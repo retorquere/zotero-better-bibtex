@@ -8,11 +8,11 @@ title: Hidden preferences
 weight: 15
 ---
 
+{{% preferences/header %}}
+
 The following settings are not exposed in the UI, but can be found under `Preferences`/`Advanced`/`Config editor`.
 
-All are prefixed with `extensions.zotero.translators.better-bibtex.` in the table you will find there
-
-{{% preferences/header %}}
+All are prefixed with `extensions.zotero.translators.better-bibtex` in the table you will find there
 
 {{% preferences/hidden-preferences %}}
 

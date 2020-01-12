@@ -1,9 +1,13 @@
 {{/* DO NOT EDIT. This shortcode is created automatically from Preferences.xul */}}
 #### postscript
 
+default: `<not set>`
+
 Snippet of javascript to run [after each reference generation]({{ ref . "scripting" }}).
 
 #### @string definitions
+
+default: `<not set>`
 
 If you have externally maintained @string vars paste them here and they will be resolved for subsequent imports
 
@@ -11,10 +15,14 @@ If you have externally maintained @string vars paste them here and they will be 
 
 #### Apply title-casing to titles
 
+default: `yes`
+
 If you're dead-set on ignoring both BibTeX/BibLaTeX best practice and the Zotero recommendations on title/sentence
 casing, you can turn this off to suppress [title casing for English references]({{ ref . "support/faq#bbt-is-changing-the-capitalization-of-my-titles-why" }}).
 
 #### Apply brace-protection to capitalized words
+
+default: `yes`
 
 If you're dead-set on ignoring both BibTeX/BibLaTeX best practice and the Zotero recommendations on title/sentence
 casing, you can turn this off to suppress [automatic brace-protection for words with uppercase letters]({{ ref . "support/faq#why-the-double-braces" }}).
@@ -22,6 +30,8 @@ casing, you can turn this off to suppress [automatic brace-protection for words 
 ### Import
 
 #### Sentence-case titles on import:
+
+default: `yes, but try to exclude already-sentence-cased titles`
 
 Bib(La)TeX references ought to be stored in Title Case; Zotero references are expected to be entered as sentence-case. With this option on, BBT will try to sentence-case
 during import. This sentence-casing uses heuristics, no natural language processing is performed, and the results are not perfect. You can turn this off, but you may then also want
@@ -35,6 +45,8 @@ Options:
 * no (import titles as-is)
 
 #### Insert case-protection for braces:
+
+default: `minimal`
 
 On import, BBT will add case-protection (<span class="nocase">...<span>) to titles that have words in {Braces}. There's plenty of bib(la)tex files
 out there that do this a little overzealously, and you may not like the resulting HTML code in your items, even though this is what the braces mean in bib(la)tex, and
@@ -51,9 +63,13 @@ Options:
 
 #### Expand the @string vars below during imports
 
+default: `yes`
+
 When enabled, BBT will prepend the @strings section below to all Bib(La)TeX imports and will expand the strings during export.
 
 #### If a field could be a @string var, export it without braces
+
+default: `No`
 
 When enabled, BBT will try to retain @string vars its exports unsurrounded by braces; when set to 'detect', single-word strings will be assumed to be externally-defined @string vars,
 when set to 'match', only @strings declared in the @strings section of the preferences will be preserved. If you don't know what this means, leave it off.
@@ -67,6 +83,8 @@ Options:
 ### Citation keys
 
 #### Warn me when changing citation keys in bulk
+
+default: `10`
 
 For those who are curious about what the `Clear/Generate BibTeX key` right-click options do, this will warn
 you if you are doing this on more than 10 (default) at the same time, to prevent your curiosity from changing

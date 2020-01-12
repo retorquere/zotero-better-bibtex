@@ -1,6 +1,8 @@
 {{/* DO NOT EDIT. This shortcode is created automatically from Preferences.xul */}}
 #### Automatic export
 
+default: `On Change`
+
 Determines when [automatic exports]({{ ref . "exporting" }}) are kicked off. Having it disabled still marks
 auto-exports as needing updates, so when you re-enable it, those exports will start. On-change means exports
 happen whenever a reference in the export changes/is added/is removed. On idle does more or less what
