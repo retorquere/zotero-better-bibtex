@@ -22,6 +22,7 @@ cache:
 # https://github.com/travis-ci/travis-ci/issues/8920
 # https://github.com/travis-ci/travis-ci/issues/4704#issuecomment-348435959
 before_install:
+  - sudo lshw -short
   - python3 -c 'import os,sys; os.set_blocking(sys.stdout.fileno(), True)'
   - python3 -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); print("blocking:", flags&os.O_NONBLOCK == 0);'
   - curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
