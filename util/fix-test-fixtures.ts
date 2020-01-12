@@ -39,6 +39,10 @@ for (const lib of glob.sync('test/fixtures/*/*.json', { cwd: root, absolute: tru
       resave = 'skipFields'
     }
 
+    if (typeof data.config.preferences.workers === 'boolean') {
+      delete data.config.preferences.workers
+      resave = 'workers'
+    }
     const invert = [
       ['suppressTitleCase', 'exportTitleCase'],
       ['suppressBraceProtection', 'exportBraceProtection' ],

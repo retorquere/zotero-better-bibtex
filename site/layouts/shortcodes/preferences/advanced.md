@@ -27,6 +27,18 @@ default: `yes`
 If you're dead-set on ignoring both BibTeX/BibLaTeX best practice and the Zotero recommendations on title/sentence
 casing, you can turn this off to suppress [automatic brace-protection for words with uppercase letters]({{ ref . "support/faq#why-the-double-braces" }}).
 
+#### Retain export cache across upgrades
+
+default: `no`
+
+By default, BBT clears all caches whenever BBT or Zotero is upgraded. I can't realistically predict whether a change in Zotero or BBT is going to affect the output
+generated for any given item, so to be sure you always have the latest export-affecting fixes, the caches are discarded when a new version of either is detected. If you
+have a very large library however, of which you regularly export significant portions, you might want to retain the cached items even if that does come with the risk that
+you get wrong output on export that has been fixed in the interim.
+
+If you turn this on, the *only* problem with export you are allowed to report is that the cache is getting dropped on upgrade. Before you report absolutely *anything* else, you *must*
+clear the cache and reproduce the problem. When you turn this off, the cache will be dropped.
+
 ### Import
 
 #### Sentence-case titles on import:

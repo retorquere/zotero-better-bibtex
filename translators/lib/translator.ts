@@ -6,70 +6,7 @@ import * as preferences from '../../gen/preferences/defaults.json'
 type TranslatorMode = 'export' | 'import'
 
 export let Translator = new class implements ITranslator { // tslint:disable-line:variable-name
-  public preferences: {
-    DOIandURL: string
-    automaticTags: boolean
-    asciiBibLaTeX: boolean
-    ascii: string
-    asciiBibTeX: boolean
-    autoExport: string
-    quickCopyMode: string
-    extraMergeTeX: boolean
-    extraMergeCSL: boolean
-    extraMergeCitekeys: boolean
-    citeCommand: string
-    quickCopyPandocBrackets: boolean
-    citekeyFormat: string
-    citekeyFold: boolean
-    keyConflictPolicy: string
-    auxImport: boolean
-    keyScope: string
-    exportBibTeXStrings: string
-    importBibTeXStrings: boolean
-    bibtexParticleNoOp: boolean
-    skipFields: string
-    bibtexURL: string
-    warnBulkModify: number
-    postscript: string
-    strings: string
-    autoAbbrev: boolean
-    autoAbbrevStyle: string
-    autoExportIdleWait: number
-    cacheFlushInterval: number
-    csquotes: string
-    rawLaTag: string
-    rawImports: boolean
-    skipWords: string
-    verbatimFields: string
-    jabrefFormat: number
-    qualityReport: boolean
-    biblatexExtendedDateFormat: boolean
-    biblatexExtendedNameFormat: boolean
-    exportTitleCase: boolean
-    exportBraceProtection: boolean
-    importSentenceCase: string
-    importCaseProtection: string
-    autoExportDelay: number
-    itemObserverDelay: number
-    parseParticles: boolean
-    citeprocNoteCitekey: boolean
-    scrubDatabase: boolean
-    removeStock: boolean
-    ignorePostscriptErrors: boolean
-    debugLogDir: string
-    testing: boolean
-    autoPin: boolean
-    kuroshiro: boolean
-    workers: number
-    relativeFilePaths: boolean
-    git: string
-    mapUnicode: string
-    mapText: string
-    mapMath: string
-    newTranslatorsAskRestart: boolean
-    platform: string
-    client: string
-  }
+  public preferences: IPreferences
   public skipFields: string[]
   public skipField: Record<string, boolean>
   public verbatimFields?: string[]

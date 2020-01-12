@@ -63,11 +63,7 @@ type ZoteroCollection = {
 }
 
 interface ITranslator {
-  preferences: {
-  #for $pref, $type in $preferences.items()
-    $pref: $type
-  #end for
-  }
+  preferences: IPreferences
   skipFields: string[]
   skipField: {[key: string]: boolean}
   verbatimFields?: string[]

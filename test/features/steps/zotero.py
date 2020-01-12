@@ -128,7 +128,10 @@ class Zotero:
       atexit.register(self.shutdown)
 
     self.testing = userdata.get('testing', 'true') == 'true'
-    self.workers = userdata.get('workers', 'true') == 'true'
+    if userdata.get('workers', 'true') == 'true':
+      self.workers = 1
+    else:
+      self.workers = 0
 
     self.preferences = Preferences(self)
     self.redir = '>'

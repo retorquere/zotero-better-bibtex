@@ -36,6 +36,7 @@
   "biblatexExtendedNameFormat": false,
   "exportTitleCase": true,
   "exportBraceProtection": true,
+  "retainCache": false,
   "importSentenceCase": "on+guess",
   "importCaseProtection": "as-needed",
   "autoExportDelay": 1,
@@ -58,7 +59,7 @@
   "mapText": "",
   "mapMath": "",
   "newTranslatorsAskRestart": true,
-  "workers": 4,
+  "workers": 1,
   "platform": "",
   "client": ""
 }

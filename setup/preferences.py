@@ -11,6 +11,12 @@ import html
 
 root = os.path.join(os.path.dirname(__file__), '..')
 
+def jstype(v):
+  if type(v) == bool: return 'boolean'
+  if type(v) == str: return 'string'
+  if type(v) == int: return 'number'
+  raise ValueError(f'Unexpected type {type(v)}')
+
 class Preferences:
   def __init__(self):
     self.preferences = {}
@@ -197,5 +203,43 @@ class Preferences:
             override[name] = { 'type': pref.type }
         json.dump(override, fos, indent=2)
       json.dump(list(override.keys()), fo, indent=2)
+
+    with open(os.path.join(root, 'gen', 'typings', 'preferences.d.ts'), 'w') as f:
+      print('interface IPreferences {', file=f)
+      for name, pref in preferences.items():
+        print(f'  {name}: {pref.type}', file=f)
+      print('}', file=f)
+
+    with open(os.path.join(root, 'gen', 'preferences.ts'), 'w') as f:
+      print('declare const Zotero: any\n', file=f)
+      print('class PreferenceManager {', file=f)
+      for name, pref in preferences.items():
+        if pref.type == 'number':
+          tslint = ' // tslint:disable-line:no-magic-numbers'
+        elif pref.type == 'string':
+          tslint = ' // tslint:disable-line:quotemark'
+        else:
+          tslint = ''
+        print(f'  set {name}(v) {{', file=f)
+        print(f"    if (typeof v === 'undefined') v = {json.dumps(pref.default)}{tslint}", file=f)
+        print(f"    if (typeof v !== '{pref.type}') throw new Error(`{name} must be of type {pref.type}, got '${{typeof v}}'`)", file=f)
+        if 'options' in pref:
+          options = json.dumps(list(pref.options.keys()))
+          print(f"    if (!{options}.includes(v)) throw new Error(`{name} must be one of {options}, got '${{v}}'`){tslint}", file=f)
+        print(f"    Zotero.Prefs.set('translators.better-bibtex.{name}', v)", file=f)
+        print('  }', file=f)
+        print(f'  get {name}() {{', file=f)
+        print(f"    return Zotero.Prefs.get('translators.better-bibtex.{name}')", file=f)
+        print('  }\n', file=f)
+      print('  public all() {', file=f)
+      print('    return {', file=f)
+      for name in preferences.keys():
+        print(f'       {name}: this.{name},', file=f)
+      print('    }', file=f)
+      print('  }\n', file=f)
+      print('  public toJSON() {', file=f)
+      print('    return this.all()', file=f)
+      print('  }', file=f)
+      print('}', file=f)
 
 Preferences()

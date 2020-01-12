@@ -13,7 +13,6 @@ import { Preferences as Prefs } from './prefs'
 import * as ini from 'ini'
 import { pathSearch } from './path-search'
 import Loki = require('lokijs')
-import * as fold from './fold.json'
 
 class Git {
   public enabled: boolean
@@ -218,7 +217,7 @@ const queue = new class {
 
     const ae = this.autoexports.get(task.id)
     if (!ae) throw new Error(`AutoExport ${task.id} not found`)
-    log.debug(fold.start, 'AutoExport.queue.run: starting', ae)
+    log.debug('AutoExport.queue.run: starting', ae)
 
     ae.status = 'running'
     this.autoexports.update(ae)
@@ -253,21 +252,16 @@ const queue = new class {
       if (Prefs.get('jabrefFormat') === 4) displayOptions.preference_jabrefFormat = 0 // tslint:disable-line:no-magic-numbers
       */
 
-      let start = Date.now()
-      log.debug(fold.start, 'AutoExport.queue.run: start priming')
-      let elapsed = (Date.now() - start) / 1000 // tslint:disable-line no-magic-numbers
-      log.debug('AutoExport.queue.run: priming took', elapsed, 'seconds', fold.end)
-
-      start = Date.now()
-      log.debug(fold.start, 'AutoExport.queue.run: start')
+      const start = Date.now()
+      log.debug('AutoExport.queue.run: start')
 
       for (const pref of prefOverrides) {
         displayOptions[`preference_${pref}`] = ae[pref]
       }
       await Translators.exportItems(ae.translatorID, displayOptions, scope, ae.path)
 
-      elapsed = (Date.now() - start) / 1000 // tslint:disable-line no-magic-numbers
-      log.debug('AutoExport.queue.run: export took', elapsed, 'seconds', fold.end)
+      const elapsed = (Date.now() - start) / 1000 // tslint:disable-line no-magic-numbers
+      log.debug('AutoExport.queue.run: export took', elapsed, 'seconds')
 
       await repo.push(Zotero.BetterBibTeX.getString('Preferences.auto-export.git.message', { type: Translators.byId[ae.translatorID].label.replace('Better ', '') }))
 
@@ -279,7 +273,7 @@ const queue = new class {
 
     ae.status = 'done'
     this.autoexports.update(ae)
-    log.debug('AutoExport.queue.run: done', fold.end)
+    log.debug('AutoExport.queue.run: done')
   }
 
   // idle observer
