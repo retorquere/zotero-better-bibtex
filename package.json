@@ -86,6 +86,7 @@
     "recast": "^0.18.5",
     "shelljs": "^0.8.3",
     "string-template": "^1.0.0",
+    "task-easy": "^0.2.0",
     "transliteration": "^2.1.8",
     "tslint": "^5.20.1",
     "unicode2latex": "^1.0.34",

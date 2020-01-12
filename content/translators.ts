@@ -11,9 +11,9 @@ import * as Extra from './extra'
 import * as prefOverrides from '../gen/preferences/auto-export-overrides.json'
 import * as translatorMetadata from '../gen/translators.json'
 
-type ExportScope = { type: 'items', items: any[], getter?: any } | { type: 'library', id: number, getter?: any } | { type: 'collection', collection: any, getter?: any }
+import Queue = require('task-easy')
 
-function sleep(timeout) { return new Promise(resolve => setTimeout(resolve, timeout)) }
+type ExportScope = { type: 'items', items: any[], getter?: any } | { type: 'library', id: number, getter?: any } | { type: 'collection', collection: any, getter?: any }
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Translators = new class { // tslint:disable-line:variable-name
@@ -21,6 +21,8 @@ export let Translators = new class { // tslint:disable-line:variable-name
   public byName: any
   public byLabel: any
   public itemType: { note: number, attachment: number }
+
+  private queue = new Queue((t1, t2) => t1.priority === t2.priority ? t1.timestamp.getTime() < t2.timestamp.getTime() : t1.priority > t2.priority)
 
   public workers: { total: number, running: Set<number> } = {
     total: 0,
@@ -116,15 +118,20 @@ export let Translators = new class { // tslint:disable-line:variable-name
     return translation.newItems
   }
 
+  public async exportItemsByQueuedWorker(translatorID: string, displayOptions: object, options: { scope?: ExportScope, path?: string, preferences?: Record<string, boolean | number | string> }) {
+    const workers = Math.max(Prefs.get('workers'), 1) // if you're here, at least one worker must be available
+
+    if (this.workers.running.size > workers) {
+      return this.queue.schedule(this.exportItemsByWorker.bind(this, translatorID, displayOptions, options), [], { priority: 1, timestamp: new Date() })
+    } else {
+      return this.exportItemsByWorker(translatorID, displayOptions, options)
+    }
+  }
+
   public async exportItemsByWorker(translatorID: string, displayOptions: object, options: { scope?: ExportScope, path?: string, preferences?: Record<string, boolean | number | string> }) {
     await Zotero.BetterBibTeX.ready
 
     log.debug('exportItemsByWorker:', displayOptions)
-
-    const workers = Math.max(Prefs.get('workers'), 1) // if you're here, at least one worker must be available
-    while (this.workers.running.size > workers) {
-      await sleep(5000) // tslint:disable-line:no-magic-numbers
-    }
 
     options.preferences = options.preferences || {}
     displayOptions = displayOptions || {}
