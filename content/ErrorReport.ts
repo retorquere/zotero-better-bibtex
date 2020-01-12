@@ -25,7 +25,7 @@ const MB = kB * kB
 
 const httpRequestOptions = {
   followRedirects: true,
-  dontCache: true,
+  noCache: true,
   foreground: true,
 }
 

@@ -8,8 +8,12 @@ import json
 from collections import OrderedDict
 import os
 import html
+from mako.template import Template
 
 root = os.path.join(os.path.dirname(__file__), '..')
+
+def template(tmpl):
+  return Template(filename=os.path.join(os.path.dirname(os.path.realpath(__file__)), 'templates', tmpl))
 
 def jstype(v):
   if type(v) == bool: return 'boolean'
@@ -211,35 +215,6 @@ class Preferences:
       print('}', file=f)
 
     with open(os.path.join(root, 'gen', 'preferences.ts'), 'w') as f:
-      print('declare const Zotero: any\n', file=f)
-      print('class PreferenceManager {', file=f)
-      for name, pref in preferences.items():
-        if pref.type == 'number':
-          tslint = ' // tslint:disable-line:no-magic-numbers'
-        elif pref.type == 'string':
-          tslint = ' // tslint:disable-line:quotemark'
-        else:
-          tslint = ''
-        print(f'  set {name}(v) {{', file=f)
-        print(f"    if (typeof v === 'undefined') v = {json.dumps(pref.default)}{tslint}", file=f)
-        print(f"    if (typeof v !== '{pref.type}') throw new Error(`{name} must be of type {pref.type}, got '${{typeof v}}'`)", file=f)
-        if 'options' in pref:
-          options = json.dumps(list(pref.options.keys()))
-          print(f"    if (!{options}.includes(v)) throw new Error(`{name} must be one of {options}, got '${{v}}'`){tslint}", file=f)
-        print(f"    Zotero.Prefs.set('translators.better-bibtex.{name}', v)", file=f)
-        print('  }', file=f)
-        print(f'  get {name}() {{', file=f)
-        print(f"    return Zotero.Prefs.get('translators.better-bibtex.{name}')", file=f)
-        print('  }\n', file=f)
-      print('  public all() {', file=f)
-      print('    return {', file=f)
-      for name in preferences.keys():
-        print(f'       {name}: this.{name},', file=f)
-      print('    }', file=f)
-      print('  }\n', file=f)
-      print('  public toJSON() {', file=f)
-      print('    return this.all()', file=f)
-      print('  }', file=f)
-      print('}', file=f)
+      print(template('preferences/preferences.ts.mako').render(preferences=preferences), file=f)
 
 Preferences()

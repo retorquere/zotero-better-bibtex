@@ -20,3 +20,4 @@ requests
 ruamel.yaml
 selenium
 toml
+Mako
