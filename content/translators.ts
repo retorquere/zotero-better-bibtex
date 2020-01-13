@@ -169,6 +169,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
     const deferred = Zotero.Promise.defer()
     const worker = new ChromeWorker(`resource://zotero-better-bibtex/worker/Zotero.js?${params}`)
 
+    let start = Date.now()
     const config: BBTWorker.Config = {
       preferences: { ...Prefs.all(), ...options.preferences },
       options: displayOptions || {},
@@ -177,6 +178,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
       cslItems: {},
       cache: {},
     }
+    log.debug('QBW: config init:', Date.now() - start)
 
     worker.onmessage = (e: { data: BBTWorker.Message }) => {
       switch (e.data?.kind) {
@@ -239,6 +241,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
       this.workers.running.delete(id)
     }
 
+    start = Date.now()
     const scope = this.exportScope(options.scope)
 
     let getter
@@ -265,7 +268,9 @@ export let Translators = new class { // tslint:disable-line:variable-name
           throw new Error(`Unexpected scope: ${Object.keys(scope)}`)
       }
     }
+    log.debug('QBW: scoped getter:', Date.now() - start)
 
+    start = Date.now()
     let elt: any
     while (elt = getter.nextItem()) {
       if (elt.itemType === 'attachment') {
@@ -277,7 +282,9 @@ export let Translators = new class { // tslint:disable-line:variable-name
       }
       config.items.push(elt)
     }
+    log.debug('QBW: items fetched:', Date.now() - start)
 
+    start = Date.now()
     // pre-fetch CSL serializations
     if (translator.label.includes('CSL')) {
       for (const item of config.items) {
@@ -289,7 +296,9 @@ export let Translators = new class { // tslint:disable-line:variable-name
         config.cslItems[item.itemID] = Zotero.Utilities.itemToCSLJSON(item)
       }
     }
+    log.debug('QBW: csl items fetched:', Date.now() - start)
 
+    start = Date.now()
     // pre-fetch cache
     if (cache) {
       const query = cacheSelector(config.items.map(item => item.itemID), displayOptions, config.preferences)
@@ -307,12 +316,15 @@ export let Translators = new class { // tslint:disable-line:variable-name
       cache.cloneObjects = cloneObjects
       cache.dirty = true
     }
+    log.debug('QBW: cache fetched:', Date.now() - start)
 
+    start = Date.now()
     if (this.byId[translatorID].configOptions?.getCollections) {
       while (elt = getter.nextCollection()) {
         config.collections.push(elt)
       }
     }
+    log.debug('QBW: collections fetched:', Date.now() - start)
 
     log.debug('starting worker export', prefix,
       'for', config.items.length, 'items in',
