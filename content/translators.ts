@@ -271,18 +271,20 @@ export let Translators = new class { // tslint:disable-line:variable-name
     log.debug('QBW: scoped getter:', Date.now() - start)
 
     start = Date.now()
-    let elt: any
-    while (elt = getter.nextItem()) {
-      if (elt.itemType === 'attachment') {
-        delete elt.saveFile
-      } else if (elt.attachments) {
-        for (const att of elt.attachments) {
-          delete att.saveFile
+    for (let item of getter._itemsLeft) {
+      if (item.isAttachment()) {
+        if (item = getter._attachmentToArray(item)) {
+          delete item.saveFile
+          config.items.push(item)
         }
+      } else {
+        const attachments = item.isRegularItem() ? item.getAttachments().map(attID => getter._attachmentToArray(Zotero.Items.get(attID))).filter(att => att) : []
+        item = Zotero.Utilities.Internal.itemToExportFormat(item)
+        item.attachments = attachments
+        config.items.push(item)
       }
-      config.items.push(elt)
     }
-    log.debug('QBW: items fetched:', Date.now() - start)
+    log.debug('QBW: items', config.items, 'fetched:', Date.now() - start)
 
     start = Date.now()
     // pre-fetch CSL serializations
@@ -320,9 +322,12 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
     start = Date.now()
     if (this.byId[translatorID].configOptions?.getCollections) {
-      while (elt = getter.nextCollection()) {
-        config.collections.push(elt)
-      }
+      config.collections = (getter._collectionsLeft || []).map(coll => {
+        coll = coll.serialize(true)
+        coll.id = coll.primary.collectionID
+        coll.name = coll.fields.name
+        return coll
+      })
     }
     log.debug('QBW: collections fetched:', Date.now() - start)
 
