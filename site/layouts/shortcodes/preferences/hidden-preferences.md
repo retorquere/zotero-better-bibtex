@@ -148,7 +148,7 @@ list of fields to treat as verbatim during import. If you're importing e.g. Mend
 
 ### workers
 
-default: `4`
+default: `1`
 
 BBT can now perform its exports in a separate thread, and should no longer block Zotero's UI pretty much regardless of how large your library is.
 While it's been tested and seems to work well, I still consider it to be experimental at this stage. You can turn it off by setting this value to `0`

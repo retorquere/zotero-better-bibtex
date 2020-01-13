@@ -13,6 +13,11 @@ import * as translatorMetadata from '../gen/translators.json'
 
 import Queue = require('task-easy')
 
+interface IPriority {
+  priority: number
+  timestamp: number
+}
+
 type ExportScope = { type: 'items', items: any[], getter?: any } | { type: 'library', id: number, getter?: any } | { type: 'collection', collection: any, getter?: any }
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
@@ -22,7 +27,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
   public byLabel: any
   public itemType: { note: number, attachment: number }
 
-  private queue = new Queue((t1, t2) => t1.priority === t2.priority ? t1.timestamp.getTime() < t2.timestamp.getTime() : t1.priority > t2.priority)
+  private queue = new Queue((t1: IPriority, t2: IPriority) => t1.priority === t2.priority ? t1.timestamp < t2.timestamp : t1.priority > t2.priority)
 
   public workers: { total: number, running: Set<number> } = {
     total: 0,
@@ -122,7 +127,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
     const workers = Math.max(Prefs.get('workers'), 1) // if you're here, at least one worker must be available
 
     if (this.workers.running.size > workers) {
-      return this.queue.schedule(this.exportItemsByWorker.bind(this, translatorID, displayOptions, options), [], { priority: 1, timestamp: new Date() })
+      return this.queue.schedule(this.exportItemsByWorker.bind(this, translatorID, displayOptions, options), [], { priority: 1, timestamp: (new Date()).getTime() })
     } else {
       return this.exportItemsByWorker(translatorID, displayOptions, options)
     }
