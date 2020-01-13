@@ -291,11 +291,12 @@ export const Zotero = new WorkerZotero // tslint:disable-line:variable-name
 export function onmessage(e: { data: BBTWorker.Config }) {
   if (e.data?.items && !Zotero.config) {
     try {
+      const start = Date.now()
       Zotero.init(e.data)
       Zotero.BetterBibTeX.debug('starting export for', { params, items: Zotero.config.items.length, collections: Zotero.config.collections.length }, 'to', Zotero.exportFile || 'text' )
       doExport()
-      Zotero.debug('export done, writing')
       Zotero.done()
+      Zotero.debug(`export done in ${Date.now() - start}`)
     } catch (err) {
       Zotero.logError(err)
     }
