@@ -112,8 +112,8 @@ class Cache extends Loki {
       if (coll.findOne({ [prefOverrides[0]]: undefined })) coll.removeDataOnly()
 
       // should have been dropped after object change/delete
-      for (const oudated of coll.data.filter(item => !modified[item.itemID] || modified[item.itemID] >= (item.meta.updated || item.meta.created))) {
-        coll.remove(oudated)
+      for (const outdated of coll.data.filter(item => !modified[item.itemID] || modified[item.itemID] >= (item.meta?.updated || item.meta?.created || 0))) {
+        coll.remove(outdated)
       }
 
       clearOnUpgrade(coll, 'BetterBibTeX', version)
