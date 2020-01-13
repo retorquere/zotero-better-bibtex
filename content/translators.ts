@@ -11,7 +11,7 @@ import * as Extra from './extra'
 import * as prefOverrides from '../gen/preferences/auto-export-overrides.json'
 import * as translatorMetadata from '../gen/translators.json'
 
-import Queue = require('task-easy')
+import { TaskEasy  as Queue } from 'task-easy'
 
 interface IPriority {
   priority: number
