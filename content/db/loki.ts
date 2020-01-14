@@ -145,7 +145,9 @@ export class XULoki extends Loki {
     options.clone = true
     const coll = this.getCollection(name) || this.addCollection(name, options)
 
-    if (options.logging && Prefs.testing) {
+    log.debug('!!!!!!! REMOVE THIS !!!!!!!!')
+    // if (options.logging && Prefs.testing) {
+    if (options.logging) {
       for (const event of ['insert', 'delete', 'update']) {
         ((e, n, db) => coll.on(e, data => log.debug(`DB Event: ${db}.${n}.${e}`, data)))(event, name, this.filename)
       }

@@ -36,6 +36,7 @@ class Cache extends Loki {
       return
     }
     for (const coll of this.collections) {
+      log.debug('Cache:reset', coll.name)
       coll.removeDataOnly()
     }
   }
@@ -164,7 +165,6 @@ if (DB.getCollection('cache')) { DB.removeCollection('cache') }
 if (DB.getCollection('serialized')) { DB.removeCollection('serialized') }
 
 export function selector(itemID, options, prefs) {
-
   const _selector = {
     itemID: Array.isArray(itemID) ? { $in: itemID } : itemID,
 

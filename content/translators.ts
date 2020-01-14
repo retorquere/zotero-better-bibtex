@@ -136,8 +136,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
   public async exportItemsByWorker(translatorID: string, displayOptions: object, options: { scope?: ExportScope, path?: string, preferences?: Record<string, boolean | number | string> }) {
     await Zotero.BetterBibTeX.ready
 
-    log.debug('exportItemsByWorker:', displayOptions)
-
     options.preferences = options.preferences || {}
     displayOptions = displayOptions || {}
 
@@ -166,6 +164,9 @@ export let Translators = new class { // tslint:disable-line:variable-name
     const id = this.workers.total
     this.workers.running.add(id)
     const prefix = `{${translator.label} worker ${id}}`
+
+    log.debug(`Beginning translation with ${prefix}`)
+
     const deferred = Zotero.Promise.defer()
     const worker = new ChromeWorker(`resource://zotero-better-bibtex/worker/Zotero.js?${params}`)
 
