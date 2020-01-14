@@ -413,7 +413,8 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         })
       }
 
-      if (!this.noWait && Prefs.get('workers')) {
+      // check for SMB path for #1396
+      if (!this.noWait && Prefs.get('workers') && !this.location.path.startsWith('\\\\')) {
         const path = this.location?.path
 
         // fake out the stuff that complete expects to be set by .translate
