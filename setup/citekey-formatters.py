@@ -73,7 +73,7 @@ def walk(doc):
     for child in doc.get('children', []):
       walk(child)
  
-with open(os.path.join(os.path.dirname(__file__), '..', 'typedoc.json')) as f:
+with open(os.path.join(os.path.dirname(__file__), '..', 'gen', 'type-doc.json')) as f:
   walk(json.load(f))
 
 def quote(s):

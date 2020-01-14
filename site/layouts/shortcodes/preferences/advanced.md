@@ -9,7 +9,7 @@ Snippet of javascript to run [after each reference generation]({{ ref . "scripti
 
 default: `<not set>`
 
-If you have externally maintained @string vars paste them here and they will be resolved for subsequent imports
+If you have externally maintained `@string` vars paste them here and they will be resolved for subsequent imports. These should be entered as `@string` declarations, such as `@string{IEEE_J_PWRE = "{IEEE} Transactions on Power Electronics"}`, not just the var name.
 
 ### Export
 

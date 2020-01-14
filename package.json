@@ -39,7 +39,7 @@
     "fix-fixtures": "ts-node ./util/fix-test-fixtures.ts",
     "postversion": "git push --tags",
     "running": "ps auxw | grep -i zotero | grep -v grep || true",
-    "docs:prep": "./setup/readme.py && typedoc --ignoreCompilerErrors --json typedoc.json content/key-manager && ./setup/citekey-formatters.py && ./setup/preferences.py",
+    "docs:prep": "./setup/readme.py && typedoc --ignoreCompilerErrors --json gen/type-doc.json content/key-manager && ./setup/citekey-formatters.py && ./setup/preferences.py",
     "docs:serve": "npm run docs:prep && cd site && hugo serve",
     "docs:deploy": "npm run docs:prep && cd site && hugo --baseURL /zotero-better-bibtex",
     "ncu": "ncu -a && npm install",
