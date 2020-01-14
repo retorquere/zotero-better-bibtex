@@ -2,7 +2,7 @@
 import * as cslVariables from './csl-vars.json'
 import * as CSL from '../gen/citeproc'
 
-type TeXString = { value: string, raw?: boolean }
+type TeXString = { value: string, raw?: boolean, type?: 'biblatex' | 'bibtex' }
 
 export type Fields = {
   csl: Record<string, string | string[]>
@@ -37,8 +37,8 @@ export function zoteroCreator(value: string): ZoteroCreator {
 
 const re = {
   // fetch fields as per https://forums.zotero.org/discussion/3673/2/original-date-of-publication/. Spurious tex. so I can do a single match
-  csl: /^{:(tex\.)?([^:]+)(:)\s*([^}]+)}$/,
-  kv: /^(tex\.)?([^:=]+)\s*([:=])\s*([\S\s]*)/,
+  csl: /^{:((?:bib(?:la)?)?tex\.)?([^:]+)(:)\s*([^}]+)}$/,
+  kv: /^((?:bib(?:la)?)?tex\.)?([^:=]+)\s*([:=])\s*([\S\s]*)/,
 }
 
 type GetOptions = {
@@ -91,7 +91,7 @@ export function get(extra: string, options?: GetOptions): { extra: string, extra
       return false
     }
 
-    if (options.csl && !tex && options.csl) {
+    if (options.csl && !tex) {
       let cslName = name.replace(/ +/g, '-')
       const cslType = cslVariables[cslName] || cslVariables[cslName = cslName.toUpperCase()]
       if (cslType) {
@@ -105,8 +105,9 @@ export function get(extra: string, options?: GetOptions): { extra: string, extra
       }
     }
 
-    if (options.tex && tex && options.tex && !name.includes(' ')) {
+    if (options.tex && tex && !name.includes(' ')) {
       extraFields.tex[name] = { value, raw }
+      if (tex === 'bibtex' || tex === 'biblatex') extraFields.tex[name].type = tex
       return false
     }
 
