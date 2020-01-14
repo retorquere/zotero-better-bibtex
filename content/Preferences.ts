@@ -441,10 +441,13 @@ export = new class PrefPane {
       document.getElementById(`id-better-bibtex-preferences-${row}`).setAttribute('hidden', quickCopyMode !== enabledFor)
     }
 
-    document.getElementById('better-bibtex-preferences-worker-state').value = Zotero.BetterBibTeX.getString(`BetterBibTeX.workers.${Prefs.get('workers') ? 'status' : 'disabled'}`, {
-      total: Translators.workers.total,
-      running: Translators.workers.running.size,
-    })
+    for (const state of Array.from(document.getElementsByClassName('better-bibtex-preferences-worker-state'))) {
+      (state as XUL.Textbox).value = Zotero.BetterBibTeX.getString(`BetterBibTeX.workers.${Prefs.get('workers') ? 'status' : 'disabled'}`, {
+        total: Translators.workers.total,
+        workers: Prefs.get('workers'),
+        running: Translators.workers.running.size,
+      })
+    }
     window.sizeToContent()
   }
 

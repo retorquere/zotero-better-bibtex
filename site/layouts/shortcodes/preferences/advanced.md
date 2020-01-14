@@ -39,6 +39,14 @@ you get wrong output on export that has been fixed in the interim.
 If you turn this on, the *only* problem with export you are allowed to report is that the cache is getting dropped on upgrade. Before you report absolutely *anything* else, you *must*
 clear the cache and reproduce the problem. When you turn this off, the cache will be dropped.
 
+#### Parallel background exports:
+
+default: `1`
+
+BBT can now perform its exports in a separate thread, and should no longer block Zotero's UI pretty much regardless of how large your library is.
+While it's been tested and seems to work well, I still consider it to be experimental at this stage. You can turn it off by setting this value to `0`
+and get the old (blocking) behavior back.
+
 ### Import
 
 #### Sentence-case titles on import:
