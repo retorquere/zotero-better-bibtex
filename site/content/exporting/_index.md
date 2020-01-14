@@ -63,3 +63,11 @@ If you add a field called `referencetype` using either one of these methods, tha
 instead of the one usually inferred from the Zotero reference type. You can use this to create, for example,
 `@customa{citekeyhere, ....}` type references.
 
+## Background exports
+
+To help out with larger libraries, BBT will export using an isolated thread ("worker thread"), which will prevent Zotero from locking up during exports.
+This was introduced in 5.2.0; at time of writing it passes all tests, and feedback so far has been positive, but it's a wild departure from how Zotero exports work, so
+I consider it experimental at this stage. If you are experiencing errors,
+
+* please do report them, and
+* you can (temporarily I hope) disable by going into the BBT advanced preferences and set the number of workers to `0`.
