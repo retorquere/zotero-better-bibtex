@@ -208,6 +208,8 @@ class Preferences:
         json.dump(override, fos, indent=2)
       json.dump(list(override.keys()), fo, indent=2)
 
+    os.makedirs(os.path.join(root, 'gen/typings'), exist_ok=True)
+
     with open(os.path.join(root, 'gen', 'typings', 'preferences.d.ts'), 'w') as f:
       print('interface IPreferences {', file=f)
       for name, pref in preferences.items():
