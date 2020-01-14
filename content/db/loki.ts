@@ -7,7 +7,7 @@ import { patch as $patch$ } from '../monkey-patch'
 
 import AJV = require('ajv')
 import * as log from '../debug'
-import { Preferences as Prefs } from '../prefs'
+// import { Preferences as Prefs } from '../prefs'
 
 // tslint:disable-next-line:variable-name
 import Loki = require('lokijs')
