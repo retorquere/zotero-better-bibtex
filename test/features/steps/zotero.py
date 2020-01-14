@@ -195,6 +195,7 @@ class Zotero:
   def start(self):
     self.needs_restart = False
     profile = self.create_profile()
+    shutil.rmtree(os.path.join(profile.path, 'zotero', 'better-bibtex'), ignore_errors=True)
 
     cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -jsconsole -ZoteroDebugText -datadir profile {self.redir} {shlex.quote(profile.path + ".log")} 2>&1'
     utils.print(f'Starting {self.client}: {cmd}')
