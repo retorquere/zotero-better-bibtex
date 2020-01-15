@@ -114,27 +114,23 @@ Avec « oui, mais en essayant d'exclure les titres déjà avec casse de phrase �
 <!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.off "non">
 <!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.on "oui">
 <!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.as_needed "minimal">
-<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.warning "À l'importation, BBT protègera la casse (&lt;span class=&quot;nocase&quot;&gt;...&lt;span&gt;) des mots entre {Braces} dans les titres.
+<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.warning "On import, BBT will add case-protection (&lt;span class=&quot;nocase&quot;&gt;...&lt;span&gt;) to titles that have words in {Braces}.
 
-Beaucoup de fichiers bib(la)tex le font de façon un peu trop zélée et vous n'aimez peut-être pas le code HTML qui en résulte dans vos entrées, même si c'est ce que les accolades signifient en bib(la)tex, et Zotero fournit cette fonctionnalité.
+There's plenty of bib(la)tex files out there that do this a little overzealously, and you may not like the resulting HTML code in your items, even though this is what the braces mean in bib(la)tex, and Zotero supports it.
 
-Si vous désactivez cette option, le balisage est omis lors de l'importation. Lorsque vous sélectionnez « oui », toutes les accolades que bib(la)tex interpréterait comme une protection de casse (ce qui n'est pas le cas de toutes) sont converties en éléments `span`.
-En mode « minimal », le nombre d'éléments `span` est minimisé.">
+If you turn this off, the markup is omitted during import. When you select 'yes', all braces that bib(la)tex would interpret as case protection (which is not all of them) are converted to `span` elements. In `minimal` mode, the number of `span` elements is minimized.">
 
 <!ENTITY better-bibtex.Preferences.advanced.tab.export "Exportation">
 <!ENTITY better-bibtex.Preferences.advanced.export.titleCase "Appliquer la capitalisation aux titres">
 <!ENTITY better-bibtex.Preferences.advanced.export.titleCase.warning "Si vous n'êtes pas prêt à ignorer à la fois les meilleures pratiques BibTeX/BibLaTeX (voir la FAQ BBT) et les recommandations de Zotero sur la casse des titres/phrases, vous pouvez désactiver cette option pour supprimer la capitalisation des références en anglais">
 <!ENTITY better-bibtex.Preferences.advanced.export.braceProtection "Appliquer la protection des accolades aux mots capitalisés">
-<!ENTITY better-bibtex.Preferences.advanced.export.braceProtection.warning "Si vous n'êtes pas prêt à ignorer à la fois les meilleures pratiques BibTeX/BibLaTeX (voir la FAQ BBT) et les recommandations de Zotero sur le tire/phrase, vous pouvez désactiver cette option pour supprimer la protection automatique des accolades pour les mots avec des lettres majuscules">
+<!ENTITY better-bibtex.Preferences.advanced.export.braceProtection.warning "If you're dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero recommendations on title/sentence casing, you can turn this off to suppress automatic brace-protection for words with uppercase letters.">
 
-<!ENTITY better-bibtex.Preferences.advanced.export.retainCache "Retain export cache across upgrades">
-<!ENTITY better-bibtex.Preferences.advanced.export.retainCache.warning "By default, BBT clears all caches whenever BBT or Zotero is upgraded. I can't realistically predict whether a change in Zotero or BBT
-is going to affect the output generated for any given item, so to be sure you always have the latest export-affecting fixes, the caches are discarded when a new version of either is detected. If you
-have a very large library however, of which you regularly export significant portions, you might want to retain the cached items even if that does come with the risk that
-you get wrong output on export that has been fixed in the interim.
+<!ENTITY better-bibtex.Preferences.advanced.export.retainCache "Conserver le cache d'exportation entre les mises à jour">
+<!ENTITY better-bibtex.Preferences.advanced.export.retainCache.warning "By default, BBT clears all caches whenever BBT or Zotero is upgraded. I can't realistically predict whether a change in Zotero or BBT is going to affect the output generated for any given item, so to be sure you always have the latest export-affecting fixes, the caches are discarded when a new version of either is detected. If you have a very large library however, of which you regularly export significant portions, you might want to retain the cached items even if that does come with the risk that you get wrong output on export that has been fixed in the interim.
 
-If you turn this on, the *only* problem with export you are allowed to report is that the cache is getting dropped on upgrade. Before you report absolutely *anything* else, you *must*
-clear the cache and reproduce the problem. When you turn this off, the cache will be dropped.">
+If you turn this on, the *only* problem with export you are allowed to report is that the cache is getting dropped on upgrade. Before you report absolutely *anything* else, you *must* clear the cache and reproduce the problem. When you change this setting, as with any setting change, the cache will be dropped.">
+<!ENTITY better-bibtex.Preferences.advanced.export.workers "Exportation parallèle en arrière-plan :">
 
 <!ENTITY better-bibtex.Preferences.advanced.tab.citekeys "Clés de citation">
 
@@ -144,7 +140,7 @@ clear the cache and reproduce the problem. When you turn this off, the cache wil
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.0 "Non">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.3 "Oui, pour JabRef 3">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.4 "Oui, pour JabRef 4">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat.4.warn "L'exportation au format JabRef 4 désactive le cache. Les exportations seront sensiblement plus lentes.">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat.4.warn "Export JabRef-specific fields: timestamps, and groups for each collection and item is part of. Note that format `4` will disable caching in exports, which is really undesirable specifically for auto-exports.">
 <!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Exporter les caractères Unicode en commandes LaTeX">
 <!ENTITY better-bibtex.Preferences.export.biblatex "BibLaTeX">
 <!ENTITY better-bibtex.Preferences.export.biblatex.extendedNameFormat "Utiliser le format de nom étendu BibLaTeX (nécessite BibLaTeX 3.5)">
