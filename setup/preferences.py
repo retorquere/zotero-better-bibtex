@@ -52,10 +52,26 @@ class Preferences:
     #for doc in self.pane.findall(f'.//{xul}prefpane/{bbt}doc'):
     #  self.header = textwrap.dedent(doc.text)
 
+    tooltips = {}
+    links = {
+      'which is not all of them': 'support/faq#why-the-double-braces',
+      'title casing for English references': 'support/faq#bbt-is-changing-the-capitalization-of-my-titles-why',
+      'automatic brace-protection for words with uppercase letters': 'support/faq#why-the-double-braces'
+    }
+    for tooltip in self.pane.findall(f'.//{xul}popupset/{xul}tooltip/{xul}description'):
+      tooltips[tooltip.getparent().get('id').replace('tooltip-', '')] = tooltip
+      for text, link in list(links.items()):
+        if text in tooltip.text:
+          tooltip.text = tooltip.text.replace(text, f'[{text}]({{{{ ref . "{link}" }}}})')
+          links.pop(text)
+    if len(links) > 0: raise ValueError(', '.join(list(links.keys())))
+
     for pref in self.pane.findall(f'.//{xul}prefpane/{xul}preferences/{xul}preference'):
-      #doc = pref.find(f'.//{bbt}doc')
+
       doc = pref.getnext()
       if doc is not None and doc.tag != f'{bbt}doc': doc = None
+      if doc is None: doc = tooltips.get(pref.get('name').split('.')[-1])
+
       _id = pref.get('id')
       pref = Munch(
         name = pref.get('name').replace(prefix, ''),

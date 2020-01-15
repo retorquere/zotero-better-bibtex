@@ -17,27 +17,21 @@ If you have externally maintained `@string` vars paste them here and they will b
 
 default: `yes`
 
-If you're dead-set on ignoring both BibTeX/BibLaTeX best practice and the Zotero recommendations on title/sentence
-casing, you can turn this off to suppress [title casing for English references]({{ ref . "support/faq#bbt-is-changing-the-capitalization-of-my-titles-why" }}).
+If you're dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero recommendations on title/sentence casing, you can turn this off to suppress [title casing for English references]({{ ref . "support/faq#bbt-is-changing-the-capitalization-of-my-titles-why" }})
 
 #### Apply brace-protection to capitalized words
 
 default: `yes`
 
-If you're dead-set on ignoring both BibTeX/BibLaTeX best practice and the Zotero recommendations on title/sentence
-casing, you can turn this off to suppress [automatic brace-protection for words with uppercase letters]({{ ref . "support/faq#why-the-double-braces" }}).
+If you're dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero recommendations on title/sentence casing, you can turn this off to suppress [automatic brace-protection for words with uppercase letters]({{ ref . "support/faq#why-the-double-braces" }}).
 
 #### Retain export cache across upgrades
 
 default: `no`
 
-By default, BBT clears all caches whenever BBT or Zotero is upgraded. I can't realistically predict whether a change in Zotero or BBT is going to affect the output
-generated for any given item, so to be sure you always have the latest export-affecting fixes, the caches are discarded when a new version of either is detected. If you
-have a very large library however, of which you regularly export significant portions, you might want to retain the cached items even if that does come with the risk that
-you get wrong output on export that has been fixed in the interim.
+By default, BBT clears all caches whenever BBT or Zotero is upgraded. I can't realistically predict whether a change in Zotero or BBT is going to affect the output generated for any given item, so to be sure you always have the latest export-affecting fixes, the caches are discarded when a new version of either is detected. If you have a very large library however, of which you regularly export significant portions, you might want to retain the cached items even if that does come with the risk that you get wrong output on export that has been fixed in the interim.
 
-If you turn this on, the *only* problem with export you are allowed to report is that the cache is getting dropped on upgrade. Before you report absolutely *anything* else, you *must*
-clear the cache and reproduce the problem. When you turn this off, the cache will be dropped.
+If you turn this on, the *only* problem with export you are allowed to report is that the cache is getting dropped on upgrade. Before you report absolutely *anything* else, you *must* clear the cache and reproduce the problem. When you change this setting, as with any setting change, the cache will be dropped.
 
 #### Parallel background exports:
 
@@ -53,10 +47,12 @@ and get the old (blocking) behavior back.
 
 default: `yes, but try to exclude already-sentence-cased titles`
 
-Bib(La)TeX references ought to be stored in Title Case; Zotero references are expected to be entered as sentence-case. With this option on, BBT will try to sentence-case
-during import. This sentence-casing uses heuristics, no natural language processing is performed, and the results are not perfect. You can turn this off, but you may then also want
-to disable `Apply title-casing to titles` (which has its own problems, see the help entry for that option on this page). With 'yes, but try to exclude already-sentence-cased titles', BBT will attempt to detect
-titles that are already sentence cased and leave them as-is on import.
+Bib(La)TeX references ought to be stored in Title Case; Zotero references are expected to be entered as sentence-case.
+
+With this option on, BBT will try to sentence-case during import. This sentence-casing uses heuristics, no natural language processing is performed, and the results are not perfect.
+
+You can turn this off, but you may then also want to disable `Apply title-casing to titles` (which has its own problems, see the help entry for that option on this page).
+With 'yes, but try to exclude already-sentence-cased titles', BBT will attempt to detect titles that are already sentence cased and leave them as-is on import.
 
 Options:
 
@@ -68,10 +64,11 @@ Options:
 
 default: `minimal`
 
-On import, BBT will add case-protection (<span class="nocase">...<span>) to titles that have words in {Braces}. There's plenty of bib(la)tex files
-out there that do this a little overzealously, and you may not like the resulting HTML code in your items, even though this is what the braces mean in bib(la)tex, and
-Zotero supports it. If you turn this off, the markup is omitted during import. When you select `yes`, all braces that bib(la)tex would interpret as case protection ([which is
-not all of them]({{ ref . "support/faq#why-the-double-braces" }})) are converted to `span` elements. In `as-needed` mode, the number of `span` elements is minimized.
+On import, BBT will add case-protection (<span class="nocase">...<span>) to titles that have words in {Braces}.
+
+There's plenty of bib(la)tex files out there that do this a little overzealously, and you may not like the resulting HTML code in your items, even though this is what the braces mean in bib(la)tex, and Zotero supports it.
+
+If you turn this off, the markup is omitted during import. When you select 'yes', all braces that bib(la)tex would interpret as case protection ([which is not all of them]({{ ref . "support/faq#why-the-double-braces" }})) are converted to `span` elements. In `minimal` mode, the number of `span` elements is minimized.
 
 Options:
 

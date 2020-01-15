@@ -23,19 +23,19 @@
     <tooltip id="tooltip-jabrefFormat">
       <description>&better-bibtex.Preferences.export.jabrefFormat.4.warn;</description>
     </tooltip>
-    <tooltip id="tooltip-import-sentenceCase">
+    <tooltip id="tooltip-importSentenceCase">
       <description>&better-bibtex.Preferences.advanced.import.sentenceCase.warning;</description>
     </tooltip>
-    <tooltip id="tooltip-import-caseProtection">
+    <tooltip id="tooltip-importCaseProtection">
       <description>&better-bibtex.Preferences.advanced.import.caseProtection.warning;</description>
     </tooltip>
-    <tooltip id="tooltip-export-titleCase">
+    <tooltip id="tooltip-exportTitleCase">
       <description>&better-bibtex.Preferences.advanced.export.titleCase.warning;</description>
     </tooltip>
-    <tooltip id="tooltip-export-braceProtection">
+    <tooltip id="tooltip-exportBraceProtection">
       <description>&better-bibtex.Preferences.advanced.export.braceProtection.warning;</description>
     </tooltip>
-    <tooltip id="tooltip-export-retainCache">
+    <tooltip id="tooltip-retainCache">
       <description>&better-bibtex.Preferences.advanced.export.retainCache.warning;</description>
     </tooltip>
   </popupset>
@@ -169,12 +169,6 @@
         </bbt:doc>
 
         <preference name="extensions.zotero.translators.better-bibtex.bibtexURL" id="pref-better-bibtex-bibtexURL" type="string" default="off"/>
-        <bbt:doc>
-          BibLaTeX supports urls in your references natively; BibTeX does not. For this reason, URLs are
-          omitted from BibTeX exports by default. Using this setting you can have them added to your exports either in a `note`
-          field (not as clean, but compatible with BibTeX out of the box), or in a `url` field (requires extra packages to be loaded,
-          or bibtex will error out).
-        </bbt:doc>
 
         <preference name="extensions.zotero.translators.better-bibtex.warnBulkModify" id="pref-better-bibtex-warnBulkModify" type="int" default="10"/>
         <bbt:doc>
@@ -247,10 +241,6 @@
         </bbt:doc>
 
         <preference name="extensions.zotero.translators.better-bibtex.jabrefFormat" id="pref-better-bibtex-jabrefFormat" type="int" default="0"/>
-        <bbt:doc>
-          Export JabRef-specific information fields; timetamps and groups for collections. Note that format `4` will disable caching in exports,
-          which is really undesirable specifically for auto-exports.
-        </bbt:doc>
 
         <preference name="extensions.zotero.translators.better-bibtex.qualityReport" id="pref-better-bibtex-qualityReport" type="bool" default="false"/>
         <bbt:doc>
@@ -271,43 +261,14 @@
         </bbt:doc>
 
         <preference name="extensions.zotero.translators.better-bibtex.exportTitleCase" id="pref-better-bibtex-exportTitleCase" type="bool" default="true"/>
-        <bbt:doc>
-          If you're dead-set on ignoring both BibTeX/BibLaTeX best practice and the Zotero recommendations on title/sentence
-          casing, you can turn this off to suppress [title casing for English references]({{ ref . "support/faq#bbt-is-changing-the-capitalization-of-my-titles-why" }}).
-        </bbt:doc>
 
         <preference name="extensions.zotero.translators.better-bibtex.exportBraceProtection" id="pref-better-bibtex-exportBraceProtection" type="bool" default="true"/>
-        <bbt:doc>
-          If you're dead-set on ignoring both BibTeX/BibLaTeX best practice and the Zotero recommendations on title/sentence
-          casing, you can turn this off to suppress [automatic brace-protection for words with uppercase letters]({{ ref . "support/faq#why-the-double-braces" }}).
-        </bbt:doc>
 
         <preference name="extensions.zotero.translators.better-bibtex.retainCache" id="pref-better-bibtex-retainCache" type="bool" default="false"/>
-        <bbt:doc>
-          By default, BBT clears all caches whenever BBT or Zotero is upgraded. I can't realistically predict whether a change in Zotero or BBT is going to affect the output
-          generated for any given item, so to be sure you always have the latest export-affecting fixes, the caches are discarded when a new version of either is detected. If you
-          have a very large library however, of which you regularly export significant portions, you might want to retain the cached items even if that does come with the risk that
-          you get wrong output on export that has been fixed in the interim.
-
-          If you turn this on, the *only* problem with export you are allowed to report is that the cache is getting dropped on upgrade. Before you report absolutely *anything* else, you *must*
-          clear the cache and reproduce the problem. When you turn this off, the cache will be dropped.
-        </bbt:doc>
 
         <preference name="extensions.zotero.translators.better-bibtex.importSentenceCase" id="pref-better-bibtex-importSentenceCase" type="string" default="on+guess"/>
-        <bbt:doc>
-          Bib(La)TeX references ought to be stored in Title Case; Zotero references are expected to be entered as sentence-case. With this option on, BBT will try to sentence-case
-          during import. This sentence-casing uses heuristics, no natural language processing is performed, and the results are not perfect. You can turn this off, but you may then also want
-          to disable `Apply title-casing to titles` (which has its own problems, see the help entry for that option on this page). With 'yes, but try to exclude already-sentence-cased titles', BBT will attempt to detect
-          titles that are already sentence cased and leave them as-is on import.
-        </bbt:doc>
 
         <preference name="extensions.zotero.translators.better-bibtex.importCaseProtection" id="pref-better-bibtex-importCaseProtection" type="string" default="as-needed"/>
-        <bbt:doc>
-          On import, BBT will add case-protection (&lt;span class="nocase"&gt;...&lt;span&gt;) to titles that have words in {Braces}. There's plenty of bib(la)tex files
-          out there that do this a little overzealously, and you may not like the resulting HTML code in your items, even though this is what the braces mean in bib(la)tex, and
-          Zotero supports it. If you turn this off, the markup is omitted during import. When you select `yes`, all braces that bib(la)tex would interpret as case protection ([which is
-          not all of them]({{ ref . "support/faq#why-the-double-braces" }})) are converted to `span` elements. In `as-needed` mode, the number of `span` elements is minimized.
-        </bbt:doc>
 
         <preference name="extensions.zotero.translators.better-bibtex.autoExportDelay" type="int" default="1"/>
         <bbt:doc>
@@ -777,17 +738,17 @@
                 <tabpanel orient="vertical">
                   <hbox>
                     <checkbox preference="pref-better-bibtex-exportTitleCase" label="&better-bibtex.Preferences.advanced.export.titleCase;"/>
-                    <image tooltip="tooltip-export-titleCase" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
+                    <image tooltip="tooltip-exportTitleCase" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
                   </hbox>
 
                   <hbox>
                     <checkbox preference="pref-better-bibtex-exportBraceProtection" label="&better-bibtex.Preferences.advanced.export.braceProtection;"/>
-                    <image tooltip="tooltip-export-braceProtection" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
+                    <image tooltip="tooltip-exportBraceProtection" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
                   </hbox>
 
                   <hbox>
                     <checkbox preference="pref-better-bibtex-retainCache" label="&better-bibtex.Preferences.advanced.export.retainCache;"/>
-                    <image tooltip="tooltip-export-retainCache" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
+                    <image tooltip="tooltip-retainCache" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
                   </hbox>
                   <hbox>
                     <label bbt:preference="pref-better-bibtex-workers">&better-bibtex.Preferences.advanced.export.workers;</label>
@@ -807,7 +768,7 @@
                         <menuitem label="&better-bibtex.Preferences.advanced.import.sentenceCase.off;" value="off"/>
                       </menupopup>
                     </menulist>
-                    <image tooltip="tooltip-import-sentenceCase" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
+                    <image tooltip="tooltip-importSentenceCase" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
                   </hbox>
 
                   <hbox>
@@ -819,7 +780,7 @@
                         <menuitem label="&better-bibtex.Preferences.advanced.import.caseProtection.off;" value="off"/>
                       </menupopup>
                     </menulist>
-                    <image tooltip="tooltip-import-caseProtection" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
+                    <image tooltip="tooltip-importCaseProtection" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
                   </hbox>
                 </tabpanel>
 

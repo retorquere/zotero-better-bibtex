@@ -20,10 +20,7 @@ will add code to have `van Gogh` sorted under `Gogh`.
 
 default: `no`
 
-BibLaTeX supports urls in your references natively; BibTeX does not. For this reason, URLs are
-omitted from BibTeX exports by default. Using this setting you can have them added to your exports either in a `note`
-field (not as clean, but compatible with BibTeX out of the box), or in a `url` field (requires extra packages to be loaded,
-or bibtex will error out).
+Most BibTeX styles do not support DOI/URL fields. Of the styles that do support them, many forget to load the required 'url' package, so make sure to load it yourself. DOI and URL fields are so-called 'verbatim' fields, and without the 'url' package loaded compilation will likely fail.
 
 Options:
 
@@ -75,8 +72,7 @@ If there are some fields you don't want in your bibtex files (such as `note` for
 
 default: `no`
 
-Export JabRef-specific information fields; timetamps and groups for collections. Note that format `4` will disable caching in exports,
-which is really undesirable specifically for auto-exports.
+Export JabRef-specific fields: timestamps, and groups for each collection and item is part of. Note that format `4` will disable caching in exports, which is really undesirable specifically for auto-exports.
 
 Options:
 
