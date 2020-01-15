@@ -1,9 +1,13 @@
+
 @book{Brennan.1976.MagiaExperimental.,
-  title = {{Magia experimental}},
+  title = {Magia experimental},
   author = {Brennan, J. H},
-  year = {1982},
+  date = {1982},
+  origdate = {1976},
   publisher = {{Edaf}},
-  address = {{Madrid}},
+  location = {{Madrid}},
   isbn = {84-7166-852-1},
-  language = {Spanish}
+  langid = {spanish}
 }
+
+

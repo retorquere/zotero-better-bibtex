@@ -265,7 +265,7 @@ export function doExport() {
 
         case 'date':
           if (date.month) ref.add({ name: 'month', value: months[date.month - 1], bare: true })
-          if ((date.orig || {}).type === 'date') {
+          if (date.orig?.type === 'date') {
             ref.add({ name: 'year', value: `[${date.orig.year}] ${date.year}` })
           } else {
             ref.add({ name: 'year', value: `${date.year}` })
