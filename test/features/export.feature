@@ -12,7 +12,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
-     | origyear not taken from csl extra-field for citation key generation #1395                      | 1           |
+     | origyear not taken from csl extra-field for citation key generation #1395                      | 2           |
      | BBT yields error with quality report #1387                                                     | 1           |
      | Does the publisher field work when put in Zoteros extra field #1370                            | 1           |
      | Treat ideographs as individual words for key generation #1353                                  | 1           |

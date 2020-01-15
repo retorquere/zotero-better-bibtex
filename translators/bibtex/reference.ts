@@ -462,7 +462,6 @@ export class Reference {
       }
 
       const date = Zotero.BetterBibTeX.parseDate(field.value)
-      if (this.item.extraFields.csl['original-date']) date.orig = Zotero.BetterBibTeX.parseDate(this.item.extraFields.csl['original-date'])
 
       this.add(datefield(date, field))
 
@@ -673,6 +672,7 @@ export class Reference {
 
           case 'original-date':
             name = 'origdate'
+            enc = 'date'
             break
 
           case 'publisher-place':

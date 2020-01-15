@@ -104,6 +104,40 @@
       "citekey": "Brennan.1982.MagiaExperimental.",
       "citationKey": "Brennan.1982.MagiaExperimental.",
       "libraryID": 1
+    },
+    {
+      "version": 235,
+      "itemType": "bookSection",
+      "title": "Cap\u00edtulo 5",
+      "date": "2002",
+      "language": "pt",
+      "extra": "{:original-date: 1994}",
+      "place": "Rio de Janeiro",
+      "publisher": "Instituto Internacional de Projeciologia",
+      "ISBN": "978-85-86019-05-0",
+      "pages": "p.22",
+      "edition": "1. ed.",
+      "creators": [
+        {
+          "firstName": "Waldo",
+          "lastName": "Vieira",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2020-01-10T23:33:03Z",
+      "dateModified": "2020-01-15T07:10:10Z",
+      "uri": "http://zotero.org/users/6244081/items/8GEWVJQ8",
+      "attachments": [],
+      "notes": [],
+      "itemID": 96,
+      "key": "8GEWVJQ8",
+      "citekey": "Vieira.1994.700ExperimentosdaConscienciologia.Capitulo.p.22",
+      "citationKey": "Vieira.1994.700ExperimentosdaConscienciologia.Capitulo.p.22",
+      "libraryID": 1,
+      "publicationTitle": "700 Experimentos da Conscienciologia"
     }
   ]
 }
