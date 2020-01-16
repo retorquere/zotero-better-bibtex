@@ -291,6 +291,11 @@ Scenario: Postscript error aborts CSL JSON export #1155
   When I import 4 references from "export/*.json"
   Then an export using "Better CSL JSON" should match "export/*.csl.json"
 
+@1400
+Scenario: Deterministic ordering for CSL #1178 #1400
+  When I import 26 references from "export/*.json"
+  Then an export using "Better CSL JSON" should match "export/*.csl.json"
+
 @1179
 Scenario: CSL exporters; ignore [Fields to omit from export] setting #1179
   When I import 26 references from "export/*.json"
