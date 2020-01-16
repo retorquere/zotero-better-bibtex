@@ -146,31 +146,42 @@ class WorkerZoteroUtilities {
 }
 
 function makeDirs(path) {
-  if (OS.File.exists(path) && !OS.File.stat(path).isDir) path = OS.Path.dirname(path)
+  path = OS.Path.normalize(path)
 
-  const { absolute, components } = OS.Path.split(path)
-
+  const { absolute } = OS.Path.split(path)
   if (!absolute) throw new Error(`Cannot make relative ${path}`)
 
-  let partial = components.shift()
-  for (const component of components) {
-    partial = OS.Path.join(partial, component)
-    if (OS.File.exists(partial)) {
-      if (!OS.File.stat(path).isDir) throw new Error(`${partial} exists, but is not a directory`)
-      break
+  // splits doesn't put the root slash/drive in components... come on Mozilla!
+  let uri = ''
+  // this normalizes the path so it's all forward slashes
+  for (const dir of OS.Path.toFileURI(path).split('/')) {
+    try {
+      if (uri) uri += '/'
+      uri += dir
+      if (!uri.startsWith('file://')) continue
+
+      path = OS.Path.fromFileURI(uri)
+    } catch (err) {
+      Zotero.BetterBibTeX.debug('makeDirs: could not convert', uri, ':', err, Object.keys(err))
+      continue
     }
-    OS.File.makeDir(partial)
+
+    if (!OS.File.exists(path)) {
+      OS.File.makeDir(path)
+    } else if (!OS.File.stat(path).isDir) {
+      throw new Error(`makeDirs: ${path} exists, but is not a directory`)
+    }
   }
 }
 
 function saveFile(path, overwrite) {
   if (!Zotero.exportDirectory) return
 
-  let target = OS.Path.Normalize(OS.Path.join(Zotero.exportDirectory, path))
+  let target = OS.Path.normalize(OS.Path.join(Zotero.exportDirectory, path))
   if (!target.startsWith(Zotero.exportDirectory)) throw new Error(`${path} looks like a relative path`)
 
   if (this.linkMode === 'imported_file' || (this.linkMode === 'imported_url' && this.contentType !== 'text/html')) {
-    makeDirs(target)
+    makeDirs(OS.Path.dirname(target))
     OS.File.copy(this.localPath, target, { noOverwrite: !overwrite })
 
   } else if (this.linkMode === 'imported_url') {
@@ -209,14 +220,15 @@ class WorkerZotero {
     this.config.preferences.client = params.client
     this.output = ''
 
-    for (const item of this.config.items) {
-      this.patchAttachments(item)
+    if (this.config.options.exportFileData) {
+      for (const item of this.config.items) {
+        this.patchAttachments(item)
+      }
     }
 
     if (params.output) {
-      if (this.config.options.exportFiles) { // output path is a directory
+      if (this.config.options.exportFileData) { // output path is a directory
         this.exportDirectory = OS.Path.normalize(params.output)
-        if (!OS.File.exists(this.exportDirectory) || !OS.File.stat(this.exportDirectory).isDir) throw new Error(`exportFiles to non-existent directory ${params.output}`)
         this.exportFile = OS.Path.join(this.exportDirectory, `${OS.Path.basename(this.exportDirectory)}.${Translator.header.target}`)
       } else {
         this.exportFile = OS.Path.normalize(params.output)
@@ -278,10 +290,16 @@ class WorkerZotero {
   private patchAttachments(item) {
     if (item.itemType === 'attachment') {
       item.saveFile = saveFile.bind(item)
+
+      if (!item.defaultPath && item.localPath) { // why is this not set by itemGetter?!
+        item.defaultPath = `files/${item.itemID}/${OS.Path.basename(item.localPath)}`
+      }
+
     } else if (item.attachments) {
       for (const att of item.attachments) {
-        att.saveFile = saveFile.bind(item)
+        this.patchAttachments(att)
       }
+
     }
   }
 }
