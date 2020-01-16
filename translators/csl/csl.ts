@@ -46,15 +46,14 @@ const validCSLTypes = [
 ]
 
 function keySort(a, b) {
-  if (a === 'id' && b !== 'id') return -1
-  if (a !== 'id' && b === 'id') return -1
-  return a.localeCompare(b, undefined, { sensitivity: 'base' })
+  if (a[0] === 'id' && b[0] !== 'id') return -1
+  if (a[0] !== 'id' && b[0] === 'id') return 1
+  return a[0].localeCompare(b[0], undefined, { sensitivity: 'base' })
 }
 
 function sortObject(obj) {
   if (obj && !Array.isArray(obj) && typeof obj === 'object') {
-    for (const field of Object.keys(obj).sort(keySort)) {
-      const value = obj[field]
+    for (const [field, value] of Object.entries(obj).sort(keySort)) {
       delete obj[field]
       obj[field] = sortObject(value)
     }
@@ -85,12 +84,8 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
 
   public doExport() {
     const items = []
-    const order = []
-
     for (const item of Translator.items()) {
       if (item.itemType === 'note' || item.itemType === 'attachment') continue
-
-      order.push({ id: item.citekey, index: items.length })
 
       let cached: Types.DB.Cache.ExportedItem
       if (cached = Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences)) {
