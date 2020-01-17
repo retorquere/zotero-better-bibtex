@@ -45,22 +45,6 @@ const validCSLTypes = [
   'thesis',
 ]
 
-function keySort(a, b) {
-  if (a[0] === 'id' && b[0] !== 'id') return -1
-  if (a[0] !== 'id' && b[0] === 'id') return 1
-  return a[0].localeCompare(b[0], undefined, { sensitivity: 'base' })
-}
-
-function sortObject(obj) {
-  if (obj && !Array.isArray(obj) && typeof obj === 'object') {
-    for (const [field, value] of Object.entries(obj).sort(keySort)) {
-      delete obj[field]
-      obj[field] = sortObject(value)
-    }
-  }
-  return obj
-}
-
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let CSLExporter = new class { // tslint:disable-line:variable-name
   public flush: Function // will be added by JSON/YAML exporter
@@ -168,7 +152,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       for (const field of Translator.skipFields) {
         delete csl[field]
       }
-      csl = sortObject(csl)
+      csl = this.sortObject(csl)
       csl = this.serialize(csl)
 
       if (typeof cache !== 'boolean' || cache) Zotero.BetterBibTeX.cacheStore(item.itemID, Translator.options, Translator.preferences, csl)
@@ -177,5 +161,22 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
     }
 
     Zotero.write(this.flush(items))
+  }
+
+  public keySort(a, b) {
+    if (a === 'id' && b !== 'id') return -1
+    if (a !== 'id' && b === 'id') return 1
+    return a.localeCompare(b, undefined, { sensitivity: 'base' })
+  }
+
+  private sortObject(obj) {
+    if (obj && !Array.isArray(obj) && typeof obj === 'object') {
+      for (const field of Object.keys(obj).sort(this.keySort)) {
+        const value = obj[field]
+        delete obj[field]
+        obj[field] = this.sortObject(value)
+      }
+    }
+    return obj
   }
 }
