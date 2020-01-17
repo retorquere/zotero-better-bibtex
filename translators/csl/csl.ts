@@ -45,22 +45,14 @@ const validCSLTypes = [
   'thesis',
 ]
 
-function keySort(a, b) {
-  if (a === 'id' && b !== 'id') return -1
-  if (a !== 'id' && b === 'id') return -1
-  return a.localeCompare(b, undefined, { sensitivity: 'base' })
-}
-
-function sortObject(obj) {
-  if (obj && !Array.isArray(obj) && typeof obj === 'object') {
-    for (const field of Object.keys(obj).sort(keySort)) {
-      const value = obj[field]
-      delete obj[field]
-      obj[field] = sortObject(value)
-    }
-  }
-  return obj
-}
+const keyOrder = [
+  'id',
+  'year',
+  'season',
+  'month',
+  'day',
+  'circa',
+].reduce((acc, field, idx, fields) => { acc[field] = idx + 1; return acc }, {})
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let CSLExporter = new class { // tslint:disable-line:variable-name
@@ -85,12 +77,8 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
 
   public doExport() {
     const items = []
-    const order = []
-
     for (const item of Translator.items()) {
       if (item.itemType === 'note' || item.itemType === 'attachment') continue
-
-      order.push({ id: item.citekey, index: items.length })
 
       let cached: Types.DB.Cache.ExportedItem
       if (cached = Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences)) {
@@ -173,7 +161,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       for (const field of Translator.skipFields) {
         delete csl[field]
       }
-      csl = sortObject(csl)
+      csl = this.sortObject(csl)
       csl = this.serialize(csl)
 
       if (typeof cache !== 'boolean' || cache) Zotero.BetterBibTeX.cacheStore(item.itemID, Translator.options, Translator.preferences, csl)
@@ -182,5 +170,26 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
     }
 
     Zotero.write(this.flush(items))
+  }
+
+  public keySort(a, b) {
+    const oa = keyOrder[a]
+    const ob = keyOrder[b]
+
+    if (oa && ob) return oa - ob
+    if (oa) return -1
+    if (ob) return 1
+    return a.localeCompare(b, undefined, { sensitivity: 'base' })
+  }
+
+  private sortObject(obj) {
+    if (obj && !Array.isArray(obj) && typeof obj === 'object') {
+      for (const field of Object.keys(obj).sort(this.keySort)) {
+        const value = obj[field]
+        delete obj[field]
+        obj[field] = this.sortObject(value)
+      }
+    }
+    return obj
   }
 }

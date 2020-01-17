@@ -1,6 +1,6 @@
 ---
 references:
-- ISBN: 979-10-239-0085-9
+- id: vogel_cinema_2016
   abstract: >-
     Le Cine´ma, art subversif est un livre culte dans l'histoire de la
     cine´philie, cite´ en re´fe´rence par de nombreux cine´astes et artistes
@@ -22,23 +22,20 @@ references:
     co-fonde´ le Festival du Film de New York, dont il a dirige´ la
     programmation jusqu'en 1968
   accessed:
-    -
-      day: 29
+    - year: 2017
       month: 6
-      year: 2017
+      day: 29
   author:
     - family: Vogel
       given: Amos
   call-number: 791.430 1
-  id: vogel_cinema_2016
+  ISBN: 979-10-239-0085-9
   issued:
-    -
-      year: 2016
+    - year: 2016
   language: fre
   number-of-pages: '349'
   original-date:
-    -
-      year: 1974
+    - year: 1974
   publisher: Capricci
   publisher-place: Paris
   source: 'BnF Catalogue général (http://catalogue.bnf.fr)'

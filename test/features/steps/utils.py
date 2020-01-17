@@ -59,16 +59,19 @@ def html2md(html):
   html = BeautifulSoup(html, features='lxml').prettify()
   return md(html).strip()
 
-def serialize(obj):
-  return json.dumps(obj, indent=2, sort_keys=True)
+def serialize(obj, sort_keys):
+  if sort_keys:
+    return json.dumps(obj, indent=2, sort_keys=True)
+  else:
+    return json.dumps(obj, indent=2)
 
-def compare(expected, found):
+def compare(expected, found, sort_keys):
   size = 30
   if len(expected) < size or len(found) < size:
-    assert_equal_diff(serialize(expected), serialize(found))
+    assert_equal_diff(serialize(expected, sort_keys), serialize(found, sort_keys))
   else:
     for start in range(0, max(len(expected), len(found)), size):
-      assert_equal_diff(serialize(expected[start:start + size]), serialize(found[start:start + size]))
+      assert_equal_diff(serialize(expected[start:start + size], sort_keys), serialize(found[start:start + size], sort_keys))
 
 def running(id):
   if type(id) == int:
