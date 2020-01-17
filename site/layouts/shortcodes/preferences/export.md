@@ -80,20 +80,7 @@ Options:
 * for JabRef 3
 * for JabRef 4
 
-#### Include comments about potential problems with the references
-
-default: `no`
-
-Generate quality reports for exported references.
-
-#### Include automatic tags in export
-
-default: `yes`
-
-Some importers or Zotero extensions (such as the ShortDOI manager for example) create tags on items that are more for item management than that
-they are descriptive of the item. When this is off, such tags will not be included in the export.
-
-### Journal abbreviations
+### Miscellaneous
 
 #### Automatically abbreviate journal title if none is set explicitly
 
@@ -107,5 +94,38 @@ default: `<not set>`
 
 Select the style for auto-abbreviation. Only applicable to Juris-M; in Zotero, the style for automatic
 abbreviation is not configurable.
+
+#### Include comments about potential problems with the references
+
+default: `no`
+
+Generate quality reports for exported references.
+
+#### Include automatic tags in export
+
+default: `yes`
+
+Some importers or Zotero extensions (such as the ShortDOI manager for example) create tags on items that are more for item management than that
+they are descriptive of the item. When this is off, such tags will not be included in the export.
+
+#### When converting to plain-text latex commands:
+
+default: `Minimize the number of switches between math-mode and text-mode`
+
+When a unicode character can be exported as either a math-mode or text-mode command, map to:
+
+* `minimal-packages`: if both a math-mode and a text-mode mapping is available, use the version that does not require
+   extra packages to be loaded.
+* `conservative`: if both a math-mode and a text-mode mapping is available, stay in the mode of the previously mapped
+   character if possible. This minimizes the number of generated `$`s in the output.
+* `text`: if both a math-mode and a text-mode mapping is available, prefer text.
+* `math`: if both a math-mode and a text-mode mapping is available, prefer math.
+
+Options:
+
+* Minimize additional latex packages required
+* Minimize the number of switches between math-mode and text-mode
+* Prefer text-mode replacements
+* Prefer math-mode replacements
 
 

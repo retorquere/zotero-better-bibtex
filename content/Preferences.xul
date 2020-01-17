@@ -348,7 +348,7 @@
           Can be `off`, `config` or `always`
         </bbt:doc>
 
-        <preference name="extensions.zotero.translators.better-bibtex.mapUnicode" type="string" default="minimal-packages"/>
+        <preference name="extensions.zotero.translators.better-bibtex.mapUnicode" id="pref-better-bibtex-mapUnicode" type="string" default="conservative"/>
         <bbt:doc>
           When a unicode character can be exported as either a math-mode or text-mode command, map to:
 
@@ -565,17 +565,26 @@
                   </row>
                 </rows>
               </grid>
-              <checkbox label="&better-bibtex.Preferences.export.qualityReport;" preference="pref-better-bibtex-qualityReport"/>
-              <checkbox label="&better-bibtex.Preferences.export.automaticTags;" preference="pref-better-bibtex-automaticTags"/>
             </groupbox>
 
             <groupbox>
-              <caption label="&better-bibtex.Preferences.export.journal-abbrev;"/>
+              <caption label="&better-bibtex.Preferences.export.misc;"/>
               <checkbox id="id-better-bibtex-preferences-autoAbbrev" label="&better-bibtex.Preferences.auto-abbrev;" preference="pref-better-bibtex-autoAbbrev"/>
               <separator id="better-bibtex-abbrev-style-separator" class="thin"/>
               <label id="better-bibtex-abbrev-style-label" bbt:preference="pref-better-bibtex-autoAbbrevStyle">&better-bibtex.Preferences.auto-abbrev.style;</label>
               <menulist id="better-bibtex-abbrev-style" onchange="Zotero.BetterBibTeX.Preferences.styleChanged()">
                 <menupopup id="better-bibtex-abbrev-style-popup">
+                </menupopup>
+              </menulist>
+              <checkbox label="&better-bibtex.Preferences.export.qualityReport;" preference="pref-better-bibtex-qualityReport"/>
+              <checkbox label="&better-bibtex.Preferences.export.automaticTags;" preference="pref-better-bibtex-automaticTags"/>
+              <label bbt:preference="pref-better-bibtex-mapUnicode">&better-bibtex.Preferences.export.map-unicode;</label>
+              <menulist preference="pref-better-bibtex-mapUnicode">
+                <menupopup>
+                  <menuitem label="&better-bibtex.Preferences.export.map-unicode.minimal-packages;" value="minimal-packages"/>
+                  <menuitem label="&better-bibtex.Preferences.export.map-unicode.conservative;" value="conservative"/>
+                  <menuitem label="&better-bibtex.Preferences.export.map-unicode.text;" value="text"/>
+                  <menuitem label="&better-bibtex.Preferences.export.map-unicode.math;" value="math"/>
                 </menupopup>
               </menulist>
             </groupbox>

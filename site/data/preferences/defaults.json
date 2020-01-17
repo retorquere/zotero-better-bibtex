@@ -55,7 +55,7 @@
   "kuroshiro": false,
   "relativeFilePaths": false,
   "git": "config",
-  "mapUnicode": "minimal-packages",
+  "mapUnicode": "conservative",
   "mapText": "",
   "mapMath": "",
   "newTranslatorsAskRestart": true,
