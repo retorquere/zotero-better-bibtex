@@ -348,10 +348,12 @@
           Can be `off`, `config` or `always`
         </bbt:doc>
 
-        <preference name="extensions.zotero.translators.better-bibtex.mapUnicode" type="string" default="conservative"/>
+        <preference name="extensions.zotero.translators.better-bibtex.mapUnicode" type="string" default="minimal-packages"/>
         <bbt:doc>
           When a unicode character can be exported as either a math-mode or text-mode command, map to:
 
+          * `minimal-packages`: if both a math-mode and a text-mode mapping is available, use the version that does not require
+             extra packages to be loaded.
           * `conservative`: if both a math-mode and a text-mode mapping is available, stay in the mode of the previously mapped
              character if possible. This minimizes the number of generated `$`s in the output.
           * `text`: if both a math-mode and a text-mode mapping is available, prefer text.

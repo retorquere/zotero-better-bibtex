@@ -54,19 +54,32 @@ const htmlConverter = new class HTMLConverter {
 
     if (!this.mapping.initialized) {
       // translator is re-ran every time it's used, not cached ready-to-run, so safe to modify the mapping
-      debug('TODO: THIS WILL BE A PROBLEM FOR WORKERS')
+      debug('TODO: THIS WILL BE A PROBLEM FOR REUSABLE WORKERS')
       for (const c of Translator.preferences.ascii) {
         this.mapping[c] = unicodeMapping.ascii[c]
       }
 
       if (Translator.preferences.mapUnicode === 'conservative') {
-        debug('TODO: THIS TOO WILL BE A PROBLEM FOR WORKERS')
+        debug('TODO: THIS TOO WILL BE A PROBLEM FOR REUSABLE WORKERS')
         for (const keep of Object.keys(switchMode).sort()) {
           const remove = switchMode[keep]
           const unicode = Translator.preferences[`map${keep[0].toUpperCase()}${keep.slice(1)}`]
           for (const c of unicode) {
             if (this.mapping[c] && this.mapping[c].text && this.mapping[c].math) {
               delete this.mapping[c][remove]
+            }
+          }
+        }
+
+      } else if (Translator.preferences.mapUnicode === 'minimal-packages') {
+        for (const tex of (Object.values(this.mapping) as any[])) {
+          if (tex.text && tex.math) {
+            if (tex.textpackages && !tex.mathpackages) {
+              delete tex.text
+              delete tex.textpackages
+            } else if (!tex.textpackages && tex.mathpackages) {
+              delete tex.math
+              delete tex.mathpackages
             }
           }
         }
