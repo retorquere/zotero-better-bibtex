@@ -1,5 +1,11 @@
 # Changelog
 
+## [5.2.8] 2020-01-17
+
+ - Minimize required LaTeX packages by default
+ - origyear was not taken from extra field for key generation
+ - fix: attachment export creates empty directories
+
 ## [5.2.7] - 2020-01-11
  - allow capping the number of export workers
 
