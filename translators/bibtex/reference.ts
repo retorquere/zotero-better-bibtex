@@ -672,6 +672,7 @@ export class Reference {
 
           case 'original-date':
             name = 'origdate'
+            enc = 'date'
             break
 
           case 'publisher-place':

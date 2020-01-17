@@ -12,6 +12,7 @@ import { Preferences as Prefs } from '../prefs'
 import * as log from '../debug'
 import { JournalAbbrev } from '../journal-abbrev'
 import { kuroshiro } from './kuroshiro'
+import * as Extra from '../extra'
 
 const parser = require('./formatter.pegjs')
 import * as DateParser from '../dateparser'
@@ -100,6 +101,7 @@ class PatternFormatter {
       item,
       type: Zotero.ItemTypes.getName(item.itemTypeID),
       language: this.language[(item.getField('language') || '').toLowerCase()] || '',
+      csl: Extra.get(item.getField('extra'), { csl: true}).extraFields.csl,
     }
 
     if (['attachment', 'note'].includes(this.item.type)) return {}
@@ -148,6 +150,8 @@ class PatternFormatter {
           throw new Error(`Unexpected parsed date ${JSON.stringify(this.item.date)} => ${JSON.stringify(date)}`)
       }
     }
+
+    if (this.item.csl['original-date']) this.item.origyear = this.item.csl['original-date'].split('-')[0]
 
     const citekey = this.generate()
 
