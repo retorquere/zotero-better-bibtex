@@ -45,6 +45,15 @@ const validCSLTypes = [
   'thesis',
 ]
 
+const keyOrder = [
+  'id',
+  'year',
+  'season',
+  'month',
+  'day',
+  'circa',
+].reduce((acc, field, idx, fields) => { acc[field] = idx + 1; return acc }, {})
+
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let CSLExporter = new class { // tslint:disable-line:variable-name
   public flush: Function // will be added by JSON/YAML exporter
@@ -164,8 +173,12 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
   }
 
   public keySort(a, b) {
-    if (a === 'id' && b !== 'id') return -1
-    if (a !== 'id' && b === 'id') return 1
+    const oa = keyOrder[a]
+    const ob = keyOrder[b]
+
+    if (oa && ob) return oa - ob
+    if (oa) return -1
+    if (ob) return 1
     return a.localeCompare(b, undefined, { sensitivity: 'base' })
   }
 

@@ -280,15 +280,15 @@ class Zotero:
 
     if ext == '.csl.json':
       with open(exported, 'w') as f: f.write(found)
-      compare(json.loads(expected), json.loads(found))
+      compare(json.loads(expected), json.loads(found), False)
       os.remove(exported)
       return
 
     elif ext == '.csl.yml':
       with open(exported, 'w') as f: f.write(found)
       assert_equal_diff(
-        serialize(yaml.load(io.StringIO(expected))),
-        serialize(yaml.load(io.StringIO(found)))
+        serialize(yaml.load(io.StringIO(expected)), False),
+        serialize(yaml.load(io.StringIO(found)), False)
       )
       os.remove(exported)
       return
@@ -300,10 +300,10 @@ class Zotero:
       expected = normalizeJSON(json.loads(expected))
 
       if True or len(expected['items']) < 30 or len(found['items']) < 30:
-        assert_equal_diff(serialize(expected), serialize(found))
+        assert_equal_diff(serialize(expected, True), serialize(found, True))
       else:
-        assert_equal_diff(serialize({ **expected, 'items': []}), serialize({ **found, 'items': []}))
-        compare(expected['items'], found['items'])
+        assert_equal_diff(serialize({ **expected, 'items': []}, True), serialize({ **found, 'items': []}, True))
+        compare(expected['items'], found['items'], True)
 
       os.remove(exported)
       return
