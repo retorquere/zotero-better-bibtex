@@ -153,7 +153,8 @@ Exporter.serialize = csl => {
   for (const [k, v] of Object.entries(csl)) {
     if (typeof v === 'string' && v.indexOf('<') >= 0) csl[k] = htmlConverter.convert(v)
   }
-  return YAML.safeDump([csl], {skipInvalid: true, sortKeys: Exporter.keySort})
+  // return YAML.safeDump([csl], {skipInvalid: true, sortKeys: Exporter.keySort})
+  return YAML.safeDump([csl], {skipInvalid: true})
 }
 
 Exporter.flush = items => `---\nreferences:\n${items.join('\n')}...\n`
