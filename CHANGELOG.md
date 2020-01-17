@@ -5,6 +5,7 @@
  - Minimize required LaTeX packages by default
  - origyear was not taken from extra field for key generation
  - fix: attachment export creates empty directories
+ - fix: sort CSL item fields for export
 
 ## [5.2.7] - 2020-01-11
  - allow capping the number of export workers
