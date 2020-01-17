@@ -169,7 +169,13 @@ Si vous activez cette option, l'*unique* problème à l'exportation que vous êt
 
 <!ENTITY better-bibtex.Preferences.export.fields.sorted "Ordonner de façon déterministe les références et champs, principalement pour le contrôle de version.">
 <!ENTITY better-bibtex.Preferences.export.fields.skip "Champs à exclure de l'exportation (séparés par des virgules) :">
-<!ENTITY better-bibtex.Preferences.export.journal-abbrev "Abréviations de journaux">
+<!ENTITY better-bibtex.Preferences.export.misc "Miscellaneous">
+<!ENTITY better-bibtex.Preferences.export.map-unicode "When converting to plain-text latex commands:">
+<!ENTITY better-bibtex.Preferences.export.map-unicode.minimal-packages "Minimize additional latex packages required">
+<!ENTITY better-bibtex.Preferences.export.map-unicode.conservative "Minimize the number of switches between math-mode and text-mode">
+<!ENTITY better-bibtex.Preferences.export.map-unicode.text "Prefer text-mode replacements">
+<!ENTITY better-bibtex.Preferences.export.map-unicode.math "Prefer math-mode replacements">
+
 <!ENTITY better-bibtex.Preferences.advanced.tab.postscript "post script">
 <!ENTITY better-bibtex.Preferences.postscript.warn "L'utilisation de 'Translator.options.exportPath' dans les post scripts désactive le cache. Les exportations seront sensiblement plus lentes.">
 <!ENTITY better-bibtex.Preferences.advanced.tab.strings "Définitions des @string">
