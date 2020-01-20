@@ -151,7 +151,7 @@ function makeDirs(path) {
   path = OS.Path.normalize(path)
 
   const paths: string[] = []
-  while (!OS.File.exists(path)) {
+  while (path !== paths[0] && !OS.File.exists(path)) {
     paths.unshift(path)
     path = OS.Path.dirname(path)
   }
