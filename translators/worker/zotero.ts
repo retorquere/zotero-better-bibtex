@@ -146,31 +146,20 @@ class WorkerZoteroUtilities {
 }
 
 function makeDirs(path) {
+  if (!OS.Path.split(path).absolute) throw new Error(`Will not make relative ${path}`)
+
   path = OS.Path.normalize(path)
 
-  const { absolute } = OS.Path.split(path)
-  if (!absolute) throw new Error(`Cannot make relative ${path}`)
+  const paths: string[] = []
+  while (!OS.File.exists(path)) {
+    paths.unshift(path)
+    path = OS.Path.dirname(path)
+  }
 
-  // splits doesn't put the root slash/drive in components... come on Mozilla!
-  let uri = ''
-  // this normalizes the path so it's all forward slashes
-  for (const dir of OS.Path.toFileURI(path).split('/')) {
-    try {
-      if (uri) uri += '/'
-      uri += dir
-      if (!uri.startsWith('file://')) continue
+  if (!OS.File.stat(path).isDir) throw new Error(`makeDirs: root ${path} is not a directory`)
 
-      path = OS.Path.fromFileURI(uri)
-    } catch (err) {
-      Zotero.BetterBibTeX.debug('makeDirs: could not convert', uri, ':', err, Object.keys(err))
-      continue
-    }
-
-    if (!OS.File.exists(path)) {
-      OS.File.makeDir(path)
-    } else if (!OS.File.stat(path).isDir) {
-      throw new Error(`makeDirs: ${path} exists, but is not a directory`)
-    }
+  for (path of paths) {
+    OS.File.makeDir(path)
   }
 }
 
