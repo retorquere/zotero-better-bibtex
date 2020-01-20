@@ -1,6 +1,6 @@
 # Changelog
 
-## [5.2.8] 2020-01-17
+## [5.2.9] 2020-01-20
 
  - Minimize required LaTeX packages by default
  - origyear was not taken from extra field for key generation
