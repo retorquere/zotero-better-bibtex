@@ -217,7 +217,15 @@ export = new class ErrorReport {
 
     for (let attempt = 0; attempt < 5; attempt++) { // tslint:disable-line:no-magic-numbers
       try {
-        await Zotero.HTTP.request('PUT', url, options)
+        // await Zotero.HTTP.request('PUT', url, options)
+
+        await fetch(url, {
+          method: 'PUT',
+          cache: 'no-cache',
+          headers: options.headers || {},
+          redirect: 'follow',
+          body: options.body,
+        })
         return
 
       } catch (err) {
@@ -229,6 +237,29 @@ export = new class ErrorReport {
 
     throw error
   }
+
+  /*
+  private put(url, options) {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest()
+      xhr.open('PUT', url)
+      for (const [header, value] of (options.headers || {})) {
+        xhr.setRequestHeader(header, value)
+      }
+      xhr.onload = function() {
+        if (this.status >= 200 && this.status < 300) { // tslint:disable-line:no-magic-numbers
+          resolve(xhr.response)
+        } else {
+          reject({ status: this.status, statusText: xhr.statusText })
+        }
+      }
+      xhr.onerror = function() {
+        reject({ status: this.status, statusText: xhr.statusText })
+      }
+      xhr.send(options.body)
+    })
+  }
+  */
 
   private async submit(filename, contentType, data, prefix = '') {
     if (data.then) data = await data
