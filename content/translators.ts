@@ -7,6 +7,7 @@ import * as log from './debug'
 import { DB as Cache, selector as cacheSelector } from './db/cache'
 import { DB } from './db/main'
 import * as Extra from './extra'
+import { sleep } from './sleep'
 
 import * as prefOverrides from '../gen/preferences/auto-export-overrides.json'
 import * as translatorMetadata from '../gen/translators.json'
@@ -271,7 +272,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
     }
     log.debug('QBW: scoped getter:', Date.now() - start)
 
-    start = Date.now()
+    let batch = start = Date.now()
     let elt: any
     while (elt = getter.nextItem()) {
       if (elt.itemType === 'attachment') {
@@ -282,6 +283,10 @@ export let Translators = new class { // tslint:disable-line:variable-name
         }
       }
       config.items.push(elt)
+      if ((Date.now() - batch) > 2000) { // tslint:disable-line:no-magic-numbers
+        await sleep(50) // tslint:disable-line:no-magic-numbers
+        batch = Date.now()
+      }
     }
     log.debug('QBW: items fetched:', Date.now() - start)
 

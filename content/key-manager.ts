@@ -5,7 +5,7 @@ import ETA = require('node-eta')
 import { kuroshiro } from './key-manager/kuroshiro'
 
 import * as log from './debug'
-import { timeout } from './timeout'
+import { sleep } from './sleep'
 import { flash } from './flash'
 import { Events } from './events'
 import { arXiv } from './arXiv'
@@ -179,7 +179,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
       // async is just a heap of fun. Who doesn't enjoy a good race condition?
       // https://github.com/retorquere/zotero-better-bibtex/issues/774
       // https://groups.google.com/forum/#!topic/zotero-dev/yGP4uJQCrMc
-      await timeout(this.itemObserverDelay)
+      await sleep(this.itemObserverDelay)
 
       try {
         await Zotero.Items.getAsync(citekey.itemID)

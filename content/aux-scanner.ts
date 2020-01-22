@@ -4,7 +4,7 @@ declare const Zotero: any
 Components.utils.import('resource://gre/modules/osfile.jsm')
 declare const OS: any
 
-import { timeout } from './timeout'
+import { sleep } from './sleep'
 import { KeyManager } from './key-manager'
 import { Translators } from './translators'
 import { Preferences as Prefs } from './prefs'
@@ -109,7 +109,7 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
       let timestamp = ''
 
       while (siblings.has(name + timestamp)) {
-        await timeout(1500) // tslint:disable-line:no-magic-numbers
+        await sleep(1500) // tslint:disable-line:no-magic-numbers
         timestamp = (new Date).toLocaleDateString('nl', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false })
       }
       name += timestamp

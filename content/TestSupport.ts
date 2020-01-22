@@ -4,7 +4,7 @@ declare const Components: any
 declare const Zotero_Duplicates_Pane: any
 
 import { AutoExport } from './auto-export'
-import { timeout } from './timeout'
+import { sleep } from './sleep'
 import * as ZoteroDB from './db/zotero'
 import * as log from './debug'
 import { KeyManager } from './key-manager'
@@ -100,7 +100,7 @@ export = new class {
     if (source.endsWith('.aux')) {
       await AUXScanner.scan(file)
       // for some reason, the imported collection shows up as empty right after the import >:
-      await timeout(1500) // tslint:disable-line:no-magic-numbers
+      await sleep(1500) // tslint:disable-line:no-magic-numbers
     } else {
       await Zotero_File_Interface.importFile({ file, createNewCollection: !!createNewCollection })
     }
@@ -239,11 +239,11 @@ export = new class {
 
     selected.sort((a, b) => ids.indexOf(a.id) - ids.indexOf(b.id))
     Zotero_Duplicates_Pane.setItems(selected)
-    await timeout(1500) // tslint:disable-line:no-magic-numbers
+    await sleep(1500) // tslint:disable-line:no-magic-numbers
 
     const before = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
     await Zotero_Duplicates_Pane.merge()
-    await timeout(1500) // tslint:disable-line:no-magic-numbers
+    await sleep(1500) // tslint:disable-line:no-magic-numbers
     const after = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
     if (before.length - after.length !== (ids.length - 1)) throw new Error(`merging ${ids.length}: before = ${before.length}, after = ${after.length}`)
   }

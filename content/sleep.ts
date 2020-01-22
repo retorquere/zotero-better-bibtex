@@ -1,5 +1,5 @@
 declare const Zotero: any
 
-export function timeout(ms) {
+export function sleep(ms) {
   return new Promise(resolve => Zotero.setTimeout(resolve, ms))
 }
