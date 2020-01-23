@@ -244,3 +244,7 @@ def step_impl(context, seconds):
 @step(u'I remove "{path}"')
 def step_impl(context, path):
   os.remove(path)
+
+@step(u'I reset the cache')
+def step_impl(context):
+  context.zotero.execute('Zotero.BetterBibTeX.TestSupport.resetCache()')

@@ -195,7 +195,7 @@ class Zotero:
   def start(self):
     self.needs_restart = False
     profile = self.create_profile()
-    shutil.rmtree(os.path.join(profile.path, 'zotero', 'better-bibtex'), ignore_errors=True)
+    shutil.rmtree(os.path.join(profile.path, self.client, 'better-bibtex'), ignore_errors=True)
 
     cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -jsconsole -ZoteroDebugText -datadir profile {self.redir} {shlex.quote(profile.path + ".log")} 2>&1'
     utils.print(f'Starting {self.client}: {cmd}')
@@ -249,6 +249,9 @@ class Zotero:
 
     self.execute('await Zotero.BetterBibTeX.TestSupport.reset()')
     self.preferences = Preferences(self)
+
+  def reset_cache(self):
+    self.execute('Zotero.BetterBibTeX.TestSupport.resetCache()')
 
   def export_library(self, translator, displayOptions = {}, collection = None, output = None, expected = None, resetCache = False):
     assert not displayOptions.get('keepUpdated', False) or output # Auto-export needs a destination
