@@ -283,8 +283,9 @@ export let Translators = new class { // tslint:disable-line:variable-name
         }
       }
       config.items.push(elt)
-      if ((Date.now() - batch) > 2000) { // tslint:disable-line:no-magic-numbers
-        await sleep(50) // tslint:disable-line:no-magic-numbers
+      // sleep occasionally so teh UI gets a breather
+      if ((Date.now() - batch) > 1000) { // tslint:disable-line:no-magic-numbers
+        await sleep(10) // tslint:disable-line:no-magic-numbers
         batch = Date.now()
       }
     }
