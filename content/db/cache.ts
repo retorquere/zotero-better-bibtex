@@ -46,8 +46,8 @@ class Cache extends Loki {
 
     let coll = this.schemaCollection('itemToExportFormat', {
       indices: [ 'itemID', 'legacy', 'skipChildItems' ],
-      logging: true,
-      cloneObjects: true,
+      logging: false,
+      cloneObjects: false,
       schema: {
         type: 'object',
         properties: {
@@ -80,7 +80,7 @@ class Cache extends Loki {
 
     for (const translator of Object.keys(translators.byName)) {
       coll = this.schemaCollection(translator, {
-        logging: true,
+        logging: false,
         indices: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...prefOverrides ],
         schema: {
           type: 'object',
