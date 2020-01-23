@@ -108,7 +108,11 @@ export = new class ErrorReport {
   }
 
   private async ping(region) {
-    await Zotero.HTTP.request('GET', `http://s3.${region}.amazonaws.com/ping`, httpRequestOptions)
+    await fetch(`http://s3.${region}.amazonaws.com/ping`, {
+      method: 'GET',
+      cache: 'no-cache',
+      redirect: 'follow',
+    })
     return { region, ...s3[region] }
   }
 
@@ -146,7 +150,8 @@ export = new class ErrorReport {
     document.getElementById('better-bibtex-report-current').value = Zotero.BetterBibTeX.getString('ErrorReport.better-bibtex.current', { version: current })
 
     let latest = PACKAGE.xpi.releaseURL.replace('https://github.com/', 'https://api.github.com/repos/').replace(/\/releases\/.*/, '/releases/latest')
-    latest = JSON.parse((await Zotero.HTTP.request('GET', latest, httpRequestOptions)).responseText).tag_name.replace('v', '')
+    latest = JSON.parse(await (await fetch(latest, { method: 'GET', cache: 'no-cache', redirect: 'follow' })).text()).tag_name.replace('v', '')
+
     const show_latest = document.getElementById('better-bibtex-report-latest')
     if (current === latest) {
       show_latest.hidden = true
