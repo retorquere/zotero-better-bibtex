@@ -407,10 +407,10 @@
               <hbox>
                 <label bbt:preference="pref-better-bibtex-citekeyFormat">&better-bibtex.Preferences.citekey.format;</label>
                 <textbox size="40" id="id-better-bibtex-preferences-citekeyFormat"
-                  onfocus="Zotero.BetterBibTeX.Preferences.getCitekeyFormat();"
-                  onblur="Zotero.BetterBibTeX.Preferences.saveCitekeyFormat();"
-                  oninput="Zotero.BetterBibTeX.Preferences.checkCitekeyFormat();"
-                  onkeypress="Zotero.setTimeout(function() { Zotero.BetterBibTeX.Preferences.checkCitekeyFormat() }, 1);"/>
+                  onfocus="Zotero.BetterBibTeX.Preferences.getCitekeyFormat(event.target);"
+                  onblur="Zotero.BetterBibTeX.Preferences.saveCitekeyFormat(event.target);"
+                  oninput="Zotero.BetterBibTeX.Preferences.checkCitekeyFormat(event.target);"
+                  onkeypress="Zotero.setTimeout(function() { Zotero.BetterBibTeX.Preferences.checkCitekeyFormat(event.target) }, 1);"/>
               </hbox>
               <description>&better-bibtex.FirstRun.citekeyFormat.explanation.bbt.citekeyUpdate;</description>
               <checkbox preference="pref-better-bibtex-citekeyFold" label="&better-bibtex.Preferences.citekey.fold;"/>
