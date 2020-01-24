@@ -206,12 +206,11 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
         case 'done':
           const duration = (Date.now() - full)
-          let status = `QBW: done ${prefix} `
-          status += `${config.items.length} items, `
-          status += `${duration / config.items.length}msec/item, `
-          status += `total duration ${duration / 1000}s ` // tslint:disable-line:no-magic-numbers
-          status += `of which ${prep.duration / 1000}s prep, ` // tslint:disable-line:no-magic-numbers
-          status += `serialization cache ${prep.serialized}%, export cache ${prep.exported}%`
+          let status = `QBW: done ${prefix}\t`
+          status += `${config.items.length} items,\t`
+          status += `total duration ${duration / 1000}s\t` // tslint:disable-line:no-magic-numbers
+          status += `of which ${prep.duration / 1000}s prep,\t` // tslint:disable-line:no-magic-numbers
+          status += `serialization cache ${prep.serialized}%,\texport cache ${prep.exported}%`
           log.debug(status)
           deferred.resolve(e.data.output)
           worker.terminate()
@@ -305,7 +304,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
       config.items.push(elt)
       // sleep occasionally so teh UI gets a breather
       if ((Date.now() - batch) > 1000) { // tslint:disable-line:no-magic-numbers
-        await sleep(10) // tslint:disable-line:no-magic-numbers
+        await sleep(0) // tslint:disable-line:no-magic-numbers
         batch = Date.now()
       }
     }
