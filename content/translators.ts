@@ -183,6 +183,12 @@ export let Translators = new class { // tslint:disable-line:variable-name
       cache: {},
     }
 
+    const prep = {
+      duration: 0,
+      serialized: 0,
+      exported: 0,
+    }
+
     worker.onmessage = (e: { data: BBTWorker.Message }) => {
       switch (e.data?.kind) {
         case 'error':
@@ -199,7 +205,14 @@ export let Translators = new class { // tslint:disable-line:variable-name
           break
 
         case 'done':
-          log.debug('QBW: done:', Date.now() - full)
+          const duration = (Date.now() - full)
+          let status = `QBW: done ${prefix} `
+          status += `${config.items.length} items, `
+          status += `${duration / config.items.length}msec/item, `
+          status += `total duration ${duration / 1000}s ` // tslint:disable-line:no-magic-numbers
+          status += `of which ${prep.duration / 1000}s prep, ` // tslint:disable-line:no-magic-numbers
+          status += `serialization cache ${prep.serialized}%, export cache ${prep.exported}%`
+          log.debug(status)
           deferred.resolve(e.data.output)
           worker.terminate()
           this.workers.running.delete(id)
@@ -275,6 +288,10 @@ export let Translators = new class { // tslint:disable-line:variable-name
       }
     }
 
+    // this needs to be calculated before the getter runs, because the getter will fill the cache
+    // tslint:disable-next-line:no-magic-numbers
+    prep.serialized = (Cache.getCollection('itemToExportFormat').find({ itemID: { $in: getter._itemsLeft.map(item => item.id) } }).length * 100) / getter._itemsLeft.length
+
     let batch = Date.now()
     let elt: any
     while (elt = getter.nextItem()) {
@@ -328,14 +345,9 @@ export let Translators = new class { // tslint:disable-line:variable-name
         config.collections.push(elt)
       }
     }
-    log.debug('QBW: prep:', Date.now() - start)
 
-    log.debug('starting worker export', prefix,
-      'for', config.items.length, 'items in',
-      config.collections.length, 'collections, from',
-      Object.keys(scope),
-      Object.keys(config.cache).length, 'cached'
-    )
+    prep.duration = Date.now() - start
+    prep.exported = (Object.keys(config.cache).length * 100) / config.items.length // tslint:disable-line:no-magic-numbers
 
     try {
       worker.postMessage(JSON.parse(JSON.stringify(config)))
