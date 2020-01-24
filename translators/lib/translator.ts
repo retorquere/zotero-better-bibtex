@@ -11,11 +11,12 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
   public skipField: Record<string, boolean>
   public verbatimFields?: string[]
   public csquotes: { open: string, close: string }
+  public exportDir: string
+  public exportPath: string
 
   public options: {
     quickCopyMode?: string
     dropAttachments?: boolean
-    exportPath?: string
     exportNotes?: boolean
     exportFileData?: boolean
     useJournalAbbreviation?: boolean
@@ -130,8 +131,9 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
         hits: 0,
         misses: 0,
       }
-      this.options.exportPath = Zotero.getOption('exportPath')
-      if (this.options.exportPath && this.options.exportPath.endsWith(this.paths.sep)) this.options.exportPath = this.options.exportPath.slice(0, -1)
+      this.exportDir = Zotero.getOption('exportDir')
+      this.exportPath = Zotero.getOption('exportPath')
+      if (this.exportDir && this.exportDir.endsWith(this.paths.sep)) this.exportDir = this.exportDir.slice(0, -1)
     }
 
     for (const pref of Object.keys(this.preferences)) {
@@ -172,8 +174,9 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
         // jabref 4 stores collection info inside the reference, and collection info depends on which part of your library you're exporting
         || (this.BetterTeX && this.preferences.jabrefFormat === 4) // tslint:disable-line:no-magic-numbers
 
-        // if you're looking at this.options.exportPath in the postscript you're probably outputting something different based on it
-        || ((this.preferences.postscript || '').indexOf('Translator.options.exportPath') >= 0)
+        // if you're looking at this.exportPath or this.exportDir in the postscript you're probably outputting something different based on it
+        || ((this.preferences.postscript || '').indexOf('Translator.exportPath') >= 0)
+        || ((this.preferences.postscript || '').indexOf('Translator.exportDir') >= 0)
 
         // relative file paths are going to be different based on the file being exported to
         || this.preferences.relativeFilePaths
