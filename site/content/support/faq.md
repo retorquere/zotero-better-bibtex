@@ -1,5 +1,6 @@
 ---
 title: Frequently Asked Questions
+weight: 5
 menuTitle: FAQ
 aliases:
   - /Unnecessarily-complicated-BibTeX-output
