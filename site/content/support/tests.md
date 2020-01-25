@@ -29,7 +29,7 @@ Now then:
 * make sure you're in `zotero-better-bibtex`
 * `./test/behave --tags @438`
 
-and be amazed. Zotero will pop up, load the test library, executes one test, and shuts down. The log file after the tests run will be `~/.BBTZ5TEST.log`
+and be amazed. Zotero will pop up, load the test library, executes one test, and shuts down. The log file after the tests run will be `~/.BBTZ5TEST.log`. The tests do not touch your own library.
 
 To restore access to your regular library so you can run either a test suite or just work with your library (but **not** both at the same time. **always** fully close Zotero between these).
 
