@@ -9,7 +9,7 @@ The tests require an installed Zotero, python 3.6+, and node 12+
 
 * `git clone https://github.com/retorquere/zotero-better-bibtex.git`
 * `cd zotero-better-bibtex`
-* `pip3 install -r requirements`
+* `pip3 install -r requirements.txt`
 
 then a few things I'd really prefer you do before anything else. **In principle** the tests are safe to run on the user account that also has your own library. I've been doing this for years. Still, it would be good to verify rather than trust this. The next steps are all reversible if things don't go as expected.
 
