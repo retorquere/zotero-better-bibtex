@@ -14,13 +14,13 @@ The tests require an installed Zotero, python 3.6+, and node 12+
 then a few things I'd really prefer you do before anything else. **In principle** the tests are safe to run on the user account that also has your own library. I've been doing this for years. Still, it would be good to verify rather than trust this. The next steps are all reversible if things don't go as expected.
 
 * Make sure Zotero is not running. If you're on a Mac, that means `cmd-Q`
-* copy the Zotero profiles to a safe place. The profiles live in `~/Library/Application\ Support/Zotero/` if you're on a Mac, `~/.zotero` if you're on Linux.
+* copy the Zotero profiles to a safe place. The profiles live in `~/Library/Application\ Support/Zotero` if you're on a Mac, `~/.zotero` if you're on Linux.
 * `mv ~/Zotero ~/Zotero.saved`
 * `touch ~/Zotero`
 
 this is all temporary, and when all is verified to be setup correctly, we'll undo them.
 
-`~/Library/Application\ Support/Zotero/` holds the administration of your Zotero profiles. The test setup will add a new profile leaving your existing profile(s) untouched. But better safe than sorry, which is why we're holding a copy.
+`~/Library/Application\ Support/Zotero` / `~/.zotero` holds the administration of your Zotero profiles. The test setup will add a new profile leaving your existing profile(s) untouched. But better safe than sorry, which is why we're holding a copy.
 
 The `mv` sets aside your library so that Zotero won't be able to find it. The `touch` creates an empty file in its place. The tests don't use that location, they use `~/.BBTZ5TEST` instead, but if for whatever reason that doesn't work, Zotero will try to write to `~/Zotero/something`, and since `~/Zotero` is now a file instead of a directory, Zotero will complain loudly if that happens, and we know we must back out.
 
