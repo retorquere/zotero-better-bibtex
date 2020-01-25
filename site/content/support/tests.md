@@ -1,5 +1,6 @@
 ---
 title: Running the BBT test suite
+menuTitle: Testing
 weight: 8
 ---
 
