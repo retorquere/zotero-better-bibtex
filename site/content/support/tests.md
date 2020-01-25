@@ -6,7 +6,12 @@ weight: 8
 
 Please **DO NOT DO THIS** without an open issue on the github tracker. I've been running tests this way for years, but I'd still prefer to guide you through this to prevent any risks to your citation library. The test suite has only been tested on MacOS and Linux. I doubt it'll run on Windows, and I don't know what will go wrong when you test. If you're on Windows, **DO NOT** run this on the same account that holds your actual Zotero library.
 
-The tests require an installed Zotero, python 3.6+, and node 12+
+The tests require an installed Zotero, python 3.6+, and node 12+, a working `gcc`, and libgit. On MacOS, that requires:
+
+* `brew install libgit2`
+* if `xcode-select -p` doesn't respond with `/Applications/Xcode.app/Contents/Developer`: `xcode-select --install` (select `install`, not `get Xcode` in the popup that follows).
+
+Then:
 
 * `git clone https://github.com/retorquere/zotero-better-bibtex.git`
 * `cd zotero-better-bibtex`
