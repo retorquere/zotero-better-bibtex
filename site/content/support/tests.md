@@ -13,7 +13,7 @@ The tests require an installed Zotero, python 3.6+, and node 12+
 
 then a few things I'd really prefer you do before anything else. **In principle** the tests are safe to run on the user account that also has your own library. I've been doing this for years. Still, it would be good to verify rather than trust this. The next steps are all reversible if things don't go as expected.
 
-* Make sure Zitero is not running. If you're on a Mac, that means `cmd-Q`
+* Make sure Zotero is not running. If you're on a Mac, that means `cmd-Q`
 * copy the Zotero profiles to a safe place. The profiles live in `~/Library/Application\ Support/Zotero/` if you're on a Mac, `~/.zotero` if you're on Linux.
 * `mv ~/Zotero ~/Zotero.saved`
 * `touch ~/Zotero`
