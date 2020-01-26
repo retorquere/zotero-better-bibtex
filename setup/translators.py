@@ -68,10 +68,11 @@ interface ITranslator {
   skipField: {[key: string]: boolean}
   verbatimFields?: string[]
   csquotes: { open: string, close: string }
+  exportDir: string
+  exportPath: string
 
   options: {
     dropAttachments?: boolean
-    exportPath?: string
     #for $key, $type in $displayOptions.items():
     $key?: $type
     #end for

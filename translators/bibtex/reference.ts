@@ -23,9 +23,9 @@ const Path = { // tslint:disable-line variable-name
   },
 
   relative(path) {
-    if (this.drive(Translator.options.exportPath) !== this.drive(path)) return path
+    if (this.drive(Translator.exportDir) !== this.drive(path)) return path
 
-    const from = Translator.options.exportPath.split(Translator.paths.sep)
+    const from = Translator.exportDir.split(Translator.paths.sep)
     const to = path.split(Translator.paths.sep)
 
     while (from.length && to.length && this.normalize(from[0]) === this.normalize(to[0])) {
@@ -1066,7 +1066,7 @@ export class Reference {
 
       if (Translator.preferences.testing) {
         att.path = `files/${this.item.citekey}/${att.path.replace(/.*[\/\\]/, '')}`
-      } else if (Translator.preferences.relativeFilePaths && Translator.options.exportPath) {
+      } else if (Translator.preferences.relativeFilePaths && Translator.exportDir) {
         const relative = Path.relative(att.path)
         if (relative !== att.path) {
           this.cachable = false

@@ -391,9 +391,11 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
     if (translator) {
       if (this.location) {
         if (this._displayOptions.exportFileData) { // when exporting file data, the user was asked to pick a directory rather than a file
-          this._displayOptions.exportPath = this.location.path
+          this._displayOptions.exportDir = this.location.path
+          this._displayOptions.exportPath = OS.Path.join(this.location.path, `${this.location.leafName}.${translator.target}`)
         } else {
-          this._displayOptions.exportPath = this.location.parent.path
+          this._displayOptions.exportDir = this.location.parent.path
+          this._displayOptions.exportPath = this.location.path
         }
       }
 
