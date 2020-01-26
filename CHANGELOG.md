@@ -1,5 +1,11 @@
 # Changelog
 
+## [5.2.10] 2020-01-27
+
+ - Make export path available to postscript
+ - Find TeXstudio in the default installation path on Windows
+ - Map `page` CSL variable from `extra` field
+
 ## [5.2.10] 2020-01-20
 
  - Minimize required LaTeX packages by default
