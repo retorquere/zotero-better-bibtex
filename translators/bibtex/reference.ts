@@ -680,6 +680,10 @@ export class Reference {
             enc = 'literal'
             break
 
+          case 'page':
+            name = 'pages'
+            break
+
           case 'issued':
             name = 'date'
             break
