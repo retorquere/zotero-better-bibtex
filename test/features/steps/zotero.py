@@ -447,6 +447,9 @@ class Zotero:
 
     for xpi in glob.glob(os.path.join(ROOT, 'xpi/*.xpi')):
       profile.firefox.add_extension(xpi)
+    if os.path.exists(os.path.join(ROOT, 'other-xpis/*.xpi')):
+      for xpi in glob.glob(os.path.join(ROOT, 'other-xpis/*.xpi')):
+        profile.firefox.add_extension(xpi)
 
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.testing', self.testing)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.workers', self.workers)
