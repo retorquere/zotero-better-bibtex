@@ -29,10 +29,8 @@ before_install:
   - travis_retry sudo apt-get update
   - travis_retry sudo apt-get install $CLIENT
   - travis_retry sudo ./util/install-beta $CLIENT
-  - travis_retry sudo apt-get install stress
 script:
   - ./util/build-assets fetch || travis_terminate 1
-  - stress --cpu `nproc` --io `nproc` --backoff 60000
   - ./test/behave
 
 after_failure:
