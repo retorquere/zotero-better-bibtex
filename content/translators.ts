@@ -172,7 +172,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
     log.debug(`Beginning translation with ${prefix}`)
 
     const deferred = Zotero.Promise.defer()
-    const worker = new ChromeWorker(`resource://zotero-better-bibtex/worker/Zotero.js?${params}`)
+    const worker = new ChromeWorker(`chrome://zotero-better-bibtex/content/worker/Zotero.js?${params}`)
 
     const start = Date.now()
     const config: BBTWorker.Config = {

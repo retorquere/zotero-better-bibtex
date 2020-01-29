@@ -165,7 +165,7 @@ if (!process.env.MINITESTS) {
 
       output: {
         jsonpFunction: 'WebPackedZoteroShim',
-        path: path.resolve(__dirname, './build/resource/worker'),
+        path: path.resolve(__dirname, './build/content/worker'),
         filename: '[name].js',
         devtoolLineToLine: true,
         pathinfo: true,
