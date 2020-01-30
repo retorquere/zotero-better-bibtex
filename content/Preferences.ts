@@ -245,11 +245,13 @@ export = new class PrefPane {
   private keyformat: any
   private timer: number
 
-  public getCitekeyFormat() {
+  public getCitekeyFormat(target = null) {
+    if (target) this.keyformat = target
     this.keyformat.value = Prefs.get('citekeyFormat')
   }
 
-  public checkCitekeyFormat() {
+  public checkCitekeyFormat(target = null) {
+    if (target) this.keyformat = target
     if (this.keyformat.disabled) return // itemTypes not available yet
 
     let msg
@@ -266,7 +268,8 @@ export = new class PrefPane {
     this.keyformat.setAttribute('tooltiptext', msg)
   }
 
-  public saveCitekeyFormat() {
+  public saveCitekeyFormat(target = null) {
+    if (target) this.keyformat = target
     try {
       Formatter.parsePattern(this.keyformat.value)
       Prefs.set('citekeyFormat', this.keyformat.value)
@@ -317,6 +320,9 @@ export = new class PrefPane {
 
     await Zotero.BetterBibTeX.ready
 
+    this.keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
+    this.keyformat.disabled = false
+
     tabbox.hidden = false
 
     if (typeof Zotero_Preferences === 'undefined') {
@@ -354,9 +360,6 @@ export = new class PrefPane {
       this.autoexport.items[id] = this.autoexport.items[id] || []
       this.autoexport.items[id].push(item.itemID)
     }
-
-    this.keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
-    this.keyformat.disabled = false
 
     document.getElementById('better-bibtex-abbrev-style').setAttribute('collapsed', Prefs.client !== 'jurism')
     document.getElementById('better-bibtex-abbrev-style-label').setAttribute('collapsed', Prefs.client !== 'jurism')

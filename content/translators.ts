@@ -7,6 +7,7 @@ import * as log from './debug'
 import { DB as Cache, selector as cacheSelector } from './db/cache'
 import { DB } from './db/main'
 import * as Extra from './extra'
+import { sleep } from './sleep'
 
 import * as prefOverrides from '../gen/preferences/auto-export-overrides.json'
 import * as translatorMetadata from '../gen/translators.json'
@@ -136,6 +137,8 @@ export let Translators = new class { // tslint:disable-line:variable-name
   public async exportItemsByWorker(translatorID: string, displayOptions: object, options: { scope?: ExportScope, path?: string, preferences?: Record<string, boolean | number | string> }) {
     await Zotero.BetterBibTeX.ready
 
+    const full = Date.now()
+
     options.preferences = options.preferences || {}
     displayOptions = displayOptions || {}
 
@@ -170,7 +173,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
     const deferred = Zotero.Promise.defer()
     const worker = new ChromeWorker(`resource://zotero-better-bibtex/worker/Zotero.js?${params}`)
 
-    let start = Date.now()
+    const start = Date.now()
     const config: BBTWorker.Config = {
       preferences: { ...Prefs.all(), ...options.preferences },
       options: displayOptions || {},
@@ -179,11 +182,17 @@ export let Translators = new class { // tslint:disable-line:variable-name
       cslItems: {},
       cache: {},
     }
-    log.debug('QBW: config init:', Date.now() - start)
+
+    const prep = {
+      duration: 0,
+      serialized: 0,
+      exported: 0,
+    }
 
     worker.onmessage = (e: { data: BBTWorker.Message }) => {
       switch (e.data?.kind) {
         case 'error':
+          log.debug('QBW: failed:', Date.now() - full)
           log.error(e.data)
           Zotero.debug(`${prefix} error: ${e.data.message}`)
           deferred.reject(e.data.message)
@@ -196,6 +205,13 @@ export let Translators = new class { // tslint:disable-line:variable-name
           break
 
         case 'done':
+          const duration = (Date.now() - full)
+          let status = `QBW ${prefix}: done\t`
+          status += `${config.items.length} items,\t`
+          status += `total duration ${duration / 1000}s\t` // tslint:disable-line:no-magic-numbers
+          status += `of which ${prep.duration / 1000}s prep,\t` // tslint:disable-line:no-magic-numbers
+          status += `serialization cache ${prep.serialized}%,\texport cache ${prep.exported}%`
+          log.debug(status)
           deferred.resolve(e.data.output)
           worker.terminate()
           this.workers.running.delete(id)
@@ -209,6 +225,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
           if (!cache) {
             const msg = `worker.cacheStore: cache ${translator.label} not found`
             log.error(msg)
+            log.debug('QBW: failed:', Date.now() - full)
             deferred.reject(msg)
             worker.terminate()
             this.workers.running.delete(id)
@@ -237,12 +254,12 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
     worker.onerror = e => {
       Zotero.debug(`${prefix} error: ${e}`)
+      log.debug('QBW: failed:', Date.now() - full)
       deferred.reject(e.message)
       worker.terminate()
       this.workers.running.delete(id)
     }
 
-    start = Date.now()
     const scope = this.exportScope(options.scope)
 
     let getter
@@ -269,23 +286,30 @@ export let Translators = new class { // tslint:disable-line:variable-name
           throw new Error(`Unexpected scope: ${Object.keys(scope)}`)
       }
     }
-    log.debug('QBW: scoped getter:', Date.now() - start)
 
-    start = Date.now()
+    // this needs to be calculated before the getter runs, because the getter will fill the cache
+    // tslint:disable-next-line:no-magic-numbers
+    prep.serialized = (Cache.getCollection('itemToExportFormat').find({ itemID: { $in: getter._itemsLeft.map(item => item.id) } }).length * 100) / getter._itemsLeft.length
+
+    const trace: number[] = []
+    let prev = Date.now()
+
+    let batch = Date.now()
     let elt: any
     while (elt = getter.nextItem()) {
-      if (elt.itemType === 'attachment') {
-        delete elt.saveFile
-      } else if (elt.attachments) {
-        for (const att of elt.attachments) {
-          delete att.saveFile
-        }
-      }
       config.items.push(elt)
+      // sleep occasionally so the UI gets a breather
+      if ((Date.now() - batch) > 1000) { // tslint:disable-line:no-magic-numbers
+        await sleep(0) // tslint:disable-line:no-magic-numbers
+        batch = Date.now()
+      }
+      const now = Date.now()
+      trace.push(now - prev)
+      prev = now
     }
-    log.debug('QBW: items fetched:', Date.now() - start)
 
-    start = Date.now()
+    log.debug('prep trace', prefix, config.items.length, JSON.stringify(trace))
+
     // pre-fetch CSL serializations
     if (translator.label.includes('CSL')) {
       for (const item of config.items) {
@@ -297,9 +321,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
         config.cslItems[item.itemID] = Zotero.Utilities.itemToCSLJSON(item)
       }
     }
-    log.debug('QBW: csl items fetched:', Date.now() - start)
 
-    start = Date.now()
     // pre-fetch cache
     if (cache) {
       const query = cacheSelector(config.items.map(item => item.itemID), displayOptions, config.preferences)
@@ -317,30 +339,24 @@ export let Translators = new class { // tslint:disable-line:variable-name
       cache.cloneObjects = cloneObjects
       cache.dirty = true
     }
-    log.debug('QBW: cache fetched:', Date.now() - start)
 
-    start = Date.now()
     if (this.byId[translatorID].configOptions?.getCollections) {
       while (elt = getter.nextCollection()) {
         config.collections.push(elt)
       }
     }
-    log.debug('QBW: collections fetched:', Date.now() - start)
 
-    log.debug('starting worker export', prefix,
-      'for', config.items.length, 'items in',
-      config.collections.length, 'collections, from',
-      Object.keys(scope),
-      Object.keys(config.cache).length, 'cached'
-    )
+    prep.duration = Date.now() - start
+    prep.exported = (Object.keys(config.cache).length * 100) / config.items.length // tslint:disable-line:no-magic-numbers
 
     try {
-      worker.postMessage(JSON.parse(JSON.stringify(config)))
+      worker.postMessage(JSON.parse(JSON.stringify(config, (name, val) => typeof val === 'function' ? undefined : val)))
     } catch (err) {
       worker.terminate()
       this.workers.running.delete(id)
       log.error(err)
       deferred.reject(err)
+      log.debug('QBW: failed:', Date.now() - full)
     }
 
     return deferred.promise

@@ -108,7 +108,11 @@ export = new class ErrorReport {
   }
 
   private async ping(region) {
-    await Zotero.HTTP.request('GET', `http://s3.${region}.amazonaws.com/ping`, httpRequestOptions)
+    await fetch(`http://s3.${region}.amazonaws.com/ping`, {
+      method: 'GET',
+      cache: 'no-cache',
+      redirect: 'follow',
+    })
     return { region, ...s3[region] }
   }
 
@@ -146,7 +150,8 @@ export = new class ErrorReport {
     document.getElementById('better-bibtex-report-current').value = Zotero.BetterBibTeX.getString('ErrorReport.better-bibtex.current', { version: current })
 
     let latest = PACKAGE.xpi.releaseURL.replace('https://github.com/', 'https://api.github.com/repos/').replace(/\/releases\/.*/, '/releases/latest')
-    latest = JSON.parse((await Zotero.HTTP.request('GET', latest, httpRequestOptions)).responseText).tag_name.replace('v', '')
+    latest = JSON.parse(await (await fetch(latest, { method: 'GET', cache: 'no-cache', redirect: 'follow' })).text()).tag_name.replace('v', '')
+
     const show_latest = document.getElementById('better-bibtex-report-latest')
     if (current === latest) {
       show_latest.hidden = true
@@ -217,7 +222,15 @@ export = new class ErrorReport {
 
     for (let attempt = 0; attempt < 5; attempt++) { // tslint:disable-line:no-magic-numbers
       try {
-        await Zotero.HTTP.request('PUT', url, options)
+        // await Zotero.HTTP.request('PUT', url, options)
+
+        await fetch(url, {
+          method: 'PUT',
+          cache: 'no-cache',
+          headers: options.headers || {},
+          redirect: 'follow',
+          body: options.body,
+        })
         return
 
       } catch (err) {
@@ -229,6 +242,29 @@ export = new class ErrorReport {
 
     throw error
   }
+
+  /*
+  private put(url, options) {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest()
+      xhr.open('PUT', url)
+      for (const [header, value] of (options.headers || {})) {
+        xhr.setRequestHeader(header, value)
+      }
+      xhr.onload = function() {
+        if (this.status >= 200 && this.status < 300) { // tslint:disable-line:no-magic-numbers
+          resolve(xhr.response)
+        } else {
+          reject({ status: this.status, statusText: xhr.statusText })
+        }
+      }
+      xhr.onerror = function() {
+        reject({ status: this.status, statusText: xhr.statusText })
+      }
+      xhr.send(options.body)
+    })
+  }
+  */
 
   private async submit(filename, contentType, data, prefix = '') {
     if (data.then) data = await data
