@@ -104,6 +104,7 @@ with open(os.path.join(root, 'gen', 'itemfields.ts'), 'w') as f:
   print('}\n', file=f)
 
   print('function unalias(item) {', file=f)
+  print('  delete item.inPublications', file=f)
   unalias = '  let v\n\n'
   for client in ['both', 'zotero', 'jurism']:
     if client != 'both': unalias += f'  if ({client}) {{\n'
