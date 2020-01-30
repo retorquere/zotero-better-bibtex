@@ -123,7 +123,7 @@ If you turn this off, the markup is omitted during import. When you select 'yes'
 <!ENTITY better-bibtex.Preferences.advanced.tab.export "Export">
 <!ENTITY better-bibtex.Preferences.advanced.export.titleCase "Apply title-casing to titles">
 <!ENTITY better-bibtex.Preferences.advanced.export.titleCase.warning "If you're dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero recommendations on title/sentence casing, you can turn this off to suppress title casing for English references">
-<!ENTITY better-bibtex.Preferences.advanced.export.braceProtection "Apply brace-protection to capitalized words">
+<!ENTITY better-bibtex.Preferences.advanced.export.braceProtection "Apply case-protection to capitalized words by enclosing them in braces">
 <!ENTITY better-bibtex.Preferences.advanced.export.braceProtection.warning "If you're dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero recommendations on title/sentence casing, you can turn this off to suppress automatic brace-protection for words with uppercase letters.">
 
 <!ENTITY better-bibtex.Preferences.advanced.export.retainCache "Retain export cache across upgrades">

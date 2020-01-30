@@ -19,7 +19,7 @@ default: `yes`
 
 If you're dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero recommendations on title/sentence casing, you can turn this off to suppress [title casing for English references]({{ ref . "support/faq#bbt-is-changing-the-capitalization-of-my-titles-why" }})
 
-#### Apply brace-protection to capitalized words
+#### Apply case-protection to capitalized words by enclosing them in braces
 
 default: `yes`
 
