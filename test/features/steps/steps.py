@@ -46,6 +46,10 @@ def step_impl(context, db, source):
 def step_impl(context, db):
   context.zotero.restart(timeout=context.timeout, db=db)
 
+@step(r'I restart Zotero with profile "{profile}"')
+def step_impl(context, profile):
+  context.zotero.restart(timeout=context.timeout, profile=profile)
+
 @step(r'I import {references:d} references from "{source}"')
 def step_impl(context, references, source):
   source = expand_scenario_variables(context, source)

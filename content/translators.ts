@@ -30,8 +30,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
   private queue = new Queue((t1: IPriority, t2: IPriority) => t1.priority === t2.priority ? t1.timestamp < t2.timestamp : t1.priority > t2.priority)
 
-  public trace: Array<{ t: number, stage: 'prep' | 'export', n: number }>
-
   public workers: { total: number, running: Set<number> } = {
     total: 0,
     running: new Set,
@@ -136,22 +134,10 @@ export let Translators = new class { // tslint:disable-line:variable-name
     }
   }
 
-  private itemDone(stage) {
-    const t = Math.round(Date.now() / 1000) // tslint:disable-line:no-magic-numbers
-    const last = this.trace[this.trace.length - 1]
-    if (t === last.t) {
-      last.n += 1
-    } else {
-      this.trace.push({ t, stage, n: 1 })
-    }
-  }
-
   public async exportItemsByWorker(translatorID: string, displayOptions: object, options: { scope?: ExportScope, path?: string, preferences?: Record<string, boolean | number | string> }) {
     await Zotero.BetterBibTeX.ready
 
     const full = Date.now()
-
-    this.trace = [ { t: Math.floor(Date.now() / 1000), stage: 'prep', n: 0 } ] // tslint:disable-line:no-magic-numbers
 
     options.preferences = options.preferences || {}
     displayOptions = displayOptions || {}
@@ -229,18 +215,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
           deferred.resolve(e.data.output)
           worker.terminate()
           this.workers.running.delete(id)
-
-          const trace = this.trace.reduce((acc, v, i) => {
-            if (i !== 0) acc.push({ t: v.t - this.trace[0].t, v: v.n / (v.t - this.trace[i - 1].t), stage: v.stage })
-            return acc
-          }, [])
-
-          for (const stage of ['prep', 'export']) {
-            let chart = 'https://image-charts.com/chart?cht=lxy&chxt=x,y&chs=700x100&chd=t:'
-            chart += trace.filter(v => v.stage === stage).map(v => '' + v.t).join(',')
-            chart += '|' + trace.filter(v => v.stage === stage).map(v => '' + v.v).join(',')
-            log.debug(`${prefix} ${stage} ${chart}`)
-          }
           break
 
         case 'cache':
@@ -268,7 +242,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
           } else {
             cache.insert({...selector, reference, metadata})
           }
-          this.itemDone('export')
           break
 
         default:
@@ -318,24 +291,24 @@ export let Translators = new class { // tslint:disable-line:variable-name
     // tslint:disable-next-line:no-magic-numbers
     prep.serialized = (Cache.getCollection('itemToExportFormat').find({ itemID: { $in: getter._itemsLeft.map(item => item.id) } }).length * 100) / getter._itemsLeft.length
 
+    const trace: number[] = []
+    let prev = Date.now()
+
     let batch = Date.now()
     let elt: any
     while (elt = getter.nextItem()) {
-      if (elt.itemType === 'attachment') {
-        delete elt.saveFile
-      } else if (elt.attachments) {
-        for (const att of elt.attachments) {
-          delete att.saveFile
-        }
-      }
       config.items.push(elt)
-      // sleep occasionally so teh UI gets a breather
+      // sleep occasionally so the UI gets a breather
       if ((Date.now() - batch) > 1000) { // tslint:disable-line:no-magic-numbers
         await sleep(0) // tslint:disable-line:no-magic-numbers
         batch = Date.now()
       }
-      this.itemDone('prep')
+      const now = Date.now()
+      trace.push(now - prev)
+      prev = now
     }
+
+    log.debug('prep trace', prefix, config.items.length, JSON.stringify(trace))
 
     // pre-fetch CSL serializations
     if (translator.label.includes('CSL')) {
@@ -377,7 +350,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
     prep.exported = (Object.keys(config.cache).length * 100) / config.items.length // tslint:disable-line:no-magic-numbers
 
     try {
-      worker.postMessage(JSON.parse(JSON.stringify(config)))
+      worker.postMessage(JSON.parse(JSON.stringify(config, (name, val) => typeof val === 'function' ? undefined : val)))
     } catch (err) {
       worker.terminate()
       this.workers.running.delete(id)

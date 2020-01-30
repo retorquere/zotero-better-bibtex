@@ -57,6 +57,7 @@ class Config:
         'locale': userdata.get('locale', ''),
         'first_run': userdata.get('first-run', 'false') == 'true',
         'timeout': 60,
+        'profile': '',
       }
     ]
     self.reset()
@@ -391,6 +392,14 @@ class Zotero:
 
     return [None, None]
 
+  def install_xpis(self, path, profile):
+    if not os.path.exists(path): return
+    utils.print(f'Installing xpis in {path}')
+
+    for xpi in glob.glob(os.path.join(path, '*.xpi')):
+      utils.print(f'installing {xpi}')
+      profile.add_extension(xpi)
+
   def create_profile(self):
     profile = Munch(
       name='BBTZ5TEST'
@@ -442,14 +451,18 @@ class Zotero:
       ini.write(f, space_around_delimiters=False)
 
     # layout profile
-    fixtures = os.path.join(ROOT, 'test/fixtures')
-    profile.firefox = webdriver.FirefoxProfile(os.path.join(fixtures, 'profile', self.client))
+    if self.config.profile:
+      profile.firefox = webdriver.FirefoxProfile(os.path.join(ROOT, 'test/db', self.config.profile))
+      profile.firefox.set_preference('extensions.zotero.dataDir', os.path.join(profile.path, self.client))
+      profile.firefox.set_preference('extensions.zotero.useDataDir', True)
+      profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.removeStock', False)
+    else:
+      profile.firefox = webdriver.FirefoxProfile(os.path.join(ROOT, 'test/fixtures/profile', self.client))
 
-    for xpi in glob.glob(os.path.join(ROOT, 'xpi/*.xpi')):
-      profile.firefox.add_extension(xpi)
-    if os.path.exists(os.path.join(ROOT, 'other-xpis/*.xpi')):
-      for xpi in glob.glob(os.path.join(ROOT, 'other-xpis/*.xpi')):
-        profile.firefox.add_extension(xpi)
+    self.install_xpis(os.path.join(ROOT, 'xpi'), profile.firefox)
+    self.install_xpis(os.path.join(ROOT, 'other-xpis'), profile.firefox)
+    if self.config.db: self.install_xpis(os.path.join(ROOT, 'test/db', self.config.db, 'xpis'), profile.firefox)
+    if self.config.profile: self.install_xpis(os.path.join(ROOT, 'test/db', self.config.profile, 'xpis'), profile.firefox)
 
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.testing', self.testing)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.workers', self.workers)
@@ -488,14 +501,20 @@ class Zotero:
       if not os.path.exists(dbs): os.makedirs(dbs)
 
       db_zotero = os.path.join(dbs, f'{self.client}.sqlite')
-      if not os.path.exists(db_zotero):
+      db_zotero_alt = os.path.join(dbs, self.client, f'{self.client}.sqlite')
+      if not os.path.exists(db_zotero) and not os.path.exists(db_zotero_alt):
         urllib.request.urlretrieve(f'https://github.com/retorquere/zotero-better-bibtex/releases/download/test-database/{self.config.db}.zotero.sqlite', db_zotero)
+      if not os.path.exists(db_zotero): db_zotero = db_zotero_alt
       shutil.copy(db_zotero, os.path.join(profile.path, self.client, os.path.basename(db_zotero)))
 
       db_bbt = os.path.join(dbs, 'better-bibtex.sqlite')
-      if not os.path.exists(db_bbt):
+      db_bbt_alt = os.path.join(dbs, self.client, 'better-bibtex.sqlite')
+      if not os.path.exists(db_bbt) and not os.path.exists(db_bbt_alt):
         urllib.request.urlretrieve(f'https://github.com/retorquere/zotero-better-bibtex/releases/download/test-database/{self.config.db}.better-bibtex.sqlite', db_bbt)
+      if not os.path.exists(db_bbt): db_bbt = db_bbt_alt
       shutil.copy(db_bbt, os.path.join(profile.path, self.client, os.path.basename(db_bbt)))
+
+      # remove any auto-exports that may exist
       db = sqlite3.connect(os.path.join(profile.path, self.client, os.path.basename(db_bbt)))
       ae = None
       for (ae,) in db.execute('SELECT data FROM "better-bibtex" WHERE name = ?', [ 'better-bibtex.autoexport' ]):
