@@ -166,15 +166,15 @@ function makeDirs(path) {
 function saveFile(path, overwrite) {
   if (!Zotero.exportDirectory) return
 
-  let target = OS.Path.normalize(OS.Path.join(Zotero.exportDirectory, path))
-  if (!target.startsWith(Zotero.exportDirectory)) throw new Error(`${path} looks like a relative path`)
+  this.path = OS.Path.normalize(OS.Path.join(Zotero.exportDirectory, path))
+  if (!this.path.startsWith(Zotero.exportDirectory)) throw new Error(`${path} looks like a relative path`)
 
   if (this.linkMode === 'imported_file' || (this.linkMode === 'imported_url' && this.contentType !== 'text/html')) {
-    makeDirs(OS.Path.dirname(target))
-    OS.File.copy(this.localPath, target, { noOverwrite: !overwrite })
+    makeDirs(OS.Path.dirname(this.path))
+    OS.File.copy(this.localPath, this.path, { noOverwrite: !overwrite })
 
   } else if (this.linkMode === 'imported_url') {
-    target = OS.Path.dirname(target)
+    const target = OS.Path.dirname(this.path)
     if (!overwrite && OS.File.exists(target)) throw new Error(`${path} would overwite ${target}`)
 
     OS.File.removeDir(target, { ignoreAbsent: true })

@@ -343,29 +343,6 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
     if (git.repo(ae.path).enabled) this.schedule(ae.type, [ae.id]) // causes initial push to overleaf at the cost of a unnecesary extra export
   }
 
-  public changed(items) {
-    const changed = {
-      collections: new Set,
-      libraries: new Set,
-    }
-
-    for (const item of items) {
-      changed.libraries.add(item.libraryID)
-
-      for (let collectionID of item.getCollections()) {
-        if (changed.collections.has(collectionID)) continue
-
-        while (collectionID) {
-          changed.collections.add(collectionID)
-          collectionID = Zotero.Collections.get(collectionID).parentID
-        }
-      }
-    }
-
-    if (changed.collections.size) Events.emit('collections-changed', Array.from(changed.collections))
-    if (changed.libraries.size) Events.emit('libraries-changed', Array.from(changed.libraries))
-  }
-
   public schedule(type, ids) {
     for (const ae of this.db.find({ type, id: { $in: ids } })) {
       queue.add(ae)

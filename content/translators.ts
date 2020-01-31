@@ -3,6 +3,7 @@ declare const Services: any
 declare class ChromeWorker extends Worker { }
 
 import { Preferences as Prefs } from './prefs'
+import { Serializer } from './serializer'
 import * as log from './debug'
 import { DB as Cache, selector as cacheSelector } from './db/cache'
 import { DB } from './db/main'
@@ -19,7 +20,7 @@ interface IPriority {
   timestamp: number
 }
 
-type ExportScope = { type: 'items', items: any[], getter?: any } | { type: 'library', id: number, getter?: any } | { type: 'collection', collection: any, getter?: any }
+type ExportScope = { type: 'items', items: any[] } | { type: 'library', id: number } | { type: 'collection', collection: any }
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Translators = new class { // tslint:disable-line:variable-name
@@ -261,54 +262,65 @@ export let Translators = new class { // tslint:disable-line:variable-name
     }
 
     const scope = this.exportScope(options.scope)
+    let items: any[] = []
+    let collections: any[] = []
+    switch (scope.type) {
+      case 'library':
+        items = await Zotero.Items.getAll(scope.id, true)
+        collections = Zotero.Collections.getByLibrary(scope.id, true)
+        break
 
-    let getter
+      case 'items':
+        items = scope.items
+        break
 
-    if (scope.getter?.nextItem) {
-      getter = scope.getter
-    } else {
-      getter = new Zotero.Translate.ItemGetter
+      case 'collection':
+        collections = Zotero.Collections.getByParent(scope.collection.id, true)
+        const items_with_duplicates = new Set(scope.collection.getChildItems())
+        for (const collection of collections) {
+          for (const item of collection.getChildItems()) {
+            items_with_duplicates.add(item) // sure hope getChildItems doesn't return a new object?!
+          }
+        }
+        items = Array.from(items_with_duplicates.values())
+        break
 
-      switch (scope.type) {
-        case 'library':
-          await getter.setAll(scope.id, true)
-          break
-
-        case 'items':
-          getter.setItems(scope.items)
-          break
-
-        case 'collection':
-          getter.setCollection(scope.collection, true)
-          break
-
-        default:
-          throw new Error(`Unexpected scope: ${Object.keys(scope)}`)
-      }
+      default:
+        throw new Error(`Unexpected scope: ${Object.keys(scope)}`)
     }
 
     // this needs to be calculated before the getter runs, because the getter will fill the cache
     // tslint:disable-next-line:no-magic-numbers
-    prep.serialized = (Cache.getCollection('itemToExportFormat').find({ itemID: { $in: getter._itemsLeft.map(item => item.id) } }).length * 100) / getter._itemsLeft.length
+    prep.serialized = (Cache.getCollection('itemToExportFormat').find({ itemID: { $in: items.map(item => item.id) } }).length * 100) / items.length
 
+    // use a loop instead of map so we can await for beachball protection
     const trace: number[] = []
     let prev = Date.now()
-
     let batch = Date.now()
-    let elt: any
-    while (elt = getter.nextItem()) {
-      config.items.push(elt)
+    config.items = []
+    for (const item of items) {
+      config.items.push(Serializer.fast(item))
+
       // sleep occasionally so the UI gets a breather
       if ((Date.now() - batch) > 1000) { // tslint:disable-line:no-magic-numbers
         await sleep(0) // tslint:disable-line:no-magic-numbers
         batch = Date.now()
       }
+
       const now = Date.now()
       trace.push(now - prev)
       prev = now
     }
-
     log.debug('prep trace', prefix, config.items.length, JSON.stringify(trace))
+
+    if (this.byId[translatorID].configOptions?.getCollections) {
+      config.collections = collections.map(collection => {
+        collection = collection.serialize(true)
+        collection.id = collection.primary.collectionID
+        collection.name = collection.fields.name
+        return collection
+      })
+    }
 
     // pre-fetch CSL serializations
     if (translator.label.includes('CSL')) {
@@ -338,12 +350,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
       }, {})
       cache.cloneObjects = cloneObjects
       cache.dirty = true
-    }
-
-    if (this.byId[translatorID].configOptions?.getCollections) {
-      while (elt = getter.nextCollection()) {
-        config.collections.push(elt)
-      }
     }
 
     prep.duration = Date.now() - start
@@ -537,8 +543,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
     if (scope.type === 'collection' && typeof scope.collection === 'number') {
       return { type: 'collection', collection: Zotero.Collections.get(scope.collection) }
     }
-
-    if (scope.getter && !scope.getter.nextItem) throw new Error(`invalid scope: ${JSON.stringify(scope)}`)
 
     switch (scope.type) {
       case 'items':

@@ -1,4 +1,5 @@
 declare const Zotero: any
+declare const OS: any
 
 import { JournalAbbrev } from './journal-abbrev'
 
@@ -40,6 +41,42 @@ export let Serializer = new class { // tslint:disable-line:variable-name
   }
 
   public serialize(item) { return Zotero.Utilities.Internal.itemToExportFormat(item, false, true) }
+
+  public fast(item) {
+    let serialized = item.toJSON()
+    serialized.uri = Zotero.URI.getItemURI(item)
+    serialized.itemID = item.id
+
+    switch (serialized.itemType) {
+      case 'note':
+        break
+
+      case 'attachment':
+        serialized = this.fastAttachment(serialized, item)
+        break
+
+      default:
+        serialized.attachments = item.getAttachments().map(id => {
+          const att = Zotero.Items.get(id)
+          return this.fastAttachment({ ...att.toJSON(), uri: Zotero.URI.getItemURI(att) }, att)
+        })
+
+        serialized.notes = item.getNotes().map(id => {
+          const note = Zotero.Items.get(id)
+          return { ...note.toJSON(), uri: Zotero.URI.getItemURI(note) }
+        })
+    }
+
+    return this.enrich(serialized, item)
+  }
+
+  private fastAttachment(serialized, att) {
+    if (att.attachmentLinkMode !== Zotero.Attachments.LINK_MODE_LINKED_URL) {
+      serialized.localPath = att.getFilePath()
+      if (serialized.localPath) serialized.defaultPath = `files/${att.id}/${OS.Path.basename(serialized.localPath)}`
+    }
+    return serialized
+  }
 
   private enrich(serialized, item) {
     switch (serialized.itemType) {

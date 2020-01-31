@@ -12,7 +12,7 @@ declare const AddonManager: any
 
 import * as log from './debug'
 import { flash } from './flash'
-import { Events } from './events'
+import { Events, itemsChanged as notifiyItemsChanged } from './events'
 
 log.debug('Loading Better BibTeX')
 
@@ -526,7 +526,7 @@ notify('item', (action, type, ids, extraData) => {
       return
   }
 
-  AutoExport.changed(items)
+  notifiyItemsChanged(items)
 })
 
 notify('collection', (event, type, ids, extraData) => {

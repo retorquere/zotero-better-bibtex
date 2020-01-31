@@ -7,7 +7,7 @@ import { kuroshiro } from './key-manager/kuroshiro'
 import * as log from './debug'
 import { sleep } from './sleep'
 import { flash } from './flash'
-import { Events } from './events'
+import { Events, itemsChanged as notifiyItemsChanged } from './events'
 import { arXiv } from './arXiv'
 import * as Extra from './extra'
 
@@ -18,7 +18,6 @@ import { getItemsAsync } from './get-items-async'
 import { Preferences as Prefs } from './prefs'
 import { Formatter } from './key-manager/formatter'
 import { DB } from './db/main'
-import { AutoExport } from './auto-export'
 import { DB as Cache } from './db/cache'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
@@ -140,7 +139,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
       if (manual) updates.push(item)
     }
 
-    if (manual) AutoExport.changed(updates)
+    if (manual) notifiyItemsChanged(updates)
   }
 
   public async init() {
