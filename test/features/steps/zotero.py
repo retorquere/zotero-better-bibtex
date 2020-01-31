@@ -547,12 +547,27 @@ def strip_obj(data):
 
   return data
 
+def itemkey(item):
+  key = [
+    item.get('title', ''),
+    item.get('date', ''),
+  ]
+  if 'creators' in item:
+    for cr in item['creators']:
+      key.append(cr.get('name', ''))
+      key.append(cr.get('lastName', ''))
+      key.append(cr.get('firstName', ''))
+
+  return ' :: '.join(key)
+
 def normalizeJSON(lib):
   un_multi(lib)
 
   lib.pop('config', None)
   lib.pop('keymanager', None)
   lib.pop('cache', None)
+
+  lib['items'] = sorted(lib['items'], key=itemkey)
 
   itemIDs = {}
   for itemID, item in enumerate(lib['items']):
