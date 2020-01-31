@@ -23,7 +23,7 @@ function getTranslatorId(name) {
   if (_name === 'jzon') return Translators.byLabel.BetterBibTeXJSON.translatorID
   if (_name === 'bib') return Translators.byLabel.BetterBibLaTeX.translatorID
 
-  for (const [id, translator] of (Object.entries(Translators.byId) as Array<[string, ITranslatorHeader]>)) {
+  for (const [id, translator] of (Object.entries(Translators.byId) as [string, ITranslatorHeader][])) {
     if (! ['yaml', 'json', 'bib'].includes(translator.target) ) continue
     if (! translator.label.startsWith('Better ') ) continue
 

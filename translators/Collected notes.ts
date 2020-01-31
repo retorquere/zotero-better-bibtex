@@ -155,7 +155,7 @@ export function doExport() {
 
   html.body += '<html><body>'
 
-  for (const item of (Object.values(items) as Array<{ itemID: number }>)) {
+  for (const item of (Object.values(items) as { itemID: number }[])) {
     if (filed[item.itemID]) continue
     _item(item)
   }

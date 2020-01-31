@@ -17,7 +17,7 @@ import unicodeMapping = require('unicode2latex')
 */
 if (Translator.BetterBibTeX) {
   let m
-  for (const tex of (Object.values(unicodeMapping.ascii) as Array<{text: string}>)) {
+  for (const tex of (Object.values(unicodeMapping.ascii) as {text: string}[])) {
     if (!tex.text) continue
 
     if (tex.text.match(/^\\[`'^~"=.][A-Za-z]$/)) {

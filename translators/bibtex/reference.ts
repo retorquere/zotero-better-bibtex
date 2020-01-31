@@ -39,7 +39,7 @@ const Path = { // tslint:disable-line variable-name
 interface IField {
   name: string
   verbatim?: string
-  value: string | string[] | number | null | { path: string; title?: string; mimeType?: string; } | Array<{ tag: string, type?: number }>
+  value: string | string[] | number | null | { path: string; title?: string; mimeType?: string; } | { tag: string, type?: number }[]
   enc?: string
   orig?: { name?: string, verbatim?: string, inherit?: boolean }
   bibtexStrings?: boolean
@@ -154,7 +154,7 @@ const Language = new class { // tslint:disable-line:variable-name
 
   private prefix: { [key: string]: boolean | string }
   private babelList: string[]
-  private cache: { [key: string]: Array<{ lang: string, sim: number }> }
+  private cache: { [key: string]: { lang: string, sim: number }[] }
 
   constructor() {
     for (const [key, value] of Object.entries(this.babelMap)) {
