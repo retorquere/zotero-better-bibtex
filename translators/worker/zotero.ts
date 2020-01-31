@@ -164,12 +164,12 @@ function makeDirs(path) {
 }
 
 function saveFile(path, overwrite) {
-  if (!Zotero.exportDirectory) return
+  if (!Zotero.exportDirectory) return false
 
   this.path = OS.Path.normalize(OS.Path.join(Zotero.exportDirectory, path))
   if (!this.path.startsWith(Zotero.exportDirectory)) throw new Error(`${path} looks like a relative path`)
 
-  if (!OS.File.exists(this.path)) return
+  if (!OS.File.exists(this.path)) return false
 
   if (this.linkMode === 'imported_file' || (this.linkMode === 'imported_url' && this.contentType !== 'text/html')) {
     makeDirs(OS.Path.dirname(this.path))
@@ -194,6 +194,8 @@ function saveFile(path, overwrite) {
       iterator.close()
     }
   }
+
+  return true
 }
 
 class WorkerZotero {

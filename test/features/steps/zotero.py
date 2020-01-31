@@ -548,15 +548,16 @@ def strip_obj(data):
   return data
 
 def itemkey(item):
-  key = [
-    item.get('title', ''),
-    item.get('date', ''),
-  ]
+  key = []
+
   if 'creators' in item:
     for cr in item['creators']:
       key.append(cr.get('name', ''))
       key.append(cr.get('lastName', ''))
       key.append(cr.get('firstName', ''))
+
+  key.append(item.get('date', ''))
+  key.append(item.get('title', ''))
 
   return ' :: '.join(key)
 
@@ -569,9 +570,15 @@ def normalizeJSON(lib):
 
   lib['items'] = sorted(lib['items'], key=itemkey)
 
-  itemIDs = {}
+  items = {}
+  for item in lib['items']:
+    items[item['itemID']] = item
+  collections = lib.get('collections', {})
+  for coll in list(collections.values()):
+    coll['collections'] = sorted([ collections[key] for key in coll['collections'] ], key=lambda x: x['name'])
+    coll['items'] = sorted([ items[itemID] for itemID in coll['items']], key=itemkey)
+
   for itemID, item in enumerate(lib['items']):
-    itemIDs[item['itemID']] = itemID
     item['itemID'] = itemID
 
     item.pop('version', None)
@@ -598,27 +605,13 @@ def normalizeJSON(lib):
       if v is None: del item[k]
       if type(v) in [list, dict] and len(v) == 0: del item[k]
 
-  collections = lib.get('collections', {})
-  while any(coll for coll in collections.values() if not coll.get('path', None)):
-    for coll in collections.values():
-      if coll.get('path', None): continue
+  lib['collections'] = sorted([ coll for coll in collections.values() if coll['parent'] == False ], key=lambda x: x['name'])
 
-      if not coll.get('parent', None):
-        coll['path'] = [ coll['name'] ]
-      elif collections[ coll['parent'] ].get('path', None):
-        coll['path'] = collections[ coll['parent'] ]['path'] + [ coll['name'] ]
-
-  for key, coll in collections.items():
-    coll['key'] = ' ::: '.join(coll['path'])
-    coll.pop('path', None)
+  for coll in list(collections.values()):
+    coll['items'] = [ item['itemID'] for item in coll['items'] ]
+    coll.pop('key', None)
     coll.pop('id', None)
-
-  for key, coll in collections.items():
-    if coll['parent']: coll['parent'] = collections[coll['parent']]['key']
-    coll['collections'] = [collections[key]['key'] for key in coll['collections']]
-    coll['items'] = [itemIDs[itemID] for itemID in coll['items']]
-
-  lib['collections'] = {coll['key']: coll for coll in collections.values()}
+    coll.pop('parent', None)
 
   return strip_obj(lib)
 
