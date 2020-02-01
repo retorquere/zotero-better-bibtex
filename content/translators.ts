@@ -1,5 +1,7 @@
 declare const Zotero: any
+
 declare const Services: any
+Components.utils.import('resource://gre/modules/Services.jsm')
 declare class ChromeWorker extends Worker { }
 
 import { Preferences as Prefs } from './prefs'
