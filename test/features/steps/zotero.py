@@ -12,6 +12,7 @@ import urllib
 import tempfile
 from munch import *
 from steps.utils import running, nested_dict_iter, benchmark, ROOT, assert_equal_diff, compare, serialize, html2md, post_log
+from steps.library import load as Library
 import steps.utils as utils
 import shutil
 import shlex
@@ -284,15 +285,15 @@ class Zotero:
 
     if ext == '.csl.json':
       with open(exported, 'w') as f: f.write(found)
-      compare(json.loads(expected), json.loads(found), False)
+      compare(json.loads(expected), json.loads(found))
       os.remove(exported)
       return
 
     elif ext == '.csl.yml':
       with open(exported, 'w') as f: f.write(found)
       assert_equal_diff(
-        serialize(yaml.load(io.StringIO(expected)), False),
-        serialize(yaml.load(io.StringIO(found)), False)
+        serialize(yaml.load(io.StringIO(expected))),
+        serialize(yaml.load(io.StringIO(found)))
       )
       os.remove(exported)
       return
@@ -300,14 +301,10 @@ class Zotero:
     elif ext == '.json':
       with open(exported, 'w') as f: f.write(found)
 
-      found = normalizeJSON(json.loads(found))
-      expected = normalizeJSON(json.loads(expected))
+      found = Library(json.loads(found))
+      expected = Library(json.loads(expected))
 
-      if True or len(expected['items']) < 30 or len(found['items']) < 30:
-        assert_equal_diff(serialize(expected, True), serialize(found, True))
-      else:
-        assert_equal_diff(serialize({ **expected, 'items': []}, True), serialize({ **found, 'items': []}, True))
-        compare(expected['items'], found['items'], True)
+      assert_equal_diff(serialize(expected), serialize(found))
 
       os.remove(exported)
       return
@@ -527,15 +524,6 @@ class Zotero:
 
     return profile
 
-def un_multi(obj):
-  if type(obj) == dict:
-    obj.pop('multi', None)
-    for v in obj.values():
-      un_multi(v)
-  elif type(obj) == list:
-    for v in obj:
-      un_multi(v)
-
 def strip_obj(data):
   if type(data) == list:
     stripped = [strip_obj(e) for e in data]
@@ -546,66 +534,6 @@ def strip_obj(data):
     return {k: v for (k, v) in stripped.items() if v not in ['', u'', {}, None, []]}
 
   return data
-
-def normalizeJSON(lib):
-  un_multi(lib)
-
-  lib.pop('config', None)
-  lib.pop('keymanager', None)
-  lib.pop('cache', None)
-
-  itemIDs = {}
-  for itemID, item in enumerate(lib['items']):
-    itemIDs[item['itemID']] = itemID
-    item['itemID'] = itemID
-
-    item.pop('version', None)
-    item.pop('libraryID', None)
-    item.pop('dateAdded', None)
-    item.pop('dateModified', None)
-    item.pop('uniqueFields', None)
-    item.pop('key', None)
-    item.pop('citekey', None)
-    item.pop('attachments', None)
-    item.pop('collections', None)
-    item.pop('__citekey__', None)
-    item.pop('citationKey', None)
-    item.pop('uri', None)
-
-    item['notes'] = sorted([html2md(note if type(note) == str else note['note']) for note in item.get('notes', [])])
-
-    if 'note' in item: item['note']  = html2md(item['note'])
-
-    item['tags'] = sorted([(tag if type(tag) == str else tag['tag']) for tag in item.get('tags', [])])
-
-    for k in list(item.keys()):
-      v = item[k]
-      if v is None: del item[k]
-      if type(v) in [list, dict] and len(v) == 0: del item[k]
-
-  collections = lib.get('collections', {})
-  while any(coll for coll in collections.values() if not coll.get('path', None)):
-    for coll in collections.values():
-      if coll.get('path', None): continue
-
-      if not coll.get('parent', None):
-        coll['path'] = [ coll['name'] ]
-      elif collections[ coll['parent'] ].get('path', None):
-        coll['path'] = collections[ coll['parent'] ]['path'] + [ coll['name'] ]
-
-  for key, coll in collections.items():
-    coll['key'] = ' ::: '.join(coll['path'])
-    coll.pop('path', None)
-    coll.pop('id', None)
-
-  for key, coll in collections.items():
-    if coll['parent']: coll['parent'] = collections[coll['parent']]['key']
-    coll['collections'] = [collections[key]['key'] for key in coll['collections']]
-    coll['items'] = [itemIDs[itemID] for itemID in coll['items']]
-
-  lib['collections'] = {coll['key']: coll for coll in collections.values()}
-
-  return strip_obj(lib)
 
 class Preferences:
   def __init__(self, zotero):

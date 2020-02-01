@@ -11,6 +11,7 @@ import time
 import urllib.request
 import psutil
 import shlex
+from collections import UserDict
 
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning, module='bs4', message='.*looks like a URL.*')
@@ -20,6 +21,10 @@ for d in pathlib.Path(__file__).resolve().parents:
   if os.path.exists(os.path.join(d, 'behave.ini')):
     ROOT = d
     break
+
+class HashableDict(dict):
+  def __hash__(self):
+    return hash(json.dumps(self, sort_keys=True))
 
 def print(txt, end='\n'):
   sys.stdout.write(txt + end)
@@ -59,19 +64,11 @@ def html2md(html):
   html = BeautifulSoup(html, features='lxml').prettify()
   return md(html).strip()
 
-def serialize(obj, sort_keys):
-  if sort_keys:
-    return json.dumps(obj, indent=2, sort_keys=True)
-  else:
-    return json.dumps(obj, indent=2)
+def serialize(obj):
+  return json.dumps(obj, indent=2, sort_keys=True)
 
-def compare(expected, found, sort_keys):
-  size = 30
-  if len(expected) < size or len(found) < size:
-    assert_equal_diff(serialize(expected, sort_keys), serialize(found, sort_keys))
-  else:
-    for start in range(0, max(len(expected), len(found)), size):
-      assert_equal_diff(serialize(expected[start:start + size], sort_keys), serialize(found[start:start + size], sort_keys))
+def compare(expected, found):
+  assert_equal_diff(serialize(expected), serialize(found))
 
 def running(id):
   if type(id) == int:
