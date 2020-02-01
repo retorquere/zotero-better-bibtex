@@ -83,6 +83,8 @@ def load(lib):
 
   for coll in list(collections.values()):
     coll.pop('parent', None)
+    coll.pop('id', None)
+    coll.pop('key', None)
     if 'collections' not in coll: coll['collections'] = []
 
   for coll in list(collections.values()):
