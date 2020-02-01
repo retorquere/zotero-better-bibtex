@@ -124,7 +124,7 @@ En mode « minimal », le nombre d'éléments `span` est minimisé.">
 <!ENTITY better-bibtex.Preferences.advanced.tab.export "Exportation">
 <!ENTITY better-bibtex.Preferences.advanced.export.titleCase "Appliquer la capitalisation aux titres">
 <!ENTITY better-bibtex.Preferences.advanced.export.titleCase.warning "Si vous n'êtes pas prêt à ignorer à la fois les meilleures pratiques BibTeX/BibLaTeX (voir la FAQ BBT) et les recommandations de Zotero sur la casse des titres/phrases, vous pouvez désactiver cette option pour supprimer la capitalisation des références en anglais">
-<!ENTITY better-bibtex.Preferences.advanced.export.braceProtection "Appliquer la protection des accolades aux mots capitalisés">
+<!ENTITY better-bibtex.Preferences.advanced.export.braceProtection "Appliquer la protection de la casse aux mots en capitales en les insérant entre paires d'accolades">
 <!ENTITY better-bibtex.Preferences.advanced.export.braceProtection.warning "Si vous n'êtes pas prêt à ignorer à la fois les meilleures pratiques BibTeX/BibLaTeX (voir la FAQ BBT) et les recommandations de Zotero sur le tire/phrase, vous pouvez désactiver cette option pour supprimer la protection automatique des accolades pour les mots avec des lettres capitales.">
 
 <!ENTITY better-bibtex.Preferences.advanced.export.retainCache "Conserver le cache d'exportation entre les mises à jour">
