@@ -169,8 +169,6 @@ function saveFile(path, overwrite) {
   this.path = OS.Path.normalize(OS.Path.join(Zotero.exportDirectory, path))
   if (!this.path.startsWith(Zotero.exportDirectory)) throw new Error(`${path} looks like a relative path`)
 
-  if (!OS.File.exists(this.path)) return false
-
   if (this.linkMode === 'imported_file' || (this.linkMode === 'imported_url' && this.contentType !== 'text/html')) {
     makeDirs(OS.Path.dirname(this.path))
     OS.File.copy(this.localPath, this.path, { noOverwrite: !overwrite })
@@ -282,7 +280,7 @@ class WorkerZotero {
 
   private patchAttachments(item) {
     if (item.itemType === 'attachment') {
-      item.saveFile = saveFile.bind(item)
+      if (OS.File.exists(item.localPath)) item.saveFile = saveFile.bind(item)
 
       if (!item.defaultPath && item.localPath) { // why is this not set by itemGetter?!
         item.defaultPath = `files/${item.itemID}/${OS.Path.basename(item.localPath)}`
