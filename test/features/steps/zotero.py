@@ -292,8 +292,8 @@ class Zotero:
     elif ext == '.csl.yml':
       with open(exported, 'w') as f: f.write(found)
       assert_equal_diff(
-        serialize(yaml.load(io.StringIO(expected)), False),
-        serialize(yaml.load(io.StringIO(found)), False)
+        serialize(yaml.load(io.StringIO(expected))),
+        serialize(yaml.load(io.StringIO(found)))
       )
       os.remove(exported)
       return
