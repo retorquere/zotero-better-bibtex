@@ -67,9 +67,6 @@ def html2md(html):
 def serialize(obj):
   return json.dumps(obj, indent=2, sort_keys=True)
 
-def compare(expected, found):
-  assert_equal_diff(serialize(expected), serialize(found))
-
 def running(id):
   if type(id) == int:
     try:

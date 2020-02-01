@@ -11,7 +11,7 @@ import toml
 import urllib
 import tempfile
 from munch import *
-from steps.utils import running, nested_dict_iter, benchmark, ROOT, assert_equal_diff, compare, serialize, html2md, post_log
+from steps.utils import running, nested_dict_iter, benchmark, ROOT, assert_equal_diff, serialize, html2md, post_log
 from steps.library import load as Library
 import steps.utils as utils
 import shutil
@@ -285,7 +285,7 @@ class Zotero:
 
     if ext == '.csl.json':
       with open(exported, 'w') as f: f.write(found)
-      compare(json.loads(expected), json.loads(found))
+      assert_equal_diff(serialize(json.loads(expected)), serialize(json.loads(found)))
       os.remove(exported)
       return
 
