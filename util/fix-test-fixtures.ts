@@ -18,6 +18,14 @@ for (const lib of glob.sync('test/fixtures/*/*.json', { cwd: root, absolute: tru
   let resave = null
   if (!data.items) throw new Error(`${lib} is not a library`)
 
+  if (data.cache) {
+    resave = 'cache'
+    delete data.cache
+  }
+  if (data.keymanager) {
+    resave = 'keymanager'
+    delete data.keymanager
+  }
   if (data.config && data.config.preferences) {
     if (data.config.preferences.jabrefGroups) {
       data.config.preferences.jabrefFormat = data.config.preferences.jabrefGroups
