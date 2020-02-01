@@ -100,7 +100,7 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
     this.BetterTeX = this.BetterBibTeX || this.BetterBibLaTeX
     this.BetterCSL = this.BetterCSLJSON || this.BetterCSLYAML
     this.preferences = preferences
-    this.options = this.header.displayOptions
+    this.options = this.header.displayOptions || {}
 
     this.stringCompare = (new Intl.Collator('en')).compare
 
