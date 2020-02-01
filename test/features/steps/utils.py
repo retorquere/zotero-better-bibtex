@@ -64,11 +64,8 @@ def html2md(html):
   html = BeautifulSoup(html, features='lxml').prettify()
   return md(html).strip()
 
-def serialize(obj, sort_keys):
-  if sort_keys:
-    return json.dumps(obj, indent=2, sort_keys=True)
-  else:
-    return json.dumps(obj, indent=2)
+def serialize(obj):
+  return json.dumps(obj, indent=2, sort_keys=True)
 
 def running(id):
   if type(id) == int:
