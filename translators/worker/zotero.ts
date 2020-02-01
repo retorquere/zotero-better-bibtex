@@ -312,4 +312,5 @@ export function onmessage(e: { data: BBTWorker.Config }) {
   } else {
     Zotero.BetterBibTeX.debug('unexpected message in worker:', e)
   }
+  close()
 }
