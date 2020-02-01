@@ -69,7 +69,7 @@ def sort_collection(coll):
 def load(lib):
   lib = HashableDict(lib)
 
-  del lib['config']
+  lib.pop('config', None)
 
   items = {
     item['itemID']: HashableDict(clean_item(item))
