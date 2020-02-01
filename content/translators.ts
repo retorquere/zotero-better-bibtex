@@ -172,7 +172,22 @@ export let Translators = new class { // tslint:disable-line:variable-name
     log.debug(`Beginning translation with ${prefix}`)
 
     const deferred = Zotero.Promise.defer()
-    const worker = new ChromeWorker(`chrome://zotero-better-bibtex/content/worker/Zotero.js?${params}`)
+    let worker: ChromeWorker = null
+    // WHAT IS GOING ON HERE FIREFOX?!?! A *NetworkError* for a xpi-internal resource:// URL?!
+    let retry = 5 // tslint:disable-line:no-magic-numbers
+    while (!worker && retry) {
+      try {
+        worker = new ChromeWorker(`resource://zotero-better-bibtex/worker/Zotero.js?${params}`)
+      } catch (err) {
+        log.debug('new ChromeWorker:', err)
+      }
+      retry--
+    }
+    if (!worker) {
+      log.debug('what the actual...')
+      deferred.reject('could not get a ChromeWorker')
+      return
+    }
 
     const start = Date.now()
     const config: BBTWorker.Config = {
