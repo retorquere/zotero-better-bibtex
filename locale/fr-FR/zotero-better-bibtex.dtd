@@ -130,7 +130,7 @@ En mode « minimal », le nombre d'éléments `span` est minimisé.">
 <!ENTITY better-bibtex.Preferences.advanced.export.retainCache "Conserver le cache d'exportation entre les mises à jour">
 <!ENTITY better-bibtex.Preferences.advanced.export.retainCache.warning "Par défaut, BBT efface tous les caches chaque fois que lui ou Zotero est mis à jour. Je ne peux pas prédire de manière certaine si un changement dans Zotero ou BBT va affecter la sortie générée pour un élément donné donc, pour être sûr(e) que vous avez toujours les dernières corrections affectant les exportations, les caches sont supprimés lorsqu'une nouvelle version de l'un ou l'autre est détectée. Cependant, si vous avez une très grande bibliothèque dont vous exportez régulièrement des portions significatives, vous pourriez vouloir conserver les éléments mis en cache même si cela comporte le risque que vous obteniez une sortie incorrecte sur l'exportation qui a été corrigée dans l'intervalle.
 
-Si cette option est activée et vous rencontrez un problème ne consistant pas en la suppression du cache lors d'une mise à jour, vous *devez* vider le cache et reproduire le problème. Lorsque vous modifiez ce paramètre, le cache est supprimé (comme c'est le cas pour toute modification de paramètre).">
+Si cette option est activée et que vous rencontrez un problème autre que l'annulation du cache lors d'une mise à jour, vous *devez* vider le cache et reproduire le problème. Lorsque vous modifiez ce paramètre, le cache est supprimé (comme c'est le cas pour toute modification de paramètre).">
 <!ENTITY better-bibtex.Preferences.advanced.export.workers "Exportation parallèle en arrière-plan :">
 
 <!ENTITY better-bibtex.Preferences.advanced.tab.citekeys "Clés de citation">
