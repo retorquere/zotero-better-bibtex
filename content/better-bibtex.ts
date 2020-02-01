@@ -357,28 +357,9 @@ Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
 
 $patch$(Zotero.Utilities.Internal, 'itemToExportFormat', original => function Zotero_Utilities_Internal_itemToExportFormat(zoteroItem, legacy, skipChildItems) {
   const start = Date.now()
-  try {
-    let serialized = Serializer.fetch(zoteroItem, !!legacy, !!skipChildItems)
-    if (serialized) {
-      log.debug('fetched serialized')
-      return serialized
-    }
-
-    serialized = original.apply(this, arguments)
-    log.debug('native serialized')
-
-    serialized = Serializer.store(zoteroItem, serialized, !!legacy, !!skipChildItems)
-    log.debug('stored serialized')
-
-    return serialized
-
-  } catch (err) { // fallback for safety for non-BBT
-    log.error('Zotero.Utilities.Internal.itemToExportFormat', err)
-  } finally {
-    log.debug('patched serialize took', Date.now() - start)
-  }
-
-  return original.apply(this, arguments)
+  const serialized = original.apply(this, arguments)
+  log.debug('Zotero.Utilities.Internal.itemToExportFormat took', Date.now() - start)
+  return Serializer.enrich(serialized, zoteroItem)
 })
 
 $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zotero_Translate_Export_prototype_translate() {

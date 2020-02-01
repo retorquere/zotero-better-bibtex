@@ -356,7 +356,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
     prep.exported = (Object.keys(config.cache).length * 100) / config.items.length // tslint:disable-line:no-magic-numbers
 
     try {
-      worker.postMessage(JSON.parse(JSON.stringify(config, (name, val) => typeof val === 'function' ? undefined : val)))
+      worker.postMessage(JSON.parse(JSON.stringify(config)))
     } catch (err) {
       worker.terminate()
       this.workers.running.delete(id)

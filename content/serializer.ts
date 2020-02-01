@@ -16,23 +16,22 @@ export let Serializer = new class { // tslint:disable-line:variable-name
     this.cache = this.enabled && Cache.getCollection('itemToExportFormat')
   }
 
-  public fetch(item, legacy, skipChildItems) {
+  public fetch(item) {
     if (!this.cache) return null
 
-    const query = { itemID: item.id, legacy: !!legacy, skipChildItems: !!skipChildItems}
-    const cached = this.cache.findOne(query)
+    const cached = this.cache.findOne({ itemID: item.id })
     if (!cached) return null
 
     return this.enrich(cached.item, item)
   }
 
-  public store(item, serialized, legacy, skipChildItems) {
+  public store(item, serialized) {
     // come on -- these are used in the collections export but not provided on the items?!
     serialized.itemID = item.id
     serialized.key = item.key
 
     if (this.cache) {
-      this.cache.insert({itemID: item.id, legacy: !!legacy, skipChildItems: !!skipChildItems, item: serialized})
+      this.cache.insert({ itemID: item.id, item: serialized })
     } else {
       if (this.enabled) Zotero.debug('Serializer.store ignored, DB not yet loaded')
     }
@@ -43,30 +42,36 @@ export let Serializer = new class { // tslint:disable-line:variable-name
   public serialize(item) { return Zotero.Utilities.Internal.itemToExportFormat(item, false, true) }
 
   public fast(item) {
-    let serialized = item.toJSON()
-    serialized.uri = Zotero.URI.getItemURI(item)
-    serialized.itemID = item.id
+    let serialized = this.fetch(item)
 
-    switch (serialized.itemType) {
-      case 'note':
-        break
+    if (!serialized) {
+      serialized = item.toJSON()
+      serialized.uri = Zotero.URI.getItemURI(item)
+      serialized.itemID = item.id
 
-      case 'attachment':
-        serialized = this.fastAttachment(serialized, item)
-        break
+      switch (serialized.itemType) {
+        case 'note':
+          break
 
-      default:
-        serialized.attachments = item.getAttachments().map(id => {
-          const att = Zotero.Items.get(id)
-          return this.fastAttachment({ ...att.toJSON(), uri: Zotero.URI.getItemURI(att) }, att)
-        })
+        case 'attachment':
+          serialized = this.fastAttachment(serialized, item)
+          break
 
-        serialized.notes = item.getNotes().map(id => {
-          const note = Zotero.Items.get(id)
-          return { ...note.toJSON(), uri: Zotero.URI.getItemURI(note) }
-        })
+        default:
+          serialized.attachments = item.getAttachments().map(id => {
+            const att = Zotero.Items.get(id)
+            return this.fastAttachment({ ...att.toJSON(), uri: Zotero.URI.getItemURI(att) }, att)
+          })
+
+          serialized.notes = item.getNotes().map(id => {
+            const note = Zotero.Items.get(id)
+            return { ...note.toJSON(), uri: Zotero.URI.getItemURI(note) }
+          })
+      }
+      this.store(item, serialized)
     }
 
+    // since the cache doesn't clone, these will be written into the cache, but since we override them always anyways, that's OK
     return this.enrich(serialized, item)
   }
 
@@ -78,7 +83,7 @@ export let Serializer = new class { // tslint:disable-line:variable-name
     return serialized
   }
 
-  private enrich(serialized, item) {
+  public enrich(serialized, item) {
     switch (serialized.itemType) {
       case 'note':
       case 'attachment':
@@ -88,9 +93,10 @@ export let Serializer = new class { // tslint:disable-line:variable-name
         serialized.citekey = KeyManager.get(item.id).citekey
         serialized.citationKey = serialized.citationKey || serialized.citekey // prepare for https://github.com/zotero/translators/pull/1810#issuecomment-456219750
         serialized.journalAbbreviation = JournalAbbrev.get(serialized)
-        serialized.libraryID = item.libraryID
         break
     }
+
+    serialized.libraryID = item.libraryID
     return serialized
   }
 }

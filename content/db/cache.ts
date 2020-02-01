@@ -45,25 +45,26 @@ class Cache extends Loki {
     await this.loadDatabaseAsync()
 
     let coll = this.schemaCollection('itemToExportFormat', {
-      indices: [ 'itemID', 'legacy', 'skipChildItems' ],
+      indices: [ 'itemID' ],
       logging: false,
       cloneObjects: false,
       schema: {
         type: 'object',
         properties: {
           itemID: { type: 'integer' },
-          legacy: { type: 'boolean' },
-          skipChildItems: { type: 'boolean' },
           item: { type: 'object' },
 
           // LokiJS
           meta: { type: 'object' },
           $loki: { type: 'integer' },
         },
-        required: [ 'itemID', 'legacy', 'skipChildItems', 'item' ],
+        required: [ 'itemID', 'item' ],
         additionalProperties: false,
       },
     })
+
+    // old cache, drop
+    if (coll.where(o => typeof o.legacy === 'boolean').length) coll.removeDataOnly()
 
     clearOnUpgrade(coll, 'Zotero', Zotero.version)
 
