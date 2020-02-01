@@ -229,8 +229,12 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
       while (item = Zotero.nextItem()) {
         this.sortedItems.push(item)
       }
-      // fallback to itemType.itemID for notes and attachments
-      this.sortedItems.sort((a, b) => (a.citekey || `{${a.itemType}:${a.itemID}}`).localeCompare((b.citekey || `{${b.itemType}:${b.itemID}}`), undefined, { sensitivity: 'base' }))
+      // fallback to itemType.itemID for notes and attachments. And some items may have duplicate keys
+      this.sortedItems.sort((a, b) => {
+        const ka = [ a.citekey || a.itemType, a.dateModified || a.dateAdded, a.itemID ].join('\t')
+        const kb = [ b.citekey || b.itemType, b.dateModified || b.dateAdded, b.itemID ].join('\t')
+        return ka.localeCompare(kb, undefined, { sensitivity: 'base' })
+      })
     }
     return this.sortedItems
   }
