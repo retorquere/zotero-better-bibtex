@@ -238,21 +238,37 @@ const patent = new class {
       if (this.countries.includes(country)) return country
     }
 
-    if (item.number) {
-      const country = item.number.substr(0, 2).toLowerCase()
-      if (this.prefix[country]) return this.prefix[country]
+    for (const patentNumber of [item.number, item.applicationNumber]) {
+      if (patentNumber) {
+        const prefix = this.prefix[patentNumber.substr(0, 2).toLowerCase()]
+        if (prefix) return prefix
+      }
     }
 
     return ''
   }
 
   public number(item) {
-    if (item.itemType !== 'patent' || !item.number) return ''
+    if (item.itemType !== 'patent' || (!item.number && !item.applicationNumber)) return ''
 
-    const country = item.number.substr(0, 2).toLowerCase()
-    if (this.prefix[country]) return item.number.substr(country.length)
+    for (const patentNumber of [item.number, item.applicationNumber]) {
+      if (patentNumber) {
+        const country = patentNumber.substr(0, 2).toLowerCase()
+        if (this.prefix[country]) return patentNumber.substr(country.length)
+      }
+    }
+    return item.number || item.applicationNumber
+  }
 
-    return item.number
+  public type(item) {
+    if (item.itemType !== 'patent') return ''
+
+    const region = this.region(item)
+
+    if (region && item.number) return `patent${region}`
+    if (region && item.applicationNumber) return `patreq${region}`
+
+    return 'patent'
   }
 }
 
@@ -478,7 +494,7 @@ export function doExport() {
         break
 
       case 'patent':
-        ref.add({ name: 'type', value: 'patent' + patent.region(item) })
+        ref.add({ name: 'type', value: patent.type(item) })
         break
 
       default:
