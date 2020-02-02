@@ -1,5 +1,18 @@
 # Changelog
 
+## [5.2.14] - 2020-02-02
+
+ - Foreground exports would fail, fixed
+ - Retry for background workers
+ - Collected notes exporter works again
+ - Background exports to SMB shares sometimes fail, defaulting those to foreground
+ - Stable sort for exports
+ - Faster background export setup
+ - Restore jabref groups import
+ - Map "Page" CSL field in extra
+ - Expose export dir / path to postscript
+ - Find texstudio in the default installation dir for windows
+
 ## [5.2.10] 2020-01-27
 
  - Make export path available to postscript
