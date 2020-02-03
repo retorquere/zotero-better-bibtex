@@ -12,6 +12,7 @@ import { DB as Cache, selector as cacheSelector } from './db/cache'
 import { DB } from './db/main'
 import * as Extra from './extra'
 import { sleep } from './sleep'
+import { flash } from './flash'
 
 import * as prefOverrides from '../gen/preferences/auto-export-overrides.json'
 import * as translatorMetadata from '../gen/translators.json'
@@ -177,18 +178,23 @@ export let Translators = new class { // tslint:disable-line:variable-name
     const deferred = Zotero.Promise.defer()
     let worker: ChromeWorker = null
     // WHAT IS GOING ON HERE FIREFOX?!?! A *NetworkError* for a xpi-internal resource:// URL?!
-    let retry = 5 // tslint:disable-line:no-magic-numbers
-    while (!worker && retry) {
+    for (let attempt = 0; !worker && attempt < 5; attempt++) { // tslint:disable-line:no-magic-numbers
       try {
+        if (attempt > 0) await sleep(2 * 1000 * attempt) // tslint:disable-line:no-magic-numbers
         worker = new ChromeWorker(`resource://zotero-better-bibtex/worker/Zotero.js?${params}`)
       } catch (err) {
         log.debug('new ChromeWorker:', err)
       }
-      retry--
     }
     if (!worker) {
       log.debug('what the actual...')
       deferred.reject('could not get a ChromeWorker')
+      flash(
+        'Failed to start background export',
+        'Could not start a background export after 5 attempts. Background exports have been disabled -- PLEASE report this as a bug at the Better BibTeX github project',
+        15 // tslint:disable-line:no-magic-numbers
+      )
+      Prefs.set('workers', 0)
       return
     }
 
