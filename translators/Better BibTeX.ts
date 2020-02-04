@@ -439,20 +439,44 @@ class ZoteroItem {
     return false
   }
 
-  protected $journaltitle(value) {
+  protected $journaltitle() {
+    let journal, abbr = null
+
+    if (this.bibtex.fields['journal-full']) { // bibdesk
+      journal = this.bibtex.fields['journal-full'][0]
+      if (this.bibtex.fields.journal) {
+        abbr = this.bibtex.fields.journal[0]
+      } else if (this.bibtex.fields.journaltitle) {
+        abbr = this.bibtex.fields.journaltitle[0]
+      }
+      if (abbr === journal) abbr = null
+
+      if (abbr && this.validFields.journalAbbreviation) {
+        this.item.journalAbbreviation = abbr
+      }
+
+    } else if (this.bibtex.fields.journal) {
+      journal = this.bibtex.fields.journal[0]
+
+    } else if (this.bibtex.fields.journaltitle) {
+      journal = this.bibtex.fields.journaltitle[0]
+
+    }
+
     switch (this.type) {
       case 'conferencePaper':
-        this.set('series', value)
+        this.set('series', journal)
         break
 
       default:
-        this.set('publicationTitle', value)
+        this.set('publicationTitle', journal)
         break
     }
 
     return true
   }
-  protected $journal(value) { return this.$journaltitle(value) }
+  protected $journal() { return this.$journaltitle() }
+  protected '$journal-full'() { return this.$journaltitle() }
 
   protected $pages(value) {
     for (const field of ['pages', 'numPages']) {
@@ -473,10 +497,19 @@ class ZoteroItem {
   protected $abstract(value) { return this.set('abstractNote', value) }
 
   protected $keywords(value) {
-    this.item.tags = (this.bibtex.fields.keywords || []).concat(this.bibtex.fields.keyword || []).sort().filter((item, pos, ary) => !pos || (item !== ary[pos - 1]))
+    let tags = this.bibtex.fields.keywords || []
+    tags = tags.concat(this.bibtex.fields.keyword || [])
+    for (const mesh of this.bibtex.fields.mesh || []) {
+      tags = tags.concat((mesh || '').trim().split(/\s*;\s*/).filter(tag => tag))
+    }
+    tags = tags.sort()
+    tags = tags.filter((item, pos, ary) => !pos || (item !== ary[pos - 1]))
+
+    this.item.tags = tags
     return true
   }
   protected $keyword(value) { return this.$keywords(value) }
+  protected $mesh(value) { return this.$keywords(value) } // bibdesk
 
   protected $date(value) {
     if (this.item.date) return true
@@ -624,6 +657,7 @@ class ZoteroItem {
     return true
   }
   protected $howpublished(value, field) { return this.$url(value, field) }
+  protected '$remote-url'(value, field) { return this.$url(value, field) }
 
   protected $type(value) {
     if (this.type === 'patent') {
@@ -766,6 +800,10 @@ class ZoteroItem {
         if (this[`$${field}`] && this[`$${field}`](value, field)) continue
 
         switch (field) {
+          case 'pst':
+            this.hackyFields.push(`tex.howpublished: ${value}`)
+            break
+
           case 'doi':
             this.hackyFields.push(`DOI: ${value}`)
             break
