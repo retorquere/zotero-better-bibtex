@@ -171,6 +171,8 @@ class AutoExportPane {
   }
 
   public remove(node) {
+    if (!confirm(Zotero.BetterBibTeX.getString('AutoExport.delete.confirm'))) return
+
     const ae = AutoExport.db.get(parseInt(node.getAttributeNS(namespace, 'ae-id')))
     Cache.getCollection(Translators.byId[ae.translatorID].label).removeDataOnly()
     AutoExport.db.remove(ae)
