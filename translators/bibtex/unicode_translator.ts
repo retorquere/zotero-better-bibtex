@@ -106,7 +106,6 @@ const htmlConverter = new class HTMLConverter {
       .replace(/(\\\\)+\n\n/g, '\n\n') // paragraph breaks followed by line breaks == line breaks
       .replace(/\n\n\n+/g, '\n\n') // line breaks > 3 is the same as two line breaks.
       .replace(/\n*\\par[\n\s]*$/, '')
-      .trim()
 
     return { latex: this.latex, raw: ast.nodeName === 'pre', packages: Object.keys(this.packages) }
   }
