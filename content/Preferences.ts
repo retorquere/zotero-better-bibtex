@@ -3,6 +3,10 @@ declare const window: any
 declare const Zotero: any
 declare const Zotero_Preferences: any
 
+declare const Components: any
+Components.utils.import('resource://gre/modules/Services.jsm')
+declare const Services: any
+
 import * as log from './debug'
 import { patch as $patch$ } from './monkey-patch'
 import * as ZoteroDB from './db/zotero'
@@ -171,7 +175,7 @@ class AutoExportPane {
   }
 
   public remove(node) {
-    if (!confirm(Zotero.BetterBibTeX.getString('AutoExport.delete.confirm'))) return
+    if (!Services.prompt.confirm(null, Zotero.BetterBibTeX.getString('AutoExport.delete'), Zotero.BetterBibTeX.getString('AutoExport.delete.confirm'))) return
 
     const ae = AutoExport.db.get(parseInt(node.getAttributeNS(namespace, 'ae-id')))
     Cache.getCollection(Translators.byId[ae.translatorID].label).removeDataOnly()
