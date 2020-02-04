@@ -102,9 +102,11 @@ const htmlConverter = new class HTMLConverter {
     this.walk(ast)
 
     this.latex = this.latex
-    // .replace(/(\\\\)+[^\S\n]*\n\n/g, '\n\n') // I don't recall why I had the middle match, replaced by match below until I figure it out
-    .replace(/(\\\\)+\n\n/g, '\n\n') // paragraph breaks followed by line breaks == line breaks
-    .replace(/\n\n\n+/g, '\n\n') // line breaks > 3 is the same as two line breaks.
+      // .replace(/(\\\\)+[^\S\n]*\n\n/g, '\n\n') // I don't recall why I had the middle match, replaced by match below until I figure it out
+      .replace(/(\\\\)+\n\n/g, '\n\n') // paragraph breaks followed by line breaks == line breaks
+      .replace(/\n\n\n+/g, '\n\n') // line breaks > 3 is the same as two line breaks.
+      .replace(/\n*\\par[\n\s]*$/, '')
+      .trim()
 
     return { latex: this.latex, raw: ast.nodeName === 'pre', packages: Object.keys(this.packages) }
   }
@@ -161,7 +163,7 @@ const htmlConverter = new class HTMLConverter {
       case 'div':
       case 'table':
       case 'tr':
-        latex = '\n\n...\n\n'
+        latex = '\n\n...\n\\par\n'
         break
 
       case 'h1':
@@ -320,9 +322,7 @@ const htmlConverter = new class HTMLConverter {
 
 export function html2latex(html, options) {
   if (typeof options.html === 'undefined') options.html = true
-  const latex = htmlConverter.convert(html, options)
-  latex.latex = latex.latex
-  return latex
+  return htmlConverter.convert(html, options)
 }
 
 export function text2latex(text, options: { caseConversion?: boolean, html?: boolean } = {}) {
