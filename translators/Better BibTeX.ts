@@ -812,6 +812,10 @@ class ZoteroItem {
             this.hackyFields.push(`ISSN: ${value}`)
             break
 
+          case 'pmid':
+            this.hackyFields.push(`PMID: ${value}`)
+            break
+
           default:
             if (value.indexOf('\n') >= 0) {
               this.item.notes.push(`<p><b>${Zotero.Utilities.text2html(field, false)}</b></p>${Zotero.Utilities.text2html(value, false)}`)
