@@ -142,7 +142,7 @@ as the default encoder knows what to do with arrays, if you give it a separator.
 if (Translator.BetterTeX && item.DOI) {
   var doi = item.DOI;
   if (doi.indexOf('doi:') != 0) { doi = 'doi:' + doi; }
-  reference.add({ name: 'note', duplicate: true, value: '[' + doi + ']' });
+  reference.add({ name: 'note', value: '[' + doi + ']' });
 }
 ```
 
