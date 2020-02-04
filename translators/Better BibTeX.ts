@@ -755,7 +755,7 @@ class ZoteroItem {
       for (let value of (values as string[])) {
         value = value.replace(/\u00A0/g, ' ')
 
-        if (field.match(/^local-zo-url-[0-9]+$/)) {
+        if (field.match(/^(local-zo-url-[0-9]+)|(file-[0-9]+)$/)) {
           if (this.$file(value)) continue
 
         } else if (field.match(/^bdsk-url-[0-9]+$/)) {
