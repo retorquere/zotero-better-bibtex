@@ -184,8 +184,9 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
     current_trace.push(translator.label)
     current_trace.push(0) // items
-    current_trace.push(0) // pct serialization cache
-    current_trace.push(0) // pct export cache
+    current_trace.push(0) // export time
+    current_trace.push(0) // # in serialization cache
+    current_trace.push(0) // # in export cache
     let last_trace = start
 
     const cache = caching && Cache.getCollection(translator.label)
@@ -369,7 +370,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
       last_trace = now
     }
     current_trace[1] = config.items.length
-    current_trace[2] = prep.serialized = (prep.serialized * 100) / config.items.length // tslint:disable-line:no-magic-numbers
+    current_trace[3] = prep.serialized // tslint:disable-line:no-magic-numbers
 
     if (this.byId[translatorID].configOptions?.getCollections) {
       config.collections = collections.map(collection => {
@@ -399,7 +400,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
       cache.cloneObjects = cloneObjects
       cache.dirty = true
     }
-    current_trace[3] = prep.exported = (prep.exported * 100) / config.items.length // tslint:disable-line:no-magic-numbers
+    current_trace[4] = prep.exported // tslint:disable-line:no-magic-numbers
 
     // pre-fetch CSL serializations
     // TODO: I should probably cache these
@@ -417,7 +418,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
       }
     }
 
-    prep.duration = Date.now() - start
+    current_trace[2] = prep.duration = Date.now() - start // tslint:disable-line:no-magic_numbers
 
     try {
       worker.postMessage(JSON.parse(JSON.stringify(config)))
