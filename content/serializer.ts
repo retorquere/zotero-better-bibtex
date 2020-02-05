@@ -39,7 +39,9 @@ export let Serializer = new class { // tslint:disable-line:variable-name
   public fast(item) {
     let serialized = this.fetch(item)
 
-    if (!serialized) {
+    if (serialized) {
+      serialized.cached = true
+    } else {
       serialized = item.toJSON()
       serialized.uri = Zotero.URI.getItemURI(item)
       serialized.itemID = item.id

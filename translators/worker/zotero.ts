@@ -273,6 +273,7 @@ class WorkerZotero {
   }
 
   public nextItem() {
+    this.send({ kind: 'item' })
     return this.config.items.shift()
   }
 

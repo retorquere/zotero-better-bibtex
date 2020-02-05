@@ -8,5 +8,9 @@ namespace BBTWorker {
     cache: Record<number, {itemID: number, reference: string, metadata: any, meta: { updated: nymber }}>
   }
 
-  type Message = { kind: 'done', output: boolean | string } | { kind: 'debug', message: string } | { kind: 'error', message: string } | { kind: 'cache', itemID: number, reference: string, metadata: any }
+  type Message = { kind: 'done', output: boolean | string }
+    | { kind: 'debug', message: string }
+    | { kind: 'error', message: string }
+    | { kind: 'cache', itemID: number, reference: string, metadata: any }
+    | { kind: 'item' }
 }
