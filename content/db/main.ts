@@ -86,6 +86,7 @@ class Main extends Loki {
           ...prefOverridesSchema,
 
           error: { type: 'string', default: '' },
+          recursive: { type: 'boolean', default: false },
 
           // LokiJS
           meta: { type: 'object' },
@@ -110,6 +111,11 @@ class Main extends Loki {
           ae[pref] = Prefs.get(pref)
           update = true
         }
+      }
+
+      if (typeof ae.recursive !== 'boolean') {
+        ae.recursive = false
+        update = true
       }
 
       if (update) autoexport.update(ae)
