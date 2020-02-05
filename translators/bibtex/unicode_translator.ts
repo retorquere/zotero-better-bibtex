@@ -105,7 +105,7 @@ const htmlConverter = new class HTMLConverter {
       // .replace(/(\\\\)+[^\S\n]*\n\n/g, '\n\n') // I don't recall why I had the middle match, replaced by match below until I figure it out
       .replace(/(\\\\)+\n\n/g, '\n\n') // paragraph breaks followed by line breaks == line breaks
       .replace(/\n\n\n+/g, '\n\n') // line breaks > 3 is the same as two line breaks.
-      .replace(/(\\par[\n\s\u00A0]+)+/g, '\\par\n')
+      .replace(/(\\par[\n\s~]+)+/g, '\\par\n')
       .replace(/\n*\\par\n*$/, '')
       .replace(/^\n*\\par\n*/, '')
 
