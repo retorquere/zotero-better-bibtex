@@ -105,7 +105,9 @@ const htmlConverter = new class HTMLConverter {
       // .replace(/(\\\\)+[^\S\n]*\n\n/g, '\n\n') // I don't recall why I had the middle match, replaced by match below until I figure it out
       .replace(/(\\\\)+\n\n/g, '\n\n') // paragraph breaks followed by line breaks == line breaks
       .replace(/\n\n\n+/g, '\n\n') // line breaks > 3 is the same as two line breaks.
-      .replace(/\n*\\par[\n\s]*$/, '')
+      .replace(/(\\par[\n\s\u00A0]+)+/g, '\\par\n')
+      .replace(/\n*\\par\n*$/, '')
+      .replace(/^\n*\\par\n*/, '')
 
     return { latex: this.latex, raw: ast.nodeName === 'pre', packages: Object.keys(this.packages) }
   }
@@ -162,7 +164,7 @@ const htmlConverter = new class HTMLConverter {
       case 'div':
       case 'table':
       case 'tr':
-        latex = '\n\n...\n\\par\n'
+        latex = '\n\\par\n...\n\\par\n'
         break
 
       case 'h1':
