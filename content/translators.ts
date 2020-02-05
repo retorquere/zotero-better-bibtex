@@ -25,6 +25,11 @@ interface IPriority {
 }
 
 type ExportScope = { type: 'items', items: any[] } | { type: 'library', id: number } | { type: 'collection', collection: any }
+type ExportJob = {
+  scope?: ExportScope
+  path?: string
+  preferences?: Record<string, boolean | number | string>
+}
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Translators = new class { // tslint:disable-line:variable-name
@@ -129,7 +134,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
     return translation.newItems
   }
 
-  public async exportItemsByQueuedWorker(translatorID: string, displayOptions: object, options: { scope?: ExportScope, path?: string, preferences?: Record<string, boolean | number | string> }) {
+  public async exportItemsByQueuedWorker(translatorID: string, displayOptions: object, options: ExportJob) {
     const workers = Math.max(Prefs.get('workers'), 1) // if you're here, at least one worker must be available
 
     if (this.workers.running.size > workers) {
@@ -139,7 +144,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
     }
   }
 
-  public async exportItemsByWorker(translatorID: string, displayOptions: object, options: { scope?: ExportScope, path?: string, preferences?: Record<string, boolean | number | string> }) {
+  public async exportItemsByWorker(translatorID: string, displayOptions: object, options: ExportJob) {
     await Zotero.BetterBibTeX.ready
 
     const full = Date.now()
@@ -346,18 +351,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
       })
     }
 
-    // pre-fetch CSL serializations
-    if (translator.label.includes('CSL')) {
-      for (const item of config.items) {
-        // this should done in the translator, but since itemToCSLJSON in the worker version doesn't actually execute itemToCSLJSON but just
-        // fetches the version we create here *before* the translator starts, changes to the 'item' inside the translator are essentially ignored.
-        // There's no way around this until Zotero makes export translators async; we prep the itemToCSLJSON versions here so they can be "made" synchronously
-        // inside the translator
-        Object.assign(item, Extra.get(item.extra))
-        config.cslItems[item.itemID] = Zotero.Utilities.itemToCSLJSON(item)
-      }
-    }
-
     // pre-fetch cache
     if (cache) {
       const query = cacheSelector(config.items.map(item => item.itemID), displayOptions, config.preferences)
@@ -374,6 +367,21 @@ export let Translators = new class { // tslint:disable-line:variable-name
       }, {})
       cache.cloneObjects = cloneObjects
       cache.dirty = true
+    }
+
+    // pre-fetch CSL serializations
+    if (translator.label.includes('CSL')) {
+      for (const item of config.items) {
+        // if there's a cached item, we don't need a fresh CSL item since we're not regenerating it anyhow
+        if (config.cache[item.itemID]) continue
+
+        // this should done in the translator, but since itemToCSLJSON in the worker version doesn't actually execute itemToCSLJSON but just
+        // fetches the version we create here *before* the translator starts, changes to the 'item' inside the translator are essentially ignored.
+        // There's no way around this until Zotero makes export translators async; we prep the itemToCSLJSON versions here so they can be "made" synchronously
+        // inside the translator
+        Object.assign(item, Extra.get(item.extra))
+        config.cslItems[item.itemID] = Zotero.Utilities.itemToCSLJSON(item)
+      }
     }
 
     prep.duration = Date.now() - start
