@@ -19,7 +19,24 @@ import * as translatorMetadata from '../gen/translators.json'
 
 import { TaskEasy  as Queue } from 'task-easy'
 
-const trace: any[][] = []
+type Trace = {
+  translator: string
+  items: number
+  cached: {
+    serializer: number
+    export: number
+  }
+  prep: {
+    total: number
+    duration: number[]
+  }
+  export: {
+    total: number
+    duration: number[]
+  }
+}
+
+const trace: Trace[] = []
 
 interface IPriority {
   priority: number
@@ -149,8 +166,26 @@ export let Translators = new class { // tslint:disable-line:variable-name
   public async exportItemsByWorker(translatorID: string, displayOptions: Record<string, boolean>, options: ExportJob) {
     await Zotero.BetterBibTeX.ready
 
+    const translator = this.byId[translatorID]
+
     const start = Date.now()
-    const current_trace: any[] = []
+
+    const current_trace: Trace = {
+      translator: translator.label,
+      items: 0,
+      cached: {
+        serializer: 0,
+        export: 0,
+      },
+      prep: {
+        total: 0,
+        duration: [],
+      },
+      export: {
+        total: 0,
+        duration: [],
+      },
+    }
     trace.push(current_trace)
 
     options.preferences = options.preferences || {}
@@ -164,8 +199,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
         delete displayOptions[pref]
       }
     }
-
-    const translator = this.byId[translatorID]
 
     const caching = !(
       // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
@@ -182,11 +215,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
       || options.preferences.relativeFilePaths
     )
 
-    current_trace.push(translator.label)
-    current_trace.push(0) // items
-    current_trace.push(0) // export time
-    current_trace.push(0) // # in serialization cache
-    current_trace.push(0) // # in export cache
     let last_trace = start
 
     const cache = caching && Cache.getCollection(translator.label)
@@ -238,12 +266,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
       cache: {},
     }
 
-    const prep = {
-      duration: 0,
-      serialized: 0,
-      exported: 0,
-    }
-
     worker.onmessage = (e: { data: BBTWorker.Message }) => {
       switch (e.data?.kind) {
         case 'error':
@@ -261,17 +283,17 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
         case 'item':
           const now = Date.now()
-          current_trace.push(now - last_trace)
+          current_trace.export.duration.push(now - last_trace)
           last_trace = now
           break
 
         case 'done':
-          const duration = (Date.now() - start)
+          current_trace.export.total = (Date.now() - start) - current_trace.prep.total
           let status = `QBW: ${prefix} done,`
           status += `${config.items.length} items, `
-          status += `total duration ${duration / 1000}s ` // tslint:disable-line:no-magic-numbers
-          status += `of which ${prep.duration / 1000}s prep, ` // tslint:disable-line:no-magic-numbers
-          status += `serialization cache ${prep.serialized}%, export cache ${prep.exported}%`
+          status += `total duration ${(current_trace.prep.total + current_trace.export.total) / 1000}s ` // tslint:disable-line:no-magic-numbers
+          status += `of which ${current_trace.prep.total / 1000}s prep, ` // tslint:disable-line:no-magic-numbers
+          status += `serialization cache ${current_trace.cached.serializer}%, export cache ${current_trace.cached.export}%`
           log.debug(status)
           log.debug(current_trace)
           deferred.resolve(e.data.output)
@@ -355,8 +377,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
     const count = { cached: 0 }
     config.items = []
     for (const item of items) {
-      const serialized = Serializer.fast(item, count)
-      config.items.push(serialized)
+      config.items.push(Serializer.fast(item, count))
 
       // sleep occasionally so the UI gets a breather
       if ((Date.now() - batch) > 1000) { // tslint:disable-line:no-magic-numbers
@@ -365,11 +386,11 @@ export let Translators = new class { // tslint:disable-line:variable-name
       }
 
       const now = Date.now()
-      current_trace.push(last_trace - now)
+      current_trace.prep.duration.push(now - last_trace)
       last_trace = now
     }
-    current_trace[1] = config.items.length
-    current_trace[3] = prep.serialized = count.cached // tslint:disable-line:no-magic-numbers
+    current_trace.items = config.items.length
+    current_trace.cached.serializer = count.cached
 
     if (this.byId[translatorID].configOptions?.getCollections) {
       config.collections = collections.map(collection => {
@@ -381,7 +402,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
     }
 
     // pre-fetch cache
-    prep.exported = 0
     if (cache) {
       const query = cacheSelector(config.items.map(item => item.itemID), displayOptions, config.preferences)
 
@@ -390,7 +410,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
       cache.cloneObjects = false
       // uncloned is safe because it gets serialized in the transfer
       config.cache = cache.find(query).reduce((acc, cached) => {
-        prep.exported += 1
+        current_trace.cached.export += 1
         // direct-DB access for speed...
         cached.meta.updated = (new Date).getTime() // touches the cache object so it isn't reaped too early
         acc[cached.itemID] = cached
@@ -399,7 +419,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
       cache.cloneObjects = cloneObjects
       cache.dirty = true
     }
-    current_trace[4] = prep.exported // tslint:disable-line:no-magic-numbers
 
     // pre-fetch CSL serializations
     // TODO: I should probably cache these
@@ -417,7 +436,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
       }
     }
 
-    current_trace[2] = prep.duration = Date.now() - start // tslint:disable-line:no-magic_numbers
+    current_trace.prep.total = Date.now() - start
 
     try {
       worker.postMessage(JSON.parse(JSON.stringify(config)))
@@ -633,7 +652,7 @@ Zotero.Server.Endpoints['/better-bibtex/translations/stats'] = class {
 
   public init(request) {
     try {
-      return [ OK, 'text/csv', trace.map(translation => translation.map(v => `${v}`).join(',')).join('\n') ]
+      return [ OK, 'application/json', JSON.stringify(trace) ]
 
     } catch (err) {
       return [SERVER_ERROR, 'text/plain', '' + err]
