@@ -350,13 +350,12 @@ export let Translators = new class { // tslint:disable-line:variable-name
         throw new Error(`Unexpected scope: ${Object.keys(scope)}`)
     }
 
-    prep.serialized = 0
     // use a loop instead of map so we can await for beachball protection
     let batch = Date.now()
+    const count = { cached: 0 }
     config.items = []
     for (const item of items) {
-      const serialized = Serializer.fast(item)
-      if (serialized.cached) prep.serialized += 1
+      const serialized = Serializer.fast(item, count)
       config.items.push(serialized)
 
       // sleep occasionally so the UI gets a breather
@@ -370,7 +369,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
       last_trace = now
     }
     current_trace[1] = config.items.length
-    current_trace[3] = prep.serialized // tslint:disable-line:no-magic-numbers
+    current_trace[3] = prep.serialized = count.cached // tslint:disable-line:no-magic-numbers
 
     if (this.byId[translatorID].configOptions?.getCollections) {
       config.collections = collections.map(collection => {

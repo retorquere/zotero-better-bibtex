@@ -36,11 +36,11 @@ export let Serializer = new class { // tslint:disable-line:variable-name
 
   public serialize(item) { return Zotero.Utilities.Internal.itemToExportFormat(item, false, true) }
 
-  public fast(item) {
+  public fast(item, count?: { cached: number }) {
     let serialized = this.fetch(item)
 
     if (serialized) {
-      serialized.cached = true
+      if (count) count.cached += 1
     } else {
       serialized = item.toJSON()
       serialized.uri = Zotero.URI.getItemURI(item)
