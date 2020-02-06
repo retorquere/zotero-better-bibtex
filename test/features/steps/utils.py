@@ -24,7 +24,7 @@ for d in pathlib.Path(__file__).resolve().parents:
 
 class HashableDict(dict):
   def __hash__(self):
-    return hash(json.dumps(self, sort_keys=True))
+    return str(hash(json.dumps(self, sort_keys=True)))
 
 def print(txt, end='\n'):
   sys.stdout.write(txt + end)

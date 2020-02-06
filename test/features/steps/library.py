@@ -75,7 +75,7 @@ def load(lib):
     item['itemID']: HashableDict(clean_item(item))
     for item in lib['items']
   }
-  lib['items'] = sorted(items.values(), key=lambda item: item.__hash__())
+  lib['items'] = sorted(items.values(), key=lambda item: item.get('title', '') + '::' + item.__hash__())
 
   if 'collections' not in lib: lib['collections'] = {}
   collections = { k: HashableDict(v) for k, v in lib['collections'].items() }
