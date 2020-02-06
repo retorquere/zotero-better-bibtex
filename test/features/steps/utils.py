@@ -61,8 +61,8 @@ def expand_scenario_variables(context, filename, star=True):
   return filename
 
 def html2md(html):
-  html = BeautifulSoup(html, features='lxml').prettify()
-  return md(html).strip()
+  if '<' in html: html = md(BeautifulSoup(html, 'lxml').prettify())
+  return html.strip()
 
 def serialize(obj):
   return json.dumps(obj, indent=2, sort_keys=True)
