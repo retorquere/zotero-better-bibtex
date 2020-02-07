@@ -28,7 +28,7 @@ in your references that Bib(La)TeX won't understand.
 
   - `<i>...</i>`&#8660;`\emph{...}`/`\textit{...}`
   - `<b>...</b>`&#8660;`\textbf{...}`
-  - `<sup>...</sup>`&#8660;`\_{...}` and `<sub>...</sub>`&#8660;`^{...}`. 
+  - `<sup>...</sup>`&#8660;`\textsuperscript{...}` and `<sub>...</sub>`&#8660;`\textsubscript{...}`. 
   
   More can be added on request.
   
