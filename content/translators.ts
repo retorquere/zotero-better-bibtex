@@ -69,7 +69,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
   }
 
   public async init() {
-    const start = (new Date()).valueOf()
+    const start = Date.now()
 
     this.itemType = {
       note: Zotero.ItemTypes.getID('note'),
@@ -169,6 +169,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
     const translator = this.byId[translatorID]
 
     const start = Date.now()
+    let now
 
     const current_trace: Trace = {
       translator: translator.label,
@@ -282,7 +283,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
           break
 
         case 'item':
-          const now = Date.now()
+          now = Date.now()
           current_trace.export.duration.push(now - last_trace)
           last_trace = now
           break
@@ -385,7 +386,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
         batch = Date.now()
       }
 
-      const now = Date.now()
+      now = Date.now()
       current_trace.prep.duration.push(now - last_trace)
       last_trace = now
     }
@@ -436,10 +437,13 @@ export let Translators = new class { // tslint:disable-line:variable-name
       }
     }
 
-    current_trace.prep.total = Date.now() - start
+    now = Date.now()
+    current_trace.prep.duration.push(now - last_trace)
+    current_trace.prep.total = now - start
+    last_trace = now
 
     try {
-      worker.postMessage(JSON.parse(JSON.stringify(config)))
+      worker.postMessage(config)
     } catch (err) {
       worker.terminate()
       this.workers.running.delete(id)
