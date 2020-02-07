@@ -443,7 +443,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
     last_trace = now
 
     try {
-      worker.postMessage(config)
+      worker.postMessage(JSON.parse(JSON.stringify(config)))
     } catch (err) {
       worker.terminate()
       this.workers.running.delete(id)
