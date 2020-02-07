@@ -413,7 +413,7 @@ class ZoteroItem {
   protected $address(value) { return this.set('place', value) }
   protected $location(value) {
     if (this.type === 'conferencePaper') {
-      this.hackyFields.push(`event-place: ${value.replace(/\n+/g, '')}`)
+      this.hackyFields.push(`Place: ${value.replace(/\n+/g, '')}`)
       return true
     }
 
@@ -862,7 +862,20 @@ class ZoteroItem {
     }
 
     if (this.hackyFields.length > 0) {
-      this.hackyFields.sort()
+      this.hackyFields.sort((a, b) => {
+        a = a.toLowerCase()
+        b = b.toLowerCase()
+
+        if (a === b) return 0
+
+        if (a.startsWith('citation key:')) return -1
+        if (b.startsWith('citation key:')) return 1
+
+        const ta = a.startsWith('tex.')
+        const tb = b.startsWith('tex.')
+        if (ta === tb) return a.localeCompare(b, undefined, { sensitivity: 'base' })
+        return ta ? 1 : -1
+      })
       this.item.extra = this.hackyFields.map(line => line.replace(/\n+/g, ' ')).concat(this.item.extra || '').join('\n').trim()
     }
 

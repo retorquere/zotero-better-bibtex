@@ -19,12 +19,36 @@ import * as translatorMetadata from '../gen/translators.json'
 
 import { TaskEasy  as Queue } from 'task-easy'
 
+type Trace = {
+  translator: string
+  items: number
+  cached: {
+    serializer: number
+    export: number
+  }
+  prep: {
+    total: number
+    duration: number[]
+  }
+  export: {
+    total: number
+    duration: number[]
+  }
+}
+
+const trace: Trace[] = []
+
 interface IPriority {
   priority: number
   timestamp: number
 }
 
 type ExportScope = { type: 'items', items: any[] } | { type: 'library', id: number } | { type: 'collection', collection: any }
+type ExportJob = {
+  scope?: ExportScope
+  path?: string
+  preferences?: Record<string, boolean | number | string>
+}
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Translators = new class { // tslint:disable-line:variable-name
@@ -45,7 +69,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
   }
 
   public async init() {
-    const start = (new Date()).valueOf()
+    const start = Date.now()
 
     this.itemType = {
       note: Zotero.ItemTypes.getID('note'),
@@ -129,7 +153,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
     return translation.newItems
   }
 
-  public async exportItemsByQueuedWorker(translatorID: string, displayOptions: object, options: { scope?: ExportScope, path?: string, preferences?: Record<string, boolean | number | string> }) {
+  public async exportItemsByQueuedWorker(translatorID: string, displayOptions: Record<string, boolean>, options: ExportJob) {
     const workers = Math.max(Prefs.get('workers'), 1) // if you're here, at least one worker must be available
 
     if (this.workers.running.size > workers) {
@@ -139,10 +163,31 @@ export let Translators = new class { // tslint:disable-line:variable-name
     }
   }
 
-  public async exportItemsByWorker(translatorID: string, displayOptions: object, options: { scope?: ExportScope, path?: string, preferences?: Record<string, boolean | number | string> }) {
+  public async exportItemsByWorker(translatorID: string, displayOptions: Record<string, boolean>, options: ExportJob) {
     await Zotero.BetterBibTeX.ready
 
-    const full = Date.now()
+    const translator = this.byId[translatorID]
+
+    const start = Date.now()
+    let now
+
+    const current_trace: Trace = {
+      translator: translator.label,
+      items: 0,
+      cached: {
+        serializer: 0,
+        export: 0,
+      },
+      prep: {
+        total: 0,
+        duration: [],
+      },
+      export: {
+        total: 0,
+        duration: [],
+      },
+    }
+    trace.push(current_trace)
 
     options.preferences = options.preferences || {}
     displayOptions = displayOptions || {}
@@ -151,14 +196,29 @@ export let Translators = new class { // tslint:disable-line:variable-name
     const override = 'preference_'
     for (const [pref, value] of Object.entries(displayOptions)) {
       if (pref.startsWith(override)) {
-        options.preferences[pref.replace(override, '')] = (value as number) // number could actually be string or bool but it's just here to quiet typescript
+        options.preferences[pref.replace(override, '')] = (value as unknown as any) // number could actually be string or bool but it's just here to quiet typescript
         delete displayOptions[pref]
       }
     }
 
-    const translator = this.byId[translatorID]
+    const caching = !(
+      // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
+      displayOptions.exportFileData
 
-    const cache = Cache.getCollection(translator.label)
+      // jabref 4 stores collection info inside the reference, and collection info depends on which part of your library you're exporting
+      || (translator.label.includes('TeX') && options.preferences.jabrefFormat === 4) // tslint:disable-line:no-magic-numbers
+
+      // if you're looking at this.exportPath or this.exportDir in the postscript you're probably outputting something different based on it
+      || (((options.preferences.postscript as string) || '').indexOf('Translator.exportPath') >= 0)
+      || (((options.preferences.postscript as string) || '').indexOf('Translator.exportDir') >= 0)
+
+      // relative file paths are going to be different based on the file being exported to
+      || options.preferences.relativeFilePaths
+    )
+
+    let last_trace = start
+
+    const cache = caching && Cache.getCollection(translator.label)
 
     const params = Object.entries({
       client: Prefs.client,
@@ -198,7 +258,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
       return
     }
 
-    const start = Date.now()
     const config: BBTWorker.Config = {
       preferences: { ...Prefs.all(), ...options.preferences },
       options: displayOptions || {},
@@ -208,16 +267,10 @@ export let Translators = new class { // tslint:disable-line:variable-name
       cache: {},
     }
 
-    const prep = {
-      duration: 0,
-      serialized: 0,
-      exported: 0,
-    }
-
     worker.onmessage = (e: { data: BBTWorker.Message }) => {
       switch (e.data?.kind) {
         case 'error':
-          log.debug('QBW: failed:', Date.now() - full)
+          log.debug('QBW: failed:', Date.now() - start)
           log.error(e.data)
           Zotero.debug(`${prefix} error: ${e.data.message}`)
           deferred.reject(e.data.message)
@@ -229,14 +282,21 @@ export let Translators = new class { // tslint:disable-line:variable-name
           Zotero.debug(`${prefix} ${e.data.message}`)
           break
 
+        case 'item':
+          now = Date.now()
+          current_trace.export.duration.push(now - last_trace)
+          last_trace = now
+          break
+
         case 'done':
-          const duration = (Date.now() - full)
-          let status = `QBW ${prefix}: done\t`
-          status += `${config.items.length} items,\t`
-          status += `total duration ${duration / 1000}s\t` // tslint:disable-line:no-magic-numbers
-          status += `of which ${prep.duration / 1000}s prep,\t` // tslint:disable-line:no-magic-numbers
-          status += `serialization cache ${prep.serialized}%,\texport cache ${prep.exported}%`
+          current_trace.export.total = (Date.now() - start) - current_trace.prep.total
+          let status = `QBW: ${prefix} done,`
+          status += `${config.items.length} items, `
+          status += `total duration ${(current_trace.prep.total + current_trace.export.total) / 1000}s ` // tslint:disable-line:no-magic-numbers
+          status += `of which ${current_trace.prep.total / 1000}s prep, ` // tslint:disable-line:no-magic-numbers
+          status += `serialization cache ${current_trace.cached.serializer}%, export cache ${current_trace.cached.export}%`
           log.debug(status)
+          log.debug(current_trace)
           deferred.resolve(e.data.output)
           worker.terminate()
           this.workers.running.delete(id)
@@ -250,7 +310,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
           if (!cache) {
             const msg = `worker.cacheStore: cache ${translator.label} not found`
             log.error(msg)
-            log.debug('QBW: failed:', Date.now() - full)
+            log.debug('QBW: failed:', Date.now() - start)
             deferred.reject(msg)
             worker.terminate()
             this.workers.running.delete(id)
@@ -279,7 +339,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
     worker.onerror = e => {
       Zotero.debug(`${prefix} error: ${e}`)
-      log.debug('QBW: failed:', Date.now() - full)
+      log.debug('QBW: failed:', Date.now() - start)
       deferred.reject(e.message)
       worker.terminate()
       this.workers.running.delete(id)
@@ -313,17 +373,12 @@ export let Translators = new class { // tslint:disable-line:variable-name
         throw new Error(`Unexpected scope: ${Object.keys(scope)}`)
     }
 
-    // this needs to be calculated before the getter runs, because the getter will fill the cache
-    // tslint:disable-next-line:no-magic-numbers
-    prep.serialized = (Cache.getCollection('itemToExportFormat').find({ itemID: { $in: items.map(item => item.id) } }).length * 100) / items.length
-
     // use a loop instead of map so we can await for beachball protection
-    const trace: number[] = []
-    let prev = Date.now()
     let batch = Date.now()
+    const count = { cached: 0 }
     config.items = []
     for (const item of items) {
-      config.items.push(Serializer.fast(item))
+      config.items.push(Serializer.fast(item, count))
 
       // sleep occasionally so the UI gets a breather
       if ((Date.now() - batch) > 1000) { // tslint:disable-line:no-magic-numbers
@@ -331,11 +386,12 @@ export let Translators = new class { // tslint:disable-line:variable-name
         batch = Date.now()
       }
 
-      const now = Date.now()
-      trace.push(now - prev)
-      prev = now
+      now = Date.now()
+      current_trace.prep.duration.push(now - last_trace)
+      last_trace = now
     }
-    log.debug('prep trace', prefix, config.items.length, JSON.stringify(trace))
+    current_trace.items = config.items.length
+    current_trace.cached.serializer = count.cached
 
     if (this.byId[translatorID].configOptions?.getCollections) {
       config.collections = collections.map(collection => {
@@ -344,18 +400,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
         collection.name = collection.fields.name
         return collection
       })
-    }
-
-    // pre-fetch CSL serializations
-    if (translator.label.includes('CSL')) {
-      for (const item of config.items) {
-        // this should done in the translator, but since itemToCSLJSON in the worker version doesn't actually execute itemToCSLJSON but just
-        // fetches the version we create here *before* the translator starts, changes to the 'item' inside the translator are essentially ignored.
-        // There's no way around this until Zotero makes export translators async; we prep the itemToCSLJSON versions here so they can be "made" synchronously
-        // inside the translator
-        Object.assign(item, Extra.get(item.extra))
-        config.cslItems[item.itemID] = Zotero.Utilities.itemToCSLJSON(item)
-      }
     }
 
     // pre-fetch cache
@@ -367,6 +411,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
       cache.cloneObjects = false
       // uncloned is safe because it gets serialized in the transfer
       config.cache = cache.find(query).reduce((acc, cached) => {
+        current_trace.cached.export += 1
         // direct-DB access for speed...
         cached.meta.updated = (new Date).getTime() // touches the cache object so it isn't reaped too early
         acc[cached.itemID] = cached
@@ -376,8 +421,26 @@ export let Translators = new class { // tslint:disable-line:variable-name
       cache.dirty = true
     }
 
-    prep.duration = Date.now() - start
-    prep.exported = (Object.keys(config.cache).length * 100) / config.items.length // tslint:disable-line:no-magic-numbers
+    // pre-fetch CSL serializations
+    // TODO: I should probably cache these
+    if (translator.label.includes('CSL')) {
+      for (const item of config.items) {
+        // if there's a cached item, we don't need a fresh CSL item since we're not regenerating it anyhow
+        if (config.cache[item.itemID]) continue
+
+        // this should done in the translator, but since itemToCSLJSON in the worker version doesn't actually execute itemToCSLJSON but just
+        // fetches the version we create here *before* the translator starts, changes to the 'item' inside the translator are essentially ignored.
+        // There's no way around this until Zotero makes export translators async; we prep the itemToCSLJSON versions here so they can be "made" synchronously
+        // inside the translator
+        Object.assign(item, Extra.get(item.extra))
+        config.cslItems[item.itemID] = Zotero.Utilities.itemToCSLJSON(item)
+      }
+    }
+
+    now = Date.now()
+    current_trace.prep.duration.push(now - last_trace)
+    current_trace.prep.total = now - start
+    last_trace = now
 
     try {
       worker.postMessage(JSON.parse(JSON.stringify(config)))
@@ -386,7 +449,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
       this.workers.running.delete(id)
       log.error(err)
       deferred.reject(err)
-      log.debug('QBW: failed:', Date.now() - full)
+      log.debug('QBW: failed:', Date.now() - start)
     }
 
     return deferred.promise
@@ -583,5 +646,20 @@ export let Translators = new class { // tslint:disable-line:variable-name
     }
 
     return scope
+  }
+}
+
+const OK = 200
+const SERVER_ERROR = 500
+Zotero.Server.Endpoints['/better-bibtex/translations/stats'] = class {
+  public supportedMethods = ['GET']
+
+  public init(request) {
+    try {
+      return [ OK, 'application/json', JSON.stringify(trace) ]
+
+    } catch (err) {
+      return [SERVER_ERROR, 'text/plain', '' + err]
+    }
   }
 }

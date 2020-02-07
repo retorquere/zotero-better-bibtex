@@ -166,6 +166,8 @@ function makeDirs(path) {
 function saveFile(path, overwrite) {
   if (!Zotero.exportDirectory) return false
 
+  if (!OS.File.exists(this.localPath)) return false
+
   this.path = OS.Path.normalize(OS.Path.join(Zotero.exportDirectory, path))
   if (!this.path.startsWith(Zotero.exportDirectory)) throw new Error(`${path} looks like a relative path`)
 
@@ -271,6 +273,7 @@ class WorkerZotero {
   }
 
   public nextItem() {
+    this.send({ kind: 'item' })
     return this.config.items.shift()
   }
 
@@ -280,7 +283,7 @@ class WorkerZotero {
 
   private patchAttachments(item) {
     if (item.itemType === 'attachment') {
-      if (OS.File.exists(item.localPath)) item.saveFile = saveFile.bind(item)
+      item.saveFile = saveFile.bind(item)
 
       if (!item.defaultPath && item.localPath) { // why is this not set by itemGetter?!
         item.defaultPath = `files/${item.itemID}/${OS.Path.basename(item.localPath)}`

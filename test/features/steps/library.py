@@ -59,6 +59,9 @@ def clean_item(item):
   if 'creators' in item:
     item['creators'] = strip_obj(item['creators'])
 
+  if 'extra' in item:
+    item['extra'] = '\n'.join(sorted(item['extra'].split('\n')))
+
   return strip_obj(item)
 
 def sort_collection(coll):
@@ -75,7 +78,7 @@ def load(lib):
     item['itemID']: HashableDict(clean_item(item))
     for item in lib['items']
   }
-  lib['items'] = sorted(items.values(), key=lambda item: item.__hash__())
+  lib['items'] = sorted(items.values(), key=lambda item: item.get('title', '') + '::' + item.__hash__())
 
   if 'collections' not in lib: lib['collections'] = {}
   collections = { k: HashableDict(v) for k, v in lib['collections'].items() }

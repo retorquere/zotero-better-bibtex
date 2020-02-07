@@ -24,7 +24,7 @@ for d in pathlib.Path(__file__).resolve().parents:
 
 class HashableDict(dict):
   def __hash__(self):
-    return hash(json.dumps(self, sort_keys=True))
+    return str(hash(json.dumps(self, sort_keys=True)))
 
 def print(txt, end='\n'):
   sys.stdout.write(txt + end)
@@ -61,8 +61,8 @@ def expand_scenario_variables(context, filename, star=True):
   return filename
 
 def html2md(html):
-  html = BeautifulSoup(html, features='lxml').prettify()
-  return md(html).strip()
+  if '<' in html: html = md(BeautifulSoup(html, 'lxml').prettify())
+  return html.strip()
 
 def serialize(obj):
   return json.dumps(obj, indent=2, sort_keys=True)
