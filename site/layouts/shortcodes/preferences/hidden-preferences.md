@@ -103,6 +103,18 @@ default: `yes`
 
 Name particle handling. Only turn on when requested and we're talking about it on github.
 
+### postscriptOverride
+
+default: `<not set>`
+
+You can use a custom postscript per export directory:
+
+1. Edit the hidden preference `postscriptOverride`, and set it to a filename like `postscript.js`
+2. In the directory where you intend to export to, create a file called `postscript.js` (or whatever you set the preference to) and add the postscript you want there
+3. Export to that directory.
+
+A postscript override will disable caching for that export.
+
 ### rawImports
 
 default: `no`
