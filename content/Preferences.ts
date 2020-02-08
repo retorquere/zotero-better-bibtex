@@ -152,6 +152,7 @@ class AutoExportPane {
           case 'bibtexParticleNoOp':
           case 'asciiBibLaTeX':
           case 'biblatexExtendedNameFormat':
+          case 'recursive':
             (node as XUL.Checkbox).checked = ae[field]
             break
 
@@ -203,6 +204,7 @@ class AutoExportPane {
       case 'bibtexParticleNoOp':
       case 'asciiBibLaTeX':
       case 'biblatexExtendedNameFormat':
+      case 'recursive':
         ae[field] = node.checked
         break
 

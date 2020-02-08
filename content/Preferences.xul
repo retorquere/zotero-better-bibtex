@@ -713,6 +713,12 @@
                       label="&better-bibtex.Preferences.auto-export.fields.journalAbbrev;"
                       oncommand="Zotero.BetterBibTeX.Preferences.autoexport.edit(event.target)"
                       />
+                    <checkbox
+                      bbt:ae-id=""
+                      bbt:ae-field="recursive"
+                      label="&better-bibtex.Preferences.auto-export.fields.recursive;"
+                      oncommand="Zotero.BetterBibTeX.Preferences.autoexport.edit(event.target)"
+                      />
                   </vbox>
     
                   <hbox>
