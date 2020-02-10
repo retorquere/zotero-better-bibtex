@@ -6,6 +6,7 @@ beautifulsoup4
 behave
 boto3
 github3.py
+PyGithub
 lxml
 markdownify
 munch
