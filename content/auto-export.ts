@@ -1,5 +1,6 @@
 declare const Zotero: any
 declare const Components: any
+declare const OS: any
 
 Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
@@ -46,7 +47,7 @@ class Git {
 
       case 'always':
         try {
-          repo.path = Zotero.File.pathToFile(bib).parent.path
+          repo.path = OS.Path.dirname(bib)
         } catch (err) {
           log.error('git.repo:', err)
           return repo
@@ -55,17 +56,16 @@ class Git {
 
       case 'config':
         let config = null
-        for (let root = Zotero.File.pathToFile(bib).parent; root && root.exists() && root.isDirectory(); root = root.parent) {
-          config = root.clone()
-          config.append('.git')
-          if (config.exists() && config.isDirectory()) break
+        for (let root = OS.Path.dirname(bib); OS.File.exists(root) && OS.File.stat(root).isDir && root !== OS.Path.dirname(root); root = OS.Path.dirname(root)) {
+          config = OS.Path.join(root, '.git')
+          if (OS.File.exists(config) && OS.File.stat(config).isDir) break
           config = null
         }
         if (!config) return repo
-        repo.path = config.parent.path
+        repo.path = OS.Path.dirname(config)
 
-        config.append('config')
-        if (!config.exists() || !config.isFile()) return repo
+        config = OS.Path.join(config, 'config')
+        if (!OS.File.exists(config) || OS.File.stat(config).isDir) return repo
 
         try {
           const enabled = (ini.parse(Zotero.File.getContents(config))['zotero "betterbibtex"'] || {}).push
@@ -232,7 +232,7 @@ const queue = new class {
           scope = { type: 'library', id: ae.id }
           break
         default:
-          scope = null
+          throw new Error(`Unexpected auto-export scope ${ae.type}`)
       }
 
       const repo = git.repo(ae.path)
@@ -252,16 +252,24 @@ const queue = new class {
       if (Prefs.get('jabrefFormat') === 4) displayOptions.preference_jabrefFormat = 0 // tslint:disable-line:no-magic-numbers
       */
 
-      const start = Date.now()
-      log.debug('AutoExport.queue.run: start')
-
       for (const pref of prefOverrides) {
         displayOptions[`preference_${pref}`] = ae[pref]
       }
-      await Translators.exportItems(ae.translatorID, displayOptions, scope, ae.path)
 
-      const elapsed = (Date.now() - start) / 1000 // tslint:disable-line no-magic-numbers
-      log.debug('AutoExport.queue.run: export took', elapsed, 'seconds')
+      const jobs = [ { scope, path: ae.path } ]
+
+      if (ae.recursive) {
+        const ext = `.${Translators.byId[ae.translatorID].target}`
+        const collections = scope.type === 'library' ? Zotero.Collections.getByLibrary(scope.id, true) : Zotero.Collections.getByParent(scope.collection, true)
+        const root = scope.type === 'collection' ? scope.collection : false
+        const base = ae.path.replace(/\.[^.]*$/, '')
+        for (const collection of collections) {
+          const path = [base].concat(this.getCollectionPath(collection, root)).join('-') + ext
+          jobs.push({ scope: { type: 'collection', collection: collection.id }, path } )
+        }
+      }
+
+      await Promise.all(jobs.map(job => Translators.exportItems(ae.translatorID, displayOptions, job.scope, job.path)))
 
       await repo.push(Zotero.BetterBibTeX.getString('Preferences.auto-export.git.message', { type: Translators.byId[ae.translatorID].label.replace('Better ', '') }))
 
@@ -274,6 +282,14 @@ const queue = new class {
     ae.status = 'done'
     this.autoexports.update(ae)
     log.debug('AutoExport.queue.run: done')
+  }
+
+  private getCollectionPath(coll, root) {
+    log.debug('ae-collection:', coll.name, coll.parentID)
+
+    let path = [ coll.name.replace(/[^a-zA-Z0-9]/, '') ]
+    if (coll.parentID && coll.parentID !== root) path = this.getCollectionPath(Zotero.Collections.get(coll.parentID), root).concat(path)
+    return path
   }
 
   // idle observer
