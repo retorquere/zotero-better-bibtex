@@ -255,7 +255,8 @@ const queue = new class {
       for (const pref of prefOverrides) {
         displayOptions[`preference_${pref}`] = ae[pref]
       }
-      await Translators.exportItems(ae.translatorID, displayOptions, scope, ae.path)
+
+      const jobs = [ { scope, path: ae.path } ]
 
       if (ae.recursive) {
         const ext = `.${Translators.byId[ae.translatorID].target}`
@@ -264,9 +265,11 @@ const queue = new class {
         const base = ae.path.replace(/\.[^.]*$/, '')
         for (const collection of collections) {
           const path = [base].concat(this.getCollectionPath(collection, root)).join('-') + ext
-          await Translators.exportItems(ae.translatorID, displayOptions, { type: 'collection', collection: collection.id}, path)
+          jobs.push({ scope: { type: 'collection', collection: collection.id }, path } )
         }
       }
+
+      await Promise.all(jobs.map(job => Translators.exportItems(ae.translatorID, displayOptions, job.scope, job.path)))
 
       await repo.push(Zotero.BetterBibTeX.getString('Preferences.auto-export.git.message', { type: Translators.byId[ae.translatorID].label.replace('Better ', '') }))
 
