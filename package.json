@@ -96,7 +96,7 @@
   },
   "devDependencies": {
     "@types/node": "^13.7.0",
-    "@types/webpack": "^4.41.5",
+    "@types/webpack": "^4.41.6",
     "archiver": "^3.1.1",
     "bluebird": "^3.7.2",
     "circular-dependency-plugin": "^5.2.0",
@@ -121,7 +121,7 @@
     "pug": "^2.0.4",
     "request": "^2.88.0",
     "request-promise": "^4.2.5",
-    "rimraf": "^3.0.1",
+    "rimraf": "^3.0.2",
     "sorted-json": "^0.2.6",
     "ts-loader": "^6.2.1",
     "ts-node": "^8.6.2",
