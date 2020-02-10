@@ -1,6 +1,6 @@
 # Changelog
 
-## [5.2.14] - 2020-02-02
+## [5.2.16] - 2020-02-02
 
  - Foreground exports would fail, fixed
  - Retry for background workers
@@ -13,7 +13,7 @@
  - Expose export dir / path to postscript
  - Find texstudio in the default installation dir for windows
 
-## [5.2.10] 2020-01-27
+## [5.2.14] 2020-01-27
 
  - Make export path available to postscript
  - Find TeXstudio in the default installation path on Windows
