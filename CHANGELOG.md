@@ -1,6 +1,17 @@
 # Changelog
 
-## [5.2.16] - 2020-02-02
+## [5.2.16] - 2020-02-10
+
+ - Custom postscript per export directory (#1101)
+ - Auto-export including subcollections (#1074)
+ - Performance improvements for large libraries(#1391)
+ - \par breaks in annotations (#1422)
+ - Make export stats available (#1391)
+ - Performance improvements for CSL exports
+ - Confirmation dialog for removing auto-exports (#1421)
+ - Export Patent Applications as such (#1413)
+
+## [5.2.14] - 2020-02-02
 
  - Foreground exports would fail, fixed
  - Retry for background workers
@@ -13,7 +24,7 @@
  - Expose export dir / path to postscript
  - Find texstudio in the default installation dir for windows
 
-## [5.2.14] 2020-01-27
+## [5.2.10] 2020-01-27
 
  - Make export path available to postscript
  - Find TeXstudio in the default installation path on Windows
