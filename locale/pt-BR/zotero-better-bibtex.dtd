@@ -61,6 +61,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.translator "Formato">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.notes "Exportar notas">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.journalAbbrev "Usar abreviações de periódicos">
+<!ENTITY better-bibtex.Preferences.auto-export.fields.recursive "Export all child collections">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.error "Erro">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.cached "Em cache">
 <!ENTITY better-bibtex.Preferences.auto-export.warn.long-running "Avisar quando exportações automáticas demorarem mais que (seconds)">
