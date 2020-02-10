@@ -300,6 +300,17 @@
         <preference name="extensions.zotero.translators.better-bibtex.extraMergeCSL" type="bool" default="true"/>
         <preference name="extensions.zotero.translators.better-bibtex.extraMergeCitekeys" type="bool" default="true"/>
 
+        <preference name="extensions.zotero.translators.better-bibtex.postscriptOverride" type="string" default=""/>
+        <bbt:doc>
+          You can use a custom postscript per export directory:
+
+          1. Edit the hidden preference `postscriptOverride`, and set it to a filename like `postscript.js`
+          2. In the directory where you intend to export to, create a file called `postscript.js` (or whatever you set the preference to) and add the postscript you want there
+          3. Export to that directory.
+
+          A postscript override will disable caching for that export.
+        </bbt:doc>
+
         <!-- mainly for testing -->
         <preference name="extensions.zotero.translators.better-bibtex.scrubDatabase" type="bool" default="false"/>
         <preference name="extensions.zotero.translators.better-bibtex.removeStock" type="bool" default="false"/>

@@ -378,6 +378,19 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
           this._displayOptions.exportDir = this.location.parent.path
           this._displayOptions.exportPath = this.location.path
         }
+
+        let postscript = Prefs.get('postscriptOverride')
+        if (postscript) {
+          postscript = OS.Path.join(this._displayOptions.exportDir, postscript)
+          try {
+            if (OS.File.exists(postscript)) {
+              // adding the literal 'Translator.exportDir' makes sure caching is disabled
+              this._displayOptions.preference_postscript = `// postscript override in Translator.exportDir ${this._displayOptions.exportDir}\n\n${Zotero.File.getContents(postscript)}`
+            }
+          } catch (err) {
+            log.error('failed to load postscript override', postscript, err)
+          }
+        }
       }
 
       let capture = this._displayOptions?.keepUpdated
