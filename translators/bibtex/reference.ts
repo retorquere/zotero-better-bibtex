@@ -314,7 +314,6 @@ export class Reference {
   private punctuationAtEnd = new Zotero.Utilities.XRegExp('[\\p{Punctuation}]$')
   private startsWithLowercase = new Zotero.Utilities.XRegExp('^[\\p{Ll}]')
   private hasLowercaseWord = new Zotero.Utilities.XRegExp('\\s[\\p{Ll}]')
-  private whitespace = new Zotero.Utilities.XRegExp('\\p{Zs}')
 
   private inPostscript = false
 
@@ -894,9 +893,6 @@ export class Reference {
     return this.toVerbatim(f.value)
   }
 
-  protected _enc_creators_scrub_name(name) {
-    return Zotero.Utilities.XRegExp.replace(name, this.whitespace, ' ', 'all')
-  }
   /*
    * Encode creators to author-style field
    *
@@ -911,15 +907,15 @@ export class Reference {
       let name
       if (creator.name || (creator.lastName && (creator.fieldMode === 1))) {
         name = creator.name || creator.lastName
-        if (name !== 'others') name = raw ? `{${name}}` : this.enc_latex({value: new String(this._enc_creators_scrub_name(name))}) // tslint:disable-line:no-construct
+        if (name !== 'others') name = raw ? `{${name}}` : this.enc_latex({value: new String(name)}) // tslint:disable-line:no-construct
 
       } else if (raw) {
         name = [creator.lastName || '', creator.firstName || ''].join(', ')
 
       } else if (creator.lastName || creator.firstName) {
         name = {
-          family: this._enc_creators_scrub_name(creator.lastName || ''),
-          given: this._enc_creators_scrub_name(creator.firstName || ''),
+          family: creator.lastName || '',
+          given: creator.firstName || '',
         }
 
         if (Translator.preferences.parseParticles) CSL.parseParticles(name)
