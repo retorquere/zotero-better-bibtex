@@ -1,0 +1,138 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "DOIandURL": "both",
+      "automaticTags": true,
+      "asciiBibLaTeX": true,
+      "ascii": "",
+      "asciiBibTeX": true,
+      "autoExport": "immediate",
+      "quickCopyMode": "latex",
+      "citeCommand": "cite",
+      "quickCopyPandocBrackets": false,
+      "citekeyFormat": "[zotero:clean]",
+      "citekeyFold": true,
+      "keyConflictPolicy": "keep",
+      "auxImport": false,
+      "keyScope": "library",
+      "exportBibTeXStrings": "off",
+      "importBibTeXStrings": true,
+      "bibtexParticleNoOp": false,
+      "skipFields": "",
+      "bibtexURL": "off",
+      "warnBulkModify": 10,
+      "postscript": "",
+      "strings": "",
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "",
+      "autoExportIdleWait": 10,
+      "cacheFlushInterval": 5,
+      "csquotes": "",
+      "rawLaTag": "#LaTeX",
+      "rawImports": false,
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
+      "jabrefFormat": 0,
+      "qualityReport": false,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": false,
+      "exportTitleCase": true,
+      "exportBraceProtection": true,
+      "retainCache": false,
+      "importSentenceCase": "on+guess",
+      "importCaseProtection": "as-needed",
+      "autoExportDelay": 1,
+      "itemObserverDelay": 100,
+      "parseParticles": true,
+      "citeprocNoteCitekey": false,
+      "extraMergeTeX": true,
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "postscriptOverride": "",
+      "scrubDatabase": false,
+      "removeStock": false,
+      "ignorePostscriptErrors": true,
+      "debugLogDir": "",
+      "testing": false,
+      "autoPin": false,
+      "kuroshiro": false,
+      "relativeFilePaths": false,
+      "git": "config",
+      "mapUnicode": "conservative",
+      "mapText": "",
+      "mapMath": "",
+      "newTranslatorsAskRestart": true,
+      "workers": 4,
+      "platform": "win",
+      "client": "zotero"
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
+    }
+  },
+  "collections": {},
+  "items": [
+    {
+      "key": "QNPM2BC4",
+      "version": 16464,
+      "itemType": "conferencePaper",
+      "pages": "123  ----      432",
+      "date": "2025",
+      "language": "Dutch",
+      "abstractNote": "This is an example\nThe first mu should be a greek mu which will turn out italic, the second is a textmu which schould look the same as the surrounding text",
+      "title": "A-D test title with lower case greek letter \u03bcPC4570, which is not the same as 1\u00b5F",
+      "creators": [
+        {
+          "firstName": "P. A.",
+          "lastName": "Author",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "collections": [
+        "3QHRTNSD"
+      ],
+      "relations": [],
+      "dateAdded": "2015-04-24T12:00:51Z",
+      "dateModified": "2020-02-15T10:47:20Z",
+      "uri": "http://zotero.org/users/1134760/items/QNPM2BC4",
+      "itemID": 1655,
+      "attachments": [],
+      "notes": [],
+      "citekey": "author_-d_2025",
+      "citationKey": "author_-d_2025",
+      "libraryID": 1,
+      "publicationTitle": "Proceedings of the test"
+    },
+    {
+      "key": "NFHAEZER",
+      "version": 6840,
+      "itemType": "document",
+      "title": "NEC \u00b5PC577H Tri state hex buffers",
+      "creators": [],
+      "tags": [],
+      "collections": [
+        "3QHRTNSD",
+        "AU7V2JA5"
+      ],
+      "relations": [
+        "http://zotero.org/users/1134760/items/4DTD4FP6"
+      ],
+      "dateAdded": "2014-07-19T14:33:45Z",
+      "dateModified": "2014-07-19T14:35:16Z",
+      "uri": "http://zotero.org/users/1134760/items/NFHAEZER",
+      "itemID": 1178,
+      "attachments": [],
+      "notes": [
+        "<p>In Yamaha tuner IC101 en IC102</p>"
+      ],
+      "citekey": "noauthor_nec_nodate",
+      "citationKey": "noauthor_nec_nodate",
+      "libraryID": 1
+    }
+  ]
+}

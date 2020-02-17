@@ -51,7 +51,7 @@
     "test": "test"
   },
   "dependencies": {
-    "@retorquere/bibtex-parser": "^3.0.20",
+    "@retorquere/bibtex-parser": "^3.0.21",
     "@types/lokijs": "^1.5.3",
     "ajv": "^6.11.0",
     "ajv-keywords": "^3.4.1",
@@ -89,7 +89,7 @@
     "task-easy": "^1.0.1",
     "transliteration": "^2.1.8",
     "tslint": "^6.0.0",
-    "unicode2latex": "^1.0.35",
+    "unicode2latex": "^1.0.37",
     "webpack-cli": "^3.3.11",
     "xregexp": "^4.3.0",
     "zotero-plugin": "^0.0.99"

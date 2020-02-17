@@ -5,13 +5,14 @@ Feature: Export
 @127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327
 @351 @376 @389 @bblt-0 @bblt @485 @515 @573 @590 @747 @edtf @689
 @biblatex @644 @889 @482 @979 @746 @1148 @1139 @1162 @1207 @1331
-@245 @246 @1353 @1370 @1387 @1395 @1413 @1422
+@245 @246 @1353 @1370 @1387 @1395 @1413 @1422 @1434
 Scenario Outline: BibLaTeX Export
   When I import <references> references from "export/<file>.json"
   Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
   Examples:
      | file                                                                                           | references  |
+     | micro sign (unicode B5) export seems wrong #1434                                               | 2           |
      | Export Patent Applications as such #1413                                                       | 2           |
      | paragraphs in Zotero notes need par #1422                                                      | 1           |
      | origyear not taken from csl extra-field for citation key generation #1395                      | 2           |
