@@ -92,7 +92,7 @@
     "unicode2latex": "^1.0.43",
     "webpack-cli": "^3.3.11",
     "xregexp": "^4.3.0",
-    "zotero-plugin": "^0.0.99"
+    "zotero-plugin": "^1.0.8"
   },
   "devDependencies": {
     "@types/node": "^13.7.1",
