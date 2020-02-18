@@ -12,6 +12,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | Be robust against misconfigured journal abbreviator #127                                       | 1           |
      | micro sign (unicode B5) export seems wrong #1434                                               | 2           |
      | Export Patent Applications as such #1413                                                       | 2           |
      | paragraphs in Zotero notes need par #1422                                                      | 1           |
@@ -63,7 +64,6 @@ Scenario Outline: BibLaTeX Export
      | Title case of latex greek text on biblatex export #564                                         | 2           |
      | pre not working in Extra field #559                                                            | 1           |
      | @legislation; map code,container-title to journaltitle #327                                    | 1           |
-     | Be robust against misconfigured journal abbreviator #127                                       | 1           |
      | Better BibLaTeX.001                                                                            | 1           |
      | Better BibLaTeX.002                                                                            | 2           |
      | Better BibLaTeX.003                                                                            | 2           |
