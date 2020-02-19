@@ -13,7 +13,7 @@ Scenario Outline: BibLaTeX Export
   Examples:
      | file                                                                                           | references  |
      | Be robust against misconfigured journal abbreviator #127                                       | 1           |
-     | micro sign (unicode B5) export seems wrong #1434                                               | 2           |
+     | micro sign (unicode B5) export seems wrong and span in title #1434                             | 2           |
      | Export Patent Applications as such #1413                                                       | 2           |
      | paragraphs in Zotero notes need par #1422                                                      | 1           |
      | origyear not taken from csl extra-field for citation key generation #1395                      | 2           |

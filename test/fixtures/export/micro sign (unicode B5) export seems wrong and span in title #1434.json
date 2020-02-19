@@ -84,7 +84,7 @@
       "date": "2025",
       "language": "Dutch",
       "abstractNote": "This is an example\nThe first mu should be a greek mu which will turn out italic, the second is a textmu which schould look the same as the surrounding text",
-      "title": "A-D test title with lower case greek letter \u03bcPC4570, which is not the same as 1\u00b5F",
+      "title": "<span class=\"novase\">A-D test </span>title with lower case greek letter \u03bcPC4570, which is not the same as 1\u00b5F",
       "creators": [
         {
           "firstName": "P. A.",
