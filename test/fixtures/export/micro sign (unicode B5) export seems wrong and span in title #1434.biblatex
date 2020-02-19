@@ -1,5 +1,10 @@
 
-@inproceedings{author_-d_2025,
+@misc{_NECuPC577HTristatehexbuffers_,
+  title = {{{NEC \textmu{}PC577H Tri}} State Hex Buffers},
+  annotation = {In Yamaha tuner IC101 en IC102}
+}
+
+@inproceedings{Author_ADtesttitlewithlowercasegreeklettermPC4570whichisnotthesameas1uF_2025,
   title = {A-D test title with lower case greek letter \textmu{}PC4570, which is not the same as 1\textmu{}F},
   booktitle = {Proceedings of the test},
   author = {Author, P. A.},
@@ -8,11 +13,6 @@
   abstract = {This is an example
 The first mu should be a greek mu which will turn out italic, the second is a textmu which schould look the same as the surrounding text},
   langid = {dutch}
-}
-
-@misc{noauthor_nec_nodate,
-  title = {{{NEC \textmu{}PC577H Tri}} State Hex Buffers},
-  annotation = {In Yamaha tuner IC101 en IC102}
 }
 
 

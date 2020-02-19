@@ -12,7 +12,7 @@
       "quickCopyMode": "latex",
       "citeCommand": "cite",
       "quickCopyPandocBrackets": false,
-      "citekeyFormat": "[zotero:clean]",
+      "citekeyFormat": "[auth]_[title]_[year]",
       "citekeyFold": true,
       "keyConflictPolicy": "keep",
       "auxImport": false,
