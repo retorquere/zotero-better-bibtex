@@ -227,6 +227,7 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
       this.sortedItems = []
       let item
       while (item = Zotero.nextItem()) {
+        item.journalAbbreviation = item.journalAbbreviation || item.autoJournalAbbreviation
         this.sortedItems.push(item)
       }
       // fallback to itemType.itemID for notes and attachments. And some items may have duplicate keys
