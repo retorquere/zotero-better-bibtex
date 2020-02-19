@@ -199,6 +199,7 @@ with open(os.path.join(root, 'gen', 'typings', 'serialized-item.d.ts'), 'w') as 
     notes: string[]
     attachments: {{ path: string, title?: string, mimeType?: string }}
     raw: boolean
+    autoJournalAbbreviation?: string
 
 {fields}
 
