@@ -17,6 +17,15 @@ import * as Extra from '../extra'
 const parser = require('./formatter.pegjs')
 import * as DateParser from '../dateparser'
 
+import parse5 = require('parse5/lib/parser')
+const htmlParser = new parse5()
+
+function innerText(node) {
+  if (node.nodeName === '#text') return node.value
+  if (node.childNodes) return node.childNodes.map(innerText).join('')
+  return ''
+}
+
 const script = {
   han: new RegExp('([' + scripts.find(s => s.name === 'Han').bmp + '])', 'g'), // tslint:disable-line prefer-template
 }
@@ -108,10 +117,13 @@ class PatternFormatter {
 
     try {
       this.item.date = item.getField('date', false, true)
-    } catch (error) {}
+    } catch (err) {}
     try {
-      this.item.title = item.getField('title', false, true)
-    } catch (error1) {}
+      this.item.title = item.getField('title', false, true) || ''
+      if (this.item.title.includes('<')) this.item.title = innerText(htmlParser.parseFragment(this.item.title))
+    } catch (err) {
+      this.item.title = ''
+    }
 
     if (this.item.date) {
       let date = DateParser.parse(this.item.date)
@@ -175,8 +187,9 @@ class PatternFormatter {
 
     key += '_'
 
-    if (this.item.title) {
-      key += this.item.title.toLowerCase().replace(this.re.zotero.citeKeyTitleBanned, '').split(/\s+/g)[0]
+    const title = this.item.item.getField('title', false, true) || '' // don't use the cleaned title
+    if (title) {
+      key += title.toLowerCase().replace(this.re.zotero.citeKeyTitleBanned, '').split(/\s+/g)[0]
     } else {
       key += 'notitle'
     }
