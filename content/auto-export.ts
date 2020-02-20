@@ -36,13 +36,14 @@ class Git {
     return this
   }
 
-  public repo(bib): Git {
+  public async repo(bib): Promise<Git> {
     const repo = new Git(this)
 
     if (!this.git) return repo
 
     switch (Prefs.get('git')) {
       case 'off':
+        log.debug('git.repo: off')
         return repo
 
       case 'always':
@@ -56,20 +57,29 @@ class Git {
 
       case 'config':
         let config = null
-        for (let root = OS.Path.dirname(bib); OS.File.exists(root) && OS.File.stat(root).isDir && root !== OS.Path.dirname(root); root = OS.Path.dirname(root)) {
+        for (let root = OS.Path.dirname(bib); (await OS.File.exists(root)) && (await OS.File.stat(root)).isDir && root !== OS.Path.dirname(root); root = OS.Path.dirname(root)) {
           config = OS.Path.join(root, '.git')
-          if (OS.File.exists(config) && OS.File.stat(config).isDir) break
+          if ((await OS.File.exists(config)) && (await OS.File.stat(config)).isDir) break
           config = null
         }
-        if (!config) return repo
+        if (!config) {
+          log.debug('git.repo: git repo found for', bib)
+          return repo
+        }
         repo.path = OS.Path.dirname(config)
 
         config = OS.Path.join(config, 'config')
-        if (!OS.File.exists(config) || OS.File.stat(config).isDir) return repo
+        if (!(await OS.File.exists(config)) || (await OS.File.stat(config)).isDir) {
+          log.debug('git.repo: git config not found for', bib)
+          return repo
+        }
 
         try {
-          const enabled = (ini.parse(Zotero.File.getContents(config))['zotero "betterbibtex"'] || {}).push
-          if (enabled !== 'true' && enabled !== true) return repo
+          const enabled = ini.parse(Zotero.File.getContents(config))['zotero "betterbibtex"']?.push
+          if (enabled !== 'true' && enabled !== true) {
+            log.debug('git.repo: push not enabled for', repo.path)
+            return repo
+          }
         } catch (err) {
           log.debug('git.repo: error parsing config', config.path, err)
           return repo
@@ -77,12 +87,12 @@ class Git {
         break
 
       default:
-        log.error('Unexpected git config', Prefs.get('git'))
+        log.error('git.repo: unexpected git config', Prefs.get('git'))
         return repo
     }
 
     const sep = Zotero.isWin ? '\\' : '/'
-    if (bib[repo.path.length] !== sep) throw new Error(`${bib} not in directory ${repo.path} (${bib[repo.path.length]} vs ${sep})?!`)
+    if (bib[repo.path.length] !== sep) throw new Error(`git.repo: ${bib} not in directory ${repo.path} (${bib[repo.path.length]} vs ${sep})?!`)
 
     repo.enabled = true
     repo.bib = bib.substring(repo.path.length + 1)
@@ -91,6 +101,7 @@ class Git {
   }
 
   public async pull() {
+    log.debug('git.pull', this)
     if (!this.enabled) return
 
     try {
@@ -103,6 +114,7 @@ class Git {
   }
 
   public async push(msg) {
+    log.debug('git.push', this)
     if (!this.enabled) return
 
     try {
@@ -235,7 +247,7 @@ const queue = new class {
           throw new Error(`Unexpected auto-export scope ${ae.type}`)
       }
 
-      const repo = git.repo(ae.path)
+      const repo = await git.repo(ae.path)
       await repo.pull()
       const displayOptions: any = {
         exportNotes: ae.exportNotes,
@@ -356,7 +368,9 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
     this.db.removeWhere({ path: ae.path })
     this.db.insert(ae)
 
-    if (git.repo(ae.path).enabled) this.schedule(ae.type, [ae.id]) // causes initial push to overleaf at the cost of a unnecesary extra export
+    git.repo(ae.path).then(repo => {
+      if (repo.enabled) this.schedule(ae.type, [ae.id]) // causes initial push to overleaf at the cost of a unnecesary extra export
+    })
   }
 
   public schedule(type, ids) {
