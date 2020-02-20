@@ -426,15 +426,15 @@ export class Reference {
     if (this.item.raw) return str
 
     return str
-      .replace(/\u2053/g, '~')
-      .replace(/[\u2014\u2015]/g, '---') // em-dash
-      .replace(/[\u2012\u2013]/g, '--') // en-dash
       .split(',').map(range => {
         return range
           .replace(/^\s*([0-9]+)\s*(-+)\s*([0-9]+)\s*$/g, '$1$2$3')
           .replace(/^([0-9]+)-([0-9]+)$/g, '$1--$2')
           .replace(/^([0-9]+)-{4,}([0-9]+)$/g, '$1---$2')
       }).join(',') // treat space-hyphen-space like an en-dash when it's between numbers
+      .replace(/\u2053/g, '~')
+      .replace(/[\u2014\u2015]/g, '---') // em-dash
+      .replace(/[\u2012\u2013]/g, '--') // en-dash
   }
 
   /*
