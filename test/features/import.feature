@@ -116,3 +116,9 @@ Scenario: Jabref groups import does not work #717
   Then the library should match "import/*.2.10.json"
   When I import 4 references from "import/*.3.8.bib" into a new collection
   Then the library should match "import/*.3.8.json"
+
+@unabbr
+Scenario: Unabbreviate journal names
+  When I set preference .importUnabbreviate to acs
+  And I import 1 reference from "import/*.bib"
+  Then the library should match "import/*.json"
