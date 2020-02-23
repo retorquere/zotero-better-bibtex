@@ -3,7 +3,7 @@
 
 default: `<not set>`
 
-Snippet of javascript to run [after each reference generation]({{ ref . "scripting" }}).
+Snippet of javascript to run [after each reference generation]({{ ref . "exporting/scripting.md" }}).
 
 #### @string definitions
 
