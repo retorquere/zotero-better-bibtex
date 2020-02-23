@@ -76,6 +76,7 @@ jobs:
       - npm run release
     before_deploy:
       - travis_retry sudo snap install hugo --channel=extended
+      - hugo version
       - npm run docs:deploy
     deploy:
       provider: pages
