@@ -61,7 +61,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.translator "Format">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.notes "Exportiere Notizen">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.journalAbbrev "Zeitschriften-Abkürzungen verwenden">
-<!ENTITY better-bibtex.Preferences.auto-export.fields.recursive "Export all child collections">
+<!ENTITY better-bibtex.Preferences.auto-export.fields.recursive "Exportiere alle Untersammlungen">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.error "Fehler">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.cached "Zwischengespeichert">
 <!ENTITY better-bibtex.Preferences.auto-export.warn.long-running "Warne mich, wenn Auto-Exporte länger dauern als (seconds)">
@@ -133,7 +133,7 @@ If you turn this off, the markup is omitted during import. When you select 'yes'
 If you have this on, and you experience any problem that is not the cache getting dropped on upgrade, you *must* clear the cache and reproduce the problem. When you change this setting, as with any setting change, the cache will be dropped.">
 <!ENTITY better-bibtex.Preferences.advanced.export.workers "Parallel background exports:">
 
-<!ENTITY better-bibtex.Preferences.advanced.tab.citekeys "Citation keys">
+<!ENTITY better-bibtex.Preferences.advanced.tab.citekeys "Zitierschlüssel">
 
 <!ENTITY better-bibtex.Preferences.export.qualityReport "Füge Kommentare über mögliche Probleme mit den Verweisen hinzu">
 <!ENTITY better-bibtex.Preferences.export.automaticTags "Inkludiere automatische Tags in den Export">
@@ -169,15 +169,15 @@ If you have this on, and you experience any problem that is not the cache gettin
 
 <!ENTITY better-bibtex.Preferences.export.fields.sorted "Ordne Referenzen und Felder deterministisch; hauptsächlich für Versionskontrolle.">
 <!ENTITY better-bibtex.Preferences.export.fields.skip "Felder, die nicht exportiert werden sollen (mit Komma trennen)">
-<!ENTITY better-bibtex.Preferences.export.misc "Miscellaneous">
+<!ENTITY better-bibtex.Preferences.export.misc "Verschiedenes">
 <!ENTITY better-bibtex.Preferences.export.map-unicode "When converting to plain-text latex commands:">
 <!ENTITY better-bibtex.Preferences.export.map-unicode.minimal-packages "Minimize additional latex packages required">
 <!ENTITY better-bibtex.Preferences.export.map-unicode.conservative "Minimize the number of switches between math-mode and text-mode">
 <!ENTITY better-bibtex.Preferences.export.map-unicode.text "Prefer text-mode replacements">
 <!ENTITY better-bibtex.Preferences.export.map-unicode.math "Prefer math-mode replacements">
 
-<!ENTITY better-bibtex.Preferences.advanced.tab.postscript "postscript">
-<!ENTITY better-bibtex.Preferences.postscript.warn "Use of 'Translator.options.exportPath' in postscripts disables the cache. Exports will be substantially slower.">
+<!ENTITY better-bibtex.Preferences.advanced.tab.postscript "Postscript">
+<!ENTITY better-bibtex.Preferences.postscript.warn "Die Verwendung von 'Translator.options.exportPath' in Postscripts deaktiviert den Cache. Die Exporte werden sich deutlich verlangsamen.">
 <!ENTITY better-bibtex.Preferences.advanced.tab.strings "@string definitions">
 <!ENTITY better-bibtex.Preferences.prefpane.better-bibtex "Better BibTeX">
 <!ENTITY better-bibtex.Preferences.rescan-citekeys "Scanne angeheftete Zitierschlüssel erneut">
