@@ -47,7 +47,6 @@
   "extraMergeCSL": true,
   "extraMergeCitekeys": true,
   "postscriptOverride": "",
-  "importUnabbreviate": "",
   "scrubDatabase": false,
   "removeStock": false,
   "ignorePostscriptErrors": true,

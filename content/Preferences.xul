@@ -179,7 +179,7 @@
 
         <preference name="extensions.zotero.translators.better-bibtex.postscript" id="pref-better-bibtex-postscript" type="string" default=""/>
         <bbt:doc>
-          Snippet of javascript to run [after each reference generation]({{ ref . "scripting" }}).
+          Snippet of javascript to run [after each reference generation]({{ ref . "exporting/scripting.md" }}).
         </bbt:doc>
 
         <preference name="extensions.zotero.translators.better-bibtex.strings" id="pref-better-bibtex-strings" type="string" default=""/>
@@ -189,12 +189,13 @@
 
         <preference name="extensions.zotero.translators.better-bibtex.autoAbbrev" id="pref-better-bibtex-autoAbbrev" type="bool" default="false"/>
         <bbt:doc>
-          If set, generates journal abbreviations on export using the Zotero journal abbreviator.
+          If set, generates journal abbreviations on export using the Zotero journal abbreviator, according to the abbreviation style selected in the list below the checkbox.
         </bbt:doc>
 
         <preference name="extensions.zotero.translators.better-bibtex.autoAbbrevStyle" id="pref-better-bibtex-autoAbbrevStyle" type="string" default=""/>
         <bbt:doc>
-          Select the style for auto-abbreviation. Only applicable to Juris-M; in Zotero, the style for automatic abbreviation is not configurable.
+          Select the style for auto-abbreviation. Only applicable to Juris-M; in Zotero, the style for automatic
+          abbreviation is not configurable.
         </bbt:doc>
 
         <preference name="extensions.zotero.translators.better-bibtex.autoExportIdleWait" type="int" default="10"/>
@@ -308,11 +309,6 @@
           3. Export to that directory.
 
           A postscript override will disable caching for that export.
-        </bbt:doc>
-
-        <preference name="extensions.zotero.translators.better-bibtex.importUnabbreviate" type="string" default=""/>
-        <bbt:doc>
-          Sometimes bib files have the abbreviated form of the journal name in the journal field instead of the full journal name. If you select one of the [JabRef abbreviation lists](https://abbrv.jabref.org/journals/) here, BBT will convert these abbrevated names to their full equivalent from the selected list during import.
         </bbt:doc>
 
         <!-- mainly for testing -->
@@ -584,13 +580,6 @@
 
             <groupbox>
               <caption label="&better-bibtex.Preferences.export.misc;"/>
-              <vbox>
-                <label bbt:preference="pref-better-bibtex-autoAbbrev">&better-bibtex.Preferences.auto-abbrev;</label>
-                <menulist id="better-bibtex-abbrev" onchange="Zotero.BetterBibTeX.Preferences.styleChanged()">
-                  <menupopup id="better-bibtex-abbrev-style-popup">
-                  </menupopup>
-                </menulist>
-              </vbox>
               <checkbox id="id-better-bibtex-preferences-autoAbbrev" label="&better-bibtex.Preferences.auto-abbrev;" preference="pref-better-bibtex-autoAbbrev"/>
               <separator id="better-bibtex-abbrev-style-separator" class="thin"/>
               <label id="better-bibtex-abbrev-style-label" bbt:preference="pref-better-bibtex-autoAbbrevStyle">&better-bibtex.Preferences.auto-abbrev.style;</label>
@@ -797,7 +786,7 @@
                   <button label="&better-bibtex.Preferences.resetCache;" oncommand="Zotero.BetterBibTeX.Preferences.cacheReset()"/>
                 </tabpanel>
 
-                <tabpanel orient="vertical"><!-- import -->
+                <tabpanel orient="vertical">
                   <hbox>
                     <label bbt:preference="pref-better-bibtex-importSentenceCase">&better-bibtex.Preferences.advanced.import.sentenceCase;</label>
                     <menulist preference="pref-better-bibtex-importSentenceCase">
@@ -820,16 +809,6 @@
                       </menupopup>
                     </menulist>
                     <image tooltip="tooltip-importCaseProtection" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
-                  </hbox>
-
-                  <hbox>
-                    <label bbt:preference="pref-better-bibtex-importUnabbreviate">&better-bibtex.Preferences.advanced.import.unabbreviate;</label>
-                    <menulist preference="pref-better-bibtex-importUnabbreviate">
-                      <menupopup id="pref-better-bibtex-unabbreviate-options">
-                        <menuitem id="pref-better-bibtex-unabbreviate-option-off" label="&better-bibtex.Preferences.advanced.import.unabbreviate.off;" value=""/>
-                      </menupopup>
-                    </menulist>
-                    <image tooltip="tooltip-importSentenceCase" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
                   </hbox>
                 </tabpanel>
 

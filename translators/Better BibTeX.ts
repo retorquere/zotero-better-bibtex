@@ -469,9 +469,12 @@ class ZoteroItem {
 
     }
 
-    if (!abbr && Translator.unabbrev[journal]) {
-      abbr = journal
-      journal = Translator.unabbrev[journal]
+    if (!abbr && journal) {
+      const _journal = journal.toLowerCase().replace(' & ')
+      if (Translator.unabbrev[_journal]) {
+        abbr = journal
+        journal = Translator.unabbrev[_journal]
+      }
     }
 
     if (abbr && this.validFields.journalAbbreviation) {
@@ -987,16 +990,8 @@ async function _fetch(url): Promise<{ json: () => Promise<any> }> {
 export async function doImport() {
   Translator.init('import')
 
-  debug('unabbr:', Translator.preferences.importUnabbreviate)
-  if (Translator.preferences.importUnabbreviate) {
-    try {
-      const list = await _fetch(`resource://zotero-better-bibtex/unabbrev/${Translator.preferences.importUnabbreviate}.json`)
-      Translator.unabbrev = await list.json()
-      debug('unabbr:', Translator.unabbrev)
-    } catch (err) {
-      debug('unabbr: failed', Translator.preferences.importUnabbreviate, ':', err)
-    }
-  }
+  const list = await _fetch('resource://zotero-better-bibtex/unabbrev.json')
+  Translator.unabbrev = await list.json()
 
   let read
   let input = ''
