@@ -44,6 +44,7 @@ if rebuild:
 
   def match(abbr, full):
     if abbr.lower() == full.lower(): return 0
+    if not '.' in abbr and full.lower().startswith(abbr.lower()): return 0
 
     abbr = '.*'.join(re.escape(c) for c in list(re.sub('[-,. ()]', '', abbr)))
     if args.case_sensitive:
@@ -105,3 +106,7 @@ with open(os.path.join(root, 'build/resource/unabbrev.json'), 'w') as f:
   for row in db.execute('SELECT abbr, full FROM abbrev WHERE abbr IN (SELECT abbr FROM (SELECT DISTINCT abbr, full FROM abbrev WHERE keep = 1) GROUP BY abbr HAVING COUNT(*) = 1)'):
     unabbrev[row.abbr] = row.full
   json.dump(unabbrev, f, indent='  ')
+
+with open('discarded.csv', 'w') as f:
+  for row in db.execute('SELECT DISTINCT abbr, full FROM abbrev WHERE keep = 0 ORDER BY abbr, full'):
+    print(f'{row.abbr};{row.full}', file=f)
