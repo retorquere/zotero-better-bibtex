@@ -56,12 +56,13 @@ Scenario Outline: Better BibTeX Import
   | Some bibtex entries quietly discarded on import from bib file #873          | 989         |
  # | Async import, large library #720                                            | 9057        |
 
-@test-cluster-1 @959 @1058 @871 @1081 @1115 @1350 @667
+@test-cluster-1 @959 @1058 @871 @1081 @1115 @1350 @667 @1436
 Scenario Outline: Better BibTeX Import
   When I import <references> references from "import/<file>.bib"
   Then the library should match "import/*.json"
   Examples:
   | file                                                                        | references  |
+  | Unabbreviate on import #1436                                                | 2           |
   | support Local-Zo-Url-x field from BibDesk2Zotero_attachments #667           | 1           |
   | Author splitter failure                                                     | 1           |
   | Title of German entry converted to lowercase during import #1350            | 4           |
@@ -116,3 +117,9 @@ Scenario: Jabref groups import does not work #717
   Then the library should match "import/*.2.10.json"
   When I import 4 references from "import/*.3.8.bib" into a new collection
   Then the library should match "import/*.3.8.json"
+
+@unabbr
+Scenario: Unabbreviate journal names
+  When I set preference .importUnabbreviate to acs
+  And I import 1 reference from "import/*.bib"
+  Then the library should match "import/*.json"
