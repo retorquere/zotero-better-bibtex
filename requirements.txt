@@ -23,3 +23,5 @@ selenium
 toml
 Mako
 markdown
+inflect
+pygtrie
