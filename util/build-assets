@@ -28,6 +28,7 @@ generated = [
   'gen/translators.json',
   'gen/preferences/defaults.json',
   'gen/update.rdf',
+  'build/resource/unabbrev.json',
 ]
 
 expired = Munch(
