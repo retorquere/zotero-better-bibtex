@@ -23,7 +23,7 @@ if args.case_sensitive:
   dbname = 'abbrev-cs.sqlite'
 else:
   dbname = 'abbrev-ci.sqlite'
-if os.path.exists(dbname) and args.rebuild: os.remove(dbname)
+if os.path.exists(dbname) and (args.rebuild or os.stat(dbname).st_mtime < os.stat(__file__).st_mtime): os.remove(dbname)
 
 rebuild = not os.path.exists(dbname)
 db = sqlite3.connect(dbname)
@@ -43,6 +43,8 @@ if rebuild:
     return _csv.replace('journal_abbreviations_', '').replace('.csv', '.json')
 
   def match(abbr, full):
+    if abbr.lower() == full.lower(): return 0
+
     abbr = '.*'.join(re.escape(c) for c in list(re.sub('[-,. ()]', '', abbr)))
     if args.case_sensitive:
       if re.match(abbr, full) is None: return 0
