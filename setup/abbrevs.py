@@ -74,20 +74,20 @@ if rebuild:
   db.commit()
 
 if args.case_sensitive:
-  print('## Case sensitive')
+  print('## Case sensitive\n')
 else:
-  print('## Case insensitive')
+  print('## Case insensitive\n')
 
 for row in db.execute('SELECT COUNT(*) as n FROM abbrev WHERE keep = 0'):
-  print(f'{row.n} abbrevs do not seem to match the full name')
+  print(f'{row.n} abbrevs do not seem to match the full name\n')
 
-print('Combined lists:')
+print('Combined lists:\n')
 for row in db.execute('SELECT COUNT(*) as n FROM (SELECT abbr, COUNT(*) FROM abbrev WHERE keep = 1 GROUP BY abbr HAVING COUNT(*) > 1)'):
   print(f'* {row.n} have more than one match')
 for row in db.execute('SELECT COUNT(*) as n FROM (SELECT abbr, COUNT(*) FROM abbrev WHERE keep = 1 GROUP BY abbr HAVING COUNT(*) = 1)'):
   print(f'* {row.n} unabbreviations available')
 
-print('Seperate lists:')
+print('\nSeperate lists:\n')
 for row in db.execute('SELECT SUM(n) as n FROM (SELECT list, COUNT(*) as n FROM (SELECT abbr, list, COUNT(*) FROM abbrev WHERE keep = 1 GROUP BY abbr, list HAVING COUNT(*) > 1) GROUP BY list)'):
   print(f'* {row.n} have more than one match')
 for row in db.execute('SELECT SUM(n) as n FROM (SELECT list, COUNT(*) as n FROM (SELECT abbr, list, COUNT(*) FROM abbrev WHERE keep = 1 GROUP BY abbr, list HAVING COUNT(*) = 1) GROUP BY list)'):
