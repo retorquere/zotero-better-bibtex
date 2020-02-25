@@ -469,11 +469,14 @@ class ZoteroItem {
 
     }
 
+    debug('$journaltitle:', { journal, abbr, unabbr: Object.keys(Translator.unabbrev).length })
     if (!abbr && journal) {
-      const _journal = journal.toLowerCase().replace(' & ')
-      if (Translator.unabbrev[_journal]) {
+      const _journal = journal.toLowerCase()
+      const full = Translator.unabbrev[_journal] || Translator.unabbrev[_journal.replace(' & ', ' and ')] || Translator.unabbrev[_journal.replace(' and ', ' & ')]
+      debug('$journaltitle:', { _journal, full })
+      if (full) {
         abbr = journal
-        journal = Translator.unabbrev[_journal]
+        journal = full
       }
     }
 

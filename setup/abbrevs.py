@@ -17,7 +17,6 @@ root = os.path.join(os.path.dirname(__file__), '..')
 parser = argparse.ArgumentParser()
 parser.add_argument('-c', '--case-sensitive', action='store_true')
 parser.add_argument('-r', '--rebuild', action='store_true')
-parser.add_argument('-v', '--verbose', action='store_true')
 args = parser.parse_args()
 
 if args.case_sensitive:
@@ -119,9 +118,10 @@ if rebuild:
     WHERE discard IS NULL AND full LIKE '% & %' AND full IN (SELECT full FROM amp_and)
   ''')
 
-  print('  removing prefix alternates')
+  print('  removing prefix alternates and duplicates')
   trie = Trie()
   prefixed = set([])
+  multiple = set([])
   duplicate = []
   for row in db.execute('SELECT rowid, abbr, full FROM abbrev WHERE discard IS NULL GROUP BY abbr, full ORDER BY abbr, full DESC'):
     name = f'{row.abbr}\t{row.full.lower()}'
@@ -130,11 +130,11 @@ if rebuild:
       continue
 
     try: # "aana j.": "AANA Journal" with better alternatives
-      longer = False
-      for prefix, rowid in trie.items(prefix=f'{row.abbr}\t'): # abbr already in there => longer because of full DESC
-        longer = True
+      longer = None
+      for mapping, rowid in trie.items(prefix=f'{row.abbr}\t'): # abbr already in there => longer because of full DESC
+        longer = mapping
         break
-      if longer:
+      if longer is not None:
         abbr = row.abbr
         if abbr.endswith('.'): abbr = abbr[:-1]
         if abbr.endswith(' j') and row.full.lower() == abbr + 'ournal':
@@ -143,6 +143,10 @@ if rebuild:
         if abbr.endswith(' bull') and row.full.lower() == abbr + 'etin':
           prefixed.add(str(row.rowid))
           continue
+
+        # when two journal names exist for the same abbr, keep the longer
+        multiple.add(str(row.rowid))
+        continue
     except:
       pass
 
@@ -154,15 +158,16 @@ if rebuild:
     trie[name] = row.rowid
   if len(duplicate) > 0: db.execute("DELETE FROM abbrev WHERE rowid IN (" + ', '.join(list(duplicate)) + ')')
   if len(prefixed) > 0: db.execute("UPDATE abbrev SET discard='prefix' WHERE rowid IN (" + ', '.join(list(prefixed)) + ')')
+  if len(multiple) > 0: db.execute("UPDATE abbrev SET discard='multiple' WHERE rowid IN (" + ', '.join(list(multiple)) + ')')
     
-  print('  removing duplicates')
-  db.execute('''
-    WITH
-    distinct_abbr_full AS (SELECT DISTINCT abbr, full FROM abbrev WHERE discard IS NULL),
-    abbr_count AS (SELECT abbr, COUNT(*) AS n FROM distinct_abbr_full GROUP BY abbr)
-
-    UPDATE abbrev SET discard = 'duplicate' WHERE abbr IN (SELECT abbr FROM abbr_count WHERE n > 1)
-  ''')
+#  print('  removing duplicates')
+#  db.execute('''
+#    WITH
+#    distinct_abbr_full AS (SELECT DISTINCT abbr, full FROM abbrev WHERE discard IS NULL),
+#    abbr_count AS (SELECT abbr, COUNT(*), MIN(rowid) AS n FROM distinct_abbr_full GROUP BY abbr)
+#
+#    UPDATE abbrev SET discard = 'duplicate' WHERE abbr IN (SELECT abbr FROM abbr_count WHERE n > 1)
+#  ''')
 
   db.commit()
 
@@ -175,12 +180,11 @@ with open(os.path.join(root, 'build/resource/unabbrev.json'), 'w') as f:
 for row in db.execute('SELECT COUNT(*) AS n FROM abbrev WHERE discard IS NULL'):
   print('  abbreviations:', row.n)
 
-if args.verbose:
-  for row in db.execute('SELECT discard, COUNT(*) AS n FROM abbrev WHERE discard IS NOT NULL GROUP BY discard'):
-    print(f'  {row.discard}: {row.n}')
+for row in db.execute('SELECT discard, COUNT(*) AS n FROM abbrev WHERE discard IS NOT NULL GROUP BY discard'):
+  print(f'  {row.discard}: {row.n}')
 
-  with open('discarded.csv', 'w') as f:
-    writer = csv.writer(f, delimiter=';')
-    writer.writerow(['abbr', 'full', 'reason'])
-    for row in db.execute('SELECT DISTINCT abbr, full, MAX(discard) AS reason FROM abbrev WHERE discard IS NOT NULL GROUP BY abbr, full ORDER BY abbr, full'):
-      writer.writerow([row.abbr, row.full, row.reason])
+with open('discarded.csv', 'w') as f:
+  writer = csv.writer(f, delimiter=';')
+  writer.writerow(['abbr', 'full', 'reason'])
+  for row in db.execute('SELECT abbr, full, discard AS reason FROM abbrev WHERE discard IS NOT NULL ORDER BY abbr, full'):
+    writer.writerow([row.abbr, row.full, row.reason])
