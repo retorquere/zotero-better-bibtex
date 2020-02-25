@@ -51,9 +51,9 @@
     "test": "test"
   },
   "dependencies": {
-    "@retorquere/bibtex-parser": "^3.0.25",
+    "@retorquere/bibtex-parser": "^3.0.27",
     "@types/lokijs": "^1.5.3",
-    "ajv": "^6.11.0",
+    "ajv": "^6.12.0",
     "ajv-keywords": "^3.4.1",
     "barcoder": "^2.0.1",
     "citeproc": "^2.2.31",
@@ -83,7 +83,7 @@
     "pegjs": "^0.10.0",
     "permutater": "^1.0.2",
     "punycode": "^2.1.1",
-    "recast": "^0.18.5",
+    "recast": "^0.18.7",
     "shelljs": "^0.8.3",
     "string-template": "^1.0.0",
     "task-easy": "^1.0.1",
@@ -92,7 +92,7 @@
     "unicode2latex": "^1.0.44",
     "webpack-cli": "^3.3.11",
     "xregexp": "^4.3.0",
-    "zotero-plugin": "^1.0.8"
+    "zotero-plugin": "^1.0.9"
   },
   "devDependencies": {
     "@types/node": "^13.7.4",
