@@ -37,7 +37,7 @@ db.row_factory = munch_factory
 
 number = inflect.engine()
 def _mismatch(abbr, full):
-  abbr = '.*?' + '.*?'.join(re.escape(c) for c in list(re.sub('[-,. ()]', '', abbr)))
+  abbr = '.*?' + '.*?'.join(re.escape(c) for c in list(re.sub('[-&,. ()]', '', abbr)))
   if args.case_sensitive:
     if re.match(abbr, full) is None: return 'mismatch'
   else:
@@ -98,25 +98,21 @@ if rebuild:
         full, abbr = [r.strip() for r in row[0:2]]
         if full == '' or abbr == '': continue
 
-        if ' and ' in full and ' & ' in abbr: abbr = abbr.replace(' & ', ' and ')
-        if ' and ' in full and '&' in abbr: abbr = abbr.replace('&', ' and ')
-        if ' und ' in full and ' & ' in abbr: abbr = abbr.replace(' & ', ' und ')
-        if ' und ' in full and '&' in abbr: abbr = abbr.replace('&', ' und ')
-
         abbr = re.sub('[{}$]', '', abbr)
         full = re.sub('[{}$]', '', full)
         if not args.case_sensitive: abbr = abbr.lower()
         db.execute('INSERT INTO abbrev (abbr, full, discard, list) VALUES (?, ?, ?, ?)', (abbr, unjunk(abbr, full), mismatch(abbr, full), name(abbrev_csv, '')))
 
   print('  removing abbr == full')
-  db.execute("UPDATE abbrev SET discard = 'same' WHERE LOWER(abbr) IN (SELECT LOWER(full) FROM abbrev)")
+  db.execute("UPDATE abbrev SET discard = 'same' WHERE LOWER(abbr) = LOWER(full)")
+  db.execute("UPDATE abbrev SET discard = 'same' WHERE LOWER(abbr) IN (SELECT LOWER(full) FROM abbrev WHERE discard IS NULL)")
 
-  print('  removing & alternates')
-  db.execute('''
-    WITH amp_and AS (SELECT REPLACE(full, ' and ', ' & ') as full FROM abbrev WHERE full LIKE '% and %')
-    UPDATE abbrev SET discard = 'alternate'
-    WHERE discard IS NULL AND full LIKE '% & %' AND full IN (SELECT full FROM amp_and)
-  ''')
+  #print('  removing & alternates')
+  #db.execute('''
+    #WITH amp_and AS (SELECT REPLACE(full, ' and ', ' & ') as full FROM abbrev WHERE full LIKE '% and %')
+    #UPDATE abbrev SET discard = 'alternate'
+    #WHERE discard IS NULL AND full LIKE '% & %' AND full IN (SELECT full FROM amp_and)
+  #''')
 
   print('  removing prefix alternates and duplicates')
   trie = Trie()
@@ -125,6 +121,9 @@ if rebuild:
   duplicate = []
   for row in db.execute('SELECT rowid, abbr, full FROM abbrev WHERE discard IS NULL GROUP BY abbr, full ORDER BY abbr, full DESC'):
     name = f'{row.abbr}\t{row.full.lower()}'
+    if trie.get(name): # strict duplicates
+      duplicate.append(str(row.rowid))
+      continue
     if trie.get(name): # strict duplicates
       duplicate.append(str(row.rowid))
       continue
