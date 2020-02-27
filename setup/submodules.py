@@ -2,6 +2,7 @@
 
 import subprocess
 import urllib.request
+import textwrap
 
 print('updating submodules')
 online = True
@@ -10,9 +11,14 @@ try:
 except:
   online = False
 
+def run(cmd):
+  return textwrap.indent(subprocess.check_output(cmd.split(' ')).decode('utf-8'), '  ')
+
 if online:
-  submodules = subprocess.check_output('git submodule update --init --recursive --remote'.split(' ')).decode('utf-8')
-  if submodules == '': submodules = 'up to date'
-  print(f'  {submodules}')
+  submodules = run('git submodule update --init --recursive --remote')
+  if submodules.strip() == '': submodules = '  up to date'
+  print(submodules)
+  print(run('git submodule foreach git checkout master'))
+  print(run('git submodule foreach git pull origin master'))
 else:
   print('  GitHub offline -- you may not have network access -- skipping submodule update')

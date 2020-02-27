@@ -89,13 +89,13 @@
     "task-easy": "^1.0.1",
     "transliteration": "^2.1.8",
     "tslint": "^6.0.0",
-    "unicode2latex": "^1.0.44",
+    "unicode2latex": "^1.0.47",
     "webpack-cli": "^3.3.11",
     "xregexp": "^4.3.0",
     "zotero-plugin": "^1.0.9"
   },
   "devDependencies": {
-    "@types/node": "^13.7.4",
+    "@types/node": "^13.7.6",
     "@types/webpack": "^4.41.6",
     "archiver": "^3.1.1",
     "bluebird": "^3.7.2",
