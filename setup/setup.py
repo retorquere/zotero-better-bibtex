@@ -7,4 +7,4 @@ import submodules
 import months
 import kuroshiro
 import item
-import abbrevs
+import abbrev
