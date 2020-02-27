@@ -5,6 +5,3 @@
 [submodule "bbt/themes/learn"]
 	path = site/themes/learn
 	url = https://github.com/matcornic/hugo-theme-learn.git
-[submodule "abbrv.jabref.org"]
-	path = abbrv.jabref.org
-	url = https://github.com/JabRef/abbrv.jabref.org.git
