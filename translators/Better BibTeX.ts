@@ -469,19 +469,14 @@ class ZoteroItem {
 
     }
 
-    debug('$journaltitle:', { journal, abbr, unabbr: Object.keys(Translator.unabbrev).length })
-    if (!abbr && journal) {
-      const _journal = journal.toLowerCase()
-      const full = Translator.unabbrev[_journal] || Translator.unabbrev[_journal.replace(' & ', ' and ')] || Translator.unabbrev[_journal.replace(' and ', ' & ')]
-      debug('$journaltitle:', { _journal, full })
-      if (full) {
-        abbr = journal
-        journal = full
-      }
-    }
+    if (!abbr && this.bibtex.fields.shortjournal) abbr = this.bibtex.fields.shortjournal[0]
 
-    if (abbr && this.validFields.journalAbbreviation) {
-      this.item.journalAbbreviation = abbr
+    if (abbr) {
+      if (this.validFields.journalAbbreviation) {
+        this.item.journalAbbreviation = abbr
+      } else if (!this.hackyFields.find(line => line.startsWith('tex.shortjournal:'))) {
+        this.hackyFields.push(`tex.shortjournal: ${abbr}`)
+      }
     }
 
     switch (this.type) {
@@ -497,6 +492,7 @@ class ZoteroItem {
     return true
   }
   protected $journal() { return this.$journaltitle() }
+  protected $shortjournal() { return this.$journaltitle() }
   protected '$journal-full'() { return this.$journaltitle() }
 
   protected $pages(value) {
@@ -993,8 +989,8 @@ async function _fetch(url): Promise<{ json: () => Promise<any> }> {
 export async function doImport() {
   Translator.init('import')
 
-  const list = await _fetch('resource://zotero-better-bibtex/unabbrev.json')
-  Translator.unabbrev = await list.json()
+  const unabbreviate = await (await _fetch('resource://zotero-better-bibtex/unabbrev/unabbrev.json')).json()
+  const strings = await (await _fetch('resource://zotero-better-bibtex/unabbrev/unabbrev.json')).json()
 
   let read
   let input = ''
@@ -1013,6 +1009,8 @@ export async function doImport() {
     guessAlreadySentenceCased: Translator.preferences.importSentenceCase === 'on+guess',
     verbatimFields: Translator.verbatimFields,
     raw: Translator.preferences.rawImports,
+    unabbreviate,
+    strings,
   })
   const errors = bib.errors
 

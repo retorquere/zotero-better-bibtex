@@ -91,8 +91,6 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
 
   public stringCompare: (a: string, b: string) => number
 
-  public unabbrev: Record<string, string> = {}
-
   public initialized = false
 
   constructor() {
