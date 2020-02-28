@@ -88,7 +88,8 @@ if args.beta: sys.argv.extend(['--define', f'beta=true'])
 
 print(' '.join(sys.argv))
 
-if (os.environ.get('CLIENT') == 'jurism' or args.jurism): # and args.beta: oy vey Juris-M...
+if os.environ.get('CLIENT') == 'jurism' or args.jurism: # and args.beta: come on Juris-M...
+  #print('********* SKIPPING BETA BUILD FOR JURIS-M UNTIL FURTHER NOTICE ****************')
   print('********* SKIPPING JURIS-M UNTIL FURTHER NOTICE ****************')
   sys.exit()
 
