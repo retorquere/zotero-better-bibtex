@@ -121,6 +121,8 @@ Beaucoup de fichiers bib(la)tex le font de façon un peu trop zélée et vous n'
 
 Si vous désactivez cette option, le balisage est omis lors de l'importation. Lorsque vous sélectionnez « oui », toutes les accolades que bib(la)tex interpréterait comme une protection de casse (ce qui n'est pas le cas de toutes) sont converties en éléments `span`.
 En mode « minimal », le nombre d'éléments `span` est minimisé.">
+<!ENTITY better-bibtex.Preferences.advanced.import.unabbreviate "Expand abbreviated journal titles on import using list:">
+<!ENTITY better-bibtex.Preferences.advanced.import.unabbreviate.off "None">
 
 <!ENTITY better-bibtex.Preferences.advanced.tab.export "Exportation">
 <!ENTITY better-bibtex.Preferences.advanced.export.titleCase "Appliquer la capitalisation aux titres">
