@@ -44,6 +44,7 @@ if args.this:
   branch = repo.head.name.split('/')[-1]
   assert re.match(r'^gh-[0-9]+$', branch)
   sys.argv.extend(['--tags', branch.replace('gh-', '@') ])
+  args.nightly = True
 
 ## exclude @nightly by default
 if os.environ.get('TRAVIS_BRANCH', 'master') != 'master' and os.path.exists(os.path.join(ROOT, '.nightly.json')):
