@@ -120,6 +120,8 @@ With 'yes, but try to exclude already-sentence-cased titles', BBT will attempt t
 There's plenty of bib(la)tex files out there that do this a little overzealously, and you may not like the resulting HTML code in your items, even though this is what the braces mean in bib(la)tex, and Zotero supports it.
 
 If you turn this off, the markup is omitted during import. When you select 'yes', all braces that bib(la)tex would interpret as case protection (which is not all of them) are converted to `span` elements. In `minimal` mode, the number of `span` elements is minimized.">
+<!ENTITY better-bibtex.Preferences.advanced.import.unabbreviate "Expand abbreviated journal titles on import using list:">
+<!ENTITY better-bibtex.Preferences.advanced.import.unabbreviate.off "None">
 
 <!ENTITY better-bibtex.Preferences.advanced.tab.export "Export">
 <!ENTITY better-bibtex.Preferences.advanced.export.titleCase "Titel-Casing auf Titel anwenden">
