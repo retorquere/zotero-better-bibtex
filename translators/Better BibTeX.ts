@@ -1,5 +1,13 @@
 declare const Zotero: any
 
+const toWordsOrdinal = require('number-to-words/src/toWordsOrdinal')
+function edition(n) {
+  if (typeof n === 'number') return toWordsOrdinal(n)
+  if (typeof n === 'string' && n.match(/^[0-9]+$/)) return toWordsOrdinal(n)
+  return n
+}
+import wordsToNumbers from 'words-to-numbers'
+
 import { Translator } from './lib/translator'
 export { Translator }
 
@@ -185,7 +193,7 @@ export function doExport() {
 
     ref.add({name: 'address', value: item.place})
     ref.add({name: 'chapter', value: item.section})
-    ref.add({name: 'edition', value: item.edition})
+    ref.add({name: 'edition', value: edition(item.edition)})
     ref.add({name: 'type', value: item.type})
     ref.add({name: 'series', value: item.series, bibtexStrings: true})
     ref.add({name: 'title', value: item.title})
@@ -428,7 +436,10 @@ class ZoteroItem {
     return this.$address(value)
   }
 
-  protected $edition(value) { return this.set('edition', value) }
+  protected $edition(value) {
+    if (value && !value.match(/^[0-9]+$/)) value = wordsToNumbers(value)
+    return this.set('edition', value)
+  }
 
   protected $isbn(value) { return this.set('ISBN', value) }
 

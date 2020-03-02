@@ -110,6 +110,11 @@ Scenario Outline: Better BibTeX Import
 #  When I import 911 references with 42 attachments from "import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.bib"
 #  Then the library should match "import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.json"
 
+@1446
+Scenario: Edition Numbers in BibTeX Exports #1446
+  When I import 1 reference from "export/*.bibtex"
+  Then the library should match "export/*.roundtrip.json"
+
 @717
 Scenario: Jabref groups import does not work #717
   When I import 3 references from "import/*.2.10.bib" into a new collection

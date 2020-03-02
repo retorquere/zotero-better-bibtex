@@ -79,6 +79,7 @@
     "lokijs": "^1.5.8",
     "njstrace": "^1.2.0",
     "node-eta": "^0.9.0",
+    "number-to-words": "^1.2.4",
     "parse5": "^5.1.1",
     "pegjs": "^0.10.0",
     "permutater": "^1.0.2",
@@ -91,6 +92,7 @@
     "tslint": "^6.0.0",
     "unicode2latex": "^1.0.47",
     "webpack-cli": "^3.3.11",
+    "words-to-numbers": "^1.5.1",
     "xregexp": "^4.3.0",
     "zotero-plugin": "^1.0.9"
   },

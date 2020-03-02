@@ -127,13 +127,14 @@ Scenario Outline: BibLaTeX Export
 
 @441 @439 @bbt @300 @565 @551 @558 @747 @892 @899 @901 @976 @977
 @978 @746 @1069 @1092 @1091 @1110 @1112 @1118 @1147 @1188 @1217 @1218
-@1227 @1265 @980 @1375 @1402
+@1227 @1265 @980 @1375 @1402 @1446
 Scenario Outline: BibTeX Export
   Given I import <references> references from "export/<file>.json"
   Then an export using "Better BibTeX" should match "export/*.bibtex"
 
   Examples:
      | file                                                                               | references |
+     | Edition Numbers in BibTeX Exports #1446                                            | 1          |
      | Minimize bibtex export package dependencies #1402                                  | 1          |
      | Book chapter citation using p. instead of pp. #1375                                | 1          |
      | braces after textemdash followed by unicode #980                                   | 1          |

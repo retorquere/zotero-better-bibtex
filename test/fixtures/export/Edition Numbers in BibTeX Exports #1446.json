@@ -1,0 +1,172 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "DOIandURL": "both",
+      "automaticTags": true,
+      "asciiBibLaTeX": false,
+      "ascii": "",
+      "asciiBibTeX": true,
+      "autoExport": "immediate",
+      "quickCopyMode": "latex",
+      "citeCommand": "cite",
+      "quickCopyPandocBrackets": false,
+      "citekeyFormat": "[auth:lower][year]",
+      "citekeyFold": true,
+      "keyConflictPolicy": "keep",
+      "auxImport": false,
+      "keyScope": "library",
+      "exportBibTeXStrings": "off",
+      "importBibTeXStrings": true,
+      "bibtexParticleNoOp": false,
+      "skipFields": "abstract,file,keywords,note",
+      "bibtexURL": "url",
+      "warnBulkModify": 10,
+      "postscript": "if (Translator.BetterBibTeX && item.itemType === 'conferencePaper' && item.extra) {\n    const lines = item.extra.split('\\n')\n    for (let line of lines) {\n        let matches = /^([A-Za-z0-9]+): *(.+)$/.exec(line);\n        if (matches === null || matches[1] !== 'Sponsor') {\n            continue\n        }\n        reference.add({name: 'organization', value: matches[2]})\n    }\n}",
+      "strings": "",
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "",
+      "autoExportIdleWait": 10,
+      "cacheFlushInterval": 5,
+      "csquotes": "",
+      "rawLaTag": "#LaTeX",
+      "rawImports": false,
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
+      "jabrefFormat": 0,
+      "qualityReport": false,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": true,
+      "exportTitleCase": true,
+      "exportBraceProtection": true,
+      "retainCache": false,
+      "importSentenceCase": "on+guess",
+      "importCaseProtection": "as-needed",
+      "autoExportDelay": 1,
+      "itemObserverDelay": 5,
+      "parseParticles": true,
+      "citeprocNoteCitekey": false,
+      "extraMergeTeX": true,
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "postscriptOverride": "",
+      "scrubDatabase": false,
+      "removeStock": false,
+      "ignorePostscriptErrors": true,
+      "debugLogDir": "",
+      "testing": false,
+      "autoPin": false,
+      "kuroshiro": false,
+      "relativeFilePaths": false,
+      "git": "config",
+      "mapUnicode": "conservative",
+      "mapText": "",
+      "mapMath": "",
+      "newTranslatorsAskRestart": true,
+      "workers": 2,
+      "platform": "lin",
+      "client": "zotero"
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
+    }
+  },
+  "collections": {},
+  "items": [
+    {
+      "key": "U5FT2EGN",
+      "version": 0,
+      "itemType": "book",
+      "title": "Templates for the solution of linear systems: building blocks for iterative methods",
+      "date": "1994",
+      "language": "en-US",
+      "shortTitle": "Templates for the solution of linear systems",
+      "url": "https://www.netlib.org/linalg/html_templates/Templates.html",
+      "accessDate": "2020-01-31T17:55:21Z",
+      "place": "Philadelphia, PA",
+      "publisher": "Society for Industrial and Applied Mathematics",
+      "edition": "2",
+      "numPages": "106",
+      "creators": [
+        {
+          "firstName": "Richard",
+          "lastName": "Barrett",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Michael",
+          "lastName": "Berry",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Tony F.",
+          "lastName": "Chan",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "James",
+          "lastName": "Demmel",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "June M.",
+          "lastName": "Donato",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Jack",
+          "lastName": "Dongarra",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Victor",
+          "lastName": "Eijkhout",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Roldan",
+          "lastName": "Pozo",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Charles",
+          "lastName": "Romine",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Henk",
+          "lastName": "van der Vorst",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "collections": [
+        "ZKGGCFJB"
+      ],
+      "relations": [],
+      "dateAdded": "2020-01-31T17:37:53Z",
+      "dateModified": "2020-02-29T16:38:00Z",
+      "uri": "http://zotero.org/users/local/cuz22LJP/items/U5FT2EGN",
+      "itemID": 31,
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "title": "Barrett et al. - 1994 - Templates for the solution of linear systems buil.pdf",
+          "tags": [],
+          "relations": [],
+          "dateAdded": "2020-01-31T17:49:44Z",
+          "dateModified": "2020-01-31T17:49:44Z",
+          "uri": "http://zotero.org/users/local/cuz22LJP/items/N5NDYHS7",
+          "path": "/home/claudio/misc/zotero/storage/N5NDYHS7/Barrett et al. - 1994 - Templates for the solution of linear systems buil.pdf"
+        }
+      ],
+      "notes": [],
+      "citekey": "barrett1994",
+      "citationKey": "barrett1994",
+      "libraryID": 1
+    }
+  ]
+}
