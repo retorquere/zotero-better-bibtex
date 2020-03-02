@@ -357,8 +357,8 @@ export function doExport() {
     ref.add({ name: 'eventtitle', value: item.conferenceName })
     ref.add({ name: 'pagetotal', value: item.numPages })
 
-    ref.add({ name: 'number', value: patent.number(item) || item.number || item.seriesNumber })
-    ref.add({ name: looks_like_number_field(item.issue) ? 'number' : 'issue', value: item.issue })
+    const number_added = ref.add({ name: 'number', value: patent.number(item) || item.number || item.seriesNumber })
+    ref.add({ name: !number_added && looks_like_number_field(item.issue) ? 'number' : 'issue', value: item.issue })
 
     switch (item.referenceType) {
       case 'case':

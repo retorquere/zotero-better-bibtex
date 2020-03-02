@@ -449,6 +449,11 @@ export class Reference {
    *   ignored)
    */
   public add(field: IField) {
+    if (!field.value && !field.bibtex && this.inPostscript) {
+      delete this.has[field.name]
+      return
+    }
+
     if (Translator.skipField[field.name]) return null
 
     if (field.enc === 'date') {

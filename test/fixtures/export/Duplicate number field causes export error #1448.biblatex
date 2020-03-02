@@ -1,0 +1,21 @@
+
+@article{wilkinson-fair-2016,
+  title = {The {{FAIR Guiding Principles}} for Scientific Data Management and Stewardship},
+  author = {Wilkinson, Mark D. and Dumontier, Michel and Aalbersberg, IJsbrand Jan and Appleton, Gabrielle and Axton, Myles and Baak, Arie and Blomberg, Niklas and Boiten, Jan-Willem and Santos, Luiz Bonino da Silva and Bourne, Philip E. and Bouwman, Jildau and Brookes, Anthony J. and Clark, Tim and Crosas, Mercè and Dillo, Ingrid and Dumon, Olivier and Edmunds, Scott and Evelo, Chris T. and Finkers, Richard and Gonzalez-Beltran, Alejandra and Gray, Alasdair J. G. and Groth, Paul and Goble, Carole and Grethe, Jeffrey S. and Heringa, Jaap and family=Hoen, given=Peter A. C., prefix=’t, useprefix=false and Hooft, Rob and Kuhn, Tobias and Kok, Ruben and Kok, Joost and Lusher, Scott J. and Martone, Maryann E. and Mons, Albert and Packer, Abel L. and Persson, Bengt and Rocca-Serra, Philippe and Roos, Marco and family=Schaik, given=Rene, prefix=van, useprefix=false and Sansone, Susanna-Assunta and Schultes, Erik and Sengstag, Thierry and Slater, Ted and Strawn, George and Swertz, Morris A. and Thompson, Mark and family=Lei, given=Johan, prefix=van der, useprefix=false and family=Mulligen, given=Erik, prefix=van, useprefix=false and Velterop, Jan and Waagmeester, Andra and Wittenburg, Peter and Wolstencroft, Katherine and Zhao, Jun and Mons, Barend},
+  date = {2016-03-15},
+  journaltitle = {Scientific Data},
+  shortjournal = {Sci Data},
+  volume = {3},
+  pages = {1--9},
+  publisher = {{Nature Publishing Group}},
+  issn = {2052-4463},
+  doi = {10.1038/sdata.2016.18},
+  issue = {1},
+  keywords = {data,data-collection,data-gathering,data-generation,data-management,data-quality,methodology,open-acccess},
+  langid = {english},
+  number = {1}
+}
+% == BibLateX quality report for wilkinson-fair-2016:
+% Unexpected field 'publisher'
+
+

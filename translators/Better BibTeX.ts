@@ -68,9 +68,16 @@ Reference.prototype.addCreators = function() {
 
   for (const creator of this.item.creators) {
     switch (creator.creatorType) {
-      case 'editor': case 'seriesEditor': editors.push(creator); break
-      case 'translator':                  translators.push(creator); break
-      case primaryCreatorType:            authors.push(creator); break
+      case 'editor':
+      case 'seriesEditor':
+        editors.push(creator)
+        break
+      case 'translator':
+        translators.push(creator)
+        break
+      case primaryCreatorType:
+        authors.push(creator)
+        break
       default:                            collaborators.push(creator)
     }
   }
@@ -374,7 +381,8 @@ class ZoteroItem {
   }
 
   protected $title(value) {
-    let title = this.bibtex.fields.title
+    let title = []
+    if (this.bibtex.fields.title) title = title.concat(this.bibtex.fields.title)
     if (this.bibtex.fields.titleaddon) title = title.concat(this.bibtex.fields.titleaddon)
     if (this.bibtex.fields.subtitle) title = title.concat(this.bibtex.fields.subtitle)
 
@@ -385,8 +393,8 @@ class ZoteroItem {
     }
     return true
   }
-  protected $titleaddon(value) { return true } // handled by $title
-  protected $subtitle(value) { return true } // handled by $title
+  protected $titleaddon(value) { return this.$title(value) }
+  protected $subtitle(value) { return this.$title(value) }
 
   protected $holder(value, field) {
     if (this.item.itemType === 'patent') {
@@ -444,16 +452,14 @@ class ZoteroItem {
 
     if (this.bibtex.fields['journal-full']) { // bibdesk
       journal = this.bibtex.fields['journal-full'][0]
+
       if (this.bibtex.fields.journal) {
         abbr = this.bibtex.fields.journal[0]
       } else if (this.bibtex.fields.journaltitle) {
         abbr = this.bibtex.fields.journaltitle[0]
       }
-      if (abbr === journal) abbr = null
 
-      if (abbr && this.validFields.journalAbbreviation) {
-        this.item.journalAbbreviation = abbr
-      }
+      if (abbr === journal) abbr = null
 
     } else if (this.bibtex.fields.journal) {
       journal = this.bibtex.fields.journal[0]
@@ -461,6 +467,16 @@ class ZoteroItem {
     } else if (this.bibtex.fields.journaltitle) {
       journal = this.bibtex.fields.journaltitle[0]
 
+    }
+
+    if (!abbr && this.bibtex.fields.shortjournal) abbr = this.bibtex.fields.shortjournal[0]
+
+    if (abbr) {
+      if (this.validFields.journalAbbreviation) {
+        this.item.journalAbbreviation = abbr
+      } else if (!this.hackyFields.find(line => line.startsWith('tex.shortjournal:'))) {
+        this.hackyFields.push(`tex.shortjournal: ${abbr}`)
+      }
     }
 
     switch (this.type) {
@@ -476,6 +492,7 @@ class ZoteroItem {
     return true
   }
   protected $journal() { return this.$journaltitle() }
+  protected $shortjournal() { return this.$journaltitle() }
   protected '$journal-full'() { return this.$journaltitle() }
 
   protected $pages(value) {
@@ -942,8 +959,38 @@ class ZoteroItem {
 //   @item.publicationTitle = value
 //   return true
 
+async function _fetch(url): Promise<{ json: () => Promise<any> }> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest()
+    xhr.open('GET', url)
+
+    xhr.onload = function() {
+      if (this.status >= 200 && this.status < 300) { // tslint:disable-line:no-magic-numbers
+        resolve({ json: () => JSON.parse(xhr.response) })
+      } else {
+        reject({
+          status: this.status,
+          statusText: xhr.statusText,
+        })
+      }
+    }
+
+    xhr.onerror = function() {
+      reject({
+        status: this.status,
+        statusText: xhr.statusText,
+      })
+    }
+
+    xhr.send()
+  })
+}
+
 export async function doImport() {
   Translator.init('import')
+
+  const unabbreviate = await (await _fetch('resource://zotero-better-bibtex/unabbrev/unabbrev.json')).json()
+  const strings = await (await _fetch('resource://zotero-better-bibtex/unabbrev/unabbrev.json')).json()
 
   let read
   let input = ''
@@ -962,6 +1009,8 @@ export async function doImport() {
     guessAlreadySentenceCased: Translator.preferences.importSentenceCase === 'on+guess',
     verbatimFields: Translator.verbatimFields,
     raw: Translator.preferences.rawImports,
+    unabbreviate,
+    strings,
   })
   const errors = bib.errors
 
