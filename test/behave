@@ -58,8 +58,13 @@ nightly = any([
 ])
 if not nightly: sys.argv.extend(['--tags', '~@nightly'])
 
+args.jurism = args.jurism or (os.environ.get('CLIENT') == 'jurism')
+if args.jurism:
+  sys.argv.extend(['--define', f'client=jurism'])
+else:
+  sys.argv.extend(['--define', f'client=zotero'])
+
 if 'CI' in os.environ: # set up for CI
-  sys.argv.extend(['--define', f'client={os.environ["CLIENT"]}'])
   oddjob = (os.environ['JOB'] == '2')
 
   if nightly and os.environ.get('TRAVIS_TAG', '') == '': # don't run beta on tagged builds
@@ -72,8 +77,6 @@ else: # local client run
   ## stop on first error by default
   if not args.no_stop: sys.argv.append('--stop')
 
-  if args.jurism: sys.argv.extend(['--define', f'client=jurism'])
-
   # build before test unless on CI
   process = subprocess.Popen(['npm', 'run', 'build'], stdout=subprocess.PIPE)
   while True:
@@ -85,12 +88,8 @@ else: # local client run
     print(f'Build exited with exit code {returncode}')
     sys.exit(returncode)
 
-if args.beta: sys.argv.extend(['--define', f'beta=true'])
-
-print(' '.join(sys.argv))
-
-if (os.environ.get('CLIENT') == 'jurism' or args.jurism) or args.beta:
-  if os.environ.get('CLIENT') == 'jurism' or args.jurism:
+if args.jurism or args.beta:
+  if args.jurism:
     client = 'juris-m'
   else:
     client = 'zotero'
@@ -100,6 +99,9 @@ if (os.environ.get('CLIENT') == 'jurism' or args.jurism) or args.beta:
     beta = ''
   print(f'********* SKIPPING{beta.upper()} BUILD FOR {client.upper()} UNTIL FURTHER NOTICE ****************')
   sys.exit()
+
+if args.beta: sys.argv.extend(['--define', f'beta=true'])
+print(' '.join(sys.argv), args)
 
 #https://stackoverflow.com/questions/28829350/run-python-behave-from-python-instead-of-command-line
 from behave.__main__ import Configuration, run_behave
