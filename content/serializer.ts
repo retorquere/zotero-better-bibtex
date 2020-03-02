@@ -89,7 +89,7 @@ export let Serializer = new class { // tslint:disable-line:variable-name
       default:
         serialized.citekey = KeyManager.get(item.id).citekey
         serialized.citationKey = serialized.citationKey || serialized.citekey // prepare for https://github.com/zotero/translators/pull/1810#issuecomment-456219750
-        serialized.journalAbbreviation = JournalAbbrev.get(serialized)
+        if (!serialized.journalAbbreviation) serialized.autoJournalAbbreviation = JournalAbbrev.get(serialized)
         break
     }
 

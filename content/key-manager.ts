@@ -55,6 +55,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
 
           const results = JSON.parse((await Zotero.HTTP.request('GET', inspireSearch + encodeURIComponent(key))).responseText)
           if (results.length !== 1) throw new Error(`Expected 1 inspire result for ${item.getField('title')}, got ${results.length}`)
+          if (!Array.isArray(results[0].system_control_number)) results[0].system_control_number = [ results[0].system_control_number ]
 
           citationKey = results[0].system_control_number.find(i => i.institute.endsWith('TeX') && i.value).value
 

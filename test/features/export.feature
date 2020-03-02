@@ -5,13 +5,16 @@ Feature: Export
 @127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327
 @351 @376 @389 @bblt-0 @bblt @485 @515 @573 @590 @747 @edtf @689
 @biblatex @644 @889 @482 @979 @746 @1148 @1139 @1162 @1207 @1331
-@245 @246 @1353 @1370 @1387 @1395 @1413 @1422
+@245 @246 @1353 @1370 @1387 @1395 @1413 @1422 @1434 @1448
 Scenario Outline: BibLaTeX Export
   When I import <references> references from "export/<file>.json"
   Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
   Examples:
      | file                                                                                           | references  |
+     | Duplicate number field causes export error #1448                                               | 1           |
+     | Be robust against misconfigured journal abbreviator #127                                       | 1           |
+     | micro sign (unicode B5) export seems wrong and span in title #1434                             | 2           |
      | Export Patent Applications as such #1413                                                       | 2           |
      | paragraphs in Zotero notes need par #1422                                                      | 1           |
      | origyear not taken from csl extra-field for citation key generation #1395                      | 2           |
@@ -62,7 +65,6 @@ Scenario Outline: BibLaTeX Export
      | Title case of latex greek text on biblatex export #564                                         | 2           |
      | pre not working in Extra field #559                                                            | 1           |
      | @legislation; map code,container-title to journaltitle #327                                    | 1           |
-     | Be robust against misconfigured journal abbreviator #127                                       | 1           |
      | Better BibLaTeX.001                                                                            | 1           |
      | Better BibLaTeX.002                                                                            | 2           |
      | Better BibLaTeX.003                                                                            | 2           |

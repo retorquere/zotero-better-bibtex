@@ -179,7 +179,7 @@
 
         <preference name="extensions.zotero.translators.better-bibtex.postscript" id="pref-better-bibtex-postscript" type="string" default=""/>
         <bbt:doc>
-          Snippet of javascript to run [after each reference generation]({{ ref . "scripting" }}).
+          Snippet of javascript to run [after each reference generation]({{ ref . "exporting/scripting.md" }}).
         </bbt:doc>
 
         <preference name="extensions.zotero.translators.better-bibtex.strings" id="pref-better-bibtex-strings" type="string" default=""/>

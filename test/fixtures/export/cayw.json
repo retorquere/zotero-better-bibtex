@@ -14,7 +14,7 @@
       "citekeyFormat": "[auth:fold:lower]_[Title:fold:nopunct:skipwords:select,1,1:lower]_[year]",
       "exportBibTeXStrings": "off",
       "jabrefFormat": 0,
-      "skipFields": ""
+      "mapUnicode": "math"
     },
     "release": "1.0.5"
   },

@@ -22,3 +22,6 @@ ruamel.yaml
 selenium
 toml
 Mako
+markdown
+inflect
+pygtrie

@@ -53,6 +53,7 @@ export async function doImport() {
     delete source.version
     delete source.libraryID
     delete source.collections
+    delete source.autoJournalAbbreviation
 
     if (!itemfields.valid.type[source.itemType]) throw new Error(`unexpected item type '${source.itemType}'`)
     const validFields = itemfields.valid.field[source.itemType]
