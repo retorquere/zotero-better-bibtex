@@ -119,13 +119,13 @@ Scenario: Jabref groups import does not work #717
 
 @1436 @timeout=120
 Scenario: Unabbreviate on import #1436-1
-  When I import 510 references from "import/*.bib" into a new collection
+  When I import 506 references from "import/*.bib" into a new collection
   Then the library should match "import/*.json"
 @1436 @timeout=240
 Scenario: Unabbreviate on import #1436-2
-  When I import 1061 references from "import/*.bib" into a new collection
+  When I import 1053 references from "import/*.bib" into a new collection
   Then the library should match "import/*.json"
 @1436 @nightly @timeout=3000
 Scenario: Unabbreviate on import #1436-3
-  When I import 7188 references from "import/*.bib" into a new collection
+  When I import 7166 references from "import/*.bib" into a new collection
   Then the library should match "import/*.json"
