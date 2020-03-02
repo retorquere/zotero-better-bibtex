@@ -2,8 +2,7 @@ declare const Zotero: any
 
 const toWordsOrdinal = require('number-to-words/src/toWordsOrdinal')
 function edition(n) {
-  if (typeof n === 'number') return toWordsOrdinal(n)
-  if (typeof n === 'string' && n.match(/^[0-9]+$/)) return toWordsOrdinal(n)
+  if (typeof n === 'number' || (typeof n === 'string' && n.match(/^[0-9]+$/))) return toWordsOrdinal(n).replace(/^\w/, c => c.toUpperCase());
   return n
 }
 import wordsToNumbers from 'words-to-numbers'
