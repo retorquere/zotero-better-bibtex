@@ -2,7 +2,7 @@ declare const Zotero: any
 
 const toWordsOrdinal = require('number-to-words/src/toWordsOrdinal')
 function edition(n) {
-  if (typeof n === 'number' || (typeof n === 'string' && n.match(/^[0-9]+$/))) return toWordsOrdinal(n).replace(/^\w/, c => c.toUpperCase());
+  if (typeof n === 'number' || (typeof n === 'string' && n.match(/^[0-9]+$/))) return toWordsOrdinal(n).replace(/^\w/, c => c.toUpperCase())
   return n
 }
 import wordsToNumbers from 'words-to-numbers'
@@ -436,7 +436,8 @@ class ZoteroItem {
   }
 
   protected $edition(value) {
-    if (value && !value.match(/^[0-9]+$/)) value = wordsToNumbers(value)
+    const numbers = wordsToNumbers(value)
+    if (typeof numbers === 'number' || (typeof numbers === 'string' && numbers && !numbers.match(/\w/))) value = numbers
     return this.set('edition', value)
   }
 
