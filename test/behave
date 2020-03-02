@@ -89,9 +89,16 @@ if args.beta: sys.argv.extend(['--define', f'beta=true'])
 
 print(' '.join(sys.argv))
 
-if os.environ.get('CLIENT') == 'jurism' or args.jurism: # and args.beta: come on Juris-M...
-  #print('********* SKIPPING BETA BUILD FOR JURIS-M UNTIL FURTHER NOTICE ****************')
-  print('********* SKIPPING JURIS-M UNTIL FURTHER NOTICE ****************')
+if (os.environ.get('CLIENT') == 'jurism' or args.jurism) or args.beta:
+  if os.environ.get('CLIENT') == 'jurism' or args.jurism:
+    client = 'juris-m'
+  else:
+    client = 'zotero'
+  if args.beta:
+    beta = ' BETA'
+  else:
+    beta = ''
+  print(f'********* SKIPPING{beta.upper()} BUILD FOR {client.upper()} UNTIL FURTHER NOTICE ****************')
   sys.exit()
 
 #https://stackoverflow.com/questions/28829350/run-python-behave-from-python-instead-of-command-line
