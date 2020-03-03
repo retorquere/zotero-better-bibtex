@@ -67,7 +67,7 @@ else:
 if 'CI' in os.environ: # set up for CI
   oddjob = (os.environ['JOB'] == '2')
 
-  if args.nightly and os.environ.get('TRAVIS_TAG', '') == '': # don't run beta on tagged builds
+  if os.environ.get('TRAVIS_EVENT_TYPE') == 'cron' and os.environ.get('TRAVIS_TAG', '') == '': # don't run beta on tagged builds
     args.beta = oddjob
 
   else: # run regular tests
