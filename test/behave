@@ -59,7 +59,7 @@ if args.this:
   branch = repo.head.name.split('/')[-1]
   assert re.match(r'^gh-[0-9]+$', branch)
   sys.argv.extend(['--tags', branch.replace('gh-', '@') ])
-  args.nightly = True
+  args.slow = True
 
 JOB_NUMBER = int(re.search(r'^[0-9]+\.([0-9]+)$', os.environ.get('TRAVIS_JOB_NUMBER', '0.0')).group(1))
 if JOB_NUMBER == 0: # local run
