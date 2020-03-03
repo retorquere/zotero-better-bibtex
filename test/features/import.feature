@@ -46,7 +46,7 @@ Scenario: AUX scanner
   And I import 1 reference from "import/*.aux"
   Then the library should match "import/*-post.json"
 
-@nightly @873
+@nightly @873 @timeout=240
 Scenario Outline: Better BibTeX Import
   When I import <references> references from "import/<file>.bib"
   Then the library should match "import/*.json"
