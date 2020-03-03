@@ -56,7 +56,7 @@ args.nightly = any([
   os.environ.get('TRAVIS_TAG', '') != '',                     # running a release build
   os.environ.get('TRAVIS_EVENT_TYPE') == 'cron',              # running the nightly build
 ])
-if not nightly: sys.argv.extend(['--tags', '~@nightly'])
+if not args.nightly: sys.argv.extend(['--tags', '~@nightly'])
 
 args.jurism = args.jurism or (os.environ.get('CLIENT') == 'jurism')
 if args.jurism:
