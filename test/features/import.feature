@@ -46,7 +46,7 @@ Scenario: AUX scanner
   And I import 1 reference from "import/*.aux"
   Then the library should match "import/*-post.json"
 
-@nightly @873
+@slow @873
 Scenario Outline: Better BibTeX Import
   When I import <references> references from "import/<file>.bib"
   Then the library should match "import/*.json"
@@ -125,7 +125,7 @@ Scenario: Unabbreviate on import #1436-1
 Scenario: Unabbreviate on import #1436-2
   When I import 1053 references from "import/*.bib" into a new collection
   Then the library should match "import/*.json"
-@1436 @nightly @timeout=3000
+@1436 @slow @timeout=3000
 Scenario: Unabbreviate on import #1436-3
   When I import 7166 references from "import/*.bib" into a new collection
   Then the library should match "import/*.json"
