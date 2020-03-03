@@ -56,19 +56,15 @@ jobs:
   - stage: test
     env:
     - CLIENT=zotero
-    - JOB=1
   - stage: test
     env:
     - CLIENT=zotero
-    - JOB=2
   - stage: test
     env:
     - CLIENT=jurism
-    - JOB=1
   - stage: test
     env:
     - CLIENT=jurism
-    - JOB=2
 
   - stage: release
     if: env(TRAVIS_EVENT_TYPE) != cron AND env(TRAVIS_EVENT_TYPE) != pull_request
