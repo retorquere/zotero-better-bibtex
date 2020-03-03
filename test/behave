@@ -47,14 +47,14 @@ if args.this:
   args.nightly = True
 
 ## exclude @nightly by default
-if os.environ.get('TRAVIS_BRANCH', 'master') != 'master' and os.path.exists(os.path.join(ROOT, '.nightly.json')):
+if os.path.exists(os.path.join(ROOT, '.nightly.json')):
   with open(os.path.join(ROOT, '.nightly.json')) as f:
-    args.nightly = args.nightly or (os.environ['TRAVIS_BRANCH'] in json.load(f))
-nightly = any([
+    args.nightly = args.nightly or os.environ.get('TRAVIS_BRANCH') in json.load(f)
+args.nightly = any([
   args.nightly,                                               # requested explicitly from the command line
   '#nightly' in os.environ.get('TRAVIS_COMMIT_MESSAGE', ''),  # requested explicitly through the commit message
   os.environ.get('TRAVIS_TAG', '') != '',                     # running a release build
-  os.environ.get('TRAVIS_EVENT_TYPE') == 'cron',          # running the nightly build
+  os.environ.get('TRAVIS_EVENT_TYPE') == 'cron',              # running the nightly build
 ])
 if not nightly: sys.argv.extend(['--tags', '~@nightly'])
 
@@ -67,7 +67,7 @@ else:
 if 'CI' in os.environ: # set up for CI
   oddjob = (os.environ['JOB'] == '2')
 
-  if nightly and os.environ.get('TRAVIS_TAG', '') == '': # don't run beta on tagged builds
+  if args.nightly and os.environ.get('TRAVIS_TAG', '') == '': # don't run beta on tagged builds
     args.beta = oddjob
 
   else: # run regular tests
