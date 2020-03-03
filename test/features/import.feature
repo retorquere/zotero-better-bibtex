@@ -1,4 +1,4 @@
-@import
+@import @test-cluster-1
 Feature: Import
 
 Background:
