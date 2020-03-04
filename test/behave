@@ -76,7 +76,7 @@ if args.this:
   sys.argv.extend(['--tags', branch.replace('gh-', '@') ])
   args.slow = True
 
-JOB_NUMBER = int(os.environ.get('TRAVIS_JOB_NUMBER', '0')) # because travis only does parallel builds if the env vars differ
+JOB_NUMBER = int(os.environ.get('JOB', '0')) # because travis only does parallel builds if the env vars differ
 if JOB_NUMBER == 0: # local run
   process = subprocess.Popen(['npm', 'run', 'build'], stdout=subprocess.PIPE)
   while True:
