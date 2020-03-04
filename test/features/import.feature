@@ -29,7 +29,9 @@ Scenario: Import support for the online type in BBT #1358
 
 @472
 Scenario: Math markup to unicode not always imported correctly #472
-  When I import 2 references from "import/*.bib"
+  When I set preference .importJabRefStrings to false
+  And I set preference .importJabRefAbbreviations to false
+  When I import 3 references from "import/*.bib"
   Then the library should match "import/*.json"
   And I set preference .exportBibTeXStrings to detect
   Then an export using "Better BibTeX" should match "import/*.roundtrip.bib"
