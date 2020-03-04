@@ -77,7 +77,7 @@
   "collections": {},
   "items": [
     {
-      "key": "DZMP9S7M",
+      "key": "RV8JJ56F",
       "version": 0,
       "itemType": "conferencePaper",
       "pages": "300-301",
@@ -108,19 +108,19 @@
       ],
       "collections": [],
       "relations": [],
-      "dateAdded": "2020-02-18T09:14:31Z",
-      "dateModified": "2020-02-18T09:14:31Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/DZMP9S7M",
-      "itemID": 758,
+      "dateAdded": "2020-03-04T21:57:08Z",
+      "dateModified": "2020-03-04T21:57:08Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/RV8JJ56F",
+      "itemID": 99,
       "attachments": [],
       "notes": [],
       "citekey": "test_citation1",
       "citationKey": "test_citation1",
       "libraryID": 1,
-      "publicationTitle": "IEEE_J_PROC"
+      "publicationTitle": "Proceedings of the IEEE"
     },
     {
-      "key": "GM3V4ATX",
+      "key": "S34G5K6B",
       "version": 0,
       "itemType": "conferencePaper",
       "pages": "300-301",
@@ -151,16 +151,16 @@
       ],
       "collections": [],
       "relations": [],
-      "dateAdded": "2020-02-18T09:14:32Z",
-      "dateModified": "2020-02-18T09:14:32Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/GM3V4ATX",
-      "itemID": 759,
+      "dateAdded": "2020-03-04T21:57:08Z",
+      "dateModified": "2020-03-04T21:57:08Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/S34G5K6B",
+      "itemID": 100,
       "attachments": [],
       "notes": [],
       "citekey": "test_citation2",
       "citationKey": "test_citation2",
       "libraryID": 1,
-      "publicationTitle": "IEEE_J_PROC"
+      "publicationTitle": "Proceedings of the IEEE"
     }
   ]
 }
