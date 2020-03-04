@@ -31,7 +31,7 @@ class BooleanAction(argparse.Action):
     super().__init__(option_strings, dest, nargs=0, **kwargs)
 
   def __call__(self, parser, namespace, values, option_string=None):
-    setattr(namespace, self.dest, option_string.startswith('--no'))
+    setattr(namespace, self.dest, not option_string.startswith('--no'))
 class ClientAction(argparse.Action):
   def __init__(self, option_strings, dest, nargs=None, **kwargs):
     super().__init__(option_strings, dest, nargs=0, **kwargs)
