@@ -131,7 +131,7 @@
     "webpack": "^4.42.0",
     "wrapper-webpack-plugin": "^2.1.0",
     "xml-parser": "^1.2.1",
-    "xmldom": "^0.2.1",
+    "xmldom": "^0.3.0",
     "xpath": "^0.0.27"
   },
   "repository": {
