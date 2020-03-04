@@ -31,7 +31,7 @@
     "release-debug-bridge": "mkdir -p xpi && rm -f xpi/debug-bridge*xpi && npm run zipup-debug-bridge && github-release upload --owner retorquere --repo zotero-better-bibtex --tag debug-bridge xpi/debug-bridge*xpi",
     "odfscan": "echo curl -L -o xpi/odfscan.xpi `curl -s https://api.github.com/repos/Juris-M/zotero-odf-scan-plugin/releases/latest | grep browser_download_url | cut -d '\"' -f 4`",
     "minitest": "webpack && node ./minitests/build/dateparser.js",
-    "start": "./test/behave --stop --tags=@none --define kill=false",
+    "start": "./test/behave --keep --tags=@none",
     "s3form": "zotero-plugin-s3form",
     "release": "zotero-plugin-release \"You can verify you are on the latest version by going into 'Tools' -> 'Addons' in Zotero/Juris-M, clicking the gear icon, and selecting 'Check for updates'\"",
     "branches": "zotero-plugin-branches",

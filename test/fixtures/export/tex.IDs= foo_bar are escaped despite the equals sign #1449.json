@@ -1,0 +1,142 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "DOIandURL": "both",
+      "automaticTags": true,
+      "asciiBibLaTeX": false,
+      "ascii": "",
+      "asciiBibTeX": true,
+      "autoExport": "immediate",
+      "quickCopyMode": "latex",
+      "citeCommand": "cite",
+      "quickCopyPandocBrackets": false,
+      "citekeyFormat": "[zotero:clean]",
+      "citekeyFold": true,
+      "keyConflictPolicy": "keep",
+      "auxImport": false,
+      "keyScope": "library",
+      "exportBibTeXStrings": "off",
+      "importBibTeXStrings": true,
+      "bibtexParticleNoOp": false,
+      "skipFields": "file",
+      "bibtexURL": "url",
+      "warnBulkModify": 10,
+      "postscript": "",
+      "strings": "",
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "",
+      "autoExportIdleWait": 10,
+      "cacheFlushInterval": 5,
+      "csquotes": "",
+      "rawLaTag": "#LaTeX",
+      "rawImports": false,
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
+      "jabrefFormat": 0,
+      "qualityReport": true,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": true,
+      "exportTitleCase": true,
+      "exportBraceProtection": true,
+      "retainCache": false,
+      "importSentenceCase": "on+guess",
+      "importCaseProtection": "as-needed",
+      "autoExportDelay": 1,
+      "itemObserverDelay": 100,
+      "parseParticles": true,
+      "citeprocNoteCitekey": false,
+      "extraMergeTeX": true,
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "postscriptOverride": "",
+      "scrubDatabase": false,
+      "removeStock": false,
+      "ignorePostscriptErrors": true,
+      "debugLogDir": "",
+      "testing": false,
+      "autoPin": false,
+      "kuroshiro": false,
+      "relativeFilePaths": false,
+      "git": "config",
+      "mapUnicode": "conservative",
+      "mapText": "",
+      "mapMath": "",
+      "newTranslatorsAskRestart": true,
+      "workers": 0,
+      "platform": "lin",
+      "client": "zotero"
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
+    }
+  },
+  "collections": {},
+  "items": [
+    {
+      "version": 5217,
+      "itemType": "webpage",
+      "url": "http://tools.ietf.org/html/rfc4880",
+      "date": "2007-11",
+      "extra": "CCitation Key: rfc4880\ntex.IDs= shaw_rfc4880_2007,rfc4880",
+      "accessDate": "2014-08-19T00:03:18Z",
+      "title": "RFC4880: OpenPGP Message Format",
+      "creators": [
+        {
+          "firstName": "David",
+          "lastName": "Shaw",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Lutz",
+          "lastName": "Donnerhacke",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Rodney",
+          "lastName": "Thayer",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Hal",
+          "lastName": "Finney",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Jon",
+          "lastName": "Callas",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "collections": [
+        "N62PAZJV"
+      ],
+      "relations": [],
+      "dateAdded": "2014-08-19T00:03:18Z",
+      "dateModified": "2020-03-04T14:18:24Z",
+      "uri": "http://zotero.org/users/45772/items/VUJ2ZSCM",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "title": "Snapshot",
+          "tags": [],
+          "relations": [],
+          "dateAdded": "2014-08-19T00:03:18Z",
+          "dateModified": "2014-08-19T00:03:18Z",
+          "uri": "http://zotero.org/users/45772/items/FAFQ332R",
+          "path": "/home/muelli/Zotero/storage/FAFQ332R/rfc4880.html"
+        }
+      ],
+      "notes": [],
+      "citekey": "shaw_rfc4880_2007",
+      "citationKey": "shaw_rfc4880_2007",
+      "itemID": 457,
+      "key": "VUJ2ZSCM",
+      "libraryID": 1
+    }
+  ]
+}
