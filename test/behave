@@ -100,7 +100,7 @@ if args.client == 'jurism' or args.beta:
   print(f"********* SKIPPING{' BETA' if args.beta else ''} BUILD FOR {args.client.upper()} UNTIL FURTHER NOTICE ****************")
   sys.exit()
 
-if args.slow: sys.argv.extend(['--tags', '~@slow'])
+if not args.slow: sys.argv.extend(['--tags', '~@slow'])
 sys.argv.extend(['--define', f'beta={str(args.beta).lower()}'])
 print(' '.join(sys.argv), args)
 
