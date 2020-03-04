@@ -990,7 +990,7 @@ export async function doImport() {
   Translator.init('import')
 
   const unabbreviate = await (await _fetch('resource://zotero-better-bibtex/unabbrev/unabbrev.json')).json()
-  const strings = await (await _fetch('resource://zotero-better-bibtex/unabbrev/unabbrev.json')).json()
+  const strings = await (await _fetch('resource://zotero-better-bibtex/unabbrev/strings.json')).json()
 
   let read
   let input = ''
