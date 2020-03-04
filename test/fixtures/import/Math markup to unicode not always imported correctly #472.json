@@ -77,26 +77,6 @@
   "collections": {},
   "items": [
     {
-      "key": "25F8ZLP9",
-      "version": 0,
-      "itemType": "note",
-      "note": "Import errors found: <ul><li>Unresolved @string reference &quot;IEEE_J_PROC&quot;</li></ul>",
-      "tags": [
-        {
-          "tag": "#Better BibTeX import error",
-          "type": 1
-        }
-      ],
-      "collections": [],
-      "relations": [],
-      "dateAdded": "2020-02-18T09:14:32Z",
-      "dateModified": "2020-02-18T09:14:32Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/25F8ZLP9",
-      "itemID": 760,
-      "libraryID": 1,
-      "notes": []
-    },
-    {
       "key": "DZMP9S7M",
       "version": 0,
       "itemType": "conferencePaper",
