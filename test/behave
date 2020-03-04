@@ -31,7 +31,7 @@ class BooleanAction(argparse.Action):
     super().__init__(option_strings, dest, nargs=0, **kwargs)
 
   def __call__(self, parser, namespace, values, option_string=None):
-    setattr(namespace, self.dest, option_string.startswith('--no'))
+    setattr(namespace, self.dest, not option_string.startswith('--no'))
 class ClientAction(argparse.Action):
   def __init__(self, option_strings, dest, nargs=None, **kwargs):
     super().__init__(option_strings, dest, nargs=0, **kwargs)
@@ -76,7 +76,7 @@ if args.this:
   sys.argv.extend(['--tags', branch.replace('gh-', '@') ])
   args.slow = True
 
-JOB_NUMBER = int(re.search(r'^[0-9]+\.([0-9]+)$', os.environ.get('TRAVIS_JOB_NUMBER', '0.0')).group(1))
+JOB_NUMBER = int(os.environ.get('JOB', '0')) # because travis only does parallel builds if the env vars differ
 if JOB_NUMBER == 0: # local run
   process = subprocess.Popen(['npm', 'run', 'build'], stdout=subprocess.PIPE)
   while True:
@@ -89,11 +89,11 @@ if JOB_NUMBER == 0: # local run
     sys.exit(returncode)
 
 elif args.nightly and not args.tagged: # only test for beta o
-  args.beta = (JOB_NUMBER % 2) == 1
+  args.beta = (JOB_NUMBER == 2)
   args.slow = True
 
 else:
-  sys.argv.extend(['--tags', f"{'~' if (JOB_NUMBER % 2) == 1 else ''}@test-cluster-1"])
+  sys.argv.extend(['--tags', f"{'~' if (JOB_NUMBER == 2) else ''}@test-cluster-1"])
   args.slow = args.slow or args.tagged
 
 if args.client == 'jurism' or args.beta:
