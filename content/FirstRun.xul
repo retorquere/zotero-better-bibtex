@@ -47,6 +47,14 @@
     <checkbox label="&better-bibtex.FirstRun.dragndrop.enable;" id="better-bibtex-first-run-dragndrop" oncommand="Zotero.BetterBibTeX.FirstRun.update()"/>
   </wizardpage>
 
+  <wizardpage label=" " onpageshow="Zotero.BetterBibTeX.FirstRun.update()">
+    <description style="white-space: pre-wrap;" class="header">&better-bibtex.FirstRun.importUnabbreviate;</description>
+    <description>&better-bibtex.FirstRun.importUnabbreviate.explanation;</description>
+    <checkbox label="&better-bibtex.FirstRun.importUnabbreviate.enable;" checked="true" id="better-bibtex-first-run-unabbreviate" oncommand="Zotero.BetterBibTeX.FirstRun.update()"/>
+    <description>&better-bibtex.FirstRun.importStrings.explanation;</description>
+    <checkbox label="&better-bibtex.FirstRun.importStrings.enable;" checked="true" id="better-bibtex-first-run-strings" oncommand="Zotero.BetterBibTeX.FirstRun.update()"/>
+  </wizardpage>
+
   <wizardpage label=" ">
     <description style="white-space: pre-wrap;" class="header">&better-bibtex.FirstRun.exporting;</description>
     <description>&better-bibtex.FirstRun.exporting.explanation; <box class="textbox-emph">Better BibTeX</box></description>

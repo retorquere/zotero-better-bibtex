@@ -644,7 +644,7 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
   public dir: string
 
   private strings: any
-  private firstRun: { citekeyFormat: String, dragndrop: boolean }
+  private firstRun: { citekeyFormat: String, dragndrop: boolean, unabbreviate: boolean }
   private document: any
 
   // #load
@@ -724,7 +724,14 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
     // its presence also indicates first-run, so right after the DB is ready, configure BBT
     const citekeyFormat = Prefs.get('citekeyFormat') || Prefs.clear('citekeyFormat')
     if (citekeyFormat[0] === '\u200B') {
-      const params = { wrappedJSObject: { citekeyFormat: 'bbt', dragndrop: true } }
+      const params = {
+        wrappedJSObject: {
+          citekeyFormat: 'bbt',
+          dragndrop: true,
+          unabbreviate: Prefs.get('importJabRefAbbreviations')
+          unstring: Prefs.get('importJabRefStrings')
+        }
+      }
       const ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
       ww.openWindow(null, 'chrome://zotero-better-bibtex/content/FirstRun.xul', 'better-bibtex-first-run', 'chrome,centerscreen,modal', params)
       this.firstRun = params.wrappedJSObject
@@ -732,6 +739,8 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
       log.debug('firstRun:', this.firstRun)
 
       Prefs.set('citekeyFormat', (this.firstRun.citekeyFormat === 'zotero') ? '[zotero:clean]' : citekeyFormat.substr(1))
+      Prefs.set('importJabRefAbbreviations', this.firstRun.unabbreviate)
+      Prefs.set('importJabRefStrings', this.firstRun.strings)
     } else {
       this.firstRun = null
     }
