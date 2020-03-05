@@ -18,6 +18,12 @@
 <!ENTITY better-bibtex.FirstRun.dragndrop.explanation "Mit BBT können Sie per Drag-and-Drop Zitate in ihren Lieblings-LaTeX-Editor einfügen. Wollen Sie diese Option aktivieren?">
 <!ENTITY better-bibtex.FirstRun.dragndrop.enable "Aktiviere Drag-and-Drop-Zitate">
 
+<!ENTITY better-bibtex.FirstRun.importUnabbreviate "Expand bibtex strings and journal abbreviations during import">
+<!ENTITY better-bibtex.FirstRun.importUnabbreviate.explanation "Some bibtex files have journal abbreviations in the 'journal' field. If you enable this, BBT will attempt to replace those abbreviations with the full journal name during import of bibtex files">
+<!ENTITY better-bibtex.FirstRun.importUnabbreviate.enable "Unabbreviate journal names on import">
+<!ENTITY better-bibtex.FirstRun.importStrings.explanation "Some bibtex files use @string variables for journal names. If you enable this, BBT will use a list of common journal IDs to replace these variables with the full journal name">
+<!ENTITY better-bibtex.FirstRun.importStrings.enable "Expand @string journal names on import">
+
 <!ENTITY better-bibtex.FirstRun.done "Fertig!">
 <!ENTITY better-bibtex.FirstRun.done.explanation "BBT kann nun verwendet werden. Sie können alle Einstellungen über den BBT-Reiter in den Zotero-Einstellungen ändern.">
 
