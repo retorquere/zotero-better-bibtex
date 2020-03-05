@@ -18,6 +18,12 @@
 <!ENTITY better-bibtex.FirstRun.dragndrop.explanation "Com BBT, é possível arrastar e soltar citações no seu editor LaTeX preferido. Você quer ativar isso?">
 <!ENTITY better-bibtex.FirstRun.dragndrop.enable "Ativar arrastar-e-soltar citações">
 
+<!ENTITY better-bibtex.FirstRun.importUnabbreviate "Expand bibtex strings and journal abbreviations during import">
+<!ENTITY better-bibtex.FirstRun.importUnabbreviate.explanation "Some bibtex files have journal abbreviations in the 'journal' field. If you enable this, BBT will attempt to replace those abbreviations with the full journal name during import of bibtex files">
+<!ENTITY better-bibtex.FirstRun.importUnabbreviate.enable "Unabbreviate journal names on import">
+<!ENTITY better-bibtex.FirstRun.importStrings.explanation "Some bibtex files use @string variables for journal names. If you enable this, BBT will use a list of common journal IDs to replace these variables with the full journal name">
+<!ENTITY better-bibtex.FirstRun.importStrings.enable "Expand @string journal names on import">
+
 <!ENTITY better-bibtex.FirstRun.done "Tudo pronto!">
 <!ENTITY better-bibtex.FirstRun.done.explanation "BBT já está configurado. Você ainda pode mudar qualquer uma dessas opções nas preferências do Zotero, abrindo a aba BBT.">
 
