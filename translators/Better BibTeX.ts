@@ -989,8 +989,8 @@ async function _fetch(url): Promise<{ json: () => Promise<any> }> {
 export async function doImport() {
   Translator.init('import')
 
-  const unabbreviate = await (await _fetch('resource://zotero-better-bibtex/unabbrev/unabbrev.json')).json()
-  const strings = await (await _fetch('resource://zotero-better-bibtex/unabbrev/unabbrev.json')).json()
+  const unabbreviate = Translator.preferences.importJabRefAbbreviations ? await (await _fetch('resource://zotero-better-bibtex/unabbrev/unabbrev.json')).json() : null
+  const strings = Translator.preferences.importJabRefStrings ? await (await _fetch('resource://zotero-better-bibtex/unabbrev/strings.json')).json() : null
 
   let read
   let input = ''
