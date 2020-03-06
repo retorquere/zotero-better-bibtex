@@ -730,7 +730,7 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
           dragndrop: true,
           unabbreviate: Prefs.get('importJabRefAbbreviations'),
           strings: Prefs.get('importJabRefStrings'),
-        }
+        },
       }
       const ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
       ww.openWindow(null, 'chrome://zotero-better-bibtex/content/FirstRun.xul', 'better-bibtex-first-run', 'chrome,centerscreen,modal', params)
