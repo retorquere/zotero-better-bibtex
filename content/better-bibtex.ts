@@ -644,7 +644,7 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
   public dir: string
 
   private strings: any
-  private firstRun: { citekeyFormat: String, dragndrop: boolean, unabbreviate: boolean }
+  private firstRun: { citekeyFormat: String, dragndrop: boolean, unabbreviate: boolean, strings: boolean }
   private document: any
 
   // #load
@@ -728,8 +728,8 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
         wrappedJSObject: {
           citekeyFormat: 'bbt',
           dragndrop: true,
-          unabbreviate: Prefs.get('importJabRefAbbreviations')
-          unstring: Prefs.get('importJabRefStrings')
+          unabbreviate: Prefs.get('importJabRefAbbreviations'),
+          strings: Prefs.get('importJabRefStrings'),
         }
       }
       const ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
