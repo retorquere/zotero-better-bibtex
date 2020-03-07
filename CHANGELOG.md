@@ -1,5 +1,18 @@
 # Changelog
 
+## [5.2.18] - 2020-03-05
+
+ - tex.IDs= did not work (#1449)
+ - optionally un-abbreviate journal titles on import (#1346)
+ - Page range cleanup on export (#1438)
+ - Allow Post Script to remove entries from extra field (#1423)
+ - Export edition numbers as text for bibtex (#1446)
+ - Duplicate number field caused export error (#1448)
+ - Git pull/push was not triggered on automatic export (#1439)
+ - LaTeX <> unicode mapping updates (#1434)
+ - filter < span > from title for key generation
+ - InspireHEP lookup failed (#1428)
+
 ## [5.2.16] - 2020-02-10
 
  - Custom postscript per export directory (#1101)
