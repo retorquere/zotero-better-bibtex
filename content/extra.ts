@@ -86,7 +86,7 @@ export function get(extra: string, options?: GetOptions): { extra: string, extra
       extraFields.aliases = value.split(/s*,\s*/).filter(alias => alias)
       return false
     }
-    if (options.aliases && tex && options.aliases && name === 'ids') {
+    if (options.aliases && tex && !raw && options.aliases && name === 'ids') {
       extraFields.aliases = value.split(/s*,\s*/).filter(alias => alias)
       return false
     }

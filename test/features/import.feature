@@ -1,4 +1,4 @@
-@import
+@import @test-cluster-1
 Feature: Import
 
 Background:
@@ -29,6 +29,8 @@ Scenario: Import support for the online type in BBT #1358
 
 @472
 Scenario: Math markup to unicode not always imported correctly #472
+  When I set preference .importJabRefStrings to false
+  And I set preference .importJabRefAbbreviations to false
   When I import 3 references from "import/*.bib"
   Then the library should match "import/*.json"
   And I set preference .exportBibTeXStrings to detect
@@ -46,7 +48,7 @@ Scenario: AUX scanner
   And I import 1 reference from "import/*.aux"
   Then the library should match "import/*-post.json"
 
-@nightly @873
+@873 @slow @timeout=3000
 Scenario Outline: Better BibTeX Import
   When I import <references> references from "import/<file>.bib"
   Then the library should match "import/*.json"
@@ -122,15 +124,15 @@ Scenario: Jabref groups import does not work #717
   When I import 4 references from "import/*.3.8.bib" into a new collection
   Then the library should match "import/*.3.8.json"
 
-@1436
+@1436 @timeout=120
 Scenario: Unabbreviate on import #1436-1
-  When I import 510 references from "import/*.bib" into a new collection
+  When I import 506 references from "import/*.bib" into a new collection
   Then the library should match "import/*.json"
 @1436 @timeout=240
 Scenario: Unabbreviate on import #1436-2
-  When I import 1061 references from "import/*.bib" into a new collection
+  When I import 1053 references from "import/*.bib" into a new collection
   Then the library should match "import/*.json"
-@1436 @nightly @timeout=3000
+@1436 @slow @timeout=6000
 Scenario: Unabbreviate on import #1436-3
-  When I import 7188 references from "import/*.bib" into a new collection
+  When I import 7166 references from "import/*.bib" into a new collection
   Then the library should match "import/*.json"

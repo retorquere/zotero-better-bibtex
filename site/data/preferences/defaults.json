@@ -46,6 +46,8 @@
   "extraMergeTeX": true,
   "extraMergeCSL": true,
   "extraMergeCitekeys": true,
+  "importJabRefStrings": true,
+  "importJabRefAbbreviations": true,
   "postscriptOverride": "",
   "scrubDatabase": false,
   "removeStock": false,

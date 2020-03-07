@@ -429,12 +429,15 @@ export class Reference {
       .replace(/\u2053/g, '~')
       .replace(/[\u2014\u2015]/g, '---') // em-dash
       .replace(/[\u2012\u2013]/g, '--') // en-dash
-      .split(',').map(range => {
+      .split(/(,\s*)/).map(range => {
+        if (range.match(/^,\s+/)) return ', '
+        if (range === ',') return range
+
         return range
-          .replace(/^\s*([0-9]+)\s*(-+)\s*([0-9]+)\s*$/g, '$1$2$3')
-          .replace(/^([0-9]+)-([0-9]+)$/g, '$1--$2')
-          .replace(/^([0-9]+)-{4,}([0-9]+)$/g, '$1---$2')
-      }).join(',') // treat space-hyphen-space like an en-dash when it's between numbers
+          .replace(/^([0-9]+)\s*(-+)\s*([0-9]+)\s*$/g, '$1$2$3') // treat space-hyphens-space like a range when it's between numbers
+          .replace(/^([0-9]+)-([0-9]+)$/g, '$1--$2') // single dash is probably a range, which should be an n-dash
+          .replace(/^([0-9]+)-{4,}([0-9]+)$/g, '$1---$2') // > 4 dashes can't be right. Settle for em-dash
+      }).join('')
   }
 
   /*
@@ -446,6 +449,11 @@ export class Reference {
    *   ignored)
    */
   public add(field: IField) {
+    if (!field.value && !field.bibtex && this.inPostscript) {
+      delete this.has[field.name]
+      return
+    }
+
     if (Translator.skipField[field.name]) return null
 
     if (field.enc === 'date') {

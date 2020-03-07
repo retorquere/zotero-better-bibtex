@@ -50,6 +50,8 @@
       "extraMergeTeX": true,
       "extraMergeCSL": true,
       "extraMergeCitekeys": true,
+      "importJabRefStrings": false,
+      "importJabRefAbbreviations": false,
       "postscriptOverride": "",
       "scrubDatabase": false,
       "removeStock": false,
@@ -77,27 +79,7 @@
   "collections": {},
   "items": [
     {
-      "key": "25F8ZLP9",
-      "version": 0,
-      "itemType": "note",
-      "note": "Import errors found: <ul><li>Unresolved @string reference &quot;IEEE_J_PROC&quot;</li></ul>",
-      "tags": [
-        {
-          "tag": "#Better BibTeX import error",
-          "type": 1
-        }
-      ],
-      "collections": [],
-      "relations": [],
-      "dateAdded": "2020-02-18T09:14:32Z",
-      "dateModified": "2020-02-18T09:14:32Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/25F8ZLP9",
-      "itemID": 760,
-      "libraryID": 1,
-      "notes": []
-    },
-    {
-      "key": "DZMP9S7M",
+      "key": "6XYL2WBT",
       "version": 0,
       "itemType": "conferencePaper",
       "pages": "300-301",
@@ -128,10 +110,10 @@
       ],
       "collections": [],
       "relations": [],
-      "dateAdded": "2020-02-18T09:14:31Z",
-      "dateModified": "2020-02-18T09:14:31Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/DZMP9S7M",
-      "itemID": 758,
+      "dateAdded": "2020-03-04T22:43:27Z",
+      "dateModified": "2020-03-04T22:43:27Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/6XYL2WBT",
+      "itemID": 99,
       "attachments": [],
       "notes": [],
       "citekey": "test_citation1",
@@ -140,7 +122,7 @@
       "publicationTitle": "IEEE_J_PROC"
     },
     {
-      "key": "GM3V4ATX",
+      "key": "9WWR8YJJ",
       "version": 0,
       "itemType": "conferencePaper",
       "pages": "300-301",
@@ -171,16 +153,36 @@
       ],
       "collections": [],
       "relations": [],
-      "dateAdded": "2020-02-18T09:14:32Z",
-      "dateModified": "2020-02-18T09:14:32Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/GM3V4ATX",
-      "itemID": 759,
+      "dateAdded": "2020-03-04T22:43:27Z",
+      "dateModified": "2020-03-04T22:43:27Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/9WWR8YJJ",
+      "itemID": 100,
       "attachments": [],
       "notes": [],
       "citekey": "test_citation2",
       "citationKey": "test_citation2",
       "libraryID": 1,
       "publicationTitle": "IEEE_J_PROC"
+    },
+    {
+      "key": "CAE4EPEK",
+      "version": 0,
+      "itemType": "note",
+      "note": "Import errors found: <ul><li>Unresolved @string reference &quot;IEEE_J_PROC&quot;</li></ul>",
+      "tags": [
+        {
+          "tag": "#Better BibTeX import error",
+          "type": 1
+        }
+      ],
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2020-03-04T22:43:27Z",
+      "dateModified": "2020-03-04T22:43:27Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/CAE4EPEK",
+      "itemID": 101,
+      "libraryID": 1,
+      "notes": []
     }
   ]
 }

@@ -17,64 +17,67 @@ for d in pathlib.Path(__file__).resolve().parents:
     ROOT = d
     break
 os.chdir(ROOT)
-
 # because behave doesn't think it's useful to be able to load local stuff... oy...
 sys.path.insert(0, os.path.abspath('test/features/steps'))
 
-parser = argparse.ArgumentParser()
-parser.add_argument('--no-stop', action='store_true')
-parser.add_argument('--nightly', action='store_true')
-parser.add_argument('--jurism', action='store_true')
-parser.add_argument('--beta', action='store_true')
-parser.add_argument('--keep', action='store_true')
-parser.add_argument('--no-workers', action='store_true')
-parser.add_argument('--this', action='store_true')
+def load_json(path, default):
+  try:
+    with open(path) as f:
+      return json.load(f)
+  except:
+    return default
+class BooleanAction(argparse.Action):
+  def __init__(self, option_strings, dest, nargs=None, **kwargs):
+    super().__init__(option_strings, dest, nargs=0, **kwargs)
 
+  def __call__(self, parser, namespace, values, option_string=None):
+    setattr(namespace, self.dest, not option_string.startswith('--no'))
+class ClientAction(argparse.Action):
+  def __init__(self, option_strings, dest, nargs=None, **kwargs):
+    super().__init__(option_strings, dest, nargs=0, **kwargs)
+
+  def __call__(self, parser, namespace, values, option_string=None):
+    print(type(input_string), type(values))
+    if option_string == '--jurism' and type(values) == bool and values:
+      setattr(namespace, self.dest, 'jurism')
+    elif option_string == '--jurism' and type(values) == bool and not values:
+      setattr(namespace, self.dest, 'zotero')
+    elif option_string == '--client' and type(values) == str and values in ['zotero', 'jurism']:
+      setattr(namespace, self.dest, values)
+    else:
+      raise ValueError(f'Unexpected argument {option_string} = {values}')
+parser = argparse.ArgumentParser()
+parser.add_argument('--stop', '--no-stop', dest='stop', action=BooleanAction, default=(os.environ.get('CI') != 'true'))
+parser.add_argument('--jurism', dest='client', action='store_const', const='jurism', default=os.environ.get('CLIENT', 'zotero'))
+parser.add_argument('--client', dest='client', default=os.environ.get('CLIENT', 'zotero'))
+parser.add_argument('--beta', action='store_true')
+parser.add_argument('--keep', '--no-keep', dest='keep', action=BooleanAction, default=False)
+parser.add_argument('--workers', '--no-workers', dest='workers', action=BooleanAction, default=True)
+parser.add_argument('--this', action='store_true')
+parser.add_argument('--slow', action='store_true',
+  default = os.environ.get('TRAVIS_BRANCH') in load_json(os.path.join(ROOT, '.slow.json'), []) or
+            '#slow' in os.environ.get('TRAVIS_COMMIT_MESSAGE', '') or
+            os.environ.get('TRAVIS_EVENT_TYPE') == 'cron'
+)
+parser.add_argument('--tagged', action='store_true', default=os.environ.get('TRAVIS_TAG', '') != '')
+parser.add_argument('--nightly', action='store_true', default=os.environ.get('TRAVIS_EVENT_TYPE') == 'cron')
 args, unknownargs = parser.parse_known_args()
 sys.argv = sys.argv[:1] + unknownargs
 
-if args.keep: sys.argv.extend(['--define', 'kill=false'])
-if args.no_workers:
-  sys.argv.extend(['--define', 'workers=false'])
-else:
-  sys.argv.extend(['--define', 'workers=true'])
+sys.argv.extend(['--define', f"client={args.client}"])
+sys.argv.extend(['--define', f'kill={str(not args.keep).lower()}'])
+sys.argv.extend(['--define', f'workers={str(args.workers).lower()}'])
+if args.stop: sys.argv.append('--stop')
 
 if args.this:
   repo = Repository('.')
   branch = repo.head.name.split('/')[-1]
   assert re.match(r'^gh-[0-9]+$', branch)
   sys.argv.extend(['--tags', branch.replace('gh-', '@') ])
-  args.nightly = True
+  args.slow = True
 
-## exclude @nightly by default
-if os.environ.get('TRAVIS_BRANCH', 'master') != 'master' and os.path.exists(os.path.join(ROOT, '.nightly.json')):
-  with open(os.path.join(ROOT, '.nightly.json')) as f:
-    args.nightly = args.nightly or (os.environ['TRAVIS_BRANCH'] in json.load(f))
-nightly = any([
-  args.nightly,                                               # requested explicitly from the command line
-  '#nightly' in os.environ.get('TRAVIS_COMMIT_MESSAGE', ''),  # requested explicitly through the commit message
-  os.environ.get('TRAVIS_TAG', '') != '',                     # running a release build
-  os.environ.get('TRAVIS_EVENT_TYPE') == 'cron',          # running the nightly build
-])
-if not nightly: sys.argv.extend(['--tags', '~@nightly'])
-
-if 'CI' in os.environ: # set up for CI
-  sys.argv.extend(['--define', f'client={os.environ["CLIENT"]}'])
-  oddjob = (os.environ['JOB'] == '2')
-
-  if nightly and os.environ.get('TRAVIS_TAG', '') == '': # don't run beta on tagged builds
-    args.beta = oddjob
-
-  else: # run regular tests
-    sys.argv.extend(['--tags', f'{"~" if oddjob else ""}@test-cluster-1'])
-
-else: # local client run
-  ## stop on first error by default
-  if not args.no_stop: sys.argv.append('--stop')
-
-  if args.jurism: sys.argv.extend(['--define', f'client=jurism'])
-
-  # build before test unless on CI
+JOB_NUMBER = int(os.environ.get('JOB', '0')) # because travis only does parallel builds if the env vars differ
+if JOB_NUMBER == 0: # local run
   process = subprocess.Popen(['npm', 'run', 'build'], stdout=subprocess.PIPE)
   while True:
     line = process.stdout.readline()
@@ -85,21 +88,21 @@ else: # local client run
     print(f'Build exited with exit code {returncode}')
     sys.exit(returncode)
 
-if args.beta: sys.argv.extend(['--define', f'beta=true'])
+elif args.nightly and not args.tagged: # only test for beta o
+  args.beta = (JOB_NUMBER == 2)
+  args.slow = True
 
-print(' '.join(sys.argv))
+else:
+  sys.argv.extend(['--tags', f"{'~' if (JOB_NUMBER == 2) else ''}@test-cluster-1"])
+  args.slow = args.slow or args.tagged
 
-if (os.environ.get('CLIENT') == 'jurism' or args.jurism) or args.beta:
-  if os.environ.get('CLIENT') == 'jurism' or args.jurism:
-    client = 'juris-m'
-  else:
-    client = 'zotero'
-  if args.beta:
-    beta = ' BETA'
-  else:
-    beta = ''
-  print(f'********* SKIPPING{beta.upper()} BUILD FOR {client.upper()} UNTIL FURTHER NOTICE ****************')
+if args.client == 'jurism' or args.beta:
+  print(f"********* SKIPPING{' BETA' if args.beta else ''} BUILD FOR {args.client.upper()} UNTIL FURTHER NOTICE ****************")
   sys.exit()
+
+if not args.slow: sys.argv.extend(['--tags', '~@slow'])
+sys.argv.extend(['--define', f'beta={str(args.beta).lower()}'])
+print(' '.join(sys.argv), args)
 
 #https://stackoverflow.com/questions/28829350/run-python-behave-from-python-instead-of-command-line
 from behave.__main__ import Configuration, run_behave

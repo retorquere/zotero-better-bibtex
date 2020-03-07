@@ -299,6 +299,8 @@
         <preference name="extensions.zotero.translators.better-bibtex.extraMergeTeX" type="bool" default="true"/>
         <preference name="extensions.zotero.translators.better-bibtex.extraMergeCSL" type="bool" default="true"/>
         <preference name="extensions.zotero.translators.better-bibtex.extraMergeCitekeys" type="bool" default="true"/>
+        <preference name="extensions.zotero.translators.better-bibtex.importJabRefStrings" type="bool" default="true"/>
+        <preference name="extensions.zotero.translators.better-bibtex.importJabRefAbbreviations" type="bool" default="true"/>
 
         <preference name="extensions.zotero.translators.better-bibtex.postscriptOverride" type="string" default=""/>
         <bbt:doc>

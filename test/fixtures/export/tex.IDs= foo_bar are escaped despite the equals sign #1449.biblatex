@@ -1,0 +1,14 @@
+
+@online{shaw_rfc4880_2007,
+  ids = {shaw_rfc4880_2007,rfc4880},
+  title = {{{RFC4880}}: {{OpenPGP Message Format}}},
+  author = {Shaw, David and Donnerhacke, Lutz and Thayer, Rodney and Finney, Hal and Callas, Jon},
+  date = {2007-11},
+  url = {http://tools.ietf.org/html/rfc4880},
+  urldate = {2014-08-19},
+  note = {CCitation Key: rfc4880}
+}
+% == BibLateX quality report for shaw_rfc4880_2007:
+% ? Title looks like it was stored in title-case in Zotero
+
+

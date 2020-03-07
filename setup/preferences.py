@@ -21,6 +21,19 @@ def jstype(v):
   if type(v) == int: return 'number'
   raise ValueError(f'Unexpected type {type(v)}')
 
+def load(name):
+  with open(name) as f:
+      xul = f.read()
+  with open(os.path.join(root, 'locale/en-US/zotero-better-bibtex.dtd')) as dtd:
+    for entity in etree.DTD(dtd).entities():
+      xul = xul.replace(f'&{entity.name};', entity.content)
+  xul = etree.fromstring(xul)
+  ns = Munch()
+  for name, url in xul.nsmap.items():
+    if not name: name = 'xul'
+    ns[name] = url
+  return xul, ns
+
 class Preferences:
   def __init__(self):
     self.preferences = {}
@@ -28,21 +41,9 @@ class Preferences:
     self.undocumented = {}
     self.printed = []
 
-    self.load()
+    self.pane, self.ns = load(os.path.join(root, 'content/Preferences.xul'))
     self.parse()
     self.save()
-
-  def load(self):
-    with open(os.path.join(root, 'content/Preferences.xul')) as xul:
-      pane = xul.read()
-    with open(os.path.join(root, 'locale/en-US/zotero-better-bibtex.dtd')) as dtd:
-      for entity in etree.DTD(dtd).entities():
-        pane = pane.replace(f'&{entity.name};', entity.content)
-    self.pane = etree.fromstring(pane)
-    self.ns = Munch()
-    for name, url in self.pane.nsmap.items():
-      if not name: name = 'xul'
-      self.ns[name] = url
 
   def parse(self):
     xul = f'{{{self.ns.xul}}}'
@@ -234,5 +235,9 @@ class Preferences:
 
     with open(os.path.join(root, 'gen', 'preferences.ts'), 'w') as f:
       print(template('preferences/preferences.ts.mako').render(preferences=preferences).strip(), file=f)
+
+content = os.path.join(root, 'content')
+for xul in os.listdir(content):
+  if xul.endswith('xul'): load(os.path.join(content, xul))
 
 Preferences()
