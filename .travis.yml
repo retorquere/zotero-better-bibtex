@@ -33,7 +33,7 @@ script:
   - ./util/build-assets fetch || travis_terminate 1
   - ./test/behave --format json.pretty --outfile behave.json --format travis
   - touch behave.json
-  - curl -T behave.json -u "$PCLOUD" https://webdav.pcloud.com/travis/$TRAVIS_BRANCH=$TRAVIS_JOB_NUMBER.json
+  - curl -T behave.json -u "$PCLOUD" https://webdav.pcloud.com/travis/$CLIENT=$TRAVIS_BRANCH=$TRAVIS_JOB_NUMBER.json
 
 after_failure:
   - ./util/build-assets pop
