@@ -56,8 +56,10 @@ parser.add_argument('--workers', '--no-workers', dest='workers', action=BooleanA
 parser.add_argument('--this', action='store_true')
 parser.add_argument('--slow', action='store_true',
   default = os.environ.get('TRAVIS_BRANCH') in load_json(os.path.join(ROOT, '.slow.json'), []) or
+            os.environ.get('TRAVIS_BRANCH') == 'master' or
             '#slow' in os.environ.get('TRAVIS_COMMIT_MESSAGE', '') or
-            os.environ.get('TRAVIS_EVENT_TYPE') == 'cron'
+            os.environ.get('TRAVIS_EVENT_TYPE') == 'cron' or
+            os.environ.get('TRAVIS_TAG', '') != ''
 )
 parser.add_argument('--tagged', action='store_true', default=os.environ.get('TRAVIS_TAG', '') != '')
 parser.add_argument('--nightly', action='store_true', default=os.environ.get('TRAVIS_EVENT_TYPE') == 'cron')
@@ -100,7 +102,7 @@ if args.client == 'jurism' or args.beta:
   print(f"********* SKIPPING{' BETA' if args.beta else ''} BUILD FOR {args.client.upper()} UNTIL FURTHER NOTICE ****************")
   sys.exit()
 
-if not args.slow: sys.argv.extend(['--tags', '~@slow'])
+if args.slow: sys.argv.extend(['--define', 'slow=true'])
 sys.argv.extend(['--define', f'beta={str(args.beta).lower()}'])
 print(' '.join(sys.argv), args)
 

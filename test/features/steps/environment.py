@@ -10,34 +10,12 @@ import steps.utils as utils
 import sys
 
 active_tag_value_provider = {
-  'client': 'zotero'
+  'client': 'zotero',
+  'slow': 'true',
 }
 active_tag_matcher = ActiveTagMatcher(active_tag_value_provider)
 
 @contextmanager
-def value_tag(tag):
-    name = tag
-    value = None
-
-    if tag.startswith('use.with_') and tag.replace('use.with_', '').split('=')[0] in active_tag_value_provider:
-      pass
-    elif tag.startswith('not.with_') and tag.replace('not.with_', '').split('=')[0] in active_tag_value_provider:
-      pass
-    elif '=' in tag:
-      s = tag.split('=', 1)
-      name = s[0]
-      try:
-        value = int(s[1])
-      except:
-        raise ValueError(f'{tag} must specify a valid integer')
-    elif ':' in tag:
-      s = tag.split(':', 1)
-      name = s[0]
-      value = s[1]
-      if len(value) == 0: raise ValueError(f'{tag} must specify a valid string')
-
-    yield (name, value)
-
 def before_feature(context, feature):
   if active_tag_matcher.should_exclude_with(feature.tags):
     feature.skip(reason="DISABLED ACTIVE-TAG")
@@ -45,13 +23,8 @@ def before_feature(context, feature):
   for scenario in feature.walk_scenarios():
     retries = 0
     for tag in scenario.effective_tags:
-      with value_tag(tag) as (tag, value):
-        if tag == 'retry':
-          retries = max(retries, 1)
-        elif tag == 'retries':
-          value = value or 0
-          if value == 0: raise ValueError(f'{value} is not a valid number of retries')
-          retries = max(retries, value)
+      if tag.startswith('retries='):
+        retries = int(tag.split('=')[1])
 
     if retries > 0:
       patch_scenario_with_autoretry(scenario, max_attempts=retries + 1)
@@ -75,11 +48,8 @@ def before_scenario(context, scenario):
 
   context.timeout = 60
   for tag in scenario.effective_tags:
-    with value_tag(tag) as (tag, value):
-      if tag == 'nightly':
-        context.timeout = max(context.timeout, 300)
-      elif tag == 'timeout':
-        value = value or 0
-        assert value > 0, f'{value} is not a valid timeout'
-        context.timeout = max(context.timeout, value)
+    if tag == 'use.with_slow=true':
+      context.timeout = max(context.timeout, 300)
+    elif tag.startswith('timeout='):
+      context.timeout = max(context.timeout, int(tag.split('=')[1]))
   context.zotero.config.timeout = context.timeout
