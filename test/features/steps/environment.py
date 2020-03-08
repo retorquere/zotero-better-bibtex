@@ -19,7 +19,11 @@ def value_tag(tag):
     name = tag
     value = None
 
-    if '=' in tag:
+    if tag.startswith('use.with_') and tag.replace('use.with_', '').split('=')[0] in active_tag_value_provider:
+      pass
+    elif tag.startswith('not.with_') and tag.replace('not.with_', '').split('=')[0] in active_tag_value_provider:
+      pass
+    elif '=' in tag:
       s = tag.split('=', 1)
       name = s[0]
       try:
