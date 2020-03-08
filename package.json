@@ -51,12 +51,12 @@
     "test": "test"
   },
   "dependencies": {
-    "@retorquere/bibtex-parser": "^3.1.13",
+    "@retorquere/bibtex-parser": "^3.1.16",
     "@types/lokijs": "^1.5.3",
     "ajv": "^6.12.0",
     "ajv-keywords": "^3.4.1",
     "barcoder": "^2.0.1",
-    "citeproc": "^2.2.31",
+    "citeproc": "^2.2.32",
     "edtf": "^2.7.1",
     "edtfy": "^0.0.8",
     "escape-string-regexp": "^2.0.0",
@@ -94,10 +94,10 @@
     "webpack-cli": "^3.3.11",
     "words-to-numbers": "^1.5.1",
     "xregexp": "^4.3.0",
-    "zotero-plugin": "^1.0.9"
+    "zotero-plugin": "^1.0.10"
   },
   "devDependencies": {
-    "@types/node": "^13.7.7",
+    "@types/node": "^13.9.0",
     "@types/webpack": "^4.41.7",
     "archiver": "^3.1.1",
     "bluebird": "^3.7.2",

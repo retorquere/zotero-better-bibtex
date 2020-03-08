@@ -461,7 +461,8 @@ Scenario: automatic tags in export #1270
   Then an export using "Better BibTeX" should match "export/*.bibtex"
 
 # tests the cache
-@rbwl @zotero @slow @timeout=3000
+@only.with_client=zotero
+@rbwl @slow @timeout=3000
 Scenario: Really Big whopping library
   When I restart Zotero with "1287" + "export/*.json"
   And I reset the cache
@@ -472,7 +473,8 @@ Scenario: Really Big whopping library
   And an export using "Better BibTeX" should match "export/*.bibtex", but take no more than 150 seconds
   And an export using "Better CSL JSON" should match "export/*.csl.json", but take no more than 150 seconds
 
-@1296 @zotero @slow @timeout=300
+@only.with_client=zotero
+@1296 @slow @timeout=300
 Scenario: Cache does not seem to fill #1296
   When I restart Zotero with "1296"
   And I empty the trash
