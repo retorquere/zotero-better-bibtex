@@ -2,6 +2,8 @@ dist: xenial
 language: python
 python:
   - 3.7
+os:
+  - linux
 services:
   - xvfb
 
@@ -82,8 +84,8 @@ jobs:
       - npm run docs:deploy
     deploy:
       provider: pages
-      skip_cleanup: true
-      github_token: $GITHUB_TOKEN
+      cleanup: false
+      token: $GITHUB_TOKEN
       local_dir: site/public
       keep_history: true
       on:
