@@ -86,6 +86,7 @@ jobs:
       provider: pages
       cleanup: false
       token: $GITHUB_TOKEN
+      edge: true
       local_dir: site/public
       keep_history: true
       on:
