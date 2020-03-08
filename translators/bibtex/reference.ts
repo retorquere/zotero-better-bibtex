@@ -368,11 +368,16 @@ export class Reference {
       this.english = ['american', 'british', 'canadian', 'english', 'australian', 'newzealand', 'usenglish', 'ukenglish', 'anglais'].includes(this.language.toLowerCase())
     }
 
+    // remove ordinal from edition
+    this.item.edition = (this.item.edition || '').replace(/^([0-9]+)(nd|th)$/, '$1')
+
+    // TODO: remove now that conditional chaining is available
     if (this.item.extraFields.csl.type) {
       this.item.cslType = (this.item.extraFields.csl.type as string).toLowerCase()
       delete item.extraFields.csl.type
     }
 
+    // TODO: remove now that conditional chaining is available
     if (this.item.extraFields.csl['volume-title']) { // should just have been mapped by Zotero
       this.item.cslVolumeTitle = (this.item.extraFields.csl['volume-title'] as string)
       delete this.item.extraFields.csl['volume-title']

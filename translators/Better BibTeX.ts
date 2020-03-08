@@ -436,6 +436,7 @@ class ZoteroItem {
   }
 
   protected $edition(value) {
+    value = value.replace(/^([0-9]+)(nd|th)$/, '$1')
     const numbers = wordsToNumbers(value)
     if (typeof numbers === 'number' || (typeof numbers === 'string' && numbers && !numbers.match(/\w/))) value = numbers
     return this.set('edition', value)
