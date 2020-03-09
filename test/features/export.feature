@@ -5,7 +5,7 @@ Feature: Export
 @351 @376 @389 @bblt-0 @bblt @485 @515 @573 @590 @747 @edtf @689
 @biblatex @644 @889 @482 @979 @746 @1148 @1139 @1162 @1207 @1331
 @245 @246 @1353 @1370 @1387 @1395 @1413 @1422 @1434 @1448 @1449
-Scenario Outline: BibLaTeX Export
+Scenario Outline: Export <references> references for BibLaTeX to <file>
   When I import <references> references from "export/<file>.json"
   Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
@@ -133,7 +133,7 @@ Scenario Outline: BibLaTeX Export
 @441 @439 @bbt @300 @565 @551 @558 @747 @892 @899 @901 @976 @977
 @978 @746 @1069 @1092 @1091 @1110 @1112 @1118 @1147 @1188 @1217 @1218
 @1227 @1265 @980 @1375 @1402 @1446
-Scenario Outline: BibTeX Export
+Scenario Outline: Export <references> references for BibTeX to <file>
   Given I import <references> references from "export/<file>.json"
   Then an export using "Better BibTeX" should match "export/*.bibtex"
 

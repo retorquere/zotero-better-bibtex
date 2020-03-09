@@ -48,19 +48,8 @@ Scenario: AUX scanner
   And I import 1 reference from "import/*.aux"
   Then the library should match "import/*-post.json"
 
-@use.with_slow=true @timeout=3000
-@873
-Scenario Outline: Better BibTeX Import
-  When I import <references> references from "import/<file>.bib"
-  Then the library should match "import/*.json"
-
-  Examples:
-  | file                                                                        | references  |
-  | Some bibtex entries quietly discarded on import from bib file #873          | 989         |
- # | Async import, large library #720                                            | 9057        |
-
-@959 @1058 @871 @1081 @1115 @1350 @667
-Scenario Outline: Better BibTeX Import
+@959 @1058 @871 @1081 @1115 @1350 @667 @873
+Scenario Outline: Import <references> from <file>
   When I import <references> references from "import/<file>.bib"
   Then the library should match "import/*.json"
   Examples:
@@ -73,6 +62,7 @@ Scenario Outline: Better BibTeX Import
   | Better BibTeX.009                                                           | 3           |
   | Better BibTeX.011                                                           | 1           |
   | Better BibTeX.012                                                           | 1           |
+  | Better BibTeX.014                                                           | 1           |
   | Biblatex Annotation Import Bug #613                                         | 1           |
   | Endnote should parse                                                        | 1           |
   | Import location to event-place for conference papers                        | 1           |
@@ -83,6 +73,11 @@ Scenario Outline: Better BibTeX Import
   | eprinttype field dropped on import #959                                     | 1           |
   | support Local-Zo-Url-x field from BibDesk2Zotero_attachments #667           | 1           |
 
+  @use.with_slow=true @timeout=3000
+  Examples:
+ # | Async import, large library #720                                            | 9057        |
+  | Some bibtex entries quietly discarded on import from bib file #873          | 989         |
+
   @test-cluster-1
   Examples:
   | file                                                                        | references  |
@@ -90,30 +85,18 @@ Scenario Outline: Better BibTeX Import
   | Better BibTeX.001                                                           | 2           |
   | Better BibTeX.008                                                           | 1           |
   | Better BibTeX.010                                                           | 1           |
+  | Better BibTeX.015                                                           | 1           |
   | BibLaTeX Patent author handling, type #1060                                 | 2           |
   | BibTeX import; preamble with def create problems #732                       | 1           |
   | Failure to handle unparsed author names (92)                                | 1           |
   | Import Jabref fileDirectory, unexpected reference type #1058                | 3           |
+  | Import fails to perform @String substitutions #154                          | 1           |
   | Literal names                                                               | 1           |
+  | Problem when importing BibTeX entries with percent sign #95 or preamble #96 | 1           |
+  | Problem when importing BibTeX entries with square brackets #94              | 1           |
   | Title of German entry converted to lowercase during import #1350            | 4           |
   | space after citekey creates confusion #716                                  | 2           |
   | zbb (quietly) chokes on this .bib #664                                      | 1           |
-
-@13
-Scenario Outline: Better BibTeX Import
-  When I import <references> reference from "import/<file>.bib"
-  Then the library should match "import/*.json"
-  Examples:
-  | file                                                                        | references  |
-  | Better BibTeX.014                                                           | 1           |
-
-  @test-cluster-1
-  Examples:
-  | file                                                                        | references  |
-  | Better BibTeX.015                                                           | 1           |
-  | Import fails to perform @String substitutions #154                          | 1           |
-  | Problem when importing BibTeX entries with percent sign #95 or preamble #96 | 1           |
-  | Problem when importing BibTeX entries with square brackets #94              | 1           |
 
 # covered by 717
 #@97
