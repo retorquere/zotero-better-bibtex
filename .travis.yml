@@ -84,7 +84,7 @@ jobs:
       - npm run docs:deploy
     deploy:
       provider: pages
-      cleanup: false
+      skip_cleanup: true
       token: $GITHUB_TOKEN
       edge: true
       local_dir: site/public
