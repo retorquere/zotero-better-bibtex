@@ -461,6 +461,7 @@ Scenario: automatic tags in export #1270
   Then an export using "Better BibTeX" should match "export/*.bibtex"
 
 # tests the cache
+@test-cluster-1
 @use.with_client=zotero @use.with_slow=true @timeout=3000
 @rbwl
 Scenario: Really Big whopping library
