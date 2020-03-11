@@ -51,12 +51,12 @@
     "test": "test"
   },
   "dependencies": {
-    "@retorquere/bibtex-parser": "^3.1.16",
+    "@retorquere/bibtex-parser": "^3.1.22",
     "@types/lokijs": "^1.5.3",
     "ajv": "^6.12.0",
     "ajv-keywords": "^3.4.1",
     "barcoder": "^2.0.1",
-    "citeproc": "^2.2.32",
+    "citeproc": "^2.2.33",
     "edtf": "^2.7.1",
     "edtfy": "^0.0.8",
     "escape-string-regexp": "^2.0.0",
@@ -90,7 +90,7 @@
     "task-easy": "^1.0.1",
     "transliteration": "^2.1.8",
     "tslint": "^6.0.0",
-    "unicode2latex": "^1.0.47",
+    "unicode2latex": "^1.0.52",
     "webpack-cli": "^3.3.11",
     "words-to-numbers": "^1.5.1",
     "xregexp": "^4.3.0",

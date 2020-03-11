@@ -49,7 +49,7 @@ Scenario: AUX scanner
   Then the library should match "import/*-post.json"
 
 @959 @1058 @871 @1081 @1115 @1350 @667 @873
-Scenario Outline: Import <references> from <file>
+Scenario Outline: Import <references> references from <file>
   When I import <references> references from "import/<file>.bib"
   Then the library should match "import/*.json"
   Examples:
