@@ -812,12 +812,10 @@ class ZoteroItem {
 
     // do this before because some handlers directly access this.bibtex.fields
     for (const [field, values] of Object.entries(this.bibtex.fields)) {
-      this.bibtex.fields[field] = (values as string[]).map(value => value.replace(/\u00A0/g, ' ').trim())
+      this.bibtex.fields[field] = (values as string[]).map(value => typeof value === 'string' ? value.replace(/\u00A0/g, ' ').trim() : ('' + value))
     }
     for (const [field, values] of Object.entries(this.bibtex.fields)) {
-      for (let value of (values as string[])) {
-        value = value.replace(/\u00A0/g, ' ')
-
+      for (const value of (values as string[])) {
         if (field.match(/^(local-zo-url-[0-9]+)|(file-[0-9]+)$/)) {
           if (this.$file(value)) continue
 
