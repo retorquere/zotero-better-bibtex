@@ -79,50 +79,7 @@
   "collections": {},
   "items": [
     {
-      "key": "6XYL2WBT",
-      "version": 0,
-      "itemType": "conferencePaper",
-      "pages": "300-301",
-      "date": "2016-02",
-      "extra": "Citation Key: test_citation1\nISSN: 0193-6530",
-      "DOI": "10.1109/JPROC.2016.2526118",
-      "abstractNote": "Abstract here",
-      "title": "Test Title With 100 𝜇J, 200 <span class=\"nocase\">𝜇J</span> Energy, and ±0.1% Accuracy, 0.2 mm² Size, and -50 dB Attenuation",
-      "creators": [
-        {
-          "firstName": "J.",
-          "lastName": "Doe",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "R.",
-          "lastName": "Smith",
-          "creatorType": "author"
-        }
-      ],
-      "tags": [
-        {
-          "tag": "Keyword 1"
-        },
-        {
-          "tag": "Keyword 2"
-        }
-      ],
-      "collections": [],
-      "relations": [],
-      "dateAdded": "2020-03-04T22:43:27Z",
-      "dateModified": "2020-03-04T22:43:27Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/6XYL2WBT",
-      "itemID": 99,
-      "attachments": [],
-      "notes": [],
-      "citekey": "test_citation1",
-      "citationKey": "test_citation1",
-      "libraryID": 1,
-      "publicationTitle": "IEEE_J_PROC"
-    },
-    {
-      "key": "9WWR8YJJ",
+      "key": "5TB5LHK8",
       "version": 0,
       "itemType": "conferencePaper",
       "pages": "300-301",
@@ -153,10 +110,10 @@
       ],
       "collections": [],
       "relations": [],
-      "dateAdded": "2020-03-04T22:43:27Z",
-      "dateModified": "2020-03-04T22:43:27Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/9WWR8YJJ",
-      "itemID": 100,
+      "dateAdded": "2020-03-12T07:59:13Z",
+      "dateModified": "2020-03-12T07:59:13Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/5TB5LHK8",
+      "itemID": 104,
       "attachments": [],
       "notes": [],
       "citekey": "test_citation2",
@@ -165,7 +122,50 @@
       "publicationTitle": "IEEE_J_PROC"
     },
     {
-      "key": "CAE4EPEK",
+      "key": "VSPIWDQI",
+      "version": 0,
+      "itemType": "conferencePaper",
+      "pages": "300-301",
+      "date": "2016-02",
+      "extra": "Citation Key: test_citation1\nISSN: 0193-6530",
+      "DOI": "10.1109/JPROC.2016.2526118",
+      "abstractNote": "Abstract here",
+      "title": "Test Title With 100 𝜇J, 200 𝜇J Energy, and ±0.1% Accuracy, 0.2 mm² Size, and -50 dB Attenuation",
+      "creators": [
+        {
+          "firstName": "J.",
+          "lastName": "Doe",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "R.",
+          "lastName": "Smith",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "Keyword 1"
+        },
+        {
+          "tag": "Keyword 2"
+        }
+      ],
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2020-03-12T07:59:12Z",
+      "dateModified": "2020-03-12T07:59:12Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/VSPIWDQI",
+      "itemID": 103,
+      "attachments": [],
+      "notes": [],
+      "citekey": "test_citation1",
+      "citationKey": "test_citation1",
+      "libraryID": 1,
+      "publicationTitle": "IEEE_J_PROC"
+    },
+    {
+      "key": "XJRIBSPX",
       "version": 0,
       "itemType": "note",
       "note": "Import errors found: <ul><li>Unresolved @string reference &quot;IEEE_J_PROC&quot;</li></ul>",
@@ -177,10 +177,10 @@
       ],
       "collections": [],
       "relations": [],
-      "dateAdded": "2020-03-04T22:43:27Z",
-      "dateModified": "2020-03-04T22:43:27Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/CAE4EPEK",
-      "itemID": 101,
+      "dateAdded": "2020-03-12T07:59:13Z",
+      "dateModified": "2020-03-12T07:59:13Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/XJRIBSPX",
+      "itemID": 105,
       "libraryID": 1,
       "notes": []
     }
