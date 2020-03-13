@@ -5,7 +5,7 @@ import argparse
 import json
 import os
 import re
-import shutil
+import shutil, shlex
 import subprocess
 import sys
 import tarfile
@@ -61,6 +61,7 @@ parser.add_argument('--slow', action='store_true',
             os.environ.get('TRAVIS_EVENT_TYPE') == 'cron' or
             os.environ.get('TRAVIS_TAG', '') != ''
 )
+parser.add_argument('--test')
 parser.add_argument('--tagged', action='store_true', default=os.environ.get('TRAVIS_TAG', '') != '')
 parser.add_argument('--nightly', action='store_true', default=os.environ.get('TRAVIS_EVENT_TYPE') == 'cron')
 args, unknownargs = parser.parse_known_args()
@@ -103,6 +104,7 @@ if args.client == 'jurism' or args.beta:
 
 if args.slow: sys.argv.extend(['--define', 'slow=true'])
 sys.argv.extend(['--define', f'beta={str(args.beta).lower()}'])
+if args.test: sys.argv.extend(['--define', f'test={args.test}'])
 print(' '.join(sys.argv), args)
 
 #https://stackoverflow.com/questions/28829350/run-python-behave-from-python-instead-of-command-line
