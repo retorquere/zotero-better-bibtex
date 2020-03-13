@@ -95,7 +95,6 @@ elif args.nightly and not args.tagged: # only test for beta o
   args.slow = True
 
 else:
-  sys.argv.extend(['--tags', f"{'~' if (JOB_NUMBER == 2) else ''}@test-cluster-1"])
   args.slow = args.slow or args.tagged
 
 if args.client == 'jurism' or args.beta:
