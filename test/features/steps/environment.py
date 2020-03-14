@@ -12,7 +12,7 @@ import json
 
 active_tag_value_provider = {
   'client': 'zotero',
-  'slow': 'true',
+  'slow': 'false',
 }
 active_tag_matcher = ActiveTagMatcher(active_tag_value_provider)
 
