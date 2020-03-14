@@ -6,6 +6,7 @@ from collections import defaultdict
 from munch import Munch
 import glob
 import re
+import math
 
 class Suite:
   def __init__(self, full=False):
@@ -24,22 +25,22 @@ class Suite:
 
   def split(self, n):
     batches = [ Suite() for i in range(0, n) ]
-    for test in sorted(self.tests, key=lambda test: test.duration, reverse=True):
+    tests = sorted(self.tests, key=lambda test: (test.duration, test.name), reverse=True)
+
+    for test in tests:
       if 'use.with_slow=true' in test.tags: continue
 
       sorted(batches, key=lambda batch: batch.duration() + test.duration)[0].tests.append(test)
-      #print('##', [ batch.duration() for batch in batches ])
 
-    for test in sorted(self.tests, key=lambda test: test.duration, reverse=True):
+    for test in tests:
       if not 'use.with_slow=true' in test.tags: continue
 
       sorted(batches, key=lambda batch: batch.duration() + test.duration)[0].tests.append(test)
-      #print('##', [ batch.duration() for batch in batches ])
 
     return batches
 
 builds = defaultdict(Suite)
-for log in glob.glob(os.path.expanduser('~/pCloud Drive/travis/zotero=master=*.json')):
+for log in sorted(glob.glob(os.path.expanduser('~/pCloud Drive/travis/zotero=master=*.json'))):
   print(log)
   if os.path.getsize(log) == 0 or not os.path.basename(log).startswith('zotero='):
     os.remove(log)
@@ -70,7 +71,7 @@ for log in glob.glob(os.path.expanduser('~/pCloud Drive/travis/zotero=master=*.j
         if build.failed: break
 
         # steps after step.status = "failed" have no results
-        element.duration = sum([step.result.duration for step in element.steps])
+        element.duration = math.ceil(sum([step.result.duration for step in element.steps]))
         element.name = re.sub(r' -- @[0-9]+\.[0-9]+ ', '', element.name)
         build.tests.append(element)
         for tag in element.tags: build.tags.add(tag)
