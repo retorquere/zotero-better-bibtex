@@ -12,10 +12,6 @@ Scenario Outline: Export <references> references for BibLaTeX to <file>
   Examples:
      | file                                                                                           | references  |
      | @jurisdiction; map court,authority to institution #326                                         | 1           |
-     | @legislation; map code,container-title to journaltitle #327                                    | 1           |
-     | ADS exports dates like 1993-00-00 #1066                                                        | 1           |
-     | Abbreviations in key generated for Conference Proceedings #548                                 | 1           |
-     | Allow explicit field override                                                                  | 1           |
      | BBT export of square brackets in date #245 -- xref should not be escaped #246                  | 3           |
      | BBT yields error with quality report #1387                                                     | 1           |
      | Be robust against misconfigured journal abbreviator #127                                       | 1           |
@@ -99,34 +95,34 @@ Scenario Outline: Export <references> references for BibLaTeX to <file>
      | Title case of latex greek text on biblatex export #564                                         | 2           |
      | Treat dash-connected words as a single word for citekey generation #619                        | 1           |
      | Treat ideographs as individual words for key generation #1353                                  | 1           |
-     | URL-DOI exclusive export broken for item types with no dedicated DOI field #1331               | 1           |
      | auth leaves punctuation in citation key #310                                                   | 1           |
-     | biblatex export of Presentation; Use type and venue fields #644                                | 2           |
-     | biblatex; Language tag xx is exported, xx-XX is not #380                                       | 1           |
-     | bookSection is always converted to @inbook, never @incollection #282                           | 1           |
      | condense in cite key format not working #308                                                   | 1           |
      | csquotes #302                                                                                  | 2           |
      | customized fields with curly brackets are not exported correctly anymore #775                  | 1           |
-     | date and year are switched #406                                                                | 4           |
-     | don't escape entry key fields for #296                                                         | 1           |
      | italics in title - capitalization #541                                                         | 1           |
      | map csl-json variables #293                                                                    | 2           |
      | markup small-caps, superscript, italics #301                                                   | 2           |
      | micro sign (unicode B5) export seems wrong and span in title #1434                             | 2           |
-     | origyear not taken from csl extra-field for citation key generation #1395                      | 2           |
      | paragraphs in Zotero notes need par #1422                                                      | 1           |
      | pre not working in Extra field #559                                                            | 1           |
      | referencetype= does not work #278                                                              | 1           |
-     | remove the field if the override is empty #303                                                 | 1           |
      | tex.IDs= foo_bar are escaped despite the equals sign #1449                                     | 1           |
      | transliteration for citekey #580                                                               | 1           |
      | typo stature-statute (zotero item type) #284                                                   | 1           |
-     | underscores in URL fields should not be escaped #104                                           | 1           |
      | urldate when only DOI is exported #869                                                         | 1           |
-
-  @test-cluster-1
-  Examples:
-     | file                                                                                           | references  |
+     | Allow explicit field override                                                                  | 1           |
+     | Abbreviations in key generated for Conference Proceedings #548                                 | 1           |
+     | ADS exports dates like 1993-00-00 #1066                                                        | 1           |
+     | @legislation; map code,container-title to journaltitle #327                                    | 1           |
+     | underscores in URL fields should not be escaped #104                                           | 1           |
+     | remove the field if the override is empty #303                                                 | 1           |
+     | don't escape entry key fields for #296                                                         | 1           |
+     | origyear not taken from csl extra-field for citation key generation #1395                      | 2           |
+     | date and year are switched #406                                                                | 4           |
+     | bookSection is always converted to @inbook, never @incollection #282                           | 1           |
+     | biblatex; Language tag xx is exported, xx-XX is not #380                                       | 1           |
+     | biblatex export of Presentation; Use type and venue fields #644                                | 2           |
+     | URL-DOI exclusive export broken for item types with no dedicated DOI field #1331               | 1           |
      | date ranges #747+#746                                                                          | 5           |
      | preserve @strings between import-export #1162                                                  | 1           |
 
@@ -141,24 +137,20 @@ Scenario Outline: Export <references> references for BibTeX to <file>
      | file                                                                               | references |
      | Better BibTeX does not export collections #901                                     | 36         |
      | Better BibTeX.027                                                                  | 1          |
-     | BetterBibtex export fails for missing last name #978                               | 1          |
-     | Double superscript in title field on export #1217                                  | 1          |
-     | Empty bibtex clause in extra gobbles whatever follows #99                          | 1          |
-     | Hyphenated last names not escaped properly (or at all) in BibTeX #976              | 1          |
      | Minimize bibtex export package dependencies #1402                                  | 1          |
      | No booktitle field when exporting references from conference proceedings #1069     | 1          |
      | Underscores break capital-preservation #300                                        | 1          |
-     | bibtex export of phdthesis does not case-protect -type- #435                       | 1          |
-     | capital delta breaks .bib output #141                                              | 1          |
-     | citekey firstpage-lastpage #1147                                                   | 2          |
-     | custom fields should be exported as-is #441                                        | 1          |
-     | error on exporting note with pre tags; duplicate field howpublished #1092          | 2          |
      | preserve BibTeX Variables does not check for null values while escaping #337       | 1          |
      | veryshorttitle and compound words #551                                             | 4          |
-
-  @test-cluster-1
-  Examples:
-     | file                                                                               | references |
+     | error on exporting note with pre tags; duplicate field howpublished #1092          | 2          |
+     | custom fields should be exported as-is #441                                        | 1          |
+     | citekey firstpage-lastpage #1147                                                   | 2          |
+     | capital delta breaks .bib output #141                                              | 1          |
+     | bibtex export of phdthesis does not case-protect -type- #435                       | 1          |
+     | Hyphenated last names not escaped properly (or at all) in BibTeX #976              | 1          |
+     | Empty bibtex clause in extra gobbles whatever follows #99                          | 1          |
+     | Double superscript in title field on export #1217                                  | 1          |
+     | BetterBibtex export fails for missing last name #978                               | 1          |
      | Better BibTeX.018                                                                  | 1          |
      | Better BibTeX.026                                                                  | 1          |
      | Book chapter citation using p. instead of pp. #1375                                | 1          |
@@ -198,13 +190,12 @@ Scenario: Omit URL export when DOI present. #131
   And I set preference .DOIandURL to url
   Then an export using "Better BibLaTeX" should match "export/*.prefer-url.biblatex"
 
-@test-cluster-1
 @438 @bbt
 Scenario: BibTeX name escaping has a million inconsistencies #438
   When I import 2 references from "export/*.json"
   Then an export using "Better BibTeX" should match "export/*.bibtex"
 
-@1194 @test-cluster-1
+@1194
 Scenario: suppressBraceProtection does not work for BibTeX export (non-English items) #1194
   When I import 1 reference from "export/*.json"
   Then an export using "Better BibTeX" should match "export/*.sbp.bibtex"
@@ -265,7 +256,6 @@ Scenario: thesis zotero entries always create @phdthesis bibtex entries #307
   Then an export using "Better BibLaTeX" should match "export/*.biblatex"
   And an export using "Better BibTeX" should match "export/*.bibtex"
 
-@test-cluster-1
 @402 @bbt
 Scenario: bibtex; url export does not survive underscores #402
   When I import 1 reference from "export/*.json"
@@ -280,7 +270,7 @@ Scenario: two ISSN number are freezing browser #110 + Generating keys and export
   And I refresh the citation key
   Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
-@arXiv @85 @bbt @test-cluster-1
+@arXiv @85 @bbt
 Scenario: Square brackets in Publication field (85), and non-pinned keys must change when the pattern does
   When I import 1 references from "export/*.json"
   Then an export using "Better BibTeX" should match "export/*.bibtex"
@@ -302,7 +292,7 @@ Scenario: Deterministic ordering for CSL #1178 #1400
   When I import 26 references from "export/*.json"
   Then an export using "Better CSL JSON" should match "export/*.csl.json"
 
-@1179 @test-cluster-1
+@1179
 Scenario: CSL exporters; ignore [Fields to omit from export] setting #1179
   When I import 26 references from "export/*.json"
   Then an export using "Better CSL JSON" should match "export/*.csl.json"
@@ -329,7 +319,7 @@ Scenario: BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372
   When I import 1 reference from "export/*.json"
   Then an export using "Better CSL JSON" should match "export/*.csl.json"
 
-@365 @pandoc @825 @test-cluster-1
+@365 @pandoc @825
 Scenario: Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825
   When I import 7 references from "export/*.json"
   Then an export using "Better BibLaTeX" should match "export/*.biblatex"
@@ -342,14 +332,12 @@ Scenario: Setting the item type via the cheater syntax #587
   And an export using "Better BibTeX" should match "export/*.bibtex"
   And an export using "Better CSL JSON" should match "export/*.csl.json"
 
-@test-cluster-1
 @360 @811 @pandoc
 Scenario: Date export to Better CSL-JSON #360 #811
   When I import 15 references from "export/*.json"
   And an export using "Better CSL JSON" should match "export/*.csl.json"
   And an export using "Better BibLaTeX" should match "export/*.biblatex"
 
-@test-cluster-1
 @432 @447 @pandoc @598 @cslyml
 Scenario: Pandoc-LaTeX-SCHOMD Citation Export
   When I import 4 references with 3 attachments from "export/*.json"
@@ -375,7 +363,7 @@ Scenario: Journal abbreviations exported in bibtex (81)
   And I import 1 reference from "export/*.json"
   Then an export using "Better BibTeX" with useJournalAbbreviation on should match "export/*.bibtex"
 
-@postscript @bbt @test-cluster-1
+@postscript @bbt
 Scenario: Export web page to misc type with notes and howpublished custom fields #329
   Given I import 3 references from "export/*.json"
   And I set preference .postscript to "export/*.js"
@@ -418,12 +406,12 @@ Scenario: Do not caps-protect name fields #384 #565 #566
   When I set preference .biblatexExtendedNameFormat to true
   Then an export using "Better BibLaTeX" should match "export/*.biber26.biblatex"
 
-@383 @bblt @test-cluster-1
+@383 @bblt
 Scenario: Capitalize all title-fields for language en #383
   Given I import 8 references from "export/*.json"
   Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
-@411 @bblt @test-cluster-1
+@411 @bblt
 Scenario: Sorting and optional particle handling #411
   Given I import 2 references from "export/*.json"
   And I set preference .parseParticles to true
@@ -461,7 +449,6 @@ Scenario: automatic tags in export #1270
   Then an export using "Better BibTeX" should match "export/*.bibtex"
 
 # tests the cache
-@test-cluster-1
 @use.with_client=zotero @use.with_slow=true @timeout=3000
 @rbwl
 Scenario: Really Big whopping library

@@ -1,11 +1,11 @@
-@import @test-cluster-1
+@import
 Feature: Import
 
 Background:
   Given I set preference .citekeyFormat to [auth][year]
   And I set preference .jabrefFormat to 0
 
-@schomd @test-cluster-1
+@schomd
 Scenario: Better BibTeX Import 2
   When I import 2 references from "import/*.bib"
   Then the library should match "import/*.json"
@@ -21,7 +21,7 @@ Scenario: LaTeX commands in Zotero should be exported untouched #1380
   Then the library should match "import/*.json"
   And an export using "Better BibLaTeX" should match "import/*.roundtrip.bib"
 
-@1358 @test-cluster-1
+@1358
 Scenario: Import support for the online type in BBT #1358
   When I import 1 references from "import/*.bib"
   Then the library should match "import/*.json"
@@ -36,7 +36,7 @@ Scenario: Math markup to unicode not always imported correctly #472
   And I set preference .exportBibTeXStrings to detect
   Then an export using "Better BibTeX" should match "import/*.roundtrip.bib"
 
-@1246 @test-cluster-1
+@1246
 Scenario: importing a title-cased bib #1246
   When I import 2 references from "import/*.bib"
   Then the library should match "import/*.json"
@@ -72,15 +72,6 @@ Scenario Outline: Import <references> references from <file>
   | Wrong ring-above import #1115                                               | 1           |
   | eprinttype field dropped on import #959                                     | 1           |
   | support Local-Zo-Url-x field from BibDesk2Zotero_attachments #667           | 1           |
-
-  @use.with_slow=true @timeout=3000
-  Examples:
- # | Async import, large library #720                                            | 9057        |
-  | Some bibtex entries quietly discarded on import from bib file #873          | 989         |
-
-  @test-cluster-1
-  Examples:
-  | file                                                                        | references  |
   | Author splitter failure                                                     | 1           |
   | Better BibTeX.001                                                           | 2           |
   | Better BibTeX.008                                                           | 1           |
@@ -98,18 +89,23 @@ Scenario Outline: Import <references> references from <file>
   | space after citekey creates confusion #716                                  | 2           |
   | zbb (quietly) chokes on this .bib #664                                      | 1           |
 
+  @use.with_slow=true @timeout=3000
+  Examples:
+ # | Async import, large library #720                                            | 9057        |
+  | Some bibtex entries quietly discarded on import from bib file #873          | 989         |
+
 # covered by 717
 #@97
 #Scenario: Maintain the JabRef group and subgroup structure when importing a BibTeX db #97
 #  When I import 911 references with 42 attachments from "import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.bib"
 #  Then the library should match "import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.json"
 
-@1446 @test-cluster-1
+@1446
 Scenario: Edition Numbers in BibTeX Exports #1446
   When I import 1 reference from "export/*.bibtex"
   Then the library should match "export/*.roundtrip.json"
 
-@717 @test-cluster-1
+@717
 Scenario: Jabref groups import does not work #717
   When I import 3 references from "import/*.2.10.bib" into a new collection
   Then the library should match "import/*.2.10.json"
@@ -120,12 +116,11 @@ Scenario: Jabref groups import does not work #717
 Scenario: Unabbreviate on import #1436-1
   When I import 506 references from "import/*.bib" into a new collection
   Then the library should match "import/*.json"
-@1436 @timeout=240 @test-cluster-1
+@1436 @timeout=240
 Scenario: Unabbreviate on import #1436-2
   When I import 1053 references from "import/*.bib" into a new collection
   Then the library should match "import/*.json"
 @use.with_slow=true @timeout=6000
-@test-cluster-1
 @1436
 Scenario: Unabbreviate on import #1436-3
   When I import 7166 references from "import/*.bib" into a new collection

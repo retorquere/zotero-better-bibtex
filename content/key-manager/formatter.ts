@@ -556,10 +556,16 @@ class PatternFormatter {
     return (value || '').replace(script.han, ' $1 ').trim()
   }
 
-  /** transliterates the citation keys and removes unsafe characters */
+  /** transliterates the citation key and removes unsafe characters */
   public _clean(value) {
     if (!value) return ''
     return this.clean(value)
+  }
+
+  /** transliterates the citation key */
+  public _transliterate(value) {
+    if (!value) return ''
+    return this.removeDiacritics(value)
   }
 
   private removeDiacritics(str, mode?: string) {
