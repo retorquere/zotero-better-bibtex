@@ -216,6 +216,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
     })
     $patch$(Zotero.SearchConditions, 'getLocalizedName', original => function getLocalizedName(str) {
       if (str === citekeySearchCondition.name) return citekeySearchCondition.localized
+      return original.apply(this, arguments)
     })
 
     Events.on('preference-changed', pref => {
