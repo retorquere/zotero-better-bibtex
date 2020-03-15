@@ -190,9 +190,14 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
       localized: 'Citation Key',
     }
     $patch$(Zotero.Search.prototype, 'addCondition', original => function addCondition(condition, operator, value, required) {
-      const result = original.apply(this, arguments)
-      if (condition === 'title') original.call(this, citekeySearchCondition.name, operator, value, false)
-      return result
+      // detect a quick search being set up
+      if (condition.match(/^quicksearch/)) this.__add_bbt_citekey = true
+      // creator is always added in a quick search so use it as a trigger
+      if (condition === 'creator' && this.__add_bbt_citekey) {
+        original.call(this, citekeySearchCondition.name, operator, value, false)
+        delete this.__add_bbt_citekey
+      }
+      return original.apply(this, arguments)
     })
     $patch$(Zotero.SearchConditions, 'hasOperator', original => function hasOperator(condition, operator) {
       if (condition === citekeySearchCondition.name) return citekeySearchCondition.operators[operator]
