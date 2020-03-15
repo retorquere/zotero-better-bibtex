@@ -177,31 +177,40 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
       }
     })
 
+    const citekeySearchCondition = {
+      name: 'citationKey',
+      operators: {
+        is: true,
+        isNot: true,
+        contains: true,
+        doesNotContain: true,
+      },
+      table: 'betterbibtexcitekeys.citekeys',
+      field: 'citekey',
+      localized: 'Citation Key',
+    }
     $patch$(Zotero.Search.prototype, 'addCondition', original => function addCondition(condition, operator, value, required) {
       const result = original.apply(this, arguments)
-      if (condition === 'title') original.call(this, 'citationKey', operator, value, false)
+      if (condition === 'title') original.call(this, citekeySearchCondition.name, operator, value, false)
       return result
     })
     $patch$(Zotero.SearchConditions, 'hasOperator', original => function hasOperator(condition, operator) {
-      if (condition === 'citationKey') return { is: true, isNot: true, contains: true, doesNotContain: true, beginsWith: true }[operator]
+      if (condition === citekeySearchCondition.name) return citekeySearchCondition.operators[operator]
       return original.apply(this, arguments)
     })
     $patch$(Zotero.SearchConditions, 'get', original => function get(condition) {
-      if (condition === 'citationKey') {
-        return {
-          name: 'citationKey',
-          operators: {
-            is: true,
-            isNot: true,
-            contains: true,
-            doesNotContain: true,
-          },
-          table: 'betterbibtexcitekeys.citekeys',
-          field: 'citekey',
-          special: true,
-        }
-      }
+      if (condition === citekeySearchCondition.name) return citekeySearchCondition
       return original.apply(this, arguments)
+    })
+    $patch$(Zotero.SearchConditions, 'getStandardConditions', original => function getStandardConditions() {
+      return original.apply(this, arguments).concat({
+        name: citekeySearchCondition.name,
+        localized: citekeySearchCondition.localized,
+        operators: citekeySearchCondition.operators,
+      }).sort((a, b) => a.localized.localeCompare(b.localized))
+    })
+    $patch$(Zotero.SearchConditions, 'getLocalizedName', original => function getLocalizedName(str) {
+      if (str === citekeySearchCondition.name) return citekeySearchCondition.localized
     })
 
     Events.on('preference-changed', pref => {
