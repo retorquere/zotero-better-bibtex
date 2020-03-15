@@ -20,6 +20,8 @@ import { Formatter } from './key-manager/formatter'
 import { DB } from './db/main'
 import { DB as Cache } from './db/cache'
 
+import { patch as $patch$ } from './monkey-patch'
+
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let KeyManager = new class { // tslint:disable-line:variable-name
   public keys: any
@@ -167,6 +169,41 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
   public async start() {
     await this.rescan()
 
+    await ZoteroDB.queryAsync('ATTACH DATABASE ":memory:" AS betterbibtexcitekeys')
+    await ZoteroDB.queryAsync('CREATE TABLE betterbibtexcitekeys.citekeys (itemID PRIMARY KEY, itemKey, citekey)')
+    await Zotero.DB.executeTransaction(async () => {
+      for (const key of this.keys.data) {
+        await ZoteroDB.queryAsync('INSERT INTO betterbibtexcitekeys.citekeys (itemID, itemKey, citekey) VALUES (?, ?, ?)', [ key.itemID, key.itemKey, key.citekey ])
+      }
+    })
+
+    $patch$(Zotero.Search.prototype, 'addCondition', original => function addCondition(condition, operator, value, required) {
+      const result = original.apply(this, arguments)
+      if (condition === 'title') original.call(this, 'citationKey', operator, value, false)
+      return result
+    })
+    $patch$(Zotero.SearchConditions, 'hasOperator', original => function hasOperator(condition, operator) {
+      if (condition === 'citationKey') return { is: true, isNot: true, contains: true, doesNotContain: true, beginsWith: true }[operator]
+      return original.apply(this, arguments)
+    })
+    $patch$(Zotero.SearchConditions, 'get', original => function get(condition) {
+      if (condition === 'citationKey') {
+        return {
+          name: 'citationKey',
+          operators: {
+            is: true,
+            isNot: true,
+            contains: true,
+            doesNotContain: true,
+          },
+          table: 'betterbibtexcitekeys.citekeys',
+          field: 'citekey',
+          special: true,
+        }
+      }
+      return original.apply(this, arguments)
+    })
+
     Events.on('preference-changed', pref => {
       if (['autoAbbrevStyle', 'citekeyFormat', 'citekeyFold', 'skipWords'].includes(pref)) {
         Formatter.update('pref-change')
@@ -175,6 +212,8 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
 
     this.keys.on(['insert', 'update'], async citekey => {
       log.debug('item updated or inserted')
+
+      await ZoteroDB.queryAsync('INSERT OR REPLACE INTO betterbibtexcitekeys.citekeys (itemID, itemKey, citekey) VALUES (?, ?, ?)', [ citekey.itemID, citekey.itemKey, citekey.citekey ])
 
       // async is just a heap of fun. Who doesn't enjoy a good race condition?
       // https://github.com/retorquere/zotero-better-bibtex/issues/774
@@ -197,6 +236,9 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
         // update display panes by issuing a fake item-update notification
         Zotero.Notifier.trigger('modify', 'item', [citekey.itemID], { [citekey.itemID]: { bbtCitekeyUpdate: true } })
       }
+    })
+    this.keys.on('delete', async citekey => {
+      await ZoteroDB.queryAsync('DELETE FROM betterbibtexcitekeys.citekeys WHERE itemID = ?', [ citekey.itemID ])
     })
 
     this.started = true
