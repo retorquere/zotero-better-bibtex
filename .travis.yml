@@ -35,7 +35,7 @@ script:
   - ./util/build-assets fetch || travis_terminate 1
   - ./test/behave --format json.pretty --outfile behave.json --format travis --define balance=$JOB
   - touch behave.json
-  - curl -T behave.json -u "$PCLOUD" https://webdav.pcloud.com/travis/$CLIENT=$TRAVIS_BRANCH=$TRAVIS_JOB_NUMBER.json
+  - curl -T behave.json -u "$PCLOUD" https://webdav.pcloud.com/travis/$CLIENT=$TRAVIS_BRANCH=$TRAVIS_JOB_NUMBER=$TRAVIS_EVENT_TYPE.json
 
 after_failure:
   - ./util/build-assets pop
