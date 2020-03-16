@@ -73,6 +73,7 @@ def load(lib):
   lib = HashableDict(lib)
 
   lib.pop('config', None)
+  lib.pop('version', None)
 
   items = {
     item['itemID']: HashableDict(clean_item(item))
