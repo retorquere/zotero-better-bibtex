@@ -21,8 +21,7 @@ for log in sorted(glob.glob(os.path.expanduser('~/pCloud Drive/travis/*.json')))
     continue
 
   job = os.path.splitext(os.path.basename(log))[0].split('=')
-  if len(job) == 3: job.append('push')
-  if job[3] != 'push':
+  if len(job) != 4 or job[3] != 'push':
     os.remove(log)
     continue
   build, job = job[2].split('.')
@@ -111,9 +110,9 @@ def balance(slow=False):
   clusters = {'1': [], '2': []}
   for i, test in enumerate(tests):
     cluster = '1' if solver.BestSolutionContains(i) else '2'
-    clusters[cluster].append((test, durations[i]))
+    clusters[cluster].append(test)
   for cluster in list(clusters.keys()):
-    clusters[cluster] = { name: duration for name, duration in sorted(clusters[cluster], key=lambda t:t[0]) }
+    clusters[cluster] = sorted(clusters[cluster])
   return clusters
 
 with open('balance.json', 'w') as f:
