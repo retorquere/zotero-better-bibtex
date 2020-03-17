@@ -44,10 +44,10 @@ except FileNotFoundError:
 
 def before_scenario(context, scenario):
   if active_tag_matcher.should_exclude_with(scenario.effective_tags):
-    scenario.skip("DISABLED ACTIVE-TAG")
+    scenario.skip(f"DISABLED ACTIVE-TAG {str(active_tag_value_provider)}")
     return
   if balance is not None and 'balance' in context.config.userdata:
-    test_in_cluster = '1' if re.sub(r' -- @[0-9]+\.[0-9]+ ', '', scenario.name) in balance['1'] else '2'
+    test_in_cluster = '1' if re.sub(r' -- @[0-9]+\.[0-9]+ ', '', scenario.name) in balance['slow' if active_tag_value_provider['slow'] == 'true' else 'fast']['1'] else '2'
     if context.config.userdata['balance'] != test_in_cluster:
       scenario.skip(f'TESTED IN CLUSTER {test_in_cluster}')
       return
