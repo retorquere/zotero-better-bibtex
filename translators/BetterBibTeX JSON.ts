@@ -5,6 +5,7 @@ export { Translator }
 
 import { debug } from './lib/debug'
 import * as itemfields from '../gen/itemfields'
+const version = require('../gen/version.js')
 
 const chunkSize = 0x100000
 
@@ -117,6 +118,10 @@ export function doExport() {
       label: Translator.header.label,
       preferences: Translator.preferences,
       options: Translator.options,
+    },
+    version: {
+      zotero: Zotero.Utilities.getVersion(),
+      bbt: version,
     },
     collections: Translator.collections,
     items: [],

@@ -124,7 +124,6 @@ with open(os.path.join(root, 'gen', 'itemfields.ts'), 'w') as f:
 export function simplifyForExport(item, dropAttachments = false) {
   unalias(item)
 
-  item.notes = item.notes ? item.notes.map(note =>  note.note || note ) : []
   if (item.filingDate) item.filingDate = item.filingDate.replace(/^0000-00-00 /, '')
 
   if (item.creators) {
@@ -138,7 +137,13 @@ export function simplifyForExport(item, dropAttachments = false) {
     }
   }
 
-  if (dropAttachments) item.attachments = []
+  if (item.itemType === 'attachment' || item.itemType === 'note') {
+    delete item.attachments
+    delete item.notes
+  } else {
+    item.attachments = (!dropAttachments && item.attachments) || []
+    item.notes = item.notes ? item.notes.map(note =>  note.note || note ) : []
+  }
 
   return item
 }
