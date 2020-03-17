@@ -105,14 +105,15 @@ def balance(slow=False):
 
   solver = pywrapknapsack_solver.KnapsackSolver(pywrapknapsack_solver.KnapsackSolver.KNAPSACK_MULTIDIMENSION_BRANCH_AND_BOUND_SOLVER, 'KnapsackExample')
   solver.Init([1 for n in durations], [durations], [int(sum(durations)/2)])
+  #solver.Init(durations, [durations], [int(sum(durations)/2)])
   computed_value = solver.Solve()
 
   clusters = {'1': [], '2': []}
-  for i, test in enumerate(tests):
-    cluster = '1' if solver.BestSolutionContains(i) else '2'
-    clusters[cluster].append(test)
-  for cluster in list(clusters.keys()):
-    clusters[cluster] = sorted(clusters[cluster])
+  for cluster in clusters.keys():
+    clusters[cluster] = sorted([test for i, test in enumerate(tests) if solver.BestSolutionContains(i) == (cluster == '1')])
+  print('slow' if slow else 'fast')
+  for cluster in clusters.keys():
+    print(' ', cluster, sum([dur for i, dur in enumerate(durations) if solver.BestSolutionContains(i) == (cluster == '1')]))
   return clusters
 
 with open('balance.json', 'w') as f:
