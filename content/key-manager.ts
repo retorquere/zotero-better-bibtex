@@ -20,6 +20,8 @@ import { Formatter } from './key-manager/formatter'
 import { DB } from './db/main'
 import { DB as Cache } from './db/cache'
 
+import { patch as $patch$ } from './monkey-patch'
+
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let KeyManager = new class { // tslint:disable-line:variable-name
   public keys: any
@@ -167,6 +169,56 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
   public async start() {
     await this.rescan()
 
+    await ZoteroDB.queryAsync('ATTACH DATABASE ":memory:" AS betterbibtexcitekeys')
+    await ZoteroDB.queryAsync('CREATE TABLE betterbibtexcitekeys.citekeys (itemID PRIMARY KEY, itemKey, citekey)')
+    await Zotero.DB.executeTransaction(async () => {
+      for (const key of this.keys.data) {
+        await ZoteroDB.queryAsync('INSERT INTO betterbibtexcitekeys.citekeys (itemID, itemKey, citekey) VALUES (?, ?, ?)', [ key.itemID, key.itemKey, key.citekey ])
+      }
+    })
+
+    const citekeySearchCondition = {
+      name: 'citationKey',
+      operators: {
+        is: true,
+        isNot: true,
+        contains: true,
+        doesNotContain: true,
+      },
+      table: 'betterbibtexcitekeys.citekeys',
+      field: 'citekey',
+      localized: 'Citation Key',
+    }
+    $patch$(Zotero.Search.prototype, 'addCondition', original => function addCondition(condition, operator, value, required) {
+      // detect a quick search being set up
+      if (condition.match(/^quicksearch/)) this.__add_bbt_citekey = true
+      // creator is always added in a quick search so use it as a trigger
+      if (condition === 'creator' && this.__add_bbt_citekey) {
+        original.call(this, citekeySearchCondition.name, operator, value, false)
+        delete this.__add_bbt_citekey
+      }
+      return original.apply(this, arguments)
+    })
+    $patch$(Zotero.SearchConditions, 'hasOperator', original => function hasOperator(condition, operator) {
+      if (condition === citekeySearchCondition.name) return citekeySearchCondition.operators[operator]
+      return original.apply(this, arguments)
+    })
+    $patch$(Zotero.SearchConditions, 'get', original => function get(condition) {
+      if (condition === citekeySearchCondition.name) return citekeySearchCondition
+      return original.apply(this, arguments)
+    })
+    $patch$(Zotero.SearchConditions, 'getStandardConditions', original => function getStandardConditions() {
+      return original.apply(this, arguments).concat({
+        name: citekeySearchCondition.name,
+        localized: citekeySearchCondition.localized,
+        operators: citekeySearchCondition.operators,
+      }).sort((a, b) => a.localized.localeCompare(b.localized))
+    })
+    $patch$(Zotero.SearchConditions, 'getLocalizedName', original => function getLocalizedName(str) {
+      if (str === citekeySearchCondition.name) return citekeySearchCondition.localized
+      return original.apply(this, arguments)
+    })
+
     Events.on('preference-changed', pref => {
       if (['autoAbbrevStyle', 'citekeyFormat', 'citekeyFold', 'skipWords'].includes(pref)) {
         Formatter.update('pref-change')
@@ -175,6 +227,8 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
 
     this.keys.on(['insert', 'update'], async citekey => {
       log.debug('item updated or inserted')
+
+      await ZoteroDB.queryAsync('INSERT OR REPLACE INTO betterbibtexcitekeys.citekeys (itemID, itemKey, citekey) VALUES (?, ?, ?)', [ citekey.itemID, citekey.itemKey, citekey.citekey ])
 
       // async is just a heap of fun. Who doesn't enjoy a good race condition?
       // https://github.com/retorquere/zotero-better-bibtex/issues/774
@@ -197,6 +251,9 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
         // update display panes by issuing a fake item-update notification
         Zotero.Notifier.trigger('modify', 'item', [citekey.itemID], { [citekey.itemID]: { bbtCitekeyUpdate: true } })
       }
+    })
+    this.keys.on('delete', async citekey => {
+      await ZoteroDB.queryAsync('DELETE FROM betterbibtexcitekeys.citekeys WHERE itemID = ?', [ citekey.itemID ])
     })
 
     this.started = true
