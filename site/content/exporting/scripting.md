@@ -166,7 +166,7 @@ Specify the ordering of the listing of fields in an exported Biblatex/Bibtex ent
 ```
 if (Translator.BetterTeX) {
   // the bib(la)tex fields are ordered according to this array.
-  // If a field is not in this list, it will show up at after the ordered fields.
+  // If a field is not in this list, it will show up after the ordered fields.
   // https://github.com/retorquere/zotero-better-bibtex/issues/512
 
   const order = ['author', 'date', 'title', 'publisher']
