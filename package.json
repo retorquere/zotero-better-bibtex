@@ -107,7 +107,7 @@
     "dotenv": "^8.2.0",
     "ejs": "^3.0.1",
     "find-up": "^4.1.0",
-    "fs-extra": "^8.1.0",
+    "fs-extra": "^9.0.0",
     "glob": "^7.1.6",
     "ignore-loader": "^0.1.2",
     "indent-string": "^4.0.0",
