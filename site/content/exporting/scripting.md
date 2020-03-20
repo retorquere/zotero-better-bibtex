@@ -116,7 +116,7 @@ Since BibTeX doesn't really have well-defined behavior across styles the way Bib
 ```
 if (Translator.BetterBibTeX && item.itemType === 'webpage') {
     if (item.accessDate) {
-      reference.add({ name: 'note', value: "(accessed " + item.accessDate + ")" });
+      reference.add({ name: 'note', value: "(accessed " + item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') + ")" });
     }
     if (item.url) {
       reference.add({ name: 'howpublished', bibtex: "{\\url{" + reference.enc_verbatim({value: item.url}) + "}}" });
