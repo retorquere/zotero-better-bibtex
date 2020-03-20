@@ -32,6 +32,25 @@ if (Translator.BetterBibTeX) {
   }
 }
 
+const combining_diacritic = {
+  '\u0300': '`',
+  '\u0301': "'",
+  '\u0302': '^',
+  '\u0303': '~',
+  '\u0304': '=',
+  '\u0306': 'u',
+  '\u0307': '.',
+  '\u0308': '"',
+  '\u030A': 'r',
+  '\u030B': 'H',
+  '\u030C': 'v',
+  '\u0323': 'd',
+  '\u0327': 'c',
+  '\u0328': 'k',
+  '\u0331': 'b',
+}
+
+
 const switchMode = {
   math: 'text',
   text: 'math',
@@ -259,6 +278,9 @@ const htmlConverter = new class HTMLConverter {
       if (text[i + 1] === '\ufe20' && text[i + 3] === '\ufe21') { // tslint:disable-line no-magic-numbers
         mapped = this.mapping[text.substr(i, 4)] || { text: text[i] + text[i + 2] } // tslint:disable-line no-magic-numbers
         i += 3 // tslint:disable-line no-magic-numbers
+      } else if (text[i + 1] && combining_diacritic[text[i + 1]]) { // separate combining diacritic
+        mapped = { text: `\\${combining_diacritic[text[i + 1]]}{${text[i]}}` }
+
       } else if (text[i + 1] && (mapped = this.mapping[text.substr(i, 2)])) {
         i += 1
 
