@@ -4,7 +4,7 @@ import { Translator } from '../lib/translator'
 import { debug } from '../lib/debug'
 
 import HE = require('he')
-import unicodeMapping = require('unicode2latex')
+import * as unicode2latex from 'unicode2latex'
 
 /* https://github.com/retorquere/zotero-better-bibtex/issues/1189
   Needed so that composite characters are counted as single characters
@@ -17,7 +17,7 @@ import unicodeMapping = require('unicode2latex')
 */
 if (Translator.BetterBibTeX) {
   let m
-  for (const tex of (Object.values(unicodeMapping.ascii) as {text: string}[])) {
+  for (const tex of (Object.values(unicode2latex.ascii) as {text: string}[])) {
     if (!tex.text) continue
 
     if (tex.text.match(/^\\[`'^~"=.][A-Za-z]$/)) {
@@ -31,25 +31,6 @@ if (Translator.BetterBibTeX) {
     }
   }
 }
-
-const combining_diacritic = {
-  '\u0300': '`',
-  '\u0301': "'",
-  '\u0302': '^',
-  '\u0303': '~',
-  '\u0304': '=',
-  '\u0306': 'u',
-  '\u0307': '.',
-  '\u0308': '"',
-  '\u030A': 'r',
-  '\u030B': 'H',
-  '\u030C': 'v',
-  '\u0323': 'd',
-  '\u0327': 'c',
-  '\u0328': 'k',
-  '\u0331': 'b',
-}
-
 
 const switchMode = {
   math: 'text',
@@ -69,13 +50,13 @@ const htmlConverter = new class HTMLConverter {
     this.options = options
     this.latex = ''
     this.packages = {}
-    this.mapping = (Translator.unicode ? unicodeMapping.unicode : unicodeMapping.ascii)
+    this.mapping = (Translator.unicode ? unicode2latex.unicode : unicode2latex.ascii)
 
     if (!this.mapping.initialized) {
       // translator is re-ran every time it's used, not cached ready-to-run, so safe to modify the mapping
       debug('TODO: THIS WILL BE A PROBLEM FOR REUSABLE WORKERS')
       for (const c of Translator.preferences.ascii) {
-        this.mapping[c] = unicodeMapping.ascii[c]
+        this.mapping[c] = unicode2latex.ascii[c]
       }
 
       if (Translator.preferences.mapUnicode === 'conservative') {
@@ -271,15 +252,18 @@ const htmlConverter = new class HTMLConverter {
     }
 
     text = text.normalize('NFC')
-    let mapped, switched, m, i
+    let mapped, switched, m, i, diacritic
     const l = text.length
     for (i = 0; i < l; i++) {
       // tie "i","︠","a","︡"
       if (text[i + 1] === '\ufe20' && text[i + 3] === '\ufe21') { // tslint:disable-line no-magic-numbers
         mapped = this.mapping[text.substr(i, 4)] || { text: text[i] + text[i + 2] } // tslint:disable-line no-magic-numbers
         i += 3 // tslint:disable-line no-magic-numbers
-      } else if (text[i + 1] && combining_diacritic[text[i + 1]]) { // separate combining diacritic
-        mapped = { text: `\\${combining_diacritic[text[i + 1]]}{${text[i]}}` }
+
+      // combining diacritic
+      } else if (text[i + 1] && (diacritic = unicode2latex.diacritics.tolatex[text[i + 1]])) {
+        mapped = { [diacritic.mode]: `\\${diacritic.command}{${text[i]}}` }
+        i += 1
 
       } else if (text[i + 1] && (mapped = this.mapping[text.substr(i, 2)])) {
         i += 1
