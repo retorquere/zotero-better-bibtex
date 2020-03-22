@@ -1,0 +1,557 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "DOIandURL": "both",
+      "automaticTags": true,
+      "asciiBibLaTeX": false,
+      "ascii": "",
+      "asciiBibTeX": true,
+      "autoExport": "immediate",
+      "quickCopyMode": "latex",
+      "citeCommand": "cite",
+      "quickCopyPandocBrackets": false,
+      "citekeyFormat": "[auth][shorttitle][year]",
+      "citekeyFold": true,
+      "keyConflictPolicy": "keep",
+      "auxImport": false,
+      "keyScope": "library",
+      "exportBibTeXStrings": "off",
+      "importBibTeXStrings": true,
+      "bibtexParticleNoOp": false,
+      "skipFields": "",
+      "bibtexURL": "off",
+      "warnBulkModify": 10,
+      "postscript": "",
+      "strings": "",
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "",
+      "autoExportIdleWait": 10,
+      "cacheFlushInterval": 5,
+      "csquotes": "",
+      "rawLaTag": "#LaTeX",
+      "rawImports": false,
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
+      "jabrefFormat": 0,
+      "qualityReport": false,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": false,
+      "exportTitleCase": true,
+      "exportBraceProtection": true,
+      "retainCache": false,
+      "importSentenceCase": "on+guess",
+      "importCaseProtection": "as-needed",
+      "autoExportDelay": 1,
+      "itemObserverDelay": 5,
+      "parseParticles": true,
+      "citeprocNoteCitekey": false,
+      "extraMergeTeX": true,
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "importJabRefStrings": true,
+      "importJabRefAbbreviations": true,
+      "postscriptOverride": "",
+      "scrubDatabase": false,
+      "removeStock": true,
+      "ignorePostscriptErrors": false,
+      "debugLogDir": "",
+      "testing": true,
+      "autoPin": false,
+      "kuroshiro": true,
+      "relativeFilePaths": false,
+      "git": "config",
+      "mapUnicode": "conservative",
+      "mapText": "",
+      "mapMath": "",
+      "newTranslatorsAskRestart": true,
+      "workers": 1,
+      "platform": "mac",
+      "client": "zotero"
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
+    }
+  },
+  "version": {
+    "zotero": "5.0.84",
+    "bbt": "5.2.18.emile.limonia"
+  },
+  "collections": {},
+  "items": [
+    {
+      "key": "B953I6YC",
+      "version": 0,
+      "itemType": "journalArticle",
+      "volume": "14",
+      "issue": "5",
+      "pages": "2510-2515",
+      "publicationTitle": "Crystal Growth & Design",
+      "date": "2014-05",
+      "extra": "Citation Key: Song_2014",
+      "DOI": "10.1021/cg500229r",
+      "title": "Epitaxial lateral overgrowth of nitrogen-polar (0001̅) GaN by metalorganic chemical vapor deposition",
+      "creators": [
+        {
+          "firstName": "Jie",
+          "lastName": "Song",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Ge",
+          "lastName": "Yuan",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Kanglin",
+          "lastName": "Xiong",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Benjamin",
+          "lastName": "Leung",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Jung",
+          "lastName": "Han",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2020-03-22T18:40:19Z",
+      "dateModified": "2020-03-22T18:40:19Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/B953I6YC",
+      "itemID": 104,
+      "attachments": [],
+      "notes": [],
+      "citekey": "Song_2014",
+      "citationKey": "Song_2014",
+      "libraryID": 1
+    },
+    {
+      "key": "EB6MRZG9",
+      "version": 0,
+      "itemType": "journalArticle",
+      "volume": "8",
+      "issue": "6",
+      "pages": "061005",
+      "publicationTitle": "Applied Physics Express",
+      "date": "2015-06",
+      "extra": "Citation Key: Shojiki_2015",
+      "journalAbbreviation": "Appl. Phys. Express",
+      "DOI": "10.7567/APEX.8.061005",
+      "title": "Red to blue wavelength emission of N-Polar (0001̄) InGaN light-emitting diodes grown by metalorganic vapor phase epitaxy",
+      "creators": [
+        {
+          "firstName": "Kanako",
+          "lastName": "Shojiki",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Tomoyuki",
+          "lastName": "Tanikawa",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Jung-Hun",
+          "lastName": "Choi",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Shigeyuki",
+          "lastName": "Kuboya",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Takashi",
+          "lastName": "Hanada",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Ryuji",
+          "lastName": "Katayama",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Takashi",
+          "lastName": "Matsuoka",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2020-03-22T18:40:19Z",
+      "dateModified": "2020-03-22T18:40:19Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/EB6MRZG9",
+      "itemID": 103,
+      "attachments": [],
+      "notes": [],
+      "citekey": "Shojiki_2015",
+      "citationKey": "Shojiki_2015",
+      "libraryID": 1
+    },
+    {
+      "key": "HWP3Q54N",
+      "version": 0,
+      "itemType": "journalArticle",
+      "volume": "73",
+      "issue": "4",
+      "pages": "487-489",
+      "publicationTitle": "Applied Physics Letters",
+      "date": "1998-07",
+      "extra": "Citation Key: Zywietz_1998",
+      "journalAbbreviation": "Appl. Phys. Lett.",
+      "DOI": "10.1063/1.121909",
+      "title": "Adatom diffusion at GaN (0001) and (0001̄) surfaces",
+      "creators": [
+        {
+          "firstName": "Tosja",
+          "lastName": "Zywietz",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Jörg",
+          "lastName": "Neugebauer",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Matthias",
+          "lastName": "Scheffler",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2020-03-22T18:40:19Z",
+      "dateModified": "2020-03-22T18:40:19Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/HWP3Q54N",
+      "itemID": 106,
+      "attachments": [],
+      "notes": [],
+      "citekey": "Zywietz_1998",
+      "citationKey": "Zywietz_1998",
+      "libraryID": 1
+    },
+    {
+      "key": "JTKC6PAJ",
+      "version": 0,
+      "itemType": "journalArticle",
+      "volume": "05",
+      "issue": "03n04",
+      "pages": "913-934",
+      "publicationTitle": "Surface Review and Letters",
+      "date": "1998-06",
+      "extra": "Citation Key: Held_1998",
+      "journalAbbreviation": "Surf. Rev. Lett.",
+      "DOI": "10.1142/S0218625X98001274",
+      "title": "N-Limited Versus Ga-Limited Growth on <span class=\"nocase\">GaN(0001̄)</span> by MBE Using NH³",
+      "creators": [
+        {
+          "firstName": "R.",
+          "lastName": "Held",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "D. E.",
+          "lastName": "Crawford",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "A. M.",
+          "lastName": "Johnston",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "A. M.",
+          "lastName": "Dabiran",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "P. I.",
+          "lastName": "Cohen",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2020-03-22T18:40:18Z",
+      "dateModified": "2020-03-22T18:40:18Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/JTKC6PAJ",
+      "itemID": 99,
+      "attachments": [],
+      "notes": [],
+      "citekey": "Held_1998",
+      "citationKey": "Held_1998",
+      "libraryID": 1
+    },
+    {
+      "key": "P8TBJNNL",
+      "version": 0,
+      "itemType": "journalArticle",
+      "volume": "341",
+      "issue": "1",
+      "pages": "27-33",
+      "publicationTitle": "Journal of Crystal Growth",
+      "date": "2012-02",
+      "extra": "Citation Key: Leung_2012",
+      "DOI": "10.1016/j.jcrysgro.2011.12.035",
+      "title": "Growth evolution and microstructural characterization of semipolar (112̄2) GaN selectively grown on etched r-Plane sapphire",
+      "creators": [
+        {
+          "firstName": "Benjamin",
+          "lastName": "Leung",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Qian",
+          "lastName": "Sun",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Christopher",
+          "lastName": "Yerino",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Yu",
+          "lastName": "Zhang",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Jung",
+          "lastName": "Han",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Bo",
+          "lastName": "Hyun Kong",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Hyung",
+          "lastName": "Koun Cho",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Kuan-Yung",
+          "lastName": "Liao",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Yun-Li",
+          "lastName": "Li",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2020-03-22T18:40:18Z",
+      "dateModified": "2020-03-22T18:40:18Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/P8TBJNNL",
+      "itemID": 101,
+      "attachments": [],
+      "notes": [],
+      "citekey": "Leung_2012",
+      "citationKey": "Leung_2012",
+      "libraryID": 1
+    },
+    {
+      "key": "PB48IQRX",
+      "version": 0,
+      "itemType": "journalArticle",
+      "volume": "7",
+      "issue": "1",
+      "pages": "273-278",
+      "publicationTitle": "ACS Applied Materials & Interfaces",
+      "date": "2015-01",
+      "extra": "Citation Key: Song_2015",
+      "journalAbbreviation": "ACS Appl. Mater. Interfaces",
+      "DOI": "10.1021/am506162z",
+      "title": "Significantly improved luminescence properties of nitrogen-polar (0001̅) InGaN multiple quantum wells grown by pulsed metalorganic chemical vapor deposition",
+      "creators": [
+        {
+          "firstName": "Jie",
+          "lastName": "Song",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Shih-Pang",
+          "lastName": "Chang",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Cheng",
+          "lastName": "Zhang",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Ta-Cheng",
+          "lastName": "Hsu",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Jung",
+          "lastName": "Han",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2020-03-22T18:40:19Z",
+      "dateModified": "2020-03-22T18:40:19Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/PB48IQRX",
+      "itemID": 105,
+      "attachments": [],
+      "notes": [],
+      "citekey": "Song_2015",
+      "citationKey": "Song_2015",
+      "libraryID": 1
+    },
+    {
+      "key": "QBFW4W6Y",
+      "version": 0,
+      "itemType": "journalArticle",
+      "volume": "3",
+      "issue": "3",
+      "pages": "036102",
+      "publicationTitle": "APL Materials",
+      "date": "2015-03",
+      "extra": "Citation Key: Niehle_2015",
+      "DOI": "10.1063/1.4914102",
+      "title": "Electron tomography of (In,Ga)N insertions in GaN nanocolumns grown on semi-polar (112̄2) GaN templates",
+      "creators": [
+        {
+          "firstName": "M.",
+          "lastName": "Niehle",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "A.",
+          "lastName": "Trampert",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "S.",
+          "lastName": "Albert",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "A.",
+          "lastName": "Bengoechea-Encabo",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "E.",
+          "lastName": "Calleja",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2020-03-22T18:40:18Z",
+      "dateModified": "2020-03-22T18:40:18Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/QBFW4W6Y",
+      "itemID": 102,
+      "attachments": [],
+      "notes": [],
+      "citekey": "Niehle_2015",
+      "citationKey": "Niehle_2015",
+      "libraryID": 1
+    },
+    {
+      "key": "RT8WHSMM",
+      "version": 0,
+      "itemType": "journalArticle",
+      "volume": "29",
+      "issue": "11",
+      "pages": "113001",
+      "publicationTitle": "Semiconductor Science and Technology",
+      "date": "2014-11",
+      "extra": "Citation Key: Keller_2014",
+      "journalAbbreviation": "Semicond. Sci. Technol.",
+      "DOI": "10.1088/0268-1242/29/11/113001",
+      "title": "Recent progress in metal-organic chemical vapor deposition of ( 0001̄ ) N-Polar group-III nitrides",
+      "creators": [
+        {
+          "firstName": "Stacia",
+          "lastName": "Keller",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Haoran",
+          "lastName": "Li",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Matthew",
+          "lastName": "Laurent",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Yanling",
+          "lastName": "Hu",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Nathan",
+          "lastName": "Pfaff",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Jing",
+          "lastName": "Lu",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "David F",
+          "lastName": "Brown",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Nicholas A",
+          "lastName": "Fichtenbaum",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "James S",
+          "lastName": "Speck",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Steven P",
+          "lastName": "DenBaars",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Umesh K",
+          "lastName": "Mishra",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2020-03-22T18:40:18Z",
+      "dateModified": "2020-03-22T18:40:18Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/RT8WHSMM",
+      "itemID": 100,
+      "attachments": [],
+      "notes": [],
+      "citekey": "Keller_2014",
+      "citationKey": "Keller_2014",
+      "libraryID": 1
+    }
+  ]
+}
