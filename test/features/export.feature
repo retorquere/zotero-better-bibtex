@@ -135,6 +135,7 @@ Scenario Outline: Export <references> references for BibTeX to <file>
 
   Examples:
      | file                                                                               | references |
+     | Missing $ in TeX export of < to langle #1469                                       | 1          |
      | Better BibTeX does not export collections #901                                     | 36         |
      | Better BibTeX.027                                                                  | 1          |
      | Minimize bibtex export package dependencies #1402                                  | 1          |
