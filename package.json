@@ -51,7 +51,7 @@
     "test": "test"
   },
   "dependencies": {
-    "@retorquere/bibtex-parser": "^3.1.32",
+    "@retorquere/bibtex-parser": "^3.1.35",
     "@types/lokijs": "^1.5.3",
     "ajv": "^6.12.0",
     "ajv-keywords": "^3.4.1",
@@ -84,7 +84,7 @@
     "task-easy": "^1.0.1",
     "transliteration": "^2.1.8",
     "tslint": "^6.1.0",
-    "unicode2latex": "^2.1.4",
+    "unicode2latex": "^2.1.7",
     "words-to-numbers": "^1.5.1",
     "xregexp": "^4.3.0"
   },
