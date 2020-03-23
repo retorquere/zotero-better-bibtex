@@ -19,7 +19,7 @@ db = sqlite3.connect(':memory:')
 db.execute('CREATE TABLE tests(build, job, name, duration, state, PRIMARY KEY(build, name))')
 
 restart = False
-for log in sorted(glob.glob(os.path.expanduser('~/pCloud Drive/travis/*.json'))):
+for log in sorted(glob.glob(os.path.expanduser('~/pCloud Drive/travis/timing/*.json'))):
   print(log)
   if os.path.getsize(log) == 0 or not os.path.basename(log).startswith('zotero=master='):
     os.remove(log)

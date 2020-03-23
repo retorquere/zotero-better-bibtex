@@ -26,12 +26,19 @@ import collections
 import sys
 import threading
 import socket
+from pathlib import PurePath
 
 from ruamel.yaml import YAML
 yaml = YAML(typ='safe')
 yaml.default_flow_style = False
 
 EXPORTED = os.path.join(ROOT, 'exported')
+FIXTURES = os.path.join(ROOT, 'test/fixtures')
+LOADED = set()
+def loaded(filename):
+  LOADED.add(str(PurePath(filename).relative_to(FIXTURES)))
+  with open(os.path.join(FIXTURES, 'loaded.json'), 'w') as f:
+    json.dump(list(LOADED, indent='  '), f)
 
 class Pinger():
   def __init__(self, every):
@@ -278,6 +285,7 @@ class Zotero:
         found = f.read()
 
     expected, ext = self.expand_expected(expected)
+    loaded(expected)
     exported = os.path.join(EXPORTED, os.path.basename(os.path.dirname(expected)) + '-' + os.path.basename(expected))
 
     with open(expected) as f:
@@ -320,8 +328,9 @@ class Zotero:
   def import_file(self, context, references, collection = False, items=True):
     assert type(collection) in [bool, str]
 
-    fixtures = os.path.join(ROOT, 'test/fixtures')
-    references = os.path.join(fixtures, references)
+    references = os.path.join(FIXTURES, references)
+
+    loaded(references)
 
     if references.endswith('.json'):
       with open(references) as f:
@@ -378,13 +387,11 @@ class Zotero:
       ext = '.csl' + ext
     assert ext != ''
 
-    fixtures = os.path.join(ROOT, 'test/fixtures')
-
-    if self.client == 'zotero': return [ os.path.join(fixtures, expected), ext ]
+    if self.client == 'zotero': return [ os.path.join(FIXTURES, expected), ext ]
 
     expected = None
     for variant in ['.juris-m', '']:
-      variant = os.path.join(fixtures, f'{base}{variant}{ext}')
+      variant = os.path.join(FIXTURES, f'{base}{variant}{ext}')
       if os.path.exists(variant): return [variant, ext]
 
     return [None, None]
@@ -454,7 +461,7 @@ class Zotero:
       profile.firefox.set_preference('extensions.zotero.useDataDir', True)
       profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.removeStock', False)
     else:
-      profile.firefox = webdriver.FirefoxProfile(os.path.join(ROOT, 'test/fixtures/profile', self.client))
+      profile.firefox = webdriver.FirefoxProfile(os.path.join(FIXTURES, 'profile', self.client))
 
     self.install_xpis(os.path.join(ROOT, 'xpi'), profile.firefox)
     self.install_xpis(os.path.join(ROOT, 'other-xpis'), profile.firefox)
@@ -553,7 +560,7 @@ class Preferences:
       assert type(value) == self.supported[key], f'Unexpected value of type {type(value)} for preference {key}'
 
     if key == 'translators.better-bibtex.postscript':
-      with open(os.path.join('test/fixtures', value)) as f:
+      with open(os.path.join(FIXTURES, value)) as f:
         value = f.read()
 
     self.pref[key] = value
