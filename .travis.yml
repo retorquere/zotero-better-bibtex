@@ -35,9 +35,9 @@ script:
   - ./util/build-assets fetch || travis_terminate 1
   - ./test/behave --format json.pretty --outfile behave.json --format travis --define balance=$JOB --no-skipped
   - touch behave.json
-  - curl --max-time 10 --retry 10 --retry-max-time 100 -T behave.json -u "$PCLOUD" https://webdav.pcloud.com/travis/timing/$CLIENT=$TRAVIS_BRANCH=$TRAVIS_JOB_NUMBER=$TRAVIS_EVENT_TYPE.json
+  - curl --retry 10 -T behave.json -u "$PCLOUD" https://webdav.pcloud.com/travis/timing/$CLIENT=$TRAVIS_BRANCH=$TRAVIS_JOB_NUMBER=$TRAVIS_EVENT_TYPE.json
   - touch test/fixtures/loaded.json
-  - curl --max-time 10 --retry 10 --retry-max-time 100 -T test/fixtures/loaded.json -u "$PCLOUD" https://webdav.pcloud.com/travis/used/$CLIENT=$TRAVIS_BRANCH=$TRAVIS_JOB_NUMBER=$TRAVIS_EVENT_TYPE.json
+  - curl --retry 10 -T test/fixtures/loaded.json -u "$PCLOUD" https://webdav.pcloud.com/travis/used/$CLIENT=$TRAVIS_BRANCH=$TRAVIS_JOB_NUMBER=$TRAVIS_EVENT_TYPE.json
 
 after_failure:
   - ./util/build-assets pop
