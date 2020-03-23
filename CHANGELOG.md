@@ -1,5 +1,16 @@
 # Changelog
 
+## [5.2.20] - 2020-03-23
+
+ - Missing $ markers in export of \langle (#1469)
+ - Import of \langle and \rangle (#1468)
+ - Combining-diacritics import & export (#1465, #1467)
+ - Missing unicode symbols for East European Names
+ - Citekey search is back
+ - Fixed import of notes in BetterBibTeX JSON
+ - Treat ideographs as individual words for key generation
+ - Edition numbers in BibTeX exports
+
 ## [5.2.18] - 2020-03-05
 
  - tex.IDs= did not work (#1449)
