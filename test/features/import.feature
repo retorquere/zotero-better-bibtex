@@ -120,12 +120,13 @@ Scenario: Unabbreviate on import #1436-1
   When I import 506 references from "import/*.bib" into a new collection
   Then the library should match "import/*.json"
 @use.with_slow=true @timeout=240
-@1436
-Scenario: Unabbreviate on import #1436-2
-  When I import 1053 references from "import/*.bib" into a new collection
-  Then the library should match "import/*.json"
-@use.with_slow=true @timeout=6000
-@1436
-Scenario: Unabbreviate on import #1436-3
-  When I import 7166 references from "import/*.bib" into a new collection
-  Then the library should match "import/*.json"
+
+#@1436
+#Scenario: Unabbreviate on import #1436-2
+#  When I import 1053 references from "import/*.bib" into a new collection
+#  Then the library should match "import/*.json"
+#@use.with_slow=true @timeout=6000
+#@1436
+#Scenario: Unabbreviate on import #1436-3
+#  When I import 7166 references from "import/*.bib" into a new collection
+#  Then the library should match "import/*.json"
