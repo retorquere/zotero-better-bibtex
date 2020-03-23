@@ -38,7 +38,7 @@ LOADED = set()
 def loaded(filename):
   LOADED.add(str(PurePath(filename).relative_to(FIXTURES)))
   with open(os.path.join(FIXTURES, 'loaded.json'), 'w') as f:
-    json.dump(list(LOADED, indent='  '), f)
+    json.dump(list(LOADED),f, indent='  ')
 
 class Pinger():
   def __init__(self, every):
