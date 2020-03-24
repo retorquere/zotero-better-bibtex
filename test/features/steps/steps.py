@@ -8,6 +8,7 @@ import os
 from hamcrest import assert_that, equal_to
 from steps.utils import assert_equal_diff, expand_scenario_variables
 import steps.utils as utils
+import steps.zotero as zotero
 
 import pathlib
 for d in pathlib.Path(__file__).resolve().parents:
@@ -217,7 +218,9 @@ def step_impl(context, change):
 @then(u'"{found}" should match "{expected}"')
 def step_impl(context, expected, found):
   expected = expand_scenario_variables(context, expected)
-  if expected[0] != '/': expected = os.path.join(ROOT, 'test/fixtures', expected)
+  if expected[0] != '/':
+    expected = os.path.join(ROOT, 'test/fixtures', expected)
+    zotero.loaded(expected)
   with open(expected) as f:
     expected = f.read()
 
