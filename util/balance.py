@@ -16,103 +16,110 @@ parser.add_argument('-v', '--verbose', action='store_true')
 args = parser.parse_args()
 
 db = sqlite3.connect(':memory:')
-db.execute('CREATE TABLE tests(build, job, name, duration, state, PRIMARY KEY(build, name))')
+db.execute('CREATE TABLE tests(name, duration, state)')
+db.execute('CREATE TABLE last(name, duration, state)')
 
-restart = False
-for log in sorted(glob.glob(os.path.expanduser('~/pCloud Drive/travis/timing/*.json'))):
-  print(log)
-  if os.path.getsize(log) == 0 or not os.path.basename(log).startswith('zotero=master='):
-    os.remove(log)
-    continue
+class NoTestError(Exception):
+  pass
+class FailedError(Exception):
+  pass
+class Log:
+  def __init__(self, id, timings):
+    self.tests = {}
+    self.id = id
 
-  job = os.path.splitext(os.path.basename(log))[0].split('=')
-  if len(job) != 4 or job[3] != 'push':
-    os.remove(log)
-    continue
-  build, job = job[2].split('.')
-  has_tests = False
-  with open(log) as f:
-    for feature in json.load(f, object_hook=Munch.fromDict):
+    for feature in timings:
       if not 'elements' in feature: continue
 
       for test in feature.elements:
         if test.type == 'background': continue
 
-        has_tests = True
-        #print(json.dumps(test, indent='  '))
-        if test.status == 'failed' or (not 'use.with_slow=true' in test.tags and not 'slow' in test.tags):
+        if test.status == 'failed':
           status = test.status
+        elif not 'use.with_slow=true' in test.tags and not 'slow' in test.tags:
+          status = 'fast'
         else:
           status = 'slow'
 
-        db.execute('INSERT OR REPLACE INTO tests(build, job, name, duration, state) VALUES (?, ?, ?, ?, ?)', [
-          build,
-          job,
-          re.sub(r' -- @[0-9]+\.[0-9]+ ', '', test.name),
-          sum([step.result.duration for step in test.steps if 'result' in step and 'duration' in step.result]),
-          status,
-        ])
-  if not has_tests:
-    print('no tests:', log)
+        # for retries, the last successful iteration (if any) will overwrite the failed iterations
+        self.tests[re.sub(r' -- @[0-9]+\.[0-9]+ ', '', test.name)] = Munch(
+          duration=sum([step.result.duration for step in test.steps if 'result' in step and 'duration' in step.result]),
+          status=status
+        )
+    if len(self.tests) == 0: raise NoTestError()
+    if any(1 for test in self.tests.values() if test.status == 'failed'): raise FailedError()
+
+    db.execute('DELETE FROM last')
+    for name, test in self.tests.items():
+      db.execute('INSERT INTO tests(name, duration, state) VALUES (?, ?, ?)', [ name, test.duration, test.status ])
+      db.execute('INSERT INTO last(name, state) VALUES (?, ?)', [ name, test.status ])
+    db.commit()
+
+class Logs:
+  @staticmethod
+  def clean(log, reason):
+    if not os.path.exists(log): return
+    print('removing', log, reason)
     os.remove(log)
-    restart = True
 
-for build, n in db.execute('WITH builds AS (SELECT DISTINCT build, job FROM tests) SELECT build, count(*) FROM builds GROUP BY build HAVING COUNT(*) <> 2'):
-  for log in glob.glob(os.path.expanduser(f'~/pCloud Drive/travis/*{build}*.json')):
-    print('expected 2, got', n, log)
-    os.remove(log)
-    restart = True
+  @staticmethod
+  def build_id(log):
+    if os.path.getsize(log) == 0:
+      Logs.clean(log, 'empty')
+      return False
 
-for build, state in db.execute("SELECT DISTINCT build, state FROM tests WHERE state = 'failed'"):
-  for log in glob.glob(os.path.expanduser(f'~/pCloud Drive/travis/*{build}*.json')):
-    print('failed', log)
-    os.remove(log)
-    restart = True
+    try:
+      return int(re.match(r'zotero=master=([0-9]+).[23]=push.json$', os.path.basename(log)).group(1))
+    except:
+      try:
+        return int(re.match(r'zotero=v[0-9]+\.[0-9]+\.[0-9]+=([0-9]+).[23]=push.json$', os.path.basename(log)).group(1))
+      except:
+        Logs.clean(log, 'not zotero-master')
+    return False
 
-sql = '''
-  WITH
-  last AS (SELECT MAX(build) as build FROM tests),
-  last_tests AS (SELECT name, state, tests.build as build, name || ' ## ' || state AS test_state FROM tests JOIN last ON tests.build = last.build)
+  @staticmethod
+  def builds():
+    return sorted(list(set([ Logs.build_id(log) for log in glob.glob(os.path.expanduser('~/pCloud Drive/travis/timing/*.json')) if Logs.build_id(log) ])))
 
-  SELECT DISTINCT tests.build as build
-  FROM tests
-  JOIN last_tests ON tests.name = last_tests.name
-  WHERE tests.name || ' ## ' || tests.state NOT IN (SELECT test_state FROM last_tests)
-'''
-for (build,) in db.execute(sql):
-  for log in glob.glob(os.path.expanduser(f'~/pCloud Drive/travis/*{build}*.json')):
-    print('slow-fast reshuffle', log)
-    os.remove(log)
-    restart = True
+  @staticmethod
+  def load(build_id):
+    logs = [os.path.expanduser(f'~/pCloud Drive/travis/timing/zotero=master={build_id}.{n}=push.json') for n in [2, 3]]
 
-if restart:
-  print('please restart')
-  sys.exit(1)
+    try:
+      timings = []
+      for log in logs:
+        with open(log) as f:
+          timings = timings + json.load(f, object_hook=Munch.fromDict)
+      return Log(build_id, timings)
+    except FileNotFoundError:
+      [Logs.clean(log, 'not paired') for log in logs]
+      return False
+    except NoTestError:
+      [Logs.clean(log, 'no tests') for log in logs]
+      return False
+    except FailedError:
+      [Logs.clean(log, 'failed') for log in logs]
+      return False
 
-db.execute('CREATE TABLE durations(name, duration, state)')
-db.execute('''
-  WITH
-  last AS (SELECT MAX(build) as build FROM tests),
-  names AS (SELECT name FROM tests JOIN last ON tests.build = last.build)
+for build in Logs.builds():
+  Logs.load(build)
+db.execute('DELETE FROM tests WHERE NOT EXISTS (SELECT 1 FROM last WHERE tests.name = last.name AND tests.state = last.state)')
 
-  INSERT INTO durations (name, duration, state)
-  SELECT name, AVG(duration) as duration, MAX(state) as state
-  FROM tests
-  WHERE name IN (SELECT name FROM names)
-  GROUP BY name
-''')
-
-def balance(slow=False):
-  sql = 'SELECT name, duration FROM durations'
-  if not slow: sql += " WHERE state <> 'slow'"
+def balance(state):
+  assert state in ['fast', 'slow']
 
   factor = 100
-  tests, durations = zip(*db.execute(sql))
+  tests, durations = zip(*db.execute("SELECT name, AVG(duration) as duration FROM tests WHERE state in ('fast', ?) GROUP BY name", (state,)))
   durations = [int(d * factor) for d in durations]
   if 0 in durations: raise ValueError(f'{factor} is too small')
-
-  solver = pywrapknapsack_solver.KnapsackSolver(pywrapknapsack_solver.KnapsackSolver.KNAPSACK_MULTIDIMENSION_BRANCH_AND_BOUND_SOLVER, 'KnapsackExample')
   total = sum(durations)
+  print('solving', len(tests), state, 'for', total)
+
+  if state == 'slow':
+    solver = pywrapknapsack_solver.KnapsackSolver.KNAPSACK_MULTIDIMENSION_BRANCH_AND_BOUND_SOLVER
+  else:
+    solver = pywrapknapsack_solver.KnapsackSolver.KNAPSACK_MULTIDIMENSION_CBC_MIP_SOLVER
+  solver = pywrapknapsack_solver.KnapsackSolver(solver, 'TestBalancer')
   solver.Init([1 for n in durations], [durations], [int(total/2)])
   solver.Solve()
 
@@ -123,13 +130,12 @@ def balance(slow=False):
     clusters[cluster] = [test for i, test in enumerate(tests) if i in indexes]
     clustertime[cluster] = [dur / factor for i, dur in enumerate(durations) if i in indexes]
 
-  print('slow' if slow else 'fast', total)
   for cluster in clusters.keys():
     print(' ', cluster, sum(clustertime[cluster]), len(clustertime[cluster]), sum(clustertime[cluster]) / len(clustertime[cluster]))
   return clusters
 
 with open('balance.json', 'w') as f:
   json.dump({
-    'slow': balance(True),
-    'fast': balance(False),
+    'slow': balance('slow'),
+    'fast': balance('fast'),
   }, f, indent = '  ')
