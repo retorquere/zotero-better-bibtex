@@ -91,10 +91,13 @@ Scenario Outline: Import <references> references from <file>
   | space after citekey creates confusion #716                                  | 2           |
   | zbb (quietly) chokes on this .bib #664                                      | 1           |
 
-  @use.with_slow=true @timeout=3000
+@use.with_slow=true @timeout=3000
+Scenario Outline: Import <references> references from <file>
+  When I import <references> references from "import/<file>.bib"
+  Then the library should match "import/*.json"
   Examples:
- # | Async import, large library #720                                            | 9057        |
   | Some bibtex entries quietly discarded on import from bib file #873          | 989         |
+# | Async import, large library #720                                            | 9057        |
 
 # covered by 717
 #@97
