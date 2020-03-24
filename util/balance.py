@@ -16,17 +16,19 @@ parser.add_argument('-v', '--verbose', action='store_true')
 args = parser.parse_args()
 
 db = sqlite3.connect(':memory:')
-db.execute('CREATE TABLE tests(name, duration, state)')
-db.execute('CREATE TABLE last(name, duration, state)')
+db.execute('CREATE TABLE tests(build, name, duration, state)')
+db.execute('CREATE TABLE last(name, state)')
 
 class NoTestError(Exception):
   pass
 class FailedError(Exception):
   pass
 class Log:
-  def __init__(self, id, timings):
-    self.tests = {}
-    self.id = id
+  def __init__(self, build, timings):
+    self.verified = False
+    self.id = build
+
+    tests = {}
 
     for feature in timings:
       if not 'elements' in feature: continue
@@ -42,16 +44,16 @@ class Log:
           status = 'slow'
 
         # for retries, the last successful iteration (if any) will overwrite the failed iterations
-        self.tests[re.sub(r' -- @[0-9]+\.[0-9]+ ', '', test.name)] = Munch(
+        tests[re.sub(r' -- @[0-9]+\.[0-9]+ ', '', test.name)] = Munch(
           duration=sum([step.result.duration for step in test.steps if 'result' in step and 'duration' in step.result]),
           status=status
         )
-    if len(self.tests) == 0: raise NoTestError()
-    if any(1 for test in self.tests.values() if test.status == 'failed'): raise FailedError()
+    if len(tests) == 0: raise NoTestError()
+    if any(1 for test in tests.values() if test.status == 'failed'): raise FailedError()
 
     db.execute('DELETE FROM last')
-    for name, test in self.tests.items():
-      db.execute('INSERT INTO tests(name, duration, state) VALUES (?, ?, ?)', [ name, test.duration, test.status ])
+    for name, test in tests.items():
+      db.execute('INSERT INTO tests(build, name, duration, state) VALUES (?, ?, ?, ?)', [ build, name, test.duration, test.status ])
       db.execute('INSERT INTO last(name, state) VALUES (?, ?)', [ name, test.status ])
     db.commit()
 
@@ -101,9 +103,15 @@ class Logs:
       [Logs.clean(log, 'failed') for log in logs]
       return False
 
-for build in Logs.builds():
-  Logs.load(build)
+builds = [ Logs.load(build) for build in Logs.builds() ]
+builds = { build.id: build for build in builds if build }
 db.execute('DELETE FROM tests WHERE NOT EXISTS (SELECT 1 FROM last WHERE tests.name = last.name AND tests.state = last.state)')
+for (build,) in db.execute('SELECT DISTINCT build FROM tests'):
+  builds[build].verified = True
+for build in builds.values():
+  if not build.verified:
+    for log in glob.glob(os.path.expanduser(f'~/pCloud Drive/travis/timing/zotero=master={build.id}.*=push.json')):
+      Logs.clean(log, 'no tests remaining')
 
 def balance(state):
   assert state in ['fast', 'slow']
