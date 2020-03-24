@@ -11,6 +11,7 @@ Scenario Outline: Export <references> references for BibLaTeX to <file>
 
   Examples:
      | file                                                                                           | references  |
+     | export missing the a accent #691                                                               | 1           |
      | @jurisdiction; map court,authority to institution #326                                         | 1           |
      | BBT export of square brackets in date #245 -- xref should not be escaped #246                  | 3           |
      | BBT yields error with quality report #1387                                                     | 1           |
