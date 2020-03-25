@@ -81,11 +81,10 @@ if args.balance is None: # local run
     print(f'Build exited with exit code {returncode}')
     sys.exit(returncode)
 
-if args.nightly and not args.tagged: # test for beta on nightly
-  if args.balance:
-    print('IGNORING BALANCER -- TESTING BETA')
-    args.balance = None
-  args.beta = (JOB_NUMBER == 2)
+if args.nightly and args.balance and not args.tagged: # test for beta on nightly
+  if args.balance: print('IGNORING BALANCER -- TESTING BETA')
+  args.beta = (args.balance == '2')
+  args.balance = None
 
 if args.this:
   repo = Repository('.')
@@ -93,7 +92,7 @@ if args.this:
   assert re.match(r'^gh-[0-9]+$', branch)
   args.this = branch.replace('gh-', '@')
 
-if args.test or args.test or args.this or args.nightly or args.tagged or args.beta: args.slow = True
+if args.test or args.this or args.nightly or args.tagged or args.beta: args.slow = True
 
 #if args.client == 'jurism':
 #  print(f"********* SKIPPING{' BETA' if args.beta else ''} BUILD FOR {args.client.upper()} UNTIL FURTHER NOTICE ****************")
