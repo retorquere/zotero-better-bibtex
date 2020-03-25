@@ -62,17 +62,11 @@ parser.add_argument('--slow', action='store_true',
             os.environ.get('TRAVIS_TAG', '') != ''
 )
 parser.add_argument('--test')
-parser.add_argument('--balance', default=os.environ.get('JOB', None))
+parser.add_argument('--balance')
 parser.add_argument('--tagged', action='store_true', default=os.environ.get('TRAVIS_TAG', '') != '')
 parser.add_argument('--nightly', action='store_true', default=os.environ.get('TRAVIS_EVENT_TYPE') == 'cron')
 args, unknownargs = parser.parse_known_args()
 sys.argv = sys.argv[:1] + unknownargs
-
-if args.this:
-  repo = Repository('.')
-  branch = repo.head.name.split('/')[-1]
-  assert re.match(r'^gh-[0-9]+$', branch)
-  args.this = branch.replace('gh-', '@')
 
 if args.balance is None: # local run
   process = subprocess.Popen(['npm', 'run', 'build'], stdout=subprocess.PIPE)
@@ -85,12 +79,19 @@ if args.balance is None: # local run
     print(f'Build exited with exit code {returncode}')
     sys.exit(returncode)
 
-elif args.nightly and not args.tagged: # test for beta on nightly
-  if args.balance: print('IGNORING BALANCER -- TESTING BETA')
+if args.nightly and not args.tagged: # test for beta on nightly
+  if args.balance:
+    print('IGNORING BALANCER -- TESTING BETA')
+    args.balance = None
   args.beta = (JOB_NUMBER == 2)
 
-elif args.balance:
-  sys.argv.extend(['--define', f"balance={args.balance}"])
+if args.this:
+  repo = Repository('.')
+  branch = repo.head.name.split('/')[-1]
+  assert re.match(r'^gh-[0-9]+$', branch)
+  args.this = branch.replace('gh-', '@')
+
+if args.test or args.test or args.this or args.nightly or args.tagged or args.beta: args.slow = True
 
 #if args.client == 'jurism':
 #  print(f"********* SKIPPING{' BETA' if args.beta else ''} BUILD FOR {args.client.upper()} UNTIL FURTHER NOTICE ****************")
@@ -98,10 +99,11 @@ elif args.balance:
 
 print(args)
 sys.argv.extend(['--define', f"client={args.client}"])
-sys.argv.extend(['--define', f'kill={str(not args.keep).lower()}'])
 sys.argv.extend(['--define', f'workers={str(args.workers).lower()}'])
+if args.balance: sys.argv.extend(['--define', f"balance={args.balance}"])
+if not args.keep: sys.argv.extend(['--define', f'kill=true'])
 if args.stop: sys.argv.append('--stop')
-if args.slow or args.test or args.this or args.nightly or args.tagged or args.beta: sys.argv.extend(['--define', 'slow=true'])
+if args.slow: sys.argv.extend(['--define', 'slow=true'])
 if args.beta: sys.argv.extend(['--define', f'beta=true'])
 if args.test: sys.argv.extend(['--define', f'test={args.test}'])
 if args.this: sys.argv.extend(['--tags', args.this ])
