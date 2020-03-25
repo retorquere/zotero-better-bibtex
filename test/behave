@@ -64,7 +64,9 @@ parser.add_argument('--slow', action='store_true',
 parser.add_argument('--test')
 parser.add_argument('--balance')
 parser.add_argument('--tagged', action='store_true', default=os.environ.get('TRAVIS_TAG', '') != '')
-parser.add_argument('--nightly', action='store_true', default=os.environ.get('TRAVIS_EVENT_TYPE') == 'cron')
+parser.add_argument('--nightly', action='store_true',
+  default=os.environ.get('TRAVIS_EVENT_TYPE') == 'cron' or '#nightly' in os.environ.get('TRAVIS_COMMIT_MESSAGE', '')
+)
 args, unknownargs = parser.parse_known_args()
 sys.argv = sys.argv[:1] + unknownargs
 
