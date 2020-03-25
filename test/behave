@@ -82,7 +82,6 @@ if args.balance is None: # local run
     sys.exit(returncode)
 
 if args.nightly and args.balance and not args.tagged: # test for beta on nightly
-  if args.balance: print('IGNORING BALANCER -- TESTING BETA')
   args.beta = (args.balance == '2')
   args.balance = None
 
