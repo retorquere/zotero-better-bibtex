@@ -33,7 +33,7 @@ before_install:
   - travis_retry sudo ./util/install-beta $CLIENT
 script:
   - ./util/build-assets fetch || travis_terminate 1
-  - ./test/behave --format json.pretty --outfile behave.json --format travis --balance $JOB --no-skipped
+  - ./test/behave --format json.pretty --outfile behave.json --format travis --balance $JOB
   - touch behave.json
   - curl --retry 10 -T behave.json -u "$PCLOUD" https://webdav.pcloud.com/travis/timing/$CLIENT=$TRAVIS_BRANCH=$TRAVIS_JOB_NUMBER=$TRAVIS_EVENT_TYPE.json
   - touch test/fixtures/loaded.json
