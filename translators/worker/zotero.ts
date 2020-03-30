@@ -8,7 +8,7 @@ import XRegExp = require('xregexp')
 import stringify = require('json-stringify-safe')
 import { HTMLParser } from '../../content/markupparser'
 import * as DateParser from '../../content/dateparser'
-import * as Extra from '../../content/extra'
+// import * as Extra from '../../content/extra'
 import { qualityReport } from '../../content/qr-check'
 import { titleCase } from '../../content/title-case'
 import * as itemCreators from '../../gen/item-creators.json'
@@ -66,9 +66,11 @@ class WorkerZoteroBetterBibTeX {
     return titleCase(text)
   }
 
+  /*
   public extractFields(item) {
     return Extra.get(item.extra)
   }
+  */
 
   public debug(...msg) {
     const now = Date.now()

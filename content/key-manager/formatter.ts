@@ -110,7 +110,7 @@ class PatternFormatter {
       item,
       type: Zotero.ItemTypes.getName(item.itemTypeID),
       language: this.language[(item.getField('language') || '').toLowerCase()] || '',
-      csl: Extra.get(item.getField('extra'), { csl: true}).extraFields.csl,
+      kv: Extra.get(item.getField('extra'), { kv: true, normalize: true}).extraFields.kv,
     }
 
     if (['attachment', 'note'].includes(this.item.type)) return {}
@@ -163,7 +163,7 @@ class PatternFormatter {
       }
     }
 
-    if (this.item.csl['original-date']) this.item.origyear = this.item.csl['original-date'].split('-')[0]
+    if (this.item.kv['original-date']) this.item.origyear = this.item.kv['original-date'].split('-')[0]
 
     const citekey = this.generate()
 

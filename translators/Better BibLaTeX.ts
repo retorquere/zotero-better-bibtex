@@ -347,8 +347,8 @@ export function doExport() {
     ref.add({ name: 'isbn', value: item.ISBN })
     ref.add({ name: 'issn', value: item.ISSN })
 
-    ref.add({ name: 'url', value: item.extraFields.csl.URL || item.url })
-    ref.add({ name: 'doi', value: item.extraFields.csl.DOI || item.DOI })
+    ref.add({ name: 'url', value: item.extraFields.kv.url || item.url })
+    ref.add({ name: 'doi', value: item.extraFields.kv.doi || item.DOI })
 
     ref.add({ name: 'shorttitle', value: item.shortTitle })
     ref.add({ name: 'abstract', value: item.abstractNote })

@@ -47,11 +47,11 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
 
       try {
         const extra = item.getField('extra')
-        const parsed = Extra.get(extra, { citationKey: true, tex: true, csl: true })
+        const parsed = Extra.get(extra)
         let citationKey
 
         if (inspireHEP) {
-          let key = parsed.extraFields.csl.DOI || item.getField('DOI') || arXiv.parse(parsed.extraFields.tex.arxiv).id
+          let key = parsed.extraFields.kv.doi || item.getField('DOI') || arXiv.parse(parsed.extraFields.tex.arxiv).id
           if (!key && ['arxiv.org', 'arxiv'].includes((item.getField('libraryCatalog') || '').toLowerCase())) key = arXiv.parse(item.getField('publicationTitle')).id
           if (!key) throw new Error(`No DOI or arXiv ID for ${item.getField('title')}`)
 
@@ -408,7 +408,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
   }
 
   public propose(item) {
-    const citekey: string = Extra.get(item.getField('extra')).extraFields.citationKey
+    const citekey: string = Extra.get(item.getField('extra'), { citationKey: true }).extraFields.citationKey
 
     if (citekey) return { citekey, pinned: true }
 

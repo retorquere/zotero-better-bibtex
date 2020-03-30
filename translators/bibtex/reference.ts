@@ -7,7 +7,7 @@ import { text2latex } from './unicode_translator'
 import { debug } from '../lib/debug'
 import { datefield } from './datefield'
 import * as Extra from '../../content/extra'
-import * as cslVariables from '../../content/csl-vars.json'
+import * as ExtraFields from '../../gen/extra-fields.json'
 import * as CSL from '../../gen/citeproc'
 
 import { arXiv } from '../../content/arXiv'
@@ -371,16 +371,24 @@ export class Reference {
     // remove ordinal from edition
     this.item.edition = (this.item.edition || '').replace(/^([0-9]+)(nd|th)$/, '$1')
 
-    // TODO: remove now that conditional chaining is available
-    if (this.item.extraFields.csl.type) {
-      this.item.cslType = (this.item.extraFields.csl.type as string).toLowerCase()
-      delete item.extraFields.csl.type
-    }
+    for (const [k, v] of Object.entries(this.item.extraFields.kv)) {
+      const ef = ExtraFields[k]
+      if (!ef || !ef.zotero) continue
 
-    // TODO: remove now that conditional chaining is available
-    if (this.item.extraFields.csl['volume-title']) { // should just have been mapped by Zotero
-      this.item.cslVolumeTitle = (this.item.extraFields.csl['volume-title'] as string)
-      delete this.item.extraFields.csl['volume-title']
+      if (ef.type === 'creator') {
+        for (const creatorType of ef.zotero) {
+          for (const creator of (v as string[])) {
+            this.item.creators.push(Extra.zoteroCreator(creator, creatorType))
+          }
+        }
+
+      } else {
+        for (const field of ef.zotero) {
+          this.item[field] = v
+        }
+      }
+
+      delete this.item.extraFields.kv[k]
     }
 
     this.item.referenceType = this.item.extraFields.tex.referencetype?.value || this.item.cslType || this.item.itemType
@@ -610,26 +618,27 @@ export class Reference {
       this.add({ name: 'ids', value: this.item.extraFields.aliases.join(',') })
     }
 
-    for (let [cslName, value] of Object.entries(this.item.extraFields.csl)) {
+    for (let [key, value] of Object.entries(this.item.extraFields.kv)) {
+      key = ExtraFields[key].id
       // these are handled just like 'arxiv' and 'lccn', respectively
-      if (['PMID', 'PMCID'].includes(cslName) && typeof value === 'string') {
-        this.item.extraFields.tex[cslName.toLowerCase()] = { value }
-        delete this.item.extraFields.csl[cslName]
+      if (['PMID', 'PMCID'].includes(key) && typeof value === 'string') {
+        this.item.extraFields.tex[key] = { value }
+        delete this.item.extraFields.kv[key]
         continue
       }
 
-      const type = cslVariables[cslName]
+      const type = ExtraFields[key].type
       let name = null
       let replace = false
       let enc
       switch (type) {
-        case 'string':
+        case 'text':
           enc = null
           break
 
         case 'creator':
           enc = 'creators'
-          if (Array.isArray(value)) value = (value.map(Extra.zoteroCreator) as string[]) // yeah yeah, shut up TS
+          if (Array.isArray(value)) value = (value.map(creator => Extra.zoteroCreator(creator)) as string[]) // yeah yeah, shut up TS
           break
 
         case 'date':
@@ -642,7 +651,7 @@ export class Reference {
 
       // CSL names are not in BibTeX format, so only add it if there's a mapping
       if (Translator.BetterBibLaTeX) {
-        switch (cslName) {
+        switch (key) {
           case 'authority':
             name = 'institution'
             break
@@ -727,20 +736,20 @@ export class Reference {
           case 'DOI':
           case 'ISBN':
           case 'ISSN':
-            name = cslName.toLowerCase()
+            name = key.toLowerCase()
             break
         }
       }
 
       if (Translator.BetterBibTeX) {
-        switch (cslName) {
+        switch (key) {
           case 'call-number':
             name = 'lccn'
             break
 
           case 'DOI':
           case 'ISSN':
-            name = cslName.toLowerCase()
+            name = key.toLowerCase()
             break
         }
       }
@@ -748,7 +757,7 @@ export class Reference {
       if (name) {
         this.override({ name, verbatim: name, orig: { inherit: true }, value, enc, replace, fallback: !replace })
       } else {
-        debug('Unmapped CSL field', cslName, '=', value)
+        debug('Unmapped k/v field', key, '=', value)
       }
     }
 

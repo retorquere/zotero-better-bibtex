@@ -93,10 +93,10 @@ $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(ite
     const merge = {
       citekeys: Prefs.get('extraMergeCitekeys'),
       tex: Prefs.get('extraMergeTeX'),
-      csl: Prefs.get('extraMergeCSL'),
+      kv: Prefs.get('extraMergeCSL'),
     }
 
-    const extra = Extra.get(item.getField('extra'), { aliases: merge.citekeys, tex: merge.tex, csl: merge.csl })
+    const extra = Extra.get(item.getField('extra'), { aliases: merge.citekeys, tex: merge.tex, kv: merge.kv })
 
     // get citekeys of other items
     if (merge.citekeys) {
@@ -106,7 +106,7 @@ $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(ite
 
     // add any aliases they were already holding
     for (const i of otherItems) {
-      const otherExtra = Extra.get(i.getField('extra'), { aliases: merge.citekeys, tex: merge.tex, csl: merge.csl })
+      const otherExtra = Extra.get(i.getField('extra'), { aliases: merge.citekeys, tex: merge.tex, kv: merge.kv })
 
       if (merge.citekeys) extra.extraFields.aliases = extra.extraFields.aliases.concat(otherExtra.extraFields.aliases)
 
@@ -116,11 +116,11 @@ $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(ite
         }
       }
 
-      if (merge.csl) {
-        for (const [name, value] of Object.entries(otherExtra.extraFields.csl)) {
-          const existing = extra.extraFields.csl[name]
+      if (merge.kv) {
+        for (const [name, value] of Object.entries(otherExtra.extraFields.kv)) {
+          const existing = extra.extraFields.kv[name]
           if (!existing) {
-            extra.extraFields.csl[name] = value
+            extra.extraFields.kv[name] = value
           } else if (Array.isArray(existing) && Array.isArray(value)) {
             for (const creator in value) {
               if (!existing.includes(creator)) existing.push(creator)
@@ -138,7 +138,7 @@ $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(ite
     item.setField('extra', Extra.set(extra.extra, {
       aliases: merge.citekeys ? extra.extraFields.aliases : undefined,
       tex: merge.tex ? extra.extraFields.tex : undefined,
-      csl: merge.csl ? extra.extraFields.csl : undefined,
+      kv: merge.kv ? extra.extraFields.kv : undefined,
     }))
 
   } catch (err) {
@@ -277,7 +277,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
     }
     return HTMLParser.parse(text.toString(), options)
   },
-  extractFields(sandbox, item) { return Extra.get(item.extra) },
+  // extractFields(sandbox, item) { return Extra.get(item.extra) },
   debugEnabled(sandbox) { return Zotero.Debug.enabled },
 
   debug(sandbox, prefix, ...msg) { Logger.log(prefix, ...msg) },

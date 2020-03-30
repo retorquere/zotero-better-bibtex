@@ -7,7 +7,7 @@ import * as itemfields from '../../gen/itemfields'
 import * as bibtexParser from '@retorquere/bibtex-parser'
 import { Postfix } from '../bibtex/postfix.ts'
 import * as Extra from '../../content/extra'
-import * as cslMapping from '../../gen/csl-mapping.json'
+import * as ExtraFields from '../../gen/extra-fields.json'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Exporter = new class { // tslint:disable-line:variable-name
@@ -67,12 +67,12 @@ export let Exporter = new class { // tslint:disable-line:variable-name
 
       itemfields.simplifyForExport(item)
       Object.assign(item, Extra.get(item.extra))
-      for (const [name, value] of Object.entries(item.extraFields.csl)) {
-        if (cslMapping.field[name]) {
-          for (const field of cslMapping.field[name]) {
+      for (const [name, value] of Object.entries(item.extraFields.kv)) {
+        if (ExtraFields[name]?.zotero) {
+          for (const field of ExtraFields[name].zotero) {
             item[field] = value
           }
-          delete item.extraFields.csl[name]
+          delete item.extraFields.kv[name]
         }
       }
 

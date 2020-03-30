@@ -5,7 +5,7 @@ import { Translator } from '../lib/translator'
 import { debug } from '../lib/debug'
 import * as itemfields from '../../gen/itemfields'
 import * as Extra from '../../content/extra'
-import * as cslVariables from '../../content/csl-vars.json'
+import * as ExtraFields from '../../gen/extra-fields.json'
 
 const validCSLTypes = [
   'article',
@@ -116,20 +116,31 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       }
       if (item.accessDate) csl.accessed = this.date2CSL(Zotero.BetterBibTeX.parseDate(item.accessDate))
 
-      for (const [name, value] of Object.entries(item.extraFields.csl)) {
+      for (const [name, value] of Object.entries(item.extraFields.kv)) {
+        const ef = ExtraFields[name]
+        if (!ef.csl) continue
+
         if (Array.isArray(value)) { // csl creators
-          csl[name] = value.map(Extra.cslCreator)
+          for (const field of ef.csl) {
+            csl[field] = value.map(Extra.cslCreator)
+          }
 
         } else if (name === 'type') {
           if (validCSLTypes.includes(value)) csl.type = value
 
-        } else if (cslVariables[name] === 'date') {
-            csl[name] = this.date2CSL(Zotero.BetterBibTeX.parseDate(value))
+        } else if (ef.type === 'date') {
+          for (const field of ef.csl) {
+            csl[field] = this.date2CSL(Zotero.BetterBibTeX.parseDate(value))
+          }
 
         } else {
-            csl[name] = value
+          for (const field of ef.csl) {
+            csl[field] = value
+          }
 
         }
+
+        delete item.extraFields.kv[name]
       }
 
       [csl.journalAbbreviation, csl['container-title-short']] = [csl['container-title-short'], csl.journalAbbreviation]
