@@ -1,4 +1,3 @@
-// http://docs.citationstyles.org/en/stable/specification.html#appendix-iv-variables
 import * as ExtraFields from '../gen/extra-fields.json'
 import * as CSL from '../gen/citeproc'
 
@@ -38,8 +37,8 @@ export function zoteroCreator(value: string): ZoteroCreator {
 
 const re = {
   // fetch fields as per https://forums.zotero.org/discussion/3673/2/original-date-of-publication/. Spurious tex. so I can do a single match
-  kv: /^{:((?:bib(?:la)?)?tex\.)?([^:]+)(:)\s*([^}]+)}$/,
-  tex: /^((?:bib(?:la)?)?tex\.)?([^:=]+)\s*([:=])\s*([\S\s]*)/,
+  old: /^{:((?:bib(?:la)?)?tex\.)?([^:]+)(:)\s*([^}]+)}$/,
+  new: /^((?:bib(?:la)?)?tex\.)?([^:=]+)\s*([:=])\s*([\S\s]*)/,
 }
 
 
@@ -78,7 +77,7 @@ export function get(extra: string, options?: GetOptions, normalize?: 'zotero' | 
 
   let ef
   extra = extra.split('\n').filter(line => {
-    const m = line.match(re.kv) || line.match(re.tex)
+    const m = line.match(re.old) || line.match(re.new)
     if (!m) return true
 
     let [ , tex, name, assign, value ] = m

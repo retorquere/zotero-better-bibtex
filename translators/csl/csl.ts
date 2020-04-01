@@ -54,6 +54,11 @@ const keyOrder = [
   'circa',
 ].reduce((acc, field, idx, fields) => { acc[field] = idx + 1; return acc }, {})
 
+const prefix = {
+  zotero: 'zotero:',
+  csl: 'csl:',
+}
+
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let CSLExporter = new class { // tslint:disable-line:variable-name
   public flush: Function // will be added by JSON/YAML exporter
@@ -117,13 +122,20 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       if (item.accessDate) csl.accessed = this.date2CSL(Zotero.BetterBibTeX.parseDate(item.accessDate))
 
       for (const [name, value] of Object.entries(item.extraFields.kv)) {
+        if (name.startsWith(prefix.zotero)) continue
+
+        if (name.startsWith(prefix.csl)) {
+          for (const field of name.substring(prefix.csl.length).split('+')) {
+            csl[field] = value
+          }
+          delete item.extraFields.kv[name]
+          continue
+        }
+
         const ef = ExtraFields[name]
         if (!ef || !ef.csl) continue
 
-        if (Array.isArray(value) && ef.type === 'creator') {
-          csl[ef.csl] = value.map(Extra.cslCreator)
-
-        } else if (name === 'type') {
+        if (name === 'type') {
           if (validCSLTypes.includes(value)) csl.type = value
 
         } else if (ef.type === 'date') {
@@ -135,6 +147,14 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
         }
 
         delete item.extraFields.kv[name]
+      }
+
+      for (const [name, value] of Object.entries(item.extraFields.creator)) {
+        if (name.includes(':')) continue
+        const ef = ExtraFields[name]
+        csl[ef.csl] = value.map(Extra.cslCreator)
+
+        delete item.extraFields.creator[name]
       }
 
       [csl.journalAbbreviation, csl['container-title-short']] = [csl['container-title-short'], csl.journalAbbreviation]

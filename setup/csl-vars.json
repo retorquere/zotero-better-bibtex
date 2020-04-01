@@ -1,4 +1,5 @@
 {
+  ".note": "text",
   "archive_location": "text",
   "abstract": "text",
   "accessed": "date",
@@ -17,6 +18,7 @@
   "composer": "creator",
   "container-author": "creator",
   "container-title": "text",
+  "container": "date",
   "container-title-short": "text",
   "dimensions": "text",
   "director": "creator",

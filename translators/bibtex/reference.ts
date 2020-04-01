@@ -7,9 +7,15 @@ import { text2latex } from './unicode_translator'
 import { debug } from '../lib/debug'
 import { datefield } from './datefield'
 import * as ExtraFields from '../../gen/extra-fields.json'
+import * as Extra from '../../content/extra'
 import * as CSL from '../../gen/citeproc'
 
 import { arXiv } from '../../content/arXiv'
+
+const prefix = {
+  zotero: 'zotero:',
+  csl: 'csl:',
+}
 
 const Path = { // tslint:disable-line variable-name
   normalize(path) {
@@ -370,10 +376,42 @@ export class Reference {
     // remove ordinal from edition
     this.item.edition = (this.item.edition || '').replace(/^([0-9]+)(nd|th)$/, '$1')
 
-    this.item.referenceType = this.item.extraFields.tex.referencetype?.value || this.item.cslType || this.item.itemType
+    const csl_type = this.item.extraFields.kv.type
+    delete this.item.extraFields.kv.type
+    this.item.referenceType = this.item.extraFields.tex.referencetype?.value || csl_type || this.item.itemType
+
+    let field
+    for (const [name, value] of Object.entries(item.extraFields.kv)) {
+      if (name.startsWith(prefix.csl)) continue
+
+      if (name.startsWith(prefix.zotero)) {
+        for (const f of name.substring(prefix.zotero.length).split('+')) {
+          item[f] = value
+        }
+        delete item.extraFields.kv[name]
+        continue
+      }
+
+      debug('extra field:', { name, ef: ExtraFields[name] })
+      if (field = ExtraFields[name].zotero) {
+        item[field] = value
+        delete item.extraFields.kv[name]
+      }
+    }
+
+
+    for (const [name, value] of Object.entries(item.extraFields.creator)) {
+      if (field = ExtraFields[name].zotero) {
+        for (const creator of (value as string[])) {
+          item.creators.push({...Extra.zoteroCreator(creator), creatorType: field})
+        }
+        delete item.extraFields.creator[name]
+      }
+    }
+
     // should be const referencetype: string | { type: string, subtype?: string }
     // https://github.com/Microsoft/TypeScript/issues/10422
-    const referencetype: any = this.item.extraFields.tex.referencetype?.value || this.typeMap.csl[this.item.cslType] || this.typeMap.zotero[this.item.itemType] || 'misc'
+    const referencetype: any = this.item.extraFields.tex.referencetype?.value || this.typeMap.csl[csl_type] || this.typeMap.zotero[this.item.itemType] || 'misc'
     if (typeof referencetype === 'string') {
       this.referencetype = referencetype
     } else {
@@ -601,6 +639,7 @@ export class Reference {
 
     for (const [key, value] of Object.entries(this.item.extraFields.kv)) {
       const ef = ExtraFields[key]
+      if (!ef) continue
       // these are handled just like 'arxiv' and 'lccn', respectively
       if (['PMID', 'PMCID'].includes(key) && typeof value === 'string') {
         this.item.extraFields.tex[key.toLowerCase()] = { value }

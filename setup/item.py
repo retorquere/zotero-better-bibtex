@@ -11,6 +11,8 @@ import time
 
 root = os.path.join(os.path.dirname(__file__), '..')
 
+print('Generating extra-fields...')
+
 def load(url, schema, lm=None):
   if lm is None: lm = url
   request = urllib.request.Request(lm)
@@ -27,9 +29,52 @@ def load(url, schema, lm=None):
       print(schema, f'does not exist, get with "curl -Lo schema/{schema} {url}"')
       sys.exit(1)
 
+def fix_csl_vars(proposed, name, csl_vars):
+  for var in list(proposed.keys()):
+    if not var in csl_vars and not f'.{var}' in csl_vars:
+      print(f'  {name}: discarding bogus CSL variable', var)
+      proposed.pop(var)
+
+def fix_zotero_schema(schema):
+  schema = Munch.fromDict(schema)
+
+  # missing date field
+  schema.meta.fields.accessDate = { 'type': 'date' }
+
+  # status is publication status, not legal status
+  schema.csl.fields.text.status = [ 'status' ]
+
+  with open(os.path.join(root, 'setup/csl-vars.json')) as f:
+    csl_vars = set(json.load(f).keys())
+    fix_csl_vars(schema.csl.fields.text, 'zotero', csl_vars)
+    fix_csl_vars(schema.csl.fields.date, 'zotero', csl_vars)
+    fix_csl_vars(schema.csl.names, 'zotero', csl_vars)
+
+  return Munch.toDict(schema)
+
+def fix_jurism_schema(schema):
+  schema = Munch.fromDict(schema)
+
+  # missing date field
+  schema.meta.fields.accessDate = { 'type': 'date' }
+
+  # missing variable mapping
+  schema.csl.fields.text['volume-title'] = [ 'volumeTitle' ]
+
+  # status is publication status, not legal status
+  schema.csl.fields.text.status = [ 'status ']
+
+  with open(os.path.join(root, 'setup/csl-vars.json')) as f:
+    csl_vars = set(json.load(f).keys())
+    fix_csl_vars(schema.csl.fields.text, 'jurism', csl_vars)
+    fix_csl_vars(schema.csl.fields.date, 'jurism', csl_vars)
+    fix_csl_vars(schema.csl.names, 'jurism', csl_vars)
+
+  return Munch.toDict(schema)
+
 data = DefaultMunch.fromDict({
-  'zotero': load('https://api.zotero.org/schema', 'zotero.json'),
-  'jurism': load('https://raw.githubusercontent.com/Juris-M/zotero-schema/master/schema-jurism.json', 'juris-m.json', 'https://api.github.com/repos/Juris-M/zotero-schema/contents/schema-jurism.json?ref=master'),
+  'zotero': fix_zotero_schema(load('https://api.zotero.org/schema', 'zotero.json')),
+  'jurism': fix_jurism_schema(load('https://raw.githubusercontent.com/Juris-M/zotero-schema/master/schema-jurism.json', 'juris-m.json', 'https://api.github.com/repos/Juris-M/zotero-schema/contents/schema-jurism.json?ref=master')),
 }, None)
 
 class ExtraFields:
@@ -44,64 +89,42 @@ class ExtraFields:
     else:
       return obj
 
-  def dict_merge(self, base_dct, merge_dct):
-    rtn_dct = base_dct.copy()
-
-    rtn_dct.update({
-        key: self.dict_merge(rtn_dct[key], merge_dct[key])
-        if isinstance(rtn_dct.get(key), dict) and isinstance(merge_dct[key], dict)
-        else merge_dct[key]
-        for key in merge_dct.keys()
-    })
-
-    return rtn_dct
-
   def __init__(self):
     self.ef = Munch(zotero=defaultdict(Munch), csl=defaultdict(Munch))
 
-  def load(self, data, fixes = {}):
-    data = self.dict_merge(data, fixes)
+  def load(self, data):
     data = Munch.fromDict(data)
-    locale = data.locales['en-US']
 
     # no extra-fields for these
     data.itemTypes = [ itemType for itemType in data.itemTypes if itemType.itemType not in ['attachment', 'note'] ]
 
-    data.meta.fields.accessDate = Munch(type='date')
-    basefield = {}
 
-    common = None
-    # find basefields and shared fields
+    class BaseField:
+      def __init__(self):
+        self.basefield = {}
+      def __getitem__(self, key):
+        return self.basefield.get(key, key)
+      def __setitem__(self, key, value):
+        self.basefield[key] = value
+    basefield = BaseField()
+
+    # find basefields
     for itemType in data.itemTypes:
       for field in itemType.fields:
         if 'baseField' in field:
           basefield[field.field] = field.baseField
 
-      if common is None:
-        common = set(basefield.get(field.field, field.field) for field in itemType.fields)
-      else:
-        common = common.intersection(set(basefield.get(field.field, field.field) for field in itemType.fields))
+    # find variables
+    for itemType in data.itemTypes:
 
-    #print(common)
-    # ignore all fields that are in all items, as these will have a UI field
-    #for itemType in data.itemTypes:
-    #  itemType.fields = [field for field in itemType.fields if not basefield.get(field.field, field.field) in common]
-    #  itemType.creatorTyped = [creator for creator in itemType.creatorTypes if not basefield.get(creator.creatorType, creator.creatorType) in common]
-    #data.meta.fields = { field: meta for field, meta in data.meta.fields.items() if field in common }
-    #locale.fields = { field: label for field, label in locale.fields.items() if not field in common }
-    #for csl, zotero in fielddata.csl.fields.text.items():
-    #  fielddata.csl.fields.text[csl] = [ field for field in zotero if not field in common ]
+      for field in itemType.fields:
+        label = re.sub(r'([a-z])([A-Z])', lambda x: x.group(1) + ' ' + x.group(2), field.field).lower()
+        self.ef.zotero[label].zotero = basefield[field.field]
 
-    # map labels
-    for field, label in locale.fields.items():
-      if '.' in label or '#' in label:
-        label = re.sub(r'([a-z])([A-Z])', lambda x: x.group(1) + ' ' + x.group(2), field)
-
-      self.ef.zotero[label.lower()].zotero = basefield.get(field, field)
-
-    for field, label in locale.creatorTypes.items():
-      self.ef.zotero[label.lower()].zotero = basefield.get(field, field)
-      self.ef.zotero[label.lower()].type = 'creator'
+      for creator in itemType.creatorTypes:
+        label = re.sub(r'([a-z])([A-Z])', lambda x: x.group(1) + ' ' + x.group(2), creator.creatorType).lower()
+        self.ef.zotero[label].zotero = basefield[creator.creatorType]
+        self.ef.zotero[label].type = 'creator'
 
     # fix types
     for var, meta in data.meta.fields.items():
@@ -110,17 +133,6 @@ class ExtraFields:
       for field in self.ef.zotero.values():
         if field.zotero == var:
           field.type = meta.type
-
-    # scan itemTypes
-    for itemType in data.itemTypes:
-      for field in itemType.fields:
-        assert any(field for field in self.ef.zotero.values() if field.zotero == var)
-
-      for creator in itemType.creatorTypes:
-        assert any(field for field in self.ef.zotero.values() if field.zotero == creator.creatorType)
-        for field in self.ef.zotero.values():
-          if field.zotero == creator.creatorType:
-            assert field.type == 'creator'
 
     def add_csl(csl, zoteros):
       types = set()
@@ -138,7 +150,7 @@ class ExtraFields:
     # map csl
     for csl, zotero in data.csl.fields.text.items():
       self.ef.csl[csl.lower()].csl = csl
-      self.ef.csl[csl.lower()].zotero = [basefield.get(z, z) for z in zotero]
+      self.ef.csl[csl.lower()].zotero = [basefield[z] for z in zotero]
 
       types = add_csl(csl, self.ef.csl[csl.lower()].zotero)
       if len(types) == 1: self.ef.csl[csl.lower()].type = types[0]
@@ -146,7 +158,7 @@ class ExtraFields:
     for csl, zotero in data.csl.fields.date.items():
       self.ef.csl[csl.lower()].csl = csl
       self.ef.csl[csl.lower()].type = 'date'
-      self.ef.csl[csl.lower()].zotero = [basefield.get(zotero, zotero)]
+      self.ef.csl[csl.lower()].zotero = [basefield[zotero]]
 
       types = add_csl(csl, self.ef.csl[csl.lower()].zotero)
       if len(types) != 0:
@@ -155,7 +167,7 @@ class ExtraFields:
     for zotero, csl in data.csl.names.items():
       self.ef.csl[csl.lower()].csl = csl
       self.ef.csl[csl.lower()].type = 'creator'
-      self.ef.csl[csl.lower()].zotero = [basefield.get(zotero, zotero)]
+      self.ef.csl[csl.lower()].zotero = [basefield[zotero]]
 
       types = add_csl(csl, self.ef.csl[csl.lower()].zotero)
       assert self.ef.csl[csl.lower()].type == types[0]
@@ -169,72 +181,42 @@ class ExtraFields:
         if _type != 'text': self.ef.csl[csl.lower()].type = _type
 
     for field in self.ef.zotero.values():
-      if 'csl' in field and len(field.csl) == 1:
-        field.csl = field.csl[0]
-      else:
-        field.pop('csl', None)
+      if 'csl' in field:
+        field.csl = sorted(list(set(field.csl)))
+        if len(field.csl) == 1:
+          field.csl = field.csl[0]
+        else:
+          field.csl = 'csl:' + '+'.join(field.csl)
+
     for field in self.ef.csl.values():
-      if 'zotero' in field and len(field.zotero) == 1:
-        field.zotero = field.zotero[0]
-      else:
-        field.pop('zotero', None)
+      if 'zotero' in field:
+        field.zotero = sorted(list(set(field.zotero)))
+        if len(field.zotero) == 1:
+          field.zotero = field.zotero[0]
+        else:
+          field.zotero = 'zotero:' + '+'.join(field.zotero)
 
     simple = {}
-    # zotero takes precedence
-    for label, field in self.ef.zotero.items():
-      simple[label] = field
-      if not field.zotero in simple:
-        simple[field.zotero] = field
     for label, field in self.ef.csl.items():
       if not label in simple:
         simple[label] = field
       if not field.csl in simple:
         simple[field.csl] = field
 
+    for label, field in self.ef.zotero.items():
+      if not label in simple:
+        simple[label] = field
+      if not field.zotero in simple:
+        simple[field.zotero] = field
+
+    # such a mess
+    simple['type'] = { 'zotero': 'type', 'csl': 'type' }
     with open(path, 'w') as f:
       json.dump(simple, f, indent='  ', default=ExtraFields.to_json)
 
-print('Generating extra-fields...')
 extraFields = ExtraFields()
-extraFields.load(data.zotero, {
-  'locales': {
-    'en-US': {
-      'fields': {
-        'programmingLanguage': 'Programming Language'
-      }
-    }
-  },
-  'meta': {
-    'fields': {
-      'accessDate': {
-        'type': 'date'
-      }
-    }
-  }
-})
-extraFields.load(data.jurism, {
-  'locales': {
-    'en-US': {
-      'fields': {
-        'programmingLanguage': 'Programming Language'
-      }
-    }
-  },
-  'meta': {
-    'fields': {
-      'accessDate': {
-        'type': 'date'
-      }
-    }
-  },
-  'csl': {
-    'fields': {
-      'text': {
-        'volume-title': [ 'volumeTitle' ]
-      }
-    }
-  }
-})
+extraFields.load(data.jurism)
+extraFields.load(data.zotero)
 extraFields.save(os.path.join(root, 'gen', 'extra-fields.json'))
 
 print('Generating item field metadata...')
