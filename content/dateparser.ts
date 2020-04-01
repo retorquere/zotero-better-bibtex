@@ -97,6 +97,14 @@ export function parse(value, toplevel = true) {
   // https://forums.zotero.org/discussion/73729/name-and-year-import-issues-with-new-nasa-ads#latest
   if (m = (/^(-?[0-9]+)-00-00$/.exec(value) || /^(-?[0-9]+-[0-9]+)-00$/.exec(value))) return parse(m[1], toplevel)
 
+  // '30-Mar-2020'
+  if (toplevel && (m = /^([0-9]+)-([a-z]+)-([0-9])+$/i)) {
+    let [ , day, month, year ] = m
+    if (day > 31 && year < 31) [ day, year ] = [ year, day ] // tslint:disable-line:no-magic-numbers
+    const date = parse(`${month} ${day} ${year}`, false)
+    if (date.type === 'date') return date
+  }
+
   // '[origyear] year'
   if (toplevel && (m = /^\[(.+)\]\s*(.+)$/.exec(value))) {
     const [ , _orig, _year ] = m
