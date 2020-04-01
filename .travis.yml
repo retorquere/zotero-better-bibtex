@@ -24,7 +24,6 @@ cache:
 # https://github.com/travis-ci/travis-ci/issues/8920
 # https://github.com/travis-ci/travis-ci/issues/4704#issuecomment-348435959
 before_install:
-  - nvm install 13.8.0
   - sudo lshw -short
   - python3 -c 'import os,sys; os.set_blocking(sys.stdout.fileno(), True)'
   - python3 -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); print("blocking:", flags&os.O_NONBLOCK == 0);'
@@ -53,7 +52,8 @@ stages:
 jobs:
   include:
   - stage: build
-    before_install: true
+    before_install:
+      - nvm install 13.8.0
     script:
       - npm run build
       - travis_retry ./util/build-assets stash
