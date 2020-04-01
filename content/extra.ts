@@ -5,14 +5,15 @@ import * as CSL from '../gen/citeproc'
 type TeXString = { value: string, raw?: boolean, type?: 'biblatex' | 'bibtex' }
 
 export type Fields = {
-  kv: Record<string, string | string[]>
+  kv: Record<string, string>
+  creator: Record<string, string[]>
   tex: Record<string, TeXString>
   citationKey: string
   aliases: string[]
 }
 
 type CSLCreator = { literal?: string, isInstitution?: 1, family?: string, given?: string }
-type ZoteroCreator = { name?: string, lastName?: string, firstName?: string, creatorType?: string }
+type ZoteroCreator = { name?: string, lastName?: string, firstName?: string }
 
 export function cslCreator(value: string): CSLCreator {
   const creator = value.split(/\s*\|\|\s*/)
@@ -26,12 +27,12 @@ export function cslCreator(value: string): CSLCreator {
   }
 }
 
-export function zoteroCreator(value: string, creatorType?: string): ZoteroCreator {
+export function zoteroCreator(value: string): ZoteroCreator {
   const creator = value.split(/\s*\|\|\s*/)
   if (creator.length === 2) { // tslint:disable-line:no-magic-numbers
-    return { creatorType, lastName: creator[0] || '', firstName: creator[1] || '' }
+    return { lastName: creator[0] || '', firstName: creator[1] || '' }
   } else {
-    return { creatorType, name: value }
+    return { name: value }
   }
 }
 
@@ -41,12 +42,18 @@ const re = {
   tex: /^((?:bib(?:la)?)?tex\.)?([^:=]+)\s*([:=])\s*([\S\s]*)/,
 }
 
-type GetOptions = {
-  citationKey?: boolean | string
-  aliases?: boolean | string[]
-  kv?: boolean | Record<string, string | string[]>
-  tex?: boolean | Record<string, TeXString>
-  normalize?: boolean
+
+type SetOptions = {
+  citationKey?: string
+  aliases?: string[]
+  kv?: Record<string, string | string[]>
+  tex?: Record<string, TeXString>
+}
+type GetOptions = SetOptions | {
+  citationKey?: boolean
+  aliases?: boolean
+  kv?: boolean
+  tex?: boolean
 }
 
 const otherFields = ['lccn', 'mr', 'zbl', 'arxiv', 'jstor', 'hdl', 'googlebooksid']
@@ -54,18 +61,22 @@ const casing = {
   arxiv: 'arXiv',
 }
 
-export function get(extra: string, options?: GetOptions): { extra: string, extraFields: Fields } {
-  if (!options) options = { citationKey: true , aliases: true, kv: true, tex: true, normalize: true }
+export function get(extra: string, options?: GetOptions, normalize?: 'zotero' | 'csl'): { extra: string, extraFields: Fields } {
+  if (!options) options = { citationKey: true , aliases: true, kv: true, tex: true }
+
+  const other = normalize ? {zotero: 'csl', csl: 'zotero'}[normalize] : null
 
   extra = extra || ''
 
   const extraFields: Fields = {
     kv: {},
+    creator: {},
     tex: {},
     citationKey: '',
     aliases: [],
   }
 
+  let ef
   extra = extra.split('\n').filter(line => {
     const m = line.match(re.kv) || line.match(re.tex)
     if (!m) return true
@@ -76,46 +87,43 @@ export function get(extra: string, options?: GetOptions): { extra: string, extra
     if (!tex && raw) return true
 
     name = name.trim()
-    const _name = name.toLowerCase()
+    const key = name.toLowerCase()
 
     value = value.trim()
 
-    if (options.citationKey && !tex && options.citationKey && ['citation key', 'bibtex'].includes(_name)) {
+    if (options.citationKey && !tex && options.citationKey && ['citation key', 'bibtex'].includes(key)) {
       extraFields.citationKey = value
       return false
     }
 
-    if (options.aliases && !tex && options.aliases && _name === 'citation key alias') {
+    if (options.aliases && !tex && options.aliases && key === 'citation key alias') {
       extraFields.aliases = value.split(/s*,\s*/).filter(alias => alias)
       return false
     }
-    if (options.aliases && tex && !raw && options.aliases && _name === 'ids') {
+    if (options.aliases && tex && !raw && options.aliases && key === 'ids') {
       extraFields.aliases = value.split(/s*,\s*/).filter(alias => alias)
       return false
     }
 
-    if (options.kv && !tex) {
-      const type = ExtraFields[_name].type
-      const k = options.normalize ? ExtraFields[_name].id : name
-      if (type) {
-        if (type === 'creator') {
-          extraFields.kv[k] = (extraFields.kv[k] as string[]) || [];
-          (extraFields.kv[k] as string[]).push(value)
-        } else {
-          extraFields.kv[k] = value
-        }
-        return false
+    if (options.kv && (ef = ExtraFields[key]) && !tex) {
+      const k = normalize ? (ef[normalize] || ef[other]) : name
+      if (ef.type === 'creator') {
+        extraFields.creator[k] = extraFields.creator[k] || []
+        extraFields.creator[k].push(value)
+      } else {
+        extraFields.kv[k] = value
       }
+      return false
     }
 
     if (options.tex && tex && !name.includes(' ')) {
-      extraFields.tex[_name] = { value, raw }
-      if (tex === 'bibtex' || tex === 'biblatex') extraFields.tex[_name].type = tex
+      extraFields.tex[key] = { value, raw }
+      if (tex === 'bibtex' || tex === 'biblatex') extraFields.tex[key].type = tex
       return false
     }
 
-    if (options.tex && !tex && otherFields.includes(_name.replace(/[- ]/g, ''))) {
-      extraFields.tex[_name.replace(/[- ]/g, '')] = { value }
+    if (options.tex && !tex && otherFields.includes(key.replace(/[- ]/g, ''))) {
+      extraFields.tex[key.replace(/[- ]/g, '')] = { value }
       return false
     }
 
@@ -125,7 +133,7 @@ export function get(extra: string, options?: GetOptions): { extra: string, extra
   return { extra, extraFields }
 }
 
-export function set(extra, options: { citationKey?: string, aliases?: string[], kv?: Record<string, string | string[]>, tex?: Record<string, TeXString>} = {}) {
+export function set(extra, options: SetOptions = {}) {
   const parsed = get(extra, options)
 
   if (options.citationKey) parsed.extra += `\nCitation Key: ${options.citationKey}`

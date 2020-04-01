@@ -432,7 +432,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
         // fetches the version we create here *before* the translator starts, changes to the 'item' inside the translator are essentially ignored.
         // There's no way around this until Zotero makes export translators async; we prep the itemToCSLJSON versions here so they can be "made" synchronously
         // inside the translator
-        Object.assign(item, Extra.get(item.extra))
+        Object.assign(item, Extra.get(item.extra, null, 'csl'))
         config.cslItems[item.itemID] = Zotero.Utilities.itemToCSLJSON(item)
       }
     }

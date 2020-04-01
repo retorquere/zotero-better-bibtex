@@ -87,7 +87,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       }
 
       itemfields.simplifyForExport(item)
-      if (!Zotero.BetterBibTeX.worker()) Object.assign(item, Extra.get(item.extra)) // for the worker version, this has already be done so that itemToCSLJSON works
+      if (!Zotero.BetterBibTeX.worker()) Object.assign(item, Extra.get(item.extra, null, 'csl')) // for the worker version, this has already been done so that itemToCSLJSON works
 
       if (item.accessDate) { // WTH is Juris-M doing with those dates?
         item.accessDate = item.accessDate.replace(/T?[0-9]{2}:[0-9]{2}:[0-9]{2}.*/, '').trim()
@@ -118,25 +118,19 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
 
       for (const [name, value] of Object.entries(item.extraFields.kv)) {
         const ef = ExtraFields[name]
-        if (!ef.csl) continue
+        if (!ef || !ef.csl) continue
 
-        if (Array.isArray(value)) { // csl creators
-          for (const field of ef.csl) {
-            csl[field] = value.map(Extra.cslCreator)
-          }
+        if (Array.isArray(value) && ef.type === 'creator') {
+          csl[ef.csl] = value.map(Extra.cslCreator)
 
         } else if (name === 'type') {
           if (validCSLTypes.includes(value)) csl.type = value
 
         } else if (ef.type === 'date') {
-          for (const field of ef.csl) {
-            csl[field] = this.date2CSL(Zotero.BetterBibTeX.parseDate(value))
-          }
+          csl[ef.csl] = this.date2CSL(Zotero.BetterBibTeX.parseDate(value))
 
         } else {
-          for (const field of ef.csl) {
-            csl[field] = value
-          }
+          csl[ef.csl] = value
 
         }
 

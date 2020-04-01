@@ -110,7 +110,7 @@ class PatternFormatter {
       item,
       type: Zotero.ItemTypes.getName(item.itemTypeID),
       language: this.language[(item.getField('language') || '').toLowerCase()] || '',
-      kv: Extra.get(item.getField('extra'), { kv: true, normalize: true}).extraFields.kv,
+      kv: Extra.get(item.getField('extra'), { kv: true }, 'zotero').extraFields.kv,
     }
 
     if (['attachment', 'note'].includes(this.item.type)) return {}

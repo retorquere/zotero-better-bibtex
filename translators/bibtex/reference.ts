@@ -6,7 +6,6 @@ import { Exporter } from './exporter'
 import { text2latex } from './unicode_translator'
 import { debug } from '../lib/debug'
 import { datefield } from './datefield'
-import * as Extra from '../../content/extra'
 import * as ExtraFields from '../../gen/extra-fields.json'
 import * as CSL from '../../gen/citeproc'
 
@@ -371,26 +370,6 @@ export class Reference {
     // remove ordinal from edition
     this.item.edition = (this.item.edition || '').replace(/^([0-9]+)(nd|th)$/, '$1')
 
-    for (const [k, v] of Object.entries(this.item.extraFields.kv)) {
-      const ef = ExtraFields[k]
-      if (!ef || !ef.zotero) continue
-
-      if (ef.type === 'creator') {
-        for (const creatorType of ef.zotero) {
-          for (const creator of (v as string[])) {
-            this.item.creators.push(Extra.zoteroCreator(creator, creatorType))
-          }
-        }
-
-      } else {
-        for (const field of ef.zotero) {
-          this.item[field] = v
-        }
-      }
-
-      delete this.item.extraFields.kv[k]
-    }
-
     this.item.referenceType = this.item.extraFields.tex.referencetype?.value || this.item.cslType || this.item.itemType
     // should be const referencetype: string | { type: string, subtype?: string }
     // https://github.com/Microsoft/TypeScript/issues/10422
@@ -618,53 +597,33 @@ export class Reference {
       this.add({ name: 'ids', value: this.item.extraFields.aliases.join(',') })
     }
 
-    for (let [key, value] of Object.entries(this.item.extraFields.kv)) {
-      key = ExtraFields[key].id
+    if (Translator.BetterBibLaTeX) this.add({ name: 'pubstate', value: this.item.status })
+
+    for (const [key, value] of Object.entries(this.item.extraFields.kv)) {
+      const ef = ExtraFields[key]
       // these are handled just like 'arxiv' and 'lccn', respectively
       if (['PMID', 'PMCID'].includes(key) && typeof value === 'string') {
-        this.item.extraFields.tex[key] = { value }
+        this.item.extraFields.tex[key.toLowerCase()] = { value }
         delete this.item.extraFields.kv[key]
         continue
       }
 
-      const type = ExtraFields[key].type
+      let enc = ef.type
+      const replace = ef.type === 'date'
       let name = null
-      let replace = false
-      let enc
-      switch (type) {
-        case 'text':
-          enc = null
-          break
-
-        case 'creator':
-          enc = 'creators'
-          if (Array.isArray(value)) value = (value.map(creator => Extra.zoteroCreator(creator)) as string[]) // yeah yeah, shut up TS
-          break
-
-        case 'date':
-          enc = 'date'
-          replace = true
-
-        default:
-          enc = type
-      }
 
       // CSL names are not in BibTeX format, so only add it if there's a mapping
       if (Translator.BetterBibLaTeX) {
         switch (key) {
-          case 'authority':
+          case 'issuingAuthority':
             name = 'institution'
-            break
-
-          case 'status':
-            name = 'pubstate'
             break
 
           case 'title':
             name = this.referencetype === 'book' ? 'maintitle' : null
             break
 
-          case 'container-title':
+          case 'publicationTitle':
             switch (this.item.referenceType) {
               case 'film':
               case 'tvBroadcast':
@@ -688,6 +647,7 @@ export class Reference {
             name = 'origpublisher'
             enc = 'literal'
             break
+
           case 'original-publisher-place':
             name = 'origlocation'
             enc = 'literal'
@@ -702,16 +662,16 @@ export class Reference {
             enc = 'date'
             break
 
-          case 'publisher-place':
+          case 'place':
             name = 'location'
             enc = 'literal'
             break
 
-          case 'page':
+          case 'pages':
             name = 'pages'
             break
 
-          case 'issued':
+          case 'date':
             name = 'date'
             break
 
@@ -730,9 +690,6 @@ export class Reference {
 
           case 'number':
           case 'volume':
-          case 'author':
-          case 'director':
-          case 'editor':
           case 'DOI':
           case 'ISBN':
           case 'ISSN':

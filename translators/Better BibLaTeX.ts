@@ -536,15 +536,15 @@ export function doExport() {
 
     ref.add({ name: 'file', value: item.attachments, enc: 'attachments' })
 
-    if (item.cslVolumeTitle) { // #381
+    if (item.volumeTitle) { // #381
       if (item.referenceType === 'book' && ref.has.title) {
-        ref.add({name: 'maintitle', value: item.cslVolumeTitle }); // ; to prevent chaining
+        ref.add({name: 'maintitle', value: item.volumeTitle }); // ; to prevent chaining
         [ref.has.title.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.title.bibtex]; // ; to prevent chaining
         [ref.has.title.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.title.value]
       }
 
       if (['bookSection', 'chapter'].includes(item.referenceType) && ref.has.booktitle) {
-        ref.add({name: 'maintitle', value: item.cslVolumeTitle }); // ; to prevent chaining
+        ref.add({name: 'maintitle', value: item.volumeTitle }); // ; to prevent chaining
         [ref.has.booktitle.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.booktitle.bibtex]; // ; to preven chaining
         [ref.has.booktitle.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.booktitle.value]
       }

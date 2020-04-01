@@ -4,201 +4,237 @@ import os, sys
 import urllib.request
 import json
 from munch import Munch, DefaultMunch
+from collections import defaultdict
 import copy
 import re
-import sqlite3
+import time
 
 root = os.path.join(os.path.dirname(__file__), '..')
 
-def load(url):
-  with urllib.request.urlopen(url) as f:
-    return json.loads(f.read().decode())
+def load(url, schema, lm=None):
+  if lm is None: lm = url
+  request = urllib.request.Request(lm)
+  request.get_method = lambda: 'HEAD'
+  with urllib.request.urlopen(request) as r:
+    last_modified = r.getheader('last-modified')
+    last_modified = time.strptime(last_modified, '%a, %d %b %Y %H:%M:%S %Z')
+    last_modified = time.strftime('%Y-%m-%dT%H-%M-%SZ', last_modified)
+    schema  = f'{last_modified}-{schema}'
+    try:
+      with open(os.path.join(root, 'schema', schema)) as f:
+        return json.load(f)
+    except FileNotFoundError:
+      print(schema, f'does not exist, get with "curl -Lo schema/{schema} {url}"')
+      sys.exit(1)
 
 data = DefaultMunch.fromDict({
-  'zotero': load('https://api.zotero.org/schema'),
-  'jurism': load('https://raw.githubusercontent.com/Juris-M/zotero-schema/master/schema-jurism.json')
+  'zotero': load('https://api.zotero.org/schema', 'zotero.json'),
+  'jurism': load('https://raw.githubusercontent.com/Juris-M/zotero-schema/master/schema-jurism.json', 'juris-m.json', 'https://api.github.com/repos/Juris-M/zotero-schema/contents/schema-jurism.json?ref=master'),
 }, None)
 
 class ExtraFields:
-  def __init__(self):
-    self.db = sqlite3.connect(':memory:', isolation_level=None)
-    self.db.row_factory = lambda cursor, row: Munch.fromDict({ col[0]: row[idx] for idx, col in enumerate(cursor.description) })
-    self.db.execute('CREATE TABLE zotero (zotero PRIMARY KEY, format NOT NULL)')
-    self.db.execute('CREATE TABLE csl (csl NOT NULL, zotero NOT NULL, format NOT NULL, PRIMARY KEY(csl, zotero))')
-    self.db.execute('CREATE TABLE label (label PRIMARY KEY, zotero NOT NULL)')
-    self.zotero = set()
-    self.csl = set()
-
-  def uncamelcase(self, k):
-    if re.match(r'[a-z]+([A-Z][a-z]+)+$', k):
-      return re.sub('([A-Z])', r' \1', k, flags=re.DOTALL)
+  @staticmethod
+  def to_json(obj):
+    if isinstance(obj, Munch):
+      return {
+        k: v
+        for k, v in Munch.toDict(obj).items()
+        if not v is None and not (type(v) == list and len(v) == 0)
+      }
     else:
-      return k
+      return obj
 
-  def label(self, label, field, mode='REPLACE'):
-    if label == 'Conf. Date': label = 'Conference Date'
-    label = label.replace('Supp. ', 'Supplement ')
-    label = label.replace('Resol. ', 'Resolution ')
-    label = label.replace('Orig. ', 'Original ')
-    label = label.replace('Assy. ', 'Assembly ')
-    label = label.replace('Loc. ', 'Location ')
-    label = label.replace('# of ', 'Number of ')
-    if label.endswith(' No.'): label = label.replace(' No.', ' Number')
-    if label.endswith(' Vol.'): label = label.replace(' Vol.', ' Volume')
+  def dict_merge(self, base_dct, merge_dct):
+    rtn_dct = base_dct.copy()
 
-    assert '.' not in label, str([label, field])
-    assert '#' not in label, str([label, field])
-    self.db.execute(f'INSERT OR {mode} INTO label (label, zotero) VALUES (LOWER(?), ?)', (label, field))
+    rtn_dct.update({
+        key: self.dict_merge(rtn_dct[key], merge_dct[key])
+        if isinstance(rtn_dct.get(key), dict) and isinstance(merge_dct[key], dict)
+        else merge_dct[key]
+        for key in merge_dct.keys()
+    })
 
-  def types(self, types, msg):
-    types = set(types)
-    if len(types) == 0:
-      return [ 'text ']
-    if len(types) > 1:
-      types = set(types) - set(['text'])
-    assert len(types) == 1, str((msg, types))
-    return list(types)
+    return rtn_dct
 
-  def load(self, data):
+  def __init__(self):
+    self.ef = Munch(zotero=defaultdict(Munch), csl=defaultdict(Munch))
+
+  def load(self, data, fixes = {}):
+    data = self.dict_merge(data, fixes)
+    data = Munch.fromDict(data)
     locale = data.locales['en-US']
-    # this must be an error
-    locale.fields.programmingLanguage = 'Programming Language'
 
-    # fields
+    # no extra-fields for these
+    data.itemTypes = [ itemType for itemType in data.itemTypes if itemType.itemType not in ['attachment', 'note'] ]
+
+    data.meta.fields.accessDate = Munch(type='date')
     basefield = {}
+
+    common = None
+    # find basefields and shared fields
     for itemType in data.itemTypes:
       for field in itemType.fields:
-        self.db.execute('INSERT OR IGNORE INTO zotero (zotero, format) VALUES (?, ?)', (field.get('baseField', field.field), 'text'))
-        self.label(self.uncamelcase(field.field), field.get('baseField', field.field), 'IGNORE')
-
         if 'baseField' in field:
-          self.zotero.add(field.baseField)
           basefield[field.field] = field.baseField
-          self.label(self.uncamelcase(field.baseField), field.baseField, 'IGNORE')
-        
-      for field in itemType.creatorTypes:
-        self.db.execute('INSERT OR REPLACE INTO zotero (zotero, format) VALUES (?, ?)', (field.creatorType, 'creator'))
-        self.label(self.uncamelcase(field.creatorType), field.creatorType, 'IGNORE')
 
-    # field types
-    for field, meta in data.meta.fields.items():
-      self.db.execute('INSERT OR REPLACE INTO zotero (zotero, format) VALUES (?, ?)', (field, meta.type))
-      self.label(self.uncamelcase(field), basefield.get(field, field), 'IGNORE')
-
-    # labels
-    for zotero_field, label in locale.fields.items():
-      self.zotero.add(basefield.get(zotero_field, zotero_field))
-      self.label(label, basefield.get(zotero_field, zotero_field))
-    for zotero_field, label in locale.creatorTypes.items(): # don't register type?
-      self.zotero.add(basefield.get(zotero_field, zotero_field))
-      self.label(label, basefield.get(zotero_field, zotero_field))
-
-#    for csl_type, zotero_types in data.csl.types.items():
-#      zotero_types = [t for t in zotero_types if t not in ['attachment', 'note']]
-#      mapping[f'type.{csl_type}'] = { 'type': zotero_types[0] }
-#      for t in zotero_types:
-#        mapping[f'type.{t}'] = { 'type': t }
-
-    # CSL
-    for csl_field, zotero_fields in data.csl.fields.text.items():
-      self.csl.add(csl_field)
-      for f in zotero_fields:
-        self.db.execute('INSERT OR IGNORE INTO csl (csl, zotero, format) VALUES (?, ?, ?)', (csl_field, basefield.get(f, f), 'text'))
-      
-    for csl_field, zotero_field in data.csl.fields.date.items():
-      self.csl.add(csl_field)
-      zotero_field = basefield.get(zotero_field, zotero_field)
-      self.db.execute('INSERT OR REPLACE INTO csl (csl, zotero, format) VALUES (?, ?, ?)', (csl_field, zotero_field, 'date'))
-
-    for zotero_field, csl_field in data.csl.names.items():
-      self.csl.add(csl_field)
-      zotero_field = basefield.get(zotero_field, zotero_field)
-
-      self.db.execute('INSERT OR REPLACE INTO csl (csl, zotero, format) VALUES (?, ?, ?)', (csl_field, zotero_field, 'creator'))
-
-    # missing matching for e.g. volume-title
-    with open(os.path.join(root, 'setup', 'csl-vars.json')) as f:
-      for csl_field, csl_format in json.load(f).items():
-        candidate = re.sub(r'([a-z])[-_]([a-z])', lambda match: match.group(1) + match.group(2).upper(), csl_field, flags=re.DOTALL)
-        candidate = basefield.get(candidate, candidate)
-        self.db.execute('INSERT OR IGNORE INTO csl (csl, zotero, format) SELECT ?, ?, ? WHERE EXISTS(SELECT 1 FROM zotero WHERE zotero = ?)', (csl_field, candidate, csl_format, candidate))
-
-  def save(self, output):
-    data = {}
-    for row in self.db.execute('SELECT zotero FROM zotero WHERE zotero NOT IN (SELECT zotero FROM label)'):
-      print('!', row.zotero)
-
-    for row in self.db.execute('''
-      SELECT label.label, GROUP_CONCAT(label.zotero) AS zotero, COALESCE(GROUP_CONCAT(csl.csl), '') AS csl
-      FROM label
-      LEFT JOIN csl ON label.zotero = csl.zotero
-      GROUP BY label.label
-    '''):
-      data[row.label] = {}
-      types = []
-
-      # soundex = Soundex()
-      if row.zotero != '':
-        data[row.label]['zotero'] = sorted(list(set(row.zotero.split(',')))) #, key=lambda x: soundex.compare(row.label, x))
-
-        data[row.label]['id'] = list(self.zotero.intersection(set(data[row.label]['zotero'])))[0]
-        #data[row.label]['zotero'][0]
-
-        types += [ ft.format for f in data[row.label]['zotero'] for ft in self.db.execute('SELECT DISTINCT format FROM zotero WHERE zotero = ?', (f,)) ]
-
-      if row.csl != '':
-        data[row.label]['csl'] = sorted(list(set(row.csl.split(',')))) # , key=lambda x: soundex.compare(row.label, x))
-        if not 'id' in data[row.label]:
-          data[row.label]['id'] = list(self.csl.intersection(set(data[row.label]['csl'])))[0]
-          #data[row.label]['id'] = data[row.label]['csl'][0]
-        types += [ ft.format for f in data[row.label]['csl'] for ft in self.db.execute('SELECT DISTINCT format FROM csl WHERE csl = ?', (f,)) ]
-      data[row.label]['type'] = self.types(types, row.label)[0]
-
-    with open(os.path.join(root, 'setup', 'csl-vars.json')) as f:
-      csl_vars = json.load(f)
-    for row in self.db.execute("SELECT LOWER(csl) AS label, csl, COALESCE(GROUP_CONCAT(zotero), '') AS zotero FROM csl GROUP BY csl"):
-      data[row.label] = { 'csl': [ row.csl ] }
-      csl_vars.pop(row.csl, None)
-      types = [ ft.format for ft in self.db.execute('SELECT DISTINCT format FROM csl WHERE LOWER(csl) = LOWER(?)', (row.csl,)) ]
-      if row.zotero != '':
-        data[row.label]['zotero'] = sorted(list(set(row.zotero.split(',')))) # , key=lambda x: soundex.compare(row.label, x))
-        types += [ ft.format for f in data[row.label]['zotero'] for ft in self.db.execute('SELECT DISTINCT format FROM zotero WHERE zotero = ?', (f,)) ]
-        #data[row.label]['id'] = data[row.label]['zotero'][0]
-        data[row.label]['id'] = list(self.zotero.intersection(set(data[row.label]['zotero'])))[0]
+      if common is None:
+        common = set(basefield.get(field.field, field.field) for field in itemType.fields)
       else:
-        #data[row.label]['id'] = data[row.label]['csl'][0]
-        data[row.label]['id'] = list(self.csl.intersection(set(data[row.label]['csl'])))[0]
-        
-      data[row.label]['type'] = self.types(types, row.csl)[0]
+        common = common.intersection(set(basefield.get(field.field, field.field) for field in itemType.fields))
 
-    # why are these missing?
-    for csl_field, csl_format in csl_vars.items():
-      if csl_field[0] == '.': continue
+    #print(common)
+    # ignore all fields that are in all items, as these will have a UI field
+    #for itemType in data.itemTypes:
+    #  itemType.fields = [field for field in itemType.fields if not basefield.get(field.field, field.field) in common]
+    #  itemType.creatorTyped = [creator for creator in itemType.creatorTypes if not basefield.get(creator.creatorType, creator.creatorType) in common]
+    #data.meta.fields = { field: meta for field, meta in data.meta.fields.items() if field in common }
+    #locale.fields = { field: label for field, label in locale.fields.items() if not field in common }
+    #for csl, zotero in fielddata.csl.fields.text.items():
+    #  fielddata.csl.fields.text[csl] = [ field for field in zotero if not field in common ]
 
-      csl_field_lower = csl_field.lower()
+    # map labels
+    for field, label in locale.fields.items():
+      if '.' in label or '#' in label:
+        label = re.sub(r'([a-z])([A-Z])', lambda x: x.group(1) + ' ' + x.group(2), field)
 
-      if csl_field_lower in data:
-        if not 'csl' in data[csl_field_lower]:
-          data[csl_field_lower]['csl'] = [ csl_field ]
-        elif not csl_field_lower in data[csl_field_lower]['csl']:
-          data[csl_field_lower]['csl'].append(csl_field)
-        else:
-          continue
-        data[csl_field_lower]['csl'] = sorted(data[csl_field_lower]['csl'])
-        print('  CSL variable', csl_field, 'assumed to be described by', data[csl_field_lower])
-        data[csl_field_lower]['type'] = csl_format
+      self.ef.zotero[label.lower()].zotero = basefield.get(field, field)
 
+    for field, label in locale.creatorTypes.items():
+      self.ef.zotero[label.lower()].zotero = basefield.get(field, field)
+      self.ef.zotero[label.lower()].type = 'creator'
+
+    # fix types
+    for var, meta in data.meta.fields.items():
+      if meta.type == 'text': continue
+
+      for field in self.ef.zotero.values():
+        if field.zotero == var:
+          field.type = meta.type
+
+    # scan itemTypes
+    for itemType in data.itemTypes:
+      for field in itemType.fields:
+        assert any(field for field in self.ef.zotero.values() if field.zotero == var)
+
+      for creator in itemType.creatorTypes:
+        assert any(field for field in self.ef.zotero.values() if field.zotero == creator.creatorType)
+        for field in self.ef.zotero.values():
+          if field.zotero == creator.creatorType:
+            assert field.type == 'creator'
+
+    def add_csl(csl, zoteros):
+      types = set()
+      for zotero in zoteros:
+        for field in self.ef.zotero.values():
+          if field.zotero != zotero: continue
+
+          if not 'csl' in field: field.csl = []
+          field.csl.append(csl)
+          field.csl = sorted(set(field.csl))
+          if 'type' in field: types.add(field.type)
+      assert len(types) < 2
+      return list(types)
+
+    # map csl
+    for csl, zotero in data.csl.fields.text.items():
+      self.ef.csl[csl.lower()].csl = csl
+      self.ef.csl[csl.lower()].zotero = [basefield.get(z, z) for z in zotero]
+
+      types = add_csl(csl, self.ef.csl[csl.lower()].zotero)
+      if len(types) == 1: self.ef.csl[csl.lower()].type = types[0]
+
+    for csl, zotero in data.csl.fields.date.items():
+      self.ef.csl[csl.lower()].csl = csl
+      self.ef.csl[csl.lower()].type = 'date'
+      self.ef.csl[csl.lower()].zotero = [basefield.get(zotero, zotero)]
+
+      types = add_csl(csl, self.ef.csl[csl.lower()].zotero)
+      if len(types) != 0:
+        assert self.ef.csl[csl.lower()].type == types[0], str((self.ef.csl[csl.lower()].type, types))
+
+    for zotero, csl in data.csl.names.items():
+      self.ef.csl[csl.lower()].csl = csl
+      self.ef.csl[csl.lower()].type = 'creator'
+      self.ef.csl[csl.lower()].zotero = [basefield.get(zotero, zotero)]
+
+      types = add_csl(csl, self.ef.csl[csl.lower()].zotero)
+      assert self.ef.csl[csl.lower()].type == types[0]
+
+  def save(self, path):
+    with open(os.path.join(root, 'setup/csl-vars.json')) as f:
+      for csl, _type in json.load(f).items():
+        if csl[0] == '.': continue
+
+        self.ef.csl[csl.lower()].csl = csl
+        if _type != 'text': self.ef.csl[csl.lower()].type = _type
+
+    for field in self.ef.zotero.values():
+      if 'csl' in field and len(field.csl) == 1:
+        field.csl = field.csl[0]
       else:
-        print('  adding missing CSL variable', csl_field)
-        data[csl_field.lower()] = { 'csl': [ csl_field ], 'type': csl_format, 'id': csl_field }
+        field.pop('csl', None)
+    for field in self.ef.csl.values():
+      if 'zotero' in field and len(field.zotero) == 1:
+        field.zotero = field.zotero[0]
+      else:
+        field.pop('zotero', None)
 
-    with open(output, 'w') as f:
-      json.dump(data, f, indent='  ')
+    simple = {}
+    # zotero takes precedence
+    for label, field in self.ef.zotero.items():
+      simple[label] = field
+      if not field.zotero in simple:
+        simple[field.zotero] = field
+    for label, field in self.ef.csl.items():
+      if not label in simple:
+        simple[label] = field
+      if not field.csl in simple:
+        simple[field.csl] = field
+
+    with open(path, 'w') as f:
+      json.dump(simple, f, indent='  ', default=ExtraFields.to_json)
 
 print('Generating extra-fields...')
 extraFields = ExtraFields()
-extraFields.load(data.zotero)
-extraFields.load(data.jurism)
+extraFields.load(data.zotero, {
+  'locales': {
+    'en-US': {
+      'fields': {
+        'programmingLanguage': 'Programming Language'
+      }
+    }
+  },
+  'meta': {
+    'fields': {
+      'accessDate': {
+        'type': 'date'
+      }
+    }
+  }
+})
+extraFields.load(data.jurism, {
+  'locales': {
+    'en-US': {
+      'fields': {
+        'programmingLanguage': 'Programming Language'
+      }
+    }
+  },
+  'meta': {
+    'fields': {
+      'accessDate': {
+        'type': 'date'
+      }
+    }
+  },
+  'csl': {
+    'fields': {
+      'text': {
+        'volume-title': [ 'volumeTitle' ]
+      }
+    }
+  }
+})
 extraFields.save(os.path.join(root, 'gen', 'extra-fields.json'))
 
 print('Generating item field metadata...')

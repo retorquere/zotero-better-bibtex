@@ -66,13 +66,22 @@ export let Exporter = new class { // tslint:disable-line:variable-name
       }
 
       itemfields.simplifyForExport(item)
-      Object.assign(item, Extra.get(item.extra))
+      Object.assign(item, Extra.get(item.extra, null, 'zotero'))
+
+      let field
       for (const [name, value] of Object.entries(item.extraFields.kv)) {
-        if (ExtraFields[name]?.zotero) {
-          for (const field of ExtraFields[name].zotero) {
-            item[field] = value
-          }
+        if (field = ExtraFields[name].zotero) {
+          item[field] = value
           delete item.extraFields.kv[name]
+        }
+      }
+
+      for (const [name, value] of Object.entries(item.extraFields.creator)) {
+        if (field = ExtraFields[name].zotero) {
+          for (const creator of (value as string[])) {
+            item.creators.push({...Extra.zoteroCreator(creator), creatorType: field})
+          }
+          delete item.extraFields.creator[name]
         }
       }
 
