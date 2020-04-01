@@ -1,6 +1,6 @@
 declare const Zotero: any
 
-import EventEmitter = require('eventemitter4')
+import { EventEmitter } from 'eventemitter3'
 
 import * as log from './debug'
 import { patch as $patch$ } from './monkey-patch'

@@ -192,6 +192,8 @@ export function doExport() {
   while (item = Exporter.nextItem()) {
     const ref = new Reference(item)
 
+    if (['bookSection', 'chapter'].includes(item.referenceType) && ref.hasCreator('bookAuthor')) ref.referencetype = 'inbook'
+
     ref.add({name: 'address', value: item.place})
     ref.add({name: 'chapter', value: item.section})
     ref.add({name: 'edition', value: edition(item.edition)})
