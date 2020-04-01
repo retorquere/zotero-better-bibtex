@@ -211,7 +211,7 @@ export function doExport() {
     ref.add({name: 'language', value: item.language})
     ref.add({name: 'assignee', value: item.assignee})
 
-    ref.add({ name: 'number', value: item.number || item.issue || item.seriesNumber })
+    if (!['book', 'inbook', 'incollection', 'proceedings', 'inproceedings'].includes(ref.referencetype) || !ref.has.volume) ref.add({ name: 'number', value: item.number || item.issue || item.seriesNumber })
     ref.add({ name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') })
 
     if (['bookSection', 'conferencePaper', 'chapter'].includes(item.referenceType)) {

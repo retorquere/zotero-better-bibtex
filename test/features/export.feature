@@ -135,6 +135,7 @@ Scenario Outline: Export <references> references for BibTeX to <file>
 
   Examples:
      | file                                                                               | references |
+     |  BibTeX Entries with Volume and Number Fields #1475                                | 1          |
      | Exporting Book Sections as Inbook #1474                                            | 1          |
      | Missing $ in TeX export of < to langle #1469                                       | 1          |
      | Better BibTeX does not export collections #901                                     | 36         |

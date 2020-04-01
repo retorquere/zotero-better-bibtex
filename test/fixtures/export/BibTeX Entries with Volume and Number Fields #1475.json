@@ -1,0 +1,173 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "DOIandURL": "both",
+      "automaticTags": true,
+      "asciiBibLaTeX": false,
+      "ascii": "",
+      "asciiBibTeX": false,
+      "autoExport": "immediate",
+      "quickCopyMode": "latex",
+      "citeCommand": "cite",
+      "quickCopyPandocBrackets": false,
+      "citekeyFormat": "[auth:lower][year]",
+      "citekeyFold": true,
+      "keyConflictPolicy": "keep",
+      "auxImport": false,
+      "keyScope": "library",
+      "exportBibTeXStrings": "off",
+      "importBibTeXStrings": true,
+      "bibtexParticleNoOp": false,
+      "skipFields": "abstract,file,keywords,note",
+      "bibtexURL": "url",
+      "warnBulkModify": 10,
+      "postscript": "if (Translator.BetterBibTeX && item.itemType === 'conferencePaper' && item.extra) {\n    const lines = item.extra.split('\\n')\n    for (let line of lines) {\n        let matches = /^([A-Za-z0-9]+): *(.+)$/.exec(line)\n        if (matches === null || matches[1] !== 'Sponsor') {\n            continue\n        }\n        reference.add({name: 'organization', value: matches[2]})\n    }\n}\n\n//if (Translator.BetterBibTeX && item.itemType === 'conferencePaper' && item.extra && item.publisher) {\n//  Zotero.debug(JSON.stringify(item))\n//\n//    var event_place = ''\n//    var publisher_place = ''\n//\n//    const lines = item.extra.split('\\n')\n//    for (let line of lines) {\n//        let matches = /^([A-Za-z0-9]+): *(.+)$/.exec(line)\n//        if (matches !== null && matches[1] === 'Event Place') {\n//            event_place = matches[2]\n//        } else if (matches !== null && matches[1] === 'Publisher Place') {\n//            publisher_place = matches[2]\n//        }\n//    }\n//\n//    if (event_place !== '' && publisher_place !== '') {\n//        reference.add({name: 'address', value: event_place})\n//        reference.add({name: 'publisher', value: item.publisher + ', ' + publisher_place})\n//    }\n//}",
+      "strings": "",
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "",
+      "autoExportIdleWait": 10,
+      "cacheFlushInterval": 5,
+      "csquotes": "",
+      "rawLaTag": "#LaTeX",
+      "rawImports": false,
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
+      "jabrefFormat": 0,
+      "qualityReport": false,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": true,
+      "exportTitleCase": true,
+      "exportBraceProtection": true,
+      "retainCache": false,
+      "importSentenceCase": "on+guess",
+      "importCaseProtection": "as-needed",
+      "autoExportDelay": 1,
+      "itemObserverDelay": 5,
+      "parseParticles": true,
+      "citeprocNoteCitekey": false,
+      "extraMergeTeX": true,
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "importJabRefStrings": true,
+      "importJabRefAbbreviations": true,
+      "postscriptOverride": "",
+      "scrubDatabase": false,
+      "removeStock": false,
+      "ignorePostscriptErrors": true,
+      "debugLogDir": "",
+      "testing": false,
+      "autoPin": false,
+      "kuroshiro": false,
+      "relativeFilePaths": false,
+      "git": "config",
+      "mapUnicode": "conservative",
+      "mapText": "",
+      "mapMath": "",
+      "newTranslatorsAskRestart": true,
+      "workers": 2,
+      "platform": "lin",
+      "client": "zotero"
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
+    }
+  },
+  "version": {
+    "zotero": "5.0.85",
+    "bbt": "5.2.20"
+  },
+  "collections": {},
+  "items": [
+    {
+      "key": "EKPU89NW",
+      "version": 0,
+      "itemType": "conferencePaper",
+      "title": "Fast sparse matrix-vector multiplication on GPUs: implications for graph mining",
+      "abstractNote": "Scaling up the sparse matrix-vector multiplication kernel on modern Graphics Processing Units (GPU) has been at the heart of numerous studies in both academia and industry. In this article we present a novel non-parametric, self-tunable, approach to data representation for computing this kernel, particularly targeting sparse matrices representing power-law graphs. Using real web graph data, we show how our representation scheme, coupled with a novel tiling algorithm, can yield significant benefits over the current state of the art GPU efforts on a number of core data mining algorithms such as PageRank, HITS and Random Walk with Restart.",
+      "date": "2011",
+      "language": "en-US",
+      "shortTitle": "Fast sparse matrix-vector multiplication on GPUs",
+      "libraryCatalog": "ACM Digital Library",
+      "url": "https://dl.acm.org/doi/10.14778/1938545.1938548",
+      "rights": "Copyright 2011 VLDB Endowment",
+      "extra": "Event Date: 2011-08-29/2011-09-03\nISSN: 2150-8097\nIssue: 4\nSponsor: Google",
+      "volume": "4",
+      "place": "United States of America",
+      "publisher": "VLDB Endowment",
+      "pages": "231–242",
+      "conferenceName": "37th International Conference on Very Large Data Bases",
+      "DOI": "10.14778/1938545.1938548",
+      "creators": [
+        {
+          "firstName": "Xintian",
+          "lastName": "Yang",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Srinivasan",
+          "lastName": "Parthasarathy",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "P.",
+          "lastName": "Sadayappan",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "H. V.",
+          "lastName": "Jagadish",
+          "creatorType": "editor"
+        },
+        {
+          "firstName": "José",
+          "lastName": "Blakeley",
+          "creatorType": "editor"
+        },
+        {
+          "firstName": "Joseph M.",
+          "lastName": "Hellerstein",
+          "creatorType": "editor"
+        },
+        {
+          "firstName": "Nick",
+          "lastName": "Koudas",
+          "creatorType": "editor"
+        },
+        {
+          "firstName": "Wolfgang",
+          "lastName": "Lehner",
+          "creatorType": "editor"
+        },
+        {
+          "firstName": "Sunita",
+          "lastName": "Sarawagi",
+          "creatorType": "editor"
+        },
+        {
+          "firstName": "Uwe",
+          "lastName": "Röhm",
+          "creatorType": "editor"
+        }
+      ],
+      "tags": [],
+      "collections": [
+        "ZKGGCFJB"
+      ],
+      "relations": [],
+      "dateAdded": "2020-03-29T09:28:46Z",
+      "dateModified": "2020-03-29T09:28:53Z",
+      "uri": "http://zotero.org/users/local/cuz22LJP/items/EKPU89NW",
+      "itemID": 111,
+      "attachments": [],
+      "notes": [],
+      "citekey": "yang2011a",
+      "citationKey": "yang2011a",
+      "libraryID": 1,
+      "publicationTitle": "Proceedings of the VLDB Endowment"
+    }
+  ]
+}
