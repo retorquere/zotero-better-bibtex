@@ -376,10 +376,17 @@ export class Reference {
     // remove ordinal from edition
     this.item.edition = (this.item.edition || '').replace(/^([0-9]+)(nd|th)$/, '$1')
 
-    const csl_type = this.item.extraFields.kv.type
-    delete this.item.extraFields.kv.type
+    // preserve for thesis type etc
+    let csl_type = this.item.extraFields.kv.type
+    if (this.typeMap.csl[csl_type]) {
+      delete this.item.extraFields.kv.type
+    } else {
+      csl_type = null
+    }
+
     this.item.referenceType = this.item.extraFields.tex.referencetype?.value || csl_type || this.item.itemType
 
+    // TODO: maybe just use item.extraFields.var || item.var instead of deleting them here
     let field
     for (const [name, value] of Object.entries(item.extraFields.kv)) {
       if (name.startsWith(prefix.csl)) continue
