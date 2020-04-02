@@ -1,0 +1,181 @@
+[
+  {
+    "op": "remove",
+    "path": "/config/options/keepUpdated"
+  },
+  {
+    "op": "add",
+    "path": "/config/options/exportPath",
+    "value": "/Users/emile/Desktop/Exported Items.json"
+  },
+  {
+    "op": "add",
+    "path": "/config/options/exportFilename",
+    "value": "Exported Items.json"
+  },
+  {
+    "op": "replace",
+    "path": "/config/options/exportFileData",
+    "value": true
+  },
+  {
+    "op": "remove",
+    "path": "/config/preferences/rawLaTag"
+  },
+  {
+    "op": "remove",
+    "path": "/config/preferences/strings"
+  },
+  {
+    "op": "remove",
+    "path": "/config/preferences/ascii"
+  },
+  {
+    "op": "remove",
+    "path": "/config/preferences/scrubDatabase"
+  },
+  {
+    "op": "remove",
+    "path": "/config/preferences/parseParticles"
+  },
+  {
+    "op": "remove",
+    "path": "/config/preferences/importBibTeXStrings"
+  },
+  {
+    "op": "remove",
+    "path": "/config/preferences/mapText"
+  },
+  {
+    "op": "remove",
+    "path": "/config/preferences/exportBraceProtection"
+  },
+  {
+    "op": "remove",
+    "path": "/config/preferences/mapMath"
+  },
+  {
+    "op": "remove",
+    "path": "/config/preferences/autoExportDelay"
+  },
+  {
+    "op": "remove",
+    "path": "/config/preferences/keyScope"
+  },
+  {
+    "op": "remove",
+    "path": "/config/preferences/mapUnicode"
+  },
+  {
+    "op": "remove",
+    "path": "/config/preferences/kuroshiro"
+  },
+  {
+    "op": "remove",
+    "path": "/config/preferences/git"
+  },
+  {
+    "op": "remove",
+    "path": "/config/preferences/citeprocNoteCitekey"
+  },
+  {
+    "op": "remove",
+    "path": "/config/preferences/auxImport"
+  },
+  {
+    "op": "remove",
+    "path": "/config/preferences/relativeFilePaths"
+  },
+  {
+    "op": "remove",
+    "path": "/config/preferences/autoPin"
+  },
+  {
+    "op": "replace",
+    "path": "/config/preferences/biblatexExtendedDateFormat",
+    "value": false
+  },
+  {
+    "op": "replace",
+    "path": "/config/preferences/autoExport",
+    "value": "idle"
+  },
+  {
+    "op": "replace",
+    "path": "/config/preferences/citekeyFormat",
+    "value": "[zotero]"
+  },
+  {
+    "op": "replace",
+    "path": "/config/preferences/autoAbbrevStyle",
+    "value": "http://www.zotero.org/styles/cell"
+  },
+  {
+    "op": "replace",
+    "path": "/config/preferences/jabrefFormat",
+    "value": 4
+  },
+  {
+    "op": "replace",
+    "path": "/config/release",
+    "value": "1.6.96"
+  },
+  {
+    "op": "remove",
+    "path": "/items/0/uri"
+  },
+  {
+    "op": "remove",
+    "path": "/items/0/version"
+  },
+  {
+    "op": "remove",
+    "path": "/items/0/citekey"
+  },
+  {
+    "op": "remove",
+    "path": "/items/0/libraryID"
+  },
+  {
+    "op": "remove",
+    "path": "/items/0/relations"
+  },
+  {
+    "op": "remove",
+    "path": "/items/0/attachments"
+  },
+  {
+    "op": "remove",
+    "path": "/items/0/key"
+  },
+  {
+    "op": "remove",
+    "path": "/items/0/citationKey"
+  },
+  {
+    "op": "remove",
+    "path": "/items/0/collections"
+  },
+  {
+    "op": "remove",
+    "path": "/items/0/dateModified"
+  },
+  {
+    "op": "remove",
+    "path": "/items/0/dateAdded"
+  },
+  {
+    "op": "remove",
+    "path": "/items/0/notes"
+  },
+  {
+    "op": "move",
+    "from": "/items/0/publisher",
+    "path": "/items/0/institution"
+  },
+  {
+    "op": "replace",
+    "path": "/items/0/itemID",
+    "value": 4
+  }
+]
