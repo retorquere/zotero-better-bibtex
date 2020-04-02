@@ -27,3 +27,4 @@ inflect
 pygtrie
 ortools
 jsonpatch
+jsonschema
