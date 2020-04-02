@@ -14,20 +14,27 @@ root = os.path.join(os.path.dirname(__file__), '..')
 print('Generating extra-fields...')
 
 def load(url, schema, lm=None):
-  if lm is None: lm = url
-  request = urllib.request.Request(lm)
-  request.get_method = lambda: 'HEAD'
-  with urllib.request.urlopen(request) as r:
-    last_modified = r.getheader('last-modified')
-    last_modified = time.strptime(last_modified, '%a, %d %b %Y %H:%M:%S %Z')
-    last_modified = time.strftime('%Y-%m-%dT%H-%M-%SZ', last_modified)
-    schema  = f'{last_modified}-{schema}'
-    try:
-      with open(os.path.join(root, 'schema', schema)) as f:
-        return json.load(f)
-    except FileNotFoundError:
-      print(schema, f'does not exist, get with "curl -Lo schema/{schema} {url}"')
-      sys.exit(1)
+  if type(lm) == bool:
+    # GH doesn't want our LM check, fine
+    assert not lm
+    with urllib.request.urlopen(url) as i:
+      with open(os.path.join(root, 'schema', schema), 'w') as o:
+        print(i.read().decode(), file=o)
+  else:
+    if lm is None: lm = url
+    request = urllib.request.Request(lm)
+    request.get_method = lambda: 'HEAD'
+    with urllib.request.urlopen(request) as r:
+      last_modified = r.getheader('last-modified')
+      last_modified = time.strptime(last_modified, '%a, %d %b %Y %H:%M:%S %Z')
+      last_modified = time.strftime('%Y-%m-%dT%H-%M-%SZ', last_modified)
+      schema  = f'{last_modified}-{schema}'
+  try:
+    with open(os.path.join(root, 'schema', schema)) as f:
+      return json.load(f)
+  except FileNotFoundError:
+    print(schema, f'does not exist, get with "curl -Lo schema/{schema} {url}"')
+    sys.exit(1)
 
 def fix_csl_vars(proposed, name, csl_vars):
   for var in list(proposed.keys()):
@@ -74,7 +81,8 @@ def fix_jurism_schema(schema):
 
 data = DefaultMunch.fromDict({
   'zotero': fix_zotero_schema(load('https://api.zotero.org/schema', 'zotero.json')),
-  'jurism': fix_jurism_schema(load('https://raw.githubusercontent.com/Juris-M/zotero-schema/master/schema-jurism.json', 'juris-m.json', 'https://api.github.com/repos/Juris-M/zotero-schema/contents/schema-jurism.json?ref=master')),
+  #'jurism': fix_jurism_schema(load('https://raw.githubusercontent.com/Juris-M/zotero-schema/master/schema-jurism.json', 'juris-m.json', 'https://api.github.com/repos/Juris-M/zotero-schema/contents/schema-jurism.json?ref=master')),
+  'jurism': fix_jurism_schema(load('https://raw.githubusercontent.com/Juris-M/zotero-schema/master/schema-jurism.json', 'juris-m.json', False)),
 }, None)
 
 class ExtraFields:
