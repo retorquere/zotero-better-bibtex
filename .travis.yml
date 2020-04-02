@@ -77,7 +77,8 @@ jobs:
 
   - stage: release
     if: env(TRAVIS_EVENT_TYPE) != cron AND env(TRAVIS_EVENT_TYPE) != pull_request
-    before_install: true
+    before_install:
+      - nvm install 13.8.0
     script:
       - ./util/build-assets fetch || travis_terminate 1
       - npm run release
