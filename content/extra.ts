@@ -86,7 +86,7 @@ export function get(extra: string, options?: GetOptions, normalize?: 'zotero' | 
     if (!tex && raw) return true
 
     name = name.trim()
-    const key = name.toUpperCase()
+    const key = name.toLowerCase()
 
     value = value.trim()
 
@@ -115,7 +115,7 @@ export function get(extra: string, options?: GetOptions, normalize?: 'zotero' | 
       return false
     }
 
-    if (options.kv && (ef = ExtraFields[key]) && !tex) { // otherwise, check for Zotero var-fields, which are uppercased in extra-fields.json
+    if (options.kv && (ef = ExtraFields[name.toUpperCase()]) && !tex) { // otherwise, check for Zotero var-fields, which are uppercased in extra-fields.json
       const k = normalize ? (ef[normalize] || ef[other]) : name
       if (ef.type === 'creator') {
         extraFields.creator[k] = extraFields.creator[k] || []

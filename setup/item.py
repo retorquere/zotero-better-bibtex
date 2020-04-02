@@ -205,17 +205,14 @@ class ExtraFields:
           field.zotero = 'zotero:' + '+'.join(field.zotero)
 
     simple = {}
-    for label, field in self.ef.csl.items():
-      if not label in simple:
-        simple[label] = field
-      if not field.csl in simple:
-        simple[field.csl] = field
-
-    for label, field in self.ef.zotero.items():
-      if not label in simple:
-        simple[label] = field
-      if not field.zotero in simple:
-        simple[field.zotero] = field
+    for section in ['csl', 'zotero']:
+      for lower in [False, True]:
+        for label, field in self.ef[section].items():
+          for name in [label, field[section]]:
+            if name.lower() == 'note' or name.lower() == 'extra': next
+            if lower: name = name.lower()
+            if not name in simple:
+              simple[name] = field
 
     # such a mess
     simple['type'] = { 'zotero': 'type', 'csl': 'type' }
