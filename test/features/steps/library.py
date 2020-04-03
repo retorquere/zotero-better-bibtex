@@ -63,9 +63,6 @@ def clean_item(item):
   if 'creators' in item:
     item['creators'] = strip_obj(item['creators'])
 
-  if 'extra' in item:
-    item['extra'] = '\n'.join(sorted(item['extra'].split('\n')))
-
   return strip_obj(item)
 
 def sort_collection(coll):
