@@ -57,7 +57,6 @@
       "removeStock": false,
       "ignorePostscriptErrors": true,
       "debugLogDir": "",
-      "testing": true,
       "autoPin": false,
       "kuroshiro": false,
       "relativeFilePaths": false,
@@ -65,10 +64,7 @@
       "mapUnicode": "conservative",
       "mapText": "",
       "mapMath": "",
-      "newTranslatorsAskRestart": true,
-      "workers": 1,
-      "platform": "mac",
-      "client": "zotero"
+      "workers": 1
     },
     "options": {
       "exportFileData": false,
@@ -80,12 +76,10 @@
   "items": [
     {
       "key": "5T5X7SZJ",
-      "version": 0,
       "itemType": "journalArticle",
       "extra": "Citation Key: BibTeXEscapeTest1",
       "title": "\\\\{}:",
       "creators": [],
-      "tags": [],
       "collections": [],
       "relations": [],
       "dateAdded": "2020-03-08T22:01:53Z",
@@ -93,10 +87,7 @@
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/5T5X7SZJ",
       "itemID": 322,
       "attachments": [],
-      "notes": [],
-      "citekey": "BibTeXEscapeTest1",
-      "citationKey": "BibTeXEscapeTest1",
-      "libraryID": 1
+      "citationKey": "BibTeXEscapeTest1"
     }
   ]
 }

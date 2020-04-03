@@ -55,7 +55,6 @@
       "removeStock": false,
       "ignorePostscriptErrors": true,
       "debugLogDir": "",
-      "testing": false,
       "autoPin": false,
       "kuroshiro": false,
       "relativeFilePaths": false,
@@ -63,10 +62,7 @@
       "mapUnicode": "conservative",
       "mapText": "",
       "mapMath": "",
-      "newTranslatorsAskRestart": true,
-      "workers": 4,
-      "platform": "win",
-      "client": "zotero"
+      "workers": 4
     },
     "options": {
       "exportFileData": false,
@@ -78,7 +74,6 @@
   "items": [
     {
       "key": "QNPM2BC4",
-      "version": 16464,
       "itemType": "conferencePaper",
       "pages": "123  ----      432",
       "date": "2025",
@@ -92,7 +87,6 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
       "collections": [
         "3QHRTNSD"
       ],
@@ -102,19 +96,14 @@
       "uri": "http://zotero.org/users/1134760/items/QNPM2BC4",
       "itemID": 1655,
       "attachments": [],
-      "notes": [],
-      "citekey": "author_-d_2025",
       "citationKey": "author_-d_2025",
-      "libraryID": 1,
       "publicationTitle": "Proceedings of the test"
     },
     {
       "key": "NFHAEZER",
-      "version": 6840,
       "itemType": "document",
       "title": "NEC \u00b5PC577H Tri state hex buffers",
       "creators": [],
-      "tags": [],
       "collections": [
         "3QHRTNSD",
         "AU7V2JA5"
@@ -130,9 +119,7 @@
       "notes": [
         "<p>In Yamaha tuner IC101 en IC102</p>"
       ],
-      "citekey": "noauthor_nec_nodate",
-      "citationKey": "noauthor_nec_nodate",
-      "libraryID": 1
+      "citationKey": "noauthor_nec_nodate"
     }
   ]
 }

@@ -14,8 +14,7 @@
       "citekeyFormat": "[auth][year]",
       "jabrefFormat": 0,
       "skipFields": ""
-    },
-    "release": "0.9.25"
+    }
   },
   "items": [
     {
@@ -24,7 +23,6 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Tom",
           "lastName": "Simonite"
         }
@@ -36,8 +34,7 @@
       "publicationTitle": "MIT Technology Review",
       "shortTitle": "The decline of Wikipedia",
       "title": "The decline of Wikipedia: even as more people than ever rely on it, fewer people create it",
-      "url": "http://www.technologyreview.com/featuredstory/520446/the-decline-of-wikipedia/",
-      "websiteTitle": "MIT Technology Review"
+      "url": "http://www.technologyreview.com/featuredstory/520446/the-decline-of-wikipedia/"
     }
   ]
 }

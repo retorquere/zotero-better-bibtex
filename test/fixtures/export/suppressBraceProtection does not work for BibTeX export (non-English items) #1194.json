@@ -51,26 +51,12 @@
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
       "strings": "",
       "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.1.84",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.66",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "en-US",
-        "oscpu": "Windows NT 10.0; WOW64",
-        "platform": "Win32",
-        "version": "5.0.66"
-      }
     }
   },
   "items": [
     {
       "ISBN": "5-9221-0122-6",
       "attachments": [],
-      "citekey": "Landafshits.V7",
       "creators": [
         {
           "creatorType": "author",
@@ -91,14 +77,12 @@
       "itemID": 660,
       "itemType": "book",
       "language": "russian",
-      "notes": [],
       "numPages": "259",
       "numberOfVolumes": "10",
       "place": "\u041c.",
       "publisher": "\u0424\u0438\u0437\u043c\u0430\u0442\u043b\u0438\u0442",
       "relations": [],
       "series": "\u0422\u0435\u043e\u0440\u0435\u0442\u0438\u0447\u0435\u0441\u043a\u0430\u044f \u0444\u0438\u0437\u0438\u043a\u0430",
-      "tags": [],
       "title": "\u0422\u0435\u043e\u0440\u0438\u044f \u0443\u043f\u0440\u0443\u0433\u043e\u0441\u0442\u0438",
       "uri": "http://zotero.org/users/2263031/items/2AZZBNTJ",
       "volume": "7"

@@ -30,7 +30,6 @@
       "citekeyFold": true,
       "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
       "citeprocNoteCitekey": false,
-      "client": "zotero",
       "csquotes": "",
       "debugLogDir": "",
       "exportBibTeXStrings": "off",
@@ -52,9 +51,7 @@
       "mapMath": "",
       "mapText": "",
       "mapUnicode": "minimal-packages",
-      "newTranslatorsAskRestart": true,
       "parseParticles": true,
-      "platform": "lin",
       "postscript": "",
       "qualityReport": false,
       "quickCopyMode": "latex",
@@ -79,7 +76,6 @@
       "accessDate": "2020-01-16T09:57:08Z",
       "attachments": [],
       "citationKey": "xuOverallNormalizationAstrophysical1994",
-      "citekey": "xuOverallNormalizationAstrophysical1994",
       "collections": [
         "FPMIY4KY"
       ],
@@ -119,16 +115,12 @@
       "journalAbbreviation": "Phys. Rev. Lett.",
       "key": "WCTEHMT5",
       "libraryCatalog": "APS",
-      "libraryID": 1,
-      "notes": [],
       "pages": "2027-2030",
       "publicationTitle": "Physical Review Letters",
       "relations": [],
-      "tags": [],
       "title": "Overall Normalization of the Astrophysical \u2192 Reactions",
       "uri": "http://zotero.org/users/local/P1JID8m3/items/WCTEHMT5",
       "url": "https://link.aps.org/doi/10.1103/PhysRevLett.73.2027",
-      "version": 0,
       "volume": "73"
     }
   ]

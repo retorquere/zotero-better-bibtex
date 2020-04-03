@@ -54,7 +54,6 @@
       "removeStock": false,
       "ignorePostscriptErrors": true,
       "debugLogDir": "",
-      "testing": false,
       "autoPin": false,
       "kuroshiro": false,
       "relativeFilePaths": false,
@@ -62,10 +61,7 @@
       "mapUnicode": "conservative",
       "mapText": "",
       "mapMath": "",
-      "newTranslatorsAskRestart": true,
-      "workers": 0,
-      "platform": "lin",
-      "client": "zotero"
+      "workers": 0
     },
     "options": {
       "exportFileData": false,
@@ -76,7 +72,6 @@
   "collections": {},
   "items": [
     {
-      "version": 694,
       "itemType": "patent",
       "assignee": "My Employer",
       "applicationNumber": "EP789789789",
@@ -88,7 +83,6 @@
           "creatorType": "inventor"
         }
       ],
-      "tags": [],
       "collections": [
         "ZY874Y9M"
       ],
@@ -97,16 +91,12 @@
       "dateModified": "2020-02-02T09:22:27Z",
       "uri": "http://zotero.org/users/5251027/items/WKEHLDX7",
       "attachments": [],
-      "notes": [],
       "itemID": 676,
       "key": "WKEHLDX7",
-      "citekey": "wernerThisPatentIt",
       "citationKey": "wernerThisPatentIt",
-      "libraryID": 1,
       "number": "EP123123123"
     },
     {
-      "version": 694,
       "itemType": "patent",
       "assignee": "My Employer",
       "applicationNumber": "EP456456456",
@@ -118,7 +108,6 @@
           "creatorType": "inventor"
         }
       ],
-      "tags": [],
       "collections": [
         "ZY874Y9M"
       ],
@@ -127,12 +116,9 @@
       "dateModified": "2020-02-02T09:22:31Z",
       "uri": "http://zotero.org/users/5251027/items/9QFC7UXV",
       "attachments": [],
-      "notes": [],
       "itemID": 677,
       "key": "9QFC7UXV",
-      "citekey": "wernerThisPatentApplication",
-      "citationKey": "wernerThisPatentApplication",
-      "libraryID": 1
+      "citationKey": "wernerThisPatentApplication"
     }
   ]
 }

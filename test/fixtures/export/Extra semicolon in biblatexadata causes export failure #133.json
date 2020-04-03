@@ -11,8 +11,7 @@
       "bibtexURL": "note",
       "citekeyFormat": "[auth][year]",
       "jabrefFormat": 0
-    },
-    "release": "0.7.5"
+    }
   },
   "items": [
     {
@@ -22,7 +21,6 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "",
           "lastName": "F"
         }
@@ -36,10 +34,18 @@
       "pages": "2982\u20133000",
       "publicationTitle": "SIAM JOURNAL ON NUMERICAL ANALYSIS",
       "tags": [
-        "error estimate",
-        "ill-posed problems",
-        "modified Tikhonov\u2029 regularization",
-        "numerical analytic continuation"
+        {
+          "tag": "error estimate"
+        },
+        {
+          "tag": "ill-posed problems"
+        },
+        {
+          "tag": "modified Tikhonov\u2029 regularization"
+        },
+        {
+          "tag": "numerical analytic continuation"
+        }
       ],
       "title": "A MODIFIED TIKHONOV REGULARIZATION FOR STABLE ANALYTIC CONTINUATION",
       "volume": "47"
@@ -51,7 +57,6 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "",
           "lastName": "F"
         }
@@ -65,10 +70,18 @@
       "pages": "2982\u20133000",
       "publicationTitle": "SIAM JOURNAL ON NUMERICAL ANALYSIS",
       "tags": [
-        "error estimate",
-        "ill-posed problems",
-        "modified Tikhonov\u2029 regularization",
-        "numerical analytic continuation"
+        {
+          "tag": "error estimate"
+        },
+        {
+          "tag": "ill-posed problems"
+        },
+        {
+          "tag": "modified Tikhonov\u2029 regularization"
+        },
+        {
+          "tag": "numerical analytic continuation"
+        }
       ],
       "title": "A MODIFIED TIKHONOV REGULARIZATION FOR STABLE ANALYTIC CONTINUATION",
       "volume": "47"
@@ -80,7 +93,6 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "",
           "lastName": "F"
         }
@@ -94,10 +106,18 @@
       "pages": "2982\u20133000",
       "publicationTitle": "SIAM JOURNAL ON NUMERICAL ANALYSIS",
       "tags": [
-        "error estimate",
-        "ill-posed problems",
-        "modified Tikhonov\u2029 regularization",
-        "numerical analytic continuation"
+        {
+          "tag": "error estimate"
+        },
+        {
+          "tag": "ill-posed problems"
+        },
+        {
+          "tag": "modified Tikhonov\u2029 regularization"
+        },
+        {
+          "tag": "numerical analytic continuation"
+        }
       ],
       "title": "A MODIFIED TIKHONOV REGULARIZATION FOR STABLE ANALYTIC CONTINUATION",
       "volume": "47"

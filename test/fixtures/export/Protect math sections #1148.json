@@ -49,34 +49,18 @@
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
       "mapUnicode": "math",
       "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.1.58",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.60",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "de",
-        "oscpu": "Linux x86_64",
-        "platform": "Linux x86_64",
-        "version": "5.0.60"
-      }
     }
   },
   "items": [
     {
       "accessDate": "2019-03-11T07:01:19Z",
       "attachments": [],
-      "citekey": "InputWikiGoLaTeX",
       "creators": [],
       "dateAdded": "2019-03-11T07:01:19Z",
       "dateModified": "2019-03-11T07:01:19Z",
       "itemID": 65,
       "itemType": "webpage",
-      "notes": [],
       "relations": [],
-      "tags": [],
       "title": "<\\input Wiki .:. goLaTeX - Mein LaTeX-Forum",
       "uri": "http://zotero.org/users/local/VonvPTGW/items/RZMP88CJ",
       "url": "https://golatex.de/wiki/%5Cinput"

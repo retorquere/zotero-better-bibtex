@@ -42,25 +42,11 @@
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
       "strings": "",
       "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.0.190",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.55",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "en-US",
-        "oscpu": "Windows NT 10.0; WOW64",
-        "platform": "Win32",
-        "version": "5.0.55"
-      }
     }
   },
   "items": [
     {
       "attachments": [],
-      "citekey": "blup_bla_9265",
       "creators": [
         {
           "creatorType": "programmer",
@@ -72,9 +58,7 @@
       "dateModified": "2018-08-23T13:04:47Z",
       "itemID": 68,
       "itemType": "computerProgram",
-      "notes": [],
       "publisher": "BliBlaBlup",
-      "tags": [],
       "title": "Bla",
       "uri": "http://zotero.org/users/4882007/items/ED3P3LJH"
     }

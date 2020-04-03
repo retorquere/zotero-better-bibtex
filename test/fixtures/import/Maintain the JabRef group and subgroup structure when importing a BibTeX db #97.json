@@ -2,7 +2,6 @@
   "collections": {
     "3DACAY8A": {
       "collections": [],
-      "id": 5,
       "items": [
         57,
         77,
@@ -38,12 +37,10 @@
         400
       ],
       "key": "3DACAY8A",
-      "name": "CuO",
-      "parent": false
+      "name": "CuO"
     },
     "LR7M5DVI": {
       "collections": [],
-      "id": 4,
       "items": [
         56,
         58,
@@ -926,8 +923,7 @@
         1012
       ],
       "key": "LR7M5DVI",
-      "name": "Cu2O",
-      "parent": false
+      "name": "Cu2O"
     }
   },
   "config": {
@@ -967,17 +963,6 @@
       "skipFields": "",
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
       "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.0.36.emile.java-cotton",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.24",
-        "locale": "en-US",
-        "oscpu": "Linux x86_64",
-        "platform": "Linux x86_64",
-        "version": "5.0.24"
-      }
     }
   },
   "items": [
@@ -2045,23 +2030,7 @@
       "itemID": 84,
       "itemType": "thesis",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 85,
-          "itemType": "note",
-          "key": "2N8ARNXZ",
-          "libraryID": null,
-          "note": "<p>This work of this thesis was published in Assimos_1974</p>",
-          "parentItem": "I24DWKED",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "I24DWKED",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>This work of this thesis was published in Assimos_1974</p>"
-          }
-        }
+        "<p>This work of this thesis was published in Assimos_1974</p>"
       ],
       "publisher": "Wayne State University, Dept. of Chemistry",
       "title": "An investigation of the photoelectric threshold, work function and bulk Fermi level of single-crystal cuprous oxide, and the photovoltaic properties of single-crystal and polycrystalline cuprous oxide-copper contacts"
@@ -2087,23 +2056,7 @@
       "itemID": 86,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 87,
-          "itemType": "note",
-          "key": "7XNR2JKB",
-          "libraryID": null,
-          "note": "<p>SBB</p>",
-          "parentItem": "WYFPR5WR",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "WYFPR5WR",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB</p>"
-          }
-        }
+        "<p>SBB</p>"
       ],
       "pages": "477-488",
       "publicationTitle": "Physica Status Solidi (a)",
@@ -3471,23 +3424,7 @@
       "itemID": 126,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 127,
-          "itemType": "note",
-          "key": "FE6H7BYW",
-          "libraryID": null,
-          "note": "<p>SBBrep</p>",
-          "parentItem": "CXZL3WX9",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "CXZL3WX9",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBBrep</p>"
-          }
-        }
+        "<p>SBBrep</p>"
       ],
       "pages": "209-212",
       "publicationTitle": "Solid State Communications",
@@ -3597,23 +3534,7 @@
       "itemID": 131,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 132,
-          "itemType": "note",
-          "key": "A7B4WJQ8",
-          "libraryID": null,
-          "note": "<p>SBB</p>",
-          "parentItem": "Q7F35AEH",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "Q7F35AEH",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB</p>"
-          }
-        }
+        "<p>SBB</p>"
       ],
       "pages": "509-520",
       "publicationTitle": "Physica Status Solidi (b)",
@@ -3764,23 +3685,7 @@
       "itemID": 136,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 137,
-          "itemType": "note",
-          "key": "SENCUVEE",
-          "libraryID": null,
-          "note": "<p>SBB</p>",
-          "parentItem": "YSXIXRHZ",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "YSXIXRHZ",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB</p>"
-          }
-        }
+        "<p>SBB</p>"
       ],
       "pages": "1473-1487",
       "publicationTitle": "Philosophical Magazine",
@@ -3839,23 +3744,7 @@
       "itemID": 139,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 140,
-          "itemType": "note",
-          "key": "3QKA7F3A",
-          "libraryID": null,
-          "note": "<p>This paper is based on T. Bretheau&apos;s and B. Sieber&apos;s thesis</p>",
-          "parentItem": "L2IYTGDG",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "L2IYTGDG",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>This paper is based on T. Bretheau&apos;s and B. Sieber&apos;s thesis</p>"
-          }
-        }
+        "<p>This paper is based on T. Bretheau&apos;s and B. Sieber&apos;s thesis</p>"
       ],
       "pages": "1617-1629",
       "publicationTitle": "Acta Metallurgica",
@@ -6759,23 +6648,7 @@
       "itemID": 217,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 218,
-          "itemType": "note",
-          "key": "ZKB6I8UQ",
-          "libraryID": null,
-          "note": "<p>SBB</p>",
-          "parentItem": "4XBTVQDF",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "4XBTVQDF",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB</p>"
-          }
-        }
+        "<p>SBB</p>"
       ],
       "pages": "691-693",
       "publicationTitle": "Journal of Materials Science Letters",
@@ -6855,23 +6728,7 @@
       "itemID": 221,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 222,
-          "itemType": "note",
-          "key": "HGXC5YNY",
-          "libraryID": null,
-          "note": "<p>SBB</p>",
-          "parentItem": "XPWW93S2",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "XPWW93S2",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB</p>"
-          }
-        }
+        "<p>SBB</p>"
       ],
       "pages": "2025-2031",
       "publicationTitle": "Soviet Physics - Solid State",
@@ -7286,23 +7143,7 @@
       "itemID": 236,
       "itemType": "conferencePaper",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 237,
-          "itemType": "note",
-          "key": "GMVSYUZJ",
-          "libraryID": null,
-          "note": "<p>SBB. Sent by Elliott!</p>",
-          "parentItem": "NQ97PGGV",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "NQ97PGGV",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB. Sent by Elliott!</p>"
-          }
-        }
+        "<p>SBB. Sent by Elliott!</p>"
       ],
       "pages": "408-410",
       "publicationTitle": "Proceedings of the International Conference on Semiconductor Physics (5th edition, Prague, 1960)",
@@ -8186,23 +8027,7 @@
       "itemID": 259,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 260,
-          "itemType": "note",
-          "key": "7UBCLPHM",
-          "libraryID": null,
-          "note": "<p>SBB</p>",
-          "parentItem": "ZLGGZ3VX",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "ZLGGZ3VX",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB</p>"
-          }
-        }
+        "<p>SBB</p>"
       ],
       "pages": "1703-1713",
       "publicationTitle": "Canadian Journal of Physics",
@@ -9618,23 +9443,7 @@
       "itemID": 298,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 299,
-          "itemType": "note",
-          "key": "WVLVQZ46",
-          "libraryID": null,
-          "note": "<p>SBB</p>",
-          "parentItem": "KRF74EJK",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "KRF74EJK",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB</p>"
-          }
-        }
+        "<p>SBB</p>"
       ],
       "pages": "K157-K161",
       "publicationTitle": "Physica Status Solidi (a)",
@@ -9662,23 +9471,7 @@
       "itemID": 300,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 301,
-          "itemType": "note",
-          "key": "67C6TMYH",
-          "libraryID": null,
-          "note": "<p>SBB</p>",
-          "parentItem": "YACPAWRX",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "YACPAWRX",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB</p>"
-          }
-        }
+        "<p>SBB</p>"
       ],
       "pages": "483-487",
       "publicationTitle": "Physica Status Solidi (b)",
@@ -11108,23 +10901,7 @@
       "itemID": 343,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 344,
-          "itemType": "note",
-          "key": "BU3QSX8D",
-          "libraryID": null,
-          "note": "<p>I have the pdf thanks to Haugsrud himself</p>",
-          "parentItem": "A5MQ3NJ4",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "A5MQ3NJ4",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>I have the pdf thanks to Haugsrud himself</p>"
-          }
-        }
+        "<p>I have the pdf thanks to Haugsrud himself</p>"
       ],
       "pages": "65-72",
       "publicationTitle": "Materials Science Forum",
@@ -11407,23 +11184,7 @@
       "itemID": 353,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 354,
-          "itemType": "note",
-          "key": "7MJTBQRN",
-          "libraryID": null,
-          "note": "<p>SBB</p>",
-          "parentItem": "PCCS95PH",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "PCCS95PH",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB</p>"
-          }
-        }
+        "<p>SBB</p>"
       ],
       "pages": "683-690",
       "publicationTitle": "Physica Status Solidi (a)",
@@ -14976,23 +14737,7 @@
       "itemID": 439,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 440,
-          "itemType": "note",
-          "key": "YV6AGQJL",
-          "libraryID": null,
-          "note": "<p>Correggere il DOI! Il 18/02/2010 era sbagliato. 10.1007/BF00818188</p>",
-          "parentItem": "MLFWTVI4",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "MLFWTVI4",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>Correggere il DOI! Il 18/02/2010 era sbagliato. 10.1007/BF00818188</p>"
-          }
-        }
+        "<p>Correggere il DOI! Il 18/02/2010 era sbagliato. 10.1007/BF00818188</p>"
       ],
       "pages": "79-83",
       "publicationTitle": "Soviet Physics Journal",
@@ -16449,23 +16194,7 @@
       "itemID": 483,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 484,
-          "itemType": "note",
-          "key": "4XPY4G5X",
-          "libraryID": null,
-          "note": "<p>SBB, volume 11 o B11?</p>",
-          "parentItem": "7E6DRG6X",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "7E6DRG6X",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB, volume 11 o B11?</p>"
-          }
-        }
+        "<p>SBB, volume 11 o B11?</p>"
       ],
       "pages": "133-140",
       "publicationTitle": "Czechoslovak Journal of Physics",
@@ -16506,23 +16235,7 @@
       "itemID": 486,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 487,
-          "itemType": "note",
-          "key": "2NBG9MKH",
-          "libraryID": null,
-          "note": "<p>volume 15 o B15?</p>",
-          "parentItem": "IIFJ9DI3",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "IIFJ9DI3",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>volume 15 o B15?</p>"
-          }
-        }
+        "<p>volume 15 o B15?</p>"
       ],
       "pages": "709-717",
       "publicationTitle": "Czechoslovak Journal of Physics",
@@ -16610,23 +16323,7 @@
       "itemID": 491,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 492,
-          "itemType": "note",
-          "key": "NXUQ3VET",
-          "libraryID": null,
-          "note": "<p>SBB, DOI errato: 10.1139/p70-328</p>",
-          "parentItem": "QNDTTKMF",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "QNDTTKMF",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB, DOI errato: 10.1139/p70-328</p>"
-          }
-        }
+        "<p>SBB, DOI errato: 10.1139/p70-328</p>"
       ],
       "pages": "2643-2656",
       "publicationTitle": "Canadian Journal of Physics",
@@ -16664,23 +16361,7 @@
       "itemID": 493,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 494,
-          "itemType": "note",
-          "key": "ELK7CCAM",
-          "libraryID": null,
-          "note": "<p>SBB, doi errato: 10.1139/p70-329</p>",
-          "parentItem": "F8I498CV",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "F8I498CV",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB, doi errato: 10.1139/p70-329</p>"
-          }
-        }
+        "<p>SBB, doi errato: 10.1139/p70-329</p>"
       ],
       "pages": "2657-2660",
       "publicationTitle": "Canadian Journal of Physics",
@@ -17349,23 +17030,7 @@
       "itemID": 509,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 510,
-          "itemType": "note",
-          "key": "ZGTNLC56",
-          "libraryID": null,
-          "note": "<p>Doi errato! 10.1007/BF00820858</p>",
-          "parentItem": "3ZZNJNP4",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "3ZZNJNP4",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>Doi errato! 10.1007/BF00820858</p>"
-          }
-        }
+        "<p>Doi errato! 10.1007/BF00820858</p>"
       ],
       "pages": "269-270",
       "publicationTitle": "Russian Physics Journal",
@@ -19357,23 +19022,7 @@
       "itemID": 560,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 561,
-          "itemType": "note",
-          "key": "VT43X83A",
-          "libraryID": null,
-          "note": "<p>Natural crystal, T=2 K. Excitons, yellow series with s, p and d states by absorption of one and two photons. Rydberg of all three series.</p>",
-          "parentItem": "NXFEPKVI",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "NXFEPKVI",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>Natural crystal, T=2 K. Excitons, yellow series with s, p and d states by absorption of one and two photons. Rydberg of all three series.</p>"
-          }
-        }
+        "<p>Natural crystal, T=2 K. Excitons, yellow series with s, p and d states by absorption of one and two photons. Rydberg of all three series.</p>"
       ],
       "pages": "125-129",
       "publicationTitle": "Solid State Communications",
@@ -20667,23 +20316,7 @@
       "itemID": 597,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 598,
-          "itemType": "note",
-          "key": "BZ4S7WKK",
-          "libraryID": null,
-          "note": "<p>DOI errato come tutti quelli del canadian</p>",
-          "parentItem": "8RACQL6X",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "8RACQL6X",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>DOI errato come tutti quelli del canadian</p>"
-          }
-        }
+        "<p>DOI errato come tutti quelli del canadian</p>"
       ],
       "pages": "165-167",
       "publicationTitle": "Canadian Journal of Physics",
@@ -21685,23 +21318,7 @@
       "itemID": 624,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 625,
-          "itemType": "note",
-          "key": "RIS9RQE8",
-          "libraryID": null,
-          "note": "<p>doi: 10.1021/j100887a006</p>",
-          "parentItem": "5ML7W8LL",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "5ML7W8LL",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>doi: 10.1021/j100887a006</p>"
-          }
-        }
+        "<p>doi: 10.1021/j100887a006</p>"
       ],
       "pages": "745-751",
       "publicationTitle": "The Journal of Physical Chemistry",
@@ -22031,23 +21648,7 @@
       "itemID": 636,
       "itemType": "thesis",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 637,
-          "itemType": "note",
-          "key": "VRV4VI8J",
-          "libraryID": null,
-          "note": "<p>Work published mainly in Noguet_1970</p>",
-          "parentItem": "IPRGZY8M",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "IPRGZY8M",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>Work published mainly in Noguet_1970</p>"
-          }
-        }
+        "<p>Work published mainly in Noguet_1970</p>"
       ],
       "publisher": "University of Strasbourg"
     },
@@ -22098,23 +21699,7 @@
       "itemID": 639,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 640,
-          "itemType": "note",
-          "key": "RK3SZY4R",
-          "libraryID": null,
-          "note": "<p>SBB</p>",
-          "parentItem": "L99XQCY4",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "L99XQCY4",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB</p>"
-          }
-        }
+        "<p>SBB</p>"
       ],
       "pages": "565-574",
       "publicationTitle": "Physica Status Solidi (a)",
@@ -22368,23 +21953,7 @@
       "itemID": 647,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 648,
-          "itemType": "note",
-          "key": "842ZI73Z",
-          "libraryID": null,
-          "note": "<p>A summary of O&apos;Hara thesis with some more details.</p><p>Diffusion coefficient of excitons (maybe is wrong) see paper.</p>",
-          "parentItem": "H8GFXLD5",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "H8GFXLD5",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>A summary of O&apos;Hara thesis with some more details.</p><p>Diffusion coefficient of excitons (maybe is wrong) see paper.</p>"
-          }
-        }
+        "<p>A summary of O&apos;Hara thesis with some more details.</p><p>Diffusion coefficient of excitons (maybe is wrong) see paper.</p>"
       ],
       "pages": "10872-10885",
       "publicationTitle": "Physical Review B",
@@ -22418,23 +21987,7 @@
       "itemID": 649,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 650,
-          "itemType": "note",
-          "key": "99GDILQ6",
-          "libraryID": null,
-          "note": "<p>First retractation of exciton Bose-Einstein condensation (Lin_1993)</p>",
-          "parentItem": "UV6WJRUY",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "UV6WJRUY",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>First retractation of exciton Bose-Einstein condensation (Lin_1993)</p>"
-          }
-        }
+        "<p>First retractation of exciton Bose-Einstein condensation (Lin_1993)</p>"
       ],
       "pages": "10565-10568",
       "publicationTitle": "Physical Review B",
@@ -22640,23 +22193,7 @@
       "itemID": 658,
       "itemType": "report",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 659,
-          "itemType": "note",
-          "key": "MNXP5WX4",
-          "libraryID": null,
-          "note": "<p>http://handle.dtic.mil/100.2/AD663435</p>",
-          "parentItem": "JDGYUEDV",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "JDGYUEDV",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>http://handle.dtic.mil/100.2/AD663435</p>"
-          }
-        }
+        "<p>http://handle.dtic.mil/100.2/AD663435</p>"
       ],
       "publisher": "Arizona State University Tempe Dept. of Chemistry",
       "title": "Semi conducting properties of cuprous oxide and related research",
@@ -24750,23 +24287,7 @@
       "itemID": 721,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 722,
-          "itemType": "note",
-          "key": "XI933VQ8",
-          "libraryID": null,
-          "note": "<p>SBB</p>",
-          "parentItem": "DM7CQ6FQ",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "DM7CQ6FQ",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB</p>"
-          }
-        }
+        "<p>SBB</p>"
       ],
       "pages": "455-463",
       "publicationTitle": "Physica Status Solidi (a)",
@@ -25351,23 +24872,7 @@
       "itemID": 740,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 741,
-          "itemType": "note",
-          "key": "PUA9S8F7",
-          "libraryID": null,
-          "note": "<p>SBB</p>",
-          "parentItem": "3GBCF34L",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "3GBCF34L",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB</p>"
-          }
-        }
+        "<p>SBB</p>"
       ],
       "pages": "175-185",
       "publicationTitle": "Physica Status Solidi (b)",
@@ -27095,23 +26600,7 @@
       "itemID": 793,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 794,
-          "itemType": "note",
-          "key": "E42NKDHI",
-          "libraryID": null,
-          "note": "<p>SBB</p>",
-          "parentItem": "V6TM2NT8",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "V6TM2NT8",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB</p>"
-          }
-        }
+        "<p>SBB</p>"
       ],
       "pages": "K109-K111",
       "publicationTitle": "physica status solidi (b)",
@@ -28120,23 +27609,7 @@
       "itemID": 823,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 824,
-          "itemType": "note",
-          "key": "PJHWHT5B",
-          "libraryID": null,
-          "note": "<p>SBB</p>",
-          "parentItem": "AA2FUWBR",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "AA2FUWBR",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB</p>"
-          }
-        }
+        "<p>SBB</p>"
       ],
       "pages": "623-628",
       "publicationTitle": "Physica Status Solidi (b)",
@@ -28959,23 +28432,7 @@
       "itemID": 843,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 844,
-          "itemType": "note",
-          "key": "TLHDMVHC",
-          "libraryID": null,
-          "note": "<p>SBB</p>",
-          "parentItem": "YM7JFQEP",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "YM7JFQEP",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB</p>"
-          }
-        }
+        "<p>SBB</p>"
       ],
       "pages": "517-520",
       "publicationTitle": "Physica Status Solidi (a)",
@@ -29007,23 +28464,7 @@
       "itemID": 845,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 846,
-          "itemType": "note",
-          "key": "QPQ8BHJ6",
-          "libraryID": null,
-          "note": "<p>SBB</p>",
-          "parentItem": "Z5YCRBRG",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "Z5YCRBRG",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB</p>"
-          }
-        }
+        "<p>SBB</p>"
       ],
       "pages": "85-94",
       "publicationTitle": "Annales de Physique",
@@ -29058,23 +28499,7 @@
       "itemID": 847,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 848,
-          "itemType": "note",
-          "key": "GQ89CS7U",
-          "libraryID": null,
-          "note": "<p>SBB</p>",
-          "parentItem": "7GF36A7T",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "7GF36A7T",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB</p>"
-          }
-        }
+        "<p>SBB</p>"
       ],
       "pages": "155-166",
       "publicationTitle": "Physica Status Solidi (a)",
@@ -29613,23 +29038,7 @@
       "itemID": 865,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 866,
-          "itemType": "note",
-          "key": "QCI45PDY",
-          "libraryID": null,
-          "note": "<p>SBB</p>",
-          "parentItem": "N29XB5WF",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "N29XB5WF",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB</p>"
-          }
-        }
+        "<p>SBB</p>"
       ],
       "pages": "1135-1137",
       "publicationTitle": "Soviet Physics - Solid State",
@@ -29951,23 +29360,7 @@
       "itemID": 877,
       "itemType": "report",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 878,
-          "itemType": "note",
-          "key": "UTBNBHRS",
-          "libraryID": null,
-          "note": "<p>SBB</p>",
-          "parentItem": "ANWZ38K8",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "ANWZ38K8",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB</p>"
-          }
-        }
+        "<p>SBB</p>"
       ],
       "number": "NSF-AER-75-23453-4",
       "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202",
@@ -29988,23 +29381,7 @@
       "itemID": 879,
       "itemType": "report",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 880,
-          "itemType": "note",
-          "key": "XAIYWUFD",
-          "libraryID": null,
-          "note": "<p>SBB</p>",
-          "parentItem": "HHJR7WNF",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "HHJR7WNF",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB</p>"
-          }
-        }
+        "<p>SBB</p>"
       ],
       "number": "NSF-AER-75-23453-5",
       "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202",
@@ -30083,23 +29460,7 @@
       "itemID": 882,
       "itemType": "report",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 883,
-          "itemType": "note",
-          "key": "HBMW74YS",
-          "libraryID": null,
-          "note": "<p>SBB</p>",
-          "parentItem": "LV2YXKML",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "LV2YXKML",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB</p>"
-          }
-        }
+        "<p>SBB</p>"
       ],
       "number": "DOE/ET/23010--T1",
       "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202",
@@ -30125,23 +29486,7 @@
       "itemID": 884,
       "itemType": "report",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 885,
-          "itemType": "note",
-          "key": "NUM3T9FI",
-          "libraryID": null,
-          "note": "<p>SBB</p>",
-          "parentItem": "3ACCT6MS",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "3ACCT6MS",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB</p>"
-          }
-        }
+        "<p>SBB</p>"
       ],
       "number": "DOE/ET/23010--9",
       "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202",
@@ -30162,23 +29507,7 @@
       "itemID": 886,
       "itemType": "report",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 887,
-          "itemType": "note",
-          "key": "IFGE6B88",
-          "libraryID": null,
-          "note": "<p>SBB</p>",
-          "parentItem": "K3RPSZN5",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "K3RPSZN5",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB</p>"
-          }
-        }
+        "<p>SBB</p>"
       ],
       "number": "DOE/ET/23010--12",
       "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202",
@@ -30199,23 +29528,7 @@
       "itemID": 888,
       "itemType": "report",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 889,
-          "itemType": "note",
-          "key": "9Y6TFTMX",
-          "libraryID": null,
-          "note": "<p>SBB</p>",
-          "parentItem": "LXSTYTUP",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "LXSTYTUP",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB</p>"
-          }
-        }
+        "<p>SBB</p>"
       ],
       "number": "DOE/ET/23010--17",
       "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202",
@@ -30265,23 +29578,7 @@
       "itemID": 891,
       "itemType": "report",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 892,
-          "itemType": "note",
-          "key": "8K3QVQNB",
-          "libraryID": null,
-          "note": "<p>SBB</p>",
-          "parentItem": "XPM5939V",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "XPM5939V",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB</p>"
-          }
-        }
+        "<p>SBB</p>"
       ],
       "number": "DOE/ET/23010--T10",
       "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202",
@@ -30331,23 +29628,7 @@
       "itemID": 894,
       "itemType": "report",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 895,
-          "itemType": "note",
-          "key": "R75EQZLP",
-          "libraryID": null,
-          "note": "<p>SBB</p>",
-          "parentItem": "2JFMUCXJ",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "2JFMUCXJ",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB</p>"
-          }
-        }
+        "<p>SBB</p>"
       ],
       "number": "DOE/ER/10825--1",
       "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202",
@@ -34621,23 +33902,7 @@
       "itemID": 1007,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 1008,
-          "itemType": "note",
-          "key": "TBXY9ARV",
-          "libraryID": null,
-          "note": "<p>SBB</p>",
-          "parentItem": "QILEKVTX",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "QILEKVTX",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB</p>"
-          }
-        }
+        "<p>SBB</p>"
       ],
       "pages": "219-227",
       "publicationTitle": "Physica Status Solidi (a)",
@@ -34675,23 +33940,7 @@
       "itemID": 1009,
       "itemType": "journalArticle",
       "notes": [
-        {
-          "dateAdded": "2017-11-13 09:26:05",
-          "dateModified": "2017-11-13 09:26:05",
-          "itemID": 1010,
-          "itemType": "note",
-          "key": "2VFIVJVY",
-          "libraryID": null,
-          "note": "<p>SBB</p>",
-          "parentItem": "WQHLFGXJ",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "WQHLFGXJ",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>SBB</p>"
-          }
-        }
+        "<p>SBB</p>"
       ],
       "pages": "449-460",
       "publicationTitle": "Physica Status Solidi (a)",

@@ -21,7 +21,6 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Fei",
           "lastName": "Hu",
           "multi": {
@@ -32,7 +31,6 @@
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Sheng",
           "lastName": "Meng",
           "multi": {
@@ -43,7 +41,6 @@
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "De-Qi",
           "lastName": "Zhang",
           "multi": {
@@ -66,10 +63,18 @@
       ],
       "publicationTitle": "arXiv:1407.5694 [math]",
       "tags": [
-        "32Q45 Hyperbolic and Kobayashi hyperbolic manifolds, 14E30 Minimal model program (Mori theory, extremal rays)",
-        "Mathematics - Algebraic Geometry",
-        "Mathematics - Complex Variables",
-        "Mathematics - Differential Geometry"
+        {
+          "tag": "32Q45 Hyperbolic and Kobayashi hyperbolic manifolds, 14E30 Minimal model program (Mori theory, extremal rays)"
+        },
+        {
+          "tag": "Mathematics - Algebraic Geometry"
+        },
+        {
+          "tag": "Mathematics - Complex Variables"
+        },
+        {
+          "tag": "Mathematics - Differential Geometry"
+        }
       ],
       "title": "Ampleness of canonical divisors of hyperbolic normal projective varieties",
       "url": "http://arxiv.org/abs/1407.5694"

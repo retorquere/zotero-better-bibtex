@@ -51,25 +51,11 @@
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
       "strings": "",
       "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.1.81",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.66",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "en-US",
-        "oscpu": "Windows NT 10.0; WOW64",
-        "platform": "Win32",
-        "version": "5.0.66"
-      }
     }
   },
   "items": [
     {
       "attachments": [],
-      "citekey": "Smith2019",
       "creators": [
         {
           "creatorType": "author",
@@ -84,18 +70,15 @@
       "issue": "1",
       "itemID": 1238,
       "itemType": "journalArticle",
-      "notes": [],
       "pages": "27-49",
       "publicationTitle": "Journal of Testing",
       "relations": [],
-      "tags": [],
       "title": "This Article is Title Case in Zotero",
       "uri": "http://zotero.org/users/4988909/items/WZ62BLYI",
       "volume": "3"
     },
     {
       "attachments": [],
-      "citekey": "Doe2018",
       "creators": [
         {
           "creatorType": "author",
@@ -110,18 +93,15 @@
       "issue": "4",
       "itemID": 1239,
       "itemType": "journalArticle",
-      "notes": [],
       "pages": "1-31",
       "publicationTitle": "Journal of Testing",
       "relations": [],
-      "tags": [],
       "title": "This article is sentence case in Zotero",
       "uri": "http://zotero.org/users/4988909/items/X243432M",
       "volume": "2"
     },
     {
       "attachments": [],
-      "citekey": "Jackson2019",
       "creators": [
         {
           "creatorType": "author",
@@ -136,11 +116,9 @@
       "issue": "4",
       "itemID": 1241,
       "itemType": "journalArticle",
-      "notes": [],
       "pages": "399-412",
       "publicationTitle": "Internet Quarterly",
       "relations": [],
-      "tags": [],
       "title": "I like ISDN heaps better than dialup",
       "uri": "http://zotero.org/users/4988909/items/UBW6GK6U",
       "volume": "12"

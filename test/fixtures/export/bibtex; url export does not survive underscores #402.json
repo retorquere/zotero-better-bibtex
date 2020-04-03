@@ -18,8 +18,7 @@
       "jabrefFormat": 0,
       "postscript": "",
       "skipFields": "abstract"
-    },
-    "release": "1.6.5"
+    }
   },
   "items": [
     {
@@ -52,10 +51,11 @@
       "itemID": 10653,
       "itemType": "conferencePaper",
       "place": "Krakow",
-      "proceedingsTitle": "7th Forum Acusticum",
       "publicationTitle": "7th Forum Acusticum",
       "tags": [
-        "NonPerRev"
+        {
+          "tag": "NonPerRev"
+        }
       ],
       "title": "taX - a Flexible Tool for Low-Order Duct Acoustic Simulation in Time and Frequency Domain",
       "url": "http://www.fa2014.agh.edu.pl/fa2014_cd/"

@@ -2,7 +2,6 @@
   "collections": {
     "2GBG5BY9": {
       "collections": [],
-      "id": 9,
       "items": [],
       "key": "2GBG5BY9",
       "name": "sub-sub-group-3",
@@ -10,7 +9,6 @@
     },
     "ETJIXHUS": {
       "collections": [],
-      "id": 4,
       "items": [
         100
       ],
@@ -20,7 +18,6 @@
     },
     "EV6AJY9X": {
       "collections": [],
-      "id": 8,
       "items": [
         103,
         104
@@ -34,7 +31,6 @@
         "EV6AJY9X",
         "M5CJEVEB"
       ],
-      "id": 6,
       "items": [
         105
       ],
@@ -44,7 +40,6 @@
     },
     "LWNF43WS": {
       "collections": [],
-      "id": 3,
       "items": [
         99
       ],
@@ -56,7 +51,6 @@
       "collections": [
         "2GBG5BY9"
       ],
-      "id": 7,
       "items": [
         102,
         104
@@ -69,7 +63,6 @@
       "collections": [
         "JEEWQLAZ"
       ],
-      "id": 5,
       "items": [
         102,
         103,
@@ -77,15 +70,13 @@
         105
       ],
       "key": "QSXGGDUL",
-      "name": "Jabref groups import does not work #717.3.8",
-      "parent": false
+      "name": "Jabref groups import does not work #717.3.8"
     },
     "RKCSCBVD": {
       "collections": [
         "ETJIXHUS",
         "LWNF43WS"
       ],
-      "id": 2,
       "items": [],
       "key": "RKCSCBVD",
       "name": "my-main-group-2",
@@ -95,15 +86,13 @@
       "collections": [
         "RKCSCBVD"
       ],
-      "id": 1,
       "items": [
         99,
         100,
         101
       ],
       "key": "TMCFLZ27",
-      "name": "Jabref groups import does not work #717.2.10",
-      "parent": false
+      "name": "Jabref groups import does not work #717.2.10"
     }
   },
   "config": {
@@ -136,7 +125,6 @@
       "citekeyFold": true,
       "citekeyFormat": "[auth][year]",
       "citeprocNoteCitekey": false,
-      "client": "zotero",
       "csquotes": "",
       "debugLogDir": "",
       "exportBibTeXStrings": "off",
@@ -158,9 +146,7 @@
       "mapMath": "",
       "mapText": "",
       "mapUnicode": "conservative",
-      "newTranslatorsAskRestart": true,
       "parseParticles": true,
-      "platform": "mac",
       "postscript": "",
       "qualityReport": false,
       "quickCopyMode": "latex",
@@ -183,7 +169,6 @@
     {
       "attachments": [],
       "citationKey": "Doe-2017",
-      "citekey": "Doe-2017",
       "collections": [
         "TMCFLZ27",
         "LWNF43WS"
@@ -202,18 +187,13 @@
       "itemID": 99,
       "itemType": "journalArticle",
       "key": "64Q4SAKS",
-      "libraryID": 1,
-      "notes": [],
       "relations": [],
-      "tags": [],
       "title": "The paper in my-subgroup-2",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/64Q4SAKS",
-      "version": 0
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/64Q4SAKS"
     },
     {
       "attachments": [],
       "citationKey": "Other-",
-      "citekey": "Other-",
       "collections": [
         "TMCFLZ27",
         "ETJIXHUS"
@@ -231,18 +211,13 @@
       "itemID": 100,
       "itemType": "journalArticle",
       "key": "T9L487T5",
-      "libraryID": 1,
-      "notes": [],
       "relations": [],
-      "tags": [],
       "title": "The article in my-other-subgroup-2",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/T9L487T5",
-      "version": 0
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/T9L487T5"
     },
     {
       "attachments": [],
       "citationKey": "Unkonw-",
-      "citekey": "Unkonw-",
       "collections": [
         "TMCFLZ27"
       ],
@@ -259,18 +234,13 @@
       "itemID": 101,
       "itemType": "journalArticle",
       "key": "B6EM2HPJ",
-      "libraryID": 1,
-      "notes": [],
       "relations": [],
-      "tags": [],
       "title": "JR2: paper not in a group",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/B6EM2HPJ",
-      "version": 0
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/B6EM2HPJ"
     },
     {
       "attachments": [],
       "citationKey": "Doe-2017",
-      "citekey": "Doe-2017",
       "collections": [
         "QSXGGDUL",
         "M5CJEVEB"
@@ -289,18 +259,13 @@
       "itemID": 102,
       "itemType": "journalArticle",
       "key": "U85DX2XX",
-      "libraryID": 1,
-      "notes": [],
       "relations": [],
-      "tags": [],
       "title": "The paper in my-subgroup-3",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/U85DX2XX",
-      "version": 0
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/U85DX2XX"
     },
     {
       "attachments": [],
       "citationKey": "Other-",
-      "citekey": "Other-",
       "collections": [
         "QSXGGDUL",
         "EV6AJY9X"
@@ -318,18 +283,13 @@
       "itemID": 103,
       "itemType": "journalArticle",
       "key": "DKWPQBZH",
-      "libraryID": 1,
-      "notes": [],
       "relations": [],
-      "tags": [],
       "title": "The article in my-other-subgroup-3",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/DKWPQBZH",
-      "version": 0
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/DKWPQBZH"
     },
     {
       "attachments": [],
       "citationKey": "Unkonw-",
-      "citekey": "Unkonw-",
       "collections": [
         "QSXGGDUL",
         "M5CJEVEB",
@@ -348,18 +308,13 @@
       "itemID": 104,
       "itemType": "journalArticle",
       "key": "Z6BDFV7S",
-      "libraryID": 1,
-      "notes": [],
       "relations": [],
-      "tags": [],
       "title": "the paper in my-subgroup-3 and my-other-subgroup-3",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/Z6BDFV7S",
-      "version": 0
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/Z6BDFV7S"
     },
     {
       "attachments": [],
       "citationKey": "Unkonw",
-      "citekey": "Unkonw",
       "collections": [
         "QSXGGDUL",
         "JEEWQLAZ"
@@ -377,13 +332,9 @@
       "itemID": 105,
       "itemType": "journalArticle",
       "key": "YYGFXWJA",
-      "libraryID": 1,
-      "notes": [],
       "relations": [],
-      "tags": [],
       "title": "JR3: paper not in a group",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/YYGFXWJA",
-      "version": 0
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/YYGFXWJA"
     }
   ]
 }

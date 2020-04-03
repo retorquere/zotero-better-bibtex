@@ -11,21 +11,18 @@
       "bibtexURL": "note",
       "citekeyFormat": "[auth][year]",
       "jabrefFormat": 0
-    },
-    "release": "0.8.2"
+    }
   },
   "items": [
     {
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Joe",
           "lastName": "Torre"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Tom",
           "lastName": "Verducci"
         }

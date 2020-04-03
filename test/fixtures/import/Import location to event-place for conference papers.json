@@ -46,7 +46,6 @@
       "mapMath": "",
       "mapText": "",
       "mapUnicode": "conservative",
-      "newTranslatorsAskRestart": true,
       "parseParticles": true,
       "postscript": "",
       "qualityReport": false,
@@ -60,19 +59,6 @@
       "strings": "",
       "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
       "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.1.145.emile.limonia",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.75",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "en-US",
-        "oscpu": "Intel Mac OS X 10.15",
-        "platform": "MacIntel",
-        "version": "5.0.75"
-      }
     }
   },
   "items": [
@@ -81,7 +67,6 @@
       "ISBN": "978-1-60558-598-7",
       "attachments": [],
       "citationKey": "Mostafa:2009:TPA:1596655.1596682",
-      "citekey": "Mostafa:2009:TPA:1596655.1596682",
       "collections": [],
       "creators": [
         {
@@ -102,8 +87,6 @@
       "itemID": 811,
       "itemType": "conferencePaper",
       "key": "MCGBKEWB",
-      "libraryID": 1,
-      "notes": [],
       "pages": "162-171",
       "place": "New York, NY, USA",
       "publicationTitle": "Proceedings of the 7th international conference on principles and practice of programming in java",
@@ -123,8 +106,7 @@
       ],
       "title": "Tracking performance across software revisions",
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/MCGBKEWB",
-      "url": "http://doi.acm.org/10.1145/1596655.1596682",
-      "version": 0
+      "url": "http://doi.acm.org/10.1145/1596655.1596682"
     }
   ]
 }

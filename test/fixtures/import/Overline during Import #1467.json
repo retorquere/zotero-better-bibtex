@@ -57,7 +57,6 @@
       "removeStock": true,
       "ignorePostscriptErrors": false,
       "debugLogDir": "",
-      "testing": true,
       "autoPin": false,
       "kuroshiro": true,
       "relativeFilePaths": false,
@@ -65,10 +64,7 @@
       "mapUnicode": "conservative",
       "mapText": "",
       "mapMath": "",
-      "newTranslatorsAskRestart": true,
-      "workers": 1,
-      "platform": "mac",
-      "client": "zotero"
+      "workers": 1
     },
     "options": {
       "exportFileData": false,
@@ -76,15 +72,10 @@
       "keepUpdated": false
     }
   },
-  "version": {
-    "zotero": "5.0.84",
-    "bbt": "5.2.18.emile.limonia"
-  },
   "collections": {},
   "items": [
     {
       "key": "B953I6YC",
-      "version": 0,
       "itemType": "journalArticle",
       "volume": "14",
       "issue": "5",
@@ -93,7 +84,7 @@
       "date": "2014-05",
       "extra": "Citation Key: Song_2014",
       "DOI": "10.1021/cg500229r",
-      "title": "Epitaxial lateral overgrowth of nitrogen-polar (0001̅) GaN by metalorganic chemical vapor deposition",
+      "title": "Epitaxial lateral overgrowth of nitrogen-polar (0001\u0305) GaN by metalorganic chemical vapor deposition",
       "creators": [
         {
           "firstName": "Jie",
@@ -121,7 +112,6 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
       "collections": [],
       "relations": [],
       "dateAdded": "2020-03-22T18:40:19Z",
@@ -129,14 +119,10 @@
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/B953I6YC",
       "itemID": 104,
       "attachments": [],
-      "notes": [],
-      "citekey": "Song_2014",
-      "citationKey": "Song_2014",
-      "libraryID": 1
+      "citationKey": "Song_2014"
     },
     {
       "key": "EB6MRZG9",
-      "version": 0,
       "itemType": "journalArticle",
       "volume": "8",
       "issue": "6",
@@ -146,7 +132,7 @@
       "extra": "Citation Key: Shojiki_2015",
       "journalAbbreviation": "Appl. Phys. Express",
       "DOI": "10.7567/APEX.8.061005",
-      "title": "Red to blue wavelength emission of N-Polar (0001̄) InGaN light-emitting diodes grown by metalorganic vapor phase epitaxy",
+      "title": "Red to blue wavelength emission of N-Polar (0001\u0304) InGaN light-emitting diodes grown by metalorganic vapor phase epitaxy",
       "creators": [
         {
           "firstName": "Kanako",
@@ -184,7 +170,6 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
       "collections": [],
       "relations": [],
       "dateAdded": "2020-03-22T18:40:19Z",
@@ -192,14 +177,10 @@
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/EB6MRZG9",
       "itemID": 103,
       "attachments": [],
-      "notes": [],
-      "citekey": "Shojiki_2015",
-      "citationKey": "Shojiki_2015",
-      "libraryID": 1
+      "citationKey": "Shojiki_2015"
     },
     {
       "key": "HWP3Q54N",
-      "version": 0,
       "itemType": "journalArticle",
       "volume": "73",
       "issue": "4",
@@ -209,7 +190,7 @@
       "extra": "Citation Key: Zywietz_1998",
       "journalAbbreviation": "Appl. Phys. Lett.",
       "DOI": "10.1063/1.121909",
-      "title": "Adatom diffusion at GaN (0001) and (0001̄) surfaces",
+      "title": "Adatom diffusion at GaN (0001) and (0001\u0304) surfaces",
       "creators": [
         {
           "firstName": "Tosja",
@@ -217,7 +198,7 @@
           "creatorType": "author"
         },
         {
-          "firstName": "Jörg",
+          "firstName": "J\u00f6rg",
           "lastName": "Neugebauer",
           "creatorType": "author"
         },
@@ -227,7 +208,6 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
       "collections": [],
       "relations": [],
       "dateAdded": "2020-03-22T18:40:19Z",
@@ -235,14 +215,10 @@
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/HWP3Q54N",
       "itemID": 106,
       "attachments": [],
-      "notes": [],
-      "citekey": "Zywietz_1998",
-      "citationKey": "Zywietz_1998",
-      "libraryID": 1
+      "citationKey": "Zywietz_1998"
     },
     {
       "key": "JTKC6PAJ",
-      "version": 0,
       "itemType": "journalArticle",
       "volume": "05",
       "issue": "03n04",
@@ -252,7 +228,7 @@
       "extra": "Citation Key: Held_1998",
       "journalAbbreviation": "Surf. Rev. Lett.",
       "DOI": "10.1142/S0218625X98001274",
-      "title": "N-Limited Versus Ga-Limited Growth on <span class=\"nocase\">GaN(0001̄)</span> by MBE Using NH³",
+      "title": "N-Limited Versus Ga-Limited Growth on <span class=\"nocase\">GaN(0001\u0304)</span> by MBE Using NH\u00b3",
       "creators": [
         {
           "firstName": "R.",
@@ -280,7 +256,6 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
       "collections": [],
       "relations": [],
       "dateAdded": "2020-03-22T18:40:18Z",
@@ -288,14 +263,10 @@
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/JTKC6PAJ",
       "itemID": 99,
       "attachments": [],
-      "notes": [],
-      "citekey": "Held_1998",
-      "citationKey": "Held_1998",
-      "libraryID": 1
+      "citationKey": "Held_1998"
     },
     {
       "key": "P8TBJNNL",
-      "version": 0,
       "itemType": "journalArticle",
       "volume": "341",
       "issue": "1",
@@ -304,7 +275,7 @@
       "date": "2012-02",
       "extra": "Citation Key: Leung_2012",
       "DOI": "10.1016/j.jcrysgro.2011.12.035",
-      "title": "Growth evolution and microstructural characterization of semipolar (112̄2) GaN selectively grown on etched r-Plane sapphire",
+      "title": "Growth evolution and microstructural characterization of semipolar (112\u03042) GaN selectively grown on etched r-Plane sapphire",
       "creators": [
         {
           "firstName": "Benjamin",
@@ -352,7 +323,6 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
       "collections": [],
       "relations": [],
       "dateAdded": "2020-03-22T18:40:18Z",
@@ -360,14 +330,10 @@
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/P8TBJNNL",
       "itemID": 101,
       "attachments": [],
-      "notes": [],
-      "citekey": "Leung_2012",
-      "citationKey": "Leung_2012",
-      "libraryID": 1
+      "citationKey": "Leung_2012"
     },
     {
       "key": "PB48IQRX",
-      "version": 0,
       "itemType": "journalArticle",
       "volume": "7",
       "issue": "1",
@@ -377,7 +343,7 @@
       "extra": "Citation Key: Song_2015",
       "journalAbbreviation": "ACS Appl. Mater. Interfaces",
       "DOI": "10.1021/am506162z",
-      "title": "Significantly improved luminescence properties of nitrogen-polar (0001̅) InGaN multiple quantum wells grown by pulsed metalorganic chemical vapor deposition",
+      "title": "Significantly improved luminescence properties of nitrogen-polar (0001\u0305) InGaN multiple quantum wells grown by pulsed metalorganic chemical vapor deposition",
       "creators": [
         {
           "firstName": "Jie",
@@ -405,7 +371,6 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
       "collections": [],
       "relations": [],
       "dateAdded": "2020-03-22T18:40:19Z",
@@ -413,14 +378,10 @@
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/PB48IQRX",
       "itemID": 105,
       "attachments": [],
-      "notes": [],
-      "citekey": "Song_2015",
-      "citationKey": "Song_2015",
-      "libraryID": 1
+      "citationKey": "Song_2015"
     },
     {
       "key": "QBFW4W6Y",
-      "version": 0,
       "itemType": "journalArticle",
       "volume": "3",
       "issue": "3",
@@ -429,7 +390,7 @@
       "date": "2015-03",
       "extra": "Citation Key: Niehle_2015",
       "DOI": "10.1063/1.4914102",
-      "title": "Electron tomography of (In,Ga)N insertions in GaN nanocolumns grown on semi-polar (112̄2) GaN templates",
+      "title": "Electron tomography of (In,Ga)N insertions in GaN nanocolumns grown on semi-polar (112\u03042) GaN templates",
       "creators": [
         {
           "firstName": "M.",
@@ -457,7 +418,6 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
       "collections": [],
       "relations": [],
       "dateAdded": "2020-03-22T18:40:18Z",
@@ -465,14 +425,10 @@
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/QBFW4W6Y",
       "itemID": 102,
       "attachments": [],
-      "notes": [],
-      "citekey": "Niehle_2015",
-      "citationKey": "Niehle_2015",
-      "libraryID": 1
+      "citationKey": "Niehle_2015"
     },
     {
       "key": "RT8WHSMM",
-      "version": 0,
       "itemType": "journalArticle",
       "volume": "29",
       "issue": "11",
@@ -482,7 +438,7 @@
       "extra": "Citation Key: Keller_2014",
       "journalAbbreviation": "Semicond. Sci. Technol.",
       "DOI": "10.1088/0268-1242/29/11/113001",
-      "title": "Recent progress in metal-organic chemical vapor deposition of ( 0001̄ ) N-Polar group-III nitrides",
+      "title": "Recent progress in metal-organic chemical vapor deposition of ( 0001\u0304 ) N-Polar group-III nitrides",
       "creators": [
         {
           "firstName": "Stacia",
@@ -540,7 +496,6 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
       "collections": [],
       "relations": [],
       "dateAdded": "2020-03-22T18:40:18Z",
@@ -548,10 +503,7 @@
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/RT8WHSMM",
       "itemID": 100,
       "attachments": [],
-      "notes": [],
-      "citekey": "Keller_2014",
-      "citationKey": "Keller_2014",
-      "libraryID": 1
+      "citationKey": "Keller_2014"
     }
   ]
 }

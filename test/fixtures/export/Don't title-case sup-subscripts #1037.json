@@ -42,25 +42,11 @@
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
       "strings": "",
       "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.0.179",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.53",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "de",
-        "oscpu": "Linux x86_64",
-        "platform": "Linux x86_64",
-        "version": "5.0.53"
-      }
     }
   },
   "items": [
     {
       "attachments": [],
-      "citekey": "Name2018",
       "creators": [
         {
           "creatorType": "author",
@@ -74,14 +60,11 @@
       "extra": "Citation Key: ref1",
       "itemID": 466,
       "itemType": "journalArticle",
-      "notes": [],
-      "tags": [],
       "title": "1 O<sub>abcde</sub>",
       "uri": "http://zotero.org/users/3130622/items/ILFCPBUM"
     },
     {
       "attachments": [],
-      "citekey": "Name2018a",
       "creators": [
         {
           "creatorType": "author",
@@ -95,14 +78,11 @@
       "extra": "Citation Key: ref2",
       "itemID": 467,
       "itemType": "journalArticle",
-      "notes": [],
-      "tags": [],
       "title": "2 O<sub>abcde</sub> test",
       "uri": "http://zotero.org/users/3130622/items/KEKAYD3E"
     },
     {
       "attachments": [],
-      "citekey": "Name2018b",
       "creators": [
         {
           "creatorType": "author",
@@ -116,14 +96,11 @@
       "extra": "Citation Key: ref3",
       "itemID": 469,
       "itemType": "journalArticle",
-      "notes": [],
-      "tags": [],
       "title": "<span class=\"nocase\">O<sub>abcde</sub></span>",
       "uri": "http://zotero.org/users/3130622/items/ANY3YQYC"
     },
     {
       "attachments": [],
-      "citekey": "Name2018",
       "creators": [
         {
           "creatorType": "author",
@@ -137,14 +114,11 @@
       "extra": "Citation Key: ref4",
       "itemID": 466,
       "itemType": "journalArticle",
-      "notes": [],
-      "tags": [],
       "title": "O<sub>x</sub>",
       "uri": "http://zotero.org/users/3130622/items/ILFCPBUM"
     },
     {
       "attachments": [],
-      "citekey": "Name2018a",
       "creators": [
         {
           "creatorType": "author",
@@ -158,14 +132,11 @@
       "extra": "Citation Key: ref5",
       "itemID": 467,
       "itemType": "journalArticle",
-      "notes": [],
-      "tags": [],
       "title": "O<sub>x</sub> test",
       "uri": "http://zotero.org/users/3130622/items/KEKAYD3E"
     },
     {
       "attachments": [],
-      "citekey": "Name2018b",
       "creators": [
         {
           "creatorType": "author",
@@ -179,14 +150,11 @@
       "extra": "Citation Key: ref6",
       "itemID": 469,
       "itemType": "journalArticle",
-      "notes": [],
-      "tags": [],
       "title": "<span class=\"nocase\">O<sub>x</sub></span>",
       "uri": "http://zotero.org/users/3130622/items/ANY3YQYC"
     },
     {
       "attachments": [],
-      "citekey": "Name2018",
       "creators": [
         {
           "creatorType": "author",
@@ -200,14 +168,11 @@
       "extra": "Citation Key: ref7",
       "itemID": 466,
       "itemType": "journalArticle",
-      "notes": [],
-      "tags": [],
       "title": "O<sub>7-x</sub>",
       "uri": "http://zotero.org/users/3130622/items/ILFCPBUM"
     },
     {
       "attachments": [],
-      "citekey": "Name2018",
       "creators": [
         {
           "creatorType": "author",
@@ -221,8 +186,6 @@
       "extra": "Citation Key: ref8",
       "itemID": 466,
       "itemType": "journalArticle",
-      "notes": [],
-      "tags": [],
       "title": "O<sub>7-x</sub> test",
       "uri": "http://zotero.org/users/3130622/items/ILFCPBUM"
     }

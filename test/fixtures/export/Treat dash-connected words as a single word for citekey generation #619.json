@@ -36,17 +36,6 @@
       "skipFields": "file,timestamp,annotation,note",
       "skipWords": "",
       "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.0.31",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.24",
-        "locale": "en-US",
-        "oscpu": "Linux x86_64",
-        "platform": "Linux x86_64",
-        "version": "5.0.24"
-      }
     }
   },
   "items": [

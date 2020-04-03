@@ -18,8 +18,7 @@
       "jabrefFormat": 0,
       "postscript": "",
       "skipFields": "timestamp"
-    },
-    "release": "1.6.3"
+    }
   },
   "items": [
     {
@@ -31,7 +30,6 @@
       "title": "Publisher"
     },
     {
-      "institution": "Office of Information Management and Communications",
       "itemID": 320,
       "itemType": "report",
       "publisher": "Office of Information Management and Communications",
@@ -41,8 +39,7 @@
       "itemID": 322,
       "itemType": "thesis",
       "publisher": "University of Saint Kitts and Nevis",
-      "title": "University",
-      "university": "University of Saint Kitts and Nevis"
+      "title": "University"
     }
   ]
 }

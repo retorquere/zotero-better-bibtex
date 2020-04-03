@@ -23,9 +23,15 @@
       "itemType": "journalArticle",
       "publicationTitle": "Title, with comma",
       "tags": [
-        "Vulcanian eruptions",
-        "breadcrust",
-        "plinian"
+        {
+          "tag": "Vulcanian eruptions"
+        },
+        {
+          "tag": "breadcrust"
+        },
+        {
+          "tag": "plinian"
+        }
       ],
       "title": "The physical volcanology of the 1600 eruption of Huaynaputina, with <pre>\\LaTeX</pre>!",
       "volume": "62"

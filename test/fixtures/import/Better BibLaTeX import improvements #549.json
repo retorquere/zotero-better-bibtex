@@ -30,7 +30,6 @@
       "citekeyFold": true,
       "citekeyFormat": "[auth][year]",
       "citeprocNoteCitekey": false,
-      "client": "",
       "csquotes": "",
       "debugLogDir": "",
       "exportBibTeXStrings": "off",
@@ -49,9 +48,7 @@
       "mapMath": "",
       "mapText": "",
       "mapUnicode": "conservative",
-      "newTranslatorsAskRestart": true,
       "parseParticles": true,
-      "platform": "",
       "postscript": "",
       "qualityReport": false,
       "quickCopyMode": "latex",
@@ -71,7 +68,6 @@
     {
       "attachments": [],
       "citationKey": "1e",
-      "citekey": "1e",
       "collections": [],
       "creators": [
         {
@@ -85,18 +81,13 @@
       "itemID": 842,
       "itemType": "journalArticle",
       "key": "MDZDMNEI",
-      "libraryID": 1,
-      "notes": [],
       "relations": [],
-      "tags": [],
       "title": "Blah <span class=\"nocase\"><i>emph</i></span> and <span class=\"nocase\">\u201cenquote\u201d</span>.",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/MDZDMNEI",
-      "version": 0
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/MDZDMNEI"
     },
     {
       "attachments": [],
       "citationKey": "1b",
-      "citekey": "1b",
       "collections": [],
       "creators": [
         {
@@ -110,18 +101,13 @@
       "itemID": 843,
       "itemType": "journalArticle",
       "key": "EGN2AG47",
-      "libraryID": 1,
-      "notes": [],
       "relations": [],
-      "tags": [],
       "title": "Blah <span class=\"nocase\"><i>mkbibemph</i></span> and <span class=\"nocase\">\u201cmkbibquote\u201d</span>.",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/EGN2AG47",
-      "version": 0
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/EGN2AG47"
     },
     {
       "attachments": [],
       "citationKey": "2e",
-      "citekey": "2e",
       "collections": [],
       "creators": [
         {
@@ -135,18 +121,13 @@
       "itemID": 844,
       "itemType": "book",
       "key": "9UITPY64",
-      "libraryID": 1,
-      "notes": [],
       "relations": [],
-      "tags": [],
       "title": "Blah <span class=\"nocase\"><i>emph</i></span> and <span class=\"nocase\">\u201cenquote\u201d</span>.",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/9UITPY64",
-      "version": 0
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/9UITPY64"
     },
     {
       "attachments": [],
       "citationKey": "2b",
-      "citekey": "2b",
       "collections": [],
       "creators": [
         {
@@ -160,18 +141,13 @@
       "itemID": 845,
       "itemType": "book",
       "key": "QN3C5UL9",
-      "libraryID": 1,
-      "notes": [],
       "relations": [],
-      "tags": [],
       "title": "Blah <span class=\"nocase\"><i>mkbibemph</i></span> and <span class=\"nocase\">\u201cmkbibquote\u201d</span>.",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/QN3C5UL9",
-      "version": 0
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/QN3C5UL9"
     },
     {
       "attachments": [],
       "citationKey": "Bennett2003",
-      "citekey": "Bennett2003",
       "collections": [],
       "creators": [
         {
@@ -187,20 +163,15 @@
       "itemID": 846,
       "itemType": "thesis",
       "key": "RMPX6UEP",
-      "libraryID": 1,
-      "notes": [],
       "publisher": "University of London",
       "relations": [],
-      "tags": [],
       "title": "Xenonika: medical texts associated with xenones in the late Byzantine period",
       "type": "Ph.D.",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/RMPX6UEP",
-      "version": 0
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/RMPX6UEP"
     },
     {
       "attachments": [],
       "citationKey": "Cooper2013",
-      "citekey": "Cooper2013",
       "collections": [],
       "creators": [
         {
@@ -216,19 +187,14 @@
       "itemID": 847,
       "itemType": "bookSection",
       "key": "PL8NZ4WB",
-      "libraryID": 1,
-      "notes": [],
       "pages": "263-87",
       "relations": [],
-      "tags": [],
       "title": "Byzantium between east and west: Competing hellenisms in the <i>Alexiad</i> of anna komnene and her contemporaries",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/PL8NZ4WB",
-      "version": 0
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/PL8NZ4WB"
     },
     {
       "attachments": [],
       "citationKey": "Correns1891",
-      "citekey": "Correns1891",
       "collections": [],
       "creators": [
         {
@@ -244,21 +210,16 @@
       "itemID": 848,
       "itemType": "journalArticle",
       "key": "XUK6PB7K",
-      "libraryID": 1,
-      "notes": [],
       "pages": "1-11",
       "publicationTitle": "Beitr\u00e4ge zur Geschichte der Philosophie des Mittelalters",
       "relations": [],
-      "tags": [],
       "title": "Die dem boethius f\u00e4lschlich zugeschriebene abhandlung des dominicus gundisalvi 'De unitate'",
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/XUK6PB7K",
-      "version": 0,
       "volume": "1"
     },
     {
       "attachments": [],
       "citationKey": "Algar1985",
-      "citekey": "Algar1985",
       "collections": [],
       "creators": [
         {
@@ -274,21 +235,16 @@
       "itemID": 849,
       "itemType": "encyclopediaArticle",
       "key": "2CTP43M7",
-      "libraryID": 1,
-      "notes": [],
       "pages": "172-4",
       "publicationTitle": "Encyclopedia iranica",
       "relations": [],
-      "tags": [],
       "title": "Besmallah: in exegesis, jurisprudence, and cultural life",
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/2CTP43M7",
-      "version": 0,
       "volume": "4"
     },
     {
       "attachments": [],
       "citationKey": "Arsdall2012",
-      "citekey": "Arsdall2012",
       "collections": [],
       "creators": [
         {
@@ -309,15 +265,11 @@
       "itemID": 850,
       "itemType": "book",
       "key": "L28CLDRT",
-      "libraryID": 1,
-      "notes": [],
       "place": "Burlington, VT",
       "publisher": "Ashgate",
       "relations": [],
-      "tags": [],
       "title": "Herbs and healers from the ancient mediterranean through the medieval west: Essays in honor of john m. Riddle",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/L28CLDRT",
-      "version": 0
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/L28CLDRT"
     }
   ]
 }

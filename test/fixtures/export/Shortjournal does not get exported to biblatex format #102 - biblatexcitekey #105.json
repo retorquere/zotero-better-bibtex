@@ -22,19 +22,16 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Antonio",
           "lastName": "Ac\u00edn"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Nicolas",
           "lastName": "Gisin"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Lluis",
           "lastName": "Masanes"
         }

@@ -13,8 +13,7 @@
       "citekeyFormat": "[auth][year]",
       "jabrefFormat": 0,
       "skipFields": "note,language,file,urldate"
-    },
-    "release": "0.7.24"
+    }
   },
   "items": [
     {
@@ -24,61 +23,51 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Lorenzo M.",
           "lastName": "Procopio"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Amir",
           "lastName": "Moqanaki"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Mateus",
           "lastName": "Ara\u00fajo"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Fabio",
           "lastName": "Costa"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Irati A.",
           "lastName": "Calafell"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Emma G.",
           "lastName": "Dowd"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Deny R.",
           "lastName": "Hamel"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Lee A.",
           "lastName": "Rozema"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "\u010caslav",
           "lastName": "Brukner"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Philip",
           "lastName": "Walther"
         }
@@ -93,7 +82,9 @@
       ],
       "publicationTitle": "arXiv:1412.4006 [quant-ph]",
       "tags": [
-        "Quantum Physics"
+        {
+          "tag": "Quantum Physics"
+        }
       ],
       "title": "Experimental Superposition of Orders of Quantum Gates",
       "url": "http://arxiv.org/abs/1412.4006"

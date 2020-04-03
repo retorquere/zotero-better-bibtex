@@ -13,8 +13,7 @@
       "citekeyFormat": "[auth:nopunct][year][Title:skipwords:nopunct:select,1,2:capitalize]",
       "jabrefFormat": 0,
       "skipFields": "abstract,note"
-    },
-    "release": "0.7.1"
+    }
   },
   "items": [
     {
@@ -23,7 +22,6 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Anders",
           "lastName": "Boas"
         }

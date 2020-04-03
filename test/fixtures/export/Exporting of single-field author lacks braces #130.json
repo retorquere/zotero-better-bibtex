@@ -11,8 +11,7 @@
       "bibtexURL": "note",
       "citekeyFormat": "[auth][year]",
       "jabrefFormat": 0
-    },
-    "release": "0.7.1"
+    }
   },
   "items": [
     {
@@ -22,13 +21,11 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Adam",
           "lastName": "Kolawa"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Dorota",
           "lastName": "Huizinga"
         },
@@ -45,11 +42,21 @@
       "publisher": "IEEE Computer Society Press",
       "shortTitle": "Automated Defect Prevention",
       "tags": [
-        "Computer programs -- Correctness.",
-        "Computer programs -- Testing -- Data processing.",
-        "Debugging in computer science -- Automatic control.",
-        "Software failures -- Prevention -- Data processing.",
-        "Software maintenance -- Data processing."
+        {
+          "tag": "Computer programs -- Correctness."
+        },
+        {
+          "tag": "Computer programs -- Testing -- Data processing."
+        },
+        {
+          "tag": "Debugging in computer science -- Automatic control."
+        },
+        {
+          "tag": "Software failures -- Prevention -- Data processing."
+        },
+        {
+          "tag": "Software maintenance -- Data processing."
+        }
       ],
       "title": "Automated Defect Prevention : Best Practices in Software Management",
       "url": "http://site.ebrary.com/lib/alltitles/docDetail.action?docID=10296302"

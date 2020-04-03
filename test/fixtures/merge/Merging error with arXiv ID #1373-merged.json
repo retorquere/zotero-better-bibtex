@@ -30,7 +30,6 @@
       "citekeyFold": true,
       "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
       "citeprocNoteCitekey": false,
-      "client": "zotero",
       "csquotes": "",
       "debugLogDir": "",
       "exportBibTeXStrings": "off",
@@ -49,9 +48,7 @@
       "mapMath": "",
       "mapText": "",
       "mapUnicode": "conservative",
-      "newTranslatorsAskRestart": true,
       "parseParticles": true,
-      "platform": "win",
       "postscript": "",
       "qualityReport": false,
       "quickCopyMode": "latex",
@@ -73,7 +70,6 @@
       "accessDate": "2020-01-05T21:41:05Z",
       "attachments": [],
       "citationKey": "ginspargItWasTwenty2011",
-      "citekey": "ginspargItWasTwenty2011",
       "collections": [],
       "creators": [
         {
@@ -90,15 +86,11 @@
       "itemType": "journalArticle",
       "key": "UQENV5R5",
       "libraryCatalog": "arXiv.org",
-      "libraryID": 1,
-      "notes": [],
       "publicationTitle": "arXiv:1108.2700 [astro-ph, physics:cond-mat, physics:gr-qc, physics:hep-ph, physics:hep-th, physics:physics, physics:quant-ph]",
       "relations": [],
-      "tags": [],
       "title": "It was twenty years ago today ...",
       "uri": "http://zotero.org/users/local/xRq3gKcT/items/UQENV5R5",
-      "url": "http://arxiv.org/abs/1108.2700",
-      "version": 0
+      "url": "http://arxiv.org/abs/1108.2700"
     }
   ]
 }

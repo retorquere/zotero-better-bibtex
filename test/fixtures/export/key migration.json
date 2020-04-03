@@ -11,8 +11,7 @@
       "bibtexURL": "note",
       "citekeyFormat": "[auth][year]",
       "jabrefFormat": 0
-    },
-    "release": "0.14.14"
+    }
   },
   "items": [
     {
@@ -59,9 +58,15 @@
       "pages": "493\u2013518",
       "publicationTitle": "Bulletin of Volcanology",
       "tags": [
-        "Vulcanian eruptions",
-        "breadcrust",
-        "plinian"
+        {
+          "tag": "Vulcanian eruptions"
+        },
+        {
+          "tag": "breadcrust"
+        },
+        {
+          "tag": "plinian"
+        }
       ],
       "title": "The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
       "volume": "62"
@@ -105,9 +110,15 @@
       "pages": "493\u2013518",
       "publicationTitle": "Bulletin of Volcanology",
       "tags": [
-        "Vulcanian eruptions",
-        "breadcrust",
-        "plinian"
+        {
+          "tag": "Vulcanian eruptions"
+        },
+        {
+          "tag": "breadcrust"
+        },
+        {
+          "tag": "plinian"
+        }
       ],
       "title": "The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
       "volume": "62"

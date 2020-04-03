@@ -14,9 +14,9 @@
     {
       "attachments": [
         {
-          "mimeType": "application/pdf",
           "path": "attachments/Adams_Huaynaputina.pdf",
-          "title": "Attachment"
+          "title": "Attachment",
+          "contentType": "application/pdf"
         }
       ],
       "creators": [
@@ -62,9 +62,15 @@
       "pages": "493\u2013518",
       "publicationTitle": "Bulletin of Volcanology",
       "tags": [
-        "Vulcanian eruptions",
-        "breadcrust",
-        "plinian"
+        {
+          "tag": "Vulcanian eruptions"
+        },
+        {
+          "tag": "breadcrust"
+        },
+        {
+          "tag": "plinian"
+        }
       ],
       "title": "The physical volcanology of the 1600 eruption of <b>Huaynaputina</b>, southern Peru",
       "volume": "62"
@@ -112,7 +118,9 @@
       "seriesNumber": "1",
       "shortTitle": "The Gospel according to St. Matthew",
       "tags": [
-        "Vulgate"
+        {
+          "tag": "Vulgate"
+        }
       ],
       "title": "The Gospel according to St. Matthew, from the St. Germain ms. (g<sub>1</sub>), now numbered Lat. 11553 in the National Library at Paris",
       "url": "https://archive.org/details/gospelaccording00goog"

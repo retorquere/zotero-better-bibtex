@@ -55,26 +55,12 @@
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
       "strings": "",
       "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.1.127.emile.limonia",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.71",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "en-US",
-        "oscpu": "Intel Mac OS X 10.14",
-        "platform": "MacIntel",
-        "version": "5.0.71"
-      }
     }
   },
   "items": [
     {
       "attachments": [],
       "citationKey": "Adams2001",
-      "citekey": "Adams2001",
       "collections": [],
       "creators": [
         {
@@ -120,25 +106,27 @@
       "itemID": 307,
       "itemType": "journalArticle",
       "key": "YL6W3WI5",
-      "libraryID": 1,
-      "notes": [],
       "pages": "493-518",
       "publicationTitle": "Bulletin of Volcanology",
       "relations": [],
       "tags": [
-        "breadcrust",
-        "plinian",
-        "Vulcanian eruptions"
+        {
+          "tag": "breadcrust"
+        },
+        {
+          "tag": "plinian"
+        },
+        {
+          "tag": "Vulcanian eruptions"
+        }
       ],
       "title": "The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/YL6W3WI5",
-      "version": 0,
       "volume": "62"
     },
     {
       "attachments": [],
       "citationKey": "Adams2002",
-      "citekey": "Adams2002",
       "collections": [],
       "creators": [
         {
@@ -184,19 +172,22 @@
       "itemID": 308,
       "itemType": "journalArticle",
       "key": "NQX2YJVB",
-      "libraryID": 1,
-      "notes": [],
       "pages": "493-518",
       "publicationTitle": "Bulletin of Volcanology",
       "relations": [],
       "tags": [
-        "breadcrust",
-        "plinian",
-        "Vulcanian eruptions"
+        {
+          "tag": "breadcrust"
+        },
+        {
+          "tag": "plinian"
+        },
+        {
+          "tag": "Vulcanian eruptions"
+        }
       ],
       "title": "The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/NQX2YJVB",
-      "version": 0,
       "volume": "62"
     },
     {
@@ -208,13 +199,13 @@
       "itemType": "note",
       "key": "HJCS23Z8",
       "note": "Import errors found: <ul><li>No fields in @emptyreference</li></ul>",
-      "notes": [],
       "relations": [],
       "tags": [
-        "#Better BibTeX import error"
+        {
+          "tag": "#Better BibTeX import error"
+        }
       ],
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/HJCS23Z8",
-      "version": 0
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/HJCS23Z8"
     }
   ]
 }

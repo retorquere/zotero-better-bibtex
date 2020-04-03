@@ -18,14 +18,12 @@
       "jabrefFormat": 0,
       "postscript": "",
       "skipFields": ""
-    },
-    "release": "1.6.15"
+    }
   },
   "items": [
     {
       "ISBN": "978-2-87031-104-2 978-2-87031-228-5 978-2-87031-179-0 978-2-87031-184-4 978-2-87031-195-0 978-2-87031-213-1 978-2-87031-256-8 978-2-87031-264-3 978-2-87031-284-1",
       "attachments": [],
-      "bookTitle": "Studies in Latin literature and Roman history",
       "callNumber": "PA6011 .S86",
       "creators": [
         {
@@ -51,10 +49,18 @@
       "series": "Collection Latomus",
       "seriesNumber": "v. 164, 168, 180, 196, 206, 217, 227, 239, 244, 254, 272, 287, 301, 315, 323, 338",
       "tags": [
-        "History",
-        "History and criticism",
-        "Latin literature",
-        "Rome"
+        {
+          "tag": "History"
+        },
+        {
+          "tag": "History and criticism"
+        },
+        {
+          "tag": "Latin literature"
+        },
+        {
+          "tag": "Rome"
+        }
       ],
       "title": "Why a Second Temple for Venus Erycina?"
     }

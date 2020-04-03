@@ -57,7 +57,6 @@
       "removeStock": false,
       "ignorePostscriptErrors": true,
       "debugLogDir": "",
-      "testing": false,
       "autoPin": false,
       "kuroshiro": false,
       "relativeFilePaths": false,
@@ -65,10 +64,7 @@
       "mapUnicode": "conservative",
       "mapText": "",
       "mapMath": "",
-      "newTranslatorsAskRestart": true,
-      "workers": 2,
-      "platform": "lin",
-      "client": "zotero"
+      "workers": 2
     },
     "options": {
       "exportFileData": false,
@@ -76,15 +72,10 @@
       "keepUpdated": false
     }
   },
-  "version": {
-    "zotero": "5.0.85",
-    "bbt": "5.2.20"
-  },
   "collections": {},
   "items": [
     {
       "key": "94RIM7N3",
-      "version": 0,
       "itemType": "bookSection",
       "title": "Sparse matrix-vector multiplication: parallelization and vectorization",
       "abstractNote": "The sparse matrix-vector (SpMV) multiplication is a very important kernel in scientific computing. Efficiently computing this kernel on modern architectures is difficult because of high bandwidth pressure and inefficient cache use. Despite the high available bandwidth on the Intel Xeon Phi, an efficient code remains difficult to achieve because of high data access latencies. We alleviate this issue by integrating vectorization into state-of-the-art parallel SpMV multiplication strategies. We present a novel data structure that is a strict improvement on the industry-standard compressed row storage (CRS), and is highly synergistic with sparse blocking techniques and cache-oblivious orderings induced by space-filling curves. The final parallel scheme we present maximizes both data locality and data reuse on shared-memory systems. The resulting code, based on explicit thread-local data partitioning and allocation, combined with vectorization, outperforms not only a CRS-based algorithm implemented using OpenMP but also the SpMV-code available in the Intel MKL library.",
@@ -93,7 +84,7 @@
       "shortTitle": "Sparse matrix-vector multiplication",
       "libraryCatalog": "ScienceDirect",
       "url": "https://www.sciencedirect.com/science/article/pii/B9780128021187000273",
-      "rights": "© 2015 Elsevier Inc.",
+      "rights": "\u00a9 2015 Elsevier Inc.",
       "extra": "Chapter Number: 27\nDOI: 10.1016/B978-0-12-802118-7.00027-3",
       "place": "Waltham, MA, USA",
       "publisher": "Morgan Kaufmann",
@@ -172,7 +163,7 @@
           "type": 1
         },
         {
-          "tag": "­multiplication",
+          "tag": "\u00admultiplication",
           "type": 1
         },
         {
@@ -201,10 +192,7 @@
       "uri": "http://zotero.org/users/local/cuz22LJP/items/94RIM7N3",
       "itemID": 110,
       "attachments": [],
-      "notes": [],
-      "citekey": "yzelman2015a",
       "citationKey": "yzelman2015a",
-      "libraryID": 1,
       "publicationTitle": "High performance parallelism pearls: multicore and many-core programming approaches"
     }
   ]

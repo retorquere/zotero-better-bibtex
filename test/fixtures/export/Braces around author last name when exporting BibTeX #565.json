@@ -28,8 +28,7 @@
       "skipFields": "keywords,file,URL",
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
       "warnBulkModify": 10
-    },
-    "release": "1.6.75"
+    }
   },
   "items": [
     {
@@ -53,10 +52,18 @@
       "publicationTitle": "Linguistics and Philosophy",
       "shortTitle": "Vagueness and grammar",
       "tags": [
-        "adjectives",
-        "degree",
-        "gradability",
-        "vagueness"
+        {
+          "tag": "adjectives"
+        },
+        {
+          "tag": "degree"
+        },
+        {
+          "tag": "gradability"
+        },
+        {
+          "tag": "vagueness"
+        }
       ],
       "title": "Vagueness and grammar: The semantics of relative and absolute gradable adjectives",
       "url": "http://www.springerlink.com/index/10.1007/s10988-006-9008-0",
@@ -78,7 +85,6 @@
       "libraryCatalog": "Google Scholar",
       "publisher": "University of Massachusetts",
       "title": "Restrictions on Quantifier Domains",
-      "university": "University of Massachusetts",
       "url": "http://www.semanticsarchive.net/Archive/jA3N2IwN/fintel-1994-thesis.pdf"
     },
     {
@@ -97,16 +103,27 @@
       "numPages": "80",
       "publisher": "Universiteit Utrecht",
       "tags": [
-        "adjectives",
-        "degree",
-        "gradability",
-        "intensional adj",
-        "modification",
-        "nouns"
+        {
+          "tag": "adjectives"
+        },
+        {
+          "tag": "degree"
+        },
+        {
+          "tag": "gradability"
+        },
+        {
+          "tag": "intensional adj"
+        },
+        {
+          "tag": "modification"
+        },
+        {
+          "tag": "nouns"
+        }
       ],
       "title": "Evaluative Degree Modification of Adjectives and Nouns",
-      "type": "Master's Thesis",
-      "university": "Universiteit Utrecht"
+      "type": "Master's Thesis"
     },
     {
       "ISBN": "978-90-6831-748-0",

@@ -27,8 +27,7 @@
       "skipFields": "",
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
       "warnBulkModify": 10
-    },
-    "release": "1.6.31-travis-2383"
+    }
   },
   "items": [
     {
@@ -54,21 +53,51 @@
       "pages": "885\u2013898",
       "publicationTitle": "Canadian Journal of Civil Engineering",
       "tags": [
-        "Air entrainment",
-        "Cavity subpressure",
-        "Civil engineering",
-        "High speed jets",
-        "Jet length",
-        "Jets",
-        "Pressure effects",
-        "Scale effect",
-        "Spillway aerators",
-        "Spillways",
-        "Structural design",
-        "Water aeration",
-        "aerator",
-        "jet flow",
-        "spillway"
+        {
+          "tag": "Air entrainment"
+        },
+        {
+          "tag": "Cavity subpressure"
+        },
+        {
+          "tag": "Civil engineering"
+        },
+        {
+          "tag": "High speed jets"
+        },
+        {
+          "tag": "Jet length"
+        },
+        {
+          "tag": "Jets"
+        },
+        {
+          "tag": "Pressure effects"
+        },
+        {
+          "tag": "Scale effect"
+        },
+        {
+          "tag": "Spillway aerators"
+        },
+        {
+          "tag": "Spillways"
+        },
+        {
+          "tag": "Structural design"
+        },
+        {
+          "tag": "Water aeration"
+        },
+        {
+          "tag": "aerator"
+        },
+        {
+          "tag": "jet flow"
+        },
+        {
+          "tag": "spillway"
+        }
       ],
       "title": "High-speed jet flows over spillway aerators",
       "volume": "29"

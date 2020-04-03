@@ -55,7 +55,6 @@
       "removeStock": false,
       "ignorePostscriptErrors": true,
       "debugLogDir": "",
-      "testing": false,
       "autoPin": false,
       "kuroshiro": false,
       "relativeFilePaths": false,
@@ -63,10 +62,7 @@
       "mapUnicode": "conservative",
       "mapText": "",
       "mapMath": "",
-      "newTranslatorsAskRestart": true,
-      "workers": 0,
-      "platform": "lin",
-      "client": "zotero"
+      "workers": 0
     },
     "options": {
       "exportFileData": false,
@@ -77,7 +73,6 @@
   "collections": {},
   "items": [
     {
-      "version": 5217,
       "itemType": "webpage",
       "url": "http://tools.ietf.org/html/rfc4880",
       "date": "2007-11",
@@ -111,7 +106,6 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
       "collections": [
         "N62PAZJV"
       ],
@@ -124,19 +118,13 @@
           "itemType": "attachment",
           "title": "Snapshot",
           "tags": [],
-          "relations": [],
-          "dateAdded": "2014-08-19T00:03:18Z",
-          "dateModified": "2014-08-19T00:03:18Z",
           "uri": "http://zotero.org/users/45772/items/FAFQ332R",
           "path": "/home/muelli/Zotero/storage/FAFQ332R/rfc4880.html"
         }
       ],
-      "notes": [],
-      "citekey": "shaw_rfc4880_2007",
       "citationKey": "shaw_rfc4880_2007",
       "itemID": 457,
-      "key": "VUJ2ZSCM",
-      "libraryID": 1
+      "key": "VUJ2ZSCM"
     }
   ]
 }

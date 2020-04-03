@@ -4,9 +4,12 @@ import json
 import glob
 from munch import Munch
 import os
+import jsonschema
+
+root = os.path.join(os.path.dirname(__file__), '../../..')
 
 baseline = __file__.replace('.py', '.json')
-def refresh(root):
+def refresh():
   with open(baseline) as f:
     schema = Munch.fromDict(json.load(f))
   with open(os.path.join(root, 'gen/preferences/preferences.json')) as f:
@@ -44,3 +47,7 @@ def refresh(root):
 
   with open(baseline, 'w') as f:
     json.dump(schema, f, indent='  ')
+
+def validate(lib):
+  with open(baseline) as f:
+    jsonschema.validate(instance=lib, schema=json.load(f))

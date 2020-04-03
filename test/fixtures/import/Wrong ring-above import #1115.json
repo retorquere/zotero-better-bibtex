@@ -30,7 +30,6 @@
       "citekeyFold": true,
       "citekeyFormat": "[auth][year]",
       "citeprocNoteCitekey": false,
-      "client": "",
       "csquotes": "",
       "debugLogDir": "",
       "exportBibTeXStrings": "off",
@@ -49,9 +48,7 @@
       "mapMath": "",
       "mapText": "",
       "mapUnicode": "conservative",
-      "newTranslatorsAskRestart": true,
       "parseParticles": true,
-      "platform": "",
       "postscript": "",
       "qualityReport": false,
       "quickCopyMode": "latex",
@@ -71,7 +68,6 @@
     {
       "attachments": [],
       "citationKey": "rehurek_lrec",
-      "citekey": "rehurek_lrec",
       "collections": [],
       "creators": [
         {
@@ -93,18 +89,14 @@
       "itemType": "conferencePaper",
       "key": "ENDHUCIJ",
       "language": "English",
-      "libraryID": 1,
-      "notes": [],
       "pages": "45-50",
       "place": "Valletta, Malta",
       "publicationTitle": "Proceedings of the LREC 2010 workshop on new challenges for NLP frameworks",
       "publisher": "ELRA",
       "relations": [],
-      "tags": [],
       "title": "Software framework for topic modelling with large corpora",
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/ENDHUCIJ",
-      "url": "http://is.muni.cz/publication/884893/en",
-      "version": 0
+      "url": "http://is.muni.cz/publication/884893/en"
     }
   ]
 }

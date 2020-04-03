@@ -2,7 +2,6 @@
   "collections": {
     "3B923GRM": {
       "collections": [],
-      "id": 27,
       "items": [
         978,
         981,
@@ -19,25 +18,20 @@
         "3B923GRM",
         "R2BUSAI2"
       ],
-      "id": 29,
       "items": [],
       "key": "3MDFQEB8",
-      "name": "other technology",
-      "parent": false
+      "name": "other technology"
     },
     "3XT3T783": {
       "collections": [],
-      "id": 19,
       "items": [
         630
       ],
       "key": "3XT3T783",
-      "name": "active redudency",
-      "parent": false
+      "name": "active redudency"
     },
     "4NMU8E3G": {
       "collections": [],
-      "id": 14,
       "items": [
         93,
         95,
@@ -83,12 +77,10 @@
         1210
       ],
       "key": "4NMU8E3G",
-      "name": "SCTP CMT",
-      "parent": false
+      "name": "SCTP CMT"
     },
     "4VVUWQIR": {
       "collections": [],
-      "id": 17,
       "items": [
         95,
         106,
@@ -120,12 +112,10 @@
         1020
       ],
       "key": "4VVUWQIR",
-      "name": "Multimedia CMT",
-      "parent": false
+      "name": "Multimedia CMT"
     },
     "ARXFFMRM": {
       "collections": [],
-      "id": 24,
       "items": [
         367,
         377,
@@ -147,7 +137,6 @@
     },
     "F8HSU6NK": {
       "collections": [],
-      "id": 21,
       "items": [
         101,
         599,
@@ -202,12 +191,10 @@
         1199
       ],
       "key": "F8HSU6NK",
-      "name": "Modeling",
-      "parent": false
+      "name": "Modeling"
     },
     "IQ8QIWCI": {
       "collections": [],
-      "id": 13,
       "items": [
         153,
         162,
@@ -289,12 +276,10 @@
         447
       ],
       "key": "IQ8QIWCI",
-      "name": "Bernhard's papers",
-      "parent": false
+      "name": "Bernhard's papers"
     },
     "MS3GR9C4": {
       "collections": [],
-      "id": 10,
       "items": [
         90,
         811,
@@ -303,12 +288,10 @@
         842
       ],
       "key": "MS3GR9C4",
-      "name": "Simulation",
-      "parent": false
+      "name": "Simulation"
     },
     "R2BUSAI2": {
       "collections": [],
-      "id": 30,
       "items": [
         1000,
         1001,
@@ -369,7 +352,6 @@
     },
     "XXI5SWPK": {
       "collections": [],
-      "id": 15,
       "items": [
         101,
         153,
@@ -411,12 +393,10 @@
         1039
       ],
       "key": "XXI5SWPK",
-      "name": "SCTP general",
-      "parent": false
+      "name": "SCTP general"
     },
     "ZAVDMTJP": {
       "collections": [],
-      "id": 23,
       "items": [
         147,
         150,
@@ -476,25 +456,11 @@
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
       "strings": "",
       "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.1.12",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.58",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "en-US",
-        "oscpu": "Windows NT 10.0; WOW64",
-        "platform": "Win32",
-        "version": "5.0.58"
-      }
     }
   },
   "items": [
     {
       "attachments": [],
-      "citekey": "blantonConservativeLossRecovery2012",
       "creators": [
         {
           "creatorType": "author",
@@ -539,7 +505,6 @@
       "number": "6675",
       "publisher": "RFC Editor",
       "relations": [],
-      "tags": [],
       "title": "A Conservative Loss Recovery Algorithm Based on Selective Acknowledgment (SACK) for TCP",
       "type": "RFC",
       "uri": "http://zotero.org/groups/570438/items/VWZTQS8X",
@@ -549,7 +514,6 @@
     {
       "accessDate": "2018-11-24T14:37:15Z",
       "attachments": [],
-      "citekey": "PortableSCTPUserland2018",
       "creators": [],
       "date": "2018-11-22T07:13:38Z",
       "dateAdded": "2018-11-24T14:37:15Z",
@@ -558,11 +522,9 @@
       "itemID": 1244,
       "itemType": "computerProgram",
       "libraryCatalog": "GitHub",
-      "notes": [],
       "programmingLanguage": "C",
       "publisher": "sctplab",
       "relations": [],
-      "tags": [],
       "title": "A portable SCTP userland stack. Contribute to sctplab/usrsctp development by creating an account on GitHub",
       "uri": "http://zotero.org/groups/570438/items/VEG5S3LG",
       "url": "https://github.com/sctplab/usrsctp",

@@ -57,7 +57,6 @@
       "removeStock": false,
       "ignorePostscriptErrors": true,
       "debugLogDir": "",
-      "testing": false,
       "autoPin": false,
       "kuroshiro": false,
       "relativeFilePaths": false,
@@ -65,10 +64,7 @@
       "mapUnicode": "conservative",
       "mapText": "",
       "mapMath": "",
-      "newTranslatorsAskRestart": false,
-      "workers": 4,
-      "platform": "lin",
-      "client": "zotero"
+      "workers": 4
     },
     "options": {
       "exportFileData": false,
@@ -76,20 +72,14 @@
       "keepUpdated": false
     }
   },
-  "version": {
-    "zotero": "5.0.85",
-    "bbt": "5.2.20"
-  },
   "collections": {},
   "items": [
     {
       "key": "GC4B9S7M",
-      "version": 384,
       "itemType": "journalArticle",
       "date": "30-Mar-2020",
       "title": "Test Entry",
       "creators": [],
-      "tags": [],
       "collections": [
         "I33IQJ98"
       ],
@@ -99,10 +89,7 @@
       "uri": "http://zotero.org/users/5883296/items/GC4B9S7M",
       "itemID": 542,
       "attachments": [],
-      "notes": [],
-      "citekey": "TestEntry2020",
-      "citationKey": "TestEntry2020",
-      "libraryID": 1
+      "citationKey": "TestEntry2020"
     }
   ]
 }

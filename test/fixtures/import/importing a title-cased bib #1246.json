@@ -30,7 +30,6 @@
       "citekeyFold": true,
       "citekeyFormat": "[auth][year]",
       "citeprocNoteCitekey": false,
-      "client": "",
       "csquotes": "",
       "debugLogDir": "",
       "exportBibTeXStrings": "off",
@@ -49,9 +48,7 @@
       "mapMath": "",
       "mapText": "",
       "mapUnicode": "conservative",
-      "newTranslatorsAskRestart": true,
       "parseParticles": true,
-      "platform": "",
       "postscript": "",
       "qualityReport": false,
       "quickCopyMode": "latex",
@@ -72,7 +69,6 @@
       "DOI": "10.1007/s13127-011-0069-8",
       "attachments": [],
       "citationKey": "Frit2",
-      "citekey": "Frit2",
       "collections": [],
       "creators": [
         {
@@ -98,21 +94,16 @@
       "itemID": 653,
       "itemType": "journalArticle",
       "key": "DVH8V3JD",
-      "libraryID": 1,
-      "notes": [],
       "pages": "71-80",
       "publicationTitle": "Actes du 4<sup>\u00e8me</sup> Congr\u00e8s Fran\u00e7ais d'Acoustique",
       "relations": [],
-      "tags": [],
       "title": "Test of markupconversion: Italics, bold, superscript, subscript, and small caps: Mitochondrial DNA\u2082 sequences suggest unexpected phylogenetic position of Corso-Sardinian grass snakes (<span class=\"nocase\"><i>Natrix cetti</i></span>) and <span class=\"nocase\"><b>do not</b></span> support their <span class=\"nocase\"><span style=\"font-variant:small-caps;\">species status</span></span>, with notes on phylogeography and subspecies delineation of grass snakes.",
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/DVH8V3JD",
-      "version": 0,
       "volume": "12"
     },
     {
       "attachments": [],
       "citationKey": "AdcroftETAL:1997",
-      "citekey": "AdcroftETAL:1997",
       "collections": [],
       "creators": [
         {
@@ -138,15 +129,11 @@
       "itemID": 654,
       "itemType": "journalArticle",
       "key": "7CYSL4MS",
-      "libraryID": 1,
-      "notes": [],
       "pages": "2293-2315",
       "publicationTitle": "Monthly Weather Review",
       "relations": [],
-      "tags": [],
       "title": "Representation of topography by shaved cells in a height coordinate ocean model",
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/7CYSL4MS",
-      "version": 0,
       "volume": "125"
     }
   ]

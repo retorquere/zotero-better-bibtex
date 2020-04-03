@@ -11,8 +11,7 @@
       "bibtexURL": "note",
       "citekeyFormat": "[auth][year]",
       "jabrefFormat": 0
-    },
-    "release": "0.6.64"
+    }
   },
   "items": [
     {
@@ -21,7 +20,6 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "P. M. S.",
           "lastName": "Hacker"
         }

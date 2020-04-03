@@ -45,26 +45,12 @@
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
       "strings": "",
       "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.1.12",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.58",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "en-US",
-        "oscpu": "Linux x86_64",
-        "platform": "Linux x86_64",
-        "version": "5.0.58"
-      }
     }
   },
   "items": [
     {
       "abstractNote": "The Boogie Veri\ufb01cation Debugger (BVD) is a tool that lets users explore the potential program errors reported by a deductive program veri\ufb01er. The user interface is like that of a dynamic debugger, but the debugging happens statically without executing the program. BVD integrates with the programveri\ufb01cation engine Boogie. Just as Boogie supports multiple language front-ends, BVD can work with those front-ends through a plug-in architecture. BVD plugins have been implemented for two state-of-the-art veri\ufb01ers, VCC and Dafny.",
       "attachments": [],
-      "citekey": "bvd2011",
       "creators": [
         {
           "creatorType": "author",
@@ -90,9 +76,7 @@
       "itemType": "journalArticle",
       "language": "en",
       "libraryCatalog": "Zotero",
-      "notes": [],
       "relations": [],
-      "tags": [],
       "title": "The Boogie Veri\ufb01cation Debugger",
       "uri": "http://zotero.org/users/local/G4R0aqlY/items/7PXK5VIN",
       "url": "https://www.microsoft.com/en-us/research/wp-content/uploads/2016/12/krml213.pdf"

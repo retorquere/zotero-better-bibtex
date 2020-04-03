@@ -23,13 +23,11 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Horst-Moritz",
           "lastName": "Maus"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Andre",
           "lastName": "Seyfarth"
         }
@@ -45,11 +43,21 @@
       "publicationTitle": "Journal of The Royal Society Interface",
       "shortTitle": "Walking in circles",
       "tags": [
-        "locomotion",
-        "slip",
-        "template model",
-        "veering",
-        "walking"
+        {
+          "tag": "locomotion"
+        },
+        {
+          "tag": "slip"
+        },
+        {
+          "tag": "template model"
+        },
+        {
+          "tag": "veering"
+        },
+        {
+          "tag": "walking"
+        }
       ],
       "title": "Walking in circles: a modelling approach",
       "volume": "11"

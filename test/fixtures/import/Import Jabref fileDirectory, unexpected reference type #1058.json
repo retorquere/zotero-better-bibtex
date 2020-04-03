@@ -30,7 +30,6 @@
       "citekeyFold": true,
       "citekeyFormat": "[auth][year]",
       "citeprocNoteCitekey": false,
-      "client": "",
       "csquotes": "",
       "debugLogDir": "",
       "exportBibTeXStrings": "off",
@@ -49,9 +48,7 @@
       "mapMath": "",
       "mapText": "",
       "mapUnicode": "conservative",
-      "newTranslatorsAskRestart": true,
       "parseParticles": true,
-      "platform": "",
       "postscript": "",
       "qualityReport": false,
       "quickCopyMode": "latex",
@@ -72,7 +69,6 @@
       "ISSN": "1612-4642",
       "attachments": [],
       "citationKey": "springerlink:10.1007/s10344-009-0327-7",
-      "citekey": "springerlink:10.1007/s10344-009-0327-7",
       "collections": [],
       "creators": [
         {
@@ -99,7 +95,6 @@
       "itemID": 105,
       "itemType": "journalArticle",
       "key": "DXP3IXV9",
-      "libraryID": 1,
       "notes": [
         "<p>10.1007/s10344-009-0327-7</p>"
       ],
@@ -114,34 +109,26 @@
       "title": "Assessment of methods for estimating wild rabbit population abundance in agricultural landscapes",
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/DXP3IXV9",
       "url": "http://dx.doi.org/10.1007/s10344-009-0327-7",
-      "version": 0,
       "volume": "56"
     },
     {
       "attachments": [
         {
-          "dateAdded": "2019-12-15T11:37:00Z",
-          "dateModified": "2019-12-15T11:37:00Z",
           "itemType": "attachment",
           "path": "/Users/emile/.BBTZ5TEST/zotero/storage/AIHRLS2S/2.pdf",
-          "relations": [],
           "tags": [],
           "title": "2",
           "uri": "http://zotero.org/users/local/6z7M0kXV/items/AIHRLS2S"
         },
         {
-          "dateAdded": "2019-12-15T11:37:00Z",
-          "dateModified": "2019-12-15T11:37:01Z",
           "itemType": "attachment",
           "path": "/Users/emile/.BBTZ5TEST/zotero/storage/RIUR67LQ/1.pdf",
-          "relations": [],
           "tags": [],
           "title": "stuff",
           "uri": "http://zotero.org/users/local/6z7M0kXV/items/RIUR67LQ"
         }
       ],
       "citationKey": "Afonso2011",
-      "citekey": "Afonso2011",
       "collections": [],
       "creators": [
         {
@@ -162,13 +149,9 @@
       "itemID": 107,
       "itemType": "journalArticle",
       "key": "7NR7TBS3",
-      "libraryID": 1,
-      "notes": [],
       "relations": [],
-      "tags": [],
       "title": "Amostragem em duas fases adaptativa para estimar a abund\u00e2ncia de popula\u00e7\u00f5es raras",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/7NR7TBS3",
-      "version": 0
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/7NR7TBS3"
     },
     {
       "attachments": [],
@@ -179,7 +162,6 @@
       "itemType": "note",
       "key": "IDW7PLL6",
       "note": "Import errors found: <ul><li>Don&#39;t know what Zotero type to make of &#39;talk&#39; for @Afonso2011, importing as journalArticle</li></ul>",
-      "notes": [],
       "relations": [],
       "tags": [
         {
@@ -187,8 +169,7 @@
           "type": 1
         }
       ],
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/IDW7PLL6",
-      "version": 0
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/IDW7PLL6"
     }
   ]
 }

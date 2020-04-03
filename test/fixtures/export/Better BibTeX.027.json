@@ -13,21 +13,19 @@
     {
       "attachments": [
         {
-          "mimeType": "application/pdf",
           "path": "attachments/Baltes_Staudinger_2000_Wisdom.pdf",
-          "title": "Baltes_Staudinger_2000_Wisdom.pdf"
+          "title": "Baltes_Staudinger_2000_Wisdom.pdf",
+          "contentType": "application/pdf"
         }
       ],
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Paul B",
           "lastName": "Baltes"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Ursula M",
           "lastName": "Staudinger"
         }

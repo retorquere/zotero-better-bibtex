@@ -17,8 +17,7 @@
       "jabrefFormat": 0,
       "skipFields": "abstract,file,editora,editoratype,editorb,editorbtype",
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum"
-    },
-    "release": "1.2.23"
+    }
   },
   "items": [
     {
@@ -159,7 +158,9 @@
       "extra": "Citation Key: bugreports_ApostropheOnParticle",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "bugreports_ApostropheOnParticle"
     },
@@ -173,7 +174,9 @@
       "extra": "Citation Key: bugreports_AsmJournals",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "bugreports_AsmJournals"
     },
@@ -186,7 +189,9 @@
       "extra": "Citation Key: bugreports_DemoPageFullCiteCruftOnSubsequent",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "bugreports_DemoPageFullCiteCruftOnSubsequent"
     },
@@ -201,7 +206,9 @@
       "extra": "Citation Key: bugreports_DuplicateSpaces",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "bugreports_DuplicateSpaces"
     },
@@ -216,7 +223,9 @@
       "extra": "Citation Key: bugreports_DuplicateSpaces3",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "bugreports_DuplicateSpaces3"
     },
@@ -231,7 +240,9 @@
       "extra": "Citation Key: bugreports_GreekStyleProblems",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "bugreports_GreekStyleProblems"
     },
@@ -261,7 +272,9 @@
       "extra": "Citation Key: bugreports_ProcessorHang1",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "bugreports_ProcessorHang1"
     },
@@ -274,7 +287,9 @@
       "extra": "Citation Key: bugreports_YearSuffixInHarvard1",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "bugreports_YearSuffixInHarvard1"
     },
@@ -294,7 +309,9 @@
       "extra": "Citation Key: bugreports_parseName",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "bugreports_parseName"
     },
@@ -314,7 +331,9 @@
       "extra": "Citation Key: decorations_AndTermUnaffectedByNameDecorations",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "decorations_AndTermUnaffectedByNameDecorations"
     },
@@ -329,7 +348,9 @@
       "extra": "Citation Key: disambiguate_CitationLabelInData",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "disambiguate_CitationLabelInData"
     },
@@ -347,7 +368,9 @@
       "extra": "Citation Key: disambiguate_FailWithYearSuffix",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "disambiguate_FailWithYearSuffix"
     },
@@ -361,7 +384,9 @@
       "extra": "Citation Key: disambiguate_YearCollapseWithInstitution",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "disambiguate_YearCollapseWithInstitution"
     },
@@ -376,7 +401,9 @@
       "extra": "Citation Key: display_SecondFieldAlignMigratePunctuation",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "display_SecondFieldAlignMigratePunctuation"
     },
@@ -390,7 +417,9 @@
       "extra": "Citation Key: group_ComplexNesting",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "group_ComplexNesting"
     },
@@ -405,7 +434,9 @@
       "extra": "Citation Key: integration_DuplicateItem",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "integration_DuplicateItem"
     },
@@ -420,7 +451,9 @@
       "extra": "Citation Key: magic_CapitalizeFirstOccurringNameParticle",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "magic_CapitalizeFirstOccurringNameParticle"
     },
@@ -435,7 +468,9 @@
       "extra": "Citation Key: magic_NameParticle",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "magic_NameParticle"
     },
@@ -448,7 +483,9 @@
       "extra": "Citation Key: magic_SuppressDuplicateVariableRendering",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "magic_SuppressDuplicateVariableRendering"
     },
@@ -463,7 +500,9 @@
       "extra": "Citation Key: name_ArticularNameAsSortOrder",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "name_ArticularNameAsSortOrder"
     },
@@ -478,7 +517,9 @@
       "extra": "Citation Key: name_ArticularShortFormCommaSuffix",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "name_ArticularShortFormCommaSuffix"
     },
@@ -493,7 +534,9 @@
       "extra": "Citation Key: name_ArticularWithComma",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "name_ArticularWithComma"
     },
@@ -507,7 +550,9 @@
       "extra": "Citation Key: name_Delimiter",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "name_Delimiter"
     },
@@ -522,7 +567,9 @@
       "extra": "Citation Key: name_FormattingOfParticles",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "name_FormattingOfParticles"
     },
@@ -537,7 +584,9 @@
       "extra": "Citation Key: name_HyphenatedNonDroppingParticle1",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "name_HyphenatedNonDroppingParticle1"
     },
@@ -550,7 +599,9 @@
       "extra": "Citation Key: name_Institution",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "name_Institution"
     },
@@ -563,7 +614,9 @@
       "extra": "Citation Key: name_InstitutionDecoration",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "name_InstitutionDecoration"
     },
@@ -583,7 +636,9 @@
       "extra": "Citation Key: name_MixedFormatsInitialSortOrderAllWithDecorationsEtAl",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "name_MixedFormatsInitialSortOrderAllWithDecorationsEtAl"
     },
@@ -605,7 +660,9 @@
       "extra": "Citation Key: name_MultipleLiteral",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "name_MultipleLiteral"
     },
@@ -625,7 +682,9 @@
       "extra": "Citation Key: name_ParseNames",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "name_ParseNames"
     },
@@ -640,7 +699,9 @@
       "extra": "Citation Key: name_ParsedDroppingParticleWithAffixes",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "name_ParsedDroppingParticleWithAffixes"
     },
@@ -655,7 +716,9 @@
       "extra": "Citation Key: name_ParsedNonDroppingParticleWithAffixes",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "name_ParsedNonDroppingParticleWithAffixes"
     },
@@ -670,7 +733,9 @@
       "extra": "Citation Key: name_ParsedNonDroppingParticleWithApostrophe",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "name_ParsedNonDroppingParticleWithApostrophe"
     },
@@ -700,7 +765,9 @@
       "extra": "Citation Key: name_ParticleCaps1",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "name_ParticleCaps1"
     },
@@ -715,7 +782,9 @@
       "extra": "Citation Key: name_ParticleCaps3",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "name_ParticleCaps3"
     },
@@ -730,7 +799,9 @@
       "extra": "Citation Key: name_ParticleFormatting",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "name_ParticleFormatting"
     },
@@ -870,7 +941,9 @@
       "extra": "Citation Key: name_ParticlesDemoteNonDroppingNever",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "name_ParticlesDemoteNonDroppingNever"
     },
@@ -885,7 +958,9 @@
       "extra": "Citation Key: name_WesternArticularLowercase",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "name_WesternArticularLowercase"
     },
@@ -900,7 +975,9 @@
       "extra": "Citation Key: name_namepartAffixes",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "name_namepartAffixes"
     },
@@ -915,7 +992,9 @@
       "extra": "Citation Key: nameorder_Long",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "nameorder_Long"
     },
@@ -929,7 +1008,9 @@
       "extra": "Citation Key: position_IbidWithSuffix",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "position_IbidWithSuffix"
     },
@@ -944,7 +1025,9 @@
       "extra": "Citation Key: sort_ChangeInNameSort",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "sort_ChangeInNameSort"
     },
@@ -961,7 +1044,9 @@
       "extra": "Citation Key: sort_ChicagoYearSuffix1",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "sort_ChicagoYearSuffix1"
     },
@@ -975,7 +1060,9 @@
       "extra": "Citation Key: sort_FamilyOnly",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "sort_FamilyOnly"
     },
@@ -995,7 +1082,9 @@
       "extra": "Citation Key: sort_LeadingApostropheOnNameParticle",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "sort_LeadingApostropheOnNameParticle"
     },
@@ -1010,7 +1099,9 @@
       "extra": "Citation Key: sort_NameParticleInNameSortFalse",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "sort_NameParticleInNameSortFalse"
     },
@@ -1025,7 +1116,9 @@
       "extra": "Citation Key: sort_NameVariable",
       "itemType": "journalArticle",
       "tags": [
-        "imported"
+        {
+          "tag": "imported"
+        }
       ],
       "title": "sort_NameVariable"
     }

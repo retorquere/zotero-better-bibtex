@@ -14,8 +14,7 @@
       "citekeyFormat": "[auth][year]",
       "jabrefFormat": 0,
       "skipFields": "file,keywords,abstract,copyright,language,timestamp"
-    },
-    "release": "0.10.22"
+    }
   },
   "items": [
     {
@@ -23,13 +22,11 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Roger D.",
           "lastName": "Blandford"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Kip S.",
           "lastName": "Thorne"
         }

@@ -30,7 +30,6 @@
       "citekeyFold": true,
       "citekeyFormat": "[auth][year]",
       "citeprocNoteCitekey": false,
-      "client": "",
       "csquotes": "",
       "debugLogDir": "",
       "exportBibTeXStrings": "off",
@@ -49,9 +48,7 @@
       "mapMath": "",
       "mapText": "",
       "mapUnicode": "conservative",
-      "newTranslatorsAskRestart": true,
       "parseParticles": true,
-      "platform": "",
       "postscript": "",
       "qualityReport": false,
       "quickCopyMode": "latex",
@@ -71,7 +68,6 @@
     {
       "attachments": [],
       "citationKey": "schiffer2005a",
-      "citekey": "schiffer2005a",
       "collections": [],
       "creators": [
         {
@@ -88,21 +84,16 @@
       "itemType": "bookSection",
       "key": "B59J8E99",
       "language": "german",
-      "libraryID": 1,
-      "notes": [],
       "place": "W\u00fcrzburg",
       "publicationTitle": "Eine Auswahl von Techniken und Beispielen",
       "publisher": "Ergon",
       "relations": [],
-      "tags": [],
       "title": "Die Darstellung des Islams in der Presse: Sprache, Bilder, Suggestionen",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/B59J8E99",
-      "version": 0
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/B59J8E99"
     },
     {
       "attachments": [],
       "citationKey": "albrecht2007a",
-      "citekey": "albrecht2007a",
       "collections": [],
       "creators": [
         {
@@ -128,22 +119,17 @@
       "itemID": 814,
       "itemType": "bookSection",
       "key": "QJKXRDC5",
-      "libraryID": 1,
-      "notes": [],
       "pages": "153 - 163",
       "place": "M\u00fcnster",
       "publicationTitle": "Religion und medien: Vom kultbild zum internetritual",
       "publisher": "Aschendorff",
       "relations": [],
-      "tags": [],
       "title": "Evangelische publizistik",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/QJKXRDC5",
-      "version": 0
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/QJKXRDC5"
     },
     {
       "attachments": [],
       "citationKey": "gaertner2008a",
-      "citekey": "gaertner2008a",
       "collections": [],
       "creators": [
         {
@@ -168,22 +154,17 @@
       "itemID": 815,
       "itemType": "bookSection",
       "key": "9LNB4D9S",
-      "libraryID": 1,
-      "notes": [],
       "pages": "93 - 108",
       "place": "Paderborn",
       "publicationTitle": "Religion heute \u2013 \u00f6ffentlich und politisch: Provokationen, kontroversen, perspektiven",
       "publisher": "Sch\u00f6ningh",
       "relations": [],
-      "tags": [],
       "title": "Die R\u00fcckkehr der Religionen in der politischen und medialen \u00d6ffent\u00ad lichkeit",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/9LNB4D9S",
-      "version": 0
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/9LNB4D9S"
     },
     {
       "attachments": [],
       "citationKey": "schiffer2005a",
-      "citekey": "schiffer2005a",
       "collections": [],
       "creators": [
         {
@@ -200,16 +181,12 @@
       "itemType": "bookSection",
       "key": "RAYHM6LP",
       "language": "german",
-      "libraryID": 1,
-      "notes": [],
       "place": "W\u00fcrzburg",
       "publicationTitle": "Eine Auswahl von Techniken und Beispielen",
       "publisher": "Ergon",
       "relations": [],
-      "tags": [],
       "title": "Die Darstellung des Islams in der Presse: Sprache, Bilder, Suggestionen",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/RAYHM6LP",
-      "version": 0
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/RAYHM6LP"
     }
   ]
 }

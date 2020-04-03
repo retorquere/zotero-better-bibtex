@@ -46,7 +46,6 @@
       "mapMath": "",
       "mapText": "",
       "mapUnicode": "conservative",
-      "newTranslatorsAskRestart": true,
       "parseParticles": true,
       "postscript": "",
       "qualityReport": false,
@@ -60,19 +59,6 @@
       "strings": "",
       "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
       "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.1.148.emile.limonia",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.76",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "en-US",
-        "oscpu": "Intel Mac OS X 10.15",
-        "platform": "MacIntel",
-        "version": "5.0.76"
-      }
     }
   },
   "items": [
@@ -81,7 +67,6 @@
       "ISSN": "1524-4539",
       "attachments": [],
       "citationKey": "sasson_increasing_2013",
-      "citekey": "sasson_increasing_2013",
       "collections": [],
       "creators": [
         {
@@ -189,7 +174,6 @@
       "itemType": "journalArticle",
       "key": "UZ45LRQU",
       "language": "English",
-      "libraryID": 1,
       "notes": [
         "<p>PMID: 23439512</p>"
       ],
@@ -231,7 +215,6 @@
       ],
       "title": "Increasing cardiopulmonary resuscitation provision in communities with low bystander cardiopulmonary resuscitation rates: a science advisory from the American Heart Association for healthcare providers, policymakers, public health departments, and community leaders",
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/UZ45LRQU",
-      "version": 0,
       "volume": "127"
     }
   ]

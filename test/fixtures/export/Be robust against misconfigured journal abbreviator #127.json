@@ -14,8 +14,7 @@
       "jabrefFormat": 0,
       "mapUnicode": "math",
       "asciiBibLaTeX": true
-    },
-    "release": "0.6.63"
+    }
   },
   "items": [
     {
@@ -24,13 +23,11 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "J. J.",
           "lastName": "Yeh"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "I.",
           "lastName": "Lindau"
         }

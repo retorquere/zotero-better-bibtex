@@ -55,37 +55,20 @@
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
       "strings": "",
       "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.1.127.emile.limonia",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.71",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "en-US",
-        "oscpu": "Intel Mac OS X 10.14",
-        "platform": "MacIntel",
-        "version": "5.0.71"
-      }
     }
   },
   "items": [
     {
       "attachments": [
         {
-          "dateAdded": "2019-08-20T15:45:04Z",
-          "dateModified": "2019-08-20T15:45:04Z",
           "itemType": "attachment",
           "path": "/Users/emile/.BBTZ5TEST/zotero/storage/8VZFW8AS/1.pdf",
-          "relations": [],
           "tags": [],
           "title": "1",
           "uri": "http://zotero.org/users/local/6z7M0kXV/items/8VZFW8AS"
         }
       ],
       "citationKey": "Abbott-2007-aa",
-      "citekey": "Abbott-2007-aa",
       "collections": [],
       "creators": [
         {
@@ -101,19 +84,22 @@
       "itemID": 296,
       "itemType": "report",
       "key": "FVRH9FL5",
-      "libraryID": 1,
-      "notes": [],
       "place": "Brussels, Belgium",
       "publisher": "European Center for International Political Economy",
       "relations": [],
       "tags": [
-        "Finance",
-        "Markets",
-        "Political Economy"
+        {
+          "tag": "Finance"
+        },
+        {
+          "tag": "Markets"
+        },
+        {
+          "tag": "Political Economy"
+        }
       ],
       "title": "Are developing countries deterred from using the WTO dispute settlement system? - participation of developing countries in the DSM in the years 1995-2005",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/FVRH9FL5",
-      "version": 0
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/FVRH9FL5"
     }
   ]
 }

@@ -14,9 +14,9 @@
       "ISBN": "978-0-7695-3902-7",
       "attachments": [
         {
-          "mimeType": "application/pdf",
           "path": "attachments/Hulse2009.pdf",
-          "title": "Attachment"
+          "title": "Attachment",
+          "contentType": "application/pdf"
         }
       ],
       "creators": [
@@ -80,13 +80,15 @@
       "extra": "Citation Key: Hulse2009\ntex.biburl= http://www.bibsonomy.org/bibtex/2c97a29e90fbd958a0990360f70252458/dblp\ntex.crossref= conf/icdm/2009w\ntex.description= dblp\ntex.ee= http://doi.ieeecomputersociety.org/10.1109/ICDMW.2009.35\ntex.groups= selekcja\ntex.interhash= aad604c231737dbf8f6155082e3535ae\ntex.intrahash= c97a29e90fbd958a0990360f70252458\ntex.owner= sstudent",
       "itemType": "conferencePaper",
       "pages": "507\u2013514",
-      "proceedingsTitle": "ICDM Workshops",
       "publisher": "IEEE Computer Society",
       "tags": [
-        "dblp"
+        {
+          "tag": "dblp"
+        }
       ],
       "title": "Feature Selection with High-Dimensional Imbalanced Data.",
-      "url": "http://dblp.uni-trier.de/db/conf/icdm/icdmw2009.htmlHulseKNW09"
+      "url": "http://dblp.uni-trier.de/db/conf/icdm/icdmw2009.htmlHulseKNW09",
+      "publicationTitle": "ICDM Workshops"
     }
   ]
 }

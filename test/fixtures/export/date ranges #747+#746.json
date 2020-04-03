@@ -26,7 +26,6 @@
       "itemType": "conferencePaper",
       "pages": "287\u2013304",
       "place": "San Diego, California, USA",
-      "proceedingsTitle": "Proceedings of the Winter 1989 USENIX Conference",
       "publicationTitle": "Proceedings of the Winter 1989 USENIX Conference",
       "publisher": "USENIX",
       "title": "A tour of the worm"
@@ -34,9 +33,9 @@
     {
       "attachments": [
         {
-          "mimeType": "application/pdf",
           "path": "attachments/Adams_Huaynaputina.pdf",
-          "title": "Attachment"
+          "title": "Attachment",
+          "contentType": "application/pdf"
         }
       ],
       "creators": [
@@ -81,9 +80,15 @@
       "pages": "493\u2013518",
       "publicationTitle": "Bulletin of Volcanology",
       "tags": [
-        "Vulcanian eruptions",
-        "breadcrust",
-        "plinian"
+        {
+          "tag": "Vulcanian eruptions"
+        },
+        {
+          "tag": "breadcrust"
+        },
+        {
+          "tag": "plinian"
+        }
       ],
       "title": "747: The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
       "volume": "62"
@@ -91,9 +96,9 @@
     {
       "attachments": [
         {
-          "mimeType": "application/pdf",
           "path": "attachments/Adams_Huaynaputina.pdf",
-          "title": "Attachment"
+          "title": "Attachment",
+          "contentType": "application/pdf"
         }
       ],
       "creators": [
@@ -138,9 +143,15 @@
       "pages": "493\u2013518",
       "publicationTitle": "Bulletin of Volcanology",
       "tags": [
-        "Vulcanian eruptions",
-        "breadcrust",
-        "plinian"
+        {
+          "tag": "Vulcanian eruptions"
+        },
+        {
+          "tag": "breadcrust"
+        },
+        {
+          "tag": "plinian"
+        }
       ],
       "title": "746: The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
       "volume": "62"
@@ -165,7 +176,6 @@
       "libraryCatalog": "ACM Digital Library",
       "pages": "203\u2013220",
       "place": "Austin, TX",
-      "proceedingsTitle": "Proceedings of the 1986 ACM Conference on Computer-supported Cooperative Work (CSCW '86)",
       "publicationTitle": "Proceedings of the 1986 ACM Conference on Computer-supported Cooperative Work (CSCW '86)",
       "publisher": "ACM",
       "title": "A language/action perspective on the design of cooperative work",
@@ -175,7 +185,6 @@
       "DOI": "10.1109/FISTS.2011.5973643",
       "abstractNote": "Virtually all ITS applications rely on accurate traffic data. Identification of faulty detectors is thus vital for their reliability and efficiency. Most existing approaches solely use current and historical data of single or adjacent detectors and are based on empirical thresholds. We present a method for fault detection using Floating-Car Data (FCD) as independent source of information which allows to distinguish changed traffic conditions from sensor faults. Fault detection is based on residuals of a nonlinear regression model fitted to detector readings and FCD traffic speeds. Instead of applying rule-of-thumb thresholds we employ a statistical test, where thresholds result naturally from historical data, sample sizes and required fault detection accuracy. We provide a theoretical framework for fault detectability analysis and empirically evaluate the fault detection capability of our approach using data obtained from a microscopic traffic simulation.",
       "attachments": [],
-      "citekey": "pwidhalmIdentifyingFaultyTraffic29",
       "conferenceName": "2011 IEEE Forum on Integrated and Sustainable Transportation Systems",
       "creators": [
         {
@@ -196,30 +205,67 @@
       "dateModified": "2018-09-07T17:42:55Z",
       "itemID": 504,
       "itemType": "conferencePaper",
-      "notes": [],
       "pages": "103-108",
       "publicationTitle": "2011 IEEE Forum on Integrated and Sustainable Transportation Systems",
       "relations": [],
       "tags": [
-        "road traffic",
-        "Data models",
-        "traffic engineering computing",
-        "ITS",
-        "floating car data",
-        "fault detection",
-        "loop-quality",
-        "Detectors",
-        "Error analysis",
-        "Fault detection",
-        "fault diagnosis",
-        "faulty traffic detector",
-        "FCD traffic speed",
-        "microscopic traffic simulation",
-        "nonlinear regression model",
-        "regression analysis",
-        "statistical test",
-        "Training data",
-        "Vehicles"
+        {
+          "tag": "road traffic"
+        },
+        {
+          "tag": "Data models"
+        },
+        {
+          "tag": "traffic engineering computing"
+        },
+        {
+          "tag": "ITS"
+        },
+        {
+          "tag": "floating car data"
+        },
+        {
+          "tag": "fault detection"
+        },
+        {
+          "tag": "loop-quality"
+        },
+        {
+          "tag": "Detectors"
+        },
+        {
+          "tag": "Error analysis"
+        },
+        {
+          "tag": "Fault detection"
+        },
+        {
+          "tag": "fault diagnosis"
+        },
+        {
+          "tag": "faulty traffic detector"
+        },
+        {
+          "tag": "FCD traffic speed"
+        },
+        {
+          "tag": "microscopic traffic simulation"
+        },
+        {
+          "tag": "nonlinear regression model"
+        },
+        {
+          "tag": "regression analysis"
+        },
+        {
+          "tag": "statistical test"
+        },
+        {
+          "tag": "Training data"
+        },
+        {
+          "tag": "Vehicles"
+        }
       ],
       "title": "Identifying faulty traffic detectors with Floating Car Data",
       "uri": "http://zotero.org/groups/1844905/items/UV8GW56Y"

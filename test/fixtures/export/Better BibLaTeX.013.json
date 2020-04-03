@@ -53,9 +53,15 @@
       "pages": "493\u2013518",
       "publicationTitle": "Title, with comma",
       "tags": [
-        "Vulcanian eruptions",
-        "breadcrust",
-        "plinian"
+        {
+          "tag": "Vulcanian eruptions"
+        },
+        {
+          "tag": "breadcrust"
+        },
+        {
+          "tag": "plinian"
+        }
       ],
       "title": "The physical, violent volcanology of the 1600 eruption of Huaynaputina, southern Peru",
       "volume": "62"

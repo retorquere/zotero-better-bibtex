@@ -46,7 +46,6 @@
       "mapMath": "",
       "mapText": "",
       "mapUnicode": "conservative",
-      "newTranslatorsAskRestart": true,
       "parseParticles": true,
       "postscript": "",
       "qualityReport": false,
@@ -69,7 +68,6 @@
       "accessDate": "2019-11-15T00:15:57Z",
       "attachments": [],
       "citationKey": "Gentleman2005",
-      "citekey": "Gentleman2005",
       "collections": [],
       "creators": [
         {
@@ -131,8 +129,6 @@
       "itemType": "book",
       "key": "HI8MWNJ8",
       "libraryCatalog": "DOI.org (Crossref)",
-      "libraryID": 1,
-      "notes": [],
       "place": "New York, NY",
       "publisher": "Springer New York",
       "relations": [],
@@ -144,8 +140,7 @@
       ],
       "title": "Bioinformatics and Computational Biology Solutions Using R and Bioconductor",
       "uri": "http://zotero.org/users/local/XvY1xbc4/items/HI8MWNJ8",
-      "url": "http://link.springer.com/10.1007/0-387-29362-0",
-      "version": 0
+      "url": "http://link.springer.com/10.1007/0-387-29362-0"
     }
   ]
 }

@@ -16,8 +16,7 @@
       "jabrefFormat": 0,
       "skipFields": "",
       "skipWords": "a,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,das,de,del,der,des,despite,die,do,down,during,ein,eine,einem,einen,einer,eines,el,except,for,from,in,inside,into,is,l,la,las,le,les,like,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,while,with,within,without,yet,zu,zum"
-    },
-    "release": "1.0.9"
+    }
   },
   "items": [
     {
@@ -44,11 +43,21 @@
       "place": "Paris",
       "publisher": "Organisation for Economic Co-operation and Development",
       "tags": [
-        "aid",
-        "cooperation",
-        "development",
-        "evaluation",
-        "monitoring"
+        {
+          "tag": "aid"
+        },
+        {
+          "tag": "cooperation"
+        },
+        {
+          "tag": "development"
+        },
+        {
+          "tag": "evaluation"
+        },
+        {
+          "tag": "monitoring"
+        }
       ],
       "title": "Making development co-operation more effective",
       "url": "http://www.oecd-ilibrary.org/content/book/9789264209305-en"

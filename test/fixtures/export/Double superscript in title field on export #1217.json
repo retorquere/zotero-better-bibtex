@@ -54,26 +54,12 @@
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
       "strings": "",
       "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.1.99",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.69",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "en-US",
-        "oscpu": "Intel Mac OS X 10.12",
-        "platform": "MacIntel",
-        "version": "5.0.69"
-      }
     }
   },
   "items": [
     {
       "DOI": "10.1103/PhysRevB.97.184301",
       "attachments": [],
-      "citekey": "Rovny2018",
       "creators": [
         {
           "creatorType": "author",
@@ -99,11 +85,9 @@
       "itemID": 592,
       "itemType": "journalArticle",
       "journalAbbreviation": "Phys Rev B",
-      "notes": [],
       "pages": "184301",
       "publicationTitle": "Phys. Rev. B",
       "relations": [],
-      "tags": [],
       "title": "\u00b3\u00b9P NMR study of discrete time-crystalline signatures in an ordered crystal of ammonium dihydrogen phosphate",
       "uri": "http://zotero.org/users/1407765/items/4XE5A6Z6",
       "url": "https://link.aps.org/doi/10.1103/PhysRevB.97.184301",

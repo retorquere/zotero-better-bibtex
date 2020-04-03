@@ -57,7 +57,6 @@
       "removeStock": false,
       "ignorePostscriptErrors": true,
       "debugLogDir": "",
-      "testing": false,
       "autoPin": false,
       "kuroshiro": false,
       "relativeFilePaths": false,
@@ -65,10 +64,7 @@
       "mapUnicode": "conservative",
       "mapText": "",
       "mapMath": "",
-      "newTranslatorsAskRestart": true,
-      "workers": 2,
-      "platform": "lin",
-      "client": "zotero"
+      "workers": 2
     },
     "options": {
       "exportFileData": false,
@@ -76,15 +72,10 @@
       "keepUpdated": false
     }
   },
-  "version": {
-    "zotero": "5.0.85",
-    "bbt": "5.2.20"
-  },
   "collections": {},
   "items": [
     {
       "key": "EKPU89NW",
-      "version": 0,
       "itemType": "conferencePaper",
       "title": "Fast sparse matrix-vector multiplication on GPUs: implications for graph mining",
       "abstractNote": "Scaling up the sparse matrix-vector multiplication kernel on modern Graphics Processing Units (GPU) has been at the heart of numerous studies in both academia and industry. In this article we present a novel non-parametric, self-tunable, approach to data representation for computing this kernel, particularly targeting sparse matrices representing power-law graphs. Using real web graph data, we show how our representation scheme, coupled with a novel tiling algorithm, can yield significant benefits over the current state of the art GPU efforts on a number of core data mining algorithms such as PageRank, HITS and Random Walk with Restart.",
@@ -98,7 +89,7 @@
       "volume": "4",
       "place": "United States of America",
       "publisher": "VLDB Endowment",
-      "pages": "231–242",
+      "pages": "231\u2013242",
       "conferenceName": "37th International Conference on Very Large Data Bases",
       "DOI": "10.14778/1938545.1938548",
       "creators": [
@@ -123,7 +114,7 @@
           "creatorType": "editor"
         },
         {
-          "firstName": "José",
+          "firstName": "Jos\u00e9",
           "lastName": "Blakeley",
           "creatorType": "editor"
         },
@@ -149,11 +140,10 @@
         },
         {
           "firstName": "Uwe",
-          "lastName": "Röhm",
+          "lastName": "R\u00f6hm",
           "creatorType": "editor"
         }
       ],
-      "tags": [],
       "collections": [
         "ZKGGCFJB"
       ],
@@ -163,10 +153,7 @@
       "uri": "http://zotero.org/users/local/cuz22LJP/items/EKPU89NW",
       "itemID": 111,
       "attachments": [],
-      "notes": [],
-      "citekey": "yang2011a",
       "citationKey": "yang2011a",
-      "libraryID": 1,
       "publicationTitle": "Proceedings of the VLDB Endowment"
     }
   ]

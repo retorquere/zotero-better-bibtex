@@ -13,8 +13,7 @@
       "citekeyFormat": "[authors][shortyear]",
       "jabrefFormat": 0,
       "skipFields": "file,abstract"
-    },
-    "release": "0.8.7"
+    }
   },
   "items": [
     {
@@ -24,19 +23,16 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Sven",
           "lastName": "Bachmann"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Wojciech",
           "lastName": "Dybalski"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Pieter",
           "lastName": "Naaijkens"
         }
@@ -48,9 +44,15 @@
       "libraryCatalog": "arXiv.org",
       "publicationTitle": "arXiv:1412.2970 [math-ph, physics:quant-ph]",
       "tags": [
-        "Lieb-Robinson bounds",
-        "Mathematical Physics",
-        "Quantum Physics"
+        {
+          "tag": "Lieb-Robinson bounds"
+        },
+        {
+          "tag": "Mathematical Physics"
+        },
+        {
+          "tag": "Quantum Physics"
+        }
       ],
       "title": "Lieb-Robinson bounds, Arveson spectrum and Haag-Ruelle scattering theory for gapped quantum spin systems",
       "url": "http://arxiv.org/abs/1412.2970"

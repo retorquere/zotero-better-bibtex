@@ -2,27 +2,13 @@
   "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
-    "label": "BetterBibTeX JSON",
-    "release": {
-      "BetterBibTeX": "5.0.197.emile.titanarum",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.55",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "en-US",
-        "oscpu": "Linux x86_64",
-        "platform": "Linux x86_64",
-        "version": "5.0.55"
-      }
-    }
+    "label": "BetterBibTeX JSON"
   },
   "items": [
     {
       "applicationNumber": "Application Number",
       "assignee": "Assignee",
       "attachments": [],
-      "citekey": "InventorcombinatorialproblemstabilityIssueDate",
       "country": "Country",
       "creators": [
         {
@@ -58,7 +44,6 @@
       "priorityNumbers": "Priority Numbers",
       "references": "References",
       "relations": [],
-      "tags": [],
       "title": "A combinatorial problem; stability and order for models and theories in infinitary languages",
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/TUAXBMBS"
     },
@@ -68,7 +53,6 @@
       "applicationNumber": "DE10361215A",
       "assignee": "DaimlerChrysler AG (Stuttgart, 70567, DE) Bayerische Motoren Werke AG (M\u00fcnchen, 80809, DE) Robert Bosch GmbH (Stuttgart, 70469, DE)",
       "attachments": [],
-      "citekey": "LaufenbergElektrischeEinrichtungund2005",
       "creators": [
         {
           "creatorType": "inventor",
@@ -137,10 +121,8 @@
       "filingDate": "2003-12-24 2003-12-24",
       "itemID": 100,
       "itemType": "patent",
-      "notes": [],
       "number": "DE10361215",
       "relations": [],
-      "tags": [],
       "title": "Elektrische Einrichtung und Betriebsverfahren",
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/ZC2UZHCP",
       "url": "http://www.freepatentsonline.com/DE10361215.html"

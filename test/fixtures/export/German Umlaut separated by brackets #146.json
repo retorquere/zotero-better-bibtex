@@ -13,8 +13,7 @@
       "citekeyFormat": "[auth][year]",
       "jabrefFormat": 0,
       "skipFields": "keywords,abstract,file"
-    },
-    "release": "0.7.11"
+    }
   },
   "items": [
     {
@@ -23,7 +22,6 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Wolfgang",
           "lastName": "Kaufmann"
         }
@@ -39,9 +37,15 @@
       "place": "Berlin; Frankfurt am Main",
       "publisher": "VDE-Verl. ; Verl.- und Wirtschaftsges. der Elektrizita\u0308tswerke",
       "tags": [
-        "Gleichzeitigkeitsfaktor",
-        "Niederspannung",
-        "Verteilnetz"
+        {
+          "tag": "Gleichzeitigkeitsfaktor"
+        },
+        {
+          "tag": "Niederspannung"
+        },
+        {
+          "tag": "Verteilnetz"
+        }
       ],
       "title": "Planung o\u0308ffentlicher Elektrizit\u00e4tsverteilungs-Systeme"
     }

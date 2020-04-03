@@ -14,21 +14,18 @@
       "citekeyFormat": "[auth:lower][year]",
       "jabrefFormat": 0,
       "skipFields": "abstract,file"
-    },
-    "release": "0.9.6"
+    }
   },
   "items": [
     {
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Abhishek",
           "lastName": "Anand"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Vincent",
           "lastName": "Rahli"
         }

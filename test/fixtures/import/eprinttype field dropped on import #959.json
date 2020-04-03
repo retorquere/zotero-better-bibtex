@@ -30,7 +30,6 @@
       "citekeyFold": true,
       "citekeyFormat": "[auth][year]",
       "citeprocNoteCitekey": false,
-      "client": "",
       "csquotes": "",
       "debugLogDir": "",
       "exportBibTeXStrings": "off",
@@ -49,9 +48,7 @@
       "mapMath": "",
       "mapText": "",
       "mapUnicode": "conservative",
-      "newTranslatorsAskRestart": true,
       "parseParticles": true,
-      "platform": "",
       "postscript": "",
       "qualityReport": false,
       "quickCopyMode": "latex",
@@ -72,7 +69,6 @@
       "DOI": "10.1023/B:LOGI.0000021744.10237.d0",
       "attachments": [],
       "citationKey": "Zach2004a",
-      "citekey": "Zach2004a",
       "collections": [],
       "creators": [
         {
@@ -88,8 +84,6 @@
       "itemID": 827,
       "itemType": "journalArticle",
       "key": "PPCACAU3",
-      "libraryID": 1,
-      "notes": [],
       "pages": "155-164",
       "publicationTitle": "Journal of Philosophical Logic",
       "relations": [],
@@ -100,7 +94,6 @@
       ],
       "title": "Decidability of quantified propositional intuitionistic logic and S4 on trees of height and arity <span class=\"nocase\">\u2264\u03c9</span>",
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/PPCACAU3",
-      "version": 0,
       "volume": "33"
     }
   ]

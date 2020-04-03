@@ -18,8 +18,7 @@
       "jabrefFormat": 0,
       "postscript": "",
       "skipFields": ""
-    },
-    "release": "1.5.11"
+    }
   },
   "items": [
     {
@@ -46,7 +45,6 @@
       "volume": "4"
     },
     {
-      "bookTitle": "Opera",
       "creators": [
         {
           "creatorType": "author",

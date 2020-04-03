@@ -12,7 +12,6 @@
   "items": [
     {
       "ISBN": "2705662219",
-      "bookTitle": "\u0152uvres compl\u00e8tes de philosophie des sciences",
       "callNumber": "QA3 .C39 1994",
       "creators": [
         {
@@ -32,12 +31,18 @@
       "libraryCatalog": "Library of Congress ISBN",
       "pages": "665\u201386",
       "place": "Paris",
-      "publicationTitle": "\u0152uvres comple\u0300tes de philosophie des sciences",
+      "publicationTitle": "\u0152uvres compl\u00e8tes de philosophie des sciences",
       "publisher": "Hermann",
       "tags": [
-        "Mathematics",
-        "Philosophy",
-        "Science"
+        {
+          "tag": "Mathematics"
+        },
+        {
+          "tag": "Philosophy"
+        },
+        {
+          "tag": "Science"
+        }
       ],
       "title": "In memoriam"
     }

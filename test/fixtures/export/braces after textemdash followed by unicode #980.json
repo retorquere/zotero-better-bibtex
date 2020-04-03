@@ -40,19 +40,6 @@
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
       "strings": "",
       "warnBulkModify": 0
-    },
-    "release": {
-      "BetterBibTeX": "5.0.145",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.48",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "zh-CN",
-        "oscpu": "Windows NT 10.0; WOW64",
-        "platform": "Win32",
-        "version": "5.0.48"
-      }
     }
   },
   "items": [
@@ -87,11 +74,8 @@
       "itemType": "journalArticle",
       "language": "\u4e2d\u6587;",
       "libraryCatalog": "CNKI",
-      "notes": [],
       "pages": "13-16",
       "publicationTitle": "\u6c34\u6587",
-      "seeAlso": [],
-      "tags": [],
       "title": "\u57fa\u4e8e\u652f\u6301\u5411\u91cf\u673a\u7684\u964d\u96e8\u2014\u5f84\u6d41\u9884\u6d4b\u7814\u7a76",
       "url": "http://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CJFQ&dbname=CJFD2009&filename=SWZZ200901003&uid=WEEvREcwSlJHSldRa1FhcEE0RVZycFZqd1NScUtXTk9zd3RUUDFrNlYwST0=$9A4hF_YAuvQ5obgVAqNKPCYcEjKensW4ggI8Fm4gTkoUKaID8j8gFw!!&v=MTk5NTBoMVQzcVRyV00xRnJDVVJMS2ZZZVpvRnkvaFY3dkFOanJSZExHNEh0ak1ybzlGWjRSOGVYMUx1eFlTN0Q="
     }

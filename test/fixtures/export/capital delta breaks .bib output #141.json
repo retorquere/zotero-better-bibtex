@@ -12,8 +12,7 @@
       "bibtexURL": "note",
       "citekeyFormat": "[auth:lower][year]",
       "jabrefFormat": 0
-    },
-    "release": "0.7.5"
+    }
   },
   "items": [
     {
@@ -23,43 +22,36 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Hershel L.",
           "lastName": "Herzog"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Constance C.",
           "lastName": "Payne"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Margaret A.",
           "lastName": "Jevnik"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "David",
           "lastName": "Gould"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Elliot L.",
           "lastName": "Shapiro"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Eugene P.",
           "lastName": "Oliveto"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "E. B.",
           "lastName": "Hershberg"
         }

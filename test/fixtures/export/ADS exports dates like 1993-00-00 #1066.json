@@ -44,19 +44,6 @@
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
       "strings": "",
       "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.1.0.emile.titanarum",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.55",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "en-US",
-        "oscpu": "Linux x86_64",
-        "platform": "Linux x86_64",
-        "version": "5.0.55"
-      }
     }
   },
   "items": [
@@ -65,7 +52,6 @@
       "abstractNote": "A powerful, streamlined new Astrophysics Data System",
       "accessDate": "2018-09-24T16:52:14Z",
       "attachments": [],
-      "citekey": "WilsonObservationsisolatedpulsars1993",
       "creators": [
         {
           "creatorType": "author",
@@ -105,11 +91,9 @@
       "itemType": "journalArticle",
       "language": "en",
       "libraryCatalog": "ui.adsabs.harvard.edu",
-      "notes": [],
       "pages": "291",
       "publicationTitle": "American Institute of Physics Conference Series",
       "relations": [],
-      "tags": [],
       "title": "Observations of isolated pulsars and disk-fed X-ray binaries.",
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/JQL5XZ8F",
       "url": "https://ui.adsabs.harvard.edu/#abs/1993AIPC..280..291W/abstract",

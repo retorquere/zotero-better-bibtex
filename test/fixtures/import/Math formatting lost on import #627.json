@@ -55,7 +55,6 @@
       "removeStock": false,
       "ignorePostscriptErrors": true,
       "debugLogDir": "",
-      "testing": true,
       "autoPin": false,
       "kuroshiro": false,
       "relativeFilePaths": false,
@@ -63,10 +62,7 @@
       "mapUnicode": "conservative",
       "mapText": "",
       "mapMath": "",
-      "newTranslatorsAskRestart": true,
-      "workers": 1,
-      "platform": "mac",
-      "client": "zotero"
+      "workers": 1
     },
     "options": {
       "exportFileData": false,
@@ -78,7 +74,6 @@
   "items": [
     {
       "key": "U8UL93HT",
-      "version": 0,
       "itemType": "journalArticle",
       "volume": "109",
       "issue": "15",
@@ -92,7 +87,7 @@
       "creators": [
         {
           "firstName": "J",
-          "lastName": "Bonča",
+          "lastName": "Bon\u010da",
           "creatorType": "author"
         },
         {
@@ -106,7 +101,6 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
       "collections": [],
       "relations": [],
       "dateAdded": "2020-02-24T14:27:35Z",
@@ -114,10 +108,7 @@
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/U8UL93HT",
       "itemID": 310,
       "attachments": [],
-      "notes": [],
-      "citekey": "Bonca:2012in",
-      "citationKey": "Bonca:2012in",
-      "libraryID": 1
+      "citationKey": "Bonca:2012in"
     }
   ]
 }

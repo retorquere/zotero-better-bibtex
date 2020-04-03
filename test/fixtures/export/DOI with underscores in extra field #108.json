@@ -11,22 +11,18 @@
       "bibtexURL": "note",
       "citekeyFormat": "[auth][year]",
       "jabrefFormat": 0
-    },
-    "release": "0.6.44"
+    }
   },
   "items": [
     {
-      "bookTitle": "Implementation of Functional Languages",
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Pieter",
           "lastName": "Koopman"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Rinus",
           "lastName": "Plasmeijer"
         }

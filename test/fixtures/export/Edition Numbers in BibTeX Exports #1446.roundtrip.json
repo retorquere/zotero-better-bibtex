@@ -55,7 +55,6 @@
       "removeStock": false,
       "ignorePostscriptErrors": true,
       "debugLogDir": "",
-      "testing": true,
       "autoPin": false,
       "kuroshiro": false,
       "relativeFilePaths": false,
@@ -63,10 +62,7 @@
       "mapUnicode": "conservative",
       "mapText": "",
       "mapMath": "",
-      "newTranslatorsAskRestart": true,
-      "workers": 1,
-      "platform": "mac",
-      "client": "zotero"
+      "workers": 1
     },
     "options": {
       "exportFileData": false,
@@ -78,7 +74,6 @@
   "items": [
     {
       "key": "CCT46D8K",
-      "version": 0,
       "itemType": "book",
       "url": "https://www.netlib.org/linalg/html_templates/Templates.html",
       "edition": "2",
@@ -142,7 +137,6 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
       "collections": [],
       "relations": [],
       "dateAdded": "2020-03-02T10:59:48Z",
@@ -150,10 +144,7 @@
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/CCT46D8K",
       "itemID": 210,
       "attachments": [],
-      "notes": [],
-      "citekey": "barrett1994",
-      "citationKey": "barrett1994",
-      "libraryID": 1
+      "citationKey": "barrett1994"
     }
   ]
 }

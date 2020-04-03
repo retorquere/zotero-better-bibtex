@@ -52,19 +52,6 @@
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
       "strings": "",
       "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.1.92.emile.limonia",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.67.3",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "en-US",
-        "oscpu": "Intel Mac OS X 10.14",
-        "platform": "MacIntel",
-        "version": "5.0.67.3"
-      }
     }
   },
   "items": [
@@ -74,24 +61,16 @@
       "attachments": [
         {
           "accessDate": "2019-02-27T19:29:31Z",
-          "charset": "",
           "contentType": "",
-          "dateAdded": "2019-06-20T10:17:57Z",
-          "dateModified": "2019-06-20T10:17:57Z",
-          "itemID": 222,
           "itemType": "attachment",
           "key": "9FIGSDAI",
           "linkMode": "linked_url",
-          "parentItem": "W6JWJZQ9",
-          "relations": {},
           "tags": [],
           "title": "Amazon.com Link",
           "uri": "http://zotero.org/users/local/6z7M0kXV/items/9FIGSDAI",
-          "url": "https://www.amazon.cn/dp/B0791WTKJR/ref=sr_1_1?s=books&ie=UTF8&qid=1551295747&sr=1-1&keywords=%E4%BA%92%E8%81%94%E7%BD%91%E9%87%91%E8%9E%8D%E7%9B%91%E7%AE%A1%E6%B3%95%E5%BE%8B%E8%A7%84%E5%88%B6%E7%A0%94%E7%A9%B6",
-          "version": 0
+          "url": "https://www.amazon.cn/dp/B0791WTKJR/ref=sr_1_1?s=books&ie=UTF8&qid=1551295747&sr=1-1&keywords=%E4%BA%92%E8%81%94%E7%BD%91%E9%87%91%E8%9E%8D%E7%9B%91%E7%AE%A1%E6%B3%95%E5%BE%8B%E8%A7%84%E5%88%B6%E7%A0%94%E7%A9%B6"
         }
       ],
-      "citekey": "LiuHuaChun2018_HulianwangJinrongJianguan",
       "creators": [
         {
           "creatorType": "author",
@@ -118,10 +97,18 @@
       "publisher": "\u6cd5\u5f8b\u51fa\u7248\u793e",
       "relations": [],
       "tags": [
-        "ausgewertet",
-        "China",
-        "top",
-        "verf\u00fcgbar"
+        {
+          "tag": "ausgewertet"
+        },
+        {
+          "tag": "China"
+        },
+        {
+          "tag": "top"
+        },
+        {
+          "tag": "verf\u00fcgbar"
+        }
       ],
       "title": "Hulianwang jinrong jianguan fal\u00fc guizhi yanjiu \u4e92\u8054\u7f51\u91d1\u878d\u76d1\u7ba1\u6cd5\u5f8b\u89c4\u5236\u7814\u7a76 [Untersuchung der Gesetze und Vorschriften zur Regulierung des Online-Finanzwesens]",
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/W6JWJZQ9"

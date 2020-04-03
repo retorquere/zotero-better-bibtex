@@ -30,7 +30,6 @@
       "citekeyFold": true,
       "citekeyFormat": "[Auth.etal].[origyear].[PublicationTitle:postfix=.][shorttitle3_3].[firstpage]",
       "citeprocNoteCitekey": false,
-      "client": "zotero",
       "csquotes": "",
       "debugLogDir": "",
       "exportBibTeXStrings": "off",
@@ -52,9 +51,7 @@
       "mapMath": "",
       "mapText": "",
       "mapUnicode": "conservative",
-      "newTranslatorsAskRestart": false,
       "parseParticles": true,
-      "platform": "win",
       "postscript": "",
       "qualityReport": true,
       "quickCopyMode": "orgRef",
@@ -77,7 +74,6 @@
       "ISBN": "84-7166-852-1",
       "attachments": [],
       "citationKey": "Brennan.1982.MagiaExperimental.",
-      "citekey": "Brennan.1982.MagiaExperimental.",
       "collections": [],
       "creators": [
         {
@@ -94,21 +90,16 @@
       "itemType": "book",
       "key": "76ELWHFR",
       "language": "Spanish",
-      "libraryID": 1,
-      "notes": [],
       "place": "Madrid",
       "publisher": "Edaf",
       "relations": [],
-      "tags": [],
       "title": "Magia experimental",
-      "uri": "http://zotero.org/users/6244081/items/76ELWHFR",
-      "version": 227
+      "uri": "http://zotero.org/users/6244081/items/76ELWHFR"
     },
     {
       "ISBN": "978-85-86019-05-0",
       "attachments": [],
       "citationKey": "Vieira.1994.700ExperimentosdaConscienciologia.Capitulo.p.22",
-      "citekey": "Vieira.1994.700ExperimentosdaConscienciologia.Capitulo.p.22",
       "collections": [],
       "creators": [
         {
@@ -126,17 +117,13 @@
       "itemType": "bookSection",
       "key": "8GEWVJQ8",
       "language": "pt",
-      "libraryID": 1,
-      "notes": [],
       "pages": "p.22",
       "place": "Rio de Janeiro",
       "publicationTitle": "700 Experimentos da Conscienciologia",
       "publisher": "Instituto Internacional de Projeciologia",
       "relations": [],
-      "tags": [],
       "title": "Cap\u00edtulo 5",
-      "uri": "http://zotero.org/users/6244081/items/8GEWVJQ8",
-      "version": 235
+      "uri": "http://zotero.org/users/6244081/items/8GEWVJQ8"
     }
   ]
 }

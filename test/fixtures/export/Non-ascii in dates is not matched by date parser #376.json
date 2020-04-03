@@ -7,8 +7,7 @@
       "bibtexURL": "note",
       "citekeyFormat": "[auth][year]",
       "jabrefFormat": 0
-    },
-    "release": "1.5.9"
+    }
   },
   "items": [
     {
@@ -48,11 +47,21 @@
       "itemType": "journalArticle",
       "pages": "205\u2013215",
       "tags": [
-        "Amygdala",
-        "Insula",
-        "Spider phobia",
-        "Startle",
-        "fMRI"
+        {
+          "tag": "Amygdala"
+        },
+        {
+          "tag": "Insula"
+        },
+        {
+          "tag": "Spider phobia"
+        },
+        {
+          "tag": "Startle"
+        },
+        {
+          "tag": "fMRI"
+        }
       ],
       "title": "Brain activation and defensive response mobilization during sustained exposure to phobia-related and other affective pictures in spider phobia",
       "url": "http://onlinelibrary.wiley.com/doi/10.1111/j.1469-8986.2007.00620.x/abstract",

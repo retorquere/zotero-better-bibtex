@@ -25,7 +25,9 @@
       "publicationTitle": "The Blackwell companion to globalization",
       "publisher": "John Wiley & Sons",
       "tags": [
-        "orphaned"
+        {
+          "tag": "orphaned"
+        }
       ],
       "title": "Theories of globalization"
     }

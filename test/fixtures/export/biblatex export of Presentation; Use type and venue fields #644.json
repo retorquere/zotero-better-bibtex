@@ -36,17 +36,6 @@
       "skipFields": "doi",
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
       "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.0.41",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.25",
-        "locale": "en-US",
-        "oscpu": "Linux x86_64",
-        "platform": "Linux x86_64",
-        "version": "5.0.25"
-      }
     }
   },
   "items": [
@@ -72,25 +61,8 @@
       "itemID": 117,
       "itemType": "conferencePaper",
       "notes": [
-        {
-          "dateAdded": "2017-09-05 15:18:50",
-          "dateModified": "2017-09-06 14:07:12",
-          "itemID": 376,
-          "itemType": "note",
-          "key": "93GFH4QZ",
-          "libraryID": null,
-          "note": "<p>Comment: Published as a conference paper at the 3rd International Conference for Learning Representations, San Diego, 2015</p>",
-          "parentItem": "KGS7MIWD",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "KGS7MIWD",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>Comment: Published as a conference paper at the 3rd International Conference for Learning Representations, San Diego, 2015</p>"
-          }
-        }
+        "<p>Comment: Published as a conference paper at the 3rd International Conference for Learning Representations, San Diego, 2015</p>"
       ],
-      "proceedingsTitle": "Proceedings of the 3rd International Conference on Learning Representations (ICLR 2015)",
       "publicationTitle": "Proceedings of the 3rd International Conference on Learning Representations (ICLR 2015)",
       "tags": [
         {
@@ -115,12 +87,8 @@
       "itemID": 2499,
       "itemType": "presentation",
       "language": "en-US",
-      "notes": [],
       "place": "Northwestern University, Evanston, IL",
-      "presentationType": "lecture",
       "rights": "CMS16e",
-      "seeAlso": [],
-      "tags": [],
       "title": "The craft and career of writing",
       "type": "lecture"
     }

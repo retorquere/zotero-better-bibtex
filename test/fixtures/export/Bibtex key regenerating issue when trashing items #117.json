@@ -11,8 +11,7 @@
       "bibtexURL": "note",
       "citekeyFormat": "[auth][year]",
       "jabrefFormat": 0
-    },
-    "release": "0.6.44"
+    }
   },
   "items": [
     {
@@ -23,13 +22,11 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "E. S.",
           "lastName": "Lander"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "D.",
           "lastName": "Botstein"
         }

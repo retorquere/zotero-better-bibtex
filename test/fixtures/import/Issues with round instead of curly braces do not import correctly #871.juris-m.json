@@ -19,10 +19,10 @@
       ],
       "date": "1972-05",
       "extra": "Citation Key: McDermott:72",
-      "institution": "MIT Artificial Intelligence Laboratory",
       "itemID": 0,
       "itemType": "report",
-      "title": "The <span style=\"font-variant:small-caps;\">CONNIVER</span> reference manual"
+      "title": "The <span style=\"font-variant:small-caps;\">CONNIVER</span> reference manual",
+      "publisher": "MIT Artificial Intelligence Laboratory"
     }
   ]
 }

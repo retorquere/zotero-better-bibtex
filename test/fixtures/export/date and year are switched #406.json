@@ -18,8 +18,7 @@
       "jabrefFormat": 0,
       "postscript": "",
       "skipFields": ""
-    },
-    "release": "1.6.6"
+    }
   },
   "items": [
     {
@@ -106,13 +105,11 @@
         }
       ],
       "date": "2014.02.11",
-      "institution": "Technische Universit\u00e4t Dortmund",
       "itemID": 10,
       "itemType": "report",
       "number": "2003/32864",
       "place": "Eldorado",
       "publisher": "Technische Universit\u00e4t Dortmund",
-      "reportNumber": "2003/32864",
       "title": "Stability Analysis and Clustering of Electrical Transmission Systems",
       "url": "http://dx.doi.org/10.17877/DE290R-13190"
     }

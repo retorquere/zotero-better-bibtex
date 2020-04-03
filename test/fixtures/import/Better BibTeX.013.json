@@ -8,8 +8,8 @@
     {
       "attachments": [
         {
-          "mimeType": "application/pdf",
-          "title": ",.;'[]{}`-=~!@#$%^&()_+.pdf"
+          "title": ",.;'[]{}`-=~!@#$%^&()_+.pdf",
+          "contentType": "application/pdf"
         }
       ],
       "extra": "Citation Key: id",
@@ -20,8 +20,8 @@
     {
       "attachments": [
         {
-          "mimeType": "application/pdf",
-          "title": ",.;'[]{}`-=~!@#$%^&()_+.pdf"
+          "title": ",.;'[]{}`-=~!@#$%^&()_+.pdf",
+          "contentType": "application/pdf"
         }
       ],
       "extra": "Citation Key: id2",

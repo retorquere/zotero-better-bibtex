@@ -11,30 +11,25 @@
       "bibtexURL": "note",
       "citekeyFormat": "[auth][year]",
       "jabrefFormat": 0
-    },
-    "release": "0.7.19"
+    }
   },
   "items": [
     {
       "accessDate": "2015-02-07 20:13:23",
       "attachments": [],
-      "bookTitle": "Policies for Happiness",
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Stefano",
           "lastName": "Bartolini"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Ennio",
           "lastName": "Bilancini"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Francesco",
           "lastName": "Sarracino"
         }

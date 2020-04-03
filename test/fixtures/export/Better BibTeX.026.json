@@ -13,9 +13,9 @@
     {
       "attachments": [
         {
-          "mimeType": "application/pdf",
           "path": "attachments/Traum - Computational Models of Non-cooperative dialogue.pdf",
-          "title": "Traum - Computational Models of Non-cooperative dialogue.pdf"
+          "title": "Traum - Computational Models of Non-cooperative dialogue.pdf",
+          "contentType": "application/pdf"
         }
       ],
       "creators": [

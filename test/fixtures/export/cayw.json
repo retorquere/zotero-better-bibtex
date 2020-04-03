@@ -15,8 +15,7 @@
       "exportBibTeXStrings": "off",
       "jabrefFormat": 0,
       "mapUnicode": "math"
-    },
-    "release": "1.0.5"
+    }
   },
   "items": [
     {
@@ -47,7 +46,9 @@
       "rights": "\u00a9 Royal Anthropological Institute 2014",
       "shortTitle": "6\u00a0The time it takes",
       "tags": [
-        "m\u00e5ske"
+        {
+          "tag": "m\u00e5ske"
+        }
       ],
       "title": "6\u00a0The time it takes: temporalities of planning",
       "url": "http://onlinelibrary.wiley.com.ep.fjernadgang.kb.dk/doi/10.1111/1467-9655.12097/abstract",
@@ -76,23 +77,21 @@
       "volume": "36"
     },
     {
-      "caseName": "Kartinyeri v Commonwealth",
       "court": "HCA",
       "date": "1998-04-01",
-      "dateDecided": "1998-04-01",
       "extra": "Citation Key: kartinyeri\ntex.author= Kaetinyeri v Commonwealth\ntex.translator= Kartinyeri",
-      "firstPage": "337",
       "itemID": 1825,
       "itemType": "case",
       "pages": "337",
-      "reporter": "CLR",
-      "reporterVolume": "195",
       "shortTitle": "Kartinyeri",
       "tags": [
-        "au"
+        {
+          "tag": "au"
+        }
       ],
       "title": "Kartinyeri v Commonwealth",
-      "volume": "195"
+      "volume": "195",
+      "publicationTitle": "CLR"
     }
   ]
 }

@@ -54,7 +54,6 @@
       "removeStock": false,
       "ignorePostscriptErrors": true,
       "debugLogDir": "",
-      "testing": false,
       "autoPin": false,
       "kuroshiro": false,
       "relativeFilePaths": false,
@@ -62,10 +61,7 @@
       "mapUnicode": "conservative",
       "mapText": "",
       "mapMath": "",
-      "newTranslatorsAskRestart": true,
-      "workers": 2,
-      "platform": "lin",
-      "client": "zotero"
+      "workers": 2
     },
     "options": {
       "exportFileData": false,
@@ -77,7 +73,6 @@
   "items": [
     {
       "key": "E888BBUG",
-      "version": 995,
       "itemType": "journalArticle",
       "url": "http://adsabs.harvard.edu/abs/2008MNRAS.383.1210S",
       "volume": "383",
@@ -138,9 +133,6 @@
           "itemType": "attachment",
           "title": "Full Text PDF",
           "tags": [],
-          "relations": [],
-          "dateAdded": "2020-01-17T20:41:26Z",
-          "dateModified": "2020-01-17T20:41:26Z",
           "uri": "http://zotero.org/users/5611573/items/TV6THWM5",
           "path": "/home/claire/Zotero/storage/TV6THWM5/Schaye and Dalla Vecchia - 2008 - On the relation between the Schmidt and Kennicutt-.pdf"
         }
@@ -148,9 +140,7 @@
       "notes": [
         "<p>For implementing observed KS relations into simulation. Describes the connection between SF law based on surface density (KS) and volume density (Schmidt). Includes some implementation advice for SF based on Schmidt laws. Suggests the use of a (polytropic) effective EOS to encapsulate the multiphase nature &amp; unmodeled physics of the ISM.</p>\n<p>Simulations show the KS-Schmidt connection developed herein, and the Schmidt implementation, do a good job of reproducing the input KS relation (incl. surface density threshold). Result is robust to winds and low resolution, though with wind it may deviate near threshold depending on how surface density is calculated. Result also roughly holds for changes in the polytropic index, but changing the effective EOS can cause instability &amp; therefore increase SF. Authors stress that matching local SF conditions is more informative than matching global relations.</p>"
       ],
-      "citekey": "schayeRelationSchmidtKennicuttSchmidt2008",
-      "citationKey": "schayeRelationSchmidtKennicuttSchmidt2008",
-      "libraryID": 1
+      "citationKey": "schayeRelationSchmidtKennicuttSchmidt2008"
     }
   ]
 }

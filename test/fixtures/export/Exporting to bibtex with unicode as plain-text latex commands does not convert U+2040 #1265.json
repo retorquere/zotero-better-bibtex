@@ -57,19 +57,6 @@
       "strings": "",
       "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
       "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.1.131",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.74",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "en-GB",
-        "oscpu": "Windows NT 10.0; WOW64",
-        "platform": "Win32",
-        "version": "5.0.74"
-      }
     }
   },
   "items": [
@@ -79,7 +66,6 @@
       "accessDate": "2019-08-27T20:39:57Z",
       "attachments": [],
       "citationKey": "golshtein_modified_1996-1",
-      "citekey": "golshtein_modified_1996-1",
       "collections": [],
       "creators": [
         {
@@ -101,19 +87,19 @@
       "key": "EQTSB3ZE",
       "language": "English",
       "libraryCatalog": "Trove",
-      "libraryID": 1,
       "notes": [
         "<p> &quot;A Wiley-Interscience publication.&quot; </p>"
       ],
       "publisher": "New York : Wiley",
       "relations": [],
       "tags": [
-        "Separating axis theorem"
+        {
+          "tag": "Separating axis theorem"
+        }
       ],
       "title": "Modified Lagrangians and monotone maps in optimization",
       "uri": "http://zotero.org/users/5887176/items/EQTSB3ZE",
-      "url": "https://trove.nla.gov.au/version/45641460",
-      "version": 0
+      "url": "https://trove.nla.gov.au/version/45641460"
     }
   ]
 }

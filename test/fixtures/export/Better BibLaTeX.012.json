@@ -14,9 +14,9 @@
       "DOI": "10.1000/182",
       "attachments": [
         {
-          "mimeType": "application/pdf",
           "path": "attachments/Adams_Huaynaputina.pdf",
-          "title": "Attachment"
+          "title": "Attachment",
+          "contentType": "application/pdf"
         }
       ],
       "creators": [
@@ -61,9 +61,15 @@
       "pages": "493\u2013518",
       "publicationTitle": "Bulletin of Volcanology",
       "tags": [
-        "Vulcanian eruptions",
-        "breadcrust",
-        "plinian"
+        {
+          "tag": "Vulcanian eruptions"
+        },
+        {
+          "tag": "breadcrust"
+        },
+        {
+          "tag": "plinian"
+        }
       ],
       "title": "The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
       "volume": "62"

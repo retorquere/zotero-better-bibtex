@@ -7,8 +7,7 @@
       "bibtexURL": "note",
       "citekeyFormat": "[auth][year]",
       "jabrefFormat": 0
-    },
-    "release": "1.5.3"
+    }
   },
   "items": [
     {
@@ -25,7 +24,6 @@
         }
       ],
       "date": "2015",
-      "distributor": "The Distributor",
       "extra": "publisher-place: US/GB",
       "itemID": 16,
       "itemType": "film",
@@ -42,14 +40,11 @@
       ],
       "date": "2015",
       "extra": "editor: Editrix||Emma\neditor: Editor||Ed\n{:X-genre: xxx}",
-      "institution": "Institution",
       "itemID": 15,
       "itemType": "report",
       "number": "77",
       "place": "Place",
       "publisher": "Institution",
-      "reportNumber": "77",
-      "reportType": "working paper",
       "title": "A report",
       "type": "working paper"
     },
@@ -86,21 +81,19 @@
         }
       ],
       "date": "1996-09-16",
-      "episodeNumber": "1",
       "extra": "Citation Key: friends:leia:tv\nvolume: 3",
       "itemID": 251,
       "itemType": "tvBroadcast",
       "language": "en-US",
-      "network": "NBC",
       "notes": [
         "<p>Adapted from <a href=\"http://mirrors.ctan.org/macros/latex/contrib/biblatex-contrib/biblatex-chicago/doc/examples/dates-test.bib\">http://mirrors.ctan.org/macros/latex/contrib/biblatex-contrib/biblatex-chicago/doc/examples/dates-test.bib</a></p>\n<p>Original annotation:</p>\n<p>*16th edition only*. This is a template for citing television shows in the 16th edition. The eventdate is the original broadcast date, while the date applies to the medium you are citing. As in other audiovisual entries, the earliest date automatically goes at the head of the entry. Note that information about the season and episode numbers [season~3, episode~1] goes in booktitleaddon.</p>"
       ],
       "number": "1",
       "place": "US",
-      "programTitle": "Friends",
       "publisher": "NBC",
       "runningTime": "22 min",
-      "title": "The one with the Princess Leia fantasy"
+      "title": "The one with the Princess Leia fantasy",
+      "publicationTitle": "Friends"
     },
     {
       "creators": [
@@ -132,9 +125,7 @@
       "place": "US",
       "publisher": "Warner Home Video",
       "runningTime": "22 min",
-      "studio": "Warner Home Video",
       "title": "The one with the Princess Leia fantasy",
-      "videoRecordingFormat": "DVD",
       "volume": "3"
     },
     {
@@ -164,7 +155,6 @@
       "date": "2004",
       "dateAdded": "2015-08-13 18:39:21",
       "dateModified": "2016-08-19 14:52:17",
-      "encyclopediaTitle": "Oxford dictionary of national biography",
       "extra": "DOI: 10.1093/ref:odnb/10183",
       "itemID": 670,
       "itemType": "encyclopediaArticle",

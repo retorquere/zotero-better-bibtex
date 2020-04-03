@@ -18,8 +18,7 @@
       "jabrefFormat": 0,
       "postscript": "",
       "skipFields": "abstract, keywords, shorttitle, issn, copyright, timestamp, language, urldate"
-    },
-    "release": "1.6.15"
+    }
   },
   "items": [
     {
@@ -27,7 +26,6 @@
       "abstractNote": "Summary The traveling salesman problem (TSP) is a challenging problem in combinatorial optimization. In this paper we consider the multiobjective TSP for which the aim is to obtain or to approximate the set of efficient solutions. In a first step, we classify and describe briefly the existing works, that are essentially based on the use of metaheuristics. In a second step, we propose a new method, called two-phase Pareto local search. In the first phase of this method, an initial population composed of an approximation to the extreme supported efficient solutions is generated. The second phase is a Pareto local search applied to all solutions of the initial population. The method does not use any numerical parameter. We show that using the combination of these two techniques\u2014good initial population generation and Pareto local search\u2014gives, on the majority of the instances tested, better results than state-of-the-art algorithms.",
       "accessDate": "2015-12-07 20:34:28",
       "attachments": [],
-      "bookTitle": "Advances in Multi-Objective Nature Inspired Computing",
       "creators": [
         {
           "creatorType": "author",
@@ -69,8 +67,12 @@
       "seriesNumber": "272",
       "shortTitle": "The Multiobjective Traveling Salesman Problem",
       "tags": [
-        "Appl.Mathematics/Computational Methods of Engineering",
-        "Artificial Intelligence (incl. Robotics)"
+        {
+          "tag": "Appl.Mathematics/Computational Methods of Engineering"
+        },
+        {
+          "tag": "Artificial Intelligence (incl. Robotics)"
+        }
       ],
       "title": "The Multiobjective Traveling Salesman Problem: A Survey and a New Approach",
       "url": "http://link.springer.com/chapter/10.1007/978-3-642-11218-8_6"

@@ -57,7 +57,6 @@
       "removeStock": true,
       "ignorePostscriptErrors": false,
       "debugLogDir": "",
-      "testing": true,
       "autoPin": false,
       "kuroshiro": true,
       "relativeFilePaths": false,
@@ -65,10 +64,7 @@
       "mapUnicode": "conservative",
       "mapText": "",
       "mapMath": "",
-      "newTranslatorsAskRestart": true,
-      "workers": 1,
-      "platform": "mac",
-      "client": "zotero"
+      "workers": 1
     },
     "options": {
       "exportFileData": false,
@@ -76,15 +72,10 @@
       "keepUpdated": false
     }
   },
-  "version": {
-    "zotero": "5.0.84",
-    "bbt": "5.2.18.emile.limonia"
-  },
   "collections": {},
   "items": [
     {
       "key": "AQBNQZAN",
-      "version": 0,
       "itemType": "journalArticle",
       "volume": "15",
       "issue": "2",
@@ -94,7 +85,7 @@
       "extra": "Citation Key: Zhang_2015",
       "journalAbbreviation": "Nano Lett.",
       "DOI": "10.1021/nl503556a",
-      "title": "Catalyst Orientation-Induced Growth of Defect-Free Zinc-Blende Structured ⟨001̅⟩ InAs Nanowires",
+      "title": "Catalyst Orientation-Induced Growth of Defect-Free Zinc-Blende Structured \u27e8001\u0305\u27e9 InAs Nanowires",
       "creators": [
         {
           "firstName": "Zhi",
@@ -127,7 +118,6 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
       "collections": [],
       "relations": [],
       "dateAdded": "2020-03-22T21:34:40Z",
@@ -135,10 +125,7 @@
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/AQBNQZAN",
       "itemID": 100,
       "attachments": [],
-      "notes": [],
-      "citekey": "Zhang_2015",
-      "citationKey": "Zhang_2015",
-      "libraryID": 1
+      "citationKey": "Zhang_2015"
     }
   ]
 }

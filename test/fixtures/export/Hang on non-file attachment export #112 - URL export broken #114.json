@@ -11,8 +11,7 @@
       "bibtexURL": "note",
       "citekeyFormat": "[auth][year]",
       "jabrefFormat": 0
-    },
-    "release": "0.6.47"
+    }
   },
   "items": [
     {
@@ -22,7 +21,6 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "John",
           "lastName": "Rawls"
         }
@@ -35,7 +33,9 @@
       "numPages": "564",
       "publisher": "Harvard University Press",
       "tags": [
-        "Law / General"
+        {
+          "tag": "Law / General"
+        }
       ],
       "title": "A Theory of Justice",
       "url": "http://www.google.com"
@@ -47,7 +47,6 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Harriet Beecher",
           "lastName": "Stowe"
         }
@@ -60,7 +59,9 @@
       "numPages": "629",
       "publisher": "Broadview Press",
       "tags": [
-        "Fiction / Literary"
+        {
+          "tag": "Fiction / Literary"
+        }
       ],
       "title": "Uncle Tom's Cabin"
     }

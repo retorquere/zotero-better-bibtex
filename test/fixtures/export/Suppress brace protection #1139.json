@@ -50,19 +50,6 @@
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
       "strings": "",
       "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.1.58.3534",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.60",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "en-US",
-        "oscpu": "Intel Mac OS X 10.14",
-        "platform": "MacIntel",
-        "version": "5.0.60"
-      }
     }
   },
   "items": [
@@ -70,7 +57,6 @@
       "ISBN": "978-0-415-78025-4",
       "abstractNote": "The Anthropology of Islam Reader brings together a rich variety of ethnographic work, offering an insight into various forms of Islam as practiced in different geographic, social, and cultural contexts. Topics explored include Ramadan and the Hajj, the Feast of Sacrifice, and the representation of Islam. An extensive introduction and bibliography helps students develop their understanding of the variety of methodological and theoretical approaches involved in the anthropological study of Islam. In his selections, Jens Kreinath highlights the diversity of practices and themes that were formative for this field of study, making this essential reading for students of Islam at undergraduate and graduate level.",
       "attachments": [],
-      "citekey": "Kreinath2011",
       "creators": [
         {
           "creatorType": "editor",
@@ -86,12 +72,10 @@
       "itemType": "book",
       "language": "English",
       "libraryCatalog": "Amazon",
-      "notes": [],
       "numPages": "432",
       "place": "London ; New York",
       "publisher": "Routledge",
       "relations": [],
-      "tags": [],
       "title": "The Anthropology of Islam Reader",
       "uri": "http://zotero.org/users/local/t1ouTzvw/items/56NQ79SG"
     }

@@ -57,7 +57,6 @@
       "removeStock": false,
       "ignorePostscriptErrors": true,
       "debugLogDir": "",
-      "testing": true,
       "autoPin": false,
       "kuroshiro": false,
       "relativeFilePaths": false,
@@ -65,10 +64,7 @@
       "mapUnicode": "conservative",
       "mapText": "",
       "mapMath": "",
-      "newTranslatorsAskRestart": true,
-      "workers": 1,
-      "platform": "mac",
-      "client": "zotero"
+      "workers": 1
     },
     "options": {
       "exportFileData": false,
@@ -80,14 +76,13 @@
   "items": [
     {
       "key": "5TB5LHK8",
-      "version": 0,
       "itemType": "conferencePaper",
       "pages": "300-301",
       "date": "2016-02",
       "extra": "Citation Key: test_citation2\nISSN: 0193-6530",
       "DOI": "10.1109/JPROC.2016.2526118",
       "abstractNote": "Abstract here",
-      "title": "Test Title with space quad, space semi-colon, space colon, space comma, space nbsp",
+      "title": "Test Title with space\u2003quad, space\u2004semi-colon, space\u205fcolon, space\u2009comma, space nbsp",
       "creators": [
         {
           "firstName": "J.",
@@ -115,22 +110,18 @@
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/5TB5LHK8",
       "itemID": 104,
       "attachments": [],
-      "notes": [],
-      "citekey": "test_citation2",
       "citationKey": "test_citation2",
-      "libraryID": 1,
       "publicationTitle": "IEEE_J_PROC"
     },
     {
       "key": "VSPIWDQI",
-      "version": 0,
       "itemType": "conferencePaper",
       "pages": "300-301",
       "date": "2016-02",
       "extra": "Citation Key: test_citation1\nISSN: 0193-6530",
       "DOI": "10.1109/JPROC.2016.2526118",
       "abstractNote": "Abstract here",
-      "title": "Test Title With 100 𝜇J, 200 𝜇J Energy, and ±0.1% Accuracy, 0.2 mm² Size, and -50 dB Attenuation",
+      "title": "Test Title With 100 \ud835\udf07J, 200\u2009\ud835\udf07J Energy, and \u00b10.1% Accuracy, 0.2\u2009mm\u00b2 Size, and -50\u2009dB Attenuation",
       "creators": [
         {
           "firstName": "J.",
@@ -158,15 +149,11 @@
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/VSPIWDQI",
       "itemID": 103,
       "attachments": [],
-      "notes": [],
-      "citekey": "test_citation1",
       "citationKey": "test_citation1",
-      "libraryID": 1,
       "publicationTitle": "IEEE_J_PROC"
     },
     {
       "key": "XJRIBSPX",
-      "version": 0,
       "itemType": "note",
       "note": "Import errors found: <ul><li>Unresolved @string reference &quot;IEEE_J_PROC&quot;</li></ul>",
       "tags": [
@@ -180,9 +167,7 @@
       "dateAdded": "2020-03-12T07:59:13Z",
       "dateModified": "2020-03-12T07:59:13Z",
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/XJRIBSPX",
-      "itemID": 105,
-      "libraryID": 1,
-      "notes": []
+      "itemID": 105
     }
   ]
 }
