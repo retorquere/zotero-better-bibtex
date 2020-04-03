@@ -5,8 +5,9 @@ import glob
 from munch import Munch
 import os
 
+baseline = __file__.replace('.py', '.json')
 def refresh(root):
-  with open(os.path.join(root, 'util/bbt-json-schema.json')) as f:
+  with open(baseline) as f:
     schema = Munch.fromDict(json.load(f))
   with open(os.path.join(root, 'gen/preferences/preferences.json')) as f:
     prefs = Munch.fromDict(json.load(f))
@@ -20,26 +21,10 @@ def refresh(root):
     else:
       raise ValueError(meta.type)
 
-  schema.properties['collections'] = Munch.fromDict({
-    'type': 'object',
-    'additionalProperties': {
-      'type': 'object',
-      'additionalProperties': False,
-      'required': [ 'collections', 'key', 'name', 'items' ],
-      'properties': {
-        'collections': { 'type': 'array', 'items': { 'type': 'string' } },
-        'key': { 'type': 'string' },
-        'name': { 'type': 'string' },
-        'items': { 'type': 'array', 'items': { 'type': 'string' } },
-        'parent': { 'type': 'string' },
-      },
-    },
-  })
-
   schema.properties['items'].properties = Munch.fromDict({
     k: v
-    for k, v in schema.properties['items'].properties.items():
-    if k in [ 'citationKey', 'itemID', 'key', 'dateAdded', 'dateModified', 'uri', 'creators', 'tags', 'notes', 'collections', 'relations', 'attachments' ]
+    for k, v in schema.properties['items']['items'].properties.items()
+    if k in [ 'note', 'multi', 'citationKey', 'itemID', 'key', 'dateAdded', 'dateModified', 'uri', 'creators', 'tags', 'notes', 'collections', 'relations', 'attachments' ]
   })
 
   itemTypes = set()
@@ -57,5 +42,5 @@ def refresh(root):
 
   schema.properties['items']['items'].properties.itemType = { 'enum': sorted(list(itemTypes)) }
 
-  with open(os.path.join(root, 'bbt-json-schema.json'), 'w') as f:
+  with open(baseline, 'w') as f:
     json.dump(schema, f, indent='  ')

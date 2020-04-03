@@ -279,9 +279,15 @@
           "additionalProperties": false,
           "default": {},
           "properties": {
-            "exportFileData": { "type": "boolean" },
-            "exportNotes": { "type": "boolean" },
-            "keepUpdated": { "type": "boolean" }
+            "exportFileData": {
+              "type": "boolean"
+            },
+            "exportNotes": {
+              "type": "boolean"
+            },
+            "keepUpdated": {
+              "type": "boolean"
+            }
           }
         }
       }
@@ -291,13 +297,34 @@
       "additionalProperties": {
         "type": "object",
         "additionalProperties": false,
-        "required": [ "collections", "key", "name", "items" ],
+        "required": [
+          "collections",
+          "key",
+          "name",
+          "items"
+        ],
         "properties": {
-          "collections": { "type": "array", "items": { "type": "string" } },
-          "key": { "type": "string" },
-          "name": { "type": "string" },
-          "items": { "type": "array", "items": { "type": "string" } },
-          "parent": { "type": "string" }
+          "collections": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "key": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "parent": {
+            "type": "string"
+          }
         }
       }
     },
@@ -324,6 +351,9 @@
             "type": "string"
           },
           "uri": {
+            "type": "string"
+          },
+          "note": {
             "type": "string"
           },
           "creators": {
@@ -375,9 +405,15 @@
                     "translator",
                     "wordsBy"
                   ]
+                },
+                "multi": {
+                  "type": "object"
                 }
               }
             }
+          },
+          "multi": {
+            "type": "object"
           },
           "tags": {
             "type": "array",
@@ -412,8 +448,7 @@
           "relations": {
             "type": "array",
             "items": {
-              "type": "object",
-              "additionalProperties": false
+              "type": "string"
             }
           },
           "attachments": {
@@ -423,7 +458,6 @@
               "additionalProperties": false,
               "default": {},
               "required": [
-                "itemType",
                 "title"
               ],
               "properties": {
@@ -431,6 +465,45 @@
                   "const": "attachment"
                 },
                 "title": {
+                  "type": "string"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "tags": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "tag"
+                    ],
+                    "properties": {
+                      "tag": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                },
+                "contentType": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "accessDate": {
+                  "type": "string"
+                },
+                "linkMode": {
+                  "type": "string"
+                },
+                "key": {
+                  "type": "string"
+                },
+                "uri": {
                   "type": "string"
                 }
               }
@@ -732,6 +805,182 @@
               "videoRecording",
               "webpage"
             ]
+          }
+        }
+      },
+      "properties": {
+        "citationKey": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "integer"
+        },
+        "key": {
+          "type": "string"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "uri": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        },
+        "creators": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              },
+              "creatorType": {
+                "enum": [
+                  "artist",
+                  "attorneyAgent",
+                  "author",
+                  "bookAuthor",
+                  "cartographer",
+                  "castMember",
+                  "commenter",
+                  "composer",
+                  "contributor",
+                  "cosponsor",
+                  "counsel",
+                  "director",
+                  "editor",
+                  "guest",
+                  "interviewee",
+                  "interviewer",
+                  "inventor",
+                  "performer",
+                  "podcaster",
+                  "presenter",
+                  "producer",
+                  "programmer",
+                  "recipient",
+                  "reviewedAuthor",
+                  "scriptwriter",
+                  "seriesEditor",
+                  "sponsor",
+                  "testimonyBy",
+                  "translator",
+                  "wordsBy"
+                ]
+              },
+              "multi": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "multi": {
+          "type": "object"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "tag"
+            ],
+            "properties": {
+              "tag": {
+                "type": "string"
+              },
+              "type": {
+                "type": "integer"
+              }
+            }
+          }
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "collections": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "relations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "attachments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "default": {},
+            "required": [
+              "title"
+            ],
+            "properties": {
+              "itemType": {
+                "const": "attachment"
+              },
+              "title": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "tag"
+                  ],
+                  "properties": {
+                    "tag": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              "contentType": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "accessDate": {
+                "type": "string"
+              },
+              "linkMode": {
+                "type": "string"
+              },
+              "key": {
+                "type": "string"
+              },
+              "uri": {
+                "type": "string"
+              }
+            }
           }
         }
       }
