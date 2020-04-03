@@ -42,14 +42,14 @@ function format(date) {
 }
 
 export function datefield(date, field) {
-  if (!date) return {}
-  if (date && !date.type && date.orig) return {}
+  field = JSON.parse(JSON.stringify({ ...field, value: '', enc: 'latex' }))
+
+  if (!date) return field
+  if (date && !date.type && date.orig) return field
   if (!date.type) throw new Error(`Failed to parse ${JSON.stringify(date)}`)
 
-  field = { ...field, enc: 'latex', value: '' }
-
   if (date.type === 'verbatim') {
-    field.name = field.verbatim
+    field.name = field.verbatim || field.name
 
     if (date.verbatim === 'n.d.') {
       field.value = '<pre>\\bibstring{nodate}</pre>'
@@ -68,7 +68,7 @@ export function datefield(date, field) {
 
   }
 
-  if (!field.value || !field.name) return {}
+  if (!field.value || !field.name) return field
 
   // well this is fairly dense... the date field is not an verbatim field, so the 'circa' symbol ('~') ought to mean a
   // NBSP... but some magic happens in that field (always with the magic, BibLaTeX...). But hey, if I insert an NBSP,

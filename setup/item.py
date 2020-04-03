@@ -30,8 +30,13 @@ def load(url, schema):
 
 def fix_csl_vars(proposed, name, csl_vars):
   for var in list(proposed.keys()):
-    if not var in csl_vars and not f'.{var}' in csl_vars:
-      print(f'  {name}: discarding bogus CSL variable', var)
+    # assume that if there's an '-' in the var they know what they're doing -- looking at you juris-m. These are not supported vars.
+    if var in csl_vars:
+      pass
+    elif f'x-{var}' in csl_vars:
+      print(f'  {name}: keeping unsupported CSL variable', json.dumps(var))
+    else:
+      print(f'  {name}: discarding bogus CSL variable', json.dumps(var))
       proposed.pop(var)
 
 def fix_zotero_schema(schema):
@@ -178,7 +183,7 @@ class ExtraFields:
   def save(self, path):
     with open(os.path.join(root, 'setup/csl-vars.json')) as f:
       for csl, _type in json.load(f).items():
-        if csl[0] == '.': continue
+        if _type == 'ignore': continue
 
         self.ef.csl[csl].csl = csl
         if _type != 'text': self.ef.csl[csl].type = _type

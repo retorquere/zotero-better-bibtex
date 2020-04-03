@@ -399,7 +399,6 @@ export class Reference {
         continue
       }
 
-      debug('extra field:', { name, ef: ExtraFields[name] })
       if (field = ExtraFields[name].zotero) {
         item[field] = value
         delete item.extraFields.kv[name]
@@ -496,13 +495,6 @@ export class Reference {
     if (field.enc === 'date') {
       if (!field.value) return null
 
-      if (Translator.BetterBibLaTeX && Translator.preferences.biblatexExtendedDateFormat && Zotero.BetterBibTeX.isEDTF(field.value, true)) {
-        return this.add({
-          ...field,
-          enc: 'verbatim',
-        })
-      }
-
       if (field.value === 'today') {
         return this.add({
           ...field,
@@ -511,15 +503,24 @@ export class Reference {
         })
       }
 
+      if (Translator.BetterBibLaTeX && Translator.preferences.biblatexExtendedDateFormat && Zotero.BetterBibTeX.isEDTF(field.value, true)) {
+        return this.add({
+          ...field,
+          enc: 'verbatim',
+        })
+      }
+
       const date = Zotero.BetterBibTeX.parseDate(field.value)
 
       this.add(datefield(date, field))
 
-      this.add(datefield(date.orig, {
-        ...field,
-        name: (field.orig && field.orig.inherit) ? `orig${field.name}` : (field.orig && field.orig.name),
-        verbatim: (field.orig && field.orig.inherit && field.verbatim) ? `orig${field.verbatim}` : (field.orig && field.orig.verbatim),
-      }))
+      if (date.orig) {
+        this.add(datefield(date.orig, {
+          ...field,
+          name: (field.orig && field.orig.inherit) ? `orig${field.name}` : (field.orig && field.orig.name),
+          verbatim: (field.orig && field.orig.inherit && field.verbatim) ? `orig${field.verbatim}` : (field.orig && field.orig.verbatim),
+        }))
+      }
 
       return field.name
     }
@@ -550,7 +551,7 @@ export class Reference {
     }
 
     if (this.has[field.name]) {
-      if (!this.inPostscript && !field.replace) throw new Error(`duplicate field '${field.name}' for ${this.item.citekey}`)
+      if (!this.inPostscript && !field.replace) throw new Error(`duplicate field '${field.name}' for ${this.item.citekey}: old: ${this.has[field.name].bibtex}, new: ${field.bibtex || field.value}`)
       this.remove(field.name)
     }
 
@@ -704,6 +705,7 @@ export class Reference {
             break
 
           case 'original-date':
+          case 'priorityDate':
             name = 'origdate'
             enc = 'date'
             break
@@ -724,10 +726,6 @@ export class Reference {
           // https://github.com/retorquere/zotero-better-bibtex/issues/644
           case 'event-place':
             name = 'venue'
-            break
-
-          case 'event-date':
-            name = 'eventdate'
             break
 
           case 'accessed':
@@ -760,7 +758,7 @@ export class Reference {
       if (name) {
         this.override({ name, verbatim: name, orig: { inherit: true }, value, enc, replace, fallback: !replace })
       } else {
-        debug('Unmapped k/v field', key, '=', value)
+        debug('Unmapped extra field', key, '=', value)
       }
     }
 

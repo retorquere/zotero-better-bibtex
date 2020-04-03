@@ -514,6 +514,13 @@ export function doExport() {
       value: item.date,
       enc: 'date',
     })
+    ref.add({
+      name: 'origdate',
+      value: item.priorityDate,
+      enc: 'date',
+      replace: true, // #293 has both date="year [origyear]" and extra="original-date: origyear"
+    })
+    ref.add({ name: 'eventdate', value: item.conferenceDate, enc: 'date' })
 
     ref.add({ name: 'pages', value: ref.normalizeDashes(item.pages)})
 
