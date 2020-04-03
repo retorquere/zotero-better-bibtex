@@ -48,14 +48,15 @@ def clean_item(item):
   item.pop('attachments', None) # I'll need to get around to this eventually
 
   # make diffs more readable
-  if 'extra' in item and type(item['extra']) != list:
+  if 'extra' in item:
     item['extra'] = item['extra'].split('\n')
 
   if 'notes' in item:
     item['notes'] = sorted(strip_obj([html2md(unnest(note, 'note')) for note in item.get('notes', [])]))
+    item['notes'] = [note.split('\n') for note in item['notes']]
 
   if 'note' in item:
-    item['note']  = html2md(item['note'])
+    item['note']  = html2md(item['note']).split('\n')
 
   if 'tags' in item:
     item['tags'] = sorted(strip_obj([html2md(unnest(tag, 'tag')) for tag in item.get('tags', [])]))
