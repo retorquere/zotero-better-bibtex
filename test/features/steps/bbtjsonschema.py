@@ -48,6 +48,8 @@ def refresh():
   with open(baseline, 'w') as f:
     json.dump(schema, f, indent='  ')
 
+  return Munch.toDict(schema)
+
+schema = refresh()
 def validate(lib):
-  with open(baseline) as f:
-    jsonschema.validate(instance=lib, schema=json.load(f))
+  jsonschema.validate(instance=lib, schema=schema)
