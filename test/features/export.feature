@@ -135,6 +135,7 @@ Scenario Outline: Export <references> references for BibTeX to <file>
 
   Examples:
      | file                                                                               | references |
+     | Publisher Address of BibTeX Inproceedings Entries #1471                            | 1          |
      | 30-Mar-2020 parsed as literal #1476                                                | 1          |
      | BibTeX Entries with Volume and Number Fields #1475                                 | 1          |
      | Exporting Book Sections as Inbook #1474                                            | 1          |

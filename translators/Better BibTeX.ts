@@ -267,6 +267,17 @@ export function doExport() {
       ref.remove('type')
     }
 
+    // #1471 and http://ctan.cs.uu.nl/biblio/bibtex/base/btxdoc.pdf: organization The organization that sponsors a conference or that publishes a manual.
+    if (ref.referencetype === 'inproceedings') {
+      const sponsors = []
+      item.creators = item.creators.filter(creator => {
+        if (creator.creatorType !== 'sponsor') return true
+
+        sponsors.push(creator.source)
+        return false
+      })
+      ref.add({ name: 'organization', value: sponsors.join(' and ') })
+    }
     ref.addCreators()
 
     if (item.date) {

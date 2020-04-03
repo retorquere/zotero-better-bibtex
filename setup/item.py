@@ -126,11 +126,11 @@ class ExtraFields:
     for itemType in data.itemTypes:
 
       for field in itemType.fields:
-        label = re.sub(r'([a-z])([A-Z])', lambda x: x.group(1) + ' ' + x.group(2), field.field).lower()
+        label = re.sub(r'([a-z])([A-Z])', lambda x: x.group(1) + ' ' + x.group(2), field.field).upper()
         self.ef.zotero[label].zotero = basefield[field.field]
 
       for creator in itemType.creatorTypes:
-        label = re.sub(r'([a-z])([A-Z])', lambda x: x.group(1) + ' ' + x.group(2), creator.creatorType).lower()
+        label = re.sub(r'([a-z])([A-Z])', lambda x: x.group(1) + ' ' + x.group(2), creator.creatorType).upper()
         self.ef.zotero[label].zotero = basefield[creator.creatorType]
         self.ef.zotero[label].type = 'creator'
 
@@ -157,36 +157,36 @@ class ExtraFields:
 
     # map csl
     for csl, zotero in data.csl.fields.text.items():
-      self.ef.csl[csl.lower()].csl = csl
-      self.ef.csl[csl.lower()].zotero = [basefield[z] for z in zotero]
+      self.ef.csl[csl].csl = csl
+      self.ef.csl[csl].zotero = [basefield[z] for z in zotero]
 
-      types = add_csl(csl, self.ef.csl[csl.lower()].zotero)
-      if len(types) == 1: self.ef.csl[csl.lower()].type = types[0]
+      types = add_csl(csl, self.ef.csl[csl].zotero)
+      if len(types) == 1: self.ef.csl[csl].type = types[0]
 
     for csl, zotero in data.csl.fields.date.items():
-      self.ef.csl[csl.lower()].csl = csl
-      self.ef.csl[csl.lower()].type = 'date'
-      self.ef.csl[csl.lower()].zotero = [basefield[zotero]]
+      self.ef.csl[csl].csl = csl
+      self.ef.csl[csl].type = 'date'
+      self.ef.csl[csl].zotero = [basefield[zotero]]
 
-      types = add_csl(csl, self.ef.csl[csl.lower()].zotero)
+      types = add_csl(csl, self.ef.csl[csl].zotero)
       if len(types) != 0:
-        assert self.ef.csl[csl.lower()].type == types[0], str((self.ef.csl[csl.lower()].type, types))
+        assert self.ef.csl[csl].type == types[0], str((self.ef.csl[csl].type, types))
 
     for zotero, csl in data.csl.names.items():
-      self.ef.csl[csl.lower()].csl = csl
-      self.ef.csl[csl.lower()].type = 'creator'
-      self.ef.csl[csl.lower()].zotero = [basefield[zotero]]
+      self.ef.csl[csl].csl = csl
+      self.ef.csl[csl].type = 'creator'
+      self.ef.csl[csl].zotero = [basefield[zotero]]
 
-      types = add_csl(csl, self.ef.csl[csl.lower()].zotero)
-      assert self.ef.csl[csl.lower()].type == types[0]
+      types = add_csl(csl, self.ef.csl[csl].zotero)
+      assert self.ef.csl[csl].type == types[0]
 
   def save(self, path):
     with open(os.path.join(root, 'setup/csl-vars.json')) as f:
       for csl, _type in json.load(f).items():
         if csl[0] == '.': continue
 
-        self.ef.csl[csl.lower()].csl = csl
-        if _type != 'text': self.ef.csl[csl.lower()].type = _type
+        self.ef.csl[csl].csl = csl
+        if _type != 'text': self.ef.csl[csl].type = _type
 
     for field in self.ef.zotero.values():
       if 'csl' in field:
@@ -205,17 +205,14 @@ class ExtraFields:
           field.zotero = 'zotero:' + '+'.join(field.zotero)
 
     simple = {}
-    for label, field in self.ef.csl.items():
-      if not label in simple:
-        simple[label] = field
-      if not field.csl in simple:
-        simple[field.csl] = field
-
-    for label, field in self.ef.zotero.items():
-      if not label in simple:
-        simple[label] = field
-      if not field.zotero in simple:
-        simple[field.zotero] = field
+    for section in ['csl', 'zotero']:
+      for lower in [False, True]:
+        for label, field in self.ef[section].items():
+          for name in [label, field[section]]:
+            if name.lower() == 'note' or name.lower() == 'extra': next
+            if lower: name = name.lower()
+            if not name in simple:
+              simple[name] = field
 
     # such a mess
     simple['type'] = { 'zotero': 'type', 'csl': 'type' }
@@ -388,7 +385,7 @@ with open(os.path.join(root, 'gen', 'typings', 'serialized-item.d.ts'), 'w') as 
     itemType: string
     dateAdded: string
     dateModified: string
-    creators: {{ creatorType?: string, name?: string, firstName?: string, lastName?:string, fieldMode?: number }}[]
+    creators: {{ creatorType?: string, name?: string, firstName?: string, lastName?:string, fieldMode?: number, source?: string }}[]
     tags: Array<{{ tag: string, type?: number }}>
     notes: string[]
     attachments: {{ path: string, title?: string, mimeType?: string }}

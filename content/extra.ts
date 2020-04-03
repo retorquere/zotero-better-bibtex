@@ -104,7 +104,18 @@ export function get(extra: string, options?: GetOptions, normalize?: 'zotero' | 
       return false
     }
 
-    if (options.kv && (ef = ExtraFields[key]) && !tex) {
+    if (options.kv && (ef = ExtraFields[name]) && !tex) { // give precedence to CSL keys, which are as-is in extra-fields.json
+      const k = normalize ? (ef[normalize] || ef[other]) : name
+      if (ef.type === 'creator') {
+        extraFields.creator[k] = extraFields.creator[k] || []
+        extraFields.creator[k].push(value)
+      } else {
+        extraFields.kv[k] = value
+      }
+      return false
+    }
+
+    if (options.kv && (ef = ExtraFields[name.toUpperCase()]) && !tex) { // otherwise, check for Zotero var-fields, which are uppercased in extra-fields.json
       const k = normalize ? (ef[normalize] || ef[other]) : name
       if (ef.type === 'creator') {
         extraFields.creator[k] = extraFields.creator[k] || []
