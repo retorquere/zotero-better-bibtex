@@ -543,7 +543,8 @@
       "title": "A Conservative Loss Recovery Algorithm Based on Selective Acknowledgment (SACK) for TCP",
       "type": "RFC",
       "uri": "http://zotero.org/groups/570438/items/VWZTQS8X",
-      "url": "https://tools.ietf.org/html/rfc6675"
+      "url": "https://tools.ietf.org/html/rfc6675",
+      "key": "704"
     },
     {
       "accessDate": "2018-11-24T14:37:15Z",
@@ -564,7 +565,8 @@
       "tags": [],
       "title": "A portable SCTP userland stack. Contribute to sctplab/usrsctp development by creating an account on GitHub",
       "uri": "http://zotero.org/groups/570438/items/VEG5S3LG",
-      "url": "https://github.com/sctplab/usrsctp"
+      "url": "https://github.com/sctplab/usrsctp",
+      "key": "1244"
     }
   ]
 }

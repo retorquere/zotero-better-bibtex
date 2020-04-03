@@ -4,7 +4,6 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "Export collections": true,
       "exportFileData": false,
       "exportNotes": false
     },
@@ -21,7 +20,6 @@
       "attachments": [],
       "creators": [
         {
-          "birthYear": "",
           "creatorType": "author",
           "fieldMode": "",
           "firstName": "Fei",
@@ -30,11 +28,9 @@
             "_key": {},
             "_lst": [],
             "main": false
-          },
-          "shortName": ""
+          }
         },
         {
-          "birthYear": "",
           "creatorType": "author",
           "fieldMode": "",
           "firstName": "Sheng",
@@ -43,11 +39,9 @@
             "_key": {},
             "_lst": [],
             "main": false
-          },
-          "shortName": ""
+          }
         },
         {
-          "birthYear": "",
           "creatorType": "author",
           "fieldMode": "",
           "firstName": "De-Qi",
@@ -56,8 +50,7 @@
             "_key": {},
             "_lst": [],
             "main": false
-          },
-          "shortName": ""
+          }
         }
       ],
       "date": "2014-07-21",

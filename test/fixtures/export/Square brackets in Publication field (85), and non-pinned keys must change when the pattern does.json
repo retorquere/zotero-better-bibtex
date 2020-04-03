@@ -20,7 +20,6 @@
       "attachments": [],
       "creators": [
         {
-          "birthYear": "",
           "creatorType": "author",
           "fieldMode": "",
           "firstName": "Fei",
@@ -29,11 +28,9 @@
             "_key": {},
             "_lst": [],
             "main": false
-          },
-          "shortName": ""
+          }
         },
         {
-          "birthYear": "",
           "creatorType": "author",
           "fieldMode": "",
           "firstName": "Sheng",
@@ -42,11 +39,9 @@
             "_key": {},
             "_lst": [],
             "main": false
-          },
-          "shortName": ""
+          }
         },
         {
-          "birthYear": "",
           "creatorType": "author",
           "fieldMode": "",
           "firstName": "De-Qi",
@@ -55,8 +50,7 @@
             "_key": {},
             "_lst": [],
             "main": false
-          },
-          "shortName": ""
+          }
         }
       ],
       "date": "2014-07-21",

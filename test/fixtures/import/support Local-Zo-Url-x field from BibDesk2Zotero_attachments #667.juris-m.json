@@ -5,9 +5,7 @@
     "label": "BetterBibTeX JSON",
     "options": {
       "exportFileData": true,
-      "exportFilename": "Exported Items.json",
-      "exportNotes": true,
-      "exportPath": "/Users/emile/Desktop/Exported Items.json"
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",

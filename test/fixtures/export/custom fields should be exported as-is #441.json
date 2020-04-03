@@ -5,7 +5,6 @@
     "label": "BetterBibTeX JSON",
     "options": {
       "exportFileData": false,
-      "exportFilename": "Exported Items.json",
       "exportNotes": true
     },
     "preferences": {
@@ -13,7 +12,7 @@
       "asciiBibLaTeX": true,
       "asciiBibTeX": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
-      "autoExport": "on-change",
+      "autoExport": "immediate",
       "autoExportIdleWait": 10,
       "bibtexURL": "note",
       "cacheFlushInterval": 5,

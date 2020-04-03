@@ -2703,7 +2703,8 @@
       "publisher": "Reidel",
       "seeAlso": [],
       "tags": [],
-      "title": "Exact Philosophy"
+      "title": "Exact Philosophy",
+      "key": "17"
     },
     {
       "attachments": [],
@@ -2726,7 +2727,8 @@
       "publisher": "Reidel",
       "seeAlso": [],
       "tags": [],
-      "title": "Treatise On Basic Philosophy Vol 5 Epistemology I Exploring the World"
+      "title": "Treatise On Basic Philosophy Vol 5 Epistemology I Exploring the World",
+      "key": "32"
     },
     {
       "ISBN": "978-0-8020-9075-1",
@@ -2762,7 +2764,8 @@
           "type": 1
         }
       ],
-      "title": "Chasing reality: strife over realism"
+      "title": "Chasing reality: strife over realism",
+      "key": "65"
     },
     {
       "accessDate": "2016-03-23 10:23:29",
@@ -2809,7 +2812,8 @@
       "series": "Classiques des sciences sociales.",
       "tags": [],
       "title": "Consid\u00e9rations d'un philosophe sur l'\u00e9conomique du n\u00e9o-conservatisme (n\u00e9o-lib\u00e9ralisme)",
-      "url": "http://www.uqac.ca/zone30/Classiques_des_sciences_sociales/contemporains/bunge_mario/considerations_eco/considerations_eco.html"
+      "url": "http://www.uqac.ca/zone30/Classiques_des_sciences_sociales/contemporains/bunge_mario/considerations_eco/considerations_eco.html",
+      "key": "68"
     },
     {
       "ISBN": "978-90-277-1262-2 978-90-277-1263-9",
@@ -2855,7 +2859,8 @@
           "type": 1
         }
       ],
-      "title": "Scientific philosophy today: Essays in honor of Mario Bunge"
+      "title": "Scientific philosophy today: Essays in honor of Mario Bunge",
+      "key": "82"
     },
     {
       "abstractNote": "Debates about scientific realism are centrally connected to almosteverything else in the philosophy of science, for they concern the verynature of scientific knowledge. Scientific realism is a positiveepistemic attitude towards the content of our best theories and models,recommending belief in both observable and unobservable aspects of theworld described by the sciences. This epistemic attitude has importantmetaphysical and semantic dimensions, and these various commitments arecontested by a number of rival epistemologies of science, knowncollectively as forms of scientific antirealism. This article explainswhat scientific realism is, outlines its main variants, considers themost common arguments for and against the position, and contrasts itwith its most important antirealist counterparts.",
@@ -2948,7 +2953,8 @@
         }
       ],
       "title": "Scientific Realism",
-      "url": "http://plato.stanford.edu/archives/fall2015/entries/scientific-realism/"
+      "url": "http://plato.stanford.edu/archives/fall2015/entries/scientific-realism/",
+      "key": "124"
     },
     {
       "abstractNote": "Abduction or, as it is also often called, Inference to the Best Explanation is a type of inference that assigns special status to explanatory considerations. Most philosophers agree that this type ofinference is frequently employed, in some form or other, both in everyday and in scientific reasoning. However, the exact form as wellas the normative status of abduction are still matters of controversy. This entry contrasts abduction with other types of inference; points at prominent uses of it, both in and outside philosophy; considers various more or less precise statements of it; discusses its normative status; and highlights possible connections between abduction and Bayesian confirmation theory.",
@@ -3013,7 +3019,8 @@
         }
       ],
       "title": "Abduction",
-      "url": "http://plato.stanford.edu/archives/spr2011/entries/abduction/"
+      "url": "http://plato.stanford.edu/archives/spr2011/entries/abduction/",
+      "key": "156"
     },
     {
       "ISBN": "978-94-007-9646-1",
@@ -3060,7 +3067,8 @@
           "type": 1
         }
       ],
-      "title": "Is water H\u2082O?: evidence, realism and pluralism"
+      "title": "Is water H\u2082O?: evidence, realism and pluralism",
+      "key": "396"
     },
     {
       "accessDate": "2017-02-20 16:20:30",
@@ -3075,7 +3083,8 @@
       "seeAlso": [],
       "tags": [],
       "title": "__\"theory of truth\" inauthor:bunge - Recherche Google",
-      "url": "https://www.google.ca/search?hl=fr&tbo=p&tbm=bks&q=%22theory+of+truth%22+inauthor:bunge&num=10#q=%22theory+of+truth%22+inauthor:bunge&hl=fr&tbm=bks&start=0"
+      "url": "https://www.google.ca/search?hl=fr&tbo=p&tbm=bks&q=%22theory+of+truth%22+inauthor:bunge&num=10#q=%22theory+of+truth%22+inauthor:bunge&hl=fr&tbm=bks&start=0",
+      "key": "484"
     },
     {
       "ISBN": "9786610221356",
@@ -3127,7 +3136,8 @@
         }
       ],
       "title": "Routledge dictionary of economics",
-      "url": "http://www.myilibrary.com?id=22135"
+      "url": "http://www.myilibrary.com?id=22135",
+      "key": "507"
     },
     {
       "archive": "Wikisource",
@@ -3167,7 +3177,8 @@
           "type": 1
         }
       ],
-      "title": "On Denoting"
+      "title": "On Denoting",
+      "key": "698"
     },
     {
       "ISSN": "0270-8647",
@@ -3194,7 +3205,8 @@
       "tags": [],
       "title": "The Philosophical Richness of Technology",
       "url": "http://www.jstor.org/stable/192379",
-      "volume": "1976"
+      "volume": "1976",
+      "key": "798"
     },
     {
       "ISBN": "978-94-010-5779-0 978-94-011-4034-8",
@@ -3221,7 +3233,8 @@
       "seeAlso": [],
       "tags": [],
       "title": "Basic Questions on Truth",
-      "url": "http://link.springer.com/10.1007/978-94-011-4034-8"
+      "url": "http://link.springer.com/10.1007/978-94-011-4034-8",
+      "key": "857"
     },
     {
       "ISBN": "978-3-642-88028-5 978-3-642-88026-1",
@@ -3252,7 +3265,8 @@
       "series": "Studies in the Foundations Methodology and Philosophy of Science",
       "tags": [],
       "title": "The Turn of the Tide",
-      "url": "https://link.springer.com/chapter/10.1007/978-3-642-88026-1_1"
+      "url": "https://link.springer.com/chapter/10.1007/978-3-642-88026-1_1",
+      "key": "875"
     },
     {
       "DOI": "10.1177/004839310103100307",
@@ -3282,7 +3296,8 @@
       "tags": [],
       "title": "Systems and Emergence, Rationality and Imprecision, Free-Wheeling and Evidence, Science and Ideology: Social Science and Its Philosophy According to van den Berg",
       "url": "http://pos.sagepub.com/cgi/doi/10.1177/004839310103100307",
-      "volume": "31"
+      "volume": "31",
+      "key": "967"
     },
     {
       "ISSN": "0039-3797",
@@ -3310,7 +3325,8 @@
       "tags": [],
       "title": "About Mario Bunge's 'A Critical Examination of Dialectics'",
       "url": "http://www.jstor.org/stable/20099996",
-      "volume": "29"
+      "volume": "29",
+      "key": "986"
     },
     {
       "attachments": [],
@@ -3334,7 +3350,8 @@
       "seeAlso": [],
       "tags": [],
       "title": "General Systems and Holism",
-      "volume": "22"
+      "volume": "22",
+      "key": "1114"
     },
     {
       "DOI": "10.1016/0307-904X(78)90008-2",
@@ -3365,7 +3382,8 @@
       "tags": [],
       "title": "A model of evolution",
       "url": "http://www.sciencedirect.com/science/article/pii/0307904X78900082",
-      "volume": "2"
+      "volume": "2",
+      "key": "1184"
     },
     {
       "ISBN": "978-0-89158-686-9",
@@ -3401,7 +3419,8 @@
           "type": 1
         }
       ],
-      "title": "Technoethics"
+      "title": "Technoethics",
+      "key": "1200"
     },
     {
       "ISBN": "978-94-009-3061-2",
@@ -3429,7 +3448,8 @@
       "seeAlso": [],
       "tags": [],
       "title": "Probability in the Sciences",
-      "url": "http://public.eblib.com/choice/publicfullrecord.aspx?p=3102026"
+      "url": "http://public.eblib.com/choice/publicfullrecord.aspx?p=3102026",
+      "key": "1254"
     },
     {
       "ISBN": "978-94-010-7877-1 978-94-009-3061-2",
@@ -3465,7 +3485,8 @@
       "series": "Synthese Library",
       "tags": [],
       "title": "Two Faces and Three Masks of Probability",
-      "url": "https://link.springer.com/chapter/10.1007/978-94-009-3061-2_2"
+      "url": "https://link.springer.com/chapter/10.1007/978-94-009-3061-2_2",
+      "key": "1255"
     },
     {
       "DOI": "10.1016/0732-118X(91)90027-J",
@@ -3495,7 +3516,8 @@
       "tags": [],
       "title": "The difference between everyday knowledge, ideology, and scientific knowledge",
       "url": "http://www.sciencedirect.com/science/article/pii/0732118X9190027J",
-      "volume": "9"
+      "volume": "9",
+      "key": "1329"
     },
     {
       "ISBN": "978-0-415-21811-5",
@@ -3527,7 +3549,8 @@
           "type": 1
         }
       ],
-      "title": "Methodological individualism: background, history, and meaning"
+      "title": "Methodological individualism: background, history, and meaning",
+      "key": "1346"
     },
     {
       "attachments": [],
@@ -3551,7 +3574,8 @@
       "seeAlso": [],
       "tags": [],
       "title": "Riot, Revolution and National Breakdown",
-      "volume": "25"
+      "volume": "25",
+      "key": "1371"
     },
     {
       "ISBN": "978-0-85124-736-6",
@@ -3576,7 +3600,8 @@
       "publisher": "Simon and Schuster",
       "seeAlso": [],
       "tags": [],
-      "title": "My philosophical development"
+      "title": "My philosophical development",
+      "key": "1708"
     },
     {
       "ISBN": "978-0-444-52076-0",
@@ -3612,7 +3637,8 @@
         }
       ],
       "title": "Philosophy of complex systems",
-      "volume": "10"
+      "volume": "10",
+      "key": "1781"
     },
     {
       "ISBN": "978-0-7456-4658-9 978-0-7456-4659-6",
@@ -3644,7 +3670,8 @@
           "type": 1
         }
       ],
-      "title": "Contemporary metaethics: an introduction"
+      "title": "Contemporary metaethics: an introduction",
+      "key": "1838"
     },
     {
       "attachments": [],
@@ -3674,7 +3701,8 @@
       "seeAlso": [],
       "shortTitle": "Moral Theory and Explanatory Impotence In",
       "tags": [],
-      "title": "Moral Theory and Explanatory Impotence"
+      "title": "Moral Theory and Explanatory Impotence",
+      "key": "1876"
     },
     {
       "ISSN": "1072-1894",
@@ -3721,7 +3749,8 @@
         }
       ],
       "title": "Fred Dretske on the Explanatory Role of Semantic Content",
-      "volume": "6"
+      "volume": "6",
+      "key": "1979"
     },
     {
       "ISSN": "0012-2173",
@@ -3753,7 +3782,8 @@
         }
       ],
       "title": "Explaining Behavior",
-      "volume": "32"
+      "volume": "32",
+      "key": "1996"
     },
     {
       "ISBN": "0774803274; 08470502",
@@ -3806,7 +3836,8 @@
         }
       ],
       "title": "Intrinsic Information",
-      "volume": "1"
+      "volume": "1",
+      "key": "2006"
     },
     {
       "ISSN": "0268-1064",
@@ -3857,7 +3888,8 @@
         }
       ],
       "title": "Deconstructing Dennett's Darwin",
-      "volume": "11"
+      "volume": "11",
+      "key": "2040"
     },
     {
       "ISBN": "092492201X (PBK)",
@@ -3888,7 +3920,8 @@
         }
       ],
       "title": "Consciousness",
-      "volume": "1"
+      "volume": "1",
+      "key": "2092"
     },
     {
       "ISSN": "0031-8108",
@@ -3913,7 +3946,8 @@
       "seeAlso": [],
       "tags": [],
       "title": "The Naturalists Return",
-      "volume": "101"
+      "volume": "101",
+      "key": "2219"
     },
     {
       "ISSN": "0279-0750",
@@ -3954,7 +3988,8 @@
         }
       ],
       "title": "What is Wrong with Etiological Accounts of Biological Function?",
-      "volume": "66"
+      "volume": "66",
+      "key": "2323"
     },
     {
       "ISBN": "978-0-520-02356-7",
@@ -3982,7 +4017,8 @@
       "seeAlso": [],
       "shortTitle": "Metalogic",
       "tags": [],
-      "title": "Metalogic: an introduction to the metatheory of standard first order logic"
+      "title": "Metalogic: an introduction to the metatheory of standard first order logic",
+      "key": "2713"
     }
   ]
 }
