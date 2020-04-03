@@ -13,22 +13,14 @@ root = os.path.join(os.path.dirname(__file__), '..')
 
 print('Generating extra-fields...')
 
-def load(url, schema, lm=None):
-  if type(lm) == bool:
-    # GH doesn't want our LM check, fine
-    assert not lm
-    with urllib.request.urlopen(url) as i:
-      with open(os.path.join(root, 'schema', schema), 'w') as o:
-        print(i.read().decode(), file=o)
-  else:
-    if lm is None: lm = url
-    request = urllib.request.Request(lm)
-    request.get_method = lambda: 'HEAD'
-    with urllib.request.urlopen(request) as r:
-      last_modified = r.getheader('last-modified')
-      last_modified = time.strptime(last_modified, '%a, %d %b %Y %H:%M:%S %Z')
-      last_modified = time.strftime('%Y-%m-%dT%H-%M-%SZ', last_modified)
-      schema  = f'{last_modified}-{schema}'
+def load(url, schema):
+  request = urllib.request.Request(url)
+  request.get_method = lambda: 'HEAD'
+  with urllib.request.urlopen(request) as r:
+    etag = r.getheader('ETag')
+    if etag.startswith('W/'): etag = etag[2:]
+    etag = json.loads(etag) # strips quotes
+    schema  = f'{etag}-{schema}'
   try:
     with open(os.path.join(root, 'schema', schema)) as f:
       return json.load(f)
@@ -81,8 +73,7 @@ def fix_jurism_schema(schema):
 
 data = DefaultMunch.fromDict({
   'zotero': fix_zotero_schema(load('https://api.zotero.org/schema', 'zotero.json')),
-  #'jurism': fix_jurism_schema(load('https://raw.githubusercontent.com/Juris-M/zotero-schema/master/schema-jurism.json', 'juris-m.json', 'https://api.github.com/repos/Juris-M/zotero-schema/contents/schema-jurism.json?ref=master')),
-  'jurism': fix_jurism_schema(load('https://raw.githubusercontent.com/Juris-M/zotero-schema/master/schema-jurism.json', 'juris-m.json', False)),
+  'jurism': fix_jurism_schema(load('https://raw.githubusercontent.com/Juris-M/zotero-schema/master/schema-jurism.json', 'juris-m.json')),
 }, None)
 
 class ExtraFields:
@@ -166,7 +157,11 @@ class ExtraFields:
     for csl, zotero in data.csl.fields.date.items():
       self.ef.csl[csl].csl = csl
       self.ef.csl[csl].type = 'date'
-      self.ef.csl[csl].zotero = [basefield[zotero]]
+
+      # jurism schema differs from zotero... please don't do this people :(
+      if type(zotero) != list: zotero = [ zotero ]
+      for z in zotero:
+        self.ef.csl[csl].zotero = [basefield[z]]
 
       types = add_csl(csl, self.ef.csl[csl].zotero)
       if len(types) != 0:
