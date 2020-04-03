@@ -163,7 +163,7 @@ class PatternFormatter {
       }
     }
 
-    if (this.item.kv['original-date']) this.item.origyear = this.item.kv['original-date'].split('-')[0]
+    if (this.item.kv['original-date'] || this.item.kv.priorityDate) this.item.origyear = (this.item.kv['original-date'] || this.item.kv.priorityDate).split('-')[0]
 
     const citekey = this.generate()
 

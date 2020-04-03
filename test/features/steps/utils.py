@@ -76,7 +76,13 @@ def running(id):
       return True
 
   if platform.system() == 'Darwin':
-    count = int(subprocess.check_output(['osascript', '-e', 'tell application "System Events"', '-e', f'count (every process whose name is "{id}")', '-e', 'end tell']).strip())
+    try:
+      count = int(subprocess.check_output(['osascript', '-e', 'tell application "System Events"', '-e', f'count (every process whose name is "{id}")', '-e', 'end tell']).strip())
+    except CalledProcessError as err:
+      print(err.output)
+      if err.output == 'Application isn’t running.': return False
+      raise
+
   else:
     count = 0
     for proc in psutil.process_iter():
