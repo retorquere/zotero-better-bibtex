@@ -48,7 +48,7 @@ def clean_item(item):
   item.pop('attachments', None) # I'll need to get around to this eventually
 
   # make diffs more readable
-  if 'extra' in item:
+  if 'extra' in item and type(item['extra']) != list:
     item['extra'] = item['extra'].split('\n')
 
   if 'notes' in item:
