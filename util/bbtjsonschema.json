@@ -1,0 +1,740 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "title": "BBT JSON format",
+  "required": [
+    "config",
+    "items"
+  ],
+  "properties": {
+    "config": {
+      "type": "object",
+      "additionalProperties": false,
+      "title": "Client configuration at time of export",
+      "default": {},
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "const": "36a3b0b5-bad0-4a04-b79b-441c7cef77db"
+        },
+        "label": {
+          "const": "BetterBibTeX JSON"
+        },
+        "preferences": {
+          "type": "object",
+          "additionalProperties": false,
+          "default": {},
+          "properties": {
+            "DOIandURL": {
+              "enum": [
+                "both",
+                "doi",
+                "url"
+              ]
+            },
+            "automaticTags": {
+              "type": "boolean"
+            },
+            "asciiBibLaTeX": {
+              "type": "boolean"
+            },
+            "ascii": {
+              "type": "string"
+            },
+            "asciiBibTeX": {
+              "type": "boolean"
+            },
+            "autoExport": {
+              "enum": [
+                "off",
+                "immediate",
+                "idle"
+              ]
+            },
+            "quickCopyMode": {
+              "enum": [
+                "latex",
+                "citekeys",
+                "pandoc",
+                "orgmode_citekey",
+                "orgmode",
+                "orgRef",
+                "rtfScan",
+                "atom",
+                "gitbook",
+                "selectLink_citekey",
+                "selectLink"
+              ]
+            },
+            "citeCommand": {
+              "type": "string"
+            },
+            "quickCopyPandocBrackets": {
+              "type": "boolean"
+            },
+            "citekeyFormat": {
+              "type": "string"
+            },
+            "citekeyFold": {
+              "type": "boolean"
+            },
+            "keyConflictPolicy": {
+              "enum": [
+                "change",
+                "keep"
+              ]
+            },
+            "auxImport": {
+              "type": "boolean"
+            },
+            "keyScope": {
+              "enum": [
+                "global",
+                "library"
+              ]
+            },
+            "exportBibTeXStrings": {
+              "enum": [
+                "off",
+                "detect",
+                "match"
+              ]
+            },
+            "importBibTeXStrings": {
+              "type": "boolean"
+            },
+            "bibtexParticleNoOp": {
+              "type": "boolean"
+            },
+            "skipFields": {
+              "type": "string"
+            },
+            "bibtexURL": {
+              "enum": [
+                "off",
+                "note",
+                "url"
+              ]
+            },
+            "warnBulkModify": {
+              "type": "number"
+            },
+            "postscript": {
+              "type": "string"
+            },
+            "strings": {
+              "type": "string"
+            },
+            "autoAbbrev": {
+              "type": "boolean"
+            },
+            "autoAbbrevStyle": {
+              "type": "string"
+            },
+            "autoExportIdleWait": {
+              "type": "number"
+            },
+            "cacheFlushInterval": {
+              "type": "number"
+            },
+            "csquotes": {
+              "type": "string"
+            },
+            "rawLaTag": {
+              "type": "string"
+            },
+            "rawImports": {
+              "type": "boolean"
+            },
+            "skipWords": {
+              "type": "string"
+            },
+            "verbatimFields": {
+              "type": "string"
+            },
+            "jabrefFormat": {
+              "type": "number"
+            },
+            "qualityReport": {
+              "type": "boolean"
+            },
+            "biblatexExtendedDateFormat": {
+              "type": "boolean"
+            },
+            "biblatexExtendedNameFormat": {
+              "type": "boolean"
+            },
+            "exportTitleCase": {
+              "type": "boolean"
+            },
+            "exportBraceProtection": {
+              "type": "boolean"
+            },
+            "retainCache": {
+              "type": "boolean"
+            },
+            "importSentenceCase": {
+              "enum": [
+                "on+guess",
+                "on",
+                "off"
+              ]
+            },
+            "importCaseProtection": {
+              "enum": [
+                "as-needed",
+                "on",
+                "off"
+              ]
+            },
+            "autoExportDelay": {
+              "type": "number"
+            },
+            "itemObserverDelay": {
+              "type": "number"
+            },
+            "parseParticles": {
+              "type": "boolean"
+            },
+            "citeprocNoteCitekey": {
+              "type": "boolean"
+            },
+            "extraMergeTeX": {
+              "type": "boolean"
+            },
+            "extraMergeCSL": {
+              "type": "boolean"
+            },
+            "extraMergeCitekeys": {
+              "type": "boolean"
+            },
+            "importJabRefStrings": {
+              "type": "boolean"
+            },
+            "importJabRefAbbreviations": {
+              "type": "boolean"
+            },
+            "postscriptOverride": {
+              "type": "string"
+            },
+            "scrubDatabase": {
+              "type": "boolean"
+            },
+            "removeStock": {
+              "type": "boolean"
+            },
+            "ignorePostscriptErrors": {
+              "type": "boolean"
+            },
+            "debugLogDir": {
+              "type": "string"
+            },
+            "testing": {
+              "type": "boolean"
+            },
+            "autoPin": {
+              "type": "boolean"
+            },
+            "kuroshiro": {
+              "type": "boolean"
+            },
+            "relativeFilePaths": {
+              "type": "boolean"
+            },
+            "git": {
+              "type": "string"
+            },
+            "mapUnicode": {
+              "enum": [
+                "minimal-packages",
+                "conservative",
+                "text",
+                "math"
+              ]
+            },
+            "mapText": {
+              "type": "string"
+            },
+            "mapMath": {
+              "type": "string"
+            },
+            "newTranslatorsAskRestart": {
+              "type": "boolean"
+            },
+            "workers": {
+              "type": "number"
+            },
+            "platform": {
+              "type": "string"
+            },
+            "client": {
+              "type": "string"
+            }
+          }
+        },
+        "options": {
+          "type": "object",
+          "additionalProperties": false,
+          "default": {},
+          "properties": {
+            "exportFileData": { "type": "boolean" },
+            "exportNotes": { "type": "boolean" },
+            "keepUpdated": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "collections": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [ "collections", "key", "name", "items" ],
+        "properties": {
+          "collections": { "type": "array", "items": { "type": "string" } },
+          "key": { "type": "string" },
+          "name": { "type": "string" },
+          "items": { "type": "array", "items": { "type": "string" } },
+          "parent": { "type": "string" }
+        }
+      }
+    },
+    "items": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "citationKey": {
+            "type": "string"
+          },
+          "itemID": {
+            "type": "integer"
+          },
+          "key": {
+            "type": "string"
+          },
+          "dateAdded": {
+            "type": "string"
+          },
+          "dateModified": {
+            "type": "string"
+          },
+          "uri": {
+            "type": "string"
+          },
+          "creators": {
+            "type": "array",
+            "default": [],
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "creatorType": {
+                  "enum": [
+                    "artist",
+                    "attorneyAgent",
+                    "author",
+                    "bookAuthor",
+                    "cartographer",
+                    "castMember",
+                    "commenter",
+                    "composer",
+                    "contributor",
+                    "cosponsor",
+                    "counsel",
+                    "director",
+                    "editor",
+                    "guest",
+                    "interviewee",
+                    "interviewer",
+                    "inventor",
+                    "performer",
+                    "podcaster",
+                    "presenter",
+                    "producer",
+                    "programmer",
+                    "recipient",
+                    "reviewedAuthor",
+                    "scriptwriter",
+                    "seriesEditor",
+                    "sponsor",
+                    "testimonyBy",
+                    "translator",
+                    "wordsBy"
+                  ]
+                }
+              }
+            }
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "tag"
+              ],
+              "properties": {
+                "tag": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "notes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "collections": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "relations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "default": {},
+              "required": [
+                "itemType",
+                "title"
+              ],
+              "properties": {
+                "itemType": {
+                  "const": "attachment"
+                },
+                "title": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "title": {
+            "type": "string"
+          },
+          "abstractNote": {
+            "type": "string"
+          },
+          "medium": {
+            "type": "string"
+          },
+          "artworkSize": {
+            "type": "string"
+          },
+          "publicationTitle": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          },
+          "shortTitle": {
+            "type": "string"
+          },
+          "archive": {
+            "type": "string"
+          },
+          "archiveLocation": {
+            "type": "string"
+          },
+          "libraryCatalog": {
+            "type": "string"
+          },
+          "callNumber": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "accessDate": {
+            "type": "string"
+          },
+          "rights": {
+            "type": "string"
+          },
+          "extra": {
+            "type": "string"
+          },
+          "seriesTitle": {
+            "type": "string"
+          },
+          "volume": {
+            "type": "string"
+          },
+          "numberOfVolumes": {
+            "type": "string"
+          },
+          "place": {
+            "type": "string"
+          },
+          "publisher": {
+            "type": "string"
+          },
+          "edition": {
+            "type": "string"
+          },
+          "opus": {
+            "type": "string"
+          },
+          "originalDate": {
+            "type": "string"
+          },
+          "runningTime": {
+            "type": "string"
+          },
+          "ISBN": {
+            "type": "string"
+          },
+          "number": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "section": {
+            "type": "string"
+          },
+          "pages": {
+            "type": "string"
+          },
+          "legislativeBody": {
+            "type": "string"
+          },
+          "session": {
+            "type": "string"
+          },
+          "history": {
+            "type": "string"
+          },
+          "jurisdiction": {
+            "type": "string"
+          },
+          "resolutionLabel": {
+            "type": "string"
+          },
+          "seriesNumber": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "series": {
+            "type": "string"
+          },
+          "volumeTitle": {
+            "type": "string"
+          },
+          "numPages": {
+            "type": "string"
+          },
+          "court": {
+            "type": "string"
+          },
+          "reign": {
+            "type": "string"
+          },
+          "documentName": {
+            "type": "string"
+          },
+          "yearAsVolume": {
+            "type": "string"
+          },
+          "filingDate": {
+            "type": "string"
+          },
+          "publicationDate": {
+            "type": "string"
+          },
+          "supplementName": {
+            "type": "string"
+          },
+          "issue": {
+            "type": "string"
+          },
+          "versionNumber": {
+            "type": "string"
+          },
+          "system": {
+            "type": "string"
+          },
+          "programmingLanguage": {
+            "type": "string"
+          },
+          "conferenceDate": {
+            "type": "string"
+          },
+          "conferenceName": {
+            "type": "string"
+          },
+          "institution": {
+            "type": "string"
+          },
+          "DOI": {
+            "type": "string"
+          },
+          "codeNumber": {
+            "type": "string"
+          },
+          "regnalYear": {
+            "type": "string"
+          },
+          "meetingName": {
+            "type": "string"
+          },
+          "committee": {
+            "type": "string"
+          },
+          "meetingNumber": {
+            "type": "string"
+          },
+          "assemblyNumber": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "seriesText": {
+            "type": "string"
+          },
+          "journalAbbreviation": {
+            "type": "string"
+          },
+          "ISSN": {
+            "type": "string"
+          },
+          "scale": {
+            "type": "string"
+          },
+          "newsCaseDate": {
+            "type": "string"
+          },
+          "genre": {
+            "type": "string"
+          },
+          "issuingAuthority": {
+            "type": "string"
+          },
+          "publicationNumber": {
+            "type": "string"
+          },
+          "applicationNumber": {
+            "type": "string"
+          },
+          "priorityNumbers": {
+            "type": "string"
+          },
+          "priorityDate": {
+            "type": "string"
+          },
+          "legalStatus": {
+            "type": "string"
+          },
+          "assignee": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "references": {
+            "type": "string"
+          },
+          "gazetteFlag": {
+            "type": "string"
+          },
+          "dateAmended": {
+            "type": "string"
+          },
+          "reporter": {
+            "type": "string"
+          },
+          "parentTreaty": {
+            "type": "string"
+          },
+          "openingDate": {
+            "type": "string"
+          },
+          "adoptionDate": {
+            "type": "string"
+          },
+          "signingDate": {
+            "type": "string"
+          },
+          "itemType": {
+            "enum": [
+              "artwork",
+              "attachment",
+              "audioRecording",
+              "bill",
+              "blogPost",
+              "book",
+              "bookSection",
+              "case",
+              "classic",
+              "computerProgram",
+              "conferencePaper",
+              "dictionaryEntry",
+              "document",
+              "email",
+              "encyclopediaArticle",
+              "film",
+              "forumPost",
+              "gazette",
+              "hearing",
+              "instantMessage",
+              "interview",
+              "journalArticle",
+              "letter",
+              "magazineArticle",
+              "manuscript",
+              "map",
+              "newspaperArticle",
+              "note",
+              "patent",
+              "podcast",
+              "presentation",
+              "radioBroadcast",
+              "regulation",
+              "report",
+              "standard",
+              "statute",
+              "thesis",
+              "treaty",
+              "tvBroadcast",
+              "videoRecording",
+              "webpage"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
