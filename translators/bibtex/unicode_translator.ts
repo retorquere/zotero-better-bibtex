@@ -261,7 +261,7 @@ const htmlConverter = new class HTMLConverter {
         i += 3 // tslint:disable-line no-magic-numbers
 
       // combining diacritic
-      } else if (text[i + 1] && (diacritic = unicode2latex.diacritics.tolatex[text[i + 1]])) {
+      } else if (text[i + 1] && !Translator.unicode && (diacritic = unicode2latex.diacritics.tolatex[text[i + 1]])) {
         mapped = { [diacritic.mode]: `\\${diacritic.command}{${text[i]}}` }
         i += 1
 
