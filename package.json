@@ -83,7 +83,7 @@
     "string-template": "^1.0.0",
     "task-easy": "^1.0.1",
     "transliteration": "^2.1.8",
-    "tslint": "^6.1.0",
+    "tslint": "^6.1.1",
     "unicode2latex": "^2.1.7",
     "words-to-numbers": "^1.5.1",
     "xregexp": "^4.3.0"
