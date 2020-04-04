@@ -3249,6 +3249,9 @@
 			"gazette": [
 				"gazette"
 			],
+			"hearing": [
+				"hearing"
+			],
 			"regulation": [
 				"regulation"
 			],
@@ -3260,6 +3263,9 @@
 			],
 			"standard": [
 				"standard"
+			],
+			"videoRecording": [
+				"videoRecording"
 			]
 		},
 		"fields": {
