@@ -72,6 +72,10 @@ export async function doImport() {
 
     const item = new Zotero.Item()
     Object.assign(item, source)
+
+    // so BBT-JSON can be imported without extra-field meddling
+    item.bbt_no_extractExtraFields = true
+
     for (const att of item.attachments || []) {
       if (att.url) delete att.path
       delete att.relations
