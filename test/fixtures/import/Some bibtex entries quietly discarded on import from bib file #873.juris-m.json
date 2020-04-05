@@ -20759,7 +20759,7 @@
       "ISSN": "0304-3975 (print), 1879-2294 (electronic)",
       "date": "1983-07",
       "extra": "Citation Key: Bagchi:1983:AHS\ntex.acknowledgement: Nelson H. F. Beebe, University of Utah, Department of Mathematics, 110 LCB, 155 S 1400 E RM 233, Salt Lake City, UT 84112-0090, USA, Tel: +1 801 581 5254, FAX: +1 801 581 4148, e-mail: |beebe@math.utah.edu|, |beebe@acm.org|, |beebe@ieee.org| (Internet), URL: |http://www.math.utah.edu/ beebe/|\ntex.bibdate: Sat Nov 22 13:36:07 MST 1997\ntex.bibsource: http://www.math.utah.edu/pub/tex/bib/tcs1980.bib\ntex.classification: C1230 (Artificial intelligence)\ntex.coden: TCSCDI\ntex.corpsource: Indian Inst. of Management, Calcutta, India\ntex.fjournal: Theoretical Computer Science\ntex.issn-l: 0304-3975\ntex.journal-url: http://www.sciencedirect.com/science/journal/03043975/\ntex.pubcountry: Netherlands\ntex.treatment: T Theoretical or Mathematical",
-      "title": "Admissible heuristic search in AND∕OR graphs",
+      "title": "Admissible heuristic search in AND/\u200bOR graphs",
       "creators": [
         {
           "firstName": "A.",
