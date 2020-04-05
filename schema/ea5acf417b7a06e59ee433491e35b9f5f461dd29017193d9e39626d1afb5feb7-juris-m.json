@@ -3171,8 +3171,7 @@
 				"newspaperArticle"
 			],
 			"bill": [
-				"bill",
-				"hearing"
+				"bill"
 			],
 			"book": [
 				"book",
@@ -3211,8 +3210,7 @@
 				"map"
 			],
 			"motion_picture": [
-				"film",
-				"videoRecording"
+				"film"
 			],
 			"paper-conference": [
 				"conferencePaper"
