@@ -7,7 +7,7 @@
       "automaticTags": false,
       "asciiBibLaTeX": false,
       "ascii": "",
-      "asciiBibTeX": false,
+      "asciiBibTeX": true,
       "autoExport": "immediate",
       "quickCopyMode": "latex",
       "citeCommand": "cite",
