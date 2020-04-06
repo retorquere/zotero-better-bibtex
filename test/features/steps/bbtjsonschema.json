@@ -307,11 +307,13 @@
           "collections": {
             "type": "array",
             "items": {
-              "type": "string"
+              "type": "string",
+              "pattern": "^coll:[0-9]+$"
             }
           },
           "key": {
-            "type": "string"
+            "type": "string",
+            "pattern": "^coll:[0-9]+$"
           },
           "name": {
             "type": "string"
@@ -323,7 +325,8 @@
             }
           },
           "parent": {
-            "type": "string"
+            "type": "string",
+            "pattern": "^coll:[0-9]+$"
           }
         }
       }
@@ -442,7 +445,8 @@
           "collections": {
             "type": "array",
             "items": {
-              "type": "string"
+              "type": "string",
+              "pattern": "^coll:[0-9]+$"
             }
           },
           "relations": {
@@ -916,7 +920,8 @@
         "collections": {
           "type": "array",
           "items": {
-            "type": "string"
+            "type": "string",
+            "pattern": "^coll:[0-9]+$"
           }
         },
         "relations": {

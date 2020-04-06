@@ -5,7 +5,9 @@ export { Translator }
 
 import { debug } from './lib/debug'
 import * as itemfields from '../gen/itemfields'
+import { normalize } from './lib/normalize'
 const version = require('../gen/version.js')
+import stringify from 'fast-safe-stringify'
 
 const chunkSize = 0x100000
 
@@ -136,6 +138,8 @@ export function doExport() {
   while ((item = Zotero.nextItem())) {
     if (item.itemType === 'attachment') continue
 
+    delete item.collections
+
     itemfields.simplifyForExport(item, Translator.options.dropAttachments)
     item.relations = item.relations ? (item.relations['dc:relation'] || []) : []
 
@@ -160,5 +164,7 @@ export function doExport() {
     data.items.push(item)
   }
 
-  Zotero.write(JSON.stringify(data, null, '  '))
+  normalize(data)
+
+  Zotero.write(stringify(data, null, '  '))
 }
