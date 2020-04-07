@@ -4,21 +4,31 @@
 
 import { normalize } from '../translators/lib/normalize'
 import * as fs from 'fs'
-import stringify from 'fast-safe-stringify'
+import { stringify } from '../content/stringify'
+import { sync as glob } from 'glob'
 
-for (const lib of process.argv.slice(2)) {
+function serialize(data) {
+  return stringify(data, null, 2, true)
+}
+
+const save = process.argv.length > 2
+const libs = save ? process.argv.slice(2) : glob('test/fixtures/*/*.json')
+
+for (const lib of libs) {
   if (lib.endsWith('.csl.json')) continue
   if (lib.endsWith('.schomd.json')) continue
 
+  console.log(lib)
+
   const data = JSON.parse(fs.readFileSync(lib, 'utf-8'))
-  const pre = stringify(data, null, 2)
+  const pre = serialize(data)
 
   normalize(data)
 
-  const post = stringify(data, null, 2)
+  const post = serialize(data)
 
-  if (post != pre) {
-    console.log('saving', lib)
-    fs.writeFileSync(lib, post)
+  if (post !== pre) {
+    console.log(' ', save ? 'saving' : 'should save', lib)
+    if (save) fs.writeFileSync(lib, post)
   }
 }

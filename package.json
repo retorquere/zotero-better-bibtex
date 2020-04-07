@@ -80,7 +80,6 @@
     "parse5": "^5.1.1",
     "permutater": "^1.0.2",
     "punycode": "^2.1.1",
-    "safe-stable-stringify": "^1.1.0",
     "string-template": "^1.0.0",
     "task-easy": "^1.0.1",
     "transliteration": "^2.1.8",

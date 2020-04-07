@@ -86,19 +86,23 @@ export function normalize(library: Library) {
     return acc
   }, {})
 
-  const collectionOrder = Object.values(library.collections).sort((a, b) => stringify({...a, key: '', parent: ''}).localeCompare(stringify({...b, key: '', parent: ''})))
-  const collectionKeys: Record<string, string> = collectionOrder.reduce((acc, coll, i) => {
-    coll.key = acc[coll.key] = `coll:${rjust(i, 5, '0')}` // tslint:disable-line:no-magic-numbers
-    return acc
-  }, {})
-  library.collections = collectionOrder.reduce((acc, coll) => {
-    if (!(coll.parent = collectionKeys[coll.parent])) delete coll.parent
+  if (library.collections && Object.keys(library.collections).length) {
+    const collectionOrder = Object.values(library.collections).sort((a, b) => stringify({...a, key: '', parent: ''}).localeCompare(stringify({...b, key: '', parent: ''})))
+    const collectionKeys: Record<string, string> = collectionOrder.reduce((acc, coll, i) => {
+      coll.key = acc[coll.key] = `coll:${rjust(i, 5, '0')}` // tslint:disable-line:no-magic-numbers
+      return acc
+    }, {})
+    library.collections = collectionOrder.reduce((acc, coll) => {
+      if (!(coll.parent = collectionKeys[coll.parent])) delete coll.parent
 
-    coll.items = coll.items.map(itemID => itemIDs[itemID]).filter(itemID => typeof itemID === 'number').sort()
+      coll.items = coll.items.map(itemID => itemIDs[itemID]).filter(itemID => typeof itemID === 'number').sort()
 
-    coll.collections = coll.collections.map(collectionKey => collectionKeys[collectionKey]).filter(collectionKey => collectionKey).sort()
+      coll.collections = coll.collections.map(collectionKey => collectionKeys[collectionKey]).filter(collectionKey => collectionKey).sort()
 
-    acc[coll.key] = coll
-    return acc
-  }, {})
+      acc[coll.key] = coll
+      return acc
+    }, {})
+  } else {
+    delete library.collections
+  }
 }
