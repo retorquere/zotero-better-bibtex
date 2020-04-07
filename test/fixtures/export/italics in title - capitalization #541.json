@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -35,7 +34,6 @@
       "DOI": "10.1007/s10695-006-9104-7",
       "ISSN": "0920-1742, 1573-5168",
       "accessDate": "2016-08-18 20:53:27",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -50,7 +48,7 @@
       ],
       "date": "2006/09/23",
       "issue": "4",
-      "itemID": 1022,
+      "itemID": 1,
       "itemType": "journalArticle",
       "journalAbbreviation": "Fish Physiol Biochem",
       "language": "en",

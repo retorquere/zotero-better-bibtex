@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -31,7 +30,7 @@
       "date": "1988",
       "extra": "tex.date= 1988\ntex.number= sp\u00e9cial anniversaire 1978-1988\ntex.issue=",
       "issue": "sp\u00e9cial anniversaire 1978-1988",
-      "itemID": 677,
+      "itemID": 1,
       "itemType": "journalArticle",
       "journalAbbreviation": "RIEJ",
       "language": "fr-FR",

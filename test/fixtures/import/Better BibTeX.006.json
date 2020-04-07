@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -66,19 +65,14 @@
   },
   "items": [
     {
-      "attachments": [],
       "citationKey": "test-ticket1661",
-      "collections": [],
-      "creators": [],
       "dateAdded": "2019-12-22T01:25:24Z",
       "dateModified": "2019-12-22T01:25:24Z",
       "extra": "Citation Key: test-ticket1661",
-      "itemID": 860,
+      "itemID": 1,
       "itemType": "journalArticle",
-      "key": "KE8S5GCZ",
       "relations": [],
-      "title": "non-braking space:  ; accented characters: \u00f1 and \u00f1; tilde in URL: <span class=\"nocase\">http://example.com/~user</span>",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/KE8S5GCZ"
+      "title": "non-braking space:  ; accented characters: \u00f1 and \u00f1; tilde in URL: <span class=\"nocase\">http://example.com/~user</span>"
     }
   ]
 }

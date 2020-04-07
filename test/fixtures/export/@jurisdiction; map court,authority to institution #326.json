@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -23,13 +22,13 @@
     {
       "court": "CE, Ass.",
       "date": "23/12/2010",
-      "itemID": 2077,
+      "itemID": 1,
       "itemType": "case",
       "language": "fr-FR",
       "number": "337033",
       "pages": "649",
-      "title": "Dalain",
       "publicationTitle": "Rec.",
+      "title": "Dalain",
       "volume": "I"
     }
   ]

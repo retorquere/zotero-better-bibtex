@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -59,9 +58,7 @@
   },
   "items": [
     {
-      "attachments": [],
       "citationKey": "author:06",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -77,18 +74,14 @@
       "dateAdded": "2019-08-22T20:53:43Z",
       "dateModified": "2019-08-22T20:53:43Z",
       "extra": "Citation Key: author:06\ntex.crossref: conference:06",
-      "itemID": 848,
+      "itemID": 1,
       "itemType": "conferencePaper",
-      "key": "YIKS325Q",
       "pages": "330\u2014331",
       "relations": [],
-      "title": "Some publication title",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/YIKS325Q"
+      "title": "Some publication title"
     },
     {
-      "attachments": [],
       "citationKey": "conference:06",
-      "collections": [],
       "creators": [
         {
           "creatorType": "editor",
@@ -105,13 +98,11 @@
       "dateAdded": "2019-08-22T20:53:43Z",
       "dateModified": "2019-08-22T20:53:43Z",
       "extra": "Citation Key: conference:06",
-      "itemID": 849,
+      "itemID": 2,
       "itemType": "bookSection",
-      "key": "MAICCQBU",
       "publicationTitle": "Proceedings of the xth conference on XYZ (book)",
       "relations": [],
-      "title": "Proceedings of the xth conference on XYZ",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/MAICCQBU"
+      "title": "Proceedings of the xth conference on XYZ"
     }
   ]
 }

@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -66,35 +65,7 @@
   },
   "items": [
     {
-      "attachments": [],
-      "citationKey": "schiffer2005a",
-      "collections": [],
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "S.",
-          "lastName": "Schiffer"
-        }
-      ],
-      "date": "2005",
-      "dateAdded": "2019-12-22T01:56:11Z",
-      "dateModified": "2019-12-22T01:56:11Z",
-      "extra": "Citation Key: schiffer2005a",
-      "itemID": 813,
-      "itemType": "bookSection",
-      "key": "B59J8E99",
-      "language": "german",
-      "place": "W\u00fcrzburg",
-      "publicationTitle": "Eine Auswahl von Techniken und Beispielen",
-      "publisher": "Ergon",
-      "relations": [],
-      "title": "Die Darstellung des Islams in der Presse: Sprache, Bilder, Suggestionen",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/B59J8E99"
-    },
-    {
-      "attachments": [],
       "citationKey": "albrecht2007a",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -116,21 +87,17 @@
       "dateAdded": "2019-12-22T01:56:11Z",
       "dateModified": "2019-12-22T01:56:11Z",
       "extra": "Citation Key: albrecht2007a",
-      "itemID": 814,
+      "itemID": 1,
       "itemType": "bookSection",
-      "key": "QJKXRDC5",
       "pages": "153 - 163",
       "place": "M\u00fcnster",
       "publicationTitle": "Religion und medien: Vom kultbild zum internetritual",
       "publisher": "Aschendorff",
       "relations": [],
-      "title": "Evangelische publizistik",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/QJKXRDC5"
+      "title": "Evangelische publizistik"
     },
     {
-      "attachments": [],
       "citationKey": "gaertner2008a",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -151,21 +118,39 @@
       "dateAdded": "2019-12-22T01:56:12Z",
       "dateModified": "2019-12-22T01:56:12Z",
       "extra": "Citation Key: gaertner2008a",
-      "itemID": 815,
+      "itemID": 2,
       "itemType": "bookSection",
-      "key": "9LNB4D9S",
       "pages": "93 - 108",
       "place": "Paderborn",
       "publicationTitle": "Religion heute \u2013 \u00f6ffentlich und politisch: Provokationen, kontroversen, perspektiven",
       "publisher": "Sch\u00f6ningh",
       "relations": [],
-      "title": "Die R\u00fcckkehr der Religionen in der politischen und medialen \u00d6ffent\u00ad lichkeit",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/9LNB4D9S"
+      "title": "Die R\u00fcckkehr der Religionen in der politischen und medialen \u00d6ffent\u00ad lichkeit"
     },
     {
-      "attachments": [],
       "citationKey": "schiffer2005a",
-      "collections": [],
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "S.",
+          "lastName": "Schiffer"
+        }
+      ],
+      "date": "2005",
+      "dateAdded": "2019-12-22T01:56:11Z",
+      "dateModified": "2019-12-22T01:56:11Z",
+      "extra": "Citation Key: schiffer2005a",
+      "itemID": 3,
+      "itemType": "bookSection",
+      "language": "german",
+      "place": "W\u00fcrzburg",
+      "publicationTitle": "Eine Auswahl von Techniken und Beispielen",
+      "publisher": "Ergon",
+      "relations": [],
+      "title": "Die Darstellung des Islams in der Presse: Sprache, Bilder, Suggestionen"
+    },
+    {
+      "citationKey": "schiffer2005a",
       "creators": [
         {
           "creatorType": "author",
@@ -177,16 +162,14 @@
       "dateAdded": "2019-12-22T01:56:12Z",
       "dateModified": "2019-12-22T01:56:12Z",
       "extra": "Citation Key: schiffer2005a",
-      "itemID": 816,
+      "itemID": 4,
       "itemType": "bookSection",
-      "key": "RAYHM6LP",
       "language": "german",
       "place": "W\u00fcrzburg",
       "publicationTitle": "Eine Auswahl von Techniken und Beispielen",
       "publisher": "Ergon",
       "relations": [],
-      "title": "Die Darstellung des Islams in der Presse: Sprache, Bilder, Suggestionen",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/RAYHM6LP"
+      "title": "Die Darstellung des Islams in der Presse: Sprache, Bilder, Suggestionen"
     }
   ]
 }

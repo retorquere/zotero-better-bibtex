@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -8,18 +7,17 @@
       "exportNotes": true
     },
     "preferences": {
+      "asciiBibLaTeX": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/american-physics-society",
       "bibtexURL": "note",
       "citekeyFormat": "[auth][year]",
       "jabrefFormat": 0,
-      "mapUnicode": "math",
-      "asciiBibLaTeX": true
+      "mapUnicode": "math"
     }
   },
   "items": [
     {
       "accessDate": "2013-01-11 09:39:35",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -35,7 +33,7 @@
       "date": "1985",
       "extra": "Citation Key: Yeh1985",
       "issue": "1",
-      "itemID": 2028,
+      "itemID": 1,
       "itemType": "journalArticle",
       "libraryCatalog": "Google Scholar",
       "pages": "1\u2013155",

@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -51,7 +50,6 @@
       "DOI": "10.1063/1.44135",
       "abstractNote": "A powerful, streamlined new Astrophysics Data System",
       "accessDate": "2018-09-24T16:52:14Z",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -87,7 +85,7 @@
       "date": "1993-00-00",
       "dateAdded": "2018-09-24T16:52:14Z",
       "dateModified": "2018-09-24T16:52:14Z",
-      "itemID": 104,
+      "itemID": 1,
       "itemType": "journalArticle",
       "language": "en",
       "libraryCatalog": "ui.adsabs.harvard.edu",
@@ -95,7 +93,6 @@
       "publicationTitle": "American Institute of Physics Conference Series",
       "relations": [],
       "title": "Observations of isolated pulsars and disk-fed X-ray binaries.",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/JQL5XZ8F",
       "url": "https://ui.adsabs.harvard.edu/#abs/1993AIPC..280..291W/abstract",
       "volume": "280"
     }

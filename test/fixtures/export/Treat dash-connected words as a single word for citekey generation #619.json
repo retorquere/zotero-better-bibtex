@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -41,7 +40,6 @@
   "items": [
     {
       "accessDate": "2017-08-17 19:37:30",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -67,7 +65,7 @@
       "date": "2017",
       "dateAdded": "2017-08-17 19:37:30",
       "dateModified": "2017-11-06 17:33:31",
-      "itemID": 9877,
+      "itemID": 1,
       "itemType": "journalArticle",
       "libraryCatalog": "Google Scholar",
       "publicationTitle": "arXiv preprint arXiv:1706.01690",

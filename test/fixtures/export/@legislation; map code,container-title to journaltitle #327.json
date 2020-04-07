@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -24,7 +23,7 @@
       "abstractNote": "dite loi Warsmann\nJORF n\u00b00115 du 18 mai 2011 page 8537",
       "code": "JORF",
       "date": "18/05/2011",
-      "itemID": 752,
+      "itemID": 1,
       "itemType": "statute",
       "language": "fr-FR",
       "number": "BCRX0929142L",

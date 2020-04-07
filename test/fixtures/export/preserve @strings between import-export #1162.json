@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -55,7 +54,6 @@
   },
   "items": [
     {
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -72,15 +70,14 @@
       "dateAdded": "2019-04-25T15:45:41Z",
       "dateModified": "2019-04-25T15:45:41Z",
       "extra": "Citation Key: Mitchell96\ntex.organization= ACM_SIGGRAPH",
-      "itemID": 5161,
+      "itemID": 1,
       "itemType": "conferencePaper",
       "pages": "277-280",
       "publicationTitle": "PROC_SIGGRAPH93_01",
       "publisher": "AW",
       "relations": [],
       "series": "ACS",
-      "title": "Consequences of Stratified Sampling in Graphics",
-      "uri": "http://zotero.org/users/5683824/items/MS45DN93"
+      "title": "Consequences of Stratified Sampling in Graphics"
     }
   ]
 }

@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -68,9 +67,7 @@
   "items": [
     {
       "ISBN": "978-2-7440-7182-9",
-      "attachments": [],
       "citationKey": "MittelbachLaTeXCompanion2006",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -113,9 +110,8 @@
       "dateModified": "2020-01-07T21:07:55Z",
       "edition": "2",
       "extra": "Citation Key: MittelbachLaTeXCompanion2006",
-      "itemID": 99,
+      "itemID": 1,
       "itemType": "book",
-      "key": "SNAZ8MMJ",
       "language": "french",
       "numPages": "1008",
       "place": "Paris",
@@ -127,8 +123,7 @@
           "type": 1
         }
       ],
-      "title": "\\LaTeX{} Companion",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/SNAZ8MMJ"
+      "title": "\\LaTeX{} Companion"
     }
   ]
 }

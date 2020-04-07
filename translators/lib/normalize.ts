@@ -1,6 +1,7 @@
 import { stringify } from '../../content/stringify'
 
 function rjust(str, width, padding) {
+  if (typeof str === 'number') str = '' + str
   padding = (padding || ' ')[0]
   return str.length < width ? padding.repeat(width - str.length) + str : str
 }
@@ -19,7 +20,11 @@ type Library = {
 
   items: {
     itemID: number
+    title: string
+    itemType: string
+    date: string
     citekey?: string
+    citationKey?: string
     autoJournalAbbreviation?: string
     libraryID?: number
     key?: string
@@ -28,7 +33,13 @@ type Library = {
   }[]
 }
 
+function key(item) {
+  return [item.itemType, item.citationKey || '', item.title || '', item.creators?.[0]?.lastName || item.creators?.[0]?.name || ''].join('\t').toLowerCase()
+}
+
 export function normalize(library: Library, scrub=false) {
+
+  library.items.sort((a, b) => key(a).localeCompare(key(b)))
 
   for (const item of (library.items as any[])) {
     delete item.citekey
@@ -84,7 +95,7 @@ export function normalize(library: Library, scrub=false) {
   // sort items and normalize their IDs
   library.items.sort((a, b) => stringify({...a, itemID: 0}).localeCompare(stringify({...b, itemID: 0})))
   const itemIDs: Record<number, number> = library.items.reduce((acc, item, i) => {
-    item.itemID = acc[item.itemID] = i
+    item.itemID = acc[item.itemID] = i + 1 // Zotero does not recognize items with itemID 0 in collections...
     return acc
   }, {})
 

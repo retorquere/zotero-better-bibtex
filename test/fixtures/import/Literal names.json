@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -65,9 +64,7 @@
     {
       "DOI": "10.1161/CIR.0b013e318288b4dd",
       "ISSN": "1524-4539",
-      "attachments": [],
       "citationKey": "sasson_increasing_2013",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -170,9 +167,8 @@
       "dateModified": "2019-10-29T13:25:50Z",
       "extra": "Citation Key: sasson_increasing_2013",
       "issue": "12",
-      "itemID": 121,
+      "itemID": 1,
       "itemType": "journalArticle",
-      "key": "UZ45LRQU",
       "language": "English",
       "notes": [
         "<p>PMID: 23439512</p>"
@@ -214,7 +210,6 @@
         }
       ],
       "title": "Increasing cardiopulmonary resuscitation provision in communities with low bystander cardiopulmonary resuscitation rates: a science advisory from the American Heart Association for healthcare providers, policymakers, public health departments, and community leaders",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/UZ45LRQU",
       "volume": "127"
     }
   ]

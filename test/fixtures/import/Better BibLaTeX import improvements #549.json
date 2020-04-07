@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -66,29 +65,7 @@
   },
   "items": [
     {
-      "attachments": [],
-      "citationKey": "1e",
-      "collections": [],
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "01e"
-        }
-      ],
-      "dateAdded": "2019-12-22T01:25:21Z",
-      "dateModified": "2019-12-22T01:25:21Z",
-      "extra": "Citation Key: 1e",
-      "itemID": 842,
-      "itemType": "journalArticle",
-      "key": "MDZDMNEI",
-      "relations": [],
-      "title": "Blah <span class=\"nocase\"><i>emph</i></span> and <span class=\"nocase\">\u201cenquote\u201d</span>.",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/MDZDMNEI"
-    },
-    {
-      "attachments": [],
       "citationKey": "1b",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -98,37 +75,29 @@
       "dateAdded": "2019-12-22T01:25:21Z",
       "dateModified": "2019-12-22T01:25:21Z",
       "extra": "Citation Key: 1b",
-      "itemID": 843,
+      "itemID": 1,
       "itemType": "journalArticle",
-      "key": "EGN2AG47",
       "relations": [],
-      "title": "Blah <span class=\"nocase\"><i>mkbibemph</i></span> and <span class=\"nocase\">\u201cmkbibquote\u201d</span>.",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/EGN2AG47"
+      "title": "Blah <span class=\"nocase\"><i>mkbibemph</i></span> and <span class=\"nocase\">\u201cmkbibquote\u201d</span>."
     },
     {
-      "attachments": [],
-      "citationKey": "2e",
-      "collections": [],
+      "citationKey": "1e",
       "creators": [
         {
           "creatorType": "author",
-          "name": "02e"
+          "name": "01e"
         }
       ],
       "dateAdded": "2019-12-22T01:25:21Z",
       "dateModified": "2019-12-22T01:25:21Z",
-      "extra": "Citation Key: 2e",
-      "itemID": 844,
-      "itemType": "book",
-      "key": "9UITPY64",
+      "extra": "Citation Key: 1e",
+      "itemID": 2,
+      "itemType": "journalArticle",
       "relations": [],
-      "title": "Blah <span class=\"nocase\"><i>emph</i></span> and <span class=\"nocase\">\u201cenquote\u201d</span>.",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/9UITPY64"
+      "title": "Blah <span class=\"nocase\"><i>emph</i></span> and <span class=\"nocase\">\u201cenquote\u201d</span>."
     },
     {
-      "attachments": [],
       "citationKey": "2b",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -138,89 +107,29 @@
       "dateAdded": "2019-12-22T01:25:21Z",
       "dateModified": "2019-12-22T01:25:21Z",
       "extra": "Citation Key: 2b",
-      "itemID": 845,
+      "itemID": 3,
       "itemType": "book",
-      "key": "QN3C5UL9",
       "relations": [],
-      "title": "Blah <span class=\"nocase\"><i>mkbibemph</i></span> and <span class=\"nocase\">\u201cmkbibquote\u201d</span>.",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/QN3C5UL9"
+      "title": "Blah <span class=\"nocase\"><i>mkbibemph</i></span> and <span class=\"nocase\">\u201cmkbibquote\u201d</span>."
     },
     {
-      "attachments": [],
-      "citationKey": "Bennett2003",
-      "collections": [],
+      "citationKey": "2e",
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "David Christopher",
-          "lastName": "Bennett"
+          "name": "02e"
         }
       ],
-      "date": "2003",
       "dateAdded": "2019-12-22T01:25:21Z",
       "dateModified": "2019-12-22T01:25:21Z",
-      "extra": "Citation Key: Bennett2003",
-      "itemID": 846,
-      "itemType": "thesis",
-      "key": "RMPX6UEP",
-      "publisher": "University of London",
+      "extra": "Citation Key: 2e",
+      "itemID": 4,
+      "itemType": "book",
       "relations": [],
-      "title": "Xenonika: medical texts associated with xenones in the late Byzantine period",
-      "type": "Ph.D.",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/RMPX6UEP"
+      "title": "Blah <span class=\"nocase\"><i>emph</i></span> and <span class=\"nocase\">\u201cenquote\u201d</span>."
     },
     {
-      "attachments": [],
-      "citationKey": "Cooper2013",
-      "collections": [],
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Glen",
-          "lastName": "Cooper"
-        }
-      ],
-      "date": "2013",
-      "dateAdded": "2019-12-22T01:25:21Z",
-      "dateModified": "2019-12-22T01:25:21Z",
-      "extra": "Citation Key: Cooper2013\ntex.crossref: Classen2013",
-      "itemID": 847,
-      "itemType": "bookSection",
-      "key": "PL8NZ4WB",
-      "pages": "263-87",
-      "relations": [],
-      "title": "Byzantium between east and west: Competing hellenisms in the <i>Alexiad</i> of anna komnene and her contemporaries",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/PL8NZ4WB"
-    },
-    {
-      "attachments": [],
-      "citationKey": "Correns1891",
-      "collections": [],
-      "creators": [
-        {
-          "creatorType": "editor",
-          "firstName": "Paul",
-          "lastName": "Correns"
-        }
-      ],
-      "date": "1891",
-      "dateAdded": "2019-12-22T01:25:21Z",
-      "dateModified": "2019-12-22T01:25:21Z",
-      "extra": "Citation Key: Correns1891",
-      "itemID": 848,
-      "itemType": "journalArticle",
-      "key": "XUK6PB7K",
-      "pages": "1-11",
-      "publicationTitle": "Beitr\u00e4ge zur Geschichte der Philosophie des Mittelalters",
-      "relations": [],
-      "title": "Die dem boethius f\u00e4lschlich zugeschriebene abhandlung des dominicus gundisalvi 'De unitate'",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/XUK6PB7K",
-      "volume": "1"
-    },
-    {
-      "attachments": [],
       "citationKey": "Algar1985",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -232,20 +141,16 @@
       "dateAdded": "2019-12-22T01:25:21Z",
       "dateModified": "2019-12-22T01:25:21Z",
       "extra": "Citation Key: Algar1985",
-      "itemID": 849,
+      "itemID": 5,
       "itemType": "encyclopediaArticle",
-      "key": "2CTP43M7",
       "pages": "172-4",
       "publicationTitle": "Encyclopedia iranica",
       "relations": [],
       "title": "Besmallah: in exegesis, jurisprudence, and cultural life",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/2CTP43M7",
       "volume": "4"
     },
     {
-      "attachments": [],
       "citationKey": "Arsdall2012",
-      "collections": [],
       "creators": [
         {
           "creatorType": "editor",
@@ -262,14 +167,72 @@
       "dateAdded": "2019-12-22T01:25:21Z",
       "dateModified": "2019-12-22T01:25:21Z",
       "extra": "Citation Key: Arsdall2012",
-      "itemID": 850,
+      "itemID": 6,
       "itemType": "book",
-      "key": "L28CLDRT",
       "place": "Burlington, VT",
       "publisher": "Ashgate",
       "relations": [],
-      "title": "Herbs and healers from the ancient mediterranean through the medieval west: Essays in honor of john m. Riddle",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/L28CLDRT"
+      "title": "Herbs and healers from the ancient mediterranean through the medieval west: Essays in honor of john m. Riddle"
+    },
+    {
+      "citationKey": "Bennett2003",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "David Christopher",
+          "lastName": "Bennett"
+        }
+      ],
+      "date": "2003",
+      "dateAdded": "2019-12-22T01:25:21Z",
+      "dateModified": "2019-12-22T01:25:21Z",
+      "extra": "Citation Key: Bennett2003",
+      "itemID": 7,
+      "itemType": "thesis",
+      "publisher": "University of London",
+      "relations": [],
+      "title": "Xenonika: medical texts associated with xenones in the late Byzantine period",
+      "type": "Ph.D."
+    },
+    {
+      "citationKey": "Cooper2013",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Glen",
+          "lastName": "Cooper"
+        }
+      ],
+      "date": "2013",
+      "dateAdded": "2019-12-22T01:25:21Z",
+      "dateModified": "2019-12-22T01:25:21Z",
+      "extra": "Citation Key: Cooper2013\ntex.crossref: Classen2013",
+      "itemID": 8,
+      "itemType": "bookSection",
+      "pages": "263-87",
+      "relations": [],
+      "title": "Byzantium between east and west: Competing hellenisms in the <i>Alexiad</i> of anna komnene and her contemporaries"
+    },
+    {
+      "citationKey": "Correns1891",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "Paul",
+          "lastName": "Correns"
+        }
+      ],
+      "date": "1891",
+      "dateAdded": "2019-12-22T01:25:21Z",
+      "dateModified": "2019-12-22T01:25:21Z",
+      "extra": "Citation Key: Correns1891",
+      "itemID": 9,
+      "itemType": "journalArticle",
+      "pages": "1-11",
+      "publicationTitle": "Beitr\u00e4ge zur Geschichte der Philosophie des Mittelalters",
+      "relations": [],
+      "title": "Die dem boethius f\u00e4lschlich zugeschriebene abhandlung des dominicus gundisalvi 'De unitate'",
+      "volume": "1"
     }
   ]
 }

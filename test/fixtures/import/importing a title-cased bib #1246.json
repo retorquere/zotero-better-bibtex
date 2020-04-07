@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -66,45 +65,7 @@
   },
   "items": [
     {
-      "DOI": "10.1007/s13127-011-0069-8",
-      "attachments": [],
-      "citationKey": "Frit2",
-      "collections": [],
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "U.",
-          "lastName": "Fritz"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "C.",
-          "lastName": "Corti"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "M.",
-          "lastName": "P\u00e4ckert"
-        }
-      ],
-      "date": "2012",
-      "dateAdded": "2019-12-22T01:25:02Z",
-      "dateModified": "2019-12-22T01:25:02Z",
-      "extra": "Citation Key: Frit2\ntex.timestamp: 2015-02-24 12:14:36 +0100",
-      "itemID": 653,
-      "itemType": "journalArticle",
-      "key": "DVH8V3JD",
-      "pages": "71-80",
-      "publicationTitle": "Actes du 4<sup>\u00e8me</sup> Congr\u00e8s Fran\u00e7ais d'Acoustique",
-      "relations": [],
-      "title": "Test of markupconversion: Italics, bold, superscript, subscript, and small caps: Mitochondrial DNA\u2082 sequences suggest unexpected phylogenetic position of Corso-Sardinian grass snakes (<span class=\"nocase\"><i>Natrix cetti</i></span>) and <span class=\"nocase\"><b>do not</b></span> support their <span class=\"nocase\"><span style=\"font-variant:small-caps;\">species status</span></span>, with notes on phylogeography and subspecies delineation of grass snakes.",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/DVH8V3JD",
-      "volume": "12"
-    },
-    {
-      "attachments": [],
       "citationKey": "AdcroftETAL:1997",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -126,15 +87,45 @@
       "dateAdded": "2019-12-22T01:25:02Z",
       "dateModified": "2019-12-22T01:25:02Z",
       "extra": "Citation Key: AdcroftETAL:1997",
-      "itemID": 654,
+      "itemID": 1,
       "itemType": "journalArticle",
-      "key": "7CYSL4MS",
       "pages": "2293-2315",
       "publicationTitle": "Monthly Weather Review",
       "relations": [],
       "title": "Representation of topography by shaved cells in a height coordinate ocean model",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/7CYSL4MS",
       "volume": "125"
+    },
+    {
+      "DOI": "10.1007/s13127-011-0069-8",
+      "citationKey": "Frit2",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "U.",
+          "lastName": "Fritz"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Corti"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "P\u00e4ckert"
+        }
+      ],
+      "date": "2012",
+      "dateAdded": "2019-12-22T01:25:02Z",
+      "dateModified": "2019-12-22T01:25:02Z",
+      "extra": "Citation Key: Frit2\ntex.timestamp: 2015-02-24 12:14:36 +0100",
+      "itemID": 2,
+      "itemType": "journalArticle",
+      "pages": "71-80",
+      "publicationTitle": "Actes du 4<sup>\u00e8me</sup> Congr\u00e8s Fran\u00e7ais d'Acoustique",
+      "relations": [],
+      "title": "Test of markupconversion: Italics, bold, superscript, subscript, and small caps: Mitochondrial DNA\u2082 sequences suggest unexpected phylogenetic position of Corso-Sardinian grass snakes (<span class=\"nocase\"><i>Natrix cetti</i></span>) and <span class=\"nocase\"><b>do not</b></span> support their <span class=\"nocase\"><span style=\"font-variant:small-caps;\">species status</span></span>, with notes on phylogeography and subspecies delineation of grass snakes.",
+      "volume": "12"
     }
   ]
 }

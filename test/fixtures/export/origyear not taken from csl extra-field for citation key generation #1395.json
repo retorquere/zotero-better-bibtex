@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -72,9 +71,7 @@
   "items": [
     {
       "ISBN": "84-7166-852-1",
-      "attachments": [],
       "citationKey": "Brennan.1982.MagiaExperimental.",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -86,21 +83,17 @@
       "dateAdded": "2020-01-09T12:07:50Z",
       "dateModified": "2020-01-14T14:34:30Z",
       "extra": "{:original-date: 1976}",
-      "itemID": 95,
+      "itemID": 1,
       "itemType": "book",
-      "key": "76ELWHFR",
       "language": "Spanish",
       "place": "Madrid",
       "publisher": "Edaf",
       "relations": [],
-      "title": "Magia experimental",
-      "uri": "http://zotero.org/users/6244081/items/76ELWHFR"
+      "title": "Magia experimental"
     },
     {
       "ISBN": "978-85-86019-05-0",
-      "attachments": [],
       "citationKey": "Vieira.1994.700ExperimentosdaConscienciologia.Capitulo.p.22",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -113,17 +106,15 @@
       "dateModified": "2020-01-15T07:10:10Z",
       "edition": "1. ed.",
       "extra": "{:original-date: 1994}",
-      "itemID": 96,
+      "itemID": 2,
       "itemType": "bookSection",
-      "key": "8GEWVJQ8",
       "language": "pt",
       "pages": "p.22",
       "place": "Rio de Janeiro",
       "publicationTitle": "700 Experimentos da Conscienciologia",
       "publisher": "Instituto Internacional de Projeciologia",
       "relations": [],
-      "title": "Cap\u00edtulo 5",
-      "uri": "http://zotero.org/users/6244081/items/8GEWVJQ8"
+      "title": "Cap\u00edtulo 5"
     }
   ]
 }

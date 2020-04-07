@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -59,10 +58,38 @@
   },
   "items": [
     {
+      "assignee": "Hughes Aircraft Company",
+      "citationKey": "sorace",
+      "creators": [
+        {
+          "creatorType": "inventor",
+          "firstName": "Ronald E.",
+          "lastName": "Sorace"
+        },
+        {
+          "creatorType": "inventor",
+          "firstName": "Victor S.",
+          "lastName": "Reinhardt"
+        },
+        {
+          "creatorType": "inventor",
+          "firstName": "Steven A.",
+          "lastName": "Vaughn"
+        }
+      ],
+      "date": "1997-09-16",
+      "dateAdded": "2019-08-20T14:14:56Z",
+      "dateModified": "2019-08-20T14:14:56Z",
+      "extra": "Citation Key: sorace",
+      "itemID": 1,
+      "itemType": "patent",
+      "number": "US5668842",
+      "relations": [],
+      "title": "High-speed digital-to-RF converter"
+    },
+    {
       "assignee": "Robert Bosch GmbH; Daimler Chrysler AG; Bayerische Motoren Werke AG",
-      "attachments": [],
       "citationKey": "laufenberg",
-      "collections": [],
       "creators": [
         {
           "creatorType": "inventor",
@@ -129,48 +156,12 @@
       "dateAdded": "2019-08-20T14:14:56Z",
       "dateModified": "2019-08-20T14:14:56Z",
       "extra": "Citation Key: laufenberg",
-      "itemID": 267,
+      "itemID": 2,
       "itemType": "patent",
-      "key": "9GSZYAT9",
       "number": "EP1700367",
       "relations": [],
       "title": "Elektrische einrichtung und betriebsverfahren",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/9GSZYAT9",
       "url": "http://v3.espacenet.com/textdoc?IDX=EP1700367"
-    },
-    {
-      "assignee": "Hughes Aircraft Company",
-      "attachments": [],
-      "citationKey": "sorace",
-      "collections": [],
-      "creators": [
-        {
-          "creatorType": "inventor",
-          "firstName": "Ronald E.",
-          "lastName": "Sorace"
-        },
-        {
-          "creatorType": "inventor",
-          "firstName": "Victor S.",
-          "lastName": "Reinhardt"
-        },
-        {
-          "creatorType": "inventor",
-          "firstName": "Steven A.",
-          "lastName": "Vaughn"
-        }
-      ],
-      "date": "1997-09-16",
-      "dateAdded": "2019-08-20T14:14:56Z",
-      "dateModified": "2019-08-20T14:14:56Z",
-      "extra": "Citation Key: sorace",
-      "itemID": 268,
-      "itemType": "patent",
-      "key": "9EQBZXZ6",
-      "number": "US5668842",
-      "relations": [],
-      "title": "High-speed digital-to-RF converter",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/9EQBZXZ6"
     }
   ]
 }

@@ -1,4 +1,5 @@
-import _stringify from 'fast-safe-stringify'
+// import _stringify from 'fast-safe-stringify'
+import _stringify from 'safe-stable-stringify'
 
 export function stringify(obj, replacer?, indent?, ucode?) {
   const stringified = _stringify(obj, replacer, indent)

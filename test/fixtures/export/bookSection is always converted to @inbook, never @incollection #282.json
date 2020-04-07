@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -29,7 +28,7 @@
         }
       ],
       "date": "1982",
-      "itemID": 1303,
+      "itemID": 1,
       "itemType": "bookSection",
       "language": "fr-FR",
       "numberOfVolumes": "2 vol. (786, xxiv+908 p.)",

@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -36,7 +35,6 @@
   },
   "items": [
     {
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -45,7 +43,7 @@
         }
       ],
       "date": "2002",
-      "itemID": 3185,
+      "itemID": 1,
       "itemType": "book",
       "language": "ru",
       "libraryCatalog": "Google Books",

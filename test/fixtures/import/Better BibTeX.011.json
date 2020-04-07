@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -63,9 +62,7 @@
   },
   "items": [
     {
-      "attachments": [],
       "citationKey": "Klassen2010",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -87,17 +84,15 @@
       "dateAdded": "2019-10-29T15:10:52Z",
       "dateModified": "2019-10-29T15:10:52Z",
       "extra": "Citation Key: Klassen2010\ntex.bibsource: DBLP, http://dblp.uni-trier.de\ntex.crossref: DBLP:conf/cata/2010\ntex.owner: sstudent\ntex.timestamp: 2011.03.22",
-      "itemID": 314,
+      "itemID": 1,
       "itemType": "conferencePaper",
-      "key": "4A7YHHBD",
       "notes": [
         "<p>svm liniowe najlepsze</p>"
       ],
       "pages": "25-30",
       "publicationTitle": "CATA",
       "relations": [],
-      "title": "Empirical study of support vector machine kernels with applications to microarray data",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/4A7YHHBD"
+      "title": "Empirical study of support vector machine kernels with applications to microarray data"
     }
   ]
 }

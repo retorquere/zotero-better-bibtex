@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -29,7 +28,7 @@
       ],
       "date": "1999",
       "extra": "Citation Key: koopman_efficient_99\ntex.doi= 10.1007/3-540-48515-5_8",
-      "itemID": 203,
+      "itemID": 1,
       "itemType": "bookSection",
       "libraryCatalog": "Google Scholar",
       "pages": "120\u2013136",
