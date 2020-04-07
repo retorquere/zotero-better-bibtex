@@ -1,4 +1,3 @@
-import { debug } from './debug'
 import stringify from 'fast-safe-stringify'
 
 function rjust(str, width, padding) {
@@ -95,9 +94,7 @@ export function normalize(library: Library) {
   library.collections = collectionOrder.reduce((acc, coll) => {
     if (!(coll.parent = collectionKeys[coll.parent])) delete coll.parent
 
-    debug('normalize:pre:', coll.items)
     coll.items = coll.items.map(itemID => itemIDs[itemID]).filter(itemID => typeof itemID === 'number').sort()
-    debug('normalize:post:', coll.items)
 
     coll.collections = coll.collections.map(collectionKey => collectionKeys[collectionKey]).filter(collectionKey => collectionKey).sort()
 
