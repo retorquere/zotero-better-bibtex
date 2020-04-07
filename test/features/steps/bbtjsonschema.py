@@ -17,7 +17,9 @@ def refresh():
 
   schema.properties.config.properties.preferences.properties = {}
   for pref, meta in prefs.items():
-    if meta.type == 'string' and 'options' in meta:
+    if pref in ['client', 'platform', 'newTranslatorsAskRestart', 'testing']:
+      pass
+    elif meta.type == 'string' and 'options' in meta:
       schema.properties.config.properties.preferences.properties[pref] = { 'enum': list(meta.options.keys()) }
     elif meta.type in [ 'string', 'boolean', 'number' ]:
       schema.properties.config.properties.preferences.properties[pref] = { 'type': meta.type }

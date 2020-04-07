@@ -8,6 +8,7 @@ function rjust(str, width, padding) {
 
 type Library = {
   config: any
+  preferences?: any
 
   collections: Record<string, {
     key: string
@@ -29,18 +30,60 @@ type Library = {
 }
 
 export function normalize(library: Library) {
-  // sort items and normalize their IDs
-  library.items.sort((a, b) => stringify({...a, itemID: 0}).localeCompare(stringify({...b, itemID: 0})))
-  const itemIDs: Record<number, number> = library.items.reduce((acc, item, i) => {
-    item.itemID = acc[item.itemID] = i
 
+  for (const item of (library.items as any[])) {
     delete item.citekey
     delete item.autoJournalAbbreviation
     delete item.libraryID
     delete item.key
     delete item.version
     delete item.uniqueFields
+    delete item.collections
 
+    if (item.notes?.length) {
+      item.notes = item.notes.map(note => typeof note === 'string' ? note : note.note).sort()
+    } else {
+      delete item.notes
+    }
+
+    if (item.tags?.length) {
+      item.tags = item.tags.map(tag => typeof tag === 'string' ? { tag } : tag).sort((a, b) => a.tag.localeCompare(b.tag))
+    } else {
+      delete item.tags
+    }
+
+    if (item.attachments?.length) {
+      for (const att of item.attachments) {
+        att.contentType = att.contentType || att.mimeType
+        delete att.mimeType
+        for (const prop of ['localPath', 'itemID', 'charset', 'dateAdded', 'parentItem', 'dateModified', 'version', 'relations', 'id']) {
+          delete att[prop]
+        }
+      }
+    } else {
+      delete item.attachments
+    }
+
+    if (item.creators?.length) {
+      for (const creator of item.creators) {
+        if (!creator.fieldMode) delete creator.fieldMode
+      }
+    } else {
+      delete item.creators
+    }
+  }
+
+  if (library.preferences) {
+    delete library.preferences.client
+    delete library.preferences.platform
+    delete library.preferences.newTranslatorsAskRestart
+    delete library.preferences.testing
+  }
+
+  // sort items and normalize their IDs
+  library.items.sort((a, b) => stringify({...a, itemID: 0}).localeCompare(stringify({...b, itemID: 0})))
+  const itemIDs: Record<number, number> = library.items.reduce((acc, item, i) => {
+    item.itemID = acc[item.itemID] = i
     return acc
   }, {})
 

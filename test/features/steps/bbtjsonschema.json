@@ -231,9 +231,6 @@
             "debugLogDir": {
               "type": "string"
             },
-            "testing": {
-              "type": "boolean"
-            },
             "autoPin": {
               "type": "boolean"
             },
@@ -260,17 +257,8 @@
             "mapMath": {
               "type": "string"
             },
-            "newTranslatorsAskRestart": {
-              "type": "boolean"
-            },
             "workers": {
               "type": "number"
-            },
-            "platform": {
-              "type": "string"
-            },
-            "client": {
-              "type": "string"
             }
           }
         },
