@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -59,7 +58,6 @@
   },
   "items": [
     {
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -70,7 +68,7 @@
       "date": "1973",
       "dateAdded": "2018-03-04T10:57:41Z",
       "dateModified": "2018-03-04T10:57:41Z",
-      "itemID": 50,
+      "itemID": 0,
       "itemType": "journalArticle",
       "pages": "437\u2013441",
       "publicationTitle": "Israel Journal of Mathematics",
@@ -80,7 +78,6 @@
       "volume": "15"
     },
     {
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -91,7 +88,7 @@
       "date": "1973",
       "dateAdded": "2018-03-04T10:57:42Z",
       "dateModified": "2018-03-04T10:57:42Z",
-      "itemID": 77,
+      "itemID": 1,
       "itemType": "journalArticle",
       "notes": [
         "<p>MR 49:8856</p>"

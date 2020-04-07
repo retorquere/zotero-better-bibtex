@@ -28,7 +28,7 @@ type Library = {
   }[]
 }
 
-export function normalize(library: Library) {
+export function normalize(library: Library, scrub=false) {
 
   for (const item of (library.items as any[])) {
     delete item.citekey
@@ -38,6 +38,8 @@ export function normalize(library: Library) {
     delete item.version
     delete item.uniqueFields
     delete item.collections
+
+    if (scrub) delete item.uri
 
     if (item.notes?.length) {
       item.notes = item.notes.map(note => typeof note === 'string' ? note : note.note).sort()
