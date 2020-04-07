@@ -7,7 +7,7 @@ import { debug } from './lib/debug'
 import * as itemfields from '../gen/itemfields'
 import { normalize } from './lib/normalize'
 const version = require('../gen/version.js')
-import stringify from 'fast-safe-stringify'
+import { stringify } from '../content/stringify'
 
 const chunkSize = 0x100000
 

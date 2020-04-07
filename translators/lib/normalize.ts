@@ -1,4 +1,4 @@
-import stringify from 'fast-safe-stringify'
+import { stringify } from '../../content/stringify'
 
 function rjust(str, width, padding) {
   padding = (padding || ' ')[0]

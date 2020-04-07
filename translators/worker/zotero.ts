@@ -5,7 +5,7 @@ importScripts('resource://gre/modules/osfile.jsm')
 declare const OS: any
 
 import XRegExp = require('xregexp')
-import stringify = require('json-stringify-safe')
+import { stringify } from '../../content/stringify'
 import { HTMLParser } from '../../content/markupparser'
 import * as DateParser from '../../content/dateparser'
 // import * as Extra from '../../content/extra'
