@@ -12,22 +12,23 @@ function serialize(data) {
 }
 
 const save = process.argv.length > 2
-const libs = save ? process.argv.slice(2) : glob('test/fixtures/*/*.json')
+const libs = save ? process.argv.slice(2) : glob('test/fixtures/*/*.json').sort()
 
 for (const lib of libs) {
   if (lib.endsWith('.csl.json')) continue
   if (lib.endsWith('.schomd.json')) continue
 
-  console.log(lib)
+  if (save) console.log(lib)
 
   const data = JSON.parse(fs.readFileSync(lib, 'utf-8'))
   const pre = serialize(data)
 
-  normalize(data)
+  normalize(data, true)
 
   const post = serialize(data)
 
   if (post !== pre) {
+    if (!save) console.log(lib)
     console.log(' ', save ? 'saving' : 'should save', lib)
     if (save) fs.writeFileSync(lib, post)
   }
