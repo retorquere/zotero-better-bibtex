@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -53,7 +52,6 @@
       "DOI": "10.1093/hmg/ddy068",
       "ISSN": "1460-2083",
       "abstractNote": "Centronuclear myopathies (CNM) are a subtype of congenital myopathies (CM) characterized by skeletal muscle weakness and an increase in the number of central myonuclei. We have previously identified three CNM probands, two with associated dilated cardiomyopathy, carrying striated preferentially expressed gene (SPEG) mutations. Currently, the role of SPEG in skeletal muscle function is unclear as constitutive SPEG-deficient mice developed severe dilated cardiomyopathy and died in utero. We have generated a conditional Speg-KO mouse model and excised Speg by crosses with striated muscle-specific cre-expressing mice (MCK-Cre). The resulting litters had a delay in Speg excision consistent with cre expression starting in early postnatal life and, therefore, an extended lifespan up to a few months. KO mice were significantly smaller and weaker than their littermate-matched controls. Histopathological skeletal muscle analysis revealed smaller myofibers, marked fiber-size variability, and poor integrity and low number of triads. Further, SPEG-deficient muscle fibers were weaker by physiological and in vitro studies and exhibited abnormal Ca2+ handling and excitation-contraction (E-C) coupling. Overall, SPEG deficiency in skeletal muscle is associated with fewer and abnormal triads, and defective calcium handling and excitation-contraction coupling, suggesting that therapies targeting calcium signaling may be beneficial in such patients.",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -121,7 +119,7 @@
       "dateModified": "2018-12-30T15:34:36Z",
       "extra": "PMID: 29474540\nPMCID: PMC5905626",
       "issue": "9",
-      "itemID": 100,
+      "itemID": 1,
       "itemType": "journalArticle",
       "journalAbbreviation": "Hum. Mol. Genet.",
       "language": "eng",
@@ -130,14 +128,12 @@
       "publicationTitle": "Human Molecular Genetics",
       "relations": [],
       "title": "SPEG-deficient skeletal muscles exhibit abnormal triad and defective calcium handling",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/9B6E853J",
       "volume": "27"
     },
     {
       "DOI": "10.1371/journal.pgen.1007226",
       "ISSN": "1553-7404",
       "abstractNote": "Gene expression in a tissue-specific context depends on the combined efforts of epigenetic, transcriptional and post-transcriptional processes that lead to the production of specific proteins that are important determinants of cellular identity. Ribosomes are a central component of the protein biosynthesis machinery in cells; however, their regulatory roles in the translational control of gene expression in skeletal muscle remain to be defined. In a genetic screen to identify critical regulators of myogenesis, we identified a DEAD-Box RNA helicase, DDX27, that is required for skeletal muscle growth and regeneration. We demonstrate that DDX27 regulates ribosomal RNA (rRNA) maturation, and thereby the ribosome biogenesis and the translation of specific transcripts during myogenesis. These findings provide insight into the translational regulation of gene expression in myogenesis and suggest novel functions for ribosomes in regulating gene expression in skeletal muscles.",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -205,7 +201,7 @@
       "dateModified": "2018-12-30T15:35:12Z",
       "extra": "PMID: 29518074\nPMCID: PMC5843160",
       "issue": "3",
-      "itemID": 102,
+      "itemID": 2,
       "itemType": "journalArticle",
       "journalAbbreviation": "PLoS Genet.",
       "language": "eng",
@@ -267,7 +263,6 @@
         }
       ],
       "title": "RNA helicase, DDX27 regulates skeletal muscle growth and regeneration by modulation of translational processes",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/VDZANJE6",
       "volume": "14"
     }
   ]

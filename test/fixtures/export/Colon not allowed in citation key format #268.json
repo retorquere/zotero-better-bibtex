@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -22,7 +21,6 @@
     {
       "ISBN": "978-0-19-820756-6",
       "abstractNote": "This history of the books of Reading Abbey covers the period from the abbey's foundation to its dissolution, and also charts the dispersal of the book collections up until c.1610. It provides valuable evidence for intellectual life and the use of books in a medieval monastery. By continuing the story beyond the Dissolution of the Monasteries, and charting the initial stages of the dispersal of the Abbey's books (many into the large institutional collections which are their homes today), Alan Coates makes a valuable contribution to our understanding of the fate of monastic books and book-collecting in the second half of the sixteenth century.",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -31,7 +29,7 @@
         }
       ],
       "date": "1999",
-      "itemID": 4064,
+      "itemID": 1,
       "itemType": "book",
       "language": "en",
       "libraryCatalog": "Google Books",

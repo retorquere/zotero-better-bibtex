@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -59,9 +58,7 @@
   },
   "items": [
     {
-      "attachments": [],
       "citationKey": "McDermott:72",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -78,13 +75,11 @@
       "dateAdded": "2019-08-18T23:27:52Z",
       "dateModified": "2019-08-18T23:27:52Z",
       "extra": "Citation Key: McDermott:72",
-      "itemID": 266,
+      "itemID": 1,
       "itemType": "report",
-      "key": "FF8ZQ34W",
       "publisher": "MIT Artificial Intelligence Laboratory",
       "relations": [],
-      "title": "The <span style=\"font-variant:small-caps;\">CONNIVER</span> reference manual",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/FF8ZQ34W"
+      "title": "The <span style=\"font-variant:small-caps;\">CONNIVER</span> reference manual"
     }
   ]
 }

@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -66,11 +65,7 @@
   },
   "items": [
     {
-      "attachments": [],
       "citationKey": "LiWenHui_2014_HangPaiShiPi",
-      "collections": [
-        "326MBU48"
-      ],
       "creators": [
         {
           "creatorType": "author",
@@ -80,14 +75,12 @@
       "date": "2014",
       "dateAdded": "2019-12-04T07:04:26Z",
       "dateModified": "2019-12-06T07:54:47Z",
-      "itemID": 121,
+      "itemID": 1,
       "itemType": "thesis",
-      "key": "2RCNQN94",
       "publisher": "\u897f\u5b89: \u897f\u5b89\u7535\u5b50\u79d1\u6280\u5927\u5b66",
       "relations": [],
       "title": "\u822a\u62cd\u89c6\u9891\u4e2d\u8fd0\u52a8\u76ee\u6807\u7684\u68c0\u6d4b\u4e0e\u8ddf\u8e2a\u7b97\u6cd5\u7814\u7a76",
-      "type": "PhD Thesis",
-      "uri": "http://zotero.org/users/6202952/items/2RCNQN94"
+      "type": "PhD Thesis"
     }
   ]
 }

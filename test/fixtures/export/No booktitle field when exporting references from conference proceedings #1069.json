@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -49,7 +48,6 @@
   "items": [
     {
       "accessDate": "2018-10-06T03:54:36Z",
-      "attachments": [],
       "conferenceName": "Proceedings of the IEEE International Conference on Computer Vision",
       "creators": [
         {
@@ -71,7 +69,7 @@
       "date": "2015",
       "dateAdded": "2018-10-06T03:54:36Z",
       "dateModified": "2018-10-06T05:19:31Z",
-      "itemID": 109,
+      "itemID": 1,
       "itemType": "conferencePaper",
       "libraryCatalog": "www.cv-foundation.org",
       "pages": "2938-2946",
@@ -83,7 +81,6 @@
         }
       ],
       "title": "PoseNet: A Convolutional Network for Real-Time 6-DOF Camera Relocalization",
-      "uri": "http://zotero.org/users/5206226/items/VCJPTZRJ",
       "url": "https://www.cv-foundation.org/openaccess/content_iccv_2015/html/Kendall_PoseNet_A_Convolutional_ICCV_2015_paper.html"
     }
   ]

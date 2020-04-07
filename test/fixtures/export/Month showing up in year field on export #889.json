@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -43,7 +42,6 @@
   },
   "items": [
     {
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -61,7 +59,7 @@
       "dateModified": "2015-05-15 10:51:58",
       "extra": "Citation Key: HoukWise95",
       "issue": "2",
-      "itemID": 27912,
+      "itemID": 1,
       "itemType": "journalArticle",
       "pages": "95\u2013110",
       "publicationTitle": "Cerebral Cortex",

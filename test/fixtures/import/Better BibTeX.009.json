@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -59,9 +58,7 @@
   },
   "items": [
     {
-      "attachments": [],
       "citationKey": "Adams2001",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -103,9 +100,8 @@
       "dateAdded": "2019-08-21T08:25:40Z",
       "dateModified": "2019-08-21T08:25:40Z",
       "extra": "Citation Key: Adams2001",
-      "itemID": 307,
+      "itemID": 1,
       "itemType": "journalArticle",
-      "key": "YL6W3WI5",
       "pages": "493-518",
       "publicationTitle": "Bulletin of Volcanology",
       "relations": [],
@@ -121,13 +117,10 @@
         }
       ],
       "title": "The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/YL6W3WI5",
       "volume": "62"
     },
     {
-      "attachments": [],
       "citationKey": "Adams2002",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -169,9 +162,8 @@
       "dateAdded": "2019-08-21T08:25:40Z",
       "dateModified": "2019-08-21T08:25:40Z",
       "extra": "Citation Key: Adams2002",
-      "itemID": 308,
+      "itemID": 2,
       "itemType": "journalArticle",
-      "key": "NQX2YJVB",
       "pages": "493-518",
       "publicationTitle": "Bulletin of Volcanology",
       "relations": [],
@@ -187,25 +179,20 @@
         }
       ],
       "title": "The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/NQX2YJVB",
       "volume": "62"
     },
     {
-      "attachments": [],
-      "collections": [],
       "dateAdded": "2019-08-21T08:25:41Z",
       "dateModified": "2019-08-21T08:25:41Z",
-      "itemID": 309,
+      "itemID": 3,
       "itemType": "note",
-      "key": "HJCS23Z8",
       "note": "Import errors found: <ul><li>No fields in @emptyreference</li></ul>",
       "relations": [],
       "tags": [
         {
           "tag": "#Better BibTeX import error"
         }
-      ],
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/HJCS23Z8"
+      ]
     }
   ]
 }

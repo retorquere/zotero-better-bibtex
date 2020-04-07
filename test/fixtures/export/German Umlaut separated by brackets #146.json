@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -18,7 +17,6 @@
   "items": [
     {
       "ISBN": "3800721414  9783800721412  3802204697  9783802204692",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -27,7 +25,7 @@
         }
       ],
       "date": "1995",
-      "itemID": 8,
+      "itemID": 1,
       "itemType": "book",
       "language": "German",
       "libraryCatalog": "Open WorldCat",

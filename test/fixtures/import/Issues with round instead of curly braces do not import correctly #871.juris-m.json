@@ -2,7 +2,6 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db"
   },
-  "collections": {},
   "items": [
     {
       "creators": [
@@ -19,10 +18,10 @@
       ],
       "date": "1972-05",
       "extra": "Citation Key: McDermott:72",
-      "itemID": 0,
+      "institution": "MIT Artificial Intelligence Laboratory",
+      "itemID": 1,
       "itemType": "report",
-      "title": "The <span style=\"font-variant:small-caps;\">CONNIVER</span> reference manual",
-      "institution": "MIT Artificial Intelligence Laboratory"
+      "title": "The <span style=\"font-variant:small-caps;\">CONNIVER</span> reference manual"
     }
   ]
 }

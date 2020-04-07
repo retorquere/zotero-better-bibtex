@@ -22,7 +22,7 @@ import subprocess
 import atexit
 import time
 import datetime
-import collections
+from collections import OrderedDict, MutableMapping
 import sys
 import threading
 import socket
@@ -293,7 +293,7 @@ class Zotero:
 
     if ext == '.csl.json':
       with open(exported, 'w') as f: f.write(found)
-      assert_equal_diff(serialize(json.loads(expected)), serialize(json.loads(found)))
+      assert_equal_diff(json.dumps(json.loads(expected, object_pairs_hook=OrderedDict), indent='  '), json.dumps(json.loads(found, object_pairs_hook=OrderedDict), indent='  '))
       os.remove(exported)
       return
 
@@ -585,7 +585,7 @@ class Preferences:
 
     return value
 
-class Pick(collections.MutableMapping):
+class Pick(MutableMapping):
   labels = [
     'article',
     'chapter',

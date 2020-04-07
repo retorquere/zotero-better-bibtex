@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -56,7 +55,6 @@
   "items": [
     {
       "ISBN": "5-9221-0122-6",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -74,7 +72,7 @@
       "dateModified": "2019-05-06T03:01:51Z",
       "edition": "5",
       "extra": "Citation Key: Landafshits.V7",
-      "itemID": 660,
+      "itemID": 1,
       "itemType": "book",
       "language": "russian",
       "numPages": "259",
@@ -84,7 +82,6 @@
       "relations": [],
       "series": "\u0422\u0435\u043e\u0440\u0435\u0442\u0438\u0447\u0435\u0441\u043a\u0430\u044f \u0444\u0438\u0437\u0438\u043a\u0430",
       "title": "\u0422\u0435\u043e\u0440\u0438\u044f \u0443\u043f\u0440\u0443\u0433\u043e\u0441\u0442\u0438",
-      "uri": "http://zotero.org/users/2263031/items/2AZZBNTJ",
       "volume": "7"
     }
   ]

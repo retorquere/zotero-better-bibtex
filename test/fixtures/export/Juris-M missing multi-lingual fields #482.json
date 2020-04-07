@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -33,7 +32,6 @@
   "items": [
     {
       "accessDate": "2016-04-20 13:56:34",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -54,7 +52,7 @@
       ],
       "date": "n.d.",
       "extra": "Citation Key: leishuku",
-      "itemID": 6701,
+      "itemID": 1,
       "itemType": "webpage",
       "language": "zh",
       "multi": {
@@ -79,7 +77,6 @@
       "url": "http://server.wenzibase.com"
     },
     {
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -96,7 +93,7 @@
       ],
       "date": "2003",
       "extra": "Citation Key: yan_cairong__2003",
-      "itemID": 2796,
+      "itemID": 2,
       "itemType": "thesis",
       "language": "Chinese",
       "multi": {

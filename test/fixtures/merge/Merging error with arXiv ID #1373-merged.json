@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -68,9 +67,7 @@
     {
       "abstractNote": "To mark the 20th anniversary of the (14 Aug 1991) commencement of hep-th@xxx.lanl.gov (now arXiv.org), I've adapted this article from one that first appeared in Physics World (2008), was later reprinted (with permission) in Learned Publishing (2009), but never appeared in arXiv. I trace some historical context and early development of the resource, its later trajectory, and close with some thoughts about the future. This version is closer to my original draft, with some updates for this occasion, plus an astounding $2^5$ added footnotes.",
       "accessDate": "2020-01-05T21:41:05Z",
-      "attachments": [],
       "citationKey": "ginspargItWasTwenty2011",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -84,12 +81,10 @@
       "extra": "tex.ids: ginspargItWasTwentyone2011\narXiv: 1108.2700",
       "itemID": 1,
       "itemType": "journalArticle",
-      "key": "UQENV5R5",
       "libraryCatalog": "arXiv.org",
       "publicationTitle": "arXiv:1108.2700 [astro-ph, physics:cond-mat, physics:gr-qc, physics:hep-ph, physics:hep-th, physics:physics, physics:quant-ph]",
       "relations": [],
       "title": "It was twenty years ago today ...",
-      "uri": "http://zotero.org/users/local/xRq3gKcT/items/UQENV5R5",
       "url": "http://arxiv.org/abs/1108.2700"
     }
   ]

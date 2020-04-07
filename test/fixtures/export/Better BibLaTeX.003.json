@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -24,6 +23,7 @@
         }
       ],
       "extra": "Citation Key: author:06\ntex.crossref= conference:06",
+      "itemID": 1,
       "itemType": "conferencePaper",
       "pages": "330\u2014331",
       "title": "Some publication title"
@@ -43,6 +43,7 @@
       ],
       "date": "October 2006",
       "extra": "Citation Key: conference:06",
+      "itemID": 2,
       "itemType": "book",
       "title": "Proceedings of the Xth conference on XYZ"
     }

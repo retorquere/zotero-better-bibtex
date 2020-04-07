@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -18,7 +17,6 @@
     {
       "DOI": "10.1109/HiPC.2011.6152428",
       "accessDate": "2014-10-23 05:48:04",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -48,7 +46,7 @@
       ],
       "date": "2011",
       "extra": "Citation Key: CapEA11",
-      "itemID": 3149,
+      "itemID": 1,
       "itemType": "conferencePaper",
       "libraryCatalog": "Google Scholar",
       "pages": "1\u201310",
@@ -70,7 +68,6 @@
       "ISBN": "978-1-4799-5500-8",
       "abstractNote": "We study the energy used by a production-level regional climate and weather simulation code on a distributed memory system with hybrid CPU-GPU nodes. The code is optimised for both processor architectures, for which we investigate both time and energy to solution. Operational constraints for time to solution can be met with both processor types, although on different numbers of nodes. Energy to solution is a factor 3 lower with GPUs, but strong scaling can be pushed to larger node counts with CPUs to minimize time to solution. Our data shows that an affine relationship exists between energy and nodehours consumed by the simulation. We use this property to devise a simple and practical methodology for optimising for energy efficiency that can be applied to other applications, which we demonstrate with the HPCG benchmark. We conclude with a discussion about the relationship to the commonly-used GF/Watt metric.",
       "accessDate": "2015-01-12 12:29:55",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -105,7 +102,7 @@
       ],
       "date": "2014",
       "extra": "Citation Key: CumEA14",
-      "itemID": 3433,
+      "itemID": 2,
       "itemType": "conferencePaper",
       "libraryCatalog": "ACM Digital Library",
       "pages": "819\u2013829",
@@ -128,7 +125,6 @@
       "DOI": "10.1175/BAMS-D-11-00094.1",
       "ISSN": "0003-0007, 1520-0477",
       "accessDate": "2012-04-17 10:25:06",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -148,7 +144,7 @@
       ],
       "date": "2011-10-07",
       "extra": "Citation Key: TayEA11",
-      "itemID": 542,
+      "itemID": 3,
       "itemType": "journalArticle",
       "libraryCatalog": "CrossRef",
       "pages": "485--498",

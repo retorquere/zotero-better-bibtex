@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -22,9 +21,10 @@
       "court": "HCA",
       "date": "1998-04-01",
       "extra": "Citation Key: kartinyeri\ntex.author= Kaetinyeri v Commonwealth\ntex.translator= Kartinyeri",
-      "itemID": 10,
+      "itemID": 1,
       "itemType": "case",
       "pages": "337",
+      "publicationTitle": "CLR",
       "shortTitle": "Kartinyeri",
       "tags": [
         {
@@ -32,8 +32,7 @@
         }
       ],
       "title": "Kartinyeri v Commonwealth",
-      "volume": "195",
-      "publicationTitle": "CLR"
+      "volume": "195"
     }
   ]
 }

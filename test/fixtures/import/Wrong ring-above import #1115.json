@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -66,9 +65,7 @@
   },
   "items": [
     {
-      "attachments": [],
       "citationKey": "rehurek_lrec",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -85,9 +82,8 @@
       "dateAdded": "2019-12-22T01:25:16Z",
       "dateModified": "2019-12-22T01:25:16Z",
       "extra": "Citation Key: rehurek_lrec",
-      "itemID": 822,
+      "itemID": 1,
       "itemType": "conferencePaper",
-      "key": "ENDHUCIJ",
       "language": "English",
       "pages": "45-50",
       "place": "Valletta, Malta",
@@ -95,7 +91,6 @@
       "publisher": "ELRA",
       "relations": [],
       "title": "Software framework for topic modelling with large corpora",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/ENDHUCIJ",
       "url": "http://is.muni.cz/publication/884893/en"
     }
   ]

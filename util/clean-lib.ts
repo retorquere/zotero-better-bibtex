@@ -14,22 +14,35 @@ function serialize(data) {
 const save = process.argv.length > 2
 const libs = save ? process.argv.slice(2) : glob('test/fixtures/*/*.json').sort()
 
+const extensions = [
+  '.schomd.json',
+  '.csl.json',
+  '.json',
+]
 for (const lib of libs) {
-  if (lib.endsWith('.csl.json')) continue
-  if (lib.endsWith('.schomd.json')) continue
+  const ext = extensions.find(ext => lib.endsWith(ext))
+
+  if (ext === '.schomd.json' || ext === '.csl.json') continue
 
   if (save) console.log(lib)
 
-  const data = JSON.parse(fs.readFileSync(lib, 'utf-8'))
-  const pre = serialize(data)
+  const pre = fs.readFileSync(lib, 'utf-8')
+  const data = JSON.parse(pre)
 
-  normalize(data, true)
+  switch (ext) {
+    case '.json':
+      normalize(data, true)
+      break
+    case '.csl.json':
+      // data.sort((a, b) => stringify(a).localeCompare(stringify(b)))
+      break
+  }
 
   const post = serialize(data)
 
   if (post !== pre) {
     if (!save) console.log(lib)
-    console.log(' ', save ? 'saving' : 'should save', lib)
+    if (save) console.log(' ', save ? 'saving' : 'should save')
     if (save) fs.writeFileSync(lib, post)
   }
 }

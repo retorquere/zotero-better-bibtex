@@ -82,8 +82,11 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
 
   public doExport() {
     const items = []
+    const order: { citekey: string, i: number}[] = []
     for (const item of Translator.items()) {
       if (item.itemType === 'note' || item.itemType === 'attachment') continue
+
+      order.push({ citekey: item.citekey, i: items.length })
 
       let cached: Types.DB.Cache.ExportedItem
       if (cached = Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences)) {
@@ -194,7 +197,9 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       items.push(csl)
     }
 
-    Zotero.write(this.flush(items))
+    order.sort((a, b) => a.citekey.localeCompare(b.citekey, undefined, { sensitivity: 'base' }))
+
+    Zotero.write(this.flush(order.map(o => items[o.i])))
   }
 
   public keySort(a, b) {

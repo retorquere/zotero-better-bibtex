@@ -2,130 +2,124 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "preferences": {
-      "DOIandURL": "both",
-      "automaticTags": true,
-      "asciiBibLaTeX": false,
-      "ascii": "",
-      "asciiBibTeX": false,
-      "autoExport": "immediate",
-      "quickCopyMode": "latex",
-      "citeCommand": "cite",
-      "quickCopyPandocBrackets": false,
-      "citekeyFormat": "[auth:lower][year]",
-      "citekeyFold": true,
-      "keyConflictPolicy": "keep",
-      "auxImport": false,
-      "keyScope": "library",
-      "exportBibTeXStrings": "off",
-      "importBibTeXStrings": true,
-      "bibtexParticleNoOp": false,
-      "skipFields": "abstract,file,keywords,note",
-      "bibtexURL": "url",
-      "warnBulkModify": 10,
-      "postscript": "if (Translator.BetterBibTeX && item.itemType === 'conferencePaper' && item.extra) {\n    const lines = item.extra.split('\\n')\n    for (let line of lines) {\n        let matches = /^([A-Za-z0-9]+): *(.+)$/.exec(line)\n        if (matches === null || matches[1] !== 'Sponsor') {\n            continue\n        }\n        reference.add({name: 'organization', value: matches[2]})\n    }\n}\n\n//if (Translator.BetterBibTeX && item.itemType === 'conferencePaper' && item.extra && item.publisher) {\n//  Zotero.debug(JSON.stringify(item))\n//\n//    var event_place = ''\n//    var publisher_place = ''\n//\n//    const lines = item.extra.split('\\n')\n//    for (let line of lines) {\n//        let matches = /^([A-Za-z0-9]+): *(.+)$/.exec(line)\n//        if (matches !== null && matches[1] === 'Event Place') {\n//            event_place = matches[2]\n//        } else if (matches !== null && matches[1] === 'Publisher Place') {\n//            publisher_place = matches[2]\n//        }\n//    }\n//\n//    if (event_place !== '' && publisher_place !== '') {\n//        reference.add({name: 'address', value: event_place})\n//        reference.add({name: 'publisher', value: item.publisher + ', ' + publisher_place})\n//    }\n//}",
-      "strings": "",
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExportIdleWait": 10,
-      "cacheFlushInterval": 5,
-      "csquotes": "",
-      "rawLaTag": "#LaTeX",
-      "rawImports": false,
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
-      "jabrefFormat": 0,
-      "qualityReport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": true,
-      "exportTitleCase": true,
-      "exportBraceProtection": true,
-      "retainCache": false,
-      "importSentenceCase": "on+guess",
-      "importCaseProtection": "as-needed",
-      "autoExportDelay": 1,
-      "itemObserverDelay": 5,
-      "parseParticles": true,
-      "citeprocNoteCitekey": false,
-      "extraMergeTeX": true,
-      "extraMergeCSL": true,
-      "extraMergeCitekeys": true,
-      "importJabRefStrings": true,
-      "importJabRefAbbreviations": true,
-      "postscriptOverride": "",
-      "scrubDatabase": false,
-      "removeStock": false,
-      "ignorePostscriptErrors": true,
-      "debugLogDir": "",
-      "autoPin": false,
-      "kuroshiro": false,
-      "relativeFilePaths": false,
-      "git": "config",
-      "mapUnicode": "conservative",
-      "mapText": "",
-      "mapMath": "",
-      "workers": 2
-    },
     "options": {
       "exportFileData": false,
       "exportNotes": true,
       "keepUpdated": false
+    },
+    "preferences": {
+      "DOIandURL": "both",
+      "ascii": "",
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": false,
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "",
+      "autoExport": "immediate",
+      "autoExportDelay": 1,
+      "autoExportIdleWait": 10,
+      "autoPin": false,
+      "automaticTags": true,
+      "auxImport": false,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": true,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "url",
+      "cacheFlushInterval": 5,
+      "citeCommand": "cite",
+      "citekeyFold": true,
+      "citekeyFormat": "[auth:lower][year]",
+      "citeprocNoteCitekey": false,
+      "csquotes": "",
+      "debugLogDir": "",
+      "exportBibTeXStrings": "off",
+      "exportBraceProtection": true,
+      "exportTitleCase": true,
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "extraMergeTeX": true,
+      "git": "config",
+      "ignorePostscriptErrors": true,
+      "importBibTeXStrings": true,
+      "importCaseProtection": "as-needed",
+      "importJabRefAbbreviations": true,
+      "importJabRefStrings": true,
+      "importSentenceCase": "on+guess",
+      "itemObserverDelay": 5,
+      "jabrefFormat": 0,
+      "keyConflictPolicy": "keep",
+      "keyScope": "library",
+      "kuroshiro": false,
+      "mapMath": "",
+      "mapText": "",
+      "mapUnicode": "conservative",
+      "parseParticles": true,
+      "postscript": "if (Translator.BetterBibTeX && item.itemType === 'conferencePaper' && item.extra) {\n    const lines = item.extra.split('\\n')\n    for (let line of lines) {\n        let matches = /^([A-Za-z0-9]+): *(.+)$/.exec(line)\n        if (matches === null || matches[1] !== 'Sponsor') {\n            continue\n        }\n        reference.add({name: 'organization', value: matches[2]})\n    }\n}\n\n//if (Translator.BetterBibTeX && item.itemType === 'conferencePaper' && item.extra && item.publisher) {\n//  Zotero.debug(JSON.stringify(item))\n//\n//    var event_place = ''\n//    var publisher_place = ''\n//\n//    const lines = item.extra.split('\\n')\n//    for (let line of lines) {\n//        let matches = /^([A-Za-z0-9]+): *(.+)$/.exec(line)\n//        if (matches !== null && matches[1] === 'Event Place') {\n//            event_place = matches[2]\n//        } else if (matches !== null && matches[1] === 'Publisher Place') {\n//            publisher_place = matches[2]\n//        }\n//    }\n//\n//    if (event_place !== '' && publisher_place !== '') {\n//        reference.add({name: 'address', value: event_place})\n//        reference.add({name: 'publisher', value: item.publisher + ', ' + publisher_place})\n//    }\n//}",
+      "postscriptOverride": "",
+      "qualityReport": false,
+      "quickCopyMode": "latex",
+      "quickCopyPandocBrackets": false,
+      "rawImports": false,
+      "rawLaTag": "#LaTeX",
+      "relativeFilePaths": false,
+      "removeStock": false,
+      "retainCache": false,
+      "scrubDatabase": false,
+      "skipFields": "abstract,file,keywords,note",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "strings": "",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
+      "warnBulkModify": 10,
+      "workers": 2
     }
   },
-  "collections": {},
   "items": [
     {
-      "key": "94RIM7N3",
-      "itemType": "bookSection",
-      "title": "Sparse matrix-vector multiplication: parallelization and vectorization",
-      "abstractNote": "The sparse matrix-vector (SpMV) multiplication is a very important kernel in scientific computing. Efficiently computing this kernel on modern architectures is difficult because of high bandwidth pressure and inefficient cache use. Despite the high available bandwidth on the Intel Xeon Phi, an efficient code remains difficult to achieve because of high data access latencies. We alleviate this issue by integrating vectorization into state-of-the-art parallel SpMV multiplication strategies. We present a novel data structure that is a strict improvement on the industry-standard compressed row storage (CRS), and is highly synergistic with sparse blocking techniques and cache-oblivious orderings induced by space-filling curves. The final parallel scheme we present maximizes both data locality and data reuse on shared-memory systems. The resulting code, based on explicit thread-local data partitioning and allocation, combined with vectorization, outperforms not only a CRS-based algorithm implemented using OpenMP but also the SpMV-code available in the Intel MKL library.",
-      "date": "2015-01-01",
-      "language": "en-US",
-      "shortTitle": "Sparse matrix-vector multiplication",
-      "libraryCatalog": "ScienceDirect",
-      "url": "https://www.sciencedirect.com/science/article/pii/B9780128021187000273",
-      "rights": "\u00a9 2015 Elsevier Inc.",
-      "extra": "Chapter Number: 27\nDOI: 10.1016/B978-0-12-802118-7.00027-3",
-      "place": "Waltham, MA, USA",
-      "publisher": "Morgan Kaufmann",
       "ISBN": "978-0-12-802118-7",
-      "pages": "457-476",
+      "abstractNote": "The sparse matrix-vector (SpMV) multiplication is a very important kernel in scientific computing. Efficiently computing this kernel on modern architectures is difficult because of high bandwidth pressure and inefficient cache use. Despite the high available bandwidth on the Intel Xeon Phi, an efficient code remains difficult to achieve because of high data access latencies. We alleviate this issue by integrating vectorization into state-of-the-art parallel SpMV multiplication strategies. We present a novel data structure that is a strict improvement on the industry-standard compressed row storage (CRS), and is highly synergistic with sparse blocking techniques and cache-oblivious orderings induced by space-filling curves. The final parallel scheme we present maximizes both data locality and data reuse on shared-memory systems. The resulting code, based on explicit thread-local data partitioning and allocation, combined with vectorization, outperforms not only a CRS-based algorithm implemented using OpenMP but also the SpMV-code available in the Intel MKL library.",
+      "citationKey": "yzelman2015a",
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "Albert-Jan N.",
-          "lastName": "Yzelman",
-          "creatorType": "author"
+          "lastName": "Yzelman"
         },
         {
+          "creatorType": "author",
           "firstName": "Dirk",
-          "lastName": "Roose",
-          "creatorType": "author"
+          "lastName": "Roose"
         },
         {
+          "creatorType": "author",
           "firstName": "Karl",
-          "lastName": "Meerbergen",
-          "creatorType": "author"
+          "lastName": "Meerbergen"
         },
         {
+          "creatorType": "bookAuthor",
           "firstName": "James",
-          "lastName": "Reinders",
-          "creatorType": "bookAuthor"
+          "lastName": "Reinders"
         },
         {
+          "creatorType": "bookAuthor",
           "firstName": "Jim",
-          "lastName": "Jeffers",
-          "creatorType": "bookAuthor"
+          "lastName": "Jeffers"
         }
       ],
+      "date": "2015-01-01",
+      "dateAdded": "2020-03-29T08:09:32Z",
+      "dateModified": "2020-03-29T08:09:38Z",
+      "extra": "Chapter Number: 27\nDOI: 10.1016/B978-0-12-802118-7.00027-3",
+      "itemID": 1,
+      "itemType": "bookSection",
+      "language": "en-US",
+      "libraryCatalog": "ScienceDirect",
+      "pages": "457-476",
+      "place": "Waltham, MA, USA",
+      "publicationTitle": "High performance parallelism pearls: multicore and many-core programming approaches",
+      "publisher": "Morgan Kaufmann",
+      "relations": [],
+      "rights": "\u00a9 2015 Elsevier Inc.",
+      "shortTitle": "Sparse matrix-vector multiplication",
       "tags": [
-        {
-          "tag": "Multicore",
-          "type": 1
-        },
-        {
-          "tag": "Intel Xeon Phi",
-          "type": 1
-        },
         {
           "tag": "Bandwidth-bound computations",
           "type": 1
@@ -163,6 +157,14 @@
           "type": 1
         },
         {
+          "tag": "Intel Xeon Phi",
+          "type": 1
+        },
+        {
+          "tag": "Multicore",
+          "type": 1
+        },
+        {
           "tag": "\u00admultiplication",
           "type": 1
         },
@@ -183,17 +185,8 @@
           "type": 1
         }
       ],
-      "collections": [
-        "ZKGGCFJB"
-      ],
-      "relations": [],
-      "dateAdded": "2020-03-29T08:09:32Z",
-      "dateModified": "2020-03-29T08:09:38Z",
-      "uri": "http://zotero.org/users/local/cuz22LJP/items/94RIM7N3",
-      "itemID": 110,
-      "attachments": [],
-      "citationKey": "yzelman2015a",
-      "publicationTitle": "High performance parallelism pearls: multicore and many-core programming approaches"
+      "title": "Sparse matrix-vector multiplication: parallelization and vectorization",
+      "url": "https://www.sciencedirect.com/science/article/pii/B9780128021187000273"
     }
   ]
 }

@@ -106,7 +106,7 @@
       "dateModified": "2019-02-02T11:35:12Z",
       "extra": "Citation Key: Kundu2013\nPMID: 24038744\narXiv: 1408.1149\nISBN: 1301725110",
       "issue": "40",
-      "itemID": 0,
+      "itemID": 1,
       "itemType": "journalArticle",
       "pages": "16187-92",
       "publicationTitle": "Proc. Natl. Acad. Sci.",
@@ -174,7 +174,6 @@
         }
       ],
       "title": "Integrated strategy for improving functional connectivity mapping using multiecho fMRI.",
-      "uri": "http://zotero.org/users/3702016/items/Y6U48GFH",
       "url": "http://www.ncbi.nlm.nih.gov/pubmed/24038744",
       "volume": "110"
     }
