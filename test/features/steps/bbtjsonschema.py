@@ -53,8 +53,6 @@ def refresh():
 
   with open(baseline, 'w') as f:
     json.dump(schema, f, indent='  ')
-  return schema
-schema = refresh()
 
   return Munch.toDict(schema)
 
