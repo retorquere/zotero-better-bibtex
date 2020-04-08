@@ -3,7 +3,6 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
@@ -49,7 +48,10 @@
         }
       ],
       "date": "2006-04-23",
-      "extra": "type: review-book\nreviewed-title: The omnivore\u2019s dilemma: a natural history of four meals",
+      "extra": [
+        "type: review-book",
+        "reviewed-title: The omnivore\u2019s dilemma: a natural history of four meals"
+      ],
       "itemID": 1,
       "itemType": "newspaperArticle",
       "language": "en-US",
@@ -71,7 +73,9 @@
         }
       ],
       "date": "1999-04",
-      "extra": "type: review-book",
+      "extra": [
+        "type: review-book"
+      ],
       "itemID": 2,
       "itemType": "journalArticle",
       "language": "en-US",
@@ -93,7 +97,9 @@
         }
       ],
       "date": "1957",
-      "extra": "type: pamphlet",
+      "extra": [
+        "type: pamphlet"
+      ],
       "itemID": 3,
       "itemType": "bookSection",
       "place": "Mesopotamia, OH",
@@ -116,7 +122,9 @@
       ],
       "date": "1960",
       "edition": "Rev. ed.",
-      "extra": "type: musical_score",
+      "extra": [
+        "type: musical_score"
+      ],
       "itemID": 4,
       "itemType": "book",
       "place": "Bryn Mawr, PA",
@@ -126,7 +134,9 @@
     {
       "abstractNote": "Example from CMoS, 16e, 14.272",
       "accessDate": "2009-10-06",
-      "extra": "type: dataset",
+      "extra": [
+        "type: dataset"
+      ],
       "itemID": 5,
       "itemType": "journalArticle",
       "publicationTitle": "NASA/IPAC Extragalactic Database",

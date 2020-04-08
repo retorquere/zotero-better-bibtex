@@ -13,7 +13,9 @@
         }
       ],
       "date": "2009",
-      "extra": "Citation Key: Oliveira_2009",
+      "extra": [
+        "Citation Key: Oliveira_2009"
+      ],
       "issue": "29",
       "itemID": 1,
       "itemType": "journalArticle",

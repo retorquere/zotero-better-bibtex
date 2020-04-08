@@ -3,7 +3,6 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
@@ -67,13 +66,10 @@
         }
       ],
       "date": "2015",
-      "dateAdded": "2018-10-06T03:54:36Z",
-      "dateModified": "2018-10-06T05:19:31Z",
       "itemID": 1,
       "itemType": "conferencePaper",
       "libraryCatalog": "www.cv-foundation.org",
       "pages": "2938-2946",
-      "relations": [],
       "shortTitle": "PoseNet",
       "tags": [
         {

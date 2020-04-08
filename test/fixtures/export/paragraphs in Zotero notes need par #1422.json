@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -98,9 +96,9 @@
         }
       ],
       "date": "January 1, 2008",
-      "dateAdded": "2020-01-17T20:41:25Z",
-      "dateModified": "2020-02-04T15:36:29Z",
-      "extra": "Citation Key: schayeRelationSchmidtKennicuttSchmidt2008",
+      "extra": [
+        "Citation Key: schayeRelationSchmidtKennicuttSchmidt2008"
+      ],
       "itemID": 1,
       "itemType": "journalArticle",
       "journalAbbreviation": "Monthly Notices of the Royal Astronomical Society",
@@ -110,10 +108,6 @@
       ],
       "pages": "1210-1222",
       "publicationTitle": "Monthly Notices of the Royal Astronomical Society",
-      "relations": [
-        "http://zotero.org/users/5611573/items/A6TWAB9J",
-        "http://zotero.org/users/5611573/items/RZXIGVIE"
-      ],
       "tags": [
         {
           "tag": "galaxies: evolution",

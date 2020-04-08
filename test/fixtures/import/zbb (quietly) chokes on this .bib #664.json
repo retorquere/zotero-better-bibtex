@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -70,15 +68,21 @@
         }
       ],
       "date": "2003",
-      "dateAdded": "2019-08-22T20:53:41Z",
-      "dateModified": "2019-08-22T20:53:41Z",
-      "extra": "Citation Key: Acemoglu2003Whynotpolitical\ntex.bdsk-url-2: http://dx.doi.org/10.1016/j.jce.2003.09.003\ntex.date-added: 2015-04-15 15:21:27 +0000\ntex.date-modified: 2017-05-15 14:14:57 +0000\ntex.jlprojects: spatial\u2091lections, continuous\u2092pinion<sub>d</sub>ynamics\ntex.project: ODCD\ntex.rating: 4\ntex.timestamp: 2011.06.01",
+      "extra": [
+        "Citation Key: Acemoglu2003Whynotpolitical",
+        "tex.bdsk-url-2: http://dx.doi.org/10.1016/j.jce.2003.09.003",
+        "tex.date-added: 2015-04-15 15:21:27 +0000",
+        "tex.date-modified: 2017-05-15 14:14:57 +0000",
+        "tex.jlprojects: spatial\u2091lections, continuous\u2092pinion<sub>d</sub>ynamics",
+        "tex.project: ODCD",
+        "tex.rating: 4",
+        "tex.timestamp: 2011.06.01"
+      ],
       "issue": "4",
       "itemID": 1,
       "itemType": "journalArticle",
       "pages": "620 - 652",
       "publicationTitle": "Journal of Comparative Economics",
-      "relations": [],
       "tags": [
         {
           "tag": "Political economy"

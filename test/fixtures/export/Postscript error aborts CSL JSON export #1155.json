@@ -84,7 +84,10 @@
         }
       ],
       "date": "2001",
-      "extra": "Citation Key: Adams2001\n{:issued:2014-12-31/2015-01-01}",
+      "extra": [
+        "Citation Key: Adams2001",
+        "{:issued:2014-12-31/2015-01-01}"
+      ],
       "itemID": 2,
       "itemType": "journalArticle",
       "pages": "493\u2013518",

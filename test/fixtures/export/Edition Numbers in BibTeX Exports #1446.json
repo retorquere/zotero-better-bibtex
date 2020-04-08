@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -136,8 +134,6 @@
         }
       ],
       "date": "1994",
-      "dateAdded": "2020-01-31T17:37:53Z",
-      "dateModified": "2020-02-29T16:38:00Z",
       "edition": "2",
       "itemID": 1,
       "itemType": "book",
@@ -145,7 +141,6 @@
       "numPages": "106",
       "place": "Philadelphia, PA",
       "publisher": "Society for Industrial and Applied Mathematics",
-      "relations": [],
       "shortTitle": "Templates for the solution of linear systems",
       "title": "Templates for the solution of linear systems: building blocks for iterative methods",
       "url": "https://www.netlib.org/linalg/html_templates/Templates.html"

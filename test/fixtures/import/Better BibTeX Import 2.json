@@ -19,7 +19,9 @@
       ],
       "date": "1964",
       "edition": "ninth Dover printing, tenth GPO printing",
-      "extra": "Citation Key: abramowitz+stegun",
+      "extra": [
+        "Citation Key: abramowitz+stegun"
+      ],
       "itemID": 1,
       "itemType": "book",
       "place": "New York",
@@ -41,7 +43,9 @@
         }
       ],
       "date": "2008",
-      "extra": "Citation Key: Torre2008",
+      "extra": [
+        "Citation Key: Torre2008"
+      ],
       "itemID": 2,
       "itemType": "book",
       "publisher": "Doubleday",

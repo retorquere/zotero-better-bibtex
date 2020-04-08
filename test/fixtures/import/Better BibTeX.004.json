@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -68,15 +66,14 @@
         }
       ],
       "date": "2001",
-      "dateAdded": "2019-08-20T22:00:54Z",
-      "dateModified": "2019-08-20T22:00:54Z",
       "edition": "1st,",
-      "extra": "Citation Key: hicks2001",
+      "extra": [
+        "Citation Key: hicks2001"
+      ],
       "itemID": 1,
       "itemType": "book",
       "place": "Palo Alto",
       "publisher": "Stanford Press",
-      "relations": [],
       "title": "Design of a carbon fiber composite grid structure for the GLAST spacecraft using a novel manufacturing technique"
     }
   ]

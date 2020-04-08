@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -92,9 +90,12 @@
         }
       ],
       "date": "2015-06-08",
-      "dateAdded": "2020-04-02T18:40:57Z",
-      "dateModified": "2020-04-02T18:41:05Z",
-      "extra": "Event Date: 2015-06-08/2015-06-11\nEvent Place: Newport Beach, California, USA\nPublisher Place: New York, NY, United States\nSponsor: ACM SIGARCH",
+      "extra": [
+        "Event Date: 2015-06-08/2015-06-11",
+        "Event Place: Newport Beach, California, USA",
+        "Publisher Place: New York, NY, United States",
+        "Sponsor: ACM SIGARCH"
+      ],
       "itemID": 1,
       "itemType": "conferencePaper",
       "language": "en-US",
@@ -102,7 +103,6 @@
       "pages": "339\u2013350",
       "publicationTitle": "Proceedings of the 29th ACM international conference on supercomputing",
       "publisher": "Association for Computing Machinery",
-      "relations": [],
       "rights": "Copyright is held by the owner/author(s). Publication rights licensed to ACM.",
       "series": "ICS '15",
       "shortTitle": "CSR5",

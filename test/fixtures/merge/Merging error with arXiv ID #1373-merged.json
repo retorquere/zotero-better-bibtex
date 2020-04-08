@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -76,14 +74,14 @@
         }
       ],
       "date": "2011-09-12",
-      "dateAdded": "2020-01-05T21:41:05Z",
-      "dateModified": "2020-01-05T21:41:48Z",
-      "extra": "tex.ids: ginspargItWasTwentyone2011\narXiv: 1108.2700",
+      "extra": [
+        "tex.ids: ginspargItWasTwentyone2011",
+        "arXiv: 1108.2700"
+      ],
       "itemID": 1,
       "itemType": "journalArticle",
       "libraryCatalog": "arXiv.org",
       "publicationTitle": "arXiv:1108.2700 [astro-ph, physics:cond-mat, physics:gr-qc, physics:hep-ph, physics:hep-th, physics:physics, physics:quant-ph]",
-      "relations": [],
       "title": "It was twenty years ago today ...",
       "url": "http://arxiv.org/abs/1108.2700"
     }

@@ -196,9 +196,10 @@
         }
       ],
       "date": "June 5, 2016",
-      "dateAdded": "2017-06-25 05:04:21",
-      "dateModified": "2017-06-25 05:04:48",
-      "extra": "Citation Key: Waskom2016\nDOI: 10.5281/zenodo.54844",
+      "extra": [
+        "Citation Key: Waskom2016",
+        "DOI: 10.5281/zenodo.54844"
+      ],
       "itemID": 1,
       "itemType": "computerProgram",
       "libraryCatalog": "DataCite",

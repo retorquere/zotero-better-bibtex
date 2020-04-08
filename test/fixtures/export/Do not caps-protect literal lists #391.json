@@ -3,7 +3,6 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
@@ -21,7 +20,10 @@
   },
   "items": [
     {
-      "extra": "original-publisher-place: Saint Kitts and Nevis\noriginal-publisher: Doe and Company",
+      "extra": [
+        "original-publisher-place: Saint Kitts and Nevis",
+        "original-publisher: Doe and Company"
+      ],
       "itemID": 1,
       "itemType": "book",
       "place": "Trinidad and Tobago",

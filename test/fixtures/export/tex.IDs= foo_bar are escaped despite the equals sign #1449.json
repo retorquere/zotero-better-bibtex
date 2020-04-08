@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -111,12 +109,12 @@
         }
       ],
       "date": "2007-11",
-      "dateAdded": "2014-08-19T00:03:18Z",
-      "dateModified": "2020-03-04T14:18:24Z",
-      "extra": "CCitation Key: rfc4880\ntex.IDs= shaw_rfc4880_2007,rfc4880",
+      "extra": [
+        "CCitation Key: rfc4880",
+        "tex.IDs= shaw_rfc4880_2007,rfc4880"
+      ],
       "itemID": 1,
       "itemType": "webpage",
-      "relations": [],
       "title": "RFC4880: OpenPGP Message Format",
       "url": "http://tools.ietf.org/html/rfc4880"
     }

@@ -11,7 +11,9 @@
           "title": ",.;'[]{}`-=~!@#$%^&()_+.pdf"
         }
       ],
-      "extra": "Citation Key: id",
+      "extra": [
+        "Citation Key: id"
+      ],
       "itemID": 1,
       "itemType": "book",
       "title": "Filename character test. Relative path"
@@ -23,7 +25,9 @@
           "title": ",.;'[]{}`-=~!@#$%^&()_+.pdf"
         }
       ],
-      "extra": "Citation Key: id2",
+      "extra": [
+        "Citation Key: id2"
+      ],
       "itemID": 2,
       "itemType": "book",
       "title": "Filename character test. Absolute path"

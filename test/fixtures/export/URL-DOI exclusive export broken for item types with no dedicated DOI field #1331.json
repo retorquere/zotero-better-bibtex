@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "doi",
@@ -119,15 +117,15 @@
         }
       ],
       "date": "2005",
-      "dateAdded": "2019-10-03T07:11:42Z",
-      "dateModified": "2019-11-15T00:18:52Z",
-      "extra": "DOI: 10.1007/0-387-29362-0\nCitation Key: Gentleman2005",
+      "extra": [
+        "DOI: 10.1007/0-387-29362-0",
+        "Citation Key: Gentleman2005"
+      ],
       "itemID": 1,
       "itemType": "book",
       "libraryCatalog": "DOI.org (Crossref)",
       "place": "New York, NY",
       "publisher": "Springer New York",
-      "relations": [],
       "series": "Statistics for Biology and Health",
       "tags": [
         {

@@ -3,7 +3,6 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
@@ -102,15 +101,17 @@
         }
       ],
       "date": "2013-10-01",
-      "dateAdded": "2017-03-02T13:25:55Z",
-      "dateModified": "2019-02-02T11:35:12Z",
-      "extra": "Citation Key: Kundu2013\nPMID: 24038744\narXiv: 1408.1149\nISBN: 1301725110",
+      "extra": [
+        "Citation Key: Kundu2013",
+        "PMID: 24038744",
+        "arXiv: 1408.1149",
+        "ISBN: 1301725110"
+      ],
       "issue": "40",
       "itemID": 1,
       "itemType": "journalArticle",
       "pages": "16187-92",
       "publicationTitle": "Proc. Natl. Acad. Sci.",
-      "relations": [],
       "tags": [
         {
           "tag": "Artifacts"

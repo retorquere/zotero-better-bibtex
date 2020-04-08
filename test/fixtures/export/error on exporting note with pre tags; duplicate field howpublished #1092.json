@@ -88,7 +88,6 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
@@ -135,15 +134,14 @@
     {
       "accessDate": "2018-11-24T14:37:15Z",
       "date": "2018-11-22T07:13:38Z",
-      "dateAdded": "2018-11-24T14:37:15Z",
-      "dateModified": "2018-11-24T14:38:06Z",
-      "extra": "original-date: 2015-07-19T10:51:48Z",
+      "extra": [
+        "original-date: 2015-07-19T10:51:48Z"
+      ],
       "itemID": 1,
       "itemType": "computerProgram",
       "libraryCatalog": "GitHub",
       "programmingLanguage": "C",
       "publisher": "sctplab",
-      "relations": [],
       "title": "A portable SCTP userland stack. Contribute to sctplab/usrsctp development by creating an account on GitHub",
       "url": "https://github.com/sctplab/usrsctp"
     },
@@ -181,8 +179,6 @@
         }
       ],
       "date": "August 2012",
-      "dateAdded": "2016-10-05T13:52:49Z",
-      "dateModified": "2016-10-05T16:50:05Z",
       "itemID": 2,
       "itemType": "report",
       "notes": [
@@ -191,7 +187,6 @@
       ],
       "number": "6675",
       "publisher": "RFC Editor",
-      "relations": [],
       "title": "A Conservative Loss Recovery Algorithm Based on Selective Acknowledgment (SACK) for TCP",
       "type": "RFC",
       "url": "https://tools.ietf.org/html/rfc6675"

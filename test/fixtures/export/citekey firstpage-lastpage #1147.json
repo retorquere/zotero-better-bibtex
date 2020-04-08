@@ -3,7 +3,6 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
@@ -99,8 +98,6 @@
         }
       ],
       "date": "November 1, 1994",
-      "dateAdded": "2018-07-17T09:51:48Z",
-      "dateModified": "2018-07-24T17:02:18Z",
       "issue": "1",
       "itemID": 1,
       "itemType": "journalArticle",
@@ -108,7 +105,6 @@
       "libraryCatalog": "ScienceDirect",
       "pages": "L1-L6",
       "publicationTitle": "Surface Science",
-      "relations": [],
       "tags": [
         {
           "tag": "Ni(111)"
@@ -169,8 +165,6 @@
         }
       ],
       "date": "November 1, 1994",
-      "dateAdded": "2018-07-17T09:51:48Z",
-      "dateModified": "2018-07-24T17:02:18Z",
       "issue": "1",
       "itemID": 2,
       "itemType": "journalArticle",
@@ -178,7 +172,6 @@
       "libraryCatalog": "ScienceDirect",
       "pages": "L1\u2013L6",
       "publicationTitle": "Surface Science",
-      "relations": [],
       "tags": [
         {
           "tag": "Ni(111)"

@@ -10,7 +10,9 @@
   },
   "items": [
     {
-      "extra": "Citation Key: test-ticket1661",
+      "extra": [
+        "Citation Key: test-ticket1661"
+      ],
       "itemID": 1,
       "itemType": "journalArticle",
       "title": "non-breaking space: ; accented characters: \u00f1 and \u00f1; tilde in URL: http://example.com/~user"

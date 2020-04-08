@@ -55,7 +55,9 @@
         }
       ],
       "date": "2001",
-      "extra": "Citation Key: Adams2001",
+      "extra": [
+        "Citation Key: Adams2001"
+      ],
       "itemID": 1,
       "itemType": "journalArticle",
       "pages": "493\u2013518",
@@ -120,7 +122,9 @@
         }
       ],
       "date": "2001",
-      "extra": "Citation Key: Adams2002",
+      "extra": [
+        "Citation Key: Adams2002"
+      ],
       "itemID": 2,
       "itemType": "journalArticle",
       "pages": "493\u2013518",

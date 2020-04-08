@@ -72,13 +72,10 @@
         }
       ],
       "date": "2005-07-28",
-      "dateAdded": "2018-09-05T14:27:59Z",
-      "dateModified": "2018-09-05T14:27:59Z",
       "filingDate": "2003-12-24 2003-12-24",
       "itemID": 1,
       "itemType": "patent",
       "number": "DE10361215",
-      "relations": [],
       "title": "Elektrische Einrichtung und Betriebsverfahren",
       "url": "http://www.freepatentsonline.com/DE10361215.html"
     },
@@ -104,8 +101,6 @@
         }
       ],
       "date": "Issue Date",
-      "dateAdded": "2018-03-04T10:57:40Z",
-      "dateModified": "2018-09-05T06:56:46Z",
       "filingDate": "0000-00-00 Filing date",
       "issuingAuthority": "Issueing Authority",
       "itemID": 2,
@@ -119,7 +114,6 @@
       "place": "Place",
       "priorityNumbers": "Priority Numbers",
       "references": "References",
-      "relations": [],
       "title": "A combinatorial problem; stability and order for models and theories in infinitary languages"
     }
   ]

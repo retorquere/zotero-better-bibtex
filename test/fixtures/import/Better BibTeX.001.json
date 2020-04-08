@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -101,14 +99,13 @@
         }
       ],
       "date": "2001",
-      "dateAdded": "2019-10-14T18:51:04Z",
-      "dateModified": "2019-10-14T18:51:04Z",
-      "extra": "Citation Key: Adams2001",
+      "extra": [
+        "Citation Key: Adams2001"
+      ],
       "itemID": 1,
       "itemType": "journalArticle",
       "pages": "493-518",
       "publicationTitle": "Bulletin of Volcanology",
-      "relations": [],
       "tags": [
         {
           "tag": "breadcrust"
@@ -134,15 +131,15 @@
         }
       ],
       "date": "2006",
-      "dateAdded": "2019-10-14T18:51:04Z",
-      "dateModified": "2019-10-14T18:51:04Z",
       "edition": "3., erw. und aktualisierte Aufl.",
-      "extra": "Citation Key: Rechenberg2006a\ntex.ppn_gvk: 511633173",
+      "extra": [
+        "Citation Key: Rechenberg2006a",
+        "tex.ppn_gvk: 511633173"
+      ],
       "itemID": 2,
       "itemType": "book",
       "numPages": "253",
       "publisher": "Hanser Fachbuchverlag",
-      "relations": [],
       "title": "Technisches schreiben - (nicht nur) f\u00fcr Informatiker"
     }
   ]

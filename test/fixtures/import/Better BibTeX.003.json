@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -71,13 +69,13 @@
           "lastName": "Author"
         }
       ],
-      "dateAdded": "2019-08-22T20:53:43Z",
-      "dateModified": "2019-08-22T20:53:43Z",
-      "extra": "Citation Key: author:06\ntex.crossref: conference:06",
+      "extra": [
+        "Citation Key: author:06",
+        "tex.crossref: conference:06"
+      ],
       "itemID": 1,
       "itemType": "conferencePaper",
       "pages": "330\u2014331",
-      "relations": [],
       "title": "Some publication title"
     },
     {
@@ -95,13 +93,12 @@
         }
       ],
       "date": "2006-10",
-      "dateAdded": "2019-08-22T20:53:43Z",
-      "dateModified": "2019-08-22T20:53:43Z",
-      "extra": "Citation Key: conference:06",
+      "extra": [
+        "Citation Key: conference:06"
+      ],
       "itemID": 2,
       "itemType": "bookSection",
       "publicationTitle": "Proceedings of the xth conference on XYZ (book)",
-      "relations": [],
       "title": "Proceedings of the xth conference on XYZ"
     }
   ]

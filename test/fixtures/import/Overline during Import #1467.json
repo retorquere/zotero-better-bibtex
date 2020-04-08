@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -124,15 +122,14 @@
         }
       ],
       "date": "2012-02",
-      "dateAdded": "2020-03-22T18:40:18Z",
-      "dateModified": "2020-03-22T18:40:18Z",
-      "extra": "Citation Key: Leung_2012",
+      "extra": [
+        "Citation Key: Leung_2012"
+      ],
       "issue": "1",
       "itemID": 1,
       "itemType": "journalArticle",
       "pages": "27-33",
       "publicationTitle": "Journal of Crystal Growth",
-      "relations": [],
       "title": "Growth evolution and microstructural characterization of semipolar (112\u03042) GaN selectively grown on etched r-Plane sapphire",
       "volume": "341"
     },
@@ -167,16 +164,15 @@
         }
       ],
       "date": "2015-01",
-      "dateAdded": "2020-03-22T18:40:19Z",
-      "dateModified": "2020-03-22T18:40:19Z",
-      "extra": "Citation Key: Song_2015",
+      "extra": [
+        "Citation Key: Song_2015"
+      ],
       "issue": "1",
       "itemID": 2,
       "itemType": "journalArticle",
       "journalAbbreviation": "ACS Appl. Mater. Interfaces",
       "pages": "273-278",
       "publicationTitle": "ACS Applied Materials & Interfaces",
-      "relations": [],
       "title": "Significantly improved luminescence properties of nitrogen-polar (0001\u0305) InGaN multiple quantum wells grown by pulsed metalorganic chemical vapor deposition",
       "volume": "7"
     },
@@ -211,15 +207,14 @@
         }
       ],
       "date": "2014-05",
-      "dateAdded": "2020-03-22T18:40:19Z",
-      "dateModified": "2020-03-22T18:40:19Z",
-      "extra": "Citation Key: Song_2014",
+      "extra": [
+        "Citation Key: Song_2014"
+      ],
       "issue": "5",
       "itemID": 3,
       "itemType": "journalArticle",
       "pages": "2510-2515",
       "publicationTitle": "Crystal Growth & Design",
-      "relations": [],
       "title": "Epitaxial lateral overgrowth of nitrogen-polar (0001\u0305) GaN by metalorganic chemical vapor deposition",
       "volume": "14"
     },
@@ -244,16 +239,15 @@
         }
       ],
       "date": "1998-07",
-      "dateAdded": "2020-03-22T18:40:19Z",
-      "dateModified": "2020-03-22T18:40:19Z",
-      "extra": "Citation Key: Zywietz_1998",
+      "extra": [
+        "Citation Key: Zywietz_1998"
+      ],
       "issue": "4",
       "itemID": 4,
       "itemType": "journalArticle",
       "journalAbbreviation": "Appl. Phys. Lett.",
       "pages": "487-489",
       "publicationTitle": "Applied Physics Letters",
-      "relations": [],
       "title": "Adatom diffusion at GaN (0001) and (0001\u0304) surfaces",
       "volume": "73"
     },
@@ -288,15 +282,14 @@
         }
       ],
       "date": "2015-03",
-      "dateAdded": "2020-03-22T18:40:18Z",
-      "dateModified": "2020-03-22T18:40:18Z",
-      "extra": "Citation Key: Niehle_2015",
+      "extra": [
+        "Citation Key: Niehle_2015"
+      ],
       "issue": "3",
       "itemID": 5,
       "itemType": "journalArticle",
       "pages": "036102",
       "publicationTitle": "APL Materials",
-      "relations": [],
       "title": "Electron tomography of (In,Ga)N insertions in GaN nanocolumns grown on semi-polar (112\u03042) GaN templates",
       "volume": "3"
     },
@@ -361,16 +354,15 @@
         }
       ],
       "date": "2014-11",
-      "dateAdded": "2020-03-22T18:40:18Z",
-      "dateModified": "2020-03-22T18:40:18Z",
-      "extra": "Citation Key: Keller_2014",
+      "extra": [
+        "Citation Key: Keller_2014"
+      ],
       "issue": "11",
       "itemID": 6,
       "itemType": "journalArticle",
       "journalAbbreviation": "Semicond. Sci. Technol.",
       "pages": "113001",
       "publicationTitle": "Semiconductor Science and Technology",
-      "relations": [],
       "title": "Recent progress in metal-organic chemical vapor deposition of ( 0001\u0304 ) N-Polar group-III nitrides",
       "volume": "29"
     },
@@ -405,16 +397,15 @@
         }
       ],
       "date": "1998-06",
-      "dateAdded": "2020-03-22T18:40:18Z",
-      "dateModified": "2020-03-22T18:40:18Z",
-      "extra": "Citation Key: Held_1998",
+      "extra": [
+        "Citation Key: Held_1998"
+      ],
       "issue": "03n04",
       "itemID": 7,
       "itemType": "journalArticle",
       "journalAbbreviation": "Surf. Rev. Lett.",
       "pages": "913-934",
       "publicationTitle": "Surface Review and Letters",
-      "relations": [],
       "title": "N-Limited Versus Ga-Limited Growth on <span class=\"nocase\">GaN(0001\u0304)</span> by MBE Using NH\u00b3",
       "volume": "05"
     },
@@ -459,16 +450,15 @@
         }
       ],
       "date": "2015-06",
-      "dateAdded": "2020-03-22T18:40:19Z",
-      "dateModified": "2020-03-22T18:40:19Z",
-      "extra": "Citation Key: Shojiki_2015",
+      "extra": [
+        "Citation Key: Shojiki_2015"
+      ],
       "issue": "6",
       "itemID": 8,
       "itemType": "journalArticle",
       "journalAbbreviation": "Appl. Phys. Express",
       "pages": "061005",
       "publicationTitle": "Applied Physics Express",
-      "relations": [],
       "title": "Red to blue wavelength emission of N-Polar (0001\u0304) InGaN light-emitting diodes grown by metalorganic vapor phase epitaxy",
       "volume": "8"
     }

@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -74,14 +72,13 @@
         }
       ],
       "date": "2012",
-      "dateAdded": "2019-12-22T01:25:25Z",
-      "dateModified": "2019-12-22T01:25:25Z",
-      "extra": "Citation Key: moller2012conceptsrisksafety",
+      "extra": [
+        "Citation Key: moller2012conceptsrisksafety"
+      ],
       "itemID": 1,
       "itemType": "bookSection",
       "publicationTitle": "Handbook of risk theory: Epistemology, decision theory, ethics, and social implications of risk",
       "publisher": "Springer",
-      "relations": [],
       "title": "The concepts of risk and safety"
     }
   ]

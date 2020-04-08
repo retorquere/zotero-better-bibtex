@@ -72,6 +72,8 @@ export async function doImport() {
       }
     }
 
+    if (Array.isArray(source.extra)) source.extra = source.extra.join('\n')
+
     const item = new Zotero.Item()
     Object.assign(item, source)
 

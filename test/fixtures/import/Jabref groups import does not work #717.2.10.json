@@ -44,11 +44,7 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false,
-      "exportNotes": false,
-      "keepUpdated": false
-    },
+    "options": {},
     "preferences": {
       "DOIandURL": "both",
       "ascii": "",
@@ -122,12 +118,13 @@
         }
       ],
       "date": "2017",
-      "dateAdded": "2020-01-31T16:52:12Z",
-      "dateModified": "2020-01-31T16:52:12Z",
-      "extra": "Citation Key: Doe-2017\ntex.owner: klein\ntex.timestamp: 2017.09.11",
+      "extra": [
+        "Citation Key: Doe-2017",
+        "tex.owner: klein",
+        "tex.timestamp: 2017.09.11"
+      ],
       "itemID": 1,
       "itemType": "journalArticle",
-      "relations": [],
       "title": "The paper in my-subgroup-2"
     },
     {
@@ -139,12 +136,13 @@
           "lastName": "Other"
         }
       ],
-      "dateAdded": "2020-01-31T16:52:12Z",
-      "dateModified": "2020-01-31T16:52:12Z",
-      "extra": "Citation Key: Other-\ntex.owner: klein\ntex.timestamp: 2017.09.11",
+      "extra": [
+        "Citation Key: Other-",
+        "tex.owner: klein",
+        "tex.timestamp: 2017.09.11"
+      ],
       "itemID": 2,
       "itemType": "journalArticle",
-      "relations": [],
       "title": "The article in my-other-subgroup-2"
     },
     {
@@ -156,12 +154,13 @@
           "lastName": "Unkonw"
         }
       ],
-      "dateAdded": "2020-01-31T16:52:12Z",
-      "dateModified": "2020-01-31T16:52:12Z",
-      "extra": "Citation Key: Unkonw-\ntex.owner: klein\ntex.timestamp: 2017.09.11",
+      "extra": [
+        "Citation Key: Unkonw-",
+        "tex.owner: klein",
+        "tex.timestamp: 2017.09.11"
+      ],
       "itemID": 3,
       "itemType": "journalArticle",
-      "relations": [],
       "title": "JR2: paper not in a group"
     }
   ]

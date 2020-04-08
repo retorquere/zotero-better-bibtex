@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -102,8 +100,6 @@
         }
       ],
       "date": "October 10, 1994",
-      "dateAdded": "2020-01-16T09:57:08Z",
-      "dateModified": "2020-01-16T09:57:08Z",
       "issue": "15",
       "itemID": 1,
       "itemType": "journalArticle",
@@ -111,7 +107,6 @@
       "libraryCatalog": "APS",
       "pages": "2027-2030",
       "publicationTitle": "Physical Review Letters",
-      "relations": [],
       "title": "Overall Normalization of the Astrophysical \u2192 Reactions",
       "url": "https://link.aps.org/doi/10.1103/PhysRevLett.73.2027",
       "volume": "73"

@@ -2,11 +2,7 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false,
-      "exportNotes": false,
-      "keepUpdated": false
-    },
+    "options": {},
     "preferences": {
       "DOIandURL": "doi",
       "ascii": "",
@@ -84,13 +80,12 @@
         }
       ],
       "date": "xx 1985",
-      "dateAdded": "2019-12-17T13:10:25Z",
-      "dateModified": "2020-01-10T21:27:53Z",
-      "extra": "Citation Key: HopfieldTank85",
+      "extra": [
+        "Citation Key: HopfieldTank85"
+      ],
       "itemID": 1,
       "itemType": "webpage",
       "publicationTitle": "Biological Cybernetics",
-      "relations": [],
       "tags": [
         {
           "tag": "#LaTeX"

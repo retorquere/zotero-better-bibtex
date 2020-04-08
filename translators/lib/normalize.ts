@@ -37,7 +37,7 @@ function key(item) {
   return [item.itemType, item.citationKey || '', item.title || '', item.creators?.[0]?.lastName || item.creators?.[0]?.name || ''].join('\t').toLowerCase()
 }
 
-export function normalize(library: Library, scrub=false) {
+export function normalize(library: Library) {
 
   library.items.sort((a, b) => key(a).localeCompare(key(b)))
 
@@ -49,8 +49,6 @@ export function normalize(library: Library, scrub=false) {
     delete item.version
     delete item.uniqueFields
     delete item.collections
-
-    if (scrub) delete item.uri
 
     if (item.notes?.length) {
       item.notes = item.notes.map(note => typeof note === 'string' ? note : note.note).sort()
@@ -82,6 +80,12 @@ export function normalize(library: Library, scrub=false) {
       }
     } else {
       delete item.creators
+    }
+
+    if (item.extra?.length) {
+      item.extra = item.extra.split('\n')
+    } else {
+      delete item.extra
     }
   }
 

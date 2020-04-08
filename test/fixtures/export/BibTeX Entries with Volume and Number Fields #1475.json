@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -131,9 +129,12 @@
         }
       ],
       "date": "2011",
-      "dateAdded": "2020-03-29T09:28:46Z",
-      "dateModified": "2020-03-29T09:28:53Z",
-      "extra": "Event Date: 2011-08-29/2011-09-03\nISSN: 2150-8097\nIssue: 4\nSponsor: Google",
+      "extra": [
+        "Event Date: 2011-08-29/2011-09-03",
+        "ISSN: 2150-8097",
+        "Issue: 4",
+        "Sponsor: Google"
+      ],
       "itemID": 1,
       "itemType": "conferencePaper",
       "language": "en-US",
@@ -142,7 +143,6 @@
       "place": "United States of America",
       "publicationTitle": "Proceedings of the VLDB Endowment",
       "publisher": "VLDB Endowment",
-      "relations": [],
       "rights": "Copyright 2011 VLDB Endowment",
       "shortTitle": "Fast sparse matrix-vector multiplication on GPUs",
       "title": "Fast sparse matrix-vector multiplication on GPUs: implications for graph mining",

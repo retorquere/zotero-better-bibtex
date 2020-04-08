@@ -53,9 +53,10 @@
         }
       ],
       "date": "2015",
-      "dateAdded": "2017-09-05 15:18:50",
-      "dateModified": "2017-11-17 18:09:52",
-      "extra": "tex.eventdate= 2015-05-07/2015-05-09\ntex.venue= San Diego, CA, USA",
+      "extra": [
+        "tex.eventdate= 2015-05-07/2015-05-09",
+        "tex.venue= San Diego, CA, USA"
+      ],
       "itemID": 1,
       "itemType": "conferencePaper",
       "notes": [
@@ -79,8 +80,6 @@
         }
       ],
       "date": "2000-04-26",
-      "dateAdded": "2014-05-24 10:18:28",
-      "dateModified": "2015-01-19 19:47:37",
       "itemID": 2,
       "itemType": "presentation",
       "language": "en-US",

@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -76,14 +74,15 @@
         }
       ],
       "date": "2007",
-      "dateAdded": "2019-08-20T15:45:04Z",
-      "dateModified": "2019-08-20T15:45:04Z",
-      "extra": "Citation Key: Abbott-2007-aa\ntex.class: States & Markets 2009, Diss Tax & Democracy 2010ff\ntex.date-modified: 2014-06-14 15:13:01 +0000",
+      "extra": [
+        "Citation Key: Abbott-2007-aa",
+        "tex.class: States & Markets 2009, Diss Tax & Democracy 2010ff",
+        "tex.date-modified: 2014-06-14 15:13:01 +0000"
+      ],
       "itemID": 1,
       "itemType": "report",
       "place": "Brussels, Belgium",
       "publisher": "European Center for International Political Economy",
-      "relations": [],
       "tags": [
         {
           "tag": "Finance"

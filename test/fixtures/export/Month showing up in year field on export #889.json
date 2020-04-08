@@ -55,9 +55,9 @@
         }
       ],
       "date": "08 1995",
-      "dateAdded": "2015-04-01 06:29:02",
-      "dateModified": "2015-05-15 10:51:58",
-      "extra": "Citation Key: HoukWise95",
+      "extra": [
+        "Citation Key: HoukWise95"
+      ],
       "issue": "2",
       "itemID": 1,
       "itemType": "journalArticle",

@@ -2,11 +2,7 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false,
-      "exportNotes": false,
-      "keepUpdated": false
-    },
+    "options": {},
     "preferences": {
       "DOIandURL": "both",
       "ascii": "",
@@ -77,10 +73,12 @@
         }
       ],
       "date": "2018",
-      "dateAdded": "2019-06-20T10:17:56Z",
-      "dateModified": "2019-06-20T10:18:40Z",
       "edition": "1",
-      "extra": "Citation Key: LiuHuaChun2018_HulianwangJinrongJianguan\ntex.publisher= Liu, \\chsf{\u5218\u534e\u6625}, Hua\\-chun\ntex.author= Xu, \\chsf{}, Duo\\-qi",
+      "extra": [
+        "Citation Key: LiuHuaChun2018_HulianwangJinrongJianguan",
+        "tex.publisher= Liu, \\chsf{\u5218\u534e\u6625}, Hua\\-chun",
+        "tex.author= Xu, \\chsf{}, Duo\\-qi"
+      ],
       "itemID": 1,
       "itemType": "book",
       "language": "Chinese",
@@ -93,7 +91,6 @@
       "numPages": "207",
       "place": "\u5317\u4eac",
       "publisher": "\u6cd5\u5f8b\u51fa\u7248\u793e",
-      "relations": [],
       "tags": [
         {
           "tag": "ausgewertet"

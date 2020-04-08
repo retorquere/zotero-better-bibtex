@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -76,16 +74,16 @@
         }
       ],
       "date": "2018-05",
-      "dateAdded": "2019-07-11T18:27:19Z",
-      "dateModified": "2019-07-11T18:27:25Z",
-      "extra": "tex.publisher: American Physical Society\ntex.numpages: 16",
+      "extra": [
+        "tex.publisher: American Physical Society",
+        "tex.numpages: 16"
+      ],
       "issue": "18",
       "itemID": 1,
       "itemType": "journalArticle",
       "journalAbbreviation": "Phys Rev B",
       "pages": "184301",
       "publicationTitle": "Phys. Rev. B",
-      "relations": [],
       "title": "\u00b3\u00b9P NMR study of discrete time-crystalline signatures in an ordered crystal of ammonium dihydrogen phosphate",
       "url": "https://link.aps.org/doi/10.1103/PhysRevB.97.184301",
       "volume": "97"

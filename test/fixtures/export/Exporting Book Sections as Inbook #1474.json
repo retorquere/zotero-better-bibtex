@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -105,9 +103,10 @@
         }
       ],
       "date": "2015-01-01",
-      "dateAdded": "2020-03-29T08:09:32Z",
-      "dateModified": "2020-03-29T08:09:38Z",
-      "extra": "Chapter Number: 27\nDOI: 10.1016/B978-0-12-802118-7.00027-3",
+      "extra": [
+        "Chapter Number: 27",
+        "DOI: 10.1016/B978-0-12-802118-7.00027-3"
+      ],
       "itemID": 1,
       "itemType": "bookSection",
       "language": "en-US",
@@ -116,7 +115,6 @@
       "place": "Waltham, MA, USA",
       "publicationTitle": "High performance parallelism pearls: multicore and many-core programming approaches",
       "publisher": "Morgan Kaufmann",
-      "relations": [],
       "rights": "\u00a9 2015 Elsevier Inc.",
       "shortTitle": "Sparse matrix-vector multiplication",
       "tags": [

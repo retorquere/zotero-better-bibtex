@@ -2,10 +2,7 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false,
-      "exportNotes": false
-    },
+    "options": {},
     "preferences": {
       "DOIandURL": "both",
       "asciiBibLaTeX": false,
@@ -115,9 +112,10 @@
         }
       ],
       "date": "05 01, 2018",
-      "dateAdded": "2018-12-30T15:34:36Z",
-      "dateModified": "2018-12-30T15:34:36Z",
-      "extra": "PMID: 29474540\nPMCID: PMC5905626",
+      "extra": [
+        "PMID: 29474540",
+        "PMCID: PMC5905626"
+      ],
       "issue": "9",
       "itemID": 1,
       "itemType": "journalArticle",
@@ -126,7 +124,6 @@
       "libraryCatalog": "PubMed",
       "pages": "1608-1617",
       "publicationTitle": "Human Molecular Genetics",
-      "relations": [],
       "title": "SPEG-deficient skeletal muscles exhibit abnormal triad and defective calcium handling",
       "volume": "27"
     },
@@ -197,9 +194,10 @@
         }
       ],
       "date": "03 2018",
-      "dateAdded": "2018-12-30T15:35:12Z",
-      "dateModified": "2018-12-30T15:35:12Z",
-      "extra": "PMID: 29518074\nPMCID: PMC5843160",
+      "extra": [
+        "PMID: 29518074",
+        "PMCID: PMC5843160"
+      ],
       "issue": "3",
       "itemID": 2,
       "itemType": "journalArticle",
@@ -208,7 +206,6 @@
       "libraryCatalog": "PubMed",
       "pages": "e1007226",
       "publicationTitle": "PLoS genetics",
-      "relations": [],
       "tags": [
         {
           "tag": "Animals"

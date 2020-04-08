@@ -2,17 +2,30 @@
   "collections": {
     "coll:00000": {
       "collections": [
+        "coll:00001"
+      ],
+      "items": [
+        2,
+        4,
+        6,
+        7
+      ],
+      "key": "coll:00000",
+      "name": "Jabref groups import does not work #717.3.8"
+    },
+    "coll:00001": {
+      "collections": [
         "coll:00003",
         "coll:00008"
       ],
       "items": [
         7
       ],
-      "key": "coll:00000",
+      "key": "coll:00001",
       "name": "my-main-group-3",
-      "parent": "coll:00002"
+      "parent": "coll:00000"
     },
-    "coll:00001": {
+    "coll:00002": {
       "collections": [
         "coll:00004"
       ],
@@ -21,21 +34,8 @@
         3,
         5
       ],
-      "key": "coll:00001",
-      "name": "Jabref groups import does not work #717.2.10"
-    },
-    "coll:00002": {
-      "collections": [
-        "coll:00000"
-      ],
-      "items": [
-        2,
-        4,
-        6,
-        7
-      ],
       "key": "coll:00002",
-      "name": "Jabref groups import does not work #717.3.8"
+      "name": "Jabref groups import does not work #717.2.10"
     },
     "coll:00003": {
       "collections": [
@@ -47,7 +47,7 @@
       ],
       "key": "coll:00003",
       "name": "my-subgroup-3",
-      "parent": "coll:00000"
+      "parent": "coll:00001"
     },
     "coll:00004": {
       "collections": [
@@ -57,7 +57,7 @@
       "items": [],
       "key": "coll:00004",
       "name": "my-main-group-2",
-      "parent": "coll:00001"
+      "parent": "coll:00002"
     },
     "coll:00005": {
       "collections": [],
@@ -92,17 +92,13 @@
       ],
       "key": "coll:00008",
       "name": "my-other-subgroup-3",
-      "parent": "coll:00000"
+      "parent": "coll:00001"
     }
   },
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false,
-      "exportNotes": false,
-      "keepUpdated": false
-    },
+    "options": {},
     "preferences": {
       "DOIandURL": "both",
       "ascii": "",
@@ -176,12 +172,13 @@
         }
       ],
       "date": "2017",
-      "dateAdded": "2020-01-31T16:55:20Z",
-      "dateModified": "2020-01-31T16:55:20Z",
-      "extra": "Citation Key: Doe-2017\ntex.owner: klein\ntex.timestamp: 2017.09.11",
+      "extra": [
+        "Citation Key: Doe-2017",
+        "tex.owner: klein",
+        "tex.timestamp: 2017.09.11"
+      ],
       "itemID": 1,
       "itemType": "journalArticle",
-      "relations": [],
       "title": "The paper in my-subgroup-2"
     },
     {
@@ -194,12 +191,13 @@
         }
       ],
       "date": "2017",
-      "dateAdded": "2020-01-31T16:55:21Z",
-      "dateModified": "2020-01-31T16:55:21Z",
-      "extra": "Citation Key: Doe-2017\ntex.owner: klein\ntex.timestamp: 2017.09.11",
+      "extra": [
+        "Citation Key: Doe-2017",
+        "tex.owner: klein",
+        "tex.timestamp: 2017.09.11"
+      ],
       "itemID": 2,
       "itemType": "journalArticle",
-      "relations": [],
       "title": "The paper in my-subgroup-3"
     },
     {
@@ -211,12 +209,13 @@
           "lastName": "Other"
         }
       ],
-      "dateAdded": "2020-01-31T16:55:20Z",
-      "dateModified": "2020-01-31T16:55:20Z",
-      "extra": "Citation Key: Other-\ntex.owner: klein\ntex.timestamp: 2017.09.11",
+      "extra": [
+        "Citation Key: Other-",
+        "tex.owner: klein",
+        "tex.timestamp: 2017.09.11"
+      ],
       "itemID": 3,
       "itemType": "journalArticle",
-      "relations": [],
       "title": "The article in my-other-subgroup-2"
     },
     {
@@ -228,12 +227,13 @@
           "lastName": "Other"
         }
       ],
-      "dateAdded": "2020-01-31T16:55:21Z",
-      "dateModified": "2020-01-31T16:55:21Z",
-      "extra": "Citation Key: Other-\ntex.owner: klein\ntex.timestamp: 2017.09.11",
+      "extra": [
+        "Citation Key: Other-",
+        "tex.owner: klein",
+        "tex.timestamp: 2017.09.11"
+      ],
       "itemID": 4,
       "itemType": "journalArticle",
-      "relations": [],
       "title": "The article in my-other-subgroup-3"
     },
     {
@@ -245,12 +245,13 @@
           "lastName": "Unkonw"
         }
       ],
-      "dateAdded": "2020-01-31T16:55:21Z",
-      "dateModified": "2020-01-31T16:55:21Z",
-      "extra": "Citation Key: Unkonw-\ntex.owner: klein\ntex.timestamp: 2017.09.11",
+      "extra": [
+        "Citation Key: Unkonw-",
+        "tex.owner: klein",
+        "tex.timestamp: 2017.09.11"
+      ],
       "itemID": 5,
       "itemType": "journalArticle",
-      "relations": [],
       "title": "JR2: paper not in a group"
     },
     {
@@ -262,12 +263,13 @@
           "lastName": "Unkonw"
         }
       ],
-      "dateAdded": "2020-01-31T16:55:21Z",
-      "dateModified": "2020-01-31T16:55:21Z",
-      "extra": "Citation Key: Unkonw-\ntex.owner: klein\ntex.timestamp: 2017.09.11",
+      "extra": [
+        "Citation Key: Unkonw-",
+        "tex.owner: klein",
+        "tex.timestamp: 2017.09.11"
+      ],
       "itemID": 6,
       "itemType": "journalArticle",
-      "relations": [],
       "title": "the paper in my-subgroup-3 and my-other-subgroup-3"
     },
     {
@@ -279,12 +281,13 @@
           "lastName": "Unkonw"
         }
       ],
-      "dateAdded": "2020-01-31T16:55:21Z",
-      "dateModified": "2020-01-31T16:55:21Z",
-      "extra": "Citation Key: Unkonw\ntex.owner: klein\ntex.timestamp: 2017.09.11",
+      "extra": [
+        "Citation Key: Unkonw",
+        "tex.owner: klein",
+        "tex.timestamp: 2017.09.11"
+      ],
       "itemID": 7,
       "itemType": "journalArticle",
-      "relations": [],
       "title": "JR3: paper not in a group"
     }
   ]

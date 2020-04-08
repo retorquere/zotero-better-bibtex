@@ -53,42 +53,10 @@
         }
       ],
       "date": "2018",
-      "dateAdded": "2018-07-21T14:37:17Z",
-      "dateModified": "2018-07-21T14:37:52Z",
-      "extra": "Citation Key: ref7",
+      "extra": [
+        "Citation Key: ref1"
+      ],
       "itemID": 1,
-      "itemType": "journalArticle",
-      "title": "O<sub>7-x</sub>"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Name",
-          "lastName": "Name"
-        }
-      ],
-      "date": "2018",
-      "dateAdded": "2018-07-21T14:37:17Z",
-      "dateModified": "2018-07-21T14:37:52Z",
-      "extra": "Citation Key: ref8",
-      "itemID": 2,
-      "itemType": "journalArticle",
-      "title": "O<sub>7-x</sub> test"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Name",
-          "lastName": "Name"
-        }
-      ],
-      "date": "2018",
-      "dateAdded": "2018-07-21T14:37:17Z",
-      "dateModified": "2018-07-21T14:43:18Z",
-      "extra": "Citation Key: ref1",
-      "itemID": 3,
       "itemType": "journalArticle",
       "title": "1 O<sub>abcde</sub>"
     },
@@ -101,9 +69,41 @@
         }
       ],
       "date": "2018",
-      "dateAdded": "2018-07-21T14:37:17Z",
-      "dateModified": "2018-07-21T15:55:46Z",
-      "extra": "Citation Key: ref4",
+      "extra": [
+        "Citation Key: ref2"
+      ],
+      "itemID": 2,
+      "itemType": "journalArticle",
+      "title": "2 O<sub>abcde</sub> test"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Name",
+          "lastName": "Name"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: ref3"
+      ],
+      "itemID": 3,
+      "itemType": "journalArticle",
+      "title": "<span class=\"nocase\">O<sub>abcde</sub></span>"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Name",
+          "lastName": "Name"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: ref4"
+      ],
       "itemID": 4,
       "itemType": "journalArticle",
       "title": "O<sub>x</sub>"
@@ -117,26 +117,10 @@
         }
       ],
       "date": "2018",
-      "dateAdded": "2018-07-21T14:37:59Z",
-      "dateModified": "2018-07-21T14:43:23Z",
-      "extra": "Citation Key: ref2",
-      "itemID": 5,
-      "itemType": "journalArticle",
-      "title": "2 O<sub>abcde</sub> test"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Name",
-          "lastName": "Name"
-        }
+      "extra": [
+        "Citation Key: ref5"
       ],
-      "date": "2018",
-      "dateAdded": "2018-07-21T14:37:59Z",
-      "dateModified": "2018-07-21T15:55:51Z",
-      "extra": "Citation Key: ref5",
-      "itemID": 6,
+      "itemID": 5,
       "itemType": "journalArticle",
       "title": "O<sub>x</sub> test"
     },
@@ -149,12 +133,12 @@
         }
       ],
       "date": "2018",
-      "dateAdded": "2018-07-21T14:51:35Z",
-      "dateModified": "2018-07-21T14:51:44Z",
-      "extra": "Citation Key: ref3",
-      "itemID": 7,
+      "extra": [
+        "Citation Key: ref6"
+      ],
+      "itemID": 6,
       "itemType": "journalArticle",
-      "title": "<span class=\"nocase\">O<sub>abcde</sub></span>"
+      "title": "<span class=\"nocase\">O<sub>x</sub></span>"
     },
     {
       "creators": [
@@ -165,12 +149,28 @@
         }
       ],
       "date": "2018",
-      "dateAdded": "2018-07-21T14:51:35Z",
-      "dateModified": "2018-07-21T15:55:43Z",
-      "extra": "Citation Key: ref6",
+      "extra": [
+        "Citation Key: ref7"
+      ],
+      "itemID": 7,
+      "itemType": "journalArticle",
+      "title": "O<sub>7-x</sub>"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Name",
+          "lastName": "Name"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: ref8"
+      ],
       "itemID": 8,
       "itemType": "journalArticle",
-      "title": "<span class=\"nocase\">O<sub>x</sub></span>"
+      "title": "O<sub>7-x</sub> test"
     }
   ]
 }

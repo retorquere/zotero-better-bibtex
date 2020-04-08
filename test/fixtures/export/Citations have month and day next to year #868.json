@@ -81,9 +81,9 @@
         }
       ],
       "date": "1998 Nov",
-      "dateAdded": "2017-05-29 11:26:22",
-      "dateModified": "2017-05-29 11:26:22",
-      "extra": "PMID: 9861700",
+      "extra": [
+        "PMID: 9861700"
+      ],
       "issue": "1",
       "itemID": 1,
       "itemType": "journalArticle",
@@ -190,9 +190,10 @@
         }
       ],
       "date": "1996 Nov 15",
-      "dateAdded": "2017-05-29 11:26:23",
-      "dateModified": "2018-01-05 19:09:08",
-      "extra": "PMID: 8947047 \nPMCID: PMC452447",
+      "extra": [
+        "PMID: 8947047 ",
+        "PMCID: PMC452447"
+      ],
       "issue": "22",
       "itemID": 2,
       "itemType": "journalArticle",

@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -73,12 +71,11 @@
         }
       ],
       "date": "2019",
-      "dateAdded": "2019-12-22T01:25:01Z",
-      "dateModified": "2019-12-22T01:25:01Z",
-      "extra": "Citation Key: WEB:intel-ark-atom",
+      "extra": [
+        "Citation Key: WEB:intel-ark-atom"
+      ],
       "itemID": 1,
       "itemType": "webpage",
-      "relations": [],
       "title": "Intel atom E3826 specifications",
       "url": "https://ark.intel.com/content/www/us/en/ark/products/78477/intel-atom-processor-e3826-1m-cache-1-46-ghz.html"
     }

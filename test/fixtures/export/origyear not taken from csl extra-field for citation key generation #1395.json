@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -80,15 +78,14 @@
         }
       ],
       "date": "1982",
-      "dateAdded": "2020-01-09T12:07:50Z",
-      "dateModified": "2020-01-14T14:34:30Z",
-      "extra": "{:original-date: 1976}",
+      "extra": [
+        "{:original-date: 1976}"
+      ],
       "itemID": 1,
       "itemType": "book",
       "language": "Spanish",
       "place": "Madrid",
       "publisher": "Edaf",
-      "relations": [],
       "title": "Magia experimental"
     },
     {
@@ -102,10 +99,10 @@
         }
       ],
       "date": "2002",
-      "dateAdded": "2020-01-10T23:33:03Z",
-      "dateModified": "2020-01-15T07:10:10Z",
       "edition": "1. ed.",
-      "extra": "{:original-date: 1994}",
+      "extra": [
+        "{:original-date: 1994}"
+      ],
       "itemID": 2,
       "itemType": "bookSection",
       "language": "pt",
@@ -113,7 +110,6 @@
       "place": "Rio de Janeiro",
       "publicationTitle": "700 Experimentos da Conscienciologia",
       "publisher": "Instituto Internacional de Projeciologia",
-      "relations": [],
       "title": "Cap\u00edtulo 5"
     }
   ]

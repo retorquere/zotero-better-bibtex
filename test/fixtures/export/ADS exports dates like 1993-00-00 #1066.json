@@ -2,10 +2,7 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false,
-      "exportNotes": false
-    },
+    "options": {},
     "preferences": {
       "DOIandURL": "both",
       "asciiBibLaTeX": false,
@@ -83,15 +80,12 @@
         }
       ],
       "date": "1993-00-00",
-      "dateAdded": "2018-09-24T16:52:14Z",
-      "dateModified": "2018-09-24T16:52:14Z",
       "itemID": 1,
       "itemType": "journalArticle",
       "language": "en",
       "libraryCatalog": "ui.adsabs.harvard.edu",
       "pages": "291",
       "publicationTitle": "American Institute of Physics Conference Series",
-      "relations": [],
       "title": "Observations of isolated pulsars and disk-fed X-ray binaries.",
       "url": "https://ui.adsabs.harvard.edu/#abs/1993AIPC..280..291W/abstract",
       "volume": "280"

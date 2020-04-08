@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -71,12 +69,11 @@
           "lastName": "Krej\u010d\u00ed"
         }
       ],
-      "dateAdded": "2019-08-19T14:27:46Z",
-      "dateModified": "2019-08-19T14:27:46Z",
-      "extra": "Citation Key: MR1870153",
+      "extra": [
+        "Citation Key: MR1870153"
+      ],
       "itemID": 1,
       "itemType": "bookSection",
-      "relations": [],
       "title": "Homogenization of scalar wave equation with hysteresis operator"
     }
   ]

@@ -3,7 +3,6 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
@@ -63,8 +62,6 @@
         }
       ],
       "date": "December 15, 2011",
-      "dateAdded": "2019-02-25T21:27:12Z",
-      "dateModified": "2019-02-25T21:27:12Z",
       "edition": "1 edition",
       "itemID": 1,
       "itemType": "book",
@@ -73,7 +70,6 @@
       "numPages": "432",
       "place": "London ; New York",
       "publisher": "Routledge",
-      "relations": [],
       "title": "The Anthropology of Islam Reader"
     }
   ]

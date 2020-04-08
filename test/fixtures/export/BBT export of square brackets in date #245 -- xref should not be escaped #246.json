@@ -3,7 +3,6 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
@@ -20,7 +19,11 @@
     {
       "court": "HCA",
       "date": "1998-04-01",
-      "extra": "Citation Key: kartinyeri\ntex.author= Kaetinyeri v Commonwealth\ntex.translator= Kartinyeri",
+      "extra": [
+        "Citation Key: kartinyeri",
+        "tex.author= Kaetinyeri v Commonwealth",
+        "tex.translator= Kartinyeri"
+      ],
       "itemID": 1,
       "itemType": "case",
       "pages": "337",
@@ -69,7 +72,10 @@
         }
       ],
       "date": "[2014]",
-      "extra": "Citation Key: bentley_academic_2011\ntex.xref= welker_andreas_1999",
+      "extra": [
+        "Citation Key: bentley_academic_2011",
+        "tex.xref= welker_andreas_1999"
+      ],
       "itemID": 3,
       "itemType": "journalArticle",
       "journalAbbreviation": "J R Anthropol Inst",

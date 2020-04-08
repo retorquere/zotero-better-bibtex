@@ -3,7 +3,6 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
@@ -67,14 +66,13 @@
         }
       ],
       "date": "2011",
-      "dateAdded": "2018-11-20T02:38:24Z",
-      "dateModified": "2018-11-23T23:23:23Z",
-      "extra": "Citation Key: bvd2011",
+      "extra": [
+        "Citation Key: bvd2011"
+      ],
       "itemID": 1,
       "itemType": "journalArticle",
       "language": "en",
       "libraryCatalog": "Zotero",
-      "relations": [],
       "title": "The Boogie Veri\ufb01cation Debugger",
       "url": "https://www.microsoft.com/en-us/research/wp-content/uploads/2016/12/krml213.pdf"
     }

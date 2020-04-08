@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -97,14 +95,13 @@
         }
       ],
       "date": "2001",
-      "dateAdded": "2019-08-21T08:25:40Z",
-      "dateModified": "2019-08-21T08:25:40Z",
-      "extra": "Citation Key: Adams2001",
+      "extra": [
+        "Citation Key: Adams2001"
+      ],
       "itemID": 1,
       "itemType": "journalArticle",
       "pages": "493-518",
       "publicationTitle": "Bulletin of Volcanology",
-      "relations": [],
       "tags": [
         {
           "tag": "breadcrust"
@@ -159,14 +156,13 @@
         }
       ],
       "date": "2001",
-      "dateAdded": "2019-08-21T08:25:40Z",
-      "dateModified": "2019-08-21T08:25:40Z",
-      "extra": "Citation Key: Adams2002",
+      "extra": [
+        "Citation Key: Adams2002"
+      ],
       "itemID": 2,
       "itemType": "journalArticle",
       "pages": "493-518",
       "publicationTitle": "Bulletin of Volcanology",
-      "relations": [],
       "tags": [
         {
           "tag": "breadcrust"
@@ -182,12 +178,9 @@
       "volume": "62"
     },
     {
-      "dateAdded": "2019-08-21T08:25:41Z",
-      "dateModified": "2019-08-21T08:25:41Z",
       "itemID": 3,
       "itemType": "note",
       "note": "Import errors found: <ul><li>No fields in @emptyreference</li></ul>",
-      "relations": [],
       "tags": [
         {
           "tag": "#Better BibTeX import error"

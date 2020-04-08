@@ -3,7 +3,6 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
@@ -62,13 +61,10 @@
         }
       ],
       "date": "2019",
-      "dateAdded": "2019-04-22T21:55:59Z",
-      "dateModified": "2019-04-24T21:36:29Z",
       "itemID": 1,
       "itemType": "webpage",
       "language": "en",
       "publicationTitle": "TIME",
-      "relations": [],
       "title": "The 100 most influential people of 2019",
       "url": "http://time.com/collection/100-most-influential-people-2019/"
     },
@@ -81,13 +77,10 @@
         }
       ],
       "date": "2019",
-      "dateAdded": "2019-04-24T20:36:53Z",
-      "dateModified": "2019-04-24T21:36:24Z",
       "itemID": 2,
       "itemType": "webpage",
       "language": "en",
       "publicationTitle": "TIME",
-      "relations": [],
       "shortTitle": "Caster Semenya",
       "title": "Caster Semenya: The 100 most influential people of 2019",
       "url": "http://time.com/collection/100-most-influential-people-2019/5567679/caster-semenya/"
@@ -101,13 +94,10 @@
         }
       ],
       "date": "2019",
-      "dateAdded": "2019-04-24T21:17:09Z",
-      "dateModified": "2019-04-27T05:45:08Z",
       "itemID": 3,
       "itemType": "webpage",
       "language": "en",
       "publicationTitle": "IAAF",
-      "relations": [],
       "shortTitle": "Caster Semenya",
       "title": "Caster Semenya: Honours",
       "url": "https://www.iaaf.org/athletes/south-africa/caster-semenya-242560"
@@ -121,13 +111,10 @@
         }
       ],
       "date": "2019-03-21",
-      "dateAdded": "2019-04-24T21:55:00Z",
-      "dateModified": "2019-04-24T21:56:38Z",
       "itemID": 4,
       "itemType": "webpage",
       "language": "en",
       "publicationTitle": "Court of Arbitration for Sport",
-      "relations": [],
       "shortTitle": "Semenya, ASA and IAAF",
       "title": "Semenya, ASA and IAAF: Planning update",
       "url": "https://www.tas-cas.org/en/general-information/news-detail/article/semenya-asa-and-iaaf-planning-update.html"
@@ -142,13 +129,10 @@
         }
       ],
       "date": "2019-01-12",
-      "dateAdded": "2019-04-28T20:57:39Z",
-      "dateModified": "2019-04-28T20:58:39Z",
       "itemID": 5,
       "itemType": "webpage",
       "language": "en",
       "publicationTitle": "Otago Daily Times Online News",
-      "relations": [],
       "title": "Uni adds gender options",
       "url": "https://www.odt.co.nz/news/dunedin/campus/university-of-otago/uni-adds-gender-options"
     },
@@ -164,8 +148,6 @@
         }
       ],
       "date": "1995",
-      "dateAdded": "2019-04-22T21:49:26Z",
-      "dateModified": "2019-04-24T01:20:55Z",
       "issue": "2",
       "itemID": 6,
       "itemType": "journalArticle",
@@ -177,7 +159,6 @@
       ],
       "pages": "191-218",
       "publicationTitle": "Journal of Sport and Social Issues",
-      "relations": [],
       "shortTitle": "Resistance/transformation of the oppositional binary",
       "title": "Resistance/transformation of the oppositional binary: Exposing sport as a continuum",
       "url": "https://doi.org/10.1177/019372395019002006",
@@ -201,8 +182,6 @@
         }
       ],
       "date": "2008",
-      "dateAdded": "2019-04-22T21:52:42Z",
-      "dateModified": "2019-04-24T01:20:55Z",
       "issue": "1",
       "itemID": 7,
       "itemType": "journalArticle",
@@ -213,7 +192,6 @@
       ],
       "pages": "24-47",
       "publicationTitle": "Journal of Sport and Social Issues",
-      "relations": [],
       "shortTitle": "'Women could be every bit as good as guys'",
       "title": "'Women could be every bit as good as guys': Reproductive and resistant agency in two 'action' sports",
       "url": "https://doi.org/10.1177/0193723507307819",
@@ -232,8 +210,6 @@
         }
       ],
       "date": "2010",
-      "dateAdded": "2019-04-22T05:11:05Z",
-      "dateModified": "2019-04-24T01:20:57Z",
       "issue": "2",
       "itemID": 8,
       "itemType": "journalArticle",
@@ -244,7 +220,6 @@
       ],
       "pages": "93-108",
       "publicationTitle": "Qualitative Research in Sport and Exercise",
-      "relations": [],
       "shortTitle": "Seeing the world of physical culture",
       "title": "Seeing the world of physical culture: The potential of visual methods for qualitative research in sport and exercise",
       "url": "https://doi.org/10.1080/19398441.2010.488017",
@@ -263,8 +238,6 @@
         }
       ],
       "date": "1981",
-      "dateAdded": "2019-04-24T09:00:27Z",
-      "dateModified": "2019-04-24T09:03:32Z",
       "issue": "2",
       "itemID": 9,
       "itemType": "journalArticle",
@@ -272,7 +245,6 @@
       "libraryCatalog": "SAGE Journals",
       "pages": "79-102",
       "publicationTitle": "International Review for the Sociology of Sport",
-      "relations": [],
       "title": "On the inadequacies of sociological definitions of sport",
       "url": "https://doi.org/10.1177/101269028101600206",
       "volume": "16"
@@ -290,8 +262,6 @@
         }
       ],
       "date": "2010",
-      "dateAdded": "2019-04-22T21:42:03Z",
-      "dateModified": "2019-04-24T01:20:56Z",
       "issue": "2",
       "itemID": 10,
       "itemType": "journalArticle",
@@ -302,7 +272,6 @@
       ],
       "pages": "234-248",
       "publicationTitle": "Sport in Society",
-      "relations": [],
       "shortTitle": "Women in sport",
       "title": "Women in sport: Gender relations and future perspectives",
       "url": "https://doi.org/10.1080/17430430903522954",
@@ -321,8 +290,6 @@
         }
       ],
       "date": "2014",
-      "dateAdded": "2019-04-28T21:56:14Z",
-      "dateModified": "2019-04-28T21:57:56Z",
       "issue": "3",
       "itemID": 11,
       "itemType": "journalArticle",
@@ -330,7 +297,6 @@
       "libraryCatalog": "Springer Link",
       "pages": "171-181",
       "publicationTitle": "Sex Roles",
-      "relations": [],
       "shortTitle": "Psychological distress and the intersection of gender and physical disability",
       "title": "Psychological distress and the intersection of gender and physical disability: Considering gender and disability-related risk factors",
       "url": "https://doi.org/10.1007/s11199-014-0385-5",
@@ -354,8 +320,6 @@
         }
       ],
       "date": "June 1, 2016",
-      "dateAdded": "2019-04-22T03:58:14Z",
-      "dateModified": "2019-04-24T01:20:52Z",
       "issue": "4",
       "itemID": 12,
       "itemType": "journalArticle",
@@ -366,7 +330,6 @@
       ],
       "pages": "375-393",
       "publicationTitle": "International Review for the Sociology of Sport",
-      "relations": [],
       "title": "The contested terrain of alcohol sponsorship of sport in New Zealand",
       "url": "https://doi.org/10.1177/1012690214526399",
       "volume": "51"
@@ -384,8 +347,6 @@
         }
       ],
       "date": "2004",
-      "dateAdded": "2019-04-28T23:00:35Z",
-      "dateModified": "2019-04-28T23:01:41Z",
       "issue": "4",
       "itemID": 13,
       "itemType": "journalArticle",
@@ -393,7 +354,6 @@
       "libraryCatalog": "SAGE Journals",
       "pages": "429-452",
       "publicationTitle": "Journal of Sport and Social Issues",
-      "relations": [],
       "title": "Perceptions of disability and their impact upon involvement in sport for people with disabilities at all levels",
       "url": "https://doi.org/10.1177/0193723504268729",
       "volume": "28"
@@ -411,8 +371,6 @@
         }
       ],
       "date": "2014",
-      "dateAdded": "2019-04-22T05:19:24Z",
-      "dateModified": "2019-04-24T01:20:59Z",
       "issue": "1",
       "itemID": 14,
       "itemType": "journalArticle",
@@ -423,7 +381,6 @@
       ],
       "pages": "24-46",
       "publicationTitle": "The Sociological Review",
-      "relations": [],
       "title": "On the relation between 'visual research methods' and contemporary visual culture",
       "url": "https://doi.org/10.1111/1467-954X.12109",
       "volume": "62"
@@ -441,8 +398,6 @@
         }
       ],
       "date": "2013",
-      "dateAdded": "2019-04-22T03:55:43Z",
-      "dateModified": "2019-04-24T01:20:53Z",
       "issue": "3",
       "itemID": 15,
       "itemType": "journalArticle",
@@ -453,7 +408,6 @@
       ],
       "pages": "274-284",
       "publicationTitle": "International Area Studies Review",
-      "relations": [],
       "title": "The contested terrain of sport diplomacy in a globalizing world",
       "url": "https://doi.org/10.1177/2233865913498867",
       "volume": "16"
@@ -476,8 +430,6 @@
         }
       ],
       "date": "2013",
-      "dateAdded": "2019-04-22T03:49:29Z",
-      "dateModified": "2019-04-24T01:20:54Z",
       "issue": "7",
       "itemID": 16,
       "itemType": "journalArticle",
@@ -488,7 +440,6 @@
       ],
       "pages": "883-898",
       "publicationTitle": "Sport in Society",
-      "relations": [],
       "shortTitle": "Rugby World Cup 2011",
       "title": "Rugby World Cup 2011: Sport mega-events and the contested terrain of space, bodies and commodities",
       "url": "https://doi.org/10.1080/17430437.2013.791156",
@@ -507,8 +458,6 @@
         }
       ],
       "date": "2016",
-      "dateAdded": "2019-04-22T22:44:21Z",
-      "dateModified": "2019-04-24T01:20:59Z",
       "issue": "7",
       "itemID": 17,
       "itemType": "journalArticle",
@@ -519,7 +468,6 @@
       ],
       "pages": "906-922",
       "publicationTitle": "Sport in Society",
-      "relations": [],
       "shortTitle": "Macho men in a girls\u2019 game",
       "title": "Macho men in a girls\u2019 game: Masculinities and the Otago men\u2019s netball team",
       "url": "https://doi.org/10.1080/17430437.2015.1067782",
@@ -538,8 +486,6 @@
         }
       ],
       "date": "1988",
-      "dateAdded": "2019-04-22T21:31:01Z",
-      "dateModified": "2019-04-24T01:20:56Z",
       "issue": "3",
       "itemID": 18,
       "itemType": "journalArticle",
@@ -550,7 +496,6 @@
       ],
       "pages": "197-211",
       "publicationTitle": "Sociology of Sport Journal",
-      "relations": [],
       "shortTitle": "Sports and male domination",
       "title": "Sports and male domination: The female athlete as contested ideological terrain",
       "url": "https://journals.humankinetics.com/doi/abs/10.1123/ssj.5.3.197",
@@ -569,8 +514,6 @@
         }
       ],
       "date": "2015",
-      "dateAdded": "2019-04-22T21:46:00Z",
-      "dateModified": "2019-04-24T01:20:52Z",
       "issue": "3",
       "itemID": 19,
       "itemType": "journalArticle",
@@ -581,7 +524,6 @@
       ],
       "pages": "331-342",
       "publicationTitle": "Sport Management Review",
-      "relations": [],
       "shortTitle": "Female athletes, women's sport, and the sport media commercial complex",
       "title": "Female athletes, women's sport, and the sport media commercial complex: Have we really 'come a long way, baby'?",
       "url": "http://www.sciencedirect.com/science/article/pii/S1441352314000369",
@@ -605,16 +547,15 @@
         }
       ],
       "date": "2019",
-      "dateAdded": "2019-04-26T23:05:23Z",
-      "dateModified": "2019-04-26T23:11:42Z",
-      "extra": "PMID: 30894351",
+      "extra": [
+        "PMID: 30894351"
+      ],
       "itemID": 20,
       "itemType": "journalArticle",
       "language": "en",
       "libraryCatalog": "www.bmj.com",
       "pages": "l1120",
       "publicationTitle": "BMJ",
-      "relations": [],
       "title": "Sex, gender, and sports",
       "url": "https://www.bmj.com/content/364/bmj.l1120",
       "volume": "364"
@@ -639,8 +580,6 @@
         }
       ],
       "date": "2002",
-      "dateAdded": "2019-04-27T05:23:45Z",
-      "dateModified": "2019-05-01T00:56:15Z",
       "itemID": 21,
       "itemType": "bookSection",
       "language": "en",
@@ -652,7 +591,6 @@
       "place": "London, United Kingdom",
       "publicationTitle": "MediaSport",
       "publisher": "Routledge",
-      "relations": [],
       "title": "The media image of sport and gender"
     },
     {
@@ -680,8 +618,6 @@
         }
       ],
       "date": "2004",
-      "dateAdded": "2019-04-23T23:39:19Z",
-      "dateModified": "2019-04-25T23:15:04Z",
       "itemID": 22,
       "itemType": "bookSection",
       "language": "en",
@@ -690,7 +626,6 @@
       "place": "New York, NY",
       "publicationTitle": "Picturing the social landscape: Visual methods and the sociological imagination",
       "publisher": "Routledge",
-      "relations": [],
       "title": "Introduction"
     },
     {
@@ -713,8 +648,6 @@
         }
       ],
       "date": "2004",
-      "dateAdded": "2019-04-23T23:42:26Z",
-      "dateModified": "2019-04-25T23:16:36Z",
       "itemID": 23,
       "itemType": "bookSection",
       "language": "en",
@@ -723,7 +656,6 @@
       "place": "New York, NY",
       "publicationTitle": "Picturing the social landscape: Visual methods and the sociological imagination",
       "publisher": "Routledge",
-      "relations": [],
       "shortTitle": "Working with visible evidence",
       "title": "Working with visible evidence: An invitation and some practical advice"
     },
@@ -742,8 +674,6 @@
         }
       ],
       "date": "2004",
-      "dateAdded": "2019-04-22T04:45:13Z",
-      "dateModified": "2019-05-01T00:58:50Z",
       "itemID": 24,
       "itemType": "bookSection",
       "language": "en",
@@ -755,7 +685,6 @@
       "place": "Bingley, United Kingdom",
       "publicationTitle": "Seeing is believing? Approaches to visual research",
       "publisher": "Emerald Group",
-      "relations": [],
       "series": "Studies in qualitative methodology",
       "shortTitle": "Visual research",
       "title": "Visual research: Potential and overview",
@@ -771,8 +700,6 @@
         }
       ],
       "date": "2013",
-      "dateAdded": "2019-04-23T23:20:24Z",
-      "dateModified": "2019-04-27T05:32:05Z",
       "edition": "3",
       "itemID": 25,
       "itemType": "book",
@@ -781,7 +708,6 @@
       "numPages": "248",
       "place": "London, United Kingdom",
       "publisher": "SAGE",
-      "relations": [],
       "title": "Doing visual ethnography"
     },
     {
@@ -795,14 +721,11 @@
         }
       ],
       "date": "2016-08-21",
-      "dateAdded": "2019-04-26T22:23:25Z",
-      "dateModified": "2019-04-29T21:17:22Z",
       "itemID": 26,
       "itemType": "newspaperArticle",
       "language": "en",
       "libraryCatalog": "www.telegraph.co.uk",
       "publicationTitle": "The Telegraph",
-      "relations": [],
       "shortTitle": "Caster Semenya wins 800 m",
       "title": "Caster Semenya wins 800 m: Beaten GB finalist Lynsey Sharp criticises rule changes over 'obvious' hyperandrogenous women",
       "url": "https://www.telegraph.co.uk/news/2016/08/21/lynsey-sharp-criticises-obvious-hypoadrogenous-women-having-bein/"

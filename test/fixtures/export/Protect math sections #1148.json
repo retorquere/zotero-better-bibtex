@@ -3,7 +3,6 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
@@ -53,11 +52,8 @@
   "items": [
     {
       "accessDate": "2019-03-11T07:01:19Z",
-      "dateAdded": "2019-03-11T07:01:19Z",
-      "dateModified": "2019-03-11T07:01:19Z",
       "itemID": 1,
       "itemType": "webpage",
-      "relations": [],
       "title": "<\\input Wiki .:. goLaTeX - Mein LaTeX-Forum",
       "url": "https://golatex.de/wiki/%5Cinput"
     }

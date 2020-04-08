@@ -3,7 +3,6 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
@@ -68,10 +67,10 @@
         }
       ],
       "date": "2007",
-      "dateAdded": "2019-05-05T10:48:49Z",
-      "dateModified": "2019-05-06T03:01:51Z",
       "edition": "5",
-      "extra": "Citation Key: Landafshits.V7",
+      "extra": [
+        "Citation Key: Landafshits.V7"
+      ],
       "itemID": 1,
       "itemType": "book",
       "language": "russian",
@@ -79,7 +78,6 @@
       "numberOfVolumes": "10",
       "place": "\u041c.",
       "publisher": "\u0424\u0438\u0437\u043c\u0430\u0442\u043b\u0438\u0442",
-      "relations": [],
       "series": "\u0422\u0435\u043e\u0440\u0435\u0442\u0438\u0447\u0435\u0441\u043a\u0430\u044f \u0444\u0438\u0437\u0438\u043a\u0430",
       "title": "\u0422\u0435\u043e\u0440\u0438\u044f \u0443\u043f\u0440\u0443\u0433\u043e\u0441\u0442\u0438",
       "volume": "7"

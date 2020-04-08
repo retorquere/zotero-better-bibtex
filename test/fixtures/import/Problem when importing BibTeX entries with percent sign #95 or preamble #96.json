@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -80,15 +78,16 @@
         }
       ],
       "date": "2009",
-      "dateAdded": "2019-07-20T22:24:11Z",
-      "dateModified": "2019-07-20T22:24:11Z",
-      "extra": "Citation Key: Akhavan_2009\ntex.owner: Francesco\ntex.timestamp: 2010.03.08",
+      "extra": [
+        "Citation Key: Akhavan_2009",
+        "tex.owner: Francesco",
+        "tex.timestamp: 2010.03.08"
+      ],
       "issue": "24",
       "itemID": 1,
       "itemType": "journalArticle",
       "pages": "6700-6706",
       "publicationTitle": "Thin Solid Films",
-      "relations": [],
       "tags": [
         {
           "tag": "Band-gap energy"

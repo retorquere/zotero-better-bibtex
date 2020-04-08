@@ -3,7 +3,6 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
@@ -28,7 +27,9 @@
           "lastName": "Stevenson"
         }
       ],
-      "extra": "[Stevenson][Adlai E.,! III]",
+      "extra": [
+        "[Stevenson][Adlai E.,! III]"
+      ],
       "itemID": 1,
       "itemType": "book"
     },
@@ -40,7 +41,9 @@
           "lastName": "Silva"
         }
       ],
-      "extra": "[Silva][Agostinho da]",
+      "extra": [
+        "[Silva][Agostinho da]"
+      ],
       "itemID": 2,
       "itemType": "book"
     },
@@ -52,7 +55,9 @@
           "lastName": "Humboldt"
         }
       ],
-      "extra": "[Humboldt][Alexander von]",
+      "extra": [
+        "[Humboldt][Alexander von]"
+      ],
       "itemID": 3,
       "itemType": "book"
     },
@@ -64,7 +69,9 @@
           "lastName": "Dumas"
         }
       ],
-      "extra": "[Dumas][Alexandre, p\u00e8re]",
+      "extra": [
+        "[Dumas][Alexandre, p\u00e8re]"
+      ],
       "itemID": 4,
       "itemType": "book"
     },
@@ -76,7 +83,9 @@
           "lastName": "Tocqueville"
         }
       ],
-      "extra": "[Tocqueville][Alexis de]",
+      "extra": [
+        "[Tocqueville][Alexis de]"
+      ],
       "itemID": 5,
       "itemType": "book"
     },
@@ -88,7 +97,9 @@
           "lastName": "D\u2019Amato"
         }
       ],
-      "extra": "[D\u2019Amato][Alfonse]",
+      "extra": [
+        "[D\u2019Amato][Alfonse]"
+      ],
       "itemID": 6,
       "itemType": "book"
     },
@@ -100,7 +111,9 @@
           "lastName": "Sadat"
         }
       ],
-      "extra": "[Sadat][Anwar el-]",
+      "extra": [
+        "[Sadat][Anwar el-]"
+      ],
       "itemID": 7,
       "itemType": "book"
     },
@@ -112,7 +125,9 @@
           "lastName": "Este"
         }
       ],
-      "extra": "[Este][Beatrice d\u2019]",
+      "extra": [
+        "[Este][Beatrice d\u2019]"
+      ],
       "itemID": 8,
       "itemType": "book"
     },
@@ -124,7 +139,9 @@
           "lastName": "\"de Gaulle\""
         }
       ],
-      "extra": "[\"de Gaulle\"][Charles]",
+      "extra": [
+        "[\"de Gaulle\"][Charles]"
+      ],
       "itemID": 9,
       "itemType": "book"
     },
@@ -136,7 +153,9 @@
           "lastName": "boven d'Eert"
         }
       ],
-      "extra": "[boven d'Eert][Christianus]",
+      "extra": [
+        "[boven d'Eert][Christianus]"
+      ],
       "itemID": 10,
       "itemType": "book"
     },
@@ -148,7 +167,9 @@
           "lastName": "DeGette"
         }
       ],
-      "extra": "[DeGette][Diana]",
+      "extra": [
+        "[DeGette][Diana]"
+      ],
       "itemID": 11,
       "itemType": "book"
     },
@@ -160,7 +181,9 @@
           "lastName": "Le Vayer"
         }
       ],
-      "extra": "[Le Vayer][Fran\u00e7ois de La Mothe]",
+      "extra": [
+        "[Le Vayer][Fran\u00e7ois de La Mothe]"
+      ],
       "itemID": 12,
       "itemType": "book"
     },
@@ -172,7 +195,9 @@
           "lastName": "D\u2019Annunzio"
         }
       ],
-      "extra": "[D\u2019Annunzio][Gabriele]",
+      "extra": [
+        "[D\u2019Annunzio][Gabriele]"
+      ],
       "itemID": 13,
       "itemType": "book"
     },
@@ -184,7 +209,9 @@
           "lastName": "'s-Gravesande"
         }
       ],
-      "extra": "['s-Gravesande][Goverdus]",
+      "extra": [
+        "['s-Gravesande][Goverdus]"
+      ],
       "itemID": 14,
       "itemType": "book"
     },
@@ -196,7 +223,9 @@
           "lastName": "Stein"
         }
       ],
-      "extra": "[Stein][Heinrich Friedrich Karl vom und zum]",
+      "extra": [
+        "[Stein][Heinrich Friedrich Karl vom und zum]"
+      ],
       "itemID": 15,
       "itemType": "book"
     },
@@ -208,7 +237,9 @@
           "lastName": "La Fontaine"
         }
       ],
-      "extra": "[La Fontaine][Jean de]",
+      "extra": [
+        "[La Fontaine][Jean de]"
+      ],
       "itemID": 16,
       "itemType": "book"
     },
@@ -220,7 +251,9 @@
           "lastName": "d\u2019Alembert"
         }
       ],
-      "extra": "[d\u2019Alembert][Jean le Rond]",
+      "extra": [
+        "[d\u2019Alembert][Jean le Rond]"
+      ],
       "itemID": 17,
       "itemType": "book"
     },
@@ -232,7 +265,9 @@
           "lastName": "Saunders"
         }
       ],
-      "extra": "[Saunders][John Bertrand de Cusance Morant]",
+      "extra": [
+        "[Saunders][John Bertrand de Cusance Morant]"
+      ],
       "itemID": 18,
       "itemType": "book"
     },
@@ -244,7 +279,9 @@
           "lastName": "Ortega y Gasset"
         }
       ],
-      "extra": "[Ortega y Gasset][Jos\u00e9]",
+      "extra": [
+        "[Ortega y Gasset][Jos\u00e9]"
+      ],
       "itemID": 19,
       "itemType": "book"
     },
@@ -256,7 +293,9 @@
           "lastName": "Medici"
         }
       ],
-      "extra": "[Medici][Lorenzo de\u2019U+200B]",
+      "extra": [
+        "[Medici][Lorenzo de\u2019U+200B]"
+      ],
       "itemID": 20,
       "itemType": "book"
     },
@@ -268,7 +307,9 @@
           "lastName": "Da Ponte"
         }
       ],
-      "extra": "[Da Ponte][Lorenzo]",
+      "extra": [
+        "[Da Ponte][Lorenzo]"
+      ],
       "itemID": 21,
       "itemType": "book"
     },
@@ -280,7 +321,9 @@
           "lastName": "Della Robbia"
         }
       ],
-      "extra": "[Della Robbia][Luca]",
+      "extra": [
+        "[Della Robbia][Luca]"
+      ],
       "itemID": 22,
       "itemType": "book"
     },
@@ -292,7 +335,9 @@
           "lastName": "Mies van der Rohe"
         }
       ],
-      "extra": "[Mies van der Rohe][Ludwig]",
+      "extra": [
+        "[Mies van der Rohe][Ludwig]"
+      ],
       "itemID": 23,
       "itemType": "book"
     },
@@ -304,7 +349,9 @@
           "lastName": "King"
         }
       ],
-      "extra": "[King][Martin Luther, Jr.]",
+      "extra": [
+        "[King][Martin Luther, Jr.]"
+      ],
       "itemID": 24,
       "itemType": "book"
     },
@@ -316,7 +363,9 @@
           "lastName": "du Puy de Clinchamps"
         }
       ],
-      "extra": "[du Puy de Clinchamps][PhU+0097ilippe]",
+      "extra": [
+        "[du Puy de Clinchamps][PhU+0097ilippe]"
+      ],
       "itemID": 25,
       "itemType": "book"
     },
@@ -328,7 +377,9 @@
           "lastName": "L\u2019Enfant"
         }
       ],
-      "extra": "[L\u2019Enfant][Pierre-Charles]",
+      "extra": [
+        "[L\u2019Enfant][Pierre-Charles]"
+      ],
       "itemID": 26,
       "itemType": "book"
     },
@@ -340,7 +391,9 @@
           "lastName": "Vaughan Williams"
         }
       ],
-      "extra": "[Vaughan Williams][Ralph]",
+      "extra": [
+        "[Vaughan Williams][Ralph]"
+      ],
       "itemID": 27,
       "itemType": "book"
     },
@@ -352,7 +405,9 @@
           "lastName": "La Salle"
         }
       ],
-      "extra": "[La Salle][Ren\u00e9-Robert Cavelier de]",
+      "extra": [
+        "[La Salle][Ren\u00e9-Robert Cavelier de]"
+      ],
       "itemID": 28,
       "itemType": "book"
     },
@@ -364,7 +419,9 @@
           "lastName": "La Follette"
         }
       ],
-      "extra": "[La Follette][Robert M., Sr.]",
+      "extra": [
+        "[La Follette][Robert M., Sr.]"
+      ],
       "itemID": 29,
       "itemType": "book"
     },
@@ -376,7 +433,9 @@
           "lastName": "\"van Gulik\""
         }
       ],
-      "extra": "[\"van Gulik\"][Robert]",
+      "extra": [
+        "[\"van Gulik\"][Robert]"
+      ],
       "itemID": 30,
       "itemType": "book"
     },
@@ -388,7 +447,9 @@
           "lastName": "Beauvoir"
         }
       ],
-      "extra": "[Beauvoir][Simone de]",
+      "extra": [
+        "[Beauvoir][Simone de]"
+      ],
       "itemID": 31,
       "itemType": "book"
     },
@@ -400,7 +461,9 @@
           "lastName": "Van Rensselaer"
         }
       ],
-      "extra": "[Van Rensselaer][Stephen]",
+      "extra": [
+        "[Van Rensselaer][Stephen]"
+      ],
       "itemID": 32,
       "itemType": "book"
     },
@@ -412,7 +475,9 @@
           "lastName": "al-Hakim"
         }
       ],
-      "extra": "[al-Hakim][Tawfiq]",
+      "extra": [
+        "[al-Hakim][Tawfiq]"
+      ],
       "itemID": 33,
       "itemType": "book"
     },
@@ -424,7 +489,9 @@
           "lastName": "De Quincey"
         }
       ],
-      "extra": "[De Quincey][Thomas]",
+      "extra": [
+        "[De Quincey][Thomas]"
+      ],
       "itemID": 34,
       "itemType": "book"
     },
@@ -436,7 +503,9 @@
           "lastName": "\"da Gama\""
         }
       ],
-      "extra": "[\"da Gama\"][Vasco]",
+      "extra": [
+        "[\"da Gama\"][Vasco]"
+      ],
       "itemID": 35,
       "itemType": "book"
     },
@@ -448,7 +517,9 @@
           "lastName": "Sackville-West"
         }
       ],
-      "extra": "[Sackville-West][Victoria]",
+      "extra": [
+        "[Sackville-West][Victoria]"
+      ],
       "itemID": 36,
       "itemType": "book"
     },
@@ -460,7 +531,9 @@
           "lastName": "van Gogh"
         }
       ],
-      "extra": "[van Gogh][Vincent]",
+      "extra": [
+        "[van Gogh][Vincent]"
+      ],
       "itemID": 37,
       "itemType": "book"
     },
@@ -472,7 +545,9 @@
           "lastName": "\"de la Mare\""
         }
       ],
-      "extra": "[\"de la Mare\"][Walter]",
+      "extra": [
+        "[\"de la Mare\"][Walter]"
+      ],
       "itemID": 38,
       "itemType": "book"
     },
@@ -483,7 +558,9 @@
           "name": "Marcus Aurelius"
         }
       ],
-      "extra": "[[Marcus Aurelius]]",
+      "extra": [
+        "[[Marcus Aurelius]]"
+      ],
       "itemID": 39,
       "itemType": "book"
     },
@@ -494,7 +571,9 @@
           "name": "National Aeronautics and Space Administration"
         }
       ],
-      "extra": "[[National Aeronautics and Space Administration]]",
+      "extra": [
+        "[[National Aeronautics and Space Administration]]"
+      ],
       "itemID": 40,
       "itemType": "book"
     }

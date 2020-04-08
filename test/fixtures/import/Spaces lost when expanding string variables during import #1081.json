@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -67,13 +65,12 @@
         }
       ],
       "date": "1990",
-      "dateAdded": "2019-08-18T23:16:11Z",
-      "dateModified": "2019-08-18T23:16:11Z",
-      "extra": "Citation Key: key",
+      "extra": [
+        "Citation Key: key"
+      ],
       "itemID": 1,
       "itemType": "journalArticle",
       "publicationTitle": "a space between this and this",
-      "relations": [],
       "title": "Title"
     }
   ]

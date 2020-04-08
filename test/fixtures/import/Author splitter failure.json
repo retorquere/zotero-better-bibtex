@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -90,14 +88,13 @@
         }
       ],
       "date": "1986",
-      "dateAdded": "2019-12-22T15:01:35Z",
-      "dateModified": "2019-12-22T15:01:35Z",
-      "extra": "Citation Key: Abu-Zeid_1986",
+      "extra": [
+        "Citation Key: Abu-Zeid_1986"
+      ],
       "itemID": 1,
       "itemType": "journalArticle",
       "pages": "613-620",
       "publicationTitle": "Physica Status Solidi (a)",
-      "relations": [],
       "title": "Determination of the thickness and refractive index of <span class=\"nocase\">Cu\u2082O</span> thin film using thermal and optical interferometry",
       "volume": "93"
     }

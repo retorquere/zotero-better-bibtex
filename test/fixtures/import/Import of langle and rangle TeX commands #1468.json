@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -109,16 +107,15 @@
         }
       ],
       "date": "2015-02",
-      "dateAdded": "2020-03-22T21:27:39Z",
-      "dateModified": "2020-03-22T21:27:39Z",
-      "extra": "Citation Key: Zhang_2015",
+      "extra": [
+        "Citation Key: Zhang_2015"
+      ],
       "issue": "2",
       "itemID": 1,
       "itemType": "journalArticle",
       "journalAbbreviation": "Nano Lett.",
       "pages": "876-882",
       "publicationTitle": "Nano Letters",
-      "relations": [],
       "title": "Catalyst Orientation-Induced Growth of Defect-Free Zinc-Blende Structured \u27e8001\u0305\u27e9 InAs Nanowires",
       "volume": "15"
     }

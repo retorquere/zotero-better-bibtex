@@ -3,7 +3,6 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
@@ -33,7 +32,9 @@
         }
       ],
       "date": "Apr 03 2014",
-      "extra": "00000",
+      "extra": [
+        "00000"
+      ],
       "itemID": 1,
       "itemType": "book",
       "language": "en",

@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -84,16 +82,15 @@
         }
       ],
       "date": "2007",
-      "dateAdded": "2019-12-22T01:56:11Z",
-      "dateModified": "2019-12-22T01:56:11Z",
-      "extra": "Citation Key: albrecht2007a",
+      "extra": [
+        "Citation Key: albrecht2007a"
+      ],
       "itemID": 1,
       "itemType": "bookSection",
       "pages": "153 - 163",
       "place": "M\u00fcnster",
       "publicationTitle": "Religion und medien: Vom kultbild zum internetritual",
       "publisher": "Aschendorff",
-      "relations": [],
       "title": "Evangelische publizistik"
     },
     {
@@ -115,16 +112,15 @@
         }
       ],
       "date": "2008",
-      "dateAdded": "2019-12-22T01:56:12Z",
-      "dateModified": "2019-12-22T01:56:12Z",
-      "extra": "Citation Key: gaertner2008a",
+      "extra": [
+        "Citation Key: gaertner2008a"
+      ],
       "itemID": 2,
       "itemType": "bookSection",
       "pages": "93 - 108",
       "place": "Paderborn",
       "publicationTitle": "Religion heute \u2013 \u00f6ffentlich und politisch: Provokationen, kontroversen, perspektiven",
       "publisher": "Sch\u00f6ningh",
-      "relations": [],
       "title": "Die R\u00fcckkehr der Religionen in der politischen und medialen \u00d6ffent\u00ad lichkeit"
     },
     {
@@ -137,16 +133,15 @@
         }
       ],
       "date": "2005",
-      "dateAdded": "2019-12-22T01:56:11Z",
-      "dateModified": "2019-12-22T01:56:11Z",
-      "extra": "Citation Key: schiffer2005a",
+      "extra": [
+        "Citation Key: schiffer2005a"
+      ],
       "itemID": 3,
       "itemType": "bookSection",
       "language": "german",
       "place": "W\u00fcrzburg",
       "publicationTitle": "Eine Auswahl von Techniken und Beispielen",
       "publisher": "Ergon",
-      "relations": [],
       "title": "Die Darstellung des Islams in der Presse: Sprache, Bilder, Suggestionen"
     },
     {
@@ -159,16 +154,15 @@
         }
       ],
       "date": "2005",
-      "dateAdded": "2019-12-22T01:56:12Z",
-      "dateModified": "2019-12-22T01:56:12Z",
-      "extra": "Citation Key: schiffer2005a",
+      "extra": [
+        "Citation Key: schiffer2005a"
+      ],
       "itemID": 4,
       "itemType": "bookSection",
       "language": "german",
       "place": "W\u00fcrzburg",
       "publicationTitle": "Eine Auswahl von Techniken und Beispielen",
       "publisher": "Ergon",
-      "relations": [],
       "title": "Die Darstellung des Islams in der Presse: Sprache, Bilder, Suggestionen"
     }
   ]

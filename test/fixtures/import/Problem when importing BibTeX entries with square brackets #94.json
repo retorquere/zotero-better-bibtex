@@ -2,11 +2,7 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false,
-      "exportNotes": false,
-      "keepUpdated": false
-    },
+    "options": {},
     "preferences": {
       "DOIandURL": "both",
       "ascii": "",
@@ -89,16 +85,17 @@
         }
       ],
       "date": "1989-01",
-      "dateAdded": "2020-02-27T16:40:20Z",
-      "dateModified": "2020-02-27T16:40:20Z",
-      "extra": "Citation Key: Adachi_1989\ntex.owner: Francesco\ntex.timestamp: 2010.07.01",
+      "extra": [
+        "Citation Key: Adachi_1989",
+        "tex.owner: Francesco",
+        "tex.timestamp: 2010.07.01"
+      ],
       "issue": "1",
       "itemID": 1,
       "itemType": "journalArticle",
       "journalAbbreviation": "Physica C",
       "pages": "169-179",
       "publicationTitle": "Physica C: Superconductivity",
-      "relations": [],
       "tags": [
         {
           "tag": "CuO"

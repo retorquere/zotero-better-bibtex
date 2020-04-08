@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -81,11 +79,8 @@
           "lastName": "Werner"
         }
       ],
-      "dateAdded": "2020-02-02T09:13:24Z",
-      "dateModified": "2020-02-02T09:22:31Z",
       "itemID": 1,
       "itemType": "patent",
-      "relations": [],
       "title": "This is a Patent Application. It has the Application Number EP456456456"
     },
     {
@@ -99,12 +94,9 @@
           "lastName": "Werner"
         }
       ],
-      "dateAdded": "2020-02-02T09:12:33Z",
-      "dateModified": "2020-02-02T09:22:27Z",
       "itemID": 2,
       "itemType": "patent",
       "number": "EP123123123",
-      "relations": [],
       "title": "This is a Patent. It has the Patent number EP123123123. It had the Application Number EP789789789 when it was first submitted."
     }
   ]

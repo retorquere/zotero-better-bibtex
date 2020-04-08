@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -65,12 +63,11 @@
           "name": "Hoffmann"
         }
       ],
-      "dateAdded": "2019-08-19T14:31:17Z",
-      "dateModified": "2019-08-19T14:31:17Z",
-      "extra": "Citation Key: HoSp-87",
+      "extra": [
+        "Citation Key: HoSp-87"
+      ],
       "itemID": 1,
       "itemType": "journalArticle",
-      "relations": [],
       "title": "Phase transitions"
     },
     {
@@ -81,12 +78,11 @@
           "name": "Sprekels"
         }
       ],
-      "dateAdded": "2019-08-19T14:31:17Z",
-      "dateModified": "2019-08-19T14:31:17Z",
-      "extra": "Citation Key: HoSp-90",
+      "extra": [
+        "Citation Key: HoSp-90"
+      ],
       "itemID": 2,
       "itemType": "book",
-      "relations": [],
       "title": "Free boundary problems"
     }
   ]

@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -72,13 +70,12 @@
         }
       ],
       "date": "1972-05",
-      "dateAdded": "2019-08-18T23:27:52Z",
-      "dateModified": "2019-08-18T23:27:52Z",
-      "extra": "Citation Key: McDermott:72",
+      "extra": [
+        "Citation Key: McDermott:72"
+      ],
       "itemID": 1,
       "itemType": "report",
       "publisher": "MIT Artificial Intelligence Laboratory",
-      "relations": [],
       "title": "The <span style=\"font-variant:small-caps;\">CONNIVER</span> reference manual"
     }
   ]

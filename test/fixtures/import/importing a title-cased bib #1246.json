@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -84,14 +82,13 @@
         }
       ],
       "date": "1997",
-      "dateAdded": "2019-12-22T01:25:02Z",
-      "dateModified": "2019-12-22T01:25:02Z",
-      "extra": "Citation Key: AdcroftETAL:1997",
+      "extra": [
+        "Citation Key: AdcroftETAL:1997"
+      ],
       "itemID": 1,
       "itemType": "journalArticle",
       "pages": "2293-2315",
       "publicationTitle": "Monthly Weather Review",
-      "relations": [],
       "title": "Representation of topography by shaved cells in a height coordinate ocean model",
       "volume": "125"
     },
@@ -116,14 +113,14 @@
         }
       ],
       "date": "2012",
-      "dateAdded": "2019-12-22T01:25:02Z",
-      "dateModified": "2019-12-22T01:25:02Z",
-      "extra": "Citation Key: Frit2\ntex.timestamp: 2015-02-24 12:14:36 +0100",
+      "extra": [
+        "Citation Key: Frit2",
+        "tex.timestamp: 2015-02-24 12:14:36 +0100"
+      ],
       "itemID": 2,
       "itemType": "journalArticle",
       "pages": "71-80",
       "publicationTitle": "Actes du 4<sup>\u00e8me</sup> Congr\u00e8s Fran\u00e7ais d'Acoustique",
-      "relations": [],
       "title": "Test of markupconversion: Italics, bold, superscript, subscript, and small caps: Mitochondrial DNA\u2082 sequences suggest unexpected phylogenetic position of Corso-Sardinian grass snakes (<span class=\"nocase\"><i>Natrix cetti</i></span>) and <span class=\"nocase\"><b>do not</b></span> support their <span class=\"nocase\"><span style=\"font-variant:small-caps;\">species status</span></span>, with notes on phylogeography and subspecies delineation of grass snakes.",
       "volume": "12"
     }

@@ -2,10 +2,7 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false,
-      "exportNotes": false
-    },
+    "options": {},
     "preferences": {
       "DOIandURL": "both",
       "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
@@ -38,7 +35,9 @@
       "abstractNote": "All Watched Over by Machines of Loving Grace is a 2011 BBC documentary series by filmmaker Adam Curtis.[1] The series argues that computers have failed to liberate humanity and instead have \"distorted and simplified our view of the world around us\".[2] The title is taken from the 1967 poem of the same name by Richard Brautigan.[3] The first of three episodes aired on Monday 23 May 2011 at 9pm on BBC2.[2]",
       "accessDate": "2014-07-22 16:12:06",
       "date": "2014-07-01T15:09:55Z",
-      "extra": "Page Version ID: 609227118",
+      "extra": [
+        "Page Version ID: 609227118"
+      ],
       "itemID": 2,
       "itemType": "encyclopediaArticle",
       "libraryCatalog": "Wikipedia",
@@ -172,7 +171,9 @@
         }
       ],
       "date": "2012",
-      "extra": "Citation Key: KlimatilpasningKokkedal2012Projektbeskrivelse",
+      "extra": [
+        "Citation Key: KlimatilpasningKokkedal2012Projektbeskrivelse"
+      ],
       "itemID": 7,
       "itemType": "book",
       "language": "da",
@@ -6079,7 +6080,9 @@
         }
       ],
       "date": "2008",
-      "extra": "{:original-date: 2005}",
+      "extra": [
+        "{:original-date: 2005}"
+      ],
       "itemID": 274,
       "itemType": "book",
       "language": "da",
@@ -10571,7 +10574,9 @@
         }
       ],
       "date": "2012",
-      "extra": "Citation Key: KlimatilpasningKokkedal2012Projektkonkurrence",
+      "extra": [
+        "Citation Key: KlimatilpasningKokkedal2012Projektkonkurrence"
+      ],
       "itemID": 509,
       "itemType": "book",
       "libraryCatalog": "Primo",
@@ -13567,7 +13572,9 @@
         }
       ],
       "date": "December 1, 2010",
-      "extra": "ArticleType: research-article / Full publication date: December 2010 / Copyright \u00a9 2010 The History of Science Society",
+      "extra": [
+        "ArticleType: research-article / Full publication date: December 2010 / Copyright \u00a9 2010 The History of Science Society"
+      ],
       "issue": "4",
       "itemID": 644,
       "itemType": "journalArticle",
@@ -14817,7 +14824,9 @@
         }
       ],
       "date": "2006",
-      "extra": "<p>Volume 14, Number 3, Fall 2006</p>",
+      "extra": [
+        "<p>Volume 14, Number 3, Fall 2006</p>"
+      ],
       "issue": "3",
       "itemID": 686,
       "itemType": "journalArticle",
@@ -14843,7 +14852,9 @@
         }
       ],
       "date": "1994",
-      "extra": "<p>Volume 2, Number 1, Winter 1994</p>",
+      "extra": [
+        "<p>Volume 2, Number 1, Winter 1994</p>"
+      ],
       "issue": "1",
       "itemID": 687,
       "itemType": "journalArticle",
@@ -14867,7 +14878,9 @@
         }
       ],
       "date": "1998",
-      "extra": "<p>Volume 6, Number 2, Spring 1998</p>",
+      "extra": [
+        "<p>Volume 6, Number 2, Spring 1998</p>"
+      ],
       "issue": "2",
       "itemID": 688,
       "itemType": "journalArticle",
@@ -14891,7 +14904,9 @@
         }
       ],
       "date": "2010",
-      "extra": "<p>Number 74, Winter 2010</p>",
+      "extra": [
+        "<p>Number 74, Winter 2010</p>"
+      ],
       "issue": "1",
       "itemID": 689,
       "itemType": "journalArticle",
@@ -14915,7 +14930,9 @@
         }
       ],
       "date": "September 1, 1988",
-      "extra": "ArticleType: book-review / Issue Title: A Special Issue on Artifact and Experiment / Full publication date: Sep., 1988 / Copyright \u00a9 1988 The History of Science Society",
+      "extra": [
+        "ArticleType: book-review / Issue Title: A Special Issue on Artifact and Experiment / Full publication date: Sep., 1988 / Copyright \u00a9 1988 The History of Science Society"
+      ],
       "issue": "3",
       "itemID": 690,
       "itemType": "journalArticle",
@@ -14942,7 +14959,9 @@
         }
       ],
       "date": "June 1, 1985",
-      "extra": "ArticleType: research-article / Full publication date: Jun., 1985 / Copyright \u00a9 1985 Royal Anthropological Institute of Great Britain and Ireland",
+      "extra": [
+        "ArticleType: research-article / Full publication date: Jun., 1985 / Copyright \u00a9 1985 Royal Anthropological Institute of Great Britain and Ireland"
+      ],
       "issue": "2",
       "itemID": 691,
       "itemType": "journalArticle",
@@ -14997,7 +15016,9 @@
         }
       ],
       "date": "April 1, 2000",
-      "extra": "ArticleType: research-article / Full publication date: Apr., 2000 / Copyright \u00a9 2000 Sage Publications, Ltd.",
+      "extra": [
+        "ArticleType: research-article / Full publication date: Apr., 2000 / Copyright \u00a9 2000 Sage Publications, Ltd."
+      ],
       "issue": "2",
       "itemID": 693,
       "itemType": "journalArticle",
@@ -15031,7 +15052,9 @@
         }
       ],
       "date": "January 1, 1972",
-      "extra": "ArticleType: research-article / Full publication date: 1972 / Copyright \u00a9 1972 Royal Anthropological Institute of Great Britain and Ireland",
+      "extra": [
+        "ArticleType: research-article / Full publication date: 1972 / Copyright \u00a9 1972 Royal Anthropological Institute of Great Britain and Ireland"
+      ],
       "issue": "1972",
       "itemID": 694,
       "itemType": "journalArticle",
@@ -15107,7 +15130,9 @@
         }
       ],
       "date": "February 1, 2006",
-      "extra": "ArticleType: research-article / Full publication date: Feb., 2006 / Copyright \u00a9 2006 Wesleyan University",
+      "extra": [
+        "ArticleType: research-article / Full publication date: Feb., 2006 / Copyright \u00a9 2006 Wesleyan University"
+      ],
       "issue": "1",
       "itemID": 697,
       "itemType": "journalArticle",
@@ -23806,7 +23831,10 @@
       ],
       "date": "2007",
       "edition": "1. University of Minnesota Press ed.",
-      "extra": "Citation Key: Serres2007Parasite\ntex.options= usetranslator=false",
+      "extra": [
+        "Citation Key: Serres2007Parasite",
+        "tex.options= usetranslator=false"
+      ],
       "itemID": 1025,
       "itemType": "book",
       "language": "af",
@@ -28287,7 +28315,9 @@
         }
       ],
       "date": "June 1, 1991",
-      "extra": "ArticleType: book-review / Issue Title: Darwin and Geology / Full publication date: Jun., 1991 / Copyright \u00a9 1991 The British Society for the History of Science",
+      "extra": [
+        "ArticleType: book-review / Issue Title: Darwin and Geology / Full publication date: Jun., 1991 / Copyright \u00a9 1991 The British Society for the History of Science"
+      ],
       "issue": "2",
       "itemID": 1186,
       "itemType": "journalArticle",
@@ -29022,7 +29052,9 @@
         }
       ],
       "date": "August 1, 2000",
-      "extra": "ArticleType: research-article / Full publication date: Aug., 2000 / Copyright \u00a9 2000 Sage Publications, Ltd.",
+      "extra": [
+        "ArticleType: research-article / Full publication date: Aug., 2000 / Copyright \u00a9 2000 Sage Publications, Ltd."
+      ],
       "issue": "4",
       "itemID": 1218,
       "itemType": "journalArticle",

@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -76,11 +74,8 @@
     {
       "citationKey": "TestEntry2020",
       "date": "30-Mar-2020",
-      "dateAdded": "2020-03-30T01:45:26Z",
-      "dateModified": "2020-03-30T01:47:24Z",
       "itemID": 1,
       "itemType": "journalArticle",
-      "relations": [],
       "title": "Test Entry"
     }
   ]

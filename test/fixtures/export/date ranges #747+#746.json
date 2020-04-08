@@ -146,8 +146,6 @@
         }
       ],
       "date": "January 30\u2013February 3, 1989",
-      "dateAdded": "2017-10-30 19:04:48",
-      "dateModified": "2017-11-03 19:06:17",
       "itemID": 3,
       "itemType": "conferencePaper",
       "pages": "287\u2013304",
@@ -175,13 +173,10 @@
         }
       ],
       "date": "29 June-1 July 2011",
-      "dateAdded": "2018-09-07T17:41:29Z",
-      "dateModified": "2018-09-07T17:42:55Z",
       "itemID": 4,
       "itemType": "conferencePaper",
       "pages": "103-108",
       "publicationTitle": "2011 IEEE Forum on Integrated and Sustainable Transportation Systems",
-      "relations": [],
       "tags": [
         {
           "tag": "Data models"
@@ -255,8 +250,6 @@
         }
       ],
       "date": "December 3-5, 1986",
-      "dateAdded": "2017-10-20 19:37:10",
-      "dateModified": "2017-10-20 19:37:59",
       "itemID": 5,
       "itemType": "conferencePaper",
       "libraryCatalog": "ACM Digital Library",

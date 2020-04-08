@@ -3,7 +3,6 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
@@ -62,15 +61,14 @@
         }
       ],
       "date": "2018",
-      "dateAdded": "2019-05-15T09:08:32Z",
-      "dateModified": "2019-05-15T10:35:19Z",
-      "extra": "00000",
+      "extra": [
+        "00000"
+      ],
       "issue": "4",
       "itemID": 1,
       "itemType": "journalArticle",
       "pages": "1-31",
       "publicationTitle": "Journal of Testing",
-      "relations": [],
       "title": "This article is sentence case in Zotero",
       "volume": "2"
     },
@@ -83,15 +81,14 @@
         }
       ],
       "date": "2019",
-      "dateAdded": "2019-05-15T10:33:14Z",
-      "dateModified": "2019-05-15T10:34:56Z",
-      "extra": "00000",
+      "extra": [
+        "00000"
+      ],
       "issue": "4",
       "itemID": 2,
       "itemType": "journalArticle",
       "pages": "399-412",
       "publicationTitle": "Internet Quarterly",
-      "relations": [],
       "title": "I like ISDN heaps better than dialup",
       "volume": "12"
     },
@@ -104,15 +101,14 @@
         }
       ],
       "date": "2019",
-      "dateAdded": "2019-05-15T09:07:15Z",
-      "dateModified": "2019-05-15T09:08:23Z",
-      "extra": "00000",
+      "extra": [
+        "00000"
+      ],
       "issue": "1",
       "itemID": 3,
       "itemType": "journalArticle",
       "pages": "27-49",
       "publicationTitle": "Journal of Testing",
-      "relations": [],
       "title": "This Article is Title Case in Zotero",
       "volume": "3"
     }

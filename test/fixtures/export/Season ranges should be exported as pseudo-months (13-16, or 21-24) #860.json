@@ -42,50 +42,42 @@
   "items": [
     {
       "date": "-0011-21/-0012-22",
-      "dateAdded": "2017-12-30 10:53:52",
-      "dateModified": "2017-12-30 10:57:01",
       "itemID": 1,
       "itemType": "webpage",
       "title": "-0011-21/-0012-22"
     },
     {
       "date": "-2011-21/-2012-22",
-      "dateAdded": "2017-12-30 10:53:52",
-      "dateModified": "2017-12-30 10:57:01",
       "itemID": 2,
       "itemType": "webpage",
       "title": "-2011-21/-2012-22"
     },
     {
       "date": "0000-21/0000-24",
-      "dateAdded": "2017-12-30 10:53:52",
-      "dateModified": "2017-12-30 10:57:01",
       "itemID": 3,
       "itemType": "webpage",
       "title": "0000-21/0000-24"
     },
     {
       "date": "0011-21/0012-22",
-      "dateAdded": "2017-12-30 10:53:52",
-      "dateModified": "2017-12-30 10:57:01",
       "itemID": 4,
       "itemType": "webpage",
       "title": "0011-21/0012-22"
     },
     {
       "date": "2017-14/2017-15",
-      "dateAdded": "2017-12-30 10:53:52",
-      "dateModified": "2017-12-30 10:57:01",
-      "extra": "original-date: 2017-14/2017-99",
+      "extra": [
+        "original-date: 2017-14/2017-99"
+      ],
       "itemID": 5,
       "itemType": "webpage",
       "title": "months out of range"
     },
     {
       "date": "2017-23/2017-24",
-      "dateAdded": "2017-12-30 10:53:52",
-      "dateModified": "2017-12-30 10:57:01",
-      "extra": "original-date: Spring 2015 - Summer 2016",
+      "extra": [
+        "original-date: Spring 2015 - Summer 2016"
+      ],
       "itemID": 6,
       "itemType": "webpage",
       "title": "Season ranges: EDTF and literal"

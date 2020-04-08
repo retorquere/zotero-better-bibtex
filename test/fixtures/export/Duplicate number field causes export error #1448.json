@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "doi",
@@ -361,9 +359,10 @@
         }
       ],
       "date": "2016-03-15",
-      "dateAdded": "2020-02-28T20:46:08Z",
-      "dateModified": "2020-02-28T20:47:11Z",
-      "extra": "Number: 1\nPublisher: Nature Publishing Group",
+      "extra": [
+        "Number: 1",
+        "Publisher: Nature Publishing Group"
+      ],
       "issue": "1",
       "itemID": 1,
       "itemType": "journalArticle",
@@ -372,7 +371,6 @@
       "libraryCatalog": "www.nature.com",
       "pages": "1-9",
       "publicationTitle": "Scientific Data",
-      "relations": [],
       "rights": "2016 The Author(s)",
       "tags": [
         {

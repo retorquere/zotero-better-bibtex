@@ -29,9 +29,9 @@
         }
       ],
       "date": "2004",
-      "dateAdded": "2015-08-13 18:39:21",
-      "dateModified": "2016-08-19 14:52:17",
-      "extra": "DOI: 10.1093/ref:odnb/10183",
+      "extra": [
+        "DOI: 10.1093/ref:odnb/10183"
+      ],
       "itemID": 1,
       "itemType": "encyclopediaArticle",
       "libraryCatalog": "CrossRef",
@@ -50,7 +50,11 @@
         }
       ],
       "date": "2015",
-      "extra": "editor: Editrix||Emma\neditor: Editor||Ed\n{:X-genre: xxx}",
+      "extra": [
+        "editor: Editrix||Emma",
+        "editor: Editor||Ed",
+        "{:X-genre: xxx}"
+      ],
       "itemID": 2,
       "itemType": "report",
       "number": "77",
@@ -78,7 +82,10 @@
         }
       ],
       "date": "1996-09-16",
-      "extra": "Citation Key: friends:leia:tv\nvolume: 3",
+      "extra": [
+        "Citation Key: friends:leia:tv",
+        "volume: 3"
+      ],
       "itemID": 3,
       "itemType": "tvBroadcast",
       "language": "en-US",
@@ -111,7 +118,13 @@
         }
       ],
       "date": "2003",
-      "extra": "Citation Key: friends:leia:dvd\ncontainer-title: Friends\nnumber: 1\noriginal-publisher: NBC\noriginal-date: 1996-09-16",
+      "extra": [
+        "Citation Key: friends:leia:dvd",
+        "container-title: Friends",
+        "number: 1",
+        "original-publisher: NBC",
+        "original-date: 1996-09-16"
+      ],
       "itemID": 4,
       "itemType": "videoRecording",
       "language": "en-US",
@@ -139,7 +152,9 @@
         }
       ],
       "date": "2015",
-      "extra": "publisher-place: US/GB",
+      "extra": [
+        "publisher-place: US/GB"
+      ],
       "itemID": 5,
       "itemType": "film",
       "publisher": "The Distributor",
@@ -160,7 +175,11 @@
       "title": "Dr. Strangelove or: how I learned to stop worrying and love the bomb"
     },
     {
-      "extra": "Citation Key: emptybook\n{:X-genre: xxx}\n{:editor: Xxx}",
+      "extra": [
+        "Citation Key: emptybook",
+        "{:X-genre: xxx}",
+        "{:editor: Xxx}"
+      ],
       "itemID": 7,
       "itemType": "encyclopediaArticle"
     }

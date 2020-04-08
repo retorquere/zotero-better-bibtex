@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -72,12 +70,11 @@
           "name": "01b"
         }
       ],
-      "dateAdded": "2019-12-22T01:25:21Z",
-      "dateModified": "2019-12-22T01:25:21Z",
-      "extra": "Citation Key: 1b",
+      "extra": [
+        "Citation Key: 1b"
+      ],
       "itemID": 1,
       "itemType": "journalArticle",
-      "relations": [],
       "title": "Blah <span class=\"nocase\"><i>mkbibemph</i></span> and <span class=\"nocase\">\u201cmkbibquote\u201d</span>."
     },
     {
@@ -88,12 +85,11 @@
           "name": "01e"
         }
       ],
-      "dateAdded": "2019-12-22T01:25:21Z",
-      "dateModified": "2019-12-22T01:25:21Z",
-      "extra": "Citation Key: 1e",
+      "extra": [
+        "Citation Key: 1e"
+      ],
       "itemID": 2,
       "itemType": "journalArticle",
-      "relations": [],
       "title": "Blah <span class=\"nocase\"><i>emph</i></span> and <span class=\"nocase\">\u201cenquote\u201d</span>."
     },
     {
@@ -104,12 +100,11 @@
           "name": "02b"
         }
       ],
-      "dateAdded": "2019-12-22T01:25:21Z",
-      "dateModified": "2019-12-22T01:25:21Z",
-      "extra": "Citation Key: 2b",
+      "extra": [
+        "Citation Key: 2b"
+      ],
       "itemID": 3,
       "itemType": "book",
-      "relations": [],
       "title": "Blah <span class=\"nocase\"><i>mkbibemph</i></span> and <span class=\"nocase\">\u201cmkbibquote\u201d</span>."
     },
     {
@@ -120,12 +115,11 @@
           "name": "02e"
         }
       ],
-      "dateAdded": "2019-12-22T01:25:21Z",
-      "dateModified": "2019-12-22T01:25:21Z",
-      "extra": "Citation Key: 2e",
+      "extra": [
+        "Citation Key: 2e"
+      ],
       "itemID": 4,
       "itemType": "book",
-      "relations": [],
       "title": "Blah <span class=\"nocase\"><i>emph</i></span> and <span class=\"nocase\">\u201cenquote\u201d</span>."
     },
     {
@@ -138,14 +132,13 @@
         }
       ],
       "date": "1985",
-      "dateAdded": "2019-12-22T01:25:21Z",
-      "dateModified": "2019-12-22T01:25:21Z",
-      "extra": "Citation Key: Algar1985",
+      "extra": [
+        "Citation Key: Algar1985"
+      ],
       "itemID": 5,
       "itemType": "encyclopediaArticle",
       "pages": "172-4",
       "publicationTitle": "Encyclopedia iranica",
-      "relations": [],
       "title": "Besmallah: in exegesis, jurisprudence, and cultural life",
       "volume": "4"
     },
@@ -164,14 +157,13 @@
         }
       ],
       "date": "2012",
-      "dateAdded": "2019-12-22T01:25:21Z",
-      "dateModified": "2019-12-22T01:25:21Z",
-      "extra": "Citation Key: Arsdall2012",
+      "extra": [
+        "Citation Key: Arsdall2012"
+      ],
       "itemID": 6,
       "itemType": "book",
       "place": "Burlington, VT",
       "publisher": "Ashgate",
-      "relations": [],
       "title": "Herbs and healers from the ancient mediterranean through the medieval west: Essays in honor of john m. Riddle"
     },
     {
@@ -184,13 +176,12 @@
         }
       ],
       "date": "2003",
-      "dateAdded": "2019-12-22T01:25:21Z",
-      "dateModified": "2019-12-22T01:25:21Z",
-      "extra": "Citation Key: Bennett2003",
+      "extra": [
+        "Citation Key: Bennett2003"
+      ],
       "itemID": 7,
       "itemType": "thesis",
       "publisher": "University of London",
-      "relations": [],
       "title": "Xenonika: medical texts associated with xenones in the late Byzantine period",
       "type": "Ph.D."
     },
@@ -204,13 +195,13 @@
         }
       ],
       "date": "2013",
-      "dateAdded": "2019-12-22T01:25:21Z",
-      "dateModified": "2019-12-22T01:25:21Z",
-      "extra": "Citation Key: Cooper2013\ntex.crossref: Classen2013",
+      "extra": [
+        "Citation Key: Cooper2013",
+        "tex.crossref: Classen2013"
+      ],
       "itemID": 8,
       "itemType": "bookSection",
       "pages": "263-87",
-      "relations": [],
       "title": "Byzantium between east and west: Competing hellenisms in the <i>Alexiad</i> of anna komnene and her contemporaries"
     },
     {
@@ -223,14 +214,13 @@
         }
       ],
       "date": "1891",
-      "dateAdded": "2019-12-22T01:25:21Z",
-      "dateModified": "2019-12-22T01:25:21Z",
-      "extra": "Citation Key: Correns1891",
+      "extra": [
+        "Citation Key: Correns1891"
+      ],
       "itemID": 9,
       "itemType": "journalArticle",
       "pages": "1-11",
       "publicationTitle": "Beitr\u00e4ge zur Geschichte der Philosophie des Mittelalters",
-      "relations": [],
       "title": "Die dem boethius f\u00e4lschlich zugeschriebene abhandlung des dominicus gundisalvi 'De unitate'",
       "volume": "1"
     }

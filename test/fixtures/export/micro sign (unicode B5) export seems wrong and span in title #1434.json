@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -82,27 +80,19 @@
         }
       ],
       "date": "2025",
-      "dateAdded": "2015-04-24T12:00:51Z",
-      "dateModified": "2020-02-15T10:47:20Z",
       "itemID": 1,
       "itemType": "conferencePaper",
       "language": "Dutch",
       "pages": "123  ----      432",
       "publicationTitle": "Proceedings of the test",
-      "relations": [],
       "title": "<span class=\"novase\">A-D test </span>title with lower case greek letter \u03bcPC4570, which is not the same as 1\u00b5F"
     },
     {
       "citationKey": "noauthor_nec_nodate",
-      "dateAdded": "2014-07-19T14:33:45Z",
-      "dateModified": "2014-07-19T14:35:16Z",
       "itemID": 2,
       "itemType": "document",
       "notes": [
         "<p>In Yamaha tuner IC101 en IC102</p>"
-      ],
-      "relations": [
-        "http://zotero.org/users/1134760/items/4DTD4FP6"
       ],
       "title": "NEC \u00b5PC577H Tri state hex buffers"
     }

@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -78,13 +76,12 @@
         }
       ],
       "date": "1997-09-16",
-      "dateAdded": "2019-08-20T14:14:56Z",
-      "dateModified": "2019-08-20T14:14:56Z",
-      "extra": "Citation Key: sorace",
+      "extra": [
+        "Citation Key: sorace"
+      ],
       "itemID": 1,
       "itemType": "patent",
       "number": "US5668842",
-      "relations": [],
       "title": "High-speed digital-to-RF converter"
     },
     {
@@ -153,13 +150,12 @@
         }
       ],
       "date": "2006-09-13",
-      "dateAdded": "2019-08-20T14:14:56Z",
-      "dateModified": "2019-08-20T14:14:56Z",
-      "extra": "Citation Key: laufenberg",
+      "extra": [
+        "Citation Key: laufenberg"
+      ],
       "itemID": 2,
       "itemType": "patent",
       "number": "EP1700367",
-      "relations": [],
       "title": "Elektrische einrichtung und betriebsverfahren",
       "url": "http://v3.espacenet.com/textdoc?IDX=EP1700367"
     }

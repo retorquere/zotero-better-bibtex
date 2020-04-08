@@ -3,7 +3,6 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
@@ -22,7 +21,10 @@
           "lastName": "MacFarlane"
         }
       ],
-      "extra": "Citation Key: MacFarlaneJohna\ntex.referencetype= archived",
+      "extra": [
+        "Citation Key: MacFarlaneJohna",
+        "tex.referencetype= archived"
+      ],
       "itemID": 1,
       "itemType": "webpage",
       "title": "Pandoc User\u2019s Guide",

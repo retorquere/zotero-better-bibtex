@@ -47,9 +47,10 @@
         }
       ],
       "date": "1789",
-      "dateAdded": "2014-01-28 12:51:16",
-      "dateModified": "2017-04-25 11:54:13",
-      "extra": "Citation Key: knoblauch_dialogen_1789-1\ntex.options= pseudoauthor=true",
+      "extra": [
+        "Citation Key: knoblauch_dialogen_1789-1",
+        "tex.options= pseudoauthor=true"
+      ],
       "itemID": 1,
       "itemType": "book",
       "language": "german",

@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -78,15 +76,14 @@
         }
       ],
       "date": "2018",
-      "dateAdded": "2019-04-02T20:14:33Z",
-      "dateModified": "2019-07-11T19:38:19Z",
-      "extra": "tex.bdsk-url-2= https://doi.org/10.1016/j.ymeth.2018.04.026",
+      "extra": [
+        "tex.bdsk-url-2= https://doi.org/10.1016/j.ymeth.2018.04.026"
+      ],
       "itemID": 1,
       "itemType": "journalArticle",
       "journalAbbreviation": "",
       "pages": "28-38",
       "publicationTitle": "Methods",
-      "relations": [],
       "tags": [
         {
           "tag": "Biomolecular interactions"

@@ -3,7 +3,6 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
@@ -49,9 +48,9 @@
         }
       ],
       "date": "July 2009",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: gage2009amazon",
+      "extra": [
+        "Citation Key: gage2009amazon"
+      ],
       "itemID": 1,
       "itemType": "webpage",
       "publicationTitle": "InformationWeek",
@@ -69,9 +68,9 @@
         }
       ],
       "date": "2010-02-12",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: bilton2010strain",
+      "extra": [
+        "Citation Key: bilton2010strain"
+      ],
       "itemID": 2,
       "itemType": "webpage",
       "publicationTitle": "Bits Blog",
@@ -162,8 +161,6 @@
         }
       ],
       "date": "2007",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 3,
       "itemType": "journalArticle",
       "journalAbbreviation": "Philos. Exch. Annu. Proc.",
@@ -183,8 +180,6 @@
         }
       ],
       "date": "2009",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 4,
       "itemType": "bookSection",
       "pages": "424-43",
@@ -208,10 +203,10 @@
         }
       ],
       "date": "2011",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "edition": "Summer 2011",
-      "extra": "Citation Key: sep-intellectual-property",
+      "extra": [
+        "Citation Key: sep-intellectual-property"
+      ],
       "itemID": 5,
       "itemType": "bookSection",
       "libraryCatalog": "Stanford Encyclopedia of Philosophy",
@@ -268,8 +263,6 @@
         }
       ],
       "date": "2007",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 6,
       "itemType": "bookSection",
       "publicationTitle": "The Analytic Turn: Analysis in Early Analytic Philosophy and Phenomenology",
@@ -286,8 +279,6 @@
         }
       ],
       "date": "2003",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "issue": "1/2",
       "itemID": 7,
       "itemType": "journalArticle",
@@ -307,8 +298,6 @@
         }
       ],
       "date": "December 1948",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 8,
       "itemType": "book",
       "tags": [
@@ -331,8 +320,6 @@
         }
       ],
       "date": "2000-03-01",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 9,
       "itemType": "webpage",
       "publicationTitle": "Dr. Dobb's",
@@ -355,8 +342,6 @@
         }
       ],
       "date": "2000",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "issue": "2",
       "itemID": 10,
       "itemType": "journalArticle",
@@ -397,10 +382,10 @@
         }
       ],
       "date": "2012",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "edition": "Summer 2012",
-      "extra": "Citation Key: sep-private-language",
+      "extra": [
+        "Citation Key: sep-private-language"
+      ],
       "itemID": 11,
       "itemType": "bookSection",
       "libraryCatalog": "Stanford Encyclopedia of Philosophy",
@@ -440,8 +425,6 @@
         }
       ],
       "date": "2011",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "issue": "1",
       "itemID": 12,
       "itemType": "journalArticle",
@@ -467,8 +450,6 @@
         }
       ],
       "date": "2002",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 13,
       "itemType": "book",
       "tags": [
@@ -506,8 +487,6 @@
         }
       ],
       "date": "October 2008",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "issue": "1",
       "itemID": 14,
       "itemType": "journalArticle",
@@ -554,8 +533,6 @@
         }
       ],
       "date": "September 2008",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "issue": "3",
       "itemID": 15,
       "itemType": "journalArticle",
@@ -576,8 +553,6 @@
         }
       ],
       "date": "2007",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 16,
       "itemType": "conferencePaper",
       "publicationTitle": "Workshop Moral Agency and Technical Artifacts, NIAS",
@@ -594,9 +569,9 @@
         }
       ],
       "date": "2004",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: law20045pla",
+      "extra": [
+        "Citation Key: law20045pla"
+      ],
       "issue": "2",
       "itemID": 17,
       "itemType": "journalArticle",
@@ -616,9 +591,9 @@
         }
       ],
       "date": "2011",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: vallor2011carebots",
+      "extra": [
+        "Citation Key: vallor2011carebots"
+      ],
       "issue": "3",
       "itemID": 18,
       "itemType": "journalArticle",
@@ -649,9 +624,9 @@
         }
       ],
       "date": "2007",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: yu2007confucian",
+      "extra": [
+        "Citation Key: yu2007confucian"
+      ],
       "issue": "3",
       "itemID": 19,
       "itemType": "journalArticle",
@@ -673,9 +648,9 @@
         }
       ],
       "date": "2012",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: gregg2012human",
+      "extra": [
+        "Citation Key: gregg2012human"
+      ],
       "itemID": 20,
       "itemType": "book",
       "libraryCatalog": "Google Scholar",
@@ -693,9 +668,9 @@
         }
       ],
       "date": "2005",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: bostrom2005history",
+      "extra": [
+        "Citation Key: bostrom2005history"
+      ],
       "issue": "1",
       "itemID": 21,
       "itemType": "journalArticle",
@@ -717,9 +692,9 @@
         }
       ],
       "date": "1987",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: borgmann1987technology",
+      "extra": [
+        "Citation Key: borgmann1987technology"
+      ],
       "itemID": 22,
       "itemType": "book",
       "libraryCatalog": "Google Scholar",
@@ -738,9 +713,9 @@
         }
       ],
       "date": "1921",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: wittgenstein1921TLP",
+      "extra": [
+        "Citation Key: wittgenstein1921TLP"
+      ],
       "itemID": 23,
       "itemType": "journalArticle",
       "journalAbbreviation": "Transl. DF Pears BF McGuinnessLondon Routledge Kegan Paul 1961 Philos. Investig.",
@@ -765,8 +740,6 @@
         }
       ],
       "date": "1931",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 24,
       "itemType": "book",
       "publisher": "Longmans, Green",
@@ -783,8 +756,6 @@
         }
       ],
       "date": "1998",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 25,
       "itemType": "book",
       "publisher": "Cambridge University Press",
@@ -800,8 +771,6 @@
         }
       ],
       "date": "1969",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 26,
       "itemType": "bookSection",
       "publicationTitle": "Ontological Relativity and Other Essays",
@@ -818,8 +787,6 @@
         }
       ],
       "date": "1950",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "issue": "2",
       "itemID": 27,
       "itemType": "journalArticle",
@@ -855,9 +822,9 @@
         }
       ],
       "date": "1964",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: bergmann1964logic",
+      "extra": [
+        "Citation Key: bergmann1964logic"
+      ],
       "itemID": 28,
       "itemType": "book",
       "publisher": "University of Wisconsin Press",
@@ -873,9 +840,9 @@
         }
       ],
       "date": "1953",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: wittgenstein1953PI",
+      "extra": [
+        "Citation Key: wittgenstein1953PI"
+      ],
       "itemID": 29,
       "itemType": "book",
       "place": "Oxford",
@@ -892,8 +859,6 @@
         }
       ],
       "date": "1948",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 30,
       "itemType": "journalArticle",
       "journalAbbreviation": "Rev. Metaphys.",
@@ -910,8 +875,6 @@
           "lastName": "Markkula Center for Applied Ethics"
         }
       ],
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 31,
       "itemType": "webpage",
       "title": "A Framework for Thinking Ethically",
@@ -931,9 +894,9 @@
         }
       ],
       "date": "1954",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: ayerrhees1954symposium",
+      "extra": [
+        "Citation Key: ayerrhees1954symposium"
+      ],
       "itemID": 32,
       "itemType": "journalArticle",
       "journalAbbreviation": "Proc. Aristot. Soc. Suppl. Vol.",
@@ -957,8 +920,6 @@
         }
       ],
       "date": "1997",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 33,
       "itemType": "book",
       "publisher": "Oxford University Press",
@@ -973,8 +934,6 @@
         }
       ],
       "date": "2009",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 34,
       "itemType": "conferencePaper",
       "title": "Ten Paradoxes"
@@ -988,9 +947,9 @@
         }
       ],
       "date": "1973",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: kenny2006wittgenstein",
+      "extra": [
+        "Citation Key: kenny2006wittgenstein"
+      ],
       "itemID": 35,
       "itemType": "book",
       "numPages": "ix, 240 p.",
@@ -1006,8 +965,6 @@
         }
       ],
       "date": "1941",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 36,
       "itemType": "book",
       "publisher": "University Press of America",
@@ -1022,8 +979,6 @@
         }
       ],
       "date": "1998",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 37,
       "itemType": "book",
       "publisher": "Stanford University Press",
@@ -1038,8 +993,6 @@
         }
       ],
       "date": "February 1999",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 38,
       "itemType": "book",
       "title": "Philosophies of Free Software and Intellectual Property",
@@ -1054,8 +1007,6 @@
         }
       ],
       "date": "1918",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 39,
       "itemType": "book",
       "place": "Chicago and LaSalle, Illinios",
@@ -1071,8 +1022,6 @@
         }
       ],
       "date": "1996",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 40,
       "itemType": "book",
       "place": "Cambridge New York",
@@ -1098,8 +1047,6 @@
         }
       ],
       "date": "2010",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 41,
       "itemType": "book",
       "publisher": "Cambridge University Press",
@@ -1115,8 +1062,6 @@
         }
       ],
       "date": "2011",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 42,
       "itemType": "book",
       "publisher": "Bloomsbury Academic",
@@ -1131,8 +1076,6 @@
         }
       ],
       "date": "2011",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 43,
       "itemType": "book",
       "title": "Logic apparently off limits in the law",
@@ -1147,8 +1090,6 @@
         }
       ],
       "date": "1988",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 44,
       "itemType": "book",
       "publisher": "Clarendon Press",
@@ -1163,8 +1104,6 @@
         }
       ],
       "date": "August 2004",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 45,
       "itemType": "book",
       "publisher": "Internet Encyclopedia of Philosophy",
@@ -1180,8 +1119,6 @@
         }
       ],
       "date": "1963",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 46,
       "itemType": "journalArticle",
       "pages": "121-123",
@@ -1198,8 +1135,6 @@
         }
       ],
       "date": "1934",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 47,
       "itemType": "book",
       "publisher": "Black",
@@ -1215,8 +1150,6 @@
         }
       ],
       "date": "1927",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 48,
       "itemType": "book",
       "publisher": "Oxford, The Clarendon Press",
@@ -1231,8 +1164,6 @@
         }
       ],
       "date": "1908",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 49,
       "itemType": "book",
       "title": "Also sprach Zarathustra"
@@ -1251,8 +1182,6 @@
         }
       ],
       "date": "1980",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 50,
       "itemType": "book",
       "publisher": "Northwestern University Press",
@@ -1267,8 +1196,6 @@
         }
       ],
       "date": "1968",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 51,
       "itemType": "book",
       "publisher": "Macmillan",
@@ -1283,8 +1210,6 @@
         }
       ],
       "date": "June 2009",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 52,
       "itemType": "conferencePaper",
       "publicationTitle": "Converging Technologies for Improving Human Performance",
@@ -1300,8 +1225,6 @@
         }
       ],
       "date": "1998",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 53,
       "itemType": "book",
       "publisher": "Waveland Press",
@@ -1318,8 +1241,6 @@
         }
       ],
       "date": "2002",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 54,
       "itemType": "journalArticle",
       "journalAbbreviation": "Constr. Pract. Reason",
@@ -1337,8 +1258,6 @@
         }
       ],
       "date": "1965",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 55,
       "itemType": "book",
       "publisher": "De Gruyter",
@@ -1353,8 +1272,6 @@
         }
       ],
       "date": "1996",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 56,
       "itemType": "book",
       "publisher": "Blackwell",
@@ -1375,8 +1292,6 @@
         }
       ],
       "date": "1949",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 57,
       "itemType": "book",
       "publisher": "University of Chicago Press",
@@ -1391,8 +1306,6 @@
         }
       ],
       "date": "2011",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 58,
       "itemType": "webpage",
       "title": "GNU Coding Standards",
@@ -1407,8 +1320,6 @@
         }
       ],
       "date": "January 2012",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 59,
       "itemType": "book",
       "title": "Words to Avoid (or Use with Care) Because They Are Loaded or Confusing",
@@ -1423,8 +1334,6 @@
         }
       ],
       "date": "January 2012",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 60,
       "itemType": "bookSection",
       "title": "What is free software?",
@@ -1439,8 +1348,6 @@
         }
       ],
       "date": "June 2010",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 61,
       "itemType": "book",
       "title": "Why Schools Should Exclusively Use Free Software",
@@ -1455,8 +1362,6 @@
         }
       ],
       "date": "June 2012",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 62,
       "itemType": "book",
       "title": "What is Copyleft?",
@@ -1471,8 +1376,6 @@
         }
       ],
       "date": "October 2011",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 63,
       "itemType": "book",
       "title": "GNU Software in the Year 2000",
@@ -1487,8 +1390,6 @@
         }
       ],
       "date": "October 2011",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 64,
       "itemType": "book",
       "title": "Why Open Source misses the point of Free Software",
@@ -1508,8 +1409,6 @@
         }
       ],
       "date": "1988",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 65,
       "itemType": "book",
       "publisher": "Cambridge University Press",
@@ -1529,8 +1428,6 @@
         }
       ],
       "date": "2001",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 66,
       "itemType": "book",
       "publisher": "Harvard University Press",
@@ -1545,8 +1442,6 @@
         }
       ],
       "date": "1999",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 67,
       "itemType": "book",
       "publisher": "Harvard University Press",
@@ -1561,8 +1456,6 @@
         }
       ],
       "date": "2005",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 68,
       "itemType": "book",
       "publisher": "Columbia University Press",
@@ -1582,8 +1475,6 @@
         }
       ],
       "date": "1926",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 69,
       "itemType": "book",
       "publisher": "Cambridge University Press",
@@ -1604,8 +1495,6 @@
         }
       ],
       "date": "1936",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 70,
       "itemType": "book",
       "publisher": "Longmans, Green and co.",
@@ -1620,8 +1509,6 @@
         }
       ],
       "date": "1863",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 71,
       "itemType": "book",
       "publisher": "Parker, Son and Bourn",
@@ -1646,9 +1533,9 @@
         }
       ],
       "date": "2009",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: leach2009freedom",
+      "extra": [
+        "Citation Key: leach2009freedom"
+      ],
       "issue": "1",
       "itemID": 72,
       "itemType": "journalArticle",
@@ -1666,8 +1553,6 @@
         }
       ],
       "date": "2010",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 73,
       "itemType": "book",
       "publisher": "Cambridge University Press",
@@ -1682,8 +1567,6 @@
         }
       ],
       "date": "1789",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 74,
       "itemType": "book",
       "publisher": "Doubleday-Doran",
@@ -1698,9 +1581,9 @@
         }
       ],
       "date": "1981",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: fodor1981mindbody",
+      "extra": [
+        "Citation Key: fodor1981mindbody"
+      ],
       "itemID": 75,
       "itemType": "journalArticle",
       "journalAbbreviation": "Sci. Am.",
@@ -1718,9 +1601,9 @@
         }
       ],
       "date": "2008",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: bennet2008principles",
+      "extra": [
+        "Citation Key: bennet2008principles"
+      ],
       "itemID": 76,
       "itemType": "journalArticle",
       "title": "Principles of Philosophy",
@@ -1735,9 +1618,9 @@
         }
       ],
       "date": "2005",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: habermas2005future",
+      "extra": [
+        "Citation Key: habermas2005future"
+      ],
       "itemID": 77,
       "itemType": "bookSection",
       "publicationTitle": "The Future of Human Nature",
@@ -1753,9 +1636,9 @@
         }
       ],
       "date": "1991",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: puhl1991meaningscepticism",
+      "extra": [
+        "Citation Key: puhl1991meaningscepticism"
+      ],
       "itemID": 78,
       "itemType": "book",
       "publisher": "W. de Gruyter",
@@ -1776,8 +1659,6 @@
         }
       ],
       "date": "2003",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 79,
       "itemType": "journalArticle",
       "title": "Why hackers do what they do: Understanding motivation and effort in free/open source software projects"
@@ -1791,9 +1672,9 @@
         }
       ],
       "date": "1959",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: popper1959logic",
+      "extra": [
+        "Citation Key: popper1959logic"
+      ],
       "itemID": 80,
       "itemType": "book",
       "place": "London",
@@ -1819,8 +1700,6 @@
         }
       ],
       "date": "1988",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 81,
       "itemType": "book",
       "publisher": "Knopf Doubleday Publishing Group",
@@ -1836,8 +1715,6 @@
         }
       ],
       "date": "1990",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 82,
       "itemType": "book",
       "publisher": "Knopf Doubleday Publishing Group",
@@ -1853,8 +1730,6 @@
         }
       ],
       "date": "June 2005",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 83,
       "itemType": "book",
       "title": "Immanuel Kant: Metaphysics",
@@ -1869,9 +1744,9 @@
         }
       ],
       "date": "1997",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: mcginn1997routledge",
+      "extra": [
+        "Citation Key: mcginn1997routledge"
+      ],
       "itemID": 84,
       "itemType": "book",
       "publisher": "Routledge",
@@ -1892,8 +1767,6 @@
         }
       ],
       "date": "June 2009",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 85,
       "itemType": "conferencePaper",
       "publicationTitle": "Converging Technologies for Improving Human Performance",
@@ -1914,8 +1787,6 @@
         }
       ],
       "date": "August 2007",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 86,
       "itemType": "journalArticle",
       "publicationTitle": "PBS",
@@ -1936,8 +1807,6 @@
         }
       ],
       "date": "2007",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 87,
       "itemType": "journalArticle",
       "journalAbbreviation": "SF Dipl.",
@@ -1959,8 +1828,6 @@
         }
       ],
       "date": "2007",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 88,
       "itemType": "bookSection",
       "publicationTitle": "New Waves in Applied Ethics",
@@ -1982,9 +1849,9 @@
         }
       ],
       "date": "2005",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: bostrom2005defense",
+      "extra": [
+        "Citation Key: bostrom2005defense"
+      ],
       "issue": "3",
       "itemID": 89,
       "itemType": "journalArticle",
@@ -2008,8 +1875,6 @@
         }
       ],
       "date": "2008",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 90,
       "itemType": "bookSection",
       "publicationTitle": "Human Dignity and Bioethics: Essays Commissioned by the President's Council on Bioethics",
@@ -2025,8 +1890,6 @@
         }
       ],
       "date": "1993",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 91,
       "itemType": "book",
       "publisher": "Routledge",
@@ -2041,9 +1904,9 @@
         }
       ],
       "date": "1991",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: hacker1991appearance",
+      "extra": [
+        "Citation Key: hacker1991appearance"
+      ],
       "itemID": 92,
       "itemType": "book",
       "publisher": "Basil Blackwell",
@@ -2058,9 +1921,9 @@
         }
       ],
       "date": "2005",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: verbeek2005things",
+      "extra": [
+        "Citation Key: verbeek2005things"
+      ],
       "itemID": 93,
       "itemType": "book",
       "publisher": "Pennsylvania State University Press",
@@ -2075,9 +1938,9 @@
         }
       ],
       "date": "1641",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: descartes1641meditations",
+      "extra": [
+        "Citation Key: descartes1641meditations"
+      ],
       "itemID": 94,
       "itemType": "book",
       "title": "Meditations on first philosophy"
@@ -2101,8 +1964,6 @@
         }
       ],
       "date": "1989",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 95,
       "itemType": "book",
       "publisher": "Rutgers University Press",
@@ -2117,9 +1978,9 @@
         }
       ],
       "date": "1995",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: egidi1995wittgenstein",
+      "extra": [
+        "Citation Key: egidi1995wittgenstein"
+      ],
       "itemID": 96,
       "itemType": "book",
       "publisher": "Kluwer",
@@ -2135,9 +1996,9 @@
         }
       ],
       "date": "1978",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: Smyth1978",
+      "extra": [
+        "Citation Key: Smyth1978"
+      ],
       "itemID": 97,
       "itemType": "book",
       "publisher": "M. Nijhoff",
@@ -2152,8 +2013,6 @@
         }
       ],
       "date": "1967",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 98,
       "itemType": "book",
       "numPages": "393",
@@ -2169,8 +2028,6 @@
         }
       ],
       "date": "1979",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 99,
       "itemType": "book",
       "numPages": "401",
@@ -2186,8 +2043,6 @@
         }
       ],
       "date": "2010",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 100,
       "itemType": "bookSection",
       "pages": "251",
@@ -2209,8 +2064,6 @@
         }
       ],
       "date": "2011",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "edition": "Winter 2011",
       "itemID": 101,
       "itemType": "bookSection",
@@ -2227,8 +2080,6 @@
         }
       ],
       "date": "2008",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 102,
       "itemType": "conferencePaper",
       "pages": "Pg.\u2013Pg. 593",
@@ -2245,8 +2096,6 @@
         }
       ],
       "date": "2009",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 103,
       "itemType": "conferencePaper",
       "pages": "pg.\u2013pg. 1569",
@@ -2263,8 +2112,6 @@
         }
       ],
       "date": "1798",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 104,
       "itemType": "book",
       "publisher": "J. Johnson",
@@ -2279,9 +2126,9 @@
         }
       ],
       "date": "2013",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: montano2013beauty",
+      "extra": [
+        "Citation Key: montano2013beauty"
+      ],
       "issue": "2",
       "itemID": 105,
       "itemType": "journalArticle",
@@ -2325,8 +2172,6 @@
         }
       ],
       "date": "September 2010",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 106,
       "itemType": "book",
       "publisher": "Figure/Ground Communication",
@@ -2352,8 +2197,6 @@
         }
       ],
       "date": "2009",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 107,
       "itemType": "book",
       "publisher": "Springer Netherlands",
@@ -2385,8 +2228,6 @@
         }
       ],
       "date": "2008",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "itemID": 108,
       "itemType": "book",
       "publisher": "Palgrave Macmillan",
@@ -2402,9 +2243,9 @@
         }
       ],
       "date": "2010",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: sheehan2010heidegger",
+      "extra": [
+        "Citation Key: sheehan2010heidegger"
+      ],
       "itemID": 109,
       "itemType": "book",
       "publisher": "Transaction Publishers",
@@ -2412,79 +2253,14 @@
     },
     {
       "date": "2011",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: 2011logicalpositivism",
+      "extra": [
+        "Citation Key: 2011logicalpositivism"
+      ],
       "itemID": 110,
       "itemType": "bookSection",
       "publicationTitle": "Encyclop\u00e6dia Britannica",
       "title": "Logical Positivism",
       "url": "http://www.britannica.com/EBchecked/topic/346336/logical-positivism"
-    },
-    {
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "itemID": 111,
-      "itemType": "book",
-      "tags": [
-        {
-          "tag": "orphaned",
-          "type": 0
-        }
-      ],
-      "title": "Grounding for the Metaphysics of Morals (Kant)"
-    },
-    {
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "itemID": 112,
-      "itemType": "book",
-      "tags": [
-        {
-          "tag": "orphaned",
-          "type": 0
-        }
-      ],
-      "title": "Groundwork for the Metaphysic of Morals (Bennett, Kant)"
-    },
-    {
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "itemID": 113,
-      "itemType": "book",
-      "tags": [
-        {
-          "tag": "orphaned",
-          "type": 0
-        }
-      ],
-      "title": "Groundwork of the Metaphysic of Morals"
-    },
-    {
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "itemID": 114,
-      "itemType": "book",
-      "tags": [
-        {
-          "tag": "orphaned",
-          "type": 0
-        }
-      ],
-      "title": "Kant's Grounding for the Metaphysics of Morals (UNC Philosophy)"
-    },
-    {
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "itemID": 115,
-      "itemType": "book",
-      "tags": [
-        {
-          "tag": "orphaned",
-          "type": 0
-        }
-      ],
-      "title": "Moral Epistemology (Stanford Encyclopedia of Philosophy)"
     },
     {
       "DOI": "10.1007/s11016-005-3431-7",
@@ -2497,10 +2273,8 @@
         }
       ],
       "date": "2005",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "issue": "3",
-      "itemID": 116,
+      "itemID": 111,
       "itemType": "journalArticle",
       "language": "English",
       "pages": "331-361",
@@ -2531,10 +2305,8 @@
         }
       ],
       "date": "1999",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "issue": "4",
-      "itemID": 117,
+      "itemID": 112,
       "itemType": "journalArticle",
       "journalAbbreviation": "Soc. Sci. J.",
       "pages": "615 - 621",
@@ -2566,11 +2338,11 @@
         }
       ],
       "date": "July 1, 2006",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "ArticleType: research-article / Full publication date: July 2006 / Copyright \u00a9 2006 The University of Chicago Press",
+      "extra": [
+        "ArticleType: research-article / Full publication date: July 2006 / Copyright \u00a9 2006 The University of Chicago Press"
+      ],
       "issue": "4",
-      "itemID": 118,
+      "itemID": 113,
       "itemType": "journalArticle",
       "journalAbbreviation": "Ethics",
       "libraryCatalog": "JSTOR",
@@ -2617,10 +2389,8 @@
         }
       ],
       "date": "2002",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "issue": "1",
-      "itemID": 119,
+      "itemID": 114,
       "itemType": "journalArticle",
       "journalAbbreviation": "Hum. Reprod.",
       "pages": "11-12",
@@ -2640,10 +2410,8 @@
         }
       ],
       "date": "1967",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "issue": "3775",
-      "itemID": 120,
+      "itemID": 115,
       "itemType": "journalArticle",
       "pages": "611-622",
       "publicationTitle": "Science",
@@ -2661,9 +2429,7 @@
         }
       ],
       "date": "December 2000",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "itemID": 121,
+      "itemID": 116,
       "itemType": "journalArticle",
       "journalAbbreviation": "Soc. Stud. Sci.",
       "pages": "p935\u2013949",
@@ -2681,9 +2447,7 @@
         }
       ],
       "date": "2007",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "itemID": 122,
+      "itemID": 117,
       "itemType": "journalArticle",
       "journalAbbreviation": "East Asian Sci. Technol. Soc. Int. J.",
       "pages": "213-231",
@@ -2711,10 +2475,8 @@
         }
       ],
       "date": "2004",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "issue": "9421",
-      "itemID": 123,
+      "itemID": 118,
       "itemType": "journalArticle",
       "pages": "1633\u2013 1641",
       "publicationTitle": "The Lancet",
@@ -2732,10 +2494,8 @@
         }
       ],
       "date": "1984",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "issue": "370",
-      "itemID": 124,
+      "itemID": 119,
       "itemType": "journalArticle",
       "pages": "194-214",
       "publicationTitle": "Mind",
@@ -2754,10 +2514,8 @@
         }
       ],
       "date": "2006",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "issue": "1",
-      "itemID": 125,
+      "itemID": 120,
       "itemType": "journalArticle",
       "journalAbbreviation": "Anthropol. Theory",
       "pages": "12-29",
@@ -2783,10 +2541,10 @@
         }
       ],
       "date": "February 1982",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: heidegger1977question",
-      "itemID": 126,
+      "extra": [
+        "Citation Key: heidegger1977question"
+      ],
+      "itemID": 121,
       "itemType": "book",
       "publisher": "Harper Torchbooks",
       "tags": [
@@ -2816,9 +2574,7 @@
         }
       ],
       "date": "2001",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "itemID": 127,
+      "itemID": 122,
       "itemType": "book",
       "language": "English",
       "numPages": "323",
@@ -2836,9 +2592,7 @@
         }
       ],
       "date": "2002",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "itemID": 128,
+      "itemID": 123,
       "itemType": "book",
       "place": "Beijing; Cambridge; Farnham; K\u00f6ln",
       "publisher": "O.Reilly",
@@ -2872,9 +2626,7 @@
         }
       ],
       "date": "2003",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "itemID": 129,
+      "itemID": 124,
       "itemType": "book",
       "publisher": "Open Court Publishing",
       "tags": [
@@ -2900,9 +2652,7 @@
         }
       ],
       "date": "1969",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "itemID": 130,
+      "itemID": 125,
       "itemType": "book",
       "publisher": "Cambridge U.P., London",
       "title": "The unbound Prometheus; technological change and industrial development in Western Europe from 1750 to the present"
@@ -2918,9 +2668,7 @@
         }
       ],
       "date": "2006",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "itemID": 131,
+      "itemID": 126,
       "itemType": "book",
       "language": "en",
       "libraryCatalog": "Google Books",
@@ -2945,9 +2693,7 @@
         }
       ],
       "date": "2006",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "itemID": 132,
+      "itemID": 127,
       "itemType": "book",
       "publisher": "University of Chicago Press",
       "series": "science * culture",
@@ -2971,9 +2717,7 @@
         }
       ],
       "date": "1996",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "itemID": 133,
+      "itemID": 128,
       "itemType": "book",
       "publisher": "University of Chicago Press",
       "series": "International encyclopedia of unified science",
@@ -2990,10 +2734,10 @@
         }
       ],
       "date": "1990",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: ihde1990technology",
-      "itemID": 134,
+      "extra": [
+        "Citation Key: ihde1990technology"
+      ],
+      "itemID": 129,
       "itemType": "book",
       "publisher": "Indiana University Press",
       "series": "The Indiana series in the philosophy of technology",
@@ -3020,9 +2764,7 @@
         }
       ],
       "date": "2002",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "itemID": 135,
+      "itemID": 130,
       "itemType": "book",
       "publisher": "Yale University Press",
       "series": "Rethinking the Western Tradition",
@@ -3044,10 +2786,10 @@
         }
       ],
       "date": "2010",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Article: The Origin of the Work of Art",
-      "itemID": 136,
+      "extra": [
+        "Article: The Origin of the Work of Art"
+      ],
+      "itemID": 131,
       "itemType": "book",
       "notes": [
         "<p>Article: The Origin of the Work of Art</p>"
@@ -3067,9 +2809,7 @@
         }
       ],
       "date": "2005",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "itemID": 137,
+      "itemID": 132,
       "itemType": "book",
       "publisher": "Cambridge University Press",
       "series": "Cambridge Collections Online",
@@ -3097,10 +2837,10 @@
         }
       ],
       "date": "1975",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: wittgenstein1975certainty",
-      "itemID": 138,
+      "extra": [
+        "Citation Key: wittgenstein1975certainty"
+      ],
+      "itemID": 133,
       "itemType": "book",
       "publisher": "Blackwell",
       "title": "On certainty"
@@ -3116,10 +2856,10 @@
         }
       ],
       "date": "1982",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: kripke1982wittgenstein",
-      "itemID": 139,
+      "extra": [
+        "Citation Key: kripke1982wittgenstein"
+      ],
+      "itemID": 134,
       "itemType": "book",
       "publisher": "Harvard University Press",
       "title": "Wittgenstein on Rules and Private Language: An Elementary Exposition",
@@ -3136,10 +2876,10 @@
         }
       ],
       "date": "2004",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: kaplan2004readings",
-      "itemID": 140,
+      "extra": [
+        "Citation Key: kaplan2004readings"
+      ],
+      "itemID": 135,
       "itemType": "book",
       "notes": [
         "<p>A Phenomenology of Technics</p>"
@@ -3158,10 +2898,10 @@
         }
       ],
       "date": "1976",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: fodor1976language",
-      "itemID": 141,
+      "extra": [
+        "Citation Key: fodor1976language"
+      ],
+      "itemID": 136,
       "itemType": "book",
       "publisher": "Harvester Wheatsheaf",
       "series": "The Language and Thought Series",
@@ -3188,9 +2928,7 @@
         }
       ],
       "date": "2005",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "itemID": 142,
+      "itemID": 137,
       "itemType": "bookSection",
       "publicationTitle": "Death and Anti-Death, Volume 2: Two Hundred Years After Kant, Fifty Years After Turing",
       "publisher": "Ria University Press",
@@ -3218,10 +2956,10 @@
         }
       ],
       "date": "1996",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: heidegger1996beingandtime",
-      "itemID": 143,
+      "extra": [
+        "Citation Key: heidegger1996beingandtime"
+      ],
+      "itemID": 138,
       "itemType": "book",
       "notes": [
         "<p>Translation by Stambaugh, Joan</p>"
@@ -3246,10 +2984,10 @@
         }
       ],
       "date": "2011",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: vandepoel2011ethicstechnologyengineering",
-      "itemID": 144,
+      "extra": [
+        "Citation Key: vandepoel2011ethicstechnologyengineering"
+      ],
+      "itemID": 139,
       "itemType": "book",
       "publisher": "Wiley",
       "title": "Ethics, Technology, and Engineering: An Introduction",
@@ -3276,9 +3014,7 @@
         }
       ],
       "date": "1997",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "itemID": 145,
+      "itemID": 140,
       "itemType": "book",
       "publisher": "New Press",
       "series": "ESSENTIAL WORKS OF MICHEL FOUCAULT",
@@ -3305,9 +3041,7 @@
         }
       ],
       "date": "2002",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "itemID": 146,
+      "itemID": 141,
       "itemType": "bookSection",
       "language": "English",
       "pages": "605-625",
@@ -3334,10 +3068,8 @@
         }
       ],
       "date": "1943",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "issue": "4",
-      "itemID": 147,
+      "itemID": 142,
       "itemType": "journalArticle",
       "journalAbbreviation": "J. Hist. Ideas",
       "language": "English",
@@ -3358,11 +3090,11 @@
         }
       ],
       "date": "1999",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
-      "extra": "Citation Key: 1999",
+      "extra": [
+        "Citation Key: 1999"
+      ],
       "issue": "4",
-      "itemID": 148,
+      "itemID": 143,
       "itemType": "journalArticle",
       "journalAbbreviation": "Hum. Rights Q.",
       "language": "English",
@@ -3383,16 +3115,69 @@
         }
       ],
       "date": "March 1985",
-      "dateAdded": "2017-11-07 19:46:15",
-      "dateModified": "2017-11-07 19:46:15",
       "issue": "3",
-      "itemID": 149,
+      "itemID": 144,
       "itemType": "journalArticle",
       "journalAbbreviation": "Dr Dobbs J. Softw. Tools",
       "publicationTitle": "Dr. Dobb's Journal of Software Tools",
       "title": "The GNU Manifesto",
       "url": "http://www.gnu.org/gnu/manifesto.html",
       "volume": "10"
+    },
+    {
+      "itemID": 145,
+      "itemType": "book",
+      "tags": [
+        {
+          "tag": "orphaned",
+          "type": 0
+        }
+      ],
+      "title": "Grounding for the Metaphysics of Morals (Kant)"
+    },
+    {
+      "itemID": 146,
+      "itemType": "book",
+      "tags": [
+        {
+          "tag": "orphaned",
+          "type": 0
+        }
+      ],
+      "title": "Groundwork for the Metaphysic of Morals (Bennett, Kant)"
+    },
+    {
+      "itemID": 147,
+      "itemType": "book",
+      "tags": [
+        {
+          "tag": "orphaned",
+          "type": 0
+        }
+      ],
+      "title": "Groundwork of the Metaphysic of Morals"
+    },
+    {
+      "itemID": 148,
+      "itemType": "book",
+      "tags": [
+        {
+          "tag": "orphaned",
+          "type": 0
+        }
+      ],
+      "title": "Kant's Grounding for the Metaphysics of Morals (UNC Philosophy)"
+    },
+    {
+      "itemID": 149,
+      "itemType": "book",
+      "tags": [
+        {
+          "tag": "orphaned",
+          "type": 0
+        }
+      ],
+      "title": "Moral Epistemology (Stanford Encyclopedia of Philosophy)"
     }
   ]
 }

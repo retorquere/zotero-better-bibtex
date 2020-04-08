@@ -27,4 +27,5 @@ inflect
 pygtrie
 ortools
 jsonschema
+jsonpatch
 diff-match-patch

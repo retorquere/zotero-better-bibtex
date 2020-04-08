@@ -3,7 +3,6 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
@@ -71,7 +70,9 @@
         }
       ],
       "date": "2014-12-12",
-      "extra": "arXiv: 1412.4006",
+      "extra": [
+        "arXiv: 1412.4006"
+      ],
       "itemID": 1,
       "itemType": "journalArticle",
       "libraryCatalog": "arXiv.org",

@@ -2,11 +2,7 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false,
-      "exportNotes": false,
-      "keepUpdated": false
-    },
+    "options": {},
     "preferences": {
       "DOIandURL": "both",
       "ascii": "",
@@ -66,15 +62,15 @@
         }
       ],
       "date": "1973",
-      "dateAdded": "2018-03-04T10:57:41Z",
-      "dateModified": "2018-03-04T10:57:41Z",
       "itemID": 1,
       "itemType": "journalArticle",
-      "pages": "437\u2013441",
+      "notes": [
+        "<p>MR 49:8856</p>"
+      ],
+      "pages": "314\u2013328",
       "publicationTitle": "Israel Journal of Mathematics",
-      "relations": [],
-      "title": "Errata to: First order theory of permutation groups",
-      "volume": "15"
+      "title": "Differentially closed fields",
+      "volume": "16"
     },
     {
       "creators": [
@@ -85,18 +81,12 @@
         }
       ],
       "date": "1973",
-      "dateAdded": "2018-03-04T10:57:42Z",
-      "dateModified": "2018-03-04T10:57:42Z",
       "itemID": 2,
       "itemType": "journalArticle",
-      "notes": [
-        "<p>MR 49:8856</p>"
-      ],
-      "pages": "314\u2013328",
+      "pages": "437\u2013441",
       "publicationTitle": "Israel Journal of Mathematics",
-      "relations": [],
-      "title": "Differentially closed fields",
-      "volume": "16"
+      "title": "Errata to: First order theory of permutation groups",
+      "volume": "15"
     }
   ]
 }

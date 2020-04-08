@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -77,8 +75,6 @@
         }
       ],
       "date": "1996",
-      "dateAdded": "2019-08-27T20:39:57Z",
-      "dateModified": "2019-08-27T20:39:57Z",
       "itemID": 1,
       "itemType": "book",
       "language": "English",
@@ -87,7 +83,6 @@
         "<p> &quot;A Wiley-Interscience publication.&quot; </p>"
       ],
       "publisher": "New York : Wiley",
-      "relations": [],
       "tags": [
         {
           "tag": "Separating axis theorem"

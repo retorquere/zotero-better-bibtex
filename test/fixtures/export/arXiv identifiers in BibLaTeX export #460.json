@@ -3,7 +3,6 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
@@ -45,7 +44,9 @@
         }
       ],
       "date": "2013-05-21",
-      "extra": "arXiv: 1305.4904",
+      "extra": [
+        "arXiv: 1305.4904"
+      ],
       "itemID": 1,
       "itemType": "journalArticle",
       "libraryCatalog": "arXiv.org",
@@ -74,7 +75,9 @@
         }
       ],
       "date": "2/2016",
-      "extra": "arXiv: 1508.05387",
+      "extra": [
+        "arXiv: 1508.05387"
+      ],
       "issue": "2",
       "itemID": 2,
       "itemType": "journalArticle",
@@ -163,7 +166,9 @@
         }
       ],
       "date": "2014-07-25",
-      "extra": "arXiv: 1401.2910 [quant-ph]",
+      "extra": [
+        "arXiv: 1401.2910 [quant-ph]"
+      ],
       "issue": "6195",
       "itemID": 3,
       "itemType": "journalArticle",

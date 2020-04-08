@@ -3,7 +3,6 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
@@ -38,7 +37,10 @@
           "lastName": "Br\u00f8ns"
         }
       ],
-      "extra": "Citation Key: Brons:pretest\nHello <pre> hej </pre>",
+      "extra": [
+        "Citation Key: Brons:pretest",
+        "Hello <pre> hej </pre>"
+      ],
       "itemID": 1,
       "itemType": "journalArticle",
       "title": "<pre>$pretest$</pre>"

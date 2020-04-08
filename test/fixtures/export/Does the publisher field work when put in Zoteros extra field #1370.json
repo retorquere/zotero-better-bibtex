@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "doi",
@@ -82,9 +80,10 @@
         }
       ],
       "date": "October 2017",
-      "dateAdded": "2019-12-27T17:34:54Z",
-      "dateModified": "2019-12-27T19:07:50Z",
-      "extra": "ZSCC: NoCitationData[s0]\nPublisher: IEEE",
+      "extra": [
+        "ZSCC: NoCitationData[s0]",
+        "Publisher: IEEE"
+      ],
       "issue": "4",
       "itemID": 1,
       "itemType": "journalArticle",
@@ -92,7 +91,6 @@
       "libraryCatalog": "IEEE Xplore",
       "pages": "586-602",
       "publicationTitle": "IEEE Transactions on Emerging Topics in Computing",
-      "relations": [],
       "tags": [
         {
           "tag": "Availability",

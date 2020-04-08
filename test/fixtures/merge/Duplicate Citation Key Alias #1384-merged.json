@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -242,9 +240,10 @@
         }
       ],
       "date": "11/2017",
-      "dateAdded": "2020-01-09T18:11:24Z",
-      "dateModified": "2020-01-09T18:25:34Z",
-      "extra": "tex.ids: Troja2017\narXiv: 1710.05433",
+      "extra": [
+        "tex.ids: Troja2017",
+        "arXiv: 1710.05433"
+      ],
       "issue": "7678",
       "itemID": 1,
       "itemType": "journalArticle",
@@ -253,7 +252,6 @@
       "libraryCatalog": "DOI.org (Crossref)",
       "pages": "71-74",
       "publicationTitle": "Nature",
-      "relations": [],
       "title": "The X-ray counterpart to the gravitational-wave event GW170817",
       "url": "http://www.nature.com/articles/nature24290",
       "volume": "551"

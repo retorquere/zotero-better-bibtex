@@ -3,7 +3,6 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
@@ -22,7 +21,9 @@
           "lastName": "Hacker"
         }
       ],
-      "extra": "Citation Key: HackerManuscript-HACTRO",
+      "extra": [
+        "Citation Key: HackerManuscript-HACTRO"
+      ],
       "itemID": 1,
       "itemType": "manuscript",
       "title": "The Relevance of Wittgenstein's Philosophy of Psychology to the Psychological Sciences"

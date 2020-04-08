@@ -2,10 +2,7 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false,
-      "exportNotes": false
-    },
+    "options": {},
     "preferences": {
       "DOIandURL": "both",
       "asciiBibLaTeX": false,
@@ -78,14 +75,13 @@
         }
       ],
       "date": "2012-03-28",
-      "dateAdded": "2018-11-08T19:36:39Z",
-      "dateModified": "2018-11-10T11:02:00Z",
-      "extra": "DOI: 10.5772/2662",
+      "extra": [
+        "DOI: 10.5772/2662"
+      ],
       "itemID": 1,
       "itemType": "bookSection",
       "language": "en",
       "publicationTitle": "Fuzzy Logic - Controls, Concepts, Theories and Applications",
-      "relations": [],
       "title": "A Mamdani Type Fuzzy Logic Controller",
       "url": "https://www.intechopen.com/books/fuzzy-logic-controls-concepts-theories-and-applications"
     }
