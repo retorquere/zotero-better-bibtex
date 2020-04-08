@@ -38,7 +38,11 @@ def refresh():
       for itemType in client.itemTypes:
         itemTypes.add(itemType.itemType)
         for field in itemType.fields:
-          schema.properties['items']['items'].properties[field.get('baseField', field.field)] = Munch(type='string')
+          if field.field == 'extra':
+            fieldType = Munch.fromDict({'type' : 'array', 'items': { 'type': 'string' } })
+          else:
+            fieldType = Munch(type='string')
+          schema.properties['items']['items'].properties[field.get('baseField', field.field)] = fieldType
 
         for creator in itemType.creatorTypes:
           creatorType.enum = sorted(list(set(creatorType.enum + [creator.creatorType])))
@@ -47,7 +51,9 @@ def refresh():
 
   with open(baseline, 'w') as f:
     json.dump(schema, f, indent='  ')
+  return schema
+schema = refresh()
 
 def validate(lib):
   with open(baseline) as f:
-    jsonschema.validate(instance=lib, schema=json.load(f))
+    jsonschema.validate(instance=lib, schema=schema)
