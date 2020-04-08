@@ -83,7 +83,7 @@ export function normalize(library: Library) {
     }
 
     if (item.extra?.length) {
-      item.extra = item.extra.split('\n')
+      if (typeof item.extra === 'string') item.extra = item.extra.split('\n')
     } else {
       delete item.extra
     }
