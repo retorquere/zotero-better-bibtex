@@ -1,10 +1,8 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
@@ -36,6 +34,60 @@
   },
   "items": [
     {
+      "abstractNote": "Example from CMoS, 16e, 14.125",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "David",
+          "lastName": "Kamp"
+        },
+        {
+          "creatorType": "reviewedAuthor",
+          "firstName": "Michael",
+          "lastName": "Pollan"
+        }
+      ],
+      "date": "2006-04-23",
+      "extra": [
+        "type: review-book",
+        "reviewed-title: The omnivore\u2019s dilemma: a natural history of four meals"
+      ],
+      "itemID": 1,
+      "itemType": "newspaperArticle",
+      "language": "en-US",
+      "section": "Sunday Book Review",
+      "title": "Deconstructing dinner",
+      "url": "http://www.nytimes.com/2006/04/23/books/review/23kamp.html."
+    },
+    {
+      "abstractNote": "Example from CMoS, 16e, 14.215\n\u201ced. and trans. John Charles Chasteen\u201d",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Ben",
+          "lastName": "Ratliff"
+        },
+        {
+          "creatorType": "reviewedAuthor",
+          "name": "Hermano Vianna"
+        }
+      ],
+      "date": "1999-04",
+      "extra": [
+        "type: review-book"
+      ],
+      "itemID": 2,
+      "itemType": "journalArticle",
+      "language": "en-US",
+      "notes": [
+        "<p>biblatex-chicago example, adapted from <a href=\"http://mirrors.ctan.org/macros/latex/contrib/biblatex-contrib/biblatex-chicago/doc/examples/dates-test.bib\">http://mirrors.ctan.org/macros/latex/contrib/biblatex-contrib/biblatex-chicago/doc/examples/dates-test.bib</a></p>\n<p>Original annotation:</p>\n<p>*16th edition only.* A Review entry presenting a review from a scholarly journaltitle, hence no entrysubtype needed.&nbsp;&nbsp;Note the bibstrings in the title of the review, and the formatting of the title of the book reviewed there.&nbsp;&nbsp;Also note the use of \\parteditandtrans.&nbsp;&nbsp;The author-date system doesn't absolutely require the use of these mechanisms, which were invented to cope with the differences between notes and bibliography in the other Chicago style.&nbsp;&nbsp;Still, although simply writing \"edited and translated by\" yourself will suffice, using these mechanisms will make your .bib file work across multiple languages, and will also allow it to work, with fewer modifications, in the notes \\&amp; bibliography style, should that be needed.&nbsp;&nbsp;See next entry.</p>\n<p>&nbsp;</p>\n<p>Example from CMoS, 16e, 14.125</p>"
+      ],
+      "pages": "B13\u2013B14",
+      "publicationTitle": "Lingua Franca",
+      "title": "The mystery of samba: Popular music and national identity in Brazil",
+      "volume": "9"
+    },
+    {
       "abstractNote": "Example from CMoS, 16e, 14.249",
       "creators": [
         {
@@ -45,22 +97,14 @@
         }
       ],
       "date": "1957",
-      "extra": "type: pamphlet",
-      "itemID": 17,
+      "extra": [
+        "type: pamphlet"
+      ],
+      "itemID": 3,
       "itemType": "bookSection",
       "place": "Mesopotamia, OH",
       "publisher": "Trumbull County Historical Society",
       "title": "Mesopotamia: between two rivers"
-    },
-    {
-      "abstractNote": "Example from CMoS, 16e, 14.272",
-      "accessDate": "2009-10-06",
-      "extra": "type: dataset",
-      "itemID": 18,
-      "itemType": "journalArticle",
-      "publicationTitle": "NASA/IPAC Extragalactic Database",
-      "title": "object name IRAS F00400+4059",
-      "url": "http://nedwww.ipac.caltech.edu/"
     },
     {
       "abstractNote": "Example from CMoS, 16e, 14.269\n\u201cPrepared from the autographs and earliest printed sources by Nathan\nBroder\u201d",
@@ -78,61 +122,26 @@
       ],
       "date": "1960",
       "edition": "Rev. ed.",
-      "extra": "type: musical_score",
-      "itemID": 19,
+      "extra": [
+        "type: musical_score"
+      ],
+      "itemID": 4,
       "itemType": "book",
       "place": "Bryn Mawr, PA",
       "publisher": "Theodore Presser",
       "title": "Sonatas and fantasies for the piano"
     },
     {
-      "abstractNote": "Example from CMoS, 16e, 14.215\n\u201ced. and trans. John Charles Chasteen\u201d",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Ben",
-          "lastName": "Ratliff"
-        },
-        {
-          "creatorType": "reviewedAuthor",
-          "name": "Hermano Vianna"
-        }
+      "abstractNote": "Example from CMoS, 16e, 14.272",
+      "accessDate": "2009-10-06",
+      "extra": [
+        "type: dataset"
       ],
-      "date": "1999-04",
-      "extra": "type: review-book",
-      "itemID": 20,
+      "itemID": 5,
       "itemType": "journalArticle",
-      "language": "en-US",
-      "notes": [
-        "<p>biblatex-chicago example, adapted from <a href=\"http://mirrors.ctan.org/macros/latex/contrib/biblatex-contrib/biblatex-chicago/doc/examples/dates-test.bib\">http://mirrors.ctan.org/macros/latex/contrib/biblatex-contrib/biblatex-chicago/doc/examples/dates-test.bib</a></p>\n<p>Original annotation:</p>\n<p>*16th edition only.* A Review entry presenting a review from a scholarly journaltitle, hence no entrysubtype needed.&nbsp;&nbsp;Note the bibstrings in the title of the review, and the formatting of the title of the book reviewed there.&nbsp;&nbsp;Also note the use of \\parteditandtrans.&nbsp;&nbsp;The author-date system doesn't absolutely require the use of these mechanisms, which were invented to cope with the differences between notes and bibliography in the other Chicago style.&nbsp;&nbsp;Still, although simply writing \"edited and translated by\" yourself will suffice, using these mechanisms will make your .bib file work across multiple languages, and will also allow it to work, with fewer modifications, in the notes \\&amp; bibliography style, should that be needed.&nbsp;&nbsp;See next entry.</p>\n<p>&nbsp;</p>\n<p>Example from CMoS, 16e, 14.125</p>"
-      ],
-      "pages": "B13\u2013B14",
-      "publicationTitle": "Lingua Franca",
-      "title": "The mystery of samba: Popular music and national identity in Brazil",
-      "volume": "9"
-    },
-    {
-      "abstractNote": "Example from CMoS, 16e, 14.125",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "David",
-          "lastName": "Kamp"
-        },
-        {
-          "creatorType": "reviewedAuthor",
-          "firstName": "Michael",
-          "lastName": "Pollan"
-        }
-      ],
-      "date": "2006-04-23",
-      "extra": "type: review-book\nreviewed-title: The omnivore\u2019s dilemma: a natural history of four meals",
-      "itemID": 22,
-      "itemType": "newspaperArticle",
-      "language": "en-US",
-      "section": "Sunday Book Review",
-      "title": "Deconstructing dinner",
-      "url": "http://www.nytimes.com/2006/04/23/books/review/23kamp.html."
+      "publicationTitle": "NASA/IPAC Extragalactic Database",
+      "title": "object name IRAS F00400+4059",
+      "url": "http://nedwww.ipac.caltech.edu/"
     }
   ]
 }

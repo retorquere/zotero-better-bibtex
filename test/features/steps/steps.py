@@ -220,7 +220,7 @@ def step_impl(context, expected, found):
   expected = expand_scenario_variables(context, expected)
   if expected[0] != '/':
     expected = os.path.join(ROOT, 'test/fixtures', expected)
-    zotero.loaded(expected)
+    context.zotero.loaded(expected)
   with open(expected) as f:
     expected = f.read()
 

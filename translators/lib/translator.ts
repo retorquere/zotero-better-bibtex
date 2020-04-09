@@ -193,7 +193,7 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
         const key = (collection.primary ? collection.primary : collection).key
 
         this.collections[key] = {
-          id: collection.id,
+          // id: collection.id,
           key,
           parent: collection.fields.parentKey,
           name: collection.name,

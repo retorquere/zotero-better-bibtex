@@ -1,10 +1,8 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
@@ -35,7 +33,6 @@
       "ISSN": "0006-0887",
       "abstractNote": "In this article it is argued that the \u03ba\u03b1\u03af in Rev 11,1b, which introduces 'the altar' and 'the worshippers', is epexegetical and best rendered 'that is'. Consequently, the designations 'the altar' and 'the worshippers' serve to clarify precisely who are the recipients of God's sovereign protection \u2014 entailed in the act of 'measuring the temple of God'. It is further contended that these designations serve to distinguish between two groups within the community of the righteous: i.e., those who are martyred ('the altar') and those who simply remain faithful to the end ('the worshippers').",
       "accessDate": "2016-08-08 10:02:40",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -45,7 +42,7 @@
       ],
       "date": "2006",
       "issue": "3",
-      "itemID": 304,
+      "itemID": 1,
       "itemType": "journalArticle",
       "journalAbbreviation": "Biblica",
       "libraryCatalog": "JSTOR",
@@ -61,7 +58,6 @@
       "ISSN": "0006-0887",
       "abstractNote": "In this article it is argued that the \u03ba\u03b1\u03af in Rev 11,1b, which introduces 'the altar' and 'the worshippers', is epexegetical and best rendered 'that is'. Consequently, the designations 'the altar' and 'the worshippers' serve to clarify precisely who are the recipients of God's sovereign protection \u2014 entailed in the act of 'measuring the temple of God'. It is further contended that these designations serve to distinguish between two groups within the community of the righteous: i.e., those who are martyred ('the altar') and those who simply remain faithful to the end ('the worshippers').",
       "accessDate": "2016-08-08 10:02:40",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -71,7 +67,7 @@
       ],
       "date": "2006",
       "issue": "3",
-      "itemID": 305,
+      "itemID": 2,
       "itemType": "journalArticle",
       "journalAbbreviation": "Biblica",
       "libraryCatalog": "JSTOR",

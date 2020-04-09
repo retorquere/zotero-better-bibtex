@@ -231,9 +231,6 @@
             "debugLogDir": {
               "type": "string"
             },
-            "testing": {
-              "type": "boolean"
-            },
             "autoPin": {
               "type": "boolean"
             },
@@ -260,17 +257,8 @@
             "mapMath": {
               "type": "string"
             },
-            "newTranslatorsAskRestart": {
-              "type": "boolean"
-            },
             "workers": {
               "type": "number"
-            },
-            "platform": {
-              "type": "string"
-            },
-            "client": {
-              "type": "string"
             }
           }
         },
@@ -307,11 +295,13 @@
           "collections": {
             "type": "array",
             "items": {
-              "type": "string"
+              "type": "string",
+              "pattern": "^coll:[0-9]+$"
             }
           },
           "key": {
-            "type": "string"
+            "type": "string",
+            "pattern": "^coll:[0-9]+$"
           },
           "name": {
             "type": "string"
@@ -323,7 +313,8 @@
             }
           },
           "parent": {
-            "type": "string"
+            "type": "string",
+            "pattern": "^coll:[0-9]+$"
           }
         }
       }
@@ -442,7 +433,8 @@
           "collections": {
             "type": "array",
             "items": {
-              "type": "string"
+              "type": "string",
+              "pattern": "^coll:[0-9]+$"
             }
           },
           "relations": {
@@ -555,7 +547,10 @@
             "type": "string"
           },
           "extra": {
-            "type": "string"
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "seriesTitle": {
             "type": "string"
@@ -916,7 +911,8 @@
         "collections": {
           "type": "array",
           "items": {
-            "type": "string"
+            "type": "string",
+            "pattern": "^coll:[0-9]+$"
           }
         },
         "relations": {

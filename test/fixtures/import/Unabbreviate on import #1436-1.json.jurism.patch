@@ -1,0 +1,12 @@
+[
+  {
+    "op": "add",
+    "path": "/items/71/issue",
+    "value": "157"
+  },
+  {
+    "op": "remove",
+    "path": "/items/71/extra/14",
+    "value": "tex.number: 157"
+  }
+]

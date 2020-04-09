@@ -1,10 +1,8 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
@@ -18,7 +16,6 @@
   },
   "items": [
     {
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -32,7 +29,7 @@
         }
       ],
       "date": "2006",
-      "itemID": 124,
+      "itemID": 1,
       "itemType": "book",
       "publisher": "Caltech",
       "title": "Applications of Classical Physics"

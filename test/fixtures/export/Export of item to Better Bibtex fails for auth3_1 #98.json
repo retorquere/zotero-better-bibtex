@@ -1,10 +1,8 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
@@ -33,8 +31,11 @@
         }
       ],
       "date": "10/06/2014",
-      "extra": "PMID: 25056215",
+      "extra": [
+        "PMID: 25056215"
+      ],
       "issue": "99",
+      "itemID": 1,
       "itemType": "journalArticle",
       "journalAbbreviation": "J. R. Soc. Interface",
       "language": "en",

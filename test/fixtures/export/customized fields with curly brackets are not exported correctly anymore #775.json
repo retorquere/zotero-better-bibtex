@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -40,7 +39,6 @@
   },
   "items": [
     {
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -49,10 +47,11 @@
         }
       ],
       "date": "1789",
-      "dateAdded": "2014-01-28 12:51:16",
-      "dateModified": "2017-04-25 11:54:13",
-      "extra": "Citation Key: knoblauch_dialogen_1789-1\ntex.options= pseudoauthor=true",
-      "itemID": 423,
+      "extra": [
+        "Citation Key: knoblauch_dialogen_1789-1",
+        "tex.options= pseudoauthor=true"
+      ],
+      "itemID": 1,
       "itemType": "book",
       "language": "german",
       "numPages": "72",
@@ -61,11 +60,7 @@
       "shortTitle": "Dialogen",
       "tags": [
         {
-          "tag": "Quelle",
-          "type": 0
-        },
-        {
-          "tag": "Monographie",
+          "tag": "anonym",
           "type": 0
         },
         {
@@ -73,7 +68,11 @@
           "type": 0
         },
         {
-          "tag": "anonym",
+          "tag": "Monographie",
+          "type": 0
+        },
+        {
+          "tag": "Quelle",
           "type": 0
         }
       ],

@@ -1,10 +1,8 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
@@ -46,13 +44,19 @@
         }
       ],
       "date": "2002",
-      "extra": "tex.related= key_2\ntex.relatedtype= bytranslator",
+      "extra": [
+        "tex.related= key_2",
+        "tex.relatedtype= bytranslator"
+      ],
       "issue": "6",
-      "itemID": 9,
+      "itemID": 1,
       "itemType": "journalArticle",
       "pages": "885\u2013898",
       "publicationTitle": "Canadian Journal of Civil Engineering",
       "tags": [
+        {
+          "tag": "aerator"
+        },
         {
           "tag": "Air entrainment"
         },
@@ -64,6 +68,9 @@
         },
         {
           "tag": "High speed jets"
+        },
+        {
+          "tag": "jet flow"
         },
         {
           "tag": "Jet length"
@@ -78,6 +85,9 @@
           "tag": "Scale effect"
         },
         {
+          "tag": "spillway"
+        },
+        {
           "tag": "Spillway aerators"
         },
         {
@@ -88,15 +98,6 @@
         },
         {
           "tag": "Water aeration"
-        },
-        {
-          "tag": "aerator"
-        },
-        {
-          "tag": "jet flow"
-        },
-        {
-          "tag": "spillway"
         }
       ],
       "title": "High-speed jet flows over spillway aerators",

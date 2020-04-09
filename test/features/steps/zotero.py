@@ -1,6 +1,6 @@
 import sqlite3
 import uuid
-import json
+import json, jsonpatch
 import os
 import redo
 import platform
@@ -22,11 +22,12 @@ import subprocess
 import atexit
 import time
 import datetime
-import collections
+from collections import OrderedDict, MutableMapping
 import sys
 import threading
 import socket
 from pathlib import PurePath
+from diff_match_patch import diff_match_patch
 
 from ruamel.yaml import YAML
 yaml = YAML(typ='safe')
@@ -35,10 +36,6 @@ yaml.default_flow_style = False
 EXPORTED = os.path.join(ROOT, 'exported')
 FIXTURES = os.path.join(ROOT, 'test/fixtures')
 LOADED = set()
-def loaded(filename):
-  LOADED.add(str(PurePath(filename).relative_to(FIXTURES)))
-  with open(os.path.join(FIXTURES, 'loaded.json'), 'w') as f:
-    json.dump(list(LOADED),f, indent='  ')
 
 class Pinger():
   def __init__(self, every):
@@ -262,6 +259,59 @@ class Zotero:
   def reset_cache(self):
     self.execute('Zotero.BetterBibTeX.TestSupport.resetCache()')
 
+  def loaded(self, path):
+    LOADED.add(str(PurePath(path).relative_to(FIXTURES)))
+    with open(os.path.join(FIXTURES, 'loaded.json'), 'w') as f:
+      json.dump(list(LOADED), f, indent='  ')
+
+  def load(self, path, attempt_patch=False):
+    path = os.path.join(FIXTURES, path)
+
+    with open(path) as f:
+      if path.endswith('.json'):
+        data = json.load(f, object_pairs_hook=OrderedDict)
+      elif path.endswith('.yml'):
+        data = yaml.load(f)
+      else:
+        data = f.read()
+
+    patch = path + '.' + self.client + '.patch'
+
+    if not attempt_patch or not os.path.exists(patch):
+      loaded = path
+    else:
+      for ext in ['.schomd.json', '.csl.json', os.path.splitext(path)[1]]:
+        if path.endswith(ext):
+          loaded = path[:-len(ext)] + '.' + self.client + ext
+          break
+
+      if path.endswith('.json') or path.endswith('.yml'):
+        with open(patch) as f:
+          data = jsonpatch.JsonPatch(json.load(f)).apply(data)
+      else:
+        with open(patch) as f:
+          dmp = diff_match_patch()
+          data = dmp.patch_apply(dmp.patch_fromText(f.read()), data)[0]
+
+    self.loaded(loaded)
+    return (data, loaded)
+
+  def exported(self, path, data=None):
+    path = os.path.join(EXPORTED, os.path.basename(os.path.dirname(path)), os.path.basename(path))
+
+    if data is None:
+      os.remove(path)
+      exdir = os.path.dirname(path)
+      if len(os.listdir(exdir)) == 0:
+        os.rmdir(exdir)
+    else:
+      os.makedirs(os.path.dirname(path), exist_ok = True)
+
+      with open(path, 'w') as f:
+        f.write(data)
+
+    return path
+
   def export_library(self, translator, displayOptions = {}, collection = None, output = None, expected = None, resetCache = False):
     assert not displayOptions.get('keepUpdated', False) or output # Auto-export needs a destination
 
@@ -284,66 +334,47 @@ class Zotero:
       with open(output) as f:
         found = f.read()
 
-    expected, ext = self.expand_expected(expected)
-    loaded(expected)
-    exported = os.path.join(EXPORTED, os.path.basename(os.path.dirname(expected)) + '-' + os.path.basename(expected))
+    expected_file = expected
+    expected, loaded_file = self.load(expected_file, True)
+    exported = self.exported(loaded_file, found)
 
-    with open(expected) as f:
-      expected = f.read()
+    if expected_file.endswith('.csl.json'):
+      assert_equal_diff(json.dumps(expected, sort_keys=True, indent='  '), json.dumps(json.loads(found), sort_keys=True, indent='  '))
 
-    if ext == '.csl.json':
-      with open(exported, 'w') as f: f.write(found)
-      assert_equal_diff(serialize(json.loads(expected)), serialize(json.loads(found)))
-      os.remove(exported)
-      return
+    elif expected_file.endswith('.csl.yml'):
+      assert_equal_diff(serialize(expected), serialize(yaml.load(io.StringIO(found))))
 
-    elif ext == '.csl.yml':
-      with open(exported, 'w') as f: f.write(found)
-      assert_equal_diff(
-        serialize(yaml.load(io.StringIO(expected))),
-        serialize(yaml.load(io.StringIO(found)))
-      )
-      os.remove(exported)
-      return
+    elif expected_file.endswith('.json'):
+      # TODO: clean lib and test against schema
 
-    elif ext == '.json':
-      with open(exported, 'w') as f: f.write(found)
-
-      found = Library(json.loads(found))
-      expected = Library(json.loads(expected))
-
+      expected = Library(expected)
+      found = Library(json.loads(found, object_pairs_hook=OrderedDict))
       assert_equal_diff(serialize(expected), serialize(found))
 
-      os.remove(exported)
-      return
+    else:
+      assert_equal_diff(expected.strip(), found.strip())
 
-    with open(exported, 'w') as f: f.write(found)
-    expected = expected.strip()
-    found = found.strip()
-
-    assert_equal_diff(expected, found)
-    os.remove(exported)
-    return
+    self.exported(exported)
 
   def import_file(self, context, references, collection = False, items=True):
     assert type(collection) in [bool, str]
 
-    references = os.path.join(FIXTURES, references)
-
-    loaded(references)
+    data, references = self.load(references)
 
     if references.endswith('.json'):
-      with open(references) as f:
-        config = json.load(f).get('config', {})
+      # TODO: clean lib and test against schema
+      config = data.get('config', {})
       preferences = config.get('preferences', {})
       context.displayOptions = config.get('options', {})
 
+      # TODO: this can go because the schema check will assure it won't get passed in
       if 'testing' in preferences: del preferences['testing']
       preferences = {
         pref: (','.join(value) if type(value) == list else value)
         for pref, value in preferences.items()
         if not self.preferences.prefix + pref in self.preferences.keys()
       }
+
       for k, v in preferences.items():
         assert self.preferences.prefix + k in self.preferences.supported, f'Unsupported preference "{k}"'
         assert type(v) == self.preferences.supported[self.preferences.prefix + k], f'Value for preference {k} has unexpected type {type(v)}'
@@ -585,7 +616,7 @@ class Preferences:
 
     return value
 
-class Pick(collections.MutableMapping):
+class Pick(MutableMapping):
   labels = [
     'article',
     'chapter',

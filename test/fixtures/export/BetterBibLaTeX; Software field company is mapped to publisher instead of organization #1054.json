@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -46,7 +45,6 @@
   },
   "items": [
     {
-      "attachments": [],
       "creators": [
         {
           "creatorType": "programmer",
@@ -54,13 +52,10 @@
         }
       ],
       "date": "9265",
-      "dateAdded": "2018-08-23T13:04:23Z",
-      "dateModified": "2018-08-23T13:04:47Z",
-      "itemID": 68,
+      "itemID": 1,
       "itemType": "computerProgram",
       "publisher": "BliBlaBlup",
-      "title": "Bla",
-      "uri": "http://zotero.org/users/4882007/items/ED3P3LJH"
+      "title": "Bla"
     }
   ]
 }

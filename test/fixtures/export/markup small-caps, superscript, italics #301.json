@@ -1,12 +1,8 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false,
-      "exportNotes": false
-    },
+    "options": {},
     "preferences": {
       "DOIandURL": "both",
       "autoAbbrevStyle": "http://www.zotero.org/styles/nature",
@@ -39,7 +35,7 @@
         }
       ],
       "date": "2011",
-      "itemID": 5868,
+      "itemID": 1,
       "itemType": "bookSection",
       "language": "fr-FR",
       "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
@@ -70,7 +66,7 @@
         }
       ],
       "date": "2010",
-      "itemID": 1597,
+      "itemID": 2,
       "itemType": "bookSection",
       "language": "fr-FR",
       "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",

@@ -1,10 +1,8 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
@@ -31,11 +29,44 @@
   },
   "items": [
     {
+      "abstractNote": "A pair of recent articles concluded that the D-Wave One machine actually operates in the quantum regime, rather than performing some classical evolution. Here we give a classical model that leads to the same behaviors used in those works to infer quantum effects. Thus, the evidence presented does not demonstrate the presence of quantum effects.",
+      "accessDate": "2016-04-18 23:47:42",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "John A.",
+          "lastName": "Smolin"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Graeme",
+          "lastName": "Smith"
+        }
+      ],
+      "date": "2013-05-21",
+      "extra": [
+        "arXiv: 1305.4904"
+      ],
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "libraryCatalog": "arXiv.org",
+      "notes": [
+        "Comment: 8 pages, 3 pdf figures"
+      ],
+      "publicationTitle": "arXiv:1305.4904 [quant-ph]",
+      "tags": [
+        {
+          "tag": "Quantum Physics"
+        }
+      ],
+      "title": "Classical signature of quantum annealing",
+      "url": "http://arxiv.org/abs/1305.4904"
+    },
+    {
       "DOI": "10.1007/JHEP02(2016)087",
       "ISSN": "1029-8479",
       "abstractNote": "We construct the quantum BV master action for heterotic and type II string field theories.",
       "accessDate": "2016-04-17 05:57:20",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -44,9 +75,11 @@
         }
       ],
       "date": "2/2016",
-      "extra": "arXiv: 1508.05387",
+      "extra": [
+        "arXiv: 1508.05387"
+      ],
       "issue": "2",
-      "itemID": 19002,
+      "itemID": 2,
       "itemType": "journalArticle",
       "libraryCatalog": "arXiv.org",
       "notes": [
@@ -55,10 +88,10 @@
       "publicationTitle": "Journal of High Energy Physics",
       "tags": [
         {
-          "tag": "Batalin-Vilkoviski formalism"
+          "tag": "_tablet"
         },
         {
-          "tag": "_tablet"
+          "tag": "Batalin-Vilkoviski formalism"
         },
         {
           "tag": "covariant string field theory"
@@ -81,44 +114,10 @@
       "volume": "2016"
     },
     {
-      "abstractNote": "A pair of recent articles concluded that the D-Wave One machine actually operates in the quantum regime, rather than performing some classical evolution. Here we give a classical model that leads to the same behaviors used in those works to infer quantum effects. Thus, the evidence presented does not demonstrate the presence of quantum effects.",
-      "accessDate": "2016-04-18 23:47:42",
-      "attachments": [],
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "John A.",
-          "lastName": "Smolin"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Graeme",
-          "lastName": "Smith"
-        }
-      ],
-      "date": "2013-05-21",
-      "extra": "arXiv: 1305.4904",
-      "itemID": 4,
-      "itemType": "journalArticle",
-      "libraryCatalog": "arXiv.org",
-      "notes": [
-        "Comment: 8 pages, 3 pdf figures"
-      ],
-      "publicationTitle": "arXiv:1305.4904 [quant-ph]",
-      "tags": [
-        {
-          "tag": "Quantum Physics"
-        }
-      ],
-      "title": "Classical signature of quantum annealing",
-      "url": "http://arxiv.org/abs/1305.4904"
-    },
-    {
       "DOI": "10.1126/science.1252319",
       "ISSN": "0036-8075, 1095-9203",
       "abstractNote": "The development of small-scale digital and analog quantum devices raises the question of how to fairly assess and compare the computational power of classical and quantum devices, and of how to detect quantum speedup. Here we show how to define and measure quantum speedup in various scenarios, and how to avoid pitfalls that might mask or fake quantum speedup. We illustrate our discussion with data from a randomized benchmark test on a D-Wave Two device with up to 503 qubits. Comparing the performance of the device on random spin glass instances with limited precision to simulated classical and quantum annealers, we find no evidence of quantum speedup when the entire data set is considered, and obtain inconclusive results when comparing subsets of instances on an instance-by-instance basis. Our results for one particular benchmark do not rule out the possibility of speedup for other classes of problems and illustrate that quantum speedup is elusive and can depend on the question posed.",
       "accessDate": "2016-04-18 23:47:51",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -167,9 +166,11 @@
         }
       ],
       "date": "2014-07-25",
-      "extra": "arXiv: 1401.2910 [quant-ph]",
+      "extra": [
+        "arXiv: 1401.2910 [quant-ph]"
+      ],
       "issue": "6195",
-      "itemID": 8,
+      "itemID": 3,
       "itemType": "journalArticle",
       "libraryCatalog": "arXiv.org",
       "pages": "420\u2013424",

@@ -1474,11 +1474,11 @@
 			],
 			"creatorTypes": [
 				{
-					"creatorType": "contributor",
+					"creatorType": "testimonyBy",
 					"primary": true
 				},
 				{
-					"creatorType": "testimonyBy"
+					"creatorType": "contributor"
 				},
 				{
 					"creatorType": "translator"
@@ -3171,8 +3171,7 @@
 				"newspaperArticle"
 			],
 			"bill": [
-				"bill",
-				"hearing"
+				"bill"
 			],
 			"book": [
 				"book",
@@ -3211,8 +3210,7 @@
 				"map"
 			],
 			"motion_picture": [
-				"film",
-				"videoRecording"
+				"film"
 			],
 			"paper-conference": [
 				"conferencePaper"
@@ -3249,6 +3247,9 @@
 			"gazette": [
 				"gazette"
 			],
+			"hearing": [
+				"hearing"
+			],
 			"regulation": [
 				"regulation"
 			],
@@ -3260,6 +3261,9 @@
 			],
 			"standard": [
 				"standard"
+			],
+			"videoRecording": [
+				"videoRecording"
 			]
 		},
 		"fields": {
@@ -3467,11 +3471,7 @@
 			"recipient": "recipient",
 			"reviewedAuthor": "reviewed-author",
 			"seriesEditor": "collection-editor",
-			"translator": "translator",
-			"artist": "author",
-			"testimonyBy": "author",
-			"contributor": "contributor",
-			"commenter": "commenter"
+			"translator": "translator"
 		}
 	},
 	"locales": {
@@ -5692,7 +5692,7 @@
 				"codeNumber": "Code Number",
 				"codePages": "Code Pages",
 				"codeVolume": "Code Volume",
-				"committee": "Committee",
+				"committee": "Commttee",
 				"company": "Company",
 				"conferenceDate": "Conf. Date",
 				"conferenceName": "Conference Name",

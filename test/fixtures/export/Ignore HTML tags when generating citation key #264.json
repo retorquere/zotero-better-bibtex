@@ -1,12 +1,8 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false,
-      "exportNotes": false
-    },
+    "options": {},
     "preferences": {
       "DOIandURL": "both",
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
@@ -29,7 +25,7 @@
         }
       ],
       "date": "1998",
-      "itemID": 4063,
+      "itemID": 1,
       "itemType": "journalArticle",
       "libraryCatalog": "journals.lib.unb.ca",
       "pages": "145\u2013165",

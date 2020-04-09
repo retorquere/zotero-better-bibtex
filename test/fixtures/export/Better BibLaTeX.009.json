@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -13,9 +12,9 @@
     {
       "attachments": [
         {
+          "contentType": "application/pdf",
           "path": "attachments/Adams_Huaynaputina.pdf",
-          "title": "Attachment",
-          "contentType": "application/pdf"
+          "title": "Attachment"
         }
       ],
       "creators": [
@@ -56,19 +55,22 @@
         }
       ],
       "date": "2001",
-      "extra": "Citation Key: Adams2001",
+      "extra": [
+        "Citation Key: Adams2001"
+      ],
+      "itemID": 1,
       "itemType": "journalArticle",
       "pages": "493\u2013518",
       "publicationTitle": "Bulletin of Volcanology",
       "tags": [
         {
-          "tag": "Vulcanian eruptions"
-        },
-        {
           "tag": "breadcrust"
         },
         {
           "tag": "plinian"
+        },
+        {
+          "tag": "Vulcanian eruptions"
         }
       ],
       "title": "The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
@@ -77,9 +79,9 @@
     {
       "attachments": [
         {
+          "contentType": "application/pdf",
           "path": "attachments/Adams_Huaynaputina.pdf",
-          "title": "Attachment",
-          "contentType": "application/pdf"
+          "title": "Attachment"
         }
       ],
       "creators": [
@@ -120,19 +122,22 @@
         }
       ],
       "date": "2001",
-      "extra": "Citation Key: Adams2002",
+      "extra": [
+        "Citation Key: Adams2002"
+      ],
+      "itemID": 2,
       "itemType": "journalArticle",
       "pages": "493\u2013518",
       "publicationTitle": "Bulletin of Volcanology",
       "tags": [
         {
-          "tag": "Vulcanian eruptions"
-        },
-        {
           "tag": "breadcrust"
         },
         {
           "tag": "plinian"
+        },
+        {
+          "tag": "Vulcanian eruptions"
         }
       ],
       "title": "The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",

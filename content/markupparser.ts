@@ -1,7 +1,6 @@
 import parse5 = require('parse5/lib/parser')
 const htmlParser = new parse5({ sourceCodeLocationInfo: true })
 import { titleCase } from './title-case'
-import stringify = require('json-stringify-safe')
 // import * as log from './debug'
 
 import charCategories = require('xregexp/tools/output/categories')
@@ -316,7 +315,7 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
         _node.value =  node.childNodes[0].value
         _node.childNodes = []
       } else {
-        throw new Error(`Unexpected script body ${stringify(node)}`)
+        throw new Error(`Unexpected script body ${JSON.stringify(node)}`)
       }
 
     } else if (node.childNodes) {

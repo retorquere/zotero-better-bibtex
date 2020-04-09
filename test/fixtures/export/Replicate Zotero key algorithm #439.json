@@ -1,12 +1,8 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false,
-      "exportNotes": false
-    },
+    "options": {},
     "preferences": {
       "DOIandURL": "both",
       "asciiBibLaTeX": false,
@@ -36,11 +32,11 @@
       "creators": [
         {
           "creatorType": "author",
-          "name": "Firstname Retorquere"
+          "firstName": "First-Double",
+          "lastName": "Retorquere-Double"
         }
       ],
-      "date": "2015",
-      "itemID": 7,
+      "itemID": 1,
       "itemType": "webpage",
       "publicationTitle": "GitHub",
       "title": "Replicate Zotero key algorithm \u00b7 Issue #439 \u00b7 retorquere/zotero-better-bibtex",
@@ -62,7 +58,7 @@
         }
       ],
       "date": "2016",
-      "itemID": 5,
+      "itemID": 2,
       "itemType": "webpage",
       "publicationTitle": "GitHub",
       "title": "Replicate Zotero key algorithm \u00b7 Issue #439 \u00b7 retorquere/zotero-better-bibtex",
@@ -74,11 +70,11 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "First-Double",
-          "lastName": "Retorquere-Double"
+          "name": "Firstname Retorquere"
         }
       ],
-      "itemID": 23,
+      "date": "2015",
+      "itemID": 3,
       "itemType": "webpage",
       "publicationTitle": "GitHub",
       "title": "Replicate Zotero key algorithm \u00b7 Issue #439 \u00b7 retorquere/zotero-better-bibtex",

@@ -633,9 +633,8 @@ export class Reference {
   }
 
   public complete() {
-    if ((this.item.collections || []).length && Translator.preferences.jabrefFormat === 4) { // tslint:disable-line:no-magic-numbers
-      let groups = this.item.collections.filter(key => Translator.collections[key]).map(key => Translator.collections[key].name)
-      groups = groups.sort().filter((item, pos, ary) => !pos || (item !== ary[pos - 1]))
+    if (this.item.collections?.length && Translator.preferences.jabrefFormat === 4) { // tslint:disable-line:no-magic-numbers
+      const groups = Array.from(new Set(this.item.collections.map(key => Translator.collections[key]?.name).filter(name => name))).sort()
       this.add({ name: 'groups', value: groups.join(',') })
     }
 

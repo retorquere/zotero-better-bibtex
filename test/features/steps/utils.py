@@ -65,7 +65,7 @@ def html2md(html):
   return html.strip()
 
 def serialize(obj):
-  return json.dumps(obj, indent=2, sort_keys=True)
+  return json.dumps(obj, indent=2, ensure_ascii=True, sort_keys=True)
 
 def running(id):
   if type(id) == int:

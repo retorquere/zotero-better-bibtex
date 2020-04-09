@@ -1,12 +1,9 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -63,13 +60,11 @@
         {
           "itemType": "attachment",
           "path": "/Users/emile/.BBTZ5TEST/zotero/storage/8VZFW8AS/1.pdf",
-          "tags": [],
           "title": "1",
           "uri": "http://zotero.org/users/local/6z7M0kXV/items/8VZFW8AS"
         }
       ],
       "citationKey": "Abbott-2007-aa",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -78,15 +73,15 @@
         }
       ],
       "date": "2007",
-      "dateAdded": "2019-08-20T15:45:04Z",
-      "dateModified": "2019-08-20T15:45:04Z",
-      "extra": "Citation Key: Abbott-2007-aa\ntex.class: States & Markets 2009, Diss Tax & Democracy 2010ff\ntex.date-modified: 2014-06-14 15:13:01 +0000",
-      "itemID": 296,
+      "extra": [
+        "Citation Key: Abbott-2007-aa",
+        "tex.class: States & Markets 2009, Diss Tax & Democracy 2010ff",
+        "tex.date-modified: 2014-06-14 15:13:01 +0000"
+      ],
+      "itemID": 1,
       "itemType": "report",
-      "key": "FVRH9FL5",
       "place": "Brussels, Belgium",
       "publisher": "European Center for International Political Economy",
-      "relations": [],
       "tags": [
         {
           "tag": "Finance"
@@ -98,8 +93,7 @@
           "tag": "Political Economy"
         }
       ],
-      "title": "Are developing countries deterred from using the WTO dispute settlement system? - participation of developing countries in the DSM in the years 1995-2005",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/FVRH9FL5"
+      "title": "Are developing countries deterred from using the WTO dispute settlement system? - participation of developing countries in the DSM in the years 1995-2005"
     }
   ]
 }

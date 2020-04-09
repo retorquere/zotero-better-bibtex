@@ -1,10 +1,8 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
@@ -29,9 +27,11 @@
         }
       ],
       "date": "1972",
-      "extra": "Citation Key: blahut_capacity",
+      "extra": [
+        "Citation Key: blahut_capacity"
+      ],
       "issue": "4",
-      "itemID": 36,
+      "itemID": 1,
       "itemType": "journalArticle",
       "pages": "460\u2013473",
       "publicationTitle": "IEEE_J_IT",

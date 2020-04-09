@@ -1,12 +1,9 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -59,9 +56,7 @@
   },
   "items": [
     {
-      "attachments": [],
       "citationKey": "MR1870153",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -74,15 +69,12 @@
           "lastName": "Krej\u010d\u00ed"
         }
       ],
-      "dateAdded": "2019-08-19T14:27:46Z",
-      "dateModified": "2019-08-19T14:27:46Z",
-      "extra": "Citation Key: MR1870153",
-      "itemID": 277,
+      "extra": [
+        "Citation Key: MR1870153"
+      ],
+      "itemID": 1,
       "itemType": "bookSection",
-      "key": "TX7DIEAS",
-      "relations": [],
-      "title": "Homogenization of scalar wave equation with hysteresis operator",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/TX7DIEAS"
+      "title": "Homogenization of scalar wave equation with hysteresis operator"
     }
   ]
 }

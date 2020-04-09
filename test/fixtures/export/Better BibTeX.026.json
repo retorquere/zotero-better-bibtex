@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -13,9 +12,9 @@
     {
       "attachments": [
         {
+          "contentType": "application/pdf",
           "path": "attachments/Traum - Computational Models of Non-cooperative dialogue.pdf",
-          "title": "Traum - Computational Models of Non-cooperative dialogue.pdf",
-          "contentType": "application/pdf"
+          "title": "Traum - Computational Models of Non-cooperative dialogue.pdf"
         }
       ],
       "creators": [
@@ -25,6 +24,7 @@
           "lastName": "Traum"
         }
       ],
+      "itemID": 1,
       "itemType": "manuscript",
       "title": "Computational Models of Non-cooperative dialogue"
     }

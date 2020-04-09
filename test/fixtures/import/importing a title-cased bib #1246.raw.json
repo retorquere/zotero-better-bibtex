@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON"
@@ -25,8 +24,10 @@
         }
       ],
       "date": "2012",
-      "extra": "Citation Key: Frit2",
-      "itemID": 0,
+      "extra": [
+        "Citation Key: Frit2"
+      ],
+      "itemID": 1,
       "itemType": "journalArticle",
       "pages": "71-80",
       "publicationTitle": "Actes du $4^{\\textrm{\u00e8me}}$ Congr\u00e8s Fran\u00e7ais d'Acoustique",

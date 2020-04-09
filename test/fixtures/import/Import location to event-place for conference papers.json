@@ -1,12 +1,9 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -65,9 +62,7 @@
     {
       "DOI": "10.1145/1596655.1596682",
       "ISBN": "978-1-60558-598-7",
-      "attachments": [],
       "citationKey": "Mostafa:2009:TPA:1596655.1596682",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -81,17 +76,18 @@
         }
       ],
       "date": "2009",
-      "dateAdded": "2019-10-14T18:43:01Z",
-      "dateModified": "2019-10-14T18:43:01Z",
-      "extra": "Citation Key: Mostafa:2009:TPA:1596655.1596682\nPlace: Calgary, Alberta, Canada\ntex.acmid: 1596682\ntex.numpages: 10",
-      "itemID": 811,
+      "extra": [
+        "Citation Key: Mostafa:2009:TPA:1596655.1596682",
+        "Place: Calgary, Alberta, Canada",
+        "tex.acmid: 1596682",
+        "tex.numpages: 10"
+      ],
+      "itemID": 1,
       "itemType": "conferencePaper",
-      "key": "MCGBKEWB",
       "pages": "162-171",
       "place": "New York, NY, USA",
       "publicationTitle": "Proceedings of the 7th international conference on principles and practice of programming in java",
       "publisher": "ACM",
-      "relations": [],
       "series": "PPPJ '09",
       "tags": [
         {
@@ -105,7 +101,6 @@
         }
       ],
       "title": "Tracking performance across software revisions",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/MCGBKEWB",
       "url": "http://doi.acm.org/10.1145/1596655.1596682"
     }
   ]

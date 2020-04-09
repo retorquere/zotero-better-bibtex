@@ -1,12 +1,9 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -66,9 +63,7 @@
   },
   "items": [
     {
-      "attachments": [],
       "citationKey": "moller2012conceptsrisksafety",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -77,17 +72,14 @@
         }
       ],
       "date": "2012",
-      "dateAdded": "2019-12-22T01:25:25Z",
-      "dateModified": "2019-12-22T01:25:25Z",
-      "extra": "Citation Key: moller2012conceptsrisksafety",
-      "itemID": 866,
+      "extra": [
+        "Citation Key: moller2012conceptsrisksafety"
+      ],
+      "itemID": 1,
       "itemType": "bookSection",
-      "key": "SCUIE2TS",
       "publicationTitle": "Handbook of risk theory: Epistemology, decision theory, ethics, and social implications of risk",
       "publisher": "Springer",
-      "relations": [],
-      "title": "The concepts of risk and safety",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/SCUIE2TS"
+      "title": "The concepts of risk and safety"
     }
   ]
 }
