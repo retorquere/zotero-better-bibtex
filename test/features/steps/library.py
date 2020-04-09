@@ -18,14 +18,18 @@ def un_multi(obj):
 
 def strip_obj(data):
   if type(data) == list:
-    stripped = [strip_obj(e) for e in data]
-    return [e for e in stripped if e not in ['', u'', {}, None, []]]
+    data = [e for e in (strip_obj(de) for de in data) if e is not None]
+    return data if len(data) > 0 else None
 
-  if type(data) == dict:
-    stripped = {k: strip_obj(v) for (k, v) in data.items()}
-    return {k: v for (k, v) in stripped.items() if v not in ['', u'', {}, None, []]}
+  elif type(data) == dict:
+    data = {k: v for k, v in ((dk, strip_obj(dv)) for dk, dv in data.items()) if v is not None}
+    return data if len(data) > 0 else None
 
-  return data
+  elif data in ['', u'']:
+    return None
+
+  else:
+    return data
 
 def clean_item(item):
   item = deepcopy(item)
@@ -64,7 +68,8 @@ def clean_item(item):
   if 'creators' in item:
     item['creators'] = strip_obj(item['creators'])
 
-  return strip_obj(item)
+  item = strip_obj(item)
+  return item
 
 def sort_collection(coll):
   coll['collections'] = sorted([sort_collection(c) for c in coll['collections']], key=lambda c: c.__hash__())
@@ -82,6 +87,8 @@ def load(lib):
     for item in lib['items']
   }
   lib['items'] = sorted(items.values(), key=lambda item: item.get('title', '') + '::' + item.__hash__())
+  for item in lib['items']:
+    if 'relations' in item: utils.print(str(item['relations']))
 
   if 'collections' not in lib: lib['collections'] = {}
   collections = { k: HashableDict(v) for k, v in lib['collections'].items() }

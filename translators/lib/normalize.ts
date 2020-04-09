@@ -37,6 +37,32 @@ function key(item) {
   return [item.itemType, item.citationKey || '', item.title || '', item.creators?.[0]?.lastName || item.creators?.[0]?.name || ''].join('\t').toLowerCase()
 }
 
+function strip(obj) {
+  if (Array.isArray(obj)) {
+    obj = obj.map(strip).filter(e => e)
+    return obj.length ? obj : undefined
+  }
+
+  if (typeof obj === 'object') {
+    let keep = false
+    for (let [k, v] of Object.entries(obj)) {
+      v = strip(v)
+      if (typeof v === 'undefined') {
+        delete obj[k]
+      } else {
+        obj[k] = v
+        keep = true
+      }
+    }
+    return keep ? obj : undefined
+  }
+
+  if (typeof obj === 'string' && !obj) return undefined
+  if (obj === null) return undefined
+
+  return obj
+}
+
 export function normalize(library: Library) {
 
   library.items.sort((a, b) => key(a).localeCompare(key(b)))
@@ -82,8 +108,13 @@ export function normalize(library: Library) {
       delete item.creators
     }
 
+    // I want to keep empty lines in extra
+    if (item.extra && typeof item.extra !== 'string') item.extra = item.extra.join('\n')
+
+    strip(item)
+
     if (item.extra?.length) {
-      if (typeof item.extra === 'string') item.extra = item.extra.split('\n')
+      item.extra = item.extra.split('\n')
     } else {
       delete item.extra
     }

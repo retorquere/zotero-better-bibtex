@@ -1,0 +1,8 @@
+[
+  {
+    "op": "move",
+    "from": "/items/0/publisher",
+    "path": "/items/0/institution",
+    "value": "MIT Artificial Intelligence Laboratory"
+  }
+]

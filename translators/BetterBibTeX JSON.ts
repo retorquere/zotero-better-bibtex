@@ -58,6 +58,16 @@ export async function doImport() {
     delete source.collections
     delete source.autoJournalAbbreviation
 
+    if (source.creators) {
+      for (const creator of source.creators) {
+        // if .name is not set, *both* first and last must be set, even if empty
+        if (!creator.name) {
+          creator.lastName = creator.lastName || ''
+          creator.firstName = creator.firstName || ''
+        }
+      }
+    }
+
     if (!itemfields.valid.type[source.itemType]) throw new Error(`unexpected item type '${source.itemType}'`)
     const validFields = itemfields.valid.field[source.itemType]
     for (const field of Object.keys(source)) {
@@ -74,6 +84,7 @@ export async function doImport() {
 
     if (Array.isArray(source.extra)) source.extra = source.extra.join('\n')
 
+    debug('importing:', source)
     const item = new Zotero.Item()
     Object.assign(item, source)
 

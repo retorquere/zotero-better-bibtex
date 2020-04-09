@@ -871,19 +871,6 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Markkula Center for Applied Ethics"
-        }
-      ],
-      "itemID": 31,
-      "itemType": "webpage",
-      "title": "A Framework for Thinking Ethically",
-      "url": "http://www.scu.edu/ethics/practicing/decision/framework.html"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
           "firstName": "A. J.",
           "lastName": "Ayer"
         },
@@ -897,7 +884,7 @@
       "extra": [
         "Citation Key: ayerrhees1954symposium"
       ],
-      "itemID": 32,
+      "itemID": 31,
       "itemType": "journalArticle",
       "journalAbbreviation": "Proc. Aristot. Soc. Suppl. Vol.",
       "language": "English",
@@ -920,7 +907,7 @@
         }
       ],
       "date": "1997",
-      "itemID": 33,
+      "itemID": 32,
       "itemType": "book",
       "publisher": "Oxford University Press",
       "title": "The Nature and Process of Law"
@@ -934,7 +921,7 @@
         }
       ],
       "date": "2009",
-      "itemID": 34,
+      "itemID": 33,
       "itemType": "conferencePaper",
       "title": "Ten Paradoxes"
     },
@@ -950,7 +937,7 @@
       "extra": [
         "Citation Key: kenny2006wittgenstein"
       ],
-      "itemID": 35,
+      "itemID": 34,
       "itemType": "book",
       "numPages": "ix, 240 p.",
       "publisher": "Allen Lane The Penguin Press, London",
@@ -965,7 +952,7 @@
         }
       ],
       "date": "1941",
-      "itemID": 36,
+      "itemID": 35,
       "itemType": "book",
       "publisher": "University Press of America",
       "title": "History as the story of liberty"
@@ -979,7 +966,7 @@
         }
       ],
       "date": "1998",
-      "itemID": 37,
+      "itemID": 36,
       "itemType": "book",
       "publisher": "Stanford University Press",
       "title": "Technics and Time: The fault of Epimetheus"
@@ -993,7 +980,7 @@
         }
       ],
       "date": "February 1999",
-      "itemID": 38,
+      "itemID": 37,
       "itemType": "book",
       "title": "Philosophies of Free Software and Intellectual Property",
       "url": "http://www.ram.org/ramblings/philosophy/fmp/free-software-philosophy.html"
@@ -1007,7 +994,7 @@
         }
       ],
       "date": "1918",
-      "itemID": 39,
+      "itemID": 38,
       "itemType": "book",
       "place": "Chicago and LaSalle, Illinios",
       "publisher": "Open Court Classics",
@@ -1022,7 +1009,7 @@
         }
       ],
       "date": "1996",
-      "itemID": 40,
+      "itemID": 39,
       "itemType": "book",
       "place": "Cambridge New York",
       "publisher": "Cambridge University Press",
@@ -1047,7 +1034,7 @@
         }
       ],
       "date": "2010",
-      "itemID": 41,
+      "itemID": 40,
       "itemType": "book",
       "publisher": "Cambridge University Press",
       "series": "Cambridge Medicine",
@@ -1062,7 +1049,7 @@
         }
       ],
       "date": "2011",
-      "itemID": 42,
+      "itemID": 41,
       "itemType": "book",
       "publisher": "Bloomsbury Academic",
       "title": "Innovation and Nanotechnology: Converging Technologies And The End of Intellectual Property"
@@ -1076,7 +1063,7 @@
         }
       ],
       "date": "2011",
-      "itemID": 43,
+      "itemID": 42,
       "itemType": "book",
       "title": "Logic apparently off limits in the law",
       "url": "http://nanowares.wordpress.com/2011/09/30/logic-apparently-off-limits-in-the-law/"
@@ -1090,7 +1077,7 @@
         }
       ],
       "date": "1988",
-      "itemID": 44,
+      "itemID": 43,
       "itemType": "book",
       "publisher": "Clarendon Press",
       "title": "The false prison: a study of the development of Wittgenstein's philosophy"
@@ -1104,7 +1091,7 @@
         }
       ],
       "date": "August 2004",
-      "itemID": 45,
+      "itemID": 44,
       "itemType": "book",
       "publisher": "Internet Encyclopedia of Philosophy",
       "title": "Ludwig Wittgenstein",
@@ -1119,7 +1106,7 @@
         }
       ],
       "date": "1963",
-      "itemID": 46,
+      "itemID": 45,
       "itemType": "journalArticle",
       "pages": "121-123",
       "publicationTitle": "Analysis",
@@ -1135,7 +1122,7 @@
         }
       ],
       "date": "1934",
-      "itemID": 47,
+      "itemID": 46,
       "itemType": "book",
       "publisher": "Black",
       "series": "Economic history of England",
@@ -1150,7 +1137,7 @@
         }
       ],
       "date": "1927",
-      "itemID": 48,
+      "itemID": 47,
       "itemType": "book",
       "publisher": "Oxford, The Clarendon Press",
       "title": "Ethical studies"
@@ -1164,7 +1151,7 @@
         }
       ],
       "date": "1908",
-      "itemID": 49,
+      "itemID": 48,
       "itemType": "book",
       "title": "Also sprach Zarathustra"
     },
@@ -1182,7 +1169,7 @@
         }
       ],
       "date": "1980",
-      "itemID": 50,
+      "itemID": 49,
       "itemType": "book",
       "publisher": "Northwestern University Press",
       "title": "The Foundations of Arithmetic: A Logico-Mathematical Enquiry Into the Concept of Number"
@@ -1196,7 +1183,7 @@
         }
       ],
       "date": "1968",
-      "itemID": 51,
+      "itemID": 50,
       "itemType": "book",
       "publisher": "Macmillan",
       "title": "Wittgenstein: the Philosophical Investigations"
@@ -1210,7 +1197,7 @@
         }
       ],
       "date": "June 2009",
-      "itemID": 52,
+      "itemID": 51,
       "itemType": "conferencePaper",
       "publicationTitle": "Converging Technologies for Improving Human Performance",
       "title": "Science and Technology and the Triple D (Disease, Disability, Defect)",
@@ -1225,7 +1212,7 @@
         }
       ],
       "date": "1998",
-      "itemID": 53,
+      "itemID": 52,
       "itemType": "book",
       "publisher": "Waveland Press",
       "series": "Religious Traditions of the World",
@@ -1241,7 +1228,7 @@
         }
       ],
       "date": "2002",
-      "itemID": 54,
+      "itemID": 53,
       "itemType": "journalArticle",
       "journalAbbreviation": "Constr. Pract. Reason",
       "publicationTitle": "Constructions of Practical Reason",
@@ -1258,7 +1245,7 @@
         }
       ],
       "date": "1965",
-      "itemID": 55,
+      "itemID": 54,
       "itemType": "book",
       "publisher": "De Gruyter",
       "title": "Die Stufen des organischen und der Mensch: Einleitung in die philosophische Anthropologie"
@@ -1272,7 +1259,7 @@
         }
       ],
       "date": "1996",
-      "itemID": 56,
+      "itemID": 55,
       "itemType": "book",
       "publisher": "Blackwell",
       "series": "The Blackwell philosopher dictionaries",
@@ -1292,7 +1279,7 @@
         }
       ],
       "date": "1949",
-      "itemID": 57,
+      "itemID": 56,
       "itemType": "book",
       "publisher": "University of Chicago Press",
       "title": "Critique of Practical Reason and Other Writings in Moral Philosophy"
@@ -1306,7 +1293,7 @@
         }
       ],
       "date": "2011",
-      "itemID": 58,
+      "itemID": 57,
       "itemType": "webpage",
       "title": "GNU Coding Standards",
       "url": "http://www.gnu.org/prep/standards/standards.html"
@@ -1320,7 +1307,7 @@
         }
       ],
       "date": "January 2012",
-      "itemID": 59,
+      "itemID": 58,
       "itemType": "book",
       "title": "Words to Avoid (or Use with Care) Because They Are Loaded or Confusing",
       "url": "http://www.gnu.org/software/year2000.html"
@@ -1334,7 +1321,7 @@
         }
       ],
       "date": "January 2012",
-      "itemID": 60,
+      "itemID": 59,
       "itemType": "bookSection",
       "title": "What is free software?",
       "url": "http://www.gnu.org/philosophy/free-sw.html"
@@ -1348,7 +1335,7 @@
         }
       ],
       "date": "June 2010",
-      "itemID": 61,
+      "itemID": 60,
       "itemType": "book",
       "title": "Why Schools Should Exclusively Use Free Software",
       "url": "http://www.gnu.org/education/edu-schools.html"
@@ -1362,7 +1349,7 @@
         }
       ],
       "date": "June 2012",
-      "itemID": 62,
+      "itemID": 61,
       "itemType": "book",
       "title": "What is Copyleft?",
       "url": "http://www.gnu.org/copyleft/"
@@ -1376,7 +1363,7 @@
         }
       ],
       "date": "October 2011",
-      "itemID": 63,
+      "itemID": 62,
       "itemType": "book",
       "title": "GNU Software in the Year 2000",
       "url": "http://www.gnu.org/software/year2000.html"
@@ -1390,7 +1377,7 @@
         }
       ],
       "date": "October 2011",
-      "itemID": 64,
+      "itemID": 63,
       "itemType": "book",
       "title": "Why Open Source misses the point of Free Software",
       "url": "http://www.gnu.org/philosophy/open-source-misses-the-point.html"
@@ -1409,7 +1396,7 @@
         }
       ],
       "date": "1988",
-      "itemID": 65,
+      "itemID": 64,
       "itemType": "book",
       "publisher": "Cambridge University Press",
       "title": "Two Treatises of Government"
@@ -1428,7 +1415,7 @@
         }
       ],
       "date": "2001",
-      "itemID": 66,
+      "itemID": 65,
       "itemType": "book",
       "publisher": "Harvard University Press",
       "title": "Justice As Fairness: A Restatement"
@@ -1442,7 +1429,7 @@
         }
       ],
       "date": "1999",
-      "itemID": 67,
+      "itemID": 66,
       "itemType": "book",
       "publisher": "Harvard University Press",
       "title": "A Theory of Justice, Revised Edition"
@@ -1456,7 +1443,7 @@
         }
       ],
       "date": "2005",
-      "itemID": 68,
+      "itemID": 67,
       "itemType": "book",
       "publisher": "Columbia University Press",
       "title": "Political Liberalism"
@@ -1475,7 +1462,7 @@
         }
       ],
       "date": "1926",
-      "itemID": 69,
+      "itemID": 68,
       "itemType": "book",
       "publisher": "Cambridge University Press",
       "seriesNumber": "v. 1",
@@ -1495,7 +1482,7 @@
         }
       ],
       "date": "1936",
-      "itemID": 70,
+      "itemID": 69,
       "itemType": "book",
       "publisher": "Longmans, Green and co.",
       "title": "The skilled labourer, 1760-1832"
@@ -1509,7 +1496,7 @@
         }
       ],
       "date": "1863",
-      "itemID": 71,
+      "itemID": 70,
       "itemType": "book",
       "publisher": "Parker, Son and Bourn",
       "title": "Utilitarianism"
@@ -1537,7 +1524,7 @@
         "Citation Key: leach2009freedom"
       ],
       "issue": "1",
-      "itemID": 72,
+      "itemID": 71,
       "itemType": "journalArticle",
       "pages": "51-71",
       "publicationTitle": "Ethnos",
@@ -1553,7 +1540,7 @@
         }
       ],
       "date": "2010",
-      "itemID": 73,
+      "itemID": 72,
       "itemType": "book",
       "publisher": "Cambridge University Press",
       "title": "An introduction to Kant's moral philosophy"
@@ -1567,7 +1554,7 @@
         }
       ],
       "date": "1789",
-      "itemID": 74,
+      "itemID": 73,
       "itemType": "book",
       "publisher": "Doubleday-Doran",
       "title": "An introduction to the principles of morals and legislation"
@@ -1584,7 +1571,7 @@
       "extra": [
         "Citation Key: fodor1981mindbody"
       ],
-      "itemID": 75,
+      "itemID": 74,
       "itemType": "journalArticle",
       "journalAbbreviation": "Sci. Am.",
       "pages": "124-132",
@@ -1604,7 +1591,7 @@
       "extra": [
         "Citation Key: bennet2008principles"
       ],
-      "itemID": 76,
+      "itemID": 75,
       "itemType": "journalArticle",
       "title": "Principles of Philosophy",
       "url": "http://www.earlymoderntexts.com/pdf/descprin.pdf"
@@ -1621,7 +1608,7 @@
       "extra": [
         "Citation Key: habermas2005future"
       ],
-      "itemID": 77,
+      "itemID": 76,
       "itemType": "bookSection",
       "publicationTitle": "The Future of Human Nature",
       "publisher": "Taylor & Francis",
@@ -1639,7 +1626,7 @@
       "extra": [
         "Citation Key: puhl1991meaningscepticism"
       ],
-      "itemID": 78,
+      "itemID": 77,
       "itemType": "book",
       "publisher": "W. de Gruyter",
       "series": "Foundations of communication",
@@ -1659,7 +1646,7 @@
         }
       ],
       "date": "2003",
-      "itemID": 79,
+      "itemID": 78,
       "itemType": "journalArticle",
       "title": "Why hackers do what they do: Understanding motivation and effort in free/open source software projects"
     },
@@ -1675,7 +1662,7 @@
       "extra": [
         "Citation Key: popper1959logic"
       ],
-      "itemID": 80,
+      "itemID": 79,
       "itemType": "book",
       "place": "London",
       "publisher": "Routledge",
@@ -1700,7 +1687,7 @@
         }
       ],
       "date": "1988",
-      "itemID": 81,
+      "itemID": 80,
       "itemType": "book",
       "publisher": "Knopf Doubleday Publishing Group",
       "series": "The History of Sexuality",
@@ -1715,7 +1702,7 @@
         }
       ],
       "date": "1990",
-      "itemID": 82,
+      "itemID": 81,
       "itemType": "book",
       "publisher": "Knopf Doubleday Publishing Group",
       "series": "The History of Sexuality, Volume 2",
@@ -1730,7 +1717,7 @@
         }
       ],
       "date": "June 2005",
-      "itemID": 83,
+      "itemID": 82,
       "itemType": "book",
       "title": "Immanuel Kant: Metaphysics",
       "url": "http://www.iep.utm.edu/kantmeta/#SH8a"
@@ -1747,7 +1734,7 @@
       "extra": [
         "Citation Key: mcginn1997routledge"
       ],
-      "itemID": 84,
+      "itemID": 83,
       "itemType": "book",
       "publisher": "Routledge",
       "series": "Routledge philosophy guidebooks",
@@ -1767,7 +1754,7 @@
         }
       ],
       "date": "June 2009",
-      "itemID": 85,
+      "itemID": 84,
       "itemType": "conferencePaper",
       "publicationTitle": "Converging Technologies for Improving Human Performance",
       "title": "Executive Summary",
@@ -1787,7 +1774,7 @@
         }
       ],
       "date": "August 2007",
-      "itemID": 86,
+      "itemID": 85,
       "itemType": "journalArticle",
       "publicationTitle": "PBS",
       "title": "The Case Against Perfection (interview)",
@@ -1807,7 +1794,7 @@
         }
       ],
       "date": "2007",
-      "itemID": 87,
+      "itemID": 86,
       "itemType": "journalArticle",
       "journalAbbreviation": "SF Dipl.",
       "publicationTitle": "SF Diplomat",
@@ -1828,7 +1815,7 @@
         }
       ],
       "date": "2007",
-      "itemID": 88,
+      "itemID": 87,
       "itemType": "bookSection",
       "publicationTitle": "New Waves in Applied Ethics",
       "publisher": "Palgrave Macmillan",
@@ -1853,7 +1840,7 @@
         "Citation Key: bostrom2005defense"
       ],
       "issue": "3",
-      "itemID": 89,
+      "itemID": 88,
       "itemType": "journalArticle",
       "pages": "202-214",
       "publicationTitle": "Bioethics",
@@ -1875,7 +1862,7 @@
         }
       ],
       "date": "2008",
-      "itemID": 90,
+      "itemID": 89,
       "itemType": "bookSection",
       "publicationTitle": "Human Dignity and Bioethics: Essays Commissioned by the President's Council on Bioethics",
       "publisher": "President's Council on Bioethics",
@@ -1890,7 +1877,7 @@
         }
       ],
       "date": "1993",
-      "itemID": 91,
+      "itemID": 90,
       "itemType": "book",
       "publisher": "Routledge",
       "title": "Wittgenstein: rethinking the inner"
@@ -1907,7 +1894,7 @@
       "extra": [
         "Citation Key: hacker1991appearance"
       ],
-      "itemID": 92,
+      "itemID": 91,
       "itemType": "book",
       "publisher": "Basil Blackwell",
       "title": "Appearance and reality: a philosophical investigation into perception and perceptual qualities"
@@ -1924,7 +1911,7 @@
       "extra": [
         "Citation Key: verbeek2005things"
       ],
-      "itemID": 93,
+      "itemID": 92,
       "itemType": "book",
       "publisher": "Pennsylvania State University Press",
       "title": "What Things Do: Philosophical Reflections On Technology, Agency, And Design"
@@ -1941,7 +1928,7 @@
       "extra": [
         "Citation Key: descartes1641meditations"
       ],
-      "itemID": 94,
+      "itemID": 93,
       "itemType": "book",
       "title": "Meditations on first philosophy"
     },
@@ -1964,7 +1951,7 @@
         }
       ],
       "date": "1989",
-      "itemID": 95,
+      "itemID": 94,
       "itemType": "book",
       "publisher": "Rutgers University Press",
       "title": "Owning Scientific and Technical Information: Value and Ethical Issues"
@@ -1981,7 +1968,7 @@
       "extra": [
         "Citation Key: egidi1995wittgenstein"
       ],
-      "itemID": 96,
+      "itemID": 95,
       "itemType": "book",
       "publisher": "Kluwer",
       "series": "Synthese library",
@@ -1999,7 +1986,7 @@
       "extra": [
         "Citation Key: Smyth1978"
       ],
-      "itemID": 97,
+      "itemID": 96,
       "itemType": "book",
       "publisher": "M. Nijhoff",
       "title": "Forms of Intuition: An Historical Introduction to the Transcendental Aesthetic"
@@ -2013,7 +2000,7 @@
         }
       ],
       "date": "1967",
-      "itemID": 98,
+      "itemID": 97,
       "itemType": "book",
       "numPages": "393",
       "publisher": "University of Chicago Press, Chicago",
@@ -2028,7 +2015,7 @@
         }
       ],
       "date": "1979",
-      "itemID": 99,
+      "itemID": 98,
       "itemType": "book",
       "numPages": "401",
       "publisher": "Princeton University Press",
@@ -2043,7 +2030,7 @@
         }
       ],
       "date": "2010",
-      "itemID": 100,
+      "itemID": 99,
       "itemType": "bookSection",
       "pages": "251",
       "publicationTitle": "Free Software, Free Society: Selected Essays of Richard M. Stallman",
@@ -2065,7 +2052,7 @@
       ],
       "date": "2011",
       "edition": "Winter 2011",
-      "itemID": 101,
+      "itemID": 100,
       "itemType": "bookSection",
       "publicationTitle": "The Stanford Encyclopedia of Philosophy",
       "title": "Moral Epistemology",
@@ -2080,7 +2067,7 @@
         }
       ],
       "date": "2008",
-      "itemID": 102,
+      "itemID": 101,
       "itemType": "conferencePaper",
       "pages": "Pg.\u2013Pg. 593",
       "publicationTitle": "Harvard Journal of Law and Public Policy",
@@ -2096,7 +2083,7 @@
         }
       ],
       "date": "2009",
-      "itemID": 103,
+      "itemID": 102,
       "itemType": "conferencePaper",
       "pages": "pg.\u2013pg. 1569",
       "publicationTitle": "Harvard Law Review",
@@ -2112,7 +2099,7 @@
         }
       ],
       "date": "1798",
-      "itemID": 104,
+      "itemID": 103,
       "itemType": "book",
       "publisher": "J. Johnson",
       "title": "An Essay on the Principle of Population"
@@ -2130,7 +2117,7 @@
         "Citation Key: montano2013beauty"
       ],
       "issue": "2",
-      "itemID": 105,
+      "itemID": 104,
       "itemType": "journalArticle",
       "journalAbbreviation": "Eur. J. Philos. Sci.",
       "pages": "133-156",
@@ -2163,6 +2150,18 @@
       ],
       "title": "Beauty in science: a new model of the role of aesthetic evaluations in science",
       "volume": "3"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Markkula Center for Applied Ethics"
+        }
+      ],
+      "itemID": 105,
+      "itemType": "webpage",
+      "title": "A Framework for Thinking Ethically",
+      "url": "http://www.scu.edu/ethics/practicing/decision/framework.html"
     },
     {
       "creators": [

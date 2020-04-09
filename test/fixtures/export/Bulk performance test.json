@@ -1542,7 +1542,6 @@
       "creators": [
         {
           "creatorType": "editor",
-          "firstName": "",
           "lastName": "Dawson"
         }
       ],
@@ -5333,34 +5332,13 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Weilbach"
-        },
-        {
-          "creatorType": "editor",
-          "firstName": "",
-          "lastName": "Weilbach"
-        }
-      ],
-      "date": "1881",
-      "itemID": 238,
-      "itemType": "book",
-      "language": "da",
-      "place": "Kbhn",
-      "publisher": "Kbhn",
-      "title": "Nordeuropas Skyformer og deres Inddeling fremstillet til Vejledning ved Fagttagelsen af Skyhimlen, med tolv Tegninger udf\u00f8rte af Forfatteren og lithograferede i Farvetryk i Hoffensberg & Traps Etablissement, accompagn\u00e9 d'un extrait en Francais, af Philip"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
           "firstName": "A. K.",
           "lastName": "Geelmuyden"
         }
       ],
       "date": "1993",
       "issue": "3",
-      "itemID": 239,
+      "itemID": 238,
       "itemType": "journalArticle",
       "language": "nb",
       "libraryCatalog": "Google Scholar",
@@ -5386,7 +5364,7 @@
         }
       ],
       "date": "2007",
-      "itemID": 240,
+      "itemID": 239,
       "itemType": "journalArticle",
       "pages": "245\u201359",
       "publicationTitle": "Annu. Rev. Anthropol.",
@@ -5403,7 +5381,7 @@
         }
       ],
       "date": "1997",
-      "itemID": 241,
+      "itemID": 240,
       "itemType": "journalArticle",
       "language": "et",
       "libraryCatalog": "Google Scholar",
@@ -5428,7 +5406,7 @@
       ],
       "date": "1955",
       "issue": "3",
-      "itemID": 242,
+      "itemID": 241,
       "itemType": "journalArticle",
       "pages": "343\u2013348",
       "publicationTitle": "Cambridge Historical Journal",
@@ -5445,7 +5423,7 @@
         }
       ],
       "date": "1943",
-      "itemID": 243,
+      "itemID": 242,
       "itemType": "book",
       "language": "da",
       "libraryCatalog": "Open WorldCat",
@@ -5462,7 +5440,7 @@
         }
       ],
       "date": "1995",
-      "itemID": 244,
+      "itemID": 243,
       "itemType": "bookSection",
       "pages": "261\u2013267",
       "publicationTitle": "Kohl",
@@ -5478,7 +5456,7 @@
       ],
       "date": "1970",
       "issue": "3",
-      "itemID": 245,
+      "itemID": 244,
       "itemType": "journalArticle",
       "pages": "345\u2013365",
       "publicationTitle": "Technology and Culture",
@@ -5496,7 +5474,7 @@
       ],
       "date": "1999",
       "edition": "2",
-      "itemID": 246,
+      "itemID": 245,
       "itemType": "book",
       "language": "fr",
       "place": "New York",
@@ -5512,7 +5490,7 @@
         }
       ],
       "date": "2014",
-      "itemID": 247,
+      "itemID": 246,
       "itemType": "book",
       "libraryCatalog": "Google Scholar",
       "notes": [
@@ -5536,7 +5514,7 @@
         }
       ],
       "date": "2009",
-      "itemID": 248,
+      "itemID": 247,
       "itemType": "document",
       "tags": [
         {
@@ -5554,7 +5532,7 @@
         }
       ],
       "date": "2004",
-      "itemID": 249,
+      "itemID": 248,
       "itemType": "thesis",
       "language": "sv",
       "publisher": "Roskilde Universitet",
@@ -5579,7 +5557,7 @@
         }
       ],
       "date": "2010",
-      "itemID": 250,
+      "itemID": 249,
       "itemType": "bookSection",
       "pages": "191\u2013208",
       "publicationTitle": "The Oxford Handbook of Material Culture Studies",
@@ -5599,7 +5577,7 @@
         }
       ],
       "date": "2006",
-      "itemID": 251,
+      "itemID": 250,
       "itemType": "book",
       "language": "da",
       "publisher": "Klim",
@@ -5624,7 +5602,7 @@
         }
       ],
       "date": "1999",
-      "itemID": 252,
+      "itemID": 251,
       "itemType": "bookSection",
       "pages": "74\u201389",
       "place": "Oxford",
@@ -5642,7 +5620,7 @@
       ],
       "date": "2009",
       "issue": "9677",
-      "itemID": 253,
+      "itemID": 252,
       "itemType": "journalArticle",
       "pages": "1756\u20137",
       "title": "Living with diabetes: care beyond choice and control.",
@@ -5668,7 +5646,7 @@
         }
       ],
       "date": "1999",
-      "itemID": 254,
+      "itemID": 253,
       "itemType": "bookSection",
       "pages": "113\u2013135",
       "place": "Oxford",
@@ -5689,7 +5667,7 @@
           "lastName": "Findlen"
         }
       ],
-      "itemID": 255,
+      "itemID": 254,
       "itemType": "bookSection",
       "publicationTitle": "The Italian Renaissance: The Essential Readings",
       "title": "Commerce with the Classics"
@@ -5707,7 +5685,7 @@
         }
       ],
       "date": "2012",
-      "itemID": 256,
+      "itemID": 255,
       "itemType": "report",
       "language": "nb",
       "publisher": "Fredensborg Kommune",
@@ -5728,7 +5706,7 @@
       ],
       "date": "2013",
       "issue": "67",
-      "itemID": 257,
+      "itemID": 256,
       "itemType": "journalArticle",
       "language": "sv",
       "notes": [
@@ -5748,7 +5726,7 @@
         }
       ],
       "date": "1944",
-      "itemID": 258,
+      "itemID": 257,
       "itemType": "book",
       "language": "da",
       "libraryCatalog": "Open WorldCat",
@@ -5766,7 +5744,7 @@
       ],
       "date": "1991",
       "edition": "Revised edition",
-      "itemID": 259,
+      "itemID": 258,
       "itemType": "book",
       "notes": [
         "<p>kompendie: samf/kultur tilgange</p>\n<p>&nbsp;</p>"
@@ -5784,7 +5762,7 @@
         }
       ],
       "date": "1995",
-      "itemID": 260,
+      "itemID": 259,
       "itemType": "journalArticle",
       "pages": "107\u2013122",
       "publicationTitle": "Nordisk Museologi",
@@ -5811,7 +5789,7 @@
         }
       ],
       "date": "2007",
-      "itemID": 261,
+      "itemID": 260,
       "itemType": "bookSection",
       "language": "da",
       "pages": "513\u2013526",
@@ -5830,7 +5808,7 @@
       ],
       "date": "2007",
       "issue": "1",
-      "itemID": 262,
+      "itemID": 261,
       "itemType": "journalArticle",
       "pages": "27\u201330",
       "publicationTitle": "Archaeological Dialogues",
@@ -5851,7 +5829,7 @@
         }
       ],
       "date": "2014",
-      "itemID": 263,
+      "itemID": 262,
       "itemType": "bookSection",
       "language": "da",
       "publicationTitle": "LAND",
@@ -5867,7 +5845,7 @@
         }
       ],
       "date": "2012",
-      "itemID": 264,
+      "itemID": 263,
       "itemType": "journalArticle",
       "language": "da",
       "pages": "104\u2013125",
@@ -5885,7 +5863,7 @@
         }
       ],
       "date": "2014",
-      "itemID": 265,
+      "itemID": 264,
       "itemType": "manuscript",
       "title": "A Short Introduction to Danish Environmental History",
       "type": "Working paper"
@@ -5904,7 +5882,7 @@
         }
       ],
       "date": "2005",
-      "itemID": 266,
+      "itemID": 265,
       "itemType": "bookSection",
       "publicationTitle": "Palgrave advances in Renaissance historiography",
       "publisher": "Palgrave Macmillan",
@@ -5939,7 +5917,7 @@
         }
       ],
       "date": "2012",
-      "itemID": 267,
+      "itemID": 266,
       "itemType": "journalArticle",
       "publicationTitle": "British Journal of Sociology",
       "title": "The Whole is Always Smaller than Its Parts: A Digital Test of Gabriel Tarde's Monads",
@@ -5959,7 +5937,7 @@
         }
       ],
       "date": "1986",
-      "itemID": 268,
+      "itemID": 267,
       "itemType": "book",
       "place": "Princeton, N.J.",
       "publisher": "Princeton University Press, [1979]",
@@ -5986,7 +5964,7 @@
         }
       ],
       "date": "1998",
-      "itemID": 269,
+      "itemID": 268,
       "itemType": "bookSection",
       "pages": "221\u2013242",
       "place": "London and New York",
@@ -6009,7 +5987,7 @@
         }
       ],
       "date": "2000",
-      "itemID": 270,
+      "itemID": 269,
       "itemType": "bookSection",
       "pages": "10\u201321",
       "place": "London",
@@ -6027,7 +6005,7 @@
         }
       ],
       "date": "1986",
-      "itemID": 271,
+      "itemID": 270,
       "itemType": "journalArticle",
       "pages": "1\u201340",
       "publicationTitle": "Know\u00adledge and Society Studies in the Sociology of Culture Past and Present",
@@ -6044,7 +6022,7 @@
         }
       ],
       "date": "2005",
-      "itemID": 272,
+      "itemID": 271,
       "itemType": "book",
       "notes": [
         "<p>p\u00e5 dansk: \"En ny sociologi...\"</p>"
@@ -6063,7 +6041,7 @@
         }
       ],
       "date": "2007",
-      "itemID": 273,
+      "itemID": 272,
       "itemType": "book",
       "language": "da",
       "numPages": "51 sider",
@@ -6083,7 +6061,7 @@
       "extra": [
         "{:original-date: 2005}"
       ],
-      "itemID": 274,
+      "itemID": 273,
       "itemType": "book",
       "language": "da",
       "place": "K\u00f8benhavn",
@@ -6100,7 +6078,7 @@
         }
       ],
       "date": "2014",
-      "itemID": 275,
+      "itemID": 274,
       "itemType": "book",
       "language": "fr",
       "place": "Paris",
@@ -6122,7 +6100,7 @@
       ],
       "date": "2007",
       "issue": "1",
-      "itemID": 276,
+      "itemID": 275,
       "itemType": "journalArticle",
       "pages": "20\u201323",
       "publicationTitle": "Archaeological Dialogues",
@@ -6138,7 +6116,7 @@
         }
       ],
       "date": "2010",
-      "itemID": 277,
+      "itemID": 276,
       "itemType": "book",
       "language": "nb",
       "libraryCatalog": "Primo",
@@ -6166,7 +6144,7 @@
       ],
       "date": "2012",
       "issue": "3",
-      "itemID": 278,
+      "itemID": 277,
       "itemType": "magazineArticle",
       "language": "da",
       "pages": "74\u201375",
@@ -6183,7 +6161,7 @@
         }
       ],
       "date": "1995",
-      "itemID": 279,
+      "itemID": 278,
       "itemType": "bookSection",
       "pages": "297\u2013303",
       "publicationTitle": "Kohl",
@@ -6199,7 +6177,7 @@
       ],
       "date": "1971",
       "issue": "12",
-      "itemID": 280,
+      "itemID": 279,
       "itemType": "journalArticle",
       "language": "da",
       "pages": "255\u2013260",
@@ -6218,7 +6196,7 @@
       ],
       "date": "2007",
       "issue": "1",
-      "itemID": 281,
+      "itemID": 280,
       "itemType": "journalArticle",
       "pages": "16\u201320",
       "publicationTitle": "Archaeological Dialogues",
@@ -6235,7 +6213,7 @@
         }
       ],
       "date": "2009",
-      "itemID": 282,
+      "itemID": 281,
       "itemType": "book",
       "notes": [
         "<p>ill. Findes p\\aa etnologi: UnEf I X A Chri </p>"
@@ -6256,7 +6234,7 @@
       ],
       "date": "1974",
       "issue": "18",
-      "itemID": 283,
+      "itemID": 282,
       "itemType": "journalArticle",
       "language": "da",
       "pages": "367\u2013379",
@@ -6279,7 +6257,7 @@
       ],
       "date": "1976",
       "issue": "12",
-      "itemID": 284,
+      "itemID": 283,
       "itemType": "journalArticle",
       "language": "nb",
       "libraryCatalog": "Primo",
@@ -6303,7 +6281,7 @@
         }
       ],
       "date": "2010",
-      "itemID": 285,
+      "itemID": 284,
       "itemType": "book",
       "notes": [
         "<p>Fra Mai &quot;hvad litteraturen g\u00f8 r ved stedet&quot; i &quot;p\\aa sporet af den tabte tid&quot;</p>"
@@ -6321,7 +6299,7 @@
       ],
       "date": "2007",
       "issue": "1",
-      "itemID": 286,
+      "itemID": 285,
       "itemType": "journalArticle",
       "pages": "23\u201327",
       "publicationTitle": "Archaeological Dialogues",
@@ -6338,7 +6316,7 @@
         }
       ],
       "date": "2005",
-      "itemID": 287,
+      "itemID": 286,
       "itemType": "bookSection",
       "language": "nb",
       "notes": [
@@ -6369,7 +6347,7 @@
         }
       ],
       "date": "2001",
-      "itemID": 288,
+      "itemID": 287,
       "itemType": "bookSection",
       "language": "da",
       "pages": "99\u2013139",
@@ -6391,7 +6369,7 @@
         }
       ],
       "date": "2009",
-      "itemID": 289,
+      "itemID": 288,
       "itemType": "bookSection",
       "language": "it",
       "publicationTitle": "Transnationale historier",
@@ -6406,7 +6384,7 @@
         }
       ],
       "date": "2006",
-      "itemID": 290,
+      "itemID": 289,
       "itemType": "manuscript",
       "language": "da",
       "notes": [
@@ -6428,7 +6406,7 @@
         }
       ],
       "date": "2014",
-      "itemID": 291,
+      "itemID": 290,
       "itemType": "report",
       "language": "nb",
       "publisher": "Fredensborg Kommune",
@@ -6448,7 +6426,7 @@
         }
       ],
       "date": "2010",
-      "itemID": 292,
+      "itemID": 291,
       "itemType": "book",
       "language": "da",
       "place": "Frederiksberg",
@@ -6468,7 +6446,7 @@
       ],
       "date": "1961",
       "issue": "3/4",
-      "itemID": 293,
+      "itemID": 292,
       "itemType": "journalArticle",
       "pages": "306\u2013309",
       "publicationTitle": "Journal of the Warburg and Courtauld Institutes",
@@ -6485,7 +6463,7 @@
         }
       ],
       "date": "2004",
-      "itemID": 294,
+      "itemID": 293,
       "itemType": "bookSection",
       "pages": "226\u2013245",
       "publicationTitle": "Najemy",
@@ -6500,7 +6478,7 @@
         }
       ],
       "date": "1994",
-      "itemID": 295,
+      "itemID": 294,
       "itemType": "book",
       "language": "ro",
       "notes": [
@@ -6519,7 +6497,7 @@
         }
       ],
       "date": "2007",
-      "itemID": 296,
+      "itemID": 295,
       "itemType": "bookSection",
       "language": "eu",
       "pages": "161\u2013183",
@@ -6543,7 +6521,7 @@
       ],
       "date": "2011",
       "issue": "1",
-      "itemID": 297,
+      "itemID": 296,
       "itemType": "journalArticle",
       "notes": [
         "<p>Fra Lotz</p>"
@@ -6573,7 +6551,7 @@
       ],
       "date": "2011",
       "issue": "1",
-      "itemID": 298,
+      "itemID": 297,
       "itemType": "journalArticle",
       "notes": [
         "<p>Fra Lotz</p>"
@@ -6603,7 +6581,7 @@
       ],
       "date": "2012",
       "issue": "3",
-      "itemID": 299,
+      "itemID": 298,
       "itemType": "magazineArticle",
       "language": "da",
       "pages": "76\u201377",
@@ -6635,7 +6613,7 @@
         }
       ],
       "date": "1999",
-      "itemID": 300,
+      "itemID": 299,
       "itemType": "bookSection",
       "pages": "220\u2013247",
       "place": "Oxford",
@@ -6652,7 +6630,7 @@
         }
       ],
       "date": "2004",
-      "itemID": 301,
+      "itemID": 300,
       "itemType": "book",
       "language": "da",
       "libraryCatalog": "Google Scholar",
@@ -6671,7 +6649,7 @@
         }
       ],
       "date": "1969",
-      "itemID": 302,
+      "itemID": 301,
       "itemType": "book",
       "place": "Oxford",
       "publisher": "Clarendon P.",
@@ -6688,7 +6666,7 @@
       ],
       "date": "2006",
       "issue": "October",
-      "itemID": 303,
+      "itemID": 302,
       "itemType": "journalArticle",
       "notes": [
         "<p><strong>Extracted Annotations (2013-06-05T22:49:41 CEST)</strong><br /><br /></p>\n<p>\"offers a viable alternative to representation\" (Domanska 2006:337)</p>\n<p>\"the spatial dimension of presence\u2014a presence that is in front of me, a presence of things.\" (Domanska 2006:337)</p>\n<p>\"focus on the materiality and thingness of the trace rather than on its textuality and content.\" (Domanska 2006:337)</p>\n<p>\"however, present-day \u201cthing studies\u201d and the socalled \u201cnew material culture,\u201d2 reject constructivism, narrativism, and textualism on the grounds that these approaches have \u201cdematerialized\u201d things by comparing the thing to a text, and research to reading, by perceiving the thing solely as a message or sign\" (Domanska 2006:339)</p>\n<p>\"material culture\" (Domanska 2006:339)</p>\n<p>\"In an attempt to reverse those tendencies, \u201cnew material studies\u201d points to the agency of things, accentuating the fact that things not only exist but also act and have performative potential. Thus, in the \u201creturn to things,\u201d it is not the topic that is new, but the approaches to things and the forms of studying them.\" (Domanska 2006:339)</p>\n<p>\"\ue046\ue047\ue0bf\ue050\ue04b\ue056\ue04b\ue051\ue050\ue002\ue051\ue048\ue002\ue043\ue002\ue056\ue04a\ue04b\ue050\ue049\ue002\" (Domanska 2006:339)</p>\n<p>\"heidegger\" (Domanska 2006:339)</p>\n<p>\"latour\" (Domanska 2006:340)</p>\n<p>\"latour is interested in how objects could become things again\" (Domanska 2006:340)</p>\n<p>\"and he insists on the agency of things.\" (Domanska 2006:340)</p>\n<p>\"for scholars inspired by latour and by Marcel Mauss\u2019s idea of the gift, things perform a socializing function: they solidify interpersonal relations, they participate in the creation of human identity at the individual and collective levels, and they mark its changes.\" (Domanska 2006:340)</p>\n<p><em>er det nu korrekt? (note on p.340)</em></p>\n<p>&nbsp;</p>\n<p><em>det var vist ham der havde misforst\u00e5et Latour helt vildt i diskussionen med Ingold. (note on p.340)</em></p>\n<p>&nbsp;</p>\n<p>\"bj\u00f8rnar Olsen:\" (Domanska 2006:340)</p>\n<p>\"Ihde\u2019s argument is that the Otzi story could have been uncovered without the aid of textual hermeneutics, and thus that material hermeneutics is not a supplement to, but rather a necessary part of, fragmentary textual hermeneutics\" (Domanska 2006:341)</p>\n<p>\"This means that instruments co-constitute the reality studied by scholars. Their role is not simply instrumental, but hermeneutic: they shape the ways that people gain access to reality\" (Domanska 2006:341)</p>\n<p>\"In such an approach we witness an expansion of hermeneutics from texts to materiality. human interpretations of reality are not to be understood in terms of textual and linguistic structures only, but also as mediated by artifacts. In the same vein as latour, who claims that the social sciences have too exclusively focused on humans and forgotten about nonhumans, hermeneutics has only been using half its capacity, occupying itself only with texts and neglecting things.\" (Domanska 2006:341)</p>\n<p><em>Men: det er stadi hermeneutic.<br />Se forkastelse af hermeneutik hos DGS, Hacking for en god diskussion.<br />Hermeneutik / poststrukturalisme (?)<br />Fortolkning bygger stadig p\u00e5 en verden vi kan betragte og komme t\u00e6ttere p\u00e5, en singularitet, ikke multiplicitet. (note on p.341)</em></p>\n<p>&nbsp;</p>\n<p>\"Ihde claims that the belief that the natural sciences and the social and human sciences have different methodologies is outdated and that an expanded notion of hermeneutics might cancel this \u201cDiltheyan Divide\u201d\" (Domanska 2006:342)</p>\n<p>\"Such a conception of their work dehumanizes \ue056\ue04a\ue047\ue002\ue047\ue05a\ue04a\ue057\ue04f\ue043\ue056\ue04b\ue051\ue050\ue002\ue052\ue054\ue051\ue045\ue047\ue055\ue055\ue00e\ue002\ue055\ue04b\ue050\ue045\ue047\ue002\ue043\ue002\ue055\ue045\ue04b\ue047\ue050\ue056\ue04b\ue0bf\ue045\ue002\ue04b\ue050\ue058\ue047\ue055\ue056\ue04b\ue049\ue043\ue056\ue04b\ue051\ue050\ue002\ue046\ue051\ue050\ue047\ue002\ue044\ue05b\ue002\ue043\ue002\ue052\ue054\ue051\ue048\ue047\ue055\ue055\ue04b\ue051\ue050\ue043\ue04e\ue002 researcher and the treatment of dead bodies as evidence introduce, in the name of the struggle for justice, a radical distance between the researcher (subject) and \ue056\ue04a\ue047\ue002\ue051\ue044\ue04c\ue047\ue045\ue056\ue002\ue051\ue048\ue002\ue043\ue050\ue043\ue04e\ue05b\ue055\ue04b\ue055\ue002\ue00a\ue056\ue04a\ue047\ue002\ue044\ue051\ue046\ue05b\ue00b\ue00e\ue002\ue048\ue051\ue054\ue045\ue04b\ue050\ue049\ue002\ue056\ue04a\ue047\ue002\ue054\ue047\ue0c0\ue047\ue045\ue056\ue04b\ue051\ue050\ue002\ue04b\ue050\ue056\ue051\ue002\ue055\ue045\ue04b\ue047\ue050\ue056\ue04b\ue055\ue056\ue04b\ue045\ue002\ue052\ue043\ue056\ue056\ue047\ue054\ue050\ue055\ue002\ue051\ue048\ue002 \ue046\ue04b\ue055\ue045\ue051\ue057\ue054\ue055\ue047\ue002\ue043\ue044\ue051\ue057\ue056\ue002\ue055\ue045\ue04b\ue047\ue050\ue056\ue04b\ue0bf\ue045\ue002\ue056\ue054\ue057\ue056\ue04a\ue00e\ue002\ue051\ue044\ue04c\ue047\ue045\ue056\ue04b\ue058\ue04b\ue056\ue05b\ue00e\ue002\ue043\ue050\ue046\ue002\ue056\ue04a\ue047\ue002\ue04e\ue051\ue049\ue04b\ue045\ue002\ue051\ue048\ue002\ue043\ue054\ue049\ue057\ue04f\ue047\ue050\ue056\ue043\ue056\ue04b\ue051\ue050\ue010\ue002\ue039\ue04a\ue047\ue050\ue002 the remains are treated as an \u201cobject of study\u201d or an \u201cobject of mourning\u201d\u2014the word \u201cobject\u201d alone implies the dead body\u2019s helplessness to resist the violence of a variety of discourses\u2014they are separated from a particular personality and \ue044\ue047\ue045\ue051\ue04f\ue047\ue002\ue043\ue002\ue056\ue04a\ue04b\ue050\ue049\" (Domanska 2006:344)</p>\n<p>\"\ue029\ue054\ue047\ue04b\ue04f\ue043\ue055\" (Domanska 2006:345)</p>\n<p>\"three paradigms of human\u2013environment relations: orientalism, paternalism, and communalism. Orientalism establishes a fundamental break between nature and society; it legitimizes anthropocracy (humans are masters of nature) that engenders an exploitative attitude toward nonhumans and an aggressive colonization. Things are seen as usable objects that, because they have no rights, can be treated in any way whatsoever. In this kind of relationship with things there are no ethical considerations. Paternalism, on the other hand, presupposes a protective attitude toward things. It still implies human mastery and relations of hierarchy, but presumes a certain responsibility not only toward other humans but also toward nonhuman beings. In this approach people act on \ue044\ue047\ue04a\ue043\ue04e\ue048\ue002\ue051\ue048\ue002\ue056\ue04a\ue04b\ue050\ue049\ue055\ue002\ue056\ue04a\ue047\ue054\ue047\ue044\ue05b\ue002\ue048\ue057\ue04e\ue0bf\ue04e\ue04e\ue04b\ue050\ue049\ue002\ue043\ue002\ue0b3\ue052\ue054\ue051\ue056\ue047\ue045\ue056\ue04b\ue058\ue047\ue002\ue045\ue051\ue050\ue056\ue054\ue043\ue045\ue056\ue010\ue0b4\ue002\ue035\ue057\ue045\ue04a\ue002\ue043\ue050\ue002\ue043\ue052\ue052\ue054\ue051\ue043\ue045\ue04a\ue002\ue055\ue056\ue04b\ue04e\ue04e\ue002 promotes a colonizing discourse in which a thing is treated as the fragile and victimized other in a vein similar to that of women, children, and the disabled; however, it is not as aggressive as the case of the orientalist approach. Communalism rejects the separation of nature and society, and is characterized by the notions of contingency and dialogue. It suggests generalized reciprocity, engagement, and an ethical attitude toward the nonhuman based on close, even intimate, relationships. P\u00e1lsson stresses that communalism does not mean a return to the pre-renaissance, medieval idea of humans as the integral center of the world, or to naive romanticism.\" (Domanska 2006:347)</p>\n<p><span style=\"text-decoration: underline;\">\"G\u00edsli P\u00e1lsson\" (Domanska 2006:347)</span></p>\n<p>\"Orientalism\" (Domanska 2006:347)</p>\n<p><span style=\"text-decoration: underline;\">\"Orientalism\" (Domanska 2006:347)</span></p>\n<p><span style=\"text-decoration: underline;\">\"Paternalism\" (Domanska 2006:347)</span></p>\n<p><span style=\"text-decoration: underline;\">\"Communalism\" (Domanska 2006:347)</span></p>\n<p>\"that they have presence (and not only that they are present)\" (Domanska 2006:348)</p>"
@@ -6717,7 +6695,7 @@
         }
       ],
       "date": "2009",
-      "itemID": 304,
+      "itemID": 303,
       "itemType": "report",
       "language": "da",
       "publisher": "Statens Institut for Folkesundhed, Syddansk Universitet. Udarbejdet for By- og Landskabsstyrelsen",
@@ -6737,7 +6715,7 @@
         }
       ],
       "date": "1996",
-      "itemID": 305,
+      "itemID": 304,
       "itemType": "bookSection",
       "language": "ht",
       "pages": "11\u201330",
@@ -6759,7 +6737,7 @@
         }
       ],
       "date": "2005",
-      "itemID": 306,
+      "itemID": 305,
       "itemType": "book",
       "language": "ro",
       "publisher": "Det Kongelige Danske Kunstakademis Billedkunstskoler",
@@ -6774,7 +6752,7 @@
         }
       ],
       "date": "2006",
-      "itemID": 307,
+      "itemID": 306,
       "itemType": "bookSection",
       "language": "fi",
       "pages": "207\u2013212",
@@ -6793,7 +6771,7 @@
         }
       ],
       "date": "2006",
-      "itemID": 308,
+      "itemID": 307,
       "itemType": "bookSection",
       "language": "it",
       "pages": "145\u2013182",
@@ -6817,7 +6795,7 @@
         }
       ],
       "date": "2011",
-      "itemID": 309,
+      "itemID": 308,
       "itemType": "book",
       "language": "da",
       "publisher": "Bedre Byrum. Realdania",
@@ -6836,7 +6814,7 @@
           "lastName": "Kiib"
         }
       ],
-      "itemID": 310,
+      "itemID": 309,
       "itemType": "report",
       "language": "nb",
       "tags": [
@@ -6855,7 +6833,7 @@
         }
       ],
       "date": "2003",
-      "itemID": 311,
+      "itemID": 310,
       "itemType": "journalArticle",
       "pages": "442\u2013450",
       "publicationTitle": "American Scientist",
@@ -6872,7 +6850,7 @@
       ],
       "date": "1976",
       "issue": "12",
-      "itemID": 312,
+      "itemID": 311,
       "itemType": "journalArticle",
       "language": "da",
       "libraryCatalog": "Primo",
@@ -6902,7 +6880,7 @@
       ],
       "date": "1995",
       "issue": "1",
-      "itemID": 313,
+      "itemID": 312,
       "itemType": "journalArticle",
       "language": "da",
       "pages": "26\u201331",
@@ -6925,7 +6903,7 @@
       ],
       "date": "1995",
       "issue": "4",
-      "itemID": 314,
+      "itemID": 313,
       "itemType": "journalArticle",
       "language": "et",
       "pages": "123\u2013129",
@@ -6943,7 +6921,7 @@
       ],
       "date": "1943",
       "issue": "1",
-      "itemID": 315,
+      "itemID": 314,
       "itemType": "journalArticle",
       "pages": "21\u201349",
       "publicationTitle": "Journal of the History of Ideas",
@@ -6959,7 +6937,7 @@
         }
       ],
       "date": "1988",
-      "itemID": 316,
+      "itemID": 315,
       "itemType": "book",
       "publisher": "Princeton University Press",
       "title": "In search of Florentine civic humanism: Essays on the transition from medieval to modern thought",
@@ -6975,7 +6953,7 @@
         }
       ],
       "date": "1988",
-      "itemID": 317,
+      "itemID": 316,
       "itemType": "bookSection",
       "pages": "155\u2013181",
       "publicationTitle": "Baron",
@@ -6990,7 +6968,7 @@
         }
       ],
       "date": "1995",
-      "itemID": 318,
+      "itemID": 317,
       "itemType": "bookSection",
       "pages": "254\u2013260",
       "publicationTitle": "Kohl",
@@ -7015,7 +6993,7 @@
         }
       ],
       "date": "1988",
-      "itemID": 319,
+      "itemID": 318,
       "itemType": "bookSection",
       "language": "gl",
       "libraryCatalog": "Google Scholar",
@@ -7038,7 +7016,7 @@
       ],
       "date": "1987",
       "issue": "1",
-      "itemID": 320,
+      "itemID": 319,
       "itemType": "journalArticle",
       "notes": [
         "<p>Se Kaldal</p>"
@@ -7059,7 +7037,7 @@
         }
       ],
       "date": "1987",
-      "itemID": 321,
+      "itemID": 320,
       "itemType": "book",
       "libraryCatalog": "Primo",
       "notes": [
@@ -7087,7 +7065,7 @@
         }
       ],
       "date": "1999",
-      "itemID": 322,
+      "itemID": 321,
       "itemType": "bookSection",
       "pages": "136\u2013155",
       "place": "Oxford",
@@ -7104,7 +7082,7 @@
         }
       ],
       "date": "1994",
-      "itemID": 323,
+      "itemID": 322,
       "itemType": "journalArticle",
       "libraryCatalog": "Google Scholar",
       "notes": [
@@ -7122,7 +7100,7 @@
         }
       ],
       "date": "2008",
-      "itemID": 324,
+      "itemID": 323,
       "itemType": "book",
       "language": "da",
       "libraryCatalog": "Primo",
@@ -7151,7 +7129,7 @@
         }
       ],
       "date": "2012",
-      "itemID": 325,
+      "itemID": 324,
       "itemType": "book",
       "libraryCatalog": "Primo",
       "numPages": "410",
@@ -7169,7 +7147,7 @@
       ],
       "date": "2013",
       "issue": "2",
-      "itemID": 326,
+      "itemID": 325,
       "itemType": "journalArticle",
       "language": "da",
       "pages": "61\u201381",
@@ -7186,7 +7164,7 @@
         }
       ],
       "date": "1977",
-      "itemID": 327,
+      "itemID": 326,
       "itemType": "book",
       "notes": [
         "<p>H. Howard Frisinger ill.</p>"
@@ -7205,7 +7183,7 @@
         }
       ],
       "date": "1996 [1985]",
-      "itemID": 328,
+      "itemID": 327,
       "itemType": "book",
       "language": "da",
       "place": "K\u00f8benhavn",
@@ -7237,7 +7215,7 @@
         }
       ],
       "date": "1999",
-      "itemID": 329,
+      "itemID": 328,
       "itemType": "bookSection",
       "pages": "196\u2013219",
       "place": "Oxford",
@@ -7253,7 +7231,7 @@
           "lastName": "Heilbron"
         }
       ],
-      "itemID": 330,
+      "itemID": 329,
       "itemType": "bookSection",
       "pages": "1\u201325",
       "publicationTitle": "Fr\u00e4ngsmyr",
@@ -7268,7 +7246,7 @@
         }
       ],
       "date": "1943",
-      "itemID": 331,
+      "itemID": 330,
       "itemType": "book",
       "language": "da",
       "libraryCatalog": "Open WorldCat",
@@ -7290,7 +7268,7 @@
         }
       ],
       "date": "1860",
-      "itemID": 332,
+      "itemID": 331,
       "itemType": "book",
       "publisher": "Project Gutenberg",
       "title": "The Civilization of the Renaissance in Italy",
@@ -7306,7 +7284,7 @@
       ],
       "date": "2013",
       "issue": "2",
-      "itemID": 333,
+      "itemID": 332,
       "itemType": "magazineArticle",
       "language": "da",
       "pages": "16\u201319",
@@ -7324,7 +7302,7 @@
       ],
       "date": "2013",
       "issue": "2",
-      "itemID": 334,
+      "itemID": 333,
       "itemType": "magazineArticle",
       "language": "da",
       "pages": "12\u201315",
@@ -7342,7 +7320,7 @@
       ],
       "date": "2003",
       "issue": "3",
-      "itemID": 335,
+      "itemID": 334,
       "itemType": "journalArticle",
       "language": "da",
       "notes": [
@@ -7378,7 +7356,7 @@
         }
       ],
       "date": "1992",
-      "itemID": 336,
+      "itemID": 335,
       "itemType": "bookSection",
       "notes": [
         "<p>kompendie: samf/kultur tilgange</p>\n<p>&nbsp;</p>"
@@ -7413,7 +7391,7 @@
         }
       ],
       "date": "1990",
-      "itemID": 337,
+      "itemID": 336,
       "itemType": "bookSection",
       "pages": "73\u2013113",
       "place": "Berkeley",
@@ -7440,7 +7418,7 @@
         }
       ],
       "date": "2010",
-      "itemID": 338,
+      "itemID": 337,
       "itemType": "bookSection",
       "pages": "171\u2013186",
       "publicationTitle": "The Oxford Handbook of Material Culture Studies",
@@ -7466,7 +7444,7 @@
         }
       ],
       "date": "1999",
-      "itemID": 339,
+      "itemID": 338,
       "itemType": "bookSection",
       "pages": "1\u201314",
       "place": "Oxford",
@@ -7488,7 +7466,7 @@
         }
       ],
       "date": "1986",
-      "itemID": 340,
+      "itemID": 339,
       "itemType": "bookSection",
       "pages": "234\u2013263",
       "publicationTitle": "Power, Action and Belief: A New Sociology of Knowledge?",
@@ -7519,7 +7497,7 @@
         }
       ],
       "date": "1989 [1987]",
-      "itemID": 341,
+      "itemID": 340,
       "itemType": "bookSection",
       "notes": [
         "<p>har noter</p>"
@@ -7541,7 +7519,7 @@
       ],
       "date": "1987",
       "issue": "2",
-      "itemID": 342,
+      "itemID": 341,
       "itemType": "journalArticle",
       "publicationTitle": "Technology and Culture",
       "title": "On the social explanation of technical change: The case of the Portuguese maritime expansion",
@@ -7558,7 +7536,7 @@
       ],
       "date": "1992",
       "issue": "4",
-      "itemID": 343,
+      "itemID": 342,
       "itemType": "journalArticle",
       "publicationTitle": "Systemic Practice and Action Research",
       "title": "Notes on the theory of the actor-network: ordering, strategy, and heterogeneity",
@@ -7574,7 +7552,7 @@
         }
       ],
       "date": "2002",
-      "itemID": 344,
+      "itemID": 343,
       "itemType": "journalArticle",
       "pages": "91\u2013105",
       "publicationTitle": "Theory, Culture & Society",
@@ -7591,7 +7569,7 @@
         }
       ],
       "date": "2011",
-      "itemID": 345,
+      "itemID": 344,
       "itemType": "journalArticle",
       "tags": [
         {
@@ -7610,7 +7588,7 @@
         }
       ],
       "date": "2009",
-      "itemID": 346,
+      "itemID": 345,
       "itemType": "book",
       "language": "da",
       "publisher": "Realdania",
@@ -7627,7 +7605,7 @@
       ],
       "date": "2012",
       "issue": "3",
-      "itemID": 347,
+      "itemID": 346,
       "itemType": "magazineArticle",
       "language": "da",
       "pages": "96\u201398",
@@ -7645,7 +7623,7 @@
       ],
       "date": "2013",
       "issue": "2",
-      "itemID": 348,
+      "itemID": 347,
       "itemType": "magazineArticle",
       "language": "da",
       "pages": "11",
@@ -7663,7 +7641,7 @@
       ],
       "date": "2013",
       "issue": "67",
-      "itemID": 349,
+      "itemID": 348,
       "itemType": "journalArticle",
       "language": "nb",
       "pages": "139\u2013155",
@@ -7681,7 +7659,7 @@
       ],
       "date": "1999",
       "issue": "2",
-      "itemID": 350,
+      "itemID": 349,
       "itemType": "journalArticle",
       "pages": "179\u2013216",
       "publicationTitle": "History of science",
@@ -7699,7 +7677,7 @@
       ],
       "date": "2011",
       "issue": "5",
-      "itemID": 351,
+      "itemID": 350,
       "itemType": "magazineArticle",
       "language": "da",
       "pages": "142\u201343",
@@ -7717,7 +7695,7 @@
       ],
       "date": "2012",
       "issue": "4",
-      "itemID": 352,
+      "itemID": 351,
       "itemType": "magazineArticle",
       "language": "da",
       "pages": "112\u2013115",
@@ -7744,7 +7722,7 @@
         }
       ],
       "date": "1999",
-      "itemID": 353,
+      "itemID": 352,
       "itemType": "bookSection",
       "pages": "51\u201373",
       "place": "Oxford",
@@ -7762,7 +7740,7 @@
       ],
       "date": "1971",
       "edition": "2",
-      "itemID": 354,
+      "itemID": 353,
       "itemType": "book",
       "language": "tl",
       "libraryCatalog": "Primo",
@@ -7781,7 +7759,7 @@
         }
       ],
       "date": "1981",
-      "itemID": 355,
+      "itemID": 354,
       "itemType": "book",
       "libraryCatalog": "Primo",
       "notes": [
@@ -7798,7 +7776,7 @@
           "lastName": "Furdal"
         }
       ],
-      "itemID": 356,
+      "itemID": 355,
       "itemType": "bookSection",
       "language": "nb",
       "title": "Jensens fornemmelse for hjemstavnshistorie"
@@ -7818,7 +7796,7 @@
       ],
       "date": "2012",
       "issue": "3",
-      "itemID": 357,
+      "itemID": 356,
       "itemType": "magazineArticle",
       "language": "da",
       "pages": "70\u201373",
@@ -7836,7 +7814,7 @@
       ],
       "date": "2012",
       "issue": "3",
-      "itemID": 358,
+      "itemID": 357,
       "itemType": "magazineArticle",
       "language": "da",
       "pages": "69",
@@ -7854,7 +7832,7 @@
       ],
       "date": "1963",
       "issue": "3",
-      "itemID": 359,
+      "itemID": 358,
       "itemType": "journalArticle",
       "pages": "287\u2013298",
       "publicationTitle": "Technology and Culture",
@@ -7872,7 +7850,7 @@
       ],
       "date": "2000",
       "issue": "2",
-      "itemID": 360,
+      "itemID": 359,
       "itemType": "journalArticle",
       "pages": "311\u2013327",
       "publicationTitle": "Organization",
@@ -7909,7 +7887,7 @@
         }
       ],
       "date": "2007",
-      "itemID": 361,
+      "itemID": 360,
       "itemType": "bookSection",
       "language": "da",
       "libraryCatalog": "Open WorldCat",
@@ -7933,7 +7911,7 @@
         }
       ],
       "date": "2011",
-      "itemID": 362,
+      "itemID": 361,
       "itemType": "report",
       "number": "Faglig rapport fra DMU nr. 814",
       "publisher": "Danmarks Milj\u00f8unders\u00f8gelser. Aarhus Universitet",
@@ -7949,7 +7927,7 @@
         }
       ],
       "date": "1938",
-      "itemID": 363,
+      "itemID": 362,
       "itemType": "book",
       "publisher": "Harcourt Brace & Company",
       "title": "The Culture of Cities"
@@ -7963,7 +7941,7 @@
         }
       ],
       "date": "1961",
-      "itemID": 364,
+      "itemID": 363,
       "itemType": "book",
       "publisher": "Penguin Books",
       "title": "The City in History. Its origins, its transformations, and its prospects"
@@ -7983,7 +7961,7 @@
       ],
       "date": "1992",
       "issue": "40",
-      "itemID": 365,
+      "itemID": 364,
       "itemType": "journalArticle",
       "notes": [
         "<p>Refereret til fra Pickering, Oxford handbook of mat. culture.</p>"
@@ -8003,7 +7981,7 @@
       ],
       "date": "1991",
       "issue": "1",
-      "itemID": 366,
+      "itemID": 365,
       "itemType": "journalArticle",
       "pages": "93\u2013124",
       "publicationTitle": "Critical Inquiry",
@@ -8021,7 +7999,7 @@
       ],
       "date": "2006",
       "edition": "2",
-      "itemID": 367,
+      "itemID": 366,
       "itemType": "book",
       "place": "London",
       "publisher": "Hodder Arnold",
@@ -8037,7 +8015,7 @@
         }
       ],
       "date": "1802",
-      "itemID": 368,
+      "itemID": 367,
       "itemType": "book",
       "place": "(London)",
       "publisher": "London",
@@ -8053,7 +8031,7 @@
         }
       ],
       "date": "1989",
-      "itemID": 369,
+      "itemID": 368,
       "itemType": "bookSection",
       "pages": "1\u201322",
       "place": "Berkeley",
@@ -8071,7 +8049,7 @@
       ],
       "date": "1976",
       "issue": "11",
-      "itemID": 370,
+      "itemID": 369,
       "itemType": "journalArticle",
       "language": "da",
       "notes": [
@@ -8101,7 +8079,7 @@
         }
       ],
       "date": "1999",
-      "itemID": 371,
+      "itemID": 370,
       "itemType": "bookSection",
       "pages": "156\u2013180",
       "place": "Oxford",
@@ -8129,7 +8107,7 @@
       ],
       "date": "2012",
       "issue": "3",
-      "itemID": 372,
+      "itemID": 371,
       "itemType": "magazineArticle",
       "language": "da",
       "pages": "78\u201379",
@@ -8151,7 +8129,7 @@
         }
       ],
       "date": "2012",
-      "itemID": 373,
+      "itemID": 372,
       "itemType": "document",
       "language": "da",
       "publisher": "Skov & Landskab, K\u00f8benhavns Universitet",
@@ -8165,7 +8143,7 @@
           "lastName": "Jensen"
         }
       ],
-      "itemID": 374,
+      "itemID": 373,
       "itemType": "report",
       "language": "da",
       "tags": [
@@ -8184,7 +8162,7 @@
         }
       ],
       "date": "1970",
-      "itemID": 375,
+      "itemID": 374,
       "itemType": "book",
       "language": "fr",
       "place": "K\u00f8benhavn",
@@ -8199,7 +8177,7 @@
           "lastName": "Institut"
         }
       ],
-      "itemID": 376,
+      "itemID": 375,
       "itemType": "book",
       "language": "da",
       "notes": [
@@ -8223,7 +8201,7 @@
         }
       ],
       "date": "1964",
-      "itemID": 377,
+      "itemID": 376,
       "itemType": "journalArticle",
       "pages": "126\u2013133",
       "publicationTitle": "The cultural studies reader",
@@ -8253,7 +8231,7 @@
         }
       ],
       "date": "1981",
-      "itemID": 378,
+      "itemID": 377,
       "itemType": "bookSection",
       "pages": "277\u2013303",
       "publicationTitle": "Advances in social theory and methodology: Toward an integration of micro- and macro-sociologies",
@@ -8281,7 +8259,7 @@
         }
       ],
       "date": "1999",
-      "itemID": 379,
+      "itemID": 378,
       "itemType": "bookSection",
       "pages": "181\u2013195",
       "place": "Oxford",
@@ -8303,7 +8281,7 @@
         }
       ],
       "date": "1986",
-      "itemID": 380,
+      "itemID": 379,
       "itemType": "bookSection",
       "notes": [
         "<p><strong>Extracted Annotations (2013-05-23T10:38:19 CEST)</strong><br /><br /></p>\n<p>\"power\" (Callon 1986:196)</p>\n<p>\"conspicuous asymmetry\" (Callon 1986:196)</p>"
@@ -8328,7 +8306,7 @@
         }
       ],
       "date": "1984",
-      "itemID": 381,
+      "itemID": 380,
       "itemType": "bookSection",
       "language": "ga",
       "pages": "100\u2013120",
@@ -8351,7 +8329,7 @@
         }
       ],
       "date": "1984",
-      "itemID": 382,
+      "itemID": 381,
       "itemType": "bookSection",
       "pages": "32\u201350",
       "place": "New York",
@@ -8373,7 +8351,7 @@
         }
       ],
       "date": "1984",
-      "itemID": 383,
+      "itemID": 382,
       "itemType": "bookSection",
       "pages": "76\u2013100",
       "place": "New York",
@@ -8390,7 +8368,7 @@
         }
       ],
       "date": "1977",
-      "itemID": 384,
+      "itemID": 383,
       "itemType": "book",
       "place": "London",
       "publisher": "Penguin Books. Translated by Alan Sheridan",
@@ -8406,7 +8384,7 @@
       ],
       "date": "1982",
       "issue": "4",
-      "itemID": 385,
+      "itemID": 384,
       "itemType": "journalArticle",
       "notes": [
         "<p>haves p\u00e5 papir</p>"
@@ -8426,7 +8404,7 @@
         }
       ],
       "date": "2009",
-      "itemID": 386,
+      "itemID": 385,
       "itemType": "book",
       "notes": [
         "<p>Fra AIME. Online via KB</p>"
@@ -8449,7 +8427,7 @@
         }
       ],
       "date": "2012",
-      "itemID": 387,
+      "itemID": 386,
       "itemType": "book",
       "notes": [
         "<p>ikke udgivet 7: kap. 1 10: begrebsafklaring 13: Mennesket som subjekt, tingen som objekt 16: figur 1 18: figur 2 (teoretisk) - abjekt 27: materielle vending 28: oversigt</p>"
@@ -8466,7 +8444,7 @@
       ],
       "date": "2013",
       "issue": "67",
-      "itemID": 388,
+      "itemID": 387,
       "itemType": "journalArticle",
       "language": "da",
       "pages": "157\u2013175",
@@ -8498,7 +8476,7 @@
         }
       ],
       "date": "1999",
-      "itemID": 389,
+      "itemID": 388,
       "itemType": "bookSection",
       "pages": "90\u2013112",
       "place": "Oxford",
@@ -8516,7 +8494,7 @@
       ],
       "date": "2013",
       "issue": "4",
-      "itemID": 390,
+      "itemID": 389,
       "itemType": "magazineArticle",
       "language": "da",
       "pages": "13\u201319",
@@ -8534,7 +8512,7 @@
       ],
       "date": "1959",
       "edition": "5. opl.",
-      "itemID": 391,
+      "itemID": 390,
       "itemType": "book",
       "language": "da",
       "libraryCatalog": "Primo",
@@ -8556,7 +8534,7 @@
       ],
       "date": "2013",
       "issue": "2",
-      "itemID": 392,
+      "itemID": 391,
       "itemType": "magazineArticle",
       "language": "tr",
       "pages": "20\u201323",
@@ -8573,7 +8551,7 @@
         }
       ],
       "date": "2012",
-      "itemID": 393,
+      "itemID": 392,
       "itemType": "document",
       "language": "da",
       "publisher": "Aalborg Kommune, Teknisk Forvaltning",
@@ -8589,7 +8567,7 @@
       ],
       "date": "2001",
       "issue": "1",
-      "itemID": 394,
+      "itemID": 393,
       "itemType": "journalArticle",
       "language": "da",
       "pages": "111\u2013145",
@@ -8608,7 +8586,7 @@
       ],
       "date": "2007",
       "issue": "1",
-      "itemID": 395,
+      "itemID": 394,
       "itemType": "journalArticle",
       "language": "nl",
       "pages": "207\u2013235",
@@ -8625,7 +8603,7 @@
         }
       ],
       "date": "1979",
-      "itemID": 396,
+      "itemID": 395,
       "itemType": "book",
       "language": "da",
       "place": "K\u00f8benhavn",
@@ -8647,7 +8625,7 @@
         }
       ],
       "date": "1989",
-      "itemID": 397,
+      "itemID": 396,
       "itemType": "bookSection",
       "pages": "25\u201346",
       "place": "Berkeley",
@@ -8664,7 +8642,7 @@
         }
       ],
       "date": "2010",
-      "itemID": 398,
+      "itemID": 397,
       "itemType": "book",
       "notes": [
         "<p>Fra AIME. Online via KB</p>"
@@ -8687,7 +8665,7 @@
         }
       ],
       "date": "1995",
-      "itemID": 399,
+      "itemID": 398,
       "itemType": "bookSection",
       "pages": "285\u2013296",
       "publicationTitle": "Kohl",
@@ -8707,7 +8685,7 @@
         }
       ],
       "date": "2001",
-      "itemID": 400,
+      "itemID": 399,
       "itemType": "bookSection",
       "pages": "5\u201351",
       "place": "Berkeley",
@@ -8726,7 +8704,7 @@
       ],
       "date": "1998",
       "issue": "1",
-      "itemID": 401,
+      "itemID": 400,
       "itemType": "journalArticle",
       "pages": "83\u2013114",
       "publicationTitle": "American Historical Review",
@@ -8748,7 +8726,7 @@
         }
       ],
       "date": "2013",
-      "itemID": 402,
+      "itemID": 401,
       "itemType": "journalArticle",
       "journalAbbreviation": "Eur. J. Risk Reg.",
       "notes": [
@@ -8770,7 +8748,7 @@
         }
       ],
       "date": "2007",
-      "itemID": 403,
+      "itemID": 402,
       "itemType": "bookSection",
       "pages": "191\u2013207",
       "publicationTitle": "Martin",
@@ -8785,7 +8763,7 @@
         }
       ],
       "date": "2007",
-      "itemID": 404,
+      "itemID": 403,
       "itemType": "journalArticle",
       "language": "de",
       "pages": "179\u2013196",
@@ -8802,7 +8780,7 @@
         }
       ],
       "date": "2006",
-      "itemID": 405,
+      "itemID": 404,
       "itemType": "book",
       "language": "da",
       "libraryCatalog": "Google Scholar",
@@ -8820,7 +8798,7 @@
       ],
       "date": "1974",
       "issue": "18",
-      "itemID": 406,
+      "itemID": 405,
       "itemType": "journalArticle",
       "language": "da",
       "pages": "365",
@@ -8838,7 +8816,7 @@
       ],
       "date": "1938",
       "issue": "2",
-      "itemID": 407,
+      "itemID": 406,
       "itemType": "journalArticle",
       "pages": "144\u2013149",
       "publicationTitle": "The Accounting Review",
@@ -8860,7 +8838,7 @@
         }
       ],
       "date": "1989",
-      "itemID": 408,
+      "itemID": 407,
       "itemType": "bookSection",
       "language": "tl",
       "pages": "154\u2013175",
@@ -8879,7 +8857,7 @@
       ],
       "date": "1985",
       "issue": "4",
-      "itemID": 409,
+      "itemID": 408,
       "itemType": "journalArticle",
       "notes": [
         "<p>haves p\\aa papir</p>"
@@ -8899,7 +8877,7 @@
         }
       ],
       "date": "1960",
-      "itemID": 410,
+      "itemID": 409,
       "itemType": "book",
       "notes": [
         "<p>[by] S.K. Heninger, jr. ill. bestilt KB</p>"
@@ -8917,7 +8895,7 @@
         }
       ],
       "date": "2009",
-      "itemID": 411,
+      "itemID": 410,
       "itemType": "book",
       "place": "Ithaca",
       "publisher": "Cornell University Press",
@@ -8932,7 +8910,7 @@
         }
       ],
       "date": "2001",
-      "itemID": 412,
+      "itemID": 411,
       "itemType": "manuscript",
       "language": "eu",
       "notes": [
@@ -8964,7 +8942,7 @@
         }
       ],
       "date": "2007",
-      "itemID": 413,
+      "itemID": 412,
       "itemType": "bookSection",
       "language": "de",
       "notes": [
@@ -8990,7 +8968,7 @@
         }
       ],
       "date": "1999",
-      "itemID": 414,
+      "itemID": 413,
       "itemType": "bookSection",
       "pages": "26\u201350",
       "place": "Oxford",
@@ -9008,7 +8986,7 @@
       ],
       "date": "1976",
       "issue": "12",
-      "itemID": 415,
+      "itemID": 414,
       "itemType": "journalArticle",
       "language": "da",
       "libraryCatalog": "Primo",
@@ -9032,7 +9010,7 @@
         }
       ],
       "date": "17/6/2011",
-      "itemID": 416,
+      "itemID": 415,
       "itemType": "newspaperArticle",
       "language": "da",
       "notes": [
@@ -9055,7 +9033,7 @@
         }
       ],
       "date": "1996",
-      "itemID": 417,
+      "itemID": 416,
       "itemType": "bookSection",
       "language": "gl",
       "notes": [
@@ -9076,7 +9054,7 @@
         }
       ],
       "date": "2010",
-      "itemID": 418,
+      "itemID": 417,
       "itemType": "thesis",
       "language": "sv",
       "title": "Bachelorprojekt"
@@ -9090,7 +9068,7 @@
         }
       ],
       "date": "2011",
-      "itemID": 419,
+      "itemID": 418,
       "itemType": "thesis",
       "language": "fr",
       "title": "By petitum"
@@ -9104,7 +9082,7 @@
         }
       ],
       "date": "2011",
-      "itemID": 420,
+      "itemID": 419,
       "itemType": "thesis",
       "language": "ms",
       "numPages": "1\u20136",
@@ -9119,7 +9097,7 @@
         }
       ],
       "date": "2011",
-      "itemID": 421,
+      "itemID": 420,
       "itemType": "thesis",
       "title": "Ren\u00e6ssance - From Revival of Antiquity to the Age of the New"
     },
@@ -9132,7 +9110,7 @@
         }
       ],
       "date": "1992",
-      "itemID": 422,
+      "itemID": 421,
       "itemType": "book",
       "place": "K\u00f8benhavn og \u00c5rhus",
       "publisher": "Sune Press og Guldenpral",
@@ -9147,7 +9125,7 @@
         }
       ],
       "date": "2011",
-      "itemID": 423,
+      "itemID": 422,
       "itemType": "thesis",
       "language": "da",
       "notes": [
@@ -9164,7 +9142,7 @@
         }
       ],
       "date": "2011",
-      "itemID": 424,
+      "itemID": 423,
       "itemType": "thesis",
       "language": "fr",
       "title": "Ren\u00e6ssance petitum"
@@ -9178,7 +9156,7 @@
         }
       ],
       "date": "2011",
-      "itemID": 425,
+      "itemID": 424,
       "itemType": "thesis",
       "title": "CTR Petitum"
     },
@@ -9191,7 +9169,7 @@
         }
       ],
       "date": "2012",
-      "itemID": 426,
+      "itemID": 425,
       "itemType": "thesis",
       "language": "da",
       "title": "Petitum Landskab"
@@ -9205,7 +9183,7 @@
         }
       ],
       "date": "2012",
-      "itemID": 427,
+      "itemID": 426,
       "itemType": "thesis",
       "language": "tr",
       "title": "Synopsis materialitet. Pseudomorphe tekstiler"
@@ -9219,7 +9197,7 @@
         }
       ],
       "date": "2012",
-      "itemID": 428,
+      "itemID": 427,
       "itemType": "thesis",
       "title": "Petitum materialitet"
     },
@@ -9252,7 +9230,7 @@
         }
       ],
       "date": "2002",
-      "itemID": 429,
+      "itemID": 428,
       "itemType": "book",
       "language": "da",
       "libraryCatalog": "Google Scholar",
@@ -9270,7 +9248,7 @@
       ],
       "date": "2013",
       "issue": "2",
-      "itemID": 430,
+      "itemID": 429,
       "itemType": "magazineArticle",
       "language": "nl",
       "pages": "24\u201329",
@@ -9287,7 +9265,7 @@
         }
       ],
       "date": "2005",
-      "itemID": 431,
+      "itemID": 430,
       "itemType": "book",
       "place": "Oxford",
       "publisher": "Berg",
@@ -9307,7 +9285,7 @@
         }
       ],
       "date": "8/8/2014",
-      "itemID": 432,
+      "itemID": 431,
       "itemType": "newspaperArticle",
       "language": "da",
       "notes": [
@@ -9338,7 +9316,7 @@
       ],
       "date": "2012",
       "issue": "3",
-      "itemID": 433,
+      "itemID": 432,
       "itemType": "magazineArticle",
       "language": "da",
       "pages": "92\u201395",
@@ -9356,7 +9334,7 @@
       ],
       "date": "1976",
       "issue": "12",
-      "itemID": 434,
+      "itemID": 433,
       "itemType": "journalArticle",
       "language": "da",
       "libraryCatalog": "Primo",
@@ -9380,7 +9358,7 @@
         }
       ],
       "date": "1969",
-      "itemID": 435,
+      "itemID": 434,
       "itemType": "book",
       "numPages": "362 s.",
       "place": "Baltimore",
@@ -9395,7 +9373,7 @@
         }
       ],
       "date": "1998",
-      "itemID": 436,
+      "itemID": 435,
       "itemType": "bookSection",
       "language": "da",
       "notes": [
@@ -9415,12 +9393,31 @@
         }
       ],
       "date": "1996",
-      "itemID": 437,
+      "itemID": 436,
       "itemType": "journalArticle",
       "pages": "230\u2013230",
       "publicationTitle": "Nature",
       "title": "The need to love technology. Book review of Bruno Latour, Aramis",
       "volume": "383"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Weilbach"
+        },
+        {
+          "creatorType": "editor",
+          "lastName": "Weilbach"
+        }
+      ],
+      "date": "1881",
+      "itemID": 437,
+      "itemType": "book",
+      "language": "da",
+      "place": "Kbhn",
+      "publisher": "Kbhn",
+      "title": "Nordeuropas Skyformer og deres Inddeling fremstillet til Vejledning ved Fagttagelsen af Skyhimlen, med tolv Tegninger udf\u00f8rte af Forfatteren og lithograferede i Farvetryk i Hoffensberg & Traps Etablissement, accompagn\u00e9 d'un extrait en Francais, af Philip"
     },
     {
       "creators": [
@@ -12733,9 +12730,6 @@
       "itemType": "journalArticle",
       "journalAbbreviation": "Studies in History and Philosophy of Science Part A",
       "libraryCatalog": "ScienceDirect",
-      "notes": [
-        ""
-      ],
       "pages": "267\u2013297",
       "publicationTitle": "Studies in History and Philosophy of Science Part A",
       "shortTitle": "Durkheim and Mauss revisited",
@@ -26132,51 +26126,6 @@
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "UNKNOWN"
-        }
-      ],
-      "date": "2014",
-      "itemID": 1116,
-      "itemType": "bookSection",
-      "language": "da",
-      "libraryCatalog": "Primo",
-      "notes": [
-        "<p>Forebyggelse</p>"
-      ],
-      "pages": "469\u2013552",
-      "publicationTitle": "Dansk velf\u00e6rdshistorie bind 6. Hvor glider vi hen? Perioden 1993-2014.",
-      "publisher": "Syddansk Universitetsforlag",
-      "series": "University of Southern Denmark studies in history and social sciences <<410+427+434+448+472+487=410>>",
-      "shortTitle": "Sygesikring og sundhedsv\u00e6sen",
-      "tags": [
-        {
-          "tag": "mangler-metadata"
-        }
-      ],
-      "title": "Kapitel 5. Sygesikring og sundhedsv\u00e6sen"
-    },
-    {
-      "ISBN": "9788776745516",
-      "abstractNote": "Indhold bd. 1: Periodens idestr\u00f8mninger ; Danske samfundsforhold forud for slutningen af 1800-tallet ; Dansk fattiglovgivning indtil 1803 ; Fattiglovgivningen fra 1803-1891 ; Debatten om alderdomsfors\u00f8rgelse frem mod alderdomsfors\u00f8gelsesloven af 1891 : baggrund og indhold ; Sygeforsikring indtil 1898 ; Ulykkesforsikringens tilblivelse, Indhold bd. 2: Samfundsforhold ; Det socialpolitiske idelandskab ; Fra fattiglov til forsorgslov ; Alderdomsfors\u00f8rgelse ; Sygeforsikring ; Ulykkesforsikring ; Arbejdsl\u00f8shedsforsikring og arbejdsanvisning ; Invalideforsikring ; B\u00f8rnesagen - Dansk familiepolitik, Indhold bd. 4: Samfundsforhold ; Det socialpolitiske idelandskab ; Fra forsorgslov til bistandslov ; Alderdomsfors\u00f8rgelse og \u00e6ldrepolitik ; Sygeforsikringen ; Ulykkesforsikring og arbejdsmilj\u00f8lov ; Arbejdsl\u00f8shedsforsikring og arbejdsanvisning ; Invalideforsikring ; Familiepolitikens storhedstid ; Enkepension og hj\u00e6lp til enker ; Immigrations- og integrationspolitik ; Sammenfatning og perspektivering ; Danske ministerier 1957-1973, Kapitel 1 Samfundsforhold 9 Kapitel 2 Det socialpolitiske idelandskab 73 Kapitel 3 Bistandsloven 137 Kapitel 4 Alderdomsfors\u00f8rgelse og \u00e6ldrepolitik 243 Kapitel 5 Den offentlige sygesikring, sygehusene og dagpengesystemet 361 Kapitel 6 Arbejdsskadeforsikring og arbejdsmilj\u00f8lov 467 Kapitel 7 Arbejdsl\u00f8shedsforsikring og aktivering 523 Kapitel 8 Invalideforsikring 611 Kapitel 9 Familiepolitik 637 Kapitel 10 Immigrations- og integrationspolitik 763 Kapitel 11 Efterl\u00f8n 831 Kapitel 12 Sammenfatning og perspektivering 915 Danske ministerier 1973-1993 . 933 Referencer 941 Illustrationsliste 971 Personregister 977",
-      "creators": [
-        {
-          "creatorType": "editor",
-          "firstName": "J\u00f8rn Henrik",
-          "lastName": "Petersen"
-        },
-        {
-          "creatorType": "editor",
-          "firstName": "Klaus",
-          "lastName": "Petersen"
-        },
-        {
-          "creatorType": "editor",
-          "firstName": "Niels Finn",
-          "lastName": "Christiansen"
-        },
-        {
-          "creatorType": "author",
           "firstName": "J\u00f8rn Henrik",
           "lastName": "Petersen"
         },
@@ -26187,7 +26136,7 @@
         }
       ],
       "date": "2012",
-      "itemID": 1117,
+      "itemID": 1116,
       "itemType": "bookSection",
       "language": "tl",
       "libraryCatalog": "Primo",
@@ -26234,7 +26183,7 @@
         }
       ],
       "date": "2012",
-      "itemID": 1118,
+      "itemID": 1117,
       "itemType": "bookSection",
       "language": "da",
       "libraryCatalog": "Primo",
@@ -26244,6 +26193,50 @@
       "series": "University of Southern Denmark studies in history and social sciences <<410+427+434+448+472+487=410>>",
       "shortTitle": "Samfundsforhold",
       "title": "Kapitel 1. Samfundsforhold"
+    },
+    {
+      "ISBN": "9788776745516",
+      "abstractNote": "Indhold bd. 1: Periodens idestr\u00f8mninger ; Danske samfundsforhold forud for slutningen af 1800-tallet ; Dansk fattiglovgivning indtil 1803 ; Fattiglovgivningen fra 1803-1891 ; Debatten om alderdomsfors\u00f8rgelse frem mod alderdomsfors\u00f8gelsesloven af 1891 : baggrund og indhold ; Sygeforsikring indtil 1898 ; Ulykkesforsikringens tilblivelse, Indhold bd. 2: Samfundsforhold ; Det socialpolitiske idelandskab ; Fra fattiglov til forsorgslov ; Alderdomsfors\u00f8rgelse ; Sygeforsikring ; Ulykkesforsikring ; Arbejdsl\u00f8shedsforsikring og arbejdsanvisning ; Invalideforsikring ; B\u00f8rnesagen - Dansk familiepolitik, Indhold bd. 4: Samfundsforhold ; Det socialpolitiske idelandskab ; Fra forsorgslov til bistandslov ; Alderdomsfors\u00f8rgelse og \u00e6ldrepolitik ; Sygeforsikringen ; Ulykkesforsikring og arbejdsmilj\u00f8lov ; Arbejdsl\u00f8shedsforsikring og arbejdsanvisning ; Invalideforsikring ; Familiepolitikens storhedstid ; Enkepension og hj\u00e6lp til enker ; Immigrations- og integrationspolitik ; Sammenfatning og perspektivering ; Danske ministerier 1957-1973, Kapitel 1 Samfundsforhold 9 Kapitel 2 Det socialpolitiske idelandskab 73 Kapitel 3 Bistandsloven 137 Kapitel 4 Alderdomsfors\u00f8rgelse og \u00e6ldrepolitik 243 Kapitel 5 Den offentlige sygesikring, sygehusene og dagpengesystemet 361 Kapitel 6 Arbejdsskadeforsikring og arbejdsmilj\u00f8lov 467 Kapitel 7 Arbejdsl\u00f8shedsforsikring og aktivering 523 Kapitel 8 Invalideforsikring 611 Kapitel 9 Familiepolitik 637 Kapitel 10 Immigrations- og integrationspolitik 763 Kapitel 11 Efterl\u00f8n 831 Kapitel 12 Sammenfatning og perspektivering 915 Danske ministerier 1973-1993 . 933 Referencer 941 Illustrationsliste 971 Personregister 977",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "J\u00f8rn Henrik",
+          "lastName": "Petersen"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Klaus",
+          "lastName": "Petersen"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Niels Finn",
+          "lastName": "Christiansen"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "UNKNOWN"
+        }
+      ],
+      "date": "2014",
+      "itemID": 1118,
+      "itemType": "bookSection",
+      "language": "da",
+      "libraryCatalog": "Primo",
+      "notes": [
+        "<p>Forebyggelse</p>"
+      ],
+      "pages": "469\u2013552",
+      "publicationTitle": "Dansk velf\u00e6rdshistorie bind 6. Hvor glider vi hen? Perioden 1993-2014.",
+      "publisher": "Syddansk Universitetsforlag",
+      "series": "University of Southern Denmark studies in history and social sciences <<410+427+434+448+472+487=410>>",
+      "shortTitle": "Sygesikring og sundhedsv\u00e6sen",
+      "tags": [
+        {
+          "tag": "mangler-metadata"
+        }
+      ],
+      "title": "Kapitel 5. Sygesikring og sundhedsv\u00e6sen"
     },
     {
       "ISBN": "9788776745516",
