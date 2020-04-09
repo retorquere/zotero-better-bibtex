@@ -17,6 +17,7 @@
     "releaseURL": "https://github.com/retorquere/zotero-better-bibtex/releases/download/release/"
   },
   "scripts": {
+    "balance": "./util/balance.py && git add balance.json && git commit -m 're-balance tests'",
     "pretest": "npm run build",
     "test": "./test/behave --stop",
     "lint": "tslint -t stylish --project .",
