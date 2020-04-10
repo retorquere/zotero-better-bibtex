@@ -144,14 +144,9 @@ export function doExport() {
   }
 
   const filed = {}
-  // expand collections
-  for (const collection of Object.values(Translator.collections)) {
-    // collection.collections = collection.collections.map(key => Translator.collections[key]).filter(v => v) // TODO: doesn't CTranslator laready do this?
-    collection.items = collection.items.map(id => filed[id] = items[id]).filter(v => v)
-  }
-
-  // prune empty branches
-  const collections = Object.values(Translator.collections).filter(collection => !collection.parent && !_prune(collection))
+  const collections = Object.values(Translator.collections)
+    .map(coll => ({...coll, items: coll.items.map(id => filed[id] = items[id]).filter(v => v)  })) // expand collections
+    .filter(coll => !coll.parent && !_prune(coll)) // prune empty branches
 
   html.body += '<html><body>'
 

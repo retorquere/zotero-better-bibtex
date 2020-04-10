@@ -1,12 +1,8 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false,
-      "exportNotes": false
-    },
+    "options": {},
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
       "bibtexURL": "note",
@@ -18,7 +14,6 @@
   "items": [
     {
       "accessDate": "2014-09-15 19:49:56",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -27,7 +22,7 @@
         }
       ],
       "date": "4/7/2014",
-      "itemID": 1348,
+      "itemID": 1,
       "itemType": "newspaperArticle",
       "pages": "12",
       "publicationTitle": "Weekendavisen",

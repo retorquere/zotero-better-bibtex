@@ -5,7 +5,9 @@ export { Translator }
 
 import { debug } from './lib/debug'
 import * as itemfields from '../gen/itemfields'
+import { normalize } from './lib/normalize'
 const version = require('../gen/version.js')
+import { stringify } from '../content/stringify'
 
 const chunkSize = 0x100000
 
@@ -56,6 +58,16 @@ export async function doImport() {
     delete source.collections
     delete source.autoJournalAbbreviation
 
+    if (source.creators) {
+      for (const creator of source.creators) {
+        // if .name is not set, *both* first and last must be set, even if empty
+        if (!creator.name) {
+          creator.lastName = creator.lastName || ''
+          creator.firstName = creator.firstName || ''
+        }
+      }
+    }
+
     if (!itemfields.valid.type[source.itemType]) throw new Error(`unexpected item type '${source.itemType}'`)
     const validFields = itemfields.valid.field[source.itemType]
     for (const field of Object.keys(source)) {
@@ -70,6 +82,9 @@ export async function doImport() {
       }
     }
 
+    if (Array.isArray(source.extra)) source.extra = source.extra.join('\n')
+
+    debug('importing:', source)
     const item = new Zotero.Item()
     Object.assign(item, source)
 
@@ -136,6 +151,8 @@ export function doExport() {
   while ((item = Zotero.nextItem())) {
     if (item.itemType === 'attachment') continue
 
+    delete item.collections
+
     itemfields.simplifyForExport(item, Translator.options.dropAttachments)
     item.relations = item.relations ? (item.relations['dc:relation'] || []) : []
 
@@ -160,5 +177,7 @@ export function doExport() {
     data.items.push(item)
   }
 
-  Zotero.write(JSON.stringify(data, null, '  '))
+  normalize(data)
+
+  Zotero.write(stringify(data, null, '  '))
 }

@@ -26,5 +26,6 @@ markdown
 inflect
 pygtrie
 ortools
-jsonpatch
 jsonschema
+jsonpatch
+diff-match-patch

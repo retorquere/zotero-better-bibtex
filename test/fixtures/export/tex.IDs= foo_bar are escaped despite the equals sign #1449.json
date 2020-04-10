@@ -2,129 +2,120 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
     "preferences": {
       "DOIandURL": "both",
-      "automaticTags": true,
-      "asciiBibLaTeX": false,
       "ascii": "",
+      "asciiBibLaTeX": false,
       "asciiBibTeX": true,
-      "autoExport": "immediate",
-      "quickCopyMode": "latex",
-      "citeCommand": "cite",
-      "quickCopyPandocBrackets": false,
-      "citekeyFormat": "[zotero:clean]",
-      "citekeyFold": true,
-      "keyConflictPolicy": "keep",
-      "auxImport": false,
-      "keyScope": "library",
-      "exportBibTeXStrings": "off",
-      "importBibTeXStrings": true,
-      "bibtexParticleNoOp": false,
-      "skipFields": "file",
-      "bibtexURL": "url",
-      "warnBulkModify": 10,
-      "postscript": "",
-      "strings": "",
       "autoAbbrev": false,
       "autoAbbrevStyle": "",
+      "autoExport": "immediate",
+      "autoExportDelay": 1,
       "autoExportIdleWait": 10,
-      "cacheFlushInterval": 5,
-      "csquotes": "",
-      "rawLaTag": "#LaTeX",
-      "rawImports": false,
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
-      "jabrefFormat": 0,
-      "qualityReport": true,
+      "autoPin": false,
+      "automaticTags": true,
+      "auxImport": false,
       "biblatexExtendedDateFormat": true,
       "biblatexExtendedNameFormat": true,
-      "exportTitleCase": true,
-      "exportBraceProtection": true,
-      "retainCache": false,
-      "importSentenceCase": "on+guess",
-      "importCaseProtection": "as-needed",
-      "autoExportDelay": 1,
-      "itemObserverDelay": 100,
-      "parseParticles": true,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "url",
+      "cacheFlushInterval": 5,
+      "citeCommand": "cite",
+      "citekeyFold": true,
+      "citekeyFormat": "[zotero:clean]",
       "citeprocNoteCitekey": false,
-      "extraMergeTeX": true,
+      "csquotes": "",
+      "debugLogDir": "",
+      "exportBibTeXStrings": "off",
+      "exportBraceProtection": true,
+      "exportTitleCase": true,
       "extraMergeCSL": true,
       "extraMergeCitekeys": true,
-      "postscriptOverride": "",
-      "scrubDatabase": false,
-      "removeStock": false,
-      "ignorePostscriptErrors": true,
-      "debugLogDir": "",
-      "autoPin": false,
-      "kuroshiro": false,
-      "relativeFilePaths": false,
+      "extraMergeTeX": true,
       "git": "config",
-      "mapUnicode": "conservative",
-      "mapText": "",
+      "ignorePostscriptErrors": true,
+      "importBibTeXStrings": true,
+      "importCaseProtection": "as-needed",
+      "importSentenceCase": "on+guess",
+      "itemObserverDelay": 100,
+      "jabrefFormat": 0,
+      "keyConflictPolicy": "keep",
+      "keyScope": "library",
+      "kuroshiro": false,
       "mapMath": "",
+      "mapText": "",
+      "mapUnicode": "conservative",
+      "parseParticles": true,
+      "postscript": "",
+      "postscriptOverride": "",
+      "qualityReport": true,
+      "quickCopyMode": "latex",
+      "quickCopyPandocBrackets": false,
+      "rawImports": false,
+      "rawLaTag": "#LaTeX",
+      "relativeFilePaths": false,
+      "removeStock": false,
+      "retainCache": false,
+      "scrubDatabase": false,
+      "skipFields": "file",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "strings": "",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
+      "warnBulkModify": 10,
       "workers": 0
-    },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
     }
   },
-  "collections": {},
   "items": [
     {
-      "itemType": "webpage",
-      "url": "http://tools.ietf.org/html/rfc4880",
-      "date": "2007-11",
-      "extra": "CCitation Key: rfc4880\ntex.IDs= shaw_rfc4880_2007,rfc4880",
       "accessDate": "2014-08-19T00:03:18Z",
-      "title": "RFC4880: OpenPGP Message Format",
-      "creators": [
-        {
-          "firstName": "David",
-          "lastName": "Shaw",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "Lutz",
-          "lastName": "Donnerhacke",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "Rodney",
-          "lastName": "Thayer",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "Hal",
-          "lastName": "Finney",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "Jon",
-          "lastName": "Callas",
-          "creatorType": "author"
-        }
-      ],
-      "collections": [
-        "N62PAZJV"
-      ],
-      "relations": [],
-      "dateAdded": "2014-08-19T00:03:18Z",
-      "dateModified": "2020-03-04T14:18:24Z",
-      "uri": "http://zotero.org/users/45772/items/VUJ2ZSCM",
       "attachments": [
         {
           "itemType": "attachment",
+          "path": "/home/muelli/Zotero/storage/FAFQ332R/rfc4880.html",
           "title": "Snapshot",
-          "tags": [],
-          "uri": "http://zotero.org/users/45772/items/FAFQ332R",
-          "path": "/home/muelli/Zotero/storage/FAFQ332R/rfc4880.html"
+          "uri": "http://zotero.org/users/45772/items/FAFQ332R"
         }
       ],
       "citationKey": "shaw_rfc4880_2007",
-      "itemID": 457,
-      "key": "VUJ2ZSCM"
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "David",
+          "lastName": "Shaw"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Lutz",
+          "lastName": "Donnerhacke"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Rodney",
+          "lastName": "Thayer"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Hal",
+          "lastName": "Finney"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jon",
+          "lastName": "Callas"
+        }
+      ],
+      "date": "2007-11",
+      "extra": [
+        "CCitation Key: rfc4880",
+        "tex.IDs= shaw_rfc4880_2007,rfc4880"
+      ],
+      "itemID": 1,
+      "itemType": "webpage",
+      "title": "RFC4880: OpenPGP Message Format",
+      "url": "http://tools.ietf.org/html/rfc4880"
     }
   ]
 }

@@ -1,10 +1,8 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
@@ -56,7 +54,6 @@
     {
       "ISBN": "978-0-415-78025-4",
       "abstractNote": "The Anthropology of Islam Reader brings together a rich variety of ethnographic work, offering an insight into various forms of Islam as practiced in different geographic, social, and cultural contexts. Topics explored include Ramadan and the Hajj, the Feast of Sacrifice, and the representation of Islam. An extensive introduction and bibliography helps students develop their understanding of the variety of methodological and theoretical approaches involved in the anthropological study of Islam. In his selections, Jens Kreinath highlights the diversity of practices and themes that were formative for this field of study, making this essential reading for students of Islam at undergraduate and graduate level.",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "editor",
@@ -65,19 +62,15 @@
         }
       ],
       "date": "December 15, 2011",
-      "dateAdded": "2019-02-25T21:27:12Z",
-      "dateModified": "2019-02-25T21:27:12Z",
       "edition": "1 edition",
-      "itemID": 21,
+      "itemID": 1,
       "itemType": "book",
       "language": "English",
       "libraryCatalog": "Amazon",
       "numPages": "432",
       "place": "London ; New York",
       "publisher": "Routledge",
-      "relations": [],
-      "title": "The Anthropology of Islam Reader",
-      "uri": "http://zotero.org/users/local/t1ouTzvw/items/56NQ79SG"
+      "title": "The Anthropology of Islam Reader"
     }
   ]
 }

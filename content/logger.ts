@@ -1,6 +1,6 @@
 declare const Zotero: any
 
-import stringify = require('json-stringify-safe')
+import { stringify } from './stringify'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Logger = new class { // tslint:disable-line:variable-name

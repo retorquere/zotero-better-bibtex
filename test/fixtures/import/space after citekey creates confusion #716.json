@@ -1,12 +1,9 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -59,44 +56,34 @@
   },
   "items": [
     {
-      "attachments": [],
       "citationKey": "HoSp-87",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
           "name": "Hoffmann"
         }
       ],
-      "dateAdded": "2019-08-19T14:31:17Z",
-      "dateModified": "2019-08-19T14:31:17Z",
-      "extra": "Citation Key: HoSp-87",
-      "itemID": 278,
+      "extra": [
+        "Citation Key: HoSp-87"
+      ],
+      "itemID": 1,
       "itemType": "journalArticle",
-      "key": "XRTG4RVE",
-      "relations": [],
-      "title": "Phase transitions",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/XRTG4RVE"
+      "title": "Phase transitions"
     },
     {
-      "attachments": [],
       "citationKey": "HoSp-90",
-      "collections": [],
       "creators": [
         {
           "creatorType": "editor",
           "name": "Sprekels"
         }
       ],
-      "dateAdded": "2019-08-19T14:31:17Z",
-      "dateModified": "2019-08-19T14:31:17Z",
-      "extra": "Citation Key: HoSp-90",
-      "itemID": 279,
+      "extra": [
+        "Citation Key: HoSp-90"
+      ],
+      "itemID": 2,
       "itemType": "book",
-      "key": "WCPQBSRH",
-      "relations": [],
-      "title": "Free boundary problems",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/WCPQBSRH"
+      "title": "Free boundary problems"
     }
   ]
 }

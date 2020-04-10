@@ -299,6 +299,42 @@
       {
         "family": "Jackson",
         "given": "Steven J."
+      }
+    ],
+    "container-title": "International Area Studies Review",
+    "DOI": "10/gfzrh2",
+    "ISSN": "2233-8659",
+    "issue": "3",
+    "issued": {
+      "date-parts": [
+        [
+          2013
+        ]
+      ]
+    },
+    "language": "en",
+    "page": "274-284",
+    "source": "SAGE Journals",
+    "title": "The contested terrain of sport diplomacy in a globalizing world",
+    "type": "article-journal",
+    "URL": "https://doi.org/10.1177/2233865913498867",
+    "volume": "16"
+  },
+  {
+    "id": "jackson2013a",
+    "accessed": {
+      "date-parts": [
+        [
+          2019,
+          4,
+          22
+        ]
+      ]
+    },
+    "author": [
+      {
+        "family": "Jackson",
+        "given": "Steven J."
       },
       {
         "family": "Scherer",
@@ -323,42 +359,6 @@
     "title-short": "Rugby World Cup 2011",
     "type": "article-journal",
     "URL": "https://doi.org/10.1080/17430437.2013.791156",
-    "volume": "16"
-  },
-  {
-    "id": "jackson2013a",
-    "accessed": {
-      "date-parts": [
-        [
-          2019,
-          4,
-          22
-        ]
-      ]
-    },
-    "author": [
-      {
-        "family": "Jackson",
-        "given": "Steven J."
-      }
-    ],
-    "container-title": "International Area Studies Review",
-    "DOI": "10/gfzrh2",
-    "ISSN": "2233-8659",
-    "issue": "3",
-    "issued": {
-      "date-parts": [
-        [
-          2013
-        ]
-      ]
-    },
-    "language": "en",
-    "page": "274-284",
-    "source": "SAGE Journals",
-    "title": "The contested terrain of sport diplomacy in a globalizing world",
-    "type": "article-journal",
-    "URL": "https://doi.org/10.1177/2233865913498867",
     "volume": "16"
   },
   {

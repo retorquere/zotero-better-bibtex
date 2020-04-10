@@ -1,10 +1,8 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
@@ -33,7 +31,6 @@
     {
       "ISBN": "978-3-322-99963-4 978-3-322-99962-7",
       "accessDate": "2016-01-23 11:04:33",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -47,8 +44,10 @@
         }
       ],
       "date": "[1990]2002",
-      "extra": "DOI: 10.1007/978-3-322-99962-7_7",
-      "itemID": 362,
+      "extra": [
+        "DOI: 10.1007/978-3-322-99962-7_7"
+      ],
+      "itemID": 1,
       "itemType": "bookSection",
       "language": "de",
       "libraryCatalog": "link.springer.com",
@@ -62,7 +61,6 @@
     {
       "ISBN": "978-3-322-99963-4 978-3-322-99962-7",
       "accessDate": "2016-01-23 11:04:33",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -76,8 +74,10 @@
         }
       ],
       "date": "[1997]2002",
-      "extra": "DOI: 10.1007/978-3-322-99962-7_11",
-      "itemID": 386,
+      "extra": [
+        "DOI: 10.1007/978-3-322-99962-7_11"
+      ],
+      "itemID": 2,
       "itemType": "bookSection",
       "language": "de",
       "libraryCatalog": "link.springer.com",

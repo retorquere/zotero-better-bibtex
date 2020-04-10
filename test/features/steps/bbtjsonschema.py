@@ -17,7 +17,9 @@ def refresh():
 
   schema.properties.config.properties.preferences.properties = {}
   for pref, meta in prefs.items():
-    if meta.type == 'string' and 'options' in meta:
+    if pref in ['client', 'platform', 'newTranslatorsAskRestart', 'testing']:
+      pass
+    elif meta.type == 'string' and 'options' in meta:
       schema.properties.config.properties.preferences.properties[pref] = { 'enum': list(meta.options.keys()) }
     elif meta.type in [ 'string', 'boolean', 'number' ]:
       schema.properties.config.properties.preferences.properties[pref] = { 'type': meta.type }
@@ -38,7 +40,11 @@ def refresh():
       for itemType in client.itemTypes:
         itemTypes.add(itemType.itemType)
         for field in itemType.fields:
-          schema.properties['items']['items'].properties[field.get('baseField', field.field)] = Munch(type='string')
+          if field.field == 'extra':
+            fieldType = Munch.fromDict({'type' : 'array', 'items': { 'type': 'string' } })
+          else:
+            fieldType = Munch(type='string')
+          schema.properties['items']['items'].properties[field.get('baseField', field.field)] = fieldType
 
         for creator in itemType.creatorTypes:
           creatorType.enum = sorted(list(set(creatorType.enum + [creator.creatorType])))

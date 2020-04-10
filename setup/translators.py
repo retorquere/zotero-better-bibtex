@@ -54,12 +54,13 @@ variables.labels = translators.byLabel.keys()
 
 template = """
 type ZoteroCollection = {
-  id: string
+  // id?: string
   key: string
-  parent: string
   name: string
-  items: string[]
-  collections: string[] | ZoteroCollection[]
+  // collections: string[] | ZoteroCollection[]
+  collections: string[]
+  items: number[]
+  parent?: string
 }
 
 interface ITranslator {

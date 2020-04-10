@@ -1,12 +1,9 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "doi",
@@ -66,11 +63,7 @@
   },
   "items": [
     {
-      "attachments": [],
       "citationKey": "rosengren_uses_1974",
-      "collections": [
-        "UYWWSJED"
-      ],
       "creators": [
         {
           "creatorType": "author",
@@ -89,20 +82,15 @@
         }
       ],
       "date": "1974",
-      "dateAdded": "2019-12-25T21:35:41Z",
-      "dateModified": "2019-12-25T21:54:20Z",
-      "itemID": 5307,
+      "itemID": 1,
       "itemType": "bookSection",
-      "key": "U8D54C2P",
       "notes": [
         "<p>In Valkenburg (2016):</p>\n<p>Uses-and-grati\ufb01cations theory: Attempts to understand why and how people actively seek out speci\ufb01c media to satisfy speci\ufb01c needs</p>"
       ],
       "pages": "269-286",
       "publicationTitle": "The uses of mass communications: Current perspectives on grati\ufb01cations research",
       "publisher": "SAGE Publications",
-      "relations": [],
-      "title": "Uses and gratifications: A paradigm outlined",
-      "uri": "http://zotero.org/users/4747744/items/U8D54C2P"
+      "title": "Uses and gratifications: A paradigm outlined"
     }
   ]
 }

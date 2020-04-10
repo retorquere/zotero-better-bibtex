@@ -1,12 +1,8 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false,
-      "exportNotes": false
-    },
+    "options": {},
     "preferences": {
       "DOIandURL": "both",
       "asciiBibLaTeX": false,
@@ -51,7 +47,6 @@
     {
       "ISBN": "978-953-51-0396-7",
       "accessDate": "2018-11-08T19:36:39Z",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -60,36 +55,30 @@
         },
         {
           "creatorType": "author",
-          "firstName": "",
           "lastName": "Alpha"
         },
         {
           "creatorType": "author",
-          "firstName": "",
           "lastName": "Beta"
         },
         {
           "creatorType": "author",
-          "firstName": "",
           "lastName": "Gamma"
         },
         {
           "creatorType": "author",
-          "firstName": "",
           "lastName": "Delta"
         }
       ],
       "date": "2012-03-28",
-      "dateAdded": "2018-11-08T19:36:39Z",
-      "dateModified": "2018-11-10T11:02:00Z",
-      "extra": "DOI: 10.5772/2662",
-      "itemID": 102,
+      "extra": [
+        "DOI: 10.5772/2662"
+      ],
+      "itemID": 1,
       "itemType": "bookSection",
       "language": "en",
       "publicationTitle": "Fuzzy Logic - Controls, Concepts, Theories and Applications",
-      "relations": [],
       "title": "A Mamdani Type Fuzzy Logic Controller",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/J2TWZPJZ",
       "url": "https://www.intechopen.com/books/fuzzy-logic-controls-concepts-theories-and-applications"
     }
   ]

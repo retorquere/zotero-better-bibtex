@@ -1,10 +1,8 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
@@ -23,7 +21,6 @@
   "items": [
     {
       "ISBN": "978-2-87031-104-2 978-2-87031-228-5 978-2-87031-179-0 978-2-87031-184-4 978-2-87031-195-0 978-2-87031-213-1 978-2-87031-256-8 978-2-87031-264-3 978-2-87031-284-1",
-      "attachments": [],
       "callNumber": "PA6011 .S86",
       "creators": [
         {
@@ -38,7 +35,7 @@
         }
       ],
       "date": "1979",
-      "itemID": 18810,
+      "itemID": 1,
       "itemType": "bookSection",
       "language": "eng",
       "libraryCatalog": "Library of Congress ISBN",

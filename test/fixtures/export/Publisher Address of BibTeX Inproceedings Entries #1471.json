@@ -2,117 +2,111 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
     "preferences": {
-      "postscript": "\nif (Translator.BetterBibTeX && item.itemType === 'conferencePaper' && item.extra) {\n  for (const line of item.extra.split('\\n')) {\n    try {\n      const [ , keyword, value ] = line.match(/([^:]+):s*(.*)/)\n      switch (keyword) {\n        case 'Sponsor':\n          reference.add({name: 'organization', value })\n          break\n      }\n    } catch (err) {\n      if (!(err instanceof TypeError)) throw err\n    }\n  }\n}\n",
       "DOIandURL": "both",
-      "automaticTags": true,
-      "asciiBibLaTeX": false,
       "ascii": "",
+      "asciiBibLaTeX": false,
       "asciiBibTeX": false,
-      "autoExport": "immediate",
-      "quickCopyMode": "latex",
-      "citeCommand": "cite",
-      "quickCopyPandocBrackets": false,
-      "citekeyFormat": "[auth:lower][year]",
-      "citekeyFold": true,
-      "keyConflictPolicy": "keep",
-      "auxImport": false,
-      "keyScope": "library",
-      "exportBibTeXStrings": "off",
-      "importBibTeXStrings": true,
-      "bibtexParticleNoOp": false,
-      "skipFields": "abstract,file,keywords,note",
-      "bibtexURL": "url",
-      "warnBulkModify": 10,
-      "strings": "",
       "autoAbbrev": false,
       "autoAbbrevStyle": "",
+      "autoExport": "immediate",
+      "autoExportDelay": 1,
       "autoExportIdleWait": 10,
-      "cacheFlushInterval": 5,
-      "csquotes": "",
-      "rawLaTag": "#LaTeX",
-      "rawImports": false,
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
-      "jabrefFormat": 0,
-      "qualityReport": false,
+      "autoPin": false,
+      "automaticTags": true,
+      "auxImport": false,
       "biblatexExtendedDateFormat": true,
       "biblatexExtendedNameFormat": true,
-      "exportTitleCase": true,
-      "exportBraceProtection": true,
-      "retainCache": false,
-      "importSentenceCase": "on+guess",
-      "importCaseProtection": "as-needed",
-      "autoExportDelay": 1,
-      "itemObserverDelay": 5,
-      "parseParticles": true,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "url",
+      "cacheFlushInterval": 5,
+      "citeCommand": "cite",
+      "citekeyFold": true,
+      "citekeyFormat": "[auth:lower][year]",
       "citeprocNoteCitekey": false,
-      "extraMergeTeX": true,
+      "csquotes": "",
+      "debugLogDir": "",
+      "exportBibTeXStrings": "off",
+      "exportBraceProtection": true,
+      "exportTitleCase": true,
       "extraMergeCSL": true,
       "extraMergeCitekeys": true,
-      "importJabRefStrings": true,
-      "importJabRefAbbreviations": true,
-      "postscriptOverride": "",
-      "scrubDatabase": false,
-      "removeStock": false,
-      "ignorePostscriptErrors": true,
-      "debugLogDir": "",
-      "autoPin": false,
-      "kuroshiro": false,
-      "relativeFilePaths": false,
+      "extraMergeTeX": true,
       "git": "config",
-      "mapUnicode": "conservative",
-      "mapText": "",
+      "ignorePostscriptErrors": true,
+      "importBibTeXStrings": true,
+      "importCaseProtection": "as-needed",
+      "importJabRefAbbreviations": true,
+      "importJabRefStrings": true,
+      "importSentenceCase": "on+guess",
+      "itemObserverDelay": 5,
+      "jabrefFormat": 0,
+      "keyConflictPolicy": "keep",
+      "keyScope": "library",
+      "kuroshiro": false,
       "mapMath": "",
+      "mapText": "",
+      "mapUnicode": "conservative",
+      "parseParticles": true,
+      "postscript": "\nif (Translator.BetterBibTeX && item.itemType === 'conferencePaper' && item.extra) {\n  for (const line of item.extra.split('\\n')) {\n    try {\n      const [ , keyword, value ] = line.match(/([^:]+):s*(.*)/)\n      switch (keyword) {\n        case 'Sponsor':\n          reference.add({name: 'organization', value })\n          break\n      }\n    } catch (err) {\n      if (!(err instanceof TypeError)) throw err\n    }\n  }\n}\n",
+      "postscriptOverride": "",
+      "qualityReport": false,
+      "quickCopyMode": "latex",
+      "quickCopyPandocBrackets": false,
+      "rawImports": false,
+      "rawLaTag": "#LaTeX",
+      "relativeFilePaths": false,
+      "removeStock": false,
+      "retainCache": false,
+      "scrubDatabase": false,
+      "skipFields": "abstract,file,keywords,note",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "strings": "",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
+      "warnBulkModify": 10,
       "workers": 2
-    },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
     }
   },
-  "collections": {},
   "items": [
     {
-      "key": "JCZZEJGP",
-      "itemType": "conferencePaper",
-      "title": "CSR5: an efficient storage format for cross-platform sparse matrix-vector multiplication",
-      "abstractNote": "Sparse matrix-vector multiplication (SpMV) is a fundamental building block for numerous applications. In this paper, we propose CSR5 (Compressed Sparse Row 5), a new storage format, which offers high-throughput SpMV on various platforms including CPUs, GPUs and Xeon Phi. First, the CSR5 format is insensitive to the sparsity structure of the input matrix. Thus the single format can support an SpMV algorithm that is efficient both for regular matrices and for irregular matrices. Furthermore, we show that the overhead of the format conversion from the CSR to the CSR5 can be as low as the cost of a few SpMV operations. We compare the CSR5-based SpMV algorithm with 11 state-of-the-art formats and algorithms on four mainstream processors using 14 regular and 10 irregular matrices as a benchmark suite. For the 14 regular matrices in the suite, we achieve comparable or better performance over the previous work. For the 10 irregular matrices, the CSR5 obtains average performance improvement of 17.6%, 28.5%, 173.0% and 293.3% (up to 213.3%, 153.6%, 405.1% and 943.3%) over the best existing work on dual-socket Intel CPUs, an nVidia GPU, an AMD GPU and an Intel Xeon Phi, respectively. For real-world applications such as a solver with only tens of iterations, the CSR5 format can be more practical because of its low-overhead for format conversion.",
-      "date": "2015-06-08",
-      "language": "en-US",
-      "shortTitle": "CSR5",
-      "libraryCatalog": "ACM Digital Library",
-      "url": "https://dl.acm.org/doi/10.1145/2751205.2751209",
-      "rights": "Copyright is held by the owner/author(s). Publication rights licensed to ACM.",
-      "extra": "Event Date: 2015-06-08/2015-06-11\nEvent Place: Newport Beach, California, USA\nPublisher Place: New York, NY, United States\nSponsor: ACM SIGARCH",
-      "publisher": "Association for Computing Machinery",
-      "ISBN": "978-1-4503-3559-1",
-      "pages": "339\u2013350",
-      "series": "ICS '15",
-      "conferenceName": "29th ACM International Conference on Supercomputing",
       "DOI": "10.1145/2751205.2751209",
+      "ISBN": "978-1-4503-3559-1",
+      "abstractNote": "Sparse matrix-vector multiplication (SpMV) is a fundamental building block for numerous applications. In this paper, we propose CSR5 (Compressed Sparse Row 5), a new storage format, which offers high-throughput SpMV on various platforms including CPUs, GPUs and Xeon Phi. First, the CSR5 format is insensitive to the sparsity structure of the input matrix. Thus the single format can support an SpMV algorithm that is efficient both for regular matrices and for irregular matrices. Furthermore, we show that the overhead of the format conversion from the CSR to the CSR5 can be as low as the cost of a few SpMV operations. We compare the CSR5-based SpMV algorithm with 11 state-of-the-art formats and algorithms on four mainstream processors using 14 regular and 10 irregular matrices as a benchmark suite. For the 14 regular matrices in the suite, we achieve comparable or better performance over the previous work. For the 10 irregular matrices, the CSR5 obtains average performance improvement of 17.6%, 28.5%, 173.0% and 293.3% (up to 213.3%, 153.6%, 405.1% and 943.3%) over the best existing work on dual-socket Intel CPUs, an nVidia GPU, an AMD GPU and an Intel Xeon Phi, respectively. For real-world applications such as a solver with only tens of iterations, the CSR5 format can be more practical because of its low-overhead for format conversion.",
+      "citationKey": "liu2015a",
+      "conferenceName": "29th ACM International Conference on Supercomputing",
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "Weifeng",
-          "lastName": "Liu",
-          "creatorType": "author"
+          "lastName": "Liu"
         },
         {
+          "creatorType": "author",
           "firstName": "Brian",
-          "lastName": "Vinter",
-          "creatorType": "author"
+          "lastName": "Vinter"
         }
       ],
+      "date": "2015-06-08",
+      "extra": [
+        "Event Date: 2015-06-08/2015-06-11",
+        "Event Place: Newport Beach, California, USA",
+        "Publisher Place: New York, NY, United States",
+        "Sponsor: ACM SIGARCH"
+      ],
+      "itemID": 1,
+      "itemType": "conferencePaper",
+      "language": "en-US",
+      "libraryCatalog": "ACM Digital Library",
+      "pages": "339\u2013350",
+      "publicationTitle": "Proceedings of the 29th ACM international conference on supercomputing",
+      "publisher": "Association for Computing Machinery",
+      "rights": "Copyright is held by the owner/author(s). Publication rights licensed to ACM.",
+      "series": "ICS '15",
+      "shortTitle": "CSR5",
       "tags": [
-        {
-          "tag": "sparse matrices",
-          "type": 1
-        },
-        {
-          "tag": "spmv",
-          "type": 1
-        },
         {
           "tag": "cpu",
           "type": 1
@@ -130,6 +124,14 @@
           "type": 1
         },
         {
+          "tag": "sparse matrices",
+          "type": 1
+        },
+        {
+          "tag": "spmv",
+          "type": 1
+        },
+        {
           "tag": "storage formats",
           "type": 1
         },
@@ -138,17 +140,8 @@
           "type": 1
         }
       ],
-      "collections": [
-        "ZKGGCFJB"
-      ],
-      "relations": [],
-      "dateAdded": "2020-04-02T18:40:57Z",
-      "dateModified": "2020-04-02T18:41:05Z",
-      "uri": "http://zotero.org/users/local/cuz22LJP/items/JCZZEJGP",
-      "itemID": 112,
-      "attachments": [],
-      "citationKey": "liu2015a",
-      "publicationTitle": "Proceedings of the 29th ACM international conference on supercomputing"
+      "title": "CSR5: an efficient storage format for cross-platform sparse matrix-vector multiplication",
+      "url": "https://dl.acm.org/doi/10.1145/2751205.2751209"
     }
   ]
 }

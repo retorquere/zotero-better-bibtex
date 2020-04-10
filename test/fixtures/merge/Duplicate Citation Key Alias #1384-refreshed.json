@@ -1,12 +1,9 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -69,9 +66,7 @@
       "DOI": "10.1038/nature24290",
       "ISSN": "0028-0836, 1476-4687",
       "accessDate": "2020-01-09T18:12:24Z",
-      "attachments": [],
       "citationKey": "Troja2017",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -245,22 +240,19 @@
         }
       ],
       "date": "11/2017",
-      "dateAdded": "2020-01-09T18:11:24Z",
-      "dateModified": "2020-01-09T18:25:34Z",
+      "extra": [
+        "arXiv: 1710.05433"
+      ],
       "issue": "7678",
-      "itemID": 13,
+      "itemID": 1,
       "itemType": "journalArticle",
       "journalAbbreviation": "Nature",
-      "key": "4CVWPLVV",
       "language": "en",
       "libraryCatalog": "DOI.org (Crossref)",
       "pages": "71-74",
       "publicationTitle": "Nature",
-      "relations": [],
       "title": "The X-ray counterpart to the gravitational-wave event GW170817",
-      "uri": "http://zotero.org/users/local/oIZgFgeZ/items/4CVWPLVV",
       "url": "http://www.nature.com/articles/nature24290",
-      "extra": "arXiv: 1710.05433",
       "volume": "551"
     }
   ]

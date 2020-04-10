@@ -13,6 +13,7 @@ import { Formatter as CAYWFormatter } from './cayw/formatter'
 import { getItemsAsync } from './get-items-async'
 import { AUXScanner } from './aux-scanner'
 import { DB as Cache } from './db/cache'
+import { upgrade } from './db/upgrade'
 
 import * as pref_defaults from '../gen/preferences/defaults.json'
 
@@ -110,6 +111,8 @@ export = new class {
     const after = items.length
 
     log.debug(`import found ${after - before} items`)
+
+    await upgrade(msg => log.debug(msg))
     return (after - before)
   }
 

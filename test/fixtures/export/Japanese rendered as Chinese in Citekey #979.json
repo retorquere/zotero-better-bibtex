@@ -1,5 +1,4 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
@@ -46,7 +45,6 @@
   "items": [
     {
       "ISBN": "978-4-8158-0763-4",
-      "attachments": [],
       "callNumber": "HN730.Z9 R3244 2014",
       "creators": [
         {
@@ -65,9 +63,7 @@
         }
       ],
       "date": "2014",
-      "dateAdded": "2018-06-01 03:17:45",
-      "dateModified": "2018-06-01 03:28:46",
-      "itemID": 9663,
+      "itemID": 1,
       "itemType": "bookSection",
       "libraryCatalog": "Library of Congress ISBN",
       "multi": {
