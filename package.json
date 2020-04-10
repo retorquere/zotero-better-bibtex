@@ -85,7 +85,7 @@
     "task-easy": "^1.0.1",
     "transliteration": "^2.1.8",
     "tslint": "^6.1.1",
-    "unicode2latex": "^2.1.11",
+    "unicode2latex": "^2.1.13",
     "words-to-numbers": "^1.5.1",
     "xregexp": "^4.3.0"
   },
@@ -109,7 +109,7 @@
     "indent-string": "^4.0.0",
     "ini": "^1.3.5",
     "jscodeshift": "^0.7.0",
-    "jsesc": "^3.0.0",
+    "jsesc": "^3.0.1",
     "loader-utils": "^2.0.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",

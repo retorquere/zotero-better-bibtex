@@ -5,6 +5,7 @@ import { debug } from '../lib/debug'
 
 import HE = require('he')
 import * as unicode2latex from 'unicode2latex'
+const combining_diacritics = new RegExp(`^[a-zA-Z][${Object.keys(unicode2latex.diacritics.tolatex).join('')}]+`)
 
 /* https://github.com/retorquere/zotero-better-bibtex/issues/1189
   Needed so that composite characters are counted as single characters
@@ -251,7 +252,7 @@ const htmlConverter = new class HTMLConverter {
       text: (nocased ? '$' : '$}'),
     }
 
-    text = text.normalize('NFC')
+    text = text.normalize('NFD') // required for multi-diacritics
     let mapped, switched, m, i, diacritic
     const l = text.length
     for (i = 0; i < l; i++) {
@@ -260,10 +261,13 @@ const htmlConverter = new class HTMLConverter {
         mapped = this.mapping[text.substr(i, 4)] || { text: text[i] + text[i + 2] } // tslint:disable-line no-magic-numbers
         i += 3 // tslint:disable-line no-magic-numbers
 
-      // combining diacritic
-      } else if (text[i + 1] && !Translator.unicode && (diacritic = unicode2latex.diacritics.tolatex[text[i + 1]])) {
+      // combining diacritics
+      } else if (!Translator.unicode && (m = combining_diacritics.exec(text.substring(i))) && (diacritic = unicode2latex.diacritics.tolatex[m[0].substr(1,2)])) {
+        // support for multiple-diacritics is taken from tipa, which doesn't support more than 2
+        // tslint:disable-next-line:no-magic-numbers
+        if (m[0].length > 3) debug('discarding diacritics > 2 from', m[0])
         mapped = { [diacritic.mode]: `\\${diacritic.command}{${text[i]}}` }
-        i += 1
+        i += m[0].length - 1
 
       } else if (text[i + 1] && (mapped = this.mapping[text.substr(i, 2)])) {
         i += 1
@@ -323,7 +327,7 @@ const htmlConverter = new class HTMLConverter {
     // might still be in math mode at the end
     if (mode === 'math') latex += switchTo.text
 
-    this.latex += latex
+    this.latex += latex.normalize('NFC')
   }
 }
 
