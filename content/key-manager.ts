@@ -40,7 +40,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
   public async pin(ids, inspireHEP = false) {
     ids = this.expandSelection(ids)
 
-    const inspireSearch = 'http://inspirehep.net/search?of=recjson&ot=system_control_number&p='
+    const inspireSearch = 'http://old.inspirehep.net/search?of=recjson&ot=system_control_number&p='
 
     for (const item of await getItemsAsync(ids)) {
       if (item.isNote() || item.isAttachment()) continue
