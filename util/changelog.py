@@ -34,5 +34,5 @@ for line in subprocess.check_output('git log --pretty=format:"%ad%x09%s" --date=
   else:
     titles = [re.sub(r'[^0-9]', '', nr) for nr in re.findall(r'(?:#|gh-)[0-9]+', comment)]
     titles = ' '.join(['[' + issues[nr] + ']' for nr in titles if nr in issues])
-    if len(titles) > 0: titles = ' ' + titles
-    print(f' - {comment}{titles}')
+    if len(titles) > 0: titles += ' '
+    print(f' - {titles}{comment}')
