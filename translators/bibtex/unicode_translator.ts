@@ -5,7 +5,9 @@ import { debug } from '../lib/debug'
 
 import HE = require('he')
 import * as unicode2latex from 'unicode2latex'
-const combining_diacritics = new RegExp(`^[a-zA-Z][${Object.keys(unicode2latex.diacritics.tolatex).join('')}]+`)
+const combining_diacritics = Object.keys(unicode2latex.diacritics.tolatex).join('')
+const combining_diacritics_re = new RegExp(`^[^${combining_diacritics}][${combining_diacritics}]+`)
+// import { asciify } from '../../content/stringify'
 
 /* https://github.com/retorquere/zotero-better-bibtex/issues/1189
   Needed so that composite characters are counted as single characters
@@ -29,6 +31,8 @@ if (Translator.BetterBibTeX) {
       tex.text = `{${tex.text}}`
     } else if (m = tex.text.match(/^\\(L|O|AE|AA|DH|DJ|OE|SS|TH|NG)\{\}$/i)) {
       tex.text = `{\\${m[1]}}`
+    } else if (m = tex.text.match(/^\\([a-zA-Z]){([a-zA-Z0-9])}$/)) {
+      tex.text = `{\\${m[1]} ${m[2]}}`
     }
   }
 }
@@ -256,26 +260,60 @@ const htmlConverter = new class HTMLConverter {
     let mapped, switched, m, i, diacritic
     const l = text.length
     for (i = 0; i < l; i++) {
+      m = combining_diacritics_re.exec(text.substring(i))
+      if (m) diacritic = unicode2latex.diacritics.tolatex[m[0].substr(1,2)]
+      if (m) mapped = this.mapping[m[0].normalize('NFC')]
+      mapped = null
+
       // tie "i","︠","a","︡"
       if (text[i + 1] === '\ufe20' && text[i + 3] === '\ufe21') { // tslint:disable-line no-magic-numbers
         mapped = this.mapping[text.substr(i, 4)] || { text: text[i] + text[i + 2] } // tslint:disable-line no-magic-numbers
         i += 3 // tslint:disable-line no-magic-numbers
-
-      // combining diacritics
-      } else if (!Translator.unicode && (m = combining_diacritics.exec(text.substring(i))) && (diacritic = unicode2latex.diacritics.tolatex[m[0].substr(1,2)])) {
-        // support for multiple-diacritics is taken from tipa, which doesn't support more than 2
-        // tslint:disable-next-line:no-magic-numbers
-        if (m[0].length > 3) debug('discarding diacritics > 2 from', m[0])
-        mapped = { [diacritic.mode]: `\\${diacritic.command}{${text[i]}}` }
-        i += m[0].length - 1
-
-      } else if (text[i + 1] && (mapped = this.mapping[text.substr(i, 2)])) {
-        i += 1
-
-      } else {
-        mapped = this.mapping[text[i]] || { text: text[i] }
-
       }
+
+      if (!mapped && !Translator.unicode) {
+        // combining diacritics. Relies on NFD always being mapped, otherwise NFC won't be tested
+
+        if (m = combining_diacritics_re.exec(text.substring(i))) {
+          // try compact representation first
+          mapped = this.mapping[m[0].normalize('NFC')]
+
+          if (!mapped && (diacritic = unicode2latex.diacritics.tolatex[m[0].substr(1,2)])) {
+            const char = this.mapping[text[i]] || { text: text[i], math: text[i] }
+
+            if (char[diacritic.mode]) {
+              if (diacritic.command.match(/[a-z]/)) {
+                if (Translator.BetterBibTeX && diacritic.mode === 'text') {
+                  mapped = { [diacritic.mode]: `{\\${diacritic.command} ${text[i]}}` }
+                } else {
+                  mapped = { [diacritic.mode]: `\\${diacritic.command}{${text[i]}}` }
+                }
+
+
+              } else {
+                if (Translator.BetterBibTeX && diacritic.mode === 'text') {
+                  mapped = { [diacritic.mode]: `{\\${diacritic.command}${text[i]}}` }
+                } else {
+                  mapped = { [diacritic.mode]: `\\${diacritic.command}${text[i]}` }
+                }
+
+              }
+
+              // support for multiple-diacritics is taken from tipa, which doesn't support more than 2
+              if (m[0].length > 3) debug('discarding diacritics > 2 from', m[0]) // tslint:disable-line:no-magic-numbers
+
+            }
+          }
+        }
+
+        if (mapped) i += m[0].length - 1
+      }
+
+      if (!mapped && text[i + 1] && (mapped = this.mapping[text.substr(i, 2)])) {
+        i += 1
+      }
+
+      if (!mapped) mapped = this.mapping[text[i]] || { text: text[i] }
 
       // in and out of math mode
       if (!mapped[mode]) {
