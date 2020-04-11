@@ -1,5 +1,16 @@
 # Changelog
 
+## [5.2.21] - 2020-04-11
+
+ - Fix "Pin BibTeX key from InspireHEP" (#1479)
+ - Multi-diacritics export (#1481)
+ - allow BBT-JSON to be imported without extra-field meddling by Zotero
+ - Extend date-parser for new informal format (#1476)
+ - BibTeX entries should not have both volume and number fields (#1475)
+ - Export book sections as inbook (#1474)
+ - extra-field parsing improvements
+ - Juris-M is supported again
+
 ## [5.2.20] - 2020-03-23
 
  - Missing $ markers in export of \langle (#1469)
