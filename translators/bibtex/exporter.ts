@@ -8,7 +8,7 @@ import * as bibtexParser from '@retorquere/bibtex-parser'
 import { Postfix } from '../bibtex/postfix.ts'
 import * as Extra from '../../content/extra'
 // import { valid } from '../../gen/itemfields'
-// import { debug } from '../lib/debug'
+import { debug } from '../lib/debug'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Exporter = new class { // tslint:disable-line:variable-name
@@ -68,6 +68,7 @@ export let Exporter = new class { // tslint:disable-line:variable-name
 
       itemfields.simplifyForExport(item)
       Object.assign(item, Extra.get(item.extra, null, 'zotero'))
+      debug('extra fields:', { ef: item.extraFields, extra: item.extra })
 
       item.raw = Translator.preferences.rawLaTag === '*'
       item.tags = item.tags.filter(tag => {
