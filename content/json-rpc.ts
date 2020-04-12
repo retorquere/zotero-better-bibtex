@@ -75,6 +75,18 @@ class Item {
       path: att.getFilePath(),
     }))
   }
+
+  public async notes(citekeys) {
+    const keys = KeyManager.keys.find({ citekey: { $in: citekeys.map(citekey => citekey.replace('@', '')) } })
+    if (!keys.length) throw { code: INVALID_PARAMETERS, message: `zero matches for ${citekeys.join(',')}` }
+
+    const notes = {}
+    for (const key of keys) {
+      const item = await getItemsAsync(key.itemID)
+      notes[key.citekey] = (await getItemsAsync(item.getNotes())).map(note => note.getNote())
+    }
+    return notes
+  }
 }
 
 const api = new class API {
