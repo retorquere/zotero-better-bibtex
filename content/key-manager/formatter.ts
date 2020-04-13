@@ -105,18 +105,6 @@ class PatternFormatter {
 
   public parsePattern(pattern) { return parser.parse(pattern, this) }
 
-  private rjust(str, length, fill) {
-    if (str.length >= length) return str
-    return ((fill || ' ').repeat(length) + str).slice(-length)
-  }
-  private formatDate(date) {
-    if (!date) return ''
-    for (const part of ['year', 'month', 'day']) {
-      if (typeof date[part] === 'string' && !date[part].match(/^\d+$/)) date[part] = ''
-    }
-    // tslint:disable-next-line:no-magic-numbers
-    return `${this.rjust(date.year || '\t', 4, '0')}-${this.rjust(date.month || '\t', 2, '0')}-${this.rjust(date.day || '\t', 2, '0')}`.replace(/0*\t.*/, '')
-  }
   public format(item) {
     this.item = {
       item,
@@ -127,63 +115,33 @@ class PatternFormatter {
 
     if (['attachment', 'note'].includes(this.item.type)) return {}
 
+    this.item.date = ''
+    this.item.year = ''
+    this.item.origdate = ''
+    this.item.origyear = ''
+
     try {
       this.item.date = item.getField('date', false, true)
+      const date = this.parseDate(this.item.date)
+      this.item.date = this._format_date(date, '0y-0m-0d')
+      this.item.year = this._format_date(date, '0y')
+      this.item.month = this._format_date(date, '0m')
+      this.item.origdate = this._format_date(date, '0oy-0om-0od')
+      this.item.origyear = this._format_date(date, '0oy')
     } catch (err) {}
+
+    if (this.item.kv['original-date'] || this.item.kv.priorityDate) {
+      const date = this.parseDate(this.item.kv['original-date'] || this.item.kv.priorityDate)
+      this.item.origdate = this._format_date(date, '0y-0m-0d')
+      this.item.origyear = this._format_date(date, '0y')
+    }
+
     try {
       this.item.title = item.getField('title', false, true) || ''
       if (this.item.title.includes('<')) this.item.title = innerText(htmlParser.parseFragment(this.item.title))
     } catch (err) {
       this.item.title = ''
     }
-
-    if (this.item.date) {
-      let date = DateParser.parse(this.item.date)
-      if (date.type === 'list') date = date.dates.find(d => d.type !== 'open') || date.dates[0]
-      if (date.type === 'interval') date = (date.from && date.from.type !== 'open') ? date.from : date.to
-
-      switch ((date ? date.type : undefined) || 'verbatim') {
-        case 'open':
-          break
-
-        case 'verbatim':
-          // strToDate is a lot less accurate than the BBT+EDTF dateparser, but it sometimes extracts year-ish things that
-          // ours doesn't
-          date = Zotero.Date.strToDate(this.item.date)
-
-          this.item.year = parseInt(date.year)
-          if (isNaN(this.item.year)) delete this.item.year
-          if (!this.item.year) this.item.year = this.item.date
-
-          this.item.month = parseInt(date.month)
-          if (isNaN(this.item.month)) delete this.item.month
-          break
-
-        case 'date':
-          this.item.date = this.formatDate(date)
-          if (date.orig) this.item.origdate = this.formatDate(date.orig)
-          break
-
-        case 'season':
-          this.item.year = date.year
-          break
-
-        default:
-          throw new Error(`Unexpected parsed date ${JSON.stringify(this.item.date)} => ${JSON.stringify(date)}`)
-      }
-    }
-
-    if (this.item.kv['original-date'] || this.item.kv.priorityDate) {
-      const origdate = (this.item.kv['original-date'] || this.item.kv.priorityDate).split('-')
-      this.item.origdate = this.formatDate({ year: origdate[0], month: origdate[1], day: origdate[2]})
-    }
-
-    if (!this.item.date) this.item.date = this.item.origdate || ''
-    if (!this.item.origdate) this.item.origdate = this.item.date || ''
-
-    this.item.year = this.item.date.split('-')[0]
-    this.item.origyear = this.item.origdate.split('-')[0]
-    this.item.month = this.item.date.split('-')[1] || ''
 
     const citekey = this.generate()
 
@@ -192,6 +150,51 @@ class PatternFormatter {
     citekey.citekey = citekey.citekey.replace(/[\s{},@]/g, '')
 
     return citekey
+  }
+
+  private parseDate(v): { y: string, m: string, d: string, oy: string, om: string, od: string } {
+    v = v || ''
+    const parsed = { y: '', m: '', d: '', oy: '', om: '', od: '' }
+
+    let date = DateParser.parse(v)
+    if (date.type === 'list') date = date.dates.find(d => d.type !== 'open') || date.dates[0]
+    if (date.type === 'interval') date = (date.from && date.from.type !== 'open') ? date.from : date.to
+
+    switch ((date ? date.type : undefined) || 'verbatim') {
+      case 'open':
+        break
+
+      case 'verbatim':
+        // strToDate is a lot less accurate than the BBT+EDTF dateparser, but it sometimes extracts year-ish things that
+        // BBTs doesn't
+        date = Zotero.Date.strToDate(v)
+        parsed.y = isNaN(parseInt(date.year)) ? '' : v
+        parsed.m = isNaN(parseInt(date.month)) ? '' : date.month
+        parsed.d = isNaN(parseInt(date.day)) ? '' : date.day
+        break
+
+      case 'date':
+        Object.assign(parsed, { y: date.year, m: date.month, d: date.day, oy: date.orig?.year, om: date.orig?.month, od: date.orig?.day })
+        break
+
+      case 'season':
+        parsed.y = date.year
+        break
+
+      default:
+        throw new Error(`Unexpected parsed date ${JSON.stringify(v)} => ${JSON.stringify(date)}`)
+    }
+
+    log.debug('1488.parseDate:', parsed)
+    parsed.y = '' + (parsed.y || parsed.oy || '')
+    parsed.m = '' + (parsed.m || parsed.om || '')
+    parsed.d = '' + (parsed.d || parsed.od || '')
+    parsed.oy = '' + (parsed.oy || parsed.y || '')
+    parsed.om = '' + (parsed.om || parsed.m || '')
+    parsed.od = '' + (parsed.od || parsed.d || '')
+    log.debug('1488.parseDate fixed:', parsed)
+
+    return parsed
   }
 
   /** Generates citation keys as the stock Zotero Bib(La)TeX export does. Note that this pattern inherits all the problems of the original Zotero citekey generation -- you should really only use this if you have existing papers that rely on this behavior. */
@@ -453,6 +456,45 @@ class PatternFormatter {
 
   /** Capitalize all the significant words of the title, and concatenate them. For example, `An awesome paper on JabRef` will become `AnAwesomePaperJabref` */
   public $title() { return (this.titleWords(this.item.title) || []).join(' ') }
+
+  private rjust(str, length, fill) {
+    str = '' + (typeof str === 'number' ? str : (str || ''))
+    if (str.length >= length) return str
+    return ((fill || ' ').repeat(length) + str).slice(-length)
+  }
+
+  /** formats date as by replacing y, m and d in the format */
+  public _format_date(v, format='y-m-d') {
+    if (!v) return ''
+    if (typeof v === 'string') v = this.parseDate(v)
+
+    log.debug('1488._format_date:', v)
+    let keep = true
+    const formatted = format.split(/(0?o?[ymd])/).map((field, i) => {
+      if ((i % 2) === 0) return field
+
+      const rjust = field[0] === '0'
+      const fmt = rjust ? field.substring(1) : field
+      const vfmt = v[fmt]
+      log.debug('1488._format_date:', { rjust, fmt, vfmt, type: typeof vfmt })
+
+      if (typeof vfmt !== 'string' || !vfmt) return null
+      if (rjust) return this.rjust(vfmt, (fmt.endsWith('y') ? 4 : 2), '0') // tslint:disable-line:no-magic-numbers
+      return vfmt
+
+    }).filter((field, i, arr) => {
+      if ((i % 2) === 0) { // separator, peek ahead
+        keep = keep && arr[i + 1]
+      } else {
+        keep = keep && field
+      }
+      return keep
+
+    }).join('')
+    log.debug('1488._format_date =', formatted)
+
+    return formatted
+  }
 
   /** replaces text, case insensitive; `:replace=.etal,&etal` will replace `.EtAl` with `&etal` */
   public _replace(value, find, replace) {
