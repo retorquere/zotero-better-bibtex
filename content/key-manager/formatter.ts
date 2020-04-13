@@ -123,6 +123,7 @@ class PatternFormatter {
     try {
       this.item.date = item.getField('date', false, true)
       const date = this.parseDate(this.item.date)
+      log.debug('1488:', this.item.date, '=>', date)
       this.item.date = this._format_date(date, '0y-0m-0d')
       this.item.year = this._format_date(date, '0y')
       this.item.month = this._format_date(date, '0m')
@@ -157,6 +158,7 @@ class PatternFormatter {
     const parsed = { y: '', m: '', d: '', oy: '', om: '', od: '' }
 
     let date = DateParser.parse(v)
+    log.debug('1488.parseDate', v, '=>', date)
     if (date.type === 'list') date = date.dates.find(d => d.type !== 'open') || date.dates[0]
     if (date.type === 'interval') date = (date.from && date.from.type !== 'open') ? date.from : date.to
 
@@ -165,12 +167,15 @@ class PatternFormatter {
         break
 
       case 'verbatim':
+        if (date.orig) Object.assign(parsed, { oy: date.orig.year, om: date.orig.month, od: date.orig.day })
         // strToDate is a lot less accurate than the BBT+EDTF dateparser, but it sometimes extracts year-ish things that
         // BBTs doesn't
-        date = Zotero.Date.strToDate(v)
-        parsed.y = isNaN(parseInt(date.year)) ? '' : v
-        parsed.m = isNaN(parseInt(date.month)) ? '' : date.month
-        parsed.d = isNaN(parseInt(date.day)) ? '' : date.day
+        if (date.literal) {
+          const reparsed = Zotero.Date.strToDate(date.literal)
+          parsed.y = isNaN(parseInt(reparsed.year)) ? date.literal : reparsed.year
+          parsed.m = isNaN(parseInt(reparsed.month)) ? '' : reparsed.month
+          parsed.d = isNaN(parseInt(reparsed.day)) ? '' : reparsed.day
+        }
         break
 
       case 'date':
