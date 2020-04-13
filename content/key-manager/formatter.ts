@@ -105,6 +105,18 @@ class PatternFormatter {
 
   public parsePattern(pattern) { return parser.parse(pattern, this) }
 
+  private rjust(str, length, fill) {
+    if (str.length >= length) return str
+    return ((fill || ' ').repeat(length) + str).slice(-length)
+  }
+  private formatDate(date) {
+    if (!date) return ''
+    for (const part of ['year', 'month', 'day']) {
+      if (typeof date[part] === 'string' && !date[part].match(/^\d+$/)) date[part] = ''
+    }
+    // tslint:disable-next-line:no-magic-numbers
+    return `${this.rjust(date.year || '\t', 4, '0')}-${this.rjust(date.month || '\t', 2, '0')}-${this.rjust(date.day || '\t', 2, '0')}`.replace(/0*\t.*/, '')
+  }
   public format(item) {
     this.item = {
       item,
@@ -148,10 +160,8 @@ class PatternFormatter {
           break
 
         case 'date':
-          this.item.origyear = (date.orig ? date.orig.year : undefined) || date.year
-          this.item.year = date.year || this.item.origyear
-
-          this.item.month = date.month
+          this.item.date = this.formatDate(date)
+          if (date.orig) this.item.origdate = this.formatDate(date.orig)
           break
 
         case 'season':
@@ -163,7 +173,17 @@ class PatternFormatter {
       }
     }
 
-    if (this.item.kv['original-date'] || this.item.kv.priorityDate) this.item.origyear = (this.item.kv['original-date'] || this.item.kv.priorityDate).split('-')[0]
+    if (this.item.kv['original-date'] || this.item.kv.priorityDate) {
+      const origdate = (this.item.kv['original-date'] || this.item.kv.priorityDate).split('-')
+      this.item.origdate = this.formatDate({ year: origdate[0], month: origdate[1], day: origdate[2]})
+    }
+
+    if (!this.item.date) this.item.date = this.item.origdate || ''
+    if (!this.item.origdate) this.item.origdate = this.item.date || ''
+
+    this.item.year = this.item.date.split('-')[0]
+    this.item.origyear = this.item.origdate.split('-')[0]
+    this.item.month = this.item.date.split('-')[1] || ''
 
     const citekey = this.generate()
 
@@ -403,10 +423,20 @@ class PatternFormatter {
     return this.padYear(this.item.year, 2)
   }
 
+  /** The date of the publication */
+  public $date() {
+    return this.item.date
+  }
+
   /** The year of the publication */
   public $year() {
     // tslint:disable-next-line:no-magic-numbers
     return this.padYear(this.item.year, 4)
+  }
+
+  /** the original date of the publication */
+  public $origdate() {
+    return this.item.origdate
   }
 
   /** the original year of the publication */
