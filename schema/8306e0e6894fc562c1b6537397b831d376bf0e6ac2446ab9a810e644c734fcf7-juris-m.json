@@ -3262,7 +3262,7 @@
 			"standard": [
 				"standard"
 			],
-			"videoRecording": [
+			"video": [
 				"videoRecording"
 			]
 		},
@@ -3383,9 +3383,7 @@
 					"scale"
 				],
 				"section": [
-					"section",
-					"committee",
-					"opus"
+					"section"
 				],
 				"shortTitle": [
 					"shortTitle"
@@ -3421,6 +3419,9 @@
 				],
 				"jurisdiction": [
 					"jurisdiction"
+				],
+				"committee": [
+					"committee"
 				],
 				"publication-number": [
 					"publicationNumber"
@@ -3471,7 +3472,10 @@
 			"recipient": "recipient",
 			"reviewedAuthor": "reviewed-author",
 			"seriesEditor": "collection-editor",
-			"translator": "translator"
+			"translator": "translator",
+			"testimonyBy": "testimonyBy",
+			"contributor": "contributor",
+			"commenter": "commenter"
 		}
 	},
 	"locales": {
