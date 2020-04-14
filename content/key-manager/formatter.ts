@@ -68,7 +68,23 @@ class PatternFormatter {
   // tslint:disable-next-line:variable-name
   private DOMParser = Components.classes['@mozilla.org/xmlextras/domparser;1'].createInstance(Components.interfaces.nsIDOMParser)
 
-  private item: any
+  private item: {
+    type: string
+    language: string
+    kv: Record<string, string>
+    item: any
+
+    date?: string
+    year?: number | string
+    month?: number
+
+    origdate?: string
+    origyear?: number | string
+
+    title?: string
+    tags?: string[]
+    pages?: string
+  }
 
   private skipWords: Set<string>
 
@@ -116,25 +132,22 @@ class PatternFormatter {
     if (['attachment', 'note'].includes(this.item.type)) return {}
 
     this.item.date = ''
-    this.item.year = ''
     this.item.origdate = ''
-    this.item.origyear = ''
 
     try {
-      this.item.date = item.getField('date', false, true)
-      const date = this.parseDate(this.item.date)
+      const date = this.parseDate(item.getField('date', false, true))
       log.debug('1488:', this.item.date, '=>', date)
       this.item.date = this._format_date(date, '0y-0m-0d')
-      this.item.year = this._format_date(date, '0y')
-      this.item.month = this._format_date(date, '0m')
+      this.item.year = parseInt(date.y) || date.y
+      this.item.month = parseInt(date.m) || undefined
       this.item.origdate = this._format_date(date, '0oy-0om-0od')
-      this.item.origyear = this._format_date(date, '0oy')
+      this.item.origyear = parseInt(date.oy) || this.item.year
     } catch (err) {}
 
     if (this.item.kv['original-date'] || this.item.kv.priorityDate) {
       const date = this.parseDate(this.item.kv['original-date'] || this.item.kv.priorityDate)
       this.item.origdate = this._format_date(date, '0y-0m-0d')
-      this.item.origyear = this._format_date(date, '0y')
+      this.item.origyear = parseInt(date.y) || this.item.year
     }
 
     try {
@@ -161,29 +174,44 @@ class PatternFormatter {
     log.debug('1488.parseDate', v, '=>', date)
     if (date.type === 'list') date = date.dates.find(d => d.type !== 'open') || date.dates[0]
     if (date.type === 'interval') date = (date.from && date.from.type !== 'open') ? date.from : date.to
+    if (!date) date = { type: 'unknown', literal: v }
 
-    switch ((date ? date.type : undefined) || 'verbatim') {
+    switch (date.type) {
       case 'open':
         break
 
+      case 'unknown':
       case 'verbatim':
-        if (date.orig) Object.assign(parsed, { oy: date.orig.year, om: date.orig.month, od: date.orig.day })
-        // strToDate is a lot less accurate than the BBT+EDTF dateparser, but it sometimes extracts year-ish things that
-        // BBTs doesn't
-        if (date.literal) {
-          const reparsed = Zotero.Date.strToDate(date.literal)
-          parsed.y = isNaN(parseInt(reparsed.year)) ? date.literal : reparsed.year
-          parsed.m = isNaN(parseInt(reparsed.month)) ? '' : reparsed.month
-          parsed.d = isNaN(parseInt(reparsed.day)) ? '' : reparsed.day
+        if (date.orig) Object.assign(parsed, { oy: date.orig.year || '', om: date.orig.month || '', od: date.orig.day || '' })
+
+        const reparsed = (date.type === 'unknown') ? Zotero.Date.strToDate(date.literal) : {}
+        if (typeof reparsed.year === 'number') {
+          parsed.y = '' + reparsed.year
+          parsed.m = '' + (isNaN(parseInt(reparsed.month)) ? '' : reparsed.month)
+          parsed.d = '' + (isNaN(parseInt(reparsed.day)) ? '' : reparsed.day)
+
+        } else if (date.literal) {
+          Object.assign(parsed, { y: date.literal, m: '', d: '' })
+        } else {
+          Object.assign(parsed, { y: parsed.oy, m: parsed.om, d: parsed.od })
         }
+
+        if (!date.orig) Object.assign(parsed, { oy: parsed.y, om: parsed.m, od: parsed.d })
+
         break
 
       case 'date':
-        Object.assign(parsed, { y: date.year, m: date.month, d: date.day, oy: date.orig?.year, om: date.orig?.month, od: date.orig?.day })
+        Object.assign(parsed, { y: date.year, m: date.month, d: date.day })
+
+        if (date.orig) {
+          Object.assign(parsed, { oy: date.orig.year, om: date.orig.month, od: date.orig.day })
+        } else {
+          Object.assign(parsed, { oy: date.year, om: date.month, od: date.day })
+        }
         break
 
       case 'season':
-        parsed.y = date.year
+        parsed.y = parsed.oy = date.year
         break
 
       default:
@@ -191,13 +219,6 @@ class PatternFormatter {
     }
 
     log.debug('1488.parseDate:', parsed)
-    parsed.y = '' + (parsed.y || parsed.oy || '')
-    parsed.m = '' + (parsed.m || parsed.om || '')
-    parsed.d = '' + (parsed.d || parsed.od || '')
-    parsed.oy = '' + (parsed.oy || parsed.y || '')
-    parsed.om = '' + (parsed.om || parsed.m || '')
-    parsed.od = '' + (parsed.od || parsed.d || '')
-    log.debug('1488.parseDate fixed:', parsed)
 
     return parsed
   }
