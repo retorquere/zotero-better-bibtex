@@ -38,6 +38,7 @@
     "branches": "zotero-plugin-branches",
     "prefs": "ts-node zotero-webpack/script/prefs.ts",
     "fix-fixtures": "ts-node ./util/fix-test-fixtures.ts",
+    "preversion": "npm run docs:prep",
     "postversion": "git push --tags",
     "running": "ps auxw | grep -i zotero | grep -v grep || true",
     "docs:prep": "./setup/readme.py && typedoc --ignoreCompilerErrors --json gen/type-doc.json content/key-manager && ./setup/citekey-formatters.py && ./setup/preferences.py",
