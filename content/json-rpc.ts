@@ -112,9 +112,10 @@ class Item {
 const api = new class API {
   public $user: User
   public $item: Item
+  public $items: Item
 
   constructor() {
-    this.$item = new Item
+    this.$item = this.$items = new Item
     this.$user = new User
   }
 
@@ -123,7 +124,7 @@ const api = new class API {
     if (request.params && (!Array.isArray(request.params) && typeof request.params !== 'object')) return {jsonrpc: '2.0', error: {code: INVALID_PARAMETERS, message: 'Invalid Parameters'}, id: null}
 
     const [ namespace, methodName ] = request.method.split('.')
-    const method = namespace && methodName && this[`$${namespace}`] && this[`$${namespace}`][methodName]
+    const method = this[`$${namespace}`]?.[methodName]
 
     if (!method) return {jsonrpc: '2.0', error: {code: METHOD_NOT_FOUND, message: `Method not found: ${request.method}`}, id: null}
 
