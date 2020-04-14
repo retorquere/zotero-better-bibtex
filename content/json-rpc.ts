@@ -87,6 +87,26 @@ class Item {
     }
     return notes
   }
+
+  public async bibliography(citekeys, format: { quickCopy?: boolean, contentType?: 'html' | 'text', locale?: string, id?: string} = {}) {
+    const qc = format.quickCopy ? Zotero.QuickCopy.unserializeSetting(Zotero.Prefs.get('export.quickCopy.setting')) : {}
+    delete format.quickCopy
+
+    format = {
+      contentType: 'text', // can be 'html'
+      locale: '',
+      id: '',
+      ...qc,
+      ...format,
+    }
+    if (!format.id) throw new Error('no style specified')
+    if (((format as any).mode || 'bibliography') !== 'bibliography') throw new Error(`mode must be bibliograpy, not ${(format as any).mode}`)
+
+    const items = await getItemsAsync(KeyManager.keys.find({ citekey: { $in: citekeys.map(citekey => citekey.replace('@', '')) } }).map(key => key.itemID))
+
+    const bibliography = Zotero.QuickCopy.getContentFromItems(items, { ...format, mode: 'bibliography' }, null, false)
+    return bibliography[format.contentType || 'html']
+  }
 }
 
 const api = new class API {
