@@ -180,24 +180,23 @@ class PatternFormatter {
     log.debug('1488.parseDate', v, '=>', date)
     if (date.type === 'list') date = date.dates.find(d => d.type !== 'open') || date.dates[0]
     if (date.type === 'interval') date = (date.from && date.from.type !== 'open') ? date.from : date.to
-    if (!date.type) Object.assign(date, { type: 'unknown', literal: v })
+    if (!date.type) Object.assign(date, { type: 'verbatim', verbatim: v })
 
     switch (date.type) {
       case 'open':
         break
 
-      case 'unknown':
       case 'verbatim':
         if (date.orig) Object.assign(parsed, { oy: date.orig.year, om: date.orig.month, od: date.orig.day })
 
-        const reparsed = (date.type === 'unknown') ? Zotero.Date.strToDate(date.literal) : {}
+        const reparsed = Zotero.Date.strToDate(date.verbatim)
         if (typeof reparsed.year === 'number' || reparsed.year) {
           parsed.y = reparsed.year
           parsed.m = parseInt(reparsed.month) || undefined
           parsed.d = parseInt(reparsed.day) || undefined
 
-        } else if (date.literal) {
-          parsed.y = date.literal
+        } else if (date.verbatim) {
+          parsed.y = date.verbatim
 
         } else {
           Object.assign(parsed, { y: parsed.oy, m: parsed.om, d: parsed.od })

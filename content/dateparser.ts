@@ -158,6 +158,16 @@ export function parse(value, toplevel = true) {
     if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
   }
 
+  // July-October 1985
+  if (toplevel && (m = (/^([a-z]+)(?:--|-|–)([a-z]+)(?:--|-|–|\s+)([0-9]+)$/i).exec(value))) {
+    const [ , month1, month2, year ] = m
+
+    const from = parse(`${month1} ${year}`, false)
+    const to = parse(`${month2} ${year}`, false)
+
+    if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
+  }
+
   const state = {approximate: false, uncertain: false}
   const exactish = stripTime(value.replace(/[~?]+$/, match => {
     state.approximate = match.indexOf('~') >= 0

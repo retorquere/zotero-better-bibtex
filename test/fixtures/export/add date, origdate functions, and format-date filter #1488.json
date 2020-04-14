@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -29,7 +27,6 @@
       "citekeyFold": true,
       "citekeyFormat": "[=forumPost][shorttitle][date] | [shorttitle][origyear]",
       "citeprocNoteCitekey": false,
-      "client": "zotero",
       "csquotes": "",
       "debugLogDir": "",
       "exportBibTeXStrings": "off",
@@ -83,7 +80,7 @@
         {
           "itemType": "attachment",
           "path": "C:\\Users\\Mariano\\Zotero\\storage\\5LRDAI5H\\index.html",
-          "title": "PPCC. PIsitófilos Creditófagos. Primavera 2020",
+          "title": "PPCC. PIsit\u00f3filos Credit\u00f3fagos. Primavera 2020",
           "uri": "http://zotero.org/users/6244081/items/5LRDAI5H"
         }
       ],
@@ -91,73 +88,60 @@
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "austadísimos"
-        }
-      ],
-      "date": "2020",
-      "dateAdded": "2020-04-12T13:25:19Z",
-      "dateModified": "2020-04-12T13:35:03Z",
-      "itemID": 1,
-      "itemType": "forumPost",
-      "title": "Forum Post with year only",
-      "uri": "http://zotero.org/users/6244081/items/7TIAPJK7",
-      "url": "https://www.transicionestructural.net/index.php?topic=2514.msg177634#msg177634"
-    },
-    {
-      "accessDate": "2020-04-12T13:25:19Z",
-      "attachments": [
-        {
-          "itemType": "attachment",
-          "path": "C:\\Users\\Mariano\\Zotero\\storage\\5LRDAI5H\\index.html",
-          "title": "PPCC. PIsitófilos Creditófagos. Primavera 2020",
-          "uri": "http://zotero.org/users/6244081/items/5LRDAI5H"
-        }
-      ],
-      "citationKey": "austadisimos.2020.BenditaMierdaCoronavirus",
-      "creators": [
-        {
-          "creatorType": "author",
-          "lastName": "austadísimos"
+          "lastName": "austad\u00edsimos"
         }
       ],
       "date": "2020-04-11",
-      "dateAdded": "2020-04-12T13:25:19Z",
-      "dateModified": "2020-04-12T13:35:03Z",
-      "itemID": 1,
-      "itemType": "forumPost",
-      "title": "Forum post with full date",
-      "uri": "http://zotero.org/users/6244081/items/7TIAPJK7",
-      "url": "https://www.transicionestructural.net/index.php?topic=2514.msg177634#msg177634"
-    },
-    {
-      "accessDate": "2020-04-12T13:25:19Z",
-      "attachments": [
-        {
-          "itemType": "attachment",
-          "path": "C:\\Users\\Mariano\\Zotero\\storage\\5LRDAI5H\\index.html",
-          "title": "PPCC. PIsitófilos Creditófagos. Primavera 2020",
-          "uri": "http://zotero.org/users/6244081/items/5LRDAI5H"
-        }
-      ],
-      "citationKey": "austadisimos.2020.BenditaMierdaCoronavirus",
-      "creators": [
-        {
-          "creatorType": "author",
-          "lastName": "austadísimos"
-        }
-      ],
-      "date": "2020-04-11",
-      "dateAdded": "2020-04-12T13:25:19Z",
-      "dateModified": "2020-04-12T13:35:03Z",
       "itemID": 1,
       "itemType": "book",
       "title": "Book",
-      "uri": "http://zotero.org/users/6244081/items/7TIAPJK7",
+      "url": "https://www.transicionestructural.net/index.php?topic=2514.msg177634#msg177634"
+    },
+    {
+      "accessDate": "2020-04-12T13:25:19Z",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "path": "C:\\Users\\Mariano\\Zotero\\storage\\5LRDAI5H\\index.html",
+          "title": "PPCC. PIsit\u00f3filos Credit\u00f3fagos. Primavera 2020",
+          "uri": "http://zotero.org/users/6244081/items/5LRDAI5H"
+        }
+      ],
+      "citationKey": "austadisimos.2020.BenditaMierdaCoronavirus",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "austad\u00edsimos"
+        }
+      ],
+      "date": "2020-04-11",
+      "itemID": 2,
+      "itemType": "forumPost",
+      "title": "Forum post with full date",
+      "url": "https://www.transicionestructural.net/index.php?topic=2514.msg177634#msg177634"
+    },
+    {
+      "accessDate": "2020-04-12T13:25:19Z",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "path": "C:\\Users\\Mariano\\Zotero\\storage\\5LRDAI5H\\index.html",
+          "title": "PPCC. PIsit\u00f3filos Credit\u00f3fagos. Primavera 2020",
+          "uri": "http://zotero.org/users/6244081/items/5LRDAI5H"
+        }
+      ],
+      "citationKey": "austadisimos.2020.BenditaMierdaCoronavirus",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "austad\u00edsimos"
+        }
+      ],
+      "date": "2020",
+      "itemID": 3,
+      "itemType": "forumPost",
+      "title": "Forum Post with year only",
       "url": "https://www.transicionestructural.net/index.php?topic=2514.msg177634#msg177634"
     }
-  ],
-  "version": {
-    "bbt": "5.2.21",
-    "zotero": "5.0.85"
-  }
+  ]
 }
