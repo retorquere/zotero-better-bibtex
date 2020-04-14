@@ -30,6 +30,8 @@ const script = {
   han: new RegExp('([' + scripts.find(s => s.name === 'Han').bmp + '])', 'g'), // tslint:disable-line prefer-template
 }
 
+type PartialDate = { y?: number | string, m?: number, d?: number, oy?: number | string, om?: number, od?: number }
+
 class PatternFormatter {
   public generate: Function
 
@@ -119,7 +121,11 @@ class PatternFormatter {
     }
   }
 
-  public parsePattern(pattern) { return parser.parse(pattern, this) }
+  public parsePattern(pattern) {
+    const formatter = parser.parse(pattern, this)
+    log.debug('key formatter=', formatter)
+    return formatter
+  }
 
   public format(item) {
     this.item = {
@@ -138,16 +144,16 @@ class PatternFormatter {
       const date = this.parseDate(item.getField('date', false, true))
       log.debug('1488:', this.item.date, '=>', date)
       this.item.date = this._format_date(date, '0y-0m-0d')
-      this.item.year = parseInt(date.y) || date.y
-      this.item.month = parseInt(date.m) || undefined
+      this.item.year = date.y
+      this.item.month = date.m
       this.item.origdate = this._format_date(date, '0oy-0om-0od')
-      this.item.origyear = parseInt(date.oy) || this.item.year
+      this.item.origyear = date.oy
     } catch (err) {}
 
     if (this.item.kv['original-date'] || this.item.kv.priorityDate) {
       const date = this.parseDate(this.item.kv['original-date'] || this.item.kv.priorityDate)
       this.item.origdate = this._format_date(date, '0y-0m-0d')
-      this.item.origyear = parseInt(date.y) || this.item.year
+      this.item.origyear = date.y || this.item.year
     }
 
     try {
@@ -166,15 +172,15 @@ class PatternFormatter {
     return citekey
   }
 
-  private parseDate(v): { y: string, m: string, d: string, oy: string, om: string, od: string } {
+  private parseDate(v): PartialDate {
     v = v || ''
-    const parsed = { y: '', m: '', d: '', oy: '', om: '', od: '' }
+    const parsed: PartialDate = {}
 
     let date = DateParser.parse(v)
     log.debug('1488.parseDate', v, '=>', date)
     if (date.type === 'list') date = date.dates.find(d => d.type !== 'open') || date.dates[0]
     if (date.type === 'interval') date = (date.from && date.from.type !== 'open') ? date.from : date.to
-    if (!date) date = { type: 'unknown', literal: v }
+    if (!date.type) Object.assign(date, { type: 'unknown', literal: v })
 
     switch (date.type) {
       case 'open':
@@ -182,22 +188,23 @@ class PatternFormatter {
 
       case 'unknown':
       case 'verbatim':
-        if (date.orig) Object.assign(parsed, { oy: date.orig.year || '', om: date.orig.month || '', od: date.orig.day || '' })
+        if (date.orig) Object.assign(parsed, { oy: date.orig.year, om: date.orig.month, od: date.orig.day })
 
         const reparsed = (date.type === 'unknown') ? Zotero.Date.strToDate(date.literal) : {}
-        if (typeof reparsed.year === 'number') {
-          parsed.y = '' + reparsed.year
-          parsed.m = '' + (isNaN(parseInt(reparsed.month)) ? '' : reparsed.month)
-          parsed.d = '' + (isNaN(parseInt(reparsed.day)) ? '' : reparsed.day)
+        if (typeof reparsed.year === 'number' || reparsed.year) {
+          parsed.y = reparsed.year
+          parsed.m = parseInt(reparsed.month) || undefined
+          parsed.d = parseInt(reparsed.day) || undefined
 
         } else if (date.literal) {
-          Object.assign(parsed, { y: date.literal, m: '', d: '' })
+          parsed.y = date.literal
+
         } else {
           Object.assign(parsed, { y: parsed.oy, m: parsed.om, d: parsed.od })
+
         }
 
         if (!date.orig) Object.assign(parsed, { oy: parsed.y, om: parsed.m, od: parsed.d })
-
         break
 
       case 'date':
@@ -218,7 +225,7 @@ class PatternFormatter {
         throw new Error(`Unexpected parsed date ${JSON.stringify(v)} => ${JSON.stringify(date)}`)
     }
 
-    log.debug('1488.parseDate:', parsed)
+    log.debug('1488.parseDate=', parsed)
 
     return parsed
   }
@@ -490,7 +497,7 @@ class PatternFormatter {
   }
 
   /** formats date as by replacing y, m and d in the format */
-  public _format_date(v, format='y-m-d') {
+  public _format_date(v, format='0y-0m-0d') {
     if (!v) return ''
     if (typeof v === 'string') v = this.parseDate(v)
 
@@ -504,9 +511,9 @@ class PatternFormatter {
       const vfmt = v[fmt]
       log.debug('1488._format_date:', { rjust, fmt, vfmt, type: typeof vfmt })
 
-      if (typeof vfmt !== 'string' || !vfmt) return null
-      if (rjust) return this.rjust(vfmt, (fmt.endsWith('y') ? 4 : 2), '0') // tslint:disable-line:no-magic-numbers
-      return vfmt
+      if (typeof vfmt !== 'number') return null
+      if (rjust) return this.rjust('' + vfmt, (fmt.endsWith('y') ? 4 : 2), '0') // tslint:disable-line:no-magic-numbers
+      return '' + vfmt
 
     }).filter((field, i, arr) => {
       if ((i % 2) === 0) { // separator, peek ahead
@@ -520,6 +527,11 @@ class PatternFormatter {
     log.debug('1488._format_date =', formatted)
 
     return formatted
+  }
+
+  /** returns the value if it's an integer */
+  public _numeric(v) {
+    return isNaN(parseInt(v)) ? '' : v
   }
 
   /** replaces text, case insensitive; `:replace=.etal,&etal` will replace `.EtAl` with `&etal` */
