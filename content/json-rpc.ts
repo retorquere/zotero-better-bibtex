@@ -37,13 +37,6 @@ class Item {
 
     const ids = new Set(await search.search())
 
-    /*
-    const format = Zotero.Prefs.get('export.quickCopy.setting')
-
-    log.debug('formatted-citations:', format, Zotero.QuickCopy.unserializeSetting(format))
-    if (Zotero.QuickCopy.unserializeSetting(format).mode !== 'bibliography') throw new Error('formatted-citations requires the Zotero default quick-copy format to be set to a citation style')
-    */
-
     // add partial-citekey search results.
     for (const partialCitekey of terms.split(/\s+/)) {
       for (const item of KeyManager.keys.find({ citekey: { $contains: partialCitekey } })) {
@@ -99,7 +92,10 @@ class Item {
       ...qc,
       ...format,
     }
+
     if (!format.id) throw new Error('no style specified')
+    if (!format.id.includes('/')) format.id = `http://www.zotero.org/styles/${format.id}`
+
     if (((format as any).mode || 'bibliography') !== 'bibliography') throw new Error(`mode must be bibliograpy, not ${(format as any).mode}`)
 
     const items = await getItemsAsync(KeyManager.keys.find({ citekey: { $in: citekeys.map(citekey => citekey.replace('@', '')) } }).map(key => key.itemID))
