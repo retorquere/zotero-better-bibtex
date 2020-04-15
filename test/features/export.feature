@@ -137,6 +137,7 @@ Scenario Outline: Export <references> references for BibTeX to <file>
 
   Examples:
      | file                                                                               | references |
+     | Regresssion in Auto-export to better biblatex #1491                                | 1          |
      | add date, origdate functions, and format-date filter #1488                         | 3          |
      | Some Unicode characters converted to LaTeX #1481                                   | 1          |
      | Publisher Address of BibTeX Inproceedings Entries #1471                            | 1          |
