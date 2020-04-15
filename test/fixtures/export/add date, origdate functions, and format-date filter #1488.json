@@ -9,29 +9,29 @@
       "DOIandURL": "both",
       "ascii": "",
       "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
+      "asciiBibTeX": false,
       "autoAbbrev": false,
       "autoAbbrevStyle": "",
       "autoExport": "immediate",
-      "autoExportDelay": 60,
+      "autoExportDelay": 1,
       "autoExportIdleWait": 10,
       "autoPin": false,
       "automaticTags": false,
       "auxImport": false,
       "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": true,
+      "biblatexExtendedNameFormat": false,
       "bibtexParticleNoOp": false,
       "bibtexURL": "off",
       "cacheFlushInterval": 5,
       "citeCommand": "cite",
       "citekeyFold": true,
-      "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
+      "citekeyFormat": "[=forumPost][shorttitle][date] | [shorttitle][origyear]",
       "citeprocNoteCitekey": false,
       "csquotes": "",
       "debugLogDir": "",
       "exportBibTeXStrings": "off",
-      "exportBraceProtection": false,
-      "exportTitleCase": false,
+      "exportBraceProtection": true,
+      "exportTitleCase": true,
       "extraMergeCSL": true,
       "extraMergeCitekeys": true,
       "extraMergeTeX": true,
@@ -52,11 +52,11 @@
       "mapUnicode": "conservative",
       "newTranslatorsAskRestart": true,
       "parseParticles": true,
-      "platform": "lin",
+      "platform": "win",
       "postscript": "",
       "postscriptOverride": "",
       "qualityReport": false,
-      "quickCopyMode": "latex",
+      "quickCopyMode": "orgRef",
       "quickCopyPandocBrackets": false,
       "rawImports": false,
       "rawLaTag": "#LaTeX",
@@ -69,29 +69,79 @@
       "strings": "",
       "testing": false,
       "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
-      "warnBulkModify": 10,
-      "workers": 2
+      "warnBulkModify": 0,
+      "workers": 0
     }
   },
   "items": [
     {
-      "DOI": "10.1007/BF00159034",
-      "citationKey": "bodewitzVedicAnusthuAnusth1974",
+      "accessDate": "2020-04-12T13:25:19Z",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "path": "C:\\Users\\Mariano\\Zotero\\storage\\5LRDAI5H\\index.html",
+          "title": "PPCC. PIsit\u00f3filos Credit\u00f3fagos. Primavera 2020",
+          "uri": "http://zotero.org/users/6244081/items/5LRDAI5H"
+        }
+      ],
+      "citationKey": "austadisimos.2020.BenditaMierdaCoronavirus",
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Hendrik Wilhelm",
-          "lastName": "Bodewitz"
+          "lastName": "austad\u00edsimos"
         }
       ],
-      "date": "1974",
+      "date": "2020-04-11",
       "itemID": 1,
-      "itemType": "journalArticle",
-      "language": "english",
-      "pages": "1\u201317",
-      "publicationTitle": "Indo-Iranian Journal",
-      "title": "Vedic anu\u1e63\u1e6dh\u00fa and anu\u1e63\u1e6dh(u)y\u0101\u0301",
-      "volume": "16"
+      "itemType": "book",
+      "title": "Book",
+      "url": "https://www.transicionestructural.net/index.php?topic=2514.msg177634#msg177634"
+    },
+    {
+      "accessDate": "2020-04-12T13:25:19Z",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "path": "C:\\Users\\Mariano\\Zotero\\storage\\5LRDAI5H\\index.html",
+          "title": "PPCC. PIsit\u00f3filos Credit\u00f3fagos. Primavera 2020",
+          "uri": "http://zotero.org/users/6244081/items/5LRDAI5H"
+        }
+      ],
+      "citationKey": "austadisimos.2020.BenditaMierdaCoronavirus",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "austad\u00edsimos"
+        }
+      ],
+      "date": "2020-04-11",
+      "itemID": 2,
+      "itemType": "forumPost",
+      "title": "Forum post with full date",
+      "url": "https://www.transicionestructural.net/index.php?topic=2514.msg177634#msg177634"
+    },
+    {
+      "accessDate": "2020-04-12T13:25:19Z",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "path": "C:\\Users\\Mariano\\Zotero\\storage\\5LRDAI5H\\index.html",
+          "title": "PPCC. PIsit\u00f3filos Credit\u00f3fagos. Primavera 2020",
+          "uri": "http://zotero.org/users/6244081/items/5LRDAI5H"
+        }
+      ],
+      "citationKey": "austadisimos.2020.BenditaMierdaCoronavirus",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "austad\u00edsimos"
+        }
+      ],
+      "date": "2020",
+      "itemID": 3,
+      "itemType": "forumPost",
+      "title": "Forum Post with year only",
+      "url": "https://www.transicionestructural.net/index.php?topic=2514.msg177634#msg177634"
     }
   ]
 }
