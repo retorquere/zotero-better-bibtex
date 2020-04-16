@@ -11,7 +11,7 @@ Scenario Outline: Export <references> references for BibLaTeX to <file>
 
   Examples:
      | file                                                                                           | references  |
-     | Regresssion in Auto-export to better biblatex #1491                                            | 1           |
+     | Regression in export to better biblatex #1491                                                  | 1           |
      | Some Unicode characters converted to LaTeX #1481                                               | 1           |
      | @jurisdiction; map court,authority to institution #326                                         | 1           |
      | BBT export of square brackets in date #245 -- xref should not be escaped #246                  | 3           |
@@ -137,7 +137,7 @@ Scenario Outline: Export <references> references for BibTeX to <file>
 
   Examples:
      | file                                                                               | references |
-     | Regresssion in Auto-export to better biblatex #1491                                | 1          |
+     | Regression in export to better biblatex #1491                                      | 1          |
      | add date, origdate functions, and format-date filter #1488                         | 3          |
      | Some Unicode characters converted to LaTeX #1481                                   | 1          |
      | Publisher Address of BibTeX Inproceedings Entries #1471                            | 1          |

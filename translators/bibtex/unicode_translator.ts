@@ -5,8 +5,7 @@ import { debug } from '../lib/debug'
 
 import HE = require('he')
 import * as unicode2latex from 'unicode2latex'
-const combining_diacritics = Object.keys(unicode2latex.diacritics.tolatex).join('')
-const combining_diacritics_re = new RegExp(`^[^${combining_diacritics}][${combining_diacritics}]+`)
+const combining_diacritics = /^[^\u0300-\u036F][\u0300-\u036F]+/
 
 /* https://github.com/retorquere/zotero-better-bibtex/issues/1189
   Needed so that composite characters are counted as single characters
@@ -270,25 +269,28 @@ const htmlConverter = new class HTMLConverter {
       if (!mapped && !Translator.unicode) {
         // combining diacritics. Relies on NFD always being mapped, otherwise NFC won't be tested
 
-        if (m = combining_diacritics_re.exec(text.substring(i))) {
+        if (m = combining_diacritics.exec(text.substring(i))) {
           // try compact representation first
           mapped = this.mapping[m[0].normalize('NFC')]
 
           if (!mapped && (diacritic = unicode2latex.diacritics.tolatex[m[0].substr(1,2)])) {
-            const char = this.mapping[text[i]] || { text: text[i], math: text[i] }
-            if (char[diacritic.mode]) {
-              let cmd = char[diacritic.mode]
-              if (cmd.length > 1) {
-                cmd = `{${cmd}}`
-              } else if (diacritic.command.match(/[a-z]/)) {
-                cmd = ' ' + cmd
+            const char = (this.mapping[text[i]] || { text: text[i], math: text[i] })[diacritic.mode]
+            if (char) {
+              const cmd = diacritic.command.match(/[a-z]/)
+
+              if (Translator.BetterBibTeX && diacritic.mode === 'text') {
+                // needs to be braced to count as a single char for name abbreviation
+                mapped = { [diacritic.mode]: `{\\${diacritic.command}${cmd ? ' ': ''}${char}}` }
+
+              } else if (cmd && char.length === 1) {
+                mapped = { [diacritic.mode]: `\\${diacritic.command} ${char}` }
+
+              } else if (cmd) {
+                mapped = { [diacritic.mode]: `\\${diacritic.command}{${char}}` }
+
+              } else {
+                mapped = { [diacritic.mode]: `\\${diacritic.command}${char}` }
               }
-              cmd = `\\${diacritic.command}${cmd}`
-
-              // needs to be braced to count as a single char for name abbreviation
-              if (Translator.BetterBibTeX && diacritic.mode === 'text') cmd = `{${cmd}}`
-
-              mapped = { [diacritic.mode]: cmd }
 
               // support for multiple-diacritics is taken from tipa, which doesn't support more than 2
               if (m[0].length > 3) debug('discarding diacritics > 2 from', m[0]) // tslint:disable-line:no-magic-numbers
