@@ -13,6 +13,7 @@ import * as log from '../debug'
 import { JournalAbbrev } from '../journal-abbrev'
 import { kuroshiro } from './kuroshiro'
 import * as Extra from '../extra'
+import { buildCiteKey as zotero_buildCiteKey } from './formatter-zotero'
 
 const parser = require('./formatter.pegjs')
 import * as DateParser from '../dateparser'
@@ -32,26 +33,21 @@ const script = {
 
 type PartialDate = { y?: number | string, m?: number, d?: number, oy?: number | string, om?: number, od?: number }
 
+const safechars = '-:\\p{L}0-9_!$*+./;\\[\\]'
 class PatternFormatter {
   public generate: Function
 
   public itemTypes: Set<string>
 
   private re = {
-    unsafechars: Zotero.Utilities.XRegExp('[^-\\p{L}0-9_!$*+./;\\[\\]]'),
+    unsafechars_allow_spaces: Zotero.Utilities.XRegExp(`[^${safechars}\\s]`),
+    unsafechars: Zotero.Utilities.XRegExp(`[^${safechars}]`),
     alphanum: Zotero.Utilities.XRegExp('[^\\p{L}\\p{N}]'),
     punct: Zotero.Utilities.XRegExp('\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g'),
     dash: Zotero.Utilities.XRegExp('(\\p{Pc}|\\p{Pd})+', 'g'),
     caseNotUpperTitle: Zotero.Utilities.XRegExp('[^\\p{Lu}\\p{Lt}]', 'g'),
     caseNotUpper: Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g'),
     word: Zotero.Utilities.XRegExp('[\\p{L}\\p{Nd}\\{Pc}\\p{M}]+(-[\\p{L}\\p{Nd}\\{Pc}\\p{M}]+)*', 'g'),
-    zotero: {
-      number: /^[0-9]+/,
-      citeKeyTitleBanned: /\b(a|an|the|some|from|on|in|to|of|do|with|der|die|das|ein|eine|einer|eines|einem|einen|un|une|la|le|l\'|el|las|los|al|uno|una|unos|unas|de|des|del|d\')(\s+|\b)|(<\/?(i|b|sup|sub|sc|span style=\"small-caps\"|span)>)/g,
-
-      // citeKeyConversion: /%([a-zA-Z])/,
-      citeKeyClean: /[^a-z0-9\!\$\&\*\+\-\.\/\:\;\<\>\?\[\]\^\_\`\|]+/g,
-    },
   }
   private language = {
     jp: 'japanese',
@@ -227,35 +223,12 @@ class PatternFormatter {
 
   /** Generates citation keys as the stock Zotero Bib(La)TeX export does. Note that this pattern inherits all the problems of the original Zotero citekey generation -- you should really only use this if you have existing papers that rely on this behavior. */
   public $zotero() {
-    let key = ''
-    const creator = (this.item.item.getCreators() || [])[0]
-
-    if (creator && creator.lastName) {
-      key += creator.lastName.toLowerCase().replace(/ /g, '_').replace(/,/g, '')
-    } else {
-      key += 'noauthor'
-    }
-
-    key += '_'
-
-    const title = this.item.item.getField('title', false, true) || '' // don't use the cleaned title
-    if (title) {
-      key += title.toLowerCase().replace(this.re.zotero.citeKeyTitleBanned, '').split(/\s+/g)[0]
-    } else {
-      key += 'notitle'
-    }
-
-    key += '_'
-
-    let year = 'nodate'
-    if (this.item.date) {
-      const date = Zotero.Date.strToDate(this.item.date)
-      if (date.year && this.re.zotero.number.test(date.year)) year = date.year
-    }
-    key += year
-
-    key = Zotero.Utilities.removeDiacritics(key.toLowerCase(), true)
-    return key.replace(this.re.zotero.citeKeyClean, '')
+    return zotero_buildCiteKey({
+      creators: this.item.item.getCreators(),
+      title: this.item.item.getField('title'),
+      date: this.item.item.getField('date'),
+      dateAdded: this.item.item.getField('dateAdded'),
+    }, null, {})
   }
 
   public $property(name) {
@@ -322,7 +295,7 @@ class PatternFormatter {
       if (etal) authors.push('EtAl')
     }
 
-    return authors.join(' ')
+    return authors.join(joiner || ' ')
   }
 
   /** Corresponds to the BibTeX style "alpha". One author: First three letters of the last name. Two to four authors: First letters of last names concatenated.
@@ -339,11 +312,11 @@ class PatternFormatter {
       case 2: // tslint:disable-line:no-magic-numbers
       case 3: // tslint:disable-line:no-magic-numbers
       case 4: // tslint:disable-line:no-magic-numbers
-        return authors.map(author => author.substring(0, 1)).join(' ')
+        return authors.map(author => author.substring(0, 1)).join(joiner || ' ')
 
       default:
         // tslint:disable-next-line:no-magic-numbers
-        return authors.slice(0, 3).map(author => author.substring(0, 1)).join(' ') + '+'
+        return authors.slice(0, 3).map(author => author.substring(0, 1)).join(joiner || ' ') + '+'
     }
   }
 
@@ -351,7 +324,7 @@ class PatternFormatter {
   public $authIni(onlyEditors, withInitials, joiner, n) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
-    return authors.map(author => author.substring(0, n)).join('.')
+    return authors.map(author => author.substring(0, n)).join(joiner || '.')
   }
 
   /** The first 5 characters of the first author's last name, and the last name initials of the remaining authors. */
@@ -361,7 +334,7 @@ class PatternFormatter {
     const firstAuthor = authors.shift()
 
     // tslint:disable-next-line:no-magic-numbers
-    return [firstAuthor.substring(0, 5)].concat(authors.map(auth => auth.map(name => name.substring(0, 1)).join('.'))).join('.')
+    return [firstAuthor.substring(0, 5)].concat(authors.map(auth => auth.map(name => name.substring(0, 1)).join('.'))).join(joiner || '.')
   }
 
   /** The last name of the first two authors, and ".ea" if there are more than two. */
@@ -379,8 +352,8 @@ class PatternFormatter {
     if (!authors || !authors.length) return ''
 
     // tslint:disable-next-line:no-magic-numbers
-    if (authors.length === 2) return authors.join(joiner || '')
-    return authors.slice(0, 1).concat(authors.length > 1 ? ['EtAl'] : []).join(joiner || '')
+    if (authors.length === 2) return authors.join(joiner || ' ')
+    return authors.slice(0, 1).concat(authors.length > 1 ? ['EtAl'] : []).join(joiner || ' ')
   }
 
   /** The last name of the first author, and the last name of the second author if there are two authors or ".etal" if there are more than two. */
@@ -407,7 +380,7 @@ class PatternFormatter {
 
       default:
         // tslint:disable-next-line:no-magic-numbers
-        return authors.slice(0, 3).map(author => author.substring(0, 1)).join('.') + (authors.length > 3 ? '+' : '')
+        return authors.slice(0, 3).map(author => author.substring(0, 1)).join(joiner || '.') + (authors.length > 3 ? '+' : '')
     }
   }
 
@@ -697,12 +670,8 @@ class PatternFormatter {
     return str
   }
 
-  private clean(str) {
-    return this.safechars(this.removeDiacritics(str)).trim()
-  }
-
-  private safechars(str) {
-    return Zotero.Utilities.XRegExp.replace(str, this.re.unsafechars, '', 'all')
+  private clean(str, allow_spaces = false) {
+    return Zotero.Utilities.XRegExp.replace(this.removeDiacritics(str), allow_spaces ? this.re.unsafechars_allow_spaces : this.re.unsafechars, '', 'all').trim()
   }
 
   private padYear(year, length) {

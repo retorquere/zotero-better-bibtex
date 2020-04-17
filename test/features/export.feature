@@ -485,3 +485,13 @@ Scenario: Cache does not seem to fill #1296
   And I wait 5 seconds
   And I wait at most 100 seconds until all auto-exports are done
   Then "/tmp/autoexport.bib" should match "export/*.bibtex"
+
+@1495
+Scenario: use author dash separation rather than camel casing in citekey #1495
+  Given I import 1 reference from "export/*.json"
+  When I set preference .citekeyFormat to [authors2+-:lower]_[year]-[shorttitle:condense=-:lower]
+  And I refresh all citation keys
+  Then an export using "Better BibTeX" should match "export/*.bibtex"
+  When I set preference .citekeyFormat to [authors2:condense=-:lower]_[year]-[shorttitle:condense=-:lower]
+  And I refresh all citation keys
+  Then an export using "Better BibTeX" should match "export/*.bibtex"

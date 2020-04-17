@@ -29,7 +29,9 @@ block
       return `if (!${JSON.stringify(types)}.includes(this.item.type.toLowerCase())) break`;
     }
   / '[>' limit:[0-9]+ ']'                 { return `if (citekey.length <= ${limit.join('')}) break` }
-  / '[' method:method filters:filter* ']' { return `${[method].concat(filters).join('; ')}; citekey += chunk`; }
+  / '[' method:method filters:filter* ']' {
+      return [].concat(method, filters, 'citekey += chunk').join('; ');
+    }
   / chars:[^\|>\[\]]+                     { return `citekey += ${JSON.stringify(chars.join(''))}` }
 
 method
@@ -58,24 +60,26 @@ method
       var args = [ '' + !!editorsOnly, '' + !!withInitials, JSON.stringify(joiner) ];
       if (params) args = args.concat(params); // mparams already are stringified integers
 
-      var chunk = `chunk = this.${$method}(${args.join(', ')})`
-      if (scrub) chunk += '; chunk = this.clean(chunk)';
+      var code = `this.${$method}(${args.join(', ')})`;
+      if (scrub) code = 'this.clean(' + code + ', true)';
+      code = 'chunk = ' + code;
 
-      return chunk;
+      return code;
     }
   / name:[0\.a-zA-Z]+ params:mparams? {
       name = name.join('');
       var $method = '$' + name.replace(/\./g, '_');
-      var chunk;
+      var code;
+      var scrub;
 
       if (options[$method]) {
-        chunk = `chunk = this.${$method}(${(params || []).join(', ')})`
-        if (name == 'zotero') chunk += `; postfix = '0'`
+        code = `chunk = this.${$method}(${(params || []).join(', ')})`
+        if (name == 'zotero') code += `; postfix = '0'`
       } else {
         if (!name.match(/^[A-Z][A-Za-z]+$/)) error(`Property access name "${name}" must start with a capital letter and can only contain letters`);
-        chunk = `chunk = this.$property(${JSON.stringify(name)})`
+        code = `chunk = this.$property(${JSON.stringify(name)})`
       }
-      return chunk;
+      return code;
     }
 
 mparams
