@@ -365,6 +365,7 @@ class Zotero:
       # TODO: clean lib and test against schema
       config = data.get('config', {})
       preferences = config.get('preferences', {})
+      localeDateOrder = config.get('localeDateOrder', None)
       context.displayOptions = config.get('options', {})
 
       # TODO: this can go because the schema check will assure it won't get passed in
@@ -381,6 +382,7 @@ class Zotero:
     else:
       context.displayOptions = {}
       preferences = None
+      localeDateOrder = None
 
     with tempfile.TemporaryDirectory() as d:
       if type(collection) is str:
@@ -405,10 +407,11 @@ class Zotero:
 
       filename = references
       if not items: filename = None
-      return self.execute('return await Zotero.BetterBibTeX.TestSupport.importFile(filename, createNewCollection, preferences)',
+      return self.execute('return await Zotero.BetterBibTeX.TestSupport.importFile(filename, createNewCollection, preferences, localeDateOrder)',
         filename = filename,
         createNewCollection = (collection != False),
-        preferences = preferences
+        preferences = preferences,
+        localeDateOrder = localeDateOrder
       )
 
   def expand_expected(self, expected):

@@ -137,6 +137,7 @@ export function doExport() {
       label: Translator.header.label,
       preferences: Translator.preferences,
       options: Translator.options,
+      localeDateOrder: Zotero.BetterBibTeX.getLocaleDateOrder(),
     },
     version: {
       zotero: Zotero.Utilities.getVersion(),

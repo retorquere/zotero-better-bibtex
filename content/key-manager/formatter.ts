@@ -171,7 +171,7 @@ class PatternFormatter {
     v = v || ''
     const parsed: PartialDate = {}
 
-    let date = DateParser.parse(v)
+    let date = DateParser.parse(v, Zotero.BetterBibTeX.localeDateOrder)
     if (date.type === 'list') date = date.dates.find(d => d.type !== 'open') || date.dates[0]
     if (date.type === 'interval') date = (date.from && date.from.type !== 'open') ? date.from : date.to
     if (!date.type) Object.assign(date, { type: 'verbatim', verbatim: v })
