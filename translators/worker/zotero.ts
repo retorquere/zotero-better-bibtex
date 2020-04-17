@@ -5,7 +5,7 @@ importScripts('resource://gre/modules/osfile.jsm')
 declare const OS: any
 
 import XRegExp = require('xregexp')
-import { stringify } from '../../content/stringify'
+import { asciify, stringify } from '../../content/stringify'
 import { HTMLParser } from '../../content/markupparser'
 import * as DateParser from '../../content/dateparser'
 // import * as Extra from '../../content/extra'
@@ -94,7 +94,7 @@ class WorkerZoteroBetterBibTeX {
       _msg += ' '
     }
 
-    Zotero.debug(`+${diff} ${_msg}`)
+    Zotero.debug(`+${diff} ${asciify(_msg)}`)
   }
 
   public parseHTML(text, options) {

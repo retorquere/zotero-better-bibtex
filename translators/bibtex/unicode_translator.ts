@@ -5,57 +5,49 @@ import { debug } from '../lib/debug'
 
 import HE = require('he')
 import * as unicode2latex from 'unicode2latex'
-const combining_diacritics = Object.keys(unicode2latex.diacritics.tolatex).join('')
-const combining_diacritics_re = new RegExp(`^[^${combining_diacritics}][${combining_diacritics}]+`)
-// import { asciify } from '../../content/stringify'
-
-/* https://github.com/retorquere/zotero-better-bibtex/issues/1189
-  Needed so that composite characters are counted as single characters
-  for in-text citation generation. This messes with the {} cleanup
-  so the resulting TeX will be more verbose; doing this only for
-  bibtex because biblatex doesn't appear to need it.
-
-  Only testing ascii.text because that's the only place (so far)
-  that these have turned up.
-*/
-if (Translator.BetterBibTeX) {
-  let m
-  for (const tex of (Object.values(unicode2latex.ascii) as {text: string}[])) {
-    if (!tex.text) continue
-
-    if (tex.text.match(/^\\[`'^~"=.][A-Za-z]$/)) {
-      tex.text = `{${tex.text}}`
-    } else if (tex.text.match(/^\\[^]\\[ij]$/)) {
-      tex.text = `{${tex.text}}`
-    } else if (tex.text.match(/^\\[kr]\{[a-zA-Z]\}$/)) {
-      tex.text = `{${tex.text}}`
-    } else if (m = tex.text.match(/^\\(L|O|AE|AA|DH|DJ|OE|SS|TH|NG)\{\}$/i)) {
-      tex.text = `{\\${m[1]}}`
-    } else if (m = tex.text.match(/^\\([a-zA-Z]){([a-zA-Z0-9])}$/)) {
-      tex.text = `{\\${m[1]} ${m[2]}}`
-    }
-  }
-}
+const combining_diacritics = /^[^\u0300-\u036F][\u0300-\u036F]+/
 
 const switchMode = {
   math: 'text',
   text: 'math',
 }
 
+type ConverterOptions = {
+  caseConversion?: boolean
+  html?: boolean
+  creator?: boolean
+}
+
 const htmlConverter = new class HTMLConverter {
   private latex: string
   private mapping: any
   private stack: any[]
-  private options: { caseConversion?: boolean, html?: boolean }
+  private options: ConverterOptions
   private embraced: boolean
   private packages: { [key: string]: boolean }
 
-  public convert(html, options) {
+  public convert(html: string, options: ConverterOptions) {
     this.embraced = false
     this.options = options
     this.latex = ''
     this.packages = {}
-    this.mapping = (Translator.unicode ? unicode2latex.unicode : unicode2latex.ascii)
+
+    if (Translator.unicode) {
+      this.mapping = unicode2latex.unicode
+    } else if (options.creator && Translator.BetterBibTeX) {
+      /* https://github.com/retorquere/zotero-better-bibtex/issues/1189
+        Needed so that composite characters are counted as single characters
+        for in-text citation generation. This messes with the {} cleanup
+        so the resulting TeX will be more verbose; doing this only for
+        bibtex because biblatex doesn't appear to need it.
+
+        Only testing ascii.text because that's the only place (so far)
+        that these have turned up.
+      */
+      this.mapping = unicode2latex.ascii_bibtex_creator
+    } else {
+      this.mapping = unicode2latex.ascii
+    }
 
     if (!this.mapping.initialized) {
       // translator is re-ran every time it's used, not cached ready-to-run, so safe to modify the mapping
@@ -260,9 +252,6 @@ const htmlConverter = new class HTMLConverter {
     let mapped, switched, m, i, diacritic
     const l = text.length
     for (i = 0; i < l; i++) {
-      m = combining_diacritics_re.exec(text.substring(i))
-      if (m) diacritic = unicode2latex.diacritics.tolatex[m[0].substr(1,2)]
-      if (m) mapped = this.mapping[m[0].normalize('NFC')]
       mapped = null
 
       // tie "i","︠","a","︡"
@@ -274,39 +263,36 @@ const htmlConverter = new class HTMLConverter {
       if (!mapped && !Translator.unicode) {
         // combining diacritics. Relies on NFD always being mapped, otherwise NFC won't be tested
 
-        if (m = combining_diacritics_re.exec(text.substring(i))) {
+        if (m = combining_diacritics.exec(text.substring(i))) {
           // try compact representation first
           mapped = this.mapping[m[0].normalize('NFC')]
 
           if (!mapped && (diacritic = unicode2latex.diacritics.tolatex[m[0].substr(1,2)])) {
-            const char = this.mapping[text[i]] || { text: text[i], math: text[i] }
+            const char = (this.mapping[text[i]] || { text: text[i], math: text[i] })[diacritic.mode]
+            if (char) {
+              const cmd = diacritic.command.match(/[a-z]/)
 
-            if (char[diacritic.mode]) {
-              if (diacritic.command.match(/[a-z]/)) {
-                if (Translator.BetterBibTeX && diacritic.mode === 'text') {
-                  mapped = { [diacritic.mode]: `{\\${diacritic.command} ${text[i]}}` }
-                } else {
-                  mapped = { [diacritic.mode]: `\\${diacritic.command}{${text[i]}}` }
-                }
+              if (Translator.BetterBibTeX && diacritic.mode === 'text') {
+                // needs to be braced to count as a single char for name abbreviation
+                mapped = { [diacritic.mode]: `{\\${diacritic.command}${cmd ? ' ': ''}${char}}` }
 
+              } else if (cmd && char.length === 1) {
+                mapped = { [diacritic.mode]: `\\${diacritic.command} ${char}` }
+
+              } else if (cmd) {
+                mapped = { [diacritic.mode]: `\\${diacritic.command}{${char}}` }
 
               } else {
-                if (Translator.BetterBibTeX && diacritic.mode === 'text') {
-                  mapped = { [diacritic.mode]: `{\\${diacritic.command}${text[i]}}` }
-                } else {
-                  mapped = { [diacritic.mode]: `\\${diacritic.command}${text[i]}` }
-                }
-
+                mapped = { [diacritic.mode]: `\\${diacritic.command}${char}` }
               }
 
               // support for multiple-diacritics is taken from tipa, which doesn't support more than 2
               if (m[0].length > 3) debug('discarding diacritics > 2 from', m[0]) // tslint:disable-line:no-magic-numbers
-
             }
           }
-        }
 
-        if (mapped) i += m[0].length - 1
+          if (mapped) i += m[0].length - 1
+        }
       }
 
       if (!mapped && text[i + 1] && (mapped = this.mapping[text.substr(i, 2)])) {
@@ -369,12 +355,12 @@ const htmlConverter = new class HTMLConverter {
   }
 }
 
-export function html2latex(html, options) {
+export function html2latex(html:string, options: ConverterOptions) {
   if (typeof options.html === 'undefined') options.html = true
   return htmlConverter.convert(html, options)
 }
 
-export function text2latex(text, options: { caseConversion?: boolean, html?: boolean } = {}) {
+export function text2latex(text:string, options: ConverterOptions = {}) {
   if (typeof options.html === 'undefined') options.html = false
   return html2latex(text, options)
 }

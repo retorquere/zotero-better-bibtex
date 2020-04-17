@@ -45,7 +45,7 @@ interface IField {
   name: string
   verbatim?: string
   value: string | string[] | number | null | { path: string; title?: string; mimeType?: string; } | { tag: string, type?: number }[]
-  enc?: string
+  enc?: 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'latex' | 'tags' | 'attachments' | 'date'
   orig?: { name?: string, verbatim?: string, inherit?: boolean }
   bibtexStrings?: boolean
   bare?: boolean
@@ -561,7 +561,44 @@ export class Reference {
 
       } else {
         const enc = field.enc || this.fieldEncoding[field.name] || 'latex'
-        let value = this[`enc_${enc}`](field, this.item.raw)
+
+        let value
+        switch (enc) {
+          case 'latex':
+            value = this.enc_latex(field, { raw: this.item.raw })
+            break
+
+          case 'raw':
+            value = this.enc_raw(field)
+            break
+
+          case 'url':
+            value = this.enc_url(field)
+            break
+
+          case 'verbatim':
+            value = this.enc_verbatim(field)
+            break
+
+          case 'creators':
+            value = this.enc_creators(field, this.item.raw)
+            break
+
+          case 'literal':
+            value = this.enc_literal(field, this.item.raw)
+            break
+
+          case 'tags':
+            value = this.enc_tags(field)
+            break
+
+          case 'attachments':
+            value = this.enc_attachments(field)
+            break
+
+          default:
+            throw new Error(`Unexpected field encoding: ${JSON.stringify(enc)}`)
+        }
 
         if (!value) return null
 
@@ -985,7 +1022,7 @@ export class Reference {
    */
   protected enc_literal(f, raw = false) {
     if (!f.value) return null
-    return this.enc_latex({...f, value: Translator.preferences.exportBraceProtection ? new String(f.value) : f.value}, raw) // tslint:disable-line:no-construct
+    return this.enc_latex({...f, value: Translator.preferences.exportBraceProtection ? new String(f.value) : f.value}, { raw }) // tslint:disable-line:no-construct
   }
 
   /*
@@ -996,19 +1033,21 @@ export class Reference {
    * @param {field} field to encode.
    * @return {String} field.value encoded as author-style value
    */
-  protected enc_latex(f, raw = false) {
+  protected enc_latex(f, options: { raw?: boolean, creator?: boolean} = {}) {
     if (typeof f.value === 'number') return f.value
     if (!f.value) return null
 
     if (Array.isArray(f.value)) {
       if (f.value.length === 0) return null
-      return f.value.map(elt => this.enc_latex({...f, bibtex: undefined, value: elt}, raw)).join(f.sep || '')
+      return f.value.map(elt => this.enc_latex({...f, bibtex: undefined, value: elt}, options)).join(f.sep || '')
     }
 
-    if (f.raw || raw) return f.value
+    debug('enc_latex:', f, options)
+    if (f.raw || options.raw) return f.value
 
     const caseConversion = this.caseConversion[f.name] || f.caseConversion
-    const latex = text2latex(f.value, {html: f.html, caseConversion: caseConversion && this.english})
+    const latex = text2latex(f.value, {html: f.html, caseConversion: caseConversion && this.english, creator: options.creator})
+    debug('enc_latex:', f, latex)
     for (const pkg of latex.packages) {
       this.packages[pkg] = true
     }
@@ -1220,20 +1259,20 @@ export class Reference {
     if (Zotero.Utilities.XRegExp.test(family, this.startsWithLowercase) || Zotero.Utilities.XRegExp.test(family, this.hasLowercaseWord)) family = new String(family) // tslint:disable-line:no-construct
 
     // https://github.com/retorquere/zotero-better-bibtex/issues/978 -- enc_latex can return null
-    family = this.enc_latex({value: family}) || ''
+    family = this.enc_latex({value: family}, { creator: true }) || ''
 
     // https://github.com/retorquere/zotero-better-bibtex/issues/976#issuecomment-393442419
     if (family[0] !== '{' && name.family.match(/[-\u2014\u2015\u2012\u2013]/)) family = `{${family}}`
 
-    if (name['dropping-particle']) family = this.enc_latex({value: this._enc_creators_pad_particle(name['dropping-particle'], true)}) + family
+    if (name['dropping-particle']) family = this.enc_latex({value: this._enc_creators_pad_particle(name['dropping-particle'], true)}, { creator: true }) + family
 
     if (Translator.BetterBibTeX && Translator.preferences.bibtexParticleNoOp && (name['non-dropping-particle'] || name['dropping-particle'])) {
-      family = `{\\noopsort{${this.enc_latex({value: name.family.toLowerCase()})}}}${family}`
+      family = `{\\noopsort{${this.enc_latex({value: name.family.toLowerCase()}, { creator: true })}}}${family}`
       this.metadata.noopsort = true
     }
 
-    if (name.given) name.given = this.enc_latex({value: name.given})
-    if (name.suffix) name.suffix = this.enc_latex({value: name.suffix})
+    if (name.given) name.given = this.enc_latex({value: name.given}, { creator: true })
+    if (name.suffix) name.suffix = this.enc_latex({value: name.suffix}, { creator: true })
 
     let latex = family
     if (name.suffix) latex += `, ${name.suffix}`
