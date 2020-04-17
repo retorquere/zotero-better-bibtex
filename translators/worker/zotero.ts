@@ -15,7 +15,7 @@ import * as itemCreators from '../../gen/item-creators.json'
 
 const ctx: DedicatedWorkerGlobalScope = self as any
 
-export const params: { client: string, version: string, platform: string, translator: string, output: string } = (ctx.location.search || '')
+export const params: { client: string, version: string, platform: string, translator: string, output: string, localeDateOrder: string } = (ctx.location.search || '')
   .replace(/^\?/, '') // remove leading question mark if present
   .split('&') // split into k-v pairs
   .filter(kv => kv) // there might be none
@@ -23,9 +23,10 @@ export const params: { client: string, version: string, platform: string, transl
   .reduce((acc, kv) => {
     if (kv.length === 2) acc[kv[0]] = kv[1]
     return acc
-  }, { client: '', version: '', platform: '', translator: '', output: '' })
+  }, { client: '', version: '', platform: '', translator: '', output: '', localeDateOrder: '' })
 
 class WorkerZoteroBetterBibTeX {
+  public localeDateOrder: string
   private timestamp: number
 
   public worker() {
@@ -56,8 +57,12 @@ class WorkerZoteroBetterBibTeX {
   }
 
   public parseDate(date) {
-    return DateParser.parse(date)
+    return DateParser.parse(date, params.localeDateOrder)
   }
+  public getLocaleDateOrder() {
+    return params.localeDateOrder
+  }
+
   public isEDTF(date, minuteLevelPrecision = false) {
     return DateParser.isEDTF(date, minuteLevelPrecision)
   }
@@ -108,7 +113,7 @@ class WorkerZoteroBetterBibTeX {
   }
 
   public strToISO(str) {
-    return DateParser.strToISO(str)
+    return DateParser.strToISO(str, params.localeDateOrder)
   }
 }
 
@@ -303,6 +308,8 @@ class WorkerZotero {
 export const Zotero = new WorkerZotero // tslint:disable-line:variable-name
 
 export function onmessage(e: { data: BBTWorker.Config }) {
+  Zotero.BetterBibTeX.localeDateOrder = params.localeDateOrder
+
   if (e.data?.items && !Zotero.config) {
     try {
       const start = Date.now()

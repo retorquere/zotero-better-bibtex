@@ -273,7 +273,9 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
 
   qrCheck(sandbox, value, test, params = null) { return qualityReport(value, test, params) },
 
-  parseDate(sandbox, date) { return DateParser.parse(date) },
+  parseDate(sandbox, date) { return DateParser.parse(date, Zotero.BetterBibTeX.localeDateOrder) },
+  getLocaleDateOrder(sandbox) { return Zotero.BetterBibTeX.localeDateOrder },
+
   isEDTF(sandbox, date, minuteLevelPrecision = false) { return DateParser.isEDTF(date, minuteLevelPrecision) },
 
   titleCase(sandbox, text) { return titleCase(text) },
@@ -340,11 +342,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
     return true
   },
 
-  strToISO(sandbox, str) {
-    const date = DateParser.strToISO(str)
-    log.debug('strToISO', { str, date })
-    return date
-  },
+  strToISO(sandbox, str) { return DateParser.strToISO(str, Zotero.BetterBibTeX.localeDateOrder) },
 }
 
 Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
@@ -361,7 +359,7 @@ Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
     return HTMLParser.parse(text.toString(), options)
   },
   debug(sandbox, prefix, ...msg) { Logger.log(prefix, ...msg) },
-  parseDate(sandbox, date) { return DateParser.parse(date) },
+  parseDate(sandbox, date) { return DateParser.parse(date, Zotero.BetterBibTeX.localeDateOrder) },
 }
 
 $patch$(Zotero.Utilities.Internal, 'itemToExportFormat', original => function Zotero_Utilities_Internal_itemToExportFormat(zoteroItem, legacy, skipChildItems) {
@@ -657,6 +655,7 @@ class Progress {
 }
 
 export let BetterBibTeX = new class { // tslint:disable-line:variable-name
+  public localeDateOrder: string = Zotero.Date.getLocaleDateOrder()
   public ready: any
   public loaded: any
   public dir: string

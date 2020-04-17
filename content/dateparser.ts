@@ -82,7 +82,7 @@ function stripTime(date) {
   return date.replace(/(\s+|T)[0-9]{2}:[0-9]{2}(:[0-9]{2}(Z|\+[0-9]{2}:?[0-9]{2})?)?$/, '')
 }
 
-export function parse(value, toplevel = true) {
+export function parse(value: string, localeDateOrder: string, as_range_part: boolean = false) {
   value = (value || '').trim()
 
   let parsed, m
@@ -92,78 +92,78 @@ export function parse(value, toplevel = true) {
     return { type: 'date', year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() }
   }
 
-  if (!toplevel && value === '') return { type: 'open' }
+  if (as_range_part && value === '') return { type: 'open' }
 
   // https://forums.zotero.org/discussion/73729/name-and-year-import-issues-with-new-nasa-ads#latest
-  if (m = (/^(-?[0-9]+)-00-00$/.exec(value) || /^(-?[0-9]+-[0-9]+)-00$/.exec(value))) return parse(m[1], toplevel)
+  if (m = (/^(-?[0-9]+)-00-00$/.exec(value) || /^(-?[0-9]+-[0-9]+)-00$/.exec(value))) return parse(m[1], localeDateOrder, as_range_part)
 
   // '30-Mar-2020'
-  if (toplevel && (m = (/^([0-9]+)-([a-z]+)-([0-9]+)$/i).exec(value))) {
+  if (!as_range_part && (m = (/^([0-9]+)-([a-z]+)-([0-9]+)$/i).exec(value))) {
     let [ , day, month, year ] = m
     if (day > 31 && year < 31) [ day, year ] = [ year, day ] // tslint:disable-line:no-magic-numbers
-    const date = parse(`${month} ${day} ${year}`, false)
+    const date = parse(`${month} ${day} ${year}`, localeDateOrder, false)
     if (date.type === 'date') return date
   }
 
   // '[origyear] year'
-  if (toplevel && (m = /^\[(.+)\]\s*(.+)$/.exec(value))) {
+  if (!as_range_part && (m = /^\[(.+)\]\s*(.+)$/.exec(value))) {
     const [ , _orig, _year ] = m
-    const year = parse(_year, false)
-    const orig = parse(_orig, false)
+    const year = parse(_year, localeDateOrder, false)
+    const orig = parse(_orig, localeDateOrder, false)
     if (year.type === 'date' && orig.type === 'date') return {...year, ...{ orig } }
   }
 
   // 'year [origyear]'
-  if (toplevel && (m = /^(-?[0-9]+)\s*\[(-?[0-9]+)\]$/.exec(value))) {
+  if (!as_range_part && (m = /^(-?[0-9]+)\s*\[(-?[0-9]+)\]$/.exec(value))) {
     const [ , _year, _orig ] = m
-    const year = parse(_year, false)
-    const orig = parse(_orig, false)
+    const year = parse(_year, localeDateOrder, false)
+    const orig = parse(_orig, localeDateOrder, false)
     if (year.type === 'date' && orig.type === 'date') return {...year, ...{ orig } }
   }
 
   // '[origyear]'
-  if (toplevel && (m = /^\[(-?[0-9]+)\]$/.exec(value))) {
+  if (!as_range_part && (m = /^\[(-?[0-9]+)\]$/.exec(value))) {
     const [ , _orig ] = m
-    const orig = parse(_orig, false)
+    const orig = parse(_orig, localeDateOrder, false)
     if (orig.type === 'date') return { ...{ orig } }
   }
 
   // 747 'jan 20-22 1977'
-  if (toplevel && (m = /^([a-zA-Z]+)\s+([0-9]+)(?:--|-|–)([0-9]+)[, ]\s*([0-9]+)$/.exec(value))) {
+  if (!as_range_part && (m = /^([a-zA-Z]+)\s+([0-9]+)(?:--|-|–)([0-9]+)[, ]\s*([0-9]+)$/.exec(value))) {
     const [ , month, day1, day2, year ] = m
 
-    const from = parse(`${month} ${day1} ${year}`, false)
-    const to = parse(`${month} ${day2} ${year}`, false)
+    const from = parse(`${month} ${day1} ${year}`, localeDateOrder, false)
+    const to = parse(`${month} ${day2} ${year}`, localeDateOrder, false)
 
     if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
   }
 
   // 747, January 30–February 3, 1989
-  if (toplevel && (m = /^([a-zA-Z]+\s+[0-9]+)(?:--|-|–)([a-zA-Z]+\s+[0-9]+)[, ]\s*([0-9]+)$/.exec(value))) {
+  if (!as_range_part && (m = /^([a-zA-Z]+\s+[0-9]+)(?:--|-|–)([a-zA-Z]+\s+[0-9]+)[, ]\s*([0-9]+)$/.exec(value))) {
     const [ , date1, date2, year ] = m
 
-    const from = parse(`${date1} ${year}`, false)
-    const to = parse(`${date2} ${year}`, false)
+    const from = parse(`${date1} ${year}`, localeDateOrder, false)
+    const to = parse(`${date2} ${year}`, localeDateOrder, false)
 
     if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
   }
 
   // 746, 22-26 June 2015, 29 June-1 July 2011
-  if (toplevel && (m = /^([0-9]+)\s*([a-zA-Z]+)?\s*(?:--|-|–)\s*([0-9]+)\s+([a-zA-Z]+)\s+([0-9]+)$/.exec(value))) {
+  if (!as_range_part && (m = /^([0-9]+)\s*([a-zA-Z]+)?\s*(?:--|-|–)\s*([0-9]+)\s+([a-zA-Z]+)\s+([0-9]+)$/.exec(value))) {
     const [ , day1, month1, day2, month2, year ] = m
 
-    const from = parse(`${month1 || month2} ${day1} ${year}`, false)
-    const to = parse(`${month2} ${day2} ${year}`, false)
+    const from = parse(`${month1 || month2} ${day1} ${year}`, localeDateOrder, false)
+    const to = parse(`${month2} ${day2} ${year}`, localeDateOrder, false)
 
     if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
   }
 
   // July-October 1985
-  if (toplevel && (m = (/^([a-z]+)(?:--|-|–)([a-z]+)(?:--|-|–|\s+)([0-9]+)$/i).exec(value))) {
+  if (!as_range_part && (m = (/^([a-z]+)(?:--|-|–)([a-z]+)(?:--|-|–|\s+)([0-9]+)$/i).exec(value))) {
     const [ , month1, month2, year ] = m
 
-    const from = parse(`${month1} ${year}`, false)
-    const to = parse(`${month2} ${year}`, false)
+    const from = parse(`${month1} ${year}`, localeDateOrder, false)
+    const to = parse(`${month2} ${year}`, localeDateOrder, false)
 
     if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
   }
@@ -192,22 +192,26 @@ export function parse(value, toplevel = true) {
   // https://github.com/retorquere/zotero-better-bibtex/issues/1112
   if (m = /^([0-9]{1,2})\s+([0-9]{1,2})\s*,\s*([0-9]{4,})$/.exec(exactish)) {
     const [ , _day, _month, _year ] = m
+
     const year = parseInt(_year)
     let month = parseInt(_month)
     let day = parseInt(_day)
 
+    if (localeDateOrder === 'mdy') [day, month] = [month, day]
     // swap day/month for our American brethren
-    if (is_valid_month(day, false) && !is_valid_month(month, false)) [day, month] = [month, day]
+    if (day && is_valid_month(day, false) && !is_valid_month(month, false)) [day, month] = [month, day]
 
     if (is_valid_month(month, false)) return seasonize(doubt({ type: 'date', year, month, day }, state))
   }
 
   if (m = /^([0-9]{1,2})([-\s\/\.])([0-9]{1,2})(\2([0-9]{3,}))$/.exec(exactish)) {
     const [ , _day, , _month, , _year ] = m
+
     const year = parseInt(_year)
     let month = parseInt(_month)
     let day = parseInt(_day)
 
+    if (localeDateOrder === 'mdy') [day, month] = [month, day]
     // swap day/month for our American brethren
     if (is_valid_month(day, false) && !is_valid_month(month, false)) [day, month] = [month, day]
 
@@ -267,13 +271,13 @@ export function parse(value, toplevel = true) {
     }
   }
 
-  if (toplevel && !parsed) {
+  if (!as_range_part && !parsed) {
     for (const sep of ['--', '-', '/', '_', '–']) {
       const split = value.split(sep)
       if (split.length === 2) {
-        const from = parse(split[0], false)
+        const from = parse(split[0], localeDateOrder, false)
         if (from.type !== 'date' && from.type !== 'season') continue
-        const to = parse(split[1], false)
+        const to = parse(split[1], localeDateOrder, false)
         if (to.type !== 'date' && to.type !== 'season') continue
         return { type: 'interval', from, to }
       }
@@ -379,8 +383,8 @@ export function isEDTF(value, minuteLevelPrecision = false) {
   return testEDTF(value) || (minuteLevelPrecision && testEDTF(`${value}:00`))
 }
 
-export function strToISO(str) {
-  let date = parse(str)
+export function strToISO(str, localeDateOrder: string) {
+  let date = parse(str, localeDateOrder)
   if (date.type === 'interval') date = date.from
 
   if (typeof date.year !== 'number') return ''

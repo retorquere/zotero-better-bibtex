@@ -226,6 +226,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
       platform: Prefs.platform,
       translator: translator.label,
       output: options.path || '',
+      localeDateOrder: Zotero.BetterBibTeX.localeDateOrder,
     }).map(([k, v]) => `${encodeURI(k)}=${encodeURI(v)}`).join('&')
 
     this.workers.total += 1

@@ -27,6 +27,8 @@ export = new class {
   }
 
   public async reset() {
+    Zotero.BetterBibTeX.localeDateOrder = Zotero.Date.getLocaleDateOrder()
+
     Cache.reset()
 
     let collections
@@ -74,7 +76,9 @@ export = new class {
     return itemIDs.length
   }
 
-  public async importFile(source, createNewCollection, preferences) {
+  public async importFile(source, createNewCollection, preferences, localeDateOrder?) {
+    if (localeDateOrder ) Zotero.BetterBibTeX.localeDateOrder = localeDateOrder
+
     preferences = preferences || {}
 
     if (Object.keys(preferences).length) {
