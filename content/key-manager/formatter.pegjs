@@ -30,10 +30,7 @@ block
     }
   / '[>' limit:[0-9]+ ']'                 { return `if (citekey.length <= ${limit.join('')}) break` }
   / '[' method:method filters:filter* ']' {
-      var call = [method.code].concat(filters);
-      if (method.scrub) call.push('chunk = this.clean(chunk)');
-      call.push('citekey += chunk')
-      return call.join('; ');
+      return [].concat(method, filters, 'citekey += chunk').join('; ');
     }
   / chars:[^\|>\[\]]+                     { return `citekey += ${JSON.stringify(chars.join(''))}` }
 
@@ -63,9 +60,11 @@ method
       var args = [ '' + !!editorsOnly, '' + !!withInitials, JSON.stringify(joiner) ];
       if (params) args = args.concat(params); // mparams already are stringified integers
 
-      var code = `chunk = this.${$method}(${args.join(', ')})`
+      var code = `this.${$method}(${args.join(', ')})`;
+      if (scrub) code = 'this.clean(' + code + ', true)';
+      code = 'chunk = ' + code;
 
-      return { code: code, scrub: scrub };
+      return code;
     }
   / name:[0\.a-zA-Z]+ params:mparams? {
       name = name.join('');
@@ -76,13 +75,11 @@ method
       if (options[$method]) {
         code = `chunk = this.${$method}(${(params || []).join(', ')})`
         if (name == 'zotero') code += `; postfix = '0'`
-        scrub = true;
       } else {
         if (!name.match(/^[A-Z][A-Za-z]+$/)) error(`Property access name "${name}" must start with a capital letter and can only contain letters`);
         code = `chunk = this.$property(${JSON.stringify(name)})`
-        scrub = false;
       }
-      return { code: code, scrub: scrub };
+      return code;
     }
 
 mparams
