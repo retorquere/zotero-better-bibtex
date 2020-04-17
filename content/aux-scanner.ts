@@ -46,7 +46,7 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
     if (!this.citekeys.size) return
 
     const azp = Zotero.getActiveZoteroPane()
-    const collection = options.collection ? Zotero.Collections.getByLibraryAndKey(options.collection.libraryID, options.collection.key) : Zotero.Collecions.getazp.getSelectedCollection()
+    const collection = options.collection ? Zotero.Collections.getByLibraryAndKey(options.collection.libraryID, options.collection.key) : azp.getSelectedCollection()
     const libraryID = collection ? collection.libraryID : azp.getSelectedLibraryID()
     let imported = []
 
