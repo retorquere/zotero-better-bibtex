@@ -2,10 +2,9 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -29,7 +28,6 @@
       "citekeyFold": true,
       "citekeyFormat": "[zotero:clean]",
       "citeprocNoteCitekey": false,
-      "client": "zotero",
       "csquotes": "",
       "debugLogDir": "",
       "exportBibTeXStrings": "off",
@@ -99,7 +97,7 @@
         {
           "creatorType": "author",
           "firstName": "M.P.",
-          "lastName": "Paı̈doussis"
+          "lastName": "Pa\u0131\u0308doussis"
         },
         {
           "creatorType": "author",
@@ -108,8 +106,6 @@
         }
       ],
       "date": "7/1994",
-      "dateAdded": "2020-03-09T10:28:22Z",
-      "dateModified": "2020-03-09T10:28:22Z",
       "issue": "5",
       "itemID": 1,
       "itemType": "journalArticle",
@@ -120,13 +116,8 @@
       "publicationTitle": "Journal of Fluids and Structures",
       "shortTitle": "Unsteady Annular Viscous Flows Between Oscillating Cylinders. Part I",
       "title": "Unsteady Annular Viscous Flows Between Oscillating Cylinders. Part I: Computational Solutions Based on a Time-Integration Method",
-      "uri": "http://zotero.org/users/1/items/SJYVMSQ2",
       "url": "https://linkinghub.elsevier.com/retrieve/pii/S0889974684710243",
       "volume": "8"
     }
-  ],
-  "version": {
-    "bbt": "5.2.21",
-    "zotero": "5.0.85"
-  }
+  ]
 }
