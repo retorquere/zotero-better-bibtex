@@ -326,7 +326,7 @@ class PatternFormatter {
       if (etal) authors.push('EtAl')
     }
 
-    return authors.join(' ')
+    return authors.join(joiner || ' ')
   }
 
   /** Corresponds to the BibTeX style "alpha". One author: First three letters of the last name. Two to four authors: First letters of last names concatenated.
@@ -343,11 +343,11 @@ class PatternFormatter {
       case 2: // tslint:disable-line:no-magic-numbers
       case 3: // tslint:disable-line:no-magic-numbers
       case 4: // tslint:disable-line:no-magic-numbers
-        return authors.map(author => author.substring(0, 1)).join(' ')
+        return authors.map(author => author.substring(0, 1)).join(joiner || ' ')
 
       default:
         // tslint:disable-next-line:no-magic-numbers
-        return authors.slice(0, 3).map(author => author.substring(0, 1)).join(' ') + '+'
+        return authors.slice(0, 3).map(author => author.substring(0, 1)).join(joiner || ' ') + '+'
     }
   }
 
@@ -355,7 +355,7 @@ class PatternFormatter {
   public $authIni(onlyEditors, withInitials, joiner, n) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
-    return authors.map(author => author.substring(0, n)).join('.')
+    return authors.map(author => author.substring(0, n)).join(joiner || '.')
   }
 
   /** The first 5 characters of the first author's last name, and the last name initials of the remaining authors. */
@@ -365,7 +365,7 @@ class PatternFormatter {
     const firstAuthor = authors.shift()
 
     // tslint:disable-next-line:no-magic-numbers
-    return [firstAuthor.substring(0, 5)].concat(authors.map(auth => auth.map(name => name.substring(0, 1)).join('.'))).join('.')
+    return [firstAuthor.substring(0, 5)].concat(authors.map(auth => auth.map(name => name.substring(0, 1)).join('.'))).join(joiner || '.')
   }
 
   /** The last name of the first two authors, and ".ea" if there are more than two. */
@@ -383,8 +383,8 @@ class PatternFormatter {
     if (!authors || !authors.length) return ''
 
     // tslint:disable-next-line:no-magic-numbers
-    if (authors.length === 2) return authors.join(joiner || '')
-    return authors.slice(0, 1).concat(authors.length > 1 ? ['EtAl'] : []).join(joiner || '')
+    if (authors.length === 2) return authors.join(joiner || ' ')
+    return authors.slice(0, 1).concat(authors.length > 1 ? ['EtAl'] : []).join(joiner || ' ')
   }
 
   /** The last name of the first author, and the last name of the second author if there are two authors or ".etal" if there are more than two. */
@@ -411,7 +411,7 @@ class PatternFormatter {
 
       default:
         // tslint:disable-next-line:no-magic-numbers
-        return authors.slice(0, 3).map(author => author.substring(0, 1)).join('.') + (authors.length > 3 ? '+' : '')
+        return authors.slice(0, 3).map(author => author.substring(0, 1)).join(joiner || '.') + (authors.length > 3 ? '+' : '')
     }
   }
 
