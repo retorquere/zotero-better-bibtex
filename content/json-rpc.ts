@@ -3,6 +3,7 @@ declare const Zotero: any
 import * as log from './debug'
 import { KeyManager } from './key-manager'
 import { getItemsAsync } from './get-items-async'
+import { AUXScanner } from './aux-scanner'
 
 const OK = 200
 
@@ -11,6 +12,12 @@ const INVALID_REQUEST = -32600 // The JSON sent is not a valid Request object.
 const METHOD_NOT_FOUND = -32601 // The method does not exist / is not available.
 const INVALID_PARAMETERS = -32602 // Invalid method parameter(s).
 const INTERNAL_ERROR = -32603 // Internal JSON-RPC error.
+
+class Collection {
+  public async scanAUX(collection: {libraryID: number, key: string}, path:string) {
+    await AUXScanner.scan(path, { collection })
+  }
+}
 
 class User {
   public async groups() {
@@ -109,10 +116,12 @@ const api = new class API {
   public $user: User
   public $item: Item
   public $items: Item
+  public $collection: Collection
 
   constructor() {
     this.$item = this.$items = new Item
     this.$user = new User
+    this.$collection = new Collection
   }
 
   public async handle(request) {
@@ -151,18 +160,16 @@ Zotero.Server.Endpoints['/better-bibtex/json-rpc'] = class {
   public supportedDataTypes = 'application/json'
   public permitBookmarklet = false
 
-  public async init(options) {
+  public async init({ data, headers }) {
     await Zotero.BetterBibTeX.ready
 
-    let request = options.data
     try {
-      if (typeof request === 'string') request = JSON.parse(request)
-      log.debug('json-rpc: execute', request)
+      log.debug('json-rpc: execute', data)
 
-      const response = await (Array.isArray(request) ? Promise.all(request.map(req => api.handle(req))) : api.handle(request))
+      const response = await (Array.isArray(data) ? Promise.all(data.map(req => api.handle(req))) : api.handle(data))
       return [OK, 'application/json', JSON.stringify(response)]
     } catch (err) {
-      return [OK, 'application/json', JSON.stringify({jsonrpc: '2.0', error: {code: PARSE_ERROR, message: `Parse error: ${err} in ${request}`}, id: null})]
+      return [OK, 'application/json', JSON.stringify({jsonrpc: '2.0', error: {code: PARSE_ERROR, message: `Parse error: ${err} in ${data}`}, id: null})]
     }
   }
 }
