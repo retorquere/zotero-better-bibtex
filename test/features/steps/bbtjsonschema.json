@@ -22,6 +22,9 @@
         "label": {
           "const": "BetterBibTeX JSON"
         },
+        "localeDateOrder": {
+          "type": "string"
+        },
         "preferences": {
           "type": "object",
           "additionalProperties": false,
