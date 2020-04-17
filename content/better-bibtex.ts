@@ -709,7 +709,7 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
         if (!ps.prompt(null, this.getString('BetterBibTeX.auxScan.title'), this.getString('BetterBibTeX.auxScan.prompt'), tag, null, {})) return
         if (!tag.value) return
 
-        await AUXScanner.scan(aux, tag.value)
+        await AUXScanner.scan(aux, { tag: tag.value })
         break
 
       default:

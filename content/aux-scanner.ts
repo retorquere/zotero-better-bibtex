@@ -37,14 +37,16 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
     })
   }
 
-  public async scan(file, tag = null) {
+  public async scan(file, options: { tag?: string, collection?: { libraryID: number, key: string } } = {}) {
+    if (options.tag && options.collection) throw new Error('cannot target both tag and collection')
+
     this.citekeys = new Set
     await this.parse(file)
 
     if (!this.citekeys.size) return
 
     const azp = Zotero.getActiveZoteroPane()
-    const collection = azp.getSelectedCollection()
+    const collection = options.collection ? Zotero.Collections.getByLibraryAndKey(options.collection.libraryID, options.collection.key) : Zotero.Collecions.getazp.getSelectedCollection()
     const libraryID = collection ? collection.libraryID : azp.getSelectedLibraryID()
     let imported = []
 
@@ -70,8 +72,8 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
       }
     }
 
-    if (tag) {
-      await this.saveToTag(tag, libraryID, imported)
+    if (options.tag) {
+      await this.saveToTag(options.tag, libraryID, imported)
     } else {
       await this.saveToCollection(file.leafName, libraryID, collection, imported)
     }
