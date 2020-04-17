@@ -138,7 +138,6 @@ class PatternFormatter {
 
     try {
       const date = this.parseDate(item.getField('date', false, true))
-      log.debug('1488:', this.item.date, '=>', date)
       this.item.date = this._format_date(date, '0y-0m-0d')
       this.item.year = date.y
       this.item.month = date.m
@@ -173,7 +172,6 @@ class PatternFormatter {
     const parsed: PartialDate = {}
 
     let date = DateParser.parse(v)
-    log.debug('1488.parseDate', v, '=>', date)
     if (date.type === 'list') date = date.dates.find(d => d.type !== 'open') || date.dates[0]
     if (date.type === 'interval') date = (date.from && date.from.type !== 'open') ? date.from : date.to
     if (!date.type) Object.assign(date, { type: 'verbatim', verbatim: v })
@@ -219,8 +217,6 @@ class PatternFormatter {
       default:
         throw new Error(`Unexpected parsed date ${JSON.stringify(v)} => ${JSON.stringify(date)}`)
     }
-
-    log.debug('1488.parseDate=', parsed)
 
     return parsed
   }
@@ -473,7 +469,6 @@ class PatternFormatter {
     if (!v) return ''
     if (typeof v === 'string') v = this.parseDate(v)
 
-    log.debug('1488._format_date:', v)
     let keep = true
     const formatted = format.split(/(0?o?[ymd])/).map((field, i) => {
       if ((i % 2) === 0) return field
@@ -481,7 +476,6 @@ class PatternFormatter {
       const rjust = field[0] === '0'
       const fmt = rjust ? field.substring(1) : field
       const vfmt = v[fmt]
-      log.debug('1488._format_date:', { rjust, fmt, vfmt, type: typeof vfmt })
 
       if (typeof vfmt !== 'number') return null
       if (rjust) return this.rjust('' + vfmt, (fmt.endsWith('y') ? 4 : 2), '0') // tslint:disable-line:no-magic-numbers
@@ -496,7 +490,6 @@ class PatternFormatter {
       return keep
 
     }).join('')
-    log.debug('1488._format_date =', formatted)
 
     return formatted
   }
