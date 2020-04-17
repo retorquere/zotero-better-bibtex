@@ -7,53 +7,47 @@ import HE = require('he')
 import * as unicode2latex from 'unicode2latex'
 const combining_diacritics = /^[^\u0300-\u036F][\u0300-\u036F]+/
 
-/* https://github.com/retorquere/zotero-better-bibtex/issues/1189
-  Needed so that composite characters are counted as single characters
-  for in-text citation generation. This messes with the {} cleanup
-  so the resulting TeX will be more verbose; doing this only for
-  bibtex because biblatex doesn't appear to need it.
-
-  Only testing ascii.text because that's the only place (so far)
-  that these have turned up.
-*/
-if (Translator.BetterBibTeX) {
-  let m
-  for (const tex of (Object.values(unicode2latex.ascii) as {text: string}[])) {
-    if (!tex.text) continue
-
-    if (tex.text.match(/^\\[`'^~"=.][A-Za-z]$/)) {
-      tex.text = `{${tex.text}}`
-    } else if (tex.text.match(/^\\[^]\\[ij]$/)) {
-      tex.text = `{${tex.text}}`
-    } else if (tex.text.match(/^\\[kr]\{[a-zA-Z]\}$/)) {
-      tex.text = `{${tex.text}}`
-    } else if (m = tex.text.match(/^\\(L|O|AE|AA|DH|DJ|OE|SS|TH|NG)\{\}$/i)) {
-      tex.text = `{\\${m[1]}}`
-    } else if (m = tex.text.match(/^\\([a-zA-Z]){([a-zA-Z0-9])}$/)) {
-      tex.text = `{\\${m[1]} ${m[2]}}`
-    }
-  }
-}
-
 const switchMode = {
   math: 'text',
   text: 'math',
+}
+
+type ConverterOptions = {
+  caseConversion?: boolean
+  html?: boolean
+  creator?: boolean
 }
 
 const htmlConverter = new class HTMLConverter {
   private latex: string
   private mapping: any
   private stack: any[]
-  private options: { caseConversion?: boolean, html?: boolean }
+  private options: ConverterOptions
   private embraced: boolean
   private packages: { [key: string]: boolean }
 
-  public convert(html, options) {
+  public convert(html: string, options: ConverterOptions) {
     this.embraced = false
     this.options = options
     this.latex = ''
     this.packages = {}
-    this.mapping = (Translator.unicode ? unicode2latex.unicode : unicode2latex.ascii)
+
+    if (Translator.unicode) {
+      this.mapping = unicode2latex.unicode
+    } else if (options.creator && Translator.BetterBibTeX) {
+      /* https://github.com/retorquere/zotero-better-bibtex/issues/1189
+        Needed so that composite characters are counted as single characters
+        for in-text citation generation. This messes with the {} cleanup
+        so the resulting TeX will be more verbose; doing this only for
+        bibtex because biblatex doesn't appear to need it.
+
+        Only testing ascii.text because that's the only place (so far)
+        that these have turned up.
+      */
+      this.mapping = unicode2latex.ascii_bibtex_creator
+    } else {
+      this.mapping = unicode2latex.ascii
+    }
 
     if (!this.mapping.initialized) {
       // translator is re-ran every time it's used, not cached ready-to-run, so safe to modify the mapping
@@ -361,12 +355,12 @@ const htmlConverter = new class HTMLConverter {
   }
 }
 
-export function html2latex(html, options) {
+export function html2latex(html:string, options: ConverterOptions) {
   if (typeof options.html === 'undefined') options.html = true
   return htmlConverter.convert(html, options)
 }
 
-export function text2latex(text, options: { caseConversion?: boolean, html?: boolean } = {}) {
+export function text2latex(text:string, options: ConverterOptions = {}) {
   if (typeof options.html === 'undefined') options.html = false
   return html2latex(text, options)
 }
