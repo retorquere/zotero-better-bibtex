@@ -37,8 +37,8 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
     })
   }
 
-  public async scan(file, options: { tag?: string, collection?: { libraryID: number, key: string } } = {}) {
-    if (options.tag && options.collection) throw new Error('cannot target both tag and collection')
+  public async scan(file, options: { tag?: string, libraryID?: number, collection?: { libraryID: number, key: string } } = {}) {
+    if ([options.tag, options.libraryID, options.collection].filter(tgt => tgt).length > 1) throw new Error('You can only specify one of tag, libraryID, or collection')
 
     this.citekeys = new Set
     await this.parse(file)
@@ -46,8 +46,18 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
     if (!this.citekeys.size) return
 
     const azp = Zotero.getActiveZoteroPane()
-    const collection = options.collection ? Zotero.Collections.getByLibraryAndKey(options.collection.libraryID, options.collection.key) : azp.getSelectedCollection()
-    const libraryID = collection ? collection.libraryID : azp.getSelectedLibraryID()
+    let collection, libraryID
+    if (typeof options.libraryID === 'number') {
+      collection = null
+      libraryID = options.libraryID
+    } else if (options.collection) {
+      collection = Zotero.Collections.getByLibraryAndKey(options.collection.libraryID, options.collection.key)
+      libraryID = options.collection.libraryID
+    } else {
+      collection = azp.getSelectedCollection()
+      libraryID = collection ? collection.libraryID : azp.getSelectedLibraryID()
+    }
+
     let imported = []
 
     if (Prefs.get('auxImport')) {
