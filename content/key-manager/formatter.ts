@@ -31,7 +31,18 @@ const script = {
   han: new RegExp('([' + scripts.find(s => s.name === 'Han').bmp + '])', 'g'), // tslint:disable-line prefer-template
 }
 
-type PartialDate = { y?: number | string, m?: number, d?: number, oy?: number | string, om?: number, od?: number }
+type PartialDate = {
+  y?: number | string
+  m?: number
+  d?: number
+  oy?: number | string
+  om?: number
+  od?: number
+
+  H?: string
+  M?: string
+  S?: string
+}
 
 const safechars = '-:\\p{L}0-9_!$*+./;\\[\\]'
 class PatternFormatter {
@@ -467,19 +478,35 @@ class PatternFormatter {
   /** formats date as by replacing y, m and d in the format */
   public _format_date(v, format='0y-0m-0d') {
     if (!v) return ''
-    if (typeof v === 'string') v = this.parseDate(v)
+
+    const date = (typeof v === 'string') ? this.parseDate(v) : v
+    date.m = (typeof date.m === 'number') ? ('' + date.m) : ''
+    date.d = (typeof date.d === 'number') ? ('' + date.d) : ''
+    date.Y = (typeof date.y === 'number') ? ('' + date.y) : ''
+    date.y = (typeof date.y === 'number') ? ('' + (date.y % 100)) : '' // tslint:disable-line:no-magic-numbers
+    if (typeof date.Y === 'string') {
+      const [ , H, M, S ] = v.match(/(?: |T)([0-9]{2}):([0-9]{2})(?::([0-9]{2}))?(?:[A-Z]+|[-+][0-9]+)?$/) || [null, '', '', '']
+      Object.assign(date, { H, M, S })
+      date.S = date.S || ''
+    } else {
+      Object.assign(date, { H: '', M: '', S: '' })
+    }
 
     let keep = true
-    const formatted = format.split(/(0?o?[ymd])/).map((field, i) => {
-      if ((i % 2) === 0) return field
+    const formatted = format.split(/(%-?[a-zA-Z]|%%)/).map((spec, i) => {
+      if ((i % 2) === 0) return spec
 
-      const rjust = field[0] === '0'
-      const fmt = rjust ? field.substring(1) : field
-      const vfmt = v[fmt]
+      if (spec === '%%') return '%'
 
-      if (typeof vfmt !== 'number') return null
-      if (rjust) return this.rjust('' + vfmt, (fmt.endsWith('y') ? 4 : 2), '0') // tslint:disable-line:no-magic-numbers
-      return '' + vfmt
+      const rjust = spec[1] !== '-'
+      const field = rjust ? spec[1] : spec[2]
+      let repl = date[field]
+      if (typeof repl !== 'string') throw new Error(`:format-date: unsupported formatter ${JSON.stringify(spec)}`)
+      if (!repl) return null
+
+      if (rjust) repl = this.rjust(repl, field === 'Y' ? 4 : 2, '0') // tslint:disable-line:no-magic-numbers
+
+      return repl
 
     }).filter((field, i, arr) => {
       if ((i % 2) === 0) { // separator, peek ahead

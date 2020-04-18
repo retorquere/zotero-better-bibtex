@@ -26,7 +26,7 @@
       "cacheFlushInterval": 5,
       "citeCommand": "cite",
       "citekeyFold": true,
-      "citekeyFormat": "[=forumPost][shorttitle][date] | [shorttitle][origyear]",
+      "citekeyFormat": "[=forumPost][shorttitle][Date:format-date=%Y-%m-%d.%H\\:%M] | [shorttitle][origyear]",
       "citeprocNoteCitekey": false,
       "csquotes": "",
       "debugLogDir": "",
@@ -92,7 +92,7 @@
           "lastName": "austad\u00edsimos"
         }
       ],
-      "date": "2020-04-11",
+      "date": "2020-04-11T08:09:10",
       "itemID": 1,
       "itemType": "book",
       "title": "Book",
@@ -115,10 +115,10 @@
           "lastName": "austad\u00edsimos"
         }
       ],
-      "date": "2020-04-11",
+      "date": "2020-04-11T08:09:10",
       "itemID": 2,
       "itemType": "forumPost",
-      "title": "Forum post with full date",
+      "title": "Forum post with full date and time",
       "url": "https://www.transicionestructural.net/index.php?topic=2514.msg177634#msg177634"
     },
     {
