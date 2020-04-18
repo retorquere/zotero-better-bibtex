@@ -103,6 +103,30 @@ class Item {
     const bibliography = Zotero.QuickCopy.getContentFromItems(items, { ...format, mode: 'bibliography' }, null, false)
     return bibliography[format.contentType || 'html']
   }
+
+  public async citationkey(item_keys) {
+    const keys = {}
+
+    let _libraryID: string
+    let libraryID: number
+    let itemKey: string
+
+    for (const key of item_keys) {
+      if (key.includes(':')) {
+        [ _libraryID, itemKey ] = key.split(':')
+        libraryID = parseInt(_libraryID)
+        if (isNaN(libraryID)) throw new Error(`Could not parse library ID from ${key}`)
+      } else {
+        libraryID = Zotero.Libraries.userLibraryID
+        itemKey = key
+      }
+
+      keys[key] = KeyManager.keys.findOne({ libraryID, itemKey })?.citekey || null
+    }
+
+    log.debug(KeyManager.keys.data)
+    return keys
+  }
 }
 
 const api = new class API {
