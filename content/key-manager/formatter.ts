@@ -18,6 +18,8 @@ import { buildCiteKey as zotero_buildCiteKey } from './formatter-zotero'
 const parser = require('./formatter.pegjs')
 import * as DateParser from '../dateparser'
 
+import { parseScript } from 'meriyah'
+
 import parse5 = require('parse5/lib/parser')
 const htmlParser = new parse5()
 
@@ -46,11 +48,45 @@ type PartialDate = {
   S?: string
 }
 
+function argumentNames(fn): string[] {
+  const source = 'function ' + fn.toString()
+  log.debug('parsing', source)
+  const ast = parseScript(source)
+
+  if (ast.type === 'Program') {
+    if (ast.body[0].type === 'FunctionDeclaration') {
+      return ast.body[0].params.map(p => {
+        switch (p.type) {
+          case 'AssignmentPattern':
+            if (p.left.type === 'Identifier') return p.left.name
+            break
+
+          case 'Identifier':
+            return p.name
+        }
+        throw new Error(`Unexpected parameter declaration ${JSON.stringify(p)}`)
+      })
+    }
+  }
+  throw new Error(`No function declaration found in ${source}`)
+}
+function listMethods(obj) {
+  const methods = { _: {}, $: {} }
+  for (const method of Object.getOwnPropertyNames(Object.getPrototypeOf(obj))) {
+    if (typeof obj[method] === 'function' && (method[0] === '_' || method[0] === '$')) {
+      methods[method[0]][method.substring(1)] = argumentNames(obj[method])
+    }
+  }
+  return { functions: methods.$, filters: methods._ }
+}
+
 const safechars = '-:\\p{L}0-9_!$*+./;\\[\\]'
 class PatternFormatter {
   public generate: Function
 
   public itemTypes: Set<string>
+
+  public methods: Record<'functions' | 'filters', Record<string, string>> = listMethods(this)
 
   private re = {
     unsafechars_allow_spaces: Zotero.Utilities.XRegExp(`[^${safechars}\\s]`),
@@ -148,7 +184,10 @@ class PatternFormatter {
     }
     if (this.item.kv['original-date'] || this.item.kv.priorityDate) {
       const date = this.parseDate(this.item.kv['original-date'] || this.item.kv.priorityDate)
-      if (date.y) Object.assign(this.item.date || {}, { oy: date.y, om: date.m, od: date.d, oY: date.Y })
+      if (date.y) {
+        Object.assign(this.item.date, { oy: date.y, om: date.m, od: date.d, oY: date.Y })
+        if (!this.item.date.y) Object.assign(this.item.date, { y: date.y, m: date.m, d: date.d, Y: date.Y })
+      }
     }
 
     try {
@@ -237,6 +276,7 @@ class PatternFormatter {
     } else {
       Object.assign(res, { H: '', M: '', S: '' })
     }
+
     return res
   }
 
@@ -451,8 +491,8 @@ class PatternFormatter {
   }
 
   /** The date of the publication */
-  public $date() {
-    return this._format_date(this.item.date, '%Y-%m-%d')
+  public $date(format = '%Y-%m-%d') {
+    return this._format_date(this.item.date, format)
   }
 
   /** the original year of the publication */
@@ -478,10 +518,10 @@ class PatternFormatter {
   }
 
   /** formats date as by replacing y, m and d in the format */
-  public _format_date(v: string | PartialDate, format='%Y-%m-%d') {
-    if (!v) return ''
+  public _format_date(value: string | PartialDate, format='%Y-%m-%d') {
+    if (!value) return ''
 
-    const date = (typeof v === 'string') ? this.parseDate(v) : v
+    const date = (typeof value === 'string') ? this.parseDate(value) : value
 
     let keep = true
     const formatted = format.split(/(%-?o?[a-z]|%%)/i).map((spec, i, arr) => {
@@ -512,8 +552,8 @@ class PatternFormatter {
   }
 
   /** returns the value if it's an integer */
-  public _numeric(v) {
-    return isNaN(parseInt(v)) ? '' : v
+  public _numeric(value) {
+    return isNaN(parseInt(value)) ? '' : value
   }
 
   /** replaces text, case insensitive; `:replace=.etal,&etal` will replace `.EtAl` with `&etal` */
