@@ -26,7 +26,7 @@
       "cacheFlushInterval": 5,
       "citeCommand": "cite",
       "citekeyFold": true,
-      "citekeyFormat": "[=forumPost][shorttitle][Date:format-date=%Y-%m-%d.%H\\:%M] | [shorttitle][origyear]",
+      "citekeyFormat": "[=forumPost][shorttitle][Date:format-date=%Y-%m-%d.%H\\:%M:prefix=-] | [shorttitle][origyear:prefix=-]",
       "citeprocNoteCitekey": false,
       "csquotes": "",
       "debugLogDir": "",
