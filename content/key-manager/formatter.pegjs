@@ -1,9 +1,26 @@
 {
+  function _method(section, name, args, skip) {
+    name = name.replace(/[.-]/g, '_')
+    var margs = options.methods[section][name]
+    if (!margs) return false
+    if (skip) margs = margs.slice(skip)
+    if (typeof args === 'undefined') return margs
+    if (typeof args === 'number') return (margs.length === args) ? margs : false
+    if (typeof args === 'string') return (margs.join(' ') === args) ? margs : false
+    if (args instanceof RegExp) return (margs.join(' ').match(args)) ? margs : false
+    return margs
+  }
+  function _function(name, args) {
+    return _method('functions', name, args)
+  }
+  function _filter(name, args) {
+    return _method('filters', name, args, 1)
+  }
 }
 
 start
   = patterns:pattern+ {
-      var body = "var loop, citekey, postfix, chunk;\n"
+      var body = "\nvar loop, citekey, postfix, chunk;\nvar itemType = this.item.type.toLowerCase();"
 
       for (var pattern = 0; pattern < patterns.length; pattern++) {
         body += "\nfor (loop = true; loop; loop=false) {\n  citekey = ''; postfix = 'a';\n\n"
@@ -22,20 +39,21 @@ pattern
 block
   = [ \t\r\n]+                            { return '' }
   / '[0]'                                 { return `postfix = '0'` }
-  / '[=' types:[a-zA-Z/]+ ']'             {
-      types = types.join('').toLowerCase().split('/');
+  / '[=' types:$[a-zA-Z/]+ ']'             {
+      types = types.toLowerCase().split('/');
       var unknown = types.find(type => !options.itemTypes.has(type));
-      if (typeof unknown !== 'undefined') error(`Unknown reference type "${unknown}"`);
-      return `if (!${JSON.stringify(types)}.includes(this.item.type.toLowerCase())) break`;
+      if (typeof unknown !== 'undefined') error(`unknown reference type "${unknown}"`);
+      return `if (!${JSON.stringify(types)}.includes(itemType)) break`;
     }
-  / '[>' limit:[0-9]+ ']'                 { return `if (citekey.length <= ${limit.join('')}) break` }
+  / '[>' limit:$[0-9]+ ']'                 { return `if (citekey.length <= ${limit}) break` }
   / '[' method:method filters:filter* ']' {
       return [].concat(method, filters, 'citekey += chunk').join('; ');
     }
-  / chars:[^\|>\[\]]+                     { return `citekey += ${JSON.stringify(chars.join(''))}` }
+  / chars:$[^\|>\[\]]+                     { return `citekey += ${JSON.stringify(chars)}` }
 
 method
-  = prefix:('auth' / 'Auth' / 'authors' / 'Authors' / 'edtr' / 'Edtr' / 'editors' / 'Editors') name:[\.a-zA-Z]* params:mparams? flag:flag? {
+  = prefix:('auth' / 'Auth' / 'authors' / 'Authors' / 'edtr' / 'Edtr' / 'editors' / 'Editors') name:$[\.a-zA-Z]* params:n_mparams? flag:flag? {
+      params = params || []
       var scrub = (prefix[0] == prefix[0].toLowerCase());
       var creators = prefix.toLowerCase();
       var editorsOnly = (creators === 'edtr' || creators === 'editors');
@@ -49,72 +67,88 @@ method
       } else if (flag.length <= 1) {
         joiner = flag;
       } else {
-        error(`Unsupported flag "${flag}" in pattern`)
+        error(`unexpected flag '${flag}' on '${prefix}${name}${params.join('_')}' in citekey pattern`)
       }
 
-      var method = creators + name.join('');
-      var $method = '$' + method.replace(/\./g, '_');
-
-      if (!options[$method]) error(`Invalid method '${method}' in citekey pattern`)
+      var method = (creators + name).replace(/\./g, '_');
+      const expected = options.methods.functions[method]
+      if (!expected) error(`invalid function '${prefix}${name}'`)
+      if (params.length > 1 && !expected.includes('m')) error(`invalid function '${prefix}${name}${params.join('_')}'`)
+      if (params.length > 0 && !expected.includes('n')) error(`invalid function '${prefix}${name}${params.join('_')}'`)
+      if (withInitials && !expected.includes('withInitials')) error(`unexpected flag on '${prefix}${name}${params.join('_')}'`)
+      if (joiner && !expected.includes('joiner')) error(`unexpected joiner on '${prefix}${name}${params.join('_')}'`)
 
       var args = [ '' + !!editorsOnly, '' + !!withInitials, JSON.stringify(joiner) ];
-      if (params) args = args.concat(params); // mparams already are stringified integers
+      args = args.concat(params); // n_mparams already are stringified integers
 
-      var code = `this.${$method}(${args.join(', ')})`;
+      var code = `this.$${method}(${args.join(', ')})`;
       if (scrub) code = 'this.clean(' + code + ', true)';
       code = 'chunk = ' + code;
 
       return code;
     }
-  / name:[0\.a-zA-Z]+ params:mparams? {
-      name = name.join('');
-      var $method = '$' + name.replace(/\./g, '_');
-      var code;
-      var scrub;
+  / prop:$([A-Z][a-zA-Z]+) {
+      return `chunk = this.$property(${JSON.stringify(prop)})`
+    }
+  / name:$([a-z][.a-zA-Z]+) &{ return _function(name, 'n') } params:nparam? {
+      params = params || []
+      return `chunk = this.$${name.replace(/\./g, '_')}(${params.join(', ')})`
+    }
+  / name:$([a-z][.a-zA-Z]+) &{ return _function(name, 'n m') } params:n_mparams? {
+      params = params || []
+      return `chunk = this.$${name.replace(/\./g, '_')}(${params.join(', ')})`
+    }
+  / name:$([a-z][.a-zA-Z]+) &{ return _function(name, 1) } param:stringparam { // single string param
+      return `chunk = this.$${name.replace(/\./g, '_')}(${JSON.stringify(param)})`
+    }
+  / name:$([a-z][.a-zA-Z]+) {
+      var args = _function(name)
+      if (!args) error (`Unexpected function '${name}'`)
+      if (args.length !== 0) error(`function '${name}' expects at least one parameter (${args.join(', ')})`)
 
-      if (options[$method]) {
-        code = `chunk = this.${$method}(${(params || []).join(', ')})`
-        if (name == 'zotero') code += `; postfix = '0'`
-      } else {
-        if (!name.match(/^[A-Z][A-Za-z]+$/)) error(`Property access name "${name}" must start with a capital letter and can only contain letters`);
-        code = `chunk = this.$property(${JSON.stringify(name)})`
-      }
-      return code;
+      var code = `chunk = this.$${name.replace(/\./g, '_')}()`
+      if (name == 'zotero') code += `; postfix = '0'`
+      return code
     }
 
-mparams
-  = n:[0-9]+ '_' m:[0-9]+             { return [n.join(''), m.join('')] }
-  / n:[0-9]+                          { return [n.join('')] }
+nparam
+  = n:$[0-9]+                          { return [n] }
+
+n_mparams
+  = n:$[0-9]+ '_' m:$[0-9]+             { return [n, m] }
+  / nparam
 
 flag
-  = '+' flag:[^_:\]]+                 { return flag.join('') }
+  = '+' flag:$[^_:\]]+                 { return flag }
 
 filter
   = ':' text:default_filter  { return `chunk = chunk || ${JSON.stringify(text)}`; }
-  / ':' f:function_filter   {
-      var _filter = '_' + f.name.replace(/-/g, '_');
-      if (! options[_filter] ) error(`invalid filter "${f.name}" in pattern`);
+  / ':' filter:function_filter {
+      var args = _filter(filter.name)
+      if (!args) error(`unexpected filter name '${filter.name}'`)
+      if (filter.params.length > args.length) error(`filter '${filter.name}' expects at most ${args.length} parameters (${args.join(', ')})`)
 
-      var params = ['chunk'].concat(f.params.map(function(p) { return JSON.stringify(p) }));
+      const method = '_' + filter.name.replace(/-/g, '_');
+      const params = ['chunk'].concat(filter.params.map(function(p) { return JSON.stringify(p) }));
 
-      return `chunk = this.${_filter}(${params})`;
+      return `chunk = this.${method}(${params.join(', ')})`;
     }
 
 default_filter
-  = '(' text:[^)]+ ')' { return text.join(''); }
+  = '(' text:$[^)]+ ')' { return text }
 
 function_filter
   = name:'fold' language:( [, =] ('german' / 'japanese') )? {
       // handle here so the user gets feedback as the pattern is being typed
       return { name: name, params: language ? [ language[1] ] : [] };
     }
-  / name:[-a-z]+ params:fparam*  {
-      return { name: name.join(''), params: params }
+  / name:$[-a-z]+ params:stringparam*  {
+      return { name: name, params: params }
     }
 
-fparam
-  = [, =] value:fparamtext+ { return value.join('') }
+stringparam
+  = [, =] value:stringparamtext+ { return value.join('') }
 
-fparamtext
-  = chars:[^= ,\\\]:]+  { return chars.join(''); }
-  / "\\" char:.       { return char;  }
+stringparamtext
+  = text:$[^= ,\\\[\]:]+  { return text }
+  / '\\' text:.           { return text }
