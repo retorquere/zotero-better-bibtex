@@ -90,6 +90,7 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
   }
 
   private async parse(file) {
+    log.debug('AUX scanner: parsing', file.path)
     let m
     const contents = Zotero.File.getContents(file)
 
