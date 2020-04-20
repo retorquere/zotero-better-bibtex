@@ -703,7 +703,7 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
       case 'tag':
         const ps = Components.classes['@mozilla.org/embedcomp/prompt-service;1'].getService(Components.interfaces.nsIPromptService)
 
-        let name = aux.leafName
+        let name = OS.Path.basename(aux)
         name = name.lastIndexOf('.') > 0 ? name.substr(0, name.lastIndexOf('.')) : name
         const tag = { value: name }
         if (!ps.prompt(null, this.getString('BetterBibTeX.auxScan.title'), this.getString('BetterBibTeX.auxScan.prompt'), tag, null, {})) return

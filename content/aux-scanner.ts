@@ -12,9 +12,11 @@ import { Preferences as Prefs } from './prefs'
 
 export let AUXScanner = new class { // tslint:disable-line:variable-name
   private citekeys: Set<string>
-  private bibdata: string[] = []
 
-  public async pick() {
+  private bibdata: string[] = []
+  private decoder = new TextDecoder
+
+  public async pick(): Promise<string> {
     const fp = Components.classes['@mozilla.org/filepicker;1'].createInstance(Components.interfaces.nsIFilePicker)
     fp.init(window, Zotero.getString('fileInterface.import'), Components.interfaces.nsIFilePicker.modeOpen)
     fp.appendFilter('AUX file', '*.aux')
@@ -24,22 +26,22 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
         switch (userChoice) {
           case Components.interfaces.nsIFilePicker.returnOK:
           case Components.interfaces.nsIFilePicker.returnReplace:
-            resolve(fp.file)
+            resolve(fp.file.path)
             break
 
           default: // aka returnCancel
-            resolve(false)
+            resolve('')
             break
         }
       })
     })
   }
 
-  public async scan(file, options: { tag?: string, libraryID?: number, collection?: { libraryID: number, key: string } } = {}) {
+  public async scan(path: string, options: { tag?: string, libraryID?: number, collection?: { libraryID: number, key: string } } = {}) {
     if ([options.tag, options.libraryID, options.collection].filter(tgt => tgt).length > 1) throw new Error('You can only specify one of tag, libraryID, or collection')
 
     this.citekeys = new Set
-    await this.parse(file)
+    await this.parse(path)
 
     if (!this.citekeys.size) return
 
@@ -62,13 +64,12 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
       const keys = new Set(KeyManager.keys.find({ libraryID }).map(key => key.citekey))
       const missing = Array.from(this.citekeys).filter(key => !keys.has(key))
       if (missing.length) {
-        const bibfiles = {}
+        const bibfiles: Record<string, string> = {}
 
-        const decoder = new TextDecoder
         for (const bibdata of this.bibdata) {
           for (const bib of [bibdata, bibdata + '.bib']) {
             if (await OS.File.exists(bib)) {
-              bibfiles[bib] = bibfiles[bib] || decoder.decode(await OS.File.read(bib))
+              bibfiles[bib] = bibfiles[bib] || await this.read(bib)
               break
             }
           }
@@ -83,32 +84,38 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
     if (options.tag) {
       await this.saveToTag(options.tag, libraryID, imported)
     } else {
-      await this.saveToCollection(file.leafName, libraryID, collection, imported)
+      await this.saveToCollection(OS.Path.basename(path), libraryID, collection, imported)
     }
   }
 
-  private async parse(file) {
-    log.debug('AUX scanner: parsing', file.path)
-    let m
-    const contents = Zotero.File.getContents(file)
+  private async read(path) {
+    return this.decoder.decode(await OS.File.read(path))
+  }
+
+  private async parse(path) {
+    log.debug('AUX scanner: parsing', path)
+    let m, re
+
+    const contents = await this.read(path)
+    const parent = OS.Path.dirname(path)
 
     // bib files used
-    while (m = (/\\bibdata{([^}]+)}/g).exec(contents)) {
-      this.bibdata.push(OS.Path.join(file.parent.path, m[1]))
+    re = /\\bibdata{([^}]+)}/g
+    while (m = re.exec(contents)) {
+      this.bibdata.push(OS.Path.join(parent, m[1]))
     }
 
-    while (m = (/(?:\\citation|@cite){([^}]+)}/g).exec(contents)) {
+    re = /(?:\\citation|@cite){([^}]+)}/g
+    while (m = re.exec(contents)) {
       for (const key of m[1].split(',')) {
         this.citekeys.add(key)
       }
     }
 
     // include files
-    while (m = (/\\@input{([^}]+)}/g).exec(contents)) {
-      log.debug('AUX scanner: trying to assemble path', { parent: file.parent.path, includes: m[1] })
-      const inc = file.parent.clone()
-      inc.append(m[1])
-      await this.parse(inc)
+    re = /\\@input{([^}]+)}/g
+    while (m = re.exec(contents)) {
+      await this.parse(OS.Path.join(parent, m[1]))
     }
   }
 
