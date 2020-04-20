@@ -15,7 +15,7 @@ const INTERNAL_ERROR = -32603 // Internal JSON-RPC error.
 
 class Collection {
   public async scanAUX(collection: {libraryID: number, key: string}, path:string) {
-    await AUXScanner.scan(Zotero.File.pathToFile(path), { collection })
+    await AUXScanner.scan(path, { collection })
   }
 }
 
