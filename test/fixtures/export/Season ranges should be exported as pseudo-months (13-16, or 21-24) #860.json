@@ -21,7 +21,7 @@
       "cacheFlushInterval": 5,
       "citeCommand": "cite",
       "citekeyFold": true,
-      "citekeyFormat": "[auth][shorttitle][year]",
+      "citekeyFormat": "[shorttitle]=[year]",
       "citeprocNoteCitekey": false,
       "csquotes": "",
       "exportBibTeXStrings": "off",
