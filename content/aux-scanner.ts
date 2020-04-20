@@ -12,9 +12,6 @@ import { Preferences as Prefs } from './prefs'
 
 export let AUXScanner = new class { // tslint:disable-line:variable-name
   private citekeys: Set<string>
-  private citationRE = /(?:\\citation|@cite){([^}]+)}/g
-  private bibdataRE = /\\bibdata{([^}]+)}/g
-  private includeRE = /\\@input{([^}]+)}/g
   private bibdata: string[] = []
 
   public async pick() {
@@ -96,18 +93,19 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
     const contents = Zotero.File.getContents(file)
 
     // bib files used
-    while ((m = this.bibdataRE.exec(contents))) {
+    while (m = (/\\bibdata{([^}]+)}/g).exec(contents)) {
       this.bibdata.push(OS.Path.join(file.parent.path, m[1]))
     }
 
-    while ((m = this.citationRE.exec(contents))) {
+    while (m = (/(?:\\citation|@cite){([^}]+)}/g).exec(contents)) {
       for (const key of m[1].split(',')) {
         this.citekeys.add(key)
       }
     }
 
     // include files
-    while ((m = this.includeRE.exec(contents))) {
+    while (m = (/\\@input{([^}]+)}/g).exec(contents)) {
+      log.debug('AUX scanner: trying to assemble path', { parent: file.parent.path, includes: m[1] })
       const inc = file.parent.clone()
       inc.append(m[1])
       await this.parse(inc)
