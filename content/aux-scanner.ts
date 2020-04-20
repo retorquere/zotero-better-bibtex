@@ -4,6 +4,7 @@ declare const Zotero: any
 Components.utils.import('resource://gre/modules/osfile.jsm')
 declare const OS: any
 
+import * as log from './debug'
 import { sleep } from './sleep'
 import { KeyManager } from './key-manager'
 import { Translators } from './translators'
