@@ -14,7 +14,7 @@ const INVALID_PARAMETERS = -32602 // Invalid method parameter(s).
 const INTERNAL_ERROR = -32603 // Internal JSON-RPC error.
 
 class Collection {
-  public async scanAUX(collection: {libraryID: number, key: string}, path:string) {
+  public async scanAUX(collection: {libraryID: number, key: string, replace:? boolean }, path:string) {
     await AUXScanner.scan(path, { collection })
   }
 }
