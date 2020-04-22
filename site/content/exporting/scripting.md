@@ -209,7 +209,7 @@ if (Translator.BetterTeX && reference.has.title) {
 
 ```
 if (Translator.BetterTeX && reference.has.journal) {
-  reference.add({ name: 'journal', value: item.publicationTitle.replace(/(\\\w+)/g, '<script>{$1}</script>') });
+  reference.add({ name: 'journal', value: reference.has.journal.value.replace(/(\\\w+)/g, '<script>{$1}</script>') });
 }
 ```
 
