@@ -34,7 +34,7 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
     })
   }
 
-  public async scan(path: string, options: { tag?: string, libraryID?: number, collection?: { libraryID: number, key: string, replace?: boolean } } = {}) {
+  public async scan(path: string, options: { tag?: string, libraryID?: number, collection?: { libraryID: number, key: string, replace?: boolean | string } } = {}) {
     if ([options.tag, options.libraryID, options.collection].filter(tgt => tgt).length > 1) throw new Error('You can only specify one of tag, libraryID, or collection')
 
     const citekeys: string[] = []
@@ -73,16 +73,16 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
       }
     }
 
-    const name = OS.Path.basename(path).replace(/\.[^.]*$/, '')
+    const basename = OS.Path.basename(path).replace(/\.[^.]*$/, '')
     if (options.tag) {
       await this.saveToTag(itemIDs, options.tag, libraryID)
     } else {
       if (collection && (options.collection?.replace || !collection.hasChildItems())) {
-        await this.saveToCollection(itemIDs, missing, { collection })
+        await this.saveToCollection(itemIDs, missing, { collection, name: typeof options.collection?.replace === 'string' ? options.collection.replace : undefined })
       } else if (collection) {
-        await this.saveToCollection(itemIDs, missing, { collection, name })
+        await this.saveToCollection(itemIDs, missing, { collection, basename })
       } else {
-        await this.saveToCollection(itemIDs, missing, { libraryID, name })
+        await this.saveToCollection(itemIDs, missing, { libraryID, basename })
       }
     }
   }
@@ -125,22 +125,22 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
     }
   }
 
-  private async saveToCollection(itemIDs: number[], missing_keys: string[], target: { collection?: any, libraryID?: number, name?: string }) {
+  private async saveToCollection(itemIDs: number[], missing_keys: string[], target: { collection?: any, libraryID?: number, basename?: string, name?: string }) {
     if (typeof target.libraryID === 'number') {
       if (target.collection) throw new Error('cannot have both collection and library target')
-      if (!target.name) throw new Error('Saving to library needs a name')
+      if (!target.basename) throw new Error('Saving to library needs a name')
     } else if (!target.collection) {
       throw new Error('need either library + name or collection')
     }
 
     const libraryID = typeof target.libraryID === 'number' ? target.libraryID : target.collection.libraryID
 
-    if (target.name) {
+    if (target.basename) {
       const siblings = new Set((target.collection ? Zotero.Collections.getByParent(target.collection.id) : Zotero.Collections.getByLibrary(target.libraryID)).map(coll => coll.name))
 
       let timestamp = ''
 
-      while (siblings.has(target.name + timestamp)) {
+      while (siblings.has(target.basename + timestamp)) {
         await sleep(1500) // tslint:disable-line:no-magic-numbers
         timestamp = (new Date).toLocaleDateString('nl', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false })
       }
@@ -154,6 +154,18 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
       await target.collection.saveTx()
 
     } else {
+      if (target.name) {
+        let subcollection = target.collection.getChildCollections().find(coll => coll.name === target.name)
+        if (!subcollection) {
+          subcollection = new Zotero.Collection({
+            name: target.name,
+            libraryID: target.collection.libraryID,
+            parentID: target.collection.id,
+          })
+          await subcollection.saveTx()
+        }
+        target.collection = subcollection
+      }
       // saving into existing collection, remove items that are not cited
       const obsolete = target.collection.getChildItems(true).filter(itemID => !itemIDs.includes(itemID))
       if (obsolete.length) await Zotero.DB.executeTransaction(async () => { await target.collection.removeItems(obsolete) })
