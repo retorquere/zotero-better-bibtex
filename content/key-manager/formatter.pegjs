@@ -87,9 +87,6 @@ method
 
       return code;
     }
-  / prop:$([A-Z][a-zA-Z]+) {
-      return `chunk = this.$property(${JSON.stringify(prop)})`
-    }
   / name:$([a-z][.a-zA-Z]+) &{ return _function(name, 'n') } params:nparam? {
       params = params || []
       return `chunk = this.$${name.replace(/\./g, '_')}(${params.join(', ')})`
@@ -101,7 +98,7 @@ method
   / name:$([a-z][.a-zA-Z]+) &{ return _function(name, 1) } param:stringparam { // single string param
       return `chunk = this.$${name.replace(/\./g, '_')}(${JSON.stringify(param)})`
     }
-  / name:$([a-z][.a-zA-Z]+) {
+  / name:$([a-z][.a-zA-Z]+) &{ return _function(name, 0) } {
       var args = _function(name)
       if (!args) error (`Unexpected function '${name}'`)
       if (args.length !== 0) error(`function '${name}' expects at least one parameter (${args.join(', ')})`)
@@ -109,6 +106,9 @@ method
       var code = `chunk = this.$${name.replace(/\./g, '_')}()`
       if (name == 'zotero') code += `; postfix = '0'`
       return code
+    }
+  / prop:$([a-zA-Z]+) &{ return options.fieldNames[prop.toLowerCase()] } {
+      return `chunk = this.$property(${JSON.stringify(options.fieldNames[prop.toLowerCase()])})`
     }
 
 nparam
