@@ -44,24 +44,25 @@
     "docs:prep": "./setup/readme.py && typedoc --ignoreCompilerErrors --json gen/type-doc.json content/key-manager && ./setup/citekey-formatters.py && ./setup/preferences.py",
     "docs:serve": "npm run docs:prep && cd site && hugo serve",
     "docs:deploy": "npm run docs:prep && cd site && hugo --baseURL /zotero-better-bibtex",
-    "ncu": "ncu -a && npm install",
     "reinstall": "rm -rf node_modules yarn* && npm install",
-    "test:nightly": "TRAVIS_EVENT_TYPE=cron ./test/behave --tags @nightly"
+    "test:nightly": "TRAVIS_EVENT_TYPE=cron ./test/behave --tags @nightly",
+    "submodules": "git submodule update --init --recursive --remote && git submodule foreach git reset --hard && git submodule foreach git checkout master && git submodule foreach git pull origin master",
+    "ncu": "npm run submodules && ncu -u && npm i && git add package.json package-lock.json citation-style-language-locales site/themes/learn && git commit -m ncu"
   },
   "main": "index.js",
   "directories": {
     "test": "test"
   },
   "dependencies": {
-    "@retorquere/bibtex-parser": "^3.1.38",
+    "@retorquere/bibtex-parser": "^3.1.39",
     "@types/lokijs": "^1.5.3",
-    "ajv": "^6.12.0",
+    "ajv": "^6.12.2",
     "ajv-keywords": "^3.4.1",
     "barcoder": "^2.0.1",
-    "citeproc": "^2.2.34",
+    "citeproc": "^2.2.36",
     "edtf": "^2.7.1",
     "edtfy": "^0.0.8",
-    "escape-string-regexp": "^3.0.0",
+    "escape-string-regexp": "^4.0.0",
     "eventemitter3": "^4.0.0",
     "fast-chunk-string": "^1.0.1",
     "file-path-filter": "^3.0.1",
@@ -92,8 +93,8 @@
     "xregexp": "^4.3.0"
   },
   "devDependencies": {
-    "@types/node": "^13.11.1",
-    "@types/webpack": "^4.41.11",
+    "@types/node": "^13.13.2",
+    "@types/webpack": "^4.41.12",
     "archiver": "^4.0.1",
     "bluebird": "^3.7.2",
     "circular-dependency-plugin": "^5.2.0",
@@ -126,18 +127,18 @@
     "request-promise": "^4.2.5",
     "rimraf": "^3.0.2",
     "shelljs": "^0.8.3",
-    "ts-loader": "^7.0.0",
-    "ts-node": "^8.8.2",
+    "ts-loader": "^7.0.1",
+    "ts-node": "^8.9.0",
     "typedoc": "^0.17.4",
     "typescript": "^3.8.3",
     "uri-templates": "^0.2.0",
-    "webpack": "^4.42.1",
+    "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
     "wrapper-webpack-plugin": "^2.1.0",
     "xml-parser": "^1.2.1",
     "xmldom": "^0.3.0",
     "xpath": "^0.0.27",
-    "zotero-plugin": "^1.0.15"
+    "zotero-plugin": "^1.0.16"
   },
   "repository": {
     "type": "git",

@@ -76,13 +76,13 @@ export = new class {
     return itemIDs.length
   }
 
-  public async importFile(source, createNewCollection, preferences, localeDateOrder?) {
+  public async importFile(path, createNewCollection, preferences, localeDateOrder?) {
     if (localeDateOrder ) Zotero.BetterBibTeX.localeDateOrder = localeDateOrder
 
     preferences = preferences || {}
 
     if (Object.keys(preferences).length) {
-      log.debug(`importing references and preferences from ${source}`)
+      log.debug(`importing references and preferences from ${path}`)
       for (let [pref, value] of Object.entries(preferences)) {
         log.debug(`${typeof pref_defaults[pref] === 'undefined' ? 'not ' : ''}setting preference ${pref} to ${value}`)
         if (typeof pref_defaults[pref] === 'undefined') throw new Error(`Unsupported preference ${pref} in test case`)
@@ -90,24 +90,22 @@ export = new class {
         Zotero.Prefs.set(`translators.better-bibtex.${pref}`, value)
       }
     } else {
-      log.debug(`importing references from ${source}`)
+      log.debug(`importing references from ${path}`)
     }
 
-    if (!source) return 0
-
-    const file = Zotero.File.pathToFile(source)
+    if (!path) return 0
 
     let items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
     const before = items.length
 
     log.debug(`starting import at ${new Date()}`)
 
-    if (source.endsWith('.aux')) {
-      await AUXScanner.scan(file)
+    if (path.endsWith('.aux')) {
+      await AUXScanner.scan(path)
       // for some reason, the imported collection shows up as empty right after the import >:
       await sleep(1500) // tslint:disable-line:no-magic-numbers
     } else {
-      await Zotero_File_Interface.importFile({ file, createNewCollection: !!createNewCollection })
+      await Zotero_File_Interface.importFile({ file: Zotero.File.pathToFile(path), createNewCollection: !!createNewCollection })
     }
     log.debug(`import finished at ${new Date()}`)
 

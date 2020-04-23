@@ -15,5 +15,7 @@ namespace OS {
 
   namespace Path {
     function join(...args: string[]): string
+    function dirname(path: string): string
+    function basename(path: string): string
   }
 }

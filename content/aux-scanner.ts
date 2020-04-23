@@ -4,19 +4,16 @@ declare const Zotero: any
 Components.utils.import('resource://gre/modules/osfile.jsm')
 declare const OS: any
 
+import * as log from './debug'
 import { sleep } from './sleep'
 import { KeyManager } from './key-manager'
 import { Translators } from './translators'
 import { Preferences as Prefs } from './prefs'
 
 export let AUXScanner = new class { // tslint:disable-line:variable-name
-  private citekeys: Set<string>
-  private citationRE = /(?:\\citation|@cite){([^}]+)}/g
-  private bibdataRE = /\\bibdata{([^}]+)}/g
-  private includeRE = /\\@input{([^}]+)}/g
-  private bibdata: string[] = []
+  private decoder = new TextDecoder
 
-  public async pick() {
+  public async pick(): Promise<string> {
     const fp = Components.classes['@mozilla.org/filepicker;1'].createInstance(Components.interfaces.nsIFilePicker)
     fp.init(window, Zotero.getString('fileInterface.import'), Components.interfaces.nsIFilePicker.modeOpen)
     fp.appendFilter('AUX file', '*.aux')
@@ -26,117 +23,159 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
         switch (userChoice) {
           case Components.interfaces.nsIFilePicker.returnOK:
           case Components.interfaces.nsIFilePicker.returnReplace:
-            resolve(fp.file)
+            resolve(fp.file.path)
             break
 
           default: // aka returnCancel
-            resolve(false)
+            resolve('')
             break
         }
       })
     })
   }
 
-  public async scan(file, tag = null) {
-    this.citekeys = new Set
-    await this.parse(file)
+  public async scan(path: string, options: { tag?: string, libraryID?: number, collection?: { libraryID: number, key: string, replace?: boolean | string } } = {}) {
+    if ([options.tag, options.libraryID, options.collection].filter(tgt => tgt).length > 1) throw new Error('You can only specify one of tag, libraryID, or collection')
 
-    if (!this.citekeys.size) return
+    const citekeys: string[] = []
+    const bibfiles: Record<string, string> = Prefs.get('auxImport') ? {} : null
+    await this.parse(path, citekeys, bibfiles)
 
-    const azp = Zotero.getActiveZoteroPane()
-    const collection = azp.getSelectedCollection()
-    const libraryID = collection ? collection.libraryID : azp.getSelectedLibraryID()
-    let imported = []
+    if (!citekeys.length) return
 
-    if (Prefs.get('auxImport')) {
-      const keys = new Set(KeyManager.keys.find({ libraryID }).map(key => key.citekey))
-      const missing = Array.from(this.citekeys).filter(key => !keys.has(key))
+    let collection, libraryID
+    if (typeof options.libraryID === 'number') {
+      collection = null
+      libraryID = options.libraryID
+    } else if (options.collection) {
+      collection = Zotero.Collections.getByLibraryAndKey(options.collection.libraryID, options.collection.key)
+      libraryID = options.collection.libraryID
+    } else {
+      const azp = Zotero.getActiveZoteroPane()
+      collection = azp.getSelectedCollection()
+      libraryID = collection ? collection.libraryID : azp.getSelectedLibraryID()
+    }
+
+    const found = KeyManager.keys.find({ libraryID, citekey: { $in: citekeys } })
+
+    const itemIDs = found.map(key => key.itemID)
+
+    const found_keys = found.map(key => key.citekey)
+    let missing = citekeys.filter(key => !found_keys.includes(key))
+
+    let newImports = []
+    if (bibfiles) {
       if (missing.length) {
-        const bibfiles = {}
-
-        const decoder = new TextDecoder
-        for (const bibdata of this.bibdata) {
-          for (const bib of [bibdata, bibdata + '.bib']) {
-            if (await OS.File.exists(bib)) {
-              bibfiles[bib] = bibfiles[bib] || decoder.decode(await OS.File.read(bib))
-              break
-            }
-          }
-        }
-
         const bibtex = Object.values(bibfiles).join('\n').trim()
-
-        imported = bibtex ? await Translators.importString(`@comment{zotero-better-bibtex:whitelist:${missing.join(',')}}\n${bibtex}`) : []
+        newImports = bibtex ? await Translators.importString(`@comment{zotero-better-bibtex:whitelist:${missing.join(',')}}\n${bibtex}`) : []
+        itemIDs.push(...(newImports.map(item => item.id)))
+        missing = []
       }
     }
 
-    if (tag) {
-      await this.saveToTag(tag, libraryID, imported)
+    const basename = OS.Path.basename(path).replace(/\.[^.]*$/, '')
+    if (options.tag) {
+      await this.saveToTag(itemIDs, options.tag, libraryID)
     } else {
-      await this.saveToCollection(file.leafName, libraryID, collection, imported)
+      if (collection && (options.collection?.replace || !collection.hasChildItems())) {
+        await this.saveToCollection(itemIDs, missing, { collection, name: typeof options.collection?.replace === 'string' ? options.collection.replace : undefined })
+      } else if (collection) {
+        await this.saveToCollection(itemIDs, missing, { collection, basename })
+      } else {
+        await this.saveToCollection(itemIDs, missing, { libraryID, basename })
+      }
     }
   }
 
-  private async parse(file) {
-    let m
-    const contents = Zotero.File.getContents(file)
+  private async read(path) {
+    return this.decoder.decode(await OS.File.read(path))
+  }
 
-    // bib files used
-    while ((m = this.bibdataRE.exec(contents))) {
-      this.bibdata.push(OS.Path.join(file.parent.path, m[1]))
+  private async parse(path: string, citekeys: string[], bibfiles: Record<string, string> ) {
+    log.debug('AUX scanner: parsing', path)
+    let m, re
+
+    const contents = await this.read(path)
+    const parent = OS.Path.dirname(path)
+
+    if (bibfiles) {
+      // bib files used
+      re = /\\bibdata\{([^}]+)\}/g
+      while (m = re.exec(contents)) {
+        for (const bib of [m[1], m[1] + '.bib']) {
+          if (!bibfiles[bib] && await OS.File.exists(bib)) {
+            bibfiles[bib] = await this.read(bib)
+            break
+          }
+        }
+      }
     }
 
-    while ((m = this.citationRE.exec(contents))) {
+    re = /(?:\\citation|@cite)\{([^}]+)\}/g
+    while (m = re.exec(contents)) {
       for (const key of m[1].split(',')) {
-        this.citekeys.add(key)
+        if (!citekeys.includes(key)) citekeys.push(key)
       }
     }
 
     // include files
-    while ((m = this.includeRE.exec(contents))) {
-      const inc = file.parent.clone()
-      inc.append(m[1])
-      await this.parse(inc)
+    re = /\\@input\{([^}]+)\}/g
+    while (m = re.exec(contents)) {
+      await this.parse(OS.Path.join(parent, m[1]), citekeys, bibfiles)
     }
   }
 
-  private async saveToCollection(source, libraryID, collection, imported) {
-    // if no collection is selected, or the selected collection contains references, create a new subcollection
-    if (!collection || collection.getChildItems(true).length) {
-      const siblings = new Set((collection ? Zotero.Collections.getByParent(collection.id) : Zotero.Collections.getByLibrary(libraryID)).map(coll => coll.name))
+  private async saveToCollection(itemIDs: number[], missing_keys: string[], target: { collection?: any, libraryID?: number, basename?: string, name?: string }) {
+    if (typeof target.libraryID === 'number') {
+      if (target.collection) throw new Error('cannot have both collection and library target')
+      if (!target.basename) throw new Error('Saving to library needs a name')
+    } else if (!target.collection) {
+      throw new Error('need either library + name or collection')
+    }
 
-      let name = source.lastIndexOf('.') > 0 ? source.substr(0, source.lastIndexOf('.')) : source
+    const libraryID = typeof target.libraryID === 'number' ? target.libraryID : target.collection.libraryID
+
+    if (target.basename) {
+      const siblings = new Set((target.collection ? Zotero.Collections.getByParent(target.collection.id) : Zotero.Collections.getByLibrary(target.libraryID)).map(coll => coll.name))
+
       let timestamp = ''
 
-      while (siblings.has(name + timestamp)) {
+      while (siblings.has(target.basename + timestamp)) {
         await sleep(1500) // tslint:disable-line:no-magic-numbers
         timestamp = (new Date).toLocaleDateString('nl', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false })
       }
-      name += timestamp
-      collection = new Zotero.Collection({
-        name,
+      target.name = target.basename + timestamp
+      target.collection = new Zotero.Collection({
+        name: target.name,
         libraryID,
-        parentID: collection ? collection.id : undefined,
+        parentID: target.collection ? target.collection.id : undefined,
       })
 
-      await collection.saveTx()
-    }
+      await target.collection.saveTx()
 
-    const missing = []
-    const found = imported.map(item => item.id)
-    for (const citekey of Array.from(this.citekeys)) {
-      const item = KeyManager.keys.findOne({libraryID, citekey})
-      if (item) {
-        found.push(item.itemID)
-      } else {
-        missing.push(citekey)
+    } else {
+      if (target.name) {
+        let subcollection = target.collection.getChildCollections().find(coll => coll.name === target.name)
+        if (!subcollection) {
+          subcollection = new Zotero.Collection({
+            name: target.name,
+            libraryID: target.collection.libraryID,
+            parentID: target.collection.id,
+          })
+          await subcollection.saveTx()
+        }
+        target.collection = subcollection
       }
+      // saving into existing collection, remove items that are not cited
+      const obsolete = target.collection.getChildItems(true).filter(itemID => !itemIDs.includes(itemID))
+      if (obsolete.length) await Zotero.DB.executeTransaction(async () => { await target.collection.removeItems(obsolete) })
+
     }
 
-    if (missing.length) {
-      missing.sort((new Intl.Collator('en')).compare)
+    if (missing_keys.length) {
+      missing_keys.sort((new Intl.Collator('en')).compare)
       let report = '<html><div><p><b>BibTeX AUX scan</b></p><p>Missing references:</p><ul>'
-      for (const citekey of missing) {
+      for (const citekey of missing_keys) {
         report += `<li>${citekey.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/'/g, '&quot;').replace(/'/g, '&#039;')}</li>`
       }
       report += '</ul></div></html>'
@@ -145,28 +184,26 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
       item.libraryID = libraryID
       item.setNote(report)
       await item.saveTx()
-      found.push(item.id)
+      itemIDs.push(item.id)
     }
 
-    if (found.length) Zotero.DB.executeTransaction(function *() { yield collection.addItems(found) })
+    if (itemIDs.length) await Zotero.DB.executeTransaction(async () => { await target.collection.addItems(itemIDs) })
   }
 
-  private async saveToTag(tag, libraryID, imported) {
-    const cited = new Set(KeyManager.keys.find({ libraryID, citekey: { $in: Array.from(this.citekeys) } }).map(item => item.itemID))
-    const tagged = new Set(await Zotero.DB.columnQueryAsync('SELECT itemID FROM itemTags JOIN tags ON tags.tagID = itemTags.tagID WHERE LOWER(tags.name) = LOWER(?)', [tag]))
+  private async saveToTag(cited: number[], tag: string, libraryID: number) {
+    const tagged: number[] = await Zotero.DB.columnQueryAsync('SELECT itemID FROM itemTags JOIN tags ON tags.tagID = itemTags.tagID WHERE LOWER(tags.name) = LOWER(?)', [tag])
 
     // cited but not tagged
-    let itemIDs = [...cited].filter(item => !tagged.has(item))
-    if (itemIDs.length) imported = imported.concat(await Zotero.Items.getAsync(itemIDs))
-    if (imported.length) {
-      for (const item of imported) {
+    let itemIDs = cited.filter(item => !tagged.includes(item))
+    if (itemIDs.length) {
+      for (const item of await Zotero.Items.getAsync(itemIDs)) {
         item.addTag(tag, 1)
         await item.saveTx()
       }
     }
 
     // tagged but not cited
-    itemIDs = [...tagged].filter(item => !cited.has(item))
+    itemIDs = tagged.filter(item => !cited.includes(item))
     if (itemIDs.length) {
       for (const item of await Zotero.Items.getAsync(itemIDs)) {
         item.removeTag(tag)
