@@ -2,12 +2,14 @@
 
 import os, sys
 import urllib.request
+from urllib.error import HTTPError
 import json
 from munch import Munch, DefaultMunch
 from collections import defaultdict
 import copy
 import re
 import time
+import glob
 
 root = os.path.join(os.path.dirname(__file__), '..')
 
@@ -16,11 +18,16 @@ print('Generating extra-fields...')
 def load(url, schema):
   request = urllib.request.Request(url)
   request.get_method = lambda: 'HEAD'
-  with urllib.request.urlopen(request) as r:
-    etag = r.getheader('ETag')
-    if etag.startswith('W/'): etag = etag[2:]
-    etag = json.loads(etag) # strips quotes
-    schema  = f'{etag}-{schema}'
+  try:
+    with urllib.request.urlopen(request) as r:
+      etag = r.getheader('ETag')
+      if etag.startswith('W/'): etag = etag[2:]
+      etag = json.loads(etag) # strips quotes
+      schema  = f'{etag}-{schema}'
+  except HTTPError:
+    print(' ', url, 'timed out, falling back to cached version')
+    schema = os.path.basename(glob.glob(os.path.join(root, 'schema', f'*-{schema}'))[0])
+
   try:
     with open(os.path.join(root, 'schema', schema)) as f:
       return json.load(f)

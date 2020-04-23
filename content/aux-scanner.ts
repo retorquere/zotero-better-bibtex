@@ -144,7 +144,7 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
         await sleep(1500) // tslint:disable-line:no-magic-numbers
         timestamp = (new Date).toLocaleDateString('nl', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false })
       }
-      target.name += timestamp
+      target.name = target.basename + timestamp
       target.collection = new Zotero.Collection({
         name: target.name,
         libraryID,
