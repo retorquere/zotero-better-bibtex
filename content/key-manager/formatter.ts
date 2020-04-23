@@ -20,6 +20,8 @@ import * as DateParser from '../dateparser'
 
 import { parseScript } from 'meriyah'
 
+import * as defaults from '../../gen/preferences/defaults.json'
+
 import parse5 = require('parse5/lib/parser')
 const htmlParser = new parse5()
 
@@ -85,6 +87,7 @@ class PatternFormatter {
   public generate: Function
 
   public itemTypes: Set<string>
+  public fieldNames: Record<string, string>
 
   public methods: Record<'functions' | 'filters', Record<string, string>> = listMethods(this)
 
@@ -133,8 +136,9 @@ class PatternFormatter {
   private fold: boolean
   private citekeyFormat: string
 
-  public init(itemTypes) {
+  public init(itemTypes: Set<string>, fieldNames: Record<string, string>) {
     this.itemTypes = itemTypes
+    this.fieldNames = fieldNames
   }
 
   public update(reason) {
@@ -143,14 +147,40 @@ class PatternFormatter {
     this.skipWords = new Set(Prefs.get('skipWords').split(',').map(word => word.trim()).filter(word => word))
     this.fold = Prefs.get('citekeyFold')
 
-    for (const attempt of ['get', 'reset']) {
-      if (attempt === 'reset') {
-        flash(`Malformed citation pattern '${this.citekeyFormat}', resetting to default`)
-        Prefs.clear('citekeyFormat')
-      }
+    for (const attempt of ['get', 'strip', 'reset']) {
+      switch (attempt) {
+        case 'get':
+          // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
+          this.citekeyFormat = (Prefs.get('citekeyFormat') || Prefs.clear('citekeyFormat')).replace(/^\u200B/, '')
+          break
 
-      // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
-      this.citekeyFormat = (Prefs.get('citekeyFormat') || Prefs.clear('citekeyFormat')).replace(/^\u200B/, '')
+        case 'strip':
+          let citekeyFormat = ''
+          const errors = []
+          for (const chunk of Prefs.get('citekeyFormat').replace(/^\u200B/, '').match(/[^\]]*\]*/g)) {
+            try {
+              this.parsePattern(citekeyFormat + chunk)
+              citekeyFormat += chunk
+            } catch (err) {
+              errors.push(chunk)
+            }
+          }
+          citekeyFormat = citekeyFormat.trim()
+          if (citekeyFormat.includes('[')) {
+            // tslint:disable-next-line:no-magic-numbers
+            if (errors.length) flash('Malformed citation pattern', `removed malformed patterns:\n${errors.join('\n')}`, 20)
+            Prefs.set('citekeyFormat', this.citekeyFormat = citekeyFormat)
+          } else {
+            continue
+          }
+          break
+
+        case 'reset':
+          // tslint:disable-next-line:no-magic-numbers
+          flash('Malformed citation pattern', 'resetting to default', 20)
+          Prefs.set('citekeyFormat', this.citekeyFormat = defaults.citekeyFormat.replace(/^\u200B/, ''))
+          break
+      }
 
       try {
         this.generate = new Function(this.parsePattern(this.citekeyFormat))
