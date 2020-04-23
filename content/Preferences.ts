@@ -266,11 +266,14 @@ export = new class PrefPane {
     try {
       Formatter.parsePattern(this.keyformat.value)
       msg = ''
+      if (this.keyformat.value) this.saveCitekeyFormat(target)
     } catch (err) {
       msg = err.message
       if (err.location) msg += ` at ${err.location.start.offset + 1}`
       log.error('prefs: key format error:', msg)
     }
+
+    if (!this.keyformat.value && !msg) { msg = 'pattern is empty' }
 
     this.keyformat.setAttribute('style', (msg ? '-moz-appearance: none !important; background-color: DarkOrange' : ''))
     this.keyformat.setAttribute('tooltiptext', msg)
