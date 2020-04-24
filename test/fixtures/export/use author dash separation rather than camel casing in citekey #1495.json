@@ -3,9 +3,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -29,7 +27,6 @@
       "citekeyFold": true,
       "citekeyFormat": "[authors2:lower][>0]_[year] -[shorttitle:skipwords:lower]| [shorttitle:skipwords:lower]-[year]",
       "citeprocNoteCitekey": false,
-      "client": "zotero",
       "csquotes": "",
       "debugLogDir": "",
       "exportBibTeXStrings": "off",
@@ -53,9 +50,7 @@
       "mapMath": "",
       "mapText": "",
       "mapUnicode": "conservative",
-      "newTranslatorsAskRestart": true,
       "parseParticles": true,
-      "platform": "lin",
       "postscript": "",
       "postscriptOverride": "",
       "qualityReport": false,
@@ -70,7 +65,6 @@
       "skipFields": "",
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
       "strings": "",
-      "testing": false,
       "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
       "warnBulkModify": 10,
       "workers": 0
@@ -90,12 +84,10 @@
         {
           "creatorType": "author",
           "firstName": "Bruce",
-          "lastName": "D’Arcus"
+          "lastName": "D\u2019Arcus"
         }
       ],
       "date": "January 2, 2019",
-      "dateAdded": "2020-02-14T21:05:17Z",
-      "dateModified": "2020-02-14T21:05:17Z",
       "issue": "1",
       "itemID": 1,
       "itemType": "journalArticle",
@@ -106,13 +98,8 @@
       "pages": "106-117",
       "publicationTitle": "Journal of Muslim Minority Affairs",
       "title": "Spaces of Muslim Identity in Inverness, Scotland",
-      "uri": "http://zotero.org/users/34/items/I5MVEZI4",
       "url": "https://doi.org/10.1080/13602004.2019.1575022",
       "volume": "39"
     }
-  ],
-  "version": {
-    "bbt": "5.2.21",
-    "zotero": "5.0.85"
-  }
+  ]
 }

@@ -4,9 +4,7 @@
     "label": "BetterBibTeX JSON",
     "localeDateOrder": "mdy",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "doi",
@@ -30,8 +28,7 @@
       "citekeyFold": true,
       "citekeyFormat": "[authors2][year]",
       "citeprocNoteCitekey": false,
-      "client": "zotero",
-      "csquotes": "“”",
+      "csquotes": "\u201c\u201d",
       "debugLogDir": "",
       "exportBibTeXStrings": "off",
       "exportBraceProtection": false,
@@ -54,9 +51,7 @@
       "mapMath": "",
       "mapText": "",
       "mapUnicode": "conservative",
-      "newTranslatorsAskRestart": true,
       "parseParticles": true,
-      "platform": "mac",
       "postscript": "",
       "postscriptOverride": "",
       "qualityReport": false,
@@ -71,7 +66,6 @@
       "skipFields": "abstract",
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
       "strings": "",
-      "testing": false,
       "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
       "warnBulkModify": 10,
       "workers": 2
@@ -89,19 +83,12 @@
         }
       ],
       "date": "4/10/2019",
-      "dateAdded": "2019-04-22T17:05:17Z",
-      "dateModified": "2019-04-22T17:25:19Z",
       "itemID": 1,
       "itemType": "webpage",
       "language": "English",
       "publicationTitle": "Cryptoline news",
       "title": "Blockchain Africa Conference 2019 was a success",
-      "uri": "http://zotero.org/users/2612102/items/59VQ7FT2",
       "url": "www.cryptolinenews.com/industry-analysis/blockchain-africa-conference-2019"
     }
-  ],
-  "version": {
-    "bbt": "5.2.21.6388",
-    "zotero": "5.0.85"
-  }
+  ]
 }

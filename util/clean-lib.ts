@@ -59,7 +59,9 @@ for (const lib of argv._) {
       }
 
       if (data.config?.preferences) {
-        delete data.config.preferences.client
+        for (const pref of ['client', 'testing', 'platform', 'newTranslatorsAskRestart']) {
+          delete data.config.preferences[pref]
+        }
         for (const pref of Object.keys(data.config.preferences)) {
           if (!preferences[pref]) delete data.config.preferences[pref]
         }
