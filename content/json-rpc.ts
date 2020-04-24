@@ -4,6 +4,7 @@ import * as log from './debug'
 import { KeyManager } from './key-manager'
 import { getItemsAsync } from './get-items-async'
 import { AUXScanner } from './aux-scanner'
+import { Translators } from './translators'
 
 const OK = 200
 
@@ -133,6 +134,23 @@ class Item {
 
     log.debug(KeyManager.keys.data)
     return keys
+  }
+
+  public async export(citekeys: string[], translator: string, libraryID: number = Zotero.Libraries.userLibraryID) {
+    const found = KeyManager.keys.find({ libraryID, citekey: { $in: citekeys } })
+    if (found.length !== citekeys.length) {
+      const keysfound = found.map(key => key.citekey)
+      throw { code: INVALID_PARAMETERS, message: citekeys.filter(key => !keysfound.includes(key)).join(', ') + 'not found' }
+    }
+
+    translator = translator.replace(/\s/g, '')
+    const _translator = translator.toLowerCase()
+    for (const [label, meta] of Object.entries(Translators.byLabel)) {
+      const _label = label.toLowerCase()
+      if (_label === _translator || _label.replace(/^better/, '') === _translator) translator = meta.translatorID
+    }
+
+    return [OK, 'text/plain', await Translators.exportItems(translator, null, { type: 'items', items: await getItemsAsync(found.map(key => key.itemID)) }) ]
   }
 }
 
