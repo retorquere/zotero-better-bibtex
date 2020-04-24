@@ -52,9 +52,9 @@ type ExportJob = {
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Translators = new class { // tslint:disable-line:variable-name
-  public byId: any
-  public byName: any
-  public byLabel: any
+  public byId: Record<string, ITranslatorHeader>
+  public byName: Record<string, ITranslatorHeader>
+  public byLabel: Record<string, ITranslatorHeader>
   public itemType: { note: number, attachment: number }
 
   private queue = new Queue((t1: IPriority, t2: IPriority) => t1.priority === t2.priority ? t1.timestamp < t2.timestamp : t1.priority > t2.priority)
