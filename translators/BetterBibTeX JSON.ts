@@ -150,7 +150,12 @@ export function doExport() {
   const validAttachmentFields = new Set([ 'relations', 'uri', 'itemType', 'title', 'path', 'tags', 'dateAdded', 'dateModified', 'seeAlso', 'mimeType' ])
 
   while ((item = Zotero.nextItem())) {
-    if (item.itemType === 'attachment') continue
+    if (Translator.options.dropAttachments && item.itemType === 'attachment') continue
+
+    if (!Translator.options.Normalize) {
+      const [ , kind, lib, key ] = item.uri.match(/^http:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^\/]+)\/items\/(.+)/)
+      item.select = (kind === 'users') ? `zotero://select/library/items/${key}` : `zotero://select/groups/${lib}/items/${key}`
+    }
 
     delete item.collections
 
@@ -178,7 +183,7 @@ export function doExport() {
     data.items.push(item)
   }
 
-  normalize(data)
+  if (Translator.options.Normalize) normalize(data)
 
   Zotero.write(stringify(data, null, '  '))
 }

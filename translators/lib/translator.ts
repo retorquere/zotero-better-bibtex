@@ -24,6 +24,7 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
     Title?: boolean
     Authors?: boolean
     Year?: boolean
+    Normalize?: boolean
   }
 
   public BetterBibLaTeX?: boolean                   // tslint:disable-line:variable-name
@@ -68,6 +69,7 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
       Title: boolean
       Authors: boolean
       Year: boolean
+      Normalize: boolean
     }
 
     configOptions: {
