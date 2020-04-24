@@ -142,7 +142,7 @@ class Item {
   }
 
   public async export(citekeys: string[], translator: string, libraryID: number = Zotero.Libraries.userLibraryID) {
-    const query = { libraryID, itemID: { $in: citekeys } }
+    const query = { libraryID, citekey: { $in: citekeys } }
 
     if (Prefs.get('keyScope') === 'global') {
       if (typeof libraryID === 'number') throw { code: INVALID_PARAMETERS, message: 'keyscope is global, do not provide a library ID' }
@@ -154,7 +154,7 @@ class Item {
     const found = KeyManager.keys.find(query)
     if (found.length !== citekeys.length) {
       const keysfound = found.map(key => key.citekey)
-      throw { code: INVALID_PARAMETERS, message: citekeys.filter(key => !keysfound.includes(key)).join(', ') + 'not found' }
+      throw { code: INVALID_PARAMETERS, message: citekeys.filter(key => !keysfound.includes(key)).join(', ') + ' not found' }
     }
 
     translator = translator.replace(/\s/g, '')
