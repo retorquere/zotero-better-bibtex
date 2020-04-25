@@ -16,11 +16,11 @@ const INVALID_PARAMETERS = -32602 // Invalid method parameter(s).
 const INTERNAL_ERROR = -32603 // Internal JSON-RPC error.
 
 class Collection {
-  public async scanAUX(collection: {libraryID: number, key: string, replace?: boolean | string }, path:string) {
+  public async scanAUX(collection: {libraryID: number, key: string, replace?: boolean }, path:string) {
     await AUXScanner.scan(path, { collection })
   }
 
-  public async scanAUX(collection: {libraryID: number, key: string, subcollecton?: string }, path:string) {
+  public async autoexport(collection: {libraryID: number, key: string, subcollecton?: string }, path:string) {
     await AUXScanner.scan(path, { collection })
   }
 }
@@ -157,14 +157,7 @@ class Item {
       throw { code: INVALID_PARAMETERS, message: citekeys.filter(key => !keysfound.includes(key)).join(', ') + ' not found' }
     }
 
-    translator = translator.replace(/\s/g, '')
-    const _translator = translator.toLowerCase()
-    for (const [label, meta] of Object.entries(Translators.byLabel)) {
-      const _label = label.toLowerCase()
-      if (_label === _translator || _label.replace(/^better/, '') === _translator) translator = meta.translatorID
-    }
-
-    return [OK, 'text/plain', await Translators.exportItems(translator, null, { type: 'items', items: await getItemsAsync(found.map(key => key.itemID)) }) ]
+    return [OK, 'text/plain', await Translators.exportItems(Translators.getTranslatorId(translator), null, { type: 'items', items: await getItemsAsync(found.map(key => key.itemID)) }) ]
   }
 }
 
