@@ -17,6 +17,10 @@ class Collection {
   public async scanAUX(collection: {libraryID: number, key: string, replace?: boolean | string }, path:string) {
     await AUXScanner.scan(path, { collection })
   }
+
+  public async scanAUX(collection: {libraryID: number, key: string, subcollecton?: string }, path:string) {
+    await AUXScanner.scan(path, { collection })
+  }
 }
 
 class User {
