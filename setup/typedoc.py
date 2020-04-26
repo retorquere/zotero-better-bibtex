@@ -102,7 +102,7 @@ def walk(doc):
     jsonrpc += f'{method.doc}\n\n'
     for p in method.parameters:
       pn = p.replace('_', '\\_')
-      jsonrpc += f"* {pn}: {p.doc}\n"
+      jsonrpc += f"* `{pn}`: {p.doc}\n"
 
     if method.returns:
       jsonrpc += f'\n returns: {method.returns}\n'
