@@ -170,6 +170,11 @@ export function doExport() {
         att.path = att.localPath
       }
 
+      if (!Translator.options.Normalize) {
+        const [ , kind, lib, key ] = att.uri.match(/^http:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^\/]+)\/items\/(.+)/)
+        att.select = (kind === 'users') ? `zotero://select/library/items/${key}` : `zotero://select/groups/${lib}/items/${key}`
+      }
+
       if (!att.path) continue // amazon/googlebooks etc links show up as atachments without a path
 
       att.relations = att.relations ? (att.relations['dc:relation'] || []) : []
