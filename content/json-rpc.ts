@@ -85,15 +85,15 @@ class NSItem {
   /**
    * Quick-search for items in Zotero.
    *
-   * @param terms  Terms as typed into the search box in Zotero
+   * @param searchterms  Terms as typed into the search box in Zotero
    */
-  public async search(terms: string) {
-    if (typeof terms !== 'string') terms = terms.terms
+  public async search(searchterms: string | { terms: string }) {
+    let terms: string = typeof searchterms === 'string' ? searchterms : searchterms.terms
 
     // quicksearch-titleCreatorYear / quicksearch-fields
     // const mode = Prefs.get('caywAPIsearchMode')
 
-    terms = terms.replace(/ (?:&|and) /g, ' ', 'g')
+    terms = terms.replace(/ (?:&|and) /g, ' ')
     if (!/[\w\u007F-\uFFFF]/.test(terms)) return []
 
     const search = new Zotero.Search()
