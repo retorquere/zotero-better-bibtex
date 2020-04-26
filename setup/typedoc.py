@@ -101,8 +101,7 @@ def walk(doc):
     jsonrpc += f"## {method.className.replace('NS', '').lower()}.{method.name}({params})\n\n"
     jsonrpc += f'{method.doc}\n\n'
     for p in method.parameters:
-      pn = p.replace('_', '\\_')
-      jsonrpc += f"* `{pn}`: {p.doc}\n"
+      jsonrpc += f"* `{p}`: {p.doc}\n"
 
     if method.returns:
       jsonrpc += f'\n returns: {method.returns}\n'

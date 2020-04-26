@@ -37,7 +37,7 @@ Generate a bibliography for the given citekeys
 
 Fetch citationkeys given item keys
 
-* `item\_keys`: A list of [libraryID]:[itemKey] strings. If [libraryID] is omitted, assume 'My Library'
+* `item_keys`: A list of [libraryID]:[itemKey] strings. If [libraryID] is omitted, assume 'My Library'
 
 ## item.export(citekeys, translator, libraryID)
 
