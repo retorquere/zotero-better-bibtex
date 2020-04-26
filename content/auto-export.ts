@@ -156,7 +156,7 @@ class Git {
 const git = new Git()
 
 import * as prefOverrides from '../gen/preferences/auto-export-overrides.json'
-const queue = new class {
+const queue = new class TaskQueue {
   private tasks = new Loki('autoexport').addCollection('tasks')
   private paused: Set<number>
   private autoexports: any
@@ -334,7 +334,7 @@ Events.on('preference-changed', pref => {
 })
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let AutoExport = new class { // tslint:disable-line:variable-name
+export let AutoExport = new class CAutoExport { // tslint:disable-line:variable-name
   public db: any
 
   constructor() {

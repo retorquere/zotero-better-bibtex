@@ -4,8 +4,10 @@ import * as log from './debug'
 import { KeyManager } from './key-manager'
 import { getItemsAsync } from './get-items-async'
 import { AUXScanner } from './aux-scanner'
+import { AutoExport } from './auto-export'
 import { Translators } from './translators'
 import { Preferences as Prefs } from './prefs'
+import { get as getCollection } from './collection'
 
 const OK = 200
 
@@ -15,23 +17,50 @@ const METHOD_NOT_FOUND = -32601 // The method does not exist / is not available.
 const INVALID_PARAMETERS = -32602 // Invalid method parameter(s).
 const INTERNAL_ERROR = -32603 // Internal JSON-RPC error.
 
-class Collection {
-  public async scanAUX(collection: {libraryID: number, key: string, replace?: boolean }, path:string) {
-    await AUXScanner.scan(path, { collection })
-  }
-
-  public async autoexport(collection: {libraryID: number, key: string, subcollecton?: string }, path:string) {
-    await AUXScanner.scan(path, { collection })
+class NSCollection {
+  public async scanAUX(collection: string, aux: string) {
+    const { libraryID, key } = await getCollection(collection, true)
+    await AUXScanner.scan(aux, { collection: { libraryID, key, replace: true } })
   }
 }
 
-class User {
+class NSAutoExport {
+  public async add(collection: string, translator: string, path: string, displayOptions:Record<string, boolean> = {}, replace = false) {
+    const translatorID = Translators.getTranslatorId(translator)
+    if (!Translators.byId[translatorID]) throw { code: INVALID_PARAMETERS, message: `Unknown translator '${translator}'` }
+
+    const coll = await getCollection(path, true)
+
+    const ae = AutoExport.db.findOne({ path })
+    if (ae && ae.translatorID === translatorID && ae.type === 'collection' && ae.id === coll.id) {
+      // pass
+
+    } else if (ae && !replace) {
+      throw { code: INVALID_PARAMETERS, message: "Auto-export exists with incompatible parameters, but no 'replace' was requested" }
+
+    } else {
+      AutoExport.add({
+        type: 'collection',
+        id: coll.id,
+        path,
+        status: 'done',
+        translatorID,
+        exportNotes: displayOptions.exportNotes,
+        useJournalAbbreviation: displayOptions.useJournalAbbreviation,
+      })
+    }
+
+    return { libraryID: coll.libraryID, key: coll.key, collectionID: coll.id }
+  }
+}
+
+class NSUser {
   public async groups() {
     return Zotero.Libraries.getAll().map(lib => ({ id: lib.libraryID, name: lib.name }))
   }
 }
 
-class Item {
+class NSItem {
   public async search(terms) {
     if (typeof terms !== 'string') terms = terms.terms
 
@@ -162,15 +191,14 @@ class Item {
 }
 
 const api = new class API {
-  public $user: User
-  public $item: Item
-  public $items: Item
-  public $collection: Collection
+  public $user = new NSUser
+  public $item = new NSItem
+  public $items: NSItem
+  public $collection = new NSCollection
+  public $autoexport = new NSAutoExport
 
   constructor() {
-    this.$item = this.$items = new Item
-    this.$user = new User
-    this.$collection = new Collection
+    this.$items = this.$item
   }
 
   public async handle(request) {
