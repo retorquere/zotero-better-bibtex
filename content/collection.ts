@@ -1,4 +1,4 @@
-import * as log from './debug'
+// import * as log from './debug'
 
 function getLibrary(name) {
   if (!name) return Zotero.Libraries.get(Zotero.Libraries.userLibraryID)
