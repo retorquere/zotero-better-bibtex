@@ -1,5 +1,5 @@
 {
-	"version": 10,
+	"version": 13,
 	"itemTypes": [
 		{
 			"itemType": "artwork",
@@ -1391,51 +1391,69 @@
 					"field": "title"
 				},
 				{
-					"field": "abstractNote"
-				},
-				{
-					"field": "jurisdiction"
-				},
-				{
-					"field": "shortTitle"
-				},
-				{
-					"field": "meetingName"
+					"field": "volume"
 				},
 				{
 					"field": "committee"
 				},
 				{
-					"field": "meetingNumber"
+					"field": "place"
 				},
 				{
-					"field": "legislativeBody"
+					"field": "publisher"
 				},
 				{
-					"field": "resolutionLabel"
-				},
-				{
-					"field": "assemblyNumber"
-				},
-				{
-					"field": "sessionType",
-					"baseField": "type"
-				},
-				{
-					"field": "session"
+					"field": "numberOfVolumes"
 				},
 				{
 					"field": "documentNumber",
 					"baseField": "number"
 				},
 				{
+					"field": "pages"
+				},
+				{
+					"field": "legislativeBody"
+				},
+				{
+					"field": "session"
+				},
+				{
+					"field": "history"
+				},
+				{
 					"field": "date"
 				},
 				{
-					"field": "volume"
+					"field": "language"
 				},
 				{
-					"field": "pages"
+					"field": "abstractNote"
+				},
+				{
+					"field": "url"
+				},
+				{
+					"field": "accessDate"
+				},
+				{
+					"field": "rights"
+				},
+				{
+					"field": "extra"
+				},
+				{
+					"field": "jurisdiction"
+				},
+				{
+					"field": "assemblyNumber"
+				},
+				{
+					"field": "resolutionLabel"
+				},
+				{
+					"field": "sessionType",
+					"baseField": "type"
 				},
 				{
 					"field": "archiveLocation"
@@ -1445,31 +1463,13 @@
 					"baseField": "publicationTitle"
 				},
 				{
-					"field": "publisher"
+					"field": "meetingName"
 				},
 				{
-					"field": "language"
+					"field": "meetingNumber"
 				},
 				{
-					"field": "url"
-				},
-				{
-					"field": "accessDate"
-				},
-				{
-					"field": "numberOfVolumes"
-				},
-				{
-					"field": "history"
-				},
-				{
-					"field": "place"
-				},
-				{
-					"field": "rights"
-				},
-				{
-					"field": "extra"
+					"field": "shortTitle"
 				}
 			],
 			"creatorTypes": [
@@ -5696,7 +5696,7 @@
 				"codeNumber": "Code Number",
 				"codePages": "Code Pages",
 				"codeVolume": "Code Volume",
-				"committee": "Commttee",
+				"committee": "Committee",
 				"company": "Company",
 				"conferenceDate": "Conf. Date",
 				"conferenceName": "Conference Name",
