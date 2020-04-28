@@ -48,7 +48,7 @@ class NSAutoExport {
     const translatorID = Translators.getTranslatorId(translator)
     if (!Translators.byId[translatorID]) throw { code: INVALID_PARAMETERS, message: `Unknown translator '${translator}'` }
 
-    const coll = await getCollection(path, true)
+    const coll = await getCollection(collection, true)
 
     const ae = AutoExport.db.findOne({ path })
     if (ae && ae.translatorID === translatorID && ae.type === 'collection' && ae.id === coll.id) {
