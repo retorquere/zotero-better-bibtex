@@ -28,6 +28,7 @@ class NSCollection {
   public async scanAUX(collection: string, aux: string) {
     const { libraryID, key } = await getCollection(collection, true)
     await AUXScanner.scan(aux, { collection: { libraryID, key, replace: true } })
+    return { libraryID, key }
   }
 }
 
