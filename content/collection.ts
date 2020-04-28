@@ -1,7 +1,8 @@
 import * as log from './debug'
 
 function getLibrary(name) {
-  log.debug('1477:', Zotero.Libraries.getAll().map(lib => lib.name))
+  if (!name) return Zotero.Libraries.get(Zotero.Libraries.userLibraryID)
+
   const libraries = Zotero.Libraries.getAll().filter(lib => lib.name === name)
   switch (libraries.length) {
     case 0:
