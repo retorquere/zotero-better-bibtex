@@ -21,7 +21,7 @@ class NSCollection {
   /**
    * Scan an AUX file for citekeys and populate a Zotero collection from them. The target collection will be cleared if it exists.
    *
-   * @param collection  The forward-slash separated path to the collection. The first part of the path must be the library name; 'My Library' is your personal library. Intermediate collections that do not exist will be created as needed.
+   * @param collection  The forward-slash separated path to the collection. The first part of the path must be the library name, or empty (`//`); empty is your personal library. Intermediate collections that do not exist will be created as needed.
    * @param aux         The absolute path to the AUX file on disk
    *
    */
@@ -35,7 +35,7 @@ class NSCollection {
 class NSAutoExport {
   /**
    * Add an auto-export for the given collection. The target collection will be created if it does not exist
-   * @param collection                             The forward-slash separated path to the collection. The first part of the path must be the library name; 'My Library' is your personal library. Intermediate collections that do not exist will be created as needed.
+   * @param collection                             The forward-slash separated path to the collection. The first part of the path must be the library name, or empty (`//`); empty is your personal library. Intermediate collections that do not exist will be created as needed.
    * @param translator                             The name or GUID of a BBT translator
    * @param path                                   The absolute path to which the collection will be auto-exported
    * @param displayOptions                         Options which you would be able to select during an interactive export
