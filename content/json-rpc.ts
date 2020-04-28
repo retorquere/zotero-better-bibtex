@@ -38,10 +38,10 @@ class NSAutoExport {
    * @param collection                             The forward-slash separated path to the collection. The first part of the path must be the library name, or empty (`//`); empty is your personal library. Intermediate collections that do not exist will be created as needed.
    * @param translator                             The name or GUID of a BBT translator
    * @param path                                   The absolute path to which the collection will be auto-exported
-   * @param displayOptions                         Options which you would be able to select during an interactive export
+   * @param displayOptions                         Options which you would be able to select during an interactive export; `exportNotes`, default `false`, and `useJournalAbbreviation`, default `false`
    * @param displayOptions.exportNotes             Export notes
    * @param displayOptions.useJournalAbbreviation  Use Journal abbreviation in export
-   * @param replace                                Replace the auto-export if it exists
+   * @param replace                                Replace the auto-export if it exists, default `false`
    * @returns                                      Collection ID of the target collection
    */
   public async add(collection: string, translator: string, path: string, displayOptions:Record<string, boolean> = {}, replace = false): Promise<{ libraryID: number, key: string, id: number}> {

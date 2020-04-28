@@ -2,11 +2,11 @@
 
 Add an auto-export for the given collection. The target collection will be created if it does not exist
 
-* `collection`: The forward-slash separated path to the collection. The first part of the path must be the library name; 'My Library' is your personal library. Intermediate collections that do not exist will be created as needed.
+* `collection`: The forward-slash separated path to the collection. The first part of the path must be the library name, or empty (`//`); empty is your personal library. Intermediate collections that do not exist will be created as needed.
 * `translator`: The name or GUID of a BBT translator
 * `path`: The absolute path to which the collection will be auto-exported
-* `displayOptions`: Options which you would be able to select during an interactive export
-* `replace`: Replace the auto-export if it exists
+* `displayOptions`: Options which you would be able to select during an interactive export; `exportNotes`, default `false`, and `useJournalAbbreviation`, default `false`
+* `replace`: Replace the auto-export if it exists, default `false`
 
  returns: Collection ID of the target collection
 
@@ -14,7 +14,7 @@ Add an auto-export for the given collection. The target collection will be creat
 
 Scan an AUX file for citekeys and populate a Zotero collection from them. The target collection will be cleared if it exists.
 
-* `collection`: The forward-slash separated path to the collection. The first part of the path must be the library name; 'My Library' is your personal library. Intermediate collections that do not exist will be created as needed.
+* `collection`: The forward-slash separated path to the collection. The first part of the path must be the library name, or empty (`//`); empty is your personal library. Intermediate collections that do not exist will be created as needed.
 * `aux`: The absolute path to the AUX file on disk
 
 
