@@ -1,5 +1,13 @@
 # Introduction
 
+Blah blah [see @doe99, pp. 33-35; also @smith04, ch. 1].
+
+Blah blah [@doe99, pp. 33-35, 38-39 and *passim*].
+
+Blah blah [@smith04; @doe99].
+
+Smith says blah [-@smith04].
+
 The course \textit{Advanced Software Design} is built around the achievement-driven learning methodology [@Shelah.SubstituteHallTheorem.p.199-208.Vol.16]
 (more details in [@sec:theory]).
 This methodology gives students more  control of their

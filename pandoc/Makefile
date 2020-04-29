@@ -1,12 +1,11 @@
 all: paper
 
+TIMESTAMP=$(shell date "+%Y-%m-%dT%H:%M:%S")
+
 paper:
 	@rm -f *.docx *.odt
-	@pandoc -s --lua-filter=add-zotero-refs.lua -o paper`date "+%Y-%m-%dT%H:%M:%S"`.docx main.md
-	@pandoc -s --lua-filter=add-zotero-refs.lua -o paper.odt main.md
+	@pandoc -s --lua-filter=add-zotero-refs.lua -o paper$(TIMESTAMP).docx main.md
+	@pandoc -s --lua-filter=add-zotero-refs.lua -o paper$(TIMESTAMP).odt main.md
 
-tidy: paper
-	rm -rf docx && mkdir docx && cd docx && unzip ../paper.docx
-	#cat docx/word/document.xml | tidy -xml -q -utf8 > document.xml
-	#mv document.xml docx/word/document.xml
-	#cd docx && zip ../paper-tidy.docx *
+unpack: paper
+	rm -rf docx && mkdir docx && cd docx && unzip ../paper*.docx

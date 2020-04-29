@@ -408,11 +408,40 @@ end
 -- SOFTWARE.
 --
 
-function escape_xml(str)
+local function collect(tbl)
+  if not tbl then return nil end
+
+  local t = ''
+  for k, v in pairs(tbl) do
+    if v.text then t = t .. v.text end
+  end
+
+  if t == '' then
+    return nil
+  else
+    return t
+  end
 end
 
+function deepcopy(orig)
+  local orig_type = type(orig)
+  local copy
+  if orig_type == 'table' then
+    copy = {}
+    for orig_key, orig_value in next, orig, nil do
+      copy[deepcopy(orig_key)] = deepcopy(orig_value)
+    end
+    setmetatable(copy, deepcopy(getmetatable(orig)))
+  else -- number, string, boolean, etc
+    copy = orig
+  end
+  return copy
+end
+
+-- local serpent = require("serpent")
+
 if FORMAT:match 'docx' then
-  local mt, contents = pandoc.mediabag.fetch('http://127.0.0.1:23119/better-bibtex/library?/1/library.json&exportCSLZoteroID=true', ".")
+  local mt, contents = pandoc.mediabag.fetch('http://127.0.0.1:23119/better-bibtex/library?/1/library.json&exportNotes=true', ".")
 
   local bib = {}
   local zotero = {}
@@ -424,13 +453,26 @@ if FORMAT:match 'docx' then
     bib[citekey] = item
   end
 
-  local citationID = 1
+  function cite_id(length)
+    math.randomseed(os.clock()^5)
+	  local id = ''
+	  for i = 1, length do
+		  id = id .. string.char(math.random(97, 122))
+	  end
+	  return id
+  end
+  -- local citationID = 1
 
+  function xmlescape(str)
+    return string.gsub(str, '["<>&]', { ['&'] = '&amp;', ['<'] = '&lt;', ['>'] = '&gt;', ['"'] = '&quot;' })
+  end
   function zotero_ref(cite)
     -- { ["citations"] = { [1] = { ["mode"] = NormalCitation,["id"] = RYAN200054,["note_num"] = 0,["prefix"] = { } ,["suffix"] = { } ,["hash"] = 0,} ,} ,["content"] = { [1] = { ["text"] = [@RYAN200054],} ,} ,} 
-    citationID = citationID + 1
+    -- {"citations":[{"prefix":[{"text":"see"}],"id":"doe99","suffix":[{"text":","},[],{"text":"pp. 33-35"}],"note_num":0,"mode":"NormalCitation","hash":0},{"prefix":[{"text":"also"}],"id":"smith04","suffix":[{"text":","},[],{"text":"ch. 1"}],"note_num":0,"mode":"NormalCitation","hash":0}],"content":[{"text":"[see"},[],{"text":"@doe99,"},[],{"text":"pp."},[],{"text":"33-35;"},[],{"text":"also"},[],{"text":"@smith04,"},[],{"text":"ch."},[],{"text":"1]"}]}
+
+    -- citationID = citationID + 1
     local csl = {
-      citationID = citationID,
+      citationID = cite_id(8),
       properties = {
         formattedCitation = cite.content[1].text,
         plainCitation = cite.content[1].text,
@@ -444,21 +486,27 @@ if FORMAT:match 'docx' then
         print(item.id .. ' not found')
         return cite
       end
+
+      -- TODO: locator and label are not reliably parsed by pandoc it seems
+      local itemData = deepcopy(bib[item.id])
+      itemData.prefix = collect(item.prefix)
+      itemData.suffix = collect(item.suffix)
+      if item.mode == 'SuppressAuthor' then itemData['suppress-author'] = true end
+
       table.insert(csl.citationItems, {
         id = zotero[item.id].itemID,
         uris = { zotero[item.id].uri },
         uri = { zotero[item.id].uri },
-        itemData = bib[item.id]
+        itemData = itemData
       })
+
     end
 
-    label = '<refresh: ' .. cite.content[1].text .. '>'
-    label = string.gsub(label, '["<>&]', { ['&'] = '&amp;', ['<'] = '&lt;', ['>'] = '&gt;', ['"'] = '&quot;' })
 
     local field = '<w:r><w:fldChar w:fldCharType="begin"/></w:r><w:r><w:instrText xml:space="preserve">'
-    field = field .. ' ADDIN ZOTERO_ITEM CSL_CITATION ' .. json.encode(csl) .. '   '
+    field = field .. ' ADDIN ZOTERO_ITEM CSL_CITATION ' .. xmlescape(json.encode(csl)) .. '   '
     field = field .. '</w:instrText></w:r><w:r><w:fldChar w:fldCharType="separate"/></w:r><w:r><w:rPr><w:noProof/></w:rPr><w:t>'
-    field = field .. label
+    field = field .. xmlescape('<refresh: ' .. collect(cite.content) .. '>')
     field = field .. '</w:t></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r>'
 
     return pandoc.RawInline('openxml', field)
@@ -482,7 +530,12 @@ if FORMAT:match 'odt' then
     uris[item.citationKey] = item.uri
   end
 
+  function trim(s)
+    return (s:gsub("^%s*(.-)%s*$", "%1"))
+  end
+
   function scannable_cite(cite)
+    -- {"citations":[{"prefix":[{"text":"see"}],"id":"doe99","suffix":[{"text":","},[],{"text":"pp. 33-35"}],"note_num":0,"mode":"NormalCitation","hash":0},{"prefix":[{"text":"also"}],"id":"smith04","suffix":[{"text":","},[],{"text":"ch. 1"}],"note_num":0,"mode":"NormalCitation","hash":0}],"content":[{"text":"[see"},[],{"text":"@doe99,"},[],{"text":"pp."},[],{"text":"33-35;"},[],{"text":"also"},[],{"text":"@smith04,"},[],{"text":"ch."},[],{"text":"1]"}]}
     local citation = ''
     for k, item in pairs(cite.citations) do
       local uri = uris[item.id]
@@ -490,19 +543,22 @@ if FORMAT:match 'odt' then
         return cite
       end
 
-      local s, e, key = string.find(uri, 'http://zotero.org/users/local/%w+/items/(%w+)')
+      local suppress = (item.mode == 'SuppressAuthor' and '-' or '')
+      local s, e, ug, id, key
+      s, e, key = string.find(uri, 'http://zotero.org/users/local/%w+/items/(%w+)')
       if key then
-        citation = citation .. '{| | | | zu:0:' .. key .. ' }'
+        ug = 'users'
+        id = '0'
       else
-        local s, e, ug, id, key = string.find(uri, 'http://zotero.org/(%w+)/(%w+)/items/(%w+)')
-        citation = citation .. '{| | | | '
-        if ug == 'groups' then
-          citation = citation .. 'zg:'
-        else
-          citation = citation .. 'zu:'
-        end
-        citation = citation .. id .. ':' .. key .. '}'
+        s, e, ug, id, key = string.find(uri, 'http://zotero.org/(%w+)/(%w+)/items/(%w+)')
       end
+
+      citation = citation ..
+        '{ ' .. (collect(item.prefix)  or '') ..
+        ' | ' .. suppress .. trim(string.gsub(collect(cite.content) or '', '[|{}]', '')) ..
+        ' | ' .. -- (item.locator or '') ..
+        ' | ' .. (collect(item.suffix) or '') ..
+        ' | ' .. (ug == 'groups' and 'zg:' or 'zu:') .. id .. ':' .. key .. ' }'
     end
 
     return pandoc.Str(citation)
