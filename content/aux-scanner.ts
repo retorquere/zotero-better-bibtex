@@ -34,7 +34,7 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
     })
   }
 
-  public async scan(path: string, options: { tag?: string, libraryID?: number, collection?: { libraryID: number, key: string, replace?: boolean | string } } = {}) {
+  public async scan(path: string, options: { tag?: string, libraryID?: number, collection?: { libraryID: number, key: string, replace?: boolean } } = {}) {
     if ([options.tag, options.libraryID, options.collection].filter(tgt => tgt).length > 1) throw new Error('You can only specify one of tag, libraryID, or collection')
 
     const citekeys: string[] = []
@@ -78,7 +78,7 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
       await this.saveToTag(itemIDs, options.tag, libraryID)
     } else {
       if (collection && (options.collection?.replace || !collection.hasChildItems())) {
-        await this.saveToCollection(itemIDs, missing, { collection, name: typeof options.collection?.replace === 'string' ? options.collection.replace : undefined })
+        await this.saveToCollection(itemIDs, missing, { collection })
       } else if (collection) {
         await this.saveToCollection(itemIDs, missing, { collection, basename })
       } else {
@@ -125,7 +125,7 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
     }
   }
 
-  private async saveToCollection(itemIDs: number[], missing_keys: string[], target: { collection?: any, libraryID?: number, basename?: string, name?: string }) {
+  private async saveToCollection(itemIDs: number[], missing_keys: string[], target: { collection?: any, libraryID?: number, basename?: string }) {
     if (typeof target.libraryID === 'number') {
       if (target.collection) throw new Error('cannot have both collection and library target')
       if (!target.basename) throw new Error('Saving to library needs a name')
@@ -144,28 +144,15 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
         await sleep(1500) // tslint:disable-line:no-magic-numbers
         timestamp = (new Date).toLocaleDateString('nl', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false })
       }
-      target.name = target.basename + timestamp
+
       target.collection = new Zotero.Collection({
-        name: target.name,
+        name: target.basename + timestamp,
         libraryID,
         parentID: target.collection ? target.collection.id : undefined,
       })
-
       await target.collection.saveTx()
 
     } else {
-      if (target.name) {
-        let subcollection = target.collection.getChildCollections().find(coll => coll.name === target.name)
-        if (!subcollection) {
-          subcollection = new Zotero.Collection({
-            name: target.name,
-            libraryID: target.collection.libraryID,
-            parentID: target.collection.id,
-          })
-          await subcollection.saveTx()
-        }
-        target.collection = subcollection
-      }
       // saving into existing collection, remove items that are not cited
       const obsolete = target.collection.getChildItems(true).filter(itemID => !itemIDs.includes(itemID))
       if (obsolete.length) await Zotero.DB.executeTransaction(async () => { await target.collection.removeItems(obsolete) })

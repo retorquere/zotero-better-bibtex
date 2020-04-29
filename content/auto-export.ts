@@ -156,7 +156,7 @@ class Git {
 const git = new Git()
 
 import * as prefOverrides from '../gen/preferences/auto-export-overrides.json'
-const queue = new class {
+const queue = new class TaskQueue {
   private tasks = new Loki('autoexport').addCollection('tasks')
   private paused: Set<number>
   private autoexports: any
@@ -334,7 +334,7 @@ Events.on('preference-changed', pref => {
 })
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let AutoExport = new class { // tslint:disable-line:variable-name
+export let AutoExport = new class CAutoExport { // tslint:disable-line:variable-name
   public db: any
 
   constructor() {
@@ -361,7 +361,7 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
     queue.start()
   }
 
-  public add(ae) {
+  public add(ae, schedule = false) {
     for (const pref of prefOverrides) {
       ae[pref] = Prefs.get(pref)
     }
@@ -369,7 +369,7 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
     this.db.insert(ae)
 
     git.repo(ae.path).then(repo => {
-      if (repo.enabled) this.schedule(ae.type, [ae.id]) // causes initial push to overleaf at the cost of a unnecesary extra export
+      if (repo.enabled || schedule) this.schedule(ae.type, [ae.id]) // causes initial push to overleaf at the cost of a unnecesary extra export
     })
   }
 

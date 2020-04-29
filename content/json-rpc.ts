@@ -4,8 +4,10 @@ import * as log from './debug'
 import { KeyManager } from './key-manager'
 import { getItemsAsync } from './get-items-async'
 import { AUXScanner } from './aux-scanner'
+import { AutoExport } from './auto-export'
 import { Translators } from './translators'
 import { Preferences as Prefs } from './prefs'
+import { get as getCollection } from './collection'
 
 const OK = 200
 
@@ -15,26 +17,84 @@ const METHOD_NOT_FOUND = -32601 // The method does not exist / is not available.
 const INVALID_PARAMETERS = -32602 // Invalid method parameter(s).
 const INTERNAL_ERROR = -32603 // Internal JSON-RPC error.
 
-class Collection {
-  public async scanAUX(collection: {libraryID: number, key: string, replace?: boolean | string }, path:string) {
-    await AUXScanner.scan(path, { collection })
+class NSCollection {
+  /**
+   * Scan an AUX file for citekeys and populate a Zotero collection from them. The target collection will be cleared if it exists.
+   *
+   * @param collection  The forward-slash separated path to the collection. The first part of the path must be the library name, or empty (`//`); empty is your personal library. Intermediate collections that do not exist will be created as needed.
+   * @param aux         The absolute path to the AUX file on disk
+   *
+   */
+  public async scanAUX(collection: string, aux: string) {
+    const { libraryID, key } = await getCollection(collection, true)
+    await AUXScanner.scan(aux, { collection: { libraryID, key, replace: true } })
+    return { libraryID, key }
   }
 }
 
-class User {
+class NSAutoExport {
+  /**
+   * Add an auto-export for the given collection. The target collection will be created if it does not exist
+   * @param collection                             The forward-slash separated path to the collection. The first part of the path must be the library name, or empty (`//`); empty is your personal library. Intermediate collections that do not exist will be created as needed.
+   * @param translator                             The name or GUID of a BBT translator
+   * @param path                                   The absolute path to which the collection will be auto-exported
+   * @param displayOptions                         Options which you would be able to select during an interactive export; `exportNotes`, default `false`, and `useJournalAbbreviation`, default `false`
+   * @param displayOptions.exportNotes             Export notes
+   * @param displayOptions.useJournalAbbreviation  Use Journal abbreviation in export
+   * @param replace                                Replace the auto-export if it exists, default `false`
+   * @returns                                      Collection ID of the target collection
+   */
+  public async add(collection: string, translator: string, path: string, displayOptions:Record<string, boolean> = {}, replace = false): Promise<{ libraryID: number, key: string, id: number}> {
+    const translatorID = Translators.getTranslatorId(translator)
+    if (!Translators.byId[translatorID]) throw { code: INVALID_PARAMETERS, message: `Unknown translator '${translator}'` }
+
+    const coll = await getCollection(collection, true)
+
+    const ae = AutoExport.db.findOne({ path })
+    if (ae && ae.translatorID === translatorID && ae.type === 'collection' && ae.id === coll.id) {
+      AutoExport.schedule(ae.type, [ae.id])
+
+    } else if (ae && !replace) {
+      throw { code: INVALID_PARAMETERS, message: "Auto-export exists with incompatible parameters, but no 'replace' was requested" }
+
+    } else {
+      AutoExport.add({
+        type: 'collection',
+        id: coll.id,
+        path,
+        status: 'done',
+        translatorID,
+        exportNotes: displayOptions.exportNotes,
+        useJournalAbbreviation: displayOptions.useJournalAbbreviation,
+      }, true)
+    }
+
+    return { libraryID: coll.libraryID, key: coll.key, id: coll.id }
+  }
+}
+
+class NSUser {
+  /**
+   * List the libraries (also known as groups) the user has in Zotero
+   */
   public async groups() {
     return Zotero.Libraries.getAll().map(lib => ({ id: lib.libraryID, name: lib.name }))
   }
 }
 
-class Item {
-  public async search(terms) {
-    if (typeof terms !== 'string') terms = terms.terms
+class NSItem {
+  /**
+   * Quick-search for items in Zotero.
+   *
+   * @param searchterms  Terms as typed into the search box in Zotero
+   */
+  public async search(searchterms: string | { terms: string }) {
+    let terms: string = typeof searchterms === 'string' ? searchterms : searchterms.terms
 
     // quicksearch-titleCreatorYear / quicksearch-fields
     // const mode = Prefs.get('caywAPIsearchMode')
 
-    terms = terms.replace(/ (?:&|and) /g, ' ', 'g')
+    terms = terms.replace(/ (?:&|and) /g, ' ')
     if (!/[\w\u007F-\uFFFF]/.test(terms)) return []
 
     const search = new Zotero.Search()
@@ -67,7 +127,12 @@ class Item {
     })
   }
 
-  public async attachments(citekey) {
+  /**
+   * List attachments for an item with the given citekey
+   *
+   * @param citekey  The citekey to search for
+   */
+  public async attachments(citekey: string) {
     const key = KeyManager.keys.findOne({ citekey: citekey.replace(/^@/, '') })
     if (!key) throw { code: INVALID_PARAMETERS, message: `${citekey} not found` }
     const item = await getItemsAsync(key.itemID)
@@ -78,7 +143,12 @@ class Item {
     }))
   }
 
-  public async notes(citekeys) {
+  /**
+   * Fetch the notes for a range of citekeys
+   *
+   * @param citekeys An array of citekeys
+   */
+  public async notes(citekeys: string[]) {
     const keys = KeyManager.keys.find({ citekey: { $in: citekeys.map(citekey => citekey.replace('@', '')) } })
     if (!keys.length) throw { code: INVALID_PARAMETERS, message: `zero matches for ${citekeys.join(',')}` }
 
@@ -90,6 +160,18 @@ class Item {
     return notes
   }
 
+  /**
+   * Generate a bibliography for the given citekeys
+   *
+   * @param citekeys An array of citekeys
+   * @param format   A specification of how the bibliography should be formatted
+   * @param.quickCopy    Format as specified in the Zotero quick-copy settings
+   * @param.contentType  Output as HTML or text
+   * @param.locale       Locale to use to generate the bibliography
+   * @param.id           CSL style to use
+   *
+   * @returns  A formatted bibliography
+   */
   public async bibliography(citekeys, format: { quickCopy?: boolean, contentType?: 'html' | 'text', locale?: string, id?: string} = {}) {
     const qc = format.quickCopy ? Zotero.QuickCopy.unserializeSetting(Zotero.Prefs.get('export.quickCopy.setting')) : {}
     delete format.quickCopy
@@ -113,6 +195,11 @@ class Item {
     return bibliography[format.contentType || 'html']
   }
 
+  /**
+   * Fetch citationkeys given item keys
+   *
+   * @param item_keys  A list of [libraryID]:[itemKey] strings. If [libraryID] is omitted, assume 'My Library'
+   */
   public async citationkey(item_keys) {
     const keys = {}
 
@@ -137,6 +224,13 @@ class Item {
     return keys
   }
 
+  /**
+   * Generate an export for a list of citekeys
+   *
+   * @param citekeys   Array of citekeys
+   * @param translator BBT translator name or GUID
+   * @param libraryID  ID of library to select the items from. When omitted, assume 'My Library'
+   */
   public async export(citekeys: string[], translator: string, libraryID: number = Zotero.Libraries.userLibraryID) {
     const query = { libraryID, citekey: { $in: citekeys } }
 
@@ -153,27 +247,19 @@ class Item {
       throw { code: INVALID_PARAMETERS, message: citekeys.filter(key => !keysfound.includes(key)).join(', ') + ' not found' }
     }
 
-    translator = translator.replace(/\s/g, '')
-    const _translator = translator.toLowerCase()
-    for (const [label, meta] of Object.entries(Translators.byLabel)) {
-      const _label = label.toLowerCase()
-      if (_label === _translator || _label.replace(/^better/, '') === _translator) translator = meta.translatorID
-    }
-
-    return [OK, 'text/plain', await Translators.exportItems(translator, null, { type: 'items', items: await getItemsAsync(found.map(key => key.itemID)) }) ]
+    return [OK, 'text/plain', await Translators.exportItems(Translators.getTranslatorId(translator), null, { type: 'items', items: await getItemsAsync(found.map(key => key.itemID)) }) ]
   }
 }
 
 const api = new class API {
-  public $user: User
-  public $item: Item
-  public $items: Item
-  public $collection: Collection
+  public $user = new NSUser
+  public $item = new NSItem
+  public $items: NSItem
+  public $collection = new NSCollection
+  public $autoexport = new NSAutoExport
 
   constructor() {
-    this.$item = this.$items = new Item
-    this.$user = new User
-    this.$collection = new Collection
+    this.$items = this.$item
   }
 
   public async handle(request) {

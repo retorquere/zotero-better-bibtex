@@ -129,6 +129,25 @@ export let Translators = new class { // tslint:disable-line:variable-name
     }
   }
 
+  public getTranslatorId(name) {
+    const _name = name.toLowerCase()
+
+    // shortcuts
+    if (_name === 'jzon') return Translators.byLabel.BetterBibTeXJSON.translatorID
+    if (_name === 'bib') return Translators.byLabel.BetterBibLaTeX.translatorID
+
+    for (const [id, translator] of (Object.entries(this.byId) as [string, ITranslatorHeader][])) {
+      if (! ['yaml', 'json', 'bib'].includes(translator.target) ) continue
+      if (! translator.label.startsWith('Better ') ) continue
+
+      if (translator.label.replace('Better ', '').replace(' ', '').toLowerCase() === _name) return id
+      if (translator.label.split(' ').pop().toLowerCase() === _name) return id
+    }
+
+    // allowed to pass GUID
+    return name
+  }
+
   public async importString(str) {
     const translation = new Zotero.Translate.Import()
     translation.setString(str)

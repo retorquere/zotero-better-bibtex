@@ -5,6 +5,8 @@ const SERVER_ERROR = 500
 const NOT_FOUND = 404
 
 import { Translators } from './translators'
+import { get as getCollection } from './collection'
+
 
 function displayOptions(request) {
   const isTrue = new Set([ 'y', 'yes', 'true' ])
@@ -18,24 +20,6 @@ function displayOptions(request) {
   }
 }
 
-function getTranslatorId(name) {
-  const _name = name.toLowerCase()
-
-  if (_name === 'jzon') return Translators.byLabel.BetterBibTeXJSON.translatorID
-  if (_name === 'bib') return Translators.byLabel.BetterBibLaTeX.translatorID
-
-  for (const [id, translator] of (Object.entries(Translators.byId) as [string, ITranslatorHeader][])) {
-    if (! ['yaml', 'json', 'bib'].includes(translator.target) ) continue
-    if (! translator.label.startsWith('Better ') ) continue
-
-    if (translator.label.replace('Better ', '').replace(' ', '').toLowerCase() === _name) return id
-    if (translator.label.split(' ').pop().toLowerCase() === _name) return id
-  }
-
-  // allowed to pass GUID
-  return name
-}
-
 Zotero.Server.Endpoints['/better-bibtex/collection'] = class {
   public supportedMethods = ['GET']
 
@@ -47,23 +31,10 @@ Zotero.Server.Endpoints['/better-bibtex/collection'] = class {
 
       const libID = parseInt(lib || 0) || Zotero.Libraries.userLibraryID
 
-      let collection = Zotero.Collections.getByLibraryAndKey(libID, path)
-      if (!collection) {
-        for (const name of path.toLowerCase().split('/')) {
-          if (!name) continue
+      const collection = Zotero.Collections.getByLibraryAndKey(libID, path) || (await getCollection(`/${libID}/${path}`))
+      if (!collection) return [NOT_FOUND, 'text/plain', `Could not export bibliography: path '${path}' not found`]
 
-          const collections = collection ? Zotero.Collections.getByParent(collection.id) : Zotero.Collections.getByLibrary(libID)
-          for (const candidate of collections) {
-            if (candidate.name.toLowerCase() === name) {
-              collection = candidate
-              break
-            }
-          }
-          if (!collection) return [NOT_FOUND, 'text/plain', `Could not export bibliography: path '${path}' not found`]
-        }
-      }
-
-      return [ OK, 'text/plain', await Translators.exportItems(getTranslatorId(translator), displayOptions(request), { type: 'collection', collection }) ]
+      return [ OK, 'text/plain', await Translators.exportItems(Translators.getTranslatorId(translator), displayOptions(request), { type: 'collection', collection }) ]
 
     } catch (err) {
       return [SERVER_ERROR, 'text/plain', '' + err]
@@ -85,7 +56,7 @@ Zotero.Server.Endpoints['/better-bibtex/library'] = class {
         return [NOT_FOUND, 'text/plain', `Could not export bibliography: library '${request.query['']}' does not exist`]
       }
 
-      return [OK, 'text/plain', await Translators.exportItems(getTranslatorId(translator), displayOptions(request), { type: 'library', id: libID }) ]
+      return [OK, 'text/plain', await Translators.exportItems(Translators.getTranslatorId(translator), displayOptions(request), { type: 'library', id: libID }) ]
 
     } catch (err) {
       return [SERVER_ERROR, 'text/plain', '' + err]
@@ -105,7 +76,7 @@ Zotero.Server.Endpoints['/better-bibtex/select'] = class {
       const items = Zotero.getActiveZoteroPane().getSelectedItems()
       if (!items.length) return [NOT_FOUND, 'text/plain', 'Could not export bibliography: no selection' ]
 
-      return [OK, 'text/plain', await Translators.exportItems(getTranslatorId(translator), displayOptions(request), { type: 'items', items }) ]
+      return [OK, 'text/plain', await Translators.exportItems(Translators.getTranslatorId(translator), displayOptions(request), { type: 'items', items }) ]
     } catch (err) {
       return [SERVER_ERROR, 'text/plain', '' + err]
     }

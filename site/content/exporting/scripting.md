@@ -205,6 +205,14 @@ if (Translator.BetterTeX && reference.has.title) {
 }
 ```
 
+### Or, detect and protect (simple) LaTeX commands
+
+```
+if (Translator.BetterTeX && reference.has.journal) {
+  reference.add({ name: 'journal', value: reference.has.journal.value.replace(/(\\\w+)/g, '<script>{$1}</script>') });
+}
+```
+
 ### Detect and protect MathJax
 
 ```
