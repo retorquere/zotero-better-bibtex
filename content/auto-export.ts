@@ -361,7 +361,7 @@ export let AutoExport = new class CAutoExport { // tslint:disable-line:variable-
     queue.start()
   }
 
-  public add(ae) {
+  public add(ae, schedule = false) {
     for (const pref of prefOverrides) {
       ae[pref] = Prefs.get(pref)
     }
@@ -369,7 +369,7 @@ export let AutoExport = new class CAutoExport { // tslint:disable-line:variable-
     this.db.insert(ae)
 
     git.repo(ae.path).then(repo => {
-      if (repo.enabled) this.schedule(ae.type, [ae.id]) // causes initial push to overleaf at the cost of a unnecesary extra export
+      if (repo.enabled || schedule) this.schedule(ae.type, [ae.id]) // causes initial push to overleaf at the cost of a unnecesary extra export
     })
   }
 

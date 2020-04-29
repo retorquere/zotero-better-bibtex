@@ -66,7 +66,7 @@ class NSAutoExport {
         translatorID,
         exportNotes: displayOptions.exportNotes,
         useJournalAbbreviation: displayOptions.useJournalAbbreviation,
-      })
+      }, true)
     }
 
     return { libraryID: coll.libraryID, key: coll.key, id: coll.id }
