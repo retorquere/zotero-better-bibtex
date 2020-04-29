@@ -52,7 +52,7 @@ class NSAutoExport {
 
     const ae = AutoExport.db.findOne({ path })
     if (ae && ae.translatorID === translatorID && ae.type === 'collection' && ae.id === coll.id) {
-      // pass
+      AutoExport.schedule(ae.type, [ae.id])
 
     } else if (ae && !replace) {
       throw { code: INVALID_PARAMETERS, message: "Auto-export exists with incompatible parameters, but no 'replace' was requested" }
