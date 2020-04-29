@@ -434,8 +434,8 @@ if FORMAT:match 'docx' then
   end
 
   local citationID = 1
-  
-  function Cite(cite)
+
+  function zotero_ref(cite)
     -- print(dump(cite))
     -- { ["citations"] = { [1] = { ["mode"] = NormalCitation,["id"] = RYAN200054,["note_num"] = 0,["prefix"] = { } ,["suffix"] = { } ,["hash"] = 0,} ,} ,["content"] = { [1] = { ["text"] = [@RYAN200054],} ,} ,} 
     citationID = citationID + 1
@@ -451,24 +451,42 @@ if FORMAT:match 'docx' then
     }
     for k, item in pairs(cite.citations) do
       if not zotero[item.id] then
+        print(item.id .. ' not found')
         return cite
       end
       table.insert(csl.citationItems, {
         id = zotero[item.id].itemID,
         uris = { zotero[item.id].uri },
         uri = { zotero[item.id].uri },
-        itemData = item
+        itemData = bib[item.id]
       })
     end
 
+    -- print('cite: ' .. json.encode(cite))
+    -- print('csl: ' .. json.encode(csl))
     local field = '<w:r><w:fldChar w:fldCharType="begin"/></w:r><w:r><w:instrText xml:space="preserve">'
     field = field .. ' ADDIN ZOTERO_ITEM CSL_CITATION ' .. json.encode(csl) .. '   '
     field = field .. '</w:instrText></w:r><w:r><w:fldChar w:fldCharType="separate"/></w:r><w:r><w:rPr><w:noProof/></w:rPr><w:t>'
     field = field .. cite.content[1].text:gsub('&', '&amp;'):gsub('<', '&lt;'):gsub('>', '&gt;'):gsub('"', '&quot;')
     field = field .. '</w:t></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r>'
+    -- print('\n--\n' .. field .. '\n--\n')
+    -- print()
+
+    if #cite.citations > 1 then
+      print(field)
+    end
 
     return pandoc.RawInline('openxml', field)
- end
+  end
+
+  function Inlines(inlines)
+    for k, v in pairs(inlines) do
+      if v.t == 'Cite' then
+        inlines[k] = zotero_ref(v)
+      end
+    end
+    return inlines
+  end
 end
 
 if FORMAT:match 'odt' then
@@ -501,6 +519,6 @@ if FORMAT:match 'odt' then
       end
     end
 
-    return pandoc.Str(citation)
+    return { pandoc.Str(citation) } 
   end
 end
