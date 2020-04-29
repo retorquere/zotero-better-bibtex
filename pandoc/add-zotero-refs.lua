@@ -407,17 +407,8 @@ end
 -- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 -- SOFTWARE.
 --
-function dump(o)
-  if type(o) == 'table' then
-    local s = '{ '
-    for k,v in pairs(o) do
-      if type(k) ~= 'number' then k = '"'..k..'"' end
-      s = s .. '['..k..'] = ' .. dump(v) .. ','
-    end
-    return s .. '} '
-  else
-    return tostring(o)
-  end
+
+function escape_xml(str)
 end
 
 if FORMAT:match 'docx' then
@@ -436,7 +427,6 @@ if FORMAT:match 'docx' then
   local citationID = 1
 
   function zotero_ref(cite)
-    -- print(dump(cite))
     -- { ["citations"] = { [1] = { ["mode"] = NormalCitation,["id"] = RYAN200054,["note_num"] = 0,["prefix"] = { } ,["suffix"] = { } ,["hash"] = 0,} ,} ,["content"] = { [1] = { ["text"] = [@RYAN200054],} ,} ,} 
     citationID = citationID + 1
     local csl = {
@@ -462,19 +452,14 @@ if FORMAT:match 'docx' then
       })
     end
 
-    -- print('cite: ' .. json.encode(cite))
-    -- print('csl: ' .. json.encode(csl))
+    label = '<refresh: ' .. cite.content[1].text .. '>'
+    label = string.gsub(label, '["<>&]', { ['&'] = '&amp;', ['<'] = '&lt;', ['>'] = '&gt;', ['"'] = '&quot;' })
+
     local field = '<w:r><w:fldChar w:fldCharType="begin"/></w:r><w:r><w:instrText xml:space="preserve">'
     field = field .. ' ADDIN ZOTERO_ITEM CSL_CITATION ' .. json.encode(csl) .. '   '
     field = field .. '</w:instrText></w:r><w:r><w:fldChar w:fldCharType="separate"/></w:r><w:r><w:rPr><w:noProof/></w:rPr><w:t>'
-    field = field .. cite.content[1].text:gsub('&', '&amp;'):gsub('<', '&lt;'):gsub('>', '&gt;'):gsub('"', '&quot;')
+    field = field .. label
     field = field .. '</w:t></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r>'
-    -- print('\n--\n' .. field .. '\n--\n')
-    -- print()
-
-    if #cite.citations > 1 then
-      print(field)
-    end
 
     return pandoc.RawInline('openxml', field)
   end
@@ -496,7 +481,8 @@ if FORMAT:match 'odt' then
   for k, item in pairs(json.decode(contents).items) do
     uris[item.citationKey] = item.uri
   end
-  function Cite(cite)
+
+  function scannable_cite(cite)
     local citation = ''
     for k, item in pairs(cite.citations) do
       local uri = uris[item.id]
@@ -519,6 +505,15 @@ if FORMAT:match 'odt' then
       end
     end
 
-    return { pandoc.Str(citation) } 
+    return pandoc.Str(citation)
+  end
+
+  function Inlines(inlines)
+    for k, v in pairs(inlines) do
+      if v.t == 'Cite' then
+        inlines[k] = scannable_cite(v)
+      end
+    end
+    return inlines
   end
 end
