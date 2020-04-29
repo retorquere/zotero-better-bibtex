@@ -14,7 +14,7 @@ function displayOptions(request) {
     exportCharset: query.exportCharset || 'utf8',
     exportNotes: isTrue.has(query.exportNotes),
     useJournalAbbreviation: isTrue.has(query.useJournalAbbreviation),
-    exportCSLZoteroID: isTrue.has(query.exportCSLZoteroID),
+    pandocFilterData: isTrue.has(query.pandocFilterData),
   }
 }
 

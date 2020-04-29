@@ -81,15 +81,23 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
   public postscript(reference, item, _translator, _zotero) {} // tslint:disable-line:no-empty
 
   public doExport() {
-    let exportCSLZoteroID = false
-    // abuse exportNotes so I don't have to expand the cache profile, which would mean more memory use. 'exportNotes' doesn't mean anything for CSL anyhow
-    try { exportCSLZoteroID = Zotero.getOption('exportNotes') } catch (err) {}
+    let pandocFilterData: { itemID: number, uri: string }[] = null
+    try {
+      if (Zotero.getOption('pandocFilterData')) pandocFilterData = []
+    } catch (err) {
+      debug('pandocFilterData:', err)
+    }
+
+    if (pandocFilterData && !Translator.BetterCSLJSON) throw new Error('pandoc filter mode only supported in CSL JSON mode')
+
     const items = []
     const order: { citekey: string, i: number}[] = []
     for (const item of Translator.items()) {
       if (item.itemType === 'note' || item.itemType === 'attachment') continue
 
       order.push({ citekey: item.citekey, i: items.length })
+
+      if (pandocFilterData) pandocFilterData.push({ itemID: typeof item.itemID === 'string' ? parseInt(item.itemID) : item.itemID, uri: item.uri })
 
       let cached: Types.DB.Cache.ExportedItem
       if (cached = Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences)) {
@@ -106,7 +114,6 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       }
 
       let csl = Zotero.Utilities.itemToCSLJSON(item)
-      if (exportCSLZoteroID) csl.zotero = { itemID: item.itemID, uri: item.uri }
 
       // 637
       delete csl['publisher-place']
@@ -202,9 +209,13 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       items.push(csl)
     }
 
-    order.sort((a, b) => a.citekey.localeCompare(b.citekey, undefined, { sensitivity: 'base' }))
-
-    Zotero.write(this.flush(order.map(o => items[o.i])))
+    if (pandocFilterData) {
+      // tslint:disable-next-line:prefer-object-spread
+      Zotero.write(JSON.stringify(JSON.parse(this.flush(items)).reduce((acc, csl, i) => Object.assign(acc, { [csl.id]: { item: csl, zotero: pandocFilterData[i] } }), {})))
+    } else {
+      order.sort((a, b) => a.citekey.localeCompare(b.citekey, undefined, { sensitivity: 'base' }))
+      Zotero.write(this.flush(order.map(o => items[o.i])))
+    }
   }
 
   public keySort(a, b) {

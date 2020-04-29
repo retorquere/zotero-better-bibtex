@@ -438,20 +438,21 @@ function deepcopy(orig)
   return copy
 end
 
--- local serpent = require("serpent")
+local serpent = require("serpent")
+
+local zotero_bib_uri = 'http://127.0.0.1:23119/better-bibtex/library?/1/library'
+
+function Meta(meta)
+  if meta.zotero then
+    zotero_bib_uri = meta.zotero
+    if zotero_bib_uri:find('%.j.on$') then
+      zotero_bib_uri = zotero_bib_uri:sub(1, -5)
+    end
+  end
+end
 
 if FORMAT:match 'docx' then
-  local mt, contents = pandoc.mediabag.fetch('http://127.0.0.1:23119/better-bibtex/library?/1/library.json&exportNotes=true', ".")
-
-  local bib = {}
-  local zotero = {}
-  for k, item in pairs(json.decode(contents)) do
-    citekey = item.id
-    item['id'] = nil
-    zotero[citekey] = item.zotero
-    item['zotero'] = nil
-    bib[citekey] = item
-  end
+  local bib = nil
 
   math.randomseed(os.clock()^5)
   function cite_id(length)
@@ -466,11 +467,13 @@ if FORMAT:match 'docx' then
   function xmlescape(str)
     return string.gsub(str, '["<>&]', { ['&'] = '&amp;', ['<'] = '&lt;', ['>'] = '&gt;', ['"'] = '&quot;' })
   end
-  function zotero_ref(cite)
-    -- { ["citations"] = { [1] = { ["mode"] = NormalCitation,["id"] = RYAN200054,["note_num"] = 0,["prefix"] = { } ,["suffix"] = { } ,["hash"] = 0,} ,} ,["content"] = { [1] = { ["text"] = [@RYAN200054],} ,} ,} 
-    -- {"citations":[{"prefix":[{"text":"see"}],"id":"doe99","suffix":[{"text":","},[],{"text":"pp. 33-35"}],"note_num":0,"mode":"NormalCitation","hash":0},{"prefix":[{"text":"also"}],"id":"smith04","suffix":[{"text":","},[],{"text":"ch. 1"}],"note_num":0,"mode":"NormalCitation","hash":0}],"content":[{"text":"[see"},[],{"text":"@doe99,"},[],{"text":"pp."},[],{"text":"33-35;"},[],{"text":"also"},[],{"text":"@smith04,"},[],{"text":"ch."},[],{"text":"1]"}]}
 
-    -- citationID = citationID + 1
+  function zotero_ref(cite)
+    if not bib then
+      local mt, contents = pandoc.mediabag.fetch(zotero_bib_uri .. '.json&pandocFilterData=true', '.')
+      bib = json.decode(contents)
+    end
+
     local csl = {
       citationID = cite_id(8),
       properties = {
@@ -482,24 +485,23 @@ if FORMAT:match 'docx' then
       schema = "https://github.com/citation-style-language/schema/raw/master/csl-citation.json"
     }
     for k, item in pairs(cite.citations) do
-      if not zotero[item.id] then
+      if not bib[item.id] then
         print(item.id .. ' not found')
         return cite
       end
 
-      -- TODO: locator and label are not reliably parsed by pandoc it seems
-      local itemData = deepcopy(bib[item.id])
+      -- TODO: locator and label are not parsed by pandoc but by pandoc-citeproc
+      local itemData = deepcopy(bib[item.id].item)
       itemData.prefix = collect(item.prefix)
       itemData.suffix = collect(item.suffix)
       if item.mode == 'SuppressAuthor' then itemData['suppress-author'] = true end
 
       table.insert(csl.citationItems, {
-        id = zotero[item.id].itemID,
-        uris = { zotero[item.id].uri },
-        uri = { zotero[item.id].uri },
+        id = bib[item.id].zotero.itemID,
+        uris = { bib[item.id].zotero.uri },
+        uri = { bib[item.id].zotero.uri },
         itemData = itemData
       })
-
     end
 
 
@@ -523,18 +525,21 @@ if FORMAT:match 'docx' then
 end
 
 if FORMAT:match 'odt' then
-  local mt, contents = pandoc.mediabag.fetch('http://127.0.0.1:23119/better-bibtex/library?/1/library.jzon', ".")
-
-  local uris = {}
-  for k, item in pairs(json.decode(contents).items) do
-    uris[item.citationKey] = item.uri
-  end
+  local uris = nil
 
   function trim(s)
     return (s:gsub("^%s*(.-)%s*$", "%1"))
   end
 
   function scannable_cite(cite)
+    if not uris then
+      local mt, contents = pandoc.mediabag.fetch(zotero_bib_uri .. '.jzon', '.')
+      uris = {}
+      for k, item in pairs(json.decode(contents).items) do
+        uris[item.citationKey] = item.uri
+      end
+    end
+
     -- {"citations":[{"prefix":[{"text":"see"}],"id":"doe99","suffix":[{"text":","},[],{"text":"pp. 33-35"}],"note_num":0,"mode":"NormalCitation","hash":0},{"prefix":[{"text":"also"}],"id":"smith04","suffix":[{"text":","},[],{"text":"ch. 1"}],"note_num":0,"mode":"NormalCitation","hash":0}],"content":[{"text":"[see"},[],{"text":"@doe99,"},[],{"text":"pp."},[],{"text":"33-35;"},[],{"text":"also"},[],{"text":"@smith04,"},[],{"text":"ch."},[],{"text":"1]"}]}
     local citation = ''
     for k, item in pairs(cite.citations) do
