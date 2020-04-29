@@ -82,7 +82,8 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
 
   public doExport() {
     let exportCSLZoteroID = false
-    try { exportCSLZoteroID = Zotero.getOption('exportCSLZoteroID') } catch (err) {}
+    // abuse exportNotes so I don't have to expand the cache profile, which would mean more memory use. 'exportNotes' doesn't mean anything for CSL anyhow
+    try { exportCSLZoteroID = Zotero.getOption('exportNotes') } catch (err) {}
     const items = []
     const order: { citekey: string, i: number}[] = []
     for (const item of Translator.items()) {
