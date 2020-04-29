@@ -81,6 +81,8 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
   public postscript(reference, item, _translator, _zotero) {} // tslint:disable-line:no-empty
 
   public doExport() {
+    let exportCSLZoteroID = false
+    try { exportCSLZoteroID = Zotero.getOption('exportCSLZoteroID') } catch (err) {}
     const items = []
     const order: { citekey: string, i: number}[] = []
     for (const item of Translator.items()) {
@@ -95,6 +97,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       }
 
       itemfields.simplifyForExport(item)
+
       if (!Zotero.BetterBibTeX.worker()) Object.assign(item, Extra.get(item.extra, null, 'csl')) // for the worker version, this has already been done so that itemToCSLJSON works
 
       if (item.accessDate) { // WTH is Juris-M doing with those dates?
@@ -102,6 +105,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       }
 
       let csl = Zotero.Utilities.itemToCSLJSON(item)
+      if (exportCSLZoteroID) csl.zotero = { itemID: item.itemID, uri: item.uri }
 
       // 637
       delete csl['publisher-place']
