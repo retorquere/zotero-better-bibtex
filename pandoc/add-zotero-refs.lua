@@ -453,8 +453,8 @@ if FORMAT:match 'docx' then
     bib[citekey] = item
   end
 
+  math.randomseed(os.clock()^5)
   function cite_id(length)
-    math.randomseed(os.clock()^5)
 	  local id = ''
 	  for i = 1, length do
 		  id = id .. string.char(math.random(97, 122))
