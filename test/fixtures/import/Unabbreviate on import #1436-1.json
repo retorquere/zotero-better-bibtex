@@ -2,7 +2,6 @@
   "collections": {
     "coll:00000": {
       "collections": [],
-      "id": 1,
       "items": [
         1,
         10,
@@ -518,8 +517,10 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "localeDateOrder": "ymd",
-    "options": {},
+    "localeDateOrder": "dmy",
+    "options": {
+      "Normalize": true
+    },
     "preferences": {
       "DOIandURL": "both",
       "ascii": "",
@@ -5947,7 +5948,7 @@
       "itemType": "journalArticle",
       "journalAbbreviation": "Comput. Mater. Sci.",
       "pages": "280-287",
-      "publicationTitle": "Computation Materials Science",
+      "publicationTitle": "Computational Materials Science",
       "title": "A generalized plane-wave formulation of <span class=\"nocase\">k\u22c5p</span> formalism and continuum-elasticity approach to elastic and electronic properties of semiconductor nanostructures",
       "volume": "95"
     },

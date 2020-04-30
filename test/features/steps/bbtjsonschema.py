@@ -12,9 +12,21 @@ baseline = __file__.replace('.py', '.json')
 def refresh():
   with open(baseline) as f:
     schema = Munch.fromDict(json.load(f))
+
+  schema.properties.config.properties.options.properties = {}
+  for translator in glob.glob(os.path.join(root, 'translators', '*.json')):
+    with open(translator) as f:
+      header = json.load(f)
+      for option, default in header.get('displayOptions', {}).items():
+        if type(default) == bool:
+          schema.properties.config.properties.options.properties[option] = { 'type': 'boolean' }
+        elif type(default) == str:
+          schema.properties.config.properties.options.properties[option] = { 'type': 'string' }
+        else:
+          assert False, os.path.basename(translator) + '.' + option + '=' + str(type(default))
+
   with open(os.path.join(root, 'gen/preferences/preferences.json')) as f:
     prefs = Munch.fromDict(json.load(f))
-
   schema.properties.config.properties.preferences.properties = {}
   for pref, meta in prefs.items():
     if pref in ['client', 'platform', 'newTranslatorsAskRestart', 'testing']:
