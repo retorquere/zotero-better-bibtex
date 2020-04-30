@@ -47,7 +47,9 @@
     "reinstall": "rm -rf node_modules yarn* && npm install",
     "test:nightly": "TRAVIS_EVENT_TYPE=cron ./test/behave --tags @nightly",
     "submodules": "git submodule update --init --recursive --remote && git submodule foreach git reset --hard && git submodule foreach git checkout master && git submodule foreach git pull origin master",
-    "ncu": "npm run submodules && ncu -u && npm i && git add package.json package-lock.json citation-style-language-locales site/themes/learn && git commit -m ncu"
+    "ncu": "npm run submodules && ncu -u && npm i && git add package.json package-lock.json citation-style-language-locales site/themes/learn && git commit -m ncu",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "main": "index.js",
   "directories": {
@@ -90,7 +92,8 @@
     "tslint": "^6.1.2",
     "unicode2latex": "^2.1.18",
     "words-to-numbers": "^1.5.1",
-    "xregexp": "^4.3.0"
+    "xregexp": "^4.3.0",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "@types/node": "^13.13.4",
@@ -153,5 +156,6 @@
         "ap-southeast-1"
       ]
     }
-  }
+  },
+  "snyk": true
 }
