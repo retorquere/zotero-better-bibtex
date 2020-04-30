@@ -91,13 +91,17 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
     if (pandocFilterData && !Translator.BetterCSLJSON) throw new Error('pandoc filter mode only supported in CSL JSON mode')
 
     const items = []
-    const order: { citekey: string, i: number}[] = []
+    const order: { citationKey: string, i: number}[] = []
+    const duplicate: Record<string, boolean> = {}
     for (const item of Translator.items()) {
       if (item.itemType === 'note' || item.itemType === 'attachment') continue
 
-      order.push({ citekey: item.citekey, i: items.length })
-
-      if (pandocFilterData) pandocFilterData.push({ itemID: typeof item.itemID === 'string' ? parseInt(item.itemID) : item.itemID, uri: item.uri })
+      if (pandocFilterData) {
+        duplicate[item.citationKey] = typeof duplicate[item.citationKey] === 'boolean'
+        pandocFilterData.push({ itemID: typeof item.itemID === 'string' ? parseInt(item.itemID) : item.itemID, uri: item.uri })
+      } else {
+        order.push({ citationKey: item.citationKey, i: items.length })
+      }
 
       let cached: Types.DB.Cache.ExportedItem
       if (cached = Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences)) {
@@ -177,7 +181,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       /* ham-fisted workaround for #365 */
       if ((csl.type === 'motion_picture' || csl.type === 'broadcast') && csl.author && !csl.director) [csl.author, csl.director] = [csl.director, csl.author]
 
-      csl.id = item.citekey
+      csl.id = item.citationKey
 
       /* Juris-M workarounds to match Zotero as close as possible */
       for (const kind of ['translator', 'author', 'editor', 'director', 'reviewed-author']) {
@@ -211,9 +215,9 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
 
     if (pandocFilterData) {
       // tslint:disable-next-line:prefer-object-spread
-      Zotero.write(JSON.stringify(JSON.parse(this.flush(items)).reduce((acc, csl, i) => Object.assign(acc, { [csl.id]: { item: csl, zotero: pandocFilterData[i] } }), {})))
+      Zotero.write(JSON.stringify(JSON.parse(this.flush(items)).reduce((acc, csl, i) => Object.assign(acc, { [csl.id]: { item: csl, zotero: pandocFilterData[i], duplicate: duplicate[csl.id] } }), {})))
     } else {
-      order.sort((a, b) => a.citekey.localeCompare(b.citekey, undefined, { sensitivity: 'base' }))
+      order.sort((a, b) => a.citationKey.localeCompare(b.citationKey, undefined, { sensitivity: 'base' }))
       Zotero.write(this.flush(order.map(o => items[o.i])))
     }
   }

@@ -446,8 +446,9 @@ function Meta(meta)
   if meta.zotero then
     zotero_bib_uri = meta.zotero
     if zotero_bib_uri:find('%.j.on$') then
-      zotero_bib_uri = zotero_bib_uri:sub(1, -5)
+      zotero_bib_uri = zotero_bib_uri:sub(1, -6)
     end
+    print('zotero=' .. zotero_bib_uri)
   end
 end
 
@@ -494,7 +495,11 @@ if FORMAT:match 'docx' then
       local itemData = deepcopy(bib[item.id].item)
       itemData.prefix = collect(item.prefix)
       itemData.suffix = collect(item.suffix)
-      if item.mode == 'SuppressAuthor' then itemData['suppress-author'] = true end
+      if item.mode == 'SuppressAuthor' then
+        itemData['suppress-author'] = true
+      elseif item.mode == 'AuthorInText' then
+        return cite
+      end
 
       table.insert(csl.citationItems, {
         id = bib[item.id].zotero.itemID,
@@ -517,6 +522,7 @@ if FORMAT:match 'docx' then
   function Inlines(inlines)
     for k, v in pairs(inlines) do
       if v.t == 'Cite' then
+        print(serpent.dump(v))
         inlines[k] = zotero_ref(v)
       end
     end
