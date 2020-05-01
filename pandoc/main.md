@@ -10,7 +10,7 @@ Smith says blah [-@smith06].
 
 @smith07 [p. 33] says blah.
 
-The course \textit{Advanced Software Design} is built around the achievement-driven learning methodology [@Shelah.SubstituteHallTheorem.p.199-208.Vol.16]
+The course \textit{Advanced Software Design} is built around the achievement-driven learning methodology [@Shelah.SubstituteHallTheorem.p.199-208.Vol.16, pp. 12-22]
 (more details in [@sec:theory]).
 This methodology gives students more  control of their
 learning with enough flexibility to engage them in deeper learning [@biggsTang2011].
