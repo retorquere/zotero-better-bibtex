@@ -80,6 +80,10 @@ for (const lib of argv._) {
           cleaner(creator.multi)
           if (creator.multi && Object.keys(creator.multi).length === 0) delete creator.multi
         }
+
+        for (const att of (item.attachments || [])) {
+          delete att.libraryID
+        }
       }
       break
     case '.csl.json':
