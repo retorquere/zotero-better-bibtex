@@ -4,9 +4,7 @@
     "label": "BetterBibTeX JSON",
     "localeDateOrder": "mdy",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -30,7 +28,6 @@
       "citekeyFold": true,
       "citekeyFormat": "[=forumPost/WebPage][Auth:lower:capitalize][Date:format-date=%Y-%m-%d.%H\\:%M\\:%S:prefix=.][PublicationTitle:select=1,1:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de] | [Auth:lower:capitalize][date=%oY:prefix=.][PublicationTitle:select=1,1:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de]",
       "citeprocNoteCitekey": false,
-      "client": "zotero",
       "csquotes": "",
       "debugLogDir": "",
       "exportBibTeXStrings": "off",
@@ -54,9 +51,7 @@
       "mapMath": "",
       "mapText": "",
       "mapUnicode": "conservative",
-      "newTranslatorsAskRestart": false,
       "parseParticles": true,
-      "platform": "win",
       "postscript": "",
       "postscriptOverride": "",
       "qualityReport": true,
@@ -71,7 +66,6 @@
       "skipFields": "",
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
       "strings": "",
-      "testing": false,
       "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
       "warnBulkModify": 0,
       "workers": 0
@@ -80,14 +74,13 @@
   "items": [
     {
       "ISBN": "978-0-393-33745-7",
-      "abstractNote": "From breaking the law to breaking a promise, how do people lie and how can they be caught?In this revised edition, Paul Ekman, a renowned expert in emotions research and nonverbal communication, adds a new chapter to present his latest research on his groundbreaking inquiry into lying and the methods for uncovering lies. Ekman has figured out the most important behavioral clues to deceit; he has developed a one-hour self-instructional program that trains people to observe and understand \"micro expressions\"; and he has done research that identifies the facial expressions that show whether someone is likely to become violent―a self-instructional program to train recognition of these dangerous signals has also been developed.Telling Lies describes how lies vary in form and how they can differ from other types of misinformation that can reveal untruths. It discusses how a person’s body language, voice, and facial expressions can give away a lie but still fool professional lie hunters?even judges, police officers, drug enforcement agents, and Secret Service agents.",
+      "abstractNote": "From breaking the law to breaking a promise, how do people lie and how can they be caught?In this revised edition, Paul Ekman, a renowned expert in emotions research and nonverbal communication, adds a new chapter to present his latest research on his groundbreaking inquiry into lying and the methods for uncovering lies. Ekman has figured out the most important behavioral clues to deceit; he has developed a one-hour self-instructional program that trains people to observe and understand \"micro expressions\"; and he has done research that identifies the facial expressions that show whether someone is likely to become violent\u2015a self-instructional program to train recognition of these dangerous signals has also been developed.Telling Lies describes how lies vary in form and how they can differ from other types of misinformation that can reveal untruths. It discusses how a person\u2019s body language, voice, and facial expressions can give away a lie but still fool professional lie hunters?even judges, police officers, drug enforcement agents, and Secret Service agents.",
       "attachments": [
         {
           "accessDate": "2020-05-01T06:47:23Z",
           "contentType": "text/html",
           "itemType": "attachment",
           "key": "32KHP9DB",
-          "libraryID": 1,
           "linkMode": "linked_url",
           "title": "Amazon.com Link",
           "uri": "http://zotero.org/users/6244081/items/32KHP9DB",
@@ -103,9 +96,7 @@
         }
       ],
       "date": "26 de enero de 2009",
-      "dateAdded": "2020-05-01T06:47:22Z",
-      "dateModified": "2020-05-01T06:47:22Z",
-      "edition": "Edición: Revised",
+      "edition": "Edici\u00f3n: Revised",
       "itemID": 1,
       "itemType": "book",
       "language": "English",
@@ -114,12 +105,7 @@
       "place": "New York",
       "publisher": "W. W. Norton & Company",
       "shortTitle": "Telling Lies",
-      "title": "Telling Lies: Clues to Deceit in the Marketplace, Politics, and Marriage",
-      "uri": "http://zotero.org/users/6244081/items/NTLSUZ3W"
+      "title": "Telling Lies: Clues to Deceit in the Marketplace, Politics, and Marriage"
     }
-  ],
-  "version": {
-    "bbt": "5.2.21.6431",
-    "zotero": "5.0.85"
-  }
+  ]
 }

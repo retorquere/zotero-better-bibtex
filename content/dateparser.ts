@@ -97,6 +97,10 @@ export function parse(value: string, localeDateOrder: string, as_range_part: boo
   // https://forums.zotero.org/discussion/73729/name-and-year-import-issues-with-new-nasa-ads#latest
   if (m = (/^(-?[0-9]+)-00-00$/.exec(value) || /^(-?[0-9]+-[0-9]+)-00$/.exec(value))) return parse(m[1], localeDateOrder, as_range_part)
 
+  // https://github.com/retorquere/zotero-better-bibtex/issues/1513
+  // tslint:disable-next-line:no-magic-numbers
+  if ((m = (/^([0-9]+) (de )?([a-z]+) (de )?([0-9]+)$/i).exec(value)) && (m[2] || m[4]) && (months[m[3].toLowerCase()])) return parse(`${m[1]} ${m[3]} ${m[5]}`, localeDateOrder, as_range_part)
+
   // '30-Mar-2020'
   if (!as_range_part && (m = (/^([0-9]+)-([a-z]+)-([0-9]+)$/i).exec(value))) {
     let [ , day, month, year ] = m
