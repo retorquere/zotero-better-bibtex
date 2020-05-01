@@ -8,6 +8,7 @@ You can convert a Pandoc-compatible markdown source to a LibreOffice or Word doc
 Add some metadata to your markdown file in a YAML header:
 
 ```
+---
 # all the regular stuff you have here
 zotero:
   bibliography: http://127.0.0.1:23119/better-bibtex/library?/1/library.json
