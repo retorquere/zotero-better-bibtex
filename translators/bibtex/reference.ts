@@ -551,7 +551,7 @@ export class Reference {
     }
 
     if (this.has[field.name]) {
-      if (!this.inPostscript && !field.replace) throw new Error(`duplicate field '${field.name}' for ${this.item.citekey}: old: ${this.has[field.name].bibtex}, new: ${field.bibtex || field.value}`)
+      if (!this.inPostscript && !field.replace) throw new Error(`duplicate field '${field.name}' for ${this.item.citationKey}: old: ${this.has[field.name].bibtex}, new: ${field.bibtex || field.value}`)
       this.remove(field.name)
     }
 
@@ -906,7 +906,7 @@ export class Reference {
 
     const fields = Object.values(this.has).map(field => `  ${field.name} = ${field.bibtex}`)
 
-    let ref = `@${this.referencetype}{${this.item.citekey},\n`
+    let ref = `@${this.referencetype}{${this.item.citationKey},\n`
     ref += fields.join(',\n')
     ref += '\n}\n'
     ref += this.qualityReport()
@@ -1131,7 +1131,7 @@ export class Reference {
       if (!att.mimetype && (att.path.slice(-4).toLowerCase() === '.pdf')) att.mimetype = 'application/pdf' // tslint:disable-line:no-magic-numbers
 
       if (Translator.preferences.testing) {
-        att.path = `files/${this.item.citekey}/${att.path.replace(/.*[\/\\]/, '')}`
+        att.path = `files/${this.item.citationKey}/${att.path.replace(/.*[\/\\]/, '')}`
       } else if (Translator.preferences.relativeFilePaths && Translator.exportDir) {
         const relative = Path.relative(att.path)
         if (relative !== att.path) {
@@ -1332,7 +1332,7 @@ export class Reference {
 
     if (!report.length) return ''
 
-    report.unshift(`== ${Translator.BetterBibTeX ? 'BibTeX' : 'BibLateX'} quality report for ${this.item.citekey}:`)
+    report.unshift(`== ${Translator.BetterBibTeX ? 'BibTeX' : 'BibLateX'} quality report for ${this.item.citationKey}:`)
 
     return report.map(line => `% ${line}\n`).join('')
   }

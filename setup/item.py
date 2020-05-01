@@ -406,7 +406,7 @@ with open(os.path.join(root, 'gen', 'typings', 'serialized-item.d.ts'), 'w') as 
     referenceType: string
     cslType: string
     cslVolumeTitle: string
-    citekey: string
+    citationKey: string
     collections: string[]
     extraFields: Fields
     arXiv: {{ source?: string, id: string, category?: string }}

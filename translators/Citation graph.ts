@@ -22,7 +22,7 @@ type Item = {
   cites: string[]
   relations: string[]
   label: string
-  citekey: string
+  citationKey: string
   uri: string
 }
 
@@ -42,7 +42,7 @@ export function doExport() {
   for (const item of Translator.items()) {
     if (['note', 'attachment'].includes(item.itemType)) continue
 
-    const label = [ item.citekey ]
+    const label = [ item.citationKey ]
 
     if (add.title && item.title) {
       label.push(`\u201C${item.title.replace(/"/g, "'")}\u201D`)
@@ -72,7 +72,7 @@ export function doExport() {
           .filter(keys => keys)
           .map(keys => keys.split(/\s*,\s*/))
         ),
-      citekey: item.citekey,
+      citationKey: item.citationKey,
       uri: item.uri,
     })
   }
@@ -89,13 +89,13 @@ export function doExport() {
       }
     }
 
-    for (const citekey of item.cites) {
-      const other = items.find(o => o.citekey === citekey)
+    for (const citationKey of item.cites) {
+      const other = items.find(o => o.citationKey === citationKey)
 
       if (other) {
         edge(item.id, other.id)
       } else {
-        edge(item.id, citekey, { style: 'dashed' })
+        edge(item.id, citationKey, { style: 'dashed' })
       }
     }
   }

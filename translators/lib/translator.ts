@@ -234,8 +234,8 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
       }
       // fallback to itemType.itemID for notes and attachments. And some items may have duplicate keys
       this.sortedItems.sort((a, b) => {
-        const ka = [ a.citekey || a.itemType, a.dateModified || a.dateAdded, a.itemID ].join('\t')
-        const kb = [ b.citekey || b.itemType, b.dateModified || b.dateAdded, b.itemID ].join('\t')
+        const ka = [ a.citationKey || a.itemType, a.dateModified || a.dateAdded, a.itemID ].join('\t')
+        const kb = [ b.citationKey || b.itemType, b.dateModified || b.dateAdded, b.itemID ].join('\t')
         return ka.localeCompare(kb, undefined, { sensitivity: 'base' })
       })
     }
