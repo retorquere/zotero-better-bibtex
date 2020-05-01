@@ -1,5 +1,5 @@
 import { validate as IsISBN } from 'is-isbn'
-import ISSN = require('issn')
+import * as issn from './issn'
 import EAN = require('barcoder')
 import * as DateParser from './dateparser'
 
@@ -11,7 +11,7 @@ export function qualityReport(value, test, params = null) {
       return IsISBN(value.replace(/-/g, '')) ? '' : 'not a valid ISBN'
 
     case 'issn':
-      return ISSN(value) ? '' : 'not a valid ISSN'
+      return issn.validate(value) ? '' : 'not a valid ISSN'
 
     case 'ismn':
       value = value.replace(/[ -]/g, '')
