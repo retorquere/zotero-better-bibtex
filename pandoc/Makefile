@@ -1,11 +1,17 @@
 all: bundle
 
 TIMESTAMP=$(shell date "+%Y-%m-%dT%H:%M:%S")
+MAIN=pandoc-zotero-live-citemarkers.lua
 
 bundle:
-	amalg.lua -o ../site/content/citing/zotero.lua -s pandoc-zotero-live-citemarkers.lua lunajson lunajson.decoder lunajson.encoder locator
+ifeq ($(shell grep '^local pl =' $(MAIN)), )
+	amalg.lua -o ../site/content/citing/zotero.lua -s $(MAIN) lunajson lunajson.decoder lunajson.encoder locator
+else
+	@echo $(MAIN) contains debugging code
+	@exit 1
+endif
 
-paper: bundle
+paper:
 	@rm -f *.docx *.odt *.json
 	@pandoc -s --lua-filter=pandoc-zotero-live-citemarkers.lua -o paper$(TIMESTAMP).docx main.md
 	@pandoc -s --lua-filter=pandoc-zotero-live-citemarkers.lua -o paper$(TIMESTAMP).odt main.md

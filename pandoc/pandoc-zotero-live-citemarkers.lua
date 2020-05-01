@@ -22,7 +22,7 @@
 -- SOFTWARE.
 --
 
-local pl = require('pl.pretty') -- for pl.pretty.dump
+-- local pl = require('pl.pretty') -- for pl.pretty.dump
 local json = require('lunajson')
 local csl_locator = require('locator')
 
