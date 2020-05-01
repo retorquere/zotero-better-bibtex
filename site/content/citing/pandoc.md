@@ -3,7 +3,7 @@ title: From Markdown to live citations
 weight: 5
 ---
 
-You can convert a Pandoc-compatible markdown source to a LibreOffice or Word document with live citation fields connecting to Zotero. Download the [Pandoc filter](zotero.lua)
+You can convert a Pandoc-compatible markdown source to a LibreOffice or Word document with live citation fields connecting to Zotero. Download the [Pandoc filter](../zotero.lua)
 
 Add some metadata to your markdown file in a YAML header:
 
