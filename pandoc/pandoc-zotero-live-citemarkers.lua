@@ -24,6 +24,7 @@
 
 local pl = require('pl.pretty') -- for pl.pretty.dump
 local json = require('lunajson')
+local csl_locator = require('locator')
 
 local function collect(tbl)
   if not tbl then return nil end
@@ -35,7 +36,7 @@ local function collect(tbl)
     elseif v.t == 'Space' then
       t = t .. ' '
     else
-      error(1, 'cannot collect ' .. v.t)
+      error('cannot collect ' .. v.t, 1)
     end
   end
 
@@ -61,184 +62,194 @@ function deepcopy(orig)
   return copy
 end
 
-local zotero_bib_uri = 'http://127.0.0.1:23119/better-bibtex/library?/1/library'
+local zotero = {
+  bibliography = 'http://127.0.0.1:23119/better-bibtex/library?/1/library',
+  scannable_cite = false
+}
 
 function Meta(meta)
-  if meta.zotero then
-    zotero_bib_uri = meta.zotero
-    if zotero_bib_uri:find('%.j.on$') then
-      zotero_bib_uri = zotero_bib_uri:sub(1, -6)
+  if meta.zotero_bibliography then
+    meta.zotero.bibliography = meta.zotero_bibliography
+  elseif meta.zotero and meta.zotero.bibliography then
+    zotero.bibliography = collect(meta.zotero.bibliography)
+  end
+
+  if not string.match(zotero.bibliography, '^http://127%.0%.0%.1:2[34]119/better%-bibtex/') and not string.match(zotero.bibliography, '^http://localhost:2[34]119/better%-bibtex/') then
+    error(zotero.bibliography .. ' does not look like a Zotero bibliography url', 1)
+  end
+  if zotero.bibliography:find('%.j.on$') then
+    zotero.bibliography = zotero.bibliography:sub(1, -6)
+  end
+
+  if type(meta.zotero_scannable_cite) == 'string' then
+    if meta.zotero_scannable_cite == 'true' then
+      zotero.scannable_cite = true
+    elseif meta.zotero_scannable_cite == 'false' then
+      zotero.scannable_cite = false
+    else
+      error('scannable-cite expects true or false, got ' .. meta.zotero_scannable_cite, 1)
     end
-    print('zotero=' .. zotero_bib_uri)
+  elseif type(meta.zotero_scannable_cite) == 'boolean' then
+    zotero.scannable_cite = meta.zotero_scannable_cite
+  elseif meta.zotero and type(meta.zotero['scannable-cite']) ~= 'nil' then
+    if type(meta.zotero['scannable-cite']) ~= 'boolean' then
+      error('scannable-cite expects a boolean', 1)
+    end
+
+    zotero.scannable_cite = meta.zotero['scannable-cite']
+  end
+  
+  if string.match(FORMAT, 'docx') then
+    zotero.format = 'docx'
+  elseif string.match(FORMAT, 'odt') and zotero.scannable_cite then
+    zotero.format = 'scannable-cite'
+  elseif string.match(FORMAT, 'odt') then
+    zotero.format = 'odt'
   end
 end
 
-if FORMAT:match 'docx' then
-  local bib = nil
-  local reported = {}
+function Inlines(inlines)
+  if not zotero.format then return inlines end
 
-  math.randomseed(os.clock()^5)
-  function cite_id(length)
-	  local id = ''
-	  for i = 1, length do
-		  id = id .. string.char(math.random(97, 122))
-	  end
-	  return id
-  end
-  -- local citationID = 1
-
-  function xmlescape(str)
-    return string.gsub(str, '["<>&]', { ['&'] = '&amp;', ['<'] = '&lt;', ['>'] = '&gt;', ['"'] = '&quot;' })
-  end
-
-  function zotero_ref(cite)
-    if not bib then
-      local mt, contents = pandoc.mediabag.fetch(zotero_bib_uri .. '.json&pandocFilterData=true', '.')
-      bib = json.decode(contents)
-    end
-
-    local csl = {
-      citationID = cite_id(8),
-      properties = {
-        formattedCitation = collect(cite.content),
-        plainCitation = collect(cite.content),
-        noteIndex = 0
-      },
-      citationItems = {},
-      schema = "https://github.com/citation-style-language/schema/raw/master/csl-citation.json"
-    }
-    for k, item in pairs(cite.citations) do
-      print('prefix')
-      pl.dump(item.prefix)
-      print('suffix')
-      pl.dump(item.suffix)
-      if not bib[item.id] then
-        if not reported[item.id] then print('@' .. item.id .. ' not found in Zotero') end
-        reported[item.id] = true
-        return cite
-      end
-
-      -- TODO: locator and label are not parsed by pandoc but by pandoc-citeproc
-      local itemData = deepcopy(bib[item.id].item)
-      itemData.prefix = collect(item.prefix)
-      itemData.suffix = collect(item.suffix)
---[[      if itemData.suffix then
-            article: 'art.',
-    chapter: 'ch.',
-    subchapter: 'subch.',
-    column: 'col.',
-    figure: 'fig.',
-    line: 'l.',
-    note: 'n.',
-    issue: 'no.',
-    opus: 'op.',
-    page: 'p.',
-    paragraph: 'para.',
-    subparagraph: 'subpara.',
-    part: 'pt.',
-    rule: 'r.',
-    section: 'sec.',
-    subsection: 'subsec.',
-    Section: 'Sec.',
-    'sub verbo': 'sv.',
-    schedule: 'sch.',
-    title: 'tit.',
-    verse: 'vrs.',
-    volume: 'vol.',
-
-      end --]]
-      if item.mode == 'SuppressAuthor' then
-        itemData['suppress-author'] = true
-      elseif item.mode == 'AuthorInText' then
-        return cite
-      end
-
-      if bib[item.id].duplicate then
-        if not reported[item.id] then print(item.id .. ' appears more than once in the library') end
-        reported[item.id] = true
-      end
-
-      table.insert(csl.citationItems, {
-        id = bib[item.id].zotero.itemID,
-        uris = { bib[item.id].zotero.uri },
-        uri = { bib[item.id].zotero.uri },
-        itemData = itemData
-      })
-    end
-
-
-    local field = '<w:r><w:fldChar w:fldCharType="begin"/></w:r><w:r><w:instrText xml:space="preserve">'
-    field = field .. ' ADDIN ZOTERO_ITEM CSL_CITATION ' .. xmlescape(json.encode(csl)) .. '   '
-    field = field .. '</w:instrText></w:r><w:r><w:fldChar w:fldCharType="separate"/></w:r><w:r><w:rPr><w:noProof/></w:rPr><w:t>'
-    field = field .. xmlescape('<refresh: ' .. collect(cite.content) .. '>')
-    field = field .. '</w:t></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r>'
-
-    return pandoc.RawInline('openxml', field)
-  end
-
-  function Inlines(inlines)
-    for k, v in pairs(inlines) do
-      if v.t == 'Cite' then
+  for k, v in pairs(inlines) do
+    if v.t == 'Cite' then
+      if zotero.format == 'scannable-cite' then
+        inlines[k] = scannable_cite(v)
+      else
         inlines[k] = zotero_ref(v)
       end
     end
-    return inlines
+  end
+
+  return inlines
+end
+
+math.randomseed(os.clock()^5)
+function cite_id(length)
+  local id = ''
+  for i = 1, length do
+    id = id .. string.char(math.random(97, 122))
+  end
+  return id
+end
+
+function xmlescape(str)
+  return string.gsub(str, '["<>&]', { ['&'] = '&amp;', ['<'] = '&lt;', ['>'] = '&gt;', ['"'] = '&quot;' })
+end
+
+function trim(s)
+  return (s:gsub("^%s*(.-)%s*$", "%1"))
+end
+
+local state = {
+  reported = {}
+}
+
+function zotero_ref(cite)
+  if not state.bib then
+    local mt, contents = pandoc.mediabag.fetch(zotero.bibliography .. '.json&pandocFilterData=true', '.')
+    state.bib = json.decode(contents)
+  end
+
+  local csl = {
+    citationID = cite_id(8),
+    properties = {
+      formattedCitation = collect(cite.content),
+      plainCitation = collect(cite.content),
+      noteIndex = 0
+    },
+    citationItems = {},
+    schema = "https://github.com/citation-style-language/schema/raw/master/csl-citation.json"
+  }
+  for k, item in pairs(cite.citations) do
+    if item.mode == 'AuthorInText' then -- not supported in Zotero
+      return cite
+    end
+
+    if not state.bib[item.id] then
+      if not state.reported[item.id] then print('@' .. item.id .. ' not found in Zotero') end
+      state.reported[item.id] = true
+      return cite
+    end
+
+    local itemData = deepcopy(state.bib[item.id].item)
+    if item.mode == 'SuppressAuthor' then
+      itemData['suppress-author'] = true
+    end
+    itemData.prefix = collect(item.prefix)
+    local label, locator, suffix = csl_locator.parse(collect(item.suffix))
+    itemData.suffix = suffix
+    itemData.label = label
+    itemData.locator = locator
+
+    if state.bib[item.id].duplicate then
+      if not state.reported[item.id] then print(item.id .. ' appears more than once in the library') end
+      state.reported[item.id] = true
+    end
+
+    table.insert(csl.citationItems, {
+      id = state.bib[item.id].zotero.itemID,
+      uris = { state.bib[item.id].zotero.uri },
+      uri = { state.bib[item.id].zotero.uri },
+      itemData = itemData
+    })
+  end
+
+  if zotero.format == 'docx' then
+    local field = '<w:r><w:fldChar w:fldCharType="begin"/></w:r><w:r><w:instrText xml:space="preserve">'
+    field = field .. ' ADDIN ZOTERO_ITEM CSL_CITATION ' .. xmlescape(json.encode(csl)) .. '   '
+    field = field .. '</w:instrText></w:r><w:r><w:fldChar w:fldCharType="separate"/></w:r><w:r><w:rPr><w:noProof/></w:rPr><w:t>'
+    field = field .. xmlescape('<open Zotero document preferences: ' .. collect(cite.content) .. '>')
+    field = field .. '</w:t></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r>'
+
+    return pandoc.RawInline('openxml', field)
+  else
+    csl = 'ZOTERO_ITEM CSL_CITATION ' .. xmlescape(json.encode(csl)) .. ' RND' .. cite_id(10)
+    local field = '<text:reference-mark-start text:name="' .. csl .. '"/>'
+    field = field .. xmlescape('<open Zotero document preferences: ' .. collect(cite.content) .. '>')
+    field = field .. '<text:reference-mark-end text:name="' .. csl .. '"/>'
+
+    return pandoc.RawInline('opendocument', field)
   end
 end
 
-if FORMAT:match 'odt' then
-  local uris = nil
-
-  function trim(s)
-    return (s:gsub("^%s*(.-)%s*$", "%1"))
+function scannable_cite(cite)
+  if not state.uris then
+    state.uris = {}
+    local mt, contents = pandoc.mediabag.fetch(zotero.bibliography .. '.jzon', '.')
+    for k, item in pairs(json.decode(contents).items) do
+      state.uris[item.citationKey] = item.uri
+    end
   end
 
-  function scannable_cite(cite)
-    if not uris then
-      local mt, contents = pandoc.mediabag.fetch(zotero_bib_uri .. '.jzon', '.')
-      uris = {}
-      for k, item in pairs(json.decode(contents).items) do
-        uris[item.citationKey] = item.uri
-      end
+  local citation = ''
+  for k, item in pairs(cite.citations) do
+    local uri = state.uris[item.id]
+    if not uri then
+      if not state.reported[item.id] then print('@' .. item.id .. ' not found in Zotero') end
+      state.reported[item.id] = true
+      return cite
     end
 
-    -- {"citations":[{"prefix":[{"text":"see"}],"id":"doe99","suffix":[{"text":","},[],{"text":"pp. 33-35"}],"note_num":0,"mode":"NormalCitation","hash":0},{"prefix":[{"text":"also"}],"id":"smith04","suffix":[{"text":","},[],{"text":"ch. 1"}],"note_num":0,"mode":"NormalCitation","hash":0}],"content":[{"text":"[see"},[],{"text":"@doe99,"},[],{"text":"pp."},[],{"text":"33-35;"},[],{"text":"also"},[],{"text":"@smith04,"},[],{"text":"ch."},[],{"text":"1]"}]}
-    local citation = ''
-    for k, item in pairs(cite.citations) do
-      local uri = uris[item.id]
-      if not uri then
-        return cite
-      end
-
-      local suppress = (item.mode == 'SuppressAuthor' and '-' or '')
-      local s, e, ug, id, key
-      s, e, key = string.find(uri, 'http://zotero.org/users/local/%w+/items/(%w+)')
-      if key then
-        ug = 'users'
-        id = '0'
-      else
-        s, e, ug, id, key = string.find(uri, 'http://zotero.org/(%w+)/(%w+)/items/(%w+)')
-      end
-
-      citation = citation ..
-        '{ ' .. (collect(item.prefix)  or '') ..
-        ' | ' .. suppress .. trim(string.gsub(collect(cite.content) or '', '[|{}]', '')) ..
-        ' | ' .. -- (item.locator or '') ..
-        ' | ' .. (collect(item.suffix) or '') ..
-        ' | ' .. (ug == 'groups' and 'zg:' or 'zu:') .. id .. ':' .. key .. ' }'
+    local suppress = (item.mode == 'SuppressAuthor' and '-' or '')
+    local s, e, ug, id, key
+    s, e, key = string.find(uri, 'http://zotero.org/users/local/%w+/items/(%w+)')
+    if key then
+      ug = 'users'
+      id = '0'
+    else
+      s, e, ug, id, key = string.find(uri, 'http://zotero.org/(%w+)/(%w+)/items/(%w+)')
     end
 
-    return pandoc.Str(citation)
+    citation = citation ..
+      '{ ' .. (collect(item.prefix)  or '') ..
+      ' | ' .. suppress .. trim(string.gsub(collect(cite.content) or '', '[|{}]', '')) ..
+      ' | ' .. -- (item.locator or '') ..
+      ' | ' .. (collect(item.suffix) or '') ..
+      ' | ' .. (ug == 'groups' and 'zg:' or 'zu:') .. id .. ':' .. key .. ' }'
   end
 
-  function Inlines(inlines)
-    for k, v in pairs(inlines) do
-      if v.t == 'Cite' then
-        inlines[k] = scannable_cite(v)
-      end
-    end
-    return inlines
-  end
+  return pandoc.Str(citation)
 end
 
 return {

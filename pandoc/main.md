@@ -1,3 +1,8 @@
+---
+zotero:
+  bibliography: http://127.0.0.1:23119/better-bibtex/library?/1/library.json
+  scannable-cite: false
+...
 # Introduction
 
 Blah blah [see @doe99, pp. 33-35; also @smith04, ch. 1].
@@ -72,7 +77,7 @@ and engagement [@SEABORN201514;@gamification-leaderboard-benefits].
 There are two types of gamification: reward-based and meaningful [@oldwine]. Reward-based uses badges,
 leaderboards and achievements -- external elements -- as a way of measuring progress;
 meaningful gamification strategies try to find a connection with the participant -- intrinsic motivation.
-From the psychological point of view, these match with extrinsic and intrinsic motivational factors [@intrinsic-book,@psychologyMotivation,@RYAN200054]. Motivation is
+From the psychological point of view, these match with extrinsic and intrinsic motivational factors [@intrinsic-book;@psychologyMotivation;@RYAN200054]. Motivation is
 \textit{extrinsic} if an individual is motivated
 by external factors, e.g. recognition after completion of a task
 and \textit{intrinsic} if an individual
