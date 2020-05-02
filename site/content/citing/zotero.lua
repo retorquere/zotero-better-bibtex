@@ -56,12 +56,25 @@ local labels = {
   ['vols.'] = 'volume'
 }
 
+function module.short_labels()
+  local sl = {}
+  for k, v in pairs(labels) do
+    if not sl[v] or string.len(k) < string.len(sl[v]) then
+      sl[v] = k
+    end
+  end
+
+  for k, v in pairs(labels) do
+    labels[k] = sl[v]
+  end
+end
+
 local function get_label(locator)
   local s, e, label, remaining = string.find(locator, '^(%l+.?) *(.*)')
-  if label and labels[label] then
-    return labels[label], remaining
+  if label and labels[label:lower()] then
+    return labels[label:lower()], remaining
   else
-    return 'page', locator
+    return labels['page'], locator
   end
 end
 
@@ -102,11 +115,11 @@ local function parse(suffix)
   end
 
   s, e, label, remaining = string.find(_suffix, '^, *(%l+%.?) *(.*)')
-  if label and labels[label] then
-    label = labels[label]
+  if label and labels[label:lower()] then
+    label = labels[label:lower()]
     _suffix = ', ' .. remaining
   else
-    label = 'page'
+    label = labels['page']
   end
 
   local _locator = ''
@@ -136,7 +149,7 @@ end
 
 function module.parse(suffix)
   label, locator, suffix = parse(suffix)
-  if label == 'page' then
+  if label == labels['page'] then
     label = nil
   end
   return label, locator, suffix
@@ -986,6 +999,7 @@ function Meta(meta)
     zotero.format = 'docx'
   elseif string.match(FORMAT, 'odt') and zotero.scannable_cite then
     zotero.format = 'scannable-cite'
+    csl_locator.short_labels()
   elseif string.match(FORMAT, 'odt') then
     zotero.format = 'odt'
   end
@@ -1124,11 +1138,18 @@ function scannable_cite(cite)
       s, e, ug, id, key = string.find(uri, 'http://zotero.org/(%w+)/(%w+)/items/(%w+)')
     end
 
+    local label, locator, suffix = csl_locator.parse(collect(item.suffix))
+    if locator then
+      locator = (label or 'p.') .. ' ' .. locator
+    else
+      locator = ''
+    end
+      
     citation = citation ..
       '{ ' .. (collect(item.prefix)  or '') ..
       ' | ' .. suppress .. trim(string.gsub(collect(cite.content) or '', '[|{}]', '')) ..
-      ' | ' .. -- (item.locator or '') ..
-      ' | ' .. (collect(item.suffix) or '') ..
+      ' | ' .. locator ..
+      ' | ' .. (suffix or '') ..
       ' | ' .. (ug == 'groups' and 'zg:' or 'zu:') .. id .. ':' .. key .. ' }'
   end
 

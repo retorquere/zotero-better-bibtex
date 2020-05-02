@@ -103,6 +103,7 @@ function Meta(meta)
     zotero.format = 'docx'
   elseif string.match(FORMAT, 'odt') and zotero.scannable_cite then
     zotero.format = 'scannable-cite'
+    csl_locator.short_labels()
   elseif string.match(FORMAT, 'odt') then
     zotero.format = 'odt'
   end
@@ -241,11 +242,18 @@ function scannable_cite(cite)
       s, e, ug, id, key = string.find(uri, 'http://zotero.org/(%w+)/(%w+)/items/(%w+)')
     end
 
+    local label, locator, suffix = csl_locator.parse(collect(item.suffix))
+    if locator then
+      locator = (label or 'p.') .. ' ' .. locator
+    else
+      locator = ''
+    end
+      
     citation = citation ..
       '{ ' .. (collect(item.prefix)  or '') ..
       ' | ' .. suppress .. trim(string.gsub(collect(cite.content) or '', '[|{}]', '')) ..
-      ' | ' .. -- (item.locator or '') ..
-      ' | ' .. (collect(item.suffix) or '') ..
+      ' | ' .. locator ..
+      ' | ' .. (suffix or '') ..
       ' | ' .. (ug == 'groups' and 'zg:' or 'zu:') .. id .. ':' .. key .. ' }'
   end
 
