@@ -85,7 +85,7 @@
     "safe-stable-stringify": "^1.1.1",
     "string-template": "^1.0.0",
     "task-easy": "^1.0.1",
-    "transliteration": "^2.1.8",
+    "transliteration": "^2.1.9",
     "tslint": "^6.1.2",
     "unicode2latex": "^2.1.18",
     "words-to-numbers": "^1.5.1",
