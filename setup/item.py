@@ -1,419 +1,298 @@
 #!/usr/bin/env python3
 
-import os, sys
+import json
+from munch import Munch
+import jsonpath_ng
+import sqlite3
+import re
+import glob
+from lxml import etree
 import urllib.request
 from urllib.error import HTTPError
-import json
-from munch import Munch, DefaultMunch
-from collections import defaultdict
-import copy
-import re
-import time
-import glob
+from http.client import RemoteDisconnected
+import os, sys
+import mako
+from mako.template import Template
+from mako import exceptions
 
-root = os.path.join(os.path.dirname(__file__), '..')
+#root = os.path.join(os.path.dirname(__file__), '..')
+root = os.path.dirname(__file__)
 
-print('Generating extra-fields...')
+print('parsing Zotero/Juris-M schemas')
+SCHEMA = Munch(root = os.path.join(root, 'schema'))
+GEN = os.path.join(root, 'gen/items')
+TYPINGS = os.path.join(root, 'gen/typings')
 
-def load(url, schema):
-  request = urllib.request.Request(url)
-  request.get_method = lambda: 'HEAD'
-  try:
-    with urllib.request.urlopen(request) as r:
-      etag = r.getheader('ETag')
-      if etag.startswith('W/'): etag = etag[2:]
-      etag = json.loads(etag) # strips quotes
-      schema  = f'{etag}-{schema}'
-  except HTTPError:
-    print(' ', url, 'timed out, falling back to cached version')
-    schema = os.path.basename(glob.glob(os.path.join(root, 'schema', f'*-{schema}'))[0])
+os.makedirs(SCHEMA.root, exist_ok=True)
+os.makedirs(GEN, exist_ok=True)
+os.makedirs(TYPINGS, exist_ok=True)
 
-  try:
-    with open(os.path.join(root, 'schema', schema)) as f:
-      return json.load(f)
-  except FileNotFoundError:
-    print(schema, f'does not exist, get with "curl -Lo schema/{schema} {url}"')
-    sys.exit(1)
+class fetch(object):
+  def __init__(self, url, name):
+    print('  * fetching', url)
+    self.url = url
+    self.name = name
 
-def fix_csl_vars(proposed, name, csl_vars):
-  for var in list(proposed.keys()):
-    # assume that if there's an '-' in the var they know what they're doing -- looking at you juris-m. These are not supported vars.
-    if var in csl_vars:
-      pass
-    elif f'x-{var}' in csl_vars:
-      print(f'  {name}: keeping unsupported CSL variable', json.dumps(var))
-    else:
-      print(f'  {name}: discarding bogus CSL variable', json.dumps(var))
-      proposed.pop(var)
+  def __enter__(self):
+    request = urllib.request.Request(self.url)
+    request.get_method = lambda: 'HEAD'
+    try:
+      with urllib.request.urlopen(request) as r:
+        etag = r.getheader('ETag')
+        if etag.startswith('W/'): etag = etag[2:]
+        etag = json.loads(etag) # strips quotes
+        name  = f'{etag}-{self.name}'
+    except (HTTPError, RemoteDisconnected):
+      print(' ', self.url, 'timed out, falling back to cached version')
+      name = os.path.basename(glob.glob(os.path.join(SCHEMA.root, f'*-{self.name}'))[0])
+    try:
+      self.f = open(os.path.join(SCHEMA.root, name))
+      return self.f
+    except FileNotFoundError:
+      print(name, f'does not exist, get with "curl -Lo schema/{name} {self.url}"')
+      sys.exit(1)
 
-def fix_zotero_schema(schema):
-  schema = Munch.fromDict(schema)
+  def __exit__(self, type, value, traceback):
+    self.f.close()
 
+CSL = Munch(
+  # https://citeproc-js.readthedocs.io/en/latest/csl-m/
+  ignore = [ 'shortTitle', 'journalAbbreviation', 'abstract', 'note', 'annote', 'citation-label', 'citation-number', 'first-reference-note-number', 'keyword', 'locator', 'year-suffix' ]
+)
+
+DBNAME=':memory:'
+DBNAME='mapping.sqlite'
+if os.path.isfile(DBNAME): os.remove(DBNAME)
+DB = sqlite3.connect(DBNAME)
+
+DB.execute(f"CREATE TABLE _mapping (zotero, csl, type CHECK (type in ('text', 'date', 'name')))")
+
+#  DB.execute(f'CREATE TABLE {table} (label, field, type, UNIQUE (label, field))')
+#  DB.execute(f'''
+#    CREATE TRIGGER {table}_type BEFORE INSERT ON {table} FOR EACH ROW
+#    BEGIN
+#      SELECT CASE WHEN EXISTS(SELECT 1 FROM {table} WHERE field = NEW.field AND type <> NEW.type) THEN
+#        RAISE(FAIL, "Type conflict in {table}")
+#      END;
+#    END
+#  ''')
+DB.execute('CREATE TABLE _baseField (field NOT NULL, baseField NOT NULL)')
+DB.execute('CREATE TABLE baseField (field NOT NULL, baseField NOT NULL, UNIQUE(field, baseField))')
+
+DB.execute('CREATE TABLE _label (label NOT NULL, field NOT NULL)')
+DB.execute('CREATE TABLE label (label NOT NULL, field NOT NULL, UNIQUE(label, field))')
+
+with fetch('https://aurimasv.github.io/z2csl/typeMap.xml', 'typeMap.xml') as f:
+  print('  parsing typemap')
+  csl_map = etree.parse(f)
+  # https://citeproc-js.readthedocs.io/en/latest/csl-m/
+  CSL.type = {
+    'document-name': 'standard',
+    'committee': 'standard',
+    'publication-number': 'number',
+    'supplement': 'number',
+    'volume-title': 'standard',
+    'opening-date': 'date', # does not appear in the csl-m extension list, and not in typeMap.xml
+    'publication-date': 'date',
+    'testimonyBy': 'name', # does not appear in the csl-m extension list, and not in typeMap.xml
+    'contributor': 'name', # does not appear in the cslCreatorMap
+    'commenter': 'name', # does not appear in the cslCreatorMap
+    'gazette-flag': 'standard',
+  }
+  for var in csl_map.xpath('//vars/var'):
+    if var.attrib['name'] in CSL.ignore: continue
+    CSL.type[var.attrib['name']] = var.attrib['type']
+  for var in CSL.type.keys():
+    CSL.type[var] = {'standard': 'text', 'number': 'text', 'date': 'date', 'name': 'name'}[CSL.type[var]]
+
+  for var in csl_map.xpath('//cslCreatorMap/map'):
+    c, z = [var.attrib['cslField'], var.attrib['zField']]
+    if c in CSL.ignore: continue
+
+    DB.execute(f'INSERT INTO _mapping (zotero, csl, type) VALUES (?, ?, ?)', (z, c, CSL.type[c]))
+
+  for var in csl_map.xpath('//citeprocJStoCSLmap/remap'):
+    c, z = [var.attrib['descKey'], var.attrib['citeprocField']]
+    if c in CSL.ignore: continue
+
+    CSL.type[z] = CSL.type[c]
+
+    DB.execute(f'INSERT INTO _mapping (zotero, csl, type) VALUES (?, ?, ?)', (z, c, CSL.type[c]))
+
+  for var in csl_map.xpath('//cslFieldMap/map'):
+    c, z = [var.attrib['cslField'], var.attrib['zField']]
+    if c in CSL.ignore: continue
+
+    DB.execute(f'INSERT INTO _mapping (zotero, csl, type) VALUES (?, ?, ?)', (z, c, CSL.type[c]))
+
+  DB.commit()
+
+class jsonpath:
+  finders = {}
+
+  @classmethod
+  def parse(cls, path):
+    if not path in cls.finders: cls.finders[path] = jsonpath_ng.parse(path)
+    return cls.finders[path]
+
+with fetch('https://api.zotero.org/schema', 'zotero.json') as z, fetch('https://raw.githubusercontent.com/Juris-M/zotero-schema/master/schema-jurism.json', 'juris-m.json') as j:
+  SCHEMA.zotero = Munch.fromDict(json.load(z))
+  SCHEMA.jurism = Munch.fromDict(json.load(j))
+
+  # Zotero
+  ## missing date field
+  SCHEMA.zotero.meta.fields.accessDate = Munch(type='date')
+
+  ## status is publication status, not legal status
+  SCHEMA.zotero.csl.fields.text.status = [ 'status' ]
+
+  ## Juris-M
   # missing date field
-  schema.meta.fields.accessDate = { 'type': 'date' }
-
-  # status is publication status, not legal status
-  schema.csl.fields.text.status = [ 'status' ]
-
-  with open(os.path.join(root, 'setup/csl-vars.json')) as f:
-    csl_vars = set(json.load(f).keys())
-    fix_csl_vars(schema.csl.fields.text, 'zotero', csl_vars)
-    fix_csl_vars(schema.csl.fields.date, 'zotero', csl_vars)
-    fix_csl_vars(schema.csl.names, 'zotero', csl_vars)
-
-  return Munch.toDict(schema)
-
-def fix_jurism_schema(schema):
-  schema = Munch.fromDict(schema)
-
-  # missing date field
-  schema.meta.fields.accessDate = { 'type': 'date' }
+  SCHEMA.jurism.meta.fields.accessDate = Munch(type='date')
 
   # missing variable mapping
-  schema.csl.fields.text['volume-title'] = [ 'volumeTitle' ]
+  SCHEMA.jurism.csl.fields.text['volume-title'] = [ 'volumeTitle' ]
 
   # status is publication status, not legal status
-  schema.csl.fields.text.status = [ 'status ']
+  SCHEMA.jurism.csl.fields.text.status = [ 'status ']
 
-  with open(os.path.join(root, 'setup/csl-vars.json')) as f:
-    csl_vars = set(json.load(f).keys())
-    fix_csl_vars(schema.csl.fields.text, 'jurism', csl_vars)
-    fix_csl_vars(schema.csl.fields.date, 'jurism', csl_vars)
-    fix_csl_vars(schema.csl.names, 'jurism', csl_vars)
+  for source in ['zotero', 'jurism']:
+    print('  parsing', source, 'schema')
+    schema = SCHEMA[source]
+    for field in [f.value for f in jsonpath.parse('itemTypes[*].fields[*]').find(schema)]:
+      if field.get('baseField', field.field) in ['extra', 'abstractNote']: continue
 
-  return Munch.toDict(schema)
+      if 'baseField' in field:
+        DB.execute('INSERT INTO _baseField(field, baseField) VALUES (?, ?)', (field.field, field.baseField))
 
-data = DefaultMunch.fromDict({
-  'zotero': fix_zotero_schema(load('https://api.zotero.org/schema', 'zotero.json')),
-  'jurism': fix_jurism_schema(load('https://raw.githubusercontent.com/Juris-M/zotero-schema/master/schema-jurism.json', 'juris-m.json')),
-}, None)
+      field = field.get('baseField', field.field)
+      field_type = ([f.value for f in jsonpath.parse(f'meta.fields.{field}.type').find(schema)] + ['text'])[0]
 
-class ExtraFields:
-  @staticmethod
-  def to_json(obj):
-    if isinstance(obj, Munch):
-      return {
-        k: v
-        for k, v in Munch.toDict(obj).items()
-        if not v is None and not (type(v) == list and len(v) == 0)
-      }
-    else:
-      return obj
+      DB.execute('INSERT INTO _mapping (zotero, type) VALUES (?, ?)', (field, field_type))
 
-  def __init__(self):
-    self.ef = Munch(zotero=defaultdict(Munch), csl=defaultdict(Munch))
+    for field in [f.value for f in jsonpath.parse('itemTypes[*].creatorTypes[*].creatorType').find(schema)]:
+      DB.execute('INSERT INTO _mapping (zotero, type) VALUES (?, ?)', (field, 'name'))
 
-  def load(self, data):
-    data = Munch.fromDict(data)
+    for field in jsonpath.parse('csl.fields[*].*.*').find(schema):
+      field_name = str(field.full_path).split('.')[-1]
 
-    # no extra-fields for these
-    data.itemTypes = [ itemType for itemType in data.itemTypes if itemType.itemType not in ['attachment', 'note'] ]
+      if field_name in CSL.ignore: continue
 
+      DB.execute('INSERT INTO _mapping (csl, type) VALUES (?, ?)', (field_name, CSL.type[field_name]))
 
-    class BaseField:
-      def __init__(self):
-        self.basefield = {}
-      def __getitem__(self, key):
-        return self.basefield.get(key, key)
-      def __setitem__(self, key, value):
-        self.basefield[key] = value
-    basefield = BaseField()
+      zotero_fields = field.value
+      if type(zotero_fields) == str: zotero_fields = [ zotero_fields ]
 
-    # find basefields
-    for itemType in data.itemTypes:
-      for field in itemType.fields:
-        if 'baseField' in field:
-          basefield[field.field] = field.baseField
+      for zotero_field in zotero_fields:
+        DB.execute('INSERT INTO _mapping (csl, zotero, type) VALUES (?, ?, ?)', (field_name, zotero_field, CSL.type[field_name]))
 
-    # find variables
-    for itemType in data.itemTypes:
+    for field in jsonpath.parse('csl.names').find(schema):
+      for zotero_field, field_name in field.value.items():
+        assert CSL.type[field_name] == 'name'
+        DB.execute('INSERT INTO _mapping (zotero, csl, type) VALUES (?, ?, ?)', (zotero_field, field_name, 'name'))
 
-      for field in itemType.fields:
-        label = re.sub(r'([a-z])([A-Z])', lambda x: x.group(1) + ' ' + x.group(2), field.field).upper()
-        self.ef.zotero[label].zotero = basefield[field.field]
+    DB.commit()
 
-      for creator in itemType.creatorTypes:
-        label = re.sub(r'([a-z])([A-Z])', lambda x: x.group(1) + ' ' + x.group(2), creator.creatorType).upper()
-        self.ef.zotero[label].zotero = basefield[creator.creatorType]
-        self.ef.zotero[label].type = 'creator'
+DB.execute('INSERT INTO baseField(field, baseField) SELECT DISTINCT field, baseField FROM _baseField')
+DB.commit()
 
-    # fix types
-    for var, meta in data.meta.fields.items():
-      if meta.type == 'text': continue
+for row in DB.execute('SELECT zotero, csl FROM _mapping UNION SELECT field, baseField FROM baseField'):
+  for field in row:
+    if field is None: continue
+    label = field.replace('_', ' ').replace('-', ' ')
+    label = re.sub(r'([a-z])([A-Z])', r'\1 \2', label)
+    label = label.lower()
+    DB.execute('INSERT INTO _label (label, field) VALUES (?, ?)', (label, field))
+DB.execute('INSERT INTO label(label, field) SELECT DISTINCT label, field FROM _label')
+DB.commit()
 
-      for field in self.ef.zotero.values():
-        if field.zotero == var:
-          field.type = meta.type
+print('  writing extra-fields')
+query = '''
+  SELECT label.label, _mapping.zotero, _mapping.csl, _mapping.type
+  FROM _mapping
+  JOIN label ON label.field IN (_mapping.zotero, _mapping.csl)
 
-    def add_csl(csl, zoteros):
-      types = set()
-      for zotero in zoteros:
-        for field in self.ef.zotero.values():
-          if field.zotero != zotero: continue
+  UNION
 
-          if not 'csl' in field: field.csl = []
-          field.csl.append(csl)
-          field.csl = sorted(set(field.csl))
-          if 'type' in field: types.add(field.type)
-      assert len(types) < 2
-      return list(types)
+  SELECT label.label, _mapping.zotero, _mapping.csl, _mapping.type
+  FROM _mapping
+  JOIN baseField ON baseField.baseField IN (_mapping.zotero, _mapping.csl)
+  JOIN label ON label.field = baseField.field
+'''
+mapping = {}
+for label, zotero, csl, field_type in DB.execute(query):
+  if not label in mapping: mapping[label] = Munch(zotero=None, csl=None, type=field_type)
+  assert mapping[label].type == field_type, (label, zotero, csl, field_type, mapping[label].type)
+  for table in [('zotero', zotero), ('csl', csl)]:
+    table, field = table
+    if table == 'csl' and field in CSL.ignore: continue
+    if field is None: continue
+    if mapping[label][table] is None: mapping[label][table] = []
+    mapping[label][table] = sorted(list(set(mapping[label][table] + [field])))
 
-    # map csl
-    for csl, zotero in data.csl.fields.text.items():
-      self.ef.csl[csl].csl = csl
-      self.ef.csl[csl].zotero = [basefield[z] for z in zotero]
+#for label, meta in mapping.items():
+#  if meta.csl and len(meta.csl) > 1: print(label, 'csl:', meta.csl)
+#  if meta.zotero and len(meta.zotero) > 1: print(label, 'zotero:', meta.zotero)
 
-      types = add_csl(csl, self.ef.csl[csl].zotero)
-      if len(types) == 1: self.ef.csl[csl].type = types[0]
+with open(os.path.join(GEN, 'extra-fields.json'), 'w') as f:
+  json.dump(mapping, f, indent='  ')
 
-    for csl, zotero in data.csl.fields.date.items():
-      self.ef.csl[csl].csl = csl
-      self.ef.csl[csl].type = 'date'
+print('  writing creators')
+creators = {}
+for itemType in jsonpath.parse('*.itemTypes[*]').find(SCHEMA):
+  if not 'creatorTypes' in itemType.value or len(itemType.value.creatorTypes) == 0: continue
+  if not itemType.value.itemType in creators: creators[itemType.value.itemType] = set()
+  for creator in itemType.value.creatorTypes:
+    creators[itemType.value.itemType].add(creator.creatorType)
+with open(os.path.join(GEN, 'creators.json'), 'w') as f:
+  json.dump(creators, f, indent='  ', default=lambda x: list(x))
 
-      # jurism schema differs from zotero... please don't do this people :(
-      if type(zotero) != list: zotero = [ zotero ]
-      for z in zotero:
-        self.ef.csl[csl].zotero = [basefield[z]]
+def template(tmpl):
+  return Template(filename=os.path.join(root, 'setup/templates', tmpl))
 
-      types = add_csl(csl, self.ef.csl[csl].zotero)
-      if len(types) != 0:
-        assert self.ef.csl[csl].type == types[0], str((self.ef.csl[csl].type, types))
+print('  writing typing for serialized item')
+with open(os.path.join(TYPINGS, 'serialized-item.d.ts'), 'w') as f:
+  fields = sorted(list(set(field.value.get('baseField', field.value.field) for field in jsonpath.parse('*.itemTypes[*].fields[*]').find(SCHEMA))))
+  print(template('items/serialized-item.d.ts.mako').render(fields=fields).strip(), file=f)
 
-    for zotero, csl in data.csl.names.items():
-      self.ef.csl[csl].csl = csl
-      self.ef.csl[csl].type = 'creator'
-      self.ef.csl[csl].zotero = [basefield[zotero]]
+print('  writing field simplifier')
+with open(os.path.join(GEN, 'fields.ts'), 'w') as f:
+  valid = Munch(type={}, field={})
+  for itemType in jsonpath.parse('*.itemTypes[*].itemType').find(SCHEMA):
+    client = str(itemType.full_path).split('.')[0]
 
-      types = add_csl(csl, self.ef.csl[csl].zotero)
-      assert self.ef.csl[csl].type == types[0]
+    if not itemType.value in valid.type:
+      valid.type[itemType.value] = client
+      valid.field[itemType.value] = {}
+    elif valid.type[itemType.value] != client:
+      valid.type[itemType.value] = 'true'
 
-  def save(self, path):
-    with open(os.path.join(root, 'setup/csl-vars.json')) as f:
-      for csl, _type in json.load(f).items():
-        if _type == 'ignore': continue
+  for itemType in jsonpath.parse('*.itemTypes[*]').find(SCHEMA):
+    client = str(itemType.full_path).split('.')[0]
+    for field in itemType.value.fields:
+      field = field.get('baseField', field.field)
 
-        self.ef.csl[csl].csl = csl
-        if _type != 'text': self.ef.csl[csl].type = _type
+      if not field in valid.field[itemType.value.itemType]:
+        valid.field[itemType.value.itemType][field] = client
+      elif valid.field[itemType.value.itemType][field] != client:
+        valid.field[itemType.value.itemType][field] = 'true'
 
-    for field in self.ef.zotero.values():
-      if 'csl' in field:
-        field.csl = sorted(list(set(field.csl)))
-        if len(field.csl) == 1:
-          field.csl = field.csl[0]
-        else:
-          field.csl = 'csl:' + '+'.join(field.csl)
+  DB.execute('CREATE TABLE _alias (field, alias, client)')
+  DB.execute('CREATE TABLE alias (field, alias, client)')
+  for field in jsonpath.parse('*.itemTypes[*].fields[*]').find(SCHEMA):
+    if not 'baseField' in field.value: continue
+    client = str(field.full_path).split('.')[0]
+    DB.execute('INSERT INTO _alias (field, alias, client) VALUES (?, ?, ?)', (field.value.baseField, field.value.field, client))
+  DB.execute('INSERT INTO alias (field, alias, client) SELECT DISTINCT field, alias, client FROM _alias')
+  DB.commit()
+  aliases = Munch()
+  for field, alias, client in DB.execute("SELECT field, alias, GROUP_CONCAT(client, '+') FROM alias GROUP BY field, alias"):
+    if '+' in client: client = 'both'
+    if not client in aliases: aliases[client] = Munch()
+    if not field in aliases[client]: aliases[client][field] = []
+    aliases[client][field].append(alias)
 
-    for field in self.ef.csl.values():
-      if 'zotero' in field:
-        field.zotero = sorted(list(set(field.zotero)))
-        if len(field.zotero) == 1:
-          field.zotero = field.zotero[0]
-        else:
-          field.zotero = 'zotero:' + '+'.join(field.zotero)
-
-    simple = {}
-    for section in ['csl', 'zotero']:
-      for lower in [False, True]:
-        for label, field in self.ef[section].items():
-          for name in [label, field[section]]:
-            if name.lower() == 'note' or name.lower() == 'extra': next
-            if lower: name = name.lower()
-            if not name in simple:
-              simple[name] = field
-
-    # such a mess
-    simple['type'] = { 'zotero': 'type', 'csl': 'type' }
-    with open(path, 'w') as f:
-      json.dump(simple, f, indent='  ', default=ExtraFields.to_json)
-
-extraFields = ExtraFields()
-extraFields.load(data.jurism)
-extraFields.load(data.zotero)
-extraFields.save(os.path.join(root, 'gen', 'extra-fields.json'))
-
-print('Generating item field metadata...')
-ValidFields = DefaultMunch(None, {})
-ValidTypes = {}
-Alias = {}
-Itemfields = set()
-ItemCreators = {}
-for client in data.keys():
-  ItemCreators[client] = {}
-
-  for spec in data[client].itemTypes:
-    ItemCreators[client][spec.itemType] = [ct.creatorType for ct in spec.get('creatorTypes', [])]
-
-    if spec.itemType in ValidTypes:
-      ValidTypes[spec.itemType] = 'true'
-    else:
-      ValidTypes[spec.itemType] = client
-
-    if not ValidFields[spec.itemType]:
-      if spec.itemType == 'note':
-        ValidFields[spec.itemType] = DefaultMunch(None, {field: 'true' for field in 'itemType tags note id itemID dateAdded dateModified'.split(' ')})
-      elif spec.itemType == 'attachment':
-        ValidFields[spec.itemType] = DefaultMunch(None, {field: 'true' for field in 'itemType tags id itemID dateAdded dateModified'.split(' ')})
-      else:
-        ValidFields[spec.itemType] = DefaultMunch(None, {field: 'true' for field in 'itemType creators tags attachments notes seeAlso id itemID dateAdded dateModified multi'.split(' ')})
-
-    for field in spec.fields:
-      if field.baseField:
-        if not field.baseField in Alias: Alias[field.baseField] = Munch(zotero=set(), jurism=set())
-        Alias[field.baseField][client].add(field.field)
-
-        fieldName = field.baseField
-      else:
-        fieldName = field.field
-
-      if spec.itemType not in ['note', 'attachment']: Itemfields.add(fieldName)
-
-      if ValidFields[spec.itemType][fieldName]:
-        ValidFields[spec.itemType][fieldName] = 'true'
-      else:
-        ValidFields[spec.itemType][fieldName] = client
-
-    if len(spec.get('creatorTypes', [])) > 0:
-      if ValidFields[spec.itemType]['creators']:
-        ValidFields[spec.itemType]['creators'] = 'true'
-      else:
-        ValidFields[spec.itemType]['creators'] = client
-
-for field, aliases in list(Alias.items()):
-  Alias[field] = Munch(
-    both = [alias for alias in aliases.zotero if alias in aliases.jurism],
-    zotero = [alias for alias in aliases.zotero if alias not in aliases.jurism],
-    jurism = [alias for alias in aliases.jurism if alias not in aliases.zotero]
-  )
-
-def replace(indent, aliases):
-  aliases = [f'item.{alias}' for alias in aliases]
-  replacement = ''
-
-  if len(aliases) > 1:
-    replacement += f"  {indent}if (v = ({' || '.join(aliases)})) item.{field} = v\n"
-  else:
-    replacement += f"  {indent}if ({aliases[0]}) item.{field} = {aliases[0]}\n"
-
-  for alias in aliases:
-    replacement += f'  {indent}delete {alias}\n'
-  replacement += '\n'
-  return replacement
-
-with open(os.path.join(root, 'gen', 'itemfields.ts'), 'w') as f:
-  print('declare const Zotero: any\n', file=f)
-  print("const jurism = Zotero.BetterBibTeX.client() === 'jurism'", file=f)
-  print('const zotero = !jurism\n', file=f)
-  print('export const valid = {', file=f)
-  print('  type: {', file=f)
-  for itemType, client in sorted(ValidTypes.items(), key=lambda x: x[0]):
-    print(f'    {itemType}: {client},', file=f)
-  print('  },', file=f)
-  print('  field: {', file=f)
-  for itemType, fields in sorted(ValidFields.items(), key=lambda x: x[0]):
-    print(f'    {itemType}: {{', file=f)
-    for field, client in sorted(fields.items(), key=lambda x: x[0]):
-      print(f'      {field}: {client},', file=f)
-    print('    },', file=f)
-  print('  },', file=f)
-  print('}\n', file=f)
-
-  print('function unalias(item) {', file=f)
-  print('  delete item.inPublications', file=f)
-  unalias = '  let v\n\n'
-  for client in ['both', 'zotero', 'jurism']:
-    if client != 'both': unalias += f'  if ({client}) {{\n'
-
-    for field, aliases in Alias.items():
-      if len(aliases[client]) > 0:
-        if client == 'both':
-          unalias += replace('', aliases[client])
-        else:
-          unalias += replace('  ', aliases[client])
-
-    if client != 'both': unalias = unalias.rstrip() + '\n  }\n\n'
-  print(unalias.rstrip(), file=f)
-  print('}', file=f)
-
-  print('''\n// import & export translators expect different creator formats... nice
-export function simplifyForExport(item, dropAttachments = false) {
-  unalias(item)
-
-  if (item.filingDate) item.filingDate = item.filingDate.replace(/^0000-00-00 /, '')
-
-  if (item.creators) {
-    for (const creator of item.creators) {
-      if (creator.fieldMode) {
-        creator.name = creator.name || creator.lastName
-        delete creator.lastName
-        delete creator.firstName
-        delete creator.fieldMode
-      }
-    }
-  }
-
-  if (item.itemType === 'attachment' || item.itemType === 'note') {
-    delete item.attachments
-    delete item.notes
-  } else {
-    item.attachments = (!dropAttachments && item.attachments) || []
-    item.notes = item.notes ? item.notes.map(note =>  note.note || note ) : []
-  }
-
-  return item
-}
-
-export function simplifyForImport(item) {
-  unalias(item)
-
-  if (item.creators) {
-    for (const creator of item.creators) {
-      if (creator.name) {
-        creator.lastName = creator.lastName || creator.name
-        creator.fieldMode = 1
-        delete creator.firstName
-        delete creator.name
-      }
-      if (!jurism) delete creator.multi
-    }
-  }
-
-  if (!jurism) delete item.multi
-
-  return item
-}''', file=f)
-
-with open(os.path.join(root, 'gen', 'typings', 'serialized-item.d.ts'), 'w') as f:
-  fields = '\n'.join(f'    {field}: string' for field in sorted(Itemfields))
-  print("import { Fields } from '../../content/extra'", file=f)
-  print(f'''declare global {{
-  interface ISerializedItem {{
-    // fields common to all items
-    itemID: string | number
-    itemType: string
-    dateAdded: string
-    dateModified: string
-    creators: {{ creatorType?: string, name?: string, firstName?: string, lastName?:string, fieldMode?: number, source?: string }}[]
-    tags: Array<{{ tag: string, type?: number }}>
-    notes: string[]
-    attachments: {{ path: string, title?: string, mimeType?: string }}
-    raw: boolean
-    autoJournalAbbreviation?: string
-
-{fields}
-
-    relations: {{ 'dc:relation': string[] }}
-    uri: string
-    referenceType: string
-    cslType: string
-    cslVolumeTitle: string
-    citationKey: string
-    collections: string[]
-    extraFields: Fields
-    arXiv: {{ source?: string, id: string, category?: string }}
-    // Juris-M extras
-    multi: any
-  }}
-}}''', file=f)
-
-with open(os.path.join(root, 'gen', 'item-creators.json'), 'w') as f:
-  json.dump(ItemCreators, f, indent='  ')
+  try:
+    print(template('items/fields.ts.mako').render(valid=valid, aliases=aliases).strip(), file=f)
+  except:
+    print(exceptions.text_error_template().render())
