@@ -81,7 +81,7 @@ class ExtraFields:
     label = label.lower()
     return label
 
-  def insert_label(self, domain, name, label):
+  def add_label(self, domain, name, label):
     assert domain in ['csl', 'zotero']
     assert type(name) == str
     assert type(label) == str
@@ -89,19 +89,19 @@ class ExtraFields:
     self.dg.add_node(f'label:{label}', domain='label', name=label, graphics={'fill': self.color.label})
     self.dg.add_edge(f'label:{label}', f'{domain}:{name}', graphics={ 'targetArrow': 'standard' })
 
-  def insert_mapping(self, f, t, reverse=True):
+  def add_mapping(self, f, t, reverse=True):
     mappings = [(f, t)]
     if reverse: mappings.append((t, f))
     for f, t in mappings:
       self.dg.add_edge(':'.join(f), ':'.join(t), graphics={ 'targetArrow': 'standard' })
 
-  def insert_var(self, domain, name, tpe):
+  def add_var(self, domain, name, tpe):
     assert domain in ['csl', 'zotero']
     assert type(name) == str
     assert tpe in ['name', 'date', 'text']
 
     self.dg.add_node(f'{domain}:{name}', domain=domain, name=name, type=tpe, graphics={'fill': self.color[domain]})
-    self.insert_label(domain, name, self.make_label(name))
+    self.add_label(domain, name, self.make_label(name))
 
   def load(self, schema):
     typeof = {}
@@ -112,37 +112,37 @@ class ExtraFields:
       baseField = field.value.get('baseField', None)
       field = field.value.get('baseField', field.value.field)
 
-      self.insert_var('zotero', field, typeof.get(field, 'text'))
-      if baseField: self.insert_label('zotero', field, self.make_label(baseField))
+      self.add_var('zotero', field, typeof.get(field, 'text'))
+      if baseField: self.add_label('zotero', field, self.make_label(baseField))
 
     for field in jsonpath.parse('$.itemTypes[*].creatorTypes[*].creatorType').find(schema):
-      self.insert_var('zotero', field.value, 'name')
+      self.add_var('zotero', field.value, 'name')
 
     for fields in jsonpath.parse('$.csl.fields.text').find(schema):
       for csl, zotero in fields.value.items():
-        self.insert_var('csl', csl, 'text')
+        self.add_var('csl', csl, 'text')
         for field in zotero:
-          self.insert_var('zotero', field, 'text')
-          self.insert_mapping(('csl', csl), ('zotero', field))
+          self.add_var('zotero', field, 'text')
+          self.add_mapping(('csl', csl), ('zotero', field))
 
     for fields in jsonpath.parse('$.csl.fields.date').find(schema):
       for csl, zotero in fields.value.items():
-        self.insert_var('csl', csl, 'date')
+        self.add_var('csl', csl, 'date')
         if type(zotero) == str: zotero = [zotero] # juris-m has a list here, zotero strings
         for field in zotero:
-          self.insert_var('zotero', field, 'date')
-          self.insert_mapping(('csl', csl), ('zotero', field))
+          self.add_var('zotero', field, 'date')
+          self.add_mapping(('csl', csl), ('zotero', field))
 
     for zotero, csl in schema.csl.names.items():
-      self.insert_var('csl', csl, 'name')
-      self.insert_var('zotero', zotero, 'name')
-      self.insert_mapping(('csl', csl), ('zotero', zotero))
+      self.add_var('csl', csl, 'name')
+      self.add_var('zotero', zotero, 'name')
+      self.add_mapping(('csl', csl), ('zotero', zotero))
 
     for field, tpe in schema.csl.unmapped.items():
-      self.insert_var('csl', field, tpe)
+      self.add_var('csl', field, tpe)
 
     for alias, field in schema.csl.alias.items():
-      self.insert_label('csl', field, self.make_label(alias))
+      self.add_label('csl', field, self.make_label(alias))
 
   def multiple_incoming(self, var_nodes):
     for node in var_nodes:
