@@ -1,22 +1,21 @@
 #!/usr/bin/env python3
 
-import json
-from munch import Munch
-import jsonpath_ng
-import sqlite3
-import re
-import glob
-from lxml import etree
-import urllib.request
-from urllib.error import HTTPError
 from http.client import RemoteDisconnected
-import os, sys
-import mako
-from mako.template import Template
+from lxml import etree
 from mako import exceptions
+from mako.template import Template
+from munch import Munch
+from urllib.error import HTTPError
+import glob
+import json, jsonpatch, jsonpath_ng
+import mako
+import networkx as nx
+import os, sys
+import re
+import sys
+import urllib.request
 
-#root = os.path.join(os.path.dirname(__file__), '..')
-root = os.path.dirname(__file__)
+root = os.path.join(os.path.dirname(__file__), '..')
 
 print('parsing Zotero/Juris-M schemas')
 SCHEMA = Munch(root = os.path.join(root, 'schema'))
@@ -49,83 +48,11 @@ class fetch(object):
       self.f = open(os.path.join(SCHEMA.root, name))
       return self.f
     except FileNotFoundError:
-      print(name, f'does not exist, get with "curl -Lo schema/{name} {self.url}"')
+      print(os.path.join(SCHEMA.root, name), f'does not exist, get with "curl -Lo schema/{name} {self.url}"')
       sys.exit(1)
 
   def __exit__(self, type, value, traceback):
     self.f.close()
-
-CSL = Munch(
-  # https://citeproc-js.readthedocs.io/en/latest/csl-m/
-  ignore = [ 'shortTitle', 'journalAbbreviation', 'abstract', 'note', 'annote', 'citation-label', 'citation-number', 'first-reference-note-number', 'keyword', 'locator', 'year-suffix' ]
-)
-
-DBNAME=':memory:'
-DBNAME='mapping.sqlite'
-if os.path.isfile(DBNAME): os.remove(DBNAME)
-DB = sqlite3.connect(DBNAME)
-
-DB.execute(f"CREATE TABLE _mapping (zotero, csl, type CHECK (type in ('text', 'date', 'name')))")
-
-#  DB.execute(f'CREATE TABLE {table} (label, field, type, UNIQUE (label, field))')
-#  DB.execute(f'''
-#    CREATE TRIGGER {table}_type BEFORE INSERT ON {table} FOR EACH ROW
-#    BEGIN
-#      SELECT CASE WHEN EXISTS(SELECT 1 FROM {table} WHERE field = NEW.field AND type <> NEW.type) THEN
-#        RAISE(FAIL, "Type conflict in {table}")
-#      END;
-#    END
-#  ''')
-DB.execute('CREATE TABLE _baseField (field NOT NULL, baseField NOT NULL)')
-DB.execute('CREATE TABLE baseField (field NOT NULL, baseField NOT NULL, UNIQUE(field, baseField))')
-
-DB.execute('CREATE TABLE _label (label NOT NULL, field NOT NULL)')
-DB.execute('CREATE TABLE label (label NOT NULL, field NOT NULL, UNIQUE(label, field))')
-
-with fetch('https://aurimasv.github.io/z2csl/typeMap.xml', 'typeMap.xml') as f:
-  print('  parsing typemap')
-  csl_map = etree.parse(f)
-  # https://citeproc-js.readthedocs.io/en/latest/csl-m/
-  CSL.type = {
-    'document-name': 'standard',
-    'committee': 'standard',
-    'publication-number': 'number',
-    'supplement': 'number',
-    'volume-title': 'standard',
-    'opening-date': 'date', # does not appear in the csl-m extension list, and not in typeMap.xml
-    'publication-date': 'date',
-    'testimonyBy': 'name', # does not appear in the csl-m extension list, and not in typeMap.xml
-    'contributor': 'name', # does not appear in the cslCreatorMap
-    'commenter': 'name', # does not appear in the cslCreatorMap
-    'gazette-flag': 'standard',
-  }
-  for var in csl_map.xpath('//vars/var'):
-    if var.attrib['name'] in CSL.ignore: continue
-    CSL.type[var.attrib['name']] = var.attrib['type']
-  for var in CSL.type.keys():
-    CSL.type[var] = {'standard': 'text', 'number': 'text', 'date': 'date', 'name': 'name'}[CSL.type[var]]
-
-  for var in csl_map.xpath('//cslCreatorMap/map'):
-    c, z = [var.attrib['cslField'], var.attrib['zField']]
-    if c in CSL.ignore: continue
-
-    DB.execute(f'INSERT INTO _mapping (zotero, csl, type) VALUES (?, ?, ?)', (z, c, CSL.type[c]))
-
-  for var in csl_map.xpath('//citeprocJStoCSLmap/remap'):
-    c, z = [var.attrib['descKey'], var.attrib['citeprocField']]
-    if c in CSL.ignore: continue
-
-    CSL.type[z] = CSL.type[c]
-
-    DB.execute(f'INSERT INTO _mapping (zotero, csl, type) VALUES (?, ?, ?)', (z, c, CSL.type[c]))
-
-  for var in csl_map.xpath('//cslFieldMap/map'):
-    c, z = [var.attrib['cslField'], var.attrib['zField']]
-    if c in CSL.ignore: continue
-
-    DB.execute(f'INSERT INTO _mapping (zotero, csl, type) VALUES (?, ?, ?)', (z, c, CSL.type[c]))
-
-  DB.commit()
 
 class jsonpath:
   finders = {}
@@ -135,115 +62,179 @@ class jsonpath:
     if not path in cls.finders: cls.finders[path] = jsonpath_ng.parse(path)
     return cls.finders[path]
 
-with fetch('https://api.zotero.org/schema', 'zotero.json') as z, fetch('https://raw.githubusercontent.com/Juris-M/zotero-schema/master/schema-jurism.json', 'juris-m.json') as j:
-  SCHEMA.zotero = Munch.fromDict(json.load(z))
-  SCHEMA.jurism = Munch.fromDict(json.load(j))
+def patch(s, p):
+  with open(os.path.join(SCHEMA.root, p)) as f:
+    return jsonpatch.apply_patch(s, json.load(f))
 
-  # Zotero
-  ## missing date field
-  SCHEMA.zotero.meta.fields.accessDate = Munch(type='date')
+class ExtraFields:
+  def __init__(self):
+    self.dg = nx.DiGraph()
+    self.color = Munch(
+      zotero='#FF0000',
+      csl='#99CC00',
+      label='#33cccc'
+    )
 
-  ## status is publication status, not legal status
-  SCHEMA.zotero.csl.fields.text.status = [ 'status' ]
-
-  ## Juris-M
-  # missing date field
-  SCHEMA.jurism.meta.fields.accessDate = Munch(type='date')
-
-  # missing variable mapping
-  SCHEMA.jurism.csl.fields.text['volume-title'] = [ 'volumeTitle' ]
-
-  # status is publication status, not legal status
-  SCHEMA.jurism.csl.fields.text.status = [ 'status ']
-
-  for source in ['zotero', 'jurism']:
-    print('  parsing', source, 'schema')
-    schema = SCHEMA[source]
-    for field in [f.value for f in jsonpath.parse('itemTypes[*].fields[*]').find(schema)]:
-      if field.get('baseField', field.field) in ['extra', 'abstractNote']: continue
-
-      if 'baseField' in field:
-        DB.execute('INSERT INTO _baseField(field, baseField) VALUES (?, ?)', (field.field, field.baseField))
-
-      field = field.get('baseField', field.field)
-      field_type = ([f.value for f in jsonpath.parse(f'meta.fields.{field}.type').find(schema)] + ['text'])[0]
-
-      DB.execute('INSERT INTO _mapping (zotero, type) VALUES (?, ?)', (field, field_type))
-
-    for field in [f.value for f in jsonpath.parse('itemTypes[*].creatorTypes[*].creatorType').find(schema)]:
-      DB.execute('INSERT INTO _mapping (zotero, type) VALUES (?, ?)', (field, 'name'))
-
-    for field in jsonpath.parse('csl.fields[*].*.*').find(schema):
-      field_name = str(field.full_path).split('.')[-1]
-
-      if field_name in CSL.ignore: continue
-
-      DB.execute('INSERT INTO _mapping (csl, type) VALUES (?, ?)', (field_name, CSL.type[field_name]))
-
-      zotero_fields = field.value
-      if type(zotero_fields) == str: zotero_fields = [ zotero_fields ]
-
-      for zotero_field in zotero_fields:
-        DB.execute('INSERT INTO _mapping (csl, zotero, type) VALUES (?, ?, ?)', (field_name, zotero_field, CSL.type[field_name]))
-
-    for field in jsonpath.parse('csl.names').find(schema):
-      for zotero_field, field_name in field.value.items():
-        assert CSL.type[field_name] == 'name'
-        DB.execute('INSERT INTO _mapping (zotero, csl, type) VALUES (?, ?, ?)', (zotero_field, field_name, 'name'))
-
-    DB.commit()
-
-DB.execute('INSERT INTO baseField(field, baseField) SELECT DISTINCT field, baseField FROM _baseField')
-DB.commit()
-
-for row in DB.execute('SELECT zotero, csl FROM _mapping UNION SELECT field, baseField FROM baseField'):
-  for field in row:
-    if field is None: continue
+  def make_label(self, field):
     label = field.replace('_', ' ').replace('-', ' ')
     label = re.sub(r'([a-z])([A-Z])', r'\1 \2', label)
     label = label.lower()
-    DB.execute('INSERT INTO _label (label, field) VALUES (?, ?)', (label, field))
-DB.execute('INSERT INTO label(label, field) SELECT DISTINCT label, field FROM _label')
-DB.commit()
+    return label
+
+  def insert_label(self, domain, name, label):
+    assert domain in ['csl', 'zotero']
+    assert type(name) == str
+    assert type(label) == str
+
+    self.dg.add_node(f'label:{label}', domain='label', name=label, graphics={'fill': self.color.label})
+    self.dg.add_edge(f'label:{label}', f'{domain}:{name}', graphics={ 'targetArrow': 'standard' })
+
+  def insert_mapping(self, f, t, reverse=True):
+    mappings = [(f, t)]
+    if reverse: mappings.append((t, f))
+    for f, t in mappings:
+      self.dg.add_edge(':'.join(f), ':'.join(t), graphics={ 'targetArrow': 'standard' })
+
+  def insert_var(self, domain, name, tpe):
+    assert domain in ['csl', 'zotero']
+    assert type(name) == str
+    assert tpe in ['name', 'date', 'text']
+
+    self.dg.add_node(f'{domain}:{name}', domain=domain, name=name, type=tpe, graphics={'fill': self.color[domain]})
+    self.insert_label(domain, name, self.make_label(name))
+
+  def load(self, schema):
+    typeof = {}
+    for field, meta in schema.meta.fields.items():
+      typeof[field] = meta.type
+  
+    for field in jsonpath.parse('$.itemTypes[*].fields[*]').find(schema):
+      baseField = field.value.get('baseField', None)
+      field = field.value.get('baseField', field.value.field)
+
+      self.insert_var('zotero', field, typeof.get(field, 'text'))
+      if baseField: self.insert_label('zotero', field, self.make_label(baseField))
+
+    for field in jsonpath.parse('$.itemTypes[*].creatorTypes[*].creatorType').find(schema):
+      self.insert_var('zotero', field.value, 'name')
+
+    for fields in jsonpath.parse('$.csl.fields.text').find(schema):
+      for csl, zotero in fields.value.items():
+        self.insert_var('csl', csl, 'text')
+        for field in zotero:
+          self.insert_var('zotero', field, 'text')
+          self.insert_mapping(('csl', csl), ('zotero', field))
+
+    for fields in jsonpath.parse('$.csl.fields.date').find(schema):
+      for csl, zotero in fields.value.items():
+        self.insert_var('csl', csl, 'date')
+        if type(zotero) == str: zotero = [zotero] # juris-m has a list here, zotero strings
+        for field in zotero:
+          self.insert_var('zotero', field, 'date')
+          self.insert_mapping(('csl', csl), ('zotero', field))
+
+    for zotero, csl in schema.csl.names.items():
+      self.insert_var('csl', csl, 'name')
+      self.insert_var('zotero', zotero, 'name')
+      self.insert_mapping(('csl', csl), ('zotero', zotero))
+
+    for field, tpe in schema.csl.unmapped.items():
+      self.insert_var('csl', field, tpe)
+
+    for alias, field in schema.csl.alias.items():
+      self.insert_label('csl', field, self.make_label(alias))
+
+  def multiple_incoming(self, var_nodes):
+    for node in var_nodes:
+      edges = [(u, v) for u, v in self.dg.in_edges(node) if u in var_nodes]
+      if len(edges) > 1: return edges
+    return None
+
+  def save(self, path):
+    stringizer = lambda x: self.dg.nodes[x]['name'] if x in self.dg.nodes else x
+    nx.write_gml(self.dg, 'mapping.gml', stringizer)
+
+    # remove multi-line text fields
+    ignore = [
+      'zotero.abstractNote',
+      'zotero.extra',
+      'csl.abstract',
+      'csl.note',
+    ]
+    for node, data in list(self.dg.nodes(data=True)):
+      if data['domain'] + '.' + data['name'] in ignore:
+        self.dg.remove_node(node)
+
+    # remove multi-incoming because that mapping incurs data loss
+    var_nodes = [n for n in self.dg.nodes if self.dg.nodes[n]['domain'] in ['csl', 'zotero']]
+    while edges := self.multiple_incoming(var_nodes):
+      for u, v in edges:
+        self.dg.remove_edge(u, v)
+    nx.write_gml(self.dg, 'mapping-remove-ambiguous.gml', stringizer)
+
+    # add labels through translation
+    for label, data in self.dg.nodes(data=True):
+      if data['domain'] != 'label': continue
+
+      # make sure a label points to only one zotero/csl field
+      out_nodes = [ out_edge[1] for out_edge in self.dg.out_edges(label) ]
+      domains = {}
+      for domain in ['zotero', 'csl']:
+        domains[domain] = len([0 for node in out_nodes if self.dg.nodes[node]['domain'] == domain])
+        assert domains[domain] < 2
+
+      # label points to both or none
+      if sum(domains.values()) != 1: continue
+      for _, node in self.dg.out_edges(out_nodes[0]):
+        self.dg.add_edge(label, node, graphics={ 'targetArrow': 'standard' })
+
+    nx.write_gml(self.dg, 'mapping-full-labels.gml', stringizer)
+
+    mapping = {}
+    for label, data in self.dg.nodes(data=True):
+      if data['domain'] != 'label': continue
+      name = data['name']
+
+      for _, var in self.dg.out_edges(label):
+        var = self.dg.nodes[var]
+        if not name in mapping: mapping[name] = {}
+        assert 'type' not in mapping[name] or mapping[name]['type'] == var['type']
+        mapping[name]['type'] = var['type']
+
+        domain = var['domain']
+        if not domain in mapping[name]: mapping[name][domain] = []
+        mapping[name][domain].append(var['name'])
+
+    # ensure names don't get mapped to multiple fields
+    for var, mapped in mapping.items():
+      if mapped['type'] != 'name': continue
+      assert len(mapped.get('zotero', [])) <= 1, var
+      assert len(mapped.get('csl', [])) <= 1, var
+
+    with open(path, 'w') as f:
+      json.dump(mapping, f, sort_keys=True, indent='  ')
 
 print('  writing extra-fields')
-query = '''
-  SELECT label.label, _mapping.zotero, _mapping.csl, _mapping.type
-  FROM _mapping
-  JOIN label ON label.field IN (_mapping.zotero, _mapping.csl)
+with fetch('https://api.zotero.org/schema', 'zotero.json') as z, fetch('https://raw.githubusercontent.com/Juris-M/zotero-schema/master/schema-jurism.json', 'juris-m.json') as j:
+  ef = ExtraFields()
 
-  UNION
+  SCHEMA.zotero = Munch.fromDict(patch(json.load(z), 'schema.patch'))
+  ef.load(SCHEMA.zotero)
 
-  SELECT label.label, _mapping.zotero, _mapping.csl, _mapping.type
-  FROM _mapping
-  JOIN baseField ON baseField.baseField IN (_mapping.zotero, _mapping.csl)
-  JOIN label ON label.field = baseField.field
-'''
-mapping = {}
-for label, zotero, csl, field_type in DB.execute(query):
-  if not label in mapping: mapping[label] = Munch(zotero=None, csl=None, type=field_type)
-  assert mapping[label].type == field_type, (label, zotero, csl, field_type, mapping[label].type)
-  for table in [('zotero', zotero), ('csl', csl)]:
-    table, field = table
-    if table == 'csl' and field in CSL.ignore: continue
-    if field is None: continue
-    if mapping[label][table] is None: mapping[label][table] = []
-    mapping[label][table] = sorted(list(set(mapping[label][table] + [field])))
-
-#for label, meta in mapping.items():
-#  if meta.csl and len(meta.csl) > 1: print(label, 'csl:', meta.csl)
-#  if meta.zotero and len(meta.zotero) > 1: print(label, 'zotero:', meta.zotero)
-
-with open(os.path.join(GEN, 'extra-fields.json'), 'w') as f:
-  json.dump(mapping, f, indent='  ')
+  SCHEMA.jurism = Munch.fromDict(patch(json.load(j), 'schema.patch'))
+  ef.load(SCHEMA.jurism)
+  ef.save(os.path.join(GEN, 'extra-fields.json'))
 
 print('  writing creators')
-creators = {}
+creators = {'zotero': {}, 'jurism': {}}
 for itemType in jsonpath.parse('*.itemTypes[*]').find(SCHEMA):
   if not 'creatorTypes' in itemType.value or len(itemType.value.creatorTypes) == 0: continue
-  if not itemType.value.itemType in creators: creators[itemType.value.itemType] = set()
+
+  client = str(itemType.full_path).split('.')[0]
+
+  if not itemType.value.itemType in creators[client]: creators[client][itemType.value.itemType] = set()
   for creator in itemType.value.creatorTypes:
-    creators[itemType.value.itemType].add(creator.creatorType)
+    creators[client][itemType.value.itemType].add(creator.creatorType)
 with open(os.path.join(GEN, 'creators.json'), 'w') as f:
   json.dump(creators, f, indent='  ', default=lambda x: list(x))
 
@@ -277,20 +268,22 @@ with open(os.path.join(GEN, 'fields.ts'), 'w') as f:
       elif valid.field[itemType.value.itemType][field] != client:
         valid.field[itemType.value.itemType][field] = 'true'
 
-  DB.execute('CREATE TABLE _alias (field, alias, client)')
-  DB.execute('CREATE TABLE alias (field, alias, client)')
+  DG = nx.DiGraph()
   for field in jsonpath.parse('*.itemTypes[*].fields[*]').find(SCHEMA):
     if not 'baseField' in field.value: continue
     client = str(field.full_path).split('.')[0]
-    DB.execute('INSERT INTO _alias (field, alias, client) VALUES (?, ?, ?)', (field.value.baseField, field.value.field, client))
-  DB.execute('INSERT INTO alias (field, alias, client) SELECT DISTINCT field, alias, client FROM _alias')
-  DB.commit()
-  aliases = Munch()
-  for field, alias, client in DB.execute("SELECT field, alias, GROUP_CONCAT(client, '+') FROM alias GROUP BY field, alias"):
-    if '+' in client: client = 'both'
-    if not client in aliases: aliases[client] = Munch()
-    if not field in aliases[client]: aliases[client][field] = []
-    aliases[client][field].append(alias)
+    field = field.value
+
+    if not (data := DG.get_edge_data(field.field, field.baseField, default=None)):
+      DG.add_edge(field.field, field.baseField, client=client)
+    elif data['client'] != client:
+      DG.edges[field.field, field.baseField]['client'] = 'both'
+
+  aliases = {}
+  for field, baseField, client in DG.edges.data('client'):
+    if not client in aliases: aliases[client] = {}
+    if not baseField in aliases[client]: aliases[client][baseField] = []
+    aliases[client][baseField].append(field)
 
   try:
     print(template('items/fields.ts.mako').render(valid=valid, aliases=aliases).strip(), file=f)
