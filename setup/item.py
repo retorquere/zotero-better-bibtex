@@ -14,6 +14,7 @@ import os, sys
 import re
 import sys
 import urllib.request
+from functools import reduce
 
 root = os.path.join(os.path.dirname(__file__), '..')
 
@@ -82,7 +83,7 @@ class ExtraFields:
     return label
 
   def add_label(self, domain, name, label):
-    assert domain in ['csl', 'zotero']
+    assert domain in ['csl', 'zotero'], (domain, name, label)
     assert type(name) == str
     assert type(label) == str
 
@@ -102,20 +103,18 @@ class ExtraFields:
     assert tpe in ['name', 'date', 'text']
 
     self.dg.add_node(f'{domain}:{name}', domain=domain, name=name, type=tpe, graphics={'fill': self.color[domain]})
-    self.add_label(domain, name, name)
 
   def load(self, schema):
     typeof = {}
     for field, meta in schema.meta.fields.items():
       typeof[field] = meta.type
   
+    # add nodes & edges
     for field in jsonpath.parse('$.itemTypes[*].fields[*]').find(schema):
       baseField = field.value.get('baseField', None)
       field = field.value.get('baseField', field.value.field)
 
       self.add_var('zotero', field, typeof.get(field, 'text'))
-      if baseField:
-        self.add_label('zotero', field, baseField)
 
     for field in jsonpath.parse('$.itemTypes[*].creatorTypes[*].creatorType').find(schema):
       self.add_var('zotero', field.value, 'name')
@@ -143,54 +142,50 @@ class ExtraFields:
     for field, tpe in schema.csl.unmapped.items():
       self.add_var('csl', field, tpe)
 
+    # add labels
+    for node, data in list(self.dg.nodes(data=True)):
+      if data['domain'] == 'label': continue # how is this possible?
+      self.add_label(data['domain'], data['name'], data['name'])
+
+    for field in [f.value for f in jsonpath.parse('$.itemTypes[*].fields[*]').find(schema)]:
+      if not 'baseField' in field: continue
+      self.add_label('zotero', field.baseField, field.field)
+
     for alias, field in schema.csl.alias.items():
       self.add_label('csl', field, alias)
 
-  def multiple_incoming(self, var_nodes):
-    for node in var_nodes:
-      edges = [(u, v) for u, v in self.dg.in_edges(node) if u in var_nodes]
-      if len(edges) > 1: return edges
-    return None
-
-  def save(self, path):
+  def save(self, save_to):
     stringizer = lambda x: self.dg.nodes[x]['name'] if x in self.dg.nodes else x
-    nx.write_gml(self.dg, 'mapping.gml', stringizer)
 
     # remove multi-line text fields
-    ignore = [
-      'zotero.abstractNote',
-      'zotero.extra',
-      'csl.abstract',
-      'csl.note',
-    ]
     for node, data in list(self.dg.nodes(data=True)):
-      if data['domain'] + '.' + data['name'] in ignore:
+      if data['domain'] + '.' + data['name'] in [ 'zotero.abstractNote', 'zotero.extra', 'csl.abstract', 'csl.note' ]:
         self.dg.remove_node(node)
 
-    # remove multi-incoming because that mapping incurs data loss
-    var_nodes = [n for n in self.dg.nodes if self.dg.nodes[n]['domain'] in ['csl', 'zotero']]
-    while edges := self.multiple_incoming(var_nodes):
-      for u, v in edges:
-        self.dg.remove_edge(u, v)
-    nx.write_gml(self.dg, 'mapping-remove-ambiguous.gml', stringizer)
+    # remove nodes with two or more incoming var nodes, as that would incur overwrites (= data loss)
+    marked = []
+    for node, data in self.dg.nodes(data=True):
+      incoming = reduce(lambda acc, edge: acc[self.dg.nodes[edge[0]]['domain']].append(edge) or acc, self.dg.in_edges(node), Munch(zotero=[], csl=[], label=[]))
+      print(incoming.keys())
+      for domain, edges in incoming.items():
+        if domain == 'label' or len(edges) < 2: continue
+        print(node, domain, edges)
+        marked.extend(edges)
+    nx.set_edge_attributes(self.dg, {
+      edge: {'removed': True, 'graphics': { 'style': 'dashed', 'fill': '#666666', 'targetArrow': 'standard' }}
+      for edge in marked
+    })
 
-    # add labels through translation
-    for label, data in self.dg.nodes(data=True):
-      if data['domain'] != 'label': continue
+    # hop-through labels
+    for u, vs in dict(nx.all_pairs_dijkstra_path(self.dg, weight=lambda u, v, d: None if d.get('removed', False) else 1)).items():
+      # only interested in shortest paths that originate in a label
+      if self.dg.nodes[u]['domain'] != 'label': continue
+      for v, path in vs.items():
+        # length of 3 means hop-through node
+        if u != v and len(path) == 3 and not self.dg.has_edge(u, v):
+          self.dg.add_edge(u, v, graphics={ 'style': 'dashed', 'fill': '#0000FF', 'targetArrow': 'standard' })
 
-      # make sure a label points to only one zotero/csl field
-      out_nodes = [ out_edge[1] for out_edge in self.dg.out_edges(label) ]
-      domains = {}
-      for domain in ['zotero', 'csl']:
-        domains[domain] = len([0 for node in out_nodes if self.dg.nodes[node]['domain'] == domain])
-        assert domains[domain] < 2
-
-      # label points to both or none
-      if sum(domains.values()) != 1: continue
-      for _, node in self.dg.out_edges(out_nodes[0]):
-        self.dg.add_edge(label, node, graphics={ 'targetArrow': 'standard' })
-
-    nx.write_gml(self.dg, 'mapping-full-labels.gml', stringizer)
+    nx.write_gml(self.dg, 'mapping.gml', stringizer)
 
     mapping = {}
     for label, data in self.dg.nodes(data=True):
@@ -210,10 +205,10 @@ class ExtraFields:
     # ensure names don't get mapped to multiple fields
     for var, mapped in mapping.items():
       if mapped['type'] != 'name': continue
-      assert len(mapped.get('zotero', [])) <= 1, var
+      assert len(mapped.get('zotero', [])) <= 1, (var, mapped)
       assert len(mapped.get('csl', [])) <= 1, var
 
-    with open(path, 'w') as f:
+    with open(save_to, 'w') as f:
       json.dump(mapping, f, sort_keys=True, indent='  ')
 
 print('  writing extra-fields')
