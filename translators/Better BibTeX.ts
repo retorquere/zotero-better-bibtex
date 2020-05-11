@@ -16,7 +16,7 @@ import { debug } from './lib/debug'
 import * as escape from '../content/escape'
 
 import * as bibtexParser from '@retorquere/bibtex-parser'
-import { valid } from '../gen/itemfields'
+import { valid } from '../gen/items/fields'
 import { arXiv } from '../content/arXiv'
 
 Reference.prototype.caseConversion = {
@@ -243,7 +243,7 @@ export function doExport() {
         break
     }
 
-    const doi = item.extraFields.kv.doi || item.DOI
+    const doi = item.extraFields.kv.DOI || item.DOI
     let url = null
     if (Translator.preferences.DOIandURL === 'both' || !doi) {
       switch (Translator.preferences.bibtexURL) {

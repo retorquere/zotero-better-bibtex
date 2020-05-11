@@ -1,5 +1,5 @@
 {
-	"version": 13,
+	"version": 14,
 	"itemTypes": [
 		{
 			"itemType": "artwork",
@@ -532,6 +532,9 @@
 				{
 					"field": "caseName",
 					"baseField": "title"
+				},
+				{
+					"field": "adminFlag"
 				},
 				{
 					"field": "abstractNote"
@@ -3414,6 +3417,9 @@
 				"document-name": [
 					"documentName"
 				],
+				"admin-flag": [
+					"adminFlag"
+				],
 				"gazette-flag": [
 					"gazetteFlag"
 				],
@@ -3526,6 +3532,7 @@
 			"fields": {
 				"abstractNote": "Abstract",
 				"accessDate": "Accessed",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Application Number",
@@ -3741,6 +3748,7 @@
 			"fields": {
 				"abstractNote": "المستخلص",
 				"accessDate": "تاريخ الدخول",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "رقم الطلب",
@@ -3956,6 +3964,7 @@
 			"fields": {
 				"abstractNote": "Извлечение",
 				"accessDate": "Отворен на",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Номер на молба",
@@ -4171,6 +4180,7 @@
 			"fields": {
 				"abstractNote": "Berradenn",
 				"accessDate": "Gwelet d'an/ar/al",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Niver arload",
@@ -4386,6 +4396,7 @@
 			"fields": {
 				"abstractNote": "Resum",
 				"accessDate": "Últim accés",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Número d'aplicació",
@@ -4601,6 +4612,7 @@
 			"fields": {
 				"abstractNote": "Abstrakt",
 				"accessDate": "Přístup",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Číslo žádosti",
@@ -4816,6 +4828,7 @@
 			"fields": {
 				"abstractNote": "Resumé",
 				"accessDate": "Set d.",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Ansøgning nr.",
@@ -5031,6 +5044,7 @@
 			"fields": {
 				"abstractNote": "Zusammenfassung",
 				"accessDate": "Heruntergeladen am",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Bewerbungsnummer",
@@ -5246,6 +5260,7 @@
 			"fields": {
 				"abstractNote": "Abstract",
 				"accessDate": "Accessed",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Application Number",
@@ -5461,6 +5476,7 @@
 			"fields": {
 				"abstractNote": "Abstract",
 				"accessDate": "Accessed",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Application Number",
@@ -5676,6 +5692,7 @@
 			"fields": {
 				"abstractNote": "Abstract",
 				"accessDate": "Accessed",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Application Number",
@@ -5891,6 +5908,7 @@
 			"fields": {
 				"abstractNote": "Resumen",
 				"accessDate": "Accedido",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Número de solicitud",
@@ -6106,6 +6124,7 @@
 			"fields": {
 				"abstractNote": "Abstrakt",
 				"accessDate": "Vaadatud",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Taotluse number",
@@ -6321,6 +6340,7 @@
 			"fields": {
 				"abstractNote": "Laburpena",
 				"accessDate": "Atzipen data",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Application Number",
@@ -6536,6 +6556,7 @@
 			"fields": {
 				"abstractNote": "چکیده",
 				"accessDate": "تاریخ دسترسی",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "شماره درخواست",
@@ -6751,6 +6772,7 @@
 			"fields": {
 				"abstractNote": "Tiivistelmä",
 				"accessDate": "Luettu",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Hakemusnumero",
@@ -6966,6 +6988,7 @@
 			"fields": {
 				"abstractNote": "Résumé",
 				"accessDate": "Consulté le",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "N° d'application",
@@ -7181,6 +7204,7 @@
 			"fields": {
 				"abstractNote": "Resumen",
 				"accessDate": "Consultado",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Número da solicitude",
@@ -7396,6 +7420,7 @@
 			"fields": {
 				"abstractNote": "תקציר",
 				"accessDate": "Accessed",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Application Number",
@@ -7611,6 +7636,7 @@
 			"fields": {
 				"abstractNote": "Abstract",
 				"accessDate": "Accessed",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Application Number",
@@ -7826,6 +7852,7 @@
 			"fields": {
 				"abstractNote": "Kivonat",
 				"accessDate": "Hozzáférés",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Bejelentés száma",
@@ -8041,6 +8068,7 @@
 			"fields": {
 				"abstractNote": "Abstrak",
 				"accessDate": "Diakses",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Nomor Aplikasi",
@@ -8256,6 +8284,7 @@
 			"fields": {
 				"abstractNote": "Ágrip",
 				"accessDate": "Sótt",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Umsókn númer",
@@ -8471,6 +8500,7 @@
 			"fields": {
 				"abstractNote": "Abstract",
 				"accessDate": "Consultato",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Numero di applicazione",
@@ -8686,6 +8716,7 @@
 			"fields": {
 				"abstractNote": "抄録",
 				"accessDate": "アクセス日時",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "商標登録号",
@@ -8901,6 +8932,7 @@
 			"fields": {
 				"abstractNote": "ខ្លឹមសារសង្ខេប",
 				"accessDate": "ចូលមើល",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "ពាក្យសុំលេខ",
@@ -9116,6 +9148,7 @@
 			"fields": {
 				"abstractNote": "요약",
 				"accessDate": "접근일",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "출원 번호",
@@ -9331,6 +9364,7 @@
 			"fields": {
 				"abstractNote": "Santrauka",
 				"accessDate": "Žiūrėta",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Pareiškimo numeris",
@@ -9546,6 +9580,7 @@
 			"fields": {
 				"abstractNote": "Abstract",
 				"accessDate": "Accessed",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Application Number",
@@ -9761,6 +9796,7 @@
 			"fields": {
 				"abstractNote": "Sammendrag",
 				"accessDate": "Lest",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Programvarenummer",
@@ -9976,6 +10012,7 @@
 			"fields": {
 				"abstractNote": "Samenvatting",
 				"accessDate": "Geraadpleegd",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Aanvraagnummer",
@@ -10191,6 +10228,7 @@
 			"fields": {
 				"abstractNote": "Samandrag",
 				"accessDate": "Lest",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Program-nummer",
@@ -10406,6 +10444,7 @@
 			"fields": {
 				"abstractNote": "Krótki opis",
 				"accessDate": "Dostęp",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Numer zgłoszenia",
@@ -10621,6 +10660,7 @@
 			"fields": {
 				"abstractNote": "Resumo",
 				"accessDate": "Data de acesso",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Número da inscrição",
@@ -10836,6 +10876,7 @@
 			"fields": {
 				"abstractNote": "Resumo",
 				"accessDate": "Acedido",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Número da Candidatura",
@@ -11051,6 +11092,7 @@
 			"fields": {
 				"abstractNote": "Rezumat",
 				"accessDate": "Data accesării",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Număr aplicație",
@@ -11266,6 +11308,7 @@
 			"fields": {
 				"abstractNote": "Аннотация",
 				"accessDate": "Дата доступа",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Номер заявки",
@@ -11481,6 +11524,7 @@
 			"fields": {
 				"abstractNote": "Abstrakt",
 				"accessDate": "Citované",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Číslo prihlášky",
@@ -11696,6 +11740,7 @@
 			"fields": {
 				"abstractNote": "Povzetek",
 				"accessDate": "Dostopano",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Številka vloge",
@@ -11911,6 +11956,7 @@
 			"fields": {
 				"abstractNote": "Сажетак",
 				"accessDate": "Приступљено",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Број апликације",
@@ -12126,6 +12172,7 @@
 			"fields": {
 				"abstractNote": "Sammanfattning",
 				"accessDate": "Hämtad den",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Anmälningsnummer",
@@ -12341,6 +12388,7 @@
 			"fields": {
 				"abstractNote": "บทคัดย่อ",
 				"accessDate": "สืบค้นเมื่อ",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "หมายเลขคำขอ",
@@ -12556,6 +12604,7 @@
 			"fields": {
 				"abstractNote": "Özet",
 				"accessDate": "Son Erişim",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Uygulama Numarası",
@@ -12771,6 +12820,7 @@
 			"fields": {
 				"abstractNote": "Анотація",
 				"accessDate": "Дата доступу",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Номер заявки",
@@ -12986,6 +13036,7 @@
 			"fields": {
 				"abstractNote": "Tóm tắt",
 				"accessDate": "Ngày truy cập",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Số đơn",
@@ -13201,6 +13252,7 @@
 			"fields": {
 				"abstractNote": "摘要",
 				"accessDate": "访问时间",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "申请号",
@@ -13416,6 +13468,7 @@
 			"fields": {
 				"abstractNote": "摘要",
 				"accessDate": "取用",
+				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "申請號碼",

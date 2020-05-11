@@ -1,4 +1,4 @@
-import * as ExtraFields from '../gen/extra-fields.json'
+import * as mapping from '../gen/items/extra-fields.json'
 import * as CSL from '../gen/citeproc'
 
 type TeXString = { value: string, raw?: boolean, type?: 'biblatex' | 'bibtex' }
@@ -60,10 +60,10 @@ const casing = {
   arxiv: 'arXiv',
 }
 
-export function get(extra: string, options?: GetOptions, normalize?: 'zotero' | 'csl'): { extra: string, extraFields: Fields } {
+export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions): { extra: string, extraFields: Fields } {
   if (!options) options = { citationKey: true , aliases: true, kv: true, tex: true }
 
-  const other = normalize ? {zotero: 'csl', csl: 'zotero'}[normalize] : null
+  const other = {zotero: 'csl', csl: 'zotero'}[mode]
 
   extra = extra || ''
 
@@ -80,14 +80,12 @@ export function get(extra: string, options?: GetOptions, normalize?: 'zotero' | 
     const m = line.match(re.old) || line.match(re.new)
     if (!m) return true
 
-    let [ , tex, name, assign, value ] = m
+    let [ , tex, key, assign, value ] = m
     const raw = (assign === '=')
 
     if (!tex && raw) return true
 
-    name = name.trim()
-    const key = name.toLowerCase()
-
+    key = key.trim().replace(/[-_]/g, ' ').replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase()
     value = value.trim()
 
     if (options.citationKey && !tex && options.citationKey && ['citation key', 'bibtex'].includes(key)) {
@@ -104,29 +102,25 @@ export function get(extra: string, options?: GetOptions, normalize?: 'zotero' | 
       return false
     }
 
-    if (options.kv && (ef = ExtraFields[name]) && !tex) { // give precedence to CSL keys, which are as-is in extra-fields.json
-      const k = normalize ? (ef[normalize] || ef[other]) : name
-      if (ef.type === 'creator') {
-        extraFields.creator[k] = extraFields.creator[k] || []
-        extraFields.creator[k].push(value)
-      } else {
-        extraFields.kv[k] = value
+    if (options.kv && (ef = mapping[key]) && !tex) {
+      for (const field of (ef[mode] ||  ef[other])) {
+        switch (ef.type) {
+          case 'name':
+            extraFields.creator[field] = extraFields.creator[key] || []
+            extraFields.creator[field].push(value)
+            break
+          case 'text':
+          case 'date':
+            extraFields.kv[field] = value
+            break
+          default:
+            throw new Error(`Unexpected extra field type ${ef.type}`)
+        }
       }
       return false
     }
 
-    if (options.kv && (ef = ExtraFields[name.toUpperCase()]) && !tex) { // otherwise, check for Zotero var-fields, which are uppercased in extra-fields.json
-      const k = normalize ? (ef[normalize] || ef[other]) : name
-      if (ef.type === 'creator') {
-        extraFields.creator[k] = extraFields.creator[k] || []
-        extraFields.creator[k].push(value)
-      } else {
-        extraFields.kv[k] = value
-      }
-      return false
-    }
-
-    if (options.tex && tex && !name.includes(' ')) {
+    if (options.tex && tex && !key.includes(' ')) {
       extraFields.tex[key] = { value, raw }
       if (tex === 'bibtex' || tex === 'biblatex') extraFields.tex[key].type = tex
       return false
@@ -144,7 +138,7 @@ export function get(extra: string, options?: GetOptions, normalize?: 'zotero' | 
 }
 
 export function set(extra, options: SetOptions = {}) {
-  const parsed = get(extra, options)
+  const parsed = get(extra, 'zotero', options)
 
   if (options.citationKey) parsed.extra += `\nCitation Key: ${options.citationKey}`
 

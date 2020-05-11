@@ -3,11 +3,10 @@ declare const Zotero: any
 import { Translator } from '../lib/translator'
 
 import { JabRef } from '../bibtex/jabref' // not so nice... BibTeX-specific code
-import * as itemfields from '../../gen/itemfields'
+import * as itemfields from '../../gen/items/fields'
 import * as bibtexParser from '@retorquere/bibtex-parser'
 import { Postfix } from '../bibtex/postfix.ts'
 import * as Extra from '../../content/extra'
-// import { valid } from '../../gen/itemfields'
 import { debug } from '../lib/debug'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
@@ -67,7 +66,7 @@ export let Exporter = new class { // tslint:disable-line:variable-name
       }
 
       itemfields.simplifyForExport(item)
-      Object.assign(item, Extra.get(item.extra, null, 'zotero'))
+      Object.assign(item, Extra.get(item.extra, 'zotero'))
       debug('extra fields:', { ef: item.extraFields, extra: item.extra })
 
       item.raw = Translator.preferences.rawLaTag === '*'

@@ -6,16 +6,11 @@ import { Exporter } from './exporter'
 import { text2latex } from './unicode_translator'
 import { debug } from '../lib/debug'
 import { datefield } from './datefield'
-import * as ExtraFields from '../../gen/extra-fields.json'
+import * as ExtraFields from '../../gen/items/extra-fields.json'
 import * as Extra from '../../content/extra'
 import * as CSL from '../../gen/citeproc'
 
 import { arXiv } from '../../content/arXiv'
-
-const prefix = {
-  zotero: 'zotero:',
-  csl: 'csl:',
-}
 
 const Path = { // tslint:disable-line variable-name
   normalize(path) {
@@ -387,29 +382,17 @@ export class Reference {
     this.item.referenceType = this.item.extraFields.tex.referencetype?.value || csl_type || this.item.itemType
 
     // TODO: maybe just use item.extraFields.var || item.var instead of deleting them here
-    let field
     for (const [name, value] of Object.entries(item.extraFields.kv)) {
-      if (name.startsWith(prefix.csl)) continue
-
-      if (name.startsWith(prefix.zotero)) {
-        for (const f of name.substring(prefix.zotero.length).split('+')) {
-          item[f] = value
-        }
-        delete item.extraFields.kv[name]
-        continue
-      }
-
-      if (field = ExtraFields[name].zotero) {
-        item[field] = value
+      if (ExtraFields[name].zotero) {
+        item[name] = value
         delete item.extraFields.kv[name]
       }
     }
 
-
     for (const [name, value] of Object.entries(item.extraFields.creator)) {
-      if (field = ExtraFields[name].zotero) {
+      if (ExtraFields[name].zotero) {
         for (const creator of (value as string[])) {
-          item.creators.push({...Extra.zoteroCreator(creator), creatorType: field, source: creator})
+          item.creators.push({...Extra.zoteroCreator(creator), creatorType: name, source: creator})
         }
         delete item.extraFields.creator[name]
       }
@@ -682,8 +665,9 @@ export class Reference {
     if (Translator.BetterBibLaTeX) this.add({ name: 'pubstate', value: this.item.status })
 
     for (const [key, value] of Object.entries(this.item.extraFields.kv)) {
-      const ef = ExtraFields[key]
-      if (!ef) continue
+      const type = ExtraFields[key].type
+      let enc = {name: 'creator', text: 'latex'}[type] || type
+      const replace = type === 'date'
       // these are handled just like 'arxiv' and 'lccn', respectively
       if (['PMID', 'PMCID'].includes(key) && typeof value === 'string') {
         this.item.extraFields.tex[key.toLowerCase()] = { value }
@@ -691,11 +675,8 @@ export class Reference {
         continue
       }
 
-      let enc = ef.type
-      const replace = ef.type === 'date'
       let name = null
 
-      // CSL names are not in BibTeX format, so only add it if there's a mapping
       if (Translator.BetterBibLaTeX) {
         switch (key) {
           case 'issuingAuthority':
@@ -711,7 +692,7 @@ export class Reference {
               case 'film':
               case 'tvBroadcast':
               case 'videoRecording':
-              case 'motion_picture':
+              case 'motion_picture': // TODO: I really should clean these up
                 name = 'booktitle'
                 break
 

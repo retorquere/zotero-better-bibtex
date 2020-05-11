@@ -9,6 +9,7 @@
   { "op": "add", "path": "/csl/unmapped/archive-place", "value": "text" },
   { "op": "add", "path": "/csl/unmapped/jurisdiction", "value": "text" },
 
+  { "op": "add", "path": "/csl/unmapped/csl-type", "value": "text" },
   { "op": "add", "path": "/csl/unmapped/original-publisher", "value": "text" },
   { "op": "add", "path": "/csl/unmapped/original-publisher-place", "value": "text" },
   { "op": "add", "path": "/csl/unmapped/original-title", "value": "text" },

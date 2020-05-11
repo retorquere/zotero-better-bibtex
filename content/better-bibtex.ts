@@ -96,7 +96,7 @@ $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(ite
       kv: Prefs.get('extraMergeCSL'),
     }
 
-    const extra = Extra.get(item.getField('extra'), { aliases: merge.citekeys, tex: merge.tex, kv: merge.kv })
+    const extra = Extra.get(item.getField('extra'), 'zotero', { aliases: merge.citekeys, tex: merge.tex, kv: merge.kv })
 
     // get citekeys of other items
     if (merge.citekeys) {
@@ -106,7 +106,7 @@ $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(ite
 
     // add any aliases they were already holding
     for (const i of otherItems) {
-      const otherExtra = Extra.get(i.getField('extra'), { aliases: merge.citekeys, tex: merge.tex, kv: merge.kv })
+      const otherExtra = Extra.get(i.getField('extra'), 'zotero', { aliases: merge.citekeys, tex: merge.tex, kv: merge.kv })
 
       if (merge.citekeys) extra.extraFields.aliases = extra.extraFields.aliases.concat(otherExtra.extraFields.aliases)
 

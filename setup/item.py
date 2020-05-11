@@ -48,7 +48,7 @@ class fetch(object):
       self.f = open(os.path.join(SCHEMA.root, name))
       return self.f
     except FileNotFoundError:
-      print(os.path.join(SCHEMA.root, name), f'does not exist, get with "curl -Lo schema/{name} {self.url}"')
+      print(name, f'does not exist, get with "curl -Lo schema/{name} {self.url}"')
       sys.exit(1)
 
   def __exit__(self, type, value, traceback):
@@ -101,6 +101,7 @@ class ExtraFields:
     assert tpe in ['name', 'date', 'text']
 
     self.dg.add_node(f'{domain}:{name}', domain=domain, name=name, type=tpe, graphics={'fill': self.color[domain]})
+    self.add_label(domain, name, name)
     self.add_label(domain, name, self.make_label(name))
 
   def load(self, schema):
@@ -113,7 +114,9 @@ class ExtraFields:
       field = field.value.get('baseField', field.value.field)
 
       self.add_var('zotero', field, typeof.get(field, 'text'))
-      if baseField: self.add_label('zotero', field, self.make_label(baseField))
+      if baseField:
+        self.add_label('zotero', field, baseField)
+        self.add_label('zotero', field, self.make_label(baseField))
 
     for field in jsonpath.parse('$.itemTypes[*].creatorTypes[*].creatorType').find(schema):
       self.add_var('zotero', field.value, 'name')
@@ -142,6 +145,7 @@ class ExtraFields:
       self.add_var('csl', field, tpe)
 
     for alias, field in schema.csl.alias.items():
+      self.add_label('csl', field, alias)
       self.add_label('csl', field, self.make_label(alias))
 
   def multiple_incoming(self, var_nodes):
@@ -251,12 +255,18 @@ with open(os.path.join(GEN, 'fields.ts'), 'w') as f:
   valid = Munch(type={}, field={})
   for itemType in jsonpath.parse('*.itemTypes[*].itemType').find(SCHEMA):
     client = str(itemType.full_path).split('.')[0]
+    itemType = itemType.value
 
-    if not itemType.value in valid.type:
-      valid.type[itemType.value] = client
-      valid.field[itemType.value] = {}
-    elif valid.type[itemType.value] != client:
-      valid.type[itemType.value] = 'true'
+    if not itemType in valid.type:
+      valid.type[itemType] = client
+      if itemType == 'note':
+        valid.field[itemType] = {field: 'true' for field in 'itemType tags note id itemID dateAdded dateModified'.split(' ')}
+      elif itemType == 'attachment':
+        valid.field[itemType] = {field: 'true' for field in 'itemType tags id itemID dateAdded dateModified'.split(' ')}
+      else:
+        valid.field[itemType] = {field: 'true' for field in 'itemType creators tags attachments notes seeAlso id itemID dateAdded dateModified multi'.split(' ')}
+    elif valid.type[itemType] != client:
+      valid.type[itemType] = 'true'
 
   for itemType in jsonpath.parse('*.itemTypes[*]').find(SCHEMA):
     client = str(itemType.full_path).split('.')[0]

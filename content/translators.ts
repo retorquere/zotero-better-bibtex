@@ -10,7 +10,7 @@ import { Serializer } from './serializer'
 import * as log from './debug'
 import { DB as Cache, selector as cacheSelector } from './db/cache'
 import { DB } from './db/main'
-import * as Extra from './extra'
+// import * as Extra from './extra'
 import { sleep } from './sleep'
 import { flash } from './flash'
 
@@ -448,11 +448,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
         // if there's a cached item, we don't need a fresh CSL item since we're not regenerating it anyhow
         if (config.cache[item.itemID]) continue
 
-        // this should done in the translator, but since itemToCSLJSON in the worker version doesn't actually execute itemToCSLJSON but just
-        // fetches the version we create here *before* the translator starts, changes to the 'item' inside the translator are essentially ignored.
-        // There's no way around this until Zotero makes export translators async; we prep the itemToCSLJSON versions here so they can be "made" synchronously
-        // inside the translator
-        Object.assign(item, Extra.get(item.extra, null, 'csl'))
         config.cslItems[item.itemID] = Zotero.Utilities.itemToCSLJSON(item)
       }
     }

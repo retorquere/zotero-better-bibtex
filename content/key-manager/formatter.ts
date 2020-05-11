@@ -121,7 +121,7 @@ class PatternFormatter {
   private item: {
     type: string
     language: string
-    kv: Record<string, string>
+    extra: Record<string, string>
     item: any
 
     date?: PartialDate
@@ -202,7 +202,7 @@ class PatternFormatter {
       item,
       type: Zotero.ItemTypes.getName(item.itemTypeID),
       language: this.language[(item.getField('language') || '').toLowerCase()] || '',
-      kv: Extra.get(item.getField('extra'), { kv: true }, 'zotero').extraFields.kv,
+      extra: Extra.get(item.getField('extra'), 'zotero', { kv: true }).extraFields.kv,
     }
 
     if (['attachment', 'note'].includes(this.item.type)) return {}
@@ -212,8 +212,8 @@ class PatternFormatter {
     } catch (err) {
       this.item.date = {}
     }
-    if (this.item.kv['original-date'] || this.item.kv.priorityDate) {
-      const date = this.parseDate(this.item.kv['original-date'] || this.item.kv.priorityDate)
+    if (this.item.extra['original-date'] || this.item.extra.priorityDate) {
+      const date = this.parseDate(this.item.extra['original-date'] || this.item.extra.priorityDate)
       if (date.y) {
         Object.assign(this.item.date, { oy: date.y, om: date.m, od: date.d, oY: date.Y })
         if (!this.item.date.y) Object.assign(this.item.date, { y: date.y, m: date.m, d: date.d, Y: date.Y })

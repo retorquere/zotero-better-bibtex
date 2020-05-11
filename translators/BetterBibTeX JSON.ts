@@ -4,7 +4,7 @@ import { Translator } from './lib/translator'
 export { Translator }
 
 import { debug } from './lib/debug'
-import * as itemfields from '../gen/itemfields'
+import * as itemfields from '../gen/items/fields'
 import { normalize } from './lib/normalize'
 const version = require('../gen/version.js')
 import { stringify } from '../content/stringify'

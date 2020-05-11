@@ -3,9 +3,9 @@ declare const Zotero: any
 import { Translator } from '../lib/translator'
 
 import { debug } from '../lib/debug'
-import * as itemfields from '../../gen/itemfields'
+import * as itemfields from '../../gen/items/fields'
 import * as Extra from '../../content/extra'
-import * as ExtraFields from '../../gen/extra-fields.json'
+import * as ExtraFields from '../../gen/items/extra-fields.json'
 
 const validCSLTypes = [
   'article',
@@ -53,11 +53,6 @@ const keyOrder = [
   'day',
   'circa',
 ].reduce((acc, field, idx, fields) => { acc[field] = idx + 1; return acc }, {})
-
-const prefix = {
-  zotero: 'zotero:',
-  csl: 'csl:',
-}
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let CSLExporter = new class { // tslint:disable-line:variable-name
@@ -110,8 +105,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       }
 
       itemfields.simplifyForExport(item)
-
-      if (!Zotero.BetterBibTeX.worker()) Object.assign(item, Extra.get(item.extra, null, 'csl')) // for the worker version, this has already been done so that itemToCSLJSON works
+      Object.assign(item, Extra.get(item.extra, 'csl'))
 
       if (item.accessDate) { // WTH is Juris-M doing with those dates?
         item.accessDate = item.accessDate.replace(/T?[0-9]{2}:[0-9]{2}:[0-9]{2}.*/, '').trim()
@@ -120,68 +114,59 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       let csl = Zotero.Utilities.itemToCSLJSON(item)
 
       // 637
+      /* TODO: is this still needed with the new extra-parser?
       delete csl['publisher-place']
       delete csl['archive-place']
       delete csl['event-place']
       delete csl['original-publisher-place']
       delete csl['publisher-place']
+      */
       if (item.place) csl[item.itemType === 'presentation' ? 'event-place' : 'publisher-place'] = item.place
 
       // https://github.com/retorquere/zotero-better-bibtex/issues/811#issuecomment-347165389
       if (item.ISBN) csl.ISBN = item.ISBN
 
       delete csl.authority
-      if (item.itemType === 'videoRecording' && csl.type === 'video') csl.type = 'motion_picture'
+
+      if (item.itemType === 'videoRecording' && csl.type === 'video') csl.type = 'motion_picture';
+
+      [csl.journalAbbreviation, csl['container-title-short']] = [csl['container-title-short'], csl.journalAbbreviation]
 
       if (item.date) {
         const parsed = Zotero.BetterBibTeX.parseDate(item.date)
         if (parsed.type) csl.issued = this.date2CSL(parsed) // possible for there to be an orig-date only
         if (parsed.orig) csl['original-date'] = this.date2CSL(parsed.orig)
       }
+
       if (item.accessDate) csl.accessed = this.date2CSL(Zotero.BetterBibTeX.parseDate(item.accessDate))
-
-      for (const [name, value] of Object.entries(item.extraFields.kv)) {
-        if (name.startsWith(prefix.zotero)) continue
-
-        if (name.startsWith(prefix.csl)) {
-          for (const field of name.substring(prefix.csl.length).split('+')) {
-            csl[field] = value
-          }
-          delete item.extraFields.kv[name]
-          continue
-        }
-
-        const ef = ExtraFields[name]
-        if (!ef || !ef.csl) continue
-
-        if (name === 'type') {
-          if (validCSLTypes.includes(value)) csl.type = value
-
-        } else if (ef.type === 'date') {
-          csl[ef.csl] = this.date2CSL(Zotero.BetterBibTeX.parseDate(value))
-
-        } else {
-          csl[ef.csl] = value
-
-        }
-
-        delete item.extraFields.kv[name]
-      }
-
-      for (const [name, value] of Object.entries(item.extraFields.creator)) {
-        if (name.includes(':')) continue
-        const ef = ExtraFields[name]
-        csl[ef.csl] = value.map(Extra.cslCreator)
-
-        delete item.extraFields.creator[name]
-      }
-
-      [csl.journalAbbreviation, csl['container-title-short']] = [csl['container-title-short'], csl.journalAbbreviation]
 
       /* ham-fisted workaround for #365 */
       if ((csl.type === 'motion_picture' || csl.type === 'broadcast') && csl.author && !csl.director) [csl.author, csl.director] = [csl.director, csl.author]
 
       csl.id = item.citationKey
+
+      if (csl.type === 'broadcast' && csl.genre === 'television broadcast') delete csl.genre
+
+      for (const [name, value] of Object.entries(item.extraFields.kv)) {
+        const ef = ExtraFields[name]
+        if (!ef.csl) continue
+
+        if (ef.type === 'date') {
+          csl[name] = this.date2CSL(Zotero.BetterBibTeX.parseDate(value))
+        } else if (name === 'csl-type') {
+          if (validCSLTypes.includes(value)) csl.type = value
+        } else {
+          csl[name] = value
+        }
+        delete item.extraFields.kv[name]
+      }
+
+      for (const [field, value] of Object.entries(item.extraFields.creator)) {
+        if (!ExtraFields[field].csl) continue
+        csl[field] = value.map(Extra.cslCreator)
+
+        delete item.extraFields.creator[field]
+      }
 
       /* Juris-M workarounds to match Zotero as close as possible */
       for (const kind of ['translator', 'author', 'editor', 'director', 'reviewed-author']) {
@@ -191,8 +176,6 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       }
       delete csl.multi
       delete csl.system_id
-
-      if (csl.type === 'broadcast' && csl.genre === 'television broadcast') delete csl.genre
 
       let cache
       try {

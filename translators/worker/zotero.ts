@@ -11,7 +11,7 @@ import * as DateParser from '../../content/dateparser'
 // import * as Extra from '../../content/extra'
 import { qualityReport } from '../../content/qr-check'
 import { titleCase } from '../../content/title-case'
-import * as itemCreators from '../../gen/item-creators.json'
+import * as itemCreators from '../../gen/items/creators.json'
 
 const ctx: DedicatedWorkerGlobalScope = self as any
 
@@ -70,12 +70,6 @@ class WorkerZoteroBetterBibTeX {
   public titleCase(text) {
     return titleCase(text)
   }
-
-  /*
-  public extractFields(item) {
-    return Extra.get(item.extra)
-  }
-  */
 
   public debug(...msg) {
     const now = Date.now()
@@ -144,7 +138,7 @@ class WorkerZoteroUtilities {
   }
 
   public getCreatorsForType(itemType) {
-    return itemCreators[(params.client as string)][itemType]
+    return itemCreators[params.client][itemType]
   }
 
   public itemToCSLJSON(item) {

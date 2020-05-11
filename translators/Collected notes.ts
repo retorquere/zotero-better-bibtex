@@ -140,7 +140,7 @@ export function doExport() {
   const items: Record<number, ISerializedItem> = {}
   for (const item of Translator.items()) {
     if (!_keep(item)) continue
-    items[item.itemID] = Object.assign(item, Extra.get(item.extra, null, 'zotero')) // tslint:disable-line:prefer-object-spread
+    items[item.itemID] = Object.assign(item, Extra.get(item.extra, 'zotero')) // tslint:disable-line:prefer-object-spread
   }
 
   const filed = {}
