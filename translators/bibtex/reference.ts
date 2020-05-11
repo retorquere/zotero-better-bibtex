@@ -722,7 +722,7 @@ export class Reference {
             break
 
           case 'original-date':
-          case 'priorityDate':
+          case 'originalDate':
             name = 'origdate'
             enc = 'date'
             break

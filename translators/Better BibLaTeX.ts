@@ -516,7 +516,7 @@ export function doExport() {
     })
     ref.add({
       name: 'origdate',
-      value: item.priorityDate,
+      value: item.originalDate,
       enc: 'date',
       replace: true, // #293 has both date="year [origyear]" and extra="original-date: origyear"
     })

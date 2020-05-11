@@ -36,7 +36,7 @@ export function zoteroCreator(value: string): ZoteroCreator {
 }
 
 const re = {
-  // fetch fields as per https://forums.zotero.org/discussion/3673/2/original-date-of-publication/. Spurious tex. so I can do a single match
+  // fetch fields as per https://forums.zotero.org/discussion/3673/2/original-date-of-publication/. Spurious 'tex.' so I can do a single match
   old: /^{:((?:bib(?:la)?)?tex\.)?([^:]+)(:)\s*([^}]+)}$/,
   new: /^((?:bib(?:la)?)?tex\.)?([^:=]+)\s*([:=])\s*([\S\s]*)/,
 }
@@ -85,7 +85,8 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
 
     if (!tex && raw) return true
 
-    key = key.trim().replace(/[-_]/g, ' ').replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase()
+    key = key.trim()
+    if (!tex) key = key.replace(/[-_]/g, ' ').replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase()
     value = value.trim()
 
     if (options.citationKey && !tex && options.citationKey && ['citation key', 'bibtex'].includes(key)) {

@@ -86,8 +86,9 @@ class ExtraFields:
     assert type(name) == str
     assert type(label) == str
 
-    self.dg.add_node(f'label:{label}', domain='label', name=label, graphics={'fill': self.color.label})
-    self.dg.add_edge(f'label:{label}', f'{domain}:{name}', graphics={ 'targetArrow': 'standard' })
+    for _label in [label, self.make_label(label)]:
+      self.dg.add_node(f'label:{_label}', domain='label', name=_label, graphics={'fill': self.color.label})
+      self.dg.add_edge(f'label:{_label}', f'{domain}:{name}', graphics={ 'targetArrow': 'standard' })
 
   def add_mapping(self, f, t, reverse=True):
     mappings = [(f, t)]
@@ -102,7 +103,6 @@ class ExtraFields:
 
     self.dg.add_node(f'{domain}:{name}', domain=domain, name=name, type=tpe, graphics={'fill': self.color[domain]})
     self.add_label(domain, name, name)
-    self.add_label(domain, name, self.make_label(name))
 
   def load(self, schema):
     typeof = {}
@@ -116,7 +116,6 @@ class ExtraFields:
       self.add_var('zotero', field, typeof.get(field, 'text'))
       if baseField:
         self.add_label('zotero', field, baseField)
-        self.add_label('zotero', field, self.make_label(baseField))
 
     for field in jsonpath.parse('$.itemTypes[*].creatorTypes[*].creatorType').find(schema):
       self.add_var('zotero', field.value, 'name')
@@ -146,7 +145,6 @@ class ExtraFields:
 
     for alias, field in schema.csl.alias.items():
       self.add_label('csl', field, alias)
-      self.add_label('csl', field, self.make_label(alias))
 
   def multiple_incoming(self, var_nodes):
     for node in var_nodes:
