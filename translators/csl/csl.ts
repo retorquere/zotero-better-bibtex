@@ -105,13 +105,16 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       }
 
       itemfields.simplifyForExport(item)
-      Object.assign(item, Extra.get(item.extra, 'csl'))
-
       if (item.accessDate) { // WTH is Juris-M doing with those dates?
         item.accessDate = item.accessDate.replace(/T?[0-9]{2}:[0-9]{2}:[0-9]{2}.*/, '').trim()
       }
 
+      Object.assign(item, Extra.get(item.extra, 'csl'))
+
+      // until export translators can be async, itemToCSLJSON must run before the translator starts, so it actually doesn't do anything in a worker context
+      // so re-assigne the extracted extra here
       let csl = Zotero.Utilities.itemToCSLJSON(item)
+      if (Zotero.BetterBibTeX.worker()) csl.note = item.extra || undefined
 
       // 637
       /* TODO: is this still needed with the new extra-parser?
