@@ -63,7 +63,7 @@
     "edtf": "^2.7.1",
     "edtfy": "^0.0.8",
     "escape-string-regexp": "^4.0.0",
-    "eventemitter3": "^4.0.0",
+    "eventemitter3": "^4.0.1",
     "fast-chunk-string": "^1.0.1",
     "file-path-filter": "^3.0.1",
     "fold-to-ascii": "^5.0.0",
