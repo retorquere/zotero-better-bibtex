@@ -212,8 +212,8 @@ class PatternFormatter {
     } catch (err) {
       this.item.date = {}
     }
-    if (this.item.extra['original-date'] || this.item.extra.priorityDate) {
-      const date = this.parseDate(this.item.extra['original-date'] || this.item.extra.priorityDate)
+    if (this.item.extra.originalDate) {
+      const date = this.parseDate(this.item.extra.originalDate)
       if (date.y) {
         Object.assign(this.item.date, { oy: date.y, om: date.m, od: date.d, oY: date.Y })
         if (!this.item.date.y) Object.assign(this.item.date, { y: date.y, m: date.m, d: date.d, Y: date.Y })

@@ -15,6 +15,7 @@ import re
 import sys
 import urllib.request
 from functools import reduce
+import matplotlib.pyplot as plt
 
 root = os.path.join(os.path.dirname(__file__), '..')
 
@@ -69,11 +70,14 @@ def patch(s, p):
 
 class ExtraFields:
   def __init__(self):
+    self.changeid = 0
     self.dg = nx.DiGraph()
     self.color = Munch(
-      zotero='#FF0000',
+      zotero='#33cccc',
       csl='#99CC00',
-      label='#33cccc'
+      label='#C0C0C0',
+      removed='#666666',
+      added='#0000FF'
     )
 
   def make_label(self, field):
@@ -87,9 +91,16 @@ class ExtraFields:
     assert type(name) == str
     assert type(label) == str
 
-    for _label in [label, self.make_label(label)]:
-      self.dg.add_node(f'label:{_label}', domain='label', name=_label, graphics={'fill': self.color.label})
-      self.dg.add_edge(f'label:{_label}', f'{domain}:{name}', graphics={ 'targetArrow': 'standard' })
+    for label in [label, self.make_label(label)]:
+      attrs = {
+        'domain': 'label',
+        'name': label,
+        'graphics': {'h': 30.0, 'w': 7 * len(label), 'hasFill': 0, 'outline': self.color.label},
+      }
+      if re.search(r'[-_A-Z]', label): attrs['LabelGraphics'] = { 'color': self.color.label }
+
+      self.dg.add_node(f'label:{label}', **attrs)
+      self.dg.add_edge(f'label:{label}', f'{domain}:{name}', graphics={ 'targetArrow': 'standard' })
 
   def add_mapping(self, f, t, reverse=True):
     mappings = [(f, t)]
@@ -102,7 +113,7 @@ class ExtraFields:
     assert type(name) == str
     assert tpe in ['name', 'date', 'text']
 
-    self.dg.add_node(f'{domain}:{name}', domain=domain, name=name, type=tpe, graphics={'fill': self.color[domain]})
+    self.dg.add_node(f'{domain}:{name}', domain=domain, name=name, type=tpe, graphics={'h': 30.0, 'w': 7 * len(name), 'fill': self.color[domain]})
 
   def load(self, schema):
     typeof = {}
@@ -154,6 +165,12 @@ class ExtraFields:
     for alias, field in schema.csl.alias.items():
       self.add_label('csl', field, alias)
 
+  def add_change(self, label, change):
+    if not label or label == '':
+      return str(change)
+    else:
+      return ','.join(label.split(',') + [ str(change) ])
+
   def save(self, save_to):
     stringizer = lambda x: self.dg.nodes[x]['name'] if x in self.dg.nodes else x
 
@@ -162,30 +179,55 @@ class ExtraFields:
       if data['domain'] + '.' + data['name'] in [ 'zotero.abstractNote', 'zotero.extra', 'csl.abstract', 'csl.note' ]:
         self.dg.remove_node(node)
 
-    # remove nodes with two or more incoming var nodes, as that would incur overwrites (= data loss)
-    marked = []
+    # remove two or more incoming var edges, as that would incur overwrites (= data loss)
+    removed = set()
     for node, data in self.dg.nodes(data=True):
       incoming = reduce(lambda acc, edge: acc[self.dg.nodes[edge[0]]['domain']].append(edge) or acc, self.dg.in_edges(node), Munch(zotero=[], csl=[], label=[]))
-      print(incoming.keys())
       for domain, edges in incoming.items():
         if domain == 'label' or len(edges) < 2: continue
-        print(node, domain, edges)
-        marked.extend(edges)
-    nx.set_edge_attributes(self.dg, {
-      edge: {'removed': True, 'graphics': { 'style': 'dashed', 'fill': '#666666', 'targetArrow': 'standard' }}
-      for edge in marked
-    })
+
+        self.changeid += 1
+        for edge in edges:
+          removed.add(edge)
+          self.dg.edges[edge].update({
+            'removed': True,
+            'label': self.add_change(self.dg.edges[edge].get('label'), self.changeid),
+            'graphics': { 'style': 'dashed', 'fill': self.color.removed, 'targetArrow': 'standard' },
+            'LabelGraphics': { 'color': self.color.label },
+          })
 
     # hop-through labels
     for u, vs in dict(nx.all_pairs_dijkstra_path(self.dg, weight=lambda u, v, d: None if d.get('removed', False) else 1)).items():
       # only interested in shortest paths that originate in a label
+      source = self.dg.nodes[u]
+      if source['domain'] != 'label' or re.search(r'[-_A-Z]', source['name']): continue # not a label or a shadow label
+
+      for v, path in vs.items():
+        if u == v: continue # no loops obviously
+        if self.dg.has_edge(u, v): continue # already in place
+        if len(path) != 3: continue # only consider one-step hop-through
+
+        # TODO: label already has direct edge to the hop-through domain -- this entails fanning out the data, which I may not want ever, but certainly for names
+        if self.dg.nodes[v]['type'] == 'name' and self.dg.nodes[v]['domain'] in [self.dg.nodes[edge[1]]['domain'] for edge in self.dg.out_edges(u)]: continue
+
+        self.changeid += 1
+        for edge in zip(path, path[1:]):
+          self.dg.edges[edge].update({
+            'label': self.add_change(self.dg.edges[edge].get('label'), self.changeid),
+          })
+        self.dg.add_edge(u, v, label=str(self.changeid), added=True, graphics={ 'style': 'dashed', 'fill': self.color.added, 'targetArrow': 'standard' })
+
+    for u, vs in dict(nx.all_pairs_shortest_path(self.dg)).items():
       if self.dg.nodes[u]['domain'] != 'label': continue
       for v, path in vs.items():
-        # length of 3 means hop-through node
-        if u != v and len(path) == 3 and not self.dg.has_edge(u, v):
-          self.dg.add_edge(u, v, graphics={ 'style': 'dashed', 'fill': '#0000FF', 'targetArrow': 'standard' })
+        # length of 3 means potential hop-through node
+        if u != v and len(path) == 3 and len(set(zip(path, path[1:])).intersection(removed)) > 0:
+          #print('removed', path)
+          pass
 
-    nx.write_gml(self.dg, 'mapping.gml', stringizer)
+    #for i, sg in enumerate(nx.weakly_connected_components(self.dg)):
+    #  nx.draw(self.dg.subgraph(sg), with_labels=True)
+    #  plt.savefig(f'{i}.png')
 
     mapping = {}
     for label, data in self.dg.nodes(data=True):
@@ -206,10 +248,26 @@ class ExtraFields:
     for var, mapped in mapping.items():
       if mapped['type'] != 'name': continue
       assert len(mapped.get('zotero', [])) <= 1, (var, mapped)
-      assert len(mapped.get('csl', [])) <= 1, var
+      assert len(mapped.get('csl', [])) <= 1, (var, mapped)
 
     with open(save_to, 'w') as f:
       json.dump(mapping, f, sort_keys=True, indent='  ')
+
+    # remove phantom labels for clarity
+    for label in [node for node, data in self.dg.nodes(data=True) if data['domain'] == 'label' and 'LabelGraphics' in data]:
+      self.dg.remove_node(label)
+    nx.write_gml(self.dg, 'mapping.gml', stringizer)
+
+    with open('mapping.json', 'w') as f:
+      data = nx.readwrite.json_graph.node_link_data(self.dg)
+      for node in data['nodes']:
+        node.pop('graphics', None)
+        node.pop('type', None)
+        node['label'] = node.pop('name')
+      for link in data['links']:
+        link.pop('graphics', None)
+        link.pop('LabelGraphics', None)
+      json.dump(data, f, indent='  ')
 
 print('  writing extra-fields')
 with fetch('https://api.zotero.org/schema', 'zotero.json') as z, fetch('https://raw.githubusercontent.com/Juris-M/zotero-schema/master/schema-jurism.json', 'juris-m.json') as j:
@@ -229,9 +287,9 @@ for itemType in jsonpath.parse('*.itemTypes[*]').find(SCHEMA):
 
   client = str(itemType.full_path).split('.')[0]
 
-  if not itemType.value.itemType in creators[client]: creators[client][itemType.value.itemType] = set()
+  if not itemType.value.itemType in creators[client]: creators[client][itemType.value.itemType] = []
   for creator in itemType.value.creatorTypes:
-    creators[client][itemType.value.itemType].add(creator.creatorType)
+    creators[client][itemType.value.itemType].append(creator.creatorType)
 with open(os.path.join(GEN, 'creators.json'), 'w') as f:
   json.dump(creators, f, indent='  ', default=lambda x: list(x))
 

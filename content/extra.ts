@@ -85,8 +85,11 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
 
     if (!tex && raw) return true
 
-    key = key.trim()
-    if (!tex) key = key.replace(/[-_]/g, ' ').replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase()
+    if (tex) {
+      key = key.trim().toLowerCase()
+    } else {
+      key = key.trim().replace(/[-_]/g, ' ').replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase()
+    }
     value = value.trim()
 
     if (options.citationKey && !tex && options.citationKey && ['citation key', 'bibtex'].includes(key)) {
