@@ -848,16 +848,18 @@ export class Reference {
       }
     }
 
-    let notes = ''
-    if (Translator.options.exportNotes && this.item.notes && this.item.notes.length) {
-      notes = this.item.notes.join('<p>')
-    }
-    const annotation = Translator.BetterBibTeX ? 'annote' : 'annotation'
-    if (this.has.note && this.item.extra) {
-      this.add({ name: annotation, value: notes ? `${this.item.extra.replace(/\n/g, '<br/>')}<p>${notes}` : this.item.extra, html: !!notes })
-    } else {
-      this.add({ name: 'note', value: this.item.extra })
-      this.add({ name: annotation, value: notes, html: true })
+    if (Translator.options.exportNotes) {
+      let notes = ''
+      if (this.item.notes && this.item.notes.length) {
+        notes = this.item.notes.join('<p>')
+      }
+      const annotation = Translator.BetterBibTeX ? 'annote' : 'annotation'
+      if (this.has.note && this.item.extra) {
+        this.add({ name: annotation, value: notes ? `${this.item.extra.replace(/\n/g, '<br/>')}<p>${notes}` : this.item.extra, html: !!notes })
+      } else {
+        this.add({ name: 'note', value: this.item.extra })
+        this.add({ name: annotation, value: notes, html: true })
+      }
     }
 
     // sort before postscript so the postscript can affect field order
