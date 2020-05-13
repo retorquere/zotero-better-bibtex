@@ -324,11 +324,11 @@ export function doExport() {
         break
 
       case 'patent':
-        if (item.country && !patent.region(item)) ref.add({ name: 'location', value: item.country })
+        if (item.country && !patent.region(item)) ref.add({ name: 'location', value: item.country || item.extraFields.kv['publisher-place'] })
         break
 
       default:
-        ref.add({ name: 'location', value: item.place, enc: 'literal' })
+        ref.add({ name: 'location', value: item.place || item.extraFields.kv['publisher-place'] , enc: 'literal' })
         break
     }
 

@@ -151,7 +151,7 @@ class ExtraFields:
       self.add_mapping(('csl', csl), ('zotero', zotero))
 
     for field, tpe in schema.csl.unmapped.items():
-      self.add_var('csl', field, tpe)
+      if tpe != 'type': self.add_var('csl', field, tpe)
 
     # add labels
     for node, data in list(self.dg.nodes(data=True)):
@@ -230,19 +230,23 @@ class ExtraFields:
     #  plt.savefig(f'{i}.png')
 
     mapping = {}
-    for label, data in self.dg.nodes(data=True):
+    for label, data in list(self.dg.nodes(data=True)):
       if data['domain'] != 'label': continue
       name = data['name']
 
-      for _, var in self.dg.out_edges(label):
-        var = self.dg.nodes[var]
-        if not name in mapping: mapping[name] = {}
-        assert 'type' not in mapping[name] or mapping[name]['type'] == var['type']
-        mapping[name]['type'] = var['type']
+      var_nodes = [var for _, var in self.dg.out_edges(label)]
+      if len(var_nodes) == 0:
+        self.dg.remove_node(label)
+      else:
+        for var in var_nodes:
+          var = self.dg.nodes[var]
+          if not name in mapping: mapping[name] = {}
+          assert 'type' not in mapping[name] or mapping[name]['type'] == var['type']
+          mapping[name]['type'] = var['type']
 
-        domain = var['domain']
-        if not domain in mapping[name]: mapping[name][domain] = []
-        mapping[name][domain].append(var['name'])
+          domain = var['domain']
+          if not domain in mapping[name]: mapping[name][domain] = []
+          mapping[name][domain].append(var['name'])
 
     # ensure names don't get mapped to multiple fields
     for var, mapped in mapping.items():
@@ -350,3 +354,12 @@ with open(os.path.join(GEN, 'fields.ts'), 'w') as f:
     print(template('items/fields.ts.mako').render(valid=valid, aliases=aliases).strip(), file=f)
   except:
     print(exceptions.text_error_template().render())
+
+print('  writing csl-types')
+with open(os.path.join(GEN, 'csl-types.json'), 'w') as f:
+  types = set()
+  for tpe in jsonpath.parse('*.csl.types.*').find(SCHEMA):
+    types.add(str(tpe.full_path).split('.')[-1])
+  for tpe in jsonpath.parse('*.csl.unmapped.*').find(SCHEMA):
+    if tpe.value == 'type': types.add(str(tpe.full_path).split('.')[-1])
+  json.dump(list(types), f)

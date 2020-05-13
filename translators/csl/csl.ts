@@ -7,43 +7,7 @@ import * as itemfields from '../../gen/items/fields'
 import * as Extra from '../../content/extra'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
 
-const validCSLTypes = [
-  'article',
-  'article-magazine',
-  'article-newspaper',
-  'article-journal',
-  'review',
-  'review-book',
-  'bill',
-  'broadcast',
-  'dataset',
-  'figure',
-  'graphic',
-  'interview',
-  'legislation',
-  'legal_case',
-  'map',
-  'motion_picture',
-  'musical_score',
-  'patent',
-  'post',
-  'post-weblog',
-  'personal_communication',
-  'song',
-  'speech',
-  'treaty',
-  'webpage',
-  'book',
-  'chapter',
-  'entry',
-  'entry-dictionary',
-  'entry-encyclopedia',
-  'manuscript',
-  'pamphlet',
-  'paper-conference',
-  'report',
-  'thesis',
-]
+const validCSLTypes: string[] = require('../../gen/items/csl-types.json')
 
 const keyOrder = [
   'id',
@@ -150,17 +114,29 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
 
       if (csl.type === 'broadcast' && csl.genre === 'television broadcast') delete csl.genre
 
+      // special case for #587... not pretty
+      // checked separately because .type isn't actually a CSL var so wouldn't pass the ef.type test below
+      if (!validCSLTypes.includes(item.extraFields.kv['csl-type']) && validCSLTypes.includes(item.extraFields.kv.type)) {
+        csl.type = item.extraFields.kv.type
+        delete item.extraFields.kv.type
+      }
+
       for (const [name, value] of Object.entries(item.extraFields.kv)) {
         const ef = ExtraFields[name]
         if (!ef.csl) continue
 
         if (ef.type === 'date') {
           csl[name] = this.date2CSL(Zotero.BetterBibTeX.parseDate(value))
+
         } else if (name === 'csl-type') {
-          if (validCSLTypes.includes(value)) csl.type = value
+          if (!validCSLTypes.includes(value)) continue // and keep the kv variable, maybe for postscripting
+          csl.type = value
+
         } else {
           csl[name] = value
+
         }
+
         delete item.extraFields.kv[name]
       }
 

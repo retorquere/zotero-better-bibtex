@@ -6,11 +6,12 @@
   { "op": "remove", "path": "/csl/fields/text/journalAbbreviation" },
   { "op": "add", "path": "/csl/fields/text/container-title-short", "value": [ "journalAbbreviation" ] },
 
-  { "op": "add", "path": "/csl/unmapped", "value": { } },
-  { "op": "add", "path": "/csl/unmapped/archive-place", "value": "text" },
-  { "op": "add", "path": "/csl/unmapped/jurisdiction", "value": "text" },
+  { "op": "add", "path": "/csl/unmapped", "value": {} },
 
   { "op": "add", "path": "/csl/unmapped/csl-type", "value": "text" },
+
+  { "op": "add", "path": "/csl/unmapped/archive-place", "value": "text" },
+  { "op": "add", "path": "/csl/unmapped/jurisdiction", "value": "text" },
   { "op": "add", "path": "/csl/unmapped/original-publisher", "value": "text" },
   { "op": "add", "path": "/csl/unmapped/original-publisher-place", "value": "text" },
   { "op": "add", "path": "/csl/unmapped/original-title", "value": "text" },
@@ -34,6 +35,15 @@
   { "op": "add", "path": "/csl/unmapped/producer", "value": "name" },
   { "op": "add", "path": "/csl/unmapped/scriptwriter", "value": "name" },
   { "op": "add", "path": "/csl/unmapped/wordsBy", "value": "name" },
+
+  { "op": "add", "path": "/csl/unmapped/dataset", "value": "type" },
+  { "op": "add", "path": "/csl/unmapped/entry", "value": "type" },
+  { "op": "add", "path": "/csl/unmapped/figure", "value": "type" },
+  { "op": "add", "path": "/csl/unmapped/musical_score", "value": "type" },
+  { "op": "add", "path": "/csl/unmapped/pamphlet", "value": "type" },
+  { "op": "add", "path": "/csl/unmapped/review", "value": "type" },
+  { "op": "add", "path": "/csl/unmapped/review-book", "value": "type" },
+  { "op": "add", "path": "/csl/unmapped/treaty", "value": "type" },
 
   { "op": "add", "path": "/csl/alias", "value": { } },
   { "op": "add", "path": "/csl/alias/artist", "value": "author" },
