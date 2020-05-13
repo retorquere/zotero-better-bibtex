@@ -127,14 +127,11 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
 
         if (ef.type === 'date') {
           csl[name] = this.date2CSL(Zotero.BetterBibTeX.parseDate(value))
-
         } else if (name === 'csl-type') {
           if (!validCSLTypes.includes(value)) continue // and keep the kv variable, maybe for postscripting
           csl.type = value
-
-        } else {
+        } else if (!csl[name]) {
           csl[name] = value
-
         }
 
         delete item.extraFields.kv[name]

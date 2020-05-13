@@ -383,8 +383,13 @@ export class Reference {
 
     // TODO: maybe just use item.extraFields.var || item.var instead of deleting them here
     for (const [name, value] of Object.entries(item.extraFields.kv)) {
-      if (ExtraFields[name].zotero) {
-        item[name] = value
+      const ef = ExtraFields[name]
+      if (ef.zotero) {
+        if (!item[name] || ef.type === 'date') {
+          item[name] = value
+        } else {
+          debug('extra fields: skipping', {name, value})
+        }
         delete item.extraFields.kv[name]
       }
     }

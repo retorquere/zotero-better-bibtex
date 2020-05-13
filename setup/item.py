@@ -196,19 +196,23 @@ class ExtraFields:
             'LabelGraphics': { 'color': self.color.label },
           })
 
-    # hop-through labels
+    # hop-through labels. Memorize here which labels had a direct connection *before any expansion*
+    labels = {
+      label: set([self.dg.nodes[edge[1]]['domain'] for edge in self.dg.out_edges(label)])
+      for label, data in self.dg.nodes(data=True)
+      if data['domain'] == 'label' and not re.search(r'[-_A-Z]', data['name']) # a label but not a shadow label
+    }
     for u, vs in dict(nx.all_pairs_dijkstra_path(self.dg, weight=lambda u, v, d: None if d.get('removed', False) else 1)).items():
       # only interested in shortest paths that originate in a label
-      source = self.dg.nodes[u]
-      if source['domain'] != 'label' or re.search(r'[-_A-Z]', source['name']): continue # not a label or a shadow label
+      if not u in labels: continue
 
       for v, path in vs.items():
         if u == v: continue # no loops obviously
         if self.dg.has_edge(u, v): continue # already in place
         if len(path) != 3: continue # only consider one-step hop-through
 
-        # TODO: label already has direct edge to the hop-through domain -- this entails fanning out the data, which I may not want ever, but certainly for names
-        if self.dg.nodes[v]['type'] == 'name' and self.dg.nodes[v]['domain'] in [self.dg.nodes[edge[1]]['domain'] for edge in self.dg.out_edges(u)]: continue
+        # TODO: label already has direct edge to the hop-through domain -- this entails fanning out the data unnecesarily
+        if self.dg.nodes[v]['domain'] in labels[u]: continue
 
         self.changeid += 1
         for edge in zip(path, path[1:]):
