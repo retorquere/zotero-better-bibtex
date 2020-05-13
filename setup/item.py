@@ -15,7 +15,7 @@ import re
 import sys
 import urllib.request
 from functools import reduce
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 root = os.path.join(os.path.dirname(__file__), '..')
 
