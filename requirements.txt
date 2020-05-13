@@ -10,11 +10,13 @@ diff-match-patch
 github3.py
 inflect
 jsonpatch
+jsonpath_ng
 jsonschema
 lxml
 markdown
 markdownify
 munch
+networkx
 ortools
 psutil
 pushbullet.py
@@ -29,5 +31,3 @@ requests
 ruamel.yaml
 selenium
 toml
-networkx
-matplotlib
