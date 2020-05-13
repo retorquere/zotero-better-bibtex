@@ -69,7 +69,7 @@
 }
 
 @book{t2,
-  title = {Container, Event-Date, and Submitted Test},
+  title = {Event-Date and Submitted Test},
   author = {Doe2, John},
   eventdate = {1800-01-01/1800-12-31}
 }

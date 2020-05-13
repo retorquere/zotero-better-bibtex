@@ -48,7 +48,6 @@
         "Citation Key: t1",
         "accessed: 2014-12-31~",
         "original-date: 1777-07-27/1888-08-28",
-        "container: 1777-07-27",
         "event-date: 1888-08-28",
         "submitted:1999-09-29/"
       ],
@@ -119,13 +118,12 @@
       "extra": [
         "Citation Key: t2",
         "accessed: 13th cent",
-        "container: 1700-01-01_1700-12-31",
         "event-date: 1800-01-01--1800-12-31",
         "submitted: 1900-01-01/1900-12-31"
       ],
       "itemID": 7,
       "itemType": "book",
-      "title": "container, event-date, and submitted test"
+      "title": "event-date and submitted test"
     },
     {
       "creators": [
@@ -172,7 +170,6 @@
         "Citation Key: t5",
         "accessed: -0332-11-05",
         "original-date: -0333/-0332",
-        "container: -0062-09-23/0014-08-19",
         "event-date: 0000",
         "submitted:-0001"
       ],
