@@ -620,12 +620,14 @@ class ZoteroItem {
           break
 
         default:
-          debug(`Unexpected number of parts in file record '${record}': ${parts.length}`)
+          debug(`attachment import: Unexpected number of parts in file record '${record}': ${parts.length}`)
+          // might be absolute windows path, just make Zotero try
+          att.path = parts.join(':')
           break
       }
 
       if (!att.path) {
-        debug(`file record '${record}' has no file path`)
+        debug(`attachment import: file record '${record}' has no file path`)
         continue
       }
 
