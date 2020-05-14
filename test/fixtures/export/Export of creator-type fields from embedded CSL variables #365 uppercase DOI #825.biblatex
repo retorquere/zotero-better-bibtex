@@ -6,7 +6,6 @@
   date = {2015},
   institution = {{Institution}},
   location = {{Place}},
-  note = {\{:X-genre: xxx\}},
   number = {77},
   type = {working paper}
 }
@@ -34,8 +33,7 @@
 }
 
 @inreference{emptybook,
-  editor = {{Xxx}},
-  note = {\{:X-genre: xxx\}}
+  editor = {{Xxx}}
 }
 
 @video{friends:leia:dvd,
