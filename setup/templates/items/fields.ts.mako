@@ -3,7 +3,11 @@ declare const Zotero: any
 const jurism = Zotero.BetterBibTeX.client() === 'jurism'
 const zotero = !jurism
 
-export const valid = {
+type Valid = {
+  type: Record<string, boolean>
+  field: Record<string, Record<string, boolean>>
+}
+export const valid: Valid = {
   type: {
     %for itemType, client in valid.type.items():
     ${itemType}: ${client},
@@ -18,6 +22,19 @@ export const valid = {
     },
     %endfor
   },
+}
+
+type Supported = {
+  field: Record<string, string>
+}
+export const supported: Supported = {
+  field: {},
+}
+for (const typeFields of Object.values(valid.field)) {
+  for (const [field, is_supported] of Object.entries(typeFields)) {
+    // tslint:disable-next-line:prefer-template
+    if (is_supported) supported.field[field] = field[0].toUpperCase() + field.substring(1).replace(/[_-]/g, ' ').replace(/([a-z])([A-Z])/g, (m, l, u) => l + ' ' + u.toLowerCase())
+  }
 }
 
 function unalias(item) {

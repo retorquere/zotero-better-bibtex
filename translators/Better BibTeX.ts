@@ -16,7 +16,7 @@ import { debug } from './lib/debug'
 import * as escape from '../content/escape'
 
 import * as bibtexParser from '@retorquere/bibtex-parser'
-import { valid } from '../gen/items/fields'
+import { valid, supported } from '../gen/items/fields'
 import { arXiv } from '../content/arXiv'
 
 Reference.prototype.caseConversion = {
@@ -402,6 +402,15 @@ class ZoteroItem {
     if (this.item) await this.item.complete()
   }
 
+  private fallback(fields, value) {
+    const field = fields.find(f => supported.field[f])
+    if (field) {
+      this.hackyFields.push(`${supported.field[field]}: ${value.replace(/\n+/g, '')}`)
+      return true
+    }
+    return false
+  }
+
   protected $title(value) {
     let title = []
     if (this.bibtex.fields.title) title = title.concat(this.bibtex.fields.title)
@@ -426,8 +435,10 @@ class ZoteroItem {
   }
 
   protected $publisher(value, field) {
-    field = [field].concat(['institution', 'publisher']).find(f => this.validFields[f]) // difference between jurism and zotero. Prepending 'field' makes the import prefer exact matches to the input
-    if (!field) return false
+    // difference between jurism and zotero. Prepending 'field' makes the import prefer exact matches to the input
+    const candidates = [field].concat(['institution', 'publisher'])
+    field = candidates.find(f => this.validFields[f])
+    if (!field) return this.fallback(candidates, value)
 
     this.item[field] = [
       (this.bibtex.fields.publisher || []).join(' and '),
@@ -501,8 +512,8 @@ class ZoteroItem {
     if (abbr) {
       if (this.validFields.journalAbbreviation) {
         this.item.journalAbbreviation = abbr
-      } else if (!this.hackyFields.find(line => line.startsWith('tex.shortjournal:'))) {
-        this.hackyFields.push(`tex.shortjournal: ${abbr}`)
+      } else if (!this.hackyFields.find(line => line.startsWith('Journal abbreviation:'))) {
+        this.hackyFields.push(`Journal abbreviation: ${abbr}`)
       }
     }
 
@@ -523,14 +534,11 @@ class ZoteroItem {
   protected '$journal-full'() { return this.$journaltitle() }
 
   protected $pages(value) {
-    for (const field of ['pages', 'numPages']) {
-      if (!this.validFields[field]) continue
+    const field = ['pages', 'numPages'].find(f => this.validFields[f])
+    if (!field) return this.fallback(['pages', 'numPages'], value)
 
-      this.set(field, value.replace(/\u2013/g, '-'))
-      return true
-    }
-
-    return false
+    this.set(field, value.replace(/\u2013/g, '-'))
+    return true
   }
   protected $pagetotal(value) { return this.$pages(value) }
 
@@ -662,19 +670,16 @@ class ZoteroItem {
       return true
     }
 
-    for (const name of [field].concat(['seriesNumber', 'number', 'issue'])) {
-      if (this.validFields[name]) {
-        this.set(name, value)
-        return true
-      }
-    }
-
-    return false
+    const candidates = [field].concat(['seriesNumber', 'number', 'issue'])
+    field = candidates.find(f => this.validFields[f])
+    if (!field) return this.fallback(candidates, value)
+    this.set(field, value)
+    return true
   }
   protected $issue(value, field) { return this.$number(value, field) }
 
   protected $issn(value) {
-    if (!this.validFields.ISSN) return false
+    if (!this.validFields.ISSN) return this.fallback(['ISSN'], value)
 
     return this.set('ISSN', value)
   }
@@ -709,12 +714,9 @@ class ZoteroItem {
       return typeof this.numberPrefix !== 'undefined'
     }
 
-    if (this.validFields.type) {
-      this.set('type', value)
-      return true
-    }
-
-    return false
+    if (!this.validFields.type) return this.fallback(['type'], value)
+    this.set('type', value)
+    return true
   }
 
   protected $lista(value) {
