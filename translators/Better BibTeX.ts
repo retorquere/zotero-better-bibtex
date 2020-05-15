@@ -243,24 +243,24 @@ export function doExport() {
         break
     }
 
-    const doi = item.extraFields.kv.DOI || item.DOI
+    const doi = item.DOI || item.extraFields.kv.DOI
     let url = null
     if (Translator.preferences.DOIandURL === 'both' || !doi) {
       switch (Translator.preferences.bibtexURL) {
         case 'url':
-          url = ref.add({ name: 'url', value: item.extraFields.kv.url || item.url })
+          url = ref.add({ name: 'url', value: item.url || item.extraFields.kv.url })
           break
 
         case 'note':
-          url = ref.add({ name: (['misc', 'booklet'].includes(ref.referencetype) && !ref.has.howpublished ? 'howpublished' : 'note'), value: item.extraFields.kv.url || item.url, enc: 'url' })
+          url = ref.add({ name: (['misc', 'booklet'].includes(ref.referencetype) && !ref.has.howpublished ? 'howpublished' : 'note'), value: item.url || item.extraFields.kv.url, enc: 'url' })
           break
 
         default:
-          if (['webpage', 'post', 'post-weblog'].includes(item.referenceType)) url = ref.add({ name: 'howpublished', value: item.extraFields.kv.url || item.url })
+          if (['webpage', 'post', 'post-weblog'].includes(item.referenceType)) url = ref.add({ name: 'howpublished', value: item.url || item.extraFields.kv.url })
           break
       }
     }
-    if (Translator.preferences.DOIandURL === 'both' || !url) ref.add({ name: 'doi', value: doi })
+    if (Translator.preferences.DOIandURL === 'both' || !url) ref.add({ name: 'doi', value: (doi || '').replace('https://doi.org/', '') })
 
     if (item.referenceType === 'thesis' && ['mastersthesis', 'phdthesis'].includes(item.type)) {
       ref.referencetype = item.type
