@@ -1,6 +1,9 @@
 declare const Components: any
 declare const Zotero: any
 
+import { patch as $patch$ } from './monkey-patch'
+import { flash } from './flash'
+
 import { Preferences as Prefs } from './prefs' // needs to be here early, initializes the prefs observer
 require('./pull-export') // just require, initializes the pull-export end points
 require('./json-rpc') // just require, initializes the json-rpc end point
@@ -11,7 +14,6 @@ Components.utils.import('resource://gre/modules/AddonManager.jsm')
 declare const AddonManager: any
 
 import * as log from './debug'
-import { flash } from './flash'
 import { Events, itemsChanged as notifiyItemsChanged } from './events'
 
 log.debug('Loading Better BibTeX')
@@ -26,8 +28,6 @@ import { AutoExport } from './auto-export'
 import { KeyManager } from './key-manager'
 import { TeXstudio } from './tex-studio'
 import format = require('string-template')
-
-import { patch as $patch$ } from './monkey-patch'
 
 // UNINSTALL
 AddonManager.addAddonListener({
@@ -171,24 +171,6 @@ $patch$(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => functio
 
   return original.apply(this, arguments)
 })
-
-/*
-// monkey-patch Zotero.Search::search to allow searching for citekey
-$patch$(Zotero.Search.prototype, 'search', original => Zotero.Promise.coroutine(function *(asTempTable) {
-  const searchText = Object.values(this._conditions).filter(c => c && c.condition === 'field').map(c => c.value.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&'))
-  if (!searchText.length) return yield original.apply(this, arguments)
-
-  let ids = yield original.call(this, false) || []
-
-  log.debug('search: looking for', searchText, 'from', this._conditions, 'to add to', ids)
-
-  ids = Array.from(new Set(ids.concat(KeyManager.keys.find({ citekey: { $regex: new RegExp(searchText.join('|'), 'i') } }).map(item => item.itemID))))
-
-  if (!ids.length) return false
-  if (asTempTable) return yield Zotero.Search.idsToTempTable(ids)
-  return ids
-}))
-*/
 
 // otherwise the display of the citekey in the item pane flames out
 $patch$(Zotero.ItemFields, 'isFieldOfBase', original => function Zotero_ItemFields_isFieldOfBase(field, baseField) {
