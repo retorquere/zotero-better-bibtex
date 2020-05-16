@@ -96,7 +96,7 @@
       "date": "1995",
       "extra": [
         "Citation Key: wilkins95:_plann_react_uncer_dynam_envir",
-        "tex.publisher: Taylor & Francis"
+        "Publisher: Taylor & Francis"
       ],
       "issue": "1",
       "itemID": 1,
@@ -5530,7 +5530,7 @@
       "date": "August 1977",
       "extra": [
         "Citation Key: deKleer:77",
-        "tex.number: 8"
+        "Number: 8"
       ],
       "itemID": 217,
       "itemType": "conferencePaper",
@@ -5562,7 +5562,7 @@
       "date": "1998",
       "extra": [
         "Citation Key: desJardins:98",
-        "tex.number: WS-98-15",
+        "Number: WS-98-15",
         "tex.organization: AAAI"
       ],
       "itemID": 218,
@@ -11279,7 +11279,7 @@
       "date": "August 1977",
       "extra": [
         "Citation Key: Kant:77",
-        "tex.number: 64"
+        "Number: 64"
       ],
       "itemID": 447,
       "itemType": "conferencePaper",
@@ -16007,7 +16007,7 @@
       "date": "2011",
       "extra": [
         "Citation Key: NDDL",
-        "tex.institution: NASA Ames Research Center",
+        "Publisher: NASA Ames Research Center",
         "tex.key: NASA"
       ],
       "itemID": 646,
@@ -17859,7 +17859,7 @@
       "date": "2007",
       "extra": [
         "Citation Key: prob-ff",
-        "tex.publisher: AI Access Foundation"
+        "Publisher: AI Access Foundation"
       ],
       "issue": "1",
       "itemID": 720,
@@ -22246,7 +22246,7 @@
       "date": "1998-01",
       "extra": [
         "Citation Key: WagnerETAL:98",
-        "tex.publisher: Elsevier Science Inc."
+        "Publisher: Elsevier Science Inc."
       ],
       "itemID": 903,
       "itemType": "journalArticle",
@@ -22468,7 +22468,7 @@
       "date": "1977",
       "extra": [
         "Citation Key: WarrenETAL:1977",
-        "tex.number: 8"
+        "Number: 8"
       ],
       "itemID": 911,
       "itemType": "conferencePaper",

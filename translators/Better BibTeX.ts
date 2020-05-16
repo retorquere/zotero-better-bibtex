@@ -482,7 +482,7 @@ class ZoteroItem {
         break
     }
 
-    return false
+    return this.fallback(['booktitle'], value)
   }
 
   protected $journaltitle() {
@@ -533,14 +533,17 @@ class ZoteroItem {
   protected $shortjournal() { return this.$journaltitle() }
   protected '$journal-full'() { return this.$journaltitle() }
 
-  protected $pages(value) {
-    const field = ['pages', 'numPages'].find(f => this.validFields[f])
-    if (!field) return this.fallback(['pages', 'numPages'], value)
+  protected $pages(value, field) {
+    const candidates = [{ numpages: 'numPages', pagetotal: 'numPages' }[field] || field].concat(['pages', 'numPages'])
+    value = value.replace(/\u2013/g, '-')
+    field = candidates.find(f => this.validFields[f])
+    if (!field) return this.fallback(candidates, value)
 
-    this.set(field, value.replace(/\u2013/g, '-'))
+    this.set(field, value)
     return true
   }
-  protected $pagetotal(value) { return this.$pages(value) }
+  protected $pagetotal(value, field) { return this.$pages(value, field) }
+  protected $numpages(value, field) { return this.$pages(value, field) }
 
   protected $volume(value) { return this.set('volume', value) }
 
@@ -782,7 +785,13 @@ class ZoteroItem {
 
   protected $nationality(value) { return this.set('country', value) }
 
-  protected $chapter(value) { return this.set('section', value) }
+  protected $chapter(value) {
+    const candidates = ['section', 'bookSection']
+    const field = candidates.find(f => this.validFields[f])
+    if (!field) return this.fallback(candidates, value)
+
+    return this.set(field, value)
+  }
 
   private error(err) {
     debug(err)
@@ -833,6 +842,10 @@ class ZoteroItem {
     for (const [field, values] of Object.entries(this.bibtex.fields)) {
       this.bibtex.fields[field] = (values as string[]).map(value => typeof value === 'string' ? value.replace(/\u00A0/g, ' ').trim() : ('' + value))
     }
+
+    const zoteroField = {
+      conference: 'conferenceName',
+    }
     for (const [field, values] of Object.entries(this.bibtex.fields)) {
       for (const value of (values as string[])) {
         if (field.match(/^(local-zo-url-[0-9]+)|(file-[0-9]+)$/)) {
@@ -866,7 +879,15 @@ class ZoteroItem {
             if (value.indexOf('\n') >= 0) {
               this.item.notes.push(`<p><b>${Zotero.Utilities.text2html(field, false)}</b></p>${Zotero.Utilities.text2html(value, false)}`)
             } else {
-              this.hackyFields.push(`tex.${field.toLowerCase()}: ${value}`)
+              const candidates = [field, zoteroField[field]]
+              let name
+              if ((name = candidates.find(f => this.validFields[f])) && !this.item[field]) {
+                this.item[name] = value
+              } else if (name = candidates.find(f => supported.field[f])) {
+                this.hackyFields.push(`${supported.field[name]}: ${value}`)
+              } else {
+                this.hackyFields.push(`tex.${field.toLowerCase()}: ${value}`)
+              }
             }
             break
         }
@@ -941,8 +962,8 @@ class ZoteroItem {
   }
   */
 
-  private set(field, value) {
-    if (!this.validFields[field]) return false
+  private set(field, value, fallback = null) {
+    if (!this.validFields[field]) return fallback && this.fallback(fallback, value)
 
     if (Translator.preferences.testing && (this.item[field] || typeof this.item[field] === 'number') && (value || typeof value === 'number') && this.item[field] !== value) {
       this.error(`import error: duplicate ${field} on ${this.type} ${this.bibtex.key} (old: ${this.item[field]}, new: ${value})`)

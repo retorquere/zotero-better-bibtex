@@ -54,7 +54,8 @@ for (const lib of argv._) {
 
       if (data.config?.options) {
         for (const [option, on] of Object.entries(data.config.options)) {
-          if (!on) delete data.config.options[option]
+          if (option === 'Normalize' && on) delete data.config.options[option]
+          if (option !== 'Normalize' && !on) delete data.config.options[option]
         }
       }
 

@@ -1,24 +1,24 @@
 
 @online{doe10_edtf_2011,
-  title = {{{EDTF}} Date Range, circa Begin \& End: 2011-05-25\textasciitilde/2012-06-26\textasciitilde{}},
+  title = {{{EDTF}} Date Range, circa Begin \& End: 2011-05-25\textasciitilde/2012-06-26\textasciitilde},
   author = {Doe10, John},
   date = {2011-05-25~/2012-06-26~}
 }
 
 @online{doe11_edtf_2011,
-  title = {{{EDTF}} Date Range, circa End: 2011-05-25/2012-06-26\textasciitilde{}},
+  title = {{{EDTF}} Date Range, circa End: 2011-05-25/2012-06-26\textasciitilde},
   author = {Doe11, John},
   date = {2011-05-25/2012-06-26~}
 }
 
 @online{doe12_edtf_2011,
-  title = {{{EDTF}} Date {{YYYY}}-{{MM}}\textasciitilde{} [Month Precision \& circa]: 2011-05\textasciitilde{}},
+  title = {{{EDTF}} Date {{YYYY}}-{{MM}}\textasciitilde{} [Month Precision \& circa]: 2011-05\textasciitilde},
   author = {Doe12, John},
   date = {2011-05~}
 }
 
 @online{doe13_season_2017,
-  title = {Season circa: : 2017-24\textasciitilde{}},
+  title = {Season circa: : 2017-24\textasciitilde},
   author = {Doe13, John},
   date = {2017-24~}
 }

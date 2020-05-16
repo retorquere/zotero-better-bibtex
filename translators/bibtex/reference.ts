@@ -3,7 +3,7 @@ declare const Zotero: any
 import { Translator } from '../lib/translator'
 
 import { Exporter } from './exporter'
-import { text2latex } from './unicode_translator'
+import { text2latex, replace_command_spacers } from './unicode_translator'
 import { debug } from '../lib/debug'
 import { datefield } from './datefield'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
@@ -997,7 +997,7 @@ export class Reference {
       encoded.push(name.trim())
     }
 
-    return encoded.join(' and ')
+    return replace_command_spacers(encoded.join(' and '))
   }
 
   /*
@@ -1170,6 +1170,13 @@ export class Reference {
     return particle + ' '
   }
 
+  private _enc_creator_part(part) {
+    const { latex, packages } = text2latex(part, { creator: true, commandspacers: true })
+    for (const pkg of packages) {
+      this.packages[pkg] = true
+    }
+    return (part instanceof String) ? new String(`{${latex}}`) : latex // tslint:disable-line:no-construct
+  }
   private _enc_creators_biblatex(name) {
     let family, latex
     if ((name.family.length > 1) && (name.family[0] === '"') && (name.family[name.family.length - 1] === '"')) {
@@ -1190,12 +1197,12 @@ export class Reference {
       }
 
       latex = []
-      if (family) latex.push(`family=${this.enc_latex({value: family})}`)
-      if (name.given) latex.push(`given=${this.enc_latex({value: name.given})}`)
-      if (initials) latex.push(`given-i=${this.enc_latex({value: initials})}`)
-      if (name.suffix) latex.push(`suffix=${this.enc_latex({value: name.suffix})}`)
+      if (family) latex.push(`family=${this._enc_creator_part(family)}`)
+      if (name.given) latex.push(`given=${this._enc_creator_part(name.given)}`)
+      if (initials) latex.push(`given-i=${this._enc_creator_part(initials)}`)
+      if (name.suffix) latex.push(`suffix=${this._enc_creator_part(name.suffix)}`)
       if (name['dropping-particle'] || name['non-dropping-particle']) {
-        latex.push(`prefix=${this.enc_latex({value: name['dropping-particle'] || name['non-dropping-particle']})}`)
+        latex.push(`prefix=${this._enc_creator_part(name['dropping-particle'] || name['non-dropping-particle'])}`)
         latex.push(`useprefix=${!!name['non-dropping-particle']}`)
       }
       if (name['comma-suffix']) latex.push('juniorcomma=true')
@@ -1204,16 +1211,16 @@ export class Reference {
 
     if (family && Zotero.Utilities.XRegExp.test(family, this.startsWithLowercase)) family = new String(family) // tslint:disable-line:no-construct
 
-    if (family) family = this.enc_latex({value: family})
+    if (family) family = this._enc_creator_part(family)
 
     if (initials >= 0) name.given = `<span relax="true">${name.given.replace(this._enc_creators_initials_marker, '</span>')}`
 
     latex = ''
-    if (name['dropping-particle']) latex += this.enc_latex({value: this._enc_creators_pad_particle(name['dropping-particle'])})
-    if (name['non-dropping-particle']) latex += this.enc_latex({value: this._enc_creators_pad_particle(name['non-dropping-particle'])})
+    if (name['dropping-particle']) latex += this._enc_creator_part(this._enc_creators_pad_particle(name['dropping-particle']))
+    if (name['non-dropping-particle']) latex += this._enc_creator_part(this._enc_creators_pad_particle(name['non-dropping-particle']))
     if (family) latex += family
-    if (name.suffix) latex += `, ${this.enc_latex({value: name.suffix})}`
-    if (name.given) latex += `, ${this.enc_latex({value: name.given})}`
+    if (name.suffix) latex += `, ${this._enc_creator_part(name.suffix)}`
+    if (name.given) latex += `, ${this._enc_creator_part(name.given)}`
 
     return latex
   }
@@ -1247,20 +1254,20 @@ export class Reference {
     if (Zotero.Utilities.XRegExp.test(family, this.startsWithLowercase) || Zotero.Utilities.XRegExp.test(family, this.hasLowercaseWord)) family = new String(family) // tslint:disable-line:no-construct
 
     // https://github.com/retorquere/zotero-better-bibtex/issues/978 -- enc_latex can return null
-    family = this.enc_latex({value: family}, { creator: true }) || ''
+    family = family ? this._enc_creator_part(family) : ''
 
     // https://github.com/retorquere/zotero-better-bibtex/issues/976#issuecomment-393442419
     if (family[0] !== '{' && name.family.match(/[-\u2014\u2015\u2012\u2013]/)) family = `{${family}}`
 
-    if (name['dropping-particle']) family = this.enc_latex({value: this._enc_creators_pad_particle(name['dropping-particle'], true)}, { creator: true }) + family
+    if (name['dropping-particle']) family = this._enc_creator_part(this._enc_creators_pad_particle(name['dropping-particle'], true)) + family
 
     if (Translator.BetterBibTeX && Translator.preferences.bibtexParticleNoOp && (name['non-dropping-particle'] || name['dropping-particle'])) {
-      family = `{\\noopsort{${this.enc_latex({value: name.family.toLowerCase()}, { creator: true })}}}${family}`
+      family = `{\\noopsort{${this._enc_creator_part(name.family.toLowerCase())}}}${family}`
       this.metadata.noopsort = true
     }
 
-    if (name.given) name.given = this.enc_latex({value: name.given}, { creator: true })
-    if (name.suffix) name.suffix = this.enc_latex({value: name.suffix}, { creator: true })
+    if (name.given) name.given = this._enc_creator_part(name.given)
+    if (name.suffix) name.suffix = this._enc_creator_part(name.suffix)
 
     let latex = family
     if (name.suffix) latex += `, ${name.suffix}`

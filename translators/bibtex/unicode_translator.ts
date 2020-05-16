@@ -16,6 +16,11 @@ type ConverterOptions = {
   caseConversion?: boolean
   html?: boolean
   creator?: boolean
+  commandspacers?: boolean
+}
+
+export function replace_command_spacers(latex) {
+  return latex.replace(/\0(\s)/g, '{}$1').replace(/\0([^\${}_\^\\\/])/g, ' $1').replace(/\0/g, '')
 }
 
 const htmlConverter = new class HTMLConverter {
@@ -97,6 +102,8 @@ const htmlConverter = new class HTMLConverter {
 
     const ast: IZoteroMarkupNode = Zotero.BetterBibTeX.parseHTML(html, this.options)
     this.walk(ast)
+
+    if (!options.commandspacers) this.latex = replace_command_spacers(this.latex)
 
     this.latex = this.latex
       // .replace(/(\\\\)+[^\S\n]*\n\n/g, '\n\n') // I don't recall why I had the middle match, replaced by match below until I figure it out
@@ -267,6 +274,7 @@ const htmlConverter = new class HTMLConverter {
           // try compact representation first
           mapped = this.mapping[m[0].normalize('NFC')]
 
+          // normal char + 1 or two following combining diacritics
           if (!mapped && (diacritic = unicode2latex.diacritics.tolatex[m[0].substr(1,2)])) {
             const char = (this.mapping[text[i]] || { text: text[i], math: text[i] })[diacritic.mode]
             if (char) {
@@ -295,10 +303,12 @@ const htmlConverter = new class HTMLConverter {
         }
       }
 
+      // ??
       if (!mapped && text[i + 1] && (mapped = this.mapping[text.substr(i, 2)])) {
         i += 1
       }
 
+      // fallback -- single char mapping
       if (!mapped) mapped = this.mapping[text[i]] || { text: text[i] }
 
       // in and out of math mode
@@ -326,6 +336,7 @@ const htmlConverter = new class HTMLConverter {
       }
 
       latex += mapped[mode]
+      if (mapped.commandspacer) latex += '\0' // clean up below
 
       // only try to merge sup/sub if we were already in math mode, because if we were previously in text mode, testing for _^ is tricky.
       if (!switched && mode === 'math' && (m = latex.match(/(([\^_])\{[^{}]+)\}\2{(.\})$/))) {

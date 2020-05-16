@@ -517,10 +517,8 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "localeDateOrder": "dmy",
-    "options": {
-      "Normalize": true
-    },
+    "localeDateOrder": "ymd",
+    "options": {},
     "preferences": {
       "DOIandURL": "both",
       "ascii": "",
@@ -655,7 +653,7 @@
       "date": "2003",
       "extra": [
         "Citation Key: aleksiejunas2003determination",
-        "tex.publisher: AIP"
+        "Publisher: AIP"
       ],
       "issue": "6",
       "itemID": 2,
@@ -703,7 +701,7 @@
       "date": "2009",
       "extra": [
         "Citation Key: aleksiejunas2009carrier",
-        "tex.publisher: Wiley Online Library"
+        "Publisher: Wiley Online Library"
       ],
       "issue": "S2 2",
       "itemID": 3,
@@ -741,7 +739,7 @@
       "date": "1993",
       "extra": [
         "Citation Key: araujo1993lateral",
-        "tex.publisher: AIP"
+        "Publisher: AIP"
       ],
       "issue": "23",
       "itemID": 4,
@@ -779,7 +777,7 @@
       "date": "1994",
       "extra": [
         "Citation Key: araujo1994comparison",
-        "tex.publisher: AIP"
+        "Publisher: AIP"
       ],
       "issue": "1",
       "itemID": 5,
@@ -827,7 +825,7 @@
       "date": "1994",
       "extra": [
         "Citation Key: araujo1994determination",
-        "tex.publisher: Elsevier"
+        "Publisher: Elsevier"
       ],
       "issue": "1-3",
       "itemID": 6,
@@ -855,7 +853,7 @@
       "date": "1973",
       "extra": [
         "Citation Key: barker1973infrared",
-        "tex.publisher: APS"
+        "Publisher: APS"
       ],
       "issue": "2",
       "itemID": 7,
@@ -893,7 +891,7 @@
       "date": "2015",
       "extra": [
         "Citation Key: bieker2015correct",
-        "tex.publisher: APS"
+        "Publisher: APS"
       ],
       "issue": "12",
       "itemID": 8,
@@ -936,7 +934,7 @@
       "date": "2015",
       "extra": [
         "Citation Key: bieker2015spatially",
-        "tex.publisher: APS"
+        "Publisher: APS"
       ],
       "issue": "22",
       "itemID": 9,
@@ -974,7 +972,7 @@
       "date": "1993",
       "extra": [
         "Citation Key: blom1993carrier",
-        "tex.publisher: APS"
+        "Publisher: APS"
       ],
       "issue": "4",
       "itemID": 10,
@@ -1012,7 +1010,7 @@
       "date": "2011",
       "extra": [
         "Citation Key: bolinsson2011diffusion",
-        "tex.publisher: Elsevier"
+        "Publisher: Elsevier"
       ],
       "issue": "1",
       "itemID": 11,
@@ -1055,7 +1053,7 @@
       "date": "1996",
       "extra": [
         "Citation Key: bonard1996cathodoluminescence",
-        "tex.publisher: AIP"
+        "Publisher: AIP"
       ],
       "issue": "11",
       "itemID": 12,
@@ -1078,7 +1076,7 @@
       "date": "2000",
       "extra": [
         "Citation Key: boyes2000low",
-        "tex.publisher: Cambridge University Press"
+        "Publisher: Cambridge University Press"
       ],
       "issue": "4",
       "itemID": 13,
@@ -1106,7 +1104,7 @@
       "date": "1986",
       "extra": [
         "Citation Key: brum1986resonant",
-        "tex.publisher: APS"
+        "Publisher: APS"
       ],
       "issue": "2",
       "itemID": 14,
@@ -1144,6 +1142,7 @@
       "date": "2004",
       "extra": [
         "Citation Key: Campo_ijnsr_2004",
+        "Publisher: Materials Research Society",
         "tex.c1: Lehigh Univ, Bethlehem, PA 18015 USA.EOLEOLEMCORE Corp, Somerset, NJ 08873 USA.EOLEOLGeorgia Inst Technol, Atlanta, GA 30332 USA.",
         "tex.ga: 878CY",
         "tex.ids: Campo2004",
@@ -1154,7 +1153,6 @@
         "tex.pa: 506 KEYSTONE DR, WARRENDALE, PA 15086 USA",
         "tex.pg: 6",
         "tex.pi: WARRENDALE",
-        "tex.publisher: Materials Research Society",
         "tex.rp: Campo, EM, Lehigh Univ, Bethlehem, PA 18015 USA.",
         "tex.sc: Materials Science, Multidisciplinary",
         "tex.sn: 1092-5783",
@@ -1208,7 +1206,7 @@
       "date": "1999",
       "extra": [
         "Citation Key: chao1999diffusion",
-        "tex.publisher: AIP"
+        "Publisher: AIP"
       ],
       "issue": "5",
       "itemID": 16,
@@ -1241,7 +1239,7 @@
       "date": "2001",
       "extra": [
         "Citation Key: cherns2001edge",
-        "tex.publisher: AIP"
+        "Publisher: AIP"
       ],
       "issue": "18",
       "itemID": 17,
@@ -1304,7 +1302,7 @@
       "date": "2014",
       "extra": [
         "Citation Key: corfdir2014stacking",
-        "tex.publisher: APS"
+        "Publisher: APS"
       ],
       "issue": "19",
       "itemID": 18,
@@ -1378,7 +1376,7 @@
       "date": "2011",
       "extra": [
         "Citation Key: demers2011three",
-        "tex.publisher: Wiley Online Library"
+        "Publisher: Wiley Online Library"
       ],
       "issue": "3",
       "itemID": 20,
@@ -1400,7 +1398,7 @@
       "date": "1981",
       "extra": [
         "Citation Key: donolato1981analytical",
-        "tex.publisher: Wiley Online Library"
+        "Publisher: Wiley Online Library"
       ],
       "issue": "2",
       "itemID": 21,
@@ -1494,7 +1492,7 @@
       "date": "1997",
       "extra": [
         "Citation Key: drouin1997casino",
-        "tex.publisher: Wiley Online Library"
+        "Publisher: Wiley Online Library"
       ],
       "issue": "1",
       "itemID": 24,
@@ -1556,8 +1554,8 @@
       "date": "1997",
       "extra": [
         "Citation Key: duboz1997diffusion",
-        "tex.ids: duboz1997",
-        "tex.publisher: Elsevier"
+        "Publisher: Elsevier",
+        "tex.ids: duboz1997"
       ],
       "issue": "1-3",
       "itemID": 25,
@@ -1585,7 +1583,7 @@
       "date": "2011",
       "extra": [
         "Citation Key: edwards2011cathodoluminescence",
-        "tex.publisher: IOP Publishing"
+        "Publisher: IOP Publishing"
       ],
       "issue": "6",
       "itemID": 26,
@@ -1613,7 +1611,7 @@
       "date": "1971",
       "extra": [
         "Citation Key: everhart1971determination",
-        "tex.publisher: AIP"
+        "Publisher: AIP"
       ],
       "issue": "13",
       "itemID": 27,
@@ -1671,7 +1669,7 @@
       "date": "2017",
       "extra": [
         "Citation Key: feix2017ga",
-        "tex.publisher: APS"
+        "Publisher: APS"
       ],
       "issue": "1",
       "itemID": 28,
@@ -1704,7 +1702,7 @@
       "date": "1977",
       "extra": [
         "Citation Key: fitting1977electron",
-        "tex.publisher: Wiley Online Library"
+        "Publisher: Wiley Online Library"
       ],
       "issue": "1",
       "itemID": 29,
@@ -1727,6 +1725,7 @@
       "date": "1978",
       "extra": [
         "Citation Key: Fourie_optik_1978",
+        "Publisher: Wissenschaftliche Verlag Mbh",
         "tex.__markedentry: [jonas:]",
         "tex.af: FOURIE, JT",
         "tex.ga: FX221",
@@ -1737,7 +1736,6 @@
         "tex.pa: BIRKENWALDSTRASSE 44, POSTFACH 10 10 61, 70009 STUTTGART, GERMANY",
         "tex.pg: 5",
         "tex.pi: STUTTGART",
-        "tex.publisher: Wissenschaftliche Verlag Mbh",
         "tex.rp: FOURIE, JT (reprint author), NATL PHYS RES LAB,POB 395,PRETORIA,SOUTH AFRICA.",
         "tex.sc: Optics",
         "tex.sn: 0030-4026",
@@ -1781,7 +1779,7 @@
       "date": "1992",
       "extra": [
         "Citation Key: fujiwara1992observation",
-        "tex.publisher: Elsevier"
+        "Publisher: Elsevier"
       ],
       "issue": "1-3",
       "itemID": 31,
@@ -1819,7 +1817,7 @@
       "date": "2010",
       "extra": [
         "Citation Key: gustafsson2010determination",
-        "tex.publisher: AIP"
+        "Publisher: AIP"
       ],
       "issue": "7",
       "itemID": 32,
@@ -1887,7 +1885,7 @@
       "date": "2015",
       "extra": [
         "Citation Key: hafiz2015determination",
-        "tex.publisher: AIP Publishing"
+        "Publisher: AIP Publishing"
       ],
       "issue": "1",
       "itemID": 33,
@@ -1959,7 +1957,7 @@
       "date": "2016",
       "extra": [
         "Citation Key: hocker2016determination",
-        "tex.publisher: AIP Publishing"
+        "Publisher: AIP Publishing"
       ],
       "issue": "8",
       "itemID": 34,
@@ -1987,7 +1985,7 @@
       "date": "1994",
       "extra": [
         "Citation Key: holt1994quantitation",
-        "tex.publisher: Wiley Online Library"
+        "Publisher: Wiley Online Library"
       ],
       "issue": "2",
       "itemID": 35,
@@ -2019,7 +2017,7 @@
       "date": "1997",
       "extra": [
         "Citation Key: hovington1997casino",
-        "tex.publisher: Wiley Online Library"
+        "Publisher: Wiley Online Library"
       ],
       "issue": "1",
       "itemID": 36,
@@ -2041,7 +2039,7 @@
       "date": "1984",
       "extra": [
         "Citation Key: huebener1984applications",
-        "tex.publisher: IOP Publishing"
+        "Publisher: IOP Publishing"
       ],
       "issue": "2",
       "itemID": 37,
@@ -2089,7 +2087,7 @@
       "date": "2011",
       "extra": [
         "Citation Key: hwang2011carrier",
-        "tex.publisher: IOP Publishing"
+        "Publisher: IOP Publishing"
       ],
       "issue": "47",
       "itemID": 38,
@@ -2136,7 +2134,7 @@
       "date": "2006",
       "extra": [
         "Citation Key: jahn2006influence",
-        "tex.publisher: APS"
+        "Publisher: APS"
       ],
       "issue": "12",
       "itemID": 39,
@@ -2194,7 +2192,7 @@
       "date": "2005",
       "extra": [
         "Citation Key: jaravsiunas2005characterization",
-        "tex.publisher: Wiley Online Library"
+        "Publisher: Wiley Online Library"
       ],
       "issue": "4",
       "itemID": 40,
@@ -2283,7 +2281,7 @@
       "date": "1989",
       "extra": [
         "Citation Key: joy1989empirical",
-        "tex.publisher: Wiley Online Library"
+        "Publisher: Wiley Online Library"
       ],
       "issue": "4",
       "itemID": 42,
@@ -2320,7 +2318,7 @@
       "date": "1992",
       "extra": [
         "Citation Key: kan1992effects",
-        "tex.publisher: AIP"
+        "Publisher: AIP"
       ],
       "issue": "7",
       "itemID": 43,
@@ -2426,7 +2424,7 @@
       "date": "2016",
       "extra": [
         "Citation Key: lahnemann2016quenching",
-        "tex.publisher: IOP Publishing"
+        "Publisher: IOP Publishing"
       ],
       "issue": "45",
       "itemID": 45,
@@ -2468,7 +2466,7 @@
       "date": "1979",
       "extra": [
         "Citation Key: leheny1979dynamics",
-        "tex.publisher: Elsevier"
+        "Publisher: Elsevier"
       ],
       "issue": "11",
       "itemID": 46,
@@ -2501,7 +2499,7 @@
       "date": "1988",
       "extra": [
         "Citation Key: leo1988hot",
-        "tex.publisher: APS"
+        "Publisher: APS"
       ],
       "issue": "3",
       "itemID": 47,
@@ -2653,8 +2651,8 @@
       "date": "2017",
       "extra": [
         "Citation Key: lin2017efficient",
-        "tex.ids: Lin_2017",
-        "tex.publisher: IOP Publishing"
+        "Publisher: IOP Publishing",
+        "tex.ids: Lin_2017"
       ],
       "issue": "41",
       "itemID": 50,
@@ -2696,7 +2694,7 @@
       "date": "2016",
       "extra": [
         "Citation Key: liu2016exciton",
-        "tex.publisher: AIP Publishing"
+        "Publisher: AIP Publishing"
       ],
       "issue": "4",
       "itemID": 51,
@@ -2765,7 +2763,7 @@
       "date": "1987",
       "extra": [
         "Citation Key: lobentanzer1987cooling",
-        "tex.publisher: APS"
+        "Publisher: APS"
       ],
       "issue": "2",
       "itemID": 53,
@@ -2803,7 +2801,7 @@
       "date": "1987",
       "extra": [
         "Citation Key: lugli1987monte",
-        "tex.publisher: AIP"
+        "Publisher: AIP"
       ],
       "issue": "18",
       "itemID": 54,
@@ -2873,7 +2871,7 @@
       "date": "2009",
       "extra": [
         "Citation Key: malinauskas2009diffusion",
-        "tex.publisher: Wiley Online Library"
+        "Publisher: Wiley Online Library"
       ],
       "issue": "S2 2",
       "itemID": 56,
@@ -2906,7 +2904,7 @@
       "date": "1995",
       "extra": [
         "Citation Key: mansour1995theoretical",
-        "tex.publisher: AIP"
+        "Publisher: AIP"
       ],
       "issue": "6",
       "itemID": 57,
@@ -2934,7 +2932,7 @@
       "date": "1989",
       "extra": [
         "Citation Key: marchetti1989relaxation",
-        "tex.publisher: APS"
+        "Publisher: APS"
       ],
       "issue": "18",
       "itemID": 58,
@@ -2977,7 +2975,7 @@
       "date": "1991",
       "extra": [
         "Citation Key: morin1991capture",
-        "tex.publisher: IEEE"
+        "Publisher: IEEE"
       ],
       "issue": "6",
       "itemID": 59,
@@ -3035,7 +3033,7 @@
       "date": "1997",
       "extra": [
         "Citation Key: muth1997absorption",
-        "tex.publisher: AIP"
+        "Publisher: AIP"
       ],
       "issue": "18",
       "itemID": 60,
@@ -3068,7 +3066,7 @@
       "date": "1987",
       "extra": [
         "Citation Key: nash1987electron",
-        "tex.publisher: IOP Publishing"
+        "Publisher: IOP Publishing"
       ],
       "issue": "6",
       "itemID": 61,
@@ -3116,7 +3114,7 @@
       "date": "2013",
       "extra": [
         "Citation Key: naureen2013carrier",
-        "tex.publisher: AIP"
+        "Publisher: AIP"
       ],
       "issue": "21",
       "itemID": 62,
@@ -3179,7 +3177,7 @@
       "date": "2012",
       "extra": [
         "Citation Key: noltemeyer2012excitonic",
-        "tex.publisher: Cambridge University Press"
+        "Publisher: Cambridge University Press"
       ],
       "issue": "17",
       "itemID": 63,
@@ -3207,7 +3205,7 @@
       "date": "1984",
       "extra": [
         "Citation Key: oelgart1984kilovolt",
-        "tex.publisher: Wiley Online Library"
+        "Publisher: Wiley Online Library"
       ],
       "issue": "1",
       "itemID": 64,
@@ -3245,8 +3243,8 @@
       "date": "2006",
       "extra": [
         "Citation Key: pauc2006carrier",
-        "tex.ids: pauc2006carrier01",
-        "tex.publisher: AIP"
+        "Publisher: AIP",
+        "tex.ids: pauc2006carrier01"
       ],
       "issue": "16",
       "itemID": 65,
@@ -3284,7 +3282,7 @@
       "date": "2006",
       "extra": [
         "Citation Key: pauc2006carrier02",
-        "tex.publisher: Elsevier"
+        "Publisher: Elsevier"
       ],
       "issue": "4-6",
       "itemID": 66,
@@ -3352,7 +3350,7 @@
       "date": "1988",
       "extra": [
         "Citation Key: polland1988trapping",
-        "tex.publisher: APS"
+        "Publisher: APS"
       ],
       "issue": "11",
       "itemID": 67,
@@ -3390,7 +3388,7 @@
       "date": "1995",
       "extra": [
         "Citation Key: prabhu1995nonequilibrium",
-        "tex.publisher: APS"
+        "Publisher: APS"
       ],
       "issue": "20",
       "itemID": 68,
@@ -3433,7 +3431,7 @@
       "date": "1997",
       "extra": [
         "Citation Key: rosner1997correlation",
-        "tex.publisher: AIP"
+        "Publisher: AIP"
       ],
       "issue": "4",
       "itemID": 69,
@@ -3495,7 +3493,7 @@
       "date": "1920",
       "extra": [
         "Citation Key: saha1920liii",
-        "tex.publisher: Taylor & Francis"
+        "Publisher: Taylor & Francis"
       ],
       "issue": "238",
       "itemID": 71,
@@ -3573,6 +3571,7 @@
       "date": "1997",
       "extra": [
         "Citation Key: Salviati_msmc_1997",
+        "Number: 157",
         "tex.__markedentry: [jonas:]",
         "tex.af: Salviati, GEOLEOLZanotti-Fregonara, CEOLEOLAlbrecht, MEOLEOLChristiansen, SEOLEOLStrunk, HPEOLEOLMayer, MEOLEOLPelzmann, AEOLEOLKamp, MEOLEOLEbeling, KJEOLEOLBremser, MDEOLEOLDavis, RFEOLEOLShreter, YG",
         "tex.be: Cullis, AGEOLEOLHutchison, JL",
@@ -3586,7 +3585,6 @@
         "tex.j9: INST PHYS CONF SER",
         "tex.la: English",
         "tex.nr: 25",
-        "tex.number: 157",
         "tex.pa: TECHNO HOUSE, REDCLIFFE WAY, BRISTOL, ENGLAND BS1 6NX",
         "tex.pg: 6",
         "tex.pi: BRISTOL",
@@ -3664,7 +3662,7 @@
       "date": "2013",
       "extra": [
         "Citation Key: scajev2013temperature",
-        "tex.publisher: IOP Publishing"
+        "Publisher: IOP Publishing"
       ],
       "issue": "26",
       "itemID": 74,
@@ -3697,7 +3695,7 @@
       "date": "1970",
       "extra": [
         "Citation Key: shah1970photoexcited",
-        "tex.publisher: Elsevier"
+        "Publisher: Elsevier"
       ],
       "issue": "14",
       "itemID": 75,
@@ -3720,7 +3718,7 @@
       "date": "1986",
       "extra": [
         "Citation Key: shah1986hot",
-        "tex.publisher: IEEE"
+        "Publisher: IEEE"
       ],
       "issue": "9",
       "itemID": 76,
@@ -3814,7 +3812,7 @@
       "date": "2001",
       "extra": [
         "Citation Key: silva2001relaxation",
-        "tex.publisher: AIP"
+        "Publisher: AIP"
       ],
       "issue": "8",
       "itemID": 78,
@@ -3857,7 +3855,7 @@
       "date": "2018",
       "extra": [
         "Citation Key: sjakste2018hot",
-        "tex.publisher: IOP Publishing"
+        "Publisher: IOP Publishing"
       ],
       "issue": "35",
       "itemID": 79,
@@ -3925,7 +3923,7 @@
       "date": "1998",
       "extra": [
         "Citation Key: sugahara1998direct",
-        "tex.publisher: IOP Publishing"
+        "Publisher: IOP Publishing"
       ],
       "issue": "4A",
       "itemID": 80,
@@ -3996,7 +3994,7 @@
       "date": "1998",
       "extra": [
         "Citation Key: toth1998monte",
-        "tex.publisher: Wiley Online Library"
+        "Publisher: Wiley Online Library"
       ],
       "issue": "6",
       "itemID": 82,
@@ -4038,7 +4036,7 @@
       "date": "1995",
       "extra": [
         "Citation Key: vassilovski1995unambiguous",
-        "tex.publisher: IEEE"
+        "Publisher: IEEE"
       ],
       "issue": "7",
       "itemID": 83,
@@ -4071,7 +4069,7 @@
       "date": "1988",
       "extra": [
         "Citation Key: werner1988kilovolt",
-        "tex.publisher: IOP Publishing"
+        "Publisher: IOP Publishing"
       ],
       "issue": "1",
       "itemID": 84,
@@ -4187,7 +4185,7 @@
       "date": "2010",
       "extra": [
         "Citation Key: yakimov2010comment",
-        "tex.publisher: AIP"
+        "Publisher: AIP"
       ],
       "issue": "16",
       "itemID": 89,
@@ -4243,7 +4241,7 @@
       "date": "2008",
       "extra": [
         "Citation Key: yoo2008probing",
-        "tex.publisher: Wiley Online Library"
+        "Publisher: Wiley Online Library"
       ],
       "issue": "4",
       "itemID": 91,
@@ -4285,7 +4283,7 @@
       "date": "2012",
       "extra": [
         "Citation Key: yoo2012exciton",
-        "tex.publisher: ACS Publications"
+        "Publisher: ACS Publications"
       ],
       "issue": "2",
       "itemID": 92,
@@ -4328,7 +4326,7 @@
       "date": "1999",
       "extra": [
         "Citation Key: zakhleniuk1999quantum",
-        "tex.publisher: Wiley Online Library"
+        "Publisher: Wiley Online Library"
       ],
       "issue": "1",
       "itemID": 93,
@@ -4376,7 +4374,7 @@
       "date": "1989",
       "extra": [
         "Citation Key: zarem1989direct",
-        "tex.publisher: AIP"
+        "Publisher: AIP"
       ],
       "issue": "16",
       "itemID": 94,
@@ -4448,7 +4446,7 @@
       "date": "2016",
       "extra": [
         "Citation Key: zettler2016observation",
-        "tex.publisher: ACS Publications"
+        "Publisher: ACS Publications"
       ],
       "issue": "2",
       "itemID": 95,
@@ -4924,6 +4922,7 @@
       "date": "1996",
       "extra": [
         "Citation Key: Christiansen_pssa_1996",
+        "Publisher: Akademie Verlag Gmbh",
         "tex.ga: VC159",
         "tex.j9: PHYS STATUS SOLIDI A-APPL RES",
         "tex.ji: Phys. Status Solidi A-Appl. Res.",
@@ -4932,7 +4931,6 @@
         "tex.pa: MUHLENSTRASSE 33-34, D-13187 BERLIN, GERMANY",
         "tex.pg: 22",
         "tex.pi: BERLIN",
-        "tex.publisher: Akademie Verlag Gmbh",
         "tex.rp: Christiansen, S, UNIV ERLANGEN NURNBERG,INSTEOLEOLWERKSTOFFWISSENSCH,MIKROCHARAKTERISIERUNG,CAUESTR 6,D-91058EOLEOLERLANGEN,GERMANY.",
         "tex.sc: Materials Science, Multidisciplinary; Physics, Applied; Physics,EOLEOLCondensed Matter",
         "tex.sn: 0031-8965",
@@ -4976,7 +4974,7 @@
       "date": "1964",
       "extra": [
         "Citation Key: Blank_pssb_1964",
-        "tex.publisher: WILEY-VCH Verlag"
+        "Publisher: WILEY-VCH Verlag"
       ],
       "issue": "3",
       "itemID": 104,
@@ -5134,7 +5132,7 @@
       "date": "2006",
       "extra": [
         "Citation Key: Paskov_pssc_2006",
-        "tex.publisher: WILEY-VCH Verlag"
+        "Publisher: WILEY-VCH Verlag"
       ],
       "issue": "6",
       "itemID": 107,
@@ -5193,7 +5191,7 @@
       "date": "2008",
       "extra": [
         "Citation Key: Paskov_pssc_2008",
-        "tex.publisher: WILEY-VCH Verlag"
+        "Publisher: WILEY-VCH Verlag"
       ],
       "issue": "6",
       "itemID": 108,
@@ -5471,7 +5469,7 @@
       "date": "1994",
       "extra": [
         "Citation Key: Hirsch_scanning_1994",
-        "tex.publisher: Wiley Periodicals, Inc."
+        "Publisher: Wiley Periodicals, Inc."
       ],
       "issue": "2",
       "itemID": 114,
@@ -6007,7 +6005,7 @@
       "date": "2015",
       "extra": [
         "Citation Key: yakimov15",
-        "tex.publisher: Elsevier B.V."
+        "Publisher: Elsevier B.V."
       ],
       "itemID": 125,
       "itemType": "journalArticle",
@@ -8413,7 +8411,7 @@
       "date": "2011",
       "extra": [
         "Citation Key: Dogan_cgd_2011",
-        "tex.publisher: American Chemical Society"
+        "Publisher: American Chemical Society"
       ],
       "issue": "10",
       "itemID": 166,
@@ -8671,8 +8669,8 @@
       "date": "2005",
       "extra": [
         "Citation Key: Calarco_nl_2005",
-        "tex.ids: Calarco2005,Calarco_2005",
-        "tex.publisher: American Chemical Society"
+        "Publisher: American Chemical Society",
+        "tex.ids: Calarco2005,Calarco_2005"
       ],
       "issue": "5",
       "itemID": 171,
@@ -8915,8 +8913,8 @@
       "date": "2010",
       "extra": [
         "Citation Key: Dick_nl_2010",
-        "tex.ids: Dick_2010",
-        "tex.publisher: American Chemical Society"
+        "Publisher: American Chemical Society",
+        "tex.ids: Dick_2010"
       ],
       "issue": "9",
       "itemID": 176,
@@ -9048,7 +9046,7 @@
       "date": "2011",
       "extra": [
         "Citation Key: Zagonel_2011",
-        "tex.publisher: American Chemical Society"
+        "Publisher: American Chemical Society"
       ],
       "issue": "2",
       "itemID": 178,
@@ -9107,7 +9105,7 @@
       "date": "2011",
       "extra": [
         "Citation Key: Nguyen_nl_2011",
-        "tex.publisher: American Chemical Society"
+        "Publisher: American Chemical Society"
       ],
       "issue": "5",
       "itemID": 179,
@@ -10447,7 +10445,7 @@
       "date": "2009",
       "extra": [
         "Citation Key: Lim_nl_2009",
-        "tex.publisher: American Chemical Society"
+        "Publisher: American Chemical Society"
       ],
       "issue": "11",
       "itemID": 204,
@@ -10658,7 +10656,7 @@
       "date": "2000",
       "extra": [
         "Citation Key: Waltereit_nat_2000",
-        "tex.publisher: Macmillian Magazines Ltd."
+        "Publisher: Macmillian Magazines Ltd."
       ],
       "issue": "6798",
       "itemID": 208,
@@ -10795,7 +10793,7 @@
       "date": "2017",
       "extra": [
         "Citation Key: najafi2017",
-        "tex.publisher: Nature Publishing Group"
+        "Publisher: Nature Publishing Group"
       ],
       "issue": "May",
       "itemID": 211,
@@ -11020,7 +11018,7 @@
       "date": "2015-04",
       "extra": [
         "Citation Key: pust2015",
-        "tex.publisher: Nature Publishing Group"
+        "Publisher: Nature Publishing Group"
       ],
       "issue": "5",
       "itemID": 216,
@@ -11069,8 +11067,8 @@
       "date": "2009",
       "extra": [
         "Citation Key: Caroff_natnano_2009",
-        "tex.ids: Caroff_2009",
-        "tex.publisher: Nature Publishing Group"
+        "Publisher: Nature Publishing Group",
+        "tex.ids: Caroff_2009"
       ],
       "issue": "1",
       "itemID": 217,
@@ -11128,8 +11126,8 @@
       "date": "2009",
       "extra": [
         "Citation Key: Yan_natphot_2009",
-        "tex.ids: Yan_2009",
-        "tex.publisher: Nature Publishing Group"
+        "Publisher: Nature Publishing Group",
+        "tex.ids: Yan_2009"
       ],
       "issue": "10",
       "itemID": 219,
@@ -11168,8 +11166,8 @@
       "date": "2009",
       "extra": [
         "Citation Key: Pimputkar_natphot_2009",
-        "tex.__markedentry: [jonas:]",
-        "tex.publisher: Nature Publishing Group"
+        "Publisher: Nature Publishing Group",
+        "tex.__markedentry: [jonas:]"
       ],
       "issue": "4",
       "itemID": 220,
@@ -11458,7 +11456,7 @@
       "date": "1996",
       "extra": [
         "Citation Key: Neugebauer_apl_1996",
-        "tex.publisher: AIP"
+        "Publisher: AIP"
       ],
       "issue": "4",
       "itemID": 227,
@@ -11497,7 +11495,7 @@
       "date": "1997",
       "extra": [
         "Citation Key: Grandjean_apl_1997",
-        "tex.publisher: AIP"
+        "Publisher: AIP"
       ],
       "issue": "2",
       "itemID": 228,
@@ -11622,8 +11620,8 @@
       "date": "2002",
       "extra": [
         "Citation Key: Craven_apl_2002",
-        "tex.__markedentry: [jonas:]",
-        "tex.publisher: AIP"
+        "Publisher: AIP",
+        "tex.__markedentry: [jonas:]"
       ],
       "issue": "3",
       "itemID": 231,
@@ -11682,7 +11680,7 @@
       "date": "2002",
       "extra": [
         "Citation Key: Sun_jap_2002",
-        "tex.publisher: AIP"
+        "Publisher: AIP"
       ],
       "issue": "10",
       "itemID": 232,
@@ -11759,7 +11757,7 @@
       "date": "2003",
       "extra": [
         "Citation Key: Lu_apl_2003",
-        "tex.publisher: AIP"
+        "Publisher: AIP"
       ],
       "issue": "7",
       "itemID": 234,
@@ -11828,8 +11826,8 @@
       "date": "2003",
       "extra": [
         "Citation Key: Haskell_apl_2003",
-        "tex.__markedentry: [jonas:]",
-        "tex.publisher: AIP"
+        "Publisher: AIP",
+        "tex.__markedentry: [jonas:]"
       ],
       "issue": "4",
       "itemID": 235,
@@ -11858,7 +11856,7 @@
       "date": "2003",
       "extra": [
         "Citation Key: Vurgaftman_jap_2003",
-        "tex.publisher: AIP"
+        "Publisher: AIP"
       ],
       "issue": "6",
       "itemID": 236,
@@ -12066,8 +12064,8 @@
       "date": "2005",
       "extra": [
         "Citation Key: Liu_apl_2005",
-        "tex.numpages: 3",
-        "tex.publisher: AIP"
+        "Publisher: AIP",
+        "tex.numpages: 3"
       ],
       "issue": "2",
       "itemID": 240,
@@ -12126,9 +12124,9 @@
       "date": "2005",
       "extra": [
         "Citation Key: Haskell_apl_2005",
+        "Publisher: AIP",
         "tex.__markedentry: [jonas:]",
-        "tex.numpages: 3",
-        "tex.publisher: AIP"
+        "tex.numpages: 3"
       ],
       "issue": "11",
       "itemID": 241,
@@ -12157,6 +12155,7 @@
       "date": "2005",
       "extra": [
         "Citation Key: Reshchikov_jap_2005",
+        "Publisher: Amer Inst Physics",
         "tex.c1: Virginia Commonwealth Univ, Dept Elect Engn, Richmond, VA 23284 USA.EOLEOLVirginia Commonwealth Univ, Dept Phys, Richmond, VA 23284 USA.",
         "tex.di: 10.1063/1.1868059",
         "tex.em: mreshchi@vcu.edu",
@@ -12168,7 +12167,6 @@
         "tex.pa: CIRCULATION & FULFILLMENT DIV, 2 HUNTINGTON QUADRANGLE, STE 1 N O 1,EOLEOLMELVILLE, NY 11747-4501 USA",
         "tex.pg: 95",
         "tex.pi: MELVILLE",
-        "tex.publisher: Amer Inst Physics",
         "tex.rp: Reshchikov, MA, Virginia Commonwealth Univ, Dept Elect Engn, Med CollEOLEOLVirginia Campus, Richmond, VA 23284 USA.",
         "tex.sc: Physics, Applied",
         "tex.sn: 0021-8979",
@@ -12232,10 +12230,10 @@
       "date": "2005",
       "extra": [
         "Citation Key: Bai_jap_2005",
+        "Publisher: AIP",
         "tex.__markedentry: [jonas:]",
         "tex.eid: 116101",
-        "tex.numpages: 3",
-        "tex.publisher: AIP"
+        "tex.numpages: 3"
       ],
       "issue": "11",
       "itemID": 243,
@@ -12284,6 +12282,7 @@
       "date": "2005",
       "extra": [
         "Citation Key: Paskov_jap_2005",
+        "Publisher: Amer Inst Physics",
         "tex.c1: Linkoping Univ, Dept Phys & Measurement Technol, S-58183 Linkoping, Sweden.EOLEOLUniv Bremen, Inst Solid State Phys, D-28359 Bremen, Germany.",
         "tex.di: 10.1063/1.2128496",
         "tex.em: plapa@ifm.liu.se",
@@ -12295,7 +12294,6 @@
         "tex.pa: CIRCULATION & FULFILLMENT DIV, 2 HUNTINGTON QUADRANGLE, STE 1 N O 1,EOLEOLMELVILLE, NY 11747-4501 USA",
         "tex.pg: 7",
         "tex.pi: MELVILLE",
-        "tex.publisher: Amer Inst Physics",
         "tex.rp: Paskov, PP, Linkoping Univ, Dept Phys & Measurement Technol, S-58183EOLEOLLinkoping, Sweden.",
         "tex.sc: Physics, Applied",
         "tex.sn: 0021-8979",
@@ -12408,8 +12406,8 @@
       "date": "2006",
       "extra": [
         "Citation Key: Mei_apl_2006",
-        "tex.numpages: 3",
-        "tex.publisher: AIP"
+        "Publisher: AIP",
+        "tex.numpages: 3"
       ],
       "issue": "14",
       "itemID": 246,
@@ -12536,8 +12534,8 @@
       "date": "2006",
       "extra": [
         "Citation Key: Kawakami_apl_2006",
-        "tex.numpages: 3",
-        "tex.publisher: AIP"
+        "Publisher: AIP",
+        "tex.numpages: 3"
       ],
       "issue": "16",
       "itemID": 248,
@@ -12692,8 +12690,8 @@
       "date": "2007",
       "extra": [
         "Citation Key: Juillaguet_apl_2007",
-        "tex.numpages: 3",
-        "tex.publisher: AIP"
+        "Publisher: AIP",
+        "tex.numpages: 3"
       ],
       "issue": "11",
       "itemID": 251,
@@ -12722,6 +12720,7 @@
       "date": "2007",
       "extra": [
         "Citation Key: VandeWalle_jap_2007",
+        "Publisher: Amer Inst Physics",
         "tex.af: Van de Walle, Chris G.EOLEOLSegev, David",
         "tex.c1: Univ Calif Santa Barbara, Dept Mat, Santa Barbara, CA 93106 USA.",
         "tex.em: vandewalle@mrl.ucsb.edu",
@@ -12733,7 +12732,6 @@
         "tex.pa: CIRCULATION & FULFILLMENT DIV, 2 HUNTINGTON QUADRANGLE, STE 1 N O 1,EOLEOLMELVILLE, NY 11747-4501 USA",
         "tex.pg: 6",
         "tex.pi: MELVILLE",
-        "tex.publisher: Amer Inst Physics",
         "tex.rp: Van de Walle, CG, Univ Calif Santa Barbara, Dept Mat, Santa Barbara, CAEOLEOL93106 USA.",
         "tex.sc: Physics, Applied",
         "tex.sn: 0021-8979",
@@ -12782,6 +12780,7 @@
       "date": "2007",
       "extra": [
         "Citation Key: Robins_jap_2007a",
+        "Publisher: Amer Inst Physics",
         "tex.af: Robins, Lawrence H.EOLEOLBertness, Kris A.EOLEOLBarker, Joy M.EOLEOLSanford, Norman A.EOLEOLSchlager, John B.",
         "tex.c1: Natl Inst Stand & Technol, Gaithersburg, MD 20899 USA.EOLEOLNatl Inst Stand & Technol, Boulder, CO 80305 USA.",
         "tex.em: lawrence.robins@nist.gov",
@@ -12794,7 +12793,6 @@
         "tex.pa: CIRCULATION & FULFILLMENT DIV, 2 HUNTINGTON QUADRANGLE, STE 1 N O 1,EOLEOLMELVILLE, NY 11747-4501 USA",
         "tex.pg: 8",
         "tex.pi: MELVILLE",
-        "tex.publisher: Amer Inst Physics",
         "tex.rp: Robins, LH, Natl Inst Stand & Technol, Gaithersburg, MD 20899 USA.",
         "tex.sc: Physics, Applied",
         "tex.sn: 0021-8979",
@@ -12843,8 +12841,8 @@
       "date": "2007",
       "extra": [
         "Citation Key: Guhne_jap_2007",
-        "tex.numpages: 6",
-        "tex.publisher: AIP"
+        "Publisher: AIP",
+        "tex.numpages: 6"
       ],
       "issue": "11",
       "itemID": 254,
@@ -12951,9 +12949,9 @@
       "date": "2008",
       "extra": [
         "Citation Key: Cherns_apl_2008",
+        "Publisher: AIP",
         "tex.__markedentry: [jonas:]",
-        "tex.numpages: 3",
-        "tex.publisher: AIP"
+        "tex.numpages: 3"
       ],
       "issue": "12",
       "itemID": 256,
@@ -13002,8 +13000,8 @@
       "date": "2008",
       "extra": [
         "Citation Key: Bastek_apl_2008",
-        "tex.numpages: 3",
-        "tex.publisher: AIP"
+        "Publisher: AIP",
+        "tex.numpages: 3"
       ],
       "issue": "21",
       "itemID": 257,
@@ -13090,8 +13088,8 @@
       "date": "2008",
       "extra": [
         "Citation Key: Schlager_jap_2008",
-        "tex.numpages: 6",
-        "tex.publisher: AIP"
+        "Publisher: AIP",
+        "tex.numpages: 6"
       ],
       "issue": "12",
       "itemID": 259,
@@ -13193,8 +13191,8 @@
       "date": "2008",
       "extra": [
         "Citation Key: Badcock_apl_2008",
-        "tex.numpages: 3",
-        "tex.publisher: AIP"
+        "Publisher: AIP",
+        "tex.numpages: 3"
       ],
       "issue": "10",
       "itemID": 261,
@@ -13228,8 +13226,8 @@
       "date": "2008",
       "extra": [
         "Citation Key: Dierre_jap_2008b",
-        "tex.numpages: 4",
-        "tex.publisher: AIP"
+        "Publisher: AIP",
+        "tex.numpages: 4"
       ],
       "issue": "4",
       "itemID": 262,
@@ -13258,9 +13256,9 @@
       "date": "2008",
       "extra": [
         "Citation Key: Dorp_jap_2008",
+        "Publisher: AIP",
         "tex.__markedentry: [jonas:]",
-        "tex.numpages: 42",
-        "tex.publisher: AIP"
+        "tex.numpages: 42"
       ],
       "issue": "8",
       "itemID": 263,
@@ -13382,9 +13380,9 @@
       "date": "2008",
       "extra": [
         "Citation Key: Ino_apl_2008",
+        "Publisher: AIP",
         "tex.ids: ino2008low",
-        "tex.numpages: 3",
-        "tex.publisher: AIP"
+        "tex.numpages: 3"
       ],
       "issue": "23",
       "itemID": 265,
@@ -13443,8 +13441,8 @@
       "date": "2009",
       "extra": [
         "Citation Key: Corfdir_jap_2009b",
-        "tex.numpages: 8",
-        "tex.publisher: AIP"
+        "Publisher: AIP",
+        "tex.numpages: 8"
       ],
       "issue": "1",
       "itemID": 266,
@@ -13513,8 +13511,8 @@
       "date": "2009",
       "extra": [
         "Citation Key: Corfdir_jap_2009",
-        "tex.numpages: 7",
-        "tex.publisher: AIP"
+        "Publisher: AIP",
+        "tex.numpages: 7"
       ],
       "issue": "4",
       "itemID": 267,
@@ -13578,8 +13576,8 @@
       "date": "2009",
       "extra": [
         "Citation Key: Corfdir_apl_2009",
-        "tex.numpages: 3",
-        "tex.publisher: AIP"
+        "Publisher: AIP",
+        "tex.numpages: 3"
       ],
       "issue": "20",
       "itemID": 268,
@@ -13628,8 +13626,8 @@
       "date": "2009",
       "extra": [
         "Citation Key: Consonni_apl_2009",
-        "tex.numpages: 3",
-        "tex.publisher: AIP"
+        "Publisher: AIP",
+        "tex.numpages: 3"
       ],
       "issue": "24",
       "itemID": 269,
@@ -13731,8 +13729,8 @@
       "date": "2010",
       "extra": [
         "Citation Key: Chang_apl_2010",
-        "tex.numpages: 3",
-        "tex.publisher: AIP"
+        "Publisher: AIP",
+        "tex.numpages: 3"
       ],
       "issue": "1",
       "itemID": 271,
@@ -13801,8 +13799,8 @@
       "date": "2010",
       "extra": [
         "Citation Key: Corfdir_jap_2010",
-        "tex.numpages: 5",
-        "tex.publisher: AIP"
+        "Publisher: AIP",
+        "tex.numpages: 5"
       ],
       "issue": "4",
       "itemID": 272,
@@ -13836,8 +13834,8 @@
       "date": "2010",
       "extra": [
         "Citation Key: Sekiguchi_apl_2010",
-        "tex.numpages: 3",
-        "tex.publisher: AIP"
+        "Publisher: AIP",
+        "tex.numpages: 3"
       ],
       "issue": "23",
       "itemID": 273,
@@ -13896,8 +13894,8 @@
       "date": "2010",
       "extra": [
         "Citation Key: Haberlen_jap_2010",
-        "tex.numpages: 7",
-        "tex.publisher: AIP"
+        "Publisher: AIP",
+        "tex.numpages: 7"
       ],
       "issue": "3",
       "itemID": 274,
@@ -13946,8 +13944,8 @@
       "date": "2010",
       "extra": [
         "Citation Key: Renard_apl_2010",
-        "tex.numpages: 3",
-        "tex.publisher: AIP"
+        "Publisher: AIP",
+        "tex.numpages: 3"
       ],
       "issue": "8",
       "itemID": 275,
@@ -13991,7 +13989,7 @@
       "date": "2010",
       "extra": [
         "Citation Key: Lin_apl_2010",
-        "tex.publisher: AIP"
+        "Publisher: AIP"
       ],
       "issue": "7",
       "itemID": 276,
@@ -14030,8 +14028,8 @@
       "date": "2010",
       "extra": [
         "Citation Key: Zhu_jap_2010",
-        "tex.numpages: 8",
-        "tex.publisher: AIP"
+        "Publisher: AIP",
+        "tex.numpages: 8"
       ],
       "issue": "8",
       "itemID": 277,
@@ -14103,8 +14101,8 @@
       "date": "2011",
       "extra": [
         "Citation Key: Goodman2011",
-        "tex.numpages: 10",
-        "tex.publisher: AIP"
+        "Publisher: AIP",
+        "tex.numpages: 10"
       ],
       "issue": "8",
       "itemID": 279,
@@ -14148,9 +14146,9 @@
       "date": "2011",
       "extra": [
         "Citation Key: Wolz_apl_2011",
+        "Publisher: AIP",
         "tex.__markedentry: [jonas:]",
-        "tex.numpages: 3",
-        "tex.publisher: AIP"
+        "tex.numpages: 3"
       ],
       "issue": "26",
       "itemID": 280,
@@ -14224,9 +14222,9 @@
       "date": "2011",
       "extra": [
         "Citation Key: Jonen_apl_2011",
+        "Publisher: AIP",
         "tex.__markedentry: [jonas:]",
-        "tex.numpages: 3",
-        "tex.publisher: AIP"
+        "tex.numpages: 3"
       ],
       "issue": "1",
       "itemID": 281,
@@ -14343,8 +14341,8 @@
       "date": "2011",
       "extra": [
         "Citation Key: Jacopin_jap_2011",
-        "tex.numpages: 5",
-        "tex.publisher: AIP"
+        "Publisher: AIP",
+        "tex.numpages: 5"
       ],
       "issue": "6",
       "itemID": 283,
@@ -14441,8 +14439,8 @@
       "date": "1999",
       "extra": [
         "Citation Key: Leroux_jap_1999",
-        "tex.__markedentry: [jonas:]",
-        "tex.publisher: AIP"
+        "Publisher: AIP",
+        "tex.__markedentry: [jonas:]"
       ],
       "issue": "7",
       "itemID": 285,
@@ -14534,9 +14532,9 @@
       "date": "2012",
       "extra": [
         "Citation Key: Wolz_apl_2012",
+        "Publisher: AIP",
         "tex.__markedentry: [jonas:]",
-        "tex.numpages: 2",
-        "tex.publisher: AIP"
+        "tex.numpages: 2"
       ],
       "issue": "17",
       "itemID": 287,
@@ -14681,9 +14679,9 @@
       "date": "2012",
       "extra": [
         "Citation Key: Albert_apl_2012",
+        "Publisher: AIP",
         "tex.__markedentry: [jonas:]",
-        "tex.numpages: 4",
-        "tex.publisher: AIP"
+        "tex.numpages: 4"
       ],
       "issue": "23",
       "itemID": 290,
@@ -14727,9 +14725,9 @@
       "date": "2012",
       "extra": [
         "Citation Key: Lethy_jap_2012",
+        "Publisher: AIP",
         "tex.__markedentry: [jonas:]",
-        "tex.numpages: 7",
-        "tex.publisher: AIP"
+        "tex.numpages: 7"
       ],
       "issue": "2",
       "itemID": 291,
@@ -14758,9 +14756,9 @@
       "date": "2012",
       "extra": [
         "Citation Key: Corfdir_jap_2012",
+        "Publisher: AIP",
         "tex.__markedentry: [jonas:]",
-        "tex.numpages: 5",
-        "tex.publisher: AIP"
+        "tex.numpages: 5"
       ],
       "issue": "5",
       "itemID": 292,
@@ -14809,9 +14807,9 @@
       "date": "2012",
       "extra": [
         "Citation Key: Vennegues_jap_2012",
+        "Publisher: AIP",
         "tex.__markedentry: [jonas:]",
-        "tex.numpages: 8",
-        "tex.publisher: AIP"
+        "tex.numpages: 8"
       ],
       "issue": "11",
       "itemID": 293,
@@ -15958,7 +15956,7 @@
       "date": "1963",
       "extra": [
         "Citation Key: Chadderton_pm_1963",
-        "tex.publisher: Taylor & Francis"
+        "Publisher: Taylor & Francis"
       ],
       "issue": "85",
       "itemID": 316,
@@ -15982,7 +15980,7 @@
       "date": "1965",
       "extra": [
         "Citation Key: Drum_pm_1965",
-        "tex.publisher: Taylor & Francis"
+        "Publisher: Taylor & Francis"
       ],
       "issue": "110",
       "itemID": 317,
@@ -16103,6 +16101,7 @@
       "date": "2010",
       "extra": [
         "Citation Key: Oliver_jpd_2010",
+        "Publisher: Iop Publishing Ltd",
         "tex.af: Oliver, R. A.EOLEOLBennett, S. E.EOLEOLZhu, T.EOLEOLBeesley, D. J.EOLEOLKappers, M. J.EOLEOLSaxey, D. W.EOLEOLCerezo, A.EOLEOLHumphreys, C. J.",
         "tex.c1: [Oliver, R. A.; Bennett, S. E.; Zhu, T.; Beesley, D. J.; Kappers, M. J.; Humphreys, C. J.] Univ Cambridge, Dept Mat Sci & Met, Cambridge CB2 3QZ, England.EOLEOL[Saxey, D. W.; Cerezo, A.] Univ Oxford, Dept Mat, Oxford OX1 3PH, England.",
         "tex.fu: EPSRC ; Royal Society ; Sharp Laboratories of Europe and PembrokeEOLEOLCollege, Cambridge",
@@ -16115,7 +16114,6 @@
         "tex.pa: DIRAC HOUSE, TEMPLE BACK, BRISTOL BS1 6BE, ENGLAND",
         "tex.pg: 8",
         "tex.pi: BRISTOL",
-        "tex.publisher: Iop Publishing Ltd",
         "tex.rp: Oliver, RA, Univ Cambridge, Dept Mat Sci & Met, Pembroke St, CambridgeEOLEOLCB2 3QZ, England.",
         "tex.sc: Physics, Applied",
         "tex.sn: 0022-3727",
@@ -18184,7 +18182,7 @@
       "date": "2005",
       "extra": [
         "Citation Key: nakaji2005contrast",
-        "tex.publisher: Oxford University Press"
+        "Publisher: Oxford University Press"
       ],
       "issue": "3",
       "itemID": 363,
@@ -18261,8 +18259,8 @@
       "date": "1985-07",
       "extra": [
         "Citation Key: Miller1985",
-        "tex.numpages: 0",
-        "tex.publisher: American Physical Society"
+        "Publisher: American Physical Society",
+        "tex.numpages: 0"
       ],
       "issue": "2",
       "itemID": 365,
@@ -18393,7 +18391,7 @@
       "date": "1992",
       "extra": [
         "Citation Key: Perlin_prb_1992",
-        "tex.publisher: American Physical Society"
+        "Publisher: American Physical Society"
       ],
       "issue": "23",
       "itemID": 368,
@@ -18465,8 +18463,8 @@
       "date": "1994",
       "extra": [
         "Citation Key: Murayama_prb_1994",
+        "Publisher: American Physical Society",
         "tex.ids: Murayama_1994",
-        "tex.publisher: American Physical Society",
         "tex.refid: 10.1103/PhysRevB.49.4710"
       ],
       "issue": "7",
@@ -18511,7 +18509,7 @@
       "date": "1996",
       "extra": [
         "Citation Key: Menniger_prb_1996",
-        "tex.publisher: American Physical Society",
+        "Publisher: American Physical Society",
         "tex.refid: 10.1103/PhysRevB.53.1881"
       ],
       "issue": "4",
@@ -18571,7 +18569,7 @@
       "date": "1996",
       "extra": [
         "Citation Key: Shan_prb_1996",
-        "tex.publisher: American Physical Society"
+        "Publisher: American Physical Society"
       ],
       "issue": "19",
       "itemID": 372,
@@ -18620,7 +18618,7 @@
       "date": "1996",
       "extra": [
         "Citation Key: Rieger_prb_1996",
-        "tex.publisher: American Physical Society"
+        "Publisher: American Physical Society"
       ],
       "issue": "24",
       "itemID": 373,
@@ -18792,7 +18790,7 @@
       "date": "1997",
       "extra": [
         "Citation Key: Bernardini_prb_1997",
-        "tex.publisher: American Physical Society",
+        "Publisher: American Physical Society",
         "tex.refid: 10.1103/PhysRevB.56.R10024"
       ],
       "issue": "16",
@@ -18822,7 +18820,7 @@
       "date": "1998",
       "extra": [
         "Citation Key: Stampfl_prb_1998",
-        "tex.publisher: American Physical Society",
+        "Publisher: American Physical Society",
         "tex.refid: 10.1103/PhysRevB.57.R15052"
       ],
       "issue": "24",
@@ -18915,8 +18913,8 @@
       "date": "1999-07",
       "extra": [
         "Citation Key: Chow1999",
-        "tex.numpages: 0",
-        "tex.publisher: American Physical Society"
+        "Publisher: American Physical Society",
+        "tex.numpages: 0"
       ],
       "issue": "3",
       "itemID": 381,
@@ -18960,7 +18958,7 @@
       "date": "1999",
       "extra": [
         "Citation Key: Fiorentini_prb_1999",
-        "tex.publisher: American Physical Society",
+        "Publisher: American Physical Society",
         "tex.refid: 10.1103/PhysRevB.60.8849"
       ],
       "issue": "12",
@@ -19045,9 +19043,9 @@
       "date": "2002",
       "extra": [
         "Citation Key: Korona_prb_2002",
+        "Publisher: American Physical Society",
         "tex.ids: korona2002dynamics",
-        "tex.numpages: 8",
-        "tex.publisher: American Physical Society"
+        "tex.numpages: 8"
       ],
       "issue": "23",
       "itemID": 384,
@@ -19081,8 +19079,8 @@
       "date": "2003-05",
       "extra": [
         "Citation Key: Kalliakos2003",
-        "tex.numpages: 10",
-        "tex.publisher: American Physical Society"
+        "Publisher: American Physical Society",
+        "tex.numpages: 10"
       ],
       "issue": "20",
       "itemID": 385,
@@ -19131,7 +19129,7 @@
       "date": "2003",
       "extra": [
         "Citation Key: Morel2003",
-        "tex.publisher: APS"
+        "Publisher: APS"
       ],
       "issue": "4",
       "itemID": 386,
@@ -19251,8 +19249,8 @@
       "date": "2005-03",
       "extra": [
         "Citation Key: Grabowska_prb_2005",
-        "tex.numpages: 7",
-        "tex.publisher: American Physical Society"
+        "Publisher: American Physical Society",
+        "tex.numpages: 7"
       ],
       "issue": "11",
       "itemID": 388,
@@ -19379,8 +19377,8 @@
       "date": "2007",
       "extra": [
         "Citation Key: Pedros_prb_2007",
-        "tex.numpages: 8",
-        "tex.publisher: American Physical Society"
+        "Publisher: American Physical Society",
+        "tex.numpages: 8"
       ],
       "issue": "11",
       "itemID": 390,
@@ -19464,9 +19462,9 @@
       "date": "2007",
       "extra": [
         "Citation Key: Schley_prb_2007",
+        "Publisher: American Physical Soc",
         "tex.nr: 40",
         "tex.pg: 8",
-        "tex.publisher: American Physical Soc",
         "tex.sc: Physics, Condensed Matter",
         "tex.sn: 1098-0121",
         "tex.tc: 18",
@@ -19509,8 +19507,8 @@
       "date": "2007-10",
       "extra": [
         "Citation Key: Tuomisto_prb_2007",
-        "tex.numpages: 10",
-        "tex.publisher: American Physical Society"
+        "Publisher: American Physical Society",
+        "tex.numpages: 10"
       ],
       "issue": "16",
       "itemID": 392,
@@ -19634,7 +19632,7 @@
       "date": "2009",
       "extra": [
         "Citation Key: Bardoux_prb_2009",
-        "tex.publisher: American Physical Society",
+        "Publisher: American Physical Society",
         "tex.refid: 10.1103/PhysRevB.79.155307"
       ],
       "issue": "15",
@@ -19747,8 +19745,8 @@
       "date": "2009",
       "extra": [
         "Citation Key: Corfdir_prb_2009",
-        "tex.numpages: 4",
-        "tex.publisher: APS"
+        "Publisher: APS",
+        "tex.numpages: 4"
       ],
       "issue": "15",
       "itemID": 397,
@@ -19852,8 +19850,8 @@
       "date": "2009",
       "extra": [
         "Citation Key: Spirkoska_prb_2009",
+        "Publisher: American Physical Society",
         "tex.ids: Spirkoska_2009",
-        "tex.publisher: American Physical Society",
         "tex.refid: 10.1103/PhysRevB.80.245325"
       ],
       "issue": "24",
@@ -19898,7 +19896,7 @@
       "date": "2010",
       "extra": [
         "Citation Key: Brandt_prb_2010",
-        "tex.publisher: American Physical Society",
+        "Publisher: American Physical Society",
         "tex.refid: 10.1103/PhysRevB.81.045302"
       ],
       "issue": "4",
@@ -19958,7 +19956,7 @@
       "date": "2010",
       "extra": [
         "Citation Key: Jahn_prb_2010",
-        "tex.publisher: American Physical Society",
+        "Publisher: American Physical Society",
         "tex.refid: 10.1103/PhysRevB.81.125314"
       ],
       "issue": "12",
@@ -20320,6 +20318,7 @@
       "date": "2011",
       "extra": [
         "Citation Key: Tischer_prb_2011",
+        "Publisher: Amer Physical Soc",
         "tex.af: Tischer, IngoEOLEOLFeneberg, MartinEOLEOLSchirra, MartinEOLEOLYacoub, HadyEOLEOLSauer, RolfEOLEOLThonke, KlausEOLEOLWunderer, ThomasEOLEOLScholz, Ferdinand",
         "tex.c1: [Tischer, Ingo; Feneberg, Martin; Schirra, Martin; Yacoub, Hady; Sauer, Rolf; Thonke, Klaus] Univ Ulm, Inst Quantenmaterie, Grp Halbleiterphys, D-89069 Ulm, Germany.EOLEOL[Wunderer, Thomas; Scholz, Ferdinand] Univ Ulm, Inst Optoelekt, D-89069 Ulm, Germany.",
         "tex.em: ingo.tischer@uni-ulm.de",
@@ -20331,7 +20330,6 @@
         "tex.pa: ONE PHYSICS ELLIPSE, COLLEGE PK, MD 20740-3844 USA",
         "tex.pg: 6",
         "tex.pi: COLLEGE PK",
-        "tex.publisher: Amer Physical Soc",
         "tex.rp: Tischer, I, Univ Ulm, Inst Quantenmaterie, Grp Halbleiterphys, D-89069EOLEOLUlm, Germany.",
         "tex.sc: Physics, Condensed Matter",
         "tex.sn: 1098-0121",
@@ -20568,9 +20566,9 @@
       "date": "2011",
       "extra": [
         "Citation Key: Khromov_prb_2011",
+        "Publisher: American Physical Society",
         "tex.__markedentry: [jonas:]",
-        "tex.numpages: 6",
-        "tex.publisher: American Physical Society"
+        "tex.numpages: 6"
       ],
       "issue": "7",
       "itemID": 410,
@@ -20609,7 +20607,7 @@
       "date": "2011",
       "extra": [
         "Citation Key: Belabbes_prb_2011",
-        "tex.publisher: American Physical Society",
+        "Publisher: American Physical Society",
         "tex.refid: 10.1103/PhysRevB.84.125108"
       ],
       "issue": "12",
@@ -20680,8 +20678,8 @@
       "extra": [
         "Citation Key: Lahnemann_prb_2011",
         "arXiv: 1109.6039",
+        "Publisher: American Physical Society",
         "tex.ids: Lahnemann2011,Lahnemann_2011",
-        "tex.publisher: American Physical Society",
         "tex.refid: 10.1103/PhysRevB.84.155303"
       ],
       "issue": "15",
@@ -20815,10 +20813,10 @@
       "extra": [
         "Citation Key: Jahn_prb_2012",
         "arXiv: 1201.6540",
+        "Publisher: American Physical Society",
         "tex.bibcode: 2012PhRvB..85d5323J",
         "tex.ids: Jahn_2012",
-        "tex.numpages: 7",
-        "tex.publisher: American Physical Society"
+        "tex.numpages: 7"
       ],
       "issue": "4",
       "itemID": 414,
@@ -20893,9 +20891,9 @@
       "extra": [
         "Citation Key: Lahnemann_prb_2012",
         "arXiv: 1201.4294",
+        "Publisher: American Physical Society",
         "tex.bibcode: 2012PhRvB..86h1302L",
-        "tex.numpages: 5",
-        "tex.publisher: American Physical Society"
+        "tex.numpages: 5"
       ],
       "issue": "8",
       "itemID": 415,
@@ -20929,8 +20927,8 @@
       "date": "2013",
       "extra": [
         "Citation Key: Belabbes_prb_2013",
-        "tex.numpages: 6",
-        "tex.publisher: American Physical Society"
+        "Publisher: American Physical Society",
+        "tex.numpages: 6"
       ],
       "issue": "3",
       "itemID": 416,
@@ -20984,9 +20982,9 @@
       "date": "2013-03",
       "extra": [
         "Citation Key: Graham_prb_2013",
+        "Publisher: American Physical Society",
         "tex.ids: Graham2013,Graham_2013",
-        "tex.numpages: 7",
-        "tex.publisher: American Physical Society"
+        "tex.numpages: 7"
       ],
       "issue": "12",
       "itemID": 417,
@@ -21118,8 +21116,8 @@
       "date": "2014-01",
       "extra": [
         "Citation Key: Lyons_prb_2014",
-        "tex.numpages: 8",
-        "tex.publisher: American Physical Society"
+        "Publisher: American Physical Society",
+        "tex.numpages: 8"
       ],
       "issue": "3",
       "itemID": 419,
@@ -21336,10 +21334,10 @@
       "date": "2014-10",
       "extra": [
         "Citation Key: Hauswald_prb_2014",
+        "Publisher: American Physical Society",
         "tex.ids: Hauswald2014,Hauswald_2014,hauswald2014origin",
         "tex.mendeley-tags: PDI",
-        "tex.numpages: 9",
-        "tex.publisher: American Physical Society"
+        "tex.numpages: 9"
       ],
       "issue": "16",
       "itemID": 423,
@@ -21566,8 +21564,8 @@
       "date": "2013-02",
       "extra": [
         "Citation Key: Demchenko_prl_2013",
-        "tex.numpages: 5",
-        "tex.publisher: American Physical Society"
+        "Publisher: American Physical Society",
+        "tex.numpages: 5"
       ],
       "issue": "8",
       "itemID": 428,
@@ -21669,7 +21667,7 @@
       "date": "1984",
       "extra": [
         "Citation Key: Miller_prl_1984",
-        "tex.publisher: American Physical Society",
+        "Publisher: American Physical Society",
         "tex.refid: 10.1103/PhysRevLett.53.2173"
       ],
       "issue": "22",
@@ -21719,7 +21717,7 @@
       "date": "2004",
       "extra": [
         "Citation Key: Schomig_prl_2004",
-        "tex.publisher: American Physical Society",
+        "Publisher: American Physical Society",
         "tex.refid: 10.1103/PhysRevLett.92.106802"
       ],
       "issue": "10",
@@ -22518,7 +22516,7 @@
       "date": "2009",
       "extra": [
         "Citation Key: Wang_jvsta_2009",
-        "tex.publisher: AVS"
+        "Publisher: AVS"
       ],
       "issue": "4",
       "itemID": 445,
@@ -22557,7 +22555,7 @@
       "date": "2009",
       "extra": [
         "Citation Key: Reshchikov_jvstb_2009",
-        "tex.publisher: AVS"
+        "Publisher: AVS"
       ],
       "issue": "3",
       "itemID": 446,
@@ -22745,8 +22743,8 @@
       "date": "1989",
       "extra": [
         "Citation Key: Paisley_jvsta_1989",
-        "tex.__markedentry: [jonas:]",
-        "tex.publisher: AVS"
+        "Publisher: AVS",
+        "tex.__markedentry: [jonas:]"
       ],
       "issue": "3",
       "itemID": 450,
@@ -22805,8 +22803,8 @@
       "date": "1991",
       "extra": [
         "Citation Key: Strite_jvstb_1991",
-        "tex.__markedentry: [jonas:]",
-        "tex.publisher: AVS"
+        "Publisher: AVS",
+        "tex.__markedentry: [jonas:]"
       ],
       "issue": "4",
       "itemID": 451,
@@ -22895,9 +22893,9 @@
       "date": "2006",
       "extra": [
         "Citation Key: Paskova_procspie_2006",
+        "Publisher: SPIE",
         "tex.location: San Jose, CA, USA",
-        "tex.numpages: 7",
-        "tex.publisher: SPIE"
+        "tex.numpages: 7"
       ],
       "issue": "1",
       "itemID": 452,
@@ -23147,6 +23145,7 @@
       "date": "1997",
       "extra": [
         "Citation Key: Takeuchi_jjap_1997",
+        "Publisher: Japan J Applied Physics",
         "tex.de: GaInN; strained quantum well; (0001) orientation; piezoelectric effect;EOLEOLquantum-confined Stark effect",
         "tex.ga: WU036",
         "tex.j9: JPN J APPL PHYS PT 2",
@@ -23156,7 +23155,6 @@
         "tex.pa: DAINI TOYOKAIJI BLDG 24-8 SHINBASHI 4-CHOME, MINATO-KU TOKYO 105, JAPAN",
         "tex.pg: 4",
         "tex.pi: MINATO-KU TOKYO",
-        "tex.publisher: Japan J Applied Physics",
         "tex.rp: Takeuchi, T, MEIJO UNIV,DEPT ELECT & ELECT ENGN,TEMPAKU KU,1-501EOLEOLSHIOGAMAGUCHI,NAGOYA,AICHI 468,JAPAN.",
         "tex.sc: Physics, Applied",
         "tex.tc: 384",
@@ -23204,8 +23202,8 @@
       "date": "1999",
       "extra": [
         "Citation Key: Mominuzzaman_jjap_1999",
-        "tex.numpages: 5",
-        "tex.publisher: The Japan Society of Applied Physics"
+        "Publisher: The Japan Society of Applied Physics",
+        "tex.numpages: 5"
       ],
       "issue": "2A",
       "itemID": 459,
@@ -23244,8 +23242,8 @@
       "date": "2004",
       "extra": [
         "Citation Key: Kikuchi_jjap_2004",
-        "tex.numpages: 3",
-        "tex.publisher: The Japan Society of Applied Physics"
+        "Publisher: The Japan Society of Applied Physics",
+        "tex.numpages: 3"
       ],
       "issue": "12A",
       "itemID": 460,
@@ -23284,8 +23282,8 @@
       "date": "2005",
       "extra": [
         "Citation Key: Mitsui_jjap_2005",
-        "tex.numpages: 4",
-        "tex.publisher: The Japan Society of Applied Physics"
+        "Publisher: The Japan Society of Applied Physics",
+        "tex.numpages: 4"
       ],
       "issue": "4A",
       "itemID": 461,
@@ -23329,8 +23327,8 @@
       "date": "2006",
       "extra": [
         "Citation Key: Baker_jjap_2006",
-        "tex.numpages: 4",
-        "tex.publisher: The Japan Society of Applied Physics"
+        "Publisher: The Japan Society of Applied Physics",
+        "tex.numpages: 4"
       ],
       "issue": "6",
       "itemID": 462,
@@ -23384,8 +23382,8 @@
       "date": "2010",
       "extra": [
         "Citation Key: Ku_jjap_2010",
-        "tex.numpages: 4",
-        "tex.publisher: The Japan Society of Applied Physics"
+        "Publisher: The Japan Society of Applied Physics",
+        "tex.numpages: 4"
       ],
       "issue": "4",
       "itemID": 463,
@@ -23682,7 +23680,7 @@
       "date": "1975-06",
       "extra": [
         "Citation Key: Hagemann_jopt_1975",
-        "tex.publisher: OSA"
+        "Publisher: OSA"
       ],
       "issue": "6",
       "itemID": 469,
@@ -23721,7 +23719,7 @@
       "date": "2009",
       "extra": [
         "Citation Key: Hong_oe_2009",
-        "tex.publisher: OSA"
+        "Publisher: OSA"
       ],
       "issue": "20",
       "itemID": 470,
@@ -25322,8 +25320,8 @@
       "date": "2014",
       "extra": [
         "Citation Key: Nogues_apl_2014",
-        "tex.ids: Nogues2014,nogues2014cathodoluminescence",
-        "tex.publisher: AIP"
+        "Publisher: AIP",
+        "tex.ids: Nogues2014,nogues2014cathodoluminescence"
       ],
       "itemID": 504,
       "itemType": "journalArticle",
