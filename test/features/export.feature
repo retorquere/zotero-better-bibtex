@@ -11,6 +11,7 @@ Scenario Outline: Export <references> references for BibLaTeX to <file>
 
   Examples:
      | file                                                                                           | references  |
+     | lone ogonek should have brace                                                                  | 1           |
      | Dateparser does not recognize de in Spanish dates #1513                                        | 1           |
      | Inconsistent date field formatting in BibLaTeX export #1493                                    | 1           |
      | Regression in export to better biblatex #1491                                                  | 1           |
@@ -139,6 +140,7 @@ Scenario Outline: Export <references> references for BibTeX to <file>
 
   Examples:
      | file                                                                               | references |
+     | lone ogonek should have brace                                                      | 1          |
      | Regression in export to better biblatex #1491                                      | 1          |
      | add date, origdate functions, and format-date filter #1488                         | 4          |
      | Some Unicode characters converted to LaTeX #1481                                   | 1          |

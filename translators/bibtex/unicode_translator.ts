@@ -20,7 +20,7 @@ type ConverterOptions = {
 }
 
 export function replace_command_spacers(latex) {
-  return latex.replace(/\0(\s)/g, '{}$1').replace(/\0([^\${}_\^\\\/])/g, ' $1').replace(/\0/g, '')
+  return latex.replace(/\0(\s)/g, '{}$1').replace(/\0([^;\.,!?\${}_\^\\\/])/g, ' $1').replace(/\0/g, '')
 }
 
 const htmlConverter = new class HTMLConverter {

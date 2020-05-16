@@ -596,7 +596,6 @@ export class Reference {
         if (!field.bare || (field.value as string).match(/\s/)) {
           // clean up unnecesary {} when followed by a char that safely terminates the command before
           // value = value.replace(/({})+($|[{}$\/\\.;,])/g, '$2') // don't remove trailing {} https://github.com/retorquere/zotero-better-bibtex/issues/1091
-          if (!(this.item.raw || field.raw)) value = value.replace(/({})+([{}\$\/\\\.;,])/g, '$2')
           value = `{${value}}`
         }
 

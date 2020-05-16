@@ -87,7 +87,7 @@
     "task-easy": "^1.0.1",
     "transliteration": "^2.1.11",
     "tslint": "^6.1.2",
-    "unicode2latex": "^2.1.23",
+    "unicode2latex": "^2.1.25",
     "words-to-numbers": "^1.5.1",
     "xregexp": "^4.3.0"
   },

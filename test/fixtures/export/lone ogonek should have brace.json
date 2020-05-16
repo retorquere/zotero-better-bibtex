@@ -1,0 +1,116 @@
+{
+  "collections": {
+    "coll:00000": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00000",
+      "name": "Untitled"
+    }
+  },
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "ascii": "",
+      "asciiBibLaTeX": true,
+      "asciiBibTeX": true,
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
+      "autoExport": "off",
+      "autoExportDelay": 1,
+      "autoExportIdleWait": 10,
+      "autoPin": true,
+      "automaticTags": true,
+      "auxImport": false,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": false,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "off",
+      "cacheFlushInterval": 5,
+      "citeCommand": "cite",
+      "citekeyFold": true,
+      "citekeyFormat": "[authors3][shortyear]",
+      "citeprocNoteCitekey": false,
+      "csquotes": "",
+      "debugLogDir": "",
+      "exportBibTeXStrings": "off",
+      "exportBraceProtection": true,
+      "exportTitleCase": true,
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "extraMergeTeX": true,
+      "git": "config",
+      "ignorePostscriptErrors": false,
+      "importBibTeXStrings": true,
+      "importCaseProtection": "off",
+      "importJabRefAbbreviations": true,
+      "importJabRefStrings": true,
+      "importSentenceCase": "on+guess",
+      "itemObserverDelay": 100,
+      "jabrefFormat": 0,
+      "keyConflictPolicy": "change",
+      "keyScope": "library",
+      "kuroshiro": false,
+      "mapMath": "",
+      "mapText": "",
+      "mapUnicode": "conservative",
+      "parseParticles": true,
+      "postscript": "",
+      "postscriptOverride": "",
+      "qualityReport": false,
+      "quickCopyMode": "latex",
+      "quickCopyPandocBrackets": false,
+      "rawImports": false,
+      "rawLaTag": "#LaTeX",
+      "relativeFilePaths": false,
+      "removeStock": true,
+      "retainCache": false,
+      "scrubDatabase": false,
+      "skipFields": "abstract, copyright, googlebooks",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "strings": "",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
+      "warnBulkModify": 10,
+      "workers": 1
+    }
+  },
+  "items": [
+    {
+      "citationKey": "MunafAClarkFlint05",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M. R.",
+          "lastName": "Munaf\u0102\u02db"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "T.",
+          "lastName": "Clark"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Flint"
+        }
+      ],
+      "date": "April 2005",
+      "extra": [
+        "Citation Key: MunafAClarkFlint05"
+      ],
+      "issue": "4",
+      "itemID": 13315,
+      "itemType": "journalArticle",
+      "pages": "415\u2013419",
+      "publicationTitle": "Molecular psychiatry",
+      "title": "Does measurement instrument moderate the association between the serotonin transporter gene and anxiety-related personality traits? A meta-analysis.",
+      "url": "http://www.ncbi.nlm.nih.gov/pubmed/15599377",
+      "volume": "10"
+    }
+  ]
+}
