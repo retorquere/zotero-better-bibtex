@@ -36,6 +36,7 @@ for (const typeFields of Object.values(valid.field)) {
     if (is_supported) supported.field[field] = field[0].toUpperCase() + field.substring(1).replace(/[_-]/g, ' ').replace(/([a-z])([A-Z])/g, (m, l, u) => l + ' ' + u.toLowerCase())
   }
 }
+supported.field.numPages = 'Number of pages'
 
 function unalias(item) {
   delete item.inPublications

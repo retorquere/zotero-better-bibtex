@@ -19,6 +19,8 @@ import * as bibtexParser from '@retorquere/bibtex-parser'
 import { valid, supported } from '../gen/items/fields'
 import { arXiv } from '../content/arXiv'
 
+debug('supported fields:', supported)
+
 Reference.prototype.caseConversion = {
   title: true,
   series: true,
@@ -533,17 +535,17 @@ class ZoteroItem {
   protected $shortjournal() { return this.$journaltitle() }
   protected '$journal-full'() { return this.$journaltitle() }
 
-  protected $pages(value, field) {
-    const candidates = [{ numpages: 'numPages', pagetotal: 'numPages' }[field] || field].concat(['pages', 'numPages'])
-    value = value.replace(/\u2013/g, '-')
-    field = candidates.find(f => this.validFields[f])
-    if (!field) return this.fallback(candidates, value)
-
-    this.set(field, value)
+  protected $pages(value) {
+    if (!this.validFields.pages) return this.fallback(['pages'], value)
+    this.set('pages', value)
     return true
   }
-  protected $pagetotal(value, field) { return this.$pages(value, field) }
-  protected $numpages(value, field) { return this.$pages(value, field) }
+  protected $pagetotal(value) {
+    if (!this.validFields.numPages) return this.fallback(['numPages'], value)
+    this.set('numPages', value)
+    return true
+  }
+  protected $numpages(value, field) { return this.$pagetotal(value) }
 
   protected $volume(value) { return this.set('volume', value) }
 
