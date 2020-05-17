@@ -1,5 +1,15 @@
 # Changelog
 
+## [5.2.23] - 2020-05-17
+
+ - Import attachments with absolute path under Windows (#1522)
+ - Parse contributor as author
+ - fixes in for latex generation
+ - clean up DOI on export
+ - disable on obsolete versions of Zotero
+ - extra-field cheater syntax parsing improvements (#1471, #1510)
+ - don't export contents of extra if notes export is off (#1516)
+
 ## [5.2.21] - 2020-04-11
 
  - Fix "Pin BibTeX key from InspireHEP" (#1479)
