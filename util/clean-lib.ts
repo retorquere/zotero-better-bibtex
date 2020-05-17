@@ -2,6 +2,10 @@
 
 // test/fixtures/export/two ISSN number are freezing browser #110 + Generating keys and export broken #111.json 
 
+const AJV = require('ajv')
+const ajv = new AJV
+const validate = ajv.compile(require('../test/features/steps/bbtjsonschema.json'))
+
 import { normalize } from '../translators/lib/normalize'
 import * as fs from 'fs'
 import { stringify } from '../content/stringify'
@@ -12,7 +16,7 @@ const preferences = {
   supported: []
 }
 for (const pref of ['client', 'testing', 'platform', 'newTranslatorsAskRestart']) {
-  delete preferences[pref]
+  delete preferences.defaults[pref]
 }
 preferences.supported = Object.keys(preferences.defaults)
 
@@ -101,6 +105,10 @@ for (const lib of argv._) {
   }
 
   const post = serialize(data)
+  if (!validate(data)) {
+    console.log(lib)
+    console.log(validate.errors)
+  }
 
   if (post !== pre) {
     console.log(lib)

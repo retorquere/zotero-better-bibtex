@@ -1,12 +1,17 @@
 [
   {
+    "op": "replace",
+    "path": "/config/localeDateOrder",
+    "value": "ymd"
+  },
+  {
     "op": "add",
     "path": "/items/71/issue",
     "value": "157"
   },
   {
     "op": "remove",
-    "path": "/items/71/extra/14",
-    "value": "tex.number: 157"
+    "path": "/items/71/extra/1",
+    "value": "Number: 157"
   }
 ]
