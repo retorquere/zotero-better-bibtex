@@ -4,15 +4,9 @@
     "label": "BetterBibTeX JSON",
     "localeDateOrder": "ymd",
     "preferences": {
-      "DOIandURL": "both",
-      "asciiBibLaTeX": false,
       "asciiBibTeX": false,
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]",
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "postscript": "",
-      "skipFields": ""
+      "citekeyFormat": "[auth][year]"
     }
   },
   "items": [

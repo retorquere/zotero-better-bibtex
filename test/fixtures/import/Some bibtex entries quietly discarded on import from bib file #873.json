@@ -2,69 +2,9 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "localeDateOrder": "ymd",
     "options": {},
     "preferences": {
-      "DOIandURL": "both",
-      "ascii": "",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportDelay": 1,
-      "autoExportIdleWait": 10,
-      "autoPin": false,
-      "automaticTags": true,
-      "auxImport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
-      "citekeyFormat": "[auth][year]",
-      "citeprocNoteCitekey": false,
-      "csquotes": "",
-      "debugLogDir": "",
-      "exportBibTeXStrings": "off",
-      "exportBraceProtection": true,
-      "exportTitleCase": true,
-      "extraMergeCSL": true,
-      "extraMergeCitekeys": true,
-      "extraMergeTeX": true,
-      "git": "config",
-      "ignorePostscriptErrors": true,
-      "importBibTeXStrings": true,
-      "importCaseProtection": "as-needed",
-      "importSentenceCase": "on+guess",
-      "itemObserverDelay": 5,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "keyScope": "library",
-      "kuroshiro": false,
-      "mapMath": "",
-      "mapText": "",
-      "mapUnicode": "conservative",
-      "parseParticles": true,
-      "postscript": "",
-      "postscriptOverride": "",
-      "qualityReport": false,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "rawImports": false,
-      "rawLaTag": "#LaTeX",
-      "relativeFilePaths": false,
-      "removeStock": false,
-      "retainCache": false,
-      "scrubDatabase": false,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
-      "warnBulkModify": 10,
-      "workers": 1
+      "citekeyFormat": "[auth][year]"
     }
   },
   "items": [
@@ -101,7 +41,7 @@
       "issue": "1",
       "itemID": 1,
       "itemType": "journalArticle",
-      "pages": "197-227",
+      "pages": "197\u2013227",
       "publicationTitle": "Journal of Experimental and Theoretical AI",
       "title": "Planning and reacting in uncertain and dynamic environments",
       "url": "http://www.ai.sri.com/w\u0303ilkins/papers/jetai.ps",
@@ -251,7 +191,7 @@
       "notes": [
         "Fits HTN planning into Rao's unifying framework. Also shows how to do this in partially hierarchical domains, i.e., those where some goals do not have methods and use normal precondition-chaining. This doesn't really arise in our playbook applications, but it's very neat. Hard to tell how well this works out, since there are a whole bunch of fairly complex bits necessary to ensure completeness and systematicity. The latter could, of course, be sacrificed. Seems to subsume the hierarchical planning in DPOCL and Barrent and Weld, which is handy! It's always nice to be able to not read a paper!"
       ],
-      "pages": "882-888",
+      "pages": "882\u2013888",
       "title": "Hybrid planning for partially hierarchical domains"
     },
     {
@@ -463,7 +403,7 @@
       ],
       "itemID": 12,
       "itemType": "conferencePaper",
-      "pages": "570-576",
+      "pages": "570\u2013576",
       "place": "Menlo Park, Cal.",
       "publicationTitle": "AAAI-99",
       "publisher": "AAAI/MIT Press",
@@ -489,7 +429,7 @@
       ],
       "itemID": 13,
       "itemType": "conferencePaper",
-      "pages": "1215-1222",
+      "pages": "1215\u20131222",
       "title": "Planning for temporally extended goals"
     },
     {
@@ -574,7 +514,7 @@
       "issue": "3",
       "itemID": 17,
       "itemType": "journalArticle",
-      "pages": "143-178",
+      "pages": "143\u2013178",
       "publicationTitle": "Artificial Intelligence",
       "title": "Analyzing intention in utterances",
       "volume": "15"
@@ -594,7 +534,7 @@
       ],
       "itemID": 18,
       "itemType": "journalArticle",
-      "pages": "123-154",
+      "pages": "123\u2013154",
       "publicationTitle": "AIJ",
       "title": "Towards a general theory of action and time",
       "volume": "23"
@@ -654,7 +594,7 @@
       ],
       "itemID": 21,
       "itemType": "conferencePaper",
-      "pages": "65-69",
+      "pages": "65\u201369",
       "title": "An adaptive planner"
     },
     {
@@ -677,7 +617,7 @@
       ],
       "itemID": 22,
       "itemType": "journalArticle",
-      "pages": "207-261",
+      "pages": "207\u2013261",
       "publicationTitle": "JAIR",
       "title": "Planning by rewriting",
       "volume": "15"
@@ -702,7 +642,7 @@
       ],
       "itemID": 23,
       "itemType": "conferencePaper",
-      "pages": "640-647",
+      "pages": "640\u2013647",
       "title": "A computational model of referring"
     },
     {
@@ -749,7 +689,7 @@
       "issue": "1",
       "itemID": 25,
       "itemType": "journalArticle",
-      "pages": "186-194",
+      "pages": "186\u2013194",
       "publicationTitle": "IEEE Transactions on Systems, Man, and Cybernetics",
       "title": "An architecture for adversarial planning",
       "volume": "20"
@@ -779,7 +719,7 @@
       ],
       "itemID": 26,
       "itemType": "conferencePaper",
-      "pages": "1089-1095",
+      "pages": "1089\u20131095",
       "place": "Denver",
       "publicationTitle": "NIPS-2000",
       "title": "APRICODD: Approximate policy construction using decision diagrams"
@@ -812,7 +752,7 @@
       "notes": [
         "This paper concerns a way to assign probabilities of reaching states to CIRCA plans. It makes a number of seemingly arbitrary simplifying assumptions and seems to me to be fundamentally goofy. I have written email to the first author to raise a number of questions about the work."
       ],
-      "pages": "49-56",
+      "pages": "49\u201356",
       "title": "Plan development using local probabilistic models"
     },
     {
@@ -840,7 +780,7 @@
       ],
       "itemID": 28,
       "itemType": "conferencePaper",
-      "pages": "571-576",
+      "pages": "571\u2013576",
       "title": "Detecting and reacting to unplanned-for world states"
     },
     {
@@ -888,7 +828,7 @@
       ],
       "itemID": 29,
       "itemType": "conferencePaper",
-      "pages": "689-693",
+      "pages": "689\u2013693",
       "publicationTitle": "Proceedings of the american control conference (ACC)",
       "title": "Solus: An autonomous aircraft for flight control and trajectory planning research",
       "volume": "2"
@@ -934,7 +874,7 @@
       "issue": "1\u20132",
       "itemID": 31,
       "itemType": "journalArticle",
-      "pages": "123-191",
+      "pages": "123\u2013191",
       "publicationTitle": "Artificial Intelligence",
       "title": "Using temporal logics to express search control knowledge for planning",
       "volume": "116"
@@ -956,7 +896,7 @@
       "issue": "1",
       "itemID": 32,
       "itemType": "journalArticle",
-      "pages": "47-56",
+      "pages": "47\u201356",
       "publicationTitle": "AIM",
       "title": "AIPS'00 planning competition",
       "volume": "22"
@@ -1036,7 +976,7 @@
       ],
       "itemID": 35,
       "itemType": "conferencePaper",
-      "pages": "144-151",
+      "pages": "144\u2013151",
       "place": "Providence, Rhode Island",
       "publicationTitle": "Proceedings of the seventeenth international conference on automated planning and scheduling (ICAPS-07)",
       "title": "Exploiting procedural domain control knowledge in state-of-the-art planners",
@@ -1060,7 +1000,7 @@
       "notes": [
         "Baker discusses ways in which dynamic backtracking can behave exponentially worse than simpler approaches, in particular depth-first search and backjumping. Briefly, the intuition is that in the attempt to preserve work done through backtracking, dynamic backtracking often preserves constraints propagated from value choices that have since been retracted, confining it in bad parts of the search space."
       ],
-      "pages": "288-293",
+      "pages": "288\u2013293",
       "title": "The hazards of fancy backtracking"
     },
     {
@@ -1102,7 +1042,7 @@
       ],
       "itemID": 38,
       "itemType": "conferencePaper",
-      "pages": "1635-1641",
+      "pages": "1635\u20131641",
       "place": "KAUFMANN-ADDRESS",
       "publicationTitle": "IJCAI-89",
       "publisher": "KAUFMANN",
@@ -1134,7 +1074,7 @@
       "issue": "2",
       "itemID": 39,
       "itemType": "journalArticle",
-      "pages": "94-102",
+      "pages": "94\u2013102",
       "publicationTitle": "IEEE Transactions on Software Engineering",
       "title": "Informality in program specifications",
       "volume": "4"
@@ -1195,7 +1135,7 @@
       "issue": "1",
       "itemID": 41,
       "itemType": "journalArticle",
-      "pages": "71-112",
+      "pages": "71\u2013112",
       "publicationTitle": "AIJ",
       "title": "Partial order planning: Evaluating possible efficiency gains",
       "volume": "67"
@@ -1361,11 +1301,11 @@
       ],
       "date": "1979",
       "extra": [
-        "Citation Key: Barstow:79"
+        "Citation Key: Barstow:79",
+        "Pages: 37-43"
       ],
       "itemID": 48,
       "itemType": "book",
-      "numPages": "37-43",
       "publisher": "Proc. Ijcai",
       "title": "The roles of knowledge and deduction in program synthesis",
       "volume": "6"
@@ -1509,7 +1449,7 @@
       ],
       "itemID": 53,
       "itemType": "conferencePaper",
-      "pages": "460-466",
+      "pages": "460\u2013466",
       "title": "PHI \u2014 A logic-based tool for intelligent help systems"
     },
     {
@@ -1601,7 +1541,7 @@
       "notes": [
         "Describes a method for projecting reactive robot plans, using probabilistic simulation."
       ],
-      "pages": "163-170",
+      "pages": "163\u2013170",
       "title": "Causal models of mobile service robot behavior"
     },
     {
@@ -1622,7 +1562,7 @@
       "notes": [
         "Describes a method for computing stable models, that correspond to TMS labelings and default logic extensions. An algorithm based on imposing a dependency graph on the rules. Didn't read it carefully."
       ],
-      "pages": "27-52",
+      "pages": "27\u201352",
       "publicationTitle": "JAIR",
       "title": "A hierarchy of tractable subsets for computing stable models",
       "volume": "5"
@@ -1677,7 +1617,7 @@
       ],
       "itemID": 60,
       "itemType": "journalArticle",
-      "pages": "53-118",
+      "pages": "53\u2013118",
       "publicationTitle": "JAIR",
       "title": "Building and refining abstract planning cases by change of representation language",
       "volume": "3"
@@ -1702,7 +1642,7 @@
       ],
       "itemID": 61,
       "itemType": "journalArticle",
-      "pages": "53-118",
+      "pages": "53\u2013118",
       "publicationTitle": "JAIR",
       "title": "Building and refining abstract planning cases by change of representation language",
       "volume": "3"
@@ -1796,7 +1736,7 @@
       ],
       "itemID": 66,
       "itemType": "conferencePaper",
-      "pages": "221-226",
+      "pages": "221\u2013226",
       "title": "Arc-consistency in dynamic constraint satisfaction problems"
     },
     {
@@ -1819,7 +1759,7 @@
       ],
       "itemID": 67,
       "itemType": "conferencePaper",
-      "pages": "52-61",
+      "pages": "52\u201361",
       "title": "Planning with incomplete information as heuristic search in belief space"
     },
     {
@@ -1883,7 +1823,7 @@
       ],
       "itemID": 69,
       "itemType": "bookSection",
-      "pages": "134-144",
+      "pages": "134\u2013144",
       "place": "Menlo Park, California",
       "publicationTitle": "KR2006",
       "publisher": "AAAI Press",
@@ -1960,7 +1900,7 @@
       ],
       "itemID": 73,
       "itemType": "journalArticle",
-      "pages": "57-77",
+      "pages": "57\u201377",
       "publicationTitle": "AIJ",
       "title": "Rigor mortis: a response to Nilsson's \u201cLogic and artificial intelligence\u201d",
       "volume": "47"
@@ -1986,7 +1926,7 @@
       ],
       "itemID": 74,
       "itemType": "bookSection",
-      "pages": "3-32",
+      "pages": "3\u201332",
       "title": "Hierarchical goal recognition"
     },
     {
@@ -2098,7 +2038,7 @@
       ],
       "itemID": 79,
       "itemType": "journalArticle",
-      "pages": "1636-1642",
+      "pages": "1636\u20131642",
       "publicationTitle": "ijcai",
       "title": "Fast planning through planning graph analysis"
     },
@@ -2123,7 +2063,7 @@
       "issue": "1\u20132",
       "itemID": 80,
       "itemType": "journalArticle",
-      "pages": "281-300",
+      "pages": "281\u2013300",
       "publicationTitle": "AIJ",
       "title": "Fast Planning through planning graph analysis",
       "volume": "90"
@@ -2143,7 +2083,7 @@
       ],
       "itemID": 81,
       "itemType": "conferencePaper",
-      "pages": "94-101",
+      "pages": "94\u2013101",
       "title": "Planning with external events"
     },
     {
@@ -2330,7 +2270,7 @@
       ],
       "itemID": 89,
       "itemType": "conferencePaper",
-      "pages": "714-719",
+      "pages": "714\u2013719",
       "title": "A robust and fast action selection mechanism for planning"
     },
     {
@@ -2353,7 +2293,7 @@
       ],
       "itemID": 90,
       "itemType": "conferencePaper",
-      "pages": "142-151",
+      "pages": "142\u2013151",
       "title": "Learning depth-first search: A unified approach to heuristic search in deterministic and non-deterministic settings, and its application to MDPs"
     },
     {
@@ -2376,7 +2316,7 @@
       ],
       "itemID": 91,
       "itemType": "conferencePaper",
-      "pages": "169-177",
+      "pages": "169\u2013177",
       "title": "A case study in integration of case-based and temporal reasoning using CAFE and Tachyon"
     },
     {
@@ -2399,7 +2339,7 @@
       ],
       "itemID": 92,
       "itemType": "journalArticle",
-      "pages": "277-308",
+      "pages": "277\u2013308",
       "publicationTitle": "JAIR",
       "title": "A semantics and complete algorithm for subsumption in the CLASSIC description logic",
       "volume": "1"
@@ -2434,7 +2374,7 @@
       ],
       "itemID": 93,
       "itemType": "conferencePaper",
-      "pages": "58-67",
+      "pages": "58\u201367",
       "publicationTitle": "ACM SIGMOD international conference on the management of data",
       "title": "CLASSIC: A structural data model for objects"
     },
@@ -2463,7 +2403,7 @@
       ],
       "itemID": 94,
       "itemType": "conferencePaper",
-      "pages": "1104-1113",
+      "pages": "1104\u20131113",
       "publicationTitle": "Proceedings of the fourteenth international joint conference on artificial intelligence",
       "title": "Exploiting structure in policy construction"
     },
@@ -2520,7 +2460,7 @@
       ],
       "itemID": 96,
       "itemType": "journalArticle",
-      "pages": "1-94",
+      "pages": "1\u201394",
       "publicationTitle": "JAIR",
       "title": "Decision-theoretic planning: Structural assumptions and computational leverage",
       "volume": "11"
@@ -2545,7 +2485,7 @@
       ],
       "itemID": 97,
       "itemType": "conferencePaper",
-      "pages": "215-220",
+      "pages": "215\u2013220",
       "title": "Conditional existence of variables in generalized constraint networks"
     },
     {
@@ -2675,7 +2615,7 @@
       ],
       "itemID": 102,
       "itemType": "bookSection",
-      "pages": "401-456",
+      "pages": "401\u2013456",
       "title": "Living with <span style=\"font-variant:small-caps;\">classic</span>: When and how to use a <span style=\"font-variant:small-caps;\">kl-one</span>-like language"
     },
     {
@@ -2768,7 +2708,7 @@
       ],
       "itemID": 106,
       "itemType": "bookSection",
-      "pages": "15-31",
+      "pages": "15\u201331",
       "title": "What is intention?"
     },
     {
@@ -2862,7 +2802,7 @@
       "issue": "1",
       "itemID": 110,
       "itemType": "journalArticle",
-      "pages": "14-23",
+      "pages": "14\u201323",
       "publicationTitle": "IEEE Journal of Robotics and Automation",
       "title": "A robust layered control system for a mobile robot",
       "volume": "RA-2"
@@ -2906,7 +2846,7 @@
       ],
       "itemID": 112,
       "itemType": "conferencePaper",
-      "pages": "796-800",
+      "pages": "796\u2013800",
       "publicationTitle": "AAAI-88",
       "title": "Situated vision in a dynamic world: Chasing objects"
     },
@@ -2925,7 +2865,7 @@
       ],
       "itemID": 113,
       "itemType": "journalArticle",
-      "pages": "139-159",
+      "pages": "139\u2013159",
       "publicationTitle": "AIJ",
       "title": "Intelligence without representation",
       "volume": "47"
@@ -2969,7 +2909,7 @@
       ],
       "itemID": 115,
       "itemType": "journalArticle",
-      "pages": "327-360",
+      "pages": "327\u2013360",
       "publicationTitle": "Artificial Intelligence",
       "title": "Case systems for natural language",
       "volume": "6"
@@ -3004,7 +2944,7 @@
       ],
       "itemID": 116,
       "itemType": "bookSection",
-      "pages": "367-384",
+      "pages": "367\u2013384",
       "place": "Hillsdale, NJ",
       "publicationTitle": "Theoretical issues in reading comprehension: Perspectives from cognitive science, linguistics, artificial intelligence and education",
       "publisher": "Lawrence Erlbaum",
@@ -3025,7 +2965,7 @@
       ],
       "itemID": 117,
       "itemType": "journalArticle",
-      "pages": "1-25",
+      "pages": "1\u201325",
       "publicationTitle": "Artificial Intelligence",
       "title": "A model for temporal references and its application in a question answering program",
       "volume": "4"
@@ -3093,7 +3033,7 @@
       "notes": [
         "Many definitions are presented, but no algorithms and the definitions don't appear to be especially helpful."
       ],
-      "pages": "39-79",
+      "pages": "39\u201379",
       "publicationTitle": "AIJ",
       "title": "A spectrum of Definitions for temporal model-based diagnosis",
       "volume": "102"
@@ -3198,7 +3138,7 @@
       "notes": [
         "Describes a technique for adding automatic repair to model checking verification. They use abductive model revision to alter a concurrent program description in the face of a counterexample. Their concurrent programs are described in terms of jumps and (boolean) assignments. Repairs are in terms of changing assignment values and changing assignment orderings. The class of repairs considered here seem most appropriate for handling concurrency protocol errors, especially involving mutual exclusion and deadlocks. They seem less appropriate for control applications. Counterexamples are used to reduce the set of repair candidates that must be considered. (In order to handle ACTL formulas, the authors consider tree-shaped counterexamples, not just simple linear counterexamples.) In particular, their technique \u201cidentifies corrections \u03b1 under which the counterexample is invariant, i.e., still apply if \u03b1 is implemented.\u201d They introduce efficiently computable conditions on counterexamples and corrections that provide this filtering."
       ],
-      "pages": "57-104",
+      "pages": "57\u2013104",
       "publicationTitle": "AIJ",
       "title": "Enhancing model checking in verification by AI techniques",
       "volume": "112"
@@ -3265,7 +3205,7 @@
       ],
       "itemID": 126,
       "itemType": "conferencePaper",
-      "pages": "19-25",
+      "pages": "19\u201325",
       "publicationTitle": "Proceedings of the international machine learning workshop",
       "publisher": "University of Illinois",
       "title": "Concept formation by incremental analogical reasoning and debugging"
@@ -3290,7 +3230,7 @@
       ],
       "itemID": 127,
       "itemType": "conferencePaper",
-      "pages": "467-483",
+      "pages": "467\u2013483",
       "title": "Mixed-initiative military planning"
     },
     {
@@ -3368,7 +3308,7 @@
       ],
       "itemID": 130,
       "itemType": "conferencePaper",
-      "pages": "49-53",
+      "pages": "49\u201353",
       "publicationTitle": "AAAI-83",
       "title": "A chess program that chunks"
     },
@@ -3387,7 +3327,7 @@
       ],
       "itemID": 131,
       "itemType": "conferencePaper",
-      "pages": "471-478",
+      "pages": "471\u2013478",
       "place": "MITP-ADDRESS",
       "publicationTitle": "AAAI-90",
       "publisher": "MITP",
@@ -3468,7 +3408,7 @@
       ],
       "itemID": 135,
       "itemType": "conferencePaper",
-      "pages": "12-18",
+      "pages": "12\u201318",
       "publicationTitle": "Proceedings of the international machine learning workshop",
       "publisher": "University of Illinois",
       "title": "Derivational analogy in problem solving and knowledge acquisition"
@@ -3514,7 +3454,7 @@
       "notes": [
         "Describes a variant of Alpha-beta pruning that works when you have a model of your opponent. Possibly relevant for JFACC."
       ],
-      "pages": "325-355",
+      "pages": "325\u2013355",
       "publicationTitle": "AIJ",
       "title": "Pruning Algorithms for multi-model adversary search",
       "volume": "99"
@@ -3542,7 +3482,7 @@
       "notes": [
         "Forthcoming"
       ],
-      "pages": "1-21",
+      "pages": "1\u201321",
       "title": "Using a marker-passing to guide forward-chaining"
     },
     {
@@ -3605,7 +3545,7 @@
       "issue": "3",
       "itemID": 141,
       "itemType": "journalArticle",
-      "pages": "333-378",
+      "pages": "333\u2013378",
       "publicationTitle": "Artificial Intelligence",
       "title": "Planning for conjunctive goals",
       "volume": "32"
@@ -3713,7 +3653,7 @@
       "issue": "1",
       "itemID": 145,
       "itemType": "journalArticle",
-      "pages": "103-122",
+      "pages": "103\u2013122",
       "publicationTitle": "AIM",
       "title": "Making an impact: Artificial intelligence at the jet propulsion laboratory",
       "volume": "17"
@@ -3799,7 +3739,7 @@
       ],
       "itemID": 149,
       "itemType": "conferencePaper",
-      "pages": "28-36",
+      "pages": "28\u201336",
       "title": "Abstract probabilistic modeling of action"
     },
     {
@@ -4013,7 +3953,7 @@
       ],
       "itemID": 157,
       "itemType": "conferencePaper",
-      "pages": "189-197",
+      "pages": "189\u2013197",
       "title": "Conditional nonlinear planning"
     },
     {
@@ -4036,7 +3976,7 @@
       ],
       "itemID": 158,
       "itemType": "journalArticle",
-      "pages": "177-212",
+      "pages": "177\u2013212",
       "publicationTitle": "Cognitive Science",
       "title": "Elements of a plan-based theory of speech acts",
       "volume": "3"
@@ -4062,7 +4002,7 @@
       ],
       "itemID": 159,
       "itemType": "bookSection",
-      "pages": "33-69",
+      "pages": "33\u201369",
       "title": "Persistence, intention, and commitment"
     },
     {
@@ -4086,7 +4026,7 @@
       "issue": "2\u20133",
       "itemID": 160,
       "itemType": "journalArticle",
-      "pages": "213-261",
+      "pages": "213\u2013261",
       "publicationTitle": "AIJ",
       "title": "Intention is choice with commitment",
       "volume": "42"
@@ -4111,7 +4051,7 @@
       ],
       "itemID": 161,
       "itemType": "journalArticle",
-      "pages": "487-512",
+      "pages": "487\u2013512",
       "publicationTitle": "No\u00fbs",
       "title": "Teamwork",
       "volume": "25"
@@ -4181,7 +4121,7 @@
       "notes": [
         "Contains definition of \u201ckeyhole\u201d and \u201cintended\u201d plan recognition."
       ],
-      "pages": "245-274",
+      "pages": "245\u2013274",
       "place": "ERLBAUM-ADDRESS",
       "publicationTitle": "Strategies for natural language processing",
       "publisher": "LEA",
@@ -4318,7 +4258,7 @@
       ],
       "itemID": 168,
       "itemType": "bookSection",
-      "pages": "385-408",
+      "pages": "385\u2013408",
       "place": "Hillsdale, NJ",
       "publicationTitle": "Theoretical issues in reading comprehension: Perspectives from cognitive science, linguistics, artificial intelligence and education",
       "publisher": "Lawrence Erlbaum",
@@ -4345,7 +4285,7 @@
       ],
       "itemID": 169,
       "itemType": "conferencePaper",
-      "pages": "375-380",
+      "pages": "375\u2013380",
       "title": "Achieving the functionality of filter conditions in a Partial order planner"
     },
     {
@@ -4393,7 +4333,7 @@
       ],
       "itemID": 171,
       "itemType": "conferencePaper",
-      "pages": "788-795",
+      "pages": "788\u2013795",
       "publicationTitle": "AAAI",
       "publisher": "AAAI Press",
       "title": "Planning with first-order temporally extended goals using heuristic search",
@@ -4426,7 +4366,7 @@
       ],
       "itemID": 172,
       "itemType": "conferencePaper",
-      "pages": "991-997",
+      "pages": "991\u2013997",
       "title": "Learning generalized plans using abstract counting"
     },
     {
@@ -4451,7 +4391,7 @@
       ],
       "itemID": 173,
       "itemType": "conferencePaper",
-      "pages": "82-91",
+      "pages": "82\u201391",
       "publicationTitle": "AIPS",
       "title": "Solving planning-graph by compiling it into CSP"
     },
@@ -4477,7 +4417,7 @@
       ],
       "itemID": 174,
       "itemType": "conferencePaper",
-      "pages": "130-139",
+      "pages": "130\u2013139",
       "publicationTitle": "AIPS",
       "title": "Dynamic programming for POMDPs using a factored state representation"
     },
@@ -4498,7 +4438,7 @@
       ],
       "itemID": 175,
       "itemType": "conferencePaper",
-      "pages": "509-515",
+      "pages": "509\u2013515",
       "publicationTitle": "IJCAI",
       "title": "Planning with loops",
       "url": "http://www.ijcai.org/papers/0305.pdf"
@@ -4530,7 +4470,7 @@
       ],
       "itemID": 176,
       "itemType": "conferencePaper",
-      "pages": "1766-1771",
+      "pages": "1766\u20131771",
       "publicationTitle": "IJCAI",
       "title": "Monte-carlo exploration for deterministic planning",
       "url": "http://ijcai.org/papers09/Papers/IJCAI09-294.pdf"
@@ -4563,7 +4503,7 @@
       ],
       "itemID": 177,
       "itemType": "conferencePaper",
-      "pages": "134-144",
+      "pages": "134\u2013144",
       "title": "Planning with qualitative temporal preferences"
     },
     {
@@ -4585,7 +4525,7 @@
       "notes": [
         "Presents an optimal k-consistency algorithm, KS."
       ],
-      "pages": "89-95",
+      "pages": "89\u201395",
       "publicationTitle": "AIJ",
       "title": "An optimal <i>k/</i>-consistency algorithm",
       "volume": "41"
@@ -4637,7 +4577,7 @@
       ],
       "itemID": 180,
       "itemType": "journalArticle",
-      "pages": "447-468",
+      "pages": "447\u2013468",
       "publicationTitle": "Artificial Intelligence Review",
       "title": "AI meets authoring: User models for intelligent multimedia",
       "volume": "8"
@@ -4676,7 +4616,7 @@
       ],
       "itemID": 182,
       "itemType": "bookSection",
-      "pages": "75-89",
+      "pages": "75\u201389",
       "title": "SAM"
     },
     {
@@ -4699,7 +4639,7 @@
       ],
       "itemID": 183,
       "itemType": "journalArticle",
-      "pages": "49-60",
+      "pages": "49\u201360",
       "publicationTitle": "Artificial Intelligence in Medicine",
       "title": "Parsimonious covering as a method for natural language interfaces to expert systems",
       "volume": "1"
@@ -4737,7 +4677,7 @@
       ],
       "itemID": 185,
       "itemType": "journalArticle",
-      "pages": "447-474",
+      "pages": "447\u2013474",
       "publicationTitle": "JAIR",
       "title": "Using pivot consistency to decompose and solve functional CSPs",
       "volume": "2"
@@ -4818,7 +4758,7 @@
       ],
       "itemID": 188,
       "itemType": "conferencePaper",
-      "pages": "295-301",
+      "pages": "295\u2013301",
       "publicationTitle": "IJCAI-83",
       "title": "The MERCATOR representation of spatial knowledge",
       "volume": "8"
@@ -4861,7 +4801,7 @@
       ],
       "itemID": 190,
       "itemType": "journalArticle",
-      "pages": "63-109",
+      "pages": "63\u2013109",
       "publicationTitle": "AIJ",
       "title": "Negotiation as a metaphor for distributed problem solving",
       "volume": "20"
@@ -4885,7 +4825,7 @@
       ],
       "itemID": 191,
       "itemType": "conferencePaper",
-      "pages": "274-283",
+      "pages": "274\u2013283",
       "publicationTitle": "Proceedings of the sixth international conference on artificial intelligence planning systems, april 23-27, 2002, toulouse, france",
       "title": "Symbolic pattern databases in heuristic search planning",
       "url": "http://www.aaai.org/Library/AIPS/2002/aips02-028.php"
@@ -5083,7 +5023,7 @@
       ],
       "itemID": 200,
       "itemType": "journalArticle",
-      "pages": "375-399",
+      "pages": "375\u2013399",
       "publicationTitle": "AIJ",
       "title": "Reasoning about partially ordered events",
       "volume": "36"
@@ -5146,7 +5086,7 @@
       "notes": [
         "Full version is DeanETAL:95."
       ],
-      "pages": "574-579",
+      "pages": "574\u2013579",
       "title": "Planning with deadlines in stochastic domains"
     },
     {
@@ -5169,7 +5109,7 @@
       ],
       "itemID": 203,
       "itemType": "conferencePaper",
-      "pages": "106-111",
+      "pages": "106\u2013111",
       "title": "Model minimization in markov decision processes"
     },
     {
@@ -5307,7 +5247,7 @@
       ],
       "itemID": 210,
       "itemType": "conferencePaper",
-      "pages": "49-54",
+      "pages": "49\u201354",
       "publicationTitle": "AAAI-88",
       "title": "An analysis of time-dependent planning"
     },
@@ -5345,7 +5285,7 @@
       "notes": [
         "Similar to Drummond and Bresina paper Drummond:90, indeed an attempt to put it on more secure theoretical footing. Project is trying to find a path through a state-space automaton. Deliberation scheduling in this framework is the allocation of resources between <i>policy generation</i> for a subgraph of the overall automaton and <i>envelope expansion</i> to consider a larger subset of the state space. Compares <i>precursor-deliberation</i>, where you develop the whole policy before any execution, and <i>recurrent-deliberation</i>, where the agent repeatedly replans."
       ],
-      "pages": "309-316",
+      "pages": "309\u2013316",
       "tags": [
         {
           "tag": "deliberation scheduling"
@@ -5387,7 +5327,7 @@
       "notes": [
         "Full version of conference papers Dean:93 also DeanETAL:93. Describes planning and deliberation scheduling methods for robot motion planning, based on Markov Decision Processes (MDPs). The method is essentially a cleaned up version of the method of Drummond and Bresina Drummond:90. See annotation to those papers, as well."
       ],
-      "pages": "35-74",
+      "pages": "35\u201374",
       "publicationTitle": "AIJ",
       "title": "Planning under time constraints in Stochastic Domains",
       "volume": "76"
@@ -5413,7 +5353,7 @@
       "issue": "1\u20132",
       "itemID": 213,
       "itemType": "journalArticle",
-      "pages": "219-283",
+      "pages": "219\u2013283",
       "publicationTitle": "AIJ",
       "title": "Abstraction and approximate decision-theoretic planning",
       "volume": "89"
@@ -5587,7 +5527,7 @@
       ],
       "itemID": 219,
       "itemType": "conferencePaper",
-      "pages": "263-272",
+      "pages": "263\u2013272",
       "title": "Machine learning of planning knowledge for SOCAP"
     },
     {
@@ -5691,7 +5631,7 @@
       ],
       "itemID": 223,
       "itemType": "journalArticle",
-      "pages": "97-128",
+      "pages": "97\u2013128",
       "publicationTitle": "AIJ",
       "title": "Impediments to universal preference-based default theories",
       "volume": "49"
@@ -5794,7 +5734,7 @@
       ],
       "itemID": 227,
       "itemType": "conferencePaper",
-      "pages": "138-144",
+      "pages": "138\u2013144",
       "title": "Anytime synthetic projection: Maximizing the probability of goal satisfaction"
     },
     {
@@ -5837,7 +5777,7 @@
       ],
       "itemID": 229,
       "itemType": "conferencePaper",
-      "pages": "205-216",
+      "pages": "205\u2013216",
       "title": "Transformational approach to transportation scheduling"
     },
     {
@@ -6145,7 +6085,7 @@
       "notes": [
         "As the name suggests, presents a sound and complete algorithm for HTN planning. The accomplishment is less overwhelming than it might at first seem, because the HTN plan's semantics rests on STRIPS-style world updates. So an HTN planner constructed according to this method will have the same knowledge-engineering demands as a first-principles STRIPS planner."
       ],
-      "pages": "249-254",
+      "pages": "249\u2013254",
       "title": "UMCP: A sound and complete procedure for hierarchical task network planning"
     },
     {
@@ -6176,7 +6116,7 @@
       "notes": [
         "Erol, et. al. discuss the complexity and expressivity of HTN planning based on their UMCP planning. They show that HTN planning is strictly more expressive than simple STRIPS planning. The reason HTN planning is more expressive is that having a goal task network instead of a propositional goal allows the user of the system to specify not just what is to be achieved, but some aspects of how it is to be achieved. They use the example that in an HTN planner one can specify the goal of \u201cbuild a house,\u201d as distinct from simply \u201cown a house,\u201d which could also be satisfied by \u201cbuy a house.\u201d As far as expressivity is concerned, HTN planning in the general case is undecidable. Forcing HTNs to be totally-ordered sets of tasks or removing variables from the tasks can reduce the complexity."
       ],
-      "pages": "1123-1128",
+      "pages": "1123\u20131128",
       "title": "HTN planning: Complexity and expressivity"
     },
     {
@@ -6255,7 +6195,7 @@
       ],
       "itemID": 244,
       "itemType": "conferencePaper",
-      "pages": "271-279",
+      "pages": "271\u2013279",
       "publicationTitle": "Proceedings of the third international workshop on multi-strategy learning (MSL-96)",
       "title": "Integrating EBL and ILP to acquire control rules for planning"
     },
@@ -6287,7 +6227,7 @@
       "issue": "1\u20132",
       "itemID": 245,
       "itemType": "journalArticle",
-      "pages": "113-148",
+      "pages": "113\u2013148",
       "publicationTitle": "AIJ",
       "title": "Sound and efficient closed-world reasoning for planning",
       "volume": "89"
@@ -6307,7 +6247,7 @@
       ],
       "itemID": 246,
       "itemType": "conferencePaper",
-      "pages": "533-540",
+      "pages": "533\u2013540",
       "title": "STATIC: A problem-space compiler for PRODIGY"
     },
     {
@@ -6351,7 +6291,7 @@
       ],
       "itemID": 247,
       "itemType": "conferencePaper",
-      "pages": "115-125",
+      "pages": "115\u2013125",
       "title": "An approach to planning with incomplete information"
     },
     {
@@ -6382,7 +6322,7 @@
       "notes": [
         "Etzioni et. al. provide a notion of dynamic closed-world reasoning. They do this by having, in addition to a database recording world state propositions, a local closed world (LCW) database, that records propositions about whose value they have complete knowledge. They present methods for updating LCW knowledge in response to the execution of actions and show that these update methods are sound and tractable, although not complete."
       ],
-      "pages": "178-189",
+      "pages": "178\u2013189",
       "title": "Tractable closed world reasoning with updates"
     },
     {
@@ -6406,7 +6346,7 @@
       "issue": "4",
       "itemID": 249,
       "itemType": "journalArticle",
-      "pages": "44-49",
+      "pages": "44\u201349",
       "publicationTitle": "EXPERT",
       "title": "Intelligent agents on the internet: Fact, fiction, and forecast",
       "volume": "10"
@@ -6480,7 +6420,7 @@
       "issue": "4",
       "itemID": 252,
       "itemType": "journalArticle",
-      "pages": "7-13",
+      "pages": "7\u201313",
       "publicationTitle": "AIM",
       "title": "Intelligence without robots: A reply to Brooks",
       "volume": "14"
@@ -6716,7 +6656,7 @@
         "Republished in  PlanReadings.",
         "Wow! A paper containing the germs of a vast amount of other work. Explains how <span style=\"font-variant:small-caps;\">Strips</span> plans are to be executed, stored, and reused. The key to all of these techniques are the <i>triangle tables</i>, which are a limited form of explanation-based learning. They also underly the approach to execution monitoring. For the plan monitoring, the triangle table contains a cached out representation of the preconditions necessary for execution of each plan suffix. So the executor monitors the truth of each of these preconditions, allowing it both to re-execute failed prefixes and exploit opportunities to skip steps."
       ],
-      "pages": "251-288",
+      "pages": "251\u2013288",
       "publicationTitle": "AIJ",
       "title": "Learning and executing generalized robot plans",
       "volume": "3"
@@ -6882,7 +6822,7 @@
       ],
       "itemID": 268,
       "itemType": "conferencePaper",
-      "pages": "196-201",
+      "pages": "196\u2013201",
       "title": "An investigation in reactive planning in complex domains"
     },
     {
@@ -7039,7 +6979,7 @@
       ],
       "itemID": 275,
       "itemType": "journalArticle",
-      "pages": "245-269",
+      "pages": "245\u2013269",
       "publicationTitle": "AIJ",
       "title": "Efficient graph automorphism by vertex partitioning",
       "volume": "21"
@@ -7121,7 +7061,7 @@
       "notes": [
         "Describes a method of computing optimal play for incomplete information games. Possibly relevant for JFACC."
       ],
-      "pages": "87-123",
+      "pages": "87\u2013123",
       "publicationTitle": "AIJ",
       "title": "Search in games with incomplete information: a case study using Bridge Card play",
       "volume": "100"
@@ -7363,7 +7303,7 @@
       ],
       "itemID": 288,
       "itemType": "bookSection",
-      "pages": "149-176",
+      "pages": "149\u2013176",
       "title": "An Overview of the FRUMP system"
     },
     {
@@ -7386,7 +7326,7 @@
       ],
       "itemID": 289,
       "itemType": "journalArticle",
-      "pages": "349-358",
+      "pages": "349\u2013358",
       "publicationTitle": "New Generation Computing",
       "title": "Intelligent systems using web-pages as knowledge base for statistical decision making",
       "volume": "17"
@@ -7424,7 +7364,7 @@
       ],
       "itemID": 291,
       "itemType": "journalArticle",
-      "pages": "159-188",
+      "pages": "159\u2013188",
       "publicationTitle": "AIJ",
       "title": "A critical examination of allen's theory of action and time",
       "volume": "42"
@@ -7557,7 +7497,7 @@
       ],
       "itemID": 296,
       "itemType": "journalArticle",
-      "pages": "267-283",
+      "pages": "267\u2013283",
       "publicationTitle": "Transactions of the Royal Society",
       "title": "On syntactic categories",
       "volume": "B-295"
@@ -7759,7 +7699,7 @@
       ],
       "itemID": 305,
       "itemType": "conferencePaper",
-      "pages": "198-204",
+      "pages": "198\u2013204",
       "publicationTitle": "Proceedings of the sixth conference on artificial intelligence application",
       "title": "Real-time reasoning: The monitoring and control of spacecraft systems"
     },
@@ -7783,7 +7723,7 @@
       ],
       "itemID": 306,
       "itemType": "journalArticle",
-      "pages": "95-137",
+      "pages": "95\u2013137",
       "publicationTitle": "JAIR",
       "title": "Accelerating partial-order planners: Some techniques for effective search control and pruning",
       "volume": "5"
@@ -7971,7 +7911,7 @@
       ],
       "itemID": 313,
       "itemType": "conferencePaper",
-      "pages": "80-86",
+      "pages": "80\u201386",
       "title": "Counterfactuals"
     },
     {
@@ -7989,7 +7929,7 @@
       ],
       "itemID": 314,
       "itemType": "journalArticle",
-      "pages": "35-79",
+      "pages": "35\u201379",
       "publicationTitle": "AIJ",
       "title": "Counterfactuals",
       "volume": "30"
@@ -8014,7 +7954,7 @@
       ],
       "itemID": 315,
       "itemType": "conferencePaper",
-      "pages": "233-258",
+      "pages": "233\u2013258",
       "title": "Reasoning about action I: A possible worlds approach"
     },
     {
@@ -8037,7 +7977,7 @@
       ],
       "itemID": 316,
       "itemType": "conferencePaper",
-      "pages": "259-287",
+      "pages": "259\u2013287",
       "title": "Reasoning about action II: The qualification problem"
     },
     {
@@ -8060,7 +8000,7 @@
       ],
       "itemID": 317,
       "itemType": "journalArticle",
-      "pages": "165-195",
+      "pages": "165\u2013195",
       "publicationTitle": "AIJ",
       "title": "Reasoning about action I: A possible worlds approach",
       "volume": "35"
@@ -8085,7 +8025,7 @@
       ],
       "itemID": 318,
       "itemType": "journalArticle",
-      "pages": "311-342",
+      "pages": "311\u2013342",
       "publicationTitle": "AIJ",
       "title": "Reasoning about action II: The qualification problem",
       "volume": "35"
@@ -8109,7 +8049,7 @@
       "notes": [
         "continued on pp. 61\u201362"
       ],
-      "pages": "40-44",
+      "pages": "40\u201344",
       "publicationTitle": "AI Magazine",
       "title": "Universal planning: An (almost) universally bad idea",
       "volume": "10"
@@ -8129,7 +8069,7 @@
       "issue": "1\u20132",
       "itemID": 320,
       "itemType": "journalArticle",
-      "pages": "89-123",
+      "pages": "89\u2013123",
       "publicationTitle": "AIJ",
       "title": "Approximate planning",
       "volume": "76"
@@ -8149,7 +8089,7 @@
       ],
       "itemID": 321,
       "itemType": "journalArticle",
-      "pages": "25-46",
+      "pages": "25\u201346",
       "publicationTitle": "JAIR",
       "title": "Dynamic backtracking",
       "volume": "1"
@@ -8250,7 +8190,7 @@
       ],
       "itemID": 325,
       "itemType": "conferencePaper",
-      "pages": "640-645",
+      "pages": "640\u2013645",
       "title": "An efficient reactive planner for synthesizing reactive plans"
     },
     {
@@ -8318,7 +8258,7 @@
       ],
       "itemID": 328,
       "itemType": "conferencePaper",
-      "pages": "70-77",
+      "pages": "70\u201377",
       "title": "Leap before you look: Information gathering in the PUCCINI planner"
     },
     {
@@ -8360,7 +8300,7 @@
       ],
       "itemID": 330,
       "itemType": "conferencePaper",
-      "pages": "79-86",
+      "pages": "79\u201386",
       "title": "Towards a content theory of loops"
     },
     {
@@ -8485,7 +8425,7 @@
       ],
       "itemID": 335,
       "itemType": "journalArticle",
-      "pages": "365-396",
+      "pages": "365\u2013396",
       "publicationTitle": "JAIR",
       "title": "Adaptive problem-solving for large-scale scheduling problems: A case study",
       "volume": "4"
@@ -8505,7 +8445,7 @@
       ],
       "itemID": 336,
       "itemType": "conferencePaper",
-      "pages": "4-18",
+      "pages": "4\u201318",
       "publicationTitle": "Proceedings of the international conference on software engineering",
       "title": "The design of the PSI program synthesis system",
       "volume": "2"
@@ -8549,7 +8489,7 @@
       ],
       "itemID": 338,
       "itemType": "conferencePaper",
-      "pages": "232-239",
+      "pages": "232\u2013239",
       "title": "Some rules for the automatic synthesis of programs"
     },
     {
@@ -8572,7 +8512,7 @@
       ],
       "itemID": 339,
       "itemType": "conferencePaper",
-      "pages": "179-190",
+      "pages": "179\u2013190",
       "title": "Monte Carlo Simulation and Bottleneck-centered Heuristics for Time-critical scheduling in stochastic domains"
     },
     {
@@ -8722,7 +8662,7 @@
       ],
       "itemID": 345,
       "itemType": "bookSection",
-      "pages": "353-362",
+      "pages": "353\u2013362",
       "title": "The representation and use of focus in a system for understanding dialogs"
     },
     {
@@ -8776,7 +8716,7 @@
       "issue": "2",
       "itemID": 347,
       "itemType": "journalArticle",
-      "pages": "67-85",
+      "pages": "67\u201385",
       "publicationTitle": "AIM",
       "title": "Collaborative systems",
       "volume": "17"
@@ -8843,7 +8783,7 @@
       ],
       "itemID": 350,
       "itemType": "conferencePaper",
-      "pages": "291-304",
+      "pages": "291\u2013304",
       "publicationTitle": "Proceedings of the fall joint computer conference",
       "title": "The decomposition of a visual scene into three dimensional bodies"
     },
@@ -8862,7 +8802,7 @@
       ],
       "itemID": 351,
       "itemType": "journalArticle",
-      "pages": "59-70",
+      "pages": "59\u201370",
       "publicationTitle": "CI",
       "title": "Possible events, actual events, and robots",
       "volume": "1"
@@ -8882,7 +8822,7 @@
       ],
       "itemID": 352,
       "itemType": "journalArticle",
-      "pages": "245-292",
+      "pages": "245\u2013292",
       "publicationTitle": "AIJ",
       "title": "A syntactic theory of belief and action",
       "volume": "28"
@@ -8998,7 +8938,7 @@
       ],
       "itemID": 357,
       "itemType": "journalArticle",
-      "pages": "310-319",
+      "pages": "310\u2013319",
       "title": "A logic to reason about likelihood"
     },
     {
@@ -9041,7 +8981,7 @@
       ],
       "itemID": 359,
       "itemType": "journalArticle",
-      "pages": "319-360",
+      "pages": "319\u2013360",
       "publicationTitle": "JAIR",
       "title": "A domain-independent algorithm for plan adaptation",
       "volume": "2"
@@ -9069,7 +9009,7 @@
       "notes": [
         "Reprinted in NONMON."
       ],
-      "pages": "328-333",
+      "pages": "328\u2013333",
       "title": "Default reasoning, nonmonotonic logics, and the frame problem"
     },
     {
@@ -9096,7 +9036,7 @@
       "notes": [
         "Fixes a bug in the Path Consistency algorithm (PC-3) presented by Mohr and Henderson in 1986. They present a revised algorithm, PC-4."
       ],
-      "pages": "125-130",
+      "pages": "125\u2013130",
       "publicationTitle": "AIJ",
       "title": "Comments on mohr and henderson's path consistency algorithm",
       "volume": "36"
@@ -9123,7 +9063,7 @@
       "issue": "1\u20132",
       "itemID": 362,
       "itemType": "journalArticle",
-      "pages": "35-62",
+      "pages": "35\u201362",
       "publicationTitle": "Artificial Intelligence",
       "title": "LAO*: A heuristic-search algorithm that finds solutions with loops",
       "volume": "129"
@@ -9200,7 +9140,7 @@
       "notes": [
         "LDS is a search technique that iteratively makes n decisions differently from the dictates of its heuristic, for increasing n. The intuition behind LDS is that heuristics often give recommendations that are worse at the start of the search than at the end. Accordingly, LDS makes divergent decisions initially at the beginning of the search path, working towards the end. Note that were this assumption wrong, depth-first search would work well, because it undoes decisions first at the end of the search. Harvey and Ginsberg also discuss combining LDS with bounded-backtrack search, which they show gives better behavior in large search spaces."
       ],
-      "pages": "607-613",
+      "pages": "607\u2013613",
       "title": "Limited discrepancy search"
     },
     {
@@ -9298,7 +9238,7 @@
       ],
       "itemID": 370,
       "itemType": "conferencePaper",
-      "pages": "99-107",
+      "pages": "99\u2013107",
       "publicationTitle": "IJCAI-77",
       "title": "On semantic nets, frames and associations",
       "volume": "5"
@@ -9318,7 +9258,7 @@
       ],
       "itemID": 371,
       "itemType": "conferencePaper",
-      "pages": "559-565",
+      "pages": "559\u2013565",
       "publicationTitle": "IJCAI-77",
       "title": "In defense of logic",
       "volume": "5"
@@ -9432,7 +9372,7 @@
       ],
       "itemID": 375,
       "itemType": "bookSection",
-      "pages": "38-45",
+      "pages": "38\u201345",
       "publicationTitle": "Seventh international planning competition",
       "publisher": "ICAPS Foundation",
       "title": "Fast downward stone soup"
@@ -9471,7 +9411,7 @@
       ],
       "itemID": 377,
       "itemType": "conferencePaper",
-      "pages": "498-503",
+      "pages": "498\u2013503",
       "title": "Mixed-initiative planning: An open information systems approach"
     },
     {
@@ -9489,7 +9429,7 @@
       ],
       "itemID": 378,
       "itemType": "journalArticle",
-      "pages": "145-180",
+      "pages": "145\u2013180",
       "publicationTitle": "Artificial Intelligence",
       "title": "Modeling simultaneous actions and continuous processes",
       "volume": "4"
@@ -9509,7 +9449,7 @@
       ],
       "itemID": 379,
       "itemType": "conferencePaper",
-      "pages": "115-121",
+      "pages": "115\u2013121",
       "series": "IJCAI-75",
       "title": "Expanding the utility of semantic networks through partitioning"
     },
@@ -9565,7 +9505,7 @@
       ],
       "itemID": 382,
       "itemType": "journalArticle",
-      "pages": "79-106",
+      "pages": "79\u2013106",
       "publicationTitle": "AIJ",
       "title": "Open information system semantics for distributed artificial intelligence",
       "volume": "47"
@@ -9763,7 +9703,7 @@
       ],
       "itemID": 392,
       "itemType": "journalArticle",
-      "pages": "81-108",
+      "pages": "81\u2013108",
       "publicationTitle": "Artificial Intelligence",
       "title": "Making believers out of computers",
       "volume": "30(1)"
@@ -9799,7 +9739,7 @@
       ],
       "itemID": 393,
       "itemType": "journalArticle",
-      "pages": "69-142",
+      "pages": "69\u2013142",
       "publicationTitle": "Artificial Intelligence",
       "title": "Interpretation as abduction",
       "volume": "63"
@@ -9843,7 +9783,7 @@
       "issue": "1",
       "itemID": 395,
       "itemType": "journalArticle",
-      "pages": "67-82",
+      "pages": "67\u201382",
       "publicationTitle": "COGSCI",
       "title": "Coherence and co-references",
       "volume": "3"
@@ -9863,7 +9803,7 @@
       ],
       "itemID": 396,
       "itemType": "conferencePaper",
-      "pages": "61-69",
+      "pages": "61\u201369",
       "publicationTitle": "ACL-85",
       "title": "Ontological promiscuity"
     },
@@ -9977,7 +9917,7 @@
       "issue": "1",
       "itemID": 400,
       "itemType": "journalArticle",
-      "pages": "57-62",
+      "pages": "57\u201362",
       "publicationTitle": "The AI Magazine",
       "title": "FF: The fast-forward PLanning system",
       "volume": "22"
@@ -10002,7 +9942,7 @@
       ],
       "itemID": 401,
       "itemType": "journalArticle",
-      "pages": "519-579",
+      "pages": "519\u2013579",
       "publicationTitle": "JAIR",
       "title": "The deterministic part of IPC-4: An overview",
       "volume": "24"
@@ -10062,7 +10002,7 @@
       ],
       "itemID": 403,
       "itemType": "journalArticle",
-      "pages": "253-302",
+      "pages": "253\u2013302",
       "publicationTitle": "jair",
       "title": "The FF planning system: Fast plan generation through heuristic search",
       "volume": "14"
@@ -10127,7 +10067,7 @@
       ],
       "itemID": 405,
       "itemType": "journalArticle",
-      "pages": "685-758",
+      "pages": "685\u2013758",
       "publicationTitle": "JAIR",
       "title": "Where \"ignoring delete lists\" works: local search topology in planning benchmarks"
     },
@@ -10174,7 +10114,7 @@
       ],
       "itemID": 406,
       "itemType": "journalArticle",
-      "pages": "453-541",
+      "pages": "453\u2013541",
       "publicationTitle": "JAIR",
       "title": "Engineering benchmarks for planning: the domains used in the deterministic part of IPC-4",
       "url": "http://dx.doi.org/10.1613/jair.1982",
@@ -10318,7 +10258,7 @@
       ],
       "itemID": 411,
       "itemType": "conferencePaper",
-      "pages": "294-301",
+      "pages": "294\u2013301",
       "publicationTitle": "Proceedings ICTAI",
       "title": "VAL: Automatic plan validation, continuous effects and mixed initiative planning using PDDL",
       "url": "http://doi.ieeecomputersociety.org/10.1109/ICTAI.2004.120"
@@ -10444,7 +10384,7 @@
       ],
       "itemID": 415,
       "itemType": "conferencePaper",
-      "pages": "425-430",
+      "pages": "425\u2013430",
       "title": "Total-Order planning with partially ordered subtasks"
     },
     {
@@ -10472,7 +10412,7 @@
       ],
       "itemID": 416,
       "itemType": "journalArticle",
-      "pages": "34-44",
+      "pages": "34\u201344",
       "publicationTitle": "IEEE Expert",
       "title": "An architecture for real-time reasoning and system control",
       "volume": "7:6"
@@ -10587,7 +10527,7 @@
       "issue": "2",
       "itemID": 421,
       "itemType": "journalArticle",
-      "pages": "21-29",
+      "pages": "21\u201329",
       "publicationTitle": "AI Magazine",
       "title": "R1: The formative years",
       "volume": "2"
@@ -10710,7 +10650,7 @@
       ],
       "itemID": 425,
       "itemType": "journalArticle",
-      "pages": "1-31",
+      "pages": "1\u201331",
       "publicationTitle": "AIJ",
       "title": "Generating diverse plans to handle unknown and partially known user preferences",
       "url": "http://dx.doi.org/10.1016/j.artint.2012.05.005",
@@ -10791,7 +10731,7 @@
       "issue": "2",
       "itemID": 427,
       "itemType": "journalArticle",
-      "pages": "34-41",
+      "pages": "34\u201341",
       "publicationTitle": "IEEE Intelligent Systems",
       "title": "Applications of SHOP and SHOP2",
       "url": "http://doi.ieeecomputersociety.org/10.1109/MIS.2005.20",
@@ -10814,7 +10754,7 @@
       ],
       "itemID": 428,
       "itemType": "journalArticle",
-      "pages": "191-246",
+      "pages": "191\u2013246",
       "publicationTitle": "JAIR",
       "title": "The fast downward planning system",
       "url": "http://dx.doi.org/10.1613/jair.1705",
@@ -10842,7 +10782,7 @@
       ],
       "itemID": 429,
       "itemType": "journalArticle",
-      "pages": "127-177",
+      "pages": "127\u2013177",
       "publicationTitle": "JAIR",
       "title": "The LAMA planner: Guiding cost-based anytime planning with landmarks",
       "url": "http://dx.doi.org/10.1613/jair.2972",
@@ -10918,7 +10858,7 @@
       ],
       "itemID": 432,
       "itemType": "bookSection",
-      "pages": "191-219",
+      "pages": "191\u2013219",
       "place": "Palo Alto, Calif.",
       "publicationTitle": "Machine learning: An artificial intelligence approach",
       "publisher": "Tioga",
@@ -10988,7 +10928,7 @@
       ],
       "itemID": 435,
       "itemType": "conferencePaper",
-      "pages": "791-798",
+      "pages": "791\u2013798",
       "title": "Synthesizing plant controllers using real-time goals"
     },
     {
@@ -11006,7 +10946,7 @@
       ],
       "itemID": 436,
       "itemType": "conferencePaper",
-      "pages": "86-94",
+      "pages": "86\u201394",
       "title": "On the synthesis of situation control rules under exogenous events"
     },
     {
@@ -11064,7 +11004,7 @@
       "issue": "1",
       "itemID": 438,
       "itemType": "journalArticle",
-      "pages": "67-113",
+      "pages": "67\u2013113",
       "publicationTitle": "AIJ",
       "title": "Planning control rules for reactive agents",
       "volume": "95"
@@ -11084,7 +11024,7 @@
       ],
       "itemID": 439,
       "itemType": "bookSection",
-      "pages": "713-728",
+      "pages": "713\u2013728",
       "title": "An architecture for intelligent reactive systems"
     },
     {
@@ -11102,7 +11042,7 @@
       ],
       "itemID": 440,
       "itemType": "conferencePaper",
-      "pages": "504-508",
+      "pages": "504\u2013508",
       "title": "Notes on mixed initiative planning and execution: A multi-agent view"
     },
     {
@@ -11148,7 +11088,7 @@
       "issue": "2\u20133",
       "itemID": 442,
       "itemType": "journalArticle",
-      "pages": "193-258",
+      "pages": "193\u2013258",
       "publicationTitle": "AIJ",
       "title": "A validation structure-based theory of plan modification and reuse",
       "volume": "55"
@@ -11175,7 +11115,7 @@
       "notes": [
         "The authors review Chapman's Modal Truth Criterion (MTC) from his paper \u201cPlanning for Conjunctive Goals.\u201d They show a bug in Chapman's arguments \u2014 in particular that the equivalence \u25c7p \u2261\u00ac\u25a1\u00acp doesn't hold for truth in partially-ordered plans. The reason for this is that the excluded middle does not hold in the logic of partial plans \u2014 the truth value of some p in some completion of a partial plan may not be defined, because the completion may be ill-formed."
       ],
-      "pages": "1055-1060",
+      "pages": "1055\u20131060",
       "title": "On the nature of modal truth criteria in planning"
     },
     {
@@ -11201,7 +11141,7 @@
       "notes": [
         "This article describes work on using keyhole plan recognition to monitor other team members to verify that the team are working together succesfully. The method is particularly of use in cases where agent-to-communications are not reliable. An extra bonus of the article is that it provides a useful hook into the literature on team action and shared plans."
       ],
-      "pages": "105-147",
+      "pages": "105\u2013147",
       "publicationTitle": "JAIR",
       "title": "Robust agent teams via socially-attentive monitoring",
       "volume": "12"
@@ -11357,7 +11297,7 @@
       ],
       "itemID": 450,
       "itemType": "conferencePaper",
-      "pages": "32-38",
+      "pages": "32\u201338",
       "publicationTitle": "AAAI-86",
       "title": "Generalized plan recognition"
     },
@@ -11377,7 +11317,7 @@
       ],
       "itemID": 451,
       "itemType": "bookSection",
-      "pages": "105-133",
+      "pages": "105\u2013133",
       "title": "A Circumscriptive theory of plan recognition"
     },
     {
@@ -11395,7 +11335,7 @@
       ],
       "itemID": 452,
       "itemType": "conferencePaper",
-      "pages": "401-405",
+      "pages": "401\u2013405",
       "title": "The logic of persistence"
     },
     {
@@ -11541,7 +11481,7 @@
       ],
       "itemID": 458,
       "itemType": "journalArticle",
-      "pages": "243-302",
+      "pages": "243\u2013302",
       "publicationTitle": "AIJ",
       "title": "Automatically Generating abstractions for planning",
       "volume": "68"
@@ -11644,7 +11584,7 @@
       ],
       "itemID": 463,
       "itemType": "journalArticle",
-      "pages": "281-328",
+      "pages": "281\u2013328",
       "publicationTitle": "Cognitive Science",
       "title": "Reconstructive memory: A computer model",
       "volume": "7"
@@ -11690,7 +11630,7 @@
       ],
       "itemID": 465,
       "itemType": "journalArticle",
-      "pages": "263-287",
+      "pages": "263\u2013287",
       "publicationTitle": "Machine Learning",
       "title": "Learning goal hierarchies from structured observations and expert annotations",
       "volume": "64"
@@ -11745,7 +11685,7 @@
       ],
       "itemID": 467,
       "itemType": "conferencePaper",
-      "pages": "138-141",
+      "pages": "138\u2013141",
       "publicationTitle": "AAAI-80",
       "title": "Multiple-agent planning systems",
       "volume": "1"
@@ -11776,7 +11716,7 @@
       ],
       "itemID": 468,
       "itemType": "bookSection",
-      "pages": "41-72",
+      "pages": "41\u201372",
       "place": "New York",
       "publicationTitle": "Machine intelligence 10",
       "publisher": "Halstead",
@@ -11807,7 +11747,7 @@
       ],
       "itemID": 469,
       "itemType": "journalArticle",
-      "pages": "159-208",
+      "pages": "159\u2013208",
       "publicationTitle": "JAIR",
       "title": "Bias-driven revision of logical domain theories",
       "volume": "1"
@@ -11851,7 +11791,7 @@
       "notes": [
         "Korf presents a space-limited algorithm for best-first search."
       ],
-      "pages": "41-78",
+      "pages": "41\u201378",
       "publicationTitle": "AIJ",
       "title": "Linear-space best-first search",
       "volume": "62"
@@ -11876,7 +11816,7 @@
       ],
       "itemID": 472,
       "itemType": "journalArticle",
-      "pages": "143-166",
+      "pages": "143\u2013166",
       "publicationTitle": "DKE",
       "title": "A probabilistic object-oriented data model",
       "volume": "12"
@@ -12020,7 +11960,7 @@
       "issue": "4",
       "itemID": 479,
       "itemType": "journalArticle",
-      "pages": "573-595",
+      "pages": "573\u2013595",
       "publicationTitle": "Journal of the ACM",
       "title": "A proof procedure using connection graphs",
       "volume": "22"
@@ -12059,7 +11999,7 @@
       ],
       "itemID": 481,
       "itemType": "journalArticle",
-      "pages": "83-94",
+      "pages": "83\u201394",
       "publicationTitle": "Acta Philosophica Fennica",
       "title": "Semantical considerations on modal logic",
       "volume": "16"
@@ -12099,7 +12039,7 @@
       "issue": "2",
       "itemID": 483,
       "itemType": "journalArticle",
-      "pages": "129-154",
+      "pages": "129\u2013154",
       "publicationTitle": "Cognitive Science",
       "title": "Modeling spatial knowledge",
       "volume": "2"
@@ -12119,7 +12059,7 @@
       ],
       "itemID": 484,
       "itemType": "conferencePaper",
-      "pages": "209-212",
+      "pages": "209\u2013212",
       "publicationTitle": "AAAI-82",
       "title": "Getting the envisionment right",
       "volume": "2"
@@ -12144,7 +12084,7 @@
       ],
       "itemID": 485,
       "itemType": "conferencePaper",
-      "pages": "774-779",
+      "pages": "774\u2013779",
       "publicationTitle": "AAAI-88",
       "title": "A robust, qualitative method for robot spatial reasoning"
     },
@@ -12169,7 +12109,7 @@
       "issue": "5",
       "itemID": 486,
       "itemType": "journalArticle",
-      "pages": "705-717",
+      "pages": "705\u2013717",
       "publicationTitle": "TCOMPUTERS",
       "title": "A microeconomic approach to optimal resource allocation in distributed computer systems",
       "volume": "38"
@@ -12233,7 +12173,7 @@
       "issue": "1\u20132",
       "itemID": 488,
       "itemType": "journalArticle",
-      "pages": "239-286",
+      "pages": "239\u2013286",
       "publicationTitle": "AIJ",
       "title": "An algorithm for probabilistic planning",
       "volume": "76"
@@ -12280,7 +12220,7 @@
       ],
       "itemID": 490,
       "itemType": "conferencePaper",
-      "pages": "1196-1202",
+      "pages": "1196\u20131202",
       "title": "Evidential probability"
     },
     {
@@ -12803,7 +12743,7 @@
       ],
       "itemID": 511,
       "itemType": "conferencePaper",
-      "pages": "1704-1710",
+      "pages": "1704\u20131710",
       "title": "A sound and fast goal recognizer"
     },
     {
@@ -12920,7 +12860,7 @@
       ],
       "itemID": 515,
       "itemType": "journalArticle",
-      "pages": "78-93",
+      "pages": "78\u201393",
       "publicationTitle": "CI",
       "title": "Expressiveness and tractability in knowledge representation",
       "volume": "3"
@@ -12940,7 +12880,7 @@
       ],
       "itemID": 516,
       "itemType": "conferencePaper",
-      "pages": "1139-1146",
+      "pages": "1139\u20131146",
       "title": "What is planning in the presence of sensing?"
     },
     {
@@ -13052,7 +12992,7 @@
       "notes": [
         "Reprinted from <i>Reasoning about Actions and Plans/</i>"
       ],
-      "pages": "523-530",
+      "pages": "523\u2013530",
       "title": "On the semantics of STRIPS"
     },
     {
@@ -13070,7 +13010,7 @@
       ],
       "itemID": 522,
       "itemType": "journalArticle",
-      "pages": "209-229",
+      "pages": "209\u2013229",
       "publicationTitle": "JAIR",
       "title": "Learning the past tense of english verbs: The symbolic pattern associator vs. Connectionist models",
       "volume": "1"
@@ -13099,7 +13039,7 @@
       "notes": [
         "Describes a number of strategies for planning with temporally-extended actions. Possibly useful for the AMP for SEC?"
       ],
-      "pages": "261-324",
+      "pages": "261\u2013324",
       "publicationTitle": "AIJ",
       "title": "Planning parallel actions",
       "volume": "99"
@@ -13189,7 +13129,7 @@
       ],
       "itemID": 527,
       "itemType": "journalArticle",
-      "pages": "710-716",
+      "pages": "710\u2013716",
       "title": "LAMA: A language for automatic mechanical assembly"
     },
     {
@@ -13213,7 +13153,7 @@
       "issue": "10",
       "itemID": 528,
       "itemType": "journalArticle",
-      "pages": "560-570",
+      "pages": "560\u2013570",
       "publicationTitle": "Communications of the ACM",
       "title": "An algorithm for planning collision-free paths among polyhedral obstacles",
       "volume": "22"
@@ -13234,7 +13174,7 @@
       "issue": "6",
       "itemID": 529,
       "itemType": "journalArticle",
-      "pages": "681-698",
+      "pages": "681\u2013698",
       "publicationTitle": "IEEE Transactions on Systems, Man, and Cybernetics",
       "title": "Automatic planning of manipulator transfer movements",
       "volume": "SMC-11"
@@ -13304,7 +13244,7 @@
       "issue": "1",
       "itemID": 532,
       "itemType": "journalArticle",
-      "pages": "1-25",
+      "pages": "1\u201325",
       "publicationTitle": "Autonomous Robots",
       "title": "Multiagent mission specification and execution",
       "volume": "4"
@@ -13334,7 +13274,7 @@
       ],
       "itemID": 533,
       "itemType": "journalArticle",
-      "pages": "333-356",
+      "pages": "333\u2013356",
       "publicationTitle": "Fundamenta Informatic\u00e6",
       "title": "A syntactic approach to introspection and reasoning about the beliefs of other agents",
       "volume": "XV"
@@ -13354,7 +13294,7 @@
       ],
       "itemID": 534,
       "itemType": "journalArticle",
-      "pages": "331-383",
+      "pages": "331\u2013383",
       "publicationTitle": "AIJ",
       "title": "Maintaining mental models of agents who have existential misconceptions",
       "volume": "50"
@@ -13571,7 +13511,7 @@
       ],
       "itemID": 543,
       "itemType": "journalArticle",
-      "pages": "269-294",
+      "pages": "269\u2013294",
       "publicationTitle": "Proceedings of the Royal Society",
       "title": "Representation and recognition of the spatial organization of three-dimensional shapes",
       "volume": "B-200"
@@ -13596,7 +13536,7 @@
       ],
       "itemID": 544,
       "itemType": "journalArticle",
-      "pages": "301-328",
+      "pages": "301\u2013328",
       "publicationTitle": "Proceedings of the Royal Society",
       "title": "A computational theory of human stereo vision",
       "volume": "B-204"
@@ -13621,7 +13561,7 @@
       ],
       "itemID": 545,
       "itemType": "journalArticle",
-      "pages": "187-217",
+      "pages": "187\u2013217",
       "publicationTitle": "Procedings of the Royal Society",
       "title": "Theory of edge detection",
       "volume": "B-207"
@@ -13706,7 +13646,7 @@
       ],
       "itemID": 548,
       "itemType": "bookSection",
-      "pages": "305-322",
+      "pages": "305\u2013322",
       "place": "MITP-ADDRESS",
       "publicationTitle": "Robot motion: Planning and control",
       "publisher": "MITP",
@@ -13788,7 +13728,7 @@
       ],
       "itemID": 551,
       "itemType": "conferencePaper",
-      "pages": "634-639",
+      "pages": "634\u2013639",
       "publicationTitle": "AAAI-91",
       "title": "Systematic nonlinear planning"
     },
@@ -13946,7 +13886,7 @@
       "notes": [
         "Reprinted in NONMON."
       ],
-      "pages": "27-39,171-172",
+      "pages": "27\u201339,171\u2013172",
       "publicationTitle": "AIJ",
       "title": "Circumscription \u2014 A form of non-monotonic reasoning",
       "volume": "13"
@@ -13971,7 +13911,7 @@
       ],
       "itemID": 559,
       "itemType": "conferencePaper",
-      "pages": "59-70",
+      "pages": "59\u201370",
       "title": "Reasoning about indefinite actions"
     },
     {
@@ -13990,7 +13930,7 @@
       "issue": "6",
       "itemID": 560,
       "itemType": "journalArticle",
-      "pages": "1417-44",
+      "pages": "1417\u201344",
       "publicationTitle": "BSTJ",
       "title": "Minimization of boolean functions",
       "volume": "35"
@@ -14084,7 +14024,7 @@
       "issue": "2",
       "itemID": 564,
       "itemType": "journalArticle",
-      "pages": "35-55",
+      "pages": "35\u201355",
       "publicationTitle": "AIM",
       "title": "The 1998 AI planning systems competition",
       "volume": "21"
@@ -14177,7 +14117,7 @@
       ],
       "itemID": 569,
       "itemType": "conferencePaper",
-      "pages": "229-234",
+      "pages": "229\u2013234",
       "publicationTitle": "IJCAI-77",
       "title": "Vocabularies for problem-solver state descriptions"
     },
@@ -14195,7 +14135,7 @@
       ],
       "itemID": 570,
       "itemType": "journalArticle",
-      "pages": "71-109",
+      "pages": "71\u2013109",
       "publicationTitle": "Cognitive Science",
       "title": "Planning and acting",
       "volume": "2"
@@ -14214,7 +14154,7 @@
       ],
       "itemID": 571,
       "itemType": "journalArticle",
-      "pages": "277-282",
+      "pages": "277\u2013282",
       "publicationTitle": "Cognitive Science",
       "title": "Tarskian semantics, or no notation without denotation"
     },
@@ -14232,7 +14172,7 @@
       ],
       "itemID": 572,
       "itemType": "conferencePaper",
-      "pages": "154-162",
+      "pages": "154\u2013162",
       "publicationTitle": "Proceedings of the ACM symposium on lisp and functional programming",
       "title": "An efficient environment allocation scheme in an interpreter for a lexically-scoped LISP"
     },
@@ -14251,7 +14191,7 @@
       ],
       "itemID": 573,
       "itemType": "conferencePaper",
-      "pages": "246-248",
+      "pages": "246\u2013248",
       "title": "A theory of metric spatial inference",
       "volume": "1"
     },
@@ -14293,7 +14233,7 @@
       "issue": "1,2",
       "itemID": 575,
       "itemType": "journalArticle",
-      "pages": "41-72",
+      "pages": "41\u201372",
       "publicationTitle": "Artificial Intelligence",
       "title": "Non-monotonic logic I",
       "volume": "13"
@@ -14377,7 +14317,7 @@
       ],
       "itemID": 579,
       "itemType": "conferencePaper",
-      "pages": "266-269",
+      "pages": "266\u2013269",
       "publicationTitle": "AAAI-83",
       "title": "Data dependencies on inequalities"
     },
@@ -14476,7 +14416,7 @@
       ],
       "itemID": 584,
       "itemType": "journalArticle",
-      "pages": "107-156",
+      "pages": "107\u2013156",
       "publicationTitle": "Artificial Intelligence",
       "title": "Planning routes through uncertain territory",
       "volume": "22"
@@ -14495,7 +14435,7 @@
       ],
       "itemID": 585,
       "itemType": "journalArticle",
-      "pages": "151-160",
+      "pages": "151\u2013160",
       "publicationTitle": "Computational Intelligence",
       "title": "A critique of pure reason",
       "volume": "3"
@@ -14515,7 +14455,7 @@
       "issue": "3",
       "itemID": 586,
       "itemType": "journalArticle",
-      "pages": "289-329",
+      "pages": "289\u2013329",
       "publicationTitle": "AIJ",
       "title": "A general framework for reason maintenance",
       "volume": "50"
@@ -14535,7 +14475,7 @@
       "issue": "2",
       "itemID": 587,
       "itemType": "journalArticle",
-      "pages": "55-79",
+      "pages": "55\u201379",
       "publicationTitle": "AI Magazine",
       "title": "Robot planning",
       "volume": "13"
@@ -14554,7 +14494,7 @@
       ],
       "itemID": 588,
       "itemType": "conferencePaper",
-      "pages": "142-149",
+      "pages": "142\u2013149",
       "title": "A heuristic estimator for means-ends analysis in planning"
     },
     {
@@ -14650,7 +14590,7 @@
       "issue": "4",
       "itemID": 591,
       "itemType": "journalArticle",
-      "pages": "357-416",
+      "pages": "357\u2013416",
       "publicationTitle": "IJIS",
       "title": "Regression planning",
       "volume": "6"
@@ -14700,7 +14640,7 @@
       ],
       "itemID": 593,
       "itemType": "conferencePaper",
-      "pages": "368-374",
+      "pages": "368\u2013374",
       "publicationTitle": "IJCAI-81",
       "title": "Using active connection graphs for reasoning with recursive rules"
     },
@@ -14720,7 +14660,7 @@
       ],
       "itemID": 594,
       "itemType": "bookSection",
-      "pages": "197-209",
+      "pages": "197\u2013209",
       "title": "TALE-SPIN"
     },
     {
@@ -14800,7 +14740,7 @@
       ],
       "itemID": 598,
       "itemType": "bookSection",
-      "pages": "83-134",
+      "pages": "83\u2013134",
       "title": "A theory and methodology of inductive learning"
     },
     {
@@ -14819,7 +14759,7 @@
       "issue": "4",
       "itemID": 599,
       "itemType": "journalArticle",
-      "pages": "361-383",
+      "pages": "361\u2013383",
       "publicationTitle": "Cognitive Science",
       "title": "Understanding understanding mathematics",
       "volume": "2"
@@ -15115,7 +15055,7 @@
       ],
       "itemID": 611,
       "itemType": "conferencePaper",
-      "pages": "83-92",
+      "pages": "83\u201392",
       "title": "Total order <i>vs./</i> partial order planning: Factors influencing performance"
     },
     {
@@ -15143,7 +15083,7 @@
       ],
       "itemID": 612,
       "itemType": "journalArticle",
-      "pages": "227-262",
+      "pages": "227\u2013262",
       "publicationTitle": "JAIR",
       "title": "Total-order and partial-order planning: A comparative analysis",
       "volume": "2"
@@ -15255,7 +15195,7 @@
       ],
       "itemID": 615,
       "itemType": "journalArticle",
-      "pages": "47-80",
+      "pages": "47\u201380",
       "publicationTitle": "Machine Learning",
       "title": "Explanation-based generalization: A unifying view",
       "volume": "1"
@@ -15305,7 +15245,7 @@
       "notes": [
         "Presents the AC-4 and PC-3 algorithms; optimal algorithms for arc consistency and path consistency, respectively, for uniprocessors. Note that Han and Lee, in their 1988 paper, provide a fix for a bug in PC-3, creating an algorithm they call PC-4."
       ],
-      "pages": "225-233",
+      "pages": "225\u2013233",
       "publicationTitle": "AIJ",
       "title": "Arc and path consistency revisited",
       "volume": "28"
@@ -15404,7 +15344,7 @@
       ],
       "itemID": 621,
       "itemType": "journalArticle",
-      "pages": "12-21",
+      "pages": "12\u201321",
       "publicationTitle": "SIGART Bulletin",
       "title": "Integrating ILP and EBL",
       "volume": "5"
@@ -15549,7 +15489,7 @@
       ],
       "itemID": 628,
       "itemType": "conferencePaper",
-      "pages": "867-874",
+      "pages": "867\u2013874",
       "title": "Knowledge preconditions for actions and plans"
     },
     {
@@ -15644,7 +15584,7 @@
       ],
       "itemID": 632,
       "itemType": "bookSection",
-      "pages": "367-403",
+      "pages": "367\u2013403",
       "place": "Palo Alto, Calif.",
       "publicationTitle": "Machine learning: An artificial intelligence approach",
       "publisher": "Tioga",
@@ -15669,7 +15609,7 @@
       "notes": [
         "Martha Pollack's rant, based on Bratman, somewhat, that plans are useful. Contra the then-popular push for reactive `planners.' Also argues for a kind of qualitative decision theory. A la Bratman, argues that committing to intentions provides a useful control of reasoning. Discusses experiments with the IRMA planning architecture."
       ],
-      "pages": "43-68",
+      "pages": "43\u201368",
       "publicationTitle": "AIJ",
       "title": "The uses of plans",
       "volume": "57"
@@ -15719,7 +15659,7 @@
       "issue": "6",
       "itemID": 635,
       "itemType": "journalArticle",
-      "pages": "1561-1574",
+      "pages": "1561\u20131574",
       "publicationTitle": "SMC",
       "title": "CIRCA: A cooperative intelligent real-time control architecture",
       "volume": "23"
@@ -15762,7 +15702,7 @@
       ],
       "itemID": 637,
       "itemType": "conferencePaper",
-      "pages": "1036-1041",
+      "pages": "1036\u20131041",
       "title": "Using abstraction and nondeterminism to plan reaction loops",
       "url": "http://www.cs.umd.edu/users/musliner/papers/salsa.ps"
     },
@@ -15792,7 +15732,7 @@
       "issue": "1",
       "itemID": 638,
       "itemType": "journalArticle",
-      "pages": "83-127",
+      "pages": "83\u2013127",
       "publicationTitle": "Artificial Intelligence",
       "title": "World modeling for the dynamic construction of real-time control plans",
       "url": "http://www.cs.umd.edu/users/musliner/papers/musliner-aij.ps",
@@ -15860,7 +15800,7 @@
       ],
       "itemID": 641,
       "itemType": "journalArticle",
-      "pages": "63-69",
+      "pages": "63\u201369",
       "publicationTitle": "AI Magazine",
       "title": "A continuous planning and execution framework"
     },
@@ -15921,7 +15861,7 @@
       "issue": "1",
       "itemID": 643,
       "itemType": "journalArticle",
-      "pages": "91-94",
+      "pages": "91\u201394",
       "publicationTitle": "AIM",
       "title": "The Shop planning system",
       "volume": "22"
@@ -16438,7 +16378,7 @@
       ],
       "itemID": 663,
       "itemType": "journalArticle",
-      "pages": "139-158",
+      "pages": "139\u2013158",
       "publicationTitle": "JAIR",
       "title": "Teleo-reactive programs for agent control",
       "volume": "1"
@@ -16618,7 +16558,7 @@
       ],
       "itemID": 672,
       "itemType": "conferencePaper",
-      "pages": "133-143",
+      "pages": "133\u2013143",
       "title": "Mixed-initiative schedule maintenance: a first step towards plan steering"
     },
     {
@@ -16647,7 +16587,7 @@
       ],
       "itemID": 673,
       "itemType": "conferencePaper",
-      "pages": "136-144",
+      "pages": "136\u2013144",
       "title": "An empirical study of sensing and defaulting in planning"
     },
     {
@@ -16694,7 +16634,7 @@
       ],
       "itemID": 675,
       "itemType": "conferencePaper",
-      "pages": "791-795",
+      "pages": "791\u2013795",
       "publicationTitle": "AAAI-88",
       "title": "Connectionist networks for learning coordinated motion in autonomous systems"
     },
@@ -16724,7 +16664,7 @@
       "issue": "2",
       "itemID": 676,
       "itemType": "journalArticle",
-      "pages": "33-46",
+      "pages": "33\u201346",
       "publicationTitle": "IEEE Transactions on Semiconductor Manufacturing",
       "title": "A framework for knowledge-based computer-integrated manufacturing",
       "volume": "2"
@@ -16784,7 +16724,7 @@
         "Describes the HITaP Hierarchical (HTN/decomposition) planner for RETSINA.",
         "http://www.ida.liu.se/ext/epa/ej/etai/2000/003/epapage.html"
       ],
-      "pages": "23-43",
+      "pages": "23\u201343",
       "publicationTitle": "ETAI",
       "title": "Interleaving planning and execution in a multiagent team planning environment",
       "volume": "4"
@@ -16809,7 +16749,7 @@
       ],
       "itemID": 679,
       "itemType": "conferencePaper",
-      "pages": "375-384",
+      "pages": "375\u2013384",
       "title": "View-concepts: Persistent Storage for planning and scheduling"
     },
     {
@@ -16827,7 +16767,7 @@
       ],
       "itemID": 680,
       "itemType": "journalArticle",
-      "pages": "263-272",
+      "pages": "263\u2013272",
       "publicationTitle": "AIJ",
       "title": "Undecidability of subsumption in NIKL",
       "volume": "39"
@@ -16893,7 +16833,7 @@
       "issue": "2",
       "itemID": 681,
       "itemType": "journalArticle",
-      "pages": "16-23",
+      "pages": "16\u201323",
       "publicationTitle": "AI Magazine",
       "title": "Term subsumption language in knowledge representation",
       "volume": "11"
@@ -16923,7 +16863,7 @@
       ],
       "itemID": 682,
       "itemType": "conferencePaper",
-      "pages": "345-348",
+      "pages": "345\u2013348",
       "publicationTitle": "AAAI-82",
       "title": "Information acquisition in diagnosis"
     },
@@ -16957,7 +16897,7 @@
       ],
       "itemID": 683,
       "itemType": "bookSection",
-      "pages": "109-118",
+      "pages": "109\u2013118",
       "publicationTitle": "Computational linguistics in medicine",
       "title": "Analyzing and simulating taking the history of the present illness: context formation"
     },
@@ -17093,7 +17033,7 @@
       "issue": "4",
       "itemID": 689,
       "itemType": "journalArticle",
-      "pages": "356-372",
+      "pages": "356\u2013372",
       "publicationTitle": "CI",
       "title": "Synthesizing Plans that contain actions with context-dependent effects",
       "volume": "4"
@@ -17113,7 +17053,7 @@
       ],
       "itemID": 690,
       "itemType": "conferencePaper",
-      "pages": "55-59",
+      "pages": "55\u201359",
       "title": "Extending conventional planning techniques to handle actions with context-dependent effects"
     },
     {
@@ -17211,7 +17151,7 @@
       ],
       "itemID": 694,
       "itemType": "conferencePaper",
-      "pages": "103-114",
+      "pages": "103\u2013114",
       "title": "UCPOP: A sound, complete, partial order planner for ADL"
     },
     {
@@ -17300,7 +17240,7 @@
       ],
       "itemID": 698,
       "itemType": "journalArticle",
-      "pages": "301-322",
+      "pages": "301\u2013322",
       "publicationTitle": "AIJ",
       "title": "Languages with self-reference I: Foundations",
       "volume": "25"
@@ -17320,7 +17260,7 @@
       ],
       "itemID": 699,
       "itemType": "journalArticle",
-      "pages": "179-212",
+      "pages": "179\u2013212",
       "publicationTitle": "AIJ",
       "title": "Languages with Self-reference II: knowledge, belief and modality",
       "volume": "34"
@@ -17395,7 +17335,7 @@
       ],
       "itemID": 702,
       "itemType": "conferencePaper",
-      "pages": "2-11",
+      "pages": "2\u201311",
       "title": "Extending the knowledge-based approach to planning with incomplete information and sensing"
     },
     {
@@ -17534,7 +17474,7 @@
       ],
       "itemID": 708,
       "itemType": "conferencePaper",
-      "pages": "519-536",
+      "pages": "519\u2013536",
       "title": "Handbook of evaluation for the ARPA/Rome lab planning initiative"
     },
     {
@@ -17742,7 +17682,7 @@
       ],
       "itemID": 716,
       "itemType": "bookSection",
-      "pages": "119-190",
+      "pages": "119\u2013190",
       "place": "Boulder, Colorado",
       "publicationTitle": "Artificial intelligence in medicine",
       "publisher": "Westview Press",
@@ -17864,7 +17804,7 @@
       "issue": "1",
       "itemID": 720,
       "itemType": "journalArticle",
-      "pages": "565-620",
+      "pages": "565\u2013620",
       "publicationTitle": "JAIR",
       "title": "Probabilistic planning via heuristic forward search and weighted model counting",
       "volume": "30"
@@ -18011,7 +17951,7 @@
       "issue": "2",
       "itemID": 724,
       "itemType": "journalArticle",
-      "pages": "60-71",
+      "pages": "60\u201371",
       "publicationTitle": "IEEE Intelligent Systems",
       "title": "Creating semantic web contents with protege-2000",
       "volume": "16"
@@ -18055,7 +17995,7 @@
       ],
       "itemID": 726,
       "itemType": "conferencePaper",
-      "pages": "181-192",
+      "pages": "181\u2013192",
       "publicationTitle": "Hybrid problems, hybrid solutions (proceedings of AISB-95)",
       "publisher": "IOS Press",
       "title": "Decisions, decisions: Knowledge goals in planning"
@@ -18080,7 +18020,7 @@
       ],
       "itemID": 727,
       "itemType": "journalArticle",
-      "pages": "287-339",
+      "pages": "287\u2013339",
       "publicationTitle": "JAIR",
       "title": "Planning for contingencies: A decision-based approach",
       "volume": "4"
@@ -18108,7 +18048,7 @@
       "notes": [
         "This paper describes the Cassandra approach to Michie's \u201ckeys and boxes\u201dproblem, which is similar to Moore's \u201cbomb in the toilet\u201d problem, in requiring both information-gathering actions and also action with only partial information (\u201cfail-safe\u201d planning)."
       ],
-      "pages": "1567-1573",
+      "pages": "1567\u20131573",
       "title": "Planning under uncertainty: Some key issues"
     },
     {
@@ -18271,7 +18211,7 @@
       "issue": "8",
       "itemID": 736,
       "itemType": "journalArticle",
-      "pages": "521-31",
+      "pages": "521\u201331",
       "publicationTitle": "American Mathematical Monthly",
       "title": "The problem of simplifying truth functions",
       "volume": "59"
@@ -18291,7 +18231,7 @@
       ],
       "itemID": 737,
       "itemType": "conferencePaper",
-      "pages": "58-64",
+      "pages": "58\u201364",
       "publicationTitle": "Proceedings of the international machine learning workshop",
       "publisher": "University of Illinois",
       "title": "Learning from noisy data"
@@ -18311,7 +18251,7 @@
       ],
       "itemID": 738,
       "itemType": "journalArticle",
-      "pages": "239-266",
+      "pages": "239\u2013266",
       "publicationTitle": "ML",
       "title": "Learning Logical definitions from relations",
       "volume": "5"
@@ -18331,7 +18271,7 @@
       ],
       "itemID": 739,
       "itemType": "journalArticle",
-      "pages": "139-161",
+      "pages": "139\u2013161",
       "publicationTitle": "JAIR",
       "title": "Learning First-order definitions of functions",
       "volume": "5"
@@ -18366,7 +18306,7 @@
       ],
       "itemID": 740,
       "itemType": "bookSection",
-      "pages": "463-482",
+      "pages": "463\u2013482",
       "place": "Palo Alto, Calif.",
       "publicationTitle": "Machine learning: An artificial intelligence approach",
       "publisher": "Tioga",
@@ -18660,7 +18600,7 @@
       "issue": "1",
       "itemID": 752,
       "itemType": "journalArticle",
-      "pages": "57-96",
+      "pages": "57\u201396",
       "publicationTitle": "AIJ",
       "title": "A theory of diagnosis from first principles",
       "volume": "32"
@@ -18683,7 +18623,7 @@
       "notes": [
         "Reprinted in NONMON."
       ],
-      "pages": "81-132",
+      "pages": "81\u2013132",
       "publicationTitle": "Artificial Intelligence",
       "title": "A logic for default reasoning",
       "volume": "13"
@@ -18708,7 +18648,7 @@
       ],
       "itemID": 754,
       "itemType": "journalArticle",
-      "pages": "125-155",
+      "pages": "125\u2013155",
       "publicationTitle": "AIJ",
       "title": "A logical framework for depiction and image interpretation",
       "volume": "41"
@@ -18814,7 +18754,7 @@
       ],
       "itemID": 759,
       "itemType": "conferencePaper",
-      "pages": "180-195",
+      "pages": "180\u2013195",
       "publicationTitle": "Theoretical issues in natural language processing",
       "title": "The commonsense algorithm as a basis for computer models of human memory, inference, belief and contextual language comprehension",
       "volume": "1"
@@ -19080,7 +19020,7 @@
       "notes": [
         "Have not yet read this article, but should."
       ],
-      "pages": "323-352",
+      "pages": "323\u2013352",
       "publicationTitle": "JAIR",
       "title": "Constructing conditional plans by a theorem-prover",
       "volume": "10"
@@ -19293,7 +19233,7 @@
       ],
       "itemID": 779,
       "itemType": "conferencePaper",
-      "pages": "331-337",
+      "pages": "331\u2013337",
       "title": "Plan synthesis: A logical perspective"
     },
     {
@@ -19360,7 +19300,7 @@
       ],
       "itemID": 782,
       "itemType": "journalArticle",
-      "pages": "575-609",
+      "pages": "575\u2013609",
       "publicationTitle": "JAIR",
       "title": "Provably bounded-optimal agents",
       "volume": "2"
@@ -19386,7 +19326,7 @@
       "issue": "1",
       "itemID": 783,
       "itemType": "journalArticle",
-      "pages": "18-26",
+      "pages": "18\u201326",
       "publicationTitle": "AI Communications",
       "title": "Temporal planner = nonlinear planner + time map manager",
       "volume": "6"
@@ -19406,7 +19346,7 @@
       ],
       "itemID": 784,
       "itemType": "conferencePaper",
-      "pages": "206-214",
+      "pages": "206\u2013214",
       "publicationTitle": "IJCAI-75",
       "title": "The nonlinear nature of plans",
       "volume": "4"
@@ -19445,7 +19385,7 @@
       ],
       "itemID": 786,
       "itemType": "conferencePaper",
-      "pages": "191-203",
+      "pages": "191\u2013203",
       "title": "Micro-boss: towards a new generation of manufacturing scheduling shells"
     },
     {
@@ -19463,7 +19403,7 @@
       ],
       "itemID": 787,
       "itemType": "conferencePaper",
-      "pages": "462-473",
+      "pages": "462\u2013473",
       "title": "A study in the logic of intention"
     },
     {
@@ -19486,7 +19426,7 @@
       ],
       "itemID": 788,
       "itemType": "journalArticle",
-      "pages": "111-129",
+      "pages": "111\u2013129",
       "publicationTitle": "JAIR",
       "title": "On planning while learning",
       "volume": "2"
@@ -19533,7 +19473,7 @@
       ],
       "itemID": 789,
       "itemType": "conferencePaper",
-      "pages": "385-393",
+      "pages": "385\u2013393",
       "publicationTitle": "Proceedings of the 9th international conference on machine learning",
       "title": "Learning to fly"
     },
@@ -19645,7 +19585,7 @@
       "issue": "5",
       "itemID": 794,
       "itemType": "journalArticle",
-      "pages": "531-552",
+      "pages": "531\u2013552",
       "publicationTitle": "PAMI",
       "title": "Representation of activity knowledge for project management",
       "volume": "PAMI-7"
@@ -19815,7 +19755,7 @@
       "notes": [
         "Provides a representation of knowledge-producing actions in the situation calculus. Extends Reiter's explanation-closure solution to the frame problem to this extended situation calculus (in which successor state axioms are automatically generated from General Positive Effect and General Negative Effect axioms). The authors show that knowledge-producing actions can be handled using Reiter's explanation-closure approach. Further, they extend Reiter's regression operators to knowledge-producing actions. This permits one to check properties of a plan (e.g., does it achieve a particular goal proposition) by regressing those properties to the initial situation and then doing theorem-proving exclusively in that initial situation."
       ],
-      "pages": "689-695",
+      "pages": "689\u2013695",
       "publisher": "NEW-AAAI-PUB",
       "title": "The frame problem and knowledge-producing actions"
     },
@@ -19869,7 +19809,7 @@
       ],
       "itemID": 803,
       "itemType": "journalArticle",
-      "pages": "45-83",
+      "pages": "45\u201383",
       "publicationTitle": "Artificial Intelligence",
       "title": "The plan recognition problem: an intersection of psychology and artificial intelligence",
       "volume": "11"
@@ -19934,7 +19874,7 @@
       ],
       "itemID": 806,
       "itemType": "conferencePaper",
-      "pages": "444-458",
+      "pages": "444\u2013458",
       "title": "An episodic knowledge representation for narrative texts"
     },
     {
@@ -19957,7 +19897,7 @@
       ],
       "itemID": 807,
       "itemType": "bookSection",
-      "pages": "23-67",
+      "pages": "23\u201367",
       "publicationTitle": "Knowledge representation and defeasible reasoning",
       "publisher": "Kluwer Academic Publishers",
       "title": "Monotonic Solution of the Frame Problem in the situation calculus"
@@ -20020,7 +19960,7 @@
       ],
       "itemID": 810,
       "itemType": "journalArticle",
-      "pages": "47-70",
+      "pages": "47\u201370",
       "publicationTitle": "COGSCI",
       "title": "The intentionality of intention and action",
       "volume": "4"
@@ -20107,7 +20047,7 @@
       ],
       "itemID": 814,
       "itemType": "journalArticle",
-      "pages": "287-322",
+      "pages": "287\u2013322",
       "publicationTitle": "AIJ",
       "title": "Model-preference default theories",
       "volume": "45"
@@ -20381,7 +20321,7 @@
       ],
       "itemID": 825,
       "itemType": "conferencePaper",
-      "pages": "699-704",
+      "pages": "699\u2013704",
       "publicationTitle": "IJCAI-83",
       "title": "Sentence disambiguation by a shift-reduce parsing technique"
     },
@@ -20484,7 +20424,7 @@
       ],
       "itemID": 829,
       "itemType": "conferencePaper",
-      "pages": "195-210",
+      "pages": "195\u2013210",
       "publicationTitle": "International semantic web conference",
       "title": "Automating DAML-S web services composition using SHOP2",
       "url": "http://springerlink.metapress.com/openurl.asp?genre=article&amp;issn=0302-9743&amp;volume=2870&amp;spage=195"
@@ -20676,7 +20616,7 @@
       ],
       "itemID": 837,
       "itemType": "bookSection",
-      "pages": "267-330",
+      "pages": "267\u2013330",
       "title": "Focusing in the comprehension of definite anaphora"
     },
     {
@@ -20695,7 +20635,7 @@
       "issue": "1",
       "itemID": 838,
       "itemType": "journalArticle",
-      "pages": "1-10",
+      "pages": "1\u201310",
       "publicationTitle": "CI",
       "title": "Plan parsing for intended response recognition in discourse",
       "volume": "1"
@@ -20833,7 +20773,7 @@
       "issue": "12",
       "itemID": 844,
       "itemType": "journalArticle",
-      "pages": "1104-1113",
+      "pages": "1104\u20131113",
       "publicationTitle": "TCOMPUTERS",
       "title": "The contract net protocol: High-level communication and control in a distributed problem solver",
       "volume": "C-29"
@@ -20858,7 +20798,7 @@
       ],
       "itemID": 845,
       "itemType": "conferencePaper",
-      "pages": "145-154",
+      "pages": "145\u2013154",
       "title": "Toward the development of flexible mixed-initiative scheduling tools"
     },
     {
@@ -21144,7 +21084,7 @@
       ],
       "itemID": 856,
       "itemType": "conferencePaper",
-      "pages": "32-38",
+      "pages": "32\u201338",
       "title": "A new logical framework for deductive planning"
     },
     {
@@ -21167,7 +21107,7 @@
       ],
       "itemID": 857,
       "itemType": "conferencePaper",
-      "pages": "213-220",
+      "pages": "213\u2013220",
       "title": "Deduction-based refinement planning"
     },
     {
@@ -21418,7 +21358,7 @@
       ],
       "itemID": 868,
       "itemType": "journalArticle",
-      "pages": "9-44",
+      "pages": "9\u201344",
       "publicationTitle": "ML",
       "title": "Learning to predict by the methods of temporal differences",
       "volume": "3"
@@ -21522,7 +21462,7 @@
       ],
       "itemID": 872,
       "itemType": "conferencePaper",
-      "pages": "155-164",
+      "pages": "155\u2013164",
       "title": "Evaluation and improvement of schedules according to interactively acquired user-defined criteria"
     },
     {
@@ -21585,7 +21525,7 @@
       ],
       "itemID": 875,
       "itemType": "conferencePaper",
-      "pages": "888-893",
+      "pages": "888\u2013893",
       "publicationTitle": "IJCAI-77",
       "title": "Generating project networks"
     },
@@ -21609,7 +21549,7 @@
       ],
       "itemID": 876,
       "itemType": "journalArticle",
-      "pages": "49-86",
+      "pages": "49\u201386",
       "publicationTitle": "AIJ",
       "title": "O-Plan: the open planning architecture",
       "volume": "52"
@@ -21657,7 +21597,7 @@
       ],
       "itemID": 878,
       "itemType": "conferencePaper",
-      "pages": "512-516",
+      "pages": "512\u2013516",
       "title": "Mixed-initiative planning in O-Plan2"
     },
     {
@@ -21853,7 +21793,7 @@
       ],
       "itemID": 886,
       "itemType": "conferencePaper",
-      "pages": "1024-1030",
+      "pages": "1024\u20131030",
       "title": "X2MORF: A morphological component based on augmented two-level morphology"
     },
     {
@@ -22016,7 +21956,7 @@
       ],
       "itemID": 893,
       "itemType": "conferencePaper",
-      "pages": "1039-1046",
+      "pages": "1039\u20131046",
       "title": "Universal plans for reactive robots in unpredictable environments"
     },
     {
@@ -22100,7 +22040,7 @@
       ],
       "itemID": 897,
       "itemType": "journalArticle",
-      "pages": "25-52",
+      "pages": "25\u201352",
       "publicationTitle": "JAIR",
       "title": "FLECS: Planning with a flexible commitment strategy",
       "volume": "3"
@@ -22132,7 +22072,7 @@
       "notes": [
         "Suggests that plans be monitored based on the plan rationale. Focuses on planning, rather than execution, so thinks about changes that happen during planning."
       ],
-      "pages": "171-179",
+      "pages": "171\u2013179",
       "title": "Rationale-based monitoring for planning in dynamic environments"
     },
     {
@@ -22182,7 +22122,7 @@
       "issue": "3",
       "itemID": 900,
       "itemType": "journalArticle",
-      "pages": "246-267",
+      "pages": "246\u2013267",
       "publicationTitle": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
       "title": "Planning in time: Windows and durations for activities and goals",
       "volume": "PAMI-5"
@@ -22202,7 +22142,7 @@
       ],
       "itemID": 901,
       "itemType": "conferencePaper",
-      "pages": "190-197",
+      "pages": "190\u2013197",
       "title": "Getting serious about parsing plans: A grammatical analysis of plan recognition"
     },
     {
@@ -22221,7 +22161,7 @@
       ],
       "itemID": 902,
       "itemType": "conferencePaper",
-      "pages": "464-470",
+      "pages": "464\u2013470",
       "title": "Deduction as parsing"
     },
     {
@@ -22253,7 +22193,7 @@
       "notes": [
         "A version of this paper is also available as UMass Computer Science Technical Report 1997-59"
       ],
-      "pages": "91-118",
+      "pages": "91\u2013118",
       "publicationTitle": "Journal for Approximate Reasoning",
       "title": "Criteria directed task scheduling",
       "url": "http://mas.cs.umass.edu/paper/14",
@@ -22284,7 +22224,7 @@
       ],
       "itemID": 904,
       "itemType": "bookSection",
-      "pages": "94-136",
+      "pages": "94\u2013136",
       "place": "Edinburgh, Scotland",
       "publicationTitle": "Machine intelligence",
       "publisher": "Ellis Horwood",
@@ -22327,7 +22267,7 @@
       "issue": "2",
       "itemID": 905,
       "itemType": "journalArticle",
-      "pages": "103-117",
+      "pages": "103\u2013117",
       "publicationTitle": "TSWE",
       "title": "Spawn: A distributed computational economy",
       "volume": "18"
@@ -22397,7 +22337,7 @@
       ],
       "itemID": 908,
       "itemType": "conferencePaper",
-      "pages": "344-354",
+      "pages": "344\u2013354",
       "publicationTitle": "Proceedings of the AISB summer conference",
       "title": "Generating conditional plans and programs"
     },
@@ -22536,7 +22476,7 @@
       ],
       "itemID": 914,
       "itemType": "journalArticle",
-      "pages": "431-465",
+      "pages": "431\u2013465",
       "publicationTitle": "JAIR",
       "title": "OPUS: An efficient admissible algorithm for unordered search",
       "volume": "3"
@@ -22556,7 +22496,7 @@
       ],
       "itemID": 915,
       "itemType": "bookSection",
-      "pages": "331-371",
+      "pages": "331\u2013371",
       "title": "So what can we talk about now?"
     },
     {
@@ -22574,7 +22514,7 @@
       ],
       "itemID": 916,
       "itemType": "conferencePaper",
-      "pages": "147-154",
+      "pages": "147\u2013154",
       "publicationTitle": "ACL-87",
       "title": "The interpretation of tense in discourse"
     },
@@ -22656,7 +22596,7 @@
       ],
       "itemID": 920,
       "itemType": "journalArticle",
-      "pages": "1-23",
+      "pages": "1\u201323",
       "publicationTitle": "JAIR",
       "title": "A Market-oriented programming environment and its application to Distributed multicommodity flow problems",
       "volume": "1"
@@ -22814,7 +22754,7 @@
       "issue": "2",
       "itemID": 927,
       "itemType": "journalArticle",
-      "pages": "165-203",
+      "pages": "165\u2013203",
       "publicationTitle": "Artificial Intelligence",
       "title": "Using patterns and plans in chess",
       "volume": "14"
@@ -22871,7 +22811,7 @@
       "issue": "4",
       "itemID": 930,
       "itemType": "journalArticle",
-      "pages": "232-246",
+      "pages": "232\u2013246",
       "publicationTitle": "CI",
       "title": "Can AI planners solve practical problems?",
       "volume": "6"
@@ -22916,7 +22856,7 @@
       ],
       "itemID": 932,
       "itemType": "conferencePaper",
-      "pages": "154-162",
+      "pages": "154\u2013162",
       "title": "A multiagent planning architecture"
     },
     {
@@ -22940,7 +22880,7 @@
       "issue": "6",
       "itemID": 933,
       "itemType": "journalArticle",
-      "pages": "731-761",
+      "pages": "731\u2013761",
       "publicationTitle": "JLC",
       "title": "A common knowledge representation for plan generation and reactive execution",
       "volume": "5"
@@ -22991,7 +22931,7 @@
       ],
       "itemID": 935,
       "itemType": "bookSection",
-      "pages": "155-184",
+      "pages": "155\u2013184",
       "publicationTitle": "Computational semantics: An introduction to artificial intelligence and natural language comprehension",
       "title": "Parsing english II"
     },
@@ -23069,7 +23009,7 @@
       ],
       "itemID": 938,
       "itemType": "conferencePaper",
-      "pages": "971-978",
+      "pages": "971\u2013978",
       "title": "A model-based approach to reactive self-configuring systems"
     },
     {
@@ -23180,7 +23120,7 @@
       ],
       "itemID": 943,
       "itemType": "conferencePaper",
-      "pages": "89-93",
+      "pages": "89\u201393",
       "publicationTitle": "AAAI-88",
       "publisher": "KAUFMANN",
       "title": "Reasoning about actions using a possible models approach"
@@ -23269,7 +23209,7 @@
       "issue": "12",
       "itemID": 947,
       "itemType": "journalArticle",
-      "pages": "689-703",
+      "pages": "689\u2013703",
       "publicationTitle": "Communications of the ACM",
       "title": "Learning and reasoning by analogy",
       "volume": "23"
@@ -23313,7 +23253,7 @@
       ],
       "itemID": 949,
       "itemType": "journalArticle",
-      "pages": "321-350",
+      "pages": "321\u2013350",
       "publicationTitle": "Artificial Intelligence",
       "title": "Learning new principles from precedents and exercises",
       "volume": "19"
@@ -23333,7 +23273,7 @@
       ],
       "itemID": 950,
       "itemType": "conferencePaper",
-      "pages": "433-439",
+      "pages": "433\u2013439",
       "publicationTitle": "AAAI-83",
       "title": "Learning physical descriptions from functional definitions, examples, and precedents",
       "volume": "3"
@@ -23408,7 +23348,7 @@
       ],
       "itemID": 953,
       "itemType": "conferencePaper",
-      "pages": "1-3",
+      "pages": "1\u20133",
       "publicationTitle": "AAAI-80",
       "title": "A statistical technique for recovering surface orientation from texture in natural imagery",
       "volume": "1"
@@ -23428,7 +23368,7 @@
       ],
       "itemID": 954,
       "itemType": "journalArticle",
-      "pages": "17-45",
+      "pages": "17\u201345",
       "publicationTitle": "Artificial Intelligence",
       "title": "Recovering surface shape and orientation from texture",
       "volume": "17"
@@ -23467,7 +23407,7 @@
       ],
       "itemID": 956,
       "itemType": "conferencePaper",
-      "pages": "1461-1466",
+      "pages": "1461\u20131466",
       "publicationTitle": "IJCAI-89",
       "publisher": "KAUFMANN",
       "title": "A schema-based approach to understanding subjunctive conditionals"
@@ -23626,7 +23566,7 @@
       ],
       "itemID": 963,
       "itemType": "conferencePaper",
-      "pages": "200-207",
+      "pages": "200\u2013207",
       "publicationTitle": "IJCAI-73",
       "title": "Mechanical inference problems in continuous speech understanding"
     },
@@ -23779,7 +23719,7 @@
       "notes": [
         "Compares the performance of best-first search with depth-first branch-and-bound, iterative-deepening and recursive best-first search."
       ],
-      "pages": "241-292",
+      "pages": "241\u2013292",
       "publicationTitle": "AIJ",
       "title": "Performance of linear-space search algorithms",
       "volume": "79"
@@ -23835,7 +23775,7 @@
       "issue": "12-13",
       "itemID": 972,
       "itemType": "journalArticle",
-      "pages": "767-798",
+      "pages": "767\u2013798",
       "publicationTitle": "AIJ",
       "title": "Optimal admissible composition of abstraction heuristics",
       "url": "http://dx.doi.org/10.1016/j.artint.2010.04.021",
@@ -23934,7 +23874,7 @@
       ],
       "itemID": 974,
       "itemType": "journalArticle",
-      "pages": "1 - 17",
+      "pages": "1 \u2013 17",
       "publicationTitle": "AIJ",
       "tags": [
         {
@@ -24066,7 +24006,7 @@
       ],
       "itemID": 978,
       "itemType": "conferencePaper",
-      "pages": "1643-1651",
+      "pages": "1643\u20131651",
       "place": "San Mateo",
       "publicationTitle": "Proceedings of the fourteenth international joint conference on artificial intelligence",
       "publisher": "Morgan Kaufmann",
@@ -24098,7 +24038,7 @@
       ],
       "itemID": 979,
       "itemType": "conferencePaper",
-      "pages": "142-150",
+      "pages": "142\u2013150",
       "place": "Menlo Park, California",
       "publicationTitle": "Theories of action, planning, and robot control: Bridging the gap: Proceedings of the 1996 AAAI workshop",
       "publisher": "AAAI Press",
@@ -24153,7 +24093,7 @@
       ],
       "itemID": 980,
       "itemType": "conferencePaper",
-      "pages": "12-21",
+      "pages": "12\u201321",
       "publicationTitle": "ICAPS",
       "publisher": "AAAI",
       "title": "Course of action generation for cyber security using classical planning"
@@ -24197,7 +24137,7 @@
       ],
       "itemID": 981,
       "itemType": "conferencePaper",
-      "pages": "179-188",
+      "pages": "179\u2013188",
       "publicationTitle": "User modeling",
       "publisher": "Springer",
       "series": "Lecture notes in computer science",
@@ -24258,7 +24198,7 @@
       ],
       "itemID": 982,
       "itemType": "conferencePaper",
-      "pages": "212-221",
+      "pages": "212\u2013221",
       "publicationTitle": "ICAPS",
       "publisher": "AAAI",
       "title": "Plan stability: Replanning versus plan repair",
@@ -24302,7 +24242,7 @@
       ],
       "itemID": 983,
       "itemType": "conferencePaper",
-      "pages": "264-271",
+      "pages": "264\u2013271",
       "publicationTitle": "ICAPS",
       "publisher": "AAAI",
       "title": "From conformant into classical planning: Efficient translations that may be complete too"
@@ -24335,7 +24275,7 @@
       ],
       "itemID": 984,
       "itemType": "conferencePaper",
-      "pages": "3887-3895",
+      "pages": "3887\u20133895",
       "publicationTitle": "AAAI",
       "publisher": "AAAI Press",
       "title": "Activity planning for a lunar orbital mission",
@@ -24379,7 +24319,7 @@
       ],
       "itemID": 985,
       "itemType": "conferencePaper",
-      "pages": "364-372",
+      "pages": "364\u2013372",
       "publicationTitle": "ICAPS",
       "publisher": "AAAI Press",
       "title": "Simulated penetration testing: From \"Dijkstra\" to \"Turing Test++\"",
@@ -24469,7 +24409,7 @@
       "issue": "2",
       "itemID": 987,
       "itemType": "journalArticle",
-      "pages": "207-219",
+      "pages": "207\u2013219",
       "publicationTitle": "Theoretical Computer Science",
       "tags": [
         {
@@ -24541,7 +24481,7 @@
       ],
       "itemID": 988,
       "itemType": "journalArticle",
-      "pages": "379-404",
+      "pages": "379\u2013404",
       "publicationTitle": "Journal of Artificial Intelligence Research",
       "title": "SHOP2: An HTN planning system",
       "url": "http://www.cs.cmu.edu/afs/cs/project/jair/pub/volume20/nau03a.pdf",

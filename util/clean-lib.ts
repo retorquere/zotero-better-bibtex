@@ -7,7 +7,14 @@ import * as fs from 'fs'
 import { stringify } from '../content/stringify'
 import { sync as glob } from 'glob'
 import cleaner = require('deep-cleaner')
-const preferences = Object.keys(require('../gen/preferences/defaults.json')).reduce((acc, key) => { acc[key] = true; return acc }, {})
+const preferences = {
+  defaults: require('../gen/preferences/defaults.json'),
+  supported: []
+}
+for (const pref of ['client', 'testing', 'platform', 'newTranslatorsAskRestart']) {
+  delete preferences[pref]
+}
+preferences.supported = Object.keys(preferences.defaults)
 
 const argv = require('rasper')(process.argv.slice(2))
 if (argv.save && typeof argv.save !== 'boolean') {
@@ -18,6 +25,8 @@ if (argv.saveAll && typeof argv.saveAll !== 'boolean') {
   console.log('put --save-all at end of command line')
   process.exit(1)
 }
+
+const localeDateOrder = argv.localeDateOrder ? argv.localeDateOrder.split('=') : null
 
 if (argv._.length === 0) {
   if (argv.save) {
@@ -52,6 +61,8 @@ for (const lib of argv._) {
       normalize(data)
       delete data.version
 
+      if (localeDateOrder && data.config.localeDateOrder === localeDateOrder[0]) data.config.localeDateOrder = localeDateOrder[1]
+
       if (data.config?.options) {
         for (const [option, on] of Object.entries(data.config.options)) {
           if (option === 'Normalize' && on) delete data.config.options[option]
@@ -60,11 +71,8 @@ for (const lib of argv._) {
       }
 
       if (data.config?.preferences) {
-        for (const pref of ['client', 'testing', 'platform', 'newTranslatorsAskRestart']) {
-          delete data.config.preferences[pref]
-        }
-        for (const pref of Object.keys(data.config.preferences)) {
-          if (!preferences[pref]) delete data.config.preferences[pref]
+        for (const [pref, value] of Object.entries(data.config.preferences)) {
+          if (!preferences.supported.includes(pref) || value === preferences.defaults[pref]) delete data.config.preferences[pref]
         }
       }
 

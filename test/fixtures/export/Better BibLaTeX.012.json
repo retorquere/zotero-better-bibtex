@@ -5,8 +5,7 @@
     "localeDateOrder": "ymd",
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[DOI]+[Title:fold:ascii:skipwords:select,1,4:condense,_]",
-      "jabrefFormat": 0
+      "citekeyFormat": "[DOI]+[Title:fold:ascii:skipwords:select,1,4:condense,_]"
     }
   },
   "items": [

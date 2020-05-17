@@ -5,14 +5,8 @@
     "localeDateOrder": "ymd",
     "options": {},
     "preferences": {
-      "DOIandURL": "both",
-      "biblatexExtendedDateFormat": true,
       "bibtexURL": "note",
-      "citekeyFormat": "[zotero:clean]",
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "jabrefFormat": 0,
-      "postscript": ""
+      "citekeyFormat": "[zotero:clean]"
     }
   },
   "items": [

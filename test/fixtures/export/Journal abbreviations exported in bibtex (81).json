@@ -6,8 +6,7 @@
     "preferences": {
       "autoAbbrev": true,
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]",
-      "jabrefFormat": 0
+      "citekeyFormat": "[auth][year]"
     }
   },
   "items": [

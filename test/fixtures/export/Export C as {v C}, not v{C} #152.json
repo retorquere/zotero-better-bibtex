@@ -10,7 +10,6 @@
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "bibtexURL": "note",
       "citekeyFormat": "[auth][year]",
-      "jabrefFormat": 0,
       "skipFields": "note,language,file,urldate"
     }
   },

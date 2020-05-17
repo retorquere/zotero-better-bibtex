@@ -5,8 +5,7 @@
     "localeDateOrder": "ymd",
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:lower][year:(ND)][shorttitle:lower]",
-      "jabrefFormat": 0
+      "citekeyFormat": "[auth:lower][year:(ND)][shorttitle:lower]"
     }
   },
   "items": [

@@ -9,7 +9,6 @@
     "preferences": {
       "bibtexURL": "note",
       "citekeyFormat": "[auth3][auth3_1][auth3_2][auth3_3][auth3_4][shortyear]",
-      "jabrefFormat": 0,
       "skipFields": "url,issn"
     }
   },

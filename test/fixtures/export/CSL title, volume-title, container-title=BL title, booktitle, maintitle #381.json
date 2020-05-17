@@ -7,16 +7,8 @@
       "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]",
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "jabrefFormat": 0,
-      "postscript": "",
-      "skipFields": ""
+      "citekeyFormat": "[auth][year]"
     }
   },
   "items": [

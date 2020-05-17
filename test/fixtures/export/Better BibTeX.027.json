@@ -5,8 +5,7 @@
     "localeDateOrder": "ymd",
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[authors][year]",
-      "jabrefFormat": 0
+      "citekeyFormat": "[authors][year]"
     }
   },
   "items": [

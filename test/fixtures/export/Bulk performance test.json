@@ -5,11 +5,9 @@
     "localeDateOrder": "ymd",
     "options": {},
     "preferences": {
-      "DOIandURL": "both",
       "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
       "bibtexURL": "note",
       "citekeyFormat": "[auth:nopunct][year][Title:skipwords:nopunct:select,1,2:capitalize:fold:alphanum]",
-      "jabrefFormat": 0,
       "skipFields": "abstract,note,file"
     }
   },

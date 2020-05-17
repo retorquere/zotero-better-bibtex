@@ -10,7 +10,6 @@
       "autoAbbrevStyle": "http://www.zotero.org/styles/ieee",
       "bibtexURL": "note",
       "citekeyFormat": "[auth][year]",
-      "jabrefFormat": 0,
       "skipFields": "keywords,abstract,file"
     }
   },

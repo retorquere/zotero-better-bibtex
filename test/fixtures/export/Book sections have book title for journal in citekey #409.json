@@ -8,15 +8,8 @@
     },
     "preferences": {
       "DOIandURL": "doi",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:nopunct:condense,_][year][journal:abbr][0]",
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "jabrefFormat": 0,
-      "postscript": "",
-      "skipFields": ""
+      "citekeyFormat": "[auth:nopunct:condense,_][year][journal:abbr][0]"
     }
   },
   "items": [

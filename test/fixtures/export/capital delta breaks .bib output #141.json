@@ -9,8 +9,7 @@
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:lower][year]",
-      "jabrefFormat": 0
+      "citekeyFormat": "[auth:lower][year]"
     }
   },
   "items": [

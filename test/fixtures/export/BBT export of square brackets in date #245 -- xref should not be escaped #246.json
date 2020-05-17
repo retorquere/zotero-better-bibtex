@@ -7,13 +7,9 @@
       "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
       "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:fold:lower]_[Title:fold:nopunct:skipwords:select,1,1:lower]_[year]",
-      "exportBibTeXStrings": "off",
-      "jabrefFormat": 0,
-      "skipFields": ""
+      "citekeyFormat": "[auth:fold:lower]_[Title:fold:nopunct:skipwords:select,1,1:lower]_[year]"
     }
   },
   "items": [

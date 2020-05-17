@@ -6,8 +6,7 @@
     "options": {},
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[authors3+initials]",
-      "jabrefFormat": 0
+      "citekeyFormat": "[authors3+initials]"
     }
   },
   "items": [
