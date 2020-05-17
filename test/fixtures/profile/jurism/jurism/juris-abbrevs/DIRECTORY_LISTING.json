@@ -23,7 +23,7 @@
   {
     "filename": "auto-fr.json",
     "name": "Abbreviations: France legal",
-    "version": "2019-11-04 08:52:44 UTC",
+    "version": "2020-02-25 00:46:01 UTC",
     "jurisdiction": "fr"
   },
   {
@@ -35,7 +35,7 @@
   {
     "filename": "auto-us.json",
     "name": "Abbreviations: United States legal",
-    "version": "2019-08-24 06:14:05 UTC",
+    "version": "2020-04-28 00:48:51 UTC",
     "jurisdiction": "us"
   },
   {
@@ -102,7 +102,7 @@
   {
     "filename": "secondary-us-bluebook.json",
     "name": "Abbreviations: Secondary materials for the US (Bluebook styles)",
-    "version": 1,
+    "version": 3,
     "jurisdictions": []
   },
   {
@@ -154,5 +154,41 @@
     "name": "Abbreviations: Vietnam legal",
     "version": "2019-12-13 00:01:28 UTC",
     "jurisdiction": "vn"
+  },
+  {
+    "filename": "auto-dk.json",
+    "name": "Abbreviations: Denmark legal",
+    "version": "2020-01-21 12:14:45 UTC",
+    "jurisdiction": "dk"
+  },
+  {
+    "filename": "auto-es.json",
+    "name": "Abbreviations: Spain legal",
+    "version": "2020-02-12 06:06:00 UTC",
+    "jurisdiction": "es"
+  },
+  {
+    "filename": "auto-se.json",
+    "name": "Abbreviations: Sweden legal",
+    "version": "2020-02-12 06:12:22 UTC",
+    "jurisdiction": "se"
+  },
+  {
+    "filename": "auto-nl.json",
+    "name": "Abbreviations: Netherlands legal",
+    "version": "2020-02-12 06:12:47 UTC",
+    "jurisdiction": "nl"
+  },
+  {
+    "filename": "auto-pt.json",
+    "name": "Abbreviations: Portugal legal",
+    "version": "2020-03-24 08:23:21 UTC",
+    "jurisdiction": "pt"
+  },
+  {
+    "filename": "auto-de.json",
+    "name": "Abbreviations: Germany legal",
+    "version": "2020-04-13 05:37:20 UTC",
+    "jurisdiction": "de"
   }
 ]

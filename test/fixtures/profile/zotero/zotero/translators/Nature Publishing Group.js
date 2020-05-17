@@ -1,15 +1,15 @@
 {
 	"translatorID": "6614a99-479a-4524-8e30-686e4d66663e",
+	"translatorType": 4,
 	"label": "Nature Publishing Group",
 	"creator": "Aurimas Vinckevicius",
 	"target": "^https?://(www\\.)?nature\\.com/([^?/]+/)?(journal|archive|research|topten|search|full|abs|current_issue\\.htm|most\\.htm|articles/)",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-10-12 15:27:55"
+	"lastUpdated": "2020-05-10 19:10:00"
 }
 
 /**
@@ -32,31 +32,31 @@
 
 
 // attr()/text() v2
+// eslint-disable-next-line
 function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
 
-
-//mimetype map for supplementary attachments
+// mimetype map for supplementary attachments
 var suppTypeMap = {
-	'pdf': 'application/pdf',
-//	'zip': 'application/zip',
-	'doc': 'application/msword',
-	'xls': 'application/vnd.ms-excel',
-	'excel': 'application/vnd.ms-excel'
+	pdf: 'application/pdf',
+	//	'zip': 'application/zip',
+	doc: 'application/msword',
+	xls: 'application/vnd.ms-excel',
+	excel: 'application/vnd.ms-excel'
 };
 
 function attachSupplementary(doc, item, next) {
-	//nature's new website
+	// nature's new website
 	var attachAsLink = Z.getHiddenPref("supplementaryAsLink");
 	var suppDiv = doc.getElementById("supplementary-information");
 	if (suppDiv) {
 		var fileClasses = ZU.xpath(suppDiv, './/div[contains(@class, "supp-info")]/h2');
-		for (var i=0, n=fileClasses.length; i<n; i++) {
+		for (var i = 0, n = fileClasses.length; i < n; i++) {
 			var type = fileClasses[i].classList.item(0);
 			if (type) type = suppTypeMap[type];
 			
 			if (!fileClasses[i].nextElementSibling) continue;
 			var dls = fileClasses[i].nextElementSibling.getElementsByTagName('dl');
-			for (var j=0, m=dls.length; j<m; j++) {
+			for (var j = 0, m = dls.length; j < m; j++) {
 				var link = ZU.xpath(dls[j], './dt/a')[0];
 				if (!link) {
 					continue;
@@ -66,8 +66,8 @@ function attachSupplementary(doc, item, next) {
 				if (title) {
 					title = title.textContent.replace(
 						/^[\s\r\n]*(?:Th(?:is|e) )?file (?:contains|shows)\s+(\S+)/i,
-						function(m, firstWord) {	//fix capitalization of first word
-							if (firstWord.toLowerCase() == firstWord) {	//lower case word
+						function (m, firstWord) {	// fix capitalization of first word
+							if (firstWord.toLowerCase() == firstWord) {	// lower case word
 								return firstWord.charAt(0).toUpperCase() + firstWord.substr(1);
 							}
 							return firstWord;
@@ -75,11 +75,11 @@ function attachSupplementary(doc, item, next) {
 					).trim();
 				}
 				
-				//add the heading from link
-				title = link.textContent.replace(/\s+\([^()]+\)\s*$/g, '').trim()	//strip off the file size info
+				// add the heading from link
+				title = link.textContent.replace(/\s+\([^()]+\)\s*$/g, '').trim()	// strip off the file size info
 						+ ". " + (title || '');
 
-				//fallback if we fail miserably
+				// fallback if we fail miserably
 				if (!title) title = "Supplementary file";
 				
 				var attachment = {
@@ -88,7 +88,7 @@ function attachSupplementary(doc, item, next) {
 				};
 				
 				if (type) attachment.mimeType = type;
-				if (attachAsLink || !type) {	//don't download unknown file types
+				if (attachAsLink || !type) {	// don't download unknown file types
 					attachment.snapshot = false;
 				}
 				
@@ -98,35 +98,36 @@ function attachSupplementary(doc, item, next) {
 		return;
 	}
 	
-	//older websites, e.g. http://www.nature.com/onc/journal/v31/n6/full/onc2011282a.html
+	// older websites, e.g. http://www.nature.com/onc/journal/v31/n6/full/onc2011282a.html
 	var suppLink = doc.getElementById('articlenav') || doc.getElementById('extranav');
 	if (suppLink) {
-		suppLink = ZU.xpath(suppLink, './ul/li//a[text()="Supplementary info"]')[0]; //unfortunately, this is the best we can do
+		suppLink = ZU.xpath(suppLink, './ul/li//a[text()="Supplementary info"]')[0]; // unfortunately, this is the best we can do
 		if (!suppLink) return;
 		
-		if (attachAsLink) {	//we don't need to find links to individual files
+		if (attachAsLink) {	// we don't need to find links to individual files
 			item.attachments.push({
 				title: "Supplementary info",
 				url: suppLink.href,
 				mimeType: 'text/html',
 				snapshot: false
 			});
-		} else {
-			ZU.processDocuments(suppLink.href, function(newDoc) {
+		}
+		else {
+			ZU.processDocuments(suppLink.href, function (newDoc) {
 				var content = newDoc.getElementById('content');
 				if (content) {
 					var links = ZU.xpath(content, './div[@class="container-supplementary" or @id="general"]//a');
-					for (var i=0, n=links.length; i<n; i++) {
+					for (var i = 0, n = links.length; i < n; i++) {
 						var title = ZU.trimInternal(links[i].textContent);
 						var type = title.match(/\((\w+)\s+\d+[^)]+\)\s*$/);
 						if (type) type = suppTypeMap[type[1]];
 						if (!type) {
 							type = links[i].classList;
-							type = type.item(type.length-1);
+							type = type.item(type.length - 1);
 							if (type) type = suppTypeMap[type.replace(/^(?:i|all)-/, '')];
 						}
 						
-						//clean up title a bit
+						// clean up title a bit
 						title = title.replace(/\s*\([^()]+\)$/, '')
 									.replace(/\s*-\s*download\b.*/i, '');
 						
@@ -134,33 +135,34 @@ function attachSupplementary(doc, item, next) {
 							title: title,
 							url: links[i].href,
 							mimeType: type,
-							snapshot: !!type	//don't download unknown file types
+							snapshot: !!type	// don't download unknown file types
 						});
 					}
 				}
 				next(doc, item);
 			});
-			return true;
+			return;
 		}
 		return;
 	}
 	
-	//e.g. http://www.nature.com/ng/journal/v38/n11/full/ng1901.html
-	var suppLink = ZU.xpath(doc, '(//a[text()="Supplementary info"])[last()]')[0];
+	// e.g. http://www.nature.com/ng/journal/v38/n11/full/ng1901.html
+	suppLink = ZU.xpath(doc, '(//a[text()="Supplementary info"])[last()]')[0];
 	if (suppLink) {
-		if (attachAsLink) {	//we don't need to find links to individual files
+		if (attachAsLink) {	// we don't need to find links to individual files
 			item.attachments.push({
 				title: "Supplementary info",
 				url: suppLink.href,
 				mimeType: 'text/html',
 				snapshot: false
 			});
-		} else {
+		}
+		else {
 			Z.debug(suppLink.href);
-			ZU.processDocuments(suppLink.href, function(newDoc) {
+			ZU.processDocuments(suppLink.href, function (newDoc) {
 				var links = ZU.xpath(newDoc, './/p[@class="articletext"]');
 				Z.debug("Found " + links.length + " links");
-				for (var i=0, n=links.length; i<n; i++) {
+				for (var i = 0, n = links.length; i < n; i++) {
 					var link = links[i].getElementsByTagName('a')[0];
 					if (!link) continue;
 					
@@ -169,14 +171,14 @@ function attachSupplementary(doc, item, next) {
 					var type = title.match(/\((\w+)\s+\d+[^)]+\)\s*$/);
 					if (type) type = suppTypeMap[type[1]];
 					
-					//clean up title a bit
+					// clean up title a bit
 					title = title.replace(/\s*\([^()]+\)$/, '')
 								.replace(/\s*-\s*download\b.*/i, '');
 					
-					//maybe we can attach description to title
-					//can this be too long? I would probably make more sense to attach these as notes on the files
-					//how do we do that?
-					var desc = ZU.xpathText(links[i], './node()[last()][not(name())]');	//last text node
+					// maybe we can attach description to title
+					// can this be too long? I would probably make more sense to attach these as notes on the files
+					// how do we do that?
+					var desc = ZU.xpathText(links[i], './node()[last()][not(name())]');	// last text node
 					if (desc && (desc = ZU.trimInternal(desc))) {
 						title += '. ' + desc;
 					}
@@ -185,63 +187,63 @@ function attachSupplementary(doc, item, next) {
 						title: title,
 						url: links[i].href,
 						mimeType: type,
-						snapshot: !!type	//don't download unknown file types
+						snapshot: !!type	// don't download unknown file types
 					});
 				}
 				next(doc, item);
 			});
-			return true;
 		}
-		return;
 	}
 }
 
-//unescape Highwire's special html characters
-function unescape(str) {
+// unescape Highwire's special html characters
+function HWunescape(str) {
 	if (!str || !str.includes('[')) return str;
 
-	return str.replace(/\|?\[([^\]]+)\]\|?/g, function(s, p1) {
+	return str.replace(/\|?\[([^\]]+)\]\|?/g, function (s, p1) {
 		if (ISO8879CharMap[p1] !== undefined) {
-		  return ISO8879CharMap[p1];
-		} else {
-		  return s;
+			return ISO8879CharMap[p1];
 		}
-  	});
+		else {
+			return s;
+		}
+	});
 }
 
-//fix capitalization if all in upper case
+// fix capitalization if all in upper case
 function fixCaps(str) {
 	if (str && str == str.toUpperCase()) {
 		return ZU.capitalizeTitle(str.toLowerCase(), true);
-	} else {
+	}
+	else {
 		return str;
 	}
 }
 
-//get abstract
+// get abstract
 function getAbstract(doc) {
 	var abstractLocations = [
-		//e.g. https://www.nature.com/articles/onc2011282
+		// e.g. https://www.nature.com/articles/onc2011282
 		'//*[@id="abstract-content"]',
-		//e.g. 'lead' http://www.nature.com/emboj/journal/v31/n1/full/emboj2011343a.html
-		//e.g. 'first_paragraph' http://www.nature.com/emboj/journal/vaop/ncurrent/full/emboj201239a.html
+		// e.g. 'lead' http://www.nature.com/emboj/journal/v31/n1/full/emboj2011343a.html
+		// e.g. 'first_paragraph' http://www.nature.com/emboj/journal/vaop/ncurrent/full/emboj201239a.html
 		'//p[contains(@class,"lead") or contains(@class,"first_paragraph")]',
-		//e.g. http://www.nature.com/nprot/journal/v8/n11/full/nprot.2013.143.html
+		// e.g. http://www.nature.com/nprot/journal/v8/n11/full/nprot.2013.143.html
 		'//div[@id="abstract"]/div[@class="content"]/p',
-		//e.g.
+		// e.g.
 		'//div[@id="abs"]/*[self::div[not(contains(@class, "keyw-abbr"))] or self::p]',
-		//e.g. 'first-paragraph' http://www.nature.com/nature/journal/v481/n7381/full/nature10669.html
-		//e.g. 'standfirst' http://www.nature.com/nature/journal/v481/n7381/full/481237a.html
+		// e.g. 'first-paragraph' http://www.nature.com/nature/journal/v481/n7381/full/nature10669.html
+		// e.g. 'standfirst' http://www.nature.com/nature/journal/v481/n7381/full/481237a.html
 		'//div[@id="first-paragraph" or @class="standfirst"]/p',
-		//e.g. http://www.nature.com/nature/journal/v481/n7381/full/nature10728.html
+		// e.g. http://www.nature.com/nature/journal/v481/n7381/full/nature10728.html
 		'//div[contains(@id,"abstract")]/div[contains(@class,"content")]/p',
-		//e.g. http://www.nature.com/ng/journal/v38/n8/abs/ng1845.html
+		// e.g. http://www.nature.com/ng/journal/v38/n8/abs/ng1845.html
 		'//span[@class="articletext" and ./preceding-sibling::*[1][name()="a" or name()="A"][@name="abstract"]]'
 	];
 
 	var paragraphs = [];
 
-	for (var i = 0, n = abstractLocations.length; i < n && !paragraphs.length; i++) {
+	for (let i = 0, n = abstractLocations.length; i < n && !paragraphs.length; i++) {
 		paragraphs = Zotero.Utilities.xpath(doc, abstractLocations[i]);
 	}
 
@@ -249,8 +251,8 @@ function getAbstract(doc) {
 
 	var textArr = [];
 	var p;
-	for (var i = 0, n = paragraphs.length; i < n; i++) {
-		//remove superscript references
+	for (let i = 0, n = paragraphs.length; i < n; i++) {
+		// remove superscript references
 		p = ZU.xpathText(paragraphs[i], "./node()[not(self::sup and ./a)]", null, '');
 		if (p) p = ZU.trimInternal(p);
 		if (p) textArr.push(p);
@@ -259,16 +261,16 @@ function getAbstract(doc) {
 	return textArr.join("\n").trim() || null;
 }
 
-//some journals display keywords
+// some journals display keywords
 function getKeywords(doc) {
-	var keywords = Zotero.Utilities.xpathText(doc, '//p[@class="keywords"]') || //e.g. http://www.nature.com/onc/journal/v26/n6/full/1209842a.html
-	Zotero.Utilities.xpathText(doc, '//ul[@class="keywords"]//ul/li', null, '') || //e.g. http://www.nature.com/emboj/journal/v31/n3/full/emboj2011459a.html
-	Zotero.Utilities.xpathText(doc, '//div[contains(@class,"article-keywords")]/ul/li/a', null, '; '); //e.g. http://www.nature.com/nature/journal/v481/n7382/full/481433a.html
+	var keywords = Zotero.Utilities.xpathText(doc, '//p[@class="keywords"]') // e.g. http://www.nature.com/onc/journal/v26/n6/full/1209842a.html
+	|| Zotero.Utilities.xpathText(doc, '//ul[@class="keywords"]//ul/li', null, '') // e.g. http://www.nature.com/emboj/journal/v31/n3/full/emboj2011459a.html
+	|| Zotero.Utilities.xpathText(doc, '//div[contains(@class,"article-keywords")]/ul/li/a', null, '; '); // e.g. http://www.nature.com/nature/journal/v481/n7382/full/481433a.html
 	if (!keywords) return null;
 	return keywords.split(/[;,]\s+/);
 }
 
-//get PDF url
+// get PDF url
 function getPdfUrl(doc, url) {
 	var m = url.match(/(^[^#?]+\/)(?:full|abs)(\/[^#?]+?\.)[a-zA-Z]+(?=$|\?|#)/);
 	if (m && m.length) return m[1] + 'pdf' + m[2] + 'pdf';
@@ -277,52 +279,54 @@ function getPdfUrl(doc, url) {
 	}
 }
 
-//add using embedded metadata
+// add using embedded metadata
 function scrapeEM(doc, url, next) {
 	var translator = Zotero.loadTranslator("web");
-	//Embedded Metadata translator
+	// Embedded Metadata translator
 	translator.setTranslator("951c027d-74ac-47d4-a107-9c3069ab7b48");
 
 	translator.setDocument(doc);
 
 	translator.setHandler("itemDone", function (obj, item) {
-		//Replace HTML special characters with proper characters
-		//also remove all caps in Names and Titles
-		for (let i=0; i<item.creators.length; i++) {
-			item.creators[i].lastName = unescape(item.creators[i].lastName);
-			item.creators[i].firstName = unescape(item.creators[i].firstName);
+		// Replace HTML special characters with proper characters
+		// also remove all caps in Names and Titles
+		for (let i = 0; i < item.creators.length; i++) {
+			item.creators[i].lastName = HWunescape(item.creators[i].lastName);
+			item.creators[i].firstName = HWunescape(item.creators[i].firstName);
 
 			item.creators[i].lastName = fixCaps(item.creators[i].lastName);
 			item.creators[i].firstName = fixCaps(item.creators[i].firstName);
 		}
 
-		item.title = fixCaps(unescape(item.title));
+		item.title = fixCaps(HWunescape(item.title));
 		if (item.abstractNote) item.abstractNote = ZU.cleanTags(item.abstractNote);
 
-		//the date in EM is usually online publication date
-		//If we can find a publication year, that's better
+		// the date in EM is usually online publication date
+		// If we can find a publication year, that's better
 		var year = ZU.xpathText(doc,
 			'//dd[preceding-sibling::dt[1][text()="Year published:" or text()="Date published:"]]');
-		if (year && ( year = year.match(/\(\s*(.*?)\s*\)/) )) {
+		if (year && (year = year.match(/\(\s*(.*?)\s*\)/))) {
 			item.date = year[1];
-		} else if ( (year = ZU.xpathText(doc,'//p[@id="cite"]')) &&
-			(year = year.match(/\((\d{4})\)/)) ) {
+		}
+		else if ((year = ZU.xpathText(doc, '//p[@id="cite"]'))
+			&& (year = year.match(/\((\d{4})\)/))) {
 			item.date = year[1];
-		} else if (
-			(year = ZU.xpathText(doc, '//a[contains(@href,"publicationDate")]/@href')) &&
-			(year = year.match(/publicationDate=([^&]+)/)) &&
-			//check that we at least have a year
-			year[1].match(/\d{4}/)) {
+		}
+		else if (
+			(year = ZU.xpathText(doc, '//a[contains(@href,"publicationDate")]/@href'))
+			&& (year = year.match(/publicationDate=([^&]+)/))
+			// check that we at least have a year
+			&& year[1].match(/\d{4}/)) {
 			item.date = year[1];
 		}
 
-		//sometimes abstract from EM is description for the website.
-		//ours should always be better
+		// sometimes abstract from EM is description for the website.
+		// ours should always be better
 		var abstract = getAbstract(doc);
 		if (abstract
-			//maybe the abstract from meta tags is more complete
+			// maybe the abstract from meta tags is more complete
 			&& !(item.abstractNote
-				&& item.abstractNote.substr(0,10) == abstract.substr(0,10)
+				&& item.abstractNote.substr(0, 10) == abstract.substr(0, 10)
 				&& item.abstractNote.length > abstract.length)) {
 			item.abstractNote = abstract;
 		}
@@ -331,17 +335,18 @@ function scrapeEM(doc, url, next) {
 
 		if (item.notes) item.notes = [];
 		
-		if (item.ISSN && ZU.cleanISSN) {	//introduced in 3.0.12
+		if (item.ISSN && ZU.cleanISSN) {	// introduced in 3.0.12
 			var issn = ZU.cleanISSN(item.ISSN);
 			if (!issn) delete item.ISSN;
 			else item.ISSN = issn;
-		} else if (item.ISSN === "ERROR! NO ISSN") {
+		}
+		else if (item.ISSN === "ERROR! NO ISSN") {
 			delete item.ISSN;
 		}
 
 		next(item);
 	});
-	translator.getTranslatorObject(function(trans) {
+	translator.getTranslatorObject(function (trans) {
 		// Make sure we always import as journal article (sometimes missing from EM)
 		// e.g. https://www.nature.com/articles/sdata201618
 		trans.itemType = "journalArticle";
@@ -364,24 +369,26 @@ function scrapeRIS(doc, url, next) {
 	if (!risURL) risURL = doc.querySelector('a[data-track-action="download article citation"]');
 	if (risURL) {
 		risURL = risURL.href;
-		ZU.doGet(risURL, function(text) {
+		ZU.doGet(risURL, function (text) {
 			if (text.search(/^TY /m) != -1) {
 				var translator = Zotero.loadTranslator('import');
 				translator.setTranslator('32d59d2d-b65a-4da4-b0a3-bdd3cfb979e7');
 				translator.setString(text);
-				translator.setHandler('itemDone', function(obj, newItem) {
+				translator.setHandler('itemDone', function (obj, newItem) {
 					newItem.notes = [];
 					next(newItem);
 				});
-				translator.setHandler('error', function() {
+				translator.setHandler('error', function () {
 					next();
 				});
 				translator.translate();
-			} else {
+			}
+			else {
 				next();
 			}
 		});
-	} else {
+	}
+	else {
 		Z.debug('Could not find RIS export');
 		next();
 	}
@@ -393,63 +400,63 @@ function getMultipleNodes(doc, url) {
 	var nodes = [];
 
 	if (url.includes('/search/') || url.includes('/most.htm')) {
-		//search, "top" lists
+		// search, "top" lists
 		nodex = '//ol[@class="results-list" or @id="content-list"]/li';
 		titlex = './' + allHNodes + '/node()[not(self::span)]';
 		linkx = './' + allHNodes + '/a';
 
 		nodes = Zotero.Utilities.xpath(doc, nodex);
-	} else {
-
-		//Maybe there's a nice way to figure out which journal uses what style, but for now we'll just try one until it matches
-		//these seem to be listed in order of frequency
+	}
+	else {
+		// Maybe there's a nice way to figure out which journal uses what style, but for now we'll just try one until it matches
+		// these seem to be listed in order of frequency
 		var styles = [
-			//ToC
+			// ToC
 			{
-				'nodex': '//tr[./td/span[@class="articletitle"]]',
-				'titlex': './td/span[@class="articletitle"]',
-				'linkx': './td/a[@class="contentslink" and substring(@href, string-length(@href)-3) != "pdf"][1]' //abstract or full text
+				nodex: '//tr[./td/span[@class="articletitle"]]',
+				titlex: './td/span[@class="articletitle"]',
+				linkx: './td/a[@class="contentslink" and substring(@href, string-length(@href)-3) != "pdf"][1]' // abstract or full text
 			},
-			//oncogene
+			// oncogene
 			{
-				'nodex': '//div[child::*[@class="atl"]]',
-				'titlex': './' + allHNodes + '[last()]/node()[not(self::span)]',	//ignore "subheading"
-				'linkx': './p[@class="links" or @class="articlelinks"]/a[contains(text(),"Full Text") or contains(text(),"Full text")]'
+				nodex: '//div[child::*[@class="atl"]]',
+				titlex: './' + allHNodes + '[last()]/node()[not(self::span)]',	// ignore "subheading"
+				linkx: './p[@class="links" or @class="articlelinks"]/a[contains(text(),"Full Text") or contains(text(),"Full text")]'
 			},
-			//embo journal
+			// embo journal
 			{
-				'nodex': '//ul[@class="articles"]/li',
-				'titlex': './' + allHNodes + '[@class="article-title"]/node()[not(self::span)]',
-				'linkx': './ul[@class="article-links"]/li/a[contains(text(),"Full Text") or contains(text(),"Full text")]'
+				nodex: '//ul[@class="articles"]/li',
+				titlex: './' + allHNodes + '[@class="article-title"]/node()[not(self::span)]',
+				linkx: './ul[@class="article-links"]/li/a[contains(text(),"Full Text") or contains(text(),"Full text")]'
 			},
-			//nature
+			// nature
 			{
-				'nodex': '//ul[contains(@class,"article-list") or contains(@class,"collapsed-list")]/li',
-				'titlex': './/' + allHNodes + '/a',
-				'linkx': './/' + allHNodes + '/a'
+				nodex: '//ul[contains(@class,"article-list") or contains(@class,"collapsed-list")]/li',
+				titlex: './/' + allHNodes + '/a',
+				linkx: './/' + allHNodes + '/a'
 			},
-			//archive (e.g. http://www.nature.com/bonekey/archive/type.html)
+			// archive (e.g. http://www.nature.com/bonekey/archive/type.html)
 			{
-				'nodex': '//table[@class="archive"]/tbody/tr',
-				'titlex': './td/' + allHNodes + '[last()]/a',
-				'linkx': './td/' + allHNodes + '[last()]/a',
+				nodex: '//table[@class="archive"]/tbody/tr',
+				titlex: './td/' + allHNodes + '[last()]/a',
+				linkx: './td/' + allHNodes + '[last()]/a',
 			},
-			//some more ToC (e.g. http://www.nature.com/nrcardio/journal/v5/n1s/index.html)
+			// some more ToC (e.g. http://www.nature.com/nrcardio/journal/v5/n1s/index.html)
 			{
-				'nodex': '//div[@class="container"]/div[./h4[@class="norm"] and ./p[@class="journal"]/a[@title]]',
-				'titlex': './h4[@class="norm"]',
-				'linkx': './p[@class="journal"]/a[@title][1]'
+				nodex: '//div[@class="container"]/div[./h4[@class="norm"] and ./p[@class="journal"]/a[@title]]',
+				titlex: './h4[@class="norm"]',
+				linkx: './p[@class="journal"]/a[@title][1]'
 			},
-			//some new more ToC (e.g. https://www.nature.com/ng/volumes/38/issues/11)
+			// some new more ToC (e.g. https://www.nature.com/ng/volumes/38/issues/11)
 			{
-				'nodex': '//article',
-				'titlex': './div/h3',
-				'linkx': './div/h3/a'
+				nodex: '//article',
+				titlex: './div/h3',
+				linkx: './div/h3/a'
 			},
 			{
-				'nodex': '//li[@itemtype="http://schema.org/Article"]',
-				'titlex': './/h2',
-				'linkx': './/h2/a'
+				nodex: '//li[@itemtype="http://schema.org/Article"]',
+				titlex: './/h2',
+				linkx: './/h2/a'
 			}
 		];
 
@@ -468,30 +475,33 @@ function getMultipleNodes(doc, url) {
 }
 
 function isNature(url) {
-	return url.search(/^https?:\/\/(?:[^\/]+\.)?nature.com/) != -1;
+	return url.search(/^https?:\/\/(?:[^/]+\.)?nature.com/) != -1;
 }
 
 function detectWeb(doc, url) {
 	if (url.endsWith('.pdf')) return false;
-	if (url.search(/\/(full|abs)\/[^\/]+($|\?|#)|\/fp\/.+?[?&]lang=ja(?:&|$)|\/articles\//) != -1) {
+	if (url.search(/\/(full|abs)\/[^/]+($|\?|#)|\/fp\/.+?[?&]lang=ja(?:&|$)|\/articles\//) != -1) {
 		return 'journalArticle';
-
-	} else if (doc.title.toLowerCase().includes('table of contents') //single issue ToC. e.g. http://www.nature.com/emboj/journal/v30/n1/index.html or http://www.nature.com/nature/journal/v481/n7381/index.html
+	}
+	else if (doc.title.toLowerCase().includes('table of contents') // single issue ToC. e.g. http://www.nature.com/emboj/journal/v30/n1/index.html or http://www.nature.com/nature/journal/v481/n7381/index.html
 		|| doc.title.toLowerCase().includes('current issue')
 		|| url.includes('/research/') || url.includes('/topten/')
 		|| url.includes('/most.htm')
-		|| (url.includes('/vaop/') && url.includes('index.html')) //advanced online publication
-		|| url.includes('sp-q=') //search query
-		|| url.search(/journal\/v\d+\/n\d+\/index\.html/i) != -1 //more ToC
+		|| (url.includes('/vaop/') && url.includes('index.html')) // advanced online publication
+		|| url.includes('sp-q=') // search query
+		|| url.search(/journal\/v\d+\/n\d+\/index\.html/i) != -1 // more ToC
 		|| url.search(/volumes\/\d+\/issues\/\d+/i) != -1
-		|| url.includes('/search?')) { //new more ToC
+		|| url.includes('/search?')) { // new more ToC
 		return getMultipleNodes(doc, url)[0].length ? 'multiple' : null;
-
-	} else if (url.includes('/archive/')) {
-		if (url.includes('index.htm')) return false; //list of issues
-		if (url.includes('subject.htm')) return false; //list of subjects
-		if (url.includes('category.htm') && !url.includes('code=')) return false; //list of categories
-		return getMultipleNodes(doc, url)[0].length ? 'multiple' : null; //all else should be ok
+	}
+	else if (url.includes('/archive/')) {
+		if (url.includes('index.htm')) return false; // list of issues
+		if (url.includes('subject.htm')) return false; // list of subjects
+		if (url.includes('category.htm') && !url.includes('code=')) return false; // list of categories
+		return getMultipleNodes(doc, url)[0].length ? 'multiple' : null; // all else should be ok
+	}
+	else {
+		return false;
 	}
 }
 
@@ -499,7 +509,7 @@ function supplementItem(item, supp, prefer) {
 	for (var i in supp) {
 		if (!supp.hasOwnProperty(i)
 			|| (item.hasOwnProperty(i) && !prefer.includes(i))) {
-			continue;	//this also skips creators, tags, notes, and related
+			continue;	// this also skips creators, tags, notes, and related
 		}
 
 		Z.debug('Supplementing item.' + i);
@@ -510,56 +520,61 @@ function supplementItem(item, supp, prefer) {
 }
 
 function runScrapers(scrapers, done) {
-	
 	var items = [];
-	var args = Array.prototype.splice.call(arguments, 2); //remove scrapers and done handler
-
-	var run = function(item) {
+	var args = Array.prototype.splice.call(arguments, 2); // remove scrapers and done handler
+	var run = function (item) {
 		items.push(item);
 		if (scrapers.length) {
-			(scrapers.shift()).apply(null, args);
+			(scrapers.shift())(...args);
 		}
 	};
 
 	args.push(run);
 	args.push(items);
 
-	scrapers.push(function() {
+	scrapers.push(function () {
 		done(items);
 	});
 
-	(scrapers.shift()).apply(null, args);
+	(scrapers.shift())(...args);
 }
 
 function scrape(doc, url) {
-	runScrapers([scrapeEM, scrapeRIS], function(items) {
+	runScrapers([scrapeEM, scrapeRIS], function (items) {
 		var item = items[0];
-		if (!item) {	//EM failed (unlikely)
+		if (!item) {	// EM failed (unlikely)
 			item = items[1];
-		} else if (items[1]) {
-			var preferredRisFields = ['journalAbbreviation', 'date'];
-			//palgrave-macmillan journals
+		}
+		else if (items[1]) {
+			var preferredRisFields = ['journalAbbreviation', 'date', 'abstractNote'];
+			// palgrave-macmillan journals
 			if (!isNature(url)) {
-				preferredRisFields.push('publisher'); //all others are going to be dropped since we only handle journalArticle
+				preferredRisFields.push('publisher'); // all others are going to be dropped since we only handle journalArticle
 				if (item.rights.includes('Nature Publishing Group')) {
 					delete item.rights;
 				}
 			}
+			// for electronic only journals, EM just has 1-page#; we instead get article number from the extra field
+			var electronicOnly = ['Scientific Data', 'Nature Communications', 'Scientific Reports', 'npj Science of Food', 'Light: Science & Applications'];
+			if (electronicOnly.includes(item.publicationTitle)) {
+				preferredRisFields.push('pages');
+			}
 			
 			item = supplementItem(item, items[1], preferredRisFields);
 			
-			if (items[1].tags.length) item.tags = items[1].tags;	//RIS doesn't seem to have tags, but we check just in case
+			if (items[1].tags.length) item.tags = items[1].tags;	// RIS doesn't seem to have tags, but we check just in case
 			
 			if (!item.creators.length) {
 				// E.g. http://www.nature.com/nprot/journal/v1/n1/full/nprot.2006.52.html
 				item.creators = items[1].creators;
-			} else {
-				//RIS can properly split first and last name
-				//but it does not (sometimes?) include accented letters
-				//We try to get best of both worlds by trying to re-split EM authors correctly
-				//hopefully the authors match up
-				for (var i=0, j=0, n=item.creators.length, m=items[1].creators.length; i<n && j<m; i++, j++) {
-					//check if last names match, then we don't need to worry
+			}
+			else {
+				// RIS can properly split first and last name
+				// but it does not (sometimes?) include accented letters
+				// We try to get best of both worlds by trying to re-split EM authors correctly
+				// hopefully the authors match up
+				for (var i = 0, j = 0, n = item.creators.length, m = items[1].creators.length; i < n && j < m; i++, j++) {
+					// check if last names match, then we don't need to worry
 					var risLName = ZU.removeDiacritics(items[1].creators[j].lastName.toUpperCase());
 					
 					var emLName = ZU.removeDiacritics(item.creators[i].lastName.toUpperCase());
@@ -570,15 +585,15 @@ function scrape(doc, url) {
 					var fullName = item.creators[i].firstName + ' ' + item.creators[i].lastName;
 					emLName = fullName.substring(fullName.length - risLName.length);
 					if (ZU.removeDiacritics(emLName.toUpperCase()) != risLName) {
-						//corporate authors are sometimes skipped in RIS
-						if (i+1<n) {
-							var nextEMLName = item.creators[i+1].firstName + ' '
-								+ item.creators[i+1].lastName;
+						// corporate authors are sometimes skipped in RIS
+						if (i + 1 < n) {
+							var nextEMLName = item.creators[i + 1].firstName + ' '
+								+ item.creators[i + 1].lastName;
 							nextEMLName = ZU.removeDiacritics(
 								nextEMLName.substring(nextEMLName.length - risLName.length)
 									.toUpperCase()
 							);
-							if (nextEMLName == risLName) { //this is corporate author and it was skipped in RIS
+							if (nextEMLName == risLName) { // this is corporate author and it was skipped in RIS
 								item.creators[i].lastName = item.creators[i].firstName
 									+ ' ' + item.creators[i].lastName;
 								delete item.creators[i].firstName;
@@ -590,12 +605,12 @@ function scrape(doc, url) {
 							}
 						}
 						
-						//authors with same name are sometimes skipped in EM
-						if (j+1<m) {
-							var nextRisLName = ZU.removeDiacritics(items[1].creators[j+1].lastName.toUpperCase());
+						// authors with same name are sometimes skipped in EM
+						if (j + 1 < m) {
+							var nextRisLName = ZU.removeDiacritics(items[1].creators[j + 1].lastName.toUpperCase());
 							var resplitEmLName = ZU.removeDiacritics(fullName.substring(fullName.length - nextRisLName.length).toUpperCase());
 							if (resplitEmLName == nextRisLName) {
-								item.creators.splice(i, 0, items[1].creators[j]); //insert missing author
+								item.creators.splice(i, 0, items[1].creators[j]); // insert missing author
 								Z.debug('It appears that "' + item.creators[i].lastName
 									+ '" was missing from EM.');
 								continue;
@@ -603,26 +618,27 @@ function scrape(doc, url) {
 						}
 						
 						Z.debug(emLName + ' and ' + risLName + ' do not match');
-						continue; //we failed
+						continue; // we failed
 					}
 	
 					if (items[1].creators[j].fieldMode !== 1) {
 						item.creators[i].firstName = fullName.substring(0, fullName.length - emLName.length).trim();
-					} else {
+					}
+					else {
 						delete item.creators[i].firstName;
 						item.creators[i].fieldMode = 1;
 					}
 					item.creators[i].lastName = emLName;
 	
-					Z.debug(fullName + ' was split into ' +
-						item.creators[i].lastName + ', ' + item.creators[i].firstName);
+					Z.debug(fullName + ' was split into '
+						+ item.creators[i].lastName + ', ' + item.creators[i].firstName);
 				}
 			}
 		}
 
 		if (!item) {
 			Z.debug('Could not retrieve metadata.');
-			return;	//both translators failed
+			return;	// both translators failed
 		}
 		
 		// We prefer the publication date to some online first date
@@ -659,7 +675,7 @@ function scrape(doc, url) {
 		}
 		delete item.journalAbbreviation;
 		var hasPDF = false;
-		for (let attach of item.attachments){
+		for (let attach of item.attachments) {
 			if (attach.mimeType && attach.mimeType == "application/pdf") {
 				hasPDF = true;
 			}
@@ -680,19 +696,19 @@ function scrape(doc, url) {
 			}
 		}
 		
-		//attach some useful links, like...
-		//GEO, GenBank, etc.
-		try {	//this shouldn't really fail, but... just in case
+		// attach some useful links, like...
+		// GEO, GenBank, etc.
+		try {	// this shouldn't really fail, but... just in case
 			var accessionDiv = doc.getElementById('accessions');
 			if (accessionDiv) {
 				var accessions = ZU.xpath(accessionDiv, './/div[@class="content"]//div[./h3]');
 				var repo, links;
-				for (var i=0, n=accessions.length; i<n; i++) {
+				for (let i = 0, n = accessions.length; i < n; i++) {
 					repo = accessions[i].getElementsByTagName('h3')[0].textContent;
 					if (repo) repo += ' entry ';
 					links = ZU.xpath(accessions[i], './ul[1]//a');
 					if (links.length) {
-						for (var j=0, m=links.length; j<m; j++) {
+						for (let j = 0, m = links.length; j < m; j++) {
 							item.attachments.push({
 								title: repo + '(' + links[j].textContent + ')',
 								url: links[j].href,
@@ -703,19 +719,21 @@ function scrape(doc, url) {
 					}
 				}
 			}
-		} catch(e) {
+		}
+		catch (e) {
 			Z.debug("Error attaching useful links.");
 			Z.debug(e);
 		}
 		
-		//attach supplementary data
+		// attach supplementary data
 		var async;
 		if (Z.getHiddenPref && Z.getHiddenPref("attachSupplementary")) {
-			try {	//don't fail if we can't attach supplementary data
-				async = attachSupplementary(doc, item, function(doc, item) {
+			try {	// don't fail if we can't attach supplementary data
+				async = attachSupplementary(doc, item, function (doc, item) {
 					item.complete();
 				});
-			} catch(e) {
+			}
+			catch (e) {
 				Z.debug("Error attaching supplementary information.");
 				Z.debug(e);
 				if (async) item.complete();
@@ -723,7 +741,8 @@ function scrape(doc, url) {
 			if (!async) {
 				item.complete();
 			}
-		} else {
+		}
+		else {
 			item.complete();
 		}
 	}, doc, url);
@@ -738,7 +757,7 @@ function doWeb(doc, url) {
 		
 		if (nodes.length == 0) {
 			Z.debug("no multiples");
-			//return false; //keep going so we can report this to zotero.org instead of "silently" failing
+			// return false; //keep going so we can report this to zotero.org instead of "silently" failing
 		}
 		var items = {};
 		for (var i = 0; i < nodes.length; i++) {
@@ -757,348 +776,350 @@ function doWeb(doc, url) {
 				urls.push(item);
 			}
 			Zotero.Utilities.processDocuments(urls, scrape);
+			return true;
 		});
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }
 
-//ISO8879 to unicode character map
+// ISO8879 to unicode character map
 var ISO8879CharMap = {
-  "excl":"\u0021", "quot":"\u0022", "num":"\u0023", "dollar":"\u0024",
-  "percnt":"\u0025", "amp":"\u0026", "apos":"\u0027", "lpar":"\u0028",
-  "rpar":"\u0029", "ast":"\u002A", "plus":"\u002B", "comma":"\u002C",
-  "period":"\u002E", "sol":"\u002F", "colon":"\u003A", "semi":"\u003B",
-  "lt":"\u003C", "equals":"\u003D", "gt":"\u003E", "quest":"\u003F",
-  "commat":"\u0040", "lsqb":"\u005B", "lbrack":"\u005B", "bsol":"\u005C",
-  "rsqb":"\u005D", "rbrack":"\u005D", "lowbar":"\u005F", "grave":"\u0060",
-  "DiacriticalGrave":"\u0060", "jnodot":"\u006A", "lcub":"\u007B", "lbrace":"\u007B",
-  "verbar":"\u007C", "vert":"\u007C", "rcub":"\u007D", "rbrace":"\u007D",
-  "nbsp":"\u00A0", "NonBreakingSpace":"\u00A0", "iexcl":"\u00A1", "cent":"\u00A2",
-  "pound":"\u00A3", "curren":"\u00A4", "yen":"\u00A5", "brvbar":"\u00A6",
-  "sect":"\u00A7", "die":"\u00A8", "uml":"\u00A8",
-  "copy":"\u00A9", "ordf":"\u00AA", "laquo":"\u00AB",
-  "not":"\u00AC", "shy":"\u00AD", "reg":"\u00AE", "circledR":"\u00AE",
-  "macr":"\u00AF", "deg":"\u00B0", "plusmn":"\u00B1", "pm":"\u00B1",
-  "PlusMinus":"\u00B1", "sup2":"\u00B2", "sup3":"\u00B3", "acute":"\u00B4",
-  "DiacriticalAcute":"\u00B4", "micro":"\u00B5", "para":"\u00B6", "middot":"\u00B7",
-  "centerdot":"\u00B7", "CenterDot":"\u00B7", "cedil":"\u00B8", "Cedilla":"\u00B8",
-  "sup1":"\u00B9", "ordm":"\u00BA", "raquo":"\u00BB", "frac14":"\u00BC",
-  "frac12":"\u00BD", "half":"\u00BD",
-  "frac34":"\u00BE", "iquest":"\u00BF", "Agrave":"\u00C0", "Aacute":"\u00C1",
-  "Acirc":"\u00C2", "Atilde":"\u00C3", "Auml":"\u00C4", "Aring":"\u00C5",
-  "AElig":"\u00C6", "Ccedil":"\u00C7", "Egrave":"\u00C8", "Eacute":"\u00C9",
-  "Ecirc":"\u00CA", "Euml":"\u00CB", "Igrave":"\u00CC", "Iacute":"\u00CD",
-  "Icirc":"\u00CE", "Iuml":"\u00CF", "ETH":"\u00D0", "Ntilde":"\u00D1",
-  "Ograve":"\u00D2", "Oacute":"\u00D3", "Ocirc":"\u00D4", "Otilde":"\u00D5",
-  "Ouml":"\u00D6", "times":"\u00D7", "Oslash":"\u00D8", "Ugrave":"\u00D9",
-  "Uacute":"\u00DA", "Ucirc":"\u00DB", "Uuml":"\u00DC", "Yacute":"\u00DD",
-  "THORN":"\u00DE", "szlig":"\u00DF", "agrave":"\u00E0", "aacute":"\u00E1",
-  "acirc":"\u00E2", "atilde":"\u00E3", "auml":"\u00E4", "aring":"\u00E5",
-  "aelig":"\u00E6", "ccedil":"\u00E7", "egrave":"\u00E8", "eacute":"\u00E9",
-  "ecirc":"\u00EA", "euml":"\u00EB", "igrave":"\u00EC", "iacute":"\u00ED",
-  "icirc":"\u00EE", "iuml":"\u00EF", "eth":"\u00F0", "ntilde":"\u00F1",
-  "ograve":"\u00F2", "oacute":"\u00F3", "ocirc":"\u00F4", "otilde":"\u00F5",
-  "ouml":"\u00F6", "divide":"\u00F7", "div":"\u00F7", "oslash":"\u00F8",
-  "ugrave":"\u00F9", "uacute":"\u00FA", "ucirc":"\u00FB", "uuml":"\u00FC",
-  "yacute":"\u00FD", "thorn":"\u00FE", "yuml":"\u00FF", "Amacr":"\u0100",
-  "amacr":"\u0101", "Abreve":"\u0102", "abreve":"\u0103", "Aogon":"\u0104",
-  "aogon":"\u0105", "Cacute":"\u0106", "cacute":"\u0107", "Ccirc":"\u0108",
-  "ccirc":"\u0109", "Cdot":"\u010A", "cdot":"\u010B", "Ccaron":"\u010C",
-  "ccaron":"\u010D", "Dcaron":"\u010E", "dcaron":"\u010F", "Dstrok":"\u0110",
-  "dstrok":"\u0111", "Emacr":"\u0112", "emacr":"\u0113", "Edot":"\u0116",
-  "edot":"\u0117", "Eogon":"\u0118", "eogon":"\u0119", "Ecaron":"\u011A",
-  "ecaron":"\u011B", "Gcirc":"\u011C", "gcirc":"\u011D", "Gbreve":"\u011E",
-  "gbreve":"\u011F", "Gdot":"\u0120", "gdot":"\u0121", "Gcedil":"\u0122",
-  "Hcirc":"\u0124", "hcirc":"\u0125", "Hstrok":"\u0126", "hstrok":"\u0127",
-  "Itilde":"\u0128", "itilde":"\u0129", "Imacr":"\u012A", "imacr":"\u012B",
-  "Iogon":"\u012E", "iogon":"\u012F", "Idot":"\u0130", "IJlig":"\u0132",
-  "ijlig":"\u0133", "Jcirc":"\u0134", "jcirc":"\u0135", "Kcedil":"\u0136",
-  "kcedil":"\u0137", "kgreen":"\u0138", "Lacute":"\u0139", "lacute":"\u013A",
-  "Lcedil":"\u013B", "lcedil":"\u013C", "Lcaron":"\u013D", "lcaron":"\u013E",
-  "Lmidot":"\u013F", "lmidot":"\u0140", "Lstrok":"\u0141", "lstrok":"\u0142",
-  "Nacute":"\u0143", "nacute":"\u0144", "Ncedil":"\u0145", "ncedil":"\u0146",
-  "Ncaron":"\u0147", "ncaron":"\u0148", "napos":"\u0149", "ENG":"\u014A",
-  "eng":"\u014B", "Omacr":"\u014C", "omacr":"\u014D", "Odblac":"\u0150",
-  "odblac":"\u0151", "OElig":"\u0152", "oelig":"\u0153", "Racute":"\u0154",
-  "racute":"\u0155", "Rcedil":"\u0156", "rcedil":"\u0157", "Rcaron":"\u0158",
-  "rcaron":"\u0159", "Sacute":"\u015A", "sacute":"\u015B", "Scirc":"\u015C",
-  "scirc":"\u015D", "Scedil":"\u015E", "scedil":"\u015F", "Scaron":"\u0160",
-  "scaron":"\u0161", "Tcedil":"\u0162", "tcedil":"\u0163", "Tcaron":"\u0164",
-  "tcaron":"\u0165", "Tstrok":"\u0166", "tstrok":"\u0167", "Utilde":"\u0168",
-  "utilde":"\u0169", "Umacr":"\u016A", "umacr":"\u016B", "Ubreve":"\u016C",
-  "ubreve":"\u016D", "Uring":"\u016E", "uring":"\u016F", "Udblac":"\u0170",
-  "udblac":"\u0171", "Uogon":"\u0172", "uogon":"\u0173", "Wcirc":"\u0174",
-  "wcirc":"\u0175", "Ycirc":"\u0176", "ycirc":"\u0177", "Yuml":"\u0178",
-  "Zacute":"\u0179", "zacute":"\u017A", "Zdot":"\u017B", "zdot":"\u017C",
-  "Zcaron":"\u017D", "zcaron":"\u017E", "gacute":"\u01F5", "circ":"\u02C6",
-  "caron":"\u02C7", "Hacek":"\u02C7", "breve":"\u02D8", "Breve":"\u02D8",
-  "dot":"\u02D9", "DiacriticalDot":"\u02D9", "ring":"\u02DA", "ogon":"\u02DB",
-  "tilde":"\u02DC", "DiacriticalTilde":"\u02DC", "dblac":"\u02DD", "DiacriticalDoubleAcute":"\u02DD",
-  "Aacgr":"\u0386", "Eacgr":"\u0388", "EEacgr":"\u0389", "Iacgr":"\u038A",
-  "Oacgr":"\u038C", "Uacgr":"\u038E", "OHacgr":"\u038F", "idiagr":"\u0390",
-  "Agr":"\u0391", "Bgr":"\u0392", "Ggr":"\u0393", "Gamma":"\u0393",
-  "Dgr":"\u0394", "Delta":"\u0394", "Egr":"\u0395", "Zgr":"\u0396",
-  "EEgr":"\u0397", "THgr":"\u0398", "Theta":"\u0398", "Igr":"\u0399",
-  "Kgr":"\u039A", "Lgr":"\u039B", "Lambda":"\u039B", "Mgr":"\u039C",
-  "Ngr":"\u039D", "Xgr":"\u039E", "Xi":"\u039E", "Ogr":"\u039F",
-  "Pgr":"\u03A0", "Pi":"\u03A0", "Rgr":"\u03A1", "Sgr":"\u03A3",
-  "Sigma":"\u03A3", "Tgr":"\u03A4", "Ugr":"\u03A5", "PHgr":"\u03A6",
-  "Phi":"\u03A6", "KHgr":"\u03A7", "PSgr":"\u03A8", "Psi":"\u03A8",
-  "OHgr":"\u03A9", "Omega":"\u03A9", "Idigr":"\u03AA", "Udigr":"\u03AB",
-  "aacgr":"\u03AC", "eacgr":"\u03AD", "eeacgr":"\u03AE", "iacgr":"\u03AF",
-  "udiagr":"\u03B0", "agr":"\u03B1", "alpha":"\u03B1", "bgr":"\u03B2",
-  "beta":"\u03B2", "ggr":"\u03B3", "gamma":"\u03B3", "dgr":"\u03B4",
-  "delta":"\u03B4", "egr":"\u03B5", "epsiv":"\u03B5", "zgr":"\u03B6",
-  "zeta":"\u03B6", "eegr":"\u03B7", "eta":"\u03B7", "thgr":"\u03B8",
-  "thetas":"\u03B8", "igr":"\u03B9", "iota":"\u03B9", "kgr":"\u03BA",
-  "kappa":"\u03BA", "lgr":"\u03BB", "lambda":"\u03BB", "mgr":"\u03BC",
-  "mu":"\u03BC", "ngr":"\u03BD", "nu":"\u03BD", "xgr":"\u03BE",
-  "xi":"\u03BE", "ogr":"\u03BF", "pgr":"\u03C0", "pi":"\u03C0",
-  "rgr":"\u03C1", "rho":"\u03C1", "sfgr":"\u03C2", "sigmav":"\u03C2",
-  "sgr":"\u03C3", "sigma":"\u03C3", "tgr":"\u03C4", "tau":"\u03C4",
-  "ugr":"\u03C5", "upsi":"\u03C5", "phgr":"\u03C6", "phiv":"\u03C6",
-  "khgr":"\u03C7", "chi":"\u03C7", "psgr":"\u03C8", "psi":"\u03C8",
-  "ohgr":"\u03C9", "omega":"\u03C9", "idigr":"\u03CA", "udigr":"\u03CB",
-  "oacgr":"\u03CC", "uacgr":"\u03CD", "ohacgr":"\u03CE", "thetav":"\u03D1",
-  "vartheta":"\u03D1", "Upsi":"\u03D2", "phis":"\u03D5", "straightphi":"\u03D5",
-  "piv":"\u03D6", "varpi":"\u03D6", "b.Gammad":"\u03DC", "gammad":"\u03DD",
-  "b.gammad":"\u03DD", "kappav":"\u03F0", "varkappa":"\u03F0", "rhov":"\u03F1",
-  "varrho":"\u03F1", "epsi":"\u03F5", "epsis":"\u03F5",
-  "straightepsilon":"\u03F5", "bepsi":"\u03F6",
-  "backepsilon":"\u03F6", "IOcy":"\u0401", "DJcy":"\u0402", "GJcy":"\u0403",
-  "Jukcy":"\u0404", "DScy":"\u0405", "Iukcy":"\u0406", "YIcy":"\u0407",
-  "Jsercy":"\u0408", "LJcy":"\u0409", "NJcy":"\u040A", "TSHcy":"\u040B",
-  "KJcy":"\u040C", "Ubrcy":"\u040E", "DZcy":"\u040F", "Acy":"\u0410",
-  "Bcy":"\u0411", "Vcy":"\u0412", "Gcy":"\u0413", "Dcy":"\u0414",
-  "IEcy":"\u0415", "ZHcy":"\u0416", "Zcy":"\u0417", "Icy":"\u0418",
-  "Jcy":"\u0419", "Kcy":"\u041A", "Lcy":"\u041B", "Mcy":"\u041C",
-  "Ncy":"\u041D", "Ocy":"\u041E", "Pcy":"\u041F", "Rcy":"\u0420",
-  "Scy":"\u0421", "Tcy":"\u0422", "Ucy":"\u0423", "Fcy":"\u0424",
-  "KHcy":"\u0425", "TScy":"\u0426", "CHcy":"\u0427", "SHcy":"\u0428",
-  "SHCHcy":"\u0429", "HARDcy":"\u042A", "Ycy":"\u042B", "SOFTcy":"\u042C",
-  "Ecy":"\u042D", "YUcy":"\u042E", "YAcy":"\u042F", "acy":"\u0430",
-  "bcy":"\u0431", "vcy":"\u0432", "gcy":"\u0433", "dcy":"\u0434",
-  "iecy":"\u0435", "zhcy":"\u0436", "zcy":"\u0437", "icy":"\u0438",
-  "jcy":"\u0439", "kcy":"\u043A", "lcy":"\u043B", "mcy":"\u043C",
-  "ncy":"\u043D", "ocy":"\u043E", "pcy":"\u043F", "rcy":"\u0440",
-  "scy":"\u0441", "tcy":"\u0442", "ucy":"\u0443", "fcy":"\u0444",
-  "khcy":"\u0445", "tscy":"\u0446", "chcy":"\u0447", "shcy":"\u0448",
-  "shchcy":"\u0449", "hardcy":"\u044A", "ycy":"\u044B", "softcy":"\u044C",
-  "ecy":"\u044D", "yucy":"\u044E", "yacy":"\u044F", "iocy":"\u0451",
-  "djcy":"\u0452", "gjcy":"\u0453", "jukcy":"\u0454", "dscy":"\u0455",
-  "iukcy":"\u0456", "yicy":"\u0457", "jsercy":"\u0458", "ljcy":"\u0459",
-  "njcy":"\u045A", "tshcy":"\u045B", "kjcy":"\u045C", "ubrcy":"\u045E",
-  "dzcy":"\u045F", "ensp":"\u2002", "emsp":"\u2003", "emsp13":"\u2004",
-  "emsp14":"\u2005", "numsp":"\u2007", "puncsp":"\u2008", "thinsp":"\u2009",
-  "ThinSpace":"\u2009", "hairsp":"\u200A", "VeryThinSpace":"\u200A", "hyphen":"\u2010",
-  "dash":"\u2010", "ndash":"\u2013", "mdash":"\u2014", "horbar":"\u2015",
-  "lsquo":"\u2018", "OpenCurlyQuote":"\u2018", "rsquo":"\u2019", "rsquor":"\u2019",
-  "lsquor":"\u201A", "ldquo":"\u201C", "OpenCurlyDoubleQuote":"\u201C", "rdquo":"\u201D",
-  "rdquor":"\u201D", "ldquor":"\u201E", "dagger":"\u2020", "Dagger":"\u2021",
-  "ddagger":"\u2021", "bull":"\u2022", "bullet":"\u2022", "nldr":"\u2025",
-  "hellip":"\u2026", "mldr":"\u2026",
-  "vprime":"\u2032", "bprime":"\u2035", "backprime":"\u2035", "caret":"\u2041",
-  "hybull":"\u2043", "incare":"\u2105", "planck":"\u210F", "hbar":"\u210F",
-  "hslash":"\u210F", "ell":"\u2113", "numero":"\u2116", "copysr":"\u2117",
-  "weierp":"\u2118", "wp":"\u2118", "real":"\u211C", "Re":"\u211C",
-  "realpart":"\u211C", "rx":"\u211E", "trade":"\u2122", "ohm":"\u2126",
-  "beth":"\u2136", "gimel":"\u2137", "daleth":"\u2138", "frac13":"\u2153",
-  "frac23":"\u2154", "frac15":"\u2155", "frac25":"\u2156", "frac35":"\u2157",
-  "frac45":"\u2158", "frac16":"\u2159", "frac56":"\u215A", "frac18":"\u215B",
-  "frac38":"\u215C", "frac58":"\u215D", "frac78":"\u215E", "larr":"\u2190",
-  "leftarrow":"\u2190", "LeftArrow":"\u2190", "ShortLeftArrow":"\u2190", "uarr":"\u2191",
-  "uparrow":"\u2191", "UpArrow":"\u2191", "ShortUpArrow":"\u2191", "rarr":"\u2192",
-  "rightarrow":"\u2192", "RightArrow":"\u2192", "ShortRightArrow":"\u2192", "darr":"\u2193",
-  "downarrow":"\u2193", "DownArrow":"\u2193", "ShortDownArrow":"\u2193", "harr":"\u2194",
-  "leftrightarrow":"\u2194", "LeftRightArrow":"\u2194", "varr":"\u2195", "updownarrow":"\u2195",
-  "UpDownArrow":"\u2195", "nwarr":"\u2196", "UpperLeftArrow":"\u2196", "nwarrow":"\u2196",
-  "nearr":"\u2197", "UpperRightArrow":"\u2197", "nearrow":"\u2197", "drarr":"\u2198",
-  "searrow":"\u2198", "LowerRightArrow":"\u2198", "dlarr":"\u2199", "swarrow":"\u2199",
-  "LowerLeftArrow":"\u2199", "nlarr":"\u219A", "nleftarrow":"\u219A", "nrarr":"\u219B",
-  "nrightarrow":"\u219B", "rarrw":"\u219D", "rightsquigarrow":"\u219D", "Larr":"\u219E",
-  "twoheadleftarrow":"\u219E", "Rarr":"\u21A0", "twoheadrightarrow":"\u21A0", "larrtl":"\u21A2",
-  "leftarrowtail":"\u21A2", "rarrtl":"\u21A3", "rightarrowtail":"\u21A3", "map":"\u21A6",
-  "RightTeeArrow":"\u21A6", "mapsto":"\u21A6", "larrhk":"\u21A9", "hookleftarrow":"\u21A9",
-  "rarrhk":"\u21AA", "hookrightarrow":"\u21AA", "larrlp":"\u21AB", "looparrowleft":"\u21AB",
-  "rarrlp":"\u21AC", "looparrowright":"\u21AC", "harrw":"\u21AD", "leftrightsquigarrow":"\u21AD",
-  "nharr":"\u21AE", "nleftrightarrow":"\u21AE", "lsh":"\u21B0", "Lsh":"\u21B0",
-  "rsh":"\u21B1", "Rsh":"\u21B1", "cularr":"\u21B6", "curvearrowleft":"\u21B6",
-  "curarr":"\u21B7", "curvearrowright":"\u21B7", "olarr":"\u21BA", "circlearrowleft":"\u21BA",
-  "orarr":"\u21BB", "circlearrowright":"\u21BB", "lharu":"\u21BC", "LeftVector":"\u21BC",
-  "leftharpoonup":"\u21BC", "lhard":"\u21BD", "leftharpoondown":"\u21BD", "DownLeftVector":"\u21BD",
-  "uharr":"\u21BE", "upharpoonright":"\u21BE", "RightUpVector":"\u21BE", "uharl":"\u21BF",
-  "upharpoonleft":"\u21BF", "LeftUpVector":"\u21BF", "rharu":"\u21C0", "RightVector":"\u21C0",
-  "rightharpoonup":"\u21C0", "rhard":"\u21C1", "rightharpoondown":"\u21C1", "DownRightVector":"\u21C1",
-  "dharr":"\u21C2", "RightDownVector":"\u21C2", "downharpoonright":"\u21C2", "dharl":"\u21C3",
-  "LeftDownVector":"\u21C3", "downharpoonleft":"\u21C3", "rlarr2":"\u21C4", "rightleftarrows":"\u21C4",
-  "RightArrowLeftArrow":"\u21C4", "lrarr2":"\u21C6", "leftrightarrows":"\u21C6", "LeftArrowRightArrow":"\u21C6",
-  "larr2":"\u21C7", "leftleftarrows":"\u21C7", "uarr2":"\u21C8", "upuparrows":"\u21C8",
-  "rarr2":"\u21C9", "rightrightarrows":"\u21C9", "darr2":"\u21CA", "downdownarrows":"\u21CA",
-  "lrhar2":"\u21CB", "ReverseEquilibrium":"\u21CB", "leftrightharpoons":"\u21CB", "rlhar2":"\u21CC",
-  "rightleftharpoons":"\u21CC", "Equilibrium":"\u21CC", "nlArr":"\u21CD", "nLeftarrow":"\u21CD",
-  "nhArr":"\u21CE", "nLeftrightarrow":"\u21CE", "nrArr":"\u21CF", "nRightarrow":"\u21CF",
-  "uArr":"\u21D1", "Uparrow":"\u21D1", "DoubleUpArrow":"\u21D1", "dArr":"\u21D3",
-  "Downarrow":"\u21D3", "DoubleDownArrow":"\u21D3", "hArr":"\u21D4", "Leftrightarrow":"\u21D4",
-  "DoubleLeftRightArrow":"\u21D4", "vArr":"\u21D5", "Updownarrow":"\u21D5", "DoubleUpDownArrow":"\u21D5",
-  "lAarr":"\u21DA", "Lleftarrow":"\u21DA", "rAarr":"\u21DB", "Rrightarrow":"\u21DB",
-  "comp":"\u2201", "complement":"\u2201", "nexist":"\u2204", "NotExists":"\u2204",
-  "nexists":"\u2204", "empty":"\u2205", "emptyset":"\u2205", "varnothing":"\u2205",
-  "prod":"\u220F", "coprod":"\u2210", "samalg":"\u2210", "sum":"\u2211",
-  "Sum":"\u2211", "plusdo":"\u2214", "dotplus":"\u2214", "setmn":"\u2216",
-  "ssetmn":"\u2216", "setminus":"\u2216", "Backslash":"\u2216",
-  "vprop":"\u221D",
-  "propto":"\u221D", "Proportional":"\u221D", "varpropto":"\u221D", "ang":"\u2220",
-  "angle":"\u2220", "angmsd":"\u2221", "measuredangle":"\u2221", "mid":"\u2223",
-  "smid":"\u2223", "VerticalBar":"\u2223",
-  "nmid":"\u2224", "nsmid":"\u2224",
-  "spar":"\u2225", "parallel":"\u2225", "DoubleVerticalBar":"\u2225",
-  "shortparallel":"\u2225", "npar":"\u2226", "nspar":"\u2226",
-  "nparallel":"\u2226", "NotDoubleVerticalBar":"\u2226",
-  "thksim":"\u223C", "Tilde":"\u223C", "thicksim":"\u223C",
-  "bsim":"\u223D", "backsim":"\u223D", "wreath":"\u2240", "VerticalTilde":"\u2240",
-  "wr":"\u2240", "nsim":"\u2241", "NotTilde":"\u2241", "nsime":"\u2244",
-  "nsimeq":"\u2244", "NotTildeEqual":"\u2244", "ncong":"\u2247", "NotTildeFullEqual":"\u2247",
-  "asymp":"\u2248", "thkap":"\u2248", "TildeTilde":"\u2248",
-  "approx":"\u2248",
-  "nap":"\u2249", "NotTildeTilde":"\u2249", "napprox":"\u2249", "ape":"\u224A",
-  "approxeq":"\u224A", "bcong":"\u224C", "backcong":"\u224C", "bump":"\u224E",
-  "HumpDownHump":"\u224E", "Bumpeq":"\u224E", "bumpe":"\u224F", "HumpEqual":"\u224F",
-  "bumpeq":"\u224F", "esdot":"\u2250", "DotEqual":"\u2250", "doteq":"\u2250",
-  "eDot":"\u2251", "doteqdot":"\u2251", "efDot":"\u2252", "fallingdotseq":"\u2252",
-  "erDot":"\u2253", "risingdotseq":"\u2253", "colone":"\u2254", "coloneq":"\u2254",
-  "Assign":"\u2254", "ecolon":"\u2255", "eqcolon":"\u2255", "ecir":"\u2256",
-  "eqcirc":"\u2256", "cire":"\u2257", "circeq":"\u2257", "trie":"\u225C",
-  "triangleq":"\u225C", "nequiv":"\u2262", "NotCongruent":"\u2262", "lE":"\u2266",
-  "LessFullEqual":"\u2266", "leqq":"\u2266", "nlE":"\u2266\u0338", "NotGreaterFullEqual":"\u2266\u0338",
-  "nleqq":"\u2266\u0338", "gE":"\u2267", "GreaterFullEqual":"\u2267", "geqq":"\u2267",
-  "ngE":"\u2267\u0338", "ngeqq":"\u2267\u0338", "lnE":"\u2268", "lneqq":"\u2268",
-  "lvnE":"\u2268\uFE00", "lvertneqq":"\u2268\uFE00", "gnE":"\u2269", "gneqq":"\u2269",
-  "gvnE":"\u2269\uFE00", "gvertneqq":"\u2269\uFE00", "Lt":"\u226A", "NestedLessLess":"\u226A",
-  "ll":"\u226A", "Gt":"\u226B", "NestedGreaterGreater":"\u226B", "gg":"\u226B",
-  "twixt":"\u226C", "between":"\u226C", "nlt":"\u226E", "NotLess":"\u226E",
-  "nless":"\u226E", "ngt":"\u226F", "NotGreater":"\u226F", "ngtr":"\u226F",
-  "nle":"\u2270", "NotLessEqual":"\u2270", "nleq":"\u2270", "nge":"\u2271",
-  "NotGreaterEqual":"\u2271", "ngeq":"\u2271", "lsim":"\u2272", "LessTilde":"\u2272",
-  "lesssim":"\u2272", "gsim":"\u2273", "gtrsim":"\u2273", "GreaterTilde":"\u2273",
-  "lg":"\u2276", "lessgtr":"\u2276", "LessGreater":"\u2276", "gl":"\u2277",
-  "gtrless":"\u2277", "GreaterLess":"\u2277", "pr":"\u227A", "Precedes":"\u227A",
-  "prec":"\u227A", "sc":"\u227B", "Succeeds":"\u227B", "succ":"\u227B",
-  "cupre":"\u227C", "PrecedesSlantEqual":"\u227C", "preccurlyeq":"\u227C", "sccue":"\u227D",
-  "SucceedsSlantEqual":"\u227D", "succcurlyeq":"\u227D", "prsim":"\u227E", "precsim":"\u227E",
-  "PrecedesTilde":"\u227E", "scsim":"\u227F", "succsim":"\u227F", "SucceedsTilde":"\u227F",
-  "npr":"\u2280", "nprec":"\u2280", "NotPrecedes":"\u2280", "nsc":"\u2281",
-  "nsucc":"\u2281", "NotSucceeds":"\u2281", "nsub":"\u2284", "nsup":"\u2285",
-  "nsube":"\u2288", "nsubseteq":"\u2288", "NotSubsetEqual":"\u2288", "nsupe":"\u2289",
-  "nsupseteq":"\u2289", "NotSupersetEqual":"\u2289", "subne":"\u228A", "subsetneq":"\u228A",
-  "vsubne":"\u228A\uFE00", "varsubsetneq":"\u228A\uFE00", "supne":"\u228B", "supsetneq":"\u228B",
-  "vsupne":"\u228B\uFE00", "varsupsetneq":"\u228B\uFE00", "uplus":"\u228E", "UnionPlus":"\u228E",
-  "sqsub":"\u228F", "SquareSubset":"\u228F", "sqsubset":"\u228F", "sqsup":"\u2290",
-  "SquareSuperset":"\u2290", "sqsupset":"\u2290", "sqsube":"\u2291", "SquareSubsetEqual":"\u2291",
-  "sqsubseteq":"\u2291", "sqsupe":"\u2292", "SquareSupersetEqual":"\u2292", "sqsupseteq":"\u2292",
-  "sqcap":"\u2293", "SquareIntersection":"\u2293", "sqcup":"\u2294", "SquareUnion":"\u2294",
-  "oplus":"\u2295", "CirclePlus":"\u2295", "ominus":"\u2296", "CircleMinus":"\u2296",
-  "otimes":"\u2297", "CircleTimes":"\u2297", "osol":"\u2298", "odot":"\u2299",
-  "CircleDot":"\u2299", "ocir":"\u229A", "circledcirc":"\u229A", "oast":"\u229B",
-  "circledast":"\u229B", "odash":"\u229D", "circleddash":"\u229D", "plusb":"\u229E",
-  "boxplus":"\u229E", "minusb":"\u229F", "boxminus":"\u229F", "timesb":"\u22A0",
-  "boxtimes":"\u22A0", "sdotb":"\u22A1", "dotsquare":"\u22A1", "vdash":"\u22A2",
-  "RightTee":"\u22A2", "dashv":"\u22A3", "LeftTee":"\u22A3", "top":"\u22A4",
-  "DownTee":"\u22A4", "models":"\u22A7", "vDash":"\u22A8", "DoubleRightTee":"\u22A8",
-  "Vdash":"\u22A9", "Vvdash":"\u22AA", "nvdash":"\u22AC", "nvDash":"\u22AD",
-  "nVdash":"\u22AE", "nVDash":"\u22AF", "vltri":"\u22B2", "vartriangleleft":"\u22B2",
-  "LeftTriangle":"\u22B2", "vrtri":"\u22B3", "vartriangleright":"\u22B3", "RightTriangle":"\u22B3",
-  "ltrie":"\u22B4", "trianglelefteq":"\u22B4", "LeftTriangleEqual":"\u22B4", "rtrie":"\u22B5",
-  "trianglerighteq":"\u22B5", "RightTriangleEqual":"\u22B5", "mumap":"\u22B8", "multimap":"\u22B8",
-  "intcal":"\u22BA", "intercal":"\u22BA", "veebar":"\u22BB", "diam":"\u22C4",
-  "diamond":"\u22C4", "Diamond":"\u22C4", "sdot":"\u22C5", "sstarf":"\u22C6",
-  "Star":"\u22C6", "divonx":"\u22C7", "divideontimes":"\u22C7", "bowtie":"\u22C8",
-  "ltimes":"\u22C9", "rtimes":"\u22CA", "lthree":"\u22CB", "leftthreetimes":"\u22CB",
-  "rthree":"\u22CC", "rightthreetimes":"\u22CC", "bsime":"\u22CD", "backsimeq":"\u22CD",
-  "cuvee":"\u22CE", "curlyvee":"\u22CE", "cuwed":"\u22CF", "curlywedge":"\u22CF",
-  "Sub":"\u22D0", "Subset":"\u22D0", "Sup":"\u22D1", "Supset":"\u22D1",
-  "Cap":"\u22D2", "Cup":"\u22D3", "fork":"\u22D4", "pitchfork":"\u22D4",
-  "ldot":"\u22D6", "lessdot":"\u22D6", "gsdot":"\u22D7", "gtrdot":"\u22D7",
-  "Ll":"\u22D8", "Gg":"\u22D9", "ggg":"\u22D9", "leg":"\u22DA",
-  "LessEqualGreater":"\u22DA", "lesseqgtr":"\u22DA", "gel":"\u22DB", "gtreqless":"\u22DB",
-  "GreaterEqualLess":"\u22DB", "cuepr":"\u22DE", "curlyeqprec":"\u22DE", "cuesc":"\u22DF",
-  "curlyeqsucc":"\u22DF", "lnsim":"\u22E6", "gnsim":"\u22E7", "prnsim":"\u22E8",
-  "precnsim":"\u22E8", "scnsim":"\u22E9", "succnsim":"\u22E9", "nltri":"\u22EA",
-  "ntriangleleft":"\u22EA", "NotLeftTriangle":"\u22EA", "nrtri":"\u22EB", "ntriangleright":"\u22EB",
-  "NotRightTriangle":"\u22EB", "nltrie":"\u22EC", "ntrianglelefteq":"\u22EC", "NotLeftTriangleEqual":"\u22EC",
-  "nrtrie":"\u22ED", "ntrianglerighteq":"\u22ED", "NotRightTriangleEqual":"\u22ED", "vellip":"\u22EE",
-  "barwed":"\u2305", "barwedge":"\u2305", "Barwed":"\u2306", "doublebarwedge":"\u2306",
-  "lceil":"\u2308", "LeftCeiling":"\u2308", "rceil":"\u2309", "RightCeiling":"\u2309",
-  "lfloor":"\u230A", "LeftFloor":"\u230A", "rfloor":"\u230B", "RightFloor":"\u230B",
-  "drcrop":"\u230C", "dlcrop":"\u230D", "urcrop":"\u230E", "ulcrop":"\u230F",
-  "telrec":"\u2315", "target":"\u2316", "ulcorn":"\u231C", "ulcorner":"\u231C",
-  "urcorn":"\u231D", "urcorner":"\u231D", "dlcorn":"\u231E", "llcorner":"\u231E",
-  "drcorn":"\u231F", "lrcorner":"\u231F", "frown":"\u2322", "sfrown":"\u2322",
-  "smile":"\u2323", "ssmile":"\u2323",
-  "blank":"\u2423", "oS":"\u24C8",
-  "circledS":"\u24C8", "boxh":"\u2500", "boxv":"\u2502", "boxdr":"\u250C",
-  "boxdl":"\u2510", "boxur":"\u2514", "boxul":"\u2518", "boxvr":"\u251C",
-  "boxvl":"\u2524", "boxhd":"\u252C", "boxhu":"\u2534", "boxvh":"\u253C",
-  "boxH":"\u2550", "boxV":"\u2551", "boxdR":"\u2552", "boxDr":"\u2553",
-  "boxDR":"\u2554", "boxdL":"\u2555", "boxDl":"\u2556", "boxDL":"\u2557",
-  "boxuR":"\u2558", "boxUr":"\u2559", "boxUR":"\u255A", "boxuL":"\u255B",
-  "boxUl":"\u255C", "boxUL":"\u255D", "boxvR":"\u255E", "boxVr":"\u255F",
-  "boxVR":"\u2560", "boxvL":"\u2561", "boxVl":"\u2562", "boxVL":"\u2563",
-  "boxHd":"\u2564", "boxhD":"\u2565", "boxHD":"\u2566", "boxHu":"\u2567",
-  "boxhU":"\u2568", "boxHU":"\u2569", "boxvH":"\u256A", "boxVh":"\u256B",
-  "boxVH":"\u256C", "uhblk":"\u2580", "lhblk":"\u2584", "block":"\u2588",
-  "blk14":"\u2591", "blk12":"\u2592", "blk34":"\u2593", "squ":"\u25A1",
-  "Square":"\u25A1", "squf":"\u25AA", "blacksquare":"\u25AA", "rect":"\u25AD",
-  "marker":"\u25AE", "xutri":"\u25B3", "bigtriangleup":"\u25B3", "utrif":"\u25B4",
-  "blacktriangle":"\u25B4", "utri":"\u25B5", "triangle":"\u25B5", "rtrif":"\u25B8",
-  "blacktriangleright":"\u25B8", "rtri":"\u25B9", "triangleright":"\u25B9", "xdtri":"\u25BD",
-  "bigtriangledown":"\u25BD", "dtrif":"\u25BE", "blacktriangledown":"\u25BE", "dtri":"\u25BF",
-  "triangledown":"\u25BF", "ltrif":"\u25C2", "blacktriangleleft":"\u25C2", "ltri":"\u25C3",
-  "triangleleft":"\u25C3", "loz":"\u25CA", "lozenge":"\u25CA", "cir":"\u25CB",
-  "xcirc":"\u25EF", "bigcirc":"\u25EF", "starf":"\u2605", "bigstar":"\u2605",
-  "star":"\u2606", "phone":"\u260E", "female":"\u2640", "male":"\u2642",
-  "spades":"\u2660", "spadesuit":"\u2660", "clubs":"\u2663", "clubsuit":"\u2663",
-  "hearts":"\u2665", "heartsuit":"\u2665", "diams":"\u2666", "diamondsuit":"\u2666",
-  "sung":"\u266A", "flat":"\u266D", "natur":"\u266E", "natural":"\u266E",
-  "sharp":"\u266F", "check":"\u2713", "checkmark":"\u2713", "cross":"\u2717",
-  "malt":"\u2720", "maltese":"\u2720", "sext":"\u2736", "xharr":"\u27F7",
-  "longleftrightarrow":"\u27F7", "LongLeftRightArrow":"\u27F7", "xlArr":"\u27F8", "Longleftarrow":"\u27F8",
-  "DoubleLongLeftArrow":"\u27F8", "xrArr":"\u27F9", "Longrightarrow":"\u27F9", "DoubleLongRightArrow":"\u27F9",
-  "xhArr":"\u27FA", "Longleftrightarrow":"\u27FA", "DoubleLongLeftRightArrow":"\u27FA", "rpargt":"\u2994",
-  "lpargt":"\u29A0", "lozf":"\u29EB", "blacklozenge":"\u29EB", "amalg":"\u2A3F",
-  "les":"\u2A7D", "LessSlantEqual":"\u2A7D", "leqslant":"\u2A7D", "nles":"\u2A7D\u0338",
-  "NotLessSlantEqual":"\u2A7D\u0338", "nleqslant":"\u2A7D\u0338", "ges":"\u2A7E", "GreaterSlantEqual":"\u2A7E",
-  "geqslant":"\u2A7E", "nges":"\u2A7E\u0338", "NotGreaterSlantEqual":"\u2A7E\u0338", "ngeqslant":"\u2A7E\u0338",
-  "lap":"\u2A85", "lessapprox":"\u2A85", "gap":"\u2A86", "gtrapprox":"\u2A86",
-  "lne":"\u2A87", "lneq":"\u2A87", "gne":"\u2A88", "gneq":"\u2A88",
-  "lnap":"\u2A89", "lnapprox":"\u2A89", "gnap":"\u2A8A", "gnapprox":"\u2A8A",
-  "lEg":"\u2A8B", "lesseqqgtr":"\u2A8B", "gEl":"\u2A8C", "gtreqqless":"\u2A8C",
-  "els":"\u2A95", "eqslantless":"\u2A95", "egs":"\u2A96", "eqslantgtr":"\u2A96",
-  "pre":"\u2AAF", "preceq":"\u2AAF", "PrecedesEqual":"\u2AAF", "npre":"\u2AAF\u0338",
-  "npreceq":"\u2AAF\u0338", "NotPrecedesEqual":"\u2AAF\u0338", "sce":"\u2AB0", "succeq":"\u2AB0",
-  "SucceedsEqual":"\u2AB0", "nsce":"\u2AB0\u0338", "nsucceq":"\u2AB0\u0338", "NotSucceedsEqual":"\u2AB0\u0338",
-  "prnE":"\u2AB5", "precneqq":"\u2AB5", "scnE":"\u2AB6", "succneqq":"\u2AB6",
-  "prap":"\u2AB7", "precapprox":"\u2AB7", "scap":"\u2AB8", "succapprox":"\u2AB8",
-  "prnap":"\u2AB9", "precnapprox":"\u2AB9", "scnap":"\u2ABA", "succnapprox":"\u2ABA",
-  "subE":"\u2AC5", "subseteqq":"\u2AC5", "nsubE":"\u2AC5\u0338", "nsubseteqq":"\u2AC5\u0338",
-  "supE":"\u2AC6", "supseteqq":"\u2AC6", "nsupE":"\u2AC6\u0338", "nsupseteqq":"\u2AC6\u0338",
-  "subnE":"\u2ACB", "subsetneqq":"\u2ACB", "vsubnE":"\u2ACB\uFE00", "varsubsetneqq":"\u2ACB\uFE00",
-  "supnE":"\u2ACC", "supsetneqq":"\u2ACC", "vsupnE":"\u2ACC\uFE00", "varsupsetneqq":"\u2ACC\uFE00",
-  "b.Gamma":"\uD835\uDEAA", "b.Delta":"\uD835\uDEAA", "b.Theta":"\uD835\uDEAF", "b.Lambda":"\uD835\uDEB2",
-  "b.Xi":"\uD835\uDEB5", "b.Pi":"\uD835\uDEB7", "b.Sigma":"\uD835\uDEBA", "b.Upsi":"\uD835\uDEBC",
-  "b.Phi":"\uD835\uDEBD", "b.Psi":"\uD835\uDEBF", "b.Omega":"\uD835\uDEC0", "b.alpha":"\uD835\uDEC2",
-  "b.beta":"\uD835\uDEC3", "b.gamma":"\uD835\uDEC4", "b.delta":"\uD835\uDEC5", "b.epsi":"\uD835\uDEC6",
-  "b.zeta":"\uD835\uDEC7", "b.eta":"\uD835\uDEC8", "b.thetas":"\uD835\uDEC9", "b.iota":"\uD835\uDECA",
-  "b.kappa":"\uD835\uDECB", "b.lambda":"\uD835\uDECC", "b.mu":"\uD835\uDECD", "b.nu":"\uD835\uDECE",
-  "b.xi":"\uD835\uDECF", "b.pi":"\uD835\uDED1", "b.rho":"\uD835\uDED2", "b.sigmav":"\uD835\uDED3",
-  "b.sigma":"\uD835\uDED4", "b.tau":"\uD835\uDED5", "b.upsi":"\uD835\uDED6", "b.phi":"\uD835\uDED7",
-  "b.chi":"\uD835\uDED8", "b.psi":"\uD835\uDED9", "b.omega":"\uD835\uDEDA", "b.epsiv":"\uD835\uDEDC",
-  "b.thetav":"\uD835\uDEDD", "b.kappav":"\uD835\uDEDE", "b.phiv":"\uD835\uDEDF", "b.rhov":"\uD835\uDEE0",
-  "b.piv":"\uD835\uDEE1", "fflig":"\uFB00", "filig":"\uFB01", "fllig":"\uFB02",
-  "ffilig":"\uFB03", "ffllig":"\uFB04", "sbsol":"\uFE68"
+	excl: "\u0021", quot: "\u0022", num: "\u0023", dollar: "\u0024",
+	percnt: "\u0025", amp: "\u0026", apos: "\u0027", lpar: "\u0028",
+	rpar: "\u0029", ast: "\u002A", plus: "\u002B", comma: "\u002C",
+	period: "\u002E", sol: "\u002F", colon: "\u003A", semi: "\u003B",
+	lt: "\u003C", equals: "\u003D", gt: "\u003E", quest: "\u003F",
+	commat: "\u0040", lsqb: "\u005B", lbrack: "\u005B", bsol: "\u005C",
+	rsqb: "\u005D", rbrack: "\u005D", lowbar: "\u005F", grave: "\u0060",
+	DiacriticalGrave: "\u0060", jnodot: "\u006A", lcub: "\u007B", lbrace: "\u007B",
+	verbar: "\u007C", vert: "\u007C", rcub: "\u007D", rbrace: "\u007D",
+	nbsp: "\u00A0", NonBreakingSpace: "\u00A0", iexcl: "\u00A1", cent: "\u00A2",
+	pound: "\u00A3", curren: "\u00A4", yen: "\u00A5", brvbar: "\u00A6",
+	sect: "\u00A7", die: "\u00A8", uml: "\u00A8",
+	copy: "\u00A9", ordf: "\u00AA", laquo: "\u00AB",
+	not: "\u00AC", shy: "\u00AD", reg: "\u00AE", circledR: "\u00AE",
+	macr: "\u00AF", deg: "\u00B0", plusmn: "\u00B1", pm: "\u00B1",
+	PlusMinus: "\u00B1", sup2: "\u00B2", sup3: "\u00B3", acute: "\u00B4",
+	DiacriticalAcute: "\u00B4", micro: "\u00B5", para: "\u00B6", middot: "\u00B7",
+	centerdot: "\u00B7", CenterDot: "\u00B7", cedil: "\u00B8", Cedilla: "\u00B8",
+	sup1: "\u00B9", ordm: "\u00BA", raquo: "\u00BB", frac14: "\u00BC",
+	frac12: "\u00BD", half: "\u00BD",
+	frac34: "\u00BE", iquest: "\u00BF", Agrave: "\u00C0", Aacute: "\u00C1",
+	Acirc: "\u00C2", Atilde: "\u00C3", Auml: "\u00C4", Aring: "\u00C5",
+	AElig: "\u00C6", Ccedil: "\u00C7", Egrave: "\u00C8", Eacute: "\u00C9",
+	Ecirc: "\u00CA", Euml: "\u00CB", Igrave: "\u00CC", Iacute: "\u00CD",
+	Icirc: "\u00CE", Iuml: "\u00CF", ETH: "\u00D0", Ntilde: "\u00D1",
+	Ograve: "\u00D2", Oacute: "\u00D3", Ocirc: "\u00D4", Otilde: "\u00D5",
+	Ouml: "\u00D6", times: "\u00D7", Oslash: "\u00D8", Ugrave: "\u00D9",
+	Uacute: "\u00DA", Ucirc: "\u00DB", Uuml: "\u00DC", Yacute: "\u00DD",
+	THORN: "\u00DE", szlig: "\u00DF", agrave: "\u00E0", aacute: "\u00E1",
+	acirc: "\u00E2", atilde: "\u00E3", auml: "\u00E4", aring: "\u00E5",
+	aelig: "\u00E6", ccedil: "\u00E7", egrave: "\u00E8", eacute: "\u00E9",
+	ecirc: "\u00EA", euml: "\u00EB", igrave: "\u00EC", iacute: "\u00ED",
+	icirc: "\u00EE", iuml: "\u00EF", eth: "\u00F0", ntilde: "\u00F1",
+	ograve: "\u00F2", oacute: "\u00F3", ocirc: "\u00F4", otilde: "\u00F5",
+	ouml: "\u00F6", divide: "\u00F7", div: "\u00F7", oslash: "\u00F8",
+	ugrave: "\u00F9", uacute: "\u00FA", ucirc: "\u00FB", uuml: "\u00FC",
+	yacute: "\u00FD", thorn: "\u00FE", yuml: "\u00FF", Amacr: "\u0100",
+	amacr: "\u0101", Abreve: "\u0102", abreve: "\u0103", Aogon: "\u0104",
+	aogon: "\u0105", Cacute: "\u0106", cacute: "\u0107", Ccirc: "\u0108",
+	ccirc: "\u0109", Cdot: "\u010A", cdot: "\u010B", Ccaron: "\u010C",
+	ccaron: "\u010D", Dcaron: "\u010E", dcaron: "\u010F", Dstrok: "\u0110",
+	dstrok: "\u0111", Emacr: "\u0112", emacr: "\u0113", Edot: "\u0116",
+	edot: "\u0117", Eogon: "\u0118", eogon: "\u0119", Ecaron: "\u011A",
+	ecaron: "\u011B", Gcirc: "\u011C", gcirc: "\u011D", Gbreve: "\u011E",
+	gbreve: "\u011F", Gdot: "\u0120", gdot: "\u0121", Gcedil: "\u0122",
+	Hcirc: "\u0124", hcirc: "\u0125", Hstrok: "\u0126", hstrok: "\u0127",
+	Itilde: "\u0128", itilde: "\u0129", Imacr: "\u012A", imacr: "\u012B",
+	Iogon: "\u012E", iogon: "\u012F", Idot: "\u0130", IJlig: "\u0132",
+	ijlig: "\u0133", Jcirc: "\u0134", jcirc: "\u0135", Kcedil: "\u0136",
+	kcedil: "\u0137", kgreen: "\u0138", Lacute: "\u0139", lacute: "\u013A",
+	Lcedil: "\u013B", lcedil: "\u013C", Lcaron: "\u013D", lcaron: "\u013E",
+	Lmidot: "\u013F", lmidot: "\u0140", Lstrok: "\u0141", lstrok: "\u0142",
+	Nacute: "\u0143", nacute: "\u0144", Ncedil: "\u0145", ncedil: "\u0146",
+	Ncaron: "\u0147", ncaron: "\u0148", napos: "\u0149", ENG: "\u014A",
+	eng: "\u014B", Omacr: "\u014C", omacr: "\u014D", Odblac: "\u0150",
+	odblac: "\u0151", OElig: "\u0152", oelig: "\u0153", Racute: "\u0154",
+	racute: "\u0155", Rcedil: "\u0156", rcedil: "\u0157", Rcaron: "\u0158",
+	rcaron: "\u0159", Sacute: "\u015A", sacute: "\u015B", Scirc: "\u015C",
+	scirc: "\u015D", Scedil: "\u015E", scedil: "\u015F", Scaron: "\u0160",
+	scaron: "\u0161", Tcedil: "\u0162", tcedil: "\u0163", Tcaron: "\u0164",
+	tcaron: "\u0165", Tstrok: "\u0166", tstrok: "\u0167", Utilde: "\u0168",
+	utilde: "\u0169", Umacr: "\u016A", umacr: "\u016B", Ubreve: "\u016C",
+	ubreve: "\u016D", Uring: "\u016E", uring: "\u016F", Udblac: "\u0170",
+	udblac: "\u0171", Uogon: "\u0172", uogon: "\u0173", Wcirc: "\u0174",
+	wcirc: "\u0175", Ycirc: "\u0176", ycirc: "\u0177", Yuml: "\u0178",
+	Zacute: "\u0179", zacute: "\u017A", Zdot: "\u017B", zdot: "\u017C",
+	Zcaron: "\u017D", zcaron: "\u017E", gacute: "\u01F5", circ: "\u02C6",
+	caron: "\u02C7", Hacek: "\u02C7", breve: "\u02D8", Breve: "\u02D8",
+	dot: "\u02D9", DiacriticalDot: "\u02D9", ring: "\u02DA", ogon: "\u02DB",
+	tilde: "\u02DC", DiacriticalTilde: "\u02DC", dblac: "\u02DD", DiacriticalDoubleAcute: "\u02DD",
+	Aacgr: "\u0386", Eacgr: "\u0388", EEacgr: "\u0389", Iacgr: "\u038A",
+	Oacgr: "\u038C", Uacgr: "\u038E", OHacgr: "\u038F", idiagr: "\u0390",
+	Agr: "\u0391", Bgr: "\u0392", Ggr: "\u0393", Gamma: "\u0393",
+	Dgr: "\u0394", Delta: "\u0394", Egr: "\u0395", Zgr: "\u0396",
+	EEgr: "\u0397", THgr: "\u0398", Theta: "\u0398", Igr: "\u0399",
+	Kgr: "\u039A", Lgr: "\u039B", Lambda: "\u039B", Mgr: "\u039C",
+	Ngr: "\u039D", Xgr: "\u039E", Xi: "\u039E", Ogr: "\u039F",
+	Pgr: "\u03A0", Pi: "\u03A0", Rgr: "\u03A1", Sgr: "\u03A3",
+	Sigma: "\u03A3", Tgr: "\u03A4", Ugr: "\u03A5", PHgr: "\u03A6",
+	Phi: "\u03A6", KHgr: "\u03A7", PSgr: "\u03A8", Psi: "\u03A8",
+	OHgr: "\u03A9", Omega: "\u03A9", Idigr: "\u03AA", Udigr: "\u03AB",
+	aacgr: "\u03AC", eacgr: "\u03AD", eeacgr: "\u03AE", iacgr: "\u03AF",
+	udiagr: "\u03B0", agr: "\u03B1", alpha: "\u03B1", bgr: "\u03B2",
+	beta: "\u03B2", ggr: "\u03B3", gamma: "\u03B3", dgr: "\u03B4",
+	delta: "\u03B4", egr: "\u03B5", epsiv: "\u03B5", zgr: "\u03B6",
+	zeta: "\u03B6", eegr: "\u03B7", eta: "\u03B7", thgr: "\u03B8",
+	thetas: "\u03B8", igr: "\u03B9", iota: "\u03B9", kgr: "\u03BA",
+	kappa: "\u03BA", lgr: "\u03BB", lambda: "\u03BB", mgr: "\u03BC",
+	mu: "\u03BC", ngr: "\u03BD", nu: "\u03BD", xgr: "\u03BE",
+	xi: "\u03BE", ogr: "\u03BF", pgr: "\u03C0", pi: "\u03C0",
+	rgr: "\u03C1", rho: "\u03C1", sfgr: "\u03C2", sigmav: "\u03C2",
+	sgr: "\u03C3", sigma: "\u03C3", tgr: "\u03C4", tau: "\u03C4",
+	ugr: "\u03C5", upsi: "\u03C5", phgr: "\u03C6", phiv: "\u03C6",
+	khgr: "\u03C7", chi: "\u03C7", psgr: "\u03C8", psi: "\u03C8",
+	ohgr: "\u03C9", omega: "\u03C9", idigr: "\u03CA", udigr: "\u03CB",
+	oacgr: "\u03CC", uacgr: "\u03CD", ohacgr: "\u03CE", thetav: "\u03D1",
+	vartheta: "\u03D1", Upsi: "\u03D2", phis: "\u03D5", straightphi: "\u03D5",
+	piv: "\u03D6", varpi: "\u03D6", "b.Gammad": "\u03DC", gammad: "\u03DD",
+	"b.gammad": "\u03DD", kappav: "\u03F0", varkappa: "\u03F0", rhov: "\u03F1",
+	varrho: "\u03F1", epsi: "\u03F5", epsis: "\u03F5",
+	straightepsilon: "\u03F5", bepsi: "\u03F6",
+	backepsilon: "\u03F6", IOcy: "\u0401", DJcy: "\u0402", GJcy: "\u0403",
+	Jukcy: "\u0404", DScy: "\u0405", Iukcy: "\u0406", YIcy: "\u0407",
+	Jsercy: "\u0408", LJcy: "\u0409", NJcy: "\u040A", TSHcy: "\u040B",
+	KJcy: "\u040C", Ubrcy: "\u040E", DZcy: "\u040F", Acy: "\u0410",
+	Bcy: "\u0411", Vcy: "\u0412", Gcy: "\u0413", Dcy: "\u0414",
+	IEcy: "\u0415", ZHcy: "\u0416", Zcy: "\u0417", Icy: "\u0418",
+	Jcy: "\u0419", Kcy: "\u041A", Lcy: "\u041B", Mcy: "\u041C",
+	Ncy: "\u041D", Ocy: "\u041E", Pcy: "\u041F", Rcy: "\u0420",
+	Scy: "\u0421", Tcy: "\u0422", Ucy: "\u0423", Fcy: "\u0424",
+	KHcy: "\u0425", TScy: "\u0426", CHcy: "\u0427", SHcy: "\u0428",
+	SHCHcy: "\u0429", HARDcy: "\u042A", Ycy: "\u042B", SOFTcy: "\u042C",
+	Ecy: "\u042D", YUcy: "\u042E", YAcy: "\u042F", acy: "\u0430",
+	bcy: "\u0431", vcy: "\u0432", gcy: "\u0433", dcy: "\u0434",
+	iecy: "\u0435", zhcy: "\u0436", zcy: "\u0437", icy: "\u0438",
+	jcy: "\u0439", kcy: "\u043A", lcy: "\u043B", mcy: "\u043C",
+	ncy: "\u043D", ocy: "\u043E", pcy: "\u043F", rcy: "\u0440",
+	scy: "\u0441", tcy: "\u0442", ucy: "\u0443", fcy: "\u0444",
+	khcy: "\u0445", tscy: "\u0446", chcy: "\u0447", shcy: "\u0448",
+	shchcy: "\u0449", hardcy: "\u044A", ycy: "\u044B", softcy: "\u044C",
+	ecy: "\u044D", yucy: "\u044E", yacy: "\u044F", iocy: "\u0451",
+	djcy: "\u0452", gjcy: "\u0453", jukcy: "\u0454", dscy: "\u0455",
+	iukcy: "\u0456", yicy: "\u0457", jsercy: "\u0458", ljcy: "\u0459",
+	njcy: "\u045A", tshcy: "\u045B", kjcy: "\u045C", ubrcy: "\u045E",
+	dzcy: "\u045F", ensp: "\u2002", emsp: "\u2003", emsp13: "\u2004",
+	emsp14: "\u2005", numsp: "\u2007", puncsp: "\u2008", thinsp: "\u2009",
+	ThinSpace: "\u2009", hairsp: "\u200A", VeryThinSpace: "\u200A", hyphen: "\u2010",
+	dash: "\u2010", ndash: "\u2013", mdash: "\u2014", horbar: "\u2015",
+	lsquo: "\u2018", OpenCurlyQuote: "\u2018", rsquo: "\u2019", rsquor: "\u2019",
+	lsquor: "\u201A", ldquo: "\u201C", OpenCurlyDoubleQuote: "\u201C", rdquo: "\u201D",
+	rdquor: "\u201D", ldquor: "\u201E", dagger: "\u2020", Dagger: "\u2021",
+	ddagger: "\u2021", bull: "\u2022", bullet: "\u2022", nldr: "\u2025",
+	hellip: "\u2026", mldr: "\u2026",
+	vprime: "\u2032", bprime: "\u2035", backprime: "\u2035", caret: "\u2041",
+	hybull: "\u2043", incare: "\u2105", planck: "\u210F", hbar: "\u210F",
+	hslash: "\u210F", ell: "\u2113", numero: "\u2116", copysr: "\u2117",
+	weierp: "\u2118", wp: "\u2118", real: "\u211C", Re: "\u211C",
+	realpart: "\u211C", rx: "\u211E", trade: "\u2122", ohm: "\u2126",
+	beth: "\u2136", gimel: "\u2137", daleth: "\u2138", frac13: "\u2153",
+	frac23: "\u2154", frac15: "\u2155", frac25: "\u2156", frac35: "\u2157",
+	frac45: "\u2158", frac16: "\u2159", frac56: "\u215A", frac18: "\u215B",
+	frac38: "\u215C", frac58: "\u215D", frac78: "\u215E", larr: "\u2190",
+	leftarrow: "\u2190", LeftArrow: "\u2190", ShortLeftArrow: "\u2190", uarr: "\u2191",
+	uparrow: "\u2191", UpArrow: "\u2191", ShortUpArrow: "\u2191", rarr: "\u2192",
+	rightarrow: "\u2192", RightArrow: "\u2192", ShortRightArrow: "\u2192", darr: "\u2193",
+	downarrow: "\u2193", DownArrow: "\u2193", ShortDownArrow: "\u2193", harr: "\u2194",
+	leftrightarrow: "\u2194", LeftRightArrow: "\u2194", varr: "\u2195", updownarrow: "\u2195",
+	UpDownArrow: "\u2195", nwarr: "\u2196", UpperLeftArrow: "\u2196", nwarrow: "\u2196",
+	nearr: "\u2197", UpperRightArrow: "\u2197", nearrow: "\u2197", drarr: "\u2198",
+	searrow: "\u2198", LowerRightArrow: "\u2198", dlarr: "\u2199", swarrow: "\u2199",
+	LowerLeftArrow: "\u2199", nlarr: "\u219A", nleftarrow: "\u219A", nrarr: "\u219B",
+	nrightarrow: "\u219B", rarrw: "\u219D", rightsquigarrow: "\u219D", Larr: "\u219E",
+	twoheadleftarrow: "\u219E", Rarr: "\u21A0", twoheadrightarrow: "\u21A0", larrtl: "\u21A2",
+	leftarrowtail: "\u21A2", rarrtl: "\u21A3", rightarrowtail: "\u21A3", map: "\u21A6",
+	RightTeeArrow: "\u21A6", mapsto: "\u21A6", larrhk: "\u21A9", hookleftarrow: "\u21A9",
+	rarrhk: "\u21AA", hookrightarrow: "\u21AA", larrlp: "\u21AB", looparrowleft: "\u21AB",
+	rarrlp: "\u21AC", looparrowright: "\u21AC", harrw: "\u21AD", leftrightsquigarrow: "\u21AD",
+	nharr: "\u21AE", nleftrightarrow: "\u21AE", lsh: "\u21B0", Lsh: "\u21B0",
+	rsh: "\u21B1", Rsh: "\u21B1", cularr: "\u21B6", curvearrowleft: "\u21B6",
+	curarr: "\u21B7", curvearrowright: "\u21B7", olarr: "\u21BA", circlearrowleft: "\u21BA",
+	orarr: "\u21BB", circlearrowright: "\u21BB", lharu: "\u21BC", LeftVector: "\u21BC",
+	leftharpoonup: "\u21BC", lhard: "\u21BD", leftharpoondown: "\u21BD", DownLeftVector: "\u21BD",
+	uharr: "\u21BE", upharpoonright: "\u21BE", RightUpVector: "\u21BE", uharl: "\u21BF",
+	upharpoonleft: "\u21BF", LeftUpVector: "\u21BF", rharu: "\u21C0", RightVector: "\u21C0",
+	rightharpoonup: "\u21C0", rhard: "\u21C1", rightharpoondown: "\u21C1", DownRightVector: "\u21C1",
+	dharr: "\u21C2", RightDownVector: "\u21C2", downharpoonright: "\u21C2", dharl: "\u21C3",
+	LeftDownVector: "\u21C3", downharpoonleft: "\u21C3", rlarr2: "\u21C4", rightleftarrows: "\u21C4",
+	RightArrowLeftArrow: "\u21C4", lrarr2: "\u21C6", leftrightarrows: "\u21C6", LeftArrowRightArrow: "\u21C6",
+	larr2: "\u21C7", leftleftarrows: "\u21C7", uarr2: "\u21C8", upuparrows: "\u21C8",
+	rarr2: "\u21C9", rightrightarrows: "\u21C9", darr2: "\u21CA", downdownarrows: "\u21CA",
+	lrhar2: "\u21CB", ReverseEquilibrium: "\u21CB", leftrightharpoons: "\u21CB", rlhar2: "\u21CC",
+	rightleftharpoons: "\u21CC", Equilibrium: "\u21CC", nlArr: "\u21CD", nLeftarrow: "\u21CD",
+	nhArr: "\u21CE", nLeftrightarrow: "\u21CE", nrArr: "\u21CF", nRightarrow: "\u21CF",
+	uArr: "\u21D1", Uparrow: "\u21D1", DoubleUpArrow: "\u21D1", dArr: "\u21D3",
+	Downarrow: "\u21D3", DoubleDownArrow: "\u21D3", hArr: "\u21D4", Leftrightarrow: "\u21D4",
+	DoubleLeftRightArrow: "\u21D4", vArr: "\u21D5", Updownarrow: "\u21D5", DoubleUpDownArrow: "\u21D5",
+	lAarr: "\u21DA", Lleftarrow: "\u21DA", rAarr: "\u21DB", Rrightarrow: "\u21DB",
+	comp: "\u2201", complement: "\u2201", nexist: "\u2204", NotExists: "\u2204",
+	nexists: "\u2204", empty: "\u2205", emptyset: "\u2205", varnothing: "\u2205",
+	prod: "\u220F", coprod: "\u2210", samalg: "\u2210", sum: "\u2211",
+	Sum: "\u2211", plusdo: "\u2214", dotplus: "\u2214", setmn: "\u2216",
+	ssetmn: "\u2216", setminus: "\u2216", Backslash: "\u2216",
+	vprop: "\u221D",
+	propto: "\u221D", Proportional: "\u221D", varpropto: "\u221D", ang: "\u2220",
+	angle: "\u2220", angmsd: "\u2221", measuredangle: "\u2221", mid: "\u2223",
+	smid: "\u2223", VerticalBar: "\u2223",
+	nmid: "\u2224", nsmid: "\u2224",
+	spar: "\u2225", parallel: "\u2225", DoubleVerticalBar: "\u2225",
+	shortparallel: "\u2225", npar: "\u2226", nspar: "\u2226",
+	nparallel: "\u2226", NotDoubleVerticalBar: "\u2226",
+	thksim: "\u223C", Tilde: "\u223C", thicksim: "\u223C",
+	bsim: "\u223D", backsim: "\u223D", wreath: "\u2240", VerticalTilde: "\u2240",
+	wr: "\u2240", nsim: "\u2241", NotTilde: "\u2241", nsime: "\u2244",
+	nsimeq: "\u2244", NotTildeEqual: "\u2244", ncong: "\u2247", NotTildeFullEqual: "\u2247",
+	asymp: "\u2248", thkap: "\u2248", TildeTilde: "\u2248",
+	approx: "\u2248",
+	nap: "\u2249", NotTildeTilde: "\u2249", napprox: "\u2249", ape: "\u224A",
+	approxeq: "\u224A", bcong: "\u224C", backcong: "\u224C", bump: "\u224E",
+	HumpDownHump: "\u224E", Bumpeq: "\u224E", bumpe: "\u224F", HumpEqual: "\u224F",
+	bumpeq: "\u224F", esdot: "\u2250", DotEqual: "\u2250", doteq: "\u2250",
+	eDot: "\u2251", doteqdot: "\u2251", efDot: "\u2252", fallingdotseq: "\u2252",
+	erDot: "\u2253", risingdotseq: "\u2253", colone: "\u2254", coloneq: "\u2254",
+	Assign: "\u2254", ecolon: "\u2255", eqcolon: "\u2255", ecir: "\u2256",
+	eqcirc: "\u2256", cire: "\u2257", circeq: "\u2257", trie: "\u225C",
+	triangleq: "\u225C", nequiv: "\u2262", NotCongruent: "\u2262", lE: "\u2266",
+	LessFullEqual: "\u2266", leqq: "\u2266", nlE: "\u2266\u0338", NotGreaterFullEqual: "\u2266\u0338",
+	nleqq: "\u2266\u0338", gE: "\u2267", GreaterFullEqual: "\u2267", geqq: "\u2267",
+	ngE: "\u2267\u0338", ngeqq: "\u2267\u0338", lnE: "\u2268", lneqq: "\u2268",
+	lvnE: "\u2268\uFE00", lvertneqq: "\u2268\uFE00", gnE: "\u2269", gneqq: "\u2269",
+	gvnE: "\u2269\uFE00", gvertneqq: "\u2269\uFE00", Lt: "\u226A", NestedLessLess: "\u226A",
+	ll: "\u226A", Gt: "\u226B", NestedGreaterGreater: "\u226B", gg: "\u226B",
+	twixt: "\u226C", between: "\u226C", nlt: "\u226E", NotLess: "\u226E",
+	nless: "\u226E", ngt: "\u226F", NotGreater: "\u226F", ngtr: "\u226F",
+	nle: "\u2270", NotLessEqual: "\u2270", nleq: "\u2270", nge: "\u2271",
+	NotGreaterEqual: "\u2271", ngeq: "\u2271", lsim: "\u2272", LessTilde: "\u2272",
+	lesssim: "\u2272", gsim: "\u2273", gtrsim: "\u2273", GreaterTilde: "\u2273",
+	lg: "\u2276", lessgtr: "\u2276", LessGreater: "\u2276", gl: "\u2277",
+	gtrless: "\u2277", GreaterLess: "\u2277", pr: "\u227A", Precedes: "\u227A",
+	prec: "\u227A", sc: "\u227B", Succeeds: "\u227B", succ: "\u227B",
+	cupre: "\u227C", PrecedesSlantEqual: "\u227C", preccurlyeq: "\u227C", sccue: "\u227D",
+	SucceedsSlantEqual: "\u227D", succcurlyeq: "\u227D", prsim: "\u227E", precsim: "\u227E",
+	PrecedesTilde: "\u227E", scsim: "\u227F", succsim: "\u227F", SucceedsTilde: "\u227F",
+	npr: "\u2280", nprec: "\u2280", NotPrecedes: "\u2280", nsc: "\u2281",
+	nsucc: "\u2281", NotSucceeds: "\u2281", nsub: "\u2284", nsup: "\u2285",
+	nsube: "\u2288", nsubseteq: "\u2288", NotSubsetEqual: "\u2288", nsupe: "\u2289",
+	nsupseteq: "\u2289", NotSupersetEqual: "\u2289", subne: "\u228A", subsetneq: "\u228A",
+	vsubne: "\u228A\uFE00", varsubsetneq: "\u228A\uFE00", supne: "\u228B", supsetneq: "\u228B",
+	vsupne: "\u228B\uFE00", varsupsetneq: "\u228B\uFE00", uplus: "\u228E", UnionPlus: "\u228E",
+	sqsub: "\u228F", SquareSubset: "\u228F", sqsubset: "\u228F", sqsup: "\u2290",
+	SquareSuperset: "\u2290", sqsupset: "\u2290", sqsube: "\u2291", SquareSubsetEqual: "\u2291",
+	sqsubseteq: "\u2291", sqsupe: "\u2292", SquareSupersetEqual: "\u2292", sqsupseteq: "\u2292",
+	sqcap: "\u2293", SquareIntersection: "\u2293", sqcup: "\u2294", SquareUnion: "\u2294",
+	oplus: "\u2295", CirclePlus: "\u2295", ominus: "\u2296", CircleMinus: "\u2296",
+	otimes: "\u2297", CircleTimes: "\u2297", osol: "\u2298", odot: "\u2299",
+	CircleDot: "\u2299", ocir: "\u229A", circledcirc: "\u229A", oast: "\u229B",
+	circledast: "\u229B", odash: "\u229D", circleddash: "\u229D", plusb: "\u229E",
+	boxplus: "\u229E", minusb: "\u229F", boxminus: "\u229F", timesb: "\u22A0",
+	boxtimes: "\u22A0", sdotb: "\u22A1", dotsquare: "\u22A1", vdash: "\u22A2",
+	RightTee: "\u22A2", dashv: "\u22A3", LeftTee: "\u22A3", top: "\u22A4",
+	DownTee: "\u22A4", models: "\u22A7", vDash: "\u22A8", DoubleRightTee: "\u22A8",
+	Vdash: "\u22A9", Vvdash: "\u22AA", nvdash: "\u22AC", nvDash: "\u22AD",
+	nVdash: "\u22AE", nVDash: "\u22AF", vltri: "\u22B2", vartriangleleft: "\u22B2",
+	LeftTriangle: "\u22B2", vrtri: "\u22B3", vartriangleright: "\u22B3", RightTriangle: "\u22B3",
+	ltrie: "\u22B4", trianglelefteq: "\u22B4", LeftTriangleEqual: "\u22B4", rtrie: "\u22B5",
+	trianglerighteq: "\u22B5", RightTriangleEqual: "\u22B5", mumap: "\u22B8", multimap: "\u22B8",
+	intcal: "\u22BA", intercal: "\u22BA", veebar: "\u22BB", diam: "\u22C4",
+	diamond: "\u22C4", Diamond: "\u22C4", sdot: "\u22C5", sstarf: "\u22C6",
+	Star: "\u22C6", divonx: "\u22C7", divideontimes: "\u22C7", bowtie: "\u22C8",
+	ltimes: "\u22C9", rtimes: "\u22CA", lthree: "\u22CB", leftthreetimes: "\u22CB",
+	rthree: "\u22CC", rightthreetimes: "\u22CC", bsime: "\u22CD", backsimeq: "\u22CD",
+	cuvee: "\u22CE", curlyvee: "\u22CE", cuwed: "\u22CF", curlywedge: "\u22CF",
+	Sub: "\u22D0", Subset: "\u22D0", Sup: "\u22D1", Supset: "\u22D1",
+	Cap: "\u22D2", Cup: "\u22D3", fork: "\u22D4", pitchfork: "\u22D4",
+	ldot: "\u22D6", lessdot: "\u22D6", gsdot: "\u22D7", gtrdot: "\u22D7",
+	Ll: "\u22D8", Gg: "\u22D9", ggg: "\u22D9", leg: "\u22DA",
+	LessEqualGreater: "\u22DA", lesseqgtr: "\u22DA", gel: "\u22DB", gtreqless: "\u22DB",
+	GreaterEqualLess: "\u22DB", cuepr: "\u22DE", curlyeqprec: "\u22DE", cuesc: "\u22DF",
+	curlyeqsucc: "\u22DF", lnsim: "\u22E6", gnsim: "\u22E7", prnsim: "\u22E8",
+	precnsim: "\u22E8", scnsim: "\u22E9", succnsim: "\u22E9", nltri: "\u22EA",
+	ntriangleleft: "\u22EA", NotLeftTriangle: "\u22EA", nrtri: "\u22EB", ntriangleright: "\u22EB",
+	NotRightTriangle: "\u22EB", nltrie: "\u22EC", ntrianglelefteq: "\u22EC", NotLeftTriangleEqual: "\u22EC",
+	nrtrie: "\u22ED", ntrianglerighteq: "\u22ED", NotRightTriangleEqual: "\u22ED", vellip: "\u22EE",
+	barwed: "\u2305", barwedge: "\u2305", Barwed: "\u2306", doublebarwedge: "\u2306",
+	lceil: "\u2308", LeftCeiling: "\u2308", rceil: "\u2309", RightCeiling: "\u2309",
+	lfloor: "\u230A", LeftFloor: "\u230A", rfloor: "\u230B", RightFloor: "\u230B",
+	drcrop: "\u230C", dlcrop: "\u230D", urcrop: "\u230E", ulcrop: "\u230F",
+	telrec: "\u2315", target: "\u2316", ulcorn: "\u231C", ulcorner: "\u231C",
+	urcorn: "\u231D", urcorner: "\u231D", dlcorn: "\u231E", llcorner: "\u231E",
+	drcorn: "\u231F", lrcorner: "\u231F", frown: "\u2322", sfrown: "\u2322",
+	smile: "\u2323", ssmile: "\u2323",
+	blank: "\u2423", oS: "\u24C8",
+	circledS: "\u24C8", boxh: "\u2500", boxv: "\u2502", boxdr: "\u250C",
+	boxdl: "\u2510", boxur: "\u2514", boxul: "\u2518", boxvr: "\u251C",
+	boxvl: "\u2524", boxhd: "\u252C", boxhu: "\u2534", boxvh: "\u253C",
+	boxH: "\u2550", boxV: "\u2551", boxdR: "\u2552", boxDr: "\u2553",
+	boxDR: "\u2554", boxdL: "\u2555", boxDl: "\u2556", boxDL: "\u2557",
+	boxuR: "\u2558", boxUr: "\u2559", boxUR: "\u255A", boxuL: "\u255B",
+	boxUl: "\u255C", boxUL: "\u255D", boxvR: "\u255E", boxVr: "\u255F",
+	boxVR: "\u2560", boxvL: "\u2561", boxVl: "\u2562", boxVL: "\u2563",
+	boxHd: "\u2564", boxhD: "\u2565", boxHD: "\u2566", boxHu: "\u2567",
+	boxhU: "\u2568", boxHU: "\u2569", boxvH: "\u256A", boxVh: "\u256B",
+	boxVH: "\u256C", uhblk: "\u2580", lhblk: "\u2584", block: "\u2588",
+	blk14: "\u2591", blk12: "\u2592", blk34: "\u2593", squ: "\u25A1",
+	Square: "\u25A1", squf: "\u25AA", blacksquare: "\u25AA", rect: "\u25AD",
+	marker: "\u25AE", xutri: "\u25B3", bigtriangleup: "\u25B3", utrif: "\u25B4",
+	blacktriangle: "\u25B4", utri: "\u25B5", triangle: "\u25B5", rtrif: "\u25B8",
+	blacktriangleright: "\u25B8", rtri: "\u25B9", triangleright: "\u25B9", xdtri: "\u25BD",
+	bigtriangledown: "\u25BD", dtrif: "\u25BE", blacktriangledown: "\u25BE", dtri: "\u25BF",
+	triangledown: "\u25BF", ltrif: "\u25C2", blacktriangleleft: "\u25C2", ltri: "\u25C3",
+	triangleleft: "\u25C3", loz: "\u25CA", lozenge: "\u25CA", cir: "\u25CB",
+	xcirc: "\u25EF", bigcirc: "\u25EF", starf: "\u2605", bigstar: "\u2605",
+	star: "\u2606", phone: "\u260E", female: "\u2640", male: "\u2642",
+	spades: "\u2660", spadesuit: "\u2660", clubs: "\u2663", clubsuit: "\u2663",
+	hearts: "\u2665", heartsuit: "\u2665", diams: "\u2666", diamondsuit: "\u2666",
+	sung: "\u266A", flat: "\u266D", natur: "\u266E", natural: "\u266E",
+	sharp: "\u266F", check: "\u2713", checkmark: "\u2713", cross: "\u2717",
+	malt: "\u2720", maltese: "\u2720", sext: "\u2736", xharr: "\u27F7",
+	longleftrightarrow: "\u27F7", LongLeftRightArrow: "\u27F7", xlArr: "\u27F8", Longleftarrow: "\u27F8",
+	DoubleLongLeftArrow: "\u27F8", xrArr: "\u27F9", Longrightarrow: "\u27F9", DoubleLongRightArrow: "\u27F9",
+	xhArr: "\u27FA", Longleftrightarrow: "\u27FA", DoubleLongLeftRightArrow: "\u27FA", rpargt: "\u2994",
+	lpargt: "\u29A0", lozf: "\u29EB", blacklozenge: "\u29EB", amalg: "\u2A3F",
+	les: "\u2A7D", LessSlantEqual: "\u2A7D", leqslant: "\u2A7D", nles: "\u2A7D\u0338",
+	NotLessSlantEqual: "\u2A7D\u0338", nleqslant: "\u2A7D\u0338", ges: "\u2A7E", GreaterSlantEqual: "\u2A7E",
+	geqslant: "\u2A7E", nges: "\u2A7E\u0338", NotGreaterSlantEqual: "\u2A7E\u0338", ngeqslant: "\u2A7E\u0338",
+	lap: "\u2A85", lessapprox: "\u2A85", gap: "\u2A86", gtrapprox: "\u2A86",
+	lne: "\u2A87", lneq: "\u2A87", gne: "\u2A88", gneq: "\u2A88",
+	lnap: "\u2A89", lnapprox: "\u2A89", gnap: "\u2A8A", gnapprox: "\u2A8A",
+	lEg: "\u2A8B", lesseqqgtr: "\u2A8B", gEl: "\u2A8C", gtreqqless: "\u2A8C",
+	els: "\u2A95", eqslantless: "\u2A95", egs: "\u2A96", eqslantgtr: "\u2A96",
+	pre: "\u2AAF", preceq: "\u2AAF", PrecedesEqual: "\u2AAF", npre: "\u2AAF\u0338",
+	npreceq: "\u2AAF\u0338", NotPrecedesEqual: "\u2AAF\u0338", sce: "\u2AB0", succeq: "\u2AB0",
+	SucceedsEqual: "\u2AB0", nsce: "\u2AB0\u0338", nsucceq: "\u2AB0\u0338", NotSucceedsEqual: "\u2AB0\u0338",
+	prnE: "\u2AB5", precneqq: "\u2AB5", scnE: "\u2AB6", succneqq: "\u2AB6",
+	prap: "\u2AB7", precapprox: "\u2AB7", scap: "\u2AB8", succapprox: "\u2AB8",
+	prnap: "\u2AB9", precnapprox: "\u2AB9", scnap: "\u2ABA", succnapprox: "\u2ABA",
+	subE: "\u2AC5", subseteqq: "\u2AC5", nsubE: "\u2AC5\u0338", nsubseteqq: "\u2AC5\u0338",
+	supE: "\u2AC6", supseteqq: "\u2AC6", nsupE: "\u2AC6\u0338", nsupseteqq: "\u2AC6\u0338",
+	subnE: "\u2ACB", subsetneqq: "\u2ACB", vsubnE: "\u2ACB\uFE00", varsubsetneqq: "\u2ACB\uFE00",
+	supnE: "\u2ACC", supsetneqq: "\u2ACC", vsupnE: "\u2ACC\uFE00", varsupsetneqq: "\u2ACC\uFE00",
+	"b.Gamma": "\uD835\uDEAA", "b.Delta": "\uD835\uDEAA", "b.Theta": "\uD835\uDEAF", "b.Lambda": "\uD835\uDEB2",
+	"b.Xi": "\uD835\uDEB5", "b.Pi": "\uD835\uDEB7", "b.Sigma": "\uD835\uDEBA", "b.Upsi": "\uD835\uDEBC",
+	"b.Phi": "\uD835\uDEBD", "b.Psi": "\uD835\uDEBF", "b.Omega": "\uD835\uDEC0", "b.alpha": "\uD835\uDEC2",
+	"b.beta": "\uD835\uDEC3", "b.gamma": "\uD835\uDEC4", "b.delta": "\uD835\uDEC5", "b.epsi": "\uD835\uDEC6",
+	"b.zeta": "\uD835\uDEC7", "b.eta": "\uD835\uDEC8", "b.thetas": "\uD835\uDEC9", "b.iota": "\uD835\uDECA",
+	"b.kappa": "\uD835\uDECB", "b.lambda": "\uD835\uDECC", "b.mu": "\uD835\uDECD", "b.nu": "\uD835\uDECE",
+	"b.xi": "\uD835\uDECF", "b.pi": "\uD835\uDED1", "b.rho": "\uD835\uDED2", "b.sigmav": "\uD835\uDED3",
+	"b.sigma": "\uD835\uDED4", "b.tau": "\uD835\uDED5", "b.upsi": "\uD835\uDED6", "b.phi": "\uD835\uDED7",
+	"b.chi": "\uD835\uDED8", "b.psi": "\uD835\uDED9", "b.omega": "\uD835\uDEDA", "b.epsiv": "\uD835\uDEDC",
+	"b.thetav": "\uD835\uDEDD", "b.kappav": "\uD835\uDEDE", "b.phiv": "\uD835\uDEDF", "b.rhov": "\uD835\uDEE0",
+	"b.piv": "\uD835\uDEE1", fflig: "\uFB00", filig: "\uFB01", fllig: "\uFB02",
+	ffilig: "\uFB03", ffllig: "\uFB04", sbsol: "\uFE68"
 };
-//Some unofficial aliases
-ISO8879CharMap.prime = "\u2032";	//same as vprime
+// Some unofficial aliases
+ISO8879CharMap.prime = "\u2032";	// same as vprime
 
 /** BEGIN TEST CASES **/
 var testCases = [

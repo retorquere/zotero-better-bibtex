@@ -1,7 +1,7 @@
 {
   "filename": "secondary-us-bluebook.json",
   "name": "Abbreviations: Secondary materials for the US (Bluebook styles)",
-  "version": 2,
+  "version": 3,
   "xdata": {
     "default": {
       "classic": {
@@ -1086,7 +1086,7 @@
         "valparaiso university law review": "Val. U. L. Rev.",
         "vanderbilt journal of entertainment technology law": "Vand. J. Ent. & Tech. L.",
         "vanderbilt journal of transnational law": "Vand. J. Transnat’l L.",
-        "vanderbilt law review": "Vano. L. Rev.",
+        "vanderbilt law review": "Vand. L. Rev.",
         "vermont journal of environmental law": "Vt. J. Envtl. L.",
         "vermont law review": "Vt. L. Rev.",
         "villanova environmental law journal": "Vill. Envtl. L.J.",

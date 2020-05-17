@@ -1,15 +1,15 @@
 {
 	"translatorID": "176948f7-9df8-4afc-ace7-4c1c7318d426",
 	"label": "ESpacenet",
-	"creator": "Sebastian Karcher and Aurimas Vinckevicius",
-	"target": "^https?://worldwide\\.espacenet\\.com/",
+	"creator": "Sebastian Karcher, Aurimas Vinckevicius, Philipp Zumstein",
+	"target": "^https?://(worldwide|[a-z][a-z])\\.espacenet\\.com/",
 	"minVersion": "4.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-10-07 20:15:16"
+	"lastUpdated": "2019-12-08 21:20:32"
 }
 
 /*
@@ -35,200 +35,154 @@
 	***** END LICENSE BLOCK *****
 */
 
+
+// attr()/text() v2
+// eslint-disable-next-line
+function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
+
+
 function detectWeb(doc, url) {
-	if (url.includes("searchResults?")
-		&& getSearchResults(doc).length) {
-			return "multiple";
+	// multiples are not working (easily) because the website
+	// has to fully load before Zotero can extract its
+	// metadata
+	if (doc.getElementById("pagebody")) {
+		Z.monitorDOMChanges(doc.getElementById("pagebody"), { childList: true });
+	}
+	if (doc.getElementById("application-content")) {
+		Z.monitorDOMChanges(doc.getElementById("application-content"));
 	}
 	
-	Z.monitorDOMChanges(doc.getElementById("pagebody"), {childList: true});
-	
-	if (url.indexOf("biblio") !== -1
+	if ((url.includes("/biblio?") || url.includes("/publication/"))
 		&& getTitle(doc)) {
 		return "patent";
 	}
+	return false;
 }
 
-function getSearchResults(doc) {
-	return ZU.xpath(doc,'//span[@class="resNumber"]/a[starts-with(@id,"publicationId")]');
-}
 
-function getTitle(doc) {
-	var title = ZU.xpathText(doc, '//div[@id="pagebody"]/h3[1]');
+function getTitle(_doc) {
+	var title = text('#pagebody>h3, #biblio-title-content');
 	if (title) {
 		if (title.toUpperCase() == title) {
 			title = ZU.capitalizeTitle(title, true);
 		}
 		return title.trim();
 	}
+	return false;
 }
 
-//locale labels from URL
-var i18n = {
-	/** German **/
-	de_EP: {
-		"Erfinder:": "Inventor(s):",
-		"Anmelder:": "Applicant(s):",
-		"Klassifikation:": "Classification:",
-		"Internationale": "international",
-		"Europäische": "Euro",
-		"Anmeldenummer:": "Application number:",
-		"Prioritätsnummer(n):": "Priority number(s):",
-		"Bookmark zur Seite": "Page bookmark"
-	},
-	/** French **/
-	fr_EP: {
-		"Inventeur(s)": "Inventor(s):",
-		"Demandeur(s)": "Applicant(s):",
-		"Classification:": "Classification:",
-		"internationale": "international",
-		"européenne": "Euro",
-		"Numéro de demande": "Application number:",
-		"Numéro(s) de priorité:": "Priority number(s):",
-		"Signet": "Page bookmark"
-	}
-};
 
-function initLocale(url) {
-	var m = url.match(/[?&]locale=([a-zA-Z_]+)/);
-	if (m && i18n[m[1]]) {
-		i18n = i18n[m[1]];	
-	} else {
-		i18n = {};	//English
-	}
-}
-
-function L(label, fromEN) {
-	if (fromEN) {
-		for (var l in i18n) {
-			if (i18n[l] == label) {
-				return l;
-			}
-		}
-		return label;
-	}
-	return i18n[label] || label;
-}
-
-var labelMap = {
-	"Application number:": "applicationNumber",
-	"Priority number(s):": "priorityNumbers",
-	"Page bookmark": "url"
-};
-
-function applyValue(newItem, label, value) {
-	if (value && labelMap[label]) {
-		newItem[labelMap[label]] = value;
-	}
-}
-
-//clean up names list and call callback with a clean name
+// clean up names list and call callback with a clean name
 function cleanNames(names, callback) {
 	if (names) {
-		//Z.debug(names)
+		// Z.debug(names)
 		names = names.replace(/\[[a-zA-Z]*\]/g, "").trim(); // to eliminate country code in square brackets after inventors' and applicants' names
 		names = ZU.capitalizeTitle(names.toLowerCase(), true);
 		names = names.split(/\s*;\s*/);
-		for (var j=0, m=names.length; j<m; j++) {
+		for (var j = 0, m = names.length; j < m; j++) {
 			callback(names[j].replace(/\s*,$/, ''));
 		}
 	}
 }
 
-function scrape(doc) {
+function scrape(doc, url) {
 	var newItem = new Zotero.Item("patent");
 	newItem.title = getTitle(doc);
 
-	var rows = ZU.xpath(doc,
-		'//tr[@class="noPrint" or ./th[@class="printTableText"]]');
+	cleanNames(text('#inventors, #biblio-inventors-content'),
+		function (name) {
+			newItem.creators.push(
+				ZU.cleanAuthor(name.replace(/,?\s/, ', '),	// format displayed is LAST FIRST MIDDLE, so we add a comma after LAST
+					"inventor", true));
+		});
+	
+	var assignees = [];
+	cleanNames(text('#applicants, #biblio-applicants-content'),
+		function (name) {
+			assignees.push(name);
+		});
+	newItem.assignee = assignees.join('; ');
+	
+	var classifications = {
+		ipc: [],
+		cpc: []
+	};
+	var ipcClasses = doc.querySelectorAll('a.ipc, #biblio-international-content a');
+	for (let ipc of ipcClasses) {
+		classifications.ipc.push(ipc.textContent.replace(';', ''));
+	}
+	var cpcClasses = doc.querySelectorAll('a.classTT:not(.ipc), #biblio-cooperative-content a');
+	for (let cpc of cpcClasses) {
+		classifications.cpc.push(cpc.textContent.replace(';', ''));
+	}
+	var note = "<h1>Classifications</h1>\n<h2>IPC</h2>\n" + classifications.ipc.join('; ') + "<h2>CPC</h2>\n" + classifications.cpc.join('; ');
+	newItem.notes.push({ note: note });
 
-	for (var i=0, n=rows.length; i<n; i++) {
-		var label = L(rows[i].firstElementChild.textContent.trim());
-		var value = rows[i].firstElementChild.nextElementSibling;
-		if (!value) continue;
-		switch (label) {
-			case "Inventor(s):":
-				cleanNames(ZU.xpathText(value, './span[@id="inventors"]'), 
-					function(name) {
-						newItem.creators.push(
-							ZU.cleanAuthor(name.replace(/,?\s/, ', '),	//format displayed is LAST FIRST MIDDLE, so we add a comma after LAST
-								"inventor", true));
-					});
-			break;
-			case "Applicant(s):":
-				var assignees = [];
-				cleanNames(ZU.xpathText(value, './span[@id="applicants"]'),
-				  	function(name) {
-				  		assignees.push(name);
-				  	});
-				newItem.assignee = assignees.join('; ');
-			break;
-			case "Classification:":
-				var CIB = ZU.trimInternal(
-					ZU.xpathText(value,
-						'.//td[preceding-sibling::th[contains(text(),"'
-						+ L("international", true) + '")]]') || '');
-				var ECLA = ZU.trimInternal(ZU.xpathText(value,
-						'.//td[preceding-sibling::th[contains(text(),"'
-						+ L("Euro", true) + '")]]/a', null, '; ') || '');
-				if (CIB || ECLA) {
-					newItem.extra = [];
-					if (CIB) newItem.extra.push('CIB: ' + CIB);
-					if (ECLA) newItem.extra.push('ECLA: ' + ECLA);
-					newItem.extra = newItem.extra.join('\n');
-				}
-			break;
-			case "Page bookmark":
-				applyValue(newItem, label, value.firstElementChild.href)
-			break;
-			case "Application number:":
-				applyValue(newItem, label, ZU.xpathText(value, './text()[1]'));
-			break;
-			default:
-				applyValue(newItem, label, ZU.trimInternal(value.textContent));
+	var rows = ZU.xpath(doc, '//tr[@class="noPrint" or ./th[@class="printTableText"]]');
+
+	var pn = text('#biblio-publication-number-content');
+	if (pn) { // new design
+		var datePnumber = pn.split('·');
+		if (datePnumber.length == 2) {
+			newItem.patentNumber = datePnumber[0];
 		}
+		newItem.issueDate = ZU.strToISO(datePnumber);
+		var application = text('#biblio-application-number-content').split('·');
+		if (application.length == 2) {
+			newItem.applicationNumber = application[0];
+			newItem.filingDate = application[1];
+		}
+		newItem.priorityNumbers = text('#biblio-priority-numbers-label ~ div');
 	}
-
-	var date = ZU.xpathText(doc, '//div[@id="pagebody"]/h1[1]');
-	if (date && (date = date.match(/\d{4}-\d{2}-\d{2}/))) {
-		newItem.date = date[0];
+	else { // old design
+		for (var i = 0, n = rows.length; i < n; i++) {
+			var label = rows[i].firstElementChild.textContent.trim();
+			var value = rows[i].firstElementChild.nextElementSibling;
+			if (!value) continue;
+			switch (label) {
+				case "Page bookmark":
+				case "Signet":
+				case "Bookmark zur Seite":
+					newItem.url = value.firstElementChild.href;
+					break;
+				case "Application number:":
+				case "Numéro de demande":
+				case "Anmeldenummer:":
+					newItem.applicationNumber = ZU.xpathText(value, './text()[1]');
+					break;
+				case "Priority number(s):":
+				case "Numéro(s) de priorité:":
+				case "Prioritätsnummer(n):":
+					newItem.priorityNumbers = ZU.trimInternal(value.textContent);
+					break;
+			}
+		}
+		
+		var date = text('#pagebody>h1');
+		if (date) {
+			newItem.issueDate = ZU.strToISO(date);
+		}
+		newItem.patentNumber = text('span.sel');
 	}
-	newItem.patentNumber = ZU.xpathText(doc, '//span[@class="sel"]');
+	
 	newItem.abstractNote = ZU.trimInternal(
-		ZU.xpathText(doc, '//p[@class="printAbstract"]') || '');
+		text('p.printAbstract, #biblio-abstract-content') || '');
 
 	newItem.attachments.push({
-		title:"Espacenet patent record",
-		document: doc
+		title: "Espacenet patent record",
+		url: url,
+		snapshot: false
 	});
 
 	newItem.complete();
 }
 
 function doWeb(doc, url) {
-	initLocale(url);
+	// only single items need to be handled
+	scrape(doc, url);
+}
 
-	if (detectWeb(doc, url) == "multiple"){
-		var hits = {};
-		var results = getSearchResults(doc);
-		for (var i=0, n=results.length; i<n; i++) {
-			hits[results[i].href] = results[i].textContent.trim();
-		}
-
-		Z.selectItems(hits, function(items) {
-			if (!items) return true;
-
-			var urls = [];
-			for (var j in items) {
-				urls.push(j);
-			}
-			ZU.processDocuments(urls, scrape);
-		});
-	} else {
-		scrape(doc);	
-	}
-}   
-  /** BEGIN TEST CASES **/
+/** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
@@ -248,17 +202,21 @@ var testCases = [
 				"abstractNote": "Many people active and inactive can't readily control their audio experience without reaching into a pocket or some other location to change a setting or answer the phone. The problem is the lack of convenience and the inaccessibility when the user is riding his motorcycle, skiing, bicycling, jogging, or even walking with winter gloves on, etc. The electronic control glove described here enables enhanced control over electronic devices wirelessly at all times from the user's fingertips. The glove is manufactured with electrical conducive materials along the fingers and the thumb, where contact with the thumb and finger conductive materials creates a closed circuit which is transmitted to a control device on the glove that can then wirelessly transmit messages to remote electronic devices such as cell phones, audio players, garage door openers, military hardware and software, in work environments, and so forth.",
 				"applicationNumber": "WO2011US56657 20111018",
 				"assignee": "Blue Infusion Technologies Llc; Blount Willie Lee Jr",
-				"extra": "CIB: G06F3/033; G09G5/08",
-				"patentNumber": "WO2012054443 (A1)",
+				"patentNumber": "WO2012054443 (A1)",
 				"priorityNumbers": "US20100394879P 20101020 ; US20100394013P 20101018",
 				"url": "https://worldwide.espacenet.com/publicationDetails/biblio?FT=D&date=20120426&DB=worldwide.espacenet.com&locale=en_EP&CC=WO&NR=2012054443A1&KC=A1&ND=4",
 				"attachments": [
 					{
-						"title": "Espacenet patent record"
+						"title": "Espacenet patent record",
+						"snapshot": false
 					}
 				],
 				"tags": [],
-				"notes": [],
+				"notes": [
+					{
+						"note": "<h1>Classifications</h1>\n<h2>IPC</h2>\nG06F3/033; G09G5/08<h2>CPC</h2>\nG06F3/014 (EP, KR); G08C17/02 (KR, US); H01H2009/0221 (EP, KR); H01H2203/0085 (EP, KR)"
+					}
+				],
 				"seeAlso": []
 			}
 		]
@@ -291,17 +249,21 @@ var testCases = [
 				"abstractNote": "The present invention employs public key infrastructure to electronically sign and encrypt important personal information on a mobile communications device (MCD), without disclosing private, personal information to the transaction counterparts and middleman, thus preserving highly elevated and enhanced security and fraud protection. In one embodiment, the present invention can use a mobile device identifier, such as a cell phone number or email address, for example, as an index/reference during the entire transaction, so that only the account holder and the account issuer know the underlying account number and other private information.",
 				"applicationNumber": "US201113172170 20110629",
 				"assignee": "Li Michael; Shakula Yuri; Rodriguez Martin",
-				"extra": "CIB: G06Q20/00",
-				"patentNumber": "US2012101951 (A1)",
+				"patentNumber": "US2012101951 (A1)",
 				"priorityNumbers": "US201113172170 20110629 ; US20100406097P 20101022",
 				"url": "https://worldwide.espacenet.com/publicationDetails/biblio?FT=D&date=20120426&DB=worldwide.espacenet.com&locale=en_EP&CC=US&NR=2012101951A1&KC=A1&ND=4",
 				"attachments": [
 					{
-						"title": "Espacenet patent record"
+						"title": "Espacenet patent record",
+						"snapshot": false
 					}
 				],
 				"tags": [],
-				"notes": [],
+				"notes": [
+					{
+						"note": "<h1>Classifications</h1>\n<h2>IPC</h2>\nG06Q20/00<h2>CPC</h2>\nG06Q20/3223 (EP); G06Q20/3829 (EP)"
+					}
+				],
 				"seeAlso": []
 			}
 		]
@@ -321,20 +283,24 @@ var testCases = [
 					}
 				],
 				"issueDate": "1989-06-01",
-				"abstractNote": "Un tube de choc de secteur conique (202) génère un secteur d'ondes de choc sphériques, divergentes, classiques qui émanent radialement d'une source ponctuelle effective d'une manière non focalisante mais hautement directionnelle. Un front de compression (208) ayant un rayon de courbure égal à sa séparation par rapport au sommet du tube de choc de secteur définit le bord d'attaque d'un ''choc de coiffe'' (306) d'une intensité que l'on peut prédire et commander de manière précise. Un front de raréfaction de fuite (314) du choc de coiffe (306) est défini par la diffraction provoquée par le bord (312) du tube (202) de choc de secteur. Le front de raréfaction (314) érode progressivement le choc de coiffe (306) lorsque celui-ci est projeté vers le calcul cible (128) définissant la largeur et la durée du choc de coiffe de propagation (306).; Le choc de coiffe (306) pulvérise uniformément le calcul cible (128) en appliquant une quantité relativement petite d'ondes de choc par rapport au nombre plus grand (d'un ordre de grandeur deux fois plus grand) de chocs utilisés dans des procédés connus par ondes de choc ellipsoïdales focalisées.",
+				"abstractNote": "A conical sector shock tube (202) generates a sector of a classical diverging spherical shock wave which emanates radially from an effective point source in a non-focusing but highly directional manner. A compression front (208) having a radius of curvature equal to its separation from the apex of the sector shock tube defines the leading edge of a ''cap shock'' (306) of accurately controllable and predictable intensity. A trailing rarefaction front (314) of the cap shock (306) is defined by the diffraction caused by the rim (312) of the sector shock tube (202). The rarefaction front (314) progressively erodes the cap shock (306) as it is projected toward the target calculus (128), defining the width and duration of the propagating cap shock (306). The cap shock (306) uniformly pulverizes the target calculus (128) in a comparatively small quantity of shock wave applications, as compared with the larger (two orders of magnitude greater) number of shots employed in known ellipsoidal focused shock wave methods.",
 				"applicationNumber": "AU19890028143 19891108",
 				"assignee": "William S Filler",
-				"extra": "CIB: A61B17/22; A61B17/225; G10K11/32; G10K15/04; (IPC1-7): A61B17/22",
-				"patentNumber": "AU2814389 (A)",
+				"patentNumber": "AU2814389 (A)",
 				"priorityNumbers": "US19870118325 19871109",
 				"url": "https://worldwide.espacenet.com/publicationDetails/biblio?FT=D&date=19890601&DB=EPODOC&locale=de_EP&CC=AU&NR=2814389A&KC=A&ND=4",
 				"attachments": [
 					{
-						"title": "Espacenet patent record"
+						"title": "Espacenet patent record",
+						"snapshot": false
 					}
 				],
 				"tags": [],
-				"notes": [],
+				"notes": [
+					{
+						"note": "<h1>Classifications</h1>\n<h2>IPC</h2>\nA61B17/22; A61B17/225; G10K11/32; G10K15/04; A61B17/22<h2>CPC</h2>\nA61B17/225 (EP); G10K11/32 (EP); G10K15/043 (EP); A61B2017/22027 (EP)"
+					}
+				],
 				"seeAlso": []
 			}
 		]
@@ -354,20 +320,115 @@ var testCases = [
 					}
 				],
 				"issueDate": "1989-06-01",
-				"abstractNote": "Un tube de choc de secteur conique (202) génère un secteur d'ondes de choc sphériques, divergentes, classiques qui émanent radialement d'une source ponctuelle effective d'une manière non focalisante mais hautement directionnelle. Un front de compression (208) ayant un rayon de courbure égal à sa séparation par rapport au sommet du tube de choc de secteur définit le bord d'attaque d'un ''choc de coiffe'' (306) d'une intensité que l'on peut prédire et commander de manière précise. Un front de raréfaction de fuite (314) du choc de coiffe (306) est défini par la diffraction provoquée par le bord (312) du tube (202) de choc de secteur. Le front de raréfaction (314) érode progressivement le choc de coiffe (306) lorsque celui-ci est projeté vers le calcul cible (128) définissant la largeur et la durée du choc de coiffe de propagation (306).; Le choc de coiffe (306) pulvérise uniformément le calcul cible (128) en appliquant une quantité relativement petite d'ondes de choc par rapport au nombre plus grand (d'un ordre de grandeur deux fois plus grand) de chocs utilisés dans des procédés connus par ondes de choc ellipsoïdales focalisées.",
+				"abstractNote": "A conical sector shock tube (202) generates a sector of a classical diverging spherical shock wave which emanates radially from an effective point source in a non-focusing but highly directional manner. A compression front (208) having a radius of curvature equal to its separation from the apex of the sector shock tube defines the leading edge of a ''cap shock'' (306) of accurately controllable and predictable intensity. A trailing rarefaction front (314) of the cap shock (306) is defined by the diffraction caused by the rim (312) of the sector shock tube (202). The rarefaction front (314) progressively erodes the cap shock (306) as it is projected toward the target calculus (128), defining the width and duration of the propagating cap shock (306). The cap shock (306) uniformly pulverizes the target calculus (128) in a comparatively small quantity of shock wave applications, as compared with the larger (two orders of magnitude greater) number of shots employed in known ellipsoidal focused shock wave methods.",
 				"applicationNumber": "AU19890028143 19891108",
 				"assignee": "William S Filler",
-				"extra": "CIB: A61B17/22; A61B17/225; G10K11/32; G10K15/04; (IPC1-7): A61B17/22",
-				"patentNumber": "AU2814389 (A)",
+				"patentNumber": "AU2814389 (A)",
 				"priorityNumbers": "US19870118325 19871109",
 				"url": "https://worldwide.espacenet.com/publicationDetails/biblio?FT=D&date=19890601&DB=EPODOC&locale=fr_EP&CC=AU&NR=2814389A&KC=A&ND=4",
 				"attachments": [
 					{
-						"title": "Espacenet patent record"
+						"title": "Espacenet patent record",
+						"snapshot": false
 					}
 				],
 				"tags": [],
-				"notes": [],
+				"notes": [
+					{
+						"note": "<h1>Classifications</h1>\n<h2>IPC</h2>\nA61B17/22; A61B17/225; G10K11/32; G10K15/04; A61B17/22<h2>CPC</h2>\nA61B17/225 (EP); G10K11/32 (EP); G10K15/043 (EP); A61B2017/22027 (EP)"
+					}
+				],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://es.espacenet.com/publicationDetails/biblio?II=0&ND=3&adjacent=true&locale=es_ES&FT=D&date=20190830&CC=ES&NR=2723723T3&KC=T3#",
+		"items": [
+			{
+				"itemType": "patent",
+				"title": "Vehículo dirigido a dianas de células nerviosas",
+				"creators": [
+					{
+						"firstName": "Andreas",
+						"lastName": "Rummel",
+						"creatorType": "inventor"
+					},
+					{
+						"firstName": "Tanja",
+						"lastName": "Weil",
+						"creatorType": "inventor"
+					},
+					{
+						"firstName": "Aleksandrs",
+						"lastName": "Gutcaits",
+						"creatorType": "inventor"
+					}
+				],
+				"issueDate": "2019-08-30",
+				"abstractNote": "Una proteína transportadora, que comprende una cadena pesada modificada de la neurotoxina que tiene el número de base de datos AAA23211 que está formada por el serotipo B de Clostridium botulinum, en donde el aminoácido en la posición glutamato 1191 se reemplaza por leucina.",
+				"assignee": "Ipsen Bioinnovation Ltd",
+				"patentNumber": "ES2723723 (T3)",
+				"attachments": [
+					{
+						"title": "Espacenet patent record",
+						"snapshot": false
+					}
+				],
+				"tags": [],
+				"notes": [
+					{
+						"note": "<h1>Classifications</h1>\n<h2>IPC</h2>\nA61K38/00; C07K14/195; C07K14/33<h2>CPC</h2>\nC07K14/33 (EP, US); C12N9/52 (EP, US); A61K38/00 (EP, US); C12Y304/24069 (EP, US); Y02A50/469 (EP, US); Y02A50/473 (EP, US)"
+					}
+				],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://worldwide.espacenet.com/patent/search/family/068096681/publication/US2019311023A1?q=pn%3DUS2019311023A1",
+		"items": [
+			{
+				"itemType": "patent",
+				"title": "Automated Reference List Builder",
+				"creators": [
+					{
+						"firstName": "George",
+						"lastName": "Burba",
+						"creatorType": "inventor"
+					},
+					{
+						"firstName": "Gerardo",
+						"lastName": "Fratini",
+						"creatorType": "inventor"
+					},
+					{
+						"firstName": "Frank",
+						"lastName": "Griessbaum",
+						"creatorType": "inventor"
+					}
+				],
+				"issueDate": "2019-10-10",
+				"abstractNote": "A device for managing a reference list. The device includes one or more processors, which alone or in combination are configured to facilitate performing: (a) running one or more applications; (b) selecting the reference list; (c) monitoring activities in the one or more applications to identify citable processes; (d) receiving citable information from the one or more applications based on the citable processes; (e) determining a type of citable information received; and (f) modifying the reference list based on the type of citable information received.",
+				"applicationNumber": "US201916372808A",
+				"assignee": "Li Cor Inc",
+				"filingDate": "2019-04-02",
+				"patentNumber": "US2019311023A1",
+				"priorityNumbers": "US201862654087P·2018-04-06; US201916372808A·2019-04-02",
+				"attachments": [
+					{
+						"title": "Espacenet patent record",
+						"snapshot": false
+					}
+				],
+				"tags": [],
+				"notes": [
+					{
+						"note": "<h1>Classifications</h1>\n<h2>IPC</h2>\nG06F16/38; G06F17/21; G06F17/22; G06F17/24<h2>CPC</h2>\nG06F16/382 (US); G06F17/218 (US); G06F17/2205 (US); G06F17/2235 (EP); G06F17/24 (US); G06F17/241 (EP)"
+					}
+				],
 				"seeAlso": []
 			}
 		]

@@ -1,7 +1,7 @@
 {
   "filename": "auto-fr.json",
   "name": "France",
-  "version": "2019-11-04 08:52:44 UTC",
+  "version": "2020-02-25 00:46:01 UTC",
   "xdata": {
     "default": {
       "place": {
@@ -57,6 +57,7 @@
         "cass~soc": "Cour de Cassation|Chambre sociale",
         "cc": "Conseil Constitutionelle",
         "ce": "Conseil d'Etat",
+        "ce~cont": "Conseil d'Etat|Section Contentieux",
         "cnda": "Cour National du Droit d'Asile"
       }
     },

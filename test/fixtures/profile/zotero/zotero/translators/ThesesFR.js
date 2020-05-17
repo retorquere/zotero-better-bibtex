@@ -1,15 +1,15 @@
 {
 	"translatorID": "3f73f0aa-f91c-4192-b0d5-907312876cb9",
+	"translatorType": 4,
 	"label": "ThesesFR",
-	"creator": "TFU",
-	"target": "^https?://(www\\.)?theses\\.fr/.",
+	"creator": "TFU, Mathis EON",
+	"target": "^https?://(www\\.)?theses\\.fr/([a-z]{2}/)?((s\\d+|\\d{4}.{8}|\\d{8}X|\\d{9})(?!\\.(rdf|xml)$)|(sujets/\\?q=|\\?q=))(?!.*&format=(json|xml))",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2019-06-10 22:54:53"
+	"lastUpdated": "2020-05-17 01:40:00"
 }
 
 /*
@@ -36,41 +36,47 @@
 */
 
 function detectWeb(doc, url) {
-	if (url.includes("?q=")) {
-		return "multiple";
+	// Match against a results page or a Ph. D/supervisor/organization page which might contains multiple records e.g.
+	// http://www.theses.fr/fr/?q=zotero
+	// http://www.theses.fr/fr/154750417
+	if (url.includes('/?q=') || url.match(/\d{8}(\d|X)/)) {
+		return 'multiple';
 	}
 	else {
-		return "thesis";
+		return 'thesis';
 	}
 }
 
-
 function getSearchResults(doc, checkOnly) {
-	var items = {};
-	var found = false;
-	var rows = ZU.xpath(doc, '//div[contains(@class, "encart arrondi-10")]//h2/a');
-	for (var i = 0; i < rows.length; i++) {
-		var href = rows[i].href;
-		var title = ZU.trimInternal(rows[i].textContent);
-		if (!href || !title) continue;
+	let items = {};
+	let found = false;
+	let rows = ZU.xpath(doc, '//div[contains(@class, "encart arrondi-10")]//h2/a');
+
+	rows.forEach((row) => {
+		let href = row.href;
+		let title = ZU.trimInternal(row.textContent);
 		if (checkOnly) return true;
 		found = true;
 		items[href] = title;
-	}
+		return row;
+	});
+
 	return found ? items : false;
 }
 
 function doWeb(doc, url) {
-	if (detectWeb(doc, url) == "multiple") {
-		Zotero.selectItems(getSearchResults(doc, false), function (items) {
+	if (detectWeb(doc, url) === 'multiple') {
+		Zotero.selectItems(getSearchResults(doc, false), (items) => {
 			if (!items) return;
 
-			var articles = [];
-			for (var i in items) {
-				articles.push(i);
+			let records = [];
+			let item = null;
+
+			for (item in items) {
+				records.push(item);
 			}
-			// Z.debug(articles)
-			ZU.processDocuments(articles, scrape);
+			
+			ZU.processDocuments(records, scrape);
 		});
 	}
 	else {
@@ -79,24 +85,87 @@ function doWeb(doc, url) {
 }
 
 function scrape(doc, url) {
-	var translator = Zotero.loadTranslator('web');
-	translator.setTranslator('951c027d-74ac-47d4-a107-9c3069ab7b48'); // https://github.com/zotero/translators/blob/master/Embedded%20Metadata.js
-	translator.setDocument(doc);
-	translator.setHandler('itemDone', function (obj, item) {
-		// add Tags
-		var tags = ZU.xpath(doc, '//span[contains(@property, "dc:subject")]');
-		if (tags.length > 0) {
-			item.tags = [];
-			for (let tag of tags) {
-				item.tags.push(tag.textContent.trim());
-			}
+	let xmlDocumentUrl = `${url}.rdf`;
+	
+	// Each thesis record has an underlying .rdf file
+	Zotero.Utilities.HTTP.doGet(xmlDocumentUrl, function (text) {
+		let parser = new DOMParser();
+		let xmlDoc = parser.parseFromString(text, 'application/xml');
+
+		// Skiping invalid or empty RDF files : prevents crashes while importing multiple records
+		if (xmlDoc.getElementsByTagName('parsererror')[0] || xmlDoc.children[0].childElementCount === 0) {
+			throw new Error("Invalid or empty RDF file");
 		}
-			
-		item.complete();
-	});
-	translator.getTranslatorObject(function (trans) {
-		trans.itemType = "thesis";
-		trans.doWeb(doc, url);
+		
+		// Importing XML namespaces for parsing purposes
+		let ns = {
+			bibo: 'http://purorg/ontology/bibo/',
+			dc: 'http://purl.org/dc/elements/1.1/',
+			dcterms: 'http://purl.org/dc/terms/',
+			foaf: 'http://xmlns.com/foaf/0.1/',
+			marcrel: 'http://www.loc.gov/loc.terms/relators/',
+			rdf: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'
+		};
+	
+		let title = ZU.xpathText(xmlDoc, '//dc:title', ns);
+		
+		if (!title) throw new Error("Reccord must contains a title to be imported");
+
+		let newItem = new Zotero.Item();
+		newItem.itemType = 'thesis';
+		newItem.title = title;
+
+		ZU.xpath(xmlDoc, '//marcrel:aut//foaf:Person/foaf:name | //marcrel:dis//foaf:Person/foaf:name', ns).forEach((auth) => {
+			let author = ZU.cleanAuthor(auth.textContent, 'author', true);
+			newItem.creators.push(author);
+		});
+
+		// Supervisor(s) must be considered as contributor(s) for french thesis
+		ZU.xpath(xmlDoc, '//marcrel:ths//foaf:Person/foaf:name', ns).forEach((sup) => {
+			let supervisor = ZU.cleanAuthor(sup.textContent, 'contributor', true);
+			newItem.creators.push(supervisor);
+		});
+
+		newItem.abstractNote = ZU.xpathText(xmlDoc, '(//dcterms:abstract)[1]', ns);
+
+		// '/s + digit' in url means thesis in preparation
+		newItem.thesisType = url.match(/\/s\d+/) ? 'These en préparation' : 'These de doctorat';
+
+		newItem.university = ZU.xpathText(xmlDoc, '(//marcrel:dgg/foaf:Organization/foaf:name)[1]', ns);
+
+		let fullDate = ZU.xpathText(xmlDoc, '//dcterms:dateAccepted', ns);
+		let year = ZU.xpathText(xmlDoc, '//dc:date', ns);
+
+		// Some old records doesn't have a full date instead we can use the defense year
+		newItem.date = fullDate ? fullDate : year;
+		newItem.url = url;
+		newItem.libraryCatalog = 'theses.fr';
+		newItem.rights = 'Licence Etalab';
+
+		// Keep extra information such as laboratory, graduate schools, etc. in a note for thesis not yet defended
+		let notePrepa = Array.from(doc.getElementsByClassName('donnees-ombreprepa2')).map((description) => {
+			return Array.from(description.getElementsByTagName('p')).map(description => description.textContent.replace(/\n/g, ' ').trim());
+		}).join(' ');
+
+		if (notePrepa) {
+			newItem.notes.push({ note: notePrepa });
+		}
+
+		// Keep extra information such as laboratory, graduate schools, etc. in a note for defended thesis
+		let note = Array.from(doc.getElementsByClassName('donnees-ombre')).map((description) => {
+			return Array.from(description.getElementsByTagName('p')).map(description => description.textContent.replace(/\n/g, ' ').trim());
+		}).join(' ');
+
+		if (note) {
+			newItem.notes.push({ note: note });
+		}
+
+		ZU.xpath(xmlDoc, '//dc:subject', ns).forEach((t) => {
+			let tag = t.textContent;
+			newItem.tags.push(tag);
+		});
+
+		newItem.complete();
 	});
 }
 
@@ -109,7 +178,17 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://theses.fr/2016SACLS590",
+		"url": "http://www.theses.fr/fr/154750417",
+		"items": "multiple"
+	},
+	{
+		"type": "web",
+		"url": "http://www.theses.fr/fr/188120777",
+		"items": "multiple"
+	},
+	{
+		"type": "web",
+		"url": "http://www.theses.fr/2016SACLS590",
 		"items": [
 			{
 				"itemType": "thesis",
@@ -119,114 +198,100 @@ var testCases = [
 						"firstName": "Oleh",
 						"lastName": "Kivernyk",
 						"creatorType": "author"
-					}
-				],
-				"date": "2016/09/19",
-				"abstractNote": "Cette thèse décrit une mesure de la masse du boson W avec le détecteur ATLAS. La mesure exploite les données enregistrées par ATLAS en 2011, a une énergie dans le centre de masse de 7 TeV et correspondant à une luminosité intégrée de 4.6 inverse femtobarn. Les mesures sont faites par ajustement aux données de distributions en énergie transverse des leptons charges et en masse transverse du boson W obtenues par simulation, dans les canaux électron et muon, et dans plusieurs catégories cinématiques. Les différentes mesures sont en bon accord et leur combinaison donne une valeur de m_W = 80371.1 ± 18.6 MeV. La valeur mesurée est compatible avec la moyenne mondiale des mesures existantes, m_W = 80385 ± 15 MeV, et l'incertitude obtenue est compétitive avec les mesures les plus précises réalisées par les collaborations CDF et D0.",
-				"libraryCatalog": "theses.fr",
-				"thesisType": "thesis",
-				"university": "Paris Saclay",
-				"url": "http://www.theses.fr/2016SACLS590",
-				"attachments": [
-					{
-						"title": "Full Text PDF",
-						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"firstName": "Maarten",
+						"lastName": "Boonekamp",
+						"creatorType": "contributor"
 					}
 				],
+				"date": "2016-09-19",
+				"abstractNote": "Cette thèse décrit une mesure de la masse du boson W avec le détecteur ATLAS. La mesure exploite les données enregistrées par ATLAS en 2011, a une énergie dans le centre de masse de 7 TeV et correspondant à une luminosité intégrée de 4.6 inverse femtobarn. Les mesures sont faites par ajustement aux données de distributions en énergie transverse des leptons charges et en masse transverse du boson W obtenues par simulation, dans les canaux électron et muon, et dans plusieurs catégories cinématiques. Les différentes mesures sont en bon accord et leur combinaison donne une valeur de m_W = 80371.1 ± 18.6 MeV. La valeur mesurée est compatible avec la moyenne mondiale des mesures existantes, m_W = 80385 ± 15 MeV, et l'incertitude obtenue est compétitive avec les mesures les plus précises réalisées par les collaborations CDF et D0.",
+				"libraryCatalog": "theses.fr",
+				"thesisType": "These de doctorat",
+				"university": "Université Paris-Saclay (ComUE)",
+				"url": "http://www.theses.fr/2016SACLS590",
+				"attachments": [],
 				"tags": [
 					{
 						"tag": "ATLAS"
 					},
-					{
+			   		{
 						"tag": "ATLAS"
 					},
-					{
+			   		{
 						"tag": "Bosons W -- Masse"
 					},
-					{
+			   		{
 						"tag": "Grand collisionneur de hadrons"
 					},
-					{
+			   		{
 						"tag": "LHC"
 					},
-					{
+			   		{
 						"tag": "LHC"
 					},
-					{
+			   		{
 						"tag": "Masse du boson W"
 					},
-					{
+			   		{
 						"tag": "Modèle standard"
 					},
-					{
+			   		{
 						"tag": "Modèle standard (physique nucléaire)"
 					},
 					{
-						"tag": "Physique des particules"
+		 				"tag": "Standard Model"
 					},
-					{
-						"tag": "Standard Model"
-					},
-					{
+			   		{
 						"tag": "W boson mass"
+			   		}
+				],
+				"rights": "Licence Etalab",
+				"notes": [
+					{
+						"note": "Sous la direction de  Maarten Boonekamp. Soutenue le 19-09-2016,à l'Université Paris-Saclay (ComUE) , dans le cadre de   École doctorale Particules, Hadrons, Énergie et Noyau : Instrumentation, Imagerie, Cosmos et Simulation (Orsay, Essonne ; 2015-....) , en partenariat avec  Département de physique des particules (Gif-sur-Yvette, Essonne)   (laboratoire)  ,  Centre européen pour la recherche nucléaire   (laboratoire)   et de  Université Paris-Sud (1970-2019)   (établissement opérateur d'inscription)  ."
 					}
 				],
-				"notes": [],
 				"seeAlso": []
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "http://theses.fr/s188862",
+		"url": "http://www.theses.fr/s128743",
 		"items": [
 			{
 				"itemType": "thesis",
-				"title": "Mesure des paramètres cosmologiques avec le catalogue d'amas de galaxies d'Euclid",
 				"creators": [
 					{
-						"firstName": "Emmanuel",
-						"lastName": "Artis",
-						"creatorType": "author"
+						"firstName": "Alice",
+				 		"lastName": "Cartier",
+				 		"creatorType": "author"
+					},
+			   		{
+						"firstName": "Gilles J.",
+				 		"lastName": "Guglielmi",
+				 		"creatorType": "contributor"
 					}
 				],
-				"abstractNote": "Euclid est un satellite de l'agence spatiale européenne dont le lancement est prévu en 2020. Outre l'observation de l'effet de lentille gravitationnelle (weak lensing WL) et des corrélations spatiales des galaxies (oscillations acoustiques des baryons BAO et redshift-space distortions RSD), Euclid détectera environ 100000 amas de galaxies (Clusters of Galaxies CG) entre redshift z=0 et z=2. Ces amas permettront de mesurer les paramètres cosmologiques indépendamment du WL, des BAO et des RSD.    La collaboration Euclid développe actuellement des outils d'extraction d'amas de galaxies sur simulations et compare leurs performances. L'objectif de cette thèse est de mettre au point l'étage supérieur qui permet de déduire la mesure des paramètres cosmologiques à partir du catalogue d'amas d'Euclid. Cet étage est appelé fonction de vraisemblance (likelihood).    Elle est au cœur de l'analyse cosmologique avec les amas. Elle demande une compréhension fine de la fonction de sélection du catalogue (proportion d'amas détectés sur le ciel par rapport au nombre total d'amas) et du lien entre la quantité observée par Euclid (nombre de galaxies dans chaque amas) et la quantité liée aux modèles théoriques (la masse). L'Irfu/SPP a développé une expertise sur la fonction de vraisemblance du catalogue d'amas du satellite Planck. Le travail proposé consiste à construire la fonction de vraisemblance Euclid en partant des acquis de Planck. Il faudra, dans un premier temps, adapter l'outil aux catalogues optiques puis, dans un second temps, le refondre pour dépasser les limites formelles actuelles. L'outil devra être capable d'ajuster à la fois paramètres cosmologiques et paramètres de nuisance liés à la physique des amas, qui étaient découplés pour l'analyse Planck.",
+				"notes": [
+					{
+						"note": "Thèses en préparation à Paris 2 , dans le cadre de   Ecole doctorale Georges Vedel Droit public interne, science administrative et science politique (Paris)  depuis le 01-10-2014 ."
+					}
+				],
+				"tags": [],
+				"seeAlso": [],
+				"attachments": [],
+				"title": "Les relations bilatérales France-Québec à l'épreuve de l'OMC et de l'UE",
+				"abstractNote": "Champ territorial: les fondements juridiques France/Québec/Canada/Europe, approches croisées européen/international. 1ère partie orientée histoire du droit: analyse relation bilatérale France/Québec: prémices enjeux diplomatiques et culturels pour la France de \"Gesta Dei per Francos\" aux échanges particuliers France/Québec (1910-1860), puis enjeux diplomatiques et culturels pour la France dans les années 1960 de Gaulle, Malraux, Québec et francophonie), Trente Glorieuses et période de guerre froide, tournant sur le plan international influant et restructurant les bases juridiques. Pour le Canada: période de \"crise majeure de son histoire\" avec la Révolution tranquille et remise en cause des rapports/accords diplomatiques avec la France qui existaient depuis Napoléon III, apparition ouverte d'un rapport triangulaire (Paris-Ottawa-Québec). Le Québec s'éveille, s'affirme, rêve d'indépendance.",
+				"thesisType": "These en préparation",
+				"university": "Paris 2",
+				"date": "2014",
+				"url": "http://www.theses.fr/s128743",
 				"libraryCatalog": "theses.fr",
-				"url": "http://www.theses.fr/s188862",
-				"attachments": [
-					{
-						"title": "Snapshot"
-					}
-				],
-				"tags": [
-					{
-						"tag": "Amas de galaxies"
-					},
-					{
-						"tag": "Astroparticules et cosmologie"
-					},
-					{
-						"tag": "Clusters of galaxies"
-					},
-					{
-						"tag": "Cosmologie"
-					},
-					{
-						"tag": "Cosmology"
-					},
-					{
-						"tag": "Euclid"
-					},
-					{
-						"tag": "Euclid"
-					}
-				],
-				"notes": [],
-				"seeAlso": []
-			}
+				"rights": "Licence Etalab"
+		   	}
 		]
 	}
 ]

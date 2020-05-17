@@ -1,15 +1,1179 @@
 {
   "filename": "auto-es.json",
   "name": "Spain",
-  "version": "2019-08-19 06:21:44 UTC",
+  "version": "2020-02-12 06:06:00 UTC",
   "xdata": {
     "default": {
       "place": {
-        "ES": "Spain"
+        "ES": "Spain",
+        "ES:ANDALUCIA": "Andalucia",
+        "ES:ANDALUCIA:GRANADA": "Granada",
+        "ES:ANDALUCIA:GRANADA:MOTRIL": "Motril",
+        "ES:ANDALUCIA:MALAGA": "Malaga",
+        "ES:ANDALUCIA:MALAGA:MELILLA": "Melilla",
+        "ES:ANDALUCIA:SEVILLA": "Sevilla",
+        "ES:ANDALUCIA:ALMERIA": "Almeria",
+        "ES:ANDALUCIA:ALGECIRAS": "Algeciras",
+        "ES:ANDALUCIA:ALGECIRAS:CADIZ": "Cadiz",
+        "ES:ANDALUCIA:ALGECIRAS:CADIZ:ALGECIRAS": "Algeciras",
+        "ES:ANDALUCIA:ALGECIRAS:CADIZ:JEREZ.DE.LA.FRONTERA": "Jerez de la Frontera",
+        "ES:ANDALUCIA:ALGECIRAS:CADIZ:CEUTA": "Ceuta",
+        "ES:ANDALUCIA:CORDOBA": "Cordoba",
+        "ES:ANDALUCIA:HUELVA": "Huelva",
+        "ES:ANDALUCIA:JAEN": "Jaen",
+        "ES:ARAGON": "Aragon",
+        "ES:ARAGON:ZARAGOZA": "Zaragoza",
+        "ES:ARAGON:HUESCA": "Huesca",
+        "ES:ARAGON:TERUEL": "Teruel",
+        "ES:ASTURIAS": "Asturias",
+        "ES:ASTURIAS:OVIEDO": "Oviedo",
+        "ES:ASTURIAS:ASTURIAS": "Asturias",
+        "ES:ASTURIAS:AVILES": "Aviles",
+        "ES:ASTURIAS:MIERES": "Mieres",
+        "ES:ASTURIAS:GIJON": "Gijon",
+        "ES:ASTURIAS:LANGREO": "Langreo",
+        "ES:BALEARES": "Baleares",
+        "ES:BALEARES:ILLES.BALEARS": "Illes Balears",
+        "ES:BALEARES:ILLES.BALEARS:CIUTADELLA.DE.MENORCA": "Ciutadella de Menorca",
+        "ES:BALEARES:ILLES.BALEARS:EIVISSA": "Eivissa",
+        "ES:BALEARES:ILLES.BALEARS:MAO.MAHON": "Mao Mahon",
+        "ES:BALEARES:ILLES.BALEARS:PALMA": "Palma",
+        "ES:CANARIAS": "Canarias",
+        "ES:CANARIAS:LAS.PALMAS": "Las Palmas",
+        "ES:CANARIAS:LAS.PALMAS:ARRECIFE": "Arrecife",
+        "ES:CANARIAS:LAS.PALMAS:GÁLDAR": "Gáldar",
+        "ES:CANARIAS:LAS.PALMAS:PUERTO.DEL.ROSARIO": "Puerto del Rosario",
+        "ES:CANARIAS:SANTA.CRUZ.DE.TENERIFE": "Santa Cruz de Tenerife",
+        "ES:CANARIAS:SANTA.CRUZ.DE.TENERIFE:SANTA.CRUZ.DE.LA.PALMA": "Santa Cruz de la Palma",
+        "ES:CANTABRIA": "Cantabria",
+        "ES:CANTABRIA:SANTANDER": "Santander",
+        "ES:CANTABRIA:CANTABRIA": "Cantabria",
+        "ES:CASTILLA.Y.LEON": "Castilla y Leon",
+        "ES:CASTILLA.Y.LEON:AVILA": "Avila",
+        "ES:CASTILLA.Y.LEON:PALENCIA": "Palencia",
+        "ES:CASTILLA.Y.LEON:SALAMANCA": "Salamanca",
+        "ES:CASTILLA.Y.LEON:SEGOVIA": "Segovia",
+        "ES:CASTILLA.Y.LEON:SORIA": "Soria",
+        "ES:CASTILLA.Y.LEON:ZAMORA": "Zamora",
+        "ES:CASTILLA.Y.LEON:LEON": "Leon",
+        "ES:CASTILLA.Y.LEON:LEON:PONFERRADA": "Ponferrada",
+        "ES:CASTILLA.Y.LEON:BURGOS": "Burgos",
+        "ES:CASTILLA.Y.LEON:VALLADOLID": "Valladolid",
+        "ES:CASTILLA.LA.MANCHA": "Castilla la mancha",
+        "ES:CASTILLA.LA.MANCHA:ALBACETE": "Albacete",
+        "ES:CASTILLA.LA.MANCHA:CIUDAD.REAL": "Ciudad Real",
+        "ES:CASTILLA.LA.MANCHA:CUENCA": "Cuenca",
+        "ES:CASTILLA.LA.MANCHA:GUADALAJARA": "Guadalajara",
+        "ES:CASTILLA.LA.MANCHA:TOLEDO": "Toledo",
+        "ES:CASTILLA.LA.MANCHA:TOLEDO:OCAÑA": "Ocaña",
+        "ES:CASTILLA.LA.MANCHA:TOLEDO:TALAVERA.DE.LA.REINA": "Talavera de la Reina",
+        "ES:CATALUNA": "Cataluna",
+        "ES:CATALUNA:BARCELONA": "Barcelona",
+        "ES:CATALUNA:BARCELONA:ARENYS.DE.MAR": "Arenys de Mar",
+        "ES:CATALUNA:BARCELONA:GRANOLLERS": "Granollers",
+        "ES:CATALUNA:BARCELONA:MANRESA": "Manresa",
+        "ES:CATALUNA:BARCELONA:MATARÓ": "Mataró",
+        "ES:CATALUNA:BARCELONA:VILANOVA.I.LA.GELTRÚ": "Vilanova i la Geltrú",
+        "ES:CATALUNA:BARCELONA:SABADELL": "Sabadell",
+        "ES:CATALUNA:BARCELONA:TERRASSA": "Terrassa",
+        "ES:CATALUNA:BARCELONA:VIC": "Vic",
+        "ES:CATALUNA:GIRONA": "Girona",
+        "ES:CATALUNA:GIRONA:FIGUERES": "Figueres",
+        "ES:CATALUNA:LIEIDA": "Lieida",
+        "ES:CATALUNA:TARRAGONA": "Tarragona",
+        "ES:CATALUNA:TARRAGONA:REUS": "Reusa",
+        "ES:CATALUNA:TARRAGONA:TORTOSA": "Tortosa",
+        "ES:COMUNIDAD.VALENCIANA": "Comunidad Valenciana",
+        "ES:COMUNIDAD.VALENCIANA:ALICANTE": "Alicante",
+        "ES:COMUNIDAD.VALENCIANA:ALICANTE:BENIDORM": "Benidorm",
+        "ES:COMUNIDAD.VALENCIANA:ALICANTE:ELCHE": "Elche",
+        "ES:COMUNIDAD.VALENCIANA:ALICANTE:ORIHUELA": "Orihuela",
+        "ES:COMUNIDAD.VALENCIANA:ALICANTE:TORREVIEJA": "Torrevieja",
+        "ES:COMUNIDAD.VALENCIANA:ALICANTE:VILLENA": "Villena",
+        "ES:COMUNIDAD.VALENCIANA:CASTELLON": "Castellón",
+        "ES:COMUNIDAD.VALENCIANA:CASTELLON:CASTELLÓN.DE.LA.PLANA": "Castellón de la Plana",
+        "ES:COMUNIDAD.VALENCIANA:CASTELLON:VINARÒS": "Vinaròs",
+        "ES:COMUNIDAD.VALENCIANA:VALENCIA": "Valencia",
+        "ES:COMUNIDAD.VALENCIANA:VALENCIA:ALZIRA": "Alzira",
+        "ES:COMUNIDAD.VALENCIANA:VALENCIA:GANDIA": "Gandia",
+        "ES:EXTREMADURA": "Extremadura",
+        "ES:EXTREMADURA:BADAJOZ": "Badajoz",
+        "ES:EXTREMADURA:BADAJOZ:DON.BENITO": "Don Benito",
+        "ES:EXTREMADURA:BADAJOZ:MÉRIDA": "Mérida",
+        "ES:EXTREMADURA:CÁCERES": "Cáceres",
+        "ES:EXTREMADURA:CÁCERES:PLASENCIA": "Plasencia",
+        "ES:GALICIA": "Galicia",
+        "ES:GALICIA:LUGO": "Lugo",
+        "ES:GALICIA:OURENSE": "Ourense",
+        "ES:GALICIA:PONTEVEDRA": "Pontevedra",
+        "ES:GALICIA:PONTEVEDRA:VIGO": "Vigo",
+        "ES:GALICIA:CORUNA": "Coruna",
+        "ES:GALICIA:CORUNA:SANTIAGO.DE.COMPOSTELA": "Santiago de Compostela",
+        "ES:GALICIA:CORUNA:FERROL": "Ferrol",
+        "ES:MADRID": "Madrid",
+        "ES:MADRID:MADRID": "Madrid",
+        "ES:MADRID:ALCALÁ.DE.HENARES": "Alcalá de Henares",
+        "ES:MADRID:GETAFE": "Getafe",
+        "ES:MADRID:MÓSTOLES": "Móstoles",
+        "ES:MURCIA": "Murcia",
+        "ES:MURCIA:MURCIA": "Murcia",
+        "ES:MURCIA:CARTAGENA": "Cartagena",
+        "ES:MURCIA:LORCA": "Lorca",
+        "ES:NAVARRA": "Navarra",
+        "ES:NAVARRA:NAVARRA": "Navarra",
+        "ES:NAVARRA:PAMPLONA": "Pamplona",
+        "ES:PAIS.VASCO": "Pais Vasco",
+        "ES:PAIS.VASCO:ARABA": "Araba",
+        "ES:PAIS.VASCO:ARABA:VITORIA.GASTEIZ": "Vitoria Gasteiz",
+        "ES:PAIS.VASCO:GIPUZKOA": "Gipuzkoa",
+        "ES:PAIS.VASCO:GIPUZKOA:DONOSTIA.SAN.SEBASTIÁN": "Donostia San Sebastián",
+        "ES:PAIS.VASCO:GIPUZKOA:EBAR": "Eibar",
+        "ES:PAIS.VASCO:BIZKAIA": "Bizkaia",
+        "ES:PAIS.VASCO:BIZKAIA:BILBAO": "Bilbao",
+        "ES:PAIS.VASCO:BIZKAIA:BARAKALDO": "Barakaldo",
+        "ES:LA.RIOJA": "La Rioja",
+        "ES:LA.RIOJA:LA.RIOJA": "La Rioja",
+        "ES:LA.RIOJA:LOGROÑO": "Logroño"
       }
     },
     "es": {
-      "institution-part": {}
+      "institution-part": {
+        "supremo": "Tribunal Supremo",
+        "audencia.national": "Audiencia Nacional",
+        "militar": "Tribunal Militar",
+        "paz": "Juzgados de Paz",
+        "constitutional": "Constitutional"
+      }
+    },
+    "es:andalucia": {
+      "institution-part": {
+        "tribunal.superior": "Tribunal Superior de Justicia",
+        "provincial": "Audiencia Provincial"
+      }
+    },
+    "es:andalucia:granada": {
+      "institution-part": {
+        "tribunal.superior": "Tribunal Superior de Justicia",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:andalucia:granada:motril": {
+      "institution-part": {
+        "penal": "Penal",
+        "social": "Salas de lo Social"
+      }
+    },
+    "es:andalucia:malaga": {
+      "institution-part": {
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:andalucia:malaga:melilla": {
+      "institution-part": {
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil"
+      }
+    },
+    "es:andalucia:sevilla": {
+      "institution-part": {
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:andalucia:almeria": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:andalucia:algeciras": {
+      "institution-part": {
+        "penitenciaria": "de Vigilancia Penitenciaria"
+      }
+    },
+    "es:andalucia:algeciras:cadiz": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:andalucia:algeciras:cadiz:algeciras": {
+      "institution-part": {
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social"
+      }
+    },
+    "es:andalucia:algeciras:cadiz:jerez.de.la.frontera": {
+      "institution-part": {
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social"
+      }
+    },
+    "es:andalucia:algeciras:cadiz:ceuta": {
+      "institution-part": {
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil"
+      }
+    },
+    "es:andalucia:cordoba": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:andalucia:huelva": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:andalucia:jaen": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:aragon": {
+      "institution-part": {
+        "tribunal.superior": "Tribunal Superior de Justicia",
+        "provincial": "Audiencia Provincial"
+      }
+    },
+    "es:aragon:zaragoza": {
+      "institution-part": {
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:aragon:huesca": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:aragon:teruel": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:asturias": {
+      "institution-part": {
+        "tribunal.superior": "Tribunal Superior de Justicia",
+        "provincial": "Audiencia Provincial"
+      }
+    },
+    "es:asturias:oviedo": {
+      "institution-part": {
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "penal": "Penal",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:asturias:asturias": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "menores": "Jusgados de Menores"
+      }
+    },
+    "es:asturias:aviles": {
+      "institution-part": {
+        "social": "Salas de lo Social"
+      }
+    },
+    "es:asturias:mieres": {
+      "institution-part": {
+        "social": "Salas de lo Social"
+      }
+    },
+    "es:asturias:gijon": {
+      "institution-part": {
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "mercantil": "Juzgados de lo Mercantil"
+      }
+    },
+    "es:asturias:langreo": {
+      "institution-part": {
+        "penal": "Penal"
+      }
+    },
+    "es:baleares": {
+      "institution-part": {
+        "tribunal.superior": "Tribunal Superior de Justicia",
+        "provincial": "Audiencia Provincial"
+      }
+    },
+    "es:baleares:illes.balears": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "menores": "Jusgados de Menores"
+      }
+    },
+    "es:baleares:illes.balears:ciutadella.de.menorca": {
+      "institution-part": {
+        "social": "Salas de lo Social"
+      }
+    },
+    "es:baleares:illes.balears:eivissa": {
+      "institution-part": {
+        "penal": "Penal",
+        "social": "Salas de lo Social"
+      }
+    },
+    "es:baleares:illes.balears:mao.mahon": {
+      "institution-part": {
+        "penal": "Penal"
+      }
+    },
+    "es:baleares:illes.balears:palma": {
+      "institution-part": {
+        "tribunal.superior": "Tribunal Superior de Justicia",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "penal": "Penal",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:canarias": {
+      "institution-part": {
+        "tribunal.superior": "Tribunal Superior de Justicia",
+        "provincial": "Audiencia Provincial"
+      }
+    },
+    "es:canarias:las.palmas": {
+      "institution-part": {
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:canarias:las.palmas:arrecife": {
+      "institution-part": {
+        "penal": "Penal",
+        "social": "Salas de lo Social"
+      }
+    },
+    "es:canarias:las.palmas:gáldar": {
+      "institution-part": {
+        "social": "Salas de lo Social"
+      }
+    },
+    "es:canarias:las.palmas:puerto.del.rosario": {
+      "institution-part": {
+        "penal": "Penal",
+        "social": "Salas de lo Social"
+      }
+    },
+    "es:canarias:santa.cruz.de.tenerife": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:canarias:santa.cruz.de.tenerife:santa.cruz.de.la.palma": {
+      "institution-part": {
+        "penal": "Penal"
+      }
+    },
+    "es:cantabria": {
+      "institution-part": {
+        "tribunal.superior": "Tribunal Superior de Justicia",
+        "provincial": "Audiencia Provincial"
+      }
+    },
+    "es:cantabria:santander": {
+      "institution-part": {
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "penal": "Penal",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:cantabria:cantabria": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "menores": "Jusgados de Menores"
+      }
+    },
+    "es:castilla.y.leon": {
+      "institution-part": {
+        "tribunal.superior": "Tribunal Superior de Justicia",
+        "provincial": "Audiencia Provincial"
+      }
+    },
+    "es:castilla.y.leon:avila": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:castilla.y.leon:palencia": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:castilla.y.leon:salamanca": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:castilla.y.leon:segovia": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:castilla.y.leon:soria": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:castilla.y.leon:zamora": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:castilla.y.leon:leon": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:castilla.y.leon:leon:ponferrada": {
+      "institution-part": {
+        "penal": "Penal",
+        "social": "Salas de lo Social"
+      }
+    },
+    "es:castilla.y.leon:burgos": {
+      "institution-part": {
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:castilla.y.leon:valladolid": {
+      "institution-part": {
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:castilla.la.mancha": {
+      "institution-part": {
+        "tribunal.superior": "Tribunal Superior de Justicia",
+        "provincial": "Audiencia Provincial"
+      }
+    },
+    "es:castilla.la.mancha:albacete": {
+      "institution-part": {
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:castilla.la.mancha:ciudad.real": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:castilla.la.mancha:cuenca": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:castilla.la.mancha:guadalajara": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:castilla.la.mancha:toledo": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:castilla.la.mancha:toledo:ocaña": {
+      "institution-part": {
+        "penitenciaria": "de Vigilancia Penitenciaria"
+      }
+    },
+    "es:castilla.la.mancha:toledo:talavera.de.la.reina": {
+      "institution-part": {
+        "penal": "Penal",
+        "social": "Salas de lo Social"
+      }
+    },
+    "es:cataluna": {
+      "institution-part": {
+        "tribunal.superior": "Tribunal Superior de Justicia",
+        "provincial": "Audiencia Provincial"
+      }
+    },
+    "es:cataluna:barcelona": {
+      "institution-part": {
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:cataluna:barcelona:arenys.de.mar": {
+      "institution-part": {
+        "penal": "Penal"
+      }
+    },
+    "es:cataluna:barcelona:granollers": {
+      "institution-part": {
+        "penal": "Penal",
+        "social": "Salas de lo Social"
+      }
+    },
+    "es:cataluna:barcelona:manresa": {
+      "institution-part": {
+        "penal": "Penal",
+        "social": "Salas de lo Social"
+      }
+    },
+    "es:cataluna:barcelona:mataró": {
+      "institution-part": {
+        "penal": "Penal",
+        "social": "Salas de lo Social"
+      }
+    },
+    "es:cataluna:barcelona:vilanova.i.la.geltrú": {
+      "institution-part": {
+        "penal": "Penal"
+      }
+    },
+    "es:cataluna:barcelona:sabadell": {
+      "institution-part": {
+        "penal": "Penal",
+        "social": "Salas de lo Social"
+      }
+    },
+    "es:cataluna:barcelona:terrassa": {
+      "institution-part": {
+        "penal": "Penal",
+        "social": "Salas de lo Social"
+      }
+    },
+    "es:cataluna:barcelona:vic": {
+      "institution-part": {
+        "penal": "Penal"
+      }
+    },
+    "es:cataluna:girona": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:cataluna:girona:figueres": {
+      "institution-part": {
+        "penal": "Penal",
+        "social": "Salas de lo Social"
+      }
+    },
+    "es:cataluna:lieida": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:cataluna:tarragona": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:cataluna:tarragona:reus": {
+      "institution-part": {
+        "penal": "Penal",
+        "social": "Salas de lo Social"
+      }
+    },
+    "es:cataluna:tarragona:tortosa": {
+      "institution-part": {
+        "penal": "Penal",
+        "social": "Salas de lo Social"
+      }
+    },
+    "es:comunidad.valenciana": {
+      "institution-part": {
+        "tribunal.superior": "Tribunal Superior de Justicia",
+        "provincial": "Audiencia Provincial"
+      }
+    },
+    "es:comunidad.valenciana:alicante": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:comunidad.valenciana:alicante:benidorm": {
+      "institution-part": {
+        "penal": "Penal",
+        "social": "Salas de lo Social"
+      }
+    },
+    "es:comunidad.valenciana:alicante:elche": {
+      "institution-part": {
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "mercantil": "Juzgados de lo Mercantil"
+      }
+    },
+    "es:comunidad.valenciana:alicante:orihuela": {
+      "institution-part": {
+        "penal": "Penal"
+      }
+    },
+    "es:comunidad.valenciana:alicante:torrevieja": {
+      "institution-part": {
+        "penal": "Penal"
+      }
+    },
+    "es:comunidad.valenciana:alicante:villena": {
+      "institution-part": {
+        "penitenciaria": "de Vigilancia Penitenciaria"
+      }
+    },
+    "es:comunidad.valenciana:castellon": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "menores": "Jusgados de Menores"
+      }
+    },
+    "es:comunidad.valenciana:castellon:castellón.de.la.plana": {
+      "institution-part": {
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:comunidad.valenciana:castellon:vinaròs": {
+      "institution-part": {
+        "penal": "Penal"
+      }
+    },
+    "es:comunidad.valenciana:valencia": {
+      "institution-part": {
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:comunidad.valenciana:valencia:alzira": {
+      "institution-part": {
+        "penal": "Penal"
+      }
+    },
+    "es:comunidad.valenciana:valencia:gandia": {
+      "institution-part": {
+        "penal": "Penal"
+      }
+    },
+    "es:extremadura": {
+      "institution-part": {
+        "provincial": "Audiencia Provincial"
+      }
+    },
+    "es:extremadura:badajoz": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:extremadura:badajoz:don.benito": {
+      "institution-part": {
+        "penal": "Penal"
+      }
+    },
+    "es:extremadura:badajoz:mérida": {
+      "institution-part": {
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo"
+      }
+    },
+    "es:extremadura:cáceres": {
+      "institution-part": {
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:extremadura:cáceres:plasencia": {
+      "institution-part": {
+        "penal": "Penal",
+        "social": "Salas de lo Social"
+      }
+    },
+    "es:galicia": {
+      "institution-part": {
+        "tribunal.superior": "Tribunal Superior de Justicia",
+        "provincial": "Audiencia Provincial"
+      }
+    },
+    "es:galicia:lugo": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:galicia:ourense": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:galicia:pontevedra": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:galicia:pontevedra:vigo": {
+      "institution-part": {
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "mercantil": "Juzgados de lo Mercantil"
+      }
+    },
+    "es:galicia:coruna": {
+      "institution-part": {
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:galicia:coruna:santiago.de.compostela": {
+      "institution-part": {
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social"
+      }
+    },
+    "es:galicia:coruna:ferrol": {
+      "institution-part": {
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social"
+      }
+    },
+    "es:madrid": {
+      "institution-part": {
+        "tribunal.superior": "Tribunal Superior de Justicia",
+        "provincial": "Audiencia Provincial"
+      }
+    },
+    "es:madrid:madrid": {
+      "institution-part": {
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:madrid:alcalá.de.henares": {
+      "institution-part": {
+        "penal": "Penal",
+        "social": "Salas de lo Social"
+      }
+    },
+    "es:madrid:getafe": {
+      "institution-part": {
+        "penal": "Penal",
+        "social": "Salas de lo Social"
+      }
+    },
+    "es:madrid:móstoles": {
+      "institution-part": {
+        "penal": "Penal",
+        "social": "Salas de lo Social"
+      }
+    },
+    "es:murcia": {
+      "institution-part": {
+        "tribunal.superior": "Tribunal Superior de Justicia",
+        "provincial": "Audiencia Provincial"
+      }
+    },
+    "es:murcia:murcia": {
+      "institution-part": {
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "penal": "Penal",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "menores": "Jusgados de Menores",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:murcia:cartagena": {
+      "institution-part": {
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social"
+      }
+    },
+    "es:murcia:lorca": {
+      "institution-part": {
+        "penal": "Penal"
+      }
+    },
+    "es:navarra": {
+      "institution-part": {
+        "tribunal.superior": "Tribunal Superior de Justicia",
+        "provincial": "Audiencia Provincial"
+      }
+    },
+    "es:navarra:navarra": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "menores": "Jusgados de Menores"
+      }
+    },
+    "es:navarra:pamplona": {
+      "institution-part": {
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "penal": "Penal",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:pais.vasco": {
+      "institution-part": {
+        "tribunal.superior": "Tribunal Superior de Justicia",
+        "provincial": "Audiencia Provincial"
+      }
+    },
+    "es:pais.vasco:araba": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "menores": "Jusgados de Menores"
+      }
+    },
+    "es:pais.vasco:araba:vitoria.gasteiz": {
+      "institution-part": {
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:pais.vasco:gipuzkoa": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "menores": "Jusgados de Menores"
+      }
+    },
+    "es:pais.vasco:gipuzkoa:donostia.san.sebastián": {
+      "institution-part": {
+        "penal": "Penal",
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:pais.vasco:gipuzkoa:ebar": {
+      "institution-part": {
+        "social": "Salas de lo Social"
+      }
+    },
+    "es:pais.vasco:bizkaia": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "menores": "Jusgados de Menores"
+      }
+    },
+    "es:pais.vasco:bizkaia:bilbao": {
+      "institution-part": {
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "penal": "Penal",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
+    },
+    "es:pais.vasco:bizkaia:barakaldo": {
+      "institution-part": {
+        "penal": "Penal"
+      }
+    },
+    "es:la.rioja": {
+      "institution-part": {
+        "tribunal.superior": "Tribunal Superior de Justicia",
+        "provincial": "Audiencia Provincial"
+      }
+    },
+    "es:la.rioja:la.rioja": {
+      "institution-part": {
+        "primera.instancia": "Juzgados de Primera Instancia",
+        "menores": "Jusgados de Menores"
+      }
+    },
+    "es:la.rioja:logroño": {
+      "institution-part": {
+        "contencioso.administrativo": "de lo Contencioso-Administrativo",
+        "social": "Salas de lo Social",
+        "penal": "Penal",
+        "penitenciaria": "de Vigilancia Penitenciaria",
+        "mercantil": "Juzgados de lo Mercantil",
+        "mujer": "Juzgados de Violencia sobre la Mujer"
+      }
     }
   }
 }

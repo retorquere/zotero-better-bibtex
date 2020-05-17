@@ -28,22 +28,40 @@
   </macro>
 
   <macro name="juris-main">
-    <group delimiter=", ">
-      <names variable="authority">
-        <name/>
-        <institution institution-parts="long-short">
-          <institution-part name="long"/>
-          <institution-part name="short" prefix=" [" suffix="]"/>
-        </institution>
-      </names>
-      <date variable="issued" form="text" date-parts="year-month-day"/>
-      <number variable="number"/>
-    </group>
+    <choose>
+      <if type="legal_case">
+        <group delimiter=", ">
+          <names variable="authority">
+            <name/>
+            <institution institution-parts="short" use-first="1" delimiter=", "/>
+          </names>
+          <date variable="issued" date-parts="year-month-day" form="text"/>
+          <group delimiter=" ">
+            <group>
+              <names variable="authority">
+                <name/>
+                <institution form="short"/>
+              </names>
+              <group delimiter=" ">
+                <text variable="genre"/>
+                <number variable="number"/>
+              </group>
+            </group>
+          </group>
+        </group>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-tail">
     <!-- Full form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <text value=""/>
+    <choose>
+      <if type="legal_case">
+        <group delimiter=" " prefix="[" suffix="]">
+          <text variable="references"/>
+        </group>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-pretitle-short">
@@ -57,16 +75,22 @@
   </macro>
 
   <macro name="juris-main-short">
-    <group delimiter=", ">
-      <names variable="authority">
-        <name/>
-        <institution institution-parts="short">
-          <institution-part name="long"/>
-          <institution-part name="short"/>
-        </institution>
-      </names>
-      <date variable="issued" form="text" date-parts="year-month-day"/>
-    </group>
+    <choose>
+      <if type="legal_case">
+        <group delimiter=" ">
+          <group>
+            <names variable="authority">
+              <name/>
+              <institution form="short"/>
+            </names>
+            <group delimiter=" ">
+              <text variable="genre"/>
+              <number variable="number"/>
+            </group>
+          </group>
+        </group>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-tail-short">

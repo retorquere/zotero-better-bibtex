@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2019-10-22 09:40:59"
+	"lastUpdated": "2019-12-24 12:46:21"
 }
 
 /*
@@ -95,7 +95,6 @@ function scrape(doc, _url) {
 
 	var tags = [];
 	doc.querySelectorAll('p.kw_main span a').forEach(e => tags.push(ZU.trimInternal(e.textContent)));
-
 	ZU.doGet(risUrl, function (ris) {
 		// Z.debug({ ris });
 		// delete parenthesis in pages information, e.g. SP  - 5-7(3)
@@ -127,13 +126,22 @@ function scrape(doc, _url) {
 					item.creators.push(ZU.cleanAuthor(e.textContent, 'author', true));
 				});
 			}
+			for (let i = 0, n = item.creators.length; i < n; i++) {
+				let creator = item.creators[i];
+				if (!creator.firstName && creator.lastName.search(/[A-Za-z]/) == -1 && !creator.lastName.includes(' ')) {
+					// Chinese name: first character is last name, the rest are first name (ignoring compound last names which are rare)
+					creator.firstName = creator.lastName.substr(1);
+					creator.lastName = creator.lastName.charAt(0);
+				}
+				item.creators[i] = creator;
+			}
 			if (!item.publicationTitle) {
 				item.publicationTitle = attr(doc, 'a.journal_title', 'title');
 			}
-			if (!item.date) {
+			if (!item.date && text(doc, 'div.year_wr p.kw_main')) {
 				item.date = ZU.trimInternal(text(doc, 'div.year_wr p.kw_main'));
 			}
-			if (!item.DOI) {
+			if (!item.DOI && text(doc, 'div.doi_wr p.kw_main')) {
 				item.DOI = ZU.trimInternal(text(doc, 'div.doi_wr p.kw_main'));
 			}
 
@@ -147,11 +155,11 @@ function scrape(doc, _url) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://xueshu.baidu.com/s?wd=paperuri%3A%28b3ab239032d44d951d8eee26d7bc44bf%29&filter=sc_long_sign&sc_ks_para=q%3DZotero%3A%20information%20management%20software%202.0&sc_us=11047153676455408520&tn=SE_baiduxueshu_c1gjeupa&ie=utf-8",
+		"url": "http://xueshu.baidu.com/usercenter/paper/show?paperid=b3ab239032d44d951d8eee26d7bc44bf&site=xueshu_se",
 		"items": [
 			{
 				"itemType": "journalArticle",
-				"title": "Zotero: information management software 2.0",
+				"title": "Zotero: Information management software 2.0",
 				"creators": [
 					{
 						"lastName": "Fernandez",
@@ -160,6 +168,7 @@ var testCases = [
 					}
 				],
 				"date": "2011",
+				"DOI": "10.1108/07419051111154758",
 				"abstractNote": "Purpose – The purpose of this paper is to highlight how the open-source bibliographic management program Zotero harnesses Web 2.0 features to make library resources more accessible to casual users without sacrificing advanced features. This reduces the barriers understanding library resources and provides additional functionality when organizing information resources. Design/methodology/approach – The paper reviews select aspects of the program to illustrate how it can be used by patrons and information professionals, and why information professionals should be aware of it. Findings – Zotero has some limitations, but succeeds in meeting the information management needs of a wide variety of users, particularly users who use online resources. Originality/value – This paper is of interest to information professionals seeking free software that can make managing bibliographic information easier for themselves and their patrons.",
 				"issue": "4",
 				"libraryCatalog": "Baidu Scholar",
@@ -194,8 +203,7 @@ var testCases = [
 					}
 				],
 				"notes": [],
-				"seeAlso": [],
-				"DOI": "10.1108/07419051111154758"
+				"seeAlso": []
 			}
 		]
 	},

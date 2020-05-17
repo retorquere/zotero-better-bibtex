@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 12,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2019-11-18 17:40:30"
+	"lastUpdated": "2019-12-28 15:34:11"
 }
 
 /*
@@ -84,7 +84,7 @@ function getUID(doc) {
 	if (maincontent) {
 		uid = ZU.xpath(maincontent,
 			'.//a[@title="PubMed record of this title" or @title="PubMed record of this page"]');
-		if (uid.length == 1 && uid[0].textContent.search(/^\d+$/) != -1) return uid;
+		if (uid.length == 1 && uid[0].textContent.search(/^\d+$/) != -1) return uid[0].textContent;
 	}
 
 	return false;
@@ -198,11 +198,11 @@ function detectWeb(doc, url) {
 
 	// determine if book or bookSection for PubMed Labs
 	var bookCitation = doc.getElementsByClassName('book-citation');
-	if (bookCitation.length > 0 && ZU.xpath(bookCitation, './/div[@class="affiliations"]')) {
-		// For a bookSection there are the affiliations of the authors of this
-		// section as well as the affiliations of the book authors.
-		var bookAffiliations = ZU.xpath(doc.getElementById('full-authors'), './/div[@class="affiliations"]/h3[@class="title"]').length > 1;
-		return bookAffiliations ? "bookSection" : "book";
+	if (bookCitation.length > 0 && ZU.xpath(doc, './/div[@class="affiliations"]')) {
+		// For a bookSection there is the affiliations section of the authors of this
+		// section as well as another affiliation sections for the book authors.
+		var isChapter = doc.querySelectorAll('#full-view-heading div.affiliations').length > 1;
+		return isChapter ? "bookSection" : "book";
 	}
 	
 	// from bookshelf page
@@ -329,9 +329,15 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Bibliography as Topic",
-					"Database Management Systems",
-					"Humans"
+					{
+						"tag": "Bibliographies as Topic"
+					},
+					{
+						"tag": "Database Management Systems"
+					},
+					{
+						"tag": "Humans"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -1079,7 +1085,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.ncbi.nlm.nih.gov/labs/pubmed/20729678-zotero-harnessing-the-power-of-a-personal-bibliographic-manager/",
+		"url": "https://pubmed.ncbi.nlm.nih.gov/20729678-zotero-harnessing-the-power-of-a-personal-bibliographic-manager/",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -1118,7 +1124,7 @@ var testCases = [
 				],
 				"tags": [
 					{
-						"tag": "Bibliography as Topic"
+						"tag": "Bibliographies as Topic"
 					},
 					{
 						"tag": "Database Management Systems"

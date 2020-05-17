@@ -1,16 +1,38 @@
 {
 	"translatorID": "3e684d82-73a3-9a34-095f-19b112d88bbf",
 	"label": "Google Books",
-	"creator": "Simon Kornblith, Michael Berkowitz and Rintze Zelle",
-	"target": "^https?://(books|www)\\.google\\.[a-z]+(\\.[a-z]+)?/(books(/.*)?\\?(.*id=.*|.*q=.*)|search\\?.*?(btnG=Search\\+Books|tbm=bks))|^https?://play\\.google\\.[a-z]+(\\.[a-z]+)?/(store/)?(books|search\\?.+&c=books)",
+	"creator": "Simon Kornblith, Michael Berkowitz, Rintze Zelle, and Sebastian Karcher",
+	"target": "^https?://(books|www)\\.google\\.[a-z]+(\\.[a-z]+)?/(books(/.*)?\\?(.*id=.*|.*q=.*)|search\\?.*?(btnG=Search\\+Books|tbm=bks)|books/edition/)|^https?://play\\.google\\.[a-z]+(\\.[a-z]+)?/(store/)?(books|search\\?.*c=books)",
 	"minVersion": "2.1.9",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsbv",
-	"lastUpdated": "2017-12-03 04:20:33"
+	"lastUpdated": "2019-12-09 13:35:39"
 }
+
+/*
+	***** BEGIN LICENSE BLOCK *****
+
+	Copyright © 2012-2019 Simon Kornblith, Michael Berkowitz, Rintze Zelle, and Sebastian Karcher
+	This file is part of Zotero.
+
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Zotero is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU Affero General Public License for more details.
+
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero.  If not, see <http://www.gnu.org/licenses/>.
+
+	***** END LICENSE BLOCK *****
+*/
 
 /*
 The various types of Google Books URLs are:
@@ -28,6 +50,9 @@ http://books.google.com/books?hl=en&lr=&id=Ct6FKwHhBSQC&oi=fnd&pg=PP9&dq=%22Pegg
 Single item - URL with "vid" (see http://code.google.com/apis/books/docs/static-links.html)
 http://books.google.com/books?printsec=frontcover&vid=ISBN0684181355&vid=ISBN0684183951&vid=LCCN84026715#v=onepage&q&f=false
 
+Single item - New Google Books November 2019
+https://www.google.com/books/edition/_/U4NmPwAACAAJ?hl=en
+
 Personal play store book lists
 https://play.google.com/books (no test)
 
@@ -36,81 +61,100 @@ https://play.google.com/store/books/details/Adam_Smith_The_Wealth_of_Nations?id=
 
 Play Store Book Searches
 https://play.google.com/store/search?q=doyle+arthur+conan&c=books
-
 */
+// attr()/text() v2
+// eslint-disable-next-line
+function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
 
-var singleRe = /^https?:\/\/(?:books|www|play)\.google\.[a-z]+(?:\.[a-z]+)?(?:\/store)?\/books(?:\/.*)?\?(?:[^q].*&)?(id|vid)=([^&]+)/i;
 
 function detectWeb(doc, url) {
-	if(singleRe.test(url)) {
+	if (url.search(/[&?]v?id=/) != -1) {
 		return "book";
-	} else {
+	}
+	else if (url.includes("/books/edition/")) {
+		return "book";
+	}
+	else if (getSearchResults(doc, true)) {
 		return "multiple";
+	}
+	return false;
+}
+
+
+function getSearchResults(doc, checkOnly) {
+	var items = {};
+	var found = false;
+	// regular books
+	var rows = ZU.xpath(doc, '//div[@class="srg"]//a[h3]');
+	if (!rows.length) {
+		// play store
+		rows = doc.querySelectorAll('div.Q9MA7b>a');
+	}
+	for (let row of rows) {
+		let href = row.href;
+		// h3 for google books, div for google play
+		let title = text(row, 'h3, div');
+		// exclude audiobooks on google play
+		// audiobooks aren't in Google's book metadata
+		if (!href || !title || href.includes("/store/audiobooks/")) continue;
+		if (checkOnly) return true;
+		found = true;
+		items[href] = ZU.trimInternal(title);
+	}
+	return found ? items : false;
+}
+
+function doWeb(doc, url) {
+	if (detectWeb(doc, url) == "multiple") {
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
+			if (items) ZU.processDocuments(Object.keys(items), scrape);
+		});
+	}
+	else {
+		scrape(doc, url);
 	}
 }
 
-var itemUrlBase;
-function doWeb(doc, url) {
-	
-	// get local domain suffix
-	var psRe = new RegExp("https?://(books|www|play)\.google\.([^/]+)/");
-	var psMatch = psRe.exec(url);
-	var suffix = psMatch[2];
-	var prefix = "books"; //Where is it not books? psMatch[1];
-	itemUrlBase = "/books?id=";
-	
-	var m = singleRe.exec(url);
-	if(m && m[1] == "id") {
-		ZU.doGet("//books.google.com/books/feeds/volumes/"+m[2], parseXML);
-	} else if (m && m[1] == "vid") {
-		var itemLinkWithID = ZU.xpath(doc, '/html/head/link[@rel="canonical"]')[0].href;
-		var m = singleRe.exec(itemLinkWithID);
-		ZU.doGet("//books.google.com/books/feeds/volumes/"+m[2], parseXML);
-	} else {
-		var items = getItemArrayGB(doc, doc, 'google\\.' + suffix + '/books\\?id=([^&]+)', '^(?:All matching pages|About this Book|Table of Contents|Index)');
-		// Drop " - Page" thing
-		for(var i in items) {
-			items[i] = items[i].replace(/- Page [0-9]+\s*$/, "");
-		}
-		Zotero.selectItems(items, function(items) {
-			if(!items) Z.done();
-			var baseurl = url.match(psRe)[0];
-			var newUris = [];
-			for(var i in items) {
-				//the singleRe has the full URL - we may only be getting the URL w/o host correct for that.
-				if (i.search(psRe)===-1){
-					i = baseurl.replace(/\/$/, "") + i;
-				}
-				var m = singleRe.exec(i);
-				newUris.push("//books.google.com/books/feeds/volumes/"+m[2]);
-			}
-			ZU.doGet(newUris, parseXML);
-		});
+function scrape(doc, url) {
+	var id;
+	// New books format:
+	if (url.includes("/books/edition/")) {
+		id = url.split('/').pop().split('?')[0];
 	}
+	// All old formats with explicit id, including play store
+	else if (url.search(/[&?]id=/) != -1) {
+		id = url.match(/[&?]id=([^&]+)/)[1];
+	}
+	else if (url.search(/[&?]vid=/) != -1) {
+		var canonicalUrl = ZU.xpath(doc, '/html/head/link[@rel="canonical"]')[0].href;
+		id = canonicalUrl.match(/[&?]id=([^&]+)/)[1];
+	}
+	ZU.doGet("//books.google.com/books/feeds/volumes/" + id, parseXML);
 }
-	
+
 function parseXML(text) {
-	//Z.debug(text)
+	// Z.debug(text);
 	// Remove xml parse instruction and doctype
 	var parser = new DOMParser();
 	var xml = parser.parseFromString(text, "text/xml").documentElement;
 	
-	var ns = {"dc":"http://purl.org/dc/terms",
-		"atom":"http://www.w3.org/2005/Atom"};
+	var ns = { dc: "http://purl.org/dc/terms",
+		atom: "http://www.w3.org/2005/Atom" };
 		
 	var newItem = new Zotero.Item("book");
 	
 	var authors = ZU.xpath(xml, "dc:creator", ns);
-	for (var i in authors) {
-		newItem.creators.push(Zotero.Utilities.cleanAuthor(authors[i].textContent, "author"));
+	for (let author of authors) {
+		newItem.creators.push(ZU.cleanAuthor(author.textContent, "author"));
 	}
 	
 	var pages = ZU.xpathText(xml, "dc:format", ns);
 	const pagesRe = /(\d+)( pages)/;
 	var pagesMatch = pagesRe.exec(pages);
-	if (pagesMatch!=null) {
+	if (pagesMatch !== null) {
 		newItem.numPages = pagesMatch[1];
-	} else {
+	}
+	else {
 		newItem.numPages = pages;
 	}
 	
@@ -119,17 +163,17 @@ function parseXML(text) {
 	const ISBN13Re = /(?:ISBN:)(\w{13})$/;
 	const booksIDRe = /^(\w{12})$/;
 	var identifiers = ZU.xpath(xml, "dc:identifier", ns);
-	for (var i in identifiers) {
-		var ISBN10Match = ISBN10Re.exec(identifiers[i].textContent);
-		var ISBN13Match = ISBN13Re.exec(identifiers[i].textContent);
-		var booksIDMatch = booksIDRe.exec(identifiers[i].textContent);
-		if (ISBN10Match != null) {
+	for (let identifier of identifiers) {
+		var ISBN10Match = ISBN10Re.exec(identifier.textContent);
+		var ISBN13Match = ISBN13Re.exec(identifier.textContent);
+		var booksIDMatch = booksIDRe.exec(identifier.textContent);
+		if (ISBN10Match !== null) {
 			ISBN = ISBN10Match[1];
 		}
-		if (ISBN13Match != null) {
+		if (ISBN13Match !== null) {
 			ISBN = ISBN13Match[1];
 		}
-		if (booksIDMatch != null) {
+		if (booksIDMatch !== null) {
 			newItem.extra = "Google-Books-ID: " + booksIDMatch[1];
 		}
 	}
@@ -141,146 +185,15 @@ function parseXML(text) {
 	newItem.abstractNote = ZU.xpathText(xml, 'dc:description', ns);
 	newItem.date = ZU.xpathText(xml, "dc:date", ns);
 
-	var url = itemUrlBase + identifiers[0].textContent;
-	newItem.attachments = [{title:"Google Books Link", snapshot:false, mimeType:"text/html", url:url}];
+	var url = "/books?id=" + identifiers[0].textContent;
+	newItem.attachments = [{ title: "Google Books Link", snapshot: false, mimeType: "text/html", url: url }];
 	
 	var subjects = ZU.xpath(xml, 'dc:subject', ns);
-	for(var i in subjects) {
-		newItem.tags.push(subjects[i].textContent);
+	for (let subject of subjects) {
+		newItem.tags.push(subject.textContent);
 	}
 	
 	newItem.complete();
-}
-
-/**
- * Grabs items based on URLs, modified for Google Books
- *
- * @param {Document} doc DOM document object
- * @param {Element|Element[]} inHere DOM element(s) to process
- * @param {RegExp} [urlRe] Regexp of URLs to add to list
- * @param {RegExp} [urlRe] Regexp of URLs to reject
- * @return {Object} Associative array of link => textContent pairs, suitable for passing to
- *	Zotero.selectItems from within a translator
- */
-function getItemArrayGB (doc, inHere, urlRe, rejectRe) {
-	
-	var availableItems = new Object();	// Technically, associative arrays are objects
-
-	//quick check for new format
-	//As of 09/23/2015 I only see the last of these options, but leaving the others in for now to be safe.
-	var bookList = ZU.xpath(doc, '//*[@id="rso"]/li|//*[@id="rso"]/div/li|//*[@id="rso"]/div/div[@class="g"]');
-	if(bookList.length) {
-		Z.debug("newFormat")
-		for(var i=0, n=bookList.length; i<n; i++) {
-			var link = ZU.xpathText(bookList[i], './/h3[@class="r"]/a/@href');
-			var title = ZU.xpathText(bookList[i], './/h3[@class="r"]/a');
-			if(link && title) {
-				availableItems[link] = title;
-			}
-		}
-		return availableItems;
-	}
-	var altformat = ZU.xpath(doc, '//div[@class="rsiwrapper"]//a[@class="primary"]' )
-	if (altformat.length){
-		for(var i=0, n=altformat.length; i<n; i++) {
-			var link = ZU.xpathText(altformat[i], './@href');
-			var title = altformat[i].textContent;
-			if(link && title) {
-				availableItems[link] = title;
-			}
-		}
-		return availableItems;
-	}
-	var googleplay = ZU.xpath(doc, '//div[contains(@class, "details")]//a[@class="title"]');
-	if(googleplay.length) {
-		for(var i=0, n=googleplay.length; i<n; i++) {
-			var link = ZU.xpathText(googleplay[i], './@href');
-			var title = googleplay[i].textContent;
-			if(link && title) {
-				availableItems[link] = title;
-			}
-		}
-		return availableItems;
-	}
-
-
-	// Require link to match this
-	if(urlRe) {
-		if(urlRe.exec) {
-			var urlRegexp = urlRe;
-		} else {
-			var urlRegexp = new RegExp();
-			urlRegexp.compile(urlRe, "i");
-		}
-	}
-	// Do not allow text to match this
-	if(rejectRe) {
-		if(rejectRe.exec) {
-			var rejectRegexp = rejectRe;
-		} else {
-			var rejectRegexp = new RegExp();
-			rejectRegexp.compile(rejectRe, "i");
-		}
-	}
-	
-	if(!inHere.length) {
-		inHere = new Array(inHere);
-	}
-	
-	for(var j=0; j<inHere.length; j++) {
-		var coverView = doc.evaluate('//div[@class="thumbotron"]', doc, null, XPathResult.ANY_TYPE, null).iterateNext();//Detect Cover view
-		if(coverView){
-			var links = inHere[j].getElementsByTagName("a");
-			for(var i=0; i<links.length; i++) {
-				if(!urlRe || urlRegexp.test(links[i].href)) {
-					var text = links[i].textContent;
-					if(!text) {
-						var text = links[i].firstChild.alt;
-					}
-					if(text) {
-						text = Zotero.Utilities.trimInternal(text);
-						if(!rejectRe || !rejectRegexp.test(text)) {
-							if(availableItems[links[i].href]) {
-								if(text != availableItems[links[i].href]) {
-									availableItems[links[i].href] += " "+text;
-								}
-							} else {
-								availableItems[links[i].href] = text;
-							}
-						}
-					}
-				}
-			}
-		}
-		else {
-			var links = inHere[j].querySelectorAll("h3.r a");
-			for(var i=0; i<links.length; i++) {
-				if(!urlRe || urlRegexp.test(links[i].href)) {
-					var text = links[i].parentNode.textContent;
-					//Z.debug(text)
-					if(text) {
-						text = Zotero.Utilities.trimInternal(text);
-						if(!rejectRe || !rejectRegexp.test(text)) {
-							if(availableItems[links[i].href]) {
-								if(text != availableItems[links[i].href]) {
-									availableItems[links[i].href] += " "+text;
-								}
-							} else {
-								availableItems[links[i].href] = text;
-							}
-						}
-					}
-					else {
-							var imagelink = links[i];
-							var booktitle = ZU.xpathText(imagelink, './*');
-							Z.debug(booktitle)
-					}
-				}
-			}
-		}
-	}
-	
-	return availableItems;
 }
 
 /** BEGIN TEST CASES **/
@@ -299,6 +212,11 @@ var testCases = [
 				"title": "The Cambridge Companion to Electronic Music",
 				"creators": [
 					{
+						"firstName": "Nick",
+						"lastName": "Collins",
+						"creatorType": "author"
+					},
+					{
 						"firstName": "Nicholas",
 						"lastName": "Collins",
 						"creatorType": "author"
@@ -306,6 +224,11 @@ var testCases = [
 					{
 						"firstName": "Julio d' Escrivan",
 						"lastName": "Rincón",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Julio",
+						"lastName": "d'Escrivan",
 						"creatorType": "author"
 					}
 				],
@@ -325,9 +248,15 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Music / General",
-					"Music / Genres & Styles / Electronic",
-					"Music / Instruction & Study / Techniques"
+					{
+						"tag": "Music / General"
+					},
+					{
+						"tag": "Music / Genres & Styles / Electronic"
+					},
+					{
+						"tag": "Music / Instruction & Study / Techniques"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -340,23 +269,32 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "book",
-				"title": "Gabriel García Márquez: A Critical Companion",
+				"title": "Gabriel García Márquez",
 				"creators": [
 					{
 						"firstName": "Rubén",
+						"lastName": "Pelayo",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Rubén Pelayo",
+						"lastName": "Coutiño",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Rube ́n",
 						"lastName": "Pelayo",
 						"creatorType": "author"
 					}
 				],
 				"date": "2001",
 				"ISBN": "9780313312601",
-				"abstractNote": "Winner of the Nobel Prize for Literature in 1982 for his masterpiece \"One Hundred Years of Solitude,\" Gabriel Garc DEGREESD'ia M DEGREESD'arquez had already earned tremendous respect and popularity in the years leading up to that honor, and remains, to date, an active and prolific writer. Readers are introduced to Garc DEGREESD'ia M DEGREESD'arquez with a vivid account of his fascinating life; from his friendships with poets and presidents, to his distinguished career as a journalist, novelist, and chronicler of the quintessential Latin American experience. This companion also helps students situate Garc DEGREESD'ia M DEGREESD'arquez within the canon of Western literature, exploring his contributions to the modern novel in general, and his forging of literary techniques, particularly magic realism, that have come to distinguish Latin American fiction. Full literary analysis is given for \"One Hundred Years of Solitude,\" as well as \"Chronicle of a Death Foretold\" (1981), \"Love in the Time of Cholera\" (1985), two additional novels, and five of Garc DEGREESD'ia M DEGREESD'arquez's best short stories. Students are given guidance in understanding the historical contexts, as well as the characters and themes that recur in these interrelated works. Narrative technique and alternative critical perspectives are also explored for each work, helping readers fully appreciate the literary accomplishments of Gabriel Garc DEGREESD'ia M DEGREESD'arquez.",
+				"abstractNote": "Winner of the Nobel Prize for Literature in 1982 for his masterpiece One Hundred Years of Solitude, Gabriel Garc^D'ia M^D'arquez had already earned tremendous respect and popularity in the years leading up to that honor, and remains, to date, an active and prolific writer. Readers are introduced to Garc^D'ia M^D'arquez with a vivid account of his fascinating life; from his friendships with poets and presidents, to his distinguished career as a journalist, novelist, and chronicler of the quintessential Latin American experience. This companion also helps students situate Garc^D'ia M^D'arquez within the canon of Western literature, exploring his contributions to the modern novel in general, and his forging of literary techniques, particularly magic realism, that have come to distinguish Latin American fiction.Full literary analysis is given for One Hundred Years of Solitude, as well as Chronicle of a Death Foretold (1981), Love in the Time of Cholera (1985), two additional novels, and five of Garc^D'ia M^D'arquez's best short stories. Students are given guidance in understanding the historical contexts, as well as the characters and themes that recur in these interrelated works. Narrative technique and alternative critical perspectives are also explored for each work, helping readers fully appreciate the literary accomplishments of Gabriel Garc^D'ia M^D'arquez.",
 				"extra": "Google-Books-ID: skf3LSyV_kEC",
 				"language": "en",
 				"libraryCatalog": "Google Books",
 				"numPages": "208",
 				"publisher": "Greenwood Publishing Group",
-				"shortTitle": "Gabriel García Márquez",
 				"attachments": [
 					{
 						"title": "Google Books Link",
@@ -365,8 +303,12 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Literary Criticism / Caribbean & Latin American",
-					"Literary Criticism / European / Spanish & Portuguese"
+					{
+						"tag": "Literary Criticism / Caribbean & Latin American"
+					},
+					{
+						"tag": "Literary Criticism / European / Spanish & Portuguese"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -490,6 +432,86 @@ var testCases = [
 					}
 				],
 				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://www.google.com/books/edition/_/U4NmPwAACAAJ?hl=en",
+		"items": [
+			{
+				"itemType": "book",
+				"title": "Ronia, the Robber's Daughter",
+				"creators": [
+					{
+						"firstName": "Astrid",
+						"lastName": "Lindgren",
+						"creatorType": "author"
+					}
+				],
+				"date": "1985",
+				"ISBN": "9780613096249",
+				"abstractNote": "Ronia, who lives with her father and his band of robbers in a castle in the woods, causes trouble when she befriends the son of a rival robber chieftain.",
+				"extra": "Google-Books-ID: U4NmPwAACAAJ",
+				"language": "en",
+				"libraryCatalog": "Google Books",
+				"numPages": "176",
+				"publisher": "Perfection Learning Corporation",
+				"attachments": [
+					{
+						"title": "Google Books Link",
+						"snapshot": false,
+						"mimeType": "text/html"
+					}
+				],
+				"tags": [
+					{
+						"tag": "Juvenile Fiction / Action & Adventure / General"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://books.google.com.au/books?id=xylqIkDQ-gEC&pg=PA111&dq=clinical+psychology&hl=en&sa=X&ved=0ahUKEwidzdfqiKjmAhXNF3IKHhttps://books.google.com.au/books?id=xylqIkDQ-gEC&pg=PA111&dq=clinical+psychology&hl=en&sa=X&ved=0ahUKEwidzdfqiKjmAhXNF3IKHejiBPoQ6AEIQTAD#v=onepage&q=clinical%20psychology&f=true",
+		"items": [
+			{
+				"itemType": "book",
+				"title": "Contemporary Clinical Psychology",
+				"creators": [
+					{
+						"firstName": "Thomas G.",
+						"lastName": "Plante",
+						"creatorType": "author"
+					}
+				],
+				"date": "2010-08-20",
+				"ISBN": "9780470872116",
+				"abstractNote": "Contemporary Clinical Psychology, Third Edition introduces students to this fascinating profession from an integrative, biopsychosocial perspective. Thoroughly updated to include the latest information on topics central to the field, this innovative approach to studying clinical psychology delivers an engaging overview of the roles and responsibilities of today's clinical psychologists that is designed to inform and spark interest in a future career in this dynamic field. Highlighting evidence-based therapies, multiple case studies round out the portrayal of clinical practice. Designed for graduate and undergraduate students in introductory clinical psychology courses.",
+				"language": "en",
+				"libraryCatalog": "Google Books",
+				"numPages": "625",
+				"publisher": "John Wiley & Sons",
+				"attachments": [
+					{
+						"title": "Google Books Link",
+						"snapshot": false,
+						"mimeType": "text/html"
+					}
+				],
+				"tags": [
+					{
+						"tag": "Psychology / Clinical Psychology"
+					},
+					{
+						"tag": "Psychology / General"
+					}
+				],
 				"notes": [],
 				"seeAlso": []
 			}

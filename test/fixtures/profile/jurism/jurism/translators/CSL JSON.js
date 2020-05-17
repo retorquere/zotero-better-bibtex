@@ -1,19 +1,20 @@
 {
 	"translatorID": "bc03b4fe-436d-4a1f-ba59-de4d2d7a63f7",
+	"translatorType": 3,
 	"label": "CSL JSON",
 	"creator": "Simon Kornblith",
 	"target": "json",
 	"minVersion": "4.0.27",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
+	"inRepository": true,
+	"browserSupport": "gcsibv",
 	"configOptions": {
 		"async": true
 	},
-	"inRepository": true,
-	"translatorType": 3,
-	"browserSupport": "gcsibv",
-	"lastUpdated": "2019-01-31 00:12:00"
+	"lastUpdated": "2020-03-25 13:37:41"
 }
+
 
 var mimeTypes = {
     "PDF": "application/pdf",
@@ -53,6 +54,17 @@ function parseInput() {
 
 function detectImport() {
 
+	const CSL_TYPES = {"article":true, "article-journal":true, "article-magazine":true,
+		"article-newspaper":true, "bill":true, "book":true, "broadcast":true,
+		"chapter":true, "dataset":true, "entry":true, "entry-dictionary":true,
+		"entry-encyclopedia":true, "figure":true, "graphic":true, "interview":true,
+		"legal_case":true, "legislation":true, "manuscript":true, "map":true,
+		"motion_picture":true, "musical_score":true, "pamphlet":true,
+		"paper-conference":true, "patent":true, "personal_communication":true,
+		"post":true, "post-weblog":true, "report":true, "review":true, "review-book":true,
+		"song":true, "speech":true, "thesis":true, "treaty":true, "webpage":true,
+		"gazette":true, "regulation":true, "classic":true, "standard":true, "hearing":true, "video":true};
+		
 	var parsedData = parseInput();
 	if (!parsedData) return false;
 	
@@ -62,7 +74,7 @@ function detectImport() {
 	for (var i=0; i<parsedData.length; i++) {
 		var item = parsedData[i];
 		// second argument is for "strict"
-		if (typeof item !== "object" || !item.type || !(ZU.getZoteroTypeFromCslType(item, true))) {
+		if (typeof item !== "object" || !item.type || !CSL_TYPES[item.type]) {
 			return false;
 		}
 	}

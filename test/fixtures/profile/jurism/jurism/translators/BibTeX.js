@@ -18,7 +18,7 @@
 	},
 	"inRepository": true,
 	"translatorType": 3,
-	"lastUpdated": "2019-10-12 20:32:44"
+	"lastUpdated": "2019-12-15 20:11:00"
 }
 
 /*
@@ -1210,7 +1210,6 @@ var numberRe = /^[0-9]+/;
 // Also remove markup
 var citeKeyTitleBannedRe = /\b(a|an|the|some|from|on|in|to|of|do|with|der|die|das|ein|eine|einer|eines|einem|einen|un|une|la|le|l\'|el|las|los|al|uno|una|unos|unas|de|des|del|d\')(\s+|\b)|(<\/?(i|b|sup|sub|sc|span style=\"small-caps\"|span)>)/g;
 var citeKeyConversionsRe = /%([a-zA-Z])/;
-var citeKeyCleanRe = /[^a-z0-9\!\$\&\*\+\-\.\/\:\;\<\>\?\[\]\^\_\`\|]+/g;
 
 var citeKeyConversions = {
 	"a":function (flags, item) {
@@ -1282,6 +1281,15 @@ function buildCiteKey (item, extraFields, citekeys) {
 	// however, we want to keep the base characters
 
 	basekey = tidyAccents(basekey);
+	// use legacy pattern for all old items to not break existing usages
+	var citeKeyCleanRe = /[^a-z0-9\!\$\&\*\+\-\.\/\:\;\<\>\?\[\]\^\_\`\|]+/g;
+	// but use the simple pattern for all newly added items
+	// or always if the hiddenPref is set
+	// extensions.zotero.translators.BibTeX.export.simpleCitekey
+	if ((Zotero.getHiddenPref && Zotero.getHiddenPref('BibTeX.export.simpleCitekey'))
+			|| (item.dateAdded && parseInt(item.dateAdded.substr(0, 4)) >= 2020)) {
+		citeKeyCleanRe = /[^a-z0-9_-]/g;
+	}
 	basekey = basekey.replace(citeKeyCleanRe, "");
 	var citekey = basekey;
 	var i = 0;
@@ -1299,14 +1307,14 @@ function doExport() {
 		// Case of words with uppercase characters in non-initial positions is
 		// preserved with braces.
 		// Two extra captures because of the other regexp below
-		protectCapsRE = new ZU.XRegExp("()()\\b(\\p{Letter}+\\p{Uppercase_Letter}\\p{Letter}*)", 'g');
+		protectCapsRE = new ZU.XRegExp("()()\\b([\\p{Letter}\\d]+\\p{Uppercase_Letter}[\\p{Letter}\\d]*)", 'g');
 	} else {
 		// Protect all upper case letters, even if the uppercase letter is only in
 		// initial position of the word.
 		// Don't protect first word if only first letter is capitalized
 		protectCapsRE = new ZU.XRegExp(
-			"(.)\\b(\\p{Letter}*\\p{Uppercase_Letter}\\p{Letter}*)" // Non-initial words with capital letter anywhere
-				+ "|^(\\p{Letter}+\\p{Uppercase_Letter}\\p{Letter}*)" // Initial word with capital in non-initial position
+			"(.)\\b([\\p{Letter}\\d]*\\p{Uppercase_Letter}[\\p{Letter}\\d]*)" // Non-initial words with capital letter anywhere
+				+ "|^([\\p{Letter}\\d]+\\p{Uppercase_Letter}[\\p{Letter}\\d]*)" // Initial word with capital in non-initial position
 			, 'g');
 	}
 	

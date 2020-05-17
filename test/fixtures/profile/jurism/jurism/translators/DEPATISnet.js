@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2014-03-12 04:43:57"
+	"lastUpdated": "2019-12-07 20:44:27"
 }
 
 /*
@@ -34,25 +34,26 @@
 */
 
 function detectWeb(doc, url) {
-	if (url.indexOf("action=bibdat") !== -1) {
+	if (url.includes("action=bibdat")) {
 		return "patent";
 	}
-	if (url.indexOf("action=treffer") !== -1 && Object.keys(getSearchResults(doc)).length) {
+	if (url.includes("action=treffer") && Object.keys(getSearchResults(doc)).length) {
 		return "multiple";
 	}
+	return false;
 }
 
 function getSearchResults(doc) {
-	var results = {}
+	var results = {};
 	
 	var rows = ZU.xpath(doc, '//div[@id="inhalt"]/form/table/tbody/tr');
 	
-	for (var i=0, n=rows.length; i<n; i++) {
+	for (var i = 0, n = rows.length; i < n; i++) {
 		var columns = ZU.xpath(rows[i], './td');
 		
-		var href = ZU.xpath(columns[0], './a')[0].href;	
+		var href = ZU.xpath(columns[0], './a')[0].href;
 		var name = ZU.trimInternal(columns[0].textContent);
-		name = name + " \"" + cleanTitle(columns[1]) +"\"";
+		name = name + " \"" + cleanTitle(columns[1]) + "\"";
 		
 		results[href] = name;
 	}
@@ -60,10 +61,9 @@ function getSearchResults(doc) {
 }
 
 
-
 var labelMap = {
-	"AN": "applicationNumber",
-	"AB": "abstractNote",
+	AN: "applicationNumber",
+	AB: "abstractNote",
 };
 
 function cleanTitle(value) {
@@ -86,7 +86,7 @@ function cleanName(name, inventors) {
 	var parts = name.split(",");
 
 	parts = parts.map(
-		function(part) {
+		function (part) {
 			part = ZU.trimInternal(part);
 			if (part.toUpperCase() == part) {
 				part = ZU.capitalizeTitle(part, true);
@@ -96,17 +96,19 @@ function cleanName(name, inventors) {
 	);
 
 	// Last is always country code, so only return first part if there are only two
-	// if second part starts with a number it is a postal code and first part is 
-	// eithe a company name or a name without delimiter between last and given name
+	// if second part starts with a number it is a postal code and first part is
+	// either a company name or a name without delimiter between last and given name
 	if (parts.length <= 2 || parts[1].match(/^[0-9]/)) {
 		if (inventors) {
 			name = parts[0].split(/ /);
-			return name.shift()+", "+name.join(" ");
-		} else {
+			return name.shift() + ", " + name.join(" ");
+		}
+		else {
 			return parts[0];
 		}
-	} else {
-		return parts[0]+", "+parts[1];
+	}
+	else {
+		return parts[0] + ", " + parts[1];
 	}
 }
 
@@ -115,71 +117,59 @@ function scrape(doc, url) {
 
 	var ipcs = [];
 
-	var rows = ZU.xpath(doc, '//table[@class="ergebnis"]/tbody/tr');
+	var rows = ZU.xpath(doc, '//table[@class="tab_detail"]/tbody/tr');
 	
-	for (var i=0, n=rows.length; i<n; i++) {
+	for (var i = 0, n = rows.length; i < n; i++) {
 		var columns = ZU.xpath(rows[i], './td');
 
+		var label;
+		var value;
 		if (columns.length == 4) {
-			var label = columns[2].textContent;
-			var value = columns[3];
-		} else if (columns.length == 3) {
-			var label = columns[1].textContent;
-			var value = columns[2];			
+			label = columns[2].textContent;
+			value = columns[3];
+		}
+		else if (columns.length == 3) {
+			label = columns[1].textContent;
+			value = columns[2];
 		}
 		if (!value) continue;
 		
-		//Z.debug("label: " + label);
-		//Z.debug("value: " + value.textContent);
+		// Z.debug("label: " + label);
+		// Z.debug("value: " + value.textContent);
 		
-		switch(label) {
+		switch (label) {
 			case "TI":
 				newItem.title = cleanTitle(value);
-			break;
+				break;
 			case "IN":
-				var names = value.textContent.split(";");
-				names.forEach(
-					function(name) {
-						name = cleanName(name, true);
-						if (name != "") {
-							newItem.creators.push(ZU.cleanAuthor(name, "inventor", true));
-						}
+				newItem.creators = [];
+				var creators = value.textContent.split(";");
+				for (let creator of creators) {
+					creator = cleanName(creator, true);
+					if (creator != "") {
+						newItem.creators.push(ZU.cleanAuthor(creator, "inventor", true));
 					}
-				)
-			break;
+				}
+				break;
 			case "PA":
-				var names = [];
-				value.textContent.split(";").forEach(
-					function(name) {
-						name = cleanName(name, false);
-						if (name != "") {
-							names.push(name);
-						}
-					}
-				)
-				newItem.assignee = names.join("; ");
-			break;
+				var assigneeNames = value.textContent.split(";").map(name => cleanName(name, false)).filter(name => name != "");
+				newItem.assignee = assigneeNames.join("; ");
+				break;
 			case "ICM":
 			case "ICS":
-				var ipc = ZU.xpathText(value, './a');
-				ipc = ipc.split(",");
-				ipc.forEach(
-					function(name) {
-						name = ZU.trimInternal(name);
-						if (name) {
-							ipcs.push(name);
-						}
-					}
-				);
-			break;
+				var ipc = ZU.xpathText(value, './a').split(",");
+				for (let name of ipc) {
+					ipcs.push(ZU.trimInternal(name));
+				}
+				break;
 			case "PUB":
 				var date = value.textContent.replace(/\s+/g, '').split(".");
-				newItem.date = date[2]+"-"+date[1]+"-"+date[0];
-			break;
+				newItem.date = date[2] + "-" + date[1] + "-" + date[0];
+				break;
 			case "AD":
-				var date = value.textContent.replace(/\s+/g, '').split(".");
-				newItem.filingDate = date[2]+"-"+date[1]+"-"+date[0];
-			break;
+				var filingDate = value.textContent.replace(/\s+/g, '').split(".");
+				newItem.filingDate = filingDate[2] + "-" + filingDate[1] + "-" + filingDate[0];
+				break;
 			default:
 				if (labelMap[label]) {
 					newItem[labelMap[label]] = ZU.trimInternal(value.textContent);
@@ -189,9 +179,9 @@ function scrape(doc, url) {
 
 	var pn = url.match(/\bdocid=([^&#]*)/)[1];
 	
-	newItem.url = "http://depatisnet.dpma.de/DepatisNet/depatisnet?action=bibdat&docid="+pn;
+	newItem.url = "http://depatisnet.dpma.de/DepatisNet/depatisnet?action=bibdat&docid=" + pn;
 	
-	newItem.patentNumber = pn.replace(/^([A-Z]{2})[0]*(.*)$/,"$1$2");
+	newItem.patentNumber = pn.replace(/^([A-Z]{2})[0]*(.*)$/, "$1$2");
 
 	// some entries (especially JP and RU patents) have no titles listed in DepatisNet
 	// use the patentnumber instead for these entries
@@ -203,17 +193,17 @@ function scrape(doc, url) {
 
 	newItem.attachments.push({
 		title: "DEPATISnet patent record",
-		document: doc
+		url: url,
+		snapshot: false
 	});
 	
-	var pages = ZU.xpathText(doc, '//table[@class="ergebnis"]/caption[1]');
-	pages = pages.match(/(Seiten|Pages):\s*([0-9]+)/)[2];
-
-	if (pages > 0) {
-		var pdfurl = "https://register.dpma.de/pdfschrift/"+pn+".pdf?dpi=300";
-		
+	var pages = ZU.xpathText(doc, '//div[@id="inhalt"]/h2');
+	// e.g. "Dokument   DE000004446098C2   (Seiten: 8)"
+	// but there is no PDF available when we have "Seiten: 0"
+	if (pages && /(Seiten|Pages):\s*[1-9][0-9]*/.test(pages)) {
+		var pdfurl = "https://depatisnet.dpma.de/DepatisNet/depatisnet/" + pn + "_all_pages.pdf?window=1&space=menu&content=download_doc_verify&action=download_doc&docid=" + pn;
 		newItem.attachments.push({
-			title: newItem.patentNumber,
+			title: "Fulltext",
 			url: pdfurl,
 			mimeType: "application/pdf"
 		});
@@ -223,14 +213,12 @@ function scrape(doc, url) {
 }
 
 function doWeb(doc, url) {
-
-	if (detectWeb(doc, url) == "multiple"){
-
+	if (detectWeb(doc, url) == "multiple") {
 		var results = getSearchResults(doc);
 
-		Z.selectItems(results, 
+		Z.selectItems(results,
 			function (items) {
-				if (!items) return true;
+				if (!items) return;
 
 				var urls = [];
 				for (var j in items) {
@@ -239,10 +227,12 @@ function doWeb(doc, url) {
 				ZU.processDocuments(urls, scrape);
 			}
 		);
-	} else {
-		scrape(doc, url);	
+	}
+	else {
+		scrape(doc, url);
 	}
 }
+
 /** BEGIN TEST CASES **/
 var testCases = [
 	{
@@ -264,13 +254,11 @@ var testCases = [
 						"creatorType": "inventor"
 					}
 				],
-				"date": "1998-11-26",
-				"accessDate": "CURRENT_TIMESTAMP",
+				"issueDate": "1998-11-26",
 				"applicationNumber": "4446098",
 				"assignee": "Philips Patentverwaltung GmbH; Siemens AG",
 				"extra": "IPC: H01R 23/68; H01R 4/24; H01R 13/648; H01R 13/652",
 				"filingDate": "1994-12-22",
-				"libraryCatalog": "DEPATISnet",
 				"patentNumber": "DE4446098C2",
 				"url": "http://depatisnet.dpma.de/DepatisNet/depatisnet?action=bibdat&docid=DE000004446098C2",
 				"attachments": [
@@ -278,7 +266,7 @@ var testCases = [
 						"title": "DEPATISnet patent record"
 					},
 					{
-						"title": "DE4446098C2",
+						"title": "Fulltext",
 						"mimeType": "application/pdf"
 					}
 				],
@@ -307,13 +295,11 @@ var testCases = [
 						"creatorType": "inventor"
 					}
 				],
-				"date": "1998-10-21",
-				"accessDate": "CURRENT_TIMESTAMP",
+				"issueDate": "1998-10-21",
 				"applicationNumber": "95942705",
 				"assignee": "Koninkl Philips Electronics Nv; Philips Patentverwaltung; Siemens Ag",
-				"extra": "IPC: H01R 12/16",
+				"extra": "IPC: H01R 12/16;",
 				"filingDate": "1995-12-20",
-				"libraryCatalog": "DEPATISnet",
 				"patentNumber": "EP871998A1",
 				"url": "http://depatisnet.dpma.de/DepatisNet/depatisnet?action=bibdat&docid=EP000000871998A1",
 				"attachments": [
@@ -321,7 +307,7 @@ var testCases = [
 						"title": "DEPATISnet patent record"
 					},
 					{
-						"title": "EP871998A1",
+						"title": "Fulltext",
 						"mimeType": "application/pdf"
 					}
 				],
@@ -366,12 +352,10 @@ var testCases = [
 				"itemType": "patent",
 				"title": "JP2007522283A",
 				"creators": [],
-				"date": "2007-08-09",
-				"accessDate": "CURRENT_TIMESTAMP",
+				"issueDate": "2007-08-09",
 				"applicationNumber": "2006551227",
-				"extra": "IPC: C10L 3/10",
+				"extra": "IPC: C10L 3/10;",
 				"filingDate": "2005-01-18",
-				"libraryCatalog": "DEPATISnet",
 				"patentNumber": "JP2007522283A",
 				"url": "http://depatisnet.dpma.de/DepatisNet/depatisnet?action=bibdat&docid=JP002007522283A",
 				"attachments": [
