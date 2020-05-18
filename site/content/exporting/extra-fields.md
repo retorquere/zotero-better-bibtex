@@ -77,4 +77,6 @@ It is important to note that these BBT-specific fields are not recognized by any
 
 ## Label/variable list
 
+*note*: I list the Zotero fields here, not the bibtex fields. The Zotero fields are translated to bibtex fields but that translation is pretty complicated and I don't have a simple description of it at this time.
+
 {{% extra-fields %}}
