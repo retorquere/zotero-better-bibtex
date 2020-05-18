@@ -29,6 +29,14 @@ These extra-fields are available to [postscripts](scripting) as `item.extraField
 * when you export to CSL, it is attempted to map it to the corrsponding CSL fields; if none are available, it is available under their *zotero* name
 * when you export to Better BibTeX/Better BibLaTeX, it is attempted to map it to the corresponding zotero fields; if none are available, it is available under their *csl variable* name
 
+There's three type of fields:
+
+* text
+* date
+* name
+
+Text is just that. For dates, BBT will do its darndest to parse the crazy dates so many people seem intent in using but if you want consistent results, stick to `YYYY-MM-DD`. For names, use either just text (equivalent to a single-part name in Zotero), or `<family name> || <given name>`.
+
 ## BBT-specific
 
 There is also a BBT-specific extra-field format that looks like
