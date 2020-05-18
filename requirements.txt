@@ -31,3 +31,4 @@ requests
 ruamel.yaml
 selenium
 toml
+pytablewriter

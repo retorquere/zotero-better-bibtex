@@ -1,6 +1,6 @@
 ---
 title: Advanced
-weight: 7
+weight: 8
 aliases:
   - /hardcore
   - /Going-hardcore

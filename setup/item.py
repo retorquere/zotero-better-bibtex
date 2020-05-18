@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 
+from functools import reduce
 from http.client import RemoteDisconnected
 from lxml import etree
 from mako import exceptions
 from mako.template import Template
 from munch import Munch
+from pytablewriter import MarkdownTableWriter
 from urllib.error import HTTPError
 import glob
+import itertools
+import json
 import json, jsonpatch, jsonpath_ng
 import mako
 import networkx as nx
@@ -14,18 +18,16 @@ import os, sys
 import re
 import sys
 import urllib.request
-from functools import reduce
-#import matplotlib.pyplot as plt
 
 root = os.path.join(os.path.dirname(__file__), '..')
 
 print('parsing Zotero/Juris-M schemas')
 SCHEMA = Munch(root = os.path.join(root, 'schema'))
-GEN = os.path.join(root, 'gen/items')
+ITEMS = os.path.join(root, 'gen/items')
 TYPINGS = os.path.join(root, 'gen/typings')
 
 os.makedirs(SCHEMA.root, exist_ok=True)
-os.makedirs(GEN, exist_ok=True)
+os.makedirs(ITEMS, exist_ok=True)
 os.makedirs(TYPINGS, exist_ok=True)
 
 class fetch(object):
@@ -171,7 +173,7 @@ class ExtraFields:
     else:
       return ','.join(label.split(',') + [ str(change) ])
 
-  def save(self, save_to):
+  def save(self):
     stringizer = lambda x: self.dg.nodes[x]['name'] if x in self.dg.nodes else x
 
     # remove multi-line text fields
@@ -258,7 +260,20 @@ class ExtraFields:
       assert len(mapped.get('zotero', [])) <= 1, (var, mapped)
       assert len(mapped.get('csl', [])) <= 1, (var, mapped)
 
-    with open(save_to, 'w') as f:
+    # docs
+    with open(os.path.join(root, 'site/layouts/shortcodes/extra-fields.md'), 'w') as f:
+      writer = MarkdownTableWriter()
+      writer.headers = ['label', 'type', 'zotero/jurism', 'csl']
+      writer.value_matrix = []
+      for label, to in sorted(mapping.items(), key=lambda x: x[0].replace('-', '').replace('_', '').replace(' ', '').lower() + ':' + x[0]):
+        if not ' ' in label: continue
+        #rows = list(itertools.zip_longest([f'**{label}**'], [to['type']], to.get('zotero', []), to.get('csl', []), fillvalue=''))
+        #writer.value_matrix.extend(rows)
+        writer.value_matrix.append((f'**{label}**', to['type'], ' / '.join(sorted(to.get('zotero', []))), ' / '.join(sorted(to.get('csl', [])))))
+      writer.stream = f
+      writer.write_table()
+
+    with open(os.path.join(ITEMS, 'extra-fields.json'), 'w') as f:
       json.dump(mapping, f, sort_keys=True, indent='  ')
 
     # remove phantom labels for clarity
@@ -266,16 +281,16 @@ class ExtraFields:
       self.dg.remove_node(label)
     nx.write_gml(self.dg, 'mapping.gml', stringizer)
 
-    with open('mapping.json', 'w') as f:
-      data = nx.readwrite.json_graph.node_link_data(self.dg)
-      for node in data['nodes']:
-        node.pop('graphics', None)
-        node.pop('type', None)
-        node['label'] = node.pop('name')
-      for link in data['links']:
-        link.pop('graphics', None)
-        link.pop('LabelGraphics', None)
-      json.dump(data, f, indent='  ')
+    #with open('mapping.json', 'w') as f:
+    #  data = nx.readwrite.json_graph.node_link_data(self.dg)
+    #  for node in data['nodes']:
+    #    node.pop('graphics', None)
+    #    node.pop('type', None)
+    #    node['label'] = node.pop('name')
+    #  for link in data['links']:
+    #    link.pop('graphics', None)
+    #    link.pop('LabelGraphics', None)
+    #  json.dump(data, f, indent='  ')
 
 print('  writing extra-fields')
 with fetch('https://api.zotero.org/schema', 'zotero.json') as z, fetch('https://raw.githubusercontent.com/Juris-M/zotero-schema/master/schema-jurism.json', 'juris-m.json') as j:
@@ -286,7 +301,7 @@ with fetch('https://api.zotero.org/schema', 'zotero.json') as z, fetch('https://
 
   SCHEMA.jurism = Munch.fromDict(patch(json.load(j), 'schema.patch'))
   ef.load(SCHEMA.jurism)
-  ef.save(os.path.join(GEN, 'extra-fields.json'))
+  ef.save()
 
 print('  writing creators')
 creators = {'zotero': {}, 'jurism': {}}
@@ -298,7 +313,7 @@ for itemType in jsonpath.parse('*.itemTypes[*]').find(SCHEMA):
   if not itemType.value.itemType in creators[client]: creators[client][itemType.value.itemType] = []
   for creator in itemType.value.creatorTypes:
     creators[client][itemType.value.itemType].append(creator.creatorType)
-with open(os.path.join(GEN, 'creators.json'), 'w') as f:
+with open(os.path.join(ITEMS, 'creators.json'), 'w') as f:
   json.dump(creators, f, indent='  ', default=lambda x: list(x))
 
 def template(tmpl):
@@ -310,7 +325,7 @@ with open(os.path.join(TYPINGS, 'serialized-item.d.ts'), 'w') as f:
   print(template('items/serialized-item.d.ts.mako').render(fields=fields).strip(), file=f)
 
 print('  writing field simplifier')
-with open(os.path.join(GEN, 'fields.ts'), 'w') as f:
+with open(os.path.join(ITEMS, 'fields.ts'), 'w') as f:
   valid = Munch(type={}, field={})
   for itemType in jsonpath.parse('*.itemTypes[*].itemType').find(SCHEMA):
     client = str(itemType.full_path).split('.')[0]
@@ -360,7 +375,7 @@ with open(os.path.join(GEN, 'fields.ts'), 'w') as f:
     print(exceptions.text_error_template().render())
 
 print('  writing csl-types')
-with open(os.path.join(GEN, 'csl-types.json'), 'w') as f:
+with open(os.path.join(ITEMS, 'csl-types.json'), 'w') as f:
   types = set()
   for tpe in jsonpath.parse('*.csl.types.*').find(SCHEMA):
     types.add(str(tpe.full_path).split('.')[-1])
