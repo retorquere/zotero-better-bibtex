@@ -45,7 +45,7 @@ There is also a BBT-specific extra-field format that looks like
 tex.field: value
 ```
 
-It is important to note that these BBT-specific fields are not recognized by any other exporter. These fields are simply copied to the output, so if you have
+These fields are simply copied to the output by BBT, so if you have
 
 ```
 tex.bestfield: philosophy
@@ -72,6 +72,8 @@ and not
 tex.corp= Black & Decker
 tex.formula: $\sum\limits_{i=1}^{n} -p(m_{i})\log_{2}(p(m_{i}))$
 ```
+
+It is important to note that these BBT-specific fields are not recognized by any other exporter. They might end up in notes for some other exporters; there's nothing I can do about that.
 
 ## Label/variable list
 
