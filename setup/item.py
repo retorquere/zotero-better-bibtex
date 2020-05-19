@@ -110,14 +110,21 @@ class ExtraFields:
     for f, t in mappings:
       self.dg.add_edge(':'.join(f), ':'.join(t), graphics={ 'targetArrow': 'standard' })
 
-  def add_var(self, domain, name, tpe):
+  def add_var(self, domain, name, tpe, client):
     assert domain in ['csl', 'zotero']
     assert type(name) == str
     assert tpe in ['name', 'date', 'text']
 
-    self.dg.add_node(f'{domain}:{name}', domain=domain, name=name, type=tpe, graphics={'h': 30.0, 'w': 7 * len(name), 'fill': self.color[domain]})
+    node_id = f'{domain}:{name}'
 
-  def load(self, schema):
+    if node_id in self.dg.nodes:
+      assert self.dg.nodes[node_id]['type'] == tpe
+    else:
+      self.dg.add_node(f'{domain}:{name}', domain=domain, name=name, type=tpe, graphics={'h': 30.0, 'w': 7 * len(name), 'fill': self.color[domain]})
+    self.dg.nodes[node_id][client] = True
+
+
+  def load(self, schema, client):
     typeof = {}
     for field, meta in schema.meta.fields.items():
       typeof[field] = meta.type
@@ -127,33 +134,33 @@ class ExtraFields:
       baseField = field.value.get('baseField', None)
       field = field.value.get('baseField', field.value.field)
 
-      self.add_var('zotero', field, typeof.get(field, 'text'))
+      self.add_var('zotero', field, typeof.get(field, 'text'), client)
 
     for field in jsonpath.parse('$.itemTypes[*].creatorTypes[*].creatorType').find(schema):
-      self.add_var('zotero', field.value, 'name')
+      self.add_var('zotero', field.value, 'name', client)
 
     for fields in jsonpath.parse('$.csl.fields.text').find(schema):
       for csl, zotero in fields.value.items():
-        self.add_var('csl', csl, 'text')
+        self.add_var('csl', csl, 'text', client)
         for field in zotero:
-          self.add_var('zotero', field, 'text')
+          self.add_var('zotero', field, 'text', client)
           self.add_mapping(('csl', csl), ('zotero', field))
 
     for fields in jsonpath.parse('$.csl.fields.date').find(schema):
       for csl, zotero in fields.value.items():
-        self.add_var('csl', csl, 'date')
+        self.add_var('csl', csl, 'date', client)
         if type(zotero) == str: zotero = [zotero] # juris-m has a list here, zotero strings
         for field in zotero:
-          self.add_var('zotero', field, 'date')
+          self.add_var('zotero', field, 'date', client)
           self.add_mapping(('csl', csl), ('zotero', field))
 
     for zotero, csl in schema.csl.names.items():
-      self.add_var('csl', csl, 'name')
-      self.add_var('zotero', zotero, 'name')
+      self.add_var('csl', csl, 'name', client)
+      self.add_var('zotero', zotero, 'name', client)
       self.add_mapping(('csl', csl), ('zotero', zotero))
 
     for field, tpe in schema.csl.unmapped.items():
-      if tpe != 'type': self.add_var('csl', field, tpe)
+      if tpe != 'type': self.add_var('csl', field, tpe, client)
 
     # add labels
     for node, data in list(self.dg.nodes(data=True)):
@@ -265,11 +272,28 @@ class ExtraFields:
       writer = MarkdownTableWriter()
       writer.headers = ['label', 'type', 'zotero/jurism', 'csl']
       writer.value_matrix = []
-      for label, to in sorted(mapping.items(), key=lambda x: x[0].replace('-', '').replace('_', '').replace(' ', '').lower() + ':' + x[0]):
-        if not ' ' in label: continue
-        #rows = list(itertools.zip_longest([f'**{label}**'], [to['type']], to.get('zotero', []), to.get('csl', []), fillvalue=''))
-        #writer.value_matrix.extend(rows)
-        writer.value_matrix.append((f'**{label}**', to['type'], ' / '.join(sorted(to.get('zotero', []))), ' / '.join(sorted(to.get('csl', [])))))
+      doc = {}
+      for label, data in self.dg.nodes(data=True):
+        if not ' ' in label or data['domain'] != 'label': continue
+        name = data['name']
+        doc[name] = {'zotero': [], 'csl': []}
+        for _, to in self.dg.out_edges(label):
+          data = self.dg.nodes[to]
+
+          if not 'type' in doc[name]:
+            doc[name]['type'] = data['type']
+          else:
+            assert doc[name]['type'] == data['type']
+
+          if data.get('zotero', False) == data.get('jurism', False):
+            postfix = ''
+          elif data.get('zotero'):
+            postfix = '\u00B2'
+          else:
+            postfix = '\u00B9'
+          doc[name][data['domain']].append(data['name'].replace('_', '\\_') + postfix)
+      for label, data in sorted(doc.items(), key=lambda x: x[0]):
+        writer.value_matrix.append((f'**{label}**', data['type'], ' / '.join(sorted(data['zotero'])), ' / '.join(sorted(data['csl']))))
       writer.stream = f
       writer.write_table()
 
@@ -297,10 +321,10 @@ with fetch('https://api.zotero.org/schema', 'zotero.json') as z, fetch('https://
   ef = ExtraFields()
 
   SCHEMA.zotero = Munch.fromDict(patch(json.load(z), 'schema.patch'))
-  ef.load(SCHEMA.zotero)
+  ef.load(SCHEMA.zotero, 'zotero')
 
   SCHEMA.jurism = Munch.fromDict(patch(json.load(j), 'schema.patch'))
-  ef.load(SCHEMA.jurism)
+  ef.load(SCHEMA.jurism, 'jurism')
   ef.save()
 
 print('  writing creators')
