@@ -5,7 +5,7 @@ MAIN=pandoc-zotero-live-citemarkers.lua
 
 bundle:
 ifeq ($(shell grep '^local pl =' $(MAIN)), )
-	amalg.lua -o ../site/content/citing/zotero.lua -s $(MAIN) lunajson lunajson.decoder lunajson.encoder locator
+	amalg.lua -o ../site/content/citing/zotero.lua -s $(MAIN) lunajson lunajson.decoder lunajson.encoder lunajson.sax locator
 else
 	@echo $(MAIN) contains debugging code
 	@exit 1
