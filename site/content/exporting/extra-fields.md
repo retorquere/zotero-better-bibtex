@@ -1,6 +1,6 @@
 ---
 title: Extra fields
-weight: 7
+weight: 8
 ---
 In some cases the Zotero fields do not offer a place to enter the
 data you need to get your references just right. For this Zotero

@@ -37,7 +37,7 @@ Not only is the extra step through "pandoc-citeproc in convert mode" unnecesary,
 * Because Zotero primarily targets the built-in CSL processor, it
   assumes titles are stored in sentence case (as CSL styles
   assume sentence case); bibtex expects title case titles, so Zotero
-  converts titles to title case on export. "pandoc-citeproc in
+  converts titles to title case on export to bibtex. "pandoc-citeproc in
   convert mode" will then take that title-cased bibtex and convert
   it back to sentence case. Neither Zotero nor pandoc-citeproc use
   natural language processing; the conversion between casing styles

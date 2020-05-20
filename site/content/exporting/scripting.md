@@ -1,6 +1,6 @@
 ---
 title: Scripting
-weight: 6
+weight: 7
 tags:
   - scripting
 aliases:
