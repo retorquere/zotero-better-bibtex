@@ -1,0 +1,39 @@
+{{/*-- How the shortcode is used: -->
+   * @see https://www.gravizo.com
+    {{< gravizo "DOT Language (GraphViz) Example" >}}
+      digraph G {
+        aize ="4,4";
+        main [shape=box];
+        main -> parse [weight=8];
+        parse -> execute;
+        main -> init [style=dotted];
+        main -> cleanup;
+        execute -> { make_string; printf}
+        init -> make_string;
+        edge [color=red];
+        main -> printf [style=bold,label="100 times"];
+        make_string [label="make a string"];
+        node [shape=box,style=filled,color=".7 .3 1.0"];
+        execute -> compare;
+      }
+    {{< /gravizo >}}
+   */}}
+
+{{ $title := "Diagram" }}
+{{ if .IsNamedParams }}
+  {{ with .Get "title" }}
+    {{ $title = . }}
+  {{ end }}
+{{ else }}
+  {{ with .Get 0 }}
+    {{ $title = . }}
+  {{ end }}
+{{ end }}
+
+<figure>
+  <img
+    src='https://g.gravizo.com/svg?{{ .Inner }}'
+    alt='{{ $title  }}'
+    />
+    <figcaption>{{ $title  }}</figcaption>
+</figure>
