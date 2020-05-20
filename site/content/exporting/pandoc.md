@@ -1,5 +1,5 @@
 ---
-title: From Markdown to live citations
+title: Markdown/Pandoc
 weight: 5
 aliases:
   - /citing/pandoc
