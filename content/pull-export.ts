@@ -6,7 +6,9 @@ const NOT_FOUND = 404
 
 import { Translators } from './translators'
 import { get as getCollection } from './collection'
-
+import { get as getLibrary } from './library'
+import { getItemsAsync } from './get-items-async'
+import { KeyManager } from './key-manager'
 
 function displayOptions(request) {
   const isTrue = new Set([ 'y', 'yes', 'true' ])
@@ -20,7 +22,7 @@ function displayOptions(request) {
   }
 }
 
-Zotero.Server.Endpoints['/better-bibtex/collection'] = class {
+Zotero.Server.Endpoints['/better-bibtex/export/collection'] = Zotero.Server.Endpoints['/better-bibtex/collection'] = class {
   public supportedMethods = ['GET']
 
   public async init(request) {
@@ -42,7 +44,7 @@ Zotero.Server.Endpoints['/better-bibtex/collection'] = class {
   }
 }
 
-Zotero.Server.Endpoints['/better-bibtex/library'] = class {
+Zotero.Server.Endpoints['/better-bibtex/export/library'] = Zotero.Server.Endpoints['/better-bibtex/library'] = class {
   public supportedMethods = ['GET']
 
   public async init(request) {
@@ -64,7 +66,7 @@ Zotero.Server.Endpoints['/better-bibtex/library'] = class {
   }
 }
 
-Zotero.Server.Endpoints['/better-bibtex/select'] = class {
+Zotero.Server.Endpoints['/better-bibtex/export/selected'] = Zotero.Server.Endpoints['/better-bibtex/select'] = class {
   public supportedMethods = ['GET']
 
   public async init(request) {
@@ -77,6 +79,40 @@ Zotero.Server.Endpoints['/better-bibtex/select'] = class {
       if (!items.length) return [NOT_FOUND, 'text/plain', 'Could not export bibliography: no selection' ]
 
       return [OK, 'text/plain', await Translators.exportItems(Translators.getTranslatorId(translator), displayOptions(request), { type: 'items', items }) ]
+    } catch (err) {
+      return [SERVER_ERROR, 'text/plain', '' + err]
+    }
+  }
+}
+
+Zotero.Server.Endpoints['/better-bibtex/export/item'] = class {
+  public supportedMethods = ['GET']
+
+  public async init(request) {
+    await Zotero.BetterBibTeX.ready
+
+    try {
+      let { translator, citationKey, libraryID, library } = request.query
+      if (typeof libraryID !== 'undefined' && library) throw new Error('specify one of library or libraryID')
+      if (typeof library === 'undefined' && library) libraryID = getLibrary(library)
+      if (typeof library === 'undefined') libraryID = Zotero.Libraries.userLibraryID
+
+      if (!translator) throw new Error('no translator selected')
+      if (!citationKey) throw new Error('no citation key provided')
+
+      const key = KeyManager.keys.find({ libraryID, citekey: citationKey })
+      let itemID
+      switch (key.length) {
+        case 0:
+          throw new Error(`item with key "${citationKey}" not found`)
+        case 1:
+          itemID = key[0].itemID
+          break
+        default:
+          throw new Error(`${key.length} items found with key "${citationKey}"`)
+      }
+
+      return [OK, 'text/plain', await Translators.exportItems(Translators.getTranslatorId(translator), displayOptions(request), { type: 'items', items: [ await getItemsAsync([itemID]) ] }) ]
     } catch (err) {
       return [SERVER_ERROR, 'text/plain', '' + err]
     }

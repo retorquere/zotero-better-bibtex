@@ -94,7 +94,7 @@ export = new class ZoteroPane {
 
     const row = pane.collectionsView.selectedTreeRow
 
-    const root = `http://127.0.0.1:${Zotero.Prefs.get('httpServer.port')}/better-bibtex`
+    const root = `http://127.0.0.1:${Zotero.Prefs.get('httpServer.port')}/better-bibtex/export`
     const params = {
       url: {
         long: '',
