@@ -18,8 +18,6 @@ import { buildCiteKey as zotero_buildCiteKey } from './formatter-zotero'
 const parser = require('./formatter.pegjs')
 import * as DateParser from '../dateparser'
 
-import { parseScript } from 'meriyah'
-
 import * as defaults from '../../gen/preferences/defaults.json'
 
 import parse5 = require('parse5/lib/parser')
@@ -53,24 +51,7 @@ type PartialDate = {
 function argumentNames(fn): string[] {
   const source = 'function ' + fn.toString()
   log.debug('parsing', source)
-  const ast = parseScript(source)
-
-  if (ast.type === 'Program') {
-    if (ast.body[0].type === 'FunctionDeclaration') {
-      return ast.body[0].params.map(p => {
-        switch (p.type) {
-          case 'AssignmentPattern':
-            if (p.left.type === 'Identifier') return p.left.name
-            break
-
-          case 'Identifier':
-            return p.name
-        }
-        throw new Error(`Unexpected parameter declaration ${JSON.stringify(p)}`)
-      })
-    }
-  }
-  throw new Error(`No function declaration found in ${source}`)
+  return []
 }
 function listMethods(obj) {
   const methods = { _: {}, $: {} }
