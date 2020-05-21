@@ -19,6 +19,7 @@ const parser = require('./formatter.pegjs')
 import * as DateParser from '../dateparser'
 
 import * as defaults from '../../gen/preferences/defaults.json'
+import * as key_formatter_methods from '../../gen/key-formatter-methods.json'
 
 import parse5 = require('parse5/lib/parser')
 const htmlParser = new parse5()
@@ -48,21 +49,6 @@ type PartialDate = {
   S?: string
 }
 
-function argumentNames(fn): string[] {
-  const source = 'function ' + fn.toString()
-  log.debug('parsing', source)
-  return []
-}
-function listMethods(obj) {
-  const methods = { _: {}, $: {} }
-  for (const method of Object.getOwnPropertyNames(Object.getPrototypeOf(obj))) {
-    if (typeof obj[method] === 'function' && (method[0] === '_' || method[0] === '$')) {
-      methods[method[0]][method.substring(1)] = argumentNames(obj[method])
-    }
-  }
-  return { functions: methods.$, filters: methods._ }
-}
-
 const safechars = '-:\\p{L}0-9_!$*+./;\\[\\]'
 class PatternFormatter {
   public generate: Function
@@ -70,7 +56,7 @@ class PatternFormatter {
   public itemTypes: Set<string>
   public fieldNames: Record<string, string>
 
-  public methods: Record<'functions' | 'filters', Record<string, string>> = listMethods(this)
+  public methods = key_formatter_methods
 
   private re = {
     unsafechars_allow_spaces: Zotero.Utilities.XRegExp(`[^${safechars}\\s]`),
