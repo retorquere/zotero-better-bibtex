@@ -1,18 +1,6 @@
 // import * as log from './debug'
 
-function getLibrary(name) {
-  if (!name) return Zotero.Libraries.get(Zotero.Libraries.userLibraryID)
-
-  const libraries = Zotero.Libraries.getAll().filter(lib => lib.name === name)
-  switch (libraries.length) {
-    case 0:
-      throw new Error(`Library '${name}' not found`)
-    case 1:
-      return libraries[0]
-    default:
-      throw new Error(`Library name '${name}' is not unique`)
-  }
-}
+import { get as getLibrary } from './library'
 
 async function getCollection(parent, name, path, create) {
   const children = parent instanceof Zotero.Library ? Zotero.Collections.getByLibrary(parent.id) : Zotero.Collections.getByParent(parent.id)
