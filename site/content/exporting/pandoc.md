@@ -76,7 +76,7 @@ pandoc -s --lua-filter=zotero.lua --metadata=zotero_scannable_cite:true --metada
 ```
 
 And hey presto, a live LibreOffice/Word file, or an ODT file with
-scannable cites. When you first open the document, open the Zotero
+scannable cites. When you first open the document with live citations, open the Zotero
 document preferences and click `OK` *before* you refresh, or you'll get a confirmation
 popup for each citation. Also, the Word document is sometimes deemed
 corrupt when opening it, but running the pandoc command again without
