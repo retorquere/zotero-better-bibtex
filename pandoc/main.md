@@ -29,7 +29,7 @@ The paper makes the following contributions:
 
 ## Achievement-driven learning methodology {#sec:achievement-driven}
 
-The learning outcomes specified to help students succeed with their courses [@biggs1996] are often necessarily at a high level, for instance to allow course content to change more fluidly, and thus arguably do not help students as much as they should. Five to ten goals might be specified for a course, but this does not tell a student what needs to be done to earn a specific grade. Indeed, often the learning outcomes can only be fully understood by someone who has completed the course.
+The learning outcomes specified to help students succeed with their courses [@biggs1996, p. 20] are often necessarily at a high level, for instance to allow course content to change more fluidly, and thus arguably do not help students as much as they should. Five to ten goals might be specified for a course, but this does not tell a student what needs to be done to earn a specific grade. Indeed, often the learning outcomes can only be fully understood by someone who has completed the course.
 
 To make these learning outcomes more achievable, comprehensible and accessible,
 Tobias Wrigstad and Elias Castegren [@wrigstad2017mastery]  developed a new

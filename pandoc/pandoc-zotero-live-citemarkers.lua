@@ -36,11 +36,12 @@ local config = {
 
 -- -- -- citation market generators -- -- --
 local function zotero_ref(cite)
+  local content = utils.collect(cite.content)
   local csl = {
     citationID = utils.random_id(8),
     properties = {
-      formattedCitation = utils.collect(cite.content),
-      plainCitation = utils.collect(cite.content),
+      formattedCitation = content,
+      plainCitation = content,
       noteIndex = 0
     },
     citationItems = {},
@@ -50,40 +51,41 @@ local function zotero_ref(cite)
     if item.mode == 'AuthorInText' then -- not supported in Zotero
       return cite
     end
-    local csl_item = zotero.get(item.id)
-    if csl_item == nil then
+    local itemData, zoteroData = zotero.get(item.id)
+    if itemData == nil then
       return cite
     end
+    local citation = {
+      id = zoteroData.itemID,
+      uris = { zoteroData.uri },
+      uri = { zoteroData.uri },
+      itemData = itemData,
+    }
 
     if item.mode == 'SuppressAuthor' then
-      csl_item.item['suppress-author'] = true
+      citation['suppress-author'] = true
     end
-    csl_item.item.prefix = utils.collect(item.prefix)
+    citation.prefix = utils.collect(item.prefix)
     local label, locator, suffix = csl_locator.parse(utils.collect(item.suffix))
-    csl_item.item.suffix = suffix
-    csl_item.item.label = label
-    csl_item.item.locator = locator
+    citation.suffix = suffix
+    citation.label = label
+    citation.locator = locator
 
-    table.insert(csl.citationItems, {
-      id = csl_item.zotero.itemID,
-      uris = { csl_item.zotero.uri },
-      uri = { csl_item.zotero.uri },
-      itemData = csl_item.item
-    })
+    table.insert(csl.citationItems, citation)
   end
 
   if config.format == 'docx' then
     local field = '<w:r><w:fldChar w:fldCharType="begin"/></w:r><w:r><w:instrText xml:space="preserve">'
     field = field .. ' ADDIN ZOTERO_ITEM CSL_CITATION ' .. utils.xmlescape(json.encode(csl)) .. '   '
     field = field .. '</w:instrText></w:r><w:r><w:fldChar w:fldCharType="separate"/></w:r><w:r><w:rPr><w:noProof/></w:rPr><w:t>'
-    field = field .. utils.xmlescape('<open Zotero document preferences: ' .. utils.collect(cite.content) .. '>')
+    field = field .. utils.xmlescape('<open Zotero document preferences: ' .. utils.xmlescape(content) .. '>')
     field = field .. '</w:t></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r>'
 
     return pandoc.RawInline('openxml', field)
   else
     csl = 'ZOTERO_ITEM CSL_CITATION ' .. utils.xmlescape(json.encode(csl)) .. ' RND' .. utils.random_id(10)
     local field = '<text:reference-mark-start text:name="' .. csl .. '"/>'
-    field = field .. utils.xmlescape('<open Zotero document preferences: ' .. utils.collect(cite.content) .. '>')
+    field = field .. utils.xmlescape('<open Zotero document preferences: ' .. utils.xmlescape(content) .. '>')
     field = field .. '<text:reference-mark-end text:name="' .. csl .. '"/>'
 
     return pandoc.RawInline('opendocument', field)
@@ -91,22 +93,21 @@ local function zotero_ref(cite)
 end
 
 local function scannable_cite(cite)
-  local citation = ''
+  local citations = ''
   for k, item in pairs(cite.citations) do
-    ssc_item = zotero.get(item.id)
-    if ssc_item == nil then
+    citation = zotero.get(item.id)
+    if citation == nil then
       return cite
     end
 
-    local uri = ssc_item.uri
     local suppress = (item.mode == 'SuppressAuthor' and '-' or '')
     local s, e, ug, id, key
-    s, e, key = string.find(uri, 'http://zotero.org/users/local/%w+/items/(%w+)')
+    s, e, key = string.find(citation.uri, 'http://zotero.org/users/local/%w+/items/(%w+)')
     if key then
       ug = 'users'
       id = '0'
     else
-      s, e, ug, id, key = string.find(uri, 'http://zotero.org/(%w+)/(%w+)/items/(%w+)')
+      s, e, ug, id, key = string.find(citation.uri, 'http://zotero.org/(%w+)/(%w+)/items/(%w+)')
     end
 
     local label, locator, suffix = csl_locator.parse(utils.collect(item.suffix))
@@ -116,7 +117,7 @@ local function scannable_cite(cite)
       locator = ''
     end
       
-    citation = citation ..
+    citations = citations ..
       '{ ' .. (utils.collect(item.prefix)  or '') ..
       ' | ' .. suppress .. utils.trim(string.gsub(utils.collect(cite.content) or '', '[|{}]', '')) ..
       ' | ' .. locator ..
