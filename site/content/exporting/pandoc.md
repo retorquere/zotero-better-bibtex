@@ -65,7 +65,7 @@ You can convert a Pandoc-compatible markdown source to a LibreOffice or Word doc
 zotero:
   library: <group name> # when omitted, use your main library
   scannable-cite: false # only relevant when your compiling to scannable-cite .odt
-  client: <`zotero` or `jurism`> # defaults to Zotero
+  client: <zotero or jurism> # defaults to zotero
 ...
 ```
 
