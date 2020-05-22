@@ -1,21 +1,6 @@
----
-zotero:
-  bibliography: http://127.0.0.1:23119/better-bibtex/library?/1/library.json
-  scannable-cite: false
-...
 # Introduction
 
-Blah blah [see @doe99, pp. 33-35; also @smith04, ch. 1].
-
-Blah blah [@doe99, pp. 33-35, 38-39 and *passim*].
-
-Blah blah [@smith05; @doe99].
-
-Smith says blah [-@smith06].
-
-@smith07 [p. 33] says blah.
-
-The course \textit{Advanced Software Design} is built around the achievement-driven learning methodology [@Shelah.SubstituteHallTheorem.p.199-208.Vol.16, pp. 12-22]
+The course \textit{Advanced Software Design} is built around the achievement-driven learning methodology [@wrigstad2017mastery]
 (more details in [@sec:theory]).
 This methodology gives students more  control of their
 learning with enough flexibility to engage them in deeper learning [@biggsTang2011].
@@ -47,7 +32,7 @@ The paper makes the following contributions:
 The learning outcomes specified to help students succeed with their courses [@biggs1996] are often necessarily at a high level, for instance to allow course content to change more fluidly, and thus arguably do not help students as much as they should. Five to ten goals might be specified for a course, but this does not tell a student what needs to be done to earn a specific grade. Indeed, often the learning outcomes can only be fully understood by someone who has completed the course.
 
 To make these learning outcomes more achievable, comprehensible and accessible,
-Tobias Wrigstad and Elias Castegren [@Shelah.SubstituteHallTheorem.p.199-208.Vol.16]  developed a new
+Tobias Wrigstad and Elias Castegren [@wrigstad2017mastery]  developed a new
 assessment technique, called \textit{achievement-driven learning}, based on a more fine-grained collection of achievements, which taken together encompass the course's learning outcomes, but are more achievable when taken individually. The list of achievements makes more explicit what a student needs to master in order to pass the course, but also to achieve higher grades. In a sense, achievement-driven learning refines constructive alignment to the micro level and provides a means for linking learning outcomes with assessment activities---it aims to hit a sweet spot in the constructive alignment design space.
 
 In achievement-driven learning, students are presented with a number of achievements (21 in Advanced Software Design) that need to be satisfactorily demonstrated to achieve each grade. Achievements are divided into 3 groups (3, 4, 5)\footnote{In many courses at Uppsala University, grades are given from a 4-point scale, U (fail),
@@ -118,7 +103,7 @@ During the meetings team members are evaluated individually, i.e. some team memb
 may pass an achievement while others will have to try
 again in the next meeting.
 The assessment scheme for the project is based
-on achievement-driven learning [@Shelah.SubstituteHallTheorem.p.199-208.Vol.16],
+on achievement-driven learning [@wrigstad2017mastery],
 as described in Section [@sec:achievement-driven].
 There is a total of 21 achievements\footnote{Link to the the overview, achievement goals and requirements: \url{https://goo.gl/CNLLLg}}: 11 achievements
 of level 3, 9 achievements of level 4 and a single individual
@@ -531,7 +516,7 @@ In the latter, the course takes Swedes and international students and students c
 different backgrounds, which made difficult finding a
 unifying game that could satisfy them all.
 
-The achievement-driven learning [@Shelah.SubstituteHallTheorem.p.199-208.Vol.16] uses gamification
+The achievement-driven learning [@wrigstad2017mastery] uses gamification
 to force students to solve a puzzle in order to optimise their time. This work extends
 achievement-driven learning, introducing explicit gaming elements to foster competition,
 engagement and the possibility of deeper learning.
@@ -560,7 +545,7 @@ In our setting, we used a platform-free software, i.e. the free Google Excel She
 # Conclusion
 
 We have added gaming elements to the \textit{Advanced Software Design} course,
-based on the achievement-driven learning methodology [@Shelah.SubstituteHallTheorem.p.199-208.Vol.16],
+based on the achievement-driven learning methodology [@wrigstad2017mastery],
 to motivate students to get higher grades.
 The gaming elements provide enjoyment and motivational factors. We have built a regression model where enjoyment and motivation explain 55\% of the variation in grades, whereby motivation drives the overall effect of the model, meaning that students who were motivated by the game also got higher grades. The link between enjoyment and grades, however, was insignificant. A future research direction could be to further explore the motivational factors that drive higher grades. Are students motivated intrinsically or extrinsically by opt-in gamification elements? What is it that drives motivation when it comes to gamification? If enjoyment, which was insignificant in our model, is indeed an intrinsic motivational factor, as suggested by [@RYAN200054],
 our results suggest that intrinsic motivational factors may be less likely to influence students' grades after all. Our results provide a hint that extrinsic motivational factors in form of achievements may be more important in students' motivation. However, future research is needed to corroborate those suggestions.

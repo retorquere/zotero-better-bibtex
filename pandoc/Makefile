@@ -4,8 +4,8 @@ TIMESTAMP=$(shell date "+%Y-%m-%dT%H:%M:%S")
 MAIN=pandoc-zotero-live-citemarkers.lua
 
 bundle:
-ifeq ($(shell grep '^local pl =' $(MAIN)), )
-	amalg.lua -o ../site/content/citing/zotero.lua -s $(MAIN) lunajson lunajson.decoder lunajson.encoder lunajson.sax locator
+ifeq ($(shell grep '^local pl =' *.lua), )
+	amalg.lua -o ../site/content/exporting/zotero.lua -s $(MAIN) lunajson lunajson.decoder lunajson.encoder lunajson.sax locator utils zotero
 else
 	@echo $(MAIN) contains debugging code
 	@exit 1
@@ -20,7 +20,13 @@ paper:
 unpack: paper
 	rm -rf docx && mkdir docx && cd docx && unzip ../paper*.docx
 
+test:
+	@pandoc -s --lua-filter=mwe.lua -o paper$(TIMESTAMP).docx main.md
+
 rocks:
 	luarocks install lunajson
 	luarocks install penlight
 	luarocks install amalg
+
+start:
+	ZOTERO_IMPORT=$(PWD)/biblio.bib npm start

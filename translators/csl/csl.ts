@@ -40,27 +40,12 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
   public postscript(reference, item, _translator, _zotero) {} // tslint:disable-line:no-empty
 
   public doExport() {
-    let pandocFilterData: { itemID: number, uri: string }[] = null
-    try {
-      if (Zotero.getOption('pandocFilterData')) pandocFilterData = []
-    } catch (err) {
-      debug('pandocFilterData:', err)
-    }
-
-    if (pandocFilterData && !Translator.BetterCSLJSON) throw new Error('pandoc filter mode only supported in CSL JSON mode')
-
     const items = []
     const order: { citationKey: string, i: number}[] = []
-    const duplicate: Record<string, boolean> = {}
     for (const item of Translator.items()) {
       if (item.itemType === 'note' || item.itemType === 'attachment') continue
 
-      if (pandocFilterData) {
-        duplicate[item.citationKey] = typeof duplicate[item.citationKey] === 'boolean'
-        pandocFilterData.push({ itemID: typeof item.itemID === 'string' ? parseInt(item.itemID) : item.itemID, uri: item.uri })
-      } else {
-        order.push({ citationKey: item.citationKey, i: items.length })
-      }
+      order.push({ citationKey: item.citationKey, i: items.length })
 
       let cached: Types.DB.Cache.ExportedItem
       if (cached = Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences)) {
@@ -172,13 +157,8 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       items.push(csl)
     }
 
-    if (pandocFilterData) {
-      // tslint:disable-next-line:prefer-object-spread
-      Zotero.write(JSON.stringify(JSON.parse(this.flush(items)).reduce((acc, csl, i) => Object.assign(acc, { [csl.id]: { item: csl, zotero: pandocFilterData[i], duplicate: duplicate[csl.id] } }), {})))
-    } else {
-      order.sort((a, b) => a.citationKey.localeCompare(b.citationKey, undefined, { sensitivity: 'base' }))
-      Zotero.write(this.flush(order.map(o => items[o.i])))
-    }
+    order.sort((a, b) => a.citationKey.localeCompare(b.citationKey, undefined, { sensitivity: 'base' }))
+    Zotero.write(this.flush(order.map(o => items[o.i])))
   }
 
   public keySort(a, b) {

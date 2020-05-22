@@ -77,7 +77,7 @@ export = new class {
   }
 
   public async importFile(path, createNewCollection, preferences, localeDateOrder?) {
-    if (localeDateOrder ) Zotero.BetterBibTeX.localeDateOrder = localeDateOrder
+    if (localeDateOrder) Zotero.BetterBibTeX.localeDateOrder = localeDateOrder
 
     preferences = preferences || {}
 

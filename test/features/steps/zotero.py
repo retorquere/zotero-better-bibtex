@@ -109,6 +109,7 @@ class Zotero:
     self.client = userdata.get('client', 'zotero')
     self.beta = userdata.get('beta') == 'true'
     self.password = str(uuid.uuid4())
+    self.import_at_start = os.environ.get('ZOTERO_IMPORT', None)
 
     self.config = Config(userdata)
 
@@ -247,6 +248,10 @@ class Zotero:
 
     assert ready, f'{self.client} did not start'
     self.config.pop()
+
+    if self.import_at_start:
+      self.execute(f'return await Zotero.BetterBibTeX.TestSupport.importFile({json.dumps(self.import_at_start)})')
+      self.import_at_start = None
 
   def reset(self):
     if self.needs_restart:
@@ -524,7 +529,7 @@ class Zotero:
 
     if not self.config.first_run:
       # force stripping of the pattern
-      profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.citekeyFormat', "[=forumPost/WebPage][Auth:lower:capitalize][Date:format-date=%Y-%m-%d.%H\\:%M\\:%S:prefix=.][PublicationTitle1_1:lower:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de] | [Auth:lower:capitalize][date:%oY:prefix=.][PublicationTitle1_1:lower:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de]")
+      profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.citekeyFormat', "[auth:lower][year] | [=forumPost/WebPage][Auth:lower:capitalize][Date:format-date=%Y-%m-%d.%H\\:%M\\:%S:prefix=.][PublicationTitle1_1:lower:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de] | [Auth:lower:capitalize][date:%oY:prefix=.][PublicationTitle1_1:lower:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de]")
 
     if self.client == 'jurism':
       utils.print('\n\n** WORKAROUNDS FOR JURIS-M IN PLACE -- SEE https://github.com/Juris-M/zotero/issues/34 **\n\n')
