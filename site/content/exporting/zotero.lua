@@ -1760,7 +1760,7 @@ function module.get(citekey)
     return nil
   end
   
-  return utils.deepcopy(state.fetched.items[citekey]), utils.deepcopy(state.fetched.zotero[citekey])
+  return state.fetched.items[citekey], state.fetched.zotero[citekey]
 end
 
 return module
