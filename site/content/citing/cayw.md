@@ -22,7 +22,7 @@ Graciously supplied by David Lukes:
 
 paste it in your .vimrc (and modify to your liking):
 
-```
+```vim
 function! ZoteroCite()
   " pick a format based on the filetype (customize at will)
   let format = &filetype =~ '.*tex' ? 'citep' : 'pandoc'

@@ -24,7 +24,7 @@ You can add options to the export as URL parameters:
 
 You can fetch your library as part of your build, using something like `curl` from your Makefile, or with a BibLaTeX remote statement like
 
-```
+```tex
 \addbibresource[location=remote]{http://127.0.0.1:23119/better-bibtex/collection?/0/8CV58ZVD.biblatex}
 ```
 

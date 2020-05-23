@@ -33,14 +33,14 @@ You can add your own fields to the export which are not derived from regular Zot
 
 either by using lines such as 
 
-```
+```text
 tex.origdate= 1856
 tex.origtitle= All This & More
 ```
 
 or
 
-```
+```text
 tex.origdate: 1856
 tex.origtitle: All This & More
 ```

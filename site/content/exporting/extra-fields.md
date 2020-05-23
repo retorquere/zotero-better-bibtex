@@ -12,13 +12,13 @@ of its own.
 
 You can add such fields by adding each on their own line in the following format:
 
-```
+```text
 Label: value
 ```
 
 or the older format you migh have seen, which is supported but considered depracated:
 
-```
+```text
 {:csl-variable: value}
 ```
 
@@ -41,19 +41,19 @@ Text is just that. For dates, BBT will do its darndest to parse the crazy dates 
 
 There is also a BBT-specific extra-field format that looks like
 
-```
+```text
 tex.field: value
 ```
 
 These fields are simply copied to the output by BBT, so if you have
 
-```
+```text
 tex.bestfield: philosophy
 ```
 
 you will end up with
 
-```
+```bibtex
   bestfield = {philosophy}
 ```
 
@@ -61,14 +61,14 @@ in the written bib(la)tex.
 
 You can make BBT export the field only for bibtex or biblatex by changing the prefix to `bibtex.` (so `bibtex.bestfield:`) or `biblatex.` respectively. Finally, you can use `=` instead of `:` as a delimiter, and that will indicate to BBT that what follows the `=` is "raw LaTeX"; BBT will not do any escaping and just copy it out unchanged. This means, for example, that you would probably want
 
-```
+```text
 tex.corp: Black & Decker
 tex.formula= $\sum\limits_{i=1}^{n} -p(m_{i})\log_{2}(p(m_{i}))$
 ```
 
 and not
 
-```
+```text
 tex.corp= Black & Decker
 tex.formula: $\sum\limits_{i=1}^{n} -p(m_{i})\log_{2}(p(m_{i}))$
 ```

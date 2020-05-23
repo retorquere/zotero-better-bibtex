@@ -22,7 +22,7 @@ here (it's how the examples got here). Postscripts are available in 4 of the tra
 You can (and totally should) check in which translator your postscript is running, which you can do by testing for
 `Translator.<id>` where `<id>` is one of these four names, using something like
 
-```
+```javascript
 if (Translator.BetterBibLaTeX) {
   ...
 }
@@ -30,7 +30,7 @@ if (Translator.BetterBibLaTeX) {
 
 or alternately on the full name using a switch
 
-```
+```javascript
 switch (Translator.header.label) {
   case 'Better BibLaTeX':
     ...
@@ -113,7 +113,7 @@ the Zotero item looks like to the translator.
 
 Since BibTeX doesn't really have well-defined behavior across styles the way BibLaTeX does, BBT can't generate URL data which is compatible with all BibTeX styles. If you know the style you use yourself, you can add the data in the format you want using a postscript. The script below will add a note for the last accessed date, and a `\url` tag within the `howpublished` field, but only for BibTeX, not for BibLaTeX, and only for `webpage` entries:
 
-```
+```javascript
 if (Translator.BetterBibTeX && item.itemType === 'webpage') {
     if (item.accessDate) {
       reference.add({ name: 'note', value: "(accessed " + item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') + ")" });
@@ -128,7 +128,7 @@ if (Translator.BetterBibTeX && item.itemType === 'webpage') {
 
 If you want to retain commas in your keywords (e.g. for chemical elements) and separate with a comma-space, you could do:
 
-```
+```javascript
 if (Translator.BetterTeX) {
   reference.add({ name: 'keywords', value: item.tags, sep: ', ' });
 }
@@ -138,7 +138,7 @@ as the default encoder knows what to do with arrays, if you give it a separator.
 
 ### Add DOI in note field
 
-```
+```javascript
 if (Translator.BetterTeX && item.DOI) {
   var doi = item.DOI;
   if (doi.indexOf('doi:') != 0) { doi = 'doi:' + doi; }
@@ -152,7 +152,7 @@ arXiv is a bit of an odd duck. It really isn't a journal, so it shouldn't be the
 
 But for arguments' sake, let's say you get the desired output by including an empty `journaltitle` field (ugh) and stuff the `arXiv:...` ID in the `pages` field (*ugh*). You could do that with the following postscript:
 
-```
+```javascript
 if (Translator.BetterTeX && item.arXiv.id) {
   reference.add({ name: 'pages', value: item.arXiv.id });
   if (!reference.has.journaltitle) { reference.add({ name: 'journaltitle', bibtex: '{}' }); }
@@ -163,7 +163,7 @@ if (Translator.BetterTeX && item.arXiv.id) {
 
 Specify the ordering of the listing of fields in an exported Biblatex/Bibtex entry. Your postscript:
 
-```
+```javascript
 if (Translator.BetterTeX) {
   // the bib(la)tex fields are ordered according to this array.
   // If a field is not in this list, it will show up after the ordered fields.
@@ -199,7 +199,7 @@ Further details [Export to Biblatex/Bibtex. Custom field order. #512](https://gi
 
 ### Detect and protect LaTeX math formulas
 
-```
+```javascript
 if (Translator.BetterTeX && reference.has.title) {
   reference.add({ name: 'title', value: item.title.replace(/(\$.*?\$)/g, '<script>{$1}</script>') });
 }
@@ -207,7 +207,7 @@ if (Translator.BetterTeX && reference.has.title) {
 
 ### Or, detect and protect (simple) LaTeX commands
 
-```
+```javascript
 if (Translator.BetterTeX && reference.has.journal) {
   reference.add({ name: 'journal', value: reference.has.journal.value.replace(/(\\\w+)/g, '<script>{$1}</script>') });
 }
@@ -215,7 +215,7 @@ if (Translator.BetterTeX && reference.has.journal) {
 
 ### Detect and protect MathJax
 
-```
+```javascript
 if (Translator.BetterTeX) {
   // different for bibtex and biblatex exporters
   const note = ['annotation', 'note'].find(field => reference.has[field])
@@ -235,7 +235,7 @@ if (Translator.BetterTeX) {
 
 Creator handling is fairly complicated, so to change the authors/editors/creators of any kind, you must change them on `item` and then call `addCreators` to do the needful. `addCreators` will *replace* the existing creators that were added to `reference` with the current state in `item.creators`, however you left it.
 
-```
+```javascript
 if (Translator.BetterBibLaTeX) {
   switch (item.itemType) {
     case 'videoRecording':
@@ -251,7 +251,7 @@ if (Translator.BetterBibLaTeX) {
 
 ### Changing the reference type from collection to book
 
-```
+```javascript
 if (Translator.BetterBibLaTeX) {
   if (reference.referencetype === 'collection') reference.referencetype = 'book'
 }

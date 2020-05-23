@@ -59,7 +59,7 @@ You can convert a Pandoc-compatible markdown source to a LibreOffice or Word doc
 * download the [Pandoc filter](../zotero.lua)
 * add some metadata to your markdown file in a YAML header:
 
-```
+```yaml
 ---
 # all the regular stuff you have here
 zotero:
@@ -72,7 +72,7 @@ zotero:
 
 or you can specify them on the pandoc command line:
 
-```
+```bash
 pandoc -s --lua-filter=zotero.lua --metadata=zotero_scannable_cite:true --metadata=client=jurism ...
 ```
 
