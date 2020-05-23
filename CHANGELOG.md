@@ -1,5 +1,10 @@
 # Changelog
 
+## [5.2.24] - 2020-05-23
+
+ - author-in-text support for pandoc-to-live-docx
+ - locators do not show up in Word through pandoc-to-live-docx (#1528)
+
 ## [5.2.23] - 2020-05-17
 
  - Import attachments with absolute path under Windows (#1522)
