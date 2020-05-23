@@ -17,6 +17,10 @@ paper:
 	@pandoc -s --lua-filter=pandoc-zotero-live-citemarkers.lua -o paper$(TIMESTAMP).odt main.md
 	@pandoc -s --metadata=zotero_scannable_cite:true --lua-filter=pandoc-zotero-live-citemarkers.lua -o paper$(TIMESTAMP)-scannable-cite.odt main.md
 
+1528:
+	@rm -f *.docx *.odt *.json
+	@pandoc -s --lua-filter=pandoc-zotero-live-citemarkers.lua -o 1528-$(TIMESTAMP).docx gh-1528.md
+
 unpack: paper
 	rm -rf docx && mkdir docx && cd docx && unzip ../paper*.docx
 

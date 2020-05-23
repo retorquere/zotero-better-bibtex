@@ -1711,6 +1711,31 @@ local state = {
 
 module.citekeys = {}
 
+function module.authors(csl)
+  if csl.author == nil then
+    return nil
+  end
+
+  local authors = {}
+  local author
+  for _, author in ipairs(csl.author) do
+    if author.literal ~= nil then
+      table.insert(authors, author.literal)
+    elseif author.family ~= nil then
+      table.insert(authors, author.family)
+    end
+  end
+  if utils.tablelength(authors) == 0 then
+    return nil
+  end
+  local last = table.remove(authors)
+  if utils.tablelength(authors) == 0 then
+    return last
+  end
+  authors = table.concat(authors, ', ')
+  return table.concat({ authors, last }, ' and ')
+end
+
 local function load_items()
   if state.fetched ~= nil then
     return
@@ -1820,12 +1845,22 @@ local function zotero_ref(cite)
     schema = "https://github.com/citation-style-language/schema/raw/master/csl-citation.json"
   }
   for k, item in pairs(cite.citations) do
-    if item.mode == 'AuthorInText' then -- not supported in Zotero
-      return cite
-    end
     local itemData, zoteroData = zotero.get(item.id)
     if itemData == nil then
       return cite
+    end
+
+    if item.mode == 'AuthorInText' then -- not formally supported in Zotero
+      if config.author_in_text then
+        local authors = zotero.authors(itemData)
+        if authors == nil then
+          return cite
+        else
+          return pandoc.Str(authors)
+        end
+      else
+        return cite
+      end
     end
     local citation = {
       id = zoteroData.itemID,
@@ -1872,6 +1907,19 @@ local function scannable_cite(cite)
       return cite
     end
 
+    if item.mode == 'AuthorInText' then -- not formally supported in Zotero
+      if config.author_in_text then
+        local authors = zotero.authors(citation)
+        if authors == nil then
+          return cite
+        else
+          return pandoc.Str(authors)
+        end
+      else
+        return cite
+      end
+    end
+
     local suppress = (item.mode == 'SuppressAuthor' and '-' or '')
     local s, e, ug, id, key
     s, e, key = string.find(citation.uri, 'http://zotero.org/users/local/%w+/items/(%w+)')
@@ -1912,6 +1960,14 @@ local function test_enum(k, v, values)
 
   error(k .. ' expects one of ' .. table.concat(values, ', ') .. ', got ' .. v)
 end
+local function test_boolean(k, v)
+  if type(v) == 'boolean' then
+    return v
+  elseif type(v) == 'nil' then
+    return false
+  end
+  return (test_enum(k, v, {'true', 'false'}) == 'true')
+end
 
 function Meta(meta)
   -- create meta.zotero if it does not exist
@@ -1921,7 +1977,7 @@ function Meta(meta)
 
   -- copy meta.zotero_<key>, which are likely command line params and take precedence, over to meta.zotero
   for k, v in pairs(meta) do
-    local s, e, key = string.find(k, '^zotero_(.*)')
+    local s, e, key = string.find(k, '^zotero[-_](.*)')
     if key then
       meta.zotero[key:gsub('_', '-')] = v
     end
@@ -1932,13 +1988,8 @@ function Meta(meta)
     meta.zotero[k] = utils.collect(v)
   end
 
-  if type(meta.zotero['scannable-cite']) == 'nil' then
-    meta.zotero['scannable-cite'] = false
-  elseif type(meta.zotero['scannable-cite']) == 'string' then
-    meta.zotero['scannable-cite'] = (test_enum('scannable-cite', meta.zotero['scannable-cite'], {'true', 'false'}) == 'true')
-  end
-  test_enum('scannable-cite', meta.zotero['scannable-cite'], {true, false})
-  config.scannable_cite = meta.zotero['scannable-cite']
+  config.scannable_cite = test_boolean(meta.zotero['scannable-cite'])
+  config.author_in_text = test_boolean(meta.zotero['author-in-text'])
 
   if type(meta.zotero.client) == 'nil' then
     meta.zotero.client = 'zotero'

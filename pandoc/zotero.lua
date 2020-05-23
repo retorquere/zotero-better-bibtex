@@ -10,6 +10,31 @@ local state = {
 
 module.citekeys = {}
 
+function module.authors(csl)
+  if csl.author == nil then
+    return nil
+  end
+
+  local authors = {}
+  local author
+  for _, author in ipairs(csl.author) do
+    if author.literal ~= nil then
+      table.insert(authors, author.literal)
+    elseif author.family ~= nil then
+      table.insert(authors, author.family)
+    end
+  end
+  if utils.tablelength(authors) == 0 then
+    return nil
+  end
+  local last = table.remove(authors)
+  if utils.tablelength(authors) == 0 then
+    return last
+  end
+  authors = table.concat(authors, ', ')
+  return table.concat({ authors, last }, ' and ')
+end
+
 local function load_items()
   if state.fetched ~= nil then
     return
