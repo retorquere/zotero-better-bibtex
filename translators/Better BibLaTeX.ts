@@ -287,6 +287,7 @@ export function doExport() {
     if (['bookSection', 'chapter'].includes(item.referenceType) && ref.hasCreator('bookAuthor')) ref.referencetype = 'inbook'
     if (item.referenceType === 'book' && !ref.hasCreator('author') && ref.hasCreator('editor')) ref.referencetype = 'collection'
     if (ref.referencetype === 'book' && item.numberOfVolumes) ref.referencetype = 'mvbook'
+    if (ref.referencetype === 'report' && item.type?.toLowerCase().includes('manual')) ref.referencetype = 'manual'
 
     let m
     if (item.url && (m = item.url.match(/^http:\/\/www.jstor.org\/stable\/([\S]+)$/i))) {

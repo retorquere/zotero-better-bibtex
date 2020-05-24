@@ -343,7 +343,7 @@ class ZoteroItem {
   private typeMap = {
     book:           'book',
     booklet:        'book',
-    manual:         'book',
+    manual:         'report',
     proceedings:    'book',
     collection:     'book',
     incollection:   'bookSection',
@@ -390,6 +390,7 @@ class ZoteroItem {
     } else {
       this.item = new Zotero.Item(this.type)
       this.item.itemID = this.id
+      if (this.type === 'report' && this.bibtex.type === 'manual') this.$type('manual')
 
       this.import()
 
