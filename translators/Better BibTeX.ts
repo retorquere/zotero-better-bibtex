@@ -193,7 +193,7 @@ export function doExport() {
   let item: ISerializedItem
   while (item = Exporter.nextItem()) {
     const ref = new Reference(item)
-
+    if (item.itemType === 'report' && item.type?.toLowerCase().includes('manual')) ref.referencetype = 'manual'
     if (['bookSection', 'chapter'].includes(item.referenceType) && ref.hasCreator('bookAuthor')) ref.referencetype = 'inbook'
 
     ref.add({name: 'address', value: item.place})
