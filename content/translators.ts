@@ -59,9 +59,10 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
   private queue = new Queue((t1: IPriority, t2: IPriority) => t1.priority === t2.priority ? t1.timestamp < t2.timestamp : t1.priority > t2.priority)
 
-  public workers: { total: number, running: Set<number> } = {
+  public workers: { total: number, running: Set<number>, disabled: boolean } = {
     total: 0,
     running: new Set,
+    disabled: false,
   }
 
   constructor() {
@@ -274,8 +275,9 @@ export let Translators = new class { // tslint:disable-line:variable-name
         'Could not start a background export after 5 attempts. Background exports have been disabled -- PLEASE report this as a bug at the Better BibTeX github project',
         15 // tslint:disable-line:no-magic-numbers
       )
-      Prefs.set('workers', 0)
-      return
+      this.workers.disabled = true
+      // this returns a promise for a new export, but now a foreground export
+      return this.exportItems(translatorID, displayOptions, options.scope, options.path)
     }
 
     const config: BBTWorker.Config = {
