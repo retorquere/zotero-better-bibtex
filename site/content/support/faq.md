@@ -136,3 +136,6 @@ JabRef import works generally well but has a few gotchas:
     `Library properties` option, then filling out the path to the attachments
     directory in `general file directory`.
 
+## [Background exports]({{< relref "../exporting/#background-exports" >}}) have been disabled
+
+When BBT encounters an error during a background export, it will automatically disable them; the UI will show `Background exports disabled`. For reasons that I haven't yet discovered, Firefox (the platform Zotero still builds on) declines BBT's request for a background thread, and will decline them until Zotero is restarted. In order to let you keep on working, BBT will disable background exports, and subsequent exports will be the normal Zotero foreground exports. You can re-enable the background exports using the `parallel exports` slider in BBT's `Advanced` preferences, under the `export` tab.
