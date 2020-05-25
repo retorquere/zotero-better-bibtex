@@ -60,7 +60,7 @@
     "ajv": "^6.12.2",
     "ajv-keywords": "^3.4.1",
     "barcoder": "^2.0.1",
-    "citeproc": "^2.3.13",
+    "citeproc": "^2.3.14",
     "edtf": "^2.7.2",
     "edtfy": "^0.0.8",
     "escape-string-regexp": "^4.0.0",
