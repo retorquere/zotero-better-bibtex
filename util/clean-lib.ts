@@ -85,6 +85,7 @@ for (const lib of argv._) {
         delete item.dateAdded
         delete item.dateModified
         delete item.relations
+        delete item.select
 
         cleaner(item.multi)
         if (item.multi && Object.keys(item.multi).length === 0) delete item.multi
