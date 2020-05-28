@@ -498,3 +498,7 @@ Scenario: use author dash separation rather than camel casing in citekey #1495
   When I set preference .citekeyFormat to [authors2:condense=-:lower]_[year]-[shorttitle:condense=-:lower]
   And I refresh all citation keys
   Then an export using "Better BibTeX" should match "export/*.bibtex"
+
+Scenario: Collected Notes
+  Given I import 36 references from "export/Better BibTeX does not export collections #901.json"
+  Then an export using "Collected notes" should match "export/*.html"
