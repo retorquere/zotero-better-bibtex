@@ -78,6 +78,17 @@ function is_valid_month(month, allowseason) {
   return false
 }
 
+// swap day/month for our American friends
+function swap_day_month(day, month, localeDateOrder) {
+  if (!day) day = undefined
+  if (day && localeDateOrder === 'mdy' && is_valid_month(day, false)) {
+    return [month, day]
+  } else if (day && is_valid_month(day, false) && !is_valid_month(month, false)) {
+    return [month, day]
+  }
+  return [day, month]
+}
+
 function stripTime(date) {
   return date.replace(/(\s+|T)[0-9]{2}:[0-9]{2}(:[0-9]{2}(Z|\+[0-9]{2}:?[0-9]{2})?)?$/, '')
 }
@@ -184,11 +195,7 @@ export function parse(value: string, localeDateOrder: string, as_range_part: boo
   if (m = /^(-?[0-9]{3,})([-\s\/\.])([0-9]{1,2})(\2([0-9]{1,2}))?$/.exec(exactish)) {
     const [ , _year, , _month, , _day ] = m
     const year = parseInt(_year)
-    let month = parseInt(_month)
-    let day = _day ? parseInt(_day) : undefined
-
-    // swap day/month for our American brethren
-    if (day && is_valid_month(day, false) && !is_valid_month(month, false)) [day, month] = [month, day]
+    const [day, month] = swap_day_month(parseInt(_day), parseInt(_month), 'ymd')
 
     if (is_valid_month(month, !day)) return seasonize(doubt({ type: 'date', year, month, day }, state))
   }
@@ -196,28 +203,16 @@ export function parse(value: string, localeDateOrder: string, as_range_part: boo
   // https://github.com/retorquere/zotero-better-bibtex/issues/1112
   if (m = /^([0-9]{1,2})\s+([0-9]{1,2})\s*,\s*([0-9]{4,})$/.exec(exactish)) {
     const [ , _day, _month, _year ] = m
-
     const year = parseInt(_year)
-    let month = parseInt(_month)
-    let day = parseInt(_day)
-
-    if (localeDateOrder === 'mdy') [day, month] = [month, day]
-    // swap day/month for our American brethren
-    if (day && is_valid_month(day, false) && !is_valid_month(month, false)) [day, month] = [month, day]
+    const [day, month] = swap_day_month(parseInt(_day), parseInt(_month), localeDateOrder)
 
     if (is_valid_month(month, false)) return seasonize(doubt({ type: 'date', year, month, day }, state))
   }
 
   if (m = /^([0-9]{1,2})([-\s\/\.])([0-9]{1,2})(\2([0-9]{3,}))$/.exec(exactish)) {
     const [ , _day, , _month, , _year ] = m
-
     const year = parseInt(_year)
-    let month = parseInt(_month)
-    let day = parseInt(_day)
-
-    if (localeDateOrder === 'mdy') [day, month] = [month, day]
-    // swap day/month for our American brethren
-    if (is_valid_month(day, false) && !is_valid_month(month, false)) [day, month] = [month, day]
+    const [day, month] = swap_day_month(parseInt(_day), parseInt(_month), localeDateOrder)
 
     if (is_valid_month(month, false)) return seasonize(doubt({ type: 'date', year, month, day }, state))
   }
