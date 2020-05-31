@@ -251,8 +251,6 @@ import { Logger } from './logger'
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   worker(sandbox) { return false },
 
-  client(sandbox) { return Zotero.version.includes('m') ? 'jurism' : 'zotero' }, // not great, but currently no other way to detect client type
-
   qrCheck(sandbox, value, test, params = null) { return qualityReport(value, test, params) },
 
   parseDate(sandbox, date) { return DateParser.parse(date, Zotero.BetterBibTeX.localeDateOrder) },
@@ -328,8 +326,6 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
 }
 
 Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
-  client(sandbox) { return Zotero.version.includes('m') ? 'jurism' : 'zotero' }, // not great, but currently no other way to detect client type
-
   debugEnabled(sandbox) { return Zotero.Debug.enabled },
   parseHTML(sandbox, text, options) {
     options = {
@@ -646,7 +642,6 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
   private firstRun: { citekeyFormat: String, dragndrop: boolean, unabbreviate: boolean, strings: boolean }
   private document: any
 
-  // #load
   public async load(document: any) {
     this.document = document
 

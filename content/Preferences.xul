@@ -401,7 +401,6 @@
         </bbt:doc>
 
         <preference name="extensions.zotero.translators.better-bibtex.platform" type="string" default=""/>
-        <preference name="extensions.zotero.translators.better-bibtex.client" type="string" default=""/>
 
       </preferences>
 

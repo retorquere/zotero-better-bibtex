@@ -349,7 +349,7 @@ with open(os.path.join(TYPINGS, 'serialized-item.d.ts'), 'w') as f:
   print(template('items/serialized-item.d.ts.mako').render(fields=fields).strip(), file=f)
 
 print('  writing field simplifier')
-with open(os.path.join(ITEMS, 'fields.ts'), 'w') as f:
+with open(os.path.join(ITEMS, 'items.ts'), 'w') as f:
   valid = Munch(type={}, field={})
   for itemType in jsonpath.parse('*.itemTypes[*].itemType').find(SCHEMA):
     client = str(itemType.full_path).split('.')[0]
@@ -394,7 +394,7 @@ with open(os.path.join(ITEMS, 'fields.ts'), 'w') as f:
     aliases[client][baseField].append(field)
 
   try:
-    print(template('items/fields.ts.mako').render(valid=valid, aliases=aliases).strip(), file=f)
+    print(template('items/items.ts.mako').render(valid=valid, aliases=aliases).strip(), file=f)
   except:
     print(exceptions.text_error_template().render())
 

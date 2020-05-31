@@ -20,7 +20,7 @@
 
 start
   = patterns:pattern+ {
-      var body = "\nvar loop, citekey, postfix, chunk;\nvar itemType = this.item.type.toLowerCase();"
+      var body = "\nvar loop, citekey, postfix, chunk;"
 
       for (var pattern = 0; pattern < patterns.length; pattern++) {
         body += "\nfor (loop = true; loop; loop=false) {\n  citekey = ''; postfix = 'a';\n\n"
@@ -40,10 +40,10 @@ block
   = [ \t\r\n]+                            { return '' }
   / '[0]'                                 { return `postfix = '0'` }
   / '[=' types:$[a-zA-Z/]+ ']'             {
-      types = types.toLowerCase().split('/');
-      var unknown = types.find(type => !options.itemTypes.has(type));
-      if (typeof unknown !== 'undefined') error(`unknown reference type "${unknown}"`);
-      return `if (!${JSON.stringify(types)}.includes(itemType)) break`;
+      types = types.toLowerCase().split('/').map(type => type.trim()).map(type => options.items.name.type[type.toLowerCase()] || type);
+      var unknown = types.find(type => !options.items.valid.type[type])
+      if (typeof unknown !== 'undefined') error(`unknown item type "${unknown}; valid types are ${Object.keys(options.items.name.type)}"`);
+      return `if (!${JSON.stringify(types)}.includes(this.item.type)) break`;
     }
   / '[>' limit:$[0-9]+ ']'                 { return `if (citekey.length <= ${limit}) break` }
   / '[' method:method filters:filter* ']' {
@@ -107,8 +107,10 @@ method
       if (name == 'zotero') code += `; postfix = '0'`
       return code
     }
-  / prop:$([a-zA-Z]+) &{ return options.fieldNames[prop.toLowerCase()] } {
-      return `chunk = this.$property(${JSON.stringify(options.fieldNames[prop.toLowerCase()])})`
+  / prop:$([a-zA-Z]+) {
+      const field = options.items.name.field[prop.toLowerCase()]
+      if (!field) error(`Unknown field ${JSON.stringify(prop)}`)
+      return `chunk = this.$property(${JSON.stringify(field)})`
     }
 
 nparam

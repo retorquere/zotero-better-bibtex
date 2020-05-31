@@ -155,19 +155,14 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
       type: {},
     }
 
-    const types: Set<string> = new Set
-    for (const type of await ZoteroDB.queryAsync('select itemTypeID, typeName from itemTypes')) { // 1, 14
+    for (const type of await ZoteroDB.queryAsync('select itemTypeID, typeName from itemTypes')) { // 1 = attachment, 14 = note
       this.query.type[type.typeName] = type.itemTypeID
-      types.add(type.typeName.toLowerCase())
     }
 
-    const fields: Record<string, string> = {}
     for (const field of await ZoteroDB.queryAsync('select fieldID, fieldName from fields')) {
       this.query.field[field.fieldName] = field.fieldID
-      fields[field.fieldName.toLowerCase()] = field.fieldName
     }
 
-    Formatter.init(types, fields)
     Formatter.update('init')
   }
 

@@ -157,7 +157,9 @@ if (!process.env.MINITESTS) {
         // new LogUsedFilesPlugin(label, 'translator'),
         new WrapperPlugin({
           test: /\.js$/,
-          footer: '\nimportScripts(`resource://zotero-better-bibtex/${params.translator}.js`);', // otherwise it would be contained in the webpack IIFE
+          // otherwise these would be contained in the webpack IIFE
+          header: 'importScripts("resource://zotero/config.js") // import ZOTERO_CONFIG\n\n',
+          footer: '\nimportScripts(`resource://zotero-better-bibtex/${params.translator}.js`);\n',
         })
       ],
       context: path.resolve(__dirname, './translators'),

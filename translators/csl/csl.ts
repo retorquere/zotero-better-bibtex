@@ -3,7 +3,7 @@ declare const Zotero: any
 import { Translator } from '../lib/translator'
 
 import { debug } from '../lib/debug'
-import * as itemfields from '../../gen/items/fields'
+import * as itemfields from '../../gen/items/items'
 import * as Extra from '../../content/extra'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
 

@@ -12,10 +12,11 @@ import * as DateParser from '../../content/dateparser'
 import { qualityReport } from '../../content/qr-check'
 import { titleCase } from '../../content/title-case'
 import * as itemCreators from '../../gen/items/creators.json'
+import { client } from '../../content/client'
 
 const ctx: DedicatedWorkerGlobalScope = self as any
 
-export const params: { client: string, version: string, platform: string, translator: string, output: string, localeDateOrder: string } = (ctx.location.search || '')
+export const params: { version: string, platform: string, translator: string, output: string, localeDateOrder: string } = (ctx.location.search || '')
   .replace(/^\?/, '') // remove leading question mark if present
   .split('&') // split into k-v pairs
   .filter(kv => kv) // there might be none
@@ -23,7 +24,7 @@ export const params: { client: string, version: string, platform: string, transl
   .reduce((acc, kv) => {
     if (kv.length === 2) acc[kv[0]] = kv[1]
     return acc
-  }, { client: '', version: '', platform: '', translator: '', output: '', localeDateOrder: '' })
+  }, { version: '', platform: '', translator: '', output: '', localeDateOrder: '' })
 
 class WorkerZoteroBetterBibTeX {
   public localeDateOrder: string
@@ -31,10 +32,6 @@ class WorkerZoteroBetterBibTeX {
 
   public worker() {
     return true
-  }
-
-  public client() {
-    return params.client
   }
 
   public debugEnabled() {
@@ -138,7 +135,7 @@ class WorkerZoteroUtilities {
   }
 
   public getCreatorsForType(itemType) {
-    return itemCreators[params.client][itemType]
+    return itemCreators[client][itemType]
   }
 
   public itemToCSLJSON(item) {
@@ -211,7 +208,7 @@ class WorkerZotero {
   public init(config) {
     this.config = config
     this.config.preferences.platform = params.platform
-    this.config.preferences.client = params.client
+    this.config.preferences.client = client
     this.output = ''
 
     if (this.config.options.exportFileData) {

@@ -60,7 +60,7 @@
     "ajv": "^6.12.2",
     "ajv-keywords": "^3.4.1",
     "barcoder": "^2.0.1",
-    "citeproc": "^2.3.13",
+    "citeproc": "^2.3.22",
     "edtf": "^2.7.2",
     "edtfy": "^0.0.8",
     "escape-string-regexp": "^4.0.0",
@@ -92,8 +92,8 @@
     "xregexp": "^4.3.0"
   },
   "devDependencies": {
-    "@types/node": "^14.0.5",
-    "@types/webpack": "^4.41.13",
+    "@types/node": "^14.0.6",
+    "@types/webpack": "^4.41.16",
     "archiver": "^4.0.1",
     "bluebird": "^3.7.2",
     "circular-dependency-plugin": "^5.2.0",
@@ -119,15 +119,15 @@
     "pegjs": "^0.10.0",
     "pretty-data": "^0.40.0",
     "properties-reader": "^2.0.0",
-    "pug": "^2.0.4",
+    "pug": "^3.0.0",
     "rasper": "^0.2.8",
     "recast": "^0.19.1",
     "request": "^2.88.2",
     "request-promise": "^4.2.5",
     "rimraf": "^3.0.2",
     "shelljs": "^0.8.4",
-    "ts-loader": "^7.0.4",
-    "ts-node": "^8.10.1",
+    "ts-loader": "^7.0.5",
+    "ts-node": "^8.10.2",
     "typedoc": "^0.17.7",
     "typescript": "^3.9.3",
     "uri-templates": "^0.2.0",
@@ -137,7 +137,7 @@
     "xml-parser": "^1.2.1",
     "xmldom": "^0.3.0",
     "xpath": "^0.0.27",
-    "zotero-plugin": "^1.0.20"
+    "zotero-plugin": "^1.0.22"
   },
   "repository": {
     "type": "git",

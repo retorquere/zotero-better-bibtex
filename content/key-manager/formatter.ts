@@ -19,7 +19,8 @@ const parser = require('./formatter.pegjs')
 import * as DateParser from '../dateparser'
 
 import * as defaults from '../../gen/preferences/defaults.json'
-import * as key_formatter_methods from '../../gen/key-formatter-methods.json'
+import * as methods from '../../gen/key-formatter-methods.json'
+import * as items from '../../gen/items/items'
 
 import parse5 = require('parse5/lib/parser')
 const htmlParser = new parse5()
@@ -52,11 +53,6 @@ type PartialDate = {
 const safechars = '-:\\p{L}0-9_!$*+./;\\[\\]'
 class PatternFormatter {
   public generate: Function
-
-  public itemTypes: Set<string>
-  public fieldNames: Record<string, string>
-
-  public methods = key_formatter_methods
 
   private re = {
     unsafechars_allow_spaces: Zotero.Utilities.XRegExp(`[^${safechars}\\s]`),
@@ -103,14 +99,7 @@ class PatternFormatter {
   private fold: boolean
   private citekeyFormat: string
 
-  public init(itemTypes: Set<string>, fieldNames: Record<string, string>) {
-    this.itemTypes = itemTypes
-    this.fieldNames = fieldNames
-  }
-
   public update(reason) {
-    if (!this.itemTypes) throw new Error('PatternFormatter.update called before init')
-
     this.skipWords = new Set(Prefs.get('skipWords').split(',').map(word => word.trim()).filter(word => word))
     this.fold = Prefs.get('citekeyFold')
 
@@ -153,13 +142,14 @@ class PatternFormatter {
         this.generate = new Function(this.parsePattern(this.citekeyFormat))
         break
       } catch (err) {
-        log.error('PatternFormatter.update: Error parsing citekeyFormat ', {pattern: this.citekeyFormat}, err)
+        log.error('PatternFormatter.update: Error parsing citekeyFormat ', {pattern: this.citekeyFormat}, err, err.location)
       }
     }
   }
 
   public parsePattern(pattern) {
-    const formatter = parser.parse(pattern, this)
+    const formatter = parser.parse(pattern, { items, methods })
+
     log.debug('key formatter=', formatter)
     return formatter
   }
@@ -489,6 +479,7 @@ class PatternFormatter {
 
   /** The date of the publication */
   public $date(format = '%Y-%m-%d') {
+    log.debug('keymanager:date:', { date: this.item.date, format })
     return this._format_date(this.item.date, format)
   }
 

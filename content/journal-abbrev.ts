@@ -2,6 +2,7 @@ declare const Zotero: any
 
 import { Preferences as Prefs } from './prefs'
 import { Events } from './events'
+import { client } from './client'
 
 import * as log from './debug'
 
@@ -31,7 +32,7 @@ export let JournalAbbrev = new class { // tslint:disable-line:variable-name
 
   public reset() {
     this.style = Prefs.get('autoAbbrevStyle')
-    if (Prefs.client === 'jurism' && !this.style) {
+    if (client === 'jurism' && !this.style) {
       this.style = Zotero.Styles.getVisible().filter(style => style.usesAbbreviation)[0].styleID
     }
 

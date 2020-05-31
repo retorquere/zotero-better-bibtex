@@ -3,7 +3,7 @@ declare const Zotero: any
 import { Translator } from '../lib/translator'
 
 import { JabRef } from '../bibtex/jabref' // not so nice... BibTeX-specific code
-import * as itemfields from '../../gen/items/fields'
+import * as itemfields from '../../gen/items/items'
 import * as bibtexParser from '@retorquere/bibtex-parser'
 import { Postfix } from '../bibtex/postfix.ts'
 import * as Extra from '../../content/extra'

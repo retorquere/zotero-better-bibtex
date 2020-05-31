@@ -17,6 +17,7 @@ import { Formatter } from './key-manager/formatter'
 import { KeyManager } from './key-manager'
 import { AutoExport } from './auto-export'
 import { Translators } from './translators'
+import { client } from './client'
 
 import * as prefOverrides from '../gen/preferences/auto-export-overrides.json'
 
@@ -372,9 +373,9 @@ export = new class PrefPane {
       this.autoexport.items[id].push(item.itemID)
     }
 
-    document.getElementById('better-bibtex-abbrev-style').setAttribute('collapsed', Prefs.client !== 'jurism')
-    document.getElementById('better-bibtex-abbrev-style-label').setAttribute('collapsed', Prefs.client !== 'jurism')
-    document.getElementById('better-bibtex-abbrev-style-separator').setAttribute('collapsed', Prefs.client !== 'jurism')
+    document.getElementById('better-bibtex-abbrev-style').setAttribute('collapsed', client !== 'jurism')
+    document.getElementById('better-bibtex-abbrev-style-label').setAttribute('collapsed', client !== 'jurism')
+    document.getElementById('better-bibtex-abbrev-style-separator').setAttribute('collapsed', client !== 'jurism')
 
     $patch$(Zotero_Preferences, 'openHelpLink', original => function() {
       if (document.getElementsByTagName('prefwindow')[0].currentPane.helpTopic === 'BetterBibTeX') {
@@ -425,7 +426,7 @@ export = new class PrefPane {
     this.checkCitekeyFormat()
     this.checkPostscript()
 
-    if (Prefs.client === 'jurism') {
+    if (client === 'jurism') {
       Zotero.Styles.init().then(() => {
         const styles = Zotero.Styles.getVisible().filter(style => style.usesAbbreviation)
 
@@ -466,7 +467,7 @@ export = new class PrefPane {
   }
 
   private styleChanged(index) {
-    if (Prefs.client !== 'jurism') return null
+    if (client !== 'jurism') return null
 
     const stylebox = document.getElementById('better-bibtex-abbrev-style-popup')
     const selectedItem = typeof index !== 'undefined' ? stylebox.getItemAtIndex(index) : stylebox.selectedItem

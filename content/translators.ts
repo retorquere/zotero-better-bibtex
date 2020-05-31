@@ -1,9 +1,12 @@
 declare const Zotero: any
-
 declare const Components: any
+
 Components.utils.import('resource://gre/modules/Services.jsm')
 declare const Services: any
 declare class ChromeWorker extends Worker { }
+
+Components.utils.import('resource://zotero/config.js')
+declare const ZOTERO_CONFIG: any
 
 import { Preferences as Prefs } from './prefs'
 import { Serializer } from './serializer'
@@ -241,7 +244,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
     const cache = caching && Cache.getCollection(translator.label)
 
     const params = Object.entries({
-      client: Prefs.client,
       version: Zotero.version,
       platform: Prefs.platform,
       translator: translator.label,
@@ -571,7 +573,10 @@ export let Translators = new class { // tslint:disable-line:variable-name
     }
 
     header = JSON.parse(Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${header.label}.json`))
-    const code = Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${header.label}.js`)
+    const code = [
+      `ZOTERO_CONFIG = ${JSON.stringify(ZOTERO_CONFIG)}`,
+      Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${header.label}.js`),
+    ].join('\n')
 
     if (installed?.configOptions?.hash === header.configOptions.hash) {
       log.debug('Translators.install:', header.label, 'not reinstalling', header.configOptions.hash)

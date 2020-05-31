@@ -1,6 +1,7 @@
 declare const Zotero: any
 
-const jurism = Zotero.BetterBibTeX.client() === 'jurism'
+import { client } from '../../content/client'
+const jurism = client === 'jurism'
 const zotero = !jurism
 
 type Valid = {
@@ -24,19 +25,22 @@ export const valid: Valid = {
   },
 }
 
-type Supported = {
-  field: Record<string, string>
-}
-export const supported: Supported = {
-  field: {},
-}
-for (const typeFields of Object.values(valid.field)) {
-  for (const [field, is_supported] of Object.entries(typeFields)) {
-    // tslint:disable-next-line:prefer-template
-    if (is_supported) supported.field[field] = field[0].toUpperCase() + field.substring(1).replace(/[_-]/g, ' ').replace(/([a-z])([A-Z])/g, (m, l, u) => l + ' ' + u.toLowerCase())
+// maps variable to its extra-field label
+export const label: Record<string, string> = {}
+// maps lower-case field/type to its properly spelled name for easier matching
+export const name: Record<'type' | 'field', Record<string, string>> = { type: {}, field: {} }
+for (const [type, fields] of Object.entries(valid.field)) {
+  name.type[type.toLowerCase()] = type
+
+  for (const [field, is_supported] of Object.entries(fields)) {
+    if (is_supported) {
+      // tslint:disable-next-line:prefer-template
+      label[field] = field[0].toUpperCase() + field.substring(1).replace(/[_-]/g, ' ').replace(/([a-z])([A-Z])/g, (m, l, u) => l + ' ' + u.toLowerCase())
+      name.field[field.toLowerCase()] = field
+    }
   }
 }
-supported.field.numPages = 'Number of pages'
+label.numPages = 'Number of pages'
 
 function unalias(item) {
   delete item.inPublications

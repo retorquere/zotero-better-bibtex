@@ -6,6 +6,11 @@ export { Translator }
 import * as escape from '../content/escape'
 import * as Extra from '../content/extra'
 
+function cleanExtra(extra) {
+  const cleaned = Extra.get(extra, 'zotero')
+  cleaned.extra = cleaned.extra.split('\n').filter(line => !line.match(/^OCLC:/i)).join('\n')
+  return cleaned
+}
 class Exporter {
   private levels = 0
   private body = ''
@@ -15,7 +20,7 @@ class Exporter {
   constructor() {
     for (const item of Translator.items()) {
       if (!this.keep(item)) continue
-      this.items[item.itemID] = Object.assign(item, Extra.get(item.extra, 'zotero')) // tslint:disable-line:prefer-object-spread
+      this.items[item.itemID] = Object.assign(item, cleanExtra(item.extra)) // tslint:disable-line:prefer-object-spread
     }
 
     const filed = {}

@@ -16,10 +16,10 @@ import { debug } from './lib/debug'
 import * as escape from '../content/escape'
 
 import * as bibtexParser from '@retorquere/bibtex-parser'
-import { valid, supported } from '../gen/items/fields'
+import { valid, label } from '../gen/items/items'
 import { arXiv } from '../content/arXiv'
 
-debug('supported fields:', supported)
+debug('field labelss:', label)
 
 Reference.prototype.caseConversion = {
   title: true,
@@ -406,9 +406,9 @@ class ZoteroItem {
   }
 
   private fallback(fields, value) {
-    const field = fields.find(f => supported.field[f])
+    const field = fields.find(f => label[f])
     if (field) {
-      this.hackyFields.push(`${supported.field[field]}: ${value.replace(/\n+/g, '')}`)
+      this.hackyFields.push(`${label[field]}: ${value.replace(/\n+/g, '')}`)
       return true
     }
     return false
@@ -886,8 +886,8 @@ class ZoteroItem {
               let name
               if ((name = candidates.find(f => this.validFields[f])) && !this.item[field]) {
                 this.item[name] = value
-              } else if (name = candidates.find(f => supported.field[f])) {
-                this.hackyFields.push(`${supported.field[name]}: ${value}`)
+              } else if (name = candidates.find(f => label[f])) {
+                this.hackyFields.push(`${label[name]}: ${value}`)
               } else {
                 this.hackyFields.push(`tex.${field.toLowerCase()}: ${value}`)
               }
