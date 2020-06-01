@@ -82,8 +82,7 @@ jobs:
       - ./util/build-assets fetch || travis_terminate 1
       - npm run release
     before_deploy:
-      - echo travis_retry sudo snap install hugo --channel=extended
-      - curl -sLO https://github.com/gohugoio/hugo/releases/download/v0.71.0/hugo_0.71.0_Linux-64bit.deb && sudo dpkg -i hugo_0.71.0_Linux-64bit.deb
+      - travis_retry sudo snap install hugo --channel=extended
       - hugo version
       - npm run docs:deploy
     deploy:
