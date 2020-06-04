@@ -6,6 +6,7 @@ namespace OS {
     function remove(path: string, options?: { ignoreAbsent: boolean }): Promise<void>
     function writeAtomic(path: string, data: string, options: { tmpPath: string, encoding: string }): Promise<void>
     function makeDir(path: string, options: { ignoreExisting: boolean }): Promise<void>
+    function stat(path: string): { isDir: boolean, size: number, unixMode?: number }
 
     class DirectoryIterator {
       constructor(path: string)

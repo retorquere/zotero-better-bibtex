@@ -1,6 +1,9 @@
 declare const Components: any
 declare const Zotero: any
 
+Components.utils.import('resource://gre/modules/FileUtils.jsm')
+declare const FileUtils: any
+
 import { patch as $patch$ } from './monkey-patch'
 import { flash } from './flash'
 
@@ -377,7 +380,8 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         if (postscript) {
           postscript = OS.Path.join(this._displayOptions.exportDir, postscript)
           try {
-            if (OS.File.exists(postscript)) {
+            // cannot use await OS.File.exists here because we may be invoked in noWait mode
+            if ((new FileUtils.File(postscript)).exists()) {
               // adding the literal 'Translator.exportDir' makes sure caching is disabled
               this._displayOptions.preference_postscript = `// postscript override in Translator.exportDir ${this._displayOptions.exportDir}\n\n${Zotero.File.getContents(postscript)}`
             }

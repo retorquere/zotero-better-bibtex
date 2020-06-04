@@ -1,9 +1,6 @@
 declare const Components: any
 declare const Zotero: any
 
-Components.utils.import('resource://gre/modules/FileUtils.jsm')
-declare const FileUtils: any
-
 import * as log from './debug'
 import permutater = require('permutater')
 
@@ -93,11 +90,16 @@ export async function pathSearch(bin, installationDirectory: { mac?: string, win
   for (const path of env.path) {
     for (const pathext of env.pathext) {
       try {
-        const cmd = new FileUtils.File(`${path}${env.sep}${bin}${pathext}`)
-        if (cmd.exists() && cmd.isFile() && cmd.isExecutable()) {
-          log.debug(`pathSearch: ${bin}${pathext} found at ${cmd.path}`)
-          return cmd.path
-        }
+        const cmd = OS.Path.join(path, bin + pathext)
+        if (!(await OS.File.exists(cmd))) continue
+        const stat = await OS.File.stat(cmd)
+        if (stat.isDir) continue
+
+        // tslint:disable-next-line:no-bitwise no-magic-numbers
+        if (!Zotero.isWin && (stat.unixMode & 111) === 0) continue // bit iffy -- we don't know if *we* can execute this.
+
+        log.debug(`pathSearch: ${bin}${pathext} found at ${cmd}`)
+        return cmd
       } catch (err) {
         log.error('pathSearch:', err)
       }
