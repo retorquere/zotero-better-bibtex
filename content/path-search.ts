@@ -92,18 +92,18 @@ export async function pathSearch(bin, installationDirectory: { mac?: string, win
       try {
         const cmd = OS.Path.join(path, bin + pathext)
         if (!(await OS.File.exists(cmd))) {
-          log.debug(`pathSearch: ${bin} does not exist`)
+          log.debug(`pathSearch: ${cmd} does not exist`)
           continue
         }
         const stat = await OS.File.stat(cmd)
         if (stat.isDir) {
-          log.debug(`pathSearch: ${bin} is a directory`)
+          log.debug(`pathSearch: ${cmd} is a directory`)
           continue
         }
 
         // tslint:disable-next-line:no-bitwise no-magic-numbers
         if (!Zotero.isWin && (stat.unixMode & 111) === 0) { // bit iffy -- we don't know if *we* can execute this.
-          log.debug(`pathSearch: ${bin} exists but has mode ${(stat.unixMode).toString(8)}`)
+          log.debug(`pathSearch: ${cmd} exists but has mode ${(stat.unixMode).toString(8)}`)
           continue
         }
 
@@ -114,7 +114,7 @@ export async function pathSearch(bin, installationDirectory: { mac?: string, win
       }
     }
   }
-  log.debug('pathSearch: ', bin, 'not found in', env.path)
+  log.debug('pathSearch: ' bin, 'not found in', env.path)
 
   return null
 }
