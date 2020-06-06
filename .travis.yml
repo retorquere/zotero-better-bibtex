@@ -56,6 +56,19 @@ jobs:
     script:
       - npm run build
       - travis_retry ./util/build-assets stash
+    before_deploy:
+      - travis_retry sudo snap install hugo --channel=extended
+      - hugo version
+      - npm run docs:deploy
+    deploy:
+      provider: pages
+      skip_cleanup: true
+      token: $GITHUB_TOKEN
+      edge: true
+      local_dir: site/public
+      keep_history: true
+      on:
+        branch: master
 
   - stage: test
     env:
@@ -81,19 +94,6 @@ jobs:
     script:
       - ./util/build-assets fetch || travis_terminate 1
       - npm run release
-    before_deploy:
-      - travis_retry sudo snap install hugo --channel=extended
-      - hugo version
-      - npm run docs:deploy
-    deploy:
-      provider: pages
-      skip_cleanup: true
-      token: $GITHUB_TOKEN
-      edge: true
-      local_dir: site/public
-      keep_history: true
-      on:
-        branch: master
     after_script:
       - ./util/build-assets pop
 
