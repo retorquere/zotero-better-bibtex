@@ -114,7 +114,7 @@ export async function pathSearch(bin, installationDirectory: { mac?: string, win
       }
     }
   }
-  log.debug('pathSearch: ' bin, 'not found in', env.path)
+  log.debug('pathSearch:', bin, 'not found in', env.path)
 
   return null
 }
