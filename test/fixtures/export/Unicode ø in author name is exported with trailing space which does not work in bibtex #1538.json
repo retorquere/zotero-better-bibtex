@@ -4,76 +4,10 @@
     "label": "BetterBibTeX JSON",
     "localeDateOrder": "mdy",
     "options": {
-      "Normalize": true,
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
-      "ascii": "",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportDelay": 1,
-      "autoExportIdleWait": 10,
-      "autoPin": false,
-      "automaticTags": true,
-      "auxImport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
-      "citeprocNoteCitekey": false,
-      "csquotes": "",
-      "debugLogDir": "",
-      "exportBibTeXStrings": "off",
-      "exportBraceProtection": true,
-      "exportTitleCase": true,
-      "extraMergeCSL": true,
-      "extraMergeCitekeys": true,
-      "extraMergeTeX": true,
-      "git": "config",
-      "ignorePostscriptErrors": true,
-      "importBibTeXStrings": true,
-      "importCaseProtection": "as-needed",
-      "importJabRefAbbreviations": true,
-      "importJabRefStrings": true,
-      "importSentenceCase": "on+guess",
-      "itemObserverDelay": 5,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "keyScope": "library",
-      "kuroshiro": false,
-      "mapMath": "",
-      "mapText": "",
-      "mapUnicode": "conservative",
-      "newTranslatorsAskRestart": true,
-      "parseParticles": true,
-      "platform": "win",
-      "postscript": "",
-      "postscriptOverride": "",
-      "qualityReport": false,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "rawImports": false,
-      "rawLaTag": "#LaTeX",
-      "relativeFilePaths": false,
-      "removeStock": false,
-      "retainCache": false,
-      "scrubDatabase": false,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "testing": false,
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
-      "warnBulkModify": 10,
       "workers": 0
     }
   },
@@ -114,17 +48,15 @@
         {
           "creatorType": "author",
           "firstName": "Leif K.",
-          "lastName": "Oxenløwe"
+          "lastName": "Oxenl\u00f8we"
         },
         {
           "creatorType": "author",
-          "firstName": "Søren",
+          "firstName": "S\u00f8ren",
           "lastName": "Forchhammer"
         }
       ],
       "date": "2020",
-      "dateAdded": "2020-01-28T07:56:24Z",
-      "dateModified": "2020-06-05T09:26:56Z",
       "itemID": 1,
       "itemType": "conferencePaper",
       "language": "en",
@@ -134,12 +66,7 @@
       ],
       "pages": "2",
       "rights": "All rights reserved",
-      "title": "Noise statistics and its implications on optimal constellation shapes for channels with optical phase conjugation",
-      "uri": "http://zotero.org/users/6282742/items/JGINBHUC"
+      "title": "Noise statistics and its implications on optimal constellation shapes for channels with optical phase conjugation"
     }
-  ],
-  "version": {
-    "bbt": "5.2.26",
-    "zotero": "5.0.87"
-  }
+  ]
 }

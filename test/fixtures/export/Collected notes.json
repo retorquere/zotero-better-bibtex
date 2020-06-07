@@ -2,25 +2,135 @@
   "collections": {
     "coll:00000": {
       "collections": [
-        "coll:00081",
-        "coll:00086",
-        "coll:00092"
+        "coll:00008",
+        "coll:00013",
+        "coll:00019",
+        "coll:00049",
+        "coll:00054",
+        "coll:00055",
+        "coll:00079",
+        "coll:00080",
+        "coll:00088",
+        "coll:00113"
       ],
       "items": [],
       "key": "coll:00000",
-      "name": "Disciplines factuelles",
-      "parent": "coll:00015"
+      "name": "Sciences conceptuelles",
+      "parent": "coll:00002"
     },
     "coll:00001": {
       "collections": [
-        "coll:00008"
+        "coll:00004",
+        "coll:00007"
       ],
       "items": [],
       "key": "coll:00001",
-      "name": "R\u00e9f\u00e9rences",
-      "parent": "coll:00009"
+      "name": "Isa"
     },
     "coll:00002": {
+      "collections": [
+        "coll:00000",
+        "coll:00005",
+        "coll:00006",
+        "coll:00009",
+        "coll:00012",
+        "coll:00014",
+        "coll:00017",
+        "coll:00018",
+        "coll:00020",
+        "coll:00021",
+        "coll:00022",
+        "coll:00023",
+        "coll:00024",
+        "coll:00025",
+        "coll:00026",
+        "coll:00027",
+        "coll:00028",
+        "coll:00029",
+        "coll:00030",
+        "coll:00031",
+        "coll:00032",
+        "coll:00112"
+      ],
+      "items": [],
+      "key": "coll:00002",
+      "name": "FM"
+    },
+    "coll:00003": {
+      "collections": [
+        "coll:00015",
+        "coll:00087",
+        "coll:00094",
+        "coll:00114"
+      ],
+      "items": [],
+      "key": "coll:00003",
+      "name": "Sciences sociales",
+      "parent": "coll:00005"
+    },
+    "coll:00004": {
+      "collections": [
+        "coll:00011"
+      ],
+      "items": [],
+      "key": "coll:00004",
+      "name": "R\u00e9f\u00e9rences",
+      "parent": "coll:00001"
+    },
+    "coll:00005": {
+      "collections": [
+        "coll:00003",
+        "coll:00010"
+      ],
+      "items": [],
+      "key": "coll:00005",
+      "name": "Sciences factuelles",
+      "parent": "coll:00002"
+    },
+    "coll:00006": {
+      "collections": [
+        "coll:00016",
+        "coll:00061",
+        "coll:00063",
+        "coll:00091",
+        "coll:00100",
+        "coll:00101",
+        "coll:00108"
+      ],
+      "items": [
+        29
+      ],
+      "key": "coll:00006",
+      "name": "_References",
+      "parent": "coll:00002"
+    },
+    "coll:00007": {
+      "collections": [
+        "coll:00033",
+        "coll:00038",
+        "coll:00048",
+        "coll:00056",
+        "coll:00062",
+        "coll:00065",
+        "coll:00070",
+        "coll:00077",
+        "coll:00089",
+        "coll:00090",
+        "coll:00105",
+        "coll:00106",
+        "coll:00107",
+        "coll:00115",
+        "coll:00116",
+        "coll:00117",
+        "coll:00118",
+        "coll:00119"
+      ],
+      "items": [],
+      "key": "coll:00007",
+      "name": "Refworks",
+      "parent": "coll:00001"
+    },
+    "coll:00008": {
       "collections": [
         "coll:00034",
         "coll:00035",
@@ -36,215 +146,11 @@
       "items": [
         16
       ],
-      "key": "coll:00002",
-      "name": "Philosophie des sciences",
-      "parent": "coll:00015"
-    },
-    "coll:00003": {
-      "collections": [
-        "coll:00073",
-        "coll:00095",
-        "coll:00110",
-        "coll:00112"
-      ],
-      "items": [],
-      "key": "coll:00003",
-      "name": "Sciences formelles",
-      "parent": "coll:00016"
-    },
-    "coll:00004": {
-      "collections": [
-        "coll:00050",
-        "coll:00102",
-        "coll:00105"
-      ],
-      "items": [],
-      "key": "coll:00004",
-      "name": "0018_MarioBunge",
-      "parent": "coll:00016"
-    },
-    "coll:00005": {
-      "collections": [
-        "coll:00059"
-      ],
-      "items": [],
-      "key": "coll:00005",
-      "name": "Histoire",
-      "parent": "coll:00011"
-    },
-    "coll:00006": {
-      "collections": [
-        "coll:00044",
-        "coll:00053",
-        "coll:00068",
-        "coll:00071",
-        "coll:00075",
-        "coll:00078",
-        "coll:00096"
-      ],
-      "items": [],
-      "key": "coll:00006",
-      "name": "Ontologie",
-      "parent": "coll:00015"
-    },
-    "coll:00007": {
-      "collections": [
-        "coll:00011",
-        "coll:00019"
-      ],
-      "items": [],
-      "key": "coll:00007",
-      "name": "Sciences factuelles",
-      "parent": "coll:00016"
-    },
-    "coll:00008": {
-      "collections": [
-        "coll:00039",
-        "coll:00098",
-        "coll:00099",
-        "coll:00104"
-      ],
-      "items": [
-        10,
-        19
-      ],
       "key": "coll:00008",
-      "name": "Objectivit\u00e9 et naturalisme",
-      "parent": "coll:00001"
+      "name": "Philosophie des sciences",
+      "parent": "coll:00000"
     },
     "coll:00009": {
-      "collections": [
-        "coll:00001",
-        "coll:00014"
-      ],
-      "items": [],
-      "key": "coll:00009",
-      "name": "Isa"
-    },
-    "coll:00010": {
-      "collections": [
-        "coll:00040"
-      ],
-      "items": [
-        2,
-        25
-      ],
-      "key": "coll:00010",
-      "name": "0013_Realisme_Scientifique",
-      "parent": "coll:00016"
-    },
-    "coll:00011": {
-      "collections": [
-        "coll:00005",
-        "coll:00087",
-        "coll:00094",
-        "coll:00114"
-      ],
-      "items": [],
-      "key": "coll:00011",
-      "name": "Sciences sociales",
-      "parent": "coll:00007"
-    },
-    "coll:00012": {
-      "collections": [
-        "coll:00064"
-      ],
-      "items": [],
-      "key": "coll:00012",
-      "name": "_Programmation",
-      "parent": "coll:00016"
-    },
-    "coll:00013": {
-      "collections": [
-        "coll:00018",
-        "coll:00061",
-        "coll:00063",
-        "coll:00091",
-        "coll:00100",
-        "coll:00101",
-        "coll:00109"
-      ],
-      "items": [
-        29
-      ],
-      "key": "coll:00013",
-      "name": "_References",
-      "parent": "coll:00016"
-    },
-    "coll:00014": {
-      "collections": [
-        "coll:00033",
-        "coll:00038",
-        "coll:00048",
-        "coll:00056",
-        "coll:00062",
-        "coll:00065",
-        "coll:00070",
-        "coll:00077",
-        "coll:00089",
-        "coll:00090",
-        "coll:00106",
-        "coll:00107",
-        "coll:00108",
-        "coll:00115",
-        "coll:00116",
-        "coll:00117",
-        "coll:00118",
-        "coll:00119"
-      ],
-      "items": [],
-      "key": "coll:00014",
-      "name": "Refworks",
-      "parent": "coll:00009"
-    },
-    "coll:00015": {
-      "collections": [
-        "coll:00000",
-        "coll:00002",
-        "coll:00006",
-        "coll:00049",
-        "coll:00054",
-        "coll:00055",
-        "coll:00079",
-        "coll:00080",
-        "coll:00088",
-        "coll:00113"
-      ],
-      "items": [],
-      "key": "coll:00015",
-      "name": "Sciences conceptuelles",
-      "parent": "coll:00016"
-    },
-    "coll:00016": {
-      "collections": [
-        "coll:00003",
-        "coll:00004",
-        "coll:00007",
-        "coll:00010",
-        "coll:00012",
-        "coll:00013",
-        "coll:00015",
-        "coll:00017",
-        "coll:00020",
-        "coll:00021",
-        "coll:00022",
-        "coll:00023",
-        "coll:00024",
-        "coll:00025",
-        "coll:00026",
-        "coll:00027",
-        "coll:00028",
-        "coll:00029",
-        "coll:00030",
-        "coll:00031",
-        "coll:00032",
-        "coll:00103"
-      ],
-      "items": [],
-      "key": "coll:00016",
-      "name": "FM"
-    },
-    "coll:00017": {
       "collections": [
         "coll:00036",
         "coll:00041",
@@ -257,23 +163,14 @@
         "coll:00069",
         "coll:00074",
         "coll:00084",
-        "coll:00111"
+        "coll:00110"
       ],
       "items": [],
-      "key": "coll:00017",
+      "key": "coll:00009",
       "name": "_Auteurs",
-      "parent": "coll:00016"
+      "parent": "coll:00002"
     },
-    "coll:00018": {
-      "collections": [
-        "coll:00060"
-      ],
-      "items": [],
-      "key": "coll:00018",
-      "name": "Histoire",
-      "parent": "coll:00013"
-    },
-    "coll:00019": {
+    "coll:00010": {
       "collections": [
         "coll:00037",
         "coll:00043",
@@ -281,198 +178,301 @@
         "coll:00082"
       ],
       "items": [],
-      "key": "coll:00019",
+      "key": "coll:00010",
       "name": "Sciences naturelles",
-      "parent": "coll:00007"
+      "parent": "coll:00005"
+    },
+    "coll:00011": {
+      "collections": [
+        "coll:00039",
+        "coll:00098",
+        "coll:00099",
+        "coll:00102"
+      ],
+      "items": [
+        10,
+        19
+      ],
+      "key": "coll:00011",
+      "name": "Objectivit\u00e9 et naturalisme",
+      "parent": "coll:00004"
+    },
+    "coll:00012": {
+      "collections": [
+        "coll:00040"
+      ],
+      "items": [
+        2,
+        25
+      ],
+      "key": "coll:00012",
+      "name": "0013_Realisme_Scientifique",
+      "parent": "coll:00002"
+    },
+    "coll:00013": {
+      "collections": [
+        "coll:00044",
+        "coll:00053",
+        "coll:00068",
+        "coll:00071",
+        "coll:00075",
+        "coll:00078",
+        "coll:00096"
+      ],
+      "items": [],
+      "key": "coll:00013",
+      "name": "Ontologie",
+      "parent": "coll:00000"
+    },
+    "coll:00014": {
+      "collections": [
+        "coll:00050",
+        "coll:00103",
+        "coll:00104"
+      ],
+      "items": [],
+      "key": "coll:00014",
+      "name": "0018_MarioBunge",
+      "parent": "coll:00002"
+    },
+    "coll:00015": {
+      "collections": [
+        "coll:00059"
+      ],
+      "items": [],
+      "key": "coll:00015",
+      "name": "Histoire",
+      "parent": "coll:00003"
+    },
+    "coll:00016": {
+      "collections": [
+        "coll:00060"
+      ],
+      "items": [],
+      "key": "coll:00016",
+      "name": "Histoire",
+      "parent": "coll:00006"
+    },
+    "coll:00017": {
+      "collections": [
+        "coll:00064"
+      ],
+      "items": [],
+      "key": "coll:00017",
+      "name": "_Programmation",
+      "parent": "coll:00002"
+    },
+    "coll:00018": {
+      "collections": [
+        "coll:00073",
+        "coll:00095",
+        "coll:00109",
+        "coll:00111"
+      ],
+      "items": [],
+      "key": "coll:00018",
+      "name": "Sciences formelles",
+      "parent": "coll:00002"
+    },
+    "coll:00019": {
+      "collections": [
+        "coll:00081",
+        "coll:00086",
+        "coll:00092"
+      ],
+      "items": [],
+      "key": "coll:00019",
+      "name": "Disciplines factuelles",
+      "parent": "coll:00000"
     },
     "coll:00020": {
       "collections": [],
       "items": [],
       "key": "coll:00020",
       "name": "_Sujets",
-      "parent": "coll:00016"
+      "parent": "coll:00002"
     },
     "coll:00021": {
       "collections": [],
       "items": [],
       "key": "coll:00021",
       "name": "0008_TradBungeDictionnairePhilosophique",
-      "parent": "coll:00016"
+      "parent": "coll:00002"
     },
     "coll:00022": {
       "collections": [],
       "items": [],
       "key": "coll:00022",
       "name": "0009_TradBungeLesOrdinateursPensentIls",
-      "parent": "coll:00016"
+      "parent": "coll:00002"
     },
     "coll:00023": {
       "collections": [],
       "items": [],
       "key": "coll:00023",
       "name": "0012_Metasciences",
-      "parent": "coll:00016"
+      "parent": "coll:00002"
     },
     "coll:00024": {
       "collections": [],
       "items": [],
       "key": "coll:00024",
       "name": "0014_Hist-Socio-Sciences",
-      "parent": "coll:00016"
+      "parent": "coll:00002"
     },
     "coll:00025": {
       "collections": [],
       "items": [],
       "key": "coll:00025",
       "name": "0015_FormationR",
-      "parent": "coll:00016"
+      "parent": "coll:00002"
     },
     "coll:00026": {
       "collections": [],
       "items": [],
       "key": "coll:00026",
       "name": "0017_CritiqueNeoClassique",
-      "parent": "coll:00016"
+      "parent": "coll:00002"
     },
     "coll:00027": {
       "collections": [],
       "items": [],
       "key": "coll:00027",
       "name": "0020_Reflexions-Metascientifiques",
-      "parent": "coll:00016"
+      "parent": "coll:00002"
     },
     "coll:00028": {
       "collections": [],
       "items": [],
       "key": "coll:00028",
       "name": "0021_PresentationCapitalXXIeSiecle",
-      "parent": "coll:00016"
+      "parent": "coll:00002"
     },
     "coll:00029": {
       "collections": [],
       "items": [],
       "key": "coll:00029",
       "name": "0024_TradBungeTraiteVol1Vol2Semantique",
-      "parent": "coll:00016"
+      "parent": "coll:00002"
     },
     "coll:00030": {
       "collections": [],
       "items": [],
       "key": "coll:00030",
       "name": "0025_Pourquoi-Marie-Bunge-n_est-pas-un-philosophe",
-      "parent": "coll:00016"
+      "parent": "coll:00002"
     },
     "coll:00031": {
       "collections": [],
       "items": [],
       "key": "coll:00031",
       "name": "0028_Les_relations_logico-mathematiques",
-      "parent": "coll:00016"
+      "parent": "coll:00002"
     },
     "coll:00032": {
       "collections": [],
       "items": [],
       "key": "coll:00032",
       "name": "0029_Keyboard-Shorcuts-Painkillers",
-      "parent": "coll:00016"
+      "parent": "coll:00002"
     },
     "coll:00033": {
       "collections": [],
       "items": [],
       "key": "coll:00033",
       "name": "2006-08-20 Biblio-plan",
-      "parent": "coll:00014"
+      "parent": "coll:00007"
     },
     "coll:00034": {
       "collections": [],
       "items": [],
       "key": "coll:00034",
       "name": "Anti-r\u00e9alisme",
-      "parent": "coll:00002"
+      "parent": "coll:00008"
     },
     "coll:00035": {
       "collections": [],
       "items": [],
       "key": "coll:00035",
       "name": "Arch\u00e9ologie",
-      "parent": "coll:00002"
+      "parent": "coll:00008"
     },
     "coll:00036": {
       "collections": [],
       "items": [],
       "key": "coll:00036",
       "name": "Aristote",
-      "parent": "coll:00017"
+      "parent": "coll:00009"
     },
     "coll:00037": {
       "collections": [],
       "items": [],
       "key": "coll:00037",
       "name": "Astronomie, astrophysique, cosmologie",
-      "parent": "coll:00019"
+      "parent": "coll:00010"
     },
     "coll:00038": {
       "collections": [],
       "items": [],
       "key": "coll:00038",
       "name": "Autres sujets Dretske (et plusieurs sujets Dretske)",
-      "parent": "coll:00014"
+      "parent": "coll:00007"
     },
     "coll:00039": {
       "collections": [],
       "items": [],
       "key": "coll:00039",
       "name": "Biblio comment\u00e9e",
-      "parent": "coll:00008"
+      "parent": "coll:00011"
     },
     "coll:00040": {
       "collections": [],
       "items": [],
       "key": "coll:00040",
       "name": "Biblio",
-      "parent": "coll:00010"
+      "parent": "coll:00012"
     },
     "coll:00041": {
       "collections": [],
       "items": [],
       "key": "coll:00041",
       "name": "Bickle",
-      "parent": "coll:00017"
+      "parent": "coll:00009"
     },
     "coll:00042": {
       "collections": [],
       "items": [],
       "key": "coll:00042",
       "name": "Biologie",
-      "parent": "coll:00002"
+      "parent": "coll:00008"
     },
     "coll:00043": {
       "collections": [],
       "items": [],
       "key": "coll:00043",
       "name": "Biologie",
-      "parent": "coll:00019"
+      "parent": "coll:00010"
     },
     "coll:00044": {
       "collections": [],
       "items": [],
       "key": "coll:00044",
       "name": "Causali\u00e9",
-      "parent": "coll:00006"
+      "parent": "coll:00013"
     },
     "coll:00045": {
       "collections": [],
       "items": [],
       "key": "coll:00045",
       "name": "Changeux",
-      "parent": "coll:00017"
+      "parent": "coll:00009"
     },
     "coll:00046": {
       "collections": [],
       "items": [],
       "key": "coll:00046",
       "name": "Chimie",
-      "parent": "coll:00019"
+      "parent": "coll:00010"
     },
     "coll:00047": {
       "collections": [],
@@ -485,371 +485,371 @@
       "items": [],
       "key": "coll:00048",
       "name": "Compte rendu Russell",
-      "parent": "coll:00014"
+      "parent": "coll:00007"
     },
     "coll:00049": {
       "collections": [],
       "items": [],
       "key": "coll:00049",
       "name": "D\u00e9marcation",
-      "parent": "coll:00015"
+      "parent": "coll:00000"
     },
     "coll:00050": {
       "collections": [],
       "items": [],
       "key": "coll:00050",
       "name": "Divers",
-      "parent": "coll:00004"
+      "parent": "coll:00014"
     },
     "coll:00051": {
       "collections": [],
       "items": [],
       "key": "coll:00051",
       "name": "Eberle",
-      "parent": "coll:00017"
+      "parent": "coll:00009"
     },
     "coll:00052": {
       "collections": [],
       "items": [],
       "key": "coll:00052",
       "name": "\u00c9conomie",
-      "parent": "coll:00002"
+      "parent": "coll:00008"
     },
     "coll:00053": {
       "collections": [],
       "items": [],
       "key": "coll:00053",
       "name": "\u00c9mergence",
-      "parent": "coll:00006"
+      "parent": "coll:00013"
     },
     "coll:00054": {
       "collections": [],
       "items": [],
       "key": "coll:00054",
       "name": "\u00c9pist\u00e9mologie",
-      "parent": "coll:00015"
+      "parent": "coll:00000"
     },
     "coll:00055": {
       "collections": [],
       "items": [],
       "key": "coll:00055",
       "name": "\u00c9thique",
-      "parent": "coll:00015"
+      "parent": "coll:00000"
     },
     "coll:00056": {
       "collections": [],
       "items": [],
       "key": "coll:00056",
       "name": "fonction -Dretske",
-      "parent": "coll:00014"
+      "parent": "coll:00007"
     },
     "coll:00057": {
       "collections": [],
       "items": [],
       "key": "coll:00057",
       "name": "Frege",
-      "parent": "coll:00017"
+      "parent": "coll:00009"
     },
     "coll:00058": {
       "collections": [],
       "items": [],
       "key": "coll:00058",
       "name": "Galil\u00e9e",
-      "parent": "coll:00017"
+      "parent": "coll:00009"
     },
     "coll:00059": {
       "collections": [],
       "items": [],
       "key": "coll:00059",
       "name": "Gr\u00e8ce ancienne",
-      "parent": "coll:00005"
+      "parent": "coll:00015"
     },
     "coll:00060": {
       "collections": [],
       "items": [],
       "key": "coll:00060",
       "name": "Gr\u00e8ce antique",
-      "parent": "coll:00018"
+      "parent": "coll:00016"
     },
     "coll:00061": {
       "collections": [],
       "items": [],
       "key": "coll:00061",
       "name": "Histoire des sciences, des technologies et des techniques",
-      "parent": "coll:00013"
+      "parent": "coll:00006"
     },
     "coll:00062": {
       "collections": [],
       "items": [],
       "key": "coll:00062",
       "name": "Information (th. trad.de l' et ouvrages g\u00e9n\u00e9raux sur le sujet)",
-      "parent": "coll:00014"
+      "parent": "coll:00007"
     },
     "coll:00063": {
       "collections": [],
       "items": [],
       "key": "coll:00063",
       "name": "Internet Encyclopedia of Philosophy",
-      "parent": "coll:00013"
+      "parent": "coll:00006"
     },
     "coll:00064": {
       "collections": [],
       "items": [],
       "key": "coll:00064",
       "name": "JavaScript",
-      "parent": "coll:00012"
+      "parent": "coll:00017"
     },
     "coll:00065": {
       "collections": [],
       "items": [],
       "key": "coll:00065",
       "name": "KFI (C-R et critiques)",
-      "parent": "coll:00014"
+      "parent": "coll:00007"
     },
     "coll:00066": {
       "collections": [],
       "items": [],
       "key": "coll:00066",
       "name": "Kistler",
-      "parent": "coll:00017"
+      "parent": "coll:00009"
     },
     "coll:00067": {
       "collections": [],
       "items": [],
       "key": "coll:00067",
       "name": "Lesniewski",
-      "parent": "coll:00017"
+      "parent": "coll:00009"
     },
     "coll:00068": {
       "collections": [],
       "items": [],
       "key": "coll:00068",
       "name": "Loi",
-      "parent": "coll:00006"
+      "parent": "coll:00013"
     },
     "coll:00069": {
       "collections": [],
       "items": [],
       "key": "coll:00069",
       "name": "Madsen",
-      "parent": "coll:00017"
+      "parent": "coll:00009"
     },
     "coll:00070": {
       "collections": [],
       "items": [],
       "key": "coll:00070",
       "name": "mai 2006 ajustements",
-      "parent": "coll:00014"
+      "parent": "coll:00007"
     },
     "coll:00071": {
       "collections": [],
       "items": [],
       "key": "coll:00071",
       "name": "Mat\u00e9rialisme",
-      "parent": "coll:00006"
+      "parent": "coll:00013"
     },
     "coll:00072": {
       "collections": [],
       "items": [],
       "key": "coll:00072",
       "name": "Math\u00e9matiques",
-      "parent": "coll:00002"
+      "parent": "coll:00008"
     },
     "coll:00073": {
       "collections": [],
       "items": [],
       "key": "coll:00073",
       "name": "Math\u00e9matiques",
-      "parent": "coll:00003"
+      "parent": "coll:00018"
     },
     "coll:00074": {
       "collections": [],
       "items": [],
       "key": "coll:00074",
       "name": "McLuhan",
-      "parent": "coll:00017"
+      "parent": "coll:00009"
     },
     "coll:00075": {
       "collections": [],
       "items": [],
       "key": "coll:00075",
       "name": "M\u00e9canisme",
-      "parent": "coll:00006"
+      "parent": "coll:00013"
     },
     "coll:00076": {
       "collections": [],
       "items": [],
       "key": "coll:00076",
       "name": "M\u00e9decine",
-      "parent": "coll:00002"
+      "parent": "coll:00008"
     },
     "coll:00077": {
       "collections": [],
       "items": [],
       "key": "coll:00077",
       "name": "Naturalizing the Mind (C-R et critiques)",
-      "parent": "coll:00014"
+      "parent": "coll:00007"
     },
     "coll:00078": {
       "collections": [],
       "items": [],
       "key": "coll:00078",
       "name": "Niveau",
-      "parent": "coll:00006"
+      "parent": "coll:00013"
     },
     "coll:00079": {
       "collections": [],
       "items": [],
       "key": "coll:00079",
       "name": "Objectivit\u00e9",
-      "parent": "coll:00015"
+      "parent": "coll:00000"
     },
     "coll:00080": {
       "collections": [],
       "items": [],
       "key": "coll:00080",
       "name": "Philosophie traditionnelle",
-      "parent": "coll:00015"
+      "parent": "coll:00000"
     },
     "coll:00081": {
       "collections": [],
       "items": [],
       "key": "coll:00081",
       "name": "Physique",
-      "parent": "coll:00000"
+      "parent": "coll:00019"
     },
     "coll:00082": {
       "collections": [],
       "items": [],
       "key": "coll:00082",
       "name": "Physique",
-      "parent": "coll:00019"
+      "parent": "coll:00010"
     },
     "coll:00083": {
       "collections": [],
       "items": [],
       "key": "coll:00083",
       "name": "Physique",
-      "parent": "coll:00002"
+      "parent": "coll:00008"
     },
     "coll:00084": {
       "collections": [],
       "items": [],
       "key": "coll:00084",
       "name": "Piaget",
-      "parent": "coll:00017"
+      "parent": "coll:00009"
     },
     "coll:00085": {
       "collections": [],
       "items": [],
       "key": "coll:00085",
       "name": "Psychologie",
-      "parent": "coll:00002"
+      "parent": "coll:00008"
     },
     "coll:00086": {
       "collections": [],
       "items": [],
       "key": "coll:00086",
       "name": "Psychologie",
-      "parent": "coll:00000"
+      "parent": "coll:00019"
     },
     "coll:00087": {
       "collections": [],
       "items": [],
       "key": "coll:00087",
       "name": "Psychologie",
-      "parent": "coll:00011"
+      "parent": "coll:00003"
     },
     "coll:00088": {
       "collections": [],
       "items": [],
       "key": "coll:00088",
       "name": "Rationalit\u00e9",
-      "parent": "coll:00015"
+      "parent": "coll:00000"
     },
     "coll:00089": {
       "collections": [],
       "items": [],
       "key": "coll:00089",
       "name": "r\u00e9alisme moral",
-      "parent": "coll:00014"
+      "parent": "coll:00007"
     },
     "coll:00090": {
       "collections": [],
       "items": [],
       "key": "coll:00090",
       "name": "R\u00e9f\u00e9rence et intentionnalit\u00e9",
-      "parent": "coll:00014"
+      "parent": "coll:00007"
     },
     "coll:00091": {
       "collections": [],
       "items": [],
       "key": "coll:00091",
       "name": "Routledge Encyclopedia of Philosophy",
-      "parent": "coll:00013"
+      "parent": "coll:00006"
     },
     "coll:00092": {
       "collections": [],
       "items": [],
       "key": "coll:00092",
       "name": "Sciences sociales",
-      "parent": "coll:00000"
+      "parent": "coll:00019"
     },
     "coll:00093": {
       "collections": [],
       "items": [],
       "key": "coll:00093",
       "name": "Sciences sociales",
-      "parent": "coll:00002"
+      "parent": "coll:00008"
     },
     "coll:00094": {
       "collections": [],
       "items": [],
       "key": "coll:00094",
       "name": "Sociologie",
-      "parent": "coll:00011"
+      "parent": "coll:00003"
     },
     "coll:00095": {
       "collections": [],
       "items": [],
       "key": "coll:00095",
       "name": "Statistiques",
-      "parent": "coll:00003"
+      "parent": "coll:00018"
     },
     "coll:00096": {
       "collections": [],
       "items": [],
       "key": "coll:00096",
       "name": "Syst\u00e8me",
-      "parent": "coll:00006"
+      "parent": "coll:00013"
     },
     "coll:00097": {
       "collections": [],
       "items": [],
       "key": "coll:00097",
       "name": "Technologies",
-      "parent": "coll:00002"
+      "parent": "coll:00008"
     },
     "coll:00098": {
       "collections": [],
       "items": [],
       "key": "coll:00098",
       "name": "The Internet Encyclopedia of Philosophy",
-      "parent": "coll:00008"
+      "parent": "coll:00011"
     },
     "coll:00099": {
       "collections": [],
       "items": [],
       "key": "coll:00099",
       "name": "The Stanford Encyclopedia of Philosophy",
-      "parent": "coll:00008"
+      "parent": "coll:00011"
     },
     "coll:00100": {
       "collections": [],
       "items": [],
       "key": "coll:00100",
       "name": "Wikipedia",
-      "parent": "coll:00013"
+      "parent": "coll:00006"
     },
     "coll:00101": {
       "collections": [],
@@ -859,9 +859,18 @@
       ],
       "key": "coll:00101",
       "name": "Stanford Encyclopdia of Philosophy",
-      "parent": "coll:00013"
+      "parent": "coll:00006"
     },
     "coll:00102": {
+      "collections": [],
+      "items": [
+        10
+      ],
+      "key": "coll:00102",
+      "name": "D\u00e9bat Harman-Sturgeon",
+      "parent": "coll:00011"
+    },
+    "coll:00103": {
       "collections": [],
       "items": [
         11,
@@ -877,31 +886,11 @@
         8,
         9
       ],
-      "key": "coll:00102",
-      "name": "Oeuvres",
-      "parent": "coll:00004"
-    },
-    "coll:00103": {
-      "collections": [],
-      "items": [
-        27,
-        4,
-        5
-      ],
       "key": "coll:00103",
-      "name": "0027_Theorie-de-la-verite",
-      "parent": "coll:00016"
+      "name": "Oeuvres",
+      "parent": "coll:00014"
     },
     "coll:00104": {
-      "collections": [],
-      "items": [
-        10
-      ],
-      "key": "coll:00104",
-      "name": "D\u00e9bat Harman-Sturgeon",
-      "parent": "coll:00008"
-    },
-    "coll:00105": {
       "collections": [],
       "items": [
         12,
@@ -909,73 +898,84 @@
         27,
         32
       ],
-      "key": "coll:00105",
+      "key": "coll:00104",
       "name": "Ouvrages",
-      "parent": "coll:00004"
+      "parent": "coll:00014"
     },
-    "coll:00106": {
+    "coll:00105": {
       "collections": [],
       "items": [
         14
       ],
-      "key": "coll:00106",
+      "key": "coll:00105",
       "name": "Indication (relation d', en lien avec Dretske)",
-      "parent": "coll:00014"
+      "parent": "coll:00007"
     },
-    "coll:00107": {
+    "coll:00106": {
       "collections": [],
       "items": [
         15,
         33
       ],
-      "key": "coll:00107",
+      "key": "coll:00106",
       "name": "Intentionnalit\u00e9 naturalisation",
-      "parent": "coll:00014"
+      "parent": "coll:00007"
     },
-    "coll:00108": {
+    "coll:00107": {
       "collections": [],
       "items": [
         15
       ],
-      "key": "coll:00108",
+      "key": "coll:00107",
       "name": "s\u00e9minaire perception et raison",
-      "parent": "coll:00014"
+      "parent": "coll:00007"
     },
-    "coll:00109": {
+    "coll:00108": {
       "collections": [],
       "items": [
         17
       ],
-      "key": "coll:00109",
+      "key": "coll:00108",
       "name": "Handbook of the philosophy of science",
-      "parent": "coll:00013"
+      "parent": "coll:00006"
     },
-    "coll:00110": {
+    "coll:00109": {
       "collections": [],
       "items": [
         18
       ],
-      "key": "coll:00110",
+      "key": "coll:00109",
       "name": "Logique math\u00e9matique",
-      "parent": "coll:00003"
+      "parent": "coll:00018"
     },
-    "coll:00111": {
+    "coll:00110": {
       "collections": [],
       "items": [
         21
       ],
-      "key": "coll:00111",
+      "key": "coll:00110",
       "name": "Russell",
-      "parent": "coll:00017"
+      "parent": "coll:00009"
     },
-    "coll:00112": {
+    "coll:00111": {
       "collections": [],
       "items": [
         26
       ],
-      "key": "coll:00112",
+      "key": "coll:00111",
       "name": "Probabilit\u00e9s",
-      "parent": "coll:00003"
+      "parent": "coll:00018"
+    },
+    "coll:00112": {
+      "collections": [],
+      "items": [
+        27,
+        4,
+        5
+      ],
+      "key": "coll:00112",
+      "name": "0027_Theorie-de-la-verite",
+      "parent": "coll:00002"
     },
     "coll:00113": {
       "collections": [],
@@ -984,7 +984,7 @@
       ],
       "key": "coll:00113",
       "name": "S\u00e9mantique",
-      "parent": "coll:00015"
+      "parent": "coll:00000"
     },
     "coll:00114": {
       "collections": [],
@@ -993,7 +993,7 @@
       ],
       "key": "coll:00114",
       "name": "\u00c9conomie",
-      "parent": "coll:00011"
+      "parent": "coll:00003"
     },
     "coll:00115": {
       "collections": [],
@@ -1002,7 +1002,7 @@
       ],
       "key": "coll:00115",
       "name": "Explaining Behavior (C-R et critiques)",
-      "parent": "coll:00014"
+      "parent": "coll:00007"
     },
     "coll:00116": {
       "collections": [],
@@ -1011,7 +1011,7 @@
       ],
       "key": "coll:00116",
       "name": "Naturalisme (en g\u00e9n\u00e9ral)",
-      "parent": "coll:00014"
+      "parent": "coll:00007"
     },
     "coll:00117": {
       "collections": [],
@@ -1021,7 +1021,7 @@
       ],
       "key": "coll:00117",
       "name": "_Non-classees",
-      "parent": "coll:00014"
+      "parent": "coll:00007"
     },
     "coll:00118": {
       "collections": [],
@@ -1030,7 +1030,7 @@
       ],
       "key": "coll:00118",
       "name": "R\u00e9f\u00e9rences m\u00e9moire (cr\u00e9\u00e9 le 16 oct. 2006)",
-      "parent": "coll:00014"
+      "parent": "coll:00007"
     },
     "coll:00119": {
       "collections": [],
@@ -1039,7 +1039,7 @@
       ],
       "key": "coll:00119",
       "name": "Contenu intentionnel (en relation avec Dretske)",
-      "parent": "coll:00014"
+      "parent": "coll:00007"
     }
   },
   "config": {
