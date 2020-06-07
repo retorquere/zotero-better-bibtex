@@ -2,6 +2,7 @@ declare const Zotero: any
 declare const ZOTERO_TRANSLATOR_INFO: any
 
 import * as preferences from '../../gen/preferences/defaults.json'
+import { client } from '../../content/client'
 
 type TranslatorMode = 'export' | 'import'
 
@@ -111,7 +112,7 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
 
   public init(mode: TranslatorMode) {
     this.platform = Zotero.getHiddenPref('better-bibtex.platform')
-    this.isJurisM = Zotero.getHiddenPref('better-bibtex.client') === 'jurism'
+    this.isJurisM = client === 'jurism'
     this.isZotero = !this.isJurisM
 
     this.paths = {
