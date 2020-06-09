@@ -1,0 +1,92 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "dmy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "asciiBibTeX": false,
+      "biblatexExtendedNameFormat": true,
+      "bibtexURL": "url",
+      "citekeyFormat": "[auth:lower][year]",
+      "postscript": "if (Translator.BetterBibTeX && item.itemType === 'conferencePaper' && item.extraFields.kv && item.publisher) {\n  if ('event-place' in item.extraFields.kv) {\n    let eventPlace = item.extraFields.kv['event-place']\n    reference.add({name: 'address', value: eventPlace})\n  }\n//  if ('publisher-place' in item.extraFields.kv) {\n//    let publisherPlace = item.extraFields.kv['publisher-place']\n//    reference.add({name: 'publisher',  value: item.publisher + ' (' + publisherPlace + ')'})\n//  }\n}",
+      "skipFields": "abstract,file,keywords,note",
+      "workers": 2
+    }
+  },
+  "items": [
+    {
+      "ISBN": "978-3-662-39778-7",
+      "citationKey": "wilkinson2013a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J. H.",
+          "lastName": "Wilkinson"
+        },
+        {
+          "creatorType": "bookAuthor",
+          "firstName": "J. H.",
+          "lastName": "Wilkinson"
+        },
+        {
+          "creatorType": "bookAuthor",
+          "firstName": "C.",
+          "lastName": "Reinsch"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "F. L.",
+          "lastName": "Bauer"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "A. S.",
+          "lastName": "Householder"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "F. W. J.",
+          "lastName": "Olver"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "H.",
+          "lastName": "Rutishauser"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "K.",
+          "lastName": "Samelson"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "E.",
+          "lastName": "Stiefel"
+        }
+      ],
+      "date": "2013",
+      "edition": "1",
+      "extra": [
+        "DOI: 10.1007/978-3-662-39778-7",
+        "Original Date: 1971"
+      ],
+      "itemID": 1,
+      "itemType": "bookSection",
+      "language": "en-GB",
+      "libraryCatalog": "Springer Link",
+      "pages": "191-201",
+      "place": "Berlin",
+      "publicationTitle": "Linear algebra",
+      "publisher": "Springer",
+      "rights": "\u00a9 by Springer-Verlag Berlin Heidelberg 1971",
+      "series": "Handbook for automatic computation",
+      "shortTitle": "Introduction to part\u00a0II",
+      "title": "Introduction to part\u00a0II: the algebraic eigenvalue problem",
+      "url": "https://link.springer.com/book/10.1007%2F978-3-662-39778-7",
+      "volume": "2"
+    }
+  ]
+}

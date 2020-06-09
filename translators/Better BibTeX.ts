@@ -281,6 +281,8 @@ export function doExport() {
       ref.add({ name: 'organization', value: sponsors.join(' and ') })
     }
     ref.addCreators()
+    // #1541
+    if (ref.referencetype === 'inbook' && ref.has.author && ref.has.editor) delete ref.has.editor
 
     if (item.date) {
       const date = Zotero.BetterBibTeX.parseDate(item.date)
@@ -310,6 +312,7 @@ export function doExport() {
     ref.add({ name: 'pages', value: ref.normalizeDashes(item.pages) })
 
     ref.add({ name: 'file', value: item.attachments, enc: 'attachments' })
+
     ref.complete()
   }
 
