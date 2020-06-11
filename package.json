@@ -55,7 +55,7 @@
     "test": "test"
   },
   "dependencies": {
-    "@retorquere/bibtex-parser": "^3.1.44",
+    "@retorquere/bibtex-parser": "^3.2.1",
     "@types/lokijs": "^1.5.3",
     "ajv": "^6.12.2",
     "ajv-keywords": "^3.4.1",
@@ -92,7 +92,7 @@
     "xregexp": "^4.3.0"
   },
   "devDependencies": {
-    "@types/node": "^14.0.12",
+    "@types/node": "^14.0.13",
     "@types/webpack": "^4.41.17",
     "archiver": "^4.0.1",
     "bluebird": "^3.7.2",
@@ -121,7 +121,7 @@
     "pretty-data": "^0.40.0",
     "properties-reader": "^2.0.0",
     "pug": "^3.0.0",
-    "rasper": "^0.2.8",
+    "rasper": "^0.2.10",
     "recast": "^0.19.1",
     "request": "^2.88.2",
     "request-promise": "^4.2.5",
