@@ -153,18 +153,17 @@ $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(ite
 
 // https://github.com/retorquere/zotero-better-bibtex/issues/769
 $patch$(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => function Zotero_DataObjects_prototype_parseLibraryKeyHash(id) {
-  id = decodeURIComponent(id)
   try {
-    if (id[0] === '@') {
-      const item = KeyManager.keys.findOne({ citekey: id.substring(1) })
+    const _id = decodeURIComponent(id)
+    if (_id[0] === '@') {
+      const item = KeyManager.keys.findOne({ citekey: _id.substring(1) })
       if (item) return { libraryID: item.libraryID, key: item.itemKey }
     }
 
-    const m = id.match(/^bbt:(?:{([0-9]+)})?(.*)/)
+    const m = _id.match(/^bbt:(?:{([0-9]+)})?(.*)/)
     if (m) {
-      let [libraryID, citekey] = m.slice(1)
-      if (!libraryID || libraryID === 1) libraryID = Zotero.Libraries.userLibraryID
-      libraryID = parseInt(libraryID)
+      const [_libraryID, citekey] = m.slice(1)
+      const libraryID: number = (!_libraryID || _libraryID === '1') ? Zotero.Libraries.userLibraryID : parseInt(_libraryID)
       const item = KeyManager.keys.findOne({ libraryID, citekey })
       if (item) return { libraryID: item.libraryID, key: item.itemKey }
     }
