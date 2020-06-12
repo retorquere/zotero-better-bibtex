@@ -153,7 +153,7 @@ export function doExport() {
     if (Translator.options.dropAttachments && item.itemType === 'attachment') continue
 
     if (!Translator.options.Normalize) {
-      const [ , kind, lib, key ] = item.uri.match(/^http:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^\/]+)\/items\/(.+)/)
+      const [ , kind, lib, key ] = item.uri.match(/^https?:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^\/]+)\/items\/(.+)/)
       item.select = (kind === 'users') ? `zotero://select/library/items/${key}` : `zotero://select/groups/${lib}/items/${key}`
     }
 
@@ -171,7 +171,7 @@ export function doExport() {
       }
 
       if (!Translator.options.Normalize) {
-        const [ , kind, lib, key ] = att.uri.match(/^http:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^\/]+)\/items\/(.+)/)
+        const [ , kind, lib, key ] = att.uri.match(/^https?:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^\/]+)\/items\/(.+)/)
         att.select = (kind === 'users') ? `zotero://select/library/items/${key}` : `zotero://select/groups/${lib}/items/${key}`
       }
 

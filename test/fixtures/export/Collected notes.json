@@ -2,7 +2,7 @@
   "collections": {
     "coll:00000": {
       "collections": [
-        "coll:00001",
+        "coll:00002",
         "coll:00003",
         "coll:00006",
         "coll:00009",
@@ -31,22 +31,22 @@
     },
     "coll:00001": {
       "collections": [
-        "coll:00005",
-        "coll:00010"
-      ],
-      "items": [],
-      "key": "coll:00001",
-      "name": "Sciences factuelles",
-      "parent": "coll:00000"
-    },
-    "coll:00002": {
-      "collections": [
         "coll:00004",
         "coll:00007"
       ],
       "items": [],
-      "key": "coll:00002",
+      "key": "coll:00001",
       "name": "Isa"
+    },
+    "coll:00002": {
+      "collections": [
+        "coll:00005",
+        "coll:00010"
+      ],
+      "items": [],
+      "key": "coll:00002",
+      "name": "Sciences factuelles",
+      "parent": "coll:00000"
     },
     "coll:00003": {
       "collections": [
@@ -73,7 +73,7 @@
       "items": [],
       "key": "coll:00004",
       "name": "R\u00e9f\u00e9rences",
-      "parent": "coll:00002"
+      "parent": "coll:00001"
     },
     "coll:00005": {
       "collections": [
@@ -85,7 +85,7 @@
       "items": [],
       "key": "coll:00005",
       "name": "Sciences sociales",
-      "parent": "coll:00001"
+      "parent": "coll:00002"
     },
     "coll:00006": {
       "collections": [
@@ -128,7 +128,7 @@
       "items": [],
       "key": "coll:00007",
       "name": "Refworks",
-      "parent": "coll:00002"
+      "parent": "coll:00001"
     },
     "coll:00008": {
       "collections": [
@@ -180,7 +180,7 @@
       "items": [],
       "key": "coll:00010",
       "name": "Sciences naturelles",
-      "parent": "coll:00001"
+      "parent": "coll:00002"
     },
     "coll:00011": {
       "collections": [

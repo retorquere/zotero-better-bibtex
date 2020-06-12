@@ -11,6 +11,7 @@ Scenario Outline: Export <references> references for BibLaTeX to <file>
 
   Examples:
      | file                                                                                           | references  |
+     | JSTOR eprint data export depends on whether jstor link starts with https vs http #1543         | 1           |
      | lone ogonek should have brace                                                                  | 1           |
      | Dateparser does not recognize de in Spanish dates #1513                                        | 1           |
      | Inconsistent date field formatting in BibLaTeX export #1493                                    | 1           |

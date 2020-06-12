@@ -290,7 +290,7 @@ export function doExport() {
     if (ref.referencetype === 'report' && item.type?.toLowerCase().includes('manual')) ref.referencetype = 'manual'
 
     let m
-    if (item.url && (m = item.url.match(/^http:\/\/www.jstor.org\/stable\/([\S]+)$/i))) {
+    if (item.url && (m = item.url.match(/^https?:\/\/www.jstor.org\/stable\/([\S]+)$/i))) {
       ref.override({ name: 'eprinttype', value: 'jstor'})
       ref.override({ name: 'eprint', value: m[1] })
       ref.remove('archivePrefix')
@@ -299,7 +299,7 @@ export function doExport() {
       ref.remove('url')
     }
 
-    if (item.url && (m = item.url.match(/^http:\/\/books.google.com\/books?id=([\S]+)$/i))) {
+    if (item.url && (m = item.url.match(/^https?:\/\/books.google.com\/books?id=([\S]+)$/i))) {
       ref.override({ name: 'eprinttype', value: 'googlebooks'})
       ref.override({ name: 'eprint', value: m[1] })
       ref.remove('archivePrefix')
@@ -308,7 +308,7 @@ export function doExport() {
       ref.remove('url')
     }
 
-    if (item.url && (m = item.url.match(/^http:\/\/www.ncbi.nlm.nih.gov\/pubmed\/([\S]+)$/i))) {
+    if (item.url && (m = item.url.match(/^https?:\/\/www.ncbi.nlm.nih.gov\/pubmed\/([\S]+)$/i))) {
       ref.override({ name: 'eprinttype', value: 'pubmed'})
       ref.override({ name: 'eprint', value: m[1] })
       ref.remove('archivePrefix')
@@ -349,7 +349,7 @@ export function doExport() {
     ref.add({ name: 'issn', value: item.ISSN })
 
     ref.add({ name: 'url', value: item.url || item.extraFields.kv.url })
-    ref.add({ name: 'doi', value: (item.DOI || item.extraFields.kv.DOI || '').replace('https://doi.org/', '') })
+    ref.add({ name: 'doi', value: (item.DOI || item.extraFields.kv.DOI || '').replace(/^https?:\/\/doi.org\//i, '') })
 
     ref.add({ name: 'shorttitle', value: item.shortTitle })
     ref.add({ name: 'abstract', value: item.abstractNote })

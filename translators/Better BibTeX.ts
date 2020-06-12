@@ -262,7 +262,7 @@ export function doExport() {
           break
       }
     }
-    if (Translator.preferences.DOIandURL === 'both' || !url) ref.add({ name: 'doi', value: (doi || '').replace('https://doi.org/', '') })
+    if (Translator.preferences.DOIandURL === 'both' || !url) ref.add({ name: 'doi', value: (doi || '').replace(/^https?:\/\/doi.org\//i, '') })
 
     if (item.referenceType === 'thesis' && ['mastersthesis', 'phdthesis'].includes(item.type)) {
       ref.referencetype = item.type
