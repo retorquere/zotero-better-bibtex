@@ -37,43 +37,61 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
   private scanning: any[]
   private started = false
 
+  private async inspireHEP(url) {
+    try {
+      const results = await (await fetch(url, { method: 'GET', cache: 'no-cache', redirect: 'follow' })).json()
+      if (results.metadata.texkeys.length !== 1) throw new Error(`expected 1 key, got ${results.metadata.texkeys.length}`)
+      return results.metadata.texkeys[0]
+    } catch (err) {
+      log.debug('inspireHEP', url, err)
+      return null
+    }
+  }
+
+  private getField(item, field): string {
+    try {
+      return item.getField(field) || ''
+    } catch (err) {
+      return ''
+    }
+  }
   public async pin(ids, inspireHEP = false) {
     ids = this.expandSelection(ids)
-
-    const inspireSearch = 'http://old.inspirehep.net/search?of=recjson&ot=system_control_number&p='
 
     for (const item of await getItemsAsync(ids)) {
       if (item.isNote() || item.isAttachment()) continue
 
-      try {
-        const extra = item.getField('extra')
-        const parsed = Extra.get(extra, 'zotero')
-        let citationKey
+      const extra = this.getField(item, 'extra')
+      const parsed = Extra.get(extra, 'zotero')
+      let citationKey: string = null
 
-        if (inspireHEP) {
-          let key = parsed.extraFields.kv.DOI || item.getField('DOI') || arXiv.parse(parsed.extraFields.tex.arxiv).id
-          if (!key && ['arxiv.org', 'arxiv'].includes((item.getField('libraryCatalog') || '').toLowerCase())) key = arXiv.parse(item.getField('publicationTitle')).id
-          if (!key) throw new Error(`No DOI or arXiv ID for ${item.getField('title')}`)
+      if (inspireHEP) {
+        const doi = (this.getField(item, 'DOI') || parsed.extraFields.kv.DOI || '').replace(/^https?:\/\/doi.org\//i, '')
+        const arxiv = ((['arxiv.org', 'arxiv'].includes((this.getField(item, 'libraryCatalog') || '').toLowerCase())) && arXiv.parse(this.getField(item, 'publicationTitle')).id) || arXiv.parse(parsed.extraFields.tex.arxiv).id
 
-          const results = JSON.parse((await Zotero.HTTP.request('GET', inspireSearch + encodeURIComponent(key))).responseText)
-          if (results.length !== 1) throw new Error(`Expected 1 inspire result for ${item.getField('title')}, got ${results.length}`)
-          if (!Array.isArray(results[0].system_control_number)) results[0].system_control_number = [ results[0].system_control_number ]
-
-          citationKey = results[0].system_control_number.find(i => i.institute.endsWith('TeX') && i.value).value
-
-          if (parsed.extraFields.citationKey === citationKey) continue
-
-        } else {
-          if (parsed.extraFields.citationKey) continue
-
-          citationKey = this.get(item.id).citekey || this.update(item)
+        if (!doi && !arxiv) {
+          log.debug(`No DOI or arXiv ID for ${item.getField('title')}`)
+          continue
         }
 
-        item.setField('extra', Extra.set(extra, { citationKey }))
-        await item.saveTx() // this should cause an update and key registration
-      } catch (err) {
-        log.error('KeyManager.pin', err)
+        if (doi) citationKey = await this.inspireHEP(`https://inspirehep.net/api/doi/${doi}`)
+        if (!citationKey && arxiv) citationKey = await this.inspireHEP(`https://inspirehep.net/api/arxiv/${arxiv}`)
+
+        if (!citationKey) {
+          log.debug(`No inspireHEP citation key for ${item.getField('title')}`)
+          continue
+        }
+
+        if (parsed.extraFields.citationKey === citationKey) continue
+
+      } else {
+        if (parsed.extraFields.citationKey) continue
+
+        citationKey = this.get(item.id).citekey || this.update(item)
       }
+
+      item.setField('extra', Extra.set(extra, { citationKey }))
+      await item.saveTx() // this should cause an update and key registration
     }
   }
 
