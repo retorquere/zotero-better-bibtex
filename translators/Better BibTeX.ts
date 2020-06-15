@@ -364,6 +364,10 @@ class ZoteroItem {
     techreport:     'report',
     report:         'report',
     online:         'webpage',
+    softwareversion:  'computerProgram',
+    software:         'computerProgram',
+    softwaremodule:   'computerProgram',
+    codefragment:     'computerProgram',
   }
 
   private type: string
