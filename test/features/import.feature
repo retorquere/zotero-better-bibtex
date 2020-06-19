@@ -90,6 +90,7 @@ Scenario Outline: Import <references> references from <file>
   | Title of German entry converted to lowercase during import #1350            | 4           |
   | space after citekey creates confusion #716                                  | 2           |
   | zbb (quietly) chokes on this .bib #664                                      | 1           |
+  | import software related biblatex entries #1544                              | 1           |
 
 @use.with_slow=true @timeout=3000
 @873

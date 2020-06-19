@@ -668,6 +668,24 @@ class ZoteroItem {
     return true
   }
 
+  protected $license(value) {
+    if (this.validFields.rights) {
+      this.set('rights', value)
+      return true
+    } else {
+      return this.fallback(['rights'], value)
+    }
+  }
+
+  protected $version(value) {
+    if (this.validFields.versionNumber) {
+      this.set('versionNumber', value)
+      return true
+    } else {
+      return this.fallback(['versionNumber'], value)
+    }
+  }
+
   /* TODO: Zotero ignores these on import
   protected '$date-modified'(value) { return this.item.dateAdded = this.unparse(value) }
   protected '$date-added'(value) { return this.item.dateAdded = this.unparse(value) }
