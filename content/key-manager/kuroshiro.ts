@@ -6,14 +6,12 @@ import KuromojiAnalyzer from 'kuroshiro-analyzer-kuromoji/src/kuroshiro-analyzer
 
 _kuromojiLoader.prototype.loadArrayBuffer = function(url, callback) { // tslint:disable-line:only-arrow-functions
   url = `resource://zotero-better-bibtex/kuromoji/${url.replace(/.*\//, '').replace(/\.gz$/, '')}`
-  log.debug('kuromoji: loading', url)
   const xhr = new XMLHttpRequest()
 
   xhr.open('GET', url, true)
   xhr.responseType = 'arraybuffer'
 
   xhr.onload = function() {
-    log.debug('kuromoji: loaded', url, this.status)
     const err = this.status > 0 && this.status !== 200 // tslint:disable-line:no-magic-numbers
     callback(err ? new Error(xhr.statusText) : null, err ? null : this.response)
   }
@@ -32,12 +30,7 @@ export let kuroshiro = new class {
   private kuroshiro: any
 
   public async init() {
-    log.debug('kuroshiro: initializing...')
-
-    if (!Prefs.get('kuroshiro')) {
-      log.debug('kuroshiro: disabled')
-      return
-    }
+    if (!Prefs.get('kuroshiro')) return
 
     try {
       this.kuroshiro = new Kuroshiro()
@@ -47,7 +40,6 @@ export let kuroshiro = new class {
       throw err
     }
 
-    log.debug('kuroshiro: ready')
     this.enabled = true
   }
 

@@ -43,7 +43,6 @@ class Git {
 
     switch (Prefs.get('git')) {
       case 'off':
-        log.debug('git.repo: off')
         return repo
 
       case 'always':
@@ -62,26 +61,19 @@ class Git {
           if ((await OS.File.exists(config)) && (await OS.File.stat(config)).isDir) break
           config = null
         }
-        if (!config) {
-          log.debug('git.repo: git repo found for', bib)
-          return repo
-        }
+        if (!config) return repo
         repo.path = OS.Path.dirname(config)
 
         config = OS.Path.join(config, 'config')
         if (!(await OS.File.exists(config)) || (await OS.File.stat(config)).isDir) {
-          log.debug('git.repo: git config not found for', bib)
           return repo
         }
 
         try {
           const enabled = ini.parse(Zotero.File.getContents(config))['zotero "betterbibtex"']?.push
-          if (enabled !== 'true' && enabled !== true) {
-            log.debug('git.repo: push not enabled for', repo.path)
-            return repo
-          }
+          if (enabled !== 'true' && enabled !== true) return repo
         } catch (err) {
-          log.debug('git.repo: error parsing config', config.path, err)
+          log.error('git.repo: error parsing config', config.path, err)
           return repo
         }
         break
@@ -101,12 +93,10 @@ class Git {
   }
 
   public async pull() {
-    log.debug('git.pull', this)
     if (!this.enabled) return
 
     try {
       await this.exec(this.git, ['-C', this.path, 'pull'])
-      log.debug(`git.pull: pulled in ${this.path}`)
     } catch (err) {
       log.error(`could not pull in ${this.path}:`, err)
       this.enabled = false
@@ -114,14 +104,12 @@ class Git {
   }
 
   public async push(msg) {
-    log.debug('git.push', this)
     if (!this.enabled) return
 
     try {
       await this.exec(this.git, ['-C', this.path, 'add', this.bib])
       await this.exec(this.git, ['-C', this.path, 'commit', '-m', msg])
       await this.exec(this.git, ['-C', this.path, 'push'])
-      log.debug(`git.push: pushed ${this.bib} in ${this.path}`)
     } catch (err) {
       log.error(`could not push ${this.bib} in ${this.path}`, err)
       this.enabled = false
@@ -136,8 +124,6 @@ class Git {
     const proc = Components.classes['@mozilla.org/process/util;1'].createInstance(Components.interfaces.nsIProcess)
     proc.init(cmd)
     // proc.startHidden = true // won't work until Zotero upgrades to post-55 Firefox
-
-    log.debug(`Running ${cmd.path} ${JSON.stringify(args).slice(1, -1)}`)
 
     const deferred = Zotero.Promise.defer()
     proc.runwAsync(args, args.length, { observe: function(subject, topic) { // tslint:disable-line:object-literal-shorthand only-arrow-functions
@@ -178,6 +164,8 @@ const queue = new class TaskQueue {
 
     const idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
     idleService.addIdleObserver(this, Prefs.get('autoExportIdleWait'))
+
+    Zotero.Notifier.registerObserver(this, ['sync'], 'BetterBibTeX', 1)
   }
 
   public init(autoexports) {
@@ -229,7 +217,6 @@ const queue = new class TaskQueue {
 
     const ae = this.autoexports.get(task.id)
     if (!ae) throw new Error(`AutoExport ${task.id} not found`)
-    log.debug('AutoExport.queue.run: starting', ae)
 
     ae.status = 'running'
     this.autoexports.update(ae)
@@ -293,12 +280,9 @@ const queue = new class TaskQueue {
 
     ae.status = 'done'
     this.autoexports.update(ae)
-    log.debug('AutoExport.queue.run: done')
   }
 
   private getCollectionPath(coll, root) {
-    log.debug('ae-collection:', coll.name, coll.parentID)
-
     let path = [ coll.name.replace(/[^a-zA-Z0-9]/, '') ]
     if (coll.parentID && coll.parentID !== root) path = this.getCollectionPath(Zotero.Collections.get(coll.parentID), root).concat(path)
     return path
@@ -316,6 +300,31 @@ const queue = new class TaskQueue {
 
       case 'idle':
         this.resume()
+        break
+
+      default:
+        log.error('Unexpected idle state', topic)
+        break
+    }
+  }
+
+  // pause during sync.
+  // It is theoretically possible that auto-export is paused because Zotero is idle and then restarted when the sync finishes, but
+  // I can't see how a system can be considered idle when Zotero is syncing.
+  protected notify(action, type) {
+    if (!this.started || Prefs.get('autoExport') === 'off') return
+
+    switch(`${type}.${action}`) {
+      case 'sync.start':
+        this.pause()
+        break
+
+      case 'sync.finish':
+        this.resume()
+        break
+
+      default:
+        log.error('Unexpected Zotero notification state', { action, type })
         break
     }
   }

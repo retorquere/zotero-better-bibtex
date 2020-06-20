@@ -479,7 +479,6 @@ class PatternFormatter {
 
   /** The date of the publication */
   public $date(format = '%Y-%m-%d') {
-    log.debug('keymanager:date:', { date: this.item.date, format })
     return this._format_date(this.item.date, format)
   }
 

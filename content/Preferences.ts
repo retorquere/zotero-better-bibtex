@@ -63,11 +63,7 @@ class AutoExportPane {
       while (tabpanels.children.length > 1) tabpanels.removeChild(tabpanels.firstChild)
     }
 
-    // log.debug('prefs.auto-update.refresh:', rebuild)
-
     for (const [index, ae] of auto_exports.entries()) {
-      // log.debug('prefs.auto-update.refresh:', ae)
-
       let tab, tabpanel
 
       if (rebuild.rebuild) {
@@ -140,10 +136,7 @@ class AutoExportPane {
                 query[pref] = ae[pref]
               }
               const cached = Cache.getCollection(Translators.byId[ae.translatorID].label).find(query)
-              // log.debug('DB Event: cache fetch', query, cached)
               ratio = Math.round((cached.length * 100) / items.length) // tslint:disable-line:no-magic-numbers
-
-              // log.debug('prefs.auto-export.cache', {ratio, items, query, cached})
             }
             (node as XUL.Textbox).value = `${ratio}%`
 
@@ -167,13 +160,6 @@ class AutoExportPane {
         }
       }
     }
-
-    /*
-    if (rebuild.rebuild) {
-      const domSerializer = Components.classes['@mozilla.org/xmlextras/xmlserializer;1'].createInstance(Components.interfaces.nsIDOMSerializer)
-      log.debug(domSerializer.serializeToString(tabbox))
-    }
-    */
   }
 
   public remove(node) {
@@ -195,9 +181,6 @@ class AutoExportPane {
     const ae = AutoExport.db.get(parseInt(node.getAttributeNS(namespace, 'ae-id')))
     Cache.getCollection(Translators.byId[ae.translatorID].label).removeDataOnly()
 
-    // const domSerializer = Components.classes['@mozilla.org/xmlextras/xmlserializer;1'].createInstance(Components.interfaces.nsIDOMSerializer)
-    // log.debug('prefs.auto-export.edit: pre', { [field]: ae[field] })
-
     switch (field) {
       case 'exportNotes':
       case 'useJournalAbbreviation':
@@ -215,7 +198,7 @@ class AutoExportPane {
         break
 
       default:
-        log.debug('unexpected field', field)
+        log.error('unexpected field', field)
     }
 
     AutoExport.db.update(ae)
@@ -313,9 +296,7 @@ export = new class PrefPane {
   }
 
   public async rescanCitekeys() {
-    log.debug('starting manual key rescan')
     await KeyManager.rescan()
-    log.debug('manual key rescan done')
   }
 
   public cacheReset() {

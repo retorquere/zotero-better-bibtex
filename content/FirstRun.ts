@@ -1,8 +1,6 @@
 declare const window: any
 declare const document: any
 
-import * as log from './debug'
-
 export = new class FirstRun {
   private prefix = 'better-bibtex-first-run-'
   private params: { citekeyFormat: String, dragndrop: boolean }
@@ -45,9 +43,11 @@ export = new class FirstRun {
     }
   }
 
+  /*
   public ok() {
     log.debug('ok')
   }
+  */
 }
 
 // otherwise this entry point won't be reloaded: https://github.com/webpack/webpack/issues/156

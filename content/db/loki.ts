@@ -66,7 +66,6 @@ idleService.addIdleObserver({
     for (const db of autoSaveOnIdle) {
       if (!db.autosaveDirty()) continue
 
-      log.debug('idle, saving', db.filename)
       try {
         await db.saveDatabaseAsync()
       } catch (err) {
@@ -97,15 +96,12 @@ export class XULoki extends Loki {
 
     if (this.persistenceAdapter && !nullStore) {
       AsyncShutdown.profileBeforeChange.addBlocker(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: closing ${name}`, async () => {
-        log.debug(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: closing ${name}`)
-
         // setTimeout is disabled during shutdown and throws errors
         this.throttledSaves = false
 
         try {
           await this.saveDatabaseAsync()
           await this.closeAsync()
-          log.debug(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: closed ${name}`)
         } catch (err) {
           log.error(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: close ${name} failed`, err)
         }
@@ -143,15 +139,7 @@ export class XULoki extends Loki {
   public schemaCollection(name, options) {
     options.cloneObjects = true
     options.clone = true
-    const coll = this.getCollection(name) || this.addCollection(name, options)
-
-    log.debug('!!!!!!! REMOVE THIS !!!!!!!!')
-    // if (options.logging && Prefs.testing) {
-    if (options.logging) {
-      for (const event of ['insert', 'delete', 'update']) {
-        ((e, n, db) => coll.on(e, data => log.debug(`DB Event: ${db}.${n}.${e}`, data)))(event, name, this.filename)
-      }
-    }
+    const coll = this.getCollection(name) || this.addCollection(name, options);
 
     (coll as any).validate = validator.compile(options.schema)
 

@@ -26,7 +26,6 @@ export let TeXstudio = new class { // tslint:disable-line:variable-name
       try {
         const pane = Zotero.getActiveZoteroPane() // can Zotero 5 have more than one pane at all?
         const items = pane.getSelectedItems()
-        log.debug('TeXstudio:', items)
         citation = items.map(item => KeyManager.get(item.id).citekey).filter(citekey => citekey).join(',')
       } catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
         log.error('TeXstudio: Could not get selected items:', err)
@@ -34,10 +33,7 @@ export let TeXstudio = new class { // tslint:disable-line:variable-name
       }
     }
 
-    if (!citation) {
-      log.debug('TeXstudio: no items to cite')
-      return
-    }
+    if (!citation) return
 
     try {
       await Zotero.Utilities.Internal.exec(this.texstudio, ['--insert-cite', citation])

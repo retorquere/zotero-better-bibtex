@@ -4,7 +4,6 @@ declare const Zotero: any
 Components.utils.import('resource://gre/modules/osfile.jsm')
 declare const OS: any
 
-import * as log from './debug'
 import { sleep } from './sleep'
 import { KeyManager } from './key-manager'
 import { Translators } from './translators'
@@ -92,7 +91,6 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
   }
 
   private async parse(path: string, citekeys: string[], bibfiles: Record<string, string> ) {
-    log.debug('AUX scanner: parsing', path)
     let m, re
 
     const contents = await this.read(path)

@@ -164,9 +164,6 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
 
     this.preferences.testing = Zotero.getHiddenPref('better-bibtex.testing')
 
-    Zotero.debug(`prefs loaded: ${JSON.stringify(this.preferences, null, 2)}`)
-    Zotero.debug(`options loaded: ${JSON.stringify(this.options, null, 2)}`)
-
     if (mode === 'export') {
       this.unicode = (this.BetterBibTeX && !Translator.preferences.asciiBibTeX) || (this.BetterBibLaTeX && !Translator.preferences.asciiBibLaTeX)
 
@@ -184,12 +181,10 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
         // relative file paths are going to be different based on the file being exported to
         || this.preferences.relativeFilePaths
       )
-      Zotero.debug(`export caching: ${this.caching}`)
     }
 
     this.collections = {}
     if (mode === 'export' && this.header.configOptions?.getCollections && Zotero.nextCollection) {
-      Zotero.debug('getting collections')
       let collection
       while (collection = Zotero.nextCollection()) {
         const children = collection.children || collection.descendents || []
@@ -222,7 +217,6 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
     }
 
     this.initialized = true
-    Zotero.debug('Translator init ready')
   }
 
   public items(): ISerializedItem[] {

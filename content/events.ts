@@ -1,8 +1,6 @@
 declare const Zotero: any
 
 import { EventEmitter } from 'eventemitter3'
-
-import * as log from './debug'
 import { patch as $patch$ } from './monkey-patch'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
@@ -23,19 +21,13 @@ if (Zotero.Debug.enabled) {
 
   $patch$(Events, 'on', original => function() {
     if (!events.includes(arguments[0])) throw new Error(`Unsupported event ${arguments[0]}`)
-    log.debug('events: handler registered for', arguments[0])
     original.apply(this, arguments)
   })
 
   $patch$(Events, 'emit', original => function() {
     if (!events.includes(arguments[0])) throw new Error(`Unsupported event ${arguments[0]}`)
-    log.debug('events: emitted', Array.prototype.slice.call(arguments))
     original.apply(this, arguments)
   })
-
-  for (const event of events) {
-    (e => Events.on(e, () => log.debug(`events: got ${e}`)))(event)
-  }
 }
 
 export function itemsChanged(items) {

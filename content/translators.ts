@@ -96,7 +96,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
     if (reinit) {
       let restart = false
-      log.debug('new translators:', { ask: Prefs.get('newTranslatorsAskRestart'), testing: Prefs.testing })
       if (Prefs.get('newTranslatorsAskRestart') && !Prefs.testing) {
         const dontAskAgain = { value: false }
         const ps = Services.prompt
@@ -256,8 +255,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
     this.workers.running.add(id)
     const prefix = `{${translator.label} worker ${id}}`
 
-    log.debug(`Beginning translation with ${prefix}`)
-
     const deferred = Zotero.Promise.defer()
     let worker: ChromeWorker = null
     // WHAT IS GOING ON HERE FIREFOX?!?! A *NetworkError* for a xpi-internal resource:// URL?!
@@ -266,11 +263,10 @@ export let Translators = new class { // tslint:disable-line:variable-name
         if (attempt > 0) await sleep(2 * 1000 * attempt) // tslint:disable-line:no-magic-numbers
         worker = new ChromeWorker(`resource://zotero-better-bibtex/worker/Zotero.js?${params}`)
       } catch (err) {
-        log.debug('new ChromeWorker:', err)
+        log.error('new ChromeWorker:', err)
       }
     }
     if (!worker) {
-      log.debug('what the actual...')
       deferred.reject('could not get a ChromeWorker')
       flash(
         'Failed to start background export',
@@ -294,7 +290,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
     worker.onmessage = (e: { data: BBTWorker.Message }) => {
       switch (e.data?.kind) {
         case 'error':
-          log.debug('QBW: failed:', Date.now() - start)
+          log.error('QBW: failed:', Date.now() - start)
           log.error(e.data)
           Zotero.debug(`${prefix} error: ${e.data.message}`)
           deferred.reject(e.data.message)
@@ -313,14 +309,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
           break
 
         case 'done':
-          current_trace.export.total = (Date.now() - start) - current_trace.prep.total
-          let status = `QBW: ${prefix} done,`
-          status += `${config.items.length} items, `
-          status += `total duration ${(current_trace.prep.total + current_trace.export.total) / 1000}s ` // tslint:disable-line:no-magic-numbers
-          status += `of which ${current_trace.prep.total / 1000}s prep, ` // tslint:disable-line:no-magic-numbers
-          status += `serialization cache ${current_trace.cached.serializer}%, export cache ${current_trace.cached.export}%`
-          log.debug(status)
-          log.debug(current_trace)
           deferred.resolve(e.data.output)
           worker.terminate()
           this.workers.running.delete(id)
@@ -328,13 +316,11 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
         case 'cache':
           let { itemID, reference, metadata } = e.data
-          log.debug(prefix, 'caught cache for', itemID)
           if (!metadata) metadata = {}
 
           if (!cache) {
             const msg = `worker.cacheStore: cache ${translator.label} not found`
             log.error(msg)
-            log.debug('QBW: failed:', Date.now() - start)
             deferred.reject(msg)
             worker.terminate()
             this.workers.running.delete(id)
@@ -363,7 +349,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
     worker.onerror = e => {
       Zotero.debug(`${prefix} error: ${e}`)
-      log.debug('QBW: failed:', Date.now() - start)
+      log.error('QBW: failed:', Date.now() - start)
       deferred.reject(e.message)
       worker.terminate()
       this.workers.running.delete(id)
@@ -468,7 +454,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
       this.workers.running.delete(id)
       log.error(err)
       deferred.reject(err)
-      log.debug('QBW: failed:', Date.now() - start)
+      log.error('QBW: failed:', Date.now() - start)
     }
 
     return deferred.promise
@@ -578,17 +564,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
       Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${header.label}.js`),
     ].join('\n')
 
-    if (installed?.configOptions?.hash === header.configOptions.hash) {
-      log.debug('Translators.install:', header.label, 'not reinstalling', header.configOptions.hash)
-      return false
-
-    } else if (installed) {
-      log.debug('Translators.install:', header.label, 'replacing', installed.lastUpdated, 'with', header.lastUpdated, `(${header.configOptions.hash})`)
-
-    } else {
-      log.debug('Translators.install:', header.label, 'not installed, installing', header.lastUpdated, `(${header.configOptions.hash})`)
-
-    }
+    if (installed?.configOptions?.hash === header.configOptions.hash) return false
 
     const cache = Cache.getCollection(header.label)
     cache.removeDataOnly()

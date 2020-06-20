@@ -39,9 +39,7 @@ class WorkerZoteroBetterBibTeX {
   }
 
   public cacheFetch(itemID: number) {
-    const cached = Zotero.config.cache[itemID]
-    Zotero.debug(`cache ${cached ? 'hit' : 'miss'} for ${itemID}`)
-    return cached
+    return Zotero.config.cache[itemID]
   }
 
   public cacheStore(itemID: number, options: any, prefs: any, reference: string, metadata: any) {
@@ -236,14 +234,10 @@ class WorkerZotero {
 
   public done() {
     if (this.exportFile) {
-      this.debug(`writing ${this.output.length} bytes to ${this.exportFile}`)
       const encoder = new TextEncoder()
       const array = encoder.encode(this.output)
       OS.File.writeAtomic(this.exportFile, array, {tmpPath: this.exportFile + '.tmp'})
-    } else {
-      this.debug(`returning ${this.output.length} bytes to caller:`)
     }
-    this.debug('writing done, bye!')
     this.send({ kind: 'done', output: this.exportFile ? true : this.output })
   }
 
@@ -303,12 +297,9 @@ export function onmessage(e: { data: BBTWorker.Config }) {
 
   if (e.data?.items && !Zotero.config) {
     try {
-      const start = Date.now()
       Zotero.init(e.data)
-      Zotero.BetterBibTeX.debug('starting export for', { params, items: Zotero.config.items.length, collections: Zotero.config.collections.length }, 'to', Zotero.exportFile || 'text' )
       doExport()
       Zotero.done()
-      Zotero.debug(`export done in ${Date.now() - start}`)
     } catch (err) {
       Zotero.logError(err)
     }

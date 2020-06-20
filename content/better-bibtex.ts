@@ -19,8 +19,6 @@ declare const AddonManager: any
 import * as log from './debug'
 import { Events, itemsChanged as notifiyItemsChanged } from './events'
 
-log.debug('Loading Better BibTeX')
-
 import { Translators } from './translators'
 import { DB } from './db/main'
 import { DB as Cache, selector as cacheSelector } from './db/cache'
@@ -36,7 +34,6 @@ import format = require('string-template')
 AddonManager.addAddonListener({
   onUninstalling(addon, needsRestart) {
     if (addon.id !== 'better-bibtex@iris-advies.com') return null
-    log.debug('uninstall')
 
     const quickCopy = Zotero.Prefs.get('export.quickCopy.setting')
     for (const [label, metadata] of (Object.entries(Translators.byName) as [string, ITranslatorHeader][])) {
@@ -343,9 +340,7 @@ Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
 }
 
 $patch$(Zotero.Utilities.Internal, 'itemToExportFormat', original => function Zotero_Utilities_Internal_itemToExportFormat(zoteroItem, legacy, skipChildItems) {
-  const start = Date.now()
   const serialized = original.apply(this, arguments)
-  log.debug('Zotero.Utilities.Internal.itemToExportFormat took', Date.now() - start)
   return Serializer.enrich(serialized, zoteroItem)
 })
 
@@ -432,15 +427,13 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         this.saveQueue = []
         this._savingAttachments = []
 
-        log.debug('starting replacement web worker translator')
         Translators.exportItemsByQueuedWorker(translatorID, this._displayOptions, { scope: { ...this._export, getter: this._itemGetter }, path })
           .then(result => {
-            log.debug('worker translation complete, written to', path ? path : 'string', 'result = ', typeof result, ('' + result).length)
             this.string = result
             this.complete(result)
           })
           .catch(err => {
-            log.debug('worker translation failed, error:', err)
+            log.error('worker translation failed, error:', err)
             this.complete(null, err)
           })
         return
@@ -475,8 +468,6 @@ notify('item-tag', (action, type, ids, extraData) => {
 })
 
 notify('item', (action, type, ids, extraData) => {
-  log.debug('notify.item', { action, type, ids, extraData })
-
   // prevents update loop -- see KeyManager.init()
   if (action === 'modify') {
     ids = ids.filter(id => !extraData[id] || !extraData[id].bbtCitekeyUpdate)
@@ -547,8 +538,6 @@ notify('collection-item', (event, type, collection_items) => {
 /*
   INIT
 */
-
-log.debug('Loading Better BibTeX: setup done')
 
 class Progress {
   private timestamp: number
@@ -655,7 +644,7 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
 
   public getString(id, params = null) {
     if (!this.strings || typeof this.strings.getString !== 'function') {
-      log.debug('getString called before strings were loaded', id)
+      log.error('getString called before strings were loaded', id)
       return id
     }
 
@@ -663,7 +652,7 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
       const str = this.strings.getString(id)
       return params ? format(str, params) : str
     } catch (err) {
-      log.debug('getString', id, err)
+      log.error('getString', id, err)
       return id
     }
   }

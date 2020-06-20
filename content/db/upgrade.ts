@@ -45,9 +45,6 @@ export async function upgrade(progress) {
 
       const extra = upgradeExtra(item.extra)
       if (extra !== item.extra) {
-        log.debug('dbUpgrade: old=\n', item.extra)
-        log.debug('dbUpgrade: new=\n', extra)
-
         const upgraded = await Zotero.Items.getAsync(item.itemID)
 
         if (!upgraded.isEditable()) {

@@ -10,7 +10,6 @@ import { get as getCollection } from './collection'
 import { get as getLibrary } from './library'
 import { getItemsAsync } from './get-items-async'
 import { KeyManager } from './key-manager'
-import * as log from './debug'
 
 function displayOptions(request) {
   const isTrue = new Set([ 'y', 'yes', 'true' ])
@@ -126,7 +125,6 @@ Zotero.Server.Endpoints['/better-bibtex/export/item'] = class {
       // itemID => zotero item
       const items = (await getItemsAsync(Object.values(itemIDs))).reduce((acc, item) => { acc[item.itemID] = item; return acc }, {})
       let contents = await Translators.exportItems(translatorID, displayOptions(request), { type: 'items', items: Object.values(items) })
-      log.debug(contents)
 
       if (pandocFilterData) {
         let _items

@@ -1029,12 +1029,10 @@ export class Reference {
       return f.value.map(elt => this.enc_latex({...f, bibtex: undefined, value: elt}, options)).join(f.sep || '')
     }
 
-    debug('enc_latex:', f, options)
     if (f.raw || options.raw) return f.value
 
     const caseConversion = this.caseConversion[f.name] || f.caseConversion
     const latex = text2latex(f.value, {html: f.html, caseConversion: caseConversion && this.english, creator: options.creator})
-    debug('enc_latex:', f, latex)
     for (const pkg of latex.packages) {
       this.packages[pkg] = true
     }

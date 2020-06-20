@@ -1,7 +1,6 @@
 declare const Zotero: any
 
 import { XULoki as Loki } from './loki'
-import * as log from '../debug'
 import { Events } from '../events'
 import { Store } from './store'
 import { Preferences as Prefs } from '../prefs'
@@ -16,12 +15,7 @@ class Cache extends Loki {
   private initialized = false
 
   public remove(ids, reason) {
-    if (!this.initialized) {
-      log.debug(':Cache:remove', reason, 'skipped, not initialized')
-      return
-    }
-
-    log.debug(':Cache:remove', reason, ids)
+    if (!this.initialized) return
 
     const query = Array.isArray(ids) ? { itemID : { $in : ids } } : { itemID: ids }
 
@@ -31,12 +25,9 @@ class Cache extends Loki {
   }
 
   public reset() {
-    if (!this.initialized) {
-      log.debug(':Cache:reset skipped, not initialized')
-      return
-    }
+    if (!this.initialized) return
+
     for (const coll of this.collections) {
-      log.debug('Cache:reset', coll.name)
       coll.removeDataOnly()
     }
   }

@@ -43,7 +43,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
       if (results.metadata.texkeys.length !== 1) throw new Error(`expected 1 key, got ${results.metadata.texkeys.length}`)
       return results.metadata.texkeys[0]
     } catch (err) {
-      log.debug('inspireHEP', url, err)
+      log.error('inspireHEP', url, err)
       return null
     }
   }
@@ -69,18 +69,12 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
         const doi = (this.getField(item, 'DOI') || parsed.extraFields.kv.DOI || '').replace(/^https?:\/\/doi.org\//i, '')
         const arxiv = ((['arxiv.org', 'arxiv'].includes((this.getField(item, 'libraryCatalog') || '').toLowerCase())) && arXiv.parse(this.getField(item, 'publicationTitle')).id) || arXiv.parse(parsed.extraFields.tex.arxiv).id
 
-        if (!doi && !arxiv) {
-          log.debug(`No DOI or arXiv ID for ${item.getField('title')}`)
-          continue
-        }
+        if (!doi && !arxiv) continue
 
         if (doi) citationKey = await this.inspireHEP(`https://inspirehep.net/api/doi/${doi}`)
         if (!citationKey && arxiv) citationKey = await this.inspireHEP(`https://inspirehep.net/api/arxiv/${arxiv}`)
 
-        if (!citationKey) {
-          log.debug(`No inspireHEP citation key for ${item.getField('title')}`)
-          continue
-        }
+        if (!citationKey) continue
 
         if (parsed.extraFields.citationKey === citationKey) continue
 
@@ -244,8 +238,6 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
     })
 
     this.keys.on(['insert', 'update'], async citekey => {
-      log.debug('item updated or inserted')
-
       await ZoteroDB.queryAsync('INSERT OR REPLACE INTO betterbibtexcitekeys.citekeys (itemID, itemKey, citekey) VALUES (?, ?, ?)', [ citekey.itemID, citekey.itemKey, citekey.citekey ])
 
       // async is just a heap of fun. Who doesn't enjoy a good race condition?
@@ -257,11 +249,9 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
         await Zotero.Items.getAsync(citekey.itemID)
       } catch (err) {
         // assume item has been deleted before we could get to it -- did I mention I hate async? I hate async
-        log.debug('could not load', citekey.itemID, err)
+        log.error('could not load', citekey.itemID, err)
         return
       }
-
-      log.debug('item updated or inserted -- waited', this.itemObserverDelay)
 
       if (Prefs.get('autoPin') && !citekey.pinned) {
         this.pin([citekey.itemID])

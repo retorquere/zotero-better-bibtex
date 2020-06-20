@@ -19,8 +19,6 @@ import * as bibtexParser from '@retorquere/bibtex-parser'
 import { valid, label } from '../gen/items/items'
 import { arXiv } from '../content/arXiv'
 
-debug('field labelss:', label)
-
 Reference.prototype.caseConversion = {
   title: true,
   series: true,
