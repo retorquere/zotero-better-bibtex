@@ -1,5 +1,34 @@
 # Changelog
 
+## [5.2.32] - 2020-06-20
+
+ - remove almost all debug logging, and pause auto-export during sync
+
+## [5.2.31] - 2020-06-18
+
+ - Use new API for "Pin BibTeX key from InspireHEP" (#1479)
+
+## [5.2.30] - 2020-06-13
+
+ - JSTOR eprint data export depends on whether jstor link starts with https vs http (#1543)
+
+## [5.2.29] - 2020-06-09
+
+ - BibTeX Warning for Inbook Entries with Author and Editor Fields (#1541)
+
+## [5.2.28] - 2020-06-08
+
+ - Unicode "ø" in author name is exported with trailing space which does not work in bibtex (#1538)
+
+## [5.2.26] - 2020-06-01
+
+ - Date Added field not available for citekey although it was in the past (#1534)
+
+## [5.2.25] - 2020-05-28
+
+ - fixed Collected Notes
+ - @manual import/export
+
 ## [5.2.24] - 2020-05-23
 
  - author-in-text support for pandoc-to-live-docx
