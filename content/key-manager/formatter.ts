@@ -59,7 +59,7 @@ class PatternFormatter {
     unsafechars: Zotero.Utilities.XRegExp(`[^${safechars}]`),
     alphanum: Zotero.Utilities.XRegExp('[^\\p{L}\\p{N}]'),
     punct: Zotero.Utilities.XRegExp('\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g'),
-    dash: Zotero.Utilities.XRegExp('(\\p{Pc}|\\p{Pd})+', 'g'),
+    dash: Zotero.Utilities.XRegExp('\\p{Pd}+', 'g'),
     caseNotUpperTitle: Zotero.Utilities.XRegExp('[^\\p{Lu}\\p{Lt}]', 'g'),
     caseNotUpper: Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g'),
     word: Zotero.Utilities.XRegExp('[\\p{L}\\p{Nd}\\{Pc}\\p{M}]+(-[\\p{L}\\p{Nd}\\{Pc}\\p{M}]+)*', 'g'),
