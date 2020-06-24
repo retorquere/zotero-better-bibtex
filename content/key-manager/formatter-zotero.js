@@ -120,7 +120,7 @@ function buildCiteKey (item, extraFields, citekeys) {
 	// but use the simple pattern for all newly added items
 	// or always if the hiddenPref is set
 	// extensions.zotero.translators.BibTeX.export.simpleCitekey
-	if ((Zotero.getHiddenPref && Zotero.getHiddenPref('BibTeX.export.simpleCitekey'))
+	if ((Zotero.Prefs && Zotero.Prefs.get('translators.BibTeX.export.simpleCitekey'))
 			|| (item.dateAdded && parseInt(item.dateAdded.substr(0, 4)) >= 2020)) {
 		citeKeyCleanRe = /[^a-z0-9_-]/g;
 	}

@@ -86,4 +86,10 @@ ${ast.toSource()}
 
 module.exports = { buildCiteKey: buildCiteKey }
 `
-fs.writeFileSync('content/key-manager/formatter-zotero.js', code)
+
+const code_with_prefs = code
+  .replace("Zotero.getHiddenPref('BibTeX.export.simpleCitekey')", "Zotero.Prefs.get('translators.BibTeX.export.simpleCitekey')")
+  .replace('Zotero.getHiddenPref', 'Zotero.Prefs')
+if (code === code_with_prefs) throw new Error('no change')
+
+fs.writeFileSync('content/key-manager/formatter-zotero.js', code_with_prefs)
