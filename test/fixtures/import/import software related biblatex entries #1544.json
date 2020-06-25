@@ -1,0 +1,81 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "mdy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
+      "workers": 0
+    }
+  },
+  "items": [
+    {
+      "abstractNote": "Software for Numerical Computation freely distributed.",
+      "attachments": [
+        {
+          "accessDate": "2020-06-18T17:08:08Z",
+          "itemType": "attachment",
+          "key": "KUAFMPKL",
+          "linkMode": "linked_url",
+          "title": "scilab-1.1.tar",
+          "uri": "http://zotero.org/users/local/q1jn3DXi/items/KUAFMPKL",
+          "url": "https://hal.inria.fr/hal-02090402/file/scilab-1.1.tar.gz"
+        }
+      ],
+      "citationKey": "delebecque:hal-02090402v1",
+      "creators": [
+        {
+          "creatorType": "programmer",
+          "firstName": "Fran\u00e7ois",
+          "lastName": "Delebecque"
+        },
+        {
+          "creatorType": "programmer",
+          "firstName": "Claude",
+          "lastName": "Gomez"
+        },
+        {
+          "creatorType": "programmer",
+          "firstName": "Maurice",
+          "lastName": "Goursat"
+        },
+        {
+          "creatorType": "programmer",
+          "firstName": "Ramine",
+          "lastName": "Nikoukhah"
+        },
+        {
+          "creatorType": "programmer",
+          "firstName": "Serge",
+          "lastName": "Steer"
+        },
+        {
+          "creatorType": "programmer",
+          "firstName": "Jean-Philippe",
+          "lastName": "Chancelier"
+        }
+      ],
+      "date": "1994-01",
+      "extra": [
+        "Citation Key: delebecque:hal-02090402v1",
+        "tex.hal_id: hal-02090402",
+        "tex.hal_version: v1",
+        "tex.repository: https://github.com/scilab/scilab",
+        "tex.swhid: swh:1:dir:1ba0b67b5d0c8f10961d878d91ae9d6e499d746a; origin=https://hal.archives-ouvertes.fr/hal-02090402"
+      ],
+      "itemID": 1,
+      "itemType": "computerProgram",
+      "notes": [
+        "First Scilab version. It was distributed by anonymous ftp."
+      ],
+      "publisher": "Inria",
+      "rights": "Scilab license",
+      "title": "Scilab",
+      "url": "https://www.scilab.org/",
+      "versionNumber": "1.1"
+    }
+  ]
+}

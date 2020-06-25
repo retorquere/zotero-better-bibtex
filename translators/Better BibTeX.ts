@@ -362,6 +362,10 @@ class ZoteroItem {
     techreport:     'report',
     report:         'report',
     online:         'webpage',
+    softwareversion:  'computerProgram',
+    software:         'computerProgram',
+    softwaremodule:   'computerProgram',
+    codefragment:     'computerProgram',
   }
 
   private type: string
@@ -660,6 +664,24 @@ class ZoteroItem {
     }
 
     return true
+  }
+
+  protected $license(value) {
+    if (this.validFields.rights) {
+      this.set('rights', value)
+      return true
+    } else {
+      return this.fallback(['rights'], value)
+    }
+  }
+
+  protected $version(value) {
+    if (this.validFields.versionNumber) {
+      this.set('versionNumber', value)
+      return true
+    } else {
+      return this.fallback(['versionNumber'], value)
+    }
   }
 
   /* TODO: Zotero ignores these on import
