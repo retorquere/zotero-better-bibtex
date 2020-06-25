@@ -6,6 +6,20 @@ import * as fs from 'fs'
 const input = fs.readFileSync('../translators/BibTeX.js', 'utf-8')
 const ast = j('const TRANSLATOR_INFO=' + input)
 
+/*
+const getCircularReplacer = () => {
+  const seen = new WeakSet()
+  return (key, value) => {
+    if (typeof value === "object" && value !== null) {
+      if (seen.has(value)) return
+      seen.add(value)
+    }
+    return value
+  }
+}
+console.log(JSON.stringify(ast, getCircularReplacer(), 2))
+*/
+
 console.log('getting zotero citekey generator')
 
 const x_functions = [
@@ -79,17 +93,25 @@ ast.find(j.MemberExpression, {
   p.value.property.name = 'Date'
 })
 
+ast.find(j.MemberExpression, {
+  type: 'MemberExpression',
+  object: { type: 'Identifier', name: 'Zotero' },
+  property: { type: 'Identifier', name: 'getHiddenPref' },
+}).forEach(p => {
+  p.value.object.name = 'Z'
+})
+
 const code = `
 const ZU = Zotero.Utilities;
+const Z = {
+  getHiddenPref(p) {
+    return Zotero.Prefs.get('translators.' + p)
+  }
+}
 
 ${ast.toSource()}
 
 module.exports = { buildCiteKey: buildCiteKey }
 `
 
-const code_with_prefs = code
-  .replace("Zotero.getHiddenPref('BibTeX.export.simpleCitekey')", "Zotero.Prefs.get('translators.BibTeX.export.simpleCitekey')")
-  .replace('Zotero.getHiddenPref', 'Zotero.Prefs')
-if (code === code_with_prefs) throw new Error('no change')
-
-fs.writeFileSync('content/key-manager/formatter-zotero.js', code_with_prefs)
+fs.writeFileSync('content/key-manager/formatter-zotero.js', code)
