@@ -65,6 +65,7 @@
     "edtfy": "^0.0.8",
     "escape-string-regexp": "^4.0.0",
     "eventemitter3": "^4.0.4",
+    "excel-column-name": "^1.0.1",
     "fast-chunk-string": "^1.0.1",
     "file-path-filter": "^3.0.1",
     "fold-to-ascii": "^5.0.0",
@@ -93,8 +94,8 @@
     "xregexp": "^4.3.0"
   },
   "devDependencies": {
-    "@types/node": "^14.0.13",
-    "@types/webpack": "^4.41.17",
+    "@types/node": "^14.0.14",
+    "@types/webpack": "^4.41.18",
     "archiver": "^4.0.1",
     "bluebird": "^3.7.2",
     "circular-dependency-plugin": "^5.2.0",
