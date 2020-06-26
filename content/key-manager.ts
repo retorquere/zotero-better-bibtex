@@ -22,6 +22,22 @@ import { DB as Cache } from './db/cache'
 
 import { patch as $patch$ } from './monkey-patch'
 
+import { sprintf } from 'sprintf-js'
+
+function toColumnName(num: number) {
+  const base = 97 // lowercase a
+  let ret = ''
+  const chars = 26
+  let a = 1
+  let b = chars
+  while ((num -= a) >= 0) {
+    ret = String.fromCharCode(((num % b) / a) + base) + ret
+    a = b
+    b *= chars
+  }
+  return ret
+}
+
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let KeyManager = new class { // tslint:disable-line:variable-name
   public keys: any
@@ -422,13 +438,24 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
 
     const proposed = Formatter.format(item)
 
-    const postfix = this[proposed.postfix === '0' ? 'postfixZotero' : 'postfixAlpha']
-
     const conflictQuery = { libraryID: item.libraryID, itemID: { $ne: item.id } }
     if (Prefs.get('keyScope') === 'global') delete conflictQuery.libraryID
 
-    for (let n = -1; true; n += 1) {
-      const postfixed = proposed.citekey + postfix(n)
+    let postfix
+    const seen = {}
+    for (let n = 0; true; n += 1) {
+      if (n) {
+        const alpha = toColumnName(n)
+        postfix = sprintf(proposed.postfix, { a: alpha, A: alpha.toUpperCase(), n })
+      } else {
+        postfix = ''
+      }
+
+      // this should never happen, it'd mean the postfix pattern doesn't have placeholders, which should have been caught by parsePattern
+      if (seen[postfix]) throw new Error(`${JSON.stringify(proposed.postfix)} does not generate unique postfixes`)
+      seen[postfix] = true
+
+      const postfixed = proposed.citekey + postfix
 
       const conflict = this.keys.findOne({ ...conflictQuery, citekey: postfixed })
       if (conflict) continue
@@ -466,27 +493,6 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
 
       await item.saveTx()
     }
-  }
-
-  private postfixZotero(n) {
-    if (n < 0) return ''
-
-    return `-${n + 1}`
-  }
-
-  private postfixAlpha(n) {
-    if (n < 0) return ''
-
-    const ordA = 'a'.charCodeAt(0)
-    const ordZ = 'z'.charCodeAt(0)
-    const len = ordZ - ordA + 1
-
-    let postfix = ''
-    while (n >= 0) {
-      postfix = String.fromCharCode(n % len + ordA) + postfix
-      n = Math.floor(n / len) - 1
-    }
-    return postfix
   }
 
   private expandSelection(ids) {

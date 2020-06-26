@@ -83,6 +83,7 @@
     "permutater": "^1.0.2",
     "punycode": "^2.1.1",
     "safe-stable-stringify": "^1.1.1",
+    "sprintf-js": "^1.1.2",
     "string-template": "^1.0.0",
     "task-easy": "^1.0.1",
     "transliteration": "^2.1.11",

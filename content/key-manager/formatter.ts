@@ -25,6 +25,8 @@ import * as items from '../../gen/items/items'
 import parse5 = require('parse5/lib/parser')
 const htmlParser = new parse5()
 
+import { sprintf } from 'sprintf-js'
+
 function innerText(node) {
   if (node.nodeName === '#text') return node.value
   if (node.childNodes) return node.childNodes.map(innerText).join('')
@@ -148,9 +150,16 @@ class PatternFormatter {
   }
 
   public parsePattern(pattern) {
-    const formatter = parser.parse(pattern, { items, methods })
+    const { formatter, postfixes } = parser.parse(pattern, { items, methods })
 
     log.debug('key formatter=', formatter)
+    log.debug('key postfixes=', postfixes)
+    for (const postfix of postfixes) {
+      const expected = '' + Date.now()
+      const found = sprintf(postfix, { a: expected, A: expected, n: expected })
+      if (!found.includes(expected)) throw new Error(`postfix ${formatter.postfix} does not contain %(a)s, %(A)s or %(n)s`)
+      if (found.split(expected).length > 2) throw new Error(`postfix ${formatter.postfix} contains multiple instances of %(a)s/%(A)s/%(n)s`)
+    }
     return formatter
   }
 

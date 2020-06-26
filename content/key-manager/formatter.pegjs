@@ -16,6 +16,21 @@
   function _filter(name, args) {
     return _method('filters', name, args, 1)
   }
+
+  const postfix = {
+    postfixes: [],
+
+    numeric: function() {
+      return this.set('-%(n)s')
+    },
+    alpha: function() {
+      return this.set('%(a)s')
+    },
+    set: function(pf) {
+      this.postfixes.push(pf)
+      return pf
+    },
+  }
 }
 
 start
@@ -23,14 +38,14 @@ start
       var body = "\nvar loop, citekey, postfix, chunk;"
 
       for (var pattern = 0; pattern < patterns.length; pattern++) {
-        body += "\nfor (loop = true; loop; loop=false) {\n  citekey = ''; postfix = 'a';\n\n"
+        body += `\nfor (loop = true; loop; loop=false) {\n  citekey = ''; postfix = ${JSON.stringify(postfix.alpha())};\n\n`
         body += patterns[pattern] + "\n"
         body += "  citekey = citekey.replace(/[\\s{},]/g, '');\n"
         body += "  if (citekey) return {citekey: citekey, postfix: postfix};\n}\n"
       }
       body += "return {citekey: ''};"
 
-      return body;
+      return { formatter: body, postfixes: postfix.postfixes }
     }
 
 pattern
@@ -38,7 +53,7 @@ pattern
 
 block
   = [ \t\r\n]+                            { return '' }
-  / '[0]'                                 { return `postfix = '0'` }
+  / '[0]'                                 { return `postfix = ${JSON.stringify(postfix.numeric())}` }
   / '[=' types:$[a-zA-Z/]+ ']'             {
       types = types.toLowerCase().split('/').map(type => type.trim()).map(type => options.items.name.type[type.toLowerCase()] || type);
       var unknown = types.find(type => !options.items.valid.type[type])
@@ -87,6 +102,7 @@ method
 
       return code;
     }
+  / 'postfix' pf:stringparam { return `postfix = ${JSON.stringify(postfix.set(pf))}` }
   / name:$([a-z][.a-zA-Z]+) &{ return _function(name, 'n') } params:nparam? {
       params = params || []
       return `chunk = this.$${name.replace(/\./g, '_')}(${params.join(', ')})`
@@ -104,7 +120,7 @@ method
       if (args.length !== 0) error(`function '${name}' expects at least one parameter (${args.join(', ')})`)
 
       var code = `chunk = this.$${name.replace(/\./g, '_')}()`
-      if (name == 'zotero') code += `; postfix = '0'`
+      if (name == 'zotero') code += `; postfix = ${JSON.stringify(postfix.numeric())}`
       return code
     }
   / prop:$([a-zA-Z]+) {
