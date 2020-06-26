@@ -2,8 +2,13 @@
   {{ range $func, $description := .Site.Data.citekeyformatters.functions }}
     <li>{{ $func | markdownify }}: {{ $description | markdownify }}</li>
   {{ end }}
-  <li><code>0</code>: a pseudo-function that sets the citekey disambiguation postfix to numeric (<code>-1</code>, <code>-2</code>, etc, like the standard Zotero Bib(La)TeX translators do) rather than alphabetic (<code>a</code>, <code>b</code>, <code>c</code>). Does not add any text to the citekey otherwise.</li>
-  <li><code>postfix=&lt;spec&gt;</code>: an <a href="https://www.npmjs.com/package/sprintf-js">sprintf-js</a> format spec. You <i>must</i> include <i>exactly</i> one of the placeholders <code>%(n)s</code> (number), <code>%(a)s</code> (alpha, lowercase) or <code>%(A)s</code> (alpha, uppercase). For the rest of the disambiguator you can use things like padding and extra text as sprintf-js allows.
+  <li><code>postfix=&lt;spec&gt;</code>:
+  a pseudo-function that sets the citekey disambiguation postfix using an <a href="https://www.npmjs.com/package/sprintf-js">sprintf-js</a> format spec
+  for when a key is generated that already exists. Does not add any text to the citekey otherwise.
+  You <i>must</i> include <i>exactly</i> one of the placeholders <code>%(n)s</code> (number), <code>%(a)s</code> (alpha, lowercase) or <code>%(A)s</code> (alpha, uppercase).
+  For the rest of the disambiguator you can use things like padding and extra text as sprintf-js allows. The default is <code>%(a)s</code>.
+  </li>
+  <li><code>0</code>: an alias for <code>[postfix=-%(n)s]</code>. Emulates the disambiguator of the standard Zotero exports. When you use <code>[zotero]</code> in your pattern, <code>[zotero][0]</code> is implied</li>
   <li><code>&gt;X</code>: a pseudo-function which aborts the current pattern generation if what came before it is <code>X</code> characters or less (<code>[&gt;0]</code> is a typical use. You would typically use this with something like <code>[auth][&gt;0][year] | [title][year]</code> which means if there's no author you get <code>title-year</code> rather than just <code>year</code>.</li>
   <li><code>=typeName</code>: a pseudo-function that aborts the current pattern generation if the Zotero reference type does not equal <code>typeName</code>. You can test for multiple typenames at once by separating them with slashes (<code>[=journalArticle/report]</code>). Valid typeNames are: {{ range $index, $tn := .Site.Data.citekeyformatters.typeNames }}{{ if (eq $index 0) }}, {{ end }}<code>{{ $tn }}</code>{{ end }}.</li>
 </ul>
