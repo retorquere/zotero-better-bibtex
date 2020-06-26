@@ -23,20 +23,7 @@ import { DB as Cache } from './db/cache'
 import { patch as $patch$ } from './monkey-patch'
 
 import { sprintf } from 'sprintf-js'
-
-function toColumnName(num: number) {
-  const base = 97 // lowercase a
-  let ret = ''
-  const chars = 26
-  let a = 1
-  let b = chars
-  while ((num -= a) >= 0) {
-    ret = String.fromCharCode(((num % b) / a) + base) + ret
-    a = b
-    b *= chars
-  }
-  return ret
-}
+import { intToExcelCol } from 'excel-column-name'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let KeyManager = new class { // tslint:disable-line:variable-name
@@ -445,8 +432,8 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
     const seen = {}
     for (let n = 0; true; n += 1) {
       if (n) {
-        const alpha = toColumnName(n)
-        postfix = sprintf(proposed.postfix, { a: alpha, A: alpha.toUpperCase(), n })
+        const alpha = intToExcelCol(n)
+        postfix = sprintf(proposed.postfix, { a: alpha.toLowerCase(), A: alpha, n })
       } else {
         postfix = ''
       }
