@@ -1,4 +1,4 @@
-api.zotero.org:HSTS	0	18399	1621242857011,1,1,2
-our.law.nagoya-u.ac.jp:HSTS	2	18399	1621242859156,1,1,2
+api.zotero.org:HSTS	1	18439	1624717335448,1,1,2
+our.law.nagoya-u.ac.jp:HSTS	3	18439	1624717337490,1,1,2
 www.zotero.org:HSTS	0	17594	1551698216045,1,1
 blocklist.addons.mozilla.org:HSTS	0	17594	1520162636731,1,0
