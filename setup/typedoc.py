@@ -14,11 +14,11 @@ def split_and_mark(names):
 
 fields = {}
 typeNames = {}
-for client in ['zotero', 'juris-m']:
-  with open(glob.glob(os.path.join(os.path.dirname(__file__), '..', 'schema', f'*-{client}.json'))[0]) as f:
+for client in ['zotero', 'jurism']:
+  with open(glob.glob(os.path.join(os.path.dirname(__file__), '..', 'schema', f'{client}-*.json'))[0]) as f:
     schema = json.load(f)
 
-  fields[client.replace('-', '')] = sorted(list(set(
+  fields[client] = sorted(list(set(
     # capitalize fieldnames for pattern formatters
     field[0].capitalize() + field[1:]
     for itemType in schema['itemTypes']
@@ -27,7 +27,7 @@ for client in ['zotero', 'juris-m']:
     for field in [fields.get('baseField', fields['field'])]
   )))
 
-  typeNames[client.replace('-', '')] = list(set(itemType['itemType'] for itemType in schema['itemTypes']))
+  typeNames[client] = list(set(itemType['itemType'] for itemType in schema['itemTypes']))
 fields = split_and_mark(fields)
 typeNames = split_and_mark(typeNames)
 
