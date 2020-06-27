@@ -1,5 +1,5 @@
 {
-	"version": 16,
+	"version": 13,
 	"itemTypes": [
 		{
 			"itemType": "artwork",
@@ -532,9 +532,6 @@
 				{
 					"field": "caseName",
 					"baseField": "title"
-				},
-				{
-					"field": "adminFlag"
 				},
 				{
 					"field": "abstractNote"
@@ -2802,8 +2799,7 @@
 					"field": "shortTitle"
 				},
 				{
-					"field": "reporter",
-					"baseField": "publicationTitle"
+					"field": "reporter"
 				},
 				{
 					"field": "treatyNumber",
@@ -3418,9 +3414,6 @@
 				"document-name": [
 					"documentName"
 				],
-				"admin-flag": [
-					"adminFlag"
-				],
 				"gazette-flag": [
 					"gazetteFlag"
 				],
@@ -3533,7 +3526,6 @@
 			"fields": {
 				"abstractNote": "Abstract",
 				"accessDate": "Accessed",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Application Number",
@@ -3713,7 +3705,7 @@
 				"bookSection": "قسم في كتاب",
 				"case": "قضية",
 				"classic": "Classic",
-				"computerProgram": "Software",
+				"computerProgram": "برنامج حاسب آلي",
 				"conferencePaper": "ورقة عمل في مؤتمر",
 				"dictionaryEntry": "كلمة في المعجم",
 				"document": "مستند",
@@ -3749,7 +3741,6 @@
 			"fields": {
 				"abstractNote": "المستخلص",
 				"accessDate": "تاريخ الدخول",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "رقم الطلب",
@@ -3929,7 +3920,7 @@
 				"bookSection": "Глава от книга",
 				"case": "Съдебно решение",
 				"classic": "Classic",
-				"computerProgram": "Software",
+				"computerProgram": "Компютърна програма",
 				"conferencePaper": "Публикация от конференция",
 				"dictionaryEntry": "Определение в речник",
 				"document": "Документ",
@@ -3965,7 +3956,6 @@
 			"fields": {
 				"abstractNote": "Извлечение",
 				"accessDate": "Отворен на",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Номер на молба",
@@ -4181,7 +4171,6 @@
 			"fields": {
 				"abstractNote": "Berradenn",
 				"accessDate": "Gwelet d'an/ar/al",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Niver arload",
@@ -4397,7 +4386,6 @@
 			"fields": {
 				"abstractNote": "Resum",
 				"accessDate": "Últim accés",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Número d'aplicació",
@@ -4577,7 +4565,7 @@
 				"bookSection": "Kapitola knihy",
 				"case": "Případ",
 				"classic": "Classic",
-				"computerProgram": "Software",
+				"computerProgram": "Počítačový program",
 				"conferencePaper": "Konferenční příspěvek",
 				"dictionaryEntry": "Záznam ve slovníku",
 				"document": "Dokument",
@@ -4613,7 +4601,6 @@
 			"fields": {
 				"abstractNote": "Abstrakt",
 				"accessDate": "Přístup",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Číslo žádosti",
@@ -4793,7 +4780,7 @@
 				"bookSection": "Bidrag til bog",
 				"case": "Retssag/Dom",
 				"classic": "Classic",
-				"computerProgram": "Software",
+				"computerProgram": "Computerprogram",
 				"conferencePaper": "Konferencebidrag",
 				"dictionaryEntry": "Ordbogsopslag",
 				"document": "Dokument",
@@ -4829,7 +4816,6 @@
 			"fields": {
 				"abstractNote": "Resumé",
 				"accessDate": "Set d.",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Ansøgning nr.",
@@ -5009,7 +4995,7 @@
 				"bookSection": "Buchteil",
 				"case": "Fall",
 				"classic": "Classic",
-				"computerProgram": "Software",
+				"computerProgram": "Computerprogramm",
 				"conferencePaper": "Konferenz-Paper",
 				"dictionaryEntry": "Wörterbucheintrag",
 				"document": "Dokument",
@@ -5045,7 +5031,6 @@
 			"fields": {
 				"abstractNote": "Zusammenfassung",
 				"accessDate": "Heruntergeladen am",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Bewerbungsnummer",
@@ -5261,7 +5246,6 @@
 			"fields": {
 				"abstractNote": "Abstract",
 				"accessDate": "Accessed",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Application Number",
@@ -5477,7 +5461,6 @@
 			"fields": {
 				"abstractNote": "Abstract",
 				"accessDate": "Accessed",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Application Number",
@@ -5693,7 +5676,6 @@
 			"fields": {
 				"abstractNote": "Abstract",
 				"accessDate": "Accessed",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Application Number",
@@ -5873,7 +5855,7 @@
 				"bookSection": "Sección de un libro",
 				"case": "Caso",
 				"classic": "Classic",
-				"computerProgram": "Software",
+				"computerProgram": "Programa informático",
 				"conferencePaper": "Artículo en conferencia",
 				"dictionaryEntry": "Entrada de diccionario",
 				"document": "Documento",
@@ -5909,7 +5891,6 @@
 			"fields": {
 				"abstractNote": "Resumen",
 				"accessDate": "Accedido",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Número de solicitud",
@@ -6089,7 +6070,7 @@
 				"bookSection": "Osa raamatust",
 				"case": "Kaasus",
 				"classic": "Classic",
-				"computerProgram": "Software",
+				"computerProgram": "Arvutiprogramm",
 				"conferencePaper": "Ettekanne",
 				"dictionaryEntry": "Kirje sõnaraamatus",
 				"document": "Dokument",
@@ -6125,7 +6106,6 @@
 			"fields": {
 				"abstractNote": "Abstrakt",
 				"accessDate": "Vaadatud",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Taotluse number",
@@ -6341,7 +6321,6 @@
 			"fields": {
 				"abstractNote": "Laburpena",
 				"accessDate": "Atzipen data",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Application Number",
@@ -6521,7 +6500,7 @@
 				"bookSection": "فصل کتاب",
 				"case": "پرونده",
 				"classic": "Classic",
-				"computerProgram": "Software",
+				"computerProgram": "برنامه کامپیوتر",
 				"conferencePaper": "مقاله کنفرانس",
 				"dictionaryEntry": "مدخل لغتنامه",
 				"document": "سند",
@@ -6557,7 +6536,6 @@
 			"fields": {
 				"abstractNote": "چکیده",
 				"accessDate": "تاریخ دسترسی",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "شماره درخواست",
@@ -6773,7 +6751,6 @@
 			"fields": {
 				"abstractNote": "Tiivistelmä",
 				"accessDate": "Luettu",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Hakemusnumero",
@@ -6953,7 +6930,7 @@
 				"bookSection": "Chapitre de livre",
 				"case": "Affaire",
 				"classic": "Classic",
-				"computerProgram": "Logiciel",
+				"computerProgram": "Programme informatique",
 				"conferencePaper": "Article de colloque",
 				"dictionaryEntry": "Entrée de dictionnaire",
 				"document": "Document",
@@ -6989,7 +6966,6 @@
 			"fields": {
 				"abstractNote": "Résumé",
 				"accessDate": "Consulté le",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "N° d'application",
@@ -7169,7 +7145,7 @@
 				"bookSection": "Sección de libro",
 				"case": "Caso",
 				"classic": "Classic",
-				"computerProgram": "Software",
+				"computerProgram": "Aplicacións",
 				"conferencePaper": "Publicación de congreso",
 				"dictionaryEntry": "Entrada de dicionario",
 				"document": "Documento",
@@ -7205,7 +7181,6 @@
 			"fields": {
 				"abstractNote": "Resumen",
 				"accessDate": "Consultado",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Número da solicitude",
@@ -7385,7 +7360,7 @@
 				"bookSection": "פרק מספר",
 				"case": "תיק",
 				"classic": "Classic",
-				"computerProgram": "Software",
+				"computerProgram": "תוכנת מחשב",
 				"conferencePaper": "Conference Paper",
 				"dictionaryEntry": "ערך במילון",
 				"document": "מסמך",
@@ -7421,7 +7396,6 @@
 			"fields": {
 				"abstractNote": "תקציר",
 				"accessDate": "Accessed",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Application Number",
@@ -7637,7 +7611,6 @@
 			"fields": {
 				"abstractNote": "Abstract",
 				"accessDate": "Accessed",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Application Number",
@@ -7853,7 +7826,6 @@
 			"fields": {
 				"abstractNote": "Kivonat",
 				"accessDate": "Hozzáférés",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Bejelentés száma",
@@ -8033,7 +8005,7 @@
 				"bookSection": "Seksi Buku",
 				"case": "Kasus",
 				"classic": "Classic",
-				"computerProgram": "Software",
+				"computerProgram": "Program Komputer",
 				"conferencePaper": "Dokumen Konferensi",
 				"dictionaryEntry": "Entri Kamus",
 				"document": "Dokumen",
@@ -8069,7 +8041,6 @@
 			"fields": {
 				"abstractNote": "Abstrak",
 				"accessDate": "Diakses",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Nomor Aplikasi",
@@ -8249,7 +8220,7 @@
 				"bookSection": "Bókarhluti",
 				"case": "Mál",
 				"classic": "Classic",
-				"computerProgram": "Software",
+				"computerProgram": "Forrit",
 				"conferencePaper": "Ráðstefnugrein",
 				"dictionaryEntry": "Færsla í orðabók",
 				"document": "Skjal",
@@ -8285,7 +8256,6 @@
 			"fields": {
 				"abstractNote": "Ágrip",
 				"accessDate": "Sótt",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Umsókn númer",
@@ -8465,7 +8435,7 @@
 				"bookSection": "Sezione di un libro",
 				"case": "Sentenza",
 				"classic": "Classic",
-				"computerProgram": "Software",
+				"computerProgram": "Programma per computer",
 				"conferencePaper": "Atto di convegno",
 				"dictionaryEntry": "Voce di dizionario",
 				"document": "Documento",
@@ -8501,7 +8471,6 @@
 			"fields": {
 				"abstractNote": "Abstract",
 				"accessDate": "Consultato",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Numero di applicazione",
@@ -8681,7 +8650,7 @@
 				"bookSection": "書籍の章",
 				"case": "訴訟",
 				"classic": "Classic",
-				"computerProgram": "Software",
+				"computerProgram": "コンピュータ・プログラム",
 				"conferencePaper": "学会発表",
 				"dictionaryEntry": "辞書項目",
 				"document": "文書",
@@ -8717,7 +8686,6 @@
 			"fields": {
 				"abstractNote": "抄録",
 				"accessDate": "アクセス日時",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "商標登録号",
@@ -8897,7 +8865,7 @@
 				"bookSection": "ផ្នែកនៃសៀវភៅ",
 				"case": "ករណី/រឿងក្តី",
 				"classic": "Classic",
-				"computerProgram": "Software",
+				"computerProgram": "កម្មវីធីកុំព្យូទ័រ",
 				"conferencePaper": "ឯកសារសន្និសីទ",
 				"dictionaryEntry": "វចនានុក្រម",
 				"document": "ឯកសារ",
@@ -8933,7 +8901,6 @@
 			"fields": {
 				"abstractNote": "ខ្លឹមសារសង្ខេប",
 				"accessDate": "ចូលមើល",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "ពាក្យសុំលេខ",
@@ -9113,7 +9080,7 @@
 				"bookSection": "책 소개 면",
 				"case": "소송",
 				"classic": "Classic",
-				"computerProgram": "소프트웨어",
+				"computerProgram": "컴퓨터 프로그램",
 				"conferencePaper": "회의문",
 				"dictionaryEntry": "사전 항목",
 				"document": "문서",
@@ -9140,7 +9107,7 @@
 				"report": "보고서",
 				"standard": "Standard",
 				"statute": "법령",
-				"thesis": "학위논문",
+				"thesis": "논문",
 				"treaty": "Treaty",
 				"tvBroadcast": "TV 방송",
 				"videoRecording": "녹화",
@@ -9149,7 +9116,6 @@
 			"fields": {
 				"abstractNote": "요약",
 				"accessDate": "접근일",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "출원 번호",
@@ -9329,7 +9295,7 @@
 				"bookSection": "Knygos skyrius",
 				"case": "Byla",
 				"classic": "Classic",
-				"computerProgram": "Programinė įranga",
+				"computerProgram": "Kompiuterinė programa",
 				"conferencePaper": "Pranešimas konferencijoje",
 				"dictionaryEntry": "Žodyno įrašas",
 				"document": "Dokumentas",
@@ -9365,7 +9331,6 @@
 			"fields": {
 				"abstractNote": "Santrauka",
 				"accessDate": "Žiūrėta",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Pareiškimo numeris",
@@ -9545,7 +9510,7 @@
 				"bookSection": "Номын хэсэг",
 				"case": "Case",
 				"classic": "Classic",
-				"computerProgram": "Software",
+				"computerProgram": "Компьютерийн програм",
 				"conferencePaper": "Хурлын өгүүлэл",
 				"dictionaryEntry": "Dictionary Entry",
 				"document": "Баримт",
@@ -9581,7 +9546,6 @@
 			"fields": {
 				"abstractNote": "Abstract",
 				"accessDate": "Accessed",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Application Number",
@@ -9797,7 +9761,6 @@
 			"fields": {
 				"abstractNote": "Sammendrag",
 				"accessDate": "Lest",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Programvarenummer",
@@ -9977,7 +9940,7 @@
 				"bookSection": "Boek-sectie",
 				"case": "Rechtszaak",
 				"classic": "Classic",
-				"computerProgram": "Software",
+				"computerProgram": "Computerprogramma",
 				"conferencePaper": "Conferentiebijdrage",
 				"dictionaryEntry": "Lemma",
 				"document": "Document",
@@ -10013,7 +9976,6 @@
 			"fields": {
 				"abstractNote": "Samenvatting",
 				"accessDate": "Geraadpleegd",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Aanvraagnummer",
@@ -10193,7 +10155,7 @@
 				"bookSection": "Del av bok",
 				"case": "Sak",
 				"classic": "Classic",
-				"computerProgram": "Software",
+				"computerProgram": "Dataprogram",
 				"conferencePaper": "Konferanseinnlegg",
 				"dictionaryEntry": "Ordbokoppslag",
 				"document": "Dokument",
@@ -10229,7 +10191,6 @@
 			"fields": {
 				"abstractNote": "Samandrag",
 				"accessDate": "Lest",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Program-nummer",
@@ -10445,7 +10406,6 @@
 			"fields": {
 				"abstractNote": "Krótki opis",
 				"accessDate": "Dostęp",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Numer zgłoszenia",
@@ -10625,7 +10585,7 @@
 				"bookSection": "Seção de livro",
 				"case": "Caso",
 				"classic": "Classic",
-				"computerProgram": "Programa",
+				"computerProgram": "Programa de computador",
 				"conferencePaper": "Conferência",
 				"dictionaryEntry": "Verbete de dicionário",
 				"document": "Documento",
@@ -10661,7 +10621,6 @@
 			"fields": {
 				"abstractNote": "Resumo",
 				"accessDate": "Data de acesso",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Número da inscrição",
@@ -10749,7 +10708,7 @@
 				"priorityDate": "Priority Date",
 				"priorityNumbers": "Números prioritários",
 				"proceedingsTitle": "Título dos anais",
-				"programmingLanguage": "Linguagem de programação",
+				"programmingLanguage": "Prog. Language",
 				"programTitle": "Título do programa",
 				"publicationDate": "Date Published",
 				"publicationNumber": "Publication No.",
@@ -10877,7 +10836,6 @@
 			"fields": {
 				"abstractNote": "Resumo",
 				"accessDate": "Acedido",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Número da Candidatura",
@@ -10965,7 +10923,7 @@
 				"priorityDate": "Priority Date",
 				"priorityNumbers": "Números de Prioridade",
 				"proceedingsTitle": "Título das Actas",
-				"programmingLanguage": "Linguagem de Programação",
+				"programmingLanguage": "Prog. Language",
 				"programTitle": "Título do Programa",
 				"publicationDate": "Date Published",
 				"publicationNumber": "Publication No.",
@@ -11057,7 +11015,7 @@
 				"bookSection": "Secțiune de carte",
 				"case": "Proces",
 				"classic": "Classic",
-				"computerProgram": "Software",
+				"computerProgram": "Program de calculator",
 				"conferencePaper": "Conferință",
 				"dictionaryEntry": "Articol de dicționar",
 				"document": "Document",
@@ -11093,7 +11051,6 @@
 			"fields": {
 				"abstractNote": "Rezumat",
 				"accessDate": "Data accesării",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Număr aplicație",
@@ -11265,7 +11222,7 @@
 		"ru-RU": {
 			"itemTypes": {
 				"artwork": "Художественная работа",
-				"attachment": "Вложение",
+				"attachment": "Приложение",
 				"audioRecording": "Звукозапись",
 				"bill": "Законопроект",
 				"blogPost": "Сообщение в блоге",
@@ -11287,7 +11244,7 @@
 				"interview": "Интервью",
 				"journalArticle": "Статья из рецензируемого журнала",
 				"letter": "Письмо",
-				"magazineArticle": "Статья из прочей периодики",
+				"magazineArticle": "Статья из прочей периодки",
 				"manuscript": "Рукопись",
 				"map": "Карта",
 				"newspaperArticle": "Газетная статья",
@@ -11309,7 +11266,6 @@
 			"fields": {
 				"abstractNote": "Аннотация",
 				"accessDate": "Дата доступа",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Номер заявки",
@@ -11324,7 +11280,7 @@
 				"billNumber": "Номер законопр.",
 				"blogTitle": "Название блога",
 				"bookTitle": "Название книги",
-				"callNumber": "Шифр (номер вызова)",
+				"callNumber": "Шифр",
 				"caseName": "Номер дела",
 				"code": "Кодекс/сборник",
 				"codeNumber": "Том кодекса",
@@ -11366,7 +11322,7 @@
 				"issueDate": "Дата выпуска",
 				"issuingAuthority": "Кем выдан",
 				"itemType": "Тип",
-				"journalAbbreviation": "Сокращ. журнала",
+				"journalAbbreviation": "Журнал сокращ.",
 				"jurisdiction": "Jurisdiction",
 				"label": "Надпись",
 				"language": "Язык",
@@ -11395,9 +11351,9 @@
 				"postType": "Тип сообщения",
 				"presentationType": "Тип",
 				"priorityDate": "Priority Date",
-				"priorityNumbers": "Номера приоритетов",
+				"priorityNumbers": "Номера приоритета",
 				"proceedingsTitle": "Назв. трудов",
-				"programmingLanguage": "Прогр. яз.",
+				"programmingLanguage": "прогр. яз.",
 				"programTitle": "Назв. программы",
 				"publicationDate": "Date Published",
 				"publicationNumber": "Publication No.",
@@ -11525,7 +11481,6 @@
 			"fields": {
 				"abstractNote": "Abstrakt",
 				"accessDate": "Citované",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Číslo prihlášky",
@@ -11705,7 +11660,7 @@
 				"bookSection": "Odsek knjige",
 				"case": "Primer",
 				"classic": "Classic",
-				"computerProgram": "Programje",
+				"computerProgram": "Računalniški program",
 				"conferencePaper": "Konferenčni članek",
 				"dictionaryEntry": "Slovarski vnos",
 				"document": "Dokument",
@@ -11741,7 +11696,6 @@
 			"fields": {
 				"abstractNote": "Povzetek",
 				"accessDate": "Dostopano",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Številka vloge",
@@ -11921,7 +11875,7 @@
 				"bookSection": "Поглавље у књизи",
 				"case": "Случај",
 				"classic": "Classic",
-				"computerProgram": "Software",
+				"computerProgram": "Рачунарски програм",
 				"conferencePaper": "Папир са конференције",
 				"dictionaryEntry": "Унос из речника",
 				"document": "Документ",
@@ -11957,7 +11911,6 @@
 			"fields": {
 				"abstractNote": "Сажетак",
 				"accessDate": "Приступљено",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Број апликације",
@@ -12137,7 +12090,7 @@
 				"bookSection": "Bokavsnitt",
 				"case": "Rättsfall",
 				"classic": "Classic",
-				"computerProgram": "Software",
+				"computerProgram": "Datorprogram",
 				"conferencePaper": "Konferensartikel",
 				"dictionaryEntry": "Uppslag i ordbok",
 				"document": "Dokument",
@@ -12173,7 +12126,6 @@
 			"fields": {
 				"abstractNote": "Sammanfattning",
 				"accessDate": "Hämtad den",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Anmälningsnummer",
@@ -12353,7 +12305,7 @@
 				"bookSection": "บทหนึ่งในหนังสือ",
 				"case": "เหตุการณ์/คดี",
 				"classic": "Classic",
-				"computerProgram": "Software",
+				"computerProgram": "โปรแกรมคอมพิวเตอร์",
 				"conferencePaper": "เอกสารประชุมวิชาการ",
 				"dictionaryEntry": "พจนานุกรม",
 				"document": "เอกสาร",
@@ -12389,7 +12341,6 @@
 			"fields": {
 				"abstractNote": "บทคัดย่อ",
 				"accessDate": "สืบค้นเมื่อ",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "หมายเลขคำขอ",
@@ -12605,7 +12556,6 @@
 			"fields": {
 				"abstractNote": "Özet",
 				"accessDate": "Son Erişim",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Uygulama Numarası",
@@ -12785,7 +12735,7 @@
 				"bookSection": "Глава книги",
 				"case": "Справа",
 				"classic": "Classic",
-				"computerProgram": "Software",
+				"computerProgram": "Комп'ютерна програма",
 				"conferencePaper": "Документ конференції",
 				"dictionaryEntry": "Стаття зі словника",
 				"document": "Документ",
@@ -12821,7 +12771,6 @@
 			"fields": {
 				"abstractNote": "Анотація",
 				"accessDate": "Дата доступу",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Номер заявки",
@@ -13001,7 +12950,7 @@
 				"bookSection": "Đoạn Sách",
 				"case": "Vụ việc",
 				"classic": "Classic",
-				"computerProgram": "Software",
+				"computerProgram": "Phần mềm",
 				"conferencePaper": "Báo cáo Hội thảo",
 				"dictionaryEntry": "Mục từ trong Từ điển",
 				"document": "Tài liệu",
@@ -13037,7 +12986,6 @@
 			"fields": {
 				"abstractNote": "Tóm tắt",
 				"accessDate": "Ngày truy cập",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "Số đơn",
@@ -13253,7 +13201,6 @@
 			"fields": {
 				"abstractNote": "摘要",
 				"accessDate": "访问时间",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "申请号",
@@ -13433,7 +13380,7 @@
 				"bookSection": "書的章節",
 				"case": "案例",
 				"classic": "Classic",
-				"computerProgram": "軟體",
+				"computerProgram": "電腦程式",
 				"conferencePaper": "會議論文",
 				"dictionaryEntry": "字典條目",
 				"document": "文件",
@@ -13469,7 +13416,6 @@
 			"fields": {
 				"abstractNote": "摘要",
 				"accessDate": "取用",
-				"adminFlag": "Admin Ref",
 				"adoptionDate": "Date Adopted",
 				"album": "Album",
 				"applicationNumber": "申請號碼",

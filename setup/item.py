@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import shlex
 from functools import reduce
 from http.client import RemoteDisconnected
 from lxml import etree
@@ -8,16 +9,21 @@ from mako.template import Template
 from munch import Munch
 from pytablewriter import MarkdownTableWriter
 from urllib.error import HTTPError
+from urllib.request import urlopen
+from urllib.request import urlretrieve
 import glob
 import itertools
-import json
 import json, jsonpatch, jsonpath_ng
 import mako
 import networkx as nx
-import os, sys
+import os
+import sys
 import re
 import sys
+import tarfile
+import tempfile
 import urllib.request
+import zipfile
 
 root = os.path.join(os.path.dirname(__file__), '..')
 
@@ -31,29 +37,63 @@ os.makedirs(ITEMS, exist_ok=True)
 os.makedirs(TYPINGS, exist_ok=True)
 
 class fetch(object):
-  def __init__(self, url, name):
-    print('  * fetching', url)
-    self.url = url
-    self.name = name
+  def __init__(self, client):
+    if client == 'zotero':
+      releases = urlopen("https://www.zotero.org/download/client/manifests/release/updates-linux-x86_64.json").read().decode("utf-8")
+      releases = json.loads(releases)
+      latest = releases[-1]['version']
+      self.schema = self.update(
+        client=client,
+        download=f'https://www.zotero.org/download/client/dl?channel=release&platform=linux-x86_64&version={latest}',
+        jar='Zotero_linux-x86_64/zotero.jar',
+        schema_path='resource/schema/global/schema.json',
+        schema=f'zotero-{latest}.json'
+      )
+    elif client == 'jurism':
+      releases = urlopen('https://github.com/Juris-M/assets/releases/download/client%2Freleases%2Fincrementals-linux/incrementals-release-linux').read().decode("utf-8")
+      latest = releases.strip().split("\n")[-1]
+      self.schema = self.update(
+        client=client,
+        download=f'https://github.com/Juris-M/assets/releases/download/client%2Frelease%2F{latest}/Jurism-{latest}_linux-x86_64.tar.bz2',
+        jar='Jurism_linux-x86_64/jurism.jar',
+        schema_path='resource/schema/global/schema-jurism.json',
+        schema=f'jurism-{latest}.json'
+      )
+    else:
+      raise ValueError(f'Unknown client {client}')
+
+  def update(self, client, download, jar, schema_path, schema):
+    schema = os.path.join(SCHEMA.root, schema)
+
+    if os.path.exists(schema):
+      print(' ', os.path.basename(schema), 'up to date')
+    else:
+      if 'CI' in os.environ: raise ValueError(f'{schema} does not exist')
+
+      print('  updating', os.path.basename(schema))
+      for cleanup in glob.glob(os.path.join(SCHEMA.root, f'{client}-*.json')):
+        os.system(f'cd {shlex.quote(SCHEMA.root)} && git rm {os.path.basename(cleanup)}')
+      with tempfile.NamedTemporaryFile() as tarball:
+        print('  downloading', download)
+        urlretrieve(download, tarball.name)
+        tar = tarfile.open(tarball.name, 'r:bz2')
+
+        jar = tar.getmember(jar)
+        print('  extracting', jar.name)
+        jar.name = os.path.basename(jar.name)
+        tar.extract(jar, path=os.path.dirname(tarball.name))
+
+        jar = zipfile.ZipFile(os.path.join(os.path.dirname(tarball.name), jar.name))
+        with jar.open(schema_path) as src:
+          print('  saving', os.path.basename(schema))
+          with open(schema, 'wb') as tgt:
+            tgt.write(src.read())
+
+    return schema
 
   def __enter__(self):
-    request = urllib.request.Request(self.url)
-    request.get_method = lambda: 'HEAD'
-    try:
-      with urllib.request.urlopen(request) as r:
-        etag = r.getheader('ETag')
-        if etag.startswith('W/'): etag = etag[2:]
-        etag = json.loads(etag) # strips quotes
-        name  = f'{etag}-{self.name}'
-    except (HTTPError, RemoteDisconnected):
-      print(' ', self.url, 'timed out, falling back to cached version')
-      name = os.path.basename(glob.glob(os.path.join(SCHEMA.root, f'*-{self.name}'))[0])
-    try:
-      self.f = open(os.path.join(SCHEMA.root, name))
-      return self.f
-    except FileNotFoundError:
-      print(name, f'does not exist, get with "curl -Lo schema/{name} {self.url}"')
-      sys.exit(1)
+    self.f = open(self.schema)
+    return self.f
 
   def __exit__(self, type, value, traceback):
     self.f.close()
@@ -317,7 +357,7 @@ class ExtraFields:
     #  json.dump(data, f, indent='  ')
 
 print('  writing extra-fields')
-with fetch('https://api.zotero.org/schema', 'zotero.json') as z, fetch('https://raw.githubusercontent.com/Juris-M/zotero-schema/master/schema-jurism.json', 'juris-m.json') as j:
+with fetch('zotero') as z, fetch('jurism') as j:
   ef = ExtraFields()
 
   SCHEMA.zotero = Munch.fromDict(patch(json.load(z), 'schema.patch'))
