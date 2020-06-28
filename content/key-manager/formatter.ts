@@ -554,8 +554,8 @@ class PatternFormatter {
    * parameter, e.g `condense=_` will replace spaces with underscores. **Parameters should not contain spaces** unless
    * you want the spaces in the value passed in to be replaced with those spaces in the parameter
    */
-  public _condense(value, sep: string) {
-    return (value || '').replace(/\s/g, sep || '')
+  public _condense(value, sep: string = '') {
+    return (value || '').replace(/\s/g, sep)
   }
 
   /**
