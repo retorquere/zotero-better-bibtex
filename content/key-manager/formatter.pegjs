@@ -54,7 +54,8 @@ pattern
 block
   = [ \t\r\n]+                            { return '' }
   / '[0]'                                 { return `postfix = ${JSON.stringify(postfix.numeric())}` }
-  / '[=' types:$[a-zA-Z/]+ ']'             {
+  / '[postfix' pf:stringparam ']'         { return `postfix = ${JSON.stringify(postfix.set(pf))}` }
+  / '[=' types:$[a-zA-Z/]+ ']'            {
       types = types.toLowerCase().split('/').map(type => type.trim()).map(type => options.items.name.type[type.toLowerCase()] || type);
       var unknown = types.find(type => !options.items.valid.type[type])
       if (typeof unknown !== 'undefined') error(`unknown item type "${unknown}; valid types are ${Object.keys(options.items.name.type)}"`);
@@ -120,7 +121,6 @@ method
 
       return code;
     }
-  / 'postfix' pf:stringparam { return `postfix = ${JSON.stringify(postfix.set(pf))}` }
   / name:$([a-z][.a-zA-Z]+) &{ return _method('function', name, ['number']) } params:nparam? {
       params = params || []
       return `chunk = this.$${_method_name(name)}(${params.join(', ')})`
