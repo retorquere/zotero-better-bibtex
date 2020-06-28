@@ -9,7 +9,7 @@
   function _trim_args(name, expected, args) {
     if (args.length > expected.length) error(`argument list too long for ${name}`)
     args.forEach((a, i) => {
-      if (a === 'undefined' && !expected[i].optional) error(`unfilled argument ${i + 1} on ${name}`)
+      if (a === 'undefined' && !expected[i].optional) error(`missing argument ${i + 1} on ${name}`)
     })
     while (args.length && args[args.length - 1] === 'undefined') {
       args.pop()
