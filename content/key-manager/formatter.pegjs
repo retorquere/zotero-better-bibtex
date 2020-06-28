@@ -166,16 +166,13 @@ filter
       if (filter.params.length > expected.length) error(`filter '${filter.name}' expects at most ${expected.length} parameters`)
 
       const params = ['chunk'].concat(_trim_args(`filter ${text()}`, expected, expected.map((p, i) => {
-        if (typeof filter.params[i] === 'undefined') {
-          if (!p.optional) error(`missing parameter ${i + 1} (${p.name}) on filter ${filter.name}`)
-          return 'undefined'
-        }
+        if (typeof filter.params[i] === 'undefined') return 'undefined'
 
         switch (p.type) {
           case 'string':
             return JSON.stringify(filter.params[i])
           case 'number':
-            if (!parseInt(filter.params[i])) error(`expected number parameter ${i + 1} (${p.name}) on filter ${filter.name}, got ${filter.params[i]}`)
+            if (!filter.params[i].match(/^[0-9]+$/)) error(`expected number parameter ${i + 1} (${p.name}) on filter ${filter.name}, got ${filter.params[i]}`)
             return filter.params[i]
           default:
             error(`expected parameter ${i + 1} (${p.name}) of type ${p.type} on filter ${filter.name}`)
