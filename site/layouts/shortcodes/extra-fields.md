@@ -1,7 +1,6 @@
 |           label            |type|                       zotero/jurism                        |          csl           |
 |----------------------------|----|------------------------------------------------------------|------------------------|
 |**access date**             |date|accessDate                                                  |accessed                |
-|**admin flag**              |text|adminFlag¹                                                  |admin-flag¹             |
 |**adoption date**           |date|adoptionDate¹                                               |                        |
 |**application number**      |text|applicationNumber                                           |                        |
 |**archive location**        |text|archiveLocation                                             |archive\_location       |
