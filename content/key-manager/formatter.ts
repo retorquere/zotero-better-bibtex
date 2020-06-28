@@ -277,7 +277,7 @@ class PatternFormatter {
     }, null, {})
   }
 
-  public $property(name) {
+  public $property(name: string) {
     try {
       return this.innerText(this.item.item.getField(name, false, true) || '')
     } catch (err) {}
@@ -296,7 +296,7 @@ class PatternFormatter {
   }
 
   /** The first `N` (default: all) characters of the `M`th (default: first) author's last name. */
-  public $auth(onlyEditors, withInitials, joiner, n, m) {
+  public $auth(onlyEditors: boolean, withInitials:boolean, joiner: string, n?: number, m?:number) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
     let author = authors[m ? m - 1 : 0]
@@ -305,21 +305,21 @@ class PatternFormatter {
   }
 
   /** The forename initial of the first author. */
-  public $authForeIni(onlyEditors) {
+  public $authForeIni(onlyEditors: boolean) {
     const authors = this.creators(onlyEditors, {initialOnly: true})
     if (!authors || !authors.length) return ''
     return authors[0]
   }
 
   /** The forename initial of the last author. */
-  public $authorLastForeIni(onlyEditors) {
+  public $authorLastForeIni(onlyEditors: boolean) {
     const authors = this.creators(onlyEditors, {initialOnly: true})
     if (!authors || !authors.length) return ''
     return authors[authors.length - 1]
   }
 
   /** The last name of the last author */
-  public $authorLast(onlyEditors, withInitials, joiner) {
+  public $authorLast(onlyEditors: boolean, withInitials: boolean, joiner: string) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
     return authors[authors.length - 1]
@@ -331,7 +331,7 @@ class PatternFormatter {
   public $journal() { return JournalAbbrev.get(this.item.item, true) || this.item.item.getField('publicationTitle', false, true) }
 
   /** The last name of up to N authors. If there are more authors, "EtAl" is appended. */
-  public $authors(onlyEditors, withInitials, joiner, n) {
+  public $authors(onlyEditors: boolean, withInitials: boolean, joiner: string, n?:number) {
     let authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
 
@@ -347,7 +347,7 @@ class PatternFormatter {
   /** Corresponds to the BibTeX style "alpha". One author: First three letters of the last name. Two to four authors: First letters of last names concatenated.
    * More than four authors: First letters of last names of first three authors concatenated. "+" at the end.
    */
-  public $authorsAlpha(onlyEditors, withInitials, joiner) {
+  public $authorsAlpha(onlyEditors: boolean, withInitials: boolean, joiner: string) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
 
@@ -367,14 +367,14 @@ class PatternFormatter {
   }
 
   /** The beginning of each author's last name, using no more than `N` characters. */
-  public $authIni(onlyEditors, withInitials, joiner, n) {
+  public $authIni(onlyEditors: boolean, withInitials: boolean, joiner: string, n?: number) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
     return authors.map(author => author.substring(0, n)).join(joiner || '.')
   }
 
   /** The first 5 characters of the first author's last name, and the last name initials of the remaining authors. */
-  public $authorIni(onlyEditors, withInitials, joiner) {
+  public $authorIni(onlyEditors: boolean, withInitials: boolean, joiner: string) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
     const firstAuthor = authors.shift()
@@ -384,7 +384,7 @@ class PatternFormatter {
   }
 
   /** The last name of the first two authors, and ".ea" if there are more than two. */
-  public $auth_auth_ea(onlyEditors, withInitials, joiner) {
+  public $auth_auth_ea(onlyEditors: boolean, withInitials: boolean, joiner: string) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
 
@@ -393,7 +393,7 @@ class PatternFormatter {
   }
 
   /** The last name of the first author, and the last name of the second author if there are two authors or "EtAl" if there are more than two. This is similar to `auth.etal`. The difference is that the authors are not separated by "." and in case of more than 2 authors "EtAl" instead of ".etal" is appended. */
-  public $authEtAl(onlyEditors, withInitials, joiner) {
+  public $authEtAl(onlyEditors: boolean, withInitials: boolean, joiner: string) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
 
@@ -403,7 +403,7 @@ class PatternFormatter {
   }
 
   /** The last name of the first author, and the last name of the second author if there are two authors or ".etal" if there are more than two. */
-  public $auth_etal(onlyEditors, withInitials, joiner) {
+  public $auth_etal(onlyEditors: boolean, withInitials: boolean, joiner: string) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
 
@@ -413,7 +413,7 @@ class PatternFormatter {
   }
 
   /** The last name if one author is given; the first character of up to three authors' last names if more than one author is given. A plus character is added, if there are more than three authors. */
-  public $authshort(onlyEditors, withInitials, joiner) {
+  public $authshort(onlyEditors: boolean, withInitials: boolean, joiner: string) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
 
@@ -443,7 +443,7 @@ class PatternFormatter {
   }
 
   /** Tag number `N` */
-  public $keyword(n) {
+  public $keyword(n: number) {
     this.item.tags = this.item.tags || this.item.item.getTags().map(tag => tag.tag).sort((a, b) => a.localeCompare(b))
     return this.item.tags[n] || ''
   }
@@ -455,7 +455,7 @@ class PatternFormatter {
   */
 
   /** The first `N` (default: 3) words of the title, apply capitalization to first `M` (default: 0) of those */
-  public $shorttitle(n = 3, m = 0) { // tslint:disable-line:no-magic-numbers
+  public $shorttitle(n: number = 3, m: number = 0) { // tslint:disable-line:no-magic-numbers
     const words = this.titleWords(this.item.title, { skipWords: true, asciiOnly: true})
     if (!words) return ''
 
@@ -463,7 +463,7 @@ class PatternFormatter {
   }
 
   /** The first `N` (default: 1) words of the title, apply capitalization to first `M` (default: 0) of those */
-  public $veryshorttitle(n = 1, m = 0) { // tslint:disable-line:no-magic-numbers
+  public $veryshorttitle(n: number = 1, m: number = 0) { // tslint:disable-line:no-magic-numbers
     return this.$shorttitle(n, m)
   }
 
@@ -478,7 +478,7 @@ class PatternFormatter {
   }
 
   /** The date of the publication */
-  public $date(format = '%Y-%m-%d') {
+  public $date(format: string = '%Y-%m-%d') {
     return this._format_date(this.item.date, format)
   }
 
@@ -505,7 +505,7 @@ class PatternFormatter {
   }
 
   /** formats date as by replacing y, m and d in the format */
-  public _format_date(value: string | PartialDate, format='%Y-%m-%d') {
+  public _format_date(value: string | PartialDate, format: string='%Y-%m-%d') {
     if (!value) return ''
 
     const date = (typeof value === 'string') ? this.parseDate(value) : value
@@ -539,12 +539,12 @@ class PatternFormatter {
   }
 
   /** returns the value if it's an integer */
-  public _numeric(value) {
+  public _numeric(value: string) {
     return isNaN(parseInt(value)) ? '' : value
   }
 
   /** replaces text, case insensitive; `:replace=.etal,&etal` will replace `.EtAl` with `&etal` */
-  public _replace(value, find, replace) {
+  public _replace(value, find: string, replace: string) {
     if (!find || !replace) return (value || '')
     return (value || '').replace(new RegExp(find.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&'), 'ig'), replace)
   }
@@ -554,7 +554,7 @@ class PatternFormatter {
    * parameter, e.g `condense=_` will replace spaces with underscores. **Parameters should not contain spaces** unless
    * you want the spaces in the value passed in to be replaced with those spaces in the parameter
    */
-  public _condense(value, sep) {
+  public _condense(value, sep: string) {
     return (value || '').replace(/\s/g, sep || '')
   }
 
@@ -563,7 +563,7 @@ class PatternFormatter {
    * it is supposed to prefix isn't empty. If you want to use a reserved character (such as `:` or `\`), you'll need to
    * add a backslash (`\`) in front of it.
    */
-  public _prefix(value, prefix) {
+  public _prefix(value, prefix: string) {
     value = value || ''
     if (value && prefix) return `${prefix}${value}`
     return value
@@ -573,7 +573,7 @@ class PatternFormatter {
    * postfixes with its parameter, so `postfix=_` will add an underscore to the end if, and only if, the value
    * it is supposed to postfix isn't empty
    */
-  public _postfix(value, postfix) {
+  public _postfix(value, postfix: string) {
     value = value || ''
     if (value && postfix) return `${value}${postfix}`
     return value
@@ -614,24 +614,20 @@ class PatternFormatter {
    * would select the first four words. If `number` is not given, all words from `start` to the end of the list are
    * selected.
    */
-  public _select(value, start, n) {
+  public _select(value, start: number = 1, n?: number) {
     value = (value || '').split(/\s+/)
     let end = value.length
 
-    if (typeof start === 'undefined') start = 1
-    start = parseInt(start) - 1
-    if (typeof n !== 'undefined') end = start + parseInt(n)
+    start -= 1
+    if (typeof n !== 'undefined') end = start + n
     return value.slice(start, end).join(' ')
   }
 
   /** (`substring=start,n`) selects `n` (default: all) characters starting at `start` (default: 1) */
-  public _substring(value, start, n) {
-    start = parseInt(start)
-    if (isNaN(start)) start = 1
-    n = parseInt(n)
-    if (isNaN(n)) n = value.length
+  public _substring(value, start: number = 1, n?: number) {
+    if (typeof n === 'undefined') n = value.length
 
-    return (value || '').slice(parseInt(start) - 1, (start - 1) + n)
+    return (value || '').slice(start - 1, (start - 1) + n)
   }
 
   /** removes all non-ascii characters */

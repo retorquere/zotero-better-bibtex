@@ -1,20 +1,20 @@
 {
-  function _method(section, name, args, skip) {
-    name = name.replace(/[.-]/g, '_')
-    var margs = options.methods[section][name]
-    if (!margs) return false
-    if (skip) margs = margs.slice(skip)
-    if (typeof args === 'undefined') return margs
-    if (typeof args === 'number') return (margs.length === args) ? margs : false
-    if (typeof args === 'string') return (margs.join(' ') === args) ? margs : false
-    if (args instanceof RegExp) return (margs.join(' ').match(args)) ? margs : false
-    return margs
+  function _method_name(name) {
+    return name.replace(/[.-]/g, '_')
   }
-  function _function(name, args) {
-    return _method('functions', name, args)
+  function _method(section, name, argtypes) {
+    const expected = options.methods[section][_method_name(name)]
+    return expected && argtypes.join(',') === expected.map(p => p.type).join(',')
   }
-  function _filter(name, args) {
-    return _method('filters', name, args, 1)
+  function _trim_args(name, expected, args) {
+    if (args.length > expected.length) error(`argument list too long for ${name}`)
+    args.forEach((a, i) => {
+      if (a === 'undefined' && !expected[i].optional) error(`unfilled argument ${i + 1} on ${name}`)
+    })
+    while (args.length && args[args.length - 1] === 'undefined') {
+      args.pop()
+    }
+    return args
   }
 }
 
@@ -54,56 +54,73 @@ block
 method
   = prefix:('auth' / 'Auth' / 'authors' / 'Authors' / 'edtr' / 'Edtr' / 'editors' / 'Editors') name:$[\.a-zA-Z]* params:n_mparams? flag:flag? {
       params = params || []
+
       var scrub = (prefix[0] == prefix[0].toLowerCase());
       var creators = prefix.toLowerCase();
-      var editorsOnly = (creators === 'edtr' || creators === 'editors');
-      if (editorsOnly) creators = (creators == 'edtr') ? 'auth' : 'authors';
+      var onlyEditors = (creators === 'edtr' || creators === 'editors');
+      if (onlyEditors) creators = (creators == 'edtr') ? 'auth' : 'authors';
 
-      flag = flag || '';
-      var withInitials = false;
-      var joiner = '';
-      if (flag == 'initials') {
-        withInitials = true;
-      } else if (flag.length <= 1) {
-        joiner = flag;
-      } else {
-        error(`unexpected flag '${flag}' on '${prefix}${name}${params.join('_')}' in citekey pattern`)
+      let method = _method_name(creators + name)
+      const expected = options.methods.function[method]
+      if (!expected) error(`invalid function '${text()}'`)
+
+      const pnames = expected.map(p => p.name)
+
+      let args = {
+        withInitials: 'false',
+        joiner: "''",
+        onlyEditors: (onlyEditors ? 'true' : 'false'),
+        n: params[0] || 'undefined',
+        m: params[1] || 'undefined',
       }
 
-      var method = (creators + name).replace(/\./g, '_');
-      const expected = options.methods.functions[method]
-      if (!expected) error(`invalid function '${prefix}${name}'`)
-      if (params.length > 1 && !expected.includes('m')) error(`invalid function '${prefix}${name}${params.join('_')}'`)
-      if (params.length > 0 && !expected.includes('n')) error(`invalid function '${prefix}${name}${params.join('_')}'`)
-      if (withInitials && !expected.includes('withInitials')) error(`unexpected flag on '${prefix}${name}${params.join('_')}'`)
-      if (joiner && !expected.includes('joiner')) error(`unexpected joiner on '${prefix}${name}${params.join('_')}'`)
+      flag = flag || '';
+      if (flag == 'initials') {
+        if (!pnames.includes('withInitials')) error(`unexpected flag '${flag}' on function '${text()}'`)
+        args.withInitials = 'true'
+      } else if (flag.length === 1) {
+        if (!pnames.includes('joiner')) error(`unexpected joiner on function '${text()}'`)
+        args.joiner = JSON.stringify(flag)
+      } else if (flag.length) {
+        error(`unexpected flag '${flag}' on function '${text()}'`)
+      }
 
-      var args = [ '' + !!editorsOnly, '' + !!withInitials, JSON.stringify(joiner) ];
-      args = args.concat(params); // n_mparams already are stringified integers
+      switch (params.length) {
+        case 0:
+          break
+        case 1:
+          if (!pnames.includes('n')) error(`unexpected parameter on function ${text()}`)
+          break
+        case 2:
+          if (!(pnames.includes('n') && pnames.includes('m'))) error(`unexpected parameters on function ${text()})`)
+          break
+        default:
+          error(`too many parameters for function '${text()}'`)
+      }
 
-      var code = `this.$${method}(${args.join(', ')})`;
-      if (scrub) code = 'this.clean(' + code + ', true)';
-      code = 'chunk = ' + code;
+      args = _trim_args(`function ${text()}`, expected, pnames.map(p => args[p])).join(', ')
+      let code = `this.$${method}(${args})`;
+      if (scrub) code = `this.clean(${code}, true)`
+      code = `chunk = ${code}`
 
       return code;
     }
-  / name:$([a-z][.a-zA-Z]+) &{ return _function(name, 'n') } params:nparam? {
+  / name:$([a-z][.a-zA-Z]+) &{ return _method('function', name, ['number']) } params:nparam? {
       params = params || []
-      return `chunk = this.$${name.replace(/\./g, '_')}(${params.join(', ')})`
+      return `chunk = this.$${_method_name(name)}(${params.join(', ')})`
     }
-  / name:$([a-z][.a-zA-Z]+) &{ return _function(name, 'n m') } params:n_mparams? {
+  / name:$([a-z][.a-zA-Z]+) &{ return _method('function', name, ['number', 'number']) } params:n_mparams? {
       params = params || []
-      return `chunk = this.$${name.replace(/\./g, '_')}(${params.join(', ')})`
+      return `chunk = this.$${_method_name(name)}(${params.join(', ')})`
     }
-  / name:$([a-z][.a-zA-Z]+) &{ return _function(name, 1) } param:stringparam { // single string param
-      return `chunk = this.$${name.replace(/\./g, '_')}(${JSON.stringify(param)})`
+  / name:$([a-z][.a-zA-Z]+) &{ return _method('function', name, ['string']) } param:stringparam { // single string param
+      return `chunk = this.$${_method_name(name)}(${JSON.stringify(param)})`
     }
-  / name:$([a-z][.a-zA-Z]+) &{ return _function(name, 0) } {
-      var args = _function(name)
-      if (!args) error (`Unexpected function '${name}'`)
-      if (args.length !== 0) error(`function '${name}' expects at least one parameter (${args.join(', ')})`)
+  / name:$([a-z][.a-zA-Z]+) &{ return options.methods.function[_method_name(name)] } {
+      const params = options.methods.function[_method_name(name)]
+      if (params.length !== 0) error(`function '${name}' expects at least one parameter (${params.map(p => p.type + (p.optional ? '?' : '')).join(', ')})`)
 
-      var code = `chunk = this.$${name.replace(/\./g, '_')}()`
+      var code = `chunk = this.$${_method_name(name)}()`
       if (name == 'zotero') code += `; postfix = '0'`
       return code
     }
@@ -126,14 +143,30 @@ flag
 filter
   = ':' text:default_filter  { return `chunk = chunk || ${JSON.stringify(text)}`; }
   / ':' filter:function_filter {
-      var args = _filter(filter.name)
-      if (!args) error(`unexpected filter name '${filter.name}'`)
-      if (filter.params.length > args.length) error(`filter '${filter.name}' expects at most ${args.length} parameters (${args.join(', ')})`)
+      const method = _method_name(filter.name)
+      const expected = options.methods.filter[method]
+      if (!expected) error(`unknown filter ${filter.name}`)
 
-      const method = '_' + filter.name.replace(/-/g, '_');
-      const params = ['chunk'].concat(filter.params.map(function(p) { return JSON.stringify(p) }));
+      if (filter.params.length > expected.length) error(`filter '${filter.name}' expects at most ${expected.length} parameters`)
 
-      return `chunk = this.${method}(${params.join(', ')})`;
+      const params = ['chunk'].concat(_trim_args(`filter ${text()}`, expected, expected.map((p, i) => {
+        if (typeof filter.params[i] === 'undefined') {
+          if (!p.optional) error(`missing parameter ${i + 1} (${p.name}) on filter ${filter.name}`)
+          return 'undefined'
+        }
+
+        switch (p.type) {
+          case 'string':
+            return JSON.stringify(filter.params[i])
+          case 'number':
+            if (!parseInt(filter.params[i])) error(`expected number parameter ${i + 1} (${p.name}) on filter ${filter.name}, got ${filter.params[i]}`)
+            return filter.params[i]
+          default:
+            error(`expected parameter ${i + 1} (${p.name}) of type ${p.type} on filter ${filter.name}`)
+        }
+      })))
+
+      return `chunk = this._${method}(${params.join(', ')})`;
     }
 
 default_filter
