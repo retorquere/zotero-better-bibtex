@@ -47,16 +47,16 @@ function getResults(doc) {
 }
 
 function detectWeb(doc, url) {
-	if(url.search(/\/results[?\/]/i) != -1 || url.indexOf('/ebook/') != -1  &&
+	if (url.search(/\/results[?\/]/i) != -1 || url.indexOf('/ebook/') != -1  &&
 		getResults(doc).length) {
 		return 'multiple';
 	}
 	//apparently URLs sometimes have upper case as in /Content/ArticleLanding/
-	if(url.search(/\/content\/articlelanding\//i) != -1 && ZU.xpathText(doc, '//meta[@name="citation_title"]/@content')) {
+	if (url.search(/\/content\/articlelanding\//i) != -1 && ZU.xpathText(doc, '//meta[@name="citation_title"]/@content')) {
 		return 'journalArticle';
 	}
 
-	if(url.search(/\/content\/chapter\//i) != -1) {
+	if (url.search(/\/content\/chapter\//i) != -1) {
 		return 'bookSection';
 	}
 }
@@ -70,7 +70,7 @@ function scrape(doc, url, type) {
 
 
 		//keywords is frequently an empty string
-		if(item.tags.length == 1 && !item.tags[0]) {
+		if (item.tags.length == 1 && !item.tags[0]) {
 			item.tags = [];
 		}
 
@@ -88,19 +88,19 @@ function scrape(doc, url, type) {
 
 function doWeb(doc, url) {
 	var type = detectWeb(doc, url);
-	if(type == 'multiple') {
+	if (type == 'multiple') {
 		var results = getResults(doc);
 		var items = new Object();
-		for(var i=0, n=results.length; i<n; i++) {
+		for (var i=0, n=results.length; i<n; i++) {
 			items[results[i].href] = ZU.trimInternal(
 				ZU.xpathText(results[i], './node()', null, ' '));
 		}
 
 		Zotero.selectItems(items, function(selectedItems) {
-				if(!selectedItems) return true;
+				if (!selectedItems) return true;
 
 				var urls = new Array();
-				for(var i in selectedItems) {
+				for (var i in selectedItems) {
 					urls.push(i);
 				}
 				ZU.processDocuments(urls,doWeb);

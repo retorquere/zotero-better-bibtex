@@ -165,7 +165,7 @@ function parseDPLAapi(text) {
 					if (source.spatial[0].city) item.place = source.spatial[0].city;
 					else if (source.spatial[0].name) item.place = source.spatial[0].name;
 				}
-				else{
+				else {
 					if (source.spatial.city) item.place = source.spatial.city;
 					else if (source.spatial.name) item.place = source.spatial.name;
 				}

@@ -14,17 +14,17 @@
 
 function detectWeb(doc, url){
 	//testing if a link to a rdf file exist
-	if(doc.getElementById('zotero_rdf')){
+	if (doc.getElementById('zotero_rdf')){
 		//testing to know if we have a book or a chapter
 		var met = doc.getElementsByName('DC.type')[0];
 		var cont = met.content
 		Zotero.debug(cont);
-		if(cont == 'Book' || cont == 'book'){
+		if (cont == 'Book' || cont == 'book'){
 			return 'book';
-		}else{
+		} else {
 			return 'bookSection';
 		}
-	}else{
+	} else {
 		return false;
 	}
 }

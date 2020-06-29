@@ -40,7 +40,7 @@
 function detectWeb(doc, url) {
 	if (url.match(/\/doi\/abs\/10\.|\/doi\/full\/10\./)) {
 		return "journalArticle";
-	} else if(url.match(/\/action\/doSearch\?|\/toc\//))
+	} else if (url.match(/\/action\/doSearch\?|\/toc\//))
 		{
 		return "multiple";
 	}
@@ -53,17 +53,17 @@ function doWeb(doc, url) {
 		var rows = ZU.xpath(doc, '//table[@class="articleEntry"]');
 		var doi;
 		var title;
-		for(var i=0, n=rows.length; i<n; i++) {
+		for (var i=0, n=rows.length; i<n; i++) {
 			doi = ZU.xpathText(rows[i], './/a[contains(@href, "/doi/abs/10.")]/@href') //.match(/10\..+/)
 			//Z.debug(doi)
 			title = ZU.xpathText(rows[i], './/div[@class="art_title"]')
-			if(doi && title) {
+			if (doi && title) {
 				items[doi.match(/10\.[^\?]+/)[0]] = title;
 			}
 		}
 		//Z.debug(items)
 		Zotero.selectItems(items, function(selectedItems){
-			if(!selectedItems) return true;
+			if (!selectedItems) return true;
 			
 			var dois = new Array();
 			for (var i in selectedItems) {
@@ -87,7 +87,7 @@ function finalizeItem(item, doc, doi, baseUrl) {
 		url: pdfurl + doi,
 		mimeType: 'application/pdf'
 	}];
-	if(doc) {
+	if (doc) {
 		item.attachments.push({
 			title: 'AIAA Snapshot',
 			document: doc
@@ -112,7 +112,7 @@ function scrape(doc, url, dois) {
 	var risFormat = '&format=ris';
 	var bibtexFormat = '&format=bibtex';
 
-	for(var i=0, n=dois.length; i<n; i++) {
+	for (var i=0, n=dois.length; i<n; i++) {
 		(function(doi) {
 			ZU.doPost(postUrl, postBody + doi + bibtexFormat, function(text) {
 				var translator = Zotero.loadTranslator("import");

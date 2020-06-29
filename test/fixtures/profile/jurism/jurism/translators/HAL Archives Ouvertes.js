@@ -122,7 +122,7 @@ function scrape(doc, url) {
 					mimeType: "application/pdf"
 				}];
 			}
-			else{
+			else {
 				item.attachments = [{
 					document: doc,
 					title: "HAL Snapshot",

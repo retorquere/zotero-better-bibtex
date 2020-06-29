@@ -45,7 +45,7 @@ function detectWeb(doc,url) {
 }
 
 function fixCase(content){
-	if(content.toUpperCase() == content ||
+	if (content.toUpperCase() == content ||
 		content.toLowerCase() == content) {
 		return ZU.capitalizeTitle(content, true);
 	}
@@ -68,7 +68,7 @@ function doWeb(doc,url)
 				urls.push(j);
 			}
 			ZU.processDocuments(urls, function (myDoc) { 
-				doWeb(myDoc, myDoc.location.href) }, function () {});
+				doWeb(myDoc, myDoc.location.href); }, function () {});
 		});
 	} else {
 		var language = ZU.xpathText(doc, '//tr/td[b[contains(text(), "Publication Language:")]]/following-sibling::td');
@@ -185,5 +185,5 @@ var testCases = [
 			}
 		]
 	}
-]
+];
 /** END TEST CASES **/

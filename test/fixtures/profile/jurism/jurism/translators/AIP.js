@@ -17,29 +17,29 @@ function getSearchResults(doc) {
 }
 
 function detectWeb(doc, url) {
-	if(url.indexOf('search') !== -1 && getSearchResults(doc).length) {
+	if (url.indexOf('search') !== -1 && getSearchResults(doc).length) {
 		return 'multiple';
 	}
 	
-	if(ZU.xpathText(doc, '/html/head/meta[@name="citation_journal_title"]/@content')) {
+	if (ZU.xpathText(doc, '/html/head/meta[@name="citation_journal_title"]/@content')) {
 		return 'journalArticle';
 	}
-	else if(doc.body.id == 'conferencepaper') return "conferencePaper"
+	else if (doc.body.id == 'conferencepaper') return "conferencePaper"
 }
 function doWeb(doc, url) {
-	if(detectWeb(doc, url) == 'multiple') {
+	if (detectWeb(doc, url) == 'multiple') {
 		var results = getSearchResults(doc);
 		var items = {};
-		for(var i=0, n=results.length; i<n; i++) {
+		for (var i=0, n=results.length; i<n; i++) {
 			var title = ZU.xpath(results[i], './/div[@class="title"]/a')[0];
 			items[title.href] = ZU.trimInternal(title.textContent);
 		}
 		
 		Z.selectItems(items, function(selectedItems) {
-			if(!selectedItems) return true;
+			if (!selectedItems) return true;
 			
 			var urls = [];
-			for(var i in selectedItems) {
+			for (var i in selectedItems) {
 				urls.push(i);
 			}
 			
@@ -58,7 +58,7 @@ function scrape(doc, url) {
 	
 	translator.setHandler('itemDone', function(obj, item) {
 		//for conference papers, we're missing some metadata
-		if(!item.publicationTitle
+		if (!item.publicationTitle
 			&& ZU.xpath(doc, '//div[@id="breadcrumb"]/a[@title="Link to conference proceedings"]').length) {
 			item.publicationTitle = "AIP Conference Proceedings";
 			item.volume = ZU.xpathText(doc, '//div[@class="itemCitation"]//span[@class="citationvolume"]');
@@ -66,14 +66,14 @@ function scrape(doc, url) {
 		
 		//check if we have the correct publication date
 		var year = doc.getElementsByClassName('itemCitation')[0];
-		if(year) year = year.textContent.match(/\((\d{4})\)/);
-		if(year && (!item.date || item.date.indexOf(year[1]) == -1) ) {
+		if (year) year = year.textContent.match(/\((\d{4})\)/);
+		if (year && (!item.date || item.date.indexOf(year[1]) == -1) ) {
 			item.date = year[1];
 		}
 		
 		
 		var pdf = ZU.xpath(doc, '//div[@class="pdfItem"]/a[@class="pdf" and @href]')[0];
-		if(pdf) {
+		if (pdf) {
 			item.attachments.push({
 				title: "Full Text PDF",
 				url: pdf.href,
@@ -83,10 +83,10 @@ function scrape(doc, url) {
 		
 		var keywords = ZU.xpath(doc, '//div[@class="keywords-container"]//dt/a');
 		var tags = [];
-		for(var i=0, n=keywords.length; i<n; i++) {
+		for (var i=0, n=keywords.length; i<n; i++) {
 			tags.push(ZU.trimInternal(keywords[i].textContent));
 		}
-		if(tags.length) {
+		if (tags.length) {
 			item.tags = tags;
 		}
 		

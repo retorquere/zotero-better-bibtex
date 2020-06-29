@@ -290,7 +290,7 @@ function finalizeItem(item) {
 			}
 		}
 	}
-	if((item.itemType == "book" ||item.itemType == "bookSection")&& !item.publisher){
+	if ((item.itemType == "book" ||item.itemType == "bookSection")&& !item.publisher){
 		item.publisher = item.publishing;
 	}
 	

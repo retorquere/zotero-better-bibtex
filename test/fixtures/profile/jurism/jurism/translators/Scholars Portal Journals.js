@@ -56,12 +56,12 @@ function detectWeb(doc, url) {
 
 function doWeb(doc, url) {
 	var type = detectWeb(doc, url);
-	if(type == "multiple") {
+	if (type == "multiple") {
 		var list = getItems(doc, url);
 		Zotero.selectItems(list, function(selectedItems) {
-			if(!selectedItems) return true;
+			if (!selectedItems) return true;
 			var articles = [];
-			for(var i in selectedItems) {
+			for (var i in selectedItems) {
 				var article = '/ris?uri='+i;
 				articles.push(article);
 			}
@@ -75,11 +75,11 @@ function doWeb(doc, url) {
 }
 
 function getURI(url){
-	if(url.indexOf("xml") != -1){
+	if (url.indexOf("xml") != -1){
 		var a = url.indexOf("details");
 		var b = url.indexOf("xml");
 		return url.substring(a+7,b+3);
-	} else if(url.indexOf("resolver.scholarsportal.info/resolve/") != -1)  {
+	} else if (url.indexOf("resolver.scholarsportal.info/resolve/") != -1)  {
 		return url.split("resolver.scholarsportal.info/resolve")[1] + ".xml";
 	}
 }
@@ -95,7 +95,7 @@ function getItems(doc, url) {
 			found = true;
 		}
 	} else {
-		if(doc.URL.indexOf("/browse") != -1){
+		if (doc.URL.indexOf("/browse") != -1){
 			var titles = ZU.xpath(doc, './/div/h4/a');
 		}
 		else {

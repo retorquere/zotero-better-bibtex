@@ -351,7 +351,7 @@ function getAuthors(ref) {
 }
 
 function getRefType(ref) {
-	switch(ref.content_type) {
+	switch (ref.content_type) {
 		case "Audio Recording":
 		case "Music Recording":
 			return "audioRecording";

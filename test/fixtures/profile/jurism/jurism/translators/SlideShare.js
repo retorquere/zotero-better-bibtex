@@ -18,14 +18,14 @@ function scrape(doc, url) {
 				ZU.xpathText(doc, '/html/head/title');
 
 	var creator = ZU.xpathText(doc, '//div[@itemprop="author"]//span[@itemprop="name"]');
-	if(creator && creator.trim())
+	if (creator && creator.trim())
 		item.creators.push({lastName:creator.trim(), creatorType:'author'});
 
 	item.abstractNote = ZU.xpathText(doc, '//p[@id="slideshow-description-paragraph"]');
 
 	var tags = ZU.xpathText(doc, '//meta[contains(@name, "slideshow_tag")]/@content');
 	if (tags) tags = tags.split(/\s*,\s*/);
-	for(var i in tags) {
+	for (var i in tags) {
 		item.tags.push(tags[i].trim());
 	}
 
@@ -35,13 +35,13 @@ function scrape(doc, url) {
 	item.type = ZU.xpathText(doc, '//div[contains(@class, "categories-container")]//a[1]');
 
 	var date = ZU.xpathText(doc, '//meta[@property = "slideshare:created_at"]/@content');
-	if(date) item.date = date;
+	if (date) item.date = date;
 	item.url = url;
 	item.libraryCatalog = "SlideShare";
 
 	var loggedin = !doc.getElementById('login_link');
 	var pdfurl = ZU.xpathText(doc, '//li[@class="action-download"]/a/@href');
-	if(loggedin && pdfurl) {
+	if (loggedin && pdfurl) {
 		//is this always pdf?
 		item.attachments.push({url:pdfurl, title:"SlideShare Slide Show", mimeType:"application/pdf"});
 	}

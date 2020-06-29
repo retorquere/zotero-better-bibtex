@@ -128,7 +128,7 @@ function scrape(doc, url) {
 	
 	var language = ZU.xpathText(doc, '//tr/td[contains(., "Dil")]//following-sibling::td');
 	if (language) {
-		switch(language.trim()) {
+		switch (language.trim()) {
 			case "İNGİLİZCE":
 				item.language = "en";
 			default:

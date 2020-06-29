@@ -55,7 +55,7 @@ function detectWeb(doc, url) {
 function scrape(doc, url) {
 	//don't parse things like image galleries
 	//e.g. http://www.sueddeutsche.de/kultur/thomas-manns-villa-in-los-angeles-weimar-am-pazifik-1.1301388
-	if(!ZU.xpathText(doc, '//h2/strong')) return;
+	if (!ZU.xpathText(doc, '//h2/strong')) return;
 
 	var newItem = new Zotero.Item("newspaperArticle");
 	newItem.url = url;
@@ -95,7 +95,7 @@ function scrape(doc, url) {
 
 	// Tags
 	var tags = ZU.xpathText(doc, '//meta[@name="keywords"]/@content');
-	if(tags) {
+	if (tags) {
 		tags = tags.split(/\s*,\s+/);
 		for (var i=0, n=tags.length; i<n; i++) {
 			newItem.tags.push(ZU.trimInternal(tags[i]));
@@ -130,13 +130,13 @@ function doWeb(doc, url) {
 
 		var items = new Object();
 		var title;
-		for(var i=0, n=links.length; i<n; i++) {
+		for (var i=0, n=links.length; i<n; i++) {
 			title = ZU.xpathText(links[i], './node()[not(self::div)]', null, '');
 			items[links[i].href] = ZU.trimInternal(title);
 		}
 
 		Zotero.selectItems(items, function(items) {
-			if(!items) return true;
+			if (!items) return true;
 
 			var articles = new Array();
 			for (var i in items) {

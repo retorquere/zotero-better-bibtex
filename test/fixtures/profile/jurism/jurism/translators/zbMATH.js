@@ -36,7 +36,7 @@
 
 
 function detectWeb(doc, url) {
-	if( ZU.xpath(doc, '//div[@class="list"]/article').length>0 ) {
+	if ( ZU.xpath(doc, '//div[@class="list"]/article').length>0 ) {
 		return "multiple";
 	} else if (ZU.xpath(doc, '//a[contains(@class, "bib")]').length>0 ) {//contains
 		//it is a single entry --> generic fallback = journalArticle
@@ -61,7 +61,7 @@ function scrape(doc, url) {
 			
 			if (item.publisher) {
 				var publisherSeperation = item.publisher.indexOf(":");
-				if(publisherSeperation != -1) {
+				if (publisherSeperation != -1) {
 					item.place = item.publisher.substr(0,publisherSeperation);
 					item.publisher = item.publisher.substr(publisherSeperation+1);
 				}
@@ -71,18 +71,18 @@ function scrape(doc, url) {
 			//moreover, the meaning of the MSC classification is also only given on the page
 			if (item.tags.length==0 ) {
 				var keywords = ZU.xpath(doc, '//div[@class="keywords"]/a');
-				for(var i=0; i<keywords.length; i++) {
+				for (var i=0; i<keywords.length; i++) {
 					item.tags.push( keywords[i].textContent );
 				}
-				var classifications = ZU.xpath(doc, '//div[@class="classification"]//tr')
-				for(var i=0; i<classifications.length; i++) {
+				var classifications = ZU.xpath(doc, '//div[@class="classification"]//tr');
+				for (var i=0; i<classifications.length; i++) {
 					item.extra = (item.extra ? item.extra + "\n" : '') + 'MSC2010: ' + ZU.xpathText(classifications[i], './td' , null , " = ");
 				}
 			}
 			
 			//add abstract but not review
 			var abstractOrReview = ZU.xpathText(doc, '//div[@class="abstract"]');
-			if(abstractOrReview.indexOf('Summary') == 0) {
+			if (abstractOrReview.indexOf('Summary') == 0) {
 				item.abstractNote = abstractOrReview.replace(/^Summary:?\s*/, '');
 			}
 			
@@ -93,7 +93,7 @@ function scrape(doc, url) {
 
 			var id = ZU.xpath(doc, '//div[@class="title"]/a[@class="label"]')[0];
 			if (id) {
-				if(!item.extra) item.extra = '';
+				if (!item.extra) item.extra = '';
 				else item.extra += "\n";
 				
 				item.extra += 'Zbl: ' + ZU.trimInternal(id.textContent)
@@ -116,7 +116,7 @@ function doWeb(doc, url) {
 		var items = new Object();
 		var articles = new Array();
 		var rows = ZU.xpath(doc, '//div[@class="list"]/article');
-		for(var i=0; i<rows.length; i++) {
+		for (var i=0; i<rows.length; i++) {
 			var title = ZU.xpathText(rows[i], './div[@class="title"]/a[1]');
 			var link = ZU.xpathText(rows[i], './div[@class="title"]/a[1]/@href');
 			items[link] = title;
@@ -259,5 +259,5 @@ var testCases = [
 		"url": "http://zbmath.org/?q=cc:35",
 		"items": "multiple"
 	}
-]
+];
 /** END TEST CASES **/

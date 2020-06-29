@@ -21,17 +21,17 @@ function detectWeb(doc,url)
 
 	   var xpath='//meta[@name="Story_type"]/@content';
 	   var temp=doc.evaluate(xpath, doc, nsResolver,XPathResult.ANY_TYPE,null).iterateNext();
-	   if(temp)
+	   if (temp)
 	   {
-			   if(temp.value=="Blog")
+			   if (temp.value=="Blog")
 					   {return "blogPost";}
-			   if(temp.value.indexOf("Story")>-1)
+			   if (temp.value.indexOf("Story")>-1)
 					   {return "magazineArticle";}
 	   }
 }
 
 function associateMeta(newItem, metaTags, field, zoteroField) {
-	  if(metaTags[field]) {
+	  if (metaTags[field]) {
 			  newItem[zoteroField] = metaTags[field];
 	  }
 }
@@ -39,7 +39,7 @@ function associateMeta(newItem, metaTags, field, zoteroField) {
 function scrape(doc, url) {
 
 	  var newItem = new Zotero.Item("magazineArticle");
-	   if(url&&url.indexOf("blogs.edweek.org")>-1)
+	   if (url&&url.indexOf("blogs.edweek.org")>-1)
 			   {newItem.itemType="blogPost";}
 
 	  newItem.url = doc.location.href;
@@ -89,9 +89,9 @@ function doWeb(doc,url)
 
 	  var xpath='//meta[@name="Story_type"]/@content';
 	  var temp=doc.evaluate(xpath, doc, nsResolver,XPathResult.ANY_TYPE,null).iterateNext();
-	  if(temp)
+	  if (temp)
 	  {
-			 if(temp.value.indexOf("Story")>-1 || temp.value=="Blog")
+			 if (temp.value.indexOf("Story")>-1 || temp.value=="Blog")
 					   {scrape(doc,url);}
 	  }
 }

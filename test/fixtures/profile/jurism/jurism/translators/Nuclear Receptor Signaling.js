@@ -44,16 +44,16 @@
 */
 
 function relativeToAbsolute(doc, url) {
-	if( typeof(url) == 'undefined' || url.length < 1 ) {
+	if ( typeof(url) == 'undefined' || url.length < 1 ) {
 		return doc.location.toString();
 	}
 
 	//check whether it's not already absolute
-	if(url.match(/^\w+:\/\//)) {
+	if (url.match(/^\w+:\/\//)) {
 		return url;
 	}
 
-	if(url.indexOf('/') == 0) {
+	if (url.indexOf('/') == 0) {
 	//relative to root
 		return doc.location.protocol + '//' + doc.location.host +
 			( (doc.location.port.length)?':' + doc.location.port:'' ) +
@@ -61,7 +61,7 @@ function relativeToAbsolute(doc, url) {
 	} else {
 	//relative to current directory
 		var location = doc.location.toString();
-		if( location.indexOf('?') > -1 ) {
+		if ( location.indexOf('?') > -1 ) {
 			location = location.slice(0, location.indexOf('?'));
 		}
 		return location.replace(/([^\/]\/)[^\/]+$/,'$1') + url;
@@ -69,10 +69,10 @@ function relativeToAbsolute(doc, url) {
 }
 
 function detectWeb(doc, url) {
-	if( url.match('nrs.cfm') &&
+	if ( url.match('nrs.cfm') &&
 		url.match(/detail=(perspectives|reviews|most%20viewed|methods)(&|$)/i) ) {
 		return 'multiple';
-	} else if( !doc.title.match(/^Error/i) &&
+	} else if ( !doc.title.match(/^Error/i) &&
 		   doc.title.trim().toLowerCase() != 'nursa |' ) {
 		return 'journalArticle';
 	}
@@ -84,14 +84,14 @@ function doWeb(doc, url) {
 		if (prefix == 'x') return namespace; else return null;
 	} : null;
 
-	if( detectWeb(doc, url) == 'multiple' ) {
+	if ( detectWeb(doc, url) == 'multiple' ) {
 		var items = Zotero.Utilities.xpath(doc, '//div[@class="articleItemFull"]');
 		var title, itemUrl;
 		var selectFrom = new Object();
-		for( var i in items ) {
+		for ( var i in items ) {
 			title = Zotero.Utilities.xpathText(items[i], './i[text()="Nucl Recept Signal"]/preceding-sibling::node()', null, ' ');
 			itemUrl = Zotero.Utilities.xpath(items[i], './a[text()="Full Text"]').shift();
-			if(title && itemUrl) {
+			if (title && itemUrl) {
 				title = Zotero.Utilities.trimInternal( title.slice(title.indexOf(')')+1).trim() );
 				selectFrom[relativeToAbsolute(doc, itemUrl.href)] = title;
 			}
@@ -99,10 +99,10 @@ function doWeb(doc, url) {
 
 		Zotero.selectItems(selectFrom,
 			function(selectedItems) {
-				if( selectedItems == null ) return true;
+				if ( selectedItems == null ) return true;
 
 				var urls = new Array();
-				for( var item in selectedItems ) {
+				for ( var item in selectedItems ) {
 					urls.push(item);
 				}
 
@@ -114,7 +114,7 @@ function doWeb(doc, url) {
 			});
 	} else {
 		//load full text instead of abstract to get the full auhor names
-		if( url.match('abstract.cfm') ) {
+		if ( url.match('abstract.cfm') ) {
 			Zotero.Utilities.processDocuments(url.replace(/abstract.cfm/,'article.cfm'),
 				function(newDoc) {
 					doWeb(newDoc, newDoc.location.href)
@@ -129,7 +129,7 @@ function doWeb(doc, url) {
 
 		var authors = doc.evaluate('//div[@class="topAuthors"]//span', doc, nsResolver, XPathResult.ANY_TYPE, null);
 		var author;
-		while( author = authors.iterateNext() ) {
+		while ( author = authors.iterateNext() ) {
 			author = author.textContent.trim().replace(/\s+and$/,'');
 			item.creators.push( Zotero.Utilities.cleanAuthor(author, 'author', false) );
 		}
@@ -139,21 +139,21 @@ function doWeb(doc, url) {
 
 		var published = Zotero.Utilities.xpathText(doc, '//div[contains(@class,"bottomHeader")]/p[1]').trim();
 		var pubDelim = 'Published:';
-		if( published && published.indexOf(pubDelim) != -1 ) {
+		if ( published && published.indexOf(pubDelim) != -1 ) {
 			item.date = published.slice( published.lastIndexOf(pubDelim) + pubDelim.length ).trim();
 		}
 
 		item.volume = Zotero.Utilities.xpathText(doc, '//div[contains(@class,"volumeCiteInfo")][2]/b');
 
 		var page = Zotero.Utilities.xpathText(doc, '//div[contains(@class,"volumeCiteInfo")][2]/text()[2]');
-		if(page) {
+		if (page) {
 			item.pages = page.replace(/\W/g,'');
 		}
 
 		item.abstractNote = Zotero.Utilities.xpathText(doc, '//div[contains(@class,"abstract")]/p', null, "\n");
 
 		var doi = Zotero.Utilities.xpathText(doc, '//div[contains(@class,"bottomHeader")]/p[3]/text()[normalize-space()]');
-		if(doi) {
+		if (doi) {
 			item.DOI = doi.trim();
 		}
 
@@ -163,14 +163,14 @@ function doWeb(doc, url) {
 		
 
 		var rights = Zotero.Utilities.xpathText(doc, '//div[contains(@class,"bottomHeader")]/p[2]');
-		if(rights) {
+		if (rights) {
 			item.rights = rights;
 		}
 
 		item.accessDate = 'CURRENT_TIMESTAMP';
 
 		var pdfURL = Zotero.Utilities.xpath(doc, '//div[span/text() = "Download PDF"]/a').shift();
-		if(pdfURL) {
+		if (pdfURL) {
 			item.attachments = [{
 				url: relativeToAbsolute(doc, pdfURL.href),
 				title: 'Full Text PDF',

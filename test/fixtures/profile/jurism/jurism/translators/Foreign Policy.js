@@ -640,7 +640,7 @@ FW.doWeb = function (doc, url) {
 
 
 function detectWeb(doc, url) {
-	if(!ZU.xpath(doc, '//article/h1').length && !ZU.xpath(doc, '//div[@class="inner"]//div[contains(@class, "text_wrapper")]/h2/a')) {
+	if (!ZU.xpath(doc, '//article/h1').length && !ZU.xpath(doc, '//div[@class="inner"]//div[contains(@class, "text_wrapper")]/h2/a')) {
 		return;
 	}
 	return FW.detectWeb(doc, url);

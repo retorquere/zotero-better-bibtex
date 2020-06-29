@@ -36,7 +36,7 @@ function detectWeb(doc, url) {
 // Central Michigan University fix
 	var xpath = '//div[@class="bibRecordLink"]';
 	var elmt = doc.evaluate(xpath, doc, null, XPathResult.ANY_TYPE, null).iterateNext();
-	if(elmt) {
+	if (elmt) {
 		return "book";
 	}
 	
@@ -44,7 +44,7 @@ function detectWeb(doc, url) {
 	if (!url.match(/SEARCH=/) && !url.match(/searchargs?=/) && !url.match(/&FF/) && !url.match(/search~S[0-9]/) && !url.match(/\/search\/q\?/) && !url.match(/record=/)) return false;
 	// First, check to see if the URL alone reveals InnoPAC, since some sites don't reveal the MARC button
 	var matchRegexp = new RegExp('^https?://[^/]+/search[^/]*\\??/[^/]+/[^/]+/[^/]+\%2C[^/]+/frameset(.+)$');
-	if(matchRegexp.test(doc.location.href)) {
+	if (matchRegexp.test(doc.location.href)) {
 		if (!url.match("SEARCH") && !url.match("searchtype")) {
 			return "book";
 		}
@@ -60,13 +60,13 @@ function detectWeb(doc, url) {
 				@alt="REGULAR RECORD DISPLAY"]] |\
 				//a[contains(@href, "/marc~")]';
 	elmt = doc.evaluate(xpath, doc, null, XPathResult.ANY_TYPE, null).iterateNext();
-	if(elmt) {
+	if (elmt) {
 		return "book";
 	}
 	// Also, check for links to an item display page
 	var tags = ZU.xpath(doc, '//a[@href]');
-	for(var i=0; i<tags.length; i++) {
-		if(matchRegexp.test(tags[i].href) || tags[i].href.match(/^https?:\/\/([^/]+\/(?:search\??\/|record=?|search%7e\/)|frameset&FF=)/)) {
+	for (var i=0; i<tags.length; i++) {
+		if (matchRegexp.test(tags[i].href) || tags[i].href.match(/^https?:\/\/([^/]+\/(?:search\??\/|record=?|search%7e\/)|frameset&FF=)/)) {
 			return "multiple";
 		}
 	}
@@ -85,7 +85,7 @@ function scrape(marc, newDoc) {
 		var useNodeValue = false;
 	}
 	var elmt;
-	while(elmt = elmts.iterateNext()) {
+	while (elmt = elmts.iterateNext()) {
 		if (useNodeValue) {
 			var text = elmt.nodeValue;
 		} else {
@@ -96,24 +96,24 @@ function scrape(marc, newDoc) {
 		
 		var linee = text.split("\n");
 		for (var i=0; i<linee.length; i++) {
-			if(!linee[i]) {
+			if (!linee[i]) {
 				continue;
 			}
 			
 			linee[i] = linee[i].replace(/[\xA0_\t]/g, " ");
 			var value = linee[i].substr(7);
 			
-			if(linee[i].substr(0, 6) == "      ") {
+			if (linee[i].substr(0, 6) == "      ") {
 				// add this onto previous value
 				tagValue += value;
 			} else {
-				if(linee[i].substr(0, 6) == "LEADER") {
+				if (linee[i].substr(0, 6) == "LEADER") {
 					// trap leader
 					record.leader = value;
 				} else {
-					if(tagValue) {	// finish last tag
+					if (tagValue) {	// finish last tag
 						tagValue = tagValue.replace(/\|(.)/g, marc.subfieldDelimiter+"$1");
-						if(tagValue[0] != marc.subfieldDelimiter) {
+						if (tagValue[0] != marc.subfieldDelimiter) {
 							tagValue = marc.subfieldDelimiter+"a"+tagValue;
 						}
 						
@@ -127,9 +127,9 @@ function scrape(marc, newDoc) {
 				}
 			}
 		}
-		if(tagValue) {
+		if (tagValue) {
 			tagValue = tagValue.replace(/\|(.)/g, marc.subfieldDelimiter+"$1");
-			if(tagValue[0] != marc.subfieldDelimiter) {
+			if (tagValue[0] != marc.subfieldDelimiter) {
 				tagValue = marc.subfieldDelimiter+"a"+tagValue;
 			}
 			
@@ -177,8 +177,8 @@ function doWeb(doc, url) {
 						]\
 					]';
 				newUri = ZU.xpath(doc, xpath);
-				if(!newUri.length) newUri = ZU.xpath(doc, '//a[contains(@href, "/marc~")]');
-				if(!newUri.length) throw new Error("MARC link not found");
+				if (!newUri.length) newUri = ZU.xpath(doc, '//a[contains(@href, "/marc~")]');
+				if (!newUri.length) throw new Error("MARC link not found");
 				
 				newUri = newUri[0].href.replace(/frameset/, "marc");
 			}
@@ -195,23 +195,23 @@ function doWeb(doc, url) {
 										 doc, null, XPathResult.ANY_TYPE, null);
 			// Go through table rows
 			var i = 0;
-			while(tableRow = tableRows.iterateNext()) {
+			while (tableRow = tableRows.iterateNext()) {
 				// get link
 				var links = doc.evaluate('.//*[@class="briefcitTitle"]//a', tableRow, null, XPathResult.ANY_TYPE, null);
 				var link = links.iterateNext();
-				if(!link) {
+				if (!link) {
 			
 					var links = doc.evaluate(".//a[@href]", tableRow, null, XPathResult.ANY_TYPE, null);
 					link = links.iterateNext();
 				}
 				
-				if(link) {
-					if(availableItems[link.href]) {
+				if (link) {
+					if (availableItems[link.href]) {
 						continue;
 					}
 					
 					// Go through links
-					while(link) {
+					while (link) {
 						if (link.textContent.trim()) availableItems[link.href] = link.textContent;
 						link = links.iterateNext();
 					}

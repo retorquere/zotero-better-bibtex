@@ -61,7 +61,7 @@ function getSearchResults(doc, checkOnly) {
 }
 
 function doWeb(doc, url) {
-	if(detectWeb(doc, url) == "multiple") { 
+	if (detectWeb(doc, url) == "multiple") { 
 		Zotero.selectItems(getSearchResults(doc), function (items) {
 			if (!items) return true;
 			

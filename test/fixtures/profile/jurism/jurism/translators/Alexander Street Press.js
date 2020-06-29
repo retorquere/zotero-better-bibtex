@@ -12,7 +12,7 @@
 }
 
 function detectWeb(doc, url) {
-	if( url.indexOf("object.details.aspx") != -1 ) {
+	if ( url.indexOf("object.details.aspx") != -1 ) {
 		var zitemtype = doc.getElementById("ctl00_ctl00_MasterContentBody_ContentPlaceHolder1_txtZType").value;
 		switch (zitemtype.toLowerCase()) {
 		        case "book":

@@ -15,24 +15,24 @@
 function scrapeMasterTable(doc) {
 	var meta = {};
 	var td = doc.getElementById('contenuto');
-	if(!td) return false;
+	if (!td) return false;
 	
 	scrapeTable(td.firstElementChild, meta);
-	if(!Object.keys(meta).length) return false; // DOI not found page
+	if (!Object.keys(meta).length) return false; // DOI not found page
 	
 	return meta;
 }
 
 function scrapeTable(node, meta) {
-	if(!node) return;
+	if (!node) return;
 	var section;
 	do {
 		var tagName = node.tagName.split(':').pop(); // drop XHTML prefix
-		if(tagName == 'BR') continue;
+		if (tagName == 'BR') continue;
 		
-		if(tagName == 'SPAN') {
+		if (tagName == 'SPAN') {
 			var sectionHeading = ZU.trimInternal(node.textContent).toLowerCase();
-			switch(sectionHeading) {
+			switch (sectionHeading) {
 				case 'doi resolution data:':
 				case 'serial article data:':
 				case 'content item data:':
@@ -53,12 +53,12 @@ function scrapeTable(node, meta) {
 			continue;
 		}
 		
-		if(tagName == 'TABLE') {
-			if(node.getElementsByTagName('span').length) {
+		if (tagName == 'TABLE') {
+			if (node.getElementsByTagName('span').length) {
 				//there are subtables, dig deeper
 				var tr = node.firstElementChild.firstElementChild;
-				while(tr) {
-					if(tr.firstElementChild) {
+				while (tr) {
+					if (tr.firstElementChild) {
 						scrapeTable(tr.firstElementChild.firstElementChild, meta);
 					}
 					tr = tr.nextElementSibling;
@@ -67,7 +67,7 @@ function scrapeTable(node, meta) {
 				scrapeMeta(node.firstElementChild.firstElementChild, section, meta);
 			}
 		}
-	} while(node = node.nextElementSibling);
+	} while (node = node.nextElementSibling);
 }
 
 var map = {
@@ -99,26 +99,26 @@ var creatorMap = {
 };
 
 function scrapeMeta(tr, section, meta) {
-	if(!tr) return;
+	if (!tr) return;
 	do {
 		var label = tr.firstElementChild;
 		var value = ZU.trimInternal(label.nextElementSibling.textContent);
 		label = ZU.trimInternal(label.textContent).toLowerCase();
 		
-		if(!label || !value) continue;
+		if (!label || !value) continue;
 		
 		var zLabel = map.all[label] || map[section][label];
-		if(zLabel) {
+		if (zLabel) {
 			meta[zLabel] = value;
 			continue;
 		}
 		
 		// Some special cases
-		if(label.indexOf('by ') == 0) {
+		if (label.indexOf('by ') == 0) {
 			// Authors. Role indicated in first set of parentheses
 			var role = label.match(/\(([^(]+?)\)/);
-			if(role && (role = creatorMap[role[1].trim()])) {
-				if(!meta.creators) meta.creators = [];
+			if (role && (role = creatorMap[role[1].trim()])) {
+				if (!meta.creators) meta.creators = [];
 				meta.creators.push({
 					// We will split this up properly later. Authors may be
 					// already incorrectly split across a number of "authors" if
@@ -130,23 +130,23 @@ function scrapeMeta(tr, section, meta) {
 			} else {
 				Zotero.debug("Unknown creator role: " + label);
 			}
-		} else if(label.indexOf('journal issue date') == 0
+		} else if (label.indexOf('journal issue date') == 0
 			|| label.indexOf('publication date') == 0) {
 			// These all seem to be the same. We "turn" them into ISO dates
 			meta.date = value.replace(/\s*\/\s*/g, '-');
-		} else if(label.indexOf('other product identifier') == 0) {
+		} else if (label.indexOf('other product identifier') == 0) {
 			// Some of these are ISBNs
 			var isbn = ZU.cleanISBN(value);
-			if(isbn) meta.ISBN = isbn;
+			if (isbn) meta.ISBN = isbn;
 		} else {
 			Zotero.debug('Unknwon label: ' + label);
 		}
-	} while(tr = tr.nextElementSibling);
+	} while (tr = tr.nextElementSibling);
 }
 
 function detectWeb(doc, url) {
 	var meta = scrapeMasterTable(doc);
-	if(!meta) return;
+	if (!meta) return;
 	
 	return mapItemType(meta);
 }
@@ -161,10 +161,10 @@ var itemTypeMap = {
 function  mapItemType(meta) {
 	var value = meta.itemType;
 	delete meta.itemType; // So we don't bother with it later
-	if(value) {
+	if (value) {
 		var type = value.match(/\(\s*([A-Z]{2})\s*\)/);
-		if(type) {
-			if(!itemTypeMap[type[1]]) {
+		if (type) {
+			if (!itemTypeMap[type[1]]) {
 				Zotero.debug("Unknown item type: " + value);
 			} else {
 				return itemTypeMap[type[1]];
@@ -178,18 +178,18 @@ function  mapItemType(meta) {
 
 function doWeb(doc, url) {
 	var meta = scrapeMasterTable(doc);
-	if(!meta) return;
+	if (!meta) return;
 	
 	var type = mapItemType(meta);
 	
 	var item = new Zotero.Item(type);
-	for(var label in meta) {
+	for (var label in meta) {
 		var value = meta[label];
-		switch(label) {
+		switch (label) {
 			case 'language':
 				// We only want to the 3 letter code, which is in parentheses
 				var lang = value.match(/\(\s*(\w{3})\s*\)/);
-				if(lang) {
+				if (lang) {
 					value = lang[1].trim();
 				}
 			break;
@@ -207,7 +207,7 @@ function doWeb(doc, url) {
 				label = 'rights';
 			break;
 			case 'firstPage':
-				if(meta.lastPage) {
+				if (meta.lastPage) {
 					value += '–' + meta.lastPage;
 				}
 				label = 'pages';
@@ -224,13 +224,13 @@ function doWeb(doc, url) {
 				// HTML numeric character escapes, but without the semicolon
 				// We use this to combine consecutive names and fix the escapes
 				var name;
-				for(var i=0; i<value.length; i++) {
-					if(/\&#\d{2,4}$/.test(value[i].lastName)) {
+				for (var i=0; i<value.length; i++) {
+					if (/\&#\d{2,4}$/.test(value[i].lastName)) {
 						name = value[i].lastName + ';';
-						for(var j=i+1; j<value.length; j++) {
-							if(value[j].lastName.charAt(0).toUpperCase() == value[j].lastName.charAt(0)) {
+						for (var j=i+1; j<value.length; j++) {
+							if (value[j].lastName.charAt(0).toUpperCase() == value[j].lastName.charAt(0)) {
 								// This could actually be a new author
-								if(name.indexOf(',') != -1
+								if (name.indexOf(',') != -1
 									&& (value[j].lastName.indexOf(',') != -1)) {
 									// We already have a comma and the next name
 									// contains a comma so the current name is done.
@@ -246,7 +246,7 @@ function doWeb(doc, url) {
 							value.splice(j,1);
 							j--;
 							
-							if(!/\&#\d{2,4}$/.test(name)) {
+							if (!/\&#\d{2,4}$/.test(name)) {
 								// There doesn't seem to be another split
 								break;
 							} else {
@@ -267,8 +267,8 @@ function doWeb(doc, url) {
 			break;
 		}
 		
-		if((label == 'title' || label == 'publicationTitle')) {
-			if(value.toUpperCase() == value) {
+		if ((label == 'title' || label == 'publicationTitle')) {
+			if (value.toUpperCase() == value) {
 				value = ZU.capitalizeTitle(value, true);
 			}
 			value = value.replace(/\s+:/g, ':');
@@ -281,26 +281,26 @@ function doWeb(doc, url) {
 }
 
 function sanitizeQueries(queries) {
-	if(typeof queries == 'string' || !queries.length) queries = [queries];
+	if (typeof queries == 'string' || !queries.length) queries = [queries];
 	
 	var dois = [], doi;
-	for(var i=0; i<queries.length; i++) {
-		if(queries[i].DOI) {
+	for (var i=0; i<queries.length; i++) {
+		if (queries[i].DOI) {
 			doi = ZU.cleanDOI(queries[i].DOI);
-		} else if(typeof queries[i] == 'string') {
+		} else if (typeof queries[i] == 'string') {
 			doi = ZU.cleanDOI(queries[i]);
 		} else {
 			doi = undefined;
 		}
 		
-		if(doi) dois.push(doi);
+		if (doi) dois.push(doi);
 	}
 	
 	return dois;
 }
 
 function detectSearch(queries) {
-	if(!queries) return;
+	if (!queries) return;
 	
 	return !!sanitizeQueries(queries).length;
 }
@@ -308,7 +308,7 @@ function detectSearch(queries) {
 function doSearch(queries) {
 	var dois = sanitizeQueries(queries);
 	var urls = [];
-	for(var i=0; i<dois.length; i++) {
+	for (var i=0; i<dois.length; i++) {
 		urls.push('https://www.medra.org/servlet/view?lang=en&doi='
 			+ encodeURIComponent(dois[i]));
 	}

@@ -15,9 +15,9 @@
 function detectWeb(doc, url) {
 	var singleRe   = /^https?:\/\/eprint\.iacr\.org\/(\d{4}\/\d{3}|cgi-bin\/print\.pl)/;
 	var multipleRe = /^https?:\/\/eprint\.iacr\.org\/(complete|curr|\d{4}|(cgi|eprint)-bin\/search\.pl)/;
-	if(singleRe.test(url)) {
+	if (singleRe.test(url)) {
 		return "report";
-	} else if(multipleRe.test(url)) {
+	} else if (multipleRe.test(url)) {
 		return "multiple";
 	}
 }
@@ -44,7 +44,7 @@ function scrape(doc, url) {
 	var abstr = "";
 	var abstractLines = doc.evaluate(abstractXPath, doc, null, XPathResult.ANY_TYPE, null);
 	var nextLine;
-	while(nextLine = abstractLines.iterateNext()) {
+	while (nextLine = abstractLines.iterateNext()) {
 		// An inner line starting with \n starts a new paragraph in the abstract.
 		if (nextLine.textContent[0] == "\n") {
 			abstr += "\n\n";

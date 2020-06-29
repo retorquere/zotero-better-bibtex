@@ -103,9 +103,9 @@ function scrape(doc, url) {
 	for (var i in authors){
 		newItem.creators.push(ZU.cleanAuthor(authors[i].textContent, "author"));
 	}
-	if(!authors.length){
+	if (!authors.length){
 		authors = ZU.xpathText(doc, xpathdate_author);
-		if(authors){
+		if (authors){
 			authors_org=authors.substring(0,authors.lastIndexOf("|")-1);
 			var regex = /(.*By\s+)(.*)/;
 			authors = authors_org.replace(regex, "$2");

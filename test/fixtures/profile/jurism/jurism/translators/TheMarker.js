@@ -50,14 +50,14 @@ function doWeb(doc, url) {
 	newItem.date = ZU.xpathText(doc, '(//meta[@itemprop="datePublished"]/@content)[1]');
 	
 	var authors = ZU.xpath(doc, '//address/a[@rel="author"]');
-	for(var i=0; i<authors.length; i++) {
+	for (var i=0; i<authors.length; i++) {
 		newItem.creators.push(ZU.cleanAuthor(authors[i].textContent, 'author'));
 	}
 	var keywordsString = ZU.xpathText(doc, '//meta[@name="news_keywords"]/@content');
 	if (keywordsString) {
 		var keywords = keywordsString.split(',');
-		for(var i=0; i<keywords.length; i++) {
-				if(keywords[i].length>0) newItem.tags.push(keywords[i].trim());
+		for (var i=0; i<keywords.length; i++) {
+				if (keywords[i].length>0) newItem.tags.push(keywords[i].trim());
 		}
 	}
 

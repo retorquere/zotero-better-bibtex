@@ -66,30 +66,30 @@ function getSearchResults(doc, url, checkOnly) {
 	var found = false, items = {},
 		//exclude cit-site-url for Sage Advanced Search (no stable URLs for testing)
 		linkx = '(.//a[not(contains(@href, "hasaccess.xhtml")) and not(@class="cit-site-url")])[1]';
-	for(var i=0; i<xpaths.length && !found; i++) {
+	for (var i=0; i<xpaths.length && !found; i++) {
 		var rows = ZU.xpath(doc, xpaths[i].searchx);
-		if(!rows.length) continue;
+		if (!rows.length) continue;
 		
-		for(var j=0, n=rows.length; j<n; j++) {
+		for (var j=0, n=rows.length; j<n; j++) {
 			var title = ZU.xpath(rows[j], xpaths[i].titlex)[0];
-			if(!title) continue;
+			if (!title) continue;
 			
 			var link;
-			if(title.nodeName == 'A') {
+			if (title.nodeName == 'A') {
 				link = title;
 			} else {
 				link = ZU.xpath(rows[j], linkx)[0];
-				if(!link || !link.href) continue;
+				if (!link || !link.href) continue;
 			}
 			
 			items[link.href] = ZU.trimInternal(title.textContent);
 			found = true;
 			
-			if(checkOnly) return true;
+			if (checkOnly) return true;
 		}
 	}
 	
-	if(found) Zotero.debug('Found search results using xpath set #' + (i-1));
+	if (found) Zotero.debug('Found search results using xpath set #' + (i-1));
 	
 	return found ? items : null;
 }
@@ -105,11 +105,11 @@ function getAbstract(doc) {
 	var abstr = '';
 	var paragraph;
 
-	for(var i=0, n=abstrSections.length; i<n; i++) {
+	for (var i=0, n=abstrSections.length; i<n; i++) {
 		paragraph = abstrSections[i].textContent.trim();
 
 		//ignore the abstract heading
-		if( paragraph.toLowerCase() == 'abstract' ||
+		if ( paragraph.toLowerCase() == 'abstract' ||
 			paragraph.toLowerCase() == 'summary' ) {
 			continue;
 		}
@@ -129,9 +129,9 @@ function getKeywords(doc) {
 	//e.g. http://jn.nutrition.org/content/130/12/3122S.abstract
 	var keywords = ZU.xpath(doc,'//ul[contains(@class,"kwd-group")]//a');
 	var kwds = new Array();
-	for(var i=0, n=keywords.length; i<n; i++) {
+	for (var i=0, n=keywords.length; i<n; i++) {
 		//don't break for empty nodes
-		if(keywords[i].textContent)	kwds.push(keywords[i].textContent.trim());
+		if (keywords[i].textContent)	kwds.push(keywords[i].textContent.trim());
 	}
 
 	return kwds;
@@ -153,12 +153,12 @@ function attachSupplementary(doc, item, next) {
 	var navDiv = doc.getElementById('article-cb-main')
 		|| doc.getElementById('article-views')
 		|| ZU.xpath(doc, '//div[contains(@class, "cb-section")]')[0]; //http://www.plantphysiol.org/content/162/1/9.abstract
-	if(navDiv) {
+	if (navDiv) {
 		var suppLink = ZU.xpath(navDiv, './/a[@rel="supplemental-data"]')[0]
 			|| ZU.xpath(doc, '//a[@rel="supplemental-data"]')[0];
-		if(suppLink) {
+		if (suppLink) {
 			var attachAsLink = Z.getHiddenPref("supplementaryAsLink");
-			if(attachAsLink) {
+			if (attachAsLink) {
 				item.attachments.push({
 					title: "Supplementary info",
 					url: suppLink.href,
@@ -169,28 +169,28 @@ function attachSupplementary(doc, item, next) {
 				ZU.processDocuments(suppLink.href, function(newDoc, url) {
 					//sciencemag.org
 					var container = newDoc.getElementById('sci-bd');
-					if(container) {
+					if (container) {
 						var dts = ZU.xpath(container, './dl/dt');
 						var dt, dd, title, url, type, snapshot, description;
-						for(var i=0, n=dts.length; i<n; i++) {
+						for (var i=0, n=dts.length; i<n; i++) {
 							dt = dts[i];
 							title = ZU.trimInternal(dt.textContent);
 							
 							dd = dt.nextElementSibling;
 							
-							if(dd.nodeName.toUpperCase() == 'DD') {
-								if(dd.firstElementChild
+							if (dd.nodeName.toUpperCase() == 'DD') {
+								if (dd.firstElementChild
 									&& dd.firstElementChild.nodeName.toUpperCase() == 'UL') {
 									description = ZU.xpathText(dd, './ul/li', null, '; ');
 								} else {
 									description = dd.textContent;
 								}
 								
-								if(description) {
+								if (description) {
 									description = ZU.trimInternal(description)
 										.replace(/\s;/g, ';');
 										
-									if(description.indexOf(title) === 0
+									if (description.indexOf(title) === 0
 										|| title.toUpperCase() == 'DOWNLOAD SUPPLEMENT') {
 										title = '';
 									} else {
@@ -201,12 +201,12 @@ function attachSupplementary(doc, item, next) {
 								}
 							}
 							
-							if(title.toUpperCase() == 'DOWNLOAD SUPPLEMENT') {
+							if (title.toUpperCase() == 'DOWNLOAD SUPPLEMENT') {
 								title = 'Supplementary Data';
 							}
 							
 							url = dt.getElementsByTagName('a')[0];
-							if(!url) continue;
+							if (!url) continue;
 							url = url.href;
 							
 							type = suppTypeMap[url.substr(url.lastIndexOf('.')+1).toLowerCase()];
@@ -229,26 +229,26 @@ function attachSupplementary(doc, item, next) {
 					
 					//others
 					container = newDoc.getElementById('content-block');
-					if(container) {
+					if (container) {
 						var links = ZU.xpath(container, './h1[@class="data-supp-article-title"]\
 							/following-sibling::div//ul//a');
 					
 						var counters = {}, title, tUC, url, type, snapshot;
-						for(var i=0, n=links.length; i<n; i++) {
+						for (var i=0, n=links.length; i<n; i++) {
 							title = links[i].nextSibling; //http://www.plantphysiol.org/content/162/1/9.abstract
-							if(title) {
+							if (title) {
 								title = title.textContent
 									.replace(/^[^a-z]+/i, '').trim();
 							}
 
-							if(!title) {
+							if (!title) {
 								title = ZU.trimInternal(links[i].textContent.trim())
 									.replace(/^download\s+/i, '')
 									.replace(/\([^()]+\)$/, '');
 							}
 							
 							tUC = title.toUpperCase();
-							if(!counters[tUC]) {	//when all supp data has the same title, we'll add some numbers
+							if (!counters[tUC]) {	//when all supp data has the same title, we'll add some numbers
 								counters[tUC] = 1;
 							} else {
 								title += ' ' + (++counters[tUC]);
@@ -293,38 +293,38 @@ function addEmbMeta(doc, url) {
 		//remove all caps in Names and Titles
 		for (i in item.creators){
 			//Z.debug(item.creators[i])
-			if(item.creators[i].lastName == item.creators[i].lastName.toUpperCase()) {
+			if (item.creators[i].lastName == item.creators[i].lastName.toUpperCase()) {
 				item.creators[i].lastName =
 					ZU.capitalizeTitle(item.creators[i].lastName, true);
 			}
 			//we test for existence of first Name to not fail with spotty data. 
-			if(item.creators[i].firstName && item.creators[i].firstName == item.creators[i].firstName.toUpperCase()) {
+			if (item.creators[i].firstName && item.creators[i].firstName == item.creators[i].firstName.toUpperCase()) {
 				item.creators[i].firstName =
 					ZU.capitalizeTitle(item.creators[i].firstName, true);
 			}
 		}
 
-		if(item.title == item.title.toUpperCase()) {
+		if (item.title == item.title.toUpperCase()) {
 			item.title = ZU.capitalizeTitle(item.title,true);
 		}
 
 		var abs = getAbstract(doc);
-		if(abs) item.abstractNote = abs;
+		if (abs) item.abstractNote = abs;
 
 		var kwds = getKeywords(doc);
-		if(kwds) item.tags = kwds;
+		if (kwds) item.tags = kwds;
 
 		if (item.notes) item.notes = [];
 		
 		//try to get PubMed ID and link if we don't already have it from EM
 		var pmDiv;
-		if((!item.extra || item.extra.search(/\bPMID:/) == -1)
+		if ((!item.extra || item.extra.search(/\bPMID:/) == -1)
 			&& (pmDiv = doc.getElementById('cb-art-pm'))) {
 			var pmId = ZU.xpathText(pmDiv, './/a[contains(@class, "cite-link")]/@href')
 					|| ZU.xpathText(pmDiv, './ol/li[1]/a/@href');	//e.g. http://www.pnas.org/content/108/52/20881.full
-			if(pmId) pmId = pmId.match(/access_num=(\d+)/);
-			if(pmId) {
-				if(item.extra) item.extra += '\n';
+			if (pmId) pmId = pmId.match(/access_num=(\d+)/);
+			if (pmId) {
+				if (item.extra) item.extra += '\n';
 				else item.extra = '';
 				
 				item.extra += 'PMID: ' + pmId[1];
@@ -338,15 +338,15 @@ function addEmbMeta(doc, url) {
 			}
 		}
 		
-		if(Z.getHiddenPref && Z.getHiddenPref("attachSupplementary")) {
+		if (Z.getHiddenPref && Z.getHiddenPref("attachSupplementary")) {
 			try {	//don't fail if we can't attach supplementary data
 				var async = attachSupplementary(doc, item, function(doc, item) { item.complete() });
 			} catch(e) {
 				Z.debug("Error attaching supplementary information.")
 				Z.debug(e);
-				if(async) item.complete();
+				if (async) item.complete();
 			}
-			if(!async) {
+			if (!async) {
 				item.complete();
 			}
 		} else {
@@ -366,7 +366,7 @@ function detectWeb(doc, url) {
 	highwiretest = url.indexOf('.pdf+html') != -1;
 
 	//only queue up the sidebar for data extraction (it seems to always be present)
-	if(highwiretest && url.indexOf('?frame=sidebar') == -1) {
+	if (highwiretest && url.indexOf('?frame=sidebar') == -1) {
 		return;
 	}
 
@@ -376,7 +376,7 @@ function detectWeb(doc, url) {
 				"//link[@href='/shared/css/hw-global.css']|//link[contains(@href,'highwire.css')]").length;
 	}
 	
-	if(highwiretest) {
+	if (highwiretest) {
 		if (getSearchResults(doc, url, true)) {
 			return "multiple";
 		} else if ( /content\/(early\/)?[0-9]+/.test(url)
@@ -392,18 +392,18 @@ function doWeb(doc, url) {
 	
 	var items = getSearchResults(doc, url);
 	//Z.debug(items)
-	if(items) {
+	if (items) {
 		Zotero.selectItems(items, function(selectedItems) {
-			if(!selectedItems) return true;
+			if (!selectedItems) return true;
 
 			var urls = new Array();
-			for( var item in selectedItems ) {
+			for ( var item in selectedItems ) {
 				urls.push(item);
 			}
 			//Z.debug(urls)
 			Zotero.Utilities.processDocuments(urls, addEmbMeta);
 		});
-	} else if(url.indexOf('.full.pdf+html') != -1) {
+	} else if (url.indexOf('.full.pdf+html') != -1) {
 		//abstract in EM is not reliable. Fetch abstract page and scrape from there.
 		ZU.processDocuments(url.replace(/\.full\.pdf\+html.*/, ''), addEmbMeta);
 	} else {

@@ -44,7 +44,7 @@ function detectWeb(doc, url) {
 function doWeb(doc, url){
 
 	var articles = new Array();
-	if(detectWeb(doc, url) == "multiple") { 
+	if (detectWeb(doc, url) == "multiple") { 
 		var items = {};
 		var titles = doc.evaluate('//li[@class="portal_list_item"]/div//a[contains(@href, "/publications/")]', doc, null, XPathResult.ANY_TYPE, null);
 		var title;
@@ -73,7 +73,7 @@ function scrape(doc, url){
 		//assemble RIS line by line
 		rislines = ZU.xpath(doc, '//div[@class="view_container"]/div[contains(@class, "_ris")]/p')
 		var risarray = [];
-		for(i in rislines){
+		for (i in rislines){
 			risarray.push(rislines[i].textContent)
 		}
 		var ris = risarray.join("\n");

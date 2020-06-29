@@ -15,9 +15,9 @@
 function detectWeb(doc, url) {
 	var singleRe   = /^https?:\/\/eccc\.weizmann\.ac\.il\/report\/\d{4}\/\d{3}/;
 	var multipleRe = /^https?:\/\/eccc\.weizmann\.ac\.il\/(title|year|keyword)\//;
-	if(singleRe.test(url)) {
+	if (singleRe.test(url)) {
 		return "report";
-	} else if(multipleRe.test(url)) {
+	} else if (multipleRe.test(url)) {
 		return "multiple";
 	}
 }
@@ -61,7 +61,7 @@ function scrape(doc) {
 	var abstractLines = doc.evaluate(abstractXPath, doc, null, XPathResult.ANY_TYPE, null);
 	newItem.abstractNote = "";
 	var nextLine;
-	while(nextLine = abstractLines.iterateNext()) {
+	while (nextLine = abstractLines.iterateNext()) {
 		newItem.abstractNote += nextLine.textContent;
 	}
 

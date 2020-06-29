@@ -39,7 +39,7 @@
 	***** END LICENSE BLOCK *****
 */
  
- /*This translator imports OpenURL ContextObjects encapsulated in XML
+/*This translator imports OpenURL ContextObjects encapsulated in XML
  * documents, as described at:
  *  http://alcme.oclc.org/openurl/servlet/OAIHandler?verb=GetRecord&metadataPrefix=oai_dc&identifier=info:ofi/fmt:xml:xsd:ctx
  * The schema for such XML documents is at:
@@ -58,7 +58,7 @@ function detectImport() {
 	// read at most 100 lines and checks for ctx-namespace
 	var line, i=0;
 	while ((line = Zotero.read()) !== false && i<100) {
-		if ( line.indexOf("info:ofi/fmt:xml:xsd:ctx")>-1 ) {
+		if ( line.includes("info:ofi/fmt:xml:xsd:ctx") ) {
 			return true;
 		}
 		i++;
@@ -94,13 +94,13 @@ function doImport() {
  */
 function contextObjectXMLToCOinS (doc) {
 
-	ns = {
+	const ns = {
 		"xsi" : "http://www.w3.org/2001/XMLSchema-instance",
 		"ctx" : "info:ofi/fmt:xml:xsd:ctx",
 		"rft" : "info:ofi/fmt:xml:xsd:journal"
 	};
 	
-	var objects = ZU.xpath(doc, '//ctx:context-object', ns)
+	var objects = ZU.xpath(doc, '//ctx:context-object', ns);
 	/* Bail out if no object */
 	if (objects.length === 0) {
 		Zotero.debug("No context object");
@@ -113,11 +113,11 @@ function contextObjectXMLToCOinS (doc) {
 		Zotero.debug("Processing object: " + objects[i].textContent);
 		var pieces = [];
 		
-		var version = ZU.xpathText(objects[i], './@version', ns)
+		var version = ZU.xpathText(objects[i], './@version', ns);
 	
 		pieces.push("ctx_ver="+encodeURIComponent(version));
 		
-		var format = ZU.xpathText(objects[i], './/ctx:format', ns)
+		var format = ZU.xpathText(objects[i], './/ctx:format', ns);
 
 		if (mapXMLtoKEV[format]) {
 			format = mapXMLtoKEV[format];
@@ -133,7 +133,7 @@ function contextObjectXMLToCOinS (doc) {
 		for (var j in fields) {
 			var name = fields[j].nodeName;
 			// turn this into html
-			name = name.replace(/:/, ".")
+			name = name.replace(/:/, ".");
 			var value = encodeURIComponent(fields[j].textContent);
 			pieces.push(name + "=" + value);
 		}
@@ -270,5 +270,5 @@ var testCases = [
 			}
 		]
 	}
-]
+];
 /** END TEST CASES **/

@@ -14,9 +14,9 @@
 
 function detectWeb(doc, url) {
 	var title = doc.getElementById('title');
-	if(title && ZU.xpath(title, './/a[@id="export-article-link"]').length) {
+	if (title && ZU.xpath(title, './/a[@id="export-article-link"]').length) {
 		return "journalArticle";
-	} else if(getSearchResults(doc, true)){
+	} else if (getSearchResults(doc, true)){
 		return "multiple";
 	}
 }
@@ -110,7 +110,7 @@ function scrape(doc, url) {
 			));
 			
 			// attach PDF
-			if(ZU.xpath(doc, '//div[@class="article-nav-actions"]/a[contains(text(), "PDF")]').length) {
+			if (ZU.xpath(doc, '//div[@class="article-nav-actions"]/a[contains(text(), "PDF")]').length) {
 				item.attachments.push({
 					title: 'Full Text PDF',
 					url: url.replace('{REPLACE}', 'pdf'),
@@ -123,17 +123,17 @@ function scrape(doc, url) {
 				document: doc
 			});
 			
-			if(Z.getHiddenPref && Z.getHiddenPref('attachSupplementary')) {
+			if (Z.getHiddenPref && Z.getHiddenPref('attachSupplementary')) {
 				ZU.processDocuments(url.replace('{REPLACE}', 'supplemental'), function(doc) {
 					try {
 						var asLink = Z.getHiddenPref('supplementaryAsLink');
 						var suppFiles = doc.getElementsByClassName('supplemental-file');
-						for(var i=0; i<suppFiles.length; i++) {
+						for (var i=0; i<suppFiles.length; i++) {
 							var link = suppFiles[i].getElementsByTagName('a')[0];
 							if (!link || !link.href) continue;
 							var title = link.getAttribute('data-id') || 'Supplementary Data';
 							var type = suppTypeMap[link.href.split('.').pop()];
-							if(asLink || dontDownload.indexOf(type) != -1) {
+							if (asLink || dontDownload.indexOf(type) != -1) {
 								item.attachments.push({
 									title: title,
 									url: link.href,

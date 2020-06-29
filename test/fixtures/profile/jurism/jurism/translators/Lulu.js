@@ -17,11 +17,11 @@ function getSearchResults(doc) {
 }
 
 function detectWeb(doc, url) {
-	if(url.search(/\/product-\d+\.html/) != -1) {
+	if (url.search(/\/product-\d+\.html/) != -1) {
 		return 'book';
 	}
 	
-	if(url.indexOf('/search.ep?') != -1
+	if (url.indexOf('/search.ep?') != -1
 		&& getSearchResults(doc).length) {
 		return 'multiple';
 	}
@@ -29,17 +29,17 @@ function detectWeb(doc, url) {
 
 function doWeb(doc, url) {
 	var results = getSearchResults(doc);
-	if(results.length) {
+	if (results.length) {
 		var items = {};
-		for(var i=0, n=results.length; i<n; i++) {
+		for (var i=0, n=results.length; i<n; i++) {
 			items[results[i].href] = ZU.trimInternal(results[i].textContent);
 		}
 		
 		Z.selectItems(items, function(selectedItems) {
-			if(!selectedItems) return true;
+			if (!selectedItems) return true;
 			
 			var urls = [];
-			for(var i in selectedItems) {
+			for (var i in selectedItems) {
 				urls.push(i);
 			}
 			ZU.processDocuments(urls, scrape);
@@ -62,23 +62,23 @@ function makeItem(doc, url) {
 	);
 	
 	var authors = ZU.xpath(doc, '//div[@class="product-information"]//span[@class="authors"]/a/span');
-	for(var i=0, n=authors.length; i<n; i++) {
+	for (var i=0, n=authors.length; i<n; i++) {
 		var name = ZU.trimInternal(authors[i].textContent).replace(/^(?:Dr|Prof)\.?\s|\s(?:M.?A|Ph\.?D|B\.?S|B\.?A|M\.?D(?:\.?\sPh\.?D)?)\.?$/gi, '');
 		item.creators.push(ZU.cleanAuthor(ZU.capitalizeTitle(name, true), 'author'));
 	}
 	
 	var description = doc.getElementsByClassName('description')[0];
-	if(description.getElementsByClassName('expandable-text').length) {
+	if (description.getElementsByClassName('expandable-text').length) {
 		description = ZU.xpathText(description, './span/text()[1]')
 			+ ' ' + ZU.xpathText(description, './span/span[@class="more-text"]/text()[1]');
 	} else {
 		description = description.textContent;
-		if(ZU.trimInternal(description) == 'No description supplied') {
+		if (ZU.trimInternal(description) == 'No description supplied') {
 			description = false;
 		}
 	}
 	
-	if(description) {
+	if (description) {
 		item.abstractNote = description.trim().replace(/ +/, ' ');
 	}
 	
@@ -101,43 +101,43 @@ function makeItem(doc, url) {
 }
 
 function detectSearch(items) {
-	if(items.ISBN) return true;
+	if (items.ISBN) return true;
 	
-	if(!items.length) return;
+	if (!items.length) return;
 	
-	for(var i=0, n=items.length; i<n; i++) {
-		if(items[i].ISBN && ZU.cleanISBN('' + items[i].ISBN)) {
+	for (var i=0, n=items.length; i<n; i++) {
+		if (items[i].ISBN && ZU.cleanISBN('' + items[i].ISBN)) {
 			return true;
 		}
 	}
 }
 
 function doSearch(items) {
-	if(!items.length) items = [items];
+	if (!items.length) items = [items];
 	
 	var query = [];
-	for(var i=0, n=items.length; i<n; i++) {
+	for (var i=0, n=items.length; i<n; i++) {
 		var isbn;
-		if(items[i].ISBN && (isbn = ZU.cleanISBN('' + items[i].ISBN))) {
+		if (items[i].ISBN && (isbn = ZU.cleanISBN('' + items[i].ISBN))) {
 			(function(item, isbn) {
 				ZU.processDocuments('http://www.lulu.com/shop/search.ep?keyWords=' + isbn, function(doc, url) {
 					var results = getSearchResults(doc);
-					if(!results.length) {
-						if(item.complete) item.complete();
+					if (!results.length) {
+						if (item.complete) item.complete();
 						return;
 					}
 					
 					ZU.processDocuments(results[0].href, function(doc, url) {
 						var newItem = makeItem(doc, url);
-						if(newItem.ISBN == isbn) {
+						if (newItem.ISBN == isbn) {
 							newItem.complete();
 						} else {
-							if(item.complete) item.complete();
+							if (item.complete) item.complete();
 						}
 					});
 				})
 			})(items[i], isbn);
-		} else if(items[i].complete) {
+		} else if (items[i].complete) {
 			items[i].complete();
 		}
 	}

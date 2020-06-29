@@ -48,13 +48,13 @@ function addByBibTex(doi, tags) {
 
 		translator.setHandler('itemDone', function(obj, item) {
 			//title is sometimes in all caps
-			if(item.title == item.title.toUpperCase())
+			if (item.title == item.title.toUpperCase())
 				item.title = ZU.capitalizeTitle(item.title, true);
 			if (item.abstractNote){
 				item.abstractNote = item.abstractNote.replace(/^...?Abstract/, "")
 			}
 			//add tags
-			if(tags) {
+			if (tags) {
 				item.tags = tags;
 			}
 
@@ -75,11 +75,11 @@ function addByBibTex(doi, tags) {
 function detectWeb(doc, url) {
 	var title = doc.title.toLowerCase();
 
-	if( url.match(/\/doi\/(abs|full|pdf)\//) ) {
+	if ( url.match(/\/doi\/(abs|full|pdf)\//) ) {
 
 		return 'journalArticle';
 
-	} else if( title.match('- table of contents -') ||
+	} else if ( title.match('- table of contents -') ||
 		title.match('- most downloaded reviews') ||
 		title.match('- most cited reviews') ||
 		title.match('- forthcoming -') ||
@@ -91,36 +91,36 @@ function detectWeb(doc, url) {
 }
 
 function doWeb(doc, url) {
-	if( detectWeb(doc, url) == 'multiple' ) {
+	if ( detectWeb(doc, url) == 'multiple' ) {
 		var articles = Zotero.Utilities.xpath(doc, '//div[@class="articleBoxWrapper"]');
 		var selectList = new Object();
 		var doi, title, article;
-		for( var i in articles ) {
+		for ( var i in articles ) {
 			article = articles[i];
 			doi = Zotero.Utilities.xpath(article, './div[@class="articleCheck"]/input');
 			title = Zotero.Utilities.xpathText(article, './div[@class="articleBoxMeta"]/h2/a');
-			if( doi && doi[0].value && title) {
+			if ( doi && doi[0].value && title) {
 				selectList[doi[0].value] = title;
 			}
 		}
 
 		Zotero.selectItems(selectList, function(selectedItems) {
-			if(selectedItems == null) return true;
-			for(var item in selectedItems) {
+			if (selectedItems == null) return true;
+			for (var item in selectedItems) {
 				addByBibTex(item);
 			}
 		});
 	} else {
 		var match = url.match(/\/(?:abs|full|pdf)\/([^?]+)/);
-		if(match) {
+		if (match) {
 			//get keywords before we leave
 			var tags, keywords = ZU.xpath(doc,
 				'//form[@id="frmQuickSearch"]\
 				/div[@class="pageTitle" and contains(text(), "KEYWORD")]\
 				/following-sibling::div/span[@class="data"]');
-			if(keywords) {
+			if (keywords) {
 				tags = new Array();
-				for(var i=0, n=keywords.length; i<n; i++) {
+				for (var i=0, n=keywords.length; i<n; i++) {
 					tags.push(keywords[i].textContent.trim());
 				}
 			}

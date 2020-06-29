@@ -28,7 +28,7 @@ function detectWeb(doc, url) {
 function useMeta (doc, newItem, field, zoteroField) {
 	xpath='//meta[@name="' + field + '"]/@content';
 	temp=doc.evaluate(xpath, doc, null, XPathResult.ANY_TYPE, null).iterateNext();
-	if(temp)
+	if (temp)
 	{ 	
 		newItem[zoteroField] =temp.value;     
 	}

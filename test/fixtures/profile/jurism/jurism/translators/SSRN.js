@@ -50,10 +50,10 @@ function doWeb(doc,url) {
 		//this one is for publication series:
 		var results = ZU.xpath(doc, "//tr/td//strong/a[(@class='textlink' or @class='textLink') and contains(@href, 'papers.cfm?abstract_id')]");
 		//otherwise, this is an author page or searches
-		if(results.length<1){
+		if (results.length<1){
 			results = ZU.xpath(doc,"//div[contains(@class, 'trow')]//a[contains(@class, 'title') and contains(@href, 'ssrn.com/abstract=')]");
 		}
-		for(var i=0, n=results.length; i<n; i++) {
+		for (var i=0, n=results.length; i<n; i++) {
 			hits[results[i].href] = results[i].textContent;
 		}
 		Z.selectItems(hits, function(items) {
@@ -79,7 +79,7 @@ function scrape(doc, url) {
 		item.type = "SSRN Scholarly Paper";
 		item.institution = "Social Science Research Network";
 		var number = url.match(/abstract_id=(\d+)/);
-		if(number) item.reportNumber= "ID " + number[1];
+		if (number) item.reportNumber= "ID " + number[1];
 		item.place = "Rochester, NY";
 		if (abstract) item.abstractNote = abstract.trim(); 
 		//The pdfurl in the meta tag 'citation_pdf_url' is just pointing

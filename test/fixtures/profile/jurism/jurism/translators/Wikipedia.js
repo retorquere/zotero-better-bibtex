@@ -31,7 +31,7 @@
 */
 
 function detectWeb(doc, url) {
-	if(doc.getElementById('firstHeading')) {
+	if (doc.getElementById('firstHeading')) {
 		return 'encyclopediaArticle';
 	}
 }
@@ -63,7 +63,7 @@ function doWeb(doc, url) {
 	 * title only says "- Wikipedia" (in some other language)
 	 */
 	var m = doc.title.match(/[\u002D\u00AD\u2010-\u2015\u2212\u2E3A\u2E3B]\s*([^\u002D\u00AD\u2010-\u2015\u2212\u2E3A\u2E3B]+)$/);
-	if(m) {
+	if (m) {
 		item.encyclopediaTitle = m[1];
 	} else {
 		item.encyclopediaTitle = 'Wikipedia, the free encyclopedia';
@@ -71,13 +71,13 @@ function doWeb(doc, url) {
 
 	item.url = ZU.xpathText(doc, '//li[@id="t-permalink"]/a/@href');
 	var revID;
-	if(item.url) {
+	if (item.url) {
 		revID = item.url.match(/[&?]oldid=(\d+)/)[1];
 		item.extra = 'Page Version ID: ' + revID;
 		item.url = doc.location.protocol + '//' + doc.location.hostname
 					+ item.url;
 	} else {
-		item.url = url
+		item.url = url;
 	}
 
 	item.attachments.push({
@@ -100,9 +100,9 @@ function doWeb(doc, url) {
 		);
 	ZU.doGet(pageInfoURL, function(text) {
 		var retObj = JSON.parse(text);
-		if(retObj && !retObj.query.pages['-1']) {
+		if (retObj && !retObj.query.pages['-1']) {
 			var pages = retObj.query.pages;
-			for(var i in pages) {
+			for (var i in pages) {
 				if (pages[i].revisions) {
 					item.date = pages[i].revisions[0].timestamp;
 				} else {
@@ -211,5 +211,5 @@ var testCases = [
 			}
 		]
 	}
-]
+];
 /** END TEST CASES **/

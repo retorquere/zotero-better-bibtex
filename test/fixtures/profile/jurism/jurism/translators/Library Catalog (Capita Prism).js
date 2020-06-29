@@ -38,7 +38,7 @@ function detectWeb(doc, url) {
 	if (url.match(/\/items\?query=/) && ZU.xpathText(doc, '//div[@id="searchResults"]//h2[@class="title"]/a')!=null ) return "multiple";
 	if (url.match(/\/items\/\d+/)) {
 		var test = ZU.xpathText(doc, '//link/@type');
-		if(test && test.indexOf("application/x-endnote-refer")!=-1)
+		if (test && test.indexOf("application/x-endnote-refer")!=-1)
 			return "book";
 	}
 }
@@ -47,7 +47,7 @@ function detectWeb(doc, url) {
 function doWeb(doc, url){
 
 	var articles = new Array();
-	if(detectWeb(doc, url) == "multiple") { 
+	if (detectWeb(doc, url) == "multiple") { 
 		var items = {};
 		var titles = doc.evaluate('//div[@id="searchResults"]//h2[@class="title"]/a', doc, null, XPathResult.ANY_TYPE, null);
 		var title;

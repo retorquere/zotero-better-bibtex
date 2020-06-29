@@ -90,7 +90,7 @@ function scrape(doc, url) {
 	for (let i=0; i<fieldtitles.length; i++) {
 		let label = fieldtitles[i].textContent.replace(/:$\s*/, '').toLowerCase();
 		let value = ZU.xpathText(fieldtitles[i], './following-sibling::div').trim();
-		switch(label) {
+		switch (label) {
 			case "title":
 				if (value == value.toUpperCase()) value = ZU.capitalizeTitle(value, true);
 				newItem.title = value;

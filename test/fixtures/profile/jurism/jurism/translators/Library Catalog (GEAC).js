@@ -13,7 +13,7 @@
 }
 
 function detectWeb(doc, url) {
-	if(doc.location.href.indexOf("/GeacQUERY") > 0) {
+	if (doc.location.href.indexOf("/GeacQUERY") > 0) {
 		return "multiple";
 	} else {
 		return "book";
@@ -25,16 +25,16 @@ function doWeb(doc, url) {
 	
 	var uris = new Array();
 	
-	if(uri.indexOf("/GeacQUERY") > 0) {
+	if (uri.indexOf("/GeacQUERY") > 0) {
 		var items = Zotero.Utilities.getItemArray(doc, doc, "(?:Geac)?FETCH[\:\?].*[&:]next=html/(?:record\.html|geacnffull\.html)");
 		items = Zotero.selectItems(items);
 		
-		if(!items) {
+		if (!items) {
 			return true;
 		}
 		
 		var uris = new Array();
-		for(var i in items) {
+		for (var i in items) {
 			var newUri = i.replace(/([:&])next=html\/geacnffull.html/, "$1next=html/marc.html");
 			newUri = newUri.replace(/([:&])next=html\/record.html/, "$1next=html/marc.html");
 			uris.push(newUri);
@@ -63,14 +63,14 @@ function doWeb(doc, url) {
 			var elmt, tag, content;
 			var ind = "";
 			
-			while(elmt = elmts.iterateNext()) {
+			while (elmt = elmts.iterateNext()) {
 				var line = elmt.nodeValue;
 				
-				if(line.substring(0, 6) == "       ") {
+				if (line.substring(0, 6) == "       ") {
 					content += " "+line.substring(6);
 					continue;
 				} else {
-					if(tag) {
+					if (tag) {
 						record.addField(tag, ind, content);
 					}
 				}
@@ -78,11 +78,11 @@ function doWeb(doc, url) {
 				line = line.replace(/[_\t\xA0]/g," "); // nbsp
 				
 				tag = line.substr(0, 3);
-				if(tag[0] != "0" || tag[1] != "0") {
+				if (tag[0] != "0" || tag[1] != "0") {
 					ind = line.substr(4, 2);
 					content = line.substr(7).replace(/\$([a-z])(?: |$)/g, marc.subfieldDelimiter+"$1");
 				} else {
-					if(tag == "000") {
+					if (tag == "000") {
 						tag = undefined;
 						record.leader = "00000"+line.substr(4);
 					} else {

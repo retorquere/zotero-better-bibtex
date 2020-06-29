@@ -36,14 +36,14 @@
 */
 
 function detectWeb(doc, url) {
-	if ( (url.indexOf("full_record.do") !== -1
-		|| url.indexOf("CitedFullRecord.do") !== -1
-		|| url.indexOf("InboundService.do") != -1)
+	if ( (url.includes("full_record.do")
+		|| url.includes("CitedFullRecord.do")
+		|| url.includes("InboundService.do") )
 		&& getSingleItemId(doc)
 	) {
 		return "journalArticle";
-	} else if (((doc.title.indexOf(" Results") !== -1) 
-		|| url.indexOf("search_mode=") !== -1)
+	} else if (((doc.title.includes(" Results"))
+		|| url.includes("search_mode="))
 		&& getRecords(doc).length) {
 		return "multiple";
 	}
@@ -55,7 +55,7 @@ function getRecords(doc) {
 
 function getSingleItemId(doc) {
 	var form = doc.forms['records_form'];
-	if(form) return (form.elements.namedItem('marked_list_candidates') || {}).value;
+	if (form) return (form.elements.namedItem('marked_list_candidates') || {}).value;
 
 	return false;
 }
@@ -66,20 +66,20 @@ function doWeb(doc, url) {
 		var items = new Object;
 		var records = getRecords(doc);
 		var recordID, title;
-		for(var i=0, n=records.length; i<n; i++) {
+		for (var i=0, n=records.length; i<n; i++) {
 			recordID = ZU.xpathText(records[i], './/input[@name="marked_list_candidates"]/@value');
 			title = ZU.xpathText(records[i], './/a[contains(@href, "/full_record.do?")]|.//a[contains(@href, "/CitedFullRecord.do?")]');
 			
-			if(!title || !recordID) continue;
+			if (!title || !recordID) continue;
 			
 			items[recordID] = title.trim();
 		}
 		
 		Zotero.selectItems(items, function (items) {
-			if(!items) return true;
+			if (!items) return true;
 
 			var ids = [];
-			for(var i in items) {
+			for (var i in items) {
 				ids.push(i);
 			}
 			
@@ -101,8 +101,8 @@ function getHiddenValues(form) {
 	var inputs = form.elements;
 	var values = {};
 	var node;
-	for(var i=0; node = inputs.item(i); i++) {
-		if(node.type == 'hidden') {
+	for (var i=0; node = inputs.item(i); i++) {
+		if (node.type == 'hidden') {
 			values[node.name] = node.value;
 		}
 	}
@@ -111,7 +111,7 @@ function getHiddenValues(form) {
 
 function serializePostData(data) {
 	var str = '';
-	for(var i in data) {
+	for (var i in data) {
 		str += '&' + encodeURIComponent(i) + '='
 			+ encodeURIComponent(data[i]).replace(/%20/g, "+");
 	}
@@ -128,17 +128,17 @@ function importISIRecord(text) {
 	importer.setTranslator("594ebe3c-90a0-4830-83bc-9502825a6810");
 	importer.setString(text);
 	importer.setHandler('itemDone', function(obj, item) {
-		if(item.title.toUpperCase() == item.title) {
+		if (item.title.toUpperCase() == item.title) {
 			item.title = ZU.capitalizeTitle(item.title, true);
 		}
 		
 		var creator;
-		for(var i=0, n=item.creators.length; i<n; i++) {
+		for (var i=0, n=item.creators.length; i<n; i++) {
 			creator = item.creators[i];
-			if(creator.firstName.toUpperCase() == creator.firstName) {
+			if (creator.firstName.toUpperCase() == creator.firstName) {
 				creator.firstName = ZU.capitalizeTitle(creator.firstName, true);
 			}
-			if(creator.lastName.toUpperCase() == creator.lastName) {
+			if (creator.lastName.toUpperCase() == creator.lastName) {
 				creator.lastName = ZU.capitalizeTitle(creator.lastName, true);
 			}
 		}
@@ -181,14 +181,14 @@ function fetchIds(ids, doc) {
 	 */
 	ZU.doPost(postUrl, serializePostData(postData), function (text) {
 		//check if there's an intermediate page
-		if(text.indexOf('FN ') === 0) {
+		if (text.indexOf('FN ') === 0) {
 			importISIRecord(text);
 			return;
 		}
 		
 		//otherwise we have an intermediate page (maybe... it just kind of went away one day)
 		//everything it mostly the same as above except for a few fields
-		var postData2 = {}
+		var postData2 = {};
 		postData2['locale'] = postData['locale'];
 		postData2['colName'] = postData['colName'];
 		postData2['sortBy'] = postData['sortBy'];
@@ -201,15 +201,15 @@ function fetchIds(ids, doc) {
 		postData2['numRecsToRetrieve'] = 500;
 		
 		var qid = text.match(/<input[^>]+name=(['"]?)qid\1[\s\/][^>]*/);
-		if(qid) qid = qid[0].match(/value=['"]?(\d+)/);
-		if(qid) {
+		if (qid) qid = qid[0].match(/value=['"]?(\d+)/);
+		if (qid) {
 			qid = qid[1];
 		} else {
 			qid = postData['qid']*1+1;	//this can be wrong if pages are refreshed
 			Z.debug("Could not find qid on page. Using 1 + previous qid: " + qid);
 			text = text.replace(/\s*[\r\n]\s*/g, '\n');	//trim out the extra newlines
 			var forms = text.match(/<form[\s\S]+?<\/form>/ig);
-			if(forms) {
+			if (forms) {
 				Z.debug("Page contained the following forms:");
 				Z.debug(forms.join('\n==============================\n'));
 			} else {

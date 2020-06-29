@@ -49,8 +49,8 @@ function generateItem(doc, co) {
 
 function getSearchResults(doc) {
 	var results = doc.getElementsByClassName('result');
-	for(var i=0; i<results.length; i++) {
-		if(!results[i].getElementsByClassName('name').length) {
+	for (var i=0; i<results.length; i++) {
+		if (!results[i].getElementsByClassName('name').length) {
 			delete results[i];
 			i--;
 		}
@@ -69,12 +69,12 @@ function getFirstContextObj(doc) {
 function detectWeb(doc, url) {
 	//distinguish from Worldcat Discovery
 	if (doc.body.id == "worldcat") {
-		if(getSearchResults(doc).length) {
+		if (getSearchResults(doc).length) {
 			return "multiple";
 		}
 
 		var co = getFirstContextObj(doc);
-		if(!co) return false;
+		if (!co) return false;
 
 		// generate item and return type
 		return generateItem(doc, co).itemType;
@@ -86,7 +86,7 @@ function detectWeb(doc, url) {
  */
 function extractOCLCID(url) {
 	var id = url.match(/\/(\d+)(?=[&?]|$)/);
-	if(!id) return false;
+	if (!id) return false;
 	return id[1];
 }
 
@@ -125,9 +125,9 @@ function scrape(ids, data) {
 					.split(/[.,],/);
 			var replStr = '';
 			var author;
-			for(var i=0, n=authors.length; i<n; i++) {
+			for (var i=0, n=authors.length; i<n; i++) {
 					author = authors[i].trim();
-					if(author) replStr += tag + author + '\n';
+					if (author) replStr += tag + author + '\n';
 			}
 			return replStr.trim();
 		});
@@ -150,7 +150,7 @@ function scrape(ids, data) {
 			item.extra = undefined;
 			item.archive = undefined;
 
-			if(item.libraryCatalog == "http://worldcat.org") {
+			if (item.libraryCatalog == "http://worldcat.org") {
 				item.libraryCatalog = "Open WorldCat";
 			}
 			//remove space before colon
@@ -168,7 +168,7 @@ function scrape(ids, data) {
 			item.place = cleanBrackets(item.place);
 			item.publisher = cleanBrackets(item.publisher);
 			//attach notes
-			if(itemData && itemData.notes) {
+			if (itemData && itemData.notes) {
 				item.notes.push({note: itemData.notes});
 			}
 			if (oclcID) {
@@ -194,29 +194,29 @@ function scrape(ids, data) {
 
 function doWeb(doc, url) {
 	var results = getSearchResults(doc);
-	if(results.length) {
+	if (results.length) {
 		var items = {}, itemData = {};
-		for(var i=0, n=results.length; i<n; i++) {
+		for (var i=0, n=results.length; i<n; i++) {
 			var title = getTitleNode(results[i]);
-			if(!title || !title.href) continue;
+			if (!title || !title.href) continue;
 			var url = title.href;
 			var oclcID = extractOCLCID(url);
-			if(!oclcID) {
+			if (!oclcID) {
 				Zotero.debug("WorldCat: Failed to extract OCLC ID from URL: " + url);
 				continue;
 			}
 			items[oclcID] = title.textContent;
 			
 			var notes = ZU.xpath(results[i], './div[@class="description" and ./strong[contains(text(), "Notes")]]');
-			if(!notes.length) {
+			if (!notes.length) {
 				//maybe we're looking at our own list
 				notes = ZU.xpath(results[i], './div/div[@class="description"]/div[contains(@id,"saved_comments_") and normalize-space(text())]');
 			}
-			if(notes.length) {
+			if (notes.length) {
 				notes = ZU.trimInternal(notes[0].innerHTML)
 					.replace(/^<strong>\s*Notes:\s*<\/strong>\s*<br>\s*/i, '');
 				
-				if(notes) {
+				if (notes) {
 					itemData[oclcID] = {
 						notes: ZU.unescapeHTML(ZU.unescapeHTML(notes)) //it's double-escaped on WorldCat
 					};
@@ -246,7 +246,7 @@ function doWeb(doc, url) {
 				oclcID = extractOCLCID(canonicalURL.href);
 			}
 		}
-		if(!oclcID) throw new Error("WorldCat: Failed to extract OCLC ID from URL: " + url);
+		if (!oclcID) throw new Error("WorldCat: Failed to extract OCLC ID from URL: " + url);
 		scrape([oclcID]);
 	}
 }
@@ -346,7 +346,7 @@ function fetchIDs(isbns, ids, callback) {
 				var canonicalURL = ZU.xpathText(doc, '/html/head/link[@rel="canonical"]/@href');
    				if (canonicalURL) {
       					oclcID = extractOCLCID(canonicalURL);
-      					if(!oclcID) throw new Error("WorldCat: Failed to extract OCLC ID from URL: " + url);
+      					if (!oclcID) throw new Error("WorldCat: Failed to extract OCLC ID from URL: " + url);
          				scrape([oclcID]);
    				} else {
      					 Z.debug("No search results found for ISBN " + isbn);

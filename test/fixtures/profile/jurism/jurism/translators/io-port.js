@@ -52,7 +52,7 @@ function doWeb(doc, url){
 		items[link]=title.trim();
 	}
 	Zotero.selectItems(items, function(items) {
-		if(!items) {
+		if (!items) {
 			return true;
 		}	
 		for (var i in items) {

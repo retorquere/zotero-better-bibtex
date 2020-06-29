@@ -81,7 +81,7 @@ function doWeb(doc, url) {
 			}
 		});
 		Zotero.selectItems(items, function(items) {
-			if(!items) {
+			if (!items) {
 				return true;
 			}
 			var urls = Object.keys(items);
@@ -136,7 +136,7 @@ function extractNumPages(str) {
 	//   x-109 p., 510 p. and X, 106 S.; 123 S.
 	var numPagesRE = /\[?\b((?:[ivxlcdm\d]+[ ,\-]*)+)\]?\s+[fps]\b/ig,
 		numPages = [], m;
-	while(m = numPagesRE.exec(str)) {
+	while (m = numPagesRE.exec(str)) {
 		numPages.push(m[1].trim()
 			.replace(/[ ,\-]+/g,'+')
 			.toLowerCase() // for Roman numerals

@@ -59,16 +59,16 @@ function detectWeb(doc, url) {
 	//contentType depends on url, which is present, but rest of site is loaded via ajax (I think)
 	//monitor dom and reset if changes
 	var jsession = doc.getElementById('jsessionid');
-	if(jsession){
+	if (jsession){
 		Zotero.monitorDOMChanges(jsession, {attributes:true});
-		if(!jsession.value){
+		if (!jsession.value){
 			return;
 		}
 	}
 
 	var contentType;
 	//contains /content/book/ and does not contain login?
-	if(url.indexOf("/content/book/") != -1 && url.indexOf("login?") == -1){
+	if (url.indexOf("/content/book/") != -1 && url.indexOf("login?") == -1){
 		contentType = "bookSection";
 	}
 	//similar structure to above
@@ -81,7 +81,7 @@ function detectWeb(doc, url) {
 	}
 
 	//contentType not set
-	if(!contentType){
+	if (!contentType){
 		return;
 	}
 	return contentType;
@@ -112,7 +112,7 @@ function doWeb(doc, url){
 	//borrowed from amazon translator
 	else if (contentType == 'book'){
 		var isbn = ZU.xpath(doc, "//button/@data-metadata-isbn");
-		if(!isbn){
+		if (!isbn){
 			return;
 		}
 		isbn = ZU.cleanISBN(isbn[0].value);
@@ -246,7 +246,7 @@ function scrapeBookSection(doc, item){
 	var authorsList  = ZU.xpath(doc, '//ul[@ng-bind-html="XocsCtrl.authorsHtml"]/li/a');
 	for (var i = 0;i<authorsList.length;i++){
 		var author = authorsList[i].innerHTML;
-		if(author.indexOf("<") != -1){
+		if (author.indexOf("<") != -1){
 			author = author.split("<")[0];
 		}
 		item.creators.push(Zotero.Utilities.cleanAuthor(author, 'author'));
@@ -259,14 +259,14 @@ function scrapeBookSection(doc, item){
 	//and xxx-xxx.eY
 	var pagesPattern = /\s\d+-\d+(\.e\d+)?/;
 	var pagesMatch = chapterAndPages.match(pagesPattern);
-	if(pagesMatch){
+	if (pagesMatch){
 		//get whole regex match
 		item.pages = pagesMatch[0];
 	}
 	//make pattern that will match to the chapter number
 	var chapterPattern = /chapter\s(\d+)/i
 	var chapterMatch = chapterAndPages.match(chapterPattern);
-	if(chapterMatch){
+	if (chapterMatch){
 		//get match within first group
 		var chapterNumber = chapterMatch[1];
 		item.notes.push({note:"Chapter: "+chapterNumber});
@@ -275,7 +275,7 @@ function scrapeBookSection(doc, item){
 
 	//ISBN metadata
 	var isbn = ZU.xpath(doc, "//button/@data-metadata-isbn");
-	if(isbn){
+	if (isbn){
 		var isbnNo = isbn[0].value;
 		item.ISBN = isbn;
 	}
@@ -288,34 +288,34 @@ function scrapeBookSection(doc, item){
 	var datePub = ZU.xpathText(doc, '//*[@data-once-text="XocsCtrl.copyright"]');
 	var datePattern = /\d{4}/g;
 	var dateMatch = datePub.match(datePattern);
-	if(dateMatch){
+	if (dateMatch){
 		item.date = dateMatch[0];
 	}
 
-	if(datePub.indexOf("imprint") != -1){
+	if (datePub.indexOf("imprint") != -1){
 		var imprintPattern = /by\s(.*),.*imprint\sof\s(.*)\sInc/i;
 		var imprintMatch = datePub.match(imprintPattern);
-		if(imprintMatch){
+		if (imprintMatch){
 			//expected number of matches
-			if(imprintMatch.length == 3){
+			if (imprintMatch.length == 3){
 				item.publisher = imprintMatch[2]+"/"+imprintMatch[1];
 			}
 			//added for robustness
-			else{
+			else {
 				var imprintPublisher=imprintMatch[0].replace("by","").trim();
 				item.publisher=imprintPublisher;
 			}
 		}
 	}
-	else{
+	else {
 		var publisherPattern = /by\s(.*?)(,)?\s/;
 		var publisherMatch = datePub.match(publisherPattern);
-		if(publisherMatch){
+		if (publisherMatch){
 			//get first matched group, between by and , or whitespace
 			item.publisher=publisherMatch[1];
 		}
 	}
-	if(datePub.match(/elsevier/i)){
+	if (datePub.match(/elsevier/i)){
 		item.place = "Philadelphia, PA";
 	}
 

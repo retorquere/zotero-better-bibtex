@@ -57,12 +57,12 @@ function doWeb(doc, url){
 			ZU.processDocuments(articles, scrape)
 		});
 	}
-	else{
+	else {
 		if (url.indexOf("catalog_brief_record.cfm")!=-1){
 			var fullRecordURL = url.replace(/catalog_brief_record\.cfm/, "catalog_full_record.cfm");
 			ZU.processDocuments(fullRecordURL, scrape)
 		}
-		else{
+		else {
 			scrape(doc, url);	
 		}
 	}
@@ -79,7 +79,7 @@ function findItemType(doc){
 	else if (title && title.search(/[\[\{]sound recording[\}\]]/)!=-1){
 		return "audioRecording"
 	}	
-	else{
+	else {
 		return "book"
 	}
 }

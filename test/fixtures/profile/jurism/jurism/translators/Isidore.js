@@ -32,32 +32,32 @@ function getSearchResults(doc) {
 }
 
 function detectWeb(doc, url) {
-	if(getSearchResults(doc).length) return "multiple";
+	if (getSearchResults(doc).length) return "multiple";
 
 	var type = ZU.xpathText(doc, '//meta[@name="DC.type"]/@content');
 	//Z.debug(type);
-	if(type) return typeMap[type] || 'journalArticle';	//default to journalArticle if we can't recognize it
+	if (type) return typeMap[type] || 'journalArticle';	//default to journalArticle if we can't recognize it
 }
 
 function doWeb(doc, url) {
 	var type = detectWeb(doc, url);
-	if(type == 'multiple') {
+	if (type == 'multiple') {
 		var res = getSearchResults(doc);
 		var items = {};
 		var title, href;
-		for(var i=0, n=res.length; i<n; i++) {
+		for (var i=0, n=res.length; i<n; i++) {
 			title = ZU.xpathText(res[i], './p[@class="titre_ressource"]');
 			url = ZU.xpathText(res[i], './p[not(@class)][1]/a[not(@onclick)][1]/@href');
-			if(title && url) {
+			if (title && url) {
 				items[url] = title;
 			}
 		}
 
 		Zotero.selectItems(items, function(selectedItems) {
-			if(!selectedItems) return true;
+			if (!selectedItems) return true;
 
 			var urls = [];
-			for(var i in selectedItems) {
+			for (var i in selectedItems) {
 				urls.push(i);
 			}
 			ZU.processDocuments(urls, scrape);
@@ -68,8 +68,8 @@ function doWeb(doc, url) {
 }
 
 function scrape(doc, url, type) {
-	if(!type) type = detectWeb(doc, url);
-	if(!type) return;	//this should not happen, but if it does, allow to proceed importing remaining items
+	if (!type) type = detectWeb(doc, url);
+	if (!type) return;	//this should not happen, but if it does, allow to proceed importing remaining items
 
 	var translator = Zotero.loadTranslator("web");
 	//use embedded metadata

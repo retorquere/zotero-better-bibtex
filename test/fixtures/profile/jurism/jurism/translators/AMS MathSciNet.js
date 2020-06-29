@@ -15,10 +15,10 @@
 function detectWeb(doc, url) {
 	
 	var itemType;
-	if(getSearchResults(doc, true)) {
+	if (getSearchResults(doc, true)) {
 		return "multiple"
-	} else if(itemType = ZU.xpathText(doc, '//div[@class="headlineMenu"]/*[last()-1]')) {
-		switch(itemType.trim().toLowerCase()) {
+	} else if (itemType = ZU.xpathText(doc, '//div[@class="headlineMenu"]/*[last()-1]')) {
+		switch (itemType.trim().toLowerCase()) {
 			case 'article':
 				return "journalArticle";
 			case 'book':
@@ -77,7 +77,7 @@ function scrape(doc, url) {
 		var bibTeXString = "";
 		
 		var m;
-		while(m = preRE.exec(text)) {
+		while (m = preRE.exec(text)) {
 			bibTeXString += m[1] + '\n';
 		}
 		
@@ -88,7 +88,7 @@ function scrape(doc, url) {
 		translator.setHandler("itemDone", function(obj, item) {
 			// Fix/fetch MR number
 			var mrnumber;
-			if(item.extra) {
+			if (item.extra) {
 				item.extra = item.extra.replace(/^MR:\s*(?:MR)?(\d+).*/gm,
 					function(m, mr) {
 						mrnumber = mr;
@@ -96,7 +96,7 @@ function scrape(doc, url) {
 					});
 			}
 			
-			if(mrnumber) {
+			if (mrnumber) {
 				url = 'https://mathscinet.ams.org/mathscinet-getitem?mr=' + mrnumber;
 			}
 			item.attachments.push({title: "MathSciNet Snapshot", document: doc});

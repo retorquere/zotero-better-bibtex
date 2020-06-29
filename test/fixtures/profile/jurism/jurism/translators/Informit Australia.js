@@ -42,7 +42,7 @@ function detectWeb(doc, url) {
 		if (typeMap[type]) return typeMap[type]
 	else return "journalArticle"
 	}
-	else if(url.match(/action\=doSearch/)) {
+	else if (url.match(/action\=doSearch/)) {
 		return "multiple";
 	}
 	return false;

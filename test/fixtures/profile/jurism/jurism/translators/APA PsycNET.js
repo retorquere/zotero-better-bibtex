@@ -234,7 +234,7 @@ function getIds(doc, url) {
 	 * we can fetch the id from the url
 	 * alternatively, the id is in a javascript section (this is messy)
 	 */
-	if(url.includes('/buy/')) {
+	if (url.includes('/buy/')) {
 		let m = url.match(/\/buy\/([\d\-]*)/);
 		if (m) {
 			return m[1];

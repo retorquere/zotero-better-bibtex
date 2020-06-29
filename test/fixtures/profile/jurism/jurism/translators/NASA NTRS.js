@@ -262,7 +262,7 @@ function scrape(doc, url) {
 	if (items["Description"]) note.push("Description: " + items["Description"]);
 	if (items["Imprint And Other Notes"]) note.push("Imprint And Other Notes: " + items["Imprint And Other Notes"]);
 	if (items["Notes"]) note.push(items["Notes"]);
-	if(note.length){
+	if (note.length){
 		newItem.notes.push(note.join("; "))
 	}
 	newItem.complete();
@@ -288,7 +288,7 @@ function doWeb(doc, url) {
 		// Get pages the user wants to save
 		Zotero.selectItems(articles, function(articles) {
 			// If the user doesn't select any, quit
-			if(!articles) return true;
+			if (!articles) return true;
 			
 			// Build an array with the user selected items
 			var urls = [];

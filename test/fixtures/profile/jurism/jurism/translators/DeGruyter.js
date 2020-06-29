@@ -33,16 +33,16 @@
 
 function detectWeb(doc,url) {
 
-	if( doc.body.classList.contains('journalArticle') || doc.body.classList.contains('page-viewdatabaseentry') ) {
+	if ( doc.body.classList.contains('journalArticle') || doc.body.classList.contains('page-viewdatabaseentry') ) {
 		return "journalArticle";
 	}
-	if( doc.body.classList.contains('page-viewbook') || doc.body.classList.contains('page-viewbooktoc')) {
+	if ( doc.body.classList.contains('page-viewbook') || doc.body.classList.contains('page-viewbooktoc')) {
 		return "book";
 	}
-	if(doc.body.classList.contains('page-viewbookchapter')) {
+	if (doc.body.classList.contains('page-viewbookchapter')) {
 		return "bookSection";
 	}
-	if( (doc.body.classList.contains('page-search') || doc.body.classList.contains('page-searchwithinbase') || doc.body.classList.contains('page-databasecontent') || doc.body.classList.contains('page-viewjournalissue')) &&  getSearchResults(doc, url)) {
+	if ( (doc.body.classList.contains('page-search') || doc.body.classList.contains('page-searchwithinbase') || doc.body.classList.contains('page-databasecontent') || doc.body.classList.contains('page-viewjournalissue')) &&  getSearchResults(doc, url)) {
 		return "multiple";
 	}
 	//page-viewjournal --> full/whole journal (type in Zotero is planned)
@@ -55,8 +55,8 @@ function getSearchResults(doc, url) {
 	var items = {}, found = false, title;
 	var results = doc.getElementsByClassName('contentItem');
 	var searchEnvironment = doc.body.classList.contains('page-search') || doc.body.classList.contains('page-searchwithinbase') || doc.body.classList.contains('page-databasecontent');
-	for(var i=0; i<results.length; i++) {
-		if( searchEnvironment ) {
+	for (var i=0; i<results.length; i++) {
+		if ( searchEnvironment ) {
 			//if we're searching titles, we can for example not handle databases or ebook packages
 			if (results[i].classList.contains('book') || 
 				results[i].classList.contains('textbook') ||
@@ -69,7 +69,7 @@ function getSearchResults(doc, url) {
 			title = ZU.xpath(results[i],'.//h3/a')[0];
 		}
 
-		if(!title || !title.href) continue;
+		if (!title || !title.href) continue;
 		found = true;
 		items[title.href] = ZU.trimInternal(title.textContent);
 	}
@@ -135,7 +135,7 @@ function scrapeRIS(doc, url) {
 				//correct authors from RIS data
 				//they are of the form lastname firstname withouth a comma
 				//e.g., AU  - Meggitt Justin J.
-				for(var i=0; i<item.creators.length; i++) {
+				for (var i=0; i<item.creators.length; i++) {
 					if (item.creators[i].fieldMode == 1) {
 						var splitPos = item.creators[i].lastName.indexOf(" ");
 							item.creators[i].firstName = item.creators[i].lastName.substr( splitPos+1 );

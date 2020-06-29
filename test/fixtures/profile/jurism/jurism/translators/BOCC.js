@@ -144,7 +144,7 @@ function doWeb(doc, url) {
 				} else {
 					items[docurl[1]] = title;
 					autores = lines[n].match(reautor);
-					for(var i in autores){
+					for (var i in autores){
 						autores[i] = autores[i].split('>')[1];
 					}
 					itemsAutors[docurl[1]] = autores ;

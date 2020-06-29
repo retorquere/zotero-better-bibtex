@@ -14,7 +14,7 @@
 
 function detectWeb(doc, url) {
 	var re = new RegExp("^https?://(www\.)?ecfr\.gov/cgi-bin/(text-idx|retrieveECFR\?)");
-	if(re.test(doc.location.href)) {
+	if (re.test(doc.location.href)) {
 		return "statute";
 	} else {
 		return "multiple";
@@ -42,7 +42,7 @@ function scrape(doc) {
 	if (title = ZU.xpathText(doc, '//p[@class="title"]')){
 		var type1 = true;
 	}
-	else{
+	else {
 		var type2 = true;
 	 	title = ZU.xpathText(doc, '//td/div/p[@class="fp"]')
 	}
@@ -64,7 +64,7 @@ function scrape(doc) {
 
 function doWeb(doc, url) {
 	var items = {};
-	if(detectWeb(doc, url)=="statute") {
+	if (detectWeb(doc, url)=="statute") {
 		scrape(doc);
 	} else {
 		var links = doc.evaluate('//td/a[./span[contains(@style, "font-weight:bold")]]', doc, null, XPathResult.ANY_TYPE, null);

@@ -17,7 +17,7 @@ function detectWeb(doc, url) {
 	if (doc.title.match(/Search Results:/)){
 		return "multiple"
 	}
-	else if(re.test(doc.location.href)) {
+	else if (re.test(doc.location.href)) {
 		return "patent";
 	} else {
 		return "multiple";
@@ -44,7 +44,7 @@ function scrape(doc) {
 	var tmpTitle = doc.title;
 	
 	var fontTags = doc.getElementsByTagName("font");
-	for(var i=0; i<fontTags.length; i++) {
+	for (var i=0; i<fontTags.length; i++) {
 		if (fontTags[i].getAttribute("size") == "+1") {
 			tmpTitle = tmpTitle + " - " + fontTags[i].innerHTML;
 		}
@@ -54,7 +54,7 @@ function scrape(doc) {
 	newItem.title = tmpTitle;
 	
 	var cellTags = doc.getElementsByTagName("td");
-	for(var i=0; i<cellTags.length; i++) {
+	for (var i=0; i<cellTags.length; i++) {
 
 		var s = new String(cellTags[i].innerHTML);
 		//Z.debug(s)
@@ -81,7 +81,7 @@ function scrape(doc) {
 	}
 	
 	var centerTags = doc.getElementsByTagName("center");
-	for(var i=0; i<centerTags.length; i++) {
+	for (var i=0; i<centerTags.length; i++) {
 		var s = new String(centerTags[i].innerHTML);
 		if (s.indexOf("Abstract") > -1) {
 			//newItem.extra = "ok";
@@ -107,7 +107,7 @@ function scrape(doc) {
 }
 
 function doWeb(doc, url) {
-	if(detectWeb(doc, url) == "patent") {
+	if (detectWeb(doc, url) == "patent") {
 		scrape(doc);
 	} else {
 		var items = Zotero.Utilities.getItemArray(doc, doc, "^https?://(patft|appft1)\.uspto\.gov/netacgi/nph-Parser.+");

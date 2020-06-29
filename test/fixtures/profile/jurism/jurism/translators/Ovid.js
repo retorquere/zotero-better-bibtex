@@ -271,7 +271,7 @@ function retrievePdfUrl(item, extras) {
 			mimeType: 'application/pdf'
 		});
 		item.complete();
-	} else if(extras.pdfLink) {
+	} else if (extras.pdfLink) {
 		Zotero.debug("Looking for PDF URL on " + extras.pdfLink);
 		ZU.doGet(extras.pdfLink, function(text) {
 			var m = text.match(/<iframe [^>]*src\s*=\s*(['"])(.*?)\1/);

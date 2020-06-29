@@ -47,7 +47,7 @@ function detectWeb(doc, url){
 	//check if book section
 	pattern = /\/content.*/i;
 	var section = url.search(pattern) != -1;
-	if(section){
+	if (section){
 		return "bookSection";
 	}
 }
@@ -79,12 +79,12 @@ function doWeb(doc, url){
 			sectionId = sectionId.substring(beginCut+1, endCut);
 			var link = baseCitation+sectionId;
 			//prevent overriding, keep most relevant title
-			if(!sectionDict[link]){
+			if (!sectionDict[link]){
 				sectionDict[link]=title;
 			}
 		}
 		Z.selectItems(sectionDict, function(selected){
-			if(!selected){
+			if (!selected){
 				return;
 			}
 			for (var link in selected){
@@ -94,7 +94,7 @@ function doWeb(doc, url){
 			}
 		});
 	}
-	else{
+	else {
 		//only book section from now on
 		var pattern = /\/content.*/i;
 		var baseUrl = url.replace(pattern,'');
@@ -112,7 +112,7 @@ function risTranslate(doc, link, bookSection){
 		translator.setTranslator("32d59d2d-b65a-4da4-b0a3-bdd3cfb979e7");
 		translator.setString(risText);
 		translator.setHandler("itemDone", function(obj, item) {
-			if(bookSection){
+			if (bookSection){
 				var chapterSpan = doc.getElementById('pageContent_lblChapterTitle1');
 				if (chapterSpan) {
 					//remove 'chapter' text if present
@@ -127,13 +127,13 @@ function risTranslate(doc, link, bookSection){
 			}
 			//parse out edition from title
 			var bookTitle = item.bookTitle;
-			if(bookTitle.indexOf(",") != -1){
+			if (bookTitle.indexOf(",") != -1){
 				//get last substring (book title might have commas in it)
 				var splitOnComma = bookTitle.split(",");
 				var len = splitOnComma.length;
 				var edition = splitOnComma[len-1];
 				//remove e
-				if(edition.indexOf("e") != -1){
+				if (edition.indexOf("e") != -1){
 					edition = edition.replace("e","");
 				}
 				edition = edition.trim();
@@ -159,7 +159,7 @@ function risTranslate(doc, link, bookSection){
 			//remove authors if they dont have a first and last name
 			for (var i=0;i<item.creators.length;i++){
 				var author = item.creators[i];
-				if(!author.lastName || !author.firstName){
+				if (!author.lastName || !author.firstName){
 					item.creators.splice(i,1);
 				}
 			}

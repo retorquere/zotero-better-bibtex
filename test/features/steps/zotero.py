@@ -205,7 +205,12 @@ class Zotero:
     profile = self.create_profile()
     shutil.rmtree(os.path.join(profile.path, self.client, 'better-bibtex'), ignore_errors=True)
 
-    cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -jsconsole -ZoteroDebugText -datadir profile {self.redir} {shlex.quote(profile.path + ".log")} 2>&1'
+    if self.client == 'zotero':
+      datadir_profile = '-datadir profile'
+    else:
+      utils.print('\n\n** WORKAROUNDS FOR JURIS-M IN PLACE -- SEE https://github.com/Juris-M/zotero/issues/34 **\n\n')
+      datadir_profile = ''
+    cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -jsconsole -ZoteroDebugText {datadir_profile} {self.redir} {shlex.quote(profile.path + ".log")} 2>&1'
     utils.print(f'Starting {self.client}: {cmd}')
     self.proc = subprocess.Popen(cmd, shell=True)
     utils.print(f'{self.client} started: {self.proc.pid}')
@@ -458,7 +463,8 @@ class Zotero:
     profile.profiles = {
       # 'Linux': os.path.expanduser(f'~/.{self.client}/{self.client}'),
       'Linux': os.path.expanduser(f'~/.{self.client}/zotero'),
-      'Darwin': os.path.expanduser('~/Library/Application Support/' + {'zotero': 'Zotero', 'jurism': 'Juris-M'}[self.client]),
+      # 'Darwin': os.path.expanduser('~/Library/Application Support/' + {'zotero': 'Zotero', 'jurism': 'Juris-M'}[self.client]),
+      'Darwin': os.path.expanduser('~/Library/Application Support/Zotero'),
     }[platform.system()]
     os.makedirs(profile.profiles, exist_ok = True)
 

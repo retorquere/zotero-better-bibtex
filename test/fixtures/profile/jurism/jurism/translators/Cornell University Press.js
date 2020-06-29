@@ -76,7 +76,7 @@ function scrape(doc, url) {
 		var field = fields[i].textContent.trim();
 		var value = ZU.xpathText(fields[i], './following-sibling::span[@class="DetailLabelText"]');
 		//Z.debug(field + ": " + value)
-		switch(field) {
+		switch (field) {
 			case "Title":
 				newItem.title = value;
 				break;

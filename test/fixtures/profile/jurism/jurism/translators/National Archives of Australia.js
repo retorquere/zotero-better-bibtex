@@ -44,7 +44,7 @@ function detectWeb(doc, url) {
 function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
 		Zotero.selectItems(getSearchResults(doc, url), function(items) {
-			if(!items) {
+			if (!items) {
 				return true;
 			}
 			
@@ -66,7 +66,7 @@ function getSearchResults(doc, url, checkOnly) {
 	
 	var items = {},
 		found = false;
-	switch(m[1].toLowerCase()) {
+	switch (m[1].toLowerCase()) {
 		case 'serieslisting':
 		case 'itemslisting':
 			var table = doc.getElementsByClassName('SearchResults')[0];
@@ -109,7 +109,7 @@ function scrape(doc, url) {
 	if (!m) return;
 	
 	var item;
-	switch(m[1].toLowerCase()) {
+	switch (m[1].toLowerCase()) {
 		case 'viewimage':
 			item = scrapeImage(doc, url);
 		break;

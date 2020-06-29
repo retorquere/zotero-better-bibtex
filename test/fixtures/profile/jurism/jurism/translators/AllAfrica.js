@@ -656,7 +656,7 @@ FW.doWeb = function (doc, url) {
 	<http://www.gnu.org/licenses/>.
 */
 
-function detectWeb(doc, url) { if(doc.title) return FW.detectWeb(doc, url); }
+function detectWeb(doc, url) { if (doc.title) return FW.detectWeb(doc, url); }
 function doWeb(doc, url) { return FW.doWeb(doc, url); }
 
 /** Articles */

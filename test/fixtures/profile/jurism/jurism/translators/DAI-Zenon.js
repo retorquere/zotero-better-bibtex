@@ -132,7 +132,7 @@ function scrape(doc, url) {
 			record._associateDBField(newItem, 995, "n", "bookTitle");
 			if (newItem.bookTitle) {
 				//Z.debug(newItem.bookTitle);
-				if( record.leader.substr(6,2) == "as") {//This seems to work good, but I don't know if is always working.
+				if ( record.leader.substr(6,2) == "as") {//This seems to work good, but I don't know if is always working.
 					newItem.itemType = "journalArticle";
 					var regularExpression1 = /^(.*),\s?(\d+),\s?(\d+)\s?\(\d\d\d\d\)/; // e.g. Bulletin du Cercle d'Études Numismatiques, 44,2 (2007)
 					var regularExpression2 = /^(.*),\s?(\d+)\s?\(\d\d\d\d\)/; // e.g Mannheimer Geschichtsblätter, Neue Folge, 16 (2008)

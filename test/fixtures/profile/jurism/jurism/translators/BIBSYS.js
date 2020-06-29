@@ -14,16 +14,16 @@
 
 function detectWeb(doc, url)	{
 	var multireg=new RegExp("^https?://ask\.bibsys\.no/ask/action/result");
-	if(multireg.test(url))
+	if (multireg.test(url))
 		return "multiple";
 	var singlereg=new RegExp("^https?://ask\.bibsys\.no/ask/action/show");
-	if(singlereg.test(url))
+	if (singlereg.test(url))
 		return "book";
 }
 
 function doWeb(doc, url)	{
 	var multireg=new RegExp("https?://ask\.bibsys\.no/ask/action/result");
-	if(multireg.test(url))	{
+	if (multireg.test(url))	{
 		var titlpath='//tr/td[@width="49%"][@align="left"][@valign="top"]/a/text()';
 		var titles=doc.evaluate(titlpath, doc, null, XPathResult.ANY_TYPE, null);
 		var codepath='//tr/td/input[@type="checkbox"][@name="valg"]/@value';
@@ -31,11 +31,11 @@ function doWeb(doc, url)	{
 		var items=new Array();
 		var title;
 		titles.iterateNext();
-		while(title=titles.iterateNext())
+		while (title=titles.iterateNext())
 			items[codes.iterateNext().nodeValue]=title.nodeValue;
 		items=Zotero.selectItems(items);
 		var string="http://ask.bibsys.no/ask/action/result?control=ctr_top";
-		for(var codes in items)
+		for (var codes in items)
 			string+="&valg="+codes;
 		string+="&control=ctr_bottom&eksportFormat=refmanager&eksportEpostAdresse=&eksportEpostFormat=fortekst&cmd=sendtil";
 		Zotero.Utilities.HTTP.doGet(string, function(text)	{
@@ -50,7 +50,7 @@ function doWeb(doc, url)	{
 		});
 	}
 	var singlereg=new RegExp("http://ask\.bibsys\.no/ask/action/show");
-	if(singlereg.test(url))	{
+	if (singlereg.test(url))	{
 		var urlstring="http://ask.bibsys.no/ask/action/show";
 		var data="visningsformat=ris&eksportFormat=refmanager&eksportEpostAdresse=&eksportEpostFormat=fortekst&cmd=sendtil";
 		Zotero.Utilities.HTTP.doPost(urlstring, data, function(text)	{

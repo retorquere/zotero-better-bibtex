@@ -50,7 +50,7 @@ function doWeb(doc, url) {
 			if (!ids) return true;
 			
 			var toProcess = [];
-			for(var id in ids){
+			for (var id in ids){
 				toProcess.push(id);
 			}
 			ZU.processDocuments(toProcess, importBook);
@@ -63,9 +63,9 @@ function getSearchResults(doc,quick) {
 		items = {},
 		found = false;
 		
-	if(quick) return titles.length;
+	if (quick) return titles.length;
 	
-	for(var i = 0; i < titles.length; i++) {
+	for (var i = 0; i < titles.length; i++) {
 		var title = ZU.xpathText(titles[i],"./a/@title");
 		var link = ZU.xpath(titles[i],"./a")[0].href;
 		items[link] = title;
@@ -85,7 +85,7 @@ function importBook(doc, url,section) {
 		var sectionTitle = nav ? ZU.xpathText(nav,".//a[@class='current']") : false;
 		var prefixes = /^(?:(?:Part|Chapter|Pt|Ch)\.? )?(?:[0-9]{1,3}\.?[0-9]{0,3}|(?:XC|XL|L?X{0,3})(?:IX|IV|V?I{0,3}))\b[.: ]+/;
 		
-		if(sectionTitle) sectionTitle = sectionTitle.replace(prefixes,"");
+		if (sectionTitle) sectionTitle = sectionTitle.replace(prefixes,"");
 		
 		ZU.processDocuments([parts[1]], function(newDoc,newUrl){
 			var section = sectionTitle ? 
@@ -109,19 +109,19 @@ function importBook(doc, url,section) {
 		props = ZU.xpath(doc, '//*[@itemprop]'),
 		isbn = {};
 		
-	for(var i = 0; i < props.length; i++) {
+	for (var i = 0; i < props.length; i++) {
 		var name = mapping[props[i].attributes["itemprop"].value];
 		
 		if (name) item[name] = ZU.trimInternal(props[i].textContent);
 		
-		if(name == "edition" 
+		if (name == "edition" 
 			&& (item.edition.toLowerCase() == "first" || item.edition == "1")) {
 			delete item.edition;
 		}
 		
-		if(name == "ISBN") {
+		if (name == "ISBN") {
 			var label = props[i].previousSibling
-			if(label) isbn[label.textContent] = item[name];
+			if (label) isbn[label.textContent] = item[name];
 		}
 	}
 	//many isbn, prefer web over print, and 13 over 10
@@ -133,22 +133,22 @@ function importBook(doc, url,section) {
 				
 	//author is poorly defined, have to search for it by text
 	var dataItems = ZU.xpath(doc, '//ul[@class="metadatalist"]//p[contains(@class,"data")]');
-	for(var i = 0; i < dataItems.length; i++) {
+	for (var i = 0; i < dataItems.length; i++) {
 		var field = dataItems[i].textContent,
 			label = ZU.trimInternal(field.substr(0, field.indexOf(":"))).toLowerCase(),
 			value = ZU.trimInternal(field.substr(field.indexOf(":") + 1));
 
 		if (label == "by") {
 			var authors = value.split(";")
-			for(var j = 0; j < authors.length; j++) {
-				if(authors[j]) item.creators.push(ZU.cleanAuthor(authors[j], 'author'));
+			for (var j = 0; j < authors.length; j++) {
+				if (authors[j]) item.creators.push(ZU.cleanAuthor(authors[j], 'author'));
 			}
 			break;
 		}
 	}
 	var itemUrl = section ? section.originalUrl : url;
 	item.url = itemUrl.replace(/[?#].*/, '');
-	if(section) {
+	if (section) {
 		item.bookTitle = item.title;
 		item.title = section.sectionTitle;
 	}

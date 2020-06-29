@@ -121,7 +121,7 @@ function processTag(item, tag, value) {
 			if (!item.ISSN){
 				item.ISSN =ZU.cleanISSN(value);
 			}
-			else{
+			else {
 				item.ISSN += " " + ZU.cleanISSN(value);
 			}
 		}
@@ -129,11 +129,11 @@ function processTag(item, tag, value) {
 			if (!item.ISBN){
 				item.ISBN =ZU.cleanISBN(value);
 			}
-			else{
+			else {
 				item.ISBN += " " + ZU.cleanISBN(value);
 			}
 		}
-	}else if (tag == "AID") {
+	} else if (tag == "AID") {
 		if (value.indexOf("[doi]") != -1) item.DOI = value.replace(/\s*\[doi\]/, "")
 	} else if (tag == "DP") {
 		item.date = value;
@@ -198,17 +198,17 @@ function finalizeItem(item) {
 		item.creators = item.creatorsBackup;
 	}
 	delete item.creatorsBackup;
-	if(item.pages) {
+	if (item.pages) {
 		//where page ranges are given in an abbreviated format, convert to full
 		//taken verbatim from NCBI Pubmed translator
 		var pageRangeRE = /(\d+)-(\d+)/g;
 		pageRangeRE.lastIndex = 0;
 		var range;
-		while(range = pageRangeRE.exec(item.pages)) {
+		while (range = pageRangeRE.exec(item.pages)) {
 			var pageRangeStart = range[1];
 			var pageRangeEnd = range[2];
 			var diff = pageRangeStart.length - pageRangeEnd.length;
-			if(diff > 0) {
+			if (diff > 0) {
 				pageRangeEnd = pageRangeStart.substring(0,diff) + pageRangeEnd;
 				var newRange = pageRangeStart + "-" + pageRangeEnd;
 				var fullPageRange = item.pages.substring(0, range.index) //everything before current range
@@ -218,7 +218,7 @@ function finalizeItem(item) {
 				pageRangeRE.lastIndex += newRange.length - range[0].length;
 			}
 		}
-		if(fullPageRange){
+		if (fullPageRange){
 			item.pages = fullPageRange;
 		}
 	}

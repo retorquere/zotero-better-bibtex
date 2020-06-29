@@ -462,11 +462,11 @@ var fieldMap = {
 var cache = {};
 
 function getField(field, type) {
-	if(!cache[type]) cache[type] = {};
+	if (!cache[type]) cache[type] = {};
 
 	//retrieve from cache if available
 	//it can be false if previous search did not find a mapping
-	if(cache[type][field] !== undefined) {
+	if (cache[type][field] !== undefined) {
 		return cache[type][field];
 	}
 	
@@ -638,7 +638,7 @@ function importNext(records, index, resolve, reject) {
 					for (var k = 0; k < node.children.length; k++) {
 						var subnode = node.children[k];
 						var attachmenttype = "";
-						switch(subnode.nodeName){
+						switch (subnode.nodeName){
 							case "text-urls":
 							case "related-urls":
 								attachmenttype="text/html";
@@ -711,8 +711,8 @@ function doExport() {
 		if (item.itemType === "note" || item.itemType === "attachment") continue;
 		
 		var record = doc.createElement("record");
-		for(var f=0; f<fields.length; f++) {
-			switch(fields[f]) {
+		for (var f=0; f<fields.length; f++) {
+			switch (fields[f]) {
 				case 'database':
 					mapProperty(record, "database", "MyLibrary", {
 						"name": "MyLibrary"
@@ -753,7 +753,7 @@ function doExport() {
 									mapProperty(creatornode, "author", name);
 								}
 								//deal with creators that are mapped to regular fields, currently only one
-								else if(item.creators[j].creatorType=="attorneyAgent") {						
+								else if (item.creators[j].creatorType=="attorneyAgent") {						
 									var name = item.creators[j].lastName;
 									if (item.creators[j].firstName) name += ", " + item.creators[j].firstName;
 									custom4.push(name);
@@ -894,15 +894,15 @@ function htmlify(nodes, field) {
 		formatting = [],
 		map = field == 'note' ? en2zNoteMap : en2zMap;
 	
-	if(nodes.childNodes.length == 1 && nodes.childNodes[0].nodeType == 3) {
+	if (nodes.childNodes.length == 1 && nodes.childNodes[0].nodeType == 3) {
 		//single text node
 		return nodes.textContent;
 	}
 	
-	for(var i=0; i<nodes.children.length; i++) {
+	for (var i=0; i<nodes.children.length; i++) {
 		var node = nodes.children[i];
 		var face = node.getAttribute('face')
-		if(face) {
+		if (face) {
 			face = face.split(/\s+/)
 				//filter out tags we don't care about
 				.filter(function(f) { return !!map[f] });
@@ -912,36 +912,36 @@ function htmlify(nodes, field) {
 		
 		//see what we're closing
 		var closing = [];
-		for(var j=0; j<formatting.length; j++) {
-			if(face.indexOf(formatting[j]) == -1) {
+		for (var j=0; j<formatting.length; j++) {
+			if (face.indexOf(formatting[j]) == -1) {
 				closing.push(map[formatting[j]]);
 				formatting.splice(j,1);
 				j--;
 			}
 		}
-		if(closing.length) htmlstr += '</' + closing.reverse().join('></') + '>';
+		if (closing.length) htmlstr += '</' + closing.reverse().join('></') + '>';
 		
 		//see what we're opening
 		var opening = [];
-		for(var j=0; j<face.length; j++) {
-			if(!map[face[j]]) continue;
+		for (var j=0; j<face.length; j++) {
+			if (!map[face[j]]) continue;
 			
-			if(formatting.indexOf(face[j]) == -1) {
+			if (formatting.indexOf(face[j]) == -1) {
 				opening.push(map[face[j]]);
 				formatting.push(face[j]);
 			}
 		}
-		if(opening.length) htmlstr += '<' + opening.join('><') + '>';
+		if (opening.length) htmlstr += '<' + opening.join('><') + '>';
 		
 		htmlstr += node.textContent;
 	}
 	
 	//close left-over tags
 	var closing = [];
-	for(var j=0; j<formatting.length; j++) {
+	for (var j=0; j<formatting.length; j++) {
 		closing.push(map[formatting[j]]);
 	}
-	if(closing.length) htmlstr += '</' + closing.reverse().join('></') + '>';
+	if (closing.length) htmlstr += '</' + closing.reverse().join('></') + '>';
 	
 	return htmlstr;
 }
@@ -987,11 +987,11 @@ function mapProperty(parentElement, elementName, property, attributes) {
 	}
 	
 	var nodes = convertZoteroMarkup(property);
-	if(nodes.length == 1 && nodes[0].getAttribute('face') == 'normal') {
+	if (nodes.length == 1 && nodes[0].getAttribute('face') == 'normal') {
 		//no special formatting, skip the outer style node
 		newElement.appendChild(nodes[0].firstChild);
 	} else {
-		for(var i=0; i<nodes.length; i++) {
+		for (var i=0; i<nodes.length; i++) {
 			newElement.appendChild(nodes[i]);
 		}
 	}
@@ -1023,7 +1023,7 @@ var convertZoteroMarkup = (function() {
 	function createFormattedNode(str, format) {
 		var node = doc.createElement('style');
 		str = str.replace(/\n{3,}/g, '\n\n'); // Possible if some tags were skipped
-		if(format.length) {
+		if (format.length) {
 			node.setAttribute('face', format.join(' '));
 		} else {
 			node.setAttribute('face', 'normal');
@@ -1046,11 +1046,11 @@ var convertZoteroMarkup = (function() {
 			nextStrStart = 0,
 			nodes = [],
 			m;
-		while(m = tagRe.exec(str)) {
+		while (m = tagRe.exec(str)) {
 			var tagName = m[2].toUpperCase(),
 				format = map[tagName] || [],
 				oldFormatting;
-			if(!m[1]) {
+			if (!m[1]) {
 				//opening tag
 				// If "span", need to inspect contents of style attribute
 				if (tagName == 'SPAN' && m[3] && /\bstyle\s*=/i.test(m[3])) {
@@ -1076,35 +1076,35 @@ var convertZoteroMarkup = (function() {
 				//closing tag
 				//see if we opened this kind of tag
 				var j;
-				for(j=tags.length-1; j>=0; j--) {
-					if(tags[j].tagName == tagName) break;
+				for (j=tags.length-1; j>=0; j--) {
+					if (tags[j].tagName == tagName) break;
 				}
-				if(j<0) continue; //never opened. Skip closing tag
+				if (j<0) continue; //never opened. Skip closing tag
 				
 				//close up tags
 				var tag, formatDiff = [];
 				do {
 					tag = tags.pop();
 					formatDiff = formatDiff.concat(tag.format);
-				} while(tag.tagName != tagName);
+				} while (tag.tagName != tagName);
 				
 				oldFormatting = formatting;
 				formatting = ZU.arrayDiff(formatting, formatDiff);
 			}
 			
 			//attach substring up to tag
-			if(nextStrStart < m.index) currentStr += str.substring(nextStrStart, m.index);
+			if (nextStrStart < m.index) currentStr += str.substring(nextStrStart, m.index);
 			nextStrStart = tagRe.lastIndex; //just past the current tag
 			
-			if(formatDiff.length && currentStr) {
+			if (formatDiff.length && currentStr) {
 				//formatting is changing, create a node for current formatting
 				nodes.push(createFormattedNode(currentStr, oldFormatting));
 				currentStr = '';
 			}
 		}
 		
-		if(nextStrStart < str.length) currentStr += str.substring(nextStrStart);
-		if(currentStr) nodes.push(createFormattedNode(currentStr, formatting));
+		if (nextStrStart < str.length) currentStr += str.substring(nextStrStart);
+		if (currentStr) nodes.push(createFormattedNode(currentStr, formatting));
 		
 		return nodes;
 	};

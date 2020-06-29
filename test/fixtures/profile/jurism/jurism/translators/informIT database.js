@@ -25,7 +25,7 @@ function detectWeb(doc,  url) {
 
 	} else if (doc.location.href.match("-978")) {
 		return "book";
-	}else if (doc.location.href.match("library")) {
+	} else if (doc.location.href.match("library")) {
 		return "bookSection";
 	} else if (doc.location.href.match(/articles\/article/)) {
 		return "bookSection";

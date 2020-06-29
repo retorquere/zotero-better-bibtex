@@ -13,9 +13,9 @@
 }
 
 function detectWeb(doc, url) {
-	if(getID(url)) return 'journalArticle';	//could be book, but it's hard to tell
+	if (getID(url)) return 'journalArticle';	//could be book, but it's hard to tell
 
-	if(url.indexOf('/cgi-bin/') != -1 &&
+	if (url.indexOf('/cgi-bin/') != -1 &&
 		(url.indexOf('/quick.html') != -1 ||
 			url.indexOf('/full.html') != -1 ||
 			url.indexOf('/command.html') != -1) &&
@@ -35,20 +35,20 @@ function getID(url) {
 
 function doWeb(doc, url) {
 	var id = getID(url);
-	if(!id) {
+	if (!id) {
 		var res = getSearchResults(doc);
 		var items = {};
-		for(var i=0, n=res.length; i<n; i++) {
+		for (var i=0, n=res.length; i<n; i++) {
 			var title = doc.evaluate('./following-sibling::b[not(./a)]', res[i], null, XPathResult.ANY_TYPE, null).iterateNext();
 			items[encodeURIComponent(res[i].value)] = title.textContent;
 
 		}
 
 		Z.selectItems(items, function(selectedItems) {
-			if(!selectedItems) return true;
+			if (!selectedItems) return true;
 
 			var ids = [];
-			for(var i in selectedItems) {
+			for (var i in selectedItems) {
 				ids.push(i);
 			}
 			scrape(ids);
@@ -63,7 +63,7 @@ function scrape(ids) {
 				'&an_op=or&an=' + ids.join('&an=');
 	ZU.doGet(url, function(text) {
 		var bibtex = text.match(/<pre>([\s\S]+?)<\/pre>/i);
-		if(!bibtex) throw new Error("Could not find BibTeX");
+		if (!bibtex) throw new Error("Could not find BibTeX");
 
 		//load BibTeX translator
 		var translator = Zotero.loadTranslator('import');
@@ -71,14 +71,14 @@ function scrape(ids) {
 		translator.setString(bibtex[1]);
 		translator.setHandler('itemDone', function(obj, item) {
 			//volume, issue, and pages end up in the publicationTitle
-			if(item.publicationTitle) {
+			if (item.publicationTitle) {
 				var vip = item.publicationTitle.match(/,?\s*(?:\((\d+)\)\s*)?(\d+)\s*,\s*(\d+(?:-\d+))/);
-				if(vip) {
+				if (vip) {
 					item.publicationTitle = item.publicationTitle.substring(0,
 												item.publicationTitle.indexOf(vip[0]));
 					var ptLoc = item.publicationTitle.split(/\s*,\s*/);
 					item.publicationTitle = ptLoc[0];
-					if(ptLoc.length > 1) item.place = ptLoc[1];
+					if (ptLoc.length > 1) item.place = ptLoc[1];
 
 					item.journalAbbreviation = item.publicationTitle;
 

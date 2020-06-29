@@ -53,7 +53,7 @@ function detectWeb(doc, url) {
 function doWeb(doc, url){
 
 	var articles = new Array();
-	if(detectWeb(doc, url) == "multiple") { 
+	if (detectWeb(doc, url) == "multiple") { 
 		var items = {};
 		var titles = doc.evaluate('//td[@class="expand metadata"]/strong/a', doc, null, XPathResult.ANY_TYPE, null);
 		var title;
@@ -82,7 +82,7 @@ function scrape(doc, url){
 	Zotero.Utilities.HTTP.doGet(RWurl, function (text) {
 	
 		text = text.replace(/\nK\d+\s/g, "\nK1 ");
-		if(text.search(/RT Generic/)!=-1){
+		if (text.search(/RT Generic/)!=-1){
 			text = text.replace(/RT Generic/, "RT Report");
 			text = text.replace(/JF (.+)/, "CL $1");
 		}		

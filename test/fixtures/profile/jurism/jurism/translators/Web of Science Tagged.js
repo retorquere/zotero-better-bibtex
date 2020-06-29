@@ -12,16 +12,39 @@
 	"lastUpdated": "2015-06-02 21:33:13"
 }
 
+/*
+	***** BEGIN LICENSE BLOCK *****
+
+	Copyright © 2015-2019 Michael Berkowitz, Avram Lyon
+
+	This file is part of Zotero.
+
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Zotero is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU Affero General Public License for more details.
+
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
+
+	***** END LICENSE BLOCK *****
+*/
+
 function detectImport() {
 	var line;
 	var i = 0;
-	while((line = Zotero.read()) !== false) {
+	while ((line = Zotero.read()) !== false) {
 		line = line.replace(/^\s+/, "");
-		if(line != "") {
-			if(line.substr(0, 4).match(/^PT [A-Z]/)) {
+		if (line != "") {
+			if (line.substr(0, 4).match(/^PT [A-Z]/)) {
 				return true;
 			} else {
-				if(i++ > 3) {
+				if (i++ > 3) {
 					return false;
 				}
 			}
@@ -44,7 +67,7 @@ function processTag(item, field, content) {
 		}
 	} else if ((field == "AF" || field == "AU")) {
 		//Z.debug("author: " + content);
-		authors = content.split("\n");
+		const authors = content.split("\n");
 		for (var i=0; i<authors.length; i++) {
 			var author = authors[i];
 			author = author.replace(/\s+\(.*/, '');
@@ -52,7 +75,7 @@ function processTag(item, field, content) {
 		}
 	} else if ((field == "BE")) {
 		//Z.debug(content);
-		authors = content.split("\n");
+		const authors = content.split("\n");
 		for (var i=0; i<authors.length; i++) {
 			var author = authors[i];
 			item.creators[1].push(ZU.cleanAuthor(author, "editor", author.match(/,/)));
@@ -76,7 +99,7 @@ function processTag(item, field, content) {
 		}
 		var year = item.date.match(/\d{4}/);
 		// If we have a double year, eliminate one
-		if (year && item.date.replace(year[0],"").indexOf(year[0]) !== -1)
+		if (year && item.date.replace(year[0],"").includes(year[0]))
 			item.date = item.date.replace(year[0],"");
 	} else if (field == "VL") {
 		item.volume = content;
@@ -149,7 +172,7 @@ function completeItem(item) {
 	
 	if (item.articleNumber){
 		if (!item.pages) item.pages = item.articleNumber;
-		delete item.articleNumber
+		delete item.articleNumber;
 	}
 	
 	// Fix caps, trim in various places
@@ -175,13 +198,13 @@ function doImport(text) {
 	var linesRead = 0, bufferMax = 100;
 	var line = Zotero.read();
 	// first valid line is type
-	while(line !== false && line.replace(/^\s+/, "").substr(0, 6).search(/^PT [A-Z]/) == -1) {
-		if(linesRead < bufferMax) debugBuffer += line + '\n';
+	while (line !== false && line.replace(/^\s+/, "").substr(0, 6).search(/^PT [A-Z]/) == -1) {
+		if (linesRead < bufferMax) debugBuffer += line + '\n';
 		linesRead++;
 		line = Zotero.read();
 	}
 
-	if(line === false) {
+	if (line === false) {
 		Z.debug("No valid data found\n" +
 			"Read " + linesRead + " lines.\n" +
 			"Here are the first " + (linesRead<bufferMax?linesRead:bufferMax) + " lines:\n" +
@@ -200,17 +223,17 @@ function doImport(text) {
 	var data = line.substr(3);
 	
 	var rawLine;
-	while((rawLine = Zotero.read()) !== false) {    // until EOF
+	while ((rawLine = Zotero.read()) !== false) {    // until EOF
 		// trim leading space if this line is not part of a note
 		line = rawLine.replace(/^\s+/, "");
 		//Z.debug("line: " + line);
 		var split = line.match(/^([A-Z0-9]{2})\s(?:([^\n]*))?/);
 		// Force a match for ER
 		if (line == "ER") split = ["","ER",""];
-		if(split) {
+		if (split) {
 			// if this line is a tag, take a look at the previous line to map
 			// its tag
-			if(tag) {
+			if (tag) {
 				//Zotero.debug("tag: '"+tag+"'; data: '"+data+"'");
 				processTag(item, tag, data);
 			}
@@ -219,12 +242,12 @@ function doImport(text) {
 			tag = split[1];
 			data = split[2];
 			
-			if(tag == "ER") {	       // ER signals end of reference
+			if (tag == "ER") {	       // ER signals end of reference
 				// unset info
 				tag = data = false;
 				completeItem(item);
 			}
-			if(tag == "PT") {
+			if (tag == "PT") {
 				// new item
 				item = new Zotero.Item();
 				item.creators = [{"AU":[], "AF":[]}, []];
@@ -233,13 +256,13 @@ function doImport(text) {
 			}
 		} else {
 			// otherwise, assume this is data from the previous line continued
-			if(tag == "AU" || tag == "AF" || tag == "BE") {
+			if (tag == "AU" || tag == "AF" || tag == "BE") {
 				//Z.debug(rawLine);
 				// preserve line endings for AU fields
 				data += "\n" + rawLine;
-			} else if(tag) {
+			} else if (tag) {
 				// otherwise, concatenate and avoid extra spaces
-				if(data[data.length-1] == " " || rawLine[0] == " ") {
+				if (data[data.length-1] == " " || rawLine[0] == " ") {
 					data += rawLine;
 				} else {
 					data += " "+rawLine;
@@ -248,7 +271,7 @@ function doImport(text) {
 		}
 	}
 
-	if(tag && tag != "ER") {	// save any unprocessed tags
+	if (tag && tag != "ER") {	// save any unprocessed tags
 		//Zotero.debug(tag);
 		processTag(item, tag, data);
 		completeItem(item);
@@ -856,5 +879,5 @@ var testCases = [
 			}
 		]
 	}
-]
+];
 /** END TEST CASES **/

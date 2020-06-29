@@ -33,9 +33,9 @@
 function detectWeb(doc,url) {
 	
 	var footer = doc.getElementById('footer');
-	if(!footer) return;
+	if (!footer) return;
 	var elsevierLink = footer.getElementsByTagName('a')[0];
-	if(!elsevierLink || elsevierLink.textContent.trim() != 'Elsevier') return;
+	if (!elsevierLink || elsevierLink.textContent.trim() != 'Elsevier') return;
 	var xpath='//meta[@name="citation_journal_title"]';
 		
 	if (ZU.xpath(doc, xpath).length > 0) {
@@ -88,7 +88,7 @@ function doWeb(doc,url)
 		translator.setDocument(doc);
 		translator.setHandler('itemDone', function(obj, item) {
 			var m;
-			if(item.publicationTitle && (m = item.publicationTitle.match(/^(.+), (the)$/i) )){
+			if (item.publicationTitle && (m = item.publicationTitle.match(/^(.+), (the)$/i) )){
 				item.publicationTitle = m[2] + ' ' + m[1];
 			}
 			if (item.date) {
@@ -99,7 +99,7 @@ function doWeb(doc,url)
 			if (item.tags.length==0){
 				for (var i in keywords){
 					var kw = keywords[i].textContent.trim();
-					if(kw) item.tags.push(kw);		
+					if (kw) item.tags.push(kw);		
 				}
 			}
 			//remove duplicate PMIDs

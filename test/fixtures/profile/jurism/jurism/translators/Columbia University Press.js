@@ -83,7 +83,7 @@ function scrape(doc, url) {
 	item.title = ZU.xpathText(doc, '//div[contains(@class, "book-header")]/h1[@class="title"]');
 	var bookDetails = ZU.xpath(doc, '//div[(contains(@class, "book-header") and contains(@class, "pc-only")) or contains(@class, "book-details")]//p[@class]');
 	for (var i=0; i<bookDetails.length; i++) {
-		switch(bookDetails[i].className) {
+		switch (bookDetails[i].className) {
 			case "subtitle":
 				item.title = item.title + ": " + bookDetails[i].textContent;
 				break;

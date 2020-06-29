@@ -12,6 +12,28 @@
 	"lastUpdated": "2014-02-27 23:05:02"
 }
 
+/*
+	***** BEGIN LICENSE BLOCK *****
+
+	Copyright © 2014-2019 Frederick Gibbs
+	
+	This file is part of Zotero.
+
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Zotero is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU Affero General Public License for more details.
+
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
+
+	***** END LICENSE BLOCK *****
+*/
 function scrape(doc) {
 	
 	var newItem = new Zotero.Item("journalArticle");
@@ -23,8 +45,8 @@ function scrape(doc) {
 	var metaTags = doc.getElementsByTagName("meta");
 	
 	newItem.publicationTitle = ZU.xpathText(doc, '//meta[@name="Journal"]/@content');
-	newItem.volume = ZU.xpathText(doc, '//meta[@name="Volume"]/@content')
-	newItem.issue = ZU.xpathText(doc, '//meta[@name="Issue"]/@content')
+	newItem.volume = ZU.xpathText(doc, '//meta[@name="Volume"]/@content');
+	newItem.issue = ZU.xpathText(doc, '//meta[@name="Issue"]/@content');
 	// in the case of book reviews, the title field is blank
 	//but quotes are not escaped properly, so if an article title begins with quotes, then the title tag looks blank even though it is not.
 	//(though semantically it is)
@@ -39,20 +61,20 @@ function scrape(doc) {
 		//it would be nice to grab the title from the meta tags, but quotations are properly escaped and the tags are therefore malformed.
 		titlePath = '/html/body/table[4]/tbody/tr[2]/td[1]/h2';
 		title = doc.evaluate(titlePath, doc, null, XPathResult.ANY_TYPE, null).iterateNext();
-		if( title ) {
+		if ( title ) {
 			newItem.title = Zotero.Utilities.trimInternal(Zotero.Utilities.superCleanString(title.textContent));
 		}
 	}
 
-	var authors = ZU.xpath(doc, '//meta[@name="Author"]/@content')
-		for(j in authors) {
-			authors[j] = authors[j].textContent.replace("Reviewed by ", "");
-			newItem.creators.push(Zotero.Utilities.cleanAuthor(authors[j], "author"));
-		}
+	var authors = ZU.xpath(doc, '//meta[@name="Author"]/@content');
+	for (let j in authors) {
+		authors[j] = authors[j].textContent.replace("Reviewed by ", "");
+		newItem.creators.push(Zotero.Utilities.cleanAuthor(authors[j], "author"));
+	}
 	
-	var month = ZU.xpathText(doc, '//meta[@name="PublicationMonth"]/@content')
-	var year = ZU.xpathText(doc, '//meta[@name="PublicationYear"]/@content')
-	if(month || year) {
+	var month = ZU.xpathText(doc, '//meta[@name="PublicationMonth"]/@content');
+	var year = ZU.xpathText(doc, '//meta[@name="PublicationYear"]/@content');
+	if (month || year) {
 		newItem.date = month +" "+ year;
 	}
 	
@@ -62,12 +84,12 @@ function scrape(doc) {
 }
 
 function detectWeb(doc, url) {
-	if(doc.title.indexOf("Contents") != -1 ) {
+	if (doc.title.includes("Contents")) {
 		return 'multiple';
-	} else if( doc.title.indexOf("Search results") != -1 &&
+	} else if ( doc.title.includes("Search results") &&
 		Zotero.Utilities.xpath(doc, '/html/body/dl/dt/strong/a[starts-with(text(),"World History Connected | Vol.")]').length ) {
 		return 'multiple';
-	} else if( url.match(/\/\d+\.\d+\/[^\/]+/) ) {
+	} else if ( url.match(/\/\d+\.\d+\/[^\/]+/) ) {
 		return 'journalArticle';
 	}
 }
@@ -76,13 +98,13 @@ function doWeb(doc, url) {
 	
 	var searchLinks;
 	
-	if(doc.title.indexOf("Contents") != -1 || doc.title.indexOf("Search results") != -1) {
+	if (doc.title.includes("Contents") || doc.title.includes("Search results")) {
 
-		if(doc.title.indexOf("Contents |") != -1) {
-		searchLinks = doc.evaluate('//tbody/tr[2]/td[1]/table//a', doc, null, XPathResult.ANY_TYPE, null);	
+		if (doc.title.includes("Contents |")) {
+			searchLinks = doc.evaluate('//tbody/tr[2]/td[1]/table//a', doc, null, XPathResult.ANY_TYPE, null);	
 		} 
-		else if ( doc.title.indexOf("| Search results") != -1) {
-		searchLinks = doc.evaluate('/html/body/dl/dt/strong/a[starts-with(text(),"World History Connected | Vol.")]', doc, null, XPathResult.ANY_TYPE, null);
+		else if ( doc.title.includes("| Search results")) {
+			searchLinks = doc.evaluate('/html/body/dl/dt/strong/a[starts-with(text(),"World History Connected | Vol.")]', doc, null, XPathResult.ANY_TYPE, null);
 		}
 		
 		var link;
@@ -90,6 +112,7 @@ function doWeb(doc, url) {
 		var items = new Object();
 		var uris = new Array();
 		
+		let elmt;
 		while (elmt = searchLinks.iterateNext()) {
 			//Zotero.debug(elmt.href);
 			title = Zotero.Utilities.superCleanString(elmt.textContent);
@@ -158,5 +181,5 @@ var testCases = [
 		"url": "http://worldhistoryconnected.press.illinois.edu/cgi-bin/htsearch?method=and&format=builtin-long&sort=score&config=whc&restrict=&exclude=&words=world",
 		"items": "multiple"
 	}
-]
+];
 /** END TEST CASES **/

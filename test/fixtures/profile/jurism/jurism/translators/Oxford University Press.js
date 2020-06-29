@@ -86,7 +86,7 @@ function scrape(doc, url) {
 
 	var subTitle = doc.getElementsByClassName('product_biblio_strapline')[0];
 	item.title = ZU.trimInternal(doc.getElementsByClassName('product_biblio_title')[0].textContent);
-	if(subTitle) {
+	if (subTitle) {
 		item.title += ': ' + ZU.trimInternal(subTitle.textContent);
 	}
 	

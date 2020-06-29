@@ -76,7 +76,7 @@ function scrape(newDoc, url){
 			abs = Zotero.Utilities.trimInternal(newDoc.evaluate('//div[@id="abstract"]', newDoc, null, XPathResult.ANY_TYPE, null).iterateNext().textContent).substr(10);
 		}
 		var articleID = ZU.xpathText(newDoc, '/html/head/meta[@name="IC.identifier"]/@content');
-		if(articleID) {
+		if (articleID) {
 			pdf = '/search/download?pub=infobike://' + articleID + '&mimetype=application/pdf';
 		} else {
 			pdf = url.replace(/[?&#].*/, '')

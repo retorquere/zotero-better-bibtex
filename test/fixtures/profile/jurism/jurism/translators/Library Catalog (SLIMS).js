@@ -45,7 +45,7 @@ function detectWeb(doc, url) {
 function doWeb(doc, url){
 
 	var articles = new Array();
-	if(detectWeb(doc, url) == "multiple") { 
+	if (detectWeb(doc, url) == "multiple") { 
 		var items = {};
 		var titles = doc.evaluate('//div[contains(@class, "item alterList")]/a', doc, null, XPathResult.ANY_TYPE, null);
 		var title;
@@ -69,7 +69,7 @@ function doWeb(doc, url){
 
 // help function
 function scrape(articles){
-	for(i in articles){
+	for (i in articles){
 	var modsurl = articles[i];
 	//Z.debug(modsurl)
 	Zotero.Utilities.HTTP.doGet(modsurl, function (text) {	

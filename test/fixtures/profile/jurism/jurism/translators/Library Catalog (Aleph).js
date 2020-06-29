@@ -53,12 +53,12 @@ https://aleph.bg.pwr.wroc.pl/F
 function detectWeb(doc, url) {
 	var singleRe = new RegExp("^https?://[^/]+/F/?[A-Z0-9\-]*\?.*(?:func=full-set-set|func=direct|func=myshelf-full.*)");
 	
-	if(singleRe.test(doc.location.href)) {
+	if (singleRe.test(doc.location.href)) {
 		return "book";
 	} else {
 		var tags = doc.getElementsByTagName("a");
-		for(var i=0; i<tags.length; i++) {
-			if(singleRe.test(tags[i].href)) {
+		for (var i=0; i<tags.length; i++) {
+			if (singleRe.test(tags[i].href)) {
 				return "multiple";
 			}
 		}
@@ -71,7 +71,7 @@ function doWeb(doc, url) {
 	var uri = doc.location.href;
 	var newUris = new Array();
 	
-	if(detailRe.test(uri)) {
+	if (detailRe.test(uri)) {
 		// find the 'add to basket' link where it will have the document number, replace the function with 'direct'
 		if (doc.evaluate('//*[contains(@href, "myshelf-add-ful-1")]', doc, null, XPathResult.ANY_TYPE, null).iterateNext()) {
 			var elmts_add = doc.evaluate('//*[contains(@href, "myshelf-add-ful-1")]', doc, null, XPathResult.ANY_TYPE, null);
@@ -91,7 +91,7 @@ function doWeb(doc, url) {
 		}
 		
 		var translator = Zotero.loadTranslator("import");
-		if(mab2Opac.test(uri)) {
+		if (mab2Opac.test(uri)) {
 			translator.setTranslator("91acf493-0de7-4473-8b62-89fd141e6c74");
 		} else {
 			translator.setTranslator("a6ee60df-1ddc-4aae-bb25-45e0537be973");
@@ -107,13 +107,13 @@ function doWeb(doc, url) {
 		var items = Zotero.Utilities.getItemArray(doc, doc, itemRegexp, '^[0-9]+$');
 		// ugly hack to see if we have any items
 		var haveItems = false;
-		for(var i in items) {
+		for (var i in items) {
 			haveItems = true;
 			break;
 		}
 		
 		// If we don't have any items otherwise, let us use the numbers
-		if(!haveItems) {
+		if (!haveItems) {
 			var items = Zotero.Utilities.getItemArray(doc, doc, itemRegexp);
 			
 			// We try to get more text by grabbing the whole table row
@@ -130,20 +130,20 @@ function doWeb(doc, url) {
 		}
 		
 		Zotero.selectItems(items, function (items) {
-			if(!items) {
+			if (!items) {
 				return true;
 			}
 			
-			for(var i in items) {
+			for (var i in items) {
 				var newUri = i.replace("&format=999", "&format=001");
-				if(newUri == i) {
+				if (newUri == i) {
 					newUri += "&format=001";
 				}
 				newUris.push(newUri);
 			}
 			
 			var translator = Zotero.loadTranslator("import");
-			if(mab2Opac.test(uri)) {
+			if (mab2Opac.test(uri)) {
 				translator.setTranslator("91acf493-0de7-4473-8b62-89fd141e6c74");
 			} else {
 				translator.setTranslator("a6ee60df-1ddc-4aae-bb25-45e0537be973");
@@ -179,7 +179,7 @@ function scrape(newDoc, marc, url) {
 		} else if (newDoc.evaluate('//table//tr[td[2][@class="td1"]]', newDoc, null, XPathResult.ANY_TYPE, null).iterateNext()) {
 			xpath = '//table//tr[td[2][@class="td1"]]';
 			nonstandard = true
-		}	else if(newDoc.evaluate('//table/tbody/tr[td/span/b]', newDoc, null,  XPathResult.ANY_TYPE, null).iterateNext()) {
+		}	else if (newDoc.evaluate('//table/tbody/tr[td/span/b]', newDoc, null,  XPathResult.ANY_TYPE, null).iterateNext()) {
 			//for NDL library
 			xpath = '//table/tbody/tr[td/span/b]'
 			ndl = true;
@@ -192,7 +192,7 @@ function scrape(newDoc, marc, url) {
 		var elmts = newDoc.evaluate(xpath, newDoc, null, XPathResult.ANY_TYPE, null);
 		var elmt;
 		var record = new marc.record();
-		while(elmt = elmts.iterateNext()) {
+		while (elmt = elmts.iterateNext()) {
 			if (th) {
 		  var field = Zotero.Utilities.superCleanString(newDoc.evaluate('./th', elmt, null, XPathResult.ANY_TYPE, null).iterateNext().textContent);
 	  } else {
@@ -204,7 +204,7 @@ function scrape(newDoc, marc, url) {
 	  //     var field = Zotero.Utilities.superCleanString(newDoc.evaluate('./TD[1]/text()[1]', elmt, null, XPathResult.ANY_TYPE, null).iterateNext().nodeValue);
 	  // }
 	 // var field = Zotero.Utilities.superCleanString(newDoc.evaluate('./td[1]', elmt, null, XPathResult.ANY_TYPE, null).iterateNext().textContent);
-			if(field) {
+			if (field) {
 				Z.debug(field)
 				var value;
 				if (th) {
@@ -216,16 +216,16 @@ function scrape(newDoc, marc, url) {
 				}
 				if (value.split(/\n/)[1]) value = Zotero.Utilities.trimInternal(value.split(/\n/)[1]);
 				Zotero.debug(field + " : " + value);
-				if(field == "LDR") {
+				if (field == "LDR") {
 					record.leader = value;
-				} else if(field != "FMT") {
+				} else if (field != "FMT") {
 					value = value.replace(/\|([a-z]) /g, marc.subfieldDelimiter+"$1");
 				
 					var code = field.substring(0, 3);
 					var ind = "";
-					if(field.length > 3) {
+					if (field.length > 3) {
 						ind = field[3];
-						if(field.length > 4) {
+						if (field.length > 4) {
 							ind += field[4];
 						}
 					}

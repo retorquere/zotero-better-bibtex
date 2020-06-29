@@ -103,7 +103,7 @@ function scrape(doc, url) {
 				mimeType: "text/html"
 			}];
 
-			if(pdfurl) {
+			if (pdfurl) {
 				item.attachments.push({
 					url: pdfurl,
 					title: "NRC Research Press PDF fulltext",
