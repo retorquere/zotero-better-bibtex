@@ -4,10 +4,10 @@ declare const AddonManager: any
 
 import { flash } from './flash'
 import { client } from './client'
-import * as built_against_schema from '../gen/schema-version.json'
+import * as built_against from '../gen/min-version.json'
 
 const schema: { expected: number, found?: number } = {
-  expected: built_against_schema[client],
+  expected: built_against[client].schema,
   found: null,
 }
 try {
@@ -31,7 +31,7 @@ try {
 export const enabled = typeof schema.expected === 'number' && typeof schema.found === 'number' && schema.found === schema.expected
 Zotero.debug(`monkey-patch: ${Zotero.version}: BBT ${enabled ? 'en' : 'dis'}abled`)
 if (!enabled) {
-  flash(`OUTDATED ${client.toUpperCase()} VERSION`, `BBT has been disabled\n${client} schema ${schema.expected} expected, ${schema.found} found, please upgrade ${client}`, 30) // tslint:disable-line:no-magic-numbers
+  flash(`OUTDATED ${client.toUpperCase()} VERSION`, `BBT has been disabled\nNeed at least ${client} ${built_against[client].release}, please upgrade.`, 30) // tslint:disable-line:no-magic-numbers
 
   Components.utils.import('resource://gre/modules/AddonManager.jsm')
   if (AddonManager.addStartupChange) { // not present in Zotero?

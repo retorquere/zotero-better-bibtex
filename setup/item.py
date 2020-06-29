@@ -384,8 +384,11 @@ with fetch('zotero') as z, fetch('jurism') as j:
   SCHEMA.jurism = Munch.fromDict(patch(json.load(j), 'schema.patch'))
   ef.load(SCHEMA.jurism, 'jurism')
   ef.save()
-  with open(os.path.join(root, 'gen', 'schema-version.json'), 'w') as f:
-    json.dump({'zotero': SCHEMA.zotero.version, 'jurism': SCHEMA.jurism.version}, f)
+  with open(os.path.join(root, 'gen', 'min-version.json'), 'w') as f:
+    json.dump({
+      'zotero': { 'release': SCHEMA.zotero.release, 'schema': SCHEMA.zotero.version},
+      'jurism': { 'release': SCHEMA.jurism.release, 'schema': SCHEMA.jurism.version},
+    }, f)
 
 print('  writing creators')
 creators = {'zotero': {}, 'jurism': {}}
