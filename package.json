@@ -26,7 +26,7 @@
     "setup": "./setup/setup.py && ts-node setup/index.ts",
     "prebuild": "npm install && npm run setup && npm run lint",
     "build": "npm run webpack",
-    "postbuild": "npm run zipup-better-bibtex && npm run zipup-debug-bridge",
+    "postbuild": "./util/patch-install-rdf.py && npm run zipup-better-bibtex && npm run zipup-debug-bridge",
     "zipup-better-bibtex": "zotero-plugin-zipup build zotero-better-bibtex",
     "zipup-debug-bridge": "zotero-plugin-zipup test/fixtures/debug-bridge debug-bridge",
     "release-debug-bridge": "mkdir -p xpi && rm -f xpi/debug-bridge*xpi && npm run zipup-debug-bridge && github-release upload --owner retorquere --repo zotero-better-bibtex --tag debug-bridge xpi/debug-bridge*xpi",

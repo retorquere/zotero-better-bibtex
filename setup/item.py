@@ -41,53 +41,71 @@ class fetch(object):
     if client == 'zotero':
       releases = urlopen("https://www.zotero.org/download/client/manifests/release/updates-linux-x86_64.json").read().decode("utf-8")
       releases = json.loads(releases)
-      latest = releases[-1]['version']
+      releases = [rel['version'] for rel in reversed(releases)]
       self.schema = self.update(
         client=client,
-        download=f'https://www.zotero.org/download/client/dl?channel=release&platform=linux-x86_64&version={latest}',
+        releases=releases,
+        download='https://www.zotero.org/download/client/dl?channel=release&platform=linux-x86_64&version={version}',
         jar='Zotero_linux-x86_64/zotero.jar',
         schema_path='resource/schema/global/schema.json',
-        schema=f'zotero-{latest}.json'
+        schema='zotero-{version}.json'
       )
     elif client == 'jurism':
       releases = urlopen('https://github.com/Juris-M/assets/releases/download/client%2Freleases%2Fincrementals-linux/incrementals-release-linux').read().decode("utf-8")
-      latest = releases.strip().split("\n")[-1]
+      releases = [rel for rel in reversed(releases.strip().split("\n")) if rel != '']
       self.schema = self.update(
         client=client,
-        download=f'https://github.com/Juris-M/assets/releases/download/client%2Frelease%2F{latest}/Jurism-{latest}_linux-x86_64.tar.bz2',
+        releases=releases,
+        download='https://github.com/Juris-M/assets/releases/download/client%2Frelease%2F{version}/Jurism-{version}_linux-x86_64.tar.bz2',
         jar='Jurism_linux-x86_64/jurism.jar',
         schema_path='resource/schema/global/schema-jurism.json',
-        schema=f'jurism-{latest}.json'
+        schema='jurism-{version}.json'
       )
     else:
       raise ValueError(f'Unknown client {client}')
 
-  def update(self, client, download, jar, schema_path, schema):
-    schema = os.path.join(SCHEMA.root, schema)
+  def update(self, client, releases, download, jar, schema_path, schema):
+    schema = os.path.join(SCHEMA.root, schema.format(version=releases[0]))
 
     if os.path.exists(schema):
       print(' ', os.path.basename(schema), 'up to date')
     else:
       if 'CI' in os.environ: raise ValueError(f'{schema} does not exist')
 
+      jarpath = jar
+      latest = None
       print('  updating', os.path.basename(schema))
+
       for cleanup in glob.glob(os.path.join(SCHEMA.root, f'{client}-*.json')):
         os.system(f'cd {shlex.quote(SCHEMA.root)} && git rm {os.path.basename(cleanup)}')
-      with tempfile.NamedTemporaryFile() as tarball:
-        print('  downloading', download)
-        urlretrieve(download, tarball.name)
-        tar = tarfile.open(tarball.name, 'r:bz2')
 
-        jar = tar.getmember(jar)
-        print('  extracting', jar.name)
-        jar.name = os.path.basename(jar.name)
-        tar.extract(jar, path=os.path.dirname(tarball.name))
+      for release in releases:
+        with tempfile.NamedTemporaryFile() as tarball:
+          print('    downloading', download.format(version=release))
+          urlretrieve(download.format(version=release), tarball.name)
+          tar = tarfile.open(tarball.name, 'r:bz2')
 
-        jar = zipfile.ZipFile(os.path.join(os.path.dirname(tarball.name), jar.name))
-        with jar.open(schema_path) as src:
-          print('  saving', os.path.basename(schema))
-          with open(schema, 'wb') as tgt:
-            tgt.write(src.read())
+          jar = tar.getmember(jarpath)
+          print('    extracting', jar.name)
+          jar.name = os.path.basename(jar.name)
+          tar.extract(jar, path=os.path.dirname(tarball.name))
+
+          jar = zipfile.ZipFile(os.path.join(os.path.dirname(tarball.name), jar.name))
+          with jar.open(schema_path) as f:
+            release_schema = json.load(f)
+            release_schema['release'] = release
+            print('    release', release, 'schema', release_schema['version'])
+            if latest is None:
+              latest = release_schema
+              latest['release'] = release
+            elif release_schema['version'] == latest['version']:
+              latest['release'] = release
+            else:
+              break
+
+      print('    saving', os.path.basename(schema))
+      with open(schema, 'w') as f:
+        json.dump(latest, f, indent='  ')
 
     return schema
 
@@ -356,8 +374,8 @@ class ExtraFields:
     #    link.pop('LabelGraphics', None)
     #  json.dump(data, f, indent='  ')
 
-print('  writing extra-fields')
 with fetch('zotero') as z, fetch('jurism') as j:
+  print('  writing extra-fields')
   ef = ExtraFields()
 
   SCHEMA.zotero = Munch.fromDict(patch(json.load(z), 'schema.patch'))
