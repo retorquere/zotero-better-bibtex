@@ -2,133 +2,127 @@
   [
     "AbstractNote",
     "AccessDate",
-    "AdminFlag**",
-    "AdoptionDate**"
+    "AdoptionDate**",
+    "ApplicationNumber"
   ],
   [
-    "ApplicationNumber",
     "Archive",
     "ArchiveLocation",
-    "ArtworkSize"
+    "ArtworkSize",
+    "AssemblyNumber**"
   ],
   [
-    "AssemblyNumber**",
     "Assignee",
     "CallNumber",
-    "Code"
+    "Code",
+    "CodeNumber"
   ],
   [
-    "CodeNumber",
     "Committee",
     "ConferenceDate**",
-    "ConferenceName"
+    "ConferenceName",
+    "Country"
   ],
   [
-    "Country",
     "Court",
     "DOI",
-    "Date"
+    "Date",
+    "DateAmended**"
   ],
   [
-    "DateAmended**",
     "DocumentName**",
     "Edition",
-    "Extra"
+    "Extra",
+    "FilingDate"
   ],
   [
-    "FilingDate",
     "GazetteFlag**",
     "Genre**",
-    "History"
+    "History",
+    "ISBN"
   ],
   [
-    "ISBN",
     "ISSN",
     "Institution**",
-    "Issue"
+    "Issue",
+    "IssuingAuthority"
   ],
   [
-    "IssuingAuthority",
     "JournalAbbreviation",
     "Jurisdiction**",
-    "Language"
+    "Language",
+    "LegalStatus"
   ],
   [
-    "LegalStatus",
     "LegislativeBody",
     "LibraryCatalog",
-    "Medium"
+    "Medium",
+    "MeetingName"
   ],
   [
-    "MeetingName",
     "MeetingNumber**",
     "NewsCaseDate**",
-    "NumPages"
+    "NumPages",
+    "Number"
   ],
   [
-    "Number",
     "NumberOfVolumes",
     "OpeningDate**",
-    "Opus**"
+    "Opus**",
+    "OriginalDate**"
   ],
   [
-    "OriginalDate**",
     "Pages",
     "ParentTreaty**",
-    "Place"
+    "Place",
+    "PriorityDate**"
   ],
   [
-    "PriorityDate**",
     "PriorityNumbers",
     "ProgrammingLanguage",
-    "PublicationDate**"
+    "PublicationDate**",
+    "PublicationNumber**"
   ],
   [
-    "PublicationNumber**",
     "PublicationTitle",
     "Publisher",
-    "References"
+    "References",
+    "RegnalYear**"
   ],
   [
-    "RegnalYear**",
     "Reign**",
     "Reporter",
-    "ResolutionLabel**"
+    "ResolutionLabel**",
+    "Rights"
   ],
   [
-    "Rights",
     "RunningTime",
     "Scale",
-    "Section"
+    "Section",
+    "Series"
   ],
   [
-    "Series",
     "SeriesNumber",
     "SeriesText",
-    "SeriesTitle"
+    "SeriesTitle",
+    "Session"
   ],
   [
-    "Session",
     "ShortTitle",
     "SigningDate**",
-    "Status**"
+    "Status**",
+    "SupplementName**"
   ],
   [
-    "SupplementName**",
     "System",
     "Title",
-    "Type"
+    "Type",
+    "Url"
   ],
   [
-    "Url",
     "VersionNumber",
     "Volume",
-    "VolumeTitle**"
-  ],
-  [
-    "YearAsVolume**",
-    "",
-    "",
-    ""
+    "VolumeTitle**",
+    "YearAsVolume**"
   ]
 ]
