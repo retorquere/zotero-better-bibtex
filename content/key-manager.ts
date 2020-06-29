@@ -430,10 +430,10 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
 
     let postfix
     const seen = {}
-    for (let n = 0; true; n += 1) {
+    for (let n = proposed.postfix.start; true; n += 1) {
       if (n) {
         const alpha = intToExcelCol(n)
-        postfix = sprintf(proposed.postfix, { a: alpha.toLowerCase(), A: alpha, n })
+        postfix = sprintf(proposed.postfix.format, { a: alpha.toLowerCase(), A: alpha, n })
       } else {
         postfix = ''
       }
