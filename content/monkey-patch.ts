@@ -34,21 +34,19 @@ if (!enabled) {
   flash(`OUTDATED ${client.toUpperCase()} VERSION`, `BBT has been disabled\nNeed at least ${client} ${built_against[client].release}, please upgrade.`, 30) // tslint:disable-line:no-magic-numbers
 
   Components.utils.import('resource://gre/modules/AddonManager.jsm')
-  if (AddonManager.addStartupChange) { // not present in Zotero?
-    AddonManager.addStartupChange(AddonManager.STARTUP_CHANGE_DISABLED, 'better-bibtex@iris-advies.com')
-  } else {
-    AddonManager.getAddonByID('better-bibtex@iris-advies.com', addon => {
-      // Add-on cannot be uninstalled
-      if (!(addon.permissions & AddonManager.PERM_CAN_UNINSTALL)) return // tslint:disable-line:no-bitwise
+  AddonManager.getAddonByID('better-bibtex@iris-advies.com', addon => { addon.userDisabled = true })
+    /*
+    // Add-on cannot be uninstalled
+    if (!(addon.permissions & AddonManager.PERM_CAN_UNINSTALL)) return // tslint:disable-line:no-bitwise
 
-      addon.uninstall()
-      // if (addon.pendingOperations & AddonManager.PENDING_UNINSTALL) {
-      // Need to restart to finish the uninstall.
-      // Might ask the user to do just that. Or not ask and just do.
-      // Or just wait until the browser is restarted by the user.
-      // }
-    })
-  }
+    addon.uninstall()
+    // if (addon.pendingOperations & AddonManager.PENDING_UNINSTALL) {
+    // Need to restart to finish the uninstall.
+    // Might ask the user to do just that. Or not ask and just do.
+    // Or just wait until the browser is restarted by the user.
+    // }
+  })
+  */
 }
 
 const marker = 'BetterBibTeXMonkeyPatched'
