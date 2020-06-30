@@ -149,6 +149,4 @@ def save(data, path):
       f.write(data)
 save(fields_table, 'site/data/citekeyformatters/fields.json')
 save(typeNames, 'site/data/citekeyformatters/typeNames.json')
-save(formatter['$'], 'site/data/citekeyformatters/functions.json')
-save(formatter['_'], 'site/data/citekeyformatters/filters.json')
 save(jsonrpc, 'site/layouts/shortcodes/json-rpc.md')

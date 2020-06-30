@@ -68,8 +68,10 @@ block
   / chars:$[^\|>\[\]]+                     { return `citekey += ${JSON.stringify(chars)}` }
 
 method
-  = prefix:('auth' / 'Auth' / 'authors' / 'Authors' / 'edtr' / 'Edtr' / 'editors' / 'Editors') name:$[\.a-zA-Z]* params:n_mparams? flag:flag? {
+  = prefix:('auth' / 'Auth' / 'authors' / 'Authors' / 'edtr' / 'Edtr' / 'editors' / 'Editors') name:$[\.a-zA-Z]* params:n_mparams? flags:flag* {
       params = params || []
+
+      if (name.startsWith('.edtr.') name = name.replace('.edtr.', '.auth.')
 
       var scrub = (prefix[0] == prefix[0].toLowerCase());
       var creators = prefix.toLowerCase();
@@ -90,15 +92,16 @@ method
         m: params[1] || 'undefined',
       }
 
-      flag = flag || '';
-      if (flag == 'initials') {
-        if (!pnames.includes('withInitials')) error(`unexpected flag '${flag}' on function '${text()}'`)
-        args.withInitials = 'true'
-      } else if (flag.length === 1) {
-        if (!pnames.includes('joiner')) error(`unexpected joiner on function '${text()}'`)
-        args.joiner = JSON.stringify(flag)
-      } else if (flag.length) {
-        error(`unexpected flag '${flag}' on function '${text()}'`)
+      for (const flag of flags) {
+        if (flag == 'initials') {
+          if (!pnames.includes('withInitials')) error(`unexpected flag '${flag}' on function '${text()}'`)
+          args.withInitials = 'true'
+        } else if (flag.length === 1) {
+          if (!pnames.includes('joiner')) error(`unexpected joiner on function '${text()}'`)
+          args.joiner = JSON.stringify(flag)
+        } else if (flag.length) {
+          error(`unexpected flag '${flag}' on function '${text()}'`)
+        }
       }
 
       switch (params.length) {
