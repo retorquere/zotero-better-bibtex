@@ -41,7 +41,7 @@
     "preversion": "npm run docs:prep",
     "postversion": "git push --tags",
     "running": "ps auxw | grep -i zotero | grep -v grep || true",
-    "docs:prep": "./setup/readme.py && ./setup/item.py && ./setup/key-formatter-methods.ts && ./setup/typedoc.py && ./setup/preferences.py",
+    "docs:prep": "./setup/readme.py && ./setup/item.py && ./node_modules/.bin/ts-node setup/key-formatter-methods.ts && ./setup/typedoc.py && ./setup/preferences.py",
     "docs:serve": "npm run docs:prep && cd site && hugo serve",
     "docs:serve:minimal": "cd site && hugo serve",
     "docs:deploy": "npm run docs:prep && cd site && hugo --baseURL /zotero-better-bibtex",
