@@ -71,7 +71,7 @@ method
   = prefix:('auth' / 'Auth' / 'authors' / 'Authors' / 'edtr' / 'Edtr' / 'editors' / 'Editors') name:$[\.a-zA-Z]* params:n_mparams? flags:flag* {
       params = params || []
 
-      if (name.startsWith('.edtr.') name = name.replace('.edtr.', '.auth.')
+      if (name.startsWith('.edtr.')) name = name.replace('.edtr.', '.auth.')
 
       var scrub = (prefix[0] == prefix[0].toLowerCase());
       var creators = prefix.toLowerCase();
