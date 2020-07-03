@@ -63,7 +63,7 @@ function normalize_edtf(date) {
 
 function upgrade_edtf(date) {
   return date
-    .replace(/unknown/g, '*')
+    .replace(/unknown/g, '')
     .replace(/u/g, 'X')
     .replace(/(\?~)|(~\?)/g, '%')
     .replace(/open/g, '')
