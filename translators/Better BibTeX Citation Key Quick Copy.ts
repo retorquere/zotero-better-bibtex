@@ -125,7 +125,7 @@ export function doExport() {
   let item: ISerializedItem
   const items = []
   while ((item = Exporter.nextItem())) {
-    if (items.citationKey) items.push(item)
+    if (item.citationKey) items.push(item)
   }
 
   const mode = Mode[`${Translator.options.quickCopyMode}`] || Mode[`${Translator.preferences.quickCopyMode}`]

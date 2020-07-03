@@ -88,7 +88,9 @@ export async function doImport() {
     const item = new Zotero.Item()
     Object.assign(item, source)
 
-    // so BBT-JSON can be imported without extra-field meddling
+    // marker so BBT-JSON can be imported without extra-field meddling
+    item.extra = '\x1BBBT\x1B' + (item.extra || '')
+
     item.bbt_no_extractExtraFields = true
 
     for (const att of item.attachments || []) {

@@ -203,15 +203,6 @@ $patch$(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prot
   return original.apply(this, arguments)
 })
 
-// so BBT-JSON can be imported without extra-field meddling
-$patch$(Zotero.Item.prototype, 'fromJSON', original => function Zotero_Item_prototype_fromJSON(json, options) {
-  if (json.bbt_no_extractExtraFields) {
-    this.bbt_no_extractExtraFields = true
-    delete json.bbt_no_extractExtraFields
-  }
-  return original.apply(this, arguments)
-})
-
 const itemTreeViewWaiting: Record<number, boolean> = {}
 $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function Zotero_ItemTreeView_prototype_getCellText(row, col) {
   if (col.id !== 'zotero-items-column-citekey') return original.apply(this, arguments)
@@ -346,10 +337,7 @@ $patch$(Zotero.Utilities.Internal, 'itemToExportFormat', original => function Zo
 
 // so BBT-JSON can be imported without extra-field meddling
 $patch$(Zotero.Utilities.Internal, 'extractExtraFields', original => function Zotero_Utilities_Internal_extractExtraFields(extra, item, additionalFields) {
-  if (item && item.bbt_no_extractExtraFields) {
-    delete item.bbt_no_extractExtraFields
-    return { itemType: null, fields: new Map(), creators: [], extra }
-  }
+  if (extra && extra.startsWith('\x1BBBT\x1B')) return { itemType: null, fields: new Map(), creators: [], extra: extra.replace('\x1BBBT\x1B', '') }
   return original.apply(this, arguments)
 })
 
