@@ -12,17 +12,17 @@ function select_by_key(item) {
   return (kind === 'users') ? `zotero://select/library/items/${key}` : `zotero://select/groups/${lib}/items/${key}`
 }
 function select_by_citekey(item) {
-  return `zotero://select/items/@${encodeURIComponent(item.citekey)}`
+  return `zotero://select/items/@${encodeURIComponent(item.citationKey)}`
 }
 
 const Mode = { // tslint:disable-line:variable-name
   gitbook(items) {
-    const citations = items.map(item => `{{ \"${item.citekey}\" | cite }}`)
+    const citations = items.map(item => `{{ \"${item.citationKey}\" | cite }}`)
     Zotero.write(citations.join(''))
   },
 
   atom(items) {
-    const keys = items.map(item => item.citekey)
+    const keys = items.map(item => item.citationKey)
     if (keys.length === 1) {
       Zotero.write(`[](#@${keys[0]})`)
     } else {
@@ -31,7 +31,7 @@ const Mode = { // tslint:disable-line:variable-name
   },
 
   latex(items) {
-    const keys = items.map(item => item.citekey)
+    const keys = items.map(item => item.citationKey)
 
     const cmd = `${Translator.preferences.citeCommand}`.trim()
     if (cmd === '') {
@@ -42,12 +42,12 @@ const Mode = { // tslint:disable-line:variable-name
   },
 
   citekeys(items) {
-    const keys = items.map(item => item.citekey)
+    const keys = items.map(item => item.citationKey)
     Zotero.write(keys.join(','))
   },
 
   pandoc(items) {
-    let keys = items.map(item => `@${item.citekey}`)
+    let keys = items.map(item => `@${item.citationKey}`)
     keys = keys.join('; ')
     if (Translator.preferences.quickCopyPandocBrackets) keys = `[${keys}]`
     Zotero.write(keys)
@@ -55,17 +55,17 @@ const Mode = { // tslint:disable-line:variable-name
 
   orgRef(items) {
     if (!items.length) return  ''
-    Zotero.write(`cite:${items.map(item => item.citekey).join(',')}`)
+    Zotero.write(`cite:${items.map(item => item.citationKey).join(',')}`)
   },
 
   orgmode(items) {
     for (const item of items) {
-      Zotero.write(`[[${select_by_key(item)}][@${item.citekey}]]`)
+      Zotero.write(`[[${select_by_key(item)}][@${item.citationKey}]]`)
     }
   },
   orgmode_citekey(items) {
     for (const item of items) {
-      Zotero.write(`[[${select_by_citekey(item)}][@${item.citekey}]]`)
+      Zotero.write(`[[${select_by_citekey(item)}][@${item.citationKey}]]`)
     }
   },
 
@@ -125,7 +125,7 @@ export function doExport() {
   let item: ISerializedItem
   const items = []
   while ((item = Exporter.nextItem())) {
-    if (items.citekey) items.push(item)
+    if (items.citationKey) items.push(item)
   }
 
   const mode = Mode[`${Translator.options.quickCopyMode}`] || Mode[`${Translator.preferences.quickCopyMode}`]
