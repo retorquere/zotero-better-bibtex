@@ -4,7 +4,6 @@ about: You appear to have found a bug in BBTs citation key generation, are propo
 labels: bug
 ---
 
-<!--
 *Please verify **all** of the below before submitting*:
 
 1. you have picked the right category for the issue in the previous screen.
@@ -20,7 +19,6 @@ Picking the right issue category is really important. Each category (`Export`, `
 
 The error report is important; it gives me your current BBT settings and a copy of the problematic reference as a test case so I can best replicate your problem. Without it, I'm effectively blind.
 
--->
 
 **Report ID:**
 

@@ -4,7 +4,6 @@ about: You want information on how to use BBT, or have an idea for improvement t
 labels: question
 ---
 
-<!--
 *Please verify **all** of the below before submitting*:
 
 1. you have picked the right category for the issue in the previous screen.
@@ -16,7 +15,6 @@ labels: question
 
 Picking the right issue category is really important. Each category (`Export`, `General error`, `Import`, `Key generation`, `Question`) has different instructions for gathering the data necessary required to resolve the issue you are experiencing
 
--->
 
 **Your question/suggestion:**
 
