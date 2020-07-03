@@ -15,7 +15,6 @@
       "keyConflictPolicy": "change",
       "kuroshiro": true,
       "qualityReport": true,
-      "removeStock": true,
       "skipFields": "abstract, copyright, googlebooks",
       "workers": 4
     }

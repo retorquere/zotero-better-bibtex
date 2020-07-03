@@ -29,11 +29,11 @@
       "date": "1986",
       "itemID": 1,
       "itemType": "bookSection",
-      "pages": "558–560",
+      "pages": "558\u2013560",
       "place": "Frankfurt am Main",
       "series": "Gesammelte Schriften",
       "seriesNumber": "VI",
-      "title": "Protokolle zu Drogenversuchen. Hauptzüge der ersten Haschisch-Impression"
+      "title": "Protokolle zu Drogenversuchen. Hauptz\u00fcge der ersten Haschisch-Impression"
     },
     {
       "citationKey": "benjamin.w.:1986-1",
@@ -50,13 +50,13 @@
         }
       ],
       "date": "1986",
-      "itemID": 1,
+      "itemID": 2,
       "itemType": "bookSection",
-      "pages": "558–560",
+      "pages": "558\u2013560",
       "place": "Frankfurt am Main",
       "series": "Gesammelte Schriften",
       "seriesNumber": "VI",
-      "title": "Protokolle zu Drogenversuchen. Hauptzüge der ersten Haschisch-Impression"
+      "title": "Protokolle zu Drogenversuchen. Hauptz\u00fcge der ersten Haschisch-Impression"
     }
   ]
 }

@@ -25,7 +25,6 @@
       "importCaseProtection": "off",
       "itemObserverDelay": 100,
       "keyConflictPolicy": "change",
-      "removeStock": true,
       "skipFields": "abstract, copyright, googlebooks"
     }
   },

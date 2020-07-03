@@ -82,11 +82,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
     let reinit = false
 
-    if (Prefs.get('removeStock')) {
-      if (this.uninstall('BibLaTeX', 'b6e39b57-8942-4d11-8259-342c46ce395f')) reinit = true
-      if (this.uninstall('BibTeX', '9cb70025-a888-4a29-a210-93ec52da40d4')) reinit = true
-    }
-
     // cleanup old translators
     if (this.uninstall('Better BibTeX Quick Copy', '9b85ff96-ceb3-4ca2-87a9-154c18ab38b1')) reinit = true
 

@@ -315,7 +315,6 @@
 
         <!-- mainly for testing -->
         <preference name="extensions.zotero.translators.better-bibtex.scrubDatabase" type="bool" default="false"/>
-        <preference name="extensions.zotero.translators.better-bibtex.removeStock" type="bool" default="false"/>
         <preference name="extensions.zotero.translators.better-bibtex.ignorePostscriptErrors" type="bool" default="true"/>
         <preference name="extensions.zotero.translators.better-bibtex.debugLogDir" type="string" default=""/>
         <preference name="extensions.zotero.translators.better-bibtex.testing" type="bool" default="false"/>

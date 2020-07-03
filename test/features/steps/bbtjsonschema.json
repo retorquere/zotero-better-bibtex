@@ -225,9 +225,6 @@
             "scrubDatabase": {
               "type": "boolean"
             },
-            "removeStock": {
-              "type": "boolean"
-            },
             "ignorePostscriptErrors": {
               "type": "boolean"
             },

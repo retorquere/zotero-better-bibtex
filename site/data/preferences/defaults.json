@@ -50,7 +50,6 @@
   "importJabRefAbbreviations": true,
   "postscriptOverride": "",
   "scrubDatabase": false,
-  "removeStock": false,
   "ignorePostscriptErrors": true,
   "debugLogDir": "",
   "testing": false,
