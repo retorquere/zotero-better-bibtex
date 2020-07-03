@@ -1,5 +1,5 @@
 {
-  "version": 13,
+  "version": 16,
   "itemTypes": [
     {
       "itemType": "artwork",
@@ -532,6 +532,9 @@
         {
           "field": "caseName",
           "baseField": "title"
+        },
+        {
+          "field": "adminFlag"
         },
         {
           "field": "abstractNote"
@@ -2799,7 +2802,8 @@
           "field": "shortTitle"
         },
         {
-          "field": "reporter"
+          "field": "reporter",
+          "baseField": "publicationTitle"
         },
         {
           "field": "treatyNumber",
@@ -3414,6 +3418,9 @@
         "document-name": [
           "documentName"
         ],
+        "admin-flag": [
+          "adminFlag"
+        ],
         "gazette-flag": [
           "gazetteFlag"
         ],
@@ -3526,6 +3533,7 @@
       "fields": {
         "abstractNote": "Abstract",
         "accessDate": "Accessed",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "Application Number",
@@ -3705,7 +3713,7 @@
         "bookSection": "\u0642\u0633\u0645 \u0641\u064a \u0643\u062a\u0627\u0628",
         "case": "\u0642\u0636\u064a\u0629",
         "classic": "Classic",
-        "computerProgram": "\u0628\u0631\u0646\u0627\u0645\u062c \u062d\u0627\u0633\u0628 \u0622\u0644\u064a",
+        "computerProgram": "Software",
         "conferencePaper": "\u0648\u0631\u0642\u0629 \u0639\u0645\u0644 \u0641\u064a \u0645\u0624\u062a\u0645\u0631",
         "dictionaryEntry": "\u0643\u0644\u0645\u0629 \u0641\u064a \u0627\u0644\u0645\u0639\u062c\u0645",
         "document": "\u0645\u0633\u062a\u0646\u062f",
@@ -3741,6 +3749,7 @@
       "fields": {
         "abstractNote": "\u0627\u0644\u0645\u0633\u062a\u062e\u0644\u0635",
         "accessDate": "\u062a\u0627\u0631\u064a\u062e \u0627\u0644\u062f\u062e\u0648\u0644",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "\u0631\u0642\u0645 \u0627\u0644\u0637\u0644\u0628",
@@ -3920,7 +3929,7 @@
         "bookSection": "\u0413\u043b\u0430\u0432\u0430 \u043e\u0442 \u043a\u043d\u0438\u0433\u0430",
         "case": "\u0421\u044a\u0434\u0435\u0431\u043d\u043e \u0440\u0435\u0448\u0435\u043d\u0438\u0435",
         "classic": "Classic",
-        "computerProgram": "\u041a\u043e\u043c\u043f\u044e\u0442\u044a\u0440\u043d\u0430 \u043f\u0440\u043e\u0433\u0440\u0430\u043c\u0430",
+        "computerProgram": "Software",
         "conferencePaper": "\u041f\u0443\u0431\u043b\u0438\u043a\u0430\u0446\u0438\u044f \u043e\u0442 \u043a\u043e\u043d\u0444\u0435\u0440\u0435\u043d\u0446\u0438\u044f",
         "dictionaryEntry": "\u041e\u043f\u0440\u0435\u0434\u0435\u043b\u0435\u043d\u0438\u0435 \u0432 \u0440\u0435\u0447\u043d\u0438\u043a",
         "document": "\u0414\u043e\u043a\u0443\u043c\u0435\u043d\u0442",
@@ -3956,6 +3965,7 @@
       "fields": {
         "abstractNote": "\u0418\u0437\u0432\u043b\u0435\u0447\u0435\u043d\u0438\u0435",
         "accessDate": "\u041e\u0442\u0432\u043e\u0440\u0435\u043d \u043d\u0430",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "\u041d\u043e\u043c\u0435\u0440 \u043d\u0430 \u043c\u043e\u043b\u0431\u0430",
@@ -4171,6 +4181,7 @@
       "fields": {
         "abstractNote": "Berradenn",
         "accessDate": "Gwelet d'an/ar/al",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "Niver arload",
@@ -4386,6 +4397,7 @@
       "fields": {
         "abstractNote": "Resum",
         "accessDate": "\u00daltim acc\u00e9s",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "N\u00famero d'aplicaci\u00f3",
@@ -4565,7 +4577,7 @@
         "bookSection": "Kapitola knihy",
         "case": "P\u0159\u00edpad",
         "classic": "Classic",
-        "computerProgram": "Po\u010d\u00edta\u010dov\u00fd program",
+        "computerProgram": "Software",
         "conferencePaper": "Konferen\u010dn\u00ed p\u0159\u00edsp\u011bvek",
         "dictionaryEntry": "Z\u00e1znam ve slovn\u00edku",
         "document": "Dokument",
@@ -4601,6 +4613,7 @@
       "fields": {
         "abstractNote": "Abstrakt",
         "accessDate": "P\u0159\u00edstup",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "\u010c\u00edslo \u017e\u00e1dosti",
@@ -4780,7 +4793,7 @@
         "bookSection": "Bidrag til bog",
         "case": "Retssag/Dom",
         "classic": "Classic",
-        "computerProgram": "Computerprogram",
+        "computerProgram": "Software",
         "conferencePaper": "Konferencebidrag",
         "dictionaryEntry": "Ordbogsopslag",
         "document": "Dokument",
@@ -4816,6 +4829,7 @@
       "fields": {
         "abstractNote": "Resum\u00e9",
         "accessDate": "Set d.",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "Ans\u00f8gning nr.",
@@ -4995,7 +5009,7 @@
         "bookSection": "Buchteil",
         "case": "Fall",
         "classic": "Classic",
-        "computerProgram": "Computerprogramm",
+        "computerProgram": "Software",
         "conferencePaper": "Konferenz-Paper",
         "dictionaryEntry": "W\u00f6rterbucheintrag",
         "document": "Dokument",
@@ -5031,6 +5045,7 @@
       "fields": {
         "abstractNote": "Zusammenfassung",
         "accessDate": "Heruntergeladen am",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "Bewerbungsnummer",
@@ -5246,6 +5261,7 @@
       "fields": {
         "abstractNote": "Abstract",
         "accessDate": "Accessed",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "Application Number",
@@ -5461,6 +5477,7 @@
       "fields": {
         "abstractNote": "Abstract",
         "accessDate": "Accessed",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "Application Number",
@@ -5676,6 +5693,7 @@
       "fields": {
         "abstractNote": "Abstract",
         "accessDate": "Accessed",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "Application Number",
@@ -5855,7 +5873,7 @@
         "bookSection": "Secci\u00f3n de un libro",
         "case": "Caso",
         "classic": "Classic",
-        "computerProgram": "Programa inform\u00e1tico",
+        "computerProgram": "Software",
         "conferencePaper": "Art\u00edculo en conferencia",
         "dictionaryEntry": "Entrada de diccionario",
         "document": "Documento",
@@ -5891,6 +5909,7 @@
       "fields": {
         "abstractNote": "Resumen",
         "accessDate": "Accedido",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "N\u00famero de solicitud",
@@ -6070,7 +6089,7 @@
         "bookSection": "Osa raamatust",
         "case": "Kaasus",
         "classic": "Classic",
-        "computerProgram": "Arvutiprogramm",
+        "computerProgram": "Software",
         "conferencePaper": "Ettekanne",
         "dictionaryEntry": "Kirje s\u00f5naraamatus",
         "document": "Dokument",
@@ -6106,6 +6125,7 @@
       "fields": {
         "abstractNote": "Abstrakt",
         "accessDate": "Vaadatud",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "Taotluse number",
@@ -6321,6 +6341,7 @@
       "fields": {
         "abstractNote": "Laburpena",
         "accessDate": "Atzipen data",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "Application Number",
@@ -6500,7 +6521,7 @@
         "bookSection": "\u0641\u0635\u0644 \u06a9\u062a\u0627\u0628",
         "case": "\u067e\u0631\u0648\u0646\u062f\u0647",
         "classic": "Classic",
-        "computerProgram": "\u0628\u0631\u0646\u0627\u0645\u0647 \u06a9\u0627\u0645\u067e\u06cc\u0648\u062a\u0631",
+        "computerProgram": "Software",
         "conferencePaper": "\u0645\u0642\u0627\u0644\u0647 \u06a9\u0646\u0641\u0631\u0627\u0646\u0633",
         "dictionaryEntry": "\u0645\u062f\u062e\u0644 \u0644\u063a\u062a\u0646\u0627\u0645\u0647",
         "document": "\u0633\u0646\u062f",
@@ -6536,6 +6557,7 @@
       "fields": {
         "abstractNote": "\u0686\u06a9\u06cc\u062f\u0647",
         "accessDate": "\u062a\u0627\u0631\u06cc\u062e \u062f\u0633\u062a\u0631\u0633\u06cc",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "\u0634\u0645\u0627\u0631\u0647 \u062f\u0631\u062e\u0648\u0627\u0633\u062a",
@@ -6751,6 +6773,7 @@
       "fields": {
         "abstractNote": "Tiivistelm\u00e4",
         "accessDate": "Luettu",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "Hakemusnumero",
@@ -6930,7 +6953,7 @@
         "bookSection": "Chapitre de livre",
         "case": "Affaire",
         "classic": "Classic",
-        "computerProgram": "Programme informatique",
+        "computerProgram": "Logiciel",
         "conferencePaper": "Article de colloque",
         "dictionaryEntry": "Entr\u00e9e de dictionnaire",
         "document": "Document",
@@ -6966,6 +6989,7 @@
       "fields": {
         "abstractNote": "R\u00e9sum\u00e9",
         "accessDate": "Consult\u00e9 le",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "N\u00b0 d'application",
@@ -7145,7 +7169,7 @@
         "bookSection": "Secci\u00f3n de libro",
         "case": "Caso",
         "classic": "Classic",
-        "computerProgram": "Aplicaci\u00f3ns",
+        "computerProgram": "Software",
         "conferencePaper": "Publicaci\u00f3n de congreso",
         "dictionaryEntry": "Entrada de dicionario",
         "document": "Documento",
@@ -7181,6 +7205,7 @@
       "fields": {
         "abstractNote": "Resumen",
         "accessDate": "Consultado",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "N\u00famero da solicitude",
@@ -7360,7 +7385,7 @@
         "bookSection": "\u05e4\u05e8\u05e7 \u05de\u05e1\u05e4\u05e8",
         "case": "\u05ea\u05d9\u05e7",
         "classic": "Classic",
-        "computerProgram": "\u05ea\u05d5\u05db\u05e0\u05ea \u05de\u05d7\u05e9\u05d1",
+        "computerProgram": "Software",
         "conferencePaper": "Conference Paper",
         "dictionaryEntry": "\u05e2\u05e8\u05da \u05d1\u05de\u05d9\u05dc\u05d5\u05df",
         "document": "\u05de\u05e1\u05de\u05da",
@@ -7396,6 +7421,7 @@
       "fields": {
         "abstractNote": "\u05ea\u05e7\u05e6\u05d9\u05e8",
         "accessDate": "Accessed",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "Application Number",
@@ -7611,6 +7637,7 @@
       "fields": {
         "abstractNote": "Abstract",
         "accessDate": "Accessed",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "Application Number",
@@ -7826,6 +7853,7 @@
       "fields": {
         "abstractNote": "Kivonat",
         "accessDate": "Hozz\u00e1f\u00e9r\u00e9s",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "Bejelent\u00e9s sz\u00e1ma",
@@ -8005,7 +8033,7 @@
         "bookSection": "Seksi Buku",
         "case": "Kasus",
         "classic": "Classic",
-        "computerProgram": "Program Komputer",
+        "computerProgram": "Software",
         "conferencePaper": "Dokumen Konferensi",
         "dictionaryEntry": "Entri Kamus",
         "document": "Dokumen",
@@ -8041,6 +8069,7 @@
       "fields": {
         "abstractNote": "Abstrak",
         "accessDate": "Diakses",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "Nomor Aplikasi",
@@ -8220,7 +8249,7 @@
         "bookSection": "B\u00f3karhluti",
         "case": "M\u00e1l",
         "classic": "Classic",
-        "computerProgram": "Forrit",
+        "computerProgram": "Software",
         "conferencePaper": "R\u00e1\u00f0stefnugrein",
         "dictionaryEntry": "F\u00e6rsla \u00ed or\u00f0ab\u00f3k",
         "document": "Skjal",
@@ -8256,6 +8285,7 @@
       "fields": {
         "abstractNote": "\u00c1grip",
         "accessDate": "S\u00f3tt",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "Ums\u00f3kn n\u00famer",
@@ -8435,7 +8465,7 @@
         "bookSection": "Sezione di un libro",
         "case": "Sentenza",
         "classic": "Classic",
-        "computerProgram": "Programma per computer",
+        "computerProgram": "Software",
         "conferencePaper": "Atto di convegno",
         "dictionaryEntry": "Voce di dizionario",
         "document": "Documento",
@@ -8471,6 +8501,7 @@
       "fields": {
         "abstractNote": "Abstract",
         "accessDate": "Consultato",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "Numero di applicazione",
@@ -8650,7 +8681,7 @@
         "bookSection": "\u66f8\u7c4d\u306e\u7ae0",
         "case": "\u8a34\u8a1f",
         "classic": "Classic",
-        "computerProgram": "\u30b3\u30f3\u30d4\u30e5\u30fc\u30bf\u30fb\u30d7\u30ed\u30b0\u30e9\u30e0",
+        "computerProgram": "Software",
         "conferencePaper": "\u5b66\u4f1a\u767a\u8868",
         "dictionaryEntry": "\u8f9e\u66f8\u9805\u76ee",
         "document": "\u6587\u66f8",
@@ -8686,6 +8717,7 @@
       "fields": {
         "abstractNote": "\u6284\u9332",
         "accessDate": "\u30a2\u30af\u30bb\u30b9\u65e5\u6642",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "\u5546\u6a19\u767b\u9332\u53f7",
@@ -8865,7 +8897,7 @@
         "bookSection": "\u1795\u17d2\u1793\u17c2\u1780\u1793\u17c3\u179f\u17c0\u179c\u1797\u17c5",
         "case": "\u1780\u179a\u178e\u17b8/\u179a\u17bf\u1784\u1780\u17d2\u178f\u17b8",
         "classic": "Classic",
-        "computerProgram": "\u1780\u1798\u17d2\u1798\u179c\u17b8\u1792\u17b8\u1780\u17bb\u17c6\u1796\u17d2\u1799\u17bc\u1791\u17d0\u179a",
+        "computerProgram": "Software",
         "conferencePaper": "\u17af\u1780\u179f\u17b6\u179a\u179f\u1793\u17d2\u1793\u17b7\u179f\u17b8\u1791",
         "dictionaryEntry": "\u179c\u1785\u1793\u17b6\u1793\u17bb\u1780\u17d2\u179a\u1798",
         "document": "\u17af\u1780\u179f\u17b6\u179a",
@@ -8901,6 +8933,7 @@
       "fields": {
         "abstractNote": "\u1781\u17d2\u179b\u17b9\u1798\u179f\u17b6\u179a\u179f\u1784\u17d2\u1781\u17c1\u1794",
         "accessDate": "\u1785\u17bc\u179b\u1798\u17be\u179b",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "\u1796\u17b6\u1780\u17d2\u1799\u179f\u17bb\u17c6\u179b\u17c1\u1781",
@@ -9080,7 +9113,7 @@
         "bookSection": "\ucc45 \uc18c\uac1c \uba74",
         "case": "\uc18c\uc1a1",
         "classic": "Classic",
-        "computerProgram": "\ucef4\ud4e8\ud130 \ud504\ub85c\uadf8\ub7a8",
+        "computerProgram": "\uc18c\ud504\ud2b8\uc6e8\uc5b4",
         "conferencePaper": "\ud68c\uc758\ubb38",
         "dictionaryEntry": "\uc0ac\uc804 \ud56d\ubaa9",
         "document": "\ubb38\uc11c",
@@ -9107,7 +9140,7 @@
         "report": "\ubcf4\uace0\uc11c",
         "standard": "Standard",
         "statute": "\ubc95\ub839",
-        "thesis": "\ub17c\ubb38",
+        "thesis": "\ud559\uc704\ub17c\ubb38",
         "treaty": "Treaty",
         "tvBroadcast": "TV \ubc29\uc1a1",
         "videoRecording": "\ub179\ud654",
@@ -9116,6 +9149,7 @@
       "fields": {
         "abstractNote": "\uc694\uc57d",
         "accessDate": "\uc811\uadfc\uc77c",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "\ucd9c\uc6d0 \ubc88\ud638",
@@ -9295,7 +9329,7 @@
         "bookSection": "Knygos skyrius",
         "case": "Byla",
         "classic": "Classic",
-        "computerProgram": "Kompiuterin\u0117 programa",
+        "computerProgram": "Programin\u0117 \u012franga",
         "conferencePaper": "Prane\u0161imas konferencijoje",
         "dictionaryEntry": "\u017dodyno \u012fra\u0161as",
         "document": "Dokumentas",
@@ -9331,6 +9365,7 @@
       "fields": {
         "abstractNote": "Santrauka",
         "accessDate": "\u017di\u016br\u0117ta",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "Parei\u0161kimo numeris",
@@ -9510,7 +9545,7 @@
         "bookSection": "\u041d\u043e\u043c\u044b\u043d \u0445\u044d\u0441\u044d\u0433",
         "case": "Case",
         "classic": "Classic",
-        "computerProgram": "\u041a\u043e\u043c\u043f\u044c\u044e\u0442\u0435\u0440\u0438\u0439\u043d \u043f\u0440\u043e\u0433\u0440\u0430\u043c",
+        "computerProgram": "Software",
         "conferencePaper": "\u0425\u0443\u0440\u043b\u044b\u043d \u04e9\u0433\u04af\u04af\u043b\u044d\u043b",
         "dictionaryEntry": "Dictionary Entry",
         "document": "\u0411\u0430\u0440\u0438\u043c\u0442",
@@ -9546,6 +9581,7 @@
       "fields": {
         "abstractNote": "Abstract",
         "accessDate": "Accessed",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "Application Number",
@@ -9761,6 +9797,7 @@
       "fields": {
         "abstractNote": "Sammendrag",
         "accessDate": "Lest",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "Programvarenummer",
@@ -9940,7 +9977,7 @@
         "bookSection": "Boek-sectie",
         "case": "Rechtszaak",
         "classic": "Classic",
-        "computerProgram": "Computerprogramma",
+        "computerProgram": "Software",
         "conferencePaper": "Conferentiebijdrage",
         "dictionaryEntry": "Lemma",
         "document": "Document",
@@ -9976,6 +10013,7 @@
       "fields": {
         "abstractNote": "Samenvatting",
         "accessDate": "Geraadpleegd",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "Aanvraagnummer",
@@ -10155,7 +10193,7 @@
         "bookSection": "Del av bok",
         "case": "Sak",
         "classic": "Classic",
-        "computerProgram": "Dataprogram",
+        "computerProgram": "Software",
         "conferencePaper": "Konferanseinnlegg",
         "dictionaryEntry": "Ordbokoppslag",
         "document": "Dokument",
@@ -10191,6 +10229,7 @@
       "fields": {
         "abstractNote": "Samandrag",
         "accessDate": "Lest",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "Program-nummer",
@@ -10406,6 +10445,7 @@
       "fields": {
         "abstractNote": "Kr\u00f3tki opis",
         "accessDate": "Dost\u0119p",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "Numer zg\u0142oszenia",
@@ -10585,7 +10625,7 @@
         "bookSection": "Se\u00e7\u00e3o de livro",
         "case": "Caso",
         "classic": "Classic",
-        "computerProgram": "Programa de computador",
+        "computerProgram": "Programa",
         "conferencePaper": "Confer\u00eancia",
         "dictionaryEntry": "Verbete de dicion\u00e1rio",
         "document": "Documento",
@@ -10621,6 +10661,7 @@
       "fields": {
         "abstractNote": "Resumo",
         "accessDate": "Data de acesso",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "N\u00famero da inscri\u00e7\u00e3o",
@@ -10708,7 +10749,7 @@
         "priorityDate": "Priority Date",
         "priorityNumbers": "N\u00fameros priorit\u00e1rios",
         "proceedingsTitle": "T\u00edtulo dos anais",
-        "programmingLanguage": "Prog. Language",
+        "programmingLanguage": "Linguagem de programa\u00e7\u00e3o",
         "programTitle": "T\u00edtulo do programa",
         "publicationDate": "Date Published",
         "publicationNumber": "Publication No.",
@@ -10836,6 +10877,7 @@
       "fields": {
         "abstractNote": "Resumo",
         "accessDate": "Acedido",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "N\u00famero da Candidatura",
@@ -10923,7 +10965,7 @@
         "priorityDate": "Priority Date",
         "priorityNumbers": "N\u00fameros de Prioridade",
         "proceedingsTitle": "T\u00edtulo das Actas",
-        "programmingLanguage": "Prog. Language",
+        "programmingLanguage": "Linguagem de Programa\u00e7\u00e3o",
         "programTitle": "T\u00edtulo do Programa",
         "publicationDate": "Date Published",
         "publicationNumber": "Publication No.",
@@ -11015,7 +11057,7 @@
         "bookSection": "Sec\u021biune de carte",
         "case": "Proces",
         "classic": "Classic",
-        "computerProgram": "Program de calculator",
+        "computerProgram": "Software",
         "conferencePaper": "Conferin\u021b\u0103",
         "dictionaryEntry": "Articol de dic\u021bionar",
         "document": "Document",
@@ -11051,6 +11093,7 @@
       "fields": {
         "abstractNote": "Rezumat",
         "accessDate": "Data acces\u0103rii",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "Num\u0103r aplica\u021bie",
@@ -11222,7 +11265,7 @@
     "ru-RU": {
       "itemTypes": {
         "artwork": "\u0425\u0443\u0434\u043e\u0436\u0435\u0441\u0442\u0432\u0435\u043d\u043d\u0430\u044f \u0440\u0430\u0431\u043e\u0442\u0430",
-        "attachment": "\u041f\u0440\u0438\u043b\u043e\u0436\u0435\u043d\u0438\u0435",
+        "attachment": "\u0412\u043b\u043e\u0436\u0435\u043d\u0438\u0435",
         "audioRecording": "\u0417\u0432\u0443\u043a\u043e\u0437\u0430\u043f\u0438\u0441\u044c",
         "bill": "\u0417\u0430\u043a\u043e\u043d\u043e\u043f\u0440\u043e\u0435\u043a\u0442",
         "blogPost": "\u0421\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u0435 \u0432 \u0431\u043b\u043e\u0433\u0435",
@@ -11244,7 +11287,7 @@
         "interview": "\u0418\u043d\u0442\u0435\u0440\u0432\u044c\u044e",
         "journalArticle": "\u0421\u0442\u0430\u0442\u044c\u044f \u0438\u0437 \u0440\u0435\u0446\u0435\u043d\u0437\u0438\u0440\u0443\u0435\u043c\u043e\u0433\u043e \u0436\u0443\u0440\u043d\u0430\u043b\u0430",
         "letter": "\u041f\u0438\u0441\u044c\u043c\u043e",
-        "magazineArticle": "\u0421\u0442\u0430\u0442\u044c\u044f \u0438\u0437 \u043f\u0440\u043e\u0447\u0435\u0439 \u043f\u0435\u0440\u0438\u043e\u0434\u043a\u0438",
+        "magazineArticle": "\u0421\u0442\u0430\u0442\u044c\u044f \u0438\u0437 \u043f\u0440\u043e\u0447\u0435\u0439 \u043f\u0435\u0440\u0438\u043e\u0434\u0438\u043a\u0438",
         "manuscript": "\u0420\u0443\u043a\u043e\u043f\u0438\u0441\u044c",
         "map": "\u041a\u0430\u0440\u0442\u0430",
         "newspaperArticle": "\u0413\u0430\u0437\u0435\u0442\u043d\u0430\u044f \u0441\u0442\u0430\u0442\u044c\u044f",
@@ -11266,6 +11309,7 @@
       "fields": {
         "abstractNote": "\u0410\u043d\u043d\u043e\u0442\u0430\u0446\u0438\u044f",
         "accessDate": "\u0414\u0430\u0442\u0430 \u0434\u043e\u0441\u0442\u0443\u043f\u0430",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "\u041d\u043e\u043c\u0435\u0440 \u0437\u0430\u044f\u0432\u043a\u0438",
@@ -11280,7 +11324,7 @@
         "billNumber": "\u041d\u043e\u043c\u0435\u0440 \u0437\u0430\u043a\u043e\u043d\u043e\u043f\u0440.",
         "blogTitle": "\u041d\u0430\u0437\u0432\u0430\u043d\u0438\u0435 \u0431\u043b\u043e\u0433\u0430",
         "bookTitle": "\u041d\u0430\u0437\u0432\u0430\u043d\u0438\u0435 \u043a\u043d\u0438\u0433\u0438",
-        "callNumber": "\u0428\u0438\u0444\u0440",
+        "callNumber": "\u0428\u0438\u0444\u0440 (\u043d\u043e\u043c\u0435\u0440 \u0432\u044b\u0437\u043e\u0432\u0430)",
         "caseName": "\u041d\u043e\u043c\u0435\u0440 \u0434\u0435\u043b\u0430",
         "code": "\u041a\u043e\u0434\u0435\u043a\u0441/\u0441\u0431\u043e\u0440\u043d\u0438\u043a",
         "codeNumber": "\u0422\u043e\u043c \u043a\u043e\u0434\u0435\u043a\u0441\u0430",
@@ -11322,7 +11366,7 @@
         "issueDate": "\u0414\u0430\u0442\u0430 \u0432\u044b\u043f\u0443\u0441\u043a\u0430",
         "issuingAuthority": "\u041a\u0435\u043c \u0432\u044b\u0434\u0430\u043d",
         "itemType": "\u0422\u0438\u043f",
-        "journalAbbreviation": "\u0416\u0443\u0440\u043d\u0430\u043b \u0441\u043e\u043a\u0440\u0430\u0449.",
+        "journalAbbreviation": "\u0421\u043e\u043a\u0440\u0430\u0449. \u0436\u0443\u0440\u043d\u0430\u043b\u0430",
         "jurisdiction": "Jurisdiction",
         "label": "\u041d\u0430\u0434\u043f\u0438\u0441\u044c",
         "language": "\u042f\u0437\u044b\u043a",
@@ -11351,9 +11395,9 @@
         "postType": "\u0422\u0438\u043f \u0441\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u044f",
         "presentationType": "\u0422\u0438\u043f",
         "priorityDate": "Priority Date",
-        "priorityNumbers": "\u041d\u043e\u043c\u0435\u0440\u0430 \u043f\u0440\u0438\u043e\u0440\u0438\u0442\u0435\u0442\u0430",
+        "priorityNumbers": "\u041d\u043e\u043c\u0435\u0440\u0430 \u043f\u0440\u0438\u043e\u0440\u0438\u0442\u0435\u0442\u043e\u0432",
         "proceedingsTitle": "\u041d\u0430\u0437\u0432. \u0442\u0440\u0443\u0434\u043e\u0432",
-        "programmingLanguage": "\u043f\u0440\u043e\u0433\u0440. \u044f\u0437.",
+        "programmingLanguage": "\u041f\u0440\u043e\u0433\u0440. \u044f\u0437.",
         "programTitle": "\u041d\u0430\u0437\u0432. \u043f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u044b",
         "publicationDate": "Date Published",
         "publicationNumber": "Publication No.",
@@ -11481,6 +11525,7 @@
       "fields": {
         "abstractNote": "Abstrakt",
         "accessDate": "Citovan\u00e9",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "\u010c\u00edslo prihl\u00e1\u0161ky",
@@ -11660,7 +11705,7 @@
         "bookSection": "Odsek knjige",
         "case": "Primer",
         "classic": "Classic",
-        "computerProgram": "Ra\u010dunalni\u0161ki program",
+        "computerProgram": "Programje",
         "conferencePaper": "Konferen\u010dni \u010dlanek",
         "dictionaryEntry": "Slovarski vnos",
         "document": "Dokument",
@@ -11696,6 +11741,7 @@
       "fields": {
         "abstractNote": "Povzetek",
         "accessDate": "Dostopano",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "\u0160tevilka vloge",
@@ -11875,7 +11921,7 @@
         "bookSection": "\u041f\u043e\u0433\u043b\u0430\u0432\u0459\u0435 \u0443 \u043a\u045a\u0438\u0437\u0438",
         "case": "\u0421\u043b\u0443\u0447\u0430\u0458",
         "classic": "Classic",
-        "computerProgram": "\u0420\u0430\u0447\u0443\u043d\u0430\u0440\u0441\u043a\u0438 \u043f\u0440\u043e\u0433\u0440\u0430\u043c",
+        "computerProgram": "Software",
         "conferencePaper": "\u041f\u0430\u043f\u0438\u0440 \u0441\u0430 \u043a\u043e\u043d\u0444\u0435\u0440\u0435\u043d\u0446\u0438\u0458\u0435",
         "dictionaryEntry": "\u0423\u043d\u043e\u0441 \u0438\u0437 \u0440\u0435\u0447\u043d\u0438\u043a\u0430",
         "document": "\u0414\u043e\u043a\u0443\u043c\u0435\u043d\u0442",
@@ -11911,6 +11957,7 @@
       "fields": {
         "abstractNote": "\u0421\u0430\u0436\u0435\u0442\u0430\u043a",
         "accessDate": "\u041f\u0440\u0438\u0441\u0442\u0443\u043f\u0459\u0435\u043d\u043e",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "\u0411\u0440\u043e\u0458 \u0430\u043f\u043b\u0438\u043a\u0430\u0446\u0438\u0458\u0435",
@@ -12090,7 +12137,7 @@
         "bookSection": "Bokavsnitt",
         "case": "R\u00e4ttsfall",
         "classic": "Classic",
-        "computerProgram": "Datorprogram",
+        "computerProgram": "Software",
         "conferencePaper": "Konferensartikel",
         "dictionaryEntry": "Uppslag i ordbok",
         "document": "Dokument",
@@ -12126,6 +12173,7 @@
       "fields": {
         "abstractNote": "Sammanfattning",
         "accessDate": "H\u00e4mtad den",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "Anm\u00e4lningsnummer",
@@ -12305,7 +12353,7 @@
         "bookSection": "\u0e1a\u0e17\u0e2b\u0e19\u0e36\u0e48\u0e07\u0e43\u0e19\u0e2b\u0e19\u0e31\u0e07\u0e2a\u0e37\u0e2d",
         "case": "\u0e40\u0e2b\u0e15\u0e38\u0e01\u0e32\u0e23\u0e13\u0e4c/\u0e04\u0e14\u0e35",
         "classic": "Classic",
-        "computerProgram": "\u0e42\u0e1b\u0e23\u0e41\u0e01\u0e23\u0e21\u0e04\u0e2d\u0e21\u0e1e\u0e34\u0e27\u0e40\u0e15\u0e2d\u0e23\u0e4c",
+        "computerProgram": "Software",
         "conferencePaper": "\u0e40\u0e2d\u0e01\u0e2a\u0e32\u0e23\u0e1b\u0e23\u0e30\u0e0a\u0e38\u0e21\u0e27\u0e34\u0e0a\u0e32\u0e01\u0e32\u0e23",
         "dictionaryEntry": "\u0e1e\u0e08\u0e19\u0e32\u0e19\u0e38\u0e01\u0e23\u0e21",
         "document": "\u0e40\u0e2d\u0e01\u0e2a\u0e32\u0e23",
@@ -12341,6 +12389,7 @@
       "fields": {
         "abstractNote": "\u0e1a\u0e17\u0e04\u0e31\u0e14\u0e22\u0e48\u0e2d",
         "accessDate": "\u0e2a\u0e37\u0e1a\u0e04\u0e49\u0e19\u0e40\u0e21\u0e37\u0e48\u0e2d",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "\u0e2b\u0e21\u0e32\u0e22\u0e40\u0e25\u0e02\u0e04\u0e33\u0e02\u0e2d",
@@ -12556,6 +12605,7 @@
       "fields": {
         "abstractNote": "\u00d6zet",
         "accessDate": "Son Eri\u015fim",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "Uygulama Numaras\u0131",
@@ -12735,7 +12785,7 @@
         "bookSection": "\u0413\u043b\u0430\u0432\u0430 \u043a\u043d\u0438\u0433\u0438",
         "case": "\u0421\u043f\u0440\u0430\u0432\u0430",
         "classic": "Classic",
-        "computerProgram": "\u041a\u043e\u043c\u043f'\u044e\u0442\u0435\u0440\u043d\u0430 \u043f\u0440\u043e\u0433\u0440\u0430\u043c\u0430",
+        "computerProgram": "Software",
         "conferencePaper": "\u0414\u043e\u043a\u0443\u043c\u0435\u043d\u0442 \u043a\u043e\u043d\u0444\u0435\u0440\u0435\u043d\u0446\u0456\u0457",
         "dictionaryEntry": "\u0421\u0442\u0430\u0442\u0442\u044f \u0437\u0456 \u0441\u043b\u043e\u0432\u043d\u0438\u043a\u0430",
         "document": "\u0414\u043e\u043a\u0443\u043c\u0435\u043d\u0442",
@@ -12771,6 +12821,7 @@
       "fields": {
         "abstractNote": "\u0410\u043d\u043e\u0442\u0430\u0446\u0456\u044f",
         "accessDate": "\u0414\u0430\u0442\u0430 \u0434\u043e\u0441\u0442\u0443\u043f\u0443",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "\u041d\u043e\u043c\u0435\u0440 \u0437\u0430\u044f\u0432\u043a\u0438",
@@ -12950,7 +13001,7 @@
         "bookSection": "\u0110o\u1ea1n S\u00e1ch",
         "case": "V\u1ee5 vi\u1ec7c",
         "classic": "Classic",
-        "computerProgram": "Ph\u1ea7n m\u1ec1m",
+        "computerProgram": "Software",
         "conferencePaper": "B\u00e1o c\u00e1o H\u1ed9i th\u1ea3o",
         "dictionaryEntry": "M\u1ee5c t\u1eeb trong T\u1eeb \u0111i\u1ec3n",
         "document": "T\u00e0i li\u1ec7u",
@@ -12986,6 +13037,7 @@
       "fields": {
         "abstractNote": "T\u00f3m t\u1eaft",
         "accessDate": "Ng\u00e0y truy c\u1eadp",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "S\u1ed1 \u0111\u01a1n",
@@ -13201,6 +13253,7 @@
       "fields": {
         "abstractNote": "\u6458\u8981",
         "accessDate": "\u8bbf\u95ee\u65f6\u95f4",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "\u7533\u8bf7\u53f7",
@@ -13380,7 +13433,7 @@
         "bookSection": "\u66f8\u7684\u7ae0\u7bc0",
         "case": "\u6848\u4f8b",
         "classic": "Classic",
-        "computerProgram": "\u96fb\u8166\u7a0b\u5f0f",
+        "computerProgram": "\u8edf\u9ad4",
         "conferencePaper": "\u6703\u8b70\u8ad6\u6587",
         "dictionaryEntry": "\u5b57\u5178\u689d\u76ee",
         "document": "\u6587\u4ef6",
@@ -13416,6 +13469,7 @@
       "fields": {
         "abstractNote": "\u6458\u8981",
         "accessDate": "\u53d6\u7528",
+        "adminFlag": "Admin Ref",
         "adoptionDate": "Date Adopted",
         "album": "Album",
         "applicationNumber": "\u7533\u8acb\u865f\u78bc",
@@ -13585,5 +13639,5 @@
       }
     }
   },
-  "release": "5.0.85m3"
+  "release": "5.0.89m1"
 }
