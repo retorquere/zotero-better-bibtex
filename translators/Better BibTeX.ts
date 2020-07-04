@@ -555,7 +555,7 @@ class ZoteroItem {
 
   protected $volume(value) { return this.set('volume', value) }
 
-  protected $doi(value) { return this.set('DOI', value) }
+  protected $doi(value) { return this.set('DOI', this.unwrap(value)) }
 
   protected $abstract(value) { return this.set('abstractNote', value) }
 
@@ -610,6 +610,8 @@ class ZoteroItem {
   // to read the manual apparently.
   protected $files(value) { return this.$file(value) }
   protected $file(value) {
+    value = this.unwrap(value)
+
     const replace = {
       '\\;':    '\u0011',
       '\u0011': ';',
@@ -719,7 +721,7 @@ class ZoteroItem {
     let m, url
 
     // no escapes needed in an verbatim field but people do it anyway
-    value = value.replace(/\\/g, '')
+    value = this.unwrap(value.replace(/\\/g, ''))
 
     if (m = value.match(/^(\\url{)(https?:\/\/|mailto:)}$/i)) {
       url = m[2]
@@ -802,7 +804,7 @@ class ZoteroItem {
   protected $archiveprefix(value, field) { return this.$eprinttype(value, field) }
 
   protected $eprint(value, field) {
-    this.eprint[field] = value
+    this.eprint[field] = this.unwrap(value)
     return true
   }
   protected $eprintclass(value, field) { return this.$eprint(value, field) }
@@ -817,6 +819,12 @@ class ZoteroItem {
     if (!field) return this.fallback(candidates, value)
 
     return this.set(field, value)
+  }
+
+  // #1562
+  private unwrap(value) {
+    const m = (value || '').match(/^{(.*)}$/)
+    return m ? m[1] : value
   }
 
   private error(err) {
