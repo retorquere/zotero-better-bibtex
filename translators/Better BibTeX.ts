@@ -319,6 +319,7 @@ export function doExport() {
 }
 
 export async function detectImport() {
+  if (!Zotero.getHiddenPref('better-bibtex.import')) return false
   const input = Zotero.read(102400) // tslint:disable-line:no-magic-numbers
   const bib = await bibtexParser.chunker(input, { max_entries: 1, async: true })
   return bib.find(chunk => chunk.entry)
@@ -962,6 +963,11 @@ class ZoteroItem {
       }
     }
 
+    this.hackyFields = this.hackyFields.filter(line => {
+      if (line.startsWith('Citation Key:')) return Translator.preferences.importCitationKey
+      if (line.startsWith('tex.')) return Translator.preferences.importExtra
+      return true
+    })
     if (this.hackyFields.length > 0) {
       this.hackyFields.sort((a, b) => {
         a = a.toLowerCase()

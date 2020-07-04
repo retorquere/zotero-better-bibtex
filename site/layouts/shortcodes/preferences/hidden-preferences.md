@@ -60,6 +60,24 @@ default: `config`
 
 Can be `off`, `config` or `always`
 
+### import
+
+default: `yes`
+
+Use BBTs importer instead of Zotero's importer
+
+### importCitationKey
+
+default: `yes`
+
+On import, assign the existing citation key to the item being imported
+
+### importExtra
+
+default: `yes`
+
+On import, place all bib(la)tex field Zotero doesn't have an existing field for in the Zotero `extra` field of the item
+
 ### itemObserverDelay
 
 default: `5`

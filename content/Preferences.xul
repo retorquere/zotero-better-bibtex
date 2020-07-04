@@ -296,6 +296,19 @@
           (such as [this](https://raw.githubusercontent.com/retorquere/zotero-better-bibtex/master/better-bibtex-citekeys.csl)) to make this work.
         </bbt:doc>
 
+        <preference name="extensions.zotero.translators.better-bibtex.import" type="bool" default="true"/>
+        <bbt:doc>
+          Use BBTs importer instead of Zotero's importer
+        </bbt:doc>
+        <preference name="extensions.zotero.translators.better-bibtex.importExtra" type="bool" default="true"/>
+        <bbt:doc>
+          On import, place all bib(la)tex field Zotero doesn't have an existing field for in the Zotero `extra` field of the item
+        </bbt:doc>
+        <preference name="extensions.zotero.translators.better-bibtex.importCitationKey" type="bool" default="true"/>
+        <bbt:doc>
+          On import, assign the existing citation key to the item being imported
+        </bbt:doc>
+
         <preference name="extensions.zotero.translators.better-bibtex.extraMergeTeX" type="bool" default="true"/>
         <preference name="extensions.zotero.translators.better-bibtex.extraMergeCSL" type="bool" default="true"/>
         <preference name="extensions.zotero.translators.better-bibtex.extraMergeCitekeys" type="bool" default="true"/>
