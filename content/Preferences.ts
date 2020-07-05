@@ -7,7 +7,7 @@ declare const Components: any
 Components.utils.import('resource://gre/modules/Services.jsm')
 declare const Services: any
 
-import * as log from './debug'
+import { log } from './logger'
 import { patch as $patch$ } from './monkey-patch'
 import * as ZoteroDB from './db/zotero'
 import { DB as Cache } from './db/cache'

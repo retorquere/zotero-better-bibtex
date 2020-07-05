@@ -2,19 +2,11 @@ declare const Zotero: any
 
 import { stringify, asciify } from './stringify'
 
-// export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let Logger = new class { // tslint:disable-line:variable-name
+export let log = new class Logger {
+  public prefix = 'better-bibtex'
   private timestamp: number
 
-  public log(prefix, ...msg) {
-    if (Zotero.Debug.enabled) this._log(Zotero.debug, prefix, msg)
-  }
-
-  public error(prefix, ...msg) {
-    this._log(Zotero.logError, `${prefix}!`, msg)
-  }
-
-  public _log(logger, prefix, msg) {
+  private format(msg) {
     let diff = null
     const now = Date.now()
     if (this.timestamp) diff = now - this.timestamp
@@ -40,6 +32,14 @@ export let Logger = new class { // tslint:disable-line:variable-name
       msg = _msg
     }
 
-    logger(`{${prefix} +${diff}} ${asciify(msg)}`)
+    return ` +${diff}} ${asciify(msg)}`
+  }
+
+  public debug(...msg) {
+    if (Zotero.BetterBibTeX.debugEnabled()) Zotero.debug(this.prefix + this.format(msg))
+  }
+
+  public error(...msg) {
+    (Zotero.logError || Zotero.debug)(`${this.prefix} error:` + this.format(msg))
   }
 }

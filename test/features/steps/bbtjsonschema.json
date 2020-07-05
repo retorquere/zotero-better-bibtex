@@ -204,6 +204,15 @@
             "citeprocNoteCitekey": {
               "type": "boolean"
             },
+            "import": {
+              "type": "boolean"
+            },
+            "importExtra": {
+              "type": "boolean"
+            },
+            "importCitationKey": {
+              "type": "boolean"
+            },
             "extraMergeTeX": {
               "type": "boolean"
             },

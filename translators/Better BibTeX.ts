@@ -12,7 +12,7 @@ export { Translator }
 
 import { Reference } from './bibtex/reference'
 import { Exporter } from './bibtex/exporter'
-import { debug } from './lib/debug'
+import { log } from './../content/logger'
 import * as escape from '../content/escape'
 
 import * as bibtexParser from '@retorquere/bibtex-parser'
@@ -319,10 +319,14 @@ export function doExport() {
 }
 
 export async function detectImport() {
-  if (!Zotero.getHiddenPref('better-bibtex.import')) return false
-  const input = Zotero.read(102400) // tslint:disable-line:no-magic-numbers
-  const bib = await bibtexParser.chunker(input, { max_entries: 1, async: true })
-  return bib.find(chunk => chunk.entry)
+  let detected = Zotero.getHiddenPref('better-bibtex.import')
+  if (detected) {
+    const input = Zotero.read(102400) // tslint:disable-line:no-magic-numbers
+    const bib = await bibtexParser.chunker(input, { max_entries: 1, async: true })
+    detected = bib.find(chunk => chunk.entry)
+  }
+  log.debug('BBT detectImport:', detected)
+  return detected
 }
 
 function importGroup(group, itemIDs, root = null) {
@@ -642,14 +646,14 @@ class ZoteroItem {
           break
 
         default:
-          debug(`attachment import: Unexpected number of parts in file record '${record}': ${parts.length}`)
+          log.debug(`attachment import: Unexpected number of parts in file record '${record}': ${parts.length}`)
           // might be absolute windows path, just make Zotero try
           att.path = parts.join(':')
           break
       }
 
       if (!att.path) {
-        debug(`attachment import: file record '${record}' has no file path`)
+        log.debug(`attachment import: file record '${record}' has no file path`)
         continue
       }
 
@@ -829,7 +833,7 @@ class ZoteroItem {
   }
 
   private error(err) {
-    debug(err)
+    log.debug(err)
     throw new Error(err)
   }
 
@@ -1078,6 +1082,7 @@ async function _fetch(url): Promise<{ json: () => Promise<any> }> {
 
 export async function doImport() {
   Translator.init('import')
+  if (!Translator.preferences.import) log.debug('detectImport disabled, I should not be here')
 
   const unabbreviate = Translator.preferences.importJabRefAbbreviations ? await (await _fetch('resource://zotero-better-bibtex/unabbrev/unabbrev.json')).json() : null
   const strings = Translator.preferences.importJabRefStrings ? await (await _fetch('resource://zotero-better-bibtex/unabbrev/strings.json')).json() : null
@@ -1093,7 +1098,7 @@ export async function doImport() {
   const bib = await bibtexParser.parse(input, {
     async: true,
     caseProtection: (Translator.preferences.importCaseProtection as 'as-needed'), // we are actually sure it's a valid enum value; stupid workaround for TS2322: Type 'string' is not assignable to type 'boolean | "as-needed" | "strict"'.
-    errorHandler: (Translator.preferences.testing ? undefined : debug),
+    errorHandler: (Translator.preferences.testing ? undefined : function(err) { log.debug(err) }), // tslint:disable-line:only-arrow-functions
     markup: (Translator.csquotes ? { enquote: Translator.csquotes } : {}),
     sentenceCase: Translator.preferences.importSentenceCase !== 'off',
     guessAlreadySentenceCased: Translator.preferences.importSentenceCase === 'on+guess',
@@ -1122,7 +1127,7 @@ export async function doImport() {
     try {
       await (new ZoteroItem(id, bibtex, jabref, errors)).complete()
     } catch (err) {
-      debug('bbt import error:', err)
+      log.debug('bbt import error:', err)
       errors.push({ message: '' + err.message })
     }
 

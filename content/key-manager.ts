@@ -4,7 +4,7 @@ declare const window: any
 import ETA = require('node-eta')
 import { kuroshiro } from './key-manager/kuroshiro'
 
-import * as log from './debug'
+import { log } from './logger'
 import { sleep } from './sleep'
 import { flash } from './flash'
 import { Events, itemsChanged as notifiyItemsChanged } from './events'

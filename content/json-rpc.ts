@@ -1,6 +1,6 @@
 declare const Zotero: any
 
-import * as log from './debug'
+import { log } from './logger'
 import { KeyManager } from './key-manager'
 import { getItemsAsync } from './get-items-async'
 import { AUXScanner } from './aux-scanner'

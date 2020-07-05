@@ -1,5 +1,3 @@
-// import * as log from './debug'
-
 export function get(name) {
   if (!name) return Zotero.Libraries.get(Zotero.Libraries.userLibraryID)
 

@@ -1,7 +1,6 @@
 import parse5 = require('parse5/lib/parser')
 const htmlParser = new parse5({ sourceCodeLocationInfo: true })
 import { titleCase } from './title-case'
-// import * as log from './debug'
 
 import charCategories = require('xregexp/tools/output/categories')
 

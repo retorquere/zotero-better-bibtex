@@ -10,7 +10,7 @@ declare const ZOTERO_CONFIG: any
 
 import { Preferences as Prefs } from './prefs'
 import { Serializer } from './serializer'
-import * as log from './debug'
+import { log } from './logger'
 import { DB as Cache, selector as cacheSelector } from './db/cache'
 import { DB } from './db/main'
 // import * as Extra from './extra'
@@ -243,6 +243,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
       translator: translator.label,
       output: options.path || '',
       localeDateOrder: Zotero.BetterBibTeX.localeDateOrder,
+      debugEnabled: Zotero.Debug.enabled ? 'true' : 'false',
     }).map(([k, v]) => `${encodeURI(k)}=${encodeURI(v)}`).join('&')
 
     this.workers.total += 1

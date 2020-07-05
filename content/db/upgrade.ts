@@ -4,7 +4,7 @@ import * as ZoteroDB from './zotero'
 import { upgradeExtra } from './upgrade-extra'
 // import { getItemsAsync } from '../get-items-async'
 import { DB as Cache } from './cache'
-import * as log from '../debug'
+import { log } from '../logger'
 import { flash } from '../flash'
 
 export async function upgrade(progress) {

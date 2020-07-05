@@ -3,7 +3,7 @@ declare const window: any
 declare const document: any
 declare const Components: any
 
-import * as log from './debug'
+import { log } from './logger'
 import { BetterBibTeX } from './better-bibtex'
 import { TeXstudio } from './tex-studio'
 import { patch as $patch$ } from './monkey-patch'

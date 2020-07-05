@@ -2,7 +2,7 @@ declare const Zotero: any
 
 import { Translator } from '../lib/translator'
 
-import { debug } from '../lib/debug'
+import { log } from '../../content/logger'
 import * as itemfields from '../../gen/items/items'
 import * as Extra from '../../content/extra'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
@@ -30,10 +30,10 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
     if (typeof postscript === 'string' && postscript.trim() !== '') {
       try {
         this.postscript = new Function('reference', 'item', 'Translator', 'Zotero', postscript) as (reference: any, item: any) => void
-        debug(`Installed postscript: ${JSON.stringify(postscript)}`)
+        log.debug(`Installed postscript: ${JSON.stringify(postscript)}`)
       } catch (err) {
         if (Translator.preferences.testing) throw err
-        debug(`Failed to compile postscript: ${err}\n\n${JSON.stringify(postscript)}`)
+        log.debug(`Failed to compile postscript: ${err}\n\n${JSON.stringify(postscript)}`)
       }
     }
   }

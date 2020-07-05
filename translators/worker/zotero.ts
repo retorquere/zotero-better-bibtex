@@ -5,7 +5,6 @@ importScripts('resource://gre/modules/osfile.jsm')
 declare const OS: any
 
 import XRegExp = require('xregexp')
-import { asciify, stringify } from '../../content/stringify'
 import { HTMLParser } from '../../content/markupparser'
 import * as DateParser from '../../content/dateparser'
 // import * as Extra from '../../content/extra'
@@ -13,29 +12,36 @@ import { qualityReport } from '../../content/qr-check'
 import { titleCase } from '../../content/title-case'
 import * as itemCreators from '../../gen/items/creators.json'
 import { client } from '../../content/client'
+import { log } from '../../content/logger'
 
 const ctx: DedicatedWorkerGlobalScope = self as any
 
-export const params: { version: string, platform: string, translator: string, output: string, localeDateOrder: string } = (ctx.location.search || '')
-  .replace(/^\?/, '') // remove leading question mark if present
-  .split('&') // split into k-v pairs
-  .filter(kv => kv) // there might be none
-  .map(kv => kv.split('=').map(decodeURIComponent)) // decode k & v
-  .reduce((acc, kv) => {
-    if (kv.length === 2) acc[kv[0]] = kv[1]
-    return acc
-  }, { version: '', platform: '', translator: '', output: '', localeDateOrder: '' })
+export const params = {
+  version: '',
+  platform: '',
+  translator: '',
+  output: '',
+  localeDateOrder: '',
+  debugEnabled: false,
+}
+for(const [key, value] of (new URLSearchParams(ctx.location.search)).entries()) {
+  if (key === 'debugEnabled') {
+    params[key] = value === 'true'
+  } else {
+    params[key] = value
+  }
+}
+log.prefix = params.translator
 
 class WorkerZoteroBetterBibTeX {
   public localeDateOrder: string
-  private timestamp: number
 
   public worker() {
     return true
   }
 
   public debugEnabled() {
-    return true
+    return params.debugEnabled
   }
 
   public cacheFetch(itemID: number) {
@@ -64,31 +70,6 @@ class WorkerZoteroBetterBibTeX {
 
   public titleCase(text) {
     return titleCase(text)
-  }
-
-  public debug(...msg) {
-    const now = Date.now()
-    const diff = typeof this.timestamp === 'number' ? now - this.timestamp : ''
-    this.timestamp = now
-
-    let _msg = ''
-    for (const m of msg) {
-      const type = typeof m
-      if (type === 'string' || m instanceof String || type === 'number' || type === 'undefined' || type === 'boolean' || m === null) {
-        _msg += m
-      } else if (m instanceof Error) {
-        _msg += `<Error: ${m.message || m.name}${m.stack ? `\n${m.stack}` : ''}>`
-      } else if (m && type === 'object' && m.message) { // mozilla exception, no idea on the actual instance type
-        // message,fileName,lineNumber,column,stack,errorCode
-        _msg += `<Error: ${m.message}#\n${m.stack}>`
-      } else {
-        _msg += stringify(m)
-      }
-
-      _msg += ' '
-    }
-
-    Zotero.debug(`+${diff} ${asciify(_msg)}`)
   }
 
   public parseHTML(text, options) {
@@ -304,7 +285,7 @@ export function onmessage(e: { data: BBTWorker.Config }) {
       Zotero.logError(err)
     }
   } else {
-    Zotero.BetterBibTeX.debug('unexpected message in worker:', e)
+    log.debug('unexpected message in worker:', e)
   }
   close()
 }

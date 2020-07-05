@@ -4,7 +4,7 @@ import { Translator } from '../lib/translator'
 
 import { Exporter } from './exporter'
 import { text2latex, replace_command_spacers } from './unicode_translator'
-import { debug } from '../lib/debug'
+import { log } from '../../content/logger'
 import { datefield } from './datefield'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
 import * as Extra from '../../content/extra'
@@ -327,10 +327,10 @@ export class Reference {
       postscript = `this.inPostscript = true; ${postscript}; this.inPostscript = false;`
       // workaround for https://github.com/Juris-M/zotero/issues/65
       Reference.prototype.postscript = new Function('reference', 'item', 'Translator', 'Zotero', postscript) as (reference: any, item: any) => boolean
-      debug(`Installed postscript: ${JSON.stringify(postscript)}`)
+      log.debug(`Installed postscript: ${JSON.stringify(postscript)}`)
     } catch (err) {
       if (Translator.preferences.testing) throw err
-      debug(`Failed to compile postscript: ${err}\n\n${JSON.stringify(postscript)}`)
+      log.debug(`Failed to compile postscript: ${err}\n\n${JSON.stringify(postscript)}`)
     }
   }
 
@@ -388,7 +388,7 @@ export class Reference {
         if (!item[name] || ef.type === 'date') {
           item[name] = value
         } else {
-          debug('extra fields: skipping', {name, value})
+          log.debug('extra fields: skipping', {name, value})
         }
         delete item.extraFields.kv[name]
       }
@@ -779,7 +779,7 @@ export class Reference {
       if (name) {
         this.override({ name, verbatim: name, orig: { inherit: true }, value, enc, replace, fallback: !replace })
       } else {
-        debug('Unmapped extra field', key, '=', value)
+        log.debug('Unmapped extra field', key, '=', value)
       }
     }
 
@@ -867,7 +867,7 @@ export class Reference {
       cache = this.postscript(this, this.item, Translator, Zotero)
     } catch (err) {
       if (Translator.preferences.testing && !Translator.preferences.ignorePostscriptErrors) throw err
-      debug('Reference.postscript failed:', err)
+      log.debug('Reference.postscript failed:', err)
       cache = false
     }
     this.cachable = this.cachable && (typeof cache !== 'boolean' || cache)

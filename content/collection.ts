@@ -1,5 +1,3 @@
-// import * as log from './debug'
-
 import { get as getLibrary } from './library'
 
 async function getCollection(parent, name, path, create) {

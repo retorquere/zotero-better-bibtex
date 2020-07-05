@@ -1,6 +1,6 @@
 declare const Zotero: any
 
-import * as log from './debug'
+import { log } from './logger'
 
 const seconds = 1000
 

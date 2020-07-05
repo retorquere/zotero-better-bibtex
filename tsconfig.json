@@ -13,7 +13,7 @@
     "sourceMap": false,
     "downlevelIteration": true,
     "resolveJsonModule": true,
-    "lib": [ "es2017", "dom", "webworker" ],
+    "lib": [ "es2017", "dom", "dom.iterable", "webworker" ],
     "typeRoots": [
       "./content/typings",
       "./translators/typings",

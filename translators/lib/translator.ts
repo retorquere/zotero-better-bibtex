@@ -90,7 +90,6 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
     caseSensitive: boolean
     sep: string
   }
-  public debugEnabled: boolean
 
   public stringCompare: (a: string, b: string) => number
 
@@ -106,8 +105,6 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
     this.options = this.header.displayOptions || {}
 
     this.stringCompare = (new Intl.Collator('en')).compare
-
-    this.debugEnabled = Zotero.BetterBibTeX.debugEnabled()
   }
 
   public init(mode: TranslatorMode) {

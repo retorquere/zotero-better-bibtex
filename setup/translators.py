@@ -117,7 +117,6 @@ interface ITranslator {
     caseSensitive: boolean
     sep: string
   }
-  debugEnabled: boolean
   BetterTeX?: boolean
   BetterCSL?: boolean
 

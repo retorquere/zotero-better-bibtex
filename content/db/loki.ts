@@ -6,7 +6,7 @@ Components.utils.import('resource://gre/modules/AsyncShutdown.jsm')
 import { patch as $patch$ } from '../monkey-patch'
 
 import AJV = require('ajv')
-import * as log from '../debug'
+import { log } from '../logger'
 // import { Preferences as Prefs } from '../prefs'
 
 // tslint:disable-next-line:variable-name

@@ -1,6 +1,6 @@
 import Kuroshiro from 'kuroshiro/src/core-sync'
 import _kuromojiLoader = require('kuromoji/src/loader/NodeDictionaryLoader')
-import * as log from '../debug'
+import { log } from '../logger'
 import { Preferences as Prefs } from '../prefs'
 import KuromojiAnalyzer from 'kuroshiro-analyzer-kuromoji/src/kuroshiro-analyzer-kuromoji-sync'
 

@@ -7,7 +7,7 @@ declare const Services: any
 
 import { Preferences as Prefs } from './prefs'
 import { Translators } from './translators'
-import * as log from './debug'
+import { log } from './logger'
 import fastChunkString = require('fast-chunk-string')
 
 import { DB } from './db/main'

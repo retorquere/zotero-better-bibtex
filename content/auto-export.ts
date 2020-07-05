@@ -5,7 +5,7 @@ declare const OS: any
 Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
 
-import * as log from './debug'
+import { log } from './logger'
 
 import { Events } from './events'
 import { DB } from './db/main'

@@ -3,7 +3,7 @@ declare const Zotero: any
 import { Translator } from './lib/translator'
 export { Translator }
 
-import { debug } from './lib/debug'
+import { log } from './../content/logger'
 import * as itemfields from '../gen/items/items'
 import { normalize } from './lib/normalize'
 const version = require('../gen/version.js')
@@ -76,7 +76,7 @@ export async function doImport() {
 
       const msg = `${valid}: unexpected ${source.itemType}.${field} for ${Translator.isZotero ? 'zotero' : 'juris-m'} in ${JSON.stringify(source)} / ${JSON.stringify(validFields)}`
       if (valid === false) {
-        debug(msg)
+        log.debug(msg)
       } else {
         throw new Error(msg)
       }
@@ -84,14 +84,12 @@ export async function doImport() {
 
     if (Array.isArray(source.extra)) source.extra = source.extra.join('\n')
 
-    debug('importing:', source)
+    log.debug('importing:', source)
     const item = new Zotero.Item()
     Object.assign(item, source)
 
     // marker so BBT-JSON can be imported without extra-field meddling
     item.extra = '\x1BBBT\x1B' + (item.extra || '')
-
-    item.bbt_no_extractExtraFields = true
 
     for (const att of item.attachments || []) {
       if (att.url) delete att.path
@@ -111,7 +109,7 @@ export async function doImport() {
     collection.zoteroCollection.name = collection.name
     collection.zoteroCollection.children = collection.items.filter(id => {
       if (items.has(id)) return true
-      debug(`Collection ${collection.key} has non-existent item ${id}`)
+      log.debug(`Collection ${collection.key} has non-existent item ${id}`)
       return false
     }).map(id => ({type: 'item', id}))
   }
@@ -119,7 +117,7 @@ export async function doImport() {
     if (collection.parent && data.collections[collection.parent]) {
       data.collections[collection.parent].zoteroCollection.children.push(collection.zoteroCollection)
     } else {
-      if (collection.parent) debug(`Collection ${collection.key} has non-existent parent ${collection.parent}`)
+      if (collection.parent) log.debug(`Collection ${collection.key} has non-existent parent ${collection.parent}`)
       collection.parent = false
     }
   }

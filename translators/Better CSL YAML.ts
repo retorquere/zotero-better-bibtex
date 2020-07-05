@@ -5,7 +5,7 @@ import YAML = require('js-yaml')
 import { Translator } from './lib/translator'
 export { Translator }
 
-import { debug } from './lib/debug'
+import { log } from './../content/logger'
 import { CSLExporter as Exporter } from './csl/csl'
 
 const htmlConverter = new class HTML {
@@ -68,7 +68,7 @@ const htmlConverter = new class HTML {
         break // ignore
 
       default:
-        debug(`unexpected tag '${tag.nodeName}'`)
+        log.debug(`unexpected tag '${tag.nodeName}'`)
     }
 
     for (const child of tag.childNodes) {

@@ -1,6 +1,6 @@
 declare const Zotero: any
 
-import * as log from './debug'
+import { log } from './logger'
 import { Events } from './events'
 
 import * as defaults from '../gen/preferences/defaults.json'

@@ -1,7 +1,7 @@
 declare const Components: any
 declare const Zotero: any
 
-import * as log from './debug'
+import { log } from './logger'
 import permutater = require('permutater')
 
 function permutations(word) {

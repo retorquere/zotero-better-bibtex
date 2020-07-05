@@ -4,7 +4,7 @@ declare const Zotero: any
 declare const Components: any
 declare const Services: any
 
-import * as log from '../debug'
+import { log } from '../logger'
 
 Components.utils.import('resource://gre/modules/osfile.jsm')
 

@@ -6,7 +6,7 @@ declare const Zotero_Duplicates_Pane: any
 import { AutoExport } from './auto-export'
 import { sleep } from './sleep'
 import * as ZoteroDB from './db/zotero'
-import * as log from './debug'
+import { log } from './logger'
 import { KeyManager } from './key-manager'
 import { Translators } from './translators'
 import { Formatter as CAYWFormatter } from './cayw/formatter'

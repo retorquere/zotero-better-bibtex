@@ -1,7 +1,7 @@
 declare const Zotero: any
 
 import { Translator } from '../lib/translator'
-import { debug } from '../lib/debug'
+import { log } from '../../content/logger'
 
 import HE = require('he')
 import * as unicode2latex from 'unicode2latex'
@@ -207,7 +207,7 @@ const htmlConverter = new class HTMLConverter {
         break // ignore
 
       default:
-        debug(`unexpected tag '${tag.nodeName}' (${Object.keys(tag)})`)
+        log.debug(`unexpected tag '${tag.nodeName}' (${Object.keys(tag)})`)
     }
 
     if (latex !== '...') latex = this.embrace(latex, latex.match(/^\\[a-z]+{\.\.\.}$/))
@@ -295,7 +295,7 @@ const htmlConverter = new class HTMLConverter {
               }
 
               // support for multiple-diacritics is taken from tipa, which doesn't support more than 2
-              if (m[0].length > 3) debug('discarding diacritics > 2 from', m[0]) // tslint:disable-line:no-magic-numbers
+              if (m[0].length > 3) log.debug('discarding diacritics > 2 from', m[0]) // tslint:disable-line:no-magic-numbers
             }
           }
 

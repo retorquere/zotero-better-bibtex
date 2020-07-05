@@ -9,7 +9,7 @@ import { transliterate } from 'transliteration'
 
 import { flash } from '../flash'
 import { Preferences as Prefs } from '../prefs'
-import * as log from '../debug'
+import { log } from '../logger'
 import { JournalAbbrev } from '../journal-abbrev'
 import { kuroshiro } from './kuroshiro'
 import * as Extra from '../extra'

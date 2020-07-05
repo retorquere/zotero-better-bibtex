@@ -4,7 +4,7 @@ import { Preferences as Prefs } from './prefs'
 import { Events } from './events'
 import { client } from './client'
 
-import * as log from './debug'
+import { log } from './logger'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let JournalAbbrev = new class { // tslint:disable-line:variable-name

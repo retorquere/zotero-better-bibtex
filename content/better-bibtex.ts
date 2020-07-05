@@ -16,7 +16,7 @@ import * as Extra from './extra'
 Components.utils.import('resource://gre/modules/AddonManager.jsm')
 declare const AddonManager: any
 
-import * as log from './debug'
+import { log } from './logger'
 import { Events, itemsChanged as notifiyItemsChanged } from './events'
 
 import { Translators } from './translators'
@@ -236,7 +236,6 @@ import * as DateParser from './dateparser'
 import { qualityReport } from './qr-check'
 import { titleCase } from './title-case'
 import { HTMLParser } from './markupparser'
-import { Logger } from './logger'
 
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   worker(sandbox) { return false },
@@ -260,8 +259,6 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   },
   // extractFields(sandbox, item) { return Extra.get(item.extra) },
   debugEnabled(sandbox) { return Zotero.Debug.enabled },
-
-  debug(sandbox, prefix, ...msg) { Logger.log(prefix, ...msg) },
 
   cacheFetch(sandbox, itemID, options, prefs) {
     const collection = Cache.getCollection(sandbox.translator[0].label)
@@ -326,7 +323,6 @@ Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
     }
     return HTMLParser.parse(text.toString(), options)
   },
-  debug(sandbox, prefix, ...msg) { Logger.log(prefix, ...msg) },
   parseDate(sandbox, date) { return DateParser.parse(date, Zotero.BetterBibTeX.localeDateOrder) },
 }
 
@@ -628,6 +624,10 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
     this.strings = this.document.getElementById('zotero-better-bibtex-strings')
 
     if (!this.loaded) await this.init()
+  }
+
+  public debugEnabled() {
+    return Zotero.Debug.enabled
   }
 
   public getString(id, params = null) {

@@ -2,7 +2,7 @@ declare const Zotero: any
 
 import { pathSearch } from './path-search'
 import { KeyManager } from './key-manager'
-import * as log from './debug'
+import { log } from './logger'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let TeXstudio = new class { // tslint:disable-line:variable-name
