@@ -32,7 +32,7 @@ export let log = new class Logger {
       msg = _msg
     }
 
-    return ` +${diff}} ${asciify(msg)}`
+    return ` +${diff} ${asciify(msg)}`
   }
 
   public debug(...msg) {

@@ -318,11 +318,11 @@ export function doExport() {
   Zotero.write('\n')
 }
 
-export async function detectImport() {
+export function detectImport() {
   let detected = Zotero.getHiddenPref('better-bibtex.import')
   if (detected) {
     const input = Zotero.read(102400) // tslint:disable-line:no-magic-numbers
-    const bib = await bibtexParser.chunker(input, { max_entries: 1, async: true })
+    const bib = bibtexParser.chunker(input, { max_entries: 1 })
     detected = bib.find(chunk => chunk.entry)
   }
   log.debug('BBT detectImport:', detected)

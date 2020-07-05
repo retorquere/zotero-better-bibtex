@@ -97,6 +97,7 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
 
   constructor() {
     this.header = ZOTERO_TRANSLATOR_INFO
+    // log.prefix = this.header.label
 
     this[this.header.label.replace(/[^a-z]/ig, '')] = true
     this.BetterTeX = this.BetterBibTeX || this.BetterBibLaTeX

@@ -13,6 +13,7 @@ import { titleCase } from '../../content/title-case'
 import * as itemCreators from '../../gen/items/creators.json'
 import { client } from '../../content/client'
 import { log } from '../../content/logger'
+log.prefix + = ' worker'
 
 const ctx: DedicatedWorkerGlobalScope = self as any
 
@@ -31,7 +32,6 @@ for(const [key, value] of (new URLSearchParams(ctx.location.search)).entries()) 
     params[key] = value
   }
 }
-log.prefix = params.translator
 
 class WorkerZoteroBetterBibTeX {
   public localeDateOrder: string
