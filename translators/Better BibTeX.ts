@@ -1,5 +1,7 @@
 declare const Zotero: any
 
+import { log } from '../content/logger'
+
 const toWordsOrdinal = require('number-to-words/src/toWordsOrdinal')
 function edition(n) {
   if (typeof n === 'number' || (typeof n === 'string' && n.match(/^[0-9]+$/))) return toWordsOrdinal(n).replace(/^\w/, c => c.toUpperCase())
@@ -12,7 +14,6 @@ export { Translator }
 
 import { Reference } from './bibtex/reference'
 import { Exporter } from './bibtex/exporter'
-import { log } from './../content/logger'
 import * as escape from '../content/escape'
 
 import * as bibtexParser from '@retorquere/bibtex-parser'
@@ -325,7 +326,6 @@ export function detectImport() {
     const bib = bibtexParser.chunker(input, { max_entries: 1 })
     detected = bib.find(chunk => chunk.entry)
   }
-  log.debug('BBT detectImport:', detected)
   return detected
 }
 
@@ -560,7 +560,7 @@ class ZoteroItem {
 
   protected $volume(value) { return this.set('volume', value) }
 
-  protected $doi(value) { return this.set('DOI', this.unwrap(value)) }
+  protected $doi(value) { return this.set('DOI', value) }
 
   protected $abstract(value) { return this.set('abstractNote', value) }
 
@@ -615,8 +615,6 @@ class ZoteroItem {
   // to read the manual apparently.
   protected $files(value) { return this.$file(value) }
   protected $file(value) {
-    value = this.unwrap(value)
-
     const replace = {
       '\\;':    '\u0011',
       '\u0011': ';',
@@ -646,7 +644,7 @@ class ZoteroItem {
           break
 
         default:
-          log.debug(`attachment import: Unexpected number of parts in file record '${record}': ${parts.length}`)
+          log.error(`attachment import: Unexpected number of parts in file record '${record}': ${parts.length}`)
           // might be absolute windows path, just make Zotero try
           att.path = parts.join(':')
           break
@@ -726,7 +724,7 @@ class ZoteroItem {
     let m, url
 
     // no escapes needed in an verbatim field but people do it anyway
-    value = this.unwrap(value.replace(/\\/g, ''))
+    value = value.replace(/\\/g, '')
 
     if (m = value.match(/^(\\url{)(https?:\/\/|mailto:)}$/i)) {
       url = m[2]
@@ -809,7 +807,7 @@ class ZoteroItem {
   protected $archiveprefix(value, field) { return this.$eprinttype(value, field) }
 
   protected $eprint(value, field) {
-    this.eprint[field] = this.unwrap(value)
+    this.eprint[field] = value
     return true
   }
   protected $eprintclass(value, field) { return this.$eprint(value, field) }
@@ -826,14 +824,8 @@ class ZoteroItem {
     return this.set(field, value)
   }
 
-  // #1562
-  private unwrap(value) {
-    const m = (value || '').match(/^{(.*)}$/)
-    return m ? m[1] : value
-  }
-
   private error(err) {
-    log.debug(err)
+    log.error(err)
     throw new Error(err)
   }
 
@@ -1082,7 +1074,6 @@ async function _fetch(url): Promise<{ json: () => Promise<any> }> {
 
 export async function doImport() {
   Translator.init('import')
-  if (!Translator.preferences.import) log.debug('detectImport disabled, I should not be here')
 
   const unabbreviate = Translator.preferences.importJabRefAbbreviations ? await (await _fetch('resource://zotero-better-bibtex/unabbrev/unabbrev.json')).json() : null
   const strings = Translator.preferences.importJabRefStrings ? await (await _fetch('resource://zotero-better-bibtex/unabbrev/strings.json')).json() : null
@@ -1098,7 +1089,7 @@ export async function doImport() {
   const bib = await bibtexParser.parse(input, {
     async: true,
     caseProtection: (Translator.preferences.importCaseProtection as 'as-needed'), // we are actually sure it's a valid enum value; stupid workaround for TS2322: Type 'string' is not assignable to type 'boolean | "as-needed" | "strict"'.
-    errorHandler: (Translator.preferences.testing ? undefined : function(err) { log.debug(err) }), // tslint:disable-line:only-arrow-functions
+    errorHandler: (Translator.preferences.testing ? undefined : function(err) { log.error(err) }), // tslint:disable-line:only-arrow-functions
     markup: (Translator.csquotes ? { enquote: Translator.csquotes } : {}),
     sentenceCase: Translator.preferences.importSentenceCase !== 'off',
     guessAlreadySentenceCased: Translator.preferences.importSentenceCase === 'on+guess',
@@ -1127,7 +1118,7 @@ export async function doImport() {
     try {
       await (new ZoteroItem(id, bibtex, jabref, errors)).complete()
     } catch (err) {
-      log.debug('bbt import error:', err)
+      log.error('bbt import error:', err)
       errors.push({ message: '' + err.message })
     }
 

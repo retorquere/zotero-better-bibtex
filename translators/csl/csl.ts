@@ -2,10 +2,11 @@ declare const Zotero: any
 
 import { Translator } from '../lib/translator'
 
-import { log } from '../../content/logger'
 import * as itemfields from '../../gen/items/items'
 import * as Extra from '../../content/extra'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
+import { log } from '../../content/logger'
+import { worker } from '../../content/worker'
 
 const validCSLTypes: string[] = require('../../gen/items/csl-types.json')
 
@@ -33,7 +34,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
         log.debug(`Installed postscript: ${JSON.stringify(postscript)}`)
       } catch (err) {
         if (Translator.preferences.testing) throw err
-        log.debug(`Failed to compile postscript: ${err}\n\n${JSON.stringify(postscript)}`)
+        log.error(`Failed to compile postscript: ${err}\n\n${JSON.stringify(postscript)}`)
       }
     }
   }
@@ -63,7 +64,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       // until export translators can be async, itemToCSLJSON must run before the translator starts, so it actually doesn't do anything in a worker context
       // so re-assigne the extracted extra here
       let csl = Zotero.Utilities.itemToCSLJSON(item)
-      if (Zotero.BetterBibTeX.worker()) csl.note = item.extra || undefined
+      if (worker) csl.note = item.extra || undefined
 
       // 637
       /* TODO: is this still needed with the new extra-parser?

@@ -3,11 +3,11 @@ declare const Zotero: any
 import { Translator } from './lib/translator'
 export { Translator }
 
-import { log } from './../content/logger'
 import * as itemfields from '../gen/items/items'
 import { normalize } from './lib/normalize'
 const version = require('../gen/version.js')
 import { stringify } from '../content/stringify'
+import { log } from '../content/logger'
 
 const chunkSize = 0x100000
 
@@ -76,7 +76,7 @@ export async function doImport() {
 
       const msg = `${valid}: unexpected ${source.itemType}.${field} for ${Translator.isZotero ? 'zotero' : 'juris-m'} in ${JSON.stringify(source)} / ${JSON.stringify(validFields)}`
       if (valid === false) {
-        log.debug(msg)
+        log.error(msg)
       } else {
         throw new Error(msg)
       }
@@ -84,7 +84,6 @@ export async function doImport() {
 
     if (Array.isArray(source.extra)) source.extra = source.extra.join('\n')
 
-    log.debug('importing:', source)
     const item = new Zotero.Item()
     Object.assign(item, source)
 
@@ -109,7 +108,7 @@ export async function doImport() {
     collection.zoteroCollection.name = collection.name
     collection.zoteroCollection.children = collection.items.filter(id => {
       if (items.has(id)) return true
-      log.debug(`Collection ${collection.key} has non-existent item ${id}`)
+      log.error(`Collection ${collection.key} has non-existent item ${id}`)
       return false
     }).map(id => ({type: 'item', id}))
   }

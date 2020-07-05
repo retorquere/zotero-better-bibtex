@@ -1,12 +1,13 @@
 declare const Zotero: any
+declare const Translator: any
 
 import { stringify, asciify } from './stringify'
+import { worker } from './worker'
 
-export let log = new class Logger {
-  public prefix = 'better-bibtex'
-  private timestamp: number
+class Logger {
+  protected timestamp: number
 
-  private format(msg) {
+  private format(error, msg) {
     let diff = null
     const now = Date.now()
     if (this.timestamp) diff = now - this.timestamp
@@ -32,14 +33,18 @@ export let log = new class Logger {
       msg = _msg
     }
 
-    return ` +${diff} ${asciify(msg)}`
+    const translator = typeof Translator !== 'undefined' && Translator.header.label
+    const prefix = ['better-bibtex', translator, error, worker ? '(worker)' : ''].filter(p => p).join(' ')
+    return `{${prefix}} +${diff} ${asciify(msg)}`
   }
 
   public debug(...msg) {
-    if (Zotero.BetterBibTeX.debugEnabled()) Zotero.debug(this.prefix + this.format(msg))
+    if (Zotero.BetterBibTeX.debugEnabled()) Zotero.debug(this.format('', msg))
   }
 
   public error(...msg) {
-    (Zotero.logError || Zotero.debug)(`${this.prefix} error:` + this.format(msg))
+    (Zotero.logError || Zotero.debug)(this.format('error', msg))
   }
 }
+
+export const log = new Logger

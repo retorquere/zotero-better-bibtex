@@ -238,8 +238,6 @@ import { titleCase } from './title-case'
 import { HTMLParser } from './markupparser'
 
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
-  worker(sandbox) { return false },
-
   qrCheck(sandbox, value, test, params = null) { return qualityReport(value, test, params) },
 
   parseDate(sandbox, date) { return DateParser.parse(date, Zotero.BetterBibTeX.localeDateOrder) },

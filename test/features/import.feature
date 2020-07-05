@@ -114,6 +114,12 @@ Scenario: Edition Numbers in BibTeX Exports #1446
   When I import 1 reference from "export/*.bibtex"
   Then the library should match "export/*.roundtrip.json"
 
+Scenario: Options to use default import process? #1562
+  Given I set preference .importExtra to false
+  And I set preference .importCitationKey to false
+  When I import 1 reference from "import/*.bib"
+  Then the library should match "import/*.json"
+
 @717
 Scenario: Jabref groups import does not work #717
   When I import 3 references from "import/*.2.10.bib" into a new collection

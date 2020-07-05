@@ -1,0 +1,70 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "dmy",
+    "options": {},
+    "preferences": {
+      "citekeyFormat": "[auth][year]",
+      "importCitationKey": false,
+      "importExtra": false
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1016/j.buildenv.2018.07.033",
+      "ISSN": "0360-1323",
+      "abstractNote": "Given climate change predictions of a warmer world, there is growing concern that insulation-led improvements in building fabric aimed at reducing carbon emissions will exacerbate overheating. If true, this would seriously affect building regulations all over the world which have moved towards increased insulation regimes. Despite extensive research, the literature has failed to resolve the controversy of insulation performance, primarily due to varied scope and limited comparability of results. We approach this problem through carefully constructed pairwise comparisons designed to isolate the effect of insulation on overheating. We encompass the complete range of relevant variables: latitude, climate, insulation, thermal mass, glazing ratio, shading, occupancy, infiltration, ventilation, orientation, and thermal comfort models - creating 576,000 building variants. Data mining techniques are implemented in a novel framework to analyse this large dataset. To provide confidence, the modelling was validated against data collected from well-insulated dwellings. Our results demonstrate that all parameters have a significant impact on overheating risk. Although insulation is seen to both decrease and increase overheating, depending on the influence of other parameters, parameter ranking shows that insulation only accounts for up to 5% of overall overheating response. Indeed, in cases that are not already overheating through poor design, there is a strong overall tendency for increased insulation to reduce overheating. These results suggest that, in cases with acceptable overheating levels (below 3.7%), the use of improved insulation levels as part of a national climate change mitigation policy is not only sensible, but also helps deliver better indoor thermal environments.",
+      "citationKey": "Fosas2018",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Daniel",
+          "lastName": "Fosas"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "David A.",
+          "lastName": "Coley"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Sukumar",
+          "lastName": "Natarajan"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Manuel",
+          "lastName": "Herrera"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Miguel",
+          "lastName": "Fosas de Pando"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Alfonso",
+          "lastName": "Ramaho-Gonzalez"
+        }
+      ],
+      "date": "OCT 1 2018",
+      "extra": [
+        "Publisher: PERGAMON-ELSEVIER SCIENCE LTD",
+        "Type: Article"
+      ],
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "language": "English",
+      "pages": "740-759",
+      "publicationTitle": "BUILDING AND ENVIRONMENT",
+      "tags": [
+        {
+          "tag": "Thermal comfort; Overheating; Energy policy; Insulation; Building simulation"
+        }
+      ],
+      "title": "Mitigation versus adaptation: Does insulating dwellings increase overheating risk?",
+      "volume": "143"
+    }
+  ]
+}

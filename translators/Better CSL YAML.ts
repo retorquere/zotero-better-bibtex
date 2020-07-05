@@ -5,8 +5,8 @@ import YAML = require('js-yaml')
 import { Translator } from './lib/translator'
 export { Translator }
 
-import { log } from './../content/logger'
 import { CSLExporter as Exporter } from './csl/csl'
+import { log } from '../content/logger'
 
 const htmlConverter = new class HTML {
   private markdown: string
@@ -68,7 +68,7 @@ const htmlConverter = new class HTML {
         break // ignore
 
       default:
-        log.debug(`unexpected tag '${tag.nodeName}'`)
+        log.error(`unexpected tag '${tag.nodeName}'`)
     }
 
     for (const child of tag.childNodes) {

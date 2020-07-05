@@ -4,11 +4,11 @@ import { Translator } from '../lib/translator'
 
 import { Exporter } from './exporter'
 import { text2latex, replace_command_spacers } from './unicode_translator'
-import { log } from '../../content/logger'
 import { datefield } from './datefield'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
 import * as Extra from '../../content/extra'
 import * as CSL from '../../gen/citeproc'
+import { log } from '../../content/logger'
 
 import { arXiv } from '../../content/arXiv'
 
@@ -330,7 +330,7 @@ export class Reference {
       log.debug(`Installed postscript: ${JSON.stringify(postscript)}`)
     } catch (err) {
       if (Translator.preferences.testing) throw err
-      log.debug(`Failed to compile postscript: ${err}\n\n${JSON.stringify(postscript)}`)
+      log.error(`Failed to compile postscript: ${err}\n\n${JSON.stringify(postscript)}`)
     }
   }
 
@@ -867,7 +867,7 @@ export class Reference {
       cache = this.postscript(this, this.item, Translator, Zotero)
     } catch (err) {
       if (Translator.preferences.testing && !Translator.preferences.ignorePostscriptErrors) throw err
-      log.debug('Reference.postscript failed:', err)
+      log.error('Reference.postscript failed:', err)
       cache = false
     }
     this.cachable = this.cachable && (typeof cache !== 'boolean' || cache)
