@@ -13,7 +13,7 @@ import { titleCase } from '../../content/title-case'
 import * as itemCreators from '../../gen/items/creators.json'
 import { client } from '../../content/client'
 import { log } from '../../content/logger'
-log.prefix + = ' worker'
+log.prefix += ' worker'
 
 const ctx: DedicatedWorkerGlobalScope = self as any
 
