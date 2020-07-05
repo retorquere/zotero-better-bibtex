@@ -136,6 +136,7 @@ const htmlConverter = new class HTMLConverter {
       case 'i':
       case 'em':
       case 'italic':
+      case 'emphasis':
         latex = '\\emph{...}'
         break
 
@@ -192,6 +193,10 @@ const htmlConverter = new class HTMLConverter {
       case 'sc':
       case 'nc':
         break // ignore, handled by the relax/nocase/smallcaps handler below
+
+      case 'header':
+      case 'section':
+        break // not really a good analogue for this
 
       case 'td':
       case 'th':

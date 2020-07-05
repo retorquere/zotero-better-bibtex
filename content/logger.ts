@@ -6,6 +6,7 @@ import { worker } from './worker'
 
 class Logger {
   protected timestamp: number
+  private logError = (typeof Zotero.logError === 'function')
 
   private format(error, msg) {
     let diff = null
@@ -43,7 +44,12 @@ class Logger {
   }
 
   public error(...msg) {
-    (Zotero.logError || Zotero.debug)(this.format('error', msg))
+    const formatted = this.format('error', msg)
+    if (logError) {
+      Zotero.logError(formatted)
+    } else {
+      Zotero.debug(formatted)
+    }
   }
 }
 
