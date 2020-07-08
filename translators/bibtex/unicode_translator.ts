@@ -203,6 +203,7 @@ const htmlConverter = new class HTMLConverter {
         latex = ' ... '
         break
 
+      case '#comment':
       case '#document':
       case '#document-fragment':
       case 'tbody':
