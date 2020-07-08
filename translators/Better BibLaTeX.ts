@@ -282,6 +282,7 @@ export function doExport() {
 
   let item: ISerializedItem
   while (item = Exporter.nextItem()) {
+    Zotero.debug(`exporting ${item.citationKey}`)
     const ref = new Reference(item)
 
     if (['bookSection', 'chapter'].includes(item.referenceType) && ref.hasCreator('bookAuthor')) ref.referencetype = 'inbook'
