@@ -115,7 +115,7 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
 
       // this pseudo-html is a PITA to parse
       this.html = this.html.replace(/<(\/?)([^<>]*)>/g, (match, close, body) => {
-        if (body.match(/^(span|nc|sc|i|b|sup|sub|script)($|\n|\s)/i)) return match
+        if (body.match(/^(emphasis|span|nc|sc|i|b|sup|sub|script)($|\n|\s)/i)) return match
 
         // I should have used script from the start
         // I think pre follows different rules where it still interprets what's inside; script just gives whatever is in there as-is
@@ -270,6 +270,12 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
     for (const cls of (_node.attr.class || '').trim().split(/\s+/)) {
       if (cls) _node.class[cls] = true
     }
+    switch (node.type?.toLowerCase()) {
+      case 'smallcaps':
+        _node.attr.smallcaps = 'smallcaps'
+        break
+    }
+    if (node.type) _node.class[node.type] = true
 
     switch (node.nodeName) {
       case '#document':
@@ -281,6 +287,10 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
       case 'nc':
         _node.nodeName = 'span'
         _node.attr.nocase = 'nocase'
+        break
+
+      case 'emphasis':
+        _node.nodeName = 'i'
         break
 
       case 'sc':
