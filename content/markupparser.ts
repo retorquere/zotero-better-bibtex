@@ -113,26 +113,15 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
     if (!options.html) {
       this.html = this.html.replace(/&/g, '&amp;')
 
-      this.html = this.html.replace(/<(\/?)([a-z]+)/g, (match, close, tag) => {
-        switch (tag.toLowerCase()) {
-          case 'span':
-          case 'nc':
-          case 'sc':
-          case 'i':
-          case 'b':
-          case 'sup':
-          case 'sub':
-          case 'script':
-            return match
+      // this pseudo-html is a PITA to parse
+      this.html = this.html.replace(/<(\/?)([^<>]*)>/g, (match, close, body) => {
+        if (body.match(/^(span|nc|sc|i|b|sup|sub|script)($|\n|\s)/i)) return match
 
-          case 'pre':
-            // I should have used script from the start
-            // I think pre follows different rules where it still interprets what's inside; script just gives whatever is in there as-is
-            return `<${close || ''}script`
+        // I should have used script from the start
+        // I think pre follows different rules where it still interprets what's inside; script just gives whatever is in there as-is
+        if (body.match(/^pre$/i)) return `<${close || ''}script>`
 
-          default:
-            return `&lt;${close || ''}${tag}`
-        }
+        return match.replace(/</g, '&lt;').replace(/>/g, '&gt;')
       })
     }
 

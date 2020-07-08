@@ -1,0 +1,73 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "mdy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "autoAbbrevStyle": "http://www.zotero.org/styles/annual-review-of-political-science",
+      "autoExport": "off",
+      "automaticTags": false,
+      "auxImport": true,
+      "biblatexExtendedNameFormat": true,
+      "citeCommand": "@",
+      "citekeyFormat": "[auth:lower]-[veryshorttitle:lower]-[year]",
+      "itemObserverDelay": 100,
+      "keyConflictPolicy": "change",
+      "keyScope": "global",
+      "qualityReport": true,
+      "quickCopyMode": "citekeys",
+      "quickCopyPandocBrackets": true,
+      "skipFields": "abstract, note, file, tag, attachment"
+    }
+  },
+  "items": [
+    {
+      "abstractNote": "Social network sites like MySpace and Facebook serve as \"networked publics.\" As with unmediated publics like parks and malls, youth use networked publics to gather, socialize with their peers, and make sense of and help build the culture around them. This article examines American youth engagement in networked publics and considers how properties unique to such mediated environments (e.g., persistence, searchability, replicability, and invisible audiences) affect the ways in which youth interact with one another. Ethnographic data is used to analyze how youth recognize these structural properties and find innovative ways of making these systems serve their purposes. Issues like privacy and impression management are explored through the practices of teens and youth participation in social network sites is situated in a historical discussion of youth's freedom and mobility in the United States.",
+      "accessDate": "2018-10-25T14:22:28Z",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "path": "/Users/jrennstich/Zotero/storage/7LLFHW4W/!boyd_2007_Why Youth (Heart) Social Network Sites.pdf",
+          "title": "!boyd_2007_Why Youth (Heart) Social Network Sites.pdf",
+          "uri": "http://zotero.org/users/3959/items/7LLFHW4W"
+        },
+        {
+          "itemType": "attachment",
+          "path": "/Users/jrennstich/Zotero/storage/3AQ78FYQ/papers.html",
+          "title": "Snapshot",
+          "uri": "http://zotero.org/users/3959/items/3AQ78FYQ"
+        }
+      ],
+      "citationKey": "boyd-why-2007",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "<!>danah",
+          "lastName": "<!>boyd"
+        }
+      ],
+      "date": "2007/12/03",
+      "itemID": 1,
+      "itemType": "report",
+      "language": "en",
+      "libraryCatalog": "papers.ssrn.com",
+      "number": "ID 1518924",
+      "place": "Rochester, NY",
+      "publisher": "Social Science Research Network",
+      "shortTitle": "Why Youth (Heart) Social Network Sites",
+      "tags": [
+        {
+          "tag": "teenagers",
+          "type": 1
+        }
+      ],
+      "title": "Why Youth (Heart) Social Network Sites: The Role of Networked Publics in Teenage Social Life",
+      "type": "SSRN Scholarly Paper",
+      "url": "https://papers.ssrn.com/abstract=1518924"
+    }
+  ]
+}
