@@ -432,12 +432,11 @@ with open(os.path.join(ITEMS, 'items.ts'), 'w') as f:
   for itemType in jsonpath.parse('*.itemTypes[*]').find(SCHEMA):
     client = str(itemType.full_path).split('.')[0]
     for field in itemType.value.fields:
-      field = field.get('baseField', field.field)
-
-      if not field in valid.field[itemType.value.itemType]:
-        valid.field[itemType.value.itemType][field] = client
-      elif valid.field[itemType.value.itemType][field] != client:
-        valid.field[itemType.value.itemType][field] = 'true'
+      for _field in [field.field, field.get('baseField', field.field)]:
+        if not _field in valid.field[itemType.value.itemType]:
+          valid.field[itemType.value.itemType][_field] = client
+        elif valid.field[itemType.value.itemType][_field] != client:
+          valid.field[itemType.value.itemType][_field] = 'true'
 
   DG = nx.DiGraph()
   for field in jsonpath.parse('*.itemTypes[*].fields[*]').find(SCHEMA):
@@ -460,6 +459,8 @@ with open(os.path.join(ITEMS, 'items.ts'), 'w') as f:
     print(template('items/items.ts.mako').render(valid=valid, aliases=aliases).strip(), file=f)
   except:
     print(exceptions.text_error_template().render())
+  #stringizer = lambda x: DG.nodes[x]['name'] if x in DG.nodes else x
+  nx.write_gml(DG, 'fields.gml') # , stringizer)
 
 print('  writing csl-types')
 with open(os.path.join(ITEMS, 'csl-types.json'), 'w') as f:
