@@ -6,129 +6,201 @@
     "AdoptionDate**"
   ],
   [
+    "Album**",
     "ApplicationNumber",
     "Archive",
-    "ArchiveLocation",
-    "ArtworkSize"
+    "ArchiveLocation"
   ],
   [
+    "ArtworkMedium",
+    "ArtworkSize",
     "AssemblyNumber**",
-    "Assignee",
+    "Assignee"
+  ],
+  [
+    "AudioFileType",
+    "AudioRecordingFormat",
+    "BillNumber",
+    "BlogTitle"
+  ],
+  [
+    "BookTitle",
     "CallNumber",
+    "CaseName",
     "Code"
   ],
   [
     "CodeNumber",
-    "Committee",
-    "ConferenceDate**",
-    "ConferenceName"
+    "CodePages",
+    "CodeVolume",
+    "Committee"
   ],
   [
-    "Country",
+    "Company",
+    "ConferenceDate**",
+    "ConferenceName",
+    "Country"
+  ],
+  [
     "Court",
     "DOI",
-    "Date"
+    "Date",
+    "DateAmended**"
   ],
   [
-    "DateAmended**",
+    "DateDecided",
+    "DateEnacted",
+    "DictionaryTitle",
+    "Distributor"
+  ],
+  [
+    "DocketNumber",
     "DocumentName**",
-    "Edition",
-    "Extra"
+    "DocumentNumber",
+    "Edition"
   ],
   [
-    "FilingDate",
+    "EncyclopediaTitle",
+    "EpisodeNumber",
+    "Extra",
+    "FilingDate"
+  ],
+  [
+    "FirstPage",
+    "ForumTitle",
     "GazetteFlag**",
-    "Genre**",
-    "History"
+    "Genre"
   ],
   [
+    "History",
     "ISBN",
     "ISSN",
-    "Institution**",
-    "Issue"
+    "Institution"
   ],
   [
-    "IssuingAuthority",
+    "InterviewMedium",
+    "Issue",
+    "IssueDate",
+    "IssuingAuthority"
+  ],
+  [
     "JournalAbbreviation",
     "Jurisdiction**",
+    "Label",
     "Language"
   ],
   [
     "LegalStatus",
     "LegislativeBody",
-    "LibraryCatalog",
-    "Medium"
+    "LetterType",
+    "LibraryCatalog"
   ],
   [
-    "MeetingName",
+    "ManuscriptType",
+    "MapType",
+    "Medium",
+    "MeetingName"
+  ],
+  [
     "MeetingNumber**",
-    "NewsCaseDate**",
-    "NumPages"
+    "NameOfAct",
+    "Network",
+    "NewsCaseDate**"
   ],
   [
+    "NumPages",
     "Number",
     "NumberOfVolumes",
-    "OpeningDate**",
-    "Opus**"
+    "OpeningDate**"
   ],
   [
+    "Opus**",
     "OriginalDate**",
     "Pages",
-    "ParentTreaty**",
-    "Place"
+    "ParentTreaty**"
+  ],
+  [
+    "PatentNumber",
+    "Place",
+    "PostType",
+    "PresentationType"
   ],
   [
     "PriorityDate**",
     "PriorityNumbers",
-    "ProgrammingLanguage",
-    "PublicationDate**"
+    "ProceedingsTitle",
+    "ProgramTitle"
   ],
   [
-    "PublicationNumber**",
+    "ProgrammingLanguage",
+    "PublicLawNumber",
+    "PublicationDate**",
+    "PublicationNumber**"
+  ],
+  [
     "PublicationTitle",
     "Publisher",
-    "References"
+    "References",
+    "RegnalYear**"
   ],
   [
-    "RegnalYear**",
+    "RegulationType**",
+    "RegulatoryBody**",
     "Reign**",
-    "Reporter*",
-    "ResolutionLabel**"
+    "Release**"
   ],
   [
+    "ReportNumber",
+    "ReportType",
+    "Reporter",
+    "ReporterVolume"
+  ],
+  [
+    "ResolutionLabel**",
     "Rights",
     "RunningTime",
-    "Scale",
-    "Section"
+    "Scale"
   ],
   [
+    "Section",
     "Series",
     "SeriesNumber",
-    "SeriesText",
-    "SeriesTitle"
+    "SeriesText"
   ],
   [
+    "SeriesTitle",
     "Session",
-    "ShortTitle",
+    "SessionType**",
+    "ShortTitle"
+  ],
+  [
     "SigningDate**",
-    "Status**"
+    "Status**",
+    "Studio",
+    "Subject"
   ],
   [
     "SupplementName**",
     "System",
-    "Title",
-    "Type"
+    "ThesisType",
+    "Title"
   ],
   [
-    "Url",
+    "TreatyNumber**",
+    "Type",
+    "University",
+    "Url"
+  ],
+  [
     "VersionNumber",
+    "VideoRecordingFormat",
     "Volume",
     "VolumeTitle**"
   ],
   [
+    "WebsiteTitle",
+    "WebsiteType",
     "YearAsVolume**",
-    "",
-    "",
     ""
   ]
 ]
