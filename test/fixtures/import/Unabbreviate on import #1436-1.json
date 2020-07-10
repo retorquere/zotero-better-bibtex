@@ -517,7 +517,7 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "localeDateOrder": "ymd",
+    "localeDateOrder": "dmy",
     "options": {},
     "preferences": {
       "citekeyFormat": "[auth][year]"
@@ -4822,7 +4822,7 @@
       "date": "2016-10",
       "extra": [
         "Citation Key: naka2016",
-        "tex.isbn: 8175753374"
+        "ISBN: 8175753374"
       ],
       "issue": "10",
       "itemID": 102,
@@ -6738,7 +6738,7 @@
       "date": "2000",
       "extra": [
         "Citation Key: bandic2000",
-        "tex.isbn: 6263954817"
+        "ISBN: 6263954817"
       ],
       "issue": "2",
       "itemID": 141,

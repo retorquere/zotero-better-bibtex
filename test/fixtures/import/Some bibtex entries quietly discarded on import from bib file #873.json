@@ -23754,17 +23754,6 @@
       "volume": "PAMI-5"
     },
     {
-      "itemID": 972,
-      "itemType": "note",
-      "note": "Import errors found: <ul><li>Unresolved @string reference &quot;AAAI-91&quot;</li><li>Unresolved @string reference &quot;IJCAI-75&quot;</li><li>Unresolved @string reference &quot;IJCAI-73&quot;</li><li>Unresolved @string reference &quot;ERLBAUM-ADDRESS&quot;</li><li>Unresolved @string reference &quot;ERLBAUM&quot;</li><li>Unresolved @string reference &quot;AIJ&quot;</li><li>Unresolved @string reference &quot;IJCAI-77&quot;</li><li>Unresolved @string reference &quot;ACL-87&quot;</li><li>Unresolved @string reference &quot;LEA&quot;</li><li>Unresolved @string reference &quot;CI&quot;</li><li>Unresolved @string reference &quot;IJCAI-81&quot;</li><li>Unresolved @string reference &quot;September&quot;</li><li>Unresolved @string reference &quot;CL&quot;</li><li>Unresolved @string reference &quot;COGSCI&quot;</li><li>Unresolved @string reference &quot;AIM&quot;</li><li>Unresolved @string reference &quot;CSLI&quot;</li><li>Unresolved @string reference &quot;AAAI-82&quot;</li><li>Unresolved @string reference &quot;March&quot;</li><li>Unresolved @string reference &quot;MITAI&quot;</li><li>Unresolved @string reference &quot;AAAI-88&quot;</li><li>Unresolved @string reference &quot;January&quot;</li><li>Unresolved @string reference &quot;AAAI-83&quot;</li><li>Unresolved @string reference &quot;IJCAI-83&quot;</li><li>Unresolved @string reference &quot;FTCW&quot;</li><li>Unresolved @string reference &quot;AAAI-80&quot;</li><li>Unresolved @string reference &quot;MCDERMOTT&quot;</li><li>Unresolved @string reference &quot;IJIS&quot;</li><li>Unresolved @string reference &quot;ML&quot;</li><li>Unresolved @string reference &quot;JAIR&quot;</li><li>Unresolved @string reference &quot;REITER&quot;</li><li>Unresolved @string reference &quot;AW-ADDRESS&quot;</li><li>Unresolved @string reference &quot;KAUFMANN&quot;</li><li>Unresolved @string reference &quot;WILKINS&quot;</li><li>Unresolved @string reference &quot;AAAI-87&quot;</li><li>Unresolved @string reference &quot;ACL-86&quot;</li><li>Unresolved @string reference &quot;AAAI-86&quot;</li><li>Unresolved @string reference &quot;ACL-85&quot;</li><li>Unresolved @string reference &quot;IJCAI-87&quot;</li><li>Unresolved @string reference &quot;ACL-88&quot;</li><li>Unresolved @string reference &quot;SRI-ADDRESS&quot;</li><li>Unresolved @string reference &quot;December&quot;</li><li>Unresolved @string reference &quot;CSLI-ADDRESS&quot;</li><li>Unresolved @string reference &quot;October&quot;</li><li>Unresolved @string reference &quot;AAAI-90&quot;</li><li>Unresolved @string reference &quot;MITP&quot;</li><li>Unresolved @string reference &quot;MITP-ADDRESS&quot;</li><li>Unresolved @string reference &quot;MIT-ADDRESS&quot;</li><li>Unresolved @string reference &quot;BSTJ&quot;</li><li>Unresolved @string reference &quot;November&quot;</li><li>Unresolved @string reference &quot;KAUFMANN-ADDRESS&quot;</li><li>Unresolved @string reference &quot;AAAI-PRESS&quot;</li><li>Unresolved @string reference &quot;IJCAI-89&quot;</li><li>Unresolved @string reference &quot;IJCAI-85&quot;</li><li>Unresolved @string reference &quot;SMC&quot;</li><li>Unresolved @string reference &quot;GINSBERG&quot;</li><li>Unresolved @string reference &quot;EXPERT&quot;</li><li>Unresolved @string reference &quot;UDUB&quot;</li><li>Unresolved @string reference &quot;NEW-AAAI-PUB&quot;</li><li>Unresolved @string reference &quot;TCOMPUTERS&quot;</li><li>Unresolved @string reference &quot;CIJ&quot;</li><li>Unresolved @string reference &quot;PAMI&quot;</li><li>Unresolved @string reference &quot;ICSI&quot;</li><li>Unresolved @string reference &quot;ELSEVIER&quot;</li><li>Unresolved @string reference &quot;TSWE&quot;</li><li>Unresolved @string reference &quot;SRI&quot;</li><li>Unresolved @string reference &quot;INGRAND&quot;</li><li>Unresolved @string reference &quot;KSL&quot;</li><li>Unresolved @string reference &quot;STANFORD-ADDRESS&quot;</li><li>Unresolved @string reference &quot;CMUSCS&quot;</li><li>Unresolved @string reference &quot;CMU-ADDRESS&quot;</li><li>Unresolved @string reference &quot;AAAI&quot;</li><li>Unresolved @string reference &quot;AAAI-PRESS-ADDRESS&quot;</li><li>Unresolved @string reference &quot;JLC&quot;</li><li>Unresolved @string reference &quot;IJCAI-97&quot;</li><li>Unresolved @string reference &quot;DKE&quot;</li><li>Unresolved @string reference &quot;AAII&quot;</li><li>Unresolved @string reference &quot;ar&quot;</li><li>Unresolved @string reference &quot;MPOLLACK&quot;</li><li>Unresolved @string reference &quot;SPRINGER&quot;</li><li>Unresolved @string reference &quot;ETAI&quot;</li><li>Unresolved @string reference &quot;amai&quot;</li><li>Unresolved @string reference &quot;LNCS&quot;</li><li>Unresolved @string reference &quot;FREED&quot;</li><li>Unresolved @string reference &quot;ICAPS&quot;</li><li>Unresolved @string reference &quot;ILP-05&quot;</li><li>Unresolved @string reference &quot;ICML-97&quot;</li><li>Unresolved @string reference &quot;ICML-06&quot;</li><li>Unresolved @string reference &quot;IJCAI&quot;</li><li>Unresolved @string reference &quot;AAAI-99&quot;</li><li>Unresolved @string reference &quot;PICAPS&quot;</li></ul>",
-      "tags": [
-        {
-          "tag": "#Better BibTeX import error",
-          "type": 1
-        }
-      ]
-    },
-    {
       "DOI": "10.1016/j.artint.2010.04.021",
       "citationKey": "DBLP:journals/ai/KatzD10",
       "creators": [
@@ -23787,7 +23776,7 @@
         "tex.timestamp: Fri, 02 Jan 2015 18:27:54 +0100"
       ],
       "issue": "12-13",
-      "itemID": 973,
+      "itemID": 972,
       "itemType": "journalArticle",
       "pages": "767\u2013798",
       "publicationTitle": "AIJ",
@@ -23809,7 +23798,7 @@
       "extra": [
         "Citation Key: fujimoto-WIIAT2010"
       ],
-      "itemID": 974,
+      "itemID": 973,
       "itemType": "conferencePaper",
       "pages": "97-101",
       "publicationTitle": "Web intelligence and intelligent agent technology (WI-IAT), 2010 IEEE/WIC/ACM international conference on",
@@ -23886,7 +23875,7 @@
       "extra": [
         "Citation Key: Ghallab20141"
       ],
-      "itemID": 975,
+      "itemID": 974,
       "itemType": "journalArticle",
       "pages": "1 \u2013 17",
       "publicationTitle": "AIJ",
@@ -23921,7 +23910,7 @@
         "Citation Key: BerleantKuipers:97"
       ],
       "issue": "2",
-      "itemID": 976,
+      "itemID": 975,
       "itemType": "journalArticle",
       "pages": "215 - 255",
       "publicationTitle": "Artificial Intelligence",
@@ -23969,7 +23958,7 @@
       "extra": [
         "Citation Key: RussellNorvigBook:2003"
       ],
-      "itemID": 977,
+      "itemID": 976,
       "itemType": "book",
       "publisher": "Prentice-Hall",
       "title": "Artificial intelligence : A modern approach"
@@ -23988,7 +23977,7 @@
         "Citation Key: books/mk/Ginsberg93",
         "tex.topic: AI-intro;AI-text;"
       ],
-      "itemID": 978,
+      "itemID": 977,
       "itemType": "book",
       "place": "KAUFMANN-ADDRESS",
       "publisher": "KAUFMANN",
@@ -24018,7 +24007,7 @@
       "extra": [
         "Citation Key: LaborieGhallab:95"
       ],
-      "itemID": 979,
+      "itemID": 978,
       "itemType": "conferencePaper",
       "pages": "1643\u20131651",
       "place": "San Mateo",
@@ -24050,7 +24039,7 @@
       "extra": [
         "Citation Key: williamson96unified"
       ],
-      "itemID": 980,
+      "itemID": 979,
       "itemType": "conferencePaper",
       "pages": "142\u2013150",
       "place": "Menlo Park, California",
@@ -24105,7 +24094,7 @@
         "tex.bibdate: 2006-04-27",
         "tex.bibsource: DBLP, http://dblp.uni-trier.de/db/conf/aips/icaps2005.html#BoddyGHH05"
       ],
-      "itemID": 981,
+      "itemID": 980,
       "itemType": "conferencePaper",
       "pages": "12\u201321",
       "publicationTitle": "ICAPS",
@@ -24149,7 +24138,7 @@
         "tex.bibdate: 2005-09-20",
         "tex.bibsource: DBLP, http://dblp.uni-trier.de/db/conf/um/um2005.html#BlaylockA05"
       ],
-      "itemID": 982,
+      "itemID": 981,
       "itemType": "conferencePaper",
       "pages": "179\u2013188",
       "publicationTitle": "User modeling",
@@ -24210,7 +24199,7 @@
         "tex.bibdate: 2012-12-13",
         "tex.bibsource: DBLP, http://dblp.uni-trier.de/db/conf/aips/icaps2006.html#FoxGLS06"
       ],
-      "itemID": 983,
+      "itemID": 982,
       "itemType": "conferencePaper",
       "pages": "212\u2013221",
       "publicationTitle": "ICAPS",
@@ -24254,7 +24243,7 @@
         "tex.bibdate: 2008-08-15",
         "tex.bibsource: DBLP, http://dblp.uni-trier.de/db/conf/aips/icaps2007.html#PalaciosG07"
       ],
-      "itemID": 984,
+      "itemID": 983,
       "itemType": "conferencePaper",
       "pages": "264\u2013271",
       "publicationTitle": "ICAPS",
@@ -24287,7 +24276,7 @@
         "tex.bibdate: 2015-04-12",
         "tex.bibsource: DBLP, http://dblp.uni-trier.de/db/conf/aaai/aaai2015.html#Bresina15"
       ],
-      "itemID": 985,
+      "itemID": 984,
       "itemType": "conferencePaper",
       "pages": "3887\u20133895",
       "publicationTitle": "AAAI",
@@ -24331,7 +24320,7 @@
         "tex.bibdate: 2015-05-26",
         "tex.bibsource: DBLP, http://dblp.uni-trier.de/db/conf/aips/icaps2015.html#000115"
       ],
-      "itemID": 986,
+      "itemID": 985,
       "itemType": "conferencePaper",
       "pages": "364\u2013372",
       "publicationTitle": "ICAPS",
@@ -24379,7 +24368,7 @@
         "Citation Key: minock-kraus-LIAI02",
         "DOI: 10.1007/3-540-45757-7_52"
       ],
-      "itemID": 987,
+      "itemID": 986,
       "itemType": "bookSection",
       "language": "English",
       "pages": "545-548",
@@ -24421,7 +24410,7 @@
         "tex.treatment: T Theoretical or Mathematical"
       ],
       "issue": "2",
-      "itemID": 988,
+      "itemID": 987,
       "itemType": "journalArticle",
       "pages": "207\u2013219",
       "publicationTitle": "Theoretical Computer Science",
@@ -24493,13 +24482,24 @@
       "extra": [
         "Citation Key: nau03a"
       ],
-      "itemID": 989,
+      "itemID": 988,
       "itemType": "journalArticle",
       "pages": "379\u2013404",
       "publicationTitle": "Journal of Artificial Intelligence Research",
       "title": "SHOP2: An HTN planning system",
       "url": "http://www.cs.cmu.edu/afs/cs/project/jair/pub/volume20/nau03a.pdf",
       "volume": "20"
+    },
+    {
+      "itemID": 989,
+      "itemType": "note",
+      "note": "Import errors found: <ul><li>Unresolved @string reference &quot;AAAI-91&quot;</li><li>Unresolved @string reference &quot;IJCAI-75&quot;</li><li>Unresolved @string reference &quot;IJCAI-73&quot;</li><li>Unresolved @string reference &quot;ERLBAUM-ADDRESS&quot;</li><li>Unresolved @string reference &quot;ERLBAUM&quot;</li><li>Unresolved @string reference &quot;AIJ&quot;</li><li>Unresolved @string reference &quot;IJCAI-77&quot;</li><li>Unresolved @string reference &quot;ACL-87&quot;</li><li>Unresolved @string reference &quot;LEA&quot;</li><li>Unresolved @string reference &quot;CI&quot;</li><li>Unresolved @string reference &quot;IJCAI-81&quot;</li><li>Unresolved @string reference &quot;September&quot;</li><li>Unresolved @string reference &quot;CL&quot;</li><li>Unresolved @string reference &quot;COGSCI&quot;</li><li>Unresolved @string reference &quot;AIM&quot;</li><li>Unresolved @string reference &quot;CSLI&quot;</li><li>Unresolved @string reference &quot;AAAI-82&quot;</li><li>Unresolved @string reference &quot;March&quot;</li><li>Unresolved @string reference &quot;MITAI&quot;</li><li>Unresolved @string reference &quot;AAAI-88&quot;</li><li>Unresolved @string reference &quot;January&quot;</li><li>Unresolved @string reference &quot;AAAI-83&quot;</li><li>Unresolved @string reference &quot;IJCAI-83&quot;</li><li>Unresolved @string reference &quot;FTCW&quot;</li><li>Unresolved @string reference &quot;AAAI-80&quot;</li><li>Unresolved @string reference &quot;MCDERMOTT&quot;</li><li>Unresolved @string reference &quot;IJIS&quot;</li><li>Unresolved @string reference &quot;ML&quot;</li><li>Unresolved @string reference &quot;JAIR&quot;</li><li>Unresolved @string reference &quot;REITER&quot;</li><li>Unresolved @string reference &quot;AW-ADDRESS&quot;</li><li>Unresolved @string reference &quot;KAUFMANN&quot;</li><li>Unresolved @string reference &quot;WILKINS&quot;</li><li>Unresolved @string reference &quot;AAAI-87&quot;</li><li>Unresolved @string reference &quot;ACL-86&quot;</li><li>Unresolved @string reference &quot;AAAI-86&quot;</li><li>Unresolved @string reference &quot;ACL-85&quot;</li><li>Unresolved @string reference &quot;IJCAI-87&quot;</li><li>Unresolved @string reference &quot;ACL-88&quot;</li><li>Unresolved @string reference &quot;SRI-ADDRESS&quot;</li><li>Unresolved @string reference &quot;December&quot;</li><li>Unresolved @string reference &quot;CSLI-ADDRESS&quot;</li><li>Unresolved @string reference &quot;October&quot;</li><li>Unresolved @string reference &quot;AAAI-90&quot;</li><li>Unresolved @string reference &quot;MITP&quot;</li><li>Unresolved @string reference &quot;MITP-ADDRESS&quot;</li><li>Unresolved @string reference &quot;MIT-ADDRESS&quot;</li><li>Unresolved @string reference &quot;BSTJ&quot;</li><li>Unresolved @string reference &quot;November&quot;</li><li>Unresolved @string reference &quot;KAUFMANN-ADDRESS&quot;</li><li>Unresolved @string reference &quot;AAAI-PRESS&quot;</li><li>Unresolved @string reference &quot;IJCAI-89&quot;</li><li>Unresolved @string reference &quot;IJCAI-85&quot;</li><li>Unresolved @string reference &quot;SMC&quot;</li><li>Unresolved @string reference &quot;GINSBERG&quot;</li><li>Unresolved @string reference &quot;EXPERT&quot;</li><li>Unresolved @string reference &quot;UDUB&quot;</li><li>Unresolved @string reference &quot;NEW-AAAI-PUB&quot;</li><li>Unresolved @string reference &quot;TCOMPUTERS&quot;</li><li>Unresolved @string reference &quot;CIJ&quot;</li><li>Unresolved @string reference &quot;PAMI&quot;</li><li>Unresolved @string reference &quot;ICSI&quot;</li><li>Unresolved @string reference &quot;ELSEVIER&quot;</li><li>Unresolved @string reference &quot;TSWE&quot;</li><li>Unresolved @string reference &quot;SRI&quot;</li><li>Unresolved @string reference &quot;INGRAND&quot;</li><li>Unresolved @string reference &quot;KSL&quot;</li><li>Unresolved @string reference &quot;STANFORD-ADDRESS&quot;</li><li>Unresolved @string reference &quot;CMUSCS&quot;</li><li>Unresolved @string reference &quot;CMU-ADDRESS&quot;</li><li>Unresolved @string reference &quot;AAAI&quot;</li><li>Unresolved @string reference &quot;AAAI-PRESS-ADDRESS&quot;</li><li>Unresolved @string reference &quot;JLC&quot;</li><li>Unresolved @string reference &quot;IJCAI-97&quot;</li><li>Unresolved @string reference &quot;DKE&quot;</li><li>Unresolved @string reference &quot;AAII&quot;</li><li>Unresolved @string reference &quot;ar&quot;</li><li>Unresolved @string reference &quot;MPOLLACK&quot;</li><li>Unresolved @string reference &quot;SPRINGER&quot;</li><li>Unresolved @string reference &quot;ETAI&quot;</li><li>Unresolved @string reference &quot;amai&quot;</li><li>Unresolved @string reference &quot;LNCS&quot;</li><li>Unresolved @string reference &quot;FREED&quot;</li><li>Unresolved @string reference &quot;ICAPS&quot;</li><li>Unresolved @string reference &quot;ILP-05&quot;</li><li>Unresolved @string reference &quot;ICML-97&quot;</li><li>Unresolved @string reference &quot;ICML-06&quot;</li><li>Unresolved @string reference &quot;IJCAI&quot;</li><li>Unresolved @string reference &quot;AAAI-99&quot;</li><li>Unresolved @string reference &quot;PICAPS&quot;</li></ul>",
+      "tags": [
+        {
+          "tag": "#Better BibTeX import error",
+          "type": 1
+        }
+      ]
     }
   ]
 }
