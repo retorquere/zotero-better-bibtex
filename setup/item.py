@@ -483,6 +483,7 @@ with open(os.path.join(ITEMS, 'items.ts'), 'w') as f:
 
   # map names to basenames
   names = Munch(field={}, type={})
+  labels = {}
   for field in jsonpath.parse('*.itemTypes.*.fields.*').find(SCHEMA):
     client, itemType = operator.itemgetter(0, 2)(str(field.full_path).split('.'))
     baseField = field.value
@@ -495,8 +496,19 @@ with open(os.path.join(ITEMS, 'items.ts'), 'w') as f:
       else:
         assert names[section][field][client] == name, (client, section, field, names[section][field][client], name)
 
+      if name == 'numPages':
+        label = 'Number of pages'
+      else:
+        label = name[0].upper() + re.sub('([a-z])([A-Z])', lambda m: m.group(1) + ' ' + m.group(2).lower(), re.sub('[-_]', ' ', name[1:]))
+      if not field in labels:
+        labels[field] = Munch.fromDict({ client: label })
+      elif not client in labels[field]:
+        labels[field][client] = label
+      else:
+        assert labels[field][client] == label, (client, field, labels[field][client], label)
+
   try:
-    print(template('items/items.ts.mako').render(names=names, valid=valid, aliases=aliases).strip(), file=f)
+    print(template('items/items.ts.mako').render(names=names, labels=labels, valid=valid, aliases=aliases).strip(), file=f)
   except:
     print(exceptions.text_error_template().render())
   #stringizer = lambda x: DG.nodes[x]['name'] if x in DG.nodes else x

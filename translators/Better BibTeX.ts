@@ -906,6 +906,10 @@ class ZoteroItem {
             this.hackyFields.push(`PMID: ${value}`)
             break
 
+          case 'subject': // otherwise it's picked up by the sibject -> title mapper, and I don't think that's right
+            this.hackyFields.push(`tex.${field}: ${value}`)
+            break
+
           default:
             if (value.indexOf('\n') >= 0) {
               this.item.notes.push(`<p><b>${Zotero.Utilities.text2html(field, false)}</b></p>${Zotero.Utilities.text2html(value, false)}`)
@@ -917,7 +921,7 @@ class ZoteroItem {
               } else if (name = candidates.find(f => label[f])) {
                 this.hackyFields.push(`${label[name]}: ${value}`)
               } else {
-                this.hackyFields.push(`tex.${field.toLowerCase()}: ${value}`)
+                this.hackyFields.push(`tex.${field}: ${value}`)
               }
             }
             break

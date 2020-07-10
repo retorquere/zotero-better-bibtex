@@ -43,17 +43,19 @@ export const name: Record<'type' | 'field', Record<string, string>> = {
 %endfor
 }
 // maps variable to its extra-field label
-export const label: Record<string, string> = {}
-// maps lower-case field/type to its properly spelled name for easier matching
-for (const fields of Object.values(valid.field)) {
-  for (const [field, is_supported] of Object.entries(fields)) {
-    if (is_supported) {
-      // tslint:disable-next-line:prefer-template
-      label[field] = field[0].toUpperCase() + field.substring(1).replace(/[_-]/g, ' ').replace(/([a-z])([A-Z])/g, (m, l, u) => l + ' ' + u.toLowerCase())
-    }
-  }
+export const label: Record<string, string> = {
+%for field, name in sorted(labels.items()):
+  %if name.get('zotero', None) == name.get('jurism', None):
+  ${field}: '${name.zotero}',
+  %elif 'zotero' in name and 'jurism' in name:
+  ${field}: zotero ? '${name.zotero}' : '${name.jurism}',
+  %elif 'zotero' in name:
+  ${field}: zotero && '${name.zotero}',
+  %else:
+  ${field}: jurism && '${name.jurism}',
+  %endif
+%endfor
 }
-label.numPages = 'Number of pages'
 
 function unalias(item) {
   delete item.inPublications
