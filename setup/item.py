@@ -75,9 +75,13 @@ class fetch(object):
 
       jarpath = jar
       latest = None
+      current = None
       print('  updating', os.path.basename(schema))
 
       for cleanup in glob.glob(os.path.join(SCHEMA.root, f'{client}-*.json')):
+        with open(cleanup) as f:
+          current = json.load(f)
+          current = { k: current[k] for k in ['version', 'release'] }
         os.system(f'cd {shlex.quote(SCHEMA.root)} && git rm {os.path.basename(cleanup)}')
 
       for release in releases:
@@ -99,6 +103,9 @@ class fetch(object):
             if latest is None:
               latest = release_schema
               latest['release'] = release
+              if current and current['version'] == latest['version']:
+                latest['release'] = current['release']
+                break
             elif release_schema['version'] == latest['version']:
               latest['release'] = release
             else:
