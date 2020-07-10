@@ -382,6 +382,16 @@ with fetch('zotero') as z, fetch('jurism') as j:
   ef.load(SCHEMA.zotero, 'zotero')
 
   SCHEMA.jurism = Munch.fromDict(patch(json.load(j), 'schema.patch'))
+
+  # come one Juris-M!
+  genre_type = [1 for field in jsonpath.parse('jurism.itemTypes[*].fields[*]').find(SCHEMA) if field.value.get('baseField', None) == 'type' and field.value.field == 'genre']
+  genre_genre = [1 for field in jsonpath.parse('jurism.itemTypes[*].fields[*]').find(SCHEMA) if not 'baseField' in field.value and field.value.field == 'genre']
+  if len(genre_genre) > 0 and len(genre_type) > 0:
+    for itemType in SCHEMA.jurism.itemTypes:
+      for field in itemType.fields:
+          if field.get('baseField', None) == 'type' and field.field == 'genre':
+            del field['baseField']
+    
   ef.load(SCHEMA.jurism, 'jurism')
   ef.save()
   with open(os.path.join(root, 'gen', 'min-version.json'), 'w') as f:
@@ -432,12 +442,14 @@ with open(os.path.join(ITEMS, 'items.ts'), 'w') as f:
   for itemType in jsonpath.parse('*.itemTypes[*]').find(SCHEMA):
     client = str(itemType.full_path).split('.')[0]
     for field in itemType.value.fields:
+      # find valid fields per client
       for _field in [field.field, field.get('baseField', field.field)]:
         if not _field in valid.field[itemType.value.itemType]:
           valid.field[itemType.value.itemType][_field] = client
         elif valid.field[itemType.value.itemType][_field] != client:
           valid.field[itemType.value.itemType][_field] = 'true'
 
+  # map aliases to base names
   DG = nx.DiGraph()
   for field in jsonpath.parse('*.itemTypes[*].fields[*]').find(SCHEMA):
     if not 'baseField' in field.value: continue
@@ -448,15 +460,43 @@ with open(os.path.join(ITEMS, 'items.ts'), 'w') as f:
       DG.add_edge(field.field, field.baseField, client=client)
     elif data['client'] != client:
       DG.edges[field.field, field.baseField]['client'] = 'both'
-
   aliases = {}
   for field, baseField, client in DG.edges.data('client'):
     if not client in aliases: aliases[client] = {}
     if not baseField in aliases[client]: aliases[client][baseField] = []
     aliases[client][baseField].append(field)
 
+  # map names to basenames
+  DG = nx.DiGraph()
+  for field in jsonpath.parse('*.itemTypes[*].fields[*]').find(SCHEMA):
+    client = str(field.full_path).split('.')[0]
+    field = field.value
+    name = field.get('baseField', field.field)
+    for field, name in [(field.field, name), (name, name)]:
+      if not (data := DG.get_edge_data(field, name, default=None)):
+        DG.add_edge(field.lower(), name, **{client: True})
+      else:
+        DG.edges[field, name][client] = True
+  names = Munch(both={}, zotero={}, jurism={})
+  for field in list(DG.nodes()):
+    out_edges = DG.out_edges(field, data=True)
+    if len(out_edges) == 0: continue
+
+    keys = [key
+      for field, name, data in out_edges
+      for key in data.keys()
+    ]
+    assert len(keys) > 0 and len(keys) <= 2, [(field, name, list(data.keys())) for field, name, data in out_edges]
+    assert len(set(keys) - set(['zotero', 'jurism'])) == 0, [(field, name, list(data.keys())) for field, name, data in out_edges]
+    for field, name, data in out_edges:
+      if 'zotero' in data and 'jurism' in data:
+        names.both[field] = name
+      else:
+        names[list(data.keys())[0]][field] = name
+  #print(json.dumps(names, indent='  ', sort_keys=True))
+
   try:
-    print(template('items/items.ts.mako').render(valid=valid, aliases=aliases).strip(), file=f)
+    print(template('items/items.ts.mako').render(names=names, valid=valid, aliases=aliases).strip(), file=f)
   except:
     print(exceptions.text_error_template().render())
   #stringizer = lambda x: DG.nodes[x]['name'] if x in DG.nodes else x
