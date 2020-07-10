@@ -1,0 +1,50 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "mdy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "bibtexURL": "url",
+      "citekeyFormat": "[Auth:nopunctordash:fold][>0][Title:skipwords:capitalize:nopunct:replace=/,-:select=1,4:fold:clean:prefix=_][year:prefix=_]|[Institution:nopunctordash:fold][shorttitle3_3:condense:nopunct:prefix=_][year:prefix=_]",
+      "itemObserverDelay": 100,
+      "skipFields": "abstract,file,note,series",
+      "workers": 4
+    }
+  },
+  "items": [
+    {
+      "abstractNote": "The Cisco Annual Internet Report is a global forecast/analysis that assesses digital transformation across various business segments (enterprise, small-to-medium business, public sector, and service provider). The report covers fixed broadband, Wi-Fi, and mobile (3G, 4G, 5G) networking. Quantitative projections are provided on the growth of Internet users, devices and connections as well as network performance and new application requirements.",
+      "accessDate": "2020-07-08T15:34:37Z",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "path": "C:\\Users\\taascad3\\Zotero\\storage\\LVX3CCEQ\\Cisco Annual Internet Report - Cisco Annual Internet Report (2018\u20132023) White Paper.pdf",
+          "title": "Cisco Annual Internet Report - Cisco Annual Internet Report (2018\u20132023) White Paper.pdf",
+          "uri": "http://zotero.org/users/1845195/items/LVX3CCEQ"
+        },
+        {
+          "itemType": "attachment",
+          "path": "C:\\Users\\taascad3\\Zotero\\storage\\CDQZJD2L\\white-paper-c11-741490.html",
+          "title": "Snapshot",
+          "uri": "http://zotero.org/users/1845195/items/CDQZJD2L"
+        }
+      ],
+      "citationKey": "CiscoSystemsInc_CiscoAnnualInternet_2020",
+      "date": "9 March 2020",
+      "extra": [
+        "Library Catalog: www.cisco.com"
+      ],
+      "itemID": 1,
+      "itemType": "report",
+      "language": "en",
+      "pages": "35",
+      "publisher": "Cisco Systems, Inc.",
+      "title": "Cisco Annual Internet Report - Cisco Annual Internet Report (2018\u20132023) White Paper",
+      "type": "White paper",
+      "url": "https://www.cisco.com/c/en/us/solutions/collateral/executive-perspectives/annual-internet-report/white-paper-c11-741490.html"
+    }
+  ]
+}

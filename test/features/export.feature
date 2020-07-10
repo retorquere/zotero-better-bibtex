@@ -7,6 +7,7 @@ Scenario Outline: Export <references> references for BibLaTeX to <file>
 
   Examples:
      | file                                                                                           | references  |
+     | Field Institution not available anymore in key pattern for Zotero #1568                        | 1           |
      | unexpected tag aborts export #1565                                                             | 1           |
      | JSTOR eprint data export depends on whether jstor link starts with https vs http #1543         | 1           |
      | lone ogonek should have brace                                                                  | 1           |
