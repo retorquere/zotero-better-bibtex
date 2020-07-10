@@ -10,14 +10,14 @@ type Valid = {
 }
 export const valid: Valid = {
   type: {
-    %for itemType, client in valid.type.items():
+    %for itemType, client in sorted(valid.type.items()):
     ${itemType}: ${client},
     %endfor
   },
   field: {
-    %for itemType, fields in valid.field.items():
+    %for itemType, fields in sorted(valid.field.items()):
     ${itemType}: {
-      %for field, client in fields.items():
+      %for field, client in sorted(fields.items()):
       ${field}: ${client},
       %endfor
     },
@@ -25,18 +25,31 @@ export const valid: Valid = {
   },
 }
 
+export const name: Record<'type' | 'field', Record<string, string>> = {
+%for section in ['type', 'field']:
+  ${section}: {
+  %for field, name in sorted(names[section].items()):
+    %if name.get('zotero', None) == name.get('jurism', None):
+    ${field}: '${name.zotero}',
+    %elif 'zotero' in name and 'jurism' in name:
+    ${field}: zotero ? '${name.zotero}' : '${name.jurism}',
+    %elif 'zotero' in name:
+    ${field}: zotero && '${name.zotero}',
+    %else:
+    ${field}: jurism && '${name.jurism}',
+    %endif
+  %endfor
+  },
+%endfor
+}
 // maps variable to its extra-field label
 export const label: Record<string, string> = {}
 // maps lower-case field/type to its properly spelled name for easier matching
-export const name: Record<'type' | 'field', Record<string, string>> = { type: {}, field: {} }
-for (const [type, fields] of Object.entries(valid.field)) {
-  name.type[type.toLowerCase()] = type
-
+for (const fields of Object.values(valid.field)) {
   for (const [field, is_supported] of Object.entries(fields)) {
     if (is_supported) {
       // tslint:disable-next-line:prefer-template
       label[field] = field[0].toUpperCase() + field.substring(1).replace(/[_-]/g, ' ').replace(/([a-z])([A-Z])/g, (m, l, u) => l + ' ' + u.toLowerCase())
-      name.field[field.toLowerCase()] = field
     }
   }
 }

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import operator
 import shlex
 from functools import reduce
 from http.client import RemoteDisconnected
@@ -124,9 +125,26 @@ class jsonpath:
     if not path in cls.finders: cls.finders[path] = jsonpath_ng.parse(path)
     return cls.finders[path]
 
-def patch(s, p):
-  with open(os.path.join(SCHEMA.root, p)) as f:
-    return jsonpatch.apply_patch(s, json.load(f))
+def patch(s, *ps):
+  # field/type order doesn't matter for BBT
+  for it in s['itemTypes']:
+    assert 'creatorTypes' in it
+    assert len(it['creatorTypes'])== 0 or [ct['creatorType'] for ct in it['creatorTypes'] if ct.get('primary', False)] == [it['creatorTypes'][0]['creatorType']]
+
+  s['itemTypes'] = {
+    itemType['itemType']: {
+      'itemType': itemType['itemType'],
+      'fields': { field['field']: field.get('baseField', field['field']) for field in itemType['fields'] },
+      'creatorTypes': [ct['creatorType'] for ct in itemType['creatorTypes'] ]
+    }
+    for itemType in s['itemTypes']
+  }
+  del s['locales']
+
+  for p in ps:
+    with open(os.path.join(SCHEMA.root, p)) as f:
+      s = jsonpatch.apply_patch(s, json.load(f))
+  return s
 
 class ExtraFields:
   def __init__(self):
@@ -176,7 +194,7 @@ class ExtraFields:
     node_id = f'{domain}:{name}'
 
     if node_id in self.dg.nodes:
-      assert self.dg.nodes[node_id]['type'] == tpe
+      assert self.dg.nodes[node_id]['type'] == tpe, (domain, name, self.dg.nodes[node_id]['type'], tpe)
     else:
       self.dg.add_node(f'{domain}:{name}', domain=domain, name=name, type=tpe, graphics={'h': 30.0, 'w': 7 * len(name), 'fill': self.color[domain]})
     self.dg.nodes[node_id][client] = True
@@ -188,13 +206,10 @@ class ExtraFields:
       typeof[field] = meta.type
   
     # add nodes & edges
-    for field in jsonpath.parse('$.itemTypes[*].fields[*]').find(schema):
-      baseField = field.value.get('baseField', None)
-      field = field.value.get('baseField', field.value.field)
+    for field, baseField in {str(f.path): f.value for f in jsonpath.parse('$.itemTypes.*.fields.*').find(schema)}.items():
+      self.add_var('zotero', baseField, typeof.get(baseField, 'text'), client)
 
-      self.add_var('zotero', field, typeof.get(field, 'text'), client)
-
-    for field in jsonpath.parse('$.itemTypes[*].creatorTypes[*].creatorType').find(schema):
+    for field in jsonpath.parse('$.itemTypes.*.creatorTypes[*]').find(schema):
       self.add_var('zotero', field.value, 'name', client)
 
     for fields in jsonpath.parse('$.csl.fields.text').find(schema):
@@ -225,9 +240,9 @@ class ExtraFields:
       if data['domain'] == 'label': continue # how is this possible?
       self.add_label(data['domain'], data['name'], data['name'])
 
-    for field in [f.value for f in jsonpath.parse('$.itemTypes[*].fields[*]').find(schema)]:
-      if not 'baseField' in field: continue
-      self.add_label('zotero', field.baseField, field.field)
+    for field, baseField in {str(f.path): f.value for f in jsonpath.parse('$.itemTypes.*.fields.*').find(schema)}.items():
+      if field == baseField: continue
+      self.add_label('zotero', baseField, field)
 
     for alias, field in schema.csl.alias.items():
       self.add_label('csl', field, alias)
@@ -379,20 +394,22 @@ with fetch('zotero') as z, fetch('jurism') as j:
   ef = ExtraFields()
 
   SCHEMA.zotero = Munch.fromDict(patch(json.load(z), 'schema.patch'))
-  ef.load(SCHEMA.zotero, 'zotero')
+  SCHEMA.jurism = Munch.fromDict(patch(json.load(j), 'schema.patch', 'jurism.patch'))
 
-  SCHEMA.jurism = Munch.fromDict(patch(json.load(j), 'schema.patch'))
+  with open('schema.json', 'w') as f:
+    json.dump(SCHEMA.jurism, f, indent='  ')
 
-  # come one Juris-M!
-  genre_type = [1 for field in jsonpath.parse('jurism.itemTypes[*].fields[*]').find(SCHEMA) if field.value.get('baseField', None) == 'type' and field.value.field == 'genre']
-  genre_genre = [1 for field in jsonpath.parse('jurism.itemTypes[*].fields[*]').find(SCHEMA) if not 'baseField' in field.value and field.value.field == 'genre']
-  if len(genre_genre) > 0 and len(genre_type) > 0:
-    for itemType in SCHEMA.jurism.itemTypes:
-      for field in itemType.fields:
-          if field.get('baseField', None) == 'type' and field.field == 'genre':
-            del field['baseField']
+  # test for inconsistent basefield mapping
+  for schema in ['jurism', 'zotero']:
+    fieldmap = {}
+    for field_path, field, baseField in [(str(f.full_path), str(f.path), f.value) for f in jsonpath.parse(f'$.itemTypes.*.fields.*').find(SCHEMA[schema])]:
+      if not field in fieldmap:
+        fieldmap[field] = baseField
+      else:
+        assert baseField == fieldmap[field], (schema, field_path, baseField, fieldmap[field])
     
   ef.load(SCHEMA.jurism, 'jurism')
+  ef.load(SCHEMA.zotero, 'zotero')
   ef.save()
   with open(os.path.join(root, 'gen', 'min-version.json'), 'w') as f:
     json.dump({
@@ -402,14 +419,13 @@ with fetch('zotero') as z, fetch('jurism') as j:
 
 print('  writing creators')
 creators = {'zotero': {}, 'jurism': {}}
-for itemType in jsonpath.parse('*.itemTypes[*]').find(SCHEMA):
-  if not 'creatorTypes' in itemType.value or len(itemType.value.creatorTypes) == 0: continue
+for creatorTypes in jsonpath.parse('*.itemTypes.*.creatorTypes').find(SCHEMA):
+  if len(creatorTypes.value) == 0: continue
+  client, itemType = operator.itemgetter(0, 2)(str(creatorTypes.full_path).split('.'))
 
-  client = str(itemType.full_path).split('.')[0]
-
-  if not itemType.value.itemType in creators[client]: creators[client][itemType.value.itemType] = []
-  for creator in itemType.value.creatorTypes:
-    creators[client][itemType.value.itemType].append(creator.creatorType)
+  if not itemType in creators[client]: creators[client][itemType] = []
+  for creatorType in creatorTypes.value:
+    creators[client][itemType].append(creatorType)
 with open(os.path.join(ITEMS, 'creators.json'), 'w') as f:
   json.dump(creators, f, indent='  ', default=lambda x: list(x))
 
@@ -418,13 +434,13 @@ def template(tmpl):
 
 print('  writing typing for serialized item')
 with open(os.path.join(TYPINGS, 'serialized-item.d.ts'), 'w') as f:
-  fields = sorted(list(set(field.value.get('baseField', field.value.field) for field in jsonpath.parse('*.itemTypes[*].fields[*]').find(SCHEMA))))
+  fields = sorted(list(set(field.value for field in jsonpath.parse('*.itemTypes.*.fields.*').find(SCHEMA))))
   print(template('items/serialized-item.d.ts.mako').render(fields=fields).strip(), file=f)
 
 print('  writing field simplifier')
 with open(os.path.join(ITEMS, 'items.ts'), 'w') as f:
   valid = Munch(type={}, field={})
-  for itemType in jsonpath.parse('*.itemTypes[*].itemType').find(SCHEMA):
+  for itemType in jsonpath.parse('*.itemTypes.*.itemType').find(SCHEMA):
     client = str(itemType.full_path).split('.')[0]
     itemType = itemType.value
 
@@ -439,27 +455,26 @@ with open(os.path.join(ITEMS, 'items.ts'), 'w') as f:
     elif valid.type[itemType] != client:
       valid.type[itemType] = 'true'
 
-  for itemType in jsonpath.parse('*.itemTypes[*]').find(SCHEMA):
-    client = str(itemType.full_path).split('.')[0]
-    for field in itemType.value.fields:
-      # find valid fields per client
-      for _field in [field.field, field.get('baseField', field.field)]:
-        if not _field in valid.field[itemType.value.itemType]:
-          valid.field[itemType.value.itemType][_field] = client
-        elif valid.field[itemType.value.itemType][_field] != client:
-          valid.field[itemType.value.itemType][_field] = 'true'
+  for field in jsonpath.parse('*.itemTypes.*.fields.*').find(SCHEMA):
+    client, itemType = operator.itemgetter(0, 2)(str(field.full_path).split('.'))
+    for field in [str(field.path), field.value]:
+      if not field in valid.field[itemType]:
+        valid.field[itemType][field] = client
+      elif valid.field[itemType][field] != client:
+        valid.field[itemType][field] = 'true'
 
   # map aliases to base names
   DG = nx.DiGraph()
-  for field in jsonpath.parse('*.itemTypes[*].fields[*]').find(SCHEMA):
-    if not 'baseField' in field.value: continue
+  for field in jsonpath.parse('*.itemTypes.*.fields.*').find(SCHEMA):
     client = str(field.full_path).split('.')[0]
-    field = field.value
+    baseField = field.value
+    field = str(field.path)
+    if field == baseField: continue
 
-    if not (data := DG.get_edge_data(field.field, field.baseField, default=None)):
-      DG.add_edge(field.field, field.baseField, client=client)
+    if not (data := DG.get_edge_data(field, baseField, default=None)):
+      DG.add_edge(field, baseField, client=client)
     elif data['client'] != client:
-      DG.edges[field.field, field.baseField]['client'] = 'both'
+      DG.edges[field, baseField]['client'] = 'both'
   aliases = {}
   for field, baseField, client in DG.edges.data('client'):
     if not client in aliases: aliases[client] = {}
@@ -467,33 +482,18 @@ with open(os.path.join(ITEMS, 'items.ts'), 'w') as f:
     aliases[client][baseField].append(field)
 
   # map names to basenames
-  DG = nx.Graph()
-  for field in jsonpath.parse('*.itemTypes[*].fields[*]').find(SCHEMA):
-    client = str(field.full_path).split('.')[0]
-    field = field.value
-    name = field.get('baseField', field.field)
-    for field, name in [(field.field, name), (name, name)]:
-      if not (data := DG.get_edge_data(field, name, default=None)):
-        DG.add_edge(field.lower(), name, **{client: True})
+  names = Munch(field={}, type={})
+  for field in jsonpath.parse('*.itemTypes.*.fields.*').find(SCHEMA):
+    client, itemType = operator.itemgetter(0, 2)(str(field.full_path).split('.'))
+    baseField = field.value
+    field = str(field.path)
+    for section, field, name in [('field', field.lower(), baseField), ('field', baseField.lower(), baseField), ('type', itemType.lower(), itemType)]:
+      if not field in names[section]:
+        names[section][field] = Munch.fromDict({ client: name })
+      elif not client in names[section][field]:
+        names[section][field][client] = name
       else:
-        DG.edges[field, name][client] = True
-  names = {}
-  for field in list(DG.nodes()):
-    out_edges = DG.out_edges(field, data=True)
-    if len(out_edges) == 0: continue
-
-    keys = [key
-      for field, name, data in out_edges
-      for key in data.keys()
-    ]
-    assert len(keys) > 0 and len(keys) <= 2, [(field, name, list(data.keys())) for field, name, data in out_edges]
-    assert len(set(keys) - set(['zotero', 'jurism'])) == 0, [(field, name, list(data.keys())) for field, name, data in out_edges]
-    for field, name, data in out_edges:
-      if 'zotero' in data and 'jurism' in data:
-        names.both[field] = name
-      else:
-        names[list(data.keys())[0]][field] = name
-  #print(json.dumps(names, indent='  ', sort_keys=True))
+        assert names[section][field][client] == name, (client, section, field, names[section][field][client], name)
 
   try:
     print(template('items/items.ts.mako').render(names=names, valid=valid, aliases=aliases).strip(), file=f)
