@@ -467,7 +467,7 @@ with open(os.path.join(ITEMS, 'items.ts'), 'w') as f:
     aliases[client][baseField].append(field)
 
   # map names to basenames
-  DG = nx.DiGraph()
+  DG = nx.Graph()
   for field in jsonpath.parse('*.itemTypes[*].fields[*]').find(SCHEMA):
     client = str(field.full_path).split('.')[0]
     field = field.value
@@ -477,7 +477,7 @@ with open(os.path.join(ITEMS, 'items.ts'), 'w') as f:
         DG.add_edge(field.lower(), name, **{client: True})
       else:
         DG.edges[field, name][client] = True
-  names = Munch(both={}, zotero={}, jurism={})
+  names = {}
   for field in list(DG.nodes()):
     out_edges = DG.out_edges(field, data=True)
     if len(out_edges) == 0: continue
