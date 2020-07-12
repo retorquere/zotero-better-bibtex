@@ -4,7 +4,7 @@ declare const Zotero: any
 Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
 
-import { patch as $patch$ } from './monkey-patch'
+import { clean_pane_persist, patch as $patch$ } from './monkey-patch'
 import { flash } from './flash'
 
 import { Preferences as Prefs } from './prefs' // needs to be here early, initializes the prefs observer
@@ -35,6 +35,7 @@ AddonManager.addAddonListener({
   onUninstalling(addon, needsRestart) {
     if (addon.id !== 'better-bibtex@iris-advies.com') return null
 
+    clean_pane_persist()
     const quickCopy = Zotero.Prefs.get('export.quickCopy.setting')
     for (const [label, metadata] of (Object.entries(Translators.byName) as [string, ITranslatorHeader][])) {
       if (quickCopy === `export=${metadata.translatorID}`) Zotero.Prefs.clear('export.quickCopy.setting')

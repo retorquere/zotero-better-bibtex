@@ -28,6 +28,19 @@ try {
   flash('ERROR CHECKING ZOTERO SCHEMA VERSION', 30) // tslint:disable-line:no-magic-numbers
 }
 
+export function clean_pane_persist() {
+  let persisted = Zotero.Prefs.get('pane.persist')
+  if (persisted) {
+    try {
+      persisted = JSON.parse(persisted)
+      delete persisted['zotero-items-column-citekey']
+      Zotero.Prefs.set('pane.persist', JSON.stringify(persisted))
+    } catch (err) {
+      Zotero.logError(err)
+    }
+  }
+}
+
 export let enabled = typeof schema.expected === 'number' && typeof schema.found === 'number' && schema.found >= schema.expected
 if (enabled) {
   const ENV = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
@@ -36,6 +49,7 @@ if (enabled) {
 
 Zotero.debug(`monkey-patch: ${Zotero.version}: BBT ${enabled ? 'en' : 'dis'}abled`)
 if (!enabled) {
+  clean_pane_persist()
   flash(`OUTDATED ${client.toUpperCase()} VERSION`, `BBT has been disabled\nNeed at least ${client} ${built_against[client].release}, please upgrade.`, 30) // tslint:disable-line:no-magic-numbers
 
   Components.utils.import('resource://gre/modules/AddonManager.jsm')

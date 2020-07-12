@@ -6,7 +6,7 @@ declare const Components: any
 import { log } from './logger'
 import { BetterBibTeX } from './better-bibtex'
 import { TeXstudio } from './tex-studio'
-import { patch as $patch$ } from './monkey-patch'
+import { clean_pane_persist, patch as $patch$ } from './monkey-patch'
 import { Preferences as Prefs } from './prefs'
 import { AutoExport } from './auto-export'
 import { flash } from './flash'
@@ -68,13 +68,7 @@ $patch$(pane, 'buildCollectionContextMenu', original => async function() {
 // Monkey patch because of https://groups.google.com/forum/#!topic/zotero-dev/zy2fSO1b0aQ
 $patch$(pane, 'serializePersist', original => function() {
   original.apply(this, arguments)
-
-  let persisted
-  if (Zotero.BetterBibTeX.uninstalled && (persisted = Zotero.Prefs.get('pane.persist'))) {
-    persisted = JSON.parse(persisted)
-    delete persisted['zotero-items-column-citekey']
-    Zotero.Prefs.set('pane.persist', JSON.stringify(persisted))
-  }
+  if (Zotero.BetterBibTeX.uninstalled) clean_pane_persist()
 })
 
 export = new class ZoteroPane {
