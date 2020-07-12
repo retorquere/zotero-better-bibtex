@@ -1,5 +1,5 @@
 {
-  "version": 16,
+  "version": 17,
   "itemTypes": [
     {
       "itemType": "artwork",
@@ -540,18 +540,23 @@
           "field": "abstractNote"
         },
         {
+          "field": "shortTitle"
+        },
+        {
           "field": "jurisdiction"
         },
         {
           "field": "court"
         },
         {
-          "field": "dateDecided",
-          "baseField": "date"
+          "field": "documentName"
         },
         {
           "field": "docketNumber",
           "baseField": "number"
+        },
+        {
+          "field": "yearAsVolume"
         },
         {
           "field": "reporterVolume",
@@ -566,28 +571,20 @@
           "baseField": "pages"
         },
         {
+          "field": "archive"
+        },
+        {
+          "field": "archiveLocation"
+        },
+        {
+          "field": "dateDecided",
+          "baseField": "date"
+        },
+        {
           "field": "reign"
         },
         {
-          "field": "documentName"
-        },
-        {
-          "field": "shortTitle"
-        },
-        {
-          "field": "yearAsVolume"
-        },
-        {
           "field": "history"
-        },
-        {
-          "field": "place"
-        },
-        {
-          "field": "filingDate"
-        },
-        {
-          "field": "callNumber"
         },
         {
           "field": "publisher"
@@ -596,25 +593,28 @@
           "field": "publicationDate"
         },
         {
-          "field": "supplementName"
+          "field": "url"
+        },
+        {
+          "field": "accessDate"
         },
         {
           "field": "issue"
         },
         {
-          "field": "archive"
+          "field": "filingDate"
         },
         {
-          "field": "archiveLocation"
+          "field": "place"
+        },
+        {
+          "field": "supplementName"
+        },
+        {
+          "field": "callNumber"
         },
         {
           "field": "language"
-        },
-        {
-          "field": "url"
-        },
-        {
-          "field": "accessDate"
         },
         {
           "field": "rights"
@@ -13639,5 +13639,5 @@
       }
     }
   },
-  "release": "5.0.89m1"
+  "release": "5.0.89m8"
 }
