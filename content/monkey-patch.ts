@@ -28,7 +28,12 @@ try {
   flash('ERROR CHECKING ZOTERO SCHEMA VERSION', 30) // tslint:disable-line:no-magic-numbers
 }
 
-export const enabled = typeof schema.expected === 'number' && typeof schema.found === 'number' && schema.found === schema.expected
+export let enabled = typeof schema.expected === 'number' && typeof schema.found === 'number' && schema.found >= schema.expected
+if (enabled) {
+  const ENV = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
+  enabled = !ENV.get('CI') || schema.found === schema.expected
+}
+
 Zotero.debug(`monkey-patch: ${Zotero.version}: BBT ${enabled ? 'en' : 'dis'}abled`)
 if (!enabled) {
   flash(`OUTDATED ${client.toUpperCase()} VERSION`, `BBT has been disabled\nNeed at least ${client} ${built_against[client].release}, please upgrade.`, 30) // tslint:disable-line:no-magic-numbers
