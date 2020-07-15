@@ -7,7 +7,7 @@ Scenario Outline: Export <references> references for BibLaTeX to <file>
 
   Examples:
      | file                                                                                           | references  |
-     | unexpected tag aborts export #1565                                                             | 1           |
+     | Unexpected HTML tags abort export #1575                                                        | 1           |
      | JSTOR eprint data export depends on whether jstor link starts with https vs http #1543         | 1           |
      | lone ogonek should have brace                                                                  | 1           |
      | Dateparser does not recognize de in Spanish dates #1513                                        | 1           |

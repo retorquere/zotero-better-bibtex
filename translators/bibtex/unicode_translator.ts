@@ -213,7 +213,7 @@ const htmlConverter = new class HTMLConverter {
         break // ignore
 
       default:
-        log.error(`unexpected tag '${tag.nodeName}' (${Object.keys(tag)})`)
+        log.debug(`unexpected tag '${tag.nodeName}' (${Object.keys(tag)})`)
     }
 
     if (latex !== '...') latex = this.embrace(latex, latex.match(/^\\[a-z]+{\.\.\.}$/))
