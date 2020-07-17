@@ -68,7 +68,7 @@
     "eventemitter3": "^4.0.4",
     "excel-column-name": "^1.0.1",
     "fast-chunk-string": "^1.0.1",
-    "file-path-filter": "^3.0.1",
+    "file-path-filter": "^3.0.2",
     "fold-to-ascii": "^5.0.0",
     "global": "^4.4.0",
     "he": "^1.2.0",
