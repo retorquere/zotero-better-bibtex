@@ -12,6 +12,7 @@ import { DB } from './db/main'
 import { Translators } from './translators'
 import { Preferences as Prefs } from './prefs'
 import * as ini from 'ini'
+import { foldMaintaining } from 'fold-to-ascii'
 import { pathSearch } from './path-search'
 import Loki = require('lokijs')
 
@@ -258,12 +259,25 @@ const queue = new class TaskQueue {
       const jobs = [ { scope, path: ae.path } ]
 
       if (ae.recursive) {
-        const ext = `.${Translators.byId[ae.translatorID].target}`
         const collections = scope.type === 'library' ? Zotero.Collections.getByLibrary(scope.id, true) : Zotero.Collections.getByParent(scope.collection, true)
+        const ext = `.${Translators.byId[ae.translatorID].target}`
+
         const root = scope.type === 'collection' ? scope.collection : false
-        const base = ae.path.replace(/\.[^.]*$/, '')
+
+        const dir = OS.Path.dirname(ae.path)
+        const base = OS.Path.basename(ae.path).replace(new RegExp(ext.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + '$'), '')
+
+        const autoExportPathReplaceDiacritics = Prefs.get('autoExportPathReplaceDiacritics')
+        const autoExportPathReplaceDirSep = Prefs.get('autoExportPathReplaceDirSep')
+        const autoExportPathReplaceSpace = Prefs.get('autoExportPathReplaceSpace')
         for (const collection of collections) {
-          const path = [base].concat(this.getCollectionPath(collection, root)).join('-') + ext
+          const path = OS.Path.join(dir, [base]
+            .concat(this.getCollectionPath(collection, root))
+            .map(p => p.replace(/[<>:'"\/\\\|\?\*\u0000-\u001F]/g, ''))
+            .map(p => p.replace(/ +/g, Prefs.get(autoExportPathReplaceSpace) || ''))
+            .map(p => autoExportPathReplaceDiacritics ? foldMaintaining(p) : p)
+            .join(autoExportPathReplaceDirSep || '-') + ext
+          )
           jobs.push({ scope: { type: 'collection', collection: collection.id }, path } )
         }
       }
@@ -283,7 +297,7 @@ const queue = new class TaskQueue {
   }
 
   private getCollectionPath(coll, root) {
-    let path = [ coll.name.replace(/[^a-zA-Z0-9]/, '') ]
+    let path = [ coll.name ]
     if (coll.parentID && coll.parentID !== root) path = this.getCollectionPath(Zotero.Collections.get(coll.parentID), root).concat(path)
     return path
   }

@@ -2,7 +2,7 @@ declare const Zotero: any
 declare const Node: any
 declare const Components: any
 
-const fold2ascii = require('fold-to-ascii')
+import { foldMaintaining } from 'fold-to-ascii'
 import PunyCode = require('punycode')
 import scripts = require('xregexp/tools/output/scripts')
 import { transliterate } from 'transliteration'
@@ -708,7 +708,7 @@ class PatternFormatter {
       replace,
     })
 
-    str = fold2ascii.foldMaintaining(str)
+    str = foldMaintaining(str)
 
     return str
   }
