@@ -11,7 +11,7 @@ ast
     id: { type: 'Identifier', name: 'CSL' },
   })
   .find(j.Property)
-  .filter(prop => !['SKIP_WORDS', 'PARTICLE_GIVEN_REGEXP', 'PARTICLE_FAMILY_REGEXP'].includes(prop.value.key.name))
+  .filter(prop => !['toLocaleLowerCase', 'toLocaleUpperCase', 'SKIP_WORDS', 'PARTICLE_GIVEN_REGEXP', 'PARTICLE_FAMILY_REGEXP'].includes(prop.value.key.name))
   .remove()
 
 const blacklist = [

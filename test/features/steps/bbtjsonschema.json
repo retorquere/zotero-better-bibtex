@@ -228,6 +228,15 @@
             "importJabRefAbbreviations": {
               "type": "boolean"
             },
+            "autoExportPathReplaceDirSep": {
+              "type": "string"
+            },
+            "autoExportPathReplaceSpace": {
+              "type": "string"
+            },
+            "autoExportPathReplaceDiacritics": {
+              "type": "boolean"
+            },
             "postscriptOverride": {
               "type": "string"
             },
