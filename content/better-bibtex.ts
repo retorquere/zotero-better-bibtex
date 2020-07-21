@@ -208,7 +208,7 @@ $patch$(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prot
 $patch$(Zotero.Item.prototype, 'clone', original => function Zotero_Item_prototype_clone(libraryID, options = {}) {
   const item = original.apply(this, arguments)
   try {
-    if (this.isRegularItem()) item.setField('extra', (item.getField('extra') || '').split('\n').filter(line => !(line.toLowerCase().startsWith('citation key:'))).join('\n'))
+    if (item.isRegularItem()) item.setField('extra', (item.getField('extra') || '').split('\n').filter(line => !(line.toLowerCase().startsWith('citation key:'))).join('\n'))
   } catch (err) {
     log.error('patched clone:', {libraryID, options, err})
   }
