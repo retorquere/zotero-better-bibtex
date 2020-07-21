@@ -11,7 +11,8 @@ aliases:
   - /push-and-pull
 ---
 
-When exporting using BBT you will be offered a new export option: `Keep updated`. Checking this option
+When exporting using BBT (by right-clicking on 'my library' from the main window of Zotero)
+you will be offered a new export option: `Keep updated`. Checking this option
 registers the export for automation; any changes to the collection or library you exported after you've completed the current export will
 trigger an automatic re-export to update the bib file. You can review/remove exports from the BBT preferences.  While
 I've gone to some lengths to make sure performance is OK, don't go overboard with the number of auto-exports you have
