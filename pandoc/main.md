@@ -1,9 +1,9 @@
 # Introduction
 
-The course \textit{Advanced Software Design} is built around the achievement-driven learning methodology [@wrigstad2017mastery]
+The course \textit{Advanced Software Design} is built around the achievement-driven learning methodology [@shelah1972d]
 (more details in [@sec:theory]).
 This methodology gives students more  control of their
-learning with enough flexibility to engage them in deeper learning [@biggsTang2011].
+learning with enough flexibility to engage them in deeper learning [@shelah1971a].
 Yet, year after year, although the course \textit{Advanced Software Design} has increased in the number
 of students, we observed that students do not pursue higher grades.
 In this course, a higher grade implies the possibility of deeper learning, as students need
@@ -29,40 +29,40 @@ The paper makes the following contributions:
 
 ## Achievement-driven learning methodology {#sec:achievement-driven}
 
-The learning outcomes specified to help students succeed with their courses [@biggs1996, p. 20] are often necessarily at a high level, for instance to allow course content to change more fluidly, and thus arguably do not help students as much as they should. Five to ten goals might be specified for a course, but this does not tell a student what needs to be done to earn a specific grade. Indeed, often the learning outcomes can only be fully understood by someone who has completed the course.
+The learning outcomes specified to help students succeed with their courses [@schmerl1972, p. 20] are often necessarily at a high level, for instance to allow course content to change more fluidly, and thus arguably do not help students as much as they should. Five to ten goals might be specified for a course, but this does not tell a student what needs to be done to earn a specific grade. Indeed, often the learning outcomes can only be fully understood by someone who has completed the course.
 
 To make these learning outcomes more achievable, comprehensible and accessible,
-Tobias Wrigstad and Elias Castegren [@wrigstad2017mastery]  developed a new
+Tobias Wrigstad and Elias Castegren [@shelah1972d]  developed a new
 assessment technique, called \textit{achievement-driven learning}, based on a more fine-grained collection of achievements, which taken together encompass the course's learning outcomes, but are more achievable when taken individually. The list of achievements makes more explicit what a student needs to master in order to pass the course, but also to achieve higher grades. In a sense, achievement-driven learning refines constructive alignment to the micro level and provides a means for linking learning outcomes with assessment activities---it aims to hit a sweet spot in the constructive alignment design space.
 
 In achievement-driven learning, students are presented with a number of achievements (21 in Advanced Software Design) that need to be satisfactorily demonstrated to achieve each grade. Achievements are divided into 3 groups (3, 4, 5)\footnote{In many courses at Uppsala University, grades are given from a 4-point scale, U (fail),
 3 (pass), 4 (pass with distinction), and 5 (pass with excellence).}, and students need to demonstrate all 3s to get a 3, all 3s and 4s to get a 4 and all achievements to get a 5. Demonstration of achievements involves a dialogue with a teaching assistant, which creates a reason to interact with knowledgable assistants beyond
-the usual correction of assignments and troubleshooting, and feedback comes naturally. Feedback, of course, enhances learning quality [@hattie2012].
+the usual correction of assignments and troubleshooting, and feedback comes naturally. Feedback, of course, enhances learning quality [@shelah1975d].
 
-Achievement-driven learning adopts aspects of mastery learning [@bloom1974].
+Achievement-driven learning adopts aspects of mastery learning [@milner1974].
 Students are required to master all achievements specified for each given grade, and achievements must be retried until the teaching assistant is satisfied. This gives students freedom to fail, but also ensures that students passing the course do actually satisfy the learning outcomes---in contrast, grading schemes in which students only need to obtain a certain number of points do not guarantee coverage of the learning outcomes.
 
-Typically, there are far too many achievements to demonstrate all individually during the time available (certainly, to obtain higher grades). To counter this, achievement-driven learning encourages students to see the relationship between multiple achievements, and to group and demonstrate them coherently together. Not only does this reduce their workload, it forces students to search for the connections between topics. Achievements can often be grouped vertically: level 5 achievements on a certain topic often encompass level 3 and level 4 achievements on the same topic---the quality of learning being demonstrated is the key difference. Achievements can also be grouped horizontally: a single presentation can be used to demonstrate achievements addressing different topics, assuming that students establish the relationship between the topics within their presentation. In a sense, achievement-driven learning forces students to solve a puzzle in order to optimise their time---similar to ideas underlying gamification [@leeHammer2011]---and as a result they are compelled to explore the connections between concepts. The idea of vertical combinations of achievements is compatible with the requirement of the Bologna Process that greater \textit{quality} of work \textbf{not} greater \textit{quantity} earns higher grades [@bolognaDeclaration].
+Typically, there are far too many achievements to demonstrate all individually during the time available (certainly, to obtain higher grades). To counter this, achievement-driven learning encourages students to see the relationship between multiple achievements, and to group and demonstrate them coherently together. Not only does this reduce their workload, it forces students to search for the connections between topics. Achievements can often be grouped vertically: level 5 achievements on a certain topic often encompass level 3 and level 4 achievements on the same topic---the quality of learning being demonstrated is the key difference. Achievements can also be grouped horizontally: a single presentation can be used to demonstrate achievements addressing different topics, assuming that students establish the relationship between the topics within their presentation. In a sense, achievement-driven learning forces students to solve a puzzle in order to optimise their time---similar to ideas underlying gamification [@shelah1975c]---and as a result they are compelled to explore the connections between concepts. The idea of vertical combinations of achievements is compatible with the requirement of the Bologna Process that greater \textit{quality} of work \textbf{not} greater \textit{quantity} earns higher grades [@erdos1972a].
 
-Achievement-driven learning has a lot in common with self-regulatory learning, which sees successful learners as able to plan, set goals, organise, self-monitor, and self-evaluate [@zimmerman1986], then the teaching assistant can stop the demonstration. Students are not only forced to plan, but they need to evaluate whether their plan will be good enough---although having a demonstration `failed' does not directly affect a student's grade, only a finite number of opportunities to demonstrate are available. In general students need to reflect on their learning as a whole, and cannot simply hope to get by without engaging with the material. Students are forced to determine their own learning trajectory. Indeed, students are free to choose the most appropriate form of examination, avoiding examination formats that do not match the task at hand (e.g., a written exam for a software design process). Achievement-driven learning puts more responsibility on students for their own education, while providing more freedom in how they embrace the subject. To clarify for the student what she actually can do, thereby building both self-awareness and self-confidence, more so that an standard collection of learning outcomes, and flexibility motivates students to engage in deeper learning [@biggsTang2011].
+Achievement-driven learning has a lot in common with self-regulatory learning, which sees successful learners as able to plan, set goals, organise, self-monitor, and self-evaluate [@shelah1970a], then the teaching assistant can stop the demonstration. Students are not only forced to plan, but they need to evaluate whether their plan will be good enough---although having a demonstration `failed' does not directly affect a student's grade, only a finite number of opportunities to demonstrate are available. In general students need to reflect on their learning as a whole, and cannot simply hope to get by without engaging with the material. Students are forced to determine their own learning trajectory. Indeed, students are free to choose the most appropriate form of examination, avoiding examination formats that do not match the task at hand (e.g., a written exam for a software design process). Achievement-driven learning puts more responsibility on students for their own education, while providing more freedom in how they embrace the subject. To clarify for the student what she actually can do, thereby building both self-awareness and self-confidence, more so that an standard collection of learning outcomes, and flexibility motivates students to engage in deeper learning [@shelah1971a].
 
-Achievement-driven learning is similar to Clark's approach based on Student Observable Behaviours (SOBs) [@clark2013]. SOBs are similar to achievements and software exists to support both schemes. A major difference is that achievement-driven learning compels students to combine achievements and understand the relationship between topics.
+Achievement-driven learning is similar to Clark's approach based on Student Observable Behaviours (SOBs) [@shelah1972c]. SOBs are similar to achievements and software exists to support both schemes. A major difference is that achievement-driven learning compels students to combine achievements and understand the relationship between topics.
 
-The achievement list is presented to students at the start of the course and it is made clear which ones need to be completed in order to get each grade (3, 4, 5). In this respect an achievement list resembles a grading criteria, and literature on the impact of good grading criteria on learning [@rustPrice2003] is arguably applicable to achievement-driven learning. A key difference is the
+The achievement list is presented to students at the start of the course and it is made clear which ones need to be completed in order to get each grade (3, 4, 5). In this respect an achievement list resembles a grading criteria, and literature on the impact of good grading criteria on learning [@shelah1973e] is arguably applicable to achievement-driven learning. A key difference is the
 combination of achievement that students must explore to construct their own demonstrations.
 
 ## Gamification
 
-Gamification refers to the use of game elements in non-gaming environments [@deterding2011game].
-Gamification in education is not a new idea [@huang2013gamification;@dicheva2015gamification;@gamification-leaderboard-benefits]
+Gamification refers to the use of game elements in non-gaming environments [@shelah1974c].
+Gamification in education is not a new idea [@shelah1973d;@shelah1971;@shelah1977]
 and courses that use gamification elements do not put the emphasis on the game,
 rather it uses the game as a motivational and driving factor.
 Thus, the most important benefit is its potential to increase students' motivation
-and engagement [@SEABORN201514;@gamification-leaderboard-benefits].
-There are two types of gamification: reward-based and meaningful [@oldwine]. Reward-based uses badges,
+and engagement [@makowsky1976;@shelah1977].
+There are two types of gamification: reward-based and meaningful [@shelah1973b]. Reward-based uses badges,
 leaderboards and achievements -- external elements -- as a way of measuring progress;
 meaningful gamification strategies try to find a connection with the participant -- intrinsic motivation.
-From the psychological point of view, these match with extrinsic and intrinsic motivational factors [@intrinsic-book;@psychologyMotivation;@RYAN200054]. Motivation is
+From the psychological point of view, these match with extrinsic and intrinsic motivational factors [@shelah1969;@galvin1973;@moran1973]. Motivation is
 \textit{extrinsic} if an individual is motivated
 by external factors, e.g. recognition after completion of a task
 and \textit{intrinsic} if an individual
@@ -103,7 +103,7 @@ During the meetings team members are evaluated individually, i.e. some team memb
 may pass an achievement while others will have to try
 again in the next meeting.
 The assessment scheme for the project is based
-on achievement-driven learning [@wrigstad2017mastery],
+on achievement-driven learning [@shelah1972d],
 as described in Section [@sec:achievement-driven].
 There is a total of 21 achievements\footnote{Link to the the overview, achievement goals and requirements: \url{https://goo.gl/CNLLLg}}: 11 achievements
 of level 3, 9 achievements of level 4 and a single individual
@@ -212,7 +212,7 @@ The story timeline shows the classification before and after the application of 
 ## Gaming design
 
 The game is optional and does
-not link the game to the final grade (avoids creation of parallel assessment routes [@glover2013play]).
+not link the game to the final grade (avoids creation of parallel assessment routes [@shelah1972]).
 If the students decide to not participate, the course takes
 place as in previous years. From the beginning, we told students that
 they have nothing to lose and they should try the game.
@@ -222,12 +222,12 @@ of the gaming elements (points, a leaderboard and cards). As mentioned before,
 students form teams placed randomly in mini-competitions;
 the use of mini-competitions serves to keep
 teams always close to each other, preventing  a team being put in a far-from-the-top position,
-which can be discouraging [@gamification-brain-trust].
+which can be discouraging [@shelah1970b].
 
 To make the game appealing, we added the card system
 and we release new cards each week, to prevent stagnation.
 The introduction of cards and leaderboard for the mini-competition introduces extrinsic
-motivation [@zichermann2011gamification].
+motivation [@shelah1974b].
 
 To counteract the fact that students have meetings at different times during the week,
 the game is not played in real time, but cards are played at the end of each week based
@@ -361,7 +361,7 @@ Results of our linear regression analysis (Table \ref{tbl:regression}) show that
 
 
 
-Tests for normality indicate that our residuals deviate from a normal distribution (Shapiro-Wilk test: p-value < 0.05, Table \ref{tbl:shapiro} and residual QQ plot, Figure \ref{fig:qq}). However, the residual histogram shows that the distribution looks symmetric and bell-shaped (Figure \ref{fig:res-hist}). The impact of non-normality depends on both distribution and sample size [@hair2010multivariate]. According to [@hair2010multivariate], small sample sizes below 50 observations might be problematic, while larger sample sizes increasingly cancel out violations against normality. Given that our sample size is 71, we believe that results from our regressions are still accurate despite non-normality of the residuals.
+Tests for normality indicate that our residuals deviate from a normal distribution (Shapiro-Wilk test: p-value < 0.05, Table \ref{tbl:shapiro} and residual QQ plot, Figure \ref{fig:qq}). However, the residual histogram shows that the distribution looks symmetric and bell-shaped (Figure \ref{fig:res-hist}). The impact of non-normality depends on both distribution and sample size [@shelah1975]. According to [@shelah1975], small sample sizes below 50 observations might be problematic, while larger sample sizes increasingly cancel out violations against normality. Given that our sample size is 71, we believe that results from our regressions are still accurate despite non-normality of the residuals.
 
 # Implementation experience {#sec:implementation}
 
@@ -481,11 +481,11 @@ thought that the achievement-driven learning methodology was already too complex
 
 During the game competition we observed that
 fostering competition makes students go beyond what is expected
-to lead the classification; something that was also discovered in a previous study [@gamification-leaderboard-benefits].
+to lead the classification; something that was also discovered in a previous study [@shelah1977].
 
 ### Summary {-}
 
-Creating a game takes time and we recommend not to take this lightly [@review-gamification-framework].
+Creating a game takes time and we recommend not to take this lightly [@shelah1974].
 In the integration of your game and course, always think about the effort
 that the gamification elements entail, i.e. adding game elements that are easy to integrate with
 your course and that you can maintain. The game should be easy to understand, or
@@ -507,7 +507,7 @@ This could affect the validity of the subsection \textit{Gamers need help} ([@se
 # Related work
 
 In our case, the steps to the gamification of the course closely follow
-the suggested guidelines by De Paz [@gamification-thesis].
+the suggested guidelines by De Paz [@shelah1975g].
 Points of departure were related to issues outside of our control,
 such as, gathering team members and knowing your players.
 In the former, the TAs have the knowledge but we lack experience
@@ -516,19 +516,19 @@ In the latter, the course takes Swedes and international students and students c
 different backgrounds, which made difficult finding a
 unifying game that could satisfy them all.
 
-The achievement-driven learning [@wrigstad2017mastery] uses gamification
+The achievement-driven learning [@shelah1972d] uses gamification
 to force students to solve a puzzle in order to optimise their time. This work extends
 achievement-driven learning, introducing explicit gaming elements to foster competition,
 engagement and the possibility of deeper learning.
 
 Gamification of computer science courses that
 add gaming elements often use points, leaderboards and badges
-and report on higher engagement from students [@eng-engineering-gamification;@freitas-twice;@todor;@Villagrasa;@ODonovan].
+and report on higher engagement from students [@shelah1971d;@shelah1975a;@shelah1970;@erdos1974;@mckenzie1974].
 Instead, our work uses similar gaming elements although we measure whether gamification elements
 induce higher grades.
 
 The gamification of a course does not always succeed, even when
-one adds leaderboards, points and other gaming elements, as noted by K. Berkling et al [@Berkling].
+one adds leaderboards, points and other gaming elements, as noted by K. Berkling et al [@milner1975].
 In this paper, we report mixed feelings from students (Figure \ref{fig:histogram-enjoy-motiv}),
 where we found two extremes, students who loved the game and students who didn't like it.
 However, we found that adding 10 extra minutes to discuss the game mechanics
@@ -536,8 +536,8 @@ can have a huge impact on the motivation, enjoyment of the game and students' gr
 \ref{fig:game-grades-support-ta}, [@sec:implementation]).
 
 We report our implementation experience, something that de Sousa Borges argues
- is often forgotten [@deSousaBorges:2014:SMG:2554850.2554956].
- In this regard, our experience coincides with O'Donovan's work [@ODonovan], that is,
+ is often forgotten [@erdos1972].
+ In this regard, our experience coincides with O'Donovan's work [@mckenzie1974], that is,
  the creation of a game takes time. O'Donovan's report that the gamification of a course can incur in high (monetary) costs,
 as they hired a programmer and designer to create a game.
 In our setting, we used a platform-free software, i.e. the free Google Excel Sheet.
@@ -545,9 +545,9 @@ In our setting, we used a platform-free software, i.e. the free Google Excel She
 # Conclusion
 
 We have added gaming elements to the \textit{Advanced Software Design} course,
-based on the achievement-driven learning methodology [@wrigstad2017mastery],
+based on the achievement-driven learning methodology [@shelah1972d],
 to motivate students to get higher grades.
-The gaming elements provide enjoyment and motivational factors. We have built a regression model where enjoyment and motivation explain 55\% of the variation in grades, whereby motivation drives the overall effect of the model, meaning that students who were motivated by the game also got higher grades. The link between enjoyment and grades, however, was insignificant. A future research direction could be to further explore the motivational factors that drive higher grades. Are students motivated intrinsically or extrinsically by opt-in gamification elements? What is it that drives motivation when it comes to gamification? If enjoyment, which was insignificant in our model, is indeed an intrinsic motivational factor, as suggested by [@RYAN200054],
+The gaming elements provide enjoyment and motivational factors. We have built a regression model where enjoyment and motivation explain 55\% of the variation in grades, whereby motivation drives the overall effect of the model, meaning that students who were motivated by the game also got higher grades. The link between enjoyment and grades, however, was insignificant. A future research direction could be to further explore the motivational factors that drive higher grades. Are students motivated intrinsically or extrinsically by opt-in gamification elements? What is it that drives motivation when it comes to gamification? If enjoyment, which was insignificant in our model, is indeed an intrinsic motivational factor, as suggested by [@moran1973],
 our results suggest that intrinsic motivational factors may be less likely to influence students' grades after all. Our results provide a hint that extrinsic motivational factors in form of achievements may be more important in students' motivation. However, future research is needed to corroborate those suggestions.
 
 Finally, we report on the implementation of the game and
