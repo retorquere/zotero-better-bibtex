@@ -18,6 +18,13 @@ paper:
 	#@pandoc -s --lua-filter=$(MAIN) -o paper$(TIMESTAMP).odt main.md
 	pandoc -s --metadata=zotero_scannable_cite:true --lua-filter=$(MAIN) -o paper$(TIMESTAMP)-scannable-cite.odt main.md
 
+1581:
+	@rm -f *.docx *.odt *.json content.xml
+	curl -L https://raw.githubusercontent.com/retorquere/zotero-better-bibtex/master/site/content/exporting/zotero.lua -o zotero-bundled.lua
+	pandoc -s --metadata=zotero_scannable_cite:true --lua-filter=./zotero-bundled.lua -o paper$(TIMESTAMP)-scannable-cite.odt main.md
+	unzip paper$(TIMESTAMP)-scannable-cite.odt content.xml
+	grep @wrigstad2017mastery content.xml
+
 1528:
 	@rm -f *.docx *.odt *.json
 	@pandoc -s --lua-filter=$(MAIN) -o 1528-$(TIMESTAMP).docx gh-1528.md
