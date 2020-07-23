@@ -21,7 +21,8 @@ paper:
 1581:
 	@rm -f *.docx *.odt *.json content.xml
 	curl -L https://raw.githubusercontent.com/retorquere/zotero-better-bibtex/master/site/content/exporting/zotero.lua -o zotero-bundled.lua
-	pandoc -s --metadata=zotero_scannable_cite:true --lua-filter=./zotero-bundled.lua -o paper$(TIMESTAMP)-scannable-cite.odt main.md
+	echo "[@wrigstad2017mastery]" > ww.md
+	pandoc -s --metadata=zotero_scannable_cite:true --lua-filter=./zotero-bundled.lua -o paper$(TIMESTAMP)-scannable-cite.odt ww.md
 	unzip paper$(TIMESTAMP)-scannable-cite.odt content.xml
 	grep @wrigstad2017mastery content.xml
 
