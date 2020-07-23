@@ -32,8 +32,9 @@ You can fetch your library as part of your build, using something like `curl` fr
 
 * `biblatex` for BibLaTeX
 * `bibtex` for BibTeX
-* `csljson` for CSL-JSON
-* `cslyaml` for CSL-JSON in YAML format
+* `json` or `csljson` for CSL-JSON
+* `yaml`, `yml` or `cslyaml` for CSL-JSON in YAML format
+* `jzon` for BetterBibTeX JSON debug format
 * the value of `translatorID` taken from the header of any existing Zotero translator to get an export in that translator format
 
 **Pull export will *only* work if you are compiling your document on the
