@@ -1936,16 +1936,16 @@ local function scannable_cite(cite)
     else
       locator = ''
     end
-      
+
     citations = citations ..
-      '{ ' .. (utils.collect(item.prefix)  or '') ..
+      '{ ' .. (utils.collect(item.prefix) or '') ..
       ' | ' .. suppress .. utils.trim(string.gsub(utils.collect(cite.content) or '', '[|{}]', '')) ..
       ' | ' .. locator ..
       ' | ' .. (suffix or '') ..
       ' | ' .. (ug == 'groups' and 'zg:' or 'zu:') .. id .. ':' .. key .. ' }'
   end
 
-  return pandoc.Str(citation)
+  return pandoc.Str(citations)
 end
 
 -- -- -- get config -- -- --
@@ -1988,8 +1988,8 @@ function Meta(meta)
     meta.zotero[k] = utils.collect(v)
   end
 
-  config.scannable_cite = test_boolean(meta.zotero['scannable-cite'])
-  config.author_in_text = test_boolean(meta.zotero['author-in-text'])
+  config.scannable_cite = test_boolean('scannable-cite', meta.zotero['scannable-cite'])
+  config.author_in_text = test_boolean('author-in-text', meta.zotero['author-in-text'])
 
   if type(meta.zotero.client) == 'nil' then
     meta.zotero.client = 'zotero'
@@ -2040,7 +2040,7 @@ function Inlines_replace_cites(inlines)
 
   for k, v in pairs(inlines) do
     if v.t == 'Cite' then
-      if zotero.format == 'scannable-cite' then
+      if config.format == 'scannable-cite' then
         inlines[k] = scannable_cite(v)
       else
         inlines[k] = zotero_ref(v)
@@ -2050,7 +2050,6 @@ function Inlines_replace_cites(inlines)
 
   return inlines
 end
-
 
 return {
   { Meta = Meta },
