@@ -81,7 +81,7 @@ class PatternFormatter {
   private months = { 1: 'jan', 2: 'feb', 3: 'mar', 4: 'apr', 5: 'may', 6: 'jun', 7: 'jul', 8: 'aug', 9: 'sep', 10: 'oct', 11: 'nov', 12: 'dec' }
 
   // tslint:disable-next-line:variable-name
-  private DOMParser = Components.classes['@mozilla.org/xmlextras/domparser;1'].createInstance(Components.interfaces.nsIDOMParser)
+  private DOMParser = new DOMParser
 
   private item: {
     type: string
@@ -736,9 +736,7 @@ class PatternFormatter {
 
   private innerText(str) {
     if (!str) return ''
-    let doc = this.DOMParser.parseFromString(`<span>${str}</span>`, 'text/html')
-    if (doc.nodeType === Node.DOCUMENT_NODE) doc = doc.documentElement
-    return doc.textContent
+    return this.DOMParser.parseFromString(`<span>${str}</span>`, 'text/html').documentElement.textContent
   }
 
   private stripQuotes(name) {
