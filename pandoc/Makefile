@@ -12,6 +12,9 @@ else
 	@exit 1
 endif
 
+gist: bundle
+	gist -u dbfcc3e51f2aaf82333bddb38cf5e4de $(BUNDLED)
+
 paper:
 	@rm -f *.docx *.odt *.json
 	#@pandoc -s --lua-filter=$(MAIN) -o paper$(TIMESTAMP).docx main.md
@@ -20,11 +23,11 @@ paper:
 
 1581:
 	@rm -f *.docx *.odt *.json content.xml
-	curl -L https://raw.githubusercontent.com/retorquere/zotero-better-bibtex/master/site/content/exporting/zotero.lua -o zotero-bundled.lua
-	echo "[@wrigstad2017mastery]" > ww.md
+	@curl -H 'Cache-Control: no-cache' -L https://gist.githubusercontent.com/retorquere/dbfcc3e51f2aaf82333bddb38cf5e4de/raw/zotero.lua -o zotero-bundled.lua
+	@echo "[@wrigstad2017mastery]" > ww.md
 	pandoc -s --metadata=zotero_scannable_cite:true --lua-filter=./zotero-bundled.lua -o paper$(TIMESTAMP)-scannable-cite.odt ww.md
-	unzip paper$(TIMESTAMP)-scannable-cite.odt content.xml
-	grep @wrigstad2017mastery content.xml
+	#unzip paper$(TIMESTAMP)-scannable-cite.odt content.xml
+	#grep @wrigstad2017mastery content.xml
 
 1528:
 	@rm -f *.docx *.odt *.json

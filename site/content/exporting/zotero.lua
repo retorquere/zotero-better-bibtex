@@ -1660,10 +1660,11 @@ function module.collect(tbl)
 
   local t = ''
   for k, v in pairs(tbl) do
-    if v.t == 'Str' then
+    if v.t == 'Str' and v.text ~= nil then
       t = t .. v.text
     elseif v.t == 'Space' then
       t = t .. ' '
+    elseif v.t == nil then
     else
       error('cannot collect ' .. v.t, 1)
     end
@@ -1970,6 +1971,16 @@ local function test_boolean(k, v)
 end
 
 function Meta(meta)
+  if
+    (PANDOC_VERSION[1] < 2)
+    or
+    (PANDOC_VERSION[1] == 2 and PANDOC_VERSION[2] < 9)
+    or
+    (PANDOC_VERSION[1] == 2 and PANDOC_VERSION[2] == 9 and PANDOC_VERSION[3] < 2)
+  then
+    error('pandoc >= 2.9.2 is required')
+  end
+
   -- create meta.zotero if it does not exist
   if meta.zotero == nil then
     meta.zotero = {}
@@ -2011,6 +2022,8 @@ function Meta(meta)
   elseif string.match(FORMAT, 'odt') or string.match(FORMAT, 'docx') then
     config.format = FORMAT
     zotero.url = zotero.url .. '&translator=json'
+  else
+    config.format = FORMAT
   end
 
   if type(meta.zotero.library) ~= 'nil' then

@@ -41,10 +41,11 @@ function module.collect(tbl)
 
   local t = ''
   for k, v in pairs(tbl) do
-    if v.t == 'Str' then
+    if v.t == 'Str' and v.text ~= nil then
       t = t .. v.text
     elseif v.t == 'Space' then
       t = t .. ' '
+    elseif v.t == nil then
     else
       error('cannot collect ' .. v.t, 1)
     end
