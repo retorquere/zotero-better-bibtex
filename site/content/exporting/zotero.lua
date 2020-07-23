@@ -1971,16 +1971,6 @@ local function test_boolean(k, v)
 end
 
 function Meta(meta)
-  if
-    (PANDOC_VERSION[1] < 2)
-    or
-    (PANDOC_VERSION[1] == 2 and PANDOC_VERSION[2] < 9)
-    or
-    (PANDOC_VERSION[1] == 2 and PANDOC_VERSION[2] == 9 and PANDOC_VERSION[3] < 2)
-  then
-    error('pandoc >= 2.9.2 is required')
-  end
-
   -- create meta.zotero if it does not exist
   if meta.zotero == nil then
     meta.zotero = {}
@@ -2022,8 +2012,6 @@ function Meta(meta)
   elseif string.match(FORMAT, 'odt') or string.match(FORMAT, 'docx') then
     config.format = FORMAT
     zotero.url = zotero.url .. '&translator=json'
-  else
-    config.format = FORMAT
   end
 
   if type(meta.zotero.library) ~= 'nil' then
@@ -2034,38 +2022,28 @@ function Meta(meta)
 end
 
 -- -- -- replace citations -- -- --
-function Inlines_collect_citekeys(inlines)
-  if not config.format then return inlines end
+function Cite_collect(cite)
+  if not config.format then return nil end
 
-  for k, v in pairs(inlines) do
-    if v.t == 'Cite' then
-      for _, item in pairs(v.citations) do
-        zotero.citekeys[item.id] = true
-      end
-    end
+  for _, item in pairs(cite.citations) do
+    zotero.citekeys[item.id] = true
   end
 
-  return inlines
+  return nil
 end
 
-function Inlines_replace_cites(inlines)
-  if not config.format then return inlines end
+function Cite_replace(cite)
+  if not config.format then return nil end
 
-  for k, v in pairs(inlines) do
-    if v.t == 'Cite' then
-      if config.format == 'scannable-cite' then
-        inlines[k] = scannable_cite(v)
-      else
-        inlines[k] = zotero_ref(v)
-      end
-    end
+  if config.format == 'scannable-cite' then
+    return scannable_cite(cite)
+  else
+    return zotero_ref(cite)
   end
-
-  return inlines
 end
 
 return {
   { Meta = Meta },
-  { Inlines = Inlines_collect_citekeys },
-  { Inlines = Inlines_replace_cites },
+  { Cite = Cite_collect },
+  { Cite = Cite_replace },
 }
