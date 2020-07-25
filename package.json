@@ -81,7 +81,7 @@
     "lokijs": "^1.5.9",
     "node-eta": "^0.9.0",
     "number-to-words": "^1.2.4",
-    "parse5": "^6.0.0",
+    "parse5": "^6.0.1",
     "permutater": "^1.0.2",
     "punycode": "^2.1.1",
     "safe-stable-stringify": "^1.1.1",
