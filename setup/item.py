@@ -490,6 +490,8 @@ with open(os.path.join(ITEMS, 'items.ts'), 'w') as f:
 
   # map names to basenames
   names = Munch(field={}, type={})
+  names.field['dateadded'] = Munch(jurism='dateAdded', zotero='dateAdded')
+  names.field['datemodified'] = Munch(jurism='dateModified', zotero='dateModified')
   labels = {}
   for field in jsonpath.parse('*.itemTypes.*.fields.*').find(SCHEMA):
     client, itemType = operator.itemgetter(0, 2)(str(field.full_path).split('.'))
