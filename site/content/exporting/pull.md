@@ -7,15 +7,7 @@ tags:
   - export
 ---
 
-You can fetch your bibliography on the url http://127.0.0.1:23119/better-bibtex/collection?`[collectionID]`.`[format]` [^1], where collectionID is:
-
-* the ID you get by right-clicking your collection and selecting "Show collection key"
-* the path "/[library id]/full/path/to/collection" (the library id is the first number from the key you get in the
-  option above; it's always '0' for your personal library)
-
-or any multiple of those, separated by a '+' sign.
-
-The format is either 'bibtex' or 'biblatex', and determines the translator used for export.
+You can fetch your bibliography on the url http://127.0.0.1:23119/better-bibtex/collection?`[collectionID]`.`[format]` [^1]. You can get this URL for a group, library or collection by right-clicking it and selecting `Download Better BibTeX export...`
 
 You can add options to the export as URL parameters:
 
