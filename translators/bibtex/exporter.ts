@@ -87,11 +87,11 @@ export let Exporter = new class { // tslint:disable-line:variable-name
     this.jabref.exportGroups()
     Zotero.write(this.postfix.toString())
     if (Translator.preferences.qualityReport) {
-      let sep = '\n'
+      let sep = '\n% == Citekey duplicates in this file:\n'
       for (const [citekey, n] of Object.entries(this.citekeys).sort((a, b) => a[0].localeCompare(b[0]))) {
         if (n > 1) {
-          Zotero.write(`${sep}% ${citekey} duplicates: ${n}`)
-          sep = ''
+          Zotero.write(`${sep}% ${citekey} duplicates: ${n}\n`)
+          sep = '% '
         }
       }
     }

@@ -43,25 +43,85 @@ Reference.prototype.fieldEncoding = {
   address: 'literal',
 }
 
+const lint: Record<string, {required: string[], optional: string[]}> = {
+  article: {
+    required: [ 'author', 'title', 'journal', 'year' ],
+    optional: [ 'volume', 'number', 'pages', 'month', 'note', 'key' ],
+  },
+  book: {
+    required: ['author/editor', 'title', 'publisher', 'year' ],
+    optional: [ 'volume/number', 'series', 'address', 'edition', 'month', 'note', 'key' ],
+  },
+  booklet: {
+    required: [ 'title' ],
+    optional: [ 'author', 'howpublished', 'address', 'month', 'year', 'note', 'key' ],
+  },
+  inbook: {
+    required: [ 'author/editor', 'title', 'chapter/pages', 'publisher', 'year' ],
+    optional: [ 'volume/number', 'series', 'type', 'address', 'edition', 'month', 'note', 'key' ],
+  },
+  incollection: {
+    required: [ 'author', 'title', 'booktitle', 'publisher', 'year' ],
+    optional:  [ 'editor', 'volume/number', 'series', 'type', 'chapter', 'pages', 'address', 'edition', 'month', 'note', 'key' ],
+  },
+  inproceedings: {
+    required: [ 'author', 'title', 'booktitle', 'year' ],
+    optional: [ 'editor', 'volume/number', 'series', 'pages', 'address', 'month', 'organization', 'publisher', 'note', 'key' ],
+  },
+  manual: {
+    required: [ 'title' ],
+    optional: [ 'author', 'organization', 'address', 'edition', 'month', 'year', 'note', 'key' ],
+  },
+  mastersthesis: {
+    required: [ 'author', 'title', 'school', 'year' ],
+    optional: [ 'type', 'address', 'month', 'note', 'key' ],
+  },
+  misc: {
+    required: [],
+    optional: [ 'author', 'title', 'howpublished', 'month', 'year', 'note', 'key' ],
+  },
+  phdthesis: {
+    required: [ 'author', 'title', 'school', 'year' ],
+    optional: [ 'type', 'address', 'month', 'note', 'key' ],
+  },
+  proceedings: {
+    required: ['title', 'year' ],
+    optional: [ 'editor', 'volume/number', 'series', 'address', 'month', 'organization', 'publisher', 'note', 'key' ],
+  },
+  techreport: {
+    required: [ 'author', 'title', 'institution', 'year' ],
+    optional: [ 'type', 'number', 'address', 'month', 'note', 'key' ],
+  },
+  unpublished: {
+    required: [ 'author', 'title', 'note', 'key' ],
+    optional: [ 'month', 'year' ],
+  },
+}
+lint.conference = lint.inproceedings
+
 Reference.prototype.lint = function(explanation) {
-  const required = {
-    inproceedings: [ 'author', 'booktitle', 'pages', 'publisher', 'title', 'year' ],
-    article: [ 'author', 'journal', 'number', 'pages', 'title', 'volume', 'year' ],
-    techreport: [ 'author', 'institution', 'title', 'year' ],
-    incollection: [ 'author', 'booktitle', 'pages', 'publisher', 'title', 'year' ],
-    book: [ 'author', 'publisher', 'title', 'year' ],
-    inbook: [ 'author', 'booktitle', 'pages', 'publisher', 'title', 'year' ],
-    proceedings: [ 'editor', 'publisher', 'title', 'year' ],
-    phdthesis: [ 'author', 'school', 'title', 'year' ],
-    mastersthesis: [ 'author', 'school', 'title', 'year' ],
-    electronic: [ 'author', 'title', 'url', 'year' ],
-    misc: [ 'author', 'howpublished', 'title', 'year' ],
+  const type = lint[this.referencetype.toLowerCase()]
+  if (!type) return
+
+  log.debug('lint:', type)
+
+  let fields = Object.keys(this.has)
+  const warnings: string[] = []
+
+  for (const required of type.required) {
+    const match = required.split('/').find(field => this.has[field])
+    if (match) {
+      fields = fields.filter(field => field !== match)
+    } else {
+      warnings.push(`Missing required field '${required}'`)
+    }
   }
 
-  const fields = required[this.referencetype.toLowerCase()]
-  if (!fields) return
+  for (const field of fields) {
+    if (!type.optional.includes(field)) warnings.push(`Unexpected field '${field}'`)
+  }
 
-  return fields.map(field => this.has[field] ? '' : `Missing required field '${field}'`).filter(msg => msg)
+  return warnings
 }
 
 Reference.prototype.addCreators = function() {

@@ -135,6 +135,7 @@ Scenario Outline: Export <references> references for BibTeX to <file>
 
   Examples:
      | file                                                                               | references |
+     | BibTeX journal article QR reports missing field number #1589                       | 2          |
      | Format disambiguations #1554                                                       | 2          |
      | BibTeX Warning for Inbook Entries with Author and Editor Fields #1541              | 1          |
      | Unicode ø in author name is exported with trailing space which does not work in bibtex #1538 | 1 |
