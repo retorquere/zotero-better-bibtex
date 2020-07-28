@@ -93,8 +93,8 @@ const lint: Record<string, {required: string[], optional: string[]}> = {
     optional: [ 'type', 'number', 'address', 'month', 'note', 'key' ],
   },
   unpublished: {
-    required: [ 'author', 'title', 'note', 'key' ],
-    optional: [ 'month', 'year' ],
+    required: [ 'author', 'title', 'note' ],
+    optional: [ 'month', 'year', 'key' ],
   },
 }
 lint.conference = lint.inproceedings
@@ -105,21 +105,25 @@ Reference.prototype.lint = function(explanation) {
 
   log.debug('lint:', type)
 
-  let fields = Object.keys(this.has)
+  // let fields = Object.keys(this.has)
   const warnings: string[] = []
 
   for (const required of type.required) {
     const match = required.split('/').find(field => this.has[field])
     if (match) {
-      fields = fields.filter(field => field !== match)
+      // fields = fields.filter(field => field !== match)
     } else {
       warnings.push(`Missing required field '${required}'`)
     }
   }
 
+  // bibtex is so incredibly lax, forget about optionals-checking
+  /*
   for (const field of fields) {
-    if (!type.optional.includes(field)) warnings.push(`Unexpected field '${field}'`)
+    if (!type.optional.find(allowed => allowed.split('/').includes(field))) warnings.push(`Unexpected field '${field}'`)
   }
+  */
+  log.debug('lint:', warnings)
 
   return warnings
 }
