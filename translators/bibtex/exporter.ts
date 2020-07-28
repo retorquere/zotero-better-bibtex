@@ -12,11 +12,11 @@ import * as Extra from '../../content/extra'
 export let Exporter = new class { // tslint:disable-line:variable-name
   public postfix: Postfix
   public jabref: JabRef
-  public strings: {[key: string]: string}
+  public strings: {[key: string]: string} = {}
+  public citekeys: Record<string, number> = {}
 
   constructor() {
     this.jabref = new JabRef()
-    this.strings = {}
   }
 
   public prepare_strings() {
@@ -51,6 +51,7 @@ export let Exporter = new class { // tslint:disable-line:variable-name
       if (!item.citekey) {
         throw new Error(`No citation key in ${JSON.stringify(item)}`)
       }
+      this.citekeys[item.citekey] = (this.citekeys[item.citekey] || 0) + 1
 
       this.jabref.citekeys.set(item.itemID, item.citekey)
 
@@ -85,5 +86,14 @@ export let Exporter = new class { // tslint:disable-line:variable-name
   public complete() {
     this.jabref.exportGroups()
     Zotero.write(this.postfix.toString())
+    if (Translator.preferences.qualityReport) {
+      let sep = '\n'
+      for (const [citekey, n] of Object.entries(this.citekeys).sort((a, b) => a[0].localeCompare(b[0]))) {
+        if (n > 1) {
+          Zotero.write(`${sep}% ${citekey} duplicates: ${n}`)
+          sep = ''
+        }
+      }
+    }
   }
 }

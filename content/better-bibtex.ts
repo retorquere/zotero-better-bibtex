@@ -179,7 +179,7 @@ $patch$(Zotero.ItemFields, 'isFieldOfBase', original => function Zotero_ItemFiel
 })
 
 // because the zotero item editor does not check whether a textbox is read-only. *sigh*
-$patch$(Zotero.Item.prototype, 'setField', original => function Zotero_ItemFields_isFieldOfBase(field, value, loadIn) {
+$patch$(Zotero.Item.prototype, 'setField', original => function Zotero_Item_prototype_setField(field, value, loadIn) {
   if (['citekey', 'itemID'].includes(field)) return false
   return original.apply(this, arguments)
 })
@@ -202,6 +202,17 @@ $patch$(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prot
   }
 
   return original.apply(this, arguments)
+})
+
+// #1579
+$patch$(Zotero.Item.prototype, 'clone', original => function Zotero_Item_prototype_clone(libraryID, options = {}) {
+  const item = original.apply(this, arguments)
+  try {
+    if (item.isRegularItem()) item.setField('extra', (item.getField('extra') || '').split('\n').filter(line => !(line.toLowerCase().startsWith('citation key:'))).join('\n'))
+  } catch (err) {
+    log.error('patched clone:', {libraryID, options, err})
+  }
+  return item
 })
 
 const itemTreeViewWaiting: Record<number, boolean> = {}
