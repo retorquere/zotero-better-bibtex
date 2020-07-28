@@ -244,7 +244,8 @@
 
         <preference name="extensions.zotero.translators.better-bibtex.qualityReport" id="pref-better-bibtex-qualityReport" type="bool" default="false"/>
         <bbt:doc>
-          Generate quality reports for exported references.
+          Generate quality reports for exported references. These show up only in BibTeX and BibLaTeX report formats and indicate things like missing required fields and 
+          duplicate citation keys.
         </bbt:doc>
 
         <preference name="extensions.zotero.translators.better-bibtex.biblatexExtendedDateFormat" type="bool" default="true"/>
