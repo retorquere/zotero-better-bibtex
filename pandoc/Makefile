@@ -29,6 +29,42 @@ paper:
 	#unzip paper$(TIMESTAMP)-scannable-cite.odt content.xml
 	#grep @wrigstad2017mastery content.xml
 
+%.md:
+	cp test.md $@
+
+odt-scannable-cite.odt:     ZOTERO_OPTIONS = --metadata=zotero_scannable_cite:true
+
+odt-with-csl-style.odt:     ZOTERO_CSL_STYLE = chicago-author-date
+odt-with-csl-style.odt:     ZOTERO_OPTIONS = --metadata=zotero_csl_style:$(ZOTERO_CSL_STYLE)
+
+odt-without-csl-style.odt:
+
+%.odt: %.md
+	rm -f *.docx $@.odt *.json *.xml
+	@echo ""
+	@echo "---------------- CONTENTS OF $< ----------------"
+	@cat  $<
+	@echo ""
+	@echo "---------------- AST FOR $< ----------------"
+	@echo ""
+	pandoc -s $(ZOTERO_OPTIONS) -L  $(BUNDLED) -t native  $<
+	@echo ""
+	@echo "---------------- Making $@ ----------------"
+	@echo ""
+	pandoc -s $(ZOTERO_OPTIONS) -L  $(BUNDLED) -o $@ $<
+	unzip $@ content.xml meta.xml
+	@echo ""
+	@echo "content.xml:"
+	@cat content.xml | tail
+	@echo ""
+	@echo "meta.xml:"
+	@cat meta.xml | tail
+
+test-odt: bundle test-clean odt-scannable-cite.odt odt-without-csl-style.odt odt-with-csl-style.odt
+
+test-clean:
+	rm -f *.docx *.odt *.json *.xml
+
 1528:
 	@rm -f *.docx *.odt *.json
 	@pandoc -s --lua-filter=$(MAIN) -o 1528-$(TIMESTAMP).docx gh-1528.md
