@@ -56,7 +56,7 @@
     "test": "test"
   },
   "dependencies": {
-    "@retorquere/bibtex-parser": "^3.2.5",
+    "@retorquere/bibtex-parser": "^3.2.6",
     "@types/lokijs": "^1.5.3",
     "ajv": "^6.12.3",
     "ajv-keywords": "^3.5.2",
@@ -141,7 +141,7 @@
     "xml-parser": "^1.2.1",
     "xmldom": "^0.3.0",
     "xpath": "^0.0.27",
-    "zotero-plugin": "^1.0.24"
+    "zotero-plugin": "^1.0.25"
   },
   "repository": {
     "type": "git",
