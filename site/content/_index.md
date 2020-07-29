@@ -61,7 +61,7 @@ editors/processors, I'm pragmatic about implementing what works.
 
 ## Got problems? We got fixes!
 
-If you have any questions on BBT's use, do not hesitate to [file a GitHub issue](https://github.com/retorquere/zotero-better-bibtex/issues/new) and ask for help. 
+If you have any questions on BBT's use, do not hesitate to [file a GitHub issue](https://github.com/retorquere/zotero-better-bibtex/issues/new/choose) and ask for help. 
 
 If you're reporting a bug in BBT, please take a moment to glance through the [support request guidelines]({{< ref "/support" >}}); it will make sure I get your problem fixed as quick as possible.
 Clear bug reports commonly have really short time-to-fix, so if you report something, stick around -- it may be done as you wait.
