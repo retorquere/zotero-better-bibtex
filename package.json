@@ -59,9 +59,9 @@
     "@retorquere/bibtex-parser": "^3.2.5",
     "@types/lokijs": "^1.5.3",
     "ajv": "^6.12.3",
-    "ajv-keywords": "^3.5.1",
+    "ajv-keywords": "^3.5.2",
     "barcoder": "^2.0.1",
-    "citeproc": "^2.4.12",
+    "citeproc": "^2.4.13",
     "edtf": "^3.0.1",
     "edtfy": "^0.0.8",
     "escape-string-regexp": "^4.0.0",
@@ -95,7 +95,7 @@
     "xregexp": "^4.3.0"
   },
   "devDependencies": {
-    "@types/node": "^14.0.26",
+    "@types/node": "^14.0.27",
     "@types/webpack": "^4.41.21",
     "archiver": "^5.0.0",
     "bluebird": "^3.7.2",
