@@ -47,11 +47,11 @@ odt-without-csl-style.odt:
 	@echo ""
 	@echo "---------------- AST FOR $< ----------------"
 	@echo ""
-	pandoc -s $(ZOTERO_OPTIONS) -L  $(BUNDLED) -t native  $<
+	pandoc -s $(ZOTERO_OPTIONS) -L  $(MAIN) -t native  $<
 	@echo ""
 	@echo "---------------- Making $@ ----------------"
 	@echo ""
-	pandoc -s $(ZOTERO_OPTIONS) -L  $(BUNDLED) -o $@ $<
+	pandoc -s $(ZOTERO_OPTIONS) -L  $(MAIN) -o $@ $<
 	unzip $@ content.xml meta.xml
 	@echo ""
 	@echo "content.xml:"

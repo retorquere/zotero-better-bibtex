@@ -250,18 +250,18 @@ function Meta(meta)
   zotero.url = zotero.url .. '&citationKeys='
 
   if config.format == 'odt' and config.csl_style then
-    -- this doesn't show up in the target doc
-    -- meta.ZOTERO_PREF_1 = string.format(
-    --   '<data data-version="3" zotero-version="5.0.89">'
-    --     .. '   <session id="OGe1IYVe"/>'
-    --     .. '   <style id="http://www.zotero.org/styles/%s" locale="en-US" hasBibliography="1" bibliographyStyleHasBeenSet="0"/>'
-    --     .. '   <prefs>'
-    --     .. '     <pref name="fieldType" value="ReferenceMark"/>'
-    --   -- .. '     <pref name="delayCitationUpdates" value="true"/>'
-    --     .. '   </prefs>'
-    --     .. '</data>',
-    --   config.csl_style)
-    -- meta.ZOTERO_PREF_2 = ''
+    -- These will be added to the document metadata by pandoc automatically
+    meta.ZOTERO_PREF_1 = string.format(
+      '<data data-version="3" zotero-version="5.0.89">'
+        .. '   <session id="OGe1IYVe"/>'
+        .. '   <style id="http://www.zotero.org/styles/%s" locale="en-US" hasBibliography="1" bibliographyStyleHasBeenSet="0"/>'
+        .. '   <prefs>'
+        .. '     <pref name="fieldType" value="ReferenceMark"/>'
+      -- .. '     <pref name="delayCitationUpdates" value="true"/>'
+        .. '   </prefs>'
+        .. '</data>',
+      config.csl_style)
+    meta.ZOTERO_PREF_2 = ''
   end
 
   return meta
