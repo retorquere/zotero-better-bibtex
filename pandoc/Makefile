@@ -33,15 +33,11 @@ paper:
 	cp test.md $@
 
 odt-scannable-cite.odt:     ZOTERO_OPTIONS = --metadata=zotero_scannable_cite:true
-odt-scannable-cite.odt:     odt
 
 odt-with-csl-style.odt:     ZOTERO_CSL_STYLE = chicago-author-date
 odt-with-csl-style.odt:     ZOTERO_OPTIONS = --metadata=zotero_csl_style:$(ZOTERO_CSL_STYLE)
-odt-with-csl-style.odt:     odt
 
-odt-without-csl-style.odt : odt
-
-.PHONY: %.odt
+odt-without-csl-style.odt:
 
 %.odt: %.md
 	rm -f *.docx $@.odt *.json *.xml

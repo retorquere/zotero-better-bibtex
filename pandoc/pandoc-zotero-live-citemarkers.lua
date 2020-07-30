@@ -36,8 +36,10 @@ local config = {
 }
 
 -- -- -- bibliography marker generator -- -- --
-local function zotero_bibl()
-  if (not string.match(FORMAT, 'odt')) or config.csl_style == '' then return '' end
+local function zotero_bibl_odt()
+  if config.format ~= 'odt' or config.csl_style == '' then
+    return error('zotero_bibl_odt: This should not happen')
+  end
 
   local message = '<Bibliography: Do Zotero Refresh>'
   local docprefs = '{"uncited":[],"omitted":[],"custom":[]}'
@@ -246,7 +248,7 @@ function Meta(meta)
 
   zotero.url = zotero.url .. '&citationKeys='
 
-  if string.match(FORMAT, 'odt') and config.csl_style ~= '' then
+  if config.format == 'odt' and config.csl_style ~= '' then
     meta.ZOTERO_PREF_1 = string.format(
       '<data data-version="3" zotero-version="5.0.89">'
         .. '   <session id="OGe1IYVe"/>'
@@ -259,13 +261,6 @@ function Meta(meta)
       config.csl_style)
     meta.ZOTERO_PREF_2 = ''
   end
-
-  print('')
-  print('config')
-  print(' scannable_cite          => ' .. tostring(config.scannable_cite))
-  print(' FORMAT                  => ' .. FORMAT)
-  print(' csl_style               => ' .. config.csl_style)
-  print('')
 
   return meta
 end
@@ -295,16 +290,16 @@ local refsDivSeen=false
 function Div(div)
   if not div.attr or div.attr.identifier ~= 'refs' then return nil end
   refsDivSeen=true
-  if (not string.match(FORMAT, 'odt')) or config.csl_style == '' then return nil end
-  return pandoc.RawBlock('opendocument', zotero_bibl())
+  if config.format ~= 'odt' or config.csl_style == '' then return nil end
 
+  return pandoc.RawBlock('opendocument', zotero_bibl_odt())
 end
 
 function Doc(doc)
   if refsDivSeen then return nil end
-  if (not string.match(FORMAT, 'odt')) or config.csl_style == '' then return nil end
+  if config.format ~= 'odt' or config.csl_style == '' then return nil end
 
-  table.insert(doc.blocks, pandoc.RawBlock('opendocument', zotero_bibl()))
+  table.insert(doc.blocks, pandoc.RawBlock('opendocument', zotero_bibl_odt()))
   return pandoc.Pandoc(doc.blocks, doc.meta)
 end
 
