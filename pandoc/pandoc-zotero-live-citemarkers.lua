@@ -53,7 +53,7 @@ end
 
 local function zotero_bibl_odt_banner()
   if not (config.format == 'odt' and config.csl_style and config.transferable) then
-    return error('zotero_bibl_odt_banner: This should not happen')
+    error('zotero_bibl_odt_banner: This should not happen')
   end
 
   local banner = ''
@@ -80,7 +80,7 @@ end
 
 local function zotero_bibl_odt()
   if config.format ~= 'odt' or not config.csl_style then
-    return error('zotero_bibl_odt: This should not happen')
+    error('zotero_bibl_odt: This should not happen')
   end
 
   local message = '<Bibliography: Do Zotero Refresh>'
@@ -287,7 +287,9 @@ function Meta(meta)
   config.transferable = test_boolean('transferable', meta.zotero['transferable'])
 
   -- refuse to create a transferable document, when csl style is not specified
-  config.transferable = config.transferable and config.csl_style
+  if config.transferable and not config.csl_style then
+    error('transferable documents need a CSL style')
+  end
 
   if type(meta.zotero.client) == 'nil' then -- should never happen as the default is 'zotero'
     meta.zotero.client = 'zotero'
@@ -351,9 +353,9 @@ end
 local refsDivSeen=false
 function Div(div)
   if not div.attr or div.attr.identifier ~= 'refs' then return nil end
-  refsDivSeen=true
-  if config.format ~= 'odt' or (not config.csl_style) then return nil end
+  if config.format ~= 'odt' or not config.csl_style then return nil end
 
+  refsDivSeen=true
   return pandoc.RawBlock('opendocument', zotero_bibl_odt())
 end
 
