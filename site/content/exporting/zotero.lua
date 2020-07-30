@@ -1651,32 +1651,6 @@ function module.trim(s)
   return (s:gsub("^%s*(.-)%s*$", "%1"))
 end
 
-function module.collect(tbl)
-  if not tbl then return nil end
-
-  if type(tbl) == 'string' or type(tbl) == 'boolean' then
-    return tbl
-  end
-
-  local t = ''
-  for k, v in pairs(tbl) do
-    if v.t == 'Str' and v.text ~= nil then
-      t = t .. v.text
-    elseif v.t == 'Space' then
-      t = t .. ' '
-    elseif v.t == nil then
-    else
-      error('cannot collect ' .. v.t, 1)
-    end
-  end
-
-  if t == '' then
-    return nil
-  else
-    return t
-  end
-end
-
 function module.deepcopy(orig)
   local orig_type = type(orig)
   local copy
@@ -1829,17 +1803,38 @@ local zotero = require('zotero')
 -- -- global state -- --
 local config = {
   client = 'zotero',
-  scannable_cite = false
+  scannable_cite = false,
+  csl_style = nil, -- more to document than anything else -- Lua does not store nils in tables
+  format = nil, -- more to document than anything else -- Lua does not store nils in tables
 }
+
+-- -- -- bibliography marker generator -- -- --
+local function zotero_bibl_odt()
+  if config.format ~= 'odt' or not config.csl_style then
+    return error('zotero_bibl_odt: This should not happen')
+  end
+
+  local message = '<Bibliography: Do Zotero Refresh>'
+  local docprefs = '{"uncited":[],"omitted":[],"custom":[]}'
+
+  return string.format(
+    '<text:section text:name=" %s">'
+      .. '<text:p text:style-name="Bibliography_20_1">'
+      .. utils.xmlescape(message)
+      .. '</text:p>'
+      ..'</text:section>',
+    'ZOTERO_BIBL ' .. utils.xmlescape(docprefs) .. ' CSL_BIBLIOGRAPHY' .. ' RND' .. utils.random_id(10))
+end
 
 -- -- -- citation market generators -- -- --
 local function zotero_ref(cite)
-  local content = utils.collect(cite.content)
+  local content = pandoc.utils.stringify(cite.content)
   local csl = {
     citationID = utils.random_id(8),
     properties = {
       formattedCitation = content,
-      plainCitation = content,
+      plainCitation = nil, -- effectively the same as not including this like -- keep an eye on whether Zotero is OK with this missing. Maybe switch to a library that allows json.null
+      -- dontUpdate = false,
       noteIndex = 0
     },
     citationItems = {},
@@ -1873,8 +1868,8 @@ local function zotero_ref(cite)
     if item.mode == 'SuppressAuthor' then
       citation['suppress-author'] = true
     end
-    citation.prefix = utils.collect(item.prefix)
-    local label, locator, suffix = csl_locator.parse(utils.collect(item.suffix))
+    citation.prefix = pandoc.utils.stringify(item.prefix)
+    local label, locator, suffix = csl_locator.parse(pandoc.utils.stringify(item.suffix))
     citation.suffix = suffix
     citation.label = label
     citation.locator = locator
@@ -1882,18 +1877,20 @@ local function zotero_ref(cite)
     table.insert(csl.citationItems, citation)
   end
 
+  local message = '<Do Zotero Refresh: ' .. content .. '>'
+
   if config.format == 'docx' then
     local field = '<w:r><w:fldChar w:fldCharType="begin"/></w:r><w:r><w:instrText xml:space="preserve">'
     field = field .. ' ADDIN ZOTERO_ITEM CSL_CITATION ' .. utils.xmlescape(json.encode(csl)) .. '   '
     field = field .. '</w:instrText></w:r><w:r><w:fldChar w:fldCharType="separate"/></w:r><w:r><w:rPr><w:noProof/></w:rPr><w:t>'
-    field = field .. utils.xmlescape('<open Zotero document preferences: ' .. utils.xmlescape(content) .. '>')
+    field = field .. utils.xmlescape(message)
     field = field .. '</w:t></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r>'
 
     return pandoc.RawInline('openxml', field)
   else
     csl = 'ZOTERO_ITEM CSL_CITATION ' .. utils.xmlescape(json.encode(csl)) .. ' RND' .. utils.random_id(10)
     local field = '<text:reference-mark-start text:name="' .. csl .. '"/>'
-    field = field .. utils.xmlescape('<open Zotero document preferences: ' .. utils.xmlescape(content) .. '>')
+    field = field .. utils.xmlescape(message)
     field = field .. '<text:reference-mark-end text:name="' .. csl .. '"/>'
 
     return pandoc.RawInline('opendocument', field)
@@ -1931,7 +1928,7 @@ local function scannable_cite(cite)
       s, e, ug, id, key = string.find(citation.uri, 'http://zotero.org/(%w+)/(%w+)/items/(%w+)')
     end
 
-    local label, locator, suffix = csl_locator.parse(utils.collect(item.suffix))
+    local label, locator, suffix = csl_locator.parse(pandoc.utils.stringify(item.suffix))
     if locator then
       locator = (label or 'p.') .. ' ' .. locator
     else
@@ -1939,8 +1936,8 @@ local function scannable_cite(cite)
     end
 
     citations = citations ..
-      '{ ' .. (utils.collect(item.prefix) or '') ..
-      ' | ' .. suppress .. utils.trim(string.gsub(utils.collect(cite.content) or '', '[|{}]', '')) ..
+      '{ ' .. (pandoc.utils.stringify(item.prefix) or '') ..
+      ' | ' .. suppress .. utils.trim(string.gsub(pandoc.utils.stringify(cite.content) or '', '[|{}]', '')) ..
       ' | ' .. locator ..
       ' | ' .. (suffix or '') ..
       ' | ' .. (ug == 'groups' and 'zg:' or 'zu:') .. id .. ':' .. key .. ' }'
@@ -1972,7 +1969,7 @@ end
 
 function Meta(meta)
   -- create meta.zotero if it does not exist
-  if meta.zotero == nil then
+  if not meta.zotero then
     meta.zotero = {}
   end
 
@@ -1986,13 +1983,17 @@ function Meta(meta)
 
   -- normalize values
   for k, v in pairs(meta.zotero) do
-    meta.zotero[k] = utils.collect(v)
+    meta.zotero[k] = pandoc.utils.stringify(v)
   end
 
   config.scannable_cite = test_boolean('scannable-cite', meta.zotero['scannable-cite'])
   config.author_in_text = test_boolean('author-in-text', meta.zotero['author-in-text'])
 
-  if type(meta.zotero.client) == 'nil' then
+  if meta.zotero['csl-style'] ~= nil then
+    config.csl_style = pandoc.utils.stringify(meta.zotero['csl-style'])
+  end
+
+  if type(meta.zotero.client) == 'nil' then -- should never happen as the default is 'zotero'
     meta.zotero.client = 'zotero'
   else
     test_enum('client', meta.zotero.client, {'zotero', 'jurism'})
@@ -2019,6 +2020,23 @@ function Meta(meta)
   end
 
   zotero.url = zotero.url .. '&citationKeys='
+
+  if config.format == 'odt' and config.csl_style then
+    -- These will be added to the document metadata by pandoc automatically
+    meta.ZOTERO_PREF_1 = string.format(
+      '<data data-version="3" zotero-version="5.0.89">'
+        .. '   <session id="OGe1IYVe"/>'
+        .. '   <style id="http://www.zotero.org/styles/%s" locale="en-US" hasBibliography="1" bibliographyStyleHasBeenSet="0"/>'
+        .. '   <prefs>'
+        .. '     <pref name="fieldType" value="ReferenceMark"/>'
+      -- .. '     <pref name="delayCitationUpdates" value="true"/>'
+        .. '   </prefs>'
+        .. '</data>',
+      config.csl_style)
+    meta.ZOTERO_PREF_2 = ''
+  end
+
+  return meta
 end
 
 -- -- -- replace citations -- -- --
@@ -2042,8 +2060,26 @@ function Cite_replace(cite)
   end
 end
 
+local refsDivSeen=false
+function Div(div)
+  if refsDivSeen or not div.attr or div.attr.identifier ~= 'refs' then return nil end
+  if config.format ~= 'odt' or not config.csl_style then return nil end
+
+  refsDivSeen = true
+  return pandoc.RawBlock('opendocument', zotero_bibl_odt())
+end
+
+function Doc(doc)
+  if refsDivSeen or config.format ~= 'odt' or not config.csl_style then return nil end
+
+  table.insert(doc.blocks, pandoc.RawBlock('opendocument', zotero_bibl_odt()))
+  return pandoc.Pandoc(doc.blocks, doc.meta)
+end
+
 return {
   { Meta = Meta },
   { Cite = Cite_collect },
   { Cite = Cite_replace },
+  { Div = Div },
+  { Doc = Doc },
 }
