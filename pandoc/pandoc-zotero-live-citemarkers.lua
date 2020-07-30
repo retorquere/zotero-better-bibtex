@@ -288,7 +288,10 @@ function Meta(meta)
 
   -- refuse to create a transferable document, when csl style is not specified
   if config.transferable and not config.csl_style then
-    error('transferable documents need a CSL style')
+    error('Transferable documents need a CSL style')
+  end
+  if config.transferable and not config.scannable_cite then
+    error('Scannable-cite documents are not transferable')
   end
 
   if type(meta.zotero.client) == 'nil' then -- should never happen as the default is 'zotero'
