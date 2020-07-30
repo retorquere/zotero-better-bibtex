@@ -29,12 +29,16 @@ test:
 %.md:
 	cp test.md $@
 
-odt-scannable-cite.odt:     ZOTERO_OPTIONS = --metadata=zotero_scannable_cite:true
+ZOTERO_TRANSFERABLE = true
 
-odt-with-csl-style.odt:     ZOTERO_CSL_STYLE = chicago-author-date
-odt-with-csl-style.odt:     ZOTERO_OPTIONS = --metadata=zotero_csl_style:$(ZOTERO_CSL_STYLE)
+odt-scannable-cite.odt:    ZOTERO_OPTIONS = --metadata=zotero_scannable_cite:true \
+                                          --metadata=zotero_transferable:$(ZOTERO_TRANSFERABLE) # don't care
 
-odt-without-csl-style.odt:
+odt-with-csl-style.odt:    ZOTERO_CSL_STYLE = chicago-author-date
+odt-with-csl-style.odt:    ZOTERO_OPTIONS = --metadata=zotero_csl_style:$(ZOTERO_CSL_STYLE) \
+                                          --metadata=zotero_transferable:$(ZOTERO_TRANSFERABLE) 
+
+odt-without-csl-style.odt: ZOTERO_OPTIONS = --metadata=zotero_transferable:$(ZOTERO_TRANSFERABLE) # don't care
 
 %.odt: %.md
 	make clean
