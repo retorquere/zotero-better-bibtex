@@ -52,7 +52,7 @@ Not only is the extra step through "pandoc-citeproc in convert mode" unnecesary,
 All of these problems go away if you just skip the detour via bibtex and export (Better) CSL from Zotero and use that in your pandoc process.
 
 
-## From Markdown to live citations
+## From Markdown to Zotero live citations
 
 You can convert a Pandoc-compatible markdown source to a LibreOffice or Word document with live citation fields connecting to Zotero.
 
@@ -67,6 +67,7 @@ zotero:
   scannable-cite: false # only relevant when your compiling to scannable-cite .odt
   client: <zotero or jurism> # defaults to zotero
   author-in-text: false # when true, enabled fake author-name-only cites by replacing it with the text of the last names of the authors
+  csl-style: apa # pre-fill the style
 ...
 ```
 
@@ -83,5 +84,6 @@ popup for each citation. Also, the Word document is sometimes deemed
 corrupt when opening it, but running the pandoc command again without
 any changes fixes it ¯\\\_(ツ)\_/¯
 
-Zotero needs to be running, with BBT installed, while you compile
-your document.
+You can also specify `transferable: true` to create a [transferable document](https://www.zotero.org/support/kb/moving_documents_between_word_processors). You don't really need this for ODT or DOCX (just use Pandoc to create those directly using this filter), but it will allow transferring your document to GDocs.
+
+Zotero needs to be running, with BBT installed, while you compile your document.
