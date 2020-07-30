@@ -12,9 +12,6 @@ else
 	@exit 1
 endif
 
-gist: bundle
-	gist -u dbfcc3e51f2aaf82333bddb38cf5e4de $(BUNDLED)
-
 test:
 	@rm -f *.docx *.odt *.json
 	#@pandoc -s --lua-filter=$(MAIN) -o paper$(TIMESTAMP).docx main.md
