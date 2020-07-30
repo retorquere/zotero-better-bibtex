@@ -72,8 +72,8 @@ clean:
 unpack: paper
 	rm -rf docx && mkdir docx && cd docx && unzip ../paper*.docx
 
-mwe: clean
-	@pandoc -s --lua-filter=mwe.lua -o paper$(TIMESTAMP).docx main.md
+mwe: clean mwe.md
+	@pandoc -s --metadata=zotero_csl_style=chicago-author-date --lua-filter=$(MAIN) -o mwe.odt mwe.md
 
 rocks:
 	luarocks install lunajson

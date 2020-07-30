@@ -22,7 +22,7 @@
 -- SOFTWARE.
 --
 
--- local pl = require('pl.pretty') -- for pl.pretty.dump
+local pl = require('pl.pretty') -- for pl.pretty.dump
 local json = require('lunajson')
 local csl_locator = require('locator')
 local utils = require('utils')
@@ -290,6 +290,7 @@ end
 
 local refsDivSeen=false
 function Div(div)
+  pl.dump(config)
   if refsDivSeen or not div.attr or div.attr.identifier ~= 'refs' then return nil end
   if config.format ~= 'odt' or not config.csl_style then return nil end
 
