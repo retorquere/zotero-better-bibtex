@@ -235,6 +235,7 @@ function Meta(meta)
   end
 
   if string.match(FORMAT, 'odt') and config.scannable_cite then
+    -- scannable-cite takes precedence over csl-style
     config.format = 'scannable-cite'
     zotero.url = zotero.url .. '&translator=jzon'
     csl_locator.short_labels()
