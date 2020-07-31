@@ -19,11 +19,11 @@ default: `10`
 
 Number of seconds to wait after your system goes idle before kicking off auto-exports.
 
-### autoPin
+### autoPinDelay
 
-default: `no`
+default: `0`
 
-When on, BBT will automatically pin the first citekey it generates for an item.
+When > 0, BBT will automatically pin the first citekey it generates for an item this many seconds.
 
 ### biblatexExtendedDateFormat
 

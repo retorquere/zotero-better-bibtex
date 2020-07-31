@@ -36,7 +36,6 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
     }
   }
 
-  private itemObserverDelay: number = Prefs.get('itemObserverDelay')
   private scanning: any[]
   private started = false
 
@@ -246,7 +245,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
       // async is just a heap of fun. Who doesn't enjoy a good race condition?
       // https://github.com/retorquere/zotero-better-bibtex/issues/774
       // https://groups.google.com/forum/#!topic/zotero-dev/yGP4uJQCrMc
-      await sleep(this.itemObserverDelay)
+      await sleep(Prefs.get('itemObserverDelay'))
 
       try {
         await Zotero.Items.getAsync(citekey.itemID)
@@ -256,11 +255,13 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
         return
       }
 
-      if (Prefs.get('autoPin') && !citekey.pinned) {
+      // update display panes by issuing a fake item-update notification
+      Zotero.Notifier.trigger('modify', 'item', [citekey.itemID], { [citekey.itemID]: { bbtCitekeyUpdate: true } })
+
+      const autoPinDelay = Prefs.get('autoPinDelay')
+      if (autoPinDelay && !citekey.pinned) {
+        await sleep(autoPinDelay * 1000) // tslint:disable-line:no-magic-numbers
         this.pin([citekey.itemID])
-      } else {
-        // update display panes by issuing a fake item-update notification
-        Zotero.Notifier.trigger('modify', 'item', [citekey.itemID], { [citekey.itemID]: { bbtCitekeyUpdate: true } })
       }
     })
     this.keys.on('delete', async citekey => {

@@ -7,7 +7,6 @@
     "preferences": {
       "DOIandURL": "doi",
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
-      "autoPin": true,
       "citekeyFormat": "[auth][shorttitle][year]",
       "ignorePostscriptErrors": false,
       "importCaseProtection": "off",

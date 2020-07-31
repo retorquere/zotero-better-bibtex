@@ -11,7 +11,7 @@
       "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
       "autoExport": "idle",
       "autoExportIdleWait": 60,
-      "autoPin": true,
+      "autoPinDelay": 1,
       "citekeyFormat": "[auth:nopunct][year][0]",
       "importSentenceCase": "off",
       "itemObserverDelay": 100,

@@ -46,6 +46,10 @@ export let Preferences = new class { // tslint:disable-line:variable-name
       }
       Zotero.Prefs.clear(key)
     }
+    if (typeof (old = Zotero.Prefs.get(key = this.key('autoPin'))) !== 'undefined') {
+      Zotero.Prefs.set(this.key('autoPinDelay'), old ? 1 : 0)
+      Zotero.Prefs.clear(key)
+    }
 
     for (const [name, value] of Object.entries(defaults)) {
       // https://groups.google.com/forum/#!topic/zotero-dev/a1IPUJ2m_3s

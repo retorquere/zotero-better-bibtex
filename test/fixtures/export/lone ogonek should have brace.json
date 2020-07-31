@@ -19,7 +19,6 @@
       "asciiBibLaTeX": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "off",
-      "autoPin": true,
       "citekeyFormat": "[authors3][shortyear]",
       "ignorePostscriptErrors": false,
       "importCaseProtection": "off",

@@ -198,6 +198,9 @@
             "itemObserverDelay": {
               "type": "number"
             },
+            "autoPinDelay": {
+              "type": "number"
+            },
             "parseParticles": {
               "type": "boolean"
             },
@@ -248,9 +251,6 @@
             },
             "debugLogDir": {
               "type": "string"
-            },
-            "autoPin": {
-              "type": "boolean"
             },
             "kuroshiro": {
               "type": "boolean"

@@ -284,6 +284,11 @@
           the number of microseconds BBT should wait after being notified before acting on the changed references.
         </bbt:doc>
 
+        <preference name="extensions.zotero.translators.better-bibtex.autoPinDelay" type="int" default="0"/>
+        <bbt:doc>
+          When > 0, BBT will automatically pin the first citekey it generates for an item this many seconds.
+        </bbt:doc>
+
         <preference name="extensions.zotero.translators.better-bibtex.parseParticles" type="bool" default="true"/>
         <bbt:doc>
           Name particle handling. Only turn on when requested and we're talking about it on github.
@@ -355,11 +360,6 @@
           </bbt:doc>
         </preference>
         -->
-
-        <preference name="extensions.zotero.translators.better-bibtex.autoPin" type="bool" default="false"/>
-        <bbt:doc>
-          When on, BBT will automatically pin the first citekey it generates for an item.
-        </bbt:doc>
 
         <preference name="extensions.zotero.translators.better-bibtex.kuroshiro" type="bool" default="false"/>
         <bbt:doc>
