@@ -84,7 +84,7 @@ default: `yes`
 
 When enabled, BBT will prepend the @strings section below to all Bib(La)TeX imports and will expand the strings during export.
 
-#### If a field could be a @string var, export it without braces
+#### If a field could be a @string reference, export it as an unbraced @string reference
 
 default: `No`
 
@@ -95,7 +95,8 @@ Options:
 
 * No
 * Assume single-word fields to be @string vars
-* Match against the @string vars below
+* Match against the @string declarations below
+* Match against the @string declarations and their values below
 
 ### Citation keys
 

@@ -398,7 +398,7 @@ export function doExport() {
         case 'journalArticle':
         case 'article':
         case 'article-journal':
-          if (ref.isBibString(item.publicationTitle)) {
+          if (ref.getBibString(item.publicationTitle)) {
             ref.add({ name: 'journaltitle', value: item.publicationTitle, bibtexStrings: true })
           } else {
             if (Translator.options.useJournalAbbreviation && item.journalAbbreviation) {

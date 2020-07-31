@@ -838,6 +838,7 @@
                         <menuitem label="&better-bibtex.Preferences.export.fields.export-strings.off;" value="off"/>
                         <menuitem label="&better-bibtex.Preferences.export.fields.export-strings.detect;" value="detect"/>
                         <menuitem label="&better-bibtex.Preferences.export.fields.export-strings.match;" value="match"/>
+                        <menuitem label="&better-bibtex.Preferences.export.fields.export-strings.match_reverse;" value="match+reverse"/>
                       </menupopup>
                     </menulist>
                   </hbox>
