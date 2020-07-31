@@ -390,7 +390,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
 
     const proposed = this.propose(item)
 
-    if (current && (current.pinned || !Prefs.get('autoPin')) && (current.pinned === proposed.pinned) && (current.citekey === proposed.citekey)) return current.citekey
+    if (current && (current.pinned || !Prefs.get('autoPinDelay')) && (current.pinned === proposed.pinned) && (current.citekey === proposed.citekey)) return current.citekey
 
     if (current) {
       current.pinned = proposed.pinned
