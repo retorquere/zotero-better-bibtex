@@ -32,32 +32,6 @@ function module.trim(s)
   return (s:gsub("^%s*(.-)%s*$", "%1"))
 end
 
-function module.collect(tbl)
-  if not tbl then return nil end
-
-  if type(tbl) == 'string' or type(tbl) == 'boolean' then
-    return tbl
-  end
-
-  local t = ''
-  for k, v in pairs(tbl) do
-    if v.t == 'Str' and v.text ~= nil then
-      t = t .. v.text
-    elseif v.t == 'Space' then
-      t = t .. ' '
-    elseif v.t == nil then
-    else
-      error('cannot collect ' .. v.t, 1)
-    end
-  end
-
-  if t == '' then
-    return nil
-  else
-    return t
-  end
-end
-
 function module.deepcopy(orig)
   local orig_type = type(orig)
   local copy

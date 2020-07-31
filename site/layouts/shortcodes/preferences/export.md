@@ -99,7 +99,8 @@ abbreviation is not configurable.
 
 default: `no`
 
-Generate quality reports for exported references.
+Generate quality reports for exported references. These show up only in BibTeX and BibLaTeX report formats and indicate things like missing required fields and 
+duplicate citation keys.
 
 #### Include automatic tags in export
 
