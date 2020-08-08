@@ -337,7 +337,7 @@ export class Reference {
   private _enc_creators_initials_marker = '\u0097' // end of guarded area
   private _enc_creators_relax_marker = '\u200C' // zero-width non-joiner
 
-  private isBibStringRE = /^[a-z][-a-z0-9_]*$/i
+  private isBibString = /^[a-z][-a-z0-9_]*$/i
   private metadata: Types.DB.Cache.ExportedItemMetadata = { DeclarePrefChars: '', noopsort: false, packages: [] }
   private packages: { [key: string]: boolean }
   private juniorcomma: boolean
@@ -544,8 +544,9 @@ export class Reference {
     }
 
     if (!field.bibtex) {
-      if ((typeof field.value === 'number') || (field.bibtexStrings && this.isBibString(field.value))) {
-        field.bibtex = `${field.value}`
+      let bibstring: string = ''
+      if ((typeof field.value === 'number') || (field.bibtexStrings && (bibstring = this.getBibString(field.value)))) {
+        field.bibtex = `${bibstring || field.value}`
 
       } else {
         const enc = field.enc || this.fieldEncoding[field.name] || 'latex'
@@ -621,18 +622,27 @@ export class Reference {
     return removed
   }
 
-  public isBibString(value) {
-    if (!value || typeof value !== 'string') return false
+  public getBibString(value) {
+    if (!value || typeof value !== 'string') return null
 
     switch (Translator.preferences.exportBibTeXStrings) {
       case 'off':
-        return false
+        return null
+
       case 'detect':
-        return this.isBibStringRE.test(value)
+        return this.isBibString.test(value) && value
+
       case 'match':
-        return !!Exporter.strings[value.toUpperCase()] // the importer uppercases string declarations
+        // the importer uppercases string declarations
+        return Exporter.strings[value.toUpperCase()] && value
+
+      case 'match+reverse':
+        // the importer uppercases string declarations
+        value = value.toUpperCase()
+        return Exporter.strings[value] ? value : Exporter.strings_reverse[value]
+
       default:
-        return false
+        return null
     }
   }
 
@@ -784,7 +794,7 @@ export class Reference {
     }
 
     const tex = Translator.BetterBibLaTeX ? 'biblatex' : 'bibtex'
-    const bibtexStrings = Translator.preferences.exportBibTeXStrings === 'match'
+    const bibtexStrings = Translator.preferences.exportBibTeXStrings.startsWith('match')
     for (const [name, field] of Object.entries(this.item.extraFields.tex)) {
       // psuedo-var, sets the reference type
       if (name === 'referencetype') {

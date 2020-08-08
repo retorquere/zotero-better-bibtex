@@ -135,6 +135,7 @@ Scenario Outline: Export <references> references for BibTeX to <file>
 
   Examples:
      | file                                                                               | references |
+     | Match against @string value for export #1597                                       | 1          |
      | BibTeX journal article QR reports missing field number #1589                       | 2          |
      | Format disambiguations #1554                                                       | 2          |
      | BibTeX Warning for Inbook Entries with Author and Editor Fields #1541              | 1          |

@@ -282,7 +282,7 @@ export function doExport() {
     if (['bookSection', 'conferencePaper', 'chapter'].includes(item.referenceType)) {
       ref.add({ name: 'booktitle', value: item.publicationTitle || item.conferenceName, bibtexStrings: true })
 
-    } else if (ref.isBibString(item.publicationTitle)) {
+    } else if (ref.getBibString(item.publicationTitle)) {
       ref.add({ name: 'journal', value: item.publicationTitle, bibtexStrings: true })
 
     } else {

@@ -1,0 +1,73 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "mdy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "asciiBibLaTeX": true,
+      "autoExport": "off",
+      "automaticTags": false,
+      "citekeyFormat": "[auth:lower][shorttitle1_1][year]",
+      "exportBibTeXStrings": "match+reverse",
+      "exportBraceProtection": false,
+      "importBibTeXStrings": false,
+      "skipFields": "abstract",
+      "strings": "@STRING{IEEE_J_IT         = \"{IEEE} Trans. Inf. Theory\"}\n@STRING{IEEE_J_SP         = \"IEEE Transactions on SIgnal Processing\"}\n@STRING{IEEE_J_WC       = \"IEEE Transactions on Communications\"}\n",
+      "workers": 0
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1109/TCOMM.2020.2987311",
+      "ISSN": "0090-6778, 1558-0857",
+      "abstractNote": "Imagine a coverage area with many wireless access points that cooperate to jointly serve the users, instead of creating autonomous cells. Such a cell-free network operation can potentially resolve many of the interference issues that appear in current cellular networks. This ambition was previously called Network MIMO (multiple-input multiple-output) and has recently reappeared under the name Cell-Free Massive MIMO. The main challenge is to achieve the benefits of cell-free operation in a practically feasible way, with computational complexity and fronthaul requirements that are scalable to large networks with many users. We propose a new framework for scalable Cell-Free Massive MIMO systems by exploiting the dynamic cooperation cluster concept from the Network MIMO literature. We provide a novel algorithm for joint initial access, pilot assignment, and cluster formation that is proved to be scalable. Moreover, we adapt the standard channel estimation, precoding, and combining methods to become scalable. A new uplink and downlink duality is proved and used to heuristically design the precoding vectors on the basis of the combining vectors. Interestingly, the proposed scalable precoding and combining outperform conventional maximum ratio processing and also performs closely to the best unscalable alternatives.",
+      "accessDate": "2020-05-19T16:57:03Z",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "path": "/Users/haochuan/Zotero/storage/UVRZKNCW/1908.html",
+          "title": "arXiv.org Snapshot",
+          "uri": "http://zotero.org/users/6242341/items/UVRZKNCW"
+        },
+        {
+          "itemType": "attachment",
+          "path": "/Users/haochuan/Zotero/storage/GYCMJS38/Bj\u00f6rnson \u548c Sanguinetti - 2020 - Scalable Cell-Free Massive MIMO Systems.pdf",
+          "title": "arXiv Fulltext PDF",
+          "uri": "http://zotero.org/users/6242341/items/GYCMJS38"
+        }
+      ],
+      "citationKey": "bjornsonScalable2020",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Emil",
+          "lastName": "Bj\u00f6rnson"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Luca",
+          "lastName": "Sanguinetti"
+        }
+      ],
+      "date": "2020",
+      "extra": [
+        "arXiv: 1908.03119"
+      ],
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "IEEE Trans. Commun.",
+      "libraryCatalog": "arXiv.org",
+      "notes": [
+        "<p>Comment: To appear in IEEE Transactions on Communications, 14 pages, 6 figures</p>"
+      ],
+      "pages": "1-1",
+      "publicationTitle": "IEEE Transactions on Communications",
+      "title": "Scalable Cell-Free Massive MIMO Systems",
+      "url": "http://arxiv.org/abs/1908.03119"
+    }
+  ]
+}

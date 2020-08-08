@@ -13,6 +13,7 @@ export let Exporter = new class { // tslint:disable-line:variable-name
   public postfix: Postfix
   public jabref: JabRef
   public strings: {[key: string]: string} = {}
+  public strings_reverse: {[key: string]: string} = {}
   public citekeys: Record<string, number> = {}
 
   constructor() {
@@ -22,15 +23,12 @@ export let Exporter = new class { // tslint:disable-line:variable-name
   public prepare_strings() {
     if (!Translator.BetterTeX || !Translator.preferences.strings) return
 
-    if (Translator.preferences.exportBibTeXStrings === 'match') {
+    if (Translator.preferences.exportBibTeXStrings.startsWith('match')) {
       this.strings = (bibtexParser.parse(Translator.preferences.strings, { markup: (Translator.csquotes ? { enquote: Translator.csquotes } : {}) }) as bibtexParser.Bibliography).strings
+      for (const [k, v] of Object.entries(this.strings)) {
+        this.strings_reverse[v.toUpperCase()] = k.toUpperCase()
+      }
     }
-
-    /*
-    if (Translator.preferences.exportBibTeXStrings !== 'off') {
-      Zotero.write(`${Translator.preferences.strings}\n\n`)
-    }
-    */
   }
 
   public unique_chars(str) {
