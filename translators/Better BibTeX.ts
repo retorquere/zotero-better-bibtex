@@ -604,6 +604,8 @@ class ZoteroItem {
         break
     }
 
+    log.debug('$journal:', this.item)
+
     return true
   }
   protected $journal() { return this.$journaltitle() }

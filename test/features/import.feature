@@ -54,6 +54,7 @@ Scenario Outline: Import <references> references from <file>
   Then the library should match "import/*.json"
   Examples:
   | file                                                                        | references  |
+  | Importing changes Journal to The Journal #1601                              | 1           |
   | Import of langle and rangle TeX commands #1468                              | 1           |
   | Overline during Import #1467                                                | 8           |
   | Better BibLaTeX import improvements #549                                    | 9           |

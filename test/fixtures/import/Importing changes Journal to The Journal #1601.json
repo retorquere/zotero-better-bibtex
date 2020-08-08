@@ -1,0 +1,35 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "dmy",
+    "options": {},
+    "preferences": {
+      "citekeyFormat": "[auth][year]"
+    }
+  },
+  "items": [
+    {
+      "citationKey": "id1",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "First Name",
+          "lastName": "Family Name"
+        }
+      ],
+      "date": "2020",
+      "extra": [
+        "Citation Key: id1"
+      ],
+      "issue": "2",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Journal",
+      "pages": "3",
+      "publicationTitle": "Journal",
+      "title": "Title",
+      "volume": "1"
+    }
+  ]
+}
