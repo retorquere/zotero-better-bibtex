@@ -22,7 +22,7 @@ people usually pick a naming scheme related to them. As the citation key is *the
 bibliography, this is a piece of data you want to have control over. BBT offers you this control:
 
 * Stable citation keys, without key clashes. BBT generates citation keys that take into account other existing keys in your library in a deterministic way, regardless of what part of your library you export, or the order in which you do it.
-* BBT is conservative about citation key changes, and allows you to fixate keys to any value of your choosing.
+* BBT is conservative about citation key changes, and allows you to fix keys to any value of your choosing.
 * Generate citation keys from JabRef(-ish) patterns.
 
 You can also
@@ -30,11 +30,11 @@ You can also
 * Drag and drop LaTeX citations using these keys to your favorite LaTeX editor
 * Show your citation keys in the reference list view.
 
-## Set your own, fixated citation keys
+## Set your own, fixed citation keys
 
 By default, BBT generates the citation key from the item information, and this key may change when you edit the item. Such keys are called `dynamic` keys, which are marked with an asterisk (`*`) in the reference list view, and are displayed in italics in the item details.
 
-You can fixate the citation key (called `pinning` in BBT) for an item by adding the text `Citation Key: [your citekey]` anywhere in the
+You can fix the citation key (called `pinning` in BBT) for an item by adding the text `Citation Key: [your citekey]` anywhere in the
 `extra` field of the reference on a line of its own. You can generate a pinned citation key by selecting one or more items, right-clicking, and selecting `Generate BibTeX key`, which will add the current citation key to the `extra` field, thereby pinning it. These keys are shown without the asterisk (`*`) marker in the middle column, and non-italicized in the details view, to distinguish them from dynamic keys.
 
 ## Drag and drop/hotkey citations
