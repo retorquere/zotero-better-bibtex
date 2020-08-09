@@ -286,7 +286,7 @@ export function doExport() {
     const ref = new Reference(item)
 
     if (['bookSection', 'chapter'].includes(item.referenceType) && ref.hasCreator('bookAuthor')) ref.referencetype = 'inbook'
-    if (item.referenceType === 'book' && !ref.hasCreator('author') && ref.hasCreator('editor')) ref.referencetype = 'collection'
+    // if (item.referenceType === 'book' && !ref.hasCreator('author') && ref.hasCreator('editor')) ref.referencetype = 'collection'
     if (ref.referencetype === 'book' && item.numberOfVolumes) ref.referencetype = 'mvbook'
     if (ref.referencetype === 'report' && item.type?.toLowerCase().includes('manual')) ref.referencetype = 'manual'
 

@@ -6,7 +6,7 @@
   crossref = {conference:06}
 }
 
-@collection{conference:06,
+@book{conference:06,
   title = {Proceedings of the {{Xth}} Conference on {{XYZ}}},
   editor = {Editor, First and Editor, Second},
   date = {2006-10}
