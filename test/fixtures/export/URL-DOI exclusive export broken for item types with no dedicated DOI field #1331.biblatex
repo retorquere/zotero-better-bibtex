@@ -1,5 +1,5 @@
 
-@collection{Gentleman2005,
+@book{Gentleman2005,
   title = {Bioinformatics and {{Computational Biology Solutions Using R}} and {{Bioconductor}}},
   editor = {Gentleman, Robert and Carey, Vincent J. and Huber, Wolfgang and Irizarry, Rafael A. and Dudoit, Sandrine},
   date = {2005},

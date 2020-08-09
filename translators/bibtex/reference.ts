@@ -412,7 +412,6 @@ export class Reference {
       this.add({ name: 'entrysubtype', value: referencetype.subtype })
       this.referencetype = referencetype.type
     }
-    delete this.item.extraFields.tex.referencetype
 
     if (Translator.preferences.jabrefFormat) {
       if (Translator.preferences.testing) {
@@ -796,7 +795,7 @@ export class Reference {
     const tex = Translator.BetterBibLaTeX ? 'biblatex' : 'bibtex'
     const bibtexStrings = Translator.preferences.exportBibTeXStrings.startsWith('match')
     for (const [name, field] of Object.entries(this.item.extraFields.tex)) {
-      // psuedo-var, sets the reference type
+      // psuedo-var, sets the reference type. Repeat application here because this needs to override all else.
       if (name === 'referencetype') {
         this.referencetype = field.value
         continue
