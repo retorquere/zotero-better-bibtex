@@ -170,10 +170,11 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.Preferences.export.fields "Campos">
 
 <!ENTITY better-bibtex.Preferences.export.fields.import-strings "Expandir as variáveis @string abaixo ao importar">
-<!ENTITY better-bibtex.Preferences.export.fields.export-strings "Se um campo pode ser uma variável @string, exportá-lo sem colchetes">
+<!ENTITY better-bibtex.Preferences.export.fields.export-strings "If a field could be a @string reference, export it as an unbraced @string reference">
 <!ENTITY better-bibtex.Preferences.export.fields.export-strings.off "Não">
 <!ENTITY better-bibtex.Preferences.export.fields.export-strings.detect "Assumir campos com uma única palavra como variáveis @string">
-<!ENTITY better-bibtex.Preferences.export.fields.export-strings.match "Comparar com as variáveis @string abaixo">
+<!ENTITY better-bibtex.Preferences.export.fields.export-strings.match "Match against the @string declarations below">
+<!ENTITY better-bibtex.Preferences.export.fields.export-strings.match_reverse "Match against the @string declarations and their values below">
 
 <!ENTITY better-bibtex.Preferences.export.fields.sorted "Ordenar referências e campos deterministicamente; essencialmente para controle de versão.">
 <!ENTITY better-bibtex.Preferences.export.fields.skip "Campos a omitir na exportação (separados por vírgulas)">
