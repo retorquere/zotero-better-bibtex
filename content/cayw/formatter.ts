@@ -233,8 +233,13 @@ export let Formatter = new class { // tslint:disable-line:variable-name
     return citation
   }
 
-  public async 'formatted-citation'(citations) {
-    const format = Zotero.Prefs.get('export.quickCopy.setting')
+  public async 'formatted-citation'(citations, options) {
+    let format = Zotero.Prefs.get('export.quickCopy.setting')
+    if (options.style) {
+      format = 'bibliography'
+      if (options.format) format += `/${options.format}`
+      format += `http://www.zotero.org/styles/${options.style}`
+    }
 
     if (Zotero.QuickCopy.unserializeSetting(format).mode !== 'bibliography') throw new Error('formatted-citations requires the Zotero default quick-copy format to be set to a citation style')
 
