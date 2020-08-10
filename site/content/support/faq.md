@@ -29,7 +29,7 @@ sensible output.
 
 Title fields in particular are a total mess. Zotero [recommends having your
 titles in sentence
-case](https://zotero-manual.github.io/zotero-manual/adding-items#sentence-and-title-case)
+case](https://zotero-manual.github.io/adding-items/#sentence-and-title-case)
 because that's what the embedded citation processor expects, but of course,
 BibLaTeX expects your titles to be in Title Case... *but only if they're in
 English*. Nice. In order to translate the Zotero recommendation into Bib(La)TeX
