@@ -4,10 +4,21 @@ declare const ZoteroItemPane: any
 declare const Zotero: any
 
 import { patch as $patch$ } from './monkey-patch'
+import { sentenceCase } from './case'
 
 import { KeyManager } from './key-manager'
 
 function display(itemID) {
+  let menuitem = document.getElementById('zotero-field-transform-menu-better-sentencecase')
+  if (!menuitem) {
+    Zotero.debug('adding better-sentencecase')
+    const zotero_field_transform_menu = document.getElementById('zotero-field-transform-menu')
+    menuitem = zotero_field_transform_menu.appendChild(document.createElementNS('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', 'menuitem'))
+    menuitem.setAttribute('id', 'zotero-field-transform-menu-better-sentencecase')
+    menuitem.setAttribute('label', 'BBT sentence case')
+    menuitem.addEventListener('command', function(e) { csl_sentenceCase.call(document.getBindingParent(this), document.popupNode) }, false)
+  }
+
   const field = document.getElementById('better-bibtex-citekey-display')
   if (field.getAttribute('itemID') !== `${itemID}`) return null
 
@@ -26,6 +37,28 @@ function init() {
   observer = KeyManager.keys.on(['update', 'insert'], citekey => {
     display(citekey.itemID)
   })
+}
+
+async function csl_sentenceCase(label) {
+  const val = this._getFieldValue(label)
+  const newVal = sentenceCase(val)
+  this._setFieldValue(label, newVal)
+  const fieldName = label.getAttribute('fieldname')
+  this._modifyField(fieldName, newVal)
+
+  // If this is a title field, convert the Short Title too
+  const isTitle = Zotero.ItemFields.getBaseIDFromTypeAndField(this.item.itemTypeID, fieldName) === Zotero.ItemFields.getID('title')
+  const shortTitleVal = this.item.getField('shortTitle')
+  if (isTitle && newVal.toLowerCase().startsWith(shortTitleVal.toLowerCase())) {
+    this._modifyField('shortTitle', newVal.substr(0, shortTitleVal.length))
+  }
+
+  if (this.saveOnEdit) {
+    // If a field is open, blur it, which will trigger a save and cause
+    // the saveTx() to be a no-op
+    await this.blurOpenField()
+    await this.item.saveTx()
+  }
 }
 
 function load() {

@@ -23,6 +23,19 @@ class State {
 }
 
 export function titleCase(text) {
-  const titleCased = CSL.Output.Formatters.title(new State, text)
-  return titleCased
+  return CSL.Output.Formatters.title(new State, text)
+}
+
+export function sentenceCase(text) {
+  let sentencecased = text.replace(/((?:^|[;?:.!]|[-\[\]<>'*\\(),{}_“”‘’])?\s*)([^-\s;?:.!\[\]<>'*\\(),{}_“”‘’]+)/g, (match, leader, word) => {
+    console.log('=', { match, leader, word })
+    if (leader && !leader.match(/^[;?:.!]/) && word.match(/^[A-Z][^A-Z]*$/)) word = word.toLowerCase()
+    return (leader || '') + word
+  })
+
+  text.replace(/<span class="nocase">.*?<\/span>/gi, (match, offset) => {
+    sentencecased = sentencecased.substr(0, offset) + match + this.substr(offset + match.length)
+  })
+
+  return sentencecased
 }

@@ -246,7 +246,7 @@ $patch$(Zotero.Integration, 'getApplication', original => function Zotero_Integr
 import * as DateParser from './dateparser'
 // import CiteProc = require('./citeproc.ts')
 import { qualityReport } from './qr-check'
-import { titleCase } from './title-case'
+import { titleCase } from './case'
 import { HTMLParser } from './markupparser'
 
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
