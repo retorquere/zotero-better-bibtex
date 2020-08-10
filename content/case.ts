@@ -33,8 +33,9 @@ export function sentenceCase(text) {
     return (leader || '') + word
   })
 
-  text.replace(/<span class="nocase">.*?<\/span>/gi, (match, offset) => {
-    sentencecased = sentencecased.substr(0, offset) + match + this.substr(offset + match.length)
+  // restore protected parts from original
+  text.replace(/<span class="nocase">.*?<\/span>|<nc>.*?<\/nc>/gi, (match, offset) => {
+    sentencecased = sentencecased.substr(0, offset) + match + sentencecased.substr(offset + match.length)
   })
 
   return sentencecased

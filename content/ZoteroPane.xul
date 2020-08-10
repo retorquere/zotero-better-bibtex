@@ -50,6 +50,8 @@
         <menuitem label="&better-bibtex.BetterBibTeX.citekey.pinInspireHEP;" oncommand="Zotero.BetterBibTeX.KeyManager.pin('selected', true);"/>
         <menuitem label="&better-bibtex.BetterBibTeX.citekey.unpin;" oncommand="Zotero.BetterBibTeX.KeyManager.unpin('selected');"/>
         <menuitem label="&better-bibtex.BetterBibTeX.citekey.refresh;" oncommand="Zotero.BetterBibTeX.KeyManager.refresh('selected', true);"/>
+        <menuseparator/>
+        <menuitem label="BBT sentencecase" oncommand="Zotero.BetterBibTeX.ZoteroPane.sentenceCase();"/>
         <menuitem label="&better-bibtex.BetterBibTeX.addCitationLinks;" oncommand="Zotero.BetterBibTeX.ZoteroPane.addCitationLinks();"/>
 
         <menuseparator class="bbt-texstudio"/>

@@ -40,6 +40,7 @@
   "importSentenceCase": "on+guess",
   "importCaseProtection": "as-needed",
   "autoExportDelay": 1,
+  "warnTitleCased": false,
   "itemObserverDelay": 5,
   "autoPinDelay": 0,
   "parseParticles": true,

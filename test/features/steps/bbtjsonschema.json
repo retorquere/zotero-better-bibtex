@@ -196,6 +196,9 @@
             "autoExportDelay": {
               "type": "number"
             },
+            "warnTitleCased": {
+              "type": "boolean"
+            },
             "itemObserverDelay": {
               "type": "number"
             },

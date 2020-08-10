@@ -16,7 +16,7 @@ function display(itemID) {
     menuitem = zotero_field_transform_menu.appendChild(document.createElementNS('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', 'menuitem'))
     menuitem.setAttribute('id', 'zotero-field-transform-menu-better-sentencecase')
     menuitem.setAttribute('label', 'BBT sentence case')
-    menuitem.addEventListener('command', function(e) { csl_sentenceCase.call(document.getBindingParent(this), document.popupNode) }, false)
+    menuitem.addEventListener('command', function(e) { title_sentenceCase.call(document.getBindingParent(this), document.popupNode) }, false)
   }
 
   const field = document.getElementById('better-bibtex-citekey-display')
@@ -39,7 +39,7 @@ function init() {
   })
 }
 
-async function csl_sentenceCase(label) {
+async function title_sentenceCase(label) {
   const val = this._getFieldValue(label)
   const newVal = sentenceCase(val)
   this._setFieldValue(label, newVal)

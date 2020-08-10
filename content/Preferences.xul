@@ -277,6 +277,13 @@
           setting off an unreasonable number of auto-exports. Minimum is 1 second. Changes to this preference take effect after restarting Zotero.
         </bbt:doc>
 
+        <preference name="extensions.zotero.translators.better-bibtex.warnTitleCased" type="bool" default="false"/>
+        <bbt:doc>
+          Both Zotero and BBT expect titles to be in sentence-case, but a lot of sites offer import data that is Title Cased. When exporting these titles to bib(la)tex you're going
+          to get a lot of extra unwanted braces, because all these Title Cased words will look like proper nouns to BBTs own title-casing mechanism. When this setting is on, you will be warned
+          when you import/save items in Zotero with titles that look like they're Title Cased, so that you can inspect/correct them.
+        </bbt:doc>
+
         <preference name="extensions.zotero.translators.better-bibtex.itemObserverDelay" type="int" default="5"/>
         <bbt:doc>
           I've had reports where Zotero notifies extensions that references have changed, but if BBT then actually

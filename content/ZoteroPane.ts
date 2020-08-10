@@ -10,6 +10,7 @@ import { clean_pane_persist, patch as $patch$ } from './monkey-patch'
 import { Preferences as Prefs } from './prefs'
 import { AutoExport } from './auto-export'
 import { flash } from './flash'
+import { sentenceCase } from './case'
 import * as CAYW from './cayw'
 
 const pane = Zotero.getActiveZoteroPane()
@@ -177,6 +178,31 @@ export = new class ZoteroPane {
 
     const ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
     ww.openWindow(null, 'chrome://zotero-better-bibtex/content/ErrorReport.xul', 'better-bibtex-error-report', 'chrome,centerscreen,modal', params)
+  }
+
+  public async sentenceCase(label) {
+    const items = Zotero.getActiveZoteroPane().getSelectedItems()
+    for (const item of items) {
+      let save = false
+
+      const title = item.getField('title')
+      let sentenceCased = sentenceCase(title)
+      if (title !== sentenceCased) {
+        save = true
+        item.setField('title', sentenceCased)
+      }
+
+      const shortTitle = item.getField('shortTitle')
+      if (sentenceCased.toLowerCase().startsWith(shortTitle.toLowerCase())) {
+        sentenceCased = sentenceCased.substr(0, shortTitle.length)
+        if (shortTitle !== sentenceCased) {
+          item.setField('shortTitle', sentenceCased)
+          save = true
+        }
+      }
+
+      if (save) await item.saveTx()
+    }
   }
 }
 

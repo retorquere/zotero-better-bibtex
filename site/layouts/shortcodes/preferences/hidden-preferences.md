@@ -165,4 +165,12 @@ default: `url,doi,file,eprint,verba,verbb,verbc`
 
 list of fields to treat as verbatim during import. If you're importing e.g. Mendeley-generated BibTeX, try removing `file` from this list before import.
 
+### warnTitleCased
+
+default: `no`
+
+Both Zotero and BBT expect titles to be in sentence-case, but a lot of sites offer import data that is Title Cased. When exporting these titles to bib(la)tex you're going
+to get a lot of extra unwanted braces, because all these Title Cased words will look like proper nouns to BBTs own title-casing mechanism. When this setting is on, you will be warned
+when you import/save items in Zotero with titles that look like they're Title Cased, so that you can inspect/correct them.
+
 

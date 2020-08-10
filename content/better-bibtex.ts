@@ -12,12 +12,13 @@ require('./pull-export') // just require, initializes the pull-export end points
 require('./json-rpc') // just require, initializes the json-rpc end point
 import { AUXScanner } from './aux-scanner'
 import * as Extra from './extra'
+import { sentenceCase } from './case'
 
 Components.utils.import('resource://gre/modules/AddonManager.jsm')
 declare const AddonManager: any
 
 import { log } from './logger'
-import { Events, itemsChanged as notifiyItemsChanged } from './events'
+import { Events, itemsChanged as notifyItemsChanged } from './events'
 
 import { Translators } from './translators'
 import { DB } from './db/main'
@@ -492,8 +493,20 @@ notify('item', (action, type, ids, extraData) => {
 
     case 'add':
     case 'modify':
+      let warn_titlecase = Prefs.get('warnTitleCased') ? 0 : null
       for (const item of items) {
         KeyManager.update(item)
+        if (typeof warn_titlecase === 'number' && !item.isNote() && !item.isAttachment()) {
+          const title = item.getField('title')
+          if (title !== sentenceCase(title)) warn_titlecase += 1
+        }
+      }
+      if (typeof warn_titlecase === 'number' && warn_titlecase) {
+        const actioned = action === 'add' ? 'added' : 'saved'
+        const msg = warn_titlecase === 1
+          ? `${warn_titlecase} item ${actioned} which looks like it has a title-cased title`
+          : `${warn_titlecase} items ${actioned} which look like they have title-cased titles`
+        flash(`Possibly title-cased title${warn_titlecase > 1 ? 's' : ''} ${actioned}`, msg, 3) // tslint:disable-line:no-magic-numbers
       }
 
       Events.emit('items-changed', ids)
@@ -503,7 +516,7 @@ notify('item', (action, type, ids, extraData) => {
       return
   }
 
-  notifiyItemsChanged(items)
+  notifyItemsChanged(items)
 })
 
 notify('collection', (event, type, ids, extraData) => {
