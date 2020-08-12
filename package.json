@@ -56,7 +56,7 @@
     "test": "test"
   },
   "dependencies": {
-    "@retorquere/bibtex-parser": "^3.2.7",
+    "@retorquere/bibtex-parser": "^3.2.8",
     "@types/lokijs": "^1.5.3",
     "ajv": "^6.12.3",
     "ajv-keywords": "^3.5.2",
@@ -107,7 +107,7 @@
     "dotenv": "^8.2.0",
     "ejs": "^3.1.3",
     "fast-json-patch": "^3.0.0-1",
-    "find-up": "^4.1.0",
+    "find-up": "^5.0.0",
     "fs-extra": "^9.0.1",
     "github-release-cli": "^1.3.1",
     "glob": "^7.1.6",
