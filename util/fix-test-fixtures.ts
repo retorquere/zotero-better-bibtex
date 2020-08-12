@@ -1,9 +1,8 @@
-#!/usr/bin/env node
+#!/usr/bin/env npx ts-node
 
 import * as fs from 'fs'
 import * as glob from 'glob'
 import * as path from 'path'
-import { sortify } from 'sorted-json'
 
 import { upgradeExtra } from '../content/db/upgrade-extra'
 
@@ -68,8 +67,8 @@ for (const lib of glob.sync('test/fixtures/*/*.json', { cwd: root, absolute: tru
       data.config.preferences.importCaseProtection = data.config.preferences.importCaseProtection ? 'as-needed' : 'off'
       resave = 'importCaseProtection'
     }
-    if (typeof data.config.preferences.importSentenceCase === 'boolean') {
-      data.config.preferences.importSentenceCase = data.config.preferences.importSentenceCase ? 'on+guess' : 'off'
+    if (typeof data.config.preferences.importSentenceCase === 'string') {
+      data.config.preferences.importSentenceCase = data.config.preferences.importSentenceCase.startsWith('on')
       resave = 'importSentenceCase'
     }
 
@@ -122,6 +121,6 @@ for (const lib of glob.sync('test/fixtures/*/*.json', { cwd: root, absolute: tru
     console.log(`${resave}: ${lib}`)
 
     // add trailing newline for POSIX compatibility
-    fs.writeFileSync(lib, JSON.stringify(sortify(data), null, 2).replace(/[\u007F-\uFFFF]/g, chr => `\\u${("0000" + chr.charCodeAt(0).toString(16)).substr(-4)}`) + '\n')
+    fs.writeFileSync(lib, JSON.stringify(data, null, 2).replace(/[\u007F-\uFFFF]/g, chr => `\\u${("0000" + chr.charCodeAt(0).toString(16)).substr(-4)}`) + '\n')
   }
 }

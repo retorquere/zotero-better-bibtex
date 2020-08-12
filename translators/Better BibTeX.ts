@@ -1164,8 +1164,7 @@ export async function doImport() {
     caseProtection: (Translator.preferences.importCaseProtection as 'as-needed'), // we are actually sure it's a valid enum value; stupid workaround for TS2322: Type 'string' is not assignable to type 'boolean | "as-needed" | "strict"'.
     errorHandler: (Translator.preferences.testing ? undefined : function(err) { log.error(err) }), // tslint:disable-line:only-arrow-functions
     markup: (Translator.csquotes ? { enquote: Translator.csquotes } : {}),
-    sentenceCase: Translator.preferences.importSentenceCase !== 'off',
-    guessAlreadySentenceCased: Translator.preferences.importSentenceCase === 'on+guess',
+    sentenceCase: Translator.preferences.importSentenceCase,
     verbatimFields: Translator.verbatimFields,
     raw: Translator.preferences.rawImports,
     unabbreviate,
