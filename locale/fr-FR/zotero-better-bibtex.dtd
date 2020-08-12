@@ -109,13 +109,11 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase "Titres avec casse de phrase lors de l'importation :">
 <!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.off "non (importer les titres tels quels)">
 <!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.on "oui">
-<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.on_guess "oui, mais en essayant d'exclure les titres déjà avec casse de phrase">
-<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.warning "Les références Bib(La)TeX devraient être stockées capitalisées (NdT : c.-à-d. avec l'initiale de chaque mot en capitale ; cette règle est conforme à la typographie anglaise mais pas française) ; les références Zotero devraient être saisies avec casse de phrase (NdT : c.-à-d. avec seule l'initiale de la phrase en capitale).
+<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.warning "Bib(La)TeX references ought to be stored in Title Case; Zotero references are expected to be entered as sentence-case.
 
-Avec cette option activée, BBT essaiera d'appliquer la casse de phrase lors de l'importation. Le mécanisme sous-jacent utilise des heuristiques : aucun traitement de langage naturel n'est effectué, et les résultats ne sont pas parfaits.
+With this option on, BBT will try to sentence-case during import. This sentence-casing uses heuristics, no natural language processing is performed, and the results are not perfect.
 
-Vous pouvez désactiver cette option, mais vous pouvez aussi vouloir désactiver « Appliquer la capitalisation aux titres » (qui a ses propres problèmes, voir l''aide pour cette option sur cette page).
-Avec « oui, mais en essayant d'exclure les titres déjà avec casse de phrase », BBT tentera de détecter les titres déjà avec casse de phrase et ne les modifiera pas à l'importation.">
+You can turn this off, but you may then also want to disable `Apply title-casing to titles` (which has its own problems, see the help entry for that option on this page).">
 
 <!ENTITY better-bibtex.Preferences.advanced.correct.titleCase "Sentence-case titles on add/edit:">
 <!ENTITY better-bibtex.Preferences.advanced.correct.titleCase.off "no">
