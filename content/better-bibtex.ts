@@ -6,6 +6,7 @@ declare const FileUtils: any
 
 import { clean_pane_persist, patch as $patch$ } from './monkey-patch'
 import { flash } from './flash'
+import { sleep } from './sleep'
 
 import { Preferences as Prefs } from './prefs' // needs to be here early, initializes the prefs observer
 require('./pull-export') // just require, initializes the pull-export end points
@@ -447,10 +448,9 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
 
 function notify(event, handler) {
   Zotero.Notifier.registerObserver({
-    notify(...args) {
-      BetterBibTeX.ready.then(() => { // tslint:disable-line:no-use-before-declare
-        handler.apply(null, args)
-      })
+    async notify(...args) {
+      await BetterBibTeX.ready
+      await handler.apply(null, args)
     },
   }, [event], 'BetterBibTeX', 1)
 }
@@ -462,7 +462,7 @@ notify('item-tag', (action, type, ids, extraData) => {
   Events.emit('items-changed', ids)
 })
 
-notify('item', (action, type, ids, extraData) => {
+notify('item', async (action, type, ids, extraData) => {
   // prevents update loop -- see KeyManager.init()
   if (action === 'modify') {
     ids = ids.filter(id => !extraData[id] || !extraData[id].bbtCitekeyUpdate)
@@ -493,20 +493,8 @@ notify('item', (action, type, ids, extraData) => {
 
     case 'add':
     case 'modify':
-      let warn_titlecase = Prefs.get('warnTitleCased') ? 0 : null
       for (const item of items) {
         KeyManager.update(item)
-        if (typeof warn_titlecase === 'number' && !item.isNote() && !item.isAttachment()) {
-          const title = item.getField('title')
-          if (title !== sentenceCase(title)) warn_titlecase += 1
-        }
-      }
-      if (typeof warn_titlecase === 'number' && warn_titlecase) {
-        const actioned = action === 'add' ? 'added' : 'saved'
-        const msg = warn_titlecase === 1
-          ? `${warn_titlecase} item ${actioned} which looks like it has a title-cased title`
-          : `${warn_titlecase} items ${actioned} which look like they have title-cased titles`
-        flash(`Possibly title-cased title${warn_titlecase > 1 ? 's' : ''} ${actioned}`, msg, 3) // tslint:disable-line:no-magic-numbers
       }
 
       Events.emit('items-changed', ids)
@@ -517,6 +505,23 @@ notify('item', (action, type, ids, extraData) => {
   }
 
   notifyItemsChanged(items)
+
+  // do this last because it will trigger a re-call of this notifier handler
+  if (['add', 'modify'].includes(action) && Prefs.get('correctTitleCase') !== 'off') {
+    await sleep(Prefs.get('itemObserverDelay'))
+
+    const save = action === 'add' && Prefs.get('correctTitleCase') === 'warn+change'
+    const sentenceCased = await Zotero.BetterBibTeX.sentenceCase({ items, save, tag: true })
+
+    if (!save && sentenceCased.length) {
+      const actioned = action.replace('y', 'i') + 'ed'
+      const title = `Possibly title-cased title${sentenceCased.length > 1 ? 's' : ''} ${actioned}`
+      const body = sentenceCased.length === 1
+        ? `${sentenceCased.length} item ${actioned} which looks like it has a title-cased title`
+        : `${sentenceCased.length} items ${actioned} which look like they have title-cased titles`
+      flash(title, body, 3) // tslint:disable-line:no-magic-numbers
+    }
+  }
 })
 
 notify('collection', (event, type, ids, extraData) => {
@@ -698,7 +703,46 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
     }
   }
 
-  // #init
+  public async sentenceCase(options: { items?: any[], tag?: boolean, save?: boolean } = {}) {
+    options.items = options.items || Zotero.getActiveZoteroPane().getSelectedItems()
+    options.tag = options.tag || options.items.length > 1
+    const tag = Prefs.get('tagCorrectedTitleCase')
+    const items = options.items.filter(item => {
+      if (item.hasTag(tag)) return false
+
+      let modified = false
+
+      const title = item.getField('title')
+      let sentenceCased = sentenceCase(title)
+      if (title !== sentenceCased) {
+        modified = true
+        if (options.save) item.setField('title', sentenceCased)
+      }
+
+      const shortTitle = item.getField('shortTitle')
+      if (sentenceCased.toLowerCase().startsWith(shortTitle.toLowerCase())) {
+        sentenceCased = sentenceCased.substr(0, shortTitle.length)
+        if (shortTitle !== sentenceCased) {
+          if (options.save) item.setField('shortTitle', sentenceCased)
+          modified = true
+        }
+      }
+
+      return modified
+    })
+
+    if (items.length && options.save) {
+      async function save(item) {
+        if (options.tag) item.addTag(tag, 1)
+        await item.saveTx()
+      }
+
+      await Promise.all(items.map(save))
+    }
+
+    return items
+  }
+
   private async init() {
     const deferred = {
       loaded: Zotero.Promise.defer(),

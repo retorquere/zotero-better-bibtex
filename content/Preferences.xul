@@ -26,6 +26,9 @@
     <tooltip id="tooltip-importSentenceCase">
       <description>&better-bibtex.Preferences.advanced.import.sentenceCase.warning;</description>
     </tooltip>
+    <tooltip id="tooltip-correctTitleCase">
+      <description>&better-bibtex.Preferences.advanced.correct.titleCase.warning;</description>
+    </tooltip>
     <tooltip id="tooltip-importCaseProtection">
       <description>&better-bibtex.Preferences.advanced.import.caseProtection.warning;</description>
     </tooltip>
@@ -277,11 +280,16 @@
           setting off an unreasonable number of auto-exports. Minimum is 1 second. Changes to this preference take effect after restarting Zotero.
         </bbt:doc>
 
-        <preference name="extensions.zotero.translators.better-bibtex.warnTitleCased" type="bool" default="false"/>
+        <preference name="extensions.zotero.translators.better-bibtex.correctTitleCase" id="pref-better-bibtex-correctTitleCase" type="string" default="off"/>
         <bbt:doc>
-          Both Zotero and BBT expect titles to be in sentence-case, but a lot of sites offer import data that is Title Cased. When exporting these titles to bib(la)tex you're going
-          to get a lot of extra unwanted braces, because all these Title Cased words will look like proper nouns to BBTs own title-casing mechanism. When this setting is on, you will be warned
-          when you import/save items in Zotero with titles that look like they're Title Cased, so that you can inspect/correct them.
+          Zotero (and therefore BBT) expect titles to be in sentence-case, but a lot of sites offer import data that is Title Cased. When exporting these titles to bib(la)tex you're going
+          to get a lot of extra unwanted braces, because all these Title Cased words will look like proper nouns/proper names to BBTs own title-casing mechanism. With this setting, you can choose to
+          have Zotero warn you when an item is saved/edited that looks to have a Title Cased title, or automatically attempt to correct them when a new item is added. Auto-corrected items are
+          tagged so you can review them; please do review them.
+        </bbt:doc>
+        <preference name="extensions.zotero.translators.better-bibtex.tagCorrectedTitleCase" type="string" default="#sentence-cased"/>
+        <bbt:doc>
+          When an item is added that looks to have a Title-Cased title, and correct-on-add is on, the item will be tagged with this tag so you can more easily find them to review the results. Please do review the changed made; the sentence-casing algorithm is fairly naive.
         </bbt:doc>
 
         <preference name="extensions.zotero.translators.better-bibtex.itemObserverDelay" type="int" default="5"/>
@@ -833,6 +841,18 @@
                       </menupopup>
                     </menulist>
                     <image tooltip="tooltip-importCaseProtection" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
+                  </hbox>
+
+                  <hbox>
+                    <label bbt:preference="pref-better-bibtex-correctTitleCase">&better-bibtex.Preferences.advanced.correct.titleCase;</label>
+                    <menulist preference="pref-better-bibtex-correctTitleCase">
+                      <menupopup>
+                        <menuitem label="&better-bibtex.Preferences.advanced.correct.titleCase.warn_change;" value="warn+change"/>
+                        <menuitem label="&better-bibtex.Preferences.advanced.correct.titleCase.warn;" value="warn"/>
+                        <menuitem label="&better-bibtex.Preferences.advanced.correct.titleCase.off;" value="off"/>
+                      </menupopup>
+                    </menulist>
+                    <image tooltip="tooltip-correctTitleCase" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
                   </hbox>
                 </tabpanel>
 

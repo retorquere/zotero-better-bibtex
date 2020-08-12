@@ -15,7 +15,7 @@ function display(itemID) {
     const zotero_field_transform_menu = document.getElementById('zotero-field-transform-menu')
     menuitem = zotero_field_transform_menu.appendChild(document.createElementNS('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', 'menuitem'))
     menuitem.setAttribute('id', 'zotero-field-transform-menu-better-sentencecase')
-    menuitem.setAttribute('label', 'BBT sentence case')
+    menuitem.setAttribute('label', 'Better sentence-case')
     menuitem.addEventListener('command', function(e) { title_sentenceCase.call(document.getBindingParent(this), document.popupNode) }, false)
   }
 

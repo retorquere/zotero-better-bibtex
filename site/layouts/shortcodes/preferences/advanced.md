@@ -76,6 +76,21 @@ Options:
 * yes
 * no
 
+#### Sentence-case titles on add/edit:
+
+default: `no`
+
+Zotero (and therefore BBT) expect titles to be in sentence-case, but a lot of sites offer import data that is Title Cased. When exporting these titles to bib(la)tex you're going
+to get a lot of extra unwanted braces, because all these Title Cased words will look like proper nouns/proper names to BBTs own title-casing mechanism. With this setting, you can choose to
+have Zotero warn you when an item is saved/edited that looks to have a Title Cased title, or automatically attempt to correct them when a new item is added. Auto-corrected items are
+tagged so you can review them; please do review them.
+
+Options:
+
+* correct new items, warn on changes to existing items
+* warn
+* no
+
 ### @string definitions
 
 #### Expand the @string vars below during imports

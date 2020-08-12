@@ -18,6 +18,10 @@ export let Preferences = new class { // tslint:disable-line:variable-name
     this.testing = Zotero.Prefs.get(this.key('testing'))
 
     let old, key
+    if (typeof (old = Zotero.Prefs.get(key = this.key('warnTitleCased'))) !== 'undefined') {
+      Zotero.Prefs.clear(key)
+      Zotero.Prefs.set(this.key('correctTitleCase'), old ? 'warn' : 'off')
+    }
     if (typeof (old = Zotero.Prefs.get(key = this.key('workers'))) !== 'number') {
       Zotero.Prefs.clear(key)
       Zotero.Prefs.set(key, old ? 1 : 0)
