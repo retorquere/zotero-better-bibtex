@@ -477,7 +477,7 @@ class ZoteroItem {
 
   public async complete() {
     if (this.item) {
-      if (this.bibtex.sentenceCased) this.item.tags.push({ tag: Translator.preferences.tagCorrectedTitleCase, type: 1 })
+      if (this.bibtex.sentenceCased && Translator.preferences.correctTitleCase === 'warn+change') this.item.tags.push({ tag: Translator.preferences.tagCorrectedTitleCase, type: 1 })
       await this.item.complete()
     }
   }
