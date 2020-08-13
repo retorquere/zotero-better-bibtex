@@ -56,7 +56,7 @@
     "test": "test"
   },
   "dependencies": {
-    "@retorquere/bibtex-parser": "^3.2.9",
+    "@retorquere/bibtex-parser": "^3.2.10",
     "@types/lokijs": "^1.5.3",
     "ajv": "^6.12.3",
     "ajv-keywords": "^3.5.2",
@@ -118,7 +118,7 @@
     "jsesc": "^3.0.1",
     "json.sortify": "^2.2.2",
     "loader-utils": "^2.0.0",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.20",
     "moment": "^2.27.0",
     "njstrace": "^1.2.0",
     "pegjs": "^0.10.0",
