@@ -21,14 +21,14 @@
     postfixes: [],
 
     numeric: function() {
-      return this.set('-%(n)s')
+      return this.set('-%(n)s', 0)
     },
     alpha: function() {
-      return this.set('%(a)s')
+      return this.set('%(a)s', 0)
     },
-    set: function(pf) {
+    set: function(pf, start) {
       this.postfixes.push(pf)
-      return pf
+      return `{ start: ${start ? 1 : 0}, format: ${JSON.stringify(pf)} }`
     },
   }
 }
@@ -38,12 +38,12 @@ start
       var body = "\nvar loop, citekey, postfix, chunk;"
 
       for (var pattern = 0; pattern < patterns.length; pattern++) {
-        body += `\nfor (loop = true; loop; loop=false) {\n  citekey = ''; postfix = { start: 0, format: ${JSON.stringify(postfix.alpha())} };\n\n`
+        body += `\nfor (loop = true; loop; loop=false) {\n  citekey = ''; postfix = ${postfix.alpha()};\n\n`
         body += patterns[pattern] + "\n"
         body += "  citekey = citekey.replace(/[\\s{},]/g, '');\n"
         body += "  if (citekey) return {citekey: citekey, postfix: postfix};\n}\n"
       }
-      body += "return {citekey: ''};"
+      body += `return {citekey: '', postfix: ${postfix.alpha()}};`
 
       return { formatter: body, postfixes: postfix.postfixes }
     }
@@ -53,8 +53,8 @@ pattern
 
 block
   = [ \t\r\n]+                            { return '' }
-  / '[0]'                                 { return `postfix = { start: 0, format: ${JSON.stringify(postfix.numeric())} }` }
-  / '[postfix' start:'+1'? pf:stringparam ']' { return `postfix = { start: ${start ? 1 : 0}, format: ${JSON.stringify(postfix.set(pf))} }` }
+  / '[0]'                                 { return `postfix = ${postfix.numeric()}` }
+  / '[postfix' start:'+1'? pf:stringparam ']' { return `postfix = ${postfix.set(pf, start)}` }
   / '[=' types:$[a-zA-Z/]+ ']'            {
       types = types.toLowerCase().split('/').map(type => type.trim()).map(type => options.items.name.type[type.toLowerCase()] || type);
       var unknown = types.find(type => !options.items.valid.type[type])
@@ -140,7 +140,7 @@ method
       if (params.length !== 0) error(`function '${name}' expects at least one parameter (${params.map(p => p.type + (p.optional ? '?' : '')).join(', ')})`)
 
       var code = `chunk = this.$${_method_name(name)}()`
-      if (name == 'zotero') code += `; postfix = { start: 0, format: ${JSON.stringify(postfix.numeric())} }`
+      if (name == 'zotero') code += `; postfix = ${postfix.numeric()}`
       return code
     }
   / prop:$([a-zA-Z]+) {
