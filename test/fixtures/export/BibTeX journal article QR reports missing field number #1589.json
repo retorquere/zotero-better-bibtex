@@ -13,7 +13,7 @@
       "autoExportIdleWait": 60,
       "autoPinDelay": 1,
       "citekeyFormat": "[auth:nopunct][year][0]",
-      "importSentenceCase": false,
+      "importSentenceCase": "off",
       "itemObserverDelay": 100,
       "keyConflictPolicy": "change",
       "qualityReport": true,

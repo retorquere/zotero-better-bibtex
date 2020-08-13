@@ -270,7 +270,7 @@
 
         <preference name="extensions.zotero.translators.better-bibtex.retainCache" id="pref-better-bibtex-retainCache" type="bool" default="false"/>
 
-        <preference name="extensions.zotero.translators.better-bibtex.importSentenceCase" id="pref-better-bibtex-importSentenceCase" type="bool" default="true"/>
+        <preference name="extensions.zotero.translators.better-bibtex.importSentenceCase" id="pref-better-bibtex-importSentenceCase" type="string" default="on+guess"/>
 
         <preference name="extensions.zotero.translators.better-bibtex.importCaseProtection" id="pref-better-bibtex-importCaseProtection" type="string" default="as-needed"/>
 
@@ -820,7 +820,14 @@
 
                 <tabpanel orient="vertical">
                   <hbox>
-                    <checkbox preference="pref-better-bibtex-importSentenceCase" label="&better-bibtex.Preferences.advanced.import.sentenceCase;"/>
+                    <label bbt:preference="pref-better-bibtex-importSentenceCase">&better-bibtex.Preferences.advanced.import.sentenceCase;</label>
+                    <menulist preference="pref-better-bibtex-importSentenceCase">
+                      <menupopup>
+                        <menuitem label="&better-bibtex.Preferences.advanced.import.sentenceCase.on_guess;" value="on+guess"/>
+                        <menuitem label="&better-bibtex.Preferences.advanced.import.sentenceCase.on;" value="on"/>
+                        <menuitem label="&better-bibtex.Preferences.advanced.import.sentenceCase.off;" value="off"/>
+                      </menupopup>
+                    </menulist>
                     <image tooltip="tooltip-importSentenceCase" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
                   </hbox>
 

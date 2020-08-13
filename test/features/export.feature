@@ -481,6 +481,20 @@ Scenario: Really Big whopping library
   And an export using "Better BibTeX" should match "export/*.bibtex", but take no more than 150 seconds
   And an export using "Better CSL JSON" should match "export/*.csl.json", but take no more than 150 seconds
 
+@use.with_client=zotero @use.with_slow=true @timeout=300
+@1296
+Scenario: Cache does not seem to fill #1296
+  When I restart Zotero with "1296"
+  And I empty the trash
+#  Then an export using "Better BibTeX" should match "export/*.bibtex"
+#  And an export using "Better BibTeX" should match "export/*.bibtex", but take no more than 150 seconds
+  Then an auto-export to "/tmp/autoexport.bib" using "Better BibTeX" should match "export/*.bibtex"
+  And I remove "/tmp/autoexport.bib"
+  When I remove all items from "Cited/2010 - CHI (Magic)"
+  And I wait 5 seconds
+  And I wait at most 100 seconds until all auto-exports are done
+  Then "/tmp/autoexport.bib" should match "export/*.bibtex"
+
 @1495
 Scenario: use author dash separation rather than camel casing in citekey #1495
   Given I import 1 reference from "export/*.json"

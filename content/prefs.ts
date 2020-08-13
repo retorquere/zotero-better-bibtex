@@ -34,16 +34,14 @@ export let Preferences = new class { // tslint:disable-line:variable-name
       Zotero.Prefs.set(this.key('exportBraceProtection'), !old)
       Zotero.Prefs.clear(key)
     }
-
-    if (typeof (old = Zotero.Prefs.get(key = this.key('importSentenceCase'))) === 'string') {
-      Zotero.Prefs.clear(key)
-      Zotero.Prefs.set(key, old.startsWith('on'))
-    }
     if (typeof (old = Zotero.Prefs.get(key = this.key('suppressSentenceCase'))) !== 'undefined') {
-      Zotero.Prefs.set(this.key('importSentenceCase'), !old)
+      if (old) {
+        Zotero.Prefs.set(this.key('importSentenceCase'), 'off')
+      } else {
+        Zotero.Prefs.set(this.key('importSentenceCase'), 'on+guess')
+      }
       Zotero.Prefs.clear(key)
     }
-
     if (typeof (old = Zotero.Prefs.get(key = this.key('suppressNoCase'))) !== 'undefined') {
       if (old) {
         Zotero.Prefs.set(this.key('importCaseProtection'), 'off')

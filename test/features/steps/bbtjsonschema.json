@@ -180,7 +180,11 @@
               "type": "boolean"
             },
             "importSentenceCase": {
-              "type": "boolean"
+              "enum": [
+                "on+guess",
+                "on",
+                "off"
+              ]
             },
             "importCaseProtection": {
               "enum": [

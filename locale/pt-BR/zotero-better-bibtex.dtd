@@ -109,11 +109,13 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase "Sentence-case titles on import:">
 <!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.off "no (import titles as-is)">
 <!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.on "yes">
+<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.on_guess "yes, but try to exclude already-sentence-cased titles">
 <!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.warning "Bib(La)TeX references ought to be stored in Title Case; Zotero references are expected to be entered as sentence-case.
 
 With this option on, BBT will try to sentence-case during import. This sentence-casing uses heuristics, no natural language processing is performed, and the results are not perfect.
 
-You can turn this off, but you may then also want to disable `Apply title-casing to titles` (which has its own problems, see the help entry for that option on this page).">
+You can turn this off, but you may then also want to disable `Apply title-casing to titles` (which has its own problems, see the help entry for that option on this page).
+With 'yes, but try to exclude already-sentence-cased titles', BBT will attempt to detect titles that are already sentence cased and leave them as-is on import.">
 
 <!ENTITY better-bibtex.Preferences.advanced.correct.titleCase "Sentence-case titles on add/edit:">
 <!ENTITY better-bibtex.Preferences.advanced.correct.titleCase.off "no">

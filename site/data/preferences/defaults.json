@@ -37,7 +37,7 @@
   "exportTitleCase": true,
   "exportBraceProtection": true,
   "retainCache": false,
-  "importSentenceCase": true,
+  "importSentenceCase": "on+guess",
   "importCaseProtection": "as-needed",
   "autoExportDelay": 1,
   "correctTitleCase": "off",
