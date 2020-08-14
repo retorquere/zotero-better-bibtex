@@ -301,7 +301,7 @@
 
         <preference name="extensions.zotero.translators.better-bibtex.autoPinDelay" type="int" default="0"/>
         <bbt:doc>
-          When > 0, BBT will automatically pin the first citekey it generates for an item this many seconds.
+          When > 0, BBT will automatically pin the first citekey it generates for an item after this many seconds.
         </bbt:doc>
 
         <preference name="extensions.zotero.translators.better-bibtex.parseParticles" type="bool" default="true"/>
