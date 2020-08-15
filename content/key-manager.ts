@@ -36,7 +36,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
       attachment?: number
     }
   }
-  public autopin: Scheduler = new Scheduler('autopin', 'autoPinDelay', 1000) // tslint:disable-line:no-magic-numbers
+  public autopin: Scheduler = new Scheduler('autoPinDelay', 1000) // tslint:disable-line:no-magic-numbers
 
   private scanning: any[]
   private started = false

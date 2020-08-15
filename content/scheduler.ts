@@ -4,13 +4,12 @@ type Handler = () => void
 type TimerHandle = ReturnType<typeof setTimeout>
 
 export class Scheduler {
-  private name: string
   private _delay: string | number
   private factor: number
   private handlers: Map<number, TimerHandle> = new Map
   private held: Map<number, Handler> = null
 
-  constructor(name, delay: string | number, factor: number = 1) {
+  constructor(delay: string | number, factor: number = 1) {
     this.name = name
     this._delay = delay
     this.factor = factor
