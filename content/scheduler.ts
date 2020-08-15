@@ -41,13 +41,21 @@ export class Scheduler {
     }
   }
 
-  // setTimeout numbers are guaranteed posive: https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setTimeout
   public schedule(id: number, handler: Handler) {
     if (this.held) {
       this.held.set(id, handler)
     } else {
       if (this.handlers.has(id)) clearTimeout(this.handlers.get(id))
       this.handlers.set(id, setTimeout(handler, this.delay))
+    }
+  }
+
+  public cancel(id: number) {
+    if (this.held) {
+      this.held.delete(id)
+    } else if (this.handlers.has(id)) {
+      clearTimeout(this.handlers.get(id))
+      this.handlers.delete(id)
     }
   }
 }

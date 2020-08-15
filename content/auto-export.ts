@@ -14,7 +14,7 @@ import { Preferences as Prefs } from './prefs'
 import * as ini from 'ini'
 import { foldMaintaining } from 'fold-to-ascii'
 import { pathSearch } from './path-search'
-import Loki = require('lokijs')
+import { Scheduler } from './scheduler'
 
 class Git {
   public enabled: boolean
@@ -143,19 +143,15 @@ class Git {
 const git = new Git()
 
 import * as prefOverrides from '../gen/preferences/auto-export-overrides.json'
+
+if (Prefs.get('autoExportDelay') < 1) Prefs.set('autoExportDelay', 1)
 const queue = new class TaskQueue {
-  private tasks = new Loki('autoexport').addCollection('tasks')
-  private paused: Set<number>
+  private scheduler = new Scheduler('autoExportDelay', 1000) // tslint:disable-line:no-magic-numbers
   private autoexports: any
-  private debounce_delay: number
   private started = false
 
   constructor() {
-    this.paused = new Set()
-
-    this.debounce_delay = Prefs.get('autoExportDelay')
-    if (this.debounce_delay < 1) this.debounce_delay = 1
-    this.debounce_delay = this.debounce_delay * 1000 // tslint:disable-line:no-magic-numbers
+    this.pause()
   }
 
   public start() {
@@ -174,50 +170,28 @@ const queue = new class TaskQueue {
   }
 
   public pause() {
-    if (!this.paused) this.paused = new Set([])
+    this.scheduler.paused = true
   }
 
   public resume() {
-    if (!this.paused) return
-
-    const ids = this.paused.values()
-    this.paused = null
-
-    for (const ae of ids) {
-      this.add(ae)
-    }
+    this.scheduler.paused = false
   }
 
   public add(ae) {
-    const id = (typeof ae === 'number' ? ae : ae.$loki)
-
-    this.cancel(id)
-
-    if (this.paused) return this.paused.add(id)
-
-    const task = this.tasks.insert({id})
-
-    Zotero.Promise.delay(this.debounce_delay)
-      .then(() => this.run(task))
-      .catch(err => log.error('autoexport failed:', {id}, err))
-      .finally(() => this.tasks.remove(task))
+    const $loki = (typeof ae === 'number' ? ae : ae.$loki)
+    this.scheduler.schedule($loki, () => { this.run($loki).catch(err => log.error('autoexport failed:', {$loki}, err)) })
   }
 
   public cancel(ae) {
-    const id = (typeof ae === 'number' ? ae : ae.$loki)
-
-    for (const task of this.tasks.find({ id })) {
-      task.canceled = true // this relies on 'clone' *not* being set
-    }
+    const $loki = (typeof ae === 'number' ? ae : ae.$loki)
+    this.scheduler.cancel($loki)
   }
 
-  public async run(task) {
-    if (task.canceled) return
+  public async run($loki: number) {
     await Zotero.BetterBibTeX.ready
-    if (task.canceled) return
 
-    const ae = this.autoexports.get(task.id)
-    if (!ae) throw new Error(`AutoExport ${task.id} not found`)
+    const ae = this.autoexports.get($loki)
+    if (!ae) throw new Error(`AutoExport ${$loki} not found`)
 
     ae.status = 'running'
     this.autoexports.update(ae)
@@ -410,6 +384,6 @@ export let AutoExport = new class CAutoExport { // tslint:disable-line:variable-
   }
 
   public run(id) {
-    queue.run({id})
+    queue.run(id)
   }
 }
