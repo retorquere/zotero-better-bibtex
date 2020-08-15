@@ -98,12 +98,11 @@ class PatternFormatter {
 
   private skipWords: Set<string>
 
-  private fold: boolean
+  // private fold: boolean
   private citekeyFormat: string
 
   public update(reason) {
     this.skipWords = new Set(Prefs.get('skipWords').split(',').map(word => word.trim()).filter(word => word))
-    this.fold = Prefs.get('citekeyFold')
 
     for (const attempt of ['get', 'strip', 'reset']) {
       switch (attempt) {
@@ -196,7 +195,7 @@ class PatternFormatter {
     const citekey = this.generate()
 
     if (!citekey.citekey) citekey.citekey = `zotero-${item.id}`
-    if (citekey.citekey && this.fold) citekey.citekey = this.removeDiacritics(citekey.citekey)
+    if (citekey.citekey && Prefs.get('citekeyFold')) citekey.citekey = this.removeDiacritics(citekey.citekey)
     citekey.citekey = citekey.citekey.replace(/[\s{},@]/g, '')
 
     return citekey

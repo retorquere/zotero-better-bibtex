@@ -4,26 +4,52 @@ type Handler = () => void
 type TimerHandle = ReturnType<typeof setTimeout>
 
 export class Scheduler {
+  private name: string
   private _delay: string | number
   private factor: number
-  private handlers: Record<number, TimerHandle> = {}
+  private handlers: Map<number, TimerHandle> = new Map
+  private held: Map<number, Handler> = null
 
-  constructor(delay: string | number, factor: number = 1) {
+  constructor(name, delay: string | number, factor: number = 1) {
+    this.name = name
     this._delay = delay
     this.factor = factor
   }
 
-  public get delay() {
-    return (this._delay === 'string' ? Prefs.get(this._delay) : this._delay) * this.factor
+  public get delay(): number {
+    return (typeof this._delay === 'string' ? Prefs.get(this._delay) : this._delay) * this.factor
   }
 
   public get enabled() {
     return this.delay !== 0
   }
 
+  public get paused() {
+    return this.held !== null
+  }
+
+  public set paused(paused: boolean) {
+    if (paused === this.paused) return
+
+    if (paused) {
+      this.held = new Map
+    } else {
+      const held = this.held
+      this.held = null
+
+      for (const [id, handler] of held.entries()) {
+        this.schedule(id, handler)
+      }
+    }
+  }
+
   // setTimeout numbers are guaranteed posive: https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setTimeout
   public schedule(id: number, handler: Handler) {
-    if (this.handlers[id]) clearTimeout(this.handlers[id])
-    this.handlers[id] = setTimeout(handler, this.delay)
+    if (this.held) {
+      this.held.set(id, handler)
+    } else {
+      if (this.handlers.has(id)) clearTimeout(this.handlers.get(id))
+      this.handlers.set(id, setTimeout(handler, this.delay))
+    }
   }
 }
