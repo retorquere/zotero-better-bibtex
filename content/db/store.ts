@@ -8,6 +8,9 @@ import { log } from '../logger'
 
 Components.utils.import('resource://gre/modules/osfile.jsm')
 
+Components.utils.import('resource://gre/modules/Sqlite.jsm')
+declare const Sqlite: any
+
 export class Store {
   public mode = 'reference'
 
@@ -140,10 +143,10 @@ export class Store {
       if (parts[1] !== `${version}`) return // not a digit
 
       if (version >= this.versions) {
-        roll.push({ version, promise: OS.File.remove(entry.path, { ignoreAbsent: true }) })
+        roll.push({ version, remove: entry.path })
       } else {
         parts[1] = `${version + 1}`
-        roll.push({ version, promise: OS.File.move(entry.path, OS.Path.join(Zotero.BetterBibTeX.dir, parts.join('.'))) })
+        roll.push({ version, move: entry.path, to: OS.Path.join(Zotero.BetterBibTeX.dir, parts.join('.')) })
       }
     })
 
@@ -152,7 +155,11 @@ export class Store {
     // this must be done sequentially
     for (const file of roll) {
       try {
-        await file.promise
+        if (file.remove) {
+          await OS.File.remove(file.remove, { ignoreAbsent: true })
+        } else {
+          await OS.File.move(file.move, file.to)
+        }
       } catch (err) {
         log.error('DB.Store.roll:', err)
       }
