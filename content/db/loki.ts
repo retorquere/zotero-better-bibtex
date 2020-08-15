@@ -1,8 +1,12 @@
 declare const Components: any
 declare const Zotero: any
-declare const AsyncShutdown: any
 
 Components.utils.import('resource://gre/modules/AsyncShutdown.jsm')
+declare const AsyncShutdown: any
+
+// Components.utils.import('resource://gre/modules/Sqlite.jsm')
+// declare const Sqlite: any
+
 import { patch as $patch$ } from '../monkey-patch'
 
 import AJV = require('ajv')
@@ -96,14 +100,18 @@ export class XULoki extends Loki {
 
     if (this.persistenceAdapter && !nullStore) {
       AsyncShutdown.profileBeforeChange.addBlocker(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: closing ${name}`, async () => {
+      // Sqlite.shutdown.addBlocker(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: close of ${name}`, async () => {
         // setTimeout is disabled during shutdown and throws errors
         this.throttledSaves = false
 
         try {
+          Zotero.debug(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: close of ${name}`)
           await this.saveDatabaseAsync()
           await this.closeAsync()
+          Zotero.debug(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: close of ${name} completed`)
         } catch (err) {
-          log.error(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: close ${name} failed`, err)
+          Zotero.debug(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: close of ${name} failed`)
+          log.error(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: close of ${name} failed`, err)
         }
       })
     }
