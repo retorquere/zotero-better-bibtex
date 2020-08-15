@@ -4,6 +4,7 @@ declare const window: any
 import ETA = require('node-eta')
 import { kuroshiro } from './key-manager/kuroshiro'
 
+import { Scheduler } from './scheduler'
 import { log } from './logger'
 import { sleep } from './sleep'
 import { flash } from './flash'
@@ -35,6 +36,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
       attachment?: number
     }
   }
+  public autopin: Scheduler = new Scheduler('autoPinDelay', 1000) // tslint:disable-line:no-magic-numbers
 
   private scanning: any[]
   private started = false
@@ -258,10 +260,8 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
       // update display panes by issuing a fake item-update notification
       Zotero.Notifier.trigger('modify', 'item', [citekey.itemID], { [citekey.itemID]: { bbtCitekeyUpdate: true } })
 
-      const autoPinDelay = Prefs.get('autoPinDelay')
-      if (autoPinDelay && !citekey.pinned) {
-        await sleep(autoPinDelay * 1000) // tslint:disable-line:no-magic-numbers
-        this.pin([citekey.itemID])
+      if (!citekey.pinned && this.autopin.enabled) {
+        this.autopin.schedule(citekey.itemID, () => { this.pin([citekey.itemID]).catch(err => log.error('failed to pin', citekey.itemID, ':', err)) })
       }
     })
     this.keys.on('delete', async citekey => {
@@ -390,7 +390,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
 
     const proposed = this.propose(item)
 
-    if (current && (current.pinned || !Prefs.get('autoPinDelay')) && (current.pinned === proposed.pinned) && (current.citekey === proposed.citekey)) return current.citekey
+    if (current && (current.pinned || !this.autopin.enabled) && (current.pinned === proposed.pinned) && (current.citekey === proposed.citekey)) return current.citekey
 
     if (current) {
       current.pinned = proposed.pinned

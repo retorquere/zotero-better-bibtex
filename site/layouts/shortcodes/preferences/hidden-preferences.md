@@ -23,7 +23,7 @@ Number of seconds to wait after your system goes idle before kicking off auto-ex
 
 default: `0`
 
-When > 0, BBT will automatically pin the first citekey it generates for an item this many seconds.
+When > 0, BBT will automatically pin the first citekey it generates for an item after this many seconds.
 
 ### biblatexExtendedDateFormat
 
