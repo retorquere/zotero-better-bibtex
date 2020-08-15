@@ -10,7 +10,6 @@ export class Scheduler {
   private held: Map<number, Handler> = null
 
   constructor(delay: string | number, factor: number = 1) {
-    this.name = name
     this._delay = delay
     this.factor = factor
   }
