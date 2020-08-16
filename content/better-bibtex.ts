@@ -567,11 +567,17 @@ class Progress {
       return v ? 'pending' : 'resolved'
     }
 
+    const initializationPromise = show(Zotero.initializationPromise?.isPending())
+    const schemaUpdatePromise = show(Zotero.Schema?.schemaUpdatePromise?.isPending())
+
     log.debug(`${this.name}: Zotero locks after ${Date.now() - this.started}:`,
-      'uiReadyPromise:', show(Zotero.uiReadyPromise?.isPending()),
-      'Zotero.initializationPromise:', show(Zotero.initializationPromise?.isPending()),
-      'schemaUpdatePromise:',  show(Zotero.Schema?.schemaUpdatePromise?.isPending())
+      'Zotero.initializationPromise:', initializationPromise,
+      ', Zotero.Schema.schemaUpdatePromise:', schemaUpdatePromise
     )
+
+    if (initializationPromise === 'resolved' && schemaUpdatePromise === 'resolved') {
+      clearTimeout(this.timer)
+    }
   }
 
   public async start(msg) {
@@ -581,8 +587,6 @@ class Progress {
     this.msg = msg || 'Initializing'
 
     log.debug(`${this.name}: waiting for Zotero locks...`)
-
-    await Zotero.uiReadyPromise
 
     log.debug(`${this.name}: ${msg}...`)
     this.toggle(true)
