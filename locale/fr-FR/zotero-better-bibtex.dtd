@@ -114,7 +114,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 
 Avec cette option activée, BBT essaiera d'appliquer la casse de phrase lors de l'importation. Le mécanisme sous-jacent utilise des heuristiques : aucun traitement de langage naturel n'est effectué, et les résultats ne sont pas parfaits.
 
-Vous pouvez désactiver cette option, mais vous pouvez aussi vouloir désactiver « Appliquer la capitalisation aux titres » (qui a ses propres problèmes, voir l''aide pour cette option sur cette page).
+Vous pouvez désactiver cette option, mais vous pouvez aussi vouloir désactiver « Appliquer la capitalisation aux titres » (qui a ses propres problèmes, voir l'aide pour cette option sur cette page).
 Avec « oui, mais en essayant d'exclure les titres déjà avec casse de phrase », BBT tentera de détecter les titres déjà avec casse de phrase et ne les modifiera pas à l'importation.">
 
 <!ENTITY better-bibtex.Preferences.advanced.correct.titleCase "Sentence-case titles on add/edit:">
