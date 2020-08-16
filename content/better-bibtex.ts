@@ -582,7 +582,7 @@ class Progress {
 
   public async start(msg) {
     this.started = this.timestamp = Date.now()
-    this.timer = setInterval(this.waiting.bind(this), 100) // tslint:disable-line:no-magic-numbers
+    this.timer = setInterval(this.waiting.bind(this), 500) // tslint:disable-line:no-magic-numbers
 
     this.msg = msg || 'Initializing'
 
