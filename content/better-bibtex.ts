@@ -551,15 +551,33 @@ notify('collection-item', (event, type, collection_items) => {
   INIT
 */
 
+type TimerHandle = ReturnType<typeof setInterval>
 class Progress {
   private timestamp: number
+  private started: number
   private msg: string
   private progressWin: any
   private progress: any
   private name: string = 'Startup progress'
+  private timer: TimerHandle
+
+  private waiting() {
+    function show(v) {
+      if (typeof v === 'undefined') return 'unset'
+      return v ? 'pending' : 'resolved'
+    }
+
+    log.debug(`${this.name}: Zotero locks after ${Date.now() - this.started}:`,
+      'uiReadyPromise:', show(Zotero.uiReadyPromise?.isPending()),
+      'Zotero.initializationPromise:', show(Zotero.initializationPromise?.isPending()),
+      'schemaUpdatePromise:',  show(Zotero.Schema?.schemaUpdatePromise?.isPending())
+    )
+  }
 
   public async start(msg) {
-    this.timestamp = Date.now()
+    this.started = this.timestamp = Date.now()
+    this.timer = setInterval(this.waiting.bind(this), 100) // tslint:disable-line:no-magic-numbers
+
     this.msg = msg || 'Initializing'
 
     log.debug(`${this.name}: waiting for Zotero locks...`)
@@ -583,6 +601,7 @@ class Progress {
 
     this.toggle(false)
     log.debug(`${this.name}: done`)
+    clearTimeout(this.timer)
   }
 
   private bench(msg) {
@@ -769,7 +788,7 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
     await progress.start(this.getString('BetterBibTeX.startup.waitingForZotero'))
 
     // Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
-    await Zotero.Schema.initializationPromise
+    await Zotero.initializationPromise
 
     this.dir = OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex')
     await OS.File.makeDir(this.dir, { ignoreExisting: true })
