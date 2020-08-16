@@ -554,42 +554,28 @@ notify('collection-item', (event, type, collection_items) => {
 class Progress {
   private timestamp: number
   private msg: string
-  private locked: boolean
   private progressWin: any
   private progress: any
-  private name: string
-  private document: any
-
-  constructor(document) {
-    this.document = document
-    this.locked = false // Prefs.get('lockedInit')
-    this.name = this.locked ? 'Startup lock' : 'Startup progress'
-  }
+  private name: string = 'Startup progress'
 
   public async start(msg) {
-    this.timestamp = (new Date()).valueOf()
+    this.timestamp = Date.now()
     this.msg = msg || 'Initializing'
 
     log.debug(`${this.name}: waiting for Zotero locks...`)
 
     await Zotero.uiReadyPromise
 
-    if (this.locked && Zotero.locked) await Zotero.unlockPromise
-
     log.debug(`${this.name}: ${msg}...`)
     this.toggle(true)
-    log.debug(`${this.name}: ${this.locked ? 'locked' : 'progress window up'}`)
+    log.debug(`${this.name}: progress window up`)
   }
 
   public update(msg) {
     this.bench(msg)
 
     log.debug(`${this.name}: ${msg}...`)
-    if (this.locked) {
-      Zotero.showZoteroPaneProgressMeter(`Better BibTeX: ${msg}...`)
-    } else {
-      this.progress.setText(msg)
-    }
+    this.progress.setText(msg)
   }
 
   public done() {
@@ -600,7 +586,7 @@ class Progress {
   }
 
   private bench(msg) {
-    const ts = (new Date()).valueOf()
+    const ts = Date.now()
     // tslint:disable-next-line:no-magic-numbers
     if (this.msg) log.debug(`${this.name}:`, this.msg, 'took', (ts - this.timestamp) / 1000.0, 's')
     this.msg = msg
@@ -608,21 +594,7 @@ class Progress {
   }
 
   private toggle(busy) {
-    if (this.locked) {
-      for (const id of ['menu_import', 'menu_importFromClipboard', 'menu_newItem', 'menu_newNote', 'menu_newCollection', 'menu_exportLibrary']) {
-        this.document.getElementById(id).hidden = busy
-      }
-
-      for (const id of ['zotero-collections-tree']) {
-        this.document.getElementById(id).disabled = busy
-      }
-
-      if (busy) {
-        Zotero.showZoteroPaneProgressMeter(`Better BibTeX: ${this.msg}...`)
-      } else {
-        Zotero.hideZoteroPaneOverlays()
-      }
-    } else if (busy) {
+    if (busy) {
       this.progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
       this.progressWin.changeHeadline('Better BibTeX: Initializing')
       // this.progressWin.addDescription(`Found ${this.scanning.length} references without a citation key`)
@@ -793,7 +765,7 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
         20 // tslint:disable-line:no-magic-numbers
       )
     }
-    const progress = new Progress(this.document)
+    const progress = new Progress
     await progress.start(this.getString('BetterBibTeX.startup.waitingForZotero'))
 
     // Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ

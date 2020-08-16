@@ -356,26 +356,6 @@
         <preference name="extensions.zotero.translators.better-bibtex.debugLogDir" type="string" default=""/>
         <preference name="extensions.zotero.translators.better-bibtex.testing" type="bool" default="false"/>
 
-        <!--
-        <preference name="extensions.zotero.translators.better-bibtex.lockedInit" type="bool" default="false">
-          <bbt:doc>
-            BBT locks the UI during startup because I have been told in
-            no uncertain terms I am not to touch the Zotero database
-            before I get an all-clear from Zotero. This all-clear takes a fair amount of time. As BBT needs database
-            access for generating keys, and *everything* in BBT depends on the keys being present, it is absolutely safest
-            to make sure BBT initialization has completed before freeing the UI. I want to stress that during most of the
-            lock-time, BBT is simply waiting for Zotero to complete its own initialization; try to do an export of any
-            kind (not just BBT) or to import new references directly after Zotero has started and you'll notice that it
-            may take a while before Zotero reacts. The lockout just puts a face on this hidden init, and prevents nasty
-            race conditions between the BBT and Zotero initialization leading to unpredictable breakage occasionally.
-
-            By default you only get a flaoting popup to tell you how far along this process Zotero is; if you really want to see how long BBT has to wait before it can do anything, you can
-            enable the lockout during startup, but it seems fairly safe now if you're patient enough to wait until the floating window goes away. There is absolutely nothing I can do about the long
-            time it takes before BBT moves from "Waiting for Zotero". After that, initialization is very quick.
-          </bbt:doc>
-        </preference>
-        -->
-
         <preference name="extensions.zotero.translators.better-bibtex.kuroshiro" type="bool" default="false"/>
         <bbt:doc>
           When on, BBT will load kuroshiro for romajization in citekeys. This uses a lot of memory, easily 100MB. If you don't have Japanese titles/names, keep this off.
