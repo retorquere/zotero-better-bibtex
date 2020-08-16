@@ -8,8 +8,8 @@ import { log } from '../logger'
 
 Components.utils.import('resource://gre/modules/osfile.jsm')
 
-Components.utils.import('resource://gre/modules/Sqlite.jsm')
-declare const Sqlite: any
+// Components.utils.import('resource://gre/modules/Sqlite.jsm')
+// declare const Sqlite: any
 
 export class Store {
   public mode = 'reference'

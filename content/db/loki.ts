@@ -1,11 +1,11 @@
 declare const Components: any
 declare const Zotero: any
 
-// Components.utils.import('resource://gre/modules/AsyncShutdown.jsm')
-// declare const AsyncShutdown: any
+Components.utils.import('resource://gre/modules/AsyncShutdown.jsm')
+declare const AsyncShutdown: any
 
-Components.utils.import('resource://gre/modules/Sqlite.jsm')
-declare const Sqlite: any
+// Components.utils.import('resource://gre/modules/Sqlite.jsm')
+// declare const Sqlite: any
 
 import { patch as $patch$ } from '../monkey-patch'
 
@@ -100,8 +100,8 @@ export class XULoki extends Loki {
 
     if (this.persistenceAdapter && !nullStore) {
       try {
-        // AsyncShutdown.profileBeforeChange.addBlocker(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: closing ${name}`, async () => {
-        Sqlite.shutdown.addBlocker(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: close of ${name}`, async () => {
+        AsyncShutdown.profileBeforeChange.addBlocker(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: closing ${name}`, async () => {
+        // Sqlite.shutdown.addBlocker(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: close of ${name}`, async () => {
           // setTimeout is disabled during shutdown and throws errors
           this.throttledSaves = false
 
