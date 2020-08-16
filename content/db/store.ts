@@ -215,21 +215,26 @@ export class Store {
     let db = null
     const collections = {}
 
+    let failed = false
+
     let rows = 0
     for (const row of await conn.queryAsync(`SELECT name, data FROM "${name}" ORDER BY name ASC`)) {
       rows += 1
-      if (row.name === name) {
-        db = JSON.parse(row.data)
-      } else {
-        collections[row.name] = JSON.parse(row.data)
+      try {
+        if (row.name === name) {
+          db = JSON.parse(row.data)
+        } else {
+          collections[row.name] = JSON.parse(row.data)
 
-        collections[row.name].cloneObjects = true // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
-        collections[row.name].adaptiveBinaryIndices = false // https://github.com/techfort/LokiJS/issues/654
-        collections[row.name].dirty = true
+          collections[row.name].cloneObjects = true // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
+          collections[row.name].adaptiveBinaryIndices = false // https://github.com/techfort/LokiJS/issues/654
+          collections[row.name].dirty = true
+        }
+      } catch (err) {
+        log.debug(`DB.Store.loadDatabaseSQLiteAsync: failed to load ${name}:`, row.name)
+        failed = true
       }
     }
-
-    let failed = false
 
     if (db) {
       const missing = db.collections.filter(coll => !collections[coll])
