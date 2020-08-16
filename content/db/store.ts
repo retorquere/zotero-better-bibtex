@@ -86,7 +86,7 @@ export class Store {
       this.save(name, {...dbref, ...{collections: dbref.collections.map(coll => coll.name)}}, true),
     ]
     for (const coll of dbref.collections) {
-      parts.push(this.save(`${name}}.${coll.name}`, coll, coll.dirty))
+      parts.push(this.save(`${name}.${coll.name}`, coll, coll.dirty))
     }
 
     await Zotero.Promise.all(parts)
