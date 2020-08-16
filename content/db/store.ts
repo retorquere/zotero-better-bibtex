@@ -81,13 +81,12 @@ export class Store {
 
   private async exportDatabaseFileAsync(name, dbref) {
     await this.roll(name)
-    const version = this.versions ? '.0' : ''
 
     const parts = [
-      this.save(`${name}${version}`, {...dbref, ...{collections: dbref.collections.map(coll => coll.name)}}, true),
+      this.save(name, {...dbref, ...{collections: dbref.collections.map(coll => coll.name)}}, true),
     ]
     for (const coll of dbref.collections) {
-      parts.push(this.save(`${name}${version}.${coll.name}`, coll, coll.dirty))
+      parts.push(this.save(`${name}}.${coll.name}`, coll, coll.dirty))
     }
 
     await Zotero.Promise.all(parts)
@@ -133,21 +132,23 @@ export class Store {
 
     const root = this.storage === 'file' ? Zotero.BetterBibTeX.dir : Zotero.DataDirectory.dir
     const ext = this.storage === 'file' ? 'json' : 'sqlite'
-    const re = new RegExp(`^${name}\\.(?:([0-9]+)\\.)?\.${ext}$`)
+    const re = new RegExp(`^${name}(\\.[A-Za-z][^.]+)?(?:\\.([0-9]+))?\\.${ext}$`)
 
-    let version: number
+    let version: string
+    let collection: string
 
     await (new OS.File.DirectoryIterator(root)).forEach(entry => { // really weird half-promise thing
       try {
-        version = parseInt(entry.name.match(re)[1] || 0, 10)
+        [ , collection, version ] = entry.name.match(re)
       } catch (err) {
         return
       }
+      const v: number = version ? parseInt(version) : 0
 
-      if (version >= this.versions) {
+      if (v >= this.versions) {
         roll.push({ version, remove: OS.Path.join(root, entry.path) })
       } else {
-        roll.push({ version, move: OS.Path.join(root, entry.path), to: OS.Path.join(root, `${name}${version + 1}.${ext}`) } )
+        roll.push({ version, move: OS.Path.join(root, entry.path), to: OS.Path.join(root, `${name}${collection || ''}.${v + 1}.${ext}`) } )
       }
     })
 
@@ -309,7 +310,7 @@ export class Store {
   }
 
   private async loadDatabaseVersionAsync(name: string, version: number) {
-    if (this.versions) name += `.${version}`
+    if (this.versions && version) name += `.${version}`
 
     const db = await this.load(name)
     if (!db) return null
