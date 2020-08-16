@@ -51,19 +51,19 @@ export class Store {
 
   private async closeDatabase(conn, name, reason) {
     if (!conn) {
-      log.error('DB.Store.closeDatabase: ', name, typeof conn)
+      log.debug('DB.Store.closeDatabase: ', name, typeof conn)
       return
     }
 
     if (conn.closed) {
-      log.error('DB.Store.closeDatabase: not re-closing connection', name)
+      log.debug('DB.Store.closeDatabase: not re-closing connection', name)
       return
     }
 
     try {
       await conn.closeDatabase(true)
     } catch (err) {
-      log.error('DB.Store.closeDatabase FAILED', name, err)
+      log.debug('DB.Store.closeDatabase FAILED', name, err)
     }
   }
 
@@ -97,12 +97,12 @@ export class Store {
     const conn = this.conn[name]
 
     if (conn === false) {
-      log.error('DB.Store.exportDatabaseSQLiteAsync: save of', name, 'attempted after close')
+      log.debug('DB.Store.exportDatabaseSQLiteAsync: save of', name, 'attempted after close')
       return
     }
 
     if (!conn) {
-      log.error('DB.Store.exportDatabaseSQLiteAsync: save of', name, 'to unopened database')
+      log.debug('DB.Store.exportDatabaseSQLiteAsync: save of', name, 'to unopened database')
       return
     }
 
@@ -133,7 +133,7 @@ export class Store {
 
     const root = this.storage === 'file' ? Zotero.BetterBibTeX.dir : Zotero.DataDirectory.dir
     const ext = this.storage === 'file' ? 'json' : 'sqlite'
-    const re = new RegEx(`^${name}\\.(?:([0-9]+)\\.)?\.${ext}$`)
+    const re = new RegExp(`^${name}\\.(?:([0-9]+)\\.)?\.${ext}$`)
 
     let version: number
 
@@ -160,7 +160,7 @@ export class Store {
           await OS.File.move(file.move, file.to)
         }
       } catch (err) {
-        log.error('DB.Store.roll:', file, err)
+        log.debug('DB.Store.roll:', file, err)
       }
     }
   }
@@ -178,7 +178,7 @@ export class Store {
     this.loadDatabaseAsync(name)
       .then(callback)
       .catch(err => {
-        log.error('DB.Store.loadDatabase', name, err)
+        log.debug('DB.Store.loadDatabase', name, err)
         callback(null)
       })
   }
@@ -188,7 +188,7 @@ export class Store {
       const db = await this.loadDatabaseSQLiteAsync(name) // always try sqlite first, may be a migration to file
       if (db) return db
     } catch (err) {
-      log.error('DB.Store.loadDatabaseAsync:', err)
+      log.debug('DB.Store.loadDatabaseAsync:', err)
     }
 
     if (this.storage === 'file') {
@@ -235,11 +235,11 @@ export class Store {
       db.collections = db.collections.map(coll => collections[coll]).filter(coll => coll)
       if (missing.length) {
         failed = !this.allowPartial
-        log.error(`DB.Store.loadDatabaseSQLiteAsync: could not find ${name}.${missing.join('.')}`)
+        log.debug(`DB.Store.loadDatabaseSQLiteAsync: could not find ${name}.${missing.join('.')}`)
       }
 
     } else if (exists && rows) {
-      log.error('DB.Store.loadDatabaseSQLiteAsync: could not find metadata for', name, rows)
+      log.debug('DB.Store.loadDatabaseSQLiteAsync: could not find metadata for', name, rows)
       failed = true
 
     }
@@ -255,7 +255,7 @@ export class Store {
     }
 
     if (failed) {
-      log.error('DB.Store.loadDatabaseSQLiteAsync failed, returning empty database')
+      log.debug('DB.Store.loadDatabaseSQLiteAsync failed, returning empty database')
       return null
     }
     return db
@@ -270,7 +270,7 @@ export class Store {
       throw new Error(`DB.Store.openDatabaseSQLiteAsync(${JSON.stringify(name)}) failed: integrity check not OK`)
 
     } catch (err) {
-      log.error('DB.Store.openDatabaseSQLiteAsync:', { name, fatal }, err)
+      log.debug('DB.Store.openDatabaseSQLiteAsync:', { name, fatal }, err)
       if (fatal) throw err
 
       // restore disabled until I Zotero supports after-open restore
@@ -325,7 +325,7 @@ export class Store {
       const msg = `Could not load ${name}.${collname}`
 
       if (this.allowPartial) {
-        log.error('DB.Store.loadDatabaseVersionAsync:', msg)
+        log.debug('DB.Store.loadDatabaseVersionAsync:', msg)
         return null
       } else {
         throw new Error(msg)
