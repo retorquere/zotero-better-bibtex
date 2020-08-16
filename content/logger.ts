@@ -43,12 +43,7 @@ class Logger {
   }
 
   public error(...msg) {
-    const formatted = this.format('error', msg)
-    if (typeof Zotero.logError === 'function') {
-      Zotero.logError(formatted)
-    } else {
-      Zotero.debug(formatted)
-    }
+    Zotero.debug(this.format('error', msg))
   }
 }
 
