@@ -19,7 +19,7 @@ if [[ "$1" == "zotero" ]]; then
 elif [[ "$1" == "jurism" ]]; then
   rm -rf /usr/lib/jurism-beta
   mkdir /usr/lib/jurism-beta
-  curl --insecure -L "https://our.law.nagoya-u.ac.jp/jurism/dl?channel=beta&platform=linux-x86_64" -o - | tar -xjf - --strip-components=1 -C /usr/lib/jurism-beta
+  # curl --insecure -L "https://our.law.nagoya-u.ac.jp/jurism/dl?channel=beta&platform=linux-x86_64" -o - | tar -xjf - --strip-components=1 -C /usr/lib/jurism-beta
 
 else
   echo "No install target"
