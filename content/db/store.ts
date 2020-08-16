@@ -24,7 +24,6 @@ export class Store {
   constructor(options: { deleteAfterLoad?: boolean, allowPartial?: boolean, versions?: number, storage: string }) {
     Object.assign(this, options)
     if (this.storage !== 'sqlite' && this.storage !== 'file') throw new Error(`Unsupported DBStore storage ${this.storage}`)
-    if (this.storage === 'sqlite' && this.versions) throw new Error('DBStore storage "sqlite" does not support versions')
   }
 
   public close(name, callback) {
@@ -132,28 +131,28 @@ export class Store {
 
     const roll = []
 
-    await (new OS.File.DirectoryIterator(Zotero.BetterBibTeX.dir)).forEach(entry => { // really weird half-promise thing
-      if (!entry.name.endsWith('.json')) return
+    const root = this.storage === 'file' ? Zotero.BetterBibTeX.dir : Zotero.DataDirectory.dir
+    const ext = this.storage === 'file' ? 'json' : 'sqlite'
+    const re = new RegEx(`^${name}\\.(?:([0-9]+)\\.)?\.${ext}$`)
 
-      const parts = entry.name.split('.')
-      if (parts[0] !== name) return
-      if (parts.length < 3) return // tslint:disable-line:no-magic-numbers
+    let version: number
 
-      const version = parseInt(parts[1], 10)
-      if (parts[1] !== `${version}`) return // not a digit
+    await (new OS.File.DirectoryIterator(root)).forEach(entry => { // really weird half-promise thing
+      try {
+        version = parseInt(entry.name.match(re)[1] || 0, 10)
+      } catch (err) {
+        return
+      }
 
       if (version >= this.versions) {
-        roll.push({ version, remove: entry.path })
+        roll.push({ version, remove: OS.Path.join(root, entry.path) })
       } else {
-        parts[1] = `${version + 1}`
-        roll.push({ version, move: entry.path, to: OS.Path.join(Zotero.BetterBibTeX.dir, parts.join('.')) })
+        roll.push({ version, move: OS.Path.join(root, entry.path), to: OS.Path.join(root, `${name}${version + 1}.${ext}`) } )
       }
     })
 
-    roll.sort((a, b) => b.version - a.version) // sort reverse
-
-    // this must be done sequentially
-    for (const file of roll) {
+    // this must be done sequentially, in reverse
+    for (const file of roll.sort((a, b) => b.version - a.version)) {
       try {
         if (file.remove) {
           await OS.File.remove(file.remove, { ignoreAbsent: true })
@@ -161,7 +160,7 @@ export class Store {
           await OS.File.move(file.move, file.to)
         }
       } catch (err) {
-        log.error('DB.Store.roll:', err)
+        log.error('DB.Store.roll:', file, err)
       }
     }
   }
