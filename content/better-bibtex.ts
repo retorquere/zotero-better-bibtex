@@ -73,6 +73,33 @@ AddonManager.addAddonListener({
   MONKEY PATCHES
 */
 
+function ZoteroReady(reason) {
+  setTimeout(() => {
+    log.debug(`trace: ${reason} after 2 seconds, Zotero.Schema.schemaUpdatePromise.isPending =`, Zotero.Schema?.schemaUpdatePromise?.isPending())
+  }, 2000) // tslint:disable-line:no-magic-numbers
+}
+$patch$(Zotero.Schema, 'updateSchema', original => async function updateSchema(options = {}) {
+  log.debug('trace: Zotero.Schema.updateSchema start, Zotero.Schema.schemaUpdatePromise.isPending =', Zotero.Schema?.schemaUpdatePromise?.isPending())
+  const res = await original.apply(this, arguments)
+  ZoteroReady('Zotero.Schema.updateSchema')
+  log.debug('trace: Zotero.Schema.updateSchema end, Zotero.Schema.schemaUpdatePromise.isPending =', Zotero.Schema?.schemaUpdatePromise?.isPending())
+  return res
+})
+$patch$(Zotero.Schema, 'updateBundledFiles', original => async function updateBundledFiles(mode) {
+  log.debug('trace: Zotero.Schema.updateBundledFiles start, Zotero.Schema.schemaUpdatePromise.isPending =', Zotero.Schema?.schemaUpdatePromise?.isPending())
+  const res = await original.apply(this, arguments)
+  ZoteroReady('Zotero.Schema.updateBundledFiles')
+  log.debug('trace: Zotero.Schema.updateBundledFiles end, Zotero.Schema.schemaUpdatePromise.isPending =', Zotero.Schema?.schemaUpdatePromise?.isPending())
+  return res
+})
+$patch$(Zotero.Schema, 'updateFromRepository', original => async function updateFromRepository(mode = 0) {
+  log.debug('trace: Zotero.Schema.updateFromRepository start, Zotero.Schema.schemaUpdatePromise.isPending =', Zotero.Schema?.schemaUpdatePromise?.isPending())
+  const res = await original.apply(this, arguments)
+  ZoteroReady('Zotero.Schema.updateFromRepository')
+  log.debug('trace: Zotero.Schema.updateFromRepository end, Zotero.Schema.schemaUpdatePromise.isPending =', Zotero.Schema?.schemaUpdatePromise?.isPending())
+  return res
+})
+
 if (Prefs.get('citeprocNoteCitekey')) {
   $patch$(Zotero.Utilities, 'itemToCSLJSON', original => function itemToCSLJSON(zoteroItem) {
     const cslItem = original.apply(this, arguments)
@@ -567,15 +594,16 @@ class Progress {
       return v ? 'pending' : 'resolved'
     }
 
-    const initializationPromise = show(Zotero.initializationPromise?.isPending())
-    const schemaUpdatePromise = show(Zotero.Schema?.schemaUpdatePromise?.isPending())
+    const initPromise = show((Zotero.isStandalone ? Zotero.uiReadyPromise : Zotero.initializationPromise).isPending())
+    const initPromiseName = Zotero.isStandalone ? 'Zotero.uiReadyPromise' : 'Zotero.initializationPromise'
+    const schemaUpdatePromise = show(Zotero.Schema.schemaUpdatePromise.isPending())
 
     log.debug(`${this.name}: Zotero locks after ${Date.now() - this.started}:`,
-      'Zotero.initializationPromise:', initializationPromise,
+      `${initPromiseName}:`, initPromise,
       ', Zotero.Schema.schemaUpdatePromise:', schemaUpdatePromise
     )
 
-    if (initializationPromise === 'resolved' && schemaUpdatePromise === 'resolved') {
+    if (initPromise === 'resolved' && schemaUpdatePromise === 'resolved') {
       clearTimeout(this.timer)
     }
   }
