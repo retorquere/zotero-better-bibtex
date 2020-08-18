@@ -793,7 +793,8 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
     await progress.start(this.getString('BetterBibTeX.startup.waitingForZotero'))
 
     // Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
-    await (Zotero.isStandalone ? Zotero.uiReadyPromise : Zotero.initializationPromise)
+    // await (Zotero.isStandalone ? Zotero.uiReadyPromise : Zotero.initializationPromise)
+    await Zotero.Schema.schemaUpdatePromise
 
     this.dir = OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex')
     await OS.File.makeDir(this.dir, { ignoreExisting: true })
