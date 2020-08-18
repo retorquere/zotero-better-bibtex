@@ -567,15 +567,16 @@ class Progress {
       return v ? 'pending' : 'resolved'
     }
 
-    const initializationPromise = show(Zotero.initializationPromise?.isPending())
-    const schemaUpdatePromise = show(Zotero.Schema?.schemaUpdatePromise?.isPending())
+    const initPromise = show((Zotero.isStandalone ? Zotero.uiReadyPromise : Zotero.initializationPromise).isPending())
+    const initPromiseName = Zotero.isStandalone ? 'Zotero.uiReadyPromise' : 'Zotero.initializationPromise'
+    const schemaUpdatePromise = show(Zotero.Schema.schemaUpdatePromise.isPending())
 
     log.debug(`${this.name}: Zotero locks after ${Date.now() - this.started}:`,
-      'Zotero.initializationPromise:', initializationPromise,
+      `${initPromiseName}:`, initPromise,
       ', Zotero.Schema.schemaUpdatePromise:', schemaUpdatePromise
     )
 
-    if (initializationPromise === 'resolved' && schemaUpdatePromise === 'resolved') {
+    if (initPromise === 'resolved' && schemaUpdatePromise === 'resolved') {
       clearTimeout(this.timer)
     }
   }
@@ -792,7 +793,7 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
     await progress.start(this.getString('BetterBibTeX.startup.waitingForZotero'))
 
     // Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
-    await Zotero.initializationPromise
+    await (Zotero.isStandalone ? Zotero.uiReadyPromise : Zotero.initializationPromise)
 
     this.dir = OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex')
     await OS.File.makeDir(this.dir, { ignoreExisting: true })
