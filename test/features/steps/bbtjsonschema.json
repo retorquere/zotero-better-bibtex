@@ -254,6 +254,9 @@
             "postscriptOverride": {
               "type": "string"
             },
+            "patientStart": {
+              "type": "boolean"
+            },
             "scrubDatabase": {
               "type": "boolean"
             },

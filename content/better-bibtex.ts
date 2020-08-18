@@ -73,30 +73,14 @@ AddonManager.addAddonListener({
   MONKEY PATCHES
 */
 
-function ZoteroReady(reason) {
-  setTimeout(() => {
-    log.debug(`trace: ${reason} after 2 seconds, Zotero.Schema.schemaUpdatePromise.isPending =`, Zotero.Schema?.schemaUpdatePromise?.isPending())
-  }, 2000) // tslint:disable-line:no-magic-numbers
-}
-$patch$(Zotero.Schema, 'updateSchema', original => async function updateSchema(options = {}) {
-  log.debug('trace: Zotero.Schema.updateSchema start, Zotero.Schema.schemaUpdatePromise.isPending =', Zotero.Schema?.schemaUpdatePromise?.isPending())
-  const res = await original.apply(this, arguments)
-  ZoteroReady('Zotero.Schema.updateSchema')
-  log.debug('trace: Zotero.Schema.updateSchema end, Zotero.Schema.schemaUpdatePromise.isPending =', Zotero.Schema?.schemaUpdatePromise?.isPending())
-  return res
-})
-$patch$(Zotero.Schema, 'updateBundledFiles', original => async function updateBundledFiles(mode) {
-  log.debug('trace: Zotero.Schema.updateBundledFiles start, Zotero.Schema.schemaUpdatePromise.isPending =', Zotero.Schema?.schemaUpdatePromise?.isPending())
-  const res = await original.apply(this, arguments)
-  ZoteroReady('Zotero.Schema.updateBundledFiles')
-  log.debug('trace: Zotero.Schema.updateBundledFiles end, Zotero.Schema.schemaUpdatePromise.isPending =', Zotero.Schema?.schemaUpdatePromise?.isPending())
-  return res
-})
 $patch$(Zotero.Schema, 'updateFromRepository', original => async function updateFromRepository(mode = 0) {
-  log.debug('trace: Zotero.Schema.updateFromRepository start, Zotero.Schema.schemaUpdatePromise.isPending =', Zotero.Schema?.schemaUpdatePromise?.isPending())
+  setTimeout(() => {
+    log.debug(`trace: Zotero.Schema.updateFromRepository(${mode}) after 2 seconds, Zotero.Schema.schemaUpdatePromise.isPending =`, Zotero.Schema?.schemaUpdatePromise?.isPending())
+  }, 2000) // tslint:disable-line:no-magic-numbers
+
+  log.debug(`trace: Zotero.Schema.updateFromRepository(${mode}) start, Zotero.Schema.schemaUpdatePromise.isPending =`, Zotero.Schema?.schemaUpdatePromise?.isPending())
   const res = await original.apply(this, arguments)
-  ZoteroReady('Zotero.Schema.updateFromRepository')
-  log.debug('trace: Zotero.Schema.updateFromRepository end, Zotero.Schema.schemaUpdatePromise.isPending =', Zotero.Schema?.schemaUpdatePromise?.isPending())
+  log.debug(`trace: Zotero.Schema.updateFromRepository(${mode}) = ${res}, Zotero.Schema.schemaUpdatePromise.isPending =`, Zotero.Schema?.schemaUpdatePromise?.isPending())
   return res
 })
 
@@ -578,6 +562,9 @@ notify('collection-item', (event, type, collection_items) => {
   INIT
 */
 
+// tslint:disable-next-line:variable-name
+const ZoteroReady = Prefs.get('patientStart') ? Zotero.Schema.schemaUpdatePromise : (Zotero.isStandalone ? Zotero.uiReadyPromise : Zotero.initializationPromise)
+
 type TimerHandle = ReturnType<typeof setInterval>
 class Progress {
   private timestamp: number
@@ -821,7 +808,8 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
 
     // Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
     // await (Zotero.isStandalone ? Zotero.uiReadyPromise : Zotero.initializationPromise)
-    await Zotero.Schema.schemaUpdatePromise
+    // await Zotero.Schema.schemaUpdatePromise
+    await ZoteroReady
 
     this.dir = OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex')
     await OS.File.makeDir(this.dir, { ignoreExisting: true })
@@ -844,7 +832,7 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
 
     // this is what really takes long
     progress.update(this.getString('BetterBibTeX.startup.waitingForTranslators'))
-    await Zotero.Schema.schemaUpdatePromise
+    await ZoteroReady
 
     // after the caches because I may need to drop items from the cache
     await dbUpgrade(progress.update.bind(progress))
