@@ -562,9 +562,6 @@ notify('collection-item', (event, type, collection_items) => {
   INIT
 */
 
-// tslint:disable-next-line:variable-name
-const ZoteroReady = Prefs.get('patientStart') ? Zotero.Schema.schemaUpdatePromise : (Zotero.isStandalone ? Zotero.uiReadyPromise : Zotero.initializationPromise)
-
 type TimerHandle = ReturnType<typeof setInterval>
 class Progress {
   private timestamp: number
@@ -807,9 +804,7 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
     await progress.start(this.getString('BetterBibTeX.startup.waitingForZotero'))
 
     // Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
-    // await (Zotero.isStandalone ? Zotero.uiReadyPromise : Zotero.initializationPromise)
-    // await Zotero.Schema.schemaUpdatePromise
-    await ZoteroReady
+    await (Zotero.isStandalone ? Zotero.uiReadyPromise : Zotero.initializationPromise)
 
     this.dir = OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex')
     await OS.File.makeDir(this.dir, { ignoreExisting: true })
@@ -832,7 +827,7 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
 
     // this is what really takes long
     progress.update(this.getString('BetterBibTeX.startup.waitingForTranslators'))
-    await ZoteroReady
+    await Zotero.Schema.schemaUpdatePromise
 
     // after the caches because I may need to drop items from the cache
     await dbUpgrade(progress.update.bind(progress))

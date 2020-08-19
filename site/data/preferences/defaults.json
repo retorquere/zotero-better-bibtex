@@ -58,7 +58,6 @@
   "autoExportPathReplaceSpace": " ",
   "autoExportPathReplaceDiacritics": false,
   "postscriptOverride": "",
-  "patientStart": true,
   "scrubDatabase": false,
   "ignorePostscriptErrors": true,
   "debugLogDir": "",
