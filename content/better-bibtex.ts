@@ -83,6 +83,19 @@ $patch$(Zotero.Schema, 'updateFromRepository', original => async function update
   log.debug(`trace: Zotero.Schema.updateFromRepository(${mode}) = ${res}, Zotero.Schema.schemaUpdatePromise.isPending =`, Zotero.Schema?.schemaUpdatePromise?.isPending())
   return res
 })
+$patch$(Zotero.DB, 'inTransaction', original => function inTransaction() {
+  const res = original.apply(this, arguments)
+  log.debug('trace: Zotero.DB.inTransaction() =', res)
+  return res
+})
+$patch$(Zotero.Retractions, 'updateFromServer', original => function updateFromServer() {
+  log.debug('trace: Zotero.DB.updateFromServer() start')
+  try {
+    return original.apply(this, arguments)
+  } finally {
+    log.debug('trace: Zotero.DB.updateFromServer() end')
+  }
+})
 
 if (Prefs.get('citeprocNoteCitekey')) {
   $patch$(Zotero.Utilities, 'itemToCSLJSON', original => function itemToCSLJSON(zoteroItem) {
