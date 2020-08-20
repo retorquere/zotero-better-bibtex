@@ -1,0 +1,2 @@
+content   zotero-schema-log content/
+overlay chrome://zotero/content/zoteroPane.xul  chrome://zotero-schema-log/content/overlay.xul

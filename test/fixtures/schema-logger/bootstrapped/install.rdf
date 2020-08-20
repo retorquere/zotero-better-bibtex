@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+
+    <Description about="urn:mozilla:install-manifest">
+        <em:id>schema-logger@iris-advies.com</em:id>
+        <em:name>Schema Logger for Zotero</em:name>
+        <em:version>1.0.0</em:version>
+        <em:multiprocessCompatible>true</em:multiprocessCompatible>
+        <em:updateURL>https://raw.githubusercontent.com/retorquere/better-bibtex/release/deploy/update.rdf</em:updateURL>
+
+        <em:creator>Emiliano Heyns</em:creator>
+        <em:type>2</em:type> <!-- type=extension -->
+        <em:bootstrap>true</em:bootstrap>
+
+        <!-- Or requires Zotero Standalone -->
+        <em:targetApplication>
+            <Description>
+                <em:id>zotero@chnm.gmu.edu</em:id>
+                <em:minVersion>3.0b1</em:minVersion>
+                <em:maxVersion>*</em:maxVersion>
+            </Description>
+        </em:targetApplication>
+
+        <!-- Or requires Juris-M -->
+        <em:targetApplication>
+          <Description>
+            <em:id>juris-m@juris-m.github.io</em:id>
+            <em:minVersion>4.0</em:minVersion>
+            <em:maxVersion>*</em:maxVersion>
+          </Description>
+        </em:targetApplication>
+
+    </Description>
+</RDF>
