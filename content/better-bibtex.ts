@@ -75,7 +75,7 @@ AddonManager.addAddonListener({
 
 $patch$(Zotero.Schema, 'updateFromRepository', original => async function updateFromRepository(mode = 0) {
   setTimeout(() => {
-    log.debug(`trace: Zotero.Schema.updateFromRepository(${mode}) after 2 seconds, Zotero.Schema.schemaUpdatePromise.isPending =`, Zotero.Schema?.schemaUpdatePromise?.isPending())
+    log.debug(`tracing: Zotero.Schema.updateFromRepository(${mode}) after 2 seconds, Zotero.Schema.schemaUpdatePromise.isPending =`, Zotero.Schema?.schemaUpdatePromise?.isPending())
   }, 2000) // tslint:disable-line:no-magic-numbers
 
   log.debug(`trace: Zotero.Schema.updateFromRepository(${mode}) start, Zotero.Schema.schemaUpdatePromise.isPending =`, Zotero.Schema?.schemaUpdatePromise?.isPending())
@@ -89,12 +89,18 @@ $patch$(Zotero.DB, 'inTransaction', original => function inTransaction() {
   return res
 })
 $patch$(Zotero.Retractions, 'updateFromServer', original => function updateFromServer() {
-  log.debug('trace: Zotero.DB.updateFromServer() start')
+  log.debug('trace: Zotero.Retractions.updateFromServer() start')
   try {
     return original.apply(this, arguments)
   } finally {
-    log.debug('trace: Zotero.DB.updateFromServer() end')
+    log.debug('trace: Zotero.Retractions.updateFromServer() end')
   }
+})
+$patch$(Zotero.Schema, 'getDBVersion', original => async function getDBVersion(schema) {
+  log.debug(`trace: getDBVersion(${schema})`)
+  const res = await original.apply(this, arguments)
+  log.debug(`trace: getDBVersion(${schema}) =`, res)
+  return res
 })
 
 if (Prefs.get('citeprocNoteCitekey')) {
@@ -614,7 +620,13 @@ class Progress {
     log.debug(`${this.name}: waiting for Zotero locks...`)
 
     log.debug(`${this.name}: ${msg}...`)
-    this.toggle(true)
+
+    this.progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
+    this.progressWin.changeHeadline('Better BibTeX: Initializing')
+    const icon = `chrome://zotero/skin/treesource-unfiled${Zotero.hiDPI ? '@2x' : ''}.png`
+    this.progress = new this.progressWin.ItemProgress(icon, `${this.msg}...`)
+    this.progressWin.show()
+
     log.debug(`${this.name}: progress window up`)
   }
 
@@ -628,7 +640,8 @@ class Progress {
   public done() {
     this.bench(null)
 
-    this.toggle(false)
+    this.progress.setText('Ready')
+    this.progressWin.startCloseTimer(500) // tslint:disable-line:no-magic-numbers
     log.debug(`${this.name}: done`)
     clearTimeout(this.timer)
   }
@@ -639,20 +652,6 @@ class Progress {
     if (this.msg) log.debug(`${this.name}:`, this.msg, 'took', (ts - this.timestamp) / 1000.0, 's')
     this.msg = msg
     this.timestamp = ts
-  }
-
-  private toggle(busy) {
-    if (busy) {
-      this.progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
-      this.progressWin.changeHeadline('Better BibTeX: Initializing')
-      // this.progressWin.addDescription(`Found ${this.scanning.length} references without a citation key`)
-      const icon = `chrome://zotero/skin/treesource-unfiled${Zotero.hiDPI ? '@2x' : ''}.png`
-      this.progress = new this.progressWin.ItemProgress(icon, `${this.msg}...`)
-      this.progressWin.show()
-    } else {
-      this.progress.setText('Ready')
-      this.progressWin.startCloseTimer(500) // tslint:disable-line:no-magic-numbers
-    }
   }
 }
 

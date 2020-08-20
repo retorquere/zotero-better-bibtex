@@ -62,6 +62,11 @@ async function title_sentenceCase(label) {
 }
 
 function load() {
+  if (!Zotero.BetterBibTeX?.ready) {
+    setTimeout(load, 1000) // tslint:disable-line:no-magic-numbers
+    return
+  }
+
   Zotero.BetterBibTeX.ready.then(() => {
     init()
     const itemBox = document.getElementById('zotero-editpane-item-box')
