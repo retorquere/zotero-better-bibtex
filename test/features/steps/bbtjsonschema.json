@@ -196,15 +196,8 @@
             "autoExportDelay": {
               "type": "number"
             },
-            "correctTitleCase": {
-              "enum": [
-                "warn+change",
-                "warn",
-                "off"
-              ]
-            },
-            "tagCorrectedTitleCase": {
-              "type": "string"
+            "warnTitleCased": {
+              "type": "boolean"
             },
             "itemObserverDelay": {
               "type": "number"
