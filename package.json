@@ -78,7 +78,7 @@
     "kuromoji": "^0.1.2",
     "kuroshiro": "^1.1.2",
     "kuroshiro-analyzer-kuromoji": "^1.1.0",
-    "lokijs": "^1.5.10",
+    "lokijs": "^1.5.11",
     "node-eta": "^0.9.0",
     "number-to-words": "^1.2.4",
     "parse5": "^6.0.1",
