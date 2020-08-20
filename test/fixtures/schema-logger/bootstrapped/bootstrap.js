@@ -3,7 +3,6 @@
 var interval = null;
 var progressWin = null;
 var progress = null;
-var icon = `chrome://zotero/skin/treesource-unfiled${Zotero.hiDPI ? '@2x' : ''}.png`;
 
 var Zotero = null;
 
@@ -17,6 +16,7 @@ function startup(data, reason) {
     Zotero = Components.classes['@zotero.org/Zotero;1'].getService(Components.interfaces.nsISupports).wrappedJSObject;
     progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
     progressWin.changeHeadline('Zotero startup trace')
+    const icon = `chrome://zotero/skin/treesource-unfiled${Zotero.hiDPI ? '@2x' : ''}.png`;
     progress = new progressWin.ItemProgress(icon, 'Waiting for Zotero.Schema.schemaUpdatePromise...')
     progressWin.show()
     const start = Date.now()

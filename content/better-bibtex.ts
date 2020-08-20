@@ -221,7 +221,7 @@ $patch$(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prot
   try {
     switch (field) {
       case 'citekey':
-        if (BetterBibTeX.ready.isPending()) return '' // tslint:disable-line:no-use-before-declare
+        if (BetterBibTeX?.ready?.isPending()) return '' // tslint:disable-line:no-use-before-declare
         const citekey = KeyManager.get(this.id)
         return citekey.citekey
 
@@ -254,7 +254,7 @@ $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function Zoter
   const item = this.getRow(row).ref
   if (item.isNote() || item.isAttachment()) return ''
 
-  if (BetterBibTeX.ready.isPending()) { // tslint:disable-line:no-use-before-declare
+  if (BetterBibTeX?.ready?.isPending()) { // tslint:disable-line:no-use-before-declare
     if (!itemTreeViewWaiting[item.id]) {
       // tslint:disable-next-line:no-use-before-declare
       BetterBibTeX.ready.then(() => this._treebox.invalidateCell(row, col))
