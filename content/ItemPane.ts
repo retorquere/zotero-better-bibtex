@@ -61,17 +61,7 @@ async function title_sentenceCase(label) {
   }
 }
 
-type TimerHandle = ReturnType<typeof setInterval>
-let loadDelay: TimerHandle
 function load() {
-  if (Zotero.BetterBibTeX?.ready) {
-    if (loadDelay) clearTimeout(loadDelay)
-    loadDelay = undefined
-  } else {
-    if (!loadDelay) loadDelay = setInterval(load, 10) // tslint:disable-line:no-magic-numbers
-    return
-  }
-
   Zotero.BetterBibTeX.ready.then(() => {
     init()
     const itemBox = document.getElementById('zotero-editpane-item-box')

@@ -513,9 +513,6 @@ class Zotero:
     else:
       profile.firefox = webdriver.FirefoxProfile(os.path.join(FIXTURES, 'profile', self.client))
 
-    if os.environ.get('IMPATIENT_START', None) == 'true':
-      profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.patientStart', False)
-
     self.install_xpis(os.path.join(ROOT, 'xpi'), profile.firefox)
     self.install_xpis(os.path.join(ROOT, 'other-xpis'), profile.firefox)
     if self.config.db: self.install_xpis(os.path.join(ROOT, 'test/db', self.config.db, 'xpis'), profile.firefox)

@@ -74,18 +74,13 @@ $patch$(pane, 'serializePersist', original => function() {
 export = new class ZoteroPane {
   public constructor() {
     window.addEventListener('load', () => {
-      this.load().catch(err => { log.error('Better BibTeX load failed', err) })
+      BetterBibTeX.load(document).then(() => {
+        log.debug('Better BibTeX load finished successfully')
+      })
+      .catch(err => {
+        log.error('Better BibTeX load failed', err)
+      })
     }, false)
-  }
-
-  private async load() {
-    try {
-      await Zotero.Schema.schemaUpdatePromise
-      await BetterBibTeX.load(document)
-      log.debug('Better BibTeX load finished successfully')
-    } catch (err) {
-      log.error('Better BibTeX load failed', err)
-    }
   }
 
   public pullExport() {

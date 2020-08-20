@@ -73,36 +73,6 @@ AddonManager.addAddonListener({
   MONKEY PATCHES
 */
 
-$patch$(Zotero.Schema, 'updateFromRepository', original => async function updateFromRepository(mode = 0) {
-  setTimeout(() => {
-    log.debug(`tracing: Zotero.Schema.updateFromRepository(${mode}) after 2 seconds, Zotero.Schema.schemaUpdatePromise.isPending =`, Zotero.Schema?.schemaUpdatePromise?.isPending())
-  }, 2000) // tslint:disable-line:no-magic-numbers
-
-  log.debug(`trace: Zotero.Schema.updateFromRepository(${mode}) start, Zotero.Schema.schemaUpdatePromise.isPending =`, Zotero.Schema?.schemaUpdatePromise?.isPending())
-  const res = await original.apply(this, arguments)
-  log.debug(`trace: Zotero.Schema.updateFromRepository(${mode}) = ${res}, Zotero.Schema.schemaUpdatePromise.isPending =`, Zotero.Schema?.schemaUpdatePromise?.isPending())
-  return res
-})
-$patch$(Zotero.DB, 'inTransaction', original => function inTransaction() {
-  const res = original.apply(this, arguments)
-  log.debug('trace: Zotero.DB.inTransaction() =', res)
-  return res
-})
-$patch$(Zotero.Retractions, 'updateFromServer', original => function updateFromServer() {
-  log.debug('trace: Zotero.Retractions.updateFromServer() start')
-  try {
-    return original.apply(this, arguments)
-  } finally {
-    log.debug('trace: Zotero.Retractions.updateFromServer() end')
-  }
-})
-$patch$(Zotero.Schema, 'getDBVersion', original => async function getDBVersion(schema) {
-  log.debug(`trace: getDBVersion(${schema})`)
-  const res = await original.apply(this, arguments)
-  log.debug(`trace: getDBVersion(${schema}) =`, res)
-  return res
-})
-
 if (Prefs.get('citeprocNoteCitekey')) {
   $patch$(Zotero.Utilities, 'itemToCSLJSON', original => function itemToCSLJSON(zoteroItem) {
     const cslItem = original.apply(this, arguments)
@@ -221,7 +191,7 @@ $patch$(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prot
   try {
     switch (field) {
       case 'citekey':
-        if (BetterBibTeX?.ready?.isPending()) return '' // tslint:disable-line:no-use-before-declare
+        if (BetterBibTeX.ready.isPending()) return '' // tslint:disable-line:no-use-before-declare
         const citekey = KeyManager.get(this.id)
         return citekey.citekey
 
@@ -254,7 +224,7 @@ $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function Zoter
   const item = this.getRow(row).ref
   if (item.isNote() || item.isAttachment()) return ''
 
-  if (BetterBibTeX?.ready?.isPending()) { // tslint:disable-line:no-use-before-declare
+  if (BetterBibTeX.ready.isPending()) { // tslint:disable-line:no-use-before-declare
     if (!itemTreeViewWaiting[item.id]) {
       // tslint:disable-next-line:no-use-before-declare
       BetterBibTeX.ready.then(() => this._treebox.invalidateCell(row, col))
@@ -620,13 +590,7 @@ class Progress {
     log.debug(`${this.name}: waiting for Zotero locks...`)
 
     log.debug(`${this.name}: ${msg}...`)
-
-    this.progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
-    this.progressWin.changeHeadline('Better BibTeX: Initializing')
-    const icon = `chrome://zotero/skin/treesource-unfiled${Zotero.hiDPI ? '@2x' : ''}.png`
-    this.progress = new this.progressWin.ItemProgress(icon, `${this.msg}...`)
-    this.progressWin.show()
-
+    this.toggle(true)
     log.debug(`${this.name}: progress window up`)
   }
 
@@ -640,8 +604,7 @@ class Progress {
   public done() {
     this.bench(null)
 
-    this.progress.setText('Ready')
-    this.progressWin.startCloseTimer(500) // tslint:disable-line:no-magic-numbers
+    this.toggle(false)
     log.debug(`${this.name}: done`)
     clearTimeout(this.timer)
   }
@@ -652,6 +615,20 @@ class Progress {
     if (this.msg) log.debug(`${this.name}:`, this.msg, 'took', (ts - this.timestamp) / 1000.0, 's')
     this.msg = msg
     this.timestamp = ts
+  }
+
+  private toggle(busy) {
+    if (busy) {
+      this.progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
+      this.progressWin.changeHeadline('Better BibTeX: Initializing')
+      // this.progressWin.addDescription(`Found ${this.scanning.length} references without a citation key`)
+      const icon = `chrome://zotero/skin/treesource-unfiled${Zotero.hiDPI ? '@2x' : ''}.png`
+      this.progress = new this.progressWin.ItemProgress(icon, `${this.msg}...`)
+      this.progressWin.show()
+    } else {
+      this.progress.setText('Ready')
+      this.progressWin.startCloseTimer(500) // tslint:disable-line:no-magic-numbers
+    }
   }
 }
 
@@ -816,7 +793,8 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
     await progress.start(this.getString('BetterBibTeX.startup.waitingForZotero'))
 
     // Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
-    await (Zotero.isStandalone ? Zotero.uiReadyPromise : Zotero.initializationPromise)
+    // await (Zotero.isStandalone ? Zotero.uiReadyPromise : Zotero.initializationPromise)
+    await Zotero.Schema.schemaUpdatePromise
 
     this.dir = OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex')
     await OS.File.makeDir(this.dir, { ignoreExisting: true })
