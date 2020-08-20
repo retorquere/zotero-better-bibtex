@@ -10,6 +10,7 @@ import subprocess
 import sys
 import tarfile
 from pygit2 import Repository
+import glob
 
 import pathlib
 for d in pathlib.Path(__file__).resolve().parents:
@@ -64,6 +65,7 @@ parser.add_argument('--slow', action='store_true',
 )
 parser.add_argument('--test')
 parser.add_argument('--balance')
+parser.add_argument('--prebuilt')
 parser.add_argument('--tagged', action='store_true', default=os.environ.get('TRAVIS_TAG', '') != '')
 parser.add_argument('--nightly', action='store_true',
   default=os.environ.get('TRAVIS_EVENT_TYPE') == 'cron' or '#nightly' in os.environ.get('TRAVIS_COMMIT_MESSAGE', '')
@@ -71,7 +73,12 @@ parser.add_argument('--nightly', action='store_true',
 args, unknownargs = parser.parse_known_args()
 sys.argv = sys.argv[:1] + unknownargs
 
-if args.balance is None: # local run
+if args.prebuilt:
+  for xpi in glob.glob('xpi/zotero-better-bibtex*.xpi'):
+    os.remove(xpi)
+  xpi = glob.glob(f'prebuilt/zotero-better-bibtex*{args.prebuilt}*.xpi')[0]
+  shutil.copy(xpi, 'xpi')
+elif args.balance is None: # local run
   process = subprocess.Popen(['npm', 'run', 'build'], stdout=subprocess.PIPE)
   while True:
     line = process.stdout.readline()
