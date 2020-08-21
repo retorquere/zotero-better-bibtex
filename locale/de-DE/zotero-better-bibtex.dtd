@@ -117,14 +117,6 @@ With this option on, BBT will try to sentence-case during import. This sentence-
 You can turn this off, but you may then also want to disable `Apply title-casing to titles` (which has its own problems, see the help entry for that option on this page).
 With 'yes, but try to exclude already-sentence-cased titles', BBT will attempt to detect titles that are already sentence cased and leave them as-is on import.">
 
-<!ENTITY better-bibtex.Preferences.advanced.correct.titleCase "Sentence-case titles on add/edit:">
-<!ENTITY better-bibtex.Preferences.advanced.correct.titleCase.off "no">
-<!ENTITY better-bibtex.Preferences.advanced.correct.titleCase.warn "warn">
-<!ENTITY better-bibtex.Preferences.advanced.correct.titleCase.warn_change "correct new items, warn on changes to existing items">
-<!ENTITY better-bibtex.Preferences.advanced.correct.titleCase.warning "Zotero references are expected to be entered as sentence-case.
-
-Many sites however offer items to Zotero in Title Case. With this option on, you can have Zotero warn you when new items are added, or when existing items are edited, with a title that appears to be Title-Cased. You can also opt to have BBT attempt to correct Title-Casing on newly added items. Please do always review these changes; the sentence-casing algorithm does not employ natural language processing, and is fairly naive.">
-
 <!ENTITY better-bibtex.Preferences.advanced.import.caseProtection "Insert case-protection for braces:">
 <!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.off "nein">
 <!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.on "ja">
