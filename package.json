@@ -65,7 +65,7 @@
     "edtf": "^3.0.1",
     "edtfy": "^0.0.8",
     "escape-string-regexp": "^4.0.0",
-    "eventemitter3": "^4.0.4",
+    "eventemitter3": "^4.0.5",
     "excel-column-name": "^1.0.1",
     "fast-chunk-string": "^1.0.1",
     "file-path-filter": "^3.0.2",
