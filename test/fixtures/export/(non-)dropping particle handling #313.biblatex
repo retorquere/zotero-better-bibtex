@@ -2,7 +2,7 @@
 @article{abbot1,
   title = {{{(Aubignac) (François Hédelin, abbé d')}}},
   author = {Aubignac, abbé d', François Hédelin},
-  note = {relies on paricleParser fallback detection}
+  annotation = {relies on paricleParser fallback detection}
 }
 
 @article{abbot3,

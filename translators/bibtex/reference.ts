@@ -284,7 +284,18 @@ const fieldOrder = [
   'doi',
   'url',
   'urldate',
-].reduce((acc, field, idx, fields) => { acc[field] = idx + 1; return acc }, {})
+
+  // '-keywords',
+  // '-annotation',
+  // '-note',
+].reduce((acc, field, idx) => {
+  if (field[0] === '-') {
+    acc[field.substring(1)] = -(idx + 1)
+  } else {
+    acc[field] = idx + 1
+  }
+  return acc
+}, {})
 
 /*
  * The fields are objects with the following keys:
@@ -843,17 +854,8 @@ export class Reference {
     }
 
     if (Translator.options.exportNotes) {
-      let notes = ''
-      if (this.item.notes && this.item.notes.length) {
-        notes = this.item.notes.join('<p>')
-      }
-      const annotation = Translator.BetterBibTeX ? 'annote' : 'annotation'
-      if (this.has.note && this.item.extra) {
-        this.add({ name: annotation, value: notes ? `${this.item.extra.replace(/\n/g, '<br/>')}<p>${notes}` : this.item.extra, html: !!notes })
-      } else {
-        this.add({ name: 'note', value: this.item.extra })
-        this.add({ name: annotation, value: notes, html: true })
-      }
+      this.add({ name: 'annotation', value: this.item.extra })
+      this.add({ name: 'note', value: this.item.notes?.join('<p></p>'), html: true })
     }
 
     // sort before postscript so the postscript can affect field order
@@ -861,9 +863,9 @@ export class Reference {
       const fa = fieldOrder[a]
       const fb = fieldOrder[b]
 
-      if (fa && fb) return fa - fb
-      if (fa) return -1
-      if (fb) return 1
+      if (fa && fb) return Math.abs(fa) - Math.abs(fb)
+      if (fa) return -fa
+      if (fb) return fb
       return a.localeCompare(b)
     })
     for (const field of keys) {

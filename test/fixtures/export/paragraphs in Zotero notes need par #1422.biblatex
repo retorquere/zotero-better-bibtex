@@ -37,7 +37,7 @@ rather than just the particular ones picked out by nature, indicates
 that simulations that lack the physics and/or resolution to simulate the
 multiphase interstellar medium can only provide limited insight into the
 origin of the observed star formation laws.},
-  annotation = {For implementing observed KS relations into simulation. Describes the connection between SF law based on surface density (KS) and volume density (Schmidt). Includes some implementation advice for SF based on Schmidt laws. Suggests the use of a (polytropic) effective EOS to encapsulate the multiphase nature \& unmodeled physics of the ISM.
+  note = {For implementing observed KS relations into simulation. Describes the connection between SF law based on surface density (KS) and volume density (Schmidt). Includes some implementation advice for SF based on Schmidt laws. Suggests the use of a (polytropic) effective EOS to encapsulate the multiphase nature \& unmodeled physics of the ISM.
 \par
 Simulations show the KS-Schmidt connection developed herein, and the Schmidt implementation, do a good job of reproducing the input KS relation (incl. surface density threshold). Result is robust to winds and low resolution, though with wind it may deviate near threshold depending on how surface density is calculated. Result also roughly holds for changes in the polytropic index, but changing the effective EOS can cause instability \& therefore increase SF. Authors stress that matching local SF conditions is more informative than matching global relations.}
 }

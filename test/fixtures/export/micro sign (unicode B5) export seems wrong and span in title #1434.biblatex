@@ -1,7 +1,7 @@
 
 @misc{_NECuPC577HTristatehexbuffers_,
   title = {{{NEC \textmu PC577H Tri}} State Hex Buffers},
-  annotation = {In Yamaha tuner IC101 en IC102}
+  note = {In Yamaha tuner IC101 en IC102}
 }
 
 @inproceedings{Author_ADtesttitlewithlowercasegreeklettermPC4570whichisnotthesameas1uF_2025,
