@@ -107,6 +107,13 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
     this.stringCompare = (new Intl.Collator('en')).compare
   }
 
+  private typefield(field) {
+    field = field.trim()
+    if (field.startsWith('bibtex.')) return this.BetterBibTeX ? field.replace(/^bibtex\./, '') : ''
+    if (field.startsWith('biblatex.')) return this.BetterBibLaTeX ? field.replace(/^biblatex\./, '') : ''
+    return field
+  }
+
   public init(mode: TranslatorMode) {
     this.platform = Zotero.getHiddenPref('better-bibtex.platform')
     this.isJurisM = client === 'jurism'
@@ -151,10 +158,10 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
     }
 
     // special handling
-    this.skipFields = this.preferences.skipFields.toLowerCase().trim().split(/\s*,\s*/).filter(s => s)
+    this.skipFields = this.preferences.skipFields.toLowerCase().split(',').map(field => this.typefield(field)).filter(s => s)
     this.skipField = this.skipFields.reduce((acc, field) => { acc[field] = true; return acc }, {})
 
-    this.verbatimFields = this.preferences.verbatimFields.toLowerCase().trim().split(/\s*,\s*/).filter(s => s)
+    this.verbatimFields = this.preferences.verbatimFields.toLowerCase().split(',').map(field => this.typefield(field)).filter(s => s)
 
     if (!this.verbatimFields.length) this.verbatimFields = null
     this.csquotes = this.preferences.csquotes ? { open: this.preferences.csquotes[0], close: this.preferences.csquotes[1] } : null
