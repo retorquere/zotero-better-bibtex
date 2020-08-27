@@ -855,7 +855,8 @@ export class Reference {
 
     if (Translator.options.exportNotes) {
       this.add({ name: 'annotation', value: this.item.extra })
-      this.add({ name: 'note', value: this.item.notes?.join('<p></p>'), html: true })
+      // if bibtexURL === 'note' is active, the note field will have been filled with an URL. In all other cases, if this is attempting to overwrite the 'note' field, I want the test suite to throw an error
+      if (!Translator.BetterBibTeX || Translator.preferences.bibtexURL !== 'note' || !this.has.note) this.add({ name: 'note', value: this.item.notes?.join('<p></p>'), html: true })
     }
 
     // sort before postscript so the postscript can affect field order
