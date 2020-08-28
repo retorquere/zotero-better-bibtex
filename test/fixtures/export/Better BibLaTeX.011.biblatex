@@ -5,6 +5,7 @@
   author = {Klassen, Myungsook and Kim, Nyunsu and Liu, Wei Ming},
   date = {2010},
   pages = {25--30},
+  annotation = {svm liniowe najlepsze},
   bibsource = {DBLP, http://dblp.uni-trier.de},
   crossref = {DBLP:conf/cata/2010},
   file = {files/Klassen2010/Klassen2010.pdf},
