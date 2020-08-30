@@ -256,7 +256,9 @@ export let Formatter = new class { // tslint:disable-line:variable-name
   public async 'formatted-bibliography'(citations) {
     const format = Zotero.Prefs.get('export.quickCopy.setting')
 
-    if (Zotero.QuickCopy.unserializeSetting(format).mode !== 'bibliography') throw new Error('formatted-citations requires the Zotero default quick-copy format to be set to a citation style')
+    if (Zotero.QuickCopy.unserializeSetting(format).mode !== 'bibliography') {
+      throw new Error(`formatted-bibliography requires the Zotero default quick-copy format to be set to a citation style; it is currently ${format}`)
+    }
 
     const items = await getItemsAsync(citations.map(item => item.id))
 
