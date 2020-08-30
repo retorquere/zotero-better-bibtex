@@ -5,6 +5,7 @@ declare const AddonManager: any
 import { Translators } from '../translators'
 import { getItemsAsync } from '../get-items-async'
 import { Preferences as Prefs } from '../prefs'
+import { log } from '../logger'
 
 import * as unicode_table from 'unicode2latex/tables/unicode.json'
 const unicode2latex = Object.entries(unicode_table).reduce((acc, pair) => {
@@ -235,13 +236,17 @@ export let Formatter = new class { // tslint:disable-line:variable-name
 
   public async 'formatted-citation'(citations, options) {
     let format = Zotero.Prefs.get('export.quickCopy.setting')
+    log.debug('CAYW.formatted-citation: format=', format, 'options=', options)
     if (options.style) {
       format = 'bibliography'
       if (options.format) format += `/${options.format}`
       format += `http://www.zotero.org/styles/${options.style}`
     }
+    log.debug('CAYW.formatted-citation: format=', format)
 
-    if (Zotero.QuickCopy.unserializeSetting(format).mode !== 'bibliography') throw new Error('formatted-citations requires the Zotero default quick-copy format to be set to a citation style')
+    if (Zotero.QuickCopy.unserializeSetting(format).mode !== 'bibliography') {
+      throw new Error(`formatted-citations requires the Zotero default quick-copy format to be set to a citation style; it is currently ${format}`)
+    }
 
     const items = await getItemsAsync(citations.map(item => item.id))
 

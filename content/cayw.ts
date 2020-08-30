@@ -6,6 +6,7 @@ import { KeyManager } from './key-manager'
 import { Formatter } from './cayw/formatter'
 import { TeXstudio } from './tex-studio'
 import * as escape from './escape'
+import { flash } from './flash'
 
 Components.utils.import('resource://gre/modules/XPCOMUtils.jsm')
 
@@ -379,6 +380,7 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
 
       return [this.OK, 'text/html; charset=utf-8', citation]
     } catch (err) {
+      flash('CAYW Failed', `${err}\n${err.stack}`)
       return [this.SERVER_ERROR, 'application/text', `CAYW failed: ${err}\n${err.stack}`]
     }
   }
