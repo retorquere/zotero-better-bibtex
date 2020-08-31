@@ -240,7 +240,9 @@ export let Formatter = new class { // tslint:disable-line:variable-name
     if (options.style) {
       format = 'bibliography'
       if (options.contentType) format += `/${options.contentType}`
-      format += `=http://www.zotero.org/styles/${options.style}`
+      format += '='
+      if (!options.style.startsWith('http://')) format += 'http://www.zotero.org/styles/'
+      format += options.style
     }
     log.debug('CAYW.formatted-citation: format=', format)
 
