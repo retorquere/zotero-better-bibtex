@@ -239,7 +239,7 @@ export let Formatter = new class { // tslint:disable-line:variable-name
     log.debug('CAYW.formatted-citation: format=', format, 'options=', options)
     if (options.style) {
       format = 'bibliography'
-      if (options.format) format += `/${options.format}`
+      if (options.contentType) format += `/${options.contentType}`
       format += `=http://www.zotero.org/styles/${options.style}`
     }
     log.debug('CAYW.formatted-citation: format=', format)
