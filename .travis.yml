@@ -58,7 +58,7 @@ jobs:
       create:
         name: build-assets
         paths:
-          - xpis
+          - xpi
           - gen
     before_deploy:
       - travis_retry sudo snap install hugo --channel=extended
