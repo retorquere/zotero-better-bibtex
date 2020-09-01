@@ -235,24 +235,36 @@ export let Formatter = new class { // tslint:disable-line:variable-name
   }
 
   public async 'formatted-citation'(citations, options) {
-    let format = Zotero.Prefs.get('export.quickCopy.setting')
-    log.debug('CAYW.formatted-citation: format=', format, 'options=', options)
+    let quickCopy = Zotero.Prefs.get('export.quickCopy.setting')
+    log.debug('CAYW.formatted-citation: format=', quickCopy, 'options=', options)
     if (options.style) {
-      format = 'bibliography'
-      if (options.contentType) format += `/${options.contentType}`
-      format += '='
-      if (!options.style.startsWith('http://')) format += 'http://www.zotero.org/styles/'
-      format += options.style
+      quickCopy = 'bibliography'
+      if (options.contentType) quickCopy += `/${options.contentType}`
+      quickCopy += '='
+      if (!options.style.startsWith('http://')) quickCopy += 'http://www.zotero.org/styles/'
+      quickCopy += options.style
     }
-    log.debug('CAYW.formatted-citation: format=', format)
+    log.debug('CAYW.formatted-citation: format=', quickCopy)
 
-    if (Zotero.QuickCopy.unserializeSetting(format).mode !== 'bibliography') {
+    const format = Zotero.QuickCopy.unserializeSetting(quickCopy)
+
+    if (format.mode !== 'bibliography') {
       throw new Error(`formatted-citations requires the Zotero default quick-copy format to be set to a citation style; it is currently ${format}`)
     }
 
-    const items = await getItemsAsync(citations.map(item => item.id))
+    // items must be pre-loaded for the citation processor
+    await getItemsAsync(citations.map(item => item.id))
 
-    return Zotero.QuickCopy.getContentFromItems(items, format, null, true).text
+    const locale = format.locale ? format.locale : Zotero.Prefs.get('export.quickCopy.locale')
+    const csl = Zotero.Styles.get(format.id).getCiteProc(locale)
+    csl.updateItems(citations.map(item => item.id))
+
+    const citation = {
+      citationItems: citations.map(item => ({ ...item, 'suppress-author': item.suppressAuthor })),
+      properties: {},
+    }
+
+    return csl.previewCitationCluster(citation, [], [], format.contentType)
   }
 
   public async 'formatted-bibliography'(citations) {
