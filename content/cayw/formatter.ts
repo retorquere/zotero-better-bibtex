@@ -238,15 +238,12 @@ export let Formatter = new class { // tslint:disable-line:variable-name
     let quickCopy = Zotero.Prefs.get('export.quickCopy.setting')
     log.debug('CAYW.formatted-citation: format=', quickCopy, 'options=', options)
     if (options.style) {
-      quickCopy = 'bibliography'
-      if (options.contentType) quickCopy += `/${options.contentType}`
-      quickCopy += '='
+      quickCopy = `bibliography/${options.contentType || 'text'}=`
       if (!options.style.startsWith('http://')) quickCopy += 'http://www.zotero.org/styles/'
       quickCopy += options.style
     }
-    log.debug('CAYW.formatted-citation: format=', quickCopy)
-
     const format = Zotero.QuickCopy.unserializeSetting(quickCopy)
+    log.debug('CAYW.formatted-citation: format=', quickCopy, format)
 
     if (format.mode !== 'bibliography') {
       throw new Error(`formatted-citations requires the Zotero default quick-copy format to be set to a citation style; it is currently ${format}`)
