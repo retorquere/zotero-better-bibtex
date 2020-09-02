@@ -106,7 +106,7 @@ export function parse(value: string, localeDateOrder: string, as_range_part: boo
   if (as_range_part && value === '') return { type: 'open' }
 
   // https://forums.zotero.org/discussion/73729/name-and-year-import-issues-with-new-nasa-ads#latest
-  if (m = (/^(-?[0-9]+)-00-00$/.exec(value) || /^(-?[0-9]+-[0-9]+)-00$/.exec(value))) return parse(m[1], localeDateOrder, as_range_part)
+  if (m = (/^(-?[0-9]+)-00-00$/.exec(value) || /^(-?[0-9]+)\/00\/00$/.exec(value) || /^(-?[0-9]+-[0-9]+)-00$/.exec(value))) return parse(m[1], localeDateOrder, as_range_part)
 
   // https://github.com/retorquere/zotero-better-bibtex/issues/1513
   // tslint:disable-next-line:no-magic-numbers
@@ -197,6 +197,8 @@ export function parse(value: string, localeDateOrder: string, as_range_part: boo
     const year = parseInt(_year)
     const [day, month] = swap_day_month(parseInt(_day), parseInt(_month), 'ymd')
 
+    if (!month && !day) return seasonize(doubt({ type: 'date', year }, state))
+    if (is_valid_month(month, !day) && !day) return seasonize(doubt({ type: 'date', year, month }, state))
     if (is_valid_month(month, !day)) return seasonize(doubt({ type: 'date', year, month, day }, state))
   }
 
@@ -206,6 +208,8 @@ export function parse(value: string, localeDateOrder: string, as_range_part: boo
     const year = parseInt(_year)
     const [day, month] = swap_day_month(parseInt(_day), parseInt(_month), localeDateOrder)
 
+    if (!month && !day) return seasonize(doubt({ type: 'date', year }, state))
+    if (is_valid_month(month, !day) && !day) return seasonize(doubt({ type: 'date', year, month }, state))
     if (is_valid_month(month, false)) return seasonize(doubt({ type: 'date', year, month, day }, state))
   }
 
@@ -214,6 +218,8 @@ export function parse(value: string, localeDateOrder: string, as_range_part: boo
     const year = parseInt(_year)
     const [day, month] = swap_day_month(parseInt(_day), parseInt(_month), localeDateOrder)
 
+    if (!month && !day) return seasonize(doubt({ type: 'date', year }, state))
+    if (is_valid_month(month, !day) && !day) return seasonize(doubt({ type: 'date', year, month }, state))
     if (is_valid_month(month, false)) return seasonize(doubt({ type: 'date', year, month, day }, state))
   }
 
@@ -222,6 +228,7 @@ export function parse(value: string, localeDateOrder: string, as_range_part: boo
     const month = parseInt(_month)
     const year = parseInt(_year)
 
+    if (!month) return seasonize(doubt({ type: 'date', year }, state))
     if (is_valid_month(month, false)) return seasonize(doubt({ type: 'date', year, month }, state))
   }
 
@@ -230,6 +237,7 @@ export function parse(value: string, localeDateOrder: string, as_range_part: boo
     const year = parseInt(_year)
     const month = parseInt(_month)
 
+    if (!month) return seasonize(doubt({ type: 'date', year }, state))
     if (is_valid_month(month, false)) return seasonize(doubt({ type: 'date', year, month }, state))
   }
 
