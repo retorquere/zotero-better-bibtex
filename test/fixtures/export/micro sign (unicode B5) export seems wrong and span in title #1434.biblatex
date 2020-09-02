@@ -10,8 +10,7 @@
   author = {Author, P. A.},
   date = {2025},
   pages = {123---432},
-  abstract = {This is an example
-The first mu should be a greek mu which will turn out italic, the second is a textmu which schould look the same as the surrounding text},
+  abstract = {This is an example The first mu should be a greek mu which will turn out italic, the second is a textmu which schould look the same as the surrounding text},
   langid = {dutch}
 }
 

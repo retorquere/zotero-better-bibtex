@@ -854,7 +854,7 @@ export class Reference {
       }
     }
 
-    this.add({ name: 'annotation', value: this.item.extra })
+    this.add({ name: 'annotation', value: this.item.extra?.replace(/\n+/g, ' ') })
     if (Translator.options.exportNotes) {
       // if bibtexURL === 'note' is active, the note field will have been filled with an URL. In all other cases, if this is attempting to overwrite the 'note' field, I want the test suite to throw an error
       if (!(Translator.BetterBibTeX && Translator.preferences.bibtexURL === 'note')) this.add({ name: 'note', value: this.item.notes?.join('<p></p>'), html: true })

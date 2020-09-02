@@ -271,7 +271,7 @@ export function doExport() {
     ref.add({name: 'issn', value: item.ISSN})
     ref.add({name: 'lccn', value: item.callNumber})
     ref.add({name: 'shorttitle', value: item.shortTitle})
-    ref.add({name: 'abstract', value: item.abstractNote})
+    ref.add({name: 'abstract', value: item.abstractNote?.replace(/\n+/g, ' ')})
     ref.add({name: 'nationality', value: item.country})
     ref.add({name: 'language', value: item.language})
     ref.add({name: 'assignee', value: item.assignee})

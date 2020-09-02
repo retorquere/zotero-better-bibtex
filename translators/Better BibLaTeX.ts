@@ -353,7 +353,7 @@ export function doExport() {
     ref.add({ name: 'doi', value: (item.DOI || item.extraFields.kv.DOI || '').replace(/^https?:\/\/doi.org\//i, '') })
 
     ref.add({ name: 'shorttitle', value: item.shortTitle })
-    ref.add({ name: 'abstract', value: item.abstractNote })
+    ref.add({ name: 'abstract', value: item.abstractNote?.replace(/\n+/g, ' ') })
     ref.add({ name: 'volumes', value: item.numberOfVolumes })
     ref.add({ name: 'version', value: item.versionNumber })
     ref.add({ name: 'eventtitle', value: item.conferenceName })

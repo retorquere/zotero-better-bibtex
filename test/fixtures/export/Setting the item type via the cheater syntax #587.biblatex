@@ -27,9 +27,7 @@
   edition = {Rev. ed.},
   publisher = {{Theodore Presser}},
   location = {{Bryn Mawr, PA}},
-  abstract = {Example from CMoS, 16e, 14.269
-“Prepared from the autographs and earliest printed sources by Nathan
-Broder”}
+  abstract = {Example from CMoS, 16e, 14.269 “Prepared from the autographs and earliest printed sources by Nathan Broder”}
 }
 
 @data{noauthor_object_nodate,
@@ -47,8 +45,7 @@ Broder”}
   journaltitle = {Lingua Franca},
   volume = {9},
   pages = {B13--B14},
-  abstract = {Example from CMoS, 16e, 14.215
-“ed. and trans. John Charles Chasteen”},
+  abstract = {Example from CMoS, 16e, 14.215 “ed. and trans. John Charles Chasteen”},
   editora = {{Hermano Vianna}},
   editoratype = {collaborator},
   langid = {american},

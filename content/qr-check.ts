@@ -3,7 +3,7 @@ import * as issn from './issn'
 import EAN = require('barcoder')
 import * as DateParser from './dateparser'
 
-const isnm_prefix = '9790'
+const ismn_prefix = '9790'
 
 export function qualityReport(value, test, params = null) {
   switch (test) {
@@ -18,11 +18,11 @@ export function qualityReport(value, test, params = null) {
 
       if (value.length === 10) { // tslint:disable-line:no-magic-numbers
         if (value[0] !== 'M') return 'not a valid ISMN'
-        value = isnm_prefix + value.substring(1)
+        value = ismn_prefix + value.substring(1)
       }
 
       // tslint:disable-next-line:no-magic-numbers
-      if (value.length !== 13 || !value.startsWith(isnm_prefix)) return 'not a valid ISMN'
+      if (value.length !== 13 || !value.startsWith(ismn_prefix)) return 'not a valid ISMN'
 
       return EAN.validate(value) ? '' : 'not a valid ISMN'
 
