@@ -682,8 +682,9 @@ export class Reference {
       this.add({ name: 'groups', value: groups.join(',') })
     }
 
+    // extra-fields has parsed & removed 'ids' to put it into aliases
     if (this.item.extraFields.aliases.length) {
-      this.add({ name: 'ids', value: this.item.extraFields.aliases.join(',') })
+      this.add({ name: 'ids', value: this.item.extraFields.aliases.filter(alias => alias !== this.item.citationKey).join(',') })
     }
 
     if (Translator.BetterBibLaTeX) this.add({ name: 'pubstate', value: this.item.status })
