@@ -15,7 +15,7 @@ def split_and_mark(names):
 fields = {}
 typeNames = {}
 for client in ['zotero', 'jurism']:
-  with open(glob.glob(os.path.join(os.path.dirname(__file__), '..', 'schema', f'{client}-*.json'))[0]) as f:
+  with open(os.path.join(os.path.dirname(__file__), '..', 'schema', f'{client}.json')) as f:
     schema = json.load(f)
 
   fields[client] = sorted(list(set(
