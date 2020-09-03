@@ -78,6 +78,12 @@ Zotero.Server.Endpoints['/better-bibtex/export/selected'] = Zotero.Server.Endpoi
       const items = Zotero.getActiveZoteroPane().getSelectedItems()
       if (!items.length) return [NOT_FOUND, 'text/plain', 'Could not export bibliography: no selection' ]
 
+      if (translator === 'quick-copy') {
+        const format = Zotero.Prefs.get('export.quickCopy.setting')
+        if (Zotero.QuickCopy.unserializeSetting(format).mode !== 'bibliography') throw new Error('formatted-citations requires the Zotero default quick-copy format to be set to a citation style')
+        return [OK, 'text/plain', Zotero.QuickCopy.getContentFromItems(items, format, null, true).text ]
+      }
+
       return [OK, 'text/plain', await Translators.exportItems(Translators.getTranslatorId(translator), displayOptions(request), { type: 'items', items }) ]
     } catch (err) {
       return [SERVER_ERROR, 'text/plain', '' + err]
