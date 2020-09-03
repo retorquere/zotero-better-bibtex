@@ -423,8 +423,8 @@ with fetch('zotero') as z, fetch('jurism') as j:
   ef.save()
   with open(os.path.join(root, 'gen', 'min-version.json'), 'w') as f:
     json.dump({
-      'zotero': { 'release': SCHEMA.zotero.release, 'schema': SCHEMA.zotero.version},
-      'jurism': { 'release': SCHEMA.jurism.release, 'schema': SCHEMA.jurism.version},
+      'zotero': { 'release': SCHEMA.zotero.release[0], 'schema': SCHEMA.zotero.version},
+      'jurism': { 'release': SCHEMA.jurism.release[0], 'schema': SCHEMA.jurism.version},
     }, f)
 
 print('  writing creators')
