@@ -49,7 +49,7 @@ class fetch(object):
         download='https://www.zotero.org/download/client/dl?channel=release&platform=linux-x86_64&version={version}',
         jar='Zotero_linux-x86_64/zotero.jar',
         schema_path='resource/schema/global/schema.json',
-        schema='zotero-{version}.json'
+        schema='zotero.json'
       )
     elif client == 'jurism':
       releases = urlopen('https://github.com/Juris-M/assets/releases/download/client%2Freleases%2Fincrementals-linux/incrementals-release-linux').read().decode("utf-8")
@@ -60,60 +60,63 @@ class fetch(object):
         download='https://github.com/Juris-M/assets/releases/download/client%2Frelease%2F{version}/Jurism-{version}_linux-x86_64.tar.bz2',
         jar='Jurism_linux-x86_64/jurism.jar',
         schema_path='resource/schema/global/schema-jurism.json',
-        schema='jurism-{version}.json'
+        schema='jurism.json'
       )
     else:
       raise ValueError(f'Unknown client {client}')
 
   def update(self, client, releases, download, jar, schema_path, schema):
-    schema = os.path.join(SCHEMA.root, schema.format(version=releases[0]))
+    schema = os.path.join(SCHEMA.root, schema)
 
     if os.path.exists(schema):
-      print(' ', os.path.basename(schema), 'up to date')
+      with open(schema) as f:
+        current = json.load(f)
+        current = {
+          'version': current['version'],
+          'release': current['release'][-1]
+        }
+        if current['release'] == releases[0]:
+          print(' ', os.path.basename(schema), 'up to date')
+          return schema
     else:
-      if 'CI' in os.environ: raise ValueError(f'{schema} does not exist')
-
-      jarpath = jar
-      latest = None
       current = None
-      print('  updating', os.path.basename(schema))
 
-      for cleanup in glob.glob(os.path.join(SCHEMA.root, f'{client}-*.json')):
-        with open(cleanup) as f:
-          current = json.load(f)
-          current = { k: current[k] for k in ['version', 'release'] }
-        os.system(f'cd {shlex.quote(SCHEMA.root)} && git rm {os.path.basename(cleanup)}')
+    if 'CI' in os.environ: raise ValueError(f'{schema} out of date')
 
-      for release in releases:
-        with tempfile.NamedTemporaryFile() as tarball:
-          print('    downloading', download.format(version=release))
-          urlretrieve(download.format(version=release), tarball.name)
-          tar = tarfile.open(tarball.name, 'r:bz2')
+    jarpath = jar
+    latest = None
+    print('  updating', os.path.basename(schema))
 
-          jar = tar.getmember(jarpath)
-          print('    extracting', jar.name)
-          jar.name = os.path.basename(jar.name)
-          tar.extract(jar, path=os.path.dirname(tarball.name))
+    for release in releases:
+      with tempfile.NamedTemporaryFile() as tarball:
+        print('    downloading', download.format(version=release))
+        urlretrieve(download.format(version=release), tarball.name)
+        tar = tarfile.open(tarball.name, 'r:bz2')
 
-          jar = zipfile.ZipFile(os.path.join(os.path.dirname(tarball.name), jar.name))
-          with jar.open(schema_path) as f:
-            release_schema = json.load(f)
-            release_schema['release'] = release
-            print('    release', release, 'schema', release_schema['version'])
-            if latest is None:
-              latest = release_schema
-              latest['release'] = release
-              if current and current['version'] == latest['version']:
-                latest['release'] = current['release']
-                break
-            elif release_schema['version'] == latest['version']:
-              latest['release'] = release
-            else:
+        jar = tar.getmember(jarpath)
+        print('    extracting', jar.name)
+        jar.name = os.path.basename(jar.name)
+        tar.extract(jar, path=os.path.dirname(tarball.name))
+
+        jar = zipfile.ZipFile(os.path.join(os.path.dirname(tarball.name), jar.name))
+        with jar.open(schema_path) as f:
+          release_schema = json.load(f)
+          release_schema['release'] = release
+          print('    release', release, 'schema', release_schema['version'])
+          if latest is None:
+            latest = release_schema
+            latest['release'] = [release, release]
+            if current and current['version'] == latest['version']:
+              latest['release'][0] = current['release']
               break
+          elif release_schema['version'] == latest['version']:
+            latest['release'][0] = release
+          else:
+            break
 
-      print('    saving', os.path.basename(schema))
-      with open(schema, 'w') as f:
-        json.dump(latest, f, indent='  ')
+    print('    saving', os.path.basename(schema))
+    with open(schema, 'w') as f:
+      json.dump(latest, f, indent='  ')
 
     return schema
 
