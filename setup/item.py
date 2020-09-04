@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import hashlib
 import operator
 import shlex
 from functools import reduce
@@ -65,6 +66,9 @@ class fetch(object):
     else:
       raise ValueError(f'Unknown client {client}')
 
+  def hash(self, schema):
+    return hashlib.sha512(json.dumps({**schema, 'release': None, 'version': None, 'locales': None}, sort_keys=True).encode('utf-8')).hexdigest()
+
   def update(self, client, releases, download, jar, schema_path, schema):
     schema = os.path.join(SCHEMA.root, schema)
 
@@ -72,8 +76,8 @@ class fetch(object):
       with open(schema) as f:
         current = json.load(f)
         current = {
-          'version': current['version'],
-          'release': current['release'][-1]
+          'release': current['release'][-1],
+          'hash': self.hash(current),
         }
         if current['release'] == releases[0]:
           print(' ', os.path.basename(schema), 'up to date')
@@ -102,14 +106,15 @@ class fetch(object):
         with jar.open(schema_path) as f:
           release_schema = json.load(f)
           release_schema['release'] = release
-          print('    release', release, 'schema', release_schema['version'])
+          release_schema['hash'] = self.hash(release_schema)
+          print('    release', release, 'schema', release_schema['version'], 'hash', release_schema['hash'])
           if latest is None:
             latest = release_schema
             latest['release'] = [release, release]
-            if current and current['version'] == latest['version']:
+            if current and current['hash'] == latest['hash']:
               latest['release'][0] = current['release']
               break
-          elif release_schema['version'] == latest['version']:
+          elif release_schema['hash'] == latest['hash']:
             latest['release'][0] = release
           else:
             break
@@ -423,8 +428,8 @@ with fetch('zotero') as z, fetch('jurism') as j:
   ef.save()
   with open(os.path.join(root, 'gen', 'min-version.json'), 'w') as f:
     json.dump({
-      'zotero': { 'release': SCHEMA.zotero.release[0], 'schema': SCHEMA.zotero.version},
-      'jurism': { 'release': SCHEMA.jurism.release[0], 'schema': SCHEMA.jurism.version},
+      'zotero': { 'min': SCHEMA.zotero.release[0], 'current': SCHEMA.zotero.release[1], 'schema': SCHEMA.zotero.version},
+      'jurism': { 'min': SCHEMA.jurism.release[0], 'current': SCHEMA.jurism.release[1], 'schema': SCHEMA.jurism.version},
     }, f)
 
 print('  writing creators')

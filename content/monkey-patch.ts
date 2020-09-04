@@ -6,28 +6,6 @@ import { flash } from './flash'
 import { client } from './client'
 import * as built_against from '../gen/min-version.json'
 
-const schema: { expected: number, found?: number } = {
-  expected: built_against[client].schema,
-  found: null,
-}
-try {
-  switch (client) {
-    case 'zotero':
-      schema.found = JSON.parse(Zotero.File.getContentsFromURL('resource://zotero/schema/global/schema.json')).version
-
-      break
-    case 'jurism':
-      schema.found = JSON.parse(Zotero.File.getContentsFromURL('resource://zotero/schema/global/schema-jurism.json')).version
-      break
-    default:
-      throw new Error(`Unexpected client ${client}`)
-  }
-
-} catch (err) {
-  schema.found = null
-  flash('ERROR CHECKING ZOTERO SCHEMA VERSION', 30) // tslint:disable-line:no-magic-numbers
-}
-
 export function clean_pane_persist() {
   let persisted = Zotero.Prefs.get('pane.persist')
   if (persisted) {
@@ -41,10 +19,11 @@ export function clean_pane_persist() {
   }
 }
 
-export let enabled = typeof schema.expected === 'number' && typeof schema.found === 'number' && schema.found >= schema.expected
+const versionCompare = Components.classes['@mozilla.org/xpcom/version-comparator;1'].getService(Components.interfaces.nsIVersionComparator)
+export let enabled = versionCompare.compare(Zotero.version.replace('m', '.'), built_against[client].min.replace('m', '.')) > 0
 if (enabled) {
   const ENV = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
-  enabled = !ENV.get('CI') || schema.found === schema.expected
+  enabled = !ENV.get('CI') || Zotero.version === built_against[client].current
 }
 
 Zotero.debug(`monkey-patch: ${Zotero.version}: BBT ${enabled ? 'en' : 'dis'}abled`)
