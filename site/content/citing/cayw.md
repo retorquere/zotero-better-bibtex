@@ -61,7 +61,7 @@ Emilie has writen [instructions](https://github.com/AmomentOfMusic/Zotero_scrive
 
 ### Overleaf
 
-David Lukes takes Overleaf integration one step further with a GreaseMonkey/TamperMonkey [userscript](https://gist.github.com/dlukes/5289eaa12d591dc21745fdef42098a17) which not only allows popping up the CAYW picker straight from your browser, no other tools required, but adds a hotkey to refresh your bib file on Overleaf. This should work with the free subscription, no fiddling with git or dropbox required.
+David Lukes takes Overleaf integration one step further with a GreaseMonkey/TamperMonkey [userscript](https://github.com/dlukes/zotero-sharelatex-cayw) which not only allows popping up the CAYW picker straight from your browser, no other tools required, but adds a hotkey to refresh your bib file on Overleaf. This should work with the free subscription, no fiddling with git or dropbox required.
 
 ## DIY
 
