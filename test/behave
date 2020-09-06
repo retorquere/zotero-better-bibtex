@@ -78,7 +78,7 @@ if args.prebuilt:
     os.remove(xpi)
   xpi = glob.glob(f'prebuilt/zotero-better-bibtex*{args.prebuilt}*.xpi')[0]
   shutil.copy(xpi, 'xpi')
-elif args.balance is None: # local run
+elif os.environ.get('CI') != 'true': # local run
   process = subprocess.Popen(['npm', 'run', 'build'], stdout=subprocess.PIPE)
   while True:
     line = process.stdout.readline()
@@ -89,8 +89,11 @@ elif args.balance is None: # local run
     print(f'Build exited with exit code {returncode}')
     sys.exit(returncode)
 
-if args.nightly and args.balance and not args.tagged: # test for beta on nightly
+if args.nightly and os.environ.get('CI') == 'true' and not args.tagged: # test for beta on nightly
   args.beta = (args.balance == '2')
+  args.balance = None
+elif os.environ.get('CI') == 'true' and os.environ.get('BETA') == 'true':
+  args.beta = True
   args.balance = None
 
 if args.this or args.test_this:
