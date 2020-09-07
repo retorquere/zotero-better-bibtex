@@ -29,7 +29,7 @@ if (enabled) {
 Zotero.debug(`monkey-patch: ${Zotero.version}: BBT ${enabled ? 'en' : 'dis'}abled`)
 if (!enabled) {
   clean_pane_persist()
-  flash(`OUTDATED ${client.toUpperCase()} VERSION`, `BBT has been disabled\nNeed at least ${client} ${built_against[client].release}, please upgrade.`, 30) // tslint:disable-line:no-magic-numbers
+  flash(`OUTDATED ${client.toUpperCase()} VERSION`, `BBT has been disabled\nNeed at least ${client} ${built_against[client].min}, found${Zotero.version}, please upgrade.`, 30) // tslint:disable-line:no-magic-numbers
 
   Components.utils.import('resource://gre/modules/AddonManager.jsm')
   AddonManager.getAddonByID('better-bibtex@iris-advies.com', addon => { addon.userDisabled = true })
