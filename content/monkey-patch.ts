@@ -21,10 +21,6 @@ export function clean_pane_persist() {
 
 const versionCompare = Components.classes['@mozilla.org/xpcom/version-comparator;1'].getService(Components.interfaces.nsIVersionComparator)
 export let enabled = versionCompare.compare(Zotero.version.replace('m', '.').replace(/-beta.*/, ''), built_against[client].min.replace('m', '.')) > 0
-if (enabled) {
-  const ENV = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
-  enabled = !ENV.get('CI') || Zotero.version === built_against[client].current
-}
 
 Zotero.debug(`monkey-patch: ${Zotero.version}: BBT ${enabled ? 'en' : 'dis'}abled`)
 if (!enabled) {

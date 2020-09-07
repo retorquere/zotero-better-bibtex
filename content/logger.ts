@@ -39,7 +39,7 @@ class Logger {
   }
 
   public debug(...msg) {
-    if (Zotero.BetterBibTeX.debugEnabled()) Zotero.debug(this.format('', msg))
+    if (Zotero.Debug.enabled) Zotero.debug(this.format('', msg))
   }
 
   public error(...msg) {
