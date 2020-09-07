@@ -20,7 +20,7 @@ export function clean_pane_persist() {
 }
 
 const versionCompare = Components.classes['@mozilla.org/xpcom/version-comparator;1'].getService(Components.interfaces.nsIVersionComparator)
-export let enabled = versionCompare.compare(Zotero.version.replace('m', '.'), built_against[client].min.replace('m', '.')) > 0
+export let enabled = versionCompare.compare(Zotero.version.replace('m', '.').replace(/-beta.*/, ''), built_against[client].min.replace('m', '.')) > 0
 if (enabled) {
   const ENV = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
   enabled = !ENV.get('CI') || Zotero.version === built_against[client].current
@@ -29,7 +29,7 @@ if (enabled) {
 Zotero.debug(`monkey-patch: ${Zotero.version}: BBT ${enabled ? 'en' : 'dis'}abled`)
 if (!enabled) {
   clean_pane_persist()
-  flash(`OUTDATED ${client.toUpperCase()} VERSION`, `BBT has been disabled\nNeed at least ${client} ${built_against[client].min}, found${Zotero.version}, please upgrade.`, 30) // tslint:disable-line:no-magic-numbers
+  flash(`OUTDATED ${client.toUpperCase()} VERSION`, `BBT has been disabled\nNeed at least ${client} ${built_against[client].min}, found ${Zotero.version}, please upgrade.`, 30) // tslint:disable-line:no-magic-numbers
 
   Components.utils.import('resource://gre/modules/AddonManager.jsm')
   AddonManager.getAddonByID('better-bibtex@iris-advies.com', addon => { addon.userDisabled = true })
