@@ -39,7 +39,8 @@ class Logger {
   }
 
   public debug(...msg) {
-    if (Zotero.Debug.enabled) Zotero.debug(this.format('', msg))
+    // cannot user Zotero.Debug.enabled because it is not available in foreground exporters
+    if (!Zotero.BetterBibTeX || Zotero.BetterBibTeX.debugEnabled()) Zotero.debug(this.format('', msg))
   }
 
   public error(...msg) {
