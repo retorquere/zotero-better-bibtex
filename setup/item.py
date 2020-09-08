@@ -67,7 +67,9 @@ class fetch(object):
       raise ValueError(f'Unknown client {client}')
 
   def hash(self, schema):
-    return hashlib.sha512(json.dumps({**schema, 'release': None, 'version': None, 'locales': None}, sort_keys=True).encode('utf-8')).hexdigest()
+    #print(schema.keys())
+    #'version', 'itemTypes', 'meta', 'csl', 'locales', 'release', 'hash'
+    return hashlib.sha512(json.dumps({ k: v for k, v in schema.items() if k in ('itemTypes', 'meta', 'csl')}, sort_keys=True).encode('utf-8')).hexdigest()
 
   def update(self, client, releases, download, jar, schema_path, schema):
     schema = os.path.join(SCHEMA.root, schema)
