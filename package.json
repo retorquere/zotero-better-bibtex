@@ -95,8 +95,8 @@
     "xregexp": "^4.3.0"
   },
   "devDependencies": {
-    "@types/node": "^14.6.3",
-    "@types/webpack": "^4.41.21",
+    "@types/node": "^14.6.4",
+    "@types/webpack": "^4.41.22",
     "archiver": "^5.0.0",
     "bluebird": "^3.7.2",
     "circular-dependency-plugin": "^5.2.0",
