@@ -20,7 +20,7 @@ The Better BibTeX [configuration]({{< ref "installation/preferences" >}}) pane c
 
 Additionally you can automate exporting (parts of) your library either using [auto-export]({{< ref "auto" >}}) or [pull export]({{< ref "pull" >}}).
 
-## Pinning (fixng) the citation key
+## Pinning (fixing) the citation key
 
 By default, BBT will generate citation keys from your items using the [formatting pattern]({{< ref "citing" >}}) you specified. If you want the key to be stable even when you change the item, 
 you can fix its citation key to a value of your choosing by adding the text `Citation Key: [your citekey]` on a line of its own in the `extra` field of the item.
