@@ -29,84 +29,9 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "localeDateOrder": "dmy",
-    "options": {
-      "Normalize": true,
-      "exportFileData": false,
-      "exportNotes": false,
-      "keepUpdated": false
-    },
+    "options": {},
     "preferences": {
-      "DOIandURL": "both",
-      "ascii": "",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportDelay": 1,
-      "autoExportIdleWait": 10,
-      "autoExportPathReplaceDiacritics": false,
-      "autoExportPathReplaceDirSep": "-",
-      "autoExportPathReplaceSpace": " ",
-      "autoPinDelay": 0,
-      "automaticTags": true,
-      "auxImport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
-      "citekeyFormat": "[auth][year]",
-      "citeprocNoteCitekey": false,
-      "csquotes": "",
-      "debugLogDir": "",
-      "exportBibTeXStrings": "off",
-      "exportBraceProtection": true,
-      "exportTitleCase": true,
-      "extraMergeCSL": true,
-      "extraMergeCitekeys": true,
-      "extraMergeTeX": true,
-      "git": "config",
-      "ignorePostscriptErrors": true,
-      "import": true,
-      "importBibTeXStrings": true,
-      "importCaseProtection": "as-needed",
-      "importCitationKey": true,
-      "importExtra": true,
-      "importJabRefAbbreviations": true,
-      "importJabRefStrings": true,
-      "importSentenceCase": "on+guess",
-      "itemObserverDelay": 5,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "keyScope": "library",
-      "kuroshiro": false,
-      "mapMath": "",
-      "mapText": "",
-      "mapUnicode": "conservative",
-      "newTranslatorsAskRestart": true,
-      "parseParticles": true,
-      "platform": "mac",
-      "postscript": "",
-      "postscriptOverride": "",
-      "qualityReport": false,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "rawImports": false,
-      "rawLaTag": "#LaTeX",
-      "relativeFilePaths": false,
-      "retainCache": false,
-      "scrubDatabase": false,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "testing": true,
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups",
-      "warnBulkModify": 10,
-      "warnTitleCased": false,
-      "workers": 1
+      "citekeyFormat": "[auth][year]"
     }
   },
   "items": [
@@ -120,8 +45,6 @@
         }
       ],
       "date": "2010",
-      "dateAdded": "2020-09-12T19:38:10Z",
-      "dateModified": "2020-09-12T19:38:10Z",
       "extra": [
         "Citation Key: Davis2010b",
         "tex.owner: napoletano",
@@ -131,7 +54,7 @@
       "issue": "61",
       "itemID": 1,
       "itemType": "journalArticle",
-      "pages": "29–46",
+      "pages": "29\u201346",
       "publicationTitle": "New Left Review",
       "tags": [
         {
@@ -157,13 +80,12 @@
         }
       ],
       "title": "Who will build the ark?",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/9FAXYIGT",
       "url": "https://newleftreview.org/issues/II61/articles/mike-davis-who-will-build-the-ark",
       "volume": "2"
     },
     {
       "ISBN": "0-231-05982-5",
-      "abstractNote": "Logic of Sense is one of Deleuze's seminal works. First published in 1969, shortly after Difference and Repetition, it prefigures the hybrid style and methods he would use in his later writing with Felix Guattari. In an early review Michel Foucault wrote that Logic of Sense 'should be read as the boldest and most insolent of metaphysical treatises'. The book is divided into 34 'series' and five appendices covering a diverse range of topics including, sense, nonsense, event, sexuality, psychoanalysis, paradoxes, schizophrenia, literature and becoming and includes fascinating close textual readings of works by Lewis Carroll, Sigmund Freud, Seneca, Pierre Klossowski, F. Scott Fitzgerald, and Émile Zola. Logic of Sense is essential reading for anyone interested in post-war continental thought. Contents Preface: From Lewis Carroll to the Stoics First Series of Paradoxes of Pure Becoming Second Series of Paradoxes of Surface Effects Third Series of the Proposition Fourth Series of Dualities Fifth Series of Sense Sixth Series on Serialization Seventh Series of Esoteric Words Eighth Series of Structure Ninth Series of the Problematic Tenth Series of the Ideal Game Eleventh Series of Nonsense Twelfth Series of the Paradox Thirteenth Series of the Schizophrenic and the Little Girl Fourteenth Series of Double Causality Fifteenth Series of Singularities Sixteenth Series of the Static Ontological Genesis Seventeenth Series of the Static Logical Genesis Eighteenth Series of the Three Images of Philosophers Nineteenth Series of Humor Twentieth Series on the Moral Problem in Stoic Philosophy Twenty-First Series of the Event Twenty-Second Series-Porcelain and Volcano Twenty-Third Series of the Aion Twenty-Fourth Series of the Communication of Events Twenty-Fifth Series of Univocity Twenty-Sixth Series of Language Twenty-Seventh Series of Orality Twenty-Eighth Series of Sexuality Twenty-Ninth Series-Good Intentions Are Inevitably Punished Thirtieth Series of the Phantasm Thirty-First Series of Thought Thirty-Second Series on the Different Kinds of Series Thirty-Third Series of Alice's Adventures Thirty-Fourth Series of Primary Order and Secondary Organization Appendixes I. The Simulacrum and Ancient Philosophy 1. Plato and the Simulacrum 2. Lucretius and the Simulacrum II. Phantasm and Modern Literature 3. Klossowski or Bodies-Language 4. Michel Tournier and the World Without Others 5. Zola and the Crack-Up Index",
+      "abstractNote": "Logic of Sense is one of Deleuze's seminal works. First published in 1969, shortly after Difference and Repetition, it prefigures the hybrid style and methods he would use in his later writing with Felix Guattari. In an early review Michel Foucault wrote that Logic of Sense 'should be read as the boldest and most insolent of metaphysical treatises'. The book is divided into 34 'series' and five appendices covering a diverse range of topics including, sense, nonsense, event, sexuality, psychoanalysis, paradoxes, schizophrenia, literature and becoming and includes fascinating close textual readings of works by Lewis Carroll, Sigmund Freud, Seneca, Pierre Klossowski, F. Scott Fitzgerald, and \u00c9mile Zola. Logic of Sense is essential reading for anyone interested in post-war continental thought. Contents Preface: From Lewis Carroll to the Stoics First Series of Paradoxes of Pure Becoming Second Series of Paradoxes of Surface Effects Third Series of the Proposition Fourth Series of Dualities Fifth Series of Sense Sixth Series on Serialization Seventh Series of Esoteric Words Eighth Series of Structure Ninth Series of the Problematic Tenth Series of the Ideal Game Eleventh Series of Nonsense Twelfth Series of the Paradox Thirteenth Series of the Schizophrenic and the Little Girl Fourteenth Series of Double Causality Fifteenth Series of Singularities Sixteenth Series of the Static Ontological Genesis Seventeenth Series of the Static Logical Genesis Eighteenth Series of the Three Images of Philosophers Nineteenth Series of Humor Twentieth Series on the Moral Problem in Stoic Philosophy Twenty-First Series of the Event Twenty-Second Series-Porcelain and Volcano Twenty-Third Series of the Aion Twenty-Fourth Series of the Communication of Events Twenty-Fifth Series of Univocity Twenty-Sixth Series of Language Twenty-Seventh Series of Orality Twenty-Eighth Series of Sexuality Twenty-Ninth Series-Good Intentions Are Inevitably Punished Thirtieth Series of the Phantasm Thirty-First Series of Thought Thirty-Second Series on the Different Kinds of Series Thirty-Third Series of Alice's Adventures Thirty-Fourth Series of Primary Order and Secondary Organization Appendixes I. The Simulacrum and Ancient Philosophy 1. Plato and the Simulacrum 2. Lucretius and the Simulacrum II. Phantasm and Modern Literature 3. Klossowski or Bodies-Language 4. Michel Tournier and the World Without Others 5. Zola and the Crack-Up Index",
       "accessDate": "2020-07-10",
       "citationKey": "Deleuze1990",
       "creators": [
@@ -189,8 +111,6 @@
         }
       ],
       "date": "1990",
-      "dateAdded": "2020-09-12T19:38:10Z",
-      "dateModified": "2020-09-12T19:38:10Z",
       "extra": [
         "Citation Key: Deleuze1990",
         "Pages: 405",
@@ -242,7 +162,6 @@
         }
       ],
       "title": "The Logic of Sense",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/DS37FYZA",
       "url": "https://www.bloomsbury.com/uk/logic-of-sense-9781474234887/"
     },
     {
@@ -252,8 +171,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Ragnheịur",
-          "lastName": "Bogadóttir"
+          "firstName": "Ragnhe\u1ecbur",
+          "lastName": "Bogad\u00f3ttir"
         },
         {
           "creatorType": "editor",
@@ -272,8 +191,6 @@
         }
       ],
       "date": "2012",
-      "dateAdded": "2020-09-12T19:38:09Z",
-      "dateModified": "2020-09-12T19:38:09Z",
       "extra": [
         "Citation Key: Bogadottir2012",
         "tex.crossref: Hornborg2012",
@@ -282,7 +199,7 @@
       ],
       "itemID": 3,
       "itemType": "bookSection",
-      "pages": "83–96",
+      "pages": "83\u201396",
       "place": "New York",
       "publicationTitle": "Ecology and power: Struggles over land and material resources in the past, present and future",
       "publisher": "Routledge",
@@ -361,8 +278,7 @@
           "tag": "sustainability"
         }
       ],
-      "title": "Fleece: Imperial metabolism in the pre­Columbian Andes",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/APAXFFL4",
+      "title": "Fleece: Imperial metabolism in the pre\u00adColumbian Andes",
       "url": "https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467",
       "volume": "18"
     },
@@ -398,8 +314,6 @@
         }
       ],
       "date": "2012",
-      "dateAdded": "2020-09-12T19:38:09Z",
-      "dateModified": "2020-09-12T19:38:09Z",
       "extra": [
         "Citation Key: Clark2012",
         "tex.crossref: Hornborg2012",
@@ -408,7 +322,7 @@
       ],
       "itemID": 4,
       "itemType": "bookSection",
-      "pages": "23–36",
+      "pages": "23\u201336",
       "place": "New York",
       "publicationTitle": "Ecology and power: Struggles over land and material resources in the past, present and future",
       "publisher": "Routledge",
@@ -488,7 +402,6 @@
         }
       ],
       "title": "Techno-fix: Ecological rifts and capital shifts",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/F5PVU99M",
       "url": "https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467",
       "volume": "18"
     },
@@ -524,8 +437,6 @@
         }
       ],
       "date": "2012",
-      "dateAdded": "2020-09-12T19:38:09Z",
-      "dateModified": "2020-09-12T19:38:09Z",
       "extra": [
         "Citation Key: Clark2012a",
         "tex.crossref: Hornborg2012",
@@ -534,7 +445,7 @@
       ],
       "itemID": 5,
       "itemType": "bookSection",
-      "pages": "68–82",
+      "pages": "68\u201382",
       "place": "New York",
       "publicationTitle": "Ecology and power: Struggles over land and material resources in the past, present and future",
       "publisher": "Routledge",
@@ -614,7 +525,6 @@
         }
       ],
       "title": "Guano: The global metabolic rift and the fertilizer trade",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/ZM3GKHAL",
       "url": "https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467",
       "volume": "18"
     },
@@ -626,7 +536,7 @@
         {
           "creatorType": "author",
           "firstName": "N. Thomas",
-          "lastName": "Håkansson"
+          "lastName": "H\u00e5kansson"
         },
         {
           "creatorType": "editor",
@@ -645,8 +555,6 @@
         }
       ],
       "date": "2012",
-      "dateAdded": "2020-09-12T19:38:09Z",
-      "dateModified": "2020-09-12T19:38:09Z",
       "extra": [
         "Citation Key: Hakansson2012",
         "tex.crossref: Hornborg2012",
@@ -655,7 +563,7 @@
       ],
       "itemID": 6,
       "itemType": "bookSection",
-      "pages": "124–142",
+      "pages": "124\u2013142",
       "place": "New York",
       "publicationTitle": "Ecology and power: Struggles over land and material resources in the past, present and future",
       "publisher": "Routledge",
@@ -735,7 +643,6 @@
         }
       ],
       "title": "Ivory: Socio-ecological consequences of the East African ivory trade",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/55GGAZCX",
       "url": "https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467",
       "volume": "18"
     },
@@ -766,8 +673,6 @@
         }
       ],
       "date": "2012",
-      "dateAdded": "2020-09-12T19:38:09Z",
-      "dateModified": "2020-09-12T19:38:09Z",
       "extra": [
         "Citation Key: Hermele2012",
         "tex.crossref: Hornborg2012",
@@ -776,7 +681,7 @@
       ],
       "itemID": 7,
       "itemType": "bookSection",
-      "pages": "285–289",
+      "pages": "285\u2013289",
       "place": "New York",
       "publicationTitle": "Ecology and power: Struggles over land and material resources in the past, present and future",
       "publisher": "Routledge",
@@ -856,7 +761,6 @@
         }
       ],
       "title": "Sugarcane: Agrofuels and conflicting land uses in Brazil",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/RA2VKLAI",
       "url": "https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467",
       "volume": "18"
     },
@@ -882,8 +786,6 @@
         }
       ],
       "date": "2012",
-      "dateAdded": "2020-09-12T19:38:10Z",
-      "dateModified": "2020-09-12T19:38:10Z",
       "extra": [
         "Citation Key: Hornborg2012",
         "Pages: 312",
@@ -970,7 +872,6 @@
         }
       ],
       "title": "Ecology and power: Struggles over land and material resources in the past, present and future",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/NKEVHVXQ",
       "url": "https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467",
       "volume": "18"
     },
@@ -1011,8 +912,6 @@
         }
       ],
       "date": "2012",
-      "dateAdded": "2020-09-12T19:38:09Z",
-      "dateModified": "2020-09-12T19:38:09Z",
       "extra": [
         "Citation Key: Hornborg2012a",
         "tex.crossref: Hornborg2012",
@@ -1021,7 +920,7 @@
       ],
       "itemID": 9,
       "itemType": "bookSection",
-      "pages": "1–10",
+      "pages": "1\u201310",
       "place": "New York",
       "publicationTitle": "Ecology and power: Struggles over land and material resources in the past, present and future",
       "publisher": "Routledge",
@@ -1101,7 +1000,6 @@
         }
       ],
       "title": "Introduction: Ecology and power",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/DHQMHQGH",
       "url": "https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467",
       "volume": "18"
     },
@@ -1132,8 +1030,6 @@
         }
       ],
       "date": "2012",
-      "dateAdded": "2020-09-12T19:38:09Z",
-      "dateModified": "2020-09-12T19:38:09Z",
       "extra": [
         "Citation Key: Hornborg2012b",
         "tex.crossref: Hornborg2012",
@@ -1142,7 +1038,7 @@
       ],
       "itemID": 10,
       "itemType": "bookSection",
-      "pages": "13–22",
+      "pages": "13\u201322",
       "place": "New York",
       "publicationTitle": "Ecology and power: Struggles over land and material resources in the past, present and future",
       "publisher": "Routledge",
@@ -1222,7 +1118,6 @@
         }
       ],
       "title": "Accumulation: Land as a medium of domination",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/CMCIRWQ9",
       "url": "https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467",
       "volume": "18"
     },
@@ -1244,7 +1139,7 @@
         {
           "creatorType": "author",
           "firstName": "Lennart",
-          "lastName": "Bångens"
+          "lastName": "B\u00e5ngens"
         },
         {
           "creatorType": "editor",
@@ -1263,8 +1158,6 @@
         }
       ],
       "date": "2012",
-      "dateAdded": "2020-09-12T19:38:09Z",
-      "dateModified": "2020-09-12T19:38:09Z",
       "extra": [
         "Citation Key: Isson2012",
         "tex.crossref: Hornborg2012",
@@ -1273,7 +1166,7 @@
       ],
       "itemID": 11,
       "itemType": "bookSection",
-      "pages": "206–216",
+      "pages": "206\u2013216",
       "place": "New York",
       "publicationTitle": "Ecology and power: Struggles over land and material resources in the past, present and future",
       "publisher": "Routledge",
@@ -1353,7 +1246,6 @@
         }
       ],
       "title": "Grass: From local pastures to global energy markets in eastern Tanzania",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/S3PMYF8B",
       "url": "https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467",
       "volume": "18"
     },
@@ -1389,8 +1281,6 @@
         }
       ],
       "date": "2012",
-      "dateAdded": "2020-09-12T19:38:09Z",
-      "dateModified": "2020-09-12T19:38:09Z",
       "extra": [
         "Citation Key: Jerneck2012",
         "tex.crossref: Hornborg2012",
@@ -1399,7 +1289,7 @@
       ],
       "itemID": 12,
       "itemType": "bookSection",
-      "pages": "274–284",
+      "pages": "274\u2013284",
       "place": "New York",
       "publicationTitle": "Ecology and power: Struggles over land and material resources in the past, present and future",
       "publisher": "Routledge",
@@ -1479,7 +1369,6 @@
         }
       ],
       "title": "Smoke: Cooking, coughing and collective action in Kenya",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/WADUELJM",
       "url": "https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467",
       "volume": "18"
     },
@@ -1510,8 +1399,6 @@
         }
       ],
       "date": "2012",
-      "dateAdded": "2020-09-12T19:38:09Z",
-      "dateModified": "2020-09-12T19:38:09Z",
       "extra": [
         "Citation Key: Jonsson2012",
         "tex.crossref: Hornborg2012",
@@ -1520,7 +1407,7 @@
       ],
       "itemID": 13,
       "itemType": "bookSection",
-      "pages": "182–193",
+      "pages": "182\u2013193",
       "place": "New York",
       "publicationTitle": "Ecology and power: Struggles over land and material resources in the past, present and future",
       "publisher": "Routledge",
@@ -1600,7 +1487,6 @@
         }
       ],
       "title": "Meat: The new geopolitics of food",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/AW9SSIBD",
       "url": "https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467",
       "volume": "18"
     },
@@ -1636,8 +1522,6 @@
         }
       ],
       "date": "2012",
-      "dateAdded": "2020-09-12T19:38:10Z",
-      "dateModified": "2020-09-12T19:38:10Z",
       "extra": [
         "Citation Key: Jorgenson2012",
         "tex.crossref: Hornborg2012",
@@ -1646,7 +1530,7 @@
       ],
       "itemID": 14,
       "itemType": "bookSection",
-      "pages": "155–167",
+      "pages": "155\u2013167",
       "place": "New York",
       "publicationTitle": "Ecology and power: Struggles over land and material resources in the past, present and future",
       "publisher": "Routledge",
@@ -1726,7 +1610,6 @@
         }
       ],
       "title": "Footprints: The division of nations and nature",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/KEFQKIRN",
       "url": "https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467",
       "volume": "18"
     },
@@ -1757,8 +1640,6 @@
         }
       ],
       "date": "2012",
-      "dateAdded": "2020-09-12T19:38:10Z",
-      "dateModified": "2020-09-12T19:38:10Z",
       "extra": [
         "Citation Key: Karlsson2012",
         "tex.crossref: Hornborg2012",
@@ -1767,7 +1648,7 @@
       ],
       "itemID": 15,
       "itemType": "bookSection",
-      "pages": "239–249",
+      "pages": "239\u2013249",
       "place": "New York",
       "publicationTitle": "Ecology and power: Struggles over land and material resources in the past, present and future",
       "publisher": "Routledge",
@@ -1847,7 +1728,6 @@
         }
       ],
       "title": "Atoms: Nuclear estrangement from Chernobyl to India",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/28P9S258",
       "url": "https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467",
       "volume": "18"
     },
@@ -1878,8 +1758,6 @@
         }
       ],
       "date": "2012",
-      "dateAdded": "2020-09-12T19:38:10Z",
-      "dateModified": "2020-09-12T19:38:10Z",
       "extra": [
         "Citation Key: Malm2012",
         "tex.crossref: Hornborg2012",
@@ -1888,7 +1766,7 @@
       ],
       "itemID": 16,
       "itemType": "bookSection",
-      "pages": "108–123",
+      "pages": "108\u2013123",
       "place": "New York",
       "publicationTitle": "Ecology and power: Struggles over land and material resources in the past, present and future",
       "publisher": "Routledge",
@@ -1967,8 +1845,7 @@
           "tag": "sustainability"
         }
       ],
-      "title": "Steam: Nineteenth-­century mechanization and the power of capital",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/V789S45P",
+      "title": "Steam: Nineteenth-\u00adcentury mechanization and the power of capital",
       "url": "https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467",
       "volume": "18"
     },
@@ -1980,7 +1857,7 @@
         {
           "creatorType": "author",
           "firstName": "Wilhelm",
-          "lastName": "Östberg"
+          "lastName": "\u00d6stberg"
         },
         {
           "creatorType": "editor",
@@ -1999,8 +1876,6 @@
         }
       ],
       "date": "2012",
-      "dateAdded": "2020-09-12T19:38:10Z",
-      "dateModified": "2020-09-12T19:38:10Z",
       "extra": [
         "Citation Key: Oestberg2012",
         "tex.crossref: Hornborg2012",
@@ -2009,7 +1884,7 @@
       ],
       "itemID": 17,
       "itemType": "bookSection",
-      "pages": "250–261",
+      "pages": "250\u2013261",
       "place": "New York",
       "publicationTitle": "Ecology and power: Struggles over land and material resources in the past, present and future",
       "publisher": "Routledge",
@@ -2089,7 +1964,6 @@
         }
       ],
       "title": "Safflower: Liberalisation or participation in a Tanzanian village",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/B36TFJJT",
       "url": "https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467",
       "volume": "18"
     },
@@ -2101,7 +1975,7 @@
         {
           "creatorType": "author",
           "firstName": "Marie",
-          "lastName": "Widengård"
+          "lastName": "Wideng\u00e5rd"
         },
         {
           "creatorType": "editor",
@@ -2120,8 +1994,6 @@
         }
       ],
       "date": "2012",
-      "dateAdded": "2020-09-12T19:38:10Z",
-      "dateModified": "2020-09-12T19:38:10Z",
       "extra": [
         "Citation Key: Widengard2012",
         "tex.crossref: Hornborg2012",
@@ -2130,7 +2002,7 @@
       ],
       "itemID": 18,
       "itemType": "bookSection",
-      "pages": "228–238",
+      "pages": "228\u2013238",
       "place": "New York",
       "publicationTitle": "Ecology and power: Struggles over land and material resources in the past, present and future",
       "publisher": "Routledge",
@@ -2210,7 +2082,6 @@
         }
       ],
       "title": "<i>Jatropha</i>: A magic bullet filled with oil",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/GWF6KZNT",
       "url": "https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467",
       "volume": "18"
     },
@@ -2241,8 +2112,6 @@
         }
       ],
       "date": "2012",
-      "dateAdded": "2020-09-12T19:38:10Z",
-      "dateModified": "2020-09-12T19:38:10Z",
       "extra": [
         "Citation Key: Widgren2012",
         "tex.crossref: Hornborg2012",
@@ -2251,7 +2120,7 @@
       ],
       "itemID": 19,
       "itemType": "bookSection",
-      "pages": "97–107",
+      "pages": "97\u2013107",
       "place": "New York",
       "publicationTitle": "Ecology and power: Struggles over land and material resources in the past, present and future",
       "publisher": "Routledge",
@@ -2331,7 +2200,6 @@
         }
       ],
       "title": "Slaves: Inequality and sustainable agriculture in pre-colonial West Africa",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/9Z2XTTWD",
       "url": "https://www.routledge.com/Ecology-and-Power-Struggles-over-Land-and-Material-Resources-in-the-Past/Hornborg-Clark-Hermele/p/book/9780415601467",
       "volume": "18"
     },
@@ -2348,8 +2216,6 @@
         }
       ],
       "date": "2020-03-01",
-      "dateAdded": "2020-09-12T19:38:10Z",
-      "dateModified": "2020-09-12T19:38:10Z",
       "extra": [
         "Citation Key: Nail2020a",
         "Pages: 240",
@@ -2437,12 +2303,7 @@
         }
       ],
       "title": "Lucretius II: An ethics of motion",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/EBKYKMFH",
       "url": "https://edinburghuniversitypress.com/book-lucretius-ii.html"
     }
-  ],
-  "version": {
-    "bbt": "5.2.66.emile.limonia",
-    "zotero": "5.0.90"
-  }
+  ]
 }
