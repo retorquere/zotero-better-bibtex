@@ -842,7 +842,10 @@ class ZoteroItem {
 
   // horrid jabref 3.8+ groups format
   protected $groups(value) {
-    if (this.jabref.groups[value] && !this.jabref.groups[value].entries.includes(this.bibtex.key)) this.jabref.groups[value].entries.push(this.bibtex.key)
+    for (const group of value.split(/\s*,\s*/)) {
+      if (this.jabref.groups[group] && !this.jabref.groups[group].entries.includes(this.bibtex.key)) this.jabref.groups[group].entries.push(this.bibtex.key)
+      log.debug('$groups: adding', this.bibtex.key, 'to', group, ':', this.jabref.groups)
+    }
     return true
   }
 
