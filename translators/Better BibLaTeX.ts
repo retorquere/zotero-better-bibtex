@@ -294,7 +294,7 @@ export function doExport() {
       let m
       if (item.url && (m = item.url.match(/^https?:\/\/www.jstor.org\/stable\/([\S]+)$/i))) {
         ref.override({ name: 'eprinttype', value: 'jstor'})
-        ref.override({ name: 'eprint', value: m[1] })
+        ref.override({ name: 'eprint', value: m[1].replace(/\?.*/, '') })
         ref.remove('archivePrefix')
         ref.remove('primaryClass')
         delete item.url

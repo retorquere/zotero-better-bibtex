@@ -9,8 +9,8 @@
   volume = {20},
   pages = {647},
   doi = {10.2307/2802755},
-  eprint = {2802755?origin=crossref},
-  eprinttype = {jstor}
+  url = {https://www.jstor.org/stable/2802755?origin=crossref},
+  urldate = {2020-05-15}
 }
 
 @article{Mehrling2000,
@@ -20,8 +20,7 @@
   journaltitle = {Journal of Post Keynesian Economics},
   volume = {22},
   pages = {397--406},
-  eprint = {4538686},
-  eprinttype = {jstor}
+  url = {https://www.jstor.org/stable/4538686}
 }
 
 

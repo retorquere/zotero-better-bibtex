@@ -7,7 +7,6 @@
       "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "doi",
       "asciiBibLaTeX": true,
       "automaticTags": false,
       "biblatexExtractEprint": false,
