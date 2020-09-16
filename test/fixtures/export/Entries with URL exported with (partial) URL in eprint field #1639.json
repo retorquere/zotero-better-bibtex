@@ -1,0 +1,70 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "mdy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "asciiBibLaTeX": true,
+      "automaticTags": false,
+      "biblatexExtractEprint": false,
+      "citeCommand": "",
+      "citekeyFormat": "[authors2][year]",
+      "csquotes": "\u201c\u201d",
+      "qualityReport": true,
+      "quickCopyMode": "citekeys",
+      "skipFields": "abstract,series,number,isbn,issn",
+      "workers": 2
+    }
+  },
+  "items": [
+    {
+      "citationKey": "Mehrling2000",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Perry",
+          "lastName": "Mehrling"
+        }
+      ],
+      "date": "2000",
+      "issue": "3",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "pages": "397-406",
+      "publicationTitle": "Journal of Post Keynesian Economics",
+      "title": "Modern money: fiat or credit?",
+      "url": "https://www.jstor.org/stable/4538686",
+      "volume": "22"
+    },
+    {
+      "DOI": "10.2307/2802755",
+      "ISSN": "00251496",
+      "abstractNote": "New information from Lesotho suggests a need to rethink common utilitarian and dualist approaches to livestock keeping in southern Africa. Non-commercial livestock practices in Lesotho can only be understood as the product of a particular cultural ordering of property which constitutes livestock and cash as distinct domains which are not freely inter-convertible. The cultural rules which define and valorise livestock as a special category of property are not residues from a traditional past but products of a contemporary social process which involves both local power relations and the larger structures of the regional migrant-labour economy which condition them. These power relations centre on the relationships: men/women (based on the division wage-earning husband/dependent wife), senior/junior (based on the division bridewealth receiver/ bridewealth giver), and patron/client (based on the division livestock lender/livestock borrower). So-called 'traditional' modes of stock-keeping thus rest on a structure of property which finds very modern attachments and points of support in a range of contemporary institutions of the household, community, and regional economy. This suggests a theoretical need to focus less on dualist spheres or utilitarian 'rational choices' and more on clusters of interconnexion that may cut across received analytical categories.",
+      "accessDate": "2020-05-15T21:12:04Z",
+      "citationKey": "Ferguson1985",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "James",
+          "lastName": "Ferguson"
+        }
+      ],
+      "date": "12/1985",
+      "issue": "4",
+      "itemID": 2,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Man",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "pages": "647",
+      "publicationTitle": "Man",
+      "shortTitle": "The bovine mystique",
+      "title": "The bovine mystique: power, property and livestock in rural Lesotho",
+      "url": "https://www.jstor.org/stable/2802755?origin=crossref",
+      "volume": "20"
+    }
+  ]
+}

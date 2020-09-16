@@ -167,6 +167,9 @@
             "biblatexExtendedDateFormat": {
               "type": "boolean"
             },
+            "biblatexExtractEprint": {
+              "type": "boolean"
+            },
             "biblatexExtendedNameFormat": {
               "type": "boolean"
             },
