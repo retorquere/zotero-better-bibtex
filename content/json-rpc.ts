@@ -242,9 +242,34 @@ class NSItem {
     }
 
     const found = KeyManager.keys.find(query)
-    if (found.length !== citekeys.length) {
-      const keysfound = found.map(key => key.citekey)
-      throw { code: INVALID_PARAMETERS, message: citekeys.filter(key => !keysfound.includes(key)).join(', ') + ' not found' }
+
+    const status: Record<string, number> = {}
+    for (const citekey of citekeys) {
+      status[citekey] = 0
+    }
+    for (const item of found) {
+      status[item.citekey] += 1
+    }
+    const error = { missing: [], duplicates: [] }
+    for (const [citekey, n] of Object.entries(status)) {
+      switch (n) {
+        case 0:
+          error.missing.push(citekey)
+          break
+        case 1:
+          break
+        default:
+          error.duplicates.push(citekey)
+          break
+      }
+    }
+
+    if (error.missing.length || error.duplicates.length) {
+      const message = [
+        error.missing.length ? `not found: ${error.missing.join(', ')}` : '',
+        error.duplicates.length ? `duplicates found: ${error.duplicates.join(', ')}` : '',
+      ].filter(msg => msg).join('\n')
+      throw { code: INVALID_PARAMETERS, message }
     }
 
     return [OK, 'text/plain', await Translators.exportItems(Translators.getTranslatorId(translator), null, { type: 'items', items: await getItemsAsync(found.map(key => key.itemID)) }) ]
