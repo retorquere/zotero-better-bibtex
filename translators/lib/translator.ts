@@ -6,14 +6,21 @@ import { client } from '../../content/client'
 
 type TranslatorMode = 'export' | 'import'
 
+const cacheDisabler = new class {
+  get(target, property) {
+    // collections: jabref 4 stores collection info inside the reference, and collection info depends on which part of your library you're exporting
+    if (['collections'].includes(property)) target.cachable = false
+    return target[property]
+  }
+}
+
 export let Translator = new class implements ITranslator { // tslint:disable-line:variable-name
   public preferences: IPreferences
   public skipFields: string[]
   public skipField: Record<string, boolean>
   public verbatimFields?: string[]
   public csquotes: { open: string, close: string }
-  public exportDir: string
-  public exportPath: string
+  public export: { dir: string, path: string } = { dir: undefined, path: undefined }
 
   public options: {
     quickCopyMode?: string
@@ -41,7 +48,7 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
   // public TeX: boolean
   // public CSL: boolean
 
-  public caching: boolean
+  private cachable: boolean
   public cache: {
     hits: number
     misses: number
@@ -81,6 +88,7 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
 
   public collections: Record<string, ZoteroCollection>
   private sortedItems: ISerializedItem[]
+  private currentItem: ISerializedItem
 
   public isJurisM: boolean
   public isZotero: boolean
@@ -105,6 +113,16 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
     this.options = this.header.displayOptions || {}
 
     this.stringCompare = (new Intl.Collator('en')).compare
+  }
+
+  public get exportDir(): string {
+    this.currentItem.cachable = false
+    return this.export.dir
+  }
+
+  public get exportPath(): string {
+    this.currentItem.cachable = false
+    return this.export.path
   }
 
   private typefield(field) {
@@ -138,9 +156,11 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
         hits: 0,
         misses: 0,
       }
-      this.exportDir = Zotero.getOption('exportDir')
-      this.exportPath = Zotero.getOption('exportPath')
-      if (this.exportDir && this.exportDir.endsWith(this.paths.sep)) this.exportDir = this.exportDir.slice(0, -1)
+      this.export = {
+        dir: Zotero.getOption('exportDir'),
+        path: Zotero.getOption('exportPath'),
+      }
+      if (this.export.dir && this.export.dir.endsWith(this.paths.sep)) this.export.dir = this.export.dir.slice(0, -1)
     }
 
     for (const pref of Object.keys(this.preferences)) {
@@ -171,20 +191,9 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
     if (mode === 'export') {
       this.unicode = (this.BetterBibTeX && !Translator.preferences.asciiBibTeX) || (this.BetterBibLaTeX && !Translator.preferences.asciiBibLaTeX)
 
-      this.caching = !(
-        // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
-        this.options.exportFileData
-
-        // jabref 4 stores collection info inside the reference, and collection info depends on which part of your library you're exporting
-        || (this.BetterTeX && this.preferences.jabrefFormat === 4) // tslint:disable-line:no-magic-numbers
-
-        // if you're looking at this.exportPath or this.exportDir in the postscript you're probably outputting something different based on it
-        || ((this.preferences.postscript || '').indexOf('Translator.exportPath') >= 0)
-        || ((this.preferences.postscript || '').indexOf('Translator.exportDir') >= 0)
-
-        // relative file paths are going to be different based on the file being exported to
-        || this.preferences.relativeFilePaths
-      )
+      // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
+      // relative file paths are going to be different based on the file being exported to
+      this.cachable = !(this.options.exportFileData || this.preferences.relativeFilePaths)
     }
 
     this.collections = {}
@@ -228,8 +237,9 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
       this.sortedItems = []
       let item
       while (item = Zotero.nextItem()) {
+        item.cachable = this.cachable
         item.journalAbbreviation = item.journalAbbreviation || item.autoJournalAbbreviation
-        this.sortedItems.push(item)
+        this.sortedItems.push(new Proxy(item, cacheDisabler))
       }
       // fallback to itemType.itemID for notes and attachments. And some items may have duplicate keys
       this.sortedItems.sort((a, b) => {
@@ -242,6 +252,6 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
   }
 
   public nextItem() {
-    return this.items().shift()
+    return (this.currentItem = this.items().shift())
   }
 }

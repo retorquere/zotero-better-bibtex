@@ -69,8 +69,7 @@ interface ITranslator {
   skipField: {[key: string]: boolean}
   verbatimFields?: string[]
   csquotes: { open: string, close: string }
-  exportDir: string
-  exportPath: string
+  export: { dir?: string, path?: string }
 
   options: {
     dropAttachments?: boolean
@@ -83,7 +82,6 @@ interface ITranslator {
   $label?: boolean
   #end for
 
-  caching: boolean
   cache: {
     hits: number
     misses: number

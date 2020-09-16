@@ -23,9 +23,9 @@ const Path = { // tslint:disable-line variable-name
   },
 
   relative(path) {
-    if (this.drive(Translator.exportDir) !== this.drive(path)) return path
+    if (this.drive(Translator.export.dir) !== this.drive(path)) return path
 
-    const from = Translator.exportDir.split(Translator.paths.sep)
+    const from = Translator.export.dir.split(Translator.paths.sep)
     const to = path.split(Translator.paths.sep)
 
     while (from.length && to.length && this.normalize(from[0]) === this.normalize(to[0])) {
@@ -318,8 +318,6 @@ export class Reference {
   public typeMap: { csl: { [key: string]: string | { type: string, subtype?: string } }, zotero: { [key: string]: string | { type: string, subtype?: string } } }
   public lint: Function
   public addCreators: Function
-
-  private cachable = true
 
   // private nonLetters = new Zotero.Utilities.XRegExp('[^\\p{Letter}]', 'g')
   private punctuationAtEnd = new Zotero.Utilities.XRegExp('[\\p{Punctuation}]$')
@@ -677,7 +675,7 @@ export class Reference {
   }
 
   public complete() {
-    if (this.item.collections?.length && Translator.preferences.jabrefFormat === 4) { // tslint:disable-line:no-magic-numbers
+    if (Translator.preferences.jabrefFormat === 4 && this.item.collections?.length) { // tslint:disable-line:no-magic-numbers
       const groups = Array.from(new Set(this.item.collections.map(key => Translator.collections[key]?.name).filter(name => name))).sort()
       this.add({ name: 'groups', value: groups.join(',') })
     }
@@ -875,15 +873,14 @@ export class Reference {
       delete this.has[field]
       this.has[field] = value
     }
-    let cache
+
     try {
-      cache = this.postscript(this, this.item, Translator, Zotero)
+      if (this.postscript(this, this.item, Translator, Zotero) === false) this.item.cachable = false
     } catch (err) {
       if (Translator.preferences.testing && !Translator.preferences.ignorePostscriptErrors) throw err
       log.error('Reference.postscript failed:', err)
-      cache = false
+      this.item.cachable = false
     }
-    this.cachable = this.cachable && (typeof cache !== 'boolean' || cache)
 
     for (const name of Translator.skipFields) {
       this.remove(name)
@@ -917,7 +914,7 @@ export class Reference {
     this.metadata.DeclarePrefChars = Exporter.unique_chars(this.metadata.DeclarePrefChars)
 
     this.metadata.packages = Object.keys(this.packages)
-    if (Translator.caching && this.cachable) Zotero.BetterBibTeX.cacheStore(this.item.itemID, Translator.options, Translator.preferences, ref, this.metadata)
+    if (this.item.cachable) Zotero.BetterBibTeX.cacheStore(this.item.itemID, Translator.options, Translator.preferences, ref, this.metadata)
 
     Exporter.postfix.add(this)
   }
@@ -1130,10 +1127,10 @@ export class Reference {
 
       if (Translator.preferences.testing) {
         att.path = `files/${this.item.citationKey}/${att.path.replace(/.*[\/\\]/, '')}`
-      } else if (Translator.preferences.relativeFilePaths && Translator.exportDir) {
+      } else if (Translator.preferences.relativeFilePaths && Translator.export.dir) {
         const relative = Path.relative(att.path)
         if (relative !== att.path) {
-          this.cachable = false
+          this.item.cachable = false
           att.path = relative
         }
       }
@@ -1286,7 +1283,7 @@ export class Reference {
     return latex
   }
 
-  private postscript(_reference, _item, _translator, _zotero) {} // tslint:disable-line:no-empty
+  private postscript(_reference, _item, _translator, _zotero): boolean { return true } // tslint:disable-line:no-empty
 
   private toVerbatim(text) {
     text = text || ''
