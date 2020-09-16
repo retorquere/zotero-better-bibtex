@@ -11,6 +11,7 @@ declare global {
     notes: string[]
     attachments: { path: string, title?: string, mimeType?: string }
     raw: boolean
+    cachable?: boolean
     autoJournalAbbreviation?: string
 
     %for field in fields:

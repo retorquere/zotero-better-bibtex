@@ -30,7 +30,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
 
     if (typeof postscript === 'string' && postscript.trim() !== '') {
       try {
-        this.postscript = new Function('reference', 'item', 'Translator', 'Zotero', postscript) as (reference: any, item: any) => void
+        this.postscript = new Function('reference', 'item', 'Translator', 'Zotero', postscript) as (reference: any, item: any) => boolean
         log.debug(`Installed postscript: ${JSON.stringify(postscript)}`)
       } catch (err) {
         if (Translator.preferences.testing) throw err
