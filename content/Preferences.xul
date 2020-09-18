@@ -573,6 +573,7 @@
                           <menuitem label="&better-bibtex.Preferences.export.jabrefFormat.0;" value="0"/>
                           <menuitem label="&better-bibtex.Preferences.export.jabrefFormat.3;" value="3"/>
                           <menuitem label="&better-bibtex.Preferences.export.jabrefFormat.4;" value="4"/>
+                          <menuitem label="&better-bibtex.Preferences.export.jabrefFormat.5;" value="5"/>
                         </menupopup>
                       </menulist>
                       <image tooltip="tooltip-jabrefFormat" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>

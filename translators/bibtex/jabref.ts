@@ -37,7 +37,8 @@ export class JabRef {
   }
 
   private exportGroup(collection, level) {
-    let group = [`${level} ExplicitGroup:${this.quote(collection.name)}`, '0']
+    let group = { 4: 'Explicit', 5: 'Static'}[Translator.preferences.jabrefFormat]
+    group = [`${level} ${group}Group:${this.quote(collection.name)}`, '0']
 
     if (Translator.preferences.jabrefFormat === 3) { // tslint:disable-line:no-magic-numbers
       const references = ((collection.items || []).filter(id => this.citekeys.has(id)).map(id => this.quote(this.citekeys.get(id))))
