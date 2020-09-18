@@ -7,6 +7,7 @@ import { Reference } from './bibtex/reference'
 import { Exporter } from './bibtex/exporter'
 
 Reference.prototype.fieldEncoding = {
+  groups: 'verbatim', // blegh jabref field
   url: 'url',
   doi: 'verbatim',
   eprint: 'verbatim',

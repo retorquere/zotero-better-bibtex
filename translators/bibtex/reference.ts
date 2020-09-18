@@ -1294,7 +1294,7 @@ export class Reference {
     } else {
       value = text.replace(/([\\{}])/g, '\\$1')
     }
-    if (!Translator.unicode) value = value.replace(/[^\x20-\x7E]/g, (chr => `\\%${`00${chr.charCodeAt(0).toString(16).slice(-2)}`}`)) // tslint:disable-line:no-magic-numbers
+    // if (!Translator.unicode) value = value.replace(/[^\x20-\x7E]/g, (chr => `\\%${`00${chr.charCodeAt(0).toString(16).slice(-2)}`}`)) // tslint:disable-line:no-magic-numbers
     return value
   }
 

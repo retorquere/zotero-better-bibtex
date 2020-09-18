@@ -34,6 +34,7 @@ Reference.prototype.caseConversion = {
 }
 
 Reference.prototype.fieldEncoding = {
+  groups: 'verbatim', // blegh jabref field
   url: 'verbatim',
   doi: 'verbatim',
   // school: 'literal'
