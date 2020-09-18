@@ -675,7 +675,7 @@ export class Reference {
   }
 
   public complete() {
-    if (Translator.preferences.jabrefFormat === 4 && this.item.collections?.length) { // tslint:disable-line:no-magic-numbers
+    if (Translator.preferences.jabrefFormat >= 4 && this.item.collections?.length) { // tslint:disable-line:no-magic-numbers
       const groups = Array.from(new Set(this.item.collections.map(key => Translator.collections[key]?.name).filter(name => name))).sort()
       this.add({ name: 'groups', value: groups.join(',') })
     }

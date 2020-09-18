@@ -23,7 +23,7 @@ export class JabRef {
     }
 
     Zotero.write(`@comment{jabref-meta: ${meta};}\n`)
-    Zotero.write('@comment{jabref-meta: groupstree:\n')
+    Zotero.write('@comment{jabref-meta: groupstree:\n') // TODO: grouping
 
     this.groups = ['0 AllEntriesGroup:']
     const collections = Object.values(Translator.collections).filter(coll => !coll.parent)

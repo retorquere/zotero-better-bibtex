@@ -223,11 +223,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
       displayOptions.exportFileData
 
       // jabref 4 stores collection info inside the reference, and collection info depends on which part of your library you're exporting
-      || (translator.label.includes('TeX') && options.preferences.jabrefFormat === 4) // tslint:disable-line:no-magic-numbers
-
-      // if you're looking at this.exportPath or this.exportDir in the postscript you're probably outputting something different based on it
-      || (((options.preferences.postscript as string) || '').indexOf('Translator.exportPath') >= 0)
-      || (((options.preferences.postscript as string) || '').indexOf('Translator.exportDir') >= 0)
+      || (translator.label.includes('TeX') && options.preferences.jabrefFormat >= 4) // tslint:disable-line:no-magic-numbers
 
       // relative file paths are going to be different based on the file being exported to
       || options.preferences.relativeFilePaths
