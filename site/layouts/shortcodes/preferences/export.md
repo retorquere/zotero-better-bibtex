@@ -72,13 +72,14 @@ If there are some fields you don't want in your bibtex files (such as `note` for
 
 default: `no`
 
-Export JabRef-specific fields: timestamps, and groups for each collection and item is part of. Note that format `4` will disable caching in exports, which is really undesirable specifically for auto-exports.
+Export JabRef-specific fields: timestamps, and groups for each collection and item is part of. Note that this format will disable caching in exports, which is really undesirable specifically for auto-exports.
 
 Options:
 
 * no
 * for JabRef 3
 * for JabRef 4
+* for JabRef 5
 
 ### Miscellaneous
 

@@ -21,7 +21,7 @@
       <description>&better-bibtex.Preferences.export.fields.doi-and-url.warning;</description>
     </tooltip>
     <tooltip id="tooltip-jabrefFormat">
-      <description>&better-bibtex.Preferences.export.jabrefFormat.4.warn;</description>
+      <description>&better-bibtex.Preferences.export.jabrefFormat.warn;</description>
     </tooltip>
     <tooltip id="tooltip-importSentenceCase">
       <description>&better-bibtex.Preferences.advanced.import.sentenceCase.warning;</description>

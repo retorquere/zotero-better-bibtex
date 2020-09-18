@@ -150,7 +150,8 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.0 "Non">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.3 "Oui, pour JabRef 3">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.4 "Oui, pour JabRef 4">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat.4.warn "Exporter les champs spécifiques à JabRef : horodatages (« timestamps ») et groupes pour chaque collection et élément qui en fait partie. Notez que le format `4` désactivera la mise en cache dans les exportations, ce qui est vraiment indésirable spécifiquement pour les exportations automatiques.">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat.5 "Oui, pour JabRef 5">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat.warn "Exporter les champs spécifiques à JabRef : horodatages (« timestamps ») et groupes pour chaque collection et élément qui en fait partie. Notez que le format `4` désactivera la mise en cache dans les exportations, ce qui est vraiment indésirable spécifiquement pour les exportations automatiques.">
 <!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Exporter les caractères Unicode en commandes LaTeX">
 <!ENTITY better-bibtex.Preferences.export.biblatex "BibLaTeX">
 <!ENTITY better-bibtex.Preferences.export.biblatex.extendedNameFormat "Utiliser le format de nom étendu BibLaTeX (nécessite BibLaTeX 3.5)">
