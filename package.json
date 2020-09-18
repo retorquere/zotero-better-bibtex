@@ -56,7 +56,7 @@
     "test": "test"
   },
   "dependencies": {
-    "@retorquere/bibtex-parser": "^3.2.10",
+    "@retorquere/bibtex-parser": "^3.2.11",
     "@types/lokijs": "^1.5.3",
     "ajv": "^6.12.5",
     "ajv-keywords": "^3.5.2",
@@ -96,7 +96,7 @@
     "xregexp": "^4.3.0"
   },
   "devDependencies": {
-    "@types/node": "^14.10.2",
+    "@types/node": "^14.11.1",
     "@types/webpack": "^4.41.22",
     "archiver": "^5.0.2",
     "bluebird": "^3.7.2",
@@ -135,7 +135,7 @@
     "ts-node": "^9.0.0",
     "typescript": "^4.0.2",
     "uri-templates": "^0.2.0",
-    "webpack": "^4.44.1",
+    "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12",
     "wrapper-webpack-plugin": "^2.1.0",
     "xml-parser": "^1.2.1",
