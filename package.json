@@ -131,7 +131,7 @@
     "request-promise": "^4.2.6",
     "rimraf": "^3.0.2",
     "shelljs": "^0.8.4",
-    "ts-loader": "^8.0.3",
+    "ts-loader": "^8.0.4",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.3",
     "uri-templates": "^0.2.0",
