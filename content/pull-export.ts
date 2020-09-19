@@ -10,6 +10,7 @@ import { get as getCollection } from './collection'
 import { get as getLibrary } from './library'
 import { getItemsAsync } from './get-items-async'
 import { KeyManager } from './key-manager'
+import { log } from './logger'
 
 function displayOptions(request) {
   const isTrue = new Set([ 'y', 'yes', 'true' ])
@@ -99,9 +100,19 @@ Zotero.Server.Endpoints['/better-bibtex/export/item'] = class {
 
     try {
       let { translator, citationKeys, libraryID, library, pandocFilterData } = request.query
-      if (typeof libraryID !== 'undefined' && library) return [BAD_REQUEST, 'text/plain', 'specify one of library or libraryID' ]
-      if (typeof library === 'undefined' && library) libraryID = getLibrary(library)
-      if (typeof library === 'undefined') libraryID = Zotero.Libraries.userLibraryID
+      if (libraryID && library) {
+        return [BAD_REQUEST, 'text/plain', 'specify at most one of library or libraryID' ]
+
+      } else if (libraryID) {
+        if (!libraryID.match(/^[0-9]+$/)) return [BAD_REQUEST, 'text/plain', `${libraryID} is not a number` ]
+        libraryID = parseInt(libraryID)
+
+      } else if (library) {
+        libraryID = getLibrary(library).libraryTypeID
+
+      } else {
+        libraryID = Zotero.Libraries.userLibraryID
+      }
 
       citationKeys = Array.from(new Set(citationKeys.split(',').filter(k => k)))
       if (!citationKeys.length) return [ SERVER_ERROR, 'text/plain', 'no citation keys provided' ]
@@ -114,6 +125,8 @@ Zotero.Server.Endpoints['/better-bibtex/export/item'] = class {
       const itemIDs: Record<string, number> = {}
       for (const citekey of citationKeys) {
         const key = KeyManager.keys.find({ libraryID, citekey })
+        log.debug('export:', { key, citekey, libraryID })
+
         switch (key.length) {
           case 0:
             response.errors[citekey] = 'not found'
