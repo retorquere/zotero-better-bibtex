@@ -2,16 +2,92 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {},
+    "localeDateOrder": "dmy",
+    "options": {
+      "Normalize": true,
+      "exportFileData": false,
+      "exportNotes": false,
+      "keepUpdated": false
+    },
     "preferences": {
-      "citekeyFormat": "[auth][year]"
+      "DOIandURL": "both",
+      "ascii": "",
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "",
+      "autoExport": "immediate",
+      "autoExportDelay": 1,
+      "autoExportIdleWait": 10,
+      "autoExportPathReplaceDiacritics": false,
+      "autoExportPathReplaceDirSep": "-",
+      "autoExportPathReplaceSpace": " ",
+      "autoPinDelay": 0,
+      "automaticTags": true,
+      "auxImport": false,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": false,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "off",
+      "cacheFlushInterval": 5,
+      "citeCommand": "cite",
+      "citekeyFold": true,
+      "citekeyFormat": "[auth][year]",
+      "citeprocNoteCitekey": false,
+      "csquotes": "",
+      "debugLogDir": "",
+      "exportBibTeXStrings": "off",
+      "exportBraceProtection": true,
+      "exportTitleCase": true,
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "extraMergeTeX": true,
+      "git": "config",
+      "ignorePostscriptErrors": true,
+      "import": true,
+      "importBibTeXStrings": true,
+      "importCaseProtection": "as-needed",
+      "importCitationKey": true,
+      "importExtra": true,
+      "importJabRefAbbreviations": true,
+      "importJabRefStrings": true,
+      "importSentenceCase": "on+guess",
+      "itemObserverDelay": 5,
+      "jabrefFormat": 0,
+      "keyConflictPolicy": "keep",
+      "keyScope": "library",
+      "kuroshiro": false,
+      "mapMath": "",
+      "mapText": "",
+      "mapUnicode": "conservative",
+      "newTranslatorsAskRestart": true,
+      "parseParticles": true,
+      "platform": "mac",
+      "postscript": "",
+      "postscriptOverride": "",
+      "qualityReport": false,
+      "quickCopyMode": "latex",
+      "quickCopyPandocBrackets": false,
+      "rawImports": false,
+      "rawLaTag": "#LaTeX",
+      "relativeFilePaths": false,
+      "retainCache": false,
+      "scrubDatabase": false,
+      "skipFields": "",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "strings": "",
+      "testing": true,
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups",
+      "warnBulkModify": 10,
+      "warnTitleCased": false,
+      "workers": 1
     }
   },
   "items": [
     {
       "DOI": "10.1016/0921-4534(89)90484-X",
       "ISSN": "0921-4534",
-      "abstractNote": "Cluster model calculations have been carried out to study the electronic state and the chemical bonding in Cu2O and CuO as well as YBa2Cu3O7 and YBa2Cu3O6. The clusters used are Cu4O14-9, Cu4O16-12, Cu3O17-12 and Cu3O15-10, respectively, each being embedded in an appropriate electrostatic potential reflecting the crystal structure. The covalent interaction between Cu and O is most significant in the cluster for the high-temperature superconductor YBa2CuO7. It is remarkable that O 2p[pi] holes are created near the Fermi level and stabilized in the O\u2014-Cu+\u2014O- linear bond formed in the basal Cu2O plane of the cluster for YBa2Cu3O7. A charge disproportionation takes place both in the model clusters for YBa2Cu3O7 and YBa2Cu3O6, while a spin polarization is seen only in the latter. The similarity and dissimilarity of Cu atoms in those oxides are discussed.",
+      "abstractNote": "Cluster model calculations have been carried out to study the electronic state and the chemical bonding in Cu2O and CuO as well as YBa2Cu3O7 and YBa2Cu3O6. The clusters used are Cu4O14-9, Cu4O16-12, Cu3O17-12 and Cu3O15-10, respectively, each being embedded in an appropriate electrostatic potential reflecting the crystal structure. The covalent interaction between Cu and O is most significant in the cluster for the high-temperature superconductor YBa2CuO7. It is remarkable that O 2p[pi] holes are created near the Fermi level and stabilized in the O—-Cu+—O- linear bond formed in the basal Cu2O plane of the cluster for YBa2Cu3O7. A charge disproportionation takes place both in the model clusters for YBa2Cu3O7 and YBa2Cu3O6, while a spin polarization is seen only in the latter. The similarity and dissimilarity of Cu atoms in those oxides are discussed.",
       "citationKey": "Adachi_1989",
       "creators": [
         {
@@ -26,6 +102,8 @@
         }
       ],
       "date": "1989-01",
+      "dateAdded": "2020-09-19T08:41:30Z",
+      "dateModified": "2020-09-19T08:41:30Z",
       "extra": [
         "Citation Key: Adachi_1989",
         "tex.owner: Francesco",
@@ -35,15 +113,20 @@
       "itemID": 1,
       "itemType": "journalArticle",
       "journalAbbreviation": "Physica C",
-      "pages": "169\u2013179",
-      "publicationTitle": "Physica C: Superconductivity",
+      "pages": "169–179",
+      "publicationTitle": "Physica C-superconductivity and Its Applications",
       "tags": [
         {
           "tag": "CuO"
         }
       ],
       "title": "Cluster model investigation of the electronic state and chemical bond in cuprous and cupric oxide",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/CX9QDNBB",
       "volume": "157"
     }
-  ]
+  ],
+  "version": {
+    "bbt": "5.2.68.emile.limonia",
+    "zotero": "5.0.90"
+  }
 }
