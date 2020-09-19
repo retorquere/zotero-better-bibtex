@@ -23,7 +23,7 @@ export class JabRef {
     }
 
     Zotero.write(`@comment{jabref-meta: ${meta};}\n`)
-    Zotero.write('@comment{jabref-meta: groupstree:\n') // TODO: grouping
+    Zotero.write(`@comment{jabref-meta: ${Translator.preferences.jabrefFormat === 5 ? 'grouping' : 'groupstree'}:\n`) // tslint:disable-line:no-magic-numbers
 
     this.groups = ['0 AllEntriesGroup:']
     const collections = Object.values(Translator.collections).filter(coll => !coll.parent)
@@ -45,8 +45,11 @@ export class JabRef {
       group = group.concat(references)
     }
 
-    // what is the meaning of the empty cell at the end, JabRef?
-    group.push('')
+    if (Translator.preferences.jabrefFormat === 5) { // tslint:disable-line:no-magic-numbers
+      group = group.concat(['1', '0x8a8a8aff', '', '']) // isexpanded?, color, icon, description
+    } else {
+      group.push('') // what is the meaning of the empty cell at the end, JabRef?
+    }
 
     this.groups.push(group.join(';'))
 
