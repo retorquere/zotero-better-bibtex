@@ -6813,7 +6813,7 @@
       "itemType": "journalArticle",
       "journalAbbreviation": "Cryst. Growth Des.",
       "pages": "4795\u20134803",
-      "publicationTitle": "Crystal Growth and Design",
+      "publicationTitle": "Crystal Growth & Design",
       "title": "Phase Transformation in Radially Merged Wurtzite GaAs Nanowires",
       "volume": "15"
     },
@@ -8293,7 +8293,7 @@
       "itemType": "journalArticle",
       "journalAbbreviation": "Cryst. Growth Des.",
       "pages": "3858\u20133865",
-      "publicationTitle": "Crystal Growth and Design",
+      "publicationTitle": "Crystal Growth & Design",
       "title": "InAs/GaAs Core\u2013Shell Nanowires",
       "volume": "11"
     },
@@ -8357,7 +8357,7 @@
       "itemType": "journalArticle",
       "journalAbbreviation": "Cryst. Growth Des.",
       "pages": "4257\u20134260",
-      "publicationTitle": "Crystal Growth and Design",
+      "publicationTitle": "Crystal Growth & Design",
       "title": "Formation of high-quality GaN microcrystals by pendeoepitaxial overgrowth of GaN nanowires on Si(111) by molecular beam epitaxy",
       "volume": "11"
     },
@@ -8410,7 +8410,7 @@
       "itemType": "journalArticle",
       "journalAbbreviation": "Cryst. Growth Des.",
       "pages": "5686\u20135692",
-      "publicationTitle": "Crystal Growth and Design",
+      "publicationTitle": "Crystal Growth & Design",
       "title": "Indium incorporation in <span class=\"nocase\">In\u2093Ga\u2081\u208b\u2093N/GaN</span> nanowire heterostructures investigated by line-of-sight quadrupole mass spectrometry",
       "volume": "12"
     },
@@ -8448,7 +8448,7 @@
       "itemType": "journalArticle",
       "journalAbbreviation": "Cryst. Growth Des.",
       "pages": "1167\u20131174",
-      "publicationTitle": "Crystal Growth and Design",
+      "publicationTitle": "Crystal Growth & Design",
       "title": "Crystal Phase Selective Growth in GaAs/InAs Core\u2013Shell Nanowires",
       "volume": "14"
     },
@@ -8503,7 +8503,7 @@
       "itemType": "journalArticle",
       "journalAbbreviation": "Cryst. Growth Des.",
       "pages": "2246\u20132253",
-      "publicationTitle": "Crystal Growth and Design",
+      "publicationTitle": "Crystal Growth & Design",
       "title": "Statistical analysis of the shape of one-dimensional nanostructures: Determining the coalescence degree of spontaneously formed GaN nanowires",
       "volume": "14"
     },
@@ -14434,7 +14434,7 @@
       "itemType": "journalArticle",
       "journalAbbreviation": "J. Chem. Phys.",
       "pages": "7706\u20137715",
-      "publicationTitle": "Journal of Chemical Physics",
+      "publicationTitle": "The Journal of Chemical Physics",
       "title": "Characterization and photocurrent spectroscopy of single quantum wells",
       "volume": "93"
     },
@@ -18126,9 +18126,8 @@
       "issue": "3",
       "itemID": 363,
       "itemType": "journalArticle",
-      "journalAbbreviation": "J. Electron Microsc. (Tokyo)",
       "pages": "223\u2013230",
-      "publicationTitle": "Journal of Electron Microscopy",
+      "publicationTitle": "J. Electron Microsc. (Tokyo)",
       "title": "Contrast analysis of dislocation images in TEM\u2013cathodoluminescence technique",
       "volume": "54"
     },
@@ -22956,7 +22955,7 @@
       "itemType": "journalArticle",
       "journalAbbreviation": "J. Electron Spectrosc. Relat. Phenom.",
       "pages": "563",
-      "publicationTitle": "Journal of Electron Spectroscopy and Related Phenomena",
+      "publicationTitle": "Journal of Electron Spectroscopy and Related Phenomenon",
       "title": "Cathodoluminescence studies of exciton diffusion in Gallium Nitride",
       "volume": "10"
     },
@@ -23592,7 +23591,7 @@
       "itemType": "journalArticle",
       "journalAbbreviation": "Europhys. Lett.",
       "pages": "305\u2013311",
-      "publicationTitle": "Europhysics Letters",
+      "publicationTitle": "Europhysics Letters (EPL)",
       "title": "Origins of Fermi-Level pinning on GaN and InN polar and nonpolar surfaces",
       "volume": "76"
     },
