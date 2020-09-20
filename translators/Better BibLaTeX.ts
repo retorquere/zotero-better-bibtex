@@ -291,32 +291,32 @@ export function doExport() {
     if (ref.referencetype === 'book' && item.numberOfVolumes) ref.referencetype = 'mvbook'
     if (ref.referencetype === 'report' && item.type?.toLowerCase().includes('manual')) ref.referencetype = 'manual'
 
-    let m
-    if (item.url && (m = item.url.match(/^https?:\/\/www.jstor.org\/stable\/([\S]+)$/i))) {
-      ref.override({ name: 'eprinttype', value: 'jstor'})
-      ref.override({ name: 'eprint', value: m[1] })
-      ref.remove('archivePrefix')
-      ref.remove('primaryClass')
-      delete item.url
-      ref.remove('url')
-    }
+    if (Translator.preferences.biblatexExtractEprint) {
+      let m
+      if (item.url && (m = item.url.match(/^https?:\/\/www.jstor.org\/stable\/([\S]+)$/i))) {
+        ref.override({ name: 'eprinttype', value: 'jstor'})
+        ref.override({ name: 'eprint', value: m[1].replace(/\?.*/, '') })
+        ref.remove('archivePrefix')
+        ref.remove('primaryClass')
+        delete item.url
+        ref.remove('url')
 
-    if (item.url && (m = item.url.match(/^https?:\/\/books.google.com\/books?id=([\S]+)$/i))) {
-      ref.override({ name: 'eprinttype', value: 'googlebooks'})
-      ref.override({ name: 'eprint', value: m[1] })
-      ref.remove('archivePrefix')
-      ref.remove('primaryClass')
-      delete item.url
-      ref.remove('url')
-    }
+      } else if (item.url && (m = item.url.match(/^https?:\/\/books.google.com\/books?id=([\S]+)$/i))) {
+        ref.override({ name: 'eprinttype', value: 'googlebooks'})
+        ref.override({ name: 'eprint', value: m[1] })
+        ref.remove('archivePrefix')
+        ref.remove('primaryClass')
+        delete item.url
+        ref.remove('url')
 
-    if (item.url && (m = item.url.match(/^https?:\/\/www.ncbi.nlm.nih.gov\/pubmed\/([\S]+)$/i))) {
-      ref.override({ name: 'eprinttype', value: 'pubmed'})
-      ref.override({ name: 'eprint', value: m[1] })
-      ref.remove('archivePrefix')
-      ref.remove('primaryClass')
-      delete item.url
-      ref.remove('url')
+      } else if (item.url && (m = item.url.match(/^https?:\/\/www.ncbi.nlm.nih.gov\/pubmed\/([\S]+)$/i))) {
+        ref.override({ name: 'eprinttype', value: 'pubmed'})
+        ref.override({ name: 'eprint', value: m[1] })
+        ref.remove('archivePrefix')
+        ref.remove('primaryClass')
+        delete item.url
+        ref.remove('url')
+      }
     }
 
     ref.add({ name: 'langid', value: ref.language })

@@ -33,6 +33,7 @@
   "jabrefFormat": 0,
   "qualityReport": false,
   "biblatexExtendedDateFormat": true,
+  "biblatexExtractEprint": true,
   "biblatexExtendedNameFormat": false,
   "exportTitleCase": true,
   "exportBraceProtection": true,

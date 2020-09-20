@@ -253,6 +253,8 @@
           Support for EDTF dates in biblatex
         </bbt:doc>
 
+        <preference name="extensions.zotero.translators.better-bibtex.biblatexExtractEprint" id="pref-better-bibtex-biblatexExtractEprint" type="bool" default="true"/>
+
         <preference name="extensions.zotero.translators.better-bibtex.biblatexExtendedNameFormat" id="pref-better-bibtex-biblatexExtendedNameFormat" type="bool" default="false"/>
         <bbt:doc>
           Use the extended biber 2.7 format for names with particles - only works in BibLaTeX 3.5 or later.
@@ -539,6 +541,7 @@
               <caption label="&better-bibtex.Preferences.export.biblatex;"/>
               <checkbox preference="pref-better-bibtex-asciiBibLaTeX" label="&better-bibtex.Preferences.export.biblatex.ascii;"/>
               <checkbox preference="pref-better-bibtex-biblatexExtendedNameFormat" label="&better-bibtex.Preferences.export.biblatex.extendedNameFormat;"/>
+              <checkbox preference="pref-better-bibtex-biblatexExtractEprint" label="&better-bibtex.Preferences.export.biblatex.biblatexExtractEprint;"/>
             </groupbox>
 
             <groupbox>
