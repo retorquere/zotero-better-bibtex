@@ -2,6 +2,7 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "dmy",
     "options": {},
     "preferences": {
       "citekeyFormat": "[auth][year]"
@@ -36,7 +37,7 @@
       "itemType": "journalArticle",
       "journalAbbreviation": "Physica C",
       "pages": "169\u2013179",
-      "publicationTitle": "Physica C: Superconductivity",
+      "publicationTitle": "Physica C-superconductivity and Its Applications",
       "tags": [
         {
           "tag": "CuO"

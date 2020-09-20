@@ -21,7 +21,7 @@
       <description>&better-bibtex.Preferences.export.fields.doi-and-url.warning;</description>
     </tooltip>
     <tooltip id="tooltip-jabrefFormat">
-      <description>&better-bibtex.Preferences.export.jabrefFormat.4.warn;</description>
+      <description>&better-bibtex.Preferences.export.jabrefFormat.warn;</description>
     </tooltip>
     <tooltip id="tooltip-importSentenceCase">
       <description>&better-bibtex.Preferences.advanced.import.sentenceCase.warning;</description>
@@ -235,7 +235,7 @@
           list of words to skip in title when generating citation keys
         </bbt:doc>
 
-        <preference name="extensions.zotero.translators.better-bibtex.verbatimFields" type="string" default="url,doi,file,eprint,verba,verbb,verbc"/>
+        <preference name="extensions.zotero.translators.better-bibtex.verbatimFields" type="string" default="url,doi,file,eprint,verba,verbb,verbc,groups"/>
         <bbt:doc>
           list of fields to treat as verbatim during import. If you're importing e.g. Mendeley-generated BibTeX, try removing `file` from this list before import.
         </bbt:doc>
@@ -252,6 +252,8 @@
         <bbt:doc>
           Support for EDTF dates in biblatex
         </bbt:doc>
+
+        <preference name="extensions.zotero.translators.better-bibtex.biblatexExtractEprint" id="pref-better-bibtex-biblatexExtractEprint" type="bool" default="true"/>
 
         <preference name="extensions.zotero.translators.better-bibtex.biblatexExtendedNameFormat" id="pref-better-bibtex-biblatexExtendedNameFormat" type="bool" default="false"/>
         <bbt:doc>
@@ -539,6 +541,7 @@
               <caption label="&better-bibtex.Preferences.export.biblatex;"/>
               <checkbox preference="pref-better-bibtex-asciiBibLaTeX" label="&better-bibtex.Preferences.export.biblatex.ascii;"/>
               <checkbox preference="pref-better-bibtex-biblatexExtendedNameFormat" label="&better-bibtex.Preferences.export.biblatex.extendedNameFormat;"/>
+              <checkbox preference="pref-better-bibtex-biblatexExtractEprint" label="&better-bibtex.Preferences.export.biblatex.biblatexExtractEprint;"/>
             </groupbox>
 
             <groupbox>
@@ -573,6 +576,7 @@
                           <menuitem label="&better-bibtex.Preferences.export.jabrefFormat.0;" value="0"/>
                           <menuitem label="&better-bibtex.Preferences.export.jabrefFormat.3;" value="3"/>
                           <menuitem label="&better-bibtex.Preferences.export.jabrefFormat.4;" value="4"/>
+                          <menuitem label="&better-bibtex.Preferences.export.jabrefFormat.5;" value="5"/>
                         </menupopup>
                       </menulist>
                       <image tooltip="tooltip-jabrefFormat" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>

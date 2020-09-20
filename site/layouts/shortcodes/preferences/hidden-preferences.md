@@ -161,7 +161,7 @@ list of words to skip in title when generating citation keys
 
 ### verbatimFields
 
-default: `url,doi,file,eprint,verba,verbb,verbc`
+default: `url,doi,file,eprint,verba,verbb,verbc,groups`
 
 list of fields to treat as verbatim during import. If you're importing e.g. Mendeley-generated BibTeX, try removing `file` from this list before import.
 
