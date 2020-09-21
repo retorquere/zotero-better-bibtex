@@ -1,7 +1,7 @@
 {
   "filename": "auto-de.json",
   "name": "Germany",
-  "version": "2020-04-13 05:37:20 UTC",
+  "version": "2020-09-07 21:01:30 UTC",
   "xdata": {
     "default": {
       "place": {
@@ -913,10 +913,13 @@
         "bverwg~8": "Bundesverwaltungsgericht|8. Revisionssenat",
         "bverwg~9": "Bundesverwaltungsgericht|9. Revisionssenat",
         "bverwg~10": "Bundesverwaltungsgericht|10. Revisionssenat",
+        "gms-ogb": "Gemeinsamer Senat der obersten Gerichtshöfe des Bundes",
         "trdg.nord": "Truppendienstgericht Nord",
         "trdg.sud": "Truppendienstgericht Süd"
       },
       "institution-entire": {
+        "bag": "BAG",
+        "bfh": "BFH",
         "bgh": "BGH",
         "bgh~zs1": "I ",
         "bgh~zs2": "II ",
@@ -933,7 +936,9 @@
         "bgh~ss1": "1 ",
         "bgh~ss2": "2 ",
         "bgh~ss3": "3 ",
-        "bverfg": "Bv",
+        "bpatg": "BPatG",
+        "bsg": "BSG",
+        "bverfg": "BVerfG",
         "bverfg~1": "1 Bv",
         "bverfg~2": "2 Bv",
         "bverwg": "BVerwG",
@@ -946,7 +951,10 @@
         "bverwg~7": "BVerwG 7",
         "bverwg~8": "BVerwG 8",
         "bverwg~9": "BVerwG 9",
-        "bverwg~10": "BVerwG 10"
+        "bverwg~10": "BVerwG 10",
+        "gms-ogb": "GmS-OGB",
+        "trdg.nord": "TDG Nord",
+        "trdg.sud": "TDG Süd"
       }
     },
     "de:baden.wurttemberg": {
@@ -956,6 +964,13 @@
         "lsg": "Landessozialgericht",
         "verfgh": "Verfassungsgerichtshof",
         "vgh": "Verwaltungsgerichtshof"
+      },
+      "institution-entire": {
+        "fg": "FG",
+        "lag": "LAG",
+        "lsg": "LSG",
+        "verfgh": "VerfGH",
+        "vgh": "VGH"
       }
     },
     "de:baden.wurttemberg:freiburg": {
@@ -963,12 +978,21 @@
         "arbg": "Arbeitsgericht",
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:baden.wurttemberg:heilbronn": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "sg": "SG"
       }
     },
     "de:baden.wurttemberg:karlsruhe": {
@@ -977,338 +1001,544 @@
         "olg": "Oberlandesgericht",
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "olg": "OLG",
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:baden.baden": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:baden.baden:achern": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:baden.baden:baden.baden": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:baden.baden:buhl": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:baden.baden:gernsbach": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:baden.baden:rastatt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:freiburg": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:freiburg:breisach": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:freiburg:emmendingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:freiburg:ettenheim": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:freiburg:freiburg.im.breisgau": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:freiburg:kenzingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:freiburg:lorrach": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:freiburg:mullheim": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:freiburg:staufen.im.breisgau": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:freiburg:titisee.neustadt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:freiburg:waldkirch": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:heidelberg": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:heidelberg:heidelberg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:heidelberg:sinsheim": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:heidelberg:wiesloch": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:karlsruhe": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:karlsruhe:bretten": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:karlsruhe:bruchsal": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:karlsruhe:ettlingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:karlsruhe:karlsruhe": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:karlsruhe:karlsruhe.durlach": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:karlsruhe:maulbronn": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:karlsruhe:pforzheim": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:karlsruhe:phillippsburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:konstanz": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:konstanz:donaueschingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:konstanz:konstanz": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:konstanz:radolfzell": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:konstanz:singen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:konstanz:stockach": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:konstanz:uberlingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:konstanz:villingen.schwenningen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:mannheim": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:mannheim:mannheim": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:mannheim:schwetzingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:mannheim:weinheim": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:mosbach": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:mosbach:adelsheim": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:mosbach:buchen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:mosbach:mosbach": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:mosbach:tauberbischofsheim": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:mosbach:wertheim": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:offenburg": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:offenburg:gengenbach": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:offenburg:kehl": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:offenburg:lahr": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:offenburg:oberkirch": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:offenburg:offenburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:offenburg:wolfach": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:waldshut.tiengen": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:waldshut.tiengen:bad.sackingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:waldshut.tiengen:schonau": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:waldshut.tiengen:schopfheim": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:waldshut.tiengen:st.blasien": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:karlsruhe:waldshut.tiengen:waldshut.tiengen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:konstanz": {
       "institution-part": {
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "sg": "SG"
       }
     },
     "de:baden.wurttemberg:mannheim": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "sg": "SG"
       }
     },
     "de:baden.wurttemberg:pforzheim": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:baden.wurttemberg:reutlingen": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "sg": "SG"
       }
     },
     "de:baden.wurttemberg:sigmaringen": {
       "institution-part": {
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "vg": "VG"
       }
     },
     "de:baden.wurttemberg:stuttgart": {
@@ -1317,337 +1547,542 @@
         "olg": "Oberlandesgericht",
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "olg": "OLG",
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:baden.wurttemberg:stuttgart:ellwangen.jagst": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:baden.wurttemberg:stuttgart:ellwangen.jagst:aalen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:ellwangen.jagst:bad.mergentheim": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:ellwangen.jagst:crailsheim": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:ellwangen.jagst:ellwangen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:ellwangen.jagst:heidenheim.an.der.brenz": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:ellwangen.jagst:langenburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:ellwangen.jagst:neresheim": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:ellwangen.jagst:schwabisch.gmund": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:hechingen": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:baden.wurttemberg:stuttgart:hechingen:albstadt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:hechingen:balingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:hechingen:hechingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:hechingen:sigmaringen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:heilbronn": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:baden.wurttemberg:stuttgart:heilbronn:besigheim": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:heilbronn:brackenheim": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:heilbronn:heilbronn": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:heilbronn:kunzelssau": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:heilbronn:marbach.am.neckar": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:heilbronn:ohringen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:heilbronn:schwabisch.hall": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:heilbronn:vaihingen.an.der.enz": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:ravensburg": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:baden.wurttemberg:stuttgart:ravensburg:bad.saulgau": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:ravensburg:bad.waldsee": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:ravensburg:biberach.an.def.riss": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:ravensburg:leutkirch.im.allgau": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:ravensburg:ravensburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:ravensburg:riedlingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:ravensburg:tettnang": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:ravensburg:wangen.im.allgau": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:rottweil": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:baden.wurttemberg:stuttgart:rottweil:freudenstadt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:rottweil:horb.am.neckar": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:rottweil:oberndorf.am.neckar": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:rottweil:rottweil": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:rottweil:spaichingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:rottweil:tuttlingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:stuttgart": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:baden.wurttemberg:stuttgart:stuttgart:backnang": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:stuttgart:boblingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:stuttgart:esslingen.am.neckar": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:stuttgart:kirchheim.unter.teck": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:stuttgart:leonberg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:stuttgart:ludwigsburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:stuttgart:nurtingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:stuttgart:schondorf": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:stuttgart:stuttgart": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:stuttgart:stuttgart.bad.canstatt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:stuttgart:waiblingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:tubingen": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:baden.wurttemberg:stuttgart:tubingen:bad.urach": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:tubingen:calw": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:tubingen:munsingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:tubingen:nagold": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:tubingen:reutlingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:tubingen:rottenburg.am.neckar": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:tubingen:tubingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:ulm": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:baden.wurttemberg:stuttgart:ulm:ehingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:ulm:geislingen.an.der.steige": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:ulm:goppingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:stuttgart:ulm:ulm": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:baden.wurttemberg:ulm": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "sg": "SG"
       }
     },
     "de:baden.wurttemberg:villingen.schwenningen": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:bayern": {
@@ -1656,158 +2091,256 @@
         "lsg": "Landessozialgericht",
         "verfgh": "Verfassungsgerichtshof",
         "vgh": "Verwaltungsgerichtshof"
+      },
+      "institution-entire": {
+        "bayoblg": "OLG",
+        "lsg": "LSG",
+        "verfgh": "VerfGH",
+        "vgh": "VGH"
       }
     },
     "de:bayern:ansbach": {
       "institution-part": {
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "vg": "VG"
       }
     },
     "de:bayern:augsburg": {
       "institution-part": {
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:bayern:bamberg": {
       "institution-part": {
         "olg": "Oberlandesgericht"
+      },
+      "institution-entire": {
+        "olg": "OLG"
       }
     },
     "de:bayern:bamberg:aschaffenburg": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:bayern:bamberg:aschaffenburg:aschaffenburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:bamberg:aschaffenburg:obernburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:bamberg:bamberg": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:bayern:bamberg:bamberg:bamberg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:bamberg:bamberg:forchheim": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:bamberg:bamberg:hassfurt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:bamberg:bayreuth": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:bayern:bamberg:bayreuth:bayreuth": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:bamberg:bayreuth:kulmbach": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:bamberg:coburg": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:bayern:bamberg:coburg:coburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:bamberg:coburg:kronach": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:bamberg:coburg:lichtenfels": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:bamberg:hof": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:bayern:bamberg:hof:hof": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:bamberg:hof:wundsiedel": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:bamberg:schweinfurt": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:bayern:bamberg:schweinfurt:kissingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:bamberg:schweinfurt:neustadt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:bamberg:schweinfurt:schweinfurt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:bamberg:wurzburg": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:bayern:bamberg:wurzburg:gemunden": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:bamberg:wurzburg:kitzingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:bamberg:wurzburg:wurzburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:bayreuth": {
       "institution-part": {
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:bayern:landshut": {
       "institution-part": {
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "sg": "SG"
       }
     },
     "de:bayern:munchen": {
@@ -1817,264 +2350,427 @@
         "olg": "Oberlandesgericht",
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "fg": "FG",
+        "lag": "LAG",
+        "olg": "OLG",
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:bayern:munchen:augsburg": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG"
       }
     },
     "de:bayern:munchen:augsburg:aichach": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:augsburg:augsburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:augsburg:dillingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:augsburg:landsberg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:augsburg:nordlingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:deggendorf": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:bayern:munchen:deggendorf:deggendorf": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:deggendorf:viechtach": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:ingolstadt": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:bayern:munchen:ingolstadt:ingolstadt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:ingolstadt:neuburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:ingolstadt:pfaffenhofen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:kempten": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG"
       }
     },
     "de:bayern:munchen:kempten:kaufbeuren": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:kempten:kempten": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:kempten:lindau": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:kempten:sonthofen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:landshut": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:bayern:munchen:landshut:eggenfelden": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:landshut:erding": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:landshut:freising": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:landshut:landau": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:landshut:landshut": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:memmingen": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:bayern:munchen:memmingen:gunzburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:memmingen:memmingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:memmingen:neu.ulm": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:munchen": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:bayern:munchen:munchen.i": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:bayern:munchen:munchen.i:munchen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:munchen.ii": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:bayern:munchen:munchen.ii:dachau": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:munchen.ii:ebersberg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:munchen.ii:furstenfeldbruck": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:munchen.ii:gamisch.partenkirchen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:munchen.ii:miesbach": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:munchen.ii:starnberg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:munchen.ii:weilheim": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:munchen.ii:wolfratshausen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:passau": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG"
       }
     },
     "de:bayern:munchen:passau:freyung": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:passau:passau": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:regensburg": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:bayern:munchen:rosenheim": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:bayern:munchen:traunstein": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:bayern:munchen:traunstein:altotting": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:traunstein:laufen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:traunstein:muhldorf": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:traunstein:rosenheim": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:munchen:traunstein:traunstein": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:nurnberg": {
@@ -2083,145 +2779,236 @@
         "lag": "Landesarbeitsgericht",
         "olg": "Oberlandesgericht",
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "fg": "FG",
+        "lag": "LAG",
+        "olg": "OLG",
+        "sg": "SG"
       }
     },
     "de:bayern:nurnberg:amberg": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:bayern:nurnberg:amberg:amberg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:nurnberg:amberg:schwandorf": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:nurnberg:ansbach": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:bayern:nurnberg:ansbach:ansbach": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:nurnberg:ansbach:weissenburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:nurnberg:bamberg": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:bayern:nurnberg:bayreuth": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:bayern:nurnberg:nurnberg": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG"
       }
     },
     "de:bayern:nurnberg:nurnberg:erlangen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:nurnberg:nurnberg:furth": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:nurnberg:nurnberg:hersbruck": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:nurnberg:nurnberg:neumarkt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:nurnberg:nurnberg:neustadt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:nurnberg:nurnberg:nurnberg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:nurnberg:nurnberg:schwabach": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:nurnberg:regensburg": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:bayern:nurnberg:regensburg:cham": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:nurnberg:regensburg:kelheim": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:nurnberg:regensburg:regensburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:nurnberg:regensburg:straubing": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:nurnberg:weiden": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG"
       }
     },
     "de:bayern:nurnberg:weiden:tirschenreuth": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:nurnberg:weiden:weiden": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bayern:nurnberg:wurzburg": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:bayern:regensburg": {
       "institution-part": {
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:bayern:wurzburg": {
       "institution-part": {
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:berlin": {
@@ -2229,6 +3016,11 @@
         "kg": "Kammergericht",
         "lg": "Landgericht",
         "verfgh": "Verfassungsgerichtshof"
+      },
+      "institution-entire": {
+        "kg": "KG",
+        "lg": "LG",
+        "verfgh": "VerfGH"
       }
     },
     "de:berlin.brandenburg": {
@@ -2237,6 +3029,12 @@
         "lag": "Landesarbeitsgericht",
         "lsg": "Landessozialgericht",
         "ovg": "Oberverwaltungsgericht"
+      },
+      "institution-entire": {
+        "fg": "FG",
+        "lag": "LAG",
+        "lsg": "LSG",
+        "ovg": "OVG"
       }
     },
     "de:berlin.brandenburg:berlin": {
@@ -2244,11 +3042,19 @@
         "arbg": "Arbeitsgericht",
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:berlin.brandenburg:brandenburg": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:berlin.brandenburg:cottbus": {
@@ -2256,11 +3062,19 @@
         "arbg": "Arbeitsgericht",
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:berlin.brandenburg:eberswalde": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:berlin.brandenburg:frankfurt": {
@@ -2268,12 +3082,21 @@
         "arbg": "Arbeitsgericht",
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:berlin.brandenburg:neuruppin": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "sg": "SG"
       }
     },
     "de:berlin.brandenburg:potsdam": {
@@ -2281,207 +3104,333 @@
         "arbg": "Arbeitsgericht",
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:berlin:charlottenburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:berlin:kopenick": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:berlin:lichtenberg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:berlin:mitte": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:berlin:neukolln": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:berlin:pankow.weissensee": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:berlin:schoneberg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:berlin:spandau": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:berlin:tempelhof.kreuzberg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:berlin:tiergarten": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:berlin:wedding": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:brandenburg": {
       "institution-part": {
         "olg": "Oberlandesgericht",
         "verfg": "Verfassungsgericht"
+      },
+      "institution-entire": {
+        "olg": "OLG",
+        "verfg": "VerfG"
       }
     },
     "de:brandenburg:cottbus": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:brandenburg:cottbus:bad.liebenwerda": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:brandenburg:cottbus:cottbus": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:brandenburg:cottbus:konigs.wusterhausen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:brandenburg:cottbus:lubben": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:brandenburg:cottbus:senftenberg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:brandenburg:frankfurt": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:brandenburg:frankfurt:bad.freienwalde": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:brandenburg:frankfurt:bernau.bei.berlin": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:brandenburg:frankfurt:eberswalde": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:brandenburg:frankfurt:eisenhuttenstadt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:brandenburg:frankfurt:frankfurt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:brandenburg:frankfurt:furstenwalde": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:brandenburg:frankfurt:strausberg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:brandenburg:neuruppin": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:brandenburg:neuruppin:neuruppin": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:brandenburg:neuruppin:oranienburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:brandenburg:neuruppin:perleberg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:brandenburg:neuruppin:prenzlau": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:brandenburg:neuruppin:schwedt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:brandenburg:neuruppin:zehdenick": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:brandenburg:potsdam": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:brandenburg:potsdam:brandenburg.an.der.havel": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:brandenburg:potsdam:luckenwalde": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:brandenburg:potsdam:nauen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:brandenburg:potsdam:potsdam": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:brandenburg:potsdam:rathenow": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:brandenburg:potsdam:zossen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bremen": {
@@ -2494,21 +3443,40 @@
         "ovg": "Oberverwaltungsgericht",
         "stgh": "Staatsgerichtshof",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "fg": "FG",
+        "lag": "LAG",
+        "lg": "LG",
+        "olg": "OLG",
+        "ovg": "OVG",
+        "stgh": "StGH",
+        "vg": "VG"
       }
     },
     "de:bremen:bremen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bremen:bremen.blumenthal": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:bremen:bremerhaven": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hamburg": {
@@ -2523,46 +3491,82 @@
         "sg": "Sozialgericht",
         "verfg": "Verfassungsgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "fg": "FG",
+        "lag": "LAG",
+        "lg": "LG",
+        "lsg": "LSG",
+        "olg": "OLG",
+        "ovg": "OVG",
+        "sg": "SG",
+        "verfg": "VerfG",
+        "vg": "VG"
       }
     },
     "de:hamburg:hamburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hamburg:hamburg.altona": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hamburg:hamburg.barmbek": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hamburg:hamburg.bergedorf": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hamburg:hamburg.blankenese": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hamburg:hamburg.harburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hamburg:hamburg.st.georg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hamburg:hamburg.wandsbek": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen": {
@@ -2573,6 +3577,14 @@
         "olg": "Oberlandesgericht",
         "stgh": "Staatsgerichtshof",
         "vgh": "Verwaltungsgerichtshof"
+      },
+      "institution-entire": {
+        "fg": "FG",
+        "lag": "LAG",
+        "lsg": "LSG",
+        "olg": "OLG",
+        "stgh": "StGH",
+        "vgh": "VGH"
       }
     },
     "de:hessen:darmstadt": {
@@ -2581,61 +3593,100 @@
         "lg": "Landgericht",
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG",
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:hessen:darmstadt:bensheim": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:darmstadt:darmstadt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:darmstadt:dieburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:darmstadt:furth": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:darmstadt:gross.gerau": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:darmstadt:lampertheim": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:darmstadt:langen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:darmstadt:michelstadt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:darmstadt:offenbach.am.main": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:darmstadt:russelshei": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:darmstadt:seligenstadt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:frankfurt.am.main": {
@@ -2644,21 +3695,36 @@
         "lg": "Landgericht",
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG",
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:hessen:frankfurt.am.main:bad.homburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:frankfurt.am.main:frankfurt.am.main": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:frankfurt.am.main:konigstein.im.taunus": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:fulda": {
@@ -2666,21 +3732,35 @@
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht",
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG",
+        "sg": "SG"
       }
     },
     "de:hessen:fulda:bad.hersfeld": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:fulda:fulda": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:fulda:hunfeld": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:giessen": {
@@ -2689,41 +3769,68 @@
         "lg": "Landgericht",
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG",
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:hessen:giessen:alsfeld": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:giessen:budingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:giessen:friedberg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:giessen:giessen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:hanau": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:hessen:hanau:gelnhausen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:hanau:hanau": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:kassel": {
@@ -2732,92 +3839,150 @@
         "lg": "Landgericht",
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG",
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:hessen:kassel:eschwege": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:kassel:fritzlar": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:kassel:kassel": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:kassel:korbach": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:kassel:melsungen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:limburg": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:hessen:limburg:dillenburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:limburg:limburg.an.der.lahn": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:limburg:weilburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:limburg:wetzlar": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:marburg": {
       "institution-part": {
         "lg": "Landgericht",
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "lg": "LG",
+        "sg": "SG"
       }
     },
     "de:hessen:marburg:biedenkopf": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:marburg:frankenberg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:marburg:kirchhain": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:marburg:marburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:marburg:schwalmstadt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:offenbach.am.main": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:hessen:wiesbaden": {
@@ -2826,26 +3991,44 @@
         "lg": "Landgericht",
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG",
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:hessen:wiesbaden:bad.schwalbach": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:wiesbaden:idstein": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:wiesbaden:rudesheim.am.rhein": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:hessen:wiesbaden:wiesbaden": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:mecklenburg.vorpommern": {
@@ -2856,32 +4039,56 @@
         "lverfg": "Landesverfassungsgericht",
         "olg": "Oberlandesgericht",
         "ovg": "Oberverwaltungsgericht"
+      },
+      "institution-entire": {
+        "fg": "FG",
+        "lag": "LAG",
+        "lsg": "LSG",
+        "lverfg": "LVerfG",
+        "olg": "OLG",
+        "ovg": "OVG"
       }
     },
     "de:mecklenburg.vorpommern:greifswald": {
       "institution-part": {
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "vg": "VG"
       }
     },
     "de:mecklenburg.vorpommern:neubrandenburg": {
       "institution-part": {
         "lg": "Landgericht",
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "lg": "LG",
+        "sg": "SG"
       }
     },
     "de:mecklenburg.vorpommern:neubrandenburg:neubrandenburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:mecklenburg.vorpommern:neubrandenburg:pasewalk": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:mecklenburg.vorpommern:neubrandenburg:waren": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:mecklenburg.vorpommern:rostock": {
@@ -2889,16 +4096,27 @@
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht",
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG",
+        "sg": "SG"
       }
     },
     "de:mecklenburg.vorpommern:rostock:gustrow": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:mecklenburg.vorpommern:rostock:rostock": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:mecklenburg.vorpommern:schwerin": {
@@ -2907,21 +4125,36 @@
         "lg": "Landgericht",
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG",
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:mecklenburg.vorpommern:schwerin:ludwigslust": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:mecklenburg.vorpommern:schwerin:schwerin": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:mecklenburg.vorpommern:schwerin:wismar": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:mecklenburg.vorpommern:stralsund": {
@@ -2929,16 +4162,27 @@
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht",
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG",
+        "sg": "SG"
       }
     },
     "de:mecklenburg.vorpommern:stralsund:greifswald": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:mecklenburg.vorpommern:stralsund:stralsund": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen": {
@@ -2947,56 +4191,92 @@
         "lag": "Landesarbeitsgericht",
         "ovg": "Oberverwaltungsgericht",
         "stgh": "Staatsgerichtshof"
+      },
+      "institution-entire": {
+        "fg": "FG",
+        "lag": "LAG",
+        "ovg": "OVG",
+        "stgh": "StGH"
       }
     },
     "de:niedersachsen.bremen": {
       "institution-part": {
         "lsg": "Landessozialgericht"
+      },
+      "institution-entire": {
+        "lsg": "LSG"
       }
     },
     "de:niedersachsen.bremen:aurich": {
       "institution-part": {
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "sg": "SG"
       }
     },
     "de:niedersachsen.bremen:braunschweig": {
       "institution-part": {
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "sg": "SG"
       }
     },
     "de:niedersachsen.bremen:bremen": {
       "institution-part": {
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "sg": "SG"
       }
     },
     "de:niedersachsen.bremen:hannover": {
       "institution-part": {
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "sg": "SG"
       }
     },
     "de:niedersachsen.bremen:hildesheim": {
       "institution-part": {
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "sg": "SG"
       }
     },
     "de:niedersachsen.bremen:luneburg": {
       "institution-part": {
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "sg": "SG"
       }
     },
     "de:niedersachsen.bremen:oldenburg": {
       "institution-part": {
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "sg": "SG"
       }
     },
     "de:niedersachsen.bremen:osnabruck": {
       "institution-part": {
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "sg": "SG"
       }
     },
     "de:niedersachsen.bremen:stade": {
       "institution-part": {
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "sg": "SG"
       }
     },
     "de:niedersachsen:braunschweig": {
@@ -3004,380 +4284,611 @@
         "arbg": "Arbeitsgericht",
         "olg": "Oberlandesgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "olg": "OLG",
+        "vg": "VG"
       }
     },
     "de:niedersachsen:braunschweig:braunschweig": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:niedersachsen:braunschweig:braunschweig:bad.gandersheim": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:braunschweig:braunschweig:braunschweig": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:braunschweig:braunschweig:clausthal.zellerfeld": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:braunschweig:braunschweig:goslar": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:braunschweig:braunschweig:helmstedt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:braunschweig:braunschweig:salzgitter": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:braunschweig:braunschweig:seesen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:braunschweig:braunschweig:wolfenbuttel": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:braunschweig:braunschweig:wolfsburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:braunschweig:gottingen": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:niedersachsen:braunschweig:gottingen:duderstadt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:braunschweig:gottingen:einbeck": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:braunschweig:gottingen:gottingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:braunschweig:gottingen:herzberg.am.harz": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:braunschweig:gottingen:munden": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:braunschweig:gottingen:northeim": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:braunschweig:gottingen:osterode.am.harz": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "olg": "Oberlandesgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "olg": "OLG"
       }
     },
     "de:niedersachsen:celle:buckeburg": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:niedersachsen:celle:buckeburg:buckeburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:buckeburg:rinteln": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:buckeburg:stadthagen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:hannover": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:niedersachsen:celle:hannover:burgwedel": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:hannover:hameln": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:hannover:hannover": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:hannover:neustadt.am.rubenberge": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:hannover:springe": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:hannover:wennigsen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:hildesheim": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:niedersachsen:celle:hildesheim:alfeld": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:hildesheim:burgdorf": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:hildesheim:elze": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:hildesheim:gifhorn": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:hildesheim:hildesheim": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:hildesheim:holzminden": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:hildesheim:lehrte": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:hildesheim:peine": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:luneburg": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:niedersachsen:celle:luneburg:celle": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:luneburg:dannenberg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:luneburg:luneburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:luneburg:soltau": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:luneburg:uelzen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:luneburg:winsen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:stade": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:niedersachsen:celle:stade:bremervorde": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:stade:buxtehude": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:stade:cuxhaven": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:stade:geestland": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:stade:otterndorf": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:stade:stade": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:stade:tostedt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:stade:zeven": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:verden": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:niedersachsen:celle:verden:achim": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:verden:diepholz": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:verden:nienburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:verden:osterholz.scharmbeck": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:verden:rotenburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:verden:stolzenau": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:verden:sulingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:verden:syke": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:verden:verden": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:celle:verden:walsrode": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:emden": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:niedersachsen:gottingen": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "vg": "VG"
       }
     },
     "de:niedersachsen:hameln": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:niedersachsen:hannover": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "vg": "VG"
       }
     },
     "de:niedersachsen:hildesheim": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:niedersachsen:lingen": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:niedersachsen:luneburg": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "vg": "VG"
       }
     },
     "de:niedersachsen:nienburg": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:niedersachsen:oldenburg": {
@@ -3385,158 +4896,255 @@
         "arbg": "Arbeitsgericht",
         "olg": "Oberlandesgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "olg": "OLG",
+        "vg": "VG"
       }
     },
     "de:niedersachsen:oldenburg:aurich": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:niedersachsen:oldenburg:aurich:aurich": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:oldenburg:aurich:emden": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:oldenburg:aurich:leer": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:oldenburg:aurich:norden": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:oldenburg:aurich:wittmund": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:oldenburg:oldenburg": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:niedersachsen:oldenburg:oldenburg:brake": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:oldenburg:oldenburg:cloppenburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:oldenburg:oldenburg:delmenhorst": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:oldenburg:oldenburg:jever": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:oldenburg:oldenburg:nordenham": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:oldenburg:oldenburg:oldenburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:oldenburg:oldenburg:varel": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:oldenburg:oldenburg:vechta": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:oldenburg:oldenburg:westerstede": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:oldenburg:oldenburg:wildeshausen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:oldenburg:oldenburg:wilhelmshaven": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:oldenburg:osnabruck": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:niedersachsen:oldenburg:osnabruck:bad.iburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:oldenburg:osnabruck:bersenbruck": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:oldenburg:osnabruck:lingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:oldenburg:osnabruck:meppen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:oldenburg:osnabruck:nordhorn": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:oldenburg:osnabruck:osnabruck": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:oldenburg:osnabruck:papenburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:niedersachsen:osnabruck": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "vg": "VG"
       }
     },
     "de:niedersachsen:stade": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "vg": "VG"
       }
     },
     "de:niedersachsen:verden": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:niedersachsen:wilhelmshaven": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:nordrhein.westfalen": {
@@ -3544,32 +5152,53 @@
         "lsg": "Landessozialgericht",
         "ovg": "Oberverwaltungsgericht",
         "verfgh": "Verfassungsgerichtshof"
+      },
+      "institution-entire": {
+        "lsg": "LSG",
+        "ovg": "OVG",
+        "verfgh": "VerfGH"
       }
     },
     "de:nordrhein.westfalen:aachen": {
       "institution-part": {
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:nordrhein.westfalen:arnsberg": {
       "institution-part": {
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "vg": "VG"
       }
     },
     "de:nordrhein.westfalen:detmold": {
       "institution-part": {
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "sg": "SG"
       }
     },
     "de:nordrhein.westfalen:dortmund": {
       "institution-part": {
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "sg": "SG"
       }
     },
     "de:nordrhein.westfalen:duisburg": {
       "institution-part": {
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "sg": "SG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf": {
@@ -3579,702 +5208,1133 @@
         "olg": "Oberlandesgericht",
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "fg": "FG",
+        "lag": "LAG",
+        "olg": "OLG",
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:duisburg": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:duisburg:dinslaken": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:duisburg:duisburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:duisburg:duisburg.hamborn": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:duisburg:duisburg.ruhrort": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:duisburg:mulheim.an.der.ruhr": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:duisburg:oberhausen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:duisburg:wesel": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:dusseldorf": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:dusseldorf:dusseldorf": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:dusseldorf:langenfeld": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:dusseldorf:neuss": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:dusseldorf:ratingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:essen": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:kleve": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:kleve:emmerich": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:kleve:geldern": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:kleve:kleve": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:kleve:moers": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:kleve:rheinberg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:krefeld": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:krefeld:kempen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:krefeld:krefeld": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:krefeld:nettetal": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:monchengladbach": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:monchengladbach:erkelenz": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:monchengladbach:grevenbroich": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:monchengladbach:monchengladbach": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:monchengladbach:monchengladbach.rheydt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:monchengladbach:viersen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:oberhausen": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:solingen": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:wesel": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:wuppertal": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:wuppertal:mettmann": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:wuppertal:remscheid": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:wuppertal:solingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:wuppertal:velbert": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:dusseldorf:wuppertal:wuppertal": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:gelsenkirchen": {
       "institution-part": {
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:nordrhein.westfalen:hamm": {
       "institution-part": {
         "lag": "Landesarbeitsgericht",
         "olg": "Oberlandesgericht"
+      },
+      "institution-entire": {
+        "lag": "LAG",
+        "olg": "OLG"
       }
     },
     "de:nordrhein.westfalen:hamm:arnsberg": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG"
       }
     },
     "de:nordrhein.westfalen:hamm:arnsberg:arnsberg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:arnsberg:brilon": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:arnsberg:marsberg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:arnsberg:medebach": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:arnsberg:menden": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:arnsberg:meschede": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:arnsberg:schmallenberg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:arnsberg:soest": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:arnsberg:warstein": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:arnsberg:werl": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:bielefeld": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG"
       }
     },
     "de:nordrhein.westfalen:hamm:bielefeld:bad.oeynhausen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:bielefeld:bielefeld": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:bielefeld:bunde": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:bielefeld:gutersloh": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:bielefeld:halle": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:bielefeld:herford": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:bielefeld:lubbecke": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:bielefeld:minden": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:bielefeld:rahden": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:bielefeld:rheda.wiedenbruck": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:bocholt": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:nordrhein.westfalen:hamm:bochum": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG"
       }
     },
     "de:nordrhein.westfalen:hamm:bochum:bochum": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:bochum:herne": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:bochum:herne.wanne": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:bochum:recklinghausen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:bochum:witten": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:detmold": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG"
       }
     },
     "de:nordrhein.westfalen:hamm:detmold:blomberg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:detmold:detmold": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:detmold:lemgo": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:dortmund": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG"
       }
     },
     "de:nordrhein.westfalen:hamm:dortmund:castrop.rauxel": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:dortmund:dortmund": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:dortmund:hamm": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:dortmund:kamen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:dortmund:lunen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:dortmund:unna": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:essen": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:nordrhein.westfalen:hamm:essen:bottrop": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:essen:dorsten": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:essen:essen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:essen:essen.borbeck": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:essen:essen.steele": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:essen:gelsenkirchen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:essen:gladbeck": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:essen:hattingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:essen:marl": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:gelsenkirchen": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:nordrhein.westfalen:hamm:hagen": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG"
       }
     },
     "de:nordrhein.westfalen:hamm:hagen:altena": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:hagen:hagen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:hagen:iserlohn": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:hagen:ludenscheid": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:hagen:meinerzhagen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:hagen:plettenberg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:hagen:schwelm": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:hagen:schwerte": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:hagen:wetter": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:hamm": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:nordrhein.westfalen:hamm:herford": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:nordrhein.westfalen:hamm:herne": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:nordrhein.westfalen:hamm:iserlohn": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:nordrhein.westfalen:hamm:minden": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:nordrhein.westfalen:hamm:munster": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG"
       }
     },
     "de:nordrhein.westfalen:hamm:munster:ahaus": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:munster:ahlen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:munster:beckum": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:munster:bocholt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:munster:borken": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:munster:coesfeld": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:munster:dulmen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:munster:gronau": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:munster:ibbenburen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:munster:ludinghausen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:munster:munster": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:munster:rheine": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:munster:steinfurt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:munster:tecklenburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:munster:warendorf": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:paderborn": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG"
       }
     },
     "de:nordrhein.westfalen:hamm:paderborn:brakel": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:paderborn:delbruck": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:paderborn:hoxter": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:paderborn:lippstadt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:paderborn:paderborn": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:paderborn:warburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:rheine": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:nordrhein.westfalen:hamm:siegen": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG"
       }
     },
     "de:nordrhein.westfalen:hamm:siegen:bad.berleburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:siegen:lennestadt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:siegen:olpe": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:hamm:siegen:siegen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:koln": {
@@ -4284,149 +6344,243 @@
         "olg": "Oberlandesgericht",
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "fg": "FG",
+        "lag": "LAG",
+        "olg": "OLG",
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:nordrhein.westfalen:koln:aachen": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG"
       }
     },
     "de:nordrhein.westfalen:koln:aachen:aachen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:koln:aachen:duren": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:koln:aachen:eschweiler": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:koln:aachen:geilenkirchen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:koln:aachen:heinsberg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:koln:aachen:julich": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:koln:aachen:monschau": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:koln:aachen:schleiden": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:koln:bonn": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG"
       }
     },
     "de:nordrhein.westfalen:koln:bonn:bonn": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:koln:bonn:euskirchen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:koln:bonn:konigswinter": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:koln:bonn:rheinbach": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:koln:bonn:siegburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:koln:bonn:waldbrol": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:koln:koln": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG"
       }
     },
     "de:nordrhein.westfalen:koln:koln:bergheim": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:koln:koln:bergisch.gladbach": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:koln:koln:bruhl": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:koln:koln:gummersbach": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:koln:koln:kerpen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:koln:koln:koln": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:koln:koln:leverkusen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:koln:koln:wermelskirchen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:koln:koln:wipperfurth": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:nordrhein.westfalen:koln:siegburg": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:nordrhein.westfalen:minden": {
       "institution-part": {
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "vg": "VG"
       }
     },
     "de:nordrhein.westfalen:munster": {
@@ -4434,6 +6588,11 @@
         "fg": "Finanzgericht",
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "fg": "FG",
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:rheinland.pfalz": {
@@ -4443,11 +6602,21 @@
         "lsg": "Landessozialgericht",
         "ovg": "Oberverwaltungsgericht",
         "verfgh": "Verfassungsgerichtshof"
+      },
+      "institution-entire": {
+        "fg": "FG",
+        "lag": "LAG",
+        "lsg": "LSG",
+        "ovg": "OVG",
+        "verfgh": "VerfGH"
       }
     },
     "de:rheinland.pfalz:kaiserslautern": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:rheinland.pfalz:koblenz": {
@@ -4456,186 +6625,300 @@
         "olg": "Oberlandesgericht",
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "olg": "OLG",
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:rheinland.pfalz:koblenz:bad.kreuznach": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:rheinland.pfalz:koblenz:bad.kreuznach:bad.kreuznach": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:koblenz:bad.kreuznach:bad.sobernheim": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:koblenz:bad.kreuznach:idar.oberstein": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:koblenz:bad.kreuznach:simmern.hunsruck": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:koblenz:koblenz": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:rheinland.pfalz:koblenz:koblenz:altenkirchen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:koblenz:koblenz:andernach": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:koblenz:koblenz:bad.neuenahr.ahrweiler": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:koblenz:koblenz:betzdorf": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:koblenz:koblenz:cochem": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:koblenz:koblenz:diez": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:koblenz:koblenz:koblenz": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:koblenz:koblenz:lahnstein": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:koblenz:koblenz:linz.am.rhein": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:koblenz:koblenz:mayen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:koblenz:koblenz:montabaur": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:koblenz:koblenz:neuwied": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:koblenz:koblenz:sankt.goar": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:koblenz:koblenz:sinzig": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:koblenz:koblenz:westerburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:koblenz:mainz": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:rheinland.pfalz:koblenz:mainz:alzey": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:koblenz:mainz:bingen.am.rhein": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:koblenz:mainz:mainz": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:koblenz:mainz:worms": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:koblenz:trier": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:rheinland.pfalz:koblenz:trier:bernkastel.kues": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:koblenz:trier:bitburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:koblenz:trier:daun": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:koblenz:trier:hermeskeil": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:koblenz:trier:prum": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:koblenz:trier:saarburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:koblenz:trier:trier": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:koblenz:trier:wittlich": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:ludwigshafen.am.rhein": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:rheinland.pfalz:mainz": {
@@ -4643,16 +6926,27 @@
         "arbg": "Arbeitsgericht",
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:rheinland.pfalz:neustadt.an.der.weinstrasse": {
       "institution-part": {
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "vg": "VG"
       }
     },
     "de:rheinland.pfalz:speyer": {
       "institution-part": {
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "sg": "SG"
       }
     },
     "de:rheinland.pfalz:trier": {
@@ -4660,106 +6954,171 @@
         "arbg": "Arbeitsgericht",
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:rheinland.pfalz:zweibrucken": {
       "institution-part": {
         "olg": "Oberlandesgericht"
+      },
+      "institution-entire": {
+        "olg": "OLG"
       }
     },
     "de:rheinland.pfalz:zweibrucken:frankenthal": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:rheinland.pfalz:zweibrucken:frankenthal:bad.durkheim": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:zweibrucken:frankenthal:frankenthal": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:zweibrucken:frankenthal:grunstadt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:zweibrucken:frankenthal:ludwigshafen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:zweibrucken:frankenthal:neustadt.an.der.weinstrasse": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:zweibrucken:frankenthal:speyer": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:zweibrucken:kaiserslautern": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:rheinland.pfalz:zweibrucken:kaiserslautern:kaiserslautern": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:zweibrucken:kaiserslautern:kusel": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:zweibrucken:kaiserslautern:rockenhausen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:zweibrucken:landau.in.der.pfalz": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:rheinland.pfalz:zweibrucken:landau.in.der.pfalz:germersheim": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:zweibrucken:landau.in.der.pfalz:kandel": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:zweibrucken:landau.in.der.pfalz:landau.in.der.pfalz": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:zweibrucken:zweibrucken": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:rheinland.pfalz:zweibrucken:zweibrucken:landstuhl": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:zweibrucken:zweibrucken:pirmasens": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:rheinland.pfalz:zweibrucken:zweibrucken:zweibrucken": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:saarland": {
@@ -4774,56 +7133,98 @@
         "sg": "Sozialgericht",
         "verfgh": "Verfassungsgerichtshof",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "fg": "FG",
+        "lag": "LAG",
+        "lg": "LG",
+        "lsg": "LSG",
+        "olg": "OLG",
+        "ovg": "OVG",
+        "sg": "SG",
+        "verfgh": "VerfGH",
+        "vg": "VG"
       }
     },
     "de:saarland:homburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:saarland:ingbert": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:saarland:lebach": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:saarland:merzig": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:saarland:neunkirchen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:saarland:ottweiler": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:saarland:saarbrucken": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:saarland:saarlouis": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:saarland:volklingen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:saarland:wendel": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen": {
@@ -4834,6 +7235,14 @@
         "olg": "Oberlandesgericht",
         "ovg": "Oberverwaltungsgericht",
         "verfgh": "Verfassungsgerichtshof"
+      },
+      "institution-entire": {
+        "fg": "FG",
+        "lag": "LAG",
+        "lsg": "LSG",
+        "olg": "OLG",
+        "ovg": "OVG",
+        "verfgh": "VerfGH"
       }
     },
     "de:sachsen.anhalt": {
@@ -4844,6 +7253,14 @@
         "lverfg": "Landesverfassungsgericht",
         "olg": "Oberlandesgericht",
         "ovg": "Oberverwaltungsgericht"
+      },
+      "institution-entire": {
+        "fg": "FG",
+        "lag": "LAG",
+        "lsg": "LSG",
+        "lverfg": "LVerfG",
+        "olg": "OLG",
+        "ovg": "OVG"
       }
     },
     "de:sachsen.anhalt:dessau.rosslau": {
@@ -4851,31 +7268,51 @@
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht",
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG",
+        "sg": "SG"
       }
     },
     "de:sachsen.anhalt:dessau.rosslau:bitterfeld.wolfen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen.anhalt:dessau.rosslau:dessau.rosslau": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen.anhalt:dessau.rosslau:kothen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen.anhalt:dessau.rosslau:wittenberg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen.anhalt:dessau.rosslau:zerbst": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen.anhalt:halle": {
@@ -4884,41 +7321,68 @@
         "lg": "Landgericht",
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG",
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:sachsen.anhalt:halle:eisleben": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen.anhalt:halle:halle": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen.anhalt:halle:merseburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen.anhalt:halle:naumburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen.anhalt:halle:sangerhausen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen.anhalt:halle:weissenfels": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen.anhalt:halle:zeitz": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen.anhalt:magdeburg": {
@@ -4927,82 +7391,134 @@
         "lg": "Landgericht",
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG",
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:sachsen.anhalt:magdeburg:aschersleben": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen.anhalt:magdeburg:bernburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen.anhalt:magdeburg:halberstadt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen.anhalt:magdeburg:haldensleben": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen.anhalt:magdeburg:magdeburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen.anhalt:magdeburg:oschersleben": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen.anhalt:magdeburg:quedlinburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen.anhalt:magdeburg:schonebeck": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen.anhalt:magdeburg:wernigerode": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen.anhalt:stendal": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG"
       }
     },
     "de:sachsen.anhalt:stendal:burg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen.anhalt:stendal:gardelegen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen.anhalt:stendal:salzwedel": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen.anhalt:stendal:stendal": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen:bautzen": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:sachsen:chemnitz": {
@@ -5011,31 +7527,52 @@
         "lg": "Landgericht",
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG",
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:sachsen:chemnitz:aue": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen:chemnitz:chemnitz": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen:chemnitz:dobeln": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen:chemnitz:freiberg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen:chemnitz:marienberg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen:dresden": {
@@ -5044,66 +7581,108 @@
         "lg": "Landgericht",
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG",
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:sachsen:dresden:dippoldiswalde": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen:dresden:dresden": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen:dresden:meissen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen:dresden:pirna": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen:dresden:riesa": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen:gorlitz": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:sachsen:gorlitz:bautzen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen:gorlitz:gorlitz": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen:gorlitz:hoyerswerda": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen:gorlitz:kamenz": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen:gorlitz:weisswasser": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen:gorlitz:zittau": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen:leipzig": {
@@ -5112,57 +7691,94 @@
         "lg": "Landgericht",
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG",
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:sachsen:leipzig:borna": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen:leipzig:eilenburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen:leipzig:grimma": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen:leipzig:leipzig": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen:leipzig:torgau": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen:zwickau": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG"
       }
     },
     "de:sachsen:zwickau:auerbach": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen:zwickau:hohenstein.ernstthal": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen:zwickau:plauen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:sachsen:zwickau:zwickau": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:schleswig.holstein": {
@@ -5173,63 +7789,106 @@
         "lverfg": "Landesverfassungsgericht",
         "olg": "Oberlandesgericht",
         "ovg": "Oberverwaltungsgericht"
+      },
+      "institution-entire": {
+        "fg": "FG",
+        "lag": "LAG",
+        "lsg": "LSG",
+        "lverfg": "LVerfG",
+        "olg": "OLG",
+        "ovg": "OVG"
       }
     },
     "de:schleswig.holstein:elmshorn": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:schleswig.holstein:flensburg": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG"
       }
     },
     "de:schleswig.holstein:flensburg:flensburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:schleswig.holstein:flensburg:husum": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:schleswig.holstein:flensburg:niebull": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:schleswig.holstein:flensburg:schleswig": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:schleswig.holstein:itzehoe": {
       "institution-part": {
         "lg": "Landgericht",
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "lg": "LG",
+        "sg": "SG"
       }
     },
     "de:schleswig.holstein:itzehoe:elmshorn": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:schleswig.holstein:itzehoe:itzehoe": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:schleswig.holstein:itzehoe:meldorf": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:schleswig.holstein:itzehoe:pinneberg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:schleswig.holstein:kiel": {
@@ -5237,41 +7896,67 @@
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht",
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG",
+        "sg": "SG"
       }
     },
     "de:schleswig.holstein:kiel:bad.segeberg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:schleswig.holstein:kiel:eckernforde": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:schleswig.holstein:kiel:kiel": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:schleswig.holstein:kiel:neumunster": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:schleswig.holstein:kiel:norderstedt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:schleswig.holstein:kiel:plon": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:schleswig.holstein:kiel:rendsburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:schleswig.holstein:lubeck": {
@@ -5279,52 +7964,85 @@
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht",
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG",
+        "sg": "SG"
       }
     },
     "de:schleswig.holstein:lubeck:ahrensburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:schleswig.holstein:lubeck:eutin": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:schleswig.holstein:lubeck:lubeck": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:schleswig.holstein:lubeck:oldenburg.in.holstein": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:schleswig.holstein:lubeck:ratzeburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:schleswig.holstein:lubeck:reinbek": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:schleswig.holstein:lubeck:schwarzenbek": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:schleswig.holstein:neumunster": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:schleswig.holstein:schleswig": {
       "institution-part": {
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:thuringen": {
@@ -5335,52 +8053,88 @@
         "olg": "Oberlandesgericht",
         "ovg": "Oberverwaltungsgericht",
         "verfgh": "Verfassungsgerichtshof"
+      },
+      "institution-entire": {
+        "fg": "FG",
+        "lag": "LAG",
+        "lsg": "LSG",
+        "olg": "OLG",
+        "ovg": "OVG",
+        "verfgh": "VerfGH"
       }
     },
     "de:thuringen:altenburg": {
       "institution-part": {
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "sg": "SG"
       }
     },
     "de:thuringen:eisenach": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:thuringen:erfurt": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG"
       }
     },
     "de:thuringen:erfurt:apolda": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:thuringen:erfurt:arnstadt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:thuringen:erfurt:erfurt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:thuringen:erfurt:gotha": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:thuringen:erfurt:sommerda": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:thuringen:erfurt:weimar": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:thuringen:gera": {
@@ -5388,51 +8142,83 @@
         "arbg": "Arbeitsgericht",
         "lg": "Landgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "lg": "LG",
+        "vg": "VG"
       }
     },
     "de:thuringen:gera:altenburg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:thuringen:gera:gera": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:thuringen:gera:greiz": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:thuringen:gera:jena": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:thuringen:gera:possneck": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:thuringen:gera:rudolstadt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:thuringen:gera:stadtroda": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:thuringen:gotha": {
       "institution-part": {
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "sg": "SG"
       }
     },
     "de:thuringen:jena": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:thuringen:meiningen": {
@@ -5440,77 +8226,125 @@
         "lg": "Landgericht",
         "sg": "Sozialgericht",
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "lg": "LG",
+        "sg": "SG",
+        "vg": "VG"
       }
     },
     "de:thuringen:meiningen:bad.salzungen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:thuringen:meiningen:eisenach": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:thuringen:meiningen:hildburghausen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:thuringen:meiningen:meiningen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:thuringen:meiningen:sonneberg": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:thuringen:meiningen:suhl": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:thuringen:muhlhausen": {
       "institution-part": {
         "lg": "Landgericht"
+      },
+      "institution-entire": {
+        "lg": "LG"
       }
     },
     "de:thuringen:muhlhausen:heilbad.heiligenstadt": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:thuringen:muhlhausen:muhlhausen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:thuringen:muhlhausen:nordhausen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:thuringen:muhlhausen:sondershausen": {
       "institution-part": {
         "ag": "Amtsgericht"
+      },
+      "institution-entire": {
+        "ag": "AG"
       }
     },
     "de:thuringen:nordhausen": {
       "institution-part": {
         "arbg": "Arbeitsgericht",
         "sg": "Sozialgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG",
+        "sg": "SG"
       }
     },
     "de:thuringen:suhl": {
       "institution-part": {
         "arbg": "Arbeitsgericht"
+      },
+      "institution-entire": {
+        "arbg": "ArbG"
       }
     },
     "de:thuringen:weimar": {
       "institution-part": {
         "vg": "Verwaltungsgericht"
+      },
+      "institution-entire": {
+        "vg": "VG"
       }
     }
   }

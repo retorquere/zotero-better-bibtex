@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.1mlz1" class="note">
+  <info>
+    <title>United Nations</title>
+    <id>http://citationstylist.org/modules/juris-un.int</id>
+    <link href="http://citationstylist/modules/juris-un.int" rel="self"/>
+    <link href="http://juris-m.github.io" rel="documentation"/>
+    <author>
+      <name>Frank Bennett</name>
+      <email>bennett@nagoya-u.jp</email>
+    </author>
+    <category citation-format="note"/>
+    <category field="law"/>
+    <law-module types="legal_case"/>
+    <summary>Juris-M style module for United Nations</summary>
+    <updated>2013-01-26T22:06:38+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+    <law-module types="bill legal_case"/>
+  </info>
+
+  <macro name="juris-pretitle">
+    <text value=""/>
+  </macro>
+
+  <macro name="juris-title">
+    <choose>
+      <if type="bill"/>
+      <else-if type="legal_case">
+        <text variable="title"/>
+      </else-if>
+      <else-if type="regulaton">
+        <text variable="title"/>
+      </else-if>
+    </choose>
+  </macro>
+
+  <macro name="juris-main">
+    <choose>
+      <if type="bill">
+        <group delimiter=" ">
+          <names variable="authority">
+            <name/>
+            <institution institution-parts="short"/>
+          </names>
+          <text variable="event" form="short"/>
+          <number variable="number"/>
+          <choose>
+            <if match="none" position="near-note">
+              <date variable="issued" form="text" date-parts="year-month-day" prefix="(" suffix=")"/>
+              <choose>
+                <if variable="container-title" match="all">
+                  <text variable="container-title" form="short"/>
+                  <group delimiter=", ">
+                    <group delimiter=" ">
+                      <group delimiter=" ">
+                        <number variable="chapter-number" form="ordinal"/>
+                        <text value="Session"/>
+                      </group>
+                      <group delimiter=" ">
+                        <text value="Supp."/>
+                        <number variable="supplement"/>
+                      </group>
+                    </group>
+                    <number variable="page"/>
+                  </group>
+                </if>
+                <else>
+                  <group delimiter=" ">
+                    <text value="U.N. Doc."/>
+                    <text variable="archive_location"/>
+                  </group>
+                </else>
+              </choose>
+            </if>
+          </choose>
+        </group>
+      </if>
+      <else-if type="legal_case">
+        <group delimiter=" ">
+          <number variable="collection-number"/>
+          <text variable="container-title" form="short"/>
+          <number variable="page"/>
+        </group>
+      </else-if>
+      <else-if type="regulation">
+        <group delimiter=" ">
+          <number variable="collection-number"/>
+          <text variable="container-title" form="short"/>
+          <number variable="page"/>
+        </group>
+      </else-if>
+    </choose>
+  </macro>
+
+  <macro name="juris-tail">
+    <text value=""/>
+  </macro>
+  
+  <macro name="juris-pretitle-short">
+    <text macro="juris-pretitle"/>
+  </macro>
+
+  <macro name="juris-title-short">
+    <text macro="juris-title"/>
+  </macro>
+
+  <macro name="juris-main-short">
+    <text macro="juris-main"/>
+  </macro>
+
+  <macro name="juris-tail-short">
+    <text value=""/>
+  </macro>
+  <macro name="juris-locator">
+    <group delimiter=" ">
+      <choose>
+        <if locator="page"/>
+        <else>
+          <label variable="locator"/>
+        </else>
+      </choose>
+      <number variable="locator"/>
+    </group>
+  </macro>
+
+</style>

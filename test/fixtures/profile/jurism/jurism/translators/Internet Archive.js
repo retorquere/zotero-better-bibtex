@@ -9,44 +9,78 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-06-04 10:03:10"
+	"lastUpdated": "2020-07-16 13:38:10"
 }
 
+/*
+	***** BEGIN LICENSE BLOCK *****
+
+	Mango Library Translator
+	Copyright © 2017 Adam Crymble and Sebastian Karcher
+
+	This file is part of Zotero.
+
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Zotero is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU Affero General Public License for more details.
+
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
+
+	***** END LICENSE BLOCK *****
+*/
+
 function detectWeb(doc, url) {
-	var icon = ZU.xpathText(doc, '//h1/div[@class="left-icon"]/span[contains(@class, "iconochive")]/@class');
+	var icon = ZU.xpathText(doc, '//div[@class="left-icon"]/span[contains(@class, "iconochive")]/@class');
 	if (icon) {
-		if (icon.indexOf("texts") != -1) {
+		if (icon.includes("texts")) {
 			return "book";
-		} else if (icon.indexOf("movies") != -1) {
+		}
+		else if (icon.includes("movies")) {
 			return "film";
-		} else if (icon.indexOf("audio") != -1) {
+		}
+		else if (icon.includes("audio")) {
 			return "audioRecording";
-		} else if (icon.indexOf("etree") != -1) {
+		}
+		else if (icon.includes("etree")) {
 			return "audioRecording";
-		} else if (icon.indexOf("software") != -1) {
+		}
+		else if (icon.includes("software")) {
 			return "computerProgram";
-		} else if (icon.indexOf("image") != -1) {
+		}
+		else if (icon.includes("image")) {
 			return "artwork";
-		} else if (icon.indexOf("tv") != -1) {
+		}
+		else if (icon.includes("tv")) {
 			return "tvBroadcast";
-		} else {
+		}
+		else {
 			Z.debug("Unknown Item Type: " + icon);
 		}
-	} else if (url.indexOf('/stream/')>-1) {
+	}
+	else if (url.includes('/stream/')) {
 		return "book";
-	} else if (getSearchResults(doc, url, true)) {
+	}
+	else if (getSearchResults(doc, url, true)) {
 		return "multiple";
 	}
+	return false;
 }
 
 var typemap = {
-	"texts": "book",
-	"movies": "film",
-	"image": "artwork",
-	"audio": "audioRecording",
-	"etree": "audioRecording",
-	"software": "computerProgram"
-}
+	texts: "book",
+	movies: "film",
+	image: "artwork",
+	audio: "audioRecording",
+	etree: "audioRecording",
+	software: "computerProgram"
+};
 
 function test(data) {
 	var clean = data ? data[0] : undefined;
@@ -57,7 +91,7 @@ function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
 	var rows = ZU.xpath(doc, '//div[@class="results"]//div[contains(@class, "item-ttl")]//a[@href]');
-	for (var i=0; i<rows.length; i++) {
+	for (var i = 0; i < rows.length; i++) {
 		var href = rows[i].href;
 		var title = ZU.trimInternal(rows[i].textContent);
 		if (!href || !title) continue;
@@ -70,31 +104,31 @@ function getSearchResults(doc, checkOnly) {
 
 
 function scrape(doc, url) {
-	//maximum PDF size to be downloaded. default to 10 MB
-	var pref_maxPdfSizeMB = 10;
+	// maximum PDF size to be downloaded. default to 10 MB
+	var prefMaxPdfSizeMB = 10;
 	var pdfurl = ZU.xpathText(doc, '//div[contains(@class, "thats-right")]/div/div/a[contains(text(), "PDF") and not(contains(text(), "B/W"))]/@href');
 	var pdfSize = ZU.xpathText(doc, '//div[contains(@class, "thats-right")]/div/div/a[contains(text(), "PDF") and not(contains(text(), "B/W"))]/@data-original-title');
-	//Z.debug(pdfurl);
 	var canonicalurl = ZU.xpathText(doc, '//link[@rel="canonical"]/@href');
+	var apiurl;
 	if (canonicalurl) {
-		var apiurl = canonicalurl + "&output=json";
-		//alternative is
-		//var apiurl = url.replace('/details/', '/metadata/').replace('/stream/', '/metadata/');
-	} else {
-		var apiurl = url.replace('/stream/', '/details/').replace(/#.*$/, '')  + "&output=json";
+		apiurl = canonicalurl + "&output=json";
+		// alternative is
+		// var apiurl = url.replace('/details/', '/metadata/').replace('/stream/', '/metadata/');
 	}
-	//Z.debug(apiurl);
-	ZU.doGet(apiurl, function(text) {
-		//Z.debug(text);
+	else {
+		apiurl = url.replace('/stream/', '/details/').replace(/#.*$/, '') + "&output=json";
+	}
+	ZU.doGet(apiurl, function (text) {
 		try {
 			var obj = JSON.parse(text).metadata;
-		} catch (e) {
+		}
+		catch (e) {
 			Zotero.debug("JSON parse error");
 			throw e;
 		}
 		var type = obj.mediatype[0];
 		var itemType = typemap[type] || "document";
-		if (type=="movies" && obj.collection.indexOf("tvarchive")>-1) {
+		if (type == "movies" && obj.collection.includes("tvarchive")) {
 			itemType = "tvBroadcast";
 		}
 		
@@ -102,40 +136,43 @@ function scrape(doc, url) {
 		
 		newItem.title = obj.title[0];
 		var creators = obj.creator;
+		var i;
 		if (creators) {
-			//sometimes authors are in one field delimiter by ;
+			// sometimes authors are in one field delimiter by ;
 			if (creators && creators[0].match(/;/)) {
 				creators = creators[0].split(/\s*;\s*/);
 			}
-			for (var i = 0; i<creators.length; i++) {
-				//authors are lastname, firstname, additional info - only use the first two.
-				var author = creators[i].replace(/(\,[^\,]+)(\,.+)/, "$1");
-				if (author.indexOf(',')>-1) {
+			for (i = 0; i < creators.length; i++) {
+				// authors are lastname, firstname, additional info - only use the first two.
+				var author = creators[i].replace(/(,[^,]+)(,.+)/, "$1");
+				if (author.includes(',')) {
 					newItem.creators.push(ZU.cleanAuthor(author, "author", true));
-				} else {
-					newItem.creators.push({"lastName": author, "creatorType": "author", "fieldMode": 1});
+				}
+				else {
+					newItem.creators.push({ lastName: author, creatorType: "author", fieldMode: 1 });
 				}
 			}
 		}
 		var contributors = obj.contributor;
 		if (contributors) {
-			for (var i = 0; i<contributors.length; i++) {
-				//authors are lastname, firstname, additional info - only use the first two.
-				var contributor = contributors[i].replace(/(\,[^\,]+)(\,.+)/, "$1");
-				if (contributor.indexOf(',')>-1) {
+			for (i = 0; i < contributors.length; i++) {
+				// authors are lastname, firstname, additional info - only use the first two.
+				var contributor = contributors[i].replace(/(,[^,]+)(,.+)/, "$1");
+				if (contributor.includes(',')) {
 					newItem.creators.push(ZU.cleanAuthor(contributor, "contributor", true));
-				} else {
-					newItem.creators.push({"lastName": contributor, "creatorType": "contributor", "fieldMode": 1});
+				}
+				else {
+					newItem.creators.push({ lastName: contributor, creatorType: "contributor", fieldMode: 1 });
 				}
 			}
 		}
 
-		for (var i = 0; i<newItem.creators.length; i++) {
+		for (i = 0; i < newItem.creators.length; i++) {
 			if (!newItem.creators[i].firstName) {
 				newItem.creators[i].fieldMode = 1;
 			}
 		}
-		//abstracts can be in multiple fields;
+		// abstracts can be in multiple fields;
 		if (obj.description) newItem.abstractNote = ZU.cleanTags(obj.description.join("; "));
 
 		var date = obj.date || obj.year;
@@ -143,25 +180,27 @@ function scrape(doc, url) {
 		var tags = test(obj.subject);
 		if (tags) {
 			tags = tags.split(/\s*;\s*/);
-			for (var i =0; i<tags.length; i++) {
+			for (i = 0; i < tags.length; i++) {
 				newItem.tags.push(tags[i]);
 			}
 		}
 		
-		//download PDFs; We're being conservative here, only downloading if we understand the filesize
-		if (pdfurl && pdfSize && parseFloat(pdfSize)){
-			//calculate file size in MB
+		// download PDFs; We're being conservative here, only downloading if we understand the filesize
+		if (pdfurl && pdfSize && parseFloat(pdfSize)) {
+			// calculate file size in MB
 			var pdfSizeMB;
-			if (pdfSize.indexOf("M")!=-1){
+			if (pdfSize.includes("M")) {
 				pdfSizeMB = parseFloat(pdfSize);
-			} else if (pdfSize.indexOf("K")!=-1){
+			}
+			else if (pdfSize.includes("K")) {
 				pdfSizeMB = parseFloat(pdfSize) / 1000;
-			} else if (pdfSize.indexOf("G")!=-1){
+			}
+			else if (pdfSize.includes("G")) {
 				pdfSizeMB = parseFloat(pdfSize) * 1000;
-			};
+			}
 			Z.debug(pdfSizeMB);
-			if (pdfSizeMB < pref_maxPdfSizeMB){
-				newItem.attachments.push({"url": pdfurl, "title": "Internet Archive Fulltext PDF", "mimeType": "application/pdf" })	
+			if (pdfSizeMB < prefMaxPdfSizeMB) {
+				newItem.attachments.push({ url: pdfurl, title: "Internet Archive Fulltext PDF", mimeType: "application/pdf" });
 			}
 		}
 		newItem.date = test(date);
@@ -173,6 +212,7 @@ function scrape(doc, url) {
 		newItem.runningTime = test(obj.runtime);
 		newItem.rights = test(obj.licenseurl);
 		if (!newItem.rights) newItem.rights = test(obj.rights);
+		if (Array.isArray(obj.isbn) && obj.isbn.length > 0) newItem.ISBN = (obj.isbn).join(' ');
 		newItem.url = "http://archive.org/details/" + test(obj.identifier);
 
 		newItem.complete();
@@ -184,7 +224,7 @@ function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
 		Zotero.selectItems(getSearchResults(doc, false), function (items) {
 			if (!items) {
-				return true;
+				return;
 			}
 			var articles = [];
 			for (var i in items) {
@@ -192,10 +232,12 @@ function doWeb(doc, url) {
 			}
 			ZU.processDocuments(articles, scrape);
 		});
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }
+
 /** BEGIN TEST CASES **/
 var testCases = [
 	{
@@ -231,15 +273,49 @@ var testCases = [
 				"publisher": "Bristol, Reprinted for J.M. Gutch and Sold in London by R. Baldwin, and R. Triphook",
 				"shortTitle": "The gull's hornbook",
 				"url": "http://archive.org/details/gullshornbookstu00dekk",
-				"attachments": [
-					{
-						"title": "Internet Archive Fulltext PDF",
-						"mimeType": "application/pdf"
-					}
-				],
 				"tags": [],
 				"notes": [],
-				"seeAlso": []
+				"seeAlso": [],
+				"attachments": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://archive.org/details/darktowersdeutsc0000enri/mode/2up",
+		"items": [
+			{
+				"itemType":"book",
+				"creators":[
+					{
+						"firstName":"David",
+						"lastName":"Enrich",
+						"creatorType":"author"
+					},
+					{
+						"lastName":"Internet Archive",
+						"creatorType":"contributor",
+						"fieldMode": 1
+					}
+				],
+				"tags":[
+					{
+						"tag":"Trump, Donald, 1946-"
+					}
+				],
+				"title":"Dark towers : Deutsche Bank, Donald Trump, and an epic trail of destruction",
+				"abstractNote":"x, 402 pages ; 24 cm; \"A searing exposé by an award-winning journalist of the most scandalous bank in the world, including its shadowy ties to Donald Trump's business empire\"--; Includes bibliographical references (pages 367-390) and index; \"A searing expose by an award-winning journalist of the most scandalous bank in the world, including its shadowy ties to Donald Trump's business empire\"--",
+				"date":"2020",
+				"publisher":"New York, NY : Custom House",
+				"language":"eng",
+				"numPages":"426",
+				"ISBN":"9780062878816 9780062878830",
+				"url":"http://archive.org/details/darktowersdeutsc0000enri",
+				"libraryCatalog":"Internet Archive",
+				"shortTitle":"Dark towers",
+				"notes": [],
+				"seeAlso": [],
+				"attachments": []
 			}
 		]
 	},
@@ -338,7 +414,7 @@ var testCases = [
 					}
 				],
 				"date": "1990",
-				"abstractNote": "Published by\n   MECC\nDeveloped by\n   MECC\nReleased\n   1990\nAlso For\n   Apple II, Atari 8-bit, Macintosh, Windows, Windows 3.x \nGenre\n   Adventure, Educational, Simulation\nPerspective\n   3rd-Person Perspective, Side-Scrolling\nSport\n   Hunting\nTheme\n   Managerial, Real-Time\nEducational\n   Geography, HistoryDescription\n  As a covered wagon party of pioneers, you head out west from Independence, Missouri to the Willamette River and valley in Oregon. You first must stock up on provisions, and then, while traveling, make decisions such as when to rest, how much food to eat, etc. The Oregon Trail incorporates simulation elements and planning ahead, along with discovery and adventure, as well as mini-game-like activities (hunting and floating down the Dalles River). From Mobygames.com. Original Entry",
+				"abstractNote": "Also For\nApple II, Macintosh, Windows, Windows 3.x\nDeveloped by\nMECC\nPublished by\nMECC\nReleased\n1990\n\n\nPacing\nReal-Time\nPerspective\nBird's-eye view, Side view, Text-based / Spreadsheet, Top-down\nEducational\nGeography, History\nGenre\nEducational, Simulation\nSetting\nWestern\nInterface\nText Parser\nGameplay\nManagerial / Business Simulation\nVisual\nFixed / Flip-screen\n\n\nDescription\n\nAs a covered wagon party of pioneers, you head out west from Independence, Missouri to the Willamette River and valley in Oregon.  You first must stock up on provisions, and then, while traveling, make decisions such as when to rest, how much food to eat, etc. The Oregon Trail incorporates simulation elements and planning ahead, along with discovery and adventure, as well as mini-game-like activities (hunting and floating down the Dalles River).\n\nFrom Mobygames.com. Original Entry",
 				"libraryCatalog": "Internet Archive",
 				"url": "http://archive.org/details/msdos_Oregon_Trail_The_1990",
 				"attachments": [],
@@ -401,7 +477,8 @@ var testCases = [
 					"Nuclear warfare"
 				],
 				"notes": [],
-				"seeAlso": []
+				"seeAlso": [],
+				"ISBN": "9780393017984"
 			}
 		]
 	},
@@ -460,6 +537,7 @@ var testCases = [
 					"rachel maddow",
 					"richard nixon",
 					"russia",
+					"south carolina",
 					"south carolina",
 					"titan atlas",
 					"washington",

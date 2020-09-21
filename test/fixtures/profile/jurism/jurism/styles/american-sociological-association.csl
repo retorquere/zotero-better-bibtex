@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="sort-only" page-range-format="chicago">
   <info>
-    <title>American Sociological Association</title>
+    <title>American Sociological Association 6th edition</title>
     <title-short>ASA</title-short>
     <id>http://www.zotero.org/styles/american-sociological-association</id>
     <link href="http://www.zotero.org/styles/american-sociological-association" rel="self"/>
@@ -15,7 +15,7 @@
     </contributor>
     <category citation-format="author-date"/>
     <category field="sociology"/>
-    <summary>The ASA style.</summary>
+    <summary>The ASA style following the 6th edition of the Style Guide</summary>
     <updated>2018-04-20T10:42:41+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
@@ -30,7 +30,7 @@
   </macro>
   <macro name="author">
     <names variable="author">
-      <name and="text" name-as-sort-order="first" sort-separator=", " delimiter=", " delimiter-precedes-last="contextual" initialize="false" initialize-with=". "/>
+      <name and="text" name-as-sort-order="first" sort-separator=", " delimiter=", " delimiter-precedes-last="always" initialize="false" initialize-with=". "/>
       <label form="short" prefix=", "/>
       <substitute>
         <names variable="editor"/>

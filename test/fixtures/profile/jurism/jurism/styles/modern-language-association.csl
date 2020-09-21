@@ -12,7 +12,7 @@
     <category citation-format="author"/>
     <category field="generic-base"/>
     <summary>This style adheres to the MLA 8th edition handbook. Follows the structure of references as outlined in the MLA Manual closely</summary>
-    <updated>2014-07-06T20:05:10+00:00</updated>
+    <updated>2018-12-13T20:05:10+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -89,20 +89,26 @@
     <text variable="container-title" font-style="italic" text-case="title"/>
   </macro>
   <macro name="other-contributors">
-    <choose>
-      <if variable="container-title" match="any">
-        <names variable="interviewer editor translator" delimiter=", ">
-          <label form="verb" suffix=" "/>
-          <name and="text"/>
-        </names>
-      </if>
-      <else>
-        <names variable="interviewer editor translator" delimiter=", ">
-          <label form="verb" suffix=" " text-case="capitalize-first"/>
-          <name and="text"/>
-        </names>
-      </else>
-    </choose>
+    <group delimiter=", ">
+      <choose>
+        <if variable="container-title" match="any">
+          <names variable="container-author editor illustrator interviewer translator" delimiter=", ">
+            <label form="verb" suffix=" "/>
+            <name and="text"/>
+          </names>
+        </if>
+        <else>
+          <names variable="container-author editor illustrator interviewer translator" delimiter=", ">
+            <label form="verb" suffix=" " text-case="capitalize-first"/>
+            <name and="text"/>
+          </names>
+        </else>
+      </choose>
+      <names variable="director">
+        <label form="verb" suffix=" " text-case="capitalize-first"/>
+        <name and="text"/>
+      </names>
+    </group>
   </macro>
   <macro name="version">
     <group delimiter=", ">
@@ -120,23 +126,37 @@
       <text variable="version"/>
     </group>
   </macro>
+  <macro name="volume-lowercase">
+    <group delimiter=" ">
+      <text term="volume" form="short"/>
+      <text variable="volume"/>
+    </group>
+  </macro>
   <macro name="number">
     <group delimiter=", ">
       <group>
         <choose>
           <!--lowercase if we have a preceding element-->
           <if variable="edition container-title" match="any">
-            <group delimiter=" ">
-              <text term="volume" form="short"/>
-              <text variable="volume"/>
-            </group>
+            <text macro="volume-lowercase"/>
           </if>
           <!--other contributors preceding the volume-->
-          <else-if variable="author editor" match="all">
-            <group delimiter=" ">
-              <text term="volume" form="short"/>
-              <text variable="volume"/>
-            </group>
+          <else-if variable="author" match="all">
+            <choose>
+              <if variable="editor translator container-author illustrator interviewer director" match="any">
+                <text macro="volume-lowercase"/>
+              </if>
+            </choose>
+          </else-if>
+          <else-if variable="editor" match="all">
+            <choose>
+              <if variable="translator container-author illustrator interviewer director" match="any">
+                <text macro="volume-lowercase"/>
+              </if>
+            </choose>
+          </else-if>
+          <else-if variable="container-author illustrator interviewer director" match="any">
+            <text macro="volume-lowercase"/>
           </else-if>
           <else>
             <group delimiter=" ">

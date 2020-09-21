@@ -1,7 +1,7 @@
 {
   "filename": "auto-fr.json",
   "name": "France",
-  "version": "2020-02-25 00:46:01 UTC",
+  "version": "2020-09-07 20:37:45 UTC",
   "xdata": {
     "default": {
       "place": {
@@ -26,8 +26,10 @@
         "FR:LIMOGES": "Limoges",
         "FR:LYON": "Lyon",
         "FR:METZ": "Metz",
+        "FR:MARSEILLE": "Marseille",
         "FR:MONTPELLIER": "Montpellier",
         "FR:NANCY": "Nancy",
+        "FR:NANTES": "Nantes",
         "FR:NIMES": "Nîmes",
         "FR:NOUMEA": "Nouméa",
         "FR:ORLEANS": "Orléans",
@@ -40,205 +42,231 @@
         "FR:RIOM": "Riom",
         "FR:ROUEN": "Rouen",
         "FR:SAINT.DENIS": "Saint-Denis",
+        "FR:SAINT.PIERRE.ET.MIQUELON": "Saint-Pierre-et-Miquelon",
         "FR:TOULOUSE": "Toulouse",
         "FR:VERSAILLES": "Versailles"
       }
     },
     "fr": {
       "institution-part": {
-        "ca": "CA France",
-        "cass": "Cour de Cassation",
-        "cass~civ1": "Cour de Cassation|1re chambre civile",
-        "cass~civ2": "Cour de Cassation|2e chambre civile",
-        "cass~civ3": "Cour de Cassation|3e chambre civile",
-        "cass~crim": "Cour de Cassation|Chambre criminelle",
-        "cass~fin": "Cour de Cassation|Chambre commerciale, financière et économique",
-        "cass~plen": "Cour de Cassation|Assemblée plénière",
-        "cass~soc": "Cour de Cassation|Chambre sociale",
-        "cc": "Conseil Constitutionelle",
-        "ce": "Conseil d'Etat",
-        "ce~cont": "Conseil d'Etat|Section Contentieux",
-        "cnda": "Cour National du Droit d'Asile"
+        "cass": "Cass.",
+        "cass~civ.1": "France civ. 1re",
+        "cass~civ.2": "France civ. 2e",
+        "cass~civ.3": "civ. 2e",
+        "cass~crim": "crim.",
+        "cass~com": "com.",
+        "cass~soc": "soc.",
+        "cass~plen": "Ass. plen.",
+        "cc": "Conseil constitutionnel",
+        "ce": "Conseil d'État",
+        "ce~reunies": "France Ch. réunies",
+        "ce~sect": "France Sect.",
+        "ce~ass": "France Ass.",
+        "cnda": "C.N.D.A.",
+        "ca": "C.A. France",
+        "tsa": "T.S.A.",
+        "caa": "C.A.A. France"
       }
     },
     "fr:agen": {
       "institution-part": {
-        "ca": "CA Agen"
+        "ca": "C.A. Agen"
       }
     },
     "fr:aix.en.provence": {
       "institution-part": {
-        "ca": "CA Aix-en-Provence"
+        "ca": "C.A. Aix-en-Provence"
       }
     },
     "fr:amiens": {
       "institution-part": {
-        "ca": "CA Amiens"
+        "ca": "C.A. Amiens"
       }
     },
     "fr:angers": {
       "institution-part": {
-        "ca": "CA Angers"
+        "ca": "C.A. Angers"
       }
     },
     "fr:basse.terre": {
       "institution-part": {
-        "ca": "CA Basse-Terre"
+        "ca": "C.A. Basse-Terre"
       }
     },
     "fr:bastia": {
       "institution-part": {
-        "ca": "CA Bastia"
+        "ca": "C.A. Bastia"
       }
     },
     "fr:besancon": {
       "institution-part": {
-        "ca": "CA Besançon"
+        "ca": "C.A. Besançon"
       }
     },
     "fr:bordeaux": {
       "institution-part": {
-        "ca": "CA Bordeaux"
+        "ca": "C.A. Bordeaux",
+        "caa": "C.A.A. Bordeaux"
       }
     },
     "fr:bourges": {
       "institution-part": {
-        "ca": "CA Bourges"
+        "ca": "C.A. Bourges"
       }
     },
     "fr:caen": {
       "institution-part": {
-        "ca": "CA Caen"
+        "ca": "C.A. Caen"
       }
     },
     "fr:cayenne": {
       "institution-part": {
-        "ca": "CA Cayenne"
+        "ca": "C.A. Cayenne"
       }
     },
     "fr:chambery": {
       "institution-part": {
-        "ca": "CA Chambéry"
+        "ca": "C.A. Chambéry"
       }
     },
     "fr:colmar": {
       "institution-part": {
-        "ca": "CA Colmar"
+        "ca": "C.A. Colmar"
       }
     },
     "fr:dijon": {
       "institution-part": {
-        "ca": "CA Dijon"
+        "ca": "C.A. Dijon"
       }
     },
     "fr:douai": {
       "institution-part": {
-        "ca": "CA Douai"
+        "ca": "C.A. Douai",
+        "caa": "C.A.A. Douai"
       }
     },
     "fr:fort.france": {
       "institution-part": {
-        "ca": "CA Fort-de-France"
+        "ca": "C.A. Fort-de-France"
       }
     },
     "fr:grenoble": {
       "institution-part": {
-        "ca": "CA Grenoble"
+        "ca": "C.A. Grenoble"
       }
     },
     "fr:limoges": {
       "institution-part": {
-        "ca": "CA Limoges"
+        "ca": "C.A. Limoges"
       }
     },
     "fr:lyon": {
       "institution-part": {
-        "ca": "CA Lyon"
+        "ca": "C.A. Lyon",
+        "caa": "C.A.A. Lyon"
       }
     },
     "fr:metz": {
       "institution-part": {
-        "ca": "CA Metz"
+        "ca": "C.A. Metz"
+      }
+    },
+    "fr:marseille": {
+      "institution-part": {
+        "caa": "C.A.A. Marseille"
       }
     },
     "fr:montpellier": {
       "institution-part": {
-        "ca": "CA Montpellier"
+        "ca": "C.A. Montpellier"
       }
     },
     "fr:nancy": {
       "institution-part": {
-        "ca": "CA Nancy"
+        "ca": "C.A. Nancy",
+        "caa": "C.A.A. Nancy"
+      }
+    },
+    "fr:nantes": {
+      "institution-part": {
+        "caa": "C.A.A. Nantes"
       }
     },
     "fr:nimes": {
       "institution-part": {
-        "ca": "CA Nîmes"
+        "ca": "C.A. Nîmes"
       }
     },
     "fr:noumea": {
       "institution-part": {
-        "ca": "CA Nouméa"
+        "ca": "C.A. Nouméa"
       }
     },
     "fr:orleans": {
       "institution-part": {
-        "ca": "CA Orléans"
+        "ca": "C.A. Orléans"
       }
     },
     "fr:papeete": {
       "institution-part": {
-        "ca": "CA Papeete"
+        "ca": "C.A. Papeete"
       }
     },
     "fr:paris": {
       "institution-part": {
-        "ca": "CA Paris"
+        "ca": "C.A. Paris",
+        "caa": "C.A.A. Paris"
       }
     },
     "fr:pau": {
       "institution-part": {
-        "ca": "CA Pau"
+        "ca": "C.A. Pau"
       }
     },
     "fr:poitiers": {
       "institution-part": {
-        "ca": "CA Poitiers"
+        "ca": "C.A. Poitiers"
       }
     },
     "fr:reims": {
       "institution-part": {
-        "ca": "CA Reims"
+        "ca": "C.A. Reims"
       }
     },
     "fr:rennes": {
       "institution-part": {
-        "ca": "CA Rennes"
+        "ca": "C.A. Rennes"
       }
     },
     "fr:riom": {
       "institution-part": {
-        "ca": "CA Riom"
+        "ca": "C.A. Riom"
       }
     },
     "fr:rouen": {
       "institution-part": {
-        "ca": "CA Rouen"
+        "ca": "C.A. Rouen"
       }
     },
     "fr:saint.denis": {
       "institution-part": {
-        "ca": "CA Saint-Denis"
+        "ca": "C.A. Saint-Denis"
+      }
+    },
+    "fr:saint.pierre.et.miquelon": {
+      "institution-part": {
+        "tsa": "T.S.A."
       }
     },
     "fr:toulouse": {
       "institution-part": {
-        "ca": "CA Toulouse"
+        "ca": "C.A. Toulouse"
       }
     },
     "fr:versailles": {
       "institution-part": {
-        "ca": "CA Versailles"
+        "ca": "C.A. Versailles",
+        "caa": "C.A.A. Versailles"
       }
     }
   }

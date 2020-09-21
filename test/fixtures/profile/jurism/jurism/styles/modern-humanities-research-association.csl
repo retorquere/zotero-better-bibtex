@@ -177,14 +177,10 @@
   <macro name="locators-note">
     <choose>
       <if type="article-journal">
-        <choose>
-          <if variable="volume">
-            <group delimiter=".">
-              <text variable="volume"/>
-              <text variable="issue"/>
-            </group>
-          </if>
-        </choose>
+        <group delimiter=".">
+          <text variable="volume"/>
+          <text variable="issue"/>
+        </group>
       </if>
       <else-if type="bill book chapter graphic legal_case legislation motion_picture paper-conference report song" match="any">
         <group delimiter=", ">
@@ -200,7 +196,10 @@
   <macro name="volume">
     <choose>
       <if type="article-journal">
-        <text variable="volume"/>
+        <group delimiter=".">
+          <text variable="volume"/>
+          <text variable="issue"/>
+        </group>
       </if>
       <else-if type="bill book chapter graphic legal_case legislation motion_picture paper-conference report song" match="any">
         <group delimiter=", ">

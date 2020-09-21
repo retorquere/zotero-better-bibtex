@@ -1,7 +1,7 @@
 {
   "filename": "auto-at.json",
   "name": "Austria",
-  "version": "2019-12-12 23:38:40 UTC",
+  "version": "2020-08-17 00:41:51 UTC",
   "xdata": {
     "default": {
       "place": {
@@ -156,12 +156,21 @@
         "bvwg": "BVwG",
         "ogh": "OGH",
         "vfgh": "VfGH",
-        "vwgh": "VwGH"
+        "vwgh": "VwGH",
+        "asylgh": "AsylGH",
+        "ubas": "UBAS",
+        "ufs": "UFS",
+        "dsk": "DSK",
+        "dsb": "DSB",
+        "bvga": "BVA",
+        "opms": "OPMS",
+        "bwb": "BWB"
       }
     },
     "at:burgenland": {
       "institution-part": {
-        "lvwg": "LVwG Burgenland"
+        "lvwg": "LVwG Burgenland",
+        "uvs": "UVS Burgenland"
       }
     },
     "at:graz": {
@@ -422,7 +431,8 @@
     },
     "at:karnten": {
       "institution-part": {
-        "lvwg": "LVwG Kärnten"
+        "lvwg": "LVwG Kärnten",
+        "uvs": "UVS Kärnten"
       }
     },
     "at:linz": {
@@ -587,38 +597,45 @@
     },
     "at:niederosterreich": {
       "institution-part": {
-        "lvwg": "LVwG Niederösterreich"
+        "lvwg": "LVwG Niederösterreich",
+        "uvs": "UVS Niederösterreich"
       }
     },
     "at:oberosterreich": {
       "institution-part": {
-        "lvwg": "LVwG Oberösterreich"
+        "lvwg": "LVwG Oberösterreich",
+        "uvs": "UVS Oberösterreich"
       }
     },
     "at:salzburg": {
       "institution-part": {
-        "lvwg": "LVwG Salzburg"
+        "lvwg": "LVwG Salzburg",
+        "uvs": "UVS Salzburg"
       }
     },
     "at:steiermark": {
       "institution-part": {
-        "lvwg": "LVwG Steiermark"
+        "lvwg": "LVwG Steiermark",
+        "uvs": "UVS Steiermark"
       }
     },
     "at:tirol": {
       "institution-part": {
-        "lvwg": "LVwG Tirol"
+        "lvwg": "LVwG Tirol",
+        "uvs": "UVS Tirol"
       }
     },
     "at:vorarlberg": {
       "institution-part": {
-        "lvwg": "LVwG Vorarlberg"
+        "lvwg": "LVwG Vorarlberg",
+        "uvs": "UVS Vorarlberg"
       }
     },
     "at:wien": {
       "institution-part": {
         "olg": "OLG Wien",
-        "vgw": "VGW"
+        "vgw": "VGW",
+        "uvs": "UVS Wien"
       }
     },
     "at:wien:eisenstadt": {

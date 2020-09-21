@@ -77,7 +77,7 @@
             <number variable="number"/>
           </group>
           <group delimiter=" ">
-            <text variable="container-title"/>
+            <text variable="container-title" form="short"/>
             <group delimiter=" ">
               <choose>
                 <if variable="volume collection-number publication-date" match="none">

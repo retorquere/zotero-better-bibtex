@@ -1,15 +1,12 @@
 {
   "filename": "auto-vc.json",
   "name": "Saint Vincent and the Grenadines",
-  "version": "2019-08-19 06:21:44 UTC",
+  "version": "2020-09-07 21:01:30 UTC",
   "xdata": {
     "default": {
       "place": {
         "VC": "Saint Vincent and the Grenadines"
       }
-    },
-    "vc": {
-      "institution-part": {}
     }
   }
 }

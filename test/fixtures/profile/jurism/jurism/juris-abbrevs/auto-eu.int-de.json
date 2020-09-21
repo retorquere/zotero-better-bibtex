@@ -1,14 +1,10 @@
 {
   "filename": "auto-eu.int-de.json",
   "name": "European Union",
-  "version": "2019-12-12 23:59:50 UTC",
+  "version": "2020-09-07 21:01:30 UTC",
   "xdata": {
     "default": {
-      "place": {
-        "EU.INT": "European Union",
-        "EU.INT:CJEU": "Court of Justice of the European Union",
-        "EU.INT:ENCJ": "European Network of Councils for the Judiciary"
-      }
+      "place": {}
     },
     "eu.int": {
       "institution-part": {
@@ -19,21 +15,18 @@
       "institution-part": {
         "ag": "GA",
         "ecj": "EuGH",
-        "ecj~chamber.1": "Cour de Justice|First Chamber",
-        "ecj~chamber.2": "Cour de Justice|Second Chamber",
-        "ecj~chamber.3": "Cour de Justice|Third Chamber",
-        "ecj~chamber.4": "Cour de Justice|Fourth Chamber",
-        "ecj~chamber.5": "Cour de Justice|Fifth Chamber",
-        "ecj~chamber.6": "Cour de Justice|Sixth Chamber",
-        "ecj~chamber.7": "Cour de Justice|Seventh Chamber",
-        "ecj~chamber.8": "Cour de Justice|Eighth Chamber",
-        "ecj~chamber.9": "Cour de Justice|Ninth Chamber",
+        "ecj~chamber.1": "Court of Justice First Chamber",
+        "ecj~chamber.2": "Court of Justice Second Chamber",
+        "ecj~chamber.3": "Court of Justice Third Chamber",
+        "ecj~chamber.4": "Court of Justice Fourth Chamber",
+        "ecj~chamber.5": "Court of Justice Fifth Chamber",
+        "ecj~chamber.6": "Court of Justice Sixth Chamber",
+        "ecj~chamber.7": "Court of Justice Seventh Chamber",
+        "ecj~chamber.8": "Court of Justice Eighth Chamber",
+        "ecj~chamber.9": "Court of Justice Ninth Chamber",
         "egc": "EuG",
         "cst": "EuGöD"
       }
-    },
-    "eu.int:encj": {
-      "institution-part": {}
     }
   }
 }

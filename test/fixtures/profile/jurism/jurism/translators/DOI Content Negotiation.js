@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 8,
 	"browserSupport": "gcs",
-	"lastUpdated": "2019-01-26 18:00:00"
+	"lastUpdated": "2020-04-20 20:04:00"
 }
 
 /*
@@ -84,7 +84,11 @@ function processDOIs(dois) {
 			});
 			trans.translate();
 		}
-		else if (text.includes("http://datacite.org/schema")) {
+		else if (text.includes("http://datacite.org/schema")
+				// TEMP
+				// https://github.com/zotero/translators/issues/2018#issuecomment-616491407
+				|| text.includes('"agency": "DataCite"')
+				|| text.includes('"providerId": ')) {
 			// Datacite JSON
 			trans.setTranslator('b5b5808b-1c61-473d-9a02-e1f5ba7b8eef');
 			trans.setHandler('itemDone', function (obj, item) {

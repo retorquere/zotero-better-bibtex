@@ -1,15 +1,12 @@
 {
   "filename": "auto-ad.json",
   "name": "Andorra",
-  "version": "2019-08-19 06:21:43 UTC",
+  "version": "2020-09-07 21:01:29 UTC",
   "xdata": {
     "default": {
       "place": {
         "AD": "Andorra"
       }
-    },
-    "ad": {
-      "institution-part": {}
     }
   }
 }

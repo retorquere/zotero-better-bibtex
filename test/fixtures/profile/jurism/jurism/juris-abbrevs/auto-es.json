@@ -1,1178 +1,4536 @@
 {
   "filename": "auto-es.json",
   "name": "Spain",
-  "version": "2020-02-12 06:06:00 UTC",
+  "version": "2020-07-12 23:46:30 UTC",
   "xdata": {
     "default": {
       "place": {
         "ES": "Spain",
-        "ES:ANDALUCIA": "Andalucia",
+        "ES:ANDALUCIA": "Andalucía",
+        "ES:ANDALUCIA:ALMERIA": "Almería",
+        "ES:ANDALUCIA:ALMERIA:ALMERIA": "Almería",
+        "ES:ANDALUCIA:ALMERIA:BERJA": "Berja",
+        "ES:ANDALUCIA:ALMERIA:PURCHENA": "Purchena",
+        "ES:ANDALUCIA:ALMERIA:VERA": "Vera",
+        "ES:ANDALUCIA:ALMERIA:EJIDO": "El Ejido",
+        "ES:ANDALUCIA:ALMERIA:ROQUETAS.MAR": "Roquetas de Mar",
+        "ES:ANDALUCIA:ALMERIA:HUERCAL.OVERA": "Huercal Overa",
+        "ES:ANDALUCIA:ALMERIA:VELEZ.RUBIO": "Vélez Rubio",
+        "ES:ANDALUCIA:CADIZ": "Cádiz",
+        "ES:ANDALUCIA:CADIZ:ALGECIRAS": "Algeciras",
+        "ES:ANDALUCIA:CADIZ:JEREZ.FRONTERA": "Jeréz de la Frontera",
+        "ES:ANDALUCIA:CADIZ:PUERTO.SANTA.MARIA": "El puerto de Santa María",
+        "ES:ANDALUCIA:CADIZ:ARCOS.FRONTERA": "Arcos de la Frontera",
+        "ES:ANDALUCIA:CADIZ:BARBATE": "Barbate",
+        "ES:ANDALUCIA:CADIZ:PUERTO.REAL": "Puerto Real",
+        "ES:ANDALUCIA:CADIZ:SAN.ROQUE": "San Roque",
+        "ES:ANDALUCIA:CADIZ:CHICLANA.FRONTERA": "Chiclana de la Frontera",
+        "ES:ANDALUCIA:CADIZ:ROTA": "Rota",
+        "ES:ANDALUCIA:CADIZ:SANLUCAR.BARRAMEDA": "Sanlúcar de Barrameda",
+        "ES:ANDALUCIA:CADIZ:LINEA.CONCEPCION": "La línea de la Concepción",
+        "ES:ANDALUCIA:CADIZ:SAN.FERNANDO": "San Fernándo",
+        "ES:ANDALUCIA:CADIZ:UBRIQUE": "Ubrique",
+        "ES:ANDALUCIA:CORDOBA": "Córdoba",
+        "ES:ANDALUCIA:CORDOBA:CORDOBA": "Córdoba",
+        "ES:ANDALUCIA:CORDOBA:AGUILAR.FRONTERA": "Aguilar de la Frontera",
+        "ES:ANDALUCIA:CORDOBA:LUCENA": "Lucena",
+        "ES:ANDALUCIA:CORDOBA:PENARROYA.PUEBLONUEVO": "Peñarroya Pueblonuevo",
+        "ES:ANDALUCIA:CORDOBA:PRIEGO.CORDOBA": "Priego de Córdoba",
+        "ES:ANDALUCIA:CORDOBA:BAENA": "Baena",
+        "ES:ANDALUCIA:CORDOBA:MONTILLA": "Montilla",
+        "ES:ANDALUCIA:CORDOBA:POSADAS": "Posadas",
+        "ES:ANDALUCIA:CORDOBA:PUENTE.GENIL": "Puente Genil",
+        "ES:ANDALUCIA:CORDOBA:CABRA": "Cabra",
+        "ES:ANDALUCIA:CORDOBA:MONTORO": "Montoro",
+        "ES:ANDALUCIA:CORDOBA:POZOBLANCO": "Pozoblanco",
         "ES:ANDALUCIA:GRANADA": "Granada",
+        "ES:ANDALUCIA:GRANADA:GRANADA": "Granada",
         "ES:ANDALUCIA:GRANADA:MOTRIL": "Motril",
-        "ES:ANDALUCIA:MALAGA": "Malaga",
-        "ES:ANDALUCIA:MALAGA:MELILLA": "Melilla",
-        "ES:ANDALUCIA:SEVILLA": "Sevilla",
-        "ES:ANDALUCIA:ALMERIA": "Almeria",
-        "ES:ANDALUCIA:ALGECIRAS": "Algeciras",
-        "ES:ANDALUCIA:ALGECIRAS:CADIZ": "Cadiz",
-        "ES:ANDALUCIA:ALGECIRAS:CADIZ:ALGECIRAS": "Algeciras",
-        "ES:ANDALUCIA:ALGECIRAS:CADIZ:JEREZ.DE.LA.FRONTERA": "Jerez de la Frontera",
-        "ES:ANDALUCIA:ALGECIRAS:CADIZ:CEUTA": "Ceuta",
-        "ES:ANDALUCIA:CORDOBA": "Cordoba",
+        "ES:ANDALUCIA:GRANADA:ALMUNECAR": "Almuñecar",
+        "ES:ANDALUCIA:GRANADA:BAZA": "Baza",
+        "ES:ANDALUCIA:GRANADA:LOJA": "Loja",
+        "ES:ANDALUCIA:GRANADA:GUADIX": "Guadix",
+        "ES:ANDALUCIA:GRANADA:ORGIVA": "Orgiva",
+        "ES:ANDALUCIA:GRANADA:HUESCAR": "Huéscar",
+        "ES:ANDALUCIA:GRANADA:SANTA.FE": "Santa Fé",
         "ES:ANDALUCIA:HUELVA": "Huelva",
-        "ES:ANDALUCIA:JAEN": "Jaen",
-        "ES:ARAGON": "Aragon",
-        "ES:ARAGON:ZARAGOZA": "Zaragoza",
-        "ES:ARAGON:HUESCA": "Huesca",
-        "ES:ARAGON:TERUEL": "Teruel",
-        "ES:ASTURIAS": "Asturias",
+        "ES:ANDALUCIA:HUELVA:HUELVA": "Huelva",
+        "ES:ANDALUCIA:HUELVA:ARACENA": "Aracena",
+        "ES:ANDALUCIA:HUELVA:MOGUER": "Moguer",
+        "ES:ANDALUCIA:HUELVA:AYAMONTE": "Ayamonte",
+        "ES:ANDALUCIA:HUELVA:VALVERDE.CAMINO": "Valverde del Camino",
+        "ES:ANDALUCIA:HUELVA:PALMA.CONDADO": "La Palma del Condado",
+        "ES:ANDALUCIA:JAEN": "Jaén",
+        "ES:ANDALUCIA:JAEN:JAEN": "Jaén",
+        "ES:ANDALUCIA:JAEN:ALCALA.REAL": "Alcalá la Real",
+        "ES:ANDALUCIA:JAEN:CAZORLA": "Cazorla",
+        "ES:ANDALUCIA:JAEN:MARTOS": "Martos",
+        "ES:ANDALUCIA:JAEN:ANDUJAR": "Andújar",
+        "ES:ANDALUCIA:JAEN:CAROLINA": "La Carolina",
+        "ES:ANDALUCIA:JAEN:UBEDA": "Úbeda ",
+        "ES:ANDALUCIA:JAEN:BAEZA": "Baeza",
+        "ES:ANDALUCIA:JAEN:LINARES": "Linares",
+        "ES:ANDALUCIA:JAEN:VILLACARRILLO": "Villacarrillo ",
+        "ES:ANDALUCIA:MALAGA": "Málaga",
+        "ES:ANDALUCIA:MALAGA:MALAGA": "Málaga",
+        "ES:ANDALUCIA:MALAGA:FUENGIROLA": "Fuengirola",
+        "ES:ANDALUCIA:MALAGA:MARBELLA": "Marbella",
+        "ES:ANDALUCIA:MALAGA:TORREMOLINOS": "Torremolinos",
+        "ES:ANDALUCIA:MALAGA:ANTEQUERRA": "Antequerra",
+        "ES:ANDALUCIA:MALAGA:ESTEPONA": "Estepona",
+        "ES:ANDALUCIA:MALAGA:VELEZ.MALAGA": "Vélez Málaga",
+        "ES:ANDALUCIA:MALAGA:ARCHIDONA": "Archidona",
+        "ES:ANDALUCIA:MALAGA:RONDA": "Ronda",
+        "ES:ANDALUCIA:MALAGA:COIN": "Coín",
+        "ES:ANDALUCIA:MALAGA:TORROX": "Torrox",
+        "ES:ANDALUCIA:SEVILLA": "Sevilla",
+        "ES:ANDALUCIA:SEVILLA:SEVILLA": "Sevilla",
+        "ES:ANDALUCIA:SEVILLA:ALCALA.GUADAIRA": "Alcalá de Guadaíra",
+        "ES:ANDALUCIA:SEVILLA:CORIA.RIO": "Coria del Río",
+        "ES:ANDALUCIA:SEVILLA:CARMONA": "Carmona",
+        "ES:ANDALUCIA:SEVILLA:DOS.HERMANAS": "Dos Hermanas",
+        "ES:ANDALUCIA:SEVILLA:CAZALLA.SIERRA": "Cazalla de la Sierra",
+        "ES:ANDALUCIA:SEVILLA:EZIJA": "Ézija",
+        "ES:ANDALUCIA:SEVILLA:ESTEPA": "Estepa",
+        "ES:ANDALUCIA:SEVILLA:MARCHENA": "Marchena",
+        "ES:ANDALUCIA:SEVILLA:SANLUCAR.MAYOR": "Sanlúcar la Mayor",
+        "ES:ANDALUCIA:SEVILLA:LEBRIJA": "Lebrija",
+        "ES:ANDALUCIA:SEVILLA:MORON.FRONTERA": "Morón de la Frontera",
+        "ES:ANDALUCIA:SEVILLA:UTRERA": "Utrera",
+        "ES:ANDALUCIA:SEVILLA:LORA.RIO": "Lora del Río",
+        "ES:ANDALUCIA:SEVILLA:CEUTA": "Ceuta",
+        "ES:ANDALUCIA:SEVILLA:MELILLA": "Melilla",
+        "ES:ZARAGOZA": "Zaragoza",
+        "ES:ZARAGOZA:HUESCA": "Huesca",
+        "ES:ZARAGOZA:HUESCA:HUESCA": "Huesca",
+        "ES:ZARAGOZA:HUESCA:BARBASTRO": "Barbastro",
+        "ES:ZARAGOZA:HUESCA:JACA": "Jaca",
+        "ES:ZARAGOZA:HUESCA:BOLTANA": "Boltaña",
+        "ES:ZARAGOZA:HUESCA:MONZON": "Monzón",
+        "ES:ZARAGOZA:HUESCA:FRAGA": "Fraga",
+        "ES:ZARAGOZA:TERUEL": "Teruel",
+        "ES:ZARAGOZA:TERUEL:TERUEL": "Teruel",
+        "ES:ZARAGOZA:TERUEL:ALCANIZ": "Alcañiz",
+        "ES:ZARAGOZA:TERUEL:CALAMOCHA": "Calamocha",
+        "ES:ZARAGOZA:ZARAGOZA": "Zaragoza",
+        "ES:ZARAGOZA:ZARAGOZA:ZARAGOZA": "Zaragoza",
+        "ES:ZARAGOZA:ZARAGOZA:CALATAYUD": "Calatayud",
+        "ES:ZARAGOZA:ZARAGOZA:EJEA.CABALLEROS": "Ejea de los Caballeros",
+        "ES:ZARAGOZA:ZARAGOZA:CASPE": "Caspe",
+        "ES:ZARAGOZA:ZARAGOZA:ALMUNIA.DONA.GODINA": "La Almunia de Doña Godina",
+        "ES:ZARAGOZA:ZARAGOZA:DAROCA": "Daroca",
+        "ES:ZARAGOZA:ZARAGOZA:TARAZONA": "Tarazona",
+        "ES:ASTURIAS": "Principado de Asturias",
         "ES:ASTURIAS:OVIEDO": "Oviedo",
-        "ES:ASTURIAS:ASTURIAS": "Asturias",
-        "ES:ASTURIAS:AVILES": "Aviles",
-        "ES:ASTURIAS:MIERES": "Mieres",
-        "ES:ASTURIAS:GIJON": "Gijon",
-        "ES:ASTURIAS:LANGREO": "Langreo",
-        "ES:BALEARES": "Baleares",
-        "ES:BALEARES:ILLES.BALEARS": "Illes Balears",
-        "ES:BALEARES:ILLES.BALEARS:CIUTADELLA.DE.MENORCA": "Ciutadella de Menorca",
-        "ES:BALEARES:ILLES.BALEARS:EIVISSA": "Eivissa",
-        "ES:BALEARES:ILLES.BALEARS:MAO.MAHON": "Mao Mahon",
-        "ES:BALEARES:ILLES.BALEARS:PALMA": "Palma",
+        "ES:ASTURIAS:OVIEDO:OVIEDO": "Oviedo",
+        "ES:ASTURIAS:OVIEDO:GIJON": "Gijón",
+        "ES:ASTURIAS:OVIEDO:AVILES": "Avilés",
+        "ES:ASTURIAS:OVIEDO:LANGREO": "Langreo",
+        "ES:ASTURIAS:OVIEDO:MIERES": "Mieres",
+        "ES:ASTURIAS:OVIEDO:CANGAS.ONIS": "Cangas de Onís",
+        "ES:ASTURIAS:OVIEDO:GRADO": "Grado",
+        "ES:ASTURIAS:OVIEDO:LLANES": "Llanes",
+        "ES:ASTURIAS:OVIEDO:SIERO": "Siero",
+        "ES:ASTURIAS:OVIEDO:VILLAVICIOSA": "Villaviciosa",
+        "ES:ASTURIAS:OVIEDO:CANGAS.NARCEA": "Cangas del Narcea",
+        "ES:ASTURIAS:OVIEDO:LAVIANA": "Laviana",
+        "ES:ASTURIAS:OVIEDO:PILONA": "Piloña",
+        "ES:ASTURIAS:OVIEDO:TINEO": "Tineo",
+        "ES:ASTURIAS:OVIEDO:CASTROPOL": "Castropol",
+        "ES:ASTURIAS:OVIEDO:LENA": "Lena",
+        "ES:ASTURIAS:OVIEDO:PRAVIA": "Pravia",
+        "ES:ASTURIAS:OVIEDO:VALDES": "Valdés",
+        "ES:ISLAS.BALEARES": "Islas Baleares",
+        "ES:ISLAS.BALEARES:PALMA.MALLORCA": "Palma de Mallorca",
+        "ES:ISLAS.BALEARES:PALMA.MALLORCA:PALMA.MALLORCA": "Palma de Mallorca",
+        "ES:ISLAS.BALEARES:PALMA.MALLORCA:EIVISSA": "Eivissa",
+        "ES:ISLAS.BALEARES:PALMA.MALLORCA:CIUTADELLA.MENORCA": "Ciutadella de Menorca",
+        "ES:ISLAS.BALEARES:PALMA.MALLORCA:INCA": "Inca",
+        "ES:ISLAS.BALEARES:PALMA.MALLORCA:MANACOR": "Manacor",
+        "ES:ISLAS.BALEARES:PALMA.MALLORCA:MAO.MAHON": "Maó-Mahón",
         "ES:CANARIAS": "Canarias",
-        "ES:CANARIAS:LAS.PALMAS": "Las Palmas",
-        "ES:CANARIAS:LAS.PALMAS:ARRECIFE": "Arrecife",
-        "ES:CANARIAS:LAS.PALMAS:GÁLDAR": "Gáldar",
-        "ES:CANARIAS:LAS.PALMAS:PUERTO.DEL.ROSARIO": "Puerto del Rosario",
-        "ES:CANARIAS:SANTA.CRUZ.DE.TENERIFE": "Santa Cruz de Tenerife",
-        "ES:CANARIAS:SANTA.CRUZ.DE.TENERIFE:SANTA.CRUZ.DE.LA.PALMA": "Santa Cruz de la Palma",
+        "ES:CANARIAS:PALMAS": "Las Palmas",
+        "ES:CANARIAS:PALMAS:PALMAS": "Las Palmas",
+        "ES:CANARIAS:PALMAS:ARRECIFE": "Arrecife",
+        "ES:CANARIAS:PALMAS:TELDE": "Telde",
+        "ES:CANARIAS:PALMAS:PUERTO.ROSARIO": "Puerto del Rosario",
+        "ES:CANARIAS:PALMAS:SAN.BARTOLOME.TIRAJANA": "San Bartolomé de Tirajana",
+        "ES:CANARIAS:PALMAS:GALDAR": "Gáldar",
+        "ES:CANARIAS:PALMAS:SANTA.MARIA.GUIA": "Santa María de Guía de Gran Canaria",
+        "ES:CANARIAS:PALMAS:ARUCAS": "Arucas",
+        "ES:CANARIAS:SANTA.CRUZ.TENERIFE": "Santa Cruz de Tenerife",
+        "ES:CANARIAS:SANTA.CRUZ.TENERIFE:SANTA.CRUZ.TENERIFE": "Santa Cruz de Tenerife",
+        "ES:CANARIAS:SANTA.CRUZ.TENERIFE:ARONA": "Arona",
+        "ES:CANARIAS:SANTA.CRUZ.TENERIFE:SAN.CRISTOBAL.LAGUNA": "San Cristóbal de La Laguna",
+        "ES:CANARIAS:SANTA.CRUZ.TENERIFE:GRANADILLA.ABONA": "Granadilla de Abona",
+        "ES:CANARIAS:SANTA.CRUZ.TENERIFE:GUIMAR": "Güimar",
+        "ES:CANARIAS:SANTA.CRUZ.TENERIFE:ICOD.VINOS": "Icod de los Vinos",
+        "ES:CANARIAS:SANTA.CRUZ.TENERIFE:OROTAFA": "La Orotafa",
+        "ES:CANARIAS:SANTA.CRUZ.TENERIFE:LLANOS.ARIDANE": "Los Llanos de Aridane",
+        "ES:CANARIAS:SANTA.CRUZ.TENERIFE:PUERTO.CRUZ": "Puerto de la Cruz",
+        "ES:CANARIAS:SANTA.CRUZ.TENERIFE:SAN.SEBASTIAN.GOMERA": "San Sebastián de La Gomera",
+        "ES:CANARIAS:SANTA.CRUZ.TENERIFE:VALVERDE": "Valverde",
         "ES:CANTABRIA": "Cantabria",
         "ES:CANTABRIA:SANTANDER": "Santander",
-        "ES:CANTABRIA:CANTABRIA": "Cantabria",
-        "ES:CASTILLA.Y.LEON": "Castilla y Leon",
-        "ES:CASTILLA.Y.LEON:AVILA": "Avila",
-        "ES:CASTILLA.Y.LEON:PALENCIA": "Palencia",
-        "ES:CASTILLA.Y.LEON:SALAMANCA": "Salamanca",
-        "ES:CASTILLA.Y.LEON:SEGOVIA": "Segovia",
-        "ES:CASTILLA.Y.LEON:SORIA": "Soria",
-        "ES:CASTILLA.Y.LEON:ZAMORA": "Zamora",
-        "ES:CASTILLA.Y.LEON:LEON": "Leon",
-        "ES:CASTILLA.Y.LEON:LEON:PONFERRADA": "Ponferrada",
+        "ES:CANTABRIA:SANTANDER:SANTANDER": "Santander",
+        "ES:CANTABRIA:SANTANDER:CASTRO.URDIALES": "Castro Urdiales",
+        "ES:CANTABRIA:SANTANDER:REINOSA": "Reinosa",
+        "ES:CANTABRIA:SANTANDER:TORRELAVEGA": "Torrelavega",
+        "ES:CANTABRIA:SANTANDER:LAREDO": "Laredo",
+        "ES:CANTABRIA:SANTANDER:SAN.VICENTE.BARQUERA": "San Vicente de la Barquera",
+        "ES:CANTABRIA:SANTANDER:MEDIO.CUDEYO": "Medio Cudeyo",
+        "ES:CANTABRIA:SANTANDER:SANTONA": "Santoña",
+        "ES:CASTILLA.Y.LEON": "Castilla y León",
+        "ES:CASTILLA.Y.LEON:AVILA": "Ávila",
+        "ES:CASTILLA.Y.LEON:AVILA:ARENAS.SAN.PEDRO": "Arenas de San Pedro",
+        "ES:CASTILLA.Y.LEON:AVILA:AREVALO": "Arévalo",
+        "ES:CASTILLA.Y.LEON:AVILA:PIEDRAHITA": "Piedrahita",
         "ES:CASTILLA.Y.LEON:BURGOS": "Burgos",
+        "ES:CASTILLA.Y.LEON:BURGOS:BURGOS": "Burgos",
+        "ES:CASTILLA.Y.LEON:BURGOS:ARANDA.DUERO": "Aranda de Duero",
+        "ES:CASTILLA.Y.LEON:BURGOS:MIRANDA.EBRO": "Miranda de Ebro",
+        "ES:CASTILLA.Y.LEON:BURGOS:BRIVIESCA": "Briviesca",
+        "ES:CASTILLA.Y.LEON:BURGOS:SALAS.INFANTES": "Salas de los Infantes",
+        "ES:CASTILLA.Y.LEON:BURGOS:LERMA": "Lerma",
+        "ES:CASTILLA.Y.LEON:BURGOS:VILLARCAYO": "Villarcayo",
+        "ES:CASTILLA.Y.LEON:LEON": "León",
+        "ES:CASTILLA.Y.LEON:LEON:LEON": "León",
+        "ES:CASTILLA.Y.LEON:LEON:PONFERRADA": "Ponferrada",
+        "ES:CASTILLA.Y.LEON:LEON:ASTORGA": "Astorga",
+        "ES:CASTILLA.Y.LEON:LEON:SAHAGUN": "Sahagún",
+        "ES:CASTILLA.Y.LEON:LEON:CISTIERNA": "Cistierna",
+        "ES:CASTILLA.Y.LEON:LEON:VILLABLINO": "Villablino",
+        "ES:CASTILLA.Y.LEON:LEON:BANEZA": "La Bañeza",
+        "ES:CASTILLA.Y.LEON:PALENCIA": "Palencia",
+        "ES:CASTILLA.Y.LEON:PALENCIA:PALENCIA": "Palencia",
+        "ES:CASTILLA.Y.LEON:PALENCIA:CARRION.CONDES": "Carrión de los Condes",
+        "ES:CASTILLA.Y.LEON:PALENCIA:CERVERA.PISUERGA": "Cervera de Pisuerga",
+        "ES:CASTILLA.Y.LEON:SALAMANCA": "Salamanca",
+        "ES:CASTILLA.Y.LEON:SALAMANCA:SALAMANCA": "Salamanca",
+        "ES:CASTILLA.Y.LEON:SALAMANCA:BEJAR": "Béjar",
+        "ES:CASTILLA.Y.LEON:SALAMANCA:PENARANDA.BRACAMONTE": "Peñaranda de Bracamonte",
+        "ES:CASTILLA.Y.LEON:SALAMANCA:CIUDAD.RODRIGO": "Ciudad Rodrigo",
+        "ES:CASTILLA.Y.LEON:SALAMANCA:VITIGUDINO": "Vitigudino",
+        "ES:CASTILLA.Y.LEON:SEGOVIA": "Segovia",
+        "ES:CASTILLA.Y.LEON:SEGOVIA:SEGOVIA": "Segovia",
+        "ES:CASTILLA.Y.LEON:SEGOVIA:CUELLAR": "Cuéllar",
+        "ES:CASTILLA.Y.LEON:SEGOVIA:SANTA.MARIA.REAL.NIEVA": "Santa María la Real de Nieva",
+        "ES:CASTILLA.Y.LEON:SEGOVIA:SEPULVEDA": "Sepúlveda",
+        "ES:CASTILLA.Y.LEON:SORIA": "Soria",
+        "ES:CASTILLA.Y.LEON:SORIA:SORIA": "Soria",
+        "ES:CASTILLA.Y.LEON:SORIA:ALMAZAN": "Almazán",
+        "ES:CASTILLA.Y.LEON:SORIA:BURGO.OSMA": "Burgo de Osma",
         "ES:CASTILLA.Y.LEON:VALLADOLID": "Valladolid",
-        "ES:CASTILLA.LA.MANCHA": "Castilla la mancha",
+        "ES:CASTILLA.Y.LEON:VALLADOLID:VALLADOLID": "Valladolid",
+        "ES:CASTILLA.Y.LEON:VALLADOLID:MEDINA.RIOSECO": "Medina de Ríoseco",
+        "ES:CASTILLA.Y.LEON:VALLADOLID:MEDINA.CAMPO": "Medina del campo",
+        "ES:CASTILLA.Y.LEON:ZAMORA": "Zamora",
+        "ES:CASTILLA.Y.LEON:ZAMORA:ZAMORA": "Zamora",
+        "ES:CASTILLA.Y.LEON:ZAMORA:BENAVENTE": "Benavente",
+        "ES:CASTILLA.Y.LEON:ZAMORA:TORO": "Toro",
+        "ES:CASTILLA.Y.LEON:ZAMORA:PUEBLA.SANABRIA": "Puebla de Sanabria",
+        "ES:CASTILLA.Y.LEON:ZAMORA:VILLALPANDO": "Villalpando",
+        "ES:CASTILLA.LA.MANCHA": "Castilla-La Mancha",
         "ES:CASTILLA.LA.MANCHA:ALBACETE": "Albacete",
+        "ES:CASTILLA.LA.MANCHA:ALBACETE:ALBACETE": "Albacete",
+        "ES:CASTILLA.LA.MANCHA:ALBACETE:ALCARAZ": "Alcaraz",
+        "ES:CASTILLA.LA.MANCHA:ALBACETE:HELLIN": "Hellín",
+        "ES:CASTILLA.LA.MANCHA:ALBACETE:ALMANSA": "Almansa",
+        "ES:CASTILLA.LA.MANCHA:ALBACETE:RODA": "La Roda",
+        "ES:CASTILLA.LA.MANCHA:ALBACETE:CASAS.IBANEZ": "Casas-Ibáñez",
+        "ES:CASTILLA.LA.MANCHA:ALBACETE:VILLARROBLEDO": "Villarrobledo",
         "ES:CASTILLA.LA.MANCHA:CIUDAD.REAL": "Ciudad Real",
+        "ES:CASTILLA.LA.MANCHA:CIUDAD.REAL:CIUDAD.REAL": "Ciudad Real",
+        "ES:CASTILLA.LA.MANCHA:CIUDAD.REAL:ALCAZAR.SAN.JUAN": "Alcázar de San Juan",
+        "ES:CASTILLA.LA.MANCHA:CIUDAD.REAL:DAIMIEL": "Daimiel",
+        "ES:CASTILLA.LA.MANCHA:CIUDAD.REAL:TOMELLOSO": "Tomelloso",
+        "ES:CASTILLA.LA.MANCHA:CIUDAD.REAL:ALMADEN": "Almadén",
+        "ES:CASTILLA.LA.MANCHA:CIUDAD.REAL:MANZANARES": "Manzanares",
+        "ES:CASTILLA.LA.MANCHA:CIUDAD.REAL:VALDEPENAS": "Valdepeñas",
+        "ES:CASTILLA.LA.MANCHA:CIUDAD.REAL:ALMAGRO": "Almagro",
+        "ES:CASTILLA.LA.MANCHA:CIUDAD.REAL:PUERTOLLANO": "Puertollano",
+        "ES:CASTILLA.LA.MANCHA:CIUDAD.REAL:VILLANUEVA.INFANTES": "Villanueva de los Infantes",
         "ES:CASTILLA.LA.MANCHA:CUENCA": "Cuenca",
-        "ES:CASTILLA.LA.MANCHA:GUADALAJARA": "Guadalajara",
+        "ES:CASTILLA.LA.MANCHA:CUENCA:CUENCA": "Cuenca",
+        "ES:CASTILLA.LA.MANCHA:CUENCA:MOTILLA.PALANCAR": "Motilla del Palancar",
+        "ES:CASTILLA.LA.MANCHA:CUENCA:SAN.CLEMENTE": "San Clemente",
+        "ES:CASTILLA.LA.MANCHA:CUENCA:TARANCON": "Tarancón",
+        "ES:CASTILLA.LA.MANCHA:GUADALARAJA": "Guadalaraja",
+        "ES:CASTILLA.LA.MANCHA:GUADALARAJA:GUADALARAJA": "Guadalaraja",
+        "ES:CASTILLA.LA.MANCHA:GUADALARAJA:MOLINA.ARAGON": "Molina de Aragón",
+        "ES:CASTILLA.LA.MANCHA:GUADALARAJA:SIGUENZA": "Sigüenza",
         "ES:CASTILLA.LA.MANCHA:TOLEDO": "Toledo",
-        "ES:CASTILLA.LA.MANCHA:TOLEDO:OCAÑA": "Ocaña",
-        "ES:CASTILLA.LA.MANCHA:TOLEDO:TALAVERA.DE.LA.REINA": "Talavera de la Reina",
-        "ES:CATALUNA": "Cataluna",
+        "ES:CASTILLA.LA.MANCHA:TOLEDO:TOLEDO": "Toledo",
+        "ES:CASTILLA.LA.MANCHA:TOLEDO:TALAVERA.REINA": "Talavera de la Reina",
+        "ES:CASTILLA.LA.MANCHA:TOLEDO:OCANA": "Ocaña",
+        "ES:CASTILLA.LA.MANCHA:TOLEDO:ILLESCAS": "Illescas",
+        "ES:CASTILLA.LA.MANCHA:TOLEDO:QUINTANAR.ORDEN": "Quintanar de la Orden",
+        "ES:CASTILLA.LA.MANCHA:TOLEDO:ORGAZ": "Orgaz",
+        "ES:CASTILLA.LA.MANCHA:TOLEDO:TORRIJOS": "Torrijos",
+        "ES:CATALUNA": "Cataluña",
         "ES:CATALUNA:BARCELONA": "Barcelona",
-        "ES:CATALUNA:BARCELONA:ARENYS.DE.MAR": "Arenys de Mar",
+        "ES:CATALUNA:BARCELONA:BARCELONA": "Barcelona",
         "ES:CATALUNA:BARCELONA:GRANOLLERS": "Granollers",
-        "ES:CATALUNA:BARCELONA:MANRESA": "Manresa",
-        "ES:CATALUNA:BARCELONA:MATARÓ": "Mataró",
-        "ES:CATALUNA:BARCELONA:VILANOVA.I.LA.GELTRÚ": "Vilanova i la Geltrú",
+        "ES:CATALUNA:BARCELONA:MATARO": "Mataró",
         "ES:CATALUNA:BARCELONA:SABADELL": "Sabadell",
         "ES:CATALUNA:BARCELONA:TERRASSA": "Terrassa",
+        "ES:CATALUNA:BARCELONA:MANRESA": "Manresa",
+        "ES:CATALUNA:BARCELONA:BADALONA": "Badalona",
+        "ES:CATALUNA:BARCELONA:HOSPITALET.LLOBREGAT": "Hospitalet de Llobregat",
+        "ES:CATALUNA:BARCELONA:ARENYS.MAR": "Arenys de Mar",
+        "ES:CATALUNA:BARCELONA:VILANOVA.GELTRU": "Vilanova i la Geltrú",
+        "ES:CATALUNA:BARCELONA:SAN.FELIU.LLOBREGAT": "San Feliú de Llobregat",
+        "ES:CATALUNA:BARCELONA:GAVA": "Gavà",
+        "ES:CATALUNA:BARCELONA:BERGA": "Berga",
+        "ES:CATALUNA:BARCELONA:CERDANYOLA.VALLES": "Cerdanyola del Vallès",
+        "ES:CATALUNA:BARCELONA:CORNELLA.LLOBREGAT": "Cornellá de Llobregat",
+        "ES:CATALUNA:BARCELONA:PRAT.LLOBREGAT": "El Prat de Llobregat",
+        "ES:CATALUNA:BARCELONA:MARTORELL": "Martorell",
+        "ES:CATALUNA:BARCELONA:SANT.BOI.LLOBREGAT": "Sant Boi de Llobregat",
+        "ES:CATALUNA:BARCELONA:VILAFRANCA.PENEDES": "Vilafranca del Penedés",
+        "ES:CATALUNA:BARCELONA:ESPLUGUES.LLOBREGAT": "Esplugues de Llobregat",
+        "ES:CATALUNA:BARCELONA:MOLLET.VALLES": "Mollet del Vallés",
+        "ES:CATALUNA:BARCELONA:SANTA.COLOMA.GRAMANET": "Santa Coloma de Gramanet",
+        "ES:CATALUNA:BARCELONA:IGUALADA": "Igualada",
+        "ES:CATALUNA:BARCELONA:RUBI": "Rubí",
         "ES:CATALUNA:BARCELONA:VIC": "Vic",
         "ES:CATALUNA:GIRONA": "Girona",
+        "ES:CATALUNA:GIRONA:GIRONA": "Girona",
         "ES:CATALUNA:GIRONA:FIGUERES": "Figueres",
-        "ES:CATALUNA:LIEIDA": "Lieida",
+        "ES:CATALUNA:GIRONA:BLANES": "Blanes",
+        "ES:CATALUNA:GIRONA:BISBAL.EMPORDA": "La Bisbal d'Empordà",
+        "ES:CATALUNA:GIRONA:RIPOLL": "Ripoll",
+        "ES:CATALUNA:GIRONA:OLOT": "Olot",
+        "ES:CATALUNA:GIRONA:SANT.FELIU.GUIXOLS": "Sant Feliu de Guíxols",
+        "ES:CATALUNA:GIRONA:PUIGCERDA": "Puigcerdá",
+        "ES:CATALUNA:GIRONA:SANTA.COLOMA.FARNERS": "Santa Coloma de Farners",
+        "ES:CATALUNA:LLEIDA": "Lleida",
+        "ES:CATALUNA:LLEIDA:LLEIDA": "Lleida",
+        "ES:CATALUNA:LLEIDA:BALAGUER": "Balaguer",
+        "ES:CATALUNA:LLEIDA:SOLSONA": "Solsona",
+        "ES:CATALUNA:LLEIDA:CERVERA": "Cervera",
+        "ES:CATALUNA:LLEIDA:TREMP": "Tremp",
+        "ES:CATALUNA:LLEIDA:SEU.URGELL": "La Seu d'Urgell",
+        "ES:CATALUNA:LLEIDA:VIELHA.E.MIJARAN": "Vielha e Mijaran",
         "ES:CATALUNA:TARRAGONA": "Tarragona",
-        "ES:CATALUNA:TARRAGONA:REUS": "Reusa",
+        "ES:CATALUNA:TARRAGONA:TARRAGONA": "Tarragona",
+        "ES:CATALUNA:TARRAGONA:REUS": "Reus",
         "ES:CATALUNA:TARRAGONA:TORTOSA": "Tortosa",
-        "ES:COMUNIDAD.VALENCIANA": "Comunidad Valenciana",
-        "ES:COMUNIDAD.VALENCIANA:ALICANTE": "Alicante",
-        "ES:COMUNIDAD.VALENCIANA:ALICANTE:BENIDORM": "Benidorm",
-        "ES:COMUNIDAD.VALENCIANA:ALICANTE:ELCHE": "Elche",
-        "ES:COMUNIDAD.VALENCIANA:ALICANTE:ORIHUELA": "Orihuela",
-        "ES:COMUNIDAD.VALENCIANA:ALICANTE:TORREVIEJA": "Torrevieja",
-        "ES:COMUNIDAD.VALENCIANA:ALICANTE:VILLENA": "Villena",
-        "ES:COMUNIDAD.VALENCIANA:CASTELLON": "Castellón",
-        "ES:COMUNIDAD.VALENCIANA:CASTELLON:CASTELLÓN.DE.LA.PLANA": "Castellón de la Plana",
-        "ES:COMUNIDAD.VALENCIANA:CASTELLON:VINARÒS": "Vinaròs",
-        "ES:COMUNIDAD.VALENCIANA:VALENCIA": "Valencia",
-        "ES:COMUNIDAD.VALENCIANA:VALENCIA:ALZIRA": "Alzira",
-        "ES:COMUNIDAD.VALENCIANA:VALENCIA:GANDIA": "Gandia",
+        "ES:CATALUNA:TARRAGONA:VENDRELL": "El Vendrell",
+        "ES:CATALUNA:TARRAGONA:AMPOSTA": "Amposta",
+        "ES:CATALUNA:TARRAGONA:FALSET": "Falset",
+        "ES:CATALUNA:TARRAGONA:GANDESA": "Gandesa",
+        "ES:CATALUNA:TARRAGONA:VALLS": "Valls",
+        "ES:VALENCIA": "Comunidad Valenciana",
+        "ES:VALENCIA:ALICANTE": "Alicante",
+        "ES:VALENCIA:ALICANTE:ALICANTE": "Alicante",
+        "ES:VALENCIA:ALICANTE:ELCHE": "Elche",
+        "ES:VALENCIA:ALICANTE:BENIDORM": "Benidorm",
+        "ES:VALENCIA:ALICANTE:ORIHUELA": "Orihuela",
+        "ES:VALENCIA:ALICANTE:TORREVIEJA": "Torrevieja",
+        "ES:VALENCIA:ALICANTE:DENIA": "Denia",
+        "ES:VALENCIA:ALICANTE:VILLENA": "Villena",
+        "ES:VALENCIA:ALICANTE:ALCOY": "Alcoy",
+        "ES:VALENCIA:ALICANTE:NOVELDA": "Novelda",
+        "ES:VALENCIA:ALICANTE:ELDA": "Elda",
+        "ES:VALENCIA:ALICANTE:SAN.VICENTE.RASPEIG": "San Vicente del Raspeig",
+        "ES:VALENCIA:ALICANTE:IBI": "Ibi",
+        "ES:VALENCIA:ALICANTE:VILLAJOYOSA": "Villajoyosa",
+        "ES:VALENCIA:CASTELLON": "Castellón",
+        "ES:VALENCIA:CASTELLON:CASTELLON": "Castellón",
+        "ES:VALENCIA:CASTELLON:VILA.REAL": "Vila-real",
+        "ES:VALENCIA:CASTELLON:VINAROS": "Vinarós",
+        "ES:VALENCIA:CASTELLON:NULES": "Nules",
+        "ES:VALENCIA:CASTELLON:SEGORBE": "Segorbe",
+        "ES:VALENCIA:VALENCIA": "Valencia",
+        "ES:VALENCIA:VALENCIA:VALENCIA": "Valencia",
+        "ES:VALENCIA:VALENCIA:GANDIA": "Gandía",
+        "ES:VALENCIA:VALENCIA:TORRENT": "Torrent",
+        "ES:VALENCIA:VALENCIA:PATERNA": "Paterna",
+        "ES:VALENCIA:VALENCIA:ALZIRA": "Alzira",
+        "ES:VALENCIA:VALENCIA:LLIRIA": "Llíria",
+        "ES:VALENCIA:VALENCIA:MONCADA": "Moncada",
+        "ES:VALENCIA:VALENCIA:QUART.POBLET": "Quart de Poblet",
+        "ES:VALENCIA:VALENCIA:SUECA": "Sueca",
+        "ES:VALENCIA:VALENCIA:CARLET": "Carlet",
+        "ES:VALENCIA:VALENCIA:MASSAMAGRELL": "Massamagrell",
+        "ES:VALENCIA:VALENCIA:ONTINYENT": "Ontinyent",
+        "ES:VALENCIA:VALENCIA:REQUENA": "Requena",
+        "ES:VALENCIA:VALENCIA:XATIVA": "Xátiva",
+        "ES:VALENCIA:VALENCIA:CATARROJA": "Catarroja",
+        "ES:VALENCIA:VALENCIA:MISLATA": "Mislata",
+        "ES:VALENCIA:VALENCIA:PICASSENT": "Picassent",
+        "ES:VALENCIA:VALENCIA:SAGUNTO": "Sagunto",
         "ES:EXTREMADURA": "Extremadura",
         "ES:EXTREMADURA:BADAJOZ": "Badajoz",
+        "ES:EXTREMADURA:BADAJOZ:BADAJOZ": "Badajoz",
+        "ES:EXTREMADURA:BADAJOZ:MERIDA": "Mérida",
         "ES:EXTREMADURA:BADAJOZ:DON.BENITO": "Don Benito",
-        "ES:EXTREMADURA:BADAJOZ:MÉRIDA": "Mérida",
-        "ES:EXTREMADURA:CÁCERES": "Cáceres",
-        "ES:EXTREMADURA:CÁCERES:PLASENCIA": "Plasencia",
+        "ES:EXTREMADURA:BADAJOZ:ALMENDRALEJO": "Almendralejo",
+        "ES:EXTREMADURA:BADAJOZ:HERRERA.DUQUE": "Herrera del Duque",
+        "ES:EXTREMADURA:BADAJOZ:MONTIJO": "Montijo",
+        "ES:EXTREMADURA:BADAJOZ:VILLANUEVA.SERENA": "Villanueva de la Serena",
+        "ES:EXTREMADURA:BADAJOZ:CASTUERA": "Castuera",
+        "ES:EXTREMADURA:BADAJOZ:JEREZ.CABALLEROS": "Jerez de los Caballeros",
+        "ES:EXTREMADURA:BADAJOZ:OLIVENZA": "Olivenza",
+        "ES:EXTREMADURA:BADAJOZ:ZAFRA": "Zafra",
+        "ES:EXTREMADURA:BADAJOZ:FREGENAL.SIERRA": "Fregenal de la Sierra",
+        "ES:EXTREMADURA:BADAJOZ:LLERENA": "Llerena",
+        "ES:EXTREMADURA:BADAJOZ:VILLAFRANCA.BARROS": "Villafranca de los Barros",
+        "ES:EXTREMADURA:CACERES": "Cáceres",
+        "ES:EXTREMADURA:CACERES:CACERES": "Cáceres",
+        "ES:EXTREMADURA:CACERES:PLASENCIA": "Plasencia",
+        "ES:EXTREMADURA:CACERES:CORIA": "Coria",
+        "ES:EXTREMADURA:CACERES:TRUJILLO": "Trujillo",
+        "ES:EXTREMADURA:CACERES:LOGROSAN": "Logrosán",
+        "ES:EXTREMADURA:CACERES:VALENCIA.ALCANTARA": "Valencia de Alcántara",
+        "ES:EXTREMADURA:CACERES:NAVALMORAL.MATA": "Navalmoral de la Mata",
         "ES:GALICIA": "Galicia",
-        "ES:GALICIA:LUGO": "Lugo",
-        "ES:GALICIA:OURENSE": "Ourense",
-        "ES:GALICIA:PONTEVEDRA": "Pontevedra",
-        "ES:GALICIA:PONTEVEDRA:VIGO": "Vigo",
-        "ES:GALICIA:CORUNA": "Coruna",
-        "ES:GALICIA:CORUNA:SANTIAGO.DE.COMPOSTELA": "Santiago de Compostela",
+        "ES:GALICIA:CORUNA": "A Coruña",
+        "ES:GALICIA:CORUNA:CORUNA": "A Coruña",
+        "ES:GALICIA:CORUNA:SANTIAGO.COMPOSTELA": "Santiago de Compostela",
         "ES:GALICIA:CORUNA:FERROL": "Ferrol",
+        "ES:GALICIA:CORUNA:ARZUA": "Arzua",
+        "ES:GALICIA:CORUNA:CORCUBION": "Corcubión",
+        "ES:GALICIA:CORUNA:NOIA": "Noia",
+        "ES:GALICIA:CORUNA:PADRON": "Padrón",
+        "ES:GALICIA:CORUNA:BETANZOS": "Betanzos",
+        "ES:GALICIA:CORUNA:MUROS": "Muros",
+        "ES:GALICIA:CORUNA:ORDES": "Ordes",
+        "ES:GALICIA:CORUNA:RIBEIRA": "Ribeira",
+        "ES:GALICIA:CORUNA:CARBALLO": "Carballo",
+        "ES:GALICIA:CORUNA:NEGREIRA": "Negreira",
+        "ES:GALICIA:CORUNA:ORTIGUIERA": "Ortiguiera",
+        "ES:GALICIA:LUGO": "Lugo",
+        "ES:GALICIA:LUGO:LUGO": "Lugo",
+        "ES:GALICIA:LUGO:A.FONSAGRADA": "A Fonsagrada",
+        "ES:GALICIA:LUGO:MONDONEDO": "Mondoñedo",
+        "ES:GALICIA:LUGO:VILALBA": "Vilalba",
+        "ES:GALICIA:LUGO:BECERREA": "Becerreá",
+        "ES:GALICIA:LUGO:MONFORTE.LEMOS": "Monforte de Lemos",
+        "ES:GALICIA:LUGO:VIVEIRO": "Viveiro",
+        "ES:GALICIA:LUGO:CHANTADA": "Chantada",
+        "ES:GALICIA:LUGO:SARRIA": "Sarria",
+        "ES:GALICIA:OURENSE": "Ourense",
+        "ES:GALICIA:OURENSE:OURENSE": "Ourense",
+        "ES:GALICIA:OURENSE:PROBA.TRIVES": "A Proba de Trives",
+        "ES:GALICIA:OURENSE:BARCO.VALDEORRAS": "O Barco de Valdeorras",
+        "ES:GALICIA:OURENSE:VERIN": "Verín",
+        "ES:GALICIA:OURENSE:BANDE": "Bande",
+        "ES:GALICIA:OURENSE:CARBALLINO": "O Carballiño",
+        "ES:GALICIA:OURENSE:XINZO.LIMIA": "Xinzo de Limia",
+        "ES:GALICIA:OURENSE:CELANOVA": "Celanova",
+        "ES:GALICIA:OURENSE:RIBADAVIA": "Ribadavia",
+        "ES:GALICIA:PONTEVEDRA": "Pontevedra",
+        "ES:GALICIA:PONTEVEDRA:PONTEVEDRA": "Pontevedra",
+        "ES:GALICIA:PONTEVEDRA:VIGO": "Vigo",
+        "ES:GALICIA:PONTEVEDRA:ESTRADA": "A Estrada",
+        "ES:GALICIA:PONTEVEDRA:CANGAS": "Cangas",
+        "ES:GALICIA:PONTEVEDRA:PORRINO": "O Porriño",
+        "ES:GALICIA:PONTEVEDRA:TUI": "Tui",
+        "ES:GALICIA:PONTEVEDRA:CALDAS.REIS": "Caldas de Reis",
+        "ES:GALICIA:PONTEVEDRA:LALIN": "Lalín",
+        "ES:GALICIA:PONTEVEDRA:PONTEAREAS": "Ponteareas",
+        "ES:GALICIA:PONTEVEDRA:VILAGARCIA.AROUSA": "Vilagarcía de Arousa",
+        "ES:GALICIA:PONTEVEDRA:CAMBADOS": "Cambados",
+        "ES:GALICIA:PONTEVEDRA:MARIN": "Marín",
+        "ES:GALICIA:PONTEVEDRA:REDONDELA": "Redondela",
         "ES:MADRID": "Madrid",
         "ES:MADRID:MADRID": "Madrid",
-        "ES:MADRID:ALCALÁ.DE.HENARES": "Alcalá de Henares",
-        "ES:MADRID:GETAFE": "Getafe",
-        "ES:MADRID:MÓSTOLES": "Móstoles",
+        "ES:MADRID:MADRID:MADRID": "Madrid",
+        "ES:MADRID:MADRID:MOSTOLES": "Móstoles",
+        "ES:MADRID:MADRID:ALCALA.HENARES": "Alcalá de Henares",
+        "ES:MADRID:MADRID:ALCOBENDAS": "Alcobendas",
+        "ES:MADRID:MADRID:FUENLABRADA": "Fuenlabrada",
+        "ES:MADRID:MADRID:GETAFE": "Getafe",
+        "ES:MADRID:MADRID:ALCORCON": "Alcorcón",
+        "ES:MADRID:MADRID:ARGANDA.REY": "Arganda del Rey",
+        "ES:MADRID:MADRID:COSLADA": "Coslada",
+        "ES:MADRID:MADRID:COLLADO.VILLALBA": "Collado Villalba",
+        "ES:MADRID:MADRID:LEGANES": "Leganés",
+        "ES:MADRID:MADRID:PARLA": "Parla",
+        "ES:MADRID:MADRID:TORREJON.ARDOZ": "Torrejón de Ardoz",
+        "ES:MADRID:MADRID:ARANJUEZ": "Aranjuez",
+        "ES:MADRID:MADRID:NAVALCARNERO": "Navalcarnero",
+        "ES:MADRID:MADRID:TORRELAGUNA": "Torrelaguna",
+        "ES:MADRID:MADRID:COLMENAR.VIEJO": "Colmenar Viejo",
+        "ES:MADRID:MADRID:POZUELO.ALARCON": "Pozuelo de Alarcón",
+        "ES:MADRID:MADRID:VALDEMORO": "Valdemoro",
+        "ES:MADRID:MADRID:MAJADAHONDA": "Majadahonda",
+        "ES:MADRID:MADRID:SAN.LORENZO.ESCORIAL": "San Lorenzo de El Escorial",
         "ES:MURCIA": "Murcia",
         "ES:MURCIA:MURCIA": "Murcia",
-        "ES:MURCIA:CARTAGENA": "Cartagena",
-        "ES:MURCIA:LORCA": "Lorca",
+        "ES:MURCIA:MURCIA:MURCIA": "Murcia",
+        "ES:MURCIA:MURCIA:CARTAGENA": "Cartagena",
+        "ES:MURCIA:MURCIA:LORCA": "Lorca",
+        "ES:MURCIA:MURCIA:CARAVACA.CRUZ": "Caravaca de la Cruz",
+        "ES:MURCIA:MURCIA:MOLINA.SEGURA": "Molina de Segura",
+        "ES:MURCIA:MURCIA:TOTANA": "Totana",
+        "ES:MURCIA:MURCIA:CIEZA": "Cieza",
+        "ES:MURCIA:MURCIA:MULA": "Mula",
+        "ES:MURCIA:MURCIA:YECLA": "Yecla",
+        "ES:MURCIA:MURCIA:JUMILLA": "Jumilla",
+        "ES:MURCIA:MURCIA:SAN.JAVIER": "San Javier",
         "ES:NAVARRA": "Navarra",
-        "ES:NAVARRA:NAVARRA": "Navarra",
         "ES:NAVARRA:PAMPLONA": "Pamplona",
-        "ES:PAIS.VASCO": "Pais Vasco",
-        "ES:PAIS.VASCO:ARABA": "Araba",
-        "ES:PAIS.VASCO:ARABA:VITORIA.GASTEIZ": "Vitoria Gasteiz",
-        "ES:PAIS.VASCO:GIPUZKOA": "Gipuzkoa",
-        "ES:PAIS.VASCO:GIPUZKOA:DONOSTIA.SAN.SEBASTIÁN": "Donostia San Sebastián",
-        "ES:PAIS.VASCO:GIPUZKOA:EBAR": "Eibar",
-        "ES:PAIS.VASCO:BIZKAIA": "Bizkaia",
+        "ES:NAVARRA:PAMPLONA:PAMPLONA": "Pamplona",
+        "ES:NAVARRA:PAMPLONA:AOIZ": "Aoiz",
+        "ES:NAVARRA:PAMPLONA:TUDELA": "Tudela",
+        "ES:NAVARRA:PAMPLONA:ESTELLA": "Estella",
+        "ES:NAVARRA:PAMPLONA:TAFALLA": "Tafalla",
+        "ES:PAIS.VASCO": "País Vasco",
+        "ES:PAIS.VASCO:ARABA.ALAVA": "Vitoria Gasteiz",
+        "ES:PAIS.VASCO:ARABA.ALAVA:VITORIA.GASTEIZ": "Vitoria Gasteiz",
+        "ES:PAIS.VASCO:ARABA.ALAVA:AMURRIO": "Amurrio",
+        "ES:PAIS.VASCO:BIZKAIA": "Bilbao",
         "ES:PAIS.VASCO:BIZKAIA:BILBAO": "Bilbao",
         "ES:PAIS.VASCO:BIZKAIA:BARAKALDO": "Barakaldo",
-        "ES:LA.RIOJA": "La Rioja",
-        "ES:LA.RIOJA:LA.RIOJA": "La Rioja",
-        "ES:LA.RIOJA:LOGROÑO": "Logroño"
+        "ES:PAIS.VASCO:BIZKAIA:BALMASEDA": "Balmaseda",
+        "ES:PAIS.VASCO:BIZKAIA:DURANGO": "Durango",
+        "ES:PAIS.VASCO:BIZKAIA:GERNIKA.LUMO": "Gernika-Lumo",
+        "ES:PAIS.VASCO:BIZKAIA:GETXO": "Getxo",
+        "ES:PAIS.VASCO:GIPUZKOA": "San Sebastián",
+        "ES:PAIS.VASCO:GIPUZKOA:SAN.SEBASTIAN": "San Sebastián",
+        "ES:PAIS.VASCO:GIPUZKOA:EIBAR": "Eibar",
+        "ES:PAIS.VASCO:GIPUZKOA:AZPEITIA": "Azpeitia",
+        "ES:PAIS.VASCO:GIPUZKOA:BERGARA": "Bergara",
+        "ES:PAIS.VASCO:GIPUZKOA:IRUN": "Irun",
+        "ES:PAIS.VASCO:GIPUZKOA:TOLOSA": "Tolosa",
+        "ES:RIOJA": "La Rioja",
+        "ES:RIOJA:LOGRONO": "Logroño",
+        "ES:RIOJA:LOGRONO:LOGRONO": "Logroño",
+        "ES:RIOJA:LOGRONO:CALAHORRA": "Calahorra",
+        "ES:RIOJA:LOGRONO:HARO": "Haro"
       }
     },
     "es": {
       "institution-part": {
-        "supremo": "Tribunal Supremo",
-        "audencia.national": "Audiencia Nacional",
-        "militar": "Tribunal Militar",
-        "paz": "Juzgados de Paz",
-        "constitutional": "Constitutional"
+        "ts": "Tribunal Supremo",
+        "rmc": "Registro Mercantil Central",
+        "dgrn": "Dirección General de los Registros y del Notariado",
+        "tc": "Tribunal Constitucional"
+      },
+      "institution-entire": {
+        "ts": "TS",
+        "rmc": "RMC",
+        "dgrn": "DGRN",
+        "tc": "TC"
       }
     },
     "es:andalucia": {
       "institution-part": {
-        "tribunal.superior": "Tribunal Superior de Justicia",
-        "provincial": "Audiencia Provincial"
-      }
-    },
-    "es:andalucia:granada": {
-      "institution-part": {
-        "tribunal.superior": "Tribunal Superior de Justicia",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
-      }
-    },
-    "es:andalucia:granada:motril": {
-      "institution-part": {
-        "penal": "Penal",
-        "social": "Salas de lo Social"
-      }
-    },
-    "es:andalucia:malaga": {
-      "institution-part": {
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
-      }
-    },
-    "es:andalucia:malaga:melilla": {
-      "institution-part": {
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil"
-      }
-    },
-    "es:andalucia:sevilla": {
-      "institution-part": {
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "tsj": "Tribunal Superior de Justicia de Andalucía"
+      },
+      "institution-entire": {
+        "tsj": "TSJ Andalucía"
       }
     },
     "es:andalucia:almeria": {
       "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "ap": "Audiencia Provincial de Almería"
+      },
+      "institution-entire": {
+        "ap": "AP Almería"
       }
     },
-    "es:andalucia:algeciras": {
+    "es:andalucia:almeria:almeria": {
       "institution-part": {
-        "penitenciaria": "de Vigilancia Penitenciaria"
+        "jm": "Juzgado de lo Mercantil de Almería",
+        "jpi": "Juzgado de 1ª Instancia de Almería"
+      },
+      "institution-entire": {
+        "jm": "JM Almería",
+        "jpi": "JPI Almería"
       }
     },
-    "es:andalucia:algeciras:cadiz": {
+    "es:andalucia:almeria:berja": {
       "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "jpi": "Juzgado de 1ª Instancia de Berja"
+      },
+      "institution-entire": {
+        "jpi": "JPI Berja"
       }
     },
-    "es:andalucia:algeciras:cadiz:algeciras": {
+    "es:andalucia:almeria:purchena": {
       "institution-part": {
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social"
+        "jpi": "Juzgado de 1ª Instancia de Purchena"
+      },
+      "institution-entire": {
+        "jpi": "JPI Purchena"
       }
     },
-    "es:andalucia:algeciras:cadiz:jerez.de.la.frontera": {
+    "es:andalucia:almeria:vera": {
       "institution-part": {
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social"
+        "jpi": "Juzgado de 1ª Instancia de Vera"
+      },
+      "institution-entire": {
+        "jpi": "JPI Vera"
       }
     },
-    "es:andalucia:algeciras:cadiz:ceuta": {
+    "es:andalucia:almeria:ejido": {
       "institution-part": {
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil"
+        "jpi": "Juzgado de 1ª Instancia de El Ejido"
+      },
+      "institution-entire": {
+        "jpi": "JPI El Ejido"
+      }
+    },
+    "es:andalucia:almeria:roquetas.mar": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Roquetas de Mar"
+      },
+      "institution-entire": {
+        "jpi": "JPI Roquetas de Mar"
+      }
+    },
+    "es:andalucia:almeria:huercal.overa": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Huercal Overa"
+      },
+      "institution-entire": {
+        "jpi": "JPI Huercal Overa"
+      }
+    },
+    "es:andalucia:almeria:velez.rubio": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Vélez Rubio"
+      },
+      "institution-entire": {
+        "jpi": "JPI Vélez Rubio"
+      }
+    },
+    "es:andalucia:cadiz": {
+      "institution-part": {
+        "ap": "Audiencia Provincial de Cádiz"
+      },
+      "institution-entire": {
+        "ap": "AP Cádiz"
+      }
+    },
+    "es:andalucia:cadiz:algeciras": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Algeciras"
+      },
+      "institution-entire": {
+        "jpi": "JPI Algeciras"
+      }
+    },
+    "es:andalucia:cadiz:jerez.frontera": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Jeréz de la Frontera"
+      },
+      "institution-entire": {
+        "jpi": "JPI Jeréz de la Frontera"
+      }
+    },
+    "es:andalucia:cadiz:puerto.santa.maria": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de El puerto de Santa María"
+      },
+      "institution-entire": {
+        "jpi": "JPI El puerto de Santa María"
+      }
+    },
+    "es:andalucia:cadiz:arcos.frontera": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Arcos de la Frontera"
+      },
+      "institution-entire": {
+        "jpi": "JPI Arcos de la Frontera"
+      }
+    },
+    "es:andalucia:cadiz:barbate": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Barbate"
+      },
+      "institution-entire": {
+        "jpi": "JPI Barbate"
+      }
+    },
+    "es:andalucia:cadiz:puerto.real": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Puerto Real"
+      },
+      "institution-entire": {
+        "jpi": "JPI Puerto Real"
+      }
+    },
+    "es:andalucia:cadiz:san.roque": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de San Roque"
+      },
+      "institution-entire": {
+        "jpi": "JPI San Roque"
+      }
+    },
+    "es:andalucia:cadiz:chiclana.frontera": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Chiclana de la Frontera"
+      },
+      "institution-entire": {
+        "jpi": "JPI Chiclana de la Frontera"
+      }
+    },
+    "es:andalucia:cadiz:rota": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Rota"
+      },
+      "institution-entire": {
+        "jpi": "JPI Rota"
+      }
+    },
+    "es:andalucia:cadiz:sanlucar.barrameda": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Sanlúcar de Barrameda"
+      },
+      "institution-entire": {
+        "jpi": "JPI Sanlúcar de Barrameda"
+      }
+    },
+    "es:andalucia:cadiz:linea.concepcion": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de La línea de la Concepción"
+      },
+      "institution-entire": {
+        "jpi": "JPI La línea de la Concepción"
+      }
+    },
+    "es:andalucia:cadiz:san.fernando": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de San Fernándo"
+      },
+      "institution-entire": {
+        "jpi": "JPI San Fernándo"
+      }
+    },
+    "es:andalucia:cadiz:ubrique": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Ubrique"
+      },
+      "institution-entire": {
+        "jpi": "JPI Ubrique"
       }
     },
     "es:andalucia:cordoba": {
       "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "ap": "Audiencia Provincial de Córdoba"
+      },
+      "institution-entire": {
+        "ap": "AP Córdoba"
+      }
+    },
+    "es:andalucia:cordoba:cordoba": {
+      "institution-part": {
+        "jm": "Juzgado de lo Mercantil de Córdoba",
+        "jpi": "Juzgado de 1ª Instancia de Córdoba"
+      },
+      "institution-entire": {
+        "jm": "JM Córdoba",
+        "jpi": "JPI Córdoba"
+      }
+    },
+    "es:andalucia:cordoba:aguilar.frontera": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Aguilar de la Frontera"
+      },
+      "institution-entire": {
+        "jpi": "JPI Aguilar de la Frontera"
+      }
+    },
+    "es:andalucia:cordoba:lucena": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Lucena"
+      },
+      "institution-entire": {
+        "jpi": "JPI Lucena"
+      }
+    },
+    "es:andalucia:cordoba:penarroya.pueblonuevo": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Peñarroya Pueblonuevo"
+      },
+      "institution-entire": {
+        "jpi": "JPI Peñarroya Pueblonuevo"
+      }
+    },
+    "es:andalucia:cordoba:priego.cordoba": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Priego de Córdoba"
+      },
+      "institution-entire": {
+        "jpi": "JPI Priego de Córdoba"
+      }
+    },
+    "es:andalucia:cordoba:baena": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Baena"
+      },
+      "institution-entire": {
+        "jpi": "JPI Baena"
+      }
+    },
+    "es:andalucia:cordoba:montilla": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Montilla"
+      },
+      "institution-entire": {
+        "jpi": "JPI Montilla"
+      }
+    },
+    "es:andalucia:cordoba:posadas": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Posadas"
+      },
+      "institution-entire": {
+        "jpi": "JPI Posadas"
+      }
+    },
+    "es:andalucia:cordoba:puente.genil": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Puente Genil"
+      },
+      "institution-entire": {
+        "jpi": "JPI Puente Genil"
+      }
+    },
+    "es:andalucia:cordoba:cabra": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Cabra"
+      },
+      "institution-entire": {
+        "jpi": "JPI Cabra"
+      }
+    },
+    "es:andalucia:cordoba:montoro": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Montoro"
+      },
+      "institution-entire": {
+        "jpi": "JPI Montoro"
+      }
+    },
+    "es:andalucia:cordoba:pozoblanco": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Pozoblanco"
+      },
+      "institution-entire": {
+        "jpi": "JPI Pozoblanco"
+      }
+    },
+    "es:andalucia:granada": {
+      "institution-part": {
+        "ap": "Audiencia Provincial de Granada"
+      },
+      "institution-entire": {
+        "ap": "AP Granada"
+      }
+    },
+    "es:andalucia:granada:granada": {
+      "institution-part": {
+        "jm": "Juzgado de lo Mercantil de Granada",
+        "jpi": "Juzgado de 1ª Instancia de Granada"
+      },
+      "institution-entire": {
+        "jm": "JM Granada",
+        "jpi": "JPI Granada"
+      }
+    },
+    "es:andalucia:granada:motril": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Motril"
+      },
+      "institution-entire": {
+        "jpi": "JPI Motril"
+      }
+    },
+    "es:andalucia:granada:almunecar": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Almuñecar"
+      },
+      "institution-entire": {
+        "jpi": "JPI Almuñecar"
+      }
+    },
+    "es:andalucia:granada:baza": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Baza"
+      },
+      "institution-entire": {
+        "jpi": "JPI Baza"
+      }
+    },
+    "es:andalucia:granada:loja": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Loja"
+      },
+      "institution-entire": {
+        "jpi": "JPI Loja"
+      }
+    },
+    "es:andalucia:granada:guadix": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Guadix"
+      },
+      "institution-entire": {
+        "jpi": "JPI Guadix"
+      }
+    },
+    "es:andalucia:granada:orgiva": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Orgiva"
+      },
+      "institution-entire": {
+        "jpi": "JPI Orgiva"
+      }
+    },
+    "es:andalucia:granada:huescar": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Huéscar"
+      },
+      "institution-entire": {
+        "jpi": "JPI Huéscar"
+      }
+    },
+    "es:andalucia:granada:santa.fe": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Santa Fé"
+      },
+      "institution-entire": {
+        "jpi": "JPI Santa Fé"
       }
     },
     "es:andalucia:huelva": {
       "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "ap": "Audiencia Provincial de Huelva"
+      },
+      "institution-entire": {
+        "ap": "AP Huelva"
+      }
+    },
+    "es:andalucia:huelva:huelva": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Huelva"
+      },
+      "institution-entire": {
+        "jpi": "JPI Huelva"
+      }
+    },
+    "es:andalucia:huelva:aracena": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Aracena"
+      },
+      "institution-entire": {
+        "jpi": "JPI Aracena"
+      }
+    },
+    "es:andalucia:huelva:moguer": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Moguer"
+      },
+      "institution-entire": {
+        "jpi": "JPI Moguer"
+      }
+    },
+    "es:andalucia:huelva:ayamonte": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Ayamonte"
+      },
+      "institution-entire": {
+        "jpi": "JPI Ayamonte"
+      }
+    },
+    "es:andalucia:huelva:valverde.camino": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Valverde del Camino"
+      },
+      "institution-entire": {
+        "jpi": "JPI Valverde del Camino"
+      }
+    },
+    "es:andalucia:huelva:palma.condado": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de La Palma del Condado"
+      },
+      "institution-entire": {
+        "jpi": "JPI La Palma del Condado"
       }
     },
     "es:andalucia:jaen": {
       "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "ap": "Audiencia Provincial de Jaén"
+      },
+      "institution-entire": {
+        "ap": "AP Jaén"
       }
     },
-    "es:aragon": {
+    "es:andalucia:jaen:jaen": {
       "institution-part": {
-        "tribunal.superior": "Tribunal Superior de Justicia",
-        "provincial": "Audiencia Provincial"
+        "jpi": "Juzgado de 1ª Instancia de Jaén"
+      },
+      "institution-entire": {
+        "jpi": "JPI Jaén"
       }
     },
-    "es:aragon:zaragoza": {
+    "es:andalucia:jaen:alcala.real": {
       "institution-part": {
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "jpi": "Juzgado de 1ª Instancia de Alcalá la Real"
+      },
+      "institution-entire": {
+        "jpi": "JPI Alcalá la Real"
       }
     },
-    "es:aragon:huesca": {
+    "es:andalucia:jaen:cazorla": {
       "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "jpi": "Juzgado de 1ª Instancia de Cazorla"
+      },
+      "institution-entire": {
+        "jpi": "JPI Cazorla"
       }
     },
-    "es:aragon:teruel": {
+    "es:andalucia:jaen:martos": {
       "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "jpi": "Juzgado de 1ª Instancia de Martos"
+      },
+      "institution-entire": {
+        "jpi": "JPI Martos"
+      }
+    },
+    "es:andalucia:jaen:andujar": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Andújar"
+      },
+      "institution-entire": {
+        "jpi": "JPI Andújar"
+      }
+    },
+    "es:andalucia:jaen:carolina": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de La Carolina"
+      },
+      "institution-entire": {
+        "jpi": "JPI La Carolina"
+      }
+    },
+    "es:andalucia:jaen:ubeda": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Úbeda "
+      },
+      "institution-entire": {
+        "jpi": "JPI Úbeda "
+      }
+    },
+    "es:andalucia:jaen:baeza": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Baeza"
+      },
+      "institution-entire": {
+        "jpi": "JPI Baeza"
+      }
+    },
+    "es:andalucia:jaen:linares": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Linares"
+      },
+      "institution-entire": {
+        "jpi": "JPI Linares"
+      }
+    },
+    "es:andalucia:jaen:villacarrillo": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Villacarrillo "
+      },
+      "institution-entire": {
+        "jpi": "JPI Villacarrillo "
+      }
+    },
+    "es:andalucia:malaga": {
+      "institution-part": {
+        "ap": "Audiencia Provincial de Málaga"
+      },
+      "institution-entire": {
+        "ap": "AP Málaga"
+      }
+    },
+    "es:andalucia:malaga:malaga": {
+      "institution-part": {
+        "jm": "Juzgado de lo Mercantil de Málaga",
+        "jpi": "Juzgado de 1ª Instancia de Málaga"
+      },
+      "institution-entire": {
+        "jm": "JM Málaga",
+        "jpi": "JPI Málaga"
+      }
+    },
+    "es:andalucia:malaga:fuengirola": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Fuengirola"
+      },
+      "institution-entire": {
+        "jpi": "JPI Fuengirola"
+      }
+    },
+    "es:andalucia:malaga:marbella": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Marbella"
+      },
+      "institution-entire": {
+        "jpi": "JPI Marbella"
+      }
+    },
+    "es:andalucia:malaga:torremolinos": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Torremolinos"
+      },
+      "institution-entire": {
+        "jpi": "JPI Torremolinos"
+      }
+    },
+    "es:andalucia:malaga:antequerra": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Antequerra"
+      },
+      "institution-entire": {
+        "jpi": "JPI Antequerra"
+      }
+    },
+    "es:andalucia:malaga:estepona": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Estepona"
+      },
+      "institution-entire": {
+        "jpi": "JPI Estepona"
+      }
+    },
+    "es:andalucia:malaga:velez.malaga": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Vélez Málaga"
+      },
+      "institution-entire": {
+        "jpi": "JPI Vélez Málaga"
+      }
+    },
+    "es:andalucia:malaga:archidona": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Archidona"
+      },
+      "institution-entire": {
+        "jpi": "JPI Archidona"
+      }
+    },
+    "es:andalucia:malaga:ronda": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Ronda"
+      },
+      "institution-entire": {
+        "jpi": "JPI Ronda"
+      }
+    },
+    "es:andalucia:malaga:coin": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Coín"
+      },
+      "institution-entire": {
+        "jpi": "JPI Coín"
+      }
+    },
+    "es:andalucia:malaga:torrox": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Torrox"
+      },
+      "institution-entire": {
+        "jpi": "JPI Torrox"
+      }
+    },
+    "es:andalucia:sevilla": {
+      "institution-part": {
+        "ap": "Audiencia Provincial de Sevilla"
+      },
+      "institution-entire": {
+        "ap": "AP Sevilla"
+      }
+    },
+    "es:andalucia:sevilla:sevilla": {
+      "institution-part": {
+        "jm": "Juzgado de lo Mercantil de Sevilla",
+        "jpi": "Juzgado de 1ª Instancia de Sevilla"
+      },
+      "institution-entire": {
+        "jm": "JM Sevilla",
+        "jpi": "JPI Sevilla"
+      }
+    },
+    "es:andalucia:sevilla:alcala.guadaira": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Alcalá de Guadaíra"
+      },
+      "institution-entire": {
+        "jpi": "JPI Alcalá de Guadaíra"
+      }
+    },
+    "es:andalucia:sevilla:coria.rio": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Coria del Río"
+      },
+      "institution-entire": {
+        "jpi": "JPI Coria del Río"
+      }
+    },
+    "es:andalucia:sevilla:carmona": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Carmona"
+      },
+      "institution-entire": {
+        "jpi": "JPI Carmona"
+      }
+    },
+    "es:andalucia:sevilla:dos.hermanas": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Dos Hermanas"
+      },
+      "institution-entire": {
+        "jpi": "JPI Dos Hermanas"
+      }
+    },
+    "es:andalucia:sevilla:cazalla.sierra": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Cazalla de la Sierra"
+      },
+      "institution-entire": {
+        "jpi": "JPI Cazalla de la Sierra"
+      }
+    },
+    "es:andalucia:sevilla:ezija": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Ézija"
+      },
+      "institution-entire": {
+        "jpi": "JPI Ézija"
+      }
+    },
+    "es:andalucia:sevilla:estepa": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Estepa"
+      },
+      "institution-entire": {
+        "jpi": "JPI Estepa"
+      }
+    },
+    "es:andalucia:sevilla:marchena": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Marchena"
+      },
+      "institution-entire": {
+        "jpi": "JPI Marchena"
+      }
+    },
+    "es:andalucia:sevilla:sanlucar.mayor": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Sanlúcar la Mayor"
+      },
+      "institution-entire": {
+        "jpi": "JPI Sanlúcar la Mayor"
+      }
+    },
+    "es:andalucia:sevilla:lebrija": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Lebrija"
+      },
+      "institution-entire": {
+        "jpi": "JPI Lebrija"
+      }
+    },
+    "es:andalucia:sevilla:moron.frontera": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Morón de la Frontera"
+      },
+      "institution-entire": {
+        "jpi": "JPI Morón de la Frontera"
+      }
+    },
+    "es:andalucia:sevilla:utrera": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Utrera"
+      },
+      "institution-entire": {
+        "jpi": "JPI Utrera"
+      }
+    },
+    "es:andalucia:sevilla:lora.rio": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Lora del Río"
+      },
+      "institution-entire": {
+        "jpi": "JPI Lora del Río"
+      }
+    },
+    "es:andalucia:sevilla:ceuta": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Ceuta"
+      },
+      "institution-entire": {
+        "jpi": "JPI Ceuta"
+      }
+    },
+    "es:andalucia:sevilla:melilla": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Melilla"
+      },
+      "institution-entire": {
+        "jpi": "JPI Melilla"
+      }
+    },
+    "es:zaragoza": {
+      "institution-part": {
+        "tsj": "Tribunal Superior de Justicia de Zaragoza"
+      },
+      "institution-entire": {
+        "tsj": "TSJ Zaragoza"
+      }
+    },
+    "es:zaragoza:huesca": {
+      "institution-part": {
+        "ap": "Audiencia Provincial de Huesca"
+      },
+      "institution-entire": {
+        "ap": "AP Huesca"
+      }
+    },
+    "es:zaragoza:huesca:huesca": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Huesca"
+      },
+      "institution-entire": {
+        "jpi": "JPI Huesca"
+      }
+    },
+    "es:zaragoza:huesca:barbastro": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Barbastro"
+      },
+      "institution-entire": {
+        "jpi": "JPI Barbastro"
+      }
+    },
+    "es:zaragoza:huesca:jaca": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Jaca"
+      },
+      "institution-entire": {
+        "jpi": "JPI Jaca"
+      }
+    },
+    "es:zaragoza:huesca:boltana": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Boltaña"
+      },
+      "institution-entire": {
+        "jpi": "JPI Boltaña"
+      }
+    },
+    "es:zaragoza:huesca:monzon": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Monzón"
+      },
+      "institution-entire": {
+        "jpi": "JPI Monzón"
+      }
+    },
+    "es:zaragoza:huesca:fraga": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Fraga"
+      },
+      "institution-entire": {
+        "jpi": "JPI Fraga"
+      }
+    },
+    "es:zaragoza:teruel": {
+      "institution-part": {
+        "ap": "Audiencia Provincial de Teruel"
+      },
+      "institution-entire": {
+        "ap": "AP Teruel"
+      }
+    },
+    "es:zaragoza:teruel:teruel": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Teruel"
+      },
+      "institution-entire": {
+        "jpi": "JPI Teruel"
+      }
+    },
+    "es:zaragoza:teruel:alcaniz": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Alcañiz"
+      },
+      "institution-entire": {
+        "jpi": "JPI Alcañiz"
+      }
+    },
+    "es:zaragoza:teruel:calamocha": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Calamocha"
+      },
+      "institution-entire": {
+        "jpi": "JPI Calamocha"
+      }
+    },
+    "es:zaragoza:zaragoza": {
+      "institution-part": {
+        "ap": "Audiencia Provincial de Zaragoza"
+      },
+      "institution-entire": {
+        "ap": "AP Zaragoza"
+      }
+    },
+    "es:zaragoza:zaragoza:zaragoza": {
+      "institution-part": {
+        "jm": "Juzgado de lo Mercantil de Zaragoza",
+        "jpi": "Juzgado de 1ª Instancia de Zaragoza"
+      },
+      "institution-entire": {
+        "jm": "JM Zaragoza",
+        "jpi": "JPI Zaragoza"
+      }
+    },
+    "es:zaragoza:zaragoza:calatayud": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Calatayud"
+      },
+      "institution-entire": {
+        "jpi": "JPI Calatayud"
+      }
+    },
+    "es:zaragoza:zaragoza:ejea.caballeros": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Ejea de los Caballeros"
+      },
+      "institution-entire": {
+        "jpi": "JPI Ejea de los Caballeros"
+      }
+    },
+    "es:zaragoza:zaragoza:caspe": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Caspe"
+      },
+      "institution-entire": {
+        "jpi": "JPI Caspe"
+      }
+    },
+    "es:zaragoza:zaragoza:almunia.dona.godina": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de La Almunia de Doña Godina"
+      },
+      "institution-entire": {
+        "jpi": "JPI La Almunia de Doña Godina"
+      }
+    },
+    "es:zaragoza:zaragoza:daroca": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Daroca"
+      },
+      "institution-entire": {
+        "jpi": "JPI Daroca"
+      }
+    },
+    "es:zaragoza:zaragoza:tarazona": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Tarazona"
+      },
+      "institution-entire": {
+        "jpi": "JPI Tarazona"
       }
     },
     "es:asturias": {
       "institution-part": {
-        "tribunal.superior": "Tribunal Superior de Justicia",
-        "provincial": "Audiencia Provincial"
+        "tsj": "Tribunal Superior de Justicia de Principado de Asturias"
+      },
+      "institution-entire": {
+        "tsj": "TSJ Principado de Asturias"
       }
     },
     "es:asturias:oviedo": {
       "institution-part": {
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "penal": "Penal",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "ap": "Audiencia Provincial de Oviedo"
+      },
+      "institution-entire": {
+        "ap": "AP Oviedo"
       }
     },
-    "es:asturias:asturias": {
+    "es:asturias:oviedo:oviedo": {
       "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "menores": "Jusgados de Menores"
+        "jm": "Juzgado de lo Mercantil de Oviedo",
+        "jpi": "Juzgado de 1ª Instancia de Oviedo"
+      },
+      "institution-entire": {
+        "jm": "JM Oviedo",
+        "jpi": "JPI Oviedo"
       }
     },
-    "es:asturias:aviles": {
+    "es:asturias:oviedo:gijon": {
       "institution-part": {
-        "social": "Salas de lo Social"
+        "jpi": "Juzgado de 1ª Instancia de Gijón"
+      },
+      "institution-entire": {
+        "jpi": "JPI Gijón"
       }
     },
-    "es:asturias:mieres": {
+    "es:asturias:oviedo:aviles": {
       "institution-part": {
-        "social": "Salas de lo Social"
+        "jpi": "Juzgado de 1ª Instancia de Avilés"
+      },
+      "institution-entire": {
+        "jpi": "JPI Avilés"
       }
     },
-    "es:asturias:gijon": {
+    "es:asturias:oviedo:langreo": {
       "institution-part": {
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "mercantil": "Juzgados de lo Mercantil"
+        "jpi": "Juzgado de 1ª Instancia de Langreo"
+      },
+      "institution-entire": {
+        "jpi": "JPI Langreo"
       }
     },
-    "es:asturias:langreo": {
+    "es:asturias:oviedo:mieres": {
       "institution-part": {
-        "penal": "Penal"
+        "jpi": "Juzgado de 1ª Instancia de Mieres"
+      },
+      "institution-entire": {
+        "jpi": "JPI Mieres"
       }
     },
-    "es:baleares": {
+    "es:asturias:oviedo:cangas.onis": {
       "institution-part": {
-        "tribunal.superior": "Tribunal Superior de Justicia",
-        "provincial": "Audiencia Provincial"
+        "jpi": "Juzgado de 1ª Instancia de Cangas de Onís"
+      },
+      "institution-entire": {
+        "jpi": "JPI Cangas de Onís"
       }
     },
-    "es:baleares:illes.balears": {
+    "es:asturias:oviedo:grado": {
       "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "menores": "Jusgados de Menores"
+        "jpi": "Juzgado de 1ª Instancia de Grado"
+      },
+      "institution-entire": {
+        "jpi": "JPI Grado"
       }
     },
-    "es:baleares:illes.balears:ciutadella.de.menorca": {
+    "es:asturias:oviedo:llanes": {
       "institution-part": {
-        "social": "Salas de lo Social"
+        "jpi": "Juzgado de 1ª Instancia de Llanes"
+      },
+      "institution-entire": {
+        "jpi": "JPI Llanes"
       }
     },
-    "es:baleares:illes.balears:eivissa": {
+    "es:asturias:oviedo:siero": {
       "institution-part": {
-        "penal": "Penal",
-        "social": "Salas de lo Social"
+        "jpi": "Juzgado de 1ª Instancia de Siero"
+      },
+      "institution-entire": {
+        "jpi": "JPI Siero"
       }
     },
-    "es:baleares:illes.balears:mao.mahon": {
+    "es:asturias:oviedo:villaviciosa": {
       "institution-part": {
-        "penal": "Penal"
+        "jpi": "Juzgado de 1ª Instancia de Villaviciosa"
+      },
+      "institution-entire": {
+        "jpi": "JPI Villaviciosa"
       }
     },
-    "es:baleares:illes.balears:palma": {
+    "es:asturias:oviedo:cangas.narcea": {
       "institution-part": {
-        "tribunal.superior": "Tribunal Superior de Justicia",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "penal": "Penal",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "jpi": "Juzgado de 1ª Instancia de Cangas del Narcea"
+      },
+      "institution-entire": {
+        "jpi": "JPI Cangas del Narcea"
+      }
+    },
+    "es:asturias:oviedo:laviana": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Laviana"
+      },
+      "institution-entire": {
+        "jpi": "JPI Laviana"
+      }
+    },
+    "es:asturias:oviedo:pilona": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Piloña"
+      },
+      "institution-entire": {
+        "jpi": "JPI Piloña"
+      }
+    },
+    "es:asturias:oviedo:tineo": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Tineo"
+      },
+      "institution-entire": {
+        "jpi": "JPI Tineo"
+      }
+    },
+    "es:asturias:oviedo:castropol": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Castropol"
+      },
+      "institution-entire": {
+        "jpi": "JPI Castropol"
+      }
+    },
+    "es:asturias:oviedo:lena": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Lena"
+      },
+      "institution-entire": {
+        "jpi": "JPI Lena"
+      }
+    },
+    "es:asturias:oviedo:pravia": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Pravia"
+      },
+      "institution-entire": {
+        "jpi": "JPI Pravia"
+      }
+    },
+    "es:asturias:oviedo:valdes": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Valdés"
+      },
+      "institution-entire": {
+        "jpi": "JPI Valdés"
+      }
+    },
+    "es:islas.baleares": {
+      "institution-part": {
+        "tsj": "Tribunal Superior de Justicia de Islas Baleares"
+      },
+      "institution-entire": {
+        "tsj": "TSJ Islas Baleares"
+      }
+    },
+    "es:islas.baleares:palma.mallorca": {
+      "institution-part": {
+        "ap": "Audiencia Provincial de Palma de Mallorca"
+      },
+      "institution-entire": {
+        "ap": "AP Palma de Mallorca"
+      }
+    },
+    "es:islas.baleares:palma.mallorca:palma.mallorca": {
+      "institution-part": {
+        "jm": "Juzgado de lo Mercantil de Palma de Mallorca",
+        "jpi": "Juzgado de 1ª Instancia de Palma de Mallorca"
+      },
+      "institution-entire": {
+        "jm": "JM Palma de Mallorca",
+        "jpi": "JPI Palma de Mallorca"
+      }
+    },
+    "es:islas.baleares:palma.mallorca:eivissa": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Eivissa"
+      },
+      "institution-entire": {
+        "jpi": "JPI Eivissa"
+      }
+    },
+    "es:islas.baleares:palma.mallorca:ciutadella.menorca": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Ciutadella de Menorca"
+      },
+      "institution-entire": {
+        "jpi": "JPI Ciutadella de Menorca"
+      }
+    },
+    "es:islas.baleares:palma.mallorca:inca": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Inca"
+      },
+      "institution-entire": {
+        "jpi": "JPI Inca"
+      }
+    },
+    "es:islas.baleares:palma.mallorca:manacor": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Manacor"
+      },
+      "institution-entire": {
+        "jpi": "JPI Manacor"
+      }
+    },
+    "es:islas.baleares:palma.mallorca:mao.mahon": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Maó-Mahón"
+      },
+      "institution-entire": {
+        "jpi": "JPI Maó-Mahón"
       }
     },
     "es:canarias": {
       "institution-part": {
-        "tribunal.superior": "Tribunal Superior de Justicia",
-        "provincial": "Audiencia Provincial"
+        "tsj": "Tribunal Superior de Justicia de Canarias"
+      },
+      "institution-entire": {
+        "tsj": "TSJ Canarias"
       }
     },
-    "es:canarias:las.palmas": {
+    "es:canarias:palmas": {
       "institution-part": {
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "ap": "Audiencia Provincial de Las Palmas"
+      },
+      "institution-entire": {
+        "ap": "AP Las Palmas"
       }
     },
-    "es:canarias:las.palmas:arrecife": {
+    "es:canarias:palmas:palmas": {
       "institution-part": {
-        "penal": "Penal",
-        "social": "Salas de lo Social"
+        "jm": "Juzgado de lo Mercantil de Las Palmas",
+        "jpi": "Juzgado de 1ª Instancia de Las Palmas"
+      },
+      "institution-entire": {
+        "jm": "JM Las Palmas",
+        "jpi": "JPI Las Palmas"
       }
     },
-    "es:canarias:las.palmas:gáldar": {
+    "es:canarias:palmas:arrecife": {
       "institution-part": {
-        "social": "Salas de lo Social"
+        "jpi": "Juzgado de 1ª Instancia de Arrecife"
+      },
+      "institution-entire": {
+        "jpi": "JPI Arrecife"
       }
     },
-    "es:canarias:las.palmas:puerto.del.rosario": {
+    "es:canarias:palmas:telde": {
       "institution-part": {
-        "penal": "Penal",
-        "social": "Salas de lo Social"
+        "jpi": "Juzgado de 1ª Instancia de Telde"
+      },
+      "institution-entire": {
+        "jpi": "JPI Telde"
       }
     },
-    "es:canarias:santa.cruz.de.tenerife": {
+    "es:canarias:palmas:puerto.rosario": {
       "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "jpi": "Juzgado de 1ª Instancia de Puerto del Rosario"
+      },
+      "institution-entire": {
+        "jpi": "JPI Puerto del Rosario"
       }
     },
-    "es:canarias:santa.cruz.de.tenerife:santa.cruz.de.la.palma": {
+    "es:canarias:palmas:san.bartolome.tirajana": {
       "institution-part": {
-        "penal": "Penal"
+        "jpi": "Juzgado de 1ª Instancia de San Bartolomé de Tirajana"
+      },
+      "institution-entire": {
+        "jpi": "JPI San Bartolomé de Tirajana"
+      }
+    },
+    "es:canarias:palmas:galdar": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Gáldar"
+      },
+      "institution-entire": {
+        "jpi": "JPI Gáldar"
+      }
+    },
+    "es:canarias:palmas:santa.maria.guia": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Santa María de Guía de Gran Canaria"
+      },
+      "institution-entire": {
+        "jpi": "JPI Santa María de Guía de Gran Canaria"
+      }
+    },
+    "es:canarias:palmas:arucas": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Arucas"
+      },
+      "institution-entire": {
+        "jpi": "JPI Arucas"
+      }
+    },
+    "es:canarias:santa.cruz.tenerife": {
+      "institution-part": {
+        "ap": "Audiencia Provincial de Santa Cruz de Tenerife"
+      },
+      "institution-entire": {
+        "ap": "AP Santa Cruz de Tenerife"
+      }
+    },
+    "es:canarias:santa.cruz.tenerife:santa.cruz.tenerife": {
+      "institution-part": {
+        "jm": "Juzgado de lo Mercantil de Santa Cruz de Tenerife",
+        "jpi": "Juzgado de 1ª Instancia de Santa Cruz de Tenerife"
+      },
+      "institution-entire": {
+        "jm": "JM Santa Cruz de Tenerife",
+        "jpi": "JPI Santa Cruz de Tenerife"
+      }
+    },
+    "es:canarias:santa.cruz.tenerife:arona": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Arona"
+      },
+      "institution-entire": {
+        "jpi": "JPI Arona"
+      }
+    },
+    "es:canarias:santa.cruz.tenerife:san.cristobal.laguna": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de San Cristóbal de La Laguna"
+      },
+      "institution-entire": {
+        "jpi": "JPI San Cristóbal de La Laguna"
+      }
+    },
+    "es:canarias:santa.cruz.tenerife:granadilla.abona": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Granadilla de Abona"
+      },
+      "institution-entire": {
+        "jpi": "JPI Granadilla de Abona"
+      }
+    },
+    "es:canarias:santa.cruz.tenerife:guimar": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Güimar"
+      },
+      "institution-entire": {
+        "jpi": "JPI Güimar"
+      }
+    },
+    "es:canarias:santa.cruz.tenerife:icod.vinos": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Icod de los Vinos"
+      },
+      "institution-entire": {
+        "jpi": "JPI Icod de los Vinos"
+      }
+    },
+    "es:canarias:santa.cruz.tenerife:orotafa": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de La Orotafa"
+      },
+      "institution-entire": {
+        "jpi": "JPI La Orotafa"
+      }
+    },
+    "es:canarias:santa.cruz.tenerife:llanos.aridane": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Los Llanos de Aridane"
+      },
+      "institution-entire": {
+        "jpi": "JPI Los Llanos de Aridane"
+      }
+    },
+    "es:canarias:santa.cruz.tenerife:puerto.cruz": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Puerto de la Cruz"
+      },
+      "institution-entire": {
+        "jpi": "JPI Puerto de la Cruz"
+      }
+    },
+    "es:canarias:santa.cruz.tenerife:san.sebastian.gomera": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de San Sebastián de La Gomera"
+      },
+      "institution-entire": {
+        "jpi": "JPI San Sebastián de La Gomera"
+      }
+    },
+    "es:canarias:santa.cruz.tenerife:valverde": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Valverde"
+      },
+      "institution-entire": {
+        "jpi": "JPI Valverde"
       }
     },
     "es:cantabria": {
       "institution-part": {
-        "tribunal.superior": "Tribunal Superior de Justicia",
-        "provincial": "Audiencia Provincial"
+        "tsj": "Tribunal Superior de Justicia de Cantabria"
+      },
+      "institution-entire": {
+        "tsj": "TSJ Cantabria"
       }
     },
     "es:cantabria:santander": {
       "institution-part": {
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "penal": "Penal",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "ap": "Audiencia Provincial de Santander"
+      },
+      "institution-entire": {
+        "ap": "AP Santander"
       }
     },
-    "es:cantabria:cantabria": {
+    "es:cantabria:santander:santander": {
       "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "menores": "Jusgados de Menores"
+        "jm": "Juzgado de lo Mercantil de Santander",
+        "jpi": "Juzgado de 1ª Instancia de Santander"
+      },
+      "institution-entire": {
+        "jm": "JM Santander",
+        "jpi": "JPI Santander"
+      }
+    },
+    "es:cantabria:santander:castro.urdiales": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Castro Urdiales"
+      },
+      "institution-entire": {
+        "jpi": "JPI Castro Urdiales"
+      }
+    },
+    "es:cantabria:santander:reinosa": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Reinosa"
+      },
+      "institution-entire": {
+        "jpi": "JPI Reinosa"
+      }
+    },
+    "es:cantabria:santander:torrelavega": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Torrelavega"
+      },
+      "institution-entire": {
+        "jpi": "JPI Torrelavega"
+      }
+    },
+    "es:cantabria:santander:laredo": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Laredo"
+      },
+      "institution-entire": {
+        "jpi": "JPI Laredo"
+      }
+    },
+    "es:cantabria:santander:san.vicente.barquera": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de San Vicente de la Barquera"
+      },
+      "institution-entire": {
+        "jpi": "JPI San Vicente de la Barquera"
+      }
+    },
+    "es:cantabria:santander:medio.cudeyo": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Medio Cudeyo"
+      },
+      "institution-entire": {
+        "jpi": "JPI Medio Cudeyo"
+      }
+    },
+    "es:cantabria:santander:santona": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Santoña"
+      },
+      "institution-entire": {
+        "jpi": "JPI Santoña"
       }
     },
     "es:castilla.y.leon": {
       "institution-part": {
-        "tribunal.superior": "Tribunal Superior de Justicia",
-        "provincial": "Audiencia Provincial"
+        "tsj": "Tribunal Superior de Justicia de Castilla y León"
+      },
+      "institution-entire": {
+        "tsj": "TSJ Castilla y León"
       }
     },
     "es:castilla.y.leon:avila": {
       "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "ap": "Audiencia Provincial de Ávila"
+      },
+      "institution-entire": {
+        "ap": "AP Ávila"
       }
     },
-    "es:castilla.y.leon:palencia": {
+    "es:castilla.y.leon:avila:arenas.san.pedro": {
       "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "jpi": "Juzgado de 1ª Instancia de Arenas de San Pedro"
+      },
+      "institution-entire": {
+        "jpi": "JPI Arenas de San Pedro"
       }
     },
-    "es:castilla.y.leon:salamanca": {
+    "es:castilla.y.leon:avila:arevalo": {
       "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "jpi": "Juzgado de 1ª Instancia de Arévalo"
+      },
+      "institution-entire": {
+        "jpi": "JPI Arévalo"
       }
     },
-    "es:castilla.y.leon:segovia": {
+    "es:castilla.y.leon:avila:piedrahita": {
       "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
-      }
-    },
-    "es:castilla.y.leon:soria": {
-      "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
-      }
-    },
-    "es:castilla.y.leon:zamora": {
-      "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
-      }
-    },
-    "es:castilla.y.leon:leon": {
-      "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
-      }
-    },
-    "es:castilla.y.leon:leon:ponferrada": {
-      "institution-part": {
-        "penal": "Penal",
-        "social": "Salas de lo Social"
+        "jpi": "Juzgado de 1ª Instancia de Piedrahita"
+      },
+      "institution-entire": {
+        "jpi": "JPI Piedrahita"
       }
     },
     "es:castilla.y.leon:burgos": {
       "institution-part": {
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "ap": "Audiencia Provincial de Burgos"
+      },
+      "institution-entire": {
+        "ap": "AP Burgos"
+      }
+    },
+    "es:castilla.y.leon:burgos:burgos": {
+      "institution-part": {
+        "jm": "Juzgado de lo Mercantil de Burgos",
+        "jpi": "Juzgado de 1ª Instancia de Burgos"
+      },
+      "institution-entire": {
+        "jm": "JM Burgos",
+        "jpi": "JPI Burgos"
+      }
+    },
+    "es:castilla.y.leon:burgos:aranda.duero": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Aranda de Duero"
+      },
+      "institution-entire": {
+        "jpi": "JPI Aranda de Duero"
+      }
+    },
+    "es:castilla.y.leon:burgos:miranda.ebro": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Miranda de Ebro"
+      },
+      "institution-entire": {
+        "jpi": "JPI Miranda de Ebro"
+      }
+    },
+    "es:castilla.y.leon:burgos:briviesca": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Briviesca"
+      },
+      "institution-entire": {
+        "jpi": "JPI Briviesca"
+      }
+    },
+    "es:castilla.y.leon:burgos:salas.infantes": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Salas de los Infantes"
+      },
+      "institution-entire": {
+        "jpi": "JPI Salas de los Infantes"
+      }
+    },
+    "es:castilla.y.leon:burgos:lerma": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Lerma"
+      },
+      "institution-entire": {
+        "jpi": "JPI Lerma"
+      }
+    },
+    "es:castilla.y.leon:burgos:villarcayo": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Villarcayo"
+      },
+      "institution-entire": {
+        "jpi": "JPI Villarcayo"
+      }
+    },
+    "es:castilla.y.leon:leon": {
+      "institution-part": {
+        "ap": "Audiencia Provincial de León"
+      },
+      "institution-entire": {
+        "ap": "AP León"
+      }
+    },
+    "es:castilla.y.leon:leon:leon": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de León"
+      },
+      "institution-entire": {
+        "jpi": "JPI León"
+      }
+    },
+    "es:castilla.y.leon:leon:ponferrada": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Ponferrada"
+      },
+      "institution-entire": {
+        "jpi": "JPI Ponferrada"
+      }
+    },
+    "es:castilla.y.leon:leon:astorga": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Astorga"
+      },
+      "institution-entire": {
+        "jpi": "JPI Astorga"
+      }
+    },
+    "es:castilla.y.leon:leon:sahagun": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Sahagún"
+      },
+      "institution-entire": {
+        "jpi": "JPI Sahagún"
+      }
+    },
+    "es:castilla.y.leon:leon:cistierna": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Cistierna"
+      },
+      "institution-entire": {
+        "jpi": "JPI Cistierna"
+      }
+    },
+    "es:castilla.y.leon:leon:villablino": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Villablino"
+      },
+      "institution-entire": {
+        "jpi": "JPI Villablino"
+      }
+    },
+    "es:castilla.y.leon:leon:baneza": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de La Bañeza"
+      },
+      "institution-entire": {
+        "jpi": "JPI La Bañeza"
+      }
+    },
+    "es:castilla.y.leon:palencia": {
+      "institution-part": {
+        "ap": "Audiencia Provincial de Palencia"
+      },
+      "institution-entire": {
+        "ap": "AP Palencia"
+      }
+    },
+    "es:castilla.y.leon:palencia:palencia": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Palencia"
+      },
+      "institution-entire": {
+        "jpi": "JPI Palencia"
+      }
+    },
+    "es:castilla.y.leon:palencia:carrion.condes": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Carrión de los Condes"
+      },
+      "institution-entire": {
+        "jpi": "JPI Carrión de los Condes"
+      }
+    },
+    "es:castilla.y.leon:palencia:cervera.pisuerga": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Cervera de Pisuerga"
+      },
+      "institution-entire": {
+        "jpi": "JPI Cervera de Pisuerga"
+      }
+    },
+    "es:castilla.y.leon:salamanca": {
+      "institution-part": {
+        "ap": "Audiencia Provincial de Salamanca"
+      },
+      "institution-entire": {
+        "ap": "AP Salamanca"
+      }
+    },
+    "es:castilla.y.leon:salamanca:salamanca": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Salamanca"
+      },
+      "institution-entire": {
+        "jpi": "JPI Salamanca"
+      }
+    },
+    "es:castilla.y.leon:salamanca:bejar": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Béjar"
+      },
+      "institution-entire": {
+        "jpi": "JPI Béjar"
+      }
+    },
+    "es:castilla.y.leon:salamanca:penaranda.bracamonte": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Peñaranda de Bracamonte"
+      },
+      "institution-entire": {
+        "jpi": "JPI Peñaranda de Bracamonte"
+      }
+    },
+    "es:castilla.y.leon:salamanca:ciudad.rodrigo": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Ciudad Rodrigo"
+      },
+      "institution-entire": {
+        "jpi": "JPI Ciudad Rodrigo"
+      }
+    },
+    "es:castilla.y.leon:salamanca:vitigudino": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Vitigudino"
+      },
+      "institution-entire": {
+        "jpi": "JPI Vitigudino"
+      }
+    },
+    "es:castilla.y.leon:segovia": {
+      "institution-part": {
+        "ap": "Audiencia Provincial de Segovia"
+      },
+      "institution-entire": {
+        "ap": "AP Segovia"
+      }
+    },
+    "es:castilla.y.leon:segovia:segovia": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Segovia"
+      },
+      "institution-entire": {
+        "jpi": "JPI Segovia"
+      }
+    },
+    "es:castilla.y.leon:segovia:cuellar": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Cuéllar"
+      },
+      "institution-entire": {
+        "jpi": "JPI Cuéllar"
+      }
+    },
+    "es:castilla.y.leon:segovia:santa.maria.real.nieva": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Santa María la Real de Nieva"
+      },
+      "institution-entire": {
+        "jpi": "JPI Santa María la Real de Nieva"
+      }
+    },
+    "es:castilla.y.leon:segovia:sepulveda": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Sepúlveda"
+      },
+      "institution-entire": {
+        "jpi": "JPI Sepúlveda"
+      }
+    },
+    "es:castilla.y.leon:soria": {
+      "institution-part": {
+        "ap": "Audiencia Provincial de Soria"
+      },
+      "institution-entire": {
+        "ap": "AP Soria"
+      }
+    },
+    "es:castilla.y.leon:soria:soria": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Soria"
+      },
+      "institution-entire": {
+        "jpi": "JPI Soria"
+      }
+    },
+    "es:castilla.y.leon:soria:almazan": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Almazán"
+      },
+      "institution-entire": {
+        "jpi": "JPI Almazán"
+      }
+    },
+    "es:castilla.y.leon:soria:burgo.osma": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Burgo de Osma"
+      },
+      "institution-entire": {
+        "jpi": "JPI Burgo de Osma"
       }
     },
     "es:castilla.y.leon:valladolid": {
       "institution-part": {
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "ap": "Audiencia Provincial de Valladolid"
+      },
+      "institution-entire": {
+        "ap": "AP Valladolid"
+      }
+    },
+    "es:castilla.y.leon:valladolid:valladolid": {
+      "institution-part": {
+        "jm": "Juzgado de lo Mercantil de Valladolid",
+        "jpi": "Juzgado de 1ª Instancia de Valladolid"
+      },
+      "institution-entire": {
+        "jm": "JM Valladolid",
+        "jpi": "JPI Valladolid"
+      }
+    },
+    "es:castilla.y.leon:valladolid:medina.rioseco": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Medina de Ríoseco"
+      },
+      "institution-entire": {
+        "jpi": "JPI Medina de Ríoseco"
+      }
+    },
+    "es:castilla.y.leon:valladolid:medina.campo": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Medina del campo"
+      },
+      "institution-entire": {
+        "jpi": "JPI Medina del campo"
+      }
+    },
+    "es:castilla.y.leon:zamora": {
+      "institution-part": {
+        "ap": "Audiencia Provincial de Zamora"
+      },
+      "institution-entire": {
+        "ap": "AP Zamora"
+      }
+    },
+    "es:castilla.y.leon:zamora:zamora": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Zamora"
+      },
+      "institution-entire": {
+        "jpi": "JPI Zamora"
+      }
+    },
+    "es:castilla.y.leon:zamora:benavente": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Benavente"
+      },
+      "institution-entire": {
+        "jpi": "JPI Benavente"
+      }
+    },
+    "es:castilla.y.leon:zamora:toro": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Toro"
+      },
+      "institution-entire": {
+        "jpi": "JPI Toro"
+      }
+    },
+    "es:castilla.y.leon:zamora:puebla.sanabria": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Puebla de Sanabria"
+      },
+      "institution-entire": {
+        "jpi": "JPI Puebla de Sanabria"
+      }
+    },
+    "es:castilla.y.leon:zamora:villalpando": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Villalpando"
+      },
+      "institution-entire": {
+        "jpi": "JPI Villalpando"
       }
     },
     "es:castilla.la.mancha": {
       "institution-part": {
-        "tribunal.superior": "Tribunal Superior de Justicia",
-        "provincial": "Audiencia Provincial"
+        "tsj": "Tribunal Superior de Justicia de Castilla-La Mancha"
+      },
+      "institution-entire": {
+        "tsj": "TSJ Castilla-La Mancha"
       }
     },
     "es:castilla.la.mancha:albacete": {
       "institution-part": {
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "ap": "Audiencia Provincial de Albacete"
+      },
+      "institution-entire": {
+        "ap": "AP Albacete"
+      }
+    },
+    "es:castilla.la.mancha:albacete:albacete": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Albacete"
+      },
+      "institution-entire": {
+        "jpi": "JPI Albacete"
+      }
+    },
+    "es:castilla.la.mancha:albacete:alcaraz": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Alcaraz"
+      },
+      "institution-entire": {
+        "jpi": "JPI Alcaraz"
+      }
+    },
+    "es:castilla.la.mancha:albacete:hellin": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Hellín"
+      },
+      "institution-entire": {
+        "jpi": "JPI Hellín"
+      }
+    },
+    "es:castilla.la.mancha:albacete:almansa": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Almansa"
+      },
+      "institution-entire": {
+        "jpi": "JPI Almansa"
+      }
+    },
+    "es:castilla.la.mancha:albacete:roda": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de La Roda"
+      },
+      "institution-entire": {
+        "jpi": "JPI La Roda"
+      }
+    },
+    "es:castilla.la.mancha:albacete:casas.ibanez": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Casas-Ibáñez"
+      },
+      "institution-entire": {
+        "jpi": "JPI Casas-Ibáñez"
+      }
+    },
+    "es:castilla.la.mancha:albacete:villarrobledo": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Villarrobledo"
+      },
+      "institution-entire": {
+        "jpi": "JPI Villarrobledo"
       }
     },
     "es:castilla.la.mancha:ciudad.real": {
       "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "ap": "Audiencia Provincial de Ciudad Real"
+      },
+      "institution-entire": {
+        "ap": "AP Ciudad Real"
+      }
+    },
+    "es:castilla.la.mancha:ciudad.real:ciudad.real": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Ciudad Real"
+      },
+      "institution-entire": {
+        "jpi": "JPI Ciudad Real"
+      }
+    },
+    "es:castilla.la.mancha:ciudad.real:alcazar.san.juan": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Alcázar de San Juan"
+      },
+      "institution-entire": {
+        "jpi": "JPI Alcázar de San Juan"
+      }
+    },
+    "es:castilla.la.mancha:ciudad.real:daimiel": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Daimiel"
+      },
+      "institution-entire": {
+        "jpi": "JPI Daimiel"
+      }
+    },
+    "es:castilla.la.mancha:ciudad.real:tomelloso": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Tomelloso"
+      },
+      "institution-entire": {
+        "jpi": "JPI Tomelloso"
+      }
+    },
+    "es:castilla.la.mancha:ciudad.real:almaden": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Almadén"
+      },
+      "institution-entire": {
+        "jpi": "JPI Almadén"
+      }
+    },
+    "es:castilla.la.mancha:ciudad.real:manzanares": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Manzanares"
+      },
+      "institution-entire": {
+        "jpi": "JPI Manzanares"
+      }
+    },
+    "es:castilla.la.mancha:ciudad.real:valdepenas": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Valdepeñas"
+      },
+      "institution-entire": {
+        "jpi": "JPI Valdepeñas"
+      }
+    },
+    "es:castilla.la.mancha:ciudad.real:almagro": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Almagro"
+      },
+      "institution-entire": {
+        "jpi": "JPI Almagro"
+      }
+    },
+    "es:castilla.la.mancha:ciudad.real:puertollano": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Puertollano"
+      },
+      "institution-entire": {
+        "jpi": "JPI Puertollano"
+      }
+    },
+    "es:castilla.la.mancha:ciudad.real:villanueva.infantes": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Villanueva de los Infantes"
+      },
+      "institution-entire": {
+        "jpi": "JPI Villanueva de los Infantes"
       }
     },
     "es:castilla.la.mancha:cuenca": {
       "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "ap": "Audiencia Provincial de Cuenca"
+      },
+      "institution-entire": {
+        "ap": "AP Cuenca"
       }
     },
-    "es:castilla.la.mancha:guadalajara": {
+    "es:castilla.la.mancha:cuenca:cuenca": {
       "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "jpi": "Juzgado de 1ª Instancia de Cuenca"
+      },
+      "institution-entire": {
+        "jpi": "JPI Cuenca"
+      }
+    },
+    "es:castilla.la.mancha:cuenca:motilla.palancar": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Motilla del Palancar"
+      },
+      "institution-entire": {
+        "jpi": "JPI Motilla del Palancar"
+      }
+    },
+    "es:castilla.la.mancha:cuenca:san.clemente": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de San Clemente"
+      },
+      "institution-entire": {
+        "jpi": "JPI San Clemente"
+      }
+    },
+    "es:castilla.la.mancha:cuenca:tarancon": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Tarancón"
+      },
+      "institution-entire": {
+        "jpi": "JPI Tarancón"
+      }
+    },
+    "es:castilla.la.mancha:guadalaraja": {
+      "institution-part": {
+        "ap": "Audiencia Provincial de Guadalaraja"
+      },
+      "institution-entire": {
+        "ap": "AP Guadalaraja"
+      }
+    },
+    "es:castilla.la.mancha:guadalaraja:guadalaraja": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Guadalaraja"
+      },
+      "institution-entire": {
+        "jpi": "JPI Guadalaraja"
+      }
+    },
+    "es:castilla.la.mancha:guadalaraja:molina.aragon": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Molina de Aragón"
+      },
+      "institution-entire": {
+        "jpi": "JPI Molina de Aragón"
+      }
+    },
+    "es:castilla.la.mancha:guadalaraja:siguenza": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Sigüenza"
+      },
+      "institution-entire": {
+        "jpi": "JPI Sigüenza"
       }
     },
     "es:castilla.la.mancha:toledo": {
       "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "ap": "Audiencia Provincial de Toledo"
+      },
+      "institution-entire": {
+        "ap": "AP Toledo"
       }
     },
-    "es:castilla.la.mancha:toledo:ocaña": {
+    "es:castilla.la.mancha:toledo:toledo": {
       "institution-part": {
-        "penitenciaria": "de Vigilancia Penitenciaria"
+        "jpi": "Juzgado de 1ª Instancia de Toledo"
+      },
+      "institution-entire": {
+        "jpi": "JPI Toledo"
       }
     },
-    "es:castilla.la.mancha:toledo:talavera.de.la.reina": {
+    "es:castilla.la.mancha:toledo:talavera.reina": {
       "institution-part": {
-        "penal": "Penal",
-        "social": "Salas de lo Social"
+        "jpi": "Juzgado de 1ª Instancia de Talavera de la Reina"
+      },
+      "institution-entire": {
+        "jpi": "JPI Talavera de la Reina"
+      }
+    },
+    "es:castilla.la.mancha:toledo:ocana": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Ocaña"
+      },
+      "institution-entire": {
+        "jpi": "JPI Ocaña"
+      }
+    },
+    "es:castilla.la.mancha:toledo:illescas": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Illescas"
+      },
+      "institution-entire": {
+        "jpi": "JPI Illescas"
+      }
+    },
+    "es:castilla.la.mancha:toledo:quintanar.orden": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Quintanar de la Orden"
+      },
+      "institution-entire": {
+        "jpi": "JPI Quintanar de la Orden"
+      }
+    },
+    "es:castilla.la.mancha:toledo:orgaz": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Orgaz"
+      },
+      "institution-entire": {
+        "jpi": "JPI Orgaz"
+      }
+    },
+    "es:castilla.la.mancha:toledo:torrijos": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Torrijos"
+      },
+      "institution-entire": {
+        "jpi": "JPI Torrijos"
       }
     },
     "es:cataluna": {
       "institution-part": {
-        "tribunal.superior": "Tribunal Superior de Justicia",
-        "provincial": "Audiencia Provincial"
+        "tsj": "Tribunal Superior de Justicia de Cataluña"
+      },
+      "institution-entire": {
+        "tsj": "TSJ Cataluña"
       }
     },
     "es:cataluna:barcelona": {
       "institution-part": {
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "ap": "Audiencia Provincial de Barcelona"
+      },
+      "institution-entire": {
+        "ap": "AP Barcelona"
       }
     },
-    "es:cataluna:barcelona:arenys.de.mar": {
+    "es:cataluna:barcelona:barcelona": {
       "institution-part": {
-        "penal": "Penal"
+        "jm": "Juzgado de lo Mercantil de Barcelona",
+        "jpi": "Juzgado de 1ª Instancia de Barcelona"
+      },
+      "institution-entire": {
+        "jm": "JM Barcelona",
+        "jpi": "JPI Barcelona"
       }
     },
     "es:cataluna:barcelona:granollers": {
       "institution-part": {
-        "penal": "Penal",
-        "social": "Salas de lo Social"
+        "jpi": "Juzgado de 1ª Instancia de Granollers"
+      },
+      "institution-entire": {
+        "jpi": "JPI Granollers"
       }
     },
-    "es:cataluna:barcelona:manresa": {
+    "es:cataluna:barcelona:mataro": {
       "institution-part": {
-        "penal": "Penal",
-        "social": "Salas de lo Social"
-      }
-    },
-    "es:cataluna:barcelona:mataró": {
-      "institution-part": {
-        "penal": "Penal",
-        "social": "Salas de lo Social"
-      }
-    },
-    "es:cataluna:barcelona:vilanova.i.la.geltrú": {
-      "institution-part": {
-        "penal": "Penal"
+        "jpi": "Juzgado de 1ª Instancia de Mataró"
+      },
+      "institution-entire": {
+        "jpi": "JPI Mataró"
       }
     },
     "es:cataluna:barcelona:sabadell": {
       "institution-part": {
-        "penal": "Penal",
-        "social": "Salas de lo Social"
+        "jpi": "Juzgado de 1ª Instancia de Sabadell"
+      },
+      "institution-entire": {
+        "jpi": "JPI Sabadell"
       }
     },
     "es:cataluna:barcelona:terrassa": {
       "institution-part": {
-        "penal": "Penal",
-        "social": "Salas de lo Social"
+        "jpi": "Juzgado de 1ª Instancia de Terrassa"
+      },
+      "institution-entire": {
+        "jpi": "JPI Terrassa"
+      }
+    },
+    "es:cataluna:barcelona:manresa": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Manresa"
+      },
+      "institution-entire": {
+        "jpi": "JPI Manresa"
+      }
+    },
+    "es:cataluna:barcelona:badalona": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Badalona"
+      },
+      "institution-entire": {
+        "jpi": "JPI Badalona"
+      }
+    },
+    "es:cataluna:barcelona:hospitalet.llobregat": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Hospitalet de Llobregat"
+      },
+      "institution-entire": {
+        "jpi": "JPI Hospitalet de Llobregat"
+      }
+    },
+    "es:cataluna:barcelona:arenys.mar": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Arenys de Mar"
+      },
+      "institution-entire": {
+        "jpi": "JPI Arenys de Mar"
+      }
+    },
+    "es:cataluna:barcelona:vilanova.geltru": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Vilanova i la Geltrú"
+      },
+      "institution-entire": {
+        "jpi": "JPI Vilanova i la Geltrú"
+      }
+    },
+    "es:cataluna:barcelona:san.feliu.llobregat": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de San Feliú de Llobregat"
+      },
+      "institution-entire": {
+        "jpi": "JPI San Feliú de Llobregat"
+      }
+    },
+    "es:cataluna:barcelona:gava": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Gavà"
+      },
+      "institution-entire": {
+        "jpi": "JPI Gavà"
+      }
+    },
+    "es:cataluna:barcelona:berga": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Berga"
+      },
+      "institution-entire": {
+        "jpi": "JPI Berga"
+      }
+    },
+    "es:cataluna:barcelona:cerdanyola.valles": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Cerdanyola del Vallès"
+      },
+      "institution-entire": {
+        "jpi": "JPI Cerdanyola del Vallès"
+      }
+    },
+    "es:cataluna:barcelona:cornella.llobregat": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Cornellá de Llobregat"
+      },
+      "institution-entire": {
+        "jpi": "JPI Cornellá de Llobregat"
+      }
+    },
+    "es:cataluna:barcelona:prat.llobregat": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de El Prat de Llobregat"
+      },
+      "institution-entire": {
+        "jpi": "JPI El Prat de Llobregat"
+      }
+    },
+    "es:cataluna:barcelona:martorell": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Martorell"
+      },
+      "institution-entire": {
+        "jpi": "JPI Martorell"
+      }
+    },
+    "es:cataluna:barcelona:sant.boi.llobregat": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Sant Boi de Llobregat"
+      },
+      "institution-entire": {
+        "jpi": "JPI Sant Boi de Llobregat"
+      }
+    },
+    "es:cataluna:barcelona:vilafranca.penedes": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Vilafranca del Penedés"
+      },
+      "institution-entire": {
+        "jpi": "JPI Vilafranca del Penedés"
+      }
+    },
+    "es:cataluna:barcelona:esplugues.llobregat": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Esplugues de Llobregat"
+      },
+      "institution-entire": {
+        "jpi": "JPI Esplugues de Llobregat"
+      }
+    },
+    "es:cataluna:barcelona:mollet.valles": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Mollet del Vallés"
+      },
+      "institution-entire": {
+        "jpi": "JPI Mollet del Vallés"
+      }
+    },
+    "es:cataluna:barcelona:santa.coloma.gramanet": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Santa Coloma de Gramanet"
+      },
+      "institution-entire": {
+        "jpi": "JPI Santa Coloma de Gramanet"
+      }
+    },
+    "es:cataluna:barcelona:igualada": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Igualada"
+      },
+      "institution-entire": {
+        "jpi": "JPI Igualada"
+      }
+    },
+    "es:cataluna:barcelona:rubi": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Rubí"
+      },
+      "institution-entire": {
+        "jpi": "JPI Rubí"
       }
     },
     "es:cataluna:barcelona:vic": {
       "institution-part": {
-        "penal": "Penal"
+        "jpi": "Juzgado de 1ª Instancia de Vic"
+      },
+      "institution-entire": {
+        "jpi": "JPI Vic"
       }
     },
     "es:cataluna:girona": {
       "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "ap": "Audiencia Provincial de Girona"
+      },
+      "institution-entire": {
+        "ap": "AP Girona"
+      }
+    },
+    "es:cataluna:girona:girona": {
+      "institution-part": {
+        "jm": "Juzgado de lo Mercantil de Girona",
+        "jpi": "Juzgado de 1ª Instancia de Girona"
+      },
+      "institution-entire": {
+        "jm": "JM Girona",
+        "jpi": "JPI Girona"
       }
     },
     "es:cataluna:girona:figueres": {
       "institution-part": {
-        "penal": "Penal",
-        "social": "Salas de lo Social"
+        "jpi": "Juzgado de 1ª Instancia de Figueres"
+      },
+      "institution-entire": {
+        "jpi": "JPI Figueres"
       }
     },
-    "es:cataluna:lieida": {
+    "es:cataluna:girona:blanes": {
       "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "jpi": "Juzgado de 1ª Instancia de Blanes"
+      },
+      "institution-entire": {
+        "jpi": "JPI Blanes"
+      }
+    },
+    "es:cataluna:girona:bisbal.emporda": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de La Bisbal d'Empordà"
+      },
+      "institution-entire": {
+        "jpi": "JPI La Bisbal d'Empordà"
+      }
+    },
+    "es:cataluna:girona:ripoll": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Ripoll"
+      },
+      "institution-entire": {
+        "jpi": "JPI Ripoll"
+      }
+    },
+    "es:cataluna:girona:olot": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Olot"
+      },
+      "institution-entire": {
+        "jpi": "JPI Olot"
+      }
+    },
+    "es:cataluna:girona:sant.feliu.guixols": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Sant Feliu de Guíxols"
+      },
+      "institution-entire": {
+        "jpi": "JPI Sant Feliu de Guíxols"
+      }
+    },
+    "es:cataluna:girona:puigcerda": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Puigcerdá"
+      },
+      "institution-entire": {
+        "jpi": "JPI Puigcerdá"
+      }
+    },
+    "es:cataluna:girona:santa.coloma.farners": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Santa Coloma de Farners"
+      },
+      "institution-entire": {
+        "jpi": "JPI Santa Coloma de Farners"
+      }
+    },
+    "es:cataluna:lleida": {
+      "institution-part": {
+        "ap": "Audiencia Provincial de Lleida"
+      },
+      "institution-entire": {
+        "ap": "AP Lleida"
+      }
+    },
+    "es:cataluna:lleida:lleida": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Lleida"
+      },
+      "institution-entire": {
+        "jpi": "JPI Lleida"
+      }
+    },
+    "es:cataluna:lleida:balaguer": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Balaguer"
+      },
+      "institution-entire": {
+        "jpi": "JPI Balaguer"
+      }
+    },
+    "es:cataluna:lleida:solsona": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Solsona"
+      },
+      "institution-entire": {
+        "jpi": "JPI Solsona"
+      }
+    },
+    "es:cataluna:lleida:cervera": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Cervera"
+      },
+      "institution-entire": {
+        "jpi": "JPI Cervera"
+      }
+    },
+    "es:cataluna:lleida:tremp": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Tremp"
+      },
+      "institution-entire": {
+        "jpi": "JPI Tremp"
+      }
+    },
+    "es:cataluna:lleida:seu.urgell": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de La Seu d'Urgell"
+      },
+      "institution-entire": {
+        "jpi": "JPI La Seu d'Urgell"
+      }
+    },
+    "es:cataluna:lleida:vielha.e.mijaran": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Vielha e Mijaran"
+      },
+      "institution-entire": {
+        "jpi": "JPI Vielha e Mijaran"
       }
     },
     "es:cataluna:tarragona": {
       "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "ap": "Audiencia Provincial de Tarragona"
+      },
+      "institution-entire": {
+        "ap": "AP Tarragona"
+      }
+    },
+    "es:cataluna:tarragona:tarragona": {
+      "institution-part": {
+        "jm": "Juzgado de lo Mercantil de Tarragona",
+        "jpi": "Juzgado de 1ª Instancia de Tarragona"
+      },
+      "institution-entire": {
+        "jm": "JM Tarragona",
+        "jpi": "JPI Tarragona"
       }
     },
     "es:cataluna:tarragona:reus": {
       "institution-part": {
-        "penal": "Penal",
-        "social": "Salas de lo Social"
+        "jpi": "Juzgado de 1ª Instancia de Reus"
+      },
+      "institution-entire": {
+        "jpi": "JPI Reus"
       }
     },
     "es:cataluna:tarragona:tortosa": {
       "institution-part": {
-        "penal": "Penal",
-        "social": "Salas de lo Social"
+        "jpi": "Juzgado de 1ª Instancia de Tortosa"
+      },
+      "institution-entire": {
+        "jpi": "JPI Tortosa"
       }
     },
-    "es:comunidad.valenciana": {
+    "es:cataluna:tarragona:vendrell": {
       "institution-part": {
-        "tribunal.superior": "Tribunal Superior de Justicia",
-        "provincial": "Audiencia Provincial"
+        "jpi": "Juzgado de 1ª Instancia de El Vendrell"
+      },
+      "institution-entire": {
+        "jpi": "JPI El Vendrell"
       }
     },
-    "es:comunidad.valenciana:alicante": {
+    "es:cataluna:tarragona:amposta": {
       "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "jpi": "Juzgado de 1ª Instancia de Amposta"
+      },
+      "institution-entire": {
+        "jpi": "JPI Amposta"
       }
     },
-    "es:comunidad.valenciana:alicante:benidorm": {
+    "es:cataluna:tarragona:falset": {
       "institution-part": {
-        "penal": "Penal",
-        "social": "Salas de lo Social"
+        "jpi": "Juzgado de 1ª Instancia de Falset"
+      },
+      "institution-entire": {
+        "jpi": "JPI Falset"
       }
     },
-    "es:comunidad.valenciana:alicante:elche": {
+    "es:cataluna:tarragona:gandesa": {
       "institution-part": {
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "mercantil": "Juzgados de lo Mercantil"
+        "jpi": "Juzgado de 1ª Instancia de Gandesa"
+      },
+      "institution-entire": {
+        "jpi": "JPI Gandesa"
       }
     },
-    "es:comunidad.valenciana:alicante:orihuela": {
+    "es:cataluna:tarragona:valls": {
       "institution-part": {
-        "penal": "Penal"
+        "jpi": "Juzgado de 1ª Instancia de Valls"
+      },
+      "institution-entire": {
+        "jpi": "JPI Valls"
       }
     },
-    "es:comunidad.valenciana:alicante:torrevieja": {
+    "es:valencia": {
       "institution-part": {
-        "penal": "Penal"
+        "tsj": "Tribunal Superior de Justicia de Comunidad Valenciana"
+      },
+      "institution-entire": {
+        "tsj": "TSJ Comunidad Valenciana"
       }
     },
-    "es:comunidad.valenciana:alicante:villena": {
+    "es:valencia:alicante": {
       "institution-part": {
-        "penitenciaria": "de Vigilancia Penitenciaria"
+        "ap": "Audiencia Provincial de Alicante"
+      },
+      "institution-entire": {
+        "ap": "AP Alicante"
       }
     },
-    "es:comunidad.valenciana:castellon": {
+    "es:valencia:alicante:alicante": {
       "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "menores": "Jusgados de Menores"
+        "jm": "Juzgado de lo Mercantil de Alicante",
+        "jpi": "Juzgado de 1ª Instancia de Alicante"
+      },
+      "institution-entire": {
+        "jm": "JM Alicante",
+        "jpi": "JPI Alicante"
       }
     },
-    "es:comunidad.valenciana:castellon:castellón.de.la.plana": {
+    "es:valencia:alicante:elche": {
       "institution-part": {
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "jpi": "Juzgado de 1ª Instancia de Elche"
+      },
+      "institution-entire": {
+        "jpi": "JPI Elche"
       }
     },
-    "es:comunidad.valenciana:castellon:vinaròs": {
+    "es:valencia:alicante:benidorm": {
       "institution-part": {
-        "penal": "Penal"
+        "jpi": "Juzgado de 1ª Instancia de Benidorm"
+      },
+      "institution-entire": {
+        "jpi": "JPI Benidorm"
       }
     },
-    "es:comunidad.valenciana:valencia": {
+    "es:valencia:alicante:orihuela": {
       "institution-part": {
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "jpi": "Juzgado de 1ª Instancia de Orihuela"
+      },
+      "institution-entire": {
+        "jpi": "JPI Orihuela"
       }
     },
-    "es:comunidad.valenciana:valencia:alzira": {
+    "es:valencia:alicante:torrevieja": {
       "institution-part": {
-        "penal": "Penal"
+        "jpi": "Juzgado de 1ª Instancia de Torrevieja"
+      },
+      "institution-entire": {
+        "jpi": "JPI Torrevieja"
       }
     },
-    "es:comunidad.valenciana:valencia:gandia": {
+    "es:valencia:alicante:denia": {
       "institution-part": {
-        "penal": "Penal"
+        "jpi": "Juzgado de 1ª Instancia de Denia"
+      },
+      "institution-entire": {
+        "jpi": "JPI Denia"
+      }
+    },
+    "es:valencia:alicante:villena": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Villena"
+      },
+      "institution-entire": {
+        "jpi": "JPI Villena"
+      }
+    },
+    "es:valencia:alicante:alcoy": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Alcoy"
+      },
+      "institution-entire": {
+        "jpi": "JPI Alcoy"
+      }
+    },
+    "es:valencia:alicante:novelda": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Novelda"
+      },
+      "institution-entire": {
+        "jpi": "JPI Novelda"
+      }
+    },
+    "es:valencia:alicante:elda": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Elda"
+      },
+      "institution-entire": {
+        "jpi": "JPI Elda"
+      }
+    },
+    "es:valencia:alicante:san.vicente.raspeig": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de San Vicente del Raspeig"
+      },
+      "institution-entire": {
+        "jpi": "JPI San Vicente del Raspeig"
+      }
+    },
+    "es:valencia:alicante:ibi": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Ibi"
+      },
+      "institution-entire": {
+        "jpi": "JPI Ibi"
+      }
+    },
+    "es:valencia:alicante:villajoyosa": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Villajoyosa"
+      },
+      "institution-entire": {
+        "jpi": "JPI Villajoyosa"
+      }
+    },
+    "es:valencia:castellon": {
+      "institution-part": {
+        "ap": "Audiencia Provincial de Castellón"
+      },
+      "institution-entire": {
+        "ap": "AP Castellón"
+      }
+    },
+    "es:valencia:castellon:castellon": {
+      "institution-part": {
+        "jm": "Juzgado de lo Mercantil de Castellón",
+        "jpi": "Juzgado de 1ª Instancia de Castellón"
+      },
+      "institution-entire": {
+        "jm": "JM Castellón",
+        "jpi": "JPI Castellón"
+      }
+    },
+    "es:valencia:castellon:vila.real": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Vila-real"
+      },
+      "institution-entire": {
+        "jpi": "JPI Vila-real"
+      }
+    },
+    "es:valencia:castellon:vinaros": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Vinarós"
+      },
+      "institution-entire": {
+        "jpi": "JPI Vinarós"
+      }
+    },
+    "es:valencia:castellon:nules": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Nules"
+      },
+      "institution-entire": {
+        "jpi": "JPI Nules"
+      }
+    },
+    "es:valencia:castellon:segorbe": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Segorbe"
+      },
+      "institution-entire": {
+        "jpi": "JPI Segorbe"
+      }
+    },
+    "es:valencia:valencia": {
+      "institution-part": {
+        "ap": "Audiencia Provincial de Valencia"
+      },
+      "institution-entire": {
+        "ap": "AP Valencia"
+      }
+    },
+    "es:valencia:valencia:valencia": {
+      "institution-part": {
+        "jm": "Juzgado de lo Mercantil de Valencia",
+        "jpi": "Juzgado de 1ª Instancia de Valencia"
+      },
+      "institution-entire": {
+        "jm": "JM Valencia",
+        "jpi": "JPI Valencia"
+      }
+    },
+    "es:valencia:valencia:gandia": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Gandía"
+      },
+      "institution-entire": {
+        "jpi": "JPI Gandía"
+      }
+    },
+    "es:valencia:valencia:torrent": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Torrent"
+      },
+      "institution-entire": {
+        "jpi": "JPI Torrent"
+      }
+    },
+    "es:valencia:valencia:paterna": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Paterna"
+      },
+      "institution-entire": {
+        "jpi": "JPI Paterna"
+      }
+    },
+    "es:valencia:valencia:alzira": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Alzira"
+      },
+      "institution-entire": {
+        "jpi": "JPI Alzira"
+      }
+    },
+    "es:valencia:valencia:lliria": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Llíria"
+      },
+      "institution-entire": {
+        "jpi": "JPI Llíria"
+      }
+    },
+    "es:valencia:valencia:moncada": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Moncada"
+      },
+      "institution-entire": {
+        "jpi": "JPI Moncada"
+      }
+    },
+    "es:valencia:valencia:quart.poblet": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Quart de Poblet"
+      },
+      "institution-entire": {
+        "jpi": "JPI Quart de Poblet"
+      }
+    },
+    "es:valencia:valencia:sueca": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Sueca"
+      },
+      "institution-entire": {
+        "jpi": "JPI Sueca"
+      }
+    },
+    "es:valencia:valencia:carlet": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Carlet"
+      },
+      "institution-entire": {
+        "jpi": "JPI Carlet"
+      }
+    },
+    "es:valencia:valencia:massamagrell": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Massamagrell"
+      },
+      "institution-entire": {
+        "jpi": "JPI Massamagrell"
+      }
+    },
+    "es:valencia:valencia:ontinyent": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Ontinyent"
+      },
+      "institution-entire": {
+        "jpi": "JPI Ontinyent"
+      }
+    },
+    "es:valencia:valencia:requena": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Requena"
+      },
+      "institution-entire": {
+        "jpi": "JPI Requena"
+      }
+    },
+    "es:valencia:valencia:xativa": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Xátiva"
+      },
+      "institution-entire": {
+        "jpi": "JPI Xátiva"
+      }
+    },
+    "es:valencia:valencia:catarroja": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Catarroja"
+      },
+      "institution-entire": {
+        "jpi": "JPI Catarroja"
+      }
+    },
+    "es:valencia:valencia:mislata": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Mislata"
+      },
+      "institution-entire": {
+        "jpi": "JPI Mislata"
+      }
+    },
+    "es:valencia:valencia:picassent": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Picassent"
+      },
+      "institution-entire": {
+        "jpi": "JPI Picassent"
+      }
+    },
+    "es:valencia:valencia:sagunto": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Sagunto"
+      },
+      "institution-entire": {
+        "jpi": "JPI Sagunto"
       }
     },
     "es:extremadura": {
       "institution-part": {
-        "provincial": "Audiencia Provincial"
+        "tsj": "Tribunal Superior de Justicia de Extremadura"
+      },
+      "institution-entire": {
+        "tsj": "TSJ Extremadura"
       }
     },
     "es:extremadura:badajoz": {
       "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "ap": "Audiencia Provincial de Badajoz"
+      },
+      "institution-entire": {
+        "ap": "AP Badajoz"
+      }
+    },
+    "es:extremadura:badajoz:badajoz": {
+      "institution-part": {
+        "jm": "Juzgado de lo Mercantil de Badajoz",
+        "jpi": "Juzgado de 1ª Instancia de Badajoz"
+      },
+      "institution-entire": {
+        "jm": "JM Badajoz",
+        "jpi": "JPI Badajoz"
+      }
+    },
+    "es:extremadura:badajoz:merida": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Mérida"
+      },
+      "institution-entire": {
+        "jpi": "JPI Mérida"
       }
     },
     "es:extremadura:badajoz:don.benito": {
       "institution-part": {
-        "penal": "Penal"
+        "jpi": "Juzgado de 1ª Instancia de Don Benito"
+      },
+      "institution-entire": {
+        "jpi": "JPI Don Benito"
       }
     },
-    "es:extremadura:badajoz:mérida": {
+    "es:extremadura:badajoz:almendralejo": {
       "institution-part": {
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo"
+        "jpi": "Juzgado de 1ª Instancia de Almendralejo"
+      },
+      "institution-entire": {
+        "jpi": "JPI Almendralejo"
       }
     },
-    "es:extremadura:cáceres": {
+    "es:extremadura:badajoz:herrera.duque": {
       "institution-part": {
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "jpi": "Juzgado de 1ª Instancia de Herrera del Duque"
+      },
+      "institution-entire": {
+        "jpi": "JPI Herrera del Duque"
       }
     },
-    "es:extremadura:cáceres:plasencia": {
+    "es:extremadura:badajoz:montijo": {
       "institution-part": {
-        "penal": "Penal",
-        "social": "Salas de lo Social"
+        "jpi": "Juzgado de 1ª Instancia de Montijo"
+      },
+      "institution-entire": {
+        "jpi": "JPI Montijo"
+      }
+    },
+    "es:extremadura:badajoz:villanueva.serena": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Villanueva de la Serena"
+      },
+      "institution-entire": {
+        "jpi": "JPI Villanueva de la Serena"
+      }
+    },
+    "es:extremadura:badajoz:castuera": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Castuera"
+      },
+      "institution-entire": {
+        "jpi": "JPI Castuera"
+      }
+    },
+    "es:extremadura:badajoz:jerez.caballeros": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Jerez de los Caballeros"
+      },
+      "institution-entire": {
+        "jpi": "JPI Jerez de los Caballeros"
+      }
+    },
+    "es:extremadura:badajoz:olivenza": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Olivenza"
+      },
+      "institution-entire": {
+        "jpi": "JPI Olivenza"
+      }
+    },
+    "es:extremadura:badajoz:zafra": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Zafra"
+      },
+      "institution-entire": {
+        "jpi": "JPI Zafra"
+      }
+    },
+    "es:extremadura:badajoz:fregenal.sierra": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Fregenal de la Sierra"
+      },
+      "institution-entire": {
+        "jpi": "JPI Fregenal de la Sierra"
+      }
+    },
+    "es:extremadura:badajoz:llerena": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Llerena"
+      },
+      "institution-entire": {
+        "jpi": "JPI Llerena"
+      }
+    },
+    "es:extremadura:badajoz:villafranca.barros": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Villafranca de los Barros"
+      },
+      "institution-entire": {
+        "jpi": "JPI Villafranca de los Barros"
+      }
+    },
+    "es:extremadura:caceres": {
+      "institution-part": {
+        "ap": "Audiencia Provincial de Cáceres"
+      },
+      "institution-entire": {
+        "ap": "AP Cáceres"
+      }
+    },
+    "es:extremadura:caceres:caceres": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Cáceres"
+      },
+      "institution-entire": {
+        "jpi": "JPI Cáceres"
+      }
+    },
+    "es:extremadura:caceres:plasencia": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Plasencia"
+      },
+      "institution-entire": {
+        "jpi": "JPI Plasencia"
+      }
+    },
+    "es:extremadura:caceres:coria": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Coria"
+      },
+      "institution-entire": {
+        "jpi": "JPI Coria"
+      }
+    },
+    "es:extremadura:caceres:trujillo": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Trujillo"
+      },
+      "institution-entire": {
+        "jpi": "JPI Trujillo"
+      }
+    },
+    "es:extremadura:caceres:logrosan": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Logrosán"
+      },
+      "institution-entire": {
+        "jpi": "JPI Logrosán"
+      }
+    },
+    "es:extremadura:caceres:valencia.alcantara": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Valencia de Alcántara"
+      },
+      "institution-entire": {
+        "jpi": "JPI Valencia de Alcántara"
+      }
+    },
+    "es:extremadura:caceres:navalmoral.mata": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Navalmoral de la Mata"
+      },
+      "institution-entire": {
+        "jpi": "JPI Navalmoral de la Mata"
       }
     },
     "es:galicia": {
       "institution-part": {
-        "tribunal.superior": "Tribunal Superior de Justicia",
-        "provincial": "Audiencia Provincial"
-      }
-    },
-    "es:galicia:lugo": {
-      "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
-      }
-    },
-    "es:galicia:ourense": {
-      "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
-      }
-    },
-    "es:galicia:pontevedra": {
-      "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
-      }
-    },
-    "es:galicia:pontevedra:vigo": {
-      "institution-part": {
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "mercantil": "Juzgados de lo Mercantil"
+        "tsj": "Tribunal Superior de Justicia de Galicia"
+      },
+      "institution-entire": {
+        "tsj": "TSJ Galicia"
       }
     },
     "es:galicia:coruna": {
       "institution-part": {
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "ap": "Audiencia Provincial de A Coruña"
+      },
+      "institution-entire": {
+        "ap": "AP A Coruña"
       }
     },
-    "es:galicia:coruna:santiago.de.compostela": {
+    "es:galicia:coruna:coruna": {
       "institution-part": {
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social"
+        "jm": "Juzgado de lo Mercantil de A Coruña",
+        "jpi": "Juzgado de 1ª Instancia de A Coruña"
+      },
+      "institution-entire": {
+        "jm": "JM A Coruña",
+        "jpi": "JPI A Coruña"
+      }
+    },
+    "es:galicia:coruna:santiago.compostela": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Santiago de Compostela"
+      },
+      "institution-entire": {
+        "jpi": "JPI Santiago de Compostela"
       }
     },
     "es:galicia:coruna:ferrol": {
       "institution-part": {
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social"
+        "jpi": "Juzgado de 1ª Instancia de Ferrol"
+      },
+      "institution-entire": {
+        "jpi": "JPI Ferrol"
+      }
+    },
+    "es:galicia:coruna:arzua": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Arzua"
+      },
+      "institution-entire": {
+        "jpi": "JPI Arzua"
+      }
+    },
+    "es:galicia:coruna:corcubion": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Corcubión"
+      },
+      "institution-entire": {
+        "jpi": "JPI Corcubión"
+      }
+    },
+    "es:galicia:coruna:noia": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Noia"
+      },
+      "institution-entire": {
+        "jpi": "JPI Noia"
+      }
+    },
+    "es:galicia:coruna:padron": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Padrón"
+      },
+      "institution-entire": {
+        "jpi": "JPI Padrón"
+      }
+    },
+    "es:galicia:coruna:betanzos": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Betanzos"
+      },
+      "institution-entire": {
+        "jpi": "JPI Betanzos"
+      }
+    },
+    "es:galicia:coruna:muros": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Muros"
+      },
+      "institution-entire": {
+        "jpi": "JPI Muros"
+      }
+    },
+    "es:galicia:coruna:ordes": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Ordes"
+      },
+      "institution-entire": {
+        "jpi": "JPI Ordes"
+      }
+    },
+    "es:galicia:coruna:ribeira": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Ribeira"
+      },
+      "institution-entire": {
+        "jpi": "JPI Ribeira"
+      }
+    },
+    "es:galicia:coruna:carballo": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Carballo"
+      },
+      "institution-entire": {
+        "jpi": "JPI Carballo"
+      }
+    },
+    "es:galicia:coruna:negreira": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Negreira"
+      },
+      "institution-entire": {
+        "jpi": "JPI Negreira"
+      }
+    },
+    "es:galicia:coruna:ortiguiera": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Ortiguiera"
+      },
+      "institution-entire": {
+        "jpi": "JPI Ortiguiera"
+      }
+    },
+    "es:galicia:lugo": {
+      "institution-part": {
+        "ap": "Audiencia Provincial de Lugo"
+      },
+      "institution-entire": {
+        "ap": "AP Lugo"
+      }
+    },
+    "es:galicia:lugo:lugo": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Lugo"
+      },
+      "institution-entire": {
+        "jpi": "JPI Lugo"
+      }
+    },
+    "es:galicia:lugo:a.fonsagrada": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de A Fonsagrada"
+      },
+      "institution-entire": {
+        "jpi": "JPI A Fonsagrada"
+      }
+    },
+    "es:galicia:lugo:mondonedo": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Mondoñedo"
+      },
+      "institution-entire": {
+        "jpi": "JPI Mondoñedo"
+      }
+    },
+    "es:galicia:lugo:vilalba": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Vilalba"
+      },
+      "institution-entire": {
+        "jpi": "JPI Vilalba"
+      }
+    },
+    "es:galicia:lugo:becerrea": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Becerreá"
+      },
+      "institution-entire": {
+        "jpi": "JPI Becerreá"
+      }
+    },
+    "es:galicia:lugo:monforte.lemos": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Monforte de Lemos"
+      },
+      "institution-entire": {
+        "jpi": "JPI Monforte de Lemos"
+      }
+    },
+    "es:galicia:lugo:viveiro": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Viveiro"
+      },
+      "institution-entire": {
+        "jpi": "JPI Viveiro"
+      }
+    },
+    "es:galicia:lugo:chantada": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Chantada"
+      },
+      "institution-entire": {
+        "jpi": "JPI Chantada"
+      }
+    },
+    "es:galicia:lugo:sarria": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Sarria"
+      },
+      "institution-entire": {
+        "jpi": "JPI Sarria"
+      }
+    },
+    "es:galicia:ourense": {
+      "institution-part": {
+        "ap": "Audiencia Provincial de Ourense"
+      },
+      "institution-entire": {
+        "ap": "AP Ourense"
+      }
+    },
+    "es:galicia:ourense:ourense": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Ourense"
+      },
+      "institution-entire": {
+        "jpi": "JPI Ourense"
+      }
+    },
+    "es:galicia:ourense:proba.trives": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de A Proba de Trives"
+      },
+      "institution-entire": {
+        "jpi": "JPI A Proba de Trives"
+      }
+    },
+    "es:galicia:ourense:barco.valdeorras": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de O Barco de Valdeorras"
+      },
+      "institution-entire": {
+        "jpi": "JPI O Barco de Valdeorras"
+      }
+    },
+    "es:galicia:ourense:verin": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Verín"
+      },
+      "institution-entire": {
+        "jpi": "JPI Verín"
+      }
+    },
+    "es:galicia:ourense:bande": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Bande"
+      },
+      "institution-entire": {
+        "jpi": "JPI Bande"
+      }
+    },
+    "es:galicia:ourense:carballino": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de O Carballiño"
+      },
+      "institution-entire": {
+        "jpi": "JPI O Carballiño"
+      }
+    },
+    "es:galicia:ourense:xinzo.limia": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Xinzo de Limia"
+      },
+      "institution-entire": {
+        "jpi": "JPI Xinzo de Limia"
+      }
+    },
+    "es:galicia:ourense:celanova": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Celanova"
+      },
+      "institution-entire": {
+        "jpi": "JPI Celanova"
+      }
+    },
+    "es:galicia:ourense:ribadavia": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Ribadavia"
+      },
+      "institution-entire": {
+        "jpi": "JPI Ribadavia"
+      }
+    },
+    "es:galicia:pontevedra": {
+      "institution-part": {
+        "ap": "Audiencia Provincial de Pontevedra"
+      },
+      "institution-entire": {
+        "ap": "AP Pontevedra"
+      }
+    },
+    "es:galicia:pontevedra:pontevedra": {
+      "institution-part": {
+        "jm": "Juzgado de lo Mercantil de Pontevedra",
+        "jpi": "Juzgado de 1ª Instancia de Pontevedra"
+      },
+      "institution-entire": {
+        "jm": "JM Pontevedra",
+        "jpi": "JPI Pontevedra"
+      }
+    },
+    "es:galicia:pontevedra:vigo": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Vigo",
+        "jm": "Juzgado de lo Mercantil de Vigo"
+      },
+      "institution-entire": {
+        "jpi": "JPI Vigo",
+        "jm": "JM Vigo"
+      }
+    },
+    "es:galicia:pontevedra:estrada": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de A Estrada"
+      },
+      "institution-entire": {
+        "jpi": "JPI A Estrada"
+      }
+    },
+    "es:galicia:pontevedra:cangas": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Cangas"
+      },
+      "institution-entire": {
+        "jpi": "JPI Cangas"
+      }
+    },
+    "es:galicia:pontevedra:porrino": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de O Porriño"
+      },
+      "institution-entire": {
+        "jpi": "JPI O Porriño"
+      }
+    },
+    "es:galicia:pontevedra:tui": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Tui"
+      },
+      "institution-entire": {
+        "jpi": "JPI Tui"
+      }
+    },
+    "es:galicia:pontevedra:caldas.reis": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Caldas de Reis"
+      },
+      "institution-entire": {
+        "jpi": "JPI Caldas de Reis"
+      }
+    },
+    "es:galicia:pontevedra:lalin": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Lalín"
+      },
+      "institution-entire": {
+        "jpi": "JPI Lalín"
+      }
+    },
+    "es:galicia:pontevedra:ponteareas": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Ponteareas"
+      },
+      "institution-entire": {
+        "jpi": "JPI Ponteareas"
+      }
+    },
+    "es:galicia:pontevedra:vilagarcia.arousa": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Vilagarcía de Arousa"
+      },
+      "institution-entire": {
+        "jpi": "JPI Vilagarcía de Arousa"
+      }
+    },
+    "es:galicia:pontevedra:cambados": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Cambados"
+      },
+      "institution-entire": {
+        "jpi": "JPI Cambados"
+      }
+    },
+    "es:galicia:pontevedra:marin": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Marín"
+      },
+      "institution-entire": {
+        "jpi": "JPI Marín"
+      }
+    },
+    "es:galicia:pontevedra:redondela": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Redondela"
+      },
+      "institution-entire": {
+        "jpi": "JPI Redondela"
       }
     },
     "es:madrid": {
       "institution-part": {
-        "tribunal.superior": "Tribunal Superior de Justicia",
-        "provincial": "Audiencia Provincial"
+        "tsj": "Tribunal Superior de Justicia de Madrid"
+      },
+      "institution-entire": {
+        "tsj": "TSJ Madrid"
       }
     },
     "es:madrid:madrid": {
       "institution-part": {
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "ap": "Audiencia Provincial de Madrid"
+      },
+      "institution-entire": {
+        "ap": "AP Madrid"
       }
     },
-    "es:madrid:alcalá.de.henares": {
+    "es:madrid:madrid:madrid": {
       "institution-part": {
-        "penal": "Penal",
-        "social": "Salas de lo Social"
+        "jpi": "Juzgado de 1ª Instancia de Madrid",
+        "jm": "Juzgado de lo Mercantil de Madrid"
+      },
+      "institution-entire": {
+        "jpi": "JPI Madrid",
+        "jm": "JM Madrid"
       }
     },
-    "es:madrid:getafe": {
+    "es:madrid:madrid:mostoles": {
       "institution-part": {
-        "penal": "Penal",
-        "social": "Salas de lo Social"
+        "jpi": "Juzgado de 1ª Instancia de Móstoles"
+      },
+      "institution-entire": {
+        "jpi": "JPI Móstoles"
       }
     },
-    "es:madrid:móstoles": {
+    "es:madrid:madrid:alcala.henares": {
       "institution-part": {
-        "penal": "Penal",
-        "social": "Salas de lo Social"
+        "jpi": "Juzgado de 1ª Instancia de Alcalá de Henares"
+      },
+      "institution-entire": {
+        "jpi": "JPI Alcalá de Henares"
+      }
+    },
+    "es:madrid:madrid:alcobendas": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Alcobendas"
+      },
+      "institution-entire": {
+        "jpi": "JPI Alcobendas"
+      }
+    },
+    "es:madrid:madrid:fuenlabrada": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Fuenlabrada"
+      },
+      "institution-entire": {
+        "jpi": "JPI Fuenlabrada"
+      }
+    },
+    "es:madrid:madrid:getafe": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Getafe"
+      },
+      "institution-entire": {
+        "jpi": "JPI Getafe"
+      }
+    },
+    "es:madrid:madrid:alcorcon": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Alcorcón"
+      },
+      "institution-entire": {
+        "jpi": "JPI Alcorcón"
+      }
+    },
+    "es:madrid:madrid:arganda.rey": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Arganda del Rey"
+      },
+      "institution-entire": {
+        "jpi": "JPI Arganda del Rey"
+      }
+    },
+    "es:madrid:madrid:coslada": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Coslada"
+      },
+      "institution-entire": {
+        "jpi": "JPI Coslada"
+      }
+    },
+    "es:madrid:madrid:collado.villalba": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Collado Villalba"
+      },
+      "institution-entire": {
+        "jpi": "JPI Collado Villalba"
+      }
+    },
+    "es:madrid:madrid:leganes": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Leganés"
+      },
+      "institution-entire": {
+        "jpi": "JPI Leganés"
+      }
+    },
+    "es:madrid:madrid:parla": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Parla"
+      },
+      "institution-entire": {
+        "jpi": "JPI Parla"
+      }
+    },
+    "es:madrid:madrid:torrejon.ardoz": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Torrejón de Ardoz"
+      },
+      "institution-entire": {
+        "jpi": "JPI Torrejón de Ardoz"
+      }
+    },
+    "es:madrid:madrid:aranjuez": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Aranjuez"
+      },
+      "institution-entire": {
+        "jpi": "JPI Aranjuez"
+      }
+    },
+    "es:madrid:madrid:navalcarnero": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Navalcarnero"
+      },
+      "institution-entire": {
+        "jpi": "JPI Navalcarnero"
+      }
+    },
+    "es:madrid:madrid:torrelaguna": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Torrelaguna"
+      },
+      "institution-entire": {
+        "jpi": "JPI Torrelaguna"
+      }
+    },
+    "es:madrid:madrid:colmenar.viejo": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Colmenar Viejo"
+      },
+      "institution-entire": {
+        "jpi": "JPI Colmenar Viejo"
+      }
+    },
+    "es:madrid:madrid:pozuelo.alarcon": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Pozuelo de Alarcón"
+      },
+      "institution-entire": {
+        "jpi": "JPI Pozuelo de Alarcón"
+      }
+    },
+    "es:madrid:madrid:valdemoro": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Valdemoro"
+      },
+      "institution-entire": {
+        "jpi": "JPI Valdemoro"
+      }
+    },
+    "es:madrid:madrid:majadahonda": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Majadahonda"
+      },
+      "institution-entire": {
+        "jpi": "JPI Majadahonda"
+      }
+    },
+    "es:madrid:madrid:san.lorenzo.escorial": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de San Lorenzo de El Escorial"
+      },
+      "institution-entire": {
+        "jpi": "JPI San Lorenzo de El Escorial"
       }
     },
     "es:murcia": {
       "institution-part": {
-        "tribunal.superior": "Tribunal Superior de Justicia",
-        "provincial": "Audiencia Provincial"
+        "tsj": "Tribunal Superior de Justicia de Murcia"
+      },
+      "institution-entire": {
+        "tsj": "TSJ Murcia"
       }
     },
     "es:murcia:murcia": {
       "institution-part": {
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "penal": "Penal",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "menores": "Jusgados de Menores",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "ap": "Audiencia Provincial de Murcia"
+      },
+      "institution-entire": {
+        "ap": "AP Murcia"
       }
     },
-    "es:murcia:cartagena": {
+    "es:murcia:murcia:murcia": {
       "institution-part": {
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social"
+        "jm": "Juzgado de lo Mercantil de Murcia",
+        "jpi": "Juzgado de 1ª Instancia de Murcia"
+      },
+      "institution-entire": {
+        "jm": "JM Murcia",
+        "jpi": "JPI Murcia"
       }
     },
-    "es:murcia:lorca": {
+    "es:murcia:murcia:cartagena": {
       "institution-part": {
-        "penal": "Penal"
+        "jpi": "Juzgado de 1ª Instancia de Cartagena"
+      },
+      "institution-entire": {
+        "jpi": "JPI Cartagena"
+      }
+    },
+    "es:murcia:murcia:lorca": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Lorca"
+      },
+      "institution-entire": {
+        "jpi": "JPI Lorca"
+      }
+    },
+    "es:murcia:murcia:caravaca.cruz": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Caravaca de la Cruz"
+      },
+      "institution-entire": {
+        "jpi": "JPI Caravaca de la Cruz"
+      }
+    },
+    "es:murcia:murcia:molina.segura": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Molina de Segura"
+      },
+      "institution-entire": {
+        "jpi": "JPI Molina de Segura"
+      }
+    },
+    "es:murcia:murcia:totana": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Totana"
+      },
+      "institution-entire": {
+        "jpi": "JPI Totana"
+      }
+    },
+    "es:murcia:murcia:cieza": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Cieza"
+      },
+      "institution-entire": {
+        "jpi": "JPI Cieza"
+      }
+    },
+    "es:murcia:murcia:mula": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Mula"
+      },
+      "institution-entire": {
+        "jpi": "JPI Mula"
+      }
+    },
+    "es:murcia:murcia:yecla": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Yecla"
+      },
+      "institution-entire": {
+        "jpi": "JPI Yecla"
+      }
+    },
+    "es:murcia:murcia:jumilla": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Jumilla"
+      },
+      "institution-entire": {
+        "jpi": "JPI Jumilla"
+      }
+    },
+    "es:murcia:murcia:san.javier": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de San Javier"
+      },
+      "institution-entire": {
+        "jpi": "JPI San Javier"
       }
     },
     "es:navarra": {
       "institution-part": {
-        "tribunal.superior": "Tribunal Superior de Justicia",
-        "provincial": "Audiencia Provincial"
-      }
-    },
-    "es:navarra:navarra": {
-      "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "menores": "Jusgados de Menores"
+        "tsj": "Tribunal Superior de Justicia de Navarra"
+      },
+      "institution-entire": {
+        "tsj": "TSJ Navarra"
       }
     },
     "es:navarra:pamplona": {
       "institution-part": {
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "penal": "Penal",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "ap": "Audiencia Provincial de Pamplona"
+      },
+      "institution-entire": {
+        "ap": "AP Pamplona"
+      }
+    },
+    "es:navarra:pamplona:pamplona": {
+      "institution-part": {
+        "jm": "Juzgado de lo Mercantil de Pamplona",
+        "jpi": "Juzgado de 1ª Instancia de Pamplona"
+      },
+      "institution-entire": {
+        "jm": "JM Pamplona",
+        "jpi": "JPI Pamplona"
+      }
+    },
+    "es:navarra:pamplona:aoiz": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Aoiz"
+      },
+      "institution-entire": {
+        "jpi": "JPI Aoiz"
+      }
+    },
+    "es:navarra:pamplona:tudela": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Tudela"
+      },
+      "institution-entire": {
+        "jpi": "JPI Tudela"
+      }
+    },
+    "es:navarra:pamplona:estella": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Estella"
+      },
+      "institution-entire": {
+        "jpi": "JPI Estella"
+      }
+    },
+    "es:navarra:pamplona:tafalla": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Tafalla"
+      },
+      "institution-entire": {
+        "jpi": "JPI Tafalla"
       }
     },
     "es:pais.vasco": {
       "institution-part": {
-        "tribunal.superior": "Tribunal Superior de Justicia",
-        "provincial": "Audiencia Provincial"
+        "tsj": "Tribunal Superior de Justicia de País Vasco"
+      },
+      "institution-entire": {
+        "tsj": "TSJ País Vasco"
       }
     },
-    "es:pais.vasco:araba": {
+    "es:pais.vasco:araba.alava": {
       "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "menores": "Jusgados de Menores"
+        "ap": "Audiencia Provincial de Vitoria Gasteiz"
+      },
+      "institution-entire": {
+        "ap": "AP Vitoria Gasteiz"
       }
     },
-    "es:pais.vasco:araba:vitoria.gasteiz": {
+    "es:pais.vasco:araba.alava:vitoria.gasteiz": {
       "institution-part": {
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "jpi": "Juzgado de 1ª Instancia de Vitoria Gasteiz"
+      },
+      "institution-entire": {
+        "jpi": "JPI Vitoria Gasteiz"
       }
     },
-    "es:pais.vasco:gipuzkoa": {
+    "es:pais.vasco:araba.alava:amurrio": {
       "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "menores": "Jusgados de Menores"
-      }
-    },
-    "es:pais.vasco:gipuzkoa:donostia.san.sebastián": {
-      "institution-part": {
-        "penal": "Penal",
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
-      }
-    },
-    "es:pais.vasco:gipuzkoa:ebar": {
-      "institution-part": {
-        "social": "Salas de lo Social"
+        "jpi": "Juzgado de 1ª Instancia de Amurrio"
+      },
+      "institution-entire": {
+        "jpi": "JPI Amurrio"
       }
     },
     "es:pais.vasco:bizkaia": {
       "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "menores": "Jusgados de Menores"
+        "ap": "Audiencia Provincial de Bilbao"
+      },
+      "institution-entire": {
+        "ap": "AP Bilbao"
       }
     },
     "es:pais.vasco:bizkaia:bilbao": {
       "institution-part": {
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "penal": "Penal",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "jm": "Juzgado de lo Mercantil de Bilbao",
+        "jpi": "Juzgado de 1ª Instancia de Bilbao"
+      },
+      "institution-entire": {
+        "jm": "JM Bilbao",
+        "jpi": "JPI Bilbao"
       }
     },
     "es:pais.vasco:bizkaia:barakaldo": {
       "institution-part": {
-        "penal": "Penal"
+        "jpi": "Juzgado de 1ª Instancia de Barakaldo"
+      },
+      "institution-entire": {
+        "jpi": "JPI Barakaldo"
       }
     },
-    "es:la.rioja": {
+    "es:pais.vasco:bizkaia:balmaseda": {
       "institution-part": {
-        "tribunal.superior": "Tribunal Superior de Justicia",
-        "provincial": "Audiencia Provincial"
+        "jpi": "Juzgado de 1ª Instancia de Balmaseda"
+      },
+      "institution-entire": {
+        "jpi": "JPI Balmaseda"
       }
     },
-    "es:la.rioja:la.rioja": {
+    "es:pais.vasco:bizkaia:durango": {
       "institution-part": {
-        "primera.instancia": "Juzgados de Primera Instancia",
-        "menores": "Jusgados de Menores"
+        "jpi": "Juzgado de 1ª Instancia de Durango"
+      },
+      "institution-entire": {
+        "jpi": "JPI Durango"
       }
     },
-    "es:la.rioja:logroño": {
+    "es:pais.vasco:bizkaia:gernika.lumo": {
       "institution-part": {
-        "contencioso.administrativo": "de lo Contencioso-Administrativo",
-        "social": "Salas de lo Social",
-        "penal": "Penal",
-        "penitenciaria": "de Vigilancia Penitenciaria",
-        "mercantil": "Juzgados de lo Mercantil",
-        "mujer": "Juzgados de Violencia sobre la Mujer"
+        "jpi": "Juzgado de 1ª Instancia de Gernika-Lumo"
+      },
+      "institution-entire": {
+        "jpi": "JPI Gernika-Lumo"
+      }
+    },
+    "es:pais.vasco:bizkaia:getxo": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Getxo"
+      },
+      "institution-entire": {
+        "jpi": "JPI Getxo"
+      }
+    },
+    "es:pais.vasco:gipuzkoa": {
+      "institution-part": {
+        "ap": "Audiencia Provincial de San Sebastián"
+      },
+      "institution-entire": {
+        "ap": "AP San Sebastián"
+      }
+    },
+    "es:pais.vasco:gipuzkoa:san.sebastian": {
+      "institution-part": {
+        "jm": "Juzgado de lo Mercantil de San Sebastián",
+        "jpi": "Juzgado de 1ª Instancia de San Sebastián"
+      },
+      "institution-entire": {
+        "jm": "JM San Sebastián",
+        "jpi": "JPI San Sebastián"
+      }
+    },
+    "es:pais.vasco:gipuzkoa:eibar": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Eibar"
+      },
+      "institution-entire": {
+        "jpi": "JPI Eibar"
+      }
+    },
+    "es:pais.vasco:gipuzkoa:azpeitia": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Azpeitia"
+      },
+      "institution-entire": {
+        "jpi": "JPI Azpeitia"
+      }
+    },
+    "es:pais.vasco:gipuzkoa:bergara": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Bergara"
+      },
+      "institution-entire": {
+        "jpi": "JPI Bergara"
+      }
+    },
+    "es:pais.vasco:gipuzkoa:irun": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Irun"
+      },
+      "institution-entire": {
+        "jpi": "JPI Irun"
+      }
+    },
+    "es:pais.vasco:gipuzkoa:tolosa": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Tolosa"
+      },
+      "institution-entire": {
+        "jpi": "JPI Tolosa"
+      }
+    },
+    "es:rioja": {
+      "institution-part": {
+        "tsj": "Tribunal Superior de Justicia de La Rioja"
+      },
+      "institution-entire": {
+        "tsj": "TSJ La Rioja"
+      }
+    },
+    "es:rioja:logrono": {
+      "institution-part": {
+        "ap": "Audiencia Provincial de Logroño"
+      },
+      "institution-entire": {
+        "ap": "AP Logroño"
+      }
+    },
+    "es:rioja:logrono:logrono": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Logroño"
+      },
+      "institution-entire": {
+        "jpi": "JPI Logroño"
+      }
+    },
+    "es:rioja:logrono:calahorra": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Calahorra"
+      },
+      "institution-entire": {
+        "jpi": "JPI Calahorra"
+      }
+    },
+    "es:rioja:logrono:haro": {
+      "institution-part": {
+        "jpi": "Juzgado de 1ª Instancia de Haro"
+      },
+      "institution-entire": {
+        "jpi": "JPI Haro"
       }
     }
   }

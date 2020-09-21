@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.1mlz1" class="note">
+  <info>
+    <title>European Union</title>
+    <id>http://citationstylist.org/modules/juris-eu.int</id>
+    <link href="http://citationstylist/modules/juris-eu.int" rel="self"/>
+    <link href="http://juris-m.github.io" rel="documentation"/>
+    <author>
+      <name>aAlexander Schuster</name>
+      <email>alexander.schuster@unitn.it</email>
+    </author>
+    <category citation-format="note"/>
+    <category field="law"/>
+    <summary>Juris-M style module for European Union ECLI standard</summary>
+    <updated>2016-09-06T22:06:38+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+    <law-module types="legal_case locator"/>
+  </info>
+  
+  <locale>
+    <terms>
+      <term name="paragraph">
+        <single>paragraph</single>
+        <multiple>paragraphs</multiple>
+      </term>
+      <term name="article">
+        <single>article</single>
+        <multiple>articles</multiple>
+      </term>
+      <term name="article" form="short">
+        <single>art.</single>
+        <multiple>arts.</multiple>
+      </term>
+    </terms>
+  </locale>
+  
+  <macro name="juris-pretitle">
+    <text value=""/>
+  </macro>
+  
+  <macro name="juris-title">
+    <choose>
+      <if match="any" type="legal_case">
+        <text variable="title"/>
+      </if>
+    </choose>
+  </macro>
+
+  <macro name="juris-main">
+    <choose>
+      <if type="legal_case">
+        <group delimiter=" ">
+          <text value="Inter-Am. Ct. H.R."/>
+          <group delimiter=" " prefix="(" suffix=")">
+            <text value="ser."/>
+            <text variable="genre"/>
+          </group>
+          <group delimiter=" ">
+            <label variable="number" form="short" text-case="capitalize-first"/>
+            <number variable="number"/>
+          </group>
+        </group>
+      </if>
+    </choose>
+  </macro>
+
+  <macro name="juris-tail">
+    <choose>
+      <if type="legal_case">
+        <group delimiter=" " prefix="(" suffix=")">
+          <date variable="issued" form="text" date-parts="year"/>
+        </group>
+      </if>
+    </choose>
+  </macro>
+
+  <macro name="juris-pretitle-short">
+    <text value=""/>
+  </macro>
+  <macro name="juris-title-short">
+    <text macro="juris-title"/>
+  </macro>
+
+  <macro name="juris-main-short">
+    <!-- The body of subsequent citations (of all types) -->
+    <text macro="juris-main"/>
+  </macro>
+
+  <macro name="juris-tail-short">
+    <text macro="juris-tail"/>
+  </macro>
+
+  <macro name="juris-locator">
+    <group delimiter=" ">
+      <choose>
+        <if>
+          <conditions match="any">
+            <condition locator="page" type="report" variable="number" match="all"/>
+            <condition locator="page" type="legal_case" variable="archive" match="all"/>
+            <condition locator="page" type="legal_case" variable="archive_location" match="all"/>
+          </conditions>
+          <text value="at"/>
+        </if>
+        <else-if locator="page" match="any"/>
+        <else-if>
+          <conditions match="all">
+            <condition type="regulation legislation" match="any"/>
+            <condition locator="rule"/>
+          </conditions>
+        </else-if>
+        <else>
+          <label variable="locator"/>
+        </else>
+      </choose>
+      <number variable="locator"/>
+    </group>
+  </macro>
+
+</style>

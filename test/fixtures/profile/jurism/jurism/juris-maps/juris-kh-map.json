@@ -1,1 +1,1 @@
-{"jurisdictions":[["kh","Cambodia"]],"courtNames":["អង្គជំនុំជម្រះវិសាមញ្ញ","ក្រុមប្រឹក្សាធម្មនុញ្ញ","សាលាឧទ្ធរណ៍","តុលាការកំពូល"],"countryCourtLinks":[[0,0],[1,0],[2,0],[3,0]],"courts":[["angchumnum.chumreas.visamanh",0],["krompreksa.tommnunh",1],["sala.outo",2],["tolaka.kompoul",3]],"courtJurisdictionLinks":[[0,0],[0,1],[0,2],[0,3]]}
+{"courts":[["angchumnum.chumreas.visamanh","អង្គជំនុំជម្រះវិសាមញ្ញ"],["krompreksa.tommnunh","ក្រុមប្រឹក្សាធម្មនុញ្ញ"],["sala.outo","សាលាឧទ្ធរណ៍"],["tolaka.kompoul","តុលាការកំពូល"]],"jurisdictions":{"default":[["kh","Cambodia",null,0,1,2,3]]}}

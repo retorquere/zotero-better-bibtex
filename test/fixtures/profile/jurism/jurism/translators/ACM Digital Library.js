@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2020-01-12 22:47:25"
+	"lastUpdated": "2020-04-20 05:31:35"
 }
 
 /*
@@ -142,7 +142,12 @@ function scrape(doc) {
 		let cslItem = json.items[0][doi];
 		cslItem.type = cslItem.type.toLowerCase().replace('_', '-');
 		
-		if (cslItem.type == 'thesis') {
+		// Some pages use ARTICLE rather than ARTICLE_JOURNAL
+		// https://github.com/zotero/translators/issues/2162
+		if (cslItem.type == 'article') {
+			cslItem.type = 'article-journal';
+		}
+		else if (cslItem.type == 'thesis') {
 			// The advisor is indicated as an editor in CSL which
 			// ZU.itemFromCSLJSON incorrectly extracts as an author.
 			delete cslItem.editor;
@@ -337,10 +342,10 @@ var testCases = [
 				"abstractNote": "Simulation techniques used in the Manufacturing Test SIMulator (MTSIM) are described. MTSIM is a Concurrent Engineering tool used to simulate the manufacturing test and repair aspects of boards and MCMs from design concept through manufacturing release. MTSIM helps designers select assembly process, specify Design For Test (DFT) features, select board test coverage, specify ASIC defect level goals, establish product feasibility, and predict manufacturing quality and cost goals. A new yield model for boards and MCMs which accounts for the clustering of solder defects is introduced and used to predict the yield at each test step. In addition, MTSIM estimates the average number of defects per board detected at each test step, and estimates costs incurred in test execution, fault isolation and repair. MTSIM models were validated with high performance assemblies at Hewlett-Packard (HP).",
 				"issue": "1-2",
 				"itemID": "10.1023/A:1008286901817",
+				"journalAbbreviation": "J. Electron. Test.",
 				"libraryCatalog": "ACM Digital Library",
 				"pages": "137–149",
 				"publicationTitle": "Journal of Electronic Testing: Theory and Applications",
-				"journalAbbreviation": "J. Electron. Test.",
 				"url": "https://doi.org/10.1023/A:1008286901817",
 				"volume": "10",
 				"attachments": [],
@@ -453,10 +458,10 @@ var testCases = [
 				"abstractNote": "Peter Blau was one of the first to define a latent social space and utilize it to provide concrete hypotheses. Blau defines social structure via social “parameters” (constraints). Actors that are closer together (more homogenous) in this social parameter space are more likely to interact. One of Blau’s most important hypotheses resulting from this work was that the consolidation of parameters could lead to isolated social groups. For example, the consolidation of race and income might lead to segregation. In the present work, we use Foursquare data from New York City to explore evidence of homogeneity along certain social parameters and consolidation that breeds social isolation in communities of locations checked in to by similar users. More specifically, we first test the extent to which communities detected via Latent Dirichlet Allocation are homogenous across a set of four social constraints—racial homophily, income homophily, personal interest homophily and physical space. Using a bootstrapping approach, we find that 14 (of 20) communities are statistically, and all but one qualitatively, homogenous along one of these social constraints, showing the relevance of Blau’s latent space model in venue communities determined via user check-in behavior. We then consider the extent to which communities with consolidated parameters, those homogenous on more than one parameter, represent socially isolated populations. We find communities homogenous on multiple parameters, including a homosexual community and a “hipster” community, that show support for Blau’s hypothesis that consolidation breeds social isolation. We consider these results in the context of mediated communication, in particular in the context of self-representation on social media.",
 				"issue": "3",
 				"itemID": "10.1145/2566617",
+				"journalAbbreviation": "ACM Trans. Intell. Syst. Technol.",
 				"libraryCatalog": "ACM Digital Library",
 				"pages": "46:1–46:22",
-				"publicationTitle": "ACM Transactions on Intelligent Systems and Technology (TIST)",
-				"journalAbbreviation": "ACM Trans. Intell. Syst. Technol.",
+				"publicationTitle": "ACM Transactions on Intelligent Systems and Technology",
 				"shortTitle": "Check-ins in “Blau Space”",
 				"url": "https://doi.org/10.1145/2566617",
 				"volume": "5",
@@ -516,7 +521,12 @@ var testCases = [
 				"libraryCatalog": "ACM Digital Library",
 				"place": "New York, NY, USA",
 				"publisher": "Association for Computing Machinery",
-				"attachments": [],
+				"attachments": [
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
+					}
+				],
 				"tags": [],
 				"notes": [],
 				"seeAlso": []
@@ -550,10 +560,10 @@ var testCases = [
 				"abstractNote": "The current interaction paradigm to access the mobile web forces people who are blind to hold out their phone at all times, thus increasing the risk for the device to fall or be robbed. Moreover, such continuous, two-handed interaction on a small screen hampers the ability of people who are blind to keep their hands free to control aiding devices (e.g., cane) or touch objects nearby, especially on-the-go. To investigate alternative paradigms, we are exploring and reifying strategies for \"screenless access\": a browsing approach that enables users to interact touch-free with aural navigation architectures using one-handed, in-air gestures recognized by an off-the-shelf armband. In this article, we summarize key highlights from an exploratory study with ten participants who are blind or visually impaired who experienced our screenless access prototype. We observed proficient navigation performance after basic training, users conceptual fit with a screen-free paradigm, and low levels of cognitive load, notwithstanding the errors and limits of the design and system proposed. The full paper appeared in W4A2018 [1].",
 				"issue": "121",
 				"itemID": "10.1145/3264631.3264634",
+				"journalAbbreviation": "SIGACCESS Access. Comput.",
 				"libraryCatalog": "ACM Digital Library",
 				"pages": "3:1",
 				"publicationTitle": "ACM SIGACCESS Accessibility and Computing",
-				"journalAbbreviation": "SIGACCESS Access. Comput.",
 				"shortTitle": "Beyond screen and voice",
 				"url": "https://doi.org/10.1145/3264631.3264634",
 				"attachments": [],
@@ -590,10 +600,10 @@ var testCases = [
 				"abstractNote": "Google's monolithic repository provides a common source of truth for tens of thousands of developers around the world.",
 				"issue": "7",
 				"itemID": "10.1145/2854146",
+				"journalAbbreviation": "Commun. ACM",
 				"libraryCatalog": "ACM Digital Library",
 				"pages": "78–87",
 				"publicationTitle": "Communications of the ACM",
-				"journalAbbreviation": "Commun. ACM",
 				"url": "https://doi.org/10.1145/2854146",
 				"volume": "59",
 				"attachments": [

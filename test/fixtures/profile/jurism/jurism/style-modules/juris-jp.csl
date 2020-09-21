@@ -107,7 +107,7 @@
             <label variable="number" form="short"/>
             <number variable="number"/>
           </group>
-          <text variable="container-title"/>
+          <text variable="container-title" form="short"/>
           <group delimiter=" ">
             <group delimiter=" ">
               <text variable="country" form="short"/>

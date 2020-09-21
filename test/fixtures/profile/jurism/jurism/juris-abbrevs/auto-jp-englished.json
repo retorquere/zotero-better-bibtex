@@ -1,11 +1,10 @@
 {
-  "filename": "auto-jp-englished.json",
-  "name": "Japan",
-  "version": "2019-08-19 06:21:44 UTC",
+  "filename": "REPLACE_ME",
+  "name": "REPLACE_ME",
+  "version": "REPLACE_ME",
   "xdata": {
     "default": {
       "place": {
-        "JP": "Japan",
         "JP:FUKUOKA": "Fukuoka",
         "JP:FUKUOKA:FUKUOKA": "Fukuoka",
         "JP:FUKUOKA:KAGOSHIMA": "Kagoshima",
