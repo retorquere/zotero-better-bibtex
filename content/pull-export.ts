@@ -10,7 +10,6 @@ import { get as getCollection } from './collection'
 import { get as getLibrary } from './library'
 import { getItemsAsync } from './get-items-async'
 import { KeyManager } from './key-manager'
-import { log } from './logger'
 
 function displayOptions(request) {
   const isTrue = new Set([ 'y', 'yes', 'true' ])
@@ -92,6 +91,9 @@ Zotero.Server.Endpoints['/better-bibtex/export/selected'] = Zotero.Server.Endpoi
   }
 }
 
+function isSet(v) {
+  return v ? 1 : 0
+}
 Zotero.Server.Endpoints['/better-bibtex/export/item'] = class {
   public supportedMethods = ['GET']
 
@@ -99,16 +101,25 @@ Zotero.Server.Endpoints['/better-bibtex/export/item'] = class {
     await Zotero.BetterBibTeX.ready
 
     try {
-      let { translator, citationKeys, libraryID, library, pandocFilterData } = request.query
-      if (libraryID && library) {
-        return [BAD_REQUEST, 'text/plain', 'specify at most one of library or libraryID' ]
+      let { translator, citationKeys, groupID, libraryID, library, group, pandocFilterData } = request.query
+      if ((isSet(libraryID) + isSet(library) + isSet(groupID) + isSet(group)) > 1) {
+        return [BAD_REQUEST, 'text/plain', 'specify at most one of library(/ID) or group(/ID)' ]
 
       } else if (libraryID) {
         if (!libraryID.match(/^[0-9]+$/)) return [BAD_REQUEST, 'text/plain', `${libraryID} is not a number` ]
         libraryID = parseInt(libraryID)
 
-      } else if (library) {
-        libraryID = getLibrary(library).libraryTypeID
+      } else if (groupID) {
+        if (!groupID.match(/^[0-9]+$/)) return [BAD_REQUEST, 'text/plain', `${libraryID} is not a number` ]
+        try {
+          groupID = parseInt(groupID)
+          libraryID = Zotero.Groups.getAll().find(g => g.groupID === groupID).libraryID
+        } catch (err) {
+          libraryID = null
+        }
+
+      } else if (library || group) {
+        libraryID = getLibrary(library || group).libraryID
 
       } else {
         libraryID = Zotero.Libraries.userLibraryID
@@ -125,7 +136,6 @@ Zotero.Server.Endpoints['/better-bibtex/export/item'] = class {
       const itemIDs: Record<string, number> = {}
       for (const citekey of citationKeys) {
         const key = KeyManager.keys.find({ libraryID, citekey })
-        log.debug('export:', { key, citekey, libraryID })
 
         switch (key.length) {
           case 0:
