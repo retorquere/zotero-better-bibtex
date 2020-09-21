@@ -4,7 +4,8 @@
     <title>IEEE</title>
     <id>http://www.zotero.org/styles/ieee</id>
     <link href="http://www.zotero.org/styles/ieee" rel="self"/>
-    <link href="https://www.ieee.org/content/dam/ieee-org/ieee/web/org/conferences/style_references_manual.pdf" rel="documentation"/>
+    <link href="https://ieeeauthorcenter.ieee.org/wp-content/uploads/IEEE-Reference-Guide.pdf" rel="documentation"/>
+    <link href="https://journals.ieeeauthorcenter.ieee.org/your-role-in-article-production/ieee-editorial-style-manual/" rel="documentation"/>
     <author>
       <name>Michael Berkowitz</name>
       <email>mberkowi@gmu.edu</email>
@@ -29,10 +30,14 @@
       <email>g.silano89@gmail.com</email>
       <uri>http://giuseppesilano.net</uri>
     </contributor>
+    <contributor>
+      <name>Patrick O'Brien</name>
+    </contributor>
     <category citation-format="numeric"/>
     <category field="engineering"/>
     <category field="generic-base"/>
-    <updated>2019-01-02T15:01:14+00:00</updated>
+    <summary>IEEE style as per the 2018 guidelines, V 11.12.2018.</summary>
+    <updated>2019-12-20T09:14:19+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -75,16 +80,22 @@
           <date-part name="year" form="long"/>
         </date>
       </if>
-      <else-if type="bill book chapter graphic legal_case legislation motion_picture paper-conference song thesis" match="any">
+      <else-if type="bill book chapter graphic legal_case legislation motion_picture song thesis" match="any">
         <date variable="issued">
           <date-part name="year" form="long"/>
         </date>
       </else-if>
+      <else-if type="paper-conference" match="any">
+        <date variable="issued">
+          <date-part name="month" form="short"/>
+          <date-part name="year" prefix=" "/>
+        </date>
+      </else-if>
       <else>
         <date variable="issued">
-          <date-part name="day" form="numeric-leading-zeros" suffix="-"/>
-          <date-part name="month" form="short" suffix="-" strip-periods="true"/>
-          <date-part name="year" form="long"/>
+          <date-part name="month" form="short" suffix=" "/>
+          <date-part name="day" form="numeric-leading-zeros" suffix=", "/>
+          <date-part name="year"/>
         </date>
       </else>
     </choose>
@@ -179,20 +190,16 @@
   </macro>
   <macro name="access">
     <choose>
-      <if type="webpage">
+      <if type="webpage post post-weblog" match="any">
         <choose>
           <if variable="URL">
-            <group delimiter=". ">
-              <text term="online" prefix="[" suffix="]" text-case="capitalize-first"/>
-              <group delimiter=": ">
-                <text term="available at" text-case="capitalize-first"/>
-                <text variable="URL"/>
-              </group>
-              <group prefix="[" suffix="]" delimiter=": ">
-                <text term="accessed" text-case="capitalize-first"/>
+            <group delimiter=" ">
+              <text variable="URL"/>
+              <group delimiter=" " prefix="(" suffix=")">
+                <text term="accessed"/>
                 <date variable="accessed">
-                  <date-part name="day" form="numeric-leading-zeros" suffix="-"/>
-                  <date-part name="month" form="short" suffix="-" strip-periods="true"/>
+                  <date-part name="month" form="short" strip-periods="false"/>
+                  <date-part name="day" form="numeric-leading-zeros" prefix=" " suffix=", "/>
                   <date-part name="year" form="long"/>
                 </date>
               </group>
@@ -200,6 +207,26 @@
           </if>
         </choose>
       </if>
+      <else-if match="any" variable="DOI">
+        <text variable="DOI" prefix="doi: "/>
+      </else-if>
+      <else>
+        <group delimiter=". ">
+          <group delimiter=": ">
+            <text term="accessed" text-case="capitalize-first"/>
+            <date variable="accessed">
+              <date-part name="month" form="short" suffix=" "/>
+              <date-part name="day" form="numeric-leading-zeros" suffix=", "/>
+              <date-part name="year"/>
+            </date>
+          </group>
+          <text term="online" prefix="[" suffix="]" text-case="capitalize-first"/>
+          <group delimiter=": ">
+            <text term="available at" text-case="capitalize-first"/>
+            <text variable="URL"/>
+          </group>
+        </group>
+      </else>
     </choose>
   </macro>
   <macro name="page">
@@ -251,6 +278,7 @@
             <text macro="page"/>
             <text macro="issued"/>
             <text macro="status"/>
+            <text macro="access"/>
           </group>
         </if>
         <else-if type="paper-conference speech" match="any">
@@ -261,17 +289,21 @@
             <text macro="locators"/>
             <text macro="page"/>
             <text macro="status"/>
+            <text macro="access"/>
           </group>
         </else-if>
         <else-if type="report">
-          <group delimiter=", ">
-            <text macro="title"/>
-            <text macro="publisher"/>
-            <group delimiter=" ">
-              <text variable="genre"/>
-              <text variable="number"/>
+          <group delimiter=". ">
+            <group delimiter=", ">
+              <text macro="title"/>
+              <text macro="publisher"/>
+              <group delimiter=" ">
+                <text variable="genre"/>
+                <text variable="number"/>
+              </group>
+              <text macro="issued"/>
             </group>
-            <text macro="issued"/>
+            <text macro="access"/>
           </group>
         </else-if>
         <else-if type="thesis">
@@ -282,7 +314,7 @@
             <text macro="issued"/>
           </group>
         </else-if>
-        <else-if type="webpage post-weblog" match="any">
+        <else-if type="webpage post-weblog post" match="any">
           <group delimiter=", " suffix=". ">
             <text macro="title"/>
             <text variable="container-title" font-style="italic"/>
@@ -345,6 +377,7 @@
             <text macro="publisher"/>
             <text macro="page"/>
             <text macro="issued"/>
+            <text macro="access"/>
           </group>
         </else>
       </choose>

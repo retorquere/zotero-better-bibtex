@@ -96,7 +96,7 @@
                 <choose>
                   <if variable="volume container-title page">
                     <number variable="volume"/>
-                    <text variable="container-title"/>
+                    <text variable="container-title" form="short"/>
                     <number variable="page"/>
                   </if>
                 </choose>

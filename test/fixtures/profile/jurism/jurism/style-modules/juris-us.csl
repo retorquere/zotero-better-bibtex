@@ -97,8 +97,8 @@
             </group>
           </if>
           <else>
-            <group is-parallel="first">
-              <text variable="title" form="short"/>
+            <group parallel-first="title">
+              <text variable="title"/>
             </group>
           </else>
         </choose>
@@ -307,7 +307,7 @@
           </group>
           <group delimiter=" ">
             <number variable="volume"/>
-            <text variable="container-title"/>
+            <text variable="container-title" form="short"/>
             <choose>
               <if match="all" variable="gazette-flag">
                 <number variable="page"/>
@@ -323,7 +323,7 @@
         </conditions>
         <group delimiter=" ">
           <number variable="volume"/>
-          <text variable="container-title"/>
+          <text variable="container-title" form="short"/>
           <number variable="page"/>
         </group>
       </else-if>
@@ -442,8 +442,7 @@
             </group>
           </else-if>
           <else-if type="legal_case">
-            <group delimiter=" " is-parallel="last">
-              <text variable="country" form="short"/>
+            <group delimiter=" " parallel-last="authority">
               <names variable="authority">
                 <name/>
                 <institution institution-parts="short"/>
@@ -504,12 +503,12 @@
                 <date form="text" date-parts="year-month-day" variable="issued"/>
               </else-if>
               <else-if variable="issued">
-                <group is-parallel="last">
+                <group parallel-last="issued">
                   <date form="text" date-parts="year" variable="issued"/>
                 </group>
               </else-if>
               <else>
-                <group is-parallel="last">
+                <group parallel-last="publication-date">
                   <date form="text" date-parts="year" variable="publication-date"/>
                 </group>
               </else>
@@ -568,7 +567,7 @@
   <macro name="juris-title-short">
     <choose>
       <if match="all" type="legal_case" variable="title-short title">
-        <group is-parallel="first">
+        <group parallel-first="title-short">
           <text variable="title-short" form="short"/>
         </group>
       </if>
@@ -652,7 +651,7 @@
           </conditions>
           <group delimiter=" ">
             <number variable="volume"/>
-            <text variable="container-title"/>
+            <text variable="container-title" form="short"/>
           </group>
         </else-if>
         <else-if>
@@ -743,6 +742,9 @@
           <text value="at"/>
         </if>
         <else-if locator="page"/>
+        <else-if match="all" locator="paragraph" type="patent">
+          <label variable="locator" form="static"/>
+        </else-if>
         <else>
           <label variable="locator"/>
         </else>

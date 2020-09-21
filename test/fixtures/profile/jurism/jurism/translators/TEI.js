@@ -5,7 +5,7 @@
 	"creator": "Stefan Majewski",
 	"target": "xml",
 	"minVersion": "4.0.27",
-	"maxVersion": null,
+	"maxVersion": "",
 	"priority": 25,
 	"inRepository": true,
 	"configOptions": {
@@ -19,7 +19,7 @@
 		"Full TEI Document": false,
 		"Export Collections": false
 	},
-	"lastUpdated": "2019-01-31 00:12:00"
+	"lastUpdated": "2020-07-23 18:31:53"
 }
 
 // ********************************************************************
@@ -60,10 +60,9 @@
 // Zotero.addOption("generateXMLIds", true);
 
 var ns = {
-	"tei": "http://www.tei-c.org/ns/1.0",
-	"xml": "http://www.w3.org/XML/1998/namespace"
+	tei: "http://www.tei-c.org/ns/1.0",
+	xml: "http://www.w3.org/XML/1998/namespace"
 };
-
 
 
 var exportedXMLIds = {};
@@ -99,18 +98,18 @@ function genXMLId(item) {
 	// use Better BibTeX for Zotero citation key if available
 	if (item.extra) {
 		item.extra = item.extra.replace(/(?:^|\n)citation key\s*:\s*([^\s]+)(?:\n|$)/i, (m, citationKey) => {
-			item.citationKey = citationKey
-			return '\n'
-		}).trim()
+			item.citationKey = citationKey;
+			return '\n';
+		}).trim();
 	}
-	if (item.citationKey) return item.citationKey
+	if (item.citationKey) return item.citationKey;
 
 	var xmlid = '';
 	if (item.creators && item.creators[0] && (item.creators[0].lastName || item.creators[0].name)) {
-		if (item.creators[0].lastName){
+		if (item.creators[0].lastName) {
 			xmlid = item.creators[0].lastName;
 		}
-		if (item.creators[0].name){
+		if (item.creators[0].name) {
 			xmlid = item.creators[0].name;
 		}
 		if (item.date) {
@@ -120,8 +119,8 @@ function genXMLId(item) {
 			}
 		}
 		// Replace space, tabulations, colon, punctuation, parenthesis and apostrophes by "_"
-		xmlid = xmlid.replace(/([ \t\[\]:\u00AD\u0021-\u002C\u2010-\u2021])+/g, "_");
-		
+		xmlid = xmlid.replace(/([ \t[\]:\u00AD\u0021-\u002C\u2010-\u2021])+/g, "_");
+
 
 		// Remove any non xml NCName characters
 
@@ -136,7 +135,8 @@ function genXMLId(item) {
 
 		xmlid = xmlid.replace(/^[^A-Z_a-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C-\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD\u10000-\uEFFFF]/, "");
 		xmlid = xmlid.replace(/[^-A-Z_a-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C-\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD\u10000-\uEFFFF.0-9\u00B7\u0300-\u036F\u203F-\u2040]/g, "");
-	} else {
+	}
+	else {
 		// "zoteroItem_item.key" as value for entries without creator
 		var str = item.uri;
 		var n = str.lastIndexOf('/');
@@ -152,8 +152,8 @@ function genXMLId(item) {
 		var charZ = 122;
 		var firstId = xmlid + "a";
 		// reset id of previous date-only item to <date> + "a";
-		if (exportedXMLIds[curXmlId] &&
-			!exportedXMLIds[firstId]) {
+		if (exportedXMLIds[curXmlId]
+			&& !exportedXMLIds[firstId]) {
 			exportedXMLIds[curXmlId].setAttributeNS(ns.xml, "xml:id", firstId);
 			exportedXMLIds[firstId] = exportedXMLIds[curXmlId];
 		}
@@ -175,27 +175,29 @@ function genXMLId(item) {
 function generateItem(item, teiDoc) {
 	// fixme not all conferencepapers are analytic!
 	var analyticItemTypes = {
-		"journalArticle": true,
-		"bookSection": true,
-		"magazineArticle": true,
-		"newspaperArticle": true,
-		"conferencePaper": true,
-		"encyclopediaArticle": true,
-		"dictionaryEntry": true,
-		"webpage": true
+		journalArticle: true,
+		bookSection: true,
+		magazineArticle: true,
+		newspaperArticle: true,
+		conferencePaper: true,
+		encyclopediaArticle: true,
+		dictionaryEntry: true,
+		webpage: true
 	};
 
-	var isAnalytic = analyticItemTypes[item.itemType] ? true : false;
+	var isAnalytic = !!analyticItemTypes[item.itemType];
 	var bibl = teiDoc.createElementNS(ns.tei, "biblStruct");
 	bibl.setAttribute("type", item.itemType);
 
 	if (Zotero.getOption("Generate XML IDs")) {
+		var xmlid;
 		if (!generatedItems[item.uri]) {
-			var xmlid = genXMLId(item);
+			xmlid = genXMLId(item);
 			bibl.setAttributeNS(ns.xml, "xml:id", xmlid);
 			exportedXMLIds[xmlid] = bibl;
-		} else {
-			var xmlid = "#" + generatedItems[item.uri].getAttributeNS(ns.xml, "id");
+		}
+		else {
+			xmlid = "#" + generatedItems[item.uri].getAttributeNS(ns.xml, "id");
 			var myXmlid = "zoteroItem_" + item.uri;
 
 			bibl.setAttribute("sameAs", xmlid);
@@ -203,7 +205,7 @@ function generateItem(item, teiDoc) {
 			bibl.setAttributeNS(ns.xml, "xml:id", myXmlid);
 			exportedXMLIds[myXmlid] = bibl;
 		}
-		//create attribute for Zotero item URI
+		// create attribute for Zotero item URI
 		bibl.setAttribute("corresp", item.uri);
 	}
 
@@ -214,9 +216,10 @@ function generateItem(item, teiDoc) {
 	var monogr = teiDoc.createElementNS(ns.tei, "monogr");
 	var analytic = null;
 	var series = null;
+	var title, shortTitle, idno, edition, date, note;
 	// create title or monogr
 	if (isAnalytic) {
-		analytic = teiDoc.createElementNS(ns.tei, "analytic")
+		analytic = teiDoc.createElementNS(ns.tei, "analytic");
 		bibl.appendChild(analytic);
 		bibl.appendChild(monogr);
 		var analyticTitle = teiDoc.createElementNS(ns.tei, "title");
@@ -225,9 +228,9 @@ function generateItem(item, teiDoc) {
 		if (item.title) {
 			analyticTitle.appendChild(teiDoc.createTextNode(replaceFormatting(item.title)));
 		}
-		//A DOI is presumably for the article, not the journal.
+		// A DOI is presumably for the article, not the journal.
 		if (item.DOI) {
-			var idno = teiDoc.createElementNS(ns.tei, "idno");
+			idno = teiDoc.createElementNS(ns.tei, "idno");
 			idno.setAttribute("type", "DOI");
 			idno.appendChild(teiDoc.createTextNode(item.DOI));
 			analytic.appendChild(idno);
@@ -239,7 +242,8 @@ function generateItem(item, teiDoc) {
 			var pubTitle = teiDoc.createElementNS(ns.tei, "title");
 			if (item.itemType == "journalArticle") {
 				pubTitle.setAttribute("level", "j");
-			} else {
+			}
+			else {
 				pubTitle.setAttribute("level", "m");
 			}
 			pubTitle.appendChild(teiDoc.createTextNode(replaceFormatting(publicationTitle)));
@@ -248,32 +252,34 @@ function generateItem(item, teiDoc) {
 
 		// short title
 		if (item.shortTitle) {
-			var shortTitle = teiDoc.createElementNS(ns.tei, "title");
+			shortTitle = teiDoc.createElementNS(ns.tei, "title");
 			shortTitle.setAttribute("type", "short");
 			shortTitle.appendChild(teiDoc.createTextNode(item.shortTitle));
 			analytic.appendChild(shortTitle);
 		}
-	} else {
+	}
+	else {
 		bibl.appendChild(monogr);
 		if (item.title) {
-			var title = teiDoc.createElementNS(ns.tei, "title");
+			title = teiDoc.createElementNS(ns.tei, "title");
 			title.setAttribute("level", "m");
 			title.appendChild(teiDoc.createTextNode(replaceFormatting(item.title)));
 			monogr.appendChild(title);
-		} else if (!item.conferenceName) {
-			var title = teiDoc.createElementNS(ns.tei, "title");
+		}
+		else if (!item.conferenceName) {
+			title = teiDoc.createElementNS(ns.tei, "title");
 			monogr.appendChild(title);
 		}
 		// short title
 		if (item.shortTitle) {
-			var shortTitle = teiDoc.createElementNS(ns.tei, "title");
+			shortTitle = teiDoc.createElementNS(ns.tei, "title");
 			shortTitle.setAttribute("type", "short");
 			shortTitle.appendChild(teiDoc.createTextNode(item.shortTitle));
 			monogr.appendChild(shortTitle);
 		}
-		//A DOI where there's no analytic must be for the monogr.
+		// A DOI where there's no analytic must be for the monogr.
 		if (item.DOI) {
-			var idno = teiDoc.createElementNS(ns.tei, "idno");
+			idno = teiDoc.createElementNS(ns.tei, "idno");
 			idno.setAttribute("type", "DOI");
 			idno.appendChild(teiDoc.createTextNode(item.DOI));
 			analytic.appendChild(idno);
@@ -296,7 +302,7 @@ function generateItem(item, teiDoc) {
 		bibl.appendChild(series);
 
 		if (item.series) {
-			var title = teiDoc.createElementNS(ns.tei, "title");
+			title = teiDoc.createElementNS(ns.tei, "title");
 			title.setAttribute("level", "s");
 			title.appendChild(teiDoc.createTextNode(replaceFormatting(item.series)));
 			series.appendChild(title);
@@ -323,43 +329,53 @@ function generateItem(item, teiDoc) {
 	}
 
 
-	//Other canonical ref nos come right after the title(s) in monogr.
+	// Other canonical ref nos come right after the title(s) in monogr.
 	if (item.ISBN) {
-		var idno = teiDoc.createElementNS(ns.tei, "idno");
+		idno = teiDoc.createElementNS(ns.tei, "idno");
 		idno.setAttribute("type", "ISBN");
 		idno.appendChild(teiDoc.createTextNode(item.ISBN));
 		monogr.appendChild(idno);
 	}
 	if (item.ISSN) {
-		var idno = teiDoc.createElementNS(ns.tei, "idno");
+		idno = teiDoc.createElementNS(ns.tei, "idno");
 		idno.setAttribute("type", "ISSN");
 		idno.appendChild(teiDoc.createTextNode(item.ISSN));
 		monogr.appendChild(idno);
 	}
 
 	if (item.callNumber) {
-		var idno = teiDoc.createElementNS(ns.tei, "idno");
+		idno = teiDoc.createElementNS(ns.tei, "idno");
 		idno.setAttribute("type", "callNumber");
 		idno.appendChild(teiDoc.createTextNode(item.callNumber));
 		monogr.appendChild(idno);
 	}
 
+	// multivolume works
+	if (item.numberOfVolumes) {
+		var volumes = teiDoc.createElementNS(ns.tei, "extent");
+		volumes.appendChild(teiDoc.createTextNode(item.numberOfVolumes));
+		monogr.appendChild(volumes);
+	}
+
 	// creators are all people only remotely involved into the creation of
 	// a resource
 	for (let creator of item.creators) {
-		var role = '';
 		var curCreator = '';
 		var curRespStmt = null;
 		var type = creator.creatorType;
 		if (type == "author") {
 			curCreator = teiDoc.createElementNS(ns.tei, "author");
-		} else if (type == "editor") {
+		}
+		else if (type == "editor") {
 			curCreator = teiDoc.createElementNS(ns.tei, "editor");
-		} else if (type == "seriesEditor") {
+		}
+		else if (type == "seriesEditor") {
 			curCreator = teiDoc.createElementNS(ns.tei, "editor");
-		} else if (type == "bookAuthor") {
+		}
+		else if (type == "bookAuthor") {
 			curCreator = teiDoc.createElementNS(ns.tei, "author");
-		} else {
+		}
+		else {
 			curRespStmt = teiDoc.createElementNS(ns.tei, "respStmt");
 			var resp = teiDoc.createElementNS(ns.tei, "resp");
 			resp.appendChild(teiDoc.createTextNode(type));
@@ -377,7 +393,8 @@ function generateItem(item, teiDoc) {
 			var surname = null;
 			if (creator.firstName) {
 				surname = teiDoc.createElementNS(ns.tei, "surname");
-			} else {
+			}
+			else {
 				surname = teiDoc.createElementNS(ns.tei, "name");
 			}
 			surname.appendChild(teiDoc.createTextNode(creator.lastName));
@@ -393,31 +410,33 @@ function generateItem(item, teiDoc) {
 			curCreator = curRespStmt;
 		}
 
-		//decide where the creator shall appear
+		// decide where the creator shall appear
 		if (type == "seriesEditor" && series) {
 			series.appendChild(curCreator);
-		} else if (isAnalytic && (type != 'editor' && type != 'bookAuthor')) {
+		}
+		else if (isAnalytic && (type != 'editor' && type != 'bookAuthor')) {
 			// assuming that only authors go here
 			analytic.appendChild(curCreator);
-		} else {
+		}
+		else {
 			monogr.appendChild(curCreator);
 		}
 	}
 
 	if (item.edition) {
-		var edition = teiDoc.createElementNS(ns.tei, "edition");
+		edition = teiDoc.createElementNS(ns.tei, "edition");
 		edition.appendChild(teiDoc.createTextNode(item.edition));
 		monogr.appendChild(edition);
 	}
 	// software
 	else if (item.versionNumber) {
-		var edition = teiDoc.createElementNS(ns.tei, "edition");
+		edition = teiDoc.createElementNS(ns.tei, "edition");
 		edition.appendChild(teiDoc.createTextNode(item.versionNumber));
 		monogr.appendChild(edition);
 	}
 
 
-	//create the imprint
+	// create the imprint
 	var imprint = teiDoc.createElementNS(ns.tei, "imprint");
 	monogr.appendChild(imprint);
 
@@ -456,11 +475,12 @@ function generateItem(item, teiDoc) {
 		imprint.appendChild(publisher);
 	}
 	if (item.date) {
-		var date = Zotero.Utilities.strToDate(item.date);
+		date = Zotero.Utilities.strToDate(item.date);
 		var imprintDate = teiDoc.createElementNS(ns.tei, "date");
 		if (date.year) {
 			imprintDate.appendChild(teiDoc.createTextNode(date.year));
-		} else {
+		}
+		else {
 			imprintDate.appendChild(teiDoc.createTextNode(item.date));
 		}
 		imprint.appendChild(imprintDate);
@@ -468,30 +488,30 @@ function generateItem(item, teiDoc) {
 
 	// If no date exists, add an empty date node so that spec minimum requirement for one imprint element is met
 	else {
-		var date = teiDoc.createElementNS(ns.tei, "date");
+		date = teiDoc.createElementNS(ns.tei, "date");
 		imprint.appendChild(date);
-		}
-		
+	}
+
 	if (item.accessDate) {
-		var note = teiDoc.createElementNS(ns.tei, "note");
+		note = teiDoc.createElementNS(ns.tei, "note");
 		note.setAttribute("type", "accessed");
 		note.appendChild(teiDoc.createTextNode(item.accessDate));
 		imprint.appendChild(note);
 	}
 	if (item.url) {
-		var note = teiDoc.createElementNS(ns.tei, "note");
+		note = teiDoc.createElementNS(ns.tei, "note");
 		note.setAttribute("type", "url");
 		note.appendChild(teiDoc.createTextNode(item.url));
 		imprint.appendChild(note);
 	}
 	if (item.thesisType) {
-		var note = teiDoc.createElementNS(ns.tei, "note");
+		note = teiDoc.createElementNS(ns.tei, "note");
 		note.setAttribute("type", "thesisType");
 		note.appendChild(teiDoc.createTextNode(item.thesisType));
 		imprint.appendChild(note);
 	}
 
-	//export notes
+	// export notes
 	if (item.notes && Zotero.getOption("exportNotes")) {
 		for (let singleNote of item.notes) {
 			// do only some basic cleaning of the html
@@ -499,13 +519,13 @@ function generateItem(item, teiDoc) {
 			var noteText = Zotero.Utilities.cleanTags(singleNote.note);
 			// unescape remaining entities -> no double escapes
 			noteText = Zotero.Utilities.unescapeHTML(noteText);
-			var note = teiDoc.createElementNS(ns.tei, "note");
+			note = teiDoc.createElementNS(ns.tei, "note");
 			note.appendChild(teiDoc.createTextNode(noteText));
 			bibl.appendChild(note);
 		}
 	}
 
-	//export tags, if available
+	// export tags, if available
 	if (Zotero.getOption("Export Tags") && item.tags && item.tags.length > 0) {
 		var tags = teiDoc.createElementNS(ns.tei, "note");
 		tags.setAttribute("type", "tags");
@@ -534,7 +554,8 @@ function generateCollection(collection, teiDoc) {
 			var child = children[i];
 			if (child.type == "collection") {
 				listBibl.appendChild(generateCollection(child, teiDoc));
-			} else if (allItems[child.id]) {
+			}
+			else if (allItems[child.id]) {
 				listBibl.appendChild(generateItem(allItems[child.id], teiDoc));
 			}
 		}
@@ -561,33 +582,34 @@ function doExport() {
 
 	// Initialize XML Doc
 	var parser = new DOMParser();
-	var teiDoc = // <TEI/>
-		parser.parseFromString('<TEI xmlns="http://www.tei-c.org/ns/1.0"><teiHeader><fileDesc><titleStmt><title>Exported from Zotero</title></titleStmt><publicationStmt><p>unpublished</p></publicationStmt><sourceDesc><p>Generated from Zotero database</p></sourceDesc></fileDesc></teiHeader></TEI>', 'application/xml');
+	var teiDoc // <TEI/>
+		= parser.parseFromString('<TEI xmlns="http://www.tei-c.org/ns/1.0"><teiHeader><fileDesc><titleStmt><title>Exported from Zotero</title></titleStmt><publicationStmt><p>unpublished</p></publicationStmt><sourceDesc><p>Generated from Zotero database</p></sourceDesc></fileDesc></teiHeader></TEI>', 'application/xml');
 
 	var item = null;
-	while (item = Zotero.nextItem()) {
+	while (item = Zotero.nextItem()) { // eslint-disable-line no-cond-assign
 		allItems[item.uri] = item;
 	}
 
 
 	var collection = Zotero.nextCollection();
-	var listBibls = new Array();
+	var listBibls = [];
 	if (Zotero.getOption("Export Collections") && collection) {
 		var curListBibl = generateCollection(collection, teiDoc);
 		if (curListBibl) {
 			listBibls.push(curListBibl);
 		}
-		while (collection = Zotero.nextCollection()) {
+		while (collection = Zotero.nextCollection()) { // eslint-disable-line no-cond-assign
 			curListBibl = generateCollection(collection, teiDoc);
 			if (curListBibl) {
 				listBibls.push(curListBibl);
 			}
 		}
-	} else {
+	}
+	else {
 		var listBibl = teiDoc.createElementNS(ns.tei, "listBibl");
-		for (var i in allItems) {
-			var item = allItems[i];
-			//skip attachments
+		for (let i in allItems) {
+			item = allItems[i];
+			// skip attachments
 			if (item.itemType == "attachment") {
 				continue;
 			}
@@ -597,26 +619,26 @@ function doExport() {
 	}
 
 
-
 	var outputElement;
 
 	if (Zotero.getOption("Full TEI Document")) {
 		outputElement = generateTEIDocument(listBibls, teiDoc);
-	} else {
-		if (listBibls.length > 1) {
-			outputElement = teiDoc.createElementNS(ns.tei, "listBibl");
-			for (var i = 0; i < listBibls.length; i++) {
-				outputElement.appendChild(listBibls[i]);
-			}
-		} else if (listBibls.length == 1) {
-			outputElement = listBibls[0];
-		} else {
-			outputElement = teiDoc.createElement("empty");
+	}
+	else if (listBibls.length > 1) {
+		outputElement = teiDoc.createElementNS(ns.tei, "listBibl");
+		for (let i = 0; i < listBibls.length; i++) {
+			outputElement.appendChild(listBibls[i]);
 		}
+	}
+	else if (listBibls.length == 1) {
+		outputElement = listBibls[0];
+	}
+	else {
+		outputElement = teiDoc.createElement("empty");
 	}
 
 	// write to file.
-	Zotero.write('<?xml version="1.0" encoding="UTF-8"?>' + "\n");
+	Zotero.write('<?xml version="1.0" encoding="UTF-8"?>\n');
 	var serializer = new XMLSerializer();
 	Zotero.write(serializer.serializeToString(outputElement));
 }

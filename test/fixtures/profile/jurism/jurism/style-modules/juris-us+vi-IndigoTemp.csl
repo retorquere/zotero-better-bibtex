@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.1mlz1" class="note">
+  <info>
+    <title>United States: Virgin Islands</title>
+    <id>http://juris-m.github.io/modules/juris-us:vi</id>
+    <link href="http://juris-m.github.io/modules/juris-us:vi" rel="self"/>
+    <link href="http://juris-m.github.io" rel="documentation"/>
+    <author>
+      <name>Frank Bennett</name>
+      <email>bennett@law.nagoya-u.ac.jp</email>
+    </author>
+    <category citation-format="note"/>
+    <category field="law"/>
+    <law-module types="locator"/>
+    <summary>Juris-M style module for the United States</summary>
+    <updated>2013-01-26T22:06:38+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+  <locale>
+    <terms>
+      <term name="article">
+        <single>article</single>
+        <multiple>articles</multiple>
+      </term>
+      <term name="article" form="short">
+        <single>art.</single>
+        <multiple>arts.</multiple>
+      </term>
+      <term form="symbol" name="chapter">ch.</term>
+      <term form="short" name="number">no.</term>
+      <!-- ordinals -->
+      <term name="ordinal">th</term>
+      <term name="ordinal-01">st</term>
+      <term name="ordinal-02">d</term>
+      <term name="ordinal-03">d</term>
+      <term name="ordinal-11">th</term>
+      <term name="ordinal-12">th</term>
+      <term name="ordinal-13">th</term>
+      <!-- id -->
+      <term name="ibid" form="short">id.</term>
+      <term name="ibid" form="long">id.</term>
+    </terms>
+    <date form="text">
+      <date-part name="month" form="short" suffix=" "/>
+      <date-part name="day" form="numeric" suffix=", "/>
+      <date-part name="year"/>
+    </date>
+  </locale>
+  <macro name="juris-pretitle">
+    <text value="BOGUS"/>
+  </macro>
+  <macro name="juris-title">
+    <text value="BOGUS"/>
+  </macro>
+  <macro name="juris-main">
+    <text value="BOGUS"/>
+  </macro>
+  <macro name="juris-tail">
+    <text value="BOGUS"/>
+  </macro>
+  <macro name="juris-pretitle-short">
+    <text value="BOGUS"/>
+  </macro>
+  <macro name="juris-title-short">
+    <text value="BOGUS"/>
+  </macro>
+  <macro name="juris-main-short">
+    <text value="BOGUS"/>
+  </macro>
+  <macro name="juris-tail-short">
+    <text value="BOGUS"/>
+  </macro>
+  <macro name="juris-locator">
+    <group delimiter=" ">
+      <choose>
+        <if>
+          <conditions match="any">
+            <condition locator="page" type="report" variable="number" match="all"/>
+            <condition locator="page" type="legal_case" variable="archive" match="all"/>
+            <condition locator="page" type="legal_case" variable="archive_location" match="all"/>
+          </conditions>
+          <text value="at"/>
+        </if>
+        <else-if>
+          <conditions match="all">
+            <condition type="legal_case" match="any"/>
+            <condition match="none" variable="document-name archive container-title"/>
+          </conditions>
+          <text value="at"/>
+        </else-if>
+        <else-if locator="page" match="any"/>
+        <else-if>
+          <conditions match="all">
+            <condition type="legislation regulation" match="any"/>
+            <condition locator="rule"/>
+          </conditions>
+        </else-if>
+        <else>
+          <label variable="locator"/>
+        </else>
+      </choose>
+      <number variable="locator"/>
+    </group>
+  </macro>
+</style>

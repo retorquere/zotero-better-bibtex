@@ -1,7 +1,7 @@
 {
   "filename": "auto-us.json",
   "name": "United States",
-  "version": "2020-04-28 00:48:51 UTC",
+  "version": "2020-09-07 08:44:28 UTC",
   "xdata": {
     "default": {
       "place": {
@@ -42,7 +42,7 @@
         "US:C1:NH.D": "D.N.H.",
         "US:C1:PR.D": "D.P.R.",
         "US:C1:RI.D": "D.R.I.",
-        "US:C2": "2nd Cir.",
+        "US:C2": "2d Cir.",
         "US:C2:CT.D": "D. Conn.",
         "US:C2:NY.D": "D.N.Y.",
         "US:C2:NY.ED": "E.D.N.Y.",
@@ -50,7 +50,7 @@
         "US:C2:NY.SD": "S.D.N.Y.",
         "US:C2:NY.WD": "W.D.N.Y.",
         "US:C2:VT.D": "D. Vt.",
-        "US:C3": "3rd Cir.",
+        "US:C3": "3d Cir.",
         "US:C3:DE.D": "D. Del.",
         "US:C3:NJ.D": "D.N.J.",
         "US:C3:PA.D": "D. Pa.",
@@ -161,18 +161,28 @@
         "US:IA": "Iowa",
         "US:ID": "Idaho",
         "US:IL": "Ill.",
+        "US:IL:D1": "First District",
+        "US:IL:D2": "Second District",
+        "US:IL:D3": "Third District",
+        "US:IL:D4": "Fourth District",
+        "US:IL:D5": "Fifth District",
         "US:IN": "Ind.",
         "US:KS": "Kan.",
         "US:KY": "Ky.",
         "US:LA": "La.",
+        "US:LA:C1": "La.",
+        "US:LA:C2": "La.",
+        "US:LA:C3": "La.",
+        "US:LA:C4": "La.",
+        "US:LA:C5": "La.",
         "US:MA": "Mass.",
         "US:MD": "Md.",
         "US:ME": "Me.",
         "US:MI": "Mich.",
         "US:MN": "Minn.",
         "US:MO": "Mo.",
-        "US:MP": "Northern Mariana Islands",
-        "US:MS": "N. Mar. Is.",
+        "US:MP": "N. Mar. I.",
+        "US:MS": "Miss.",
         "US:MT": "Mont.",
         "US:NAVAJO": "Navajo",
         "US:NC": "N.C.",
@@ -186,11 +196,23 @@
         "US:NY": "N.Y.",
         "US:NY:NYC": "N.Y.C.",
         "US:OH": "Ohio",
+        "US:OH:D1": "Ohio Ct. App. 1st Dist.",
+        "US:OH:D2": "Ohio Ct. App. 2d Dist.",
+        "US:OH:D3": "Ohio Ct. App. 3d Dist.",
+        "US:OH:D4": "Ohio Ct. App. 4th Dist.",
+        "US:OH:D5": "Ohio Ct. App. 5th Dist.",
+        "US:OH:D6": "Ohio Ct. App. 6th Dist.",
+        "US:OH:D7": "Ohio Ct. App. 7th Dist.",
+        "US:OH:D8": "Ohio Ct. App. 8th Dist.",
+        "US:OH:D9": "Ohio Ct. App. 9th Dist.",
+        "US:OH:D10": "Ohio Ct. App. 10th Dist.",
+        "US:OH:D11": "Ohio Ct. App. 11th Dist.",
+        "US:OH:D12": "Ohio Ct. App. 12th Dist.",
         "US:OK": "Okla.",
         "US:OR": "Or.",
         "US:ORLEANS.D": "Orleans",
         "US:PA": "Pa.",
-        "US:PR": "Puerto Rico",
+        "US:PR": "P.R.",
         "US:RI": "R.I.",
         "US:SC": "S.C.",
         "US:SD": "S.D.",
@@ -200,7 +222,7 @@
         "US:TX.D": "D. Tex.",
         "US:UT": "Utah",
         "US:VA": "Va.",
-        "US:VI": "U.S. Virgin Islands",
+        "US:VI": "V.I.",
         "US:VT": "Vt.",
         "US:WA": "Wash.",
         "US:WI": "Wis.",
@@ -210,15 +232,15 @@
     },
     "us": {
       "institution-part": {
-        "supreme.court": "U.S."
+        "supreme.court": "U.S.",
+        "cftc": "CFTC",
+        "cfpb": "CFPB"
       },
       "container-title": {
         "U.S.": "!authority>>>U.S.",
         "S. Ct.": "!authority>>>S. Ct.",
         "L. Ed.": "!authority>>>L. Ed.",
-        "L. Ed. 2d": "!authority>>>L. Ed. 2d"
-      },
-      "collection-title": {
+        "L. Ed. 2d": "!authority>>>L. Ed. 2d",
         "U.S. LEXIS": "!authority>>>U.S. LEXIS"
       }
     },
@@ -1069,6 +1091,10 @@
         "court.appeals": "Colo. Ct. App.",
         "industrial.claim.appeals": "Colo. Indust. Cl. App.",
         "supreme.court": "Colo."
+      },
+      "institution-entire": {
+        "court.appeals": "COA",
+        "supreme.court": "CO"
       }
     },
     "us:ct": {
@@ -1135,8 +1161,11 @@
     },
     "us:gu": {
       "institution-part": {
-        "small.claims.court": "Guam Small Cl. Ct.",
-        "superior.court": "Guam Super. Ct.",
+        "small.claims.court": "Small Cl. Ct. Guam",
+        "superior.court": "Super. Ct. Guam",
+        "supreme.court": "Sup. Ct. Guam"
+      },
+      "institution-entire": {
         "supreme.court": "Guam"
       }
     },
@@ -1160,13 +1189,55 @@
     },
     "us:il": {
       "institution-part": {
-        "appellate.court": "Ill. App. Ct.",
         "supreme.court": "Ill."
+      },
+      "institution-entire": {
+        "supreme.court": "IL"
       },
       "container-title": {
         "Ill. App.": "!authority>>>Ill. App.",
         "Ill. App. 2d": "!authority>>>Ill. App. 2d",
         "Ill. App. 3d": "!authority>>>Ill. App. 3d"
+      }
+    },
+    "us:il:d1": {
+      "institution-part": {
+        "appellate.court": "First District App. Ct."
+      },
+      "institution-entire": {
+        "appellate.court": "IL App (1st)"
+      }
+    },
+    "us:il:d2": {
+      "institution-part": {
+        "appellate.court": "Second District App. Ct."
+      },
+      "institution-entire": {
+        "appellate.court": "Il App (2d)"
+      }
+    },
+    "us:il:d3": {
+      "institution-part": {
+        "appellate.court": "Third District App. Ct."
+      },
+      "institution-entire": {
+        "appellate.court": "IL App (3d)"
+      }
+    },
+    "us:il:d4": {
+      "institution-part": {
+        "appellate.court": "Fourth District App. Ct."
+      },
+      "institution-entire": {
+        "appellate.court": "IL App (4th)"
+      }
+    },
+    "us:il:d5": {
+      "institution-part": {
+        "appellate.court": "Fifth District App. Ct."
+      },
+      "institution-entire": {
+        "appellate.court": "IL App (5th)"
       }
     },
     "us:in": {
@@ -1193,8 +1264,50 @@
     "us:la": {
       "institution-part": {
         "attorney.general": "La. Att'y Gen.",
-        "court.appeal": "La. Ct. App.",
         "supreme.court": "La."
+      },
+      "institution-entire": {
+        "supreme.court": "La."
+      }
+    },
+    "us:la:c1": {
+      "institution-part": {
+        "court.appeal": "La. Ct. App."
+      },
+      "institution-entire": {
+        "court.appeal": "La. App. 1 Cir."
+      }
+    },
+    "us:la:c2": {
+      "institution-part": {
+        "court.appeal": "La. Ct. App."
+      },
+      "institution-entire": {
+        "court.appeal": "La. App. 2 Cir."
+      }
+    },
+    "us:la:c3": {
+      "institution-part": {
+        "court.appeal": "La. Ct. App."
+      },
+      "institution-entire": {
+        "court.appeal": "La. App. 3 Cir."
+      }
+    },
+    "us:la:c4": {
+      "institution-part": {
+        "court.appeal": "La. Ct. App."
+      },
+      "institution-entire": {
+        "court.appeal": "La. App. 4 Cir."
+      }
+    },
+    "us:la:c5": {
+      "institution-part": {
+        "court.appeal": "La. Ct. App."
+      },
+      "institution-entire": {
+        "court.appeal": "La. App. 5 Cir."
       }
     },
     "us:ma": {
@@ -1216,7 +1329,10 @@
     },
     "us:me": {
       "institution-part": {
-        "supreme.judicial.court": "Supreme Judicial Court"
+        "supreme.judicial.court": "Me."
+      },
+      "institution-entire": {
+        "supreme.judicial.court": "ME"
       }
     },
     "us:mi": {
@@ -1240,12 +1356,21 @@
       }
     },
     "us:mp": {
-      "institution-part": {}
+      "institution-part": {
+        "supreme.court": "Sup. Ct. N. Mar. I."
+      },
+      "institution-entire": {
+        "supreme.court": "MP"
+      }
     },
     "us:ms": {
       "institution-part": {
-        "court.appeals": "N. Mar. Is. Ct. App.",
-        "supreme.court": "N. Mar. Is."
+        "court.appeals": "Miss. Ct. App.",
+        "supreme.court": "Miss."
+      },
+      "institution-entire": {
+        "court.appeals": "Miss. App.",
+        "supreme.court": "Miss."
       }
     },
     "us:mt": {
@@ -1253,6 +1378,9 @@
         "attorney.general": "Mont. Att'y Gen.",
         "supreme.court": "Mont.",
         "tax.appeal.board": "Mont. Tax App. Bd."
+      },
+      "institution-entire": {
+        "supreme.court": "MT"
       }
     },
     "us:navajo": {
@@ -1277,6 +1405,10 @@
       "institution-part": {
         "court.appeals": "N.D. Ct. App.",
         "supreme.court": "N.D."
+      },
+      "institution-entire": {
+        "court.appeals": "ND App",
+        "supreme.court": "ND"
       }
     },
     "us:ne": {
@@ -1303,6 +1435,10 @@
       "institution-part": {
         "court.appeals": "N.M. Ct. App.",
         "supreme.court": "N.M."
+      },
+      "institution-entire": {
+        "court.appeals": "NMCA",
+        "supreme.court": "NMSC"
       }
     },
     "us:nv": {
@@ -1334,9 +1470,113 @@
     },
     "us:oh": {
       "institution-part": {
-        "court.appeals": "Ohio Ct. App.",
         "court.claims": "Ct. Cl.",
         "supreme.court": "Ohio"
+      },
+      "institution-entire": {
+        "court.claims": "Ohio",
+        "supreme.court": "Ohio"
+      },
+      "container-title": {
+        "Ohio St.": "!authority:Ohio>>>Ohio St.",
+        "Ohio St.2d": "!authority:Ohio>>>Ohio St.2d",
+        "Ohio St.3d": "!authority:Ohio>>>Ohio St.3d"
+      }
+    },
+    "us:oh:d1": {
+      "institution-part": {
+        "court.appeals": "Ohio Ct. App. 1st Dist."
+      },
+      "institution-entire": {
+        "court.appeals": "!authority:Ohio Ct. App.>>>Ohio"
+      }
+    },
+    "us:oh:d2": {
+      "institution-part": {
+        "court.appeals": "Ohio Ct. App. 2d Dist."
+      },
+      "institution-entire": {
+        "court.appeals": "!authority:Ohio Ct. App.>>>Ohio"
+      }
+    },
+    "us:oh:d3": {
+      "institution-part": {
+        "court.appeals": "Ohio Ct. App. 3d Dist."
+      },
+      "institution-entire": {
+        "court.appeals": "!authority:Ohio Ct. App.>>>Ohio"
+      }
+    },
+    "us:oh:d4": {
+      "institution-part": {
+        "court.appeals": "Ohio Ct. App. 4th Dist."
+      },
+      "institution-entire": {
+        "court.appeals": "!authority:Ohio Ct. App.>>>Ohio"
+      }
+    },
+    "us:oh:d5": {
+      "institution-part": {
+        "court.appeals": "Ohio Ct. App. 5th Dist."
+      },
+      "institution-entire": {
+        "court.appeals": "!authority:Ohio Ct. App.>>>Ohio"
+      }
+    },
+    "us:oh:d6": {
+      "institution-part": {
+        "court.appeals": "Ohio Ct. App. 6th Dist."
+      },
+      "institution-entire": {
+        "court.appeals": "!authority:Ohio Ct. App.>>>Ohio"
+      }
+    },
+    "us:oh:d7": {
+      "institution-part": {
+        "court.appeals": "Ohio Ct. App. 7th Dist."
+      },
+      "institution-entire": {
+        "court.appeals": "!authority:Ohio Ct. App.>>>Ohio"
+      }
+    },
+    "us:oh:d8": {
+      "institution-part": {
+        "court.appeals": "Ohio Ct. App. 8th Dist."
+      },
+      "institution-entire": {
+        "court.appeals": "!authority:Ohio Ct. App.>>>Ohio"
+      }
+    },
+    "us:oh:d9": {
+      "institution-part": {
+        "court.appeals": "Ohio Ct. App. 9th Dist."
+      },
+      "institution-entire": {
+        "court.appeals": "!authority:Ohio Ct. App.>>>Ohio"
+      }
+    },
+    "us:oh:d10": {
+      "institution-part": {
+        "court.appeals": "Ohio Ct. App. 10th Dist."
+      },
+      "institution-entire": {
+        "court.appeals": "!authority:Ohio Ct. App.>>>Ohio"
+      }
+    },
+    "us:oh:d11": {
+      "institution-part": {
+        "court.appeals": "Ohio Ct. App. 11th Dist."
+      },
+      "institution-entire": {
+        "court.appeals": "!authority:Ohio Ct. App.>>>Ohio"
+      }
+    },
+    "us:oh:d12": {
+      "institution-part": {
+        "court.appeals": "Ohio Ct. App. 12th Dist."
+      },
+      "institution-entire": {
+        "court.appeals": "!authority:Ohio Ct. App.>>>Ohio"
       }
     },
     "us:ok": {
@@ -1346,7 +1586,14 @@
         "court.criminal.appeals": "Okla. Crim. App.",
         "court.judiciary": "Okla. Ct. Jud.",
         "judicial.ethics.advisory.panel": "Okla. Jud. Ethics Adv. Panel",
-        "supreme.court": "Okla."
+        "supreme.court": "Okla.",
+        "court.appeals.indian.territory": "Okla. Ct. App. Ind. Terr."
+      },
+      "institution-entire": {
+        "court.civil.appeals": "OK CIV APP",
+        "court.criminal.appeals": "OK CR",
+        "supreme.court": "OK",
+        "court.appeals.indian.territory": "IT"
       }
     },
     "us:or": {
@@ -1366,12 +1613,20 @@
         "commonwealth.court": "Pa. Commw. Ct.",
         "court.judicial.discipline": "Pa. Ct. Jud. Disc.",
         "special.tribunal": "Spec. Trib.",
-        "superior.court": "Pa. Super. Ct.",
-        "supreme.court": "Pa."
+        "superior.court": "Pa.",
+        "supreme.court": "Pa. Sup. Ct."
+      },
+      "institution-entire": {
+        "superior.court": "PA Super"
       }
     },
     "us:pr": {
-      "institution-part": {}
+      "institution-part": {
+        "tribunal.supremo": "P.R. Tr. Sup."
+      },
+      "institution-entire": {
+        "tribunal.supremo": "TSPR"
+      }
     },
     "us:ri": {
       "institution-part": {
@@ -1387,6 +1642,9 @@
     },
     "us:sd": {
       "institution-part": {
+        "supreme.court": "S.D."
+      },
+      "institution-entire": {
         "supreme.court": "S.D."
       }
     },
@@ -1422,6 +1680,10 @@
       "institution-part": {
         "court.appeals": "Utah Ct. App.",
         "supreme.court": "Utah"
+      },
+      "institution-entire": {
+        "court.appeals": "UT App",
+        "supreme.court": "UT"
       }
     },
     "us:va": {
@@ -1430,12 +1692,12 @@
         "supreme.court": "Va."
       }
     },
-    "us:vi": {
-      "institution-part": {}
-    },
     "us:vt": {
       "institution-part": {
         "supreme.court": "Vt."
+      },
+      "institution-entire": {
+        "supreme.court": "VT"
       },
       "container-title": {
         "Vt.": "!authority>>>Vt."
@@ -1456,6 +1718,10 @@
         "attorney.general": "Wis. Att'y Gen.",
         "court.appeals": "Wis. Ct. App.",
         "supreme.court": "Wis."
+      },
+      "institution-entire": {
+        "court.appeals": "WI App",
+        "supreme.court": "WI"
       }
     },
     "us:wv": {
@@ -1466,6 +1732,9 @@
     "us:wy": {
       "institution-part": {
         "supreme.court": "Wyo."
+      },
+      "institution-entire": {
+        "supreme.court": "WY"
       }
     }
   }

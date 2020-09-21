@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.1mlz1" class="note">
+  <info>
+    <title>Spain</title>
+    <id>http://citationstylist.org/modules/juris-es</id>
+    <link href="http://citationstylist/modules/juris-es" rel="self"/>
+    <link href="http://juris-m.github.io" rel="documentation"/>
+    <author>
+      <name>Frank Bennett</name>
+      <email>bennett@nagoya-u.jp</email>
+    </author>
+    <category citation-format="note"/>
+    <category field="law"/>
+    <summary>Juris-M style module for Pakistan</summary>
+    <updated>2013-01-26T22:06:38+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+    <law-module types="legal_case"/>
+  </info>
+  
+  <macro name="juris-pretitle">
+    <!-- Fragment to precede title (rare) -->
+    <text value=""/>
+  </macro>
+
+  <macro name="juris-title">
+    <!-- The title form for full citations (of all types) -->
+    <text value=""/>
+  </macro>
+
+  <macro name="juris-main">
+    <group delimiter=", ">
+	  <group delimiter=" ">
+		<group>
+		  <text variable="genre" text-case="capitalize-first"/>
+		  <names variable="authority">
+			<name/>
+			<institution form="short"/>
+		  </names>
+		</group>
+		<number variable="number"/>
+	  </group>
+	  <date variable="issued" form="text" date-parts="year-month-day"/>
+    </group>
+  </macro>
+
+  <macro name="juris-tail">
+    <!-- Full form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
+    <text value=""/>
+  </macro>
+
+  <macro name="juris-pretitle-short">
+    <!-- Fragment to precede short title (rare) -->
+    <text value=""/>
+  </macro>
+
+  <macro name="juris-title-short">
+    <!-- The title form for subsequent citations (of all types) -->
+    <text value=""/>
+  </macro>
+
+  <macro name="juris-main-short">
+    <text macro="juris-main"/>
+  </macro>
+
+  <macro name="juris-tail-short">
+    <!-- Short form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
+    <text value=""/>
+  </macro>
+
+  <macro name="juris-locator">
+    <group delimiter=" ">
+      <choose>
+        <if locator="page">
+          <text value="at"/>
+        </if>
+        <else>
+          <label variable="locator" form="short"/>
+        </else>
+      </choose>
+      <number variable="locator"/>
+    </group>
+  </macro>
+</style>

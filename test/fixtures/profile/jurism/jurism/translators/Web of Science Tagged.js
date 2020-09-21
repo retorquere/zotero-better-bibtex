@@ -8,8 +8,7 @@
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 1,
-	"browserSupport": "gcsibv",
-	"lastUpdated": "2015-06-02 21:33:13"
+	"lastUpdated": "2020-03-28 22:56:16"
 }
 
 /*
@@ -224,12 +223,10 @@ function doImport(text) {
 	
 	var rawLine;
 	while ((rawLine = Zotero.read()) !== false) {    // until EOF
-		// trim leading space if this line is not part of a note
-		line = rawLine.replace(/^\s+/, "");
-		//Z.debug("line: " + line);
-		var split = line.match(/^([A-Z0-9]{2})\s(?:([^\n]*))?/);
+		//Z.debug("line: " + rawLine);
+		let split = rawLine.match(/^([A-Z0-9]{2})\s(?:([^\n]*))?/);
 		// Force a match for ER
-		if (line == "ER") split = ["","ER",""];
+		if (rawLine == "ER") split = ["","ER",""];
 		if (split) {
 			// if this line is a tag, take a look at the previous line to map
 			// its tag
@@ -240,7 +237,7 @@ function doImport(text) {
 
 			// then fetch the tag and data from this line
 			tag = split[1];
-			data = split[2];
+			data = split[2] || '';
 			
 			if (tag == "ER") {	       // ER signals end of reference
 				// unset info
@@ -878,6 +875,36 @@ var testCases = [
 				"seeAlso": []
 			}
 		]
+	},
+	{
+		"type": "import",
+		"input": "FN Clarivate Analytics Web of Science\nVR 1.0\nPT P\nAU YANG Y\n   LI W\nTI Use of reagent for detecting syntaxin 12 protein autoantibodies in\n   preparation of lung cancer screening kit\nPN CN110836969-A\nAE UNIV SICHUAN WEST CHINA HOSPITAL\nAB \n   NOVELTY - Use of reagent for detecting syntaxin 12 (STX12) protein\n   autoantibodies, is claimed in preparation of a lung cancer screening\n   kit.\n   USE - The reagent for detecting STX12 protein autoantibodies is useful\n   in preparation of a lung cancer screening kit (claimed).\n   ADVANTAGE - The reagent realizes effective screening of lung cancer and\n   detects that the autoantibody level of the STX12 protein in the serum of\n   lung cancer patients is significantly lower than that of healthy\n   patients.\nZ9 0\nUT DIIDW:202018799C\nER\n\nEF",
+		"items": [
+			{
+				"itemType": "patent",
+				"title": "Use of reagent for detecting syntaxin 12 protein autoantibodies in preparation of lung cancer screening kit",
+				"creators": [
+					{
+						"firstName": "YANG",
+						"lastName": "Y",
+						"creatorType": "inventor"
+					},
+					{
+						"firstName": "LI",
+						"lastName": "W",
+						"creatorType": "inventor"
+					}
+				],
+				"abstractNote": "NOVELTY - Use of reagent for detecting syntaxin 12 (STX12) protein autoantibodies, is claimed in preparation of a lung cancer screening kit. USE - The reagent for detecting STX12 protein autoantibodies is useful in preparation of a lung cancer screening kit (claimed). ADVANTAGE - The reagent realizes effective screening of lung cancer and detects that the autoantibody level of the STX12 protein in the serum of lung cancer patients is significantly lower than that of healthy patients.",
+				"assignee": "UNIV SICHUAN WEST CHINA HOSPITAL",
+				"extra": "DIIDW:202018799C",
+				"patentNumber": "CN110836969-A",
+				"attachments": [],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
 	}
-];
+]
 /** END TEST CASES **/

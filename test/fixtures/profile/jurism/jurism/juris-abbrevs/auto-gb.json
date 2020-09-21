@@ -1,7 +1,7 @@
 {
   "filename": "auto-gb.json",
   "name": "United Kingdom",
-  "version": "2019-08-23 09:55:46 UTC",
+  "version": "2020-09-07 21:01:30 UTC",
   "xdata": {
     "default": {
       "place": {
@@ -27,9 +27,6 @@
         "supreme.court": "Supreme Court"
       }
     },
-    "gb:bermuda": {
-      "institution-part": {}
-    },
     "gb:england.and.wales": {
       "institution-part": {
         "ewca.civ": "Court of Appeal|Civil Division",
@@ -47,36 +44,6 @@
       "institution-entire": {
         "ewca.civ": "EWCA"
       }
-    },
-    "gb:falkland.islands": {
-      "institution-part": {}
-    },
-    "gb:gibraltar": {
-      "institution-part": {}
-    },
-    "gb:guernsey": {
-      "institution-part": {}
-    },
-    "gb:hong.kong": {
-      "institution-part": {}
-    },
-    "gb:isle.man": {
-      "institution-part": {}
-    },
-    "gb:montserrat": {
-      "institution-part": {}
-    },
-    "gb:northern.ireland": {
-      "institution-part": {}
-    },
-    "gb:pitcairn.islands": {
-      "institution-part": {}
-    },
-    "gb:scotland": {
-      "institution-part": {}
-    },
-    "gb:turks.caicos.islands": {
-      "institution-part": {}
     }
   }
 }

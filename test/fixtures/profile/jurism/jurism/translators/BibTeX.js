@@ -18,7 +18,7 @@
 	},
 	"inRepository": true,
 	"translatorType": 3,
-	"lastUpdated": "2019-12-15 20:11:00"
+	"lastUpdated": "2020-03-13 03:07:49"
 }
 
 /*
@@ -1535,6 +1535,8 @@ function doExport() {
 		
 		Zotero.write("\n}");
 	}
+	
+	Zotero.write("\n");
 }
 
 var exports = {

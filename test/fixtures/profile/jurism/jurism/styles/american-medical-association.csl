@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="sort-only" default-locale="en-US" page-range-format="expanded">
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="sort-only" page-range-format="expanded" default-locale="en-US">
   <info>
-    <title>American Medical Association</title>
-    <title-short>AMA</title-short>
+    <title>American Medical Association 11th edition</title>
+    <title-short>AMA (11th ed.)</title-short>
     <id>http://www.zotero.org/styles/american-medical-association</id>
     <link href="http://www.zotero.org/styles/american-medical-association" rel="self"/>
+    <link href="http://www.zotero.org/styles/american-medical-association-10th-edition" rel="template"/>
     <link href="https://westlibrary.txwes.edu/sites/default/files/pdf/AMACitationStyle.pdf" rel="documentation"/>
+    <link href="https://www.amamanualofstyle.com/fileasset/AMAMOS/aaaAMWA%20presentation%20Nov%202019%20FULL.pdf" rel="documentation"/>
     <author>
       <name>Julian Onions</name>
       <email>julian.onions@gmail.com</email>
@@ -18,10 +20,14 @@
       <name>Daniel W Chan</name>
       <email>danwchan@protonmail.com</email>
     </contributor>
+    <contributor>
+      <name>Patrick O'Brien</name>
+      <email>obrienpat86@gmail.com</email>
+    </contributor>
     <category citation-format="numeric"/>
     <category field="medicine"/>
-    <summary>The American Medical Association style as used in JAMA.</summary>
-    <updated>2018-01-18T11:17:00-05:00</updated>
+    <summary>The American Medical Association style as used in JAMA. Version 11 as per November-2019.</summary>
+    <updated>2020-04-23T13:38:04+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -56,10 +62,9 @@
             <text variable="DOI"/>
           </if>
           <else-if variable="URL">
-            <group delimiter=". " suffix=".">
-              <text variable="URL"/>
+            <group delimiter=". ">
               <choose>
-                <if type="webpage">
+                <if type="webpage post post-weblog" match="any">
                   <date variable="issued" prefix="Published " form="text"/>
                 </if>
               </choose>
@@ -71,6 +76,7 @@
                   <date-part name="year"/>
                 </date>
               </group>
+              <text variable="URL"/>
             </group>
           </else-if>
         </choose>
@@ -88,10 +94,7 @@
     </choose>
   </macro>
   <macro name="publisher">
-    <group delimiter=": ">
-      <text variable="publisher-place"/>
-      <text variable="publisher"/>
-    </group>
+    <text variable="publisher"/>
   </macro>
   <macro name="edition">
     <choose>
@@ -216,7 +219,7 @@
             </date>
           </group>
         </else-if>
-        <else-if type="webpage">
+        <else-if type="webpage post post-weblog" match="any">
           <text variable="container-title" prefix=" " suffix="."/>
         </else-if>
         <else-if type="speech">
@@ -255,10 +258,10 @@
                   </date>
                 </if>
                 <else>
-                  <date variable="issued">
-                    <date-part name="month" suffix=" "/>
-                    <date-part name="year"/>
-                  </date>
+                  <group delimiter=" ">
+                    <text value="Published online"/>
+                    <date form="text" date-parts="year-month-day" variable="issued"/>
+                  </group>
                 </else>
               </choose>
               <group>

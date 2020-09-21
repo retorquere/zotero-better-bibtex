@@ -80,6 +80,10 @@
     <terms>
       <term name="letter">communication personnelle</term>
       <term name="letter" form="short">lettre</term>
+      <term name="editor" form="short">
+        <single>éd.</single>
+        <multiple>éds.</multiple>
+      </term>
     </terms>
   </locale>
   <locale xml:lang="nb">
@@ -457,13 +461,13 @@
         <text macro="bracketed-intext" prefix="[" suffix="]"/>
       </if>
       <else-if type="bill">
-        <!-- If a bill has no number or container-title, assume it is a hearing; italic and title case -->
+        <!-- If a bill has no number or container-title, assume it is a hearing; italic -->
         <choose>
           <if variable="number container-title" match="none">
             <text variable="title" form="short" font-style="italic" text-case="title"/>
           </if>
           <else-if variable="title">
-            <text variable="title" form="short"/>
+            <text variable="title" form="short" text-case="title"/>
           </else-if>
           <else>
             <group delimiter=" ">
@@ -487,18 +491,18 @@
       </else-if>
       <else-if type="legislation treaty" match="any">
         <!-- Legislation and treaties not italicized or quoted -->
-        <text variable="title" form="short"/>
+        <text variable="title" form="short" text-case="title"/>
       </else-if>
       <else-if type="post webpage" match="any">
         <!-- Webpages are always italicized -->
-        <text variable="title" form="short" font-style="italic"/>
+        <text variable="title" form="short" font-style="italic" text-case="title"/>
       </else-if>
       <else-if variable="container-title" match="any">
         <!-- Other types are italicized or quoted based on presence of container-title. As in title macro. -->
-        <text variable="title" form="short" quotes="true"/>
+        <text variable="title" form="short" quotes="true" text-case="title"/>
       </else-if>
       <else>
-        <text variable="title" form="short" font-style="italic"/>
+        <text variable="title" form="short" font-style="italic" text-case="title"/>
       </else>
     </choose>
   </macro>
@@ -1123,11 +1127,11 @@
     <choose>
       <if variable="reviewed-title">
         <!-- Not possible to distinguish TV series episode from other reviewed works [Ex. 69] -->
-        <text variable="reviewed-title" form="short" font-style="italic"/>
+        <text variable="reviewed-title" form="short" font-style="italic" text-case="title"/>
       </if>
       <else>
         <!-- Assume title is title of reviewed work -->
-        <text variable="title" form="short" font-style="italic"/>
+        <text variable="title" form="short" font-style="italic" text-case="title"/>
       </else>
     </choose>
   </macro>

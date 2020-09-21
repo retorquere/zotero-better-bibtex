@@ -1,18 +1,18 @@
 {
   "filename": "auto-nl.json",
   "name": "Netherlands",
-  "version": "2020-02-12 06:12:47 UTC",
+  "version": "2020-09-07 21:01:30 UTC",
   "xdata": {
     "default": {
       "place": {
         "NL": "Netherlands",
-        "NL:GRAVENHAGE": "Gravenhage",
+        "NL:GRAVENHAGE": "Den Haag",
         "NL:GRAVENHAGE:ALPHEN.RIJN": "Alphen aan den Rijn",
         "NL:GRAVENHAGE:DELFT": "Delft",
         "NL:GRAVENHAGE:GOUDA": "Gouda",
         "NL:GRAVENHAGE:LEIDEN": "Leiden",
         "NL:GRAVENHAGE:WINSCHOTEN": "Winschoten",
-        "NL:HERTOGENBOSCH": "Hertogenbosch",
+        "NL:HERTOGENBOSCH": "Den Bosch",
         "NL:HERTOGENBOSCH:BOXMEER": "Boxmeer",
         "NL:HERTOGENBOSCH:EINDHOVEN": "Eindhoven",
         "NL:HELMOND": "Helmond",
@@ -67,10 +67,11 @@
     },
     "nl": {
       "institution-part": {
-        "hoge": "Hoge Raad",
+        "hoge": "HR",
         "rekenkamer": "Rekenkamer",
-        "centrale.beroep": "Centrale Raad van Beroep",
-        "college.beroep.bedrijfsleven": "College van Beroep voor het bedrijfsleven"
+        "centrale.beroep": "CRvB",
+        "college.beroep.bedrijfsleven": "CBb",
+        "raad.state": "RvS"
       }
     },
     "nl:gravenhage": {
