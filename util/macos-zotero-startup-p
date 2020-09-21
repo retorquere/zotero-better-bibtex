@@ -2,10 +2,14 @@
 
 import plistlib
 import os
+import sys
 
-root = '/Applications/Zotero.app/Contents'
-launcher = root + '/MacOS/zotero-p-datadir'
-zotero = root + '/MacOS/zotero'
+client = sys.argv[1] if len(sys.argv) == 2 else 'zotero'
+assert client in ['zotero', 'jurism'], client
+
+root = f'/Applications/{client.title()}.app/Contents'
+launcher = root + f'/MacOS/{client}-p-datadir'
+zotero = root + f'/MacOS/{client}'
 info = root + '/Info.plist'
 
 with open(launcher, 'w') as f:
