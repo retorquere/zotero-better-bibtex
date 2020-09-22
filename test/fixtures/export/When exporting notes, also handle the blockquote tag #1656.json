@@ -1,0 +1,41 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "mdy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "automaticTags": false,
+      "citekeyFormat": "[authEtAl]-[shorttitle3_3]",
+      "itemObserverDelay": 100,
+      "jabrefFormat": 4,
+      "qualityReport": true,
+      "quickCopyMode": "orgmode_citekey",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
+      "warnBulkModify": 0,
+      "workers": 0
+    }
+  },
+  "items": [
+    {
+      "citationKey": "Kant-Book",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Emmanuel",
+          "lastName": "Kant"
+        }
+      ],
+      "itemID": 1,
+      "itemType": "book",
+      "notes": [
+        "<h1>This is a heading</h1>\n<p>This is some text</p>\n<blockquote>\n<p>Then this is a quote from the book. It is inserted using the \" icon in Zotero. It appears indented and with a blue vertical line to\u00a0 its left.</p>\n<p>It can span several paragraphs.</p>\n</blockquote>\n<p>And this is some regular text again.</p>\n<p>\u00a0</p>"
+      ],
+      "place": "Here",
+      "publisher": "Him",
+      "title": "A book"
+    }
+  ]
+}

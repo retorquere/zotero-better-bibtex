@@ -7,6 +7,7 @@ Scenario Outline: Export <references> references for BibLaTeX to <file>
 
   Examples:
      | file                                                                                           | references  |
+     | When exporting notes, also handle the blockquote tag #1656                                     | 1           |
      | Entries with URL exported with (partial) URL in eprint field #1639                             | 2           |
      | Unexpected HTML tags abort export #1575                                                        | 1           |
      | JSTOR eprint data export depends on whether jstor link starts with https vs http #1543         | 1           |
