@@ -13,10 +13,12 @@ function display(itemID) {
   if (!menuitem) {
     Zotero.debug('adding better-sentencecase')
     const zotero_field_transform_menu = document.getElementById('zotero-field-transform-menu')
-    menuitem = zotero_field_transform_menu.appendChild(document.createElementNS('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', 'menuitem'))
-    menuitem.setAttribute('id', 'zotero-field-transform-menu-better-sentencecase')
-    menuitem.setAttribute('label', 'BBT sentence case')
-    menuitem.addEventListener('command', function(e) { title_sentenceCase.call(document.getBindingParent(this), document.popupNode) }, false)
+    if (zotero_field_transform_menu) {
+      menuitem = zotero_field_transform_menu.appendChild(document.createElementNS('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', 'menuitem'))
+      menuitem.setAttribute('id', 'zotero-field-transform-menu-better-sentencecase')
+      menuitem.setAttribute('label', 'BBT sentence case')
+      menuitem.addEventListener('command', function(e) { title_sentenceCase.call(document.getBindingParent(this), document.popupNode) }, false)
+    }
   }
 
   const field = document.getElementById('better-bibtex-citekey-display')
@@ -80,15 +82,12 @@ function unload() {
   }
 }
 
-$patch$(ZoteroItemPane, 'viewItem', original => {
-  // don't use async here because I don't know What Zotero does with the result
-  return Zotero.Promise.coroutine(function*(item, mode, index) {
-    yield original.call(this, item, mode, index)
-    init()
+$patch$(ZoteroItemPane, 'viewItem', original => async function(item, mode, index) {
+  await original.apply(this, arguments)
+  init()
 
-    document.getElementById('better-bibtex-citekey-display').setAttribute('itemID', `${item.id}`)
-    display(item.id)
-  })
+  document.getElementById('better-bibtex-citekey-display').setAttribute('itemID', `${item.id}`)
+  display(item.id)
 })
 
 window.addEventListener('load', load, false)
