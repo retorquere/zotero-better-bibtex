@@ -21,17 +21,19 @@ def jstype(v):
   if type(v) == int: return 'number'
   raise ValueError(f'Unexpected type {type(v)}')
 
-def load(name):
-  with open(name) as f:
-      xul = f.read()
-  with open(os.path.join(root, 'locale/en-US/zotero-better-bibtex.dtd')) as dtd:
-    for entity in etree.DTD(dtd).entities():
-      xul = xul.replace(f'&{entity.name};', entity.content)
-  xul = etree.fromstring(xul)
-  ns = Munch()
-  for name, url in xul.nsmap.items():
-    if not name: name = 'xul'
-    ns[name] = url
+def load(path):
+  for lang in [l for l in os.listdir(os.path.join(root, 'locale')) if l != 'en-US'] + ['en-US']: # make sure en-US is loaded last for the website
+    #print(f'  {os.path.basename(path)} {lang}')
+    with open(path) as f:
+        xul = f.read()
+    with open(os.path.join(root, f'locale/{lang}/zotero-better-bibtex.dtd')) as dtd:
+      for entity in etree.DTD(dtd).entities():
+        xul = xul.replace(f'&{entity.name};', entity.content)
+    xul = etree.fromstring(xul)
+    ns = Munch()
+    for name, url in xul.nsmap.items():
+      if not name: name = 'xul'
+      ns[name] = url
   return xul, ns
 
 class Preferences:

@@ -154,6 +154,7 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Exportar unicode como comandos LaTeX em texto puro">
 <!ENTITY better-bibtex.Preferences.export.biblatex "BibLaTeX">
 <!ENTITY better-bibtex.Preferences.export.biblatex.extendedNameFormat "Usar o formato de nomes estendido de BibLaTeX (exige biblatex 3.5)">
+<!ENTITY better-bibtex.Preferences.export.biblatex.biblatexExtractEprint "Extract JSTOR/Google Books/PubMed info from the URL field into eprint fields">
 <!ENTITY better-bibtex.Preferences.export.bibtex.ascii "Exportar unicode como comandos LaTeX em texto puro (recomendado)">
 <!ENTITY better-bibtex.Preferences.export.bibtex "BibTeX">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs "Adicionar URLs à exportação BibTeX">
