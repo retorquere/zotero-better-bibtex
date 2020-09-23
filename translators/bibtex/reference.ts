@@ -802,6 +802,12 @@ export class Reference {
       }
     }
 
+    this.add({ name: 'annotation', value: this.item.extra?.replace(/\n+/g, ' ') })
+    if (Translator.options.exportNotes) {
+      // if bibtexURL === 'note' is active, the note field will have been filled with an URL. In all other cases, if this is attempting to overwrite the 'note' field, I want the test suite to throw an error
+      if (!(Translator.BetterBibTeX && Translator.preferences.bibtexURL === 'note')) this.add({ name: 'note', value: this.item.notes?.join('<p></p>'), html: true })
+    }
+
     const tex = Translator.BetterBibLaTeX ? 'biblatex' : 'bibtex'
     const bibtexStrings = Translator.preferences.exportBibTeXStrings.startsWith('match')
     for (const [name, field] of Object.entries(this.item.extraFields.tex)) {
@@ -850,12 +856,6 @@ export class Reference {
           this.override({ ...field, name, bibtexStrings })
           break
       }
-    }
-
-    this.add({ name: 'annotation', value: this.item.extra?.replace(/\n+/g, ' ') })
-    if (Translator.options.exportNotes) {
-      // if bibtexURL === 'note' is active, the note field will have been filled with an URL. In all other cases, if this is attempting to overwrite the 'note' field, I want the test suite to throw an error
-      if (!(Translator.BetterBibTeX && Translator.preferences.bibtexURL === 'note')) this.add({ name: 'note', value: this.item.notes?.join('<p></p>'), html: true })
     }
 
     // sort before postscript so the postscript can affect field order
