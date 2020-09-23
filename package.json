@@ -56,12 +56,12 @@
     "test": "test"
   },
   "dependencies": {
-    "@retorquere/bibtex-parser": "^3.2.12",
+    "@retorquere/bibtex-parser": "^3.2.13",
     "@types/lokijs": "^1.5.3",
     "ajv": "^6.12.5",
     "ajv-keywords": "^3.5.2",
     "barcoder": "^2.0.1",
-    "citeproc": "^2.4.15",
+    "citeproc": "^2.4.16",
     "edtf": "^3.0.1",
     "edtfy": "^0.0.8",
     "escape-string-regexp": "^4.0.0",
@@ -96,7 +96,7 @@
     "xregexp": "^4.3.0"
   },
   "devDependencies": {
-    "@types/node": "^14.11.1",
+    "@types/node": "^14.11.2",
     "@types/webpack": "^4.41.22",
     "archiver": "^5.0.2",
     "bluebird": "^3.7.2",
@@ -120,7 +120,7 @@
     "json.sortify": "^2.2.2",
     "loader-utils": "^2.0.0",
     "lodash": "^4.17.20",
-    "moment": "^2.28.0",
+    "moment": "^2.29.0",
     "njstrace": "^1.2.0",
     "pegjs": "^0.10.0",
     "pretty-data": "^0.40.0",
