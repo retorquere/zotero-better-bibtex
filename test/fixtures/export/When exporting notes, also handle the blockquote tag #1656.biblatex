@@ -1,0 +1,27 @@
+
+@book{Kant-Book,
+  title = {A Book},
+  author = {Kant, Emmanuel},
+  publisher = {{Him}},
+  location = {{Here}},
+  note = {\section{This is a heading}
+
+\par
+This is some text
+\par
+\begin{quotation}
+
+\par
+Then this is a quote from the book. It is inserted using the " icon in Zotero. It appears indented and with a blue vertical line to~ its left.
+\par
+It can span several paragraphs.
+\par
+\end{quotation}
+
+\par
+And this is some regular text again.},
+  timestamp = {2015-02-24 12:14:36 +0100}
+}
+% == BibLateX quality report for Kant-Book:
+% Unexpected field 'timestamp' (added because JabRef format is set to 4)
+% Exactly one of 'date' / 'year' must be present

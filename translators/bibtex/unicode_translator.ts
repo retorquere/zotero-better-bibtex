@@ -212,8 +212,13 @@ const htmlConverter = new class HTMLConverter {
       case 'body':
         break // ignore
 
+      case 'blockquote':
+        latex = '\n\n\\begin{quotation}\n...\n\n\\end{quotation}\n'
+        break
+
       default:
         log.debug(`unexpected tag '${tag.nodeName}' (${Object.keys(tag)})`)
+        break
     }
 
     if (latex !== '...') latex = this.embrace(latex, latex.match(/^\\[a-z]+{\.\.\.}$/))
