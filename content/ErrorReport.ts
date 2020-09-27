@@ -124,45 +124,49 @@ export = new class ErrorReport {
     const continueButton = wizard.getButton('next')
     continueButton.disabled = true
 
-    this.params = window.arguments[0].wrappedJSObject
+    try {
+      this.params = window.arguments[0].wrappedJSObject
 
-    this.timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
+      this.timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
 
-    this.errorlog = {
-      info: await this.info(),
-      errors: Zotero.getErrors(true).join('\n'),
-      debug: Zotero.Debug.getConsoleViewerOutput(),
+      this.errorlog = {
+        info: await this.info(),
+        errors: Zotero.getErrors(true).join('\n'),
+        debug: Zotero.Debug.getConsoleViewerOutput(),
+      }
+
+      if (Zotero.BetterBibTeX.ready && this.params.scope) {
+        await Zotero.BetterBibTeX.ready
+
+        this.errorlog.references = await Translators.exportItems(Translators.byLabel.BetterBibTeXJSON.translatorID, {exportNotes: true, dropAttachments: true, Normalize: true}, this.params.scope)
+      }
+
+      document.getElementById('better-bibtex-error-context').value = this.errorlog.info
+      document.getElementById('better-bibtex-error-errors').value = this.errorlog.errors
+      document.getElementById('better-bibtex-error-debug').value = this.preview(this.errorlog.debug)
+      if (this.errorlog.references) document.getElementById('better-bibtex-error-references').value = this.preview(this.errorlog.references)
+      document.getElementById('better-bibtex-error-tab-references').hidden = !this.errorlog.references
+
+      const current = require('../gen/version.js')
+      document.getElementById('better-bibtex-report-current').value = Zotero.BetterBibTeX.getString('ErrorReport.better-bibtex.current', { version: current })
+
+      let latest = PACKAGE.xpi.releaseURL.replace('https://github.com/', 'https://api.github.com/repos/').replace(/\/releases\/.*/, '/releases/latest')
+      latest = JSON.parse(await (await fetch(latest, { method: 'GET', cache: 'no-cache', redirect: 'follow' })).text()).tag_name.replace('v', '')
+
+      const show_latest = document.getElementById('better-bibtex-report-latest')
+      if (current === latest) {
+        show_latest.hidden = true
+      } else {
+        show_latest.value = Zotero.BetterBibTeX.getString('ErrorReport.better-bibtex.latest', { version: latest })
+        show_latest.hidden = false
+      }
+
+      const region = await Zotero.Promise.any(PACKAGE.bugs.logs.regions.map(this.ping))
+      this.bucket = `http://${PACKAGE.bugs.logs.bucket}-${region.short}.s3-${region.region}.amazonaws.com${region.tld}`
+      this.key = `${Zotero.Utilities.generateObjectKey()}-${region.short}`
+    } catch (err) {
+      alert(err.message)
     }
-
-    if (Zotero.BetterBibTeX.ready && this.params.scope) {
-      await Zotero.BetterBibTeX.ready
-
-      this.errorlog.references = await Translators.exportItems(Translators.byLabel.BetterBibTeXJSON.translatorID, {exportNotes: true, dropAttachments: true, Normalize: true}, this.params.scope)
-    }
-
-    document.getElementById('better-bibtex-error-context').value = this.errorlog.info
-    document.getElementById('better-bibtex-error-errors').value = this.errorlog.errors
-    document.getElementById('better-bibtex-error-debug').value = this.preview(this.errorlog.debug)
-    if (this.errorlog.references) document.getElementById('better-bibtex-error-references').value = this.preview(this.errorlog.references)
-    document.getElementById('better-bibtex-error-tab-references').hidden = !this.errorlog.references
-
-    const current = require('../gen/version.js')
-    document.getElementById('better-bibtex-report-current').value = Zotero.BetterBibTeX.getString('ErrorReport.better-bibtex.current', { version: current })
-
-    let latest = PACKAGE.xpi.releaseURL.replace('https://github.com/', 'https://api.github.com/repos/').replace(/\/releases\/.*/, '/releases/latest')
-    latest = JSON.parse(await (await fetch(latest, { method: 'GET', cache: 'no-cache', redirect: 'follow' })).text()).tag_name.replace('v', '')
-
-    const show_latest = document.getElementById('better-bibtex-report-latest')
-    if (current === latest) {
-      show_latest.hidden = true
-    } else {
-      show_latest.value = Zotero.BetterBibTeX.getString('ErrorReport.better-bibtex.latest', { version: latest })
-      show_latest.hidden = false
-    }
-
-    const region = await Zotero.Promise.any(PACKAGE.bugs.logs.regions.map(this.ping))
-    this.bucket = `http://${PACKAGE.bugs.logs.bucket}-${region.short}.s3-${region.region}.amazonaws.com${region.tld}`
-    this.key = `${Zotero.Utilities.generateObjectKey()}-${region.short}`
 
     continueButton.disabled = false
     continueButton.focus()
