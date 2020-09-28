@@ -108,12 +108,12 @@ export = new class ErrorReport {
   }
 
   private async ping(region) {
-    await fetch(`http://s3.${region}.amazonaws.com/ping`, {
+    await fetch(`http://s3.${region}.amazonaws.com${s3.region[region].tld || ''}/ping`, {
       method: 'GET',
       cache: 'no-cache',
       redirect: 'follow',
     })
-    return { region, ...s3[region] }
+    return { region, ...s3.region[region] }
   }
 
   private async init() {
@@ -160,8 +160,8 @@ export = new class ErrorReport {
       show_latest.hidden = false
     }
 
-    const region = await Zotero.Promise.any(PACKAGE.bugs.logs.regions.map(this.ping))
-    this.bucket = `http://${PACKAGE.bugs.logs.bucket}-${region.short}.s3-${region.region}.amazonaws.com${region.tld}`
+    const region = await Zotero.Promise.any(Object.keys(s3.region).map(this.ping))
+    this.bucket = `http://${s3.bucket}-${region.short}.s3-${region.region}.amazonaws.com${region.tld || ''}`
     this.key = `${Zotero.Utilities.generateObjectKey()}-${region.short}`
 
     continueButton.disabled = false

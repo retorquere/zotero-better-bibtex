@@ -148,13 +148,6 @@
     "url": "git+https://github.com/retorquere/zotero-better-bibtex.git"
   },
   "bugs": {
-    "url": "https://github.com/retorquere/zotero-better-bibtex/issues",
-    "logs": {
-      "bucket": "better-bibtex-error-reports-62200312",
-      "regions": [
-        "eu-central-1",
-        "ap-southeast-1"
-      ]
-    }
+    "url": "https://github.com/retorquere/zotero-better-bibtex/issues"
   }
 }
