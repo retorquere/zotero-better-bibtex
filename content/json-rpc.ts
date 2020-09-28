@@ -231,20 +231,23 @@ class NSItem {
    * @param translator BBT translator name or GUID
    * @param libraryID  ID of library to select the items from. When omitted, assume 'My Library'
    */
-  public async export(citekeys: string[], translator: string, libraryID: number = Zotero.Libraries.userLibraryID) {
-    const query = { libraryID, citekey: { $in: citekeys } }
+  public async export(citekeys: string[], translator: string, libraryID: number) {
+    const args = { citekeys, translator, libraryID, ...(arguments[0].__arguments__ || {}) }
+    if (typeof args.libraryID === 'undefined') args.libraryID = Zotero.Libraries.userLibraryID
+
+    const query = { libraryID: args.libraryID, citekey: { $in: args.citekeys } }
 
     if (Prefs.get('keyScope') === 'global') {
-      if (typeof libraryID === 'number') throw { code: INVALID_PARAMETERS, message: 'keyscope is global, do not provide a library ID' }
+      if (typeof args.libraryID === 'number') throw { code: INVALID_PARAMETERS, message: 'keyscope is global, do not provide a library ID' }
       delete query.libraryID
     } else {
-      if (typeof libraryID !== 'number') throw { code: INVALID_PARAMETERS, message: 'keyscope is per-library, you should provide a library ID' }
+      if (typeof args.libraryID !== 'number') throw { code: INVALID_PARAMETERS, message: 'keyscope is per-library, you should provide a library ID' }
     }
 
     const found = KeyManager.keys.find(query)
 
     const status: Record<string, number> = {}
-    for (const citekey of citekeys) {
+    for (const citekey of args.citekeys) {
       status[citekey] = 0
     }
     for (const item of found) {
@@ -272,7 +275,7 @@ class NSItem {
       throw { code: INVALID_PARAMETERS, message }
     }
 
-    return [OK, 'text/plain', await Translators.exportItems(Translators.getTranslatorId(translator), null, { type: 'items', items: await getItemsAsync(found.map(key => key.itemID)) }) ]
+    return [OK, 'text/plain', await Translators.exportItems(Translators.getTranslatorId(args.translator), null, { type: 'items', items: await getItemsAsync(found.map(key => key.itemID)) }) ]
   }
 }
 
@@ -299,7 +302,8 @@ const api = new class API {
     try {
       if (!request.params) return {jsonrpc: '2.0', result: await method(), id: request.id || null}
       if (Array.isArray(request.params)) return {jsonrpc: '2.0', result: await method.apply(null, request.params), id: request.id || null}
-      return {jsonrpc: '2.0', result: await method.call(null, request.params), id: request.id || null}
+      if (typeof request.params === 'object') return {jsonrpc: '2.0', result: await method.call(null, { __arguments__: request.params }), id: request.id || null}
+      throw new Error('params must be either an array or an object')
     } catch (err) {
       log.error('JSON-RPC:', err)
       if (err.code) {
