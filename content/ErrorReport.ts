@@ -107,6 +107,15 @@ export = new class ErrorReport {
     if (index === 0) Zotero.Utilities.Internal.quit(true)
   }
 
+  private async latest() {
+    try {
+      const latest = PACKAGE.xpi.releaseURL.replace('https://github.com/', 'https://api.github.com/repos/').replace(/\/releases\/.*/, '/releases/latest')
+      return JSON.parse(await (await fetch(latest, { method: 'GET', cache: 'no-cache', redirect: 'follow' })).text()).tag_name.replace('v', '')
+    } catch (err) {
+      return null
+    }
+  }
+
   private async ping(region) {
     await fetch(`http://s3.${region}.amazonaws.com${s3.region[region].tld || ''}/ping`, {
       method: 'GET',
@@ -149,23 +158,27 @@ export = new class ErrorReport {
     const current = require('../gen/version.js')
     document.getElementById('better-bibtex-report-current').value = Zotero.BetterBibTeX.getString('ErrorReport.better-bibtex.current', { version: current })
 
-    let latest = PACKAGE.xpi.releaseURL.replace('https://github.com/', 'https://api.github.com/repos/').replace(/\/releases\/.*/, '/releases/latest')
-    latest = JSON.parse(await (await fetch(latest, { method: 'GET', cache: 'no-cache', redirect: 'follow' })).text()).tag_name.replace('v', '')
+    const latest = await this.latest()
 
     const show_latest = document.getElementById('better-bibtex-report-latest')
     if (current === latest) {
       show_latest.hidden = true
     } else {
-      show_latest.value = Zotero.BetterBibTeX.getString('ErrorReport.better-bibtex.latest', { version: latest })
+      show_latest.value = Zotero.BetterBibTeX.getString('ErrorReport.better-bibtex.latest', { version: latest || '<could not be established>' })
       show_latest.hidden = false
     }
 
-    const region = await Zotero.Promise.any(Object.keys(s3.region).map(this.ping))
-    this.bucket = `http://${s3.bucket}-${region.short}.s3-${region.region}.amazonaws.com${region.tld || ''}`
-    this.key = `${Zotero.Utilities.generateObjectKey()}-${region.short}`
+    try {
+      const region = await Zotero.Promise.any(Object.keys(s3.region).map(this.ping))
+      this.bucket = `http://${s3.bucket}-${region.short}.s3-${region.region}.amazonaws.com${region.tld || ''}`
+      this.key = `${Zotero.Utilities.generateObjectKey()}-${region.short}`
+      continueButton.disabled = false
+      continueButton.focus()
 
-    continueButton.disabled = false
-    continueButton.focus()
+    } catch (err) {
+      alert(`No AWS region can be reached: ${err.message}`)
+      wizard.getButton('cancel').disabled = false
+    }
   }
 
   private preview(lines) {

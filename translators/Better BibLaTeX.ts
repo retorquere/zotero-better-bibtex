@@ -604,6 +604,8 @@ export function doExport() {
       }
     }
 
+    if (item.arXiv && !ref.has.journaltitle && ref.referencetype === 'article') ref.referencetype = 'online'
+
     ref.complete()
   }
 

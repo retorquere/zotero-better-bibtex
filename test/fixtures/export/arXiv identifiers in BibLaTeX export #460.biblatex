@@ -40,7 +40,7 @@ This paper is of great importance because it constructs a fully consistent quant
   number = {2}
 }
 
-@article{Smolin.2013.Classical,
+@online{Smolin.2013.Classical,
   title = {Classical Signature of Quantum Annealing},
   author = {Smolin, John A. and Smith, Graeme},
   date = {2013-05-21},
