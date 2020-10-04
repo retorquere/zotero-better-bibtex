@@ -149,8 +149,8 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.0 "não">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.3 "para JabRef 3">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.4 "para JabRef 4">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat.5 "para JabRef 5">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat.warn "Export JabRef-specific fields: timestamps, and groups for each collection and item is part of. Note that format `4` will disable caching in exports, which is really undesirable specifically for auto-exports.">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat.5 "for JabRef 5">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat.warn "Export JabRef-specific fields: timestamps, and groups for each collection and item is part of. Note that this format will disable caching in exports, which is really undesirable specifically for auto-exports.">
 <!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Exportar unicode como comandos LaTeX em texto puro">
 <!ENTITY better-bibtex.Preferences.export.biblatex "BibLaTeX">
 <!ENTITY better-bibtex.Preferences.export.biblatex.extendedNameFormat "Usar o formato de nomes estendido de BibLaTeX (exige biblatex 3.5)">
@@ -198,6 +198,7 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.bulk-keys-confirm.message "Você está modificando mais que {treshold} items de uma vez. Tem certeza?">
 <!ENTITY better-bibtex.bulk-keys-confirm.whatever "OK e não perguntar novamente">
 <!ENTITY better-bibtex.BetterBibTeX.menu "Better BibTeX">
+<!ENTITY better-bibtex.BetterBibTeX.citekey.set "Change BibTeX key...">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.pin "Fixar chave BibTeX">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.pinInspireHEP "Fixar chave BibTeX do InspireHEP">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.unpin "Des-fixar chave BibTeX">
