@@ -62,11 +62,11 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
 
   public async set() {
     const ids = this.expandSelection('selected')
-    if (ids.length !== 1) return alert('Can only change one key at a time')
+    if (ids.length !== 1) return alert(Zotero.BetterBibTeX.getString('Citekey.set.toomany'))
 
     Cache.remove(ids, `setting key for ${ids}`)
     const existingKey = this.get(ids[0]).citekey
-    const citationKey = prompt('Change BibTeX key to', existingKey) || existingKey
+    const citationKey = prompt(Zotero.BetterBibTeX.getString('Citekey.set.change'), existingKey) || existingKey
     if (citationKey === existingKey) return
 
     const item = await getItemsAsync(ids[0])
