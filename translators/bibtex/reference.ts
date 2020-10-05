@@ -430,11 +430,11 @@ export class Reference {
       }
     }
 
-    if (this.item.publicationTitle && (this.item.arXiv = arXiv.parse(this.item.publicationTitle)) && this.item.arXiv.id) {
+    if ((this.item.arXiv = arXiv.parse(this.item.publicationTitle)) && this.item.arXiv.id) {
       this.item.arXiv.source = 'publicationTitle'
       if (Translator.BetterBibLaTeX) delete this.item.publicationTitle
 
-    } else if (this.item.extraFields.tex.arxiv && (this.item.arXiv = arXiv.parse(this.item.extraFields.tex.arxiv.value)) && this.item.arXiv.id) {
+    } else if ((this.item.arXiv = arXiv.parse(this.item.extraFields.tex.arxiv?.value)) && this.item.arXiv.id) {
       this.item.arXiv.source = 'extra'
 
     } else {
