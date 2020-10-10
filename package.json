@@ -58,7 +58,7 @@
   "dependencies": {
     "@retorquere/bibtex-parser": "^3.2.13",
     "@types/lokijs": "^1.5.3",
-    "ajv": "^6.12.5",
+    "ajv": "^6.12.6",
     "ajv-keywords": "^3.5.2",
     "barcoder": "^2.0.1",
     "citeproc": "^2.4.38",
@@ -136,7 +136,7 @@
     "typescript": "^4.0.3",
     "uri-templates": "^0.2.0",
     "webpack": "^4.44.2",
-    "webpack-cli": "^3.3.12",
+    "webpack-cli": "^4.0.0",
     "wrapper-webpack-plugin": "^2.1.0",
     "xml-parser": "^1.2.1",
     "xmldom": "^0.3.0",
