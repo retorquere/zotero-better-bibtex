@@ -11077,10 +11077,5 @@
         "wordsBy": "\u6558\u8ff0\u8005"
       }
     }
-  },
-  "release": [
-    "5.0.85",
-    "5.0.89"
-  ],
-  "hash": "f7cd7588f699c773b33a7ba9cbfc871bb8914664c09f7824ba5c7f76026eadc4a7eed3101bc8805270868b017929b56a342c12cd5bc3628c2ae6ede28a7a37ff"
+  }
 }

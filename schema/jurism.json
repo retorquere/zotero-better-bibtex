@@ -13638,10 +13638,5 @@
         "wordsBy": "\u6558\u8ff0\u8005"
       }
     }
-  },
-  "release": [
-    "5.0.90m2",
-    "5.0.90m3"
-  ],
-  "hash": "de5aa8473bd815985c6670be5010c65a940e86ab12d0e712f579c6d96bd4dd11a38f2444c0e0834c3672acd13d9cd4edf82938e83fe63b3bae9ddb7d53a8d6f5"
+  }
 }

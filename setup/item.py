@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from collections import OrderedDict
 import hashlib
 import operator
 import shlex
@@ -40,28 +41,47 @@ os.makedirs(TYPINGS, exist_ok=True)
 
 class fetch(object):
   def __init__(self, client):
+    self.schema = os.path.join(SCHEMA.root, f'{client}.json')
+
     if client == 'zotero':
-      releases = urlopen("https://www.zotero.org/download/client/manifests/release/updates-linux-x86_64.json").read().decode("utf-8")
-      releases = json.loads(releases)
-      releases = [rel['version'] for rel in reversed(releases)]
-      self.schema = self.update(
+      releases = [
+        ref['ref'].split('/')[-1]
+        for ref in
+        json.loads(urlopen('https://api.github.com/repos/zotero/zotero/git/refs/tags').read().decode('utf-8'))
+      ]
+      releases += [
+        rel['version']
+        for rel in
+        json.loads(urlopen("https://www.zotero.org/download/client/manifests/release/updates-linux-x86_64.json").read().decode("utf-8"))
+        if not rel['version'] in releases
+      ]
+      releases = [rel for rel in releases if rel.startswith('5.')]
+      self.update(
         client=client,
         releases=releases,
         download='https://www.zotero.org/download/client/dl?channel=release&platform=linux-x86_64&version={version}',
-        jar='Zotero_linux-x86_64/zotero.jar',
-        schema_path='resource/schema/global/schema.json',
-        schema='zotero.json'
+        jarpath='Zotero_linux-x86_64/zotero.jar',
+        schema='resource/schema/global/schema.json'
       )
     elif client == 'jurism':
-      releases = urlopen('https://github.com/Juris-M/assets/releases/download/client%2Freleases%2Fincrementals-linux/incrementals-release-linux').read().decode("utf-8")
-      releases = [rel for rel in reversed(releases.strip().split("\n")) if rel != '']
-      self.schema = self.update(
+      releases = [
+        ref['ref'].split('/')[-1].replace('v', '')
+        for ref in
+        json.loads(urlopen('https://api.github.com/repos/juris-m/zotero/git/refs/tags').read().decode('utf-8'))
+      ]
+      releases += [
+        rel
+        for rel in
+        urlopen('https://github.com/Juris-M/assets/releases/download/client%2Freleases%2Fincrementals-linux/incrementals-release-linux').read().decode("utf-8").strip().split("\n")
+        if rel != '' and rel not in releases
+      ]
+      releases = [rel for rel in releases if rel.startswith('5.') and 'm' in rel and not 'beta' in rel]
+      self.update(
         client=client,
         releases=releases,
         download='https://github.com/Juris-M/assets/releases/download/client%2Frelease%2F{version}/Jurism-{version}_linux-x86_64.tar.bz2',
-        jar='Jurism_linux-x86_64/jurism.jar',
-        schema_path='resource/schema/global/schema-jurism.json',
-        schema='jurism.json'
+        jarpath='Jurism_linux-x86_64/jurism.jar',
+        schema='resource/schema/global/schema-jurism.json'
       )
     else:
       raise ValueError(f'Unknown client {client}')
@@ -71,61 +91,61 @@ class fetch(object):
     #'version', 'itemTypes', 'meta', 'csl', 'locales', 'release', 'hash'
     return hashlib.sha512(json.dumps({ k: v for k, v in schema.items() if k in ('itemTypes', 'meta', 'csl')}, sort_keys=True).encode('utf-8')).hexdigest()
 
-  def update(self, client, releases, download, jar, schema_path, schema):
-    schema = os.path.join(SCHEMA.root, schema)
+  def update(self, client, releases, download, jarpath, schema):
+    hashes_cache = os.path.join(SCHEMA.root, 'hashes.json')
 
-    if os.path.exists(schema):
-      with open(schema) as f:
-        current = json.load(f)
-        current = {
-          'release': current['release'][-1],
-          'hash': self.hash(current),
-        }
-        if current['release'] == releases[0]:
-          print(' ', os.path.basename(schema), 'up to date')
-          return schema
+    if os.path.exists(hashes_cache):
+      with open(hashes_cache) as f:
+        hashes = json.load(f, object_hook=OrderedDict)
     else:
-      current = None
+      hashes = OrderedDict()
+    if not client in hashes:
+      hashes[client] = OrderedDict()
 
-    if 'CI' in os.environ: raise ValueError(f'{schema} out of date')
+    current = releases[-1]
+    if current in hashes[client] and os.path.exists(self.schema):
+      return
+    elif 'CI' in os.environ:
+      raise ValueError(f'{self.schema} out of date')
 
-    jarpath = jar
-    latest = None
-    print('  updating', os.path.basename(schema))
+    print('  updating', os.path.basename(self.schema))
 
     for release in releases:
+      if release != current and release in hashes[client]: continue
+
       with tempfile.NamedTemporaryFile() as tarball:
         print('    downloading', download.format(version=release))
-        urlretrieve(download.format(version=release), tarball.name)
-        tar = tarfile.open(tarball.name, 'r:bz2')
+        try:
+          urlretrieve(download.format(version=release), tarball.name)
 
-        jar = tar.getmember(jarpath)
-        print('    extracting', jar.name)
-        jar.name = os.path.basename(jar.name)
-        tar.extract(jar, path=os.path.dirname(tarball.name))
+          tar = tarfile.open(tarball.name, 'r:bz2')
 
-        jar = zipfile.ZipFile(os.path.join(os.path.dirname(tarball.name), jar.name))
-        with jar.open(schema_path) as f:
-          release_schema = json.load(f)
-          release_schema['release'] = release
-          release_schema['hash'] = self.hash(release_schema)
-          print('    release', release, 'schema', release_schema['version'], 'hash', release_schema['hash'])
-          if latest is None:
-            latest = release_schema
-            latest['release'] = [release, release]
-            if current and current['hash'] == latest['hash']:
-              latest['release'][0] = current['release']
-              break
-          elif release_schema['hash'] == latest['hash']:
-            latest['release'][0] = release
+          jar = tar.getmember(jarpath)
+          print('      extracting', jar.name)
+          jar.name = os.path.basename(jar.name)
+          tar.extract(jar, path=os.path.dirname(tarball.name))
+
+          jar = zipfile.ZipFile(os.path.join(os.path.dirname(tarball.name), jar.name))
+          try:
+            with jar.open(schema) as f:
+              client_schema = json.load(f)
+              with open(self.schema, 'w') as f:
+                json.dump(client_schema, f, indent='  ')
+              hashes[client][release] = self.hash(client_schema)
+            print('      release', release, 'schema', client_schema['version'], 'hash', hashes[client][release])
+          except KeyError:
+            hashes[client][release] = None
+            print('      release', release, 'does not have a bundled schema')
+
+        except HTTPError as e:
+          if e.code in [ 403, 404 ] and release != current:
+            print('      release', release, 'not available')
+            hashes[client][release] = None
           else:
-            break
+            raise e
 
-    print('    saving', os.path.basename(schema))
-    with open(schema, 'w') as f:
-      json.dump(latest, f, indent='  ')
-
-    return schema
+      with open(hashes_cache, 'w') as f:
+        json.dump(hashes, f, indent='  ')
 
   def __enter__(self):
     self.f = open(self.schema)
@@ -221,7 +241,7 @@ class ExtraFields:
     typeof = {}
     for field, meta in schema.meta.fields.items():
       typeof[field] = meta.type
-  
+
     # add nodes & edges
     for field, baseField in {str(f.path): f.value for f in jsonpath.parse('$.itemTypes.*.fields.*').find(schema)}.items():
       self.add_var('zotero', baseField, typeof.get(baseField, 'text'), client)
@@ -424,15 +444,28 @@ with fetch('zotero') as z, fetch('jurism') as j:
         fieldmap[field] = baseField
       else:
         assert baseField == fieldmap[field], (schema, field_path, baseField, fieldmap[field])
-    
+
   ef.load(SCHEMA.jurism, 'jurism')
   ef.load(SCHEMA.zotero, 'zotero')
   ef.save()
-  with open(os.path.join(root, 'gen', 'min-version.json'), 'w') as f:
-    json.dump({
-      'zotero': { 'min': SCHEMA.zotero.release[0], 'current': SCHEMA.zotero.release[1], 'schema': SCHEMA.zotero.version},
-      'jurism': { 'min': SCHEMA.jurism.release[0], 'current': SCHEMA.jurism.release[1], 'schema': SCHEMA.jurism.version},
-    }, f)
+
+  with open(os.path.join(SCHEMA.root, 'hashes.json')) as f:
+    min_version = {}
+    hashes = json.load(f, object_hook=OrderedDict)
+    for client in hashes.keys():
+      releases = list(hashes[client].keys())
+      current = releases[-1]
+      min_version[client] = current
+      for rel in reversed(releases):
+        if hashes[client][rel] is None: # unreleased version, or no schema
+          continue
+        elif hashes[client][rel] != hashes[client][current]:
+          break
+        else:
+          min_version[client] = rel
+
+    with open(os.path.join(root, 'gen', 'min-version.json'), 'w') as f:
+      json.dump(min_version, f)
 
 print('  writing creators')
 creators = {'zotero': {}, 'jurism': {}}
