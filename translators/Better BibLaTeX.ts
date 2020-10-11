@@ -480,8 +480,15 @@ export function doExport() {
         break
 
       case 'thesis':
-        const thesistype = item.type ? item.type.toLowerCase() : null
-        if (['phdthesis', 'mastersthesis'].includes(thesistype)) {
+        const thesistype = {
+          phdthesis: 'phdthesis',
+          phd: 'phdthesis',
+          mastersthesis: 'mastersthesis',
+          masterthesis: 'mastersthesis',
+          master: 'mastersthesis',
+          ma: 'mastersthesis',
+        }[item.type?.toLowerCase()]
+        if (thesistype) {
           ref.referencetype = thesistype
         } else {
           ref.add({ name: 'type', value: item.type })
