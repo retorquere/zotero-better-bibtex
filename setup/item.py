@@ -12,8 +12,7 @@ from mako.template import Template
 from munch import Munch
 from pytablewriter import MarkdownTableWriter
 from urllib.error import HTTPError
-from urllib.request import urlopen
-from urllib.request import urlretrieve
+from urllib.request import urlopen, urlretrieve, Request
 import glob
 import itertools
 import json, jsonpatch, jsonpath_ng
@@ -25,7 +24,6 @@ import re
 import sys
 import tarfile
 import tempfile
-import urllib.request
 import zipfile
 
 root = os.path.join(os.path.dirname(__file__), '..')
@@ -44,10 +42,12 @@ class fetch(object):
     self.schema = os.path.join(SCHEMA.root, f'{client}.json')
 
     if client == 'zotero':
+      req = Request('https://api.github.com/repos/zotero/zotero/git/refs/tags')
+      if token := os.environ.get('GITHUB_TOKEN', None): req.add_header('Authorization', f'token {token}')
       releases = [
         ref['ref'].split('/')[-1]
         for ref in
-        json.loads(urlopen('https://api.github.com/repos/zotero/zotero/git/refs/tags').read().decode('utf-8'))
+        json.loads(urlopen(req).read().decode('utf-8'))
       ]
       releases += [
         rel['version']
@@ -64,10 +64,12 @@ class fetch(object):
         schema='resource/schema/global/schema.json'
       )
     elif client == 'jurism':
+      req = Request('https://api.github.com/repos/juris-m/zotero/git/refs/tags')
+      if token := os.environ.get('GITHUB_TOKEN', None): req.add_header('Authorization', f'token {token}')
       releases = [
         ref['ref'].split('/')[-1].replace('v', '')
         for ref in
-        json.loads(urlopen('https://api.github.com/repos/juris-m/zotero/git/refs/tags').read().decode('utf-8'))
+        json.loads(urlopen(req).read().decode('utf-8'))
       ]
       releases += [
         rel
