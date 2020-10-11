@@ -328,9 +328,19 @@ export function doExport() {
     }
     if (Translator.preferences.DOIandURL === 'both' || !url) ref.add({ name: 'doi', value: (doi || '').replace(/^https?:\/\/doi.org\//i, '') })
 
-    if (item.referenceType === 'thesis' && ['mastersthesis', 'phdthesis'].includes(item.type)) {
-      ref.referencetype = item.type
-      ref.remove('type')
+    if (item.referenceType === 'thesis') {
+      const thesistype = {
+        phdthesis: 'phdthesis',
+        phd: 'phdthesis',
+        mastersthesis: 'mastersthesis',
+        masterthesis: 'mastersthesis',
+        master: 'mastersthesis',
+        ma: 'mastersthesis',
+      }[item.type?.toLowerCase()]
+      if (thesistype) {
+        ref.referencetype = thesistype
+        ref.remove('type')
+      }
     }
 
     // #1471 and http://ctan.cs.uu.nl/biblio/bibtex/base/btxdoc.pdf: organization The organization that sponsors a conference or that publishes a manual.
