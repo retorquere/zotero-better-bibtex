@@ -39,7 +39,7 @@ os.makedirs(TYPINGS, exist_ok=True)
 
 def readurl(url):
   req = Request(url)
-  if ('github.com' in url) and (token := os.environ.get('GITHUB_TOKEN', None)): req.add_header('Authorization', f'token {token}')
+  if ('api.github.com' in url) and (token := os.environ.get('GITHUB_TOKEN', None)): req.add_header('Authorization', f'token {token}')
   return urlopen(req).read().decode('utf-8')
 
 class fetch(object):
