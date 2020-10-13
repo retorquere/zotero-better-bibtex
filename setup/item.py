@@ -37,17 +37,20 @@ os.makedirs(SCHEMA.root, exist_ok=True)
 os.makedirs(ITEMS, exist_ok=True)
 os.makedirs(TYPINGS, exist_ok=True)
 
+def readurl(url):
+  req = Request(url)
+  if ('github.com' in url) and (token := os.environ.get('GITHUB_TOKEN', None)): req.add_header('Authorization', f'token {token}')
+  return urlopen(req).read().decode('utf-8')
+
 class fetch(object):
   def __init__(self, client):
     self.schema = os.path.join(SCHEMA.root, f'{client}.json')
 
     if client == 'zotero':
-      req = Request('https://api.github.com/repos/zotero/zotero/git/refs/tags')
-      if token := os.environ.get('GITHUB_TOKEN', None): req.add_header('Authorization', f'token {token}')
       releases = [
         ref['ref'].split('/')[-1]
         for ref in
-        json.loads(urlopen(req).read().decode('utf-8'))
+        json.loads(readurl('https://api.github.com/repos/zotero/zotero/git/refs/tags'))
       ]
       releases += [
         rel['version']
@@ -64,17 +67,15 @@ class fetch(object):
         schema='resource/schema/global/schema.json'
       )
     elif client == 'jurism':
-      req = Request('https://api.github.com/repos/juris-m/zotero/git/refs/tags')
-      if token := os.environ.get('GITHUB_TOKEN', None): req.add_header('Authorization', f'token {token}')
       releases = [
         ref['ref'].split('/')[-1].replace('v', '')
         for ref in
-        json.loads(urlopen(req).read().decode('utf-8'))
+        json.loads(readurl('https://api.github.com/repos/juris-m/zotero/git/refs/tags'))
       ]
       releases += [
         rel
         for rel in
-        urlopen('https://github.com/Juris-M/assets/releases/download/client%2Freleases%2Fincrementals-linux/incrementals-release-linux').read().decode("utf-8").strip().split("\n")
+        readurl('https://github.com/Juris-M/assets/releases/download/client%2Freleases%2Fincrementals-linux/incrementals-release-linux').strip().split("\n")
         if rel != '' and rel not in releases
       ]
       releases = [rel for rel in releases if rel.startswith('5.') and 'm' in rel and not 'beta' in rel]
