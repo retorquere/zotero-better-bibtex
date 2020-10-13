@@ -27,14 +27,10 @@ const common = {
 
   resolve: {
     extensions: ['.ts', '.js'],
-    fallback: {
-      fs: false,
-      path: {
-        join() {
-          return OS.Path.join.apply(null, arguments)
-        }
-      }
-    }
+    fallback: { fs: false },
+    alias: {
+      'path': path.join(__dirname, 'setup/shims/path.js')
+    },
   },
 
   // node: { fs: 'empty' },
