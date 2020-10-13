@@ -2,14 +2,14 @@ declare const Zotero: any
 declare const Node: any
 declare const Components: any
 
+import { log } from '../logger'
 import { foldMaintaining } from 'fold-to-ascii'
-import PunyCode = require('punycode')
+import ucs2decode = require('punycode2/ucs2/decode')
 import scripts = require('xregexp/tools/output/scripts')
 import { transliterate } from 'transliteration'
 
 import { flash } from '../flash'
 import { Preferences as Prefs } from '../prefs'
-import { log } from '../logger'
 import { JournalAbbrev } from '../journal-abbrev'
 import { kuroshiro } from './kuroshiro'
 import * as Extra from '../extra'
@@ -728,7 +728,7 @@ class PatternFormatter {
 
     if (options.asciiOnly) words = words.map(word => word.replace(/[^ -~]/g, ''))
     words = words.filter(word => word)
-    if (options.skipWords) words = words.filter(word => !this.skipWords.has(word.toLowerCase()) && (PunyCode.ucs2.decode(word).length > 1) || word.match(script.han))
+    if (options.skipWords) words = words.filter(word => !this.skipWords.has(word.toLowerCase()) && (ucs2decode(word).length > 1) || word.match(script.han))
     if (words.length === 0) return null
     return words
   }
