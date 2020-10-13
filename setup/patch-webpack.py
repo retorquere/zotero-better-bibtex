@@ -15,7 +15,7 @@ root = os.path.join(os.path.dirname(__file__), '..')
 webpack = os.path.join(root, 'build/content/webpack.js')
 loader = ''
 wrapped = None
-prefix = "if (!Zotero.WebPackedBetterBibTeX) {\n\n"
+prefix = "if (!Zotero.webpackChunkBetterBibTeX) {\n\n"
 postfix = "\n\n}\n"
 
 with open(webpack) as f:
