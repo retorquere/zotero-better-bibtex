@@ -13,9 +13,10 @@ with open('package.json') as f:
 with open('content/s3.json') as f:
   regions = json.load(f, object_hook=Munch)
 
-prefix = package.bugs.logs.bucket
+prefix = regions.bucket
 print(prefix)
-for region, details in regions.items():
+for region, details in regions.region.items():
+  print(region, details)
   merge = {}
 
   bucket = s3.Bucket(name=f'{prefix}-{details.short}')
