@@ -3,6 +3,7 @@ declare const Zotero: any
 const OK = 200
 const SERVER_ERROR = 500
 const NOT_FOUND = 404
+const CONFLICT = 409
 const BAD_REQUEST = 400
 
 import { Translators } from './translators'
@@ -39,7 +40,7 @@ Zotero.Server.Endpoints['/better-bibtex/export/collection'] = Zotero.Server.Endp
       return [ OK, 'text/plain', await Translators.exportItems(Translators.getTranslatorId(translator), displayOptions(request), { type: 'collection', collection }) ]
 
     } catch (err) {
-      return [SERVER_ERROR, 'text/plain', '' + err]
+      return [{ notfound: NOT_FOUND, duplicate: CONFLICT, error: SERVER_ERROR}[err.kind || 'error'], 'text/plain', '' + err]
     }
   }
 }

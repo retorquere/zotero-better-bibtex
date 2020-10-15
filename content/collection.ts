@@ -1,5 +1,19 @@
 import { get as getLibrary } from './library'
 
+class CollectionError extends Error {
+  kind: 'duplicate' | 'notfound'
+
+  constructor(message: string, kind: 'duplicate' | 'notfound') {
+    // 'Error' breaks prototype chain here
+    super(message)
+
+    // restore prototype chain
+    Object.setPrototypeOf(this, new.target.prototype)
+
+    this.kind = kind
+  }
+}
+
 async function getCollection(parent, name, path, create) {
   const children = parent instanceof Zotero.Library ? Zotero.Collections.getByLibrary(parent.id) : Zotero.Collections.getByParent(parent.id)
   let found = children.filter(coll => coll.name === name)
@@ -9,7 +23,7 @@ async function getCollection(parent, name, path, create) {
     case 1:
       return found[0]
     default:
-      throw new Error(`Collection '${path}' is not unique`)
+      throw new CollectionError(`Collection '${path}' is not unique`, 'duplicate')
   }
 
   found = children.filter(coll => coll.name.toLowerCase() === name.toLowerCase())
@@ -19,10 +33,10 @@ async function getCollection(parent, name, path, create) {
     case 1:
       return found[0]
     default:
-      throw new Error(`Collection '${path}' is not unique`)
+      throw new CollectionError(`Collection '${path}' is not unique`, 'duplicate')
   }
 
-  if (!create) throw new Error(`Collection '${path}' does not exist`)
+  if (!create) throw new CollectionError(`Collection '${path}' does not exist`, 'notfound')
   const collection = new Zotero.Collection({
     name,
     libraryID: parent instanceof Zotero.Library ? parent.id : parent.libraryID,
@@ -34,12 +48,12 @@ async function getCollection(parent, name, path, create) {
 
 export async function get(path: string, create: boolean = false) {
   const names = (path || '').split('/')
-  if (names.shift() !== '') throw new Error('path must be absolute')
+  if (names.shift() !== '') throw new CollectionError('path must be absolute', 'notfound')
   const root = names.shift()
-  if (names.length === 0) throw new Error('path is too short')
+  if (names.length === 0) throw new CollectionError('path is too short', 'notfound')
 
   let collection = root.match(/^[0-9]+$/) ? Zotero.Libraries.get(root) : getLibrary(root)
-  if (!collection) throw new Error(`Library ${root} not found`)
+  if (!collection) throw new CollectionError(`Library ${root} not found`, 'notfound')
   let _path = `/${root}`
 
   for (const name of names) {
