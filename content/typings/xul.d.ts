@@ -1,33 +1,29 @@
 namespace XUL {
-  class Element {
+  class Element extends HTMLElement {
     public hidden: boolean
   }
 
-  class Textbox {
+  class Textbox extends HTMLElement{
     public value: string
     public hidden: boolean
     public readonly: boolean
   }
 
-  class Element {
-    public hidden: boolean
-  }
-
-  class Checkbox {
+  class Checkbox extends HTMLElement {
     public hidden: boolean
     public checked: boolean
   }
 
-  class Menuitem {
+  class Menuitem extends HTMLElement {
     public value: string
     public label: string
   }
 
-  class Menupopup {
-    public children: Menuitem[] // menupopup
+  class Menupopup extends HTMLElement {
+    public children: Menuitem[]
   }
 
-  class Menulist {
+  class Menulist extends HTMLElement {
     public firstChild: Menupopup
     public selectedItem: Menuitem
     public value: string
