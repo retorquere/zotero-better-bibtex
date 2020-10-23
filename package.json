@@ -62,7 +62,6 @@
     "ajv": "^6.12.6",
     "ajv-keywords": "^3.5.2",
     "barcoder": "^2.0.1",
-    "chevrotain": "^7.0.2",
     "citeproc": "^2.4.45",
     "edtf": "^3.0.1",
     "edtfy": "^0.0.8",
