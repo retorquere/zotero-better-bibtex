@@ -3,85 +3,9 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "localeDateOrder": "dmy",
-    "options": {
-      "Normalize": true,
-      "exportFileData": false,
-      "exportNotes": false,
-      "keepUpdated": false
-    },
+    "options": {},
     "preferences": {
-      "DOIandURL": "both",
-      "ascii": "",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportDelay": 1,
-      "autoExportIdleWait": 10,
-      "autoExportPathReplaceDiacritics": false,
-      "autoExportPathReplaceDirSep": "-",
-      "autoExportPathReplaceSpace": " ",
-      "autoPinDelay": 0,
-      "automaticTags": true,
-      "auxImport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "biblatexExtractEprint": true,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
-      "citekeyFormat": "[auth][year]",
-      "citeprocNoteCitekey": false,
-      "csquotes": "",
-      "debugLogDir": "",
-      "exportBibTeXStrings": "off",
-      "exportBraceProtection": true,
-      "exportTitleCase": true,
-      "extraMergeCSL": true,
-      "extraMergeCitekeys": true,
-      "extraMergeTeX": true,
-      "git": "config",
-      "ignorePostscriptErrors": true,
-      "import": true,
-      "importBibTeXStrings": true,
-      "importCaseProtection": "as-needed",
-      "importCitationKey": true,
-      "importExtra": true,
-      "importJabRefAbbreviations": true,
-      "importJabRefStrings": true,
-      "importSentenceCase": "on+guess",
-      "itemObserverDelay": 5,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "keyScope": "library",
-      "kuroshiro": false,
-      "mapMath": "",
-      "mapText": "",
-      "mapUnicode": "conservative",
-      "newTranslatorsAskRestart": true,
-      "parseParticles": true,
-      "platform": "mac",
-      "postscript": "",
-      "postscriptOverride": "",
-      "qualityReport": false,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "rawImports": false,
-      "rawLaTag": "#LaTeX",
-      "relativeFilePaths": false,
-      "retainCache": false,
-      "scrubDatabase": false,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "testing": true,
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups",
-      "warnBulkModify": 10,
-      "warnTitleCased": false,
-      "workers": 1
+      "citekeyFormat": "[auth][year]"
     }
   },
   "items": [
@@ -136,18 +60,15 @@
         }
       ],
       "date": "2012-02",
-      "dateAdded": "2020-10-24T21:27:01Z",
-      "dateModified": "2020-10-24T21:27:01Z",
       "extra": [
         "Citation Key: Leung_2012"
       ],
       "issue": "1",
       "itemID": 1,
       "itemType": "journalArticle",
-      "pages": "27–33",
+      "pages": "27\u201333",
       "publicationTitle": "Journal of Crystal Growth",
-      "title": "Growth evolution and microstructural characterization of semipolar (112̄2) GaN selectively grown on etched r-Plane sapphire",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/25BRGTQ8",
+      "title": "Growth evolution and microstructural characterization of semipolar (112\u03042) GaN selectively grown on etched r-Plane sapphire",
       "volume": "341"
     },
     {
@@ -181,8 +102,6 @@
         }
       ],
       "date": "2015-01",
-      "dateAdded": "2020-10-24T21:27:01Z",
-      "dateModified": "2020-10-24T21:27:01Z",
       "extra": [
         "Citation Key: Song_2015"
       ],
@@ -190,10 +109,9 @@
       "itemID": 2,
       "itemType": "journalArticle",
       "journalAbbreviation": "ACS Appl. Mater. Interfaces",
-      "pages": "273–278",
+      "pages": "273\u2013278",
       "publicationTitle": "ACS Applied Materials & Interfaces",
-      "title": "Significantly improved luminescence properties of nitrogen-polar (0001̅) InGaN multiple quantum wells grown by pulsed metalorganic chemical vapor deposition",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/KH4XUXRK",
+      "title": "Significantly improved luminescence properties of nitrogen-polar (0001\u0305) InGaN multiple quantum wells grown by pulsed metalorganic chemical vapor deposition",
       "volume": "7"
     },
     {
@@ -227,18 +145,15 @@
         }
       ],
       "date": "2014-05",
-      "dateAdded": "2020-10-24T21:27:01Z",
-      "dateModified": "2020-10-24T21:27:01Z",
       "extra": [
         "Citation Key: Song_2014"
       ],
       "issue": "5",
       "itemID": 3,
       "itemType": "journalArticle",
-      "pages": "2510–2515",
+      "pages": "2510\u20132515",
       "publicationTitle": "Crystal Growth & Design",
-      "title": "Epitaxial lateral overgrowth of nitrogen-polar (0001̅) GaN by metalorganic chemical vapor deposition",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/TAUTEEP3",
+      "title": "Epitaxial lateral overgrowth of nitrogen-polar (0001\u0305) GaN by metalorganic chemical vapor deposition",
       "volume": "14"
     },
     {
@@ -252,7 +167,7 @@
         },
         {
           "creatorType": "author",
-          "firstName": "Jörg",
+          "firstName": "J\u00f6rg",
           "lastName": "Neugebauer"
         },
         {
@@ -262,8 +177,6 @@
         }
       ],
       "date": "1998-07",
-      "dateAdded": "2020-10-24T21:27:01Z",
-      "dateModified": "2020-10-24T21:27:01Z",
       "extra": [
         "Citation Key: Zywietz_1998"
       ],
@@ -271,10 +184,9 @@
       "itemID": 4,
       "itemType": "journalArticle",
       "journalAbbreviation": "Appl. Phys. Lett.",
-      "pages": "487–489",
+      "pages": "487\u2013489",
       "publicationTitle": "Applied Physics Letters",
-      "title": "Adatom diffusion at GaN (0001) and (0001̄) surfaces",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/8BHQA95P",
+      "title": "Adatom diffusion at GaN (0001) and (0001\u0304) surfaces",
       "volume": "73"
     },
     {
@@ -308,8 +220,6 @@
         }
       ],
       "date": "2015-03",
-      "dateAdded": "2020-10-24T21:27:01Z",
-      "dateModified": "2020-10-24T21:27:01Z",
       "extra": [
         "Citation Key: Niehle_2015"
       ],
@@ -318,8 +228,7 @@
       "itemType": "journalArticle",
       "pages": "036102",
       "publicationTitle": "APL Materials",
-      "title": "Electron tomography of (In,Ga)N insertions in GaN nanocolumns grown on semi-polar (112̄2) GaN templates",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/7E287BXJ",
+      "title": "Electron tomography of (In,Ga)N insertions in GaN nanocolumns grown on semi-polar (112\u03042) GaN templates",
       "volume": "3"
     },
     {
@@ -383,8 +292,6 @@
         }
       ],
       "date": "2014-11",
-      "dateAdded": "2020-10-24T21:27:01Z",
-      "dateModified": "2020-10-24T21:27:01Z",
       "extra": [
         "Citation Key: Keller_2014"
       ],
@@ -394,8 +301,7 @@
       "journalAbbreviation": "Semicond. Sci. Technol.",
       "pages": "113001",
       "publicationTitle": "Semiconductor Science and Technology",
-      "title": "Recent progress in metal-organic chemical vapor deposition of ( 0001̄ ) N-Polar group-III nitrides",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/AKMMCS8E",
+      "title": "Recent progress in metal-organic chemical vapor deposition of ( 0001\u0304 ) N-Polar group-III nitrides",
       "volume": "29"
     },
     {
@@ -429,8 +335,6 @@
         }
       ],
       "date": "1998-06",
-      "dateAdded": "2020-10-24T21:27:01Z",
-      "dateModified": "2020-10-24T21:27:01Z",
       "extra": [
         "Citation Key: Held_1998"
       ],
@@ -438,10 +342,9 @@
       "itemID": 7,
       "itemType": "journalArticle",
       "journalAbbreviation": "Surf. Rev. Lett.",
-      "pages": "913–934",
+      "pages": "913\u2013934",
       "publicationTitle": "Surface Review and Letters",
-      "title": "N-Limited Versus Ga-Limited Growth on GaN(0001̄) by MBE Using NH³",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/8JUIXNC3",
+      "title": "N-Limited Versus Ga-Limited Growth on GaN(0001\u0304) by MBE Using NH\u00b3",
       "volume": "05"
     },
     {
@@ -485,8 +388,6 @@
         }
       ],
       "date": "2015-06",
-      "dateAdded": "2020-10-24T21:27:01Z",
-      "dateModified": "2020-10-24T21:27:01Z",
       "extra": [
         "Citation Key: Shojiki_2015"
       ],
@@ -496,13 +397,8 @@
       "journalAbbreviation": "Appl. Phys. Express",
       "pages": "061005",
       "publicationTitle": "Applied Physics Express",
-      "title": "Red to blue wavelength emission of N-Polar (0001̄) InGaN light-emitting diodes grown by metalorganic vapor phase epitaxy",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/YUHTKHVF",
+      "title": "Red to blue wavelength emission of N-Polar (0001\u0304) InGaN light-emitting diodes grown by metalorganic vapor phase epitaxy",
       "volume": "8"
     }
-  ],
-  "version": {
-    "bbt": "5.2.84.emile.limonia",
-    "zotero": "5.0.91"
-  }
+  ]
 }
