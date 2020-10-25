@@ -49,7 +49,7 @@
     "reinstall": "rm -rf node_modules yarn* && npm install",
     "test:nightly": "TRAVIS_EVENT_TYPE=cron ./test/behave --tags @nightly",
     "submodules": "git submodule update --init --recursive --remote && git submodule foreach git reset --hard && git submodule foreach git checkout master && git submodule foreach git pull origin master",
-    "ncu": "npm run submodules && ncu -u && npm i && npm audit fix && git add package.json package-lock.json citation-style-language-locales site/themes/learn && git commit -m ncu"
+    "ncu": "npm run submodules && ncu -u && npm i && npm audit fix && ./setup/item.py && git add package.json package-lock.json citation-style-language-locales site/themes/learn schema && git commit -m ncu"
   },
   "main": "index.js",
   "directories": {
