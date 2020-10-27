@@ -483,21 +483,18 @@ export function doExport() {
         const thesistype = {
           phdthesis: 'phdthesis',
           phd: 'phdthesis',
-          mastersthesis: 'mastersthesis',
-          masterthesis: 'mastersthesis',
-          master: 'mastersthesis',
-          ma: 'mastersthesis',
+          mastersthesis: 'mathesis',
+          masterthesis: 'mathesis',
+          master: 'mathesis',
+          ma: 'mathesis',
         }[item.type?.toLowerCase()]
-        if (thesistype) {
-          ref.referencetype = thesistype
-        } else {
-          ref.add({ name: 'type', value: item.type })
-        }
+
+        ref.add({ name: 'type', value: thesistype || item.type })
         break
 
       case 'report':
-        if ((item.type || '').toLowerCase().trim() === 'techreport') {
-          ref.referencetype = 'techreport'
+        if (item.type?.toLowerCase().trim() === 'techreport') {
+          ref.add({ name: 'type', value: 'techreport' })
         } else {
           ref.add({ name: 'type', value: item.type })
         }
