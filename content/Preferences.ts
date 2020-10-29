@@ -74,12 +74,18 @@ class AutoExportPane {
 
         // tabpanel
         tabpanel = (index === 0 ? tabpanels.firstChild : tabpanels.appendChild(tabpanels.firstChild.cloneNode(true)))
+
+        // set IDs on clone
         for (const node of Array.from(tabpanel.querySelectorAll('[*|ae-id]'))) {
           (node as Element).setAttributeNS(namespace, 'ae-id', `${ae.$loki}`)
         }
-        for (const node of Array.from(tabpanel.getElementsByClassName(`autoexport-${Translators.byId[ae.translatorID].label.replace(/ /g, '')}`))) {
-          (node as XUL.Element).hidden = false
+
+        // hide/show per-translator options
+        const enabled = `autoexport-${Translators.byId[ae.translatorID].label.replace(/ /g, '')}`
+        for (const node of (Array.from(tabpanel.getElementsByClassName('autoexport-options')) as XUL.Element[])) {
+          node.hidden = !node.classList.contains(enabled)
         }
+
       } else {
         tab = tabs.children[index]
         tabpanel = tabpanels.children[index]

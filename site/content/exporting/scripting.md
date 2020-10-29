@@ -257,4 +257,13 @@ if (Translator.BetterBibLaTeX) {
 }
 ```
 
+### Set the reference type to `misc` for arXiv preprints in BibTeX
 
+```
+if (Translator.BetterBibTeX && reference.referencetype === 'article' && item.arXiv) {
+  if (reference.has.journal && item.arXiv.source === 'publicationTitle') {
+    reference.remove('journal');
+  }
+  if (!reference.has.journal) reference.referencetype = 'misc'
+}
+```

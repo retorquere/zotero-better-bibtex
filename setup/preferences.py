@@ -22,7 +22,8 @@ def jstype(v):
   raise ValueError(f'Unexpected type {type(v)}')
 
 def load(path):
-  for lang in [l for l in os.listdir(os.path.join(root, 'locale')) if l != 'en-US'] + ['en-US']: # make sure en-US is loaded last for the website
+  #for lang in [l for l in os.listdir(os.path.join(root, 'locale')) if l != 'en-US'] + ['en-US']: # make sure en-US is loaded last for the website
+  for lang in ['en-US']:
     #print(f'  {os.path.basename(path)} {lang}')
     with open(path) as f:
         xul = f.read()

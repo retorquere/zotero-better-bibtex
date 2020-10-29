@@ -54,15 +54,15 @@
     "Distributor"
   ],
   [
+    "Division**",
     "DocketNumber",
     "DocumentName**",
-    "DocumentNumber",
-    "Edition"
+    "DocumentNumber"
   ],
   [
+    "Edition",
     "EncyclopediaTitle",
     "EpisodeNumber",
-    "Extra",
     "FilingDate"
   ],
   [

@@ -33,9 +33,9 @@ before_install:
 script:
   - ./test/behave --format json.pretty --outfile behave.json --format travis --balance $JOB
   - touch behave.json
-  - curl --retry 10 -T behave.json -u "$PCLOUD" https://webdav.pcloud.com/travis/timing/$CLIENT=$TRAVIS_BRANCH=$TRAVIS_JOB_NUMBER=$TRAVIS_EVENT_TYPE.json || echo 'could not upload test timing'
+  - curl --retry 5 --retry-max-time 120 --upload-file behave.json -u "$PCLOUD" https://webdav.pcloud.com/travis/timing/$CLIENT=$TRAVIS_BRANCH=$TRAVIS_JOB_NUMBER=$TRAVIS_EVENT_TYPE.json || echo 'could not upload test timing'
   - touch test/fixtures/loaded.json
-  - curl --retry 10 -T test/fixtures/loaded.json -u "$PCLOUD" https://webdav.pcloud.com/travis/used/$CLIENT=$TRAVIS_BRANCH=$TRAVIS_JOB_NUMBER=$TRAVIS_EVENT_TYPE.json || echo 'could not upload test file usage'
+  - curl --retry 5 --retry-max-time 120 --upload-file test/fixtures/loaded.json -u "$PCLOUD" https://webdav.pcloud.com/travis/used/$CLIENT=$TRAVIS_BRANCH=$TRAVIS_JOB_NUMBER=$TRAVIS_EVENT_TYPE.json || echo 'could not upload test file usage'
 
 after_failure:
   - export fileio=$(curl -F "file=@$HOME/.BBTZ5TEST.log" https://file.io/?expires=2) && echo $fileio

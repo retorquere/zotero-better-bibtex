@@ -665,7 +665,7 @@
                     </rows>
                   </grid>
 
-                  <vbox hidden="true" class="autoexport-BetterBibTeX">
+                  <vbox hidden="true" class="autoexport-options autoexport-BetterBibTeX">
                     <checkbox
                       bbt:ae-id=""
                       bbt:ae-field="asciiBibTeX"
@@ -693,7 +693,7 @@
                     </hbox>
                   </vbox>
     
-                  <vbox hidden="true" class="autoexport-BetterBibLaTeX">
+                  <vbox hidden="true" class="autoexport-options autoexport-BetterBibLaTeX">
                     <checkbox
                       bbt:ae-id=""
                       bbt:ae-field="asciiBibLaTeX"
@@ -708,7 +708,7 @@
                       />
                   </vbox>
     
-                  <vbox hidden="true" class="autoexport-BetterBibTeX autoexport-BetterBibLaTeX">
+                  <vbox hidden="true" class="autoexport-options autoexport-BetterBibTeX autoexport-BetterBibLaTeX">
                     <hbox>
                       <label>&better-bibtex.Preferences.export.fields.doi-and-url;</label>
                       <menulist bbt:ae-id="" bbt:ae-field="DOIandURL" oncommand="Zotero.BetterBibTeX.Preferences.autoexport.edit(event.currentTarget)">

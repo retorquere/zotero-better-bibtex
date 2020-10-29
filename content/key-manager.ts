@@ -59,6 +59,21 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
       return ''
     }
   }
+
+  public async set() {
+    const ids = this.expandSelection('selected')
+    if (ids.length !== 1) return alert(Zotero.BetterBibTeX.getString('Citekey.set.toomany'))
+
+    Cache.remove(ids, `setting key for ${ids}`)
+    const existingKey = this.get(ids[0]).citekey
+    const citationKey = prompt(Zotero.BetterBibTeX.getString('Citekey.set.change'), existingKey) || existingKey
+    if (citationKey === existingKey) return
+
+    const item = await getItemsAsync(ids[0])
+    item.setField('extra', Extra.set(item.getField('extra'), { citationKey }))
+    await item.saveTx() // this should cause an update and key registration
+  }
+
   public async pin(ids, inspireHEP = false) {
     ids = this.expandSelection(ids)
 

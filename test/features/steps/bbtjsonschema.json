@@ -823,6 +823,7 @@
               "instantMessage",
               "interview",
               "journalArticle",
+              "legalCommentary",
               "letter",
               "magazineArticle",
               "manuscript",
@@ -845,6 +846,9 @@
             ]
           },
           "adminFlag": {
+            "type": "string"
+          },
+          "division": {
             "type": "string"
           }
         }

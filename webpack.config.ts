@@ -1,23 +1,12 @@
 // tslint:disable:no-console
 
+declare const OS: any
+
 import * as webpack from 'webpack'
 import * as path from 'path'
 
-// import BailPlugin from 'zotero-plugin/plugin/bail'
-
-import CircularDependencyPlugin = require('circular-dependency-plugin')
+// import CircularDependencyPlugin = require('circular-dependency-plugin')
 import WrapperPlugin = require('wrapper-webpack-plugin')
-// import { LogUsedFilesPlugin } from './setup/plugins/log-used'
-
-/*
-class WebpackFixerPlugin {
-  apply(compiler) {
-    compiler.hooks.done.tap({name: 'WebpackFixerPlugin'}, () => {
-      console.log(compiler.options.entries, compiler.options.output)
-    })
-  }
-}
-*/
 
 import * as translators from './gen/translators.json'
 const _ = require('lodash')
@@ -27,21 +16,24 @@ const common = {
   devtool: false,
   optimization: {
     flagIncludedChunks: true,
-    occurrenceOrder: false,
     usedExports: true,
     minimize: false,
     concatenateModules: false,
-    noEmitOnErrors: true,
-    namedModules: true,
-    namedChunks: true,
+    emitOnErrors: false,
+    moduleIds: 'named',
+    chunkIds: 'named',
     // runtimeChunk: false,
   },
 
   resolve: {
     extensions: ['.ts', '.js'],
+    fallback: { fs: false },
+    alias: {
+      'path': path.join(__dirname, 'setup/shims/path.js')
+    },
   },
 
-  node: { fs: 'empty' },
+  // node: { fs: 'empty' },
   resolveLoader: {
     alias: {
       'pegjs-loader': 'zotero-plugin/loader/pegjs',
@@ -85,10 +77,7 @@ if (!process.env.MINITESTS) {
         },
       },
       plugins: [
-        // new webpack.NamedModulesPlugin(),
-        new CircularDependencyPlugin({ failOnError: true }),
-        // BailPlugin,
-        // new LogUsedFilesPlugin('BetterBibTeX'),
+        // new CircularDependencyPlugin({ failOnError: true }),
       ],
 
       context: path.resolve(__dirname, './content'),
@@ -108,9 +97,11 @@ if (!process.env.MINITESTS) {
         globalObject: 'Zotero',
         path: path.resolve(__dirname, './build/content'),
         filename: '[name].js',
-        jsonpFunction: 'WebPackedBetterBibTeX',
+
+        // jsonpFunction: 'WebPackedBetterBibTeX',
+        uniqueName: 'BetterBibTeX',
+
         // chunkFilename: "[id].chunk.js",
-        devtoolLineToLine: true,
         // sourceMapFilename: "./[name].js.map",
         pathinfo: true,
         library: 'Zotero.[name]',
@@ -128,7 +119,7 @@ if (!process.env.MINITESTS) {
     config.push(
       _.merge({}, common, {
         plugins: [
-          new CircularDependencyPlugin({ failOnError: true }),
+          // new CircularDependencyPlugin({ failOnError: true }),
           new webpack.DefinePlugin({
             ZOTERO_TRANSLATOR_INFO: JSON.stringify(header),
           }),
@@ -138,10 +129,10 @@ if (!process.env.MINITESTS) {
         entry: { [label]: `./${label}.ts` },
 
         output: {
-          jsonpFunction: `WebPacked${label.replace(/ /g, '')}`,
+          // jsonpFunction: `WebPacked${label.replace(/ /g, '')}`,
+          uniqueName: `Translator${label}`.replace(/ /g, ''),
           path: path.resolve(__dirname, './build/resource'),
           filename: '[name].js',
-          devtoolLineToLine: true,
           pathinfo: true,
           library: `var {${vars}}`,
           libraryTarget: 'assign',
@@ -153,8 +144,7 @@ if (!process.env.MINITESTS) {
   config.push(
     _.merge({}, common, {
       plugins: [
-        new CircularDependencyPlugin({ failOnError: true }),
-        // new LogUsedFilesPlugin(label, 'translator'),
+        // new CircularDependencyPlugin({ failOnError: true }),
         new WrapperPlugin({
           test: /\.js$/,
           // otherwise these would be contained in the webpack IIFE
@@ -166,10 +156,10 @@ if (!process.env.MINITESTS) {
       entry: { Zotero: './worker/zotero.ts' },
 
       output: {
-        jsonpFunction: 'WebPackedZoteroShim',
+        // jsonpFunction: 'WebPackedZoteroShim',
+        uniqueName: 'BetterBibTeXZoteroShim',
         path: path.resolve(__dirname, './build/resource/worker'),
         filename: '[name].js',
-        devtoolLineToLine: true,
         pathinfo: true,
         library: 'var { Zotero, onmessage, params }',
         libraryTarget: 'assign',
@@ -184,7 +174,7 @@ if (process.env.MINITESTS) {
     config.push(
       _.merge({}, common, {
         plugins: [
-          new CircularDependencyPlugin({ failOnError: true }),
+          // new CircularDependencyPlugin({ failOnError: true }),
           new webpack.NormalModuleReplacementPlugin(/.*/, function(resource) {
             resource.request = resource.request
               .replace(/\/prefs.ts$/, '/minitests/prefs.ts')
@@ -212,7 +202,6 @@ if (process.env.MINITESTS) {
         output: {
           path: path.resolve(__dirname, './build/minitest'),
           filename: '[name].js',
-          devtoolLineToLine: true,
           pathinfo: true,
         },
       })

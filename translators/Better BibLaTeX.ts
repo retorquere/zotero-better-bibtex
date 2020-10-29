@@ -480,17 +480,21 @@ export function doExport() {
         break
 
       case 'thesis':
-        const thesistype = item.type ? item.type.toLowerCase() : null
-        if (['phdthesis', 'mastersthesis'].includes(thesistype)) {
-          ref.referencetype = thesistype
-        } else {
-          ref.add({ name: 'type', value: item.type })
-        }
+        const thesistype = {
+          phdthesis: 'phdthesis',
+          phd: 'phdthesis',
+          mastersthesis: 'mathesis',
+          masterthesis: 'mathesis',
+          master: 'mathesis',
+          ma: 'mathesis',
+        }[item.type?.toLowerCase()]
+
+        ref.add({ name: 'type', value: thesistype || item.type })
         break
 
       case 'report':
-        if ((item.type || '').toLowerCase().trim() === 'techreport') {
-          ref.referencetype = 'techreport'
+        if (item.type?.toLowerCase().trim() === 'techreport') {
+          ref.add({ name: 'type', value: 'techreport' })
         } else {
           ref.add({ name: 'type', value: item.type })
         }
@@ -603,6 +607,8 @@ export function doExport() {
         if (!ref.has.eprint) ref.add({ name: 'eprint', value: item.archiveLocation })
       }
     }
+
+    if (item.arXiv && !ref.has.journaltitle && ref.referencetype === 'article') ref.referencetype = 'online'
 
     ref.complete()
   }

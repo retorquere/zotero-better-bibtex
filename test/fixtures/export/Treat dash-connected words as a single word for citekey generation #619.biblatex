@@ -1,11 +1,13 @@
 
-@article{SchulzZumerEtAl_2017_A_Frame_Tracking_Model_for_Memory-Enhanced_Dialogue_Systems,
+@online{SchulzZumerEtAl_2017_A_Frame_Tracking_Model_for_Memory-Enhanced_Dialogue_Systems,
   title = {A {{Frame Tracking Model}} for {{Memory}}-{{Enhanced Dialogue Systems}}},
   author = {Schulz, Hannes and Zumer, Jeremie and Asri, Layla El and Sharma, Shikhar},
   date = {2017},
-  journaltitle = {arXiv preprint arXiv:1706.01690},
   url = {https://arxiv.org/abs/1706.01690},
   urldate = {2017-08-17},
+  archivePrefix = {arXiv},
+  eprint = {1706.01690},
+  eprinttype = {arxiv},
   keywords = {_tablet_modified}
 }
 

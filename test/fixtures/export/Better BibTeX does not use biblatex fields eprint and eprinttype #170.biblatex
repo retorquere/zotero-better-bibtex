@@ -1,5 +1,5 @@
 
-@article{BachmannDybalskiNaaijkens14,
+@online{BachmannDybalskiNaaijkens14,
   title = {Lieb-{{Robinson}} Bounds, {{Arveson}} Spectrum and {{Haag}}-{{Ruelle}} Scattering Theory for Gapped Quantum Spin Systems},
   author = {Bachmann, Sven and Dybalski, Wojciech and Naaijkens, Pieter},
   date = {2014-12-09},
@@ -11,5 +11,8 @@
   keywords = {Lieb-Robinson bounds,Mathematical Physics,Quantum Physics},
   primaryClass = {math-ph, physics:quant-ph}
 }
+% == BibLateX quality report for BachmannDybalskiNaaijkens14:
+% Unexpected field 'archivePrefix'
+% Unexpected field 'primaryClass'
 
 

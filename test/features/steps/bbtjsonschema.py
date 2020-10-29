@@ -47,6 +47,8 @@ def refresh():
   itemTypes = set()
   creatorType = schema.properties['items']['items'].properties.creators['items'].properties.creatorType
   for client in glob.glob(os.path.join(root, 'schema/*.json')):
+    if os.path.basename(client) not in ['zotero.json', 'jurism.json']: continue
+
     with open(client) as f:
       client = Munch.fromDict(json.load(f))
       for itemType in client.itemTypes:
