@@ -394,7 +394,7 @@ export class Reference {
     let referencetype: any
     if (this.item.extraFields.tex.referencetype) {
       referencetype = this.item.extraFields.tex.referencetype.value
-      this.referencetype_source = `tex.${this.referencetype}`
+      this.referencetype_source = `tex.${referencetype}`
     } else if (csl_type) {
       referencetype = this.typeMap.csl[csl_type]
       this.referencetype_source = `csl.${csl_type}`

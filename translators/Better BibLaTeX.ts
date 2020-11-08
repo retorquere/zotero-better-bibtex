@@ -385,6 +385,7 @@ export function doExport() {
         case 'zotero.encyclopediaArticle':
         case 'tex.chapter':
         case 'csl.chapter':
+        case 'tex.incollection':
           ref.add({ name: 'booktitle', value: item.publicationTitle, bibtexStrings: true })
           break
 
