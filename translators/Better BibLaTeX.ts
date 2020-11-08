@@ -498,7 +498,8 @@ export function doExport() {
         ref.add({ name: 'type', value: thesistype || item.type })
         break
 
-      case 'report':
+      case 'zotero.report':
+      case 'csl.report':
         if (item.type?.toLowerCase().trim() === 'techreport') {
           ref.add({ name: 'type', value: 'techreport' })
         } else {
@@ -506,7 +507,8 @@ export function doExport() {
         }
         break
 
-      case 'patent':
+      case 'zotero.patent':
+      case 'csl.patent':
         ref.add({ name: 'type', value: patent.type(item) })
         break
 
