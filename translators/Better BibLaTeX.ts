@@ -286,8 +286,8 @@ export function doExport() {
     Zotero.debug(`exporting ${item.citationKey}`)
     const ref = new Reference(item)
 
-    if (['bookSection', 'chapter'].includes(item.referenceType) && ref.hasCreator('bookAuthor')) ref.referencetype = 'inbook'
-    // if (item.referenceType === 'book' && !ref.hasCreator('author') && ref.hasCreator('editor')) ref.referencetype = 'collection'
+    if (['zotero.bookSection', 'csl.chapter'].includes(ref.referencetype_source) && ref.hasCreator('bookAuthor')) ref.referencetype = 'inbook'
+    // if (ref.referencetype_source === 'csl.book' && !ref.hasCreator('author') && ref.hasCreator('editor')) ref.referencetype = 'collection'
     if (ref.referencetype === 'book' && item.numberOfVolumes) ref.referencetype = 'mvbook'
     if (ref.referencetype === 'report' && item.type?.toLowerCase().includes('manual')) ref.referencetype = 'manual'
 
@@ -321,12 +321,12 @@ export function doExport() {
 
     ref.add({ name: 'langid', value: ref.language })
 
-    switch (item.referenceType) {
-      case 'presentation':
+    switch (ref.referencetype_source) {
+      case 'zotero.presentation':
         ref.add({ name: 'venue', value: item.place, enc: 'literal' })
         break
 
-      case 'patent':
+      case 'zotero.patent':
         if (item.country && !patent.region(item)) ref.add({ name: 'location', value: item.country || item.extraFields.kv['publisher-place'] })
         break
 
@@ -363,42 +363,42 @@ export function doExport() {
     const number_added = ref.add({ name: 'number', value: patent.number(item) || item.number || item.seriesNumber })
     ref.add({ name: !number_added && looks_like_number_field(item.issue) ? 'number' : 'issue', value: item.issue })
 
-    switch (item.referenceType) {
-      case 'case':
-      case 'gazette':
-      case 'legal_case':
+    switch (ref.referencetype_source) {
+      case 'zotero.case':
+      case 'zotero.gazette':
+      case 'csl.legal_case':
         ref.add({ name: 'journaltitle', value: item.reporter, bibtexStrings: true })
         break
 
-      case 'statute':
-      case 'bill':
-      case 'legislation':
+      case 'zotero.statute':
+      case 'zotero.bill':
+      case 'tex.legislation':
         ref.add({ name: 'journaltitle', value: item.code, bibtexStrings: true })
         break
     }
 
     if (item.publicationTitle) {
-      switch (item.referenceType) {
-        case 'bookSection':
-        case 'conferencePaper':
-        case 'dictionaryEntry':
-        case 'encyclopediaArticle':
-        case 'chapter':
-        case 'chapter':
+      switch (ref.referencetype_source) {
+        case 'zotero.bookSection':
+        case 'zotero.conferencePaper':
+        case 'zotero.dictionaryEntry':
+        case 'zotero.encyclopediaArticle':
+        case 'tex.chapter':
+        case 'csl.chapter':
           ref.add({ name: 'booktitle', value: item.publicationTitle, bibtexStrings: true })
           break
 
-        case 'magazineArticle':
-        case 'newspaperArticle':
-        case 'article-magazine':
-        case 'article-newspaper':
+        case 'zotero.magazineArticle':
+        case 'zotero.newspaperArticle':
+        case 'csl.article-magazine':
+        case 'csl.article-newspaper':
           ref.add({ name: 'journaltitle', value: item.publicationTitle, bibtexStrings: true})
-          if (['newspaperArticle', 'article-newspaper'].includes(item.referenceType)) ref.add({ name: 'journalsubtitle', value: item.section })
+          if (['zotero.newspaperArticle', 'csl.article-newspaper'].includes(ref.referencetype_source)) ref.add({ name: 'journalsubtitle', value: item.section })
           break
 
-        case 'journalArticle':
-        case 'article':
-        case 'article-journal':
+        case 'zotero.journalArticle':
+        case 'tex.article':
+        case 'csl.article-journal':
           if (ref.getBibString(item.publicationTitle)) {
             ref.add({ name: 'journaltitle', value: item.publicationTitle, bibtexStrings: true })
           } else {
@@ -416,14 +416,14 @@ export function doExport() {
       }
     }
 
-    switch (item.referenceType) {
-      case 'bookSection':
-      case 'encyclopediaArticle':
-      case 'dictionaryEntry':
-      case 'conferencePaper':
-      case 'film':
-      case 'videoRecording':
-      case 'tvBroadcast':
+    switch (ref.referencetype_source) {
+      case 'zotero.bookSection':
+      case 'zotero.encyclopediaArticle':
+      case 'zotero.dictionaryEntry':
+      case 'zotero.conferencePaper':
+      case 'zotero.film':
+      case 'zotero.videoRecording':
+      case 'zotero.tvBroadcast':
         if (!ref.has.booktitle) ref.add({ name: 'booktitle', value: item.publicationTitle })
         break
     }
@@ -449,19 +449,22 @@ export function doExport() {
 
     ref.add({ name: 'series', value: item.seriesTitle || item.series, bibtexStrings: true })
 
-    switch (item.referenceType) {
-      case 'report':
-      case 'thesis':
+    switch (ref.referencetype_source) {
+      case 'zotero.report':
+      case 'tex.report':
+      case 'zotero.thesis':
+      case 'tex.thesis':
+      case 'csl.thesis':
         ref.add({ name: 'institution', value: item.publisher, bibtexStrings: true })
         break
 
-      case 'case':
-      case 'hearing':
-      case 'legal_case':
+      case 'zotero.case':
+      case 'zotero.hearing':
+      case 'csl.legal_case':
         ref.add({ name: 'institution', value: item.court, bibtexStrings: true })
         break
 
-      case 'computerProgram':
+      case 'zotero.computerProgram':
         ref.add({ name: 'organization', value: item.publisher, bibtexStrings: true })
         break
 
@@ -469,17 +472,19 @@ export function doExport() {
         ref.add({ name: 'publisher', value: item.publisher, bibtexStrings: true })
     }
 
-    switch (item.referenceType) {
-      case 'letter':
-      case 'personal_communication':
+    switch (ref.referencetype_source) {
+      case 'zotero.letter':
+      case 'csl.personal_communication':
         ref.add({ name: 'type', value: item.type || 'Letter' })
         break
 
-      case 'email':
+      case 'zotero.email':
         ref.add({ name: 'type', value: 'E-mail' })
         break
 
-      case 'thesis':
+      case 'zotero.thesis':
+      case 'csl.thesis':
+      case 'tex.thesis':
         const thesistype = {
           phdthesis: 'phdthesis',
           phd: 'phdthesis',
@@ -508,7 +513,7 @@ export function doExport() {
         ref.add({ name: 'type', value: item.type })
     }
 
-    if (item.referenceType === 'manuscript') ref.add({ name: 'howpublished', value: item.type })
+    if (ref.referencetype_source.split('.')[1] === 'manuscript') ref.add({ name: 'howpublished', value: item.type })
 
     ref.add({ name: 'eventtitle', value: item.meetingName })
 
@@ -551,13 +556,13 @@ export function doExport() {
     ref.add({ name: 'file', value: item.attachments, enc: 'attachments' })
 
     if (item.volumeTitle) { // #381
-      if (item.referenceType === 'book' && ref.has.title) {
+      if (ref.referencetype_source.split('.')[1] === 'book' && ref.has.title) {
         ref.add({name: 'maintitle', value: item.volumeTitle }); // ; to prevent chaining
         [ref.has.title.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.title.bibtex]; // ; to prevent chaining
         [ref.has.title.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.title.value]
       }
 
-      if (['bookSection', 'chapter'].includes(item.referenceType) && ref.has.booktitle) {
+      if (['zotero.bookSection', 'csl.chapter', 'tex.chapter'].includes(ref.referencetype_source) && ref.has.booktitle) {
         ref.add({name: 'maintitle', value: item.volumeTitle }); // ; to prevent chaining
         [ref.has.booktitle.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.booktitle.bibtex]; // ; to preven chaining
         [ref.has.booktitle.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.booktitle.value]

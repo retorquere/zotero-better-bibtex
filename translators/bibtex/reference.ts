@@ -308,6 +308,7 @@ export class Reference {
   public has: { [key: string]: any } = {}
   public item: ISerializedItem
   public referencetype: string
+  public referencetype_source: string
   public useprefix: boolean
   public language: string
   public english: boolean
@@ -388,7 +389,25 @@ export class Reference {
       csl_type = null
     }
 
-    this.item.referenceType = this.item.extraFields.tex.referencetype?.value || csl_type || this.item.itemType
+    // should be const referencetype: string | { type: string, subtype?: string }
+    // https://github.com/Microsoft/TypeScript/issues/10422
+    let referencetype: any
+    if (this.item.extraFields.tex.referencetype) {
+      referencetype = this.item.extraFields.tex.referencetype.value
+      this.referencetype_source = `tex.${this.referencetype}`
+    } else if (csl_type) {
+      referencetype = this.typeMap.csl[csl_type]
+      this.referencetype_source = `csl.${csl_type}`
+    } else {
+      referencetype = this.typeMap.zotero[this.item.itemType] || 'misc'
+      this.referencetype_source = `zotero.${this.item.itemType}`
+    }
+    if (typeof referencetype === 'string') {
+      this.referencetype = referencetype
+    } else {
+      this.add({ name: 'entrysubtype', value: referencetype.subtype })
+      this.referencetype = referencetype.type
+    }
 
     // TODO: maybe just use item.extraFields.var || item.var instead of deleting them here
     for (const [name, value] of Object.entries(item.extraFields.kv)) {
@@ -410,16 +429,6 @@ export class Reference {
         }
         delete item.extraFields.creator[name]
       }
-    }
-
-    // should be const referencetype: string | { type: string, subtype?: string }
-    // https://github.com/Microsoft/TypeScript/issues/10422
-    const referencetype: any = this.item.extraFields.tex.referencetype?.value || this.typeMap.csl[csl_type] || this.typeMap.zotero[this.item.itemType] || 'misc'
-    if (typeof referencetype === 'string') {
-      this.referencetype = referencetype
-    } else {
-      this.add({ name: 'entrysubtype', value: referencetype.subtype })
-      this.referencetype = referencetype.type
     }
 
     if (Translator.preferences.jabrefFormat) {
@@ -711,16 +720,16 @@ export class Reference {
             break
 
           case 'publicationTitle':
-            switch (this.item.referenceType) {
-              case 'film':
-              case 'tvBroadcast':
-              case 'videoRecording':
-              case 'motion_picture': // TODO: I really should clean these up
+            switch (this.referencetype_source) {
+              case 'zotero.film':
+              case 'zotero.tvBroadcast':
+              case 'zotero.videoRecording':
+              case 'csl.motion_picture': // TODO: I really should clean these up
                 name = 'booktitle'
                 break
 
-              case 'bookSection':
-              case 'chapter':
+              case 'zotero.bookSection':
+              case 'csl.chapter':
                 name = 'maintitle'
                 break
 
