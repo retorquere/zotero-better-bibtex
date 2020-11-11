@@ -27,7 +27,12 @@ const common = {
 
   resolve: {
     extensions: ['.ts', '.js'],
-    fallback: { fs: false },
+    // https://github.com/webpack/webpack/pull/8460/commits/a68426e9255edcce7822480b78416837617ab065
+    fallback: {
+      fs: false,
+      assert: require.resolve('assert'),
+      util: require.resolve('util'),
+    },
     alias: {
       'path': path.join(__dirname, 'setup/shims/path.js')
     },
@@ -77,7 +82,7 @@ if (!process.env.MINITESTS) {
         },
       },
       plugins: [
-        // new CircularDependencyPlugin({ failOnError: true }),
+        new webpack.ProvidePlugin({ process: 'process/browser', }),
       ],
 
       context: path.resolve(__dirname, './content'),
@@ -119,6 +124,7 @@ if (!process.env.MINITESTS) {
     config.push(
       _.merge({}, common, {
         plugins: [
+          new webpack.ProvidePlugin({ process: 'process/browser', }),
           // new CircularDependencyPlugin({ failOnError: true }),
           new webpack.DefinePlugin({
             ZOTERO_TRANSLATOR_INFO: JSON.stringify(header),
@@ -144,6 +150,7 @@ if (!process.env.MINITESTS) {
   config.push(
     _.merge({}, common, {
       plugins: [
+        new webpack.ProvidePlugin({ process: 'process/browser', }),
         // new CircularDependencyPlugin({ failOnError: true }),
         new WrapperPlugin({
           test: /\.js$/,
