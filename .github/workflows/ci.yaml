@@ -2,35 +2,24 @@ name: Better BibTeX
 
 on: [push]
 
-macro:
-  python: &python
-    name: install python
-    uses: actions/setup-python@v2
-    with:
-      python-version: 3.8
-  python-install: &python-install
-    name: install python dependencies
-    run: |
-      python -m pip install --upgrade pip
-      if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-  node: &node
-    name: install node
-    uses: actions/setup-node@v1
-    with:
-      node-version: 14.x
-  node-install: &node-install
-    name: install node dependencies
-    run: npm install
-  
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - *python
-    - *python-install
-    - *node
-    - *node-install
+    - name: install python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: install node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14.x
+    - name: install python/node dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        npm install
     - run: npm run build
     - name: build artifacts
       uses: actions/upload-artifact@v2
@@ -52,8 +41,14 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: build-artifacts
-    - *python
-    - *python-install
+    - name: install python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: install python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
     - sudo apt-get update
     - sudo apt-get install ${{ matrix.client }}
