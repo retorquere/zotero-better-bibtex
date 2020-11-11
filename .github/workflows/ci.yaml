@@ -55,7 +55,7 @@ jobs:
     - run: sudo apt-get install ${{ matrix.client }}
     - run: sudo ./util/install-beta ${{ matrix.client }}
     - name: Run headless test
-        uses: GabrielBB/xvfb-action@v1
-        with:
-          run: ./test/behave --format json.pretty --outfile behave.json --format travis --balance ${{ matrix.slice }}
+      uses: GabrielBB/xvfb-action@v1
+      with:
+        run: ./test/behave --format json.pretty --outfile behave.json --format travis --balance ${{ matrix.slice }}
 
