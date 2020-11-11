@@ -93,4 +93,8 @@ jobs:
       uses: GabrielBB/xvfb-action@v1
       with:
         run: ./test/behave --client ${{ matrix.client }} --format json.pretty --outfile behave.json --format travis --balance ${{ matrix.slice }}
-
+    - uses: actions/upload-artifact@v2
+      if: failure()
+      with:
+        name: debug log ${{ matrix.client }} ${{ matrix.slice }}
+        path: '~/.BBTZ5TEST.log'
