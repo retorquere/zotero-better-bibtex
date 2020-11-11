@@ -99,7 +99,9 @@ jobs:
         path: '~/.BBTZ5TEST.log'
 
   release:
+    needs: test
     runs-on: ubuntu-latest
+    steps:
     - name: install node
       uses: actions/setup-node@v1
       with:
