@@ -1,3 +1,22 @@
+
+@online{NagyHistorians2008,
+  title = {Historians and {{Emotions}}: {{New Theories}}, {{New Questions}}},
+  shorttitle = {Historians and {{Emotions}}},
+  author = {Nagy, Piroska},
+  date = {2008-10-24},
+  url = {http://emma.hypotheses.org/147},
+  urldate = {2017-12-12},
+  editora = {Boquet, Damien},
+  editoratype = {collaborator},
+  organization = {Les émotions au Moyen Âge, carnet d'EMMA},
+  type = {Billet}
+}
+% == BibLateX quality report for NagyHistorians2008:
+% Unexpected field 'editora'
+% Unexpected field 'editoratype'
+% Unexpected field 'type'
+% ? Title looks like it was stored in title-case in Zotero
+
 @incollection{胡適哲學史1917,
   title = {中國古代哲學史},
   booktitle = {胡適文集},
@@ -12,3 +31,5 @@
   origpublisher = {{萬有文庫}},
   origtitle = {中國哲學史大綱卷上[1919]，商務}
 }
+
+

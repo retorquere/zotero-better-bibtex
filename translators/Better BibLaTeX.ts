@@ -377,6 +377,10 @@ export function doExport() {
         if (!ref.has.booktitle) ref.add({ name: 'booktitle', value: item.publicationTitle, bibtexStrings: true })
         break
 
+      case 'online':
+        ref.add({ name: 'organization', value: item.publicationTitle, bibtexStrings: true })
+        break
+
       case 'article':
         if (ref.getBibString(item.publicationTitle)) {
           ref.add({ name: 'journaltitle', value: item.publicationTitle, bibtexStrings: true })
