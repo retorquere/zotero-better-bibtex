@@ -93,6 +93,7 @@
     "transliteration": "^2.2.0",
     "tslint": "^6.1.3",
     "unicode2latex": "^2.1.28",
+    "util": "^0.12.3",
     "words-to-numbers": "^1.5.1",
     "xregexp": "^4.4.0"
   },
