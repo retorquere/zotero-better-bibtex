@@ -37,6 +37,7 @@ jobs:
         client: [ 'zotero', 'jurism' ]
         slice: [ '1', '2' ]
     steps:
+    - uses: actions/checkout@v2
     - name: Download build artifacts
       uses: actions/download-artifact@v2
       with:
