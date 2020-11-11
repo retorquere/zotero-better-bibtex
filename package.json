@@ -56,12 +56,12 @@
     "test": "test"
   },
   "dependencies": {
-    "@retorquere/bibtex-parser": "^3.2.17",
+    "@retorquere/bibtex-parser": "^3.2.18",
     "@types/lokijs": "^1.5.3",
     "ajv": "^6.12.6",
     "ajv-keywords": "^3.5.2",
     "barcoder": "^2.0.1",
-    "citeproc": "^2.4.47",
+    "citeproc": "^2.4.48",
     "edtf": "^3.1.0",
     "edtfy": "^0.0.8",
     "escape-string-regexp": "^4.0.0",
@@ -96,7 +96,7 @@
     "xregexp": "^4.4.0"
   },
   "devDependencies": {
-    "@types/node": "^14.14.6",
+    "@types/node": "^14.14.7",
     "@types/webpack": "^4.41.24",
     "archiver": "^5.0.2",
     "bluebird": "^3.7.2",
@@ -131,7 +131,7 @@
     "request-promise": "^4.2.6",
     "rimraf": "^3.0.2",
     "shelljs": "^0.8.4",
-    "ts-loader": "^8.0.10",
+    "ts-loader": "^8.0.11",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.5",
     "uri-templates": "^0.2.0",
@@ -141,7 +141,7 @@
     "xml-parser": "^1.2.1",
     "xmldom": "^0.4.0",
     "xpath": "^0.0.32",
-    "zotero-plugin": "^1.0.26"
+    "zotero-plugin": "^1.0.28"
   },
   "repository": {
     "type": "git",
