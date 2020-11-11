@@ -27,7 +27,7 @@ CI = Munch(
   branch = os.environ.get('TRAVIS_BRANCH') or (os.environ.get('GITHUB_REF', '').startswith('refs/heads/') and os.environ['GITHUB_REF'].split('/')[-1]) or '',
   event = (os.environ.get('TRAVIS_EVENT_TYPE') and ('schedule' if os.environ['TRAVIS_EVENT_TYPE'] == 'cron' else os.environ['TRAVIS_EVENT_TYPE'])) or os.environ.get('GITHUB_EVENT_NAME') or '',
   tag = os.environ.get('TRAVIS_TAG') or (os.environ.get('GITHUB_REF', '').startswith('refs/tags/') and os.environ['GITHUB_REF'].split('/')[-1]) or '',
-  message = os.environ.get('TRAVIS_COMMIT_MESSAGE') or (os.environ.get('GITHUB_SHA') and subprocess.check_output(['git', 'log', '--format=%B', '-n' '1', os.environ['GITHUB_SHA']]).strip()) or ''
+  message = os.environ.get('TRAVIS_COMMIT_MESSAGE') or (os.environ.get('GITHUB_SHA') and subprocess.check_output('git log --format=%B -n 1 ' + os.environ['GITHUB_SHA'], encoding='UTF-8').strip()) or ''
 )
 
 def load_json(path, default):
