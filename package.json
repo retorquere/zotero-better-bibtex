@@ -60,6 +60,7 @@
     "@types/lokijs": "^1.5.3",
     "ajv": "^6.12.6",
     "ajv-keywords": "^3.5.2",
+    "assert": "^2.0.0",
     "barcoder": "^2.0.1",
     "citeproc": "^2.4.48",
     "edtf": "^3.1.0",
@@ -141,7 +142,7 @@
     "xml-parser": "^1.2.1",
     "xmldom": "^0.4.0",
     "xpath": "^0.0.32",
-    "zotero-plugin": "^1.0.26"
+    "zotero-plugin": "^1.0.28"
   },
   "repository": {
     "type": "git",
