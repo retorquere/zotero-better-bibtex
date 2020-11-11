@@ -1,11 +1,15 @@
 name: Better BibTeX
 
-on: [push]
+on:
+  - push
+  - schedule
+    - cron:  '0 0 * * *'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - run: echo GITHUB_EVENT_NAME = $GITHUB_EVENT_NAME
     - uses: actions/checkout@v2
 
     - name: install python
