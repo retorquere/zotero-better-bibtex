@@ -102,6 +102,8 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
+
     - name: install node
       uses: actions/setup-node@v1
       with:
@@ -121,8 +123,5 @@ jobs:
           ${{ runner.os }}-build-
           ${{ runner.os }}-
 
-    - name: install python/node dependencies
-      run: |
-        npm install
-
+    - run: npm install
     - run: npm run release
