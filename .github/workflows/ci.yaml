@@ -2,7 +2,7 @@ name: Better BibTeX
 
 on:
   - push
-  - schedule
+  - schedule:
     - cron:  '0 0 * * *'
 
 jobs:
