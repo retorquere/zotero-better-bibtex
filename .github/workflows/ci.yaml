@@ -1,4 +1,4 @@
-name: Better BibTeX
+name: continuous integration
 
 on:
   push:
