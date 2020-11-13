@@ -4,6 +4,7 @@
 |**admin flag**              |text|adminFlag¹                                                  |admin-flag¹             |
 |**adoption date**           |date|adoptionDate¹                                               |                        |
 |**application number**      |text|applicationNumber                                           |                        |
+|**archive collection**      |text|archiveCollection¹                                          |archive\_collection¹    |
 |**archive location**        |text|archiveLocation                                             |archive\_location       |
 |**archive place**           |text|                                                            |archive-place           |
 |**artwork medium**          |text|medium                                                      |                        |
