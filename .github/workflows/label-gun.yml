@@ -1,0 +1,14 @@
+name: label-gun
+on:
+  issues:
+    types: opened
+jobs:
+  demilestoned:
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: get issue
+        run: |
+          echo ${{ github.event.issue.url }}
+      - name: add label
+        run: |
+          curl -v -u admin:${{ secrets.GITHUB_TOKEN }} -H "Accept: application/vnd.github.antiope-preview+json" -d '{"labels": ["Needs Milestone"]}' ${{ github.event.issue.url }}/labels

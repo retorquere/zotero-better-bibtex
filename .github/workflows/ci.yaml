@@ -99,6 +99,7 @@ jobs:
         path: '~/.BBTZ5TEST.log'
 
   release:
+    if: github.event_name != 'schedule'
     needs: test
     runs-on: ubuntu-latest
     steps:
