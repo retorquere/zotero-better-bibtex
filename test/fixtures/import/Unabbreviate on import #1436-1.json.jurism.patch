@@ -1,8 +1,603 @@
 [
   {
-    "op": "replace",
-    "path": "/config/localeDateOrder",
-    "value": "ymd"
+    "op": "add",
+    "path": "/items/1/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/1/extra/1",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/2/publisher",
+    "value": "Wiley Online Library"
+  },
+  {
+    "op": "remove",
+    "path": "/items/2/extra/1",
+    ":value": "Publisher: Wiley Online Library"
+  },
+  {
+    "op": "add",
+    "path": "/items/3/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/3/extra/1",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/4/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/4/extra/1",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/5/publisher",
+    "value": "Elsevier"
+  },
+  {
+    "op": "remove",
+    "path": "/items/5/extra/1",
+    ":value": "Publisher: Elsevier"
+  },
+  {
+    "op": "add",
+    "path": "/items/6/publisher",
+    "value": "APS"
+  },
+  {
+    "op": "remove",
+    "path": "/items/6/extra/1",
+    ":value": "Publisher: APS"
+  },
+  {
+    "op": "add",
+    "path": "/items/7/publisher",
+    "value": "APS"
+  },
+  {
+    "op": "remove",
+    "path": "/items/7/extra/1",
+    ":value": "Publisher: APS"
+  },
+  {
+    "op": "add",
+    "path": "/items/8/publisher",
+    "value": "APS"
+  },
+  {
+    "op": "remove",
+    "path": "/items/8/extra/1",
+    ":value": "Publisher: APS"
+  },
+  {
+    "op": "add",
+    "path": "/items/9/publisher",
+    "value": "APS"
+  },
+  {
+    "op": "remove",
+    "path": "/items/9/extra/1",
+    ":value": "Publisher: APS"
+  },
+  {
+    "op": "add",
+    "path": "/items/10/publisher",
+    "value": "Elsevier"
+  },
+  {
+    "op": "remove",
+    "path": "/items/10/extra/1",
+    ":value": "Publisher: Elsevier"
+  },
+  {
+    "op": "add",
+    "path": "/items/11/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/11/extra/1",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/12/publisher",
+    "value": "Cambridge University Press"
+  },
+  {
+    "op": "remove",
+    "path": "/items/12/extra/1",
+    ":value": "Publisher: Cambridge University Press"
+  },
+  {
+    "op": "add",
+    "path": "/items/13/publisher",
+    "value": "APS"
+  },
+  {
+    "op": "remove",
+    "path": "/items/13/extra/1",
+    ":value": "Publisher: APS"
+  },
+  {
+    "op": "add",
+    "path": "/items/14/publisher",
+    "value": "Materials Research Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/14/extra/1",
+    ":value": "Publisher: Materials Research Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/15/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/15/extra/1",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/16/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/16/extra/1",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/17/publisher",
+    "value": "APS"
+  },
+  {
+    "op": "remove",
+    "path": "/items/17/extra/1",
+    ":value": "Publisher: APS"
+  },
+  {
+    "op": "add",
+    "path": "/items/19/publisher",
+    "value": "Wiley Online Library"
+  },
+  {
+    "op": "remove",
+    "path": "/items/19/extra/1",
+    ":value": "Publisher: Wiley Online Library"
+  },
+  {
+    "op": "add",
+    "path": "/items/20/publisher",
+    "value": "Wiley Online Library"
+  },
+  {
+    "op": "remove",
+    "path": "/items/20/extra/1",
+    ":value": "Publisher: Wiley Online Library"
+  },
+  {
+    "op": "add",
+    "path": "/items/23/publisher",
+    "value": "Wiley Online Library"
+  },
+  {
+    "op": "remove",
+    "path": "/items/23/extra/1",
+    ":value": "Publisher: Wiley Online Library"
+  },
+  {
+    "op": "add",
+    "path": "/items/24/publisher",
+    "value": "Elsevier"
+  },
+  {
+    "op": "remove",
+    "path": "/items/24/extra/1",
+    ":value": "Publisher: Elsevier"
+  },
+  {
+    "op": "add",
+    "path": "/items/25/publisher",
+    "value": "IOP Publishing"
+  },
+  {
+    "op": "remove",
+    "path": "/items/25/extra/1",
+    ":value": "Publisher: IOP Publishing"
+  },
+  {
+    "op": "add",
+    "path": "/items/26/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/26/extra/1",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/27/publisher",
+    "value": "APS"
+  },
+  {
+    "op": "remove",
+    "path": "/items/27/extra/1",
+    ":value": "Publisher: APS"
+  },
+  {
+    "op": "add",
+    "path": "/items/28/publisher",
+    "value": "Wiley Online Library"
+  },
+  {
+    "op": "remove",
+    "path": "/items/28/extra/1",
+    ":value": "Publisher: Wiley Online Library"
+  },
+  {
+    "op": "add",
+    "path": "/items/29/publisher",
+    "value": "Wissenschaftliche Verlag Mbh"
+  },
+  {
+    "op": "remove",
+    "path": "/items/29/extra/1",
+    ":value": "Publisher: Wissenschaftliche Verlag Mbh"
+  },
+  {
+    "op": "add",
+    "path": "/items/30/publisher",
+    "value": "Elsevier"
+  },
+  {
+    "op": "remove",
+    "path": "/items/30/extra/1",
+    ":value": "Publisher: Elsevier"
+  },
+  {
+    "op": "add",
+    "path": "/items/31/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/31/extra/1",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/32/publisher",
+    "value": "AIP Publishing"
+  },
+  {
+    "op": "remove",
+    "path": "/items/32/extra/1",
+    ":value": "Publisher: AIP Publishing"
+  },
+  {
+    "op": "add",
+    "path": "/items/33/publisher",
+    "value": "AIP Publishing"
+  },
+  {
+    "op": "remove",
+    "path": "/items/33/extra/1",
+    ":value": "Publisher: AIP Publishing"
+  },
+  {
+    "op": "add",
+    "path": "/items/34/publisher",
+    "value": "Wiley Online Library"
+  },
+  {
+    "op": "remove",
+    "path": "/items/34/extra/1",
+    ":value": "Publisher: Wiley Online Library"
+  },
+  {
+    "op": "add",
+    "path": "/items/35/publisher",
+    "value": "Wiley Online Library"
+  },
+  {
+    "op": "remove",
+    "path": "/items/35/extra/1",
+    ":value": "Publisher: Wiley Online Library"
+  },
+  {
+    "op": "add",
+    "path": "/items/36/publisher",
+    "value": "IOP Publishing"
+  },
+  {
+    "op": "remove",
+    "path": "/items/36/extra/1",
+    ":value": "Publisher: IOP Publishing"
+  },
+  {
+    "op": "add",
+    "path": "/items/37/publisher",
+    "value": "IOP Publishing"
+  },
+  {
+    "op": "remove",
+    "path": "/items/37/extra/1",
+    ":value": "Publisher: IOP Publishing"
+  },
+  {
+    "op": "add",
+    "path": "/items/38/publisher",
+    "value": "APS"
+  },
+  {
+    "op": "remove",
+    "path": "/items/38/extra/1",
+    ":value": "Publisher: APS"
+  },
+  {
+    "op": "add",
+    "path": "/items/39/publisher",
+    "value": "Wiley Online Library"
+  },
+  {
+    "op": "remove",
+    "path": "/items/39/extra/1",
+    ":value": "Publisher: Wiley Online Library"
+  },
+  {
+    "op": "add",
+    "path": "/items/41/publisher",
+    "value": "Wiley Online Library"
+  },
+  {
+    "op": "remove",
+    "path": "/items/41/extra/1",
+    ":value": "Publisher: Wiley Online Library"
+  },
+  {
+    "op": "add",
+    "path": "/items/42/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/42/extra/1",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/44/publisher",
+    "value": "IOP Publishing"
+  },
+  {
+    "op": "remove",
+    "path": "/items/44/extra/1",
+    ":value": "Publisher: IOP Publishing"
+  },
+  {
+    "op": "add",
+    "path": "/items/45/publisher",
+    "value": "Elsevier"
+  },
+  {
+    "op": "remove",
+    "path": "/items/45/extra/1",
+    ":value": "Publisher: Elsevier"
+  },
+  {
+    "op": "add",
+    "path": "/items/46/publisher",
+    "value": "APS"
+  },
+  {
+    "op": "remove",
+    "path": "/items/46/extra/1",
+    ":value": "Publisher: APS"
+  },
+  {
+    "op": "add",
+    "path": "/items/49/publisher",
+    "value": "IOP Publishing"
+  },
+  {
+    "op": "remove",
+    "path": "/items/49/extra/1",
+    ":value": "Publisher: IOP Publishing"
+  },
+  {
+    "op": "add",
+    "path": "/items/50/publisher",
+    "value": "AIP Publishing"
+  },
+  {
+    "op": "remove",
+    "path": "/items/50/extra/1",
+    ":value": "Publisher: AIP Publishing"
+  },
+  {
+    "op": "add",
+    "path": "/items/52/publisher",
+    "value": "APS"
+  },
+  {
+    "op": "remove",
+    "path": "/items/52/extra/1",
+    ":value": "Publisher: APS"
+  },
+  {
+    "op": "add",
+    "path": "/items/53/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/53/extra/1",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/55/publisher",
+    "value": "Wiley Online Library"
+  },
+  {
+    "op": "remove",
+    "path": "/items/55/extra/1",
+    ":value": "Publisher: Wiley Online Library"
+  },
+  {
+    "op": "add",
+    "path": "/items/56/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/56/extra/1",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/57/publisher",
+    "value": "APS"
+  },
+  {
+    "op": "remove",
+    "path": "/items/57/extra/1",
+    ":value": "Publisher: APS"
+  },
+  {
+    "op": "add",
+    "path": "/items/58/publisher",
+    "value": "IEEE"
+  },
+  {
+    "op": "remove",
+    "path": "/items/58/extra/1",
+    ":value": "Publisher: IEEE"
+  },
+  {
+    "op": "add",
+    "path": "/items/59/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/59/extra/1",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/60/publisher",
+    "value": "IOP Publishing"
+  },
+  {
+    "op": "remove",
+    "path": "/items/60/extra/1",
+    ":value": "Publisher: IOP Publishing"
+  },
+  {
+    "op": "add",
+    "path": "/items/61/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/61/extra/1",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/62/publisher",
+    "value": "Cambridge University Press"
+  },
+  {
+    "op": "remove",
+    "path": "/items/62/extra/1",
+    ":value": "Publisher: Cambridge University Press"
+  },
+  {
+    "op": "add",
+    "path": "/items/63/publisher",
+    "value": "Wiley Online Library"
+  },
+  {
+    "op": "remove",
+    "path": "/items/63/extra/1",
+    ":value": "Publisher: Wiley Online Library"
+  },
+  {
+    "op": "add",
+    "path": "/items/64/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/64/extra/1",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/65/publisher",
+    "value": "Elsevier"
+  },
+  {
+    "op": "remove",
+    "path": "/items/65/extra/1",
+    ":value": "Publisher: Elsevier"
+  },
+  {
+    "op": "add",
+    "path": "/items/66/publisher",
+    "value": "APS"
+  },
+  {
+    "op": "remove",
+    "path": "/items/66/extra/1",
+    ":value": "Publisher: APS"
+  },
+  {
+    "op": "add",
+    "path": "/items/67/publisher",
+    "value": "APS"
+  },
+  {
+    "op": "remove",
+    "path": "/items/67/extra/1",
+    ":value": "Publisher: APS"
+  },
+  {
+    "op": "add",
+    "path": "/items/68/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/68/extra/1",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/70/publisher",
+    "value": "Taylor & Francis"
+  },
+  {
+    "op": "remove",
+    "path": "/items/70/extra/1",
+    ":value": "Publisher: Taylor & Francis"
   },
   {
     "op": "add",
@@ -12,6 +607,1336 @@
   {
     "op": "remove",
     "path": "/items/71/extra/1",
-    "value": "Number: 157"
+    ":value": "Number: 157"
+  },
+  {
+    "op": "add",
+    "path": "/items/73/publisher",
+    "value": "IOP Publishing"
+  },
+  {
+    "op": "remove",
+    "path": "/items/73/extra/1",
+    ":value": "Publisher: IOP Publishing"
+  },
+  {
+    "op": "add",
+    "path": "/items/74/publisher",
+    "value": "Elsevier"
+  },
+  {
+    "op": "remove",
+    "path": "/items/74/extra/1",
+    ":value": "Publisher: Elsevier"
+  },
+  {
+    "op": "add",
+    "path": "/items/75/publisher",
+    "value": "IEEE"
+  },
+  {
+    "op": "remove",
+    "path": "/items/75/extra/1",
+    ":value": "Publisher: IEEE"
+  },
+  {
+    "op": "add",
+    "path": "/items/77/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/77/extra/1",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/78/publisher",
+    "value": "IOP Publishing"
+  },
+  {
+    "op": "remove",
+    "path": "/items/78/extra/1",
+    ":value": "Publisher: IOP Publishing"
+  },
+  {
+    "op": "add",
+    "path": "/items/79/publisher",
+    "value": "IOP Publishing"
+  },
+  {
+    "op": "remove",
+    "path": "/items/79/extra/1",
+    ":value": "Publisher: IOP Publishing"
+  },
+  {
+    "op": "add",
+    "path": "/items/81/publisher",
+    "value": "Wiley Online Library"
+  },
+  {
+    "op": "remove",
+    "path": "/items/81/extra/1",
+    ":value": "Publisher: Wiley Online Library"
+  },
+  {
+    "op": "add",
+    "path": "/items/82/publisher",
+    "value": "IEEE"
+  },
+  {
+    "op": "remove",
+    "path": "/items/82/extra/1",
+    ":value": "Publisher: IEEE"
+  },
+  {
+    "op": "add",
+    "path": "/items/83/publisher",
+    "value": "IOP Publishing"
+  },
+  {
+    "op": "remove",
+    "path": "/items/83/extra/1",
+    ":value": "Publisher: IOP Publishing"
+  },
+  {
+    "op": "add",
+    "path": "/items/88/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/88/extra/1",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/90/publisher",
+    "value": "Wiley Online Library"
+  },
+  {
+    "op": "remove",
+    "path": "/items/90/extra/1",
+    ":value": "Publisher: Wiley Online Library"
+  },
+  {
+    "op": "add",
+    "path": "/items/91/publisher",
+    "value": "ACS Publications"
+  },
+  {
+    "op": "remove",
+    "path": "/items/91/extra/1",
+    ":value": "Publisher: ACS Publications"
+  },
+  {
+    "op": "add",
+    "path": "/items/92/publisher",
+    "value": "Wiley Online Library"
+  },
+  {
+    "op": "remove",
+    "path": "/items/92/extra/1",
+    ":value": "Publisher: Wiley Online Library"
+  },
+  {
+    "op": "add",
+    "path": "/items/93/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/93/extra/1",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/94/publisher",
+    "value": "ACS Publications"
+  },
+  {
+    "op": "remove",
+    "path": "/items/94/extra/1",
+    ":value": "Publisher: ACS Publications"
+  },
+  {
+    "op": "add",
+    "path": "/items/102/publisher",
+    "value": "Akademie Verlag Gmbh"
+  },
+  {
+    "op": "remove",
+    "path": "/items/102/extra/1",
+    ":value": "Publisher: Akademie Verlag Gmbh"
+  },
+  {
+    "op": "add",
+    "path": "/items/103/publisher",
+    "value": "WILEY-VCH Verlag"
+  },
+  {
+    "op": "remove",
+    "path": "/items/103/extra/1",
+    ":value": "Publisher: WILEY-VCH Verlag"
+  },
+  {
+    "op": "add",
+    "path": "/items/106/publisher",
+    "value": "WILEY-VCH Verlag"
+  },
+  {
+    "op": "remove",
+    "path": "/items/106/extra/1",
+    ":value": "Publisher: WILEY-VCH Verlag"
+  },
+  {
+    "op": "add",
+    "path": "/items/107/publisher",
+    "value": "WILEY-VCH Verlag"
+  },
+  {
+    "op": "remove",
+    "path": "/items/107/extra/1",
+    ":value": "Publisher: WILEY-VCH Verlag"
+  },
+  {
+    "op": "add",
+    "path": "/items/113/publisher",
+    "value": "Wiley Periodicals, Inc."
+  },
+  {
+    "op": "remove",
+    "path": "/items/113/extra/1",
+    ":value": "Publisher: Wiley Periodicals, Inc."
+  },
+  {
+    "op": "add",
+    "path": "/items/124/publisher",
+    "value": "Elsevier B.V."
+  },
+  {
+    "op": "remove",
+    "path": "/items/124/extra/1",
+    ":value": "Publisher: Elsevier B.V."
+  },
+  {
+    "op": "add",
+    "path": "/items/165/publisher",
+    "value": "American Chemical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/165/extra/1",
+    ":value": "Publisher: American Chemical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/170/publisher",
+    "value": "American Chemical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/170/extra/1",
+    ":value": "Publisher: American Chemical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/175/publisher",
+    "value": "American Chemical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/175/extra/1",
+    ":value": "Publisher: American Chemical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/177/publisher",
+    "value": "American Chemical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/177/extra/1",
+    ":value": "Publisher: American Chemical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/178/publisher",
+    "value": "American Chemical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/178/extra/1",
+    ":value": "Publisher: American Chemical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/203/publisher",
+    "value": "American Chemical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/203/extra/1",
+    ":value": "Publisher: American Chemical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/207/publisher",
+    "value": "Macmillian Magazines Ltd."
+  },
+  {
+    "op": "remove",
+    "path": "/items/207/extra/1",
+    ":value": "Publisher: Macmillian Magazines Ltd."
+  },
+  {
+    "op": "add",
+    "path": "/items/210/publisher",
+    "value": "Nature Publishing Group"
+  },
+  {
+    "op": "remove",
+    "path": "/items/210/extra/1",
+    ":value": "Publisher: Nature Publishing Group"
+  },
+  {
+    "op": "add",
+    "path": "/items/215/publisher",
+    "value": "Nature Publishing Group"
+  },
+  {
+    "op": "remove",
+    "path": "/items/215/extra/1",
+    ":value": "Publisher: Nature Publishing Group"
+  },
+  {
+    "op": "add",
+    "path": "/items/216/publisher",
+    "value": "Nature Publishing Group"
+  },
+  {
+    "op": "remove",
+    "path": "/items/216/extra/1",
+    ":value": "Publisher: Nature Publishing Group"
+  },
+  {
+    "op": "add",
+    "path": "/items/218/publisher",
+    "value": "Nature Publishing Group"
+  },
+  {
+    "op": "remove",
+    "path": "/items/218/extra/1",
+    ":value": "Publisher: Nature Publishing Group"
+  },
+  {
+    "op": "add",
+    "path": "/items/219/publisher",
+    "value": "Nature Publishing Group"
+  },
+  {
+    "op": "remove",
+    "path": "/items/219/extra/1",
+    ":value": "Publisher: Nature Publishing Group"
+  },
+  {
+    "op": "add",
+    "path": "/items/226/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/226/extra/1",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/227/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/227/extra/1",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/230/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/230/extra/1",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/231/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/231/extra/1",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/233/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/233/extra/1",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/234/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/234/extra/1",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/235/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/235/extra/1",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/239/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/239/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/240/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/240/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/241/publisher",
+    "value": "Amer Inst Physics"
+  },
+  {
+    "op": "remove",
+    "path": "/items/241/extra/1",
+    ":value": "Publisher: Amer Inst Physics"
+  },
+  {
+    "op": "add",
+    "path": "/items/242/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/242/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/243/publisher",
+    "value": "Amer Inst Physics"
+  },
+  {
+    "op": "remove",
+    "path": "/items/243/extra/1",
+    ":value": "Publisher: Amer Inst Physics"
+  },
+  {
+    "op": "add",
+    "path": "/items/245/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/245/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/247/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/247/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/250/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/250/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/251/publisher",
+    "value": "Amer Inst Physics"
+  },
+  {
+    "op": "remove",
+    "path": "/items/251/extra/1",
+    ":value": "Publisher: Amer Inst Physics"
+  },
+  {
+    "op": "add",
+    "path": "/items/252/publisher",
+    "value": "Amer Inst Physics"
+  },
+  {
+    "op": "remove",
+    "path": "/items/252/extra/1",
+    ":value": "Publisher: Amer Inst Physics"
+  },
+  {
+    "op": "add",
+    "path": "/items/253/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/253/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/255/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/255/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/256/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/256/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/258/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/258/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/260/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/260/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/261/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/261/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/262/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/262/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/264/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/264/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/265/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/265/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/266/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/266/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/267/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/267/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/268/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/268/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/270/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/270/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/271/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/271/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/272/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/272/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/273/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/273/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/274/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/274/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/275/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/275/extra/1",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/276/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/276/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/278/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/278/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/279/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/279/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/280/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/280/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/282/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/282/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/284/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/284/extra/1",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/286/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/286/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/289/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/289/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/290/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/290/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/291/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/291/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/292/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/292/extra/2",
+    ":value": "Publisher: AIP"
+  },
+  {
+    "op": "add",
+    "path": "/items/315/publisher",
+    "value": "Taylor & Francis"
+  },
+  {
+    "op": "remove",
+    "path": "/items/315/extra/1",
+    ":value": "Publisher: Taylor & Francis"
+  },
+  {
+    "op": "add",
+    "path": "/items/316/publisher",
+    "value": "Taylor & Francis"
+  },
+  {
+    "op": "remove",
+    "path": "/items/316/extra/1",
+    ":value": "Publisher: Taylor & Francis"
+  },
+  {
+    "op": "add",
+    "path": "/items/319/publisher",
+    "value": "Iop Publishing Ltd"
+  },
+  {
+    "op": "remove",
+    "path": "/items/319/extra/1",
+    ":value": "Publisher: Iop Publishing Ltd"
+  },
+  {
+    "op": "add",
+    "path": "/items/362/publisher",
+    "value": "Oxford University Press"
+  },
+  {
+    "op": "remove",
+    "path": "/items/362/extra/1",
+    ":value": "Publisher: Oxford University Press"
+  },
+  {
+    "op": "add",
+    "path": "/items/364/publisher",
+    "value": "American Physical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/364/extra/2",
+    ":value": "Publisher: American Physical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/367/publisher",
+    "value": "American Physical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/367/extra/1",
+    ":value": "Publisher: American Physical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/369/publisher",
+    "value": "American Physical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/369/extra/1",
+    ":value": "Publisher: American Physical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/370/publisher",
+    "value": "American Physical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/370/extra/1",
+    ":value": "Publisher: American Physical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/371/publisher",
+    "value": "American Physical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/371/extra/1",
+    ":value": "Publisher: American Physical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/372/publisher",
+    "value": "American Physical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/372/extra/1",
+    ":value": "Publisher: American Physical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/377/publisher",
+    "value": "American Physical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/377/extra/1",
+    ":value": "Publisher: American Physical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/378/publisher",
+    "value": "American Physical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/378/extra/1",
+    ":value": "Publisher: American Physical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/380/publisher",
+    "value": "American Physical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/380/extra/2",
+    ":value": "Publisher: American Physical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/381/publisher",
+    "value": "American Physical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/381/extra/1",
+    ":value": "Publisher: American Physical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/383/publisher",
+    "value": "American Physical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/383/extra/2",
+    ":value": "Publisher: American Physical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/384/publisher",
+    "value": "American Physical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/384/extra/2",
+    ":value": "Publisher: American Physical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/385/publisher",
+    "value": "APS"
+  },
+  {
+    "op": "remove",
+    "path": "/items/385/extra/1",
+    ":value": "Publisher: APS"
+  },
+  {
+    "op": "add",
+    "path": "/items/387/publisher",
+    "value": "American Physical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/387/extra/2",
+    ":value": "Publisher: American Physical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/389/publisher",
+    "value": "American Physical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/389/extra/2",
+    ":value": "Publisher: American Physical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/390/publisher",
+    "value": "American Physical Soc"
+  },
+  {
+    "op": "remove",
+    "path": "/items/390/extra/1",
+    ":value": "Publisher: American Physical Soc"
+  },
+  {
+    "op": "add",
+    "path": "/items/391/publisher",
+    "value": "American Physical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/391/extra/2",
+    ":value": "Publisher: American Physical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/394/publisher",
+    "value": "American Physical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/394/extra/1",
+    ":value": "Publisher: American Physical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/396/publisher",
+    "value": "APS"
+  },
+  {
+    "op": "remove",
+    "path": "/items/396/extra/2",
+    ":value": "Publisher: APS"
+  },
+  {
+    "op": "add",
+    "path": "/items/397/publisher",
+    "value": "American Physical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/397/extra/1",
+    ":value": "Publisher: American Physical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/398/publisher",
+    "value": "American Physical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/398/extra/1",
+    ":value": "Publisher: American Physical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/399/publisher",
+    "value": "American Physical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/399/extra/1",
+    ":value": "Publisher: American Physical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/405/publisher",
+    "value": "Amer Physical Soc"
+  },
+  {
+    "op": "remove",
+    "path": "/items/405/extra/1",
+    ":value": "Publisher: Amer Physical Soc"
+  },
+  {
+    "op": "add",
+    "path": "/items/409/publisher",
+    "value": "American Physical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/409/extra/2",
+    ":value": "Publisher: American Physical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/410/publisher",
+    "value": "American Physical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/410/extra/1",
+    ":value": "Publisher: American Physical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/411/publisher",
+    "value": "American Physical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/411/extra/2",
+    ":value": "Publisher: American Physical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/413/publisher",
+    "value": "American Physical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/413/extra/3",
+    ":value": "Publisher: American Physical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/414/publisher",
+    "value": "American Physical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/414/extra/3",
+    ":value": "Publisher: American Physical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/415/publisher",
+    "value": "American Physical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/415/extra/2",
+    ":value": "Publisher: American Physical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/416/publisher",
+    "value": "American Physical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/416/extra/2",
+    ":value": "Publisher: American Physical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/418/publisher",
+    "value": "American Physical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/418/extra/2",
+    ":value": "Publisher: American Physical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/422/publisher",
+    "value": "American Physical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/422/extra/2",
+    ":value": "Publisher: American Physical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/427/publisher",
+    "value": "American Physical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/427/extra/2",
+    ":value": "Publisher: American Physical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/429/publisher",
+    "value": "American Physical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/429/extra/1",
+    ":value": "Publisher: American Physical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/430/publisher",
+    "value": "American Physical Society"
+  },
+  {
+    "op": "remove",
+    "path": "/items/430/extra/1",
+    ":value": "Publisher: American Physical Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/444/publisher",
+    "value": "AVS"
+  },
+  {
+    "op": "remove",
+    "path": "/items/444/extra/1",
+    ":value": "Publisher: AVS"
+  },
+  {
+    "op": "add",
+    "path": "/items/445/publisher",
+    "value": "AVS"
+  },
+  {
+    "op": "remove",
+    "path": "/items/445/extra/1",
+    ":value": "Publisher: AVS"
+  },
+  {
+    "op": "add",
+    "path": "/items/449/publisher",
+    "value": "AVS"
+  },
+  {
+    "op": "remove",
+    "path": "/items/449/extra/1",
+    ":value": "Publisher: AVS"
+  },
+  {
+    "op": "add",
+    "path": "/items/450/publisher",
+    "value": "AVS"
+  },
+  {
+    "op": "remove",
+    "path": "/items/450/extra/1",
+    ":value": "Publisher: AVS"
+  },
+  {
+    "op": "add",
+    "path": "/items/451/place",
+    "value": "San Jose, CA, USA"
+  },
+  {
+    "op": "add",
+    "path": "/items/451/publisher",
+    "value": "SPIE"
+  },
+  {
+    "op": "remove",
+    "path": "/items/451/extra/2",
+    ":value": "Publisher: SPIE"
+  },
+  {
+    "op": "remove",
+    "path": "/items/451/extra/2",
+    ":value": "tex.location: San Jose, CA, USA"
+  },
+  {
+    "op": "add",
+    "path": "/items/457/publisher",
+    "value": "Japan J Applied Physics"
+  },
+  {
+    "op": "remove",
+    "path": "/items/457/extra/1",
+    ":value": "Publisher: Japan J Applied Physics"
+  },
+  {
+    "op": "add",
+    "path": "/items/458/publisher",
+    "value": "The Japan Society of Applied Physics"
+  },
+  {
+    "op": "remove",
+    "path": "/items/458/extra/2",
+    ":value": "Publisher: The Japan Society of Applied Physics"
+  },
+  {
+    "op": "add",
+    "path": "/items/459/publisher",
+    "value": "The Japan Society of Applied Physics"
+  },
+  {
+    "op": "remove",
+    "path": "/items/459/extra/2",
+    ":value": "Publisher: The Japan Society of Applied Physics"
+  },
+  {
+    "op": "add",
+    "path": "/items/460/publisher",
+    "value": "The Japan Society of Applied Physics"
+  },
+  {
+    "op": "remove",
+    "path": "/items/460/extra/2",
+    ":value": "Publisher: The Japan Society of Applied Physics"
+  },
+  {
+    "op": "add",
+    "path": "/items/461/publisher",
+    "value": "The Japan Society of Applied Physics"
+  },
+  {
+    "op": "remove",
+    "path": "/items/461/extra/2",
+    ":value": "Publisher: The Japan Society of Applied Physics"
+  },
+  {
+    "op": "add",
+    "path": "/items/462/publisher",
+    "value": "The Japan Society of Applied Physics"
+  },
+  {
+    "op": "remove",
+    "path": "/items/462/extra/2",
+    ":value": "Publisher: The Japan Society of Applied Physics"
+  },
+  {
+    "op": "add",
+    "path": "/items/468/publisher",
+    "value": "OSA"
+  },
+  {
+    "op": "remove",
+    "path": "/items/468/extra/1",
+    ":value": "Publisher: OSA"
+  },
+  {
+    "op": "add",
+    "path": "/items/469/publisher",
+    "value": "OSA"
+  },
+  {
+    "op": "remove",
+    "path": "/items/469/extra/1",
+    ":value": "Publisher: OSA"
+  },
+  {
+    "op": "add",
+    "path": "/items/503/publisher",
+    "value": "AIP"
+  },
+  {
+    "op": "remove",
+    "path": "/items/503/extra/1",
+    ":value": "Publisher: AIP"
   }
 ]
