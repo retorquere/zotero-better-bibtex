@@ -99,7 +99,7 @@
   },
   "devDependencies": {
     "@types/node": "^14.14.7",
-    "@types/webpack": "^4.41.24",
+    "@types/webpack": "^4.41.25",
     "archiver": "^5.0.2",
     "bluebird": "^3.7.2",
     "circular-dependency-plugin": "^5.2.2",
@@ -143,7 +143,7 @@
     "xml-parser": "^1.2.1",
     "xmldom": "^0.4.0",
     "xpath": "^0.0.32",
-    "zotero-plugin": "^1.0.28"
+    "zotero-plugin": "^1.0.29"
   },
   "repository": {
     "type": "git",
