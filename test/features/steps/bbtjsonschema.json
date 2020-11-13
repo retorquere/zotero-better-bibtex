@@ -850,6 +850,9 @@
           },
           "division": {
             "type": "string"
+          },
+          "archiveCollection": {
+            "type": "string"
           }
         }
       },
