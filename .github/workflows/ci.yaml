@@ -83,6 +83,7 @@ jobs:
           ${{ runner.os }}-
     - name: install python dependencies
       run: |
+        pip install packaging
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - run: curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
