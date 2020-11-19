@@ -1,4 +1,3 @@
-packaging
 Cheetah3
 Mako
 PyGithub
