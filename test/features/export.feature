@@ -7,6 +7,7 @@ Scenario Outline: Export <references> references for BibLaTeX to <file>
 
   Examples:
      | file                                                                                           | references  |
+     | Book Title exports to Journaltitle for Biblatex @incollection reference type #1691             | 2           |
      | When exporting notes, also handle the blockquote tag #1656                                     | 1           |
      | Entries with URL exported with (partial) URL in eprint field #1639                             | 2           |
      | error during export: duplicate field note #1636                                                | 1           |

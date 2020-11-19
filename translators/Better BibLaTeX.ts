@@ -183,6 +183,7 @@ Reference.prototype.typeMap = {
     encyclopediaArticle: 'inreference',
     film               : 'movie',
     forumPost          : 'online',
+    gazette            : 'jurisdiction',
     hearing            : 'jurisdiction',
     instantMessage     : 'misc',
     interview          : 'misc',
@@ -286,8 +287,8 @@ export function doExport() {
     Zotero.debug(`exporting ${item.citationKey}`)
     const ref = new Reference(item)
 
-    if (['bookSection', 'chapter'].includes(item.referenceType) && ref.hasCreator('bookAuthor')) ref.referencetype = 'inbook'
-    // if (item.referenceType === 'book' && !ref.hasCreator('author') && ref.hasCreator('editor')) ref.referencetype = 'collection'
+    if (ref.referencetype === 'incollection' && ref.hasCreator('bookAuthor')) ref.referencetype = 'inbook'
+    // if (ref.referencetype_source === 'csl.book' && !ref.hasCreator('author') && ref.hasCreator('editor')) ref.referencetype = 'collection'
     if (ref.referencetype === 'book' && item.numberOfVolumes) ref.referencetype = 'mvbook'
     if (ref.referencetype === 'report' && item.type?.toLowerCase().includes('manual')) ref.referencetype = 'manual'
 
@@ -321,18 +322,12 @@ export function doExport() {
 
     ref.add({ name: 'langid', value: ref.language })
 
-    switch (item.referenceType) {
-      case 'presentation':
-        ref.add({ name: 'venue', value: item.place, enc: 'literal' })
-        break
-
-      case 'patent':
-        if (item.country && !patent.region(item)) ref.add({ name: 'location', value: item.country || item.extraFields.kv['publisher-place'] })
-        break
-
-      default:
-        ref.add({ name: 'location', value: item.place || item.extraFields.kv['publisher-place'] , enc: 'literal' })
-        break
+    if (ref.referencetype === 'patent') {
+      if (item.country && !patent.region(item)) ref.add({ name: 'location', value: item.country || item.extraFields.kv['publisher-place'] })
+    } else if (ref.referencetype === 'unpublished' && item.itemType === 'presentation') {
+      ref.add({ name: 'venue', value: item.place, enc: 'literal' })
+    } else {
+      ref.add({ name: 'location', value: item.place || item.extraFields.kv['publisher-place'] , enc: 'literal' })
     }
 
     /*
@@ -363,69 +358,49 @@ export function doExport() {
     const number_added = ref.add({ name: 'number', value: patent.number(item) || item.number || item.seriesNumber })
     ref.add({ name: !number_added && looks_like_number_field(item.issue) ? 'number' : 'issue', value: item.issue })
 
-    switch (item.referenceType) {
-      case 'case':
-      case 'gazette':
-      case 'legal_case':
-        ref.add({ name: 'journaltitle', value: item.reporter, bibtexStrings: true })
+    switch (ref.referencetype) {
+      case 'jurisdiction':
+        ref.add({ name: 'journaltitle', value: item.reporter || (item.publicationTitle !== item.title && item.publicationTitle), bibtexStrings: true })
         break
 
-      case 'statute':
-      case 'bill':
       case 'legislation':
-        ref.add({ name: 'journaltitle', value: item.code, bibtexStrings: true })
+        ref.add({ name: 'journaltitle', value: item.code || (item.publicationTitle !== item.title && item.publicationTitle), bibtexStrings: true })
         break
-    }
 
-    if (item.publicationTitle) {
-      switch (item.referenceType) {
-        case 'bookSection':
-        case 'conferencePaper':
-        case 'dictionaryEntry':
-        case 'encyclopediaArticle':
-        case 'chapter':
-        case 'chapter':
-          ref.add({ name: 'booktitle', value: item.publicationTitle, bibtexStrings: true })
-          break
+      case 'incollection':
+      case 'chapter':
+      case 'inproceedings':
+      case 'inreference':
+      case 'movie':
+      case 'video':
+      case 'inbook':
+        if (!ref.has.booktitle) ref.add({ name: 'booktitle', value: item.publicationTitle, bibtexStrings: true })
+        break
 
-        case 'magazineArticle':
-        case 'newspaperArticle':
-        case 'article-magazine':
-        case 'article-newspaper':
-          ref.add({ name: 'journaltitle', value: item.publicationTitle, bibtexStrings: true})
-          if (['newspaperArticle', 'article-newspaper'].includes(item.referenceType)) ref.add({ name: 'journalsubtitle', value: item.section })
-          break
+      case 'online':
+        ref.add({ name: 'organization', value: item.publicationTitle, bibtexStrings: true })
+        break
 
-        case 'journalArticle':
-        case 'article':
-        case 'article-journal':
-          if (ref.getBibString(item.publicationTitle)) {
-            ref.add({ name: 'journaltitle', value: item.publicationTitle, bibtexStrings: true })
+      case 'article':
+        if (ref.getBibString(item.publicationTitle)) {
+          ref.add({ name: 'journaltitle', value: item.publicationTitle, bibtexStrings: true })
+
+        } else if (Translator.options.useJournalAbbreviation && item.publicationTitle && item.journalAbbreviation) {
+            ref.add({ name: 'journaltitle', value: item.journalAbbreviation, bibtexStrings: true })
+
+        } else {
+          ref.add({ name: 'journaltitle', value: item.publicationTitle, bibtexStrings: true })
+
+          if (ref.has.entrysubtype?.value === 'newspaper') {
+            ref.add({ name: 'journalsubtitle', value: item.section })
           } else {
-            if (Translator.options.useJournalAbbreviation && item.journalAbbreviation) {
-              ref.add({ name: 'journaltitle', value: item.journalAbbreviation, bibtexStrings: true })
-            } else {
-              ref.add({ name: 'journaltitle', value: item.publicationTitle, bibtexStrings: true })
-              ref.add({ name: 'shortjournal', value: item.journalAbbreviation, bibtexStrings: true })
-            }
+            ref.add({ name: 'shortjournal', value: item.journalAbbreviation, bibtexStrings: true })
           }
-          break
-
-        default:
-          if (!ref.has.journaltitle && (item.publicationTitle !== item.title)) ref.add({ name: 'journaltitle', value: item.publicationTitle })
-      }
-    }
-
-    switch (item.referenceType) {
-      case 'bookSection':
-      case 'encyclopediaArticle':
-      case 'dictionaryEntry':
-      case 'conferencePaper':
-      case 'film':
-      case 'videoRecording':
-      case 'tvBroadcast':
-        if (!ref.has.booktitle) ref.add({ name: 'booktitle', value: item.publicationTitle })
+        }
         break
+
+      default:
+        if (!ref.has.journaltitle && (item.publicationTitle !== item.title)) ref.add({ name: 'journaltitle', value: item.publicationTitle })
     }
 
     let main
@@ -449,19 +424,17 @@ export function doExport() {
 
     ref.add({ name: 'series', value: item.seriesTitle || item.series, bibtexStrings: true })
 
-    switch (item.referenceType) {
+    switch (ref.referencetype) {
       case 'report':
       case 'thesis':
         ref.add({ name: 'institution', value: item.publisher, bibtexStrings: true })
         break
 
-      case 'case':
-      case 'hearing':
-      case 'legal_case':
+      case 'jurisdiction':
         ref.add({ name: 'institution', value: item.court, bibtexStrings: true })
         break
 
-      case 'computerProgram':
+      case 'software':
         ref.add({ name: 'organization', value: item.publisher, bibtexStrings: true })
         break
 
@@ -469,14 +442,9 @@ export function doExport() {
         ref.add({ name: 'publisher', value: item.publisher, bibtexStrings: true })
     }
 
-    switch (item.referenceType) {
+    switch (ref.referencetype) {
       case 'letter':
-      case 'personal_communication':
-        ref.add({ name: 'type', value: item.type || 'Letter' })
-        break
-
-      case 'email':
-        ref.add({ name: 'type', value: 'E-mail' })
+        ref.add({ name: 'type', value: item.type || (item.itemType === 'email' ? 'E-mail' : 'Letter') })
         break
 
       case 'thesis':
@@ -508,7 +476,7 @@ export function doExport() {
         ref.add({ name: 'type', value: item.type })
     }
 
-    if (item.referenceType === 'manuscript') ref.add({ name: 'howpublished', value: item.type })
+    if (ref.referencetype === 'unpublished' && item.itemType !== 'presentation') ref.add({ name: 'howpublished', value: item.type })
 
     ref.add({ name: 'eventtitle', value: item.meetingName })
 
@@ -551,13 +519,13 @@ export function doExport() {
     ref.add({ name: 'file', value: item.attachments, enc: 'attachments' })
 
     if (item.volumeTitle) { // #381
-      if (item.referenceType === 'book' && ref.has.title) {
+      if (ref.referencetype === 'book' && ref.has.title) {
         ref.add({name: 'maintitle', value: item.volumeTitle }); // ; to prevent chaining
         [ref.has.title.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.title.bibtex]; // ; to prevent chaining
         [ref.has.title.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.title.value]
       }
 
-      if (['bookSection', 'chapter'].includes(item.referenceType) && ref.has.booktitle) {
+      if (['incollection', 'chapter'].includes(ref.referencetype) && ref.has.booktitle) {
         ref.add({name: 'maintitle', value: item.volumeTitle }); // ; to prevent chaining
         [ref.has.booktitle.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.booktitle.bibtex]; // ; to preven chaining
         [ref.has.booktitle.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.booktitle.value]
