@@ -258,7 +258,7 @@ export function doExport() {
   while (item = Exporter.nextItem()) {
     const ref = new Reference(item)
     if (item.itemType === 'report' && item.type?.toLowerCase().includes('manual')) ref.referencetype = 'manual'
-    if (['bookSection', 'chapter'].includes(item.referenceType) && ref.hasCreator('bookAuthor')) ref.referencetype = 'inbook'
+    if (['zotero.bookSection', 'csl.chapter', 'tex.chapter'].includes(ref.referencetype_source) && ref.hasCreator('bookAuthor')) ref.referencetype = 'inbook'
 
     ref.add({name: 'address', value: item.place})
     ref.add({name: 'chapter', value: item.section})
@@ -280,7 +280,7 @@ export function doExport() {
     if (!['book', 'inbook', 'incollection', 'proceedings', 'inproceedings'].includes(ref.referencetype) || !ref.has.volume) ref.add({ name: 'number', value: item.number || item.issue || item.seriesNumber })
     ref.add({ name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') })
 
-    if (['bookSection', 'conferencePaper', 'chapter'].includes(item.referenceType)) {
+    if (['zotero.bookSection', 'zotero.conferencePaper', 'tex.chapter', 'csl.chapter'].includes(ref.referencetype_source)) {
       ref.add({ name: 'booktitle', value: item.publicationTitle || item.conferenceName, bibtexStrings: true })
 
     } else if (ref.getBibString(item.publicationTitle)) {
@@ -291,7 +291,7 @@ export function doExport() {
 
     }
 
-    switch (item.referenceType) {
+    switch (ref.referencetype_source.split('.')[1]) {
       case 'thesis':
         ref.add({ name: 'school', value: item.publisher, bibtexStrings: true })
         break
@@ -322,13 +322,13 @@ export function doExport() {
           break
 
         default:
-          if (['webpage', 'post', 'post-weblog'].includes(item.referenceType)) url = ref.add({ name: 'howpublished', value: item.url || item.extraFields.kv.url })
+          if (['csl.webpage', 'zotero.webpage', 'csl.post', 'csl.post-weblog'].includes(ref.referencetype_source)) url = ref.add({ name: 'howpublished', value: item.url || item.extraFields.kv.url })
           break
       }
     }
     if (Translator.preferences.DOIandURL === 'both' || !url) ref.add({ name: 'doi', value: (doi || '').replace(/^https?:\/\/doi.org\//i, '') })
 
-    if (item.referenceType === 'thesis') {
+    if (ref.referencetype_source.split('.')[1] === 'thesis') {
       const thesistype = {
         phdthesis: 'phdthesis',
         phd: 'phdthesis',

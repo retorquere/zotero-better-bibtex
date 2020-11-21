@@ -1,5 +1,15 @@
 [
   {
+    "op": "add",
+    "path": "/items/0/publisher",
+    "value": "Taylor & Francis"
+  },
+  {
+    "op": "remove",
+    "path": "/items/0/extra/1",
+    ":value": "Publisher: Taylor & Francis"
+  },
+  {
     "op": "move",
     "from": "/items/7/publisher",
     "path": "/items/7/institution",
@@ -462,9 +472,14 @@
     ":value": "Computer Science Department, University of Maryland"
   },
   {
-    "op": "replace",
+    "op": "add",
+    "path": "/items/645/publisher",
+    "value": "NASA Ames Research Center"
+  },
+  {
+    "op": "remove",
     "path": "/items/645/extra/1",
-    "value": "Institution: NASA Ames Research Center"
+    ":value": "Publisher: NASA Ames Research Center"
   },
   {
     "op": "move",
@@ -507,6 +522,16 @@
     "from": "/items/706/publisher",
     "path": "/items/706/institution",
     ":value": "University of Waterloo Department of Computer Science"
+  },
+  {
+    "op": "add",
+    "path": "/items/719/publisher",
+    "value": "AI Access Foundation"
+  },
+  {
+    "op": "remove",
+    "path": "/items/719/extra/1",
+    ":value": "Publisher: AI Access Foundation"
   },
   {
     "op": "move",
@@ -684,6 +709,16 @@
   },
   {
     "op": "add",
+    "path": "/items/902/publisher",
+    "value": "Elsevier Science Inc."
+  },
+  {
+    "op": "remove",
+    "path": "/items/902/extra/1",
+    ":value": "Publisher: Elsevier Science Inc."
+  },
+  {
+    "op": "add",
     "path": "/items/910/issue",
     "value": "8"
   },
@@ -746,6 +781,11 @@
   },
   {
     "op": "remove",
+    "path": "/items/971/publicationTitle",
+    ":value": "AIJ"
+  },
+  {
+    "op": "remove",
     "path": "/items/971/citationKey",
     ":value": "DBLP:journals/ai/KatzD10"
   },
@@ -753,26 +793,6 @@
     "op": "remove",
     "path": "/items/971/DOI",
     ":value": "10.1016/j.artint.2010.04.021"
-  },
-  {
-    "op": "remove",
-    "path": "/items/971/date",
-    ":value": "2010"
-  },
-  {
-    "op": "remove",
-    "path": "/items/971/pages",
-    ":value": "767\u2013798"
-  },
-  {
-    "op": "remove",
-    "path": "/items/971/publicationTitle",
-    ":value": "AIJ"
-  },
-  {
-    "op": "remove",
-    "path": "/items/971/volume",
-    ":value": "174"
   },
   {
     "op": "remove",
@@ -786,8 +806,23 @@
   },
   {
     "op": "remove",
+    "path": "/items/971/volume",
+    ":value": "174"
+  },
+  {
+    "op": "remove",
     "path": "/items/971/title",
     ":value": "Optimal admissible composition of abstraction heuristics"
+  },
+  {
+    "op": "remove",
+    "path": "/items/971/pages",
+    ":value": "767\u2013798"
+  },
+  {
+    "op": "remove",
+    "path": "/items/971/date",
+    ":value": "2010"
   },
   {
     "op": "replace",
@@ -844,25 +879,25 @@
   },
   {
     "op": "move",
-    "from": "/items/971/url",
-    "path": "/items/972/url",
-    ":value": "http://dx.doi.org/10.1016/j.artint.2010.04.021"
-  },
-  {
-    "op": "move",
     "from": "/items/971/issue",
     "path": "/items/972/issue",
     ":value": "12-13"
   },
   {
-    "op": "replace",
-    "path": "/items/972/creators/0/firstName",
-    "value": "Michael"
+    "op": "move",
+    "from": "/items/971/url",
+    "path": "/items/972/url",
+    ":value": "http://dx.doi.org/10.1016/j.artint.2010.04.021"
   },
   {
     "op": "replace",
     "path": "/items/972/creators/0/lastName",
     "value": "Katz"
+  },
+  {
+    "op": "replace",
+    "path": "/items/972/creators/0/firstName",
+    "value": "Michael"
   },
   {
     "op": "add",
@@ -875,8 +910,18 @@
   },
   {
     "op": "replace",
+    "path": "/items/972/publicationTitle",
+    "value": "AIJ"
+  },
+  {
+    "op": "replace",
     "path": "/items/972/citationKey",
     "value": "DBLP:journals/ai/KatzD10"
+  },
+  {
+    "op": "replace",
+    "path": "/items/972/DOI",
+    "value": "10.1016/j.artint.2010.04.021"
   },
   {
     "op": "add",
@@ -900,28 +945,13 @@
   },
   {
     "op": "replace",
-    "path": "/items/972/DOI",
-    "value": "10.1016/j.artint.2010.04.021"
-  },
-  {
-    "op": "replace",
-    "path": "/items/972/date",
-    "value": "2010"
-  },
-  {
-    "op": "replace",
-    "path": "/items/972/pages",
-    "value": "767\u2013798"
-  },
-  {
-    "op": "replace",
-    "path": "/items/972/publicationTitle",
-    "value": "AIJ"
-  },
-  {
-    "op": "replace",
     "path": "/items/972/volume",
     "value": "174"
+  },
+  {
+    "op": "replace",
+    "path": "/items/972/title",
+    "value": "Optimal admissible composition of abstraction heuristics"
   },
   {
     "op": "replace",
@@ -930,13 +960,13 @@
   },
   {
     "op": "replace",
-    "path": "/items/972/title",
-    "value": "Optimal admissible composition of abstraction heuristics"
+    "path": "/items/972/pages",
+    "value": "767\u2013798"
   },
   {
-    "op": "remove",
-    "path": "/items/973/abstractNote",
-    ":value": "Abstract Planning is motivated by acting. Most of the existing work on automated planning underestimates the reasoning and deliberation needed for acting; it is instead biased towards path-finding methods in a compactly specified state-transition system. Researchers in this {AI} field have developed many planners, but very few actors. We believe this is one of the main causes of the relatively low deployment of automated planning applications. In this paper, we advocate a change in focus to actors as the primary topic of investigation. Actors are not mere plan executors: they may use planning and other deliberation tools, before and during acting. This change in focus entails two interconnected principles: a hierarchical structure to integrate the actor\u02bcs deliberation functions, and continual online planning and reasoning throughout the acting process. In the paper, we discuss open problems and research directions toward that objective in knowledge representations, model acquisition and verification, synthesis and refinement, monitoring, goal reasoning, and integration."
+    "op": "replace",
+    "path": "/items/972/date",
+    "value": "2010"
   },
   {
     "op": "remove",
@@ -944,14 +974,19 @@
     ":value": "http://www.sciencedirect.com/science/article/pii/S0004370213001173"
   },
   {
-    "op": "replace",
-    "path": "/items/973/creators/0/firstName",
-    "value": "K."
+    "op": "remove",
+    "path": "/items/973/abstractNote",
+    ":value": "Abstract Planning is motivated by acting. Most of the existing work on automated planning underestimates the reasoning and deliberation needed for acting; it is instead biased towards path-finding methods in a compactly specified state-transition system. Researchers in this {AI} field have developed many planners, but very few actors. We believe this is one of the main causes of the relatively low deployment of automated planning applications. In this paper, we advocate a change in focus to actors as the primary topic of investigation. Actors are not mere plan executors: they may use planning and other deliberation tools, before and during acting. This change in focus entails two interconnected principles: a hierarchical structure to integrate the actor\u02bcs deliberation functions, and continual online planning and reasoning throughout the acting process. In the paper, we discuss open problems and research directions toward that objective in knowledge representations, model acquisition and verification, synthesis and refinement, monitoring, goal reasoning, and integration."
   },
   {
     "op": "replace",
     "path": "/items/973/creators/0/lastName",
     "value": "Fujimoto"
+  },
+  {
+    "op": "replace",
+    "path": "/items/973/creators/0/firstName",
+    "value": "K."
   },
   {
     "op": "remove",
@@ -964,39 +999,13 @@
   },
   {
     "op": "replace",
-    "path": "/items/973/citationKey",
-    "value": "fujimoto-WIIAT2010"
-  },
-  {
-    "op": "move",
-    "from": "/items/972/extra/4",
-    "path": "/items/973/extra/0",
-    ":value": "Citation Key: fujimoto-WIIAT2010"
-  },
-  {
-    "op": "replace",
-    "path": "/items/973/DOI",
-    "value": "10.1109/WI-IAT.2010.240"
-  },
-  {
-    "op": "replace",
-    "path": "/items/973/date",
-    "value": "2010-08"
-  },
-  {
-    "op": "replace",
-    "path": "/items/973/pages",
-    "value": "97-101"
-  },
-  {
-    "op": "replace",
     "path": "/items/973/publicationTitle",
     "value": "Web intelligence and intelligent agent technology (WI-IAT), 2010 IEEE/WIC/ACM international conference on"
   },
   {
     "op": "replace",
-    "path": "/items/973/volume",
-    "value": "3"
+    "path": "/items/973/citationKey",
+    "value": "fujimoto-WIIAT2010"
   },
   {
     "op": "replace",
@@ -1096,8 +1105,19 @@
   },
   {
     "op": "replace",
-    "path": "/items/973/itemType",
-    "value": "conferencePaper"
+    "path": "/items/973/DOI",
+    "value": "10.1109/WI-IAT.2010.240"
+  },
+  {
+    "op": "move",
+    "from": "/items/972/extra/4",
+    "path": "/items/973/extra/0",
+    ":value": "Citation Key: fujimoto-WIIAT2010"
+  },
+  {
+    "op": "replace",
+    "path": "/items/973/volume",
+    "value": "3"
   },
   {
     "op": "replace",
@@ -1106,8 +1126,18 @@
   },
   {
     "op": "replace",
-    "path": "/items/974/creators/0/firstName",
-    "value": "Malik"
+    "path": "/items/973/itemType",
+    "value": "conferencePaper"
+  },
+  {
+    "op": "replace",
+    "path": "/items/973/pages",
+    "value": "97-101"
+  },
+  {
+    "op": "replace",
+    "path": "/items/973/date",
+    "value": "2010-08"
   },
   {
     "op": "replace",
@@ -1116,13 +1146,18 @@
   },
   {
     "op": "replace",
-    "path": "/items/974/creators/1/firstName",
-    "value": "Dana"
+    "path": "/items/974/creators/0/firstName",
+    "value": "Malik"
   },
   {
     "op": "replace",
     "path": "/items/974/creators/1/lastName",
     "value": "Nau"
+  },
+  {
+    "op": "replace",
+    "path": "/items/974/creators/1/firstName",
+    "value": "Dana"
   },
   {
     "op": "move",
@@ -1136,49 +1171,13 @@
   },
   {
     "op": "replace",
-    "path": "/items/974/citationKey",
-    "value": "Ghallab20141"
-  },
-  {
-    "op": "move",
-    "from": "/items/973/extra/1",
-    "path": "/items/974/extra/0",
-    ":value": "Citation Key: Ghallab20141"
-  },
-  {
-    "op": "replace",
-    "path": "/items/974/abstractNote",
-    "value": "Abstract Planning is motivated by acting. Most of the existing work on automated planning underestimates the reasoning and deliberation needed for acting; it is instead biased towards path-finding methods in a compactly specified state-transition system. Researchers in this {AI} field have developed many planners, but very few actors. We believe this is one of the main causes of the relatively low deployment of automated planning applications. In this paper, we advocate a change in focus to actors as the primary topic of investigation. Actors are not mere plan executors: they may use planning and other deliberation tools, before and during acting. This change in focus entails two interconnected principles: a hierarchical structure to integrate the actor\u02bcs deliberation functions, and continual online planning and reasoning throughout the acting process. In the paper, we discuss open problems and research directions toward that objective in knowledge representations, model acquisition and verification, synthesis and refinement, monitoring, goal reasoning, and integration."
-  },
-  {
-    "op": "replace",
-    "path": "/items/974/DOI",
-    "value": "http://dx.doi.org/10.1016/j.artint.2013.11.002"
-  },
-  {
-    "op": "replace",
-    "path": "/items/974/url",
-    "value": "http://www.sciencedirect.com/science/article/pii/S0004370213001173"
-  },
-  {
-    "op": "replace",
-    "path": "/items/974/date",
-    "value": "2014"
-  },
-  {
-    "op": "replace",
-    "path": "/items/974/pages",
-    "value": "1 \u2013 17"
-  },
-  {
-    "op": "replace",
     "path": "/items/974/publicationTitle",
     "value": "AIJ"
   },
   {
     "op": "replace",
-    "path": "/items/974/volume",
-    "value": "208"
+    "path": "/items/974/citationKey",
+    "value": "Ghallab20141"
   },
   {
     "op": "replace",
@@ -1222,18 +1221,54 @@
   },
   {
     "op": "replace",
+    "path": "/items/974/DOI",
+    "value": "http://dx.doi.org/10.1016/j.artint.2013.11.002"
+  },
+  {
+    "op": "move",
+    "from": "/items/973/extra/1",
+    "path": "/items/974/extra/0",
+    ":value": "Citation Key: Ghallab20141"
+  },
+  {
+    "op": "replace",
+    "path": "/items/974/volume",
+    "value": "208"
+  },
+  {
+    "op": "replace",
+    "path": "/items/974/abstractNote",
+    "value": "Abstract Planning is motivated by acting. Most of the existing work on automated planning underestimates the reasoning and deliberation needed for acting; it is instead biased towards path-finding methods in a compactly specified state-transition system. Researchers in this {AI} field have developed many planners, but very few actors. We believe this is one of the main causes of the relatively low deployment of automated planning applications. In this paper, we advocate a change in focus to actors as the primary topic of investigation. Actors are not mere plan executors: they may use planning and other deliberation tools, before and during acting. This change in focus entails two interconnected principles: a hierarchical structure to integrate the actor\u02bcs deliberation functions, and continual online planning and reasoning throughout the acting process. In the paper, we discuss open problems and research directions toward that objective in knowledge representations, model acquisition and verification, synthesis and refinement, monitoring, goal reasoning, and integration."
+  },
+  {
+    "op": "replace",
     "path": "/items/974/title",
     "value": "The actor\u02bcs view of automated planning and acting: A position paper"
   },
   {
-    "op": "remove",
-    "path": "/items/975/publisher",
-    ":value": "Prentice-Hall"
+    "op": "replace",
+    "path": "/items/974/pages",
+    "value": "1 \u2013 17"
+  },
+  {
+    "op": "replace",
+    "path": "/items/974/date",
+    "value": "2014"
+  },
+  {
+    "op": "replace",
+    "path": "/items/974/url",
+    "value": "http://www.sciencedirect.com/science/article/pii/S0004370213001173"
   },
   {
     "op": "remove",
     "path": "/items/975/ISBN",
     ":value": "0-13-790395-2"
+  },
+  {
+    "op": "remove",
+    "path": "/items/975/publisher",
+    ":value": "Prentice-Hall"
   },
   {
     "op": "move",
@@ -1243,33 +1278,8 @@
   },
   {
     "op": "add",
-    "path": "/items/975/abstractNote",
-    "value": "Shortcomings of qualitative simulation and of quantitative simulation motivate combining them to do simulations exhibiting strengths of both. The resulting class of techniques is called semiquantitative simulation. One approach to semi-quantitative simulation is to use numeric intervals to represent incomplete quantitative information. In this research we demonstrate semi-quantitative simulation using intervals in an implemented semi-quantitative simulator called Q3. Q3 progressively refines a qualitative simulation, providing increasingly specific quantitative predictions which can converge to a numerical simulation in the limit while retaining important correctness guarantees from qualitative and interval simulation techniques. Q3's simulations are based on a technique we call step size refinement. While a pure qualitative simulation has a very coarse step size, representing the state of a system trajectory at relatively few qualitatively distinct states, Q3 interpolates newly explicit states between distinct qualitative states, thereby representing more states which instantiate new constraints, leading to improved quantitative inferences. Q3's techniques have been used for prediction, measurement interpretation, diagnosis, and even analysis of the probabilities of qualitative behaviors. Because Q3 shares important expressive and inferential properties of both qualitative and quantitative simulation, Q3 helps to bridge the gap between qualitative and quantitative simulation."
-  },
-  {
-    "op": "add",
-    "path": "/items/975/DOI",
-    "value": "http://dx.doi.org/10.1016/S0004-3702(97)00050-7"
-  },
-  {
-    "op": "add",
-    "path": "/items/975/url",
-    "value": "http://www.sciencedirect.com/science/article/pii/S0004370297000507"
-  },
-  {
-    "op": "add",
-    "path": "/items/975/pages",
-    "value": "215 - 255"
-  },
-  {
-    "op": "add",
     "path": "/items/975/publicationTitle",
     "value": "Artificial Intelligence"
-  },
-  {
-    "op": "add",
-    "path": "/items/975/volume",
-    "value": "95"
   },
   {
     "op": "add",
@@ -1296,15 +1306,35 @@
     ]
   },
   {
+    "op": "add",
+    "path": "/items/975/DOI",
+    "value": "http://dx.doi.org/10.1016/S0004-3702(97)00050-7"
+  },
+  {
+    "op": "add",
+    "path": "/items/975/volume",
+    "value": "95"
+  },
+  {
+    "op": "add",
+    "path": "/items/975/abstractNote",
+    "value": "Shortcomings of qualitative simulation and of quantitative simulation motivate combining them to do simulations exhibiting strengths of both. The resulting class of techniques is called semiquantitative simulation. One approach to semi-quantitative simulation is to use numeric intervals to represent incomplete quantitative information. In this research we demonstrate semi-quantitative simulation using intervals in an implemented semi-quantitative simulator called Q3. Q3 progressively refines a qualitative simulation, providing increasingly specific quantitative predictions which can converge to a numerical simulation in the limit while retaining important correctness guarantees from qualitative and interval simulation techniques. Q3's simulations are based on a technique we call step size refinement. While a pure qualitative simulation has a very coarse step size, representing the state of a system trajectory at relatively few qualitatively distinct states, Q3 interpolates newly explicit states between distinct qualitative states, thereby representing more states which instantiate new constraints, leading to improved quantitative inferences. Q3's techniques have been used for prediction, measurement interpretation, diagnosis, and even analysis of the probabilities of qualitative behaviors. Because Q3 shares important expressive and inferential properties of both qualitative and quantitative simulation, Q3 helps to bridge the gap between qualitative and quantitative simulation."
+  },
+  {
     "op": "move",
     "from": "/items/975/edition",
     "path": "/items/975/issue",
     ":value": "2"
   },
   {
-    "op": "replace",
-    "path": "/items/975/creators/0/firstName",
-    "value": "Daniel"
+    "op": "add",
+    "path": "/items/975/pages",
+    "value": "215 - 255"
+  },
+  {
+    "op": "add",
+    "path": "/items/975/url",
+    "value": "http://www.sciencedirect.com/science/article/pii/S0004370297000507"
   },
   {
     "op": "replace",
@@ -1313,13 +1343,18 @@
   },
   {
     "op": "replace",
-    "path": "/items/975/creators/1/firstName",
-    "value": "Benjamin J."
+    "path": "/items/975/creators/0/firstName",
+    "value": "Daniel"
   },
   {
     "op": "replace",
     "path": "/items/975/creators/1/lastName",
     "value": "Kuipers"
+  },
+  {
+    "op": "replace",
+    "path": "/items/975/creators/1/firstName",
+    "value": "Benjamin J."
   },
   {
     "op": "replace",
@@ -1334,8 +1369,8 @@
   },
   {
     "op": "replace",
-    "path": "/items/975/date",
-    "value": "1997"
+    "path": "/items/975/title",
+    "value": "Qualitative and quantitative simulation: bridging the gap"
   },
   {
     "op": "replace",
@@ -1344,8 +1379,8 @@
   },
   {
     "op": "replace",
-    "path": "/items/975/title",
-    "value": "Qualitative and quantitative simulation: bridging the gap"
+    "path": "/items/975/date",
+    "value": "1997"
   },
   {
     "op": "remove",
@@ -1360,13 +1395,13 @@
   },
   {
     "op": "add",
-    "path": "/items/976/creators/0/firstName",
-    "value": "Stuart"
+    "path": "/items/976/creators/0/lastName",
+    "value": "Russell"
   },
   {
     "op": "add",
-    "path": "/items/976/creators/0/lastName",
-    "value": "Russell"
+    "path": "/items/976/creators/0/firstName",
+    "value": "Stuart"
   },
   {
     "op": "add",
@@ -1383,11 +1418,6 @@
     "value": "RussellNorvigBook:2003"
   },
   {
-    "op": "replace",
-    "path": "/items/976/ISBN",
-    "value": "0-13-790395-2"
-  },
-  {
     "op": "move",
     "from": "/items/975/extra/1",
     "path": "/items/976/extra/0",
@@ -1395,8 +1425,8 @@
   },
   {
     "op": "replace",
-    "path": "/items/976/date",
-    "value": "2003"
+    "path": "/items/976/ISBN",
+    "value": "0-13-790395-2"
   },
   {
     "op": "replace",
@@ -1409,9 +1439,9 @@
     "value": "Artificial intelligence : A modern approach"
   },
   {
-    "op": "remove",
-    "path": "/items/977/publicationTitle",
-    ":value": "Proceedings of the fourteenth international joint conference on artificial intelligence"
+    "op": "replace",
+    "path": "/items/976/date",
+    "value": "2003"
   },
   {
     "op": "remove",
@@ -1420,13 +1450,18 @@
   },
   {
     "op": "remove",
-    "path": "/items/977/creators/0/firstName",
-    ":value": "Philippe"
+    "path": "/items/977/publicationTitle",
+    ":value": "Proceedings of the fourteenth international joint conference on artificial intelligence"
   },
   {
     "op": "remove",
     "path": "/items/977/creators/0/lastName",
     ":value": "Laborie"
+  },
+  {
+    "op": "remove",
+    "path": "/items/977/creators/0/firstName",
+    ":value": "Philippe"
   },
   {
     "op": "move",
@@ -1458,11 +1493,6 @@
     "value": "books/mk/Ginsberg93"
   },
   {
-    "op": "replace",
-    "path": "/items/977/ISBN",
-    "value": "1-55860-221-6"
-  },
-  {
     "op": "move",
     "from": "/items/976/extra/1",
     "path": "/items/977/extra/0",
@@ -1476,18 +1506,8 @@
   },
   {
     "op": "replace",
-    "path": "/items/977/date",
-    "value": "1993"
-  },
-  {
-    "op": "replace",
-    "path": "/items/977/publisher",
-    "value": "KAUFMANN"
-  },
-  {
-    "op": "replace",
-    "path": "/items/977/itemType",
-    "value": "book"
+    "path": "/items/977/ISBN",
+    "value": "1-55860-221-6"
   },
   {
     "op": "replace",
@@ -1501,8 +1521,18 @@
   },
   {
     "op": "replace",
-    "path": "/items/978/creators/0/firstName",
-    "value": "Philippe"
+    "path": "/items/977/publisher",
+    "value": "KAUFMANN"
+  },
+  {
+    "op": "replace",
+    "path": "/items/977/itemType",
+    "value": "book"
+  },
+  {
+    "op": "replace",
+    "path": "/items/977/date",
+    "value": "1993"
   },
   {
     "op": "replace",
@@ -1511,8 +1541,8 @@
   },
   {
     "op": "replace",
-    "path": "/items/978/creators/1/firstName",
-    "value": "Malik"
+    "path": "/items/978/creators/0/firstName",
+    "value": "Philippe"
   },
   {
     "op": "replace",
@@ -1521,13 +1551,13 @@
   },
   {
     "op": "replace",
-    "path": "/items/978/creators/2/creatorType",
-    "value": "editor"
+    "path": "/items/978/creators/1/firstName",
+    "value": "Malik"
   },
   {
     "op": "replace",
-    "path": "/items/978/creators/2/firstName",
-    "value": "Chris S."
+    "path": "/items/978/creators/2/creatorType",
+    "value": "editor"
   },
   {
     "op": "replace",
@@ -1536,13 +1566,18 @@
   },
   {
     "op": "replace",
-    "path": "/items/978/citationKey",
-    "value": "LaborieGhallab:95"
+    "path": "/items/978/creators/2/firstName",
+    "value": "Chris S."
   },
   {
     "op": "replace",
-    "path": "/items/978/ISBN",
-    "value": "1-55860-363-8"
+    "path": "/items/978/publicationTitle",
+    "value": "Proceedings of the fourteenth international joint conference on artificial intelligence"
+  },
+  {
+    "op": "replace",
+    "path": "/items/978/citationKey",
+    "value": "LaborieGhallab:95"
   },
   {
     "op": "move",
@@ -1552,23 +1587,8 @@
   },
   {
     "op": "replace",
-    "path": "/items/978/date",
-    "value": "08 20\u201325 1995"
-  },
-  {
-    "op": "replace",
-    "path": "/items/978/pages",
-    "value": "1643\u20131651"
-  },
-  {
-    "op": "replace",
-    "path": "/items/978/publisher",
-    "value": "Morgan Kaufmann"
-  },
-  {
-    "op": "replace",
-    "path": "/items/978/publicationTitle",
-    "value": "Proceedings of the fourteenth international joint conference on artificial intelligence"
+    "path": "/items/978/ISBN",
+    "value": "1-55860-363-8"
   },
   {
     "op": "replace",
@@ -1581,10 +1601,19 @@
     "value": "Planning with sharable resource constraints"
   },
   {
-    "op": "move",
-    "from": "/items/978/url",
-    "path": "/items/979/url",
-    ":value": "citeseer.nj.nec.com/article/williamson96unified.html"
+    "op": "replace",
+    "path": "/items/978/publisher",
+    "value": "Morgan Kaufmann"
+  },
+  {
+    "op": "replace",
+    "path": "/items/978/pages",
+    "value": "1643\u20131651"
+  },
+  {
+    "op": "replace",
+    "path": "/items/978/date",
+    "value": "08 20\u201325 1995"
   },
   {
     "op": "add",
@@ -1592,9 +1621,10 @@
     "value": "Menlo Park, California"
   },
   {
-    "op": "replace",
-    "path": "/items/979/creators/0/firstName",
-    "value": "M."
+    "op": "move",
+    "from": "/items/978/url",
+    "path": "/items/979/url",
+    ":value": "citeseer.nj.nec.com/article/williamson96unified.html"
   },
   {
     "op": "replace",
@@ -1603,8 +1633,8 @@
   },
   {
     "op": "replace",
-    "path": "/items/979/creators/1/firstName",
-    "value": "K."
+    "path": "/items/979/creators/0/firstName",
+    "value": "M."
   },
   {
     "op": "replace",
@@ -1613,13 +1643,18 @@
   },
   {
     "op": "replace",
-    "path": "/items/979/creators/2/firstName",
+    "path": "/items/979/creators/1/firstName",
     "value": "K."
   },
   {
     "op": "replace",
     "path": "/items/979/creators/2/lastName",
     "value": "Sycara"
+  },
+  {
+    "op": "replace",
+    "path": "/items/979/creators/2/firstName",
+    "value": "K."
   },
   {
     "op": "remove",
@@ -1641,13 +1676,13 @@
   },
   {
     "op": "replace",
-    "path": "/items/979/citationKey",
-    "value": "williamson96unified"
+    "path": "/items/979/publicationTitle",
+    "value": "Theories of action, planning, and robot control: Bridging the gap: Proceedings of the 1996 AAAI workshop"
   },
   {
     "op": "replace",
-    "path": "/items/979/ISBN",
-    "value": "1-57735-021-9"
+    "path": "/items/979/citationKey",
+    "value": "williamson96unified"
   },
   {
     "op": "move",
@@ -1657,13 +1692,8 @@
   },
   {
     "op": "replace",
-    "path": "/items/979/date",
-    "value": "1996"
-  },
-  {
-    "op": "replace",
-    "path": "/items/979/pages",
-    "value": "142\u2013150"
+    "path": "/items/979/ISBN",
+    "value": "1-57735-021-9"
   },
   {
     "op": "replace",
@@ -1672,13 +1702,18 @@
   },
   {
     "op": "replace",
-    "path": "/items/979/publicationTitle",
-    "value": "Theories of action, planning, and robot control: Bridging the gap: Proceedings of the 1996 AAAI workshop"
+    "path": "/items/979/title",
+    "value": "Unified information and control flow in hierarchical task networks"
   },
   {
     "op": "replace",
-    "path": "/items/979/title",
-    "value": "Unified information and control flow in hierarchical task networks"
+    "path": "/items/979/pages",
+    "value": "142\u2013150"
+  },
+  {
+    "op": "replace",
+    "path": "/items/979/date",
+    "value": "1996"
   },
   {
     "op": "remove",
@@ -1687,18 +1722,13 @@
   },
   {
     "op": "replace",
-    "path": "/items/980/creators/0/firstName",
-    "value": "Mark S."
-  },
-  {
-    "op": "replace",
     "path": "/items/980/creators/0/lastName",
     "value": "Boddy"
   },
   {
     "op": "replace",
-    "path": "/items/980/creators/1/firstName",
-    "value": "Johnathan"
+    "path": "/items/980/creators/0/firstName",
+    "value": "Mark S."
   },
   {
     "op": "replace",
@@ -1707,13 +1737,13 @@
   },
   {
     "op": "replace",
-    "path": "/items/980/creators/2/creatorType",
-    "value": "author"
+    "path": "/items/980/creators/1/firstName",
+    "value": "Johnathan"
   },
   {
     "op": "replace",
-    "path": "/items/980/creators/2/firstName",
-    "value": "Thomas"
+    "path": "/items/980/creators/2/creatorType",
+    "value": "author"
   },
   {
     "op": "replace",
@@ -1722,13 +1752,13 @@
   },
   {
     "op": "replace",
-    "path": "/items/980/creators/3/creatorType",
-    "value": "author"
+    "path": "/items/980/creators/2/firstName",
+    "value": "Thomas"
   },
   {
     "op": "replace",
-    "path": "/items/980/creators/3/firstName",
-    "value": "Steven A."
+    "path": "/items/980/creators/3/creatorType",
+    "value": "author"
   },
   {
     "op": "replace",
@@ -1737,13 +1767,18 @@
   },
   {
     "op": "replace",
-    "path": "/items/980/creators/4/firstName",
-    "value": "Susanne"
+    "path": "/items/980/creators/3/firstName",
+    "value": "Steven A."
   },
   {
     "op": "replace",
     "path": "/items/980/creators/4/lastName",
     "value": "Biundo"
+  },
+  {
+    "op": "replace",
+    "path": "/items/980/creators/4/firstName",
+    "value": "Susanne"
   },
   {
     "op": "move",
@@ -1767,13 +1802,13 @@
   },
   {
     "op": "replace",
-    "path": "/items/980/citationKey",
-    "value": "conf/aips/BoddyGHH05"
+    "path": "/items/980/publicationTitle",
+    "value": "ICAPS"
   },
   {
     "op": "replace",
-    "path": "/items/980/ISBN",
-    "value": "1-57735-220-3"
+    "path": "/items/980/citationKey",
+    "value": "conf/aips/BoddyGHH05"
   },
   {
     "op": "move",
@@ -1795,13 +1830,8 @@
   },
   {
     "op": "replace",
-    "path": "/items/980/date",
-    "value": "2005"
-  },
-  {
-    "op": "replace",
-    "path": "/items/980/pages",
-    "value": "12\u201321"
+    "path": "/items/980/ISBN",
+    "value": "1-57735-220-3"
   },
   {
     "op": "replace",
@@ -1810,13 +1840,18 @@
   },
   {
     "op": "replace",
-    "path": "/items/980/publicationTitle",
-    "value": "ICAPS"
+    "path": "/items/980/title",
+    "value": "Course of action generation for cyber security using classical planning"
   },
   {
     "op": "replace",
-    "path": "/items/980/title",
-    "value": "Course of action generation for cyber security using classical planning"
+    "path": "/items/980/pages",
+    "value": "12\u201321"
+  },
+  {
+    "op": "replace",
+    "path": "/items/980/date",
+    "value": "2005"
   },
   {
     "op": "move",
@@ -1832,18 +1867,13 @@
   },
   {
     "op": "replace",
-    "path": "/items/981/creators/0/firstName",
-    "value": "Nate"
-  },
-  {
-    "op": "replace",
     "path": "/items/981/creators/0/lastName",
     "value": "Blaylock"
   },
   {
     "op": "replace",
-    "path": "/items/981/creators/1/firstName",
-    "value": "James F."
+    "path": "/items/981/creators/0/firstName",
+    "value": "Nate"
   },
   {
     "op": "replace",
@@ -1852,13 +1882,13 @@
   },
   {
     "op": "replace",
-    "path": "/items/981/creators/2/creatorType",
-    "value": "editor"
+    "path": "/items/981/creators/1/firstName",
+    "value": "James F."
   },
   {
     "op": "replace",
-    "path": "/items/981/creators/2/firstName",
-    "value": "Liliana"
+    "path": "/items/981/creators/2/creatorType",
+    "value": "editor"
   },
   {
     "op": "replace",
@@ -1867,13 +1897,13 @@
   },
   {
     "op": "replace",
-    "path": "/items/981/creators/3/creatorType",
-    "value": "editor"
+    "path": "/items/981/creators/2/firstName",
+    "value": "Liliana"
   },
   {
     "op": "replace",
-    "path": "/items/981/creators/3/firstName",
-    "value": "Paul"
+    "path": "/items/981/creators/3/creatorType",
+    "value": "editor"
   },
   {
     "op": "replace",
@@ -1882,8 +1912,8 @@
   },
   {
     "op": "replace",
-    "path": "/items/981/creators/4/firstName",
-    "value": "Antonija"
+    "path": "/items/981/creators/3/firstName",
+    "value": "Paul"
   },
   {
     "op": "replace",
@@ -1892,13 +1922,18 @@
   },
   {
     "op": "replace",
-    "path": "/items/981/citationKey",
-    "value": "conf/um/BlaylockA05"
+    "path": "/items/981/creators/4/firstName",
+    "value": "Antonija"
   },
   {
     "op": "replace",
-    "path": "/items/981/ISBN",
-    "value": "3-540-27885-0"
+    "path": "/items/981/publicationTitle",
+    "value": "User modeling"
+  },
+  {
+    "op": "replace",
+    "path": "/items/981/citationKey",
+    "value": "conf/um/BlaylockA05"
   },
   {
     "op": "move",
@@ -1926,18 +1961,8 @@
   },
   {
     "op": "replace",
-    "path": "/items/981/url",
-    "value": "http://dx.doi.org/10.1007/11527886\u20824"
-  },
-  {
-    "op": "replace",
-    "path": "/items/981/date",
-    "value": "2005-07"
-  },
-  {
-    "op": "replace",
-    "path": "/items/981/pages",
-    "value": "179\u2013188"
+    "path": "/items/981/ISBN",
+    "value": "3-540-27885-0"
   },
   {
     "op": "replace",
@@ -1946,13 +1971,23 @@
   },
   {
     "op": "replace",
-    "path": "/items/981/publicationTitle",
-    "value": "User modeling"
+    "path": "/items/981/title",
+    "value": "Generating artificial corpora for plan recognition"
   },
   {
     "op": "replace",
-    "path": "/items/981/title",
-    "value": "Generating artificial corpora for plan recognition"
+    "path": "/items/981/pages",
+    "value": "179\u2013188"
+  },
+  {
+    "op": "replace",
+    "path": "/items/981/date",
+    "value": "2005-07"
+  },
+  {
+    "op": "replace",
+    "path": "/items/981/url",
+    "value": "http://dx.doi.org/10.1007/11527886\u20824"
   },
   {
     "op": "add",
@@ -1961,18 +1996,13 @@
   },
   {
     "op": "replace",
-    "path": "/items/982/creators/0/firstName",
-    "value": "Maria"
-  },
-  {
-    "op": "replace",
     "path": "/items/982/creators/0/lastName",
     "value": "Fox"
   },
   {
     "op": "replace",
-    "path": "/items/982/creators/1/firstName",
-    "value": "Alfonso"
+    "path": "/items/982/creators/0/firstName",
+    "value": "Maria"
   },
   {
     "op": "replace",
@@ -1981,13 +2011,13 @@
   },
   {
     "op": "replace",
-    "path": "/items/982/creators/2/creatorType",
-    "value": "author"
+    "path": "/items/982/creators/1/firstName",
+    "value": "Alfonso"
   },
   {
     "op": "replace",
-    "path": "/items/982/creators/2/firstName",
-    "value": "Derek"
+    "path": "/items/982/creators/2/creatorType",
+    "value": "author"
   },
   {
     "op": "replace",
@@ -1996,13 +2026,13 @@
   },
   {
     "op": "replace",
-    "path": "/items/982/creators/3/creatorType",
-    "value": "author"
+    "path": "/items/982/creators/2/firstName",
+    "value": "Derek"
   },
   {
     "op": "replace",
-    "path": "/items/982/creators/3/firstName",
-    "value": "Ivan"
+    "path": "/items/982/creators/3/creatorType",
+    "value": "author"
   },
   {
     "op": "replace",
@@ -2011,13 +2041,18 @@
   },
   {
     "op": "replace",
-    "path": "/items/982/creators/4/firstName",
-    "value": "Derek"
+    "path": "/items/982/creators/3/firstName",
+    "value": "Ivan"
   },
   {
     "op": "replace",
     "path": "/items/982/creators/4/lastName",
     "value": "Long"
+  },
+  {
+    "op": "replace",
+    "path": "/items/982/creators/4/firstName",
+    "value": "Derek"
   },
   {
     "op": "move",
@@ -2055,11 +2090,6 @@
     "value": "FoxGLS:Stability:06"
   },
   {
-    "op": "replace",
-    "path": "/items/982/ISBN",
-    "value": "978-1-57735-270-9"
-  },
-  {
     "op": "move",
     "from": "/items/981/extra/4",
     "path": "/items/982/extra/0",
@@ -2079,8 +2109,13 @@
   },
   {
     "op": "replace",
-    "path": "/items/982/date",
-    "value": "2006"
+    "path": "/items/982/ISBN",
+    "value": "978-1-57735-270-9"
+  },
+  {
+    "op": "replace",
+    "path": "/items/982/title",
+    "value": "Plan stability: Replanning versus plan repair"
   },
   {
     "op": "replace",
@@ -2089,8 +2124,8 @@
   },
   {
     "op": "replace",
-    "path": "/items/982/title",
-    "value": "Plan stability: Replanning versus plan repair"
+    "path": "/items/982/date",
+    "value": "2006"
   },
   {
     "op": "remove",
@@ -2099,13 +2134,13 @@
   },
   {
     "op": "replace",
-    "path": "/items/983/creators/0/firstName",
-    "value": "H\u00e9ctor"
+    "path": "/items/983/creators/0/lastName",
+    "value": "Palacios"
   },
   {
     "op": "replace",
-    "path": "/items/983/creators/0/lastName",
-    "value": "Palacios"
+    "path": "/items/983/creators/0/firstName",
+    "value": "H\u00e9ctor"
   },
   {
     "op": "replace",
@@ -2114,23 +2149,23 @@
   },
   {
     "op": "replace",
-    "path": "/items/983/creators/1/firstName",
-    "value": "Hector"
-  },
-  {
-    "op": "replace",
     "path": "/items/983/creators/1/lastName",
     "value": "Geffner"
   },
   {
     "op": "replace",
-    "path": "/items/983/creators/2/firstName",
-    "value": "Mark S."
+    "path": "/items/983/creators/1/firstName",
+    "value": "Hector"
   },
   {
     "op": "replace",
     "path": "/items/983/creators/2/lastName",
     "value": "Boddy"
+  },
+  {
+    "op": "replace",
+    "path": "/items/983/creators/2/firstName",
+    "value": "Mark S."
   },
   {
     "op": "add",
@@ -2152,13 +2187,13 @@
   },
   {
     "op": "replace",
-    "path": "/items/983/citationKey",
-    "value": "conf/aips/PalaciosG07"
+    "path": "/items/983/publicationTitle",
+    "value": "ICAPS"
   },
   {
     "op": "replace",
-    "path": "/items/983/ISBN",
-    "value": "978-1-57735-344-7"
+    "path": "/items/983/citationKey",
+    "value": "conf/aips/PalaciosG07"
   },
   {
     "op": "move",
@@ -2180,13 +2215,8 @@
   },
   {
     "op": "replace",
-    "path": "/items/983/date",
-    "value": "2007"
-  },
-  {
-    "op": "replace",
-    "path": "/items/983/pages",
-    "value": "264\u2013271"
+    "path": "/items/983/ISBN",
+    "value": "978-1-57735-344-7"
   },
   {
     "op": "replace",
@@ -2195,18 +2225,18 @@
   },
   {
     "op": "replace",
-    "path": "/items/983/publicationTitle",
-    "value": "ICAPS"
-  },
-  {
-    "op": "replace",
     "path": "/items/983/title",
     "value": "From conformant into classical planning: Efficient translations that may be complete too"
   },
   {
     "op": "replace",
-    "path": "/items/984/creators/0/firstName",
-    "value": "John L."
+    "path": "/items/983/pages",
+    "value": "264\u2013271"
+  },
+  {
+    "op": "replace",
+    "path": "/items/983/date",
+    "value": "2007"
   },
   {
     "op": "replace",
@@ -2215,8 +2245,8 @@
   },
   {
     "op": "replace",
-    "path": "/items/984/creators/1/firstName",
-    "value": "Blai"
+    "path": "/items/984/creators/0/firstName",
+    "value": "John L."
   },
   {
     "op": "replace",
@@ -2225,13 +2255,18 @@
   },
   {
     "op": "replace",
-    "path": "/items/984/creators/2/firstName",
-    "value": "Sven"
+    "path": "/items/984/creators/1/firstName",
+    "value": "Blai"
   },
   {
     "op": "replace",
     "path": "/items/984/creators/2/lastName",
     "value": "Koenig"
+  },
+  {
+    "op": "replace",
+    "path": "/items/984/creators/2/firstName",
+    "value": "Sven"
   },
   {
     "op": "remove",
@@ -2253,13 +2288,13 @@
   },
   {
     "op": "replace",
-    "path": "/items/984/citationKey",
-    "value": "conf/aaai/Bresina15"
+    "path": "/items/984/publicationTitle",
+    "value": "AAAI"
   },
   {
     "op": "replace",
-    "path": "/items/984/ISBN",
-    "value": "978-1-57735-698-1"
+    "path": "/items/984/citationKey",
+    "value": "conf/aaai/Bresina15"
   },
   {
     "op": "move",
@@ -2281,8 +2316,13 @@
   },
   {
     "op": "replace",
-    "path": "/items/984/url",
-    "value": "http://www.aaai.org/Library/AAAI/aaai15contents.php"
+    "path": "/items/984/ISBN",
+    "value": "978-1-57735-698-1"
+  },
+  {
+    "op": "replace",
+    "path": "/items/984/title",
+    "value": "Activity planning for a lunar orbital mission"
   },
   {
     "op": "replace",
@@ -2291,13 +2331,8 @@
   },
   {
     "op": "replace",
-    "path": "/items/984/publicationTitle",
-    "value": "AAAI"
-  },
-  {
-    "op": "replace",
-    "path": "/items/984/title",
-    "value": "Activity planning for a lunar orbital mission"
+    "path": "/items/984/url",
+    "value": "http://www.aaai.org/Library/AAAI/aaai15contents.php"
   },
   {
     "op": "remove",
@@ -2306,13 +2341,13 @@
   },
   {
     "op": "replace",
-    "path": "/items/985/creators/0/firstName",
-    "value": "J\u00f6rg"
+    "path": "/items/985/creators/0/lastName",
+    "value": "Hoffmann"
   },
   {
     "op": "replace",
-    "path": "/items/985/creators/0/lastName",
-    "value": "Hoffmann"
+    "path": "/items/985/creators/0/firstName",
+    "value": "J\u00f6rg"
   },
   {
     "op": "replace",
@@ -2321,18 +2356,13 @@
   },
   {
     "op": "replace",
-    "path": "/items/985/creators/1/firstName",
-    "value": "Ronen I."
-  },
-  {
-    "op": "replace",
     "path": "/items/985/creators/1/lastName",
     "value": "Brafman"
   },
   {
     "op": "replace",
-    "path": "/items/985/creators/2/firstName",
-    "value": "Carmel"
+    "path": "/items/985/creators/1/firstName",
+    "value": "Ronen I."
   },
   {
     "op": "replace",
@@ -2341,8 +2371,8 @@
   },
   {
     "op": "replace",
-    "path": "/items/985/creators/3/firstName",
-    "value": "Patrik"
+    "path": "/items/985/creators/2/firstName",
+    "value": "Carmel"
   },
   {
     "op": "replace",
@@ -2351,8 +2381,8 @@
   },
   {
     "op": "replace",
-    "path": "/items/985/creators/4/firstName",
-    "value": "Shlomo"
+    "path": "/items/985/creators/3/firstName",
+    "value": "Patrik"
   },
   {
     "op": "replace",
@@ -2361,13 +2391,18 @@
   },
   {
     "op": "replace",
-    "path": "/items/985/citationKey",
-    "value": "conf/aips/000115"
+    "path": "/items/985/creators/4/firstName",
+    "value": "Shlomo"
   },
   {
     "op": "replace",
-    "path": "/items/985/ISBN",
-    "value": "978-1-57735-731-5"
+    "path": "/items/985/publicationTitle",
+    "value": "ICAPS"
+  },
+  {
+    "op": "replace",
+    "path": "/items/985/citationKey",
+    "value": "conf/aips/000115"
   },
   {
     "op": "move",
@@ -2389,18 +2424,8 @@
   },
   {
     "op": "replace",
-    "path": "/items/985/url",
-    "value": "http://www.aaai.org/Library/ICAPS/icaps15contents.php"
-  },
-  {
-    "op": "replace",
-    "path": "/items/985/date",
-    "value": "2015"
-  },
-  {
-    "op": "replace",
-    "path": "/items/985/pages",
-    "value": "364\u2013372"
+    "path": "/items/985/ISBN",
+    "value": "978-1-57735-731-5"
   },
   {
     "op": "replace",
@@ -2409,8 +2434,8 @@
   },
   {
     "op": "replace",
-    "path": "/items/985/publicationTitle",
-    "value": "ICAPS"
+    "path": "/items/985/title",
+    "value": "Simulated penetration testing: From \"Dijkstra\" to \"Turing Test++\""
   },
   {
     "op": "replace",
@@ -2419,8 +2444,18 @@
   },
   {
     "op": "replace",
-    "path": "/items/985/title",
-    "value": "Simulated penetration testing: From \"Dijkstra\" to \"Turing Test++\""
+    "path": "/items/985/pages",
+    "value": "364\u2013372"
+  },
+  {
+    "op": "replace",
+    "path": "/items/985/date",
+    "value": "2015"
+  },
+  {
+    "op": "replace",
+    "path": "/items/985/url",
+    "value": "http://www.aaai.org/Library/ICAPS/icaps15contents.php"
   },
   {
     "op": "remove",
@@ -2431,17 +2466,6 @@
     "op": "add",
     "path": "/items/986/ISBN",
     "value": "978-3-540-44190-8"
-  },
-  {
-    "op": "move",
-    "from": "/items/985/series",
-    "path": "/items/986/series",
-    ":value": "Lecture notes in computer science"
-  },
-  {
-    "op": "add",
-    "path": "/items/986/url",
-    "value": "http://dx.doi.org/10.1007/3-540-45757-7_52"
   },
   {
     "op": "add",
@@ -2455,9 +2479,15 @@
     ":value": "English"
   },
   {
-    "op": "replace",
-    "path": "/items/986/creators/0/firstName",
-    "value": "Michael"
+    "op": "move",
+    "from": "/items/985/series",
+    "path": "/items/986/series",
+    ":value": "Lecture notes in computer science"
+  },
+  {
+    "op": "add",
+    "path": "/items/986/url",
+    "value": "http://dx.doi.org/10.1007/3-540-45757-7_52"
   },
   {
     "op": "replace",
@@ -2466,13 +2496,18 @@
   },
   {
     "op": "replace",
-    "path": "/items/986/creators/1/firstName",
-    "value": "Hansi"
+    "path": "/items/986/creators/0/firstName",
+    "value": "Michael"
   },
   {
     "op": "replace",
     "path": "/items/986/creators/1/lastName",
     "value": "Kraus"
+  },
+  {
+    "op": "replace",
+    "path": "/items/986/creators/1/firstName",
+    "value": "Hansi"
   },
   {
     "op": "add",
@@ -2513,6 +2548,11 @@
   },
   {
     "op": "replace",
+    "path": "/items/986/publicationTitle",
+    "value": "Logics in artificial intelligence"
+  },
+  {
+    "op": "replace",
     "path": "/items/986/citationKey",
     "value": "minock-kraus-LIAI02"
   },
@@ -2530,23 +2570,13 @@
   },
   {
     "op": "replace",
-    "path": "/items/986/date",
-    "value": "2002"
-  },
-  {
-    "op": "replace",
-    "path": "/items/986/pages",
-    "value": "545-548"
-  },
-  {
-    "op": "replace",
-    "path": "/items/986/publicationTitle",
-    "value": "Logics in artificial intelligence"
-  },
-  {
-    "op": "replace",
     "path": "/items/986/volume",
     "value": "2424"
+  },
+  {
+    "op": "replace",
+    "path": "/items/986/title",
+    "value": "Z-log: Applying system-z"
   },
   {
     "op": "replace",
@@ -2555,8 +2585,19 @@
   },
   {
     "op": "replace",
-    "path": "/items/986/title",
-    "value": "Z-log: Applying system-z"
+    "path": "/items/986/pages",
+    "value": "545-548"
+  },
+  {
+    "op": "replace",
+    "path": "/items/986/date",
+    "value": "2002"
+  },
+  {
+    "op": "move",
+    "from": "/items/986/issue",
+    "path": "/items/987/issue",
+    ":value": "2"
   },
   {
     "op": "move",
@@ -2584,10 +2625,9 @@
     ]
   },
   {
-    "op": "move",
-    "from": "/items/986/issue",
-    "path": "/items/987/issue",
-    ":value": "2"
+    "op": "replace",
+    "path": "/items/987/creators/0/lastName",
+    "value": "Bagchi"
   },
   {
     "op": "replace",
@@ -2596,18 +2636,13 @@
   },
   {
     "op": "replace",
-    "path": "/items/987/creators/0/lastName",
-    "value": "Bagchi"
+    "path": "/items/987/creators/1/lastName",
+    "value": "Mahanti"
   },
   {
     "op": "replace",
     "path": "/items/987/creators/1/firstName",
     "value": "A."
-  },
-  {
-    "op": "replace",
-    "path": "/items/987/creators/1/lastName",
-    "value": "Mahanti"
   },
   {
     "op": "remove",
@@ -2656,13 +2691,18 @@
   },
   {
     "op": "replace",
-    "path": "/items/987/citationKey",
-    "value": "Bagchi:1983:AHS"
+    "path": "/items/987/ISSN",
+    "value": "0304-3975 (print), 1879-2294 (electronic)"
   },
   {
     "op": "replace",
-    "path": "/items/987/ISSN",
-    "value": "0304-3975 (print), 1879-2294 (electronic)"
+    "path": "/items/987/publicationTitle",
+    "value": "Theoretical Computer Science"
+  },
+  {
+    "op": "replace",
+    "path": "/items/987/citationKey",
+    "value": "Bagchi:1983:AHS"
   },
   {
     "op": "remove",
@@ -2743,8 +2783,13 @@
   },
   {
     "op": "replace",
-    "path": "/items/987/date",
-    "value": "1983-07"
+    "path": "/items/987/volume",
+    "value": "24"
+  },
+  {
+    "op": "replace",
+    "path": "/items/987/title",
+    "value": "Admissible heuristic search in AND/\u200bOR graphs"
   },
   {
     "op": "replace",
@@ -2753,18 +2798,14 @@
   },
   {
     "op": "replace",
-    "path": "/items/987/publicationTitle",
-    "value": "Theoretical Computer Science"
+    "path": "/items/987/date",
+    "value": "1983-07"
   },
   {
-    "op": "replace",
-    "path": "/items/987/volume",
-    "value": "24"
-  },
-  {
-    "op": "replace",
-    "path": "/items/987/title",
-    "value": "Admissible heuristic search in AND/\u200bOR graphs"
+    "op": "move",
+    "from": "/items/988/note",
+    "path": "/items/971/note",
+    ":value": "Import errors found: <ul><li>Unresolved @string reference &quot;AAAI-91&quot;</li><li>Unresolved @string reference &quot;IJCAI-75&quot;</li><li>Unresolved @string reference &quot;IJCAI-73&quot;</li><li>Unresolved @string reference &quot;ERLBAUM-ADDRESS&quot;</li><li>Unresolved @string reference &quot;ERLBAUM&quot;</li><li>Unresolved @string reference &quot;AIJ&quot;</li><li>Unresolved @string reference &quot;IJCAI-77&quot;</li><li>Unresolved @string reference &quot;ACL-87&quot;</li><li>Unresolved @string reference &quot;LEA&quot;</li><li>Unresolved @string reference &quot;CI&quot;</li><li>Unresolved @string reference &quot;IJCAI-81&quot;</li><li>Unresolved @string reference &quot;September&quot;</li><li>Unresolved @string reference &quot;CL&quot;</li><li>Unresolved @string reference &quot;COGSCI&quot;</li><li>Unresolved @string reference &quot;AIM&quot;</li><li>Unresolved @string reference &quot;CSLI&quot;</li><li>Unresolved @string reference &quot;AAAI-82&quot;</li><li>Unresolved @string reference &quot;March&quot;</li><li>Unresolved @string reference &quot;MITAI&quot;</li><li>Unresolved @string reference &quot;AAAI-88&quot;</li><li>Unresolved @string reference &quot;January&quot;</li><li>Unresolved @string reference &quot;AAAI-83&quot;</li><li>Unresolved @string reference &quot;IJCAI-83&quot;</li><li>Unresolved @string reference &quot;FTCW&quot;</li><li>Unresolved @string reference &quot;AAAI-80&quot;</li><li>Unresolved @string reference &quot;MCDERMOTT&quot;</li><li>Unresolved @string reference &quot;IJIS&quot;</li><li>Unresolved @string reference &quot;ML&quot;</li><li>Unresolved @string reference &quot;JAIR&quot;</li><li>Unresolved @string reference &quot;REITER&quot;</li><li>Unresolved @string reference &quot;AW-ADDRESS&quot;</li><li>Unresolved @string reference &quot;KAUFMANN&quot;</li><li>Unresolved @string reference &quot;WILKINS&quot;</li><li>Unresolved @string reference &quot;AAAI-87&quot;</li><li>Unresolved @string reference &quot;ACL-86&quot;</li><li>Unresolved @string reference &quot;AAAI-86&quot;</li><li>Unresolved @string reference &quot;ACL-85&quot;</li><li>Unresolved @string reference &quot;IJCAI-87&quot;</li><li>Unresolved @string reference &quot;ACL-88&quot;</li><li>Unresolved @string reference &quot;SRI-ADDRESS&quot;</li><li>Unresolved @string reference &quot;December&quot;</li><li>Unresolved @string reference &quot;CSLI-ADDRESS&quot;</li><li>Unresolved @string reference &quot;October&quot;</li><li>Unresolved @string reference &quot;AAAI-90&quot;</li><li>Unresolved @string reference &quot;MITP&quot;</li><li>Unresolved @string reference &quot;MITP-ADDRESS&quot;</li><li>Unresolved @string reference &quot;MIT-ADDRESS&quot;</li><li>Unresolved @string reference &quot;BSTJ&quot;</li><li>Unresolved @string reference &quot;November&quot;</li><li>Unresolved @string reference &quot;KAUFMANN-ADDRESS&quot;</li><li>Unresolved @string reference &quot;AAAI-PRESS&quot;</li><li>Unresolved @string reference &quot;IJCAI-89&quot;</li><li>Unresolved @string reference &quot;IJCAI-85&quot;</li><li>Unresolved @string reference &quot;SMC&quot;</li><li>Unresolved @string reference &quot;GINSBERG&quot;</li><li>Unresolved @string reference &quot;EXPERT&quot;</li><li>Unresolved @string reference &quot;UDUB&quot;</li><li>Unresolved @string reference &quot;NEW-AAAI-PUB&quot;</li><li>Unresolved @string reference &quot;TCOMPUTERS&quot;</li><li>Unresolved @string reference &quot;CIJ&quot;</li><li>Unresolved @string reference &quot;PAMI&quot;</li><li>Unresolved @string reference &quot;ICSI&quot;</li><li>Unresolved @string reference &quot;ELSEVIER&quot;</li><li>Unresolved @string reference &quot;TSWE&quot;</li><li>Unresolved @string reference &quot;SRI&quot;</li><li>Unresolved @string reference &quot;INGRAND&quot;</li><li>Unresolved @string reference &quot;KSL&quot;</li><li>Unresolved @string reference &quot;STANFORD-ADDRESS&quot;</li><li>Unresolved @string reference &quot;CMUSCS&quot;</li><li>Unresolved @string reference &quot;CMU-ADDRESS&quot;</li><li>Unresolved @string reference &quot;AAAI&quot;</li><li>Unresolved @string reference &quot;AAAI-PRESS-ADDRESS&quot;</li><li>Unresolved @string reference &quot;JLC&quot;</li><li>Unresolved @string reference &quot;IJCAI-97&quot;</li><li>Unresolved @string reference &quot;DKE&quot;</li><li>Unresolved @string reference &quot;AAII&quot;</li><li>Unresolved @string reference &quot;ar&quot;</li><li>Unresolved @string reference &quot;MPOLLACK&quot;</li><li>Unresolved @string reference &quot;SPRINGER&quot;</li><li>Unresolved @string reference &quot;ETAI&quot;</li><li>Unresolved @string reference &quot;amai&quot;</li><li>Unresolved @string reference &quot;LNCS&quot;</li><li>Unresolved @string reference &quot;FREED&quot;</li><li>Unresolved @string reference &quot;ICAPS&quot;</li><li>Unresolved @string reference &quot;ILP-05&quot;</li><li>Unresolved @string reference &quot;ICML-97&quot;</li><li>Unresolved @string reference &quot;ICML-06&quot;</li><li>Unresolved @string reference &quot;IJCAI&quot;</li><li>Unresolved @string reference &quot;AAAI-99&quot;</li><li>Unresolved @string reference &quot;PICAPS&quot;</li></ul>"
   },
   {
     "op": "move",
@@ -2776,12 +2817,6 @@
         "type": 1
       }
     ]
-  },
-  {
-    "op": "move",
-    "from": "/items/988/note",
-    "path": "/items/971/note",
-    ":value": "Import errors found: <ul><li>Unresolved @string reference &quot;AAAI-91&quot;</li><li>Unresolved @string reference &quot;IJCAI-75&quot;</li><li>Unresolved @string reference &quot;IJCAI-73&quot;</li><li>Unresolved @string reference &quot;ERLBAUM-ADDRESS&quot;</li><li>Unresolved @string reference &quot;ERLBAUM&quot;</li><li>Unresolved @string reference &quot;AIJ&quot;</li><li>Unresolved @string reference &quot;IJCAI-77&quot;</li><li>Unresolved @string reference &quot;ACL-87&quot;</li><li>Unresolved @string reference &quot;LEA&quot;</li><li>Unresolved @string reference &quot;CI&quot;</li><li>Unresolved @string reference &quot;IJCAI-81&quot;</li><li>Unresolved @string reference &quot;September&quot;</li><li>Unresolved @string reference &quot;CL&quot;</li><li>Unresolved @string reference &quot;COGSCI&quot;</li><li>Unresolved @string reference &quot;AIM&quot;</li><li>Unresolved @string reference &quot;CSLI&quot;</li><li>Unresolved @string reference &quot;AAAI-82&quot;</li><li>Unresolved @string reference &quot;March&quot;</li><li>Unresolved @string reference &quot;MITAI&quot;</li><li>Unresolved @string reference &quot;AAAI-88&quot;</li><li>Unresolved @string reference &quot;January&quot;</li><li>Unresolved @string reference &quot;AAAI-83&quot;</li><li>Unresolved @string reference &quot;IJCAI-83&quot;</li><li>Unresolved @string reference &quot;FTCW&quot;</li><li>Unresolved @string reference &quot;AAAI-80&quot;</li><li>Unresolved @string reference &quot;MCDERMOTT&quot;</li><li>Unresolved @string reference &quot;IJIS&quot;</li><li>Unresolved @string reference &quot;ML&quot;</li><li>Unresolved @string reference &quot;JAIR&quot;</li><li>Unresolved @string reference &quot;REITER&quot;</li><li>Unresolved @string reference &quot;AW-ADDRESS&quot;</li><li>Unresolved @string reference &quot;KAUFMANN&quot;</li><li>Unresolved @string reference &quot;WILKINS&quot;</li><li>Unresolved @string reference &quot;AAAI-87&quot;</li><li>Unresolved @string reference &quot;ACL-86&quot;</li><li>Unresolved @string reference &quot;AAAI-86&quot;</li><li>Unresolved @string reference &quot;ACL-85&quot;</li><li>Unresolved @string reference &quot;IJCAI-87&quot;</li><li>Unresolved @string reference &quot;ACL-88&quot;</li><li>Unresolved @string reference &quot;SRI-ADDRESS&quot;</li><li>Unresolved @string reference &quot;December&quot;</li><li>Unresolved @string reference &quot;CSLI-ADDRESS&quot;</li><li>Unresolved @string reference &quot;October&quot;</li><li>Unresolved @string reference &quot;AAAI-90&quot;</li><li>Unresolved @string reference &quot;MITP&quot;</li><li>Unresolved @string reference &quot;MITP-ADDRESS&quot;</li><li>Unresolved @string reference &quot;MIT-ADDRESS&quot;</li><li>Unresolved @string reference &quot;BSTJ&quot;</li><li>Unresolved @string reference &quot;November&quot;</li><li>Unresolved @string reference &quot;KAUFMANN-ADDRESS&quot;</li><li>Unresolved @string reference &quot;AAAI-PRESS&quot;</li><li>Unresolved @string reference &quot;IJCAI-89&quot;</li><li>Unresolved @string reference &quot;IJCAI-85&quot;</li><li>Unresolved @string reference &quot;SMC&quot;</li><li>Unresolved @string reference &quot;GINSBERG&quot;</li><li>Unresolved @string reference &quot;EXPERT&quot;</li><li>Unresolved @string reference &quot;UDUB&quot;</li><li>Unresolved @string reference &quot;NEW-AAAI-PUB&quot;</li><li>Unresolved @string reference &quot;TCOMPUTERS&quot;</li><li>Unresolved @string reference &quot;CIJ&quot;</li><li>Unresolved @string reference &quot;PAMI&quot;</li><li>Unresolved @string reference &quot;ICSI&quot;</li><li>Unresolved @string reference &quot;ELSEVIER&quot;</li><li>Unresolved @string reference &quot;TSWE&quot;</li><li>Unresolved @string reference &quot;SRI&quot;</li><li>Unresolved @string reference &quot;INGRAND&quot;</li><li>Unresolved @string reference &quot;KSL&quot;</li><li>Unresolved @string reference &quot;STANFORD-ADDRESS&quot;</li><li>Unresolved @string reference &quot;CMUSCS&quot;</li><li>Unresolved @string reference &quot;CMU-ADDRESS&quot;</li><li>Unresolved @string reference &quot;AAAI&quot;</li><li>Unresolved @string reference &quot;AAAI-PRESS-ADDRESS&quot;</li><li>Unresolved @string reference &quot;JLC&quot;</li><li>Unresolved @string reference &quot;IJCAI-97&quot;</li><li>Unresolved @string reference &quot;DKE&quot;</li><li>Unresolved @string reference &quot;AAII&quot;</li><li>Unresolved @string reference &quot;ar&quot;</li><li>Unresolved @string reference &quot;MPOLLACK&quot;</li><li>Unresolved @string reference &quot;SPRINGER&quot;</li><li>Unresolved @string reference &quot;ETAI&quot;</li><li>Unresolved @string reference &quot;amai&quot;</li><li>Unresolved @string reference &quot;LNCS&quot;</li><li>Unresolved @string reference &quot;FREED&quot;</li><li>Unresolved @string reference &quot;ICAPS&quot;</li><li>Unresolved @string reference &quot;ILP-05&quot;</li><li>Unresolved @string reference &quot;ICML-97&quot;</li><li>Unresolved @string reference &quot;ICML-06&quot;</li><li>Unresolved @string reference &quot;IJCAI&quot;</li><li>Unresolved @string reference &quot;AAAI-99&quot;</li><li>Unresolved @string reference &quot;PICAPS&quot;</li></ul>"
   },
   {
     "op": "add",
@@ -2826,35 +2861,8 @@
   },
   {
     "op": "add",
-    "path": "/items/988/citationKey",
-    "value": "nau03a"
-  },
-  {
-    "op": "add",
     "path": "/items/988/ISSN",
     "value": "1076-9757"
-  },
-  {
-    "op": "move",
-    "from": "/items/987/abstractNote",
-    "path": "/items/988/abstractNote",
-    ":value": "The SHOP2 planning system received one of the awards for distinguished performance in the 2002 International Planning Competition. This paper describes the features of SHOP2 which enabled it to excel in the competition, especially those aspects of SHOP2 that deal with temporal and metric planning domains."
-  },
-  {
-    "op": "move",
-    "from": "/items/987/url",
-    "path": "/items/988/url",
-    ":value": "http://www.cs.cmu.edu/afs/cs/project/jair/pub/volume20/nau03a.pdf"
-  },
-  {
-    "op": "add",
-    "path": "/items/988/date",
-    "value": "2003"
-  },
-  {
-    "op": "add",
-    "path": "/items/988/pages",
-    "value": "379\u2013404"
   },
   {
     "op": "add",
@@ -2863,8 +2871,8 @@
   },
   {
     "op": "add",
-    "path": "/items/988/volume",
-    "value": "20"
+    "path": "/items/988/citationKey",
+    "value": "nau03a"
   },
   {
     "op": "add",
@@ -2875,8 +2883,35 @@
   },
   {
     "op": "add",
+    "path": "/items/988/volume",
+    "value": "20"
+  },
+  {
+    "op": "move",
+    "from": "/items/987/abstractNote",
+    "path": "/items/988/abstractNote",
+    ":value": "The SHOP2 planning system received one of the awards for distinguished performance in the 2002 International Planning Competition. This paper describes the features of SHOP2 which enabled it to excel in the competition, especially those aspects of SHOP2 that deal with temporal and metric planning domains."
+  },
+  {
+    "op": "add",
     "path": "/items/988/title",
     "value": "SHOP2: An HTN planning system"
+  },
+  {
+    "op": "add",
+    "path": "/items/988/pages",
+    "value": "379\u2013404"
+  },
+  {
+    "op": "add",
+    "path": "/items/988/date",
+    "value": "2003"
+  },
+  {
+    "op": "move",
+    "from": "/items/987/url",
+    "path": "/items/988/url",
+    ":value": "http://www.cs.cmu.edu/afs/cs/project/jair/pub/volume20/nau03a.pdf"
   },
   {
     "op": "replace",

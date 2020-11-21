@@ -488,7 +488,8 @@ def template(tmpl):
 print('  writing typing for serialized item')
 with open(os.path.join(TYPINGS, 'serialized-item.d.ts'), 'w') as f:
   fields = sorted(list(set(field.value for field in jsonpath.parse('*.itemTypes.*.fields.*').find(SCHEMA))))
-  print(template('items/serialized-item.d.ts.mako').render(fields=fields).strip(), file=f)
+  itemTypes = sorted(list(set(field.value for field in jsonpath.parse('*.itemTypes.*.itemType').find(SCHEMA))))
+  print(template('items/serialized-item.d.ts.mako').render(fields=fields, itemTypes=itemTypes).strip(), file=f)
 
 print('  writing field simplifier')
 with open(os.path.join(ITEMS, 'items.ts'), 'w') as f:

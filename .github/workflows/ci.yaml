@@ -37,6 +37,7 @@ jobs:
 
     - name: install python/node dependencies
       run: |
+        pip install packaging
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         npm install
@@ -82,6 +83,7 @@ jobs:
           ${{ runner.os }}-
     - name: install python dependencies
       run: |
+        pip install packaging
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - run: curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
@@ -93,7 +95,7 @@ jobs:
       with:
         run: ./test/behave --client ${{ matrix.client }} --format json.pretty --outfile behave.json --format travis --balance ${{ matrix.slice }}
     - uses: actions/upload-artifact@v2
-      if: failure()
+      if: ${{ failure() }}
       with:
         name: debug log ${{ matrix.client }} ${{ matrix.slice }}
         path: '~/.BBTZ5TEST.log'
@@ -131,3 +133,6 @@ jobs:
 
     - run: npm install
     - run: npm run release
+      env:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+

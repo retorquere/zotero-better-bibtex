@@ -3,11 +3,9 @@
   title = {{`Neural'} computation of decisions in optimization problems.},
   author = {Hopfield, J. J. and Tank, D. W.},
   year = {xx 1985},
-  journaltitle = {Biological Cybernetics},
   eprint = {4027280},
-  eprinttype = {pubmed}
+  eprinttype = {pubmed},
+  organization = {Biological Cybernetics}
 }
-% == BibLateX quality report for HopfieldTank85:
-% Unexpected field 'journaltitle'
 
 

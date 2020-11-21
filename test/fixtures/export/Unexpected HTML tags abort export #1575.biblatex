@@ -3,7 +3,6 @@
   title = {G\'erer la documentation I - Quelques consid\'erations g\'en\'erales},
   author = {Heimburger, Franziska},
   date = {2012-10-17T12:50:00+00:00},
-  journaltitle = {La bo\^ite \`a outils des historien{$\cdot$}ne{$\cdot$}s},
   url = {http://www.boiteaoutils.info/2012/10/gerer-la-documentation-i-quelques/},
   urldate = {2018-10-23},
   abstract = {\'Emilien~a lanc\'e cet \'et\'e une~r\'eflexion~sur la gestion de la documentation, en partant de sa situation de fin de th\`ese et sp\'ecifiquement d'un incident qui l'amenait \`a revoir ses pratiques de sauvegarde. J'aimerais revenir sur ces questions \textendash{} dans un premier billet avec quelques possibilit\'es informatiques existantes pour g\'erer l'information n\'ecessaires \`a la r\'edaction d'un travail...},
@@ -24,7 +23,8 @@ J'ajoute un dernier \'el\'ement parce qu'il me fascine et que je compte en repar
 \par
 Luhmann notait toutes les id\'ees qui lui venaient de ses lectures ou d'ailleurs et il les reliait aux notes~pr\'eexistantes~par un syst\`eme de num\'erotation extensible et sous-divisible \`a l'infini. Ils ne prenait pas des notes pour un projet sp\'ecifique, mais alimentait en quelque sorte en permanence sa base, le \guillemotleft ~Zettelkasten~\guillemotright. Dans l'analyse cit\'ee ci-dessus il explique qu'il se faisait souvent surprendre par les liens entre id\'ees qui deviennent apparents par son syst\`eme de classement et lui inspirent de nouveaux travaux. Pour Luhmann, sa \guillemotleft ~bo\^ite \`a fiches~\guillemotright{} est son \guillemotleft ~Zweitged\"achtnis~\guillemotright, une sorte de cerveau secondaire ou deuxi\`eme cerveau qui fait appara\^itre ses id\'ees sous d'autres angles. Apr\`es la mort de Luhmann un long combat a commenc\'e entre les ayant-droit et les chercheurs int\'eress\'es par ce fond \'enorme que repr\'esente la \guillemotleft ~boite \`a fiches~\guillemotright. Il est aujourd'hui \href{http://www.stifterverband.info/presse/pressemitteilungen/2011/2011_06_15_luhmann_nachlass/index.html}{r\'esolu} et des chercheurs essaient maintenant de \href{http://www.dradio.de/dlf/sendungen/kulturheute/1496578/}{comprendre et exploiter cet objet insolite}.
 \par
-Voici une vid\'eo o\`u Luhmann lui-m\^eme explique le fonctionnement de son \guillemotleft ~Zettelkasten~\guillemotright :}
+Voici une vid\'eo o\`u Luhmann lui-m\^eme explique le fonctionnement de son \guillemotleft ~Zettelkasten~\guillemotright :},
+  organization = {{La bo\^ite \`a outils des historien{$\cdot$}ne{$\cdot$}s}}
 }
 
 

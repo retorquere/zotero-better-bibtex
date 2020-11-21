@@ -3,7 +3,7 @@ declare global {
   interface ISerializedItem {
     // fields common to all items
     itemID: string | number
-    itemType: string
+    itemType: ${' | '.join(["'" + itemType + "'" for itemType in itemTypes])}
     dateAdded: string
     dateModified: string
     creators: { creatorType?: string, name?: string, firstName?: string, lastName?:string, fieldMode?: number, source?: string }[]
@@ -20,7 +20,6 @@ declare global {
 
     relations: { 'dc:relation': string[] }
     uri: string
-    referenceType: string
     cslType: string
     cslVolumeTitle: string
     citationKey: string
