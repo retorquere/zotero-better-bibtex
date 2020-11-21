@@ -817,7 +817,6 @@ export class Reference {
       if (!(Translator.BetterBibTeX && Translator.preferences.bibtexURL === 'note')) this.add({ name: 'note', value: this.item.notes?.join('<p></p>'), html: true })
     }
 
-    const tex = Translator.BetterBibLaTeX ? 'biblatex' : 'bibtex'
     const bibtexStrings = Translator.preferences.exportBibTeXStrings.startsWith('match')
     for (const [name, field] of Object.entries(this.item.extraFields.tex)) {
       // psuedo-var, sets the reference type. Repeat application here because this needs to override all else.
@@ -825,8 +824,6 @@ export class Reference {
         this.referencetype = field.value
         continue
       }
-
-      if (field.type && field.type !== tex) continue
 
       switch (name) {
         case 'mr':

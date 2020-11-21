@@ -1,7 +1,7 @@
 import * as mapping from '../gen/items/extra-fields.json'
 import * as CSL from '../gen/citeproc'
 
-type TeXString = { value: string, raw?: boolean, type?: 'biblatex' | 'bibtex' }
+type TeXString = { value: string, raw?: boolean }
 
 export type Fields = {
   kv: Record<string, string>
@@ -125,13 +125,12 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
     }
 
     if (options.tex && tex && !key.includes(' ')) {
-      extraFields.tex[key] = { value, raw }
-      if (tex === 'bibtex' || tex === 'biblatex') extraFields.tex[key].type = tex
+      extraFields.tex[tex + key] = { value, raw }
       return false
     }
 
     if (options.tex && !tex && otherFields.includes(key.replace(/[- ]/g, ''))) {
-      extraFields.tex[key.replace(/[- ]/g, '')] = { value }
+      extraFields.tex['tex.' + key.replace(/[- ]/g, '')] = { value }
       return false
     }
 
@@ -153,9 +152,17 @@ export function set(extra, options: SetOptions = {}) {
 
   if (options.tex) {
     for (const name of Object.keys(options.tex).sort()) {
+      let prefix, field
+      const m = name.match(/^((?:bib(?:la)?)?tex\.)(.*)/)
+      if (m) {
+        [ , prefix, field ] = m
+      } else {
+        prefix = 'tex.'
+        field = name
+      }
+      if (otherFields.includes(field)) prefix = ''
       const value = options.tex[name]
-      const prefix = otherFields.includes(name) ? '' : 'tex.'
-      parsed.extra += `\n${prefix}${casing[name] || name}${value.raw ? '=' : ':'} ${value.value}`
+      parsed.extra += `\n${prefix}${casing[field] || field}${value.raw ? '=' : ':'} ${value.value}`
     }
   }
 
