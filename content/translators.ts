@@ -556,6 +556,9 @@ export let Translators = new class { // tslint:disable-line:variable-name
       Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${header.label}.js`),
     ].join('\n')
 
+    const bbtjson = 'BetterBibTeX JSON'
+    const bbtjson_debug = `\u672B ${bbtjson} (for debugging)`
+    if (header.label === bbtjson && installed && installed.label !== bbtjson_debug) installed.hash = ''
     if (installed?.configOptions?.hash === header.configOptions.hash) return false
 
     const cache = Cache.getCollection(header.label)
@@ -567,7 +570,11 @@ export let Translators = new class { // tslint:disable-line:variable-name
     }
 
     try {
-      await Zotero.Translators.save(header, code)
+      if (header.label === bbtjson) {
+        await Zotero.Translators.save({...header, label: bbtjson_debug}, code)
+      } else {
+        await Zotero.Translators.save(header, code)
+      }
 
     } catch (err) {
       log.error('Translator.install', header, 'failed:', err)
