@@ -9,14 +9,14 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2019-03-30 15:18:21"
+	"lastUpdated": "2020-10-18 04:03:07"
 }
 
 /*
 	***** BEGIN LICENSE BLOCK *****
 
 	Copyright © 2017 Philipp Zumstein
-	
+
 	This file is part of Zotero.
 
 	Zotero is free software: you can redistribute it and/or modify
@@ -37,34 +37,41 @@
 
 
 // attr()/text() v2
+// eslint-disable-next-line
 function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null}
 
 function detectWeb(doc, url) {
 	if (url.includes('/publication/')) {
-		var type = text(doc, 'div.publication-meta strong');
+		var type = text(doc, "span.research-detail-header-section__badge");
 		if (!type) {
+			type = text(doc, '[data-testid="research-meta-type"]');
+			if (!type) {
 			// for logged in users (yes, really...)
-			type = text(doc, 'b[data-reactid]');
+				Zotero.debug('trying logged in way');
+				type = text(doc, 'b[data-reactid]');
+			}
 		}
-		type = type.replace('(PDF Available)', '').trim();
+		// Z.debug(type)
+		// type = type.replace('(PDF Available)', '').trim();
 		switch (type) {
-		case "Data":// until we have a data itemType
-		case "Article":
-			return "journalArticle";
-		case "Conference Paper":
-			return "conferencePaper";
-		case "Chapter":
-			return "bookSection";
-		case "Thesis":
-			return "thesis";
-		case "Research":
-			return "report";
-		case "Presentation":
-			return "presentation";
-		default:
-			return "book";
+			case "Data":// until we have a data itemType
+			case "Article":
+				return "journalArticle";
+			case "Conference Paper":
+				return "conferencePaper";
+			case "Chapter":
+				return "bookSection";
+			case "Thesis":
+				return "thesis";
+			case "Research":
+				return "report";
+			case "Presentation":
+				return "presentation";
+			default:
+				return "book";
 		}
-	} else if ((url.match('/search(\\?|/)?') || url.includes('/profile/') || url.includes('/scientific-contributions/')) && getSearchResults(doc, true)) {
+	}
+	else if ((url.includes('/search') || url.includes('/profile/') || url.includes('/scientific-contributions/')) && getSearchResults(doc, true)) {
 		return "multiple";
 	}
 	return false;
@@ -101,7 +108,8 @@ function doWeb(doc, url) {
 			ZU.processDocuments(articles, scrape);
 			return true;
 		});
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }
@@ -129,7 +137,7 @@ function scrape(doc, url) {
 		if (type == "presentation") text = text.replace('TY  - BOOK', 'TY  - SLIDE');
 		if (type == "journalArticle") text = text.replace('TY  - BOOK', 'TY  - JOUR');
 		if (type == "thesis") text = text.replace('TY  - BOOK', 'TY  - THES');
-		
+
 		var translator = Zotero.loadTranslator("import");
 		translator.setTranslator("32d59d2d-b65a-4da4-b0a3-bdd3cfb979e7");
 		translator.setString(text);
@@ -178,6 +186,10 @@ var testCases = [
 				"shortTitle": "Academic social networking sites",
 				"volume": "118",
 				"attachments": [
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
+					},
 					{
 						"title": "ResearchGate Link",
 						"snapshot": false
@@ -306,7 +318,7 @@ var testCases = [
 						"creatorType": "author"
 					},
 					{
-						"lastName": "Ali Özler",
+						"lastName": "Özler",
 						"firstName": "Mehmet",
 						"creatorType": "author"
 					}

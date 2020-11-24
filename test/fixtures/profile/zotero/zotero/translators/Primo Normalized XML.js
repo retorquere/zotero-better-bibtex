@@ -1,17 +1,17 @@
 {
 	"translatorID": "efd737c9-a227-4113-866e-d57fbc0684ca",
+	"translatorType": 1,
 	"label": "Primo Normalized XML",
 	"creator": "Philipp Zumstein",
 	"target": "xml",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
+	"inRepository": true,
 	"configOptions": {
 		"dataMode": "xml/dom"
 	},
-	"inRepository": true,
-	"translatorType": 1,
-	"lastUpdated": "2019-06-10 08:28:21"
+	"lastUpdated": "2020-11-12 02:00:00"
 }
 
 /*
@@ -58,68 +58,68 @@ function doImport() {
 	}
 	
 	switch (itemType.toLowerCase()) {
-	case 'book':
-	case 'ebook':
-	case 'pbook':
-	case 'books':
-	case 'score':
-	case 'journal':		// as long as we don't have a periodical item type;
-		item.itemType = "book";
-		break;
-	case 'audio':
-	case 'sound_recording':
-		item.itemType = "audioRecording";
-		break;
-	case 'video':
-	case 'dvd':
-		item.itemType = "videoRecording";
-		break;
-	case 'computer_file':
-		item.itemType = "computerProgram";
-		break;
-	case 'report':
-		item.itemType = "report";
-		break;
-	case 'webpage':
-		item.itemType = "webpage";
-		break;
-	case 'article':
-	case 'review':
-		item.itemType = "journalArticle";
-		break;
-	case 'thesis':
-	case 'dissertation':
-		item.itemType = "thesis";
-		break;
-	case 'archive_manuscript':
-	case 'object':
-		item.itemType = "manuscript";
-		break;
-	case 'map':
-		item.itemType = "map";
-		break;
-	case 'reference_entry':
-		item.itemType = "encyclopediaArticle";
-		break;
-	case 'image':
-		item.itemType = "artwork";
-		break;
-	case 'newspaper_article':
-		item.itemType = "newspaperArticle";
-		break;
-	case 'conference_proceeding':
-		item.itemType = "conferencePaper";
-		break;
-	default:
-		item.itemType = "document";
-		var risType = ZU.xpathText(doc, '//p:addata/p:ristype', ns);
-		if (risType) {
-			switch (risType.toUpperCase()) {
-			case 'THES':
-				item.itemType = "thesis";
-				break;
+		case 'book':
+		case 'ebook':
+		case 'pbook':
+		case 'books':
+		case 'score':
+		case 'journal':		// as long as we don't have a periodical item type;
+			item.itemType = "book";
+			break;
+		case 'audio':
+		case 'sound_recording':
+			item.itemType = "audioRecording";
+			break;
+		case 'video':
+		case 'dvd':
+			item.itemType = "videoRecording";
+			break;
+		case 'computer_file':
+			item.itemType = "computerProgram";
+			break;
+		case 'report':
+			item.itemType = "report";
+			break;
+		case 'webpage':
+			item.itemType = "webpage";
+			break;
+		case 'article':
+		case 'review':
+			item.itemType = "journalArticle";
+			break;
+		case 'thesis':
+		case 'dissertation':
+			item.itemType = "thesis";
+			break;
+		case 'archive_manuscript':
+		case 'object':
+			item.itemType = "manuscript";
+			break;
+		case 'map':
+			item.itemType = "map";
+			break;
+		case 'reference_entry':
+			item.itemType = "encyclopediaArticle";
+			break;
+		case 'image':
+			item.itemType = "artwork";
+			break;
+		case 'newspaper_article':
+			item.itemType = "newspaperArticle";
+			break;
+		case 'conference_proceeding':
+			item.itemType = "conferencePaper";
+			break;
+		default:
+			item.itemType = "document";
+			var risType = ZU.xpathText(doc, '//p:addata/p:ristype', ns);
+			if (risType) {
+				switch (risType.toUpperCase()) {
+					case 'THES':
+						item.itemType = "thesis";
+						break;
+				}
 			}
-		}
 	}
 	
 	item.title = ZU.xpathText(doc, '//p:display/p:title', ns);
@@ -146,7 +146,7 @@ function doImport() {
 			if (splitAu.length > 2) continue;
 			var name = splitAu[1].trim().toLowerCase() + ' '
 				+ splitAu[0].trim().toLowerCase();
-			splitGuidance[name] = author;
+			splitGuidance[name.replace(/\./g, "")] = author;
 		}
 	}
 
@@ -253,15 +253,22 @@ function doImport() {
 	item.issue = ZU.xpathText(doc, '//p:addata/p:issue', ns);
 	item.volume = ZU.xpathText(doc, '//p:addata/p:volume', ns);
 	item.publicationTitle = ZU.xpathText(doc, '//p:addata/p:jtitle', ns);
-	
+
 	var startPage = ZU.xpathText(doc, '//p:addata/p:spage', ns);
 	var endPage = ZU.xpathText(doc, '//p:addata/p:epage', ns);
 	var overallPages = ZU.xpathText(doc, '//p:addata/p:pages', ns);
+	
+	var pageRangeTypes = ["journalArticle", "magazineArticle", "newspaperArticle", "dictionaryEntry", "encyclopediaArticle", "conferencePaper"];
 	if (startPage && endPage) {
 		item.pages = startPage + '–' + endPage;
 	}
 	else if (overallPages) {
-		item.pages = overallPages;
+		if (pageRangeTypes.includes(item.itemType)) {
+			item.pages = overallPages;
+		}
+		else {
+			item.numPages = overallPages;
+		}
 	}
 	else if (startPage) {
 		item.pages = startPage;
@@ -355,13 +362,12 @@ function fetchCreators(item, creators, type, splitGuidance) {
 	for (let i = 0; i < creators.length; i++) {
 		var creator = ZU.unescapeHTML(creators[i].textContent).split(/\s*;\s*/);
 		for (var j = 0; j < creator.length; j++) {
-			var c = stripAuthor(creator[j]);
+			var c = stripAuthor(creator[j]).replace(/\./g, "");
 			c = ZU.cleanAuthor(
 				splitGuidance[c.toLowerCase()] || c,
 				type,
 				true
 			);
-			
 			if (!c.firstName) {
 				delete c.firstName;
 				c.fieldMode = 1;

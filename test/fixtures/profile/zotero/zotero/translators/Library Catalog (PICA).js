@@ -1,16 +1,39 @@
 {
 	"translatorID": "1b9ed730-69c7-40b0-8a06-517a89a3a278",
+	"translatorType": 4,
 	"label": "Library Catalog (PICA)",
-	"creator": "Sean Takats, Michael Berkowitz, Sylvain Machefert, Sebastian Karcher",
-	"target": "^https?://[^/]+(/[^/]+)?//?DB=\\d",
+	"creator": "Sean Takats, Michael Berkowitz, Sylvain Machefert, Sebastian Karcher, Stéphane Gully",
+	"target": "^https?://[^/]+(/[^/]+)*//?DB=\\d",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 248,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsb",
-	"lastUpdated": "2018-01-26 09:57:02"
+	"lastUpdated": "2020-11-13 19:00:00"
 }
+
+/*
+	***** BEGIN LICENSE BLOCK *****
+
+	Copyright © 2013 Sean Takats, Michael Berkowitz, Sylvain Machefert, Sebastian Karcher, Stéphane Gully
+	
+	This file is part of Zotero.
+
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Zotero is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU Affero General Public License for more details.
+
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
+
+	***** END LICENSE BLOCK *****
+*/
 
 function getSearchResults(doc) {
 	return doc.evaluate(
@@ -18,95 +41,109 @@ function getSearchResults(doc) {
 		doc, null, XPathResult.ANY_TYPE, null);
 }
 
-function detectWeb(doc, url) {
+function detectWeb(doc, _url) {
 	var multxpath = "//span[@class='tab1']|//td[@class='tab1']";
-	if (elt = doc.evaluate(multxpath, doc, null, XPathResult.ANY_TYPE, null).iterateNext()) {
+	var elt;
+	if ((elt = doc.evaluate(multxpath, doc, null, XPathResult.ANY_TYPE, null).iterateNext())) {
 		var content = elt.textContent;
-		//Z.debug(content)
+		// Z.debug(content)
 		if ((content == "Liste des résultats") || (content == "shortlist") || (content == 'Kurzliste') || content == 'titellijst') {
-			if(!getSearchResults(doc).iterateNext()) return;	//no results. Does not seem to be necessary, but just in case.
+			if (!getSearchResults(doc).iterateNext()) {
+			// no results. Does not seem to be necessary, but just in case.
+				return false;
+			}
+
 			return "multiple";
-			
-		} else if ((content == "Notice détaillée") || (content == "title data") || (content == 'Titeldaten') || (content == 'Vollanzeige') || 
-					(content == 'Besitznachweis(e)') || (content == 'full title') || (content == 'Titelanzeige' || (content == 'titelgegevens'))) {
+		}
+		else if ((content == "Notice détaillée") || (content == "title data") || (content == 'Titeldaten') || (content == 'Vollanzeige') || (content == 'Besitznachweis(e)') || (content == 'full title') || (content == 'Titelanzeige' || (content == 'titelgegevens'))) {
 			var xpathimage = "//span[@class='rec_mat_long']/img|//table[contains(@summary, 'presentation')]/tbody/tr/td/img";
-			if (elt = doc.evaluate(xpathimage, doc, null, XPathResult.ANY_TYPE, null).iterateNext()) {
+			if ((elt = doc.evaluate(xpathimage, doc, null, XPathResult.ANY_TYPE, null).iterateNext())) {
 				var type = elt.getAttribute('src');
-				//Z.debug(type);
+				// Z.debug(type);
 				if (type.includes('article.')) {
-					//book section and journal article have the same icon
-					//we can check if there is an ISBN
+					// book section and journal article have the same icon
+					// we can check if there is an ISBN
 					if (ZU.xpath(doc, '//tr/td[@class="rec_lable" and .//span[starts-with(text(), "ISBN")]]').length) {
 						return 'bookSection';
 					}
 					return "journalArticle";
-				} else if (type.includes('audiovisual.')) {
+				}
+				else if (type.includes('audiovisual.')) {
 					return "film";
-				} else if (type.includes('book.')) {
+				}
+				else if (type.includes('book.')) {
 					return "book";
-				} else if (type.includes('handwriting.')) {
+				}
+				else if (type.includes('handwriting.')) {
 					return "manuscript";
-				} else if (type.includes('sons.') || type.includes('sound.') || type.includes('score')) {
+				}
+				else if (type.includes('sons.') || type.includes('sound.') || type.includes('score')) {
 					return "audioRecording";
-				} else if (type.includes('thesis.')) {
+				}
+				else if (type.includes('thesis.')) {
 					return "thesis";
-				} else if (type.includes('map.')) {
+				}
+				else if (type.includes('map.')) {
 					return "map";
 				}
 			}
 			return "book";
 		}
 	}
+	return false;
 }
 
 function scrape(doc, url) {
 	var zXpath = '//span[@class="Z3988"]';
 	var eltCoins = doc.evaluate(zXpath, doc, null, XPathResult.ANY_TYPE, null).iterateNext();
+	var newItem = new Zotero.Item();
 	if (eltCoins) {
 		var coins = eltCoins.getAttribute('title');
-
-		var newItem = new Zotero.Item();
-		//newItem.repository = "SUDOC"; // do not save repository
-		//make sure we don't get stuck because of a COinS error
+	
+		// newItem.repository = "SUDOC"; // do not save repository
+		// make sure we don't get stuck because of a COinS error
 		try {
 			Zotero.Utilities.parseContextObject(coins, newItem);
-		} catch(e) {
+		}
+		catch (e) {
 			Z.debug("error parsing COinS");
 		}
+
 		/** we need to clean up the results a bit **/
-		//pages should not contain any extra characters like p. or brackets (what about supplementary pages?)
-		if(newItem.pages) newItem.pages = newItem.pages.replace(/[^\d-]+/g, '');
-		
-		
-	} else var newItem = new Zotero.Item();
+		// pages should not contain any extra characters like p. or brackets (what about supplementary pages?)
+		if (newItem.pages) newItem.pages = newItem.pages.replace(/[^\d-]+/g, '');
+	}
 
 	newItem.itemType = detectWeb(doc, url);
 	newItem.libraryCatalog = "Library Catalog - " + doc.location.host;
-	// 	We need to correct some informations where COinS is wrong
+	// We need to correct some informations where COinS is wrong
 	var rowXpath = '//tr[td[@class="rec_lable"]]';
-	if (!ZU.xpathText(doc, rowXpath)){
+	if (!ZU.xpathText(doc, rowXpath)) {
 		rowXpath = '//tr[td[@class="preslabel"]]';
 	}
 	var tableRows = doc.evaluate(rowXpath, doc, null, XPathResult.ANY_TYPE, null);
 	
 	var tableRow, role;
 	var authorpresent = false;
-	while (tableRow = tableRows.iterateNext()) {
+	while ((tableRow = tableRows.iterateNext())) {
 		var field = doc.evaluate('./td[@class="rec_lable"]|./td[@class="preslabel"]', tableRow, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
 		var value = doc.evaluate('./td[@class="rec_title"]|./td[@class="presvalue"]', tableRow, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
 		
 		field = ZU.trimInternal(ZU.superCleanString(field.trim()))
-			.toLowerCase().replace(/\(s\)/g, '');	
+			.toLowerCase().replace(/\(s\)/g, '');
 				
 		// With COins, we only get one author - so we start afresh. We do so in two places: Here if there is an author fied
-		//further down for other types of author fields. This is so we don't overwrite the author array when we have both an author and 
-		//another persons field (cf. the Scheffer/Schachtschabel/Blume/Thiele test)
-		if (field == "author" || field == "auteur" || field == "verfasser"){ 
+		// further down for other types of author fields. This is so we don't overwrite the author array when we have both an author and
+		// another persons field (cf. the Scheffer/Schachtschabel/Blume/Thiele test)
+		if (field == "author" || field == "auteur" || field == "verfasser") {
 			authorpresent = true;
-			newItem.creators = new Array();
-		}	
-		//Z.debug(field + ": " + value)
-		//french, english, german, and dutch interface
+			newItem.creators = [];
+		}
+
+		// Z.debug(field + ": " + value)
+		// french, english, german, and dutch interface
+		var m;
+		var i;
 		switch (field) {
 			case 'auteur':
 			case 'author':
@@ -116,22 +153,25 @@ function scrape(doc, url) {
 			case 'other persons':
 			case 'sonst. personen':
 			case 'collaborator':
-			case 'beiträger': //turn into contributor
+			case 'beiträger': // turn into contributor
 			case 'contributor':
-				if (field == 'medewerker' || field == 'beteiligt'||field =='collaborator') role = "editor";
+				if (field == 'medewerker' || field == 'beteiligt' || field == 'collaborator') role = "editor";
 				if (field == 'beiträger' || field == 'contributor') role = "contributor";
-				//we may have set this in the title field below
+				
+				// we may have set this in the title field below
 				else if (!role) role = "author";
 				
-				if (!authorpresent) newItem.creators = new Array();
-				if (authorpresent && (field=="sonst. personen" || field=="other persons")) role = "editor";
-				//sudoc has authors on separate lines and with different format - use this
+				if (!authorpresent) newItem.creators = [];
+				if (authorpresent && (field == "sonst. personen" || field == "other persons")) role = "editor";
+				
+				// sudoc has authors on separate lines and with different format - use this
+				var authors;
+				var author;
 				if (url.search(/sudoc\.(abes\.)?fr/) != -1) {
-
-					var authors = ZU.xpath(tableRow, './td[2]/div');
-					for (var i in authors) {
+					authors = ZU.xpath(tableRow, './td[2]/div');
+					for (i in authors) {
 						var authorText = authors[i].textContent;
-						var authorFields = authorText.match(/^\s*(.+?)\s*(?:\((.+?)\)\s*)?\.\s*([^\.]+)\s*$/);
+						var authorFields = authorText.match(/^\s*(.+?)\s*(?:\((.+?)\)\s*)?\.\s*([^.]+)\s*$/);
 						var authorFunction = '';
 						if (authorFields) {
 							authorFunction = authorFields[3];
@@ -145,31 +185,35 @@ function scrape(doc, url) {
 						// TODO : Add other author types
 						if (authorFunction == 'Traduction') {
 							zoteroFunction = 'translator';
-						} else if ((authorFunction.substr(0, 7) == 'Éditeur') || authorFunction=="Directeur de la publication") {
-							//once Zotero suppports it, distinguish between editorial director and editor here;
+						}
+						else if ((authorFunction.substr(0, 7) == 'Éditeur') || authorFunction == "Directeur de la publication") {
+							// once Zotero suppports it, distinguish between editorial director and editor here;
 							zoteroFunction = 'editor';
-						} else if ((newItem.itemType == "thesis") && (authorFunction != 'Auteur')) {
+						}
+						else if ((newItem.itemType == "thesis") && (authorFunction != 'Auteur')) {
 							zoteroFunction = "contributor";
-						} else {
+						}
+						else {
 							zoteroFunction = 'author';
 						}
 
 						if (authorFunction == "Université de soutenance" || authorFunction == "Organisme de soutenance") {
 							// If the author function is "université de soutenance"	it means that this author has to be in "university" field
 							newItem.university = authorText;
-							newItem.city = extra; //store for later
-						} else {
-							var author = authorText.replace(/[\*\(].+[\)\*]/, "");
+							newItem.city = extra; // store for later
+						}
+						else {
+							author = authorText.replace(/[*(].+[)*]/, "");
 							newItem.creators.push(Zotero.Utilities.cleanAuthor(author, zoteroFunction, true));
 						}
 					}
-
-				} else {
-					var authors = value.split(/\s*;\s*/);
-					for (var i in authors) {
-						if (role == "author") if (authors[i].search(/[\[\()]Hrsg\.?[\]\)]/)!=-1) role = "editor";
-						var author = authors[i].replace(/[\*\(\[].+[\)\*\]]/, "");
-						var comma = author.indexOf(",") != -1;
+				}
+				else {
+					authors = value.split(/\s*;\s*/);
+					for (i in authors) {
+						if (role == "author") if (authors[i].search(/[[()]Hrsg\.?[\])]/) != -1) role = "editor";
+						author = authors[i].replace(/[*([].+[)*\]]/, "");
+						var comma = author.includes(",");
 						newItem.creators.push(Zotero.Utilities.cleanAuthor(author, role, comma));
 					}
 				}
@@ -178,118 +222,128 @@ function scrape(doc, url) {
 			case 'edition':
 			case 'ausgabe':
 				var edition;
-				if (edition = value.match(/(\d+)[.\s]+(Aufl|ed|éd)/)){
+				if ((edition = value.match(/(\d+)[.\s]+(Aufl|ed|éd)/))) {
 					newItem.edition = edition[1];
 				}
 				else newItem.edition = value;
+				break;
 
 			case 'dans':
 			case 'in':
-				//Looks like we can do better with titles than COinS
-				//journal/book titles are always first
-				//Several different formats for ending a title
+				// Looks like we can do better with titles than COinS
+				// journal/book titles are always first
+				// Several different formats for ending a title
 				// end with "/" http://gso.gbv.de/DB=2.1/PPNSET?PPN=732386977
 				//              http://gso.gbv.de/DB=2.1/PPNSET?PPN=732443563
 				// end with ". -" followed by publisher information http://gso.gbv.de/DB=2.1/PPNSET?PPN=729937798
 				// end with ", ISSN" (maybe also ISBN?) http://www.sudoc.abes.fr/DB=2.1/SET=6/TTL=1/SHW?FRST=10
 				newItem.publicationTitle = ZU.superCleanString(
-					value.substring(0,value.search(/(?:\/|,\s*IS[SB]N\b|\.\s*-)/i)));
-				//ISSN/ISBN are easyto find
-				//http://gso.gbv.de/DB=2.1/PPNSET?PPN=732386977
-				//http://gso.gbv.de/DB=2.1/PPNSET?PPN=732443563
-				var issnRE = /\b(is[sb]n)\s+([-\d\sx]+)/i;	//this also matches ISBN
-				var m = value.match(issnRE);
-				if(m) {
-					if(m[1].toUpperCase() == 'ISSN' && !newItem.ISSN) {
-						newItem.ISSN = m[2].replace(/\s+/g,'');
-					} else if(m[1].toUpperCase() == 'ISBN' && !newItem.ISBN) {
-						newItem.ISBN = m[2].replace(/\s+/g,'');
+					value.substring(0, value.search(/(?:\/|,\s*IS[SB]N\b|\.\s*-)/i)));
+
+				// ISSN/ISBN are easyto find
+				// http://gso.gbv.de/DB=2.1/PPNSET?PPN=732386977
+				// http://gso.gbv.de/DB=2.1/PPNSET?PPN=732443563
+				var issnRE = /\b(is[sb]n)\s+([-\d\sx]+)/i;	// this also matches ISBN
+				m = value.match(issnRE);
+				if (m) {
+					if (m[1].toUpperCase() == 'ISSN' && !newItem.ISSN) {
+						newItem.ISSN = m[2].replace(/\s+/g, '');
+					}
+					else if (m[1].toUpperCase() == 'ISBN' && !newItem.ISBN) {
+						newItem.ISBN = m[2].replace(/\s+/g, '');
 					}
 				}
-				//publisher information can be preceeded by ISSN/ISBN
+
+				// publisher information can be preceeded by ISSN/ISBN
 				// typically / ed. by ****. - city, country : publisher
-				//http://gso.gbv.de/DB=2.1/PPNSET?PPN=732386977
+				// http://gso.gbv.de/DB=2.1/PPNSET?PPN=732386977
 				var n = value;
-				if(m) {
+				if (m) {
 					n = value.split(m[0])[0];
-					//first editors
-					var ed = n.split('/');	//editors only appear after /
-					if(ed.length > 1) {
-						n = n.substr(ed[0].length+1);	//trim off title
-						ed = ed[1].split('-',1)[0];
-						n = n.substr(ed.length+1);	//trim off editors
-						if(ed.indexOf('ed. by') != -1) {	//not http://gso.gbv.de/DB=2.1/PPNSET?PPN=732443563
-							ed = ed.replace(/^\s*ed\.\s*by\s*|[.\s]+$/g,'')
-									.split(/\s*(?:,|and)\s*/);	//http://gso.gbv.de/DB=2.1/PPNSET?PPN=731519299
-							for(var i=0, m=ed.length; i<m; i++) {
+					
+					// first editors
+					var ed = n.split('/');	// editors only appear after /
+					if (ed.length > 1) {
+						n = n.substr(ed[0].length + 1);	// trim off title
+						ed = ed[1].split('-', 1)[0];
+						n = n.substr(ed.length + 1);	// trim off editors
+						if (ed.includes('ed. by')) {	// not http://gso.gbv.de/DB=2.1/PPNSET?PPN=732443563
+							ed = ed.replace(/^\s*ed\.\s*by\s*|[.\s]+$/g, '')
+									.split(/\s*(?:,|and)\s*/);	// http://gso.gbv.de/DB=2.1/PPNSET?PPN=731519299
+							for (i = 0, m = ed.length; i < m; i++) {
 								newItem.creators.push(ZU.cleanAuthor(ed[i], 'editor', false));
 							}
 						}
 					}
 					var loc = n.split(':');
-					if(loc.length == 2) {
-						if(!newItem.publisher) newItem.publisher = loc[1].replace(/^\s+|[\s,]+$/,'');
-						if(!newItem.place) newItem.place = loc[0].replace(/\s*\[.+?\]\s*/, '').trim();
+					if (loc.length == 2) {
+						if (!newItem.publisher) newItem.publisher = loc[1].replace(/^\s+|[\s,]+$/, '');
+						if (!newItem.place) newItem.place = loc[0].replace(/\s*\[.+?\]\s*/, '').trim();
 					}
 
-					//we can now drop everything up through the last ISSN/ISBN
+					// we can now drop everything up through the last ISSN/ISBN
 					n = value.split(issnRE).pop();
 				}
-				//For the rest, we have trouble with some articles, like
-				//http://www.sudoc.abes.fr/DB=2.1/SRCH?IKT=12&TRM=013979922
-				//we'll only take the last set of year, volume, issue
+				// For the rest, we have trouble with some articles, like
+				// http://www.sudoc.abes.fr/DB=2.1/SRCH?IKT=12&TRM=013979922
+				// we'll only take the last set of year, volume, issue
 
-				//There are also some other problems, like
-				//"How to cook a russian goose / by Robert Cantwell" at http://opc4.kb.nl
+				// There are also some other problems, like
+				// "How to cook a russian goose / by Robert Cantwell" at http://opc4.kb.nl
 
-				//page ranges are last
-				//but they can be indicated by p. or page (or s?)
-				//http://www.sudoc.abes.fr/DB=2.1/SET=6/TTL=1/SHW?FRST=10
-				//http://opc4.kb.nl/DB=1/SET=2/TTL=1/SHW?FRST=7
-				//we'll just assume there are always pages at the end and ignore the indicator
+				// page ranges are last
+				// but they can be indicated by p. or page (or s?)
+				// http://www.sudoc.abes.fr/DB=2.1/SET=6/TTL=1/SHW?FRST=10
+				// http://opc4.kb.nl/DB=1/SET=2/TTL=1/SHW?FRST=7
+				// we'll just assume there are always pages at the end and ignore the indicator
 				n = n.split(',');
 				var pages = n.pop().match(/\d+(?:\s*-\s*\d+)/);
-				if(pages && !newItem.pages) {
+				if (pages && !newItem.pages) {
 					newItem.pages = pages[0];
 				}
-				n = n.join(',');	//there might be empty values that we're joining here
-									//could filter them out, but IE <9 does not support Array.filter, so we won't bother
-				//we're left possibly with some sort of formatted volume year issue string
-				//it's very unlikely that we will have 4 digit volumes starting with 19 or 20, so we'll just grab the year first
+				n = n.join(','); // there might be empty values that we're joining here
+				// could filter them out, but IE <9 does not support Array.filter, so we won't bother
+				// we're left possibly with some sort of formatted volume year issue string
+				// it's very unlikely that we will have 4 digit volumes starting with 19 or 20, so we'll just grab the year first
 				var dateRE = /\b(?:19|20)\d{2}\b/g;
 				var date, lastDate;
-				while(date = dateRE.exec(n)) {
+				while ((date = dateRE.exec(n))) {
 					lastDate = date[0];
-					n = n.replace(lastDate,'');	//get rid of year
+					n = n.replace(lastDate, '');	// get rid of year
 				}
-				if(lastDate) {
-					if(!newItem.date) newItem.date = lastDate;
-				} else {	//if there's no year, panic and stop trying
+				if (lastDate) {
+					if (!newItem.date) newItem.date = lastDate;
+				}
+				else {	// if there's no year, panic and stop trying
 					break;
 				}
-				//volume comes before issue
-				//but there can sometimes be other numeric stuff that we have
-				//not filtered out yet, so we just take the last two numbers
-				//e.g. http://gso.gbv.de/DB=2.1/PPNSET?PPN=732443563
-				var issvolRE = /[\d\/]+/g;	//in French, issues can be 1/4 (e.g. http://www.sudoc.abes.fr/DB=2.1/SRCH?IKT=12&TRM=013979922)
+				
+				// volume comes before issue
+				// but there can sometimes be other numeric stuff that we have
+				// not filtered out yet, so we just take the last two numbers
+				// e.g. http://gso.gbv.de/DB=2.1/PPNSET?PPN=732443563
+				var issvolRE = /[\d/]+/g;	// in French, issues can be 1/4 (e.g. http://www.sudoc.abes.fr/DB=2.1/SRCH?IKT=12&TRM=013979922)
 				var num, vol, issue;
-				while(num = issvolRE.exec(n)) {
-					if(issue != undefined) {
+				while ((num = issvolRE.exec(n))) {
+					if (issue != undefined) {
 						vol = issue;
 						issue = num[0];
-					} else if(vol != undefined) {
+					}
+					else if (vol != undefined) {
 						issue = num[0];
-					} else {
+					}
+					else {
 						vol = num[0];
 					}
 				}
-				if(vol != undefined && !newItem.volume) {
+				if (vol != undefined && !newItem.volume) {
 					newItem.volume = vol;
 				}
-				if(issue != undefined && !newItem.issue) {
+				if (issue != undefined && !newItem.issue) {
 					newItem.issue = issue;
 				}
 				break;
+
 			case 'serie':
 			case 'collection':
 			case 'series':
@@ -297,17 +351,18 @@ function scrape(doc, url) {
 			case 'reeks':
 				// The series isn't in COinS
 				var series = value;
-				var m;
 				var volRE = /;[^;]*?(\d+)\s*$/;
-				if(m = series.match(volRE)) {
-					if(ZU.fieldIsValidForType('seriesNumber', newItem.itemType)) { //e.g. http://gso.gbv.de/DB=2.1/PPNSET?PPN=729937798
-						if(!newItem.seriesNumber) newItem.seriesNumber = m[1];
-					} else {	//e.g. http://www.sudoc.fr/05625248X
-						if(!newItem.volume) newItem.volume = m[1];
+				if ((m = series.match(volRE))) {
+					if (ZU.fieldIsValidForType('seriesNumber', newItem.itemType)) { // e.g. http://gso.gbv.de/DB=2.1/PPNSET?PPN=729937798
+						if (!newItem.seriesNumber) newItem.seriesNumber = m[1];
+					}
+					else if (!newItem.volume) {
+						// e.g. http://www.sudoc.fr/05625248X
+						newItem.volume = m[1];
 					}
 					series = series.replace(volRE, '').trim();
 				}
-				newItem.seriesTitle = newItem.series = series;	//see http://forums.zotero.org/discussion/18322/series-vs-series-title/
+				newItem.seriesTitle = newItem.series = series;	// see http://forums.zotero.org/discussion/18322/series-vs-series-title/
 				break;
 
 			case 'titre':
@@ -315,15 +370,14 @@ function scrape(doc, url) {
 			case 'titel':
 			case 'title of article':
 			case 'aufsatztitel':
-				
-					title = value.split(" / ");
-					if (title[1]) {
-						//Z.debug("Title1: "+title[1])
-						//store this to convert authors to editors. 
-						//Run separate if in case we'll do this for more languages
-						//this assumes title precedes author - need to make sure that's the case
-						if (title[1].match(/^\s*(ed. by|edited by|hrsg\. von|édité par)/)) role = "editor";
-					}
+				var title = value.split(" / ");
+				if (title[1]) {
+					// Z.debug("Title1: "+title[1])
+					// store this to convert authors to editors.
+					// Run separate if in case we'll do this for more languages
+					// this assumes title precedes author - need to make sure that's the case
+					if (title[1].match(/^\s*(ed. by|edited by|hrsg\. von|édité par)/)) role = "editor";
+				}
 				if (!newItem.title) {
 					newItem.title = title[0];
 				}
@@ -332,15 +386,15 @@ function scrape(doc, url) {
 
 			case 'periodical':
 			case 'zeitschrift':
-				//for whole journals
-				var journaltitle =  value.split(" / ")[0];
+				// for whole journals
+				var journaltitle = value.split(" / ")[0];
 				break;
 
 			case 'year':
 			case 'jahr':
 			case 'jaar':
 			case 'date':
-				newItem.date = value; //we clean this up below
+				newItem.date = value; // we clean this up below
 				break;
 
 			case 'language':
@@ -356,31 +410,31 @@ function scrape(doc, url) {
 			case 'ort/jahr':
 			case 'uitgever':
 			case 'publication':
-				//ignore publisher for thesis, so that it does not overwrite university
+				// ignore publisher for thesis, so that it does not overwrite university
 				if (newItem.itemType == 'thesis' && newItem.university) break;
 
-				var m = value.split(';')[0];	//hopefully publisher is always first (e.g. http://www.sudoc.fr/128661828)
+				m = value.split(';')[0]; // hopefully publisher is always first (e.g. http://www.sudoc.fr/128661828)
 				var place = m.split(':', 1)[0];
-				var pub = m.substring(place.length+1); //publisher and maybe year
-				if(!newItem.city) {
+				var pub = m.substring(place.length + 1); // publisher and maybe year
+				if (!newItem.city) {
 					place = place.replace(/[[\]]/g, '').trim();
-					if(place.toUpperCase() != 'S.L.') {	//place is not unknown
+					if (place.toUpperCase() != 'S.L.') {	// place is not unknown
 						newItem.city = place;
 					}
 				}
 
-				if(!newItem.publisher) {
-					if(!pub) break; //not sure what this would be or look like without publisher
-					pub = pub.replace(/\[.*?\]/g,'')	//drop bracketted info, which looks to be publisher role
+				if (!newItem.publisher) {
+					if (!pub) break; // not sure what this would be or look like without publisher
+					pub = pub.replace(/\[.*?\]/g, '')	// drop bracketted info, which looks to be publisher role
 									.split(',');
-					if(pub[pub.length-1].search(/\D\d{4}\b/) != -1) {	//this is most likely year, we can drop it
+					if (pub[pub.length - 1].search(/\D\d{4}\b/) != -1) {	// this is most likely year, we can drop it
 						pub.pop();
 					}
-					if(pub.length) newItem.publisher = pub.join(',');	//in case publisher contains commas
+					if (pub.length) newItem.publisher = pub.join(',');	// in case publisher contains commas
 				}
-				if(!newItem.date) {	//date is always (?) last on the line
-					m = value.match(/\D(\d{4})\b[^,;]*$/);	//could be something like c1986
-					if(m) newItem.date = m[1];
+				if (!newItem.date) {	// date is always (?) last on the line
+					m = value.match(/\D(\d{4})\b[^,;]*$/);	// could be something like c1986
+					if (m) newItem.date = m[1];
 				}
 				break;
 
@@ -401,29 +455,29 @@ function scrape(doc, url) {
 				value = ZU.trimInternal(value); // Since we assume spaces
 				
 				// We're going to extract the number of pages from this field
-				var m = value.match(/(\d+) vol\./);
+				m = value.match(/(\d+) vol\./);
 				// sudoc in particular includes "1 vol" for every book; We don't want that info
 				if (m && m[1] != 1) {
 					newItem.numberOfVolumes = m[1];
 				}
 				
-				//make sure things like 2 partition don't match, but 2 p at the end of the field do
+				// make sure things like 2 partition don't match, but 2 p at the end of the field do
 				// f., p., and S. are "pages" in various languages
 				// For multi-volume works, we expect formats like:
-				//   x-109 p., 510 p. and X, 106 S.; 123 S.
-				var numPagesRE = /\[?((?:[ivxlcdm\d]+[ ,\-]*)+)\]?\s+[fps]\b/ig,
-					numPages = [], m;
-				while(m = numPagesRE.exec(value)) {
+				// x-109 p., 510 p. and X, 106 S.; 123 S.
+				var numPagesRE = /\[?((?:[ivxlcdm\d]+[ ,-]*)+)\]?\s+[fps]\b/ig,
+					numPages = [];
+				while ((m = numPagesRE.exec(value))) {
 					numPages.push(m[1].replace(/ /g, '')
-						.replace(/[\-,]/g,'+')
+						.replace(/[-,]/g, '+')
 						.toLowerCase() // for Roman numerals
 					);
 				}
-				if(numPages.length) newItem.numPages = numPages.join('; ');
+				if (numPages.length) newItem.numPages = numPages.join('; ');
 				
-				//running time for movies:
+				// running time for movies:
 				m = value.match(/\d+\s*min/);
-				if (m){
+				if (m) {
 					newItem.runningTime = m[0];
 				}
 				break;
@@ -454,26 +508,27 @@ function scrape(doc, url) {
 			case 'category/subject':
 
 				var subjects = doc.evaluate('./td[2]/div', tableRow, null, XPathResult.ANY_TYPE, null);
-				//subjects on separate div lines
+				// subjects on separate div lines
 				if (ZU.xpath(tableRow, './td[2]/div').length > 1) {
-					var subject_out = "";
-					while (subject = subjects.iterateNext()) {
-						var subject_content = subject.textContent;
-						subject_content = subject_content.replace(/^\s*/, "");
-						subject_content = subject_content.replace(/\s*$/, "");
-						subject_content = subject_content.split(/\s*;\s*/)
-						for (var i in subject_content) {
-							if (subject_content != "") {
-								newItem.tags.push(Zotero.Utilities.trimInternal(subject_content[i]));
+					var subject;
+					while ((subject = subjects.iterateNext())) {
+						var subjectContent = subject.textContent;
+						subjectContent = subjectContent.replace(/^\s*/, "");
+						subjectContent = subjectContent.replace(/\s*$/, "");
+						subjectContent = subjectContent.split(/\s*;\s*/);
+						for (i in subjectContent) {
+							if (subjectContent != "") {
+								newItem.tags.push(Zotero.Utilities.trimInternal(subjectContent[i]));
 							}
 						}
 					}
-				} else {
-					//subjects separated by newline or ; in same div.
-					var subjects = value.trim().split(/\s*[;\n]\s*/)
-					for (var i in subjects) {
+				}
+				else {
+					// subjects separated by newline or ; in same div.
+					subjects = value.trim().split(/\s*[;\n]\s*/);
+					for (i in subjects) {
 						subjects[i] = subjects[i].trim().replace(/\*/g, "").replace(/^\s*\/|\/\s*$/, "");
-						if (subjects[i].length!=0) newItem.tags.push(Zotero.Utilities.trimInternal(subjects[i]))
+						if (subjects[i].length != 0) newItem.tags.push(Zotero.Utilities.trimInternal(subjects[i]));
 					}
 				}
 				break;
@@ -486,23 +541,24 @@ function scrape(doc, url) {
 			case "identifiant pérenne de la notice":
 			case 'persistent identifier of the record':
 			case 'persistent identifier des datensatzes':
-				var permalink = value;	//we handle this at the end
+				var permalink = value;	// we handle this at the end
 				break;
 			
 			case 'doi':
 				newItem.DOI = value.trim();
+				break;
 
 			case 'isbn':
 				var isbns = value.trim().split(/[\n,]/);
-				var isbn = [], s;
-				for (var i in isbns) {
-					var m = isbns[i].match(/[-x\d]{10,}/i);	//this is necessary until 3.0.12
-					if(!m) continue;
-					if(m[0].replace(/-/g,'').search(/^(?:\d{9}|\d{12})[\dx]$/i) != -1) {
+				var isbn = [];
+				for (i in isbns) {
+					m = isbns[i].match(/[-x\d]{10,}/i);	// this is necessary until 3.0.12
+					if (!m) continue;
+					if (m[0].replace(/-/g, '').search(/^(?:\d{9}|\d{12})[\dx]$/i) != -1) {
 						isbn.push(m[0]);
 					}
 				}
-				//we should eventually check for duplicates, but right now this seems fine;
+				// we should eventually check for duplicates, but right now this seems fine;
 				newItem.ISBN = isbn.join(", ");
 				break;
 			
@@ -510,7 +566,7 @@ function scrape(doc, url) {
 				newItem.callNumber = value;
 				break;
 			case 'worldcat':
-				//SUDOC only
+				// SUDOC only
 				var worldcatLink = doc.evaluate('./td[2]//a', tableRow, null, XPathResult.ANY_TYPE, null).iterateNext();
 				if (worldcatLink) {
 					newItem.attachments.push({
@@ -524,51 +580,54 @@ function scrape(doc, url) {
 		}
 	}
 
-	//merge city & country where they're separate
+	// merge city & country where they're separate
 	var location = [];
 	if (newItem.city) location.push(newItem.city.trim());
 	newItem.city = undefined;
 	if (newItem.country) location.push(newItem.country.trim());
 	newItem.country = undefined;
-	//join and remove the "u.a." common in German libraries
-	if(location.length) newItem.place = location.join(', ').replace(/\[?u\.a\.\]?\s*$/, "");
 	
-	//remove u.a. and [u.a.] from publisher
-	if (newItem.publisher){
+	// join and remove the "u.a." common in German libraries
+	if (location.length) newItem.place = location.join(', ').replace(/\[?u\.a\.\]?\s*$/, "");
+	
+	// remove u.a. and [u.a.] from publisher
+	if (newItem.publisher) {
 		newItem.publisher = newItem.publisher.replace(/\[?u\.a\.\]?\s*$/, "");
 	}
 	
-	//clean up date, which may come from various places; We're conservative here and are just cleaning up c1996 and [1995] and combinations thereof
-	if (newItem.date){
-		newItem.date = newItem.date.replace(/[\[c]+\s*(\d{4})\]?/, "$1");
+	// clean up date, which may come from various places; We're conservative here and are just cleaning up c1996 and [1995] and combinations thereof
+	if (newItem.date) {
+		newItem.date = newItem.date.replace(/[[c]+\s*(\d{4})\]?/, "$1");
 	}
-	//if we didn't get a permalink, look for it in the entire page
-	if(!permalink) {
-		var permalink = ZU.xpathText(doc, '//a[./img[contains(@src,"/permalink") or contains(@src,"/zitierlink")]][1]/@href');
+
+	// if we didn't get a permalink, look for it in the entire page
+	if (!permalink) {
+		permalink = ZU.xpathText(doc, '//a[./img[contains(@src,"/permalink") or contains(@src,"/zitierlink")]][1]/@href');
 	}
 	
-	//switch institutional authors to single field;
-	for (var i=0; i<newItem.creators.length; i++){
-		if (!newItem.creators[i].firstName){
+	// switch institutional authors to single field;
+	for (i = 0; i < newItem.creators.length; i++) {
+		if (!newItem.creators[i].firstName) {
 			newItem.creators[i].fieldMode = true;
 		}
 	}
-	if(permalink) {
+	if (permalink) {
 		newItem.attachments.push({
 			title: 'Link to Library Catalog Entry',
 			url: permalink,
 			mimeType: 'text/html',
 			snapshot: false
 		});
-		//also add snapshot using permalink so that right-click -> View Online works
+		// also add snapshot using permalink so that right-click -> View Online works
 		newItem.attachments.push({
 			title: 'Library Catalog Entry Snapshot',
 			url: permalink,
 			mimeType: 'text/html',
 			snapshot: true
 		});
-	} else {
-		//add snapshot
+	}
+	else {
+		// add snapshot
 		newItem.attachments.push({
 			title: 'Library Catalog Entry Snapshot',
 			document: doc
@@ -584,40 +643,35 @@ function doWeb(doc, url) {
 	if (type == "multiple") {
 		var newUrl = doc.evaluate('//base/@href', doc, null, XPathResult.ANY_TYPE, null).iterateNext().nodeValue;
 		// fix for sudoc, see #1529
-		newUrl = newUrl.replace(/sudoc\.abes\.fr\/\/?DB=/, 'sudoc.abes.fr/xslt/DB=');
+		newUrl = newUrl.replace(/sudoc\.abes\.fr\/cbs\/\/?DB=/, 'sudoc.abes.fr/cbs/xslt/DB=');
 		var elmts = getSearchResults(doc);
 		var elmt = elmts.iterateNext();
-		var links = [];
+
 		var availableItems = {};
 		do {
 			var link = doc.evaluate(".//a/@href", elmt, null, XPathResult.ANY_TYPE, null).iterateNext().nodeValue;
 			var searchTitle = doc.evaluate(".//a", elmt, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
 			availableItems[newUrl + link] = searchTitle;
-		} while (elmt = elmts.iterateNext());
+		} while ((elmt = elmts.iterateNext()));
 		Zotero.selectItems(availableItems, function (items) {
-			if (!items) {
-				return true;
-			}
-			var uris = [];
-			for (var i in items) {
-				uris.push(i);
-			}
-			ZU.processDocuments(uris, scrape);
+			if (items) ZU.processDocuments(Object.keys(items), scrape);
 		});
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }
+
 /** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.sudoc.abes.fr/DB=2.1/CMD?ACT=SRCHA&IKT=1016&SRT=RLV&TRM=labor",
+		"url": "http://www.sudoc.abes.fr/cbs/xslt/DB=2.1//CMD?ACT=SRCHA&IKT=1016&SRT=RLV&TRM=labor",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://www.sudoc.abes.fr/DB=2.1/SRCH?IKT=12&TRM=147745608",
+		"url": "http://www.sudoc.abes.fr/cbs/xslt/DB=2.1//SRCH?IKT=12&TRM=147745608",
 		"items": [
 			{
 				"itemType": "book",
@@ -672,7 +726,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.sudoc.abes.fr/DB=2.1/SRCH?IKT=12&TRM=156726319",
+		"url": "http://www.sudoc.abes.fr/cbs/xslt/DB=2.1//SRCH?IKT=12&TRM=156726319",
 		"items": [
 			{
 				"itemType": "book",
@@ -719,7 +773,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.sudoc.abes.fr/DB=2.1/SRCH?IKT=12&TRM=093838956",
+		"url": "http://www.sudoc.abes.fr/cbs/xslt/DB=2.1//SRCH?IKT=12&TRM=093838956",
 		"items": [
 			{
 				"itemType": "thesis",
@@ -779,7 +833,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.sudoc.abes.fr/DB=2.1/SRCH?IKT=12&TRM=127261664",
+		"url": "http://www.sudoc.abes.fr/cbs/xslt/DB=2.1//SRCH?IKT=12&TRM=127261664",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -830,7 +884,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.sudoc.abes.fr/DB=2.1/SRCH?IKT=12&TRM=128661828",
+		"url": "http://www.sudoc.abes.fr/cbs/xslt/DB=2.1//SRCH?IKT=12&TRM=128661828",
 		"items": [
 			{
 				"itemType": "film",
@@ -899,7 +953,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.sudoc.abes.fr/DB=2.1/SRCH?IKT=12&TRM=098846663",
+		"url": "http://www.sudoc.abes.fr/cbs/xslt/DB=2.1//SRCH?IKT=12&TRM=098846663",
 		"items": [
 			{
 				"itemType": "map",
@@ -941,7 +995,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.sudoc.abes.fr/DB=2.1/SRCH?IKT=12&TRM=05625248X",
+		"url": "http://www.sudoc.abes.fr/cbs/xslt/DB=2.1//SRCH?IKT=12&TRM=05625248X",
 		"items": [
 			{
 				"itemType": "audioRecording",
@@ -1175,7 +1229,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.sudoc.abes.fr/DB=2.1/SRCH?IKT=12&TRM=013979922",
+		"url": "http://www.sudoc.abes.fr/cbs/xslt/DB=2.1//SRCH?IKT=12&TRM=013979922",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -1857,7 +1911,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.sudoc.abes.fr/xslt/DB=2.1//SRCH?IKT=12&TRM=024630527",
+		"url": "http://www.sudoc.abes.fr/cbs/xslt/DB=2.1//SRCH?IKT=12&TRM=024630527",
 		"items": [
 			{
 				"itemType": "book",
@@ -1918,7 +1972,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.sudoc.abes.fr/xslt/DB=2.1//SRCH?IKT=12&TRM=001493817",
+		"url": "http://www.sudoc.abes.fr/cbs/xslt/DB=2.1//SRCH?IKT=12&TRM=001493817",
 		"items": [
 			{
 				"itemType": "book",
@@ -1985,7 +2039,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.sudoc.abes.fr/xslt/DB=2.1//SRCH?IKT=12&TRM=200278649",
+		"url": "http://www.sudoc.abes.fr/cbs/xslt/DB=2.1//SRCH?IKT=12&TRM=200278649",
 		"items": [
 			{
 				"itemType": "book",

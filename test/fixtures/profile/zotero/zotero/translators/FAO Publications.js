@@ -1,15 +1,15 @@
 {
 	"translatorID": "4883f662-29df-44ad-959e-27c9d036d165",
-	"translatorType": 4,
 	"label": "FAO Publications",
 	"creator": "Bin Liu <lieubean@gmail.com>",
 	"target": "^https?://www\\.fao\\.org/documents|publications/",
 	"minVersion": "3.0",
-	"maxVersion": null,
+	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
+	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2020-05-17 08:00:00"
+	"lastUpdated": "2020-05-17 12:27:13"
 }
 
 /*
@@ -100,7 +100,7 @@ function scrape(doc, url) {
 			}
 			// DOI: Some docs contain DOI as the last paragraph in abs field
 			var DOILead = 'https://doi.org/';
-			if (abs.textContent.includes(DOILead) === true) {
+			if (abs.textContent.includes(DOILead)) {
 				newItem.DOI = abs.textContent.slice(abs.textContent.indexOf(DOILead) + DOILead.length);
 			}
 		}
@@ -113,28 +113,38 @@ function scrape(doc, url) {
 		});
 		// url
 		newItem.url = url;
-		// language: according to the last one (old format) or two (new format) letters of PDF file name
-		var langOld = pdfUrl.charAt(pdfUrl.indexOf('pdf') - 2);
-		var langNew = pdfUrl.slice(pdfUrl.indexOf('pdf') - 3, pdfUrl.indexOf('pdf') - 1);
-		if ((langOld == 'a') || (langNew == 'AR') || (langNew == 'ar')) {
+		// language: 2 or 3 letters following ISO 639
+		// indicated by the last 1-3 letters in PDF file name (langCode)
+		// One good example is the various language versions of http://www.fao.org/publications/card/en/c/I2801E
+		var langCode = '';
+		var matches = pdfUrl.match(/([a-z]+)\.pdf$/i);
+		if (matches) {
+			langCode = matches[1];
+		}
+		// In the new PDF naming scheme, langCode follows ISO 639.
+		if (langCode.length > 1) {
+			newItem.language = langCode.toLowerCase();
+		}
+		// In the old PDF naming scheme, langCode is one lower/upper case letter and only differentiates between the 6 UN languages.
+		else if ((langCode == 'a') || (langCode == 'A')) {
 			newItem.language = 'ar';
 		}
-		else if ((langOld == 'c') || (langNew == 'ZH') || (langNew == 'zh')) {
+		else if ((langCode == 'c') || (langCode == 'C')) {
 			newItem.language = 'zh';
 		}
-		else if ((langOld == 'e') || (langNew == 'EN') || (langNew == 'en')) {
+		else if ((langCode == 'e') || (langCode == 'E')) {
 			newItem.language = 'en';
 		}
-		else if ((langOld == 'f') || (langNew == 'FR') || (langNew == 'fr')) {
+		else if ((langCode == 'f') || (langCode == 'F')) {
 			newItem.language = 'fr';
 		}
-		else if ((langOld == 'r') || (langNew == 'RU') || (langNew == 'ru')) {
+		else if ((langCode == 'r') || (langCode == 'R')) {
 			newItem.language = 'ru';
 		}
-		else if ((langOld == 's') || (langNew == 'ES') || (langNew == 'es')) {
+		else if ((langCode == 's') || (langCode == 'S')) {
 			newItem.language = 'es';
 		}
-		else {
+		else { // Other languages are usually designated 'o'. Using 'else' just to be safe.
 			newItem.language = 'other';
 		}
 		// title: use colon to connect main title and subtitle (if subtitle exists)
@@ -143,7 +153,7 @@ function scrape(doc, url) {
 		if (!subTitle) {
 			newItem.title = mainTitle;
 		}
-		else if (newItem.language == 'zh') {
+		else if ((newItem.language == 'zh') || (newItem.language == 'ja') || (newItem.language == 'ko')) {
 			newItem.title = mainTitle + '：' + subTitle;
 		}
 		else {
@@ -712,7 +722,7 @@ var testCases = [
 				"date": "2015",
 				"ISBN": "9789251088630",
 				"abstractNote": "This publication is a summary of the workshop held in Bangkok, Thailand from 18 to 20 June 2015 to promote the mainstreaming and up-scaling of Climate-Smart Agriculture in the region. Included in the report are successful case studies that agriculturists have been practicing as a means to address food security under adverse circumstances.",
-				"language": "other",
+				"language": "en",
 				"libraryCatalog": "FAO Publications",
 				"numPages": "106",
 				"place": "Rome, Italy",
@@ -755,7 +765,65 @@ var testCases = [
 				"notes": [],
 				"seeAlso": []
 			}
-		]
+		],
+		"defer": true
+	},
+	{
+		"type": "web",
+		"url": "http://www.fao.org/publications/card/ar/c/c6c2c8d7-3683-53a7-ab58-ce480c65f36c/",
+		"items": [
+			{
+				"itemType": "book",
+				"title": "الخطوط التوجيهية الطوعية بشأن الحوكمة المسؤولة لحيازة الأراضي ومصايد الأسماك والغابات في سياق الأمن الغذائي الوطني",
+				"creators": [
+					{
+						"lastName": "FAO",
+						"creatorType": "author",
+						"fieldMode": 1
+					}
+				],
+				"date": "2012",
+				"abstractNote": "هذه الخطوط التوجيهية هي أول صكّ عالمي شامل خاص بالحيازات وإدارتها  يُعدّ من خلال مفاوضات حكومية دولية. وتضع هذه الخطوط التوجيهية مبادئ ومعايير  مقبولة دولياً للممارسات المسؤولة لاستخدام الأراضي ومصايد الأسماك والغابات وللتحكّم بها.  وهي تعطي توجيهات لتحسين الأطر القانونية والتنظيمية والمتصلة بالسياسات التي تنظّم  حقوق الحيازة  ولزيادة شفافية نظم الحيازة وإدارتها  ولتعزيز القدرات والإجراءات التي  تتخذها الأجهزة العامة ومؤسسات القطاع الخاص ومنظمات المجتمع المدني وجميع  المعنيين بالحيازات وإد ارتها. وتُدرج هذه الخطوط التوجيهية إدارة الحيازات ضمن السياق  الوطني للأمن الغذائي وهي تسعى إلى المساهمة في الإعمال المطرد للحق في غذاء كافٍ  والقضاء على الفقر وحماية البيئة وتحقيق التنمية الاجتماعية والاقتصادية المستدامة.",
+				"language": "ar",
+				"libraryCatalog": "FAO Publications",
+				"numPages": "40",
+				"place": "Rome, Italy",
+				"publisher": "FAO",
+				"url": "http://www.fao.org/publications/card/ar/c/c6c2c8d7-3683-53a7-ab58-ce480c65f36c/",
+				"attachments": [
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
+					}
+				],
+				"tags": [
+					{
+						"tag": "fishery economics"
+					},
+					{
+						"tag": "forestry economics"
+					},
+					{
+						"tag": "gender"
+					},
+					{
+						"tag": "governance"
+					},
+					{
+						"tag": "guidelines"
+					},
+					{
+						"tag": "land tenure"
+					},
+					{
+						"tag": "أمن غذائي"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		],
+		"defer": true
 	}
 ]
 /** END TEST CASES **/

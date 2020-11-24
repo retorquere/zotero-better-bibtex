@@ -16,7 +16,7 @@
     <category citation-format="author-date"/>
     <category field="sociology"/>
     <summary>The ASA style following the 6th edition of the Style Guide</summary>
-    <updated>2020-02-19T03:58:07+00:00</updated>
+    <updated>2020-09-20T17:47:13+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <macro name="editor">
@@ -62,13 +62,16 @@
   <macro name="access">
     <group>
       <choose>
-        <if type="webpage post-weblog">
+        <if type="webpage post-weblog post" match="any">
           <group delimiter=" ">
             <text term="retrieved" text-case="capitalize-first"/>
             <date variable="accessed" form="text"/>
             <text prefix="(" suffix=")" variable="URL"/>
           </group>
         </if>
+        <else-if type="article-journal" match="any">
+          <text variable="DOI" prefix="doi: "/>
+        </else-if>
       </choose>
     </group>
   </macro>
