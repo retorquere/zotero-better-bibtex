@@ -135,12 +135,7 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: test-artifacts
-
-    - name: fetch test artifacts
-      uses: actions/download-artifact@v2
-      with:
-        name: test-artifacts
-    - run: ls logs
+    - run: pwd && find . -name logs
 
     - name: install node
       uses: actions/setup-node@v1
