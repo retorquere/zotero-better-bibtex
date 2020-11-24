@@ -130,19 +130,19 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: fetch build artifacts
-      id: buildartifacts
-      uses: actions/download-artifact@v2
-      with:
-        name: build-artifacts
-    - run: echo build-artifacts ${{ steps.buildartifacts.outputs.download-path }} && ls ${{ steps.buildartifacts.outputs.download-path }}
-
     - name: fetch test artifacts
       id: testartifacts
       uses: actions/download-artifact@v2
       with:
         name: test-artifacts
     - run: echo test-artifacts ${{ steps.testartifacts.outputs.download-path }} && ls ${{ steps.testartifacts.outputs.download-path }}
+
+    - name: fetch build artifacts
+      id: buildartifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: build-artifacts
+    - run: echo build-artifacts ${{ steps.buildartifacts.outputs.download-path }} && ls ${{ steps.buildartifacts.outputs.download-path }}
 
     - name: install node
       uses: actions/setup-node@v1
