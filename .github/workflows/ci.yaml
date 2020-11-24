@@ -43,6 +43,7 @@ jobs:
         npm install
 
     - run: npm run build
+
     - name: store build artifacts
       uses: actions/upload-artifact@v2
       with:
@@ -93,12 +94,19 @@ jobs:
     - name: Run headless test
       uses: GabrielBB/xvfb-action@v1
       with:
-        run: ./test/behave --client ${{ matrix.client }} --format json.pretty --outfile behave.json --format travis --balance ${{ matrix.slice }}
+        run: |
+          mkdir logs
+          ./test/behave --client ${{ matrix.client }} --logs logs --format travis --balance ${{ matrix.slice }}
     - uses: actions/upload-artifact@v2
       if: ${{ failure() }}
       with:
         name: debug log ${{ matrix.client }} ${{ matrix.slice }}
         path: '~/.BBTZ5TEST.log'
+    - name: store test artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-artifacts
+        path: logs
 
   release:
     if: github.event_name != 'schedule'
@@ -111,6 +119,12 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: build-artifacts
+
+    - name: fetch test artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: test-artifacts
+    - run: ls logs
 
     - name: install node
       uses: actions/setup-node@v1

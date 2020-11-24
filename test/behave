@@ -74,11 +74,22 @@ parser.add_argument('--slow', action='store_true',
 )
 parser.add_argument('--test')
 parser.add_argument('--balance')
+parser.add_argument('--logs')
 parser.add_argument('--prebuilt')
 parser.add_argument('--tagged', action='store_true', default=CI.tag != '')
 parser.add_argument('--nightly', action='store_true', default=(CI.event == 'schedule') or ('#nightly' in CI.message))
 args, unknownargs = parser.parse_known_args()
-sys.argv = sys.argv[:1] + unknownargs
+sys.argv = sys.argv[:1]
+if CI.branch != '' and args.logs:
+  def logfile(name):
+    return os.path.join(args.logs, f'{name}-{args.client}-{args.balance}-{CI.branch}.json')
+  # prepend, because the final format is for the console
+  sys.argv += [
+    '--format', 'json.pretty',
+    '--outfile', logfile('behave'),
+    '--define', f"loaded={logfile('loaded')}",
+  ]
+sys.argv += unknownargs
 
 if args.prebuilt:
   for xpi in glob.glob('xpi/zotero-better-bibtex*.xpi'):
