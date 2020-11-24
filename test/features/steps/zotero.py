@@ -275,8 +275,8 @@ class Zotero:
   def loaded(self, path):
     self.fixtures_loaded.add(str(PurePath(path).relative_to(FIXTURES)))
     if self.fixtures_loaded_log:
-      with open(self.fixtures_loaded_log), 'w') as f:
-        json.dump(list(self.fixtures_loaded), f, indent='  ')
+      with open(self.fixtures_loaded_log, 'w') as f:
+        json.dump(sorted(list(self.fixtures_loaded)), f, indent='  ')
 
   def load(self, path, attempt_patch=False):
     path = os.path.join(FIXTURES, path)
