@@ -94,9 +94,7 @@ jobs:
     - name: Run headless test
       uses: GabrielBB/xvfb-action@v1
       with:
-        run: |
-          mkdir logs
-          ./test/behave --client ${{ matrix.client }} --logs logs --format travis --balance ${{ matrix.slice }}
+        run: ./test/behave --client ${{ matrix.client }} --logs logs --format travis --balance ${{ matrix.slice }}
     - uses: actions/upload-artifact@v2
       if: ${{ failure() }}
       with:
