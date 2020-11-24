@@ -77,8 +77,11 @@ jobs:
     - uses: actions/checkout@v2
     - name: fetch build artifacts
       uses: actions/download-artifact@v2
+      id: buildartifacts
       with:
         name: build-artifacts
+    - run: echo build-artifacts ${{ steps.buildartifacts.outputs.download-path }} && ls ${{ steps.buildartifacts.outputs.download-path }}
+      
     - name: install python
       uses: actions/setup-python@v2
       with:
@@ -128,14 +131,18 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: fetch build artifacts
+      id: buildartifacts
       uses: actions/download-artifact@v2
       with:
         name: build-artifacts
+    - run: echo build-artifacts ${{ steps.buildartifacts.outputs.download-path }} && ls ${{ steps.buildartifacts.outputs.download-path }}
+
     - name: fetch test artifacts
+      id: testartifacts
       uses: actions/download-artifact@v2
       with:
         name: test-artifacts
-    - run: pwd && find . -name logs
+    - run: echo test-artifacts ${{ steps.testartifacts.outputs.download-path }} && ls ${{ steps.testartifacts.outputs.download-path }}
 
     - name: install node
       uses: actions/setup-node@v1
