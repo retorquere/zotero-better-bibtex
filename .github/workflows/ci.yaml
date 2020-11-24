@@ -117,6 +117,10 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: build-artifacts
+    - name: fetch test artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: test-artifacts
 
     - name: fetch test artifacts
       uses: actions/download-artifact@v2
