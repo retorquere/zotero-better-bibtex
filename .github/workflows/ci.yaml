@@ -10,6 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+      with:
+        persist-credentials: false
+        submodules: true  # Fetch Hugo themes (true OR recursive)
+        fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
 
     - name: install python
       uses: actions/setup-python@v2
@@ -51,6 +55,16 @@ jobs:
         path: |
           xpi
           gen
+
+    - uses: peaceiris/actions-hugo@v2
+      with:
+        hugo-version: 'latest'
+        extended: true
+    - run: npm run docs:deploy
+    - uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./site/public
 
   test:
     needs: build
