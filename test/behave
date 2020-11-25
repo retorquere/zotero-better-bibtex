@@ -147,7 +147,7 @@ if CI.branch != '' and args.logs:
     if arg == 'behave.json':
       return name
     else:
-      return f'loaded={name}',
+      return f'loaded={name}'
   sys.argv = [replace_logfile(arg) for arg in sys.argv]
 
 # *no* idea
@@ -157,8 +157,7 @@ import atexit
 atexit.register(cleanup)
 
 print('prepped with', args)
-#print('starting with', ' '.join(sys.argv))
-print('starting with', sys.argv)
+print('starting with', ' '.join(sys.argv))
 
 #https://stackoverflow.com/questions/28829350/run-python-behave-from-python-instead-of-command-line
 from behave.__main__ import Configuration, run_behave
