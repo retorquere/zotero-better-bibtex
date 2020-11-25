@@ -110,6 +110,7 @@ jobs:
       uses: GabrielBB/xvfb-action@v1
       with:
         run: ./test/behave --client ${{ matrix.client }} --logs logs/logs --format travis --balance ${{ matrix.slice }}
+    - run: find ./logs -type f 
 
     - uses: actions/upload-artifact@v2
       if: ${{ failure() }}
