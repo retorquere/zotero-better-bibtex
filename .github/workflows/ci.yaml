@@ -121,7 +121,8 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: build-artifacts
-        path: logs/
+        path: |
+          logs/
 
   release:
     if: github.event_name != 'schedule'
