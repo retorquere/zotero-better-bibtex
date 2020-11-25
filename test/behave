@@ -81,14 +81,11 @@ parser.add_argument('--nightly', action='store_true', default=(CI.event == 'sche
 args, unknownargs = parser.parse_known_args()
 sys.argv = sys.argv[:1]
 if CI.branch != '' and args.logs:
-  if not os.path.exists(args.logs): os.makedirs(args.logs)
-  def logfile(name):
-    return os.path.join(args.logs, f'{name}-{args.client}-{args.balance}-{CI.branch}.json')
-  # prepend, because the final format is for the console
+  # prepend but replace later, because the final format is for the console
   sys.argv += [
     '--format', 'json.pretty',
-    '--outfile', logfile('behave'),
-    '--define', f"loaded={logfile('loaded')}",
+    '--outfile', 'behave.json',
+    '--define', 'loaded.json', # f"loaded={logfile('loaded')}",
   ]
 sys.argv += unknownargs
 
@@ -137,7 +134,17 @@ if args.slow: sys.argv.extend(['--define', 'slow=true'])
 if args.beta: sys.argv.extend(['--define', f'beta=true'])
 if args.test: sys.argv.extend(['--define', f'test={args.test}'])
 if args.this: sys.argv.extend(['--tags', args.this ])
-print(' '.join(sys.argv))
+
+if CI.branch != '' and args.logs:
+  if not os.path.exists(args.logs): os.makedirs(args.logs)
+  def replace_logfile(arg):
+    if arg not in ['behave.json', 'loaded.json']: return arg
+    name = os.path.splitext(arg)[0]
+    if args.nightly:
+      return os.path.join(args.logs, f'{name}-{args.client}-{"beta" if args.beta else "release"}-{CI.branch}.json')
+    else:
+      return os.path.join(args.logs, f'{name}-{args.client}-{args.balance}-{CI.branch}-{"slow" if args.slow else "fast"}.json')
+  sys.argv = [replace_logfile(arg) for arg in sys.argv]
 
 # *no* idea
 def cleanup():
@@ -146,7 +153,7 @@ import atexit
 atexit.register(cleanup)
 
 print('prepped with', args)
-print('starting with', sys.argv)
+print('starting with', ' '.join(sys.argv))
 
 #https://stackoverflow.com/questions/28829350/run-python-behave-from-python-instead-of-command-line
 from behave.__main__ import Configuration, run_behave

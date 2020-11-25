@@ -53,8 +53,8 @@ jobs:
       with:
         name: build-artifacts
         path: |
-          xpi
-          gen
+          xpi/
+          gen/
 
     - uses: peaceiris/actions-hugo@v2
       with:
@@ -77,10 +77,8 @@ jobs:
     - uses: actions/checkout@v2
     - name: fetch build artifacts
       uses: actions/download-artifact@v2
-      id: buildartifacts
       with:
         name: build-artifacts
-    - run: echo build-artifacts ${{ steps.buildartifacts.outputs.download-path }} && ls ${{ steps.buildartifacts.outputs.download-path }}
       
     - name: install python
       uses: actions/setup-python@v2
@@ -112,16 +110,18 @@ jobs:
       uses: GabrielBB/xvfb-action@v1
       with:
         run: ./test/behave --client ${{ matrix.client }} --logs logs --format travis --balance ${{ matrix.slice }}
+
     - uses: actions/upload-artifact@v2
       if: ${{ failure() }}
       with:
         name: debug log ${{ matrix.client }} ${{ matrix.slice }}
         path: '~/.BBTZ5TEST.log'
+
     - name: store test artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: test-artifacts
-        path: logs
+        name: build-artifacts
+        path: logs/
 
   release:
     if: github.event_name != 'schedule'
@@ -130,19 +130,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: fetch test artifacts
-      id: testartifacts
-      uses: actions/download-artifact@v2
-      with:
-        name: test-artifacts
-    - run: echo test-artifacts ${{ steps.testartifacts.outputs.download-path }} && ls ${{ steps.testartifacts.outputs.download-path }}
-
     - name: fetch build artifacts
-      id: buildartifacts
       uses: actions/download-artifact@v2
       with:
         name: build-artifacts
-    - run: echo build-artifacts ${{ steps.buildartifacts.outputs.download-path }} && ls ${{ steps.buildartifacts.outputs.download-path }}
 
     - name: install node
       uses: actions/setup-node@v1
