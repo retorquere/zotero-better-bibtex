@@ -182,6 +182,7 @@ def patch(s, *ps):
   del s['locales']
 
   for p in ps:
+    print('applying', p)
     with open(os.path.join(SCHEMA.root, p)) as f:
       s = jsonpatch.apply_patch(s, json.load(f))
   return s
@@ -433,7 +434,7 @@ with fetch('zotero') as z, fetch('jurism') as j:
   print('  writing extra-fields')
   ef = ExtraFields()
 
-  SCHEMA.zotero = Munch.fromDict(patch(json.load(z), 'schema.patch'))
+  SCHEMA.zotero = Munch.fromDict(patch(json.load(z), 'schema.patch', 'zotero.patch'))
   SCHEMA.jurism = Munch.fromDict(patch(json.load(j), 'schema.patch', 'jurism.patch'))
 
   with open('schema.json', 'w') as f:

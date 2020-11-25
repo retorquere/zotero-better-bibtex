@@ -15,6 +15,7 @@
 |**audio recording format**  |text|medium                                                      |                        |
 |**bill number**             |text|number                                                      |number                  |
 |**blog title**              |text|publicationTitle                                            |                        |
+|**book abbreviation**       |text|journalAbbreviation                                         |container-title-short   |
 |**book author**             |name|bookAuthor                                                  |container-author        |
 |**book title**              |text|publicationTitle                                            |                        |
 |**call number**             |text|callNumber                                                  |call-number             |
