@@ -106,6 +106,7 @@ jobs:
     - run: sudo apt-get update
     - run: sudo apt-get install ${{ matrix.client }}
     - run: sudo ./util/install-beta ${{ matrix.client }}
+    # needs logs/logs to have them show up as logs in the artifact... no idea why
     - name: Run headless test
       uses: GabrielBB/xvfb-action@v1
       with:
