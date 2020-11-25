@@ -141,9 +141,13 @@ if CI.branch != '' and args.logs:
     if arg not in ['behave.json', 'loaded.json']: return arg
     name = os.path.splitext(arg)[0]
     if args.nightly:
-      return os.path.join(args.logs, f'{name}-{args.client}-{"beta" if args.beta else "release"}-{CI.branch}.json')
+      name = os.path.join(args.logs, f'{name}-{args.client}-{"beta" if args.beta else "release"}-{CI.branch}.json')
     else:
-      return os.path.join(args.logs, f'{name}-{args.client}-{args.balance}-{CI.branch}-{"slow" if args.slow else "fast"}.json')
+      name = os.path.join(args.logs, f'{name}-{args.client}-{args.balance}-{CI.branch}.json')
+    if arg == 'behave.json':
+      return name
+    else:
+      return f'loaded={name}',
   sys.argv = [replace_logfile(arg) for arg in sys.argv]
 
 # *no* idea
