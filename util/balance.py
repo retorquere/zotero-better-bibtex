@@ -45,7 +45,7 @@ class Log:
 
         # for retries, the last successful iteration (if any) will overwrite the failed iterations
         tests[re.sub(r' -- @[0-9]+\.[0-9]+ ', '', test.name)] = Munch(
-          duration=sum([step.result.duration for step in test.steps if 'result' in step and 'duration' in step.result]),
+          duration=sum([step.result.duration * 1000 for step in test.steps if 'result' in step and 'duration' in step.result]), # msecs
           status=status
         )
     if len(tests) == 0: raise NoTestError()
@@ -81,11 +81,11 @@ class Logs:
 
   @staticmethod
   def builds():
-    return sorted(list(set([ Logs.build_id(log) for log in glob.glob(os.path.expanduser('~/pCloud Drive/travis/timing/*.json')) if Logs.build_id(log) ])))
+    return sorted(list(set([ Logs.build_id(log) for log in glob.glob(os.path.expanduser('~/pCloud Drive/timing/*.json')) if Logs.build_id(log) ])))
 
   @staticmethod
   def load(build_id):
-    logs = [os.path.expanduser(f'~/pCloud Drive/travis/timing/zotero=master={build_id}.{n}=push.json') for n in [2, 3]]
+    logs = [os.path.expanduser(f'~/pCloud Drive/timing/zotero=master={build_id}.{n}=push.json') for n in [2, 3]]
 
     try:
       timings = []
@@ -110,16 +110,14 @@ for (build,) in db.execute('SELECT DISTINCT build FROM tests'):
   builds[build].verified = True
 for build in builds.values():
   if not build.verified:
-    for log in glob.glob(os.path.expanduser(f'~/pCloud Drive/travis/timing/zotero=master={build.id}.*=push.json')):
+    for log in glob.glob(os.path.expanduser(f'~/pCloud Drive/timing/zotero=master={build.id}.*=push.json')):
       Logs.clean(log, 'no tests remaining')
 
 def balance(state):
   assert state in ['fast', 'slow']
 
-  factor = 100
-  tests, durations = zip(*db.execute("SELECT name, AVG(duration) as duration FROM tests WHERE state in ('fast', ?) GROUP BY name", (state,)))
-  durations = [int(d * factor) for d in durations]
-  if 0 in durations: raise ValueError(f'{factor} is too small')
+  tests, durations, samples = zip(*db.execute("SELECT name, AVG(duration) as duration, COUNT(*) as n FROM tests WHERE state in ('fast', ?) GROUP BY name", (state,)))
+  if 0 in durations: raise ValueError('zero-length test')
   total = sum(durations)
   print('solving', len(tests), state, 'for', total)
 
@@ -130,6 +128,8 @@ def balance(state):
   solver = pywrapknapsack_solver.KnapsackSolver(solver, 'TestBalancer')
   solver.Init([1 for n in durations], [durations], [int(total/2)])
   solver.Solve()
+
+  return sorted([{ 'test': tests[i], 'msecs': durations[i], 'n': samples[i], 'cluster': 1 if solver.BestSolutionContains(i) else 2} for i in range(len(tests))], key=lambda x: x['test'])
 
   clusters = {'1': [], '2': []}
   clustertime = {'1': [], '2': []}
