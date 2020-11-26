@@ -31,7 +31,6 @@ _anchors:
         ${{ runner.os }}-build-${{ env.cache-name }}-
   install_python_packages: &install_python_packages
     name: install python packages
-    if: steps.cache.outputs.cache-hit != 'true'
     run: |
       pip install packaging
       python -m pip install --upgrade pip
@@ -39,7 +38,6 @@ _anchors:
   install_node_packages: &install_node_packages
     name: install node packages
     run: npm install
-    if: steps.cache.outputs.cache-hit != 'true'
 
 jobs:
   build:
