@@ -20,6 +20,8 @@ _anchors:
     name: Cache python/node dependencies
     id: cache
     uses: actions/cache@v2
+    env:
+      cache-name: v1
     with:
       path: |
         ~/.npm
@@ -27,8 +29,6 @@ _anchors:
       key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
       restore-keys: |
         ${{ runner.os }}-build-${{ env.cache-name }}-
-        ${{ runner.os }}-build-
-        ${{ runner.os }}-
   install_python_packages: &install_python_packages
     name: install python packages
     if: steps.cache.outputs.cache-hit != 'true'

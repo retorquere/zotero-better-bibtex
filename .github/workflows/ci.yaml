@@ -26,6 +26,8 @@ jobs:
     - name: Cache python/node dependencies
       id: cache
       uses: actions/cache@v2
+      env:
+        cache-name: v1
       with:
         path: |
           ~/.npm
@@ -33,8 +35,6 @@ jobs:
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
     - name: python env
       run: pip --version && pip cache dir && pip list
     - name: install python packages
@@ -89,6 +89,8 @@ jobs:
     - name: Cache python/node dependencies
       id: cache
       uses: actions/cache@v2
+      env:
+        cache-name: v1
       with:
         path: |
           ~/.npm
@@ -96,8 +98,6 @@ jobs:
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
     - name: python env
       run: pip --version && pip cache dir && pip list
     - name: install python packages
@@ -154,6 +154,8 @@ jobs:
     - name: Cache python/node dependencies
       id: cache
       uses: actions/cache@v2
+      env:
+        cache-name: v1
       with:
         path: |
           ~/.npm
@@ -161,8 +163,6 @@ jobs:
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
     - name: python env
       run: pip --version && pip cache dir && pip list
     - name: install python packages
