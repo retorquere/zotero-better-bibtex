@@ -98,6 +98,8 @@ jobs:
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
           ${{ runner.os }}-
+    - name: python env
+      run: pip --version && pip cache dir && pip list
     - name: install python packages
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
@@ -161,6 +163,8 @@ jobs:
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
           ${{ runner.os }}-
+    - name: python env
+      run: pip --version && pip cache dir && pip list
     - name: install python packages
       if: steps.cache.outputs.cache-hit != 'true'
       run: |

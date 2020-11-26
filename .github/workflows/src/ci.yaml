@@ -95,6 +95,8 @@ jobs:
       
     - *install_python
     - *cache
+    - name: python env
+      run: pip --version && pip cache dir && pip list
     - *install_python_packages
 
     - run: curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
@@ -136,6 +138,8 @@ jobs:
     - *install_python
     - *install_node
     - *cache
+    - name: python env
+      run: pip --version && pip cache dir && pip list
     - *install_python_packages
     - *install_node_packages
 
