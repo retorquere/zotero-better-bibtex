@@ -139,8 +139,6 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: show logs
-      run: cat logs/loaded-zotero-*.json
     - name: rebalance tests
       id: logs
       if: github.ref == 'refs/heads/master'
