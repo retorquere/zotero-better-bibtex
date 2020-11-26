@@ -94,16 +94,11 @@ def interpolate_aliases(in_stream, out_stream):
     del data['_anchors']
   out_stream.write(yaml.round_trip_dump(data, Dumper=InterpolatingDumper, width=5000))
 
-if __name__ == '__main__':
-  if '-h' in sys.argv:
-    print(__doc__)
-    sys.exit(0)
-
-  for changed in subprocess.run('git diff --cached --name-only --diff-filter=ACM'.split(' '), stdout=subprocess.PIPE).stdout.decode('utf-8').split('\n'):
-    print('changed:', changed)
-  for ayml in glob('.github/workflows/src/*.y*ml'):
-    yml = os.path.join(os.path.dirname(os.path.dirname(ayml)), os.path.basename(ayml))
-    assert yml != ayml
-    print(ayml, '=>', yml)
-    with open(ayml) as in_stream, open(yml, 'w') as out_stream:
-      interpolate_aliases(in_stream, out_stream)
+for changed in subprocess.run('git diff --cached --name-status'.split(' '), stdout=subprocess.PIPE).stdout.decode('utf-8').split('\n'):
+  print('changed:', changed)
+for ayml in glob('.github/workflows/src/*.y*ml'):
+  yml = os.path.join(os.path.dirname(os.path.dirname(ayml)), os.path.basename(ayml))
+  assert yml != ayml
+  print(ayml, '=>', yml)
+  with open(ayml) as in_stream, open(yml, 'w') as out_stream:
+    interpolate_aliases(in_stream, out_stream)
