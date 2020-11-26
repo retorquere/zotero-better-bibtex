@@ -79,8 +79,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        client: [ zotero, jurism ]
-        slice: [ '1', '2' ]
+        client: [zotero, jurism]
+        slice: ['1', '2']
     steps:
     - uses: actions/checkout@v2
     - name: fetch build artifacts
