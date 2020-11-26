@@ -107,7 +107,7 @@ jobs:
       if: ${{ failure() }}
       with:
         name: debug log ${{ matrix.client }} ${{ matrix.slice }}
-        path: '~/.BBTZ5TEST.log'
+        path: ~/.BBTZ5TEST.log
 
     - name: store test artifacts
       uses: actions/upload-artifact@v2
