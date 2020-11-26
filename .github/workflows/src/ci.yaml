@@ -53,6 +53,8 @@ jobs:
 
     - *install_python
     - *install_node
+    - name: python env
+      run: pip --version && pip cache dir && pip list
     - *cache
     - *install_python_packages
     - *install_node_packages

@@ -23,6 +23,8 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 14.x
+    - name: python env
+      run: pip --version && pip cache dir && pip list
     - name: Cache python/node dependencies
       id: cache
       uses: actions/cache@v2
