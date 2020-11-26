@@ -95,11 +95,41 @@ def interpolate_aliases(in_stream, out_stream):
     del data['_anchors']
   out_stream.write(yaml.round_trip_dump(data, Dumper=InterpolatingDumper, width=5000))
 
-for changed in subprocess.run('git diff --cached --name-status'.split(' '), stdout=subprocess.PIPE).stdout.decode('utf-8').split('\n'):
-  print('changed:', json.dumps(changed))
-for ayml in glob('.github/workflows/src/*.y*ml'):
-  yml = os.path.join(os.path.dirname(os.path.dirname(ayml)), os.path.basename(ayml))
-  assert yml != ayml
-  print(ayml, '=>', yml)
-  with open(ayml) as in_stream, open(yml, 'w') as out_stream:
+def run(cmd):
+  print(' '.join(cmd))
+  return subprocess.run(cmd, stdout=subprocess.PIPE).stdout.decode('utf-8')
+
+for change in run('git diff --cached --name-status'.split(' ')).split('\n'):
+  if change.strip() == '': continue
+  print('change:', json.dumps(change))
+  if change[0] == 'R':
+    status, path, new = change.split("\t")
+    status = status[0]
+  else:
+    status, path = change.split("\t")
+
+  if os.path.dirname(path) != '.github/workflows/src': continue
+
+  src = path
+  tgt = os.path.join(os.path.dirname(os.path.dirname(src)), os.path.basename(src))
+
+  action = None
+  if status in ['M', 'A']:
+    action = ['git', 'add', tgt]
+  elif status == 'D':
+    action = 'rm'
+    if os.path.exists(tgt): action = ['git', 'rm', tgt]
+  elif status == 'R':
+    old_tgt = tgt
+    src = new
+    tgt = os.path.join(os.path.dirname(os.path.dirname(src)), os.path.basename(src))
+    if os.path.exists(tgt): os.remove(tgt)
+    if os.path.exists(old_tgt): print(run(['git', 'mv', old_tgt, tgt]))
+    action = ['git', 'add', tgt]
+
+  assert tgt != src
+  print(src, '=>', tgt, action)
+  with open(src) as in_stream, open(tgt, 'w') as out_stream:
     interpolate_aliases(in_stream, out_stream)
+  if action:
+    print(run(action))

@@ -169,3 +169,9 @@ jobs:
 
     - name: rebalance tests
       run: ./util/rebalance.py
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        repository: release
+        commit_message: ${{ github.event.inputs.commit_message }}
+      if: github.event_name == 'workflow_dispatch'
+
