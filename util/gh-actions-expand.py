@@ -97,10 +97,9 @@ if __name__ == '__main__':
     print(__doc__)
     sys.exit(0)
 
-  for ayml in glob('.github/workflows/*.ayaml') + glob('.github/workflows/*.ayml'):
-    yml = os.path.splitext(ayml)
-    yml = yml[0] + yml[1].replace('.ay', '.y')
+  for ayml in glob('.github/workflows/src/*.y*ml'):
+    yml = os.path.join(os.path.dirname(os.path.dirname(ayml)), os.path.basename(ayml))
     assert yml != ayml
-    print(ayml, '=>', 'yml')
+    print(ayml, '=>', yml)
     with open(ayml) as in_stream, open(yml, 'w') as out_stream:
       interpolate_aliases(in_stream, out_stream)
