@@ -52,8 +52,6 @@ jobs:
     - *install_python
     - *install_node
     - *cache
-    - name: python env
-      run: pip --version && pip cache dir && pip list
     - *install_python_packages
     - *install_node_packages
 
@@ -93,8 +91,6 @@ jobs:
       
     - *install_python
     - *cache
-    - name: python env
-      run: pip --version && pip cache dir && pip list
     - *install_python_packages
 
     - run: curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
@@ -136,8 +132,6 @@ jobs:
     - *install_python
     - *install_node
     - *cache
-    - name: python env
-      run: pip --version && pip cache dir && pip list
     - *install_python_packages
     - *install_node_packages
 
@@ -145,10 +139,12 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: show logs
+      run: ls logs
     - name: rebalance tests
       id: rebalance
-      if: github.ref == 'refs/heads/rebalance'
-      run: ./util/rebalance.py ${{ github.ref }} test/balanced.json
+      if: github.ref == 'refs/heads/master'
+      run: ./util/rebalance.py ${{ github.ref }} test/balance.json
     - uses: stefanzweifel/git-auto-commit-action@v4
       if: steps.rebalance.outputs.balance
       continue-on-error: true

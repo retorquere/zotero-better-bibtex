@@ -35,8 +35,6 @@ jobs:
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-
-    - name: python env
-      run: pip --version && pip cache dir && pip list
     - name: install python packages
       run: |
         pip install packaging
@@ -96,8 +94,6 @@ jobs:
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-
-    - name: python env
-      run: pip --version && pip cache dir && pip list
     - name: install python packages
       run: |
         pip install packaging
@@ -160,8 +156,6 @@ jobs:
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-
-    - name: python env
-      run: pip --version && pip cache dir && pip list
     - name: install python packages
       run: |
         pip install packaging
@@ -175,10 +169,12 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: show logs
+      run: ls logs
     - name: rebalance tests
       id: rebalance
-      if: github.ref == 'refs/heads/rebalance'
-      run: ./util/rebalance.py ${{ github.ref }} test/balanced.json
+      if: github.ref == 'refs/heads/master'
+      run: ./util/rebalance.py ${{ github.ref }} test/balance.json
     - uses: stefanzweifel/git-auto-commit-action@v4
       if: steps.rebalance.outputs.balance
       continue-on-error: true
