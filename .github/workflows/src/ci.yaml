@@ -140,7 +140,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: show logs
-      run: ls logs
+      run: cat loaded-zotero-*.json
     - name: rebalance tests
       id: rebalance
       if: github.ref == 'refs/heads/master'
