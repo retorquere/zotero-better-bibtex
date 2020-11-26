@@ -3,7 +3,7 @@ name: continuous integration
 on:
   push:
   schedule:
-  - cron:  '0 0 * * *'
+  - cron:  0 0 * * *
 
 _anchors:
   install_python: &install_python
