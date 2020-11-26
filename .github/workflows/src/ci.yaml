@@ -54,6 +54,7 @@ jobs:
     - *cache
     - name: show pip env
       run: |
+        pip --version
         pip cache dir
         pip list
     - *install_python
