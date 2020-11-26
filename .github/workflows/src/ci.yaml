@@ -79,7 +79,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        client: [ 'zotero', 'jurism' ]
+        client: [ zotero, jurism ]
         slice: [ '1', '2' ]
     steps:
     - uses: actions/checkout@v2
