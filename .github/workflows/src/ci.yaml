@@ -142,7 +142,7 @@ jobs:
     - name: rebalance tests
       id: logs
       if: github.ref == 'refs/heads/master'
-      run:
+      run: |
         ./util/rebalance.py ${{ github.ref }} test/balance.json
         ./util/loaded.py ${{ github.ref }} test/loaded.json
     - uses: stefanzweifel/git-auto-commit-action@v4
