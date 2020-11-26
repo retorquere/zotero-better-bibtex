@@ -139,9 +139,10 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: rebalance tests
+      if: github.ref == 'refs/heads/rebalance'
       run: |
         ls logs
-        ./util/rebalance.py
+        ./util/rebalance.py rebalance
     - uses: stefanzweifel/git-auto-commit-action@v4
       if: github.ref == 'refs/heads/rebalance'
       with:

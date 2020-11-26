@@ -7,8 +7,9 @@ from munch import Munch
 import re
 from ortools.algorithms import pywrapknapsack_solver
 
-if not os.path.exists('logs/behave-zotero-1-master.json') or not os.path.exists('logs/behave-zotero-2-master.json'):
-  print('not found: logs/behave-zotero-{1,2}-master.json')
+branch = sys.argv[1]
+if not all(os.path.exists(f'logs/behave-zotero-{slice}-{branch}.json') for slice in [1, 2]):
+  print(f'not found: logs/behave-zotero-{{1,2}}-{branch}.json')
   sys.exit(0)
 
 class RunningAverage():
