@@ -172,14 +172,14 @@ jobs:
     - name: show logs
       run: cat logs/loaded-zotero-*.json
     - name: rebalance tests
-      id: rebalance
+      id: logs
       if: github.ref == 'refs/heads/master'
-      run: ./util/rebalance.py ${{ github.ref }} test/balance.json
+      run: ./util/rebalance.py ${{ github.ref }} test/balance.json ./util/loaded.py ${{ github.ref }} test/loaded.json
     - uses: stefanzweifel/git-auto-commit-action@v4
-      if: steps.rebalance.outputs.balance
+      if: steps.logs.outputs.balance || steps.logs.outputs.loaded
       continue-on-error: true
       with:
         commit_message: Rebalance test suite
-        file_pattern: ${{ steps.rebalance.outputs.balance }}
+        file_pattern: ${{ steps.logs.outputs.balance }} ${{ steps.logs.outputs.loaded }}
         skip_dirty_check: false
 

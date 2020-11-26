@@ -15,9 +15,11 @@ branch = ref.split('/')[-1]
 
 print('rebalance', branch, '=>', output)
 
-if not all(os.path.exists(f'logs/behave-zotero-{slice}-{branch}.json') for slice in [1, 2]):
-  print(f'not found: logs/behave-zotero-{{1,2}}-{branch}.json')
-  sys.exit(0)
+for job in [1, 2]:
+  job = f'logs/behave-zotero-{job}-{branch}.json'
+  if not os.path.exists(job)
+    print('not found:', job)
+    sys.exit(0)
 
 class RunningAverage():
   def __init__(self, average=None, n=0):
@@ -76,10 +78,10 @@ class Log:
 
 log = Log()
 try:
-  with open(f'logs/behave-zotero-1-{branch}.json') as left, open(f'logs/behave-zotero-2-{branch}.json') as right:
-    log.load(json.load(left, object_hook=Munch.fromDict))
-    log.load(json.load(right, object_hook=Munch.fromDict))
-    print(len(log.tests), 'tests')
+  for job in [1, 2]:
+    with open(f'logs/behave-zotero-{job}-{branch}.json') as f:
+      log.load(json.load(f, object_hook=Munch.fromDict))
+  print(len(log.tests), 'tests')
   with open('test/balance.json') as f:
     history = json.load(f, object_hook=Munch.fromDict)
 
