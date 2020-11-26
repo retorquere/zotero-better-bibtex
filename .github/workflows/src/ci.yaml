@@ -52,6 +52,7 @@ jobs:
         fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
 
     - *cache
+    - run: pip list
     - *install_python
     - *install_python_packages
     - *install_node

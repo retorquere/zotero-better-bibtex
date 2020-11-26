@@ -27,6 +27,7 @@ jobs:
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
           ${{ runner.os }}-
+    - run: pip list
     - name: install python
       uses: actions/setup-python@v2
       with:
