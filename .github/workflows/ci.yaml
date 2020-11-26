@@ -17,18 +17,14 @@ jobs:
 
     - name: install python
       uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
+      with: python-version: 3.8
 
     - name: install node
       uses: actions/setup-node@v1
-      with:
-        node-version: 14.x
+      with: node-version: 14.x
 
     - name: Cache python/node dependencies
       uses: actions/cache@v2
-      env:
-        cache-name: cache-dependencies
       with:
         path: |
           ~/.npm
