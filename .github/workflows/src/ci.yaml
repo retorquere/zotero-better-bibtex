@@ -146,6 +146,7 @@ jobs:
         ./util/rebalance.py ${{ github.ref }} test/balanced.json
     - uses: stefanzweifel/git-auto-commit-action@v4
       if: steps.rebalance.outputs.balance
+      continue-on-error: true
       with:
         commit_message: Rebalance test suite
         file_pattern: ${{ steps.rebalance.outputs.balance }}
