@@ -1,7 +1,7 @@
 {
   "fast": {
     "1": [
-      "Export 1 references for BibLaTeX to When exporting notes, also handle the blockquote tag #1656",
+      "Export 2 references for BibLaTeX to Book Title exports to Journaltitle for Biblatex @incollection reference type #1691",
       "Export 2 references for BibLaTeX to Entries with URL exported with (partial) URL in eprint field #1639",
       "Export 1 references for BibLaTeX to error during export: duplicate field note #1636",
       "Export 1 references for BibLaTeX to Unexpected HTML tags abort export #1575",
@@ -61,6 +61,7 @@
       "Export 1 references for BibLaTeX to Dollar sign in title not properly escaped #485",
       "Export 8 references for BibLaTeX to Don't title-case sup-subscripts #1037",
       "Export 1 references for BibLaTeX to Duplicate number field causes export error #1448",
+      "Export 27 references for BibLaTeX to EDTF dates in BibLaTeX #590",
       "Export 1 references for BibLaTeX to Error exporting duplicate eprinttype #1128",
       "Export 1 references for BibLaTeX to Export Forthcoming as Forthcoming",
       "Export 1 references for BibLaTeX to Export Newspaper Article misses section field #132",
@@ -178,8 +179,11 @@
       "Export 5 references for BibTeX to date ranges #747+#746",
       "Export 1 references for BibTeX to preserve @strings between import-export #1162",
       "Export 2 references for BibTeX to titles are title-cased in .bib file #558",
+      "Omit URL export when DOI present. #131",
+      "Changing item type for only BibLaTeX does not work #1694",
       "BibTeX name escaping has a million inconsistencies #438",
       "suppressBraceProtection does not work for BibTeX export (non-English items) #1194",
+      "Citekey generation failure #708 and sort references on export #957",
       "BibTeX; URL missing in bibtex for Book Section #412",
       "CAYW picker",
       "thesis zotero entries always create @phdthesis bibtex entries #307",
@@ -209,6 +213,7 @@
       "Field Institution not available anymore in key pattern for Zotero #1568",
       "use author dash separation rather than camel casing in citekey #1495",
       "Better BibTeX Import 2",
+      "LaTeX commands in Zotero should be exported untouched #1380",
       "Import support for the online type in BBT #1358",
       "Math markup to unicode not always imported correctly #472",
       "importing a title-cased bib #1246",
@@ -244,7 +249,9 @@
       "Import 3 references from Import Jabref fileDirectory, unexpected reference type #1058",
       "Import 1 references from Import fails to perform @String substitutions #154",
       "Import 1 references from Literal names",
+      "Import 1 references from Problem when importing BibTeX entries with percent sign #95 or preamble #96",
       "Import 1 references from Problem when importing BibTeX entries with square brackets #94",
+      "Import 4 references from Title of German entry converted to lowercase during import #1350",
       "Import 2 references from space after citekey creates confusion #716",
       "Import 1 references from zbb (quietly) chokes on this .bib #664",
       "Import 1 references from import software related biblatex entries #1544",
@@ -252,10 +259,8 @@
       "Options to use default import process? #1562"
     ],
     "2": [
-      "Export 27 references for BibLaTeX to EDTF dates in BibLaTeX #590",
+      "Export 1 references for BibLaTeX to When exporting notes, also handle the blockquote tag #1656",
       "Export 36 references for BibTeX to Better BibTeX does not export collections #901",
-      "Omit URL export when DOI present. #131",
-      "Citekey generation failure #708 and sort references on export #957",
       "Bibtex key regenerating issue when trashing items #117",
       "two ISSN number are freezing browser #110 + Generating keys and export broken #111",
       "Deterministic ordering for CSL #1178 #1400",
@@ -263,11 +268,8 @@
       "auto-export",
       "(non-)dropping particle handling #313",
       "Collected notes",
-      "LaTeX commands in Zotero should be exported untouched #1380",
       "AUX scanner",
       "Import 20 references from BBT does not import groups from JabRef 5.1 #1641",
-      "Import 1 references from Problem when importing BibTeX entries with percent sign #95 or preamble #96",
-      "Import 4 references from Title of German entry converted to lowercase during import #1350",
       "Import 989 references from Some bibtex entries quietly discarded on import from bib file #873",
       "Jabref groups import does not work #717",
       "Unabbreviate on import #1436-1",
@@ -278,6 +280,7 @@
   },
   "slow": {
     "1": [
+      "Export 2 references for BibLaTeX to Book Title exports to Journaltitle for Biblatex @incollection reference type #1691",
       "Export 1 references for BibLaTeX to When exporting notes, also handle the blockquote tag #1656",
       "Export 2 references for BibLaTeX to Entries with URL exported with (partial) URL in eprint field #1639",
       "Export 1 references for BibLaTeX to error during export: duplicate field note #1636",
@@ -458,6 +461,7 @@
       "Export 1 references for BibTeX to preserve @strings between import-export #1162",
       "Export 2 references for BibTeX to titles are title-cased in .bib file #558",
       "Omit URL export when DOI present. #131",
+      "Changing item type for only BibLaTeX does not work #1694",
       "BibTeX name escaping has a million inconsistencies #438",
       "suppressBraceProtection does not work for BibTeX export (non-English items) #1194",
       "Citekey generation failure #708 and sort references on export #957",
@@ -548,9 +552,7 @@
       "Unabbreviate on import #1436-1",
       "Set IDS field when merging references with different citation keys #1221",
       "Merging error with arXiv ID #1373",
-      "Duplicate Citation Key Alias #1384",
-      "Export 2 references for BibLaTeX to Book Title exports to Journaltitle for Biblatex @incollection reference type #1691",
-      "Changing item type for only BibLaTeX does not work #1694"
+      "Duplicate Citation Key Alias #1384"
     ],
     "2": [
       "Really Big whopping library"
@@ -559,1099 +561,1099 @@
   "tests": {
     "(non-)dropping particle handling #313": {
       "msecs": 2850,
-      "n": 199
+      "n": 200
     },
     "AUX scanner": {
-      "msecs": 9320,
-      "n": 199
+      "msecs": 9310,
+      "n": 200
     },
     "BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372": {
       "msecs": 270,
-      "n": 199
+      "n": 200
     },
     "Better BibTeX Import 2": {
       "msecs": 1160,
-      "n": 199
+      "n": 200
     },
     "BibTeX name escaping has a million inconsistencies #438": {
       "msecs": 480,
-      "n": 199
+      "n": 200
     },
     "BibTeX; URL missing in bibtex for Book Section #412": {
       "msecs": 1060,
-      "n": 199
+      "n": 200
     },
     "Bibtex key regenerating issue when trashing items #117": {
       "msecs": 3840,
-      "n": 199
+      "n": 200
     },
     "CAYW picker": {
       "msecs": 840,
-      "n": 199
+      "n": 200
     },
     "CSL YAML export of date with original publication date in [brackets] #922": {
       "msecs": 360,
-      "n": 199
+      "n": 200
     },
     "CSL exporters; ignore [Fields to omit from export] setting #1179": {
       "msecs": 1970,
-      "n": 199
+      "n": 200
     },
     "Capitalize all title-fields for language en #383": {
       "msecs": 680,
-      "n": 199
+      "n": 200
     },
     "Changing item type for only BibLaTeX does not work #1694": {
-      "msecs": 540,
-      "n": 1
+      "msecs": 590,
+      "n": 2
     },
     "Citekey generation failure #708 and sort references on export #957": {
       "msecs": 2040,
-      "n": 199
+      "n": 200
     },
     "Collected notes": {
       "msecs": 3300,
-      "n": 128
+      "n": 129
     },
     "Date export to Better CSL-JSON #360 #811": {
       "msecs": 1350,
-      "n": 199
+      "n": 200
     },
     "Deterministic ordering for CSL #1178 #1400": {
       "msecs": 2350,
-      "n": 199
+      "n": 200
     },
     "Diacritics stripped from keys regardless of ascii or fold filters #266": {
       "msecs": 700,
-      "n": 199
+      "n": 200
     },
     "Do not caps-protect name fields #384 #565 #566": {
       "msecs": 3440,
-      "n": 199
+      "n": 200
     },
     "Duplicate Citation Key Alias #1384": {
       "msecs": 10180,
-      "n": 199
+      "n": 200
     },
     "Edition Numbers in BibTeX Exports #1446": {
       "msecs": 1080,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to @jurisdiction; map court,authority to institution #326": {
       "msecs": 320,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to @legislation; map code,container-title to journaltitle #327": {
       "msecs": 340,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to ADS exports dates like 1993-00-00 #1066": {
       "msecs": 370,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Abbreviations in key generated for Conference Proceedings #548": {
       "msecs": 350,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Allow explicit field override": {
       "msecs": 340,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to BBT yields error with quality report #1387": {
       "msecs": 360,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Be robust against misconfigured journal abbreviator #127": {
       "msecs": 350,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Better BibLaTeX.001": {
       "msecs": 370,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Better BibLaTeX.004": {
       "msecs": 320,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Better BibLaTeX.005": {
       "msecs": 320,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Better BibLaTeX.006": {
       "msecs": 310,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Better BibLaTeX.007": {
       "msecs": 360,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Better BibLaTeX.010": {
       "msecs": 570,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Better BibLaTeX.011": {
       "msecs": 460,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Better BibLaTeX.012": {
       "msecs": 520,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Better BibLaTeX.013": {
       "msecs": 360,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Better BibLaTeX.014": {
       "msecs": 370,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Better BibLaTeX.015": {
       "msecs": 370,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Better BibLaTeX.016": {
       "msecs": 340,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Better BibLaTeX.017": {
       "msecs": 350,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Better BibLaTeX.019": {
       "msecs": 350,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Better BibLaTeX.020": {
       "msecs": 390,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Better BibLaTeX.021": {
       "msecs": 480,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Better BibLaTeX.022": {
       "msecs": 350,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Better BibLaTeX.023": {
       "msecs": 400,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Better BibTeX does not use biblatex fields eprint and eprinttype #170": {
       "msecs": 400,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to BetterBibLaTeX; Software field company is mapped to publisher instead of organization #1054": {
       "msecs": 310,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to BibLaTeX; export CSL override 'issued' to date or year #351": {
       "msecs": 340,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to BibTeX variable support for journal titles. #309": {
       "msecs": 330,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Book converted to mvbook #288": {
       "msecs": 370,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Book sections have book title for journal in citekey #409": {
       "msecs": 410,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to BraceBalancer": {
       "msecs": 410,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to CSL status = biblatex pubstate #573": {
       "msecs": 310,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to CSL variables only recognized when in lowercase #408": {
       "msecs": 460,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Capitalisation in techreport titles #160": {
       "msecs": 340,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Colon in bibtex key #405": {
       "msecs": 350,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Colon not allowed in citation key format #268": {
       "msecs": 460,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to DOI with underscores in extra field #108": {
       "msecs": 330,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Date parses incorrectly with year 1000 when source Zotero field is in datetime format. #515": {
       "msecs": 350,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Dateparser does not recognize de in Spanish dates #1513": {
       "msecs": 390,
-      "n": 152
+      "n": 153
     },
     "Export 1 references for BibLaTeX to Dates incorrect when Zotero date field includes times #934": {
       "msecs": 330,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Do not use more than three initials in case of authshort key #1079": {
       "msecs": 340,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Does the publisher field work when put in Zoteros extra field #1370": {
       "msecs": 510,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Dollar sign in title not properly escaped #485": {
       "msecs": 330,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Duplicate number field causes export error #1448": {
       "msecs": 600,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Error exporting duplicate eprinttype #1128": {
       "msecs": 460,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Export Forthcoming as Forthcoming": {
       "msecs": 390,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Export Newspaper Article misses section field #132": {
       "msecs": 330,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Export error for items without publicationTitle and Preserve BibTeX variables enabled #201": {
       "msecs": 310,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Export mapping for reporter field #219": {
       "msecs": 360,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Exporting of single-field author lacks braces #130": {
       "msecs": 410,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Fields in Extra should override defaults": {
       "msecs": 320,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to German Umlaut separated by brackets #146": {
       "msecs": 390,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to HTML Fragment separator escaped in url #140 #147": {
       "msecs": 300,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Ignore HTML tags when generating citation key #264": {
       "msecs": 340,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Inconsistent date field formatting in BibLaTeX export #1493": {
       "msecs": 340,
-      "n": 161
+      "n": 162
     },
     "Export 1 references for BibLaTeX to JSTOR eprint data export depends on whether jstor link starts with https vs http #1543": {
       "msecs": 420,
-      "n": 117
+      "n": 118
     },
     "Export 1 references for BibLaTeX to Japanese rendered as Chinese in Citekey #979": {
       "msecs": 400,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Latex commands in extra-field treated differently #1207": {
       "msecs": 500,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Malformed HTML": {
       "msecs": 300,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Math parts in title #113": {
       "msecs": 340,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Month showing up in year field on export #889": {
       "msecs": 340,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Multiple locations and-or publishers and BibLaTeX export #689": {
       "msecs": 340,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Non-ascii in dates is not matched by date parser #376": {
       "msecs": 470,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Oriental dates trip up date parser #389": {
       "msecs": 390,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Protect math sections #1148": {
       "msecs": 320,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to References with multiple notes fail to export #174": {
       "msecs": 370,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Regression in export to better biblatex #1491": {
       "msecs": 260,
-      "n": 164
+      "n": 165
     },
     "Export 1 references for BibLaTeX to Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105": {
       "msecs": 400,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Some Unicode characters converted to LaTeX #1481": {
       "msecs": 310,
-      "n": 172
+      "n": 173
     },
     "Export 1 references for BibLaTeX to Spaces not stripped from citation keys #294": {
       "msecs": 390,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Suppress brace protection #1139": {
       "msecs": 400,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253": {
       "msecs": 480,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Thin space in author name #859": {
       "msecs": 470,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Treat dash-connected words as a single word for citekey generation #619": {
       "msecs": 410,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Treat ideographs as individual words for key generation #1353": {
       "msecs": 330,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to URL-DOI exclusive export broken for item types with no dedicated DOI field #1331": {
       "msecs": 460,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to Unexpected HTML tags abort export #1575": {
       "msecs": 490,
-      "n": 97
+      "n": 98
     },
     "Export 1 references for BibLaTeX to When exporting notes, also handle the blockquote tag #1656": {
-      "msecs": 310,
-      "n": 32
+      "msecs": 360,
+      "n": 33
     },
     "Export 1 references for BibLaTeX to auth leaves punctuation in citation key #310": {
       "msecs": 320,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to biblatex; Language tag xx is exported, xx-XX is not #380": {
       "msecs": 330,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to bookSection is always converted to @inbook, never @incollection #282": {
       "msecs": 350,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to condense in cite key format not working #308": {
       "msecs": 360,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to customized fields with curly brackets are not exported correctly anymore #775": {
       "msecs": 410,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to don't escape entry key fields for #296": {
       "msecs": 340,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to error during export: duplicate field note #1636": {
       "msecs": 280,
-      "n": 35
+      "n": 36
     },
     "Export 1 references for BibLaTeX to italics in title - capitalization #541": {
       "msecs": 380,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to lone ogonek should have brace": {
       "msecs": 400,
-      "n": 147
+      "n": 148
     },
     "Export 1 references for BibLaTeX to paragraphs in Zotero notes need par #1422": {
       "msecs": 510,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to pre not working in Extra field #559": {
       "msecs": 320,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to preserve @strings between import-export #1162": {
       "msecs": 510,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to referencetype= does not work #278": {
       "msecs": 420,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to remove the field if the override is empty #303": {
       "msecs": 350,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to tex.IDs= foo_bar are escaped despite the equals sign #1449": {
       "msecs": 250,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to transliteration for citekey #580": {
       "msecs": 400,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to typo stature-statute (zotero item type) #284": {
       "msecs": 380,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to underscores in URL fields should not be escaped #104": {
       "msecs": 330,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibLaTeX to urldate when only DOI is exported #869": {
       "msecs": 440,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibTeX to 30-Mar-2020 parsed as literal #1476": {
       "msecs": 410,
-      "n": 188
+      "n": 189
     },
     "Export 1 references for BibTeX to Better BibTeX.018": {
       "msecs": 430,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibTeX to Better BibTeX.026": {
       "msecs": 540,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibTeX to Better BibTeX.027": {
       "msecs": 470,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibTeX to BetterBibtex export fails for missing last name #978": {
       "msecs": 520,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibTeX to BibTeX Entries with Volume and Number Fields #1475": {
       "msecs": 440,
-      "n": 188
+      "n": 189
     },
     "Export 1 references for BibTeX to BibTeX Warning for Inbook Entries with Author and Editor Fields #1541": {
       "msecs": 430,
-      "n": 118
+      "n": 119
     },
     "Export 1 references for BibTeX to Book chapter citation using p. instead of pp. #1375": {
       "msecs": 450,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibTeX to Double superscript in title field on export #1217": {
       "msecs": 400,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibTeX to Edition Numbers in BibTeX Exports #1446": {
       "msecs": 420,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibTeX to Empty bibtex clause in extra gobbles whatever follows #99": {
       "msecs": 370,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibTeX to Error exporting with custom Extra field #1118": {
       "msecs": 420,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibTeX to Export C as {v C}, not v{C} #152": {
       "msecs": 550,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibTeX to Export of item to Better Bibtex fails for auth3_1 #98": {
       "msecs": 490,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibTeX to Export unicode as plain text fails for Vietnamese characters #977": {
       "msecs": 380,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibTeX to Exporting Book Sections as Inbook #1474": {
       "msecs": 520,
-      "n": 190
+      "n": 191
     },
     "Export 1 references for BibTeX to Exporting to bibtex with unicode as plain-text latex commands does not convert U+2040 #1265": {
       "msecs": 510,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibTeX to Hyphenated last names not escaped properly (or at all) in BibTeX #976": {
       "msecs": 450,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibTeX to Match against @string value for export #1597": {
       "msecs": 350,
-      "n": 73
+      "n": 74
     },
     "Export 1 references for BibTeX to Minimize bibtex export package dependencies #1402": {
       "msecs": 410,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibTeX to Mismatched conversion of braces in title on export means field never gets closed #1218": {
       "msecs": 490,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibTeX to Missing $ in TeX export of < to langle #1469": {
       "msecs": 390,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibTeX to Missing JabRef pattern; authEtAl #554": {
       "msecs": 490,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibTeX to Missing JabRef pattern; authorsN+initials #553": {
       "msecs": 460,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibTeX to No booktitle field when exporting references from conference proceedings #1069": {
       "msecs": 430,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibTeX to No space between author first and last name because last char of first name is translated to a latex command #1091": {
       "msecs": 380,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibTeX to Numbers confuse capital-preservation #295": {
       "msecs": 360,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibTeX to Open date range crashes citekey generator #1227": {
       "msecs": 410,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibTeX to Publisher Address of BibTeX Inproceedings Entries #1471": {
       "msecs": 500,
-      "n": 186
+      "n": 187
     },
     "Export 1 references for BibTeX to Regression in export to better biblatex #1491": {
       "msecs": 280,
-      "n": 164
+      "n": 165
     },
     "Export 1 references for BibTeX to Some Unicode characters converted to LaTeX #1481": {
       "msecs": 360,
-      "n": 172
+      "n": 173
     },
     "Export 1 references for BibTeX to Underscores break capital-preservation #300": {
       "msecs": 340,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibTeX to Unicode \u00f8 in author name is exported with trailing space which does not work in bibtex #1538": {
       "msecs": 350,
-      "n": 119
+      "n": 120
     },
     "Export 1 references for BibTeX to [authN_M] citation key syntax has off-by-one error #899": {
       "msecs": 370,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibTeX to bibtex export of phdthesis does not case-protect -type- #435": {
       "msecs": 370,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibTeX to braces after textemdash followed by unicode #980": {
       "msecs": 400,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibTeX to capital delta breaks .bib output #141": {
       "msecs": 410,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibTeX to custom fields should be exported as-is #441": {
       "msecs": 480,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibTeX to lone ogonek should have brace": {
       "msecs": 420,
-      "n": 147
+      "n": 148
     },
     "Export 1 references for BibTeX to preserve @strings between import-export #1162": {
       "msecs": 540,
-      "n": 199
+      "n": 200
     },
     "Export 1 references for BibTeX to preserve BibTeX Variables does not check for null values while escaping #337": {
       "msecs": 370,
-      "n": 199
+      "n": 200
     },
     "Export 2 references for BibLaTeX to Better BibLaTeX.002": {
       "msecs": 370,
-      "n": 199
+      "n": 200
     },
     "Export 2 references for BibLaTeX to Better BibLaTeX.003": {
       "msecs": 380,
-      "n": 199
+      "n": 200
     },
     "Export 2 references for BibLaTeX to Better BibLaTeX.009": {
       "msecs": 770,
-      "n": 199
+      "n": 200
     },
     "Export 2 references for BibLaTeX to BibLaTeX Patent author handling, type #1060": {
       "msecs": 540,
-      "n": 199
+      "n": 200
     },
     "Export 2 references for BibLaTeX to Book Title exports to Journaltitle for Biblatex @incollection reference type #1691": {
-      "msecs": 410,
-      "n": 1
+      "msecs": 430,
+      "n": 2
     },
     "Export 2 references for BibLaTeX to CSL title, volume-title, container-title=BL title, booktitle, maintitle #381": {
       "msecs": 400,
-      "n": 199
+      "n": 200
     },
     "Export 2 references for BibLaTeX to Citations have month and day next to year #868": {
       "msecs": 730,
-      "n": 199
+      "n": 200
     },
     "Export 2 references for BibLaTeX to Entries with URL exported with (partial) URL in eprint field #1639": {
       "msecs": 450,
-      "n": 38
+      "n": 39
     },
     "Export 2 references for BibLaTeX to Export Patent Applications as such #1413": {
       "msecs": 270,
-      "n": 199
+      "n": 200
     },
     "Export 2 references for BibLaTeX to Hang on non-file attachment export #112 - URL export broken #114": {
       "msecs": 460,
-      "n": 199
+      "n": 200
     },
     "Export 2 references for BibLaTeX to Juris-M missing multi-lingual fields #482": {
       "msecs": 430,
-      "n": 199
+      "n": 200
     },
     "Export 2 references for BibLaTeX to Title case of latex greek text on biblatex export #564": {
       "msecs": 550,
-      "n": 199
+      "n": 200
     },
     "Export 2 references for BibLaTeX to biblatex export of Presentation; Use type and venue fields #644": {
       "msecs": 530,
-      "n": 199
+      "n": 200
     },
     "Export 2 references for BibLaTeX to csquotes #302": {
       "msecs": 420,
-      "n": 199
+      "n": 200
     },
     "Export 2 references for BibLaTeX to map csl-json variables #293": {
       "msecs": 450,
-      "n": 199
+      "n": 200
     },
     "Export 2 references for BibLaTeX to markup small-caps, superscript, italics #301": {
       "msecs": 440,
-      "n": 199
+      "n": 200
     },
     "Export 2 references for BibLaTeX to micro sign (unicode B5) export seems wrong and span in title #1434": {
       "msecs": 430,
-      "n": 199
+      "n": 200
     },
     "Export 2 references for BibLaTeX to origyear not taken from csl extra-field for citation key generation #1395": {
       "msecs": 420,
-      "n": 199
+      "n": 200
     },
     "Export 2 references for BibTeX to BibTeX journal article QR reports missing field number #1589": {
       "msecs": 570,
-      "n": 74
+      "n": 75
     },
     "Export 2 references for BibTeX to Format disambiguations #1554": {
       "msecs": 330,
-      "n": 114
+      "n": 115
     },
     "Export 2 references for BibTeX to citekey firstpage-lastpage #1147": {
       "msecs": 610,
-      "n": 199
+      "n": 200
     },
     "Export 2 references for BibTeX to creating a key with [authForeIni] and [authN] not working properly #892": {
       "msecs": 440,
-      "n": 199
+      "n": 200
     },
     "Export 2 references for BibTeX to date not always parsed properly into month and year with PubMed #1112": {
       "msecs": 670,
-      "n": 199
+      "n": 200
     },
     "Export 2 references for BibTeX to error on exporting note with pre tags; duplicate field howpublished #1092": {
       "msecs": 670,
-      "n": 199
+      "n": 200
     },
     "Export 2 references for BibTeX to titles are title-cased in .bib file #558": {
       "msecs": 510,
-      "n": 199
+      "n": 200
     },
     "Export 27 references for BibLaTeX to EDTF dates in BibLaTeX #590": {
       "msecs": 1810,
-      "n": 199
+      "n": 200
     },
     "Export 3 references for BibLaTeX to BBT export of square brackets in date #245 -- xref should not be escaped #246": {
       "msecs": 610,
-      "n": 199
+      "n": 200
     },
     "Export 3 references for BibLaTeX to Do not caps-protect literal lists #391": {
       "msecs": 410,
-      "n": 199
+      "n": 200
     },
     "Export 3 references for BibLaTeX to Extra semicolon in biblatexadata causes export failure #133": {
       "msecs": 580,
-      "n": 199
+      "n": 200
     },
     "Export 3 references for BibLaTeX to Normalize date ranges in citekeys #356": {
       "msecs": 510,
-      "n": 199
+      "n": 200
     },
     "Export 3 references for BibTeX to No brace protection when suppressTitleCase set to true #1188": {
       "msecs": 500,
-      "n": 199
+      "n": 200
     },
     "Export 3 references for BibTeX to Replicate Zotero key algorithm #439": {
       "msecs": 500,
-      "n": 199
+      "n": 200
     },
     "Export 36 references for BibTeX to Better BibTeX does not export collections #901": {
       "msecs": 4600,
-      "n": 199
+      "n": 200
     },
     "Export 4 references for BibLaTeX to date and year are switched #406": {
       "msecs": 550,
-      "n": 199
+      "n": 200
     },
     "Export 4 references for BibTeX to add date, origdate functions, and format-date filter #1488": {
       "msecs": 430,
-      "n": 157
+      "n": 158
     },
     "Export 4 references for BibTeX to veryshorttitle and compound words #551": {
       "msecs": 620,
-      "n": 199
+      "n": 200
     },
     "Export 5 references for BibLaTeX to date ranges #747+#746": {
       "msecs": 1330,
-      "n": 199
+      "n": 200
     },
     "Export 5 references for BibTeX to Braces around author last name when exporting BibTeX #565": {
       "msecs": 820,
-      "n": 199
+      "n": 200
     },
     "Export 5 references for BibTeX to date ranges #747+#746": {
       "msecs": 1330,
-      "n": 199
+      "n": 200
     },
     "Export 6 references for BibLaTeX to Better BibLaTeX.stable-keys": {
       "msecs": 620,
-      "n": 199
+      "n": 200
     },
     "Export 8 references for BibLaTeX to Don't title-case sup-subscripts #1037": {
       "msecs": 660,
-      "n": 199
+      "n": 200
     },
     "Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825": {
       "msecs": 990,
-      "n": 199
+      "n": 200
     },
     "Export web page to misc type with notes and howpublished custom fields #329": {
       "msecs": 470,
-      "n": 199
+      "n": 200
     },
     "Field Institution not available anymore in key pattern for Zotero #1568": {
       "msecs": 370,
-      "n": 102
+      "n": 103
     },
     "Ignoring upper cases in German titles #456": {
       "msecs": 700,
-      "n": 199
+      "n": 200
     },
     "Import 1 references from Author splitter failure": {
       "msecs": 1040,
-      "n": 199
+      "n": 200
     },
     "Import 1 references from Better BibTeX.004": {
       "msecs": 1000,
-      "n": 199
+      "n": 200
     },
     "Import 1 references from Better BibTeX.005": {
       "msecs": 970,
-      "n": 199
+      "n": 200
     },
     "Import 1 references from Better BibTeX.006": {
       "msecs": 980,
-      "n": 199
+      "n": 200
     },
     "Import 1 references from Better BibTeX.008": {
       "msecs": 1050,
-      "n": 199
+      "n": 200
     },
     "Import 1 references from Better BibTeX.010": {
       "msecs": 1130,
-      "n": 199
+      "n": 200
     },
     "Import 1 references from Better BibTeX.011": {
       "msecs": 1060,
-      "n": 199
+      "n": 200
     },
     "Import 1 references from Better BibTeX.012": {
       "msecs": 980,
-      "n": 199
+      "n": 200
     },
     "Import 1 references from Better BibTeX.014": {
       "msecs": 1000,
-      "n": 199
+      "n": 200
     },
     "Import 1 references from Better BibTeX.015": {
       "msecs": 1370,
-      "n": 199
+      "n": 200
     },
     "Import 1 references from BibTeX import; preamble with def create problems #732": {
       "msecs": 1060,
-      "n": 199
+      "n": 200
     },
     "Import 1 references from Biblatex Annotation Import Bug #613": {
       "msecs": 1040,
-      "n": 199
+      "n": 200
     },
     "Import 1 references from Endnote should parse": {
       "msecs": 770,
-      "n": 199
+      "n": 200
     },
     "Import 1 references from Failure to handle unparsed author names (92)": {
       "msecs": 1080,
-      "n": 199
+      "n": 200
     },
     "Import 1 references from Import fails to perform @String substitutions #154": {
       "msecs": 1030,
-      "n": 199
+      "n": 200
     },
     "Import 1 references from Import location to event-place for conference papers": {
       "msecs": 1010,
-      "n": 199
+      "n": 200
     },
     "Import 1 references from Import of langle and rangle TeX commands #1468": {
       "msecs": 1050,
-      "n": 199
+      "n": 200
     },
     "Import 1 references from Importing changes Journal to The Journal #1601": {
       "msecs": 1020,
-      "n": 72
+      "n": 73
     },
     "Import 1 references from Issues with round instead of curly braces do not import correctly #871": {
       "msecs": 1000,
-      "n": 199
+      "n": 200
     },
     "Import 1 references from Literal names": {
       "msecs": 1220,
-      "n": 199
+      "n": 200
     },
     "Import 1 references from Math formatting lost on import #627": {
       "msecs": 1020,
-      "n": 199
+      "n": 200
     },
     "Import 1 references from Problem when importing BibTeX entries with percent sign #95 or preamble #96": {
       "msecs": 1170,
-      "n": 199
+      "n": 200
     },
     "Import 1 references from Problem when importing BibTeX entries with square brackets #94": {
       "msecs": 1130,
-      "n": 199
+      "n": 200
     },
     "Import 1 references from Spaces lost when expanding string variables during import #1081": {
       "msecs": 1020,
-      "n": 199
+      "n": 200
     },
     "Import 1 references from Wrong ring-above import #1115": {
       "msecs": 1020,
-      "n": 199
+      "n": 200
     },
     "Import 1 references from eprinttype field dropped on import #959": {
       "msecs": 1020,
-      "n": 199
+      "n": 200
     },
     "Import 1 references from import software related biblatex entries #1544": {
       "msecs": 1230,
-      "n": 117
+      "n": 118
     },
     "Import 1 references from support Local-Zo-Url-x field from BibDesk2Zotero_attachments #667": {
       "msecs": 1300,
-      "n": 199
+      "n": 200
     },
     "Import 1 references from zbb (quietly) chokes on this .bib #664": {
       "msecs": 1070,
-      "n": 199
+      "n": 200
     },
     "Import 2 references from Better BibTeX.001": {
       "msecs": 1150,
-      "n": 199
+      "n": 200
     },
     "Import 2 references from Better BibTeX.003": {
       "msecs": 1050,
-      "n": 199
+      "n": 200
     },
     "Import 2 references from BibLaTeX Patent author handling, type #1060": {
       "msecs": 1210,
-      "n": 199
+      "n": 200
     },
     "Import 2 references from space after citekey creates confusion #716": {
       "msecs": 1160,
-      "n": 199
+      "n": 200
     },
     "Import 20 references from BBT does not import groups from JabRef 5.1 #1641": {
       "msecs": 3770,
-      "n": 38
+      "n": 39
     },
     "Import 3 references from Better BibTeX.009": {
       "msecs": 1130,
-      "n": 199
+      "n": 200
     },
     "Import 3 references from Import Jabref fileDirectory, unexpected reference type #1058": {
       "msecs": 1850,
-      "n": 199
+      "n": 200
     },
     "Import 4 references from Title of German entry converted to lowercase during import #1350": {
       "msecs": 1300,
-      "n": 199
+      "n": 200
     },
     "Import 8 references from Overline during Import #1467": {
       "msecs": 1720,
-      "n": 199
+      "n": 200
     },
     "Import 9 references from Better BibLaTeX import improvements #549": {
       "msecs": 1520,
-      "n": 199
+      "n": 200
     },
     "Import 989 references from Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 56100,
-      "n": 190
+      "msecs": 56030,
+      "n": 191
     },
     "Import support for the online type in BBT #1358": {
       "msecs": 1170,
-      "n": 199
+      "n": 200
     },
     "Include first name initial(s) in cite key generation pattern (86)": {
       "msecs": 450,
-      "n": 199
+      "n": 200
     },
     "Jabref groups import does not work #717": {
       "msecs": 2810,
-      "n": 199
+      "n": 200
     },
     "Journal abbreviations": {
       "msecs": 490,
-      "n": 199
+      "n": 200
     },
     "Journal abbreviations exported in bibtex (81)": {
       "msecs": 380,
-      "n": 199
+      "n": 200
     },
     "LaTeX commands in Zotero should be exported untouched #1380": {
       "msecs": 1290,
-      "n": 199
+      "n": 200
     },
     "Math markup to unicode not always imported correctly #472": {
       "msecs": 1020,
-      "n": 199
+      "n": 200
     },
     "Merging error with arXiv ID #1373": {
       "msecs": 9480,
-      "n": 199
+      "n": 200
     },
     "Omit URL export when DOI present. #131": {
       "msecs": 1760,
-      "n": 199
+      "n": 200
     },
     "Options to use default import process? #1562": {
       "msecs": 1230,
-      "n": 107
+      "n": 108
     },
     "Pandoc-LaTeX-SCHOMD Citation Export": {
       "msecs": 1280,
-      "n": 199
+      "n": 200
     },
     "Postscript error aborts CSL JSON export #1155": {
       "msecs": 750,
-      "n": 199
+      "n": 200
     },
     "Quotes around last names should be removed from citekeys #856": {
       "msecs": 250,
-      "n": 199
+      "n": 200
     },
     "Really Big whopping library": {
-      "msecs": 408450,
-      "n": 199
+      "msecs": 408220,
+      "n": 200
     },
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": {
       "msecs": 1220,
-      "n": 199
+      "n": 200
     },
     "Set IDS field when merging references with different citation keys #1221": {
       "msecs": 9640,
-      "n": 199
+      "n": 200
     },
     "Setting the item type via the cheater syntax #587": {
       "msecs": 1190,
-      "n": 199
+      "n": 200
     },
     "Sorting and optional particle handling #411": {
       "msecs": 760,
-      "n": 199
+      "n": 200
     },
     "Square brackets in Publication field (85), and non-pinned keys must change when the pattern does": {
       "msecs": 450,
-      "n": 199
+      "n": 200
     },
     "Unabbreviate on import #1436-1": {
-      "msecs": 41470,
-      "n": 199
+      "msecs": 41440,
+      "n": 200
     },
     "Unbalanced vphantom escapes #1043": {
       "msecs": 760,
-      "n": 199
+      "n": 200
     },
     "arXiv identifiers in BibLaTeX export #460": {
       "msecs": 1180,
-      "n": 199
+      "n": 200
     },
     "auto-export": {
       "msecs": 14370,
-      "n": 199
+      "n": 200
     },
     "automatic tags in export #1270": {
       "msecs": 410,
-      "n": 199
+      "n": 200
     },
     "bibtex; url export does not survive underscores #402": {
       "msecs": 670,
-      "n": 199
+      "n": 200
     },
     "importing a title-cased bib #1246": {
       "msecs": 1320,
-      "n": 199
+      "n": 200
     },
     "suppressBraceProtection does not work for BibTeX export (non-English items) #1194": {
       "msecs": 980,
-      "n": 199
+      "n": 200
     },
     "thesis zotero entries always create @phdthesis bibtex entries #307": {
       "msecs": 760,
-      "n": 199
+      "n": 200
     },
     "two ISSN number are freezing browser #110 + Generating keys and export broken #111": {
       "msecs": 3610,
-      "n": 199
+      "n": 200
     },
     "use author dash separation rather than camel casing in citekey #1495": {
       "msecs": 530,
-      "n": 163
+      "n": 164
     }
   }
 }
