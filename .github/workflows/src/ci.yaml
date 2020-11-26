@@ -138,3 +138,5 @@ jobs:
       env:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
+    - name: rebalance tests
+      run: ./util/rebalance.py

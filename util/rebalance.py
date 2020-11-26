@@ -8,6 +8,7 @@ import re
 from ortools.algorithms import pywrapknapsack_solver
 
 if not os.path.exists('logs/behave-zotero-1-master.json') or not os.path.exists('logs/behave-zotero-2-master.json'):
+  print('not found: logs/behave-zotero-{1,2}-master.json')
   sys.exit(0)
 
 class RunningAverage():
