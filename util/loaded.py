@@ -17,8 +17,9 @@ for job in [1, 2]:
   if not os.path.exists(job):
     print('not found:', job)
     sys.exit(0)
-  loaded += json.load(job)
+  with open(job) as f:
+    loaded += json.load(f)
 
 with open(output, 'w') as f:
-  json.dump(sorted(loaded), f, indent='  ')
+  json.dump(sorted(set(loaded)), f, indent='  ')
 print(f"::set-output name=loaded::{output}")
