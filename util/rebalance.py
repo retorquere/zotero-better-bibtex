@@ -69,7 +69,7 @@ class Log:
 
 log = Log()
 try:
-  with open('logs/behave-zotero-1-master.json') as left, open('logs/behave-zotero-2-master.json') as right:
+  with open(f'logs/behave-zotero-1-{branch}.json') as left, open(f'logs/behave-zotero-2-{branch}.json') as right:
     log.load(json.load(left, object_hook=Munch.fromDict))
     log.load(json.load(right, object_hook=Munch.fromDict))
     print(len(log.tests), 'tests')
