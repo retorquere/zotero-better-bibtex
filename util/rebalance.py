@@ -67,6 +67,7 @@ class Log:
 
         # for retries, the last successful iteration (if any) will overwrite the failed iterations
         tests[re.sub(r' -- @[0-9]+\.[0-9]+ ', '', test.name)] = Munch(
+          # convert to msecs here or too much gets rounded down to 0
           duration=sum([step.result.duration * 1000 for step in test.steps if 'result' in step and 'duration' in step.result]), # msecs
           status=status
         )
@@ -93,7 +94,8 @@ try:
       h = history['tests'][name]
       avg = RunningAverage(h['msecs'], h['n'])
       avg(test['msecs'])
-      balance['tests'][name] = { 'msecs': float(avg), 'n': h['n'] + 1 }
+      # round to 10 msecs to prevent flutter
+      balance['tests'][name] = { 'msecs': round(float(avg) / 10) * 10, 'n': h['n'] + 1 }
 
   for status in ['slow', 'fast']:
     tests = [test for test in log.tests if status in [ 'slow', test.status] ]
