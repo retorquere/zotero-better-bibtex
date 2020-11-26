@@ -66,7 +66,7 @@ jobs:
 
     - uses: peaceiris/actions-hugo@v2
       with:
-        hugo-version: 'latest'
+        hugo-version: latest
         extended: true
     - run: npm run docs:deploy
     - uses: peaceiris/actions-gh-pages@v3
