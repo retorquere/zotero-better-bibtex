@@ -7,7 +7,12 @@ from munch import Munch
 import re
 from ortools.algorithms import pywrapknapsack_solver
 
-branch = sys.argv[1]
+ref, output = sys.argv[1:]
+if not ref.startswith('refs/heads/'):
+  print(ref, 'is not a branch')
+  sys.exit(0)
+branch = ref.split('/')[-1]
+
 if not all(os.path.exists(f'logs/behave-zotero-{slice}-{branch}.json') for slice in [1, 2]):
   print(f'not found: logs/behave-zotero-{{1,2}}-{branch}.json')
   sys.exit(0)
@@ -88,7 +93,6 @@ try:
 
   for status in ['slow', 'fast']:
     tests = [test for test in log.tests if status in [ 'slow', test.status] ]
-    print(status, len(tests))
     if status == 'slow':
       solver = pywrapknapsack_solver.KnapsackSolver.KNAPSACK_MULTIDIMENSION_BRANCH_AND_BOUND_SOLVER
     else:
@@ -102,6 +106,7 @@ try:
     balance[status] = {}
     for i in [1, 2]:
       balance[status][i] = [ test.test for t, test in enumerate(tests) if solver.BestSolutionContains(t) == (i == 1) ]
+    print(status, len(tests), 'tests,', { k: len(t) for k, t in balance[status].items()})
 except FileNotFoundError:
   print('logs incomplete')
   sys.exit()
@@ -112,5 +117,7 @@ except FailedError:
   print('some tests failed')
   sys.exit()
 
-with open('test/rebalanced.json', 'w') as f:
+print('writing', output)
+with open(output, 'w') as f:
   json.dump(balance, f, indent='  ', sort_keys=True)
+print(f"::set-output name=balance::{output}")

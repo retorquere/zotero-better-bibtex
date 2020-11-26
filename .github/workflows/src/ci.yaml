@@ -139,14 +139,15 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: rebalance tests
+      id: rebalance
       if: github.ref == 'refs/heads/rebalance'
       run: |
         ls logs
-        ./util/rebalance.py rebalance
+        ./util/rebalance.py ${{ github.ref }} test/balanced.json
     - uses: stefanzweifel/git-auto-commit-action@v4
-      if: github.ref == 'refs/heads/rebalance'
+      if: steps.rebalance.outputs.balance
       with:
         commit_message: Rebalance test suite
-        file_pattern: test/balanced.json
+        file_pattern: ${{ steps.rebalance.outputs.balance }}
         skip_dirty_check: false
 

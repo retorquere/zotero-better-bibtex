@@ -129,7 +129,7 @@ for change in run('git diff --cached --name-status'.split(' ')).split('\n'):
     action = ['git', 'add', tgt]
 
   assert tgt != src
-  print(src, '=>', tgt, action)
+  print(src, '=>', tgt)
   with open(src) as in_stream, open(tgt, 'w') as out_stream:
     interpolate_aliases(in_stream, out_stream)
   if action:
