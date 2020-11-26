@@ -136,7 +136,7 @@ jobs:
 
     - run: npm run release
       env:
-        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: rebalance tests
       run: ./util/rebalance.py
