@@ -141,6 +141,7 @@ jobs:
     - name: rebalance tests
       run: ./util/rebalance.py
     - uses: stefanzweifel/git-auto-commit-action@v4
+      if: github.ref == 'refs/heads/rebalance'
       with:
         commit_message: Rebalance test suite
         file_pattern: test/balanced.json

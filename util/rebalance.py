@@ -111,5 +111,5 @@ except FailedError:
   print('some tests failed')
   sys.exit()
 
-with open('test/balance.json', 'w') as f:
+with open('test/rebalanced.json', 'w') as f:
   json.dump(balance, f, indent='  ', sort_keys=True)
