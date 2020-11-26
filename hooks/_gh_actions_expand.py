@@ -79,6 +79,8 @@ import os
 import sys
 from glob import glob
 from ruamel import yaml
+import subprocess
+
 
 class InterpolatingDumper(yaml.RoundTripDumper):
   def ignore_aliases(self, data):
@@ -97,6 +99,8 @@ if __name__ == '__main__':
     print(__doc__)
     sys.exit(0)
 
+  for changed in subprocess.run('git diff --cached --name-only --diff-filter=ACM'.split(' '), stdout=subprocess.PIPE).stdout.decode('utf-8').split('\n'):
+    print(changed)
   for ayml in glob('.github/workflows/src/*.y*ml'):
     yml = os.path.join(os.path.dirname(os.path.dirname(ayml)), os.path.basename(ayml))
     assert yml != ayml
