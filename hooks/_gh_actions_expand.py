@@ -80,6 +80,7 @@ import sys
 from glob import glob
 from ruamel import yaml
 import subprocess
+import json
 
 
 class InterpolatingDumper(yaml.RoundTripDumper):
@@ -95,7 +96,7 @@ def interpolate_aliases(in_stream, out_stream):
   out_stream.write(yaml.round_trip_dump(data, Dumper=InterpolatingDumper, width=5000))
 
 for changed in subprocess.run('git diff --cached --name-status'.split(' '), stdout=subprocess.PIPE).stdout.decode('utf-8').split('\n'):
-  print('changed:', changed)
+  print('changed:', json.dumps(changed))
 for ayml in glob('.github/workflows/src/*.y*ml'):
   yml = os.path.join(os.path.dirname(os.path.dirname(ayml)), os.path.basename(ayml))
   assert yml != ayml
