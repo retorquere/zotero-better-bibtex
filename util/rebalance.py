@@ -17,7 +17,7 @@ print('rebalance', branch, '=>', output)
 
 for job in [1, 2]:
   job = f'logs/behave-zotero-{job}-{branch}.json'
-  if not os.path.exists(job)
+  if not os.path.exists(job):
     print('not found:', job)
     sys.exit(0)
 
