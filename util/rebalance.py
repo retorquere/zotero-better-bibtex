@@ -13,6 +13,8 @@ if not ref.startswith('refs/heads/'):
   sys.exit(0)
 branch = ref.split('/')[-1]
 
+print('rebalance', branch, '=>', output)
+
 if not all(os.path.exists(f'logs/behave-zotero-{slice}-{branch}.json') for slice in [1, 2]):
   print(f'not found: logs/behave-zotero-{{1,2}}-{branch}.json')
   sys.exit(0)
