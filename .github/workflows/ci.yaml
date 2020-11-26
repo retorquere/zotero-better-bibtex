@@ -1,9 +1,9 @@
 name: continuous integration
 
 on:
-  push:
+  push: null
   schedule:
-  - cron:  '0 0 * * *'
+  - cron: 0 0 * * *
 
 jobs:
   build:
@@ -14,16 +14,6 @@ jobs:
         persist-credentials: false
         submodules: true  # Fetch Hugo themes (true OR recursive)
         fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
-
-    - name: install python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
-
-    - name: install node
-      uses: actions/setup-node@v1
-      with:
-        node-version: 14.x
 
     - name: Cache python/node dependencies
       uses: actions/cache@v2
@@ -37,12 +27,21 @@ jobs:
           ${{ runner.os }}-build-
           ${{ runner.os }}-
 
-    - name: install python/node dependencies
+    - name: install python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: install python packages
       run: |
         pip install packaging
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-        npm install
+    - name: install node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14.x
+    - name: install node packages
+      run: npm install
 
     - run: npm run build
 
@@ -56,7 +55,7 @@ jobs:
 
     - uses: peaceiris/actions-hugo@v2
       with:
-        hugo-version: 'latest'
+        hugo-version: latest
         extended: true
     - run: npm run docs:deploy
     - uses: peaceiris/actions-gh-pages@v3
@@ -69,23 +68,17 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        client: [ 'zotero', 'jurism' ]
-        slice: [ '1', '2' ]
+        client: [zotero, jurism]
+        slice: ['1', '2']
     steps:
     - uses: actions/checkout@v2
     - name: fetch build artifacts
       uses: actions/download-artifact@v2
       with:
         name: build-artifacts
-      
-    - name: install python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
+
     - name: Cache python/node dependencies
       uses: actions/cache@v2
-      env:
-        cache-name: cache-dependencies
       with:
         path: |
           ~/.npm
@@ -95,27 +88,33 @@ jobs:
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
           ${{ runner.os }}-
-    - name: install python dependencies
+
+    - name: install python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: install python packages
       run: |
         pip install packaging
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
     - run: curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
     - run: sudo apt-get update
     - run: sudo apt-get install ${{ matrix.client }}
     - run: sudo ./util/install-beta ${{ matrix.client }}
+
     # needs logs/logs to have them show up as logs in the artifact... no idea why
     - name: Run headless test
       uses: GabrielBB/xvfb-action@v1
       with:
         run: ./test/behave --client ${{ matrix.client }} --logs logs/logs --format travis --balance ${{ matrix.slice }}
-    - run: find ./logs -type f 
 
     - uses: actions/upload-artifact@v2
       if: ${{ failure() }}
       with:
         name: debug log ${{ matrix.client }} ${{ matrix.slice }}
-        path: '~/.BBTZ5TEST.log'
+        path: ~/.BBTZ5TEST.log
 
     - name: store test artifacts
       uses: actions/upload-artifact@v2
@@ -135,17 +134,9 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: build-artifacts
-    - run: ls logs
-
-    - name: install node
-      uses: actions/setup-node@v1
-      with:
-        node-version: 14.x
 
     - name: Cache python/node dependencies
       uses: actions/cache@v2
-      env:
-        cache-name: cache-dependencies
       with:
         path: |
           ~/.npm
@@ -156,8 +147,23 @@ jobs:
           ${{ runner.os }}-build-
           ${{ runner.os }}-
 
-    - run: npm install
+    - name: install python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: install python packages
+      run: |
+        pip install packaging
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: install node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14.x
+    - name: install node packages
+      run: npm install
+
     - run: npm run release
       env:
-        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
