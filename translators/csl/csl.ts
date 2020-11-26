@@ -81,9 +81,9 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
 
       delete csl.authority
 
-      if (item.itemType === 'videoRecording' && csl.type === 'video') csl.type = 'motion_picture';
+      if (item.itemType === 'videoRecording' && csl.type === 'video') csl.type = 'motion_picture'
 
-      [csl.journalAbbreviation, csl['container-title-short']] = [csl['container-title-short'], csl.journalAbbreviation]
+      if (csl.journalAbbreviation) [csl.journalAbbreviation, csl['container-title-short']] = [csl['container-title-short'], csl.journalAbbreviation]
 
       if (item.date) {
         const parsed = Zotero.BetterBibTeX.parseDate(item.date)
