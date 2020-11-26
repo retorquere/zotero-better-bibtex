@@ -96,12 +96,13 @@ def interpolate_aliases(in_stream, out_stream):
   out_stream.write(yaml.round_trip_dump(data, Dumper=InterpolatingDumper, width=5000))
 
 def run(cmd):
-  print(' '.join(cmd))
-  return subprocess.run(cmd, stdout=subprocess.PIPE).stdout.decode('utf-8')
+  print('$ ' + ' '.join(cmd))
+  result = subprocess.run(cmd, stdout=subprocess.PIPE).stdout.decode('utf-8')
+  print(result)
+  return result
 
 for change in run('git diff --cached --name-status'.split(' ')).split('\n'):
   if change.strip() == '': continue
-  print('change:', json.dumps(change))
   if change[0] == 'R':
     status, path, new = change.split("\t")
     status = status[0]
@@ -124,7 +125,7 @@ for change in run('git diff --cached --name-status'.split(' ')).split('\n'):
     src = new
     tgt = os.path.join(os.path.dirname(os.path.dirname(src)), os.path.basename(src))
     if os.path.exists(tgt): os.remove(tgt)
-    if os.path.exists(old_tgt): print(run(['git', 'mv', old_tgt, tgt]))
+    if os.path.exists(old_tgt): run(['git', 'mv', old_tgt, tgt])
     action = ['git', 'add', tgt]
 
   assert tgt != src
@@ -132,4 +133,4 @@ for change in run('git diff --cached --name-status'.split(' ')).split('\n'):
   with open(src) as in_stream, open(tgt, 'w') as out_stream:
     interpolate_aliases(in_stream, out_stream)
   if action:
-    print(run(action))
+    run(action)
