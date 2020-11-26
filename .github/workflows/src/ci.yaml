@@ -1,7 +1,7 @@
 name: continuous integration
 
 on:
-  push:
+  push: null
   schedule:
   - cron:  0 0 * * *
 
