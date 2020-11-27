@@ -1,0 +1,3 @@
+[
+  { "op": "remove", "path": "/csl/fields/text/journalAbbreviation" }
+]

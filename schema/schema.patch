@@ -3,7 +3,6 @@
 
   { "op": "replace", "path": "/csl/fields/text/status", "value": [ "status" ] },
   { "op": "remove", "path": "/csl/fields/text/shortTitle" },
-  { "op": "remove", "path": "/csl/fields/text/journalAbbreviation" },
   { "op": "add", "path": "/csl/fields/text/container-title-short", "value": [ "journalAbbreviation" ] },
 
   { "op": "add", "path": "/csl/unmapped", "value": {} },

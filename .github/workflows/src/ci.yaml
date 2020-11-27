@@ -5,6 +5,40 @@ on:
   schedule:
   - cron: 0 0 * * *
 
+_anchors:
+  install_python: &install_python
+    name: install python
+    uses: actions/setup-python@v2
+    with:
+      python-version: 3.8
+  install_node: &install_node
+    name: install node
+    uses: actions/setup-node@v1
+    with:
+      node-version: 14.x
+  cache: &cache
+    name: Cache python/node dependencies
+    id: cache
+    uses: actions/cache@v2
+    env:
+      cache-name: v1
+    with:
+      path: |
+        ~/.npm
+        ~/.cache/pip
+      key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
+      restore-keys: |
+        ${{ runner.os }}-build-${{ env.cache-name }}-
+  install_python_packages: &install_python_packages
+    name: install python packages
+    run: |
+      pip install packaging
+      python -m pip install --upgrade pip
+      if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+  install_node_packages: &install_node_packages
+    name: install node packages
+    run: npm install
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,34 +49,11 @@ jobs:
         submodules: true  # Fetch Hugo themes (true OR recursive)
         fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
 
-    - name: install python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
-    - name: install node
-      uses: actions/setup-node@v1
-      with:
-        node-version: 14.x
-    - name: Cache python/node dependencies
-      id: cache
-      uses: actions/cache@v2
-      env:
-        cache-name: v1
-      with:
-        path: |
-          ~/.npm
-          ~/.cache/pip
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-    - name: install python packages
-      run: |
-        pip install packaging
-        python -m pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: install node packages
-      run: npm install
-
+    - *install_python
+    - *install_node
+    - *cache
+    - *install_python_packages
+    - *install_node_packages
 
     - run: npm run build
 
@@ -77,28 +88,10 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: build-artifacts
-
-    - name: install python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
-    - name: Cache python/node dependencies
-      id: cache
-      uses: actions/cache@v2
-      env:
-        cache-name: v1
-      with:
-        path: |
-          ~/.npm
-          ~/.cache/pip
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-    - name: install python packages
-      run: |
-        pip install packaging
-        python -m pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      
+    - *install_python
+    - *cache
+    - *install_python_packages
 
     - run: curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
     - run: sudo apt-get update
@@ -136,34 +129,11 @@ jobs:
       with:
         name: build-artifacts
 
-    - name: install python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
-    - name: install node
-      uses: actions/setup-node@v1
-      with:
-        node-version: 14.x
-    - name: Cache python/node dependencies
-      id: cache
-      uses: actions/cache@v2
-      env:
-        cache-name: v1
-      with:
-        path: |
-          ~/.npm
-          ~/.cache/pip
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-    - name: install python packages
-      run: |
-        pip install packaging
-        python -m pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: install node packages
-      run: npm install
-
+    - *install_python
+    - *install_node
+    - *cache
+    - *install_python_packages
+    - *install_node_packages
 
     - run: npm run release
       env:
