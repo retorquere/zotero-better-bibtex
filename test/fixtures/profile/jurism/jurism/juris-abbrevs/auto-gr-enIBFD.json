@@ -1,0 +1,657 @@
+{
+  "filename": "auto-gr-enIBFD.json",
+  "name": "Greece",
+  "version": "2020-10-30 01:03:27 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "GR": "Greece",
+        "GR:AEGEAN": "ΑΙΓΑΙΟΥ (Σύρος)",
+        "GR:AEGEAN:CHIOS": "Χίου",
+        "GR:AEGEAN:MYTILENE": "Μυτιλήνης",
+        "GR:AEGEAN:NAXOS": "Νάξου",
+        "GR:AEGEAN:SAMOU": "Σάμου",
+        "GR:AEGEAN:SYROS": "Σύρου",
+        "GR:ATHENS": "ΑΘΗΝΩΝ",
+        "GR:ATHENS:ATHENS": "Αθηνών",
+        "GR:ATHENS:CHALKIS": "Χαλκίδας",
+        "GR:ATHENS:THEBES": "Θηβών",
+        "GR:CHANIA": "ΧΑΝΙΩΝ",
+        "GR:CHANIA:CHANIA": "Χανίων",
+        "GR:CHANIA:HERAKLION": "Ηρακλείου",
+        "GR:CORFU": "ΚΕΡΚΥΡΑΣ",
+        "GR:CORFU:CORFU": "Κερκύρας",
+        "GR:CORFU:THESPROTIA": "Θεσπρωτίας",
+        "GR:CRETE": "ΚΡΗΤΗΣ (Χανιά)",
+        "GR:CRETE:CHANIA": "Χανίων",
+        "GR:CRETE:HERAKLION": "Ηρακλείου",
+        "GR:CRETE:LASITHI": "Λασιθίου (Νεάπολη)",
+        "GR:CRETE:RETHYMNON": "Ρεθύμνου",
+        "GR:DODECANESE": "ΔΩΔΕΚΑΝΗΣΟΥ (Ρόδος)",
+        "GR:DODECANESE:KOS": "Κω",
+        "GR:DODECANESE:RHODES": "Ρόδου",
+        "GR:DYT.MACEDONIA": "ΔΥΤ. ΜΑΚΕΔΟΝΙΑΣ (Κοζάνη)",
+        "GR:DYT.MACEDONIA:FLORINA": "Φλωρίνης",
+        "GR:DYT.MACEDONIA:GREVENA": "Γρεβενών",
+        "GR:DYT.MACEDONIA:KASTORIA": "Καστοριάς",
+        "GR:DYT.MACEDONIA:KOZANI": "Κοζάνης",
+        "GR:IOANNINA": "ΙΩΑΝΝΙΝΩΝ",
+        "GR:IOANNINA:ARTA": "Άρτας",
+        "GR:IOANNINA:CORFU": "Κερκύρας",
+        "GR:IOANNINA:IOANNINA": "Ιωαννίνων",
+        "GR:IOANNINA:PREVEZA": "Πρέβεζας",
+        "GR:KALAMATA": "ΚΑΛΑΜΑΤΑΣ",
+        "GR:KALAMATA:CORINTH": "Κορίνθου",
+        "GR:KALAMATA:GYTHEION": "Γυθείου",
+        "GR:KALAMATA:KALAMATA": "Καλαμάτας",
+        "GR:KALAMATA:KYPARISSIA": "Κυπαρισσίας",
+        "GR:KOMOTINIS": "ΚΟΜΟΤΗΝΗΣ",
+        "GR:KOMOTINIS:ALEX.CITY": "Αλεξ/πόλεως",
+        "GR:KOMOTINIS:KAVALA": "Καβάλας",
+        "GR:KOMOTINIS:KOMOTINI": "Κομοτηνής",
+        "GR:LAMIA": "ΛΑΜΙΑΣ",
+        "GR:LAMIA:AMFISSA": "Άμφισσας",
+        "GR:LAMIA:EVRYTANIA": "Ευρυτανίας",
+        "GR:LAMIA:LAMIA": "Λαμίας",
+        "GR:LAMIA:LIVADIA": "Λιβαδειάς",
+        "GR:LARISA": "ΛΑΡΙΣΑΣ",
+        "GR:LARISA:LARISSA": "Λάρισας",
+        "GR:LARISA:VOLOS": "Βόλου",
+        "GR:LARISSA": "ΛΑΡΙΣΑΣ",
+        "GR:LARISSA:KARDITSA": "Καρδίτσας",
+        "GR:LARISSA:LARISSA": "Λάρισας",
+        "GR:LARISSA:TRIKALA": "Τρικάλων",
+        "GR:LARISSA:VOLOS": "Βόλου",
+        "GR:NAFPLIO": "ΝΑΥΠΛΙΟΥ",
+        "GR:NAFPLIO:CORINTH": "Κορίνθου",
+        "GR:NAFPLIO:NAFPLION": "Ναυπλίου",
+        "GR:NAFPLIO:SPARTA": "Σπάρτης",
+        "GR:NAFPLIO:TRIPOLI": "Τριπόλεως",
+        "GR:PATRON": "ΠΑΤΡΩΝ",
+        "GR:PATRON:AGRINION": "Αγρινίου",
+        "GR:PATRON:AIGION": "Αιγίου",
+        "GR:PATRON:AMALIADA": "Αμαλιάδας",
+        "GR:PATRON:ILIA": "Ηλείας",
+        "GR:PATRON:KALAVRYTA": "Καλαβρύτων",
+        "GR:PATRON:KEFALLINIAS": "Κεφαλληνίας",
+        "GR:PATRON:LEFKADA": "Λευκάδας",
+        "GR:PATRON:MESOLONGI": "Μεσολογγίου",
+        "GR:PATRON:MESSOLONGHI": "Μεσολογγίου",
+        "GR:PATRON:PATRAS": "Πατρών",
+        "GR:PATRON:TOWER": "Πύργου",
+        "GR:PATRON:ZAKYNTHOS": "Ζακύνθου",
+        "GR:PIRAEUS": "ΠΕΙΡΑΙΩΣ",
+        "GR:PIRAEUS:CHALKIS": "Χαλκίδας",
+        "GR:PIRAEUS:LAMIA": "Λαμίας",
+        "GR:PIRAEUS:LIVADIA": "Λειβαδιάς",
+        "GR:PIRAEUS:MYTILENE": "Μυτιλήνης",
+        "GR:PIRAEUS:PIRAEUS": "Πειραιώς",
+        "GR:PIRAEUS:RHODES": "Ρόδου",
+        "GR:PIRAEUS:SYROS": "Σύρου",
+        "GR:THESSALONIKI": "ΘΕΣΣΑΛΟΝΙΚΗΣ",
+        "GR:THESSALONIKI:CHALKIDIKI": "Χαλκιδικής",
+        "GR:THESSALONIKI:EDESSA": "Έδεσσας",
+        "GR:THESSALONIKI:GIANNITSON": "Γιαννιτσών",
+        "GR:THESSALONIKI:KATERINI": "Κατερίνης",
+        "GR:THESSALONIKI:KILKIS": "Κιλκίς",
+        "GR:THESSALONIKI:KOZANI": "Κοζάνης",
+        "GR:THESSALONIKI:SERRES": "Σερρών",
+        "GR:THESSALONIKI:THESSALONIKI": "Θεσσαλονίκης",
+        "GR:THESSALONIKI:VERIA": "Βέροιας",
+        "GR:THRACE": "ΘΡΑΚΗΣ (Κομοτηνή)",
+        "GR:THRACE:DRAMA": "Δράμας",
+        "GR:THRACE:EVROS": "Έβρου",
+        "GR:THRACE:KAVALA": "Καβάλας",
+        "GR:THRACE:ORESTIADA": "Ορεστιάδας",
+        "GR:THRACE:RODOPI": "Ροδόπης",
+        "GR:THRACE:XANTHI": "Ξάνθης",
+        "GR:TRIPOLEOS": "ΤΡΙΠΟΛΕΩΣ",
+        "GR:TRIPOLEOS:CORINTH": "Κορίνθου",
+        "GR:TRIPOLEOS:KALAMATA": "Καλαμάτας",
+        "GR:TRIPOLEOS:NAFPLION": "Ναυπλίου",
+        "GR:TRIPOLEOS:TRIPOLI": "Τριπόλεως"
+      }
+    },
+    "gr": {
+      "institution-part": {
+        "coa": "Ελεγκτικό Συνέδριο",
+        "coc": "Άρειος Πάγος",
+        "cos": "SE [Supreme Administrative Court]",
+        "ssc": "Ανώτατο Ειδικό Δικαστήριο"
+      }
+    },
+    "gr:aegean": {
+      "institution-part": {
+        "oca": "ΕΦΕΤΕΙΟ"
+      }
+    },
+    "gr:aegean:chios": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:aegean:mytilene": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:aegean:naxos": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:aegean:samou": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:aegean:syros": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:athens": {
+      "institution-part": {
+        "aca": "DE ΑΘΗΝΩΝ [Administrative Court of Appeal]",
+        "oca": "ΕΦΕΤΕΙΟ"
+      }
+    },
+    "gr:athens:athens": {
+      "institution-part": {
+        "atc": "DP Αθηνών [Administrative Court of First Instance]",
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:athens:chalkis": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:athens:thebes": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:chania": {
+      "institution-part": {
+        "aca": "DE ΧΑΝΙΩΝ [Administrative Court of Appeal]"
+      }
+    },
+    "gr:chania:chania": {
+      "institution-part": {
+        "atc": "DP Χανίων [Administrative Court of First Instance]"
+      }
+    },
+    "gr:chania:heraklion": {
+      "institution-part": {
+        "atc": "DP Ηρακλείου [Administrative Court of First Instance]"
+      }
+    },
+    "gr:corfu": {
+      "institution-part": {
+        "oca": "ΕΦΕΤΕΙΟ"
+      }
+    },
+    "gr:corfu:corfu": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:corfu:thesprotia": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:crete": {
+      "institution-part": {
+        "oca": "ΕΦΕΤΕΙΟ"
+      }
+    },
+    "gr:crete:chania": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:crete:heraklion": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:crete:lasithi": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:crete:rethymnon": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:dodecanese": {
+      "institution-part": {
+        "oca": "ΕΦΕΤΕΙΟ"
+      }
+    },
+    "gr:dodecanese:kos": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:dodecanese:rhodes": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:dyt.macedonia": {
+      "institution-part": {
+        "oca": "ΕΦΕΤΕΙΟ"
+      }
+    },
+    "gr:dyt.macedonia:florina": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:dyt.macedonia:grevena": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:dyt.macedonia:kastoria": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:dyt.macedonia:kozani": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:ioannina": {
+      "institution-part": {
+        "aca": "DE ΙΩΑΝΝΙΝΩΝ [Administrative Court of Appeal]",
+        "oca": "ΕΦΕΤΕΙΟ"
+      }
+    },
+    "gr:ioannina:arta": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:ioannina:corfu": {
+      "institution-part": {
+        "atc": "DP Κερκύρας [Administrative Court of First Instance]"
+      }
+    },
+    "gr:ioannina:ioannina": {
+      "institution-part": {
+        "atc": "DP Ιωαννίνων [Administrative Court of First Instance]",
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:ioannina:preveza": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:kalamata": {
+      "institution-part": {
+        "oca": "ΕΦΕΤΕΙΟ"
+      }
+    },
+    "gr:kalamata:corinth": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:kalamata:gytheion": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:kalamata:kalamata": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:kalamata:kyparissia": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:komotinis": {
+      "institution-part": {
+        "aca": "DE ΚΟΜΟΤΗΝΗΣ [Administrative Court of Appeal]"
+      }
+    },
+    "gr:komotinis:alex.city": {
+      "institution-part": {
+        "atc": "DP Αλεξ/πόλεως [Administrative Court of First Instance]"
+      }
+    },
+    "gr:komotinis:kavala": {
+      "institution-part": {
+        "atc": "DP Καβάλας [Administrative Court of First Instance]"
+      }
+    },
+    "gr:komotinis:komotini": {
+      "institution-part": {
+        "atc": "DP Κομοτηνής [Administrative Court of First Instance]"
+      }
+    },
+    "gr:lamia": {
+      "institution-part": {
+        "oca": "ΕΦΕΤΕΙΟ"
+      }
+    },
+    "gr:lamia:amfissa": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:lamia:evrytania": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:lamia:lamia": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:lamia:livadia": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:larisa": {
+      "institution-part": {
+        "aca": "DE ΛΑΡΙΣΑΣ [Administrative Court of Appeal]"
+      }
+    },
+    "gr:larisa:larissa": {
+      "institution-part": {
+        "atc": "DP Λάρισας [Administrative Court of First Instance]"
+      }
+    },
+    "gr:larisa:volos": {
+      "institution-part": {
+        "atc": "DP Βόλου [Administrative Court of First Instance]"
+      }
+    },
+    "gr:larissa": {
+      "institution-part": {
+        "oca": "ΕΦΕΤΕΙΟ"
+      }
+    },
+    "gr:larissa:karditsa": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:larissa:larissa": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:larissa:trikala": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:larissa:volos": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:nafplio": {
+      "institution-part": {
+        "oca": "ΕΦΕΤΕΙΟ"
+      }
+    },
+    "gr:nafplio:corinth": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:nafplio:nafplion": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:nafplio:sparta": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:nafplio:tripoli": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:patron": {
+      "institution-part": {
+        "aca": "DE ΠΑΤΡΩΝ [Administrative Court of Appeal]",
+        "oca": "ΕΦΕΤΕΙΟ"
+      }
+    },
+    "gr:patron:agrinion": {
+      "institution-part": {
+        "atc": "DP Αγρινίου [Administrative Court of First Instance]",
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:patron:aigion": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:patron:amaliada": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:patron:ilia": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:patron:kalavryta": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:patron:kefallinias": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:patron:lefkada": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:patron:mesolongi": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:patron:messolonghi": {
+      "institution-part": {
+        "atc": "DP Μεσολογγίου [Administrative Court of First Instance]"
+      }
+    },
+    "gr:patron:patras": {
+      "institution-part": {
+        "atc": "DP Πατρών [Administrative Court of First Instance]",
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:patron:tower": {
+      "institution-part": {
+        "atc": "DP Πύργου [Administrative Court of First Instance]"
+      }
+    },
+    "gr:patron:zakynthos": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:piraeus": {
+      "institution-part": {
+        "aca": "DE ΠΕΙΡΑΙΩΣ [Administrative Court of Appeal]",
+        "oca": "ΕΦΕΤΕΙΟ"
+      }
+    },
+    "gr:piraeus:chalkis": {
+      "institution-part": {
+        "atc": "DP Χαλκίδας [Administrative Court of First Instance]"
+      }
+    },
+    "gr:piraeus:lamia": {
+      "institution-part": {
+        "atc": "DP Λαμίας [Administrative Court of First Instance]"
+      }
+    },
+    "gr:piraeus:livadia": {
+      "institution-part": {
+        "atc": "DP Λειβαδιάς [Administrative Court of First Instance]"
+      }
+    },
+    "gr:piraeus:mytilene": {
+      "institution-part": {
+        "atc": "DP Μυτιλήνης [Administrative Court of First Instance]"
+      }
+    },
+    "gr:piraeus:piraeus": {
+      "institution-part": {
+        "atc": "DP Πειραιώς [Administrative Court of First Instance]",
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:piraeus:rhodes": {
+      "institution-part": {
+        "atc": "DP Ρόδου [Administrative Court of First Instance]"
+      }
+    },
+    "gr:piraeus:syros": {
+      "institution-part": {
+        "atc": "DP Σύρου [Administrative Court of First Instance]"
+      }
+    },
+    "gr:thessaloniki": {
+      "institution-part": {
+        "aca": "DE ΘΕΣΣΑΛΟΝΙΚΗΣ [Administrative Court of Appeal]",
+        "oca": "ΕΦΕΤΕΙΟ"
+      }
+    },
+    "gr:thessaloniki:chalkidiki": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:thessaloniki:edessa": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:thessaloniki:giannitson": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:thessaloniki:katerini": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:thessaloniki:kilkis": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:thessaloniki:kozani": {
+      "institution-part": {
+        "atc": "DP Κοζάνης [Administrative Court of First Instance]"
+      }
+    },
+    "gr:thessaloniki:serres": {
+      "institution-part": {
+        "atc": "DP Σερρών [Administrative Court of First Instance]",
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:thessaloniki:thessaloniki": {
+      "institution-part": {
+        "atc": "DP Θεσσαλονίκης [Administrative Court of First Instance]",
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:thessaloniki:veria": {
+      "institution-part": {
+        "atc": "DP Βέροιας [Administrative Court of First Instance]",
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:thrace": {
+      "institution-part": {
+        "oca": "ΕΦΕΤΕΙΟ"
+      }
+    },
+    "gr:thrace:drama": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:thrace:evros": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:thrace:kavala": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:thrace:orestiada": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:thrace:rodopi": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:thrace:xanthi": {
+      "institution-part": {
+        "otc": "ΠΡΩΤΟΔΙΚΕΙΟ"
+      }
+    },
+    "gr:tripoleos": {
+      "institution-part": {
+        "aca": "DE ΤΡΙΠΟΛΕΩΣ [Administrative Court of Appeal]"
+      }
+    },
+    "gr:tripoleos:corinth": {
+      "institution-part": {
+        "atc": "DP Κορίνθου [Administrative Court of First Instance]"
+      }
+    },
+    "gr:tripoleos:kalamata": {
+      "institution-part": {
+        "atc": "DP Καλαμάτας [Administrative Court of First Instance]"
+      }
+    },
+    "gr:tripoleos:nafplion": {
+      "institution-part": {
+        "atc": "DP Ναυπλίου [Administrative Court of First Instance]"
+      }
+    },
+    "gr:tripoleos:tripoli": {
+      "institution-part": {
+        "atc": "DP Τριπόλεως [Administrative Court of First Instance]"
+      }
+    }
+  }
+}

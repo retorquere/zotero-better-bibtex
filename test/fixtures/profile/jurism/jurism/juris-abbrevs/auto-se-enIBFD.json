@@ -1,0 +1,465 @@
+{
+  "filename": "auto-se-enIBFD.json",
+  "name": "Sweden",
+  "version": "2020-10-30 01:03:27 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "SE": "Sweden",
+        "SE:SKANE.BLEKINGE": "Skane Blekinge",
+        "SE:SKANE.BLEKINGE:BLEKINGE": "Blekinge",
+        "SE:SKANE.BLEKINGE:HELSINGBORGS": "Helsingborgs",
+        "SE:SKANE.BLEKINGE:HASSLEHOLMS": "Hässleholms",
+        "SE:SKANE.BLEKINGE:KRISTIANSTAD": "Kristianstad",
+        "SE:SKANE.BLEKINGE:LUNDS": "Lunds",
+        "SE:SKANE.BLEKINGE:MALMO": "Malmö",
+        "SE:SKANE.BLEKINGE:YSTADS": "Ystads",
+        "SE:VASTRA.SVERIGE": "Västra Sverige",
+        "SE:VASTRA.SVERIGE:ALINGSAS": "Alingsås",
+        "SE:VASTRA.SVERIGE:BORAS": "Boras",
+        "SE:VASTRA.SVERIGE:GOTEBORGS": "Göteborgs",
+        "SE:VASTRA.SVERIGE:HALMSTADS": "Halmstads",
+        "SE:VASTRA.SVERIGE:UDDEVALLA": "Uddevalla",
+        "SE:VASTRA.SVERIGE:VARBERGS": "Varbergs",
+        "SE:VASTRA.SVERIGE:VANERSBORGS": "Vanersborgs",
+        "SE:VASTRA.SVERIGE:VARMLANDS": "Värmlands",
+        "SE:GOTA": "Göta",
+        "SE:GOTA:EKSJO": "Eksjö",
+        "SE:GOTA:JONKOPINGS": "Jönköpings",
+        "SE:GOTA:JONKOPINGS:LINKOPINGS": "Linköpings",
+        "SE:GOTA:JONKOPINGS:VAXJO": "Växjö",
+        "SE:GOTA:KALMAR": "Kalmar",
+        "SE:GOTA:NORRKOPINGS": "Norrköpings",
+        "SE:GOTA:SKARABORGS": "Skaraborgs",
+        "SE:GOTA:OREBRO": "Örebro",
+        "SE:SVEA": "Svea",
+        "SE:SVEA:ATTUNDA": "Attunda",
+        "SE:SVEA:ESKILSTUNA": "Eskilstuna",
+        "SE:SVEA:FALUN": "Falun",
+        "SE:SVEA:GOTLANDS": "Gotlands",
+        "SE:SVEA:MORA": "Mora",
+        "SE:SVEA:NACKA": "Nacka",
+        "SE:SVEA:NORRTALJE": "Norrtälje",
+        "SE:SVEA:NYKOPINGS": "Nyköpings",
+        "SE:SVEA:SOLNA": "Solna",
+        "SE:SVEA:STOCKHOLM": "Stockholms",
+        "SE:SVEA:STOCKHOLM:UPPSALA": "Uppsala",
+        "SE:SVEA:SODERTALJE": "Södertälje",
+        "SE:SVEA:SODERTORNS": " Södertörns",
+        "SE:SVEA:UPPSALA": "Uppsala",
+        "SE:SVEA:VASTMANLANDS": "Västmanlands",
+        "SE:SVEA:VASTERAS": "Vasteras",
+        "SE:NEDRE.NORRLAND": "Nedre Norrland",
+        "SE:NEDRE.NORRLAND:GAVLE": "Gävle",
+        "SE:NEDRE.NORRLAND:HUDIKSVALLS": "Hudiksvalls",
+        "SE:NEDRE.NORRLAND:SUNDSVALLS": "Sundsvalls",
+        "SE:NEDRE.NORRLAND:SUNDSVALLS:FALLUN": "Fallun",
+        "SE:NEDRE.NORRLAND:SUNDSVALLS:UMEA": "Umeå",
+        "SE:NEDRE.NORRLAND:SUNDSVALLS:LULEA": "Luleå",
+        "SE:NEDRE.NORRLAND:SUNDSVALLS:HARNOSAND": "Härnösand",
+        "SE:NEDRE.NORRLAND:ANGERMANLANDS": "Ångermanlands",
+        "SE:NEDRE.NORRLAND:OSTERSUNDS": "Östersunds",
+        "SE:OEVRE.NORRLAND": "Övre Norrland",
+        "SE:OEVRE.NORRLAND:GALLIVARE": "Gällivare",
+        "SE:OEVRE.NORRLAND:HAPARANDA": "Haparanda",
+        "SE:OEVRE.NORRLAND:LULEA": "Luleå",
+        "SE:OEVRE.NORRLAND:LYCKSELE": "Lycksele",
+        "SE:OEVRE.NORRLAND:SKELLEFTEA": "Skelleftea",
+        "SE:OEVRE.NORRLAND:UMEA": "Umeå"
+      }
+    },
+    "se": {
+      "institution-part": {
+        "hogsta": "Högsta domstolen",
+        "regeringsratten": "RÅ [Supreme Administrative Court]",
+        "hogsta.forvaltningsdomstolen": "HFD [Supreme Administrative Court]",
+        "arbetsdomstolen": "Arbetsdomstolen",
+        "patent.marknadsdomstolen": "Patent och marknadsdomstolen",
+        "fosvarsunderrattelsedomstolen": "Försvarsunderrättelsedomstolen"
+      }
+    },
+    "se:skane.blekinge": {
+      "institution-part": {
+        "hovratten": "Hovrätten"
+      }
+    },
+    "se:skane.blekinge:blekinge": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:skane.blekinge:helsingborgs": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:skane.blekinge:hassleholms": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:skane.blekinge:kristianstad": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:skane.blekinge:lunds": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:skane.blekinge:malmo": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol",
+        "forvaltningsraetten": "FR Malmö [Administrative Court]",
+        "migrationsdomstol": "Migrationsdomstol",
+        "hyresnamnd": "Hyresnämnd",
+        "arrendenamnd": "Arrendenämnd"
+      }
+    },
+    "se:skane.blekinge:ystads": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:vastra.sverige": {
+      "institution-part": {
+        "hovratten": "Hovrätten"
+      }
+    },
+    "se:vastra.sverige:alingsas": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:vastra.sverige:boras": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:vastra.sverige:goteborgs": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol",
+        "kammarratten": "KR Göteborgs [Administrative Court of Appeal]",
+        "forvaltningsraetten": "FR Göteborgs [Administrative Court]",
+        "migrationsdomstol": "Migrationsdomstol",
+        "hyresnamnd": "Hyresnämnd",
+        "arrendenamnd": "Arrendenämnd"
+      }
+    },
+    "se:vastra.sverige:halmstads": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:vastra.sverige:uddevalla": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:vastra.sverige:varbergs": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:vastra.sverige:vanersborgs": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol",
+        "mark.miljodomstol": "Mark och miljödomstol"
+      }
+    },
+    "se:vastra.sverige:varmlands": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:gota": {
+      "institution-part": {
+        "hovratten": "Hovrätten"
+      }
+    },
+    "se:gota:eksjo": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:gota:jonkopings": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol",
+        "kammarratten": "KR Jönköpings [Administrative Court of Appeal]",
+        "forvaltningsraetten": "FR Jönköpings [Administrative Court]",
+        "hyresnamnd": "Hyresnämnd",
+        "arrendenamnd": "Arrendenämnd"
+      }
+    },
+    "se:gota:jonkopings:linkopings": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol",
+        "forvaltningsraetten": "FR Linköpings [Administrative Court]",
+        "hyresnamnd": "Hyresnämnd",
+        "arrendenamnd": "Arrendenämnd"
+      }
+    },
+    "se:gota:jonkopings:vaxjo": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol",
+        "forvaltningsraetten": "FR Växjö [Administrative Court]",
+        "mark.miljodomstol": "Mark och miljödomstol"
+      }
+    },
+    "se:gota:kalmar": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:gota:norrkopings": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:gota:skaraborgs": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:gota:orebro": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:svea": {
+      "institution-part": {
+        "hovratten": "Hovrätten"
+      }
+    },
+    "se:svea:attunda": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:svea:eskilstuna": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:svea:falun": {
+      "institution-part": {
+        "forvaltningsraetten": "FR Falun [Administrative Court]"
+      }
+    },
+    "se:svea:gotlands": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:svea:mora": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:svea:nacka": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol",
+        "mark.miljodomstol": "Mark och miljödomstol"
+      }
+    },
+    "se:svea:norrtalje": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:svea:nykopings": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:svea:solna": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:svea:stockholm": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "kammarratten": "KR Stockholms [Administrative Court of Appeal]",
+        "forvaltningsraetten": "FR Stockholms [Administrative Court]",
+        "migrationsdomstol": "Migrationsdomstol",
+        "hyresnamnd": "Hyresnämnd",
+        "arrendenamnd": "Arrendenämnd"
+      }
+    },
+    "se:svea:stockholm:uppsala": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol",
+        "forvaltningsraetten": "FR Uppsala [Administrative Court]"
+      }
+    },
+    "se:svea:sodertalje": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:svea:sodertorns": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:svea:uppsala": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol",
+        "forvaltningsraetten": "FR Uppsala [Administrative Court]"
+      }
+    },
+    "se:svea:vastmanlands": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:svea:vasteras": {
+      "institution-part": {
+        "hyresnamnd": "Hyresnämnd",
+        "arrendenamnd": "Arrendenämnd"
+      }
+    },
+    "se:nedre.norrland": {
+      "institution-part": {
+        "hovratten": "Hovrätten"
+      }
+    },
+    "se:nedre.norrland:gavle": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:nedre.norrland:hudiksvalls": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:nedre.norrland:sundsvalls": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol",
+        "kammarratten": "KR Sundsvalls [Administrative Court of Appeal]",
+        "hyresnamnd": "Hyresnämnd",
+        "arrendenamnd": "Arrendenämnd"
+      }
+    },
+    "se:nedre.norrland:sundsvalls:fallun": {
+      "institution-part": {
+        "forvaltningsraetten": "FR Fallun [Administrative Court]"
+      }
+    },
+    "se:nedre.norrland:sundsvalls:umea": {
+      "institution-part": {
+        "forvaltningsraetten": "FR Umeå [Administrative Court]"
+      }
+    },
+    "se:nedre.norrland:sundsvalls:lulea": {
+      "institution-part": {
+        "forvaltningsraetten": "FR Luleå [Administrative Court]"
+      }
+    },
+    "se:nedre.norrland:sundsvalls:harnosand": {
+      "institution-part": {
+        "forvaltningsraetten": "FR Härnösand [Administrative Court]"
+      }
+    },
+    "se:nedre.norrland:angermanlands": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:nedre.norrland:ostersunds": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol",
+        "mark.miljodomstol": "Mark och miljödomstol"
+      }
+    },
+    "se:oevre.norrland": {
+      "institution-part": {
+        "hovratten": "Hovrätten"
+      }
+    },
+    "se:oevre.norrland:gallivare": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:oevre.norrland:haparanda": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:oevre.norrland:lulea": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol",
+        "forvaltningsraetten": "FR Luleå [Administrative Court]"
+      }
+    },
+    "se:oevre.norrland:lycksele": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:oevre.norrland:skelleftea": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol"
+      }
+    },
+    "se:oevre.norrland:umea": {
+      "institution-part": {
+        "tingsratt": "Tingsrätt",
+        "tryckfrihetsdomstol": "Tryckfrihetsdomstol",
+        "mark.miljodomstol": "Mark och miljödomstol",
+        "hyresnamnd": "Hyresnämnd",
+        "arrendenamnd": "Arrendenämnd"
+      }
+    }
+  }
+}

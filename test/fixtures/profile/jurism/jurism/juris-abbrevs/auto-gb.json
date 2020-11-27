@@ -1,11 +1,11 @@
 {
   "filename": "auto-gb.json",
   "name": "United Kingdom",
-  "version": "2020-09-07 21:01:30 UTC",
+  "version": "2020-11-01 09:32:50 UTC",
   "xdata": {
     "default": {
       "place": {
-        "GB": "United Kingdom",
+        "GB": "UK",
         "GB:BERMUDA": "Bermuda",
         "GB:ENGLAND.AND.WALES": "England and Wales",
         "GB:FALKLAND.ISLANDS": "Falkland Islands",
@@ -17,6 +17,61 @@
         "GB:NORTHERN.IRELAND": "Northern Ireland",
         "GB:PITCAIRN.ISLANDS": "Pitcairn Islands",
         "GB:SCOTLAND": "Scotland",
+        "GB:SCOTLAND:GLASGOW.STRATHKELVIN": "Glasgow and Stathkelvin",
+        "GB:SCOTLAND:GLASGOW.STRATHKELVIN:GLASGOW": "Glasgow",
+        "GB:SCOTLAND:GRAMPIAN.HIGHLAND.ISLANDS": "Grampian Highland and Islands",
+        "GB:SCOTLAND:GRAMPIAN.HIGHLAND.ISLANDS:ABERDEEN": "Aberdeen",
+        "GB:SCOTLAND:GRAMPIAN.HIGHLAND.ISLANDS:BANFF": "Banff",
+        "GB:SCOTLAND:GRAMPIAN.HIGHLAND.ISLANDS:DINGWALL": "Dingwall",
+        "GB:SCOTLAND:GRAMPIAN.HIGHLAND.ISLANDS:DORNOCH": "Dornoch",
+        "GB:SCOTLAND:GRAMPIAN.HIGHLAND.ISLANDS:ELGIN": "Elgin",
+        "GB:SCOTLAND:GRAMPIAN.HIGHLAND.ISLANDS:FORT.WILLIAM": "Fort William",
+        "GB:SCOTLAND:GRAMPIAN.HIGHLAND.ISLANDS:INVERNESS": "Inverness",
+        "GB:SCOTLAND:GRAMPIAN.HIGHLAND.ISLANDS:KIRKWALL": "Kirkwall",
+        "GB:SCOTLAND:GRAMPIAN.HIGHLAND.ISLANDS:LERWICK": "Lerwick",
+        "GB:SCOTLAND:GRAMPIAN.HIGHLAND.ISLANDS:LOCHMADDY": "Lochmaddy",
+        "GB:SCOTLAND:GRAMPIAN.HIGHLAND.ISLANDS:PETERHEAD": "Peterhead",
+        "GB:SCOTLAND:GRAMPIAN.HIGHLAND.ISLANDS:PORTREE": "Portree",
+        "GB:SCOTLAND:GRAMPIAN.HIGHLAND.ISLANDS:STONEHAVEN": "Stonehaven",
+        "GB:SCOTLAND:GRAMPIAN.HIGHLAND.ISLANDS:STORNOWAY": "Stornoway",
+        "GB:SCOTLAND:GRAMPIAN.HIGHLAND.ISLANDS:TAIN": "Tain",
+        "GB:SCOTLAND:GRAMPIAN.HIGHLAND.ISLANDS:WICK": "Wick",
+        "GB:SCOTLAND:LOTHIAN.BORDERS": "Lothian and Borders",
+        "GB:SCOTLAND:LOTHIAN.BORDERS:DUNS": "Duns",
+        "GB:SCOTLAND:LOTHIAN.BORDERS:EDINBURGH": "Edinburgh",
+        "GB:SCOTLAND:LOTHIAN.BORDERS:HADDINGTON": "Haddington",
+        "GB:SCOTLAND:LOTHIAN.BORDERS:JEDBURGH": "Jedburgh",
+        "GB:SCOTLAND:LOTHIAN.BORDERS:LENLITHGOW": "Linlithgow",
+        "GB:SCOTLAND:LOTHIAN.BORDERS:PEEBLES": "Peebles",
+        "GB:SCOTLAND:LOTHIAN.BORDERS:SELKIRK": "Selkirk",
+        "GB:SCOTLAND:NORTH.STRATHCLYDE": "North Strathclyde",
+        "GB:SCOTLAND:NORTH.STRATHCLYDE:CAMPBELTOWN": "Campbeltown",
+        "GB:SCOTLAND:NORTH.STRATHCLYDE:DUMBARTON": "Dumbarton",
+        "GB:SCOTLAND:NORTH.STRATHCLYDE:DUNOON": "Dunoon",
+        "GB:SCOTLAND:NORTH.STRATHCLYDE:GREENOCK": "Greenock",
+        "GB:SCOTLAND:NORTH.STRATHCLYDE:KILMARNOCK": "Kilmarnock",
+        "GB:SCOTLAND:NORTH.STRATHCLYDE:OBAN": "Oban",
+        "GB:SCOTLAND:NORTH.STRATHCLYDE:PAISLEY": "Paisley",
+        "GB:SCOTLAND:NORTH.STRATHCLYDE:ROTHESAY": "Rothesay",
+        "GB:SCOTLAND:SOUTH.STRATHCLYDE.DUMBRIES.GALLOWAY": "South Strathclyde, Dumfries and Galloway",
+        "GB:SCOTLAND:SOUTH.STRATHCLYDE.DUMBRIES.GALLOWAY:AIRDRIE": "Airdrie",
+        "GB:SCOTLAND:SOUTH.STRATHCLYDE.DUMBRIES.GALLOWAY:AYR": "Ayr",
+        "GB:SCOTLAND:SOUTH.STRATHCLYDE.DUMBRIES.GALLOWAY:DUMFRIES": "Dumfries",
+        "GB:SCOTLAND:SOUTH.STRATHCLYDE.DUMBRIES.GALLOWAY:HAMILTON": "Hamilton",
+        "GB:SCOTLAND:SOUTH.STRATHCLYDE.DUMBRIES.GALLOWAY:KIRKCUDBRIGHT": "Kirkcudbright",
+        "GB:SCOTLAND:SOUTH.STRATHCLYDE.DUMBRIES.GALLOWAY:LANARK": "Lanark",
+        "GB:SCOTLAND:SOUTH.STRATHCLYDE.DUMBRIES.GALLOWAY:STRANRAER": "Stranraer",
+        "GB:SCOTLAND:TAYSIDE.CENTRAL.FIFE": "Tayside, Central and Fife",
+        "GB:SCOTLAND:TAYSIDE.CENTRAL.FIFE:ALLOA": "Alloa",
+        "GB:SCOTLAND:TAYSIDE.CENTRAL.FIFE:ARBROATH": "Arbroath",
+        "GB:SCOTLAND:TAYSIDE.CENTRAL.FIFE:CUPAR": "Cupar",
+        "GB:SCOTLAND:TAYSIDE.CENTRAL.FIFE:DUNDEE": "Dundee",
+        "GB:SCOTLAND:TAYSIDE.CENTRAL.FIFE:DUNFERMLINE": "Dunfermline",
+        "GB:SCOTLAND:TAYSIDE.CENTRAL.FIFE:FALKIRK": "Falkirk",
+        "GB:SCOTLAND:TAYSIDE.CENTRAL.FIFE:FORFAR": "Forfar",
+        "GB:SCOTLAND:TAYSIDE.CENTRAL.FIFE:KIRKALDY": "Kirkaldy",
+        "GB:SCOTLAND:TAYSIDE.CENTRAL.FIFE:PERTH": "Perth",
+        "GB:SCOTLAND:TAYSIDE.CENTRAL.FIFE:STIRLING": "Stirling",
         "GB:TURKS.CAICOS.ISLANDS": "Turks and Caicos Islands"
       }
     },
@@ -24,25 +79,279 @@
       "institution-part": {
         "house.of.lords": "House of Lords",
         "privy.council": "Privy Council",
-        "supreme.court": "Supreme Court"
+        "supreme.court": "UKSC",
+        "uksiac": "UKSIAC",
+        "ukut.iac": "UKUT|IAC"
       }
     },
     "gb:england.and.wales": {
       "institution-part": {
-        "ewca.civ": "Court of Appeal|Civil Division",
-        "ewhc.ch.bankruptcy": "High Court|Chancery Division|Bankruptcy and Companies Court",
-        "ewhc.ch.masters": "High Court|Chancery Division|Masters",
-        "ewhc.ch.patent": "High Court|Chancery Division|Patents Court",
-        "ewhc.family": "High Court|Family Division",
-        "ewhc.qb.admin": "High Court|Queen's Bench Division|Administrative Court",
-        "ewhc.qb.admiralty": "High Court|Queen's Bench Division|Admiralty Court",
-        "ewhc.qb.comm": "High Court|Queen's Bench Division|Commercial Court",
-        "ewhc.qb.mercantile": "High Court|Queen's Bench Division|Mercantile Court",
-        "ewhc.qb.tcc": "High Court|Queen's Bench Division|Technology and Construction Court",
+        "ewca.civ": "EWCA Civ",
+        "ewca.crim": "EWCA Crim",
+        "ewhc.ch": "EWHC|Ch",
+        "ewhc.qb": "EWHC|QB",
+        "ewhc.bankruptcy": "High Court|Chancery Division|Bankruptcy and Companies Court",
+        "ewhc.masters": "EWHC",
+        "ewhc.patent": "EWHC|Pat",
+        "ewhc.family": "EWHC|Fam",
+        "ewhc.admin": "EWHC|Admin",
+        "ewhc.admiralty": "EWHC|Admlty",
+        "ewhc.comm": "EWHC|Comm",
+        "ewhc.mercantile": "High Court|Queen's Bench Division|Mercantile Court",
+        "ewhc.tcc": "EWHC|TCC",
+        "ewcop": "EWCOP",
         "kb": "King's Bench"
-      },
-      "institution-entire": {
-        "ewca.civ": "EWCA"
+      }
+    },
+    "gb:scotland": {
+      "institution-part": {
+        "csih": "CSIH",
+        "csoh": "CSOH"
+      }
+    },
+    "gb:scotland:glasgow.strathkelvin:glasgow": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Glasgow"
+      }
+    },
+    "gb:scotland:grampian.highland.islands:aberdeen": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Aberdeen"
+      }
+    },
+    "gb:scotland:grampian.highland.islands:banff": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Banff"
+      }
+    },
+    "gb:scotland:grampian.highland.islands:dingwall": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Dingwall"
+      }
+    },
+    "gb:scotland:grampian.highland.islands:dornoch": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Dornoch"
+      }
+    },
+    "gb:scotland:grampian.highland.islands:elgin": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Elgin"
+      }
+    },
+    "gb:scotland:grampian.highland.islands:fort.william": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Fort William"
+      }
+    },
+    "gb:scotland:grampian.highland.islands:inverness": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Inverness"
+      }
+    },
+    "gb:scotland:grampian.highland.islands:kirkwall": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Kirkwall"
+      }
+    },
+    "gb:scotland:grampian.highland.islands:lerwick": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Lerwick"
+      }
+    },
+    "gb:scotland:grampian.highland.islands:lochmaddy": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Lochmaddy"
+      }
+    },
+    "gb:scotland:grampian.highland.islands:peterhead": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Peterhead"
+      }
+    },
+    "gb:scotland:grampian.highland.islands:portree": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Portree"
+      }
+    },
+    "gb:scotland:grampian.highland.islands:stonehaven": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Stonehaven"
+      }
+    },
+    "gb:scotland:grampian.highland.islands:stornoway": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Stornoway"
+      }
+    },
+    "gb:scotland:grampian.highland.islands:tain": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Tain"
+      }
+    },
+    "gb:scotland:grampian.highland.islands:wick": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Wick"
+      }
+    },
+    "gb:scotland:lothian.borders:duns": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Duns"
+      }
+    },
+    "gb:scotland:lothian.borders:edinburgh": {
+      "institution-part": {
+        "sheriff": "SC EDIN"
+      }
+    },
+    "gb:scotland:lothian.borders:haddington": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Haddington"
+      }
+    },
+    "gb:scotland:lothian.borders:jedburgh": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Jedburgh"
+      }
+    },
+    "gb:scotland:lothian.borders:lenlithgow": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Linlithgow"
+      }
+    },
+    "gb:scotland:lothian.borders:peebles": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Peebles"
+      }
+    },
+    "gb:scotland:lothian.borders:selkirk": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Selkirk"
+      }
+    },
+    "gb:scotland:north.strathclyde:campbeltown": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Campbeltown"
+      }
+    },
+    "gb:scotland:north.strathclyde:dumbarton": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Dumbarton"
+      }
+    },
+    "gb:scotland:north.strathclyde:dunoon": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Dunoon"
+      }
+    },
+    "gb:scotland:north.strathclyde:greenock": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Greenock"
+      }
+    },
+    "gb:scotland:north.strathclyde:kilmarnock": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Kilmarnock"
+      }
+    },
+    "gb:scotland:north.strathclyde:oban": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Oban"
+      }
+    },
+    "gb:scotland:north.strathclyde:paisley": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Paisley"
+      }
+    },
+    "gb:scotland:north.strathclyde:rothesay": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Rothesay"
+      }
+    },
+    "gb:scotland:south.strathclyde.dumbries.galloway:airdrie": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Airdrie"
+      }
+    },
+    "gb:scotland:south.strathclyde.dumbries.galloway:ayr": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Ayr"
+      }
+    },
+    "gb:scotland:south.strathclyde.dumbries.galloway:dumfries": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Dumfries"
+      }
+    },
+    "gb:scotland:south.strathclyde.dumbries.galloway:hamilton": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Hamilton"
+      }
+    },
+    "gb:scotland:south.strathclyde.dumbries.galloway:kirkcudbright": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Kirkcudbright"
+      }
+    },
+    "gb:scotland:south.strathclyde.dumbries.galloway:lanark": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Lanark"
+      }
+    },
+    "gb:scotland:south.strathclyde.dumbries.galloway:stranraer": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Stranraer"
+      }
+    },
+    "gb:scotland:tayside.central.fife:alloa": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Alloa"
+      }
+    },
+    "gb:scotland:tayside.central.fife:arbroath": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Arbroath"
+      }
+    },
+    "gb:scotland:tayside.central.fife:cupar": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Cupar"
+      }
+    },
+    "gb:scotland:tayside.central.fife:dundee": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Dundee"
+      }
+    },
+    "gb:scotland:tayside.central.fife:dunfermline": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Dunfermline"
+      }
+    },
+    "gb:scotland:tayside.central.fife:falkirk": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Falkirk"
+      }
+    },
+    "gb:scotland:tayside.central.fife:forfar": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Forfar"
+      }
+    },
+    "gb:scotland:tayside.central.fife:kirkaldy": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Kirkaldy"
+      }
+    },
+    "gb:scotland:tayside.central.fife:perth": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Perth"
+      }
+    },
+    "gb:scotland:tayside.central.fife:stirling": {
+      "institution-part": {
+        "sheriff": "Sheriff Court Stirling"
       }
     }
   }

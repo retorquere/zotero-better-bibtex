@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.1mlz1" class="note">
+  <info>
+    <title>Canada</title>
+    <id>http://citationstylist.org/modules/juris-ca</id>
+    <link href="http://citationstylist/modules/juris-ca" rel="self"/>
+    <link href="http://juris-m.github.io" rel="documentation"/>
+    <author>
+      <name>Samuel Gagnon</name>
+      <email>gagnon-samuel@outlook.com</email>
+    </author>
+    <category citation-format="note"/>
+    <category field="law"/>
+    <summary>Juris-M style module for Canada</summary>
+    <updated>2020-10-19T15:45:45.469Z</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+    <law-module types="legal_case legislation"/>
+  </info>
+
+  <macro name="juris-pretitle">
+    <!-- Fragment to precede title (rare) -->
+    <text value=""/>
+  </macro>
+
+  <macro name="juris-title">
+    <!-- The title form for full citations (of all types) -->
+    <text variable="title" strip-periods="true"/>
+  </macro>
+
+  <macro name="juris-main">
+    <choose>
+      <if type="legal_case">
+        <group delimiter=" ">
+          <choose>
+            <if>
+              <!-- Journal without year as volume-->
+              <conditions match="all">
+                <condition match="all" variable="container-title page"/>
+                <condition match="none" variable="collection-number admin-flag"/>
+              </conditions>
+              <number variable="volume"/>
+              <text variable="container-title" form="short" strip-periods="true"/>
+              <choose>
+                <if variable="issue">
+                  <number variable="issue" form="ordinal" prefix="(" suffix=")"/>
+                </if>
+              </choose>
+              <number variable="page-first"/>
+            </if>
+            <else-if>
+              <!-- Journal with [year] -->
+              <conditions match="all">
+                <condition match="all" variable="collection-number container-title page"/>
+                <condition match="none" variable="admin-flag"/>
+              </conditions>
+              <number variable="collection-number" prefix="[" suffix="]"/>
+              <number variable="volume"/>
+              <text variable="container-title" form="short" strip-periods="true"/>
+              <choose>
+                <if variable="issue">
+                  <number variable="issue" form="ordinal" prefix="(" suffix=")"/>
+                </if>
+              </choose>
+              <number variable="page-first"/>
+            </else-if>
+            <else-if>
+              <!-- Vendor neutral citation -->
+              <conditions match="all">
+                <condition match="all" variable="authority page collection-number"/>
+                <condition match="none" variable="container-title admin-flag"/>
+              </conditions>
+              <number variable="collection-number"/>
+              <names variable="dummy">
+                <name/>
+                <institution form="short"/>
+                <substitute>
+                  <names variable="authority"/>
+                </substitute>
+              </names>
+              <number variable="page-first"/>
+            </else-if>
+          </choose>
+        </group>
+      </if>
+      <else-if type="legislation">
+        <group delimiter=" ">
+          <choose>
+            <if>
+              <conditions match="all">
+                <condition match="all" variable="issued container-title volume"/>
+                <condition match="none" variable="admin-flag"/>
+              </conditions>
+              <text variable="container-title"/>
+              <date variable="issued" form="numeric" date-parts="year" suffix=","/>
+              <text value="c"/>
+              <number variable="volume"/>
+            </if>
+          </choose>
+        </group>
+      </else-if>
+    </choose>
+  </macro>
+
+  <macro name="juris-tail">
+    <!-- Full form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
+    <text value=""/>
+  </macro>
+
+  <macro name="juris-pretitle-short">
+    <!-- Fragment to precede short title (rare) -->
+    <text value=""/>
+  </macro>
+
+  <macro name="juris-title-short">
+    <!-- The title form for subsequent citations (of all types) -->
+    <choose>
+      <if variable="hereinafter">
+        <text variable="hereinafter" form="short" strip-periods="true"/>
+      </if>
+      <else-if variable="title-short">
+        <text variable="title-short" strip-periods="true"/>
+      </else-if>
+      <else-if position="subsequent">
+        <text variable="title" form="short" strip-periods="true"/>
+      </else-if>
+    </choose>
+  </macro>
+
+  <macro name="juris-main-short">
+    <text value=""/>
+  </macro>
+
+  <macro name="juris-tail-short">
+    <!-- Short form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
+    <text value=""/>
+  </macro>
+
+  <macro name="juris-locator">
+    <group delimiter=" ">
+      <label variable="locator" form="short"/>   
+      <number variable="locator"/>
+    </group>
+  </macro>
+
+  <citation>
+
+    <layout>
+    </layout>
+
+  </citation>
+  
+</style>

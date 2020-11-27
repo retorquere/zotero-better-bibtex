@@ -33,7 +33,7 @@
         <group delimiter=", ">
           <names variable="authority">
             <name/>
-            <institution institution-parts="short" use-first="1" delimiter=", "/>
+            <institution institution-parts="short" use-last="1" delimiter=", "/>
           </names>
           <date variable="issued" date-parts="year-month-day" form="text"/>
           <group delimiter=" ">

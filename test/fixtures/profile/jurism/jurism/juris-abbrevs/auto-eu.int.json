@@ -1,7 +1,7 @@
 {
   "filename": "auto-eu.int.json",
   "name": "European Union",
-  "version": "2020-09-07 21:01:30 UTC",
+  "version": "2020-10-15 22:01:47 UTC",
   "xdata": {
     "default": {
       "place": {
@@ -17,7 +17,7 @@
     },
     "eu.int:cjeu": {
       "institution-part": {
-        "ag": "Attorney General",
+        "ag": "AG",
         "ecj": "ECJ",
         "ecj~chamber.1": "Court of Justice First Chamber",
         "ecj~chamber.2": "Court of Justice Second Chamber",
