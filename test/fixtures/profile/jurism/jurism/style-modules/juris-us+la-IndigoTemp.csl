@@ -11,10 +11,10 @@
     </author>
     <category citation-format="note"/>
     <category field="law"/>
-    <law-module types="legal_case"/>
     <summary>Juris-M style module for the United States</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+    <law-module types="legal_case"/>
   </info>
   <locale>
     <terms>
@@ -212,7 +212,7 @@
                     <number variable="volume"/>
                   </group>
                   <text variable="container-title" form="short"/>
-                  <number variable="archive_location"/>
+                  <text variable="archive_location"/>
                 </group>
               </group>
             </else-if>
@@ -487,7 +487,7 @@
         <!-- comma-separated leading extras -->
         <choose>
           <if type="legal_case">
-            <text variable="locator-extra"/>
+            <number variable="locator-extra"/>
           </if>
         </choose>
         <group delimiter=" ">
@@ -760,9 +760,8 @@
   <macro name="juris-locator">
     <group delimiter=" ">
       <choose>
-        <if match="all" type="patent" locator="field">
+        <if locator="page" position="ibid-with-locator" match="all">
           <text value="at"/>
-          <label variable="locator" form="static"/>
         </if>
         <else-if>
           <conditions match="any">
@@ -796,4 +795,8 @@
       <number variable="locator"/>
     </group>
   </macro>
+  <citation>
+    <layout>
+    </layout>
+  </citation>
 </style>

@@ -1,0 +1,350 @@
+{
+  "filename": "auto-fi-enIBFD.json",
+  "name": "Finland",
+  "version": "2020-10-30 01:03:27 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "FI": "Finland",
+        "FI:AHVENANMAA": "Ahvenanmaan",
+        "FI:HAMEENLINNA": "Hämeenlinnan",
+        "FI:HELSINKI": "Helsingin",
+        "FI:HELSINKI:HELSINKI": "Helsingin",
+        "FI:HELSINKI:ITA.UUSIMAA": "Itä-Uudenmaan",
+        "FI:HELSINKI:VANTAA": "Vantaan",
+        "FI:HELSINKI:HYVINKAA": "Hyvinkään",
+        "FI:HELSINKI:LANSI.UUSIMAA": "Länsi-Uudenmaan",
+        "FI:HELSINKI:ESPOO": "Espoon",
+        "FI:ITA.SUOMI": "Itä-Suomen",
+        "FI:ITA.SUOMI:ETELA.KARJALA": "Etelä-Karjalan",
+        "FI:ITA.SUOMI:ETELA.SAVO": "Etelä-Savon",
+        "FI:ITA.SUOMI:KYMENLAAKSO": "Kymenlaakson",
+        "FI:ITA.SUOMI:PAIJAT.HAME": "Päijät-Hämeen",
+        "FI:ITA.SUOMI:POHJOIS.KARJALA": "Pohjois-Karjalan",
+        "FI:ITA.SUOMI:POHJOIS.SAVO": "Pohjois-Savon",
+        "FI:POHJOIS.SUOMI": "Pohjois-Suomen",
+        "FI:ROVANIEMI": "Rovaniemen",
+        "FI:ROVANIEMI:KEMI.TORNIO": "Kemi-Tornion",
+        "FI:ROVANIEMI:KAINUU": "Kainuun",
+        "FI:ROVANIEMI:LAPPI": "Lapin",
+        "FI:ROVANIEMI:OULU": "Oulun",
+        "FI:ROVANIEMI:YLIVIESKA.RAAHE": "Ylivieska-Raahen",
+        "FI:TURKU": "Turun",
+        "FI:TURKU:KANTA.HAME": "Kanta-Hämeen",
+        "FI:TURKU:PIRKANMAA": "Pirkanmaan",
+        "FI:TURKU:VARSINAIS.SUOMI": "Varsinais-Suomen",
+        "FI:TURKU:AHVENANMAA": "Ahvenanmaan",
+        "FI:POHJANMAA": "Vaasan",
+        "FI:VAASA": "Vaasan",
+        "FI:VAASA:ETELA.POHJANMAA": "Etelä-Pohjanmaan",
+        "FI:VAASA:KESKI.SUOMI": "Keski-Suomen",
+        "FI:VAASA:POHJANMAA": "Pohjanmaan",
+        "FI:VAASA:KESKI.POHJANMAA": "Keski-Pohjanmaan",
+        "FI:VAASA:SATAKUNTA": "Satakunnan"
+      }
+    },
+    "fi": {
+      "institution-part": {
+        "vako": "Vakuutusoikeus",
+        "tt": "Työtuomioisuin",
+        "impeachment": "Valtakunnanoikeus",
+        "mao": "Markkinaoikeus",
+        "kho": "KHO [Supreme Administrative Court]",
+        "kko": "Korkein oikeus"
+      },
+      "institution-entire": {
+        "vako": "VakO",
+        "tt": "TT",
+        "mao": "MAO",
+        "kho": "KHO",
+        "kko": "KKO"
+      }
+    },
+    "fi:ahvenanmaa": {
+      "institution-part": {
+        "hao": "HAO Ahvenanmaan [Regional Administrative Court]"
+      },
+      "institution-entire": {
+        "hao": "HAO"
+      }
+    },
+    "fi:hameenlinna": {
+      "institution-part": {
+        "hao": "HAO Hämeenlinnan [Regional Administrative Court]"
+      },
+      "institution-entire": {
+        "hao": "HAO"
+      }
+    },
+    "fi:helsinki": {
+      "institution-part": {
+        "hao": "HAO Helsingin [Regional Administrative Court]",
+        "ho": "Helsingin hovioikeus"
+      },
+      "institution-entire": {
+        "hao": "HAO",
+        "ho": "HO"
+      }
+    },
+    "fi:helsinki:helsinki": {
+      "institution-part": {
+        "ko": "Helsingin käräjäoikeus"
+      },
+      "institution-entire": {
+        "ko": "KO"
+      }
+    },
+    "fi:helsinki:ita.uusimaa": {
+      "institution-part": {
+        "ko": "Itä-Uudenmaan käräjäoikeus"
+      },
+      "institution-entire": {
+        "ko": "KO"
+      }
+    },
+    "fi:helsinki:vantaa": {
+      "institution-part": {
+        "ko": "Vantaan käräjäoikeus"
+      },
+      "institution-entire": {
+        "ko": "KO"
+      }
+    },
+    "fi:helsinki:hyvinkaa": {
+      "institution-part": {
+        "ko": "Hyvinkään käräjäoikeus"
+      },
+      "institution-entire": {
+        "ko": "KO"
+      }
+    },
+    "fi:helsinki:lansi.uusimaa": {
+      "institution-part": {
+        "ko": "Länsi-Uudenmaan käräjäoikeus"
+      },
+      "institution-entire": {
+        "ko": "KO"
+      }
+    },
+    "fi:helsinki:espoo": {
+      "institution-part": {
+        "ko": "Espoon käräjäoikeus"
+      },
+      "institution-entire": {
+        "ko": "KO"
+      }
+    },
+    "fi:ita.suomi": {
+      "institution-part": {
+        "hao": "HAO Itä-Suomen [Regional Administrative Court]",
+        "ho": "Itä-Suomen hovioikeus"
+      },
+      "institution-entire": {
+        "hao": "HAO",
+        "ho": "HO"
+      }
+    },
+    "fi:ita.suomi:etela.karjala": {
+      "institution-part": {
+        "ko": "Etelä-Karjalan käräjäoikeus"
+      },
+      "institution-entire": {
+        "ko": "KO"
+      }
+    },
+    "fi:ita.suomi:etela.savo": {
+      "institution-part": {
+        "ko": "Etelä-Savon käräjäoikeus"
+      },
+      "institution-entire": {
+        "ko": "KO"
+      }
+    },
+    "fi:ita.suomi:kymenlaakso": {
+      "institution-part": {
+        "ko": "Kymenlaakson käräjäoikeus"
+      },
+      "institution-entire": {
+        "ko": "KO"
+      }
+    },
+    "fi:ita.suomi:paijat.hame": {
+      "institution-part": {
+        "ko": "Päijät-Hämeen käräjäoikeus"
+      },
+      "institution-entire": {
+        "ko": "KO"
+      }
+    },
+    "fi:ita.suomi:pohjois.karjala": {
+      "institution-part": {
+        "ko": "Pohjois-Karjalan käräjäoikeus"
+      },
+      "institution-entire": {
+        "ko": "KO"
+      }
+    },
+    "fi:ita.suomi:pohjois.savo": {
+      "institution-part": {
+        "ko": "Pohjois-Savon käräjäoikeus"
+      },
+      "institution-entire": {
+        "ko": "KO"
+      }
+    },
+    "fi:pohjois.suomi": {
+      "institution-part": {
+        "hao": "HAO Pohjois-Suomen [Regional Administrative Court]"
+      },
+      "institution-entire": {
+        "hao": "HAO"
+      }
+    },
+    "fi:rovaniemi": {
+      "institution-part": {
+        "ho": "Rovaniemen hovioikeus"
+      },
+      "institution-entire": {
+        "ho": "HO"
+      }
+    },
+    "fi:rovaniemi:kemi.tornio": {
+      "institution-part": {
+        "ko": "Kemi-Tornion käräjäoikeus"
+      },
+      "institution-entire": {
+        "ko": "KO"
+      }
+    },
+    "fi:rovaniemi:kainuu": {
+      "institution-part": {
+        "ko": "Kainuun käräjäoikeus"
+      },
+      "institution-entire": {
+        "ko": "KO"
+      }
+    },
+    "fi:rovaniemi:lappi": {
+      "institution-part": {
+        "ko": "Lapin käräjäoikeus"
+      },
+      "institution-entire": {
+        "ko": "KO"
+      }
+    },
+    "fi:rovaniemi:oulu": {
+      "institution-part": {
+        "ko": "Oulun käräjäoikeus"
+      },
+      "institution-entire": {
+        "ko": "KO"
+      }
+    },
+    "fi:rovaniemi:ylivieska.raahe": {
+      "institution-part": {
+        "ko": "Ylivieska-Raahen käräjäoikeus"
+      },
+      "institution-entire": {
+        "ko": "KO"
+      }
+    },
+    "fi:turku": {
+      "institution-part": {
+        "hao": "HAO Turun [Regional Administrative Court]",
+        "ho": "Turun hovioikeus"
+      },
+      "institution-entire": {
+        "hao": "HAO",
+        "ho": "HO"
+      }
+    },
+    "fi:turku:kanta.hame": {
+      "institution-part": {
+        "ko": "Kanta-Hämeen käräjäoikeus"
+      },
+      "institution-entire": {
+        "ko": "KO"
+      }
+    },
+    "fi:turku:pirkanmaa": {
+      "institution-part": {
+        "ko": "Pirkanmaan käräjäoikeus"
+      },
+      "institution-entire": {
+        "ko": "KO"
+      }
+    },
+    "fi:turku:varsinais.suomi": {
+      "institution-part": {
+        "ko": "Varsinais-Suomen käräjäoikeus"
+      },
+      "institution-entire": {
+        "ko": "KO"
+      }
+    },
+    "fi:turku:ahvenanmaa": {
+      "institution-part": {
+        "ko": "Ahvenanmaan käräjäoikeus"
+      },
+      "institution-entire": {
+        "ko": "KO"
+      }
+    },
+    "fi:pohjanmaa": {
+      "institution-part": {
+        "hao": "HAO Vaasan [Regional Administrative Court]"
+      },
+      "institution-entire": {
+        "hao": "HAO"
+      }
+    },
+    "fi:vaasa": {
+      "institution-part": {
+        "ho": "Vaasan hovioikeus"
+      },
+      "institution-entire": {
+        "ho": "HO"
+      }
+    },
+    "fi:vaasa:etela.pohjanmaa": {
+      "institution-part": {
+        "ko": "Etelä-Pohjanmaan käräjäoikeus"
+      },
+      "institution-entire": {
+        "ko": "KO"
+      }
+    },
+    "fi:vaasa:keski.suomi": {
+      "institution-part": {
+        "ko": "Keski-Suomen käräjäoikeus"
+      },
+      "institution-entire": {
+        "ko": "KO"
+      }
+    },
+    "fi:vaasa:pohjanmaa": {
+      "institution-part": {
+        "ko": "Pohjanmaan käräjäoikeus"
+      },
+      "institution-entire": {
+        "ko": "KO"
+      }
+    },
+    "fi:vaasa:keski.pohjanmaa": {
+      "institution-part": {
+        "ko": "Keski-Pohjanmaan käräjäoikeus"
+      },
+      "institution-entire": {
+        "ko": "KO"
+      }
+    },
+    "fi:vaasa:satakunta": {
+      "institution-part": {
+        "ko": "Satakunnan käräjäoikeus"
+      },
+      "institution-entire": {
+        "ko": "KO"
+      }
+    }
+  }
+}

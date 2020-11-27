@@ -1,7 +1,7 @@
 {
   "filename": "auto-se.json",
   "name": "Sweden",
-  "version": "2020-02-12 06:12:22 UTC",
+  "version": "2020-10-30 01:03:27 UTC",
   "xdata": {
     "default": {
       "place": {
@@ -72,6 +72,7 @@
       "institution-part": {
         "hogsta": "Högsta domstolen",
         "regeringsratten": "Regeringsrätten",
+        "hogsta.forvaltningsdomstolen": "Högsta förvaltningsdomstolen",
         "arbetsdomstolen": "Arbetsdomstolen",
         "patent.marknadsdomstolen": "Patent och marknadsdomstolen",
         "fosvarsunderrattelsedomstolen": "Försvarsunderrättelsedomstolen"

@@ -1,7 +1,7 @@
 {
 	"translatorID": "16199bf0-a365-4aad-baeb-225019ae32dc",
 	"label": "DAI-Zenon",
-	"creator": "Philipp Zumstein",
+	"creator": "Philipp Zumstein, Sebastian Karcher",
 	"target": "^https?://zenon\\.dainst\\.org/(Record/|Search/)",
 	"minVersion": "3.0",
 	"maxVersion": "",
@@ -9,13 +9,13 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-06-02 16:57:10"
+	"lastUpdated": "2020-10-13 15:24:32"
 }
 
 /*
 	***** BEGIN LICENSE BLOCK *****
 
-	Copyright © 2014 Philipp Zumstein
+	Copyright © 2014-2020 Philipp Zumstein and Sebastian Karcher
 
 	This file is part of Zotero.
 
@@ -37,13 +37,15 @@
 
 
 function detectWeb(doc, url) {
-	//return "bookSection"; // activate for testing
-	//return "journalArticle"; // activate for testing
-	if (url.indexOf("/Record") != -1 ) {//book, journalArticle or bookSection --> will be improved during scraping
+	// return "bookSection"; // activate for testing
+	// return "journalArticle"; // activate for testing
+	if (url.includes("/Record")) { // book, journalArticle or bookSection --> will be improved during scraping
 		return "book";
-	} else if (getSearchResults(doc, true)) {
+	}
+	else if (getSearchResults(doc, true)) {
 		return "multiple";
 	}
+	return false;
 }
 
 
@@ -51,7 +53,7 @@ function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
 	var rows = ZU.xpath(doc, '//div[contains(@class, "row")]//a[contains(@class, "title")]');
-	for (var i=0; i<rows.length; i++) {
+	for (let i = 0; i < rows.length; i++) {
 		var href = rows[i].href;
 		var title = ZU.trimInternal(rows[i].textContent);
 		if (!href || !title) continue;
@@ -67,7 +69,7 @@ function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
 		Zotero.selectItems(getSearchResults(doc, false), function (items) {
 			if (!items) {
-				return true;
+				return;
 			}
 			var articles = [];
 			for (var i in items) {
@@ -75,92 +77,98 @@ function doWeb(doc, url) {
 			}
 			ZU.processDocuments(articles, scrape);
 		});
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }
 
 function scrape(doc, url) {
-	
-	//e.g. url = "http://zenon.dainst.org/Record/000300287"
-	var urlParts = url.split("/");
-	var id = urlParts[urlParts.length-1];
-	
-	//call MARC translator
-	ZU.doGet('/Record/' + id + '/Details', function(text) {
+	// e.g. url = "http://zenon.dainst.org/Record/000300287"
+	// remove anchor so this doesn't break https://zenon.dainst.org/Record/001275808#usercomments
+	var urlParts = url.replace(/#.*/, "").split("/");
+	var id = urlParts[urlParts.length - 1];
+
+	// call MARC translator
+	ZU.doGet('/Record/' + id + '/Details', function (text) {
 		var parser = new DOMParser();
 		var xml = parser.parseFromString(text, "text/html");
-		
+
 		var translator = Zotero.loadTranslator("import");
-		
+
 		translator.setTranslator("a6ee60df-1ddc-4aae-bb25-45e0537be973");
 		translator.getTranslatorObject(function (marc) {
 			var details = ZU.xpath(xml, '//tr');
 			var record = new marc.record();
 			var newItem = new Zotero.Item();
-			
-			for (var i=0; i<details.length; i++) {
+
+			for (let i = 0; i < details.length; i++) {
 				var fieldTag = ZU.xpathText(details[i], './th');
-				//skip empty lines
+				// skip empty lines
 				if (!fieldTag) continue;
-	
+
 				var values = ZU.xpath(details[i], './td');
 				if (values.length == 1) {
 					if (fieldTag == "LEADER") {
 						record.leader = ZU.xpathText(details[i], './td');
 					}
-					//the control fields are not anyhow used in MARC translator, thus we do not import them
+					// the control fields are not anyhow used in MARC translator, thus we do not import them
 				}
 				if (values.length == 3) {
 					var ind1 = ZU.xpathText(details[i], './td[1]');
 					var ind2 = ZU.xpathText(details[i], './td[2]');
 					var fieldContent = ZU.xpathText(details[i], './td[3]', null, '').replace(/[\r\n\s]*\|/g, marc.subfieldDelimiter);
-					record.addField( fieldTag, ind1 + ind2, fieldContent);
+					record.addField(fieldTag, ind1 + ind2, fieldContent);
 				}
-				
 			}
-			
+
 			record.translate(newItem);
-			
-			//import tags from the 999 fields and filter out dublicate tags
+
+			// import tags from the 999 fields and filter out dublicate tags
+			// leaving this here in case it ever comes back, but doesn't exist as of October 2020
 			record._associateTags(newItem, 999, "a");
-			newItem.tags = newItem.tags.filter( function( item, index, inputArray ) {
+			newItem.tags = newItem.tags.filter(function (item, index, inputArray) {
 				return inputArray.indexOf(item) == index;
 			});
-			
-			//there is a special field 995 if the entry is a bookSection or journalArticle
-			record._associateDBField(newItem, 995, "n", "bookTitle");
+
+			// get container title from 773
+			record._associateDBField(newItem, 773, "t", "bookTitle");
+			// This used to be in 995 - not seeing this anymore in October 202 but
+			// leaving to make sure it doesn't break.
+			if (!newItem.bookTitle) {
+				record._associateDBField(newItem, 995, "n", "bookTitle");
+			}
 			if (newItem.bookTitle) {
-				//Z.debug(newItem.bookTitle);
-				if ( record.leader.substr(6,2) == "as") {//This seems to work good, but I don't know if is always working.
+				if (record.leader.substr(6, 2) == "as") { // This seems to work good, but I don't know if is always working.
 					newItem.itemType = "journalArticle";
 					var regularExpression1 = /^(.*),\s?(\d+),\s?(\d+)\s?\(\d\d\d\d\)/; // e.g. Bulletin du Cercle d'Études Numismatiques, 44,2 (2007)
 					var regularExpression2 = /^(.*),\s?(\d+)\s?\(\d\d\d\d\)/; // e.g Mannheimer Geschichtsblätter, Neue Folge, 16 (2008)
 					var m;
-					if (m = newItem.bookTitle.match(regularExpression1)) {
+					if ((m = newItem.bookTitle.match(regularExpression1))) {
 						newItem.publicationTitle = m[1];
 						newItem.volume = m[2];
 						newItem.issue = m[3];
-					} else if (m = newItem.bookTitle.match(regularExpression2)) {
+					}
+					else if ((m = newItem.bookTitle.match(regularExpression2))) {
 						newItem.publicationTitle = m[1];
 						newItem.volume = m[2];
 					}
-				} else {
+				}
+				else {
 					newItem.itemType = "bookSection";
 				}
 				record._associateDBField(newItem, 300, "a", "pages");
 				delete newItem.numPages;
 			}
-	
+
 			newItem.attachments.push({
 				url: url,
 				title: "DAI Zenon Entry",
 				mimeType: 'text/html',
 				snapshot: false
 			});
-			
+
 			newItem.complete();
-			
 		});
 	});
 }/** BEGIN TEST CASES **/
@@ -201,10 +209,15 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Etrusker",
-					"Kongresse und Tagungen M",
-					"Kongreßschrift",
-					"Mannheim 1980"
+					{
+						"tag": "Etrusker"
+					},
+					{
+						"tag": "Kongreßschrift"
+					},
+					{
+						"tag": "Mannheim 1980"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -213,7 +226,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://zenon.dainst.org/Record/000300287",
+		"url": "https://zenon.dainst.org/Record/000300287",
 		"items": [
 			{
 				"itemType": "bookSection",
@@ -236,9 +249,12 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Alpenländer (bis 1997)",
-					"Beziehungen",
-					"Culture in contatto. Etruschi, liguri, romani nella Valle del Serchio fra IV e II secolo a.C"
+					{
+						"tag": "Alpenländer (bis 1997)"
+					},
+					{
+						"tag": "Beziehungen"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -353,35 +369,15 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Die kultische Verehrung des römischen Herrschers",
-					"Diva Faustina : coinage and cult in Rome and the provinces",
-					"Divine kings and sacred spaces : power and religion in Hellenistic Syria (301-64 BC)",
-					"Du prêtre du roi au prêtre de Rome et au grand prêtre d’Auguste : lamise en place du culte impérial civique",
-					"Ein Miniaturaltar der Arsinoë II",
-					"Emperor Worship",
-					"Herrscher",
-					"Herrscher- und Dynastiekulte im Ptolemäerreich",
-					"Herrscherkult",
-					"Imperial Cult",
-					"Imperial cult and imperial representation in Roman Cyprus",
-					"Kaiserverehrung und Kaiserkult in Alexandria und Ägypten von Augustus bis Caracalla",
-					"Les cultes des souverains hellénistiques",
-					"Les cultes des souverains hellénistiques après la disparition des dynasties : formes de survie et d’extinction d’une institution dans un contexte civique",
-					"Münzen als Zeugnis",
-					"Prêtres des empereurs",
-					"The Emperor Cult",
-					"The Near Eastern origins of Hellenistic ruler cult",
-					"The imperial Cult",
-					"Theoi sebastoi",
-					"Un culto imperiale \"provinciale\" in Achaia",
-					"benannte Porträts",
-					"culte impérial civique",
-					"domus divina",
-					"il culto degli imperatori romani",
-					"il culto degli imperatori romani in Grecia (Provincia Achaia) nel secondo secolo D.C",
-					"sul culto imperiale",
-					"the Cult of Ptolemaic Queens",
-					"the Roman imperial cult"
+					{
+						"tag": "Augustus"
+					},
+					{
+						"tag": "Herrscherkult"
+					},
+					{
+						"tag": "Münzen als Zeugnis"
+					}
 				],
 				"notes": [
 					{

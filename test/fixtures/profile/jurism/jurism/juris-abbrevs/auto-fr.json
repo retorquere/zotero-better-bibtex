@@ -1,7 +1,7 @@
 {
   "filename": "auto-fr.json",
   "name": "France",
-  "version": "2020-09-07 20:37:45 UTC",
+  "version": "2020-10-30 01:03:27 UTC",
   "xdata": {
     "default": {
       "place": {
@@ -17,19 +17,28 @@
         "FR:BOURGES": "Bourges",
         "FR:CAEN": "Caen",
         "FR:CAYENNE": "Cayenne",
+        "FR:CERGY.PONTOISE": "Cergy-Pontoise",
+        "FR:CHALONS.CHAMPAGNE": "Châlons-en-Champagne",
         "FR:CHAMBERY": "Chambéry",
+        "FR:CLERMONT.FERRAND": "Clermont-Ferrand",
         "FR:COLMAR": "Colmar",
         "FR:DIJON": "Dijon",
         "FR:DOUAI": "Douai",
         "FR:FORT.FRANCE": "Fort-de-France",
         "FR:GRENOBLE": "Grenoble",
+        "FR:LILLE": "Lille",
         "FR:LIMOGES": "Limoges",
         "FR:LYON": "Lyon",
+        "FR:MAMOUDZOU": "Mamoudzou",
+        "FR:MATA.UTU": "Mata-Utu",
         "FR:METZ": "Metz",
         "FR:MARSEILLE": "Marseille",
+        "FR:MELUN": "Melun",
         "FR:MONTPELLIER": "Montpellier",
+        "FR:MONTREUIL": "Montreuil",
         "FR:NANCY": "Nancy",
         "FR:NANTES": "Nantes",
+        "FR:NICE": "Nice",
         "FR:NIMES": "Nîmes",
         "FR:NOUMEA": "Nouméa",
         "FR:ORLEANS": "Orléans",
@@ -41,8 +50,12 @@
         "FR:RENNES": "Rennes",
         "FR:RIOM": "Riom",
         "FR:ROUEN": "Rouen",
+        "FR:SAINT.BARTHELEMY": "Saint-Barthélemy",
         "FR:SAINT.DENIS": "Saint-Denis",
+        "FR:SAINT.MARTIN": "Saint-Martin",
         "FR:SAINT.PIERRE.ET.MIQUELON": "Saint-Pierre-et-Miquelon",
+        "FR:STRASBOURG": "Strasbourg",
+        "FR:TOULON": "Toulon",
         "FR:TOULOUSE": "Toulouse",
         "FR:VERSAILLES": "Versailles"
       }
@@ -80,7 +93,8 @@
     },
     "fr:amiens": {
       "institution-part": {
-        "ca": "C.A. Amiens"
+        "ca": "C.A. Amiens",
+        "ta": "TA Amiens"
       }
     },
     "fr:angers": {
@@ -90,23 +104,27 @@
     },
     "fr:basse.terre": {
       "institution-part": {
-        "ca": "C.A. Basse-Terre"
+        "ca": "C.A. Basse-Terre",
+        "ta": "TA Basse-Terre"
       }
     },
     "fr:bastia": {
       "institution-part": {
-        "ca": "C.A. Bastia"
+        "ca": "C.A. Bastia",
+        "ta": "TA Bastia"
       }
     },
     "fr:besancon": {
       "institution-part": {
-        "ca": "C.A. Besançon"
+        "ca": "C.A. Besançon",
+        "ta": "TA Besançon"
       }
     },
     "fr:bordeaux": {
       "institution-part": {
         "ca": "C.A. Bordeaux",
-        "caa": "C.A.A. Bordeaux"
+        "caa": "C.A.A. Bordeaux",
+        "ta": "TA Bordeaux"
       }
     },
     "fr:bourges": {
@@ -116,17 +134,34 @@
     },
     "fr:caen": {
       "institution-part": {
-        "ca": "C.A. Caen"
+        "ca": "C.A. Caen",
+        "ta": "TA Caen"
       }
     },
     "fr:cayenne": {
       "institution-part": {
-        "ca": "C.A. Cayenne"
+        "ca": "C.A. Cayenne",
+        "ta": "TA Cayenne"
+      }
+    },
+    "fr:cergy.pontoise": {
+      "institution-part": {
+        "ta": "TA Cergy-Pontoise"
+      }
+    },
+    "fr:chalons.champagne": {
+      "institution-part": {
+        "ta": "TA Châlons-en-Champagne"
       }
     },
     "fr:chambery": {
       "institution-part": {
         "ca": "C.A. Chambéry"
+      }
+    },
+    "fr:clermont.ferrand": {
+      "institution-part": {
+        "ta": "TA Clermont-Ferrand"
       }
     },
     "fr:colmar": {
@@ -136,7 +171,8 @@
     },
     "fr:dijon": {
       "institution-part": {
-        "ca": "C.A. Dijon"
+        "ca": "C.A. Dijon",
+        "ta": "TA Dijon"
       }
     },
     "fr:douai": {
@@ -147,23 +183,42 @@
     },
     "fr:fort.france": {
       "institution-part": {
-        "ca": "C.A. Fort-de-France"
+        "ca": "C.A. Fort-de-France",
+        "ta": "TA Fort-de-France"
       }
     },
     "fr:grenoble": {
       "institution-part": {
-        "ca": "C.A. Grenoble"
+        "ca": "C.A. Grenoble",
+        "ta": "TA Grenoble"
+      }
+    },
+    "fr:lille": {
+      "institution-part": {
+        "ta": "TA Lille"
       }
     },
     "fr:limoges": {
       "institution-part": {
-        "ca": "C.A. Limoges"
+        "ca": "C.A. Limoges",
+        "ta": "TA Limoges"
       }
     },
     "fr:lyon": {
       "institution-part": {
         "ca": "C.A. Lyon",
-        "caa": "C.A.A. Lyon"
+        "caa": "C.A.A. Lyon",
+        "ta": "TA Lyon"
+      }
+    },
+    "fr:mamoudzou": {
+      "institution-part": {
+        "ta": "TA Mamoudzou"
+      }
+    },
+    "fr:mata.utu": {
+      "institution-part": {
+        "ta": "TA Mata-Utu"
       }
     },
     "fr:metz": {
@@ -173,59 +228,85 @@
     },
     "fr:marseille": {
       "institution-part": {
-        "caa": "C.A.A. Marseille"
+        "caa": "C.A.A. Marseille",
+        "ta": "TA Marseille"
+      }
+    },
+    "fr:melun": {
+      "institution-part": {
+        "ta": "TA Melun"
       }
     },
     "fr:montpellier": {
       "institution-part": {
-        "ca": "C.A. Montpellier"
+        "ca": "C.A. Montpellier",
+        "ta": "TA Montpellier"
+      }
+    },
+    "fr:montreuil": {
+      "institution-part": {
+        "ta": "TA Montreuil"
       }
     },
     "fr:nancy": {
       "institution-part": {
         "ca": "C.A. Nancy",
-        "caa": "C.A.A. Nancy"
+        "caa": "C.A.A. Nancy",
+        "ta": "TA Nancy"
       }
     },
     "fr:nantes": {
       "institution-part": {
-        "caa": "C.A.A. Nantes"
+        "caa": "C.A.A. Nantes",
+        "ta": "TA Nantes"
+      }
+    },
+    "fr:nice": {
+      "institution-part": {
+        "ta": "TA Nice"
       }
     },
     "fr:nimes": {
       "institution-part": {
-        "ca": "C.A. Nîmes"
+        "ca": "C.A. Nîmes",
+        "ta": "TA Nîmes"
       }
     },
     "fr:noumea": {
       "institution-part": {
-        "ca": "C.A. Nouméa"
+        "ca": "C.A. Nouméa",
+        "ta": "TA Nouméa"
       }
     },
     "fr:orleans": {
       "institution-part": {
-        "ca": "C.A. Orléans"
+        "ca": "C.A. Orléans",
+        "ta": "TA Orléans"
       }
     },
     "fr:papeete": {
       "institution-part": {
-        "ca": "C.A. Papeete"
+        "ca": "C.A. Papeete",
+        "ta": "TA Papeete"
       }
     },
     "fr:paris": {
       "institution-part": {
         "ca": "C.A. Paris",
-        "caa": "C.A.A. Paris"
+        "caa": "C.A.A. Paris",
+        "ta": "TA Paris"
       }
     },
     "fr:pau": {
       "institution-part": {
-        "ca": "C.A. Pau"
+        "ca": "C.A. Pau",
+        "ta": "TA Pau"
       }
     },
     "fr:poitiers": {
       "institution-part": {
-        "ca": "C.A. Poitiers"
+        "ca": "C.A. Poitiers",
+        "ta": "TA Poitiers"
       }
     },
     "fr:reims": {
@@ -235,7 +316,8 @@
     },
     "fr:rennes": {
       "institution-part": {
-        "ca": "C.A. Rennes"
+        "ca": "C.A. Rennes",
+        "ta": "TA Rennes"
       }
     },
     "fr:riom": {
@@ -245,28 +327,53 @@
     },
     "fr:rouen": {
       "institution-part": {
-        "ca": "C.A. Rouen"
+        "ca": "C.A. Rouen",
+        "ta": "TA Rouen"
+      }
+    },
+    "fr:saint.barthelemy": {
+      "institution-part": {
+        "ta": "TA Saint-Barthélemy"
       }
     },
     "fr:saint.denis": {
       "institution-part": {
-        "ca": "C.A. Saint-Denis"
+        "ca": "C.A. Saint-Denis",
+        "ta": "TA Saint-Denis"
+      }
+    },
+    "fr:saint.martin": {
+      "institution-part": {
+        "ta": "TA Saint-Martin"
       }
     },
     "fr:saint.pierre.et.miquelon": {
       "institution-part": {
+        "ta": "TA Saint-Pierre-et-Miquelon",
         "tsa": "T.S.A."
+      }
+    },
+    "fr:strasbourg": {
+      "institution-part": {
+        "ta": "TA Strasbourg"
+      }
+    },
+    "fr:toulon": {
+      "institution-part": {
+        "ta": "TA Toulon"
       }
     },
     "fr:toulouse": {
       "institution-part": {
-        "ca": "C.A. Toulouse"
+        "ca": "C.A. Toulouse",
+        "ta": "TA Toulouse"
       }
     },
     "fr:versailles": {
       "institution-part": {
         "ca": "C.A. Versailles",
-        "caa": "C.A.A. Versailles"
+        "caa": "C.A.A. Versailles",
+        "ta": "TA Versailles"
       }
     }
   }

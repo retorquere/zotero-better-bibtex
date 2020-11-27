@@ -1,2 +1,2 @@
-api.zotero.org:HSTS	0	18442	1624965217040,1,1,2
-our.law.nagoya-u.ac.jp:HSTS	0	18442	1624965219224,1,1,2
+api.zotero.org:HSTS	1	18593	1638007065605,1,1,2
+our.law.nagoya-u.ac.jp:HSTS	1	18593	1638007067448,1,1,2

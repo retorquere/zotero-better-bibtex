@@ -11,7 +11,6 @@
     </author>
     <category citation-format="note"/>
     <category field="law"/>
-    <law-module types="legal_case"/>
     <summary>Juris-M style module for United Nations</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
@@ -28,7 +27,7 @@
       <else-if type="legal_case">
         <text variable="title"/>
       </else-if>
-      <else-if type="regulaton">
+      <else-if type="regulation">
         <text variable="title"/>
       </else-if>
     </choose>
@@ -122,5 +121,9 @@
       <number variable="locator"/>
     </group>
   </macro>
+  <citation>
+    <layout>
+    </layout>
+  </citation>
 
 </style>

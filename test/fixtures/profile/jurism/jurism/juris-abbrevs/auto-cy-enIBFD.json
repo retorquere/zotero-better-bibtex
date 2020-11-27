@@ -1,0 +1,86 @@
+{
+  "filename": "auto-cy-enIBFD.json",
+  "name": "Cyprus",
+  "version": "2020-10-30 01:03:27 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "CY": "Cyprus",
+        "CY:FAMAGUSTA": "Αμμοχώστου",
+        "CY:KYRENIA": "Κερύνειας",
+        "CY:LARNACA": "Λάρνακας",
+        "CY:LARNACA.FAMAGUSTA": "Λάρνακας-Αμμοχώστου",
+        "CY:LIMASSOL": "Λεμεσού",
+        "CY:LIMASSOL.PAPHOS.": "Λεμεσού-Πάφου",
+        "CY:NICOSIA": "Λευκωσίας",
+        "CY:NICOSIA.KYRENIA": "Λευκωσίας-Κερύνειας",
+        "CY:PAPHOS": "Πάφου"
+      }
+    },
+    "cy": {
+      "institution-part": {
+        "ac": "Διοικητικό Δικαστήριο",
+        "afc": "Δευτεροβάθμιο Οικογενειακό Δικαστήριο",
+        "fcrg": "Οικογενειακά Δικαστήρια θρησκευτικών ομάδων",
+        "mc": "Στρατιωτικό Δικαστήριο",
+        "sc": "SC [Supreme Court]"
+      }
+    },
+    "cy:famagusta": {
+      "institution-part": {
+        "dc": "DC Αμμοχώστου [District Court]"
+      }
+    },
+    "cy:kyrenia": {
+      "institution-part": {
+        "dc": "DC Κερύνειας [District Court]"
+      }
+    },
+    "cy:larnaca": {
+      "institution-part": {
+        "assize": "Κακουργιοδικεία",
+        "dc": "DC Λάρνακας [District Court]",
+        "lc": "Δικαστήριο Εργατικών Διάφορων",
+        "rcc": "Δικαστήριο Εργατικών Διάφορων"
+      }
+    },
+    "cy:larnaca.famagusta": {
+      "institution-part": {
+        "fc": "Δικαστήριο Έλεγχου Ενοικιάσεων"
+      }
+    },
+    "cy:limassol": {
+      "institution-part": {
+        "assize": "Κακουργιοδικεία",
+        "dc": "DC Λεμεσού [District Court]",
+        "lc": "Δικαστήριο Εργατικών Διάφορων",
+        "rcc": "Δικαστήριο Εργατικών Διάφορων"
+      }
+    },
+    "cy:limassol.paphos.": {
+      "institution-part": {
+        "fc": "Δικαστήριο Έλεγχου Ενοικιάσεων"
+      }
+    },
+    "cy:nicosia": {
+      "institution-part": {
+        "assize": "Κακουργιοδικεία",
+        "dc": "DC Λευκωσίας [District Court]",
+        "lc": "Δικαστήριο Εργατικών Διάφορων",
+        "rcc": "Δικαστήριο Εργατικών Διάφορων"
+      }
+    },
+    "cy:nicosia.kyrenia": {
+      "institution-part": {
+        "fc": "Δικαστήριο Έλεγχου Ενοικιάσεων"
+      }
+    },
+    "cy:paphos": {
+      "institution-part": {
+        "assize": "Κακουργιοδικεία",
+        "dc": "DC Πάφου [District Court]",
+        "rcc": "Δικαστήριο Εργατικών Διάφορων"
+      }
+    }
+  }
+}

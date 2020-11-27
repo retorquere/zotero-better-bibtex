@@ -30,7 +30,7 @@
 			<group delimiter=" ">
 			  <group delimiter=".">
 				<text variable="container-title" form="short"/>
-				<text variable="collection-number"/>
+				<number variable="collection-number"/>
 				<number variable="page"/>
 			  </group>
 			  <names variable="authority">
@@ -62,7 +62,7 @@
 	<text value=""/>
   </macro>
   <macro name="juris-title-short">
-	<macro name=""/>
+	<text value=""/>
   </macro>
   <macro name="juris-main-short">
     <choose>
@@ -71,7 +71,7 @@
 		  <if variable="container-title collection-number" match="all">
 			<group delimiter=".">
 			  <text variable="container-title" form="short"/>
-			  <text variable="collection-number"/>
+			  <number variable="collection-number"/>
 			  <number variable="page"/>
 			</group>
 		  </if>

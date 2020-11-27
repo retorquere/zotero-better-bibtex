@@ -1,0 +1,19 @@
+{
+  "filename": "auto-icc.int-de.json",
+  "name": "International Criminal Court",
+  "version": "2020-10-15 22:01:47 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "ICC.INT": "ICC, %s"
+      }
+    },
+    "icc.int": {
+      "institution-part": {
+        "appeals.chamber": "Appeals Chamber",
+        "pre.trial.chamber": "Pre-Trial Chamber",
+        "trial.chamber": "Trial Chamber"
+      }
+    }
+  }
+}

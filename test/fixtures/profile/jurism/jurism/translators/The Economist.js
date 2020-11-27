@@ -9,23 +9,23 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-11-28 13:38:42"
+	"lastUpdated": "2020-09-05 05:23:47"
 }
 
 function detectWeb(doc, url) {
-	var m = url.match(/^https?:\/\/[^\/]+\/[^\/]*\/[^\/]*\/\d+/);
+	var m = url.match(/^https?:\/\/[^/]+\/[^/]*\/[^/]*\/\d+/);
 	//Z.debug(m)
 	if (url.includes('/node/') || m) {
 		return "magazineArticle";
-	} else if (getSearchResults(doc, url, true)) {
+	}
+	if (getSearchResults(doc, url, true)) {
 		return "multiple";
-	} 
-
+	}
+	return false;
 }
 
 function scrape(doc, url) {
-
-	newItem = new Zotero.Item("magazineArticle");
+	var newItem = new Zotero.Item("magazineArticle");
 	newItem.ISSN = "0013-0613";
 	newItem.url = url;
 	newItem.publicationTitle = "The Economist";
@@ -42,10 +42,10 @@ function scrape(doc, url) {
 	}
 	//get abstract
 	var abstract = ZU.xpathText(doc, '//h1[@class="rubric"]');
-	if (!abstract) abstract = ZU.xpathText(doc, '//meta[@property="og:description"]/@content');
+	if (!abstract) abstract = ZU.xpathText(doc, '//*[@itemprop="description"]');
 	newItem.abstractNote = abstract;
 	//get date and extra stuff
-	newItem.date = ZU.xpathText(doc, '//time[@itemprop="dateCreated"]/@datetime');
+	newItem.date = ZU.xpathText(doc, '//time[@itemtype="http://schema.org/DateTime"]/@datetime');
 	newItem.attachments = [{
 		document: doc,
 		title: "The Economist Snapshot",
@@ -60,16 +60,19 @@ function getSearchResults(doc, url, checkOnly) {
 	var items = {};
 	var found = false;
 	var rows;
-	if (url.indexOf('/printedition/')>-1) {
-		rows = ZU.xpath(doc, '//li/a[contains(@class, "list__link")]');
-	} else if (url.indexOf('/search?')>-1) {
-		rows = ZU.xpath(doc, '//div[contains(@class, "gs-title")]/a[@class="gs-title" and not(contains(@href, "topics"))]');
-	} else {
-		rows = ZU.xpath(doc, '//article/a[contains(@class, "teaser__link")]');
+	if (url.includes('/search?')) {
+		rows = ZU.xpath(doc, '//a[@class="search-result"]');
 	}
-	for (var i=0; i<rows.length; i++) {
+	else {
+		rows = doc.querySelectorAll('a.headline-link');
+	}
+	for (let i = 0; i < rows.length; i++) {
 		var href = rows[i].href;
-		var title = ZU.trimInternal(rows[i].textContent);
+		let [subhead, head] = rows[i].innerText.split(/\n/);
+		let title = ZU.trimInternal(subhead);
+		if (head) {
+			title = ZU.trimInternal(head) + ' — ' + title;
+		}
 		if (!href || !title) continue;
 		if (checkOnly) return true;
 		found = true;
@@ -83,7 +86,7 @@ function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
 		Zotero.selectItems(getSearchResults(doc, url, false), function (items) {
 			if (!items) {
-				return true;
+				return;
 			}
 			var articles = [];
 			for (var i in items) {
@@ -91,7 +94,8 @@ function doWeb(doc, url) {
 			}
 			ZU.processDocuments(articles, scrape);
 		});
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }
@@ -100,18 +104,18 @@ function doWeb(doc, url) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.economist.com/node/21538214",
+		"url": "https://www.economist.com/asia/2011/11/12/dreams-and-realities",
 		"items": [
 			{
 				"itemType": "magazineArticle",
 				"title": "Dreams and realities",
 				"creators": [],
-				"date": "2011-11-12T00:00:00+0000",
+				"date": "2011-11-12T00:00:00Z",
 				"ISSN": "0013-0613",
 				"abstractNote": "A battle over American-led free trade brews in Asia",
 				"libraryCatalog": "The Economist",
 				"publicationTitle": "The Economist",
-				"url": "http://www.economist.com/node/21538214",
+				"url": "https://www.economist.com/asia/2011/11/12/dreams-and-realities",
 				"attachments": [
 					{
 						"title": "The Economist Snapshot",
@@ -141,7 +145,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.economist.com/news/international/21726276-last-week-newspaper-said-alphabets-boss-should-write-detailed-ringing-rebuttal",
+		"url": "https://www.economist.com/international/2017/08/19/the-e-mail-larry-page-should-have-written-to-james-damore",
 		"items": [
 			{
 				"itemType": "magazineArticle",
@@ -152,7 +156,7 @@ var testCases = [
 				"abstractNote": "Last week this newspaper said Alphabet’s boss should write a “detailed, ringing rebuttal” of a viral anti-diversity memo sent at Google. Here is how we imagine it",
 				"libraryCatalog": "The Economist",
 				"publicationTitle": "The Economist",
-				"url": "https://www.economist.com/news/international/21726276-last-week-newspaper-said-alphabets-boss-should-write-detailed-ringing-rebuttal",
+				"url": "https://www.economist.com/international/2017/08/19/the-e-mail-larry-page-should-have-written-to-james-damore",
 				"attachments": [
 					{
 						"title": "The Economist Snapshot",
@@ -167,7 +171,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.economist.com/blogs/democracyinamerica/2017/11/free-speech-supreme-court",
+		"url": "https://www.economist.com/democracy-in-america/2017/11/15/the-justices-dive-into-new-abortion-controversy",
 		"items": [
 			{
 				"itemType": "magazineArticle",
@@ -178,7 +182,7 @@ var testCases = [
 				"abstractNote": "Can a state require pro-life pregnancy centres to alert women of government-funded abortions?",
 				"libraryCatalog": "The Economist",
 				"publicationTitle": "The Economist",
-				"url": "https://www.economist.com/blogs/democracyinamerica/2017/11/free-speech-supreme-court",
+				"url": "https://www.economist.com/democracy-in-america/2017/11/15/the-justices-dive-into-new-abortion-controversy",
 				"attachments": [
 					{
 						"title": "The Economist Snapshot",

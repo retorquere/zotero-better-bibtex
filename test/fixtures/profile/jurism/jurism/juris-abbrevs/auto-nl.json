@@ -1,68 +1,43 @@
 {
   "filename": "auto-nl.json",
   "name": "Netherlands",
-  "version": "2020-09-07 21:01:30 UTC",
+  "version": "2020-10-15 22:01:48 UTC",
   "xdata": {
     "default": {
       "place": {
         "NL": "Netherlands",
-        "NL:GRAVENHAGE": "Den Haag",
-        "NL:GRAVENHAGE:ALPHEN.RIJN": "Alphen aan den Rijn",
-        "NL:GRAVENHAGE:DELFT": "Delft",
-        "NL:GRAVENHAGE:GOUDA": "Gouda",
-        "NL:GRAVENHAGE:LEIDEN": "Leiden",
-        "NL:GRAVENHAGE:WINSCHOTEN": "Winschoten",
-        "NL:HERTOGENBOSCH": "Den Bosch",
-        "NL:HERTOGENBOSCH:BOXMEER": "Boxmeer",
-        "NL:HERTOGENBOSCH:EINDHOVEN": "Eindhoven",
-        "NL:HELMOND": "Helmond",
         "NL:AMSTERDAM": "Amsterdam",
-        "NL:AMSTERDAM:HILVERSUM": "Hilversum",
-        "NL:ARNHEM": "Arnhem",
-        "NL:ARNHEM:NIJMEGEN": "Nijmegen",
-        "NL:ARNHEM:TIEL": "Tiel",
-        "NL:ARNHEM:WAGENINGEN": "Wageningen",
-        "NL:LEEUWARDEN": "Leeuwarden",
-        "NL:LEEUWARDEN:HEERENVEEN": "Heerenveen",
-        "NL:LEEUWARDEN:SNEEK": "Sneek",
-        "NL:ALKMAAR": "Alkmaar",
-        "NL:ALKMAAR:DEN.HELDER": "Den Helder",
-        "NL:ALKMAAR:HOORN": "Hoorn",
-        "NL:ALMELO": "Almelo",
-        "NL:ASSEN": "Assen",
-        "NL:ASSEN:EMMEN": "Emmen",
-        "NL:ASSEN:ENSCHEDE": "Enschede",
-        "NL:ASSEN:MEPPEL": "Meppel",
-        "NL:BREDA": "Breda",
-        "NL:BREDA:BERGEN.ZOOM": "Bergen op Zoom",
-        "NL:BREDA:TILBURG": "Tilburg",
-        "NL:DORDRECHT": "Dordrecht",
-        "NL:GORINCHEM": "Gorinchem",
-        "NL:GRONINGEN": "Groningen",
-        "NL:HAARLEM": "Haarlem",
-        "NL:HAARLEM:ZAANSTAD": "Zaanstad",
-        "NL:MAASTRICHT": "Maastricht",
-        "NL:MAASTRICHT:HEERLEN": "Heerlen",
-        "NL:MAASTRICHT:SITTARD.GELEEN": "Sittard-Geleen",
-        "NL:MIDDELBURG": "Middelburg",
-        "NL:MIDDELBURG:TERNEUZEN": "Terneuzen",
-        "NL:ROERMOND": "Roermond",
-        "NL:ROERMOND:VENLO": "Venlo",
-        "NL:ROTTERDAM": "Rotterdam",
-        "NL:ROTTERDAM:BRIELLE": "Brielle",
-        "NL:ROTTERDAM:MIDDELHARNIS": "Middelharnis",
-        "NL:ROTTERDAM:SCHIEDAM": "Schiedam",
+        "NL:AMSTERDAM:AMSTERDAM": "Amsterdam",
+        "NL:AMSTERDAM:HAARLEM": "Haarlem",
+        "NL:AMSTERDAM:ALKMAAR": "Alkmaar",
         "NL:UTRECHT": "Utrecht",
-        "NL:UTRECHT:AMERSFOORT": "Amersfoort",
-        "NL:ZUTPHEN": "Zutphen",
-        "NL:ZUTPHEN:APELDOORN": "Apeldoorn",
-        "NL:ZUTPHEN:HARDERWIJK": "Harderwijk",
-        "NL:ZUTPHEN:OOST.GELRE": "Oost-Gelre",
-        "NL:ZUTPHEN:OUDE.IJSSELSTREEK": "Oude IJsselstreek",
-        "NL:ZWOLLE.LELYSTAD": "Zwolle-Lelystad",
-        "NL:ZWOLLE.LELYSTAD:ZWOLLE": "Zwolle",
-        "NL:ZWOLLE.LELYSTAD:DEVENTER": "Deventer",
-        "NL:ZWOLLE.LELYSTAD:LELYSTAD": "Lelystad"
+        "NL:AMSTERDAM:NOORD.HOLLAND": "Noord-Holland",
+        "NL:ARNHEM": "Arnhem",
+        "NL:ARNHEM:ARNHEM": "Arnhem",
+        "NL:ARNHEM:ZWOLLE": "Zwolle",
+        "NL:ARNHEM:ALMELO": "Almelo",
+        "NL:ARNHEM:ZUTPHEN": "Zutphen",
+        "NL:LEEUWARDEN": "Leeuwarden",
+        "NL:LEEUWARDEN:LEEUWARDEN": "Leeuwarden",
+        "NL:LEEUWARDEN:GRONINGEN": "Groningen",
+        "NL:LEEUWARDEN:ASSEN": "Assen",
+        "NL:ARNHEM.LEEUWARDEN": "Arnhem-Leeuwarden",
+        "NL:ARNHEM.LEEUWARDEN:GELDERLAND": "Gelderland",
+        "NL:ARNHEM.LEEUWARDEN:MIDDEN.NEDERLAND": "Midden-Nederland",
+        "NL:ARNHEM.LEEUWARDEN:NOORD.NEDERLAND": "Noord-Nederland",
+        "NL:ARNHEM.LEEUWARDEN:OVERIJSSEL": "Overijssel",
+        "NL:GRAVENHAGE": "Den Haag",
+        "NL:GRAVENHAGE:GRAVENHAGE": "Den Haag",
+        "NL:GRAVENHAGE:ROTTERDAM": "Rotterdam",
+        "NL:GRAVENHAGE:DORDRECHT": "Dordrecht",
+        "NL:HERTOGENBOSCH": "Den Bosch",
+        "NL:HERTOGENBOSCH:HERTOGENBOSCH": "Den Bosch",
+        "NL:HERTOGENBOSCH:BREDA": "Breda",
+        "NL:HERTOGENBOSCH:ROERMOND": "Roermond",
+        "NL:HERTOGENBOSCH:MAASTRICHT": "Maastricht",
+        "NL:HERTOGENBOSCH:LIMBURG": "Limburg",
+        "NL:HERTOGENBOSCH:OOST.BRABANT": "Oost-Brabant",
+        "NL:HERTOGENBOSCH:ZEELAND-WEST-BRABANT": "Zeeland-West-Brabant"
       }
     },
     "nl": {
@@ -74,311 +49,164 @@
         "raad.state": "RvS"
       }
     },
-    "nl:gravenhage": {
-      "institution-part": {
-        "gerechtshof": "Gerechtshof",
-        "rechtbank": "Rechtbank",
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:gravenhage:alphen.rijn": {
-      "institution-part": {
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:gravenhage:delft": {
-      "institution-part": {
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:gravenhage:gouda": {
-      "institution-part": {
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:gravenhage:leiden": {
-      "institution-part": {
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:gravenhage:winschoten": {
-      "institution-part": {
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:hertogenbosch": {
-      "institution-part": {
-        "gerechtshof": "Gerechtshof",
-        "rechtbank": "Rechtbank",
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:hertogenbosch:boxmeer": {
-      "institution-part": {
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:hertogenbosch:eindhoven": {
-      "institution-part": {
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:helmond": {
-      "institution-part": {
-        "sector.kanton": "Sector Kanton"
-      }
-    },
     "nl:amsterdam": {
       "institution-part": {
-        "gerechtshof": "Gerechtshof",
-        "rechtbank": "Rechtbank",
-        "sector.kanton": "Sector Kanton"
+        "gerechtshof": "Amsterdam Gerechtshof"
       }
     },
-    "nl:amsterdam:hilversum": {
+    "nl:amsterdam:amsterdam": {
       "institution-part": {
-        "sector.kanton": "Sector Kanton"
+        "rechtbank": "Amsterdam Rechtbank"
       }
     },
-    "nl:arnhem": {
+    "nl:amsterdam:haarlem": {
       "institution-part": {
-        "gerechtshof": "Gerechtshof",
-        "rechtbank": "Rechtbank",
-        "sector.kanton": "Sector Kanton"
+        "rechtbank": "Haarlem Rechtbank"
       }
     },
-    "nl:arnhem:nijmegen": {
+    "nl:amsterdam:alkmaar": {
       "institution-part": {
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:arnhem:tiel": {
-      "institution-part": {
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:arnhem:wageningen": {
-      "institution-part": {
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:leeuwarden": {
-      "institution-part": {
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:leeuwarden:heerenveen": {
-      "institution-part": {
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:leeuwarden:sneek": {
-      "institution-part": {
-        "gerechtshof": "Gerechtshof",
-        "rechtbank": "Rechtbank",
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:alkmaar": {
-      "institution-part": {
-        "rechtbank": "Rechtbank",
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:alkmaar:den.helder": {
-      "institution-part": {
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:alkmaar:hoorn": {
-      "institution-part": {
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:almelo": {
-      "institution-part": {
-        "rechtbank": "Rechtbank",
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:assen": {
-      "institution-part": {
-        "rechtbank": "Rechtbank",
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:assen:emmen": {
-      "institution-part": {
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:assen:enschede": {
-      "institution-part": {
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:assen:meppel": {
-      "institution-part": {
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:breda": {
-      "institution-part": {
-        "rechtbank": "Rechtbank"
-      }
-    },
-    "nl:breda:bergen.zoom": {
-      "institution-part": {
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:breda:tilburg": {
-      "institution-part": {
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:dordrecht": {
-      "institution-part": {
-        "rechtbank": "Rechtbank",
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:gorinchem": {
-      "institution-part": {
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:groningen": {
-      "institution-part": {
-        "rechtbank": "Rechtbank",
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:haarlem": {
-      "institution-part": {
-        "rechtbank": "Rechtbank",
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:haarlem:zaanstad": {
-      "institution-part": {
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:maastricht": {
-      "institution-part": {
-        "rechtbank": "Rechtbank",
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:maastricht:heerlen": {
-      "institution-part": {
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:maastricht:sittard.geleen": {
-      "institution-part": {
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:middelburg": {
-      "institution-part": {
-        "rechtbank": "Rechtbank",
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:middelburg:terneuzen": {
-      "institution-part": {
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:roermond": {
-      "institution-part": {
-        "rechtbank": "Rechtbank",
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:roermond:venlo": {
-      "institution-part": {
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:rotterdam": {
-      "institution-part": {
-        "rechtbank": "Rechtbank",
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:rotterdam:brielle": {
-      "institution-part": {
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:rotterdam:middelharnis": {
-      "institution-part": {
-        "sector.kanton": "Sector Kanton"
-      }
-    },
-    "nl:rotterdam:schiedam": {
-      "institution-part": {
-        "sector.kanton": "Sector Kanton"
+        "rechtbank": "Alkmaar Rechtbank"
       }
     },
     "nl:utrecht": {
       "institution-part": {
-        "rechtbank": "Rechtbank",
-        "sector.kanton": "Sector Kanton"
+        "rechtbank": "Utrecht Rechtbank"
       }
     },
-    "nl:utrecht:amersfoort": {
+    "nl:amsterdam:noord.holland": {
       "institution-part": {
-        "sector.kanton": "Sector Kanton"
+        "rechtbank": "Noord-Holland Rechtbank"
       }
     },
-    "nl:zutphen": {
+    "nl:arnhem": {
       "institution-part": {
-        "rechtbank": "Rechtbank",
-        "sector.kanton": "Sector Kanton"
+        "gerechtshof": "Arnhem Gerechtshof"
       }
     },
-    "nl:zutphen:apeldoorn": {
+    "nl:arnhem:arnhem": {
       "institution-part": {
-        "sector.kanton": "Sector Kanton"
+        "rechtbank": "Arnhem Rechtbank"
       }
     },
-    "nl:zutphen:harderwijk": {
+    "nl:arnhem:zwolle": {
       "institution-part": {
-        "sector.kanton": "Sector Kanton"
+        "rechtbank": "Zwolle Rechtbank"
       }
     },
-    "nl:zutphen:oost.gelre": {
+    "nl:arnhem:almelo": {
       "institution-part": {
-        "sector.kanton": "Sector Kanton"
+        "rechtbank": "Almelo Rechtbank"
       }
     },
-    "nl:zutphen:oude.ijsselstreek": {
+    "nl:arnhem:zutphen": {
       "institution-part": {
-        "sector.kanton": "Sector Kanton"
+        "rechtbank": "Zutphen Rechtbank"
       }
     },
-    "nl:zwolle.lelystad": {
+    "nl:leeuwarden": {
       "institution-part": {
-        "rechtbank": "Rechtbank"
+        "gerechtshof": "Leeuwarden Gerechtshof"
       }
     },
-    "nl:zwolle.lelystad:zwolle": {
+    "nl:leeuwarden:leeuwarden": {
       "institution-part": {
-        "sector.kanton": "Sector Kanton"
+        "rechtbank": "Leeuwarden Rechtbank"
       }
     },
-    "nl:zwolle.lelystad:deventer": {
+    "nl:leeuwarden:groningen": {
       "institution-part": {
-        "sector.kanton": "Sector Kanton"
+        "rechtbank": "Groningen Rechtbank"
       }
     },
-    "nl:zwolle.lelystad:lelystad": {
+    "nl:leeuwarden:assen": {
       "institution-part": {
-        "sector.kanton": "Sector Kanton"
+        "rechtbank": "Assen Rechtbank"
+      }
+    },
+    "nl:arnhem.leeuwarden": {
+      "institution-part": {
+        "gerechtshof": "Arnhem-Leeuwarden Gerechtshof"
+      }
+    },
+    "nl:arnhem.leeuwarden:gelderland": {
+      "institution-part": {
+        "rechtbank": "Gelderland Rechtbank"
+      }
+    },
+    "nl:arnhem.leeuwarden:midden.nederland": {
+      "institution-part": {
+        "rechtbank": "Midden-Nederland Rechtbank"
+      }
+    },
+    "nl:arnhem.leeuwarden:noord.nederland": {
+      "institution-part": {
+        "rechtbank": "Noord-Nederland Rechtbank"
+      }
+    },
+    "nl:arnhem.leeuwarden:overijssel": {
+      "institution-part": {
+        "rechtbank": "Overijssel Rechtbank"
+      }
+    },
+    "nl:gravenhage": {
+      "institution-part": {
+        "gerechtshof": "Den Haag Gerechtshof"
+      }
+    },
+    "nl:gravenhage:gravenhage": {
+      "institution-part": {
+        "rechtbank": "Den Haag Rechtbank"
+      }
+    },
+    "nl:gravenhage:rotterdam": {
+      "institution-part": {
+        "rechtbank": "Rotterdam Rechtbank"
+      }
+    },
+    "nl:gravenhage:dordrecht": {
+      "institution-part": {
+        "rechtbank": "Dordrecht Rechtbank"
+      }
+    },
+    "nl:hertogenbosch": {
+      "institution-part": {
+        "gerechtshof": "Den Bosch Gerechtshof"
+      }
+    },
+    "nl:hertogenbosch:hertogenbosch": {
+      "institution-part": {
+        "rechtbank": "Den Bosch Rechtbank"
+      }
+    },
+    "nl:hertogenbosch:breda": {
+      "institution-part": {
+        "rechtbank": "Breda Rechtbank"
+      }
+    },
+    "nl:hertogenbosch:roermond": {
+      "institution-part": {
+        "rechtbank": "Roermond Rechtbank"
+      }
+    },
+    "nl:hertogenbosch:maastricht": {
+      "institution-part": {
+        "rechtbank": "Maastricht Rechtbank"
+      }
+    },
+    "nl:hertogenbosch:limburg": {
+      "institution-part": {
+        "rechtbank": "Limburg Rechtbank"
+      }
+    },
+    "nl:hertogenbosch:oost.brabant": {
+      "institution-part": {
+        "rechtbank": "Oost-Brabant Rechtbank"
+      }
+    },
+    "nl:hertogenbosch:zeeland-west-brabant": {
+      "institution-part": {
+        "rechtbank": "Zeeland-West-Brabant Rechtbank"
       }
     }
   }
