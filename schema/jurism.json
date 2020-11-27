@@ -1,5 +1,5 @@
 {
-  "version": 31,
+  "version": 32,
   "itemTypes": [
     {
       "itemType": "artwork",
@@ -1746,6 +1746,9 @@
         },
         {
           "field": "edition"
+        },
+        {
+          "field": "versionNumber"
         },
         {
           "field": "place"
