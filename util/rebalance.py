@@ -83,19 +83,26 @@ try:
     with open(f'logs/behave-zotero-{job}-{branch}.json') as f:
       log.load(json.load(f, object_hook=Munch.fromDict))
   print(len(log.tests), 'tests')
-  with open('test/balance.json') as f:
+  with open(output) as f:
     history = json.load(f, object_hook=Munch.fromDict)
 
-  balance = {}
-  balance['tests'] = { test.test: { 'msecs': test.msecs, 'n': 1 } for test in log.tests }
+  balance = Munch.fromDict({
+    duration: { test.test: { 'msecs': test.msecs, 'runs': 1 } for test in log.tests },
+    runs: history.runs + 1,
+  })
 
-  for name, test in balance['tests'].items():
-    if name in history['tests']:
-      h = history['tests'][name]
-      avg = RunningAverage(h['msecs'], h['n'])
-      avg(test['msecs'])
+  for name, test in list(balance.duration.items()):
+    if h:= history.duration.get(name):
+      if type(h) in (float, int):
+        h = Munch(msecs=h, runs=history.runs)
+      else:
+        h.runs += history.runs
+      avg = RunningAverage(h.msecs, h.runs)
+      avg(test.msecs)
       # round to 10 msecs to prevent flutter
-      balance['tests'][name] = { 'msecs': round(float(avg) / 10) * 10, 'n': h['n'] + 1 }
+      balance.duration[name] = Munch(msecs=round(float(avg) / 10) * 10, runs = h.runs + 1)
+    balance.duration[name].runs -= history.runs
+    if balance.runs == 0: balance.duration[name] = balance.duration[name].msecs
 
   for status in ['slow', 'fast']:
     tests = [test for test in log.tests if status in [ 'slow', test.status] ]
@@ -124,6 +131,6 @@ except FailedError:
   sys.exit()
 
 print('writing', output)
-with open(output, 'w') as f:
+#with open(output, 'w') as f:
   json.dump(balance, f, indent='  ', sort_keys=True)
 print(f"::set-output name=balance::{output}")
