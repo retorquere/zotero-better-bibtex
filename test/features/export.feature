@@ -7,6 +7,7 @@ Scenario Outline: Export <references> references for BibLaTeX to <file>
 
   Examples:
      | file                                                                                           | references  |
+     | biber 2.14 rejects the date field generated from Better BibLaTex #1695                         | 1           |
      | Book Title exports to Journaltitle for Biblatex @incollection reference type #1691             | 2           |
      | When exporting notes, also handle the blockquote tag #1656                                     | 1           |
      | Entries with URL exported with (partial) URL in eprint field #1639                             | 2           |

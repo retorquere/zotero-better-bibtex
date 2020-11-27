@@ -511,7 +511,7 @@ export class Reference {
       if (Translator.BetterBibLaTeX && Translator.preferences.biblatexExtendedDateFormat && Zotero.BetterBibTeX.isEDTF(field.value, true)) {
         return this.add({
           ...field,
-          value: field.value?.replace(/\.[0-9]{4}[a-z]+$/, ''),
+          value: (field.value as string).replace(/\.[0-9]{3}[a-z]+$/i, ''),
           enc: 'verbatim',
         })
       }
