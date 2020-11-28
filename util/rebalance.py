@@ -68,14 +68,14 @@ class Log:
         # for retries, the last successful iteration (if any) will overwrite the failed iterations
         tests[re.sub(r' -- @[0-9]+\.[0-9]+ ', '', test.name)] = Munch(
           # convert to msecs here or too much gets rounded down to 0
-          duration=sum([step.result.duration * 1000 for step in test.steps if 'result' in step and 'duration' in step.result]), # msecs
+          msecs=sum([step.result.duration * 1000 for step in test.steps if 'result' in step and 'duration' in step.result]), # msecs
           status=status
         )
     if len(tests) == 0: raise NoTestError()
     if any(1 for test in tests.values() if test.status == 'failed'): raise FailedError()
 
     for name, test in tests.items():
-      self.tests.append(Munch(name=name, msecs=test.duration, status=status))
+      self.tests.append(Munch(name=name, msecs=test.msecs, status=status))
 
 log = Log()
 try:
@@ -107,6 +107,7 @@ try:
   for status in ['slow', 'fast']:
     tests = [test for test in log.tests if status in [ 'slow', test.status] ]
     durations = [balance.duration[test.name].msecs for test in tests]
+    print(durations)
 
     #if status == 'slow':
     #  solver = pywrapknapsack_solver.KnapsackSolver.KNAPSACK_MULTIDIMENSION_BRANCH_AND_BOUND_SOLVER
@@ -126,7 +127,7 @@ try:
   for name, duration in list(balance.duration.items()):
     balance.duration[name].runs -= balance.runs
     if balance.duration[name].runs == 0:
-      balance.duration[name] = balance.duration[test.name].msecs
+      balance.duration[name] = balance.duration[name].msecs
 
 except FileNotFoundError:
   print('logs incomplete')
