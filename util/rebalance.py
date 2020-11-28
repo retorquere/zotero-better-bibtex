@@ -87,8 +87,8 @@ try:
     history = json.load(f, object_hook=Munch.fromDict)
 
   balance = Munch.fromDict({
-    duration: { test.test: { 'msecs': test.msecs, 'runs': 1 } for test in log.tests },
-    runs: history.runs + 1,
+    'duration': { test.test: { 'msecs': test.msecs, 'runs': 1 } for test in log.tests },
+    'runs': history.runs + 1,
   })
 
   for name, test in list(balance.duration.items()):
