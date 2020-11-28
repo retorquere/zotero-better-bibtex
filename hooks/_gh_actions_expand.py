@@ -109,6 +109,11 @@ for change in run('git diff --cached --name-status'.split(' ')).split('\n'):
   else:
     status, path = change.split("\t")
 
+  if os.path.dirname(path) == '.github/workflows':
+    src = os.path.join(os.path.dirname(path), 'src', os.path.basename(path))
+    if os.path.exists(src) and os.path.getmtime(path) > os.path.getmtime(src):
+      print(f'{src} is older than {path}')
+      sys.exit(1)
   if os.path.dirname(path) != '.github/workflows/src': continue
 
   src = path
