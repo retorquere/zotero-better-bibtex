@@ -98,7 +98,7 @@ try:
 
   for test in log.tests:
     if h:= history.duration.get(test.name):
-      avg = RunningAverage(h.msecs, history.runs)
+      avg = RunningAverage(h.msecs, h.runs)
     else:
       avg = RunningAverage()
     avg.add(test.msecs)
@@ -107,7 +107,6 @@ try:
   for status in ['slow', 'fast']:
     tests = [test for test in log.tests if status in [ 'slow', test.status] ]
     durations = [balance.duration[test.name].msecs for test in tests]
-    print(durations)
 
     #if status == 'slow':
     #  solver = pywrapknapsack_solver.KnapsackSolver.KNAPSACK_MULTIDIMENSION_BRANCH_AND_BOUND_SOLVER
