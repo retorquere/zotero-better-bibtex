@@ -83,8 +83,13 @@ try:
     with open(f'logs/behave-zotero-{job}-{branch}.json') as f:
       log.load(json.load(f, object_hook=Munch.fromDict))
   print(len(log.tests), 'tests')
+
   with open(output) as f:
     history = json.load(f, object_hook=Munch.fromDict)
+  for name, h in list(history.duration.items()):
+    if type(h) in (float, int):
+      history.duration[name] = Munch(msecs=h, runs=0)
+    history.duration[name].runs += history.runs
 
   balance = Munch.fromDict({
     'duration': {},
@@ -92,14 +97,12 @@ try:
   })
 
   for test in log.tests:
-    if h:= history.duration.get(test.name) and type(h) in (float, int):
-      avg = RunningAverage(h, history.runs)
-    elif h:
-      avg = RunningAverage(h.msecs, history.runs + h.runs)
+    if h:= history.duration.get(test.name):
+      avg = RunningAverage(h.msecs, history.runs)
     else:
       avg = RunningAverage()
     avg.add(test.msecs)
-    balance.duration[test.name] = Munch(msecs=round(float(avg) / 10) * 10, runs=avg.n - balance.runs)
+    balance.duration[test.name] = Munch(msecs=round(float(avg) / 10) * 10, runs=avg.n)
 
   for status in ['slow', 'fast']:
     tests = [test for test in log.tests if status in [ 'slow', test.status] ]
@@ -121,8 +124,9 @@ try:
 
   # simplify for cleaner diffs
   for name, duration in list(balance.duration.items()):
-    if balance.duration[test.name].runs == 0:
-      balance.duration[test.name] = balance.duration[test.name].msecs
+    balance.duration[name].runs -= balance.runs
+    if balance.duration[name].runs == 0:
+      balance.duration[name] = balance.duration[test.name].msecs
 
 except FileNotFoundError:
   print('logs incomplete')

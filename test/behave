@@ -73,7 +73,7 @@ parser.add_argument('--slow', action='store_true',
             CI.tag != ''
 )
 parser.add_argument('--test')
-parser.add_argument('--balance')
+parser.add_argument('--bin')
 parser.add_argument('--logs')
 parser.add_argument('--prebuilt')
 parser.add_argument('--tagged', action='store_true', default=CI.tag != '')
@@ -106,11 +106,11 @@ elif not CI.service : # local run
     sys.exit(returncode)
 
 if args.nightly and CI.service and not args.tagged: # test for beta on nightly
-  args.beta = (args.balance == '2')
-  args.balance = None
+  args.beta = (args.bin == '2')
+  args.bin = None
 elif CI.service and os.environ.get('BETA') == 'true':
   args.beta = True
-  args.balance = None
+  args.bin = None
 
 if args.this or args.test_this:
   repo = Repository('.')
@@ -127,7 +127,7 @@ if args.client == 'jurism' and args.beta and CI.service:
 
 sys.argv.extend(['--define', f"client={args.client}"])
 sys.argv.extend(['--define', f'workers={str(args.workers).lower()}'])
-if args.balance: sys.argv.extend(['--define', f"balance={args.balance}"])
+if args.bin: sys.argv.extend(['--define', f"bin={args.bin}"])
 sys.argv.extend(['--define', f'kill={str(not args.keep).lower()}'])
 if args.stop: sys.argv.append('--stop')
 if args.slow: sys.argv.extend(['--define', 'slow=true'])
@@ -143,7 +143,7 @@ if CI.branch != '' and args.logs:
     if args.nightly:
       name = os.path.join(args.logs, f'{name}-{args.client}-{"beta" if args.beta else "release"}-{CI.branch}.json')
     else:
-      name = os.path.join(args.logs, f'{name}-{args.client}-{args.balance}-{CI.branch}.json')
+      name = os.path.join(args.logs, f'{name}-{args.client}-{args.bin}-{CI.branch}.json')
     if arg == 'behave.json':
       return name
     else:

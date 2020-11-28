@@ -70,7 +70,7 @@ jobs:
     strategy:
       matrix:
         client: [zotero, jurism]
-        slice: ['1', '2']
+        bin: ['1', '2']
     steps:
     - uses: actions/checkout@v2
     - name: fetch build artifacts
@@ -109,12 +109,12 @@ jobs:
     - name: Run headless test
       uses: GabrielBB/xvfb-action@v1
       with:
-        run: ./test/behave --client ${{ matrix.client }} --logs logs/logs --format travis --balance ${{ matrix.slice }}
+        run: ./test/behave --client ${{ matrix.client }} --logs logs/logs --format travis --bin ${{ matrix.bin }}
 
     - uses: actions/upload-artifact@v2
       if: ${{ failure() }}
       with:
-        name: debug log ${{ matrix.client }} ${{ matrix.slice }}
+        name: debug log ${{ matrix.client }} ${{ matrix.bin }}
         path: ~/.BBTZ5TEST.log
 
     - name: store test artifacts
