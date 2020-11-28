@@ -131,6 +131,6 @@ except FailedError:
   sys.exit()
 
 print('writing', output)
-#with open(output, 'w') as f:
+with open(output, 'w') as f:
   json.dump(balance, f, indent='  ', sort_keys=True)
 print(f"::set-output name=balance::{output}")
