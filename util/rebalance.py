@@ -26,7 +26,7 @@ class RunningAverage():
     self.average = average
     self.n = n
 
-  def __call__(self, new_value):
+  def add(self, new_value):
     self.n += 1
     if self.n == 1:
       self.average = new_value
@@ -75,7 +75,7 @@ class Log:
     if any(1 for test in tests.values() if test.status == 'failed'): raise FailedError()
 
     for name, test in tests.items():
-      self.tests.append(Munch(test=name, msecs=test.duration, status=status))
+      self.tests.append(Munch(name=name, msecs=test.duration, status=status))
 
 log = Log()
 try:
@@ -87,39 +87,43 @@ try:
     history = json.load(f, object_hook=Munch.fromDict)
 
   balance = Munch.fromDict({
-    'duration': { test.test: { 'msecs': test.msecs, 'runs': 1 } for test in log.tests },
+    'duration': {},
     'runs': history.runs + 1,
   })
 
-  for name, test in list(balance.duration.items()):
-    if h:= history.duration.get(name):
-      if type(h) in (float, int):
-        h = Munch(msecs=h, runs=history.runs)
-      else:
-        h.runs += history.runs
-      avg = RunningAverage(h.msecs, h.runs)
-      avg(test.msecs)
-      # round to 10 msecs to prevent flutter
-      balance.duration[name] = Munch(msecs=round(float(avg) / 10) * 10, runs = h.runs + 1)
-    balance.duration[name].runs -= history.runs
-    if balance.runs == 0: balance.duration[name] = balance.duration[name].msecs
+  for test in log.tests:
+    if h:= history.duration.get(test.name) and type(h) in (float, int):
+      avg = RunningAverage(h, history.runs)
+    elif h:
+      avg = RunningAverage(h.msecs, history.runs + h.runs)
+    else:
+      avg = RunningAverage()
+    avg.add(test.msecs)
+    balance.duration[test.name] = Munch(msecs=round(float(avg) / 10) * 10, runs=avg.n - balance.runs)
 
   for status in ['slow', 'fast']:
     tests = [test for test in log.tests if status in [ 'slow', test.status] ]
-    if status == 'slow':
-      solver = pywrapknapsack_solver.KnapsackSolver.KNAPSACK_MULTIDIMENSION_BRANCH_AND_BOUND_SOLVER
-    else:
-      solver = pywrapknapsack_solver.KnapsackSolver.KNAPSACK_MULTIDIMENSION_CBC_MIP_SOLVER
-    durations = [test.msecs for test in tests]
+    durations = [balance.duration[test.name].msecs for test in tests]
 
+    #if status == 'slow':
+    #  solver = pywrapknapsack_solver.KnapsackSolver.KNAPSACK_MULTIDIMENSION_BRANCH_AND_BOUND_SOLVER
+    #else:
+    #  solver = pywrapknapsack_solver.KnapsackSolver.KNAPSACK_MULTIDIMENSION_CBC_MIP_SOLVER
+    solver = pywrapknapsack_solver.KnapsackSolver.KNAPSACK_MULTIDIMENSION_CBC_MIP_SOLVER
     solver = pywrapknapsack_solver.KnapsackSolver(solver, 'TestBalancer')
     solver.Init([1 for n in durations], [durations], [int(sum(durations)/2)])
     solver.Solve()
 
     balance[status] = {}
-    for i in [1, 2]:
-      balance[status][i] = [ test.test for t, test in enumerate(tests) if solver.BestSolutionContains(t) == (i == 1) ]
+    for _bin in [1, 2]:
+      balance[status][_bin] = [ test.name for i, test in enumerate(tests) if solver.BestSolutionContains(i) == (_bin == 1) ]
     print(status, len(tests), 'tests,', { k: len(t) for k, t in balance[status].items()})
+
+  # simplify for cleaner diffs
+  for name, duration in list(balance.duration.items()):
+    if balance.duration[test.name].runs == 0:
+      balance.duration[test.name] = balance.duration[test.name].msecs
+
 except FileNotFoundError:
   print('logs incomplete')
   sys.exit()
