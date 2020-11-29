@@ -1,0 +1,895 @@
+{
+  "filename": "auto-at-enIBFD.json",
+  "name": "Austria",
+  "version": "2020-10-30 01:03:26 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "AT": "Austria",
+        "AT:BURGENLAND": "Burgenland",
+        "AT:GRAZ": "Graz",
+        "AT:GRAZ:GRAZ": "Graz",
+        "AT:GRAZ:GRAZ:DEUTSCHLANDSBERG": "Deutschlandsberg",
+        "AT:GRAZ:GRAZ:FELDBACH": "Feldbach",
+        "AT:GRAZ:GRAZ:FURSTENFELD": "Fürstenfeld",
+        "AT:GRAZ:GRAZ:GRAZ-OST": "Graz-Ost",
+        "AT:GRAZ:GRAZ:GRAZ-WEST": "Graz-West",
+        "AT:GRAZ:GRAZ:LEIBNITZ": "Leibnitz",
+        "AT:GRAZ:GRAZ:VOITSBERG": "Voitsberg",
+        "AT:GRAZ:GRAZ:WEIZ": "Weiz",
+        "AT:GRAZ:KLAGENFURT": "Klagenfurt",
+        "AT:GRAZ:KLAGENFURT:BLEIBURG": "Bleiburg",
+        "AT:GRAZ:KLAGENFURT:EISENKAPPEL": "Eisenkappel",
+        "AT:GRAZ:KLAGENFURT:FELDKIRCHEN": "Feldkirchen",
+        "AT:GRAZ:KLAGENFURT:FERLACH": "Ferlach",
+        "AT:GRAZ:KLAGENFURT:HERMAGOR": "Hermagor",
+        "AT:GRAZ:KLAGENFURT:KLAGENFURT": "Klagenfurt",
+        "AT:GRAZ:KLAGENFURT:SANKT.VEIT.AN.DER.GLAN": "Sankt Veit an der Glan",
+        "AT:GRAZ:KLAGENFURT:SPITTAL.AN.DER.DRAU": "Spittal an der Drau",
+        "AT:GRAZ:KLAGENFURT:VILLACH": "Villach",
+        "AT:GRAZ:KLAGENFURT:VOLKERMARKT": "Völkermarkt",
+        "AT:GRAZ:KLAGENFURT:WOLFSBERG": "Wolfsberg",
+        "AT:GRAZ:LEOBEN": "Leoben",
+        "AT:GRAZ:LEOBEN:BRUCK.AN.DER.MUR": "Bruck an der Mur",
+        "AT:GRAZ:LEOBEN:JUDENBURG": "Judenburg",
+        "AT:GRAZ:LEOBEN:LEOBEN": "Leoben",
+        "AT:GRAZ:LEOBEN:LIEZEN": "Liezen",
+        "AT:GRAZ:LEOBEN:MURAU": "Murau",
+        "AT:GRAZ:LEOBEN:MURZZUSCHLAG": "Mürzzuschlag",
+        "AT:GRAZ:LEOBEN:SCHLADMING": "Schladming",
+        "AT:INNSBRUCK": "Innsbruck",
+        "AT:INNSBRUCK:FELDKIRCH": "Feldkirch",
+        "AT:INNSBRUCK:FELDKIRCH:BEZAU": "Bezau",
+        "AT:INNSBRUCK:FELDKIRCH:BLUDENZ": "Bludenz",
+        "AT:INNSBRUCK:FELDKIRCH:BREGENZ": "Bregenz",
+        "AT:INNSBRUCK:FELDKIRCH:DORNBIRN": "Dornbirn",
+        "AT:INNSBRUCK:FELDKIRCH:FELDKIRCH": "Feldkirch",
+        "AT:INNSBRUCK:INNSBRUCK": "Innsbruck",
+        "AT:INNSBRUCK:INNSBRUCK:HALL.IN.TIROL": "Hall in Tirol",
+        "AT:INNSBRUCK:INNSBRUCK:IMST": "Imst",
+        "AT:INNSBRUCK:INNSBRUCK:INNSBRUCK": "Innsbruck",
+        "AT:INNSBRUCK:INNSBRUCK:KITZBUHEL": "Kitzbühel",
+        "AT:INNSBRUCK:INNSBRUCK:KUFSTEIN": "Kufstein",
+        "AT:INNSBRUCK:INNSBRUCK:LANDECK": "Landeck",
+        "AT:INNSBRUCK:INNSBRUCK:LIENZ": "Lienz",
+        "AT:INNSBRUCK:INNSBRUCK:RATTENBERG": "Rattenberg",
+        "AT:INNSBRUCK:INNSBRUCK:REUTTE": "Reutte",
+        "AT:INNSBRUCK:INNSBRUCK:SCHWAZ": "Schwaz",
+        "AT:INNSBRUCK:INNSBRUCK:SILZ": "Silz",
+        "AT:INNSBRUCK:INNSBRUCK:TELFS": "Telfs",
+        "AT:INNSBRUCK:INNSBRUCK:ZELL.AM.ZILLER": "Zell am Ziller",
+        "AT:KARNTEN": "Kärnten",
+        "AT:LINZ": "Linz",
+        "AT:LINZ:LINZ": "Linz",
+        "AT:LINZ:LINZ:FREISTADT": "Freistadt",
+        "AT:LINZ:LINZ:LINZ": "Linz",
+        "AT:LINZ:LINZ:PERG": "Perg",
+        "AT:LINZ:LINZ:ROHRBACH": "Rohrbach",
+        "AT:LINZ:LINZ:TRAUN": "Traun",
+        "AT:LINZ:LINZ:URFAHR": "Urfahr",
+        "AT:LINZ:RIED.IM.INNKREIS": "Ried im Innkreis",
+        "AT:LINZ:RIED.IM.INNKREIS:BRAUNAU.AM.INN": "Braunau am Inn",
+        "AT:LINZ:RIED.IM.INNKREIS:MATTIGHOFEN": "Mattighofen",
+        "AT:LINZ:RIED.IM.INNKREIS:RIED.IM.INNKREIS": "Ried im Innkreis",
+        "AT:LINZ:RIED.IM.INNKREIS:SCHARDING": "Schärding",
+        "AT:LINZ:SALZBURG": "Salzburg",
+        "AT:LINZ:SALZBURG:HALLEIN": "Hallein",
+        "AT:LINZ:SALZBURG:NEUMARKT.BEI.SALZBURG": "Neumarkt bei Salzburg",
+        "AT:LINZ:SALZBURG:OBERNDORF": "Oberndorf",
+        "AT:LINZ:SALZBURG:SALZBURG": "Salzburg",
+        "AT:LINZ:SALZBURG:SANKT.JOHANN.IM.PONGAU": "Sankt Johann im Pongau",
+        "AT:LINZ:SALZBURG:TAMSWEG": "Tamsweg",
+        "AT:LINZ:SALZBURG:THALGAU": "Thalgau",
+        "AT:LINZ:SALZBURG:ZELL.AM.SEE": "Zell am See",
+        "AT:LINZ:STEYR": "Steyr",
+        "AT:LINZ:STEYR:KIRCHDORF.AN.DER.KREMS": "Kirchdorf an der Krems",
+        "AT:LINZ:STEYR:STEYR": "Steyr",
+        "AT:LINZ:WELS": "Wels",
+        "AT:LINZ:WELS:BAD.ISCHL": "Bad Ischl",
+        "AT:LINZ:WELS:EFERDING": "Eferding",
+        "AT:LINZ:WELS:GMUNDEN": "Gmunden",
+        "AT:LINZ:WELS:GRIESKIRCHEN": "Grieskirchen",
+        "AT:LINZ:WELS:VOCKLABRUCK": "Vöcklabruck",
+        "AT:LINZ:WELS:WELS": "Wels",
+        "AT:NIEDEROSTERREICH": "Niederösterreich",
+        "AT:OBEROSTERREICH": "Oberösterreich",
+        "AT:SALZBURG": "Salzburg",
+        "AT:STEIERMARK": "Steiermark",
+        "AT:TIROL": "Tirol",
+        "AT:VORARLBERG": "Vorarlberg",
+        "AT:WIEN": "Wien",
+        "AT:WIEN:EISENSTADT": "Eisenstadt",
+        "AT:WIEN:EISENSTADT:EISENSTADT": "Eisenstadt",
+        "AT:WIEN:EISENSTADT:GUSSING": "Güssing",
+        "AT:WIEN:EISENSTADT:MATTERSBURG": "Mattersburg",
+        "AT:WIEN:EISENSTADT:NEUSIEDL.AM.SEE": "Neusiedl am See",
+        "AT:WIEN:EISENSTADT:OBERPULLENDORF": "Oberpullendorf",
+        "AT:WIEN:EISENSTADT:OBERWART": "Oberwart",
+        "AT:WIEN:KORNEUBURG": "Korneuburg",
+        "AT:WIEN:KORNEUBURG:BRUCK.AN.DER.LEITHA": "Bruck an der Leitha",
+        "AT:WIEN:KORNEUBURG:GANSERNDORF": "Gänserndorf",
+        "AT:WIEN:KORNEUBURG:HOLLABRUNN": "Hollabrunn",
+        "AT:WIEN:KORNEUBURG:KLOSTERNEUBURG": "Klosterneuburg",
+        "AT:WIEN:KORNEUBURG:KORNEUBURG": "Korneuburg",
+        "AT:WIEN:KORNEUBURG:MISTELBACH": "Mistelbach",
+        "AT:WIEN:KORNEUBURG:SCHWECHAT": "Schwechat",
+        "AT:WIEN:KREMS.AN.DER.DONAU": "Krems an der Donau",
+        "AT:WIEN:KREMS.AN.DER.DONAU:GMUND.IN.NIEDEROSTERREICH": "Gmünd in Niederösterreich",
+        "AT:WIEN:KREMS.AN.DER.DONAU:HORN": "Horn",
+        "AT:WIEN:KREMS.AN.DER.DONAU:KREMS.AN.DER.DONAU": "Krems an der Donau",
+        "AT:WIEN:KREMS.AN.DER.DONAU:WAIDHOFEN.AN.DER.THAYA": "Waidhofen an der Thaya",
+        "AT:WIEN:KREMS.AN.DER.DONAU:ZWETTL": "Zwettl",
+        "AT:WIEN:ST.POLTEN": "St. Pölten",
+        "AT:WIEN:ST.POLTEN:AMSTETTEN": "Amstetten",
+        "AT:WIEN:ST.POLTEN:HAAG": "Haag",
+        "AT:WIEN:ST.POLTEN:LILIENFELD": "Lilienfeld",
+        "AT:WIEN:ST.POLTEN:MELK": "Melk",
+        "AT:WIEN:ST.POLTEN:NEULENGBACH": "Neulengbach",
+        "AT:WIEN:ST.POLTEN:PURKERSDORF": "Purkersdorf",
+        "AT:WIEN:ST.POLTEN:SCHEIBBS": "Scheibbs",
+        "AT:WIEN:ST.POLTEN:ST.POLTEN": "St. Pölten",
+        "AT:WIEN:ST.POLTEN:TULLN": "Tulln",
+        "AT:WIEN:ST.POLTEN:WAIDHOFEN.AN.DER.YBBS": "Waidhofen an der Ybbs",
+        "AT:WIEN:WIEN": "Wien",
+        "AT:WIEN:WIEN:DOBLING": "Döbling",
+        "AT:WIEN:WIEN:DONAUSTADT": "Donaustadt",
+        "AT:WIEN:WIEN:FAVORITEN": "Favoriten",
+        "AT:WIEN:WIEN:FLORIDSDORF": "Floridsdorf",
+        "AT:WIEN:WIEN:FUNFHAUS": "Fünfhaus",
+        "AT:WIEN:WIEN:HERNALS": "Hernals",
+        "AT:WIEN:WIEN:HIETZING": "Hietzing",
+        "AT:WIEN:WIEN:INNERE.STADT.WIEN": "Innere Stadt Wien",
+        "AT:WIEN:WIEN:JOSEFSTADT": "Josefstadt",
+        "AT:WIEN:WIEN:LEOPOLDSTADT": "Leopoldstadt",
+        "AT:WIEN:WIEN:LIESING": "Liesing",
+        "AT:WIEN:WIEN:MEIDLING": "Meidling",
+        "AT:WIEN:WIENER.NEUSTADT": "Wiener Neustadt",
+        "AT:WIEN:WIENER.NEUSTADT:BADEN": "Baden",
+        "AT:WIEN:WIENER.NEUSTADT:MODLING": "Mödling",
+        "AT:WIEN:WIENER.NEUSTADT:NEUNKIRCHEN": "Neunkirchen",
+        "AT:WIEN:WIENER.NEUSTADT:WIENER.NEUSTADT": "Wiener Neustadt"
+      }
+    },
+    "at": {
+      "institution-part": {
+        "bfg": "BFG [Federal Tax Court]",
+        "bvwg": "BVwG [Federal Administrative Court]",
+        "ogh": "OGH [Supreme Court]",
+        "vfgh": "VfGH [Constitutional Court]",
+        "vwgh": "VwGH [Supreme Administrative Court]",
+        "asylgh": "AsylGH",
+        "ubas": "UBAS",
+        "ufs": "UFS [Independent Finance Senate]",
+        "dsk": "DSK",
+        "dsb": "DSB",
+        "bvga": "BVA",
+        "opms": "OPMS",
+        "bwb": "BWB"
+      }
+    },
+    "at:burgenland": {
+      "institution-part": {
+        "lvwg": "LVwG Burgenland [Regional Administrative Court]",
+        "uvs": "UVS Burgenland [Independent Administrative Senate]"
+      }
+    },
+    "at:graz": {
+      "institution-part": {
+        "olg": "OLG Graz [Higher Regional Court]"
+      }
+    },
+    "at:graz:graz": {
+      "institution-part": {
+        "lgs": "LGS Graz [Regional Criminal Court]",
+        "lgzrs": "LGZ Graz [Regional Civil Court]"
+      }
+    },
+    "at:graz:graz:deutschlandsberg": {
+      "institution-part": {
+        "bg": "BG Deutschlandsberg [District Court]"
+      }
+    },
+    "at:graz:graz:feldbach": {
+      "institution-part": {
+        "bg": "BG Feldbach [District Court]"
+      }
+    },
+    "at:graz:graz:furstenfeld": {
+      "institution-part": {
+        "bg": "BG Fürstenfeld [District Court]"
+      }
+    },
+    "at:graz:graz:graz-ost": {
+      "institution-part": {
+        "bg": "BG Graz-Ost [District Court]"
+      }
+    },
+    "at:graz:graz:graz-west": {
+      "institution-part": {
+        "bg": "BG Graz-West [District Court]"
+      }
+    },
+    "at:graz:graz:leibnitz": {
+      "institution-part": {
+        "bg": "BG Leibnitz [District Court]"
+      }
+    },
+    "at:graz:graz:voitsberg": {
+      "institution-part": {
+        "bg": "BG Voitsberg [District Court]"
+      }
+    },
+    "at:graz:graz:weiz": {
+      "institution-part": {
+        "bg": "BG Weiz [District Court]"
+      }
+    },
+    "at:graz:klagenfurt": {
+      "institution-part": {
+        "lg": "LG Klagenfurt [Regional Court]"
+      }
+    },
+    "at:graz:klagenfurt:bleiburg": {
+      "institution-part": {
+        "bg": "BG Bleiburg [District Court]"
+      }
+    },
+    "at:graz:klagenfurt:eisenkappel": {
+      "institution-part": {
+        "bg": "BG Eisenkappel [District Court]"
+      }
+    },
+    "at:graz:klagenfurt:feldkirchen": {
+      "institution-part": {
+        "bg": "BG Feldkirchen [District Court]"
+      }
+    },
+    "at:graz:klagenfurt:ferlach": {
+      "institution-part": {
+        "bg": "BG Ferlach [District Court]"
+      }
+    },
+    "at:graz:klagenfurt:hermagor": {
+      "institution-part": {
+        "bg": "BG Hermagor [District Court]"
+      }
+    },
+    "at:graz:klagenfurt:klagenfurt": {
+      "institution-part": {
+        "bg": "BG Klagenfurt [District Court]"
+      }
+    },
+    "at:graz:klagenfurt:sankt.veit.an.der.glan": {
+      "institution-part": {
+        "bg": "BG Sankt Veit an der Glan [District Court]"
+      }
+    },
+    "at:graz:klagenfurt:spittal.an.der.drau": {
+      "institution-part": {
+        "bg": "BG Spittal an der Drau [District Court]"
+      }
+    },
+    "at:graz:klagenfurt:villach": {
+      "institution-part": {
+        "bg": "BG Villach [District Court]"
+      }
+    },
+    "at:graz:klagenfurt:volkermarkt": {
+      "institution-part": {
+        "bg": "BG Völkermarkt [District Court]"
+      }
+    },
+    "at:graz:klagenfurt:wolfsberg": {
+      "institution-part": {
+        "bg": "BG Wolfsberg [District Court]"
+      }
+    },
+    "at:graz:leoben": {
+      "institution-part": {
+        "lg": "LG Leoben [Regional Court]"
+      }
+    },
+    "at:graz:leoben:bruck.an.der.mur": {
+      "institution-part": {
+        "bg": "BG Bruck an der Mur [District Court]"
+      }
+    },
+    "at:graz:leoben:judenburg": {
+      "institution-part": {
+        "bg": "BG Judenburg [District Court]"
+      }
+    },
+    "at:graz:leoben:leoben": {
+      "institution-part": {
+        "bg": "BG Leoben [District Court]"
+      }
+    },
+    "at:graz:leoben:liezen": {
+      "institution-part": {
+        "bg": "BG Liezen [District Court]"
+      }
+    },
+    "at:graz:leoben:murau": {
+      "institution-part": {
+        "bg": "BG Murau [District Court]"
+      }
+    },
+    "at:graz:leoben:murzzuschlag": {
+      "institution-part": {
+        "bg": "BG Mürzzuschlag [District Court]"
+      }
+    },
+    "at:graz:leoben:schladming": {
+      "institution-part": {
+        "bg": "BG Schladming [District Court]"
+      }
+    },
+    "at:innsbruck": {
+      "institution-part": {
+        "olg": "OLG Innsbruck [Higher Regional Court]"
+      }
+    },
+    "at:innsbruck:feldkirch": {
+      "institution-part": {
+        "lg": "LG Feldkirch [Regional Court]"
+      }
+    },
+    "at:innsbruck:feldkirch:bezau": {
+      "institution-part": {
+        "bg": "BG Bezau [District Court]"
+      }
+    },
+    "at:innsbruck:feldkirch:bludenz": {
+      "institution-part": {
+        "bg": "BG Bludenz [District Court]"
+      }
+    },
+    "at:innsbruck:feldkirch:bregenz": {
+      "institution-part": {
+        "bg": "BG Bregenz [District Court]"
+      }
+    },
+    "at:innsbruck:feldkirch:dornbirn": {
+      "institution-part": {
+        "bg": "BG Dornbirn [District Court]"
+      }
+    },
+    "at:innsbruck:feldkirch:feldkirch": {
+      "institution-part": {
+        "bg": "BG Feldkirch [District Court]"
+      }
+    },
+    "at:innsbruck:innsbruck": {
+      "institution-part": {
+        "lg": "LG Innsbruck [Regional Court]"
+      }
+    },
+    "at:innsbruck:innsbruck:hall.in.tirol": {
+      "institution-part": {
+        "bg": "BG Hall in Tirol [District Court]"
+      }
+    },
+    "at:innsbruck:innsbruck:imst": {
+      "institution-part": {
+        "bg": "BG Imst [District Court]"
+      }
+    },
+    "at:innsbruck:innsbruck:innsbruck": {
+      "institution-part": {
+        "bg": "BG Innsbruck [District Court]"
+      }
+    },
+    "at:innsbruck:innsbruck:kitzbuhel": {
+      "institution-part": {
+        "bg": "BG Kitzbühel [District Court]"
+      }
+    },
+    "at:innsbruck:innsbruck:kufstein": {
+      "institution-part": {
+        "bg": "BG Kufstein [District Court]"
+      }
+    },
+    "at:innsbruck:innsbruck:landeck": {
+      "institution-part": {
+        "bg": "BG Landeck [District Court]"
+      }
+    },
+    "at:innsbruck:innsbruck:lienz": {
+      "institution-part": {
+        "bg": "BG Lienz [District Court]"
+      }
+    },
+    "at:innsbruck:innsbruck:rattenberg": {
+      "institution-part": {
+        "bg": "BG Rattenberg [District Court]"
+      }
+    },
+    "at:innsbruck:innsbruck:reutte": {
+      "institution-part": {
+        "bg": "BG Reutte [District Court]"
+      }
+    },
+    "at:innsbruck:innsbruck:schwaz": {
+      "institution-part": {
+        "bg": "BG Schwaz [District Court]"
+      }
+    },
+    "at:innsbruck:innsbruck:silz": {
+      "institution-part": {
+        "bg": "BG Silz [District Court]"
+      }
+    },
+    "at:innsbruck:innsbruck:telfs": {
+      "institution-part": {
+        "bg": "BG Telfs [District Court]"
+      }
+    },
+    "at:innsbruck:innsbruck:zell.am.ziller": {
+      "institution-part": {
+        "bg": "BG Zell am Ziller [District Court]"
+      }
+    },
+    "at:karnten": {
+      "institution-part": {
+        "lvwg": "LVwG Kärnten [Regional Administrative Court]",
+        "uvs": "UVS Kärnten [Independent Administrative Senate]"
+      }
+    },
+    "at:linz": {
+      "institution-part": {
+        "olg": "OLG Linz [Higher Regional Court]"
+      }
+    },
+    "at:linz:linz": {
+      "institution-part": {
+        "lg": "LG Linz [Regional Court]"
+      }
+    },
+    "at:linz:linz:freistadt": {
+      "institution-part": {
+        "bg": "BG Freistadt [District Court]"
+      }
+    },
+    "at:linz:linz:linz": {
+      "institution-part": {
+        "bg": "BG Linz [District Court]"
+      }
+    },
+    "at:linz:linz:perg": {
+      "institution-part": {
+        "bg": "BG Perg [District Court]"
+      }
+    },
+    "at:linz:linz:rohrbach": {
+      "institution-part": {
+        "bg": "BG Rohrbach [District Court]"
+      }
+    },
+    "at:linz:linz:traun": {
+      "institution-part": {
+        "bg": "BG Traun [District Court]"
+      }
+    },
+    "at:linz:linz:urfahr": {
+      "institution-part": {
+        "bg": "BG Urfahr [District Court]"
+      }
+    },
+    "at:linz:ried.im.innkreis": {
+      "institution-part": {
+        "lg": "LG Ried im Innkreis [Regional Court]"
+      }
+    },
+    "at:linz:ried.im.innkreis:braunau.am.inn": {
+      "institution-part": {
+        "bg": "BG Braunau am Inn [District Court]"
+      }
+    },
+    "at:linz:ried.im.innkreis:mattighofen": {
+      "institution-part": {
+        "bg": "BG Mattighofen [District Court]"
+      }
+    },
+    "at:linz:ried.im.innkreis:ried.im.innkreis": {
+      "institution-part": {
+        "bg": "BG Ried im Innkreis [District Court]"
+      }
+    },
+    "at:linz:ried.im.innkreis:scharding": {
+      "institution-part": {
+        "bg": "BG Schärding [District Court]"
+      }
+    },
+    "at:linz:salzburg": {
+      "institution-part": {
+        "lg": "LG Salzburg [Regional Court]"
+      }
+    },
+    "at:linz:salzburg:hallein": {
+      "institution-part": {
+        "bg": "BG Hallein [District Court]"
+      }
+    },
+    "at:linz:salzburg:neumarkt.bei.salzburg": {
+      "institution-part": {
+        "bg": "BG Neumarkt bei Salzburg [District Court]"
+      }
+    },
+    "at:linz:salzburg:oberndorf": {
+      "institution-part": {
+        "bg": "BG Oberndorf [District Court]"
+      }
+    },
+    "at:linz:salzburg:salzburg": {
+      "institution-part": {
+        "bg": "BG Salzburg [District Court]"
+      }
+    },
+    "at:linz:salzburg:sankt.johann.im.pongau": {
+      "institution-part": {
+        "bg": "BG Sankt Johann im Pongau [District Court]"
+      }
+    },
+    "at:linz:salzburg:tamsweg": {
+      "institution-part": {
+        "bg": "BG Tamsweg [District Court]"
+      }
+    },
+    "at:linz:salzburg:thalgau": {
+      "institution-part": {
+        "bg": "BG Thalgau [District Court]"
+      }
+    },
+    "at:linz:salzburg:zell.am.see": {
+      "institution-part": {
+        "bg": "BG Zell am See [District Court]"
+      }
+    },
+    "at:linz:steyr": {
+      "institution-part": {
+        "lg": "LG Steyr [Regional Court]"
+      }
+    },
+    "at:linz:steyr:kirchdorf.an.der.krems": {
+      "institution-part": {
+        "bg": "BG Kirchdorf an der Krems [District Court]"
+      }
+    },
+    "at:linz:steyr:steyr": {
+      "institution-part": {
+        "bg": "BG Steyr [District Court]"
+      }
+    },
+    "at:linz:wels": {
+      "institution-part": {
+        "lg": "LG Wels [Regional Court]"
+      }
+    },
+    "at:linz:wels:bad.ischl": {
+      "institution-part": {
+        "bg": "BG Bad Ischl [District Court]"
+      }
+    },
+    "at:linz:wels:eferding": {
+      "institution-part": {
+        "bg": "BG Eferding [District Court]"
+      }
+    },
+    "at:linz:wels:gmunden": {
+      "institution-part": {
+        "bg": "BG Gmunden [District Court]"
+      }
+    },
+    "at:linz:wels:grieskirchen": {
+      "institution-part": {
+        "bg": "BG Grieskirchen [District Court]"
+      }
+    },
+    "at:linz:wels:vocklabruck": {
+      "institution-part": {
+        "bg": "BG Vöcklabruck [District Court]"
+      }
+    },
+    "at:linz:wels:wels": {
+      "institution-part": {
+        "bg": "BG Wels [District Court]"
+      }
+    },
+    "at:niederosterreich": {
+      "institution-part": {
+        "lvwg": "LVwG Niederösterreich [Regional Administrative Court]",
+        "uvs": "UVS Niederösterreich [Independent Administrative Senate]"
+      }
+    },
+    "at:oberosterreich": {
+      "institution-part": {
+        "lvwg": "LVwG Oberösterreich [Regional Administrative Court]",
+        "uvs": "UVS Oberösterreich [Independent Administrative Senate]"
+      }
+    },
+    "at:salzburg": {
+      "institution-part": {
+        "lvwg": "LVwG Salzburg [Regional Administrative Court]",
+        "uvs": "UVS Salzburg [Independent Administrative Senate]"
+      }
+    },
+    "at:steiermark": {
+      "institution-part": {
+        "lvwg": "LVwG Steiermark [Regional Administrative Court]",
+        "uvs": "UVS Steiermark [Independent Administrative Senate]"
+      }
+    },
+    "at:tirol": {
+      "institution-part": {
+        "lvwg": "LVwG Tirol [Regional Administrative Court]",
+        "uvs": "UVS Tirol [Independent Administrative Senate]"
+      }
+    },
+    "at:vorarlberg": {
+      "institution-part": {
+        "lvwg": "LVwG Vorarlberg [Regional Administrative Court]",
+        "uvs": "UVS Vorarlberg [Independent Administrative Senate]"
+      }
+    },
+    "at:wien": {
+      "institution-part": {
+        "olg": "OLG Wien [Higher Regional Court]",
+        "vgw": "VGW [Regional Administrative Court]",
+        "uvs": "UVS Wien [Independent Administrative Senate]"
+      }
+    },
+    "at:wien:eisenstadt": {
+      "institution-part": {
+        "lg": "LG Eisenstadt [Regional Court]"
+      }
+    },
+    "at:wien:eisenstadt:eisenstadt": {
+      "institution-part": {
+        "bg": "BG Eisenstadt [District Court]"
+      }
+    },
+    "at:wien:eisenstadt:gussing": {
+      "institution-part": {
+        "bg": "BG Güssing [District Court]"
+      }
+    },
+    "at:wien:eisenstadt:mattersburg": {
+      "institution-part": {
+        "bg": "BG Mattersburg [District Court]"
+      }
+    },
+    "at:wien:eisenstadt:neusiedl.am.see": {
+      "institution-part": {
+        "bg": "BG Neusiedl am See [District Court]"
+      }
+    },
+    "at:wien:eisenstadt:oberpullendorf": {
+      "institution-part": {
+        "bg": "BG Oberpullendorf [District Court]"
+      }
+    },
+    "at:wien:eisenstadt:oberwart": {
+      "institution-part": {
+        "bg": "BG Oberwart [District Court]"
+      }
+    },
+    "at:wien:korneuburg": {
+      "institution-part": {
+        "lg": "LG Korneuburg [Regional Court]"
+      }
+    },
+    "at:wien:korneuburg:bruck.an.der.leitha": {
+      "institution-part": {
+        "bg": "BG Bruck an der Leitha [District Court]"
+      }
+    },
+    "at:wien:korneuburg:ganserndorf": {
+      "institution-part": {
+        "bg": "BG Gänserndorf [District Court]"
+      }
+    },
+    "at:wien:korneuburg:hollabrunn": {
+      "institution-part": {
+        "bg": "BG Hollabrunn [District Court]"
+      }
+    },
+    "at:wien:korneuburg:klosterneuburg": {
+      "institution-part": {
+        "bg": "BG Klosterneuburg [District Court]"
+      }
+    },
+    "at:wien:korneuburg:korneuburg": {
+      "institution-part": {
+        "bg": "BG Korneuburg [District Court]"
+      }
+    },
+    "at:wien:korneuburg:mistelbach": {
+      "institution-part": {
+        "bg": "BG Mistelbach [District Court]"
+      }
+    },
+    "at:wien:korneuburg:schwechat": {
+      "institution-part": {
+        "bg": "BG Schwechat [District Court]"
+      }
+    },
+    "at:wien:krems.an.der.donau": {
+      "institution-part": {
+        "lg": "LG Krems an der Donau [Regional Court]"
+      }
+    },
+    "at:wien:krems.an.der.donau:gmund.in.niederosterreich": {
+      "institution-part": {
+        "bg": "BG Gmünd in Niederösterreich [District Court]"
+      }
+    },
+    "at:wien:krems.an.der.donau:horn": {
+      "institution-part": {
+        "bg": "BG Horn [District Court]"
+      }
+    },
+    "at:wien:krems.an.der.donau:krems.an.der.donau": {
+      "institution-part": {
+        "bg": "BG Krems an der Donau [District Court]"
+      }
+    },
+    "at:wien:krems.an.der.donau:waidhofen.an.der.thaya": {
+      "institution-part": {
+        "bg": "BG Waidhofen an der Thaya [District Court]"
+      }
+    },
+    "at:wien:krems.an.der.donau:zwettl": {
+      "institution-part": {
+        "bg": "BG Zwettl [District Court]"
+      }
+    },
+    "at:wien:st.polten": {
+      "institution-part": {
+        "lg": "LG St. Pölten [Regional Court]"
+      }
+    },
+    "at:wien:st.polten:amstetten": {
+      "institution-part": {
+        "bg": "BG Amstetten [District Court]"
+      }
+    },
+    "at:wien:st.polten:haag": {
+      "institution-part": {
+        "bg": "BG Haag [District Court]"
+      }
+    },
+    "at:wien:st.polten:lilienfeld": {
+      "institution-part": {
+        "bg": "BG Lilienfeld [District Court]"
+      }
+    },
+    "at:wien:st.polten:melk": {
+      "institution-part": {
+        "bg": "BG Melk [District Court]"
+      }
+    },
+    "at:wien:st.polten:neulengbach": {
+      "institution-part": {
+        "bg": "BG Neulengbach [District Court]"
+      }
+    },
+    "at:wien:st.polten:purkersdorf": {
+      "institution-part": {
+        "bg": "BG Purkersdorf [District Court]"
+      }
+    },
+    "at:wien:st.polten:scheibbs": {
+      "institution-part": {
+        "bg": "BG Scheibbs [District Court]"
+      }
+    },
+    "at:wien:st.polten:st.polten": {
+      "institution-part": {
+        "bg": "BG St. Pölten [District Court]"
+      }
+    },
+    "at:wien:st.polten:tulln": {
+      "institution-part": {
+        "bg": "BG Tulln [District Court]"
+      }
+    },
+    "at:wien:st.polten:waidhofen.an.der.ybbs": {
+      "institution-part": {
+        "bg": "BG Waidhofen an der Ybbs [District Court]"
+      }
+    },
+    "at:wien:wien": {
+      "institution-part": {
+        "asg": "ASG Wien [Labour and Social Court]",
+        "hg": "HG Wien [Commercial Court]",
+        "lgs": "LGS Wien [Regional Criminal Court]",
+        "lgzrs": "LGZ Wien [Regional Civil Court]"
+      }
+    },
+    "at:wien:wien:dobling": {
+      "institution-part": {
+        "bg": "BG Döbling [District Court]"
+      }
+    },
+    "at:wien:wien:donaustadt": {
+      "institution-part": {
+        "bg": "BG Donaustadt [District Court]"
+      }
+    },
+    "at:wien:wien:favoriten": {
+      "institution-part": {
+        "bg": "BG Favoriten [District Court]"
+      }
+    },
+    "at:wien:wien:floridsdorf": {
+      "institution-part": {
+        "bg": "BG Floridsdorf [District Court]"
+      }
+    },
+    "at:wien:wien:funfhaus": {
+      "institution-part": {
+        "bg": "BG Fünfhaus [District Court]"
+      }
+    },
+    "at:wien:wien:hernals": {
+      "institution-part": {
+        "bg": "BG Hernals [District Court]"
+      }
+    },
+    "at:wien:wien:hietzing": {
+      "institution-part": {
+        "bg": "BG Hietzing [District Court]"
+      }
+    },
+    "at:wien:wien:innere.stadt.wien": {
+      "institution-part": {
+        "bg": "BG Innere Stadt Wien [District Court]"
+      }
+    },
+    "at:wien:wien:josefstadt": {
+      "institution-part": {
+        "bg": "BG Josefstadt [District Court]"
+      }
+    },
+    "at:wien:wien:leopoldstadt": {
+      "institution-part": {
+        "bg": "BG Leopoldstadt [District Court]"
+      }
+    },
+    "at:wien:wien:liesing": {
+      "institution-part": {
+        "bg": "BG Liesing [District Court]"
+      }
+    },
+    "at:wien:wien:meidling": {
+      "institution-part": {
+        "bg": "BG Meidling [District Court]"
+      }
+    },
+    "at:wien:wiener.neustadt": {
+      "institution-part": {
+        "lg": "LG Wiener Neustadt [Regional Court]"
+      }
+    },
+    "at:wien:wiener.neustadt:baden": {
+      "institution-part": {
+        "bg": "BG Baden [District Court]"
+      }
+    },
+    "at:wien:wiener.neustadt:modling": {
+      "institution-part": {
+        "bg": "BG Mödling [District Court]"
+      }
+    },
+    "at:wien:wiener.neustadt:neunkirchen": {
+      "institution-part": {
+        "bg": "BG Neunkirchen [District Court]"
+      }
+    },
+    "at:wien:wiener.neustadt:wiener.neustadt": {
+      "institution-part": {
+        "bg": "BG Wiener Neustadt [District Court]"
+      }
+    }
+  }
+}

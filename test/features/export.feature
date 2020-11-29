@@ -208,6 +208,11 @@ Scenario: Omit URL export when DOI present. #131
   And I set preference .DOIandURL to url
   Then an export using "Better BibLaTeX" should match "export/*.prefer-url.biblatex"
 
+Scenario: Changing item type for only BibLaTeX does not work #1694
+  When I import 1 reference from "export/*.json"
+  Then an export using "Better BibTeX" should match "export/*.bibtex"
+  Then an export using "Better BibLaTeX" should match "export/*.biblatex"
+
 @438 @bbt
 Scenario: BibTeX name escaping has a million inconsistencies #438
   When I import 2 references from "export/*.json"

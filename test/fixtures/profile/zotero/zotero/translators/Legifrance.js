@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2013-04-17 03:09:28"
+	"lastUpdated": "2020-11-01 22:46:15"
 }
 
 /*
@@ -59,7 +59,7 @@ var legifrancecaseRegexp = /https?:\/\/(www.)?legifrance\\.gouv\\.fr\/.+JURITEXT
 
 		// Paramètres communs
 
-		var title = ZU.xpathText(doc, '//h2[@class="title"]');
+		var title = ZU.xpathText(doc, '//h1[@class="main-title"]');
 		newItem.title = title;
 		newItem.url = doc.location.href;
 		var rtfurl = ZU.xpathText(doc, '//a[contains(text(), "Télécharger")]/@href');
@@ -215,7 +215,7 @@ var legifrancecaseRegexp = /https?:\/\/(www.)?legifrance\\.gouv\\.fr\/.+JURITEXT
 
 		var newItem = new Zotero.Item("statute");
 
-		var title = ZU.xpathText(doc, '//h2[@class="title"]');
+		var title = ZU.xpathText(doc, '//h1[@class="main-title"]');
 		newItem.title = title;
 		newItem.accessDate = 'CURRENT_TIMESTAMP';
 

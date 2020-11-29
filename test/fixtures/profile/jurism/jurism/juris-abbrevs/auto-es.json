@@ -1,7 +1,7 @@
 {
   "filename": "auto-es.json",
   "name": "Spain",
-  "version": "2020-07-12 23:46:30 UTC",
+  "version": "2020-10-30 01:03:27 UTC",
   "xdata": {
     "default": {
       "place": {
@@ -508,13 +508,15 @@
         "ts": "Tribunal Supremo",
         "rmc": "Registro Mercantil Central",
         "dgrn": "Dirección General de los Registros y del Notariado",
-        "tc": "Tribunal Constitucional"
+        "tc": "Tribunal Constitucional",
+        "teac": "Tribunal económico administrativo central"
       },
       "institution-entire": {
         "ts": "TS",
         "rmc": "RMC",
         "dgrn": "DGRN",
-        "tc": "TC"
+        "tc": "TC",
+        "teac": "TEAC"
       }
     },
     "es:andalucia": {

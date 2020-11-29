@@ -33,11 +33,14 @@
     <contributor>
       <name>Patrick O'Brien</name>
     </contributor>
+    <contributor>
+      <name>Brenton M. Wiernik</name>
+    </contributor>
     <category citation-format="numeric"/>
     <category field="engineering"/>
     <category field="generic-base"/>
     <summary>IEEE style as per the 2018 guidelines, V 11.12.2018.</summary>
-    <updated>2020-03-28T21:02:10+00:00</updated>
+    <updated>2020-06-15T03:21:46+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -165,7 +168,7 @@
       <if type="paper-conference speech" match="any">
         <choose>
           <!-- Published Conference Paper -->
-          <if variable="container-title">
+          <if variable="collection-editor editor editorial-director issue page volume" match="any">
             <group delimiter=", ">
               <group delimiter=" ">
                 <text term="in"/>
@@ -230,10 +233,21 @@
     </choose>
   </macro>
   <macro name="page">
-    <group>
-      <label variable="page" form="short" suffix=" "/>
-      <text variable="page"/>
-    </group>
+    <choose>
+      <if type="article-journal" variable="number" match="all">
+        <group delimiter=" ">
+          <text value="Art."/>
+          <text term="issue" form="short"/>
+          <text variable="number"/>
+        </group>
+      </if>
+      <else>
+        <group delimiter=" ">
+          <label variable="page" form="short"/>
+          <text variable="page"/>
+        </group>
+      </else>
+    </choose>
   </macro>
   <macro name="citation-locator">
     <group delimiter=" ">

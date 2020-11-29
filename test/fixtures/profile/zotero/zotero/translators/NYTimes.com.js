@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2019-06-15 16:21:59"
+	"lastUpdated": "2020-11-02 07:42:08"
 }
 
 /*
@@ -126,11 +126,7 @@ function scrape(doc, url) {
 				item.tags[i] = ZU.capitalizeTitle(item.tags[i], true);
 			}
 		}
-		
-		// Jan. 2019: Disable snapshot saving, since saved snapshots currently
-		// don't load properly (even via Save As in Firefox and Chrome)
-		item.attachments = [];
-		
+
 		/* TODO: Fix saving the PDF attachment which is currently broken
 		
 		// PDF attachments are in subURL with key & signature

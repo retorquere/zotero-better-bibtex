@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2019-10-28 20:20:19"
+	"lastUpdated": "2020-06-04 03:46:18"
 }
 
 /*
@@ -199,6 +199,16 @@ function detectWeb(doc, url) {
 	}
 }
 
+function detectTitles(doc, url) {
+	
+	var pattern = /\.douban\.com\/tag\//;
+	if (pattern.test(url)) {
+		return ZU.xpath(doc, '//div[@class="info"]/h2/a');
+	} else {
+		return ZU.xpath(doc, '//div[@class="title"]/a');
+	}
+}
+
 function doWeb(doc, url) {
 	var articles = [];
 	let r = /douban.com\/url\//;
@@ -206,7 +216,8 @@ function doWeb(doc, url) {
 		// also searches but they don't work as test cases in Scaffold
 		// e.g. https://book.douban.com/subject_search?search_text=Murakami&cat=1001
 		var items = {};
-		var titles = ZU.xpath(doc, '//div[@class="title"]/a');
+		// var titles = ZU.xpath(doc, '//div[@class="title"]/a');
+		var titles = detectTitles(doc, url);
 		var title;
 		for (let i = 0; i < titles.length; i++) {
 			title = titles[i];
@@ -261,14 +272,30 @@ var testCases = [
 				"url": "https://book.douban.com/subject/1355643/",
 				"attachments": [],
 				"tags": [
-					"HarukiMurakami",
-					"小说",
-					"挪威森林英文版",
-					"日本",
-					"日本文学",
-					"村上春树",
-					"英文原版",
-					"英文版"
+					{
+						"tag": "HarukiMurakami"
+					},
+					{
+						"tag": "小说"
+					},
+					{
+						"tag": "挪威森林英文版"
+					},
+					{
+						"tag": "日本"
+					},
+					{
+						"tag": "日本文学"
+					},
+					{
+						"tag": "村上春树"
+					},
+					{
+						"tag": "英文原版"
+					},
+					{
+						"tag": "英文版"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -278,6 +305,11 @@ var testCases = [
 	{
 		"type": "web",
 		"url": "https://www.douban.com/doulist/120664512/",
+		"items": "multiple"
+	},
+	{
+		"type": "web",
+		"url": "https://book.douban.com/tag/认知心理学?type=S",
 		"items": "multiple"
 	}
 ]

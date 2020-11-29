@@ -67,4 +67,8 @@
       </else>
     </choose>
   </macro>
+  <citation>
+    <layout>
+    </layout>
+  </citation>
 </style>

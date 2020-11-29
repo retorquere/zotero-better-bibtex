@@ -102,5 +102,10 @@
       <number variable="locator"/>
     </group>
   </macro>
+  
+  <citation>
+    <layout>
+    </layout>
+  </citation>
 
 </style>

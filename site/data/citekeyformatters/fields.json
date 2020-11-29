@@ -9,198 +9,198 @@
     "Album**",
     "ApplicationNumber",
     "Archive",
-    "ArchiveLocation"
+    "ArchiveCollection**"
   ],
   [
+    "ArchiveLocation",
     "ArtworkMedium",
     "ArtworkSize",
-    "AssemblyNumber**",
-    "Assignee"
+    "AssemblyNumber**"
   ],
   [
+    "Assignee",
     "AudioFileType",
     "AudioRecordingFormat",
-    "BillNumber",
-    "BlogTitle"
+    "BillNumber"
   ],
   [
+    "BlogTitle",
     "BookTitle",
     "CallNumber",
-    "CaseName",
-    "Code"
+    "CaseName"
   ],
   [
+    "Code",
     "CodeNumber",
     "CodePages",
-    "CodeVolume",
-    "Committee"
+    "CodeVolume"
   ],
   [
+    "Committee",
     "Company",
     "ConferenceDate**",
-    "ConferenceName",
-    "Country"
+    "ConferenceName"
   ],
   [
+    "Country",
     "Court",
     "DOI",
-    "Date",
-    "DateAmended**"
+    "Date"
   ],
   [
+    "DateAmended**",
     "DateDecided",
     "DateEnacted",
-    "DictionaryTitle",
-    "Distributor"
+    "DictionaryTitle"
   ],
   [
+    "Distributor",
     "Division**",
     "DocketNumber",
-    "DocumentName**",
-    "DocumentNumber"
+    "DocumentName**"
   ],
   [
+    "DocumentNumber",
     "Edition",
     "EncyclopediaTitle",
-    "EpisodeNumber",
-    "FilingDate"
+    "EpisodeNumber"
   ],
   [
+    "FilingDate",
     "FirstPage",
     "ForumTitle",
-    "GazetteFlag**",
-    "Genre"
+    "GazetteFlag**"
   ],
   [
+    "Genre",
     "History",
     "ISBN",
-    "ISSN",
-    "Institution"
+    "ISSN"
   ],
   [
+    "Institution",
     "InterviewMedium",
     "Issue",
-    "IssueDate",
-    "IssuingAuthority"
+    "IssueDate"
   ],
   [
+    "IssuingAuthority",
     "JournalAbbreviation",
     "Jurisdiction**",
-    "Label",
-    "Language"
+    "Label"
   ],
   [
+    "Language",
     "LegalStatus",
     "LegislativeBody",
-    "LetterType",
-    "LibraryCatalog"
+    "LetterType"
   ],
   [
+    "LibraryCatalog",
     "ManuscriptType",
     "MapType",
-    "Medium",
-    "MeetingName"
+    "Medium"
   ],
   [
+    "MeetingName",
     "MeetingNumber**",
     "NameOfAct",
-    "Network",
-    "NewsCaseDate**"
+    "Network"
   ],
   [
+    "NewsCaseDate**",
     "NumPages",
     "Number",
-    "NumberOfVolumes",
-    "OpeningDate**"
+    "NumberOfVolumes"
   ],
   [
+    "OpeningDate**",
     "Opus**",
     "OriginalDate**",
-    "Pages",
-    "ParentTreaty**"
+    "Pages"
   ],
   [
+    "ParentTreaty**",
     "PatentNumber",
     "Place",
-    "PostType",
-    "PresentationType"
+    "PostType"
   ],
   [
+    "PresentationType",
     "PriorityDate**",
     "PriorityNumbers",
-    "ProceedingsTitle",
-    "ProgramTitle"
+    "ProceedingsTitle"
   ],
   [
+    "ProgramTitle",
     "ProgrammingLanguage",
     "PublicLawNumber",
-    "PublicationDate**",
-    "PublicationNumber**"
+    "PublicationDate**"
   ],
   [
+    "PublicationNumber**",
     "PublicationTitle",
     "Publisher",
-    "References",
-    "RegnalYear**"
+    "References"
   ],
   [
+    "RegnalYear**",
     "RegulationType**",
     "RegulatoryBody**",
-    "Reign**",
-    "Release**"
+    "Reign**"
   ],
   [
+    "Release**",
     "ReportNumber",
     "ReportType",
-    "Reporter",
-    "ReporterVolume"
+    "Reporter"
   ],
   [
+    "ReporterVolume",
     "ResolutionLabel**",
     "Rights",
-    "RunningTime",
-    "Scale"
+    "RunningTime"
   ],
   [
+    "Scale",
     "Section",
     "Series",
-    "SeriesNumber",
-    "SeriesText"
+    "SeriesNumber"
   ],
   [
+    "SeriesText",
     "SeriesTitle",
     "Session",
-    "SessionType**",
-    "ShortTitle"
+    "SessionType**"
   ],
   [
+    "ShortTitle",
     "SigningDate**",
     "Status**",
-    "Studio",
-    "Subject"
+    "Studio"
   ],
   [
+    "Subject",
     "SupplementName**",
     "System",
-    "ThesisType",
-    "Title"
+    "ThesisType"
   ],
   [
+    "Title",
     "TreatyNumber**",
     "Type",
-    "University",
-    "Url"
+    "University"
   ],
   [
+    "Url",
     "VersionNumber",
     "VideoRecordingFormat",
-    "Volume",
-    "VolumeTitle**"
+    "Volume"
   ],
   [
+    "VolumeTitle**",
     "WebsiteTitle",
     "WebsiteType",
-    "YearAsVolume**",
-    ""
+    "YearAsVolume**"
   ]
 ]

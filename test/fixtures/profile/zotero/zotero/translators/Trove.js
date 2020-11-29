@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2020-01-05 17:34:52"
+	"lastUpdated": "2020-09-15 01:24:23"
 }
 
 /*
@@ -32,15 +32,21 @@
 
 
 function detectWeb(doc, url) {
+	// Note that the url for search results has changed,
+	// so the first pattern will never match.
+	// However, results scraping needs to be rewritten due to the redesign,
+	// so leave this as is for now.
 	if (url.includes('/result?') || url.includes('/newspaper/page')) {
 		return getSearchResults(doc, url, true) ? 'multiple' : false;
 	}
 	else if (url.includes('/newspaper/article')) {
 		return "newspaperArticle";
 	}
-	else if (url.includes('/work/')) {
-		return "book";
-	}
+	//  Scraping from works is very brokened due to site redesign
+	//  Prevent detection until a fix is available
+	//	else if (url.includes('/work/')) {
+	//		return "book";
+	//	}
 	return false;
 }
 
@@ -116,13 +122,13 @@ function scrapeNewspaper(doc, url) {
 				// Add tags
 				var tags = ZU.xpath(doc, "//ul[contains(@class,'nlaTagContainer')]/li");
 				for (let tag of tags) {
-					tag = ZU.xpathText(tag, "a[not(contains(@class,'anno-remove'))]");
+					tag = ZU.xpathText(tag, "div/a[not(contains(@class,'anno-remove'))]");
 					item.tags.push(tag);
 				}
 			}
 
 			// I've created a proxy server to generate the PDF and return the URL without locking up the browser.
-			var proxyURL = "http://trove-proxy.herokuapp.com/pdf/" + articleID;
+			var proxyURL = "https://trove-proxy.herokuapp.com/pdf/" + articleID;
 			ZU.doGet(proxyURL, function (pdfURL) {
 				// With the last argument 'false' passed to doGet
 				// we allow all status codes to continue and reach
@@ -336,7 +342,12 @@ var testCases = [
 				"place": "Vic.",
 				"publicationTitle": "Sunbury News (Vic. : 1900 - 1927)",
 				"url": "http://nla.gov.au/nla.news-article70068753",
-				"attachments": [],
+				"attachments": [
+					{
+						"title": "Trove newspaper PDF",
+						"mimeType": "application/pdf"
+					}
+				],
 				"tags": [
 					{
 						"tag": "Meteorology Journal - Clement Wragge"

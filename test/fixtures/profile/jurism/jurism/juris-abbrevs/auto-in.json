@@ -1,11 +1,232 @@
 {
   "filename": "auto-in.json",
   "name": "India",
-  "version": "2020-09-07 21:01:30 UTC",
+  "version": "2020-11-15 00:24:19 UTC",
   "xdata": {
     "default": {
       "place": {
-        "IN": "India"
+        "IN": "India",
+        "IN:ANDAMAN.NICOBAR": "Andaman and Nicobar Islands",
+        "IN:ARUNACHAL.PRADESH": "Arunachal Pradesh",
+        "IN:ANDHRA.PRADESH": "Andhra Pradesh",
+        "IN:ASSAM": "Assam",
+        "IN:BIHAR": "Bihar",
+        "IN:CHANDIGARH": "Chandigarh",
+        "IN:CHHATTISGARH": "Chhattisgarh",
+        "IN:DADRA.NAGAR.HAVELI.DAMAN.DIU": "Dadra and Nagar Haveli and Daman and Diu",
+        "IN:DELHI": "National Capital Territory of Delhi",
+        "IN:GOA": "Goa",
+        "IN:GUJARAT": "Gujarat",
+        "IN:HARYANA": "Haryana",
+        "IN:HIMACHAL.PRADESH": "Himachal Pradesh",
+        "IN:JAMMU.AND.KASHMIR": "Jammu and Kashmir",
+        "IN:JHARKHAND": "Jharkhand",
+        "IN:KARNATAKA": "Karnataka",
+        "IN:KERALA": "Kerala",
+        "IN:LADAKH": "Ladakh",
+        "IN:LAKSHADWEEP": "Lakshadweep",
+        "IN:MADHYA.PRADESH": "Madhya Pradesh",
+        "IN:MAHARASHTRA": "Maharashtra",
+        "IN:MANIPUR": "Manipur",
+        "IN:MEGHALAYA": "Meghalaya",
+        "IN:MIZORAM": "Mizoram",
+        "IN:NAGALAND": "Nagaland",
+        "IN:ODISHA": "Odisha",
+        "IN:PUDUCHERRY": "Puducherry",
+        "IN:PUNJAB": "Punjab",
+        "IN:RAJASTHAN": "Rajasthan",
+        "IN:SIKKIM": "Sikkim",
+        "IN:TAMIL.NADU": "Tamil Nadu",
+        "IN:TELANGANA": "Telangana",
+        "IN:TRIPURA": "Tripura",
+        "IN:UTTAR.PRADESH": "Uttar Pradesh",
+        "IN:UTTARAKHAND": "Uttarakhand",
+        "IN:WEST.BENGAL": "West Bengal"
+      }
+    },
+    "in": {
+      "institution-part": {
+        "sc": "Supreme Court"
+      }
+    },
+    "in:andaman.nicobar": {
+      "institution-part": {
+        "hc": "Andaman and Nicobar Islands High Court"
+      }
+    },
+    "in:arunachal.pradesh": {
+      "institution-part": {
+        "hc": "Arunachal Pradesh High Court"
+      }
+    },
+    "in:andhra.pradesh": {
+      "institution-part": {
+        "hc": "Andhra Pradesh High Court"
+      }
+    },
+    "in:assam": {
+      "institution-part": {
+        "hc": "Assam High Court"
+      }
+    },
+    "in:bihar": {
+      "institution-part": {
+        "hc": "Bihar High Court"
+      }
+    },
+    "in:chandigarh": {
+      "institution-part": {
+        "hc": "Chandigarh High Court"
+      }
+    },
+    "in:chhattisgarh": {
+      "institution-part": {
+        "hc": "Chhattisgarh High Court"
+      }
+    },
+    "in:dadra.nagar.haveli.daman.diu": {
+      "institution-part": {
+        "hc": "Dadra and Nagar Haveli and Daman and Diu High Court"
+      }
+    },
+    "in:delhi": {
+      "institution-part": {
+        "hc": "National Capital Territory of Delhi High Court"
+      }
+    },
+    "in:goa": {
+      "institution-part": {
+        "hc": "Goa High Court"
+      }
+    },
+    "in:gujarat": {
+      "institution-part": {
+        "hc": "Gujarat High Court"
+      }
+    },
+    "in:haryana": {
+      "institution-part": {
+        "hc": "Haryana High Court"
+      }
+    },
+    "in:himachal.pradesh": {
+      "institution-part": {
+        "hc": "Himachal Pradesh High Court"
+      }
+    },
+    "in:jammu.and.kashmir": {
+      "institution-part": {
+        "hc": "Jammu and Kashmir High Court"
+      }
+    },
+    "in:jharkhand": {
+      "institution-part": {
+        "hc": "Jharkhand High Court"
+      }
+    },
+    "in:karnataka": {
+      "institution-part": {
+        "hc": "Karnataka High Court"
+      }
+    },
+    "in:kerala": {
+      "institution-part": {
+        "hc": "Kerala High Court"
+      }
+    },
+    "in:ladakh": {
+      "institution-part": {
+        "hc": "Ladakh High Court"
+      }
+    },
+    "in:lakshadweep": {
+      "institution-part": {
+        "hc": "Lakshadweep High Court"
+      }
+    },
+    "in:madhya.pradesh": {
+      "institution-part": {
+        "hc": "Madhya Pradesh High Court"
+      }
+    },
+    "in:maharashtra": {
+      "institution-part": {
+        "hc": "Maharashtra High Court"
+      }
+    },
+    "in:manipur": {
+      "institution-part": {
+        "hc": "Manipur High Court"
+      }
+    },
+    "in:meghalaya": {
+      "institution-part": {
+        "hc": "Meghalaya High Court"
+      }
+    },
+    "in:mizoram": {
+      "institution-part": {
+        "hc": "Mizoram High Court"
+      }
+    },
+    "in:nagaland": {
+      "institution-part": {
+        "hc": "Nagaland High Court"
+      }
+    },
+    "in:odisha": {
+      "institution-part": {
+        "hc": "Odisha High Court"
+      }
+    },
+    "in:puducherry": {
+      "institution-part": {
+        "hc": "Puducherry High Court"
+      }
+    },
+    "in:punjab": {
+      "institution-part": {
+        "hc": "Punjab High Court"
+      }
+    },
+    "in:rajasthan": {
+      "institution-part": {
+        "hc": "Rajasthan High Court"
+      }
+    },
+    "in:sikkim": {
+      "institution-part": {
+        "hc": "Sikkim High Court"
+      }
+    },
+    "in:tamil.nadu": {
+      "institution-part": {
+        "hc": "Tamil Nadu High Court"
+      }
+    },
+    "in:telangana": {
+      "institution-part": {
+        "hc": "Telangana High Court"
+      }
+    },
+    "in:tripura": {
+      "institution-part": {
+        "hc": "Tripura High Court"
+      }
+    },
+    "in:uttar.pradesh": {
+      "institution-part": {
+        "hc": "Uttar Pradesh High Court"
+      }
+    },
+    "in:uttarakhand": {
+      "institution-part": {
+        "hc": "Uttarakhand High Court"
+      }
+    },
+    "in:west.bengal": {
+      "institution-part": {
+        "hc": "West Bengal High Court"
       }
     }
   }

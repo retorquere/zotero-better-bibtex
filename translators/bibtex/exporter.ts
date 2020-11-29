@@ -65,6 +65,18 @@ export let Exporter = new class { // tslint:disable-line:variable-name
 
       itemfields.simplifyForExport(item)
       Object.assign(item, Extra.get(item.extra, 'zotero'))
+      // strip extra.tex fields that are not for me
+      const prefix = Translator.BetterBibLaTeX ? 'biblatex.' : 'bibtex.'
+      for (const [name, field] of Object.entries(item.extraFields.tex).sort((a, b) => b[0].localeCompare(a[0]))) { // sorts the fields from tex. to biblatex. to bibtex.
+        for (const type of [ prefix, 'tex.' ]) {
+          if (name.startsWith(type)) {
+            item.extraFields.tex[name.substr(type.length)] = field
+            break
+          }
+        }
+
+        delete item.extraFields.tex[name]
+      }
 
       item.raw = Translator.preferences.rawLaTag === '*'
       item.tags = item.tags.filter(tag => {

@@ -11,10 +11,10 @@
     </author>
     <category citation-format="note"/>
     <category field="law"/>
-    <law-module types="legal_case"/>
     <summary>Juris-M style module for the United States</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+    <law-module types="legal_case"/>
   </info>
   <locale>
     <terms>
@@ -216,7 +216,7 @@
                   <number variable="volume"/>
                 </group>
                 <text variable="container-title" form="short"/>
-                <number variable="archive_location"/>
+                <text variable="archive_location"/>
               </group>
             </group>
           </else-if>
@@ -490,7 +490,7 @@
         <!-- comma-separated leading extras -->
         <choose>
           <if type="legal_case">
-            <text variable="locator-extra"/>
+            <number variable="locator-extra"/>
           </if>
         </choose>
         <group delimiter=" ">
@@ -752,10 +752,27 @@
   <macro name="juris-locator">
     <group delimiter=" ">
       <choose>
-        <if match="all" type="patent" locator="field">
+        <if locator="page" position="ibid-with-locator" match="all">
           <text value="at"/>
-          <label variable="locator" form="static"/>
         </if>
+        <else-if match="all" type="patent" variable="locator">
+          <choose>
+            <if locator="field">
+              <text value="at"/>
+              <label variable="locator" form="static"/>
+            </if>
+            <else>
+              <label variable="locator"/>
+            </else>
+          </choose>
+        </else-if>
+        <else-if>
+          <conditions match="all">
+            <condition type="legal_case" locator="page" match="all"/>
+            <condition match="none" variable="document-name archive container-title"/>
+          </conditions>
+          <text value="at"/>
+        </else-if>
         <else-if>
           <conditions match="any">
             <condition locator="page" type="report" variable="number" match="all"/>
@@ -763,15 +780,6 @@
             <condition locator="page" type="legal_case" variable="archive_location" match="all"/>
             <condition type="legal_case" variable="document-name" match="all"/>
           </conditions>
-          <text value="at"/>
-        </else-if>
-        <else-if>
-          <conditions match="all">
-            <condition match="none" variable="container-title archive" position="ibid-with-locator"/>
-          </conditions>
-          <label variable="locator" form="short"/>
-        </else-if>
-        <else-if locator="page" position="ibid-with-locator">
           <text value="at"/>
         </else-if>
         <else-if locator="page" match="any"/>
@@ -782,10 +790,14 @@
           </conditions>
         </else-if>
         <else>
-          <label variable="locator" form="short"/>
+          <label variable="locator"/>
         </else>
       </choose>
       <number variable="locator"/>
     </group>
   </macro>
+  <citation>
+    <layout>
+    </layout>
+  </citation>
 </style>

@@ -1,0 +1,213 @@
+{
+  "filename": "auto-nz-enIBFD.json",
+  "name": "New Zealand",
+  "version": "2020-10-30 01:03:27 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "NZ": "New Zealand",
+        "NZ:AUCKLAND": "Auckland",
+        "NZ:BLENHEIM": "Blenheim",
+        "NZ:CHRISTCHURCH": "Christchurch",
+        "NZ:DUNEDIN": "Dunedin",
+        "NZ:GISBORNE": "Gisborne",
+        "NZ:GREYMOUTH": "Greymouth",
+        "NZ:HAMILTON": "Hamilton",
+        "NZ:INVERCARGILL": "Invercargill",
+        "NZ:MAORI": "Maori Land Court Jurisdiction",
+        "NZ:MAORI:CHRISTCHURCH": "Christchurch",
+        "NZ:MAORI:ELLERSLIE": "Ellerslie",
+        "NZ:MAORI:GISBORNE": "Gisborne",
+        "NZ:MAORI:HAMILTON": "Hamilton",
+        "NZ:MAORI:HASTINGS": "Hastings",
+        "NZ:MAORI:ROTORUA": "Rotorua",
+        "NZ:MAORI:WELLINGTON": "Wellington",
+        "NZ:MAORI:WHANGANUI": "Whanganui",
+        "NZ:MAORI:WHANGAREI": "Whangarei",
+        "NZ:MASTERTON": "Masterton",
+        "NZ:NAPIER": "Napier",
+        "NZ:NELSON": "Nelson",
+        "NZ:NEW.PLYMOUTH": "New Plymouth",
+        "NZ:PALMERSTON.NORTH": "Palmerston North",
+        "NZ:ROTORUA": "Rotorua",
+        "NZ:TAURANGA": "Tauranga",
+        "NZ:TIMARU": "Timaru",
+        "NZ:WELLINGTON": "Wellington",
+        "NZ:WHANGANUI": "Whanganui",
+        "NZ:WHANGAREI": "Whangarei"
+      }
+    },
+    "nz": {
+      "institution-part": {
+        "aca": "Accident Compensation Appeal Authority",
+        "bsa": "Broadcasting Standards Authority",
+        "ca": "NZCA",
+        "caa": "Customs Appeal Authority",
+        "cc": "Commerce Commission",
+        "cop": "Copyright Tribunal",
+        "drt": "Deportation Review Tribunal",
+        "hrrt": "Human Rights Review Tribunal",
+        "iacdt": "Immigration Advisers Complaints Disciplinary Tribunal",
+        "ieaa": "International Education Appeal Authority",
+        "ipt": "Immigration And Protection Tribunal",
+        "lat": "Legal Aid Tribunal",
+        "lcdt": "Lawyers And Conveyancers Disciplinary Tribunal",
+        "lla": "Liquor Licensing Authority",
+        "lvt": "Land Valuation Tribunal",
+        "mvdt": "Motor Vehicle Disputes Tribunal",
+        "pspla": "Private Security Personnel Licensing Authority",
+        "readt": "Real Estate Agents Disciplinary Tribunal",
+        "saaa": "Student Allowance Appeal Authority",
+        "sc": "NZSC",
+        "shd": "Licensing Authority Of Secondhand Dealers And Pawnbrokers",
+        "ssaa": "Social Security Appeal Authority",
+        "tra": "NZTRA"
+      }
+    },
+    "nz:auckland": {
+      "institution-part": {
+        "high.court": "NZHC Auckland"
+      }
+    },
+    "nz:blenheim": {
+      "institution-part": {
+        "high.court": "NZHC Blenheim"
+      }
+    },
+    "nz:christchurch": {
+      "institution-part": {
+        "high.court": "NZHC Christchurch"
+      }
+    },
+    "nz:dunedin": {
+      "institution-part": {
+        "high.court": "NZHC Dunedin"
+      }
+    },
+    "nz:gisborne": {
+      "institution-part": {
+        "high.court": "NZHC Gisborne"
+      }
+    },
+    "nz:greymouth": {
+      "institution-part": {
+        "high.court": "NZHC Greymouth"
+      }
+    },
+    "nz:hamilton": {
+      "institution-part": {
+        "high.court": "NZHC Hamilton"
+      }
+    },
+    "nz:invercargill": {
+      "institution-part": {
+        "high.court": "NZHC Invercargill"
+      }
+    },
+    "nz:maori": {
+      "institution-part": {
+        "mac": "Maori Appellate Court"
+      }
+    },
+    "nz:maori:christchurch": {
+      "institution-part": {
+        "land.court": "Land Court"
+      }
+    },
+    "nz:maori:ellerslie": {
+      "institution-part": {
+        "land.court": "Land Court"
+      }
+    },
+    "nz:maori:gisborne": {
+      "institution-part": {
+        "land.court": "Land Court"
+      }
+    },
+    "nz:maori:hamilton": {
+      "institution-part": {
+        "land.court": "Land Court"
+      }
+    },
+    "nz:maori:hastings": {
+      "institution-part": {
+        "land.court": "Land Court"
+      }
+    },
+    "nz:maori:rotorua": {
+      "institution-part": {
+        "land.court": "Land Court"
+      }
+    },
+    "nz:maori:wellington": {
+      "institution-part": {
+        "land.court": "Land Court"
+      }
+    },
+    "nz:maori:whanganui": {
+      "institution-part": {
+        "land.court": "Land Court"
+      }
+    },
+    "nz:maori:whangarei": {
+      "institution-part": {
+        "land.court": "Land Court"
+      }
+    },
+    "nz:masterton": {
+      "institution-part": {
+        "high.court": "NZHC Masterton"
+      }
+    },
+    "nz:napier": {
+      "institution-part": {
+        "high.court": "NZHC Napier"
+      }
+    },
+    "nz:nelson": {
+      "institution-part": {
+        "high.court": "NZHC Nelson"
+      }
+    },
+    "nz:new.plymouth": {
+      "institution-part": {
+        "high.court": "NZHC New Plymouth"
+      }
+    },
+    "nz:palmerston.north": {
+      "institution-part": {
+        "high.court": "NZHC Palmerston North"
+      }
+    },
+    "nz:rotorua": {
+      "institution-part": {
+        "high.court": "NZHC Rotorua"
+      }
+    },
+    "nz:tauranga": {
+      "institution-part": {
+        "high.court": "NZHC Tauranga"
+      }
+    },
+    "nz:timaru": {
+      "institution-part": {
+        "high.court": "NZHC Timaru"
+      }
+    },
+    "nz:wellington": {
+      "institution-part": {
+        "high.court": "NZHC Wellington"
+      }
+    },
+    "nz:whanganui": {
+      "institution-part": {
+        "high.court": "NZHC Whanganui"
+      }
+    },
+    "nz:whangarei": {
+      "institution-part": {
+        "high.court": "NZHC Whangarei"
+      }
+    }
+  }
+}

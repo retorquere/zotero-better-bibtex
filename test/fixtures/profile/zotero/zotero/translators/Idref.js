@@ -1,15 +1,15 @@
 {
 	"translatorID": "271ee1a5-da86-465b-b3a5-eafe7bd3c156",
-	"translatorType": 4,
 	"label": "Idref",
 	"creator": "Sylvain Machefert",
 	"target": "^https?://www\\.idref\\.fr/",
 	"minVersion": "3.0",
-	"maxVersion": null,
+	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
+	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2020-05-14 03:00:00"
+	"lastUpdated": "2020-06-19 12:54:28"
 }
 
 /*
@@ -37,9 +37,7 @@
 
 var domain2translator = {
 	'www.sudoc.abes.fr': '1b9ed730-69c7-40b0-8a06-517a89a3a278',
-	'hal.archives-ouvertes.fr': '58ab2618-4a25-4b9b-83a7-80cd0259f896',
-	'edutice.archives-ouvertes.fr': '951c027d-74ac-47d4-a107-9c3069ab7b48',
-	'halshs.archives-ouvertes.fr': '951c027d-74ac-47d4-a107-9c3069ab7b48',
+	'hal.archives-ouvertes.fr': 'f20f91fe-d875-47e7-9656-0abb928be472',
 	'archivesic.ccsd.cnrs.fr': 'dedcae51-073c-48fb-85ce-2425e97f128d',
 	'memsic.ccsd.cnrs.fr': '58ab2618-4a25-4b9b-83a7-80cd0259f896',
 	'catalogue.bnf.fr': '47533cd7-ccaa-47a7-81bb-71c45e68a74d',
@@ -47,10 +45,22 @@ var domain2translator = {
 	'www.persee.fr': '951c027d-74ac-47d4-a107-9c3069ab7b48',
 	'oatao.univ-toulouse.fr': '951c027d-74ac-47d4-a107-9c3069ab7b48',
 	'pub.orcid.org': 'bc03b4fe-436d-4a1f-ba59-de4d2d7a63f7',
-	'tel.archives-ouvertes.fr': '951c027d-74ac-47d4-a107-9c3069ab7b48',
-	'medihal.archives-ouvertes.fr': '951c027d-74ac-47d4-a107-9c3069ab7b48',
 	'dumas.ccsd.cnrs.fr': '951c027d-74ac-47d4-a107-9c3069ab7b48',
 };
+
+function getTranslatorFromDomain(domain) {
+	if (domain2translator[domain]) {
+		return domain2translator[domain];
+	}
+
+	/* Fallback for *.archives-ouvertes.fr */
+	if (domain.endsWith(".archives-ouvertes.fr")) {
+		return '951c027d-74ac-47d4-a107-9c3069ab7b48';
+	}
+	
+	
+	return false;
+}
 
 function detectWeb(doc, _url) {
 	if (getSearchResults(doc, true)) {
@@ -70,8 +80,8 @@ function getSearchResults(doc, checkOnly) {
 		// We need to replace the http://www.sudoc.fr/XXXXXX links are they are redirects and aren't handled correctly from subtranslator
 		href = href.replace(/http:\/\/www\.sudoc\.fr\/(.*)$/, "http://www.sudoc.abes.fr/xslt/DB=2.1//SRCH?IKT=12&TRM=$1");
 		var domain = urlToDomain(href);
-
-		if (domain2translator[domain]) {
+		
+		if (getTranslatorFromDomain(domain)) {
 			if (checkOnly) return true;
 			found = true;
 			items[href] = resultsTitle[i].textContent;
@@ -117,9 +127,10 @@ function scrape(doc, url) {
 	}
 	
 	var domain = urlToDomain(url);
-	
-	if (domain2translator[domain]) {
-		translator.setTranslator(domain2translator[domain]);
+	var domainTranslator = getTranslatorFromDomain(domain);
+
+	if (domainTranslator) {
+		translator.setTranslator(domainTranslator);
 	}
 	else {
 		Z.debug("Undefined website");

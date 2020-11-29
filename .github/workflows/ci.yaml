@@ -1,30 +1,33 @@
 name: continuous integration
 
 on:
-  push:
+  push: null
   schedule:
-  - cron:  '0 0 * * *'
+  - cron: 0 0 * * *
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+      with:
+        persist-credentials: false
+        submodules: true  # Fetch Hugo themes (true OR recursive)
+        fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
 
     - name: install python
       uses: actions/setup-python@v2
       with:
         python-version: 3.8
-
     - name: install node
       uses: actions/setup-node@v1
       with:
         node-version: 14.x
-
     - name: Cache python/node dependencies
+      id: cache
       uses: actions/cache@v2
       env:
-        cache-name: cache-dependencies
+        cache-name: v1
       with:
         path: |
           ~/.npm
@@ -32,46 +35,58 @@ jobs:
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
-
-    - name: install python/node dependencies
+    - name: install python packages
       run: |
         pip install packaging
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-        npm install
+    - name: install node packages
+      run: npm install
+
 
     - run: npm run build
+
     - name: store build artifacts
       uses: actions/upload-artifact@v2
       with:
         name: build-artifacts
         path: |
-          xpi
-          gen
+          xpi/
+          gen/
+
+    - uses: peaceiris/actions-hugo@v2
+      with:
+        hugo-version: latest
+        extended: true
+    - run: npm run docs:deploy
+    - uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./site/public
 
   test:
     needs: build
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        client: [ 'zotero', 'jurism' ]
-        slice: [ '1', '2' ]
+        client: [zotero, jurism]
+        bin: ['1', '2']
     steps:
     - uses: actions/checkout@v2
     - name: fetch build artifacts
       uses: actions/download-artifact@v2
       with:
         name: build-artifacts
+
     - name: install python
       uses: actions/setup-python@v2
       with:
         python-version: 3.8
     - name: Cache python/node dependencies
+      id: cache
       uses: actions/cache@v2
       env:
-        cache-name: cache-dependencies
+        cache-name: v1
       with:
         path: |
           ~/.npm
@@ -79,26 +94,35 @@ jobs:
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
-    - name: install python dependencies
+    - name: install python packages
       run: |
         pip install packaging
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
     - run: curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
     - run: sudo apt-get update
     - run: sudo apt-get install ${{ matrix.client }}
     - run: sudo ./util/install-beta ${{ matrix.client }}
+
+    # needs logs/logs to have them show up as logs in the artifact... no idea why
     - name: Run headless test
       uses: GabrielBB/xvfb-action@v1
       with:
-        run: ./test/behave --client ${{ matrix.client }} --format json.pretty --outfile behave.json --format travis --balance ${{ matrix.slice }}
+        run: ./test/behave --client ${{ matrix.client }} --logs logs/logs --format travis --bin ${{ matrix.bin }}
+
     - uses: actions/upload-artifact@v2
       if: ${{ failure() }}
       with:
-        name: debug log ${{ matrix.client }} ${{ matrix.slice }}
-        path: '~/.BBTZ5TEST.log'
+        name: debug log ${{ matrix.client }} ${{ matrix.bin }}
+        path: ~/.BBTZ5TEST.log
+
+    - name: store test artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: build-artifacts
+        path: |
+          logs/
 
   release:
     if: github.event_name != 'schedule'
@@ -112,15 +136,19 @@ jobs:
       with:
         name: build-artifacts
 
+    - name: install python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
     - name: install node
       uses: actions/setup-node@v1
       with:
         node-version: 14.x
-
     - name: Cache python/node dependencies
+      id: cache
       uses: actions/cache@v2
       env:
-        cache-name: cache-dependencies
+        cache-name: v1
       with:
         path: |
           ~/.npm
@@ -128,11 +156,30 @@ jobs:
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
+    - name: install python packages
+      run: |
+        pip install packaging
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: install node packages
+      run: npm install
 
-    - run: npm install
+
     - run: npm run release
       env:
-        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: rebalance tests
+      id: logs
+      if: github.ref == 'refs/heads/master'
+      run: |
+        ./util/rebalance.py ${{ github.ref }} test/balance.json
+        ./util/loaded.py ${{ github.ref }} test/loaded.json
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      if: steps.logs.outputs.balance || steps.logs.outputs.loaded
+      continue-on-error: true
+      with:
+        commit_message: Rebalance test suite
+        file_pattern: ${{ steps.logs.outputs.balance }} ${{ steps.logs.outputs.loaded }}
+        skip_dirty_check: false
 
