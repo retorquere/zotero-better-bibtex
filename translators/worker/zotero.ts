@@ -5,7 +5,7 @@ importScripts('resource://gre/modules/osfile.jsm')
 declare const OS: any
 
 // @ts-ignore
-import XRegExp from 'xregexp'
+import XRegExp = require('xregexp')
 import { HTMLParser } from '../../content/markupparser'
 import * as DateParser from '../../content/dateparser'
 // import * as Extra from '../../content/extra'
