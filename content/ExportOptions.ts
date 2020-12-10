@@ -9,6 +9,13 @@ import { patch as $patch$ } from './monkey-patch'
 let DOM_OBSERVER = null
 let reset = true
 
+$patch$(Zotero_File_Interface_Export, 'init', original => function(options) {
+  for (const translator of window.arguments[0].translators) {
+    if (translator.label === 'BetterBibTeX JSON') translator.label = 'BetterBibTeX debug JSON'
+  }
+  original.apply(this, arguments)
+})
+
 $patch$(Zotero_File_Interface_Export, 'updateOptions', original => function(options) {
   original.apply(this, arguments)
 
