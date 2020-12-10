@@ -42,7 +42,7 @@ AddonManager.addAddonListener({
       if (quickCopy === `export=${metadata.translatorID}`) Zotero.Prefs.clear('export.quickCopy.setting')
 
       try {
-        Translators.uninstall(label, metadata.translatorID)
+        Translators.uninstall(label)
       } catch (error) {}
     }
 
