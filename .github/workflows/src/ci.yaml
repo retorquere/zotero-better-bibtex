@@ -95,8 +95,7 @@ jobs:
 
     - run: curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
     - run: sudo apt-get update
-    - run: sudo apt-get install ${{ matrix.client }}
-    - run: sudo ./util/install-beta ${{ matrix.client }}
+    - run: sudo apt-get install ${{ matrix.client }} ${{ matrix.client }}-beta
 
     # needs logs/logs to have them show up as logs in the artifact... no idea why
     - name: Run headless test

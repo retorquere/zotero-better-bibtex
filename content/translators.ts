@@ -83,7 +83,9 @@ export let Translators = new class { // tslint:disable-line:variable-name
     let reinit = false
 
     // cleanup old translators
-    if (this.uninstall('Better BibTeX Quick Copy', '9b85ff96-ceb3-4ca2-87a9-154c18ab38b1')) reinit = true
+    this.uninstall('Better BibTeX Quick Copy')
+    this.uninstall('\u672B BetterBibTeX JSON (for debugging)')
+    this.uninstall('BetterBibTeX JSON (for debugging)')
 
     for (const header of Object.values(this.byId)) {
       if (await this.install(header)) reinit = true
@@ -522,11 +524,10 @@ export let Translators = new class { // tslint:disable-line:variable-name
     return deferred.promise
   }
 
-  public uninstall(label, id) {
+  public uninstall(label) {
     try {
-      const fileName = Zotero.Translators.getFileNameFromLabel(label, id)
       const destFile = Zotero.getTranslatorsDirectory()
-      destFile.append(fileName)
+      destFile.append(label + '.js')
       if (destFile.exists()) {
         destFile.remove(false)
         return true
@@ -556,9 +557,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
       Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${header.label}.js`),
     ].join('\n')
 
-    const bbtjson = 'BetterBibTeX JSON'
-    const bbtjson_debug = `\u672B ${bbtjson} (for debugging)`
-    if (header.label === bbtjson && installed && installed.label !== bbtjson_debug) installed.hash = ''
     if (installed?.configOptions?.hash === header.configOptions.hash) return false
 
     const cache = Cache.getCollection(header.label)
@@ -570,15 +568,11 @@ export let Translators = new class { // tslint:disable-line:variable-name
     }
 
     try {
-      if (header.label === bbtjson) {
-        await Zotero.Translators.save({...header, label: bbtjson_debug}, code)
-      } else {
-        await Zotero.Translators.save(header, code)
-      }
+      await Zotero.Translators.save(header, code)
 
     } catch (err) {
       log.error('Translator.install', header, 'failed:', err)
-      this.uninstall(header.label, header.translatorID)
+      this.uninstall(header.label)
     }
 
     return true

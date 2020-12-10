@@ -28,7 +28,6 @@ export function titleCase(text) {
 
 export function sentenceCase(text) {
   let sentencecased = text.replace(/((?:^|[?!]|[-.:;\[\]<>'*\\(),{}_“”‘’])?\s*)([^-\s;?:.!\[\]<>'*\\(),{}_“”‘’]+)/g, (match, leader, word) => {
-    console.log('=', { match, leader, word })
     if (leader && !leader.match(/^[?!]/) && word.match(/^[A-Z][^A-Z]*$/)) word = word.toLowerCase()
     return (leader || '') + word
   })
