@@ -44,9 +44,10 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
   private async inspireHEP(url) {
     try {
       const results = await (await fetch(url, { method: 'GET', cache: 'no-cache', redirect: 'follow' })).json()
-      if (results.metadata.texkeys.length !== 1) throw new Error(`expected 1 key, got ${results.metadata.texkeys.length}`)
+      if (results.metadata.texkeys.length === 0) return null
       return results.metadata.texkeys[0]
     } catch (err) {
+      flash('Error fetching inspireHEP key', err.message)
       log.error('inspireHEP', url, err)
       return null
     }
