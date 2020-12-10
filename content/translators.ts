@@ -83,9 +83,9 @@ export let Translators = new class { // tslint:disable-line:variable-name
     let reinit = false
 
     // cleanup old translators
-    if (this.uninstall('Better BibTeX Quick Copy')) reinit = true
-    // debug exporter renamed on the fly
-    this.uninstall('BetterBibTeX JSON')
+    this.uninstall('Better BibTeX Quick Copy')
+    this.uninstall('\u672B BetterBibTeX JSON (for debugging)')
+    this.uninstall('BetterBibTeX JSON (for debugging)')
 
     for (const header of Object.values(this.byId)) {
       if (await this.install(header)) reinit = true
@@ -557,9 +557,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
       Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${header.label}.js`),
     ].join('\n')
 
-    const bbtjson = 'BetterBibTeX JSON'
-    const bbtjson_debug = `${bbtjson} (for debugging)`
-    if (header.label === bbtjson && installed && installed.label !== bbtjson_debug) installed.hash = ''
     if (installed?.configOptions?.hash === header.configOptions.hash) return false
 
     const cache = Cache.getCollection(header.label)
@@ -571,11 +568,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
     }
 
     try {
-      if (header.label === bbtjson) {
-        await Zotero.Translators.save({...header, label: bbtjson_debug}, code)
-      } else {
-        await Zotero.Translators.save(header, code)
-      }
+      await Zotero.Translators.save(header, code)
 
     } catch (err) {
       log.error('Translator.install', header, 'failed:', err)
