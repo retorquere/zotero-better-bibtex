@@ -83,7 +83,9 @@ export let Translators = new class { // tslint:disable-line:variable-name
     let reinit = false
 
     // cleanup old translators
-    if (this.uninstall('Better BibTeX Quick Copy', '9b85ff96-ceb3-4ca2-87a9-154c18ab38b1')) reinit = true
+    if (this.uninstall('Better BibTeX Quick Copy')) reinit = true
+    // debug exporter renamed on the fly
+    this.uninstall('BetterBibTeX JSON')
 
     for (const header of Object.values(this.byId)) {
       if (await this.install(header)) reinit = true
@@ -522,11 +524,10 @@ export let Translators = new class { // tslint:disable-line:variable-name
     return deferred.promise
   }
 
-  public uninstall(label, id) {
+  public uninstall(label) {
     try {
-      const fileName = Zotero.Translators.getFileNameFromLabel(label, id)
       const destFile = Zotero.getTranslatorsDirectory()
-      destFile.append(fileName)
+      destFile.append(label + '.js')
       if (destFile.exists()) {
         destFile.remove(false)
         return true
@@ -557,7 +558,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
     ].join('\n')
 
     const bbtjson = 'BetterBibTeX JSON'
-    const bbtjson_debug = `\u672B ${bbtjson} (for debugging)`
+    const bbtjson_debug = `${bbtjson} (for debugging)`
     if (header.label === bbtjson && installed && installed.label !== bbtjson_debug) installed.hash = ''
     if (installed?.configOptions?.hash === header.configOptions.hash) return false
 
@@ -578,7 +579,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
     } catch (err) {
       log.error('Translator.install', header, 'failed:', err)
-      this.uninstall(header.label, header.translatorID)
+      this.uninstall(header.label)
     }
 
     return true
