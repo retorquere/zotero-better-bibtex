@@ -1,7 +1,7 @@
 {
   "duration": {
-    "(non-)dropping particle handling #313": 2830,
-    "AUX scanner": 9240,
+    "(non-)dropping particle handling #313": 2820,
+    "AUX scanner": 9230,
     "BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372": 270,
     "Better BibTeX Import 2": 1160,
     "BibTeX name escaping has a million inconsistencies #438": 480,
@@ -266,7 +266,7 @@
     "Export 3 references for BibLaTeX to Normalize date ranges in citekeys #356": 510,
     "Export 3 references for BibTeX to No brace protection when suppressTitleCase set to true #1188": 500,
     "Export 3 references for BibTeX to Replicate Zotero key algorithm #439": 500,
-    "Export 36 references for BibTeX to Better BibTeX does not export collections #901": 4560,
+    "Export 36 references for BibTeX to Better BibTeX does not export collections #901": 4550,
     "Export 4 references for BibLaTeX to date and year are switched #406": 550,
     "Export 4 references for BibTeX to add date, origdate functions, and format-date filter #1488": {
       "msecs": 430,
@@ -325,7 +325,7 @@
     "Import 2 references from BibLaTeX Patent author handling, type #1060": 1210,
     "Import 2 references from space after citekey creates confusion #716": 1160,
     "Import 20 references from BBT does not import groups from JabRef 5.1 #1641": {
-      "msecs": 3780,
+      "msecs": 3770,
       "runs": -161
     },
     "Import 3 references from Better BibTeX.009": 1130,
@@ -334,7 +334,7 @@
     "Import 8 references from Overline during Import #1467": 1720,
     "Import 9 references from Better BibLaTeX import improvements #549": 1520,
     "Import 989 references from Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 55460,
+      "msecs": 55370,
       "runs": -9
     },
     "Import support for the online type in BBT #1358": 1170,
@@ -353,13 +353,13 @@
     "Pandoc-LaTeX-SCHOMD Citation Export": 1280,
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 408100,
+    "Really Big whopping library": 407870,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Sorting and optional particle handling #411": 760,
     "Square brackets in Publication field (85), and non-pinned keys must change when the pattern does": 450,
-    "Unabbreviate on import #1436-1": 41150,
+    "Unabbreviate on import #1436-1": 41090,
     "Unbalanced vphantom escapes #1043": 760,
     "arXiv identifiers in BibLaTeX export #460": 1180,
     "auto-export": 14370,
@@ -653,7 +653,7 @@
       "Duplicate Citation Key Alias #1384"
     ]
   },
-  "runs": 207,
+  "runs": 208,
   "slow": {
     "1": [
       "Export 2 references for BibLaTeX to Book Title exports to Journaltitle for Biblatex @incollection reference type #1691",
