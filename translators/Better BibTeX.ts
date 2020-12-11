@@ -924,7 +924,9 @@ class ZoteroItem {
       'translator',
     ]
     const creatorsForType = Zotero.Utilities.getCreatorsForType(this.item.itemType)
-    for (const type of creatorTypes.concat(Object.keys(this.bibtex.creators).filter(other => !creatorTypes.includes(other)).filter(t => t !== 'holder' || this.type !== 'patent'))) {
+    for (const type of creatorTypes.concat(Object.keys(this.bibtex.creators).filter(other => !creatorTypes.includes(other)))) {
+      // 'assignee' is not a creator field for Zotero
+      if (type === 'holder' && this.type === 'patent') continue
       if (!this.bibtex.fields[type]) continue
 
       const creators = this.bibtex.fields[type].length ? this.bibtex.creators[type] : []
@@ -943,6 +945,7 @@ class ZoteroItem {
         editors: 'editor',
         scriptwriter: 'scriptwriter',
       }[type]
+      if (creatorType === 'author') creatorType = ['inventor', 'programmer', 'author'].find(t => creatorsForType.includes(t))
       if (!creatorsForType.includes(creatorType)) creatorType = null
       if (!creatorType && type === 'bookauthor' && creatorsForType.includes('author')) creatorType = 'author'
       if (!creatorType) creatorType = 'contributor'
