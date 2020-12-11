@@ -41,16 +41,30 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
   private scanning: any[]
   private started = false
 
-  private async inspireHEP(url) {
-    try {
-      const results = await (await fetch(url, { method: 'GET', cache: 'no-cache', redirect: 'follow' })).json()
-      if (results.metadata.texkeys.length === 0) return null
-      return results.metadata.texkeys[0]
-    } catch (err) {
-      flash('Error fetching inspireHEP key', err.message)
-      log.error('inspireHEP', url, err)
-      return null
+  private async inspireHEP(doi: string, arxiv: string) {
+    for (const [type, id] of [['DOI', doi], ['arXiv ID', arxiv]]) {
+      if (!id) continue
+      const url = type === 'DOI' ? `https://inspirehep.net/api/doi/${id}` : `https://inspirehep.net/api/arxiv/${id}`
+
+      try {
+        const results = await (await fetch(url, { method: 'GET', cache: 'no-cache', redirect: 'follow' })).json()
+
+        if (results.status && (results.status < 200 || results.status > 299)) { // tslint:disable-line:no-magic-numbers
+          flash(`Could not fetch inspireHEP key from ${type}`, `Could not fetch inspireHEP key for ${type} ${JSON.stringify(id)}\n${results.message}`)
+
+        } else if (results.metadata.texkeys.length === 0) {
+          flash(`No inspireHEP key found for ${type}`)
+
+        } else {
+          if (results.metadata.texkeys.length > 1) flash(`Multiple inspireHEP keys found for ${type}`)
+          return results.metadata.texkeys[0]
+        }
+      } catch (err) {
+        flash(`Error fetching inspireHEP key from ${type}`, `Could not fetch inspireHEP key for ${type} ${JSON.stringify(id)}\n${err.message}`)
+        log.error('inspireHEP', url, err)
+      }
     }
+    return null
   }
 
   private getField(item, field): string {
@@ -90,10 +104,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
         const arxiv = ((['arxiv.org', 'arxiv'].includes((this.getField(item, 'libraryCatalog') || '').toLowerCase())) && arXiv.parse(this.getField(item, 'publicationTitle')).id) || arXiv.parse(parsed.extraFields.tex.arxiv).id
 
         if (!doi && !arxiv) continue
-
-        if (doi) citationKey = await this.inspireHEP(`https://inspirehep.net/api/doi/${doi}`)
-        if (!citationKey && arxiv) citationKey = await this.inspireHEP(`https://inspirehep.net/api/arxiv/${arxiv}`)
-
+        citationKey = await this.inspireHEP(doi, arxiv)
         if (!citationKey) continue
 
         if (parsed.extraFields.citationKey === citationKey) continue
