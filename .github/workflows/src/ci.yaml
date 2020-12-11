@@ -102,6 +102,8 @@ jobs:
       uses: GabrielBB/xvfb-action@v1
       with:
         run: ./test/behave --client ${{ matrix.client }} --logs logs/logs --format travis --bin ${{ matrix.bin }}
+        env:
+          PYTHONUNBUFFERED: true
 
     - uses: actions/upload-artifact@v2
       if: ${{ failure() }}
