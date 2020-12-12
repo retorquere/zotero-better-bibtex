@@ -50,17 +50,19 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
         const results = await (await fetch(url, { method: 'GET', cache: 'no-cache', redirect: 'follow' })).json()
 
         if (results.status && (results.status < 200 || results.status > 299)) { // tslint:disable-line:no-magic-numbers
-          flash(`Could not fetch inspireHEP key from ${type}`, `Could not fetch inspireHEP key for ${type} ${JSON.stringify(id)}\n${results.message}`)
+          flash(`Could not fetch inspireHEP key from ${type}`, `Could not fetch inspireHEP key for ${type} ${JSON.stringify(id)},\n\nInspireHEP says: ${results.message}`)
 
         } else if (results.metadata.texkeys.length === 0) {
           flash(`No inspireHEP key found for ${type}`)
 
         } else {
-          if (results.metadata.texkeys.length > 1) flash(`Multiple inspireHEP keys found for ${type}`)
+          if (results.metadata.texkeys.length > 1) {
+            flash(`Multiple inspireHEP keys found for ${type}`, `Multiple inspireHEP keys found for ${type} (${results.metadata.texkeys.join(' / ')}), selected ${results.metadata.texkeys[0]}`)
+          }
           return results.metadata.texkeys[0]
         }
       } catch (err) {
-        flash(`Error fetching inspireHEP key from ${type}`, `Could not fetch inspireHEP key for ${type} ${JSON.stringify(id)}\n${err.message}`)
+        flash(`Error fetching inspireHEP key from ${type}`, `Could not fetch inspireHEP key for ${type} ${JSON.stringify(id)}\n\n${err.message}`)
         log.error('inspireHEP', url, err)
       }
     }
