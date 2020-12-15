@@ -98,7 +98,7 @@
     "xregexp": "^4.4.1"
   },
   "devDependencies": {
-    "@types/node": "^14.14.12",
+    "@types/node": "^14.14.13",
     "@types/webpack": "^4.41.25",
     "archiver": "^5.1.0",
     "bluebird": "^3.7.2",
