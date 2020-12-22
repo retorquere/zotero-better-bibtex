@@ -416,6 +416,8 @@
   "export/error during export: duplicate field note #1636.json",
   "export/error on exporting note with pre tags; duplicate field howpublished #1092.bibtex",
   "export/error on exporting note with pre tags; duplicate field howpublished #1092.json",
+  "export/google-scholar like references #1705.biblatex",
+  "export/google-scholar like references #1705.json",
   "export/italics in title - capitalization #541.biblatex",
   "export/italics in title - capitalization #541.json",
   "export/lone ogonek should have brace.biblatex",

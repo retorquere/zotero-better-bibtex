@@ -1,7 +1,7 @@
 {
   "duration": {
     "(non-)dropping particle handling #313": 2810,
-    "AUX scanner": 9190,
+    "AUX scanner": 9180,
     "BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372": 270,
     "Better BibTeX Import 2": 1160,
     "BibTeX name escaping has a million inconsistencies #438": 480,
@@ -12,7 +12,7 @@
     "CSL exporters; ignore [Fields to omit from export] setting #1179": 1970,
     "Capitalize all title-fields for language en #383": 680,
     "Changing item type for only BibLaTeX does not work #1694": {
-      "msecs": 710,
+      "msecs": 720,
       "runs": -198
     },
     "Citekey generation failure #708 and sort references on export #957": 2040,
@@ -242,6 +242,10 @@
     "Export 2 references for BibLaTeX to Title case of latex greek text on biblatex export #564": 550,
     "Export 2 references for BibLaTeX to biblatex export of Presentation; Use type and venue fields #644": 530,
     "Export 2 references for BibLaTeX to csquotes #302": 420,
+    "Export 2 references for BibLaTeX to google-scholar like references #1705": {
+      "msecs": 460,
+      "runs": -213
+    },
     "Export 2 references for BibLaTeX to map csl-json variables #293": 450,
     "Export 2 references for BibLaTeX to markup small-caps, superscript, italics #301": 440,
     "Export 2 references for BibLaTeX to micro sign (unicode B5) export seems wrong and span in title #1434": 430,
@@ -314,7 +318,7 @@
     "Import 1 references from Spaces lost when expanding string variables during import #1081": 1020,
     "Import 1 references from Wrong ring-above import #1115": 1020,
     "Import 1 references from collaborators to contributors": {
-      "msecs": 1110,
+      "msecs": 1170,
       "runs": -209
     },
     "Import 1 references from eprinttype field dropped on import #959": 1020,
@@ -338,7 +342,7 @@
     "Import 8 references from Overline during Import #1467": 1720,
     "Import 9 references from Better BibLaTeX import improvements #549": 1520,
     "Import 989 references from Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 54950,
+      "msecs": 54900,
       "runs": -9
     },
     "Import support for the online type in BBT #1358": 1170,
@@ -357,13 +361,13 @@
     "Pandoc-LaTeX-SCHOMD Citation Export": 1280,
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 406920,
+    "Really Big whopping library": 406930,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Sorting and optional particle handling #411": 760,
     "Square brackets in Publication field (85), and non-pinned keys must change when the pattern does": 450,
-    "Unabbreviate on import #1436-1": 40860,
+    "Unabbreviate on import #1436-1": 40830,
     "Unbalanced vphantom escapes #1043": 760,
     "arXiv identifiers in BibLaTeX export #460": 1180,
     "auto-export": 14370,
@@ -658,7 +662,7 @@
       "Duplicate Citation Key Alias #1384"
     ]
   },
-  "runs": 213,
+  "runs": 214,
   "slow": {
     "1": [
       "Export 2 references for BibLaTeX to Book Title exports to Journaltitle for Biblatex @incollection reference type #1691",
@@ -934,7 +938,8 @@
       "Unabbreviate on import #1436-1",
       "Set IDS field when merging references with different citation keys #1221",
       "Merging error with arXiv ID #1373",
-      "Duplicate Citation Key Alias #1384"
+      "Duplicate Citation Key Alias #1384",
+      "Export 2 references for BibLaTeX to google-scholar like references #1705"
     ],
     "2": [
       "Really Big whopping library"
