@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 37,
   "itemTypes": [
     {
       "itemType": "artwork",
@@ -5279,7 +5279,7 @@
         "issuingAuthority": "Herausgeber",
         "itemType": "Typ",
         "journalAbbreviation": "Zeitschriften-Abk\u00fcrzung",
-        "jurisdiction": "Hoheitsbereich",
+        "jurisdiction": "Jurisdiktion",
         "label": "Label",
         "language": "Sprache",
         "legalStatus": "Rechtsstatus",
@@ -5760,7 +5760,7 @@
         "regnalYear": "Regnal Year",
         "regulationType": "Type",
         "regulatoryBody": "Authority",
-        "reign": "Reign",
+        "reign": "Case Type",
         "release": "Release",
         "reporter": "Reporter",
         "reporterVolume": "Reporter Volume",
@@ -5980,7 +5980,7 @@
         "regnalYear": "Regnal Year",
         "regulationType": "Type",
         "regulatoryBody": "Authority",
-        "reign": "Reign",
+        "reign": "Case Type",
         "release": "Release",
         "reporter": "Reporter",
         "reporterVolume": "Reporter Volume",
