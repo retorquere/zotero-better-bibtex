@@ -150,7 +150,7 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.3 "for JabRef 3">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.4 "for JabRef 4">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.5 "for JabRef 5">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat.warn "Export JabRef-specific fields: timestamps, and groups for each collection and item is part of. Note that this format will disable caching in exports, which is really undesirable specifically for auto-exports.">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat.warn "Export JabRef-specific fields: timestamps, titles for attachments, and groups for each collection an item is part of. Note that having this on will disable caching in exports, which is really undesirable specifically for auto-exports.">
 <!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Export unicode as plain-text latex commands">
 <!ENTITY better-bibtex.Preferences.export.biblatex "BibLaTeX">
 <!ENTITY better-bibtex.Preferences.export.biblatex.extendedNameFormat "Use BibLaTeX extended name format (requires biblatex 3.5)">
