@@ -123,7 +123,7 @@ if (!process.env.MINITESTS) {
       // devtool: '#source-map',
       output: {
         globalObject: 'Zotero',
-        path: path.resolve(__dirname, './build/content'),
+        path: path.resolve(__dirname, path.dirname(build.runtime)),
         filename: '[name].js',
 
         uniqueName: build.uniqueName,

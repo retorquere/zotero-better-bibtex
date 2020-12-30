@@ -8,6 +8,8 @@ reopen:
 no_debug_id: |
   It looks like you did not upload an debug report. The debug report is important; it gives @retorquere your current BBT settings and a copy of the problematic reference as a test case so he can best replicate your problem. Without it, @retorquere is effectively blind. Debug reports are useful for both bug analysis and enhancement requests; in the case of export enhancements, I need the copy of the references you have in mind.
 
+  If you did try to submit a debug report, but the ID looked like `D<number>`, that is a Zotero debug report, which I cannot access. Please re-submit a BBT debug log by one of the methods below.
+
   **This request is much more likely than not to apply to you, too, _even if you think it unlikely_**, and even if it does not, there's no harm in sending a debug log that turns out to be unnecessary. @retorquere will more often than not just end up saying "please send a debug log first". Let's just skip over the unnecesary delay this entails. Sending a debug log is very easy:
 
   1. If your issue relates to how BBT behaves around a **specific reference(s)**, such as citekey generation or export, select at least one of the problematic reference(s), right-click it, and submit an BBT debug report from that popup menu. If the problem is with export, please do include a sample of what you see exported, and what you expected to see exported for these references.
