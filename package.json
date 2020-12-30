@@ -61,7 +61,7 @@
     "ajv-keywords": "^4.0.0",
     "assert": "^2.0.0",
     "barcoder": "^2.0.1",
-    "citeproc": "^2.4.52",
+    "citeproc": "^2.4.56",
     "edtf": "^3.1.0",
     "edtfy": "^0.0.8",
     "escape-string-regexp": "^4.0.0",
