@@ -853,6 +853,9 @@
           },
           "archiveCollection": {
             "type": "string"
+          },
+          "documentNumber": {
+            "type": "string"
           }
         }
       },
