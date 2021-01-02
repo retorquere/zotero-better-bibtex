@@ -227,7 +227,7 @@
     "Export 2 references for BibLaTeX to Better BibLaTeX.009": 770,
     "Export 2 references for BibLaTeX to BibLaTeX Patent author handling, type #1060": 540,
     "Export 2 references for BibLaTeX to Book Title exports to Journaltitle for Biblatex @incollection reference type #1691": {
-      "msecs": 570,
+      "msecs": 560,
       "runs": -198
     },
     "Export 2 references for BibLaTeX to CSL title, volume-title, container-title=BL title, booktitle, maintitle #381": 400,
@@ -243,7 +243,7 @@
     "Export 2 references for BibLaTeX to biblatex export of Presentation; Use type and venue fields #644": 530,
     "Export 2 references for BibLaTeX to csquotes #302": 420,
     "Export 2 references for BibLaTeX to google-scholar like references #1705": {
-      "msecs": 520,
+      "msecs": 530,
       "runs": -213
     },
     "Export 2 references for BibLaTeX to map csl-json variables #293": 450,
@@ -342,7 +342,7 @@
     "Import 8 references from Overline during Import #1467": 1720,
     "Import 9 references from Better BibLaTeX import improvements #549": 1520,
     "Import 989 references from Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 54620,
+      "msecs": 54550,
       "runs": -9
     },
     "Import support for the online type in BBT #1358": 1170,
@@ -361,13 +361,13 @@
     "Pandoc-LaTeX-SCHOMD Citation Export": 1280,
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 407110,
+    "Really Big whopping library": 406940,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Sorting and optional particle handling #411": 760,
     "Square brackets in Publication field (85), and non-pinned keys must change when the pattern does": 450,
-    "Unabbreviate on import #1436-1": 40660,
+    "Unabbreviate on import #1436-1": 40630,
     "Unbalanced vphantom escapes #1043": 760,
     "arXiv identifiers in BibLaTeX export #460": 1180,
     "auto-export": 14370,
@@ -663,7 +663,7 @@
       "Duplicate Citation Key Alias #1384"
     ]
   },
-  "runs": 217,
+  "runs": 218,
   "slow": {
     "1": [
       "Export 2 references for BibLaTeX to google-scholar like references #1705",
