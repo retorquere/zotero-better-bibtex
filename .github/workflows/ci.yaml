@@ -100,9 +100,11 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    - run: curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
-    - run: sudo apt-get update
-    - run: sudo apt-get install ${{ matrix.client }} ${{ matrix.client }}-beta
+    - name: install {{ matrix.client }} + beta
+      run: |
+        curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
+        sudo apt-get update
+        sudo apt-get install ${{ matrix.client }} ${{ matrix.client }}-beta
 
     # needs logs/logs to have them show up as logs in the artifact... no idea why
     - name: Run headless test
