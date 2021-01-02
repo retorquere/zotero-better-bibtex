@@ -1,5 +1,5 @@
 {
-  "version": 37,
+  "version": 38,
   "itemTypes": [
     {
       "itemType": "artwork",
@@ -556,11 +556,14 @@
           "field": "division"
         },
         {
+          "field": "docketNumber",
+          "baseField": "number"
+        },
+        {
           "field": "documentName"
         },
         {
-          "field": "docketNumber",
-          "baseField": "number"
+          "field": "documentNumber"
         },
         {
           "field": "yearAsVolume"
@@ -1419,8 +1422,7 @@
           "field": "numberOfVolumes"
         },
         {
-          "field": "documentNumber",
-          "baseField": "number"
+          "field": "documentNumber"
         },
         {
           "field": "pages"
@@ -3558,6 +3560,9 @@
         ],
         "document-name": [
           "documentName"
+        ],
+        "document-number": [
+          "documentNumber"
         ],
         "admin-flag": [
           "adminFlag"
