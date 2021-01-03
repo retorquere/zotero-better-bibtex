@@ -57,7 +57,7 @@
   "dependencies": {
     "@retorquere/bibtex-parser": "^3.2.30",
     "@types/lokijs": "^1.5.3",
-    "ajv": "^7.0.2",
+    "ajv": "^7.0.3",
     "ajv-keywords": "^4.0.0",
     "assert": "^2.0.0",
     "barcoder": "^2.0.1",
