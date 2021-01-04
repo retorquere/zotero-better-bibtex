@@ -2,7 +2,7 @@
 
 // test/fixtures/export/two ISSN number are freezing browser #110 + Generating keys and export broken #111.json 
 
-const AJV = require('ajv')
+import AJV from 'ajv'
 const ajv = new AJV
 const validate = ajv.compile(require('../test/features/steps/bbtjsonschema.json'))
 import * as jsonpatch from 'fast-json-patch'

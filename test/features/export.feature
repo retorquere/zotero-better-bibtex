@@ -140,6 +140,7 @@ Scenario Outline: Export <references> references for BibTeX to <file>
 
   Examples:
      | file                                                                               | references |
+     | url field is having its special characters escaped in BBT Bibtex #1716             | 1          |
      | Match against @string value for export #1597                                       | 1          |
      | BibTeX journal article QR reports missing field number #1589                       | 2          |
      | Format disambiguations #1554                                                       | 2          |
