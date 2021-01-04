@@ -95,7 +95,7 @@ if args.prebuilt:
   xpi = glob.glob(f'prebuilt/zotero-better-bibtex*{args.prebuilt}*.xpi')[0]
   shutil.copy(xpi, 'xpi')
 elif not CI.service : # local run
-  process = subprocess.Popen(['npm', 'run', 'build'], stdout=subprocess.PIPE)
+  process = subprocess.Popen(['pnpm', 'run', 'build'], stdout=subprocess.PIPE)
   while True:
     line = process.stdout.readline()
     print(line.decode('utf-8'), end='')
