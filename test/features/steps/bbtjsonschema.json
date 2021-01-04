@@ -119,7 +119,9 @@
               "enum": [
                 "off",
                 "note",
-                "url"
+                "note-url-ish",
+                "url",
+                "url-ish"
               ]
             },
             "warnBulkModify": {

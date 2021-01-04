@@ -314,7 +314,7 @@ export function doExport() {
     if (Translator.preferences.DOIandURL === 'both' || !doi) {
       switch (Translator.preferences.bibtexURL) {
         case 'url':
-          url = ref.add({ name: 'url', value: item.url || item.extraFields.kv.url })
+          url = ref.add({ name: 'url', value: item.url || item.extraFields.kv.url, enc: 'url' })
           break
 
         case 'note':

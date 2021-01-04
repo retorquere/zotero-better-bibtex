@@ -942,12 +942,12 @@ export class Reference {
    * @return {String} field.value encoded as verbatim LaTeX string (minimal escaping). If in Better BibTeX, wraps return value in `\url{string}`
    */
   protected enc_url(f) {
-    const value = this.enc_verbatim(f)
-
-    if (Translator.BetterBibTeX) {
-      return `\\url{${value}}`
+    if (Translator.BetterBibTeX && Translator.preferences.bibtexURL.endsWith('-ish')) {
+      return (f.value || '').replace(/([#\\%&{}])/g, '\\$1') // or maybe enc_latex?
+    } else if (Translator.BetterBibTeX && Translator.preferences.bibtexURL === 'note') {
+      return `\\url{${this.enc_verbatim(f)}}`
     } else {
-      return value
+      return this.enc_verbatim(f)
     }
   }
 
@@ -958,7 +958,8 @@ export class Reference {
    * @return {String} field.value encoded as verbatim LaTeX string (minimal escaping).
    */
   protected enc_verbatim(f) {
-    return this.toVerbatim(f.value)
+    // if (!Translator.unicode) value = value.replace(/[^\x20-\x7E]/g, (chr => `\\%${`00${chr.charCodeAt(0).toString(16).slice(-2)}`}`)) // tslint:disable-line:no-magic-numbers
+    return (f.value || '').replace(/([\\{}])/g, '\\$1')
   }
 
   protected _enc_creators_scrub_name(name) {
@@ -1290,19 +1291,6 @@ export class Reference {
   }
 
   private postscript(_reference, _item, _translator, _zotero): boolean { return true } // tslint:disable-line:no-empty
-
-  private toVerbatim(text) {
-    text = text || ''
-
-    let value
-    if (Translator.BetterBibTeX) {
-      value = text.replace(/([#\\%&{}])/g, '\\$1')
-    } else {
-      value = text.replace(/([\\{}])/g, '\\$1')
-    }
-    // if (!Translator.unicode) value = value.replace(/[^\x20-\x7E]/g, (chr => `\\%${`00${chr.charCodeAt(0).toString(16).slice(-2)}`}`)) // tslint:disable-line:no-magic-numbers
-    return value
-  }
 
   private qualityReport() {
     if (!Translator.preferences.qualityReport) return ''

@@ -25,8 +25,10 @@ Most BibTeX styles do not support DOI/URL fields. Of the styles that do support 
 Options:
 
 * no
-* in a note field
-* in a URL field
+* in the 'note' field
+* in the 'note' field, but assuming the 'url' package is not loaded
+* in the 'url' field
+* in the 'url' field, but assuming the 'url' package is not loaded
 
 ### BibLaTeX
 

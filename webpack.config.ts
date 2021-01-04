@@ -153,16 +153,20 @@ if (!process.env.MINITESTS) {
           }),
           // new LogUsedFilesPlugin(label, 'translator'),
           new PostCompile(() => {
-            // @ts-ignore TS2339
-            if (!header.configOptions) header.configOptions = {}
-            const source = fs.readFileSync(`build/resource/${label}.js`)
-            const checksum = crypto.createHash('sha256')
-            checksum.update(source)
-            // @ts-ignore TS2339
-            header.configOptions.hash = checksum.digest('hex')
-            // @ts-ignore TS2339
-            header.lastUpdated = (new Date).toISOString().replace(/T.*/, '')
-            fs.writeFileSync(`build/resource/${label}.json`, JSON.stringify(header, null, 2))
+            if (fs.existsSync(`build/resource/${label}.js`)) {
+              // @ts-ignore TS2339
+              if (!header.configOptions) header.configOptions = {}
+              const source = fs.readFileSync(`build/resource/${label}.js`)
+              const checksum = crypto.createHash('sha256')
+              checksum.update(source)
+              // @ts-ignore TS2339
+              header.configOptions.hash = checksum.digest('hex')
+              // @ts-ignore TS2339
+              header.lastUpdated = (new Date).toISOString().replace(/T.*/, '')
+              fs.writeFileSync(`build/resource/${label}.json`, JSON.stringify(header, null, 2))
+            } else {
+              console.log(`build/resource/${label}.js does not exist (yet?)`)
+            }
           })
         ],
         context: path.resolve(__dirname, './translators'),
