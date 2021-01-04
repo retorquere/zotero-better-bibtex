@@ -222,6 +222,10 @@
     },
     "Export 1 references for BibTeX to preserve @strings between import-export #1162": 540,
     "Export 1 references for BibTeX to preserve BibTeX Variables does not check for null values while escaping #337": 370,
+    "Export 1 references for BibTeX to url field is having its special characters escaped in BBT Bibtex #1716": {
+      "msecs": 300,
+      "runs": -220
+    },
     "Export 2 references for BibLaTeX to Better BibLaTeX.002": 370,
     "Export 2 references for BibLaTeX to Better BibLaTeX.003": 380,
     "Export 2 references for BibLaTeX to Better BibLaTeX.009": 770,
@@ -243,7 +247,7 @@
     "Export 2 references for BibLaTeX to biblatex export of Presentation; Use type and venue fields #644": 530,
     "Export 2 references for BibLaTeX to csquotes #302": 420,
     "Export 2 references for BibLaTeX to google-scholar like references #1705": {
-      "msecs": 530,
+      "msecs": 520,
       "runs": -213
     },
     "Export 2 references for BibLaTeX to map csl-json variables #293": 450,
@@ -318,7 +322,7 @@
     "Import 1 references from Spaces lost when expanding string variables during import #1081": 1020,
     "Import 1 references from Wrong ring-above import #1115": 1020,
     "Import 1 references from collaborators to contributors": {
-      "msecs": 1170,
+      "msecs": 1160,
       "runs": -209
     },
     "Import 1 references from eprinttype field dropped on import #959": 1020,
@@ -357,17 +361,17 @@
     "Pandoc-LaTeX-SCHOMD Citation Export": 1280,
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 406680,
+    "Really Big whopping library": 406670,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 45150,
+      "msecs": 43010,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
     "Square brackets in Publication field (85), and non-pinned keys must change when the pattern does": 450,
-    "Unabbreviate on import #1436-1": 40570,
+    "Unabbreviate on import #1436-1": 40530,
     "Unbalanced vphantom escapes #1043": 760,
     "arXiv identifiers in BibLaTeX export #460": 1180,
     "auto-export": 14370,
@@ -595,7 +599,6 @@
       "Diacritics stripped from keys regardless of ascii or fold filters #266",
       "Capitalize all title-fields for language en #383",
       "Sorting and optional particle handling #411",
-      "(non-)dropping particle handling #313",
       "automatic tags in export #1270",
       "Field Institution not available anymore in key pattern for Zotero #1568",
       "use author dash separation rather than camel casing in citekey #1495",
@@ -652,6 +655,7 @@
       "two ISSN number are freezing browser #110 + Generating keys and export broken #111",
       "Do not caps-protect name fields #384 #565 #566",
       "auto-export",
+      "(non-)dropping particle handling #313",
       "Collected notes",
       "AUX scanner",
       "Import 20 references from BBT does not import groups from JabRef 5.1 #1641",
@@ -663,7 +667,7 @@
       "Duplicate Citation Key Alias #1384"
     ]
   },
-  "runs": 220,
+  "runs": 221,
   "slow": {
     "1": [
       "Export 2 references for BibLaTeX to google-scholar like references #1705",
@@ -940,7 +944,8 @@
       "Unabbreviate on import #1436-1",
       "Set IDS field when merging references with different citation keys #1221",
       "Merging error with arXiv ID #1373",
-      "Duplicate Citation Key Alias #1384"
+      "Duplicate Citation Key Alias #1384",
+      "Export 1 references for BibTeX to url field is having its special characters escaped in BBT Bibtex #1716"
     ],
     "2": [
       "Really Big whopping library"

@@ -463,6 +463,8 @@
   "export/typo stature-statute (zotero item type) #284.json",
   "export/underscores in URL fields should not be escaped #104.biblatex",
   "export/underscores in URL fields should not be escaped #104.json",
+  "export/url field is having its special characters escaped in BBT Bibtex #1716.bibtex",
+  "export/url field is having its special characters escaped in BBT Bibtex #1716.json",
   "export/urldate when only DOI is exported #869.biblatex",
   "export/urldate when only DOI is exported #869.json",
   "export/use author dash separation rather than camel casing in citekey #1495.bibtex",
