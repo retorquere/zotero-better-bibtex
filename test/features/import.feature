@@ -131,7 +131,6 @@ Scenario: Jabref groups import does not work #717
 Scenario: Unabbreviate on import #1436-1
   When I import 506 references from "import/*.bib" into a new collection
   Then the library should match "import/*.json"
-@use.with_slow=true @timeout=240
 
 #@1436
 #Scenario: Unabbreviate on import #1436-2
