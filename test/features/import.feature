@@ -96,13 +96,9 @@ Scenario Outline: Import <references> references from <file>
   | import software related biblatex entries #1544                              | 1           |
 
 @use.with_slow=true @timeout=3000
-@873
-Scenario Outline: Import <references> references from <file>
-  When I import <references> references from "import/<file>.bib"
+Scenario: Some bibtex entries quietly discarded on import from bib file #873
+  When I import 989 references from "import/*.bib"
   Then the library should match "import/*.json"
-  Examples:
-  | file                                                                        | references  |
-  | Some bibtex entries quietly discarded on import from bib file #873          | 989         |
 
 # | Async import, large library #720                                            | 9057        |
 
