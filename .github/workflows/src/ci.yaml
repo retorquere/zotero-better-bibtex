@@ -38,7 +38,7 @@ _anchors:
       if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
   install_node_packages: &install_node_packages
     name: install node packages
-    run: pnpm install
+    run: npm install -g pnpm && pnpm install
 
 jobs:
   build:
