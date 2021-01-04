@@ -31,6 +31,7 @@ jobs:
       with:
         path: |
           ~/.npm
+          ~/.pnpm-store
           ~/.cache/pip
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
         restore-keys: |
@@ -41,10 +42,10 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: install node packages
-      run: npm install
+      run: pnpm install
 
 
-    - run: npm run build
+    - run: pnpm run build
 
     - name: store build artifacts
       uses: actions/upload-artifact@v2
@@ -58,7 +59,7 @@ jobs:
       with:
         hugo-version: latest
         extended: true
-    - run: npm run docs:deploy
+    - run: pnpm run docs:deploy
     - uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -90,6 +91,7 @@ jobs:
       with:
         path: |
           ~/.npm
+          ~/.pnpm-store
           ~/.cache/pip
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
         restore-keys: |
@@ -155,6 +157,7 @@ jobs:
       with:
         path: |
           ~/.npm
+          ~/.pnpm-store
           ~/.cache/pip
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
         restore-keys: |
@@ -165,10 +168,10 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: install node packages
-      run: npm install
+      run: pnpm install
 
 
-    - run: npm run release
+    - run: pnpm run release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

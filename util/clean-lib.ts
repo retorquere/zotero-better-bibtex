@@ -21,7 +21,7 @@ for (const pref of ['client', 'testing', 'platform', 'newTranslatorsAskRestart']
 }
 preferences.supported = Object.keys(preferences.defaults)
 
-const argv = require('rasper')(process.argv.slice(2))
+const argv = require("clp")()
 if (argv.save && typeof argv.save !== 'boolean') {
   console.log('put --save at end of command line')
   process.exit(1)
