@@ -1,7 +1,7 @@
 {
   "duration": {
     "(non-)dropping particle handling #313": 2810,
-    "AUX scanner": 9150,
+    "AUX scanner": 9140,
     "BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372": 270,
     "Better BibTeX Import 2": 1160,
     "BibTeX name escaping has a million inconsistencies #438": 480,
@@ -228,7 +228,7 @@
     },
     "Export 2 references for BibLaTeX to Better BibLaTeX.002": 370,
     "Export 2 references for BibLaTeX to Better BibLaTeX.003": 380,
-    "Export 2 references for BibLaTeX to Better BibLaTeX.009": 770,
+    "Export 2 references for BibLaTeX to Better BibLaTeX.009": 780,
     "Export 2 references for BibLaTeX to BibLaTeX Patent author handling, type #1060": 540,
     "Export 2 references for BibLaTeX to Book Title exports to Journaltitle for Biblatex @incollection reference type #1691": {
       "msecs": 560,
@@ -322,7 +322,7 @@
     "Import 1 references from Spaces lost when expanding string variables during import #1081": 1020,
     "Import 1 references from Wrong ring-above import #1115": 1020,
     "Import 1 references from collaborators to contributors": {
-      "msecs": 1160,
+      "msecs": 1150,
       "runs": -209
     },
     "Import 1 references from eprinttype field dropped on import #959": 1020,
@@ -361,17 +361,17 @@
     "Pandoc-LaTeX-SCHOMD Citation Export": 1280,
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 406640,
+    "Really Big whopping library": 406910,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 42650,
+      "msecs": 42630,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
     "Square brackets in Publication field (85), and non-pinned keys must change when the pattern does": 450,
-    "Unabbreviate on import #1436-1": 40500,
+    "Unabbreviate on import #1436-1": 40480,
     "Unbalanced vphantom escapes #1043": 760,
     "arXiv identifiers in BibLaTeX export #460": 1180,
     "auto-export": 14370,
@@ -668,7 +668,7 @@
       "Duplicate Citation Key Alias #1384"
     ]
   },
-  "runs": 222,
+  "runs": 223,
   "slow": {
     "1": [
       "Export 2 references for BibLaTeX to google-scholar like references #1705",
