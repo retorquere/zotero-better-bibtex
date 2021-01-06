@@ -38,7 +38,10 @@ _anchors:
       if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
   install_node_packages: &install_node_packages
     name: install node packages
-    run: npm install -g pnpm && pnpm install
+    uses: pnpm/action-setup@v1.2.1
+    with:
+      version: latest
+      run_install: true
 
 jobs:
   build:
@@ -56,7 +59,7 @@ jobs:
     - *install_python_packages
     - *install_node_packages
 
-    - run: pnpm run build
+    - run: npm run build
 
     - name: store build artifacts
       uses: actions/upload-artifact@v2
@@ -70,7 +73,7 @@ jobs:
       with:
         hugo-version: latest
         extended: true
-    - run: pnpm run docs:deploy
+    - run: npm run docs:deploy
     - uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -139,7 +142,7 @@ jobs:
     - *install_python_packages
     - *install_node_packages
 
-    - run: pnpm run release
+    - run: npm run release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
