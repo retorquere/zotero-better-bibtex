@@ -442,6 +442,7 @@ class ZoteroItem {
     techreport:     'report',
     report:         'report',
     online:         'webpage',
+    web_page:         'webpage',
     softwareversion:  'computerProgram',
     software:         'computerProgram',
     softwaremodule:   'computerProgram',
