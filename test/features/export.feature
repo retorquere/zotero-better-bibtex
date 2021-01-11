@@ -7,6 +7,7 @@ Scenario Outline: Export <references> references for BibLaTeX to <file>
 
   Examples:
      | file                                                                                           | references  |
+     | type dataset exported as @data instead of @dataset for BibLaTeX #1720                          | 1           |
      | google-scholar like references #1705                                                           | 2           |
      | Book Title exports to Journaltitle for Biblatex @incollection reference type #1691             | 2           |
      | When exporting notes, also handle the blockquote tag #1656                                     | 1           |

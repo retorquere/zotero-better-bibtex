@@ -39,7 +39,7 @@ if (argv._.length === 0) {
     process.exit(1)
   }
   argv._ = glob('test/fixtures/*/*.json')
-  argv.save = argv.saveAll
+  argv.save = argv['save-all']
 }
 argv._.sort()
 console.log(`## inspecting ${argv._.length} files`)
