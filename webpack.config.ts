@@ -50,7 +50,7 @@ const common = {
     alias: {
       'pegjs-loader': 'zotero-plugin/loader/pegjs',
       // 'json-jsesc-loader': 'zotero-plugin/loader/json',
-      'bcf-loader': path.join(__dirname, './setup/loaders/bcf.ts'),
+      'bibertool-loader': path.join(__dirname, './setup/loaders/bibertool.ts'),
       'trace-loader': path.join(__dirname, './setup/loaders/trace.ts'),
     },
   },
@@ -58,7 +58,7 @@ const common = {
     rules: [
       { test: /\.pegjs$/, use: [ 'pegjs-loader' ] },
       // { test: /\.json$/, type: 'javascript/auto', use: [ 'json-jsesc-loader' ] }, // https://github.com/webpack/webpack/issues/6572
-      { test: /\.bcf$/, use: [ 'bcf-loader' ] },
+      { test: /\.bibertool/, use: [ 'bibertool-loader' ] },
       { test: /\.ts$/, exclude: [ /node_modules/ ], use: [ 'trace-loader', 'ts-loader' ] },
     ],
   },
