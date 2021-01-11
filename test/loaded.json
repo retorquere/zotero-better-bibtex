@@ -459,6 +459,8 @@
   "export/transliteration for citekey #580.json",
   "export/two ISSN number are freezing browser #110 + Generating keys and export broken #111.biblatex",
   "export/two ISSN number are freezing browser #110 + Generating keys and export broken #111.json",
+  "export/type dataset exported as @data instead of @dataset for BibLaTeX #1720.biblatex",
+  "export/type dataset exported as @data instead of @dataset for BibLaTeX #1720.json",
   "export/typo stature-statute (zotero item type) #284.biblatex",
   "export/typo stature-statute (zotero item type) #284.json",
   "export/underscores in URL fields should not be escaped #104.biblatex",
