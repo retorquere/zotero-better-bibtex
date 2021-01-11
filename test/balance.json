@@ -1,7 +1,7 @@
 {
   "duration": {
     "(non-)dropping particle handling #313": 2810,
-    "AUX scanner": 9130,
+    "AUX scanner": 9120,
     "BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372": 270,
     "Better BibTeX Import 2": 1160,
     "BibTeX name escaping has a million inconsistencies #438": 480,
@@ -149,7 +149,7 @@
     "Export 1 references for BibLaTeX to tex.IDs= foo_bar are escaped despite the equals sign #1449": 250,
     "Export 1 references for BibLaTeX to transliteration for citekey #580": 400,
     "Export 1 references for BibLaTeX to type dataset exported as @data instead of @dataset for BibLaTeX #1720": {
-      "msecs": 450,
+      "msecs": 400,
       "runs": -223
     },
     "Export 1 references for BibLaTeX to typo stature-statute (zotero item type) #284": 380,
@@ -227,7 +227,7 @@
     "Export 1 references for BibTeX to preserve @strings between import-export #1162": 540,
     "Export 1 references for BibTeX to preserve BibTeX Variables does not check for null values while escaping #337": 370,
     "Export 1 references for BibTeX to url field is having its special characters escaped in BBT Bibtex #1716": {
-      "msecs": 330,
+      "msecs": 300,
       "runs": -220
     },
     "Export 2 references for BibLaTeX to Better BibLaTeX.002": 370,
@@ -235,7 +235,7 @@
     "Export 2 references for BibLaTeX to Better BibLaTeX.009": 780,
     "Export 2 references for BibLaTeX to BibLaTeX Patent author handling, type #1060": 540,
     "Export 2 references for BibLaTeX to Book Title exports to Journaltitle for Biblatex @incollection reference type #1691": {
-      "msecs": 560,
+      "msecs": 550,
       "runs": -198
     },
     "Export 2 references for BibLaTeX to CSL title, volume-title, container-title=BL title, booktitle, maintitle #381": 400,
@@ -251,7 +251,7 @@
     "Export 2 references for BibLaTeX to biblatex export of Presentation; Use type and venue fields #644": 530,
     "Export 2 references for BibLaTeX to csquotes #302": 420,
     "Export 2 references for BibLaTeX to google-scholar like references #1705": {
-      "msecs": 510,
+      "msecs": 500,
       "runs": -213
     },
     "Export 2 references for BibLaTeX to map csl-json variables #293": 450,
@@ -326,7 +326,7 @@
     "Import 1 references from Spaces lost when expanding string variables during import #1081": 1020,
     "Import 1 references from Wrong ring-above import #1115": 1020,
     "Import 1 references from collaborators to contributors": {
-      "msecs": 1160,
+      "msecs": 1150,
       "runs": -209
     },
     "Import 1 references from eprinttype field dropped on import #959": 1020,
@@ -341,7 +341,7 @@
     "Import 2 references from BibLaTeX Patent author handling, type #1060": 1210,
     "Import 2 references from space after citekey creates confusion #716": 1160,
     "Import 20 references from BBT does not import groups from JabRef 5.1 #1641": {
-      "msecs": 3730,
+      "msecs": 3720,
       "runs": -161
     },
     "Import 3 references from Better BibTeX.009": 1130,
@@ -365,17 +365,17 @@
     "Pandoc-LaTeX-SCHOMD Citation Export": 1280,
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 407020,
+    "Really Big whopping library": 406730,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 41330,
+      "msecs": 40060,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
     "Square brackets in Publication field (85), and non-pinned keys must change when the pattern does": 450,
-    "Unabbreviate on import #1436-1": 40430,
+    "Unabbreviate on import #1436-1": 40370,
     "Unbalanced vphantom escapes #1043": 760,
     "arXiv identifiers in BibLaTeX export #460": 1180,
     "auto-export": 14370,
@@ -392,6 +392,7 @@
   },
   "fast": {
     "1": [
+      "Export 1 references for BibLaTeX to type dataset exported as @data instead of @dataset for BibLaTeX #1720",
       "Export 2 references for BibLaTeX to google-scholar like references #1705",
       "Export 2 references for BibLaTeX to Book Title exports to Journaltitle for Biblatex @incollection reference type #1691",
       "Export 1 references for BibLaTeX to When exporting notes, also handle the blockquote tag #1656",
@@ -633,7 +634,6 @@
       "Import 1 references from Spaces lost when expanding string variables during import #1081",
       "Import 1 references from Wrong ring-above import #1115",
       "Import 1 references from eprinttype field dropped on import #959",
-      "Import 1 references from support Local-Zo-Url-x field from BibDesk2Zotero_attachments #667",
       "Import 1 references from Author splitter failure",
       "Import 2 references from Better BibTeX.001",
       "Import 1 references from Better BibTeX.008",
@@ -664,6 +664,7 @@
       "Collected notes",
       "AUX scanner",
       "Import 20 references from BBT does not import groups from JabRef 5.1 #1641",
+      "Import 1 references from support Local-Zo-Url-x field from BibDesk2Zotero_attachments #667",
       "Some bibtex entries quietly discarded on import from bib file #873",
       "Jabref groups import does not work #717",
       "Unabbreviate on import #1436-1",
@@ -672,9 +673,10 @@
       "Duplicate Citation Key Alias #1384"
     ]
   },
-  "runs": 224,
+  "runs": 225,
   "slow": {
     "1": [
+      "Export 1 references for BibLaTeX to type dataset exported as @data instead of @dataset for BibLaTeX #1720",
       "Export 2 references for BibLaTeX to google-scholar like references #1705",
       "Export 2 references for BibLaTeX to Book Title exports to Journaltitle for Biblatex @incollection reference type #1691",
       "Export 1 references for BibLaTeX to When exporting notes, also handle the blockquote tag #1656",
@@ -950,8 +952,7 @@
       "Unabbreviate on import #1436-1",
       "Set IDS field when merging references with different citation keys #1221",
       "Merging error with arXiv ID #1373",
-      "Duplicate Citation Key Alias #1384",
-      "Export 1 references for BibLaTeX to type dataset exported as @data instead of @dataset for BibLaTeX #1720"
+      "Duplicate Citation Key Alias #1384"
     ],
     "2": [
       "Really Big whopping library"
