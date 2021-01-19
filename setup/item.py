@@ -457,10 +457,12 @@ with fetch('zotero') as z, fetch('jurism') as j:
     min_version = {}
     hashes = json.load(f, object_hook=OrderedDict)
     for client in hashes.keys():
-      releases = list(hashes[client].keys())
-      current = releases[-1]
+      # assumes json loads dicts into an ordered dict
+      releases = reversed(list(hashes[client].keys()))
+      # pick the last(=first because of the 'reversed') non-null release as 
+      current = next(rel for rel in releases if hashes[client][rel])
       min_version[client] = current
-      for rel in reversed(releases):
+      for rel in releases:
         if hashes[client][rel] is None: # unreleased version, or no schema
           continue
         elif hashes[client][rel] != hashes[client][current]:
