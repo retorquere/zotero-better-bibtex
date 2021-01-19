@@ -1,0 +1,46 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "dmy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "biblatexExtendedNameFormat": true,
+      "bibtexURL": "url",
+      "citekeyFold": false,
+      "citekeyFormat": "[auth:capitalize][year]",
+      "exportBraceProtection": false,
+      "exportTitleCase": false,
+      "itemObserverDelay": 100,
+      "keyConflictPolicy": "change",
+      "keyScope": "global",
+      "qualityReport": true,
+      "skipFields": "abstract, language, note, keywords, file, month, shorttitle",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
+      "workers": 4
+    }
+  },
+  "items": [
+    {
+      "citationKey": "Doe2021",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "John",
+          "lastName": "Doe"
+        }
+      ],
+      "date": "2021",
+      "extra": [
+        "type: dataset"
+      ],
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "rights": "Restricted to linguistic research",
+      "title": "Faulty Dataset Export"
+    }
+  ]
+}

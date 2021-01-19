@@ -1,4 +1,4 @@
-name: continuous integration
+name: automated tests
 
 on:
   push: null
@@ -31,6 +31,7 @@ jobs:
       with:
         path: |
           ~/.npm
+          ~/.pnpm-store
           ~/.cache/pip
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
         restore-keys: |
@@ -41,7 +42,10 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: install node packages
-      run: npm install
+      uses: pnpm/action-setup@v1.2.1
+      with:
+        version: latest
+        run_install: true
 
 
     - run: npm run build
@@ -90,6 +94,7 @@ jobs:
       with:
         path: |
           ~/.npm
+          ~/.pnpm-store
           ~/.cache/pip
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
         restore-keys: |
@@ -100,13 +105,17 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    - run: curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
-    - run: sudo apt-get update
-    - run: sudo apt-get install ${{ matrix.client }} ${{ matrix.client }}-beta
+    - name: install ${{ matrix.client }} + beta
+      run: |
+        curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
+        sudo apt-get update
+        sudo apt-get install ${{ matrix.client }} ${{ matrix.client }}-beta
 
     # needs logs/logs to have them show up as logs in the artifact... no idea why
     - name: Run headless test
       uses: GabrielBB/xvfb-action@v1
+      env:
+        PYTHONUNBUFFERED: true
       with:
         run: ./test/behave --client ${{ matrix.client }} --logs logs/logs --format travis --bin ${{ matrix.bin }}
 
@@ -151,6 +160,7 @@ jobs:
       with:
         path: |
           ~/.npm
+          ~/.pnpm-store
           ~/.cache/pip
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
         restore-keys: |
@@ -161,7 +171,10 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: install node packages
-      run: npm install
+      uses: pnpm/action-setup@v1.2.1
+      with:
+        version: latest
+        run_install: true
 
 
     - run: npm run release

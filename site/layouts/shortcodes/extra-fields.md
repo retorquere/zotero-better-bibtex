@@ -40,7 +40,7 @@
 |**dictionary title**        |text|publicationTitle                                            |                        |
 |**docket number**           |text|number                                                      |number                  |
 |**document name**           |text|documentName¹                                               |document-name¹          |
-|**document number**         |text|number                                                      |number                  |
+|**document number**         |text|documentNumber¹ / number                                    |document-number¹        |
 |**editorial director**      |name|                                                            |editorial-director      |
 |**encyclopedia title**      |text|publicationTitle                                            |                        |
 |**episode number**          |text|number                                                      |number                  |

@@ -1,0 +1,1704 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+  <!-- BIBLATEX OPTION SCOPE -->
+  <optionscope type="GLOBAL">
+    <option datatype="xml">datamodel</option>
+    <option datatype="xml">labelalphanametemplate</option>
+    <option datatype="xml">labelalphatemplate</option>
+    <option datatype="xml">inheritance</option>
+    <option datatype="xml">translit</option>
+    <option datatype="xml">uniquenametemplate</option>
+    <option datatype="xml">sortingnamekeytemplate</option>
+    <option datatype="xml">sortingtemplate</option>
+    <option datatype="xml">extradatespec</option>
+    <option datatype="xml">labelnamespec</option>
+    <option datatype="xml">labeltitlespec</option>
+    <option datatype="xml">labeldatespec</option>
+    <option datatype="string">controlversion</option>
+    <option datatype="string">alphaothers</option>
+    <option datatype="string">sortalphaothers</option>
+    <option datatype="string">presort</option>
+    <option datatype="string">texencoding</option>
+    <option datatype="string">bibencoding</option>
+    <option datatype="string">sortingtemplatename</option>
+    <option datatype="string">sortlocale</option>
+    <option datatype="string">language</option>
+    <option datatype="string">autolang</option>
+    <option datatype="string">backrefsetstyle</option>
+    <option datatype="string">block</option>
+    <option datatype="string">labeldate</option>
+    <option datatype="string">labeltime</option>
+    <option datatype="string">dateera</option>
+    <option datatype="string">date</option>
+    <option datatype="string">time</option>
+    <option datatype="string">eventdate</option>
+    <option datatype="string">eventtime</option>
+    <option datatype="string">origdate</option>
+    <option datatype="string">origtime</option>
+    <option datatype="string">urldate</option>
+    <option datatype="string">urltime</option>
+    <option datatype="string">alldatesusetime</option>
+    <option datatype="string">alldates</option>
+    <option datatype="string">alltimes</option>
+    <option datatype="string">gregorianstart</option>
+    <option datatype="string">autocite</option>
+    <option datatype="string">notetype</option>
+    <option datatype="string">uniquelist</option>
+    <option datatype="string">uniquename</option>
+    <option datatype="string">refsection</option>
+    <option datatype="string">refsegment</option>
+    <option datatype="string">citereset</option>
+    <option datatype="string">sortlos</option>
+    <option datatype="string">babel</option>
+    <option datatype="string">datelabel</option>
+    <option datatype="string">backrefstyle</option>
+    <option datatype="string">arxiv</option>
+    <option datatype="boolean">familyinits</option>
+    <option datatype="boolean">giveninits</option>
+    <option datatype="boolean">prefixinits</option>
+    <option datatype="boolean">suffixinits</option>
+    <option datatype="boolean">useafterword</option>
+    <option datatype="boolean">useannotator</option>
+    <option datatype="boolean">useauthor</option>
+    <option datatype="boolean">usebookauthor</option>
+    <option datatype="boolean">usecommentator</option>
+    <option datatype="boolean">useeditor</option>
+    <option datatype="boolean">useeditora</option>
+    <option datatype="boolean">useeditorb</option>
+    <option datatype="boolean">useeditorc</option>
+    <option datatype="boolean">useforeword</option>
+    <option datatype="boolean">useholder</option>
+    <option datatype="boolean">useintroduction</option>
+    <option datatype="boolean">usenamea</option>
+    <option datatype="boolean">usenameb</option>
+    <option datatype="boolean">usenamec</option>
+    <option datatype="boolean">usetranslator</option>
+    <option datatype="boolean">useshortauthor</option>
+    <option datatype="boolean">useshorteditor</option>
+    <option datatype="boolean">debug</option>
+    <option datatype="boolean">loadfiles</option>
+    <option datatype="boolean">safeinputenc</option>
+    <option datatype="boolean">sortcase</option>
+    <option datatype="boolean">sortupper</option>
+    <option datatype="boolean">terseinits</option>
+    <option datatype="boolean">abbreviate</option>
+    <option datatype="boolean">dateabbrev</option>
+    <option datatype="boolean">noroman</option>
+    <option datatype="boolean">nohashothers</option>
+    <option datatype="boolean">nosortothers</option>
+    <option datatype="boolean">singletitle</option>
+    <option datatype="boolean">uniquebaretitle</option>
+    <option datatype="boolean">uniqueprimaryauthor</option>
+    <option datatype="boolean">uniquetitle</option>
+    <option datatype="boolean">uniquework</option>
+    <option datatype="boolean">clearlang</option>
+    <option datatype="boolean">indexing</option>
+    <option datatype="boolean">sortcites</option>
+    <option datatype="boolean">sortsets</option>
+    <option datatype="boolean">hyperref</option>
+    <option datatype="boolean">backref</option>
+    <option datatype="boolean">pagetracker</option>
+    <option datatype="boolean">citecounter</option>
+    <option datatype="boolean">citetracker</option>
+    <option datatype="boolean">ibidtracker</option>
+    <option datatype="boolean">idemtracker</option>
+    <option datatype="boolean">opcittracker</option>
+    <option datatype="boolean">loccittracker</option>
+    <option datatype="boolean">parentracker</option>
+    <option datatype="boolean">labeldateusetime</option>
+    <option datatype="boolean">datecirca</option>
+    <option datatype="boolean">dateuncertain</option>
+    <option datatype="boolean">dateusetime</option>
+    <option datatype="boolean">eventdateusetime</option>
+    <option datatype="boolean">origdateusetime</option>
+    <option datatype="boolean">urldateusetime</option>
+    <option datatype="boolean">julian</option>
+    <option datatype="boolean">datezeros</option>
+    <option datatype="boolean">timezeros</option>
+    <option datatype="boolean">timezones</option>
+    <option datatype="boolean">seconds</option>
+    <option datatype="boolean">autopunct</option>
+    <option datatype="boolean">punctfont</option>
+    <option datatype="boolean">labelnumber</option>
+    <option datatype="boolean">labelalpha</option>
+    <option datatype="boolean">labeltitle</option>
+    <option datatype="boolean">labeltitleyear</option>
+    <option datatype="boolean">labeldateparts</option>
+    <option datatype="boolean">defernumbers</option>
+    <option datatype="boolean">locallabelwidth</option>
+    <option datatype="boolean">bibwarn</option>
+    <option datatype="boolean">useprefix</option>
+    <option datatype="boolean">skipbib</option>
+    <option datatype="boolean">skipbiblist</option>
+    <option datatype="boolean">skiplab</option>
+    <option datatype="boolean">dataonly</option>
+    <option datatype="boolean">defernums</option>
+    <option datatype="boolean">firstinits</option>
+    <option datatype="boolean">sortfirstinits</option>
+    <option datatype="boolean">sortgiveninits</option>
+    <option datatype="boolean">labelyear</option>
+    <option datatype="boolean">isbn</option>
+    <option datatype="boolean">url</option>
+    <option datatype="boolean">doi</option>
+    <option datatype="boolean">eprint</option>
+    <option datatype="boolean">related</option>
+    <option datatype="boolean">dashed</option>
+    <option datatype="boolean">mergedate</option>
+    <option datatype="integer">mincrossrefs</option>
+    <option datatype="integer">minxrefs</option>
+    <option datatype="integer">maxnames</option>
+    <option datatype="integer">minnames</option>
+    <option datatype="integer">maxbibnames</option>
+    <option datatype="integer">minbibnames</option>
+    <option datatype="integer">maxcitenames</option>
+    <option datatype="integer">mincitenames</option>
+    <option datatype="integer">maxsortnames</option>
+    <option datatype="integer">minsortnames</option>
+    <option datatype="integer">maxitems</option>
+    <option datatype="integer">minitems</option>
+    <option datatype="integer">maxalphanames</option>
+    <option datatype="integer">minalphanames</option>
+    <option datatype="integer">maxparens</option>
+    <option datatype="integer">dateeraauto</option>
+  </optionscope>
+  <optionscope type="ENTRYTYPE">
+    <option datatype="string">alphaothers</option>
+    <option datatype="string">sortalphaothers</option>
+    <option datatype="string">presort</option>
+    <option datatype="string">uniquelist</option>
+    <option datatype="string">uniquename</option>
+    <option datatype="boolean">useafterword</option>
+    <option datatype="boolean">useannotator</option>
+    <option datatype="boolean">useauthor</option>
+    <option datatype="boolean">usebookauthor</option>
+    <option datatype="boolean">usecommentator</option>
+    <option datatype="boolean">useeditor</option>
+    <option datatype="boolean">useeditora</option>
+    <option datatype="boolean">useeditorb</option>
+    <option datatype="boolean">useeditorc</option>
+    <option datatype="boolean">useforeword</option>
+    <option datatype="boolean">useholder</option>
+    <option datatype="boolean">useintroduction</option>
+    <option datatype="boolean">usenamea</option>
+    <option datatype="boolean">usenameb</option>
+    <option datatype="boolean">usenamec</option>
+    <option datatype="boolean">usetranslator</option>
+    <option datatype="boolean">useshortauthor</option>
+    <option datatype="boolean">useshorteditor</option>
+    <option datatype="boolean">noroman</option>
+    <option datatype="boolean">nohashothers</option>
+    <option datatype="boolean">nosortothers</option>
+    <option datatype="boolean">singletitle</option>
+    <option datatype="boolean">uniquebaretitle</option>
+    <option datatype="boolean">uniqueprimaryauthor</option>
+    <option datatype="boolean">uniquetitle</option>
+    <option datatype="boolean">uniquework</option>
+    <option datatype="boolean">indexing</option>
+    <option datatype="boolean">labelnumber</option>
+    <option datatype="boolean">labelalpha</option>
+    <option datatype="boolean">labeltitle</option>
+    <option datatype="boolean">labeltitleyear</option>
+    <option datatype="boolean">labeldateparts</option>
+    <option datatype="boolean">useprefix</option>
+    <option datatype="boolean">skipbib</option>
+    <option datatype="boolean">skipbiblist</option>
+    <option datatype="boolean">skiplab</option>
+    <option datatype="boolean">dataonly</option>
+    <option datatype="boolean">skiplos</option>
+    <option datatype="boolean">labelyear</option>
+    <option datatype="xml">labelalphatemplate</option>
+    <option datatype="xml">translit</option>
+    <option datatype="xml">sortexclusion</option>
+    <option datatype="xml">sortinclusion</option>
+    <option datatype="xml">labelnamespec</option>
+    <option datatype="xml">labeltitlespec</option>
+    <option datatype="xml">labeldatespec</option>
+    <option datatype="integer">maxnames</option>
+    <option datatype="integer">minnames</option>
+    <option datatype="integer">maxbibnames</option>
+    <option datatype="integer">minbibnames</option>
+    <option datatype="integer">maxcitenames</option>
+    <option datatype="integer">mincitenames</option>
+    <option datatype="integer">maxsortnames</option>
+    <option datatype="integer">minsortnames</option>
+    <option datatype="integer">maxitems</option>
+    <option datatype="integer">minitems</option>
+    <option datatype="integer">maxalphanames</option>
+    <option datatype="integer">minalphanames</option>
+  </optionscope>
+  <optionscope type="ENTRY">
+    <option datatype="string">noinherit</option>
+    <option datatype="string" backendin="sortingnamekeytemplatename,uniquenametemplatename,labelalphanametemplatename">nametemplates</option>
+    <option datatype="string" backendout="1">labelalphanametemplatename</option>
+    <option datatype="string" backendout="1">uniquenametemplatename</option>
+    <option datatype="string" backendout="1">sortingnamekeytemplatename</option>
+    <option datatype="string">presort</option>
+    <option datatype="string" backendout="1">uniquelist</option>
+    <option datatype="string" backendout="1">uniquename</option>
+    <option datatype="boolean" backendin="skipbib=true,skipbiblist=true,skiplab=true,uniquename=false,uniquelist=false">dataonly</option>
+    <option datatype="boolean">noroman</option>
+    <option datatype="boolean">nohashothers</option>
+    <option datatype="boolean">nosortothers</option>
+    <option datatype="boolean">singletitle</option>
+    <option datatype="boolean">uniquebaretitle</option>
+    <option datatype="boolean">uniqueprimaryauthor</option>
+    <option datatype="boolean">uniquetitle</option>
+    <option datatype="boolean">uniquework</option>
+    <option datatype="boolean" backendout="1">useafterword</option>
+    <option datatype="boolean" backendout="1">useannotator</option>
+    <option datatype="boolean" backendout="1">useauthor</option>
+    <option datatype="boolean" backendout="1">usebookauthor</option>
+    <option datatype="boolean" backendout="1">usecommentator</option>
+    <option datatype="boolean" backendout="1">useeditor</option>
+    <option datatype="boolean" backendout="1">useeditora</option>
+    <option datatype="boolean" backendout="1">useeditorb</option>
+    <option datatype="boolean" backendout="1">useeditorc</option>
+    <option datatype="boolean" backendout="1">useforeword</option>
+    <option datatype="boolean" backendout="1">useholder</option>
+    <option datatype="boolean" backendout="1">useintroduction</option>
+    <option datatype="boolean" backendout="1">usenamea</option>
+    <option datatype="boolean" backendout="1">usenameb</option>
+    <option datatype="boolean" backendout="1">usenamec</option>
+    <option datatype="boolean" backendout="1">usetranslator</option>
+    <option datatype="boolean" backendout="1">useshortauthor</option>
+    <option datatype="boolean" backendout="1">useshorteditor</option>
+    <option datatype="boolean" backendout="1">indexing</option>
+    <option datatype="boolean" backendout="1">labelnumber</option>
+    <option datatype="boolean" backendout="1">labelalpha</option>
+    <option datatype="boolean" backendout="1">labeltitle</option>
+    <option datatype="boolean" backendout="1">labeltitleyear</option>
+    <option datatype="boolean" backendout="1">labeldateparts</option>
+    <option datatype="boolean" backendout="1">useprefix</option>
+    <option datatype="boolean" backendout="1">skipbib</option>
+    <option datatype="boolean" backendout="1">skipbiblist</option>
+    <option datatype="boolean" backendout="1">skiplab</option>
+    <option datatype="boolean" backendout="1">skiplos</option>
+    <option datatype="integer" backendin="maxcitenames,maxbibnames,maxsortnames">maxnames</option>
+    <option datatype="integer" backendin="mincitenames,minbibnames,minsortnames">minnames</option>
+    <option datatype="integer">maxsortnames</option>
+    <option datatype="integer">minsortnames</option>
+    <option datatype="integer" backendout="1">maxbibnames</option>
+    <option datatype="integer" backendout="1">minbibnames</option>
+    <option datatype="integer" backendout="1">maxcitenames</option>
+    <option datatype="integer" backendout="1">mincitenames</option>
+    <option datatype="integer" backendout="1">maxitems</option>
+    <option datatype="integer" backendout="1">minitems</option>
+    <option datatype="integer" backendout="1">maxalphanames</option>
+    <option datatype="integer" backendout="1">minalphanames</option>
+  </optionscope>
+  <optionscope type="NAMELIST">
+    <option datatype="string" backendin="sortingnamekeytemplatename,uniquenametemplatename,labelalphanametemplatename">nametemplates</option>
+    <option datatype="string" backendout="1">sortingnamekeytemplatename</option>
+    <option datatype="string" backendout="1">uniquenametemplatename</option>
+    <option datatype="string">uniquelist</option>
+    <option datatype="string">uniquename</option>
+    <option datatype="string" backendout="1">labelalphanametemplatename</option>
+    <option datatype="boolean" backendout="1">useprefix</option>
+    <option datatype="boolean">nohashothers</option>
+    <option datatype="boolean">nosortothers</option>
+  </optionscope>
+  <optionscope type="NAME">
+    <option datatype="string" backendin="sortingnamekeytemplatename,uniquenametemplatename,labelalphanametemplatename">nametemplates</option>
+    <option datatype="string" backendout="1">sortingnamekeytemplatename</option>
+    <option datatype="string" backendout="1">uniquenametemplatename</option>
+    <option datatype="string">uniquename</option>
+    <option datatype="string" backendout="1">labelalphanametemplatename</option>
+    <option datatype="boolean" backendout="1">useprefix</option>
+  </optionscope>
+  <!-- DATAFIELDSETS -->
+  <datafieldset name="setnames">
+    <member datatype="name" fieldtype="list"/>
+  </datafieldset>
+  <datafieldset name="settitles">
+    <member field="title"/>
+    <member field="booktitle"/>
+    <member field="eventtitle"/>
+    <member field="issuetitle"/>
+    <member field="journaltitle"/>
+    <member field="maintitle"/>
+    <member field="origtitle"/>
+  </datafieldset>
+  <!-- SOURCEMAP -->
+  <sourcemap>
+    <maps datatype="bibtex">
+      <map>
+        <map_step map_type_source="conference" map_type_target="inproceedings"/>
+        <map_step map_type_source="electronic" map_type_target="online"/>
+        <map_step map_type_source="www" map_type_target="online"/>
+      </map>
+      <map>
+        <map_step map_type_source="mastersthesis" map_type_target="thesis" map_final="1"/>
+        <map_step map_field_set="type" map_field_value="mathesis"/>
+      </map>
+      <map>
+        <map_step map_type_source="phdthesis" map_type_target="thesis" map_final="1"/>
+        <map_step map_field_set="type" map_field_value="phdthesis"/>
+      </map>
+      <map>
+        <map_step map_type_source="techreport" map_type_target="report" map_final="1"/>
+        <map_step map_field_set="type" map_field_value="techreport"/>
+      </map>
+      <map>
+        <map_step map_field_source="address" map_field_target="location"/>
+        <map_step map_field_source="school" map_field_target="institution"/>
+        <map_step map_field_source="annote" map_field_target="annotation"/>
+        <map_step map_field_source="archiveprefix" map_field_target="eprinttype"/>
+        <map_step map_field_source="journal" map_field_target="journaltitle"/>
+        <map_step map_field_source="primaryclass" map_field_target="eprintclass"/>
+        <map_step map_field_source="key" map_field_target="sortkey"/>
+        <map_step map_field_source="pdf" map_field_target="file"/>
+      </map>
+    </maps>
+  </sourcemap>
+  <!-- INHERITANCE -->
+  <inheritance>
+    <defaults inherit_all="true" override_target="false">
+    </defaults>
+    <inherit>
+      <type_pair source="mvbook" target="inbook"/>
+      <type_pair source="mvbook" target="bookinbook"/>
+      <type_pair source="mvbook" target="suppbook"/>
+      <type_pair source="book" target="inbook"/>
+      <type_pair source="book" target="bookinbook"/>
+      <type_pair source="book" target="suppbook"/>
+      <field source="author" target="author"/>
+      <field source="author" target="bookauthor"/>
+    </inherit>
+    <inherit>
+      <type_pair source="mvbook" target="book"/>
+      <type_pair source="mvbook" target="inbook"/>
+      <type_pair source="mvbook" target="bookinbook"/>
+      <type_pair source="mvbook" target="suppbook"/>
+      <field source="title" target="maintitle"/>
+      <field source="subtitle" target="mainsubtitle"/>
+      <field source="titleaddon" target="maintitleaddon"/>
+    </inherit>
+    <inherit>
+      <type_pair source="mvcollection" target="collection"/>
+      <type_pair source="mvcollection" target="incollection"/>
+      <type_pair source="mvcollection" target="suppcollection"/>
+      <field source="title" target="maintitle"/>
+      <field source="subtitle" target="mainsubtitle"/>
+      <field source="titleaddon" target="maintitleaddon"/>
+    </inherit>
+    <inherit>
+      <type_pair source="mvproceedings" target="proceedings"/>
+      <type_pair source="mvproceedings" target="inproceedings"/>
+      <field source="title" target="maintitle"/>
+      <field source="subtitle" target="mainsubtitle"/>
+      <field source="titleaddon" target="maintitleaddon"/>
+    </inherit>
+    <inherit>
+      <type_pair source="mvreference" target="reference"/>
+      <type_pair source="mvreference" target="inreference"/>
+      <field source="title" target="maintitle"/>
+      <field source="subtitle" target="mainsubtitle"/>
+      <field source="titleaddon" target="maintitleaddon"/>
+    </inherit>
+    <inherit>
+      <type_pair source="book" target="inbook"/>
+      <type_pair source="book" target="bookinbook"/>
+      <type_pair source="book" target="suppbook"/>
+      <field source="title" target="booktitle"/>
+      <field source="subtitle" target="booksubtitle"/>
+      <field source="titleaddon" target="booktitleaddon"/>
+    </inherit>
+    <inherit>
+      <type_pair source="collection" target="incollection"/>
+      <type_pair source="collection" target="suppcollection"/>
+      <field source="title" target="booktitle"/>
+      <field source="subtitle" target="booksubtitle"/>
+      <field source="titleaddon" target="booktitleaddon"/>
+    </inherit>
+    <inherit>
+      <type_pair source="reference" target="inreference"/>
+      <field source="title" target="booktitle"/>
+      <field source="subtitle" target="booksubtitle"/>
+      <field source="titleaddon" target="booktitleaddon"/>
+    </inherit>
+    <inherit>
+      <type_pair source="proceedings" target="inproceedings"/>
+      <field source="title" target="booktitle"/>
+      <field source="subtitle" target="booksubtitle"/>
+      <field source="titleaddon" target="booktitleaddon"/>
+    </inherit>
+    <inherit>
+      <type_pair source="periodical" target="article"/>
+      <type_pair source="periodical" target="suppperiodical"/>
+      <field source="title" target="journaltitle"/>
+      <field source="subtitle" target="journalsubtitle"/>
+    </inherit>
+  </inheritance>
+  <!-- UNIQUENAME TEMPLATE -->
+  <uniquenametemplate name="global">
+    <namepart order="1" use="1" base="1">prefix</namepart>
+    <namepart order="2" base="1">family</namepart>
+    <namepart order="3">given</namepart>
+  </uniquenametemplate>
+  <!-- SORTING NAME KEY -->
+  <sortingnamekeytemplate name="global">
+    <keypart order="1">
+      <part type="namepart" order="1" use="1">prefix</part>
+    </keypart>
+    <keypart order="2">
+      <part type="namepart" order="1">family</part>
+    </keypart>
+    <keypart order="3">
+      <part type="namepart" order="1">given</part>
+    </keypart>
+    <keypart order="4">
+      <part type="namepart" order="1">suffix</part>
+    </keypart>
+    <keypart order="5">
+      <part type="namepart" order="1" use="0">prefix</part>
+    </keypart>
+  </sortingnamekeytemplate>
+  <presort>mm</presort>
+  <!-- SORTING SCHEMES -->
+  <sortingtemplate name="tool">
+    <sort order="1">
+      <sortitem order="1">citeorder</sortitem>
+    </sort>
+  </sortingtemplate>
+  <!-- DATA MODEL -->
+  <datamodel>
+    <constants>
+      <constant type="list" name="gender">sf,sm,sn,pf,pm,pn,pp</constant>
+      <constant type="list" name="nameparts">family,given,prefix,suffix</constant>
+      <constant type="list" name="optiondatatypes">boolean,integer,string,xml</constant>
+      <constant type="list" name="multiscriptforms">original,transliteration,transcription,translation</constant>
+    </constants>
+    <entrytypes>
+      <entrytype>article</entrytype>
+      <entrytype>artwork</entrytype>
+      <entrytype>audio</entrytype>
+      <entrytype>bibnote</entrytype>
+      <entrytype>book</entrytype>
+      <entrytype>bookinbook</entrytype>
+      <entrytype>booklet</entrytype>
+      <entrytype>collection</entrytype>
+      <entrytype>commentary</entrytype>
+      <entrytype>customa</entrytype>
+      <entrytype>customb</entrytype>
+      <entrytype>customc</entrytype>
+      <entrytype>customd</entrytype>
+      <entrytype>custome</entrytype>
+      <entrytype>customf</entrytype>
+      <entrytype>inbook</entrytype>
+      <entrytype>incollection</entrytype>
+      <entrytype>inproceedings</entrytype>
+      <entrytype>inreference</entrytype>
+      <entrytype>image</entrytype>
+      <entrytype>jurisdiction</entrytype>
+      <entrytype>legal</entrytype>
+      <entrytype>legislation</entrytype>
+      <entrytype>letter</entrytype>
+      <entrytype>manual</entrytype>
+      <entrytype>misc</entrytype>
+      <entrytype>movie</entrytype>
+      <entrytype>music</entrytype>
+      <entrytype>mvcollection</entrytype>
+      <entrytype>mvreference</entrytype>
+      <entrytype>mvbook</entrytype>
+      <entrytype>online</entrytype>
+      <entrytype>patent</entrytype>
+      <entrytype>performance</entrytype>
+      <entrytype>periodical</entrytype>
+      <entrytype>proceedings</entrytype>
+      <entrytype>reference</entrytype>
+      <entrytype>report</entrytype>
+      <entrytype>review</entrytype>
+      <entrytype>set</entrytype>
+      <entrytype>software</entrytype>
+      <entrytype>standard</entrytype>
+      <entrytype>suppbook</entrytype>
+      <entrytype>suppcollection</entrytype>
+      <entrytype>thesis</entrytype>
+      <entrytype>unpublished</entrytype>
+      <entrytype>video</entrytype>
+      <entrytype skip_output="true">xdata</entrytype>
+    </entrytypes>
+    <fields>
+      <field fieldtype="field" datatype="datepart">month</field>
+      <field fieldtype="field" datatype="datepart">year</field>
+      <field fieldtype="field" datatype="datepart">day</field>
+      <field fieldtype="field" datatype="datepart">endday</field>
+      <field fieldtype="field" datatype="datepart">endmonth</field>
+      <field fieldtype="field" datatype="datepart">eventday</field>
+      <field fieldtype="field" datatype="datepart">eventendday</field>
+      <field fieldtype="field" datatype="datepart">eventendmonth</field>
+      <field fieldtype="field" datatype="datepart">eventmonth</field>
+      <field fieldtype="field" datatype="datepart">eventyear</field>
+      <field fieldtype="field" datatype="datepart">origday</field>
+      <field fieldtype="field" datatype="datepart">origendday</field>
+      <field fieldtype="field" datatype="datepart">origendmonth</field>
+      <field fieldtype="field" datatype="datepart">origmonth</field>
+      <field fieldtype="field" datatype="datepart">origyear</field>
+      <field fieldtype="field" datatype="datepart">urlday</field>
+      <field fieldtype="field" datatype="datepart">urlendday</field>
+      <field fieldtype="field" datatype="datepart">urlendmonth</field>
+      <field fieldtype="field" datatype="datepart">urlmonth</field>
+      <field fieldtype="field" datatype="datepart">urlyear</field>
+      <field fieldtype="field" datatype="literal">abstract</field>
+      <field fieldtype="field" datatype="literal">addendum</field>
+      <field fieldtype="field" datatype="literal">annotation</field>
+      <field fieldtype="field" datatype="literal">booksubtitle</field>
+      <field fieldtype="field" datatype="literal">booktitle</field>
+      <field fieldtype="field" datatype="literal">booktitleaddon</field>
+      <field fieldtype="field" datatype="literal">chapter</field>
+      <field fieldtype="field" datatype="literal">edition</field>
+      <field fieldtype="field" datatype="literal">eid</field>
+      <field fieldtype="field" datatype="literal">entrysubtype</field>
+      <field fieldtype="field" datatype="literal">eprintclass</field>
+      <field fieldtype="field" datatype="literal">eprinttype</field>
+      <field fieldtype="field" datatype="literal">eventtitle</field>
+      <field fieldtype="field" datatype="literal">eventtitleaddon</field>
+      <field fieldtype="field" datatype="literal">gender</field>
+      <field fieldtype="field" datatype="literal">howpublished</field>
+      <field fieldtype="field" datatype="literal">indexsorttitle</field>
+      <field fieldtype="field" datatype="literal">indextitle</field>
+      <field fieldtype="field" datatype="literal">isan</field>
+      <field fieldtype="field" datatype="literal">isbn</field>
+      <field fieldtype="field" datatype="literal">ismn</field>
+      <field fieldtype="field" datatype="literal">isrn</field>
+      <field fieldtype="field" datatype="literal">issn</field>
+      <field fieldtype="field" datatype="literal">issue</field>
+      <field fieldtype="field" datatype="literal">issuesubtitle</field>
+      <field fieldtype="field" datatype="literal">issuetitle</field>
+      <field fieldtype="field" datatype="literal">iswc</field>
+      <field fieldtype="field" datatype="literal">journalsubtitle</field>
+      <field fieldtype="field" datatype="literal">journaltitle</field>
+      <field fieldtype="field" datatype="literal">label</field>
+      <field fieldtype="field" datatype="literal">langid</field>
+      <field fieldtype="field" datatype="literal">langidopts</field>
+      <field fieldtype="field" datatype="literal">library</field>
+      <field fieldtype="field" datatype="literal">mainsubtitle</field>
+      <field fieldtype="field" datatype="literal">maintitle</field>
+      <field fieldtype="field" datatype="literal">maintitleaddon</field>
+      <field fieldtype="field" datatype="literal">nameaddon</field>
+      <field fieldtype="field" datatype="literal">note</field>
+      <field fieldtype="field" datatype="literal">number</field>
+      <field fieldtype="field" datatype="literal">origtitle</field>
+      <field fieldtype="field" datatype="literal">pagetotal</field>
+      <field fieldtype="field" datatype="literal">part</field>
+      <field fieldtype="field" datatype="literal">relatedstring</field>
+      <field fieldtype="field" datatype="literal">relatedtype</field>
+      <field fieldtype="field" datatype="literal">reprinttitle</field>
+      <field fieldtype="field" datatype="literal">series</field>
+      <field fieldtype="field" datatype="literal">shorthandintro</field>
+      <field fieldtype="field" datatype="literal">subtitle</field>
+      <field fieldtype="field" datatype="literal">title</field>
+      <field fieldtype="field" datatype="literal">titleaddon</field>
+      <field fieldtype="field" datatype="literal">usera</field>
+      <field fieldtype="field" datatype="literal">userb</field>
+      <field fieldtype="field" datatype="literal">userc</field>
+      <field fieldtype="field" datatype="literal">userd</field>
+      <field fieldtype="field" datatype="literal">usere</field>
+      <field fieldtype="field" datatype="literal">userf</field>
+      <field fieldtype="field" datatype="literal">venue</field>
+      <field fieldtype="field" datatype="literal">version</field>
+      <field fieldtype="field" datatype="literal">volume</field>
+      <field fieldtype="field" datatype="literal">volumes</field>
+      <field fieldtype="field" datatype="literal" label="true">shorthand</field>
+      <field fieldtype="field" datatype="literal" label="true">shortjournal</field>
+      <field fieldtype="field" datatype="literal" label="true">shortseries</field>
+      <field fieldtype="field" datatype="literal" label="true">shorttitle</field>
+      <field fieldtype="field" datatype="datepart" nullok="true">urlendyear</field>
+      <field fieldtype="field" datatype="datepart" nullok="true">endyear</field>
+      <field fieldtype="field" datatype="datepart" nullok="true">eventendyear</field>
+      <field fieldtype="field" datatype="datepart" nullok="true">origendyear</field>
+      <field fieldtype="field" datatype="literal" skip_output="true">sorttitle</field>
+      <field fieldtype="field" datatype="literal" skip_output="true">sortshorthand</field>
+      <field fieldtype="field" datatype="literal" skip_output="true">sortyear</field>
+      <field fieldtype="field" datatype="literal" skip_output="true">sortkey</field>
+      <field fieldtype="field" datatype="literal" skip_output="true">presort</field>
+      <field fieldtype="list" datatype="literal">institution</field>
+      <field fieldtype="list" datatype="literal">lista</field>
+      <field fieldtype="list" datatype="literal">listb</field>
+      <field fieldtype="list" datatype="literal">listc</field>
+      <field fieldtype="list" datatype="literal">listd</field>
+      <field fieldtype="list" datatype="literal">liste</field>
+      <field fieldtype="list" datatype="literal">listf</field>
+      <field fieldtype="list" datatype="literal">location</field>
+      <field fieldtype="list" datatype="literal">organization</field>
+      <field fieldtype="list" datatype="literal">origlocation</field>
+      <field fieldtype="list" datatype="literal">origpublisher</field>
+      <field fieldtype="list" datatype="literal">publisher</field>
+      <field fieldtype="list" datatype="name">afterword</field>
+      <field fieldtype="list" datatype="name">annotator</field>
+      <field fieldtype="list" datatype="name">author</field>
+      <field fieldtype="list" datatype="name">bookauthor</field>
+      <field fieldtype="list" datatype="name">commentator</field>
+      <field fieldtype="list" datatype="name">editor</field>
+      <field fieldtype="list" datatype="name">editora</field>
+      <field fieldtype="list" datatype="name">editorb</field>
+      <field fieldtype="list" datatype="name">editorc</field>
+      <field fieldtype="list" datatype="name">foreword</field>
+      <field fieldtype="list" datatype="name">holder</field>
+      <field fieldtype="list" datatype="name">introduction</field>
+      <field fieldtype="list" datatype="name">namea</field>
+      <field fieldtype="list" datatype="name">nameb</field>
+      <field fieldtype="list" datatype="name">namec</field>
+      <field fieldtype="list" datatype="name">translator</field>
+      <field fieldtype="list" datatype="name" label="true">shortauthor</field>
+      <field fieldtype="list" datatype="name" label="true">shorteditor</field>
+      <field fieldtype="list" datatype="name" skip_output="true">sortname</field>
+      <field fieldtype="field" datatype="key">authortype</field>
+      <field fieldtype="field" datatype="key">editoratype</field>
+      <field fieldtype="field" datatype="key">editorbtype</field>
+      <field fieldtype="field" datatype="key">editorctype</field>
+      <field fieldtype="field" datatype="key">editortype</field>
+      <field fieldtype="field" datatype="key">bookpagination</field>
+      <field fieldtype="field" datatype="key">nameatype</field>
+      <field fieldtype="field" datatype="key">namebtype</field>
+      <field fieldtype="field" datatype="key">namectype</field>
+      <field fieldtype="field" datatype="key">origlanguage</field>
+      <field fieldtype="field" datatype="key">pagination</field>
+      <field fieldtype="field" datatype="key">pubstate</field>
+      <field fieldtype="field" datatype="key">type</field>
+      <field fieldtype="list" datatype="key">language</field>
+      <field fieldtype="field" datatype="entrykey">crossref</field>
+      <field fieldtype="field" datatype="entrykey">xref</field>
+      <field fieldtype="field" datatype="date" skip_output="true">date</field>
+      <field fieldtype="field" datatype="date" skip_output="true">eventdate</field>
+      <field fieldtype="field" datatype="date" skip_output="true">origdate</field>
+      <field fieldtype="field" datatype="date" skip_output="true">urldate</field>
+      <field fieldtype="field" datatype="verbatim">doi</field>
+      <field fieldtype="field" datatype="verbatim">eprint</field>
+      <field fieldtype="field" datatype="verbatim">file</field>
+      <field fieldtype="field" datatype="verbatim">verba</field>
+      <field fieldtype="field" datatype="verbatim">verbb</field>
+      <field fieldtype="field" datatype="verbatim">verbc</field>
+      <field fieldtype="field" datatype="uri">url</field>
+      <field fieldtype="field" format="xsv" datatype="entrykey" skip_output="true">xdata</field>
+      <field fieldtype="field" format="xsv" datatype="entrykey" skip_output="true">ids</field>
+      <field fieldtype="field" format="xsv" datatype="entrykey" skip_output="true">entryset</field>
+      <field fieldtype="field" format="xsv" datatype="entrykey">related</field>
+      <field fieldtype="field" format="xsv" datatype="keyword">keywords</field>
+      <field fieldtype="field" format="xsv" datatype="option" skip_output="true">options</field>
+      <field fieldtype="field" format="xsv" datatype="option" skip_output="true">relatedoptions</field>
+      <field fieldtype="field" datatype="range">pages</field>
+      <field fieldtype="field" datatype="code">execute</field>
+    </fields>
+    <entryfields>
+      <field>abstract</field>
+      <field>annotation</field>
+      <field>authortype</field>
+      <field>bookpagination</field>
+      <field>crossref</field>
+      <field>day</field>
+      <field>doi</field>
+      <field>eprint</field>
+      <field>eprintclass</field>
+      <field>eprinttype</field>
+      <field>endday</field>
+      <field>endhour</field>
+      <field>endminute</field>
+      <field>endmonth</field>
+      <field>endseason</field>
+      <field>endsecond</field>
+      <field>endtimezone</field>
+      <field>endyear</field>
+      <field>entryset</field>
+      <field>entrysubtype</field>
+      <field>execute</field>
+      <field>file</field>
+      <field>gender</field>
+      <field>hour</field>
+      <field>ids</field>
+      <field>indextitle</field>
+      <field>indexsorttitle</field>
+      <field>isan</field>
+      <field>ismn</field>
+      <field>iswc</field>
+      <field>keywords</field>
+      <field>label</field>
+      <field>langid</field>
+      <field>langidopts</field>
+      <field>library</field>
+      <field>lista</field>
+      <field>listb</field>
+      <field>listc</field>
+      <field>listd</field>
+      <field>liste</field>
+      <field>listf</field>
+      <field>minute</field>
+      <field>month</field>
+      <field>namea</field>
+      <field>nameb</field>
+      <field>namec</field>
+      <field>nameatype</field>
+      <field>namebtype</field>
+      <field>namectype</field>
+      <field>nameaddon</field>
+      <field>options</field>
+      <field>origday</field>
+      <field>origendday</field>
+      <field>origendhour</field>
+      <field>origendminute</field>
+      <field>origendmonth</field>
+      <field>origendseason</field>
+      <field>origendsecond</field>
+      <field>origendtimezone</field>
+      <field>origendyear</field>
+      <field>orighour</field>
+      <field>origminute</field>
+      <field>origmonth</field>
+      <field>origseason</field>
+      <field>origsecond</field>
+      <field>origtimezone</field>
+      <field>origyear</field>
+      <field>origlocation</field>
+      <field>origpublisher</field>
+      <field>origtitle</field>
+      <field>pagination</field>
+      <field>presort</field>
+      <field>related</field>
+      <field>relatedoptions</field>
+      <field>relatedstring</field>
+      <field>relatedtype</field>
+      <field>season</field>
+      <field>second</field>
+      <field>shortauthor</field>
+      <field>shorteditor</field>
+      <field>shorthand</field>
+      <field>shorthandintro</field>
+      <field>shortjournal</field>
+      <field>shortseries</field>
+      <field>shorttitle</field>
+      <field>sortkey</field>
+      <field>sortname</field>
+      <field>sortshorthand</field>
+      <field>sorttitle</field>
+      <field>sortyear</field>
+      <field>timezone</field>
+      <field>url</field>
+      <field>urlday</field>
+      <field>urlendday</field>
+      <field>urlendhour</field>
+      <field>urlendminute</field>
+      <field>urlendmonth</field>
+      <field>urlendsecond</field>
+      <field>urlendtimezone</field>
+      <field>urlendyear</field>
+      <field>urlhour</field>
+      <field>urlminute</field>
+      <field>urlmonth</field>
+      <field>urlsecond</field>
+      <field>urltimezone</field>
+      <field>urlyear</field>
+      <field>usera</field>
+      <field>userb</field>
+      <field>userc</field>
+      <field>userd</field>
+      <field>usere</field>
+      <field>userf</field>
+      <field>verba</field>
+      <field>verbb</field>
+      <field>verbc</field>
+      <field>xdata</field>
+      <field>xref</field>
+      <field>year</field>
+    </entryfields>
+    <entryfields>
+      <entrytype>set</entrytype>
+      <field>entryset</field>
+    </entryfields>
+    <entryfields>
+      <entrytype>article</entrytype>
+      <field>addendum</field>
+      <field>annotator</field>
+      <field>author</field>
+      <field>commentator</field>
+      <field>editor</field>
+      <field>editora</field>
+      <field>editorb</field>
+      <field>editorc</field>
+      <field>editortype</field>
+      <field>editoratype</field>
+      <field>editorbtype</field>
+      <field>editorctype</field>
+      <field>eid</field>
+      <field>issn</field>
+      <field>issue</field>
+      <field>issuetitle</field>
+      <field>issuesubtitle</field>
+      <field>issuetitleaddon</field>
+      <field>journalsubtitle</field>
+      <field>journaltitle</field>
+      <field>journaltitleaddon</field>
+      <field>language</field>
+      <field>note</field>
+      <field>number</field>
+      <field>origlanguage</field>
+      <field>pages</field>
+      <field>pubstate</field>
+      <field>series</field>
+      <field>subtitle</field>
+      <field>title</field>
+      <field>titleaddon</field>
+      <field>translator</field>
+      <field>version</field>
+      <field>volume</field>
+    </entryfields>
+    <entryfields>
+      <entrytype>bibnote</entrytype>
+      <field>note</field>
+    </entryfields>
+    <entryfields>
+      <entrytype>book</entrytype>
+      <field>author</field>
+      <field>addendum</field>
+      <field>afterword</field>
+      <field>annotator</field>
+      <field>chapter</field>
+      <field>commentator</field>
+      <field>edition</field>
+      <field>editor</field>
+      <field>editora</field>
+      <field>editorb</field>
+      <field>editorc</field>
+      <field>editortype</field>
+      <field>editoratype</field>
+      <field>editorbtype</field>
+      <field>editorctype</field>
+      <field>eid</field>
+      <field>foreword</field>
+      <field>introduction</field>
+      <field>isbn</field>
+      <field>language</field>
+      <field>location</field>
+      <field>maintitle</field>
+      <field>maintitleaddon</field>
+      <field>mainsubtitle</field>
+      <field>note</field>
+      <field>number</field>
+      <field>origlanguage</field>
+      <field>pages</field>
+      <field>pagetotal</field>
+      <field>part</field>
+      <field>publisher</field>
+      <field>pubstate</field>
+      <field>series</field>
+      <field>subtitle</field>
+      <field>title</field>
+      <field>titleaddon</field>
+      <field>translator</field>
+      <field>volume</field>
+      <field>volumes</field>
+    </entryfields>
+    <entryfields>
+      <entrytype>mvbook</entrytype>
+      <field>addendum</field>
+      <field>afterword</field>
+      <field>annotator</field>
+      <field>author</field>
+      <field>commentator</field>
+      <field>edition</field>
+      <field>editor</field>
+      <field>editora</field>
+      <field>editorb</field>
+      <field>editorc</field>
+      <field>editortype</field>
+      <field>editoratype</field>
+      <field>editorbtype</field>
+      <field>editorctype</field>
+      <field>foreword</field>
+      <field>introduction</field>
+      <field>isbn</field>
+      <field>language</field>
+      <field>location</field>
+      <field>note</field>
+      <field>number</field>
+      <field>origlanguage</field>
+      <field>pagetotal</field>
+      <field>publisher</field>
+      <field>pubstate</field>
+      <field>series</field>
+      <field>subtitle</field>
+      <field>title</field>
+      <field>titleaddon</field>
+      <field>translator</field>
+      <field>volume</field>
+      <field>volumes</field>
+    </entryfields>
+    <entryfields>
+      <entrytype>inbook</entrytype>
+      <entrytype>bookinbook</entrytype>
+      <entrytype>suppbook</entrytype>
+      <field>addendum</field>
+      <field>afterword</field>
+      <field>annotator</field>
+      <field>author</field>
+      <field>booktitle</field>
+      <field>bookauthor</field>
+      <field>booksubtitle</field>
+      <field>booktitleaddon</field>
+      <field>chapter</field>
+      <field>commentator</field>
+      <field>edition</field>
+      <field>editor</field>
+      <field>editora</field>
+      <field>editorb</field>
+      <field>editorc</field>
+      <field>editortype</field>
+      <field>editoratype</field>
+      <field>editorbtype</field>
+      <field>editorctype</field>
+      <field>eid</field>
+      <field>foreword</field>
+      <field>introduction</field>
+      <field>isbn</field>
+      <field>language</field>
+      <field>location</field>
+      <field>mainsubtitle</field>
+      <field>maintitle</field>
+      <field>maintitleaddon</field>
+      <field>note</field>
+      <field>number</field>
+      <field>origlanguage</field>
+      <field>part</field>
+      <field>publisher</field>
+      <field>pages</field>
+      <field>pubstate</field>
+      <field>series</field>
+      <field>subtitle</field>
+      <field>title</field>
+      <field>titleaddon</field>
+      <field>translator</field>
+      <field>volume</field>
+      <field>volumes</field>
+    </entryfields>
+    <entryfields>
+      <entrytype>booklet</entrytype>
+      <field>addendum</field>
+      <field>author</field>
+      <field>chapter</field>
+      <field>editor</field>
+      <field>editortype</field>
+      <field>eid</field>
+      <field>howpublished</field>
+      <field>language</field>
+      <field>location</field>
+      <field>note</field>
+      <field>pages</field>
+      <field>pagetotal</field>
+      <field>pubstate</field>
+      <field>subtitle</field>
+      <field>title</field>
+      <field>titleaddon</field>
+      <field>type</field>
+    </entryfields>
+    <entryfields>
+      <entrytype>collection</entrytype>
+      <entrytype>reference</entrytype>
+      <field>addendum</field>
+      <field>afterword</field>
+      <field>annotator</field>
+      <field>chapter</field>
+      <field>commentator</field>
+      <field>edition</field>
+      <field>editor</field>
+      <field>editora</field>
+      <field>editorb</field>
+      <field>editorc</field>
+      <field>editortype</field>
+      <field>editoratype</field>
+      <field>editorbtype</field>
+      <field>editorctype</field>
+      <field>eid</field>
+      <field>foreword</field>
+      <field>introduction</field>
+      <field>isbn</field>
+      <field>language</field>
+      <field>location</field>
+      <field>mainsubtitle</field>
+      <field>maintitle</field>
+      <field>maintitleaddon</field>
+      <field>note</field>
+      <field>number</field>
+      <field>origlanguage</field>
+      <field>pages</field>
+      <field>pagetotal</field>
+      <field>part</field>
+      <field>publisher</field>
+      <field>pubstate</field>
+      <field>series</field>
+      <field>subtitle</field>
+      <field>title</field>
+      <field>titleaddon</field>
+      <field>translator</field>
+      <field>volume</field>
+      <field>volumes</field>
+    </entryfields>
+    <entryfields>
+      <entrytype>mvcollection</entrytype>
+      <entrytype>mvreference</entrytype>
+      <field>addendum</field>
+      <field>afterword</field>
+      <field>annotator</field>
+      <field>author</field>
+      <field>commentator</field>
+      <field>edition</field>
+      <field>editor</field>
+      <field>editora</field>
+      <field>editorb</field>
+      <field>editorc</field>
+      <field>editortype</field>
+      <field>editoratype</field>
+      <field>editorbtype</field>
+      <field>editorctype</field>
+      <field>foreword</field>
+      <field>introduction</field>
+      <field>isbn</field>
+      <field>language</field>
+      <field>location</field>
+      <field>note</field>
+      <field>number</field>
+      <field>origlanguage</field>
+      <field>publisher</field>
+      <field>pubstate</field>
+      <field>subtitle</field>
+      <field>title</field>
+      <field>titleaddon</field>
+      <field>translator</field>
+      <field>volume</field>
+      <field>volumes</field>
+    </entryfields>
+    <entryfields>
+      <entrytype>incollection</entrytype>
+      <entrytype>suppcollection</entrytype>
+      <entrytype>inreference</entrytype>
+      <field>addendum</field>
+      <field>afterword</field>
+      <field>annotator</field>
+      <field>author</field>
+      <field>booksubtitle</field>
+      <field>booktitle</field>
+      <field>booktitleaddon</field>
+      <field>chapter</field>
+      <field>commentator</field>
+      <field>edition</field>
+      <field>editor</field>
+      <field>editora</field>
+      <field>editorb</field>
+      <field>editorc</field>
+      <field>editortype</field>
+      <field>editoratype</field>
+      <field>editorbtype</field>
+      <field>editorctype</field>
+      <field>eid</field>
+      <field>foreword</field>
+      <field>introduction</field>
+      <field>isbn</field>
+      <field>language</field>
+      <field>location</field>
+      <field>mainsubtitle</field>
+      <field>maintitle</field>
+      <field>maintitleaddon</field>
+      <field>note</field>
+      <field>number</field>
+      <field>origlanguage</field>
+      <field>pages</field>
+      <field>part</field>
+      <field>publisher</field>
+      <field>pubstate</field>
+      <field>series</field>
+      <field>subtitle</field>
+      <field>title</field>
+      <field>titleaddon</field>
+      <field>translator</field>
+      <field>volume</field>
+      <field>volumes</field>
+    </entryfields>
+    <entryfields>
+      <entrytype>dataset</entrytype>
+      <field>addendum</field>
+      <field>author</field>
+      <field>edition</field>
+      <field>editor</field>
+      <field>editortype</field>
+      <field>language</field>
+      <field>location</field>
+      <field>note</field>
+      <field>number</field>
+      <field>organization</field>
+      <field>publisher</field>
+      <field>pubstate</field>
+      <field>series</field>
+      <field>subtitle</field>
+      <field>title</field>
+      <field>titleaddon</field>
+      <field>type</field>
+      <field>version</field>
+    </entryfields>
+    <entryfields>
+      <entrytype>manual</entrytype>
+      <field>addendum</field>
+      <field>author</field>
+      <field>chapter</field>
+      <field>edition</field>
+      <field>editor</field>
+      <field>editortype</field>
+      <field>eid</field>
+      <field>isbn</field>
+      <field>language</field>
+      <field>location</field>
+      <field>note</field>
+      <field>number</field>
+      <field>organization</field>
+      <field>pages</field>
+      <field>pagetotal</field>
+      <field>publisher</field>
+      <field>pubstate</field>
+      <field>series</field>
+      <field>subtitle</field>
+      <field>title</field>
+      <field>titleaddon</field>
+      <field>type</field>
+      <field>version</field>
+    </entryfields>
+    <entryfields>
+      <entrytype>misc</entrytype>
+      <entrytype>software</entrytype>
+      <field>addendum</field>
+      <field>author</field>
+      <field>editor</field>
+      <field>editortype</field>
+      <field>howpublished</field>
+      <field>language</field>
+      <field>location</field>
+      <field>note</field>
+      <field>organization</field>
+      <field>pubstate</field>
+      <field>subtitle</field>
+      <field>title</field>
+      <field>titleaddon</field>
+      <field>type</field>
+      <field>version</field>
+    </entryfields>
+    <entryfields>
+      <entrytype>online</entrytype>
+      <field>addendum</field>
+      <field>author</field>
+      <field>editor</field>
+      <field>editortype</field>
+      <field>language</field>
+      <field>note</field>
+      <field>organization</field>
+      <field>pubstate</field>
+      <field>subtitle</field>
+      <field>title</field>
+      <field>titleaddon</field>
+      <field>version</field>
+    </entryfields>
+    <entryfields>
+      <entrytype>patent</entrytype>
+      <field>addendum</field>
+      <field>author</field>
+      <field>holder</field>
+      <field>location</field>
+      <field>note</field>
+      <field>number</field>
+      <field>pubstate</field>
+      <field>subtitle</field>
+      <field>title</field>
+      <field>titleaddon</field>
+      <field>type</field>
+      <field>version</field>
+    </entryfields>
+    <entryfields>
+      <entrytype>periodical</entrytype>
+      <field>addendum</field>
+      <field>editor</field>
+      <field>editora</field>
+      <field>editorb</field>
+      <field>editorc</field>
+      <field>editortype</field>
+      <field>editoratype</field>
+      <field>editorbtype</field>
+      <field>editorctype</field>
+      <field>issn</field>
+      <field>issue</field>
+      <field>issuesubtitle</field>
+      <field>issuetitle</field>
+      <field>issuetitleaddon</field>
+      <field>language</field>
+      <field>note</field>
+      <field>number</field>
+      <field>pubstate</field>
+      <field>season</field>
+      <field>series</field>
+      <field>subtitle</field>
+      <field>title</field>
+      <field>titleaddon</field>
+      <field>volume</field>
+    </entryfields>
+    <entryfields>
+      <entrytype>mvproceedings</entrytype>
+      <field>addendum</field>
+      <field>editor</field>
+      <field>editortype</field>
+      <field>eventday</field>
+      <field>eventendday</field>
+      <field>eventendhour</field>
+      <field>eventendminute</field>
+      <field>eventendmonth</field>
+      <field>eventendseason</field>
+      <field>eventendsecond</field>
+      <field>eventendtimezone</field>
+      <field>eventendyear</field>
+      <field>eventhour</field>
+      <field>eventminute</field>
+      <field>eventmonth</field>
+      <field>eventseason</field>
+      <field>eventsecond</field>
+      <field>eventtimezone</field>
+      <field>eventyear</field>
+      <field>eventtitle</field>
+      <field>eventtitleaddon</field>
+      <field>isbn</field>
+      <field>language</field>
+      <field>location</field>
+      <field>note</field>
+      <field>number</field>
+      <field>organization</field>
+      <field>pagetotal</field>
+      <field>publisher</field>
+      <field>pubstate</field>
+      <field>series</field>
+      <field>subtitle</field>
+      <field>title</field>
+      <field>titleaddon</field>
+      <field>venue</field>
+      <field>volumes</field>
+    </entryfields>
+    <entryfields>
+      <entrytype>proceedings</entrytype>
+      <field>addendum</field>
+      <field>chapter</field>
+      <field>editor</field>
+      <field>editortype</field>
+      <field>eid</field>
+      <field>eventday</field>
+      <field>eventendday</field>
+      <field>eventendhour</field>
+      <field>eventendminute</field>
+      <field>eventendmonth</field>
+      <field>eventendseason</field>
+      <field>eventendsecond</field>
+      <field>eventendtimezone</field>
+      <field>eventendyear</field>
+      <field>eventhour</field>
+      <field>eventminute</field>
+      <field>eventmonth</field>
+      <field>eventseason</field>
+      <field>eventsecond</field>
+      <field>eventtimezone</field>
+      <field>eventyear</field>
+      <field>eventtitle</field>
+      <field>eventtitleaddon</field>
+      <field>isbn</field>
+      <field>language</field>
+      <field>location</field>
+      <field>mainsubtitle</field>
+      <field>maintitle</field>
+      <field>maintitleaddon</field>
+      <field>note</field>
+      <field>number</field>
+      <field>organization</field>
+      <field>pages</field>
+      <field>pagetotal</field>
+      <field>part</field>
+      <field>publisher</field>
+      <field>pubstate</field>
+      <field>series</field>
+      <field>subtitle</field>
+      <field>title</field>
+      <field>titleaddon</field>
+      <field>venue</field>
+      <field>volume</field>
+      <field>volumes</field>
+    </entryfields>
+    <entryfields>
+      <entrytype>inproceedings</entrytype>
+      <field>addendum</field>
+      <field>author</field>
+      <field>booksubtitle</field>
+      <field>booktitle</field>
+      <field>booktitleaddon</field>
+      <field>chapter</field>
+      <field>editor</field>
+      <field>editortype</field>
+      <field>eid</field>
+      <field>eventday</field>
+      <field>eventendday</field>
+      <field>eventendhour</field>
+      <field>eventendminute</field>
+      <field>eventendmonth</field>
+      <field>eventendseason</field>
+      <field>eventendsecond</field>
+      <field>eventendtimezone</field>
+      <field>eventendyear</field>
+      <field>eventhour</field>
+      <field>eventminute</field>
+      <field>eventmonth</field>
+      <field>eventseason</field>
+      <field>eventsecond</field>
+      <field>eventtimezone</field>
+      <field>eventyear</field>
+      <field>eventtitle</field>
+      <field>eventtitleaddon</field>
+      <field>isbn</field>
+      <field>language</field>
+      <field>location</field>
+      <field>mainsubtitle</field>
+      <field>maintitle</field>
+      <field>maintitleaddon</field>
+      <field>note</field>
+      <field>number</field>
+      <field>organization</field>
+      <field>pages</field>
+      <field>part</field>
+      <field>publisher</field>
+      <field>pubstate</field>
+      <field>series</field>
+      <field>subtitle</field>
+      <field>title</field>
+      <field>titleaddon</field>
+      <field>venue</field>
+      <field>volume</field>
+      <field>volumes</field>
+    </entryfields>
+    <entryfields>
+      <entrytype>report</entrytype>
+      <field>addendum</field>
+      <field>author</field>
+      <field>chapter</field>
+      <field>eid</field>
+      <field>institution</field>
+      <field>isrn</field>
+      <field>language</field>
+      <field>location</field>
+      <field>note</field>
+      <field>number</field>
+      <field>pages</field>
+      <field>pagetotal</field>
+      <field>pubstate</field>
+      <field>subtitle</field>
+      <field>title</field>
+      <field>titleaddon</field>
+      <field>type</field>
+      <field>version</field>
+    </entryfields>
+    <entryfields>
+      <entrytype>thesis</entrytype>
+      <field>addendum</field>
+      <field>author</field>
+      <field>chapter</field>
+      <field>eid</field>
+      <field>institution</field>
+      <field>language</field>
+      <field>location</field>
+      <field>note</field>
+      <field>pages</field>
+      <field>pagetotal</field>
+      <field>pubstate</field>
+      <field>subtitle</field>
+      <field>title</field>
+      <field>titleaddon</field>
+      <field>type</field>
+    </entryfields>
+    <entryfields>
+      <entrytype>unpublished</entrytype>
+      <field>addendum</field>
+      <field>author</field>
+      <field>eventday</field>
+      <field>eventendday</field>
+      <field>eventendhour</field>
+      <field>eventendminute</field>
+      <field>eventendmonth</field>
+      <field>eventendseason</field>
+      <field>eventendsecond</field>
+      <field>eventendtimezone</field>
+      <field>eventendyear</field>
+      <field>eventhour</field>
+      <field>eventminute</field>
+      <field>eventmonth</field>
+      <field>eventseason</field>
+      <field>eventsecond</field>
+      <field>eventtimezone</field>
+      <field>eventyear</field>
+      <field>eventtitle</field>
+      <field>eventtitleaddon</field>
+      <field>howpublished</field>
+      <field>language</field>
+      <field>location</field>
+      <field>note</field>
+      <field>pubstate</field>
+      <field>subtitle</field>
+      <field>title</field>
+      <field>titleaddon</field>
+      <field>type</field>
+      <field>venue</field>
+    </entryfields>
+    <multiscriptfields>
+      <field>abstract</field>
+      <field>addendum</field>
+      <field>afterword</field>
+      <field>annotator</field>
+      <field>author</field>
+      <field>bookauthor</field>
+      <field>booksubtitle</field>
+      <field>booktitle</field>
+      <field>booktitleaddon</field>
+      <field>chapter</field>
+      <field>commentator</field>
+      <field>editor</field>
+      <field>editora</field>
+      <field>editorb</field>
+      <field>editorc</field>
+      <field>foreword</field>
+      <field>holder</field>
+      <field>institution</field>
+      <field>introduction</field>
+      <field>issuesubtitle</field>
+      <field>issuetitle</field>
+      <field>issuetitleaddon</field>
+      <field>journalsubtitle</field>
+      <field>journaltitle</field>
+      <field>journaltitleaddon</field>
+      <field>location</field>
+      <field>mainsubtitle</field>
+      <field>maintitle</field>
+      <field>maintitleaddon</field>
+      <field>nameaddon</field>
+      <field>note</field>
+      <field>organization</field>
+      <field>origlanguage</field>
+      <field>origlocation</field>
+      <field>origpublisher</field>
+      <field>origtitle</field>
+      <field>part</field>
+      <field>publisher</field>
+      <field>relatedstring</field>
+      <field>series</field>
+      <field>shortauthor</field>
+      <field>shorteditor</field>
+      <field>shorthand</field>
+      <field>shortjournal</field>
+      <field>shortseries</field>
+      <field>shorttitle</field>
+      <field>sortname</field>
+      <field>sortshorthand</field>
+      <field>sorttitle</field>
+      <field>subtitle</field>
+      <field>title</field>
+      <field>titleaddon</field>
+      <field>translator</field>
+      <field>venue</field>
+    </multiscriptfields>
+    <constraints>
+      <entrytype>article</entrytype>
+      <entrytype>book</entrytype>
+      <entrytype>inbook</entrytype>
+      <entrytype>bookinbook</entrytype>
+      <entrytype>suppbook</entrytype>
+      <entrytype>booklet</entrytype>
+      <entrytype>collection</entrytype>
+      <entrytype>incollection</entrytype>
+      <entrytype>suppcollection</entrytype>
+      <entrytype>manual</entrytype>
+      <entrytype>misc</entrytype>
+      <entrytype>mvbook</entrytype>
+      <entrytype>mvcollection</entrytype>
+      <entrytype>online</entrytype>
+      <entrytype>patent</entrytype>
+      <entrytype>periodical</entrytype>
+      <entrytype>suppperiodical</entrytype>
+      <entrytype>proceedings</entrytype>
+      <entrytype>inproceedings</entrytype>
+      <entrytype>reference</entrytype>
+      <entrytype>inreference</entrytype>
+      <entrytype>report</entrytype>
+      <entrytype>set</entrytype>
+      <entrytype>thesis</entrytype>
+      <entrytype>unpublished</entrytype>
+      <constraint type="mandatory">
+        <fieldxor>
+          <field>date</field>
+          <field>year</field>
+        </fieldxor>
+      </constraint>
+    </constraints>
+    <constraints>
+      <entrytype>set</entrytype>
+      <constraint type="mandatory">
+        <field>entryset</field>
+      </constraint>
+    </constraints>
+    <constraints>
+      <entrytype>article</entrytype>
+      <constraint type="mandatory">
+        <field>author</field>
+        <field>journaltitle</field>
+        <field>title</field>
+      </constraint>
+    </constraints>
+    <constraints>
+      <entrytype>book</entrytype>
+      <entrytype>mvbook</entrytype>
+      <entrytype>mvcollection</entrytype>
+      <entrytype>mvreference</entrytype>
+      <constraint type="mandatory">
+        <field>author</field>
+        <field>title</field>
+      </constraint>
+    </constraints>
+    <constraints>
+      <entrytype>inbook</entrytype>
+      <entrytype>bookinbook</entrytype>
+      <entrytype>suppbook</entrytype>
+      <constraint type="mandatory">
+        <field>author</field>
+        <field>title</field>
+        <field>booktitle</field>
+      </constraint>
+    </constraints>
+    <constraints>
+      <entrytype>booklet</entrytype>
+      <constraint type="mandatory">
+        <fieldor>
+          <field>author</field>
+          <field>editor</field>
+        </fieldor>
+        <field>title</field>
+      </constraint>
+    </constraints>
+    <constraints>
+      <entrytype>collection</entrytype>
+      <entrytype>reference</entrytype>
+      <constraint type="mandatory">
+        <field>editor</field>
+        <field>title</field>
+      </constraint>
+    </constraints>
+    <constraints>
+      <entrytype>incollection</entrytype>
+      <entrytype>suppcollection</entrytype>
+      <entrytype>inreference</entrytype>
+      <constraint type="mandatory">
+        <field>author</field>
+        <field>editor</field>
+        <field>title</field>
+        <field>booktitle</field>
+      </constraint>
+    </constraints>
+    <constraints>
+      <entrytype>dataset</entrytype>
+      <constraint type="mandatory">
+        <field>title</field>
+      </constraint>
+    </constraints>
+    <constraints>
+      <entrytype>manual</entrytype>
+      <constraint type="mandatory">
+        <field>title</field>
+      </constraint>
+    </constraints>
+    <constraints>
+      <entrytype>misc</entrytype>
+      <entrytype>software</entrytype>
+      <constraint type="mandatory">
+        <field>title</field>
+      </constraint>
+    </constraints>
+    <constraints>
+      <entrytype>online</entrytype>
+      <constraint type="mandatory">
+        <field>title</field>
+        <fieldor>
+          <field>url</field>
+          <field>doi</field>
+          <field>eprint</field>
+        </fieldor>
+      </constraint>
+    </constraints>
+    <constraints>
+      <entrytype>patent</entrytype>
+      <constraint type="mandatory">
+        <field>author</field>
+        <field>title</field>
+        <field>number</field>
+      </constraint>
+    </constraints>
+    <constraints>
+      <entrytype>periodical</entrytype>
+      <constraint type="mandatory">
+        <field>editor</field>
+        <field>title</field>
+      </constraint>
+    </constraints>
+    <constraints>
+      <entrytype>proceedings</entrytype>
+      <entrytype>mvproceedings</entrytype>
+      <constraint type="mandatory">
+        <field>title</field>
+      </constraint>
+    </constraints>
+    <constraints>
+      <entrytype>inproceedings</entrytype>
+      <constraint type="mandatory">
+        <field>author</field>
+        <field>title</field>
+        <field>booktitle</field>
+      </constraint>
+    </constraints>
+    <constraints>
+      <entrytype>report</entrytype>
+      <constraint type="mandatory">
+        <field>author</field>
+        <field>title</field>
+        <field>type</field>
+        <field>institution</field>
+      </constraint>
+    </constraints>
+    <constraints>
+      <entrytype>thesis</entrytype>
+      <constraint type="mandatory">
+        <field>author</field>
+        <field>title</field>
+        <field>type</field>
+        <field>institution</field>
+      </constraint>
+    </constraints>
+    <constraints>
+      <entrytype>unpublished</entrytype>
+      <constraint type="mandatory">
+        <field>author</field>
+        <field>title</field>
+      </constraint>
+    </constraints>
+    <constraints>
+      <constraint type="data" datatype="isbn">
+        <field>isbn</field>
+      </constraint>
+      <constraint type="data" datatype="issn">
+        <field>issn</field>
+      </constraint>
+      <constraint type="data" datatype="ismn">
+        <field>ismn</field>
+      </constraint>
+      <constraint type="data" datatype="date">
+        <field>date</field>
+        <field>eventdate</field>
+        <field>origdate</field>
+        <field>urldate</field>
+      </constraint>
+      <constraint type="data" datatype="pattern" pattern="(?:sf|sm|sn|pf|pm|pn|pp)">
+        <field>gender</field>
+      </constraint>
+    </constraints>
+  </datamodel>
+</config>
+

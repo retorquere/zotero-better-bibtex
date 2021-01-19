@@ -141,7 +141,7 @@ class fetch(object):
             print('      release', release, 'does not have a bundled schema')
 
         except HTTPError as e:
-          if e.code in [ 403, 404 ] and release != current:
+          if e.code in [ 403, 404 ]:
             print('      release', release, 'not available')
             hashes[client][release] = None
           else:

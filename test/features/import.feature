@@ -54,6 +54,7 @@ Scenario Outline: Import <references> references from <file>
   Then the library should match "import/*.json"
   Examples:
   | file                                                                        | references  |
+  | collaborators to contributors                                               | 1           |
   | BBT does not import groups from JabRef 5.1 #1641                            | 20          |
   | Importing changes Journal to The Journal #1601                              | 1           |
   | Import of langle and rangle TeX commands #1468                              | 1           |
@@ -95,13 +96,9 @@ Scenario Outline: Import <references> references from <file>
   | import software related biblatex entries #1544                              | 1           |
 
 @use.with_slow=true @timeout=3000
-@873
-Scenario Outline: Import <references> references from <file>
-  When I import <references> references from "import/<file>.bib"
+Scenario: Some bibtex entries quietly discarded on import from bib file #873
+  When I import 989 references from "import/*.bib"
   Then the library should match "import/*.json"
-  Examples:
-  | file                                                                        | references  |
-  | Some bibtex entries quietly discarded on import from bib file #873          | 989         |
 
 # | Async import, large library #720                                            | 9057        |
 
@@ -134,7 +131,6 @@ Scenario: Jabref groups import does not work #717
 Scenario: Unabbreviate on import #1436-1
   When I import 506 references from "import/*.bib" into a new collection
   Then the library should match "import/*.json"
-@use.with_slow=true @timeout=240
 
 #@1436
 #Scenario: Unabbreviate on import #1436-2

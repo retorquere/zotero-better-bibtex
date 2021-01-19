@@ -546,9 +546,12 @@ class PatternFormatter {
   }
 
   /** replaces text, case insensitive; `:replace=.etal,&etal` will replace `.EtAl` with `&etal` */
-  public _replace(value, find: string, replace: string) {
-    if (!find || !replace) return (value || '')
-    return (value || '').replace(new RegExp(find.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&'), 'ig'), replace)
+  public _replace(value, find: string, replace: string, mode?: 'string' | 'regex') {
+    if (!find) return (value || '')
+    log.debug(':replace', { find, value: value || '', mode})
+    const re = mode === 'regex' ? find : find.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&')
+    log.debug(':replace', { find, value: value || '', mode}, (value || '').replace(new RegExp(re, 'ig'), replace || ''))
+    return (value || '').replace(new RegExp(re, 'ig'), replace || '')
   }
 
   /**
@@ -643,7 +646,7 @@ class PatternFormatter {
   }
 
   /** tries to replace diacritics with ascii look-alikes. Removes non-ascii characters it cannot match */
-  public _fold(value, mode?: string) {
+  public _fold(value, mode?: 'german' | 'japanese') {
     return this.removeDiacritics(value, mode).split(/\s+/).join(' ').trim()
   }
 

@@ -4,12 +4,19 @@ declare const OS: any
 
 import * as webpack from 'webpack'
 import * as path from 'path'
+import * as fs from 'fs'
+import * as crypto from 'crypto'
 
-// import CircularDependencyPlugin = require('circular-dependency-plugin')
 import WrapperPlugin = require('wrapper-webpack-plugin')
+import PostCompile = require('post-compile-webpack-plugin')
 
 import * as translators from './gen/translators.json'
 const _ = require('lodash')
+
+const build = {
+  uniqueName: _.startCase(require('./package.json').name).replace(/ /g, ''),
+  runtime: 'build/content/webpack.js',
+}
 
 const common = {
   mode: 'development',
@@ -43,7 +50,7 @@ const common = {
     alias: {
       'pegjs-loader': 'zotero-plugin/loader/pegjs',
       // 'json-jsesc-loader': 'zotero-plugin/loader/json',
-      'bcf-loader': path.join(__dirname, './setup/loaders/bcf.ts'),
+      'bibertool-loader': path.join(__dirname, './setup/loaders/bibertool.ts'),
       'trace-loader': path.join(__dirname, './setup/loaders/trace.ts'),
     },
   },
@@ -51,7 +58,7 @@ const common = {
     rules: [
       { test: /\.pegjs$/, use: [ 'pegjs-loader' ] },
       // { test: /\.json$/, type: 'javascript/auto', use: [ 'json-jsesc-loader' ] }, // https://github.com/webpack/webpack/issues/6572
-      { test: /\.bcf$/, use: [ 'bcf-loader' ] },
+      { test: /\.bibertool/, use: [ 'bibertool-loader' ] },
       { test: /\.ts$/, exclude: [ /node_modules/ ], use: [ 'trace-loader', 'ts-loader' ] },
     ],
   },
@@ -83,6 +90,22 @@ if (!process.env.MINITESTS) {
       },
       plugins: [
         new webpack.ProvidePlugin({ process: 'process/browser', }),
+        new PostCompile(() => {
+          if (fs.existsSync(build.runtime)) {
+            let js = fs.readFileSync(build.runtime, 'utf-8')
+
+            const prefix = `if (!Zotero.webpackChunk${build.uniqueName}) {\n\n`
+            const postfix = '\n\n}\n'
+
+            if (!js.startsWith(prefix)) js = `${prefix}${js}${postfix}`
+
+            fs.writeFileSync(build.runtime, js)
+
+          } else {
+            console.log(`${build.runtime} does not exist -- compilation error?`)
+
+          }
+        }),
       ],
 
       context: path.resolve(__dirname, './content'),
@@ -100,11 +123,10 @@ if (!process.env.MINITESTS) {
       // devtool: '#source-map',
       output: {
         globalObject: 'Zotero',
-        path: path.resolve(__dirname, './build/content'),
+        path: path.resolve(__dirname, path.dirname(build.runtime)),
         filename: '[name].js',
 
-        // jsonpFunction: 'WebPackedBetterBibTeX',
-        uniqueName: 'BetterBibTeX',
+        uniqueName: build.uniqueName,
 
         // chunkFilename: "[id].chunk.js",
         // sourceMapFilename: "./[name].js.map",
@@ -130,6 +152,22 @@ if (!process.env.MINITESTS) {
             ZOTERO_TRANSLATOR_INFO: JSON.stringify(header),
           }),
           // new LogUsedFilesPlugin(label, 'translator'),
+          new PostCompile(() => {
+            if (fs.existsSync(`build/resource/${label}.js`)) {
+              // @ts-ignore TS2339
+              if (!header.configOptions) header.configOptions = {}
+              const source = fs.readFileSync(`build/resource/${label}.js`)
+              const checksum = crypto.createHash('sha256')
+              checksum.update(source)
+              // @ts-ignore TS2339
+              header.configOptions.hash = checksum.digest('hex')
+              // @ts-ignore TS2339
+              header.lastUpdated = (new Date).toISOString().replace(/T.*/, '')
+              fs.writeFileSync(`build/resource/${label}.json`, JSON.stringify(header, null, 2))
+            } else {
+              console.log(`build/resource/${label}.js does not exist (yet?)`)
+            }
+          })
         ],
         context: path.resolve(__dirname, './translators'),
         entry: { [label]: `./${label}.ts` },
@@ -163,7 +201,6 @@ if (!process.env.MINITESTS) {
       entry: { Zotero: './worker/zotero.ts' },
 
       output: {
-        // jsonpFunction: 'WebPackedZoteroShim',
         uniqueName: 'BetterBibTeXZoteroShim',
         path: path.resolve(__dirname, './build/resource/worker'),
         filename: '[name].js',

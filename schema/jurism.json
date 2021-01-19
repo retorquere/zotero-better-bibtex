@@ -1,5 +1,5 @@
 {
-  "version": 33,
+  "version": 38,
   "itemTypes": [
     {
       "itemType": "artwork",
@@ -556,11 +556,14 @@
           "field": "division"
         },
         {
+          "field": "docketNumber",
+          "baseField": "number"
+        },
+        {
           "field": "documentName"
         },
         {
-          "field": "docketNumber",
-          "baseField": "number"
+          "field": "documentNumber"
         },
         {
           "field": "yearAsVolume"
@@ -1419,8 +1422,7 @@
           "field": "numberOfVolumes"
         },
         {
-          "field": "documentNumber",
-          "baseField": "number"
+          "field": "documentNumber"
         },
         {
           "field": "pages"
@@ -3559,6 +3561,9 @@
         "document-name": [
           "documentName"
         ],
+        "document-number": [
+          "documentNumber"
+        ],
         "admin-flag": [
           "adminFlag"
         ],
@@ -5279,7 +5284,7 @@
         "issuingAuthority": "Herausgeber",
         "itemType": "Typ",
         "journalAbbreviation": "Zeitschriften-Abk\u00fcrzung",
-        "jurisdiction": "Hoheitsbereich",
+        "jurisdiction": "Jurisdiktion",
         "label": "Label",
         "language": "Sprache",
         "legalStatus": "Rechtsstatus",
@@ -5760,7 +5765,7 @@
         "regnalYear": "Regnal Year",
         "regulationType": "Type",
         "regulatoryBody": "Authority",
-        "reign": "Reign",
+        "reign": "Case Type",
         "release": "Release",
         "reporter": "Reporter",
         "reporterVolume": "Reporter Volume",
@@ -5980,7 +5985,7 @@
         "regnalYear": "Regnal Year",
         "regulationType": "Type",
         "regulatoryBody": "Authority",
-        "reign": "Reign",
+        "reign": "Case Type",
         "release": "Release",
         "reporter": "Reporter",
         "reporterVolume": "Reporter Volume",

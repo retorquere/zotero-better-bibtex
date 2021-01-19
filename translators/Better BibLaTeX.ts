@@ -37,7 +37,7 @@ Reference.prototype.caseConversion = {
   eventtitle: true,
 }
 
-Reference.prototype.lint = require('./bibtex/biblatex.qr.bcf')
+Reference.prototype.lint = require('./bibtex/35440492ce37b2caf4b5fe1edfe86f832f1df8321688b1f546292255ae57720c.bibertool')
 
 type CreatorArray = any[] & { type?: string }
 
@@ -139,7 +139,8 @@ Reference.prototype.typeMap = {
     book                  : 'book',
     broadcast             : {type: 'misc', subtype: 'broadcast'},
     chapter               : 'incollection',
-    dataset               : 'data',
+    data                  : 'dataset',
+    dataset               : 'dataset',
     entry                 : 'inreference',
     'entry-dictionary'    : 'inreference',
     'entry-encyclopedia'  : 'inreference',

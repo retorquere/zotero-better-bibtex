@@ -9,7 +9,7 @@ declare const AsyncShutdown: any
 
 import { patch as $patch$ } from '../monkey-patch'
 
-import AJV = require('ajv')
+import AJV from 'ajv'
 import { log } from '../logger'
 // import { Preferences as Prefs } from '../prefs'
 
