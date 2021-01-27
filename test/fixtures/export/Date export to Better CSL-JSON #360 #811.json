@@ -11,95 +11,68 @@
   },
   "items": [
     {
-      "accessDate": "2015-04-30",
       "creators": [
         {
           "creatorType": "author",
           "firstName": "John",
-          "lastName": "Doe7"
+          "lastName": "Doe5"
         }
       ],
-      "date": "printemps 1985",
-      "issue": "3",
-      "itemID": 1,
-      "itemType": "journalArticle",
-      "pages": "4\u201323",
-      "publicationTitle": "Cinema Journal",
-      "title": "The Politics of Film Canons: printemps 1985",
-      "url": "http://www.jstor.org/stable/1225428",
-      "volume": "24"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "John",
-          "lastName": "Doe1"
-        }
-      ],
-      "date": "2014-12-31/2015-01-01",
+      "date": "-0333",
       "extra": [
-        "Citation Key: t1",
-        "accessed: 2014-12-31~",
-        "original-date: 1777-07-27/1888-08-28",
-        "event-date: 1888-08-28",
-        "submitted:1999-09-29/"
+        "Citation Key: t5",
+        "accessed: -0332-11-05",
+        "original-date: -0333/-0332",
+        "event-date: 0000",
+        "submitted:-0001"
       ],
-      "itemID": 2,
-      "itemType": "manuscript",
-      "title": "A manuscript: 2014-12-31/2015-01-01"
+      "itemID": 10,
+      "itemType": "book",
+      "title": "BC tests: -0333"
     },
     {
       "creators": [
         {
           "creatorType": "author",
           "firstName": "John",
-          "lastName": "Doe10"
+          "lastName": "Doe6"
         }
       ],
-      "date": "2011-05-25~/2012-06-26~",
-      "itemID": 3,
-      "itemType": "webpage",
-      "title": "EDTF date range, circa begin & end: 2011-05-25~/2012-06-26~"
+      "date": "-0099-07-12/-0043-03-15",
+      "extra": [
+        "Citation Key: t6"
+      ],
+      "itemID": 11,
+      "itemType": "book",
+      "title": "BC tests 2: -0099-07-12/-0043-03-15"
     },
     {
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "John",
-          "lastName": "Doe11"
+          "name": "Doe14"
         }
       ],
-      "date": "2011-05-25/2012-06-26~",
-      "itemID": 4,
-      "itemType": "webpage",
-      "title": "EDTF date range, circa end: 2011-05-25/2012-06-26~"
+      "date": "2010",
+      "extra": [
+        "issued:2011"
+      ],
+      "itemID": 14,
+      "itemType": "book",
+      "title": "Date=2010 & Extra=issued:2011"
     },
     {
+      "ISBN": "0-943396-04-2 0-85131-041-9",
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "John",
-          "lastName": "Doe12"
+          "name": "Doe15"
         }
       ],
-      "date": "2011-05~",
-      "itemID": 5,
-      "itemType": "webpage",
-      "title": "EDTF date YYYY-MM~ [month precision & circa]: 2011-05~"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "John",
-          "lastName": "Doe13"
-        }
-      ],
-      "date": "2017-24~",
-      "itemID": 6,
-      "itemType": "webpage",
-      "title": "Season circa: : 2017-24~"
+      "date": "2017",
+      "itemID": 15,
+      "itemType": "book",
+      "title": "multiple ISBNs"
     },
     {
       "creators": [
@@ -152,40 +125,43 @@
       "title": "single date test: 2014-12-31"
     },
     {
+      "accessDate": "2015-04-30",
       "creators": [
         {
           "creatorType": "author",
           "firstName": "John",
-          "lastName": "Doe5"
+          "lastName": "Doe7"
         }
       ],
-      "date": "-0333",
-      "extra": [
-        "Citation Key: t5",
-        "accessed: -0332-11-05",
-        "original-date: -0333/-0332",
-        "event-date: 0000",
-        "submitted:-0001"
-      ],
-      "itemID": 10,
-      "itemType": "book",
-      "title": "BC tests: -0333"
+      "date": "printemps 1985",
+      "issue": "3",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "pages": "4\u201323",
+      "publicationTitle": "Cinema Journal",
+      "title": "The Politics of Film Canons: printemps 1985",
+      "url": "http://www.jstor.org/stable/1225428",
+      "volume": "24"
     },
     {
       "creators": [
         {
           "creatorType": "author",
           "firstName": "John",
-          "lastName": "Doe6"
+          "lastName": "Doe1"
         }
       ],
-      "date": "-0099-07-12/-0043-03-15",
+      "date": "2014-12-31/2015-01-01",
       "extra": [
-        "Citation Key: t6"
+        "Citation Key: t1",
+        "accessed: 2014-12-31~",
+        "original-date: 1777-07-27/1888-08-28",
+        "event-date: 1888-08-28",
+        "submitted:1999-09-29/"
       ],
-      "itemID": 11,
-      "itemType": "book",
-      "title": "BC tests 2: -0099-07-12/-0043-03-15"
+      "itemID": 2,
+      "itemType": "manuscript",
+      "title": "A manuscript: 2014-12-31/2015-01-01"
     },
     {
       "creators": [
@@ -217,29 +193,53 @@
       "creators": [
         {
           "creatorType": "author",
-          "name": "Doe14"
+          "firstName": "John",
+          "lastName": "Doe10"
         }
       ],
-      "date": "2010",
-      "extra": [
-        "issued:2011"
-      ],
-      "itemID": 14,
-      "itemType": "book",
-      "title": "Date=2010 & Extra=issued:2011"
+      "date": "2011-05-25~/2012-06-26~",
+      "itemID": 3,
+      "itemType": "webpage",
+      "title": "EDTF date range, circa begin & end: 2011-05-25~/2012-06-26~"
     },
     {
-      "ISBN": "0-943396-04-2 0-85131-041-9",
       "creators": [
         {
           "creatorType": "author",
-          "name": "Doe15"
+          "firstName": "John",
+          "lastName": "Doe11"
         }
       ],
-      "date": "2017",
-      "itemID": 15,
-      "itemType": "book",
-      "title": "multiple ISBNs"
+      "date": "2011-05-25/2012-06-26~",
+      "itemID": 4,
+      "itemType": "webpage",
+      "title": "EDTF date range, circa end: 2011-05-25/2012-06-26~"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "John",
+          "lastName": "Doe12"
+        }
+      ],
+      "date": "2011-05~",
+      "itemID": 5,
+      "itemType": "webpage",
+      "title": "EDTF date YYYY-MM~ [month precision & circa]: 2011-05~"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "John",
+          "lastName": "Doe13"
+        }
+      ],
+      "date": "2017-24~",
+      "itemID": 6,
+      "itemType": "webpage",
+      "title": "Season circa: : 2017-24~"
     }
   ]
 }

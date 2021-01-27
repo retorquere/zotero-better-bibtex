@@ -1,5 +1,6 @@
 import * as mapping from '../gen/items/extra-fields.json'
 import * as CSL from '../gen/citeproc'
+import { log } from './logger'
 
 type TeXString = { value: string, raw?: boolean }
 
@@ -62,6 +63,7 @@ const casing = {
 
 export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions): { extra: string, extraFields: Fields } {
   if (!options) options = { citationKey: true , aliases: true, kv: true, tex: true }
+  options.citationKey = options.aliases = (options.citationKey as boolean) || (options.aliases as boolean)
 
   const other = {zotero: 'csl', csl: 'zotero'}[mode]
 
@@ -92,17 +94,18 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
     }
     value = value.trim()
 
-    if (options.citationKey && !tex && options.citationKey && ['citation key', 'bibtex'].includes(key)) {
+    if (options.citationKey && !tex && ['citation key', 'bibtex'].includes(key)) {
       extraFields.citationKey = value
+      extraFields.aliases.push(value)
       return false
     }
 
-    if (options.aliases && !tex && options.aliases && key === 'citation key alias') {
-      extraFields.aliases = value.split(/s*,\s*/).filter(alias => alias)
+    if (options.aliases && !tex && key === 'citation key alias') {
+      extraFields.aliases = extraFields.aliases.concat(value.split(/s*,\s*/).filter(alias => alias))
       return false
     }
     if (options.aliases && tex && !raw && options.aliases && key === 'ids') {
-      extraFields.aliases = value.split(/s*,\s*/).filter(alias => alias)
+      extraFields.aliases = extraFields.aliases.concat(value.split(/s*,\s*/).filter(alias => alias))
       return false
     }
 
@@ -137,15 +140,24 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
     return true
   }).join('\n').trim()
 
+  extraFields.aliases = Array.from(new Set(extraFields.aliases)).filter(key => key !== extraFields.citationKey)
+  if (options.citationKey && !extraFields.citationKey) extraFields.citationKey = extraFields.aliases.shift()
+  log.debug('bbt merge:extra.get.extraFields = ', extraFields)
+
   return { extra, extraFields }
 }
 
 export function set(extra, options: SetOptions = {}) {
+  log.debug('bbt merge: extra.set.options', options)
+  if (options.citationKey && !options.aliases) options.aliases = []
+  if (!options.citationKey && options.aliases?.length) options.citationKey = options.aliases.shift()
+  if (options.citationKey && options.aliases) options.aliases = options.aliases.filter(key => key !== options.citationKey)
   const parsed = get(extra, 'zotero', options)
+  log.debug('bbt merge: extra.set.parsed', parsed)
 
   if (options.citationKey) parsed.extra += `\nCitation Key: ${options.citationKey}`
 
-  if (options.aliases && options.aliases.length) {
+  if (options.aliases?.length) {
     const aliases = Array.from(new Set(options.aliases)).sort().join(', ')
     parsed.extra += `\ntex.ids: ${aliases}`
   }
@@ -177,5 +189,6 @@ export function set(extra, options: SetOptions = {}) {
     }
   }
 
+  log.debug('bbt merge: extra.set.parsed.return', parsed)
   return parsed.extra.trim()
 }

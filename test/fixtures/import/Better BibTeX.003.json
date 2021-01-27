@@ -13,29 +13,6 @@
   },
   "items": [
     {
-      "citationKey": "author:06",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "First",
-          "lastName": "Author"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Second",
-          "lastName": "Author"
-        }
-      ],
-      "extra": [
-        "Citation Key: author:06",
-        "tex.crossref: conference:06"
-      ],
-      "itemID": 1,
-      "itemType": "conferencePaper",
-      "pages": "330\u2014331",
-      "title": "Some publication title"
-    },
-    {
       "citationKey": "conference:06",
       "creators": [
         {
@@ -57,6 +34,29 @@
       "itemType": "bookSection",
       "publicationTitle": "Proceedings of the xth conference on XYZ (book)",
       "title": "Proceedings of the xth conference on XYZ"
+    },
+    {
+      "citationKey": "author:06",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "First",
+          "lastName": "Author"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Second",
+          "lastName": "Author"
+        }
+      ],
+      "extra": [
+        "Citation Key: author:06",
+        "tex.crossref: conference:06"
+      ],
+      "itemID": 1,
+      "itemType": "conferencePaper",
+      "pages": "330\u2014331",
+      "title": "Some publication title"
     }
   ]
 }

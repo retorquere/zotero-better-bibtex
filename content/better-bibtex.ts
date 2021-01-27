@@ -98,7 +98,8 @@ $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(ite
       kv: Prefs.get('extraMergeCSL'),
     }
 
-    const extra = Extra.get(item.getField('extra'), 'zotero', { aliases: merge.citekeys, tex: merge.tex, kv: merge.kv })
+    const extra = Extra.get(item.getField('extra'), 'zotero', { citationKey: merge.citekeys, aliases: merge.citekeys, tex: merge.tex, kv: merge.kv })
+    log.debug('bbt merge: extra-pre:', { extract: merge, raw: item.getField('extra'), parsed: extra })
 
     // get citekeys of other items
     if (merge.citekeys) {
@@ -108,9 +109,12 @@ $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(ite
 
     // add any aliases they were already holding
     for (const i of otherItems) {
-      const otherExtra = Extra.get(i.getField('extra'), 'zotero', { aliases: merge.citekeys, tex: merge.tex, kv: merge.kv })
+      const otherExtra = Extra.get(i.getField('extra'), 'zotero', { citationKey: merge.citekeys, aliases: merge.citekeys, tex: merge.tex, kv: merge.kv })
 
-      if (merge.citekeys) extra.extraFields.aliases = extra.extraFields.aliases.concat(otherExtra.extraFields.aliases)
+      if (merge.citekeys) {
+        extra.extraFields.aliases = extra.extraFields.aliases.concat(otherExtra.extraFields.aliases)
+        if (otherExtra.extraFields.citationKey) extra.extraFields.aliases.push(otherExtra.extraFields.citationKey)
+      }
 
       if (merge.tex) {
         for (const [name, value] of Object.entries(otherExtra.extraFields.tex)) {
@@ -137,11 +141,15 @@ $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(ite
       extra.extraFields.aliases = extra.extraFields.aliases.filter(alias => alias && alias !== citekey)
     }
 
+    log.debug('bbt merge: extra-post:', extra)
     item.setField('extra', Extra.set(extra.extra, {
+      citationKey: merge.citekeys ? extra.extraFields.citationKey : undefined,
       aliases: merge.citekeys ? extra.extraFields.aliases : undefined,
       tex: merge.tex ? extra.extraFields.tex : undefined,
       kv: merge.kv ? extra.extraFields.kv : undefined,
     }))
+    log.debug('bbt merge: extra-field:', item.getField('extra'))
+
 
   } catch (err) {
     log.error('Zotero.Items.merge:', err)
@@ -344,7 +352,11 @@ $patch$(Zotero.Utilities.Internal, 'itemToExportFormat', original => function Zo
 
 // so BBT-JSON can be imported without extra-field meddling
 $patch$(Zotero.Utilities.Internal, 'extractExtraFields', original => function Zotero_Utilities_Internal_extractExtraFields(extra, item, additionalFields) {
-  if (extra && extra.startsWith('\x1BBBT\x1B')) return { itemType: null, fields: new Map(), creators: [], extra: extra.replace('\x1BBBT\x1B', '') }
+  if (extra && extra.startsWith('\x1BBBT\x1B')) {
+    log.debug('bbt merge:extractExtraFields disabled:', JSON.stringify({ extra: extra.replace('\x1BBBT\x1B', ''), additionalFields }))
+    return { itemType: null, fields: new Map(), creators: [], extra: extra.replace('\x1BBBT\x1B', '') }
+  }
+  log.debug('bbt merge:extractExtraFields:', JSON.stringify({ extra, additionalFields }))
   return original.apply(this, arguments)
 })
 

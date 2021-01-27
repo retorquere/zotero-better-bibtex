@@ -139,7 +139,7 @@ export = new class {
     const zoteroPane = Zotero.getActiveZoteroPane()
     // zoteroPane.show()
 
-    const sortedIDs = ids.slice().sort()
+    const sortedIDs = JSON.stringify(ids.slice().sort())
     // tslint:disable-next-line:no-magic-numbers
     for (let attempt = 1; attempt <= 10; attempt++) {
       log.debug(`select ${ids}, attempt ${attempt}`)
@@ -152,17 +152,16 @@ export = new class {
         log.error('Could not get selected items:', err)
         selected = []
       }
-      selected.sort()
 
       log.debug('selected items = ', selected)
 
-      if (JSON.stringify(sortedIDs) === JSON.stringify(selected)) return true
+      if (sortedIDs === JSON.stringify(selected.sort())) return true
       log.debug(`select: expected ${ids}, got ${selected}`)
     }
     throw new Error(`failed to select ${ids}`)
   }
 
-  public async find(query) {
+  public async find(query, expected = 1) {
     if (!Object.keys(query).length) throw new Error(`empty query ${JSON.stringify(query)}`)
 
     let ids: number[] = []
@@ -175,9 +174,10 @@ export = new class {
       s.addCondition('field', mode, text)
     }
     ids = ids.concat(await s.search())
-    if (!ids || ids.length !== 1) throw new Error(`No item found matching '${JSON.stringify(query)}'`)
+    if (!ids || !ids.length) throw new Error(`No item found matching ${JSON.stringify(query)}`)
+    if (ids && ids.length !== expected) throw new Error(`${JSON.stringify(query)} matched ${ids.length}, but only ${expected} expected`)
 
-    return ids[0]
+    return ids
   }
 
   public async pick(format, citations) {
