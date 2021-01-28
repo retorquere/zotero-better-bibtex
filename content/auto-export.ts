@@ -127,7 +127,7 @@ class Git {
     // proc.startHidden = true // won't work until Zotero upgrades to post-55 Firefox
 
     const deferred = Zotero.Promise.defer()
-    proc.runwAsync(args, args.length, { observe: function(subject, topic) { // tslint:disable-line:object-literal-shorthand only-arrow-functions
+    proc.runwAsync(args, args.length, { observe: function(subject, topic) { // eslint-disable-line object-shorthand, prefer-arrow/prefer-arrow-functions
       if (topic !== 'process-finished') {
         deferred.reject(new Error(`${cmd.path} failed`))
       } else if (proc.exitValue !== 0) {
@@ -146,7 +146,7 @@ import * as prefOverrides from '../gen/preferences/auto-export-overrides.json'
 
 if (Prefs.get('autoExportDelay') < 1) Prefs.set('autoExportDelay', 1)
 const queue = new class TaskQueue {
-  private scheduler = new Scheduler('autoExportDelay', 1000) // tslint:disable-line:no-magic-numbers
+  private scheduler = new Scheduler('autoExportDelay', 1000) // eslint-disable-line no-magic-numbers
   private autoexports: any
   private started = false
 
@@ -330,7 +330,7 @@ Events.on('preference-changed', pref => {
 })
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let AutoExport = new class CAutoExport { // tslint:disable-line:variable-name
+export let AutoExport = new class CAutoExport { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public db: any
 
   constructor() {

@@ -170,7 +170,7 @@ class Main extends Loki {
 }
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let DB = new Main('better-bibtex', { // tslint:disable-line:variable-name
+export let DB = new Main('better-bibtex', { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   autosave: true,
   autosaveInterval: 5000,
   autosaveOnIdle: true,

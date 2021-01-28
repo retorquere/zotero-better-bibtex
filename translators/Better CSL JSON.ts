@@ -20,7 +20,7 @@ function date2csl(date) {
 
     case 'season':
       // https://github.com/retorquere/zotero-better-bibtex/issues/860
-      return [ date.year > 0 ? date.year : date.year - 1, date.season + 12 ] // tslint:disable-line:no-magic-numbers
+      return [ date.year > 0 ? date.year : date.year - 1, date.season + 12 ] // eslint-disable-line no-magic-numbers
 
     default:
       throw new Error(`Expected date or open, got ${date.type}`)

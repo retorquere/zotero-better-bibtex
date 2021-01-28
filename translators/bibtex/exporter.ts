@@ -9,7 +9,7 @@ import { Postfix } from '../bibtex/postfix.ts'
 import * as Extra from '../../content/extra'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let Exporter = new class { // tslint:disable-line:variable-name
+export let Exporter = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public postfix: Postfix
   public jabref: JabRef
   public strings: {[key: string]: string} = {}

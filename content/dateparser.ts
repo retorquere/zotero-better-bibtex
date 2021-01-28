@@ -42,7 +42,7 @@ function normalize_edtf(date) {
       return doubt({ type: 'date', year, month, day}, {approximate: date.approximate || date.unspecified, uncertain: date.uncertain })
 
     case 'Interval':
-      // tslint:disable-next-line:no-magic-numbers
+      // eslint-disable-next-line no-magic-numbers
       if (date.values.length !== 2) throw new Error(JSON.stringify(date))
       const from = date.values[0] ? normalize_edtf(date.values[0]) : { type: 'open' }
       const to = date.values[1] ? normalize_edtf(date.values[1]) : { type: 'open' }
@@ -72,8 +72,8 @@ function upgrade_edtf(date) {
 }
 
 function is_valid_month(month, allowseason) {
-  if (month >= 1 && month <= 12) return true // tslint:disable-line:no-magic-numbers
-  if (allowseason && month >= 21 && month <= 24) return true // tslint:disable-line:no-magic-numbers
+  if (month >= 1 && month <= 12) return true // eslint-disable-line no-magic-numbers
+  if (allowseason && month >= 21 && month <= 24) return true // eslint-disable-line no-magic-numbers
 
   return false
 }
@@ -109,13 +109,13 @@ export function parse(value: string, localeDateOrder: string, as_range_part: boo
   if (m = (/^(-?[0-9]+)-00-00$/.exec(value) || /^(-?[0-9]+)\/00\/00$/.exec(value) || /^(-?[0-9]+-[0-9]+)-00$/.exec(value))) return parse(m[1], localeDateOrder, as_range_part)
 
   // https://github.com/retorquere/zotero-better-bibtex/issues/1513
-  // tslint:disable-next-line:no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   if ((m = (/^([0-9]+) (de )?([a-z]+) (de )?([0-9]+)$/i).exec(value)) && (m[2] || m[4]) && (months[m[3].toLowerCase()])) return parse(`${m[1]} ${m[3]} ${m[5]}`, localeDateOrder, as_range_part)
 
   // '30-Mar-2020'
   if (!as_range_part && (m = (/^([0-9]+)-([a-z]+)-([0-9]+)$/i).exec(value))) {
     let [ , day, month, year ] = m
-    if (day > 31 && year < 31) [ day, year ] = [ year, day ] // tslint:disable-line:no-magic-numbers
+    if (day > 31 && year < 31) [ day, year ] = [ year, day ] // eslint-disable-line no-magic-numbers
     const date = parse(`${month} ${day} ${year}`, localeDateOrder, false)
     if (date.type === 'date') return date
   }
@@ -314,7 +314,7 @@ export function strToISO(str, localeDateOrder: string) {
 
   if (typeof date.year !== 'number') return ''
 
-  let iso = `${date.year}`.padStart(4, '0') // tslint:disable-line:no-magic-numbers
+  let iso = `${date.year}`.padStart(4, '0') // eslint-disable-line no-magic-numbers
 
   if (typeof date.month === 'number') {
     const month = `${date.month}`.padStart(2, '0')

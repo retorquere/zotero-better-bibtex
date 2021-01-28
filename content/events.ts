@@ -4,7 +4,7 @@ import { EventEmitter } from 'eventemitter3'
 import { patch as $patch$ } from './monkey-patch'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let Events = new EventEmitter() // tslint:disable-line:variable-name
+export let Events = new EventEmitter() // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
 
 if (Zotero.Debug.enabled) {
   const events = [

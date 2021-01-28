@@ -7,7 +7,7 @@ import { DB as Cache } from './db/cache'
 import { KeyManager } from './key-manager'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let Serializer = new class { // tslint:disable-line:variable-name
+export let Serializer = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   private cache
 
   public init() {

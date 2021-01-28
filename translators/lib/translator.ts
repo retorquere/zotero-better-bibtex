@@ -14,7 +14,7 @@ const cacheDisabler = new class {
   }
 }
 
-export let Translator = new class implements ITranslator { // tslint:disable-line:variable-name
+export let Translator = new class implements ITranslator { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public preferences: IPreferences
   public skipFields: string[]
   public skipField: Record<string, boolean>
@@ -35,16 +35,16 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
     Normalize?: boolean
   }
 
-  public BetterBibLaTeX?: boolean                   // tslint:disable-line:variable-name
-  public BetterBibTeX?: boolean                     // tslint:disable-line:variable-name
-  public BetterTeX: boolean                         // tslint:disable-line:variable-name
-  public BetterCSLJSON?: boolean                    // tslint:disable-line:variable-name
-  public BetterCSLYAML?: boolean                    // tslint:disable-line:variable-name
-  public BetterCSL?: boolean                        // tslint:disable-line:variable-name
-  public BetterBibTeXCitationKeyQuickCopy?: boolean // tslint:disable-line:variable-name
-  public BetterBibTeXJSON?: boolean                 // tslint:disable-line:variable-name
-  public Citationgraph?: boolean                    // tslint:disable-line:variable-name
-  public Collectednotes?: boolean                   // tslint:disable-line:variable-name
+  public BetterBibLaTeX?: boolean                   // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+  public BetterBibTeX?: boolean                     // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+  public BetterTeX: boolean                         // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+  public BetterCSLJSON?: boolean                    // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+  public BetterCSLYAML?: boolean                    // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+  public BetterCSL?: boolean                        // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+  public BetterBibTeXCitationKeyQuickCopy?: boolean // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+  public BetterBibTeXJSON?: boolean                 // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+  public Citationgraph?: boolean                    // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+  public Collectednotes?: boolean                   // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   // public TeX: boolean
   // public CSL: boolean
 

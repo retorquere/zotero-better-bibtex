@@ -13,7 +13,7 @@ import AJV from 'ajv'
 import { log } from '../logger'
 // import { Preferences as Prefs } from '../prefs'
 
-// tslint:disable-next-line:variable-name
+// eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
 import Loki = require('lokijs')
 
 const validator = new AJV({ useDefaults: true, coerceTypes: true })
@@ -77,7 +77,7 @@ idleService.addIdleObserver({
       }
     }
   },
-}, 5) // tslint:disable-line:no-magic-numbers
+}, 5) // eslint-disable-line no-magic-numbers
 
 // https://github.com/Microsoft/TypeScript/issues/17032
 export class XULoki extends Loki {

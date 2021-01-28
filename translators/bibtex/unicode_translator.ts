@@ -273,9 +273,9 @@ const htmlConverter = new class HTMLConverter {
       mapped = null
 
       // tie "i","︠","a","︡"
-      if (text[i + 1] === '\ufe20' && text[i + 3] === '\ufe21') { // tslint:disable-line no-magic-numbers
-        mapped = this.mapping[text.substr(i, 4)] || { text: text[i] + text[i + 2] } // tslint:disable-line no-magic-numbers
-        i += 3 // tslint:disable-line no-magic-numbers
+      if (text[i + 1] === '\ufe20' && text[i + 3] === '\ufe21') { // eslint-disable-line  no-magic-numbers
+        mapped = this.mapping[text.substr(i, 4)] || { text: text[i] + text[i + 2] } // eslint-disable-line  no-magic-numbers
+        i += 3 // eslint-disable-line  no-magic-numbers
       }
 
       if (!mapped && !Translator.unicode) {
@@ -306,7 +306,7 @@ const htmlConverter = new class HTMLConverter {
               }
 
               // support for multiple-diacritics is taken from tipa, which doesn't support more than 2
-              if (m[0].length > 3) log.error('discarding diacritics > 2 from', m[0]) // tslint:disable-line:no-magic-numbers
+              if (m[0].length > 3) log.error('discarding diacritics > 2 from', m[0]) // eslint-disable-line no-magic-numbers
             }
           }
 
@@ -343,7 +343,7 @@ const htmlConverter = new class HTMLConverter {
 
       // if we just switched out of math mode, and there's a lone sup/sub at the end, unpack it. The extra option brace is for when we're in nocased mode (see switchTo)
       if (switched && mode === 'text' && (m = latex.match(/([\^_])\{(.)\}(\$\}?)$/))) {
-        latex = latex.slice(0, latex.length - m[0].length) + m[1] + m[2] + m[3] // tslint:disable-line no-magic-numbers
+        latex = latex.slice(0, latex.length - m[0].length) + m[1] + m[2] + m[3] // eslint-disable-line  no-magic-numbers
       }
 
       latex += mapped[mode]
@@ -351,7 +351,7 @@ const htmlConverter = new class HTMLConverter {
 
       // only try to merge sup/sub if we were already in math mode, because if we were previously in text mode, testing for _^ is tricky.
       if (!switched && mode === 'math' && (m = latex.match(/(([\^_])\{[^{}]+)\}\2{(.\})$/))) {
-        latex = latex.slice(0, latex.length - m[0].length) + m[1] + m[3] // tslint:disable-line no-magic-numbers
+        latex = latex.slice(0, latex.length - m[0].length) + m[1] + m[3] // eslint-disable-line  no-magic-numbers
       }
 
       const pkg = mapped[mode + 'package'] || mapped.package

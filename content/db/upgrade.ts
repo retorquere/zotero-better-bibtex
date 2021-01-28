@@ -41,7 +41,7 @@ export async function upgrade(progress) {
 
     for (const item of legacy) {
       n += 1
-      if ((n % 50) === 0) progress(Zotero.BetterBibTeX.getString('BetterBibTeX.startup.dbUpgrade', { n, total })) // tslint:disable-line:no-magic-numbers
+      if ((n % 50) === 0) progress(Zotero.BetterBibTeX.getString('BetterBibTeX.startup.dbUpgrade', { n, total })) // eslint-disable-line no-magic-numbers
 
       const extra = upgradeExtra(item.extra)
       if (extra !== item.extra) {

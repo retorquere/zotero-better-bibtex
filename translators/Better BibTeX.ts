@@ -397,7 +397,7 @@ export function doExport() {
 export function detectImport() {
   let detected = Zotero.getHiddenPref('better-bibtex.import')
   if (detected) {
-    const input = Zotero.read(102400) // tslint:disable-line:no-magic-numbers
+    const input = Zotero.read(102400) // eslint-disable-line no-magic-numbers
     const bib = bibtexParser.chunker(input, { max_entries: 1 })
     detected = bib.find(chunk => chunk.entry)
   }
@@ -666,7 +666,7 @@ class ZoteroItem {
 
     let month = (this.bibtex.fields.month && this.bibtex.fields.month[0]) || ''
     const monthno = months.indexOf(month.toLowerCase())
-    if (monthno >= 0) month = `0${monthno + 1}`.slice(-2) // tslint:disable-line no-magic-numbers
+    if (monthno >= 0) month = `0${monthno + 1}`.slice(-2) // eslint-disable-line  no-magic-numbers
 
     const day = (this.bibtex.fields.day && this.bibtex.fields.day[0]) || ''
 
@@ -715,10 +715,10 @@ class ZoteroItem {
           att.path = parts[0]
           break
 
-        case 3: // tslint:disable-line:no-magic-numbers
+        case 3: // eslint-disable-line no-magic-numbers
           att.title = parts[0]
           att.path = parts[1]
-          att.mimeType = parts[2] // tslint:disable-line:no-magic-numbers
+          att.mimeType = parts[2] // eslint-disable-line no-magic-numbers
           break
 
         default:
@@ -1157,7 +1157,7 @@ async function _fetch(url): Promise<{ json: () => Promise<any> }> {
     xhr.open('GET', url)
 
     xhr.onload = function() {
-      if (this.status >= 200 && this.status < 300) { // tslint:disable-line:no-magic-numbers
+      if (this.status >= 200 && this.status < 300) { // eslint-disable-line no-magic-numbers
         resolve({ json: () => JSON.parse(xhr.response) })
       } else {
         reject({
@@ -1186,7 +1186,7 @@ export async function doImport() {
 
   let read
   let input = ''
-  while ((read = Zotero.read(0x100000)) !== false) { // tslint:disable-line:no-magic-numbers
+  while ((read = Zotero.read(0x100000)) !== false) { // eslint-disable-line no-magic-numbers
     input += read
   }
 
@@ -1195,7 +1195,7 @@ export async function doImport() {
   const bib = await bibtexParser.parse(input, {
     async: true,
     caseProtection: (Translator.preferences.importCaseProtection as 'as-needed'), // we are actually sure it's a valid enum value; stupid workaround for TS2322: Type 'string' is not assignable to type 'boolean | "as-needed" | "strict"'.
-    errorHandler: (Translator.preferences.testing ? undefined : function(err) { log.error(err) }), // tslint:disable-line:only-arrow-functions
+    errorHandler: (Translator.preferences.testing ? undefined : function(err) { log.error(err) }), // eslint-disable-line prefer-arrow/prefer-arrow-functions
     markup: (Translator.csquotes ? { enquote: Translator.csquotes } : {}),
     sentenceCase: Translator.preferences.importSentenceCase !== 'off',
     guessAlreadySentenceCased: Translator.preferences.importSentenceCase === 'on+guess',
@@ -1229,7 +1229,7 @@ export async function doImport() {
     }
 
     imported += 1
-    Zotero.setProgress(imported / bib.entries.length * 100) // tslint:disable-line:no-magic-numbers
+    Zotero.setProgress(imported / bib.entries.length * 100) // eslint-disable-line no-magic-numbers
   }
 
   for (const group of jabref.root || []) {
@@ -1255,5 +1255,5 @@ export async function doImport() {
     await item.complete()
   }
 
-  Zotero.setProgress(100) // tslint:disable-line:no-magic-numbers
+  Zotero.setProgress(100) // eslint-disable-line no-magic-numbers
 }

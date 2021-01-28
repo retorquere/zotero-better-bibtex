@@ -15,7 +15,7 @@ function select_by_citekey(item) {
   return `zotero://select/items/@${encodeURIComponent(item.citationKey)}`
 }
 
-const Mode = { // tslint:disable-line:variable-name
+const Mode = { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   gitbook(items) {
     const citations = items.map(item => `{{ \"${item.citationKey}\" | cite }}`)
     Zotero.write(citations.join(''))

@@ -20,7 +20,7 @@ class Exporter {
   constructor() {
     for (const item of Translator.items()) {
       if (!this.keep(item)) continue
-      this.items[item.itemID] = Object.assign(item, cleanExtra(item.extra)) // tslint:disable-line:prefer-object-spread
+      this.items[item.itemID] = Object.assign(item, cleanExtra(item.extra)) // eslint-disable-line prefer-object-spread
     }
 
     const filed = {}

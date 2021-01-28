@@ -7,7 +7,7 @@ import * as defaults from '../gen/preferences/defaults.json'
 const supported = Object.keys(defaults)
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let Preferences = new class { // tslint:disable-line:variable-name
+export let Preferences = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public branch: any
   public testing: boolean
   public platform: 'win' | 'lin' | 'mac' | 'unix'

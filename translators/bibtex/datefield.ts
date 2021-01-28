@@ -6,11 +6,11 @@ function pad(v, padding) {
 }
 
 function year(y) {
-  // tslint:disable-next-line:no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   if (Math.abs(y) > 999) {
     return `${y}`
   } else {
-    // tslint:disable-next-line:no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     return (y < 0 ? '-' : '') + (`000${Math.abs(y)}`).slice(-4)
   }
 }
@@ -22,7 +22,7 @@ function format(date) {
     formatted = `${year(date.year)}-${pad(date.month, '00')}-${pad(date.day, '00')}`
 
   } else if (typeof date.year === 'number' && (date.month || date.season)) {
-    // tslint:disable-next-line:no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     formatted = `${year(date.year)}-${pad((date.month || (date.season + 20)), '00')}`
 
   } else if (typeof date.year === 'number') {

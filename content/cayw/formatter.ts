@@ -87,7 +87,7 @@ function citation2latex(citation, options) {
 }
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let Formatter = new class { // tslint:disable-line:variable-name
+export let Formatter = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public async playground(citations, options) {
     const formatted = citations.map(cit => `${options.keyprefix || ''}${cit.citekey}${options.keypostfix || ''}`)
     return formatted.length ? `${options.citeprefix || ''}${formatted.join(options.separator || ',')}${options.citekeypostfix || ''}` : ''

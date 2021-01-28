@@ -1,4 +1,4 @@
-// tslint:disable:no-magic-numbers
+/* eslint-disable no-magic-numbers */
 
 const isIssnStrict = /^(\d{4})-?(\d{3})([\dX])$/
 const isIssnLax = new RegExp(isIssnStrict.source, 'i')

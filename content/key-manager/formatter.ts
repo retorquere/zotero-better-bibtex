@@ -34,7 +34,7 @@ function innerText(node) {
 }
 
 const script = {
-  han: new RegExp('([' + scripts.find(s => s.name === 'Han').bmp + '])', 'g'), // tslint:disable-line prefer-template
+  han: new RegExp('([' + scripts.find(s => s.name === 'Han').bmp + '])', 'g'), // eslint-disable-line  prefer-template
 }
 
 type PartialDate = {
@@ -80,7 +80,7 @@ class PatternFormatter {
   */
   private months = { 1: 'jan', 2: 'feb', 3: 'mar', 4: 'apr', 5: 'may', 6: 'jun', 7: 'jul', 8: 'aug', 9: 'sep', 10: 'oct', 11: 'nov', 12: 'dec' }
 
-  // tslint:disable-next-line:variable-name
+  // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   private DOMParser = new DOMParser
 
   private item: {
@@ -124,7 +124,7 @@ class PatternFormatter {
           }
           citekeyFormat = citekeyFormat.trim()
           if (citekeyFormat.includes('[')) {
-            // tslint:disable-next-line:no-magic-numbers
+            // eslint-disable-next-line no-magic-numbers
             if (errors.length) flash('Malformed citation pattern', `removed malformed patterns:\n${errors.join('\n')}`, 20)
             Prefs.set('citekeyFormat', this.citekeyFormat = citekeyFormat)
           } else {
@@ -133,7 +133,7 @@ class PatternFormatter {
           break
 
         case 'reset':
-          // tslint:disable-next-line:no-magic-numbers
+          // eslint-disable-next-line no-magic-numbers
           flash('Malformed citation pattern', 'resetting to default', 20)
           Prefs.set('citekeyFormat', this.citekeyFormat = defaults.citekeyFormat.replace(/^\u200B/, ''))
           break
@@ -258,11 +258,11 @@ class PatternFormatter {
 
     res.m = (typeof parsed.m !== 'undefined') ? ('' + parsed.m) : ''
     res.d = (typeof parsed.d !== 'undefined') ? ('' + parsed.d) : ''
-    res.y = (typeof parsed.y !== 'undefined') ? ('' + (parsed.y % 100)) : '' // tslint:disable-line:no-magic-numbers
+    res.y = (typeof parsed.y !== 'undefined') ? ('' + (parsed.y % 100)) : '' // eslint-disable-line no-magic-numbers
     res.Y = (typeof parsed.y !== 'undefined') ? ('' + parsed.y) : ''
     res.om = (typeof parsed.om !== 'undefined') ? ('' + parsed.om) : ''
     res.od = (typeof parsed.od !== 'undefined') ? ('' + parsed.od) : ''
-    res.oy = (typeof parsed.oy !== 'undefined') ? ('' + (parsed.oy % 100)) : '' // tslint:disable-line:no-magic-numbers
+    res.oy = (typeof parsed.oy !== 'undefined') ? ('' + (parsed.oy % 100)) : '' // eslint-disable-line no-magic-numbers
     res.oY = (typeof parsed.oy !== 'undefined') ? ('' + parsed.oy) : ''
     if (date.type !== 'verbatim') {
       const [ , H, M, S ] = v.match(/(?: |T)([0-9]{2}):([0-9]{2})(?::([0-9]{2}))?(?:[A-Z]+|[-+][0-9]+)?$/) || [null, '', '', '']
@@ -360,16 +360,16 @@ class PatternFormatter {
     if (!authors || !authors.length) return ''
 
     switch (authors.length) {
-      case 1: // tslint:disable-line:no-magic-numbers
-        return authors[0].substring(0, 3) // tslint:disable-line:no-magic-numbers
+      case 1: // eslint-disable-line no-magic-numbers
+        return authors[0].substring(0, 3) // eslint-disable-line no-magic-numbers
 
-      case 2: // tslint:disable-line:no-magic-numbers
-      case 3: // tslint:disable-line:no-magic-numbers
-      case 4: // tslint:disable-line:no-magic-numbers
+      case 2: // eslint-disable-line no-magic-numbers
+      case 3: // eslint-disable-line no-magic-numbers
+      case 4: // eslint-disable-line no-magic-numbers
         return authors.map(author => author.substring(0, 1)).join(joiner || ' ')
 
       default:
-        // tslint:disable-next-line:no-magic-numbers
+        // eslint-disable-next-line no-magic-numbers
         return authors.slice(0, 3).map(author => author.substring(0, 1)).join(joiner || ' ') + '+'
     }
   }
@@ -387,7 +387,7 @@ class PatternFormatter {
     if (!authors || !authors.length) return ''
     const firstAuthor = authors.shift()
 
-    // tslint:disable-next-line:no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     return [firstAuthor.substring(0, 5)].concat(authors.map(auth => auth.map(name => name.substring(0, 1)).join('.'))).join(joiner || '.')
   }
 
@@ -396,7 +396,7 @@ class PatternFormatter {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
 
-    // tslint:disable-next-line:no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     return authors.slice(0, 2).concat(authors.length > 2 ? ['ea'] : []).join(joiner || '.')
   }
 
@@ -405,7 +405,7 @@ class PatternFormatter {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
 
-    // tslint:disable-next-line:no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     if (authors.length === 2) return authors.join(joiner || ' ')
     return authors.slice(0, 1).concat(authors.length > 1 ? ['EtAl'] : []).join(joiner || ' ')
   }
@@ -415,7 +415,7 @@ class PatternFormatter {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
 
-    // tslint:disable-next-line:no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     if (authors.length === 2) return authors.join(joiner || '.')
     return authors.slice(0, 1).concat(authors.length > 1 ? ['etal'] : []).join(joiner || '.')
   }
@@ -433,7 +433,7 @@ class PatternFormatter {
         return authors[0]
 
       default:
-        // tslint:disable-next-line:no-magic-numbers
+        // eslint-disable-next-line no-magic-numbers
         return authors.slice(0, 3).map(author => author.substring(0, 1)).join(joiner || '.') + (authors.length > 3 ? '+' : '')
     }
   }
@@ -457,7 +457,7 @@ class PatternFormatter {
   }
 
   /** The first `N` (default: 3) words of the title, apply capitalization to first `M` (default: 0) of those */
-  public $shorttitle(n: number = 3, m: number = 0) { // tslint:disable-line:no-magic-numbers
+  public $shorttitle(n: number = 3, m: number = 0) { // eslint-disable-line no-magic-numbers
     const words = this.titleWords(this.item.title, { skipWords: true, asciiOnly: true})
     if (!words) return ''
 
@@ -465,7 +465,7 @@ class PatternFormatter {
   }
 
   /** The first `N` (default: 1) words of the title, apply capitalization to first `M` (default: 0) of those */
-  public $veryshorttitle(n: number = 1, m: number = 0) { // tslint:disable-line:no-magic-numbers
+  public $veryshorttitle(n: number = 1, m: number = 0) { // eslint-disable-line no-magic-numbers
     return this.$shorttitle(n, m)
   }
 
@@ -523,7 +523,7 @@ class PatternFormatter {
       if (typeof repl !== 'string') throw new Error(`:format-date: unsupported formatter ${JSON.stringify(spec)}`)
       if (!repl) return null
 
-      if (pad) repl = this.padYear(repl, (field === 'Y' || field === 'oY') ? 4 : 2) // tslint:disable-line:no-magic-numbers
+      if (pad) repl = this.padYear(repl, (field === 'Y' || field === 'oY') ? 4 : 2) // eslint-disable-line no-magic-numbers
 
       return repl
 
@@ -694,12 +694,12 @@ class PatternFormatter {
     if (mode === 'japanese') mode = null
     const replace = {
       german: {
-        '\u00E4': 'ae', // tslint:disable-line:object-literal-key-quotes
-        '\u00F6': 'oe', // tslint:disable-line:object-literal-key-quotes
-        '\u00FC': 'ue', // tslint:disable-line:object-literal-key-quotes
-        '\u00C4': 'Ae', // tslint:disable-line:object-literal-key-quotes
-        '\u00D6': 'Oe', // tslint:disable-line:object-literal-key-quotes
-        '\u00DC': 'Ue', // tslint:disable-line:object-literal-key-quotes
+        '\u00E4': 'ae', // eslint-disable-line quote-props
+        '\u00F6': 'oe', // eslint-disable-line quote-props
+        '\u00FC': 'ue', // eslint-disable-line quote-props
+        '\u00C4': 'Ae', // eslint-disable-line quote-props
+        '\u00D6': 'Oe', // eslint-disable-line quote-props
+        '\u00DC': 'Ue', // eslint-disable-line quote-props
       },
     }[mode]
     if (mode && !replace) throw new Error(`Unsupported fold mode "${mode}"`)
@@ -819,4 +819,4 @@ class PatternFormatter {
 }
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let Formatter = new PatternFormatter // tslint:disable-line:variable-name
+export let Formatter = new PatternFormatter // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match

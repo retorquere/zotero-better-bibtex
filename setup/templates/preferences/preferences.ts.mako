@@ -1,4 +1,4 @@
-// tslint:disable:no-magic-numbers quotemark
+/* eslint-disable no-magic-numbers, @typescript-eslint/quotes */
 <%
   import json
 %>

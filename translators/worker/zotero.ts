@@ -84,7 +84,7 @@ class WorkerZoteroBetterBibTeX {
 }
 
 class WorkerZoteroUtilities {
-  public XRegExp = XRegExp // tslint:disable-line:variable-name
+  public XRegExp = XRegExp // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
 
   public getVersion() {
     return params.version
@@ -177,8 +177,8 @@ class WorkerZotero {
   public exportDirectory: string
   public exportFile: string
 
-  public Utilities = new WorkerZoteroUtilities // tslint:disable-line:variable-name
-  public BetterBibTeX = new WorkerZoteroBetterBibTeX // tslint:disable-line:variable-name
+  public Utilities = new WorkerZoteroUtilities // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+  public BetterBibTeX = new WorkerZoteroBetterBibTeX // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
 
   public init(config) {
     this.config = config
@@ -267,7 +267,7 @@ class WorkerZotero {
   }
 }
 
-export const Zotero = new WorkerZotero // tslint:disable-line:variable-name
+export const Zotero = new WorkerZotero // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
 
 export function onmessage(e: { data: BBTWorker.Config }) {
   Zotero.BetterBibTeX.localeDateOrder = params.localeDateOrder

@@ -6,10 +6,10 @@ import { filePathFilter } from 'file-path-filter'
 import Injector = require('njstrace/lib/injector')
 const injector = new Injector({
   emit(kind, err) { throw err },
-  log() { }, // tslint:disable-line:no-empty
+  log() { }, // eslint-disable-line no-empty,@typescript-eslint/no-empty-function
 })
 
-let selected = function(filename) { return false } // tslint:disable-line:only-arrow-functions
+let selected = function(filename) { return false } // eslint-disable-line prefer-arrow/prefer-arrow-functions
 if (fs.existsSync(path.join(__dirname, '../../.trace.json'))) {
   const branch = process.env.TRAVIS_BRANCH || shell.exec('git rev-parse --abbrev-ref HEAD', { silent: true }).stdout.trim()
   if (branch !== 'master') {

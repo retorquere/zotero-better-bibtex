@@ -1,5 +1,5 @@
 #!/usr/bin/env npx ts-node
-// tslint:disable:prefer-template
+/* eslint-disable prefer-template */
 
 import * as ts from 'typescript'
 import * as fs from 'fs'

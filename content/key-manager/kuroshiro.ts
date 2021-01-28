@@ -4,7 +4,7 @@ import { log } from '../logger'
 import { Preferences as Prefs } from '../prefs'
 import KuromojiAnalyzer from 'kuroshiro-analyzer-kuromoji/src/kuroshiro-analyzer-kuromoji-sync'
 
-_kuromojiLoader.prototype.loadArrayBuffer = function(url, callback) { // tslint:disable-line:only-arrow-functions
+_kuromojiLoader.prototype.loadArrayBuffer = function(url, callback) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
   url = `resource://zotero-better-bibtex/kuromoji/${url.replace(/.*\//, '').replace(/\.gz$/, '')}`
   const xhr = new XMLHttpRequest()
 
@@ -12,11 +12,11 @@ _kuromojiLoader.prototype.loadArrayBuffer = function(url, callback) { // tslint:
   xhr.responseType = 'arraybuffer'
 
   xhr.onload = function() {
-    const err = this.status > 0 && this.status !== 200 // tslint:disable-line:no-magic-numbers
+    const err = this.status > 0 && this.status !== 200 // eslint-disable-line no-magic-numbers
     callback(err ? new Error(xhr.statusText) : null, err ? null : this.response)
   }
 
-  xhr.onerror = function(pge) { // tslint:disable-line:only-arrow-functions
+  xhr.onerror = function(pge) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
     const err = new Error(`could not load ${url}: ${pge}`)
     log.error('kuromoji: load failed', url, err)
     callback(err, null)

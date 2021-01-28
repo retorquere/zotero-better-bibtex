@@ -53,7 +53,7 @@ AddonManager.addAddonListener({
 
   onOperationCancelled(addon, needsRestart) {
     if (addon.id !== 'better-bibtex@iris-advies.com') return null
-    // tslint:disable-next-line:no-bitwise
+    // eslint-disable-next-line no-bitwise
     if (addon.pendingOperations & (AddonManager.PENDING_UNINSTALL | AddonManager.PENDING_DISABLE)) return null
 
     for (const header of Object.values(Translators.byId)) {
@@ -198,7 +198,7 @@ $patch$(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prot
   try {
     switch (field) {
       case 'citekey':
-        if (BetterBibTeX.ready.isPending()) return '' // tslint:disable-line:no-use-before-declare
+        if (BetterBibTeX.ready.isPending()) return '' // eslint-disable-line @typescript-eslint/no-use-before-define
         const citekey = KeyManager.get(this.id)
         return citekey.citekey
 
@@ -231,9 +231,9 @@ $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function Zoter
   const item = this.getRow(row).ref
   if (item.isNote() || item.isAttachment()) return ''
 
-  if (BetterBibTeX.ready.isPending()) { // tslint:disable-line:no-use-before-declare
+  if (BetterBibTeX.ready.isPending()) { // eslint-disable-line @typescript-eslint/no-use-before-define
     if (!itemTreeViewWaiting[item.id]) {
-      // tslint:disable-next-line:no-use-before-declare
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       BetterBibTeX.ready.then(() => this._treebox.invalidateCell(row, col))
       itemTreeViewWaiting[item.id] = true
     }
@@ -460,7 +460,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
 function notify(event, handler) {
   Zotero.Notifier.registerObserver({
     notify(...args) {
-      BetterBibTeX.ready.then(() => { // tslint:disable-line:no-use-before-declare
+      BetterBibTeX.ready.then(() => { // eslint-disable-line @typescript-eslint/no-use-before-define
         handler.apply(null, args)
       })
     },
@@ -518,7 +518,7 @@ notify('item', (action, type, ids, extraData) => {
         const msg = warn_titlecase === 1
           ? `${warn_titlecase} item ${actioned} which looks like it has a title-cased title`
           : `${warn_titlecase} items ${actioned} which look like they have title-cased titles`
-        flash(`Possibly title-cased title${warn_titlecase > 1 ? 's' : ''} ${actioned}`, msg, 3) // tslint:disable-line:no-magic-numbers
+        flash(`Possibly title-cased title${warn_titlecase > 1 ? 's' : ''} ${actioned}`, msg, 3) // eslint-disable-line no-magic-numbers
       }
 
       Events.emit('items-changed', ids)
@@ -590,7 +590,7 @@ class Progress {
 
   public async start(msg) {
     this.started = this.timestamp = Date.now()
-    this.timer = setInterval(this.waiting.bind(this), 500) // tslint:disable-line:no-magic-numbers
+    this.timer = setInterval(this.waiting.bind(this), 500) // eslint-disable-line no-magic-numbers
 
     this.msg = msg || 'Initializing'
 
@@ -618,7 +618,7 @@ class Progress {
 
   private bench(msg) {
     const ts = Date.now()
-    // tslint:disable-next-line:no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     if (this.msg) log.debug(`${this.name}:`, this.msg, 'took', (ts - this.timestamp) / 1000.0, 's')
     this.msg = msg
     this.timestamp = ts
@@ -634,12 +634,12 @@ class Progress {
       this.progressWin.show()
     } else {
       this.progress.setText('Ready')
-      this.progressWin.startCloseTimer(500) // tslint:disable-line:no-magic-numbers
+      this.progressWin.startCloseTimer(500) // eslint-disable-line no-magic-numbers
     }
   }
 }
 
-export let BetterBibTeX = new class { // tslint:disable-line:variable-name
+export let BetterBibTeX = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public localeDateOrder: string = Zotero.Date.getLocaleDateOrder()
   public ready: any
   public loaded: any
@@ -754,7 +754,7 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
       flash(
         'BBT TRACE LOGGING IS ENABLED',
         'BBT trace logging is enabled in this build.\nZotero will run very slowly.\nThis is intended for debugging ONLY.',
-        20 // tslint:disable-line:no-magic-numbers
+        20 // eslint-disable-line no-magic-numbers
       )
     }
     const progress = new Progress

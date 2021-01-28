@@ -27,7 +27,7 @@ import { sprintf } from 'sprintf-js'
 import { intToExcelCol } from 'excel-column-name'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let KeyManager = new class { // tslint:disable-line:variable-name
+export let KeyManager = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public keys: any
   public query: {
     field: { extra?: number }
@@ -36,7 +36,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
       attachment?: number
     }
   }
-  public autopin: Scheduler = new Scheduler('autoPinDelay', 1000) // tslint:disable-line:no-magic-numbers
+  public autopin: Scheduler = new Scheduler('autoPinDelay', 1000) // eslint-disable-line no-magic-numbers
 
   private scanning: any[]
   private started = false
@@ -49,7 +49,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
       try {
         const results = await (await fetch(url, { method: 'GET', cache: 'no-cache', redirect: 'follow' })).json()
 
-        if (results.status && (results.status < 200 || results.status > 299)) { // tslint:disable-line:no-magic-numbers
+        if (results.status && (results.status < 200 || results.status > 299)) { // eslint-disable-line no-magic-numbers
           flash(`Could not fetch inspireHEP key from ${type}`, `Could not fetch inspireHEP key for ${type} ${JSON.stringify(id)},\n\nInspireHEP says: ${results.message}`)
 
         } else if (results.metadata.texkeys.length === 0) {
@@ -393,18 +393,18 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
 
         eta.iterate()
 
-        // tslint:disable-next-line:no-magic-numbers
+        // eslint-disable-next-line no-magic-numbers
         if ((done % 10) === 1) {
-          // tslint:disable-next-line:no-magic-numbers
+          // eslint-disable-next-line no-magic-numbers
           progress.setProgress((eta.done * 100) / eta.count)
           progress.setText(eta.format(`${eta.done} / ${eta.count}, {{etah}} remaining`))
         }
       }
 
-      // tslint:disable-next-line:no-magic-numbers
+      // eslint-disable-next-line no-magic-numbers
       progress.setProgress(100)
       progress.setText('Ready')
-      // tslint:disable-next-line:no-magic-numbers
+      // eslint-disable-next-line no-magic-numbers
       progressWin.startCloseTimer(500)
     }
     this.bench(bench)

@@ -142,7 +142,7 @@ class AutoExportPane {
                 query[pref] = ae[pref]
               }
               const cached = Cache.getCollection(Translators.byId[ae.translatorID].label).find(query)
-              ratio = Math.round((cached.length * 100) / items.length) // tslint:disable-line:no-magic-numbers
+              ratio = Math.round((cached.length * 100) / items.length) // eslint-disable-line no-magic-numbers
             }
             (node as XUL.Textbox).value = `${ratio}%`
 
@@ -289,7 +289,7 @@ export = new class PrefPane {
     let error = ''
     try {
       // don't care about the return value, just if it throws an error
-      new Function(postscript.value) // tslint:disable-line:no-unused-expression
+      new Function(postscript.value) // eslint-disable-line @typescript-eslint/no-unused-expressions
     } catch (err) {
       log.error('PrefPane.checkPostscript: error compiling postscript:', err)
       error = `${err}`
@@ -378,14 +378,14 @@ export = new class PrefPane {
 
     if (document.location.hash === '#better-bibtex') {
       // runs into the 'TypeError: aId is undefined' problem for some reason unless I delay the activation of the pane
-      // tslint:disable-next-line:no-magic-numbers
+      // eslint-disable-next-line no-magic-numbers
       Zotero.setTimeout(() => document.getElementById('zotero-prefs').showPane(document.getElementById('zotero-prefpane-better-bibtex')), 500)
     }
 
     window.sizeToContent()
 
     // no other way that I know of to know that I've just been selected
-    this.timer = this.timer || window.setInterval(this.refresh.bind(this), 500) as any // tslint:disable-line:no-magic-numbers
+    this.timer = this.timer || window.setInterval(this.refresh.bind(this), 500) as any // eslint-disable-line no-magic-numbers
   }
 
   private refresh() {

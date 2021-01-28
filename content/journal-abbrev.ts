@@ -7,7 +7,7 @@ import { client } from './client'
 import { log } from './logger'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let JournalAbbrev = new class { // tslint:disable-line:variable-name
+export let JournalAbbrev = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   private initialized: boolean
   private style: any
   private abbrevs: any

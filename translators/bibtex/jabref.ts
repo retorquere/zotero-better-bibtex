@@ -14,7 +14,7 @@ export class JabRef {
     if ((Object.keys(Translator.collections).length === 0) || !Translator.preferences.jabrefFormat) return
 
     let meta
-    if (Translator.preferences.jabrefFormat === 3) { // tslint:disable-line:no-magic-numbers
+    if (Translator.preferences.jabrefFormat === 3) { // eslint-disable-line no-magic-numbers
       meta = 'groupsversion:3'
     } else if (Translator.BetterBibLaTeX) {
       meta = 'databaseType:biblatex'
@@ -23,7 +23,7 @@ export class JabRef {
     }
 
     Zotero.write(`@comment{jabref-meta: ${meta};}\n`)
-    Zotero.write(`@comment{jabref-meta: ${Translator.preferences.jabrefFormat === 5 ? 'grouping' : 'groupstree'}:\n`) // tslint:disable-line:no-magic-numbers
+    Zotero.write(`@comment{jabref-meta: ${Translator.preferences.jabrefFormat === 5 ? 'grouping' : 'groupstree'}:\n`) // eslint-disable-line no-magic-numbers
 
     this.groups = ['0 AllEntriesGroup:']
     const collections = Object.values(Translator.collections).filter(coll => !coll.parent)
@@ -37,15 +37,15 @@ export class JabRef {
   }
 
   private exportGroup(collection, level) {
-    let group = [`${level} ${Translator.preferences.jabrefFormat === 5 ? 'Static' : 'Explicit'}Group:${this.quote(collection.name)}`, '0'] // tslint:disable-line:no-magic-numbers
+    let group = [`${level} ${Translator.preferences.jabrefFormat === 5 ? 'Static' : 'Explicit'}Group:${this.quote(collection.name)}`, '0'] // eslint-disable-line no-magic-numbers
 
-    if (Translator.preferences.jabrefFormat === 3) { // tslint:disable-line:no-magic-numbers
+    if (Translator.preferences.jabrefFormat === 3) { // eslint-disable-line no-magic-numbers
       const references = ((collection.items || []).filter(id => this.citekeys.has(id)).map(id => this.quote(this.citekeys.get(id))))
       if (Translator.preferences.testing) references.sort()
       group = group.concat(references)
     }
 
-    if (Translator.preferences.jabrefFormat === 5) { // tslint:disable-line:no-magic-numbers
+    if (Translator.preferences.jabrefFormat === 5) { // eslint-disable-line no-magic-numbers
       group = group.concat(['1', '0x8a8a8aff', '', '']) // isexpanded?, color, icon, description
     } else {
       group.push('') // what is the meaning of the empty cell at the end, JabRef?

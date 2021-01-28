@@ -9,7 +9,7 @@ import { KeyManager } from './key-manager'
 import { Translators } from './translators'
 import { Preferences as Prefs } from './prefs'
 
-export let AUXScanner = new class { // tslint:disable-line:variable-name
+export let AUXScanner = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   private decoder = new TextDecoder
 
   public async pick(): Promise<string> {
@@ -139,7 +139,7 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
       let timestamp = ''
 
       while (siblings.has(target.basename + timestamp)) {
-        await sleep(1500) // tslint:disable-line:no-magic-numbers
+        await sleep(1500) // eslint-disable-line no-magic-numbers
         timestamp = (new Date).toLocaleDateString('nl', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false })
       }
 

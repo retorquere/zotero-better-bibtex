@@ -54,7 +54,7 @@ type ExportJob = {
 }
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let Translators = new class { // tslint:disable-line:variable-name
+export let Translators = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public byId: Record<string, ITranslatorHeader>
   public byName: Record<string, ITranslatorHeader>
   public byLabel: Record<string, ITranslatorHeader>
@@ -225,7 +225,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
       displayOptions.exportFileData
 
       // jabref 4 stores collection info inside the reference, and collection info depends on which part of your library you're exporting
-      || (translator.label.includes('TeX') && options.preferences.jabrefFormat >= 4) // tslint:disable-line:no-magic-numbers
+      || (translator.label.includes('TeX') && options.preferences.jabrefFormat >= 4) // eslint-disable-line no-magic-numbers
 
       // relative file paths are going to be different based on the file being exported to
       || options.preferences.relativeFilePaths
@@ -252,9 +252,9 @@ export let Translators = new class { // tslint:disable-line:variable-name
     const deferred = Zotero.Promise.defer()
     let worker: ChromeWorker = null
     // WHAT IS GOING ON HERE FIREFOX?!?! A *NetworkError* for a xpi-internal resource:// URL?!
-    for (let attempt = 0; !worker && attempt < 5; attempt++) { // tslint:disable-line:no-magic-numbers
+    for (let attempt = 0; !worker && attempt < 5; attempt++) { // eslint-disable-line no-magic-numbers
       try {
-        if (attempt > 0) await sleep(2 * 1000 * attempt) // tslint:disable-line:no-magic-numbers
+        if (attempt > 0) await sleep(2 * 1000 * attempt) // eslint-disable-line no-magic-numbers
         worker = new ChromeWorker(`resource://zotero-better-bibtex/worker/Zotero.js?${params}`)
       } catch (err) {
         log.error('new ChromeWorker:', err)
@@ -265,7 +265,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
       flash(
         'Failed to start background export',
         'Could not start a background export after 5 attempts. Background exports have been disabled -- PLEASE report this as a bug at the Better BibTeX github project',
-        15 // tslint:disable-line:no-magic-numbers
+        15 // eslint-disable-line no-magic-numbers
       )
       this.workers.disabled = true
       // this returns a promise for a new export, but now a foreground export
@@ -385,8 +385,8 @@ export let Translators = new class { // tslint:disable-line:variable-name
       config.items.push(Serializer.fast(item, count))
 
       // sleep occasionally so the UI gets a breather
-      if ((Date.now() - batch) > 1000) { // tslint:disable-line:no-magic-numbers
-        await sleep(0) // tslint:disable-line:no-magic-numbers
+      if ((Date.now() - batch) > 1000) { // eslint-disable-line no-magic-numbers
+        await sleep(0) // eslint-disable-line no-magic-numbers
         batch = Date.now()
       }
 

@@ -1,12 +1,12 @@
 import * as CSL from '../gen/citeproc'
 
-// tslint:disable: no-var-keyword prefer-const semicolon prefer-template quotemark
+/* eslint-disable no-var, prefer-const, @typescript-eslint/semi,@typescript-eslint/member-delimiter-style, prefer-template, @typescript-eslint/quotes */
 function makeRegExp(lst) {
   var lst = lst.slice();
   var ret = new RegExp( "(?:(?:[?!:]*\\s+|-|^)(?:" + lst.join("|") + ")(?=[!?:]*\\s+|-|$))", "g");
   return ret;
 }
-// tslint:enable
+/* eslint-enable */
 
 class State {
   public opt = { lang: 'en' }
@@ -17,7 +17,7 @@ class State {
     this.locale = {}
     this.locale[this.opt.lang] = { opts: {} }
     this.locale[this.opt.lang].opts['skip-words'] = CSL.SKIP_WORDS
-    this.locale[this.opt.lang].opts["skip-words-regexp"] = makeRegExp(this.locale[this.opt.lang].opts["skip-words"]) // tslint:disable-line:quotemark semicolon
+    this.locale[this.opt.lang].opts["skip-words-regexp"] = makeRegExp(this.locale[this.opt.lang].opts["skip-words"]) // eslint-disable-line @typescript-eslint/quotes, @typescript-eslint/semi,@typescript-eslint/member-delimiter-style
     this.tmp = {}
   }
 }
@@ -39,3 +39,4 @@ export function sentenceCase(text) {
 
   return sentencecased
 }
+

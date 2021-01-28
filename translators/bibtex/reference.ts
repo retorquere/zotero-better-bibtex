@@ -12,7 +12,7 @@ import { log } from '../../content/logger'
 
 import { arXiv } from '../../content/arXiv'
 
-const Path = { // tslint:disable-line variable-name
+const Path = { // eslint-disable-line  @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   normalize(path) {
     return Translator.paths.caseSensitive ? path : path.toLowerCase()
   },
@@ -55,7 +55,7 @@ interface IField {
   bibtex?: string
 }
 
-const Language = new class { // tslint:disable-line:variable-name
+const Language = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public babelMap = {
     af: 'afrikaans',
     am: 'amharic',
@@ -368,7 +368,7 @@ export class Reference {
         this.language = language[0]
       } else {
         const match = Language.lookup(langlc)
-        if (match[0].sim >= 0.9) { // tslint:disable-line:no-magic-numbers
+        if (match[0].sim >= 0.9) { // eslint-disable-line no-magic-numbers
           this.language = match[0].lang
         } else {
           this.language = this.item.language
@@ -684,7 +684,7 @@ export class Reference {
   }
 
   public complete() {
-    if (Translator.preferences.jabrefFormat >= 4 && this.item.collections?.length) { // tslint:disable-line:no-magic-numbers
+    if (Translator.preferences.jabrefFormat >= 4 && this.item.collections?.length) { // eslint-disable-line no-magic-numbers
       const groups = Array.from(new Set(this.item.collections.map(key => Translator.collections[key]?.name).filter(name => name))).sort()
       this.add({ name: 'groups', value: groups.join(',') })
     }
@@ -979,7 +979,7 @@ export class Reference {
       let name
       if (creator.name || (creator.lastName && (creator.fieldMode === 1))) {
         name = creator.name || creator.lastName
-        if (name !== 'others') name = raw ? `{${name}}` : this.enc_latex({value: new String(this._enc_creators_scrub_name(name))}) // tslint:disable-line:no-construct
+        if (name !== 'others') name = raw ? `{${name}}` : this.enc_latex({value: new String(this._enc_creators_scrub_name(name))}) // eslint-disable-line no-new-wrappers
 
       } else if (raw) {
         name = [creator.lastName || '', creator.firstName || ''].join(', ')
@@ -1026,7 +1026,7 @@ export class Reference {
    */
   protected enc_literal(f, raw = false) {
     if (!f.value) return null
-    return this.enc_latex({...f, value: Translator.preferences.exportBraceProtection ? new String(f.value) : f.value}, { raw }) // tslint:disable-line:no-construct
+    return this.enc_latex({...f, value: Translator.preferences.exportBraceProtection ? new String(f.value) : f.value}, { raw }) // eslint-disable-line no-new-wrappers
   }
 
   /*
@@ -1065,7 +1065,7 @@ export class Reference {
     */
     if (caseConversion && Translator.BetterBibTeX && !this.english && Translator.preferences.exportBraceProtection) value = `{${value}}`
 
-    if (f.value instanceof String && !latex.raw) value = new String(`{${value}}`) // tslint:disable-line:no-construct
+    if (f.value instanceof String && !latex.raw) value = new String(`{${value}}`) // eslint-disable-line no-new-wrappers
     return value
   }
 
@@ -1130,7 +1130,7 @@ export class Reference {
 
       if (!att.title) att.title = att.path.replace(/.*[\\\/]/, '') || 'attachment'
 
-      if (!att.mimetype && (att.path.slice(-4).toLowerCase() === '.pdf')) att.mimetype = 'application/pdf' // tslint:disable-line:no-magic-numbers
+      if (!att.mimetype && (att.path.slice(-4).toLowerCase() === '.pdf')) att.mimetype = 'application/pdf' // eslint-disable-line no-magic-numbers
 
       if (Translator.preferences.testing) {
         att.path = `files/${this.item.citationKey}/${att.path.replace(/.*[\/\\]/, '')}`
@@ -1189,12 +1189,12 @@ export class Reference {
     for (const pkg of packages) {
       this.packages[pkg] = true
     }
-    return (part instanceof String) ? new String(`{${latex}}`) : latex // tslint:disable-line:no-construct
+    return (part instanceof String) ? new String(`{${latex}}`) : latex // eslint-disable-line no-new-wrappers
   }
   private _enc_creators_biblatex(name) {
     let family, latex
     if ((name.family.length > 1) && (name.family[0] === '"') && (name.family[name.family.length - 1] === '"')) {
-      family = new String(name.family.slice(1, -1)) // tslint:disable-line:no-construct
+      family = new String(name.family.slice(1, -1)) // eslint-disable-line no-new-wrappers
     } else {
       ({ family } = name)
     }
@@ -1204,7 +1204,7 @@ export class Reference {
     if (Translator.preferences.biblatexExtendedNameFormat && (name['dropping-particle'] || name['non-dropping-particle'] || name['comma-suffix'])) {
       if (initials >= 0) {
         initials = name.given.substring(0, initials)
-        if (initials.length > 1) initials = new String(initials) // tslint:disable-line:no-construct
+        if (initials.length > 1) initials = new String(initials) // eslint-disable-line no-new-wrappers
         name.given = name.given.replace(this._enc_creators_initials_marker, '')
       } else {
         initials = ''
@@ -1223,7 +1223,7 @@ export class Reference {
       return latex.join(', ')
     }
 
-    if (family && Zotero.Utilities.XRegExp.test(family, this.startsWithLowercase)) family = new String(family) // tslint:disable-line:no-construct
+    if (family && Zotero.Utilities.XRegExp.test(family, this.startsWithLowercase)) family = new String(family) // eslint-disable-line no-new-wrappers
 
     if (family) family = this._enc_creator_part(family)
 
@@ -1242,7 +1242,7 @@ export class Reference {
   private _enc_creators_bibtex(name) {
     let family
     if ((name.family.length > 1) && (name.family[0] === '"') && (name.family[name.family.length - 1] === '"')) { // quoted
-      family = new String(name.family.slice(1, -1)) // tslint:disable-line:no-construct
+      family = new String(name.family.slice(1, -1)) // eslint-disable-line no-new-wrappers
     } else {
       family = name.family
     }
@@ -1264,8 +1264,8 @@ export class Reference {
       in the label, use {\relax van} Gogh or something like this.
     */
 
-    if (name['non-dropping-particle']) family = new String(this._enc_creators_pad_particle(name['non-dropping-particle']) + family) // tslint:disable-line:no-construct
-    if (Zotero.Utilities.XRegExp.test(family, this.startsWithLowercase) || Zotero.Utilities.XRegExp.test(family, this.hasLowercaseWord)) family = new String(family) // tslint:disable-line:no-construct
+    if (name['non-dropping-particle']) family = new String(this._enc_creators_pad_particle(name['non-dropping-particle']) + family) // eslint-disable-line no-new-wrappers
+    if (Zotero.Utilities.XRegExp.test(family, this.startsWithLowercase) || Zotero.Utilities.XRegExp.test(family, this.hasLowercaseWord)) family = new String(family) // eslint-disable-line no-new-wrappers
 
     // https://github.com/retorquere/zotero-better-bibtex/issues/978 -- enc_latex can return null
     family = family ? this._enc_creator_part(family) : ''
@@ -1290,7 +1290,7 @@ export class Reference {
     return latex
   }
 
-  private postscript(_reference, _item, _translator, _zotero): boolean { return true } // tslint:disable-line:no-empty
+  private postscript(_reference, _item, _translator, _zotero): boolean { return true } // eslint-disable-line no-empty,@typescript-eslint/no-empty-function
 
   private qualityReport() {
     if (!Translator.preferences.qualityReport) return ''

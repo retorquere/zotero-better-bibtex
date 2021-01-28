@@ -19,7 +19,7 @@ function select(selector, node) {
 export = source => {
   const doc = (new DOMParser).parseFromString(source)
 
-  const BiberTool = { // tslint:disable-line:variable-name
+  const BiberTool = { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
     // combinations fo allowed fields
     fieldSet: '',
 
@@ -44,7 +44,7 @@ export = source => {
     BiberTool.allowed[type.textContent] = ['optional']
   }
 
-  // tslint:disable-next-line:prefer-template
+  // eslint-disable-next-line prefer-template
   const dateprefix = '^('
     + select('//fields/field[@fieldtype="field" and @datatype="date"]', doc)
         .map(field => field.textContent.replace(/date$/, ''))
@@ -53,7 +53,7 @@ export = source => {
     + ')?'
   const dateprefixRE = new RegExp(dateprefix)
 
-  // tslint:disable-next-line:prefer-template
+  // eslint-disable-next-line prefer-template
   const datefieldRE = new RegExp(dateprefix + '(' + Array.from(new Set(
     select('//fields/field[@fieldtype="field" and @datatype="datepart"]', doc)
       .map(field => field.textContent.replace(dateprefixRE, ''))

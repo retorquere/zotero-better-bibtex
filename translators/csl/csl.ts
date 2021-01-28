@@ -20,7 +20,7 @@ const keyOrder = [
 ].reduce((acc, field, idx, fields) => { acc[field] = idx + 1; return acc }, {})
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let CSLExporter = new class { // tslint:disable-line:variable-name
+export let CSLExporter = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public flush: Function // will be added by JSON/YAML exporter
   public serialize: Function // will be added by JSON/YAML exporter
   public date2CSL: Function // will be added by JSON/YAML exporter
@@ -38,7 +38,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       }
     }
   }
-  public postscript(reference, item, _translator, _zotero) {} // tslint:disable-line:no-empty
+  public postscript(reference, item, _translator, _zotero) {} // eslint-disable-line no-empty,@typescript-eslint/no-empty-function
 
   public doExport() {
     const items = []
@@ -183,3 +183,4 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
     return obj
   }
 }
+

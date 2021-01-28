@@ -10,10 +10,10 @@ import { flash } from './flash'
 
 Components.utils.import('resource://gre/modules/XPCOMUtils.jsm')
 
-// tslint:disable:max-classes-per-file
+/* eslint-disable max-classes-per-file */
 
 class FieldEnumerator {
-  // tslint:disable-next-line:variable-name
+  // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public QueryInterface = XPCOMUtils.generateQI([Components.interfaces.nsISupports, Components.interfaces.nsISimpleEnumerator])
   public doc: Document
   public idx: number
@@ -128,7 +128,7 @@ class Document {
       automaticJournalAbbreviations: true,
     }
     data.style = {styleID: options.style, locale: 'en-US', hasBibliography: true, bibliographyStyleHasBeenSet: true}
-    data.sessionID = Zotero.Utilities.randomString(10) // tslint:disable-line:no-magic-numbers
+    data.sessionID = Zotero.Utilities.randomString(10) // eslint-disable-line no-magic-numbers
     this.data = data.serialize()
   }
 
@@ -256,7 +256,7 @@ class Document {
 }
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let Application = new class { // tslint:disable-line:variable-name
+export let Application = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public primaryFieldType = 'Field'
   public secondaryFieldType = 'Bookmark'
   public fields: any[] = []

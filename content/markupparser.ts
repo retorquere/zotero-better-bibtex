@@ -46,7 +46,7 @@ re.unprotectedWord = new RegExp(`^[${re.char}]+`)
 re.url = /^(https?|mailto):\/\/[^\s]+/
 re.whitespace = new RegExp(`^[${re.Whitespace}]+`)
 
-// tslint:disable: object-literal-key-quotes
+/* eslint-disable quote-props */
 const ligatures = {
   '\u01F1': 'DZ',
   '\u01F2': 'Dz',
@@ -70,7 +70,7 @@ const ligatures = {
   '\u01CB': 'Nj',
   '\u01CC': 'nj',
 }
-// tslint:enable
+/* eslint-enable */
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 
@@ -82,7 +82,7 @@ type HTMLParserOptions = {
   exportTitleCase: boolean
 }
 
-export let HTMLParser = new class { // tslint:disable-line:variable-name
+export let HTMLParser = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   private caseConversion: boolean
   private braceProtection: boolean
   private sentenceStart: boolean
@@ -105,7 +105,7 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
     if (csquotes) {
       const space = '\\s*'
       for (const close of [0, 1]) {
-        const chars = csquotes.replace(/./g, (c, i) => [c, ''][(i + close) & 1]).replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]\s*/g, '\\$&') // tslint:disable-line:no-bitwise
+        const chars = csquotes.replace(/./g, (c, i) => [c, ''][(i + close) & 1]).replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]\s*/g, '\\$&') // eslint-disable-line no-bitwise
         this.html = this.html.replace(new RegExp(`${close ? space : ''}[${chars}]${close ? '' : space}`, 'g'), close ? '</span>' : '<span class="enquote">')
       }
     }

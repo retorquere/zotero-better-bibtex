@@ -61,8 +61,8 @@ class Cache extends Loki {
 
     // this reaps unused cache entries -- make sure that cacheFetchs updates the object
     //                  secs    mins  hours days
-    const ttl =         1000  * 60  * 60  * 24 * 30 // tslint:disable-line:no-magic-numbers
-    const ttlInterval = 1000  * 60  * 60  * 4       // tslint:disable-line:no-magic-numbers
+    const ttl =         1000  * 60  * 60  * 24 * 30 // eslint-disable-line no-magic-numbers
+    const ttlInterval = 1000  * 60  * 60  * 4       // eslint-disable-line no-magic-numbers
 
     const modified = {}
     // SQLITE gives time in seconds, LokiJS time is in milliseconds
@@ -116,7 +116,7 @@ class Cache extends Loki {
   }
 }
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let DB = new Cache('cache', { // tslint:disable-line:variable-name
+export let DB = new Cache('cache', { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   autosave: true,
   adapter: new Store({ storage: 'file', deleteAfterLoad: true, allowPartial: true }),
 })

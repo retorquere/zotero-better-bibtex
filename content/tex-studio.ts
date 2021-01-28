@@ -5,7 +5,7 @@ import { KeyManager } from './key-manager'
 import { log } from './logger'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let TeXstudio = new class { // tslint:disable-line:variable-name
+export let TeXstudio = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public enabled: boolean
   public texstudio: string
 

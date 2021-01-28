@@ -30,8 +30,8 @@ const httpRequestOptions = {
 }
 
 export = new class ErrorReport {
-  private chunkSize = 10 * MB // tslint:disable-line:no-magic-numbers binary-expression-operand-order
-  private previewSize = 3 * kB // tslint:disable-line:no-magic-numbers binary-expression-operand-order
+  private chunkSize = 10 * MB // eslint-disable-line no-magic-numbers, yoda
+  private previewSize = 3 * kB // eslint-disable-line no-magic-numbers, yoda
 
   private key: string
   private timestamp: string
@@ -235,7 +235,7 @@ export = new class ErrorReport {
   private async put(url, options) {
     let error = null
 
-    for (let attempt = 0; attempt < 5; attempt++) { // tslint:disable-line:no-magic-numbers
+    for (let attempt = 0; attempt < 5; attempt++) { // eslint-disable-line no-magic-numbers
       try {
         // await Zotero.HTTP.request('PUT', url, options)
 
@@ -331,7 +331,7 @@ export = new class ErrorReport {
 
     }
 
-    chunks = chunks.map((chunk, n) => ({ n: '.' + (n + 1).toString().padStart(4, '0'), body: chunk })) // tslint:disable-line:no-magic-numbers
+    chunks = chunks.map((chunk, n) => ({ n: '.' + (n + 1).toString().padStart(4, '0'), body: chunk })) // eslint-disable-line no-magic-numbers
     if (chunks.length === 1) chunks[0].n = ''
 
     await Promise.all(chunks.map(chunk => this.put(`${url}${chunk.n}.${ext}`, {

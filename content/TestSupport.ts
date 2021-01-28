@@ -53,7 +53,7 @@ export = new class {
     // to delete.
     let items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, false, true, true)
     while (items.length) {
-      // tslint:disable-next-line:no-magic-numbers
+      // eslint-disable-next-line no-magic-numbers
       const chunk = items.splice(0, 100)
       log.debug('TestSupport.reset: deleting', chunk.length, 'items')
       await Zotero.Items.erase(chunk)
@@ -103,7 +103,7 @@ export = new class {
     if (path.endsWith('.aux')) {
       await AUXScanner.scan(path)
       // for some reason, the imported collection shows up as empty right after the import >:
-      await sleep(1500) // tslint:disable-line:no-magic-numbers
+      await sleep(1500) // eslint-disable-line no-magic-numbers
     } else {
       await Zotero_File_Interface.importFile({ file: Zotero.File.pathToFile(path), createNewCollection: !!createNewCollection })
     }
@@ -140,7 +140,7 @@ export = new class {
     // zoteroPane.show()
 
     const sortedIDs = JSON.stringify(ids.slice().sort())
-    // tslint:disable-next-line:no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     for (let attempt = 1; attempt <= 10; attempt++) {
       log.debug(`select ${ids}, attempt ${attempt}`)
       await zoteroPane.selectItems(ids, true)
@@ -244,11 +244,11 @@ export = new class {
 
     selected.sort((a, b) => ids.indexOf(a.id) - ids.indexOf(b.id))
     Zotero_Duplicates_Pane.setItems(selected)
-    await sleep(1500) // tslint:disable-line:no-magic-numbers
+    await sleep(1500) // eslint-disable-line no-magic-numbers
 
     const before = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
     await Zotero_Duplicates_Pane.merge()
-    await sleep(1500) // tslint:disable-line:no-magic-numbers
+    await sleep(1500) // eslint-disable-line no-magic-numbers
     const after = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
     if (before.length - after.length !== (ids.length - 1)) throw new Error(`merging ${ids.length}: before = ${before.length}, after = ${after.length}`)
   }
