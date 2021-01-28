@@ -128,8 +128,6 @@
     "pretty-data": "^0.40.0",
     "properties-reader": "^2.2.0",
     "recast": "^0.20.4",
-    "request": "^2.88.2",
-    "request-promise": "^4.2.6",
     "rimraf": "^3.0.2",
     "shelljs": "^0.8.4",
     "ts-loader": "^8.0.14",
