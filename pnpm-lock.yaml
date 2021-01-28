@@ -85,7 +85,7 @@ devDependencies:
   xml-parser: 1.2.1
   xmldom: 0.4.0
   xpath: 0.0.32
-  zotero-plugin: 1.0.37_webpack-cli@4.4.0
+  zotero-plugin: 1.0.38_webpack-cli@4.4.0
 lockfileVersion: 5.2
 packages:
   /@babel/code-frame/7.12.11:
@@ -5402,7 +5402,7 @@ packages:
     dev: false
     resolution:
       integrity: sha1-UBl+2yihxCymWcyLTmqd3W1ERVQ=
-  /zotero-plugin/1.0.37_webpack-cli@4.4.0:
+  /zotero-plugin/1.0.38_webpack-cli@4.4.0:
     dependencies:
       '@octokit/rest': 18.0.15
       '@rgrove/parse-xml': 3.0.0
@@ -5448,7 +5448,7 @@ packages:
     peerDependencies:
       webpack-cli: '*'
     resolution:
-      integrity: sha512-15QcDuoJq8SpxqTQjbLjfqp6cxQ0kz+WnM3XlDeBv+eugqVkJQ6T/FGnyDMPUvcrG7tTdncHsduSkCMgMSUReA==
+      integrity: sha512-0hKHye4OkHL2QK8e7PfETdE7GVkhPjjNlbimfCF3EXhjXePPo1nCVufZsasGmxbAFOByK95V8AYNH8conq489g==
 specifiers:
   '@retorquere/bibtex-parser': ^3.2.33
   '@types/lokijs': ^1.5.3
@@ -5535,4 +5535,4 @@ specifiers:
   xmldom: ^0.4.0
   xpath: ^0.0.32
   xregexp: ^4.4.1
-  zotero-plugin: ^1.0.37
+  zotero-plugin: ^1.0.38
