@@ -286,8 +286,12 @@ class PatternFormatter {
     return res
   }
 
-  // eslint-disable-next-line max-len
-  /** Generates citation keys as the stock Zotero Bib(La)TeX export does. Note that this pattern inherits all the problems of the original Zotero citekey generation -- you should really only use this if you have existing papers that rely on this behavior. */
+  /**
+    * Generates citation keys as the stock Zotero Bib(La)TeX export
+    * does. Note that this pattern inherits all the problems of the
+    * original Zotero citekey generation -- you should really only
+    * use this if you have existing papers that rely on this behavior.
+    */
   public $zotero() {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return zotero_buildCiteKey({
@@ -343,7 +347,7 @@ class PatternFormatter {
   }
 
   /** The last name of the last author */
-  public $authorLast(onlyEditors: boolean, withInitials: boolean, _joiner: string) {
+  public $authorLast(onlyEditors: boolean, withInitials: boolean, joiner: string) { // eslint-disable-line @typescript-eslint/no-unused-vars
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
     return authors[authors.length - 1]
@@ -416,8 +420,12 @@ class PatternFormatter {
     return authors.slice(0, 2).concat(authors.length > 2 ? ['ea'] : []).join(joiner || '.')
   }
 
-  // eslint-disable-next-line max-len
-  /** The last name of the first author, and the last name of the second author if there are two authors or "EtAl" if there are more than two. This is similar to `auth.etal`. The difference is that the authors are not separated by "." and in case of more than 2 authors "EtAl" instead of ".etal" is appended. */
+  /** The last name of the first author, and the last name of the
+   * second author if there are two authors or "EtAl" if there are
+   * more than two. This is similar to `auth.etal`. The difference
+   * is that the authors are not separated by "." and in case of
+   * more than 2 authors "EtAl" instead of ".etal" is appended.
+   */
   public $authEtAl(onlyEditors: boolean, withInitials: boolean, joiner: string) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''

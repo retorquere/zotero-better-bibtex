@@ -89,7 +89,7 @@ ast.forEachChild((node: ts.Node) => {
           if (comment_ranges) {
             let comment = ast.getFullText().slice(comment_ranges[0].pos, comment_ranges[0].end)
             if (comment.startsWith('/**')) {
-              comment = comment.replace(/^\/\*\*/, '').replace(/\*\/$/, '').trim().split('\n').map(line => line.replace(/^\s*[*]\s*/, '')).join('\n')
+              comment = comment.replace(/^\/\*\*/, '').replace(/\*\/$/, '').trim().split('\n').map(line => line.replace(/^\s*[*]\s*/, '')).join('\n').replace(/\n+/g, newlines => newlines.length > 1 ? '\n\n' : ' ')
 
               switch(kind) {
                 case '$':

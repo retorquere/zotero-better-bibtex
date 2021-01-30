@@ -97,30 +97,31 @@ if (Prefs.get('citeprocNoteCitekey')) {
 }
 
 // https://github.com/retorquere/zotero-better-bibtex/issues/1221
-$patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(item: { getField: (arg0: string) => string, id: any, setField: (arg0: string, arg1: string) => void }, otherItems: any[]) {
+$patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(item: { getField: (field: string) => string, id: string, setField: (field: string, value: string) => void }, otherItems: any[]) {
   try {
     const merge = {
-      citekeys: Prefs.get('extraMergeCitekeys'),
+      citationKey: Prefs.get('extraMergeCitekeys'),
       tex: Prefs.get('extraMergeTeX'),
       kv: Prefs.get('extraMergeCSL'),
     }
 
-    const extra = Extra.get(item.getField('extra'), 'zotero', { citationKey: merge.citekeys, aliases: merge.citekeys, tex: merge.tex, kv: merge.kv })
-    log.debug('bbt merge: extra-pre:', { extract: merge, raw: item.getField('extra'), parsed: extra })
+    const extra = Extra.get(item.getField('extra'), 'zotero', { citationKey: merge.citationKey, aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
+    log.debug('#bbt merge: item:', { extract: merge, raw: item.getField('extra'), parsed: extra })
 
     // get citekeys of other items
-    if (merge.citekeys) {
+    if (merge.citationKey) {
       const otherIDs = otherItems.map((i: { id: string }) => parseInt(i.id))
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      extra.extraFields.aliases = extra.extraFields.aliases.concat(KeyManager.keys.find({ itemID: { $in: otherIDs }}).map((i: { citekey: any }) => i.citekey))
+      extra.extraFields.aliases = [...extra.extraFields.aliases, ...(KeyManager.keys.find({ itemID: { $in: otherIDs }}).map((i: { citekey: string }) => i.citekey))]
     }
+    log.debug('#bbt merge: added stored keys:', { extract: merge, raw: item.getField('extra'), parsed: extra })
 
     // add any aliases they were already holding
     for (const i of otherItems) {
-      const otherExtra = Extra.get(i.getField('extra'), 'zotero', { citationKey: merge.citekeys, aliases: merge.citekeys, tex: merge.tex, kv: merge.kv })
+      const otherExtra = Extra.get(i.getField('extra'), 'zotero', { citationKey: merge.citationKey, aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
 
-      if (merge.citekeys) {
-        extra.extraFields.aliases = extra.extraFields.aliases.concat(otherExtra.extraFields.aliases)
+      if (merge.citationKey) {
+        extra.extraFields.aliases = [...extra.extraFields.aliases, ...otherExtra.extraFields.aliases]
         if (otherExtra.extraFields.citationKey) extra.extraFields.aliases.push(otherExtra.extraFields.citationKey)
       }
 
@@ -143,17 +144,21 @@ $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(ite
           }
         }
       }
+      log.debug('do bbt merge: other-extra-pre:', { raw: i.getField('extra'), parsed: extra })
     }
+    log.debug('#bbt merge: added aliases:', { extra })
 
-    if (merge.citekeys) {
+    if (merge.citationKey) {
       const citekey = KeyManager.keys.findOne({ itemID: item.id }).citekey
-      extra.extraFields.aliases = extra.extraFields.aliases.filter(alias => alias && alias !== citekey)
+      extra.extraFields.aliases = extra.extraFields.aliases.filter(alias => alias !== citekey)
     }
+    log.debug('#bbt merge: aliases cleaned:', { extra })
 
     log.debug('bbt merge: extra-post:', extra)
     item.setField('extra', Extra.set(extra.extra, {
-      citationKey: merge.citekeys ? extra.extraFields.citationKey : undefined,
-      aliases: merge.citekeys ? extra.extraFields.aliases : undefined,
+      // keep pinned if it was before
+      citationKey: merge.citationKey ? extra.extraFields.citationKey : undefined,
+      aliases: merge.citationKey ? extra.extraFields.aliases : undefined,
       tex: merge.tex ? extra.extraFields.tex : undefined,
       kv: merge.kv ? extra.extraFields.kv : undefined,
     }))
