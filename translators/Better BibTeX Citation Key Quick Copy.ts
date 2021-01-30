@@ -60,7 +60,7 @@ const Mode = {
     if (Translator.preferences.quickCopyPandocBrackets) keys = `[${keys}]`
     Zotero.write(keys)
   },
-  
+
   roamCiteKey(items) {
     let keys = items.map(item => `[[@${item.citationKey}]]`)
     keys = keys.join(' ')
