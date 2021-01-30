@@ -135,7 +135,8 @@ class Main extends Loki {
         let corrupt
         try {
           corrupt = coll.checkAllIndexes({ repair: true })
-        } catch (err) {
+        }
+        catch (err) {
           corrupt = [ '*' ]
           coll.ensureAllIndexes(true)
         }
@@ -143,7 +144,8 @@ class Main extends Loki {
           for (const index of corrupt) {
             if (index === '*') {
               Zotero.logError(new Error(`LokiJS: rebuilt index ${name}.${index}`))
-            } else {
+            }
+            else {
               Zotero.logError(new Error(`LokiJS: corrupt index ${name}.${index} repaired`))
             }
           }
@@ -170,7 +172,7 @@ class Main extends Loki {
 }
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let DB = new Main('better-bibtex', { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export const DB = new Main('better-bibtex', { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   autosave: true,
   autosaveInterval: 5000,
   autosaveOnIdle: true,

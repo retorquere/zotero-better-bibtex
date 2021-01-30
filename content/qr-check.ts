@@ -5,7 +5,7 @@ import * as DateParser from './dateparser'
 
 const ismn_prefix = '9790'
 
-export function qualityReport(value, test, params = null) {
+export function qualityReport(value: string, test: string, params = null): string {
   switch (test) {
     case 'isbn':
       return IsISBN(value.replace(/-/g, '')) ? '' : 'not a valid ISBN'

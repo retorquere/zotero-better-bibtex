@@ -21,7 +21,7 @@ const htmlConverter = new class HTML {
     if (!tag) return
 
     if (['#text', 'pre', 'script'].includes(tag.nodeName)) {
-      this.markdown += tag.value.replace(/([\[*~^])/g, '\\$1')
+      this.markdown += tag.value.replace(/([[*~^])/g, '\\$1')
       return
     }
 
@@ -132,7 +132,8 @@ function date2csl(date) {
   }
 }
 
-Exporter.date2CSL = date => {
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions, @typescript-eslint/no-unsafe-return
+Exporter.date2CSL = function(date) {
   switch (date.type) {
     case 'date':
     case 'season':
@@ -149,16 +150,18 @@ Exporter.date2CSL = date => {
   }
 }
 
-Exporter.serialize = csl => {
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+Exporter.serialize = function(csl): string {
   for (const [k, v] of Object.entries(csl)) {
     if (typeof v === 'string' && v.indexOf('<') >= 0) csl[k] = htmlConverter.convert(v)
   }
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return YAML.dump([csl], {skipInvalid: true})
 }
 
 Exporter.flush = items => `---\nreferences:\n${items.join('\n')}...\n`
 
-export function doExport() {
+export function doExport(): void {
   Translator.init('export')
   Exporter.initialize()
   Exporter.doExport()

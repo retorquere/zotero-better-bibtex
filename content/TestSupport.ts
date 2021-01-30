@@ -18,7 +18,7 @@ import { upgrade } from './db/upgrade'
 import * as pref_defaults from '../gen/preferences/defaults.json'
 
 export = new class {
-  public async removeAutoExports() {
+  public removeAutoExports() {
     AutoExport.db.findAndRemove({ type: { $ne: '' } })
   }
 
@@ -32,17 +32,14 @@ export = new class {
     Cache.reset()
 
     let collections
-    log.debug('TestSupport.reset: start')
     const prefix = 'translators.better-bibtex.'
     for (const [pref, value] of Object.entries(pref_defaults)) {
       if (pref === 'testing') continue
       Zotero.Prefs.set(prefix + pref, value)
     }
 
-    Zotero.Prefs.set(prefix + 'testing', true)
-    log.debug('TestSupport.reset: preferences reset')
+    Zotero.Prefs.set(`${prefix}testing`, true)
 
-    log.debug('TestSupport.reset: removing collections')
     // remove collections before items to work around https://github.com/zotero/zotero/issues/1317 and https://github.com/zotero/zotero/issues/1314
     // ^%&^%@#&^% you can't just loop and erase because subcollections are also deleted
     while ((collections = Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID, true) || []).length) {
@@ -55,24 +52,20 @@ export = new class {
     while (items.length) {
       // eslint-disable-next-line no-magic-numbers
       const chunk = items.splice(0, 100)
-      log.debug('TestSupport.reset: deleting', chunk.length, 'items')
       await Zotero.Items.erase(chunk)
     }
 
-    log.debug('TestSupport.reset: empty trash')
     await Zotero.Items.emptyTrash(Zotero.Libraries.userLibraryID)
 
-    log.debug('TestSupport.reset: remove auto-exports')
     AutoExport.db.findAndRemove({ type: { $ne: '' } })
 
-    log.debug('TestSupport.reset: done')
 
     items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, false, true, true)
     if (items.length !== 0) throw new Error('library not empty after reset')
   }
 
-  public async librarySize() {
-    const itemIDs = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
+  public async librarySize(): Promise<number> {
+    const itemIDs: number[] = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
     return itemIDs.length
   }
 
@@ -82,14 +75,13 @@ export = new class {
     preferences = preferences || {}
 
     if (Object.keys(preferences).length) {
-      log.debug(`importing references and preferences from ${path}`)
       for (let [pref, value] of Object.entries(preferences)) {
-        log.debug(`${typeof pref_defaults[pref] === 'undefined' ? 'not ' : ''}setting preference ${pref} to ${value}`)
         if (typeof pref_defaults[pref] === 'undefined') throw new Error(`Unsupported preference ${pref} in test case`)
         if (Array.isArray(value)) value = value.join(',')
         Zotero.Prefs.set(`translators.better-bibtex.${pref}`, value)
       }
-    } else {
+    }
+    else {
       log.debug(`importing references from ${path}`)
     }
 
@@ -104,7 +96,8 @@ export = new class {
       await AUXScanner.scan(path)
       // for some reason, the imported collection shows up as empty right after the import >:
       await sleep(1500) // eslint-disable-line no-magic-numbers
-    } else {
+    }
+    else {
       await Zotero_File_Interface.importFile({ file: Zotero.File.pathToFile(path), createNewCollection: !!createNewCollection })
     }
     log.debug(`import finished at ${new Date()}`)
@@ -118,7 +111,7 @@ export = new class {
     return (after - before)
   }
 
-  public async exportLibrary(translatorID, displayOptions, path, collection) {
+  public async exportLibrary(translatorID, displayOptions, path, collection): Promise<string> {
     let scope
     log.debug('TestSupport.exportLibrary', { translatorID, displayOptions, path, collection })
     if (collection) {
@@ -129,7 +122,8 @@ export = new class {
       }
       log.debug('TestSupport.exportLibrary', { name, scope })
       if (!scope) throw new Error(`Collection '${name}' not found`)
-    } else {
+    }
+    else {
       scope = null
     }
     return await Translators.exportItems(translatorID, displayOptions, scope, path)
@@ -148,7 +142,8 @@ export = new class {
       let selected
       try {
         selected = zoteroPane.getSelectedItems(true)
-      } catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
+      }
+      catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
         log.error('Could not get selected items:', err)
         selected = []
       }
@@ -166,7 +161,7 @@ export = new class {
 
     let ids: number[] = []
 
-    if (query.is) ids = ids.concat(KeyManager.keys.find({ citekey: query.is }).map(item => item.itemID))
+    if (query.is) ids = ids.concat(KeyManager.keys.find({ citekey: query.is }).map((item: { itemID: number }) => item.itemID))
 
     const s = new Zotero.Search()
     for (const [mode, text] of Object.entries(query)) {
@@ -182,9 +177,11 @@ export = new class {
 
   public async pick(format, citations) {
     for (const citation of citations) {
-      citation.citekey = KeyManager.get(citation.id).citekey
-      citation.uri = Zotero.URI.getItemURI(await getItemsAsync(citation.id))
+      if (citation.id.length !== 1) throw new Error(`Expected 1 item, got ${citation.id.length}`)
+      citation.citekey = KeyManager.get(citation.id[0]).citekey
+      citation.uri = Zotero.URI.getItemURI(await getItemsAsync(citation.id[0]))
     }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return await CAYWFormatter[format](citations, {})
   }
 
@@ -192,7 +189,8 @@ export = new class {
     let ids
     if (typeof itemID === 'number') {
       ids = [itemID]
-    } else {
+    }
+    else {
       ids = []
       const items = await ZoteroDB.queryAsync(`
         SELECT item.itemID

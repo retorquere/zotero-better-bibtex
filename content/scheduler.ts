@@ -9,7 +9,7 @@ export class Scheduler {
   private handlers: Map<number, TimerHandle> = new Map
   private held: Map<number, Handler> = null
 
-  constructor(delay: string | number, factor: number = 1) {
+  constructor(delay: string | number, factor = 1) {
     this._delay = delay
     this.factor = factor
   }
@@ -18,11 +18,11 @@ export class Scheduler {
     return (typeof this._delay === 'string' ? Prefs.get(this._delay) : this._delay) * this.factor
   }
 
-  public get enabled() {
+  public get enabled(): boolean {
     return this.delay !== 0
   }
 
-  public get paused() {
+  public get paused(): boolean {
     return this.held !== null
   }
 
@@ -31,7 +31,8 @@ export class Scheduler {
 
     if (paused) {
       this.held = new Map
-    } else {
+    }
+    else {
       const held = this.held
       this.held = null
 
@@ -41,19 +42,21 @@ export class Scheduler {
     }
   }
 
-  public schedule(id: number, handler: Handler) {
+  public schedule(id: number, handler: Handler): void {
     if (this.held) {
       this.held.set(id, handler)
-    } else {
+    }
+    else {
       if (this.handlers.has(id)) clearTimeout(this.handlers.get(id))
       this.handlers.set(id, setTimeout(handler, this.delay))
     }
   }
 
-  public cancel(id: number) {
+  public cancel(id: number): void {
     if (this.held) {
       this.held.delete(id)
-    } else if (this.handlers.has(id)) {
+    }
+    else if (this.handlers.has(id)) {
       clearTimeout(this.handlers.get(id))
       this.handlers.delete(id)
     }

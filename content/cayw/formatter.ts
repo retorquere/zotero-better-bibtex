@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/require-await, @typescript-eslint/no-unsafe-return */
 declare const Zotero: any
 declare const Components: any
 declare const AddonManager: any
@@ -9,12 +10,13 @@ import { log } from '../logger'
 
 import * as unicode_table from 'unicode2latex/tables/unicode.json'
 const unicode2latex = Object.entries(unicode_table).reduce((acc, pair) => {
-  const unicode = pair[0] as string
+  const unicode = pair[0]
   const latex = pair[1] as { text: string, math: string }
   acc[unicode] = { text: latex.text || latex.math, math: !(latex.text) }
   return acc
 }, {})
-function tolatex(s) {
+
+function tolatex(s: string): string {
   if (!s) return ''
 
   return s.split('')
@@ -23,7 +25,8 @@ function tolatex(s) {
       const last = acc[acc.length - 1]
       if (last && last.math === c.math) {
         last.text += c.text
-      } else {
+      }
+      else {
         acc.push(c)
       }
       return acc
@@ -32,7 +35,7 @@ function tolatex(s) {
     .join('')
 }
 
-function shortLabel(label, options) {
+function shortLabel(label: string, options): string {
   if (typeof options[label] === 'string') return options[label]
 
   return {
@@ -64,20 +67,23 @@ function shortLabel(label, options) {
 function citation2latex(citation, options) {
   let formatted = ''
   // despite Mozilla's claim that trimStart === trimLeft, and that trimStart should be preferred, trimStart does not seem to exist in FF chrome code.
-  const label = (shortLabel(citation.label, { page: '', ...options }) + ' ').trimLeft()
+  const label = (`${shortLabel(citation.label, { page: '', ...options })} `).trimLeft()
 
   if (citation.prefix) formatted += `[${tolatex(citation.prefix)}]`
 
   if (citation.locator && citation.suffix) {
     formatted += `[${tolatex(label)}${tolatex(citation.locator)}, ${tolatex(citation.suffix)}]`
 
-  } else if (citation.locator) {
+  }
+  else if (citation.locator) {
     formatted += `[${tolatex(label)}${tolatex(citation.locator)}]`
 
-  } else if (citation.suffix) {
+  }
+  else if (citation.suffix) {
     formatted += `[${tolatex(citation.suffix)}]`
 
-  } else if (citation.prefix) {
+  }
+  else if (citation.prefix) {
     formatted += '[]'
   }
 
@@ -87,14 +93,14 @@ function citation2latex(citation, options) {
 }
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let Formatter = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export const Formatter = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public async playground(citations, options) {
-    const formatted = citations.map(cit => `${options.keyprefix || ''}${cit.citekey}${options.keypostfix || ''}`)
+    const formatted = await citations.map(cit => `${options.keyprefix || ''}${cit.citekey}${options.keypostfix || ''}`)
     return formatted.length ? `${options.citeprefix || ''}${formatted.join(options.separator || ',')}${options.citekeypostfix || ''}` : ''
   }
 
-  public async citationLinks(citations, options) {
-    return citations.map(citation => `cites: ${citation.citekey}`).join('\n')
+  public async citationLinks(citations, _options): Promise<string> {
+    return await citations.map(citation => `cites: ${citation.citekey}`).join('\n')
   }
 
   public async cite(citations, options) { return this.natbib(citations, options) }
@@ -111,6 +117,7 @@ export let Formatter = new class { // eslint-disable-line @typescript-eslint/nam
     if (citations.length > 1) {
       const state = citations.reduce((acc, cit) => {
         for (const field of ['prefix', 'suffix', 'suppressAuthor', 'locator', 'label']) {
+          // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
           acc[field] = (acc[field] || 0) + (cit[field] ? 1 : 0)
         }
         return acc
@@ -149,7 +156,8 @@ export let Formatter = new class { // eslint-disable-line @typescript-eslint/nam
     if (citations.includes('[')) {
       // there are some pre/post notes → generate a full \XYcites command
       command = command.endsWith('s') ? command : `${command}s`
-    } else {
+    }
+    else {
       // there are no pre/post-notes, the citations can be a simple
       // comma-separated list of keys
       citations = citations.replace(/\}\{/g, ',')
@@ -157,13 +165,14 @@ export let Formatter = new class { // eslint-disable-line @typescript-eslint/nam
     return `\\${command}${citations}`
   }
 
-  public async mmd(citations, options) {
+  public async mmd(citations, _options) {
     const formatted = []
 
     for (const citation of citations) {
       if (citation.prefix) {
         formatted.push(`[${citation.prefix}][#${citation.citekey}]`)
-      } else {
+      }
+      else {
         formatted.push(`[#${citation.citekey}][]`)
       }
     }
@@ -217,7 +226,7 @@ export let Formatter = new class { // eslint-disable-line @typescript-eslint/nam
 
     let citation = ''
     for (const item of citations) {
-      const [ , kind, lib, key ] = item.uri.match(/^http:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^\/]+)\/items\/(.+)/)
+      const [ , kind, lib, key ] = item.uri.match(/^http:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^/]+)\/items\/(.+)/)
       const id = `${kind === 'users' ? 'zu' : 'zg'}:${lib.startsWith('local/') ? '0' : lib}:${key}`
       if (!labels[id]) throw new Error(`No formatted citation found for ${id}`)
 
@@ -290,7 +299,7 @@ export let Formatter = new class { // eslint-disable-line @typescript-eslint/nam
     return await Translators.exportItems(translator, exportOptions, { type: 'items', items })
   }
 
-  public async json(citations, options) {
+  public async json(citations, _options) {
     return JSON.stringify(citations)
   }
 }

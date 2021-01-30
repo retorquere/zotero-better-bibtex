@@ -7,7 +7,7 @@ import { client } from './client'
 import { log } from './logger'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let JournalAbbrev = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export const JournalAbbrev = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   private initialized: boolean
   private style: any
   private abbrevs: any
@@ -33,6 +33,7 @@ export let JournalAbbrev = new class { // eslint-disable-line @typescript-eslint
   public reset() {
     this.style = Prefs.get('autoAbbrevStyle')
     if (client === 'jurism' && !this.style) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       this.style = Zotero.Styles.getVisible().filter(style => style.usesAbbreviation)[0].styleID
     }
 
@@ -43,6 +44,7 @@ export let JournalAbbrev = new class { // eslint-disable-line @typescript-eslint
         'institution-entire': { },
         'institution-part': { },
         nickname: { },
+        // eslint-disable-next-line id-blacklist
         number: { },
         title: { },
         place: { },
@@ -54,14 +56,17 @@ export let JournalAbbrev = new class { // eslint-disable-line @typescript-eslint
     }
   }
 
-  public get(item, force = false) {
-    let abbrev, journal
+  public get(item, force = false): string {
+    let abbrev:string
+    let journal: string
 
     if (item.getField) {
       try {
         abbrev = item.getField('journalAbbreviation', false, true)
-      } catch (error) {}
-    } else {
+      }
+      catch (error) {}
+    }
+    else {
       abbrev = item.journalAbbreviation
     }
 
@@ -77,7 +82,8 @@ export let JournalAbbrev = new class { // eslint-disable-line @typescript-eslint
         if (!journal) continue
 
         break
-      } catch (err) {
+      }
+      catch (err) {
         log.error('JournalAbbrev.get: err', err)
       }
     }
@@ -88,7 +94,7 @@ export let JournalAbbrev = new class { // eslint-disable-line @typescript-eslint
     if (!this.abbrevs.default['container-title'][journal] && typeof Zotero.Cite.getAbbreviation === 'function') {
       Zotero.Cite.getAbbreviation(this.style, this.abbrevs, 'default', 'container-title', journal)
     }
-    const abbr = this.abbrevs.default['container-title'][journal]
+    const abbr: string = this.abbrevs.default['container-title'][journal]
 
     if (abbr === journal) return null
     return abbr || journal

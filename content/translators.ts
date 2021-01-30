@@ -1,3 +1,6 @@
+/* eslint-disable no-case-declarations */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+
 declare const Zotero: any
 declare const Components: any
 
@@ -13,7 +16,6 @@ import { Serializer } from './serializer'
 import { log } from './logger'
 import { DB as Cache, selector as cacheSelector } from './db/cache'
 import { DB } from './db/main'
-// import * as Extra from './extra'
 import { sleep } from './sleep'
 import { flash } from './flash'
 
@@ -54,7 +56,7 @@ type ExportJob = {
 }
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let Translators = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export const Translators = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public byId: Record<string, ITranslatorHeader>
   public byName: Record<string, ITranslatorHeader>
   public byLabel: Record<string, ITranslatorHeader>
@@ -102,6 +104,7 @@ export let Translators = new class { // eslint-disable-line @typescript-eslint/n
           Zotero.BetterBibTeX.getString('BetterBibTeX.startup.installingTranslators.new.DnD'), // text
 
           // button flags
+          // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
           ps.BUTTON_POS_0 * ps.BUTTON_TITLE_IS_STRING + ps.BUTTON_POS_0_DEFAULT
             + ps.BUTTON_POS_1 * ps.BUTTON_TITLE_IS_STRING,
 
@@ -123,25 +126,26 @@ export let Translators = new class { // eslint-disable-line @typescript-eslint/n
 
       try {
         await Zotero.Translators.reinit()
-      } catch (err) {
+      }
+      catch (err) {
         log.error('Translator.inits: reinit failed @', (new Date()).valueOf() - start, err)
       }
     }
   }
 
   public getTranslatorId(name) {
-    const _name = name.toLowerCase()
+    const name_lc = name.toLowerCase()
 
     // shortcuts
-    if (_name === 'jzon') return Translators.byLabel.BetterBibTeXJSON.translatorID
-    if (_name === 'bib') return Translators.byLabel.BetterBibLaTeX.translatorID
+    if (name_lc === 'jzon') return Translators.byLabel.BetterBibTeXJSON.translatorID
+    if (name_lc === 'bib') return Translators.byLabel.BetterBibLaTeX.translatorID
 
-    for (const [id, translator] of (Object.entries(this.byId) as [string, ITranslatorHeader][])) {
+    for (const [id, translator] of (Object.entries(this.byId))) {
       if (! ['yaml', 'json', 'bib'].includes(translator.target) ) continue
       if (! translator.label.startsWith('Better ') ) continue
 
-      if (translator.label.replace('Better ', '').replace(' ', '').toLowerCase() === _name) return id
-      if (translator.label.split(' ').pop().toLowerCase() === _name) return id
+      if (translator.label.replace('Better ', '').replace(' ', '').toLowerCase() === name_lc) return id
+      if (translator.label.split(' ').pop().toLowerCase() === name_lc) return id
     }
 
     // allowed to pass GUID
@@ -177,7 +181,8 @@ export let Translators = new class { // eslint-disable-line @typescript-eslint/n
 
     if (this.workers.running.size > workers) {
       return this.queue.schedule(this.exportItemsByWorker.bind(this, translatorID, displayOptions, options), [], { priority: 1, timestamp: (new Date()).getTime() })
-    } else {
+    }
+    else {
       return this.exportItemsByWorker(translatorID, displayOptions, options)
     }
   }
@@ -256,7 +261,8 @@ export let Translators = new class { // eslint-disable-line @typescript-eslint/n
       try {
         if (attempt > 0) await sleep(2 * 1000 * attempt) // eslint-disable-line no-magic-numbers
         worker = new ChromeWorker(`resource://zotero-better-bibtex/worker/Zotero.js?${params}`)
-      } catch (err) {
+      }
+      catch (err) {
         log.error('new ChromeWorker:', err)
       }
     }
@@ -328,7 +334,8 @@ export let Translators = new class { // eslint-disable-line @typescript-eslint/n
             cached.metadata = metadata
             cached = cache.update(cached)
 
-          } else {
+          }
+          else {
             cache.insert({...selector, reference, metadata})
           }
           break
@@ -443,7 +450,8 @@ export let Translators = new class { // eslint-disable-line @typescript-eslint/n
 
     try {
       worker.postMessage(JSON.parse(JSON.stringify(config)))
-    } catch (err) {
+    }
+    catch (err) {
       worker.terminate()
       this.workers.running.delete(id)
       log.error(err)
@@ -454,7 +462,7 @@ export let Translators = new class { // eslint-disable-line @typescript-eslint/n
     return deferred.promise
   }
 
-  public async exportItems(translatorID: string, displayOptions: any, scope: ExportScope, path = null) {
+  public async exportItems(translatorID: string, displayOptions: any, scope: ExportScope, path = null): Promise<string> {
     await Zotero.BetterBibTeX.ready
 
     const start = Date.now()
@@ -491,7 +499,8 @@ export let Translators = new class { // eslint-disable-line @typescript-eslint/n
         file = Zotero.File.pathToFile(path)
         // path could exist but not be a regular file
         if (file.exists() && !file.isFile()) file = null
-      } catch (err) {
+      }
+      catch (err) {
         // or Zotero.File.pathToFile could have thrown an error
         log.error('Translators.exportItems:', err)
         file = null
@@ -513,7 +522,8 @@ export let Translators = new class { // eslint-disable-line @typescript-eslint/n
     translation.setHandler('done', (obj, success) => {
       if (success) {
         deferred.resolve(obj ? obj.string : undefined)
-      } else {
+      }
+      else {
         log.error('Translators.exportItems failed in', { time: Date.now() - start, translatorID, displayOptions, path })
         deferred.reject('translation failed')
       }
@@ -527,12 +537,13 @@ export let Translators = new class { // eslint-disable-line @typescript-eslint/n
   public uninstall(label) {
     try {
       const destFile = Zotero.getTranslatorsDirectory()
-      destFile.append(label + '.js')
+      destFile.append(`${label}.js`)
       if (destFile.exists()) {
         destFile.remove(false)
         return true
       }
-    } catch (err) {
+    }
+    catch (err) {
       log.error(`Translators.uninstall: failed to remove ${label}:`, err)
       return true
     }
@@ -546,7 +557,8 @@ export let Translators = new class { // eslint-disable-line @typescript-eslint/n
     let installed = null
     try {
       installed = Zotero.Translators.get(header.translatorID)
-    } catch (err) {
+    }
+    catch (err) {
       log.error('Translators.install', header, err)
       installed = null
     }
@@ -570,7 +582,8 @@ export let Translators = new class { // eslint-disable-line @typescript-eslint/n
     try {
       await Zotero.Translators.save(header, code)
 
-    } catch (err) {
+    }
+    catch (err) {
       log.error('Translator.install', header, 'failed:', err)
       this.uninstall(header.label)
     }
@@ -588,7 +601,8 @@ export let Translators = new class { // eslint-disable-line @typescript-eslint/n
     for (const pref of prefOverrides) {
       if (typeof displayOptions[`preference_${pref}`] === 'undefined') {
         query[pref] = Prefs.get(pref)
-      } else {
+      }
+      else {
         query[pref] = displayOptions[`preference_${pref}`]
       }
     }
@@ -603,10 +617,12 @@ export let Translators = new class { // eslint-disable-line @typescript-eslint/n
     if (scope.library) {
       sql = `SELECT i.itemID FROM items i WHERE i.libraryID = ${scope.library} AND ${cond}`
 
-    } else if (scope.collection) {
+    }
+    else if (scope.collection) {
       sql = `SELECT i.itemID FROM collectionItems ci JOIN items i ON i.itemID = ci.itemID WHERE ci.collectionID = ${scope.collection.id} AND ${cond}`
 
-    } else {
+    }
+    else {
       log.error('Translators.uncached: no active scope')
       return []
 
@@ -645,12 +661,13 @@ const SERVER_ERROR = 500
 Zotero.Server.Endpoints['/better-bibtex/translations/stats'] = class {
   public supportedMethods = ['GET']
 
-  public init(request) {
+  public init(_request) {
     try {
       return [ OK, 'application/json', JSON.stringify(trace) ]
 
-    } catch (err) {
-      return [SERVER_ERROR, 'text/plain', '' + err]
+    }
+    catch (err) {
+      return [SERVER_ERROR, 'text/plain', `${err}`]
     }
   }
 }

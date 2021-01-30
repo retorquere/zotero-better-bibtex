@@ -27,12 +27,12 @@ import { sprintf } from 'sprintf-js'
 import { intToExcelCol } from 'excel-column-name'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let KeyManager = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export const KeyManager = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public keys: any
   public query: {
     field: { extra?: number }
     type: {
-      note?: number,
+      note?: number
       attachment?: number
     }
   }
@@ -52,16 +52,19 @@ export let KeyManager = new class { // eslint-disable-line @typescript-eslint/na
         if (results.status && (results.status < 200 || results.status > 299)) { // eslint-disable-line no-magic-numbers
           flash(`Could not fetch inspireHEP key from ${type}`, `Could not fetch inspireHEP key for ${type} ${JSON.stringify(id)},\n\nInspireHEP says: ${results.message}`)
 
-        } else if (results.metadata.texkeys.length === 0) {
+        }
+        else if (results.metadata.texkeys.length === 0) {
           flash(`No inspireHEP key found for ${type}`)
 
-        } else {
+        }
+        else {
           if (results.metadata.texkeys.length > 1) {
             flash(`Multiple inspireHEP keys found for ${type}`, `Multiple inspireHEP keys found for ${type} (${results.metadata.texkeys.join(' / ')}), selected ${results.metadata.texkeys[0]}`)
           }
-          return results.metadata.texkeys[0]
+          return (results.metadata.texkeys[0] as string)
         }
-      } catch (err) {
+      }
+      catch (err) {
         flash(`Error fetching inspireHEP key from ${type}`, `Could not fetch inspireHEP key for ${type} ${JSON.stringify(id)}\n\n${err.message}`)
         log.error('inspireHEP', url, err)
       }
@@ -69,10 +72,11 @@ export let KeyManager = new class { // eslint-disable-line @typescript-eslint/na
     return null
   }
 
-  private getField(item, field): string {
+  private getField(item: { getField: ((str: string) => string)}, field: string): string {
     try {
       return item.getField(field) || ''
-    } catch (err) {
+    }
+    catch (err) {
       return ''
     }
   }
@@ -91,7 +95,7 @@ export let KeyManager = new class { // eslint-disable-line @typescript-eslint/na
     await item.saveTx() // this should cause an update and key registration
   }
 
-  public async pin(ids, inspireHEP = false) {
+  public async pin(ids: any[], inspireHEP = false) {
     ids = this.expandSelection(ids)
 
     for (const item of await getItemsAsync(ids)) {
@@ -111,7 +115,8 @@ export let KeyManager = new class { // eslint-disable-line @typescript-eslint/na
 
         if (parsed.extraFields.citationKey === citationKey) continue
 
-      } else {
+      }
+      else {
         if (parsed.extraFields.citationKey) continue
 
         citationKey = this.get(item.id).citekey || this.update(item)
@@ -122,7 +127,7 @@ export let KeyManager = new class { // eslint-disable-line @typescript-eslint/na
     }
   }
 
-  public async unpin(ids) {
+  public async unpin(ids: any) {
     ids = this.expandSelection(ids)
 
     for (const item of await getItemsAsync(ids)) {
@@ -137,7 +142,7 @@ export let KeyManager = new class { // eslint-disable-line @typescript-eslint/na
 
   }
 
-  public async refresh(ids, manual = false) {
+  public async refresh(ids: 'selected' | number[], manual = false) {
     ids = this.expandSelection(ids)
 
     Cache.remove(ids, `refreshing keys for ${ids}`)
@@ -179,7 +184,8 @@ export let KeyManager = new class { // eslint-disable-line @typescript-eslint/na
 
         if (aliases.extraFields.aliases.length) {
           item.setField('extra', Extra.set(aliases.extra, { aliases: aliases.extraFields.aliases }))
-        } else {
+        }
+        else {
           item.setField('extra', aliases.extra)
         }
       }
@@ -234,7 +240,7 @@ export let KeyManager = new class { // eslint-disable-line @typescript-eslint/na
       field: 'citekey',
       localized: 'Citation Key',
     }
-    $patch$(Zotero.Search.prototype, 'addCondition', original => function addCondition(condition, operator, value, required) {
+    $patch$(Zotero.Search.prototype, 'addCondition', original => function addCondition(condition: string, operator: any, value: any, _required: any) {
       // detect a quick search being set up
       if (condition.match(/^quicksearch/)) this.__add_bbt_citekey = true
       // creator is always added in a quick search so use it as a trigger
@@ -242,25 +248,31 @@ export let KeyManager = new class { // eslint-disable-line @typescript-eslint/na
         original.call(this, citekeySearchCondition.name, operator, value, false)
         delete this.__add_bbt_citekey
       }
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
       return original.apply(this, arguments)
     })
-    $patch$(Zotero.SearchConditions, 'hasOperator', original => function hasOperator(condition, operator) {
+    $patch$(Zotero.SearchConditions, 'hasOperator', original => function hasOperator(condition: string, operator: string | number) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       if (condition === citekeySearchCondition.name) return citekeySearchCondition.operators[operator]
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
       return original.apply(this, arguments)
     })
-    $patch$(Zotero.SearchConditions, 'get', original => function get(condition) {
+    $patch$(Zotero.SearchConditions, 'get', original => function get(condition: string) {
       if (condition === citekeySearchCondition.name) return citekeySearchCondition
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
       return original.apply(this, arguments)
     })
     $patch$(Zotero.SearchConditions, 'getStandardConditions', original => function getStandardConditions() {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
       return original.apply(this, arguments).concat({
         name: citekeySearchCondition.name,
         localized: citekeySearchCondition.localized,
         operators: citekeySearchCondition.operators,
-      }).sort((a, b) => a.localized.localeCompare(b.localized))
+      }).sort((a: { localized: string }, b: { localized: any }) => a.localized.localeCompare(b.localized))
     })
-    $patch$(Zotero.SearchConditions, 'getLocalizedName', original => function getLocalizedName(str) {
+    $patch$(Zotero.SearchConditions, 'getLocalizedName', original => function getLocalizedName(str: string) {
       if (str === citekeySearchCondition.name) return citekeySearchCondition.localized
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
       return original.apply(this, arguments)
     })
 
@@ -270,7 +282,7 @@ export let KeyManager = new class { // eslint-disable-line @typescript-eslint/na
       }
     })
 
-    this.keys.on(['insert', 'update'], async citekey => {
+    this.keys.on(['insert', 'update'], async (citekey: { itemID: number, itemKey: any, citekey: any, pinned: any }) => {
       await ZoteroDB.queryAsync('INSERT OR REPLACE INTO betterbibtexcitekeys.citekeys (itemID, itemKey, citekey) VALUES (?, ?, ?)', [ citekey.itemID, citekey.itemKey, citekey.citekey ])
 
       // async is just a heap of fun. Who doesn't enjoy a good race condition?
@@ -280,7 +292,8 @@ export let KeyManager = new class { // eslint-disable-line @typescript-eslint/na
 
       try {
         await Zotero.Items.getAsync(citekey.itemID)
-      } catch (err) {
+      }
+      catch (err) {
         // assume item has been deleted before we could get to it -- did I mention I hate async? I hate async
         log.error('could not load', citekey.itemID, err)
         return
@@ -293,7 +306,7 @@ export let KeyManager = new class { // eslint-disable-line @typescript-eslint/na
         this.autopin.schedule(citekey.itemID, () => { this.pin([citekey.itemID]).catch(err => log.error('failed to pin', citekey.itemID, ':', err)) })
       }
     })
-    this.keys.on('delete', async citekey => {
+    this.keys.on('delete', async (citekey: { itemID: any }) => {
       await ZoteroDB.queryAsync('DELETE FROM betterbibtexcitekeys.citekeys WHERE itemID = ?', [ citekey.itemID ])
     })
 
@@ -302,6 +315,7 @@ export let KeyManager = new class { // eslint-disable-line @typescript-eslint/na
 
   public async rescan(clean?: boolean) {
     if (Prefs.get('scrubDatabase')) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, no-prototype-builtins
       for (const item of this.keys.where(i => i.hasOwnProperty('extra'))) { // 799
         delete item.extra
         this.keys.update(item)
@@ -309,10 +323,11 @@ export let KeyManager = new class { // eslint-disable-line @typescript-eslint/na
     }
 
     if (Array.isArray(this.scanning)) {
-      let left
+      let left: string
       if (this.scanning.length) {
         left = `, ${this.scanning.length} items left`
-      } else {
+      }
+      else {
         left = ''
       }
       flash('Scanning still in progress', `Scan is still running${left}`)
@@ -325,7 +340,6 @@ export let KeyManager = new class { // eslint-disable-line @typescript-eslint/na
 
     const marker = '\uFFFD'
 
-    let bench = this.bench('cleanup')
     const ids = []
     const items = await ZoteroDB.queryAsync(`
       SELECT item.itemID, item.libraryID, item.key, extra.value as extra, item.itemTypeID
@@ -346,20 +360,20 @@ export let KeyManager = new class { // eslint-disable-line @typescript-eslint/na
         // if the extra doesn't have a citekey, insert marker, next phase will find & fix it
         this.keys.insert({ citekey: extra.extraFields.citationKey || marker, pinned: !!extra.extraFields.citationKey, itemID: item.itemID, libraryID: item.libraryID, itemKey: item.key })
 
-      } else if (extra.extraFields.citationKey && ((extra.extraFields.citationKey !== existing.citekey) || !existing.pinned)) {
+      }
+      else if (extra.extraFields.citationKey && ((extra.extraFields.citationKey !== existing.citekey) || !existing.pinned)) {
         // we have an existing key in the DB, extra says it should be pinned to the extra value, but it's not.
         // update the DB to have the itemkey if necessaru
         this.keys.update({ ...existing, citekey: extra.extraFields.citationKey, pinned: true, itemKey: item.key })
 
-      } else if (!existing.itemKey) {
+      }
+      else if (!existing.itemKey) {
         this.keys.update({ ...existing, itemKey: item.key })
       }
     }
 
     this.keys.findAndRemove({ itemID: { $nin: ids } })
-    this.bench(bench)
 
-    bench = this.bench('regenerate')
     // find all references without citekey
     this.scanning = this.keys.find({ citekey: marker })
 
@@ -387,7 +401,8 @@ export let KeyManager = new class { // eslint-disable-line @typescript-eslint/na
 
         try {
           this.update(item, key)
-        } catch (err) {
+        }
+        catch (err) {
           log.error('KeyManager.rescan: update', done, 'failed:', err)
         }
 
@@ -407,12 +422,11 @@ export let KeyManager = new class { // eslint-disable-line @typescript-eslint/na
       // eslint-disable-next-line no-magic-numbers
       progressWin.startCloseTimer(500)
     }
-    this.bench(bench)
 
     this.scanning = null
   }
 
-  public update(item, current?) {
+  public update(item: any, current?: { pinned: boolean, citekey: string }) {
     if (item.isNote() || item.isAttachment()) return null
 
     current = current || this.keys.findOne({ itemID: item.id })
@@ -425,30 +439,30 @@ export let KeyManager = new class { // eslint-disable-line @typescript-eslint/na
       current.pinned = proposed.pinned
       current.citekey = proposed.citekey
       this.keys.update(current)
-    } else {
+    }
+    else {
       this.keys.insert({ itemID: item.id, libraryID: item.libraryID, itemKey: item.key, pinned: proposed.pinned, citekey: proposed.citekey })
     }
 
     return proposed.citekey
   }
 
-  public remove(ids) {
-     if (!Array.isArray(ids)) ids = [ids]
+  public remove(ids: any[]) {
+    if (!Array.isArray(ids)) ids = [ids]
+    this.keys.findAndRemove({ itemID : { $in : ids } })
+  }
 
-     this.keys.findAndRemove({ itemID : { $in : ids } })
-   }
-
-  public get(itemID) {
+  public get(itemID: number): { citekey: string, pinned: boolean, retry?: boolean } {
     // I cannot prevent being called before the init is done because Zotero unlocks the UI *way* before I'm getting the
     // go-ahead to *start* my init.
     if (!this.keys || !this.started) return { citekey: '', pinned: false, retry: true }
 
-    const key = this.keys.findOne({ itemID })
+    const key = (this.keys.findOne({ itemID }) as { citekey: string, pinned: boolean })
     if (key) return key
     return { citekey: '', pinned: false, retry: true }
   }
 
-  public propose(item) {
+  public propose(item: { getField: (field: string) => string, libraryID: number, id: number }) {
     const citekey: string = Extra.get(item.getField('extra'), 'zotero', { citationKey: true }).extraFields.citationKey
 
     if (citekey) return { citekey, pinned: true }
@@ -458,13 +472,15 @@ export let KeyManager = new class { // eslint-disable-line @typescript-eslint/na
     const conflictQuery = { libraryID: item.libraryID, itemID: { $ne: item.id } }
     if (Prefs.get('keyScope') === 'global') delete conflictQuery.libraryID
 
-    let postfix
+    let postfix: string
     const seen = {}
+    // eslint-disable-next-line no-constant-condition
     for (let n = proposed.postfix.start; true; n += 1) {
       if (n) {
         const alpha = intToExcelCol(n)
         postfix = sprintf(proposed.postfix.format, { a: alpha.toLowerCase(), A: alpha, n })
-      } else {
+      }
+      else {
         postfix = ''
       }
 
@@ -481,7 +497,7 @@ export let KeyManager = new class { // eslint-disable-line @typescript-eslint/na
     }
   }
 
-  public async tagDuplicates(libraryID) {
+  public async tagDuplicates(libraryID: any) {
     const tag = '#duplicate-citation-key'
     const scope = Prefs.get('keyScope')
 
@@ -491,7 +507,7 @@ export let KeyManager = new class { // eslint-disable-line @typescript-eslint/na
       JOIN itemTags ON itemTags.itemID = items.itemID
       JOIN tags ON tags.tagID = itemTags.tagID
       WHERE (items.libraryID = ? OR 'global' = ?) AND tags.name = ? AND items.itemID NOT IN (select itemID from deletedItems)
-    `, [ libraryID, scope, tag ])).map(item => item.itemID)
+    `, [ libraryID, scope, tag ])).map((item: { itemID: number }) => item.itemID)
 
     const citekeys: {[key: string]: any[]} = {}
     for (const item of this.keys.find(scope === 'global' ? undefined : { libraryID })) {
@@ -500,11 +516,13 @@ export let KeyManager = new class { // eslint-disable-line @typescript-eslint/na
       if (citekeys[item.citekey].length > 1) citekeys[item.citekey].forEach(i => i.duplicate = true)
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     const mistagged = Object.values(citekeys).reduce((acc, val) => acc.concat(val), []).filter(i => i.tagged !== i.duplicate).map(i => i.itemID)
     for (const item of await getItemsAsync(mistagged)) {
       if (tagged.includes(item.id)) {
         item.removeTag(tag)
-      } else {
+      }
+      else {
         item.addTag(tag)
       }
 
@@ -512,22 +530,20 @@ export let KeyManager = new class { // eslint-disable-line @typescript-eslint/na
     }
   }
 
-  private expandSelection(ids) {
+  private expandSelection(ids: 'selected' | number[]): number[] {
     if (Array.isArray(ids)) return ids
 
     if (ids === 'selected') {
       try {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         return Zotero.getActiveZoteroPane().getSelectedItems(true)
-      } catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
+      }
+      catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
         log.error('Could not get selected items:', err)
         return []
       }
     }
 
     return [ids]
-  }
-
-  private bench(id) {
-    if (typeof id === 'string') return { id, start: Date.now() }
   }
 }

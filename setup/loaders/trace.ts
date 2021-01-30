@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
 import * as fs from 'fs'
 import * as path from 'path'
 import * as shell from 'shelljs'
@@ -5,11 +7,11 @@ import { filePathFilter } from 'file-path-filter'
 
 import Injector = require('njstrace/lib/injector')
 const injector = new Injector({
-  emit(kind, err) { throw err },
+  emit(_kind, err) { throw err },
   log() { }, // eslint-disable-line no-empty,@typescript-eslint/no-empty-function
 })
 
-let selected = function(filename) { return false } // eslint-disable-line prefer-arrow/prefer-arrow-functions
+let selected = function(_filename) { return false } // eslint-disable-line prefer-arrow/prefer-arrow-functions
 if (fs.existsSync(path.join(__dirname, '../../.trace.json'))) {
   const branch = process.env.TRAVIS_BRANCH || shell.exec('git rev-parse --abbrev-ref HEAD', { silent: true }).stdout.trim()
   if (branch !== 'master') {
@@ -56,7 +58,7 @@ function __njsOnCatchClause__(call) {
 
 const logArguments = false
 const logExceptions = true
-export = function loader(source) {
+export = function loader(source: string): string {
   const filename = this.resourcePath.substring(process.cwd().length + 1)
 
   if (filename.split('.').pop() !== 'ts') throw new Error(`Unexpected extension on ${filename}`)
@@ -65,5 +67,6 @@ export = function loader(source) {
 
   console.log(`!!!!!!!!!!!!!! Instrumenting ${filename} for trace logging !!!!!!!!!!!!!`)
 
+  // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
   return tracer + injector.injectTracing(filename, source, logExceptions, logArguments)
 }

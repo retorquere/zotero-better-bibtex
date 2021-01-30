@@ -11,7 +11,7 @@ import { log } from '../content/logger'
 
 const chunkSize = 0x100000
 
-export function detectImport() {
+export function detectImport(): boolean {
   let str
   let json = ''
   while ((str = Zotero.read(chunkSize)) !== false) {
@@ -22,7 +22,8 @@ export function detectImport() {
   let data
   try {
     data = JSON.parse(json)
-  } catch (err) {
+  }
+  catch (err) {
     return false
   }
 
@@ -30,7 +31,7 @@ export function detectImport() {
   return true
 }
 
-export async function doImport() {
+export async function doImport(): Promise<void> {
   Translator.init('import')
 
   let str
@@ -77,7 +78,8 @@ export async function doImport() {
       const msg = `${valid}: unexpected ${source.itemType}.${field} for ${Translator.isZotero ? 'zotero' : 'juris-m'} in ${JSON.stringify(source)} / ${JSON.stringify(validFields)}`
       if (valid === false) {
         log.error(msg)
-      } else {
+      }
+      else {
         throw new Error(msg)
       }
     }
@@ -88,7 +90,7 @@ export async function doImport() {
     Object.assign(item, source)
 
     // marker so BBT-JSON can be imported without extra-field meddling
-    item.extra = '\x1BBBT\x1B' + (item.extra || '')
+    item.extra = `\x1BBBT\x1B${item.extra || ''}`
 
     for (const att of item.attachments || []) {
       if (att.url) delete att.path
@@ -103,7 +105,7 @@ export async function doImport() {
 
   const collections: any[] = Object.values(data.collections || {})
   for (const collection of collections) {
-    collection.zoteroCollection = (new Zotero.Collection()) as any
+    collection.zoteroCollection = new Zotero.Collection()
     collection.zoteroCollection.type = 'collection'
     collection.zoteroCollection.name = collection.name
     collection.zoteroCollection.children = collection.items.filter(id => {
@@ -115,7 +117,8 @@ export async function doImport() {
   for (const collection of collections) {
     if (collection.parent && data.collections[collection.parent]) {
       data.collections[collection.parent].zoteroCollection.children.push(collection.zoteroCollection)
-    } else {
+    }
+    else {
       if (collection.parent) log.debug(`Collection ${collection.key} has non-existent parent ${collection.parent}`)
       collection.parent = false
     }
@@ -126,7 +129,7 @@ export async function doImport() {
   }
 }
 
-export function doExport() {
+export function doExport(): void {
   Translator.init('export')
 
   let item
@@ -152,7 +155,7 @@ export function doExport() {
     if (Translator.options.dropAttachments && item.itemType === 'attachment') continue
 
     if (!Translator.options.Normalize) {
-      const [ , kind, lib, key ] = item.uri.match(/^https?:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^\/]+)\/items\/(.+)/)
+      const [ , kind, lib, key ] = item.uri.match(/^https?:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^/]+)\/items\/(.+)/)
       item.select = (kind === 'users') ? `zotero://select/library/items/${key}` : `zotero://select/groups/${lib}/items/${key}`
     }
 
@@ -165,12 +168,13 @@ export function doExport() {
       if (Translator.options.exportFileData && att.saveFile && att.defaultPath) {
         att.saveFile(att.defaultPath, true)
         att.path = att.defaultPath
-      } else if (att.localPath) {
+      }
+      else if (att.localPath) {
         att.path = att.localPath
       }
 
       if (!Translator.options.Normalize) {
-        const [ , kind, lib, key ] = att.uri.match(/^https?:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^\/]+)\/items\/(.+)/)
+        const [ , kind, lib, key ] = att.uri.match(/^https?:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^/]+)\/items\/(.+)/)
         att.select = (kind === 'users') ? `zotero://select/library/items/${key}` : `zotero://select/groups/${lib}/items/${key}`
       }
 

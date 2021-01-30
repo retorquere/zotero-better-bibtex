@@ -16,7 +16,7 @@ function select(selector, node) {
   return xpath.select(selector, node) as Element[]
 }
 
-export = source => {
+export = (source: string): string => {
   const doc = (new DOMParser).parseFromString(source)
 
   const BiberTool = { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
@@ -47,9 +47,9 @@ export = source => {
   // eslint-disable-next-line prefer-template
   const dateprefix = '^('
     + select('//fields/field[@fieldtype="field" and @datatype="date"]', doc)
-        .map(field => field.textContent.replace(/date$/, ''))
-        .filter(field => field)
-        .join('|')
+      .map(field => field.textContent.replace(/date$/, ''))
+      .filter(field => field)
+      .join('|')
     + ')?'
   const dateprefixRE = new RegExp(dateprefix)
 
@@ -64,7 +64,7 @@ export = source => {
   for (const node of select('//entryfields', doc)) {
     const types = select('./entrytype', node).map(type => type.textContent).sort()
 
-    const setname = types.length === 0 ? 'optional' : 'optional_' + types.join('_')
+    const setname = types.length === 0 ? 'optional' : `optional_${types.join('_')}`
     if (fieldSet[setname]) throw new Error(`field set ${setname} exists`)
 
     // find all the field names allowed by this set
@@ -74,7 +74,8 @@ export = source => {
       if (m) {
         fieldSet[setname].push(`${m[1] || ''}date`)
         if (field === 'month' || field === 'year') fieldSet[setname].push(field)
-      } else {
+      }
+      else {
         fieldSet[setname].push(field)
       }
     }
@@ -84,7 +85,8 @@ export = source => {
     for (const type of types) {
       if (!BiberTool.allowed[type]) {
         throw new Error(`Unknown reference type ${type}`)
-      } else {
+      }
+      else {
         BiberTool.allowed[type] = _.uniq(BiberTool.allowed[type].concat(setname))
       }
     }
@@ -92,7 +94,7 @@ export = source => {
 
   for (const node of select('.//constraints', doc)) {
     const types = select('./entrytype', node).map(type => type.textContent).sort()
-    const setname = types.length === 0 ? 'required' : 'required_' + types.join('_')
+    const setname = types.length === 0 ? 'required' : `required_${types.join('_')}`
 
     if (fieldSet[setname] || BiberTool.required[setname]) throw new Error(`constraint set ${setname} exists`)
 
@@ -148,16 +150,17 @@ export = source => {
       if (!constraint.localName) continue
 
       const test = {
-        test: (constraint as Element).getAttribute('datatype'),
+        test: constraint.getAttribute('datatype'),
         fields: Array.from(select('./field', constraint)).map(field => field.textContent),
         params: null,
       }
-      if (test.test === 'pattern') test.params = (constraint as Element).getAttribute('pattern')
+      if (test.test === 'pattern') test.params = constraint.getAttribute('pattern')
       BiberTool.data.push(test)
     }
   }
 
   BiberTool.fieldSet = jsesc(fieldSet, { compact: false, indent: '  ' })
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return ejs.render(fs.readFileSync(path.join(__dirname, 'bibertool.ejs'), 'utf8'), BiberTool)
 }

@@ -4,17 +4,17 @@ import { Translator } from './lib/translator'
 export { Translator }
 
 function node(id, attributes = {}) {
-  let _node = JSON.stringify(id)
+  let n = JSON.stringify(id)
   const attrs = Object.entries(attributes).map(([key, value]) => `${key}=${JSON.stringify(value)}`).join(', ')
-  if (attrs) _node += ` [${attrs}]`
-  Zotero.write(`  ${_node};\n`)
+  if (attrs) n += ` [${attrs}]`
+  Zotero.write(`  ${n};\n`)
 }
 
 function edge(source, target, attributes = {}) {
-  let _edge = `${JSON.stringify(source)} -> ${JSON.stringify(target)}`
+  let e = `${JSON.stringify(source)} -> ${JSON.stringify(target)}`
   const attrs = Object.entries(attributes).map(([key, value]) => `${key}=${JSON.stringify(value)}`).join(', ')
-  if (attrs) _edge += ` [${attrs}]`
-  Zotero.write(`  ${_edge};\n`)
+  if (attrs) e += ` [${attrs}]`
+  Zotero.write(`  ${e};\n`)
 }
 
 type Item = {
@@ -26,7 +26,7 @@ type Item = {
   uri: string
 }
 
-export function doExport() {
+export function doExport(): void {
   Translator.init('export')
 
   Zotero.write('digraph CitationGraph {\n')
@@ -50,6 +50,7 @@ export function doExport() {
 
     const author = []
     if (add.authors && item.creators && item.creators.length) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       const name = item.creators?.map(creator => (creator.name || creator.lastName || '').replace(/"/g, "'")).filter(creator => creator).join(', ')
       if (name) author.push(name)
     }
@@ -61,9 +62,10 @@ export function doExport() {
     if (author.length) label.push(author.join(' '))
 
     items.push({
-      id: 'node-' + item.uri.replace(/.*\//, ''),
+      id: `node-${item.uri.replace(/.*\//, '')}`,
       label: label.join('\n'),
       relations: (item.relations?.['dc:relation'] || []),
+      // eslint-disable-next-line prefer-spread
       cites: [].concat.apply([],
         (item.extra || '')
           .split('\n')
@@ -71,7 +73,7 @@ export function doExport() {
           .map(line => line.replace(/^cites:/, '').trim())
           .filter(keys => keys)
           .map(keys => keys.split(/\s*,\s*/))
-        ),
+      ),
       citationKey: item.citationKey,
       uri: item.uri,
     })
@@ -84,7 +86,8 @@ export function doExport() {
       const other = items.find(o => o.uri === uri)
       if (other) {
         edge(item.id, other.id)
-      } else {
+      }
+      else {
         edge(item.id, uri.replace(/.*\//, ''), { style: 'dashed', dir: 'both' })
       }
     }
@@ -94,7 +97,8 @@ export function doExport() {
 
       if (other) {
         edge(item.id, other.id)
-      } else {
+      }
+      else {
         edge(item.id, citationKey, { style: 'dashed' })
       }
     }

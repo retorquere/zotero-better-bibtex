@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment */
+
 declare const doExport: () => void
 declare const Translator: ITranslator
 
@@ -14,6 +16,7 @@ import { titleCase } from '../../content/case'
 import * as itemCreators from '../../gen/items/creators.json'
 import { client } from '../../content/client'
 import { log } from '../../content/logger'
+import { ZoteroTranslator } from '../../gen/typings/serialized-item'
 
 const ctx: DedicatedWorkerGlobalScope = self as any
 
@@ -28,7 +31,8 @@ export const params = {
 for(const [key, value] of (new URLSearchParams(ctx.location.search)).entries()) {
   if (key === 'debugEnabled') {
     params[key] = value === 'true'
-  } else {
+  }
+  else {
     params[key] = value
   }
 }
@@ -100,10 +104,11 @@ class WorkerZoteroUtilities {
 
     if (singleNewlineIsParagraph) {
       // \n => <p>
-      str = `<p>${str.replace(/\n/g, '</p><p>').replace(/  /g, '&nbsp; ')}</p>`
-    } else {
+      str = `<p>${str.replace(/\n/g, '</p><p>').replace(/ {2}/g, '&nbsp; ')}</p>`
+    }
+    else {
       // \n\n => <p>, \n => <br/>
-      str = `<p>${str.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br/>').replace(/  /g, '&nbsp; ')}</p>`
+      str = `<p>${str.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br/>').replace(/ {2}/g, '&nbsp; ')}</p>`
     }
 
     return str.replace(/<p>\s*<\/p>/g, '<p>&nbsp;</p>')
@@ -148,7 +153,8 @@ function saveFile(path, overwrite) {
     makeDirs(OS.Path.dirname(this.path))
     OS.File.copy(this.localPath, this.path, { noOverwrite: !overwrite })
 
-  } else if (this.linkMode === 'imported_url') {
+  }
+  else if (this.linkMode === 'imported_url') {
     const target = OS.Path.dirname(this.path)
     if (!overwrite && OS.File.exists(target)) throw new Error(`${path} would overwite ${target}`)
 
@@ -163,7 +169,8 @@ function saveFile(path, overwrite) {
         if (entry.isDir) throw new Error(`Unexpected directory ${entry.path} in snapshot`)
         OS.File.copy(OS.Path.join(snapshot, entry.name), OS.path.join(target, entry.name), { noOverwrite: !overwrite })
       }
-    } finally {
+    }
+    finally {
       iterator.close()
     }
   }
@@ -196,14 +203,16 @@ class WorkerZotero {
       if (this.config.options.exportFileData) { // output path is a directory
         this.exportDirectory = OS.Path.normalize(params.output)
         this.exportFile = OS.Path.join(this.exportDirectory, `${OS.Path.basename(this.exportDirectory)}.${Translator.header.target}`)
-      } else {
+      }
+      else {
         this.exportFile = OS.Path.normalize(params.output)
         const ext = `.${Translator.header.target}`
         if (!this.exportFile.endsWith(ext)) this.exportFile += ext
         this.exportDirectory = OS.Path.dirname(this.exportFile)
       }
       makeDirs(this.exportDirectory)
-    } else {
+    }
+    else {
       this.exportFile = ''
       this.exportDirectory = ''
     }
@@ -213,7 +222,7 @@ class WorkerZotero {
     if (this.exportFile) {
       const encoder = new TextEncoder()
       const array = encoder.encode(this.output)
-      OS.File.writeAtomic(this.exportFile, array, {tmpPath: this.exportFile + '.tmp'})
+      OS.File.writeAtomic(this.exportFile, array, {tmpPath: `${this.exportFile}.tmp`})
     }
     this.send({ kind: 'done', output: this.exportFile ? true : this.output })
   }
@@ -246,11 +255,11 @@ class WorkerZotero {
     return this.config.items.shift()
   }
 
-  public nextCollection() {
+  public nextCollection(): ZoteroTranslator.Collection {
     return this.config.collections.shift()
   }
 
-  private patchAttachments(item) {
+  private patchAttachments(item): void {
     if (item.itemType === 'attachment') {
       item.saveFile = saveFile.bind(item)
 
@@ -258,7 +267,8 @@ class WorkerZotero {
         item.defaultPath = `files/${item.itemID}/${OS.Path.basename(item.localPath)}`
       }
 
-    } else if (item.attachments) {
+    }
+    else if (item.attachments) {
       for (const att of item.attachments) {
         this.patchAttachments(att)
       }
@@ -269,7 +279,7 @@ class WorkerZotero {
 
 export const Zotero = new WorkerZotero // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
 
-export function onmessage(e: { data: BBTWorker.Config }) {
+export function onmessage(e: { data: BBTWorker.Config }): void {
   Zotero.BetterBibTeX.localeDateOrder = params.localeDateOrder
 
   if (e.data?.items && !Zotero.config) {
@@ -277,10 +287,12 @@ export function onmessage(e: { data: BBTWorker.Config }) {
       Zotero.init(e.data)
       doExport()
       Zotero.done()
-    } catch (err) {
+    }
+    catch (err) {
       Zotero.logError(err)
     }
-  } else {
+  }
+  else {
     log.debug('unexpected message in worker:', e)
   }
   close()

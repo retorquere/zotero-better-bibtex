@@ -1,7 +1,10 @@
-import { stringify } from '../../content/stringify'
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-return */
 
-function rjust(str, width, padding) {
-  if (typeof str === 'number') str = '' + str
+import { stringify } from '../../content/stringify'
+import { ZoteroTranslator } from '../../gen/typings/serialized-item'
+
+function rjust(str: string | number, width: number, padding: string): string {
+  if (typeof str === 'number') str = `${str}`
   padding = (padding || ' ')[0]
   return str.length < width ? padding.repeat(width - str.length) + str : str
 }
@@ -49,7 +52,8 @@ function strip(obj) {
       v = strip(v)
       if (typeof v === 'undefined') {
         delete obj[k]
-      } else {
+      }
+      else {
         obj[k] = v
         keep = true
       }
@@ -63,8 +67,7 @@ function strip(obj) {
   return obj
 }
 
-export function normalize(library: Library) {
-
+export function normalize(library: Library): void {
   library.items.sort((a, b) => key(a).localeCompare(key(b)))
 
   for (const item of (library.items as any[])) {
@@ -78,13 +81,15 @@ export function normalize(library: Library) {
 
     if (item.notes?.length) {
       item.notes = item.notes.map(note => typeof note === 'string' ? note : note.note).sort()
-    } else {
+    }
+    else {
       delete item.notes
     }
 
     if (item.tags?.length) {
       item.tags = item.tags.map(tag => typeof tag === 'string' ? { tag } : tag).sort((a, b) => a.tag.localeCompare(b.tag))
-    } else {
+    }
+    else {
       delete item.tags
     }
 
@@ -96,7 +101,8 @@ export function normalize(library: Library) {
           delete att[prop]
         }
       }
-    } else {
+    }
+    else {
       delete item.attachments
     }
 
@@ -104,7 +110,8 @@ export function normalize(library: Library) {
       for (const creator of item.creators) {
         if (!creator.fieldMode) delete creator.fieldMode
       }
-    } else {
+    }
+    else {
       delete item.creators
     }
 
@@ -114,8 +121,9 @@ export function normalize(library: Library) {
     strip(item)
 
     if (item.extra?.length) {
-      item.extra = item.extra.split('\n')
-    } else {
+      item.extra = (item as ZoteroTranslator.Item).extra.split('\n')
+    }
+    else {
       delete item.extra
     }
   }
@@ -135,8 +143,9 @@ export function normalize(library: Library) {
   }, {})
 
   if (library.collections && Object.keys(library.collections).length) {
-    const collectionOrder = Object.values(library.collections).sort((a, b) => stringify({...a, key: '', parent: ''}).localeCompare(stringify({...b, key: '', parent: ''})))
-    const collectionKeys: Record<string, string> = collectionOrder.reduce((acc, coll, i) => {
+    const collectionOrder: ZoteroTranslator.Collection[] = Object.values(library.collections)
+      .sort((a: ZoteroTranslator.Collection, b: ZoteroTranslator.Collection): number => stringify({...a, key: '', parent: ''}).localeCompare(stringify({...b, key: '', parent: ''})))
+    const collectionKeys: Record<string, string> = collectionOrder.reduce((acc: Record<string, string>, coll: ZoteroTranslator.Collection, i: number): Record<string, string> => {
       coll.key = acc[coll.key] = `coll:${rjust(i, 5, '0')}` // eslint-disable-line no-magic-numbers
       return acc
     }, {})
@@ -150,7 +159,8 @@ export function normalize(library: Library) {
       acc[coll.key] = coll
       return acc
     }, {})
-  } else {
+  }
+  else {
     delete library.collections
   }
 }

@@ -33,7 +33,9 @@ const re = {
   whitespace: null,
 }
 
+// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
 re.lcChar = re.Ll + re.Lt + re.Lm + re.Lo + re.Mn + re.Mc + re.Nd + re.Nl
+// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
 re.char = re.Lu + re.lcChar
 re.protectedWord = `[${re.lcChar}]*[${re.Lu}][${re.char}]*`
 
@@ -75,14 +77,14 @@ const ligatures = {
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 
 type HTMLParserOptions = {
-  html?: boolean,
+  html?: boolean
   caseConversion?: boolean
   exportBraceProtection: boolean
-  csquotes: string,
+  csquotes: string
   exportTitleCase: boolean
 }
 
-export let HTMLParser = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   private caseConversion: boolean
   private braceProtection: boolean
   private sentenceStart: boolean
@@ -94,7 +96,7 @@ export let HTMLParser = new class { // eslint-disable-line @typescript-eslint/na
   public parse(html, options: HTMLParserOptions): IZoteroMarkupNode {
     this.html = html
 
-    let doc
+    let doc: IZoteroMarkupNode
 
     this.caseConversion = options.caseConversion
     this.braceProtection = options.caseConversion && options.exportBraceProtection
@@ -105,7 +107,7 @@ export let HTMLParser = new class { // eslint-disable-line @typescript-eslint/na
     if (csquotes) {
       const space = '\\s*'
       for (const close of [0, 1]) {
-        const chars = csquotes.replace(/./g, (c, i) => [c, ''][(i + close) & 1]).replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]\s*/g, '\\$&') // eslint-disable-line no-bitwise
+        const chars = csquotes.replace(/./g, (c: string, i: number) => [c, ''][(i + close) & 1]).replace(/[-[\]/{}()*+?.\\^$|]\s*/g, '\\$&') // eslint-disable-line no-bitwise
         this.html = this.html.replace(new RegExp(`${close ? space : ''}[${chars}]${close ? '' : space}`, 'g'), close ? '</span>' : '<span class="enquote">')
       }
     }
@@ -136,11 +138,12 @@ export let HTMLParser = new class { // eslint-disable-line @typescript-eslint/na
         this.titleCase(doc)
       }
 
-      doc = this.unwrapNocase(doc)
-      if (doc.length === 1) {
-        doc = doc[0]
-      } else {
-        doc = { nodeName: 'span', attr: {}, class: {}, childNodes: doc }
+      const unwrapped = this.unwrapNocase(doc)
+      if (unwrapped.length === 1) {
+        doc = unwrapped[0]
+      }
+      else {
+        doc = { nodeName: 'span', attr: {}, class: {}, childNodes: unwrapped }
       }
       this.cleanupNocase(doc)
     }
@@ -236,11 +239,12 @@ export let HTMLParser = new class { // eslint-disable-line @typescript-eslint/na
 
   private plaintext(childNodes: IZoteroMarkupNode[], text, offset) {
     // replace ligatures so titlecasing works for things like "figures"
-    text = text.replace(this.ligatures, ligature => ligatures[ligature])
+    text = text.replace(this.ligatures, (ligature: string) => (ligatures[ligature] as string))
     const l = childNodes.length
     if (l === 0 || (childNodes[l - 1].nodeName !== '#text')) {
       childNodes.push({ nodeName: '#text', offset, value: text, attr: {}, class: {} })
-    } else {
+    }
+    else {
       childNodes[l - 1].value += text
     }
   }
@@ -263,69 +267,72 @@ export let HTMLParser = new class { // eslint-disable-line @typescript-eslint/na
 
   private walk(node, isNocased = false) {
     // debug('walk:', node.nodeName)
-    const _node: IZoteroMarkupNode = { nodeName: node.nodeName, childNodes: [], attr: {}, class: {} }
+    const normalized_node: IZoteroMarkupNode = { nodeName: node.nodeName, childNodes: [], attr: {}, class: {} }
     for (const {name, value} of (node.attrs || [])) {
-      _node.attr[name] = value
+      normalized_node.attr[name] = value
     }
-    for (const cls of (_node.attr.class || '').trim().split(/\s+/)) {
-      if (cls) _node.class[cls] = true
+    for (const cls of (normalized_node.attr.class || '').trim().split(/\s+/)) {
+      if (cls) normalized_node.class[cls] = true
     }
     switch (node.type?.toLowerCase()) {
       case 'smallcaps':
-        _node.attr.smallcaps = 'smallcaps'
+        normalized_node.attr.smallcaps = 'smallcaps'
         break
     }
-    if (node.type) _node.class[node.type] = true
+    if (node.type) normalized_node.class[node.type] = true
 
     switch (node.nodeName) {
       case '#document':
       case '#document-fragment':
       case 'pre':
-        _node.nodeName = 'span'
+        normalized_node.nodeName = 'span'
         break
 
       case 'nc':
-        _node.nodeName = 'span'
-        _node.attr.nocase = 'nocase'
+        normalized_node.nodeName = 'span'
+        normalized_node.attr.nocase = 'nocase'
         break
 
       case 'emphasis':
-        _node.nodeName = 'i'
+        normalized_node.nodeName = 'i'
         break
 
       case 'sc':
-        _node.nodeName = 'span'
-        _node.attr.smallcaps = 'smallcaps'
+        normalized_node.nodeName = 'span'
+        normalized_node.attr.smallcaps = 'smallcaps'
         break
     }
 
-    if (_node.attr.nocase || _node.class.nocase) _node.nocase = !isNocased
-    if (_node.attr.relax || _node.class.relax) _node.relax = true
-    if (_node.class.enquote || _node.attr.enquote) _node.enquote = true
-    if (!_node.attr.smallcaps && (_node.attr.style || '').match(/small-caps/i)) _node.attr.smallcaps = 'smallcaps'
-    if (_node.class.smallcaps || _node.attr.smallcaps) _node.smallcaps = true
+    if (normalized_node.attr.nocase || normalized_node.class.nocase) normalized_node.nocase = !isNocased
+    if (normalized_node.attr.relax || normalized_node.class.relax) normalized_node.relax = true
+    if (normalized_node.class.enquote || normalized_node.attr.enquote) normalized_node.enquote = true
+    if (!normalized_node.attr.smallcaps && (normalized_node.attr.style || '').match(/small-caps/i)) normalized_node.attr.smallcaps = 'smallcaps'
+    if (normalized_node.class.smallcaps || normalized_node.attr.smallcaps) normalized_node.smallcaps = true
 
-    if (_node.nodeName === 'script') {
+    if (normalized_node.nodeName === 'script') {
       if (!node.childNodes || node.childNodes.length === 0) {
-        _node.value =  ''
-        _node.childNodes = []
-      } else if (node.childNodes.length === 1 && node.childNodes[0].nodeName === '#text') {
-        _node.value =  node.childNodes[0].value
-        _node.childNodes = []
-      } else {
+        normalized_node.value =  ''
+        normalized_node.childNodes = []
+      }
+      else if (node.childNodes.length === 1 && node.childNodes[0].nodeName === '#text') {
+        normalized_node.value =  node.childNodes[0].value
+        normalized_node.childNodes = []
+      }
+      else {
         throw new Error(`Unexpected script body ${JSON.stringify(node)}`)
       }
 
-    } else if (node.childNodes) {
+    }
+    else if (node.childNodes) {
       let m
       for (const child of node.childNodes) {
         if (child.nodeName !== '#text') {
-          _node.childNodes.push(this.walk(child, isNocased || _node.nocase))
+          normalized_node.childNodes.push(this.walk(child, isNocased || normalized_node.nocase))
           continue
         }
 
         if (!this.caseConversion || isNocased) {
-          this.plaintext(_node.childNodes, child.value, child.sourceCodeLocation.startOffset)
+          this.plaintext(normalized_node.childNodes, child.value, child.sourceCodeLocation.startOffset)
           continue
         }
 
@@ -333,14 +340,16 @@ export let HTMLParser = new class { // eslint-disable-line @typescript-eslint/na
         const length = text.length
         while (text) {
           if (m = re.whitespace.exec(text)) {
-            this.plaintext(_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
+            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+            this.plaintext(normalized_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[0].length)
             continue
           }
 
-          if (this.sentenceStart && (m = re.leadingUnprotectedWord.exec(text + ' '))) {
+          if (this.sentenceStart && (m = re.leadingUnprotectedWord.exec(`${text} `))) {
             this.sentenceStart = false
-            this.plaintext(_node.childNodes, m[1], child.sourceCodeLocation.startOffset + (length - text.length))
+            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+            this.plaintext(normalized_node.childNodes, m[1], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[1].length)
             continue
           }
@@ -348,25 +357,32 @@ export let HTMLParser = new class { // eslint-disable-line @typescript-eslint/na
           this.sentenceStart = false
 
           if (!isNocased && this.braceProtection && (m = re.protectedWords.exec(text))) {
-            this.nocase(_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
+            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+            this.nocase(normalized_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[0].length)
 
-          } else if (m = re.url.exec(text)) {
-            this.nocase(_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
+          }
+          else if (m = re.url.exec(text)) {
+            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+            this.nocase(normalized_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[0].length)
 
-          } else if (m = re.unprotectedWord.exec(text)) {
-            this.plaintext(_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
+          }
+          else if (m = re.unprotectedWord.exec(text)) {
+            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+            this.plaintext(normalized_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[0].length)
 
-          } else {
-            this.plaintext(_node.childNodes, text[0], child.sourceCodeLocation.startOffset + (length - text.length))
+          }
+          else {
+            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+            this.plaintext(normalized_node.childNodes, text[0], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(1)
           }
         }
       }
     }
 
-    return _node
+    return normalized_node
   }
 }

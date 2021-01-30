@@ -4,7 +4,7 @@ import { EventEmitter } from 'eventemitter3'
 import { patch as $patch$ } from './monkey-patch'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let Events = new EventEmitter() // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export const Events = new EventEmitter() // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
 
 if (Zotero.Debug.enabled) {
   const events = [
@@ -20,17 +20,21 @@ if (Zotero.Debug.enabled) {
   ]
 
   $patch$(Events, 'on', original => function() {
+    // eslint-disable-next-line prefer-rest-params
     if (!events.includes(arguments[0])) throw new Error(`Unsupported event ${arguments[0]}`)
+    // eslint-disable-next-line prefer-rest-params
     original.apply(this, arguments)
   })
 
   $patch$(Events, 'emit', original => function() {
+    // eslint-disable-next-line prefer-rest-params
     if (!events.includes(arguments[0])) throw new Error(`Unsupported event ${arguments[0]}`)
+    // eslint-disable-next-line prefer-rest-params
     original.apply(this, arguments)
   })
 }
 
-export function itemsChanged(items) {
+export function itemsChanged(items: any[]): void {
   const changed = {
     collections: new Set,
     libraries: new Set,

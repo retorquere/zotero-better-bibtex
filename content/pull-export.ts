@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 declare const Zotero: any
 
 const OK = 200
@@ -39,8 +40,9 @@ Zotero.Server.Endpoints['/better-bibtex/export/collection'] = Zotero.Server.Endp
 
       return [ OK, 'text/plain', await Translators.exportItems(Translators.getTranslatorId(translator), displayOptions(request), { type: 'collection', collection }) ]
 
-    } catch (err) {
-      return [{ notfound: NOT_FOUND, duplicate: CONFLICT, error: SERVER_ERROR}[err.kind || 'error'], 'text/plain', '' + err]
+    }
+    catch (err) {
+      return [{ notfound: NOT_FOUND, duplicate: CONFLICT, error: SERVER_ERROR}[err.kind || 'error'], 'text/plain', `${err}`]
     }
   }
 }
@@ -61,8 +63,9 @@ Zotero.Server.Endpoints['/better-bibtex/export/library'] = Zotero.Server.Endpoin
 
       return [OK, 'text/plain', await Translators.exportItems(Translators.getTranslatorId(translator), displayOptions(request), { type: 'library', id: libID }) ]
 
-    } catch (err) {
-      return [SERVER_ERROR, 'text/plain', '' + err]
+    }
+    catch (err) {
+      return [SERVER_ERROR, 'text/plain', `${err}`]
     }
   }
 }
@@ -86,8 +89,9 @@ Zotero.Server.Endpoints['/better-bibtex/export/selected'] = Zotero.Server.Endpoi
       }
 
       return [OK, 'text/plain', await Translators.exportItems(Translators.getTranslatorId(translator), displayOptions(request), { type: 'items', items }) ]
-    } catch (err) {
-      return [SERVER_ERROR, 'text/plain', '' + err]
+    }
+    catch (err) {
+      return [SERVER_ERROR, 'text/plain', `${err}`]
     }
   }
 }
@@ -106,23 +110,28 @@ Zotero.Server.Endpoints['/better-bibtex/export/item'] = class {
       if ((isSet(libraryID) + isSet(library) + isSet(groupID) + isSet(group)) > 1) {
         return [BAD_REQUEST, 'text/plain', 'specify at most one of library(/ID) or group(/ID)' ]
 
-      } else if (libraryID) {
+      }
+      else if (libraryID) {
         if (!libraryID.match(/^[0-9]+$/)) return [BAD_REQUEST, 'text/plain', `${libraryID} is not a number` ]
         libraryID = parseInt(libraryID)
 
-      } else if (groupID) {
+      }
+      else if (groupID) {
         if (!groupID.match(/^[0-9]+$/)) return [BAD_REQUEST, 'text/plain', `${libraryID} is not a number` ]
         try {
           groupID = parseInt(groupID)
           libraryID = Zotero.Groups.getAll().find(g => g.groupID === groupID).libraryID
-        } catch (err) {
+        }
+        catch (err) {
           libraryID = null
         }
 
-      } else if (library || group) {
+      }
+      else if (library || group) {
         libraryID = getLibrary(library || group).libraryID
 
-      } else {
+      }
+      else {
         libraryID = Zotero.Libraries.userLibraryID
       }
 
@@ -157,19 +166,19 @@ Zotero.Server.Endpoints['/better-bibtex/export/item'] = class {
       let contents = await Translators.exportItems(translatorID, displayOptions(request), { type: 'items', items: Object.values(items) })
 
       if (pandocFilterData) {
-        let _items
+        let filtered_items
         switch (Translators.byId[translatorID]?.label) {
           case 'Better CSL JSON':
-            _items = JSON.parse(contents)
+            filtered_items = JSON.parse(contents)
             break
           case 'BetterBibTeX JSON':
-            _items = JSON.parse(contents).items
+            filtered_items = JSON.parse(contents).items
             break
           default:
             throw new Error(`Unexpected translator ${translatorID}`)
         }
 
-        for (const item of _items) {
+        for (const item of filtered_items) {
           // jzon gives citationKey, CSL gives id
           const citekey = item.citationKey || item.id
           response.items[citekey] = item
@@ -183,8 +192,9 @@ Zotero.Server.Endpoints['/better-bibtex/export/item'] = class {
       }
 
       return [OK, 'text/plain', contents ]
-    } catch (err) {
-      return [SERVER_ERROR, 'text/plain', '' + err]
+    }
+    catch (err) {
+      return [SERVER_ERROR, 'text/plain', `${err}`]
     }
   }
 }

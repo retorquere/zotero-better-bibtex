@@ -3,7 +3,7 @@ declare const document: any
 
 export = new class FirstRun {
   private prefix = 'better-bibtex-first-run-'
-  private params: { citekeyFormat: String, dragndrop: boolean }
+  private params: { citekeyFormat: string, dragndrop: boolean }
 
   public load() {
     const wizard = document.getElementById('better-bibtex-first-run')

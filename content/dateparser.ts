@@ -1,9 +1,12 @@
+/* eslint-disable no-case-declarations */
+declare const Zotero
 import EDTF = require('edtf')
 import edtfy = require('edtfy')
 
 // import escapeStringRegexp = require('escape-string-regexp')
 
 import * as months from '../gen/dateparser-months.json'
+import { ParsedDate } from './typings/bbt'
 const months_re = new RegExp(Object.keys(months).sort((a, b) => b.length - a.length).join('|'), 'i')
 
 /*
@@ -17,7 +20,7 @@ regex = {
 const SPRING = 21
 const WINTER = 24
 
-function seasonize(date) {
+function seasonize(date: ParsedDate): ParsedDate {
   if (date.type === 'date' && typeof date.month === 'number' && date.month >= SPRING && date.month <= WINTER && !date.day) {
     date.type = 'season'
     date.season = (date.month - SPRING) + 1
@@ -26,13 +29,13 @@ function seasonize(date) {
   return date
 }
 
-function doubt(date, state) {
+function doubt(date: ParsedDate, state: { uncertain: boolean, approximate: boolean }): ParsedDate {
   if (state.uncertain) date.uncertain = true
   if (state.approximate) date.approximate = true
   return date
 }
 
-function normalize_edtf(date) {
+function normalize_edtf(date: any): ParsedDate {
   let year, month, day
 
   switch (date.type) {
@@ -44,8 +47,8 @@ function normalize_edtf(date) {
     case 'Interval':
       // eslint-disable-next-line no-magic-numbers
       if (date.values.length !== 2) throw new Error(JSON.stringify(date))
-      const from = date.values[0] ? normalize_edtf(date.values[0]) : { type: 'open' }
-      const to = date.values[1] ? normalize_edtf(date.values[1]) : { type: 'open' }
+      const from: ParsedDate = date.values[0] ? normalize_edtf(date.values[0]) : { type: 'open' }
+      const to: ParsedDate = date.values[1] ? normalize_edtf(date.values[1]) : { type: 'open' }
       return { type: 'interval', from, to }
 
     case 'Season':
@@ -61,7 +64,7 @@ function normalize_edtf(date) {
   }
 }
 
-function upgrade_edtf(date) {
+function upgrade_edtf(date: string): string {
   return date
     .replace(/unknown/g, '')
     .replace(/u/g, 'X')
@@ -71,7 +74,7 @@ function upgrade_edtf(date) {
     .replace(/y/g, 'Y')
 }
 
-function is_valid_month(month, allowseason) {
+function is_valid_month(month: number, allowseason: boolean) {
   if (month >= 1 && month <= 12) return true // eslint-disable-line no-magic-numbers
   if (allowseason && month >= 21 && month <= 24) return true // eslint-disable-line no-magic-numbers
 
@@ -79,24 +82,26 @@ function is_valid_month(month, allowseason) {
 }
 
 // swap day/month for our American friends
-function swap_day_month(day, month, localeDateOrder) {
+function swap_day_month(day: number, month: number, localeDateOrder: string): number[] {
   if (!day) day = undefined
   if (day && localeDateOrder === 'mdy' && is_valid_month(day, false)) {
     return [month, day]
-  } else if (day && is_valid_month(day, false) && !is_valid_month(month, false)) {
+  }
+  else if (day && is_valid_month(day, false) && !is_valid_month(month, false)) {
     return [month, day]
   }
   return [day, month]
 }
 
-function stripTime(date) {
+function stripTime(date: string): string {
   return date.replace(/(\s+|T)[0-9]{2}:[0-9]{2}(:[0-9]{2}(Z|\+[0-9]{2}:?[0-9]{2})?)?$/, '')
 }
 
-export function parse(value: string, localeDateOrder: string, as_range_part: boolean = false) {
+export function parse(value: string, localeDateOrder: string, as_range_part = false): ParsedDate {
   value = (value || '').trim()
 
-  let parsed, m
+  let parsed: ParsedDate
+  let m: RegExpMatchArray
 
   if (value === 'today') {
     const now = new Date
@@ -113,10 +118,14 @@ export function parse(value: string, localeDateOrder: string, as_range_part: boo
   if ((m = (/^([0-9]+) (de )?([a-z]+) (de )?([0-9]+)$/i).exec(value)) && (m[2] || m[4]) && (months[m[3].toLowerCase()])) return parse(`${m[1]} ${m[3]} ${m[5]}`, localeDateOrder, as_range_part)
 
   // '30-Mar-2020'
+  Zotero.debug(`${value}: 30-Mar-2020`)
   if (!as_range_part && (m = (/^([0-9]+)-([a-z]+)-([0-9]+)$/i).exec(value))) {
+    Zotero.debug('30-Mar-2020: yes')
+    // eslint-disable-next-line @typescript-eslint/tslint/config
     let [ , day, month, year ] = m
-    if (day > 31 && year < 31) [ day, year ] = [ year, day ] // eslint-disable-line no-magic-numbers
+    if (parseInt(day) > 31 && parseInt(year) < 31) [ day, year ] = [ year, day ] // eslint-disable-line no-magic-numbers
     const date = parse(`${month} ${day} ${year}`, localeDateOrder, false)
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     if (date.type === 'date') return date
   }
 
@@ -125,6 +134,7 @@ export function parse(value: string, localeDateOrder: string, as_range_part: boo
     const [ , _orig, _date ] = m
     const date = parse(_date, localeDateOrder, false)
     const orig = parse(_orig, localeDateOrder, false)
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     if (date.type === 'date' && orig.type === 'date') return {...date, ...{ orig } }
   }
 
@@ -133,6 +143,7 @@ export function parse(value: string, localeDateOrder: string, as_range_part: boo
     const [ , _date, _orig ] = m
     const date = parse(_date, localeDateOrder, false)
     const orig = parse(_orig, localeDateOrder, false)
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     if (date.type === 'date' && orig.type === 'date') return {...date, ...{ orig } }
   }
 
@@ -192,7 +203,7 @@ export function parse(value: string, localeDateOrder: string, as_range_part: boo
 
   // these assume a sensible d/m/y format by default. There's no sane way to guess between m/d/y and d/m/y, and m/d/y is
   // just wrong. https://en.wikipedia.org/wiki/Date_format_by_country
-  if (m = /^(-?[0-9]{3,})([-\s\/\.])([0-9]{1,2})(\2([0-9]{1,2}))?$/.exec(exactish)) {
+  if (m = /^(-?[0-9]{3,})([-\s/.])([0-9]{1,2})(\2([0-9]{1,2}))?$/.exec(exactish)) {
     const [ , _year, , _month, , _day ] = m
     const year = parseInt(_year)
     const [day, month] = swap_day_month(parseInt(_day), parseInt(_month), 'ymd')
@@ -213,7 +224,7 @@ export function parse(value: string, localeDateOrder: string, as_range_part: boo
     if (is_valid_month(month, false)) return seasonize(doubt({ type: 'date', year, month, day }, state))
   }
 
-  if (m = /^([0-9]{1,2})([-\s\/\.])([0-9]{1,2})(\2([0-9]{3,}))$/.exec(exactish)) {
+  if (m = /^([0-9]{1,2})([-\s/.])([0-9]{1,2})(\2([0-9]{3,}))$/.exec(exactish)) {
     const [ , _day, , _month, , _year ] = m
     const year = parseInt(_year)
     const [day, month] = swap_day_month(parseInt(_day), parseInt(_month), localeDateOrder)
@@ -223,7 +234,7 @@ export function parse(value: string, localeDateOrder: string, as_range_part: boo
     if (is_valid_month(month, false)) return seasonize(doubt({ type: 'date', year, month, day }, state))
   }
 
-  if (m = /^([0-9]{1,2})[-\s\/\.]([0-9]{3,})$/.exec(exactish)) {
+  if (m = /^([0-9]{1,2})[-\s/.]([0-9]{3,})$/.exec(exactish)) {
     const [ , _month, _year ] = m
     const month = parseInt(_month)
     const year = parseInt(_year)
@@ -232,7 +243,7 @@ export function parse(value: string, localeDateOrder: string, as_range_part: boo
     if (is_valid_month(month, false)) return seasonize(doubt({ type: 'date', year, month }, state))
   }
 
-  if (m = /^([0-9]{3,})[-\s\/\.]([0-9]{1,2})$/.exec(exactish)) {
+  if (m = /^([0-9]{3,})[-\s/.]([0-9]{1,2})$/.exec(exactish)) {
     const [ , _year, _month ] = m
     const year = parseInt(_year)
     const month = parseInt(_month)
@@ -248,7 +259,8 @@ export function parse(value: string, localeDateOrder: string, as_range_part: boo
   try {
     // https://github.com/inukshuk/edtf.js/issues/5
     parsed = normalize_edtf(EDTF.parse(upgrade_edtf(stripTime(value.replace(/_|--/, '/')))))
-  } catch (err) {
+  }
+  catch (err) {
     parsed = null
   }
 
@@ -257,21 +269,25 @@ export function parse(value: string, localeDateOrder: string, as_range_part: boo
       parsed = normalize_edtf(EDTF.parse(edtfy(value
         .normalize('NFC')
         .replace(/\. /, ' ') // 8. july 2011
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         .replace(months_re, _ => months[_.toLowerCase()] || _)
       )))
-    } catch (err) {
+    }
+    catch (err) {
       parsed = null
     }
   }
 
   // https://github.com/retorquere/zotero-better-bibtex/issues/868
   if (!parsed) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     if (m = /^([0-9]+)\s([^0-9]+)(?:\s+([0-9]+))?$/.exec(value.normalize('NFC').replace(months_re, _ => months[_.toLowerCase()] || _))) {
       const [ , year, month, day ] = m
       if (months[month]) {
         try {
           parsed = normalize_edtf(EDTF.parse(edtfy(`${day || ''} ${month} ${year}`.trim())))
-        } catch (err) {
+        }
+        catch (err) {
           parsed = null
         }
       }
@@ -294,21 +310,22 @@ export function parse(value: string, localeDateOrder: string, as_range_part: boo
   return parsed || { type: 'verbatim', verbatim: value }
 }
 
-function testEDTF(value) {
+function testEDTF(value: string): boolean {
   try {
-    return EDTF.parse(value, { level: 1 })
-  } catch (err) {
+    return (EDTF.parse(value, { level: 1 }) as boolean)
+  }
+  catch (err) {
     return false
   }
 }
 
-export function isEDTF(value, minuteLevelPrecision = false) {
+export function isEDTF(value: string, minuteLevelPrecision = false): boolean {
   value = upgrade_edtf(value)
 
   return testEDTF(value) || (minuteLevelPrecision && testEDTF(`${value}:00`))
 }
 
-export function strToISO(str, localeDateOrder: string) {
+export function strToISO(str: string, localeDateOrder: string): string {
   let date = parse(str, localeDateOrder)
   if (date.type === 'interval') date = date.from
 

@@ -82,11 +82,14 @@ class AutoExportPane {
 
         // hide/show per-translator options
         const enabled = `autoexport-${Translators.byId[ae.translatorID].label.replace(/ /g, '')}`
+        // eslint is wrong here. tsc complains that hidden is not present on element, and I think tsc is correct here
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
         for (const node of (Array.from(tabpanel.getElementsByClassName('autoexport-options')) as XUL.Element[])) {
           node.hidden = !node.classList.contains(enabled)
         }
 
-      } else {
+      }
+      else {
         tab = tabs.children[index]
         tabpanel = tabpanels.children[index]
       }
@@ -100,7 +103,7 @@ class AutoExportPane {
 
         switch (field) {
           case 'type':
-            (node as XUL.Textbox).value = Zotero.BetterBibTeX.getString(`Preferences.auto-export.type.${ae.type}`) + ':'
+            (node as XUL.Textbox).value = `${Zotero.BetterBibTeX.getString(`Preferences.auto-export.type.${ae.type}`)}:`
             break
 
           case 'name':
@@ -129,7 +132,9 @@ class AutoExportPane {
             break
 
           case 'cached':
+            // eslint-disable-next-line no-case-declarations
             const items = this.items[`${ae.type}=${ae.id}`] || []
+            // eslint-disable-next-line no-case-declarations
             let ratio = 100
 
             if (items.length) {
@@ -212,22 +217,24 @@ class AutoExportPane {
     this.refresh()
   }
 
-  private collection(id, form) {
-    if (isNaN(parseInt(id))) return ''
+  private collection(id: number | string, form: 'long' | 'short'): string {
+    if (typeof id === 'string') id = parseInt(id)
+    if (isNaN(id)) return ''
     const coll = Zotero.Collections.get(id)
     if (!coll) return ''
 
     if (form === 'long' && !isNaN(parseInt(coll.parentID))) {
       return `${this.collection(coll.parentID, form)} / ${coll.name}`
-    } else {
+    }
+    else {
       return `${Zotero.Libraries.get(coll.libraryID).name} : ${coll.name}`
     }
   }
 
-  private name(ae, form) {
+  private name(ae: { type: string, id: number, path: string }, form: 'long' | 'short'): string {
     switch (ae.type) {
       case 'library':
-        return Zotero.Libraries.get(ae.id).name
+        return (Zotero.Libraries.get(ae.id).name as string)
 
       case 'collection':
         return this.collection(ae.id, form)
@@ -257,9 +264,10 @@ export = new class PrefPane {
       Formatter.parsePattern(this.keyformat.value)
       msg = ''
       if (this.keyformat.value) this.saveCitekeyFormat(target)
-    } catch (err) {
+    }
+    catch (err) {
       msg = err.message
-      if (err.location) msg += ` at ${err.location.start.offset + 1}`
+      if (err.location) msg += ` at ${(err.location.start.offset as number) + 1}`
       log.error('prefs: key format error:', msg)
     }
 
@@ -274,7 +282,8 @@ export = new class PrefPane {
     try {
       Formatter.parsePattern(this.keyformat.value)
       Prefs.set('citekeyFormat', this.keyformat.value)
-    } catch (error) {
+    }
+    catch (error) {
       // restore previous value
       log.error('prefs: error saving new citekey format', this.keyformat.value, 'restoring previous')
       this.getCitekeyFormat()
@@ -290,7 +299,8 @@ export = new class PrefPane {
     try {
       // don't care about the return value, just if it throws an error
       new Function(postscript.value) // eslint-disable-line @typescript-eslint/no-unused-expressions
-    } catch (err) {
+    }
+    catch (err) {
       log.error('PrefPane.checkPostscript: error compiling postscript:', err)
       error = `${err}`
     }
@@ -368,7 +378,9 @@ export = new class PrefPane {
       if (document.getElementsByTagName('prefwindow')[0].currentPane.helpTopic === 'BetterBibTeX') {
         const id = document.getElementById('better-bibtex-prefs-tabbox').selectedPanel.id
         if (id) this.openURL(`https://retorque.re/zotero-better-bibtex/configuration/#${id.replace('better-bibtex-prefs-', '')}`)
-      } else {
+      }
+      else {
+        // eslint-disable-next-line prefer-rest-params
         original.apply(this, arguments)
       }
     })
@@ -378,14 +390,14 @@ export = new class PrefPane {
 
     if (document.location.hash === '#better-bibtex') {
       // runs into the 'TypeError: aId is undefined' problem for some reason unless I delay the activation of the pane
-      // eslint-disable-next-line no-magic-numbers
+      // eslint-disable-next-line no-magic-numbers, @typescript-eslint/no-unsafe-return
       Zotero.setTimeout(() => document.getElementById('zotero-prefs').showPane(document.getElementById('zotero-prefpane-better-bibtex')), 500)
     }
 
     window.sizeToContent()
 
     // no other way that I know of to know that I've just been selected
-    this.timer = this.timer || window.setInterval(this.refresh.bind(this), 500) as any // eslint-disable-line no-magic-numbers
+    this.timer = this.timer || window.setInterval(this.refresh.bind(this), 500)  // eslint-disable-line no-magic-numbers
   }
 
   private refresh() {
@@ -415,7 +427,7 @@ export = new class PrefPane {
 
     if (client === 'jurism') {
       Zotero.Styles.init().then(() => {
-        const styles = Zotero.Styles.getVisible().filter(style => style.usesAbbreviation)
+        const styles = Zotero.Styles.getVisible().filter((style: { usesAbbreviation: boolean }) => style.usesAbbreviation)
 
         const stylebox = document.getElementById('better-bibtex-abbrev-style-popup')
         const refill = stylebox.children.length === 0

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import Kuroshiro from 'kuroshiro/src/core-sync'
 import _kuromojiLoader = require('kuromoji/src/loader/NodeDictionaryLoader')
 import { log } from '../logger'
@@ -25,7 +26,7 @@ _kuromojiLoader.prototype.loadArrayBuffer = function(url, callback) { // eslint-
   xhr.send()
 }
 
-export let kuroshiro = new class {
+export const kuroshiro = new class {
   public enabled = false
   private kuroshiro: any
 
@@ -35,7 +36,8 @@ export let kuroshiro = new class {
     try {
       this.kuroshiro = new Kuroshiro()
       await this.kuroshiro.init(new KuromojiAnalyzer('resource://zotero-better-bibtex/kuromoji'))
-    } catch (err) {
+    }
+    catch (err) {
       log.error('kuroshiro: initializing failed')
       throw err
     }
@@ -43,7 +45,7 @@ export let kuroshiro = new class {
     this.enabled = true
   }
 
-  public convert(str, options) {
+  public convert(str: string, options): string {
     if (!this.enabled) throw new Error('kuroshiro not initialized')
     if (str && Kuroshiro.Util.hasJapanese(str)) return this.kuroshiro.convert(str, options)
     return str

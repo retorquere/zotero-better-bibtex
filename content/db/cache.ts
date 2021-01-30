@@ -10,11 +10,12 @@ import * as translators from '../../gen/translators.json'
 
 import * as prefOverrides from '../../gen/preferences/auto-export-overrides.json'
 import * as prefOverridesSchema from '../../gen/preferences/auto-export-overrides-schema.json'
+import { IPreferences } from '../../gen/typings/preferences'
 
 class Cache extends Loki {
   private initialized = false
 
-  public remove(ids, reason) {
+  public remove(ids, _reason) {
     if (!this.initialized) return
 
     const query = Array.isArray(ids) ? { itemID : { $in : ids } } : { itemID: ids }
@@ -116,7 +117,7 @@ class Cache extends Loki {
   }
 }
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let DB = new Cache('cache', { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export const DB = new Cache('cache', { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   autosave: true,
   adapter: new Store({ storage: 'file', deleteAfterLoad: true, allowPartial: true }),
 })
@@ -134,7 +135,8 @@ function clearOnUpgrade(coll, property, current) {
   const msg = drop ? { dropping: 'dropping', because: 'because' } : { dropping: 'keeping', because: 'even though' }
   if (dbVersion) {
     Zotero.debug(`:Cache:${msg.dropping} cache ${coll.name} ${msg.because} ${property} went from ${dbVersion} to ${current}`)
-  } else {
+  }
+  else {
     Zotero.debug(`:Cache:${msg.dropping} cache ${coll.name} ${msg.because} ${property} was not set (current: ${current})`)
   }
 
@@ -147,24 +149,24 @@ function clearOnUpgrade(coll, property, current) {
 }
 
 // the preferences influence the output way too much, no keeping track of that
-Events.on('preference-changed', async () => {
-  await Zotero.BetterBibTeX.loaded
-  DB.reset()
+Events.on('preference-changed', () => {
+  Zotero.BetterBibTeX.loaded.then(() => { DB.reset() })
 })
 
 // cleanup
 if (DB.getCollection('cache')) { DB.removeCollection('cache') }
 if (DB.getCollection('serialized')) { DB.removeCollection('serialized') }
 
-export function selector(itemID, options, prefs) {
-  const _selector = {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function selector(itemID: number | number[], options: any, prefs: IPreferences): any {
+  const query = {
     itemID: Array.isArray(itemID) ? { $in: itemID } : itemID,
 
     exportNotes: !!options.exportNotes,
     useJournalAbbreviation: !!options.useJournalAbbreviation,
   }
   for (const pref of prefOverrides) {
-    _selector[pref] = prefs[pref]
+    query[pref] = prefs[pref]
   }
-  return _selector
+  return query
 }

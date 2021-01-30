@@ -1,6 +1,7 @@
 declare const Zotero: any
 
 import { Translator } from '../lib/translator'
+import { ZoteroTranslator } from '../../gen/typings/serialized-item'
 
 import { JabRef } from '../bibtex/jabref' // not so nice... BibTeX-specific code
 import * as itemfields from '../../gen/items/items'
@@ -9,7 +10,7 @@ import { Postfix } from '../bibtex/postfix.ts'
 import * as Extra from '../../content/extra'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let Exporter = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export const Exporter = new class {
   public postfix: Postfix
   public jabref: JabRef
   public strings: {[key: string]: string} = {}
@@ -39,19 +40,19 @@ export let Exporter = new class { // eslint-disable-line @typescript-eslint/nami
     return uniq
   }
 
-  public nextItem(): ISerializedItem {
+  public nextItem(): ZoteroTranslator.Item {
     this.postfix = this.postfix || (new Postfix(Translator.preferences.qualityReport))
 
-    let item
+    let item: ZoteroTranslator.Item
     while (item = Translator.nextItem()) {
       if (['note', 'attachment'].includes(item.itemType)) continue
 
-      if (!item.citekey) {
+      if (!item.citationKey) {
         throw new Error(`No citation key in ${JSON.stringify(item)}`)
       }
-      this.citekeys[item.citekey] = (this.citekeys[item.citekey] || 0) + 1
+      this.citekeys[item.citationKey] = (this.citekeys[item.citationKey] || 0) + 1
 
-      this.jabref.citekeys.set(item.itemID, item.citekey)
+      this.jabref.citekeys.set(item.itemID, item.citationKey)
 
       // this is not automatically lazy-evaluated?!?!
       const cached: Types.DB.Cache.ExportedItem = item.cachable ? Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences) : null
@@ -59,12 +60,13 @@ export let Exporter = new class { // eslint-disable-line @typescript-eslint/nami
 
       if (cached) {
         Zotero.write(cached.reference)
-        this.postfix.add(cached)
+        this.postfix.add(cached.metadata)
         continue
       }
 
       itemfields.simplifyForExport(item)
       Object.assign(item, Extra.get(item.extra, 'zotero'))
+
       // strip extra.tex fields that are not for me
       const prefix = Translator.BetterBibLaTeX ? 'biblatex.' : 'bibtex.'
       for (const [name, field] of Object.entries(item.extraFields.tex).sort((a, b) => b[0].localeCompare(a[0]))) { // sorts the fields from tex. to biblatex. to bibtex.

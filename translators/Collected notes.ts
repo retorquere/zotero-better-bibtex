@@ -1,7 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+
 declare const Zotero: any
 
 import { Translator } from './lib/translator'
 export { Translator }
+
+import { ZoteroTranslator } from '../gen/typings/serialized-item'
 
 import * as escape from '../content/escape'
 import * as Extra from '../content/extra'
@@ -14,7 +18,7 @@ function cleanExtra(extra) {
 class Exporter {
   private levels = 0
   private body = ''
-  private items: Record<number, ISerializedItem> = {}
+  private items: Record<number, ZoteroTranslator.Item> = {}
   public html = ''
 
   constructor() {
@@ -30,8 +34,6 @@ class Exporter {
       if (!Translator.collections[collection.parent]) delete collection.parent
       if (!collection.parent && !this.prune(collection)) root.push(collection) // prune empty roots
     }
-    Zotero.debug('root collections: ' + JSON.stringify(root))
-    Zotero.debug('items: ' + JSON.stringify(Object.keys(this.items)))
 
     for (const item of (Object.values(this.items) as { itemID: number }[])) {
       if (!filed[item.itemID] && this.keep(item)) this.item(item)
@@ -57,7 +59,6 @@ class Exporter {
   }
 
   collection(collection, level = 1) {
-    this.show('collection', arguments)
     if (level > this.levels) this.levels = level
 
     this.body += `<h${ level }>${ escape.html(collection.name) }</h${ level }>\n`
@@ -71,7 +72,6 @@ class Exporter {
   }
 
   item(item) {
-    this.show('item', arguments)
     switch (item.itemType) {
       case 'note':
         this.note(item.note, 'note')
@@ -86,7 +86,6 @@ class Exporter {
   }
 
   prune(collection) {
-    this.show('prune', arguments)
     if (!collection) return true
 
     collection.items = collection.items.filter(itemID => this.keep(this.items[itemID]))
@@ -96,7 +95,6 @@ class Exporter {
   }
 
   note(note, type) {
-    this.show('note', arguments)
     switch (type) {
       case 'extra':
         if (!note) return
@@ -114,12 +112,10 @@ class Exporter {
   }
 
   creator(cr) {
-    this.show('creator', arguments)
     return [cr.lastName, cr.firstName, cr.name].filter(v => v).join(', ')
   }
 
   reference(item) {
-    this.show('reference', arguments)
     let notes = []
     let title = ''
 
@@ -127,10 +123,10 @@ class Exporter {
       if (item.note) notes = [ { note: item.note } ]
       if (item.title) title = `<samp>${ escape.html(item.title) }</samp>`
 
-    } else {
+    }
+    else {
       notes = (item.notes || []).filter(note => note.note)
 
-      Zotero.debug('this.reference: ' + JSON.stringify(item))
       const creators = item.creators.map(creator => this.creator(creator)).filter(v => v).join(' and ')
 
       let date = null
@@ -161,19 +157,17 @@ class Exporter {
   }
 
   reset(starting) {
-    this.show('reset', arguments)
     if (starting > this.levels) return ''
 
     let reset = 'counter-reset:'
     for (let level = starting; level <= this.levels; level++) {
       reset += ` h${ level }counter 0`
     }
-    return reset + ';'
+    return `${reset};`
     // return `counter-reset: h${ starting }counter;`
   }
 
   keep(item) {
-    this.show('keep', arguments)
     if (!item) return false
     if (item.extra) return true
     if (item.note) return true
@@ -183,7 +177,7 @@ class Exporter {
   }
 }
 
-export function doExport() {
+export function doExport(): void {
   Translator.init('export')
   Zotero.write((new Exporter).html)
 }

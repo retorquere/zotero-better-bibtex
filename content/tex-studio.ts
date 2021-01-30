@@ -5,7 +5,7 @@ import { KeyManager } from './key-manager'
 import { log } from './logger'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let TeXstudio = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export const TeXstudio = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public enabled: boolean
   public texstudio: string
 
@@ -14,7 +14,8 @@ export let TeXstudio = new class { // eslint-disable-line @typescript-eslint/nam
     this.enabled = !!this.texstudio
     if (this.enabled) {
       log.debug('TeXstudio: found at', this.texstudio)
-    } else {
+    }
+    else {
       log.debug('TeXstudio: not found')
     }
   }
@@ -26,8 +27,10 @@ export let TeXstudio = new class { // eslint-disable-line @typescript-eslint/nam
       try {
         const pane = Zotero.getActiveZoteroPane() // can Zotero 5 have more than one pane at all?
         const items = pane.getSelectedItems()
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         citation = items.map(item => KeyManager.get(item.id).citekey).filter(citekey => citekey).join(',')
-      } catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
+      }
+      catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
         log.error('TeXstudio: Could not get selected items:', err)
         return
       }
@@ -37,7 +40,8 @@ export let TeXstudio = new class { // eslint-disable-line @typescript-eslint/nam
 
     try {
       await Zotero.Utilities.Internal.exec(this.texstudio, ['--insert-cite', citation])
-    } catch (err) {
+    }
+    catch (err) {
       log.error('TeXstudio: Could not get execute texstudio:', err)
     }
   }

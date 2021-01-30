@@ -2,8 +2,8 @@ namespace BBTWorker {
   type Config = {
     preferences: any,
     options: any,
-    items: any[]
-    collections: any[]
+    items: ISerializedItem[]
+    collections: ZoteroCollection[]
     cslItems?: Record<number, any>
     cache: Record<number, {itemID: number, reference: string, metadata: any, meta: { updated: number }}>
   }

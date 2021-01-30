@@ -49,13 +49,15 @@ class Git {
       case 'always':
         try {
           repo.path = OS.Path.dirname(bib)
-        } catch (err) {
+        }
+        catch (err) {
           log.error('git.repo:', err)
           return repo
         }
         break
 
       case 'config':
+        // eslint-disable-next-line no-case-declarations
         let config = null
         for (let root = OS.Path.dirname(bib); (await OS.File.exists(root)) && (await OS.File.stat(root)).isDir && root !== OS.Path.dirname(root); root = OS.Path.dirname(root)) {
           config = OS.Path.join(root, '.git')
@@ -73,7 +75,8 @@ class Git {
         try {
           const enabled = ini.parse(Zotero.File.getContents(config))['zotero "betterbibtex"']?.push
           if (enabled !== 'true' && enabled !== true) return repo
-        } catch (err) {
+        }
+        catch (err) {
           log.error('git.repo: error parsing config', config.path, err)
           return repo
         }
@@ -98,7 +101,8 @@ class Git {
 
     try {
       await this.exec(this.git, ['-C', this.path, 'pull'])
-    } catch (err) {
+    }
+    catch (err) {
       log.error(`could not pull in ${this.path}:`, err)
       this.enabled = false
     }
@@ -111,13 +115,14 @@ class Git {
       await this.exec(this.git, ['-C', this.path, 'add', this.bib])
       await this.exec(this.git, ['-C', this.path, 'commit', '-m', msg])
       await this.exec(this.git, ['-C', this.path, 'push'])
-    } catch (err) {
+    }
+    catch (err) {
       log.error(`could not push ${this.bib} in ${this.path}`, err)
       this.enabled = false
     }
   }
 
-  private async exec(cmd, args) {
+  private async exec(cmd, args): Promise<boolean> {
     if (typeof cmd === 'string') cmd = new FileUtils.File(cmd)
 
     if (!cmd.isExecutable()) throw new Error(`${cmd.path} is not an executable`)
@@ -130,14 +135,16 @@ class Git {
     proc.runwAsync(args, args.length, { observe: function(subject, topic) { // eslint-disable-line object-shorthand, prefer-arrow/prefer-arrow-functions
       if (topic !== 'process-finished') {
         deferred.reject(new Error(`${cmd.path} failed`))
-      } else if (proc.exitValue !== 0) {
+      }
+      else if (proc.exitValue !== 0) {
         deferred.reject(new Error(`${cmd.path} returned exit status ${proc.exitValue}`))
-      } else {
+      }
+      else {
         deferred.resolve(true)
       }
     }})
 
-    return deferred.promise
+    return (deferred.promise as Promise<boolean>)
   }
 }
 const git = new Git()
@@ -238,17 +245,18 @@ const queue = new class TaskQueue {
         const root = scope.type === 'collection' ? scope.collection : false
 
         const dir = OS.Path.dirname(ae.path)
-        const base = OS.Path.basename(ae.path).replace(new RegExp(ext.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + '$'), '')
+        const base = OS.Path.basename(ae.path).replace(new RegExp(`${ext.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')}$`), '')
 
-        const autoExportPathReplaceDiacritics = Prefs.get('autoExportPathReplaceDiacritics')
-        const autoExportPathReplaceDirSep = Prefs.get('autoExportPathReplaceDirSep')
-        const autoExportPathReplaceSpace = Prefs.get('autoExportPathReplaceSpace')
+        const autoExportPathReplaceDiacritics: boolean = Prefs.get('autoExportPathReplaceDiacritics')
+        const autoExportPathReplaceDirSep: string = Prefs.get('autoExportPathReplaceDirSep')
+        const autoExportPathReplaceSpace: string = Prefs.get('autoExportPathReplaceSpace')
         for (const collection of collections) {
           const path = OS.Path.join(dir, [base]
             .concat(this.getCollectionPath(collection, root))
-            .map(p => p.replace(/[<>:'"\/\\\|\?\*\u0000-\u001F]/g, ''))
-            .map(p => p.replace(/ +/g, Prefs.get(autoExportPathReplaceSpace) || ''))
-            .map(p => autoExportPathReplaceDiacritics ? foldMaintaining(p) : p)
+            // eslint-disable-next-line no-control-regex
+            .map((p: string) => p.replace(/[<>:'"/\\|?*\u0000-\u001F]/g, ''))
+            .map((p: string) => p.replace(/ +/g, Prefs.get(autoExportPathReplaceSpace) || ''))
+            .map((p: string) => autoExportPathReplaceDiacritics ? (foldMaintaining(p) as string) : p)
             .join(autoExportPathReplaceDirSep || '-') + ext
           )
           jobs.push({ scope: { type: 'collection', collection: collection.id }, path } )
@@ -260,7 +268,8 @@ const queue = new class TaskQueue {
       await repo.push(Zotero.BetterBibTeX.getString('Preferences.auto-export.git.message', { type: Translators.byId[ae.translatorID].label.replace('Better ', '') }))
 
       ae.error = ''
-    } catch (err) {
+    }
+    catch (err) {
       log.error('AutoExport.queue.run: failed', ae, err)
       ae.error = `${err}`
     }
@@ -269,14 +278,14 @@ const queue = new class TaskQueue {
     this.autoexports.update(ae)
   }
 
-  private getCollectionPath(coll, root) {
-    let path = [ coll.name ]
+  private getCollectionPath(coll: {name: string, parentID: number}, root: number): string[] {
+    let path: string[] = [ coll.name ]
     if (coll.parentID && coll.parentID !== root) path = this.getCollectionPath(Zotero.Collections.get(coll.parentID), root).concat(path)
     return path
   }
 
   // idle observer
-  protected observe(subject, topic, data) {
+  protected observe(_subject, topic, _data) {
     if (!this.started || Prefs.get('autoExport') === 'off') return
 
     switch (topic) {
@@ -330,7 +339,7 @@ Events.on('preference-changed', pref => {
 })
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let AutoExport = new class CAutoExport { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export const AutoExport = new class CAutoExport { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public db: any
 
   constructor() {
@@ -366,6 +375,8 @@ export let AutoExport = new class CAutoExport { // eslint-disable-line @typescri
 
     git.repo(ae.path).then(repo => {
       if (repo.enabled || schedule) this.schedule(ae.type, [ae.id]) // causes initial push to overleaf at the cost of a unnecesary extra export
+    }).catch(err => {
+      log.error('AutoExport.add:', err)
     })
   }
 
@@ -383,6 +394,6 @@ export let AutoExport = new class CAutoExport { // eslint-disable-line @typescri
   }
 
   public run(id) {
-    queue.run(id)
+    queue.run(id).catch(err => log.error('AutoExport.run:', err))
   }
 }
