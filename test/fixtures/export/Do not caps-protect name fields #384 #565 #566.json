@@ -31,118 +31,6 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Agostinho da",
-          "lastName": "Silva"
-        }
-      ],
-      "extra": [
-        "[Silva][Agostinho da]"
-      ],
-      "itemID": 2,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Alexander von",
-          "lastName": "Humboldt"
-        }
-      ],
-      "extra": [
-        "[Humboldt][Alexander von]"
-      ],
-      "itemID": 3,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Alexandre, p\u00e8re",
-          "lastName": "Dumas"
-        }
-      ],
-      "extra": [
-        "[Dumas][Alexandre, p\u00e8re]"
-      ],
-      "itemID": 4,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Alexis de",
-          "lastName": "Tocqueville"
-        }
-      ],
-      "extra": [
-        "[Tocqueville][Alexis de]"
-      ],
-      "itemID": 5,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Alfonse",
-          "lastName": "D\u2019Amato"
-        }
-      ],
-      "extra": [
-        "[D\u2019Amato][Alfonse]"
-      ],
-      "itemID": 6,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Anwar el-",
-          "lastName": "Sadat"
-        }
-      ],
-      "extra": [
-        "[Sadat][Anwar el-]"
-      ],
-      "itemID": 7,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Beatrice d\u2019",
-          "lastName": "Este"
-        }
-      ],
-      "extra": [
-        "[Este][Beatrice d\u2019]"
-      ],
-      "itemID": 8,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Charles",
-          "lastName": "\"de Gaulle\""
-        }
-      ],
-      "extra": [
-        "[\"de Gaulle\"][Charles]"
-      ],
-      "itemID": 9,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
           "firstName": "Christianus",
           "lastName": "boven d'Eert"
         }
@@ -277,6 +165,20 @@
         "[Ortega y Gasset][Jos\u00e9]"
       ],
       "itemID": 19,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Agostinho da",
+          "lastName": "Silva"
+        }
+      ],
+      "extra": [
+        "[Silva][Agostinho da]"
+      ],
+      "itemID": 2,
       "itemType": "book"
     },
     {
@@ -423,6 +325,20 @@
       "creators": [
         {
           "creatorType": "author",
+          "firstName": "Alexander von",
+          "lastName": "Humboldt"
+        }
+      ],
+      "extra": [
+        "[Humboldt][Alexander von]"
+      ],
+      "itemID": 3,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
           "firstName": "Robert",
           "lastName": "\"van Gulik\""
         }
@@ -562,6 +478,20 @@
       "creators": [
         {
           "creatorType": "author",
+          "firstName": "Alexandre, p\u00e8re",
+          "lastName": "Dumas"
+        }
+      ],
+      "extra": [
+        "[Dumas][Alexandre, p\u00e8re]"
+      ],
+      "itemID": 4,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
           "name": "National Aeronautics and Space Administration"
         }
       ],
@@ -569,6 +499,76 @@
         "[[National Aeronautics and Space Administration]]"
       ],
       "itemID": 40,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Alexis de",
+          "lastName": "Tocqueville"
+        }
+      ],
+      "extra": [
+        "[Tocqueville][Alexis de]"
+      ],
+      "itemID": 5,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Alfonse",
+          "lastName": "D\u2019Amato"
+        }
+      ],
+      "extra": [
+        "[D\u2019Amato][Alfonse]"
+      ],
+      "itemID": 6,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Anwar el-",
+          "lastName": "Sadat"
+        }
+      ],
+      "extra": [
+        "[Sadat][Anwar el-]"
+      ],
+      "itemID": 7,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Beatrice d\u2019",
+          "lastName": "Este"
+        }
+      ],
+      "extra": [
+        "[Este][Beatrice d\u2019]"
+      ],
+      "itemID": 8,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Charles",
+          "lastName": "\"de Gaulle\""
+        }
+      ],
+      "extra": [
+        "[\"de Gaulle\"][Charles]"
+      ],
+      "itemID": 9,
       "itemType": "book"
     }
   ]

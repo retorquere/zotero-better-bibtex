@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment */
+
 declare const Zotero: any
 
 import { Translator } from '../lib/translator'
@@ -17,10 +20,10 @@ const keyOrder = [
   'month',
   'day',
   'circa',
-].reduce((acc, field, idx, fields) => { acc[field] = idx + 1; return acc }, {})
+].reduce((acc, field, idx) => { acc[field] = idx + 1; return acc }, {})
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let CSLExporter = new class { // tslint:disable-line:variable-name
+export const CSLExporter = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public flush: Function // will be added by JSON/YAML exporter
   public serialize: Function // will be added by JSON/YAML exporter
   public date2CSL: Function // will be added by JSON/YAML exporter
@@ -32,13 +35,15 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       try {
         this.postscript = new Function('reference', 'item', 'Translator', 'Zotero', postscript) as (reference: any, item: any) => boolean
         log.debug(`Installed postscript: ${JSON.stringify(postscript)}`)
-      } catch (err) {
+      }
+      catch (err) {
         if (Translator.preferences.testing) throw err
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         log.error(`Failed to compile postscript: ${err}\n\n${JSON.stringify(postscript)}`)
       }
     }
   }
-  public postscript(reference, item, _translator, _zotero) {} // tslint:disable-line:no-empty
+  public postscript(_reference, _item, _translator, _zotero) {} // eslint-disable-line @typescript-eslint/no-empty-function
 
   public doExport() {
     const items = []
@@ -113,10 +118,12 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
 
         if (ef.type === 'date') {
           csl[name] = this.date2CSL(Zotero.BetterBibTeX.parseDate(value))
-        } else if (name === 'csl-type') {
+        }
+        else if (name === 'csl-type') {
           if (!validCSLTypes.includes(value)) continue // and keep the kv variable, maybe for postscripting
           csl.type = value
-        } else if (!csl[name]) {
+        }
+        else if (!csl[name]) {
           csl[name] = value
         }
 
@@ -142,7 +149,8 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       let cache
       try {
         cache = this.postscript(csl, item, Translator, Zotero)
-      } catch (err) {
+      }
+      catch (err) {
         if (Translator.preferences.testing && !Translator.preferences.ignorePostscriptErrors) throw err
         cache = false
       }
@@ -174,6 +182,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
 
   private sortObject(obj) {
     if (obj && !Array.isArray(obj) && typeof obj === 'object') {
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       for (const field of Object.keys(obj).sort(this.keySort)) {
         const value = obj[field]
         delete obj[field]
@@ -183,3 +192,4 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
     return obj
   }
 }
+

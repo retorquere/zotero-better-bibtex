@@ -13,36 +13,6 @@
   },
   "items": [
     {
-      "citationKey": "1b",
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "01b"
-        }
-      ],
-      "extra": [
-        "Citation Key: 1b"
-      ],
-      "itemID": 1,
-      "itemType": "journalArticle",
-      "title": "Blah <span class=\"nocase\"><i>mkbibemph</i></span> and <span class=\"nocase\">\u201cmkbibquote\u201d</span>."
-    },
-    {
-      "citationKey": "1e",
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "01e"
-        }
-      ],
-      "extra": [
-        "Citation Key: 1e"
-      ],
-      "itemID": 2,
-      "itemType": "journalArticle",
-      "title": "Blah <span class=\"nocase\"><i>emph</i></span> and <span class=\"nocase\">\u201cenquote\u201d</span>."
-    },
-    {
       "citationKey": "2b",
       "creators": [
         {
@@ -73,26 +43,6 @@
       "title": "Blah <span class=\"nocase\"><i>emph</i></span> and <span class=\"nocase\">\u201cenquote\u201d</span>."
     },
     {
-      "citationKey": "Algar1985",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Hamid",
-          "lastName": "Algar"
-        }
-      ],
-      "date": "1985",
-      "extra": [
-        "Citation Key: Algar1985"
-      ],
-      "itemID": 5,
-      "itemType": "encyclopediaArticle",
-      "pages": "172-4",
-      "publicationTitle": "Encyclopedia iranica",
-      "title": "Besmallah: in exegesis, jurisprudence, and cultural life",
-      "volume": "4"
-    },
-    {
       "citationKey": "Arsdall2012",
       "creators": [
         {
@@ -117,25 +67,6 @@
       "title": "Herbs and healers from the ancient mediterranean through the medieval west: Essays in honor of john m. Riddle"
     },
     {
-      "citationKey": "Bennett2003",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "David Christopher",
-          "lastName": "Bennett"
-        }
-      ],
-      "date": "2003",
-      "extra": [
-        "Citation Key: Bennett2003"
-      ],
-      "itemID": 7,
-      "itemType": "thesis",
-      "publisher": "University of London",
-      "title": "Xenonika: medical texts associated with xenones in the late Byzantine period",
-      "type": "Ph.D."
-    },
-    {
       "citationKey": "Cooper2013",
       "creators": [
         {
@@ -153,6 +84,56 @@
       "itemType": "bookSection",
       "pages": "263-87",
       "title": "Byzantium between east and west: Competing hellenisms in the <i>Alexiad</i> of anna komnene and her contemporaries"
+    },
+    {
+      "citationKey": "Algar1985",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Hamid",
+          "lastName": "Algar"
+        }
+      ],
+      "date": "1985",
+      "extra": [
+        "Citation Key: Algar1985"
+      ],
+      "itemID": 5,
+      "itemType": "encyclopediaArticle",
+      "pages": "172-4",
+      "publicationTitle": "Encyclopedia iranica",
+      "title": "Besmallah: in exegesis, jurisprudence, and cultural life",
+      "volume": "4"
+    },
+    {
+      "citationKey": "1b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "01b"
+        }
+      ],
+      "extra": [
+        "Citation Key: 1b"
+      ],
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "title": "Blah <span class=\"nocase\"><i>mkbibemph</i></span> and <span class=\"nocase\">\u201cmkbibquote\u201d</span>."
+    },
+    {
+      "citationKey": "1e",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "01e"
+        }
+      ],
+      "extra": [
+        "Citation Key: 1e"
+      ],
+      "itemID": 2,
+      "itemType": "journalArticle",
+      "title": "Blah <span class=\"nocase\"><i>emph</i></span> and <span class=\"nocase\">\u201cenquote\u201d</span>."
     },
     {
       "citationKey": "Correns1891",
@@ -173,6 +154,25 @@
       "publicationTitle": "Beitr\u00e4ge zur Geschichte der Philosophie des Mittelalters",
       "title": "Die dem boethius f\u00e4lschlich zugeschriebene abhandlung des dominicus gundisalvi 'De unitate'",
       "volume": "1"
+    },
+    {
+      "citationKey": "Bennett2003",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "David Christopher",
+          "lastName": "Bennett"
+        }
+      ],
+      "date": "2003",
+      "extra": [
+        "Citation Key: Bennett2003"
+      ],
+      "itemID": 7,
+      "itemType": "thesis",
+      "publisher": "University of London",
+      "title": "Xenonika: medical texts associated with xenones in the late Byzantine period",
+      "type": "Ph.D."
     }
   ]
 }

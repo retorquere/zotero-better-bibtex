@@ -9,14 +9,16 @@ import { patch as $patch$ } from './monkey-patch'
 let DOM_OBSERVER = null
 let reset = true
 
-$patch$(Zotero_File_Interface_Export, 'init', original => function(options) {
+$patch$(Zotero_File_Interface_Export, 'init', original => function(_options) {
   for (const translator of window.arguments[0].translators) {
     if (translator.label === 'BetterBibTeX JSON') translator.label = 'BetterBibTeX debug JSON'
   }
+  // eslint-disable-next-line prefer-rest-params
   original.apply(this, arguments)
 })
 
-$patch$(Zotero_File_Interface_Export, 'updateOptions', original => function(options) {
+$patch$(Zotero_File_Interface_Export, 'updateOptions', original => function(_options) {
+  // eslint-disable-next-line prefer-rest-params
   original.apply(this, arguments)
 
   const index = document.getElementById('format-menu').selectedIndex
@@ -55,7 +57,8 @@ function mutex(e) {
 
   if ((e.target.id === exportFileData.id) && exportFileData.checked) {
     keepUpdated.checked = false
-  } else if ((e.target.id === keepUpdated.id) && keepUpdated.checked) {
+  }
+  else if ((e.target.id === keepUpdated.id) && keepUpdated.checked) {
     exportFileData.checked = false
   }
 }

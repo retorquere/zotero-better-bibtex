@@ -231,7 +231,7 @@ class Preferences:
     os.makedirs(os.path.join(root, 'gen/typings'), exist_ok=True)
 
     with open(os.path.join(root, 'gen', 'typings', 'preferences.d.ts'), 'w') as f:
-      print('interface IPreferences {', file=f)
+      print('export interface IPreferences {', file=f)
       for name, pref in preferences.items():
         print(f'  {name}: {pref.type}', file=f)
       print('}', file=f)

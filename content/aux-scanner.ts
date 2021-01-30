@@ -9,14 +9,16 @@ import { KeyManager } from './key-manager'
 import { Translators } from './translators'
 import { Preferences as Prefs } from './prefs'
 
-export let AUXScanner = new class { // tslint:disable-line:variable-name
+export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   private decoder = new TextDecoder
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   public async pick(): Promise<string> {
     const fp = Components.classes['@mozilla.org/filepicker;1'].createInstance(Components.interfaces.nsIFilePicker)
     fp.init(window, Zotero.getString('fileInterface.import'), Components.interfaces.nsIFilePicker.modeOpen)
     fp.appendFilter('AUX file', '*.aux')
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return new Zotero.Promise(resolve => {
       fp.open(userChoice => {
         switch (userChoice) {
@@ -46,16 +48,18 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
     if (typeof options.libraryID === 'number') {
       collection = null
       libraryID = options.libraryID
-    } else if (options.collection) {
+    }
+    else if (options.collection) {
       collection = Zotero.Collections.getByLibraryAndKey(options.collection.libraryID, options.collection.key)
       libraryID = options.collection.libraryID
-    } else {
+    }
+    else {
       const azp = Zotero.getActiveZoteroPane()
       collection = azp.getSelectedCollection()
       libraryID = collection ? collection.libraryID : azp.getSelectedLibraryID()
     }
 
-    const found = KeyManager.keys.find({ libraryID, citekey: { $in: citekeys } })
+    const found = (KeyManager.keys.find({ libraryID, citekey: { $in: citekeys } }) as { itemID: number, citekey: string }[])
 
     const itemIDs = found.map(key => key.itemID)
 
@@ -67,7 +71,7 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
       if (missing.length) {
         const bibtex = Object.values(bibfiles).join('\n').trim()
         newImports = bibtex ? await Translators.importString(`@comment{zotero-better-bibtex:whitelist:${missing.join(',')}}\n${bibtex}`) : []
-        itemIDs.push(...(newImports.map(item => item.id)))
+        itemIDs.push(...(newImports.map((item: { id: number}) => item.id)))
         missing = []
       }
     }
@@ -75,12 +79,15 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
     const basename = OS.Path.basename(path).replace(/\.[^.]*$/, '')
     if (options.tag) {
       await this.saveToTag(itemIDs, options.tag, libraryID)
-    } else {
+    }
+    else {
       if (collection && (options.collection?.replace || !collection.hasChildItems())) {
         await this.saveToCollection(itemIDs, missing, { collection })
-      } else if (collection) {
+      }
+      else if (collection) {
         await this.saveToCollection(itemIDs, missing, { collection, basename })
-      } else {
+      }
+      else {
         await this.saveToCollection(itemIDs, missing, { libraryID, basename })
       }
     }
@@ -100,7 +107,7 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
       // bib files used
       re = /\\bibdata\{([^}]+)\}/g
       while (m = re.exec(contents)) {
-        for (const bib of [m[1], m[1] + '.bib']) {
+        for (const bib of [m[1], `${m[1]}.bib`]) {
           if (!bibfiles[bib] && await OS.File.exists(bib)) {
             bibfiles[bib] = await this.read(bib)
             break
@@ -127,19 +134,25 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
     if (typeof target.libraryID === 'number') {
       if (target.collection) throw new Error('cannot have both collection and library target')
       if (!target.basename) throw new Error('Saving to library needs a name')
-    } else if (!target.collection) {
+    }
+    else if (!target.collection) {
       throw new Error('need either library + name or collection')
     }
 
     const libraryID = typeof target.libraryID === 'number' ? target.libraryID : target.collection.libraryID
 
     if (target.basename) {
-      const siblings = new Set((target.collection ? Zotero.Collections.getByParent(target.collection.id) : Zotero.Collections.getByLibrary(target.libraryID)).map(coll => coll.name))
+      const siblings = new Set(
+        (target.collection
+          ? Zotero.Collections.getByParent(target.collection.id)
+          : Zotero.Collections.getByLibrary(target.libraryID)
+        ).map((coll: { name: string }) => coll.name)
+      )
 
       let timestamp = ''
 
       while (siblings.has(target.basename + timestamp)) {
-        await sleep(1500) // tslint:disable-line:no-magic-numbers
+        await sleep(1500) // eslint-disable-line no-magic-numbers
         timestamp = (new Date).toLocaleDateString('nl', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false })
       }
 
@@ -150,7 +163,8 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
       })
       await target.collection.saveTx()
 
-    } else {
+    }
+    else {
       // saving into existing collection, remove items that are not cited
       const obsolete = target.collection.getChildItems(true).filter(itemID => !itemIDs.includes(itemID))
       if (obsolete.length) await Zotero.DB.executeTransaction(async () => { await target.collection.removeItems(obsolete) })
@@ -158,7 +172,8 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
     }
 
     if (missing_keys.length) {
-      missing_keys.sort((new Intl.Collator('en')).compare)
+      const collator = new Intl.Collator('en')
+      missing_keys.sort(collator.compare.bind(collator))
       let report = '<html><div><p><b>BibTeX AUX scan</b></p><p>Missing references:</p><ul>'
       for (const citekey of missing_keys) {
         report += `<li>${citekey.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/'/g, '&quot;').replace(/'/g, '&#039;')}</li>`
@@ -175,7 +190,7 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
     if (itemIDs.length) await Zotero.DB.executeTransaction(async () => { await target.collection.addItems(itemIDs) })
   }
 
-  private async saveToTag(cited: number[], tag: string, libraryID: number) {
+  private async saveToTag(cited: number[], tag: string, _libraryID: number) {
     const tagged: number[] = await Zotero.DB.columnQueryAsync('SELECT itemID FROM itemTags JOIN tags ON tags.tagID = itemTags.tagID WHERE LOWER(tags.name) = LOWER(?)', [tag])
 
     // cited but not tagged

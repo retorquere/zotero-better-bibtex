@@ -2,6 +2,7 @@ declare const Zotero: any
 
 import { Translator } from './lib/translator'
 export { Translator }
+import { ZoteroTranslator } from '../gen/typings/serialized-item'
 
 import { Reference } from './bibtex/reference'
 import { Exporter } from './bibtex/exporter'
@@ -66,7 +67,8 @@ Reference.prototype.addCreators = function() {
         if (['video', 'movie'].includes(this.referencetype)) {
           creators.editor.push(creator)
           creators.editor.type = 'director'
-        } else {
+        }
+        else {
           creators.author.push(creator)
         }
         break
@@ -120,7 +122,7 @@ Reference.prototype.addCreators = function() {
 
   for (const [field, value] of Object.entries(creators)) {
     this.remove(field)
-    this.remove(field + 'type')
+    this.remove(`${field}type`)
 
     if (!value.length) continue
 
@@ -207,22 +209,22 @@ Reference.prototype.typeMap = {
   },
 }
 
-function looks_like_number(n) {
+function looks_like_number(n): string | boolean {
   if (n.match(/^(?=[MDCLXVI])M*(C[MD]|D?C*)(X[CL]|L?X*)(I[XV]|V?I*)$/)) return 'roman'
   if (n.match(/^[A-Z]?[0-9]+(\.[0-9]+)?$/i)) return 'arabic'
   if (n.match(/^[A-Z]$/i)) return 'arabic'
   return false
 }
-function looks_like_number_field(n) {
+function looks_like_number_field(n: string): boolean {
   if (!n) return false
 
-  n = n.split(/-+|–|,|\//).map(_n => _n.trim())
-  switch (n.length) {
+  const ns: string[] = n.trim().split(/\s*-+|–|,|\/\s*/)
+  switch (ns.length) {
     case 1:
-      return looks_like_number(n[0])
+      return (looks_like_number(ns[0]) as boolean)
 
     case 2:
-      return looks_like_number(n[0]) && (looks_like_number(n[0]) === looks_like_number(n[1]))
+      return (looks_like_number(ns[0]) as boolean) && (looks_like_number(ns[0]) === looks_like_number(ns[1]))
 
     default:
       return false
@@ -233,17 +235,17 @@ const patent = new class {
   private countries = ['de', 'eu', 'fr', 'uk', 'us']
   private prefix = {us: 'us', ep: 'eu', gb: 'uk', de: 'de', fr: 'fr' }
 
-  public region(item) {
+  public region(item): string {
     if (item.itemType !== 'patent') return ''
 
     if (item.country) {
-      const country = item.country.toLowerCase()
+      const country: string = item.country.toLowerCase()
       if (this.countries.includes(country)) return country
     }
 
     for (const patentNumber of [item.number, item.applicationNumber]) {
       if (patentNumber) {
-        const prefix = this.prefix[patentNumber.substr(0, 2).toLowerCase()]
+        const prefix: string = this.prefix[patentNumber.substr(0, 2).toLowerCase()]
         if (prefix) return prefix
       }
     }
@@ -251,15 +253,17 @@ const patent = new class {
     return ''
   }
 
-  public number(item) {
+  // eslint-disable-next-line id-blacklist
+  public number(item): string {
     if (item.itemType !== 'patent' || (!item.number && !item.applicationNumber)) return ''
 
-    for (const patentNumber of [item.number, item.applicationNumber]) {
+    for (const patentNumber of ([item.number, item.applicationNumber] as string[])) {
       if (patentNumber) {
         const country = patentNumber.substr(0, 2).toLowerCase()
         if (this.prefix[country]) return patentNumber.substr(country.length)
       }
     }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return item.number || item.applicationNumber
   }
 
@@ -275,7 +279,7 @@ const patent = new class {
   }
 }
 
-export function doExport() {
+export function doExport(): void {
   Translator.init('export')
   Reference.installPostscript()
   Exporter.prepare_strings()
@@ -283,7 +287,7 @@ export function doExport() {
   // Zotero.write(`\n% ${Translator.header.label}\n`)
   Zotero.write('\n')
 
-  let item: ISerializedItem
+  let item: ZoteroTranslator.Item
   while (item = Exporter.nextItem()) {
     Zotero.debug(`exporting ${item.citationKey}`)
     const ref = new Reference(item)
@@ -303,7 +307,8 @@ export function doExport() {
         delete item.url
         ref.remove('url')
 
-      } else if (item.url && (m = item.url.match(/^https?:\/\/books.google.com\/books?id=([\S]+)$/i))) {
+      }
+      else if (item.url && (m = item.url.match(/^https?:\/\/books.google.com\/books?id=([\S]+)$/i))) {
         ref.override({ name: 'eprinttype', value: 'googlebooks'})
         ref.override({ name: 'eprint', value: m[1] })
         ref.remove('archivePrefix')
@@ -311,7 +316,8 @@ export function doExport() {
         delete item.url
         ref.remove('url')
 
-      } else if (item.url && (m = item.url.match(/^https?:\/\/www.ncbi.nlm.nih.gov\/pubmed\/([\S]+)$/i))) {
+      }
+      else if (item.url && (m = item.url.match(/^https?:\/\/www.ncbi.nlm.nih.gov\/pubmed\/([\S]+)$/i))) {
         ref.override({ name: 'eprinttype', value: 'pubmed'})
         ref.override({ name: 'eprint', value: m[1] })
         ref.remove('archivePrefix')
@@ -325,9 +331,11 @@ export function doExport() {
 
     if (ref.referencetype === 'patent') {
       if (item.country && !patent.region(item)) ref.add({ name: 'location', value: item.country || item.extraFields.kv['publisher-place'] })
-    } else if (ref.referencetype === 'unpublished' && item.itemType === 'presentation') {
+    }
+    else if (ref.referencetype === 'unpublished' && item.itemType === 'presentation') {
       ref.add({ name: 'venue', value: item.place, enc: 'literal' })
-    } else {
+    }
+    else {
       ref.add({ name: 'location', value: item.place || item.extraFields.kv['publisher-place'] , enc: 'literal' })
     }
 
@@ -386,15 +394,18 @@ export function doExport() {
         if (ref.getBibString(item.publicationTitle)) {
           ref.add({ name: 'journaltitle', value: item.publicationTitle, bibtexStrings: true })
 
-        } else if (Translator.options.useJournalAbbreviation && item.publicationTitle && item.journalAbbreviation) {
-            ref.add({ name: 'journaltitle', value: item.journalAbbreviation, bibtexStrings: true })
+        }
+        else if (Translator.options.useJournalAbbreviation && item.publicationTitle && item.journalAbbreviation) {
+          ref.add({ name: 'journaltitle', value: item.journalAbbreviation, bibtexStrings: true })
 
-        } else {
+        }
+        else {
           ref.add({ name: 'journaltitle', value: item.publicationTitle, bibtexStrings: true })
 
           if (ref.has.entrysubtype?.value === 'newspaper') {
             ref.add({ name: 'journalsubtitle', value: item.section })
-          } else {
+          }
+          else {
             ref.add({ name: 'shortjournal', value: item.journalAbbreviation, bibtexStrings: true })
           }
         }
@@ -405,7 +416,9 @@ export function doExport() {
     }
 
     let main
+    // eslint-disable-next-line no-underscore-dangle
     if (item.multi?._keys?.title && (main = item.multi.main?.title || item.language)) {
+      // eslint-disable-next-line no-underscore-dangle
       const languages = Object.keys(item.multi._keys.title).filter(lang => lang !== main)
       main += '-'
       languages.sort((a, b) => {
@@ -418,6 +431,7 @@ export function doExport() {
       for (let i = 0; i < languages.length; i++) {
         ref.add({
           name: i === 0 ? 'titleaddon' : `user${String.fromCharCode('d'.charCodeAt(0) + i)}`,
+          // eslint-disable-next-line no-underscore-dangle
           value: item.multi._keys.title[languages[i]],
         })
       }
@@ -443,13 +457,14 @@ export function doExport() {
         ref.add({ name: 'publisher', value: item.publisher, bibtexStrings: true })
     }
 
+    let thesistype: string
     switch (ref.referencetype) {
       case 'letter':
         ref.add({ name: 'type', value: item.type || (item.itemType === 'email' ? 'E-mail' : 'Letter') })
         break
 
       case 'thesis':
-        const thesistype = {
+        thesistype = {
           phdthesis: 'phdthesis',
           phd: 'phdthesis',
           mastersthesis: 'mathesis',
@@ -464,7 +479,8 @@ export function doExport() {
       case 'report':
         if (item.type?.toLowerCase().trim() === 'techreport') {
           ref.add({ name: 'type', value: 'techreport' })
-        } else {
+        }
+        else {
           ref.add({ name: 'type', value: item.type })
         }
         break

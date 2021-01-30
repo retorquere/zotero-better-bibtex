@@ -3,6 +3,8 @@ declare const ZOTERO_TRANSLATOR_INFO: any
 
 import * as preferences from '../../gen/preferences/defaults.json'
 import { client } from '../../content/client'
+import { ZoteroTranslator } from '../../gen/typings/serialized-item'
+import { IPreferences } from '../../gen/typings/preferences'
 
 type TranslatorMode = 'export' | 'import'
 
@@ -10,17 +12,53 @@ const cacheDisabler = new class {
   get(target, property) {
     // collections: jabref 4 stores collection info inside the reference, and collection info depends on which part of your library you're exporting
     if (['collections'].includes(property)) target.cachable = false
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return target[property]
   }
 }
 
-export let Translator = new class implements ITranslator { // tslint:disable-line:variable-name
+type TranslatorHeader = {
+  translatorID: string
+  translatorType: number
+  label: string
+  description: string
+  creator: string
+  target: string
+  minVersion: string
+  maxVersion: string
+  priority: number
+  inRepository: boolean
+  lastUpdated: string
+  browserSupport: string
+
+  displayOptions: {
+    exportNotes: boolean
+    exportFileData: boolean
+    useJournalAbbreviation: boolean
+    keepUpdated: boolean
+    quickCopyMode: string
+    Title: boolean
+    Authors: boolean
+    Year: boolean
+    Normalize: boolean
+  }
+
+  configOptions: {
+    getCollections: boolean
+    async: boolean
+  }
+}
+
+export const Translator = new class implements ITranslator { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public preferences: IPreferences
   public skipFields: string[]
   public skipField: Record<string, boolean>
   public verbatimFields?: string[]
   public csquotes: { open: string, close: string }
-  public export: { dir: string, path: string } = { dir: undefined, path: undefined }
+  public export: { dir: string, path: string } = {
+    dir: undefined,
+    path: undefined,
+  }
 
   public options: {
     quickCopyMode?: string
@@ -35,16 +73,16 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
     Normalize?: boolean
   }
 
-  public BetterBibLaTeX?: boolean                   // tslint:disable-line:variable-name
-  public BetterBibTeX?: boolean                     // tslint:disable-line:variable-name
-  public BetterTeX: boolean                         // tslint:disable-line:variable-name
-  public BetterCSLJSON?: boolean                    // tslint:disable-line:variable-name
-  public BetterCSLYAML?: boolean                    // tslint:disable-line:variable-name
-  public BetterCSL?: boolean                        // tslint:disable-line:variable-name
-  public BetterBibTeXCitationKeyQuickCopy?: boolean // tslint:disable-line:variable-name
-  public BetterBibTeXJSON?: boolean                 // tslint:disable-line:variable-name
-  public Citationgraph?: boolean                    // tslint:disable-line:variable-name
-  public Collectednotes?: boolean                   // tslint:disable-line:variable-name
+  public BetterBibLaTeX?: boolean                   // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+  public BetterBibTeX?: boolean                     // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+  public BetterTeX: boolean                         // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+  public BetterCSLJSON?: boolean                    // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+  public BetterCSLYAML?: boolean                    // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+  public BetterCSL?: boolean                        // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+  public BetterBibTeXCitationKeyQuickCopy?: boolean // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+  public BetterBibTeXJSON?: boolean                 // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+  public Citationgraph?: boolean                    // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+  public Collectednotes?: boolean                   // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   // public TeX: boolean
   // public CSL: boolean
 
@@ -54,41 +92,11 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
     misses: number
   }
 
-  public header: {
-    translatorID: string
-    translatorType: number
-    label: string
-    description: string
-    creator: string
-    target: string
-    minVersion: string
-    maxVersion: string
-    priority: number
-    inRepository: boolean
-    lastUpdated: string
-    browserSupport: string
+  public header: TranslatorHeader
 
-    displayOptions: {
-      exportNotes: boolean
-      exportFileData: boolean
-      useJournalAbbreviation: boolean
-      keepUpdated: boolean
-      quickCopyMode: string
-      Title: boolean
-      Authors: boolean
-      Year: boolean
-      Normalize: boolean
-    }
-
-    configOptions: {
-      getCollections: boolean
-      async: boolean
-    }
-  }
-
-  public collections: Record<string, ZoteroCollection>
-  private sortedItems: ISerializedItem[]
-  private currentItem: ISerializedItem
+  public collections: Record<string, ZoteroTranslator.Collection>
+  private sortedItems: ZoteroTranslator.Item[]
+  private currentItem: ZoteroTranslator.Item
 
   public isJurisM: boolean
   public isZotero: boolean
@@ -104,7 +112,7 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
   public initialized = false
 
   constructor() {
-    this.header = ZOTERO_TRANSLATOR_INFO
+    this.header = (ZOTERO_TRANSLATOR_INFO as TranslatorHeader)
 
     this[this.header.label.replace(/[^a-z]/ig, '')] = true
     this.BetterTeX = this.BetterBibTeX || this.BetterBibLaTeX
@@ -112,7 +120,8 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
     this.preferences = preferences
     this.options = this.header.displayOptions || {}
 
-    this.stringCompare = (new Intl.Collator('en')).compare
+    const collator = new Intl.Collator('en')
+    this.stringCompare = (collator.compare.bind(collator) as (left: string, right: string) => number)
   }
 
   public get exportDir(): string {
@@ -125,7 +134,7 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
     return this.export.path
   }
 
-  private typefield(field) {
+  private typefield(field: string): string {
     field = field.trim()
     if (field.startsWith('bibtex.')) return this.BetterBibTeX ? field.replace(/^bibtex\./, '') : ''
     if (field.startsWith('biblatex.')) return this.BetterBibLaTeX ? field.replace(/^biblatex\./, '') : ''
@@ -133,7 +142,7 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
   }
 
   public init(mode: TranslatorMode) {
-    this.platform = Zotero.getHiddenPref('better-bibtex.platform')
+    this.platform = (Zotero.getHiddenPref('better-bibtex.platform') as string)
     this.isJurisM = client === 'jurism'
     this.isZotero = !this.isJurisM
 
@@ -144,8 +153,11 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
 
     for (const key in this.options) {
       if (typeof this.options[key] === 'boolean') {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         this.options[key] = !!Zotero.getOption(key)
-      } else {
+      }
+      else {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         this.options[key] = Zotero.getOption(key)
       }
     }
@@ -157,8 +169,8 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
         misses: 0,
       }
       this.export = {
-        dir: Zotero.getOption('exportDir'),
-        path: Zotero.getOption('exportPath'),
+        dir: (Zotero.getOption('exportDir') as string),
+        path: (Zotero.getOption('exportPath') as string),
       }
       if (this.export.dir && this.export.dir.endsWith(this.paths.sep)) this.export.dir = this.export.dir.slice(0, -1)
     }
@@ -167,13 +179,17 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
       let value
 
       try {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         value = Zotero.getOption(`preference_${pref}`)
-      } catch (err) {
+      }
+      catch (err) {
         value = undefined
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       if (typeof value === 'undefined') value = Zotero.getHiddenPref(`better-bibtex.${pref}`)
 
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       this.preferences[pref] = value
     }
 
@@ -186,7 +202,7 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
     if (!this.verbatimFields.length) this.verbatimFields = null
     this.csquotes = this.preferences.csquotes ? { open: this.preferences.csquotes[0], close: this.preferences.csquotes[1] } : null
 
-    this.preferences.testing = Zotero.getHiddenPref('better-bibtex.testing')
+    this.preferences.testing = (Zotero.getHiddenPref('better-bibtex.testing') as boolean)
 
     if (mode === 'export') {
       this.unicode = (this.BetterBibTeX && !Translator.preferences.asciiBibTeX) || (this.BetterBibLaTeX && !Translator.preferences.asciiBibLaTeX)
@@ -198,18 +214,23 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
 
     this.collections = {}
     if (mode === 'export' && this.header.configOptions?.getCollections && Zotero.nextCollection) {
-      let collection
+      let collection: any
       while (collection = Zotero.nextCollection()) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const children = collection.children || collection.descendents || []
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const key = (collection.primary ? collection.primary : collection).key
 
         this.collections[key] = {
           // id: collection.id,
+
           key,
           parent: collection.fields.parentKey,
           name: collection.name,
           items: collection.childItems,
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
           collections: children.filter(coll => coll.type === 'collection').map(coll => coll.key),
+
           // items: (item.itemID for item in children when item.type != 'collection')
           // descendents: undefined
           // children: undefined
@@ -223,7 +244,8 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
 
       for (collection of Object.values(this.collections)) {
         if (collection.parent && !this.collections[collection.parent]) {
-          collection.parent = false
+          // collection.parent = false
+          delete collection.parent
           Zotero.debug(`BBT translator: collection with key ${collection.key} has non-existent parent ${collection.parent}, assuming root collection`)
         }
       }
@@ -232,11 +254,11 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
     this.initialized = true
   }
 
-  public items(): ISerializedItem[] {
+  public items(): ZoteroTranslator.Item[] {
     if (!this.sortedItems) {
       this.sortedItems = []
-      let item
-      while (item = Zotero.nextItem()) {
+      let item: ZoteroTranslator.Item
+      while (item = (Zotero.nextItem() as ZoteroTranslator.Item)) {
         item.cachable = this.cachable
         item.journalAbbreviation = item.journalAbbreviation || item.autoJournalAbbreviation
         this.sortedItems.push(new Proxy(item, cacheDisabler))

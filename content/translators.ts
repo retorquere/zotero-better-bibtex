@@ -1,3 +1,6 @@
+/* eslint-disable no-case-declarations */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+
 declare const Zotero: any
 declare const Components: any
 
@@ -13,7 +16,6 @@ import { Serializer } from './serializer'
 import { log } from './logger'
 import { DB as Cache, selector as cacheSelector } from './db/cache'
 import { DB } from './db/main'
-// import * as Extra from './extra'
 import { sleep } from './sleep'
 import { flash } from './flash'
 
@@ -54,7 +56,7 @@ type ExportJob = {
 }
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let Translators = new class { // tslint:disable-line:variable-name
+export const Translators = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public byId: Record<string, ITranslatorHeader>
   public byName: Record<string, ITranslatorHeader>
   public byLabel: Record<string, ITranslatorHeader>
@@ -102,6 +104,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
           Zotero.BetterBibTeX.getString('BetterBibTeX.startup.installingTranslators.new.DnD'), // text
 
           // button flags
+          // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
           ps.BUTTON_POS_0 * ps.BUTTON_TITLE_IS_STRING + ps.BUTTON_POS_0_DEFAULT
             + ps.BUTTON_POS_1 * ps.BUTTON_TITLE_IS_STRING,
 
@@ -123,25 +126,26 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
       try {
         await Zotero.Translators.reinit()
-      } catch (err) {
+      }
+      catch (err) {
         log.error('Translator.inits: reinit failed @', (new Date()).valueOf() - start, err)
       }
     }
   }
 
   public getTranslatorId(name) {
-    const _name = name.toLowerCase()
+    const name_lc = name.toLowerCase()
 
     // shortcuts
-    if (_name === 'jzon') return Translators.byLabel.BetterBibTeXJSON.translatorID
-    if (_name === 'bib') return Translators.byLabel.BetterBibLaTeX.translatorID
+    if (name_lc === 'jzon') return Translators.byLabel.BetterBibTeXJSON.translatorID
+    if (name_lc === 'bib') return Translators.byLabel.BetterBibLaTeX.translatorID
 
-    for (const [id, translator] of (Object.entries(this.byId) as [string, ITranslatorHeader][])) {
+    for (const [id, translator] of (Object.entries(this.byId))) {
       if (! ['yaml', 'json', 'bib'].includes(translator.target) ) continue
       if (! translator.label.startsWith('Better ') ) continue
 
-      if (translator.label.replace('Better ', '').replace(' ', '').toLowerCase() === _name) return id
-      if (translator.label.split(' ').pop().toLowerCase() === _name) return id
+      if (translator.label.replace('Better ', '').replace(' ', '').toLowerCase() === name_lc) return id
+      if (translator.label.split(' ').pop().toLowerCase() === name_lc) return id
     }
 
     // allowed to pass GUID
@@ -177,7 +181,8 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
     if (this.workers.running.size > workers) {
       return this.queue.schedule(this.exportItemsByWorker.bind(this, translatorID, displayOptions, options), [], { priority: 1, timestamp: (new Date()).getTime() })
-    } else {
+    }
+    else {
       return this.exportItemsByWorker(translatorID, displayOptions, options)
     }
   }
@@ -225,7 +230,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
       displayOptions.exportFileData
 
       // jabref 4 stores collection info inside the reference, and collection info depends on which part of your library you're exporting
-      || (translator.label.includes('TeX') && options.preferences.jabrefFormat >= 4) // tslint:disable-line:no-magic-numbers
+      || (translator.label.includes('TeX') && options.preferences.jabrefFormat >= 4) // eslint-disable-line no-magic-numbers
 
       // relative file paths are going to be different based on the file being exported to
       || options.preferences.relativeFilePaths
@@ -252,11 +257,12 @@ export let Translators = new class { // tslint:disable-line:variable-name
     const deferred = Zotero.Promise.defer()
     let worker: ChromeWorker = null
     // WHAT IS GOING ON HERE FIREFOX?!?! A *NetworkError* for a xpi-internal resource:// URL?!
-    for (let attempt = 0; !worker && attempt < 5; attempt++) { // tslint:disable-line:no-magic-numbers
+    for (let attempt = 0; !worker && attempt < 5; attempt++) { // eslint-disable-line no-magic-numbers
       try {
-        if (attempt > 0) await sleep(2 * 1000 * attempt) // tslint:disable-line:no-magic-numbers
+        if (attempt > 0) await sleep(2 * 1000 * attempt) // eslint-disable-line no-magic-numbers
         worker = new ChromeWorker(`resource://zotero-better-bibtex/worker/Zotero.js?${params}`)
-      } catch (err) {
+      }
+      catch (err) {
         log.error('new ChromeWorker:', err)
       }
     }
@@ -265,7 +271,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
       flash(
         'Failed to start background export',
         'Could not start a background export after 5 attempts. Background exports have been disabled -- PLEASE report this as a bug at the Better BibTeX github project',
-        15 // tslint:disable-line:no-magic-numbers
+        15 // eslint-disable-line no-magic-numbers
       )
       this.workers.disabled = true
       // this returns a promise for a new export, but now a foreground export
@@ -328,7 +334,8 @@ export let Translators = new class { // tslint:disable-line:variable-name
             cached.metadata = metadata
             cached = cache.update(cached)
 
-          } else {
+          }
+          else {
             cache.insert({...selector, reference, metadata})
           }
           break
@@ -385,8 +392,8 @@ export let Translators = new class { // tslint:disable-line:variable-name
       config.items.push(Serializer.fast(item, count))
 
       // sleep occasionally so the UI gets a breather
-      if ((Date.now() - batch) > 1000) { // tslint:disable-line:no-magic-numbers
-        await sleep(0) // tslint:disable-line:no-magic-numbers
+      if ((Date.now() - batch) > 1000) { // eslint-disable-line no-magic-numbers
+        await sleep(0) // eslint-disable-line no-magic-numbers
         batch = Date.now()
       }
 
@@ -443,7 +450,8 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
     try {
       worker.postMessage(JSON.parse(JSON.stringify(config)))
-    } catch (err) {
+    }
+    catch (err) {
       worker.terminate()
       this.workers.running.delete(id)
       log.error(err)
@@ -454,7 +462,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
     return deferred.promise
   }
 
-  public async exportItems(translatorID: string, displayOptions: any, scope: ExportScope, path = null) {
+  public async exportItems(translatorID: string, displayOptions: any, scope: ExportScope, path = null): Promise<string> {
     await Zotero.BetterBibTeX.ready
 
     const start = Date.now()
@@ -491,7 +499,8 @@ export let Translators = new class { // tslint:disable-line:variable-name
         file = Zotero.File.pathToFile(path)
         // path could exist but not be a regular file
         if (file.exists() && !file.isFile()) file = null
-      } catch (err) {
+      }
+      catch (err) {
         // or Zotero.File.pathToFile could have thrown an error
         log.error('Translators.exportItems:', err)
         file = null
@@ -513,7 +522,8 @@ export let Translators = new class { // tslint:disable-line:variable-name
     translation.setHandler('done', (obj, success) => {
       if (success) {
         deferred.resolve(obj ? obj.string : undefined)
-      } else {
+      }
+      else {
         log.error('Translators.exportItems failed in', { time: Date.now() - start, translatorID, displayOptions, path })
         deferred.reject('translation failed')
       }
@@ -527,12 +537,13 @@ export let Translators = new class { // tslint:disable-line:variable-name
   public uninstall(label) {
     try {
       const destFile = Zotero.getTranslatorsDirectory()
-      destFile.append(label + '.js')
+      destFile.append(`${label}.js`)
       if (destFile.exists()) {
         destFile.remove(false)
         return true
       }
-    } catch (err) {
+    }
+    catch (err) {
       log.error(`Translators.uninstall: failed to remove ${label}:`, err)
       return true
     }
@@ -546,7 +557,8 @@ export let Translators = new class { // tslint:disable-line:variable-name
     let installed = null
     try {
       installed = Zotero.Translators.get(header.translatorID)
-    } catch (err) {
+    }
+    catch (err) {
       log.error('Translators.install', header, err)
       installed = null
     }
@@ -570,7 +582,8 @@ export let Translators = new class { // tslint:disable-line:variable-name
     try {
       await Zotero.Translators.save(header, code)
 
-    } catch (err) {
+    }
+    catch (err) {
       log.error('Translator.install', header, 'failed:', err)
       this.uninstall(header.label)
     }
@@ -588,7 +601,8 @@ export let Translators = new class { // tslint:disable-line:variable-name
     for (const pref of prefOverrides) {
       if (typeof displayOptions[`preference_${pref}`] === 'undefined') {
         query[pref] = Prefs.get(pref)
-      } else {
+      }
+      else {
         query[pref] = displayOptions[`preference_${pref}`]
       }
     }
@@ -603,10 +617,12 @@ export let Translators = new class { // tslint:disable-line:variable-name
     if (scope.library) {
       sql = `SELECT i.itemID FROM items i WHERE i.libraryID = ${scope.library} AND ${cond}`
 
-    } else if (scope.collection) {
+    }
+    else if (scope.collection) {
       sql = `SELECT i.itemID FROM collectionItems ci JOIN items i ON i.itemID = ci.itemID WHERE ci.collectionID = ${scope.collection.id} AND ${cond}`
 
-    } else {
+    }
+    else {
       log.error('Translators.uncached: no active scope')
       return []
 
@@ -645,12 +661,13 @@ const SERVER_ERROR = 500
 Zotero.Server.Endpoints['/better-bibtex/translations/stats'] = class {
   public supportedMethods = ['GET']
 
-  public init(request) {
+  public init(_request) {
     try {
       return [ OK, 'application/json', JSON.stringify(trace) ]
 
-    } catch (err) {
-      return [SERVER_ERROR, 'text/plain', '' + err]
+    }
+    catch (err) {
+      return [SERVER_ERROR, 'text/plain', `${err}`]
     }
   }
 }

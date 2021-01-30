@@ -16,6 +16,7 @@ import * as CAYW from './cayw'
 const pane = Zotero.getActiveZoteroPane()
 
 $patch$(pane, 'buildCollectionContextMenu', original => async function() {
+  // eslint-disable-next-line prefer-rest-params
   await original.apply(this, arguments)
 
   try {
@@ -31,20 +32,20 @@ $patch$(pane, 'buildCollectionContextMenu', original => async function() {
     if (isLibrary) {
       tagDuplicates.hidden = false
       tagDuplicates.setAttribute('libraryID', treeRow.ref.libraryID.toString())
-    } else {
+    }
+    else {
       tagDuplicates.hidden = true
     }
 
     let query = null
     if (Prefs.get('autoExport') === 'immediate') {
       query = null
-
-    } else if (isCollection) {
+    }
+    else if (isCollection) {
       query = { type: 'collection', id: treeRow.ref.id }
-
-    } else if (isLibrary) {
+    }
+    else if (isLibrary) {
       query = { type: 'library', id: treeRow.ref.libraryID }
-
     }
     const auto_exports = query ? AutoExport.db.find(query) : []
 
@@ -61,13 +62,15 @@ $patch$(pane, 'buildCollectionContextMenu', original => async function() {
       }
     }
 
-  } catch (err) {
+  }
+  catch (err) {
     log.error('ZoteroPane.buildCollectionContextMenu:', err)
   }
 })
 
 // Monkey patch because of https://groups.google.com/forum/#!topic/zotero-dev/zy2fSO1b0aQ
 $patch$(pane, 'serializePersist', original => function() {
+  // eslint-disable-next-line prefer-rest-params
   original.apply(this, arguments)
   if (Zotero.BetterBibTeX.uninstalled) clean_pane_persist()
 })
@@ -75,12 +78,13 @@ $patch$(pane, 'serializePersist', original => function() {
 export = new class ZoteroPane {
   public constructor() {
     window.addEventListener('load', () => {
-      BetterBibTeX.load(document).then(() => {
-        log.debug('Better BibTeX load finished successfully')
-      })
-      .catch(err => {
-        log.error('Better BibTeX load failed', err)
-      })
+      BetterBibTeX.load(document)
+        .then(() => {
+          log.debug('Better BibTeX load finished successfully')
+        })
+        .catch(err => {
+          log.error('Better BibTeX load failed', err)
+        })
     }, false)
   }
 
@@ -127,7 +131,8 @@ export = new class ZoteroPane {
 
     if (ae) {
       AutoExport.run(ae.$loki)
-    } else {
+    }
+    else {
       log.error('cannot find ae for', { path })
     }
   }
@@ -140,7 +145,7 @@ export = new class ZoteroPane {
     }
 
     const extra = items[0].getField('extra') || ''
-    const citations = new Set(extra.split('\n').filter(line => line.startsWith('cites:')))
+    const citations = new Set(extra.split('\n').filter((line: string) => line.startsWith('cites:')))
     const picked = (await CAYW.pick({ format: 'citationLinks' })).split('\n').filter(citation => !citations.has(citation))
 
     if (picked.length) {
@@ -165,7 +170,8 @@ export = new class ZoteroPane {
       case 'items':
         try {
           scope = { type: 'items', items: pane.getSelectedItems() }
-        } catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
+        }
+        catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
           log.error('Could not get selected items:', err)
           scope = {}
         }
@@ -180,7 +186,7 @@ export = new class ZoteroPane {
     ww.openWindow(null, 'chrome://zotero-better-bibtex/content/ErrorReport.xul', 'better-bibtex-error-report', 'chrome,centerscreen,modal', params)
   }
 
-  public async sentenceCase(label) {
+  public async sentenceCase() {
     const items = Zotero.getActiveZoteroPane().getSelectedItems()
     for (const item of items) {
       let save = false

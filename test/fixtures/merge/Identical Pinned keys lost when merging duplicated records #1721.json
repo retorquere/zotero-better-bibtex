@@ -1,0 +1,95 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "mdy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "autoExport": "off",
+      "automaticTags": false,
+      "bibtexURL": "url",
+      "citekeyFold": false,
+      "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
+      "workers": 0
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1140/epjc/s10052-013-2428-4",
+      "citationKey": "Coimbra:2013qq",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Rita",
+          "lastName": "Coimbra"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Marco O.P.",
+          "lastName": "Sampaio"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Rui",
+          "lastName": "Santos"
+        }
+      ],
+      "date": "2013",
+      "extra": [
+        "arXiv: 1301.2599 [hep-ph]",
+        "number: arXiv:1301.2599",
+        "Citation Key: Coimbra:2013qq"
+      ],
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Eur. Phys. J. C",
+      "pages": "2428",
+      "publicationTitle": "The European Physical Journal C",
+      "tags": [
+        {
+          "tag": "scalars"
+        },
+        {
+          "tag": "tools"
+        }
+      ],
+      "title": "ScannerS: Constraining the phase diagram of a complex scalar singlet at the LHC",
+      "volume": "73"
+    },
+    {
+      "DOI": "10.1140/epjc/s10052-013-2428-4",
+      "citationKey": "Coimbra:2013qq",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Rita",
+          "lastName": "Coimbra"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Marco O.P.",
+          "lastName": "Sampaio"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Rui",
+          "lastName": "Santos"
+        }
+      ],
+      "date": "2013",
+      "extra": [
+        "Citation Key: Coimbra:2013qq",
+        "arXiv: 1301.2599 [hep-ph]"
+      ],
+      "itemID": 2,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Eur. Phys. J. C",
+      "pages": "2428",
+      "publicationTitle": "The European Physical Journal C",
+      "title": "ScannerS: Constraining the phase diagram of a complex scalar singlet at the LHC",
+      "volume": "73"
+    }
+  ]
+}

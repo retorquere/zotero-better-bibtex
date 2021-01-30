@@ -19,6 +19,111 @@
       "creators": [
         {
           "creatorType": "author",
+          "firstName": "Martin Luther, Jr.",
+          "lastName": "King"
+        }
+      ],
+      "date": "1968",
+      "itemID": 28,
+      "itemType": "book",
+      "numPages": "154",
+      "place": "New York",
+      "publisher": "Grosset & Dunlap",
+      "title": "\"I have a dream\" : the quotations of Martin Luther King JR"
+    },
+    {
+      "ISBN": "0-7100-3616-7",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Alexander von",
+          "lastName": "Humboldt"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Cuba, Jr.",
+          "lastName": "Gooding"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jean de",
+          "lastName": "La Fontaine"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Georg Henrik Auto",
+          "lastName": "von Wright"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Georg Henrik Explicit",
+          "lastName": "\"von Wright\""
+        }
+      ],
+      "date": "1963",
+      "extra": [
+        "Citation Key: fixedkey"
+      ],
+      "itemID": 51,
+      "itemType": "book",
+      "language": "anglais",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "numPages": "xviii+214",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "series": "International Library of Philosophy and Scientific Method",
+      "shortTitle": "Norm and Action",
+      "title": "Norm and Action. A Logical Enquiry"
+    },
+    {
+      "ISBN": "978-1-4793-4771-1",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Frank G.,! Jr.",
+          "lastName": "Bennett"
+        }
+      ],
+      "date": "2013",
+      "itemID": 52,
+      "itemType": "book",
+      "numPages": "137",
+      "place": "Lexington Kentucky",
+      "publisher": "CreateSpace Independent Publishing Platform",
+      "title": "Citations, Out of the Box"
+    },
+    {
+      "ISBN": "978-1-84946-324-9",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "Lu\u00eds d'",
+          "lastName": "Almeida"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "James",
+          "lastName": "Edwards"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Andrea",
+          "lastName": "Dolcetti"
+        }
+      ],
+      "date": "2013",
+      "itemID": 53,
+      "itemType": "book",
+      "language": "en",
+      "numPages": "vi+309",
+      "place": "Oxford",
+      "publisher": "Hart Publishing",
+      "title": "Reading HLA Hart's: <i>The Concept of Law</i>"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
           "firstName": "Alan",
           "lastName": "\"De Quincey\""
         }
@@ -34,172 +139,6 @@
         }
       ],
       "title": "sort_ChangeInNameSort"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Alan",
-          "lastName": "al-One"
-        }
-      ],
-      "extra": [
-        "Citation Key: name_HyphenatedNonDroppingParticle1"
-      ],
-      "itemID": 2,
-      "itemType": "journalArticle",
-      "tags": [
-        {
-          "tag": "imported"
-        }
-      ],
-      "title": "name_HyphenatedNonDroppingParticle1"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Bruce",
-          "lastName": "D'Arcus"
-        }
-      ],
-      "extra": [
-        "Citation Key: bugreports_DuplicateSpaces"
-      ],
-      "itemID": 3,
-      "itemType": "journalArticle",
-      "tags": [
-        {
-          "tag": "imported"
-        }
-      ],
-      "title": "bugreports_DuplicateSpaces"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Dick",
-          "lastName": "\"Van Dyke\""
-        }
-      ],
-      "extra": [
-        "Citation Key: name_ParticleCaps3"
-      ],
-      "itemID": 4,
-      "itemType": "journalArticle",
-      "tags": [
-        {
-          "tag": "imported"
-        }
-      ],
-      "title": "name_ParticleCaps3"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Doug",
-          "lastName": "von Dipheria"
-        }
-      ],
-      "extra": [
-        "Citation Key: disambiguate_CitationLabelInData"
-      ],
-      "itemID": 5,
-      "itemType": "journalArticle",
-      "tags": [
-        {
-          "tag": "imported"
-        }
-      ],
-      "title": "disambiguate_CitationLabelInData"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Eduard",
-          "lastName": "van Happel"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Gustav",
-          "lastName": "von Hoppel"
-        }
-      ],
-      "extra": [
-        "Citation Key: bugreports_parseName"
-      ],
-      "itemID": 6,
-      "itemType": "journalArticle",
-      "tags": [
-        {
-          "tag": "imported"
-        }
-      ],
-      "title": "bugreports_parseName"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Eric",
-          "lastName": "van der Vlist"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Vincent",
-          "lastName": "van Gogh"
-        }
-      ],
-      "extra": [
-        "Citation Key: name_ParseNames"
-      ],
-      "itemID": 7,
-      "itemType": "journalArticle",
-      "tags": [
-        {
-          "tag": "imported"
-        }
-      ],
-      "title": "name_ParseNames"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Fran\u00e7ois H\u00e9delin, abb\u00e9 d'",
-          "lastName": "Aubignac"
-        }
-      ],
-      "extra": [
-        "Citation Key: abbot1",
-        "relies on paricleParser fallback detection"
-      ],
-      "itemID": 8,
-      "itemType": "journalArticle",
-      "title": "<span class=\"nocase\">(Aubignac) (Fran\u00e7ois H\u00e9delin, abb\u00e9 d')</span>"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Fran\u00e7ois H\u00e9delin, abb\u00e9 d'",
-          "lastName": "d'Aubignac"
-        }
-      ],
-      "extra": [
-        "Citation Key: name_ParsedNonDroppingParticleWithApostrophe"
-      ],
-      "itemID": 9,
-      "itemType": "journalArticle",
-      "tags": [
-        {
-          "tag": "imported"
-        }
-      ],
-      "title": "name_ParsedNonDroppingParticleWithApostrophe"
     },
     {
       "creators": [
@@ -525,6 +464,26 @@
       "creators": [
         {
           "creatorType": "author",
+          "firstName": "Alan",
+          "lastName": "al-One"
+        }
+      ],
+      "extra": [
+        "Citation Key: name_HyphenatedNonDroppingParticle1"
+      ],
+      "itemID": 2,
+      "itemType": "journalArticle",
+      "tags": [
+        {
+          "tag": "imported"
+        }
+      ],
+      "title": "name_HyphenatedNonDroppingParticle1"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
           "firstName": "Jean de",
           "lastName": "la Fontaine"
         }
@@ -690,22 +649,6 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Martin Luther, Jr.",
-          "lastName": "King"
-        }
-      ],
-      "date": "1968",
-      "itemID": 28,
-      "itemType": "book",
-      "numPages": "154",
-      "place": "New York",
-      "publisher": "Grosset & Dunlap",
-      "title": "\"I have a dream\" : the quotations of Martin Luther King JR"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
           "firstName": "N",
           "lastName": "Family Name"
         }
@@ -721,6 +664,26 @@
         }
       ],
       "title": "bugreports_DuplicateSpaces3"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Bruce",
+          "lastName": "D'Arcus"
+        }
+      ],
+      "extra": [
+        "Citation Key: bugreports_DuplicateSpaces"
+      ],
+      "itemID": 3,
+      "itemType": "journalArticle",
+      "tags": [
+        {
+          "tag": "imported"
+        }
+      ],
+      "title": "bugreports_DuplicateSpaces"
     },
     {
       "creators": [
@@ -966,6 +929,26 @@
       "creators": [
         {
           "creatorType": "author",
+          "firstName": "Dick",
+          "lastName": "\"Van Dyke\""
+        }
+      ],
+      "extra": [
+        "Citation Key: name_ParticleCaps3"
+      ],
+      "itemID": 4,
+      "itemType": "journalArticle",
+      "tags": [
+        {
+          "tag": "imported"
+        }
+      ],
+      "title": "name_ParticleCaps3"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
           "lastName": "Doe Co."
         }
       ],
@@ -1163,6 +1146,26 @@
     {
       "creators": [
         {
+          "creatorType": "author",
+          "firstName": "Doug",
+          "lastName": "von Dipheria"
+        }
+      ],
+      "extra": [
+        "Citation Key: disambiguate_CitationLabelInData"
+      ],
+      "itemID": 5,
+      "itemType": "journalArticle",
+      "tags": [
+        {
+          "tag": "imported"
+        }
+      ],
+      "title": "disambiguate_CitationLabelInData"
+    },
+    {
+      "creators": [
+        {
           "name": "U.S. Bureau of the Census"
         }
       ],
@@ -1179,93 +1182,90 @@
       "title": "bugreports_DemoPageFullCiteCruftOnSubsequent"
     },
     {
-      "ISBN": "0-7100-3616-7",
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Alexander von",
-          "lastName": "Humboldt"
+          "firstName": "Eduard",
+          "lastName": "van Happel"
         },
         {
           "creatorType": "author",
-          "firstName": "Cuba, Jr.",
-          "lastName": "Gooding"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Jean de",
-          "lastName": "La Fontaine"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Georg Henrik Auto",
-          "lastName": "von Wright"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Georg Henrik Explicit",
-          "lastName": "\"von Wright\""
+          "firstName": "Gustav",
+          "lastName": "von Hoppel"
         }
       ],
-      "date": "1963",
       "extra": [
-        "Citation Key: fixedkey"
+        "Citation Key: bugreports_parseName"
       ],
-      "itemID": 51,
-      "itemType": "book",
-      "language": "anglais",
-      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
-      "numPages": "xviii+214",
-      "place": "Londres",
-      "publisher": "Routledge & Kegan Paul",
-      "series": "International Library of Philosophy and Scientific Method",
-      "shortTitle": "Norm and Action",
-      "title": "Norm and Action. A Logical Enquiry"
+      "itemID": 6,
+      "itemType": "journalArticle",
+      "tags": [
+        {
+          "tag": "imported"
+        }
+      ],
+      "title": "bugreports_parseName"
     },
     {
-      "ISBN": "978-1-4793-4771-1",
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Frank G.,! Jr.",
-          "lastName": "Bennett"
+          "firstName": "Eric",
+          "lastName": "van der Vlist"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Vincent",
+          "lastName": "van Gogh"
         }
       ],
-      "date": "2013",
-      "itemID": 52,
-      "itemType": "book",
-      "numPages": "137",
-      "place": "Lexington Kentucky",
-      "publisher": "CreateSpace Independent Publishing Platform",
-      "title": "Citations, Out of the Box"
+      "extra": [
+        "Citation Key: name_ParseNames"
+      ],
+      "itemID": 7,
+      "itemType": "journalArticle",
+      "tags": [
+        {
+          "tag": "imported"
+        }
+      ],
+      "title": "name_ParseNames"
     },
     {
-      "ISBN": "978-1-84946-324-9",
       "creators": [
         {
-          "creatorType": "editor",
-          "firstName": "Lu\u00eds d'",
-          "lastName": "Almeida"
-        },
-        {
-          "creatorType": "editor",
-          "firstName": "James",
-          "lastName": "Edwards"
-        },
-        {
-          "creatorType": "editor",
-          "firstName": "Andrea",
-          "lastName": "Dolcetti"
+          "creatorType": "author",
+          "firstName": "Fran\u00e7ois H\u00e9delin, abb\u00e9 d'",
+          "lastName": "Aubignac"
         }
       ],
-      "date": "2013",
-      "itemID": 53,
-      "itemType": "book",
-      "language": "en",
-      "numPages": "vi+309",
-      "place": "Oxford",
-      "publisher": "Hart Publishing",
-      "title": "Reading HLA Hart's: <i>The Concept of Law</i>"
+      "extra": [
+        "Citation Key: abbot1",
+        "relies on paricleParser fallback detection"
+      ],
+      "itemID": 8,
+      "itemType": "journalArticle",
+      "title": "<span class=\"nocase\">(Aubignac) (Fran\u00e7ois H\u00e9delin, abb\u00e9 d')</span>"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Fran\u00e7ois H\u00e9delin, abb\u00e9 d'",
+          "lastName": "d'Aubignac"
+        }
+      ],
+      "extra": [
+        "Citation Key: name_ParsedNonDroppingParticleWithApostrophe"
+      ],
+      "itemID": 9,
+      "itemType": "journalArticle",
+      "tags": [
+        {
+          "tag": "imported"
+        }
+      ],
+      "title": "name_ParsedNonDroppingParticleWithApostrophe"
     }
   ]
 }
