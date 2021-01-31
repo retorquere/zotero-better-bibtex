@@ -1,6 +1,6 @@
 
 @online{shaw_rfc4880_2007,
-  ids = {shaw_rfc4880_2007,rfc4880},
+  ids = {rfc4880},
   title = {{{RFC4880}}: {{OpenPGP Message Format}}},
   author = {Shaw, David and Donnerhacke, Lutz and Thayer, Rodney and Finney, Hal and Callas, Jon},
   date = {2007-11},
