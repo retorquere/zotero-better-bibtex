@@ -588,5 +588,7 @@
   "merge/Merging error with arXiv ID #1373-merged.json",
   "merge/Merging error with arXiv ID #1373.json",
   "merge/Set IDS field when merging references with different citation keys #1221.biblatex",
-  "merge/Set IDS field when merging references with different citation keys #1221.json"
+  "merge/Set IDS field when merging references with different citation keys #1221.json",
+  "merge/ids field should be created in raw mode #1729-merged.json",
+  "merge/ids field should be created in raw mode #1729.json"
 ]
