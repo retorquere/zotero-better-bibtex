@@ -160,15 +160,15 @@ def step_impl(context, translator, expected, seconds):
 def step_impl(context, expected):
   export_library(context, expected = expected)
 
-@when(u'I select the item with "{value}"')
-def step_impl(context, value):
-  context.selected += context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.find({contains: value})', value=value)
+@when(u'I select the item with a field that {mode} "{value}"')
+def step_impl(context, mode, value):
+  context.selected += context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.find({[mode]: value})', mode=mode, value=value)
   context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.select(ids)', ids=context.selected)
   time.sleep(3)
 
-@when(u'I select {n} items with "{value}"')
+@when(u'I select {n} items with a field that {mode} "{value}"')
 def step_impl(context, n, value):
-  context.selected += context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.find({contains: value}, n)', value=value, n=int(n))
+  context.selected += context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.find({[mode]: value}, n)', mode=mode, value=value, n=int(n))
   context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.select(ids)', ids=context.selected)
   time.sleep(3)
 

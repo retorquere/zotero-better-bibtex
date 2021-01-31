@@ -156,11 +156,12 @@ export = new class {
     throw new Error(`failed to select ${ids}`)
   }
 
-  public async find(query, expected = 1) {
+  public async find(query: { contains: string, is: string }, expected = 1): Promise<number[]> {
     if (!Object.keys(query).length) throw new Error(`empty query ${JSON.stringify(query)}`)
 
     let ids: number[] = []
 
+    if (query.contains) ids = ids.concat(KeyManager.keys.find((item: { citekey: string }) => item.citekey.toLowerCase().includes(query.contains.toLowerCase())).map((item: { itemID: number }) => item.itemID))
     if (query.is) ids = ids.concat(KeyManager.keys.find({ citekey: query.is }).map((item: { itemID: number }) => item.itemID))
 
     const s = new Zotero.Search()
@@ -172,7 +173,7 @@ export = new class {
     if (!ids || !ids.length) throw new Error(`No item found matching ${JSON.stringify(query)}`)
     if (ids && ids.length !== expected) throw new Error(`${JSON.stringify(query)} matched ${ids.length}, but only ${expected} expected`)
 
-    return ids
+    return Array.from(new Set(ids))
   }
 
   public async pick(format, citations) {
