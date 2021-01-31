@@ -453,7 +453,7 @@ Scenario: auto-export
   And I set preference .jabrefFormat to 3
   Then an auto-export to "/tmp/autoexport.bib" using "Better BibLaTeX" should match "export/*.before.biblatex"
   And an auto-export of "/auto-export" to "/tmp/autoexport.coll.bib" using "Better BibLaTeX" should match "export/*.before.coll.biblatex"
-  When I select the item with a field that contains "IEEE"
+  When I select the item with a field that is "IEEE"
   And I remove the selected item
   And I wait 10 seconds
   Then "/tmp/autoexport.bib" should match "export/*.after.biblatex"

@@ -161,7 +161,7 @@ export = new class {
 
     let ids: number[] = []
 
-    if (query.contains) ids = ids.concat(KeyManager.keys.find((item: { citekey: string }) => item.citekey.toLowerCase().includes(query.contains.toLowerCase())).map((item: { itemID: number }) => item.itemID))
+    if (query.contains) ids = ids.concat(KeyManager.keys.where( (item: { citekey: string }) => item.citekey.toLowerCase().includes(query.contains.toLowerCase()) ).map((item: { itemID: number }) => item.itemID))
     if (query.is) ids = ids.concat(KeyManager.keys.find({ citekey: query.is }).map((item: { itemID: number }) => item.itemID))
 
     const s = new Zotero.Search()
@@ -170,10 +170,11 @@ export = new class {
       s.addCondition('field', mode, text)
     }
     ids = ids.concat(await s.search())
+    ids = Array.from(new Set(ids))
     if (!ids || !ids.length) throw new Error(`No item found matching ${JSON.stringify(query)}`)
-    if (ids && ids.length !== expected) throw new Error(`${JSON.stringify(query)} matched ${ids.length}, but only ${expected} expected`)
+    if (ids.length !== expected) throw new Error(`${JSON.stringify(query)} matched ${JSON.stringify(ids)}, but only ${expected} expected`)
 
-    return Array.from(new Set(ids))
+    return ids
   }
 
   public async pick(format, citations) {
