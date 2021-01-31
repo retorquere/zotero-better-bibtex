@@ -127,8 +127,8 @@ Scenario: Jabref groups import does not work #717
   Then the library should match "import/*.3.8.json"
 
 Scenario: Jabref import - groups lost #1730
-  When I import 4 references from "import/*-3.bib"
-  And I import 4 references from "import/*-5.bib"
+  When I import 4 references from "import/*-3.bib" into a new collection
+  And I import 4 references from "import/*-5.bib" into a new collection
   Then the library should match "import/*.json"
 
 @use.with_slow=true @timeout=120
