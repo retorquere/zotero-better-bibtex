@@ -696,7 +696,7 @@ export class Reference {
 
     // extra-fields has parsed & removed 'ids' to put it into aliases
     if (this.item.extraFields.aliases.length) {
-      this.add({ name: 'ids', value: this.item.extraFields.aliases.filter(alias => alias !== this.item.citationKey).join(',') })
+      this.add({ name: 'ids', value: this.item.extraFields.aliases.filter(alias => alias !== this.item.citationKey).join(','), enc: 'verbatim' })
     }
 
     if (Translator.BetterBibLaTeX) this.add({ name: 'pubstate', value: this.item.status })
