@@ -44,6 +44,7 @@ for target in glob.glob('test/fixtures/*/*.*'):
   else:
     continue
 
+  print(target)
   with open(source) as f:
     _source = f.read()
   with open(target) as f:

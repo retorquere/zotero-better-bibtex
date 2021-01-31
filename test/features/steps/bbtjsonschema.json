@@ -294,7 +294,19 @@
           "additionalProperties": false,
           "default": {},
           "properties": {
+            "exportNotes": {
+              "type": "boolean"
+            },
+            "exportFileData": {
+              "type": "boolean"
+            },
+            "useJournalAbbreviation": {
+              "type": "boolean"
+            },
             "keepUpdated": {
+              "type": "boolean"
+            },
+            "Normalize": {
               "type": "boolean"
             },
             "Title": {
@@ -306,20 +318,8 @@
             "Year": {
               "type": "boolean"
             },
-            "exportNotes": {
-              "type": "boolean"
-            },
-            "exportFileData": {
-              "type": "boolean"
-            },
-            "useJournalAbbreviation": {
-              "type": "boolean"
-            },
             "quickCopyMode": {
               "type": "string"
-            },
-            "Normalize": {
-              "type": "boolean"
             }
           }
         }
