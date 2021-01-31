@@ -1,6 +1,5 @@
 import * as mapping from '../gen/items/extra-fields.json'
 import * as CSL from '../gen/citeproc'
-import { log } from './logger'
 
 type TeXString = { value: string, raw?: boolean }
 
@@ -64,7 +63,6 @@ const casing = {
 }
 
 export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions): { extra: string, extraFields: Fields } {
-  log.debug('bbt merge:extra.get.extraFields input:', {extra})
   if (!options) options = { citationKey: true , aliases: true, kv: true, tex: true }
 
   const other = {zotero: 'csl', csl: 'zotero'}[mode]
@@ -142,9 +140,7 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
     return true
   }).join('\n').trim()
 
-  log.debug('bbt merge:extra.get.extraFields = ', extraFields)
   extraFields.aliases = Array.from(new Set(extraFields.aliases)).filter(key => key !== extraFields.citationKey)
-  log.debug('bbt merge:extra.get.extraFields = ', extraFields)
 
   return { extra, extraFields }
 }
@@ -188,6 +184,5 @@ export function set(extra: string, options: SetOptions = {}): string {
     }
   }
 
-  log.debug('bbt merge: extra.set.parsed.return', parsed)
   return parsed.extra.trim()
 }
