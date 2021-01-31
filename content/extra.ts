@@ -106,7 +106,7 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
       extraFields.aliases = [...extraFields.aliases, ...(value.split(/s*,\s*/).filter(alias => alias))]
       return false
     }
-    if (options.aliases && tex && !raw && options.aliases && key === 'ids') {
+    if (options.aliases && tex && options.aliases && key === 'ids') {
       extraFields.aliases = [...extraFields.aliases, ...(value.split(/s*,\s*/).filter(alias => alias))]
       return false
     }
@@ -156,7 +156,7 @@ export function set(extra: string, options: SetOptions = {}): string {
 
   if (options.aliases?.length) {
     const aliases = Array.from(new Set(options.aliases)).sort().join(', ')
-    parsed.extra += `\ntex.ids: ${aliases}`
+    parsed.extra += `\ntex.ids= ${aliases}`
   }
 
   if (options.tex) {
