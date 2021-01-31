@@ -33,3 +33,10 @@ Scenario: Duplicate Citation Key Alias #1384
 #  And I select 2 items with "Coimbra:2013qq"
 #  And I merge the selected items
 #  Then the library should match "merge/*-merged.json"
+
+#@retries=5
+Scenario: ids field should be created in raw mode #1729
+  When I import 2 references from "merge/*.json"
+  And I select 2 items with "conjecture in bounded domains"
+  And I merge the selected items
+  Then the library should match "merge/*-merged.json"
