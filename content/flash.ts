@@ -4,7 +4,8 @@ import { log } from './logger'
 
 const seconds = 1000
 
-export function flash(title, body = null, timeout = 8) {
+// eslint-disable-next-line no-magic-numbers
+export function flash(title: string, body?: string, timeout = 8): void {
   try {
     log.debug('flash:', {title, body})
     const pw = new Zotero.ProgressWindow()
@@ -14,7 +15,8 @@ export function flash(title, body = null, timeout = 8) {
     pw.addDescription(body)
     pw.show()
     pw.startCloseTimer(timeout * seconds)
-  } catch (err) {
+  }
+  catch (err) {
     log.error('@flash failed:', {title, body}, err)
   }
 }

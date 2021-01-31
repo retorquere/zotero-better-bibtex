@@ -1,0 +1,51 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "dmy",
+    "options": {
+      "Normalize": false,
+      "exportNotes": true
+    },
+    "preferences": {
+      "biblatexExtendedDateFormat": false,
+      "bibtexURL": "url",
+      "citekeyFormat": "[auth][shorttitle2_2][year]",
+      "qualityReport": true,
+      "skipFields": "keywords, file,  timestamp",
+      "warnBulkModify": 1,
+      "workers": 0
+    }
+  },
+  "items": [
+    {
+      "abstractNote": "Em aprendizagem de m\u00e1quina, a medi\u00e7\u00e3o de desempenho \u00e9 uma tarefa crucial. As m\u00e9tricas ROC (Receiver Operating Characteristics) e AUC (Area\u2026",
+      "accessDate": "2020-11-23",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "path": "/Users/rflmorais/Zotero/storage/JER6PBMW/o-que-\u00e9-auc-e-roc-nos-modelos-de-machine-learning-2e2c4112033d.html",
+          "title": "Snapshot",
+          "uri": "http://zotero.org/users/7315465/items/JER6PBMW"
+        }
+      ],
+      "citationKey": "AvelarQueAUC2019",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Adriano",
+          "lastName": "Avelar"
+        }
+      ],
+      "date": "22/09/2020",
+      "extra": [
+        "Citation Key: AvelarQueAUC2019"
+      ],
+      "itemID": 1,
+      "itemType": "webpage",
+      "language": "pt-BR",
+      "title": "O que \u00e9 AUC e ROC nos modelos de Machine Learning",
+      "url": "https://medium.com/@eam.avelar/o-que-%C3%A9-auc-e-roc-nos-modelos-de-machine-learning-2e2c4112033d"
+    }
+  ]
+}

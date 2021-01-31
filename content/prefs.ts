@@ -7,7 +7,7 @@ import * as defaults from '../gen/preferences/defaults.json'
 const supported = Object.keys(defaults)
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let Preferences = new class { // tslint:disable-line:variable-name
+export const Preferences = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public branch: any
   public testing: boolean
   public platform: 'win' | 'lin' | 'mac' | 'unix'
@@ -33,7 +33,8 @@ export let Preferences = new class { // tslint:disable-line:variable-name
     if (typeof (old = Zotero.Prefs.get(key = this.key('suppressSentenceCase'))) !== 'undefined') {
       if (old) {
         Zotero.Prefs.set(this.key('importSentenceCase'), 'off')
-      } else {
+      }
+      else {
         Zotero.Prefs.set(this.key('importSentenceCase'), 'on+guess')
       }
       Zotero.Prefs.clear(key)
@@ -41,7 +42,8 @@ export let Preferences = new class { // tslint:disable-line:variable-name
     if (typeof (old = Zotero.Prefs.get(key = this.key('suppressNoCase'))) !== 'undefined') {
       if (old) {
         Zotero.Prefs.set(this.key('importCaseProtection'), 'off')
-      } else {
+      }
+      else {
         Zotero.Prefs.set(this.key('importCaseProtection'), 'as-needed')
       }
       Zotero.Prefs.clear(key)
@@ -56,7 +58,7 @@ export let Preferences = new class { // tslint:disable-line:variable-name
       if (typeof this.get(name) === 'undefined') this.set(name, value);
 
       (pref => {
-        Zotero.Prefs.registerObserver(`${this.prefix}.${pref}`, newValue => {
+        Zotero.Prefs.registerObserver(`${this.prefix}.${pref}`, _newValue => {
           Events.emit('preference-changed', pref)
         })
       })(name)
@@ -73,15 +75,18 @@ export let Preferences = new class { // tslint:disable-line:variable-name
 
   public get(pref) {
     if (this.testing && !supported.includes(pref)) throw new Error(`Getting unsupported preference "${pref}"`)
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return Zotero.Prefs.get(this.key(pref))
   }
 
   public clear(pref) {
     try {
       Zotero.Prefs.clear(this.key(pref))
-    } catch (err) {
+    }
+    catch (err) {
       log.error('Prefs.clear', pref, err)
     }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return this.get(pref)
   }
 

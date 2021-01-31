@@ -42,6 +42,37 @@
       "url": "http://www.oxforddnb.com/view/article/10183"
     },
     {
+      "extra": [
+        "Citation Key: emptybook",
+        "{:X-genre: xxx}",
+        "{:editor: Xxx}"
+      ],
+      "itemID": 7,
+      "itemType": "encyclopediaArticle"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "director",
+          "firstName": "John",
+          "lastName": "Doe"
+        },
+        {
+          "creatorType": "director",
+          "firstName": "Rob",
+          "lastName": "Roe"
+        }
+      ],
+      "date": "2015",
+      "extra": [
+        "publisher-place: US/GB"
+      ],
+      "itemID": 5,
+      "itemType": "film",
+      "publisher": "The Distributor",
+      "title": "A film"
+    },
+    {
       "creators": [
         {
           "creatorType": "author",
@@ -103,6 +134,20 @@
       "creators": [
         {
           "creatorType": "director",
+          "firstName": "Stanley",
+          "lastName": "Kubrick"
+        }
+      ],
+      "date": "1964",
+      "itemID": 6,
+      "itemType": "tvBroadcast",
+      "shortTitle": "Dr. Strangelove",
+      "title": "Dr. Strangelove or: how I learned to stop worrying and love the bomb"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "director",
           "firstName": "Gail",
           "lastName": "Mancuso"
         },
@@ -137,51 +182,6 @@
       "runningTime": "22 min",
       "title": "The one with the Princess Leia fantasy",
       "volume": "3"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "director",
-          "firstName": "John",
-          "lastName": "Doe"
-        },
-        {
-          "creatorType": "director",
-          "firstName": "Rob",
-          "lastName": "Roe"
-        }
-      ],
-      "date": "2015",
-      "extra": [
-        "publisher-place: US/GB"
-      ],
-      "itemID": 5,
-      "itemType": "film",
-      "publisher": "The Distributor",
-      "title": "A film"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "director",
-          "firstName": "Stanley",
-          "lastName": "Kubrick"
-        }
-      ],
-      "date": "1964",
-      "itemID": 6,
-      "itemType": "tvBroadcast",
-      "shortTitle": "Dr. Strangelove",
-      "title": "Dr. Strangelove or: how I learned to stop worrying and love the bomb"
-    },
-    {
-      "extra": [
-        "Citation Key: emptybook",
-        "{:X-genre: xxx}",
-        "{:editor: Xxx}"
-      ],
-      "itemID": 7,
-      "itemType": "encyclopediaArticle"
     }
   ]
 }

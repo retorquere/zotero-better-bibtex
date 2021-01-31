@@ -141,7 +141,7 @@ class fetch(object):
             print('      release', release, 'does not have a bundled schema')
 
         except HTTPError as e:
-          if e.code in [ 403, 404 ] and release != current:
+          if e.code in [ 403, 404 ]:
             print('      release', release, 'not available')
             hashes[client][release] = None
           else:
@@ -457,13 +457,11 @@ with fetch('zotero') as z, fetch('jurism') as j:
     min_version = {}
     hashes = json.load(f, object_hook=OrderedDict)
     for client in hashes.keys():
-      releases = list(hashes[client].keys())
+      releases = [rel for rel, h in hashes[client].items() if h is not None]
       current = releases[-1]
       min_version[client] = current
       for rel in reversed(releases):
-        if hashes[client][rel] is None: # unreleased version, or no schema
-          continue
-        elif hashes[client][rel] != hashes[client][current]:
+        if hashes[client][rel] != hashes[client][current]:
           break
         else:
           min_version[client] = rel

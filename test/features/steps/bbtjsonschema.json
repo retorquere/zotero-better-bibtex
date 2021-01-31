@@ -119,7 +119,9 @@
               "enum": [
                 "off",
                 "note",
-                "url"
+                "note-url-ish",
+                "url",
+                "url-ish"
               ]
             },
             "warnBulkModify": {
@@ -852,6 +854,9 @@
             "type": "string"
           },
           "archiveCollection": {
+            "type": "string"
+          },
+          "documentNumber": {
             "type": "string"
           }
         }

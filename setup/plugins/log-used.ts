@@ -1,16 +1,17 @@
 import * as path from 'path'
-import * as fs from 'fs-extra'
+import * as fs from 'fs'
 
 export class LogUsedFilesPlugin {
   private name: string
   private type: string
 
-  constructor(name, type = '') {
+  constructor(name: string, type = '') {
     this.name = name
     this.type = type
   }
 
-  public apply(compiler) {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  public apply(compiler: { hooks: { afterEmit: { tap: (arg0: string, arg1: (compilation: any) => void) => void } } }) {
     compiler.hooks.afterEmit.tap('LogUsedFilesPlugin', compilation => {
       const used = new Set
 
@@ -31,7 +32,7 @@ export class LogUsedFilesPlugin {
       */
 
       const output = `gen/log-used/${this.type}${this.type ? '.' : ''}${this.name.replace(/ /g, '')}.json`
-      fs.ensureDirSync(path.dirname(output))
+      fs.mkdirSync(path.dirname(output), { recursive: true })
       fs.writeFileSync(output, JSON.stringify(Array.from(used).sort(), null, 2), 'utf-8')
     })
   }

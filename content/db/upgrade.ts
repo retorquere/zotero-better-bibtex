@@ -7,7 +7,7 @@ import { DB as Cache } from './cache'
 import { log } from '../logger'
 import { flash } from '../flash'
 
-export async function upgrade(progress) {
+export async function upgrade(progress: { (msg: any): void, (arg0: any): void }): Promise<void> {
   progress(Zotero.BetterBibTeX.getString('BetterBibTeX.startup.dbUpgrade', { n: '?', total: '?' }))
 
   const patterns = []
@@ -26,7 +26,7 @@ export async function upgrade(progress) {
     WHERE
       items.itemID NOT IN (select itemID from deletedItems)
       AND fields.fieldName = 'extra'
-      AND (${patterns.map(pattern => 'itemDataValues.value like ?').join(' OR ')})
+      AND (${patterns.map(() => 'itemDataValues.value like ?').join(' OR ')})
   `
 
   let notEditable = 0
@@ -41,7 +41,7 @@ export async function upgrade(progress) {
 
     for (const item of legacy) {
       n += 1
-      if ((n % 50) === 0) progress(Zotero.BetterBibTeX.getString('BetterBibTeX.startup.dbUpgrade', { n, total })) // tslint:disable-line:no-magic-numbers
+      if ((n % 50) === 0) progress(Zotero.BetterBibTeX.getString('BetterBibTeX.startup.dbUpgrade', { n, total })) // eslint-disable-line no-magic-numbers
 
       const extra = upgradeExtra(item.extra)
       if (extra !== item.extra) {
@@ -51,10 +51,12 @@ export async function upgrade(progress) {
           log.error('dbUpgrade:', item.extra, 'required upgrade, but', item.itemID, 'is not editable')
           notEditable++
 
-        } else {
+        }
+        else {
           try {
             upgraded.setField('extra', extra)
-          } catch (err) {
+          }
+          catch (err) {
             await upgraded.loadAllData()
             upgraded.setField('extra', extra)
           }

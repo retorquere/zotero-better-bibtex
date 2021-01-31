@@ -1,4 +1,4 @@
-// tslint:disable:member-ordering
+/* eslint-disable @typescript-eslint/member-ordering */
 
 declare const Zotero: any
 declare const Components: any
@@ -26,7 +26,7 @@ export class Store {
     if (this.storage !== 'sqlite' && this.storage !== 'file') throw new Error(`Unsupported DBStore storage ${this.storage}`)
   }
 
-  public close(name, callback) {
+  public close(name: string, callback: ((v: null) => void)): void {
     if (this.storage !== 'sqlite') return callback(null)
 
     if (!this.conn[name]) return callback(null)
@@ -43,13 +43,14 @@ export class Store {
       })
   }
 
-  public exportDatabase(name, dbref, callback) {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  public exportDatabase(name: string, dbref: any, callback: ((v: null) => void)): void {
     this.exportDatabaseAsync(name, dbref)
       .then(() => callback(null))
       .catch(callback)
   }
 
-  private async closeDatabase(conn, name, reason) {
+  private async closeDatabase(conn, name, _reason) {
     if (!conn) {
       log.debug('DB.Store.closeDatabase: ', name, typeof conn)
       return
@@ -62,7 +63,8 @@ export class Store {
 
     try {
       await conn.closeDatabase(true)
-    } catch (err) {
+    }
+    catch (err) {
       log.debug('DB.Store.closeDatabase FAILED', name, err)
     }
   }
@@ -83,7 +85,7 @@ export class Store {
     await this.roll(name)
 
     const parts = [
-      this.save(name, {...dbref, ...{collections: dbref.collections.map(coll => coll.name)}}, true),
+      this.save(name, {...dbref, ...{collections: dbref.collections.map((coll: { name: string }) => coll.name)}}, true),
     ]
     for (const coll of dbref.collections) {
       parts.push(this.save(`${name}.${coll.name}`, coll, coll.dirty))
@@ -106,7 +108,7 @@ export class Store {
     }
 
     await conn.executeTransaction(async () => {
-      const names = (await conn.queryAsync(`SELECT name FROM "${name}"`)).map(coll => coll.name)
+      const names = (await conn.queryAsync(`SELECT name FROM "${name}"`)).map((coll: { name: string }) => coll.name)
 
       const parts = []
       for (const coll of dbref.collections) {
@@ -140,14 +142,16 @@ export class Store {
     await (new OS.File.DirectoryIterator(root)).forEach(entry => { // really weird half-promise thing
       try {
         [ , collection, version ] = entry.name.match(re)
-      } catch (err) {
+      }
+      catch (err) {
         return
       }
       const v: number = version ? parseInt(version) : 0
 
       if (v >= this.versions) {
         roll.push({ version, remove: OS.Path.join(root, entry.path) })
-      } else {
+      }
+      else {
         roll.push({ version, move: OS.Path.join(root, entry.path), to: OS.Path.join(root, `${name}${collection || ''}.${v + 1}.${ext}`) } )
       }
     })
@@ -157,25 +161,27 @@ export class Store {
       try {
         if (file.remove) {
           await OS.File.remove(file.remove, { ignoreAbsent: true })
-        } else {
+        }
+        else {
           await OS.File.move(file.move, file.to)
         }
-      } catch (err) {
+      }
+      catch (err) {
         log.debug('DB.Store.roll:', file, err)
       }
     }
   }
 
-  private async save(name, data, dirty) {
+  private async save(name: string, data, dirty: boolean) {
     const path = OS.Path.join(Zotero.BetterBibTeX.dir, `${name}.json`)
     const save = dirty || !(await OS.File.exists(path))
 
     if (!save) return null
 
-    await OS.File.writeAtomic(path, JSON.stringify(data), { encoding: 'utf-8', tmpPath: path + '.tmp'})
+    await OS.File.writeAtomic(path, JSON.stringify(data), { encoding: 'utf-8', tmpPath: `${path}.tmp`})
   }
 
-  public loadDatabase(name, callback) {
+  public loadDatabase(name: string, callback: ((v: null) => void)): void {
     this.loadDatabaseAsync(name)
       .then(callback)
       .catch(err => {
@@ -184,11 +190,13 @@ export class Store {
       })
   }
 
-  public async loadDatabaseAsync(name) {
+  public async loadDatabaseAsync(name: string): Promise<any> {
     try {
       const db = await this.loadDatabaseSQLiteAsync(name) // always try sqlite first, may be a migration to file
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       if (db) return db
-    } catch (err) {
+    }
+    catch (err) {
       log.debug('DB.Store.loadDatabaseAsync:', err)
     }
 
@@ -196,6 +204,7 @@ export class Store {
       const versions = this.versions || 1
       for (let version = 0; version < versions; version++) {
         const db = await this.loadDatabaseVersionAsync(name, version)
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         if (db) return db
       }
     }
@@ -203,7 +212,7 @@ export class Store {
     return null
   }
 
-  private async loadDatabaseSQLiteAsync(name) {
+  private async loadDatabaseSQLiteAsync(name: string): Promise<any> {
     const path = OS.Path.join(Zotero.DataDirectory.dir, `${name}.sqlite`)
     const exists = await OS.File.exists(path)
 
@@ -213,7 +222,7 @@ export class Store {
     await conn.queryAsync(`CREATE TABLE IF NOT EXISTS "${name}" (name TEXT PRIMARY KEY NOT NULL, data TEXT NOT NULL)`)
 
     let db = null
-    const collections = {}
+    const collections: Record<string, any> = {}
 
     let failed = false
 
@@ -223,14 +232,16 @@ export class Store {
       try {
         if (row.name === name) {
           db = JSON.parse(row.data)
-        } else {
+        }
+        else {
           collections[row.name] = JSON.parse(row.data)
 
           collections[row.name].cloneObjects = true // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
           collections[row.name].adaptiveBinaryIndices = false // https://github.com/techfort/LokiJS/issues/654
           collections[row.name].dirty = true
         }
-      } catch (err) {
+      }
+      catch (err) {
         log.debug(`DB.Store.loadDatabaseSQLiteAsync: failed to load ${name}:`, row.name)
         failed = true
       }
@@ -238,13 +249,15 @@ export class Store {
 
     if (db) {
       const missing = db.collections.filter(coll => !collections[coll])
-      db.collections = db.collections.map(coll => collections[coll]).filter(coll => coll)
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      db.collections = db.collections.map((coll: string) => collections[coll]).filter(coll => coll)
       if (missing.length) {
         failed = !this.allowPartial
         log.debug(`DB.Store.loadDatabaseSQLiteAsync: could not find ${name}.${missing.join('.')}`)
       }
 
-    } else if (exists && rows) {
+    }
+    else if (exists && rows) {
       log.debug('DB.Store.loadDatabaseSQLiteAsync: could not find metadata for', name, rows)
       failed = true
 
@@ -254,7 +267,8 @@ export class Store {
       await this.closeDatabase(conn, name, 'migrated')
       await OS.File.move(path, `${path}.migrated`)
 
-    } else {
+    }
+    else {
       this.conn[name] = conn
       if (failed || this.deleteAfterLoad) await conn.queryAsync(`DELETE FROM "${name}"`)
 
@@ -264,6 +278,7 @@ export class Store {
       log.debug('DB.Store.loadDatabaseSQLiteAsync failed, returning empty database')
       return null
     }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return db
   }
 
@@ -272,10 +287,12 @@ export class Store {
 
     const conn = new Zotero.DBConnection(name)
     try {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       if (await conn.integrityCheck()) return conn
       throw new Error(`DB.Store.openDatabaseSQLiteAsync(${JSON.stringify(name)}) failed: integrity check not OK`)
 
-    } catch (err) {
+    }
+    catch (err) {
       log.debug('DB.Store.openDatabaseSQLiteAsync:', { name, fatal }, err)
       if (fatal) throw err
 
@@ -285,6 +302,7 @@ export class Store {
         null, // parent
         Zotero.BetterBibTeX.getString('DB.corrupt'), // dialogTitle
         Zotero.BetterBibTeX.getString('DB.corrupt.explanation', { error: err.message }), // text
+        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
         ps.BUTTON_POS_0 * ps.BUTTON_TITLE_IS_STRING + ps.BUTTON_POS_0_DEFAULT // buttons
           + ps.BUTTON_POS_1 * ps.BUTTON_TITLE_IS_STRING
           + 0, // disabled: (fatal ? 0 : ps.BUTTON_POS_2 * ps.BUTTON_TITLE_IS_STRING),
@@ -304,6 +322,7 @@ export class Store {
 
         case 1: // reset
           if (await OS.File.exists(path)) await OS.File.move(path, `${path}.ignore.corrupt`)
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
           return await this.openDatabaseSQLiteAsync(name, true)
 
         default: // restore
@@ -325,6 +344,7 @@ export class Store {
       if (coll) {
         coll.cloneObjects = true // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
         coll.adaptiveBinaryIndices = false // https://github.com/techfort/LokiJS/issues/654
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         return coll
       }
 
@@ -333,10 +353,13 @@ export class Store {
       if (this.allowPartial) {
         log.debug('DB.Store.loadDatabaseVersionAsync:', msg)
         return null
-      } else {
+      }
+      else {
         throw new Error(msg)
       }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     })).filter(coll => coll)
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return db
   }
 
@@ -350,8 +373,9 @@ export class Store {
 
     // this is intentional. If all is well, the database will be retained in memory until it's saved at
     // shutdown. If all is not well, this will make sure the caches are rebuilt from scratch on next start
-    if (this.deleteAfterLoad) await OS.File.move(path, path + '.bak')
+    if (this.deleteAfterLoad) await OS.File.move(path, `${path}.bak`)
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return data
   }
 }

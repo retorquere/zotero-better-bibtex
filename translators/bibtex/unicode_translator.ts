@@ -19,19 +19,23 @@ type ConverterOptions = {
   commandspacers?: boolean
 }
 
-export function replace_command_spacers(latex) {
-  return latex.replace(/\0(\s)/g, '{}$1').replace(/\0([^;\.,!?\${}_\^\\\/])/g, ' $1').replace(/\0/g, '')
+export function replace_command_spacers(latex: string): string {
+  return latex.replace(/\0(\s)/g, '{}$1').replace(/\0([^;.,!?${}_^\\/])/g, ' $1').replace(/\0/g, '')
 }
 
-const htmlConverter = new class HTMLConverter {
-  private latex: string
-  private mapping: any
-  private stack: any[]
-  private options: ConverterOptions
-  private embraced: boolean
-  private packages: { [key: string]: boolean }
+type ParseResult = { latex: string, raw: boolean, packages: string[] }
 
-  public convert(html: string, options: ConverterOptions) {
+type LatexRepresentation = { text?: string, math?: string, textpackages?: string[], mathpackages?: string[], commandspacer?: boolean }
+
+const htmlConverter = new class HTMLConverter {
+  private latex = ''
+  private mapping: any = {}
+  private stack: any[] = []
+  private options: ConverterOptions = {}
+  private embraced: boolean
+  private packages: { [key: string]: boolean } = {}
+
+  public convert(html: string, options: ConverterOptions): ParseResult {
     this.embraced = false
     this.options = options
     this.latex = ''
@@ -39,7 +43,8 @@ const htmlConverter = new class HTMLConverter {
 
     if (Translator.unicode) {
       this.mapping = unicode2latex.unicode
-    } else if (options.creator && Translator.BetterBibTeX) {
+    }
+    else if (options.creator && Translator.BetterBibTeX) {
       /* https://github.com/retorquere/zotero-better-bibtex/issues/1189
         Needed so that composite characters are counted as single characters
         for in-text citation generation. This messes with the {} cleanup
@@ -50,7 +55,8 @@ const htmlConverter = new class HTMLConverter {
         that these have turned up.
       */
       this.mapping = unicode2latex.ascii_bibtex_creator
-    } else {
+    }
+    else {
       this.mapping = unicode2latex.ascii
     }
 
@@ -73,23 +79,28 @@ const htmlConverter = new class HTMLConverter {
           }
         }
 
-      } else if (Translator.preferences.mapUnicode === 'minimal-packages') {
-        for (const tex of (Object.values(this.mapping) as any[])) {
+      }
+      else if (Translator.preferences.mapUnicode === 'minimal-packages') {
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+        for (const tex of (Object.values(this.mapping) as LatexRepresentation[])) {
           if (tex.text && tex.math) {
             if (tex.textpackages && !tex.mathpackages) {
               delete tex.text
               delete tex.textpackages
-            } else if (!tex.textpackages && tex.mathpackages) {
+            }
+            else if (!tex.textpackages && tex.mathpackages) {
               delete tex.math
               delete tex.mathpackages
             }
           }
         }
 
-      } else {
+      }
+      else {
         const remove = switchMode[Translator.preferences.mapUnicode]
         if (remove) {
-          for (const tex of (Object.values(this.mapping) as any[])) {
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+          for (const tex of (Object.values(this.mapping) as LatexRepresentation[])) {
             if (tex.text && tex.math) delete tex[remove]
           }
         }
@@ -221,14 +232,15 @@ const htmlConverter = new class HTMLConverter {
         break
     }
 
-    if (latex !== '...') latex = this.embrace(latex, latex.match(/^\\[a-z]+{\.\.\.}$/))
+    if (latex !== '...') latex = this.embrace(latex, /^\\[a-z]+{\.\.\.}$/.test(latex))
     if (tag.smallcaps) latex = this.embrace(`\\textsc{${latex}}`, true)
     if (tag.nocase) latex = `{{${latex}}}`
     if (tag.relax) latex = `{\\relax ${latex}}`
     if (tag.enquote) {
       if (Translator.BetterBibTeX) {
         latex = `\\enquote{${latex}}`
-      } else {
+      }
+      else {
         latex = `\\mkbibquote{${latex}}`
       }
     }
@@ -245,7 +257,7 @@ const htmlConverter = new class HTMLConverter {
 
   }
 
-  private embrace(latex, condition) {
+  private embrace(latex: string, condition: boolean): string {
     /* holy mother of %^$#^%$@ the bib(la)tex case conversion rules are insane */
     /* https://github.com/retorquere/zotero-better-bibtex/issues/541 */
     /* https://github.com/plk/biblatex/issues/459 ... oy! */
@@ -267,15 +279,19 @@ const htmlConverter = new class HTMLConverter {
     }
 
     text = text.normalize('NFD') // required for multi-diacritics
-    let mapped, switched, m, i, diacritic
-    const l = text.length
+    let mapped: LatexRepresentation
+    let switched: boolean
+    let m: RegExpExecArray | RegExpMatchArray
+    let i: number
+    let diacritic: { command: string, mode: string }
+    const l: number = text.length
     for (i = 0; i < l; i++) {
       mapped = null
 
       // tie "i","︠","a","︡"
-      if (text[i + 1] === '\ufe20' && text[i + 3] === '\ufe21') { // tslint:disable-line no-magic-numbers
-        mapped = this.mapping[text.substr(i, 4)] || { text: text[i] + text[i + 2] } // tslint:disable-line no-magic-numbers
-        i += 3 // tslint:disable-line no-magic-numbers
+      if (text[i + 1] === '\ufe20' && text[i + 3] === '\ufe21') { // eslint-disable-line  no-magic-numbers
+        mapped = this.mapping[text.substr(i, 4)] || { text: `${text[i]}${text[i + 2]}` } // eslint-disable-line  no-magic-numbers
+        i += 3 // eslint-disable-line  no-magic-numbers
       }
 
       if (!mapped && !Translator.unicode) {
@@ -293,20 +309,23 @@ const htmlConverter = new class HTMLConverter {
 
               if (Translator.BetterBibTeX && diacritic.mode === 'text') {
                 // needs to be braced to count as a single char for name abbreviation
-                mapped = { [diacritic.mode]: `{\\${diacritic.command}${cmd ? ' ': ''}${char}}` }
+                mapped = ({ [diacritic.mode]: `{\\${diacritic.command}${cmd ? ' ': ''}${char}}` } as LatexRepresentation)
 
-              } else if (cmd && char.length === 1) {
-                mapped = { [diacritic.mode]: `\\${diacritic.command} ${char}` }
+              }
+              else if (cmd && char.length === 1) {
+                mapped = ({ [diacritic.mode]: `\\${diacritic.command} ${char}` } as LatexRepresentation)
 
-              } else if (cmd) {
-                mapped = { [diacritic.mode]: `\\${diacritic.command}{${char}}` }
+              }
+              else if (cmd) {
+                mapped = ({ [diacritic.mode]: `\\${diacritic.command}{${char}}` } as LatexRepresentation)
 
-              } else {
-                mapped = { [diacritic.mode]: `\\${diacritic.command}${char}` }
+              }
+              else {
+                mapped = ({ [diacritic.mode]: `\\${diacritic.command}${char}` } as LatexRepresentation)
               }
 
               // support for multiple-diacritics is taken from tipa, which doesn't support more than 2
-              if (m[0].length > 3) log.error('discarding diacritics > 2 from', m[0]) // tslint:disable-line:no-magic-numbers
+              if (m[0].length > 3) log.error('discarding diacritics > 2 from', m[0]) // eslint-disable-line no-magic-numbers
             }
           }
 
@@ -327,7 +346,8 @@ const htmlConverter = new class HTMLConverter {
         mode = switchMode[mode]
         latex += switchTo[mode]
         switched = true
-      } else {
+      }
+      else {
         switched = false
       }
 
@@ -343,7 +363,7 @@ const htmlConverter = new class HTMLConverter {
 
       // if we just switched out of math mode, and there's a lone sup/sub at the end, unpack it. The extra option brace is for when we're in nocased mode (see switchTo)
       if (switched && mode === 'text' && (m = latex.match(/([\^_])\{(.)\}(\$\}?)$/))) {
-        latex = latex.slice(0, latex.length - m[0].length) + m[1] + m[2] + m[3] // tslint:disable-line no-magic-numbers
+        latex = latex.slice(0, latex.length - m[0].length) + m[1] + m[2] + m[3] // eslint-disable-line  no-magic-numbers
       }
 
       latex += mapped[mode]
@@ -351,11 +371,15 @@ const htmlConverter = new class HTMLConverter {
 
       // only try to merge sup/sub if we were already in math mode, because if we were previously in text mode, testing for _^ is tricky.
       if (!switched && mode === 'math' && (m = latex.match(/(([\^_])\{[^{}]+)\}\2{(.\})$/))) {
-        latex = latex.slice(0, latex.length - m[0].length) + m[1] + m[3] // tslint:disable-line no-magic-numbers
+        latex = latex.slice(0, latex.length - m[0].length) + m[1] + m[3] // eslint-disable-line  no-magic-numbers
       }
 
-      const pkg = mapped[mode + 'package'] || mapped.package
-      if (pkg) this.packages[pkg] = true
+      const pkgs = (mapped[`${mode}packages`] as string[])
+      if (pkgs) {
+        for (const pkg of pkgs) {
+          this.packages[pkg] = true
+        }
+      }
     }
 
     // add any missing closing phantom braces
@@ -377,12 +401,12 @@ const htmlConverter = new class HTMLConverter {
   }
 }
 
-export function html2latex(html:string, options: ConverterOptions) {
+export function html2latex(html:string, options: ConverterOptions): ParseResult {
   if (typeof options.html === 'undefined') options.html = true
   return htmlConverter.convert(html, options)
 }
 
-export function text2latex(text:string, options: ConverterOptions = {}) {
+export function text2latex(text:string, options: ConverterOptions = {}): ParseResult {
   if (typeof options.html === 'undefined') options.html = false
   return html2latex(text, options)
 }

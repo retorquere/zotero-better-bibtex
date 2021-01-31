@@ -1,5 +1,6 @@
 import * as mapping from '../gen/items/extra-fields.json'
 import * as CSL from '../gen/citeproc'
+import { log } from './logger'
 
 type TeXString = { value: string, raw?: boolean }
 
@@ -16,11 +17,12 @@ type ZoteroCreator = { name?: string, lastName?: string, firstName?: string }
 
 export function cslCreator(value: string): CSLCreator {
   const creator = value.split(/\s*\|\|\s*/)
-  if (creator.length === 2) { // tslint:disable-line:no-magic-numbers
-    const _creator = { family: creator[0] || '', given: creator[1] || ''}
-    CSL.parseParticles(_creator)
-    return _creator
-  } else {
+  if (creator.length === 2) { // eslint-disable-line no-magic-numbers
+    const csl_creator = { family: creator[0] || '', given: creator[1] || ''}
+    CSL.parseParticles(csl_creator)
+    return csl_creator
+  }
+  else {
     // return { literal: value, isInstitution: 1 }
     return { literal: value }
   }
@@ -28,9 +30,10 @@ export function cslCreator(value: string): CSLCreator {
 
 export function zoteroCreator(value: string): ZoteroCreator {
   const creator = value.split(/\s*\|\|\s*/)
-  if (creator.length === 2) { // tslint:disable-line:no-magic-numbers
+  if (creator.length === 2) { // eslint-disable-line no-magic-numbers
     return { lastName: creator[0] || '', firstName: creator[1] || '' }
-  } else {
+  }
+  else {
     return { name: value }
   }
 }
@@ -61,6 +64,7 @@ const casing = {
 }
 
 export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions): { extra: string, extraFields: Fields } {
+  log.debug('bbt merge:extra.get.extraFields input:', {extra})
   if (!options) options = { citationKey: true , aliases: true, kv: true, tex: true }
 
   const other = {zotero: 'csl', csl: 'zotero'}[mode]
@@ -87,22 +91,23 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
 
     if (tex) {
       key = key.trim().toLowerCase()
-    } else {
+    }
+    else {
       key = key.trim().replace(/[-_]/g, ' ').replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase()
     }
     value = value.trim()
 
-    if (options.citationKey && !tex && options.citationKey && ['citation key', 'bibtex'].includes(key)) {
+    if (options.citationKey && !tex && ['citation key', 'bibtex'].includes(key)) {
       extraFields.citationKey = value
       return false
     }
 
-    if (options.aliases && !tex && options.aliases && key === 'citation key alias') {
-      extraFields.aliases = value.split(/s*,\s*/).filter(alias => alias)
+    if (options.aliases && !tex && key === 'citation key alias') {
+      extraFields.aliases = [...extraFields.aliases, ...(value.split(/s*,\s*/).filter(alias => alias))]
       return false
     }
     if (options.aliases && tex && !raw && options.aliases && key === 'ids') {
-      extraFields.aliases = value.split(/s*,\s*/).filter(alias => alias)
+      extraFields.aliases = [...extraFields.aliases, ...(value.split(/s*,\s*/).filter(alias => alias))]
       return false
     }
 
@@ -130,22 +135,26 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
     }
 
     if (options.tex && !tex && otherFields.includes(key.replace(/[- ]/g, ''))) {
-      extraFields.tex['tex.' + key.replace(/[- ]/g, '')] = { value }
+      extraFields.tex[`tex.${key.replace(/[- ]/g, '')}`] = { value }
       return false
     }
 
     return true
   }).join('\n').trim()
 
+  log.debug('bbt merge:extra.get.extraFields = ', extraFields)
+  extraFields.aliases = Array.from(new Set(extraFields.aliases)).filter(key => key !== extraFields.citationKey)
+  log.debug('bbt merge:extra.get.extraFields = ', extraFields)
+
   return { extra, extraFields }
 }
 
-export function set(extra, options: SetOptions = {}) {
+export function set(extra: string, options: SetOptions = {}): string {
   const parsed = get(extra, 'zotero', options)
 
   if (options.citationKey) parsed.extra += `\nCitation Key: ${options.citationKey}`
 
-  if (options.aliases && options.aliases.length) {
+  if (options.aliases?.length) {
     const aliases = Array.from(new Set(options.aliases)).sort().join(', ')
     parsed.extra += `\ntex.ids: ${aliases}`
   }
@@ -156,7 +165,8 @@ export function set(extra, options: SetOptions = {}) {
       const m = name.match(/^((?:bib(?:la)?)?tex\.)(.*)/)
       if (m) {
         [ , prefix, field ] = m
-      } else {
+      }
+      else {
         prefix = 'tex.'
         field = name
       }
@@ -170,12 +180,14 @@ export function set(extra, options: SetOptions = {}) {
     for (const name of Object.keys(options.kv).sort()) {
       const value = options.kv[name]
       if (Array.isArray(value)) { // creators
-        parsed.extra += value.map(creator => `\n${name}: ${value}`).join('') // do not sort!!
-      } else {
+        parsed.extra += value.map(creator => `\n${name}: ${creator}`).join('') // do not sort!!
+      }
+      else {
         parsed.extra += `\n${name}: ${value}`
       }
     }
   }
 
+  log.debug('bbt merge: extra.set.parsed.return', parsed)
   return parsed.extra.trim()
 }

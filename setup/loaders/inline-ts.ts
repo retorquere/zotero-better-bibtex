@@ -1,6 +1,6 @@
 import * as ts from 'typescript'
 
-export = function loader(source) {
+export = function loader(source: string): string {
   if (this.cacheable) this.cacheable()
 
   const js = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.None } })

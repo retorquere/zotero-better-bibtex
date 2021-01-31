@@ -12,19 +12,19 @@ export class Postfix {
     this.declarePrefChars = ''
   }
 
-  public add(item) {
-    if (!item.metadata) return
+  public add(metadata: { DeclarePrefChars: string, noopsort: any, packages: any }): void {
+    if (!metadata) return
 
-    if (item.metadata.DeclarePrefChars) this.declarePrefChars += item.metadata.DeclarePrefChars
-    if (item.metadata.noopsort) this.noopsort = true
-    if (item.metadata.packages) {
-      for (const pkg of item.metadata.packages) {
+    if (metadata.DeclarePrefChars) this.declarePrefChars += metadata.DeclarePrefChars
+    if (metadata.noopsort) this.noopsort = true
+    if (metadata.packages) {
+      for (const pkg of metadata.packages) {
         this.packages[pkg] = true
       }
     }
   }
 
-  public toString() {
+  public toString(): string {
     let postfix = ''
 
     let preamble = []

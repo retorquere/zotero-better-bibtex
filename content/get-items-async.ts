@@ -1,10 +1,11 @@
 declare const Zotero: any
 
-export async function getItemsAsync(ids) {
-  let returnSingle
+export async function getItemsAsync(ids: number | number[]): Promise<any | any[]> {
+  let returnSingle: boolean
   if (Array.isArray(ids)) {
     returnSingle = false
-  } else {
+  }
+  else {
     returnSingle = true
     ids = [ids]
   }
@@ -25,5 +26,6 @@ export async function getItemsAsync(ids) {
   }
 
   if (returnSingle) items = items[0]
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return items
 }

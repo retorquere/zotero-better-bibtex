@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import j = require('jscodeshift')
 import * as fs from 'fs'
 

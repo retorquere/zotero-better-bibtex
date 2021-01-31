@@ -1,6 +1,6 @@
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 
-export let arXiv = new class {
+export const arXiv = new class {
   // new-style IDs
   // arXiv:0707.3168 [hep-th]
   // arXiv:YYMM.NNNNv# [category]

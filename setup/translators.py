@@ -53,16 +53,6 @@ with open(os.path.join(root, 'gen/preferences/defaults.json')) as f:
 variables.labels = translators.byLabel.keys()
 
 template = """
-type ZoteroCollection = {
-  // id?: string
-  key: string
-  name: string
-  // collections: string[] | ZoteroCollection[]
-  collections: string[]
-  items: number[]
-  parent?: string
-}
-
 interface ITranslator {
   preferences: IPreferences
   skipFields: string[]

@@ -17,7 +17,7 @@ function display(itemID) {
       menuitem = zotero_field_transform_menu.appendChild(document.createElementNS('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', 'menuitem'))
       menuitem.setAttribute('id', 'zotero-field-transform-menu-better-sentencecase')
       menuitem.setAttribute('label', 'BBT sentence case')
-      menuitem.addEventListener('command', function(e) { title_sentenceCase.call(document.getBindingParent(this), document.popupNode) }, false)
+      menuitem.addEventListener('command', function(_e) { title_sentenceCase.call(document.getBindingParent(this), document.popupNode) }, false)
     }
   }
 
@@ -29,7 +29,7 @@ function display(itemID) {
 
   const pin = ' \uD83D\uDCCC'
   const label = document.getElementById('better-bibtex-citekey-label')
-  label.value = label.value.replace(pin, '') + (citekey.pinned ? pin : '')
+  label.value = `${label.value.replace(pin, '')}${(citekey.pinned ? pin : '')}`
 }
 
 let observer = null
@@ -82,7 +82,8 @@ function unload() {
   }
 }
 
-$patch$(ZoteroItemPane, 'viewItem', original => async function(item, mode, index) {
+$patch$(ZoteroItemPane, 'viewItem', original => async function(item, _mode, _index) {
+  // eslint-disable-next-line prefer-rest-params
   await original.apply(this, arguments)
   init()
 

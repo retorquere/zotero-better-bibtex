@@ -150,7 +150,7 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.3 "für JabRef 3">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.4 "für JabRef 4">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.5 "für JabRef 5">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat.warn "Export JabRef-specific fields: timestamps, and groups for each collection and item is part of. Note that this format will disable caching in exports, which is really undesirable specifically for auto-exports.">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat.warn "Export JabRef-specific fields: timestamps, titles for attachments, and groups for each collection an item is part of. Note that having this on will disable caching in exports, which is really undesirable specifically for auto-exports.">
 <!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Exportiere Latex-Befehle im Unicode-Format als Plaintext">
 <!ENTITY better-bibtex.Preferences.export.biblatex "BibLaTeX">
 <!ENTITY better-bibtex.Preferences.export.biblatex.extendedNameFormat "Verwende das erweiterte Namensformat von BibLaTeX (benötigt biblatex 3.5)">
@@ -158,10 +158,12 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.Preferences.export.bibtex.ascii "Exportiere Latex-Befehle im Unicode-Format als Plaintext (empfohlen)">
 <!ENTITY better-bibtex.Preferences.export.bibtex "BibTeX">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs "Füge URLs zu BibTeX-Export hinzu">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note "in einem &quot;Note&quot;-Feld">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.off "Nein">
+<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note "in the 'note' field">
+<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note-url-ish "in the 'note' field, but assuming the 'url' package is not loaded">
 <!-- https://texfaq.org/FAQ-citeURL -->
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url "in einem &quot;URL&quot;-Feld">
+<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url "in the 'url' field">
+<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url-ish "in the 'url' field, but assuming the 'url' package is not loaded">
 <!ENTITY better-bibtex.Preferences.tab.export "Exportiere">
 <!ENTITY better-bibtex.Preferences.export.fields.bibtexParticleNoOp "Ignoriere Namens-Präfixe beim Sortieren">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.both "beide">

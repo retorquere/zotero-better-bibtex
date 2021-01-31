@@ -46,10 +46,13 @@ def before_scenario(context, scenario):
   if active_tag_matcher.should_exclude_with(scenario.effective_tags):
     scenario.skip(f"DISABLED ACTIVE-TAG {str(active_tag_value_provider)}")
     return
-  if balance is not None and 'balance' in context.config.userdata:
-    test_in_cluster = '1' if re.sub(r' -- @[0-9]+\.[0-9]+ ', '', scenario.name) in balance['slow' if active_tag_value_provider['slow'] == 'true' else 'fast']['1'] else '2'
-    if context.config.userdata['balance'] != test_in_cluster:
-      scenario.skip(f'TESTED IN CLUSTER {test_in_cluster}')
+  if balance is not None and 'bin' in context.config.userdata:
+    if re.sub(r' -- @[0-9]+\.[0-9]+ ', '', scenario.name) in balance['slow' if active_tag_value_provider['slow'] == 'true' else 'fast']['1']:
+      test_bin = '1'
+    else:
+      test_bin = '2'
+    if context.config.userdata['bin'] != test_bin:
+      scenario.skip(f'TESTED IN BIN {test_bin}')
       return
   if 'test' in context.config.userdata and not context.config.userdata['test'] in scenario.name:
     scenario.skip(f"ONLY TESTING SCENARIOS WITH {context.config.userdata['test']}")

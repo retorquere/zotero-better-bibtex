@@ -23,260 +23,187 @@
   },
   "items": [
     {
-      "accessDate": "2019-04-22T21:55:59Z",
-      "citationKey": "timeusa2019a",
+      "ISBN": "978-1-4462-1116-8",
+      "citationKey": "pink2013",
       "creators": [
         {
           "creatorType": "author",
-          "name": "TIME USA"
+          "firstName": "Sarah",
+          "lastName": "Pink"
         }
       ],
-      "date": "2019",
-      "itemID": 1,
-      "itemType": "webpage",
+      "date": "2013",
+      "edition": "3",
+      "itemID": 25,
+      "itemType": "book",
       "language": "en",
-      "publicationTitle": "TIME",
-      "title": "The 100 most influential people of 2019",
-      "url": "http://time.com/collection/100-most-influential-people-2019/"
+      "libraryCatalog": "Amazon",
+      "numPages": "248",
+      "place": "London, United Kingdom",
+      "publisher": "SAGE",
+      "title": "Doing visual ethnography"
     },
     {
-      "accessDate": "2019-04-24T20:36:53Z",
-      "citationKey": "timeusa2019",
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "TIME USA"
-        }
-      ],
-      "date": "2019",
-      "itemID": 2,
-      "itemType": "webpage",
-      "language": "en",
-      "publicationTitle": "TIME",
-      "shortTitle": "Caster Semenya",
-      "title": "Caster Semenya: The 100 most influential people of 2019",
-      "url": "http://time.com/collection/100-most-influential-people-2019/5567679/caster-semenya/"
-    },
-    {
-      "accessDate": "2019-04-24T21:17:09Z",
-      "citationKey": "iaaf2019",
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "IAAF"
-        }
-      ],
-      "date": "2019",
-      "itemID": 3,
-      "itemType": "webpage",
-      "language": "en",
-      "publicationTitle": "IAAF",
-      "shortTitle": "Caster Semenya",
-      "title": "Caster Semenya: Honours",
-      "url": "https://www.iaaf.org/athletes/south-africa/caster-semenya-242560"
-    },
-    {
-      "accessDate": "2019-04-24T21:55:00Z",
-      "citationKey": "courtofarbitrationforsport2019",
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "Court of Arbitration for Sport"
-        }
-      ],
-      "date": "2019-03-21",
-      "itemID": 4,
-      "itemType": "webpage",
-      "language": "en",
-      "publicationTitle": "Court of Arbitration for Sport",
-      "shortTitle": "Semenya, ASA and IAAF",
-      "title": "Semenya, ASA and IAAF: Planning update",
-      "url": "https://www.tas-cas.org/en/general-information/news-detail/article/semenya-asa-and-iaaf-planning-update.html"
-    },
-    {
-      "accessDate": "2019-04-28T20:57:39Z",
-      "citationKey": "mcphee2019",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Elena",
-          "lastName": "McPhee"
-        }
-      ],
-      "date": "2019-01-12",
-      "itemID": 5,
-      "itemType": "webpage",
-      "language": "en",
-      "publicationTitle": "Otago Daily Times Online News",
-      "title": "Uni adds gender options",
-      "url": "https://www.odt.co.nz/news/dunedin/campus/university-of-otago/uni-adds-gender-options"
-    },
-    {
-      "DOI": "10/b4mz6g",
-      "ISSN": "0193-7235",
-      "accessDate": "2019-04-22T21:49:26Z",
+      "ISBN": "978-0-203-01405-9",
       "attachments": [
         {
           "itemType": "attachment",
-          "path": "/Users/jp/Documents/Reference/Papers/Kane/kane (1995) - resistance-transformation of the oppositional binary [annotated].pdf",
-          "title": "kane (1995) - resistance-transformation of the oppositional binary [annotated].pdf",
-          "uri": "http://zotero.org/users/1510432/items/DHJENFZC"
+          "path": "/Users/jp/Documents/Reference/Papers/Duncan/duncan (2002) - the media image of sport and gender [annotated].pdf",
+          "title": "duncan (2002) - the media image of sport and gender [annotated].pdf",
+          "uri": "http://zotero.org/users/1510432/items/WNZ96Z9K"
         },
         {
           "itemType": "attachment",
-          "path": "/Users/jp/Documents/Reference/Papers/Kane/kane (1995) - resistance-transformation of the oppositional binary.pdf",
-          "title": "kane (1995) - resistance-transformation of the oppositional binary.pdf",
-          "uri": "http://zotero.org/users/1510432/items/2HUMB3WY"
+          "path": "/Users/jp/Documents/Reference/Papers/Duncan/duncan (2002) - the media image of sport and gender.pdf",
+          "title": "duncan (2002) - the media image of sport and gender.pdf",
+          "uri": "http://zotero.org/users/1510432/items/LIND7XBZ"
         }
       ],
-      "citationKey": "kane1995",
+      "citationKey": "duncan2002",
       "creators": [
         {
+          "creatorType": "editor",
+          "firstName": "Lawrence",
+          "lastName": "Wenner"
+        },
+        {
           "creatorType": "author",
-          "firstName": "Mary Jo",
-          "lastName": "Kane"
+          "firstName": "Margaret Carlisle",
+          "lastName": "Duncan"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Michael A.",
+          "lastName": "Messner"
         }
       ],
-      "date": "1995",
-      "issue": "2",
-      "itemID": 6,
-      "itemType": "journalArticle",
-      "journalAbbreviation": "Journal of Sport and Social Issues",
+      "date": "2002",
+      "itemID": 21,
+      "itemType": "bookSection",
       "language": "en",
-      "libraryCatalog": "SAGE Journals",
+      "libraryCatalog": "ProQuest Ebook Central",
       "notes": [
-        "<p><strong>Extracted Annotations (24/04/2019, 13:22:35)</strong></p>\n<p>\"the fundamental role sport plays in producing and maintaining patriarchal ideologies and arrangements with respect to gender. At the heart of this critique is the notion of biological determinism whereby all human beings are assumed to fit, by nature, into unambiguous and oppositional bipolar categories of \"female\" and \"male\"\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=1\">Kane 1995:191</a>)</p>\n<p>\"Within this biology-is-destiny paradigm, the apparent given-by-nature dichotomous category of gender forces a polarization between the sexes that ignores overlap; differences are systematically emphasized whereas similarities are ignored\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=1\">Kane 1995:191</a>)</p>\n<p>\"Many feminist scholars have challenged the notion of biological reductionism and the dualism it produces by showing how there are no natural categories of male and female; our conceptions of \"woman\" and \"man\" are never separate from larger social relations\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=1\">Kane 1995:191</a>)</p>\n<p>\"there is a \"constant, complex and often unrecognizable interaction between biology and culture\" (Hall, 1990, p. 224) in which human bodies are manipulated and socially constituted\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=1\">Kane 1995:191</a>)</p>\n<p>\"The net result of this analysis is that gender is seen not as the natural outcome of a biological imperative but as the product of a patriarchal social construction.\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=1\">Kane 1995:191</a>)</p>\n<p>\"sport becomes an ideal setting for reinforcing fundamental assumptions underlying biological reductionism.\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=1\">Kane 1995:191</a>)</p>\n<p>\"sport establishes and articulates the \"assumption that there are two, and only two, obviously universal, bipolar, mutually exclusive sexes\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=1\">Kane 1995:191</a>)</p>\n<p>\"that necessarily correspond to stable gender identity and gendered behavior\"\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=2\">Kane 1995:192</a>)</p>\n<p>\"it constructs and vigilantly maintains gender difference as (a) hierarchically ordered and (b) grounded in the physical body and thus perceived as biologically, inherently based\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=2\">Kane 1995:192</a>)</p>\n<p>\"in the larger social debate surrounding biological reductionism versus social constructionism, sport sociologists have illustrated why the connection between sport and gender is a particularly powerful tool for hegemonic masculinity.\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=2\">Kane 1995:192</a>)</p>\n<p>\"during a time period when other symbols and institutions of male supremacy are faltering, sport can provide incontrovertible evidence of male superiority. This is because sport is preoccupied with measurable physical differences between the sexes in which heights, scores, and distances are obsessively recorded and compared\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=2\">Kane 1995:192</a>)</p>\n<p>\"These differences provide daily, commonsense, apparent empirical proof that men are naturally superior to women\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=2\">Kane 1995:192</a>)</p>\n<p>\"sport is an ideological construct rather than an inherent given, it must be reinforced continually and systematically. It also undergoes constant challenge because dominant ideologies are\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=2\">Kane 1995:192</a>)</p>\n<p>\"never uncontested,\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=3\">Kane 1995:193</a>)</p>\n<p>\"sport is a site of cultural struggle in which male hegemony is dependent on the continual reproduction of unequal power relations between women and men. This struggle is never complete; it is in a constant state of flux and negotiation between dominant and subordinate groups.\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=3\">Kane 1995:193</a>)</p>\n<p>\"It is this sense of negotiation, challenge, and struggle that has led a number of authors to analyze sport as a site of resistance to and transformation of ideologies and practices of domination and oppression\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=3\">Kane 1995:193</a>)</p>\n<p>\"there exists today a sport continuum in which many women routinely outperform many men and, in some cases, women outperform most-if not all-men in a variety of sports and physical skills/activities. The acknowledgment of such a continuum could provide a direct assault on traditional beliefs about sport-and gender itself-as an inherent, oppositional binary that is grounded in biological difference.\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=3\">Kane 1995:193</a>)</p>\n<p>\"First is the suggestion that we expand the definition of sport to include a wider range of sporting activities. A second suggestion is that we elevate in status those sports, physical skills, and attributes traditionally associated with females\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=5\">Kane 1995:195</a>)</p>\n<p>\"change current patriarchal definitions of what it means to be an athlete.\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=5\">Kane 1995:195</a>)</p>\n<p>\"rejected the values embedded in men's sports-an overemphasis on winning, hierarchy, elitism, exclusivity (e.g., heterosexism), disparagement of opponents, and an ethic of endangerment\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=6\">Kane 1995:196</a>)</p>\n<p>\"The feminist principles adopted by these leagues can include issues of safety, cooperation, shared decision making, and collectivity. In this model, enjoyment and friendship become the priorities\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=6\">Kane 1995:196</a>)</p>\n<p>\"biology-is-destiny theme-the muscle gap. This ideological construct refers to the degree of difference that exists when comparing women's and men's performances in the same sport or physical activity.\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=8\">Kane 1995:198</a>)</p>\n<p>\"comparisons in which females are systematically shown to be inherently inferior athletes\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=8\">Kane 1995:198</a>)</p>\n<p>\"explaining and defending performance differences between women and men as predictable outcomes of\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=8\">Kane 1995:198</a>)</p>\n<p>\"hegemonic masculinity\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=8\">Kane 1995:198</a>)</p>\n<p>\"males are the biological norm against which women are compared and subsequently seen as different\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=9\">Kane 1995:199</a>)</p>\n<p>\"range of performance differences among numerous women and men-\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=10\">Kane 1995:200</a>)</p>\n<p>\"By emphasizing comparisons based on an average difference, Messner limits any discussion of a range of performance differences among males and females\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=10\">Kane 1995:200</a>)</p>\n<p>\"athletic performance is not primarily a result of physical difference; factors such as coaching, training, discipline, strategy, and mental toughness come into play\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=11\">Kane 1995:201</a>)</p>\n<p>\"many women are bigger, faster, and stronger than many men.\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=11\">Kane 1995:201</a>)</p>\n<p>\"it does not automatically follow that every elite male can outperform every elite female in these same sports\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=11\">Kane 1995:201</a>)</p>\n<p>\"it is because of this socially constructed and rigidly maintained sport structure that females are truly at a disadvantage\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=11\">Kane 1995:201</a>)</p>\n<p>\"By focusing our examples on sports and physical activities that are considered lesser to begin with, we keep alive the belief that women can only hope to compete against men in a very limited, narrow capacity\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=12\">Kane 1995:202</a>)</p>\n<p>\"She should be able to do this; it is perceived as her natural domain. Because the binary is threatened only when we see women exhibit skills or possess physical attributes that are considered malelike or outperform men in a sport traditionally identified with males, this is something we rarely, if ever, get to experience.\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=13\">Kane 1995:203</a>)</p>\n<p>\"In ever-expanding spheres of physical activity, they are demonstrating that they can do more than move through space in aesthetically pleasing ways.\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=14\">Kane 1995:204</a>)</p>\n<p>\"if women were allowed to compete against men, the very integrity of sport would be put at risk:\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=14\">Kane 1995:204</a>)</p>\n<p>\"men have refused to participate when asked or forced to compete against (or even with) women. Does not such a reaction undermine any arguments about women as naturally inferior athletes?\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=15\">Kane 1995:205</a>)</p>\n<p>\"sport as a \"proving ground for masculinity can only be preserved as such by the exclusion of women from the activity\"\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=15\">Kane 1995:205</a>)</p>\n<p>\"They are deeply afraid that many women can outperform them, even in those sports and physical skills/attributes that they have claimed as their own. What better way to deflect such fears than to create segregationist ideologies and practices that will ensure that these possibilities rarely (if ever) come to pass?\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=16\">Kane 1995:206</a>)</p>\n<p>\"defining some sports as exclusively male or female to taking sports in which both women and men participate and recasting them into dichotomous categories of women's sports and men's sport\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=16\">Kane 1995:206</a>)</p>\n<p>\"In the case of gymnastics, even though women and men participate in the same sport, they engage in an entirely different set of events\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=17\">Kane 1995:207</a>)</p>\n<p>\"Tennis offers a more subtle example of the imposition of the oppositional binary\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=17\">Kane 1995:207</a>)</p>\n<p>\"combative sports such as ice hockey and rugby require physical attributes such as strength, speed, and aggressiveness. Evidence that thousands of women eagerly pursue this kind of physical activity and possess these kinds of physical characteristics needs to be suppressed;\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=18\">Kane 1995:208</a>)</p>\n<p>\"what regendering reveals is that to receive this kind of praise, she must be (temporarily at least) considered anything but female.\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=18\">Kane 1995:208</a>)</p>\n<p>\"e marathon.\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=19\">Kane 1995:209</a>)</p>\n<p>\"Even though one race is appearing before our eyes, it is constructed as two separate races based on oppositional sexual difference:\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=19\">Kane 1995:209</a>)</p>\n<p>\"because only one type of gender comparison is emphasized while all other possibilities are completely dismissed, we are taught to read these performance differences only in ways that privilege men.\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=19\">Kane 1995:209</a>)</p>\n<p>\"labels certain sportswomen as deviant-mutants. This label refers to a female athlete who so deviates from traditional expectations of femininity that her biological standing as a \"real\" female is called into question. The deviant-mutant's crime is that she exhibits such a high degree of athletic competence, or possesses such physical characteristics as muscle mass, size, and strength, that she becomes a dangerous, suspicious outlier\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=20\">Kane 1995:210</a>)</p>\n<p>\"Deviant-mutants are typically contained in one of two interrelated\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=20\">Kane 1995:210</a>)</p>\n<p>\"ways. First, they are required to take a chromosomal sex test to prove that they are real females. Second, . they are branded as lesbians. In both instances, their mutant status derives from concerns about their true biological nature\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=20\">Kane 1995:210</a>)</p>\n<p>\"Not only do these women have to prove (with\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=20\">Kane 1995:210</a>)</p>\n<p>\"laboratory test results) that they are not biological mutants because they so deviate from patriarchal conceptions of female capacity, they are also required to carry their \"certificate of femininity\" at all times during international competition.\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=21\">Kane 1995:211</a>)</p>\n<p>\"One reason lesbians are suspicious is that they do not fit neatly into bipolar conceptions of gender and sexuality. As such, they can off er contradictory evidence that gender does not consist of two mutually exclusive oppositional categories\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=21\">Kane 1995:211</a>)</p>\n<p>\"If female athletes provide empirical evidence that they can, for example, develop great upper body strength or outperform men in a \"man's sport;' they must be discredited in ways that keep the notion of natural male supremacy intact.\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=22\">Kane 1995:212</a>)</p>"
+        "<p><strong>Extracted Annotations (27/04/2019, 17:37:58)</strong></p>\n<p>\"Sport in the twentieth century has given men an arena in which to create and reinforce an ideology of male superiority\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=1\">Duncan 2002:170</a>)</p>\n<p>\"by making athleticism virtually synonymous with masculinity, sport provides opportunities for men to assert their dominance at a time when male hegemony is continually challenged and opposed in everyday life.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=1\">Duncan 2002:170</a>)</p>\n<p>\"sports media have been slow to register these changes, perhaps because athletic women and girls symbolically threaten masculine hegemony\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=1\">Duncan 2002:170</a>)</p>\n<p>\"Amount of Coverage\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=2\">Duncan 2002:171</a>)</p>\n<p>\"PRODUCTION\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=2\">Duncan 2002:171</a>)</p>\n<p>\"The underrepresentation of female athletes and the overrepresentation of male athletes\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=3\">Duncan 2002:172</a>)</p>\n<p>\"Technical Quality\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=3\">Duncan 2002:172</a>)</p>\n<p>\"Camera work, editing, and sound were decidedly better in men's games than women's games. More slowmotion replays and more onscreen statistics enhanced the viewing of the men's game.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=3\">Duncan 2002:172</a>)</p>\n<p>\"Intentional Audience Building\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=4\">Duncan 2002:173</a>)</p>\n<p>\"the media do not simply report news; they actively construct it by framing it, that is, by offering a context for viewing or understanding an event\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=4\">Duncan 2002:173</a>)</p>\n<p>\"Television producers have sometimes argued that the sports audience is composed mostly of men who aren't interested in women's sports; therefore, producers are simply giving viewers what they want by devoting more resources to the men's games.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=4\">Duncan 2002:173</a>)</p>\n<p>\"strategies insure that audiences will be primed and eager to watch championship games\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=5\">Duncan 2002:174</a>)</p>\n<p>\"media \"neglect\" are probably not conscious strategies used by producers to discriminate against women\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=5\">Duncan 2002:174</a>)</p>\n<p>\"ATTRIBUTIONS\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=5\">Duncan 2002:174</a>)</p>\n<p>\"attributions that encompass the most commonly used descriptions of athletes. We call these: a) larger than life, b) strength versus weakness, and c) agency. Each category exaggerates the differences and inequalities of male and female athletes. The use of these categories also naturalizes inequality by making it appear to be biologically essential that men and women differ in these characteristic ways.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=5\">Duncan 2002:174</a>)</p>\n<p>\"Male Athletes: Larger than Life/Symbolic Superiority\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=5\">Duncan 2002:174</a>)</p>\n<p>\"the social positioning of\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=5\">Duncan 2002:174</a>)</p>\n<p>\"males and females as unambiguous binary opposites (e.g., men as \"big\" and \"strong,\" women as \"small\" and \"weak\") obscures the existence of a continuum of performance (rather than categorical gender differences) in sport\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=6\">Duncan 2002:175</a>)</p>\n<p>\"Because it is so important ideologically for male athletes to maintain this image of strength and power, media characterizations tend to play up images of strong men.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=6\">Duncan 2002:175</a>)</p>\n<p>\"Strength and Weakness\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=6\">Duncan 2002:175</a>)</p>\n<p>\"left the viewer with the impression that while men, overall, were extremely powerful, women were only moderately so\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=6\">Duncan 2002:175</a>)</p>\n<p>\"practice of undermining sportswomen's accomplishments by coupling suggestions of strength with suggestions of weakness has been called \"ambivalence\"\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=6\">Duncan 2002:175</a>)</p>\n<p>\"Meanings connoting strength and weakness are suggested by the athlete's physical appearance, poses, body positions, facial expressions, emotional displays, and camera angles; captions function to anchor those meanings.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=7\">Duncan 2002:176</a>)</p>\n<p>\"diverting attention from women as strong and competent athletes and reducing them to sexual objects.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=7\">Duncan 2002:176</a>)</p>\n<p>\"Sportswomen were more likely to be photographed in postures connoting deference (lower physical positions, smaller size, head and body canting) than men, while men were more likely portrayed in postures connoting dominance (higher physical elevation, larger size, positions of protectiveness and distance) than women.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=7\">Duncan 2002:176</a>)</p>\n<p>\"Active poses (which highlighted athleticism) were more characteristic of the way male athletes were photographed; passive poses (in which the athletes were obviously positioned for the camera or were motionless) were more typical of the way female athletes were photographed.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=7\">Duncan 2002:176</a>)</p>\n<p>\"Female athletes were more often shown in tears or being consoled by others after a defeat than were male athletes.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=7\">Duncan 2002:176</a>)</p>\n<p>\"Consistent with this emphasis on male strength is the symbolic suppression of weakness; attributions that might call the power or competence of a male athlete into question tend to be minimized.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=7\">Duncan 2002:176</a>)</p>\n<p>\"the tendency of the sports media to feature female athletes passively posing, rather than actively engaged in their sport.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=7\">Duncan 2002:176</a>)</p>\n<p>\"the message that what is valued about women is not their athleticism, but their appearance\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=7\">Duncan 2002:176</a>)</p>\n<p>\"Agency: Successes and Failures\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=8\">Duncan 2002:177</a>)</p>\n<p>\"the framing of men as active agents, engineering their own successes and their opponents' failures. By contrast, women were framed as passive, reactive agents, succeeding sometimes because of their talent, but also because of forces outside their control (luck, family support). More significantly, women were framed as failing because of their own inability to take control.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=8\">Duncan 2002:177</a>)</p>\n<p>\"success was attributed to men's competence, and failure to their opponents' competence.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=8\">Duncan 2002:177</a>)</p>\n<p>\"women's failure was thus almost always attributed to the women's incompetence,\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=8\">Duncan 2002:177</a>)</p>\n<p>\"the use of stereotyped attributions such as emotional vulnerability to account for sportswomen's failures.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=8\">Duncan 2002:177</a>)</p>\n<p>\"FORMULAE OF EXCLUSION\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=9\">Duncan 2002:178</a>)</p>\n<p>\"commentators have considerable power to define audiences' expectations about how athletes will perform.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=9\">Duncan 2002:178</a>)</p>\n<p>\"render some attributes of the players socially visible by bringing those qualities to the audience's attention; simultaneously commentators make other characteristics of the athletes socially invisible. This social structure of visibility and invisibility must then constantly be defended; we refer to these defensive discursive practices as \"formulae of exclusion\"\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=9\">Duncan 2002:178</a>)</p>\n<p>\"Missing in Action\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=9\">Duncan 2002:178</a>)</p>\n<p>\"The first formula of exclusion related to the language of \"misses\" in women's basketball in contrast with the representation of success in men's\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=9\">Duncan 2002:178</a>)</p>\n<p>\"In the men's games, commentary functioned to linguistically transform errors into successes.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=9\">Duncan 2002:178</a>)</p>\n<p>\"yet it was virtually absent in the women's games\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=9\">Duncan 2002:178</a>)</p>\n<p>\"The Secret Agent\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=10\">Duncan 2002:179</a>)</p>\n<p>\"The second formula of exclusion was the way commentators accounted for errors during play. Commentators of the men's game softened or even neutralized suggestions of incompetence by alluding to mitigating circumstances\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=10\">Duncan 2002:179</a>)</p>\n<p>\"errors were minimized by suggesting they didn't reflect the players' true skill\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=10\">Duncan 2002:179</a>)</p>\n<p>\"In the corresponding women's games, there were virtually no accounts that mitigated errors in women's play,\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=10\">Duncan 2002:179</a>)</p>\n<p>\"constructed an impression that women's errors were due to their own unmitigated incompetence.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=10\">Duncan 2002:179</a>)</p>\n<p>\"This impression was strengthened by the frequent subtraction of agency in commentary when a male player missed the basket or made another error, and the frequent emphasis on flawed agency in expert commentary when a female player missed the basket.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=10\">Duncan 2002:179</a>)</p>\n<p>\"SYMBOLIC DOMINANCE\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=11\">Duncan 2002:180</a>)</p>\n<p>\"Symbolic dominance emphasizes the difference between men and women, where men represent the standard and women represent the Other. It positions men as dominant, women as subordinate\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=11\">Duncan 2002:180</a>)</p>\n<p>\"Asymmetrical Gender Marking\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=11\">Duncan 2002:180</a>)</p>\n<p>\"the verbal and visual \"marking\" of female athletes.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=11\">Duncan 2002:180</a>)</p>\n<p>\"cast female athletes in a derivative, secondary role\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=11\">Duncan 2002:180</a>)</p>\n<p>\"Infantilization/Hierarchies of Naming\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=11\">Duncan 2002:180</a>)</p>\n<p>\"contrasts between how men athletes and women athletes were referred to by commentators.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=11\">Duncan 2002:180</a>)</p>\n<p>\"symbolically \"infantilized\" mature women.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=11\">Duncan 2002:180</a>)</p>\n<p>\"labeling of women as child-like and the contrasting labeling of men as adults, we also\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=11\">Duncan 2002:180</a>)</p>\n<p>\"discovered \"hierarchies of naming.\"\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=12\">Duncan 2002:181</a>)</p>\n<p>\"women were called by only their first name 41.4 percent of the time, while men were never referred to at all by only their first name. These contrasts in the identification and labeling of athletes served to linguistically \"infantilize\" and subordinate women, while men were raised to full adult status\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=12\">Duncan 2002:181</a>)</p>\n<p>\"asymmetrical practice of referring formally to dominants but informally to subordinates reflects and reconstructs social inequities,\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=12\">Duncan 2002:181</a>)</p>\n<p>\"Sexualization\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=12\">Duncan 2002:181</a>)</p>\n<p>\"epitomizes the sport media's treatment of female athletes and because this theme serves as a summary of all the\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=12\">Duncan 2002:181</a>)</p>\n<p>\"arguments and illustrations that precede it.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=13\">Duncan 2002:182</a>)</p>\n<p>\"Appearance\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=13\">Duncan 2002:182</a>)</p>\n<p>\"Stereotyping female athletes as attractive and feminine shifts attention from their physical prowess to their looks and minimizes the symbolic threat sportswomen pose to male hegemony\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=13\">Duncan 2002:182</a>)</p>\n<p>\"women athletes' appearance\u2014their personal beauty or clothing\u2014was fundamental to fans' assessments of their performance\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=13\">Duncan 2002:182</a>)</p>\n<p>\"Difference is also constructed by media sex-typing: when there is coverage of women, it tends to be in sex \"appropriate\" sports or physical activities: individual, aesthetically pleasing events such as figure-skating, gymnastics, tennis, swimming, diving\u2014all sports thought to be consistent with conventional \"femininity\"\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=13\">Duncan 2002:182</a>)</p>\n<p>\"When sexually objectified in this way, women are symbolically subordinated to the erotic desires of men.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=13\">Duncan 2002:182</a>)</p>\n<p>\"When the sports media highlight men's sexuality, it is almost always within the context of heterosexual conquests\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=13\">Duncan 2002:182</a>)</p>\n<p>\"The Humorous Sexualization of Women\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=13\">Duncan 2002:182</a>)</p>\n<p>\"women were portrayed repeatedly in the sports media as humorous sex objects rather than as serious athletes\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=13\">Duncan 2002:182</a>)</p>\n<p>\"coverage of women's sports continued to focus on the humorous, exotic, and weird, endowing stories on female athletes with a kind of freakshow aura\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=14\">Duncan 2002:183</a>)</p>\n<p>\"the great preponderance of coverage cast men as strong, competent athletes. Men's status as athletes was never seriously compromised by the rare humorous portrayal.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=14\">Duncan 2002:183</a>)</p>\n<p>\"Sexual Orientation\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=14\">Duncan 2002:183</a>)</p>\n<p>\"much media commentary emphasizes sportswomen's sexuality, femininity, or status as wives and mothers, thereby effectively trivializing their athletic achievements.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=14\">Duncan 2002:183</a>)</p>\n<p>\"labeling female athletes as lesbians is an \"effective form of containment precisely because we live in a homophobic culture that views lesbians and gay men negatively\"\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=14\">Duncan 2002:183</a>)</p>\n<p>\"an easy way to discredit female athletes is to cast aspersions on their sexuality so their accomplishments can be dismissed as abnormal, freakish, deviant.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=14\">Duncan 2002:183</a>)</p>\n<p>\"Some current research suggests that instead of reducing gender hierarchies, media globalization may simply lead to the reinforcement of conventional patriarchal hierarchies on a worldwide scale\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=16\">Duncan 2002:185</a>)</p>"
       ],
-      "pages": "191-218",
-      "publicationTitle": "Journal of Sport and Social Issues",
-      "shortTitle": "Resistance/transformation of the oppositional binary",
-      "title": "Resistance/transformation of the oppositional binary: Exposing sport as a continuum",
-      "url": "https://doi.org/10.1177/019372395019002006",
-      "volume": "19"
+      "pages": "170-185",
+      "place": "London, United Kingdom",
+      "publicationTitle": "MediaSport",
+      "publisher": "Routledge",
+      "title": "The media image of sport and gender"
     },
     {
-      "DOI": "10/bqwfc8",
-      "ISSN": "0193-7235",
-      "abstractNote": "This article examines two action sports\u2014skydiving and snowboarding\u2014as cases of women on men's turf and explores the construction of gender in the ways women negotiate space in these male-dominated arenas. It investigates some of the ways in which women's participation in these activities is constrained and the strategies women employ to carve out spaces for themselves in these sporting contexts. Women in both sports tend to engage in strategies rooted in middle-class and liberal notions of resistance. Most of these exemplify what researchers have called \u201creproductive agency.\u201d Some strategies, however, seem to exemplify \u201cresistant agency.\u201d The article explores the potential of these strategies to bring about meaningful social change.",
-      "accessDate": "2019-04-22T21:52:42Z",
-      "attachments": [
-        {
-          "itemType": "attachment",
-          "path": "/Users/jp/Documents/Reference/Papers/Laurendeau/laurendeau (2008) - 'women could be every bit as good as guys' [annotated].pdf",
-          "title": "laurendeau (2008) - 'women could be every bit as good as guys' [annotated].pdf",
-          "uri": "http://zotero.org/users/1510432/items/VNRW7DW9"
-        },
-        {
-          "itemType": "attachment",
-          "path": "/Users/jp/Documents/Reference/Papers/Laurendeau/laurendeau (2008) - 'women could be every bit as good as guys'.pdf",
-          "title": "laurendeau (2008) - 'women could be every bit as good as guys'.pdf",
-          "uri": "http://zotero.org/users/1510432/items/WILJ8AJY"
-        }
-      ],
-      "citationKey": "laurendeau2008",
+      "ISBN": "978-0-415-30639-3",
+      "citationKey": "grady2004",
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Jason",
-          "lastName": "Laurendeau"
+          "firstName": "J.",
+          "lastName": "Grady"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Caroline",
+          "lastName": "Knowles"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Paul",
+          "lastName": "Sweetman"
+        }
+      ],
+      "date": "2004",
+      "itemID": 22,
+      "itemType": "bookSection",
+      "language": "en",
+      "libraryCatalog": "Amazon",
+      "pages": "18-32",
+      "place": "New York, NY",
+      "publicationTitle": "Picturing the social landscape: Visual methods and the sociological imagination",
+      "publisher": "Routledge",
+      "shortTitle": "Working with visible evidence",
+      "title": "Working with visible evidence: An invitation and some practical advice"
+    },
+    {
+      "ISBN": "978-0-415-30639-3",
+      "citationKey": "knowles2004",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Caroline",
+          "lastName": "Knowles"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Caroline",
+          "lastName": "Knowles"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Paul",
+          "lastName": "Sweetman"
         },
         {
           "creatorType": "author",
-          "firstName": "Nancy",
-          "lastName": "Sharara"
+          "firstName": "Paul",
+          "lastName": "Sweetman"
         }
       ],
-      "date": "2008",
-      "issue": "1",
-      "itemID": 7,
-      "itemType": "journalArticle",
+      "date": "2004",
+      "itemID": 23,
+      "itemType": "bookSection",
       "language": "en",
-      "libraryCatalog": "SAGE Journals",
+      "libraryCatalog": "Amazon",
+      "pages": "1-17",
+      "place": "New York, NY",
+      "publicationTitle": "Picturing the social landscape: Visual methods and the sociological imagination",
+      "publisher": "Routledge",
+      "title": "Introduction"
+    },
+    {
+      "ISBN": "978-0-7623-1021-0",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "path": "/Users/jp/Documents/Reference/Papers/Pole/pole (2015) - visual research [annotated].pdf",
+          "title": "pole (2015) - visual research [annotated].pdf",
+          "uri": "http://zotero.org/users/1510432/items/WEK2C9NN"
+        },
+        {
+          "itemType": "attachment",
+          "path": "/Users/jp/Documents/Reference/Papers/Pole/pole (2015) - visual research.pdf",
+          "title": "pole (2015) - visual research.pdf",
+          "uri": "http://zotero.org/users/1510432/items/BRGCK6UN"
+        }
+      ],
+      "citationKey": "pole2004",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Christopher J.",
+          "lastName": "Pole"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Christopher J.",
+          "lastName": "Pole"
+        }
+      ],
+      "date": "2004",
+      "itemID": 24,
+      "itemType": "bookSection",
+      "language": "en",
+      "libraryCatalog": "www-emeraldinsight-com.ezproxy.otago.ac.nz (Atypon)",
       "notes": [
-        "<p><strong>Extracted Annotations (24/04/2019, 13:22:39)</strong></p>\n<p>\"with the relatively recent emergence of alternative sports, several ostensibly gender-neutral \"action\" sports have proliferated.1\" (<a href=\"zotero://open-pdf/library/items/VNRW7DW9?page=1\">Laurendeau 2008:24</a>)</p>\n<p>\"So-called \"risk\" sports have been and continue to be considered male domain, as both risk and sport have come to be associated with particular notions of masculinity\" (<a href=\"zotero://open-pdf/library/items/VNRW7DW9?page=2\">Laurendeau 2008:25</a>)</p>\n<p>\"millennium\" sports present unique opportunities for shifts in gender equity, as the organization and values embedded in these sports are constantly up for negotiation.\" (<a href=\"zotero://open-pdf/library/items/VNRW7DW9?page=3\">Laurendeau 2008:26</a>)</p>\n<p>\"women in Adventure Racing are valued for their \"teaming\" skills, and simultaneously constructed as \"mandatory equipment\" on mixed gender teams.\" (<a href=\"zotero://open-pdf/library/items/VNRW7DW9?page=3\">Laurendeau 2008:26</a>)</p>\n<p>\"Women face the complex task of negotiating for themselves a space in a sporting arena that makes sense for them. In the process, though, they often engage in \"configurations of practice\"\" (<a href=\"zotero://open-pdf/library/items/VNRW7DW9?page=5\">Laurendeau 2008:28</a>)</p>\n<p>\"that reproduce forms of marginalization and trivialization faced by some or all women\" (<a href=\"zotero://open-pdf/library/items/VNRW7DW9?page=5\">Laurendeau 2008:28</a>)</p>"
+        "<p><strong>Extracted Annotations (24/04/2019, 13:23:40)</strong></p>\n<p>\"visual research has the capacity to offer a different way of understanding the social world.\" (<a href=\"zotero://open-pdf/library/items/WEK2C9NN?page=7\">Pole 2004:7</a>)</p>\n<p>\"visual methods provide access to different aspects of the social world, not possible by other means\" (<a href=\"zotero://open-pdf/library/items/WEK2C9NN?page=7\">Pole 2004:7</a>)</p>"
       ],
-      "pages": "24-47",
-      "publicationTitle": "Journal of Sport and Social Issues",
-      "shortTitle": "'Women could be every bit as good as guys'",
-      "title": "'Women could be every bit as good as guys': Reproductive and resistant agency in two 'action' sports",
-      "url": "https://doi.org/10.1177/0193723507307819",
-      "volume": "32"
-    },
-    {
-      "DOI": "10/ccgb29",
-      "ISSN": "1939-8441",
-      "abstractNote": "Adopting visual methods can enhance our understanding of the social world. By encompassing a multitude of forms including photographs, videos, maps, diagrams, symbols and so forth, images can provide specific information about our existence. They can also act as powerful indicators regarding the multiple meanings embedded within our culture. One domain where the use of visual methods has been less well documented is that of physical culture. Physical culture is taken here to mean human physical movement occurring within recognised cultural domains such as sport, dance and, more broadly, outdoor and indoor recreational activities involving expression through physicality. Opening this special edition of Qualitative Research in Sport and Exercise on \u2018Visual Methods in Physical Culture\u2019s\u2019, I provide some broad responses to the following questions: What are visual methods? Why might they be useful? How can they be utilised? I then outline some ongoing debates within the field surrounding issues of interpretation, representation and ethics. I conclude by positioning this special edition as a resource to assist with the continued use of visual methods in physical culture.",
-      "accessDate": "2019-04-22T05:11:05Z",
-      "attachments": [
-        {
-          "itemType": "attachment",
-          "path": "/Users/jp/Documents/Reference/Papers/Phoenix/phoenix (2010) - seeing the world of physical culture [annotated].pdf",
-          "title": "phoenix (2010) - seeing the world of physical culture [annotated].pdf",
-          "uri": "http://zotero.org/users/1510432/items/FWFB3EHR"
-        },
-        {
-          "itemType": "attachment",
-          "path": "/Users/jp/Documents/Reference/Papers/Phoenix/phoenix (2010) - seeing the world of physical culture.pdf",
-          "title": "phoenix (2010) - seeing the world of physical culture.pdf",
-          "uri": "http://zotero.org/users/1510432/items/897FIDZQ"
-        }
-      ],
-      "citationKey": "phoenix2010",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Cassandra",
-          "lastName": "Phoenix"
-        }
-      ],
-      "date": "2010",
-      "issue": "2",
-      "itemID": 8,
-      "itemType": "journalArticle",
-      "language": "en",
-      "libraryCatalog": "Taylor and Francis+NEJM",
-      "notes": [
-        "<p><strong>Extracted Annotations (24/04/2019, 13:23:38)</strong></p>\n<p>\"They can also act as powerful indicators regarding the multiple meanings embedded within our culture\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=1\">Phoenix 2010:93</a>)</p>\n<p>\"adopting visual methods has the potential to further develop our understanding of the social world.\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=1\">Phoenix 2010:93</a>)</p>\n<p>\"According to Harrison (2004), 'visual methods' describes any research design, which utilises visual evidence.\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=2\">Phoenix 2010:94</a>)</p>\n<p>\"renders the world in visual terms, enabling insight into what the eye can physiologically see ('vision'), and also how vision is culturally constructed ('visuality'; Rose 2007). For Grady (2004), an image can be extremely objective - a record of what occurred at a given moment - yet its interpretation is entirely subjective.\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=2\">Phoenix 2010:94</a>)</p>\n<p>\"They can act as an impetus for asking questions such as: How are we able to see? How are we allowed to see it? How are we made to see? What is being seen, and how is it socially shaped?\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=2\">Phoenix 2010:94</a>)</p>\n<p>\"Knowles and Sweetman's (2004) suggestion that visuality is a fundamental fact of social existence, and that sighted individuals navigate the social world visually\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=2\">Phoenix 2010:94</a>)</p>\n<p>\"Thinking, writing, presenting and discussing with images, suggests Grady (2004), can make arguments more vivid and more lucid than alternative forms of representation. Visual images, therefore, have the ability to construct and convey arguments whilst powerfully indicating the multiple meanings embedded within (physical) culture\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=2\">Phoenix 2010:94</a>)</p>\n<p>\"Photographs 'may not provide us with unbiased, objective documentation of the social and material world, but they can show characteristic attributes of people, objects, and events that often\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=3\">Phoenix 2010:95</a>)</p>\n<p>\"elude even the most skilled wordsmiths' (emphasis added, Prosser and Schwartz 1998, p. 116). These authors suggest that via photographs the researcher is able to explore relationships that may be subtle or easily overlooked\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=4\">Phoenix 2010:96</a>)</p>\n<p>\"Pink (2007) explains: The meanings of photographs are arbitrary and subjective; they depend on who is looking. The same photographic image may have a variety (perhaps conflicting) meanings invested in it at different stages of ethnographic research and representation, as it is viewed by different eyes and audiences in diverse temporal historical, spatial and cultural contexts. Photographs produced as part of an ethnographic project will be given different meanings by the subjects of those images, local people in that context, the researcher, and other (sometimes critical) audiences. (pp. 67-68)\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=5\">Phoenix 2010:97</a>)</p>\n<p>\"three areas where debate and discussion are rife: the issue of interpretation, the issue of representation and,\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=7\">Phoenix 2010:99</a>)</p>\n<p>\"briefly, the issue of ethics\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=8\">Phoenix 2010:100</a>)</p>\n<p>\"One continual topic of contestation is that of interpretation\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=8\">Phoenix 2010:100</a>)</p>\n<p>\"By inserting written or spoken commentary alongside images, are we defeating the very power and purpose of the visual?\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=10\">Phoenix 2010:102</a>)</p>\n<p>\"it is through some form of verbalisation that we generally have to rely in order to gain understanding of an image\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=10\">Phoenix 2010:102</a>)</p>\n<p>\"Knowles and Sweetman (2004, p. 12) suggest that there are a number of key difficulties with visual methods, not least considerations that should include, 'the problem of ascribing anonymity or confidentiality to research subjects who have been photographed, equipment costs associated with the use of photography and video, difficulties with dissemination - particularly where images are in a moving form - and issues of copyright where already existing images are employed'\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=11\">Phoenix 2010:103</a>)</p>"
-      ],
-      "pages": "93-108",
-      "publicationTitle": "Qualitative Research in Sport and Exercise",
-      "shortTitle": "Seeing the world of physical culture",
-      "title": "Seeing the world of physical culture: The potential of visual methods for qualitative research in sport and exercise",
-      "url": "https://doi.org/10.1080/19398441.2010.488017",
-      "volume": "2"
-    },
-    {
-      "DOI": "10/cz44dk",
-      "ISSN": "0074-7769",
-      "abstractNote": "\"There are few words in the English language which have such a muliplicity of divergent meanings as the word sport.\" A detailed scrutiny of the substantial sociology of sport literature indicates that the problem of definition is one of the most basic and extensive, if highly contentious issues are to be found in the field. Despite the importance of the problem, debate continues, inaccurate and contra dictory statements abound, and consensus is largely absent. This paper attempts to overcome limited views to produce an adequate definition of sport, to locate its precise boundaries, and to ferret out its essential core., The research procedure consists of five major components: (1) a preliminary assessment of the requirements and difficulties of the task; (2) a systematic de lineation of the individual factors and characteristics deemed to be essential com ponents of the concept of sport in a rigorous scrutiny of more than fifty research studies which concern themselves, at least in part, with this task; (3) an extended, critical analysis of three major characteristics-the necessity and nature of physical skill or prowess, institutionalization, and the \"play-game-sport\" continuum; (4) the presentation of work towards an acceptable definition of sport; and (5) a differen tiation of the concept of sport from the concepts of play and game.",
-      "accessDate": "2019-04-24T09:00:27Z",
-      "attachments": [
-        {
-          "itemType": "attachment",
-          "path": "/Users/jp/Documents/Reference/Papers/Meier/meier (1981) - on the inadequacies of sociological definitions of sport.pdf",
-          "title": "meier (1981) - on the inadequacies of sociological definitions of sport.pdf",
-          "uri": "http://zotero.org/users/1510432/items/SDE5XB3H"
-        }
-      ],
-      "citationKey": "meier1981",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Klaus V.",
-          "lastName": "Meier"
-        }
-      ],
-      "date": "1981",
-      "issue": "2",
-      "itemID": 9,
-      "itemType": "journalArticle",
-      "language": "en",
-      "libraryCatalog": "SAGE Journals",
-      "pages": "79-102",
-      "publicationTitle": "International Review for the Sociology of Sport",
-      "title": "On the inadequacies of sociological definitions of sport",
-      "url": "https://doi.org/10.1177/101269028101600206",
-      "volume": "16"
+      "pages": "1-7",
+      "place": "Bingley, United Kingdom",
+      "publicationTitle": "Seeing is believing? Approaches to visual research",
+      "publisher": "Emerald Group",
+      "series": "Studies in qualitative methodology",
+      "shortTitle": "Visual research",
+      "title": "Visual research: Potential and overview",
+      "volume": "7"
     },
     {
       "DOI": "10/dkntrs",
@@ -747,187 +674,171 @@
       "volume": "364"
     },
     {
-      "ISBN": "978-0-203-01405-9",
+      "DOI": "10/b4mz6g",
+      "ISSN": "0193-7235",
+      "accessDate": "2019-04-22T21:49:26Z",
       "attachments": [
         {
           "itemType": "attachment",
-          "path": "/Users/jp/Documents/Reference/Papers/Duncan/duncan (2002) - the media image of sport and gender [annotated].pdf",
-          "title": "duncan (2002) - the media image of sport and gender [annotated].pdf",
-          "uri": "http://zotero.org/users/1510432/items/WNZ96Z9K"
+          "path": "/Users/jp/Documents/Reference/Papers/Kane/kane (1995) - resistance-transformation of the oppositional binary [annotated].pdf",
+          "title": "kane (1995) - resistance-transformation of the oppositional binary [annotated].pdf",
+          "uri": "http://zotero.org/users/1510432/items/DHJENFZC"
         },
         {
           "itemType": "attachment",
-          "path": "/Users/jp/Documents/Reference/Papers/Duncan/duncan (2002) - the media image of sport and gender.pdf",
-          "title": "duncan (2002) - the media image of sport and gender.pdf",
-          "uri": "http://zotero.org/users/1510432/items/LIND7XBZ"
+          "path": "/Users/jp/Documents/Reference/Papers/Kane/kane (1995) - resistance-transformation of the oppositional binary.pdf",
+          "title": "kane (1995) - resistance-transformation of the oppositional binary.pdf",
+          "uri": "http://zotero.org/users/1510432/items/2HUMB3WY"
         }
       ],
-      "citationKey": "duncan2002",
+      "citationKey": "kane1995",
       "creators": [
         {
-          "creatorType": "editor",
-          "firstName": "Lawrence",
-          "lastName": "Wenner"
-        },
-        {
           "creatorType": "author",
-          "firstName": "Margaret Carlisle",
-          "lastName": "Duncan"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Michael A.",
-          "lastName": "Messner"
+          "firstName": "Mary Jo",
+          "lastName": "Kane"
         }
       ],
-      "date": "2002",
-      "itemID": 21,
-      "itemType": "bookSection",
+      "date": "1995",
+      "issue": "2",
+      "itemID": 6,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Journal of Sport and Social Issues",
       "language": "en",
-      "libraryCatalog": "ProQuest Ebook Central",
+      "libraryCatalog": "SAGE Journals",
       "notes": [
-        "<p><strong>Extracted Annotations (27/04/2019, 17:37:58)</strong></p>\n<p>\"Sport in the twentieth century has given men an arena in which to create and reinforce an ideology of male superiority\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=1\">Duncan 2002:170</a>)</p>\n<p>\"by making athleticism virtually synonymous with masculinity, sport provides opportunities for men to assert their dominance at a time when male hegemony is continually challenged and opposed in everyday life.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=1\">Duncan 2002:170</a>)</p>\n<p>\"sports media have been slow to register these changes, perhaps because athletic women and girls symbolically threaten masculine hegemony\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=1\">Duncan 2002:170</a>)</p>\n<p>\"Amount of Coverage\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=2\">Duncan 2002:171</a>)</p>\n<p>\"PRODUCTION\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=2\">Duncan 2002:171</a>)</p>\n<p>\"The underrepresentation of female athletes and the overrepresentation of male athletes\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=3\">Duncan 2002:172</a>)</p>\n<p>\"Technical Quality\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=3\">Duncan 2002:172</a>)</p>\n<p>\"Camera work, editing, and sound were decidedly better in men's games than women's games. More slowmotion replays and more onscreen statistics enhanced the viewing of the men's game.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=3\">Duncan 2002:172</a>)</p>\n<p>\"Intentional Audience Building\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=4\">Duncan 2002:173</a>)</p>\n<p>\"the media do not simply report news; they actively construct it by framing it, that is, by offering a context for viewing or understanding an event\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=4\">Duncan 2002:173</a>)</p>\n<p>\"Television producers have sometimes argued that the sports audience is composed mostly of men who aren't interested in women's sports; therefore, producers are simply giving viewers what they want by devoting more resources to the men's games.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=4\">Duncan 2002:173</a>)</p>\n<p>\"strategies insure that audiences will be primed and eager to watch championship games\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=5\">Duncan 2002:174</a>)</p>\n<p>\"media \"neglect\" are probably not conscious strategies used by producers to discriminate against women\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=5\">Duncan 2002:174</a>)</p>\n<p>\"ATTRIBUTIONS\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=5\">Duncan 2002:174</a>)</p>\n<p>\"attributions that encompass the most commonly used descriptions of athletes. We call these: a) larger than life, b) strength versus weakness, and c) agency. Each category exaggerates the differences and inequalities of male and female athletes. The use of these categories also naturalizes inequality by making it appear to be biologically essential that men and women differ in these characteristic ways.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=5\">Duncan 2002:174</a>)</p>\n<p>\"Male Athletes: Larger than Life/Symbolic Superiority\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=5\">Duncan 2002:174</a>)</p>\n<p>\"the social positioning of\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=5\">Duncan 2002:174</a>)</p>\n<p>\"males and females as unambiguous binary opposites (e.g., men as \"big\" and \"strong,\" women as \"small\" and \"weak\") obscures the existence of a continuum of performance (rather than categorical gender differences) in sport\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=6\">Duncan 2002:175</a>)</p>\n<p>\"Because it is so important ideologically for male athletes to maintain this image of strength and power, media characterizations tend to play up images of strong men.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=6\">Duncan 2002:175</a>)</p>\n<p>\"Strength and Weakness\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=6\">Duncan 2002:175</a>)</p>\n<p>\"left the viewer with the impression that while men, overall, were extremely powerful, women were only moderately so\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=6\">Duncan 2002:175</a>)</p>\n<p>\"practice of undermining sportswomen's accomplishments by coupling suggestions of strength with suggestions of weakness has been called \"ambivalence\"\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=6\">Duncan 2002:175</a>)</p>\n<p>\"Meanings connoting strength and weakness are suggested by the athlete's physical appearance, poses, body positions, facial expressions, emotional displays, and camera angles; captions function to anchor those meanings.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=7\">Duncan 2002:176</a>)</p>\n<p>\"diverting attention from women as strong and competent athletes and reducing them to sexual objects.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=7\">Duncan 2002:176</a>)</p>\n<p>\"Sportswomen were more likely to be photographed in postures connoting deference (lower physical positions, smaller size, head and body canting) than men, while men were more likely portrayed in postures connoting dominance (higher physical elevation, larger size, positions of protectiveness and distance) than women.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=7\">Duncan 2002:176</a>)</p>\n<p>\"Active poses (which highlighted athleticism) were more characteristic of the way male athletes were photographed; passive poses (in which the athletes were obviously positioned for the camera or were motionless) were more typical of the way female athletes were photographed.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=7\">Duncan 2002:176</a>)</p>\n<p>\"Female athletes were more often shown in tears or being consoled by others after a defeat than were male athletes.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=7\">Duncan 2002:176</a>)</p>\n<p>\"Consistent with this emphasis on male strength is the symbolic suppression of weakness; attributions that might call the power or competence of a male athlete into question tend to be minimized.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=7\">Duncan 2002:176</a>)</p>\n<p>\"the tendency of the sports media to feature female athletes passively posing, rather than actively engaged in their sport.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=7\">Duncan 2002:176</a>)</p>\n<p>\"the message that what is valued about women is not their athleticism, but their appearance\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=7\">Duncan 2002:176</a>)</p>\n<p>\"Agency: Successes and Failures\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=8\">Duncan 2002:177</a>)</p>\n<p>\"the framing of men as active agents, engineering their own successes and their opponents' failures. By contrast, women were framed as passive, reactive agents, succeeding sometimes because of their talent, but also because of forces outside their control (luck, family support). More significantly, women were framed as failing because of their own inability to take control.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=8\">Duncan 2002:177</a>)</p>\n<p>\"success was attributed to men's competence, and failure to their opponents' competence.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=8\">Duncan 2002:177</a>)</p>\n<p>\"women's failure was thus almost always attributed to the women's incompetence,\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=8\">Duncan 2002:177</a>)</p>\n<p>\"the use of stereotyped attributions such as emotional vulnerability to account for sportswomen's failures.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=8\">Duncan 2002:177</a>)</p>\n<p>\"FORMULAE OF EXCLUSION\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=9\">Duncan 2002:178</a>)</p>\n<p>\"commentators have considerable power to define audiences' expectations about how athletes will perform.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=9\">Duncan 2002:178</a>)</p>\n<p>\"render some attributes of the players socially visible by bringing those qualities to the audience's attention; simultaneously commentators make other characteristics of the athletes socially invisible. This social structure of visibility and invisibility must then constantly be defended; we refer to these defensive discursive practices as \"formulae of exclusion\"\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=9\">Duncan 2002:178</a>)</p>\n<p>\"Missing in Action\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=9\">Duncan 2002:178</a>)</p>\n<p>\"The first formula of exclusion related to the language of \"misses\" in women's basketball in contrast with the representation of success in men's\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=9\">Duncan 2002:178</a>)</p>\n<p>\"In the men's games, commentary functioned to linguistically transform errors into successes.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=9\">Duncan 2002:178</a>)</p>\n<p>\"yet it was virtually absent in the women's games\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=9\">Duncan 2002:178</a>)</p>\n<p>\"The Secret Agent\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=10\">Duncan 2002:179</a>)</p>\n<p>\"The second formula of exclusion was the way commentators accounted for errors during play. Commentators of the men's game softened or even neutralized suggestions of incompetence by alluding to mitigating circumstances\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=10\">Duncan 2002:179</a>)</p>\n<p>\"errors were minimized by suggesting they didn't reflect the players' true skill\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=10\">Duncan 2002:179</a>)</p>\n<p>\"In the corresponding women's games, there were virtually no accounts that mitigated errors in women's play,\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=10\">Duncan 2002:179</a>)</p>\n<p>\"constructed an impression that women's errors were due to their own unmitigated incompetence.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=10\">Duncan 2002:179</a>)</p>\n<p>\"This impression was strengthened by the frequent subtraction of agency in commentary when a male player missed the basket or made another error, and the frequent emphasis on flawed agency in expert commentary when a female player missed the basket.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=10\">Duncan 2002:179</a>)</p>\n<p>\"SYMBOLIC DOMINANCE\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=11\">Duncan 2002:180</a>)</p>\n<p>\"Symbolic dominance emphasizes the difference between men and women, where men represent the standard and women represent the Other. It positions men as dominant, women as subordinate\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=11\">Duncan 2002:180</a>)</p>\n<p>\"Asymmetrical Gender Marking\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=11\">Duncan 2002:180</a>)</p>\n<p>\"the verbal and visual \"marking\" of female athletes.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=11\">Duncan 2002:180</a>)</p>\n<p>\"cast female athletes in a derivative, secondary role\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=11\">Duncan 2002:180</a>)</p>\n<p>\"Infantilization/Hierarchies of Naming\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=11\">Duncan 2002:180</a>)</p>\n<p>\"contrasts between how men athletes and women athletes were referred to by commentators.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=11\">Duncan 2002:180</a>)</p>\n<p>\"symbolically \"infantilized\" mature women.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=11\">Duncan 2002:180</a>)</p>\n<p>\"labeling of women as child-like and the contrasting labeling of men as adults, we also\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=11\">Duncan 2002:180</a>)</p>\n<p>\"discovered \"hierarchies of naming.\"\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=12\">Duncan 2002:181</a>)</p>\n<p>\"women were called by only their first name 41.4 percent of the time, while men were never referred to at all by only their first name. These contrasts in the identification and labeling of athletes served to linguistically \"infantilize\" and subordinate women, while men were raised to full adult status\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=12\">Duncan 2002:181</a>)</p>\n<p>\"asymmetrical practice of referring formally to dominants but informally to subordinates reflects and reconstructs social inequities,\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=12\">Duncan 2002:181</a>)</p>\n<p>\"Sexualization\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=12\">Duncan 2002:181</a>)</p>\n<p>\"epitomizes the sport media's treatment of female athletes and because this theme serves as a summary of all the\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=12\">Duncan 2002:181</a>)</p>\n<p>\"arguments and illustrations that precede it.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=13\">Duncan 2002:182</a>)</p>\n<p>\"Appearance\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=13\">Duncan 2002:182</a>)</p>\n<p>\"Stereotyping female athletes as attractive and feminine shifts attention from their physical prowess to their looks and minimizes the symbolic threat sportswomen pose to male hegemony\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=13\">Duncan 2002:182</a>)</p>\n<p>\"women athletes' appearance\u2014their personal beauty or clothing\u2014was fundamental to fans' assessments of their performance\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=13\">Duncan 2002:182</a>)</p>\n<p>\"Difference is also constructed by media sex-typing: when there is coverage of women, it tends to be in sex \"appropriate\" sports or physical activities: individual, aesthetically pleasing events such as figure-skating, gymnastics, tennis, swimming, diving\u2014all sports thought to be consistent with conventional \"femininity\"\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=13\">Duncan 2002:182</a>)</p>\n<p>\"When sexually objectified in this way, women are symbolically subordinated to the erotic desires of men.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=13\">Duncan 2002:182</a>)</p>\n<p>\"When the sports media highlight men's sexuality, it is almost always within the context of heterosexual conquests\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=13\">Duncan 2002:182</a>)</p>\n<p>\"The Humorous Sexualization of Women\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=13\">Duncan 2002:182</a>)</p>\n<p>\"women were portrayed repeatedly in the sports media as humorous sex objects rather than as serious athletes\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=13\">Duncan 2002:182</a>)</p>\n<p>\"coverage of women's sports continued to focus on the humorous, exotic, and weird, endowing stories on female athletes with a kind of freakshow aura\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=14\">Duncan 2002:183</a>)</p>\n<p>\"the great preponderance of coverage cast men as strong, competent athletes. Men's status as athletes was never seriously compromised by the rare humorous portrayal.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=14\">Duncan 2002:183</a>)</p>\n<p>\"Sexual Orientation\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=14\">Duncan 2002:183</a>)</p>\n<p>\"much media commentary emphasizes sportswomen's sexuality, femininity, or status as wives and mothers, thereby effectively trivializing their athletic achievements.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=14\">Duncan 2002:183</a>)</p>\n<p>\"labeling female athletes as lesbians is an \"effective form of containment precisely because we live in a homophobic culture that views lesbians and gay men negatively\"\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=14\">Duncan 2002:183</a>)</p>\n<p>\"an easy way to discredit female athletes is to cast aspersions on their sexuality so their accomplishments can be dismissed as abnormal, freakish, deviant.\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=14\">Duncan 2002:183</a>)</p>\n<p>\"Some current research suggests that instead of reducing gender hierarchies, media globalization may simply lead to the reinforcement of conventional patriarchal hierarchies on a worldwide scale\" (<a href=\"zotero://open-pdf/library/items/WNZ96Z9K?page=16\">Duncan 2002:185</a>)</p>"
+        "<p><strong>Extracted Annotations (24/04/2019, 13:22:35)</strong></p>\n<p>\"the fundamental role sport plays in producing and maintaining patriarchal ideologies and arrangements with respect to gender. At the heart of this critique is the notion of biological determinism whereby all human beings are assumed to fit, by nature, into unambiguous and oppositional bipolar categories of \"female\" and \"male\"\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=1\">Kane 1995:191</a>)</p>\n<p>\"Within this biology-is-destiny paradigm, the apparent given-by-nature dichotomous category of gender forces a polarization between the sexes that ignores overlap; differences are systematically emphasized whereas similarities are ignored\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=1\">Kane 1995:191</a>)</p>\n<p>\"Many feminist scholars have challenged the notion of biological reductionism and the dualism it produces by showing how there are no natural categories of male and female; our conceptions of \"woman\" and \"man\" are never separate from larger social relations\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=1\">Kane 1995:191</a>)</p>\n<p>\"there is a \"constant, complex and often unrecognizable interaction between biology and culture\" (Hall, 1990, p. 224) in which human bodies are manipulated and socially constituted\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=1\">Kane 1995:191</a>)</p>\n<p>\"The net result of this analysis is that gender is seen not as the natural outcome of a biological imperative but as the product of a patriarchal social construction.\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=1\">Kane 1995:191</a>)</p>\n<p>\"sport becomes an ideal setting for reinforcing fundamental assumptions underlying biological reductionism.\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=1\">Kane 1995:191</a>)</p>\n<p>\"sport establishes and articulates the \"assumption that there are two, and only two, obviously universal, bipolar, mutually exclusive sexes\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=1\">Kane 1995:191</a>)</p>\n<p>\"that necessarily correspond to stable gender identity and gendered behavior\"\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=2\">Kane 1995:192</a>)</p>\n<p>\"it constructs and vigilantly maintains gender difference as (a) hierarchically ordered and (b) grounded in the physical body and thus perceived as biologically, inherently based\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=2\">Kane 1995:192</a>)</p>\n<p>\"in the larger social debate surrounding biological reductionism versus social constructionism, sport sociologists have illustrated why the connection between sport and gender is a particularly powerful tool for hegemonic masculinity.\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=2\">Kane 1995:192</a>)</p>\n<p>\"during a time period when other symbols and institutions of male supremacy are faltering, sport can provide incontrovertible evidence of male superiority. This is because sport is preoccupied with measurable physical differences between the sexes in which heights, scores, and distances are obsessively recorded and compared\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=2\">Kane 1995:192</a>)</p>\n<p>\"These differences provide daily, commonsense, apparent empirical proof that men are naturally superior to women\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=2\">Kane 1995:192</a>)</p>\n<p>\"sport is an ideological construct rather than an inherent given, it must be reinforced continually and systematically. It also undergoes constant challenge because dominant ideologies are\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=2\">Kane 1995:192</a>)</p>\n<p>\"never uncontested,\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=3\">Kane 1995:193</a>)</p>\n<p>\"sport is a site of cultural struggle in which male hegemony is dependent on the continual reproduction of unequal power relations between women and men. This struggle is never complete; it is in a constant state of flux and negotiation between dominant and subordinate groups.\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=3\">Kane 1995:193</a>)</p>\n<p>\"It is this sense of negotiation, challenge, and struggle that has led a number of authors to analyze sport as a site of resistance to and transformation of ideologies and practices of domination and oppression\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=3\">Kane 1995:193</a>)</p>\n<p>\"there exists today a sport continuum in which many women routinely outperform many men and, in some cases, women outperform most-if not all-men in a variety of sports and physical skills/activities. The acknowledgment of such a continuum could provide a direct assault on traditional beliefs about sport-and gender itself-as an inherent, oppositional binary that is grounded in biological difference.\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=3\">Kane 1995:193</a>)</p>\n<p>\"First is the suggestion that we expand the definition of sport to include a wider range of sporting activities. A second suggestion is that we elevate in status those sports, physical skills, and attributes traditionally associated with females\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=5\">Kane 1995:195</a>)</p>\n<p>\"change current patriarchal definitions of what it means to be an athlete.\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=5\">Kane 1995:195</a>)</p>\n<p>\"rejected the values embedded in men's sports-an overemphasis on winning, hierarchy, elitism, exclusivity (e.g., heterosexism), disparagement of opponents, and an ethic of endangerment\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=6\">Kane 1995:196</a>)</p>\n<p>\"The feminist principles adopted by these leagues can include issues of safety, cooperation, shared decision making, and collectivity. In this model, enjoyment and friendship become the priorities\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=6\">Kane 1995:196</a>)</p>\n<p>\"biology-is-destiny theme-the muscle gap. This ideological construct refers to the degree of difference that exists when comparing women's and men's performances in the same sport or physical activity.\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=8\">Kane 1995:198</a>)</p>\n<p>\"comparisons in which females are systematically shown to be inherently inferior athletes\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=8\">Kane 1995:198</a>)</p>\n<p>\"explaining and defending performance differences between women and men as predictable outcomes of\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=8\">Kane 1995:198</a>)</p>\n<p>\"hegemonic masculinity\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=8\">Kane 1995:198</a>)</p>\n<p>\"males are the biological norm against which women are compared and subsequently seen as different\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=9\">Kane 1995:199</a>)</p>\n<p>\"range of performance differences among numerous women and men-\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=10\">Kane 1995:200</a>)</p>\n<p>\"By emphasizing comparisons based on an average difference, Messner limits any discussion of a range of performance differences among males and females\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=10\">Kane 1995:200</a>)</p>\n<p>\"athletic performance is not primarily a result of physical difference; factors such as coaching, training, discipline, strategy, and mental toughness come into play\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=11\">Kane 1995:201</a>)</p>\n<p>\"many women are bigger, faster, and stronger than many men.\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=11\">Kane 1995:201</a>)</p>\n<p>\"it does not automatically follow that every elite male can outperform every elite female in these same sports\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=11\">Kane 1995:201</a>)</p>\n<p>\"it is because of this socially constructed and rigidly maintained sport structure that females are truly at a disadvantage\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=11\">Kane 1995:201</a>)</p>\n<p>\"By focusing our examples on sports and physical activities that are considered lesser to begin with, we keep alive the belief that women can only hope to compete against men in a very limited, narrow capacity\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=12\">Kane 1995:202</a>)</p>\n<p>\"She should be able to do this; it is perceived as her natural domain. Because the binary is threatened only when we see women exhibit skills or possess physical attributes that are considered malelike or outperform men in a sport traditionally identified with males, this is something we rarely, if ever, get to experience.\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=13\">Kane 1995:203</a>)</p>\n<p>\"In ever-expanding spheres of physical activity, they are demonstrating that they can do more than move through space in aesthetically pleasing ways.\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=14\">Kane 1995:204</a>)</p>\n<p>\"if women were allowed to compete against men, the very integrity of sport would be put at risk:\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=14\">Kane 1995:204</a>)</p>\n<p>\"men have refused to participate when asked or forced to compete against (or even with) women. Does not such a reaction undermine any arguments about women as naturally inferior athletes?\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=15\">Kane 1995:205</a>)</p>\n<p>\"sport as a \"proving ground for masculinity can only be preserved as such by the exclusion of women from the activity\"\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=15\">Kane 1995:205</a>)</p>\n<p>\"They are deeply afraid that many women can outperform them, even in those sports and physical skills/attributes that they have claimed as their own. What better way to deflect such fears than to create segregationist ideologies and practices that will ensure that these possibilities rarely (if ever) come to pass?\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=16\">Kane 1995:206</a>)</p>\n<p>\"defining some sports as exclusively male or female to taking sports in which both women and men participate and recasting them into dichotomous categories of women's sports and men's sport\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=16\">Kane 1995:206</a>)</p>\n<p>\"In the case of gymnastics, even though women and men participate in the same sport, they engage in an entirely different set of events\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=17\">Kane 1995:207</a>)</p>\n<p>\"Tennis offers a more subtle example of the imposition of the oppositional binary\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=17\">Kane 1995:207</a>)</p>\n<p>\"combative sports such as ice hockey and rugby require physical attributes such as strength, speed, and aggressiveness. Evidence that thousands of women eagerly pursue this kind of physical activity and possess these kinds of physical characteristics needs to be suppressed;\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=18\">Kane 1995:208</a>)</p>\n<p>\"what regendering reveals is that to receive this kind of praise, she must be (temporarily at least) considered anything but female.\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=18\">Kane 1995:208</a>)</p>\n<p>\"e marathon.\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=19\">Kane 1995:209</a>)</p>\n<p>\"Even though one race is appearing before our eyes, it is constructed as two separate races based on oppositional sexual difference:\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=19\">Kane 1995:209</a>)</p>\n<p>\"because only one type of gender comparison is emphasized while all other possibilities are completely dismissed, we are taught to read these performance differences only in ways that privilege men.\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=19\">Kane 1995:209</a>)</p>\n<p>\"labels certain sportswomen as deviant-mutants. This label refers to a female athlete who so deviates from traditional expectations of femininity that her biological standing as a \"real\" female is called into question. The deviant-mutant's crime is that she exhibits such a high degree of athletic competence, or possesses such physical characteristics as muscle mass, size, and strength, that she becomes a dangerous, suspicious outlier\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=20\">Kane 1995:210</a>)</p>\n<p>\"Deviant-mutants are typically contained in one of two interrelated\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=20\">Kane 1995:210</a>)</p>\n<p>\"ways. First, they are required to take a chromosomal sex test to prove that they are real females. Second, . they are branded as lesbians. In both instances, their mutant status derives from concerns about their true biological nature\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=20\">Kane 1995:210</a>)</p>\n<p>\"Not only do these women have to prove (with\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=20\">Kane 1995:210</a>)</p>\n<p>\"laboratory test results) that they are not biological mutants because they so deviate from patriarchal conceptions of female capacity, they are also required to carry their \"certificate of femininity\" at all times during international competition.\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=21\">Kane 1995:211</a>)</p>\n<p>\"One reason lesbians are suspicious is that they do not fit neatly into bipolar conceptions of gender and sexuality. As such, they can off er contradictory evidence that gender does not consist of two mutually exclusive oppositional categories\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=21\">Kane 1995:211</a>)</p>\n<p>\"If female athletes provide empirical evidence that they can, for example, develop great upper body strength or outperform men in a \"man's sport;' they must be discredited in ways that keep the notion of natural male supremacy intact.\" (<a href=\"zotero://open-pdf/library/items/DHJENFZC?page=22\">Kane 1995:212</a>)</p>"
       ],
-      "pages": "170-185",
-      "place": "London, United Kingdom",
-      "publicationTitle": "MediaSport",
-      "publisher": "Routledge",
-      "title": "The media image of sport and gender"
+      "pages": "191-218",
+      "publicationTitle": "Journal of Sport and Social Issues",
+      "shortTitle": "Resistance/transformation of the oppositional binary",
+      "title": "Resistance/transformation of the oppositional binary: Exposing sport as a continuum",
+      "url": "https://doi.org/10.1177/019372395019002006",
+      "volume": "19"
     },
     {
-      "ISBN": "978-0-415-30639-3",
-      "citationKey": "grady2004",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "J.",
-          "lastName": "Grady"
-        },
-        {
-          "creatorType": "editor",
-          "firstName": "Caroline",
-          "lastName": "Knowles"
-        },
-        {
-          "creatorType": "editor",
-          "firstName": "Paul",
-          "lastName": "Sweetman"
-        }
-      ],
-      "date": "2004",
-      "itemID": 22,
-      "itemType": "bookSection",
-      "language": "en",
-      "libraryCatalog": "Amazon",
-      "pages": "18-32",
-      "place": "New York, NY",
-      "publicationTitle": "Picturing the social landscape: Visual methods and the sociological imagination",
-      "publisher": "Routledge",
-      "shortTitle": "Working with visible evidence",
-      "title": "Working with visible evidence: An invitation and some practical advice"
-    },
-    {
-      "ISBN": "978-0-415-30639-3",
-      "citationKey": "knowles2004",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Caroline",
-          "lastName": "Knowles"
-        },
-        {
-          "creatorType": "editor",
-          "firstName": "Caroline",
-          "lastName": "Knowles"
-        },
-        {
-          "creatorType": "editor",
-          "firstName": "Paul",
-          "lastName": "Sweetman"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Paul",
-          "lastName": "Sweetman"
-        }
-      ],
-      "date": "2004",
-      "itemID": 23,
-      "itemType": "bookSection",
-      "language": "en",
-      "libraryCatalog": "Amazon",
-      "pages": "1-17",
-      "place": "New York, NY",
-      "publicationTitle": "Picturing the social landscape: Visual methods and the sociological imagination",
-      "publisher": "Routledge",
-      "title": "Introduction"
-    },
-    {
-      "ISBN": "978-0-7623-1021-0",
+      "DOI": "10/bqwfc8",
+      "ISSN": "0193-7235",
+      "abstractNote": "This article examines two action sports\u2014skydiving and snowboarding\u2014as cases of women on men's turf and explores the construction of gender in the ways women negotiate space in these male-dominated arenas. It investigates some of the ways in which women's participation in these activities is constrained and the strategies women employ to carve out spaces for themselves in these sporting contexts. Women in both sports tend to engage in strategies rooted in middle-class and liberal notions of resistance. Most of these exemplify what researchers have called \u201creproductive agency.\u201d Some strategies, however, seem to exemplify \u201cresistant agency.\u201d The article explores the potential of these strategies to bring about meaningful social change.",
+      "accessDate": "2019-04-22T21:52:42Z",
       "attachments": [
         {
           "itemType": "attachment",
-          "path": "/Users/jp/Documents/Reference/Papers/Pole/pole (2015) - visual research [annotated].pdf",
-          "title": "pole (2015) - visual research [annotated].pdf",
-          "uri": "http://zotero.org/users/1510432/items/WEK2C9NN"
+          "path": "/Users/jp/Documents/Reference/Papers/Laurendeau/laurendeau (2008) - 'women could be every bit as good as guys' [annotated].pdf",
+          "title": "laurendeau (2008) - 'women could be every bit as good as guys' [annotated].pdf",
+          "uri": "http://zotero.org/users/1510432/items/VNRW7DW9"
         },
         {
           "itemType": "attachment",
-          "path": "/Users/jp/Documents/Reference/Papers/Pole/pole (2015) - visual research.pdf",
-          "title": "pole (2015) - visual research.pdf",
-          "uri": "http://zotero.org/users/1510432/items/BRGCK6UN"
+          "path": "/Users/jp/Documents/Reference/Papers/Laurendeau/laurendeau (2008) - 'women could be every bit as good as guys'.pdf",
+          "title": "laurendeau (2008) - 'women could be every bit as good as guys'.pdf",
+          "uri": "http://zotero.org/users/1510432/items/WILJ8AJY"
         }
       ],
-      "citationKey": "pole2004",
+      "citationKey": "laurendeau2008",
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Christopher J.",
-          "lastName": "Pole"
+          "firstName": "Jason",
+          "lastName": "Laurendeau"
         },
         {
-          "creatorType": "editor",
-          "firstName": "Christopher J.",
-          "lastName": "Pole"
+          "creatorType": "author",
+          "firstName": "Nancy",
+          "lastName": "Sharara"
         }
       ],
-      "date": "2004",
-      "itemID": 24,
-      "itemType": "bookSection",
+      "date": "2008",
+      "issue": "1",
+      "itemID": 7,
+      "itemType": "journalArticle",
       "language": "en",
-      "libraryCatalog": "www-emeraldinsight-com.ezproxy.otago.ac.nz (Atypon)",
+      "libraryCatalog": "SAGE Journals",
       "notes": [
-        "<p><strong>Extracted Annotations (24/04/2019, 13:23:40)</strong></p>\n<p>\"visual research has the capacity to offer a different way of understanding the social world.\" (<a href=\"zotero://open-pdf/library/items/WEK2C9NN?page=7\">Pole 2004:7</a>)</p>\n<p>\"visual methods provide access to different aspects of the social world, not possible by other means\" (<a href=\"zotero://open-pdf/library/items/WEK2C9NN?page=7\">Pole 2004:7</a>)</p>"
+        "<p><strong>Extracted Annotations (24/04/2019, 13:22:39)</strong></p>\n<p>\"with the relatively recent emergence of alternative sports, several ostensibly gender-neutral \"action\" sports have proliferated.1\" (<a href=\"zotero://open-pdf/library/items/VNRW7DW9?page=1\">Laurendeau 2008:24</a>)</p>\n<p>\"So-called \"risk\" sports have been and continue to be considered male domain, as both risk and sport have come to be associated with particular notions of masculinity\" (<a href=\"zotero://open-pdf/library/items/VNRW7DW9?page=2\">Laurendeau 2008:25</a>)</p>\n<p>\"millennium\" sports present unique opportunities for shifts in gender equity, as the organization and values embedded in these sports are constantly up for negotiation.\" (<a href=\"zotero://open-pdf/library/items/VNRW7DW9?page=3\">Laurendeau 2008:26</a>)</p>\n<p>\"women in Adventure Racing are valued for their \"teaming\" skills, and simultaneously constructed as \"mandatory equipment\" on mixed gender teams.\" (<a href=\"zotero://open-pdf/library/items/VNRW7DW9?page=3\">Laurendeau 2008:26</a>)</p>\n<p>\"Women face the complex task of negotiating for themselves a space in a sporting arena that makes sense for them. In the process, though, they often engage in \"configurations of practice\"\" (<a href=\"zotero://open-pdf/library/items/VNRW7DW9?page=5\">Laurendeau 2008:28</a>)</p>\n<p>\"that reproduce forms of marginalization and trivialization faced by some or all women\" (<a href=\"zotero://open-pdf/library/items/VNRW7DW9?page=5\">Laurendeau 2008:28</a>)</p>"
       ],
-      "pages": "1-7",
-      "place": "Bingley, United Kingdom",
-      "publicationTitle": "Seeing is believing? Approaches to visual research",
-      "publisher": "Emerald Group",
-      "series": "Studies in qualitative methodology",
-      "shortTitle": "Visual research",
-      "title": "Visual research: Potential and overview",
-      "volume": "7"
+      "pages": "24-47",
+      "publicationTitle": "Journal of Sport and Social Issues",
+      "shortTitle": "'Women could be every bit as good as guys'",
+      "title": "'Women could be every bit as good as guys': Reproductive and resistant agency in two 'action' sports",
+      "url": "https://doi.org/10.1177/0193723507307819",
+      "volume": "32"
     },
     {
-      "ISBN": "978-1-4462-1116-8",
-      "citationKey": "pink2013",
+      "DOI": "10/ccgb29",
+      "ISSN": "1939-8441",
+      "abstractNote": "Adopting visual methods can enhance our understanding of the social world. By encompassing a multitude of forms including photographs, videos, maps, diagrams, symbols and so forth, images can provide specific information about our existence. They can also act as powerful indicators regarding the multiple meanings embedded within our culture. One domain where the use of visual methods has been less well documented is that of physical culture. Physical culture is taken here to mean human physical movement occurring within recognised cultural domains such as sport, dance and, more broadly, outdoor and indoor recreational activities involving expression through physicality. Opening this special edition of Qualitative Research in Sport and Exercise on \u2018Visual Methods in Physical Culture\u2019s\u2019, I provide some broad responses to the following questions: What are visual methods? Why might they be useful? How can they be utilised? I then outline some ongoing debates within the field surrounding issues of interpretation, representation and ethics. I conclude by positioning this special edition as a resource to assist with the continued use of visual methods in physical culture.",
+      "accessDate": "2019-04-22T05:11:05Z",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "path": "/Users/jp/Documents/Reference/Papers/Phoenix/phoenix (2010) - seeing the world of physical culture [annotated].pdf",
+          "title": "phoenix (2010) - seeing the world of physical culture [annotated].pdf",
+          "uri": "http://zotero.org/users/1510432/items/FWFB3EHR"
+        },
+        {
+          "itemType": "attachment",
+          "path": "/Users/jp/Documents/Reference/Papers/Phoenix/phoenix (2010) - seeing the world of physical culture.pdf",
+          "title": "phoenix (2010) - seeing the world of physical culture.pdf",
+          "uri": "http://zotero.org/users/1510432/items/897FIDZQ"
+        }
+      ],
+      "citationKey": "phoenix2010",
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Sarah",
-          "lastName": "Pink"
+          "firstName": "Cassandra",
+          "lastName": "Phoenix"
         }
       ],
-      "date": "2013",
-      "edition": "3",
-      "itemID": 25,
-      "itemType": "book",
+      "date": "2010",
+      "issue": "2",
+      "itemID": 8,
+      "itemType": "journalArticle",
       "language": "en",
-      "libraryCatalog": "Amazon",
-      "numPages": "248",
-      "place": "London, United Kingdom",
-      "publisher": "SAGE",
-      "title": "Doing visual ethnography"
+      "libraryCatalog": "Taylor and Francis+NEJM",
+      "notes": [
+        "<p><strong>Extracted Annotations (24/04/2019, 13:23:38)</strong></p>\n<p>\"They can also act as powerful indicators regarding the multiple meanings embedded within our culture\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=1\">Phoenix 2010:93</a>)</p>\n<p>\"adopting visual methods has the potential to further develop our understanding of the social world.\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=1\">Phoenix 2010:93</a>)</p>\n<p>\"According to Harrison (2004), 'visual methods' describes any research design, which utilises visual evidence.\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=2\">Phoenix 2010:94</a>)</p>\n<p>\"renders the world in visual terms, enabling insight into what the eye can physiologically see ('vision'), and also how vision is culturally constructed ('visuality'; Rose 2007). For Grady (2004), an image can be extremely objective - a record of what occurred at a given moment - yet its interpretation is entirely subjective.\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=2\">Phoenix 2010:94</a>)</p>\n<p>\"They can act as an impetus for asking questions such as: How are we able to see? How are we allowed to see it? How are we made to see? What is being seen, and how is it socially shaped?\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=2\">Phoenix 2010:94</a>)</p>\n<p>\"Knowles and Sweetman's (2004) suggestion that visuality is a fundamental fact of social existence, and that sighted individuals navigate the social world visually\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=2\">Phoenix 2010:94</a>)</p>\n<p>\"Thinking, writing, presenting and discussing with images, suggests Grady (2004), can make arguments more vivid and more lucid than alternative forms of representation. Visual images, therefore, have the ability to construct and convey arguments whilst powerfully indicating the multiple meanings embedded within (physical) culture\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=2\">Phoenix 2010:94</a>)</p>\n<p>\"Photographs 'may not provide us with unbiased, objective documentation of the social and material world, but they can show characteristic attributes of people, objects, and events that often\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=3\">Phoenix 2010:95</a>)</p>\n<p>\"elude even the most skilled wordsmiths' (emphasis added, Prosser and Schwartz 1998, p. 116). These authors suggest that via photographs the researcher is able to explore relationships that may be subtle or easily overlooked\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=4\">Phoenix 2010:96</a>)</p>\n<p>\"Pink (2007) explains: The meanings of photographs are arbitrary and subjective; they depend on who is looking. The same photographic image may have a variety (perhaps conflicting) meanings invested in it at different stages of ethnographic research and representation, as it is viewed by different eyes and audiences in diverse temporal historical, spatial and cultural contexts. Photographs produced as part of an ethnographic project will be given different meanings by the subjects of those images, local people in that context, the researcher, and other (sometimes critical) audiences. (pp. 67-68)\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=5\">Phoenix 2010:97</a>)</p>\n<p>\"three areas where debate and discussion are rife: the issue of interpretation, the issue of representation and,\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=7\">Phoenix 2010:99</a>)</p>\n<p>\"briefly, the issue of ethics\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=8\">Phoenix 2010:100</a>)</p>\n<p>\"One continual topic of contestation is that of interpretation\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=8\">Phoenix 2010:100</a>)</p>\n<p>\"By inserting written or spoken commentary alongside images, are we defeating the very power and purpose of the visual?\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=10\">Phoenix 2010:102</a>)</p>\n<p>\"it is through some form of verbalisation that we generally have to rely in order to gain understanding of an image\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=10\">Phoenix 2010:102</a>)</p>\n<p>\"Knowles and Sweetman (2004, p. 12) suggest that there are a number of key difficulties with visual methods, not least considerations that should include, 'the problem of ascribing anonymity or confidentiality to research subjects who have been photographed, equipment costs associated with the use of photography and video, difficulties with dissemination - particularly where images are in a moving form - and issues of copyright where already existing images are employed'\" (<a href=\"zotero://open-pdf/library/items/FWFB3EHR?page=11\">Phoenix 2010:103</a>)</p>"
+      ],
+      "pages": "93-108",
+      "publicationTitle": "Qualitative Research in Sport and Exercise",
+      "shortTitle": "Seeing the world of physical culture",
+      "title": "Seeing the world of physical culture: The potential of visual methods for qualitative research in sport and exercise",
+      "url": "https://doi.org/10.1080/19398441.2010.488017",
+      "volume": "2"
+    },
+    {
+      "DOI": "10/cz44dk",
+      "ISSN": "0074-7769",
+      "abstractNote": "\"There are few words in the English language which have such a muliplicity of divergent meanings as the word sport.\" A detailed scrutiny of the substantial sociology of sport literature indicates that the problem of definition is one of the most basic and extensive, if highly contentious issues are to be found in the field. Despite the importance of the problem, debate continues, inaccurate and contra dictory statements abound, and consensus is largely absent. This paper attempts to overcome limited views to produce an adequate definition of sport, to locate its precise boundaries, and to ferret out its essential core., The research procedure consists of five major components: (1) a preliminary assessment of the requirements and difficulties of the task; (2) a systematic de lineation of the individual factors and characteristics deemed to be essential com ponents of the concept of sport in a rigorous scrutiny of more than fifty research studies which concern themselves, at least in part, with this task; (3) an extended, critical analysis of three major characteristics-the necessity and nature of physical skill or prowess, institutionalization, and the \"play-game-sport\" continuum; (4) the presentation of work towards an acceptable definition of sport; and (5) a differen tiation of the concept of sport from the concepts of play and game.",
+      "accessDate": "2019-04-24T09:00:27Z",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "path": "/Users/jp/Documents/Reference/Papers/Meier/meier (1981) - on the inadequacies of sociological definitions of sport.pdf",
+          "title": "meier (1981) - on the inadequacies of sociological definitions of sport.pdf",
+          "uri": "http://zotero.org/users/1510432/items/SDE5XB3H"
+        }
+      ],
+      "citationKey": "meier1981",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Klaus V.",
+          "lastName": "Meier"
+        }
+      ],
+      "date": "1981",
+      "issue": "2",
+      "itemID": 9,
+      "itemType": "journalArticle",
+      "language": "en",
+      "libraryCatalog": "SAGE Journals",
+      "pages": "79-102",
+      "publicationTitle": "International Review for the Sociology of Sport",
+      "title": "On the inadequacies of sociological definitions of sport",
+      "url": "https://doi.org/10.1177/101269028101600206",
+      "volume": "16"
     },
     {
       "ISSN": "0307-1235",
@@ -949,6 +860,95 @@
       "shortTitle": "Caster Semenya wins 800 m",
       "title": "Caster Semenya wins 800 m: Beaten GB finalist Lynsey Sharp criticises rule changes over 'obvious' hyperandrogenous women",
       "url": "https://www.telegraph.co.uk/news/2016/08/21/lynsey-sharp-criticises-obvious-hypoadrogenous-women-having-bein/"
+    },
+    {
+      "accessDate": "2019-04-22T21:55:59Z",
+      "citationKey": "timeusa2019a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "TIME USA"
+        }
+      ],
+      "date": "2019",
+      "itemID": 1,
+      "itemType": "webpage",
+      "language": "en",
+      "publicationTitle": "TIME",
+      "title": "The 100 most influential people of 2019",
+      "url": "http://time.com/collection/100-most-influential-people-2019/"
+    },
+    {
+      "accessDate": "2019-04-24T20:36:53Z",
+      "citationKey": "timeusa2019",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "TIME USA"
+        }
+      ],
+      "date": "2019",
+      "itemID": 2,
+      "itemType": "webpage",
+      "language": "en",
+      "publicationTitle": "TIME",
+      "shortTitle": "Caster Semenya",
+      "title": "Caster Semenya: The 100 most influential people of 2019",
+      "url": "http://time.com/collection/100-most-influential-people-2019/5567679/caster-semenya/"
+    },
+    {
+      "accessDate": "2019-04-24T21:17:09Z",
+      "citationKey": "iaaf2019",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "IAAF"
+        }
+      ],
+      "date": "2019",
+      "itemID": 3,
+      "itemType": "webpage",
+      "language": "en",
+      "publicationTitle": "IAAF",
+      "shortTitle": "Caster Semenya",
+      "title": "Caster Semenya: Honours",
+      "url": "https://www.iaaf.org/athletes/south-africa/caster-semenya-242560"
+    },
+    {
+      "accessDate": "2019-04-24T21:55:00Z",
+      "citationKey": "courtofarbitrationforsport2019",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "Court of Arbitration for Sport"
+        }
+      ],
+      "date": "2019-03-21",
+      "itemID": 4,
+      "itemType": "webpage",
+      "language": "en",
+      "publicationTitle": "Court of Arbitration for Sport",
+      "shortTitle": "Semenya, ASA and IAAF",
+      "title": "Semenya, ASA and IAAF: Planning update",
+      "url": "https://www.tas-cas.org/en/general-information/news-detail/article/semenya-asa-and-iaaf-planning-update.html"
+    },
+    {
+      "accessDate": "2019-04-28T20:57:39Z",
+      "citationKey": "mcphee2019",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Elena",
+          "lastName": "McPhee"
+        }
+      ],
+      "date": "2019-01-12",
+      "itemID": 5,
+      "itemType": "webpage",
+      "language": "en",
+      "publicationTitle": "Otago Daily Times Online News",
+      "title": "Uni adds gender options",
+      "url": "https://www.odt.co.nz/news/dunedin/campus/university-of-otago/uni-adds-gender-options"
     }
   ]
 }

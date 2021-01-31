@@ -9,6 +9,28 @@
   },
   "items": [
     {
+      "ISBN": "978-3-446-40695-7",
+      "citationKey": "Rechenberg2006a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Peter",
+          "lastName": "Rechenberg"
+        }
+      ],
+      "date": "2006",
+      "edition": "3., erw. und aktualisierte Aufl.",
+      "extra": [
+        "Citation Key: Rechenberg2006a",
+        "tex.ppn_gvk: 511633173"
+      ],
+      "itemID": 2,
+      "itemType": "book",
+      "numPages": "253",
+      "publisher": "Hanser Fachbuchverlag",
+      "title": "Technisches schreiben - (nicht nur) f\u00fcr Informatiker"
+    },
+    {
       "citationKey": "Adams2001",
       "creators": [
         {
@@ -68,28 +90,6 @@
       ],
       "title": "The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
       "volume": "62"
-    },
-    {
-      "ISBN": "978-3-446-40695-7",
-      "citationKey": "Rechenberg2006a",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Peter",
-          "lastName": "Rechenberg"
-        }
-      ],
-      "date": "2006",
-      "edition": "3., erw. und aktualisierte Aufl.",
-      "extra": [
-        "Citation Key: Rechenberg2006a",
-        "tex.ppn_gvk: 511633173"
-      ],
-      "itemID": 2,
-      "itemType": "book",
-      "numPages": "253",
-      "publisher": "Hanser Fachbuchverlag",
-      "title": "Technisches schreiben - (nicht nur) f\u00fcr Informatiker"
     }
   ]
 }

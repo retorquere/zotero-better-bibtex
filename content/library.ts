@@ -1,4 +1,8 @@
-export function get(name) {
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+declare const Zotero: any
+
+export function get(name: string) {
   if (!name) return Zotero.Libraries.get(Zotero.Libraries.userLibraryID)
 
   const libraries = Zotero.Libraries.getAll().filter(lib => lib.name === name)
