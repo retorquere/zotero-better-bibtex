@@ -375,6 +375,8 @@
   "export/auto-export.json",
   "export/automatic tags in export #1270.bibtex",
   "export/automatic tags in export #1270.json",
+  "export/biber 2.14 rejects the date field generated from Better BibLaTex #1695.biblatex",
+  "export/biber 2.14 rejects the date field generated from Better BibLaTex #1695.json",
   "export/biblatex export of Presentation; Use type and venue fields #644.biblatex",
   "export/biblatex export of Presentation; Use type and venue fields #644.json",
   "export/biblatex; Language tag xx is exported, xx-XX is not #380.biblatex",

@@ -23,7 +23,7 @@
     "Date export to Better CSL-JSON #360 #811": 1350,
     "Deterministic ordering for CSL #1178 #1400": 2350,
     "Diacritics stripped from keys regardless of ascii or fold filters #266": 700,
-    "Do not caps-protect name fields #384 #565 #566": 3430,
+    "Do not caps-protect name fields #384 #565 #566": 3440,
     "Duplicate Citation Key Alias #1384": 10180,
     "Edition Numbers in BibTeX Exports #1446": 1080,
     "Export 1 references for BibLaTeX to @jurisdiction; map court,authority to institution #326": 320,
@@ -127,6 +127,10 @@
       "runs": -167
     },
     "Export 1 references for BibLaTeX to auth leaves punctuation in citation key #310": 320,
+    "Export 1 references for BibLaTeX to biber 2.14 rejects the date field generated from Better BibLaTex #1695": {
+      "msecs": 270,
+      "runs": -226
+    },
     "Export 1 references for BibLaTeX to biblatex; Language tag xx is exported, xx-XX is not #380": 330,
     "Export 1 references for BibLaTeX to bookSection is always converted to @inbook, never @incollection #282": 350,
     "Export 1 references for BibLaTeX to condense in cite key format not working #308": 360,
@@ -149,7 +153,7 @@
     "Export 1 references for BibLaTeX to tex.IDs= foo_bar are escaped despite the equals sign #1449": 250,
     "Export 1 references for BibLaTeX to transliteration for citekey #580": 400,
     "Export 1 references for BibLaTeX to type dataset exported as @data instead of @dataset for BibLaTeX #1720": {
-      "msecs": 400,
+      "msecs": 410,
       "runs": -223
     },
     "Export 1 references for BibLaTeX to typo stature-statute (zotero item type) #284": 380,
@@ -310,7 +314,7 @@
     "Import 1 references from BibTeX import; preamble with def create problems #732": 1060,
     "Import 1 references from Biblatex Annotation Import Bug #613": 1040,
     "Import 1 references from Endnote should parse": 770,
-    "Import 1 references from Failure to handle unparsed author names (92)": 1090,
+    "Import 1 references from Failure to handle unparsed author names (92)": 1100,
     "Import 1 references from Import fails to perform @String substitutions #154": 1030,
     "Import 1 references from Import location to event-place for conference papers": 1010,
     "Import 1 references from Import of langle and rangle TeX commands #1468": 1050,
@@ -341,7 +345,7 @@
     "Import 2 references from BibLaTeX Patent author handling, type #1060": 1210,
     "Import 2 references from space after citekey creates confusion #716": 1160,
     "Import 20 references from BBT does not import groups from JabRef 5.1 #1641": {
-      "msecs": 3720,
+      "msecs": 3730,
       "runs": -161
     },
     "Import 3 references from Better BibTeX.009": 1130,
@@ -365,17 +369,17 @@
     "Pandoc-LaTeX-SCHOMD Citation Export": 1280,
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 406740,
+    "Really Big whopping library": 406770,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 40740,
+      "msecs": 41990,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
     "Square brackets in Publication field (85), and non-pinned keys must change when the pattern does": 450,
-    "Unabbreviate on import #1436-1": 40360,
+    "Unabbreviate on import #1436-1": 40370,
     "Unbalanced vphantom escapes #1043": 760,
     "arXiv identifiers in BibLaTeX export #460": 1180,
     "auto-export": 14370,
@@ -673,7 +677,7 @@
       "Duplicate Citation Key Alias #1384"
     ]
   },
-  "runs": 226,
+  "runs": 227,
   "slow": {
     "1": [
       "Export 1 references for BibLaTeX to type dataset exported as @data instead of @dataset for BibLaTeX #1720",
@@ -952,7 +956,8 @@
       "Unabbreviate on import #1436-1",
       "Set IDS field when merging references with different citation keys #1221",
       "Merging error with arXiv ID #1373",
-      "Duplicate Citation Key Alias #1384"
+      "Duplicate Citation Key Alias #1384",
+      "Export 1 references for BibLaTeX to biber 2.14 rejects the date field generated from Better BibLaTex #1695"
     ],
     "2": [
       "Really Big whopping library"
