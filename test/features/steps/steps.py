@@ -167,11 +167,7 @@ def step_impl(context, mode, value):
   time.sleep(3)
 
 @when(u'I select {n} items with a field that {mode} "{value}"')
-<<<<<<< HEAD
 def step_impl(context, n, mode, value):
-=======
-def step_impl(context, n, value):
->>>>>>> 2a7168208... multi-mode search
   context.selected += context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.find({[mode]: value}, n)', mode=mode, value=value, n=int(n))
   context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.select(ids)', ids=context.selected)
   time.sleep(3)
