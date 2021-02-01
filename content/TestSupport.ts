@@ -174,7 +174,7 @@ export = new class {
     if (!ids || !ids.length) throw new Error(`No item found matching ${JSON.stringify(query)}`)
     if (ids.length !== expected) throw new Error(`${JSON.stringify(query)} matched ${JSON.stringify(ids)}, but only ${expected} expected`)
 
-    return ids
+    return Array.from(new Set(ids))
   }
 
   public async pick(format, citations) {
