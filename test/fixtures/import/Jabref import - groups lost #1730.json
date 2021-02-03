@@ -183,6 +183,51 @@
       "url": "http://eprints.whiterose.ac.uk/160135/"
     },
     {
+      "DOI": "10.1109/EMCEUROPE48519.2020.9245741",
+      "citationKey": "Marvin2020",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Andy",
+          "lastName": "Marvin"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "John",
+          "lastName": "Dawson"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Linda",
+          "lastName": "Dawson"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Haiyan",
+          "lastName": "Xie"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Arunkumar",
+          "lastName": "Venkateshaiah"
+        }
+      ],
+      "date": "2020",
+      "extra": [
+        "Citation Key: Marvin2020",
+        "tex.owner: jfd1",
+        "tex.timestamp: 2020.02.07"
+      ],
+      "itemID": 2,
+      "itemType": "conferencePaper",
+      "notes": [
+        "Submitted 6 Feb 2020, Accepted 17 April 2020,"
+      ],
+      "publicationTitle": "2020 international symposium on electromagnetic compatibility - EMC EUROPE",
+      "title": "An experimental study of the variability of the shielding effectiveness of circuit board shields",
+      "url": "http://eprints.whiterose.ac.uk/160135/"
+    },
+    {
       "DOI": "10.1109/EMCEUROPE48519.2020.9245804",
       "citationKey": "Venkateshaiah2020",
       "creators": [
@@ -232,135 +277,6 @@
       "publicationTitle": "2020 international symposium on electromagnetic compatibility - EMC EUROPE",
       "title": "Coupling of Energy into PCB traces in a reverberant environment: Absorption cross-section and Risk of Susceptibility",
       "url": "http://eprints.whiterose.ac.uk/160133/"
-    },
-    {
-      "DOI": "10.1109/TEMC.2019.2954303",
-      "citationKey": "Xie2020",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Haiyan",
-          "lastName": "Xie"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "John F.",
-          "lastName": "Dawson"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Andy C.",
-          "lastName": "Marvin"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Martin P.",
-          "lastName": "Robinson"
-        }
-      ],
-      "date": "2020-08",
-      "extra": [
-        "Citation Key: Xie2020",
-        "tex.owner: jfd1",
-        "tex.timestamp: 2021.01.28"
-      ],
-      "issue": "4",
-      "itemID": 5,
-      "itemType": "journalArticle",
-      "pages": "1128-1135",
-      "publicationTitle": "Electromagnetic Compatibility, IEEE Transactions on",
-      "title": "Numerical and analytical analysis of stochastic electromagnetic fields coupling to a printed circuit board trace",
-      "url": "http://eprints.whiterose.ac.uk/154302/",
-      "volume": "62"
-    },
-    {
-      "DOI": "10.3390/electronics9081219",
-      "citationKey": "Chau2020",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Arnold",
-          "lastName": "Chau"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "John",
-          "lastName": "Dawson"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Paul",
-          "lastName": "Mitchell"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Tian Hong",
-          "lastName": "Loh"
-        }
-      ],
-      "date": "2020",
-      "extra": [
-        "Citation Key: Chau2020",
-        "tex.owner: jfd1",
-        "tex.timestamp: 2020.07.14"
-      ],
-      "issue": "8",
-      "itemID": 7,
-      "itemType": "journalArticle",
-      "journalAbbreviation": "Electronics",
-      "notes": [
-        "Submitted: 8 June 2020; Revised 13 July 2020, Accepted 27 July 2020"
-      ],
-      "pages": "1219",
-      "publicationTitle": "Electronicsweek",
-      "title": "Virtual sensing directional hub MAC (VSDH-MAC) protocol with power control",
-      "url": "http://eprints.whiterose.ac.uk/163808/",
-      "volume": "9"
-    },
-    {
-      "DOI": "10.1109/EMCEUROPE48519.2020.9245741",
-      "citationKey": "Marvin2020",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Andy",
-          "lastName": "Marvin"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "John",
-          "lastName": "Dawson"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Linda",
-          "lastName": "Dawson"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Haiyan",
-          "lastName": "Xie"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Arunkumar",
-          "lastName": "Venkateshaiah"
-        }
-      ],
-      "date": "2020",
-      "extra": [
-        "Citation Key: Marvin2020",
-        "tex.owner: jfd1",
-        "tex.timestamp: 2020.02.07"
-      ],
-      "itemID": 2,
-      "itemType": "conferencePaper",
-      "notes": [
-        "Submitted 6 Feb 2020, Accepted 17 April 2020,"
-      ],
-      "publicationTitle": "2020 international symposium on electromagnetic compatibility - EMC EUROPE",
-      "title": "An experimental study of the variability of the shielding effectiveness of circuit board shields",
-      "url": "http://eprints.whiterose.ac.uk/160135/"
     },
     {
       "DOI": "10.1109/EMCEUROPE48519.2020.9245804",
@@ -444,6 +360,46 @@
         "tex.timestamp: 2021.01.28"
       ],
       "issue": "4",
+      "itemID": 5,
+      "itemType": "journalArticle",
+      "pages": "1128-1135",
+      "publicationTitle": "Electromagnetic Compatibility, IEEE Transactions on",
+      "title": "Numerical and analytical analysis of stochastic electromagnetic fields coupling to a printed circuit board trace",
+      "url": "http://eprints.whiterose.ac.uk/154302/",
+      "volume": "62"
+    },
+    {
+      "DOI": "10.1109/TEMC.2019.2954303",
+      "citationKey": "Xie2020",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Haiyan",
+          "lastName": "Xie"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "John F.",
+          "lastName": "Dawson"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Andy C.",
+          "lastName": "Marvin"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Martin P.",
+          "lastName": "Robinson"
+        }
+      ],
+      "date": "2020-08",
+      "extra": [
+        "Citation Key: Xie2020",
+        "tex.owner: jfd1",
+        "tex.timestamp: 2021.01.28"
+      ],
+      "issue": "4",
       "itemID": 6,
       "itemType": "journalArticle",
       "pages": "1128-1135",
@@ -451,6 +407,50 @@
       "title": "Numerical and analytical analysis of stochastic electromagnetic fields coupling to a printed circuit board trace",
       "url": "http://eprints.whiterose.ac.uk/154302/",
       "volume": "62"
+    },
+    {
+      "DOI": "10.3390/electronics9081219",
+      "citationKey": "Chau2020",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Arnold",
+          "lastName": "Chau"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "John",
+          "lastName": "Dawson"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Paul",
+          "lastName": "Mitchell"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Tian Hong",
+          "lastName": "Loh"
+        }
+      ],
+      "date": "2020",
+      "extra": [
+        "Citation Key: Chau2020",
+        "tex.owner: jfd1",
+        "tex.timestamp: 2020.07.14"
+      ],
+      "issue": "8",
+      "itemID": 7,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Electronics",
+      "notes": [
+        "Submitted: 8 June 2020; Revised 13 July 2020, Accepted 27 July 2020"
+      ],
+      "pages": "1219",
+      "publicationTitle": "Electronicsweek",
+      "title": "Virtual sensing directional hub MAC (VSDH-MAC) protocol with power control",
+      "url": "http://eprints.whiterose.ac.uk/163808/",
+      "volume": "9"
     },
     {
       "DOI": "10.3390/electronics9081219",
