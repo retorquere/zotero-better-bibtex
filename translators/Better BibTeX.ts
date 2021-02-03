@@ -1031,6 +1031,10 @@ class ZoteroItem {
             this.hackyFields.push(`ISSN: ${value}`)
             break
 
+          case 'origdate':
+            this.hackyFields.push(`Original Date: ${value}`)
+
+            break
           case 'pmid':
             this.hackyFields.push(`PMID: ${value}`)
             break

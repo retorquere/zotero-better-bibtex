@@ -54,6 +54,7 @@ Scenario Outline: Import <references> references from <file>
   Then the library should match "import/*.json"
   Examples:
   | file                                                                        | references  |
+  | tex.origdate ignored in citekey generation #1696                            | 1           |
   | collaborators to contributors                                               | 1           |
   | BBT does not import groups from JabRef 5.1 #1641                            | 20          |
   | Importing changes Journal to The Journal #1601                              | 1           |
