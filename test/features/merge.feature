@@ -37,6 +37,6 @@ Scenario: ids field should be created in raw mode #1729
 @retries=5
 Scenario: Identical Pinned keys lost when merging duplicated records #1721
   When I import 2 references from "merge/*.json"
-  And I select 2 items with "Coimbra:2013qq"
+  And I select 2 items with a field that is "Coimbra:2013qq"
   And I merge the selected items
   Then the library should match "merge/*-merged.json"
