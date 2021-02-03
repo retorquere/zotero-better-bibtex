@@ -244,7 +244,7 @@
 
         <preference name="extensions.zotero.translators.better-bibtex.qualityReport" id="pref-better-bibtex-qualityReport" type="bool" default="false"/>
         <bbt:doc>
-          Generate quality reports for exported references. These show up only in BibTeX and BibLaTeX report formats and indicate things like missing required fields and 
+          Generate quality reports for exported references. These show up only in BibTeX and BibLaTeX report formats and indicate things like missing required fields and
           duplicate citation keys.
         </bbt:doc>
 
@@ -272,6 +272,15 @@
         <preference name="extensions.zotero.translators.better-bibtex.importSentenceCase" id="pref-better-bibtex-importSentenceCase" type="string" default="on+guess"/>
 
         <preference name="extensions.zotero.translators.better-bibtex.importCaseProtection" id="pref-better-bibtex-importCaseProtection" type="string" default="as-needed"/>
+
+        <preference name="extensions.zotero.translators.better-bibtex.importUnknownTexCommand" type="string" default="ignore"/>
+        <bbt:doc>
+          What to do when encountering a TeX command the parser does not know about. Please only use values:
+
+          * `ignore`: ignore the command entirely
+          * `tex`: import and mark as TeX code, so on re-export it will be output as-is
+          * `text`: import without marking it as TeX code, so on re-export it will be treated as regular text
+        </bbt:doc>
 
         <preference name="extensions.zotero.translators.better-bibtex.autoExportDelay" type="int" default="1"/>
         <bbt:doc>
@@ -694,7 +703,7 @@
                       </hbox>
                     </hbox>
                   </vbox>
-    
+
                   <vbox hidden="true" class="autoexport-options autoexport-BetterBibLaTeX">
                     <checkbox
                       bbt:ae-id=""
@@ -709,7 +718,7 @@
                       oncommand="Zotero.BetterBibTeX.Preferences.autoexport.edit(event.target)"
                       />
                   </vbox>
-    
+
                   <vbox hidden="true" class="autoexport-options autoexport-BetterCSLJSON autoexport-BetterCSLYAML autoexport-BetterBibTeX autoexport-BetterBibLaTeX">
                     <hbox class="autoexport-options autoexport-BetterBibTeX autoexport-BetterBibLaTeX">
                       <label>&better-bibtex.Preferences.export.fields.doi-and-url;</label>
@@ -721,7 +730,7 @@
                         </menupopup>
                       </menulist>
                     </hbox>
-    
+
                     <checkbox class="autoexport-options autoexport-BetterBibTeX autoexport-BetterBibLaTeX"
                       bbt:ae-id=""
                       bbt:ae-field="exportNotes"
@@ -741,7 +750,7 @@
                       oncommand="Zotero.BetterBibTeX.Preferences.autoexport.edit(event.target)"
                       />
                   </vbox>
-    
+
                   <hbox>
                     <button label="&better-bibtex.Preferences.auto-export.remove;" bbt:ae-id="" oncommand="Zotero.BetterBibTeX.Preferences.autoexport.remove(event.target)"/>
                     <button label="&better-bibtex.Preferences.auto-export.run;" bbt:ae-id="" oncommand="Zotero.BetterBibTeX.Preferences.autoexport.run(event.target)"/>

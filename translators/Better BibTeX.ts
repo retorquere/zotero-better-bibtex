@@ -1230,6 +1230,18 @@ export async function doImport(): Promise<void> {
     async: true,
     caseProtection: (Translator.preferences.importCaseProtection as 'as-needed'), // we are actually sure it's a valid enum value; stupid workaround for TS2322: Type 'string' is not assignable to type 'boolean | "as-needed" | "strict"'.
     errorHandler: (Translator.preferences.testing ? undefined : function(err) { log.error(err) }), // eslint-disable-line prefer-arrow/prefer-arrow-functions
+    unknownCommandHandler: Translator.preferences.importUnknownTexCommand === 'ignore' ? undefined : function(node) {
+      switch (Translator.preferences.importUnknownTexCommand) {
+        case 'tex':
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+          return this.text(`<script>${node.source}</script>`)
+        case 'text':
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+          return this.text(node.source)
+        default:
+          throw new Error(`Unexpected unknownCommandHandler ${JSON.stringify(Translator.preferences.importUnknownTexCommand)}`)
+      }
+    },
     markup: (Translator.csquotes ? { enquote: Translator.csquotes } : {}),
     sentenceCase: Translator.preferences.importSentenceCase !== 'off',
     guessAlreadySentenceCased: Translator.preferences.importSentenceCase === 'on+guess',

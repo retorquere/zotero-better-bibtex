@@ -198,6 +198,9 @@
                 "off"
               ]
             },
+            "importUnknownTexCommand": {
+              "type": "string"
+            },
             "autoExportDelay": {
               "type": "number"
             },

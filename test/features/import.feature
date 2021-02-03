@@ -146,3 +146,8 @@ Scenario: Unabbreviate on import #1436-1
 #Scenario: Unabbreviate on import #1436-3
 #  When I import 7166 references from "import/*.bib" into a new collection
 #  Then the library should match "import/*.json"
+Scenario: unknown command handler #1733
+  Given I set preference .importUnknownTexCommand to "tex"
+  When I import 1 reference from "import/*.bib"
+  Then the library should match "import/*.json"
+
