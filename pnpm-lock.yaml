@@ -1,5 +1,5 @@
 dependencies:
-  '@retorquere/bibtex-parser': 3.2.34
+  '@retorquere/bibtex-parser': 3.2.35
   '@types/lokijs': 1.5.3
   ajv: 7.0.4
   ajv-keywords: 4.0.0_ajv@7.0.4
@@ -569,14 +569,14 @@ packages:
     dev: true
     resolution:
       integrity: sha512-nmFoU3HCbw1AmnZU/eto2VvzV06+N7oAqXwMmAHGlNDF+KFykksh/VlAl85xc1P5T7Mw8fKYvXNaImNHCCH/rg==
-  /@retorquere/bibtex-parser/3.2.34:
+  /@retorquere/bibtex-parser/3.2.35:
     dependencies:
       chevrotain: 7.1.0
       unicode2latex: 2.1.35
       xregexp: 4.4.1
     dev: false
     resolution:
-      integrity: sha512-BfJnzDtz07ewwwk6tqjK+EriIQMr+gAb9/nvM2v+ESvgolMa4AM3zCRe7Ea5x23BxXySTSNixGomLVzoAWawng==
+      integrity: sha512-gZVeQqzI36Oqax/bKjVzGIqkAJobovkQ8JssxlcuzwWUVFKhcHMPJCBi3Nhsprv5StUh0sGRDHvMnswlsDNdsw==
   /@rgrove/parse-xml/3.0.0:
     dev: true
     engines:
@@ -5608,7 +5608,7 @@ packages:
     resolution:
       integrity: sha512-fypMhFiwH6FJ9ox79uI9uondnIvxztQQqWmlz7iqW+o3VbFCYU22T6QHVtrDLvj8dEVAbXEYMpbKVQmOPL9eIQ==
 specifiers:
-  '@retorquere/bibtex-parser': ^3.2.34
+  '@retorquere/bibtex-parser': ^3.2.35
   '@types/lokijs': ^1.5.3
   '@types/node': ^14.14.22
   '@types/webpack': ^4.41.26
