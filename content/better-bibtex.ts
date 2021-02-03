@@ -99,6 +99,8 @@ if (Prefs.get('citeprocNoteCitekey')) {
 // https://github.com/retorquere/zotero-better-bibtex/issues/1221
 $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(item: { getField: (field: string) => string, id: string, setField: (field: string, value: string) => void }, otherItems: any[]) {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    log.debug('#bbt merge:', { item: item.getField('extra'), otherItems: otherItems.map(o => o.getField('extra')) })
     const merge = {
       citationKey: Prefs.get('extraMergeCitekeys'),
       tex: Prefs.get('extraMergeTeX'),
@@ -106,7 +108,11 @@ $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(ite
     }
 
     const extra = Extra.get(item.getField('extra'), 'zotero', { citationKey: merge.citationKey, aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
-    log.debug('#bbt merge: item:', { extract: merge, raw: item.getField('extra'), parsed: extra })
+    if (!extra.extraFields.citationKey) { // why is the citationkey stripped from extra before we get to this point?!
+      const pinned = KeyManager.keys.findOne({ itemID: item.id })
+      if (pinned.pinned) extra.extraFields.citationKey = pinned.citekey
+    }
+    log.debug('#bbt merge: item:', { extract: merge, raw: item.getField('extra'), id: item.id, parsed: extra })
 
     // get citekeys of other items
     if (merge.citationKey) {
@@ -144,7 +150,6 @@ $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(ite
           }
         }
       }
-      log.debug('do bbt merge: other-extra-pre:', { raw: i.getField('extra'), parsed: extra })
     }
     log.debug('#bbt merge: added aliases:', { extra })
 
@@ -152,9 +157,8 @@ $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(ite
       const citekey = KeyManager.keys.findOne({ itemID: item.id }).citekey
       extra.extraFields.aliases = extra.extraFields.aliases.filter(alias => alias !== citekey)
     }
-    log.debug('#bbt merge: aliases cleaned:', { extra })
+    log.debug('#bbt merge: aliases cleaned:', { merge, extra })
 
-    log.debug('bbt merge: extra-post:', extra)
     item.setField('extra', Extra.set(extra.extra, {
       // keep pinned if it was before
       citationKey: merge.citationKey ? extra.extraFields.citationKey : undefined,
@@ -162,7 +166,6 @@ $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(ite
       tex: merge.tex ? extra.extraFields.tex : undefined,
       kv: merge.kv ? extra.extraFields.kv : undefined,
     }))
-    log.debug('bbt merge: extra-field:', item.getField('extra'))
 
   }
   catch (err) {
@@ -384,6 +387,7 @@ $patch$(Zotero.Utilities.Internal, 'itemToExportFormat', original => function Zo
 
 // so BBT-JSON can be imported without extra-field meddling
 $patch$(Zotero.Utilities.Internal, 'extractExtraFields', original => function Zotero_Utilities_Internal_extractExtraFields(extra: string, _item: any, additionalFields: any) {
+  log.debug('bbt merge:extractExtraFields')
   if (extra && extra.startsWith('\x1BBBT\x1B')) {
     log.debug('bbt merge:extractExtraFields disabled:', JSON.stringify({ extra: extra.replace('\x1BBBT\x1B', ''), additionalFields }))
     return { itemType: null, fields: new Map(), creators: [], extra: extra.replace('\x1BBBT\x1B', '') }

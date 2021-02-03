@@ -243,11 +243,15 @@ export = new class {
     }
 
     selected.sort((a, b) => ids.indexOf(a.id) - ids.indexOf(b.id))
+    log.debug('#bbt merge: pre:', selected.map(i => ({ id: i.id, extra: i.getField('extra') }))) // eslint-disable-line @typescript-eslint/no-unsafe-return
+
     Zotero_Duplicates_Pane.setItems(selected)
     await sleep(1500) // eslint-disable-line no-magic-numbers
 
     const before = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
     await Zotero_Duplicates_Pane.merge()
+
+    log.debug('#bbt merge: done')
     await sleep(1500) // eslint-disable-line no-magic-numbers
     const after = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
     if (before.length - after.length !== (ids.length - 1)) throw new Error(`merging ${ids.length}: before = ${before.length}, after = ${after.length}`)
