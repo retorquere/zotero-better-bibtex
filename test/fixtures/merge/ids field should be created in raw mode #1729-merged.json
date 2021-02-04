@@ -4,7 +4,6 @@
     "label": "BetterBibTeX JSON",
     "localeDateOrder": "mdy",
     "options": {
-      "Normalize": false,
       "exportNotes": true
     },
     "preferences": {
@@ -47,6 +46,7 @@
       ],
       "date": "2019-02",
       "extra": [
+        "Citation Key: bardosOnsagerConjectureBounded2019",
         "tex.ids= Titi_Gwiazda_conservation_entropy",
         "arXiv: 1902.07120 [math]",
         "tex.eprint: arXiv:1902.07120"

@@ -99,6 +99,7 @@ if (Prefs.get('citeprocNoteCitekey')) {
 // https://github.com/retorquere/zotero-better-bibtex/issues/1221
 $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(item: { getField: (field: string) => string, id: string, setField: (field: string, value: string) => void }, otherItems: any[]) {
   try {
+    // log.verbose = true
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     log.debug('#bbt merge:', { item: item.getField('extra'), otherItems: otherItems.map(o => o.getField('extra')) })
     const merge = {
@@ -110,6 +111,7 @@ $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(ite
     const extra = Extra.get(item.getField('extra'), 'zotero', { citationKey: merge.citationKey, aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
     if (!extra.extraFields.citationKey) { // why is the citationkey stripped from extra before we get to this point?!
       const pinned = KeyManager.keys.findOne({ itemID: item.id })
+      log.debug('#bbt merge: repinning key?', pinned)
       if (pinned.pinned) extra.extraFields.citationKey = pinned.citekey
     }
     log.debug('#bbt merge: item:', { extract: merge, raw: item.getField('extra'), id: item.id, parsed: extra })

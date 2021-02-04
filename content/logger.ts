@@ -5,6 +5,8 @@ import { stringify, asciify } from './stringify'
 import { worker } from './worker'
 
 class Logger {
+  public verbose = false
+
   protected timestamp: number
 
   private format(error, msg) {
@@ -26,6 +28,9 @@ class Logger {
         else if (m && type === 'object' && m.message) { // mozilla exception, no idea on the actual instance type
           // message,fileName,lineNumber,column,stack,errorCode
           output += `<Error: ${m.message}#\n${m.stack}>`
+        }
+        else if (this.verbose) {
+          output += stringify(m, null, 2)
         }
         else {
           output += stringify(m)
