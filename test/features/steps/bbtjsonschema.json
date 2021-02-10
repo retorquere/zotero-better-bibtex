@@ -306,6 +306,7 @@
                 "orgmode",
                 "orgRef",
                 "rtfScan",
+                "roamCiteKey",
                 "atom",
                 "gitbook",
                 "selectLink_citekey",
