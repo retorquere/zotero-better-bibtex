@@ -1,7 +1,7 @@
 {
   "duration": {
-    "(non-)dropping particle handling #313": 2810,
-    "AUX scanner": 9080,
+    "(non-)dropping particle handling #313": 2800,
+    "AUX scanner": 9070,
     "BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372": 270,
     "Better BibTeX Import 2": 1160,
     "BibTeX name escaping has a million inconsistencies #438": 480,
@@ -128,7 +128,7 @@
     },
     "Export 1 references for BibLaTeX to auth leaves punctuation in citation key #310": 320,
     "Export 1 references for BibLaTeX to biber 2.14 rejects the date field generated from Better BibLaTex #1695": {
-      "msecs": 320,
+      "msecs": 310,
       "runs": -226
     },
     "Export 1 references for BibLaTeX to biblatex; Language tag xx is exported, xx-XX is not #380": 330,
@@ -153,7 +153,7 @@
     "Export 1 references for BibLaTeX to tex.IDs= foo_bar are escaped despite the equals sign #1449": 250,
     "Export 1 references for BibLaTeX to transliteration for citekey #580": 400,
     "Export 1 references for BibLaTeX to type dataset exported as @data instead of @dataset for BibLaTeX #1720": {
-      "msecs": 390,
+      "msecs": 380,
       "runs": -223
     },
     "Export 1 references for BibLaTeX to typo stature-statute (zotero item type) #284": 380,
@@ -239,7 +239,7 @@
     "Export 2 references for BibLaTeX to Better BibLaTeX.009": 780,
     "Export 2 references for BibLaTeX to BibLaTeX Patent author handling, type #1060": 540,
     "Export 2 references for BibLaTeX to Book Title exports to Journaltitle for Biblatex @incollection reference type #1691": {
-      "msecs": 500,
+      "msecs": 490,
       "runs": -198
     },
     "Export 2 references for BibLaTeX to CSL title, volume-title, container-title=BL title, booktitle, maintitle #381": 400,
@@ -255,7 +255,7 @@
     "Export 2 references for BibLaTeX to biblatex export of Presentation; Use type and venue fields #644": 530,
     "Export 2 references for BibLaTeX to csquotes #302": 420,
     "Export 2 references for BibLaTeX to google-scholar like references #1705": {
-      "msecs": 500,
+      "msecs": 490,
       "runs": -213
     },
     "Export 2 references for BibLaTeX to map csl-json variables #293": 450,
@@ -282,7 +282,7 @@
     "Export 3 references for BibLaTeX to Normalize date ranges in citekeys #356": 510,
     "Export 3 references for BibTeX to No brace protection when suppressTitleCase set to true #1188": 500,
     "Export 3 references for BibTeX to Replicate Zotero key algorithm #439": 500,
-    "Export 36 references for BibTeX to Better BibTeX does not export collections #901": 4480,
+    "Export 36 references for BibTeX to Better BibTeX does not export collections #901": 4470,
     "Export 4 references for BibLaTeX to date and year are switched #406": 550,
     "Export 4 references for BibTeX to add date, origdate functions, and format-date filter #1488": {
       "msecs": 430,
@@ -301,7 +301,7 @@
       "runs": -97
     },
     "Identical Pinned keys lost when merging duplicated records #1721": {
-      "msecs": 6420,
+      "msecs": 6400,
       "runs": -231
     },
     "Ignoring upper cases in German titles #456": 700,
@@ -344,7 +344,7 @@
     },
     "Import 1 references from support Local-Zo-Url-x field from BibDesk2Zotero_attachments #667": 1300,
     "Import 1 references from tex.origdate ignored in citekey generation #1696": {
-      "msecs": 1130,
+      "msecs": 1070,
       "runs": -231
     },
     "Import 1 references from zbb (quietly) chokes on this .bib #664": 1080,
@@ -353,7 +353,7 @@
     "Import 2 references from BibLaTeX Patent author handling, type #1060": 1210,
     "Import 2 references from space after citekey creates confusion #716": 1160,
     "Import 20 references from BBT does not import groups from JabRef 5.1 #1641": {
-      "msecs": 3700,
+      "msecs": 3690,
       "runs": -161
     },
     "Import 3 references from Better BibTeX.009": 1130,
@@ -365,7 +365,7 @@
     "Include first name initial(s) in cite key generation pattern (86)": 450,
     "Jabref groups import does not work #717": 2810,
     "Jabref import - groups lost #1730": {
-      "msecs": 2930,
+      "msecs": 2890,
       "runs": -228
     },
     "Journal abbreviations": 490,
@@ -381,24 +381,24 @@
     "Pandoc-LaTeX-SCHOMD Citation Export": 1280,
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 407960,
+    "Really Big whopping library": 407930,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 42640,
+      "msecs": 41920,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
     "Square brackets in Publication field (85), and non-pinned keys must change when the pattern does": 450,
-    "Unabbreviate on import #1436-1": 40260,
+    "Unabbreviate on import #1436-1": 40200,
     "Unbalanced vphantom escapes #1043": 760,
     "arXiv identifiers in BibLaTeX export #460": 1180,
     "auto-export": 14370,
     "automatic tags in export #1270": 410,
     "bibtex; url export does not survive underscores #402": 670,
     "ids field should be created in raw mode #1729": {
-      "msecs": 7760,
+      "msecs": 7960,
       "runs": -227
     },
     "importing a title-cased bib #1246": 1320,
@@ -406,7 +406,7 @@
     "thesis zotero entries always create @phdthesis bibtex entries #307": 760,
     "two ISSN number are freezing browser #110 + Generating keys and export broken #111": 3610,
     "unknown command handler #1733": {
-      "msecs": 1140,
+      "msecs": 1100,
       "runs": -231
     },
     "use author dash separation rather than camel casing in citekey #1495": {
@@ -542,7 +542,6 @@
       "Export 1 references for BibLaTeX to biblatex; Language tag xx is exported, xx-XX is not #380",
       "Export 2 references for BibLaTeX to biblatex export of Presentation; Use type and venue fields #644",
       "Export 1 references for BibLaTeX to URL-DOI exclusive export broken for item types with no dedicated DOI field #1331",
-      "Export 5 references for BibLaTeX to date ranges #747+#746",
       "Export 1 references for BibLaTeX to preserve @strings between import-export #1162",
       "Export 1 references for BibTeX to url field is having its special characters escaped in BBT Bibtex #1716",
       "Export 1 references for BibTeX to Match against @string value for export #1597",
@@ -681,10 +680,12 @@
       "Import 1 references from import software related biblatex entries #1544",
       "Edition Numbers in BibTeX Exports #1446",
       "Options to use default import process? #1562",
+      "Jabref groups import does not work #717",
       "Jabref import - groups lost #1730",
       "unknown command handler #1733"
     ],
     "2": [
+      "Export 5 references for BibLaTeX to date ranges #747+#746",
       "Export 36 references for BibTeX to Better BibTeX does not export collections #901",
       "Bibtex key regenerating issue when trashing items #117",
       "two ISSN number are freezing browser #110 + Generating keys and export broken #111",
@@ -694,7 +695,6 @@
       "AUX scanner",
       "Import 20 references from BBT does not import groups from JabRef 5.1 #1641",
       "Some bibtex entries quietly discarded on import from bib file #873",
-      "Jabref groups import does not work #717",
       "Unabbreviate on import #1436-1",
       "Set IDS field when merging references with different citation keys #1221",
       "Merging error with arXiv ID #1373",
@@ -703,7 +703,7 @@
       "Identical Pinned keys lost when merging duplicated records #1721"
     ]
   },
-  "runs": 234,
+  "runs": 235,
   "slow": {
     "1": [
       "Export 1 references for BibLaTeX to biber 2.14 rejects the date field generated from Better BibLaTex #1695",
