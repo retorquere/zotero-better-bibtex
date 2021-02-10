@@ -61,6 +61,7 @@ Options:
 * Org-mode Zotero select link
 * org-ref
 * RTF Scan
+* Roam Cite Key
 * Atom (https://atom.io/packages/zotero-citations)
 * GitBook
 * Citekey select link
