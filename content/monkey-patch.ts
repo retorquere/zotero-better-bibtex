@@ -32,7 +32,7 @@ if (!enabled) {
   AddonManager.getAddonByID('better-bibtex@iris-advies.com', addon => { addon.userDisabled = true })
   /*
     // Add-on cannot be uninstalled
-    if (!(addon.permissions & AddonManager.PERM_CAN_UNINSTALL)) return // tslint:disable-line:no-bitwise
+    if (!(addon.permissions & AddonManager.PERM_CAN_UNINSTALL)) return
 
     addon.uninstall()
     // if (addon.pendingOperations & AddonManager.PENDING_UNINSTALL) {
