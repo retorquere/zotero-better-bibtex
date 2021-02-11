@@ -161,18 +161,18 @@ export = new class ErrorReport {
     const current = require('../gen/version.js')
     document.getElementById('better-bibtex-report-current').value = Zotero.BetterBibTeX.getString('ErrorReport.better-bibtex.current', { version: current })
 
-    const latest = await this.latest()
-
-    const show_latest = document.getElementById('better-bibtex-report-latest')
-    if (current === latest) {
-      show_latest.hidden = true
-    }
-    else {
-      show_latest.value = Zotero.BetterBibTeX.getString('ErrorReport.better-bibtex.latest', { version: latest || '<could not be established>' })
-      show_latest.hidden = false
-    }
-
     try {
+      const latest = await this.latest()
+
+      const show_latest = document.getElementById('better-bibtex-report-latest')
+      if (current === latest) {
+        show_latest.hidden = true
+      }
+      else {
+        show_latest.value = Zotero.BetterBibTeX.getString('ErrorReport.better-bibtex.latest', { version: latest || '<could not be established>' })
+        show_latest.hidden = false
+      }
+
       const region = await Zotero.Promise.any(Object.keys(s3.region).map(this.ping.bind(this)))
       this.bucket = `http://${s3.bucket}-${region.short}.s3-${region.region}.amazonaws.com${region.tld || ''}`
       this.key = `${Zotero.Utilities.generateObjectKey()}-${region.short}`
@@ -272,7 +272,7 @@ export = new class ErrorReport {
         xhr.setRequestHeader(header, value)
       }
       xhr.onload = function() {
-        if (this.status >= 200 && this.status < 300) { // tslint:disable-line:no-magic-numbers
+        if (this.status >= 200 && this.status < 300) {
           resolve(xhr.response)
         }
         else {
