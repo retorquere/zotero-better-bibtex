@@ -13,21 +13,6 @@
   },
   "items": [
     {
-      "citationKey": "HoSp-87",
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "Hoffmann"
-        }
-      ],
-      "extra": [
-        "Citation Key: HoSp-87"
-      ],
-      "itemID": 1,
-      "itemType": "journalArticle",
-      "title": "Phase transitions"
-    },
-    {
       "citationKey": "HoSp-90",
       "creators": [
         {
@@ -41,6 +26,21 @@
       "itemID": 2,
       "itemType": "book",
       "title": "Free boundary problems"
+    },
+    {
+      "citationKey": "HoSp-87",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "Hoffmann"
+        }
+      ],
+      "extra": [
+        "Citation Key: HoSp-87"
+      ],
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "title": "Phase transitions"
     }
   ]
 }

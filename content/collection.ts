@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+declare const Zotero: any
 import { get as getLibrary } from './library'
 
 class CollectionError extends Error {
@@ -46,7 +48,7 @@ async function getCollection(parent, name, path, create) {
   return collection
 }
 
-export async function get(path: string, create: boolean = false) {
+export async function get(path: string, create = false): Promise<any> {
   const names = (path || '').split('/')
   if (names.shift() !== '') throw new CollectionError('path must be absolute', 'notfound')
   const root = names.shift()
@@ -54,11 +56,11 @@ export async function get(path: string, create: boolean = false) {
 
   let collection = root.match(/^[0-9]+$/) ? Zotero.Libraries.get(root) : getLibrary(root)
   if (!collection) throw new CollectionError(`Library ${root} not found`, 'notfound')
-  let _path = `/${root}`
+  let tmp_path = `/${root}`
 
   for (const name of names) {
-    _path += `/${name}`
-    collection = await getCollection(collection, name, _path, create)
+    tmp_path += `/${name}`
+    collection = await getCollection(collection, name, tmp_path, create)
   }
 
   return collection

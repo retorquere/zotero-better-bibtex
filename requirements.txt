@@ -23,6 +23,7 @@ pushbullet.py
 pygit2
 pygtrie
 pylint
+pytablewriter
 python-dotenv
 python-slugify
 readmd
@@ -31,4 +32,3 @@ requests
 ruamel.yaml
 selenium
 toml
-pytablewriter

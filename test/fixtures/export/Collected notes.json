@@ -1056,483 +1056,6 @@
   },
   "items": [
     {
-      "abstractNote": "Abduction or, as it is also often called, Inference to the Best Explanation is a type of inference that assigns special status to explanatory considerations. Most philosophers agree that this type ofinference is frequently employed, in some form or other, both in everyday and in scientific reasoning. However, the exact form as wellas the normative status of abduction are still matters of controversy. This entry contrasts abduction with other types of inference; points at prominent uses of it, both in and outside philosophy; considers various more or less precise statements of it; discusses its normative status; and highlights possible connections between abduction and Bayesian confirmation theory.",
-      "accessDate": "2016-09-04T10:34:34Z",
-      "citationKey": "Douven2011",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Igor",
-          "lastName": "Douven"
-        },
-        {
-          "creatorType": "editor",
-          "firstName": "Edward N.",
-          "lastName": "Zalta"
-        }
-      ],
-      "date": "2011",
-      "edition": "Spring 2011",
-      "extra": [
-        "Abduction"
-      ],
-      "itemID": 1,
-      "itemType": "encyclopediaArticle",
-      "language": "Anglais",
-      "libraryCatalog": "Stanford Encyclopedia of Philosophy",
-      "publicationTitle": "The Stanford Encyclopedia of Philosophy",
-      "tags": [
-        {
-          "tag": "epistemology: Bayesian",
-          "type": 1
-        },
-        {
-          "tag": "induction: problem of",
-          "type": 1
-        },
-        {
-          "tag": "Peirce, Charles Sanders",
-          "type": 1
-        },
-        {
-          "tag": "scientific explanation",
-          "type": 1
-        },
-        {
-          "tag": "scientific realism",
-          "type": 1
-        },
-        {
-          "tag": "simplicity",
-          "type": 1
-        },
-        {
-          "tag": "skepticism",
-          "type": 1
-        },
-        {
-          "tag": "underdetermination, of scientific theories",
-          "type": 1
-        }
-      ],
-      "title": "Abduction",
-      "url": "http://plato.stanford.edu/archives/spr2011/entries/abduction/"
-    },
-    {
-      "abstractNote": "Debates about scientific realism are centrally connected to almosteverything else in the philosophy of science, for they concern the verynature of scientific knowledge. Scientific realism is a positiveepistemic attitude towards the content of our best theories and models,recommending belief in both observable and unobservable aspects of theworld described by the sciences. This epistemic attitude has importantmetaphysical and semantic dimensions, and these various commitments arecontested by a number of rival epistemologies of science, knowncollectively as forms of scientific antirealism. This article explainswhat scientific realism is, outlines its main variants, considers themost common arguments for and against the position, and contrasts itwith its most important antirealist counterparts.",
-      "accessDate": "2016-04-29T02:13:57Z",
-      "citationKey": "Chakravartty2011",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Anjan",
-          "lastName": "Chakravartty"
-        },
-        {
-          "creatorType": "editor",
-          "firstName": "Edward N.",
-          "lastName": "Zalta"
-        }
-      ],
-      "date": "2011",
-      "edition": "Fall 2015",
-      "extra": [
-        "Scientific Realism"
-      ],
-      "itemID": 2,
-      "itemType": "encyclopediaArticle",
-      "language": "Anglais",
-      "libraryCatalog": "Stanford Encyclopedia of Philosophy",
-      "publicationTitle": "The Stanford Encyclopedia of Philosophy",
-      "tags": [
-        {
-          "tag": "abduction",
-          "type": 1
-        },
-        {
-          "tag": "constructive empiricism",
-          "type": 1
-        },
-        {
-          "tag": "feminist (topics): perspectives on science",
-          "type": 1
-        },
-        {
-          "tag": "incommensurability: of scientific theories",
-          "type": 1
-        },
-        {
-          "tag": "Kuhn, Thomas",
-          "type": 1
-        },
-        {
-          "tag": "models in science",
-          "type": 1
-        },
-        {
-          "tag": "rationality: historicist theories of",
-          "type": 1
-        },
-        {
-          "tag": "science: theory and observation in",
-          "type": 1
-        },
-        {
-          "tag": "scientific explanation",
-          "type": 1
-        },
-        {
-          "tag": "scientific knowledge: social dimensions of",
-          "type": 1
-        },
-        {
-          "tag": "scientific progress",
-          "type": 1
-        },
-        {
-          "tag": "structural realism",
-          "type": 1
-        },
-        {
-          "tag": "truthlikeness",
-          "type": 1
-        },
-        {
-          "tag": "underdetermination, of scientific theories",
-          "type": 1
-        },
-        {
-          "tag": "Vienna Circle",
-          "type": 1
-        }
-      ],
-      "title": "Scientific Realism",
-      "url": "http://plato.stanford.edu/archives/fall2015/entries/scientific-realism/"
-    },
-    {
-      "accessDate": "2016-03-23T10:23:29Z",
-      "citationKey": "Bunge2003",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Mario",
-          "lastName": "Bunge"
-        },
-        {
-          "creatorType": "translator",
-          "name": "Services de traduction de l'Universit\u00e9 McGil"
-        }
-      ],
-      "date": "2003",
-      "extra": [
-        "Consid\u00e9rations d'un philosophe sur l'\u00e9conomique du n\u00e9o-conservatisme (n\u00e9o-lib\u00e9ralisme)"
-      ],
-      "itemID": 3,
-      "itemType": "journalArticle",
-      "language": "Fran\u00e7ais",
-      "libraryCatalog": "CrossRef",
-      "notes": [
-        "<div style=\"left: 270px; top: 1125.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.801445);\">L'essentiel de ce texte est tir\u00e9 d'une \u00e9tude in\u00e9dite, intitul\u00e9e</div>\n<div style=\"left: 718.001px; top: 1125.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.828156);\">The</div>\n<div style=\"left: 753.2px; top: 1125.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.822593);\">Methodological</div>\n<div style=\"left: 867.6px; top: 1125.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.859719);\">Crisis of</div>\n<div style=\"left: 270px; top: 1143.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.816605);\">Economics.</div>\n<div style=\"left: 353.03px; top: 1143.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.788572);\">Une premi\u00e8re version de cette \u00e9tude a \u00e9t\u00e9 publi\u00e9e en espagnol, sous le titre</div>\n<div style=\"left: 863.6px; top: 1143.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.800597);\">Economia</div>\n<div style=\"left: 270px; top: 1161.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.842257);\">y</div>\n<div style=\"left: 283.601px; top: 1161.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.826636);\">filosofia</div>\n<div style=\"left: 337.201px; top: 1161.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.746873);\">, Madrid, Tecnos, 1982, 1985. Une premi\u00e8re version de la <span class=\"highlight selected\">traduction</span> de ce texte a \u00e9t\u00e9</div>\n<div style=\"left: 270px; top: 1179.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.777761);\">assur\u00e9e par les services de traduction de l'Universit\u00e9 McGill.</div>"
-      ],
-      "series": "Classiques des sciences sociales.",
-      "title": "Consid\u00e9rations d'un philosophe sur l'\u00e9conomique du n\u00e9o-conservatisme (n\u00e9o-lib\u00e9ralisme)",
-      "url": "http://www.uqac.ca/zone30/Classiques_des_sciences_sociales/contemporains/bunge_mario/considerations_eco/considerations_eco.html"
-    },
-    {
-      "accessDate": "2017-02-20T16:20:30Z",
-      "citationKey": "zotero-609",
-      "extra": [
-        "__\"theory of truth\" inauthor:bunge - Recherche Google"
-      ],
-      "itemID": 4,
-      "itemType": "webpage",
-      "language": "Anglais",
-      "title": "__\"theory of truth\" inauthor:bunge - Recherche Google",
-      "url": "https://www.google.ca/search?hl=fr&tbo=p&tbm=bks&q=%22theory+of+truth%22+inauthor:bunge&num=10#q=%22theory+of+truth%22+inauthor:bunge&hl=fr&tbm=bks&start=0"
-    },
-    {
-      "archive": "Wikisource",
-      "citationKey": "Russell1905",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Bertrand",
-          "lastName": "Russell"
-        }
-      ],
-      "date": "1905",
-      "extra": [
-        "On Denoting"
-      ],
-      "itemID": 5,
-      "itemType": "manuscript",
-      "language": "Anglais",
-      "libraryCatalog": "Wikisource",
-      "rights": "Text is available under the Creative Commons Attribution-ShareAlike License; additional terms may apply.  By using this site, you agree to the Terms of Use and Privacy Policy.",
-      "tags": [
-        {
-          "tag": "1905 works",
-          "type": 1
-        },
-        {
-          "tag": "Journal articles",
-          "type": 1
-        },
-        {
-          "tag": "Logic",
-          "type": 1
-        },
-        {
-          "tag": "PD-old-30-1923",
-          "type": 1
-        }
-      ],
-      "title": "On Denoting"
-    },
-    {
-      "callNumber": "UDM: LSH: BD 21 B86",
-      "citationKey": "Bunge1983",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Mario",
-          "lastName": "Bunge"
-        }
-      ],
-      "date": "1983",
-      "extra": [
-        "Treatise On Basic Philosophy Vol 5 Epistemology I Exploring the World"
-      ],
-      "itemID": 6,
-      "itemType": "book",
-      "language": "Anglais",
-      "place": "Dordrecht",
-      "publisher": "Reidel",
-      "title": "Treatise On Basic Philosophy Vol 5 Epistemology I Exploring the World"
-    },
-    {
-      "citationKey": "Bunge1973",
-      "creators": [
-        {
-          "creatorType": "editor",
-          "firstName": "Mario",
-          "lastName": "Bunge"
-        }
-      ],
-      "date": "1973",
-      "extra": [
-        "Exact Philosophy"
-      ],
-      "itemID": 7,
-      "itemType": "book",
-      "language": "Anglais",
-      "place": "Dordrecht",
-      "publisher": "Reidel",
-      "title": "Exact Philosophy"
-    },
-    {
-      "citationKey": "Bunge1977",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "MA",
-          "lastName": "Bunge"
-        }
-      ],
-      "date": "1977",
-      "extra": [
-        "General Systems and Holism"
-      ],
-      "itemID": 8,
-      "itemType": "journalArticle",
-      "language": "Anglais",
-      "libraryCatalog": "CiteULike",
-      "pages": "87\u201390",
-      "publicationTitle": "General Systems",
-      "title": "General Systems and Holism",
-      "volume": "22"
-    },
-    {
-      "citationKey": "Bunge1999",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "M.",
-          "lastName": "Bunge"
-        }
-      ],
-      "date": "1999",
-      "extra": [
-        "Riot, Revolution and National Breakdown"
-      ],
-      "itemID": 9,
-      "itemType": "journalArticle",
-      "language": "Anglais",
-      "libraryCatalog": "Google Scholar",
-      "pages": "17\u201328",
-      "publicationTitle": "Philosophy and social action",
-      "title": "Riot, Revolution and National Breakdown",
-      "volume": "25"
-    },
-    {
-      "citationKey": "Sayre-McCord1988",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Geoffrey",
-          "lastName": "Sayre-McCord"
-        },
-        {
-          "creatorType": "editor",
-          "firstName": "Geoffrey",
-          "lastName": "Sayre-McCord"
-        }
-      ],
-      "date": "1988",
-      "extra": [
-        "Moral Theory and Explanatory Impotence"
-      ],
-      "itemID": 10,
-      "itemType": "bookSection",
-      "libraryCatalog": "PhilPapers",
-      "pages": "256\u2013281",
-      "publicationTitle": "Essays on Moral Realism",
-      "publisher": "Cornell University Press",
-      "shortTitle": "Moral Theory and Explanatory Impotence In",
-      "title": "Moral Theory and Explanatory Impotence"
-    },
-    {
-      "DOI": "10.1016/0307-904X(78)90008-2",
-      "ISSN": "0307-904X",
-      "abstractNote": "The theory of evolution is too general to be able to make predictions. However, like every other hypergeneral scientific theory, it can be enriched with specific assumptions and data, and thus become a specific model for a particular evolutionary line. This paper exhibits such a model. It accounts for the evolution of a biopopulation in terms of genetic and environmental variables. The results is a system of linear finite difference equations that enable one to pin down the necessary and sufficient conditions for evolution proper to occur, as well as to predict the average numbers of the final varieties originating from the parent population. It is estimated that the main value of the paper is methodological rather than substantive, in that it suggests a way of building models of biological lineages.",
-      "accessDate": "2017-07-14T11:10:22Z",
-      "citationKey": "Bunge1978",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Mario",
-          "lastName": "Bunge"
-        }
-      ],
-      "date": "September 1, 1978",
-      "extra": [
-        "A model of evolution"
-      ],
-      "issue": "3",
-      "itemID": 11,
-      "itemType": "journalArticle",
-      "journalAbbreviation": "Applied Mathematical Modelling",
-      "language": "Anglais",
-      "libraryCatalog": "ScienceDirect",
-      "pages": "201\u2013204",
-      "publicationTitle": "Applied Mathematical Modelling",
-      "title": "A model of evolution",
-      "url": "http://www.sciencedirect.com/science/article/pii/0307904X78900082",
-      "volume": "2"
-    },
-    {
-      "DOI": "10.1016/0732-118X(91)90027-J",
-      "ISSN": "0732-118X",
-      "accessDate": "2017-07-22T13:24:08Z",
-      "citationKey": "Perrez1991",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Meinrad",
-          "lastName": "Perrez"
-        }
-      ],
-      "date": "January 1, 1991",
-      "extra": [
-        "The difference between everyday knowledge, ideology, and scientific knowledge"
-      ],
-      "issue": "2",
-      "itemID": 12,
-      "itemType": "journalArticle",
-      "journalAbbreviation": "New Ideas in Psychology",
-      "language": "Anglais",
-      "libraryCatalog": "ScienceDirect",
-      "pages": "227\u2013231",
-      "publicationTitle": "New Ideas in Psychology",
-      "title": "The difference between everyday knowledge, ideology, and scientific knowledge",
-      "url": "http://www.sciencedirect.com/science/article/pii/0732118X9190027J",
-      "volume": "9"
-    },
-    {
-      "DOI": "10.1177/004839310103100307",
-      "ISSN": "0048-3931",
-      "accessDate": "2017-06-28T23:47:39Z",
-      "citationKey": "Bunge2001",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "M.",
-          "lastName": "Bunge"
-        }
-      ],
-      "date": "2001-09-01",
-      "extra": [
-        "Systems and Emergence, Rationality and Imprecision, Free-Wheeling and Evidence, Science and Ideology: Social Science and Its Philosophy According to van den Berg"
-      ],
-      "issue": "3",
-      "itemID": 13,
-      "itemType": "journalArticle",
-      "language": "Anglais",
-      "libraryCatalog": "CrossRef",
-      "pages": "404\u2013423",
-      "publicationTitle": "Philosophy of the Social Sciences",
-      "shortTitle": "Systems and Emergence, Rationality and Imprecision, Free-Wheeling and Evidence, Science and Ideology",
-      "title": "Systems and Emergence, Rationality and Imprecision, Free-Wheeling and Evidence, Science and Ideology: Social Science and Its Philosophy According to van den Berg",
-      "url": "http://pos.sagepub.com/cgi/doi/10.1177/004839310103100307",
-      "volume": "31"
-    },
-    {
-      "ISBN": "0774803274; 08470502",
-      "callNumber": "Q360 I54 1990; Q360; 003/.5420; Q/360/I 535/1990 PS; Q/360/I 535/1990 BI 2; CaQMU UdeM Bib. EBSI Q 360 I535 199010537047 31225003820194 2 Retour: 12/07/05 23:59LC; CaQMU UdeM EPC-Bio Q 360 I535 199010537046 31225006014373 ManquantLC",
-      "citationKey": "Collier1990",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "John",
-          "lastName": "Collier"
-        },
-        {
-          "creatorType": "editor",
-          "firstName": "Philip P.",
-          "lastName": "Hanson"
-        }
-      ],
-      "date": "1990",
-      "extra": [
-        "Intrinsic Information"
-      ],
-      "itemID": 14,
-      "itemType": "bookSection",
-      "pages": "411",
-      "place": "Vancouver",
-      "publicationTitle": "Information, language, and cognition",
-      "publisher": "University of British Columbia Press",
-      "tags": [
-        {
-          "tag": "Cognition"
-        },
-        {
-          "tag": "Information theory"
-        },
-        {
-          "tag": "Information, Th\u00e9orie de l'"
-        },
-        {
-          "tag": "Langage et langues"
-        },
-        {
-          "tag": "Language and languages"
-        }
-      ],
-      "title": "Intrinsic Information",
-      "volume": "1"
-    },
-    {
       "ISBN": "092492201X (PBK)",
       "callNumber": "B105.C477; B/105/C477/C65/1991 SS; CaQMU UdeM L.S.H. B 105 C477 C65 199110164481 31225004320970 DisponibleLC",
       "citationKey": "Villanueva1991",
@@ -1743,68 +1266,6 @@
       "title": "My philosophical development"
     },
     {
-      "ISBN": "978-0-89158-686-9",
-      "callNumber": "BJ59 .E86 1980",
-      "citationKey": "Bunge1980",
-      "creators": [
-        {
-          "creatorType": "editor",
-          "firstName": "Mario",
-          "lastName": "Bunge"
-        }
-      ],
-      "date": "1980",
-      "extra": [
-        "Technoethics"
-      ],
-      "itemID": 22,
-      "itemType": "bookSection",
-      "language": "Anglais",
-      "libraryCatalog": "Library of Congress ISBN",
-      "place": "Boulder, Colo",
-      "publicationTitle": "Ethics in an age of pervasive technology",
-      "publisher": "Westview Press",
-      "tags": [
-        {
-          "tag": "Moral and ethical aspects Congresses",
-          "type": 1
-        },
-        {
-          "tag": "Technology",
-          "type": 1
-        }
-      ],
-      "title": "Technoethics"
-    },
-    {
-      "ISBN": "978-3-642-88028-5 978-3-642-88026-1",
-      "abstractNote": "During centuries physicists were supposed to be studying the physical world. Since the turn of the century this assumption has often been challenged as naive: it was proclaimed that physics is not about the external world but about observers and their manipulations: that it is meaningless to talk of anything else than observation devices and operations: that the laws of physics concern our knowledge rather than the external world.",
-      "accessDate": "2017-06-28T00:29:07Z",
-      "citationKey": "Bunge1967",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Mario",
-          "lastName": "Bunge"
-        }
-      ],
-      "date": "1967",
-      "extra": [
-        "DOI: 10.1007/978-3-642-88026-1_1",
-        "The Turn of the Tide"
-      ],
-      "itemID": 23,
-      "itemType": "bookSection",
-      "language": "Anglais",
-      "libraryCatalog": "link.springer.com",
-      "pages": "1\u20136",
-      "publicationTitle": "Quantum Theory and Reality",
-      "publisher": "Springer, Berlin, Heidelberg",
-      "series": "Studies in the Foundations Methodology and Philosophy of Science",
-      "title": "The Turn of the Tide",
-      "url": "https://link.springer.com/chapter/10.1007/978-3-642-88026-1_1"
-    },
-    {
       "ISBN": "978-90-277-1262-2 978-90-277-1263-9",
       "citationKey": "Agassi1982",
       "creators": [
@@ -1947,38 +1408,6 @@
       "url": "http://link.springer.com/10.1007/978-94-011-4034-8"
     },
     {
-      "ISBN": "978-94-010-7877-1 978-94-009-3061-2",
-      "abstractNote": "The concept of probability has fascinated and puzzled numerous philosophers since its inception three and a half centuries ago. Mathematicians and scientists too, whether basic or applied, have often taken part in philosophical discussions on probability. Notwithstanding such discussions, which have been numerous and often spirited, there is still considerable divergence of opinion concerning the interpretation of probability. (See e.g. du Pasquier 1926, Fine 1973.) This is probably due to the fact that the choice of interpretation is largely a matter of philosophy. Not that philosophy is necessarily inconclusive, but it does colour all thinking on fundamental questions.",
-      "accessDate": "2017-07-18T12:12:07Z",
-      "citationKey": "Bunge1988",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Mario",
-          "lastName": "Bunge"
-        },
-        {
-          "creatorType": "editor",
-          "lastName": "Agazzi"
-        }
-      ],
-      "date": "1988",
-      "extra": [
-        "DOI: 10.1007/978-94-009-3061-2_2",
-        "Two Faces and Three Masks of Probability"
-      ],
-      "itemID": 28,
-      "itemType": "bookSection",
-      "language": "Anglais",
-      "libraryCatalog": "link.springer.com",
-      "pages": "27\u201349",
-      "publicationTitle": "Probability in the Sciences",
-      "publisher": "Springer, Dordrecht",
-      "series": "Synthese Library",
-      "title": "Two Faces and Three Masks of Probability",
-      "url": "https://link.springer.com/chapter/10.1007/978-94-009-3061-2_2"
-    },
-    {
       "ISBN": "9786610221356",
       "accessDate": "2017-03-13T01:30:41Z",
       "callNumber": "HB61",
@@ -2013,6 +1442,482 @@
       ],
       "title": "Routledge dictionary of economics",
       "url": "http://www.myilibrary.com?id=22135"
+    },
+    {
+      "callNumber": "UDM: LSH: BD 21 B86",
+      "citationKey": "Bunge1983",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Mario",
+          "lastName": "Bunge"
+        }
+      ],
+      "date": "1983",
+      "extra": [
+        "Treatise On Basic Philosophy Vol 5 Epistemology I Exploring the World"
+      ],
+      "itemID": 6,
+      "itemType": "book",
+      "language": "Anglais",
+      "place": "Dordrecht",
+      "publisher": "Reidel",
+      "title": "Treatise On Basic Philosophy Vol 5 Epistemology I Exploring the World"
+    },
+    {
+      "citationKey": "Bunge1973",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "Mario",
+          "lastName": "Bunge"
+        }
+      ],
+      "date": "1973",
+      "extra": [
+        "Exact Philosophy"
+      ],
+      "itemID": 7,
+      "itemType": "book",
+      "language": "Anglais",
+      "place": "Dordrecht",
+      "publisher": "Reidel",
+      "title": "Exact Philosophy"
+    },
+    {
+      "citationKey": "Sayre-McCord1988",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Geoffrey",
+          "lastName": "Sayre-McCord"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Geoffrey",
+          "lastName": "Sayre-McCord"
+        }
+      ],
+      "date": "1988",
+      "extra": [
+        "Moral Theory and Explanatory Impotence"
+      ],
+      "itemID": 10,
+      "itemType": "bookSection",
+      "libraryCatalog": "PhilPapers",
+      "pages": "256\u2013281",
+      "publicationTitle": "Essays on Moral Realism",
+      "publisher": "Cornell University Press",
+      "shortTitle": "Moral Theory and Explanatory Impotence In",
+      "title": "Moral Theory and Explanatory Impotence"
+    },
+    {
+      "ISBN": "0774803274; 08470502",
+      "callNumber": "Q360 I54 1990; Q360; 003/.5420; Q/360/I 535/1990 PS; Q/360/I 535/1990 BI 2; CaQMU UdeM Bib. EBSI Q 360 I535 199010537047 31225003820194 2 Retour: 12/07/05 23:59LC; CaQMU UdeM EPC-Bio Q 360 I535 199010537046 31225006014373 ManquantLC",
+      "citationKey": "Collier1990",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "John",
+          "lastName": "Collier"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Philip P.",
+          "lastName": "Hanson"
+        }
+      ],
+      "date": "1990",
+      "extra": [
+        "Intrinsic Information"
+      ],
+      "itemID": 14,
+      "itemType": "bookSection",
+      "pages": "411",
+      "place": "Vancouver",
+      "publicationTitle": "Information, language, and cognition",
+      "publisher": "University of British Columbia Press",
+      "tags": [
+        {
+          "tag": "Cognition"
+        },
+        {
+          "tag": "Information theory"
+        },
+        {
+          "tag": "Information, Th\u00e9orie de l'"
+        },
+        {
+          "tag": "Langage et langues"
+        },
+        {
+          "tag": "Language and languages"
+        }
+      ],
+      "title": "Intrinsic Information",
+      "volume": "1"
+    },
+    {
+      "ISBN": "978-0-89158-686-9",
+      "callNumber": "BJ59 .E86 1980",
+      "citationKey": "Bunge1980",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "Mario",
+          "lastName": "Bunge"
+        }
+      ],
+      "date": "1980",
+      "extra": [
+        "Technoethics"
+      ],
+      "itemID": 22,
+      "itemType": "bookSection",
+      "language": "Anglais",
+      "libraryCatalog": "Library of Congress ISBN",
+      "place": "Boulder, Colo",
+      "publicationTitle": "Ethics in an age of pervasive technology",
+      "publisher": "Westview Press",
+      "tags": [
+        {
+          "tag": "Moral and ethical aspects Congresses",
+          "type": 1
+        },
+        {
+          "tag": "Technology",
+          "type": 1
+        }
+      ],
+      "title": "Technoethics"
+    },
+    {
+      "ISBN": "978-3-642-88028-5 978-3-642-88026-1",
+      "abstractNote": "During centuries physicists were supposed to be studying the physical world. Since the turn of the century this assumption has often been challenged as naive: it was proclaimed that physics is not about the external world but about observers and their manipulations: that it is meaningless to talk of anything else than observation devices and operations: that the laws of physics concern our knowledge rather than the external world.",
+      "accessDate": "2017-06-28T00:29:07Z",
+      "citationKey": "Bunge1967",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Mario",
+          "lastName": "Bunge"
+        }
+      ],
+      "date": "1967",
+      "extra": [
+        "DOI: 10.1007/978-3-642-88026-1_1",
+        "The Turn of the Tide"
+      ],
+      "itemID": 23,
+      "itemType": "bookSection",
+      "language": "Anglais",
+      "libraryCatalog": "link.springer.com",
+      "pages": "1\u20136",
+      "publicationTitle": "Quantum Theory and Reality",
+      "publisher": "Springer, Berlin, Heidelberg",
+      "series": "Studies in the Foundations Methodology and Philosophy of Science",
+      "title": "The Turn of the Tide",
+      "url": "https://link.springer.com/chapter/10.1007/978-3-642-88026-1_1"
+    },
+    {
+      "ISBN": "978-94-010-7877-1 978-94-009-3061-2",
+      "abstractNote": "The concept of probability has fascinated and puzzled numerous philosophers since its inception three and a half centuries ago. Mathematicians and scientists too, whether basic or applied, have often taken part in philosophical discussions on probability. Notwithstanding such discussions, which have been numerous and often spirited, there is still considerable divergence of opinion concerning the interpretation of probability. (See e.g. du Pasquier 1926, Fine 1973.) This is probably due to the fact that the choice of interpretation is largely a matter of philosophy. Not that philosophy is necessarily inconclusive, but it does colour all thinking on fundamental questions.",
+      "accessDate": "2017-07-18T12:12:07Z",
+      "citationKey": "Bunge1988",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Mario",
+          "lastName": "Bunge"
+        },
+        {
+          "creatorType": "editor",
+          "lastName": "Agazzi"
+        }
+      ],
+      "date": "1988",
+      "extra": [
+        "DOI: 10.1007/978-94-009-3061-2_2",
+        "Two Faces and Three Masks of Probability"
+      ],
+      "itemID": 28,
+      "itemType": "bookSection",
+      "language": "Anglais",
+      "libraryCatalog": "link.springer.com",
+      "pages": "27\u201349",
+      "publicationTitle": "Probability in the Sciences",
+      "publisher": "Springer, Dordrecht",
+      "series": "Synthese Library",
+      "title": "Two Faces and Three Masks of Probability",
+      "url": "https://link.springer.com/chapter/10.1007/978-94-009-3061-2_2"
+    },
+    {
+      "abstractNote": "Abduction or, as it is also often called, Inference to the Best Explanation is a type of inference that assigns special status to explanatory considerations. Most philosophers agree that this type ofinference is frequently employed, in some form or other, both in everyday and in scientific reasoning. However, the exact form as wellas the normative status of abduction are still matters of controversy. This entry contrasts abduction with other types of inference; points at prominent uses of it, both in and outside philosophy; considers various more or less precise statements of it; discusses its normative status; and highlights possible connections between abduction and Bayesian confirmation theory.",
+      "accessDate": "2016-09-04T10:34:34Z",
+      "citationKey": "Douven2011",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Igor",
+          "lastName": "Douven"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Edward N.",
+          "lastName": "Zalta"
+        }
+      ],
+      "date": "2011",
+      "edition": "Spring 2011",
+      "extra": [
+        "Abduction"
+      ],
+      "itemID": 1,
+      "itemType": "encyclopediaArticle",
+      "language": "Anglais",
+      "libraryCatalog": "Stanford Encyclopedia of Philosophy",
+      "publicationTitle": "The Stanford Encyclopedia of Philosophy",
+      "tags": [
+        {
+          "tag": "epistemology: Bayesian",
+          "type": 1
+        },
+        {
+          "tag": "induction: problem of",
+          "type": 1
+        },
+        {
+          "tag": "Peirce, Charles Sanders",
+          "type": 1
+        },
+        {
+          "tag": "scientific explanation",
+          "type": 1
+        },
+        {
+          "tag": "scientific realism",
+          "type": 1
+        },
+        {
+          "tag": "simplicity",
+          "type": 1
+        },
+        {
+          "tag": "skepticism",
+          "type": 1
+        },
+        {
+          "tag": "underdetermination, of scientific theories",
+          "type": 1
+        }
+      ],
+      "title": "Abduction",
+      "url": "http://plato.stanford.edu/archives/spr2011/entries/abduction/"
+    },
+    {
+      "abstractNote": "Debates about scientific realism are centrally connected to almosteverything else in the philosophy of science, for they concern the verynature of scientific knowledge. Scientific realism is a positiveepistemic attitude towards the content of our best theories and models,recommending belief in both observable and unobservable aspects of theworld described by the sciences. This epistemic attitude has importantmetaphysical and semantic dimensions, and these various commitments arecontested by a number of rival epistemologies of science, knowncollectively as forms of scientific antirealism. This article explainswhat scientific realism is, outlines its main variants, considers themost common arguments for and against the position, and contrasts itwith its most important antirealist counterparts.",
+      "accessDate": "2016-04-29T02:13:57Z",
+      "citationKey": "Chakravartty2011",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Anjan",
+          "lastName": "Chakravartty"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Edward N.",
+          "lastName": "Zalta"
+        }
+      ],
+      "date": "2011",
+      "edition": "Fall 2015",
+      "extra": [
+        "Scientific Realism"
+      ],
+      "itemID": 2,
+      "itemType": "encyclopediaArticle",
+      "language": "Anglais",
+      "libraryCatalog": "Stanford Encyclopedia of Philosophy",
+      "publicationTitle": "The Stanford Encyclopedia of Philosophy",
+      "tags": [
+        {
+          "tag": "abduction",
+          "type": 1
+        },
+        {
+          "tag": "constructive empiricism",
+          "type": 1
+        },
+        {
+          "tag": "feminist (topics): perspectives on science",
+          "type": 1
+        },
+        {
+          "tag": "incommensurability: of scientific theories",
+          "type": 1
+        },
+        {
+          "tag": "Kuhn, Thomas",
+          "type": 1
+        },
+        {
+          "tag": "models in science",
+          "type": 1
+        },
+        {
+          "tag": "rationality: historicist theories of",
+          "type": 1
+        },
+        {
+          "tag": "science: theory and observation in",
+          "type": 1
+        },
+        {
+          "tag": "scientific explanation",
+          "type": 1
+        },
+        {
+          "tag": "scientific knowledge: social dimensions of",
+          "type": 1
+        },
+        {
+          "tag": "scientific progress",
+          "type": 1
+        },
+        {
+          "tag": "structural realism",
+          "type": 1
+        },
+        {
+          "tag": "truthlikeness",
+          "type": 1
+        },
+        {
+          "tag": "underdetermination, of scientific theories",
+          "type": 1
+        },
+        {
+          "tag": "Vienna Circle",
+          "type": 1
+        }
+      ],
+      "title": "Scientific Realism",
+      "url": "http://plato.stanford.edu/archives/fall2015/entries/scientific-realism/"
+    },
+    {
+      "DOI": "10.1016/0307-904X(78)90008-2",
+      "ISSN": "0307-904X",
+      "abstractNote": "The theory of evolution is too general to be able to make predictions. However, like every other hypergeneral scientific theory, it can be enriched with specific assumptions and data, and thus become a specific model for a particular evolutionary line. This paper exhibits such a model. It accounts for the evolution of a biopopulation in terms of genetic and environmental variables. The results is a system of linear finite difference equations that enable one to pin down the necessary and sufficient conditions for evolution proper to occur, as well as to predict the average numbers of the final varieties originating from the parent population. It is estimated that the main value of the paper is methodological rather than substantive, in that it suggests a way of building models of biological lineages.",
+      "accessDate": "2017-07-14T11:10:22Z",
+      "citationKey": "Bunge1978",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Mario",
+          "lastName": "Bunge"
+        }
+      ],
+      "date": "September 1, 1978",
+      "extra": [
+        "A model of evolution"
+      ],
+      "issue": "3",
+      "itemID": 11,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Applied Mathematical Modelling",
+      "language": "Anglais",
+      "libraryCatalog": "ScienceDirect",
+      "pages": "201\u2013204",
+      "publicationTitle": "Applied Mathematical Modelling",
+      "title": "A model of evolution",
+      "url": "http://www.sciencedirect.com/science/article/pii/0307904X78900082",
+      "volume": "2"
+    },
+    {
+      "DOI": "10.1016/0732-118X(91)90027-J",
+      "ISSN": "0732-118X",
+      "accessDate": "2017-07-22T13:24:08Z",
+      "citationKey": "Perrez1991",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Meinrad",
+          "lastName": "Perrez"
+        }
+      ],
+      "date": "January 1, 1991",
+      "extra": [
+        "The difference between everyday knowledge, ideology, and scientific knowledge"
+      ],
+      "issue": "2",
+      "itemID": 12,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "New Ideas in Psychology",
+      "language": "Anglais",
+      "libraryCatalog": "ScienceDirect",
+      "pages": "227\u2013231",
+      "publicationTitle": "New Ideas in Psychology",
+      "title": "The difference between everyday knowledge, ideology, and scientific knowledge",
+      "url": "http://www.sciencedirect.com/science/article/pii/0732118X9190027J",
+      "volume": "9"
+    },
+    {
+      "DOI": "10.1177/004839310103100307",
+      "ISSN": "0048-3931",
+      "accessDate": "2017-06-28T23:47:39Z",
+      "citationKey": "Bunge2001",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Bunge"
+        }
+      ],
+      "date": "2001-09-01",
+      "extra": [
+        "Systems and Emergence, Rationality and Imprecision, Free-Wheeling and Evidence, Science and Ideology: Social Science and Its Philosophy According to van den Berg"
+      ],
+      "issue": "3",
+      "itemID": 13,
+      "itemType": "journalArticle",
+      "language": "Anglais",
+      "libraryCatalog": "CrossRef",
+      "pages": "404\u2013423",
+      "publicationTitle": "Philosophy of the Social Sciences",
+      "shortTitle": "Systems and Emergence, Rationality and Imprecision, Free-Wheeling and Evidence, Science and Ideology",
+      "title": "Systems and Emergence, Rationality and Imprecision, Free-Wheeling and Evidence, Science and Ideology: Social Science and Its Philosophy According to van den Berg",
+      "url": "http://pos.sagepub.com/cgi/doi/10.1177/004839310103100307",
+      "volume": "31"
+    },
+    {
+      "accessDate": "2016-03-23T10:23:29Z",
+      "citationKey": "Bunge2003",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Mario",
+          "lastName": "Bunge"
+        },
+        {
+          "creatorType": "translator",
+          "name": "Services de traduction de l'Universit\u00e9 McGil"
+        }
+      ],
+      "date": "2003",
+      "extra": [
+        "Consid\u00e9rations d'un philosophe sur l'\u00e9conomique du n\u00e9o-conservatisme (n\u00e9o-lib\u00e9ralisme)"
+      ],
+      "itemID": 3,
+      "itemType": "journalArticle",
+      "language": "Fran\u00e7ais",
+      "libraryCatalog": "CrossRef",
+      "notes": [
+        "<div style=\"left: 270px; top: 1125.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.801445);\">L'essentiel de ce texte est tir\u00e9 d'une \u00e9tude in\u00e9dite, intitul\u00e9e</div>\n<div style=\"left: 718.001px; top: 1125.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.828156);\">The</div>\n<div style=\"left: 753.2px; top: 1125.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.822593);\">Methodological</div>\n<div style=\"left: 867.6px; top: 1125.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.859719);\">Crisis of</div>\n<div style=\"left: 270px; top: 1143.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.816605);\">Economics.</div>\n<div style=\"left: 353.03px; top: 1143.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.788572);\">Une premi\u00e8re version de cette \u00e9tude a \u00e9t\u00e9 publi\u00e9e en espagnol, sous le titre</div>\n<div style=\"left: 863.6px; top: 1143.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.800597);\">Economia</div>\n<div style=\"left: 270px; top: 1161.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.842257);\">y</div>\n<div style=\"left: 283.601px; top: 1161.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.826636);\">filosofia</div>\n<div style=\"left: 337.201px; top: 1161.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.746873);\">, Madrid, Tecnos, 1982, 1985. Une premi\u00e8re version de la <span class=\"highlight selected\">traduction</span> de ce texte a \u00e9t\u00e9</div>\n<div style=\"left: 270px; top: 1179.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.777761);\">assur\u00e9e par les services de traduction de l'Universit\u00e9 McGill.</div>"
+      ],
+      "series": "Classiques des sciences sociales.",
+      "title": "Consid\u00e9rations d'un philosophe sur l'\u00e9conomique du n\u00e9o-conservatisme (n\u00e9o-lib\u00e9ralisme)",
+      "url": "http://www.uqac.ca/zone30/Classiques_des_sciences_sociales/contemporains/bunge_mario/considerations_eco/considerations_eco.html"
     },
     {
       "ISSN": "0012-2173",
@@ -2237,6 +2142,101 @@
       ],
       "title": "Fred Dretske on the Explanatory Role of Semantic Content",
       "volume": "6"
+    },
+    {
+      "citationKey": "Bunge1977",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "MA",
+          "lastName": "Bunge"
+        }
+      ],
+      "date": "1977",
+      "extra": [
+        "General Systems and Holism"
+      ],
+      "itemID": 8,
+      "itemType": "journalArticle",
+      "language": "Anglais",
+      "libraryCatalog": "CiteULike",
+      "pages": "87\u201390",
+      "publicationTitle": "General Systems",
+      "title": "General Systems and Holism",
+      "volume": "22"
+    },
+    {
+      "citationKey": "Bunge1999",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Bunge"
+        }
+      ],
+      "date": "1999",
+      "extra": [
+        "Riot, Revolution and National Breakdown"
+      ],
+      "itemID": 9,
+      "itemType": "journalArticle",
+      "language": "Anglais",
+      "libraryCatalog": "Google Scholar",
+      "pages": "17\u201328",
+      "publicationTitle": "Philosophy and social action",
+      "title": "Riot, Revolution and National Breakdown",
+      "volume": "25"
+    },
+    {
+      "archive": "Wikisource",
+      "citationKey": "Russell1905",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Bertrand",
+          "lastName": "Russell"
+        }
+      ],
+      "date": "1905",
+      "extra": [
+        "On Denoting"
+      ],
+      "itemID": 5,
+      "itemType": "manuscript",
+      "language": "Anglais",
+      "libraryCatalog": "Wikisource",
+      "rights": "Text is available under the Creative Commons Attribution-ShareAlike License; additional terms may apply.  By using this site, you agree to the Terms of Use and Privacy Policy.",
+      "tags": [
+        {
+          "tag": "1905 works",
+          "type": 1
+        },
+        {
+          "tag": "Journal articles",
+          "type": 1
+        },
+        {
+          "tag": "Logic",
+          "type": 1
+        },
+        {
+          "tag": "PD-old-30-1923",
+          "type": 1
+        }
+      ],
+      "title": "On Denoting"
+    },
+    {
+      "accessDate": "2017-02-20T16:20:30Z",
+      "citationKey": "zotero-609",
+      "extra": [
+        "__\"theory of truth\" inauthor:bunge - Recherche Google"
+      ],
+      "itemID": 4,
+      "itemType": "webpage",
+      "language": "Anglais",
+      "title": "__\"theory of truth\" inauthor:bunge - Recherche Google",
+      "url": "https://www.google.ca/search?hl=fr&tbo=p&tbm=bks&q=%22theory+of+truth%22+inauthor:bunge&num=10#q=%22theory+of+truth%22+inauthor:bunge&hl=fr&tbm=bks&start=0"
     }
   ]
 }

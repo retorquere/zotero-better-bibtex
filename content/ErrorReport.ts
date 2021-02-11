@@ -30,8 +30,8 @@ const httpRequestOptions = {
 }
 
 export = new class ErrorReport {
-  private chunkSize = 10 * MB // tslint:disable-line:no-magic-numbers binary-expression-operand-order
-  private previewSize = 3 * kB // tslint:disable-line:no-magic-numbers binary-expression-operand-order
+  private chunkSize = 10 * MB // eslint-disable-line no-magic-numbers, yoda
+  private previewSize = 3 * kB // eslint-disable-line no-magic-numbers, yoda
 
   private key: string
   private timestamp: string
@@ -39,10 +39,10 @@ export = new class ErrorReport {
   private params: any
 
   private errorlog: {
-    info: string,
-    errors: string,
-    debug: string | string[],
-    references?: string,
+    info: string
+    errors: string
+    debug: string | string[]
+    references?: string
     db?: string
   }
 
@@ -72,7 +72,8 @@ export = new class ErrorReport {
 
       document.getElementById('better-bibtex-report-id').value = this.key
       document.getElementById('better-bibtex-report-result').hidden = false
-    } catch (err) {
+    }
+    catch (err) {
       const ps = Components.classes['@mozilla.org/embedcomp/prompt-service;1'].getService(Components.interfaces.nsIPromptService)
       ps.alert(null, Zotero.getString('general.error'), `${err} (${this.key}, references: ${!!this.errorlog.references})`)
       if (wizard.rewind) wizard.rewind()
@@ -110,18 +111,21 @@ export = new class ErrorReport {
   private async latest() {
     try {
       const latest = PACKAGE.xpi.releaseURL.replace('https://github.com/', 'https://api.github.com/repos/').replace(/\/releases\/.*/, '/releases/latest')
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return JSON.parse(await (await fetch(latest, { method: 'GET', cache: 'no-cache', redirect: 'follow' })).text()).tag_name.replace('v', '')
-    } catch (err) {
+    }
+    catch (err) {
       return null
     }
   }
 
-  private async ping(region) {
+  private async ping(region: string) {
     await fetch(`http://s3.${region}.amazonaws.com${s3.region[region].tld || ''}/ping`, {
       method: 'GET',
       cache: 'no-cache',
       redirect: 'follow',
     })
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return { region, ...s3.region[region] }
   }
 
@@ -162,39 +166,40 @@ export = new class ErrorReport {
     const show_latest = document.getElementById('better-bibtex-report-latest')
     if (current === latest) {
       show_latest.hidden = true
-    } else {
+    }
+    else {
       show_latest.value = Zotero.BetterBibTeX.getString('ErrorReport.better-bibtex.latest', { version: latest || '<could not be established>' })
       show_latest.hidden = false
     }
 
     try {
-      const region = await Zotero.Promise.any(Object.keys(s3.region).map(this.ping))
+      const region = await Zotero.Promise.any(Object.keys(s3.region).map(this.ping.bind(this)))
       this.bucket = `http://${s3.bucket}-${region.short}.s3-${region.region}.amazonaws.com${region.tld || ''}`
       this.key = `${Zotero.Utilities.generateObjectKey()}-${region.short}`
       continueButton.disabled = false
       continueButton.focus()
 
-    } catch (err) {
+    }
+    catch (err) {
       alert(`No AWS region can be reached: ${err.message}`)
       wizard.getButton('cancel').disabled = false
     }
   }
 
-  private preview(lines) {
+  private preview(lines: string | string[]): string {
     if (Array.isArray(lines)) {
       let preview = ''
       for (const line of lines) {
         if (line.startsWith('(4)(+')) continue // DB statements
 
-        preview += line + '\n'
-        if (preview.length > this.previewSize) return preview + ' ...'
+        preview += `${line}\n`
+        if (preview.length > this.previewSize) return `${preview} ...`
       }
 
       return preview
-
-    } else if (lines.length > this.previewSize) {
-      return lines.substr(0, this.previewSize) + ' ...'
-
+    }
+    else if (lines.length > this.previewSize) {
+      return `${lines.substr(0, this.previewSize)} ...`
     }
 
     return lines
@@ -234,7 +239,7 @@ export = new class ErrorReport {
   private async put(url, options) {
     let error = null
 
-    for (let attempt = 0; attempt < 5; attempt++) { // tslint:disable-line:no-magic-numbers
+    for (let attempt = 0; attempt < 5; attempt++) { // eslint-disable-line no-magic-numbers
       try {
         // await Zotero.HTTP.request('PUT', url, options)
 
@@ -247,7 +252,8 @@ export = new class ErrorReport {
         })
         return
 
-      } catch (err) {
+      }
+      catch (err) {
         log.error('ErrorReport: failed to PUT to', url, attempt)
         error = err
 
@@ -268,7 +274,8 @@ export = new class ErrorReport {
       xhr.onload = function() {
         if (this.status >= 200 && this.status < 300) { // tslint:disable-line:no-magic-numbers
           resolve(xhr.response)
-        } else {
+        }
+        else {
           reject({ status: this.status, statusText: xhr.statusText })
         }
       }
@@ -280,8 +287,8 @@ export = new class ErrorReport {
   }
   */
 
-  private async submit(filename, contentType, data, prefix = '') {
-    if (data.then) data = await data
+  private async submit(filename, contentType, data: Promise<string | string[]> | string | string[], prefix = '') {
+    data = await Promise.resolve(data)
 
     const headers = {
       'x-amz-storage-class': 'STANDARD',
@@ -302,6 +309,7 @@ export = new class ErrorReport {
 
     const debugLogDir = Prefs.get('debugLogDir')
     if (debugLogDir) {
+      if (Array.isArray(data)) data = data.join('\n')
       await Zotero.File.putContentsAsync(`${debugLogDir}/${filename}.${ext}`, prefix + data)
       return
     }
@@ -316,21 +324,23 @@ export = new class ErrorReport {
 
         if ((chunk.length + line.length) > this.chunkSize) {
           if (chunk.length !== 0) chunks.push(chunk)
-          chunk = line + '\n'
+          chunk = `${line}\n`
 
-        } else {
-          chunk += line + '\n'
+        }
+        else {
+          chunk += `${line}\n`
 
         }
       }
       if (chunk.length) chunks.push(chunk)
 
-    } else {
-      chunks = fastChunkString(prefix + data, { size: this.chunkSize })
+    }
+    else {
+      chunks = fastChunkString(`${prefix}${data}`, { size: this.chunkSize })
 
     }
 
-    chunks = chunks.map((chunk, n) => ({ n: '.' + (n + 1).toString().padStart(4, '0'), body: chunk })) // tslint:disable-line:no-magic-numbers
+    chunks = chunks.map((chunk, n) => ({ n: `.${(n + 1).toString().padStart(4, '0')}`, body: chunk })) // eslint-disable-line no-magic-numbers
     if (chunks.length === 1) chunks[0].n = ''
 
     await Promise.all(chunks.map(chunk => this.put(`${url}${chunk.n}.${ext}`, {

@@ -1,5 +1,5 @@
 #!/usr/bin/env npx ts-node
-// tslint:disable:prefer-template
+/* eslint-disable prefer-template */
 
 import * as ts from 'typescript'
 import * as fs from 'fs'
@@ -16,24 +16,28 @@ const doc = {
   functions: {},
 }
 
-function function_name(name, parameters) {
+function function_name(name: string, parameters: { name: string }[]) {
   name = name.replace(/_/g, '.')
   let names = [ name ]
 
   if (parameters.find(p => p.name === 'onlyEditors')) {
     if (name.startsWith('authors')) {
-      names = [ 'authors', 'editors' ].map(prefix => name.replace(/^authors/, prefix))
-    } else if (name === 'auth.auth.ea') {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      names = [ 'authors', 'editors' ].map((prefix: string) => name.replace(/^authors/, prefix))
+    }
+    else if (name === 'auth.auth.ea') {
       names = [ 'auth.auth.ea', 'edtr.edtr.ea' ]
-    } else {
-      names = [ 'auth', 'edtr' ].map(prefix => name.replace(/^auth/, prefix))
+    }
+    else {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      names = [ 'auth', 'edtr' ].map((prefix: string) => name.replace(/^auth/, prefix))
     }
   }
   if (parameters.find(p => p.name === 'n')) {
-    names = names.map(n => n + 'N')
+    names = names.map(n => `${n}N`)
   }
   if (parameters.find(p => p.name === 'm')) {
-    names = names.map(n => n + '_M')
+    names = names.map(n => `${n}_M`)
   }
   let quoted = names.map(n => '`' + n + '`').join(' / ')
   if (parameters.find(p => p.name === 'withInitials')) {
@@ -45,7 +49,7 @@ function function_name(name, parameters) {
   return quoted
 }
 
-function filter_name(name, parameters) {
+function filter_name({ name, parameters }: { name: string, parameters: { name: string, optional: boolean, type: string} [] }) {
   name = '`' + name.replace(/_/g, '-') + '`'
   if (parameters && parameters.length) {
     name += '=' + parameters.map(p => `${p.name}${p.optional ? '?' : ''} (${p.type})`).join(', ')
@@ -85,14 +89,14 @@ ast.forEachChild((node: ts.Node) => {
           if (comment_ranges) {
             let comment = ast.getFullText().slice(comment_ranges[0].pos, comment_ranges[0].end)
             if (comment.startsWith('/**')) {
-              comment = comment.replace(/^\/\*\*/, '').replace(/\*\/$/, '').trim().split('\n').map(line => line.replace(/^\s*[*]\s*/, '')).join('\n')
+              comment = comment.replace(/^\/\*\*/, '').replace(/\*\/$/, '').trim().split('\n').map(line => line.replace(/^\s*[*]\s*/, '')).join('\n').replace(/\n+/g, newlines => newlines.length > 1 ? '\n\n' : ' ')
 
               switch(kind) {
                 case '$':
                   doc.functions[function_name(name, parameters)] = comment
                   break
                 case '_':
-                  doc.filters[filter_name(name, parameters)] = comment
+                  doc.filters[filter_name({ name, parameters })] = comment
                   break
               }
             }

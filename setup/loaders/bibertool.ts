@@ -10,15 +10,16 @@ import _ = require('lodash')
 
 // TODO: make sure to occasionally check https://sourceforge.net/projects/biblatex-biber/files/biblatex-biber/testfiles/ for updates.
 
-const _select = xpath.useNamespaces({ bcf: 'https://sourceforge.net/projects/biblatex' })
+// const _select = xpath.useNamespaces({ bcf: 'https://sourceforge.net/projects/biblatex' })
 function select(selector, node) {
-  return _select(selector, node) as Element[]
+  // return _select(selector, node) as Element[]
+  return xpath.select(selector, node) as Element[]
 }
 
-export = source => {
+export = (source: string): string => {
   const doc = (new DOMParser).parseFromString(source)
 
-  const BCF = {
+  const BiberTool = { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
     // combinations fo allowed fields
     fieldSet: '',
 
@@ -35,41 +36,46 @@ export = source => {
   const fieldSet = {}
 
   // get all the possible entrytypes and apply the generic fields
-  for (const type of select('//bcf:entrytypes/bcf:entrytype', doc)) {
-    BCF.allowed[type.textContent] = ['optional']
+  for (const type of select('//entrytypes/entrytype', doc)) {
+    BiberTool.allowed[type.textContent] = ['optional']
+  }
+  // some entry types are not listed under entrytypes?! I'm looking at you dataset...
+  for (const type of select('//entryfields/entrytype', doc)) {
+    BiberTool.allowed[type.textContent] = ['optional']
   }
 
-  // tslint:disable-next-line:prefer-template
+  // eslint-disable-next-line prefer-template
   const dateprefix = '^('
-    + select('//bcf:fields/bcf:field[@fieldtype="field" and @datatype="date"]', doc)
-        .map(field => field.textContent.replace(/date$/, ''))
-        .filter(field => field)
-        .join('|')
+    + select('//fields/field[@fieldtype="field" and @datatype="date"]', doc)
+      .map(field => field.textContent.replace(/date$/, ''))
+      .filter(field => field)
+      .join('|')
     + ')?'
   const dateprefixRE = new RegExp(dateprefix)
 
-  // tslint:disable-next-line:prefer-template
+  // eslint-disable-next-line prefer-template
   const datefieldRE = new RegExp(dateprefix + '(' + Array.from(new Set(
-    select('//bcf:fields/bcf:field[@fieldtype="field" and @datatype="datepart"]', doc)
+    select('//fields/field[@fieldtype="field" and @datatype="datepart"]', doc)
       .map(field => field.textContent.replace(dateprefixRE, ''))
       .filter(field => field)
   )).join('|') + ')$')
 
   // gather the fieldsets
-  for (const node of select('//bcf:entryfields', doc)) {
-    const types = select('./bcf:entrytype', node).map(type => type.textContent).sort()
+  for (const node of select('//entryfields', doc)) {
+    const types = select('./entrytype', node).map(type => type.textContent).sort()
 
-    const setname = types.length === 0 ? 'optional' : 'optional_' + types.join('_')
+    const setname = types.length === 0 ? 'optional' : `optional_${types.join('_')}`
     if (fieldSet[setname]) throw new Error(`field set ${setname} exists`)
 
     // find all the field names allowed by this set
     fieldSet[setname] = []
-    for (const { textContent: field } of select('./bcf:field', node)) {
+    for (const { textContent: field } of select('./field', node)) {
       const m = datefieldRE.exec(field)
       if (m) {
         fieldSet[setname].push(`${m[1] || ''}date`)
         if (field === 'month' || field === 'year') fieldSet[setname].push(field)
-      } else {
+      }
+      else {
         fieldSet[setname].push(field)
       }
     }
@@ -77,19 +83,20 @@ export = source => {
 
     // assign the fieldset to the types it applies to
     for (const type of types) {
-      if (!BCF.allowed[type]) {
+      if (!BiberTool.allowed[type]) {
         throw new Error(`Unknown reference type ${type}`)
-      } else {
-        BCF.allowed[type] = _.uniq(BCF.allowed[type].concat(setname))
+      }
+      else {
+        BiberTool.allowed[type] = _.uniq(BiberTool.allowed[type].concat(setname))
       }
     }
   }
 
-  for (const node of select('.//bcf:constraints', doc)) {
-    const types = select('./bcf:entrytype', node).map(type => type.textContent).sort()
-    const setname = types.length === 0 ? 'required' : 'required_' + types.join('_')
+  for (const node of select('.//constraints', doc)) {
+    const types = select('./entrytype', node).map(type => type.textContent).sort()
+    const setname = types.length === 0 ? 'required' : `required_${types.join('_')}`
 
-    if (fieldSet[setname] || BCF.required[setname]) throw new Error(`constraint set ${setname} exists`)
+    if (fieldSet[setname] || BiberTool.required[setname]) throw new Error(`constraint set ${setname} exists`)
 
     /*
     // find all the field names allowed by this set
@@ -104,13 +111,13 @@ export = source => {
     }
     */
 
-    const mandatory = select(".//bcf:constraint[@type='mandatory']", node)
+    const mandatory = select(".//constraint[@type='mandatory']", node)
     switch (mandatory.length) {
       case 0:
         break
 
       case 1:
-        BCF.required[setname] = { types, fields: []}
+        BiberTool.required[setname] = { types, fields: []}
 
         for (const constraint of (Array.from(mandatory[0].childNodes) as Element[])) {
           switch (constraint.localName || '#text') {
@@ -118,13 +125,13 @@ export = source => {
               break
 
             case 'field':
-              BCF.required[setname].fields.push(constraint.textContent)
+              BiberTool.required[setname].fields.push(constraint.textContent)
               break
 
             case 'fieldor':
             case 'fieldxor':
-              BCF.required[setname].fields.push({
-                [constraint.localName.replace('field', '')]: select('./bcf:field', constraint).map(field => field.textContent),
+              BiberTool.required[setname].fields.push({
+                [constraint.localName.replace('field', '')]: select('./field', constraint).map(field => field.textContent),
               })
               break
 
@@ -138,21 +145,22 @@ export = source => {
         throw new Error(`found ${mandatory.length} constraints, expected 1`)
     }
 
-    for (const constraint of select(".//bcf:constraint[@type='data']", node)) {
+    for (const constraint of select(".//constraint[@type='data']", node)) {
       if (types.length) throw new Error('Did not expect types for data constraints')
       if (!constraint.localName) continue
 
       const test = {
-        test: (constraint as Element).getAttribute('datatype'),
-        fields: Array.from(select('./bcf:field', constraint)).map(field => field.textContent),
+        test: constraint.getAttribute('datatype'),
+        fields: Array.from(select('./field', constraint)).map(field => field.textContent),
         params: null,
       }
-      if (test.test === 'pattern') test.params = (constraint as Element).getAttribute('pattern')
-      BCF.data.push(test)
+      if (test.test === 'pattern') test.params = constraint.getAttribute('pattern')
+      BiberTool.data.push(test)
     }
   }
 
-  BCF.fieldSet = jsesc(fieldSet, { compact: false, indent: '  ' })
+  BiberTool.fieldSet = jsesc(fieldSet, { compact: false, indent: '  ' })
 
-  return ejs.render(fs.readFileSync(path.join(__dirname, 'bcf.ejs'), 'utf8'), BCF)
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return ejs.render(fs.readFileSync(path.join(__dirname, 'bibertool.ejs'), 'utf8'), BiberTool)
 }

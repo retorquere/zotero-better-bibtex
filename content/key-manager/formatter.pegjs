@@ -4,7 +4,7 @@
   }
   function _method(section, name, argtypes) {
     const expected = options.methods[section][_method_name(name)]
-    return expected && argtypes.join(',') === expected.map(p => p.type).join(',')
+    return expected && argtypes.join(',') === expected.map(p => p.type[0] === "'" ? 'string' : p.type).join(',')
   }
   function _trim_args(name, expected, args) {
     if (args.length > expected.length) error(`argument list too long for ${name}`)
@@ -160,45 +160,40 @@ flag
   = '+' flag:$[^_:\]]+                 { return flag }
 
 filter
-  = ':' text:default_filter  { return `chunk = chunk || ${JSON.stringify(text)}`; }
-  / ':' filter:function_filter {
-      const method = _method_name(filter.name)
+  = ':(' text:$[^)]+ ')'  { return `chunk = chunk || ${JSON.stringify(text)}`; }
+  / ':' name:$[-a-z]+ params:stringparam* {
+      const method = _method_name(name)
       const expected = options.methods.filter[method]
-      if (!expected) error(`unknown filter ${filter.name}`)
+      if (!expected) error(`unknown filter ${name}`)
 
-      if (filter.params.length > expected.length) error(`filter '${filter.name}' expects at most ${expected.length} parameters`)
+      if (params.length > expected.length) error(`filter '${name}' expects at most ${expected.length} parameters`)
 
-      const params = ['chunk'].concat(_trim_args(`filter ${text()}`, expected, expected.map((p, i) => {
-        if (typeof filter.params[i] === 'undefined') return 'undefined'
+      const escaped_params = ['chunk'].concat(_trim_args(`filter ${text()}`, expected, expected.map((p, i) => {
+        if (typeof params[i] === 'undefined') return 'undefined'
 
         switch (p.type) {
           case 'string':
-            return JSON.stringify(filter.params[i])
+            return JSON.stringify(params[i])
           case 'number':
-            if (!filter.params[i].match(/^[0-9]+$/)) error(`expected number parameter ${i + 1} (${p.name}) on filter ${filter.name}, got ${filter.params[i]}`)
-            return filter.params[i]
+            if (!params[i].match(/^[0-9]+$/)) error(`expected number parameter ${i + 1} (${p.name}) on filter ${name}, got ${params[i]}`)
+            return params[i]
           default:
-            error(`expected parameter ${i + 1} (${p.name}) of type ${p.type} on filter ${filter.name}`)
+            if (p.type[0] == "'") {
+              if (params[i].match(new RegExp('^(' + p.type.split(' | ').map(c => c.match(/^'([^']+)'$/)[1]).join('|') + ')$'))) {
+                return JSON.stringify(params[i])
+              } else {
+                error(`expected ${p.type} parameter ${i + 1} (${p.name}) on filter ${name}, got ${params[i]}`)
+              }
+            }
+            error(`expected parameter ${i + 1} (${p.name}) of type ${p.type} on filter ${name}`)
         }
       })))
 
-      return `chunk = this._${method}(${params.join(', ')})`;
-    }
-
-default_filter
-  = '(' text:$[^)]+ ')' { return text }
-
-function_filter
-  = name:'fold' language:( [, =] ('german' / 'japanese') )? {
-      // handle here so the user gets feedback as the pattern is being typed
-      return { name: name, params: language ? [ language[1] ] : [] };
-    }
-  / name:$[-a-z]+ params:stringparam*  {
-      return { name: name, params: params }
+      return `chunk = this._${method}(${escaped_params.join(', ')})`;
     }
 
 stringparam
-  = [, =] value:stringparamtext+ { return value.join('') }
+  = [, =] value:stringparamtext* { return value.join('') }
 
 stringparamtext
   = text:$[^= ,\\\[\]:]+  { return text }

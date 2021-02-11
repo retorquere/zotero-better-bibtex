@@ -25,8 +25,10 @@ Most BibTeX styles do not support DOI/URL fields. Of the styles that do support 
 Options:
 
 * no
-* in a note field
-* in a URL field
+* in the 'note' field
+* in the 'note' field, but assuming the 'url' package is not loaded
+* in the 'url' field
+* in the 'url' field, but assuming the 'url' package is not loaded
 
 ### BibLaTeX
 
@@ -72,7 +74,7 @@ If there are some fields you don't want in your bibtex files (such as `note` for
 
 default: `no`
 
-Export JabRef-specific fields: timestamps, and groups for each collection and item is part of. Note that this format will disable caching in exports, which is really undesirable specifically for auto-exports.
+Export JabRef-specific fields: timestamps, titles for attachments, and groups for each collection an item is part of. Note that having this on will disable caching in exports, which is really undesirable specifically for auto-exports.
 
 Options:
 
@@ -100,7 +102,7 @@ abbreviation is not configurable.
 
 default: `no`
 
-Generate quality reports for exported references. These show up only in BibTeX and BibLaTeX report formats and indicate things like missing required fields and 
+Generate quality reports for exported references. These show up only in BibTeX and BibLaTeX report formats and indicate things like missing required fields and
 duplicate citation keys.
 
 #### Include automatic tags in export

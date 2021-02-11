@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types, prefer-arrow/prefer-arrow-functions, prefer-rest-params, @typescript-eslint/no-unsafe-return */
 declare const Components: any
 declare const Zotero: any
 
@@ -9,11 +10,11 @@ declare const AsyncShutdown: any
 
 import { patch as $patch$ } from '../monkey-patch'
 
-import AJV = require('ajv')
+import AJV from 'ajv'
 import { log } from '../logger'
 // import { Preferences as Prefs } from '../prefs'
 
-// tslint:disable-next-line:variable-name
+// eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
 import Loki = require('lokijs')
 
 const validator = new AJV({ useDefaults: true, coerceTypes: true })
@@ -23,6 +24,7 @@ require('ajv-keywords')(validator)
 $patch$(Loki.Collection.prototype, 'findOne', original => function() {
   if (!this.data.length) return null
 
+  log.debug('findOne', Array.from(arguments))
   return original.apply(this, arguments)
 })
 
@@ -49,7 +51,8 @@ $patch$(Loki.prototype, 'close', original => function(callback) {
   return original.call(this, errClose => {
     if (this.persistenceAdapter && (typeof this.persistenceAdapter.close === 'function')) {
       return this.persistenceAdapter.close(this.filename, errCloseAdapter => callback(errClose || errCloseAdapter))
-    } else {
+    }
+    else {
       return callback(errClose)
     }
   })
@@ -66,22 +69,23 @@ const autoSaveOnIdle = []
 
 const idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
 idleService.addIdleObserver({
-  async observe(subject, topic, data) {
+  async observe(_subject: string, _topic: string, _data: any) {
     for (const db of autoSaveOnIdle) {
       if (!db.autosaveDirty()) continue
 
       try {
         await db.saveDatabaseAsync()
-      } catch (err) {
+      }
+      catch (err) {
         log.error('idle, saving failed', db.filename, err)
       }
     }
   },
-}, 5) // tslint:disable-line:no-magic-numbers
+}, 5) // eslint-disable-line no-magic-numbers
 
 // https://github.com/Microsoft/TypeScript/issues/17032
 export class XULoki extends Loki {
-  constructor(name, options: any = {}) {
+  constructor(name: string, options: any = {}) {
     const nullStore = !options.adapter
     options.adapter = options.adapter || new NullStore()
     options.env = 'XUL-Chrome'
@@ -93,7 +97,8 @@ export class XULoki extends Loki {
 
     if (periodicSave) {
       autoSaveOnIdle.push(this)
-    } else {
+    }
+    else {
       // workaround for https://github.com/techfort/LokiJS/issues/597
       this.autosaveDisable()
     }
@@ -110,18 +115,20 @@ export class XULoki extends Loki {
             await this.saveDatabaseAsync()
             await this.closeAsync()
             Zotero.debug(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: close of ${name} completed`)
-          } catch (err) {
+          }
+          catch (err) {
             Zotero.debug(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: close of ${name} failed`)
             log.error(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: close of ${name} failed`, err)
           }
         })
-      } catch (err) {
+      }
+      catch (err) {
         log.error(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'} failed to install shutdown blocker!`, err)
       }
     }
   }
 
-  public loadDatabaseAsync(options = {}) {
+  public loadDatabaseAsync(options = {}): Promise<void> {
     const deferred = Zotero.Promise.defer()
     this.loadDatabase(options, err => {
       if (err) return deferred.reject(err)
@@ -130,7 +137,7 @@ export class XULoki extends Loki {
     return deferred.promise
   }
 
-  public saveDatabaseAsync() {
+  public saveDatabaseAsync(): Promise<void> {
     const deferred = Zotero.Promise.defer()
     this.saveDatabase(err => {
       if (err) return deferred.reject(err)
@@ -139,7 +146,7 @@ export class XULoki extends Loki {
     return deferred.promise
   }
 
-  public closeAsync() {
+  public closeAsync(): Promise<void> {
     const deferred = Zotero.Promise.defer()
     this.close(err => {
       if (err) return deferred.reject(err)
@@ -148,7 +155,7 @@ export class XULoki extends Loki {
     return deferred.promise
   }
 
-  public schemaCollection(name, options) {
+  public schemaCollection(name: string, options: any) {
     options.cloneObjects = true
     options.clone = true
     const coll = this.getCollection(name) || this.addCollection(name, options);

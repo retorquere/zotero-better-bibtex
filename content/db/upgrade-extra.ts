@@ -1,24 +1,24 @@
 import JSON5 = require('json5')
 
 const bibtex = /(?:^|\s)bibtex:[^\S\n]*([^\s]*)(?:\s|$)/
-const biblatexcitekey = /(?:^|\s)biblatexcitekey\[([^\[\]\s]*)\](?:\s|$)/
+const biblatexcitekey = /(?:^|\s)biblatexcitekey\[([^[\]\s]*)\](?:\s|$)/
 const citekey = new RegExp(`${bibtex.source}|${biblatexcitekey.source}`, 'ig')
 
 const bibtexJSON = /(biblatexdata|bibtex|biblatex)(\*)?{/
 
-function indexOfRE(str, re, start) {
+function indexOfRE(str: string, re: RegExp, start: number): number {
   const index = str.substring(start).search(re)
   return (index >= 0) ? (index + start) : index
 }
 
-function makeName(name) {
+function makeName(name: string): string {
   return `tex.${name.replace(/[:=]/g, '-').toLowerCase()}`
 }
-function makeValue(value) {
+function makeValue(value: string | number): string {
   return `${value}`.replace(/\n+/g, ' ')
 }
 
-export function upgradeExtra(extra) {
+export function upgradeExtra(extra: string): string {
   let extraFields = []
 
   // replace citekey markers with 'Citation Key'
@@ -28,13 +28,13 @@ export function upgradeExtra(extra) {
   }).trim()
 
   // replace old-style key-value fields
-  extra = extra.replace(/(?:biblatexdata|bibtex|biblatex)(\*)?\[([^\[\]]*)\]/g, (match, cook, fields) => {
+  extra = extra.replace(/(?:biblatexdata|bibtex|biblatex)(\*)?\[([^[\]]*)\]/g, (match, cook, fields) => {
     const legacy = []
     for (const field of fields.split(';')) {
       const kv = field.match(/^([^=]+)(?:=)([\S\s]*)/)
       if (!kv) return match
 
-      const [ , name, value ] = kv.map(v => v.trim())
+      const [ , name, value ] = kv.map((v: string) => v.trim())
       legacy.push(`${makeName(name)}${cook ? ':' : '='} ${makeValue(value)}`)
     }
 
@@ -56,10 +56,12 @@ export function upgradeExtra(extra) {
       const candidate = extra.substring(start, end + 1)
       try {
         json = JSON.parse(candidate)
-      } catch (err) {
+      }
+      catch {
         try {
           json = JSON5.parse(candidate)
-        } catch (err) {
+        }
+        catch {
           json = null
         }
       }
@@ -69,7 +71,7 @@ export function upgradeExtra(extra) {
 
         extra = extra.substring(0, marker) + extra.substring(end + 1)
 
-        for (const [name, value] of Object.entries(json)) {
+        for (const [name, value] of (Object.entries(json))) {
           if (typeof value !== 'number' && typeof value !== 'string') throw new Error(`unexpected field of type ${typeof value}`)
           extraFields.push(`${makeName(name)}${cook ? ':' : '='} ${makeValue(value)}`)
         }
@@ -80,9 +82,7 @@ export function upgradeExtra(extra) {
       end = extra.lastIndexOf('}', end - 1)
     }
 
-    if (!json) {
-      marker = start
-    }
+    if (!json) marker = start
   }
 
   extra = extraFields.sort().concat(extra).join('\n').trim()

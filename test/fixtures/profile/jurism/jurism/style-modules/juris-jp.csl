@@ -128,7 +128,7 @@
         <group delimiter=" of the ">
           <group delimiter=", ">
             <group delimiter=" statement at ">
-              <number variable="archive_location" form="ordinal"/>
+              <text variable="archive_location"/>
               <group delimiter=" ">
                 <text value="meeting no."/>
                 <number variable="chapter-number"/>
@@ -185,7 +185,7 @@
             <if variable="author">
               <choose>
                 <if disambiguate="true">
-                  <number variable="archive_location" form="ordinal"/>
+                  <text variable="archive_location"/>
                 </if>
               </choose>
               <text value="statement"/>
@@ -263,7 +263,7 @@
             <choose>
               <if disambiguate="true">
                 <group delimiter=" statement at ">
-                  <number variable="archive_location" form="ordinal"/>
+                  <text variable="archive_location"/>
                   <group delimiter=" ">
                     <text value="meeting no."/>
                     <number variable="chapter-number"/>

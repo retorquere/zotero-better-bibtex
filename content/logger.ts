@@ -5,6 +5,8 @@ import { stringify, asciify } from './stringify'
 import { worker } from './worker'
 
 class Logger {
+  public verbose = false
+
   protected timestamp: number
 
   private format(error, msg) {
@@ -14,23 +16,29 @@ class Logger {
     this.timestamp = now
 
     if (typeof msg !== 'string') {
-      let _msg = ''
+      let output = ''
       for (const m of msg) {
         const type = typeof m
         if (type === 'string' || m instanceof String || type === 'number' || type === 'undefined' || type === 'boolean' || m === null) {
-          _msg += m
-        } else if (m instanceof Error) {
-          _msg += `<Error: ${m.message || m.name}${m.stack ? `\n${m.stack}` : Object.keys(m).join(', ')}>`
-        } else if (m && type === 'object' && m.message) { // mozilla exception, no idea on the actual instance type
+          output += m
+        }
+        else if (m instanceof Error) {
+          output += `<Error: ${m.message || m.name}${m.stack ? `\n${m.stack}` : Object.keys(m).join(', ')}>`
+        }
+        else if (m && type === 'object' && m.message) { // mozilla exception, no idea on the actual instance type
           // message,fileName,lineNumber,column,stack,errorCode
-          _msg += `<Error: ${m.message}#\n${m.stack}>`
-        } else {
-          _msg += stringify(m)
+          output += `<Error: ${m.message}#\n${m.stack}>`
+        }
+        else if (this.verbose) {
+          output += stringify(m, null, 2)
+        }
+        else {
+          output += stringify(m)
         }
 
-        _msg += ' '
+        output += ' '
       }
-      msg = _msg
+      msg = output
     }
 
     const translator = typeof Translator !== 'undefined' && Translator.header.label

@@ -8,8 +8,7 @@
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 1,
-	"browserSupport": "gcsv",
-	"lastUpdated": "2015-10-16 18:47:13"
+	"lastUpdated": "2020-08-08 23:31:56"
 }
 
 /*
@@ -43,16 +42,17 @@ function detectImport() {
 	while ((line = Zotero.read()) !== false) {
 		line = line.replace(/^\s+/, "");
 		if (line != "") {
-			//Actual MEDLINE format starts with PMID
-			if (line.substr(0, 6).match(/^PMID( {1, 2})?- /)) {
+			// Actual MEDLINE format starts with PMID
+			// ERIC .nbib starts with "OWN -  ERIC"
+			if (line.substr(0, 6).match(/^PMID( {1, 2})?- /) || line.includes("OWN - ERIC")) {
 				return true;
-			} else {
-				if (i++ > 3) {
-					return false;
-				}
+			}
+			else if (i++ > 3) {
+				return false;
 			}
 		}
 	}
+	return false;
 }
 
 var fieldMap = {
@@ -60,7 +60,7 @@ var fieldMap = {
 	VI: "volume",
 	IP: "issue",
 	PL: "place",
-	PB: "publisher", //not in the specs, but is used 
+	PB: "publisher", // not in the specs, but is used
 	BTI: "bookTitle",
 	JT: "publicationTitle",
 	TA: "journalAbbreviation",
@@ -74,100 +74,109 @@ var fieldMap = {
 };
 
 
-// Only the most basic types. Most official MEDLINE types make little sense as item types 
+// Only the most basic types. Most official MEDLINE types make little sense as item types
 var inputTypeMap = {
-	"Book": "book",
-	"Book Chapter": "bookSection", //can't find in specs, but is used.
+	Book: "book",
+	"Book Chapter": "bookSection", // can't find in specs, but is used.
 	"Journal Article": "journalArticle",
 	"Newspaper Article": "newspaperArticle",
 	"Video-Audio Media": "videoRecording",
 	"Technical Report": "report",
 	"Legal Case": "case",
-	"Legislation": "statute"
+	Legislation: "statute"
 };
-
-var isEndNote = false;
 
 function processTag(item, tag, value) {
 	value = Zotero.Utilities.trim(value);
+	var type;
 	if (fieldMap[tag]) {
 		item[fieldMap[tag]] = value;
-	} else if (tag == "PT") {
+	}
+	else if (tag == "PT") {
 		if (inputTypeMap[value]) { // first check inputTypeMap
-			item.itemType = inputTypeMap[value]
+			item.itemType = inputTypeMap[value];
 		}
-	} else if (tag == "FAU" || tag == "FED") {
+	}
+	else if (tag == "FAU" || tag == "FED") {
 		if (tag == "FAU") {
-			var type = "author";
-		} else if (tag == "FED") {
-			var type = "editor";
+			type = "author";
 		}
-		item.creators.push(Zotero.Utilities.cleanAuthor(value, type, value.indexOf(",") != -1));
-	} else if (tag == "AU" || tag == "ED") { //save normal author tags as fallback
+		else if (tag == "FED") {
+			type = "editor";
+		}
+		item.creators.push(Zotero.Utilities.cleanAuthor(value, type, value.includes(",")));
+	}
+	else if (tag == "AU" || tag == "ED") { // save normal author tags as fallback
 		if (tag == "AU") {
-			var type = "author";
-		} else if (tag == "ED") {
-			var type = "editor";
+			type = "author";
 		}
-		value = value.replace(/\s([A-Z]+)$/, ", $1")
-		item.creatorsBackup.push(Zotero.Utilities.cleanAuthor(value, type, value.indexOf(",") != -1));
-	} else if (tag == "PMID") {
+		else if (tag == "ED") {
+			type = "editor";
+		}
+		value = value.replace(/\s([A-Z]+)$/, ", $1");
+		item.creatorsBackup.push(Zotero.Utilities.cleanAuthor(value, type, value.includes(",")));
+	}
+	else if (tag == "PMID") {
 		item.extra = "PMID: " + value;
-	} else if (tag == "PMC") {
+	}
+	else if (tag == "PMC") {
 		item.extra += " \nPMCID: " + value;
-	} else if (tag == "IS") {
-		var newline = "";
-		if (ZU.cleanISSN(value)){
-			if (!item.ISSN){
-				item.ISSN =ZU.cleanISSN(value);
+	}
+	else if (tag == "IS") {
+		if (ZU.cleanISSN(value)) {
+			if (!item.ISSN) {
+				item.ISSN = ZU.cleanISSN(value);
 			}
-			else{
+			else {
 				item.ISSN += " " + ZU.cleanISSN(value);
 			}
 		}
-		else if (ZU.cleanISBN(value)){
-			if (!item.ISBN){
-				item.ISBN =ZU.cleanISBN(value);
+		else if (ZU.cleanISBN(value)) {
+			if (!item.ISBN) {
+				item.ISBN = ZU.cleanISBN(value);
 			}
-			else{
+			else {
 				item.ISBN += " " + ZU.cleanISBN(value);
 			}
 		}
-	}else if (tag == "AID") {
-		if (value.indexOf("[doi]") != -1) item.DOI = value.replace(/\s*\[doi\]/, "")
-	} else if (tag == "DP") {
+	}
+	else if (tag == "AID") {
+		if (value.includes("[doi]")) item.DOI = value.replace(/\s*\[doi\]/, "");
+	}
+	else if (tag == "DP") {
 		item.date = value;
-	} else if (tag == "MH" || tag == "OT") {
+	}
+	else if (tag == "MH" || tag == "OT") {
 		item.tags.push(value);
 	}
 }
 
 function doImport() {
 	var line = true;
-	var tag = data = false;
+	var tag = false;
+	var data = false;
 	do { // first valid line is type
 		Zotero.debug("ignoring " + line);
 		line = Zotero.read();
-		line = line.replace(/^\s+/, "");
 	} while (line !== false && line.search(/^[A-Z0-9]+\s*-/) == -1);
 
 	var item = new Zotero.Item();
 	item.creatorsBackup = [];
-	var tag = line.match(/^[A-Z0-9]+/)[0];
-	var data = line.substr(line.indexOf("-") + 1);
+	tag = line.match(/^[A-Z0-9]+/)[0];
+	data = line.substr(line.indexOf("-") + 1);
 	while ((line = Zotero.read()) !== false) { // until EOF
-		line = line.replace(/^\s+/, "");
 		if (!line) {
 			if (tag) {
 				processTag(item, tag, data);
 				// unset info
 				tag = data = false;
 				// new item
-				finalizeItem(item)
+				finalizeItem(item);
 				item = new Zotero.Item();
 				item.creatorsBackup = [];
 			}
-		} else if (line.search(/^[A-Z0-9]+\s*-/) != -1) {
+		}
+		else if (line.search(/^[A-Z0-9]+\s*-/) != -1) {
 			// if this line is a tag, take a look at the previous line to map
 			// its tag
 			if (tag) {
@@ -177,58 +186,81 @@ function doImport() {
 			// then fetch the tag and data from this line
 			tag = line.match(/^[A-Z0-9]+/)[0];
 			data = line.substr(line.indexOf("-") + 1);
-		} else {
+		}
+		else if (tag) {
 			// otherwise, assume this is data from the previous line continued
-			if (tag) {
-				data += " " + line;
-			}
+			data += " " + line.replace(/^\s+/, "");
 		}
 	}
 
 	if (tag) { // save any unprocessed tags
 		processTag(item, tag, data);
 		// and finalize with some post-processing
-		finalizeItem(item)
+		finalizeItem(item);
 	}
 }
 
 function finalizeItem(item) {
-	//if we didn't get full authors (included post 2002, sub in the basic authors)
+	// if we didn't get full authors (included post 2002, sub in the basic authors)
 	if (item.creators.length == 0 && item.creatorsBackup.length > 0) {
 		item.creators = item.creatorsBackup;
 	}
 	delete item.creatorsBackup;
-	if(item.pages) {
-		//where page ranges are given in an abbreviated format, convert to full
-		//taken verbatim from NCBI Pubmed translator
+	if (item.pages) {
+		// where page ranges are given in an abbreviated format, convert to full
+		// taken verbatim from NCBI Pubmed translator
 		var pageRangeRE = /(\d+)-(\d+)/g;
 		pageRangeRE.lastIndex = 0;
 		var range;
-		while(range = pageRangeRE.exec(item.pages)) {
+
+		while (range = pageRangeRE.exec(item.pages)) { // eslint-disable-line no-cond-assign
 			var pageRangeStart = range[1];
 			var pageRangeEnd = range[2];
 			var diff = pageRangeStart.length - pageRangeEnd.length;
-			if(diff > 0) {
-				pageRangeEnd = pageRangeStart.substring(0,diff) + pageRangeEnd;
+			if (diff > 0) {
+				pageRangeEnd = pageRangeStart.substring(0, diff) + pageRangeEnd;
 				var newRange = pageRangeStart + "-" + pageRangeEnd;
-				var fullPageRange = item.pages.substring(0, range.index) //everything before current range
-					+ newRange	//insert the new range
-					+ item.pages.substring(range.index + range[0].length);	//everything after the old range
-				//adjust RE index
+				var fullPageRange = item.pages.substring(0, range.index) // everything before current range
+					+ newRange	// insert the new range
+					+ item.pages.substring(range.index + range[0].length);	// everything after the old range
+				// adjust RE index
 				pageRangeRE.lastIndex += newRange.length - range[0].length;
 			}
 		}
-		if(fullPageRange){
+		if (fullPageRange) {
 			item.pages = fullPageRange;
 		}
 	}
-	//journal article is the fallback item type
+	// journal article is the fallback item type
 	if (!item.itemType) item.itemType = inputTypeMap["Journal Article"];
-	//titles for books are mapped to bookTitle
+	// titles for books are mapped to bookTitle
 	if (item.itemType == "book") item.title = item.bookTitle;
 	item.complete();
 }/** BEGIN TEST CASES **/
 var testCases = [
+	{
+		"type": "import",
+		"input": "PMID- 000000000000\nOWN - NLM\nSTAT- In-Process\nLR  - 20200715\nTI  - Mickey Mouse had an \n      O-some day!\nAB  - Mickey Mouse had a quiet day until something happened and\n      SAMD9L was caught in the end. \nFAU - Mouse, Mickey\nAU  - Mouse M",
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "Mickey Mouse had an O-some day!",
+				"creators": [
+					{
+						"firstName": "Mickey",
+						"lastName": "Mouse",
+						"creatorType": "author"
+					}
+				],
+				"abstractNote": "Mickey Mouse had a quiet day until something happened and SAMD9L was caught in the end.",
+				"extra": "PMID: 000000000000",
+				"attachments": [],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
 	{
 		"type": "import",
 		"input": "PMID- 8692918\nOWN - NLM\nSTAT- MEDLINE\nDA  - 19960829\nDCOM- 19960829\nLR  - 20131121\nIS  - 0027-8424 (Print)\nIS  - 0027-8424 (Linking)\nVI  - 93\nIP  - 14\nDP  - 1996 Jul 9\nTI  - The structure of bovine F1-ATPase complexed with the antibiotic inhibitor\n      aurovertin B.\nPG  - 6913-7\nAB  - In the structure of bovine mitochondrial F1-ATPase that was previously determined\n      with crystals grown in the presence of adenylyl-imidodiphosphate (AMP-PNP) and\n      ADP, the three catalytic beta-subunits have different conformations and\n      nucleotide occupancies. Adenylyl-imidodiphosphate is bound to one beta-subunit\n      (betaTP), ADP is bound to the second (betaDP), and no nucleotide is bound to the \n      third (betaE). Here we show that the uncompetitive inhibitor aurovertin B binds\n      to bovine F1 at two equivalent sites in betaTP and betaE, in a cleft between the \n      nucleotide binding and C-terminal domains. In betaDP, the aurovertin B pocket is \n      incomplete and is inaccessible to the inhibitor. The aurovertin B bound to betaTP\n      interacts with alpha-Glu399 in the adjacent alphaTP subunit, whereas the\n      aurovertin B bound to betaE is too distant from alphaE to make an equivalent\n      interaction. Both sites encompass betaArg-412, which was shown by mutational\n      studies to be involved in binding aurovertin. Except for minor changes around the\n      aurovertin pockets, the structure of bovine F1-ATPase is the same as determined\n      previously. Aurovertin B appears to act by preventing closure of the catalytic\n      interfaces, which is essential for a catalytic mechanism involving cyclic\n      interconversion of catalytic sites.\nFAU - van Raaij, M J\nAU  - van Raaij MJ\nAD  - Medical Research Council Laboratory of Molecular Biology, Cambridge, United\n      Kingdom.\nFAU - Abrahams, J P\nAU  - Abrahams JP\nFAU - Leslie, A G\nAU  - Leslie AG\nFAU - Walker, J E\nAU  - Walker JE\nLA  - eng\nPT  - Journal Article\nPT  - Research Support, Non-U.S. Gov't\nPL  - UNITED STATES\nTA  - Proc Natl Acad Sci U S A\nJT  - Proceedings of the National Academy of Sciences of the United States of America\nJID - 7505876\nRN  - 0 (Aurovertins)\nRN  - 0 (Enzyme Inhibitors)\nRN  - 0 (Macromolecular Substances)\nRN  - 25612-73-1 (Adenylyl Imidodiphosphate)\nRN  - 3KX376GY7L (Glutamic Acid)\nRN  - 55350-03-3 (aurovertin B)\nRN  - 94ZLA3W45F (Arginine)\nRN  - EC 3.6.3.14 (Proton-Translocating ATPases)\nSB  - IM\nMH  - Adenylyl Imidodiphosphate/pharmacology\nMH  - Animals\nMH  - Arginine\nMH  - Aurovertins/*chemistry/*metabolism\nMH  - Binding Sites\nMH  - Cattle\nMH  - Crystallography, X-Ray\nMH  - Enzyme Inhibitors/chemistry/metabolism\nMH  - Glutamic Acid\nMH  - Macromolecular Substances\nMH  - Models, Molecular\nMH  - Molecular Structure\nMH  - Myocardium/enzymology\nMH  - *Protein Structure, Secondary\nMH  - Proton-Translocating ATPases/*chemistry/*metabolism\nPMC - PMC38908\nOID - NLM: PMC38908\nEDAT- 1996/07/09\nMHDA- 1996/07/09 00:01\nCRDT- 1996/07/09 00:00\nPST - ppublish\nSO  - Proc Natl Acad Sci U S A. 1996 Jul 9;93(14):6913-7.\n\nPMID- 21249755\nSTAT- Publisher\nDA  - 20110121\nDRDT- 20080809\nCTDT- 20080718\nPB  - National Center for Biotechnology Information (US)\nDP  - 2009\nTI  - Peutz-Jeghers Syndrome\nBTI - Cancer Syndromes\nAB  - PJS is a rare disease. (\"Peutz-Jeghers syndrome is no frequent nosological unit\".\n      (1)) There are no high-quality estimates of the prevalence or incidence of PJS.\n      Estimates have included 1 in 8,500 to 23,000 live births (2), 1 in 50,000 to 1 in\n      100,000 in Finland (3), and 1 in 200,000 (4). A report on the incidence of PJS is\n      available at www.peutz-jeghers.com. At Mayo Clinic from 1945 to 1996 the\n      incidence of PJS was 0.9 PJS patients per 100,000 patients. PJS has been reported\n      in Western Europeans (5), African Americans (5), Nigerians (6), Japanese (7),\n      Chinese (8, 9), Indians (10, 11), and other populations (12-15). PJS occurs\n      equally in males and females (7).\nCI  - Copyright (c) 2009-, Douglas L Riegert-Johnson\nFED - Riegert-Johnson, Douglas L\nED  - Riegert-Johnson DL\nFED - Boardman, Lisa A\nED  - Boardman LA\nFED - Hefferon, Timothy\nED  - Hefferon T\nFED - Roberts, Maegan\nED  - Roberts M\nFAU - Riegert-Johnson, Douglas\nAU  - Riegert-Johnson D\nFAU - Gleeson, Ferga C.\nAU  - Gleeson FC\nFAU - Westra, Wytske\nAU  - Westra W\nFAU - Hefferon, Timothy\nAU  - Hefferon T\nFAU - Wong Kee Song, Louis M.\nAU  - Wong Kee Song LM\nFAU - Spurck, Lauren\nAU  - Spurck L\nFAU - Boardman, Lisa A.\nAU  - Boardman LA\nLA  - eng\nPT  - Book Chapter\nPL  - Bethesda (MD)\nEDAT- 2011/01/21 06:00\nMHDA- 2011/01/21 06:00\nCDAT- 2011/01/21 06:00\nAID - NBK1826 [bookaccession]\n\n",
@@ -515,6 +547,184 @@ var testCases = [
 					"Shaken baby syndrome",
 					"Videodisc Recording",
 					"Young Adult"
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "import",
+		"input": "\nOWN - ERIC\nTI  - Educational Test Approaches: The Suitability of Computer-Based Test Types for Assessment and Evaluation in Formative and Summative Contexts\nAU  - van Groen, Maaike M.\nAU  - Eggen, Theo J. H. M.\nOT  - Computer Assisted Testing\nOT  - Formative Evaluation\nOT  - Summative Evaluation\nOT  - Adaptive Testing\nOT  - Educational Games\nOT  - Computer Simulation\nOT  - Automation\nOT  - Educational Testing\nJT  - Journal of Applied Testing Technology\nSO  - v21 n1 p12-24 2020\nAID - http://www.jattjournal.com/index.php/atp/article/view/146484\nOID - EJ1227990\nVI  - 21\nIP  - 1\nPG  - 12-24\nDP  - 2020\nLID - http://eric.ed.gov/?id=EJ1227990\nAB  - When developing a digital test, one of the first decisions that need to be made is which type of Computer-Based Test (CBT) to develop. Six different CBT types are considered here: linear tests, automatically generated tests, computerized adaptive tests, adaptive learning environments, educational simulations, and educational games. The selection of a CBT type needs to be guided by the intended purposes of the test. The test approach determines which purposes can be achieved by using a particular test. Four different test approaches are discussed here: formative assessment, formative evaluation, summative assessment, and summative evaluation. The suitability of each CBT type to measure performance for the different test approaches is evaluated based on four test characteristics: test purpose, test length, level of interest for measurement (student, class, school, system), and test report. This article aims to provide some guidance in the selection of the most appropriate type of CBT.\nISSN - EISSN-2375-5636\nLA  - English\nPT  - Journal Articles\nPT  - Reports - Research\n\nOWN - ERIC\nTI  - Test-Taker Perception of and Test Performance on Computer-Delivered Speaking Tests: The Mediational Role of Test-Taking Motivation\nAU  - Zhou, Yujia\nAU  - Yoshitomi, Asako\nOT  - Computer Literacy\nOT  - Computer Assisted Testing\nOT  - College Students\nOT  - Language Tests\nOT  - English (Second Language)\nOT  - Second Language Learning\nOT  - Speech Communication\nOT  - Test Validity\nOT  - Foreign Countries\nOT  - Student Attitudes\nOT  - Correlation\nOT  - Test Construction\nOT  - Student Motivation\nJT  - Language Testing in Asia\nSO  - v9 Article 10 2019\nAID - http://dx.doi.org/10.1186/s40468-019-0086-7\nOID - EJ1245375\nVI  - 9\nDP  - Article 10 2019\nLID - http://eric.ed.gov/?id=EJ1245375\nAB  - Background: Research on the test-taker perception of assessments has been conducted under the assumption that negative test-taker perception may influence test performance by decreasing test-taking motivation. This assumption, however, has not been verified in the field of language testing. Building on expectancy-value theory, this study explored the relationships between test-taker perception, test-taking motivation, and test performance in the context of a computer-delivered speaking test. Methods: Sixty-four Japanese university students took the TOEIC Speaking test and completed a questionnaire that included statements about their test perception, test-taking motivation, and self-perceived test performance. Five students participated in follow-up interviews. Results: Questionnaire results showed that students regarded the TOEIC Speaking test positively in terms of test validity but showed reservations about computer delivery, and that they felt sufficiently motivated during the test. Interview results revealed various reasons for their reservations about computer delivery and factors that distracted them during the test. According to correlation analysis, the effects of test-taker perception and test-taking motivation seemed to be minimal on test performance, and participants' perception of computer delivery was directly related to test-taking effort, but their perception of test validity seemed to be related to test-taking effort only indirectly through the mediation of perceived test importance. Conclusion: Our findings not only provide empirical evidence for the relationship between test-taker perception and test performance but also highlight the importance of considering test-taker reactions in developing tests.\nISSN - EISSN-2229-0443\nLA  - English\nPT  - Journal Articles\nPT  - Reports - Research\n\nOWN - ERIC\nTI  - College Entrance Exams: How Does Test Preparation Affect Retest Scores? Research Report 2019-2\nAU  - Moore, Raeal\nAU  - Sanchez, Edgar\nAU  - San Pedro, Sweet\nOT  - College Entrance Examinations\nOT  - Test Preparation\nOT  - Scores\nOT  - Achievement Gains\nOT  - Pretests Posttests\nOT  - Tutoring\nOT  - High School Students\nOT  - Outcomes of Education\nJT  - ACT, Inc.\nOID - ED602023\nDP  - 2019\nLID - http://eric.ed.gov/?id=ED602023\nAB  - As test preparation becomes widely accessible through different delivery systems, large-scale studies of test preparation efficacy that involve a variety of test preparation activities become more important to understanding the value and impact of test preparation activities on both the ACT and SAT. In this paper, the authors examine the impact of participating in test preparation prior to retaking the ACT test. The study focused on addressing three questions: (1) Using a pretest-posttest design, do students who participate in test preparation have larger score gains relative to students who did not participate in test preparation; does the test preparation effect depend on students' pretest scores?; (2) Among students who participated in test preparation, is the number of hours spent participating in each of 10 test preparation activities related to retest scores?; and (3) Among students who participated in test preparation, do their own beliefs that they might have been ill-prepared to take the test, regardless of the test preparation activities they engaged in, impact retest scores? The study findings showed that test preparation improved students' retest scores, and this effect did not differ depending on students' first ACT score. Among specific test prep activities, only the number of hours using a private tutor resulted in increased score gains above the overall effect of test prep. Students who reported feeling inadequately prepared for the second test had ACT Composite scores that were lower than those students who felt adequately prepared.\nPT  - Reports - Research",
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "Educational Test Approaches: The Suitability of Computer-Based Test Types for Assessment and Evaluation in Formative and Summative Contexts",
+				"creators": [
+					{
+						"firstName": "Maaike M.",
+						"lastName": "van Groen",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Theo J. H. M.",
+						"lastName": "Eggen",
+						"creatorType": "author"
+					}
+				],
+				"date": "2020",
+				"ISSN": "EISSN-2375-5636",
+				"abstractNote": "When developing a digital test, one of the first decisions that need to be made is which type of Computer-Based Test (CBT) to develop. Six different CBT types are considered here: linear tests, automatically generated tests, computerized adaptive tests, adaptive learning environments, educational simulations, and educational games. The selection of a CBT type needs to be guided by the intended purposes of the test. The test approach determines which purposes can be achieved by using a particular test. Four different test approaches are discussed here: formative assessment, formative evaluation, summative assessment, and summative evaluation. The suitability of each CBT type to measure performance for the different test approaches is evaluated based on four test characteristics: test purpose, test length, level of interest for measurement (student, class, school, system), and test report. This article aims to provide some guidance in the selection of the most appropriate type of CBT.",
+				"issue": "1",
+				"language": "English",
+				"pages": "12-24",
+				"publicationTitle": "Journal of Applied Testing Technology",
+				"volume": "21",
+				"attachments": [],
+				"tags": [
+					{
+						"tag": "Adaptive Testing"
+					},
+					{
+						"tag": "Automation"
+					},
+					{
+						"tag": "Computer Assisted Testing"
+					},
+					{
+						"tag": "Computer Simulation"
+					},
+					{
+						"tag": "Educational Games"
+					},
+					{
+						"tag": "Educational Testing"
+					},
+					{
+						"tag": "Formative Evaluation"
+					},
+					{
+						"tag": "Summative Evaluation"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
+			},
+			{
+				"itemType": "journalArticle",
+				"title": "Test-Taker Perception of and Test Performance on Computer-Delivered Speaking Tests: The Mediational Role of Test-Taking Motivation",
+				"creators": [
+					{
+						"firstName": "Yujia",
+						"lastName": "Zhou",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Asako",
+						"lastName": "Yoshitomi",
+						"creatorType": "author"
+					}
+				],
+				"date": "Article 10 2019",
+				"ISSN": "EISSN-2229-0443",
+				"abstractNote": "Background: Research on the test-taker perception of assessments has been conducted under the assumption that negative test-taker perception may influence test performance by decreasing test-taking motivation. This assumption, however, has not been verified in the field of language testing. Building on expectancy-value theory, this study explored the relationships between test-taker perception, test-taking motivation, and test performance in the context of a computer-delivered speaking test. Methods: Sixty-four Japanese university students took the TOEIC Speaking test and completed a questionnaire that included statements about their test perception, test-taking motivation, and self-perceived test performance. Five students participated in follow-up interviews. Results: Questionnaire results showed that students regarded the TOEIC Speaking test positively in terms of test validity but showed reservations about computer delivery, and that they felt sufficiently motivated during the test. Interview results revealed various reasons for their reservations about computer delivery and factors that distracted them during the test. According to correlation analysis, the effects of test-taker perception and test-taking motivation seemed to be minimal on test performance, and participants' perception of computer delivery was directly related to test-taking effort, but their perception of test validity seemed to be related to test-taking effort only indirectly through the mediation of perceived test importance. Conclusion: Our findings not only provide empirical evidence for the relationship between test-taker perception and test performance but also highlight the importance of considering test-taker reactions in developing tests.",
+				"language": "English",
+				"publicationTitle": "Language Testing in Asia",
+				"volume": "9",
+				"attachments": [],
+				"tags": [
+					{
+						"tag": "College Students"
+					},
+					{
+						"tag": "Computer Assisted Testing"
+					},
+					{
+						"tag": "Computer Literacy"
+					},
+					{
+						"tag": "Correlation"
+					},
+					{
+						"tag": "English (Second Language)"
+					},
+					{
+						"tag": "Foreign Countries"
+					},
+					{
+						"tag": "Language Tests"
+					},
+					{
+						"tag": "Second Language Learning"
+					},
+					{
+						"tag": "Speech Communication"
+					},
+					{
+						"tag": "Student Attitudes"
+					},
+					{
+						"tag": "Student Motivation"
+					},
+					{
+						"tag": "Test Construction"
+					},
+					{
+						"tag": "Test Validity"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
+			},
+			{
+				"itemType": "journalArticle",
+				"title": "College Entrance Exams: How Does Test Preparation Affect Retest Scores? Research Report 2019-2",
+				"creators": [
+					{
+						"firstName": "Raeal",
+						"lastName": "Moore",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Edgar",
+						"lastName": "Sanchez",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Sweet",
+						"lastName": "San Pedro",
+						"creatorType": "author"
+					}
+				],
+				"date": "2019",
+				"abstractNote": "As test preparation becomes widely accessible through different delivery systems, large-scale studies of test preparation efficacy that involve a variety of test preparation activities become more important to understanding the value and impact of test preparation activities on both the ACT and SAT. In this paper, the authors examine the impact of participating in test preparation prior to retaking the ACT test. The study focused on addressing three questions: (1) Using a pretest-posttest design, do students who participate in test preparation have larger score gains relative to students who did not participate in test preparation; does the test preparation effect depend on students' pretest scores?; (2) Among students who participated in test preparation, is the number of hours spent participating in each of 10 test preparation activities related to retest scores?; and (3) Among students who participated in test preparation, do their own beliefs that they might have been ill-prepared to take the test, regardless of the test preparation activities they engaged in, impact retest scores? The study findings showed that test preparation improved students' retest scores, and this effect did not differ depending on students' first ACT score. Among specific test prep activities, only the number of hours using a private tutor resulted in increased score gains above the overall effect of test prep. Students who reported feeling inadequately prepared for the second test had ACT Composite scores that were lower than those students who felt adequately prepared.",
+				"publicationTitle": "ACT, Inc.",
+				"attachments": [],
+				"tags": [
+					{
+						"tag": "Achievement Gains"
+					},
+					{
+						"tag": "College Entrance Examinations"
+					},
+					{
+						"tag": "High School Students"
+					},
+					{
+						"tag": "Outcomes of Education"
+					},
+					{
+						"tag": "Pretests Posttests"
+					},
+					{
+						"tag": "Scores"
+					},
+					{
+						"tag": "Test Preparation"
+					},
+					{
+						"tag": "Tutoring"
+					}
 				],
 				"notes": [],
 				"seeAlso": []

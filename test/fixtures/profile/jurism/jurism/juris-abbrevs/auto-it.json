@@ -1,7 +1,7 @@
 {
   "filename": "auto-it.json",
   "name": "Italy",
-  "version": "2020-07-03 01:11:41 UTC",
+  "version": "2020-10-15 22:01:47 UTC",
   "xdata": {
     "default": {
       "place": {
@@ -201,7 +201,8 @@
       "institution-part": {
         "csdc": "Corte Suprema di Cassazione",
         "cs": "Consiglio di Stato",
-        "cc": "Corte Costituzionale"
+        "cc": "Corte Costituzionale",
+        "ctc": "Commissione Tributaria Centrale"
       }
     },
     "it:abruzzo": {

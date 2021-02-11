@@ -1,7 +1,7 @@
 import * as mapping from '../gen/items/extra-fields.json'
 import * as CSL from '../gen/citeproc'
 
-type TeXString = { value: string, raw?: boolean, type?: 'biblatex' | 'bibtex' }
+type TeXString = { value: string, raw?: boolean }
 
 export type Fields = {
   kv: Record<string, string>
@@ -16,11 +16,12 @@ type ZoteroCreator = { name?: string, lastName?: string, firstName?: string }
 
 export function cslCreator(value: string): CSLCreator {
   const creator = value.split(/\s*\|\|\s*/)
-  if (creator.length === 2) { // tslint:disable-line:no-magic-numbers
-    const _creator = { family: creator[0] || '', given: creator[1] || ''}
-    CSL.parseParticles(_creator)
-    return _creator
-  } else {
+  if (creator.length === 2) { // eslint-disable-line no-magic-numbers
+    const csl_creator = { family: creator[0] || '', given: creator[1] || ''}
+    CSL.parseParticles(csl_creator)
+    return csl_creator
+  }
+  else {
     // return { literal: value, isInstitution: 1 }
     return { literal: value }
   }
@@ -28,9 +29,10 @@ export function cslCreator(value: string): CSLCreator {
 
 export function zoteroCreator(value: string): ZoteroCreator {
   const creator = value.split(/\s*\|\|\s*/)
-  if (creator.length === 2) { // tslint:disable-line:no-magic-numbers
+  if (creator.length === 2) { // eslint-disable-line no-magic-numbers
     return { lastName: creator[0] || '', firstName: creator[1] || '' }
-  } else {
+  }
+  else {
     return { name: value }
   }
 }
@@ -87,22 +89,23 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
 
     if (tex) {
       key = key.trim().toLowerCase()
-    } else {
+    }
+    else {
       key = key.trim().replace(/[-_]/g, ' ').replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase()
     }
     value = value.trim()
 
-    if (options.citationKey && !tex && options.citationKey && ['citation key', 'bibtex'].includes(key)) {
+    if (options.citationKey && !tex && ['citation key', 'bibtex'].includes(key)) {
       extraFields.citationKey = value
       return false
     }
 
-    if (options.aliases && !tex && options.aliases && key === 'citation key alias') {
-      extraFields.aliases = value.split(/s*,\s*/).filter(alias => alias)
+    if (options.aliases && !tex && key === 'citation key alias') {
+      extraFields.aliases = [...extraFields.aliases, ...(value.split(/s*,\s*/).filter(alias => alias))]
       return false
     }
-    if (options.aliases && tex && !raw && options.aliases && key === 'ids') {
-      extraFields.aliases = value.split(/s*,\s*/).filter(alias => alias)
+    if (options.aliases && tex && options.aliases && key === 'ids') {
+      extraFields.aliases = [...extraFields.aliases, ...(value.split(/s*,\s*/).filter(alias => alias))]
       return false
     }
 
@@ -125,37 +128,47 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
     }
 
     if (options.tex && tex && !key.includes(' ')) {
-      extraFields.tex[key] = { value, raw }
-      if (tex === 'bibtex' || tex === 'biblatex') extraFields.tex[key].type = tex
+      extraFields.tex[tex + key] = { value, raw }
       return false
     }
 
     if (options.tex && !tex && otherFields.includes(key.replace(/[- ]/g, ''))) {
-      extraFields.tex[key.replace(/[- ]/g, '')] = { value }
+      extraFields.tex[`tex.${key.replace(/[- ]/g, '')}`] = { value }
       return false
     }
 
     return true
   }).join('\n').trim()
 
+  extraFields.aliases = Array.from(new Set(extraFields.aliases)).filter(key => key !== extraFields.citationKey)
+
   return { extra, extraFields }
 }
 
-export function set(extra, options: SetOptions = {}) {
+export function set(extra: string, options: SetOptions = {}): string {
   const parsed = get(extra, 'zotero', options)
 
   if (options.citationKey) parsed.extra += `\nCitation Key: ${options.citationKey}`
 
-  if (options.aliases && options.aliases.length) {
+  if (options.aliases?.length) {
     const aliases = Array.from(new Set(options.aliases)).sort().join(', ')
-    parsed.extra += `\ntex.ids: ${aliases}`
+    parsed.extra += `\ntex.ids= ${aliases}`
   }
 
   if (options.tex) {
     for (const name of Object.keys(options.tex).sort()) {
+      let prefix, field
+      const m = name.match(/^((?:bib(?:la)?)?tex\.)(.*)/)
+      if (m) {
+        [ , prefix, field ] = m
+      }
+      else {
+        prefix = 'tex.'
+        field = name
+      }
+      if (otherFields.includes(field)) prefix = ''
       const value = options.tex[name]
-      const prefix = otherFields.includes(name) ? '' : 'tex.'
-      parsed.extra += `\n${prefix}${casing[name] || name}${value.raw ? '=' : ':'} ${value.value}`
+      parsed.extra += `\n${prefix}${casing[field] || field}${value.raw ? '=' : ':'} ${value.value}`
     }
   }
 
@@ -163,8 +176,9 @@ export function set(extra, options: SetOptions = {}) {
     for (const name of Object.keys(options.kv).sort()) {
       const value = options.kv[name]
       if (Array.isArray(value)) { // creators
-        parsed.extra += value.map(creator => `\n${name}: ${value}`).join('') // do not sort!!
-      } else {
+        parsed.extra += value.map(creator => `\n${name}: ${creator}`).join('') // do not sort!!
+      }
+      else {
         parsed.extra += `\n${name}: ${value}`
       }
     }

@@ -1,10 +1,13 @@
 {
   "filename": "auto-eu.int-de.json",
   "name": "European Union",
-  "version": "2020-09-07 21:01:30 UTC",
+  "version": "2020-10-15 22:01:47 UTC",
   "xdata": {
     "default": {
-      "place": {}
+      "place": {
+        "EU.INT": "Europäische Union",
+        "EU.INT:CJEU": "Gerichtshof der Europäischen Union"
+      }
     },
     "eu.int": {
       "institution-part": {
@@ -15,15 +18,15 @@
       "institution-part": {
         "ag": "GA",
         "ecj": "EuGH",
-        "ecj~chamber.1": "Court of Justice First Chamber",
-        "ecj~chamber.2": "Court of Justice Second Chamber",
-        "ecj~chamber.3": "Court of Justice Third Chamber",
-        "ecj~chamber.4": "Court of Justice Fourth Chamber",
-        "ecj~chamber.5": "Court of Justice Fifth Chamber",
-        "ecj~chamber.6": "Court of Justice Sixth Chamber",
-        "ecj~chamber.7": "Court of Justice Seventh Chamber",
-        "ecj~chamber.8": "Court of Justice Eighth Chamber",
-        "ecj~chamber.9": "Court of Justice Ninth Chamber",
+        "ecj~chamber.1": "Gerichtshof der Europäischen Union First Chamber",
+        "ecj~chamber.2": "Gerichtshof der Europäischen Union Second Chamber",
+        "ecj~chamber.3": "Gerichtshof der Europäischen Union Third Chamber",
+        "ecj~chamber.4": "Gerichtshof der Europäischen Union Fourth Chamber",
+        "ecj~chamber.5": "Gerichtshof der Europäischen Union Fifth Chamber",
+        "ecj~chamber.6": "Gerichtshof der Europäischen Union Sixth Chamber",
+        "ecj~chamber.7": "Gerichtshof der Europäischen Union Seventh Chamber",
+        "ecj~chamber.8": "Gerichtshof der Europäischen Union Eighth Chamber",
+        "ecj~chamber.9": "Gerichtshof der Europäischen Union Ninth Chamber",
         "egc": "EuG",
         "cst": "EuGöD"
       }

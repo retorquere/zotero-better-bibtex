@@ -30,7 +30,7 @@
   abstract = {Example from CMoS, 16e, 14.269 “Prepared from the autographs and earliest printed sources by Nathan Broder”}
 }
 
-@data{noauthor_object_nodate,
+@dataset{noauthor_object_nodate,
   title = {Object Name {{IRAS F00400}}+4059},
   journaltitle = {NASA/IPAC Extragalactic Database},
   url = {http://nedwww.ipac.caltech.edu/},

@@ -141,7 +141,7 @@ class fetch(object):
             print('      release', release, 'does not have a bundled schema')
 
         except HTTPError as e:
-          if e.code in [ 403, 404 ] and release != current:
+          if e.code in [ 403, 404 ]:
             print('      release', release, 'not available')
             hashes[client][release] = None
           else:
@@ -182,6 +182,7 @@ def patch(s, *ps):
   del s['locales']
 
   for p in ps:
+    print('applying', p)
     with open(os.path.join(SCHEMA.root, p)) as f:
       s = jsonpatch.apply_patch(s, json.load(f))
   return s
@@ -433,7 +434,7 @@ with fetch('zotero') as z, fetch('jurism') as j:
   print('  writing extra-fields')
   ef = ExtraFields()
 
-  SCHEMA.zotero = Munch.fromDict(patch(json.load(z), 'schema.patch'))
+  SCHEMA.zotero = Munch.fromDict(patch(json.load(z), 'schema.patch', 'zotero.patch'))
   SCHEMA.jurism = Munch.fromDict(patch(json.load(j), 'schema.patch', 'jurism.patch'))
 
   with open('schema.json', 'w') as f:
@@ -456,13 +457,11 @@ with fetch('zotero') as z, fetch('jurism') as j:
     min_version = {}
     hashes = json.load(f, object_hook=OrderedDict)
     for client in hashes.keys():
-      releases = list(hashes[client].keys())
+      releases = [rel for rel, h in hashes[client].items() if h is not None]
       current = releases[-1]
       min_version[client] = current
       for rel in reversed(releases):
-        if hashes[client][rel] is None: # unreleased version, or no schema
-          continue
-        elif hashes[client][rel] != hashes[client][current]:
+        if hashes[client][rel] != hashes[client][current]:
           break
         else:
           min_version[client] = rel
@@ -488,7 +487,8 @@ def template(tmpl):
 print('  writing typing for serialized item')
 with open(os.path.join(TYPINGS, 'serialized-item.d.ts'), 'w') as f:
   fields = sorted(list(set(field.value for field in jsonpath.parse('*.itemTypes.*.fields.*').find(SCHEMA))))
-  print(template('items/serialized-item.d.ts.mako').render(fields=fields).strip(), file=f)
+  itemTypes = sorted(list(set(field.value for field in jsonpath.parse('*.itemTypes.*.itemType').find(SCHEMA))))
+  print(template('items/serialized-item.d.ts.mako').render(fields=fields, itemTypes=itemTypes).strip(), file=f)
 
 print('  writing field simplifier')
 with open(os.path.join(ITEMS, 'items.ts'), 'w') as f:

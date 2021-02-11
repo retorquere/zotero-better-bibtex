@@ -14,30 +14,48 @@
   },
   "items": [
     {
-      "abstractNote": "Example from CMoS, 16e, 14.125",
+      "abstractNote": "Example from CMoS, 16e, 14.269\n\u201cPrepared from the autographs and earliest printed sources by Nathan\nBroder\u201d",
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "David",
-          "lastName": "Kamp"
+          "firstName": "Wolfgang Amadeus",
+          "lastName": "Mozart"
         },
         {
-          "creatorType": "reviewedAuthor",
-          "firstName": "Michael",
-          "lastName": "Pollan"
+          "creatorType": "editor",
+          "firstName": "Nathan",
+          "lastName": "Broder"
         }
       ],
-      "date": "2006-04-23",
+      "date": "1960",
+      "edition": "Rev. ed.",
       "extra": [
-        "type: review-book",
-        "reviewed-title: The omnivore\u2019s dilemma: a natural history of four meals"
+        "type: musical_score"
       ],
-      "itemID": 1,
-      "itemType": "newspaperArticle",
-      "language": "en-US",
-      "section": "Sunday Book Review",
-      "title": "Deconstructing dinner",
-      "url": "http://www.nytimes.com/2006/04/23/books/review/23kamp.html."
+      "itemID": 4,
+      "itemType": "book",
+      "place": "Bryn Mawr, PA",
+      "publisher": "Theodore Presser",
+      "title": "Sonatas and fantasies for the piano"
+    },
+    {
+      "abstractNote": "Example from CMoS, 16e, 14.249",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Hazel V.",
+          "lastName": "Clark"
+        }
+      ],
+      "date": "1957",
+      "extra": [
+        "type: pamphlet"
+      ],
+      "itemID": 3,
+      "itemType": "bookSection",
+      "place": "Mesopotamia, OH",
+      "publisher": "Trumbull County Historical Society",
+      "title": "Mesopotamia: between two rivers"
     },
     {
       "abstractNote": "Example from CMoS, 16e, 14.215\n\u201ced. and trans. John Charles Chasteen\u201d",
@@ -68,50 +86,6 @@
       "volume": "9"
     },
     {
-      "abstractNote": "Example from CMoS, 16e, 14.249",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Hazel V.",
-          "lastName": "Clark"
-        }
-      ],
-      "date": "1957",
-      "extra": [
-        "type: pamphlet"
-      ],
-      "itemID": 3,
-      "itemType": "bookSection",
-      "place": "Mesopotamia, OH",
-      "publisher": "Trumbull County Historical Society",
-      "title": "Mesopotamia: between two rivers"
-    },
-    {
-      "abstractNote": "Example from CMoS, 16e, 14.269\n\u201cPrepared from the autographs and earliest printed sources by Nathan\nBroder\u201d",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Wolfgang Amadeus",
-          "lastName": "Mozart"
-        },
-        {
-          "creatorType": "editor",
-          "firstName": "Nathan",
-          "lastName": "Broder"
-        }
-      ],
-      "date": "1960",
-      "edition": "Rev. ed.",
-      "extra": [
-        "type: musical_score"
-      ],
-      "itemID": 4,
-      "itemType": "book",
-      "place": "Bryn Mawr, PA",
-      "publisher": "Theodore Presser",
-      "title": "Sonatas and fantasies for the piano"
-    },
-    {
       "abstractNote": "Example from CMoS, 16e, 14.272",
       "accessDate": "2009-10-06",
       "extra": [
@@ -122,6 +96,32 @@
       "publicationTitle": "NASA/IPAC Extragalactic Database",
       "title": "object name IRAS F00400+4059",
       "url": "http://nedwww.ipac.caltech.edu/"
+    },
+    {
+      "abstractNote": "Example from CMoS, 16e, 14.125",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "David",
+          "lastName": "Kamp"
+        },
+        {
+          "creatorType": "reviewedAuthor",
+          "firstName": "Michael",
+          "lastName": "Pollan"
+        }
+      ],
+      "date": "2006-04-23",
+      "extra": [
+        "type: review-book",
+        "reviewed-title: The omnivore\u2019s dilemma: a natural history of four meals"
+      ],
+      "itemID": 1,
+      "itemType": "newspaperArticle",
+      "language": "en-US",
+      "section": "Sunday Book Review",
+      "title": "Deconstructing dinner",
+      "url": "http://www.nytimes.com/2006/04/23/books/review/23kamp.html."
     }
   ]
 }

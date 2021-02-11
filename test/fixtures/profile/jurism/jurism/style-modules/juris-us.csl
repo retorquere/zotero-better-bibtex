@@ -118,11 +118,11 @@
             <group delimiter=" of the ">
               <names variable="committee">
                 <name/>
-                <institution stop-last="1" use-first="1"/>
+                <institution stop-first="1" use-last="1"/>
               </names>
               <names variable="committee">
                 <name/>
-                <institution use-last="1"/>
+                <institution use-first="1"/>
               </names>
             </group>
           </group>
@@ -153,7 +153,7 @@
                 <number variable="collection-number" form="ordinal"/>
                 <names variable="authority">
                   <name/>
-                  <institution institution-parts="short" use-last="1"/>
+                  <institution institution-parts="short" use-first="1"/>
                 </names>
               </group>
             </if>
@@ -195,7 +195,7 @@
             <number variable="collection-number" form="ordinal"/>
             <names variable="authority">
               <name/>
-              <institution institution-parts="short" use-last="1"/>
+              <institution institution-parts="short" use-first="1"/>
             </names>
           </group>
           <text variable="title"/>
@@ -293,7 +293,7 @@
             <number variable="collection-number" form="ordinal"/>
             <names variable="authority">
               <name/>
-              <institution use-last="1" institution-parts="short"/>
+              <institution use-first="1" institution-parts="short"/>
             </names>
           </group>
         </group>
@@ -333,7 +333,7 @@
             <number variable="collection-number" form="ordinal"/>
             <names variable="authority">
               <name/>
-              <institution institution-parts="short" use-last="1"/>
+              <institution institution-parts="short" use-first="1"/>
             </names>
           </group>
           <group delimiter=" ">
@@ -637,7 +637,7 @@
               <else>
                 <names variable="authority">
                   <name/>
-                  <institution use-first="1" institution-parts="short"/>
+                  <institution use-last="1" institution-parts="short"/>
                 </names>
               </else>
             </choose>

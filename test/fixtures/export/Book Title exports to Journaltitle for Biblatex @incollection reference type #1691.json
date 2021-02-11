@@ -1,0 +1,92 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "mdy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "asciiBibTeX": false,
+      "autoExport": "idle",
+      "auxImport": true,
+      "biblatexExtendedNameFormat": true,
+      "citekeyFold": false,
+      "citekeyFormat": "[Auth][Title:skipwords:capitalize:select=1,1:split-ideographs:select=1,3:nopunct][year]",
+      "importCaseProtection": "off",
+      "mapUnicode": "minimal-packages",
+      "qualityReport": true,
+      "quickCopyMode": "orgRef",
+      "skipFields": "abstract, keywords",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
+      "warnBulkModify": 0,
+      "workers": 0
+    }
+  },
+  "items": [
+    {
+      "abstractNote": "Le colloque international \u00ab\u00a0Cultural History of Emotions in Premodernity\u00a0\u00bb s\u2019est tenu du 23 au 26 octobre \u00e0 l\u2019universit\u00e9 d\u2019Ume\u00e5 dans le nord de la Su\u00e8de. Piroska Nagy (UQAM) a prononc\u00e9 le 23 octobre la premi\u00e8re conf\u00e9rence pleini\u00e8re. EMMA vous en propose le texte en exclusivit\u00e9 : Historians and Emotions: New Theories, New Questions Piroska NAGY \u2026 Continuer la lecture de Historians and Emotions: New Theories, New Questions \u2192",
+      "accessDate": "2017-12-12T08:19:14Z",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "path": "/Users/satibodhi/Zotero/storage/DG3EWTZL/147.html",
+          "title": "Snapshot",
+          "uri": "http://zotero.org/users/1731694/items/DG3EWTZL"
+        }
+      ],
+      "citationKey": "NagyHistorians2008",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Piroska",
+          "lastName": "Nagy"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "Damien",
+          "lastName": "Boquet"
+        }
+      ],
+      "date": "24 octobre 2008",
+      "itemID": 2,
+      "itemType": "blogPost",
+      "publicationTitle": "Les \u00e9motions au Moyen \u00c2ge, carnet d'EMMA",
+      "shortTitle": "Historians and Emotions",
+      "title": "Historians and Emotions: New Theories, New Questions",
+      "type": "Billet",
+      "url": "http://emma.hypotheses.org/147"
+    },
+    {
+      "abstractNote": "\u300a\u4e2d\u570b\u53e4\u4ee3\u54f2\u5b78\u53f2\u300b\u539f\u540d\u300a\u4e2d\u570b\u54f2\u5b78\u53f2\u5927\u7db1\u300b\u5377\u4e0a\uff0c\u672c\u66f8\u6700\u521d\u662f\u80e1\u90691917\u5e749\u6708\u4ee5\u5f8c\u5728\u5317\u4eac\u5357\u5b78\u8b1b\u6388\u300a\u4e2d\u570b\u54f2\u5b78\u53f2\u5927\u7db1\u300b\u4e00\u8ab2\u7684\u8b1b\u7a3f\uff0c\u5728\u6821\u5167\u66fe\u4f5c\u70ba\u8b1b\u7fa9\u6cb9\u5370\u30021919\u5e742\u6708\u5546\u52d9\u5370\u66f8\u9928\u51fa\u7248\uff0c\u81f31930\u5e74\u5df2\u51fa15\u7248\u30021930\u5e74\u6536\u5165\u300c\u842c\u6709\u6587\u5eab\u300d\uff0c\u66f8\u540d\u6539\u4f5c\u300a\u4e2d\u570b\u53e4\u4ee3\u54f2\u5b78\u53f2\u300b\uff08\u4e09\u518a\uff09\u30021958\u5e74\u53f0\u5317\u5546\u52d9\u5370\u66f8\u9928\u6539\u7248\u91cd\u5370\uff0c\u80e1\u9069\u65b0\u589e\u300a\u3008\u4e2d\u570b\u53e4\u4ee3\u54f2\u5b78\u53f2\u3009\u53f0\u5317\u7248\u81ea\u8a18\u300b\uff0c\u4e26\u5728\u66f8\u5f8c\u505a\u4e86\u4e00\u500b\u300c\u6b63\u8aa4\u8868\u300d\u3002\u73fe\u64da1958\u5e74\u53f0\u5317\u5546\u52d9\u7248\u6536\u5165\u3002",
+      "citationKey": "\u80e1\u9069\u54f2\u5b78\u53f21917",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "\u80e1\u9069"
+        },
+        {
+          "creatorType": "editor",
+          "name": "\u6b50\u967d\u54f2\u751f"
+        }
+      ],
+      "date": "1998",
+      "extra": [
+        "tex.referencetype: incollection",
+        "citation-key:\u80e1\u9069\u54f2\u5b78\u53f21917",
+        "tex.origdate:1930",
+        "tex.origpublisher:\u842c\u6709\u6587\u5eab",
+        "tex.origtitle:\u4e2d\u570b\u54f2\u5b78\u53f2\u5927\u7db1\u5377\u4e0a[1919]\uff0c\u5546\u52d9"
+      ],
+      "itemID": 1,
+      "itemType": "bookSection",
+      "pages": "155-422",
+      "place": "\u5317\u4eac",
+      "publicationTitle": "\u80e1\u9069\u6587\u96c6",
+      "publisher": "\u5317\u4eac\u5927\u5b78",
+      "title": "\u4e2d\u570b\u53e4\u4ee3\u54f2\u5b78\u53f2",
+      "volume": "\u518a6"
+    }
+  ]
+}

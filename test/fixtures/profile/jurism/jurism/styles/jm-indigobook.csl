@@ -12,7 +12,7 @@ href="http://juris-m.github.io/styles/jm-indigobook" rel="self"/>
     </author>
     <category citation-format="note"/>
     <category field="law"/>
-    <updated>2016-10-08T08:07:23.106844</updated>
+    <updated>2020-11-13T02:47:54+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale>
@@ -196,8 +196,14 @@ href="http://juris-m.github.io/styles/jm-indigobook" rel="self"/>
                   <condition match="all" type="hearing" variable="title"/>
                   <condition match="all" type="hearing" variable="section number"/>
                 </conditions>
-                <text value="supra" font-style="italic"/>
-                <text macro="ib-at-locator" label-form="symbol"/>
+                <group delimiter=" ">
+                  <text value="supra" font-style="italic"/>
+                  <group delimiter=" ">
+                    <text value="note"/>
+                    <text variable="first-reference-note-number"/>
+                  </group>
+                  <text macro="ib-at-locator" label-form="symbol"/>
+                </group>
               </if>
             </choose>
             <choose>
@@ -435,6 +441,18 @@ href="http://juris-m.github.io/styles/jm-indigobook" rel="self"/>
           <text variable="title-sub" font-style="italic" text-case="title"/>
         </group>
       </if>
+      <else-if type="speech">
+        <group delimiter=" ">
+          <group delimiter=", ">
+            <text variable="title" text-case="title"/>
+            <group delimiter=" at ">
+              <text variable="genre"/>
+              <text variable="event-place"/>
+            </group>
+          </group>
+          <date variable="issued" prefix="(" suffix=")" date-parts="year-month-day" form="text"/>
+        </group>
+      </else-if>
       <else-if type="webpage">
         <text variable="title" text-case="title" font-style="italic"/>
       </else-if>
@@ -529,7 +547,7 @@ href="http://juris-m.github.io/styles/jm-indigobook" rel="self"/>
               <conditions match="any">
                 <condition match="none" position="near-note"/>
                 <condition match="none" variable="author title"/>
-                <condition match="all" type="entry-dictionary entry-encyclopedia"/>
+                <condition match="all" type="entry-dictionary entry-encyclopedia speech"/>
               </conditions>
               <group delimiter=" ">
                 <choose>
@@ -559,6 +577,18 @@ href="http://juris-m.github.io/styles/jm-indigobook" rel="self"/>
                     <group delimiter=" ">
                       <text value="in" font-style="italic"/>
                       <text variable="container-title" font-style="italic" form="short"/>
+                    </group>
+                  </else-if>
+                  <else-if>
+                    <conditions match="all">
+                      <condition type="speech"/>
+                      <condition position="subsequent" match="none"/>
+                    </conditions>
+                    <group delimiter=" ">
+                      <text value="in" font-style="italic"/>
+                      <text variable="archive_collection" font-style="italic"/>
+                      <text variable="archive_location" prefix="(" suffix=")"/>
+                      <text variable="archive" font-style="italic"/>
                     </group>
                   </else-if>
                   <else-if match="all" type="article-magazine article-newspaper" variable="page">
@@ -680,6 +710,20 @@ href="http://juris-m.github.io/styles/jm-indigobook" rel="self"/>
               </conditions>
               <text variable="URL"/>
             </else-if>
+            <else-if>
+              <conditions match="all">
+                <condition type="speech"/>
+                <condition variable="archive"/>
+              </conditions>
+              <group delimiter=" ">
+                <text value="available at" font-style="italic"/>
+                <text variable="URL"/>
+                <group delimiter=" " prefix="(" suffix=")">
+                  <text value="visited"/>
+                  <date variable="accessed" form="text" date-parts="year-month-day"/>
+                </group>
+              </group>
+            </else-if>
           </choose>
         </if>
       </choose>
@@ -712,7 +756,13 @@ href="http://juris-m.github.io/styles/jm-indigobook" rel="self"/>
             <if match="none" type="treaty">
               <group delimiter=" ">
                 <group delimiter=", ">
-                  <group><text value="supra" font-style="italic"/></group>
+                  <group delimiter=" ">
+                    <group><text value="supra" font-style="italic"/></group>
+                    <group delimiter=" ">
+                      <text value="note"/>
+                      <text variable="first-reference-note-number"/>
+                    </group>
+                  </group>
                   <text macro="ib-at-locator"/>
                 </group>
               </group>
@@ -755,7 +805,7 @@ href="http://juris-m.github.io/styles/jm-indigobook" rel="self"/>
     </choose>
   </macro>
   <citation disambiguate-add-givenname="true" givenname-disambiguation-rule="by-cite" et-al-min="3" et-al-use-first="1" near-note-distance="5">
-    <layout delimiter=", " suffix=".">
+    <layout delimiter="; " suffix=".">
       <text macro="citation"/>
     </layout>
   </citation>

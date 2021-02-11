@@ -1,0 +1,638 @@
+{
+  "filename": "auto-cz-enIBFD.json",
+  "name": "Czechia",
+  "version": "2020-10-30 01:03:27 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "CZ": "Czech Republic",
+        "CZ:BRNO": "v Brně",
+        "CZ:CESKE.BUDEJOVICE": "v Českých Budějovicích",
+        "CZ:HRADEC.KRALOVE": "v Hradci Králové",
+        "CZ:OLOMOUC": "v Olomouci",
+        "CZ:OLOMOUC:BRNO": "v Brně",
+        "CZ:OLOMOUC:BRNO:BLANSKO": "v Blansku",
+        "CZ:OLOMOUC:BRNO:BRECLAV": "v Břeclavi",
+        "CZ:OLOMOUC:BRNO:BRNO.V": "Brno venkov",
+        "CZ:OLOMOUC:BRNO:HODONIN": "v Hodoníně",
+        "CZ:OLOMOUC:BRNO:JIHLAVA": "v Jihlavě",
+        "CZ:OLOMOUC:BRNO:KROMERIZ": "v Kroměříži",
+        "CZ:OLOMOUC:BRNO:M.BRNO": "v Brně",
+        "CZ:OLOMOUC:BRNO:PROSTEJOV": "v Prostějově",
+        "CZ:OLOMOUC:BRNO:TREBIC": "v Třebíči",
+        "CZ:OLOMOUC:BRNO:UHERSKE.HRADISTE": "v Uherském Hradišti",
+        "CZ:OLOMOUC:BRNO:VYSKOV": "ve Vyškově",
+        "CZ:OLOMOUC:BRNO:ZDAR.SAZAVOU": "ve Žďáru nad Sázavou",
+        "CZ:OLOMOUC:BRNO:ZLIN": "ve Zlíně",
+        "CZ:OLOMOUC:BRNO:ZNOJMO": "ve Znojmě",
+        "CZ:OLOMOUC:OSTRAVA": "v Ostravě",
+        "CZ:OLOMOUC:OSTRAVA:BRUNTAL": "v Bruntále",
+        "CZ:OLOMOUC:OSTRAVA:FRYDEK.MISTEK": "ve Frýdku-Místku",
+        "CZ:OLOMOUC:OSTRAVA:JESENIK": "v Jeseníku",
+        "CZ:OLOMOUC:OSTRAVA:KARVINA": "v Karviné",
+        "CZ:OLOMOUC:OSTRAVA:NOVY.JICIN": "v Novém Jičíně",
+        "CZ:OLOMOUC:OSTRAVA:OLOMOUC": "v Olomouci",
+        "CZ:OLOMOUC:OSTRAVA:OPAVA": "v Opavě",
+        "CZ:OLOMOUC:OSTRAVA:OSTAVA": "v Ostravě",
+        "CZ:OLOMOUC:OSTRAVA:PREROV": "v Přerově",
+        "CZ:OLOMOUC:OSTRAVA:SUMPERK": "v  Šumperku",
+        "CZ:OLOMOUC:OSTRAVA:VSETIN": "ve Vsetíně",
+        "CZ:OSTRAVA": "v Ostravě",
+        "CZ:PLZEN": "v Plzni",
+        "CZ:PRAHA": "v Praze",
+        "CZ:PRAHA.MESTSKY": "v Praze",
+        "CZ:PRAHA:CESKE.BUDEJOVICE": "v Českých Budějovicích",
+        "CZ:PRAHA:CESKE.BUDEJOVICE:CESKE.BUDEJOVICE": "v Českých Budějovicích",
+        "CZ:PRAHA:CESKE.BUDEJOVICE:CESKY.KRUMLOV": "v Českém Krumlově",
+        "CZ:PRAHA:CESKE.BUDEJOVICE:JINDRICHOV.HRADEC": "v Jindřichově Hradci",
+        "CZ:PRAHA:CESKE.BUDEJOVICE:PELHRIMOV": "v Pelhřimově",
+        "CZ:PRAHA:CESKE.BUDEJOVICE:PISEK": "v Písku",
+        "CZ:PRAHA:CESKE.BUDEJOVICE:PRACHATICE": "v Prachaticích",
+        "CZ:PRAHA:CESKE.BUDEJOVICE:STRAKONICE": "ve Strakonicích",
+        "CZ:PRAHA:CESKE.BUDEJOVICE:TABOR": "v Táboře",
+        "CZ:PRAHA:HRADEC.KRALOVE": "v Hradci Králové",
+        "CZ:PRAHA:HRADEC.KRALOVE:CHRUDIM": "v Chrudimi",
+        "CZ:PRAHA:HRADEC.KRALOVE:HAVLICKUV.BROD": "v Havlíčkově Brodu",
+        "CZ:PRAHA:HRADEC.KRALOVE:HRADEC.KRALOVE": "v Hradci Králové",
+        "CZ:PRAHA:HRADEC.KRALOVE:JICIN": "v Jičíně",
+        "CZ:PRAHA:HRADEC.KRALOVE:NACHOD": "v Náchodě",
+        "CZ:PRAHA:HRADEC.KRALOVE:PARDUBICE": "v Pardubicích",
+        "CZ:PRAHA:HRADEC.KRALOVE:RYCHNOV.NAD.KNEZNOU": "v Rychnově nad Kněžnou",
+        "CZ:PRAHA:HRADEC.KRALOVE:SEMILY": "v Semilech",
+        "CZ:PRAHA:HRADEC.KRALOVE:SVITAVY": "v Svitavách",
+        "CZ:PRAHA:HRADEC.KRALOVE:TRUTNOV": "v Trutnově",
+        "CZ:PRAHA:HRADEC.KRALOVE:USTI.NAD.ORLICI": "v Ústí nad Orlicí",
+        "CZ:PRAHA:PLZEN": "v Plzni",
+        "CZ:PRAHA:PLZEN:CHEB": "v Chebu",
+        "CZ:PRAHA:PLZEN:DOMAZLICE": "v Domažlicích",
+        "CZ:PRAHA:PLZEN:KARLOVY.VARY": "v Karlových Varech",
+        "CZ:PRAHA:PLZEN:KLATOVY": "v Klatovech",
+        "CZ:PRAHA:PLZEN:PLZEN-JIH": "Plzeň-jih",
+        "CZ:PRAHA:PLZEN:PLZEN.MESTO": "Plzeň-město",
+        "CZ:PRAHA:PLZEN:PLZEN.SEVER": "Plzeň-sever",
+        "CZ:PRAHA:PLZEN:ROKYCANY": "v Rokycanech",
+        "CZ:PRAHA:PLZEN:SOKOLOV": "v Sokolově",
+        "CZ:PRAHA:PLZEN:TACHOV": "v Tachově",
+        "CZ:PRAHA:PRAHA": "v Praze",
+        "CZ:PRAHA:PRAHA.MESTSKY": "v Praze",
+        "CZ:PRAHA:PRAHA:BENESOV": "v Benešově",
+        "CZ:PRAHA:PRAHA:BEROUN": "v Berouně",
+        "CZ:PRAHA:PRAHA:KLADNO": "v  Kladně",
+        "CZ:PRAHA:PRAHA:KOLIN": "v Kolíně",
+        "CZ:PRAHA:PRAHA:KUTNA.HORA": "v Kutné Hoře",
+        "CZ:PRAHA:PRAHA:MELNIK": "v Mělníku",
+        "CZ:PRAHA:PRAHA:MLADA.BOLESLAV": "v Mladé Boleslavi",
+        "CZ:PRAHA:PRAHA:NYMBURK": "v Nymburku",
+        "CZ:PRAHA:PRAHA:PRAHA.VYCHOD": "Praha-východ",
+        "CZ:PRAHA:PRAHA:PRAHA.ZAPAD": "Praha-západ",
+        "CZ:PRAHA:PRAHA:PRAHA01": "pro Prahu 1",
+        "CZ:PRAHA:PRAHA:PRAHA02": "pro Prahu 2",
+        "CZ:PRAHA:PRAHA:PRAHA03": "pro Prahu 3",
+        "CZ:PRAHA:PRAHA:PRAHA04": "pro Prahu 4",
+        "CZ:PRAHA:PRAHA:PRAHA05": "pro Prahu 5",
+        "CZ:PRAHA:PRAHA:PRAHA06": "pro Prahu 6",
+        "CZ:PRAHA:PRAHA:PRAHA07": "pro Prahu 7",
+        "CZ:PRAHA:PRAHA:PRAHA08": "pro Prahu 8",
+        "CZ:PRAHA:PRAHA:PRAHA09": "pro Prahu 9",
+        "CZ:PRAHA:PRAHA:PRAHA10": "pro Prahu 10",
+        "CZ:PRAHA:PRAHA:PRIBRAM": "v Příbrami",
+        "CZ:PRAHA:PRAHA:RAKOVNIK": "v Rakovníku",
+        "CZ:PRAHA:USTI.NAD.LABEM": "v Ústí nad Labem",
+        "CZ:PRAHA:USTI.NAD.LABEM:CESKA.LIPA": "v  České Lípě",
+        "CZ:PRAHA:USTI.NAD.LABEM:CHOMUTOV": "v Chomutově",
+        "CZ:PRAHA:USTI.NAD.LABEM:DECIN": "v Děčíně",
+        "CZ:PRAHA:USTI.NAD.LABEM:JABLONEC.NAD.NISOU": "v Jablonci nad Nisou",
+        "CZ:PRAHA:USTI.NAD.LABEM:LIBEREC": "v Liberci",
+        "CZ:PRAHA:USTI.NAD.LABEM:LITOMERICE": "v Litoměřicích",
+        "CZ:PRAHA:USTI.NAD.LABEM:LOUNY": "v Lounech",
+        "CZ:PRAHA:USTI.NAD.LABEM:MOST": "v Mostě",
+        "CZ:PRAHA:USTI.NAD.LABEM:TEPLICE": "v Teplicích",
+        "CZ:PRAHA:USTI.NAD.LABEM:USTI.NAD.LABEM": "v Ústí nad Labem",
+        "CZ:USTI.NAD.LABEM": "v Ústí nad Labem"
+      }
+    },
+    "cz": {
+      "institution-part": {
+        "ns": "NS [Supreme Court]",
+        "nss": "NSS [Supreme Administrative Court]",
+        "us": "US [Constitutional Court]"
+      }
+    },
+    "cz:brno": {
+      "institution-part": {
+        "ks": "KS v Brně [Regional Court]"
+      }
+    },
+    "cz:ceske.budejovice": {
+      "institution-part": {
+        "ks": "KS v Českých Budějovicích [Regional Court]"
+      }
+    },
+    "cz:hradec.kralove": {
+      "institution-part": {
+        "ks": "KS v Hradci Králové [Regional Court]"
+      }
+    },
+    "cz:olomouc": {
+      "institution-part": {
+        "vs": "Vrchní soud v Olomouci"
+      }
+    },
+    "cz:olomouc:brno": {
+      "institution-part": {
+        "ks": "KS v Brně [Regional Court]"
+      }
+    },
+    "cz:olomouc:brno:blansko": {
+      "institution-part": {
+        "oks": "Okresní soud v Blansku"
+      }
+    },
+    "cz:olomouc:brno:breclav": {
+      "institution-part": {
+        "oks": "Okresní soud v Břeclavi"
+      }
+    },
+    "cz:olomouc:brno:brno.v": {
+      "institution-part": {
+        "oks": "Okresní soud Brno venkov"
+      }
+    },
+    "cz:olomouc:brno:hodonin": {
+      "institution-part": {
+        "oks": "Okresní soud v Hodoníně"
+      }
+    },
+    "cz:olomouc:brno:jihlava": {
+      "institution-part": {
+        "oks": "Okresní soud v Jihlavě"
+      }
+    },
+    "cz:olomouc:brno:kromeriz": {
+      "institution-part": {
+        "oks": "Okresní soud v Kroměříži"
+      }
+    },
+    "cz:olomouc:brno:m.brno": {
+      "institution-part": {
+        "ms": "Městský soud v Brně"
+      }
+    },
+    "cz:olomouc:brno:prostejov": {
+      "institution-part": {
+        "oks": "Okresní soud v Prostějově"
+      }
+    },
+    "cz:olomouc:brno:trebic": {
+      "institution-part": {
+        "oks": "Okresní soud v Třebíči"
+      }
+    },
+    "cz:olomouc:brno:uherske.hradiste": {
+      "institution-part": {
+        "oks": "Okresní soud v Uherském Hradišti"
+      }
+    },
+    "cz:olomouc:brno:vyskov": {
+      "institution-part": {
+        "oks": "Okresní soud ve Vyškově"
+      }
+    },
+    "cz:olomouc:brno:zdar.sazavou": {
+      "institution-part": {
+        "oks": "Okresní soud ve Žďáru nad Sázavou"
+      }
+    },
+    "cz:olomouc:brno:zlin": {
+      "institution-part": {
+        "oks": "Okresní soud ve Zlíně"
+      }
+    },
+    "cz:olomouc:brno:znojmo": {
+      "institution-part": {
+        "oks": "Okresní soud ve Znojmě"
+      }
+    },
+    "cz:olomouc:ostrava": {
+      "institution-part": {
+        "ks": "KS v Ostravě [Regional Court]"
+      }
+    },
+    "cz:olomouc:ostrava:bruntal": {
+      "institution-part": {
+        "oks": "Okresní soud v Bruntále"
+      }
+    },
+    "cz:olomouc:ostrava:frydek.mistek": {
+      "institution-part": {
+        "oks": "Okresní soud ve Frýdku-Místku"
+      }
+    },
+    "cz:olomouc:ostrava:jesenik": {
+      "institution-part": {
+        "oks": "Okresní soud v Jeseníku"
+      }
+    },
+    "cz:olomouc:ostrava:karvina": {
+      "institution-part": {
+        "oks": "Okresní soud v Karviné"
+      }
+    },
+    "cz:olomouc:ostrava:novy.jicin": {
+      "institution-part": {
+        "oks": "Okresní soud v Novém Jičíně"
+      }
+    },
+    "cz:olomouc:ostrava:olomouc": {
+      "institution-part": {
+        "oks": "Okresní soud v Olomouci"
+      }
+    },
+    "cz:olomouc:ostrava:opava": {
+      "institution-part": {
+        "oks": "Okresní soud v Opavě"
+      }
+    },
+    "cz:olomouc:ostrava:ostava": {
+      "institution-part": {
+        "oks": "Okresní soud v Ostravě"
+      }
+    },
+    "cz:olomouc:ostrava:prerov": {
+      "institution-part": {
+        "oks": "Okresní soud v Přerově"
+      }
+    },
+    "cz:olomouc:ostrava:sumperk": {
+      "institution-part": {
+        "oks": "Okresní soud v  Šumperku"
+      }
+    },
+    "cz:olomouc:ostrava:vsetin": {
+      "institution-part": {
+        "oks": "Okresní soud ve Vsetíně"
+      }
+    },
+    "cz:ostrava": {
+      "institution-part": {
+        "ks": "KS v Ostravě [Regional Court]"
+      }
+    },
+    "cz:plzen": {
+      "institution-part": {
+        "ks": "KS v Plzni [Regional Court]"
+      }
+    },
+    "cz:praha": {
+      "institution-part": {
+        "ks": "KS v Praze [Regional Court]",
+        "vs": "Vrchní soud v Praze"
+      }
+    },
+    "cz:praha.mestsky": {
+      "institution-part": {
+        "ms": "Městský soud v Praze"
+      }
+    },
+    "cz:praha:ceske.budejovice": {
+      "institution-part": {
+        "ks": "KS v Českých Budějovicích [Regional Court]"
+      }
+    },
+    "cz:praha:ceske.budejovice:ceske.budejovice": {
+      "institution-part": {
+        "oks": "Okresní soud v Českých Budějovicích"
+      }
+    },
+    "cz:praha:ceske.budejovice:cesky.krumlov": {
+      "institution-part": {
+        "oks": "Okresní soud v Českém Krumlově"
+      }
+    },
+    "cz:praha:ceske.budejovice:jindrichov.hradec": {
+      "institution-part": {
+        "oks": "Okresní soud v Jindřichově Hradci"
+      }
+    },
+    "cz:praha:ceske.budejovice:pelhrimov": {
+      "institution-part": {
+        "oks": "Okresní soud v Pelhřimově"
+      }
+    },
+    "cz:praha:ceske.budejovice:pisek": {
+      "institution-part": {
+        "oks": "Okresní soud v Písku"
+      }
+    },
+    "cz:praha:ceske.budejovice:prachatice": {
+      "institution-part": {
+        "oks": "Okresní soud v Prachaticích"
+      }
+    },
+    "cz:praha:ceske.budejovice:strakonice": {
+      "institution-part": {
+        "oks": "Okresní soud ve Strakonicích"
+      }
+    },
+    "cz:praha:ceske.budejovice:tabor": {
+      "institution-part": {
+        "oks": "Okresní soud v Táboře"
+      }
+    },
+    "cz:praha:hradec.kralove": {
+      "institution-part": {
+        "ks": "KS v Hradci Králové [Regional Court]"
+      }
+    },
+    "cz:praha:hradec.kralove:chrudim": {
+      "institution-part": {
+        "oks": "Okresní soud v Chrudimi"
+      }
+    },
+    "cz:praha:hradec.kralove:havlickuv.brod": {
+      "institution-part": {
+        "oks": "Okresní soud v Havlíčkově Brodu"
+      }
+    },
+    "cz:praha:hradec.kralove:hradec.kralove": {
+      "institution-part": {
+        "oks": "Okresní soud v Hradci Králové"
+      }
+    },
+    "cz:praha:hradec.kralove:jicin": {
+      "institution-part": {
+        "oks": "Okresní soud v Jičíně"
+      }
+    },
+    "cz:praha:hradec.kralove:nachod": {
+      "institution-part": {
+        "oks": "Okresní soud v Náchodě"
+      }
+    },
+    "cz:praha:hradec.kralove:pardubice": {
+      "institution-part": {
+        "oks": "Okresní soud v Pardubicích"
+      }
+    },
+    "cz:praha:hradec.kralove:rychnov.nad.kneznou": {
+      "institution-part": {
+        "oks": "Okresní soud v Rychnově nad Kněžnou"
+      }
+    },
+    "cz:praha:hradec.kralove:semily": {
+      "institution-part": {
+        "oks": "Okresní soud v Semilech"
+      }
+    },
+    "cz:praha:hradec.kralove:svitavy": {
+      "institution-part": {
+        "oks": "Okresní soud v Svitavách"
+      }
+    },
+    "cz:praha:hradec.kralove:trutnov": {
+      "institution-part": {
+        "oks": "Okresní soud v Trutnově"
+      }
+    },
+    "cz:praha:hradec.kralove:usti.nad.orlici": {
+      "institution-part": {
+        "oks": "Okresní soud v Ústí nad Orlicí"
+      }
+    },
+    "cz:praha:plzen": {
+      "institution-part": {
+        "ks": "KS v Plzni [Regional Court]"
+      }
+    },
+    "cz:praha:plzen:cheb": {
+      "institution-part": {
+        "oks": "Okresní soud v Chebu"
+      }
+    },
+    "cz:praha:plzen:domazlice": {
+      "institution-part": {
+        "oks": "Okresní soud v Domažlicích"
+      }
+    },
+    "cz:praha:plzen:karlovy.vary": {
+      "institution-part": {
+        "oks": "Okresní soud v Karlových Varech"
+      }
+    },
+    "cz:praha:plzen:klatovy": {
+      "institution-part": {
+        "oks": "Okresní soud v Klatovech"
+      }
+    },
+    "cz:praha:plzen:plzen-jih": {
+      "institution-part": {
+        "oks": "Okresní soud Plzeň-jih"
+      }
+    },
+    "cz:praha:plzen:plzen.mesto": {
+      "institution-part": {
+        "oks": "Okresní soud Plzeň-město"
+      }
+    },
+    "cz:praha:plzen:plzen.sever": {
+      "institution-part": {
+        "oks": "Okresní soud Plzeň-sever"
+      }
+    },
+    "cz:praha:plzen:rokycany": {
+      "institution-part": {
+        "oks": "Okresní soud v Rokycanech"
+      }
+    },
+    "cz:praha:plzen:sokolov": {
+      "institution-part": {
+        "oks": "Okresní soud v Sokolově"
+      }
+    },
+    "cz:praha:plzen:tachov": {
+      "institution-part": {
+        "oks": "Okresní soud v Tachově"
+      }
+    },
+    "cz:praha:praha": {
+      "institution-part": {
+        "ks": "KS v Praze [Regional Court]"
+      }
+    },
+    "cz:praha:praha.mestsky": {
+      "institution-part": {
+        "ms": "Městský soud v Praze"
+      }
+    },
+    "cz:praha:praha:benesov": {
+      "institution-part": {
+        "oks": "Okresní soud v Benešově"
+      }
+    },
+    "cz:praha:praha:beroun": {
+      "institution-part": {
+        "oks": "Okresní soud v Berouně"
+      }
+    },
+    "cz:praha:praha:kladno": {
+      "institution-part": {
+        "oks": "Okresní soud v  Kladně"
+      }
+    },
+    "cz:praha:praha:kolin": {
+      "institution-part": {
+        "oks": "Okresní soud v Kolíně"
+      }
+    },
+    "cz:praha:praha:kutna.hora": {
+      "institution-part": {
+        "oks": "Okresní soud v Kutné Hoře"
+      }
+    },
+    "cz:praha:praha:melnik": {
+      "institution-part": {
+        "oks": "Okresní soud v Mělníku"
+      }
+    },
+    "cz:praha:praha:mlada.boleslav": {
+      "institution-part": {
+        "oks": "Okresní soud v Mladé Boleslavi"
+      }
+    },
+    "cz:praha:praha:nymburk": {
+      "institution-part": {
+        "oks": "Okresní soud v Nymburku"
+      }
+    },
+    "cz:praha:praha:praha.vychod": {
+      "institution-part": {
+        "oks": "Okresní soud Praha-východ"
+      }
+    },
+    "cz:praha:praha:praha.zapad": {
+      "institution-part": {
+        "oks": "Okresní soud Praha-západ"
+      }
+    },
+    "cz:praha:praha:praha01": {
+      "institution-part": {
+        "obs": "Obvodní soud pro Prahu 1"
+      }
+    },
+    "cz:praha:praha:praha02": {
+      "institution-part": {
+        "obs": "Obvodní soud pro Prahu 2"
+      }
+    },
+    "cz:praha:praha:praha03": {
+      "institution-part": {
+        "obs": "Obvodní soud pro Prahu 3"
+      }
+    },
+    "cz:praha:praha:praha04": {
+      "institution-part": {
+        "obs": "Obvodní soud pro Prahu 4"
+      }
+    },
+    "cz:praha:praha:praha05": {
+      "institution-part": {
+        "obs": "Obvodní soud pro Prahu 5"
+      }
+    },
+    "cz:praha:praha:praha06": {
+      "institution-part": {
+        "obs": "Obvodní soud pro Prahu 6"
+      }
+    },
+    "cz:praha:praha:praha07": {
+      "institution-part": {
+        "obs": "Obvodní soud pro Prahu 7"
+      }
+    },
+    "cz:praha:praha:praha08": {
+      "institution-part": {
+        "obs": "Obvodní soud pro Prahu 8"
+      }
+    },
+    "cz:praha:praha:praha09": {
+      "institution-part": {
+        "obs": "Obvodní soud pro Prahu 9"
+      }
+    },
+    "cz:praha:praha:praha10": {
+      "institution-part": {
+        "obs": "Obvodní soud pro Prahu 10"
+      }
+    },
+    "cz:praha:praha:pribram": {
+      "institution-part": {
+        "oks": "Okresní soud v Příbrami"
+      }
+    },
+    "cz:praha:praha:rakovnik": {
+      "institution-part": {
+        "oks": "Okresní soud v Rakovníku"
+      }
+    },
+    "cz:praha:usti.nad.labem": {
+      "institution-part": {
+        "ks": "KS v Ústí nad Labem [Regional Court]"
+      }
+    },
+    "cz:praha:usti.nad.labem:ceska.lipa": {
+      "institution-part": {
+        "oks": "Okresní soud v  České Lípě"
+      }
+    },
+    "cz:praha:usti.nad.labem:chomutov": {
+      "institution-part": {
+        "oks": "Okresní soud v Chomutově"
+      }
+    },
+    "cz:praha:usti.nad.labem:decin": {
+      "institution-part": {
+        "oks": "Okresní soud v Děčíně"
+      }
+    },
+    "cz:praha:usti.nad.labem:jablonec.nad.nisou": {
+      "institution-part": {
+        "oks": "Okresní soud v Jablonci nad Nisou"
+      }
+    },
+    "cz:praha:usti.nad.labem:liberec": {
+      "institution-part": {
+        "oks": "Okresní soud v Liberci"
+      }
+    },
+    "cz:praha:usti.nad.labem:litomerice": {
+      "institution-part": {
+        "oks": "Okresní soud v Litoměřicích"
+      }
+    },
+    "cz:praha:usti.nad.labem:louny": {
+      "institution-part": {
+        "oks": "Okresní soud v Lounech"
+      }
+    },
+    "cz:praha:usti.nad.labem:most": {
+      "institution-part": {
+        "oks": "Okresní soud v Mostě"
+      }
+    },
+    "cz:praha:usti.nad.labem:teplice": {
+      "institution-part": {
+        "oks": "Okresní soud v Teplicích"
+      }
+    },
+    "cz:praha:usti.nad.labem:usti.nad.labem": {
+      "institution-part": {
+        "oks": "Okresní soud v Ústí nad Labem"
+      }
+    },
+    "cz:usti.nad.labem": {
+      "institution-part": {
+        "ks": "KS v Ústí nad Labem [Regional Court]"
+      }
+    }
+  }
+}

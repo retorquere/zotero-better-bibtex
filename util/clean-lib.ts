@@ -2,7 +2,7 @@
 
 // test/fixtures/export/two ISSN number are freezing browser #110 + Generating keys and export broken #111.json 
 
-const AJV = require('ajv')
+import AJV from 'ajv'
 const ajv = new AJV
 const validate = ajv.compile(require('../test/features/steps/bbtjsonschema.json'))
 import * as jsonpatch from 'fast-json-patch'
@@ -21,7 +21,7 @@ for (const pref of ['client', 'testing', 'platform', 'newTranslatorsAskRestart']
 }
 preferences.supported = Object.keys(preferences.defaults)
 
-const argv = require('rasper')(process.argv.slice(2))
+const argv = require("clp")()
 if (argv.save && typeof argv.save !== 'boolean') {
   console.log('put --save at end of command line')
   process.exit(1)
@@ -39,7 +39,7 @@ if (argv._.length === 0) {
     process.exit(1)
   }
   argv._ = glob('test/fixtures/*/*.json')
-  argv.save = argv.saveAll
+  argv.save = argv['save-all']
 }
 argv._.sort()
 console.log(`## inspecting ${argv._.length} files`)
@@ -49,6 +49,9 @@ const extensions = [
   '.csl.json',
   '.json',
 ]
+function sortkey(item) {
+  return [ item.dateModified || item.dateAdded, item.itemType, `${item.itemID}` ].join('\t')
+}
 for (const lib of argv._) {
   const ext = extensions.find(ext => lib.endsWith(ext))
 
@@ -77,6 +80,7 @@ for (const lib of argv._) {
         }
       }
 
+      post.items.sort((a, b) => sortkey(a).localeCompare(sortkey(b)))
       for (const item of (post.items || [])) {
         delete item.uri
         delete item.dateAdded

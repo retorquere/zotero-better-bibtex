@@ -78,6 +78,16 @@ default: `yes`
 
 On import, place all bib(la)tex field Zotero doesn't have an existing field for in the Zotero `extra` field of the item
 
+### importUnknownTexCommand
+
+default: `ignore`
+
+What to do when encountering a TeX command the parser does not know about. Please only use values:
+
+* `ignore`: ignore the command entirely
+* `tex`: import and mark as TeX code, so on re-export it will be output as-is
+* `text`: import without marking it as TeX code, so on re-export it will be treated as regular text
+
 ### itemObserverDelay
 
 default: `5`

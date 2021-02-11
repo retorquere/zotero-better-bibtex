@@ -1,20 +1,48 @@
 {
-  "type": "object",
   "additionalProperties": false,
-  "title": "BBT JSON format",
-  "required": [
-    "config",
-    "items"
-  ],
   "properties": {
+    "collections": {
+      "additionalProperties": {
+        "additionalProperties": false,
+        "properties": {
+          "collections": {
+            "items": {
+              "pattern": "^coll:[0-9]+$",
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "items": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "key": {
+            "pattern": "^coll:[0-9]+$",
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "parent": {
+            "pattern": "^coll:[0-9]+$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "collections",
+          "key",
+          "name",
+          "items"
+        ],
+        "type": "object"
+      },
+      "type": "object"
+    },
     "config": {
-      "type": "object",
       "additionalProperties": false,
-      "title": "Client configuration at time of export",
       "default": {},
-      "required": [
-        "id"
-      ],
       "properties": {
         "id": {
           "const": "36a3b0b5-bad0-4a04-b79b-441c7cef77db"
@@ -25,8 +53,41 @@
         "localeDateOrder": {
           "type": "string"
         },
+        "options": {
+          "additionalProperties": false,
+          "default": {},
+          "properties": {
+            "Authors": {
+              "type": "boolean"
+            },
+            "Normalize": {
+              "type": "boolean"
+            },
+            "Title": {
+              "type": "boolean"
+            },
+            "Year": {
+              "type": "boolean"
+            },
+            "exportFileData": {
+              "type": "boolean"
+            },
+            "exportNotes": {
+              "type": "boolean"
+            },
+            "keepUpdated": {
+              "type": "boolean"
+            },
+            "quickCopyMode": {
+              "type": "string"
+            },
+            "useJournalAbbreviation": {
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        },
         "preferences": {
-          "type": "object",
           "additionalProperties": false,
           "default": {},
           "properties": {
@@ -37,17 +98,20 @@
                 "url"
               ]
             },
-            "automaticTags": {
-              "type": "boolean"
+            "ascii": {
+              "type": "string"
             },
             "asciiBibLaTeX": {
               "type": "boolean"
             },
-            "ascii": {
-              "type": "string"
-            },
             "asciiBibTeX": {
               "type": "boolean"
+            },
+            "autoAbbrev": {
+              "type": "boolean"
+            },
+            "autoAbbrevStyle": {
+              "type": "string"
             },
             "autoExport": {
               "enum": [
@@ -55,6 +119,183 @@
                 "immediate",
                 "idle"
               ]
+            },
+            "autoExportDelay": {
+              "type": "number"
+            },
+            "autoExportIdleWait": {
+              "type": "number"
+            },
+            "autoExportPathReplaceDiacritics": {
+              "type": "boolean"
+            },
+            "autoExportPathReplaceDirSep": {
+              "type": "string"
+            },
+            "autoExportPathReplaceSpace": {
+              "type": "string"
+            },
+            "autoPinDelay": {
+              "type": "number"
+            },
+            "automaticTags": {
+              "type": "boolean"
+            },
+            "auxImport": {
+              "type": "boolean"
+            },
+            "biblatexExtendedDateFormat": {
+              "type": "boolean"
+            },
+            "biblatexExtendedNameFormat": {
+              "type": "boolean"
+            },
+            "biblatexExtractEprint": {
+              "type": "boolean"
+            },
+            "bibtexParticleNoOp": {
+              "type": "boolean"
+            },
+            "bibtexURL": {
+              "enum": [
+                "off",
+                "note",
+                "note-url-ish",
+                "url",
+                "url-ish"
+              ]
+            },
+            "cacheFlushInterval": {
+              "type": "number"
+            },
+            "citeCommand": {
+              "type": "string"
+            },
+            "citekeyFold": {
+              "type": "boolean"
+            },
+            "citekeyFormat": {
+              "type": "string"
+            },
+            "citeprocNoteCitekey": {
+              "type": "boolean"
+            },
+            "csquotes": {
+              "type": "string"
+            },
+            "debugLogDir": {
+              "type": "string"
+            },
+            "exportBibTeXStrings": {
+              "enum": [
+                "off",
+                "detect",
+                "match",
+                "match+reverse"
+              ]
+            },
+            "exportBraceProtection": {
+              "type": "boolean"
+            },
+            "exportTitleCase": {
+              "type": "boolean"
+            },
+            "extraMergeCSL": {
+              "type": "boolean"
+            },
+            "extraMergeCitekeys": {
+              "type": "boolean"
+            },
+            "extraMergeTeX": {
+              "type": "boolean"
+            },
+            "git": {
+              "type": "string"
+            },
+            "ignorePostscriptErrors": {
+              "type": "boolean"
+            },
+            "import": {
+              "type": "boolean"
+            },
+            "importBibTeXStrings": {
+              "type": "boolean"
+            },
+            "importCaseProtection": {
+              "enum": [
+                "as-needed",
+                "on",
+                "off"
+              ]
+            },
+            "importCitationKey": {
+              "type": "boolean"
+            },
+            "importExtra": {
+              "type": "boolean"
+            },
+            "importJabRefAbbreviations": {
+              "type": "boolean"
+            },
+            "importJabRefStrings": {
+              "type": "boolean"
+            },
+            "importSentenceCase": {
+              "enum": [
+                "on+guess",
+                "on",
+                "off"
+              ]
+            },
+            "importUnknownTexCommand": {
+              "type": "string"
+            },
+            "itemObserverDelay": {
+              "type": "number"
+            },
+            "jabrefFormat": {
+              "type": "number"
+            },
+            "keyConflictPolicy": {
+              "enum": [
+                "change",
+                "keep"
+              ]
+            },
+            "keyScope": {
+              "enum": [
+                "global",
+                "library"
+              ]
+            },
+            "kuroshiro": {
+              "type": "boolean"
+            },
+            "mapMath": {
+              "type": "string"
+            },
+            "mapText": {
+              "type": "string"
+            },
+            "mapUnicode": {
+              "enum": [
+                "minimal-packages",
+                "conservative",
+                "text",
+                "math"
+              ]
+            },
+            "parseParticles": {
+              "type": "boolean"
+            },
+            "postscript": {
+              "type": "string"
+            },
+            "postscriptOverride": {
+              "type": "string"
+            },
+            "qualityReport": {
+              "type": "boolean"
             },
             "quickCopyMode": {
               "enum": [
@@ -71,341 +312,199 @@
                 "selectLink"
               ]
             },
-            "citeCommand": {
-              "type": "string"
-            },
             "quickCopyPandocBrackets": {
               "type": "boolean"
-            },
-            "citekeyFormat": {
-              "type": "string"
-            },
-            "citekeyFold": {
-              "type": "boolean"
-            },
-            "keyConflictPolicy": {
-              "enum": [
-                "change",
-                "keep"
-              ]
-            },
-            "auxImport": {
-              "type": "boolean"
-            },
-            "keyScope": {
-              "enum": [
-                "global",
-                "library"
-              ]
-            },
-            "exportBibTeXStrings": {
-              "enum": [
-                "off",
-                "detect",
-                "match",
-                "match+reverse"
-              ]
-            },
-            "importBibTeXStrings": {
-              "type": "boolean"
-            },
-            "bibtexParticleNoOp": {
-              "type": "boolean"
-            },
-            "skipFields": {
-              "type": "string"
-            },
-            "bibtexURL": {
-              "enum": [
-                "off",
-                "note",
-                "url"
-              ]
-            },
-            "warnBulkModify": {
-              "type": "number"
-            },
-            "postscript": {
-              "type": "string"
-            },
-            "strings": {
-              "type": "string"
-            },
-            "autoAbbrev": {
-              "type": "boolean"
-            },
-            "autoAbbrevStyle": {
-              "type": "string"
-            },
-            "autoExportIdleWait": {
-              "type": "number"
-            },
-            "cacheFlushInterval": {
-              "type": "number"
-            },
-            "csquotes": {
-              "type": "string"
-            },
-            "rawLaTag": {
-              "type": "string"
             },
             "rawImports": {
               "type": "boolean"
             },
-            "skipWords": {
+            "rawLaTag": {
               "type": "string"
             },
-            "verbatimFields": {
-              "type": "string"
-            },
-            "jabrefFormat": {
-              "type": "number"
-            },
-            "qualityReport": {
-              "type": "boolean"
-            },
-            "biblatexExtendedDateFormat": {
-              "type": "boolean"
-            },
-            "biblatexExtractEprint": {
-              "type": "boolean"
-            },
-            "biblatexExtendedNameFormat": {
-              "type": "boolean"
-            },
-            "exportTitleCase": {
-              "type": "boolean"
-            },
-            "exportBraceProtection": {
+            "relativeFilePaths": {
               "type": "boolean"
             },
             "retainCache": {
               "type": "boolean"
             },
-            "importSentenceCase": {
-              "enum": [
-                "on+guess",
-                "on",
-                "off"
-              ]
+            "scrubDatabase": {
+              "type": "boolean"
             },
-            "importCaseProtection": {
-              "enum": [
-                "as-needed",
-                "on",
-                "off"
-              ]
+            "skipFields": {
+              "type": "string"
             },
-            "autoExportDelay": {
+            "skipWords": {
+              "type": "string"
+            },
+            "strings": {
+              "type": "string"
+            },
+            "verbatimFields": {
+              "type": "string"
+            },
+            "warnBulkModify": {
               "type": "number"
             },
             "warnTitleCased": {
               "type": "boolean"
             },
-            "itemObserverDelay": {
-              "type": "number"
-            },
-            "autoPinDelay": {
-              "type": "number"
-            },
-            "parseParticles": {
-              "type": "boolean"
-            },
-            "citeprocNoteCitekey": {
-              "type": "boolean"
-            },
-            "import": {
-              "type": "boolean"
-            },
-            "importExtra": {
-              "type": "boolean"
-            },
-            "importCitationKey": {
-              "type": "boolean"
-            },
-            "extraMergeTeX": {
-              "type": "boolean"
-            },
-            "extraMergeCSL": {
-              "type": "boolean"
-            },
-            "extraMergeCitekeys": {
-              "type": "boolean"
-            },
-            "importJabRefStrings": {
-              "type": "boolean"
-            },
-            "importJabRefAbbreviations": {
-              "type": "boolean"
-            },
-            "autoExportPathReplaceDirSep": {
-              "type": "string"
-            },
-            "autoExportPathReplaceSpace": {
-              "type": "string"
-            },
-            "autoExportPathReplaceDiacritics": {
-              "type": "boolean"
-            },
-            "postscriptOverride": {
-              "type": "string"
-            },
-            "scrubDatabase": {
-              "type": "boolean"
-            },
-            "ignorePostscriptErrors": {
-              "type": "boolean"
-            },
-            "debugLogDir": {
-              "type": "string"
-            },
-            "kuroshiro": {
-              "type": "boolean"
-            },
-            "relativeFilePaths": {
-              "type": "boolean"
-            },
-            "git": {
-              "type": "string"
-            },
-            "mapUnicode": {
-              "enum": [
-                "minimal-packages",
-                "conservative",
-                "text",
-                "math"
-              ]
-            },
-            "mapText": {
-              "type": "string"
-            },
-            "mapMath": {
-              "type": "string"
-            },
             "workers": {
               "type": "number"
             }
-          }
-        },
-        "options": {
-          "type": "object",
-          "additionalProperties": false,
-          "default": {},
-          "properties": {
-            "exportNotes": {
-              "type": "boolean"
-            },
-            "exportFileData": {
-              "type": "boolean"
-            },
-            "useJournalAbbreviation": {
-              "type": "boolean"
-            },
-            "keepUpdated": {
-              "type": "boolean"
-            },
-            "Normalize": {
-              "type": "boolean"
-            },
-            "Title": {
-              "type": "boolean"
-            },
-            "Authors": {
-              "type": "boolean"
-            },
-            "Year": {
-              "type": "boolean"
-            },
-            "quickCopyMode": {
-              "type": "string"
-            }
-          }
+          },
+          "type": "object"
         }
-      }
-    },
-    "collections": {
-      "type": "object",
-      "additionalProperties": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "collections",
-          "key",
-          "name",
-          "items"
-        ],
-        "properties": {
-          "collections": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "pattern": "^coll:[0-9]+$"
-            }
-          },
-          "key": {
-            "type": "string",
-            "pattern": "^coll:[0-9]+$"
-          },
-          "name": {
-            "type": "string"
-          },
-          "items": {
-            "type": "array",
-            "items": {
-              "type": "integer"
-            }
-          },
-          "parent": {
-            "type": "string",
-            "pattern": "^coll:[0-9]+$"
-          }
-        }
-      }
+      },
+      "required": [
+        "id"
+      ],
+      "title": "Client configuration at time of export",
+      "type": "object"
     },
     "items": {
-      "type": "array",
       "default": [],
       "items": {
-        "type": "object",
         "additionalProperties": false,
         "properties": {
+          "DOI": {
+            "type": "string"
+          },
+          "ISBN": {
+            "type": "string"
+          },
+          "ISSN": {
+            "type": "string"
+          },
+          "abstractNote": {
+            "type": "string"
+          },
+          "accessDate": {
+            "type": "string"
+          },
+          "adminFlag": {
+            "type": "string"
+          },
+          "adoptionDate": {
+            "type": "string"
+          },
+          "applicationNumber": {
+            "type": "string"
+          },
+          "archive": {
+            "type": "string"
+          },
+          "archiveCollection": {
+            "type": "string"
+          },
+          "archiveLocation": {
+            "type": "string"
+          },
+          "artworkSize": {
+            "type": "string"
+          },
+          "assemblyNumber": {
+            "type": "string"
+          },
+          "assignee": {
+            "type": "string"
+          },
+          "attachments": {
+            "items": {
+              "additionalProperties": false,
+              "default": {},
+              "properties": {
+                "accessDate": {
+                  "type": "string"
+                },
+                "contentType": {
+                  "type": "string"
+                },
+                "itemType": {
+                  "const": "attachment"
+                },
+                "key": {
+                  "type": "string"
+                },
+                "linkMode": {
+                  "type": "string"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "tags": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "tag": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "tag"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "uri": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "title"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "callNumber": {
+            "type": "string"
+          },
           "citationKey": {
             "type": "string"
           },
-          "itemID": {
-            "type": "integer"
-          },
-          "key": {
+          "code": {
             "type": "string"
           },
-          "dateAdded": {
+          "codeNumber": {
             "type": "string"
           },
-          "dateModified": {
+          "collections": {
+            "items": {
+              "pattern": "^coll:[0-9]+$",
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "committee": {
             "type": "string"
           },
-          "uri": {
+          "conferenceDate": {
             "type": "string"
           },
-          "note": {
+          "conferenceName": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "court": {
             "type": "string"
           },
           "creators": {
-            "type": "array",
             "default": [],
             "items": {
-              "type": "object",
               "additionalProperties": false,
               "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "firstName": {
-                  "type": "string"
-                },
-                "lastName": {
-                  "type": "string"
-                },
                 "creatorType": {
                   "enum": [
                     "artist",
@@ -440,364 +539,76 @@
                     "wordsBy"
                   ]
                 },
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
                 "multi": {
                   "type": "object"
-                }
-              }
-            }
-          },
-          "multi": {
-            "type": "object"
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "additionalProperties": false,
-              "required": [
-                "tag"
-              ],
-              "properties": {
-                "tag": {
-                  "type": "string"
                 },
-                "type": {
-                  "type": "integer"
-                }
-              }
-            }
-          },
-          "notes": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "collections": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "pattern": "^coll:[0-9]+$"
-            }
-          },
-          "relations": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "attachments": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "additionalProperties": false,
-              "default": {},
-              "required": [
-                "title"
-              ],
-              "properties": {
-                "itemType": {
-                  "const": "attachment"
-                },
-                "title": {
-                  "type": "string"
-                },
-                "path": {
-                  "type": "string"
-                },
-                "tags": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "required": [
-                      "tag"
-                    ],
-                    "properties": {
-                      "tag": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "integer"
-                      }
-                    }
-                  }
-                },
-                "contentType": {
-                  "type": "string"
-                },
-                "url": {
-                  "type": "string"
-                },
-                "accessDate": {
-                  "type": "string"
-                },
-                "linkMode": {
-                  "type": "string"
-                },
-                "key": {
-                  "type": "string"
-                },
-                "uri": {
+                "name": {
                   "type": "string"
                 }
-              }
-            }
-          },
-          "title": {
-            "type": "string"
-          },
-          "abstractNote": {
-            "type": "string"
-          },
-          "medium": {
-            "type": "string"
-          },
-          "artworkSize": {
-            "type": "string"
-          },
-          "publicationTitle": {
-            "type": "string"
+              },
+              "type": "object"
+            },
+            "type": "array"
           },
           "date": {
             "type": "string"
           },
-          "language": {
-            "type": "string"
-          },
-          "shortTitle": {
-            "type": "string"
-          },
-          "archive": {
-            "type": "string"
-          },
-          "archiveLocation": {
-            "type": "string"
-          },
-          "libraryCatalog": {
-            "type": "string"
-          },
-          "callNumber": {
-            "type": "string"
-          },
-          "url": {
-            "type": "string"
-          },
-          "accessDate": {
-            "type": "string"
-          },
-          "rights": {
-            "type": "string"
-          },
-          "extra": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "seriesTitle": {
-            "type": "string"
-          },
-          "volume": {
-            "type": "string"
-          },
-          "numberOfVolumes": {
-            "type": "string"
-          },
-          "place": {
-            "type": "string"
-          },
-          "publisher": {
-            "type": "string"
-          },
-          "edition": {
-            "type": "string"
-          },
-          "opus": {
-            "type": "string"
-          },
-          "originalDate": {
-            "type": "string"
-          },
-          "runningTime": {
-            "type": "string"
-          },
-          "ISBN": {
-            "type": "string"
-          },
-          "number": {
-            "type": "string"
-          },
-          "code": {
-            "type": "string"
-          },
-          "section": {
-            "type": "string"
-          },
-          "pages": {
-            "type": "string"
-          },
-          "legislativeBody": {
-            "type": "string"
-          },
-          "session": {
-            "type": "string"
-          },
-          "history": {
-            "type": "string"
-          },
-          "jurisdiction": {
-            "type": "string"
-          },
-          "resolutionLabel": {
-            "type": "string"
-          },
-          "seriesNumber": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string"
-          },
-          "series": {
-            "type": "string"
-          },
-          "volumeTitle": {
-            "type": "string"
-          },
-          "numPages": {
-            "type": "string"
-          },
-          "court": {
-            "type": "string"
-          },
-          "reign": {
-            "type": "string"
-          },
-          "documentName": {
-            "type": "string"
-          },
-          "yearAsVolume": {
-            "type": "string"
-          },
-          "filingDate": {
-            "type": "string"
-          },
-          "publicationDate": {
-            "type": "string"
-          },
-          "supplementName": {
-            "type": "string"
-          },
-          "issue": {
-            "type": "string"
-          },
-          "versionNumber": {
-            "type": "string"
-          },
-          "system": {
-            "type": "string"
-          },
-          "programmingLanguage": {
-            "type": "string"
-          },
-          "conferenceDate": {
-            "type": "string"
-          },
-          "conferenceName": {
-            "type": "string"
-          },
-          "institution": {
-            "type": "string"
-          },
-          "DOI": {
-            "type": "string"
-          },
-          "codeNumber": {
-            "type": "string"
-          },
-          "regnalYear": {
-            "type": "string"
-          },
-          "meetingName": {
-            "type": "string"
-          },
-          "committee": {
-            "type": "string"
-          },
-          "meetingNumber": {
-            "type": "string"
-          },
-          "assemblyNumber": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string"
-          },
-          "seriesText": {
-            "type": "string"
-          },
-          "journalAbbreviation": {
-            "type": "string"
-          },
-          "ISSN": {
-            "type": "string"
-          },
-          "scale": {
-            "type": "string"
-          },
-          "newsCaseDate": {
-            "type": "string"
-          },
-          "genre": {
-            "type": "string"
-          },
-          "issuingAuthority": {
-            "type": "string"
-          },
-          "publicationNumber": {
-            "type": "string"
-          },
-          "applicationNumber": {
-            "type": "string"
-          },
-          "priorityNumbers": {
-            "type": "string"
-          },
-          "priorityDate": {
-            "type": "string"
-          },
-          "legalStatus": {
-            "type": "string"
-          },
-          "assignee": {
-            "type": "string"
-          },
-          "country": {
-            "type": "string"
-          },
-          "references": {
-            "type": "string"
-          },
-          "gazetteFlag": {
+          "dateAdded": {
             "type": "string"
           },
           "dateAmended": {
             "type": "string"
           },
-          "reporter": {
+          "dateModified": {
             "type": "string"
           },
-          "parentTreaty": {
+          "division": {
             "type": "string"
           },
-          "openingDate": {
+          "documentName": {
             "type": "string"
           },
-          "adoptionDate": {
+          "documentNumber": {
             "type": "string"
           },
-          "signingDate": {
+          "edition": {
             "type": "string"
+          },
+          "extra": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "filingDate": {
+            "type": "string"
+          },
+          "gazetteFlag": {
+            "type": "string"
+          },
+          "genre": {
+            "type": "string"
+          },
+          "history": {
+            "type": "string"
+          },
+          "institution": {
+            "type": "string"
+          },
+          "issue": {
+            "type": "string"
+          },
+          "issuingAuthority": {
+            "type": "string"
+          },
+          "itemID": {
+            "type": "integer"
           },
           "itemType": {
             "enum": [
@@ -845,52 +656,281 @@
               "webpage"
             ]
           },
-          "adminFlag": {
+          "journalAbbreviation": {
             "type": "string"
           },
-          "division": {
+          "jurisdiction": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          },
+          "legalStatus": {
+            "type": "string"
+          },
+          "legislativeBody": {
+            "type": "string"
+          },
+          "libraryCatalog": {
+            "type": "string"
+          },
+          "medium": {
+            "type": "string"
+          },
+          "meetingName": {
+            "type": "string"
+          },
+          "meetingNumber": {
+            "type": "string"
+          },
+          "multi": {
+            "type": "object"
+          },
+          "newsCaseDate": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          },
+          "notes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "numPages": {
+            "type": "string"
+          },
+          "number": {
+            "type": "string"
+          },
+          "numberOfVolumes": {
+            "type": "string"
+          },
+          "openingDate": {
+            "type": "string"
+          },
+          "opus": {
+            "type": "string"
+          },
+          "originalDate": {
+            "type": "string"
+          },
+          "pages": {
+            "type": "string"
+          },
+          "parentTreaty": {
+            "type": "string"
+          },
+          "place": {
+            "type": "string"
+          },
+          "priorityDate": {
+            "type": "string"
+          },
+          "priorityNumbers": {
+            "type": "string"
+          },
+          "programmingLanguage": {
+            "type": "string"
+          },
+          "publicationDate": {
+            "type": "string"
+          },
+          "publicationNumber": {
+            "type": "string"
+          },
+          "publicationTitle": {
+            "type": "string"
+          },
+          "publisher": {
+            "type": "string"
+          },
+          "references": {
+            "type": "string"
+          },
+          "regnalYear": {
+            "type": "string"
+          },
+          "reign": {
+            "type": "string"
+          },
+          "relations": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "reporter": {
+            "type": "string"
+          },
+          "resolutionLabel": {
+            "type": "string"
+          },
+          "rights": {
+            "type": "string"
+          },
+          "runningTime": {
+            "type": "string"
+          },
+          "scale": {
+            "type": "string"
+          },
+          "section": {
+            "type": "string"
+          },
+          "series": {
+            "type": "string"
+          },
+          "seriesNumber": {
+            "type": "string"
+          },
+          "seriesText": {
+            "type": "string"
+          },
+          "seriesTitle": {
+            "type": "string"
+          },
+          "session": {
+            "type": "string"
+          },
+          "shortTitle": {
+            "type": "string"
+          },
+          "signingDate": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "supplementName": {
+            "type": "string"
+          },
+          "system": {
+            "type": "string"
+          },
+          "tags": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "tag": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "tag"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "title": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "uri": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "versionNumber": {
+            "type": "string"
+          },
+          "volume": {
+            "type": "string"
+          },
+          "volumeTitle": {
+            "type": "string"
+          },
+          "yearAsVolume": {
             "type": "string"
           }
-        }
+        },
+        "type": "object"
       },
       "properties": {
+        "attachments": {
+          "items": {
+            "additionalProperties": false,
+            "default": {},
+            "properties": {
+              "accessDate": {
+                "type": "string"
+              },
+              "contentType": {
+                "type": "string"
+              },
+              "itemType": {
+                "const": "attachment"
+              },
+              "key": {
+                "type": "string"
+              },
+              "linkMode": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "tags": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "tag": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "tag"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "title": {
+                "type": "string"
+              },
+              "uri": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "title"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
         "citationKey": {
           "type": "string"
         },
-        "itemID": {
-          "type": "integer"
-        },
-        "key": {
-          "type": "string"
-        },
-        "dateAdded": {
-          "type": "string"
-        },
-        "dateModified": {
-          "type": "string"
-        },
-        "uri": {
-          "type": "string"
-        },
-        "note": {
-          "type": "string"
+        "collections": {
+          "items": {
+            "pattern": "^coll:[0-9]+$",
+            "type": "string"
+          },
+          "type": "array"
         },
         "creators": {
-          "type": "array",
           "default": [],
           "items": {
-            "type": "object",
             "additionalProperties": false,
             "properties": {
-              "name": {
-                "type": "string"
-              },
-              "firstName": {
-                "type": "string"
-              },
-              "lastName": {
-                "type": "string"
-              },
               "creatorType": {
                 "enum": [
                   "artist",
@@ -925,23 +965,56 @@
                   "wordsBy"
                 ]
               },
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              },
               "multi": {
                 "type": "object"
+              },
+              "name": {
+                "type": "string"
               }
-            }
-          }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "dateAdded": {
+          "type": "string"
+        },
+        "dateModified": {
+          "type": "string"
+        },
+        "itemID": {
+          "type": "integer"
+        },
+        "key": {
+          "type": "string"
         },
         "multi": {
           "type": "object"
         },
-        "tags": {
-          "type": "array",
+        "note": {
+          "type": "string"
+        },
+        "notes": {
           "items": {
-            "type": "object",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "relations": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "tags": {
+          "items": {
             "additionalProperties": false,
-            "required": [
-              "tag"
-            ],
             "properties": {
               "tag": {
                 "type": "string"
@@ -949,87 +1022,25 @@
               "type": {
                 "type": "integer"
               }
-            }
-          }
-        },
-        "notes": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "collections": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "pattern": "^coll:[0-9]+$"
-          }
-        },
-        "relations": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "attachments": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "additionalProperties": false,
-            "default": {},
+            },
             "required": [
-              "title"
+              "tag"
             ],
-            "properties": {
-              "itemType": {
-                "const": "attachment"
-              },
-              "title": {
-                "type": "string"
-              },
-              "path": {
-                "type": "string"
-              },
-              "tags": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "additionalProperties": false,
-                  "required": [
-                    "tag"
-                  ],
-                  "properties": {
-                    "tag": {
-                      "type": "string"
-                    },
-                    "type": {
-                      "type": "integer"
-                    }
-                  }
-                }
-              },
-              "contentType": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              },
-              "accessDate": {
-                "type": "string"
-              },
-              "linkMode": {
-                "type": "string"
-              },
-              "key": {
-                "type": "string"
-              },
-              "uri": {
-                "type": "string"
-              }
-            }
-          }
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "uri": {
+          "type": "string"
         }
-      }
+      },
+      "type": "array"
     }
-  }
+  },
+  "required": [
+    "config",
+    "items"
+  ],
+  "title": "BBT JSON format",
+  "type": "object"
 }

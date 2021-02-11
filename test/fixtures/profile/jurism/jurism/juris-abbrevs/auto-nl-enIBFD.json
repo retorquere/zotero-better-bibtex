@@ -1,0 +1,213 @@
+{
+  "filename": "auto-nl-enIBFD.json",
+  "name": "Netherlands",
+  "version": "2020-10-30 01:03:27 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "NL": "Netherlands",
+        "NL:AMSTERDAM": "A",
+        "NL:AMSTERDAM:AMSTERDAM": "A",
+        "NL:AMSTERDAM:HAARLEM": "Haarlem",
+        "NL:AMSTERDAM:ALKMAAR": "Alkmaar",
+        "NL:UTRECHT": "Utrecht",
+        "NL:AMSTERDAM:NOORD.HOLLAND": "NH",
+        "NL:ARNHEM": "Arnhem",
+        "NL:ARNHEM:ARNHEM": "Arnhem",
+        "NL:ARNHEM:ZWOLLE": "Zwolle",
+        "NL:ARNHEM:ALMELO": "Almelo",
+        "NL:ARNHEM:ZUTPHEN": "Zutphen",
+        "NL:LEEUWARDEN": "Leeuwarden",
+        "NL:LEEUWARDEN:LEEUWARDEN": "Leeuwarden",
+        "NL:LEEUWARDEN:GRONINGEN": "Groningen",
+        "NL:LEEUWARDEN:ASSEN": "Assen",
+        "NL:ARNHEM.LEEUWARDEN": "A-L",
+        "NL:ARNHEM.LEEUWARDEN:GELDERLAND": "GLD",
+        "NL:ARNHEM.LEEUWARDEN:MIDDEN.NEDERLAND": "MN",
+        "NL:ARNHEM.LEEUWARDEN:NOORD.NEDERLAND": "NN",
+        "NL:ARNHEM.LEEUWARDEN:OVERIJSSEL": "OV",
+        "NL:GRAVENHAGE": "DH",
+        "NL:GRAVENHAGE:GRAVENHAGE": "DH",
+        "NL:GRAVENHAGE:ROTTERDAM": "R.",
+        "NL:GRAVENHAGE:DORDRECHT": "Dordrecht",
+        "NL:HERTOGENBOSCH": "DB",
+        "NL:HERTOGENBOSCH:HERTOGENBOSCH": "Den Bosch",
+        "NL:HERTOGENBOSCH:BREDA": "Breda",
+        "NL:HERTOGENBOSCH:ROERMOND": "Roermond",
+        "NL:HERTOGENBOSCH:MAASTRICHT": "Maastricht",
+        "NL:HERTOGENBOSCH:LIMBURG": "L",
+        "NL:HERTOGENBOSCH:OOST.BRABANT": "OB",
+        "NL:HERTOGENBOSCH:ZEELAND-WEST-BRABANT": "ZWB"
+      }
+    },
+    "nl": {
+      "institution-part": {
+        "hoge": "HR [Supreme Court]",
+        "rekenkamer": "Rekenkamer",
+        "centrale.beroep": "CRB [Central Board of Appeal]",
+        "college.beroep.bedrijfsleven": "CBb",
+        "raad.state": "RvS [Council of State]"
+      }
+    },
+    "nl:amsterdam": {
+      "institution-part": {
+        "gerechtshof": "Hof A [Court of Appeal]"
+      }
+    },
+    "nl:amsterdam:amsterdam": {
+      "institution-part": {
+        "rechtbank": "Rb A [District Court]"
+      }
+    },
+    "nl:amsterdam:haarlem": {
+      "institution-part": {
+        "rechtbank": "Rb Haarlem [District Court]"
+      }
+    },
+    "nl:amsterdam:alkmaar": {
+      "institution-part": {
+        "rechtbank": "Rb Alkmaar [District Court]"
+      }
+    },
+    "nl:utrecht": {
+      "institution-part": {
+        "rechtbank": "Rb Utrecht [District Court]"
+      }
+    },
+    "nl:amsterdam:noord.holland": {
+      "institution-part": {
+        "rechtbank": "Rb NH [District Court]"
+      }
+    },
+    "nl:arnhem": {
+      "institution-part": {
+        "gerechtshof": "Hof Arnhem [Court of Appeal]"
+      }
+    },
+    "nl:arnhem:arnhem": {
+      "institution-part": {
+        "rechtbank": "Rb Arnhem [District Court]"
+      }
+    },
+    "nl:arnhem:zwolle": {
+      "institution-part": {
+        "rechtbank": "Rb Zwolle [District Court]"
+      }
+    },
+    "nl:arnhem:almelo": {
+      "institution-part": {
+        "rechtbank": "Rb Almelo [District Court]"
+      }
+    },
+    "nl:arnhem:zutphen": {
+      "institution-part": {
+        "rechtbank": "Rb Zutphen [District Court]"
+      }
+    },
+    "nl:leeuwarden": {
+      "institution-part": {
+        "gerechtshof": "Hof Leeuwarden [Court of Appeal]"
+      }
+    },
+    "nl:leeuwarden:leeuwarden": {
+      "institution-part": {
+        "rechtbank": "Rb Leeuwarden [District Court]"
+      }
+    },
+    "nl:leeuwarden:groningen": {
+      "institution-part": {
+        "rechtbank": "Rb Groningen [District Court]"
+      }
+    },
+    "nl:leeuwarden:assen": {
+      "institution-part": {
+        "rechtbank": "Rb Assen [District Court]"
+      }
+    },
+    "nl:arnhem.leeuwarden": {
+      "institution-part": {
+        "gerechtshof": "Hof A-L [Court of Appeal]"
+      }
+    },
+    "nl:arnhem.leeuwarden:gelderland": {
+      "institution-part": {
+        "rechtbank": "Rb GLD [District Court]"
+      }
+    },
+    "nl:arnhem.leeuwarden:midden.nederland": {
+      "institution-part": {
+        "rechtbank": "Rb MN [District Court]"
+      }
+    },
+    "nl:arnhem.leeuwarden:noord.nederland": {
+      "institution-part": {
+        "rechtbank": "Rb NN [District Court]"
+      }
+    },
+    "nl:arnhem.leeuwarden:overijssel": {
+      "institution-part": {
+        "rechtbank": "Rb OV [District Court]"
+      }
+    },
+    "nl:gravenhage": {
+      "institution-part": {
+        "gerechtshof": "Hof DH [Court of Appeal]"
+      }
+    },
+    "nl:gravenhage:gravenhage": {
+      "institution-part": {
+        "rechtbank": "Rb DH [District Court]"
+      }
+    },
+    "nl:gravenhage:rotterdam": {
+      "institution-part": {
+        "rechtbank": "Rb R. [District Court]"
+      }
+    },
+    "nl:gravenhage:dordrecht": {
+      "institution-part": {
+        "rechtbank": "Rb Dordrecht [District Court]"
+      }
+    },
+    "nl:hertogenbosch": {
+      "institution-part": {
+        "gerechtshof": "Hof DB [Court of Appeal]"
+      }
+    },
+    "nl:hertogenbosch:hertogenbosch": {
+      "institution-part": {
+        "rechtbank": "Rb Den Bosch [District Court]"
+      }
+    },
+    "nl:hertogenbosch:breda": {
+      "institution-part": {
+        "rechtbank": "Rb Breda [District Court]"
+      }
+    },
+    "nl:hertogenbosch:roermond": {
+      "institution-part": {
+        "rechtbank": "Rb Roermond [District Court]"
+      }
+    },
+    "nl:hertogenbosch:maastricht": {
+      "institution-part": {
+        "rechtbank": "Rb Maastricht [District Court]"
+      }
+    },
+    "nl:hertogenbosch:limburg": {
+      "institution-part": {
+        "rechtbank": "Rb L [District Court]"
+      }
+    },
+    "nl:hertogenbosch:oost.brabant": {
+      "institution-part": {
+        "rechtbank": "Rb OB [District Court]"
+      }
+    },
+    "nl:hertogenbosch:zeeland-west-brabant": {
+      "institution-part": {
+        "rechtbank": "Rb ZWB [District Court]"
+      }
+    }
+  }
+}

@@ -7,6 +7,10 @@ Scenario Outline: Export <references> references for BibLaTeX to <file>
 
   Examples:
      | file                                                                                           | references  |
+     | biber 2.14 rejects the date field generated from Better BibLaTex #1695                         | 1           |
+     | type dataset exported as @data instead of @dataset for BibLaTeX #1720                          | 1           |
+     | google-scholar like references #1705                                                           | 2           |
+     | Book Title exports to Journaltitle for Biblatex @incollection reference type #1691             | 2           |
      | When exporting notes, also handle the blockquote tag #1656                                     | 1           |
      | Entries with URL exported with (partial) URL in eprint field #1639                             | 2           |
      | error during export: duplicate field note #1636                                                | 1           |
@@ -138,6 +142,7 @@ Scenario Outline: Export <references> references for BibTeX to <file>
 
   Examples:
      | file                                                                               | references |
+     | url field is having its special characters escaped in BBT Bibtex #1716             | 1          |
      | Match against @string value for export #1597                                       | 1          |
      | BibTeX journal article QR reports missing field number #1589                       | 2          |
      | Format disambiguations #1554                                                       | 2          |
@@ -207,6 +212,11 @@ Scenario: Omit URL export when DOI present. #131
   And I set preference .DOIandURL to url
   Then an export using "Better BibLaTeX" should match "export/*.prefer-url.biblatex"
 
+Scenario: Changing item type for only BibLaTeX does not work #1694
+  When I import 1 reference from "export/*.json"
+  Then an export using "Better BibTeX" should match "export/*.bibtex"
+  Then an export using "Better BibLaTeX" should match "export/*.biblatex"
+
 @438 @bbt
 Scenario: BibTeX name escaping has a million inconsistencies #438
   When I import 2 references from "export/*.json"
@@ -231,7 +241,7 @@ Scenario: Citekey generation failure #708 and sort references on export #957
 @117
 Scenario: Bibtex key regenerating issue when trashing items #117
   When I import 1 reference from "export/*.json"
-  And I select the first item where publicationTitle = "Genetics"
+  And I select the item with a field that contains "Genetics"
   And I remove the selected item
   And I import 1 reference from "export/*.json" into "Second Import.json"
   Then an export using "Better BibLaTeX" should match "export/*.biblatex"
@@ -282,7 +292,7 @@ Scenario: bibtex; url export does not survive underscores #402
 @110 @111
 Scenario: two ISSN number are freezing browser #110 + Generating keys and export broken #111
   When I import 1 reference from "export/*.json"
-  And I select the first item where publicationTitle = "Genetics"
+  And I select the item with a field that contains "Genetics"
   And I unpin the citation key
   And I refresh the citation key
   Then an export using "Better BibLaTeX" should match "export/*.biblatex"
@@ -443,7 +453,7 @@ Scenario: auto-export
   And I set preference .jabrefFormat to 3
   Then an auto-export to "/tmp/autoexport.bib" using "Better BibLaTeX" should match "export/*.before.biblatex"
   And an auto-export of "/auto-export" to "/tmp/autoexport.coll.bib" using "Better BibLaTeX" should match "export/*.before.coll.biblatex"
-  When I select the first item where publisher = "IEEE"
+  When I select the item with a field that is "IEEE"
   And I remove the selected item
   And I wait 10 seconds
   Then "/tmp/autoexport.bib" should match "export/*.after.biblatex"

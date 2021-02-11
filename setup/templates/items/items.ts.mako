@@ -1,6 +1,7 @@
-declare const Zotero: any
+/* eslint-disable id-blacklist, @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types */
 
 import { client } from '../../content/client'
+import { ZoteroTranslator } from '../typings/serialized-item'
 const jurism = client === 'jurism'
 const zotero = !jurism
 
@@ -57,7 +58,7 @@ export const label: Record<string, string> = {
 %endfor
 }
 
-function unalias(item) {
+function unalias(item: any) {
   delete item.inPublications
   let v
   %for client, indent in [('both', ''), ('zotero', '  '), ('jurism', '  ')]:
@@ -84,7 +85,7 @@ function unalias(item) {
 }
 
 // import & export translators expect different creator formats... nice
-export function simplifyForExport(item, dropAttachments = false) {
+export function simplifyForExport(item: any, dropAttachments = false): ZoteroTranslator.Item {
   unalias(item)
 
   if (item.filingDate) item.filingDate = item.filingDate.replace(/^0000-00-00 /, '')
@@ -103,15 +104,15 @@ export function simplifyForExport(item, dropAttachments = false) {
   if (item.itemType === 'attachment' || item.itemType === 'note') {
     delete item.attachments
     delete item.notes
-  } else {
+  }
+  else {
     item.attachments = (!dropAttachments && item.attachments) || []
-    item.notes = item.notes ? item.notes.map(note =>  note.note || note ) : []
   }
 
-  return item
+  return (item as ZoteroTranslator.Item)
 }
 
-export function simplifyForImport(item) {
+export function simplifyForImport(item: any): ZoteroTranslator.Item {
   unalias(item)
 
   if (item.creators) {
@@ -128,5 +129,5 @@ export function simplifyForImport(item) {
 
   if (!jurism) delete item.multi
 
-  return item
+  return (item as ZoteroTranslator.Item)
 }

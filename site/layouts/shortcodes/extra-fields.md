@@ -4,6 +4,7 @@
 |**admin flag**              |text|adminFlag¹                                                  |admin-flag¹             |
 |**adoption date**           |date|adoptionDate¹                                               |                        |
 |**application number**      |text|applicationNumber                                           |                        |
+|**archive collection**      |text|archiveCollection¹                                          |archive\_collection¹    |
 |**archive location**        |text|archiveLocation                                             |archive\_location       |
 |**archive place**           |text|                                                            |archive-place           |
 |**artwork medium**          |text|medium                                                      |                        |
@@ -14,6 +15,7 @@
 |**audio recording format**  |text|medium                                                      |                        |
 |**bill number**             |text|number                                                      |number                  |
 |**blog title**              |text|publicationTitle                                            |                        |
+|**book abbreviation**       |text|journalAbbreviation                                         |container-title-short   |
 |**book author**             |name|bookAuthor                                                  |container-author        |
 |**book title**              |text|publicationTitle                                            |                        |
 |**call number**             |text|callNumber                                                  |call-number             |
@@ -38,7 +40,7 @@
 |**dictionary title**        |text|publicationTitle                                            |                        |
 |**docket number**           |text|number                                                      |number                  |
 |**document name**           |text|documentName¹                                               |document-name¹          |
-|**document number**         |text|number                                                      |number                  |
+|**document number**         |text|documentNumber¹ / number                                    |document-number¹        |
 |**editorial director**      |name|                                                            |editorial-director      |
 |**encyclopedia title**      |text|publicationTitle                                            |                        |
 |**episode number**          |text|number                                                      |number                  |

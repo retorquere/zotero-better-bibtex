@@ -28,6 +28,41 @@
       "title": "Modellierung niederfrequenter Schwingungen in einem elektrischen Energienetz"
     },
     {
+      "ISBN": "978-0-13-014400-3",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Douglas Brent",
+          "lastName": "West"
+        }
+      ],
+      "date": "22.08.2000",
+      "edition": "2",
+      "itemID": 4,
+      "itemType": "book",
+      "numPages": "470",
+      "publisher": "Prentice Hall",
+      "title": "Introduction to Graph Theory"
+    },
+    {
+      "DOI": "10.1002/eej.4391150705",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Tsutomu",
+          "lastName": "Michigami"
+        }
+      ],
+      "date": "1995.12",
+      "issue": "7",
+      "itemID": 3,
+      "itemType": "journalArticle",
+      "pages": "49 - 68",
+      "publicationTitle": "Electrical Engineering in Japan",
+      "title": "Development of a new two-input PSS to control low-frequency oscillation in interconnecting power systems and the study of a low-frequency oscillation model",
+      "volume": "115"
+    },
+    {
       "creators": [
         {
           "creatorType": "author",
@@ -68,41 +103,6 @@
       "publisher": "Technische Universit\u00e4t Dortmund",
       "title": "Stability Analysis and Clustering of Electrical Transmission Systems",
       "url": "http://dx.doi.org/10.17877/DE290R-13190"
-    },
-    {
-      "DOI": "10.1002/eej.4391150705",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Tsutomu",
-          "lastName": "Michigami"
-        }
-      ],
-      "date": "1995.12",
-      "issue": "7",
-      "itemID": 3,
-      "itemType": "journalArticle",
-      "pages": "49 - 68",
-      "publicationTitle": "Electrical Engineering in Japan",
-      "title": "Development of a new two-input PSS to control low-frequency oscillation in interconnecting power systems and the study of a low-frequency oscillation model",
-      "volume": "115"
-    },
-    {
-      "ISBN": "978-0-13-014400-3",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Douglas Brent",
-          "lastName": "West"
-        }
-      ],
-      "date": "22.08.2000",
-      "edition": "2",
-      "itemID": 4,
-      "itemType": "book",
-      "numPages": "470",
-      "publisher": "Prentice Hall",
-      "title": "Introduction to Graph Theory"
     }
   ]
 }

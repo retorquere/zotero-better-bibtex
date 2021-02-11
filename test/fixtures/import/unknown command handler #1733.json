@@ -1,0 +1,69 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "dmy",
+    "options": {},
+    "preferences": {
+      "citekeyFormat": "[auth][year]",
+      "importUnknownTexCommand": "tex"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1051/0004-6361:20040307",
+      "citationKey": "2004A&A...424..927C",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "F.",
+          "lastName": "Caputo"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "V.",
+          "lastName": "Castellani"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "S.",
+          "lastName": "Degl'Innocenti"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "G.",
+          "lastName": "Fiorentino"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Marconi"
+        }
+      ],
+      "date": "2004-09",
+      "extra": [
+        "Citation Key: 2004A&A...424..927C",
+        "arXiv: astro-ph/0405395 [astro-ph]",
+        "tex.adsnote: Provided by the SAO/NASA Astrophysics Data System",
+        "tex.adsurl: https://ui.adsabs.harvard.edu/abs/2004A&A...424..927C"
+      ],
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "pages": "927-934",
+      "publicationTitle": "<script>\\aap</script>",
+      "tags": [
+        {
+          "tag": "Astrophysics"
+        },
+        {
+          "tag": "stars: evolution"
+        },
+        {
+          "tag": "stars: variables: Cepheids"
+        }
+      ],
+      "title": "Bright metal-poor variables: Why \u201cAnomalous\u201d cepheids?",
+      "volume": "424"
+    }
+  ]
+}

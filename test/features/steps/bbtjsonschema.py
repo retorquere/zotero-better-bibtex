@@ -66,7 +66,7 @@ def refresh():
   schema.properties['items']['items'].properties.itemType = { 'enum': sorted(list(itemTypes)) }
 
   with open(baseline, 'w') as f:
-    json.dump(schema, f, indent='  ')
+    json.dump(schema, f, sort_keys=True, indent='  ')
 
   return Munch.toDict(schema)
 

@@ -3,10 +3,10 @@
   title = {Blockchain Africa Conference 2019 Was a Success},
   author = {Beckford, Neil},
   date = {2019-04-10},
-  journaltitle = {Cryptoline news},
   url = {www.cryptolinenews.com/industry-analysis/blockchain-africa-conference-2019},
   urldate = {2019-04-10},
-  langid = {english}
+  langid = {english},
+  organization = {Cryptoline news}
 }
 
 

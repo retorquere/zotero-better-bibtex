@@ -1,0 +1,2317 @@
+{
+  "filename": "auto-pl-enIBFD.json",
+  "name": "Poland",
+  "version": "2020-10-30 01:03:27 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "PL": "Poland",
+        "PL:BIALYSTOK": "w Białymstoku",
+        "PL:BIALYSTOK:BIALYSTOK": "w Białymstoku",
+        "PL:BIALYSTOK:BIALYSTOK:BIALYSTOK": "w Białymstoku",
+        "PL:BIALYSTOK:BIALYSTOK:BIELSKO.PODLASKI": "w Bielsku Podlaskim",
+        "PL:BIALYSTOK:BIALYSTOK:SOKOLKA": "w Sokółce",
+        "PL:BIALYSTOK:LOMZA": "w Łomży",
+        "PL:BIALYSTOK:LOMZA:GRAJEWO": "w Grajewie",
+        "PL:BIALYSTOK:LOMZA:LOMZA": "w Łomży",
+        "PL:BIALYSTOK:LOMZA:WYSOKIE.MAZOWIECKIE": "w Wysokiem Mazowieckiem",
+        "PL:BIALYSTOK:LOMZA:ZAMBROW": "w Zambrowie",
+        "PL:BIALYSTOK:OLSZTYN": "w Olsztynie",
+        "PL:BIALYSTOK:OLSZTYN:BARTOSZYCE": "w Bartoszycach",
+        "PL:BIALYSTOK:OLSZTYN:BISKUPIEC": "w Biskupcu",
+        "PL:BIALYSTOK:OLSZTYN:GIZYCKO": "w Giżycku",
+        "PL:BIALYSTOK:OLSZTYN:KETRZYN": "w Kętrzynie",
+        "PL:BIALYSTOK:OLSZTYN:LIDZBARK.WARMINSKI": "w Lidzbarku Warmińskim",
+        "PL:BIALYSTOK:OLSZTYN:MRAGOWO": "w Mrągowie",
+        "PL:BIALYSTOK:OLSZTYN:NIDZICA": "w Nidzicy",
+        "PL:BIALYSTOK:OLSZTYN:OLSZTYN": "w Olsztynie",
+        "PL:BIALYSTOK:OLSZTYN:PISZ": "w Piszu",
+        "PL:BIALYSTOK:OLSZTYN:SZCZYTNO": "w Szczytnie",
+        "PL:BIALYSTOK:OSTROLEKA": "w Ostrołęce",
+        "PL:BIALYSTOK:OSTROLEKA:OSTROLEKA": "w Ostrołęce",
+        "PL:BIALYSTOK:OSTROLEKA:OSTROW.MAZOWIECKA": "w Ostrowi Mazowieckiej",
+        "PL:BIALYSTOK:OSTROLEKA:PRZASNYSZ": "w Przasnyszu",
+        "PL:BIALYSTOK:OSTROLEKA:PULTUSK": "w Pułtusku",
+        "PL:BIALYSTOK:OSTROLEKA:WYSZKOW": "w Wyszkowie",
+        "PL:BIALYSTOK:SUWALKI": "w Suwałkach",
+        "PL:BIALYSTOK:SUWALKI:AUGUSTOW": "w Augustowie",
+        "PL:BIALYSTOK:SUWALKI:ELK": "w Ełku",
+        "PL:BIALYSTOK:SUWALKI:OLECKO": "w Olecku",
+        "PL:BIALYSTOK:SUWALKI:SUWALKI": "w Suwałkach",
+        "PL:BYDGOSZCZ": "w Bydgoszczy",
+        "PL:GDANSK": "w Gdańsku",
+        "PL:GDANSK:BYDGOSZCZ": "w Bydgoszczy",
+        "PL:GDANSK:BYDGOSZCZ:BYDGOSZCZ": "w Bydgoszczy",
+        "PL:GDANSK:BYDGOSZCZ:INOWROCLAW": "w Inowrocławiu",
+        "PL:GDANSK:BYDGOSZCZ:MOGILNO": "w Mogilnie",
+        "PL:GDANSK:BYDGOSZCZ:NAKLO.NAD.NOTECIA": "w Nakle nad Notecią",
+        "PL:GDANSK:BYDGOSZCZ:SWIECIE": "w Świeciu",
+        "PL:GDANSK:BYDGOSZCZ:SZUBINIE": "w Szubinie",
+        "PL:GDANSK:BYDGOSZCZ:TUCHOLI": "w Tucholi",
+        "PL:GDANSK:BYDGOSZCZ:ZNINIE": "w Żninie",
+        "PL:GDANSK:ELBLAG": "w Elblągu",
+        "PL:GDANSK:ELBLAG:BRANIEWO": "w Braniewie",
+        "PL:GDANSK:ELBLAG:DZIALDOWO": "w Działdowie",
+        "PL:GDANSK:ELBLAG:ELBLAG": "w Elblągu",
+        "PL:GDANSK:ELBLAG:ILAWA": "w Iławie",
+        "PL:GDANSK:ELBLAG:NOWE.MIASTO.LUBAWSKIE": "w Nowym Mieście Lubawskim",
+        "PL:GDANSK:ELBLAG:OSTRODA": "w Ostródzie",
+        "PL:GDANSK:GDANSK": "w Gdańsku",
+        "PL:GDANSK:GDANSK:GDANSK": "w Gdańsku",
+        "PL:GDANSK:GDANSK:GDYNIA": "w Gdyni",
+        "PL:GDANSK:GDANSK:KARTUZY": "w Kartuzach",
+        "PL:GDANSK:GDANSK:KOSCIERZYNA": "w Kościerzynie",
+        "PL:GDANSK:GDANSK:KWIDZYN": "w Kwidzynie",
+        "PL:GDANSK:GDANSK:MALBORK": "w Malborku",
+        "PL:GDANSK:GDANSK:POLNOC": "Gdańsk-Północ w Gdańsku",
+        "PL:GDANSK:GDANSK:POLUDNIE": "Gdańsk-Południe w Gdańsku",
+        "PL:GDANSK:GDANSK:SOPOT": "w Sopocie",
+        "PL:GDANSK:GDANSK:STAROGARD.GDANSKI": "w Starogardzie Gdańskim",
+        "PL:GDANSK:GDANSK:TCZEW": "w Tczewie",
+        "PL:GDANSK:GDANSK:WEJHEROWO": "w Wejherowie",
+        "PL:GDANSK:SLUPSK": "w Słupsku",
+        "PL:GDANSK:SLUPSK:BYTOW": "w Bytowie",
+        "PL:GDANSK:SLUPSK:CHOJNICE": "w Chojnicach",
+        "PL:GDANSK:SLUPSK:CZLUCHOW": "w Człuchowie",
+        "PL:GDANSK:SLUPSK:LEBORK": "w Lęborku",
+        "PL:GDANSK:SLUPSK:MIASTKO": "w Miastku",
+        "PL:GDANSK:SLUPSK:SLUPSK": "w Słupsku",
+        "PL:GDANSK:TORUN": "w Toruniu",
+        "PL:GDANSK:TORUN:BRODNICA": "w Brodnicy",
+        "PL:GDANSK:TORUN:CHELMNO": "w Chełmnie",
+        "PL:GDANSK:TORUN:GOLUB.DOBRZYN": "w Golubiu-Dobrzyniu",
+        "PL:GDANSK:TORUN:GRUDZIADZ": "w Grudziądzu",
+        "PL:GDANSK:TORUN:TORUN": "w Toruniu",
+        "PL:GDANSK:TORUN:WABRZEZNO": "w Wąbrzeźnie",
+        "PL:GDANSK:WLOCLAWEK": "we Włocławku",
+        "PL:GDANSK:WLOCLAWEK:ALEKSANDROW.KUJAWSKI": "w Aleksandrowie Kujawskim",
+        "PL:GDANSK:WLOCLAWEK:LIPNO": "w Lipnie",
+        "PL:GDANSK:WLOCLAWEK:RADZIEJOW": "w Radziejowie",
+        "PL:GDANSK:WLOCLAWEK:RYPIN": "w Rypinie",
+        "PL:GDANSK:WLOCLAWEK:WLOCLAWEK": "we Włocławku",
+        "PL:GLIWICE": "w Gliwicach",
+        "PL:GORZOW.WIELKOPOLSKI": "w Gorzowie Wielkopolskim",
+        "PL:KATOWICE": "w Katowicach",
+        "PL:KATOWICE:BIELSKO.BIALA": "w Bielsku-Białej",
+        "PL:KATOWICE:BIELSKO.BIALA:BIELSKO.BIALA": "w Bielsku-Białej",
+        "PL:KATOWICE:BIELSKO.BIALA:CIESZYN": "w Cieszynie",
+        "PL:KATOWICE:BIELSKO.BIALA:ZYWIEC": "w Żywcu",
+        "PL:KATOWICE:CZESTOCHOWA": "w Częstochowie",
+        "PL:KATOWICE:CZESTOCHOWA:CZESTOCHOWA": "w Częstochowie",
+        "PL:KATOWICE:CZESTOCHOWA:LUBLINIEC": "w Lublińcu",
+        "PL:KATOWICE:CZESTOCHOWA:MYSZKOW": "w Myszkowie",
+        "PL:KATOWICE:CZESTOCHOWA:ZAWIERCIE": "w Zawierciu",
+        "PL:KATOWICE:GLIWICE": "w Gliwicach",
+        "PL:KATOWICE:GLIWICE:GLIWICE": "w Gliwicach",
+        "PL:KATOWICE:GLIWICE:JASTRZEBIE.ZDROJ": "w Jastrzębiu-Zdroju",
+        "PL:KATOWICE:GLIWICE:RACIBORZ": "w Raciborzu",
+        "PL:KATOWICE:GLIWICE:RUDA.SLASKA": "w Rudzie Śląskiej",
+        "PL:KATOWICE:GLIWICE:RYBNIK": "w Rybniku",
+        "PL:KATOWICE:GLIWICE:TARNOWSKIE.GORY": "w Tarnowskich Górach",
+        "PL:KATOWICE:GLIWICE:WODZISLAW.SLASKI": "w Wodzisławiu Śląskim",
+        "PL:KATOWICE:GLIWICE:ZABRZE": "w Zabrzu",
+        "PL:KATOWICE:GLIWICE:ZORY": "w Żorach",
+        "PL:KATOWICE:KATOWICE": "w Katowicach",
+        "PL:KATOWICE:KATOWICE:BEDZIN": "w Będzinie",
+        "PL:KATOWICE:KATOWICE:BYTOM": "w Bytomiu",
+        "PL:KATOWICE:KATOWICE:CHORZOW": "w Chorzowie",
+        "PL:KATOWICE:KATOWICE:DABROWA.GORNICZA": "w Dąbrowie Górniczej",
+        "PL:KATOWICE:KATOWICE:JAWORZNO": "w Jaworznie",
+        "PL:KATOWICE:KATOWICE:MIKOLOW": "w Mikołowie",
+        "PL:KATOWICE:KATOWICE:MYSLOWICE": "w Mysłowicach",
+        "PL:KATOWICE:KATOWICE:PSZCZYNA": "w Pszczynie",
+        "PL:KATOWICE:KATOWICE:SIEMIANOWICE.SLASKIE": "w Siemianowicach Śląskich",
+        "PL:KATOWICE:KATOWICE:SOSNOWIEC": "w Sosnowcu",
+        "PL:KATOWICE:KATOWICE:TYCHY": "w Tychach",
+        "PL:KATOWICE:KATOWICE:WSCHOD.KATOWICE": "Katowice-Wschód w Katowicach",
+        "PL:KATOWICE:KATOWICE:ZACHOD.KATOWICE": "Katowice-Zachód w Katowicach",
+        "PL:KIELCE": "w Kielcach",
+        "PL:KRAKOW": "w Krakowie",
+        "PL:KRAKOW:KIELCE": "w Kielcach",
+        "PL:KRAKOW:KIELCE:BUSKU.ZDROJ": "w Busku-Zdroju",
+        "PL:KRAKOW:KIELCE:JEDRZEJOW": "w Jędrzejowie",
+        "PL:KRAKOW:KIELCE:KIELCE": "w Kielcach",
+        "PL:KRAKOW:KIELCE:KONSKIE": "w Końskich",
+        "PL:KRAKOW:KIELCE:OPATOW": "w Opatowie",
+        "PL:KRAKOW:KIELCE:OSTROWIEC.SWIETOKRZYSKI": "w Ostrowcu Świętokrzyskim",
+        "PL:KRAKOW:KIELCE:PINCZOW": "w Pińczowie",
+        "PL:KRAKOW:KIELCE:SANDOMIERZ": "w Sandomierzu",
+        "PL:KRAKOW:KIELCE:SKARZYSKO.KAMIENNA": "w Skarżysku-Kamiennej",
+        "PL:KRAKOW:KIELCE:STARACHOWICE": "w Starachowicach",
+        "PL:KRAKOW:KIELCE:STASZOW": "w Staszowie",
+        "PL:KRAKOW:KIELCE:WLOSZCZOW": "we Włoszczowie",
+        "PL:KRAKOW:KRAKOW": "w Krakowie",
+        "PL:KRAKOW:KRAKOW:CHRZANOW": "w Chrzanowie",
+        "PL:KRAKOW:KRAKOW:KROWODRZA": "dla Krakowa-Krowodrzy w Krakowie",
+        "PL:KRAKOW:KRAKOW:MIECHOW": "w Miechowie",
+        "PL:KRAKOW:KRAKOW:MYSLENICE": "w Myślenicach",
+        "PL:KRAKOW:KRAKOW:NOWA.HUTA": "dla Krakowa-Nowej Huty w Krakowie",
+        "PL:KRAKOW:KRAKOW:OLKUSZ": "w Olkuszu",
+        "PL:KRAKOW:KRAKOW:OSWIECIM": "w Oświęcimiu",
+        "PL:KRAKOW:KRAKOW:PODGORZE": "dla Krakowa-Podgórza w Krakowie",
+        "PL:KRAKOW:KRAKOW:SRODMIESCIE": "dla Krakowa-Śródmieścia w Krakowie",
+        "PL:KRAKOW:KRAKOW:SUCHA.BESKIDZKA": "w Suchej Beskidzkiej",
+        "PL:KRAKOW:KRAKOW:WADOWICE": "w Wadowicach",
+        "PL:KRAKOW:KRAKOW:WIELICZKA": "w Wieliczce",
+        "PL:KRAKOW:NOWY.SACZ": "w Nowym Sączu",
+        "PL:KRAKOW:NOWY.SACZ:GORLICE": "w Gorlicach",
+        "PL:KRAKOW:NOWY.SACZ:LIMANOWA": "w Limanowej",
+        "PL:KRAKOW:NOWY.SACZ:NOWY.SACZ": "w Nowym Sączu",
+        "PL:KRAKOW:NOWY.SACZ:NOWY.TARG": "w Nowym Targu",
+        "PL:KRAKOW:NOWY.SACZ:ZAKOPANE": "w Zakopanem",
+        "PL:KRAKOW:TARNOW": "w Tarnowie",
+        "PL:KRAKOW:TARNOW:BOCHNIA": "w Bochni",
+        "PL:KRAKOW:TARNOW:BRZESKO": "w Brzesku",
+        "PL:KRAKOW:TARNOW:DABROWA.TARNOWSKA": "w Dąbrowie Tarnowskiej",
+        "PL:KRAKOW:TARNOW:TARNOW": "w Tarnowie",
+        "PL:LODZ": "w Łodzi",
+        "PL:LODZ:KALISZ": "w Kaliszu",
+        "PL:LODZ:KALISZ:JAROCIN": "w Jarocinie",
+        "PL:LODZ:KALISZ:KALISZ": "w Kaliszu",
+        "PL:LODZ:KALISZ:KEPNO": "w Kępnie",
+        "PL:LODZ:KALISZ:KROTOSZYN": "w Krotoszynie",
+        "PL:LODZ:KALISZ:OSTROW.WIELKOPOLSKI": "w Ostrowie Wielkopolskim",
+        "PL:LODZ:KALISZ:OSTRZESZOW": "w Ostrzeszowie",
+        "PL:LODZ:KALISZ:PLESZEW": "w Pleszewie",
+        "PL:LODZ:LODZ": "w Łodzi",
+        "PL:LODZ:LODZ:BRZEZINY": "w Brzezinach",
+        "PL:LODZ:LODZ:KUTNO": "w Kutnie",
+        "PL:LODZ:LODZ:LECZYCA": "w Łęczycy",
+        "PL:LODZ:LODZ:LOWICZ": "w Łowiczu",
+        "PL:LODZ:LODZ:PABIANICE": "w Pabianicach",
+        "PL:LODZ:LODZ:RAWA.MAZOWIECKA": "w Rawie Mazowieckiej",
+        "PL:LODZ:LODZ:SKIERNIEWICE": "w Skierniewicach",
+        "PL:LODZ:LODZ:SRODMIESCIE": "dla Łodzi-Śródmieścia w Łodzi",
+        "PL:LODZ:LODZ:WIDZEW": "dla Łodzi-Widzewa w Łodzi",
+        "PL:LODZ:LODZ:ZGIERZ": "w Zgierzu",
+        "PL:LODZ:PIOTRKOW.TRYBUNALSKI": "w Piotrkowie Trybunalskim",
+        "PL:LODZ:PIOTRKOW.TRYBUNALSKI:BELCHATOW": "w Bełchatowie",
+        "PL:LODZ:PIOTRKOW.TRYBUNALSKI:OPOCZNO": "w Opocznie",
+        "PL:LODZ:PIOTRKOW.TRYBUNALSKI:PIOTRKOW.TRYBUNALSKI": "w Piotrkowie Trybunalskim",
+        "PL:LODZ:PIOTRKOW.TRYBUNALSKI:RADOMSKO": "w Radomsku",
+        "PL:LODZ:PIOTRKOW.TRYBUNALSKI:TOMASZOW.MAZOWIECKI": "w Tomaszowie Mazowieckim",
+        "PL:LODZ:PLOCK": "w Płocku",
+        "PL:LODZ:PLOCK:CIECHANOW": "w Ciechanowie",
+        "PL:LODZ:PLOCK:GOSTYNIN": "w Gostyninie",
+        "PL:LODZ:PLOCK:MLAWA": "w Mławie",
+        "PL:LODZ:PLOCK:PLOCK": "w Płocku",
+        "PL:LODZ:PLOCK:PLONSK": "w Płońsku",
+        "PL:LODZ:PLOCK:SIERPC": "w Sierpcu",
+        "PL:LODZ:PLOCK:SOCHACZEW": "w Sochaczewie",
+        "PL:LODZ:PLOCK:ZYRARDOW": "w Żyrardowie",
+        "PL:LODZ:SIERADZ": "w Sieradzu",
+        "PL:LODZ:SIERADZ:LASK": "w Łasku",
+        "PL:LODZ:SIERADZ:SIERADZ": "w Sieradzu",
+        "PL:LODZ:SIERADZ:WIELUN": "w Wieluniu",
+        "PL:LODZ:SIERADZ:ZDUNSKA.WOLA": "w Zduńskiej Woli",
+        "PL:LUBLIN": "w Lublinie",
+        "PL:LUBLIN:LUBLIN": "w Lublinie",
+        "PL:LUBLIN:LUBLIN:BIALA.PODLASKA": "w Białej Podlaskiej",
+        "PL:LUBLIN:LUBLIN:CHELM": "w Chełmie",
+        "PL:LUBLIN:LUBLIN:KRASNIK": "w Kraśniku",
+        "PL:LUBLIN:LUBLIN:LUBARTOW": "w Lubartowie",
+        "PL:LUBLIN:LUBLIN:LUKOW": "w Łukowie",
+        "PL:LUBLIN:LUBLIN:OPOLE.LUBELSKIE": "w Opolu Lubelskim",
+        "PL:LUBLIN:LUBLIN:PULAWY": "w Puławach",
+        "PL:LUBLIN:LUBLIN:RADZYN.PODLASKI": "w Radzyniu Podlaskim",
+        "PL:LUBLIN:LUBLIN:RYKI": "w Rykach",
+        "PL:LUBLIN:LUBLIN:WLODAWA": "we Włodawie",
+        "PL:LUBLIN:LUBLIN:WSCHOD.LUBLIN": "Lublin-Wschód w Lublinie z siedzibą w Świdniku",
+        "PL:LUBLIN:LUBLIN:ZACHOD.LUBLIN": "Lublin-Zachód w Lublinie",
+        "PL:LUBLIN:RADOM": "w Radomiu",
+        "PL:LUBLIN:RADOM:GROJEC": "w Grójcu",
+        "PL:LUBLIN:RADOM:KOZIENICE": "w Kozienicach",
+        "PL:LUBLIN:RADOM:LIPSK": "w Lipsku",
+        "PL:LUBLIN:RADOM:PRZYSUSZE": "w Przysusze",
+        "PL:LUBLIN:RADOM:RADOM": "w Radomiu",
+        "PL:LUBLIN:RADOM:SZYDLOWIEC": "w Szydłowcu",
+        "PL:LUBLIN:RADOM:ZWOLEN": "w Zwoleniu",
+        "PL:LUBLIN:SIEDLCE": "w Siedlcach",
+        "PL:LUBLIN:SIEDLCE:GARWOLIN": "w Garwolinie",
+        "PL:LUBLIN:SIEDLCE:MINSK.MAZOWIECKI": "w Mińsku Mazowieckim",
+        "PL:LUBLIN:SIEDLCE:SIEDLCE": "w Siedlcach",
+        "PL:LUBLIN:SIEDLCE:SOKOLOW.PODLASKI": "w Sokołowie Podlaskim",
+        "PL:LUBLIN:SIEDLCE:WEGROW": "w Węgrowie",
+        "PL:LUBLIN:ZAMOSC": "w Zamościu",
+        "PL:LUBLIN:ZAMOSC:BILGORAJU": "w Biłgoraju",
+        "PL:LUBLIN:ZAMOSC:HRUBIESZOW": "w Hrubieszowie",
+        "PL:LUBLIN:ZAMOSC:JANOW.LUBELSKI": "w Janowie Lubelskim",
+        "PL:LUBLIN:ZAMOSC:KRASNYSTAW": "w Krasnymstawie",
+        "PL:LUBLIN:ZAMOSC:TOMASZOW.LUBELSKI": "w Tomaszowie Lubelskim",
+        "PL:LUBLIN:ZAMOSC:ZAMOSC": "w Zamościu",
+        "PL:OLSZTYN": "w Olsztynie",
+        "PL:OPOLE": "w Opolu",
+        "PL:POZNAN": "w Poznaniu",
+        "PL:POZNAN:KONIN": "w Koninie",
+        "PL:POZNAN:KONIN:KOLE": "w Kole",
+        "PL:POZNAN:KONIN:KONIN": "w Koninie",
+        "PL:POZNAN:KONIN:SLUPCY": "w Słupcy",
+        "PL:POZNAN:KONIN:TURKU": "w Turku",
+        "PL:POZNAN:POZNAN": "w Poznaniu",
+        "PL:POZNAN:POZNAN:CHODZIEZ": "w Chodzieży",
+        "PL:POZNAN:POZNAN:GNIEZNO": "w Gnieźnie",
+        "PL:POZNAN:POZNAN:GOSTYN": "w Gostyniu",
+        "PL:POZNAN:POZNAN:GRODZISK.WIELKOPOLSKI": "w Grodzisku Wielkopolskim",
+        "PL:POZNAN:POZNAN:GRUNWALD.JEZYCE": "Poznań-Grunwald i Jeżyce w Poznaniu",
+        "PL:POZNAN:POZNAN:KOSCIAN": "w Kościanie",
+        "PL:POZNAN:POZNAN:LESZNO": "w Lesznie",
+        "PL:POZNAN:POZNAN:NOWE.MIASTO.WILDA": "Poznań-Nowe Miasto i Wilda w Poznaniu",
+        "PL:POZNAN:POZNAN:NOWY.TOMYSL": "w Nowym Tomyślu",
+        "PL:POZNAN:POZNAN:OBORNIKI": "w Obornikach",
+        "PL:POZNAN:POZNAN:PILE": "w Pile",
+        "PL:POZNAN:POZNAN:RAWICZ": "w Rawiczu",
+        "PL:POZNAN:POZNAN:SREM": "w Śremie",
+        "PL:POZNAN:POZNAN:SRODA.WIELKOPOLSKA": "w Środzie Wielkopolskiej",
+        "PL:POZNAN:POZNAN:STARE.MIASTO": "Poznań-Stare Miasto w Poznaniu",
+        "PL:POZNAN:POZNAN:SZAMOTULY": "w Szamotułach",
+        "PL:POZNAN:POZNAN:TRZCIANKA": "w Trzciance",
+        "PL:POZNAN:POZNAN:WAGROWIEC": "w Wągrowcu",
+        "PL:POZNAN:POZNAN:WOLSZTYN": "w Wolsztynie",
+        "PL:POZNAN:POZNAN:WRZESNIA": "we Wrześni",
+        "PL:POZNAN:POZNAN:ZLOTOW": "w Złotowie",
+        "PL:POZNAN:ZIELONA.GORA": "w Zielonej Górze",
+        "PL:POZNAN:ZIELONA.GORA:KROSNO.ODRZANSKIE": "w Krośnie Odrzańskim",
+        "PL:POZNAN:ZIELONA.GORA:NOWA.SOL": "w Nowej Soli",
+        "PL:POZNAN:ZIELONA.GORA:SWIEBODZIN": "w Świebodzinie",
+        "PL:POZNAN:ZIELONA.GORA:WSCHOWA": "we Wschowie",
+        "PL:POZNAN:ZIELONA.GORA:ZAGAN": "w Żaganiu",
+        "PL:POZNAN:ZIELONA.GORA:ZARY": "w Żarach",
+        "PL:POZNAN:ZIELONA.GORA:ZIELONA.GORA": "w Zielonej Górze",
+        "PL:RZESZOW": "w Rzeszowie",
+        "PL:RZESZOW:KROSNO": "w Krośnie",
+        "PL:RZESZOW:KROSNO:BRZOZOW": "w Brzozowie",
+        "PL:RZESZOW:KROSNO:JASLO": "w Jaśle",
+        "PL:RZESZOW:KROSNO:KROSNO": "w Krośnie",
+        "PL:RZESZOW:KROSNO:LESKO": "w Lesku",
+        "PL:RZESZOW:KROSNO:SANOK": "w Sanoku",
+        "PL:RZESZOW:PRZEMYSL": "w Przemyślu",
+        "PL:RZESZOW:PRZEMYSL:JAROSLAW": "w Jarosławiu",
+        "PL:RZESZOW:PRZEMYSL:LUBACZOW": "w Lubaczowie",
+        "PL:RZESZOW:PRZEMYSL:PRZEMYSL": "w Przemyślu",
+        "PL:RZESZOW:PRZEMYSL:PRZEWORSK": "w Przeworsku",
+        "PL:RZESZOW:RZESZOW": "w Rzeszowie",
+        "PL:RZESZOW:RZESZOW:DEBICA": "w Dębicy",
+        "PL:RZESZOW:RZESZOW:LANCUT": "w Łańcucie",
+        "PL:RZESZOW:RZESZOW:LEZAJSK": "w Leżajsku",
+        "PL:RZESZOW:RZESZOW:ROPCZYCE": "w Ropczycach",
+        "PL:RZESZOW:RZESZOW:RZESZOW": "w Rzeszowie",
+        "PL:RZESZOW:RZESZOW:STRZYZOW": "w Strzyżowie",
+        "PL:RZESZOW:TARNOBRZEG": "w Tarnobrzegu",
+        "PL:RZESZOW:TARNOBRZEG:KOLBUSZOWA": "w Kolbuszowej",
+        "PL:RZESZOW:TARNOBRZEG:MIELEC": "w Mielcu",
+        "PL:RZESZOW:TARNOBRZEG:NISKO": "w Nisku",
+        "PL:RZESZOW:TARNOBRZEG:STALOWA.WOLA": "w Stalowej Woli",
+        "PL:RZESZOW:TARNOBRZEG:TARNOBRZEG": "w Tarnobrzegu",
+        "PL:SZCZECIN": "w Szczecinie",
+        "PL:SZCZECIN:GORZOW.WIELKOPOLSKI": "w Gorzowie Wielkopolskim",
+        "PL:SZCZECIN:GORZOW.WIELKOPOLSKI:GORZOW.WIELKOPOLSKI": "w Gorzowie Wielkopolskim",
+        "PL:SZCZECIN:GORZOW.WIELKOPOLSKI:MIEDZYRZECZ": "w Międzyrzeczu",
+        "PL:SZCZECIN:GORZOW.WIELKOPOLSKI:SLUBICE": "w Słubicach",
+        "PL:SZCZECIN:GORZOW.WIELKOPOLSKI:STRZELCE.KRAJENSKIE": "w Strzelcach Krajeńskich",
+        "PL:SZCZECIN:GORZOW.WIELKOPOLSKI:SULECIN": "w Sulęcinie",
+        "PL:SZCZECIN:KOSZALIN": "w Koszalinie",
+        "PL:SZCZECIN:KOSZALIN:BIALOGARD": "w Białogardzie",
+        "PL:SZCZECIN:KOSZALIN:DRAWSKO.POMORSKIE": "w Drawsku Pomorskim",
+        "PL:SZCZECIN:KOSZALIN:KOLOBRZEG": "w Kołobrzegu",
+        "PL:SZCZECIN:KOSZALIN:KOSZALIN": "w Koszalinie",
+        "PL:SZCZECIN:KOSZALIN:SLAWNO": "w Sławnie",
+        "PL:SZCZECIN:KOSZALIN:SZCZECINEK": "w Szczecinku",
+        "PL:SZCZECIN:KOSZALIN:WALCZ": "w Wałczu",
+        "PL:SZCZECIN:SZCZECIN": "w Szczecinie",
+        "PL:SZCZECIN:SZCZECIN:CHOSZCZNO": "w Choszcznie",
+        "PL:SZCZECIN:SZCZECIN:GOLENIOW": "w Goleniowie",
+        "PL:SZCZECIN:SZCZECIN:GRYFICE": "w Gryficach",
+        "PL:SZCZECIN:SZCZECIN:GRYFINO": "w Gryfinie",
+        "PL:SZCZECIN:SZCZECIN:KAMIEN.POMORSKI": "w Kamieniu Pomorskim",
+        "PL:SZCZECIN:SZCZECIN:LOBZIE": "w Łobzie",
+        "PL:SZCZECIN:SZCZECIN:MYSLIBORZ": "w Myśliborzu",
+        "PL:SZCZECIN:SZCZECIN:PRAWOBRZEZE": "Szczecin-Prawobrzeże i Zachód w Szczecinie",
+        "PL:SZCZECIN:SZCZECIN:STARGARD": "w Stargardzie",
+        "PL:SZCZECIN:SZCZECIN:SWINOUJSCIE": "w Świnoujściu",
+        "PL:SZCZECIN:SZCZECIN:SZCZECIN.CENTRUM": "Szczecin-Centrum w Szczecinie",
+        "PL:WARSAW": "w Warszawie",
+        "PL:WARSAW:PRAGA": "Warszawa-Praga w Warszawie",
+        "PL:WARSAW:PRAGA:LEGIONOWO": "w Legionowie",
+        "PL:WARSAW:PRAGA:NOWY.DWOR.MAZOWIECKI": "w Nowym Dworze Mazowieckim",
+        "PL:WARSAW:PRAGA:OTWOCK": "w Otwocku",
+        "PL:WARSAW:PRAGA:PRAGA.POLNOC": "dla Warszawy Pragi-Północ w Warszawie",
+        "PL:WARSAW:PRAGA:PRAGA.POLUDNIE": "dla Warszawy Pragi-Południe w Warszawie",
+        "PL:WARSAW:PRAGA:WOLOMIN": "w Wołominie",
+        "PL:WARSAW:WARSAW": "w Warszawie",
+        "PL:WARSAW:WARSAW:GRODZISK.MAZOWIECKI": "w Grodzisku Mazowieckim",
+        "PL:WARSAW:WARSAW:MIASTA.STOLECZNEGO": "dla miasta stołecznego Warszawy w Warszawie",
+        "PL:WARSAW:WARSAW:MOKOTOW": "dla Warszawy-Mokotowa w Warszawie",
+        "PL:WARSAW:WARSAW:PIASECZNO": "w Piasecznie",
+        "PL:WARSAW:WARSAW:PRUSZKOW": "w Pruszkowie",
+        "PL:WARSAW:WARSAW:SRODMIESCIE": "dla Warszawy-Śródmieścia w Warszawie",
+        "PL:WARSAW:WARSAW:WOLA": "dla Warszawy-Woli w Warszawie",
+        "PL:WARSAW:WARSAW:ZOLIBORZ": "dla Warszawy-Żoliborza w Warszawie",
+        "PL:WROCLAW": "we Wrocławiu",
+        "PL:WROCLAW:JELENIA.GORA": "w Jeleniej Górze",
+        "PL:WROCLAW:JELENIA.GORA:BOLESLAWIEC": "w Bolesławcu",
+        "PL:WROCLAW:JELENIA.GORA:JELENIA.GORA": "w Jeleniej Górze",
+        "PL:WROCLAW:JELENIA.GORA:KAMIENNA.GORA": "w Kamiennej Górze",
+        "PL:WROCLAW:JELENIA.GORA:LUBANIE": "w Lubaniu",
+        "PL:WROCLAW:JELENIA.GORA:LWOWEK.SLASKI": "w Lwówku Śląskim",
+        "PL:WROCLAW:JELENIA.GORA:ZGORZELEC": "w Zgorzelcu",
+        "PL:WROCLAW:LEGNICA": "w Legnicy",
+        "PL:WROCLAW:LEGNICA:GLOGOW": "w Głogowie",
+        "PL:WROCLAW:LEGNICA:JAWORZE": "w Jaworze",
+        "PL:WROCLAW:LEGNICA:LEGNICA": "w Legnicy",
+        "PL:WROCLAW:LEGNICA:LUBIN": "w Lubinie",
+        "PL:WROCLAW:LEGNICA:ZLOTOR": "w Złotoryi",
+        "PL:WROCLAW:OPOLE": "w Opolu",
+        "PL:WROCLAW:OPOLE:BRZEG": "w Brzegu",
+        "PL:WROCLAW:OPOLE:GLUBCZYCE": "w Głubczycach",
+        "PL:WROCLAW:OPOLE:KEDZIERZYN.KOZLE": "w Kędzierzynie-Koźlu",
+        "PL:WROCLAW:OPOLE:KLUCZBORK": "w Kluczborku",
+        "PL:WROCLAW:OPOLE:NYSA": "w Nysie",
+        "PL:WROCLAW:OPOLE:OLESNO": "w Oleśnie",
+        "PL:WROCLAW:OPOLE:OPOLE": "w Opolu",
+        "PL:WROCLAW:OPOLE:PRUDNIK": "w Prudniku",
+        "PL:WROCLAW:OPOLE:STRZELCE.OPOLSKI": "w Strzelcach Opolskich",
+        "PL:WROCLAW:SWIDNICA": "w Świdnicy",
+        "PL:WROCLAW:SWIDNICA:DZIERZONIOW": "w Dzierżoniowie",
+        "PL:WROCLAW:SWIDNICA:KLODZKO": "w Kłodzku",
+        "PL:WROCLAW:SWIDNICA:SWIDNICA": "w Świdnicy",
+        "PL:WROCLAW:SWIDNICA:WALBRZYCH": "w Wałbrzychu",
+        "PL:WROCLAW:SWIDNICA:ZABKOWICE.SLASKIE": "w Ząbkowicach Śląskich",
+        "PL:WROCLAW:WROCLAW": "we Wrocławiu",
+        "PL:WROCLAW:WROCLAW:FABRYCZNA": "dla Wrocławia-Fabrycznej we Wrocławiu",
+        "PL:WROCLAW:WROCLAW:KRZYKOW": "dla Wrocławia-Krzyków we Wrocławiu",
+        "PL:WROCLAW:WROCLAW:MILICZ": "w Miliczu",
+        "PL:WROCLAW:WROCLAW:OLAWA": "w Oławie",
+        "PL:WROCLAW:WROCLAW:OLESNICA": "w Oleśnicy",
+        "PL:WROCLAW:WROCLAW:SRODA.SLASKA": "w Środzie Śląskiej",
+        "PL:WROCLAW:WROCLAW:SRODMIESCIE": "dla Wrocławia-Śródmieścia we Wrocławiu",
+        "PL:WROCLAW:WROCLAW:STRZELIN": "w Strzelinie",
+        "PL:WROCLAW:WROCLAW:TRZEBNICA": "w Trzebnicy",
+        "PL:WROCLAW:WROCLAW:WOLOW": "w Wołowie"
+      }
+    },
+    "pl": {
+      "institution-part": {
+        "nsa": "NSA [Supreme Administrative Court]",
+        "sn": "Sąd Najwyższy",
+        "sokik": "Sąd Ochrony Konkurencji i Konsumentów",
+        "tk": "Trybunał Konstytucyjny"
+      }
+    },
+    "pl:bialystok": {
+      "institution-part": {
+        "sa": "Sąd Apelacyjny w Białymstoku",
+        "wsa": "WSA w Białymstoku [Regional Administrative Court]"
+      }
+    },
+    "pl:bialystok:bialystok": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Białymstoku"
+      }
+    },
+    "pl:bialystok:bialystok:bialystok": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Białymstoku"
+      }
+    },
+    "pl:bialystok:bialystok:bielsko.podlaski": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Bielsku Podlaskim"
+      }
+    },
+    "pl:bialystok:bialystok:sokolka": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Sokółce"
+      }
+    },
+    "pl:bialystok:lomza": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Łomży"
+      }
+    },
+    "pl:bialystok:lomza:grajewo": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Grajewie"
+      }
+    },
+    "pl:bialystok:lomza:lomza": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Łomży"
+      }
+    },
+    "pl:bialystok:lomza:wysokie.mazowieckie": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Wysokiem Mazowieckiem"
+      }
+    },
+    "pl:bialystok:lomza:zambrow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Zambrowie"
+      }
+    },
+    "pl:bialystok:olsztyn": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Olsztynie"
+      }
+    },
+    "pl:bialystok:olsztyn:bartoszyce": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Bartoszycach"
+      }
+    },
+    "pl:bialystok:olsztyn:biskupiec": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Biskupcu"
+      }
+    },
+    "pl:bialystok:olsztyn:gizycko": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Giżycku"
+      }
+    },
+    "pl:bialystok:olsztyn:ketrzyn": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Kętrzynie"
+      }
+    },
+    "pl:bialystok:olsztyn:lidzbark.warminski": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Lidzbarku Warmińskim"
+      }
+    },
+    "pl:bialystok:olsztyn:mragowo": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Mrągowie"
+      }
+    },
+    "pl:bialystok:olsztyn:nidzica": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Nidzicy"
+      }
+    },
+    "pl:bialystok:olsztyn:olsztyn": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Olsztynie"
+      }
+    },
+    "pl:bialystok:olsztyn:pisz": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Piszu"
+      }
+    },
+    "pl:bialystok:olsztyn:szczytno": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Szczytnie"
+      }
+    },
+    "pl:bialystok:ostroleka": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Ostrołęce"
+      }
+    },
+    "pl:bialystok:ostroleka:ostroleka": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Ostrołęce"
+      }
+    },
+    "pl:bialystok:ostroleka:ostrow.mazowiecka": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Ostrowi Mazowieckiej"
+      }
+    },
+    "pl:bialystok:ostroleka:przasnysz": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Przasnyszu"
+      }
+    },
+    "pl:bialystok:ostroleka:pultusk": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Pułtusku"
+      }
+    },
+    "pl:bialystok:ostroleka:wyszkow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Wyszkowie"
+      }
+    },
+    "pl:bialystok:suwalki": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Suwałkach"
+      }
+    },
+    "pl:bialystok:suwalki:augustow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Augustowie"
+      }
+    },
+    "pl:bialystok:suwalki:elk": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Ełku"
+      }
+    },
+    "pl:bialystok:suwalki:olecko": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Olecku"
+      }
+    },
+    "pl:bialystok:suwalki:suwalki": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Suwałkach"
+      }
+    },
+    "pl:bydgoszcz": {
+      "institution-part": {
+        "wsa": "WSA w Bydgoszczy [Regional Administrative Court]"
+      }
+    },
+    "pl:gdansk": {
+      "institution-part": {
+        "sa": "Sąd Apelacyjny w Gdańsku",
+        "wsa": "WSA w Gdańsku [Regional Administrative Court]"
+      }
+    },
+    "pl:gdansk:bydgoszcz": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Bydgoszczy"
+      }
+    },
+    "pl:gdansk:bydgoszcz:bydgoszcz": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Bydgoszczy"
+      }
+    },
+    "pl:gdansk:bydgoszcz:inowroclaw": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Inowrocławiu"
+      }
+    },
+    "pl:gdansk:bydgoszcz:mogilno": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Mogilnie"
+      }
+    },
+    "pl:gdansk:bydgoszcz:naklo.nad.notecia": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Nakle nad Notecią"
+      }
+    },
+    "pl:gdansk:bydgoszcz:swiecie": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Świeciu"
+      }
+    },
+    "pl:gdansk:bydgoszcz:szubinie": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Szubinie"
+      }
+    },
+    "pl:gdansk:bydgoszcz:tucholi": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Tucholi"
+      }
+    },
+    "pl:gdansk:bydgoszcz:zninie": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Żninie"
+      }
+    },
+    "pl:gdansk:elblag": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Elblągu"
+      }
+    },
+    "pl:gdansk:elblag:braniewo": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Braniewie"
+      }
+    },
+    "pl:gdansk:elblag:dzialdowo": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Działdowie"
+      }
+    },
+    "pl:gdansk:elblag:elblag": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Elblągu"
+      }
+    },
+    "pl:gdansk:elblag:ilawa": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Iławie"
+      }
+    },
+    "pl:gdansk:elblag:nowe.miasto.lubawskie": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Nowym Mieście Lubawskim"
+      }
+    },
+    "pl:gdansk:elblag:ostroda": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Ostródzie"
+      }
+    },
+    "pl:gdansk:gdansk": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Gdańsku"
+      }
+    },
+    "pl:gdansk:gdansk:gdansk": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Gdańsku"
+      }
+    },
+    "pl:gdansk:gdansk:gdynia": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Gdyni"
+      }
+    },
+    "pl:gdansk:gdansk:kartuzy": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Kartuzach"
+      }
+    },
+    "pl:gdansk:gdansk:koscierzyna": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Kościerzynie"
+      }
+    },
+    "pl:gdansk:gdansk:kwidzyn": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Kwidzynie"
+      }
+    },
+    "pl:gdansk:gdansk:malbork": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Malborku"
+      }
+    },
+    "pl:gdansk:gdansk:polnoc": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy Gdańsk-Północ w Gdańsku"
+      }
+    },
+    "pl:gdansk:gdansk:poludnie": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy Gdańsk-Południe w Gdańsku"
+      }
+    },
+    "pl:gdansk:gdansk:sopot": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Sopocie"
+      }
+    },
+    "pl:gdansk:gdansk:starogard.gdanski": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Starogardzie Gdańskim"
+      }
+    },
+    "pl:gdansk:gdansk:tczew": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Tczewie"
+      }
+    },
+    "pl:gdansk:gdansk:wejherowo": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Wejherowie"
+      }
+    },
+    "pl:gdansk:slupsk": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Słupsku"
+      }
+    },
+    "pl:gdansk:slupsk:bytow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Bytowie"
+      }
+    },
+    "pl:gdansk:slupsk:chojnice": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Chojnicach"
+      }
+    },
+    "pl:gdansk:slupsk:czluchow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Człuchowie"
+      }
+    },
+    "pl:gdansk:slupsk:lebork": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Lęborku"
+      }
+    },
+    "pl:gdansk:slupsk:miastko": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Miastku"
+      }
+    },
+    "pl:gdansk:slupsk:slupsk": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Słupsku"
+      }
+    },
+    "pl:gdansk:torun": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Toruniu"
+      }
+    },
+    "pl:gdansk:torun:brodnica": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Brodnicy"
+      }
+    },
+    "pl:gdansk:torun:chelmno": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Chełmnie"
+      }
+    },
+    "pl:gdansk:torun:golub.dobrzyn": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Golubiu-Dobrzyniu"
+      }
+    },
+    "pl:gdansk:torun:grudziadz": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Grudziądzu"
+      }
+    },
+    "pl:gdansk:torun:torun": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Toruniu"
+      }
+    },
+    "pl:gdansk:torun:wabrzezno": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Wąbrzeźnie"
+      }
+    },
+    "pl:gdansk:wloclawek": {
+      "institution-part": {
+        "so": "Sąd Okręgowy we Włocławku"
+      }
+    },
+    "pl:gdansk:wloclawek:aleksandrow.kujawski": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Aleksandrowie Kujawskim"
+      }
+    },
+    "pl:gdansk:wloclawek:lipno": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Lipnie"
+      }
+    },
+    "pl:gdansk:wloclawek:radziejow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Radziejowie"
+      }
+    },
+    "pl:gdansk:wloclawek:rypin": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Rypinie"
+      }
+    },
+    "pl:gdansk:wloclawek:wloclawek": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy we Włocławku"
+      }
+    },
+    "pl:gliwice": {
+      "institution-part": {
+        "wsa": "WSA w Gliwicach [Regional Administrative Court]"
+      }
+    },
+    "pl:gorzow.wielkopolski": {
+      "institution-part": {
+        "wsa": "WSA w Gorzowie Wielkopolskim [Regional Administrative Court]"
+      }
+    },
+    "pl:katowice": {
+      "institution-part": {
+        "sa": "Sąd Apelacyjny w Katowicach",
+        "wsa": "WSA w Katowicach [Regional Administrative Court]"
+      }
+    },
+    "pl:katowice:bielsko.biala": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Bielsku-Białej"
+      }
+    },
+    "pl:katowice:bielsko.biala:bielsko.biala": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Bielsku-Białej"
+      }
+    },
+    "pl:katowice:bielsko.biala:cieszyn": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Cieszynie"
+      }
+    },
+    "pl:katowice:bielsko.biala:zywiec": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Żywcu"
+      }
+    },
+    "pl:katowice:czestochowa": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Częstochowie"
+      }
+    },
+    "pl:katowice:czestochowa:czestochowa": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Częstochowie"
+      }
+    },
+    "pl:katowice:czestochowa:lubliniec": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Lublińcu"
+      }
+    },
+    "pl:katowice:czestochowa:myszkow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Myszkowie"
+      }
+    },
+    "pl:katowice:czestochowa:zawiercie": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Zawierciu"
+      }
+    },
+    "pl:katowice:gliwice": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Gliwicach"
+      }
+    },
+    "pl:katowice:gliwice:gliwice": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Gliwicach"
+      }
+    },
+    "pl:katowice:gliwice:jastrzebie.zdroj": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Jastrzębiu-Zdroju"
+      }
+    },
+    "pl:katowice:gliwice:raciborz": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Raciborzu"
+      }
+    },
+    "pl:katowice:gliwice:ruda.slaska": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Rudzie Śląskiej"
+      }
+    },
+    "pl:katowice:gliwice:rybnik": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Rybniku"
+      }
+    },
+    "pl:katowice:gliwice:tarnowskie.gory": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Tarnowskich Górach"
+      }
+    },
+    "pl:katowice:gliwice:wodzislaw.slaski": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Wodzisławiu Śląskim"
+      }
+    },
+    "pl:katowice:gliwice:zabrze": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Zabrzu"
+      }
+    },
+    "pl:katowice:gliwice:zory": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Żorach"
+      }
+    },
+    "pl:katowice:katowice": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Katowicach"
+      }
+    },
+    "pl:katowice:katowice:bedzin": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Będzinie"
+      }
+    },
+    "pl:katowice:katowice:bytom": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Bytomiu"
+      }
+    },
+    "pl:katowice:katowice:chorzow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Chorzowie"
+      }
+    },
+    "pl:katowice:katowice:dabrowa.gornicza": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Dąbrowie Górniczej"
+      }
+    },
+    "pl:katowice:katowice:jaworzno": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Jaworznie"
+      }
+    },
+    "pl:katowice:katowice:mikolow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Mikołowie"
+      }
+    },
+    "pl:katowice:katowice:myslowice": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Mysłowicach"
+      }
+    },
+    "pl:katowice:katowice:pszczyna": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Pszczynie"
+      }
+    },
+    "pl:katowice:katowice:siemianowice.slaskie": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Siemianowicach Śląskich"
+      }
+    },
+    "pl:katowice:katowice:sosnowiec": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Sosnowcu"
+      }
+    },
+    "pl:katowice:katowice:tychy": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Tychach"
+      }
+    },
+    "pl:katowice:katowice:wschod.katowice": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy Katowice-Wschód w Katowicach"
+      }
+    },
+    "pl:katowice:katowice:zachod.katowice": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy Katowice-Zachód w Katowicach"
+      }
+    },
+    "pl:kielce": {
+      "institution-part": {
+        "wsa": "WSA w Kielcach [Regional Administrative Court]"
+      }
+    },
+    "pl:krakow": {
+      "institution-part": {
+        "sa": "Sąd Apelacyjny w Krakowie",
+        "wsa": "WSA w Krakowie [Regional Administrative Court]"
+      }
+    },
+    "pl:krakow:kielce": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Kielcach"
+      }
+    },
+    "pl:krakow:kielce:busku.zdroj": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Busku-Zdroju"
+      }
+    },
+    "pl:krakow:kielce:jedrzejow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Jędrzejowie"
+      }
+    },
+    "pl:krakow:kielce:kielce": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Kielcach"
+      }
+    },
+    "pl:krakow:kielce:konskie": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Końskich"
+      }
+    },
+    "pl:krakow:kielce:opatow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Opatowie"
+      }
+    },
+    "pl:krakow:kielce:ostrowiec.swietokrzyski": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Ostrowcu Świętokrzyskim"
+      }
+    },
+    "pl:krakow:kielce:pinczow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Pińczowie"
+      }
+    },
+    "pl:krakow:kielce:sandomierz": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Sandomierzu"
+      }
+    },
+    "pl:krakow:kielce:skarzysko.kamienna": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Skarżysku-Kamiennej"
+      }
+    },
+    "pl:krakow:kielce:starachowice": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Starachowicach"
+      }
+    },
+    "pl:krakow:kielce:staszow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Staszowie"
+      }
+    },
+    "pl:krakow:kielce:wloszczow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy we Włoszczowie"
+      }
+    },
+    "pl:krakow:krakow": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Krakowie"
+      }
+    },
+    "pl:krakow:krakow:chrzanow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Chrzanowie"
+      }
+    },
+    "pl:krakow:krakow:krowodrza": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy dla Krakowa-Krowodrzy w Krakowie"
+      }
+    },
+    "pl:krakow:krakow:miechow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Miechowie"
+      }
+    },
+    "pl:krakow:krakow:myslenice": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Myślenicach"
+      }
+    },
+    "pl:krakow:krakow:nowa.huta": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy dla Krakowa-Nowej Huty w Krakowie"
+      }
+    },
+    "pl:krakow:krakow:olkusz": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Olkuszu"
+      }
+    },
+    "pl:krakow:krakow:oswiecim": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Oświęcimiu"
+      }
+    },
+    "pl:krakow:krakow:podgorze": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy dla Krakowa-Podgórza w Krakowie"
+      }
+    },
+    "pl:krakow:krakow:srodmiescie": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy dla Krakowa-Śródmieścia w Krakowie"
+      }
+    },
+    "pl:krakow:krakow:sucha.beskidzka": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Suchej Beskidzkiej"
+      }
+    },
+    "pl:krakow:krakow:wadowice": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Wadowicach"
+      }
+    },
+    "pl:krakow:krakow:wieliczka": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Wieliczce"
+      }
+    },
+    "pl:krakow:nowy.sacz": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Nowym Sączu"
+      }
+    },
+    "pl:krakow:nowy.sacz:gorlice": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Gorlicach"
+      }
+    },
+    "pl:krakow:nowy.sacz:limanowa": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Limanowej"
+      }
+    },
+    "pl:krakow:nowy.sacz:nowy.sacz": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Nowym Sączu"
+      }
+    },
+    "pl:krakow:nowy.sacz:nowy.targ": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Nowym Targu"
+      }
+    },
+    "pl:krakow:nowy.sacz:zakopane": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Zakopanem"
+      }
+    },
+    "pl:krakow:tarnow": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Tarnowie"
+      }
+    },
+    "pl:krakow:tarnow:bochnia": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Bochni"
+      }
+    },
+    "pl:krakow:tarnow:brzesko": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Brzesku"
+      }
+    },
+    "pl:krakow:tarnow:dabrowa.tarnowska": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Dąbrowie Tarnowskiej"
+      }
+    },
+    "pl:krakow:tarnow:tarnow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Tarnowie"
+      }
+    },
+    "pl:lodz": {
+      "institution-part": {
+        "sa": "Sąd Apelacyjny w Łodzi",
+        "wsa": "WSA w Łodzi [Regional Administrative Court]"
+      }
+    },
+    "pl:lodz:kalisz": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Kaliszu"
+      }
+    },
+    "pl:lodz:kalisz:jarocin": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Jarocinie"
+      }
+    },
+    "pl:lodz:kalisz:kalisz": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Kaliszu"
+      }
+    },
+    "pl:lodz:kalisz:kepno": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Kępnie"
+      }
+    },
+    "pl:lodz:kalisz:krotoszyn": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Krotoszynie"
+      }
+    },
+    "pl:lodz:kalisz:ostrow.wielkopolski": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Ostrowie Wielkopolskim"
+      }
+    },
+    "pl:lodz:kalisz:ostrzeszow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Ostrzeszowie"
+      }
+    },
+    "pl:lodz:kalisz:pleszew": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Pleszewie"
+      }
+    },
+    "pl:lodz:lodz": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Łodzi"
+      }
+    },
+    "pl:lodz:lodz:brzeziny": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Brzezinach"
+      }
+    },
+    "pl:lodz:lodz:kutno": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Kutnie"
+      }
+    },
+    "pl:lodz:lodz:leczyca": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Łęczycy"
+      }
+    },
+    "pl:lodz:lodz:lowicz": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Łowiczu"
+      }
+    },
+    "pl:lodz:lodz:pabianice": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Pabianicach"
+      }
+    },
+    "pl:lodz:lodz:rawa.mazowiecka": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Rawie Mazowieckiej"
+      }
+    },
+    "pl:lodz:lodz:skierniewice": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Skierniewicach"
+      }
+    },
+    "pl:lodz:lodz:srodmiescie": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy dla Łodzi-Śródmieścia w Łodzi"
+      }
+    },
+    "pl:lodz:lodz:widzew": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy dla Łodzi-Widzewa w Łodzi"
+      }
+    },
+    "pl:lodz:lodz:zgierz": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Zgierzu"
+      }
+    },
+    "pl:lodz:piotrkow.trybunalski": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Piotrkowie Trybunalskim"
+      }
+    },
+    "pl:lodz:piotrkow.trybunalski:belchatow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Bełchatowie"
+      }
+    },
+    "pl:lodz:piotrkow.trybunalski:opoczno": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Opocznie"
+      }
+    },
+    "pl:lodz:piotrkow.trybunalski:piotrkow.trybunalski": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Piotrkowie Trybunalskim"
+      }
+    },
+    "pl:lodz:piotrkow.trybunalski:radomsko": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Radomsku"
+      }
+    },
+    "pl:lodz:piotrkow.trybunalski:tomaszow.mazowiecki": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Tomaszowie Mazowieckim"
+      }
+    },
+    "pl:lodz:plock": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Płocku"
+      }
+    },
+    "pl:lodz:plock:ciechanow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Ciechanowie"
+      }
+    },
+    "pl:lodz:plock:gostynin": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Gostyninie"
+      }
+    },
+    "pl:lodz:plock:mlawa": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Mławie"
+      }
+    },
+    "pl:lodz:plock:plock": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Płocku"
+      }
+    },
+    "pl:lodz:plock:plonsk": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Płońsku"
+      }
+    },
+    "pl:lodz:plock:sierpc": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Sierpcu"
+      }
+    },
+    "pl:lodz:plock:sochaczew": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Sochaczewie"
+      }
+    },
+    "pl:lodz:plock:zyrardow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Żyrardowie"
+      }
+    },
+    "pl:lodz:sieradz": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Sieradzu"
+      }
+    },
+    "pl:lodz:sieradz:lask": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Łasku"
+      }
+    },
+    "pl:lodz:sieradz:sieradz": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Sieradzu"
+      }
+    },
+    "pl:lodz:sieradz:wielun": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Wieluniu"
+      }
+    },
+    "pl:lodz:sieradz:zdunska.wola": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Zduńskiej Woli"
+      }
+    },
+    "pl:lublin": {
+      "institution-part": {
+        "sa": "Sąd Apelacyjny w Lublinie",
+        "wsa": "WSA w Lublinie [Regional Administrative Court]"
+      }
+    },
+    "pl:lublin:lublin": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Lublinie"
+      }
+    },
+    "pl:lublin:lublin:biala.podlaska": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Białej Podlaskiej"
+      }
+    },
+    "pl:lublin:lublin:chelm": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Chełmie"
+      }
+    },
+    "pl:lublin:lublin:krasnik": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Kraśniku"
+      }
+    },
+    "pl:lublin:lublin:lubartow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Lubartowie"
+      }
+    },
+    "pl:lublin:lublin:lukow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Łukowie"
+      }
+    },
+    "pl:lublin:lublin:opole.lubelskie": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Opolu Lubelskim"
+      }
+    },
+    "pl:lublin:lublin:pulawy": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Puławach"
+      }
+    },
+    "pl:lublin:lublin:radzyn.podlaski": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Radzyniu Podlaskim"
+      }
+    },
+    "pl:lublin:lublin:ryki": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Rykach"
+      }
+    },
+    "pl:lublin:lublin:wlodawa": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy we Włodawie"
+      }
+    },
+    "pl:lublin:lublin:wschod.lublin": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy Lublin-Wschód w Lublinie z siedzibą w Świdniku"
+      }
+    },
+    "pl:lublin:lublin:zachod.lublin": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy Lublin-Zachód w Lublinie"
+      }
+    },
+    "pl:lublin:radom": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Radomiu"
+      }
+    },
+    "pl:lublin:radom:grojec": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Grójcu"
+      }
+    },
+    "pl:lublin:radom:kozienice": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Kozienicach"
+      }
+    },
+    "pl:lublin:radom:lipsk": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Lipsku"
+      }
+    },
+    "pl:lublin:radom:przysusze": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Przysusze"
+      }
+    },
+    "pl:lublin:radom:radom": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Radomiu"
+      }
+    },
+    "pl:lublin:radom:szydlowiec": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Szydłowcu"
+      }
+    },
+    "pl:lublin:radom:zwolen": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Zwoleniu"
+      }
+    },
+    "pl:lublin:siedlce": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Siedlcach"
+      }
+    },
+    "pl:lublin:siedlce:garwolin": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Garwolinie"
+      }
+    },
+    "pl:lublin:siedlce:minsk.mazowiecki": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Mińsku Mazowieckim"
+      }
+    },
+    "pl:lublin:siedlce:siedlce": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Siedlcach"
+      }
+    },
+    "pl:lublin:siedlce:sokolow.podlaski": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Sokołowie Podlaskim"
+      }
+    },
+    "pl:lublin:siedlce:wegrow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Węgrowie"
+      }
+    },
+    "pl:lublin:zamosc": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Zamościu"
+      }
+    },
+    "pl:lublin:zamosc:bilgoraju": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Biłgoraju"
+      }
+    },
+    "pl:lublin:zamosc:hrubieszow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Hrubieszowie"
+      }
+    },
+    "pl:lublin:zamosc:janow.lubelski": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Janowie Lubelskim"
+      }
+    },
+    "pl:lublin:zamosc:krasnystaw": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Krasnymstawie"
+      }
+    },
+    "pl:lublin:zamosc:tomaszow.lubelski": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Tomaszowie Lubelskim"
+      }
+    },
+    "pl:lublin:zamosc:zamosc": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Zamościu"
+      }
+    },
+    "pl:olsztyn": {
+      "institution-part": {
+        "wsa": "WSA w Olsztynie [Regional Administrative Court]"
+      }
+    },
+    "pl:opole": {
+      "institution-part": {
+        "wsa": "WSA w Opolu [Regional Administrative Court]"
+      }
+    },
+    "pl:poznan": {
+      "institution-part": {
+        "sa": "Sąd Apelacyjny w Poznaniu",
+        "wsa": "WSA w Poznaniu [Regional Administrative Court]"
+      }
+    },
+    "pl:poznan:konin": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Koninie"
+      }
+    },
+    "pl:poznan:konin:kole": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Kole"
+      }
+    },
+    "pl:poznan:konin:konin": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Koninie"
+      }
+    },
+    "pl:poznan:konin:slupcy": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Słupcy"
+      }
+    },
+    "pl:poznan:konin:turku": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Turku"
+      }
+    },
+    "pl:poznan:poznan": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Poznaniu"
+      }
+    },
+    "pl:poznan:poznan:chodziez": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Chodzieży"
+      }
+    },
+    "pl:poznan:poznan:gniezno": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Gnieźnie"
+      }
+    },
+    "pl:poznan:poznan:gostyn": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Gostyniu"
+      }
+    },
+    "pl:poznan:poznan:grodzisk.wielkopolski": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Grodzisku Wielkopolskim"
+      }
+    },
+    "pl:poznan:poznan:grunwald.jezyce": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy Poznań-Grunwald i Jeżyce w Poznaniu"
+      }
+    },
+    "pl:poznan:poznan:koscian": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Kościanie"
+      }
+    },
+    "pl:poznan:poznan:leszno": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Lesznie"
+      }
+    },
+    "pl:poznan:poznan:nowe.miasto.wilda": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy Poznań-Nowe Miasto i Wilda w Poznaniu"
+      }
+    },
+    "pl:poznan:poznan:nowy.tomysl": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Nowym Tomyślu"
+      }
+    },
+    "pl:poznan:poznan:oborniki": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Obornikach"
+      }
+    },
+    "pl:poznan:poznan:pile": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Pile"
+      }
+    },
+    "pl:poznan:poznan:rawicz": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Rawiczu"
+      }
+    },
+    "pl:poznan:poznan:srem": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Śremie"
+      }
+    },
+    "pl:poznan:poznan:sroda.wielkopolska": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Środzie Wielkopolskiej"
+      }
+    },
+    "pl:poznan:poznan:stare.miasto": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy Poznań-Stare Miasto w Poznaniu"
+      }
+    },
+    "pl:poznan:poznan:szamotuly": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Szamotułach"
+      }
+    },
+    "pl:poznan:poznan:trzcianka": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Trzciance"
+      }
+    },
+    "pl:poznan:poznan:wagrowiec": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Wągrowcu"
+      }
+    },
+    "pl:poznan:poznan:wolsztyn": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Wolsztynie"
+      }
+    },
+    "pl:poznan:poznan:wrzesnia": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy we Wrześni"
+      }
+    },
+    "pl:poznan:poznan:zlotow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Złotowie"
+      }
+    },
+    "pl:poznan:zielona.gora": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Zielonej Górze"
+      }
+    },
+    "pl:poznan:zielona.gora:krosno.odrzanskie": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Krośnie Odrzańskim"
+      }
+    },
+    "pl:poznan:zielona.gora:nowa.sol": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Nowej Soli"
+      }
+    },
+    "pl:poznan:zielona.gora:swiebodzin": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Świebodzinie"
+      }
+    },
+    "pl:poznan:zielona.gora:wschowa": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy we Wschowie"
+      }
+    },
+    "pl:poznan:zielona.gora:zagan": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Żaganiu"
+      }
+    },
+    "pl:poznan:zielona.gora:zary": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Żarach"
+      }
+    },
+    "pl:poznan:zielona.gora:zielona.gora": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Zielonej Górze"
+      }
+    },
+    "pl:rzeszow": {
+      "institution-part": {
+        "sa": "Sąd Apelacyjny w Rzeszowie",
+        "wsa": "WSA w Rzeszowie [Regional Administrative Court]"
+      }
+    },
+    "pl:rzeszow:krosno": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Krośnie"
+      }
+    },
+    "pl:rzeszow:krosno:brzozow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Brzozowie"
+      }
+    },
+    "pl:rzeszow:krosno:jaslo": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Jaśle"
+      }
+    },
+    "pl:rzeszow:krosno:krosno": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Krośnie"
+      }
+    },
+    "pl:rzeszow:krosno:lesko": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Lesku"
+      }
+    },
+    "pl:rzeszow:krosno:sanok": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Sanoku"
+      }
+    },
+    "pl:rzeszow:przemysl": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Przemyślu"
+      }
+    },
+    "pl:rzeszow:przemysl:jaroslaw": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Jarosławiu"
+      }
+    },
+    "pl:rzeszow:przemysl:lubaczow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Lubaczowie"
+      }
+    },
+    "pl:rzeszow:przemysl:przemysl": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Przemyślu"
+      }
+    },
+    "pl:rzeszow:przemysl:przeworsk": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Przeworsku"
+      }
+    },
+    "pl:rzeszow:rzeszow": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Rzeszowie"
+      }
+    },
+    "pl:rzeszow:rzeszow:debica": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Dębicy"
+      }
+    },
+    "pl:rzeszow:rzeszow:lancut": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Łańcucie"
+      }
+    },
+    "pl:rzeszow:rzeszow:lezajsk": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Leżajsku"
+      }
+    },
+    "pl:rzeszow:rzeszow:ropczyce": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Ropczycach"
+      }
+    },
+    "pl:rzeszow:rzeszow:rzeszow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Rzeszowie"
+      }
+    },
+    "pl:rzeszow:rzeszow:strzyzow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Strzyżowie"
+      }
+    },
+    "pl:rzeszow:tarnobrzeg": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Tarnobrzegu"
+      }
+    },
+    "pl:rzeszow:tarnobrzeg:kolbuszowa": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Kolbuszowej"
+      }
+    },
+    "pl:rzeszow:tarnobrzeg:mielec": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Mielcu"
+      }
+    },
+    "pl:rzeszow:tarnobrzeg:nisko": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Nisku"
+      }
+    },
+    "pl:rzeszow:tarnobrzeg:stalowa.wola": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Stalowej Woli"
+      }
+    },
+    "pl:rzeszow:tarnobrzeg:tarnobrzeg": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Tarnobrzegu"
+      }
+    },
+    "pl:szczecin": {
+      "institution-part": {
+        "sa": "Sąd Apelacyjny w Szczecinie",
+        "wsa": "WSA w Szczecinie [Regional Administrative Court]"
+      }
+    },
+    "pl:szczecin:gorzow.wielkopolski": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Gorzowie Wielkopolskim"
+      }
+    },
+    "pl:szczecin:gorzow.wielkopolski:gorzow.wielkopolski": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Gorzowie Wielkopolskim"
+      }
+    },
+    "pl:szczecin:gorzow.wielkopolski:miedzyrzecz": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Międzyrzeczu"
+      }
+    },
+    "pl:szczecin:gorzow.wielkopolski:slubice": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Słubicach"
+      }
+    },
+    "pl:szczecin:gorzow.wielkopolski:strzelce.krajenskie": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Strzelcach Krajeńskich"
+      }
+    },
+    "pl:szczecin:gorzow.wielkopolski:sulecin": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Sulęcinie"
+      }
+    },
+    "pl:szczecin:koszalin": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Koszalinie"
+      }
+    },
+    "pl:szczecin:koszalin:bialogard": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Białogardzie"
+      }
+    },
+    "pl:szczecin:koszalin:drawsko.pomorskie": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Drawsku Pomorskim"
+      }
+    },
+    "pl:szczecin:koszalin:kolobrzeg": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Kołobrzegu"
+      }
+    },
+    "pl:szczecin:koszalin:koszalin": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Koszalinie"
+      }
+    },
+    "pl:szczecin:koszalin:slawno": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Sławnie"
+      }
+    },
+    "pl:szczecin:koszalin:szczecinek": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Szczecinku"
+      }
+    },
+    "pl:szczecin:koszalin:walcz": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Wałczu"
+      }
+    },
+    "pl:szczecin:szczecin": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Szczecinie"
+      }
+    },
+    "pl:szczecin:szczecin:choszczno": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Choszcznie"
+      }
+    },
+    "pl:szczecin:szczecin:goleniow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Goleniowie"
+      }
+    },
+    "pl:szczecin:szczecin:gryfice": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Gryficach"
+      }
+    },
+    "pl:szczecin:szczecin:gryfino": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Gryfinie"
+      }
+    },
+    "pl:szczecin:szczecin:kamien.pomorski": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Kamieniu Pomorskim"
+      }
+    },
+    "pl:szczecin:szczecin:lobzie": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Łobzie"
+      }
+    },
+    "pl:szczecin:szczecin:mysliborz": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Myśliborzu"
+      }
+    },
+    "pl:szczecin:szczecin:prawobrzeze": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy Szczecin-Prawobrzeże i Zachód w Szczecinie"
+      }
+    },
+    "pl:szczecin:szczecin:stargard": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Stargardzie"
+      }
+    },
+    "pl:szczecin:szczecin:swinoujscie": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Świnoujściu"
+      }
+    },
+    "pl:szczecin:szczecin:szczecin.centrum": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy Szczecin-Centrum w Szczecinie"
+      }
+    },
+    "pl:warsaw": {
+      "institution-part": {
+        "sa": "Sąd Apelacyjny w Warszawie",
+        "wsa": "WSA w Warszawie [Regional Administrative Court]"
+      }
+    },
+    "pl:warsaw:praga": {
+      "institution-part": {
+        "so": "Sąd Okręgowy Warszawa-Praga w Warszawie"
+      }
+    },
+    "pl:warsaw:praga:legionowo": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Legionowie"
+      }
+    },
+    "pl:warsaw:praga:nowy.dwor.mazowiecki": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Nowym Dworze Mazowieckim"
+      }
+    },
+    "pl:warsaw:praga:otwock": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Otwocku"
+      }
+    },
+    "pl:warsaw:praga:praga.polnoc": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy dla Warszawy Pragi-Północ w Warszawie"
+      }
+    },
+    "pl:warsaw:praga:praga.poludnie": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy dla Warszawy Pragi-Południe w Warszawie"
+      }
+    },
+    "pl:warsaw:praga:wolomin": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Wołominie"
+      }
+    },
+    "pl:warsaw:warsaw": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Warszawie"
+      }
+    },
+    "pl:warsaw:warsaw:grodzisk.mazowiecki": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Grodzisku Mazowieckim"
+      }
+    },
+    "pl:warsaw:warsaw:miasta.stolecznego": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy dla miasta stołecznego Warszawy w Warszawie"
+      }
+    },
+    "pl:warsaw:warsaw:mokotow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy dla Warszawy-Mokotowa w Warszawie"
+      }
+    },
+    "pl:warsaw:warsaw:piaseczno": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Piasecznie"
+      }
+    },
+    "pl:warsaw:warsaw:pruszkow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Pruszkowie"
+      }
+    },
+    "pl:warsaw:warsaw:srodmiescie": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy dla Warszawy-Śródmieścia w Warszawie"
+      }
+    },
+    "pl:warsaw:warsaw:wola": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy dla Warszawy-Woli w Warszawie"
+      }
+    },
+    "pl:warsaw:warsaw:zoliborz": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy dla Warszawy-Żoliborza w Warszawie"
+      }
+    },
+    "pl:wroclaw": {
+      "institution-part": {
+        "sa": "Sąd Apelacyjny we Wrocławiu",
+        "wsa": "WSA we Wrocławiu [Regional Administrative Court]"
+      }
+    },
+    "pl:wroclaw:jelenia.gora": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Jeleniej Górze"
+      }
+    },
+    "pl:wroclaw:jelenia.gora:boleslawiec": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Bolesławcu"
+      }
+    },
+    "pl:wroclaw:jelenia.gora:jelenia.gora": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Jeleniej Górze"
+      }
+    },
+    "pl:wroclaw:jelenia.gora:kamienna.gora": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Kamiennej Górze"
+      }
+    },
+    "pl:wroclaw:jelenia.gora:lubanie": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Lubaniu"
+      }
+    },
+    "pl:wroclaw:jelenia.gora:lwowek.slaski": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Lwówku Śląskim"
+      }
+    },
+    "pl:wroclaw:jelenia.gora:zgorzelec": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Zgorzelcu"
+      }
+    },
+    "pl:wroclaw:legnica": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Legnicy"
+      }
+    },
+    "pl:wroclaw:legnica:glogow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Głogowie"
+      }
+    },
+    "pl:wroclaw:legnica:jaworze": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Jaworze"
+      }
+    },
+    "pl:wroclaw:legnica:legnica": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Legnicy"
+      }
+    },
+    "pl:wroclaw:legnica:lubin": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Lubinie"
+      }
+    },
+    "pl:wroclaw:legnica:zlotor": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Złotoryi"
+      }
+    },
+    "pl:wroclaw:opole": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Opolu"
+      }
+    },
+    "pl:wroclaw:opole:brzeg": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Brzegu"
+      }
+    },
+    "pl:wroclaw:opole:glubczyce": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Głubczycach"
+      }
+    },
+    "pl:wroclaw:opole:kedzierzyn.kozle": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Kędzierzynie-Koźlu"
+      }
+    },
+    "pl:wroclaw:opole:kluczbork": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Kluczborku"
+      }
+    },
+    "pl:wroclaw:opole:nysa": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Nysie"
+      }
+    },
+    "pl:wroclaw:opole:olesno": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Oleśnie"
+      }
+    },
+    "pl:wroclaw:opole:opole": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Opolu"
+      }
+    },
+    "pl:wroclaw:opole:prudnik": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Prudniku"
+      }
+    },
+    "pl:wroclaw:opole:strzelce.opolski": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Strzelcach Opolskich"
+      }
+    },
+    "pl:wroclaw:swidnica": {
+      "institution-part": {
+        "so": "Sąd Okręgowy w Świdnicy"
+      }
+    },
+    "pl:wroclaw:swidnica:dzierzoniow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Dzierżoniowie"
+      }
+    },
+    "pl:wroclaw:swidnica:klodzko": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Kłodzku"
+      }
+    },
+    "pl:wroclaw:swidnica:swidnica": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Świdnicy"
+      }
+    },
+    "pl:wroclaw:swidnica:walbrzych": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Wałbrzychu"
+      }
+    },
+    "pl:wroclaw:swidnica:zabkowice.slaskie": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Ząbkowicach Śląskich"
+      }
+    },
+    "pl:wroclaw:wroclaw": {
+      "institution-part": {
+        "so": "Sąd Okręgowy we Wrocławiu"
+      }
+    },
+    "pl:wroclaw:wroclaw:fabryczna": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy dla Wrocławia-Fabrycznej we Wrocławiu"
+      }
+    },
+    "pl:wroclaw:wroclaw:krzykow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy dla Wrocławia-Krzyków we Wrocławiu"
+      }
+    },
+    "pl:wroclaw:wroclaw:milicz": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Miliczu"
+      }
+    },
+    "pl:wroclaw:wroclaw:olawa": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Oławie"
+      }
+    },
+    "pl:wroclaw:wroclaw:olesnica": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Oleśnicy"
+      }
+    },
+    "pl:wroclaw:wroclaw:sroda.slaska": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Środzie Śląskiej"
+      }
+    },
+    "pl:wroclaw:wroclaw:srodmiescie": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy dla Wrocławia-Śródmieścia we Wrocławiu"
+      }
+    },
+    "pl:wroclaw:wroclaw:strzelin": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Strzelinie"
+      }
+    },
+    "pl:wroclaw:wroclaw:trzebnica": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Trzebnicy"
+      }
+    },
+    "pl:wroclaw:wroclaw:wolow": {
+      "institution-part": {
+        "sr": "Sąd Rejonowy w Wołowie"
+      }
+    }
+  }
+}

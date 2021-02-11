@@ -32,6 +32,35 @@
       "title": "Folkways: a study of the social importance of usages, manners, customs, mores, and morals"
     },
     {
+      "ISBN": "2-8041-4660-X 978-2-8041-4660-3",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "Philippe van",
+          "lastName": "Parijs"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Samuel",
+          "lastName": "Bowles"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jung-Kyoo",
+          "lastName": "Choi"
+        }
+      ],
+      "date": "2003",
+      "itemID": 4,
+      "itemType": "bookSection",
+      "language": "English",
+      "libraryCatalog": "Open WorldCat",
+      "place": "Bruxelles",
+      "publicationTitle": "Cultural diversity versus economic solidarity: proceedings of the Seventh Francqui Colloquium, Brussels, 28 February-1 March 2003",
+      "publisher": "De Boeck",
+      "title": "The co-evolution of love and hate"
+    },
+    {
       "DOI": "10.1098/rspb.2008.1060",
       "ISSN": "0962-8452, 1471-2954",
       "abstractNote": "A distinctive feature of human behaviour is the widespread occurrence of cooperation among unrelated individuals. Explaining the maintenance of costly within-group cooperation is a challenge because the incentive to free ride on the efforts of other group members is expected to lead to decay of cooperation. However, the costs of cooperation can be diminished or overcome when there is competition at a higher level of organizational hierarchy. Here we show that competition between groups resolves the paradigmatic \u2018public goods\u2019 social dilemma and increases within-group cooperation and overall productivity. Further, group competition intensifies the moral emotions of anger and guilt associated with violations of the cooperative norm. The results suggest an important role for group conflict in the evolution of human cooperation and moral emotions.",
@@ -106,35 +135,6 @@
       "title": "War\u2019s Enduring Effects on the Development of Egalitarian Motivations and In-Group Biases",
       "url": "http://pss.sagepub.com/content/early/2013/11/08/0956797613493444",
       "volume": "25"
-    },
-    {
-      "ISBN": "2-8041-4660-X 978-2-8041-4660-3",
-      "creators": [
-        {
-          "creatorType": "editor",
-          "firstName": "Philippe van",
-          "lastName": "Parijs"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Samuel",
-          "lastName": "Bowles"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Jung-Kyoo",
-          "lastName": "Choi"
-        }
-      ],
-      "date": "2003",
-      "itemID": 4,
-      "itemType": "bookSection",
-      "language": "English",
-      "libraryCatalog": "Open WorldCat",
-      "place": "Bruxelles",
-      "publicationTitle": "Cultural diversity versus economic solidarity: proceedings of the Seventh Francqui Colloquium, Brussels, 28 February-1 March 2003",
-      "publisher": "De Boeck",
-      "title": "The co-evolution of love and hate"
     }
   ]
 }

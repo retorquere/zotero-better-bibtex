@@ -1,7 +1,7 @@
 {
   "filename": "auto-ch.json",
   "name": "Switzerland",
-  "version": "2019-08-19 06:21:43 UTC",
+  "version": "2020-10-12 01:32:11 UTC",
   "xdata": {
     "default": {
       "place": {
@@ -80,7 +80,7 @@
     },
     "ch:jura": {
       "institution-part": {
-        "trubunal.cantonal": "Trubunal cantonal"
+        "tribunal.cantonal": "Tribunal cantonal"
       }
     },
     "ch:luzern": {

@@ -9,198 +9,204 @@
     "Album**",
     "ApplicationNumber",
     "Archive",
-    "ArchiveLocation"
+    "ArchiveCollection**"
   ],
   [
+    "ArchiveLocation",
     "ArtworkMedium",
     "ArtworkSize",
-    "AssemblyNumber**",
-    "Assignee"
+    "AssemblyNumber**"
   ],
   [
+    "Assignee",
     "AudioFileType",
     "AudioRecordingFormat",
-    "BillNumber",
-    "BlogTitle"
+    "BillNumber"
   ],
   [
+    "BlogTitle",
+    "BookAbbreviation**",
     "BookTitle",
-    "CallNumber",
+    "CallNumber"
+  ],
+  [
     "CaseName",
-    "Code"
-  ],
-  [
+    "Code",
     "CodeNumber",
-    "CodePages",
+    "CodePages"
+  ],
+  [
     "CodeVolume",
-    "Committee"
-  ],
-  [
+    "Committee",
     "Company",
-    "ConferenceDate**",
+    "ConferenceDate**"
+  ],
+  [
     "ConferenceName",
-    "Country"
-  ],
-  [
+    "Country",
     "Court",
-    "DOI",
+    "DOI"
+  ],
+  [
     "Date",
-    "DateAmended**"
-  ],
-  [
+    "DateAmended**",
     "DateDecided",
-    "DateEnacted",
+    "DateEnacted"
+  ],
+  [
     "DictionaryTitle",
-    "Distributor"
-  ],
-  [
+    "Distributor",
     "Division**",
-    "DocketNumber",
+    "DocketNumber"
+  ],
+  [
     "DocumentName**",
-    "DocumentNumber"
-  ],
-  [
+    "DocumentNumber",
     "Edition",
-    "EncyclopediaTitle",
+    "EncyclopediaTitle"
+  ],
+  [
     "EpisodeNumber",
-    "FilingDate"
-  ],
-  [
+    "FilingDate",
     "FirstPage",
-    "ForumTitle",
+    "ForumTitle"
+  ],
+  [
     "GazetteFlag**",
-    "Genre"
-  ],
-  [
+    "Genre",
     "History",
-    "ISBN",
+    "ISBN"
+  ],
+  [
     "ISSN",
-    "Institution"
-  ],
-  [
+    "Institution",
     "InterviewMedium",
-    "Issue",
+    "Issue"
+  ],
+  [
     "IssueDate",
-    "IssuingAuthority"
-  ],
-  [
+    "IssuingAuthority",
     "JournalAbbreviation",
-    "Jurisdiction**",
+    "Jurisdiction**"
+  ],
+  [
     "Label",
-    "Language"
-  ],
-  [
+    "Language",
     "LegalStatus",
-    "LegislativeBody",
+    "LegislativeBody"
+  ],
+  [
     "LetterType",
-    "LibraryCatalog"
-  ],
-  [
+    "LibraryCatalog",
     "ManuscriptType",
-    "MapType",
+    "MapType"
+  ],
+  [
     "Medium",
-    "MeetingName"
-  ],
-  [
+    "MeetingName",
     "MeetingNumber**",
-    "NameOfAct",
+    "NameOfAct"
+  ],
+  [
     "Network",
-    "NewsCaseDate**"
-  ],
-  [
+    "NewsCaseDate**",
     "NumPages",
-    "Number",
+    "Number"
+  ],
+  [
     "NumberOfVolumes",
-    "OpeningDate**"
-  ],
-  [
+    "OpeningDate**",
     "Opus**",
-    "OriginalDate**",
+    "OriginalDate**"
+  ],
+  [
     "Pages",
-    "ParentTreaty**"
-  ],
-  [
+    "ParentTreaty**",
     "PatentNumber",
-    "Place",
+    "Place"
+  ],
+  [
     "PostType",
-    "PresentationType"
-  ],
-  [
+    "PresentationType",
     "PriorityDate**",
-    "PriorityNumbers",
+    "PriorityNumbers"
+  ],
+  [
     "ProceedingsTitle",
-    "ProgramTitle"
-  ],
-  [
+    "ProgramTitle",
     "ProgrammingLanguage",
-    "PublicLawNumber",
+    "PublicLawNumber"
+  ],
+  [
     "PublicationDate**",
-    "PublicationNumber**"
-  ],
-  [
+    "PublicationNumber**",
     "PublicationTitle",
-    "Publisher",
+    "Publisher"
+  ],
+  [
     "References",
-    "RegnalYear**"
-  ],
-  [
+    "RegnalYear**",
     "RegulationType**",
-    "RegulatoryBody**",
+    "RegulatoryBody**"
+  ],
+  [
     "Reign**",
-    "Release**"
-  ],
-  [
+    "Release**",
     "ReportNumber",
-    "ReportType",
+    "ReportType"
+  ],
+  [
     "Reporter",
-    "ReporterVolume"
-  ],
-  [
+    "ReporterVolume",
     "ResolutionLabel**",
-    "Rights",
+    "Rights"
+  ],
+  [
     "RunningTime",
-    "Scale"
-  ],
-  [
+    "Scale",
     "Section",
-    "Series",
+    "Series"
+  ],
+  [
     "SeriesNumber",
-    "SeriesText"
-  ],
-  [
+    "SeriesText",
     "SeriesTitle",
-    "Session",
+    "Session"
+  ],
+  [
     "SessionType**",
-    "ShortTitle"
-  ],
-  [
+    "ShortTitle",
     "SigningDate**",
-    "Status**",
+    "Status**"
+  ],
+  [
     "Studio",
-    "Subject"
-  ],
-  [
+    "Subject",
     "SupplementName**",
-    "System",
+    "System"
+  ],
+  [
     "ThesisType",
-    "Title"
-  ],
-  [
+    "Title",
     "TreatyNumber**",
-    "Type",
+    "Type"
+  ],
+  [
     "University",
-    "Url"
-  ],
-  [
+    "Url",
     "VersionNumber",
-    "VideoRecordingFormat",
-    "Volume",
-    "VolumeTitle**"
+    "VideoRecordingFormat"
   ],
   [
+    "Volume",
+    "VolumeTitle**",
     "WebsiteTitle",
-    "WebsiteType",
+    "WebsiteType"
+  ],
+  [
     "YearAsVolume**",
+    "",
+    "",
     ""
   ]
 ]

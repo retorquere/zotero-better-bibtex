@@ -12,6 +12,27 @@
     {
       "creators": [
         {
+          "creatorType": "editor",
+          "firstName": "First",
+          "lastName": "Editor"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Second",
+          "lastName": "Editor"
+        }
+      ],
+      "date": "October 2006",
+      "extra": [
+        "Citation Key: conference:06"
+      ],
+      "itemID": 2,
+      "itemType": "book",
+      "title": "Proceedings of the Xth conference on XYZ"
+    },
+    {
+      "creators": [
+        {
           "creatorType": "author",
           "firstName": "First",
           "lastName": "Author"
@@ -30,27 +51,6 @@
       "itemType": "conferencePaper",
       "pages": "330\u2014331",
       "title": "Some publication title"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "editor",
-          "firstName": "First",
-          "lastName": "Editor"
-        },
-        {
-          "creatorType": "editor",
-          "firstName": "Second",
-          "lastName": "Editor"
-        }
-      ],
-      "date": "October 2006",
-      "extra": [
-        "Citation Key: conference:06"
-      ],
-      "itemID": 2,
-      "itemType": "book",
-      "title": "Proceedings of the Xth conference on XYZ"
     }
   ]
 }

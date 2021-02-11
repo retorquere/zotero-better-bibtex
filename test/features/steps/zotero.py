@@ -36,7 +36,6 @@ yaml.default_flow_style = False
 
 EXPORTED = os.path.join(ROOT, 'exported')
 FIXTURES = os.path.join(ROOT, 'test/fixtures')
-LOADED = set()
 
 class Pinger():
   def __init__(self, every):
@@ -105,6 +104,9 @@ class Config:
 class Zotero:
   def __init__(self, userdata):
     assert not running('Zotero'), 'Zotero is running'
+
+    self.fixtures_loaded = set()
+    self.fixtures_loaded_log = userdata.get('loaded')
 
     self.client = userdata.get('client', 'zotero')
     self.beta = userdata.get('beta') == 'true'
@@ -271,9 +273,10 @@ class Zotero:
     self.execute('Zotero.BetterBibTeX.TestSupport.resetCache()')
 
   def loaded(self, path):
-    LOADED.add(str(PurePath(path).relative_to(FIXTURES)))
-    with open(os.path.join(FIXTURES, 'loaded.json'), 'w') as f:
-      json.dump(list(LOADED), f, indent='  ')
+    self.fixtures_loaded.add(str(PurePath(path).relative_to(FIXTURES)))
+    if self.fixtures_loaded_log:
+      with open(self.fixtures_loaded_log, 'w') as f:
+        json.dump(sorted(list(self.fixtures_loaded)), f, indent='  ')
 
   def load(self, path, attempt_patch=False):
     path = os.path.join(FIXTURES, path)

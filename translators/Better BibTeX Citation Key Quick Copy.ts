@@ -1,47 +1,55 @@
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
 declare const Zotero: any
 
 import format = require('string-template')
 
 import { Translator } from './lib/translator'
 export { Translator }
+import { ZoteroTranslator } from '../gen/typings/serialized-item'
 
 import { Exporter } from './bibtex/exporter'
 
 function select_by_key(item) {
-  const [ , kind, lib, key ] = item.uri.match(/^https?:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^\/]+)\/items\/(.+)/)
+  const [ , kind, lib, key ] = item.uri.match(/^https?:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^/]+)\/items\/(.+)/)
   return (kind === 'users') ? `zotero://select/library/items/${key}` : `zotero://select/groups/${lib}/items/${key}`
 }
 function select_by_citekey(item) {
   return `zotero://select/items/@${encodeURIComponent(item.citationKey)}`
 }
 
-const Mode = { // tslint:disable-line:variable-name
+const Mode = {
+  // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
   gitbook(items) {
-    const citations = items.map(item => `{{ \"${item.citationKey}\" | cite }}`)
+    const citations = items.map(item => `{{ "${item.citationKey}" | cite }}`)
     Zotero.write(citations.join(''))
   },
 
   atom(items) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     const keys = items.map(item => item.citationKey)
     if (keys.length === 1) {
       Zotero.write(`[](#@${keys[0]})`)
-    } else {
+    }
+    else {
       Zotero.write(`[](?@${keys.join(',')})`)
     }
   },
 
   latex(items) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     const keys = items.map(item => item.citationKey)
 
     const cmd = `${Translator.preferences.citeCommand}`.trim()
     if (cmd === '') {
       Zotero.write(keys.join(','))
-    } else {
+    }
+    else {
       Zotero.write(`\\${cmd}{${keys.join(',')}}`)
     }
   },
 
   citekeys(items) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     const keys = items.map(item => item.citationKey)
     Zotero.write(keys.join(','))
   },
@@ -53,8 +61,15 @@ const Mode = { // tslint:disable-line:variable-name
     Zotero.write(keys)
   },
 
+  roamCiteKey(items) {
+    let keys = items.map(item => `[[@${item.citationKey}]]`)
+    keys = keys.join(' ')
+    Zotero.write(keys)
+  },
+
   orgRef(items) {
     if (!items.length) return  ''
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     Zotero.write(`cite:${items.map(item => item.citationKey).join(',')}`)
   },
 
@@ -97,10 +112,12 @@ const Mode = { // tslint:disable-line:variable-name
 
         if (date.type === 'verbatim' || !date.year) {
           ref.push(item.date)
-        } else {
+        }
+        else {
           ref.push(date.year)
         }
-      } else {
+      }
+      else {
         ref.push('no date')
       }
 
@@ -112,17 +129,19 @@ const Mode = { // tslint:disable-line:variable-name
   'string-template'(items) {
     try {
       const { citation, item, sep } = JSON.parse(Translator.preferences.citeCommand)
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       Zotero.write(format(citation || '{citation}', { citation: items.map(i => format(item || '{item}', { item: i })).join(sep || '') }))
-    } catch (err) {
+    }
+    catch (err) {
       Zotero.write(`${err}`)
     }
   },
 }
 
-export function doExport() {
+export function doExport(): void {
   Translator.init('export')
 
-  let item: ISerializedItem
+  let item: ZoteroTranslator.Item
   const items = []
   while ((item = Exporter.nextItem())) {
     if (item.citationKey) items.push(item)
@@ -131,7 +150,8 @@ export function doExport() {
   const mode = Mode[`${Translator.options.quickCopyMode}`] || Mode[`${Translator.preferences.quickCopyMode}`]
   if (mode) {
     mode.call(null, items)
-  } else {
+  }
+  else {
     throw new Error(`Unsupported Quick Copy format '${Translator.options.quickCopyMode || Translator.preferences.quickCopyMode}', I only know about: ${Object.keys(Mode).join(', ')}`)
   }
 }
