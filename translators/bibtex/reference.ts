@@ -317,6 +317,7 @@ export class Reference {
   private whitespace = new Zotero.Utilities.XRegExp('\\p{Zs}')
 
   private inPostscript = false
+  private quality_report: string[] = []
 
   public static installPostscript(): void {
     let postscript = Translator.preferences.postscript
@@ -559,7 +560,12 @@ export class Reference {
     }
 
     if (this.has[field.name]) {
-      if (!this.inPostscript && !field.replace) throw new Error(`duplicate field '${field.name}' for ${this.item.citationKey}: old: ${this.has[field.name].bibtex}, new: ${field.bibtex || field.value}`)
+      if (this.has[field.name].value === field.value && (this.has[field.name].enc || 'latex') === (field.enc || 'latex')) return null
+      if (!this.inPostscript && !field.replace) {
+        const value = field.bibtex ? 'bibtex' : 'value'
+        throw new Error(`duplicate field '${field.name}' for ${this.item.citationKey}: old: ${this.has[field.name][value]}, new: ${field[value]}`)
+      }
+      this.quality_report.push(`duplicate "${field.name}" ("${this.has[field.name].value}") ignored`)
       this.remove(field.name)
     }
 
@@ -1349,6 +1355,8 @@ export class Reference {
     else {
       report = [`I don't know how to quality-check ${this.referencetype} references`]
     }
+
+    report = report.concat(this.quality_report)
 
     if (!report.length) return ''
 

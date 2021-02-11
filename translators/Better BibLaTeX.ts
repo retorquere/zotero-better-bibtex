@@ -361,7 +361,10 @@ export function doExport(): void {
     ref.add({ name: 'abstract', value: item.abstractNote?.replace(/\n+/g, ' ') })
     ref.add({ name: 'volumes', value: item.numberOfVolumes })
     ref.add({ name: 'version', value: item.versionNumber })
+
     ref.add({ name: 'eventtitle', value: item.conferenceName })
+    ref.add({ name: 'eventtitle', value: item.meetingName, replace: true })
+
     ref.add({ name: 'pagetotal', value: item.numPages })
 
     const number_added = ref.add({ name: 'number', value: patent.number(item) || item.number || item.seriesNumber })
@@ -494,8 +497,6 @@ export function doExport(): void {
     }
 
     if (ref.referencetype === 'unpublished' && item.itemType !== 'presentation') ref.add({ name: 'howpublished', value: item.type })
-
-    ref.add({ name: 'eventtitle', value: item.meetingName })
 
     if (item.accessDate && item.url) ref.add({ name: 'urldate', value: Zotero.BetterBibTeX.strToISO(item.accessDate), enc: 'date' })
 
