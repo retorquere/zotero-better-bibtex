@@ -417,6 +417,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
           this._displayOptions.exportPath = this.location.path
         }
 
+        let stored_strings = Prefs.get('postscriptOverride')
         let postscript = Prefs.get('postscriptOverride')
         if (postscript) {
           postscript = OS.Path.join(this._displayOptions.exportDir, postscript)

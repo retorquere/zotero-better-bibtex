@@ -342,6 +342,11 @@
         <preference name="extensions.zotero.translators.better-bibtex.autoExportPathReplaceSpace" type="string" default=" "/>
         <preference name="extensions.zotero.translators.better-bibtex.autoExportPathReplaceDiacritics" type="bool" default="false"/>
 
+        <preference name="extensions.zotero.translators.better-bibtex.exportBibTeXStringsPath" type="string" default=""/>
+        <bbt:doc>
+          If you maintain @strings vars in an external file, and you want to use @string-matching on export for these, you can enter a filename here, and it will be loaded just before the export starts, so it will always be up to date during exports. If you enter an absolute path, only that one file will be used for all exports; if you enter a relative path, BBT will look for that path relative to the export target
+        </bbt:doc>
+
         <preference name="extensions.zotero.translators.better-bibtex.postscriptOverride" type="string" default=""/>
         <bbt:doc>
           You can use a custom postscript per export directory:
