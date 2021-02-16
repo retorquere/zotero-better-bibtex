@@ -3,15 +3,13 @@
 
 default: `<not set>`
 
-If you have unicode turned on you can still selectively replace some characters to plain-text commands; any characters entered here will always
-be replaced by their LaTeX-command counterparts.
+If you have unicode turned on you can still selectively replace some characters to plain-text commands; any characters entered here will always be replaced by their LaTeX-command counterparts.
 
 ### autoExportDelay
 
 default: `1`
 
-If you have auto-exports set up, BBT will wait this many seconds before actually kicking off the exports to buffer multiple changes in quick succession
-setting off an unreasonable number of auto-exports. Minimum is 1 second. Changes to this preference take effect after restarting Zotero.
+If you have auto-exports set up, BBT will wait this many seconds before actually kicking off the exports to buffer multiple changes in quick succession setting off an unreasonable number of auto-exports. Minimum is 1 second. Changes to this preference take effect after restarting Zotero.
 
 ### autoExportIdleWait
 
@@ -35,24 +33,19 @@ Support for EDTF dates in biblatex
 
 default: `5`
 
-How often the Better BibTeX database should be saved to disk. Defaults to once every 5 seconds. Note that
-your database is always saved when your computer goes idle, or when you exit Zotero.
+How often the Better BibTeX database should be saved to disk. Defaults to once every 5 seconds. Note that your database is always saved when your computer goes idle, or when you exit Zotero.
 
 ### citeprocNoteCitekey
 
 default: `no`
 
-Replaces the "note" field with the bibtex key during citation rendering in Word/Libreoffice. Main use-case is to help migrating word documents to pandoc.
-This setting only takes effect during startup, so if you change it, you will have to restart Zotero to have this take effect (or to disable it.
-Please disable it when done). You will want to use a custom CSL style
-(such as [this](https://raw.githubusercontent.com/retorquere/zotero-better-bibtex/master/better-bibtex-citekeys.csl)) to make this work.
+Replaces the "note" field with the bibtex key during citation rendering in Word/Libreoffice. Main use-case is to help migrating word documents to pandoc. This setting only takes effect during startup, so if you change it, you will have to restart Zotero to have this take effect (or to disable it. Please disable it when done). You will want to use a custom CSL style (such as [this](https://raw.githubusercontent.com/retorquere/zotero-better-bibtex/master/better-bibtex-citekeys.csl)) to make this work.
 
 ### csquotes
 
 default: `<not set>`
 
-if you set `csquotes` to a string of character pairs, each pair will be assumed to be the open and close parts of a pair and
-will be replaced with a `\\enquote{...}` construct.
+if you set `csquotes` to a string of character pairs, each pair will be assumed to be the open and close parts of a pair and will be replaced with a `\\enquote{...}` construct.
 
 ### git
 
@@ -84,17 +77,13 @@ default: `ignore`
 
 What to do when encountering a TeX command the parser does not know about. Please only use values:
 
-* `ignore`: ignore the command entirely
-* `tex`: import and mark as TeX code, so on re-export it will be output as-is
-* `text`: import without marking it as TeX code, so on re-export it will be treated as regular text
+* `ignore`: ignore the command entirely * `tex`: import and mark as TeX code, so on re-export it will be output as-is * `text`: import without marking it as TeX code, so on re-export it will be treated as regular text
 
 ### itemObserverDelay
 
 default: `5`
 
-I've had reports where Zotero notifies extensions that references have changed, but if BBT then actually
-retrieves those same references, Zotero complains they "haven't been saved yet". Super. This preference sets
-the number of microseconds BBT should wait after being notified before acting on the changed references.
+I've had reports where Zotero notifies extensions that references have changed, but if BBT then actually retrieves those same references, Zotero complains they "haven't been saved yet". Super. This preference sets the number of microseconds BBT should wait after being notified before acting on the changed references.
 
 ### kuroshiro
 
@@ -106,24 +95,19 @@ When on, BBT will load kuroshiro for romajization in citekeys. This uses a lot o
 
 default: `<not set>`
 
-Any characters entered here will prefer a math-mode LaTeX-command counterpart over a math-mode,
-if a math-mode command is available. Only useful when `mapUnicode` is `conservative`.
+Any characters entered here will prefer a math-mode LaTeX-command counterpart over a math-mode, if a math-mode command is available. Only useful when `mapUnicode` is `conservative`.
 
 ### mapText
 
 default: `<not set>`
 
-Any characters entered here will prefer a text-mode LaTeX-command counterpart over a math-mode, if a text-mode command is available.
-Only useful when `mapUnicode` is `conservative`. Characters specified in `mapMath` take presedence over characters specified in `mapText`.
+Any characters entered here will prefer a text-mode LaTeX-command counterpart over a math-mode, if a text-mode command is available. Only useful when `mapUnicode` is `conservative`. Characters specified in `mapMath` take presedence over characters specified in `mapText`.
 
 ### newTranslatorsAskRestart
 
 default: `yes`
 
-New translators installed in Zotero are not immediately usuable for drag-and-drop. If you want to use BBT for drag-and-drop
-(e.g. to drag and drop citekeys or citations), you will be asked whether you want to restart after installation,
-or whether you want to reinstall when it is more convenient to you. You will be asked this whenever the BBT translators update,
-but you can disable this by checking "Do not ask again" in that dialog.
+New translators installed in Zotero are not immediately usuable for drag-and-drop. If you want to use BBT for drag-and-drop (e.g. to drag and drop citekeys or citations), you will be asked whether you want to restart after installation, or whether you want to reinstall when it is more convenient to you. You will be asked this whenever the BBT translators update, but you can disable this by checking "Do not ask again" in that dialog.
 
 ### parseParticles
 
@@ -137,9 +121,7 @@ default: `<not set>`
 
 You can use a custom postscript per export directory:
 
-1. Edit the hidden preference `postscriptOverride`, and set it to a filename like `postscript.js`
-2. In the directory where you intend to export to, create a file called `postscript.js` (or whatever you set the preference to) and add the postscript you want there
-3. Export to that directory.
+1. Edit the hidden preference `postscriptOverride`, and set it to a filename like `postscript.js` 2. In the directory where you intend to export to, create a file called `postscript.js` (or whatever you set the preference to) and add the postscript you want there 3. Export to that directory.
 
 A postscript override will disable caching for that export.
 
@@ -153,15 +135,13 @@ When you set this on, BBT will import bib files leaving any LaTeX commands as-is
 
 default: `#LaTeX`
 
-When an item has this tag, all its fields will be assumed to hold raw LaTeX and will undergo no further transformation.
-If you set this to `*`, all items will be assumed to have raw LaTeX.
+When an item has this tag, all its fields will be assumed to hold raw LaTeX and will undergo no further transformation. If you set this to `*`, all items will be assumed to have raw LaTeX.
 
 ### relativeFilePaths
 
 default: `no`
 
-When exporting a Bib(La)TeX file, if the attachments are stored anywhere under the directory the bibliography is exported to, use relative paths
-to those attachments. Caching is disabled when this option is on, so it affects performance.
+When exporting a Bib(La)TeX file, if the attachments are stored anywhere under the directory the bibliography is exported to, use relative paths to those attachments. Caching is disabled when this option is on, so it affects performance.
 
 ### skipWords
 
@@ -179,8 +159,6 @@ list of fields to treat as verbatim during import. If you're importing e.g. Mend
 
 default: `no`
 
-Both Zotero and BBT expect titles to be in sentence-case, but a lot of sites offer import data that is Title Cased. When exporting these titles to bib(la)tex you're going
-to get a lot of extra unwanted braces, because all these Title Cased words will look like proper nouns to BBTs own title-casing mechanism. When this setting is on, you will be warned
-when you import/save items in Zotero with titles that look like they're Title Cased, so that you can inspect/correct them.
+Both Zotero and BBT expect titles to be in sentence-case, but a lot of sites offer import data that is Title Cased. When exporting these titles to bib(la)tex you're going to get a lot of extra unwanted braces, because all these Title Cased words will look like proper nouns to BBTs own title-casing mechanism. When this setting is on, you will be warned when you import/save items in Zotero with titles that look like they're Title Cased, so that you can inspect/correct them.
 
 

@@ -44,11 +44,8 @@ for header in sorted(glob.glob(os.path.join(root, 'translators/*.json'))):
 with open(os.path.join(root, 'gen/translators.json'), 'w') as out:
   json.dump(translators, out, indent=2, sort_keys=True)
 
-with open(os.path.join(root, 'gen/preferences/defaults.json')) as f:
-  variables.preferences = json.load(f)
-
-  for pref, default in variables.preferences.items():
-    variables.preferences[pref] = jstype(default)
+with open(os.path.join(root, 'gen/preferences.json')) as f:
+  variables.preferences = { pref['var']: jstype(pref['default']) for pref in json.load(f) }
 
 variables.labels = translators.byLabel.keys()
 

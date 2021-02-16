@@ -601,8 +601,8 @@ class Preferences:
     self.zotero = zotero
     self.pref = {}
     self.prefix = 'translators.better-bibtex.'
-    with open(os.path.join(ROOT, 'gen/preferences/defaults.json')) as f:
-      self.supported = {self.prefix + k: type(v) for (k, v) in json.load(f).items()}
+    with open(os.path.join(ROOT, 'gen/preferences.json')) as f:
+      self.supported = {self.prefix + pref['var']: type(pref['default']) for pref in json.load(f)}
     self.supported[self.prefix + 'removeStock'] = bool
     self.supported[self.prefix + 'ignorePostscriptErrors'] = bool
 

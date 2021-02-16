@@ -12,11 +12,12 @@ import { JournalAbbrev } from '../journal-abbrev'
 import { kuroshiro } from './kuroshiro'
 import * as Extra from '../extra'
 import { buildCiteKey as zotero_buildCiteKey } from './formatter-zotero'
+import { fromEntries } from '../object'
 
 const parser = require('./formatter.pegjs')
 import * as DateParser from '../dateparser'
 
-import * as defaults from '../../gen/preferences/defaults.json'
+import { defaults } from '../prefs-meta'
 import * as methods from '../../gen/key-formatter-methods.json'
 import * as items from '../../gen/items/items'
 
@@ -799,7 +800,7 @@ class PatternFormatter {
   private creators(onlyEditors, options: { initialOnly?: boolean, withInitials?: boolean} = {}): string[] {
     let types = Zotero.CreatorTypes.getTypesForItemType(this.item.item.itemTypeID)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    types = types.reduce((map, type) => { map[type.name] = type.id; return map }, {})
+    types = fromEntries(types.map(type => [ type.name, type.id ]))
     const primary = Zotero.CreatorTypes.getPrimaryIDForType(this.item.item.itemTypeID)
 
     const creators: Record<string, string[]> = {}

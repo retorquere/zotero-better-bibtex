@@ -11,9 +11,7 @@ Set the pattern used to generate citation keys. The format of the keys is docume
 
 default: `yes`
 
-If you have deviated from the default citation key format pattern by [specifying your own]({{ ref . "citing" }}), you may
-wind up with non-ASCII characters in your citation keys. You can prevent that using the `fold` function at the
-appropriate place in your pattern, but checking this checkbox will just apply `fold` to all your keys.
+If you have deviated from the default citation key format pattern by [specifying your own]({{ ref . "citing" }}), you may wind up with non-ASCII characters in your citation keys. You can prevent that using the `fold` function at the appropriate place in your pattern, but checking this checkbox will just apply `fold` to all your keys.
 
 ### Keeping citation keys unique
 
@@ -21,9 +19,7 @@ appropriate place in your pattern, but checking this checkbox will just apply `f
 
 default: `within each library`
 
-Auto-generated (non-pinned) keys automatically get a postfix when they would generate a duplicate. By default, the check for duplicates is restricted
-to the library/group the item lives in. When set to global, the check will include all libraries/groups, so auto-generated keys would be globally
-unique. Changing this setting *does not* affect existign keys - for this you would need to select the items and refresh the keys.
+Auto-generated (non-pinned) keys automatically get a postfix when they would generate a duplicate. By default, the check for duplicates is restricted to the library/group the item lives in. When set to global, the check will include all libraries/groups, so auto-generated keys would be globally unique. Changing this setting *does not* affect existign keys - for this you would need to select the items and refresh the keys.
 
 Options:
 
@@ -34,9 +30,7 @@ Options:
 
 default: `kept (causes key duplicates)`
 
-This determines what happens if you pin a key to a value that is already in use in a different reference but not pinned there.
-Neither are ideal, you just get to pick your poison. If you let BBT change the non-pinned key by adding a postfix character,
-the citation key changes which could be problematic for existing papers. If you keep the non-pinned key as-is, your library now has duplicate keys.
+This determines what happens if you pin a key to a value that is already in use in a different reference but not pinned there. Neither are ideal, you just get to pick your poison. If you let BBT change the non-pinned key by adding a postfix character, the citation key changes which could be problematic for existing papers. If you keep the non-pinned key as-is, your library now has duplicate keys.
 
 Options:
 
@@ -49,8 +43,7 @@ Options:
 
 default: `LaTeX`
 
-Used for drag-and-drop/quick copy using Better BibTeX citekeys. In the Zotero "Export" pane, choose `Better BibTeX Quick Copy`
-as the default export format for quick copy, and choose the desired format for the drag-and-drop citations here.
+Used for drag-and-drop/quick copy using Better BibTeX citekeys. In the Zotero "Export" pane, choose `Better BibTeX Quick Copy` as the default export format for quick copy, and choose the desired format for the drag-and-drop citations here.
 
 Options:
 
@@ -71,15 +64,13 @@ Options:
 
 default: `cite`
 
-Used for drag-and-drop/quick copy citations in `LaTeX` format. Set the desired LaTeX citation command here. If you set this to `citep`,
-drag-and-drop citations will yield `\citep{key1,key2,...}`
+Used for drag-and-drop/quick copy citations in `LaTeX` format. Set the desired LaTeX citation command here. If you set this to `citep`, drag-and-drop citations will yield `\citep{key1,key2,...}`
 
 #### Surround Pandoc citations with brackets
 
 default: `no`
 
-Used for drag-and-drop/quick copy citations in `Pandoc` format. You can use this option to select whether you want
-to have these pandoc citations surrounded with brackets or not.
+Used for drag-and-drop/quick copy citations in `Pandoc` format. You can use this option to select whether you want to have these pandoc citations surrounded with brackets or not.
 
 ### BibTeX AUX scanner
 
@@ -87,7 +78,6 @@ to have these pandoc citations surrounded with brackets or not.
 
 default: `no`
 
-By default, when scanning for cited items in the aux file, BBT will just generate a note listing all citation keys it cannot find in Zotero.
-When this option is turned on, BBT will attempt to import such missing items from the bib file that the AUX file being scanned points to.
+By default, when scanning for cited items in the aux file, BBT will just generate a note listing all citation keys it cannot find in Zotero. When this option is turned on, BBT will attempt to import such missing items from the bib file that the AUX file being scanned points to.
 
 

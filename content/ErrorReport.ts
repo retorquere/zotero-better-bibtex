@@ -14,8 +14,7 @@ import { DB } from './db/main'
 import { DB as Cache } from './db/cache'
 
 import * as s3 from './s3.json'
-import * as preferences_defaults from '../gen/preferences/defaults.json'
-const preferences = Object.keys(preferences_defaults).sort()
+import { names as preferences} from './prefs-meta'
 
 import * as PACKAGE from '../package.json'
 

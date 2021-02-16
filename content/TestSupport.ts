@@ -15,7 +15,7 @@ import { AUXScanner } from './aux-scanner'
 import { DB as Cache } from './db/cache'
 import { upgrade } from './db/upgrade'
 
-import * as pref_defaults from '../gen/preferences/defaults.json'
+import  { defaults } from './prefs-meta'
 
 export = new class {
   public removeAutoExports() {
@@ -33,7 +33,7 @@ export = new class {
 
     let collections
     const prefix = 'translators.better-bibtex.'
-    for (const [pref, value] of Object.entries(pref_defaults)) {
+    for (const [pref, value] of Object.entries(defaults)) {
       if (pref === 'testing') continue
       Zotero.Prefs.set(prefix + pref, value)
     }
@@ -76,7 +76,7 @@ export = new class {
 
     if (Object.keys(preferences).length) {
       for (let [pref, value] of Object.entries(preferences)) {
-        if (typeof pref_defaults[pref] === 'undefined') throw new Error(`Unsupported preference ${pref} in test case`)
+        if (typeof defaults[pref] === 'undefined') throw new Error(`Unsupported preference ${pref} in test case`)
         if (Array.isArray(value)) value = value.join(',')
         Zotero.Prefs.set(`translators.better-bibtex.${pref}`, value)
       }

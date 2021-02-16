@@ -6,8 +6,7 @@ import { getItemsAsync } from '../get-items-async'
 
 import { Store } from './store'
 
-import * as prefOverrides from '../../gen/preferences/auto-export-overrides.json'
-import * as prefOverridesSchema from '../../gen/preferences/auto-export-overrides-schema.json'
+import { override } from '../prefs-meta'
 
 class Main extends Loki {
   public async init() {
@@ -65,7 +64,7 @@ class Main extends Loki {
         'useJournalAbbreviation',
         'exportNotes',
 
-        ...prefOverrides,
+        ...(override.names),
       ],
       unique: [ 'path' ],
       logging: true,
@@ -83,7 +82,7 @@ class Main extends Loki {
           useJournalAbbreviation: { type: 'boolean', default: false },
 
           // prefs
-          ...prefOverridesSchema,
+          ...(override.types),
 
           error: { type: 'string', default: '' },
           recursive: { type: 'boolean', default: false },
@@ -92,7 +91,7 @@ class Main extends Loki {
           meta: { type: 'object' },
           $loki: { type: 'integer' },
         },
-        required: [ 'type', 'id', 'path', 'status', 'translatorID', 'exportNotes', 'useJournalAbbreviation', ...prefOverrides ],
+        required: [ 'type', 'id', 'path', 'status', 'translatorID', 'exportNotes', 'useJournalAbbreviation', ...(override.names) ],
 
         additionalProperties: false,
       },
@@ -106,7 +105,7 @@ class Main extends Loki {
         update = true
       }
 
-      for (const pref of prefOverrides) {
+      for (const pref of override.names) {
         if (typeof ae[pref] === 'undefined') {
           ae[pref] = Prefs.get(pref)
           update = true

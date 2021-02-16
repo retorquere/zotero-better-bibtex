@@ -7,14 +7,15 @@ import { Translators } from '../translators'
 import { getItemsAsync } from '../get-items-async'
 import { Preferences as Prefs } from '../prefs'
 import { log } from '../logger'
+import { fromEntries } from '../object'
 
 import * as unicode_table from 'unicode2latex/tables/unicode.json'
-const unicode2latex = Object.entries(unicode_table).reduce((acc, pair) => {
-  const unicode = pair[0]
-  const latex = pair[1] as { text: string, math: string }
-  acc[unicode] = { text: latex.text || latex.math, math: !(latex.text) }
-  return acc
-}, {})
+
+const unicode2latex = (fromEntries(
+  Object
+    .entries(unicode_table)
+    .map(([unicode, latex]: [string, { text: string, math: string }]) => [ unicode, { text: latex.text || latex.math, math: !(latex.text) }])
+) as Record<string, { text: string, math: boolean }>)
 
 function tolatex(s: string): string {
   if (!s) return ''

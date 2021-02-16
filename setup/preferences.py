@@ -9,6 +9,7 @@ from collections import OrderedDict
 import os
 import html
 from mako.template import Template
+import re
 
 root = os.path.join(os.path.dirname(__file__), '..')
 
@@ -43,6 +44,7 @@ class Preferences:
     self.hidden = {}
     self.undocumented = {}
     self.printed = []
+    self.vars = []
 
     self.pane, self.ns = load(os.path.join(root, 'content/Preferences.xul'))
     self.parse()
@@ -51,7 +53,7 @@ class Preferences:
   def parse(self):
     xul = f'{{{self.ns.xul}}}'
     bbt = f'{{{self.ns.bbt}}}'
-    prefix = 'extensions.zotero.translators.better-bibtex.'
+    self.prefix = 'extensions.zotero.translators.better-bibtex.'
 
     #for doc in self.pane.findall(f'.//{xul}prefpane/{bbt}doc'):
     #  self.header = textwrap.dedent(doc.text)
@@ -71,21 +73,47 @@ class Preferences:
     if len(links) > 0: raise ValueError(', '.join(list(links.keys())))
 
     for pref in self.pane.findall(f'.//{xul}prefpane/{xul}preferences/{xul}preference'):
-
       doc = pref.getnext()
-      if doc is not None and doc.tag != f'{bbt}doc': doc = None
-      if doc is None: doc = tooltips.get(pref.get('name').split('.')[-1])
-
-      _id = pref.get('id')
       pref = Munch(
-        name = pref.get('name').replace(prefix, ''),
+        id = pref.get('id'),
+        name = pref.get('name').replace(self.prefix, ''),
         type = pref.get('type'),
         default = pref.get('default')
       )
-      if doc is not None: pref.description = textwrap.dedent(doc.text).strip()
-      self.preferences[_id or f'#{pref.name}'] = pref
+      pref.var = re.sub(r'-(.)', lambda m: m.group(1).upper(), pref.name.replace('.', '_'))
+      assert pref.var not in self.vars
+      self.vars.append(pref.var)
 
-      self.hidden[pref.name] = _id is None
+      # temporary
+      assert pref.name == pref.var, (pref.name, pref.var)
+
+      self.hidden[pref.name] = pref.id is None
+      self.preferences[pref.id or f'#{pref.name}'] = pref
+
+      while doc is not None and doc.tag in [f'{bbt}option', f'{bbt}doc']:
+        if doc.tag == f'{bbt}option':
+          assert pref.id is None, pref.id
+          assert pref.type == 'string'
+          pref.options = OrderedDict()
+          self.undocumented[pref.name] = True
+          while doc is not None and doc.tag == f'{bbt}option':
+            value = doc.get('value')
+            pref.options[value] = value
+            doc = doc.getnext()
+          continue
+
+        elif doc.tag == f'{bbt}doc':
+          pref.description = textwrap.dedent(doc.text).strip()
+
+        doc = doc.getnext()
+
+      if not 'description' in pref:
+        if (doc := tooltips.get(pref.get('name', '').split('.')[-1])) is not None:
+          pref.description = textwrap.dedent(doc.text).strip()
+
+      if 'description' in pref:
+        pref.description = pref.description.replace('\n\n', '\t').replace('\n', ' ').replace('\t', '\n\n')
+
       self.undocumented[pref.name] = 'description' not in pref
 
       if pref.type == 'bool':
@@ -115,8 +143,13 @@ class Preferences:
 
     for override in self.pane.findall(f'.//*[@{bbt}ae-field]'):
       override = override.get(f'{bbt}ae-field')
-      override = next((pref for pref in self.preferences.values() if pref.name == override), None)
-      if override: override.override = True
+      if override in ['type', 'name', 'status', 'updated', 'translator', 'path', 'error', 'cached', 'recursive']:
+        continue
+      if override in ['exportNotes', 'useJournalAbbreviation']:
+        continue
+      pref = next((pref for pref in self.preferences.values() if pref.name == override), None)
+      assert pref, f'could not find pref with name {override}'
+      pref.override = True
 
     self.preferences['#skipWords'].default = self.preferences['#skipWords'].default.replace(' ', '')
 
@@ -200,44 +233,31 @@ class Preferences:
     return doc
 
   def save(self):
-    preferences = {}
     for pref in self.preferences.values():
       assert (pref.name in self.printed) or (pref.name in self.undocumented), f'{pref.name} not printed'
-      preferences[pref.name] = pref
-      del pref['name']
 
-    os.makedirs(os.path.join(root, 'gen/preferences'), exist_ok=True)
+    os.makedirs(os.path.join(root, 'gen'), exist_ok=True)
+    preferences = sorted(self.preferences.values(), key=lambda pref: pref.name)
+    for pref in preferences:
+      if 'id' in pref:
+        del pref['id']
 
-    with open(os.path.join(root, 'gen/preferences/preferences.json'), 'w') as f:
+    with open(os.path.join(root, 'gen/preferences.json'), 'w') as f:
       json.dump(preferences, f, indent=2)
 
-    for f in ['gen/preferences/defaults.json', 'site/data/preferences/defaults.json']:
-      with open(os.path.join(root, f), 'w') as f:
-        dflts = { name: pref.default for (name, pref) in preferences.items() }
-        json.dump(dflts, f, indent=2)
-
-    with open(os.path.join(root, 'gen/preferences/auto-export-overrides.json'), 'w') as fo:
-      with open(os.path.join(root, 'gen/preferences/auto-export-overrides-schema.json'), 'w') as fos:
-        override = {}
-        for name, pref in preferences.items():
-          if not 'override' in pref: continue
-          if 'options' in pref:
-            override[name] = { 'enum': list(pref.options.keys()) }
-          else:
-            override[name] = { 'type': pref.type }
-        json.dump(override, fos, indent=2)
-      json.dump(list(override.keys()), fo, indent=2)
+    with open(os.path.join(root, 'site/data/preferences/defaults.json'), 'w') as f:
+      json.dump({ pref.name: pref.default for pref in preferences }, f, indent=2)
 
     os.makedirs(os.path.join(root, 'gen/typings'), exist_ok=True)
 
-    with open(os.path.join(root, 'gen', 'typings', 'preferences.d.ts'), 'w') as f:
-      print('export interface IPreferences {', file=f)
-      for name, pref in preferences.items():
-        print(f'  {name}: {pref.type}', file=f)
-      print('}', file=f)
+#    with open(os.path.join(root, 'gen/typings/preferences.d.ts'), 'w') as f:
+#      print('export interface IPreferences {', file=f)
+#      for pref in preferences:
+#        print(f'  {pref.var}: {pref.type}', file=f)
+#      print('}', file=f)
 
     with open(os.path.join(root, 'gen', 'preferences.ts'), 'w') as f:
-      print(template('preferences/preferences.ts.mako').render(preferences=preferences).strip(), file=f)
+      print(template('preferences/preferences.ts.mako').render(prefix=self.prefix, preferences=preferences).strip(), file=f)
 
 content = os.path.join(root, 'content')
 for xul in os.listdir(content):

@@ -19,7 +19,7 @@ import { DB } from './db/main'
 import { sleep } from './sleep'
 import { flash } from './flash'
 
-import * as prefOverrides from '../gen/preferences/auto-export-overrides.json'
+import { override } from './prefs-meta'
 import * as translatorMetadata from '../gen/translators.json'
 
 import { TaskEasy  as Queue } from 'task-easy'
@@ -217,10 +217,10 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     displayOptions = displayOptions || {}
 
     // undo override smuggling so I can pre-fetch the cache
-    const override = 'preference_'
+    const cloaked_override = 'preference_'
     for (const [pref, value] of Object.entries(displayOptions)) {
-      if (pref.startsWith(override)) {
-        options.preferences[pref.replace(override, '')] = (value as unknown as any) // number could actually be string or bool but it's just here to quiet typescript
+      if (pref.startsWith(cloaked_override)) {
+        options.preferences[pref.replace(cloaked_override, '')] = (value as unknown as any)
         delete displayOptions[pref]
       }
     }
@@ -598,7 +598,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       exportNotes: !!displayOptions.exportNotes,
       useJournalAbbreviation: !!displayOptions.useJournalAbbreviation,
     }
-    for (const pref of prefOverrides) {
+    for (const pref of override.names) {
       if (typeof displayOptions[`preference_${pref}`] === 'undefined') {
         query[pref] = Prefs.get(pref)
       }

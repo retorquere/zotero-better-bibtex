@@ -1,10 +1,10 @@
 declare const Zotero: any
 declare const ZOTERO_TRANSLATOR_INFO: any
 
-import * as preferences from '../../gen/preferences/defaults.json'
+import { defaults } from '../../content/prefs-meta'
 import { client } from '../../content/client'
 import { ZoteroTranslator } from '../../gen/typings/serialized-item'
-import { IPreferences } from '../../gen/typings/preferences'
+import type { Preferences } from '../../gen/preferences'
 
 type TranslatorMode = 'export' | 'import'
 
@@ -50,7 +50,7 @@ type TranslatorHeader = {
 }
 
 export const Translator = new class implements ITranslator { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
-  public preferences: IPreferences
+  public preferences: Preferences
   public skipFields: string[]
   public skipField: Record<string, boolean>
   public verbatimFields?: string[]
@@ -117,7 +117,7 @@ export const Translator = new class implements ITranslator { // eslint-disable-l
     this[this.header.label.replace(/[^a-z]/ig, '')] = true
     this.BetterTeX = this.BetterBibTeX || this.BetterBibLaTeX
     this.BetterCSL = this.BetterCSLJSON || this.BetterCSLYAML
-    this.preferences = preferences
+    this.preferences = defaults
     this.options = this.header.displayOptions || {}
 
     const collator = new Intl.Collator('en')
@@ -194,10 +194,10 @@ export const Translator = new class implements ITranslator { // eslint-disable-l
     }
 
     // special handling
-    this.skipFields = this.preferences.skipFields.toLowerCase().split(',').map(field => this.typefield(field)).filter(s => s)
+    this.skipFields = this.preferences.skipFields.toLowerCase().split(',').map(field => this.typefield(field)).filter((s: string) => s)
     this.skipField = this.skipFields.reduce((acc, field) => { acc[field] = true; return acc }, {})
 
-    this.verbatimFields = this.preferences.verbatimFields.toLowerCase().split(',').map(field => this.typefield(field)).filter(s => s)
+    this.verbatimFields = this.preferences.verbatimFields.toLowerCase().split(',').map(field => this.typefield(field)).filter((s: string) => s)
 
     if (!this.verbatimFields.length) this.verbatimFields = null
     this.csquotes = this.preferences.csquotes ? { open: this.preferences.csquotes[0], close: this.preferences.csquotes[1] } : null

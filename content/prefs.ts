@@ -3,8 +3,7 @@ declare const Zotero: any
 import { log } from './logger'
 import { Events } from './events'
 
-import * as defaults from '../gen/preferences/defaults.json'
-const supported = Object.keys(defaults)
+import { defaults, names } from './prefs-meta'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const Preferences = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
@@ -69,12 +68,12 @@ export const Preferences = new class { // eslint-disable-line @typescript-eslint
 
   public set(pref, value) {
     // if (pref === 'testing' && !value) throw new Error(`preference "${pref}" may not be set to false`)
-    if (this.testing && !supported.includes(pref)) throw new Error(`Getting unsupported preference "${pref}"`)
+    if (this.testing && !names.includes(pref)) throw new Error(`Setting unsupported preference "${pref}"`)
     Zotero.Prefs.set(this.key(pref), value)
   }
 
   public get(pref) {
-    if (this.testing && !supported.includes(pref)) throw new Error(`Getting unsupported preference "${pref}"`)
+    if (this.testing && !names.includes(pref)) throw new Error(`Getting unsupported preference "${pref}"`)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return Zotero.Prefs.get(this.key(pref))
   }
@@ -95,6 +94,7 @@ export const Preferences = new class { // eslint-disable-line @typescript-eslint
     for (const name of Object.keys(all)) {
       all[name] = this.get(name)
     }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return all
   }
 

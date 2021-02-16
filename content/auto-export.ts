@@ -149,7 +149,7 @@ class Git {
 }
 const git = new Git()
 
-import * as prefOverrides from '../gen/preferences/auto-export-overrides.json'
+import { override } from './prefs-meta'
 
 if (Prefs.get('autoExportDelay') < 1) Prefs.set('autoExportDelay', 1)
 const queue = new class TaskQueue {
@@ -232,7 +232,7 @@ const queue = new class TaskQueue {
         4. If you change the jabrefFormat to anything back to 3 or 0, all caches will be dropped anyhow, and we will follow that cache format from that point on
       */
 
-      for (const pref of prefOverrides) {
+      for (const pref of override.names) {
         displayOptions[`preference_${pref}`] = ae[pref]
       }
 
@@ -367,7 +367,7 @@ export const AutoExport = new class CAutoExport { // eslint-disable-line @typesc
   }
 
   public add(ae, schedule = false) {
-    for (const pref of prefOverrides) {
+    for (const pref of override.names) {
       ae[pref] = Prefs.get(pref)
     }
     this.db.removeWhere({ path: ae.path })

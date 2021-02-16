@@ -19,7 +19,7 @@ import { AutoExport } from './auto-export'
 import { Translators } from './translators'
 import { client } from './client'
 
-import * as prefOverrides from '../gen/preferences/auto-export-overrides.json'
+import { override } from './prefs-meta'
 
 const namespace = 'http://retorque.re/zotero-better-bibtex/'
 
@@ -143,7 +143,7 @@ class AutoExportPane {
                 useJournalAbbreviation: ae.useJournalAbbreviation,
                 itemID: { $in: items },
               }
-              for (const pref of prefOverrides) {
+              for (const pref of override.names) {
                 query[pref] = ae[pref]
               }
               const cached = Cache.getCollection(Translators.byId[ae.translatorID].label).find(query)

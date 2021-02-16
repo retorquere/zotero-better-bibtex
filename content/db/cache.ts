@@ -8,9 +8,10 @@ import { Preferences as Prefs } from '../prefs'
 const version = require('../../gen/version.js')
 import * as translators from '../../gen/translators.json'
 
-import * as prefOverrides from '../../gen/preferences/auto-export-overrides.json'
-import * as prefOverridesSchema from '../../gen/preferences/auto-export-overrides-schema.json'
-import { IPreferences } from '../../gen/typings/preferences'
+import { override } from '../prefs-meta'
+import type { Preferences } from '../../gen/preferences'
+
+Zotero.debug(`::cache-override: ${JSON.stringify(override, null, 2)}`)
 
 class Cache extends Loki {
   private initialized = false
@@ -74,7 +75,7 @@ class Cache extends Loki {
     for (const translator of Object.keys(translators.byName)) {
       coll = this.schemaCollection(translator, {
         logging: false,
-        indices: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...prefOverrides ],
+        indices: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...(override.names) ],
         schema: {
           type: 'object',
           properties: {
@@ -86,7 +87,7 @@ class Cache extends Loki {
             useJournalAbbreviation: { type: 'boolean' },
 
             // prefs
-            ...prefOverridesSchema,
+            ...(override.types),
 
             // Optional
             metadata: { type: 'object' },
@@ -95,7 +96,7 @@ class Cache extends Loki {
             meta: { type: 'object' },
             $loki: { type: 'integer' },
           },
-          required: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...prefOverrides, 'reference' ],
+          required: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...(override.names), 'reference' ],
           additionalProperties: false,
         },
         ttl,
@@ -103,7 +104,7 @@ class Cache extends Loki {
       })
 
       // old cache, drop
-      if (coll.findOne({ [prefOverrides[0]]: undefined })) coll.removeDataOnly()
+      if (coll.findOne({ [override.names[0]]: undefined })) coll.removeDataOnly()
 
       // should have been dropped after object change/delete
       for (const outdated of coll.data.filter(item => !modified[item.itemID] || modified[item.itemID] >= (item.meta?.updated || item.meta?.created || 0))) {
@@ -158,14 +159,14 @@ if (DB.getCollection('cache')) { DB.removeCollection('cache') }
 if (DB.getCollection('serialized')) { DB.removeCollection('serialized') }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function selector(itemID: number | number[], options: any, prefs: IPreferences): any {
+export function selector(itemID: number | number[], options: any, prefs: Preferences): any {
   const query = {
     itemID: Array.isArray(itemID) ? { $in: itemID } : itemID,
 
     exportNotes: !!options.exportNotes,
     useJournalAbbreviation: !!options.useJournalAbbreviation,
   }
-  for (const pref of prefOverrides) {
+  for (const pref of override.names) {
     query[pref] = prefs[pref]
   }
   return query

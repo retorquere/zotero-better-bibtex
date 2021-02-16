@@ -1,52 +1,123 @@
 /* eslint-disable no-magic-numbers, @typescript-eslint/quotes, max-len */
+import { Events } from '../content/events'
 <%
   import json
+  prefix = 'translators.better-bibtex.'
 %>
 declare const Zotero: any
+const prefix = '${prefix}'
+import * as preferences from './preferences.json'
+import * as meta from '../content/prefs-meta.ts'
 
 <%
-  for name, pref in preferences.items():
+  for pref in preferences:
     if 'options' in pref:
       pref.valid = ' | '.join([ json.dumps(option) for option in pref.options ])
       pref.quoted_options = json.dumps(list(pref.options.keys()))
     else:
       pref.valid = pref.type
+
+  names = ' | '.join([f"'{pref.var}'" for pref in preferences])
 %>
 
-type Preferences = {
-% for name, pref in preferences.items():
-  ${name}: ${pref.valid | n }
+export type PreferenceName = ${names}
+export const names: PreferenceName[] = (preferences.map(pref => pref.var) as PreferenceName[])
+
+export type Preferences = {
+% for pref in preferences:
+  ${pref.var}: ${pref.valid | n }
 % endfor
 }
 
-export class PreferenceManager {
-% for name, pref in preferences.items():
-  set ${name}(v: ${pref.valid | n} | undefined) {
+export const Preference = new class PreferenceManager {
+  public defaults = meta.defaults
+
+  constructor() {
+    // migrate ancient keys
+    let old, key
+    if (typeof (old = Zotero.Prefs.get(key = '${prefix}workers')) !== 'number') {
+      Zotero.Prefs.clear(key)
+      Zotero.Prefs.set(key, old ? 1 : 0)
+    }
+    if (typeof (old = Zotero.Prefs.get(key = '${prefix}suppressTitleCase')) !== 'undefined') {
+      Zotero.Prefs.set('${prefix}exportTitleCase', !old)
+      Zotero.Prefs.clear(key)
+    }
+    if (typeof (old = Zotero.Prefs.get(key = '${prefix}suppressBraceProtection')) !== 'undefined') {
+      Zotero.Prefs.set('${prefix}exportBraceProtection', !old)
+      Zotero.Prefs.clear(key)
+    }
+    if (typeof (old = Zotero.Prefs.get(key = '${prefix}suppressSentenceCase')) !== 'undefined') {
+      Zotero.Prefs.set('${prefix}importSentenceCase', old ? 'off' : 'on+guess')
+      Zotero.Prefs.clear(key)
+    }
+    if (typeof (old = Zotero.Prefs.get(key = '${prefix}suppressNoCase')) !== 'undefined') {
+      Zotero.Prefs.set('${prefix}importCaseProtection', old ? 'off' : 'as-needed')
+      Zotero.Prefs.clear(key)
+    }
+    if (typeof (old = Zotero.Prefs.get(key = '${prefix}autoPin')) !== 'undefined') {
+      Zotero.Prefs.set('${prefix}autoPinDelay', old ? 1 : 0)
+      Zotero.Prefs.clear(key)
+    }
+
+    function changed() { Events.emit('preference-changed', this) }
+    // set defaults and install event emitter
+    for (const pref of preferences) {
+      if (pref.var !== 'platform') {
+        if (typeof this[pref.var] === 'undefined') this[pref.var] = pref.default
+        Zotero.Prefs.registerObserver(<%text>`${prefix}${pref.name}`</%text>, changed.bind(pref.var))
+      }
+    }
+    // put this in a preference so that translators can access this.
+    if (Zotero.isWin) {
+      this.platform = 'win'
+    }
+    else if (Zotero.isMac) {
+      this.platform = 'mac'
+    }
+    else {
+      if (!Zotero.isLinux) Zotero.debug('error: better-bibtex could not establish the platform, assuming linux')
+      this.platform = 'lin'
+    }
+
+    if (this.testing) {
+      return new Proxy(this, {
+        set: (object, property, value) => {
+          if (!(typeof property === 'string' && (names as string[]).includes(property))) throw new TypeError(`Unsupported preference <%text>${new String(property)}</%text>`) // eslint-disable-line no-new-wrappers
+          object[property] = value
+          return true
+        },
+        get: (object, property) => {
+          if (!(typeof property === 'string' && (names as string[]).includes(property))) throw new TypeError(`Unsupported preference <%text>${new String(property)}</%text>`) // eslint-disable-line no-new-wrappers
+          return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
+        },
+      })
+    }
+  }
+
+% for pref in preferences:
+%   if pref.name != 'platform':
+  set ${pref.var}(v: ${pref.valid | n} | undefined) {
     if (typeof v === 'undefined') v = ${json.dumps(pref.default) | n}
-    if (typeof v !== '${pref.type}') throw new Error(`${name} must be of type ${pref.type}, got '<%text>$</%text>{typeof v}'`)
+%   else:
+  set ${pref.var}(v: ${pref.valid | n}) {
+%   endif
 %   if 'quoted_options' in pref:
-    if (!${pref.quoted_options | n}.includes(v)) throw new Error(`${name} must be one of ${pref.quoted_options}, got '<%text>$</%text>{v}'`)
-%     endif
-    Zotero.Prefs.set('translators.better-bibtex.${name}', v)
+    if (!${pref.quoted_options | n}.includes(v)) throw new Error(`${pref.var} must be one of ${pref.quoted_options}, got '<%text>$</%text>{v}'`)
+%   else:
+    if (typeof v !== '${pref.type}') throw new Error(`${pref.var} must be of type ${pref.type}, got '<%text>$</%text>{typeof v}'`)
+%   endif
+    Zotero.Prefs.set('translators.better-bibtex.${pref.name}', v)
   }
-  get ${name}(): ${pref.valid} {
-    return (Zotero.Prefs.get('translators.better-bibtex.${name}') as ${pref.valid})
+  get ${pref.var}(): ${pref.valid} {
+    return (Zotero.Prefs.get('translators.better-bibtex.${pref.name}') as ${pref.valid})
   }
+
 % endfor
-
-  public defaults(): Preferences {
-    return {
-%   for name, pref in preferences.items():
-      ${name}: ${json.dumps(pref.default) | n },
-%   endfor
-    }
-  }
-
-  public all(): Preferences {
-    return {
-%   for name in preferences.keys():
-      ${name}: this.${name},
-%   endfor
-    }
+  get all(): Readonly<Preferences> {
+    return (Object.freeze(preferences.reduce((acc, pref) => {
+      acc[pref.var] = this[pref.var]
+      return acc
+    }, {})) as Readonly<Preferences>)
   }
 }

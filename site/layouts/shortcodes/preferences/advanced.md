@@ -37,9 +37,7 @@ If you have this on, and you experience any problem that is not the cache gettin
 
 default: `1`
 
-BBT can now perform its exports in a separate thread, and should no longer block Zotero's UI pretty much regardless of how large your library is.
-While it's been tested and seems to work well, I still consider it to be experimental at this stage. You can turn it off by setting this value to `0`
-and get the old (blocking) behavior back.
+BBT can now perform its exports in a separate thread, and should no longer block Zotero's UI pretty much regardless of how large your library is. While it's been tested and seems to work well, I still consider it to be experimental at this stage. You can turn it off by setting this value to `0` and get the old (blocking) behavior back.
 
 ### Import
 
@@ -51,8 +49,7 @@ Bib(La)TeX references ought to be stored in Title Case; Zotero references are ex
 
 With this option on, BBT will try to sentence-case during import. This sentence-casing uses heuristics, no natural language processing is performed, and the results are not perfect.
 
-You can turn this off, but you may then also want to disable `Apply title-casing to titles` (which has its own problems, see the help entry for that option on this page).
-With 'yes, but try to exclude already-sentence-cased titles', BBT will attempt to detect titles that are already sentence cased and leave them as-is on import.
+You can turn this off, but you may then also want to disable `Apply title-casing to titles` (which has its own problems, see the help entry for that option on this page). With 'yes, but try to exclude already-sentence-cased titles', BBT will attempt to detect titles that are already sentence cased and leave them as-is on import.
 
 Options:
 
@@ -88,8 +85,7 @@ When enabled, BBT will prepend the @strings section below to all Bib(La)TeX impo
 
 default: `No`
 
-When enabled, BBT will try to retain @string vars its exports unsurrounded by braces; when set to 'detect', single-word strings will be assumed to be externally-defined @string vars,
-when set to 'match', only @strings declared in the @strings section of the preferences will be preserved. If you don't know what this means, leave it off.
+When enabled, BBT will try to retain @string vars its exports unsurrounded by braces; when set to 'detect', single-word strings will be assumed to be externally-defined @string vars, when set to 'match', only @strings declared in the @strings section of the preferences will be preserved. If you don't know what this means, leave it off.
 
 Options:
 
@@ -104,8 +100,6 @@ Options:
 
 default: `10`
 
-For those who are curious about what the `Clear/Generate BibTeX key` right-click options do, this will warn
-you if you are doing this on more than 10 (default) at the same time, to prevent your curiosity from changing
-all your citation keys at once.
+For those who are curious about what the `Clear/Generate BibTeX key` right-click options do, this will warn you if you are doing this on more than 10 (default) at the same time, to prevent your curiosity from changing all your citation keys at once.
 
 
