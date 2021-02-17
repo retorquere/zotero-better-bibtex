@@ -1,7 +1,7 @@
 {
   "duration": {
     "(non-)dropping particle handling #313": 2800,
-    "AUX scanner": 9070,
+    "AUX scanner": 9060,
     "BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372": 270,
     "Better BibTeX Import 2": 1160,
     "BibTeX name escaping has a million inconsistencies #438": 480,
@@ -79,7 +79,7 @@
     "Export 1 references for BibLaTeX to Export Newspaper Article misses section field #132": 330,
     "Export 1 references for BibLaTeX to Export error for items without publicationTitle and Preserve BibTeX variables enabled #201": 310,
     "Export 1 references for BibLaTeX to Export fails for duplicate \"extra\" field #1739": {
-      "msecs": 330,
+      "msecs": 320,
       "runs": -236
     },
     "Export 1 references for BibLaTeX to Export mapping for reporter field #219": 360,
@@ -305,7 +305,7 @@
       "runs": -97
     },
     "Identical Pinned keys lost when merging duplicated records #1721": {
-      "msecs": 6430,
+      "msecs": 6440,
       "runs": -231
     },
     "Ignoring upper cases in German titles #456": 700,
@@ -338,7 +338,7 @@
     "Import 1 references from Spaces lost when expanding string variables during import #1081": 1020,
     "Import 1 references from Wrong ring-above import #1115": 1020,
     "Import 1 references from collaborators to contributors": {
-      "msecs": 1180,
+      "msecs": 1190,
       "runs": -209
     },
     "Import 1 references from eprinttype field dropped on import #959": 1020,
@@ -348,7 +348,7 @@
     },
     "Import 1 references from support Local-Zo-Url-x field from BibDesk2Zotero_attachments #667": 1300,
     "Import 1 references from tex.origdate ignored in citekey generation #1696": {
-      "msecs": 1110,
+      "msecs": 1100,
       "runs": -231
     },
     "Import 1 references from zbb (quietly) chokes on this .bib #664": 1080,
@@ -362,14 +362,14 @@
     },
     "Import 3 references from Better BibTeX.009": 1130,
     "Import 3 references from Import Jabref fileDirectory, unexpected reference type #1058": 1870,
-    "Import 4 references from Title of German entry converted to lowercase during import #1350": 1300,
+    "Import 4 references from Title of German entry converted to lowercase during import #1350": 1310,
     "Import 8 references from Overline during Import #1467": 1720,
     "Import 9 references from Better BibLaTeX import improvements #549": 1520,
     "Import support for the online type in BBT #1358": 1170,
     "Include first name initial(s) in cite key generation pattern (86)": 450,
     "Jabref groups import does not work #717": 2810,
     "Jabref import - groups lost #1730": {
-      "msecs": 3000,
+      "msecs": 3070,
       "runs": -228
     },
     "Journal abbreviations": 490,
@@ -385,12 +385,12 @@
     "Pandoc-LaTeX-SCHOMD Citation Export": 1280,
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 408370,
+    "Really Big whopping library": 408150,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 42180,
+      "msecs": 42270,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
@@ -402,7 +402,7 @@
     "automatic tags in export #1270": 410,
     "bibtex; url export does not survive underscores #402": 670,
     "ids field should be created in raw mode #1729": {
-      "msecs": 8380,
+      "msecs": 8470,
       "runs": -227
     },
     "importing a title-cased bib #1246": 1320,
@@ -708,7 +708,7 @@
       "Identical Pinned keys lost when merging duplicated records #1721"
     ]
   },
-  "runs": 238,
+  "runs": 239,
   "slow": {
     "1": [
       "Export 1 references for BibLaTeX to biber 2.14 rejects the date field generated from Better BibLaTex #1695",
