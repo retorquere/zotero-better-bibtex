@@ -56,7 +56,7 @@
   "dependencies": {
     "@retorquere/bibtex-parser": "^3.2.35",
     "@types/lokijs": "^1.5.3",
-    "ajv": "^7.1.1",
+    "ajv": "^7.1.0",
     "ajv-keywords": "^4.0.0",
     "assert": "^2.0.0",
     "barcoder": "^2.0.1",
@@ -96,7 +96,7 @@
     "xregexp": "^5.0.1"
   },
   "devDependencies": {
-    "@types/node": "^14.14.28",
+    "@types/node": "^14.14.25",
     "@types/webpack": "^4.41.26",
     "archiver": "^5.2.0",
     "bluebird": "^3.7.2",
@@ -107,7 +107,7 @@
     "deep-cleaner": "^1.2.1",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.6",
-    "eslint": "^7.20.0",
+    "eslint": "^7.19.0",
     "fast-json-patch": "^3.0.0-1",
     "find-up": "^5.0.0",
     "fs-extra": "^9.1.0",
@@ -135,13 +135,13 @@
     "tslib": "^2.1.0",
     "typescript": "^4.1.5",
     "uri-templates": "^0.2.0",
-    "webpack": "^5.22.0",
+    "webpack": "^5.21.2",
     "webpack-cli": "^4.5.0",
     "wrapper-webpack-plugin": "^2.1.0",
     "xml-parser": "^1.2.1",
     "xmldom": "^0.4.0",
     "xpath": "^0.0.32",
-    "zotero-plugin": "^1.0.40"
+    "zotero-plugin": "^1.0.39"
   },
   "repository": {
     "type": "git",
