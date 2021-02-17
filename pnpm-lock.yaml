@@ -1,8 +1,8 @@
 dependencies:
   '@retorquere/bibtex-parser': 3.2.35
   '@types/lokijs': 1.5.3
-  ajv: 7.1.0
-  ajv-keywords: 4.0.0_ajv@7.1.0
+  ajv: 7.1.1
+  ajv-keywords: 4.0.0_ajv@7.1.1
   assert: 2.0.0
   barcoder: 2.0.1
   citeproc: 2.4.59
@@ -973,9 +973,9 @@ packages:
       ajv: ^7.0.0
     resolution:
       integrity: sha512-baL4pEYniCF5E/5Cj28f1DmPXGGASQIeCFfntY94vJPtrq0fei3iNt/TP5f2IwEH4opCzcOOvL6hKsi2IHaecg==
-  /ajv-keywords/4.0.0_ajv@7.1.0:
+  /ajv-keywords/4.0.0_ajv@7.1.1:
     dependencies:
-      ajv: 7.1.0
+      ajv: 7.1.1
     dev: false
     peerDependencies:
       ajv: ^7.0.0
@@ -1008,7 +1008,7 @@ packages:
     dev: true
     resolution:
       integrity: sha512-xzzzaqgEQfmuhbhAoqjJ8T/1okb6gAzXn/eQRNpAN1AEUoHJTNF9xCDRTtf/s3SKldtZfa+RJeTs+BQq+eZ/sw==
-  /ajv/7.1.0:
+  /ajv/7.1.1:
     dependencies:
       fast-deep-equal: 3.1.3
       json-schema-traverse: 1.0.0
@@ -1016,7 +1016,7 @@ packages:
       uri-js: 4.4.1
     dev: false
     resolution:
-      integrity: sha512-svS9uILze/cXbH0z2myCK2Brqprx/+JJYK5pHicT/GQiBfzzhUVAIT6MwqJg8y4xV/zoGsUeuPuwtoiKSGE15g==
+      integrity: sha512-ga/aqDYnUy/o7vbsRTFhhTsNeXiYb5JWDIcRIeZfwRNCefwjNTVYCGdGSUrEmiu3yDK3vFvNbgJxvrQW4JXrYQ==
   /ansi-colors/4.1.1:
     dev: true
     engines:
@@ -5665,7 +5665,7 @@ specifiers:
   '@types/lokijs': ^1.5.3
   '@types/node': ^14.14.25
   '@types/webpack': ^4.41.26
-  ajv: ^7.1.0
+  ajv: ^7.1.1
   ajv-keywords: ^4.0.0
   archiver: ^5.2.0
   assert: ^2.0.0
