@@ -431,31 +431,36 @@ class ZoteroItem {
   protected item: any
 
   private typeMap = {
-    book:           'book',
-    booklet:        'book',
-    manual:         'report',
-    proceedings:    'book',
-    collection:     'book',
-    incollection:   'bookSection',
-    inbook:         'bookSection',
-    inreference:    'encyclopediaArticle',
-    article:        'journalArticle',
-    misc:           'journalArticle',
-    phdthesis:      'thesis',
-    mastersthesis:  'thesis',
-    thesis:         'thesis',
-    unpublished:    'manuscript',
-    patent:         'patent',
-    inproceedings:  'conferencePaper',
-    conference:     'conferencePaper',
-    techreport:     'report',
-    report:         'report',
-    online:         'webpage',
-    web_page:         'webpage',
-    softwareversion:  'computerProgram',
-    software:         'computerProgram',
-    softwaremodule:   'computerProgram',
-    codefragment:     'computerProgram',
+    article:            'journalArticle',
+    book:               'book',
+    book_section:       'bookSection', // mendeley made-up entry type
+    booklet:            'book',
+    codefragment:       'computerProgram',
+    collection:         'book',
+    conference:         'conferencePaper',
+    film:               'film', // mendeley made-up entry type
+    generic:            'journalArticle', // mendeley made-up entry type
+    inbook:             'bookSection',
+    incollection:       'bookSection',
+    inproceedings:      'conferencePaper',
+    inreference:        'encyclopediaArticle',
+    magazine_article:   'magazineArticle', // mendeley made-up entry type
+    manual:             'report',
+    mastersthesis:      'thesis',
+    misc:               'journalArticle',
+    newspaper_article:  'newspaperArticle', // mendeley made-up entry type
+    online:             'webpage',
+    patent:             'patent',
+    phdthesis:          'thesis',
+    proceedings:        'book',
+    report:             'report',
+    software:           'computerProgram',
+    softwaremodule:     'computerProgram',
+    softwareversion:    'computerProgram',
+    techreport:         'report',
+    thesis:             'thesis',
+    unpublished:        'manuscript',
+    web_page:           'webpage', // mendeley made-up entry type
   }
 
   private type: string

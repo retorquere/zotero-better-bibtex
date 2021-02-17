@@ -12,14 +12,9 @@ import { stringify } from '../content/stringify'
 import * as fs from 'fs'
 import { sync as glob } from 'glob'
 import cleaner = require('deep-cleaner')
-const preferences = {
-  defaults: require('../gen/preferences/defaults.json'),
-  supported: []
-}
-for (const pref of ['client', 'testing', 'platform', 'newTranslatorsAskRestart']) {
-  delete preferences.defaults[pref]
-}
-preferences.supported = Object.keys(preferences.defaults)
+
+import { defaults, names } from '../content/prefs-meta'
+const supported: string[] = names.filter(name => !['client', 'testing', 'platform', 'newTranslatorsAskRestart'].includes(name))
 
 const argv = require("clp")()
 if (argv.save && typeof argv.save !== 'boolean') {
@@ -76,7 +71,7 @@ for (const lib of argv._) {
 
       if (post.config?.preferences) {
         for (const [pref, value] of Object.entries(post.config.preferences)) {
-          if (!preferences.supported.includes(pref) || value === preferences.defaults[pref]) delete post.config.preferences[pref]
+          if (!supported.includes(pref) || value === defaults[pref]) delete post.config.preferences[pref]
         }
       }
 

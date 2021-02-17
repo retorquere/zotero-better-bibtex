@@ -152,3 +152,8 @@ Scenario: unknown command handler #1733
   When I import 1 reference from "import/*.bib"
   Then the library should match "import/*.json"
 
+# https://forums.zotero.org/discussion/comment/371812/#Comment_371812
+Scenario: web_page and other mendeley idiocy
+  When I import 512 references from "import/*.bib" into a new collection
+  Then the library should match "import/*.json"
+
