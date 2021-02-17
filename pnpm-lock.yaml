@@ -40,7 +40,7 @@ dependencies:
   words-to-numbers: 1.5.1
   xregexp: 5.0.1
 devDependencies:
-  '@types/node': 14.14.25
+  '@types/node': 14.14.28
   '@types/webpack': 4.41.26
   archiver: 5.2.0
   bluebird: 3.7.2
@@ -636,6 +636,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-EPpXLOVqDvisVxtlbvzfyqSsFeQxltFbluZNRndIb8tr9KiBnYNLzrc1N3pyKUCww2RNrfHDViqDWWE1LCJQtQ==
+  /@types/node/14.14.28:
+    dev: true
+    resolution:
+      integrity: sha512-lg55ArB+ZiHHbBBttLpzD07akz0QPrZgUODNakeC09i62dnrywr9mFErHuaPlB6I7z+sEbK+IYmplahvplCj2g==
   /@types/source-list-map/0.1.2:
     dev: true
     resolution:
@@ -5663,7 +5667,7 @@ packages:
 specifiers:
   '@retorquere/bibtex-parser': ^3.2.35
   '@types/lokijs': ^1.5.3
-  '@types/node': ^14.14.25
+  '@types/node': ^14.14.28
   '@types/webpack': ^4.41.26
   ajv: ^7.1.1
   ajv-keywords: ^4.0.0
