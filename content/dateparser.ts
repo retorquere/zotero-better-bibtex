@@ -121,7 +121,6 @@ export function parse(value: string, localeDateOrder: string, as_range_part = fa
   Zotero.debug(`${value}: 30-Mar-2020`)
   if (!as_range_part && (m = (/^([0-9]+)-([a-z]+)-([0-9]+)$/i).exec(value))) {
     Zotero.debug('30-Mar-2020: yes')
-    // eslint-disable-next-line @typescript-eslint/tslint/config
     let [ , day, month, year ] = m
     if (parseInt(day) > 31 && parseInt(year) < 31) [ day, year ] = [ year, day ] // eslint-disable-line no-magic-numbers
     const date = parse(`${month} ${day} ${year}`, localeDateOrder, false)
