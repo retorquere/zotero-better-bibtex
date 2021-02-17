@@ -8,7 +8,7 @@ import { getItemsAsync } from './get-items-async'
 import { AUXScanner } from './aux-scanner'
 import { AutoExport } from './auto-export'
 import { Translators } from './translators'
-import { Preferences as Prefs } from './prefs'
+import { Preference } from '../gen/preferences'
 import { get as getCollection } from './collection'
 
 const OK = 200
@@ -251,7 +251,7 @@ class NSItem {
 
     const query = { libraryID: args.libraryID, citekey: { $in: args.citekeys } }
 
-    if (Prefs.get('keyScope') === 'global') {
+    if (Preference.keyScope === 'global') {
       if (typeof args.libraryID === 'number') throw { code: INVALID_PARAMETERS, message: 'keyscope is global, do not provide a library ID' }
       delete query.libraryID
     }

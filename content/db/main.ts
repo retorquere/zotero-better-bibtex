@@ -1,18 +1,16 @@
 declare const Zotero: any
 
 import { XULoki as Loki } from './loki'
-import { Preferences as Prefs } from '../prefs'
+import { Preference } from '../../gen/preferences'
+import { override } from '../prefs-meta'
 import { getItemsAsync } from '../get-items-async'
 
 import { Store } from './store'
 
-import { override } from '../prefs-meta'
 
 class Main extends Loki {
   public async init() {
     await this.loadDatabaseAsync()
-
-    const scrub = Prefs.get('scrubDatabase')
 
     const citekeys = this.schemaCollection('citekey', {
       indices: [ 'itemID', 'itemKey', 'libraryID', 'citekey', 'pinned' ],
@@ -37,7 +35,7 @@ class Main extends Loki {
     })
 
     // https://github.com/retorquere/zotero-better-bibtex/issues/1073
-    if (scrub) {
+    if (Preference.scrubDatabase) {
       for (const citekey of citekeys.find()) {
         if (typeof(citekey.extra) !== 'undefined') {
           delete citekey.extra
@@ -107,7 +105,7 @@ class Main extends Loki {
 
       for (const pref of override.names) {
         if (typeof ae[pref] === 'undefined') {
-          ae[pref] = Prefs.get(pref)
+          ae[pref] = Preference[pref]
           update = true
         }
       }
@@ -120,7 +118,7 @@ class Main extends Loki {
       if (update) autoexport.update(ae)
     }
 
-    if (scrub) {
+    if (Preference.scrubDatabase) {
       // directly change the data objects and rebuild indexes https://github.com/techfort/LokiJS/issues/660
       const length = autoexport.data.length
       autoexport.data = autoexport.data.filter(doc => typeof doc.$loki === 'number' && typeof doc.meta === 'object')

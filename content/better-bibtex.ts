@@ -8,7 +8,7 @@ declare const FileUtils: any
 import { clean_pane_persist, patch as $patch$ } from './monkey-patch'
 import { flash } from './flash'
 
-import { Preferences as Prefs } from './prefs' // needs to be here early, initializes the prefs observer
+import { Preference } from '../gen/preferences' // needs to be here early, initializes the prefs observer
 require('./pull-export') // just require, initializes the pull-export end points
 require('./json-rpc') // just require, initializes the json-rpc end point
 import { AUXScanner } from './aux-scanner'
@@ -77,7 +77,7 @@ AddonManager.addAddonListener({
   MONKEY PATCHES
 */
 
-if (Prefs.get('citeprocNoteCitekey')) {
+if (Preference.citeprocNoteCitekey) {
   $patch$(Zotero.Utilities, 'itemToCSLJSON', original => function itemToCSLJSON(zoteroItem: { itemID: any }) {
     const cslItem = original.apply(this, arguments)
 
@@ -103,9 +103,9 @@ $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(ite
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     log.debug('#bbt merge:', { item: item.getField('extra'), otherItems: otherItems.map(o => o.getField('extra')) })
     const merge = {
-      citationKey: Prefs.get('extraMergeCitekeys'),
-      tex: Prefs.get('extraMergeTeX'),
-      kv: Prefs.get('extraMergeCSL'),
+      citationKey: Preference.extraMergeCitekeys,
+      tex: Preference.extraMergeTeX,
+      kv: Preference.extraMergeCSL,
     }
 
     const extra = Extra.get(item.getField('extra'), 'zotero', { citationKey: merge.citationKey, aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
@@ -303,9 +303,9 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   parseHTML(_sandbox: any, text: { toString: () => any }, options: { html?: boolean, caseConversion?: boolean, exportBraceProtection: boolean, csquotes: string, exportTitleCase: boolean }) {
     options = {
       ...options,
-      exportBraceProtection: Prefs.get('exportBraceProtection'),
-      csquotes: Prefs.get('csquotes'),
-      exportTitleCase: Prefs.get('exportTitleCase'),
+      exportBraceProtection: Preference.exportBraceProtection,
+      csquotes: Preference.csquotes,
+      exportTitleCase: Preference.exportTitleCase,
     }
     return HTMLParser.parse(text.toString(), options)
   },
@@ -371,9 +371,9 @@ Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
   parseHTML(_sandbox: any, text: { toString: () => any }, options: { html?: boolean, caseConversion?: boolean, exportBraceProtection: boolean, csquotes: string, exportTitleCase: boolean }) {
     options = {
       ...options,
-      exportBraceProtection: Prefs.get('exportBraceProtection'),
-      csquotes: Prefs.get('csquotes'),
-      exportTitleCase: Prefs.get('exportTitleCase'),
+      exportBraceProtection: Preference.exportBraceProtection,
+      csquotes: Preference.csquotes,
+      exportTitleCase: Preference.exportTitleCase,
     }
     return HTMLParser.parse(text.toString(), options)
   },
@@ -417,7 +417,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
           this._displayOptions.exportPath = this.location.path
         }
 
-        let postscript = Prefs.get('postscriptOverride')
+        let postscript = Preference.postscriptOverride
         if (postscript) {
           postscript = OS.Path.join(this._displayOptions.exportDir, postscript)
           try {
@@ -467,7 +467,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
       }
 
       // check for SMB path for #1396
-      if (!this.noWait && Prefs.get('workers') && !Translators.workers.disabled && (!this.location || !this.location.path.startsWith('\\\\'))) {
+      if (!this.noWait && Preference.workers && !Translators.workers.disabled && (!this.location || !this.location.path.startsWith('\\\\'))) {
         const path = this.location?.path
 
         // fake out the stuff that complete expects to be set by .translate
@@ -552,7 +552,7 @@ notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]:
     case 'add':
     case 'modify':
       // eslint-disable-next-line no-case-declarations
-      let warn_titlecase = Prefs.get('warnTitleCased') ? 0 : null
+      let warn_titlecase = Preference.warnTitleCased ? 0 : null
       for (const item of items) {
         KeyManager.update(item)
         if (typeof warn_titlecase === 'number' && !item.isNote() && !item.isAttachment()) {
@@ -780,14 +780,15 @@ export const BetterBibTeX = new class { // eslint-disable-line @typescript-eslin
 
     // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
     // its presence also indicates first-run, so right after the DB is ready, configure BBT
-    const citekeyFormat = Prefs.get('citekeyFormat') || Prefs.clear('citekeyFormat')
-    if (citekeyFormat[0] === '\u200B') {
+    if (!Preference.citekeyFormat) Preference.citekeyFormat = Preference.default.citekeyFormat
+    const citekeyFormat = Preference.citekeyFormat
+    if (citekeyFormat.includes('\u200B')) {
       const params = {
         wrappedJSObject: {
           citekeyFormat: 'bbt',
           dragndrop: true,
-          unabbreviate: Prefs.get('importJabRefAbbreviations'),
-          strings: Prefs.get('importJabRefStrings'),
+          unabbreviate: Preference.importJabRefAbbreviations,
+          strings: Preference.importJabRefStrings,
         },
       }
       const ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
@@ -796,9 +797,9 @@ export const BetterBibTeX = new class { // eslint-disable-line @typescript-eslin
 
       log.debug('firstRun:', this.firstRun)
 
-      Prefs.set('citekeyFormat', (this.firstRun.citekeyFormat === 'zotero') ? '[zotero:clean]' : citekeyFormat.substr(1))
-      Prefs.set('importJabRefAbbreviations', this.firstRun.unabbreviate)
-      Prefs.set('importJabRefStrings', this.firstRun.strings)
+      Preference.citekeyFormat = (this.firstRun.citekeyFormat === 'zotero') ? '[zotero:clean]' : citekeyFormat.replace(/\u200B/g, '')
+      Preference.importJabRefAbbreviations = this.firstRun.unabbreviate
+      Preference.importJabRefStrings = this.firstRun.strings
     }
     else {
       this.firstRun = null

@@ -11,7 +11,7 @@ declare class ChromeWorker extends Worker { }
 Components.utils.import('resource://zotero/config.js')
 declare const ZOTERO_CONFIG: any
 
-import { Preferences as Prefs } from './prefs'
+import { Preference } from '../gen/preferences'
 import { Serializer } from './serializer'
 import { log } from './logger'
 import { DB as Cache, selector as cacheSelector } from './db/cache'
@@ -95,7 +95,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     if (reinit) {
       let restart = false
-      if (Prefs.get('newTranslatorsAskRestart') && !Prefs.testing) {
+      if (Preference.newTranslatorsAskRestart && !Preference.testing) {
         const dontAskAgain = { value: false }
         const ps = Services.prompt
         const index = ps.confirmEx(
@@ -117,7 +117,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           dontAskAgain // check state
         )
 
-        Prefs.set('newTranslatorsAskRestart', !dontAskAgain.value)
+        Preference.newTranslatorsAskRestart = !dontAskAgain.value
 
         restart = (index === 0)
       }
@@ -177,7 +177,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   public async exportItemsByQueuedWorker(translatorID: string, displayOptions: Record<string, boolean>, options: ExportJob) {
-    const workers = Math.max(Prefs.get('workers'), 1) // if you're here, at least one worker must be available
+    const workers = Math.max(Preference.workers, 1) // if you're here, at least one worker must be available
 
     if (this.workers.running.size > workers) {
       return this.queue.schedule(this.exportItemsByWorker.bind(this, translatorID, displayOptions, options), [], { priority: 1, timestamp: (new Date()).getTime() })
@@ -242,7 +242,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     const params = Object.entries({
       version: Zotero.version,
-      platform: Prefs.platform,
+      platform: Preference.platform,
       translator: translator.label,
       output: options.path || '',
       localeDateOrder: Zotero.BetterBibTeX.localeDateOrder,
@@ -279,7 +279,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     const config: BBTWorker.Config = {
-      preferences: { ...Prefs.all(), ...options.preferences },
+      preferences: { ...Preference.all, ...options.preferences },
       options: displayOptions || {},
       items: [],
       collections: [],
@@ -600,7 +600,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
     for (const pref of override.names) {
       if (typeof displayOptions[`preference_${pref}`] === 'undefined') {
-        query[pref] = Prefs.get(pref)
+        query[pref] = Preference[pref]
       }
       else {
         query[pref] = displayOptions[`preference_${pref}`]

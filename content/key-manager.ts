@@ -16,7 +16,7 @@ import * as ZoteroDB from './db/zotero'
 
 import { getItemsAsync } from './get-items-async'
 
-import { Preferences as Prefs } from './prefs'
+import { Preference } from '../gen/preferences'
 import { Formatter } from './key-manager/formatter'
 import { DB } from './db/main'
 import { DB as Cache } from './db/cache'
@@ -147,7 +147,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
 
     Cache.remove(ids, `refreshing keys for ${ids}`)
 
-    const warnAt = manual ? Prefs.get('warnBulkModify') : 0
+    const warnAt = manual ? Preference.warnBulkModify : 0
     if (warnAt > 0 && ids.length > warnAt) {
       const affected = this.keys.find({ itemID: { $in: ids }, pinned: false }).length
       if (affected > warnAt) {
@@ -157,7 +157,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
           case 'ok':
             break
           case 'whatever':
-            Prefs.set('warnBulkModify', 0)
+            Preference.warnBulkModify = 0
             break
           default:
             return
@@ -288,7 +288,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
       // async is just a heap of fun. Who doesn't enjoy a good race condition?
       // https://github.com/retorquere/zotero-better-bibtex/issues/774
       // https://groups.google.com/forum/#!topic/zotero-dev/yGP4uJQCrMc
-      await sleep(Prefs.get('itemObserverDelay'))
+      await sleep(Preference.itemObserverDelay)
 
       try {
         await Zotero.Items.getAsync(citekey.itemID)
@@ -314,7 +314,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
   }
 
   public async rescan(clean?: boolean) {
-    if (Prefs.get('scrubDatabase')) {
+    if (Preference.scrubDatabase) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return, no-prototype-builtins
       for (const item of this.keys.where(i => i.hasOwnProperty('extra'))) { // 799
         delete item.extra
@@ -470,7 +470,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
     const proposed = Formatter.format(item)
 
     const conflictQuery = { libraryID: item.libraryID, itemID: { $ne: item.id } }
-    if (Prefs.get('keyScope') === 'global') delete conflictQuery.libraryID
+    if (Preference.keyScope === 'global') delete conflictQuery.libraryID
 
     let postfix: string
     const seen = {}
@@ -499,7 +499,6 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
 
   public async tagDuplicates(libraryID: any) {
     const tag = '#duplicate-citation-key'
-    const scope = Prefs.get('keyScope')
 
     const tagged = (await ZoteroDB.queryAsync(`
       SELECT items.itemID
@@ -507,10 +506,10 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
       JOIN itemTags ON itemTags.itemID = items.itemID
       JOIN tags ON tags.tagID = itemTags.tagID
       WHERE (items.libraryID = ? OR 'global' = ?) AND tags.name = ? AND items.itemID NOT IN (select itemID from deletedItems)
-    `, [ libraryID, scope, tag ])).map((item: { itemID: number }) => item.itemID)
+    `, [ libraryID, Preference.keyScope, tag ])).map((item: { itemID: number }) => item.itemID)
 
     const citekeys: {[key: string]: any[]} = {}
-    for (const item of this.keys.find(scope === 'global' ? undefined : { libraryID })) {
+    for (const item of this.keys.find(Preference.keyScope === 'global' ? undefined : { libraryID })) {
       if (!citekeys[item.citekey]) citekeys[item.citekey] = []
       citekeys[item.citekey].push({ itemID: item.itemID, tagged: tagged.includes(item.itemID), duplicate: false })
       if (citekeys[item.citekey].length > 1) citekeys[item.citekey].forEach(i => i.duplicate = true)

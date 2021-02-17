@@ -7,7 +7,7 @@ import { log } from './logger'
 import { BetterBibTeX } from './better-bibtex'
 import { TeXstudio } from './tex-studio'
 import { clean_pane_persist, patch as $patch$ } from './monkey-patch'
-import { Preferences as Prefs } from './prefs'
+import { Preference } from '../gen/preferences'
 import { AutoExport } from './auto-export'
 import { flash } from './flash'
 import { sentenceCase } from './case'
@@ -38,7 +38,7 @@ $patch$(pane, 'buildCollectionContextMenu', original => async function() {
     }
 
     let query = null
-    if (Prefs.get('autoExport') === 'immediate') {
+    if (Preference.autoExport === 'immediate') {
       query = null
     }
     else if (isCollection) {

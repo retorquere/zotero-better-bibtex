@@ -7,7 +7,7 @@ declare const OS: any
 import { sleep } from './sleep'
 import { KeyManager } from './key-manager'
 import { Translators } from './translators'
-import { Preferences as Prefs } from './prefs'
+import { Preference } from '../gen/preferences'
 
 export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   private decoder = new TextDecoder
@@ -39,7 +39,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
     if ([options.tag, options.libraryID, options.collection].filter(tgt => tgt).length > 1) throw new Error('You can only specify one of tag, libraryID, or collection')
 
     const citekeys: string[] = []
-    const bibfiles: Record<string, string> = Prefs.get('auxImport') ? {} : null
+    const bibfiles: Record<string, string> = Preference.auxImport ? {} : null
     await this.parse(path, citekeys, bibfiles)
 
     if (!citekeys.length) return

@@ -248,8 +248,7 @@ class Preferences:
     with open(os.path.join(root, 'site/data/preferences/defaults.json'), 'w') as f:
       json.dump({ pref.name: pref.default for pref in preferences }, f, indent=2)
 
-    os.makedirs(os.path.join(root, 'gen/typings'), exist_ok=True)
-
+#    os.makedirs(os.path.join(root, 'gen/typings'), exist_ok=True)
 #    with open(os.path.join(root, 'gen/typings/preferences.d.ts'), 'w') as f:
 #      print('export interface IPreferences {', file=f)
 #      for pref in preferences:
@@ -258,6 +257,11 @@ class Preferences:
 
     with open(os.path.join(root, 'gen', 'preferences.ts'), 'w') as f:
       print(template('preferences/preferences.ts.mako').render(prefix=self.prefix, preferences=preferences).strip(), file=f)
+
+    os.makedirs(os.path.join(root, 'build/defaults/preferences'), exist_ok=True)
+    with open(os.path.join(root, 'build/defaults/preferences/defaults.js'), 'w') as f:
+      for pref in preferences:
+        print(f'pref({json.dumps(self.prefix + pref.name)}, {json.dumps(pref.default)})', file=f)
 
 content = os.path.join(root, 'content')
 for xul in os.listdir(content):

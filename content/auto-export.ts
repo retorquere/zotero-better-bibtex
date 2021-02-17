@@ -10,7 +10,7 @@ import { log } from './logger'
 import { Events } from './events'
 import { DB } from './db/main'
 import { Translators } from './translators'
-import { Preferences as Prefs } from './prefs'
+import { Preference } from '../gen/preferences'
 import * as ini from 'ini'
 import { foldMaintaining } from 'fold-to-ascii'
 import { pathSearch } from './path-search'
@@ -42,7 +42,7 @@ class Git {
 
     if (!this.git) return repo
 
-    switch (Prefs.get('git')) {
+    switch (Preference.git) {
       case 'off':
         return repo
 
@@ -83,7 +83,7 @@ class Git {
         break
 
       default:
-        log.error('git.repo: unexpected git config', Prefs.get('git'))
+        log.error('git.repo: unexpected git config', Preference.git)
         return repo
     }
 
@@ -151,7 +151,7 @@ const git = new Git()
 
 import { override } from './prefs-meta'
 
-if (Prefs.get('autoExportDelay') < 1) Prefs.set('autoExportDelay', 1)
+if (Preference.autoExportDelay < 1) Preference.autoExportDelay = 1
 const queue = new class TaskQueue {
   private scheduler = new Scheduler('autoExportDelay', 1000) // eslint-disable-line no-magic-numbers
   private autoexports: any
@@ -164,10 +164,10 @@ const queue = new class TaskQueue {
   public start() {
     if (this.started) return
     this.started = true
-    if (Prefs.get('autoExport') === 'immediate') this.resume()
+    if (Preference.autoExport === 'immediate') this.resume()
 
     const idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
-    idleService.addIdleObserver(this, Prefs.get('autoExportIdleWait'))
+    idleService.addIdleObserver(this, Preference.autoExportIdleWait)
 
     Zotero.Notifier.registerObserver(this, ['sync'], 'BetterBibTeX', 1)
   }
@@ -247,15 +247,15 @@ const queue = new class TaskQueue {
         const dir = OS.Path.dirname(ae.path)
         const base = OS.Path.basename(ae.path).replace(new RegExp(`${ext.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')}$`), '')
 
-        const autoExportPathReplaceDiacritics: boolean = Prefs.get('autoExportPathReplaceDiacritics')
-        const autoExportPathReplaceDirSep: string = Prefs.get('autoExportPathReplaceDirSep')
-        const autoExportPathReplaceSpace: string = Prefs.get('autoExportPathReplaceSpace')
+        const autoExportPathReplaceDiacritics: boolean = Preference.autoExportPathReplaceDiacritics
+        const autoExportPathReplaceDirSep: string = Preference.autoExportPathReplaceDirSep
+        const autoExportPathReplaceSpace: string = Preference.autoExportPathReplaceSpace
         for (const collection of collections) {
           const path = OS.Path.join(dir, [base]
             .concat(this.getCollectionPath(collection, root))
             // eslint-disable-next-line no-control-regex
             .map((p: string) => p.replace(/[<>:'"/\\|?*\u0000-\u001F]/g, ''))
-            .map((p: string) => p.replace(/ +/g, Prefs.get(autoExportPathReplaceSpace) || ''))
+            .map((p: string) => p.replace(/ +/g, autoExportPathReplaceSpace || ''))
             .map((p: string) => autoExportPathReplaceDiacritics ? (foldMaintaining(p) as string) : p)
             .join(autoExportPathReplaceDirSep || '-') + ext
           )
@@ -286,12 +286,12 @@ const queue = new class TaskQueue {
 
   // idle observer
   protected observe(_subject, topic, _data) {
-    if (!this.started || Prefs.get('autoExport') === 'off') return
+    if (!this.started || Preference.autoExport === 'off') return
 
     switch (topic) {
       case 'back':
       case 'active':
-        if (Prefs.get('autoExport') === 'idle') this.pause()
+        if (Preference.autoExport === 'idle') this.pause()
         break
 
       case 'idle':
@@ -308,7 +308,7 @@ const queue = new class TaskQueue {
   // It is theoretically possible that auto-export is paused because Zotero is idle and then restarted when the sync finishes, but
   // I can't see how a system can be considered idle when Zotero is syncing.
   protected notify(action, type) {
-    if (!this.started || Prefs.get('autoExport') === 'off') return
+    if (!this.started || Preference.autoExport === 'off') return
 
     switch(`${type}.${action}`) {
       case 'sync.start':
@@ -329,7 +329,7 @@ const queue = new class TaskQueue {
 Events.on('preference-changed', pref => {
   if (pref !== 'autoExport') return
 
-  switch (Prefs.get('autoExport')) {
+  switch (Preference.autoExport) {
     case 'immediate':
       queue.resume()
       break
@@ -359,7 +359,7 @@ export const AutoExport = new class CAutoExport { // eslint-disable-line @typesc
       queue.add(ae)
     }
 
-    if (Prefs.get('autoExport') === 'immediate') { queue.resume() }
+    if (Preference.autoExport === 'immediate') { queue.resume() }
   }
 
   public start() {
@@ -368,7 +368,7 @@ export const AutoExport = new class CAutoExport { // eslint-disable-line @typesc
 
   public add(ae, schedule = false) {
     for (const pref of override.names) {
-      ae[pref] = Prefs.get(pref)
+      ae[pref] = Preference[pref]
     }
     this.db.removeWhere({ path: ae.path })
     this.db.insert(ae)

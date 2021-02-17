@@ -7,7 +7,7 @@ import scripts = require('xregexp/tools/output/scripts')
 import { transliterate } from 'transliteration'
 
 import { flash } from '../flash'
-import { Preferences as Prefs } from '../prefs'
+import { Preference } from '../../gen/preferences'
 import { JournalAbbrev } from '../journal-abbrev'
 import { kuroshiro } from './kuroshiro'
 import * as Extra from '../extra'
@@ -17,7 +17,6 @@ import { fromEntries } from '../object'
 const parser = require('./formatter.pegjs')
 import * as DateParser from '../dateparser'
 
-import { defaults } from '../prefs-meta'
 import * as methods from '../../gen/key-formatter-methods.json'
 import * as items from '../../gen/items/items'
 
@@ -104,19 +103,22 @@ class PatternFormatter {
   private citekeyFormat: string
 
   public update(_reason: string) {
-    this.skipWords = new Set(Prefs.get('skipWords').split(',').map((word: string) => word.trim()).filter((word: string) => word))
+    this.skipWords = new Set(Preference.skipWords.split(',').map((word: string) => word.trim()).filter((word: string) => word))
+
+    // safeguard agains Zotero late-loading preference defaults
+    // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
+    if (!Preference.citekeyFormat || Preference.citekeyFormat.includes('\u200B')) Preference.citekeyFormat = Preference.default.citekeyFormat.replace(/^\u200B/, '')
 
     for (const attempt of ['get', 'strip', 'reset']) {
       let citekeyFormat = ''
       const errors = []
       switch (attempt) {
         case 'get':
-          // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
-          this.citekeyFormat = (Prefs.get('citekeyFormat') || Prefs.clear('citekeyFormat')).replace(/^\u200B/, '')
+          this.citekeyFormat = Preference.citekeyFormat
           break
 
         case 'strip':
-          for (const chunk of (Prefs.get('citekeyFormat').replace(/^\u200B/, '').match(/[^\]]*\]*/g) as string[])) {
+          for (const chunk of (Preference.citekeyFormat.replace(/^\u200B/, '').match(/[^\]]*\]*/g) as string[])) {
             try {
               this.parsePattern(citekeyFormat + chunk)
               citekeyFormat += chunk
@@ -129,7 +131,7 @@ class PatternFormatter {
           if (citekeyFormat.includes('[')) {
             // eslint-disable-next-line no-magic-numbers
             if (errors.length) flash('Malformed citation pattern', `removed malformed patterns:\n${errors.join('\n')}`, 20)
-            Prefs.set('citekeyFormat', this.citekeyFormat = citekeyFormat)
+            this.citekeyFormat = Preference.citekeyFormat = citekeyFormat
           }
           else {
             continue
@@ -139,7 +141,7 @@ class PatternFormatter {
         case 'reset':
           // eslint-disable-next-line no-magic-numbers
           flash('Malformed citation pattern', 'resetting to default', 20)
-          Prefs.set('citekeyFormat', this.citekeyFormat = defaults.citekeyFormat.replace(/^\u200B/, ''))
+          this.citekeyFormat = Preference.citekeyFormat = Preference.default.citekeyFormat.replace(/^\u200B/, '')
           break
       }
 
@@ -203,7 +205,7 @@ class PatternFormatter {
     const citekey = this.generate()
 
     if (!citekey.citekey) citekey.citekey = `zotero-${item.id}`
-    if (citekey.citekey && Prefs.get('citekeyFold')) citekey.citekey = this.removeDiacritics(citekey.citekey)
+    if (citekey.citekey && Preference.citekeyFold) citekey.citekey = this.removeDiacritics(citekey.citekey)
     citekey.citekey = citekey.citekey.replace(/[\s{},@]/g, '')
 
     return citekey

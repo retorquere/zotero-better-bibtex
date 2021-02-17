@@ -2,7 +2,7 @@
 import Kuroshiro from 'kuroshiro/src/core-sync'
 import _kuromojiLoader = require('kuromoji/src/loader/NodeDictionaryLoader')
 import { log } from '../logger'
-import { Preferences as Prefs } from '../prefs'
+import { Preference } from '../../gen/preferences'
 import KuromojiAnalyzer from 'kuroshiro-analyzer-kuromoji/src/kuroshiro-analyzer-kuromoji-sync'
 
 _kuromojiLoader.prototype.loadArrayBuffer = function(url, callback) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
@@ -31,7 +31,7 @@ export const kuroshiro = new class {
   private kuroshiro: any
 
   public async init() {
-    if (!Prefs.get('kuroshiro')) return
+    if (!Preference.kuroshiro) return
 
     try {
       this.kuroshiro = new Kuroshiro()

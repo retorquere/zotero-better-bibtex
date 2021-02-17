@@ -12,7 +12,7 @@ import { patch as $patch$ } from './monkey-patch'
 import * as ZoteroDB from './db/zotero'
 import { DB as Cache } from './db/cache'
 
-import { Preferences as Prefs } from './prefs'
+import { Preference } from '../gen/preferences'
 import { Formatter } from './key-manager/formatter'
 import { KeyManager } from './key-manager'
 import { AutoExport } from './auto-export'
@@ -252,7 +252,7 @@ export = new class PrefPane {
 
   public getCitekeyFormat(target = null) {
     if (target) this.keyformat = target
-    this.keyformat.value = Prefs.get('citekeyFormat')
+    this.keyformat.value = Preference.citekeyFormat
   }
 
   public checkCitekeyFormat(target = null) {
@@ -281,7 +281,7 @@ export = new class PrefPane {
     if (target) this.keyformat = target
     try {
       Formatter.parsePattern(this.keyformat.value)
-      Prefs.set('citekeyFormat', this.keyformat.value)
+      Preference.citekeyFormat = this.keyformat.value
     }
     catch (error) {
       // restore previous value
@@ -431,7 +431,7 @@ export = new class PrefPane {
 
         const stylebox = document.getElementById('better-bibtex-abbrev-style-popup')
         const refill = stylebox.children.length === 0
-        const selectedStyle = Prefs.get('autoAbbrevStyle')
+        const selectedStyle = Preference.autoAbbrevStyle
         let selectedIndex = -1
         for (const [i, style] of styles.entries()) {
           if (refill) {
@@ -456,9 +456,9 @@ export = new class PrefPane {
     }
 
     for (const state of Array.from(document.getElementsByClassName('better-bibtex-preferences-worker-state'))) {
-      (state as XUL.Textbox).value = Zotero.BetterBibTeX.getString(`BetterBibTeX.workers.${Prefs.get('workers') ? 'status' : 'disabled'}`, {
+      (state as XUL.Textbox).value = Zotero.BetterBibTeX.getString(`BetterBibTeX.workers.${Preference.workers ? 'status' : 'disabled'}`, {
         total: Translators.workers.total,
-        workers: Prefs.get('workers'),
+        workers: Preference.workers,
         running: Translators.workers.running.size,
       })
     }
@@ -471,7 +471,7 @@ export = new class PrefPane {
     const stylebox = document.getElementById('better-bibtex-abbrev-style-popup')
     const selectedItem = typeof index !== 'undefined' ? stylebox.getItemAtIndex(index) : stylebox.selectedItem
     const styleID = selectedItem.getAttribute('value')
-    Prefs.set('autoAbbrevStyle', styleID)
+    Preference.autoAbbrevStyle = styleID
   }
 }
 

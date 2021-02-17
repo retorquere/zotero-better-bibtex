@@ -1,4 +1,4 @@
-import { Preferences as Prefs } from './prefs'
+import { Preference } from '../gen/preferences'
 
 type Handler = () => void
 type TimerHandle = ReturnType<typeof setTimeout>
@@ -15,7 +15,8 @@ export class Scheduler {
   }
 
   public get delay(): number {
-    return (typeof this._delay === 'string' ? Prefs.get(this._delay) : this._delay) * this.factor
+    // what preference is this actually grabbing?
+    return (typeof this._delay === 'string' ? Preference[this._delay] : this._delay) * this.factor
   }
 
   public get enabled(): boolean {

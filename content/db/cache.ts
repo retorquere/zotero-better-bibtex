@@ -3,7 +3,7 @@ declare const Zotero: any
 import { XULoki as Loki } from './loki'
 import { Events } from '../events'
 import { Store } from './store'
-import { Preferences as Prefs } from '../prefs'
+import { Preference } from '../../gen/preferences'
 
 const version = require('../../gen/version.js')
 import * as translators from '../../gen/translators.json'
@@ -132,7 +132,7 @@ function clearOnUpgrade(coll, property, current) {
     return
   }
 
-  const drop = !Prefs.get('retainCache')
+  const drop = !Preference.retainCache
   const msg = drop ? { dropping: 'dropping', because: 'because' } : { dropping: 'keeping', because: 'even though' }
   if (dbVersion) {
     Zotero.debug(`:Cache:${msg.dropping} cache ${coll.name} ${msg.because} ${property} went from ${dbVersion} to ${current}`)

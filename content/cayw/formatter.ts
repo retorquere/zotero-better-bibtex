@@ -5,7 +5,7 @@ declare const AddonManager: any
 
 import { Translators } from '../translators'
 import { getItemsAsync } from '../get-items-async'
-import { Preferences as Prefs } from '../prefs'
+import { Preference } from '../../gen/preferences'
 import { log } from '../logger'
 import { fromEntries } from '../object'
 
@@ -236,7 +236,7 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
         `${item.suppressAuthor ? '-' : ''}${labels[id]}`,
         item.locator ? `${shortLabel(item.label, options)} ${item.locator}`.trim() : '',
         item.suffix || '',
-        Prefs.testing ? 'zu:0:ITEMKEY' : id,
+        Preference.testing ? 'zu:0:ITEMKEY' : id,
       ].join(' | ').replace(/ +/g, ' ')
 
       citation += `{ ${enriched.trim()} }`

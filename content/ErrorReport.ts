@@ -5,7 +5,7 @@ declare const Zotero: any
 Components.utils.import('resource://gre/modules/Services.jsm')
 declare const Services: any
 
-import { Preferences as Prefs } from './prefs'
+import { Preference } from '../gen/preferences'
 import { Translators } from './translators'
 import { log } from './logger'
 import fastChunkString = require('fast-chunk-string')
@@ -14,7 +14,6 @@ import { DB } from './db/main'
 import { DB as Cache } from './db/cache'
 
 import * as s3 from './s3.json'
-import { names as preferences} from './prefs-meta'
 
 import * as PACKAGE from '../package.json'
 
@@ -221,8 +220,8 @@ export = new class ErrorReport {
     }
 
     info += 'Settings:\n'
-    for (const key of preferences) {
-      info += `  ${key} = ${JSON.stringify(Prefs.get(key))}\n`
+    for (const [key, value] of Object.entries(Preference.all)) {
+      info += `  ${key} = ${JSON.stringify(value)}\n`
     }
     for (const key of ['export.quickCopy.setting']) {
       info += `  Zotero: ${key} = ${JSON.stringify(Zotero.Prefs.get(key))}\n`
@@ -306,10 +305,9 @@ export = new class ErrorReport {
         break
     }
 
-    const debugLogDir = Prefs.get('debugLogDir')
-    if (debugLogDir) {
+    if (Preference.debugLogDir) {
       if (Array.isArray(data)) data = data.join('\n')
-      await Zotero.File.putContentsAsync(`${debugLogDir}/${filename}.${ext}`, prefix + data)
+      await Zotero.File.putContentsAsync(`${Preference.debugLogDir}/${filename}.${ext}`, prefix + data)
       return
     }
 

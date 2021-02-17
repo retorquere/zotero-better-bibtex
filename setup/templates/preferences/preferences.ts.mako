@@ -8,6 +8,7 @@ declare const Zotero: any
 const prefix = '${prefix}'
 import * as preferences from './preferences.json'
 import * as meta from '../content/prefs-meta.ts'
+import { fromEntries } from '../content/object.ts'
 
 <%
   for pref in preferences:
@@ -30,7 +31,7 @@ export type Preferences = {
 }
 
 export const Preference = new class PreferenceManager {
-  public defaults = meta.defaults
+  public default = meta.defaults
 
   constructor() {
     // migrate ancient keys
@@ -64,7 +65,7 @@ export const Preference = new class PreferenceManager {
     // set defaults and install event emitter
     for (const pref of preferences) {
       if (pref.var !== 'platform') {
-        if (typeof this[pref.var] === 'undefined') this[pref.var] = pref.default
+        if (typeof this[pref.var] === 'undefined') this[pref.var] = (typeof pref.default === 'string' ? pref.default.replace(/^\u200B/, '') : pref.default)
         Zotero.Prefs.registerObserver(<%text>`${prefix}${pref.name}`</%text>, changed.bind(pref.var))
       }
     }
@@ -83,12 +84,12 @@ export const Preference = new class PreferenceManager {
     if (this.testing) {
       return new Proxy(this, {
         set: (object, property, value) => {
-          if (!(typeof property === 'string' && (names as string[]).includes(property))) throw new TypeError(`Unsupported preference <%text>${new String(property)}</%text>`) // eslint-disable-line no-new-wrappers
+          if (!(property in object)) throw new TypeError(`Unsupported preference <%text>${new String(property)}</%text>`) // eslint-disable-line no-new-wrappers
           object[property] = value
           return true
         },
         get: (object, property) => {
-          if (!(typeof property === 'string' && (names as string[]).includes(property))) throw new TypeError(`Unsupported preference <%text>${new String(property)}</%text>`) // eslint-disable-line no-new-wrappers
+          if (!(property in object)) throw new TypeError(`Unsupported preference <%text>${new String(property)}</%text>`) // eslint-disable-line no-new-wrappers
           return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
         },
       })
@@ -114,10 +115,8 @@ export const Preference = new class PreferenceManager {
   }
 
 % endfor
-  get all(): Readonly<Preferences> {
-    return (Object.freeze(preferences.reduce((acc, pref) => {
-      acc[pref.var] = this[pref.var]
-      return acc
-    }, {})) as Readonly<Preferences>)
+  get all(): Preferences {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return (fromEntries(preferences.map(pref => [ pref.var, this[pref.var] ])) as Preferences)
   }
 }

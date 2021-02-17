@@ -1,6 +1,6 @@
 declare const Zotero: any
 
-import { Preferences as Prefs } from './prefs'
+import { Preference } from '../gen/preferences'
 import { Events } from './events'
 import { client } from './client'
 
@@ -31,7 +31,7 @@ export const JournalAbbrev = new class { // eslint-disable-line @typescript-esli
   }
 
   public reset() {
-    this.style = Prefs.get('autoAbbrevStyle')
+    this.style = Preference.autoAbbrevStyle
     if (client === 'jurism' && !this.style) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       this.style = Zotero.Styles.getVisible().filter(style => style.usesAbbreviation)[0].styleID
@@ -70,7 +70,7 @@ export const JournalAbbrev = new class { // eslint-disable-line @typescript-esli
       abbrev = item.journalAbbreviation
     }
 
-    if (abbrev || (!Prefs.get('autoAbbrev') && !force)) return abbrev
+    if (abbrev || (!Preference.autoAbbrev && !force)) return abbrev
 
     if (!['conferencePaper', 'journalArticle', 'bill', 'case', 'statute'].includes(item.getField ? Zotero.ItemTypes.getName(item.itemTypeID) : item.itemType)) return null
 
