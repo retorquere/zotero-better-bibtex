@@ -11,12 +11,12 @@
   url = {http://arxiv.org/abs/1401.2910},
   urldate = {2016-04-18},
   abstract = {The development of small-scale digital and analog quantum devices raises the question of how to fairly assess and compare the computational power of classical and quantum devices, and of how to detect quantum speedup. Here we show how to define and measure quantum speedup in various scenarios, and how to avoid pitfalls that might mask or fake quantum speedup. We illustrate our discussion with data from a randomized benchmark test on a D-Wave Two device with up to 503 qubits. Comparing the performance of the device on random spin glass instances with limited precision to simulated classical and quantum annealers, we find no evidence of quantum speedup when the entire data set is considered, and obtain inconclusive results when comparing subsets of instances on an instance-by-instance basis. Our results for one particular benchmark do not rule out the possibility of speedup for other classes of problems and illustrate that quantum speedup is elusive and can depend on the question posed.},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {1401.2910},
   eprinttype = {arxiv},
   keywords = {Quantum Physics},
   number = {6195},
-  primaryClass = {quant-ph}
+  primaryclass = {quant-ph}
 }
 
 @article{Sen.2016.BV,
@@ -30,7 +30,7 @@
   url = {http://arxiv.org/abs/1508.05387},
   urldate = {2016-04-17},
   abstract = {We construct the quantum BV master action for heterotic and type II string field theories.},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {1508.05387},
   eprinttype = {arxiv},
   keywords = {_tablet,Batalin-Vilkoviski formalism,covariant string field theory,futur: 3,note: 4,printed,superstring field theory},
@@ -47,12 +47,12 @@ This paper is of great importance because it constructs a fully consistent quant
   url = {http://arxiv.org/abs/1305.4904},
   urldate = {2016-04-18},
   abstract = {A pair of recent articles concluded that the D-Wave One machine actually operates in the quantum regime, rather than performing some classical evolution. Here we give a classical model that leads to the same behaviors used in those works to infer quantum effects. Thus, the evidence presented does not demonstrate the presence of quantum effects.},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {1305.4904},
   eprinttype = {arxiv},
   keywords = {Quantum Physics},
   note = {Comment: 8 pages, 3 pdf figures},
-  primaryClass = {quant-ph}
+  primaryclass = {quant-ph}
 }
 
 

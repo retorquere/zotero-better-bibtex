@@ -456,10 +456,10 @@ export class Reference {
 
     if (this.item.arXiv) {
       delete this.item.extraFields.tex.arxiv
-      this.add({ name: 'archivePrefix', value: 'arXiv'} )
+      this.add({ name: 'archiveprefix', value: 'arXiv'} )
       this.add({ name: 'eprinttype', value: 'arxiv'})
       this.add({ name: 'eprint', value: this.item.arXiv.id })
-      this.add({ name: 'primaryClass', value: this.item.arXiv.category })
+      this.add({ name: 'primaryclass', value: this.item.arXiv.category })
     }
   }
 
@@ -493,6 +493,8 @@ export class Reference {
    *   ignored)
    */
   public add(field: IField): string {
+    if (Translator.preferences.testing && !this.inPostscript && field.name !== field.name.toLowerCase()) throw new Error(`Do not add mixed-case field ${field.name}`)
+
     if (!field.value && !field.bibtex && this.inPostscript) {
       delete this.has[field.name]
       return null

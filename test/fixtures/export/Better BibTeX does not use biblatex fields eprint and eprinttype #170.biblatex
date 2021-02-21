@@ -5,14 +5,14 @@
   date = {2014-12-09},
   url = {http://arxiv.org/abs/1412.2970},
   urldate = {2015-02-07},
-  archivePrefix = {arXiv},
+  archiveprefix = {arXiv},
   eprint = {1412.2970},
   eprinttype = {arxiv},
   keywords = {Lieb-Robinson bounds,Mathematical Physics,Quantum Physics},
-  primaryClass = {math-ph, physics:quant-ph}
+  primaryclass = {math-ph, physics:quant-ph}
 }
 % == BibLateX quality report for BachmannDybalskiNaaijkens14:
-% Unexpected field 'archivePrefix'
-% Unexpected field 'primaryClass'
+% Unexpected field 'archiveprefix'
+% Unexpected field 'primaryclass'
 
 

@@ -302,8 +302,8 @@ export function doExport(): void {
       if (item.url && (m = item.url.match(/^https?:\/\/www.jstor.org\/stable\/([\S]+)$/i))) {
         ref.override({ name: 'eprinttype', value: 'jstor'})
         ref.override({ name: 'eprint', value: m[1].replace(/\?.*/, '') })
-        ref.remove('archivePrefix')
-        ref.remove('primaryClass')
+        ref.remove('archiveprefix')
+        ref.remove('primaryclass')
         delete item.url
         ref.remove('url')
 
@@ -311,8 +311,8 @@ export function doExport(): void {
       else if (item.url && (m = item.url.match(/^https?:\/\/books.google.com\/books?id=([\S]+)$/i))) {
         ref.override({ name: 'eprinttype', value: 'googlebooks'})
         ref.override({ name: 'eprint', value: m[1] })
-        ref.remove('archivePrefix')
-        ref.remove('primaryClass')
+        ref.remove('archiveprefix')
+        ref.remove('primaryclass')
         delete item.url
         ref.remove('url')
 
@@ -320,8 +320,8 @@ export function doExport(): void {
       else if (item.url && (m = item.url.match(/^https?:\/\/www.ncbi.nlm.nih.gov\/pubmed\/([\S]+)$/i))) {
         ref.override({ name: 'eprinttype', value: 'pubmed'})
         ref.override({ name: 'eprint', value: m[1] })
-        ref.remove('archivePrefix')
-        ref.remove('primaryClass')
+        ref.remove('archiveprefix')
+        ref.remove('primaryclass')
         delete item.url
         ref.remove('url')
       }
