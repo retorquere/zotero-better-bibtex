@@ -121,6 +121,8 @@
   "export/CSL title, volume-title, container-title=BL title, booktitle, maintitle #381.json",
   "export/CSL variables only recognized when in lowercase #408.biblatex",
   "export/CSL variables only recognized when in lowercase #408.json",
+  "export/Cannot ignore archivePrefix export field #1744.bibtex",
+  "export/Cannot ignore archivePrefix export field #1744.json",
   "export/Capitalisation in techreport titles #160.biblatex",
   "export/Capitalisation in techreport titles #160.json",
   "export/Capitalize all title-fields for language en #383.biblatex",
