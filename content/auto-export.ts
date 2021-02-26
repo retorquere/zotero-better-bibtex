@@ -202,6 +202,8 @@ const queue = new class TaskQueue {
 
     ae.status = 'running'
     this.autoexports.update(ae)
+    const started = Date.now()
+    log.debug('auto-export', ae.type, ae.id, 'started')
 
     try {
       let scope
@@ -268,9 +270,10 @@ const queue = new class TaskQueue {
       await repo.push(Zotero.BetterBibTeX.getString('Preferences.auto-export.git.message', { type: Translators.byId[ae.translatorID].label.replace('Better ', '') }))
 
       ae.error = ''
+      log.debug('auto-export', ae.type, ae.id, 'took', Date.now() - started, 'msecs')
     }
     catch (err) {
-      log.error('AutoExport.queue.run: failed', ae, err)
+      log.error('auto-export', ae.type, ae.id, 'failed:', ae, err)
       ae.error = `${err}`
     }
 

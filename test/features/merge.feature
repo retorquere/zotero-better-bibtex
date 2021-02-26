@@ -1,6 +1,11 @@
 @merge
 Feature: Export
 
+Background:
+  Given I set preference .extraMergeCSL to true
+  And I set preference .extraMergeCitekeys to true
+  And I set preference .extraMergeTeX to true
+
 @1221 @retries=10
 Scenario: Set IDS field when merging references with different citation keys #1221
   When I import 2 references from "merge/*.json"
