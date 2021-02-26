@@ -159,7 +159,6 @@ export class XULoki extends Loki {
     options.clone = true
     const coll: any = this.getCollection(name) || this.addCollection(name, options)
 
-    Zotero.debug(`::schemacollection: ${name}=${JSON.stringify(options.schema, null, 2)}`)
     coll.validate = validator.compile(options.schema)
 
     return coll

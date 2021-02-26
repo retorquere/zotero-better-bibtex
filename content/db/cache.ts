@@ -11,8 +11,6 @@ import * as translators from '../../gen/translators.json'
 import { override } from '../prefs-meta'
 import type { Preferences } from '../../gen/preferences'
 
-Zotero.debug(`::cache-override: ${JSON.stringify(override, null, 2)}`)
-
 class Cache extends Loki {
   private initialized = false
 
@@ -127,10 +125,7 @@ const METADATA = 'Better BibTeX metadata'
 
 function clearOnUpgrade(coll, property, current) {
   const dbVersion = (coll.getTransform(METADATA) || [{value: {}}])[0].value[property]
-  if (current && dbVersion === current) {
-    Zotero.debug(`:Cache:retaining cache ${coll.name} because stored ${property} is ${dbVersion} (current: ${current})`)
-    return
-  }
+  if (current && dbVersion === current) return
 
   const drop = !Preference.retainCache
   const msg = drop ? { dropping: 'dropping', because: 'because' } : { dropping: 'keeping', because: 'even though' }

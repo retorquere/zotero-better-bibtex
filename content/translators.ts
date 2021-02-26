@@ -342,7 +342,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
         default:
           if (JSON.stringify(e) !== '{"isTrusted":true}') { // why are we getting this?
-            Zotero.debug(`unexpected message in host from ${prefix} ${JSON.stringify(e)}`)
+            log.debug(`unexpected message in host from ${prefix} ${JSON.stringify(e)}`)
           }
           break
       }
