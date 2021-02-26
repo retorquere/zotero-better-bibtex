@@ -101,73 +101,74 @@ $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(ite
   try {
     // log.verbose = true
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    log.debug('#bbt merge:', { item: item.getField('extra'), otherItems: otherItems.map(o => o.getField('extra')) })
     const merge = {
       citationKey: Preference.extraMergeCitekeys,
       tex: Preference.extraMergeTeX,
       kv: Preference.extraMergeCSL,
     }
 
-    const extra = Extra.get(item.getField('extra'), 'zotero', { citationKey: merge.citationKey, aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
-    if (!extra.extraFields.citationKey) { // why is the citationkey stripped from extra before we get to this point?!
-      const pinned = KeyManager.keys.findOne({ itemID: item.id })
-      log.debug('#bbt merge: repinning key?', pinned)
-      if (pinned.pinned) extra.extraFields.citationKey = pinned.citekey
-    }
-    log.debug('#bbt merge: item:', { extract: merge, raw: item.getField('extra'), id: item.id, parsed: extra })
+    if (merge.citationKey || merge.tex || merge.kv) {
+      const extra = Extra.get(item.getField('extra'), 'zotero', { citationKey: merge.citationKey, aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
+      if (!extra.extraFields.citationKey) { // why is the citationkey stripped from extra before we get to this point?!
+        const pinned = KeyManager.keys.findOne({ itemID: item.id })
+        log.debug('#bbt merge: repinning key?', pinned)
+        if (pinned.pinned) extra.extraFields.citationKey = pinned.citekey
+      }
+      log.debug('#bbt merge: item:', { extract: merge, raw: item.getField('extra'), id: item.id, parsed: extra })
 
-    // get citekeys of other items
-    if (merge.citationKey) {
-      const otherIDs = otherItems.map((i: { id: string }) => parseInt(i.id))
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      extra.extraFields.aliases = [...extra.extraFields.aliases, ...(KeyManager.keys.find({ itemID: { $in: otherIDs }}).map((i: { citekey: string }) => i.citekey))]
-    }
-    log.debug('#bbt merge: added stored keys:', { extract: merge, raw: item.getField('extra'), parsed: extra })
-
-    // add any aliases they were already holding
-    for (const i of otherItems) {
-      const otherExtra = Extra.get(i.getField('extra'), 'zotero', { citationKey: merge.citationKey, aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
-
+      // get citekeys of other items
       if (merge.citationKey) {
-        extra.extraFields.aliases = [...extra.extraFields.aliases, ...otherExtra.extraFields.aliases]
-        if (otherExtra.extraFields.citationKey) extra.extraFields.aliases.push(otherExtra.extraFields.citationKey)
+        const otherIDs = otherItems.map((i: { id: string }) => parseInt(i.id))
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        extra.extraFields.aliases = [...extra.extraFields.aliases, ...(KeyManager.keys.find({ itemID: { $in: otherIDs }}).map((i: { citekey: string }) => i.citekey))]
       }
+      log.debug('#bbt merge: added stored keys:', { extract: merge, raw: item.getField('extra'), parsed: extra })
 
-      if (merge.tex) {
-        for (const [name, value] of Object.entries(otherExtra.extraFields.tex)) {
-          if (!extra.extraFields.tex[name]) extra.extraFields.tex[name] = value
+      // add any aliases they were already holding
+      for (const i of otherItems) {
+        const otherExtra = Extra.get(i.getField('extra'), 'zotero', { citationKey: merge.citationKey, aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
+
+        if (merge.citationKey) {
+          extra.extraFields.aliases = [...extra.extraFields.aliases, ...otherExtra.extraFields.aliases]
+          if (otherExtra.extraFields.citationKey) extra.extraFields.aliases.push(otherExtra.extraFields.citationKey)
         }
-      }
 
-      if (merge.kv) {
-        for (const [name, value] of Object.entries(otherExtra.extraFields.kv)) {
-          const existing = extra.extraFields.kv[name]
-          if (!existing) {
-            extra.extraFields.kv[name] = value
+        if (merge.tex) {
+          for (const [name, value] of Object.entries(otherExtra.extraFields.tex)) {
+            if (!extra.extraFields.tex[name]) extra.extraFields.tex[name] = value
           }
-          else if (Array.isArray(existing) && Array.isArray(value)) {
-            for (const creator in value) {
-              if (!existing.includes(creator)) existing.push(creator)
+        }
+
+        if (merge.kv) {
+          for (const [name, value] of Object.entries(otherExtra.extraFields.kv)) {
+            const existing = extra.extraFields.kv[name]
+            if (!existing) {
+              extra.extraFields.kv[name] = value
+            }
+            else if (Array.isArray(existing) && Array.isArray(value)) {
+              for (const creator in value) {
+                if (!existing.includes(creator)) existing.push(creator)
+              }
             }
           }
         }
       }
-    }
-    log.debug('#bbt merge: added aliases:', { extra })
+      log.debug('#bbt merge: added aliases:', { extra })
 
-    if (merge.citationKey) {
-      const citekey = KeyManager.keys.findOne({ itemID: item.id }).citekey
-      extra.extraFields.aliases = extra.extraFields.aliases.filter(alias => alias !== citekey)
-    }
-    log.debug('#bbt merge: aliases cleaned:', { merge, extra })
+      if (merge.citationKey) {
+        const citekey = KeyManager.keys.findOne({ itemID: item.id }).citekey
+        extra.extraFields.aliases = extra.extraFields.aliases.filter(alias => alias !== citekey)
+      }
+      log.debug('#bbt merge: aliases cleaned:', { merge, extra })
 
-    item.setField('extra', Extra.set(extra.extra, {
-      // keep pinned if it was before
-      citationKey: merge.citationKey ? extra.extraFields.citationKey : undefined,
-      aliases: merge.citationKey ? extra.extraFields.aliases : undefined,
-      tex: merge.tex ? extra.extraFields.tex : undefined,
-      kv: merge.kv ? extra.extraFields.kv : undefined,
-    }))
+      item.setField('extra', Extra.set(extra.extra, {
+        // keep pinned if it was before
+        citationKey: merge.citationKey ? extra.extraFields.citationKey : undefined,
+        aliases: merge.citationKey ? extra.extraFields.aliases : undefined,
+        tex: merge.tex ? extra.extraFields.tex : undefined,
+        kv: merge.kv ? extra.extraFields.kv : undefined,
+      }))
+    }
 
   }
   catch (err) {

@@ -333,9 +333,9 @@
           On import, assign the existing citation key to the item being imported
         </bbt:doc>
 
-        <preference name="extensions.zotero.translators.better-bibtex.extraMergeTeX" type="bool" default="true"/>
-        <preference name="extensions.zotero.translators.better-bibtex.extraMergeCSL" type="bool" default="true"/>
-        <preference name="extensions.zotero.translators.better-bibtex.extraMergeCitekeys" type="bool" default="true"/>
+        <preference name="extensions.zotero.translators.better-bibtex.extraMergeTeX" type="bool" default="false"/>
+        <preference name="extensions.zotero.translators.better-bibtex.extraMergeCSL" type="bool" default="false"/>
+        <preference name="extensions.zotero.translators.better-bibtex.extraMergeCitekeys" type="bool" default="false"/>
         <preference name="extensions.zotero.translators.better-bibtex.importJabRefStrings" type="bool" default="true"/>
         <preference name="extensions.zotero.translators.better-bibtex.importJabRefAbbreviations" type="bool" default="true"/>
         <preference name="extensions.zotero.translators.better-bibtex.autoExportPathReplaceDirSep" type="string" default="-"/>
