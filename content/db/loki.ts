@@ -24,7 +24,6 @@ require('ajv-keywords')(validator)
 $patch$(Loki.Collection.prototype, 'findOne', original => function() {
   if (!this.data.length) return null
 
-  log.debug('findOne', Array.from(arguments))
   return original.apply(this, arguments)
 })
 
