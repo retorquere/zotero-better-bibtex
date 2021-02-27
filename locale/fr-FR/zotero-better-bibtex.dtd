@@ -145,6 +145,11 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 
 <!ENTITY better-bibtex.Preferences.advanced.tab.citekeys "Clés de citation">
 
+<!ENTITY better-bibtex.Preferences.advanced.extraMerge "Lors de la fusion d'éléments, fusionner également :">
+<!ENTITY better-bibtex.Preferences.advanced.extraMergeCitekeys "leurs clés de citation dans un champ bib(la)tex `ids`">
+<!ENTITY better-bibtex.Preferences.advanced.extraMergeCSL "les champs qui sont reconnus comme champs CSL par Zotero">
+<!ENTITY better-bibtex.Preferences.advanced.extraMergeTeX "leurs champs `tex.*`">
+
 <!ENTITY better-bibtex.Preferences.export.qualityReport "Inclure des commentaires à propos de problèmes potentiels avec les références ">
 <!ENTITY better-bibtex.Preferences.export.automaticTags "Inclure les tags automatiques dans l'export">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat "Inclure les métadonnées spécifiques à JabRef :">
