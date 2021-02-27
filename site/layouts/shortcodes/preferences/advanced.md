@@ -102,4 +102,22 @@ default: `10`
 
 For those who are curious about what the `Clear/Generate BibTeX key` right-click options do, this will warn you if you are doing this on more than 10 (default) at the same time, to prevent your curiosity from changing all your citation keys at once.
 
+#### their citation keys into an bib(la)tex `ids` field
+
+default: `no`
+
+When merging items, also merge their citation keys into an bib(la)tex `ids` field.
+
+#### fields that are understood to be CSL fields by Zotero
+
+default: `no`
+
+When merging items, also merge fields that are understood to be CSL fields by Zotero.
+
+#### their `tex.*` fields
+
+default: `no`
+
+When merging items, also merge their `tex.*` fields.
+
 
