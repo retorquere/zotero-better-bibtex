@@ -256,6 +256,9 @@
             "jabrefFormat": {
               "type": "number"
             },
+            "jieba": {
+              "type": "boolean"
+            },
             "keyConflictPolicy": {
               "enum": [
                 "change",

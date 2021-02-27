@@ -143,6 +143,7 @@ Scenario Outline: Export <references> references for BibTeX to <file>
 
   Examples:
      | file                                                                               | references |
+     | Word segmentation for Chinese references #1682                                     | 1          |
      | Cannot ignore archivePrefix export field #1744                                     | 1          |
      | url field is having its special characters escaped in BBT Bibtex #1716             | 1          |
      | Match against @string value for export #1597                                       | 1          |
