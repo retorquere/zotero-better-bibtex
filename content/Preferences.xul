@@ -394,6 +394,10 @@
         <bbt:doc>
           When on, BBT will load kuroshiro for romajization in citekeys. This uses a lot of memory, easily 100MB. If you don't have Japanese titles/names, keep this off.
         </bbt:doc>
+        <preference name="extensions.zotero.translators.better-bibtex.jieba" type="bool" default="false"/>
+        <bbt:doc>
+          When on, BBT will make `jieba` Chinese word segmentation available for citekey construction. This uses a lot of memory, easily 10MB. If you don't have Chinese titles/names, keep this off.
+        </bbt:doc>
 
         <preference name="extensions.zotero.translators.better-bibtex.relativeFilePaths" type="bool" default="false"/>
         <bbt:doc>

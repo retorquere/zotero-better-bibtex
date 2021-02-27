@@ -46,6 +46,7 @@
   "importUnknownTexCommand": "ignore",
   "itemObserverDelay": 5,
   "jabrefFormat": 0,
+  "jieba": false,
   "keyConflictPolicy": "keep",
   "keyScope": "library",
   "kuroshiro": false,

@@ -3,6 +3,7 @@ declare const window: any
 
 import ETA = require('node-eta')
 import { kuroshiro } from './key-manager/kuroshiro'
+import { jieba } from './key-manager/jieba'
 
 import { Scheduler } from './scheduler'
 import { log } from './logger'
@@ -198,6 +199,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
 
   public async init() {
     await kuroshiro.init()
+    jieba.init()
 
     this.keys = DB.getCollection('citekey')
 

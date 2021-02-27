@@ -19,6 +19,7 @@ import * as DateParser from '../dateparser'
 
 import * as methods from '../../gen/key-formatter-methods.json'
 import * as items from '../../gen/items/items'
+import { jieba } from './jieba'
 
 import parse5 = require('parse5/lib/parser')
 const htmlParser = new parse5()
@@ -711,6 +712,11 @@ class PatternFormatter {
   /** Treat ideaographs as individual words */
   public _split_ideographs(value: string): string {
     return (value || '').replace(script.han, ' $1 ').trim()
+  }
+
+  /** jieba*/
+  public _jieba(value: string): string {
+    return jieba.cut(value || '').join(' ').trim()
   }
 
   /** transliterates the citation key and removes unsafe characters */
