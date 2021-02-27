@@ -144,6 +144,11 @@ If you have this on, and you experience any problem that is not the cache gettin
 
 <!ENTITY better-bibtex.Preferences.advanced.tab.citekeys "Zitierschlüssel">
 
+<!ENTITY better-bibtex.Preferences.advanced.extraMerge "When merging items, also merge:">
+<!ENTITY better-bibtex.Preferences.advanced.extraMergeCitekeys "their citation keys into an bib(la)tex `ids` field">
+<!ENTITY better-bibtex.Preferences.advanced.extraMergeCSL "fields that are understood to be CSL fields by Zotero">
+<!ENTITY better-bibtex.Preferences.advanced.extraMergeTeX "their `tex.*` fields">
+
 <!ENTITY better-bibtex.Preferences.export.qualityReport "Füge Kommentare über mögliche Probleme mit den Verweisen hinzu">
 <!ENTITY better-bibtex.Preferences.export.automaticTags "Inkludiere automatische Tags in den Export">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat "Füge JabRef-spezifische Meta-Informationen hinzu:">
