@@ -89,7 +89,7 @@ I've had reports where Zotero notifies extensions that references have changed, 
 
 default: `no`
 
-When on, BBT will make `jieba` Chinese word segmentation available for citekey construction. This uses a lot of memory, easily 10MB. If you don't have Chinese titles/names, keep this off.
+When on, BBT will make Chinese word segmentation available for citekey construction. This uses a lot of memory, easily 70MB. If you don't have Chinese titles/names, keep this off.
 
 ### kuroshiro
 

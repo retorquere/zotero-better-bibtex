@@ -646,6 +646,7 @@ class PatternFormatter {
    * Note that this filter is always applied if you use `title` (which is different from `Title`) or `shorttitle`.
    */
   public _skipwords(value: string): string {
+    log.debug('citekey.skipwors:', value, '=>', (value || '').split(/\s+/).filter(word => !this.skipWords.has(word.toLowerCase())).join(' ').trim())
     return (value || '').split(/\s+/).filter(word => !this.skipWords.has(word.toLowerCase())).join(' ').trim()
   }
 
@@ -661,6 +662,7 @@ class PatternFormatter {
 
     start -= 1
     if (typeof n !== 'undefined') end = start + n
+    log.debug('citekey.select:', value, '=>', values.slice(start, end).join(' '))
     return values.slice(start, end).join(' ')
   }
 
@@ -690,6 +692,7 @@ class PatternFormatter {
 
   /** uppercases the first letter of each word */
   public _capitalize(value: string): string {
+    log.debug('citekey.capitalize:', value, '=>', (value || '').replace(/((^|\s)[a-z])/g, m => m.toUpperCase()))
     return (value || '').replace(/((^|\s)[a-z])/g, m => m.toUpperCase())
   }
 
@@ -716,6 +719,7 @@ class PatternFormatter {
 
   /** jieba*/
   public _jieba(value: string): string {
+    log.debug('citekey.jieba:', value, '=>', jieba.cut(value || '').join(' ').trim())
     return jieba.cut(value || '').join(' ').trim()
   }
 

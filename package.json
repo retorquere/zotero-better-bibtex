@@ -82,6 +82,7 @@
     "lokijs": "^1.5.11",
     "node-eta": "^0.9.0",
     "number-to-words": "^1.2.4",
+    "ooooevan-jieba": "^1.0.3",
     "parse5": "^6.0.1",
     "permutater": "^1.0.2",
     "pug": "^3.0.2",

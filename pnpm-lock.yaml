@@ -27,6 +27,7 @@ dependencies:
   lokijs: 1.5.11
   node-eta: 0.9.0
   number-to-words: 1.2.4
+  ooooevan-jieba: 1.0.3
   parse5: 6.0.1
   permutater: 1.0.2
   pug: 3.0.2
@@ -3909,6 +3910,10 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-kbpaSSGJTWdAY5KPVeMOKXSrPtr8C8C7wodJbcsd51jRnmD+GZu8Y0VoU6Dm5Z4vWr0Ig/1NKuWRKf7j5aaYSg==
+  /ooooevan-jieba/1.0.3:
+    dev: false
+    resolution:
+      integrity: sha512-PzeanZSVn4eWXkgXdzF/2Bg3erkajBPj+/oAQoflzplmQAzQBdP0ClxwTC26Q+4CC1eAoytzDjIMOHSYfj0Egw==
   /optionator/0.9.1:
     dependencies:
       deep-is: 0.1.3
@@ -5821,6 +5826,7 @@ specifiers:
   njstrace: ^1.2.1
   node-eta: ^0.9.0
   number-to-words: ^1.2.4
+  ooooevan-jieba: ^1.0.3
   parse5: ^6.0.1
   pegjs: ^0.10.0
   permutater: ^1.0.2
