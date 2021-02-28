@@ -744,7 +744,7 @@ class PatternFormatter {
     }[mode]
     if (mode && !replace) throw new Error(`Unsupported fold mode "${mode}"`)
 
-    if (kuroshiro.enabled) str = kuroshiro.convert(str, {to: 'romaji'})
+    if (Preference.kuroshiro && kuroshiro.enabled) str = kuroshiro.convert(str, {to: 'romaji'})
     str = transliterate(str || '', {
       unknown: '\uFFFD', // unicode replacement char
       replace,
@@ -765,7 +765,7 @@ class PatternFormatter {
 
     title = this.innerText(title)
 
-    if (options.asciiOnly && kuroshiro.enabled) title = kuroshiro.convert(title, {to: 'romaji', mode: 'spaced'})
+    if (options.asciiOnly && Preference.kuroshiro && kuroshiro.enabled) title = kuroshiro.convert(title, {to: 'romaji', mode: 'spaced'})
 
     // 551
     let words: string[] = (Zotero.Utilities.XRegExp.matchChain(title, [this.re.word]).map(word => this.clean(word).replace(/-/g, '')))
