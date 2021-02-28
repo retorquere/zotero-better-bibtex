@@ -1,20 +1,34 @@
 declare const Zotero: any
 
-import { init, cut } from '../../gen/jieba'
 import { Preference } from '../../gen/preferences'
 import { log } from '../logger'
+import { Events } from '../events'
 
-function ignore() {} // eslint-disable-line @typescript-eslint/no-empty-function
+import Jieba = require('ooooevan-jieba')
+import Trie = require('ooooevan-jieba/trieTree')
 
 export const jieba = new class {
-  private dict: any
+  private jieba: any
 
   init() {
-    log.debug('Jieba enabled:', Preference.jieba)
-    if (Preference.jieba && !this.dict) {
-      this.dict = JSON.parse(Zotero.File.getContentsFromURL('resource://zotero-better-bibtex/jieba/dict.json'))
-      log.debug('Jieba enabled:', Object.keys(this.dict).length, 'entries')
-      init(this.dict)
+    log.debug('jieba enabled:', Preference.jieba)
+    this.load()
+    Events.on('preference-changed', pref => {
+      if (pref === 'jieba') this.load()
+    })
+  }
+
+  private load() {
+    if (Preference.jieba && !this.jieba) {
+      this.jieba = new Jieba()
+      for (const [k, v] of Object.entries(JSON.parse(Zotero.File.getContentsFromURL('resource://zotero-better-bibtex/jieba/probabilities.json')))) {
+        this.jieba[k] = v
+      }
+      const dict = JSON.parse(Zotero.File.getContentsFromURL('resource://zotero-better-bibtex/jieba/dict.json'))
+      this.jieba.tireTree = new Trie()
+      this.jieba.tireTree.insertArr(dict.dictlineArr)
+      this.jieba.tireTree.insertArr(dict.userDictlineArr)
+      this.jieba._loaded = true // eslint-disable-line no-underscore-dangle
     }
   }
 
@@ -23,8 +37,8 @@ export const jieba = new class {
       this.init()
     }
     else {
-      throw new Error('Jieba not loaded')
+      throw new Error('jieba not loaded')
     }
-    return (cut([this.dict], input, ignore) as string[])
+    return (this.jieba.cut(input, { cutAll: false, dag: false, hmm: true, cutForSearch: false }) as string[])
   }
 }

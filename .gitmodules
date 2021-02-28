@@ -5,6 +5,3 @@
 [submodule "bbt/themes/learn"]
 	path = site/themes/learn
 	url = https://github.com/matcornic/hugo-theme-learn.git
-[submodule "jieba-js"]
-	path = jieba-js
-	url = https://github.com/pulipulichen/jieba-js.git

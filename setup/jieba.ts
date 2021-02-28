@@ -1,13 +1,20 @@
-import * as fs from 'fs'
+/* eslint-disable no-console, @typescript-eslint/no-unsafe-return */
+const fs = require('fs')
+const Jieba = require('ooooevan-jieba')
+const jieba = new Jieba()
+console.log('jieba')
+jieba.load()
 
-const dict = require('../jieba-js/scripts/data/dictionary.js')
+console.log('  probabilities')
+fs.writeFileSync('build/resource/jieba/probabilities.json', JSON.stringify({
+  startProb: jieba.startProb,
+  transProb: jieba.transProb,
+  prevTrans: jieba.prevTrans,
+  emitProb: jieba.emitProb,
+}))
 
-fs.writeFileSync('build/resource/jieba/dict.json', JSON.stringify(dict))
-fs.writeFileSync('gen/jieba.js', `
-${fs.readFileSync('jieba-js/scripts/main.js', 'utf-8').replace(/\r/g, '')}
-
-module.exports = {
-  init: jieba_parsing,
-  cut: node_jieba_parsing,
-}
-`)
+console.log('  dict')
+fs.writeFileSync('build/resource/jieba/dict.json', JSON.stringify({
+  dictlineArr: fs.readFileSync(jieba.dictPath).toString().split('\n').filter(s => s),
+  userDictlineArr: fs.readFileSync(jieba.userDictPath).toString().split('\n').filter(s => s),
+}))
