@@ -10,7 +10,7 @@ export const TeXstudio = new class { // eslint-disable-line @typescript-eslint/n
   public texstudio: string
 
   public async init() {
-    this.texstudio = await pathSearch('texstudio', { mac: '/Applications/texstudio.app/Contents/MacOS', win: 'C:\\Program Files (x86)\\texstudio' })
+    this.texstudio = await pathSearch('texstudio', { mac: ['/Applications/texstudio.app/Contents/MacOS'], win: ['C:\\Program Files (x86)\\texstudio', 'C:\\Program Files\\texstudio'] })
     this.enabled = !!this.texstudio
     if (this.enabled) {
       log.debug('TeXstudio: found at', this.texstudio)
