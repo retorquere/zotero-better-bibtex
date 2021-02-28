@@ -160,8 +160,6 @@ class PatternFormatter {
   public parsePattern(pattern) {
     const { formatter, postfixes } = (parser.parse(pattern, { items, methods }) as { formatter: string, postfixes: string[]})
 
-    log.debug('key formatter=', formatter)
-    log.debug('key postfixes=', postfixes)
     for (const postfix of postfixes) {
       const expected = `${Date.now()}`
       const found = sprintf(postfix, { a: expected, A: expected, n: expected })
@@ -583,9 +581,7 @@ class PatternFormatter {
   /** replaces text, case insensitive; `:replace=.etal,&etal` will replace `.EtAl` with `&etal` */
   public _replace(value: string, find: string, replace: string, mode?: 'string' | 'regex') {
     if (!find) return (value || '')
-    log.debug(':replace', { find, value: value || '', mode})
     const re = mode === 'regex' ? find : find.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&')
-    log.debug(':replace', { find, value: value || '', mode}, (value || '').replace(new RegExp(re, 'ig'), replace || ''))
     return (value || '').replace(new RegExp(re, 'ig'), replace || '')
   }
 
@@ -646,7 +642,6 @@ class PatternFormatter {
    * Note that this filter is always applied if you use `title` (which is different from `Title`) or `shorttitle`.
    */
   public _skipwords(value: string): string {
-    log.debug('citekey.skipwors:', value, '=>', (value || '').split(/\s+/).filter(word => !this.skipWords.has(word.toLowerCase())).join(' ').trim())
     return (value || '').split(/\s+/).filter(word => !this.skipWords.has(word.toLowerCase())).join(' ').trim()
   }
 
@@ -662,7 +657,6 @@ class PatternFormatter {
 
     start -= 1
     if (typeof n !== 'undefined') end = start + n
-    log.debug('citekey.select:', value, '=>', values.slice(start, end).join(' '))
     return values.slice(start, end).join(' ')
   }
 
@@ -692,7 +686,6 @@ class PatternFormatter {
 
   /** uppercases the first letter of each word */
   public _capitalize(value: string): string {
-    log.debug('citekey.capitalize:', value, '=>', (value || '').replace(/((^|\s)[a-z])/g, m => m.toUpperCase()))
     return (value || '').replace(/((^|\s)[a-z])/g, m => m.toUpperCase())
   }
 
@@ -719,7 +712,7 @@ class PatternFormatter {
 
   /** jieba*/
   public _jieba(value: string): string {
-    log.debug('citekey.jieba:', value, '=>', jieba.cut(value || '').join(' ').trim())
+    if (!Preference.jieba) return value
     return jieba.cut(value || '').join(' ').trim()
   }
 
