@@ -85,18 +85,6 @@ default: `5`
 
 I've had reports where Zotero notifies extensions that references have changed, but if BBT then actually retrieves those same references, Zotero complains they "haven't been saved yet". Super. This preference sets the number of microseconds BBT should wait after being notified before acting on the changed references.
 
-### jieba
-
-default: `no`
-
-When on, BBT will make Chinese word segmentation available for citekey construction. This uses a lot of memory, easily 70MB. If you don't have Chinese titles/names, keep this off.
-
-### kuroshiro
-
-default: `no`
-
-When on, BBT will load kuroshiro for romajization in citekeys. This uses a lot of memory, easily 100MB. If you don't have Japanese titles/names, keep this off.
-
 ### mapMath
 
 default: `<not set>`

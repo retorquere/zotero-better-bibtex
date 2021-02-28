@@ -390,11 +390,11 @@
         <preference name="extensions.zotero.translators.better-bibtex.debugLogDir" type="string" default=""/>
         <preference name="extensions.zotero.translators.better-bibtex.testing" type="bool" default="false"/>
 
-        <preference name="extensions.zotero.translators.better-bibtex.kuroshiro" type="bool" default="false"/>
+        <preference id="pref-better-bibtex-kuroshiro" name="extensions.zotero.translators.better-bibtex.kuroshiro" type="bool" default="false"/>
         <bbt:doc>
           When on, BBT will load kuroshiro for romajization in citekeys. This uses a lot of memory, easily 100MB. If you don't have Japanese titles/names, keep this off.
         </bbt:doc>
-        <preference name="extensions.zotero.translators.better-bibtex.jieba" type="bool" default="false"/>
+        <preference id="pref-better-bibtex-jieba" name="extensions.zotero.translators.better-bibtex.jieba" type="bool" default="false"/>
         <bbt:doc>
           When on, BBT will make Chinese word segmentation available for citekey construction. This uses a lot of memory, easily 70MB. If you don't have Chinese titles/names, keep this off.
         </bbt:doc>
@@ -905,6 +905,11 @@
                       <checkbox preference="pref-better-bibtex-extraMergeCitekeys" label="&better-bibtex.Preferences.advanced.extraMergeCitekeys;"/>
                       <checkbox preference="pref-better-bibtex-extraMergeCSL" label="&better-bibtex.Preferences.advanced.extraMergeCSL;"/>
                       <checkbox preference="pref-better-bibtex-extraMergeTeX" label="&better-bibtex.Preferences.advanced.extraMergeTeX;"/>
+                  </groupbox>
+                  <groupbox>
+                    <caption label="&better-bibtex.Preferences.advanced.ideographs;"/>
+                      <checkbox preference="pref-better-bibtex-kuroshiro" label="&better-bibtex.Preferences.advanced.ideographs.kuroshiro;"/>
+                      <checkbox preference="pref-better-bibtex-jieba" label="&better-bibtex.Preferences.advanced.ideographs.jieba;"/>
                   </groupbox>
                 </tabpanel>
               </tabpanels>
