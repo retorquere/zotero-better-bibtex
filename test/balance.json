@@ -17,7 +17,7 @@
     },
     "Citekey generation failure #708 and sort references on export #957": 2040,
     "Collected notes": {
-      "msecs": 3350,
+      "msecs": 3360,
       "runs": -71
     },
     "Date export to Better CSL-JSON #360 #811": 1350,
@@ -79,7 +79,7 @@
     "Export 1 references for BibLaTeX to Export Newspaper Article misses section field #132": 330,
     "Export 1 references for BibLaTeX to Export error for items without publicationTitle and Preserve BibTeX variables enabled #201": 310,
     "Export 1 references for BibLaTeX to Export fails for duplicate \"extra\" field #1739": {
-      "msecs": 310,
+      "msecs": 320,
       "runs": -236
     },
     "Export 1 references for BibLaTeX to Export mapping for reporter field #219": 360,
@@ -181,7 +181,7 @@
     },
     "Export 1 references for BibTeX to Book chapter citation using p. instead of pp. #1375": 450,
     "Export 1 references for BibTeX to Cannot ignore archivePrefix export field #1744": {
-      "msecs": 480,
+      "msecs": 520,
       "runs": -240
     },
     "Export 1 references for BibTeX to Double superscript in title field on export #1217": 400,
@@ -309,7 +309,7 @@
       "runs": -97
     },
     "Identical Pinned keys lost when merging duplicated records #1721": {
-      "msecs": 6440,
+      "msecs": 6450,
       "runs": -231
     },
     "Ignoring upper cases in German titles #456": 700,
@@ -342,7 +342,7 @@
     "Import 1 references from Spaces lost when expanding string variables during import #1081": 1020,
     "Import 1 references from Wrong ring-above import #1115": 1020,
     "Import 1 references from collaborators to contributors": {
-      "msecs": 1190,
+      "msecs": 1200,
       "runs": -209
     },
     "Import 1 references from eprinttype field dropped on import #959": 1020,
@@ -361,7 +361,7 @@
     "Import 2 references from BibLaTeX Patent author handling, type #1060": 1210,
     "Import 2 references from space after citekey creates confusion #716": 1160,
     "Import 20 references from BBT does not import groups from JabRef 5.1 #1641": {
-      "msecs": 3690,
+      "msecs": 3700,
       "runs": -161
     },
     "Import 3 references from Better BibTeX.009": 1130,
@@ -373,7 +373,7 @@
     "Include first name initial(s) in cite key generation pattern (86)": 450,
     "Jabref groups import does not work #717": 2810,
     "Jabref import - groups lost #1730": {
-      "msecs": 3030,
+      "msecs": 3050,
       "runs": -228
     },
     "Journal abbreviations": 490,
@@ -389,12 +389,12 @@
     "Pandoc-LaTeX-SCHOMD Citation Export": 1280,
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 409120,
+    "Really Big whopping library": 409350,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 42570,
+      "msecs": 42780,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
@@ -406,7 +406,7 @@
     "automatic tags in export #1270": 410,
     "bibtex; url export does not survive underscores #402": 670,
     "ids field should be created in raw mode #1729": {
-      "msecs": 8720,
+      "msecs": 8770,
       "runs": -227
     },
     "importing a title-cased bib #1246": 1320,
@@ -414,7 +414,7 @@
     "thesis zotero entries always create @phdthesis bibtex entries #307": 760,
     "two ISSN number are freezing browser #110 + Generating keys and export broken #111": 3610,
     "unknown command handler #1733": {
-      "msecs": 1120,
+      "msecs": 1140,
       "runs": -231
     },
     "use author dash separation rather than camel casing in citekey #1495": {
@@ -422,7 +422,7 @@
       "runs": -36
     },
     "web_page and other mendeley idiocy": {
-      "msecs": 38940,
+      "msecs": 39970,
       "runs": -239
     }
   },
@@ -718,7 +718,7 @@
       "Identical Pinned keys lost when merging duplicated records #1721"
     ]
   },
-  "runs": 243,
+  "runs": 244,
   "slow": {
     "1": [
       "Export 1 references for BibLaTeX to biber 2.14 rejects the date field generated from Better BibLaTex #1695",
