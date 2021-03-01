@@ -265,6 +265,8 @@ class Preferences:
 
 content = os.path.join(root, 'content')
 for xul in os.listdir(content):
-  if xul.endswith('xul'): load(os.path.join(content, xul))
+  if xul.endswith('xul'):
+    print(' ', xul)
+    load(os.path.join(content, xul))
 
 Preferences()

@@ -64,9 +64,9 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
   private queue = new Queue((t1: IPriority, t2: IPriority) => t1.priority === t2.priority ? t1.timestamp < t2.timestamp : t1.priority > t2.priority)
 
-  public workers: { total: number, running: boolean, disabled: boolean } = {
+  public workers: { total: number, running: Set<number>, disabled: boolean } = {
     total: 0,
-    running: false,
+    running: new Set,
     disabled: false,
   }
 
@@ -177,7 +177,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   public async exportItemsByQueuedWorker(translatorID: string, displayOptions: Record<string, boolean>, options: ExportJob) {
-    if (this.workers.running) {
+    if (this.workers.running.size < Preference.workers) {
       return this.queue.schedule(this.exportItemsByWorker.bind(this, translatorID, displayOptions, options), [], { priority: 1, timestamp: (new Date()).getTime() })
     }
     else {
@@ -249,7 +249,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     this.workers.total += 1
     const id = this.workers.total
-    this.workers.running = true
+    this.workers.running.add(id)
     const prefix = `{${translator.label} worker ${id}}`
 
     const deferred = Zotero.Promise.defer()
@@ -293,7 +293,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           Zotero.debug(`${prefix} error: ${e.data.message}`)
           deferred.reject(e.data.message)
           worker.terminate()
-          this.workers.running = false
+          this.workers.running.delete(id)
           break
 
         case 'debug':
@@ -309,7 +309,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         case 'done':
           deferred.resolve(e.data.output)
           worker.terminate()
-          this.workers.running = false
+          this.workers.running.delete(id)
           break
 
         case 'cache':
@@ -321,7 +321,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
             log.error(msg)
             deferred.reject(msg)
             worker.terminate()
-            this.workers.running = false
+            this.workers.running.delete(id)
           }
 
           const selector = cacheSelector(itemID, config.options, config.preferences)
@@ -351,7 +351,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       log.error('QBW: failed:', Date.now() - start)
       deferred.reject(e.message)
       worker.terminate()
-      this.workers.running = false
+      this.workers.running.delete(id)
     }
 
     const scope = this.exportScope(options.scope)
@@ -451,7 +451,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
     catch (err) {
       worker.terminate()
-      this.workers.running = false
+      this.workers.running.delete(id)
       log.error(err)
       deferred.reject(err)
       log.error('QBW: failed:', Date.now() - start)

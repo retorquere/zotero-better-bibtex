@@ -71,5 +71,5 @@
   "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups",
   "warnBulkModify": 10,
   "warnTitleCased": false,
-  "workers": true
+  "workers": 1
 }
