@@ -37,7 +37,7 @@ If you have this on, and you experience any problem that is not the cache gettin
 
 default: `1`
 
-BBT can now perform its exports in a separate thread, and should no longer block Zotero's UI pretty much regardless of how large your library is. While it's been tested and seems to work well, I still consider it to be experimental at this stage. You can turn it off by setting this value to `0` and get the old (blocking) behavior back.
+BBT can now perform its exports in a separate thread, and should no longer block Zotero's UI pretty much regardless of how large your library is. The default of 1 parallel export should suit most needs, but if you have many auto-exports set up, you may want to raise the maximum parallel exports to prevent queueing of exports. It is possible to turn background exports off by setting this value to `0` in the hidden preferences; you will get the old (blocking) behavior back, but you can't complain about Zotero being laggy during auto-exports. All Zotero exports are blocking, and it's a minor miracle I got background exports to work at all.
 
 ### Import
 

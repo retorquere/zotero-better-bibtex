@@ -3,27 +3,25 @@ namespace XUL {
     public hidden: boolean
   }
 
-  class Textbox extends HTMLElement{
+  class Textbox extends XUL.Element {
     public value: string
-    public hidden: boolean
     public readonly: boolean
   }
 
-  class Checkbox extends HTMLElement {
-    public hidden: boolean
+  class Checkbox extends XUL.Element {
     public checked: boolean
   }
 
-  class Menuitem extends HTMLElement {
+  class Menuitem extends XUL.Element {
     public value: string
     public label: string
   }
 
-  class Menupopup extends HTMLElement {
+  class Menupopup extends XUL.Element {
     public children: Menuitem[]
   }
 
-  class Menulist extends HTMLElement {
+  class Menulist extends XUL.Element {
     public firstChild: Menupopup
     public selectedItem: Menuitem
     public value: string
