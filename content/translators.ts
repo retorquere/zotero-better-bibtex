@@ -223,7 +223,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       }
     }
 
-    const caching = !(
+    const caching = Preference.workersCache && !(
       // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
       displayOptions.exportFileData
 
