@@ -6,7 +6,7 @@
   "autoAbbrev": false,
   "autoAbbrevStyle": "",
   "autoExport": "immediate",
-  "autoExportDelay": 1,
+  "autoExportDelay": 5,
   "autoExportIdleWait": 10,
   "autoExportPathReplaceDiacritics": false,
   "autoExportPathReplaceDirSep": "-",

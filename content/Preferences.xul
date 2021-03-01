@@ -282,7 +282,7 @@
           * `text`: import without marking it as TeX code, so on re-export it will be treated as regular text
         </bbt:doc>
 
-        <preference name="extensions.zotero.translators.better-bibtex.autoExportDelay" type="int" default="1"/>
+        <preference name="extensions.zotero.translators.better-bibtex.autoExportDelay" type="int" default="5"/>
         <bbt:doc>
           If you have auto-exports set up, BBT will wait this many seconds before actually kicking off the exports to buffer multiple changes in quick succession
           setting off an unreasonable number of auto-exports. Minimum is 1 second. Changes to this preference take effect after restarting Zotero.
