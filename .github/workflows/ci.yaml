@@ -82,6 +82,7 @@ jobs:
         - client: jurism
           bin: '2'
           softfail: true
+    if: github.event_name == 'schedule' || matrix.client == 'zotero'
     steps:
     - uses: actions/checkout@v2
     - name: fetch build artifacts
