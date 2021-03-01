@@ -87,12 +87,12 @@ jobs:
         client: [zotero]
         bin: ['1', '2']
         include:
-        - client: jurism
-          bin: '1'
-          softfail: true
-        - client: jurism
-          bin: '2'
-          softfail: true
+#        - client: jurism
+#          bin: '1'
+#          softfail: true
+#        - client: jurism
+#          bin: '2'
+#          softfail: true
     steps:
     - uses: actions/checkout@v2
     - name: fetch build artifacts
