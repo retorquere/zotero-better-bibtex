@@ -419,11 +419,9 @@
           but you can disable this by checking "Do not ask again" in that dialog.
         </bbt:doc>
 
-        <preference name="extensions.zotero.translators.better-bibtex.workers" id="pref-better-bibtex-workers" type="int" default="1"/>
+        <preference name="extensions.zotero.translators.better-bibtex.workers" id="pref-better-bibtex-workers" type="bool" default="true"/>
         <bbt:doc>
           BBT can now perform its exports in a separate thread, and should no longer block Zotero's UI pretty much regardless of how large your library is.
-          While it's been tested and seems to work well, I still consider it to be experimental at this stage. You can turn it off by setting this value to `0`
-          and get the old (blocking) behavior back.
         </bbt:doc>
 
         <preference name="extensions.zotero.translators.better-bibtex.platform" type="string" default=""/>
@@ -771,8 +769,6 @@
                 </tabpanel>
               </tabpanels>
             </tabbox>
-
-            <label class="better-bibtex-preferences-worker-state"/>
           </tabpanel>
 
           <tabpanel id="better-bibtex-prefs-advanced" orient="vertical">
@@ -810,11 +806,6 @@
                     <checkbox preference="pref-better-bibtex-retainCache" label="&better-bibtex.Preferences.advanced.export.retainCache;"/>
                     <image tooltip="tooltip-retainCache" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
                   </hbox>
-                  <hbox>
-                    <label bbt:preference="pref-better-bibtex-workers">&better-bibtex.Preferences.advanced.export.workers;</label>
-                    <scale min="0" max="10" preference="pref-better-bibtex-workers"/>
-                  </hbox>
-                  <label class="better-bibtex-preferences-worker-state"/>
                   <button label="&better-bibtex.Preferences.resetCache;" oncommand="Zotero.BetterBibTeX.Preferences.cacheReset()"/>
                 </tabpanel>
 

@@ -455,13 +455,6 @@ export = new class PrefPane {
       document.getElementById(`id-better-bibtex-preferences-${row}`).setAttribute('hidden', quickCopyMode !== enabledFor)
     }
 
-    for (const state of Array.from(document.getElementsByClassName('better-bibtex-preferences-worker-state'))) {
-      (state as XUL.Textbox).value = Zotero.BetterBibTeX.getString(`BetterBibTeX.workers.${Preference.workers ? 'status' : 'disabled'}`, {
-        total: Translators.workers.total,
-        workers: Preference.workers,
-        running: Translators.workers.running.size,
-      })
-    }
     window.sizeToContent()
   }
 

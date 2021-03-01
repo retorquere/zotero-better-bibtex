@@ -36,9 +36,9 @@ export const Preference = new class PreferenceManager {
   constructor() {
     // migrate ancient keys
     let old, key
-    if (typeof (old = Zotero.Prefs.get(key = '${prefix}workers')) !== 'number') {
+    if (typeof (old = Zotero.Prefs.get(key = '${prefix}workers')) !== 'boolean') {
       Zotero.Prefs.clear(key)
-      Zotero.Prefs.set(key, old ? 1 : 0)
+      Zotero.Prefs.set(key, true)
     }
     if (typeof (old = Zotero.Prefs.get(key = '${prefix}suppressTitleCase')) !== 'undefined') {
       Zotero.Prefs.set('${prefix}exportTitleCase', !old)

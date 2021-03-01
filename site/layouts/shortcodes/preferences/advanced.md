@@ -33,12 +33,6 @@ By default, BBT clears all caches whenever BBT or Zotero is upgraded. I can't re
 
 If you have this on, and you experience any problem that is not the cache getting dropped on upgrade, you *must* clear the cache and reproduce the problem. When you change this setting, as with any setting change, the cache will be dropped.
 
-#### Parallel background exports:
-
-default: `1`
-
-BBT can now perform its exports in a separate thread, and should no longer block Zotero's UI pretty much regardless of how large your library is. While it's been tested and seems to work well, I still consider it to be experimental at this stage. You can turn it off by setting this value to `0` and get the old (blocking) behavior back.
-
 ### Import
 
 #### Sentence-case titles on import:
