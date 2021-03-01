@@ -86,7 +86,7 @@ jobs:
       matrix:
         client: [zotero]
         bin: ['1', '2']
-        include:
+#        include:
 #        - client: jurism
 #          bin: '1'
 #          softfail: true
