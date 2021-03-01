@@ -64,10 +64,11 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
   private queue = new Queue((t1: IPriority, t2: IPriority) => t1.priority === t2.priority ? t1.timestamp < t2.timestamp : t1.priority > t2.priority)
 
-  public workers: { total: number, running: Set<number>, disabled: boolean } = {
+  public workers: { total: number, running: Set<number>, disabled: boolean, startup: number } = {
     total: 0,
     running: new Set,
     disabled: false,
+    startup: 0,
   }
 
   constructor() {
@@ -442,7 +443,13 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     now = Date.now()
-    log.debug('worker:', { caching, startup: now - start })
+
+    // if the average startup time is greater than the autoExportDelay, bump up the delay to prevent stall-cascades
+    this.workers.startup += Math.ceil((now - start) / 1000) // eslint-disable-line no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
+    if (this.workers.total > 5 && (this.workers.startup / this.workers.total) > Preference.autoExportDelay) Preference.autoExportDelay = Math.ceil(this.workers.startup / this.workers.total)
+    log.debug('worker:', { caching, workers: this.workers, autoExportDelay: Preference.autoExportDelay })
+
     current_trace.prep.duration.push(now - last_trace)
     current_trace.prep.total = now - start
     last_trace = now

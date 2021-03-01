@@ -71,5 +71,6 @@
   "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups",
   "warnBulkModify": 10,
   "warnTitleCased": false,
-  "workers": 1
+  "workers": 1,
+  "workersCache": true
 }
