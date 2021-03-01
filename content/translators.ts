@@ -442,6 +442,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     now = Date.now()
+    log.debug('worker:', { caching, startup: now - start })
     current_trace.prep.duration.push(now - last_trace)
     current_trace.prep.total = now - start
     last_trace = now
