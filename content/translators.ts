@@ -447,7 +447,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     this.workers.startup += Math.ceil((now - start) / 1000) // eslint-disable-line no-magic-numbers
     // eslint-disable-next-line no-magic-numbers
     if (this.workers.total > 5 && (this.workers.startup / this.workers.total) > Preference.autoExportDelay) Preference.autoExportDelay = Math.ceil(this.workers.startup / this.workers.total)
-    log.debug('worker:', { caching, workers: this.workers, autoExportDelay: Preference.autoExportDelay })
+    log.debug('worker:', { avgstartup: this.workers.startup / this.workers.total, startup: now - start, caching, workers: this.workers, autoExportDelay: Preference.autoExportDelay })
 
     current_trace.prep.duration.push(now - last_trace)
     current_trace.prep.total = now - start

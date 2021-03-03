@@ -485,15 +485,28 @@ Scenario: Field Institution not available anymore in key pattern for Zotero #156
 
 # tests the cache
 @use.with_client=zotero @use.with_slow=true @timeout=3000
-@rbwl
-Scenario: Really Big whopping library
+Scenario: Really big whopping library
   When I restart Zotero with "1287" + "export/*.json"
   And I reset the cache
   Then an export using "Better BibTeX" should match "export/*.bibtex"
-  When I reset the cache
-  Then an export using "Better CSL JSON" should match "export/*.csl.json"
-  And an export using "Better BibTeX" should match "export/*.bibtex"
   And an export using "Better BibTeX" should match "export/*.bibtex", but take no more than 150 seconds
+  When I set preference .workersCache to false
+  Then an export using "Better BibTeX" should match "export/*.bibtex", but take no more than 400 seconds
+
+# tests without cache prefill
+@use.with_client=zotero @use.with_slow=true @timeout=3000
+Scenario: Really Big whopping library
+  When I restart Zotero with "1287" + "export/*.json"
+  And I reset the cache
+  And I set preference .workersCache to false
+  Then an export using "Better BibTeX" should match "export/*.bibtex"
+
+# tests the cache for CSL
+@use.with_client=zotero @use.with_slow=true @timeout=3000
+Scenario: Really Big whopping library
+  When I restart Zotero with "1287" + "export/*.json"
+  And I reset the cache
+  Then an export using "Better CSL JSON" should match "export/*.csl.json"
   And an export using "Better CSL JSON" should match "export/*.csl.json", but take no more than 150 seconds
 
 #@use.with_client=zotero @use.with_slow=true @timeout=300
