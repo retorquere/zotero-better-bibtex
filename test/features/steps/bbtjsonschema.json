@@ -351,6 +351,9 @@
             },
             "workers": {
               "type": "number"
+            },
+            "workersCache": {
+              "type": "boolean"
             }
           },
           "type": "object"

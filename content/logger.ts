@@ -22,12 +22,11 @@ class Logger {
         if (type === 'string' || m instanceof String || type === 'number' || type === 'undefined' || type === 'boolean' || m === null) {
           output += m
         }
-        else if (m instanceof Error) {
-          output += `<Error: ${m.message || m.name}${m.stack ? `\n${m.stack}` : Object.keys(m).join(', ')}>`
+        else if (m instanceof Error || m instanceof ErrorEvent || m.toString() === '[object ErrorEvent]') {
+          output += this.formatError(m)
         }
         else if (m && type === 'object' && m.message) { // mozilla exception, no idea on the actual instance type
-          // message,fileName,lineNumber,column,stack,errorCode
-          output += `<Error: ${m.message}#\n${m.stack}>`
+          output += this.formatError({ message: m.errorCode ? `${m.message} (${m.errorCode})` : m.message, filename: m.fileName, lineno: m.lineNumber, colno: m.column, stack: m.stack })
         }
         else if (this.verbose) {
           output += stringify(m, null, 2)
@@ -44,6 +43,15 @@ class Logger {
     const translator = typeof Translator !== 'undefined' && Translator.header.label
     const prefix = ['better-bibtex', translator, error, worker ? '(worker)' : ''].filter(p => p).join(' ')
     return `{${prefix}} +${diff} ${asciify(msg)}`
+  }
+
+  private formatError(e, indent='') {
+    let msg = `${indent}${e.message || e.name || ''}`
+    if (e.filename) msg += ` in ${e.filename}`
+    if (e.lineno && e.colno) msg += ` line ${e.lineno}, col ${e.colno}`
+    if (e.stack) msg += `\n${indent}${e.stack.replace(/\n/g, `${indent}\n`)}`
+    if (e.error) msg += `\n${indent}${this.formatError(e.error, '  ')}\n`
+    return `${indent}<Error: ${msg}>`
   }
 
   public debug(...msg) {
