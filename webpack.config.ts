@@ -144,6 +144,7 @@ if (!process.env.MINITESTS) {
     config.push(
       _.merge({}, common, {
         plugins: [
+          new AssignLibraryDammitPlugin(),
           new webpack.ProvidePlugin({ process: 'process/browser', }),
           // new CircularDependencyPlugin({ failOnError: true }),
           new webpack.DefinePlugin({
@@ -177,7 +178,7 @@ if (!process.env.MINITESTS) {
           filename: '[name].js',
           pathinfo: true,
           library: `var {${vars}}`,
-          libraryTarget: 'assign',
+          libraryTarget: 'assign-dammit',
         },
       })
     )

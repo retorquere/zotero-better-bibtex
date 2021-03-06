@@ -9,7 +9,7 @@ class Logger {
 
   protected timestamp: number
 
-  private format(error, msg) {
+  private format(status: { error?: boolean, worker?: boolean}, msg) {
     let diff = null
     const now = Date.now()
     if (this.timestamp) diff = now - this.timestamp
@@ -41,7 +41,7 @@ class Logger {
     }
 
     const translator = typeof Translator !== 'undefined' && Translator.header.label
-    const prefix = ['better-bibtex', translator, error, worker ? '(worker)' : ''].filter(p => p).join(' ')
+    const prefix = ['better-bibtex', translator, status.error, worker || status.worker ? '(worker)' : ''].filter(p => p).join(' ')
     return `{${prefix}} +${diff} ${asciify(msg)}`
   }
 
@@ -56,11 +56,14 @@ class Logger {
 
   public debug(...msg) {
     // cannot user Zotero.Debug.enabled because it is not available in foreground exporters
-    if (!Zotero.BetterBibTeX || Zotero.BetterBibTeX.debugEnabled()) Zotero.debug(this.format('', msg))
+    if (!Zotero.BetterBibTeX || Zotero.BetterBibTeX.debugEnabled()) Zotero.debug(this.format({}, msg))
   }
 
   public error(...msg) {
-    Zotero.debug(this.format('error', msg))
+    Zotero.debug(this.format({error: true}, msg))
+  }
+  public status(status: { error?: boolean, worker?: boolean}, ...msg) {
+    Zotero.debug(this.format(status, msg))
   }
 }
 

@@ -289,9 +289,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     worker.onmessage = (e: { data: BBTWorker.Message }) => {
       switch (e.data?.kind) {
         case 'error':
-          log.error('QBW: failed:', Date.now() - start)
-          log.error(e.data)
-          Zotero.debug(`${prefix} error: ${e.data.message}`)
+          log.error('QBW failed:', Date.now() - start)
+          log.status({error: true, worker: true}, e.data)
           deferred.reject(e.data.message)
           worker.terminate()
           this.workers.running.delete(id)
