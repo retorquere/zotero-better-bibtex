@@ -107,7 +107,7 @@
     "Export 1 references for BibLaTeX to Protect math sections #1148": 320,
     "Export 1 references for BibLaTeX to References with multiple notes fail to export #174": 370,
     "Export 1 references for BibLaTeX to Regression in export to better biblatex #1491": {
-      "msecs": 260,
+      "msecs": 270,
       "runs": -35
     },
     "Export 1 references for BibLaTeX to Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105": 400,
@@ -309,7 +309,7 @@
       "runs": -97
     },
     "Identical Pinned keys lost when merging duplicated records #1721": {
-      "msecs": 6450,
+      "msecs": 6460,
       "runs": -231
     },
     "Ignoring upper cases in German titles #456": 700,
@@ -352,7 +352,7 @@
     },
     "Import 1 references from support Local-Zo-Url-x field from BibDesk2Zotero_attachments #667": 1300,
     "Import 1 references from tex.origdate ignored in citekey generation #1696": {
-      "msecs": 1060,
+      "msecs": 1070,
       "runs": -231
     },
     "Import 1 references from zbb (quietly) chokes on this .bib #664": 1080,
@@ -373,7 +373,7 @@
     "Include first name initial(s) in cite key generation pattern (86)": 450,
     "Jabref groups import does not work #717": 2810,
     "Jabref import - groups lost #1730": {
-      "msecs": 3100,
+      "msecs": 3110,
       "runs": -228
     },
     "Journal abbreviations": 490,
@@ -389,7 +389,7 @@
     "Pandoc-LaTeX-SCHOMD Citation Export": 1280,
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 409200,
+    "Really Big whopping library": 409420,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
@@ -399,14 +399,14 @@
     },
     "Sorting and optional particle handling #411": 760,
     "Square brackets in Publication field (85), and non-pinned keys must change when the pattern does": 450,
-    "Unabbreviate on import #1436-1": 40140,
+    "Unabbreviate on import #1436-1": 40130,
     "Unbalanced vphantom escapes #1043": 760,
     "arXiv identifiers in BibLaTeX export #460": 1180,
     "auto-export": 14370,
     "automatic tags in export #1270": 410,
     "bibtex; url export does not survive underscores #402": 670,
     "ids field should be created in raw mode #1729": {
-      "msecs": 8850,
+      "msecs": 8890,
       "runs": -227
     },
     "importing a title-cased bib #1246": 1320,
@@ -422,7 +422,7 @@
       "runs": -36
     },
     "web_page and other mendeley idiocy": {
-      "msecs": 41420,
+      "msecs": 41270,
       "runs": -239
     }
   },
@@ -718,7 +718,7 @@
       "Identical Pinned keys lost when merging duplicated records #1721"
     ]
   },
-  "runs": 246,
+  "runs": 247,
   "slow": {
     "1": [
       "Export 1 references for BibLaTeX to biber 2.14 rejects the date field generated from Better BibLaTex #1695",
