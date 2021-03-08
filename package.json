@@ -56,7 +56,7 @@
   "dependencies": {
     "@retorquere/bibtex-parser": "^3.2.35",
     "@types/lokijs": "^1.5.3",
-    "ajv": "^7.1.1",
+    "ajv": "^7.2.1",
     "ajv-keywords": "^4.0.0",
     "assert": "^2.0.0",
     "barcoder": "^2.0.1",
@@ -96,9 +96,9 @@
     "xregexp": "^5.0.1"
   },
   "devDependencies": {
-    "@types/node": "^14.14.31",
+    "@types/node": "^14.14.32",
     "@types/webpack": "^4.41.26",
-    "archiver": "^5.2.0",
+    "archiver": "^5.3.0",
     "bluebird": "^3.7.2",
     "circular-dependency-plugin": "^5.2.2",
     "clean-webpack-plugin": "^3.0.0",
@@ -133,9 +133,9 @@
     "ts-loader": "^8.0.17",
     "ts-node": "^9.1.1",
     "tslib": "^2.1.0",
-    "typescript": "^4.2.2",
+    "typescript": "^4.2.3",
     "uri-templates": "^0.2.0",
-    "webpack": "^5.24.2",
+    "webpack": "^5.24.4",
     "webpack-cli": "^4.5.0",
     "wrapper-webpack-plugin": "^2.1.0",
     "xml-parser": "^1.2.1",
