@@ -81,7 +81,7 @@ class Preferences:
         default = pref.get('default')
       )
       pref.var = re.sub(r'-(.)', lambda m: m.group(1).upper(), pref.name.replace('.', '_'))
-      assert pref.var not in self.vars
+      assert pref.var not in self.vars, pref.var
       self.vars.append(pref.var)
 
       # temporary

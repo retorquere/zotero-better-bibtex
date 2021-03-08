@@ -22,7 +22,44 @@ import { flash } from './flash'
 import { override } from './prefs-meta'
 import * as translatorMetadata from '../gen/translators.json'
 
-import { TaskEasy  as Queue } from 'task-easy'
+import { TaskEasy } from 'task-easy'
+
+interface Priority {
+  priority: number
+  timestamp: number
+}
+
+type ExportScope = { type: 'items', items: any[] } | { type: 'library', id: number } | { type: 'collection', collection: any }
+type ExportJob = {
+  scope?: ExportScope
+  path?: string
+  preferences?: Record<string, boolean | number | string>
+  canceled?: number
+}
+
+class Queue {
+  private queue: TaskEasy<Priority>
+
+  constructor() {
+    this.queue = new TaskEasy((t1: Priority, t2: Priority) => t1.priority === t2.priority ? t1.timestamp < t2.timestamp : t1.priority > t2.priority)
+  }
+
+  public async schedule(task: TaskEasy.Task<string>, translatorID: string, displayOptions: Record<string, boolean>, job: ExportJob) {
+    const timestamp: number = Date.now()
+    if (job.path) {
+      for (const scheduled of (this.queue as any).tasks) {
+        if (scheduled.args && scheduled.args.length === 3) { // eslint-disable-line no-magic-numbers
+          const scheduledJob = (scheduled.args[2] as ExportJob)
+          if (scheduledJob.path && scheduledJob.path === job.path) {
+            log.debug(timestamp, 'cancels export to', job.path)
+            scheduledJob.canceled = timestamp
+          }
+        }
+      }
+    }
+    return await this.queue.schedule(task, [translatorID, displayOptions, job], { priority: 1, timestamp })
+  }
+}
 
 type Trace = {
   translator: string
@@ -43,18 +80,6 @@ type Trace = {
 
 const trace: Trace[] = []
 
-interface IPriority {
-  priority: number
-  timestamp: number
-}
-
-type ExportScope = { type: 'items', items: any[] } | { type: 'library', id: number } | { type: 'collection', collection: any }
-type ExportJob = {
-  scope?: ExportScope
-  path?: string
-  preferences?: Record<string, boolean | number | string>
-}
-
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const Translators = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public byId: Record<string, ITranslatorHeader>
@@ -62,7 +87,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   public byLabel: Record<string, ITranslatorHeader>
   public itemType: { note: number, attachment: number }
 
-  private queue = new Queue((t1: IPriority, t2: IPriority) => t1.priority === t2.priority ? t1.timestamp < t2.timestamp : t1.priority > t2.priority)
+  private queue = new Queue
 
   public workers: { total: number, running: Set<number>, disabled: boolean, startup: number } = {
     total: 0,
@@ -177,17 +202,26 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     return translation.newItems
   }
 
-  public async exportItemsByQueuedWorker(translatorID: string, displayOptions: Record<string, boolean>, options: ExportJob) {
+  public async exportItemsByQueuedWorker(translatorID: string, displayOptions: Record<string, boolean>, job: ExportJob) {
     if (this.workers.running.size < Preference.workers) {
-      return this.queue.schedule(this.exportItemsByWorker.bind(this, translatorID, displayOptions, options), [], { priority: 1, timestamp: (new Date()).getTime() })
+      return this.queue.schedule(this.exportItemsByWorker.bind(this), translatorID, displayOptions, job)
     }
     else {
-      return this.exportItemsByWorker(translatorID, displayOptions, options)
+      return this.exportItemsByWorker(translatorID, displayOptions, job)
     }
   }
 
-  public async exportItemsByWorker(translatorID: string, displayOptions: Record<string, boolean>, options: ExportJob) {
+  public async exportItemsByWorker(translatorID: string, displayOptions: Record<string, boolean>, job: ExportJob) {
+    if (job.path && job.canceled) {
+      log.debug('export to', job.path, 'canceled by', job.canceled)
+      return ''
+    }
+
     await Zotero.BetterBibTeX.ready
+    if (job.path && job.canceled) {
+      log.debug('export to', job.path, 'canceled by', job.canceled)
+      return ''
+    }
 
     const translator = this.byId[translatorID]
 
@@ -212,14 +246,14 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
     trace.push(current_trace)
 
-    options.preferences = options.preferences || {}
+    job.preferences = job.preferences || {}
     displayOptions = displayOptions || {}
 
     // undo override smuggling so I can pre-fetch the cache
     const cloaked_override = 'preference_'
     for (const [pref, value] of Object.entries(displayOptions)) {
       if (pref.startsWith(cloaked_override)) {
-        options.preferences[pref.replace(cloaked_override, '')] = (value as unknown as any)
+        job.preferences[pref.replace(cloaked_override, '')] = (value as unknown as any)
         delete displayOptions[pref]
       }
     }
@@ -229,10 +263,10 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       displayOptions.exportFileData
 
       // jabref 4 stores collection info inside the reference, and collection info depends on which part of your library you're exporting
-      || (translator.label.includes('TeX') && options.preferences.jabrefFormat >= 4) // eslint-disable-line no-magic-numbers
+      || (translator.label.includes('TeX') && job.preferences.jabrefFormat >= 4) // eslint-disable-line no-magic-numbers
 
       // relative file paths are going to be different based on the file being exported to
-      || options.preferences.relativeFilePaths
+      || job.preferences.relativeFilePaths
     )
 
     let last_trace = start
@@ -243,7 +277,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       version: Zotero.version,
       platform: Preference.platform,
       translator: translator.label,
-      output: options.path || '',
+      output: job.path || '',
       localeDateOrder: Zotero.BetterBibTeX.localeDateOrder,
       debugEnabled: Zotero.Debug.enabled ? 'true' : 'false',
     }).map(([k, v]) => `${encodeURI(k)}=${encodeURI(v)}`).join('&')
@@ -274,11 +308,11 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       )
       this.workers.disabled = true
       // this returns a promise for a new export, but now a foreground export
-      return this.exportItems(translatorID, displayOptions, options.scope, options.path)
+      return this.exportItems(translatorID, displayOptions, job.scope, job.path)
     }
 
     const config: BBTWorker.Config = {
-      preferences: { ...Preference.all, ...options.preferences },
+      preferences: { ...Preference.all, ...job.preferences },
       options: displayOptions || {},
       items: [],
       collections: [],
@@ -354,7 +388,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       this.workers.running.delete(id)
     }
 
-    const scope = this.exportScope(options.scope)
+    const scope = this.exportScope(job.scope)
     let items: any[] = []
     let collections: any[] = []
     switch (scope.type) {
@@ -381,6 +415,10 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       default:
         throw new Error(`Unexpected scope: ${Object.keys(scope)}`)
     }
+    if (job.path && job.canceled) {
+      log.debug('export to', job.path, 'canceled by', job.canceled)
+      return ''
+    }
 
     // use a loop instead of map so we can await for beachball protection
     let batch = Date.now()
@@ -401,6 +439,10 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
     current_trace.items = config.items.length
     current_trace.cached.serializer = count.cached
+    if (job.path && job.canceled) {
+      log.debug('export to', job.path, 'canceled by', job.canceled)
+      return ''
+    }
 
     if (this.byId[translatorID].configOptions?.getCollections) {
       config.collections = collections.map(collection => {
