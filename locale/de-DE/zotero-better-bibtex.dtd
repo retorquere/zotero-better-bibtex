@@ -141,6 +141,7 @@ If you turn this off, the markup is omitted during import. When you select 'yes'
 
 If you have this on, and you experience any problem that is not the cache getting dropped on upgrade, you *must* clear the cache and reproduce the problem. When you change this setting, as with any setting change, the cache will be dropped.">
 <!ENTITY better-bibtex.Preferences.advanced.export.workers "Parallele Hintergrundexporte:">
+<!ENTITY better-bibtex.Preferences.advanced.export.workers.cache "Enable caching for background exports">
 
 <!ENTITY better-bibtex.Preferences.advanced.tab.citekeys "Zitierschlüssel">
 

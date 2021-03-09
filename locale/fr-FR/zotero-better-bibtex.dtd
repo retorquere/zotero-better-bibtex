@@ -142,6 +142,7 @@ En mode « minimal », le nombre d'éléments `span` est minimisé.">
 
 Si cette option est activée et que vous rencontrez un problème autre que l'annulation du cache lors d'une mise à jour, vous *devez* vider le cache et reproduire le problème. Lorsque vous modifiez ce paramètre, le cache est supprimé (comme c'est le cas pour toute modification de paramètre).">
 <!ENTITY better-bibtex.Preferences.advanced.export.workers "Exportation parallèle en arrière-plan :">
+<!ENTITY better-bibtex.Preferences.advanced.export.workers.cache "Activer la mise en cache pour les exportations en arrière-plan">
 
 <!ENTITY better-bibtex.Preferences.advanced.tab.citekeys "Clés de citation">
 
