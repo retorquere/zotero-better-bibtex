@@ -12,8 +12,7 @@
       "citekeyFormat": "[zotero:clean]",
       "itemObserverDelay": 100,
       "qualityReport": true,
-      "skipFields": "file",
-      "workers": 0
+      "skipFields": "file"
     }
   },
   "items": [

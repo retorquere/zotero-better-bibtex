@@ -12,8 +12,7 @@
       "citekeyFormat": "[=journalArticle][shorttitle][date=%oY] | [=forumPost][shorttitle][Date:format-date=%Y-%m-%d.%H\\:%M:prefix=-] | [shorttitle][origyear:prefix=-]",
       "keyScope": "global",
       "quickCopyMode": "orgRef",
-      "warnBulkModify": 0,
-      "workers": 0
+      "warnBulkModify": 0
     }
   },
   "items": [

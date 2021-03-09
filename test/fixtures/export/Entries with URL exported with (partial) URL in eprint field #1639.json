@@ -16,7 +16,7 @@
       "qualityReport": true,
       "quickCopyMode": "citekeys",
       "skipFields": "abstract,series,number,isbn,issn",
-      "workers": 2
+      "workersMax": 2
     }
   },
   "items": [

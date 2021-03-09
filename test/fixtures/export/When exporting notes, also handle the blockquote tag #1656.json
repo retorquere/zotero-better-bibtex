@@ -14,8 +14,7 @@
       "qualityReport": true,
       "quickCopyMode": "orgmode_citekey",
       "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
-      "warnBulkModify": 0,
-      "workers": 0
+      "warnBulkModify": 0
     }
   },
   "items": [

@@ -13,7 +13,7 @@
       "qualityReport": true,
       "quickCopyMode": "orgRef",
       "warnBulkModify": 0,
-      "workers": 4
+      "workersMax": 4
     }
   },
   "items": [

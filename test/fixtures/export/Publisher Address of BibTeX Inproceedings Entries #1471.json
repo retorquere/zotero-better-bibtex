@@ -13,7 +13,7 @@
       "citekeyFormat": "[auth:lower][year]",
       "postscript": "\nif (Translator.BetterBibTeX && item.itemType === 'conferencePaper' && item.extra) {\n  for (const line of item.extra.split('\\n')) {\n    try {\n      const [ , keyword, value ] = line.match(/([^:]+):s*(.*)/)\n      switch (keyword) {\n        case 'Sponsor':\n          reference.add({name: 'organization', value })\n          break\n      }\n    } catch (err) {\n      if (!(err instanceof TypeError)) throw err\n    }\n  }\n}\n",
       "skipFields": "abstract,file,keywords,note",
-      "workers": 2
+      "workersMax": 2
     }
   },
   "items": [

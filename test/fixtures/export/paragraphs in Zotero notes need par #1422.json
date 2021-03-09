@@ -14,7 +14,7 @@
       "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
       "exportTitleCase": false,
       "skipFields": "file",
-      "workers": 2
+      "workersMax": 2
     }
   },
   "items": [

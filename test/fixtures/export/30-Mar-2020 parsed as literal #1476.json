@@ -9,7 +9,7 @@
     "preferences": {
       "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
       "itemObserverDelay": 100,
-      "workers": 4
+      "workersMax": 4
     }
   },
   "items": [

@@ -8,8 +8,7 @@
     },
     "preferences": {
       "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
-      "workers": 0
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc"
     }
   },
   "items": [

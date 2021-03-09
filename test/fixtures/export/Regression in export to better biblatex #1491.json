@@ -8,8 +8,7 @@
     },
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/vancouver",
-      "citekeyFormat": "[zotero:clean]",
-      "workers": 0
+      "citekeyFormat": "[zotero:clean]"
     }
   },
   "items": [

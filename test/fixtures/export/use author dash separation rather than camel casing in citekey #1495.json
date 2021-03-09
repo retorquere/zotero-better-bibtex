@@ -9,8 +9,7 @@
       "citekeyFormat": "[authors2:lower][>0]_[year] -[shorttitle:skipwords:lower]| [shorttitle:skipwords:lower]-[year]",
       "keyConflictPolicy": "change",
       "quickCopyMode": "pandoc",
-      "quickCopyPandocBrackets": true,
-      "workers": 0
+      "quickCopyPandocBrackets": true
     }
   },
   "items": [

@@ -16,8 +16,7 @@
       "exportBraceProtection": false,
       "importBibTeXStrings": false,
       "skipFields": "abstract",
-      "strings": "@STRING{IEEE_J_IT         = \"{IEEE} Trans. Inf. Theory\"}\n@STRING{IEEE_J_SP         = \"IEEE Transactions on SIgnal Processing\"}\n@STRING{IEEE_J_WC       = \"IEEE Transactions on Communications\"}\n",
-      "workers": 0
+      "strings": "@STRING{IEEE_J_IT         = \"{IEEE} Trans. Inf. Theory\"}\n@STRING{IEEE_J_SP         = \"IEEE Transactions on SIgnal Processing\"}\n@STRING{IEEE_J_WC       = \"IEEE Transactions on Communications\"}\n"
     }
   },
   "items": [

@@ -7,7 +7,6 @@
       "exportNotes": true
     },
     "preferences": {
-      "autoExportDelay": 5,
       "automaticTags": false,
       "biblatexExtendedNameFormat": true,
       "bibtexURL": "url",
@@ -18,7 +17,7 @@
       "quickCopyMode": "pandoc",
       "quickCopyPandocBrackets": true,
       "skipFields": "abstract",
-      "workers": 4
+      "workersMax": 4
     }
   },
   "items": [

@@ -349,11 +349,11 @@
             "warnTitleCased": {
               "type": "boolean"
             },
-            "workers": {
-              "type": "number"
-            },
             "workersCache": {
               "type": "boolean"
+            },
+            "workersMax": {
+              "type": "number"
             }
           },
           "type": "object"
