@@ -34,7 +34,8 @@ type ExportJob = {
   scope?: ExportScope
   path?: string
   preferences?: Record<string, boolean | number | string>
-  canceled?: number
+  started?: number
+  canceled?: boolean
 }
 
 class Queue {
@@ -45,19 +46,19 @@ class Queue {
   }
 
   public async schedule(task: TaskEasy.Task<string>, translatorID: string, displayOptions: Record<string, boolean>, job: ExportJob) {
-    const timestamp: number = Date.now()
+    job.started = Date.now()
     if (job.path) {
       for (const scheduled of (this.queue as any).tasks) {
-        if (scheduled.args && scheduled.args.length === 3) { // eslint-disable-line no-magic-numbers
+        if (scheduled.started < job.started && scheduled.args && scheduled.args.length === 3) { // eslint-disable-line no-magic-numbers
           const scheduledJob = (scheduled.args[2] as ExportJob)
           if (scheduledJob.path && scheduledJob.path === job.path) {
-            log.debug(timestamp, 'cancels export to', job.path)
-            scheduledJob.canceled = timestamp
+            log.debug(job.started, 'cancels export to', job.path, 'started at', scheduledJob.started)
+            scheduledJob.canceled = true
           }
         }
       }
     }
-    return await this.queue.schedule(task, [translatorID, displayOptions, job], { priority: 1, timestamp })
+    return await this.queue.schedule(task, [translatorID, displayOptions, job], { priority: 1, timestamp: job.started })
   }
 }
 
@@ -213,13 +214,13 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
   public async exportItemsByWorker(translatorID: string, displayOptions: Record<string, boolean>, job: ExportJob) {
     if (job.path && job.canceled) {
-      log.debug('export to', job.path, 'canceled by', job.canceled)
+      log.debug('export to', job.path, 'started at', job.started, 'canceled')
       return ''
     }
 
     await Zotero.BetterBibTeX.ready
     if (job.path && job.canceled) {
-      log.debug('export to', job.path, 'canceled by', job.canceled)
+      log.debug('export to', job.path, 'started at', job.started, 'canceled')
       return ''
     }
 
@@ -416,7 +417,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         throw new Error(`Unexpected scope: ${Object.keys(scope)}`)
     }
     if (job.path && job.canceled) {
-      log.debug('export to', job.path, 'canceled by', job.canceled)
+      log.debug('export to', job.path, 'started at', job.started, 'canceled')
       return ''
     }
 
@@ -440,7 +441,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     current_trace.items = config.items.length
     current_trace.cached.serializer = count.cached
     if (job.path && job.canceled) {
-      log.debug('export to', job.path, 'canceled by', job.canceled)
+      log.debug('export to', job.path, 'started at', job.started, 'canceled')
       return ''
     }
 
