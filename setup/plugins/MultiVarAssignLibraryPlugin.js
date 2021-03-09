@@ -2,7 +2,7 @@ const { ConcatSource } = require('webpack-sources')
 const AssignLibraryPlugin = require('webpack/lib/library/AssignLibraryPlugin')
 const EnableLibraryPlugin = require('webpack/lib/library/EnableLibraryPlugin')
 
-const type = 'assign-dammit'
+const type = 'assign-multi-var'
 
 function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')

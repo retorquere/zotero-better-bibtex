@@ -9,7 +9,8 @@ import * as crypto from 'crypto'
 
 import WrapperPlugin = require('wrapper-webpack-plugin')
 import PostCompile = require('post-compile-webpack-plugin')
-import AssignLibraryDammitPlugin = require('./setup/plugins/AssignLibraryDammitPlugin')
+import MultiVarAssignLibraryPlugin = require('./setup/plugins/MultiVarAssignLibraryPlugin')
+const assign = 'assign-multi-var'
 
 import * as translators from './gen/translators.json'
 const _ = require('lodash')
@@ -90,7 +91,7 @@ if (!process.env.MINITESTS) {
         },
       },
       plugins: [
-        new AssignLibraryDammitPlugin(),
+        new MultiVarAssignLibraryPlugin(),
         new webpack.ProvidePlugin({ process: 'process/browser', }),
         new PostCompile(() => {
           if (fs.existsSync(build.runtime)) {
@@ -130,7 +131,7 @@ if (!process.env.MINITESTS) {
         filename: '[name].js',
         pathinfo: true,
         library: 'Zotero.[name]',
-        libraryTarget: 'assign-dammit',
+        libraryTarget: assign,
       },
     })
   )
@@ -144,7 +145,7 @@ if (!process.env.MINITESTS) {
     config.push(
       _.merge({}, common, {
         plugins: [
-          new AssignLibraryDammitPlugin(),
+          new MultiVarAssignLibraryPlugin(),
           new webpack.ProvidePlugin({ process: 'process/browser', }),
           // new CircularDependencyPlugin({ failOnError: true }),
           new webpack.DefinePlugin({
@@ -178,7 +179,7 @@ if (!process.env.MINITESTS) {
           filename: '[name].js',
           pathinfo: true,
           library: `var {${vars}}`,
-          libraryTarget: 'assign-dammit',
+          libraryTarget: assign,
         },
       })
     )
@@ -187,7 +188,7 @@ if (!process.env.MINITESTS) {
   config.push(
     _.merge({}, common, {
       plugins: [
-        new AssignLibraryDammitPlugin(),
+        new MultiVarAssignLibraryPlugin(),
         new webpack.ProvidePlugin({ process: 'process/browser', }),
         // new CircularDependencyPlugin({ failOnError: true }),
         new WrapperPlugin({
@@ -206,7 +207,7 @@ if (!process.env.MINITESTS) {
         filename: '[name].js',
         pathinfo: true,
         library: 'var { Zotero, onmessage, params }',
-        libraryTarget: 'assign-dammit',
+        libraryTarget: assign,
       },
     })
   )
