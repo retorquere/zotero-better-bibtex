@@ -485,7 +485,7 @@ Scenario: Field Institution not available anymore in key pattern for Zotero #156
 
 # tests the cache
 @use.with_client=zotero @use.with_slow=true @timeout=3000
-Scenario: Really big whopping library
+Scenario: Really Big whopping library
   When I restart Zotero with "1287" + "export/*.json"
   And I reset the cache
   Then an export using "Better BibTeX" should match "export/*.bibtex"
