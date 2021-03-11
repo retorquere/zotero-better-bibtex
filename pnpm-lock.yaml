@@ -10,6 +10,7 @@ dependencies:
   edtf: 3.1.0
   edtfy: 0.0.8
   escape-string-regexp: 4.0.0
+  eta: 1.12.1
   eventemitter3: 4.0.7
   excel-column-name: 1.0.1
   fast-chunk-string: 1.0.1
@@ -2288,6 +2289,12 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==
+  /eta/1.12.1:
+    dev: false
+    engines:
+      node: '>=6.0.0'
+    resolution:
+      integrity: sha512-H8npoci2J/7XiPnVcCVulBSPsTNGvGaINyMjQDU8AFqp9LGsEYS88g2CiU+d01Sg44WtX7o4nb8wUJ9vnI+tiA==
   /eventemitter3/4.0.7:
     dev: false
     resolution:
@@ -5731,6 +5738,7 @@ specifiers:
   ejs: ^3.1.6
   escape-string-regexp: ^4.0.0
   eslint: ^7.21.0
+  eta: ^1.12.1
   eventemitter3: ^4.0.7
   excel-column-name: ^1.0.1
   fast-chunk-string: ^1.0.1

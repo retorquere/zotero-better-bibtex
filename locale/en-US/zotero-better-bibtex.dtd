@@ -92,6 +92,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.pandoc "Pandoc">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.selectLink_itemkey "Zotero select link">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.selectLink_citekey "Citekey select link">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.etaTemplate "Eta template">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy "Quick copy/drag-and-drop citations">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness "Keeping citation keys unique">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict "On conflict with a pinned key, non-pinned keys will be">

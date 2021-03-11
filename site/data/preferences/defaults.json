@@ -57,6 +57,7 @@
   "postscript": "",
   "postscriptOverride": "",
   "qualityReport": false,
+  "quickCopyEta": "",
   "quickCopyMode": "latex",
   "quickCopyPandocBrackets": false,
   "rawImports": false,

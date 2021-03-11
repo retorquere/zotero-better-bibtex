@@ -106,6 +106,14 @@
           to have these pandoc citations surrounded with brackets or not.
         </bbt:doc>
 
+        <preference name="extensions.zotero.translators.better-bibtex.quickCopyEta" id="pref-better-bibtex-quickCopyEta" type="string" default=""/>
+        <bbt:doc>
+          Used for drag-and-drop/quick copy citations in `Build your own` format. This is going to get pretty technical, sorry.
+
+          You can paste a [Eta](https://eta.js.org/) template here. Inside the template, you will find an array `it.items`, each of which is a serialized Zotero item.
+          To find out what an item looks like inside the template, export some items as BetterBibTeX JSON.
+        </bbt:doc>
+
         <!-- the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly -->
         <preference name="extensions.zotero.translators.better-bibtex.citekeyFormat" id="pref-better-bibtex-citekeyFormat" type="string" default="&#x200B;[auth:lower][shorttitle3_3][year]"/>
         <bbt:doc>
@@ -516,6 +524,7 @@
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.gitbook;" value="gitbook"/>
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.selectLink_citekey;" value="selectLink_citekey"/>
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.selectLink_itemkey;" value="selectLink"/>
+                        <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.etaTemplate;" value="eta"/>
                       </menupopup>
                     </menulist>
                   </row>
@@ -529,6 +538,13 @@
                     <checkbox id="id-better-bibtex-preferences-quickCopyPandocBrackets"
                       preference="pref-better-bibtex-quickCopyPandocBrackets"
                       label="&better-bibtex.Preferences.citekey.quickCopy.pandoc.brackets;"/>
+                  </row>
+                  <row class="better-bibtex-preferences-quickcopy-details" id="better-bibtex-preferences-quickcopy-details-eta">
+                    <label
+                      class="text-link"
+                      href="https://retorque.re/zotero-better-bibtex/installation/preferences/citation-keys/#quick-copydrag-and-drop-citations"
+                      bbt:preference="pref-better-bibtex-quickCopyEta">&better-bibtex.Preferences.citekey.quickCopy.etaTemplate;</label>
+                    <textbox rows="10" flex="1" multiline="true" preference="pref-better-bibtex-quickCopyEta"/>
                   </row>
                 </rows>
               </grid>
