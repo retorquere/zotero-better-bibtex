@@ -528,13 +528,13 @@
                       </menupopup>
                     </menulist>
                   </row>
-                  <row id="id-better-bibtex-preferences-citeCommand">
+                  <row class="better-bibtex-preferences-quickcopy-details" id="id-better-bibtex-preferences-details-latex">
                     <label bbt:preference="pref-better-bibtex-citeCommand">&better-bibtex.Preferences.citekey.quickCopy.latex.command;</label>
                     <textbox size="10" preference="pref-better-bibtex-citeCommand"
                       onchange="Zotero.BetterBibTeX.Preferences.update();"
                       onkeypress="Zotero.setTimeout(function() { Zotero.BetterBibTeX.Preferences.update() }, 1);"/>
                   </row>
-                  <row id="id-better-bibtex-preferences-quickCopyPandocBrackets">
+                  <row class="better-bibtex-preferences-quickcopy-details" id="id-better-bibtex-preferences-details-pandoc">
                     <checkbox id="id-better-bibtex-preferences-quickCopyPandocBrackets"
                       preference="pref-better-bibtex-quickCopyPandocBrackets"
                       label="&better-bibtex.Preferences.citekey.quickCopy.pandoc.brackets;"/>

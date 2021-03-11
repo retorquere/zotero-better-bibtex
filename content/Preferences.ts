@@ -451,6 +451,11 @@ export = new class PrefPane {
 
     const quickCopyNode = document.getElementById('id-better-bibtex-preferences-quickCopyMode').selectedItem
     const quickCopyMode = quickCopyNode ? quickCopyNode.getAttribute('value') : ''
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    for (const node of (Array.from(document.getElementsByClassName('better-bibtex-preferences-quickcopy-details')) as XUL.Element[])) {
+      node.hidden = (node.id !== `better-bibtex-preferences-quickcopy-details-${quickCopyMode}`)
+    }
+
     for (const [row, enabledFor] of [['citeCommand', 'latex'], ['quickCopyPandocBrackets', 'pandoc']]) {
       document.getElementById(`id-better-bibtex-preferences-${row}`).setAttribute('hidden', quickCopyMode !== enabledFor)
     }
