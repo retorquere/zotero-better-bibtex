@@ -41,19 +41,19 @@ Options:
 
 #### QuickCopy format
 
-default: `LaTeX`
+default: `LaTeX citation`
 
 Used for drag-and-drop/quick copy using Better BibTeX citekeys. In the Zotero "Export" pane, choose `Better BibTeX Quick Copy` as the default export format for quick copy, and choose the desired format for the drag-and-drop citations here.
 
 Options:
 
-* LaTeX
+* LaTeX citation
 * Cite Keys
-* Pandoc
+* Pandoc citation
 * Org-mode citekey select link
 * Org-mode Zotero select link
-* org-ref
-* RTF Scan
+* org-ref citation
+* RTF Scan marker
 * Roam Cite Key
 * Atom (https://atom.io/packages/zotero-citations)
 * GitBook

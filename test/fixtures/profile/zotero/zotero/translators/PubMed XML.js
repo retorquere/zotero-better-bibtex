@@ -11,7 +11,7 @@
 	},
 	"inRepository": true,
 	"translatorType": 1,
-	"lastUpdated": "2020-10-11 03:18:11"
+	"lastUpdated": "2020-12-16 02:54:30"
 }
 
 /*
@@ -180,10 +180,18 @@ function doImport() {
 					var year = ZU.xpathText(pubDate, 'Year');
 
 					if (day) {
-						newItem.date = month + " " + day + ", " + year;
+						// month appears in two different formats:
+						// 1. numeric, e.g. "07", see 4th test
+						if (month && /\d+/.test(month)) {
+							newItem.date = ZU.strToISO(year + "-" + month + "-" + day);
+						}
+						// 2. English acronym, e.g. "Aug", see 3rd test
+						else {
+							newItem.date = ZU.strToISO(month + " " + day + ", " + year);
+						}
 					}
 					else if (month) {
-						newItem.date = month + " " + year;
+						newItem.date = ZU.strToISO(month + "/" + year);
 					}
 					else if (year) {
 						newItem.date = year;
@@ -398,7 +406,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "Feb 2008",
+				"date": "2008-02",
 				"DOI": "10.1038/nchembio.2007.59",
 				"ISSN": "1552-4469",
 				"abstractNote": "Drug screening is often limited to cell-free assays involving purified enzymes, but it is arguably best applied against systems that represent disease states or complex physiological cellular networks. Here, we describe a high-content, cell-based drug discovery platform based on phosphospecific flow cytometry, or phosphoflow, that enabled screening for inhibitors against multiple endogenous kinase signaling pathways in heterogeneous primary cell populations at the single-cell level. From a library of small-molecule natural products, we identified pathway-selective inhibitors of Jak-Stat and MAP kinase signaling. Dose-response experiments in primary cells confirmed pathway selectivity, but importantly also revealed differential inhibition of cell types and new druggability trends across multiple compounds. Lead compound selectivity was confirmed in vivo in mice. Phosphoflow therefore provides a unique platform that can be applied throughout the drug discovery process, from early compound screening to in vivo testing and clinical monitoring of drug efficacy.",
@@ -417,19 +425,45 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Animals",
-					"Cell Line, Tumor",
-					"Drug Evaluation, Preclinical",
-					"Flow Cytometry",
-					"Humans",
-					"Janus Kinases",
-					"Mice",
-					"Mice, Inbred BALB C",
-					"Mitogen-Activated Protein Kinases",
-					"Phosphorus",
-					"STAT Transcription Factors",
-					"Sensitivity and Specificity",
-					"Signal Transduction"
+					{
+						"tag": "Animals"
+					},
+					{
+						"tag": "Cell Line, Tumor"
+					},
+					{
+						"tag": "Drug Evaluation, Preclinical"
+					},
+					{
+						"tag": "Flow Cytometry"
+					},
+					{
+						"tag": "Humans"
+					},
+					{
+						"tag": "Janus Kinases"
+					},
+					{
+						"tag": "Mice"
+					},
+					{
+						"tag": "Mice, Inbred BALB C"
+					},
+					{
+						"tag": "Mitogen-Activated Protein Kinases"
+					},
+					{
+						"tag": "Phosphorus"
+					},
+					{
+						"tag": "STAT Transcription Factors"
+					},
+					{
+						"tag": "Sensitivity and Specificity"
+					},
+					{
+						"tag": "Signal Transduction"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -454,7 +488,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "Feb 2008",
+				"date": "2008-02",
 				"DOI": "10.1038/nchembio.2007.58",
 				"ISSN": "1552-4469",
 				"abstractNote": "X-ray crystallographic and biochemical investigation of the reaction of cisplatin and oxaliplatin with nucleosome core particle and naked DNA reveals that histone octamer association can modulate DNA platination. Adduct formation also occurs at specific histone methionine residues, which could serve as a nuclear platinum reservoir influencing adduct transfer to DNA. Our findings suggest that the nucleosome center may provide a favorable target for the design of improved platinum anticancer drugs.",
@@ -473,18 +507,42 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Amino Acid Sequence",
-					"Antineoplastic Agents",
-					"Base Sequence",
-					"Crystallography, X-Ray",
-					"DNA Adducts",
-					"Histones",
-					"Models, Molecular",
-					"Molecular Sequence Data",
-					"Nucleosomes",
-					"Platinum",
-					"Protein Structure, Tertiary",
-					"Sensitivity and Specificity"
+					{
+						"tag": "Amino Acid Sequence"
+					},
+					{
+						"tag": "Antineoplastic Agents"
+					},
+					{
+						"tag": "Base Sequence"
+					},
+					{
+						"tag": "Crystallography, X-Ray"
+					},
+					{
+						"tag": "DNA Adducts"
+					},
+					{
+						"tag": "Histones"
+					},
+					{
+						"tag": "Models, Molecular"
+					},
+					{
+						"tag": "Molecular Sequence Data"
+					},
+					{
+						"tag": "Nucleosomes"
+					},
+					{
+						"tag": "Platinum"
+					},
+					{
+						"tag": "Protein Structure, Tertiary"
+					},
+					{
+						"tag": "Sensitivity and Specificity"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -582,7 +640,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "Aug 2015",
+				"date": "2015-08",
 				"DOI": "10.3168/jds.2014-8211",
 				"ISSN": "1525-3198",
 				"abstractNote": "As part of a broader control strategy within herds known to be infected with Mycobacterium avium ssp. paratuberculosis (MAP), individual animal testing is generally conducted to identify infected animals for action, usually culling. Opportunities are now available to quantitatively compare different testing strategies (combinations of tests) in known infected herds. This study evaluates the effectiveness, cost, and cost-effectiveness of different testing strategies to identify infected animals at a single round of testing within dairy herds known to be MAP infected. A model was developed, taking account of both within-herd infection dynamics and test performance, to simulate the use of different tests at a single round of testing in a known infected herd. Model inputs included the number of animals at different stages of infection, the sensitivity and specificity of each test, and the costs of testing and culling. Testing strategies included either milk or serum ELISA alone or with fecal culture in series. Model outputs included effectiveness (detection fraction, the proportion of truly infected animals in the herd that are successfully detected by the testing strategy), cost, and cost-effectiveness (testing cost per true positive detected, total cost per true positive detected). Several assumptions were made: MAP was introduced with a single animal and no management interventions were implemented to limit within-herd transmission of MAP before this test. In medium herds, between 7 and 26% of infected animals are detected at a single round of testing, the former using the milk ELISA and fecal culture in series 5 yr after MAP introduction and the latter using fecal culture alone 15 yr after MAP introduction. The combined costs of testing and culling at a single round of testing increases with time since introduction of MAP infection, with culling costs being much greater than testing costs. The cost-effectiveness of testing varied by testing strategy. It was also greater at 5 yr, compared with 10 or 15 yr, since MAP introduction, highlighting the importance of early detection. Future work is needed to evaluate these testing strategies in subsequent rounds of testing as well as accounting for different herd dynamics and different levels of herd biocontainment.",
@@ -601,11 +659,21 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Johne’s disease",
-					"control",
-					"evaluation",
-					"infected herd",
-					"testing strategies"
+					{
+						"tag": "Johne’s disease"
+					},
+					{
+						"tag": "control"
+					},
+					{
+						"tag": "evaluation"
+					},
+					{
+						"tag": "infected herd"
+					},
+					{
+						"tag": "testing strategies"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -630,7 +698,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "Aug 1, 2015",
+				"date": "2015-08-01",
 				"DOI": "10.1111/rssc.12097",
 				"ISSN": "0035-9254",
 				"abstractNote": "Hierarchical group testing is widely used to test individuals for diseases. This testing procedure works by first amalgamating individual specimens into groups for testing. Groups testing negatively have their members declared negative. Groups testing positively are subsequently divided into smaller subgroups and are then retested to search for positive individuals. In our paper, we propose a new class of informative retesting procedures for hierarchical group testing that acknowledges heterogeneity among individuals. These procedures identify the optimal number of groups and their sizes at each testing stage in order to minimize the expected number of tests. We apply our proposals in two settings: 1) HIV testing programs that currently use three-stage hierarchical testing and 2) chlamydia and gonorrhea screening practices that currently use individual testing. For both applications, we show that substantial savings can be realized by our new procedures.",
@@ -649,12 +717,24 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Classification",
-					"HIV",
-					"Infertility Prevention Project",
-					"Informative retesting",
-					"Pooled testing",
-					"Retesting"
+					{
+						"tag": "Classification"
+					},
+					{
+						"tag": "HIV"
+					},
+					{
+						"tag": "Infertility Prevention Project"
+					},
+					{
+						"tag": "Informative retesting"
+					},
+					{
+						"tag": "Pooled testing"
+					},
+					{
+						"tag": "Retesting"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -707,6 +787,174 @@ var testCases = [
 					},
 					{
 						"tag": "Humans"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "import",
+		"input": "<?xml version=\"1.0\" ?>\n         <!DOCTYPE PubmedArticleSet PUBLIC \"-//NLM//DTD PubMedArticle, 1st January 2019//EN\" \"https://dtd.nlm.nih.gov/ncbi/pubmed/out/pubmed_190101.dtd\">\n         <PubmedArticleSet>\n         <PubmedArticle>\n             <MedlineCitation Status=\"MEDLINE\" Owner=\"NLM\">\n                 <PMID Version=\"1\">30133126</PMID>\n                 <DateCompleted>\n                     <Year>2019</Year>\n                     <Month>01</Month>\n                     <Day>29</Day>\n                 </DateCompleted>\n                 <DateRevised>\n                     <Year>2019</Year>\n                     <Month>01</Month>\n                     <Day>29</Day>\n                 </DateRevised>\n                 <Article PubModel=\"Print-Electronic\">\n                     <Journal>\n                         <ISSN IssnType=\"Electronic\">1601-183X</ISSN>\n                         <JournalIssue CitedMedium=\"Internet\">\n                             <Volume>17</Volume>\n                             <Issue>8</Issue>\n                             <PubDate>\n                                 <Year>2018</Year>\n                                 <Month>11</Month>\n                             </PubDate>\n                         </JournalIssue>\n                         <Title>Genes, brain, and behavior</Title>\n                         <ISOAbbreviation>Genes Brain Behav</ISOAbbreviation>\n                     </Journal>\n                     <ArticleTitle>Neph2/Kirrel3 regulates sensory input, motor coordination, and home-cage activity in rodents.</ArticleTitle>\n                     <Pagination>\n                         <MedlinePgn>e12516</MedlinePgn>\n                     </Pagination>\n                     <ELocationID EIdType=\"doi\" ValidYN=\"Y\">10.1111/gbb.12516</ELocationID>\n                     <Abstract>\n                         <AbstractText>Adhesion molecules of the immunoglobulin superfamily (IgSF) are essential for neuronal synapse development across evolution and control various aspects of synapse formation and maturation. Neph2, also known as Kirrel3, is an IgSF adhesion molecule implicated in synapse formation, synaptic transmission and ultrastructure. In humans, defects in the NEPH2 gene have been associated with neurodevelopmental disorders such as Jacobsen syndrome, intellectual disability, and autism-spectrum disorders. However, the precise role in development and function of the nervous system is still unclear. Here, we present the histomorphological and phenotypical analysis of a constitutive Neph2-knockout mouse line. Knockout mice display defects in auditory sensory processing, motor skills, and hyperactivity in the home-cage analysis. Olfactory, memory and metabolic testing did not differ from controls. Despite the wide-spread expression of Neph2 in various brain areas, no gross anatomic defects could be observed. Neph2 protein could be located at the cerebellar pinceaux. It interacted with the pinceau core component neurofascin and other synaptic proteins thus suggesting a possible role in cerebellar synapse formation and circuit assembly. Our results suggest that Neph2/Kirrel3 acts on the synaptic ultrastructural level and neuronal wiring rather than on ontogenetic events affecting macroscopic structure. Neph2-knockout mice may provide a valuable rodent model for research on autism spectrum diseases and neurodevelopmental disorders.</AbstractText>\n                         <CopyrightInformation>© 2018 John Wiley &amp; Sons Ltd and International Behavioural and Neural Genetics Society.</CopyrightInformation>\n                     </Abstract>\n                     <AuthorList CompleteYN=\"Y\">\n                         <Author ValidYN=\"Y\">\n                             <LastName>Völker</LastName>\n                             <ForeName>Linus A</ForeName>\n                             <Initials>LA</Initials>\n                             <Identifier Source=\"ORCID\">0000-0002-4461-6128</Identifier>\n                             <AffiliationInfo>\n                                 <Affiliation>Department II of Internal Medicine and Center for Molecular Medicine Cologne, University of Cologne, Cologne, Germany.</Affiliation>\n                             </AffiliationInfo>\n                         </Author>\n                         <Author ValidYN=\"Y\">\n                             <LastName>Maar</LastName>\n                             <ForeName>Barbara A</ForeName>\n                             <Initials>BA</Initials>\n                             <AffiliationInfo>\n                                 <Affiliation>Department II of Internal Medicine and Center for Molecular Medicine Cologne, University of Cologne, Cologne, Germany.</Affiliation>\n                             </AffiliationInfo>\n                         </Author>\n                         <Author ValidYN=\"Y\">\n                             <LastName>Pulido Guevara</LastName>\n                             <ForeName>Barbara A</ForeName>\n                             <Initials>BA</Initials>\n                             <AffiliationInfo>\n                                 <Affiliation>Department II of Internal Medicine and Center for Molecular Medicine Cologne, University of Cologne, Cologne, Germany.</Affiliation>\n                             </AffiliationInfo>\n                         </Author>\n                         <Author ValidYN=\"Y\">\n                             <LastName>Bilkei-Gorzo</LastName>\n                             <ForeName>Andras</ForeName>\n                             <Initials>A</Initials>\n                             <AffiliationInfo>\n                                 <Affiliation>Institute of Molecular Psychiatry, Medical Faculty of the University of Bonn, Bonn, Germany.</Affiliation>\n                             </AffiliationInfo>\n                         </Author>\n                         <Author ValidYN=\"Y\">\n                             <LastName>Zimmer</LastName>\n                             <ForeName>Andreas</ForeName>\n                             <Initials>A</Initials>\n                             <AffiliationInfo>\n                                 <Affiliation>Institute of Molecular Psychiatry, Medical Faculty of the University of Bonn, Bonn, Germany.</Affiliation>\n                             </AffiliationInfo>\n                         </Author>\n                         <Author ValidYN=\"Y\">\n                             <LastName>Brönneke</LastName>\n                             <ForeName>Hella</ForeName>\n                             <Initials>H</Initials>\n                             <AffiliationInfo>\n                                 <Affiliation>Mouse Phenotyping Core Facility, Cologne Excellence Cluster on Cellular Stress Responses (CECAD), 50931 Cologne, Germany.</Affiliation>\n                             </AffiliationInfo>\n                         </Author>\n                         <Author ValidYN=\"Y\">\n                             <LastName>Dafinger</LastName>\n                             <ForeName>Claudia</ForeName>\n                             <Initials>C</Initials>\n                             <AffiliationInfo>\n                                 <Affiliation>Department II of Internal Medicine and Center for Molecular Medicine Cologne, University of Cologne, Cologne, Germany.</Affiliation>\n                             </AffiliationInfo>\n                         </Author>\n                         <Author ValidYN=\"Y\">\n                             <LastName>Bertsch</LastName>\n                             <ForeName>Sabine</ForeName>\n                             <Initials>S</Initials>\n                             <AffiliationInfo>\n                                 <Affiliation>Department II of Internal Medicine and Center for Molecular Medicine Cologne, University of Cologne, Cologne, Germany.</Affiliation>\n                             </AffiliationInfo>\n                         </Author>\n                         <Author ValidYN=\"Y\">\n                             <LastName>Wagener</LastName>\n                             <ForeName>Jan-Robin</ForeName>\n                             <Initials>JR</Initials>\n                             <AffiliationInfo>\n                                 <Affiliation>Institute for Neuroanatomy, Universitätsmedizin Göttingen, Georg-August-University Göttingen, Göttingen, Germany.</Affiliation>\n                             </AffiliationInfo>\n                         </Author>\n                         <Author ValidYN=\"Y\">\n                             <LastName>Schweizer</LastName>\n                             <ForeName>Heiko</ForeName>\n                             <Initials>H</Initials>\n                             <AffiliationInfo>\n                                 <Affiliation>Renal Division, University Hospital Freiburg, Freiburg, Germany.</Affiliation>\n                             </AffiliationInfo>\n                         </Author>\n                         <Author ValidYN=\"Y\">\n                             <LastName>Schermer</LastName>\n                             <ForeName>Bernhard</ForeName>\n                             <Initials>B</Initials>\n                             <AffiliationInfo>\n                                 <Affiliation>Department II of Internal Medicine and Center for Molecular Medicine Cologne, University of Cologne, Cologne, Germany.</Affiliation>\n                             </AffiliationInfo>\n                             <AffiliationInfo>\n                                 <Affiliation>Cologne Excellence Cluster on Cellular Stress Responses in Aging-Associated Diseases (CECAD), University of Cologne, Cologne, Germany.</Affiliation>\n                             </AffiliationInfo>\n                             <AffiliationInfo>\n                                 <Affiliation>Systems Biology of Ageing Cologne (Sybacol), University of Cologne, Cologne, Germany.</Affiliation>\n                             </AffiliationInfo>\n                         </Author>\n                         <Author ValidYN=\"Y\">\n                             <LastName>Benzing</LastName>\n                             <ForeName>Thomas</ForeName>\n                             <Initials>T</Initials>\n                             <AffiliationInfo>\n                                 <Affiliation>Department II of Internal Medicine and Center for Molecular Medicine Cologne, University of Cologne, Cologne, Germany.</Affiliation>\n                             </AffiliationInfo>\n                             <AffiliationInfo>\n                                 <Affiliation>Cologne Excellence Cluster on Cellular Stress Responses in Aging-Associated Diseases (CECAD), University of Cologne, Cologne, Germany.</Affiliation>\n                             </AffiliationInfo>\n                             <AffiliationInfo>\n                                 <Affiliation>Systems Biology of Ageing Cologne (Sybacol), University of Cologne, Cologne, Germany.</Affiliation>\n                             </AffiliationInfo>\n                         </Author>\n                         <Author ValidYN=\"Y\">\n                             <LastName>Hoehne</LastName>\n                             <ForeName>Martin</ForeName>\n                             <Initials>M</Initials>\n                             <AffiliationInfo>\n                                 <Affiliation>Department II of Internal Medicine and Center for Molecular Medicine Cologne, University of Cologne, Cologne, Germany.</Affiliation>\n                             </AffiliationInfo>\n                             <AffiliationInfo>\n                                 <Affiliation>Cologne Excellence Cluster on Cellular Stress Responses in Aging-Associated Diseases (CECAD), University of Cologne, Cologne, Germany.</Affiliation>\n                             </AffiliationInfo>\n                             <AffiliationInfo>\n                                 <Affiliation>Systems Biology of Ageing Cologne (Sybacol), University of Cologne, Cologne, Germany.</Affiliation>\n                             </AffiliationInfo>\n                         </Author>\n                     </AuthorList>\n                     <Language>eng</Language>\n                     <PublicationTypeList>\n                         <PublicationType UI=\"D016428\">Journal Article</PublicationType>\n                     </PublicationTypeList>\n                     <ArticleDate DateType=\"Electronic\">\n                         <Year>2018</Year>\n                         <Month>09</Month>\n                         <Day>14</Day>\n                     </ArticleDate>\n                 </Article>\n                 <MedlineJournalInfo>\n                     <Country>England</Country>\n                     <MedlineTA>Genes Brain Behav</MedlineTA>\n                     <NlmUniqueID>101129617</NlmUniqueID>\n                     <ISSNLinking>1601-183X</ISSNLinking>\n                 </MedlineJournalInfo>\n                 <ChemicalList>\n                     <Chemical>\n                         <RegistryNumber>0</RegistryNumber>\n                         <NameOfSubstance UI=\"D002352\">Carrier Proteins</NameOfSubstance>\n                     </Chemical>\n                     <Chemical>\n                         <RegistryNumber>0</RegistryNumber>\n                         <NameOfSubstance UI=\"D007136\">Immunoglobulins</NameOfSubstance>\n                     </Chemical>\n                     <Chemical>\n                         <RegistryNumber>0</RegistryNumber>\n                         <NameOfSubstance UI=\"C474214\">Kirrel3 protein, mouse</NameOfSubstance>\n                     </Chemical>\n                     <Chemical>\n                         <RegistryNumber>0</RegistryNumber>\n                         <NameOfSubstance UI=\"D008565\">Membrane Proteins</NameOfSubstance>\n                     </Chemical>\n                 </ChemicalList>\n                 <CitationSubset>IM</CitationSubset>\n                 <MeshHeadingList>\n                     <MeshHeading>\n                         <DescriptorName UI=\"D000818\" MajorTopicYN=\"N\">Animals</DescriptorName>\n                     </MeshHeading>\n                     <MeshHeading>\n                         <DescriptorName UI=\"D002352\" MajorTopicYN=\"N\">Carrier Proteins</DescriptorName>\n                         <QualifierName UI=\"Q000235\" MajorTopicYN=\"N\">genetics</QualifierName>\n                     </MeshHeading>\n                     <MeshHeading>\n                         <DescriptorName UI=\"D002448\" MajorTopicYN=\"N\">Cell Adhesion</DescriptorName>\n                         <QualifierName UI=\"Q000502\" MajorTopicYN=\"N\">physiology</QualifierName>\n                     </MeshHeading>\n                     <MeshHeading>\n                         <DescriptorName UI=\"D007136\" MajorTopicYN=\"N\">Immunoglobulins</DescriptorName>\n                         <QualifierName UI=\"Q000502\" MajorTopicYN=\"N\">physiology</QualifierName>\n                     </MeshHeading>\n                     <MeshHeading>\n                         <DescriptorName UI=\"D008565\" MajorTopicYN=\"N\">Membrane Proteins</DescriptorName>\n                         <QualifierName UI=\"Q000235\" MajorTopicYN=\"Y\">genetics</QualifierName>\n                         <QualifierName UI=\"Q000502\" MajorTopicYN=\"Y\">physiology</QualifierName>\n                     </MeshHeading>\n                     <MeshHeading>\n                         <DescriptorName UI=\"D051379\" MajorTopicYN=\"N\">Mice</DescriptorName>\n                     </MeshHeading>\n                     <MeshHeading>\n                         <DescriptorName UI=\"D018345\" MajorTopicYN=\"N\">Mice, Knockout</DescriptorName>\n                     </MeshHeading>\n                     <MeshHeading>\n                         <DescriptorName UI=\"D055495\" MajorTopicYN=\"N\">Neurogenesis</DescriptorName>\n                     </MeshHeading>\n                     <MeshHeading>\n                         <DescriptorName UI=\"D009474\" MajorTopicYN=\"N\">Neurons</DescriptorName>\n                         <QualifierName UI=\"Q000378\" MajorTopicYN=\"N\">metabolism</QualifierName>\n                     </MeshHeading>\n                     <MeshHeading>\n                         <DescriptorName UI=\"D013569\" MajorTopicYN=\"N\">Synapses</DescriptorName>\n                         <QualifierName UI=\"Q000378\" MajorTopicYN=\"N\">metabolism</QualifierName>\n                     </MeshHeading>\n                 </MeshHeadingList>\n                 <KeywordList Owner=\"NOTNLM\">\n                     <Keyword MajorTopicYN=\"Y\">Jacobsen syndrome</Keyword>\n                     <Keyword MajorTopicYN=\"Y\">Kirrel3</Keyword>\n                     <Keyword MajorTopicYN=\"Y\">Neph2</Keyword>\n                     <Keyword MajorTopicYN=\"Y\">attention-deficit hyperactivity disorder</Keyword>\n                     <Keyword MajorTopicYN=\"Y\">autism-spectrum disorder</Keyword>\n                     <Keyword MajorTopicYN=\"Y\">behavior</Keyword>\n                     <Keyword MajorTopicYN=\"Y\">cerebellum</Keyword>\n                     <Keyword MajorTopicYN=\"Y\">intellectual disability</Keyword>\n                     <Keyword MajorTopicYN=\"Y\">knockout</Keyword>\n                     <Keyword MajorTopicYN=\"Y\">neurodevelopmental disorders</Keyword>\n                     <Keyword MajorTopicYN=\"Y\">neurofascin</Keyword>\n                     <Keyword MajorTopicYN=\"Y\">olfaction</Keyword>\n                     <Keyword MajorTopicYN=\"Y\">phenotyping</Keyword>\n                 </KeywordList>\n             </MedlineCitation>\n             <PubmedData>\n                 <History>\n                     <PubMedPubDate PubStatus=\"received\">\n                         <Year>2018</Year>\n                         <Month>04</Month>\n                         <Day>07</Day>\n                     </PubMedPubDate>\n                     <PubMedPubDate PubStatus=\"revised\">\n                         <Year>2018</Year>\n                         <Month>07</Month>\n                         <Day>22</Day>\n                     </PubMedPubDate>\n                     <PubMedPubDate PubStatus=\"accepted\">\n                         <Year>2018</Year>\n                         <Month>08</Month>\n                         <Day>17</Day>\n                     </PubMedPubDate>\n                     <PubMedPubDate PubStatus=\"pubmed\">\n                         <Year>2018</Year>\n                         <Month>8</Month>\n                         <Day>23</Day>\n                         <Hour>6</Hour>\n                         <Minute>0</Minute>\n                     </PubMedPubDate>\n                     <PubMedPubDate PubStatus=\"medline\">\n                         <Year>2019</Year>\n                         <Month>1</Month>\n                         <Day>30</Day>\n                         <Hour>6</Hour>\n                         <Minute>0</Minute>\n                     </PubMedPubDate>\n                     <PubMedPubDate PubStatus=\"entrez\">\n                         <Year>2018</Year>\n                         <Month>8</Month>\n                         <Day>23</Day>\n                         <Hour>6</Hour>\n                         <Minute>0</Minute>\n                     </PubMedPubDate>\n                 </History>\n                 <PublicationStatus>ppublish</PublicationStatus>\n                 <ArticleIdList>\n                     <ArticleId IdType=\"pubmed\">30133126</ArticleId>\n                     <ArticleId IdType=\"doi\">10.1111/gbb.12516</ArticleId>\n                 </ArticleIdList>\n             </PubmedData>\n         </PubmedArticle>\n         \n         </PubmedArticleSet>",
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "Neph2/Kirrel3 regulates sensory input, motor coordination, and home-cage activity in rodents",
+				"creators": [
+					{
+						"firstName": "Linus A.",
+						"lastName": "Völker",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Barbara A.",
+						"lastName": "Maar",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Barbara A.",
+						"lastName": "Pulido Guevara",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Andras",
+						"lastName": "Bilkei-Gorzo",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Andreas",
+						"lastName": "Zimmer",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Hella",
+						"lastName": "Brönneke",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Claudia",
+						"lastName": "Dafinger",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Sabine",
+						"lastName": "Bertsch",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Jan-Robin",
+						"lastName": "Wagener",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Heiko",
+						"lastName": "Schweizer",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Bernhard",
+						"lastName": "Schermer",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Thomas",
+						"lastName": "Benzing",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Martin",
+						"lastName": "Hoehne",
+						"creatorType": "author"
+					}
+				],
+				"date": "2018-11",
+				"DOI": "10.1111/gbb.12516",
+				"ISSN": "1601-183X",
+				"abstractNote": "Adhesion molecules of the immunoglobulin superfamily (IgSF) are essential for neuronal synapse development across evolution and control various aspects of synapse formation and maturation. Neph2, also known as Kirrel3, is an IgSF adhesion molecule implicated in synapse formation, synaptic transmission and ultrastructure. In humans, defects in the NEPH2 gene have been associated with neurodevelopmental disorders such as Jacobsen syndrome, intellectual disability, and autism-spectrum disorders. However, the precise role in development and function of the nervous system is still unclear. Here, we present the histomorphological and phenotypical analysis of a constitutive Neph2-knockout mouse line. Knockout mice display defects in auditory sensory processing, motor skills, and hyperactivity in the home-cage analysis. Olfactory, memory and metabolic testing did not differ from controls. Despite the wide-spread expression of Neph2 in various brain areas, no gross anatomic defects could be observed. Neph2 protein could be located at the cerebellar pinceaux. It interacted with the pinceau core component neurofascin and other synaptic proteins thus suggesting a possible role in cerebellar synapse formation and circuit assembly. Our results suggest that Neph2/Kirrel3 acts on the synaptic ultrastructural level and neuronal wiring rather than on ontogenetic events affecting macroscopic structure. Neph2-knockout mice may provide a valuable rodent model for research on autism spectrum diseases and neurodevelopmental disorders.",
+				"extra": "PMID: 30133126",
+				"issue": "8",
+				"journalAbbreviation": "Genes Brain Behav",
+				"language": "eng",
+				"pages": "e12516",
+				"publicationTitle": "Genes, Brain, and Behavior",
+				"volume": "17",
+				"attachments": [
+					{
+						"title": "PubMed entry",
+						"mimeType": "text/html",
+						"snapshot": false
+					}
+				],
+				"tags": [
+					{
+						"tag": "Animals"
+					},
+					{
+						"tag": "Carrier Proteins"
+					},
+					{
+						"tag": "Cell Adhesion"
+					},
+					{
+						"tag": "Immunoglobulins"
+					},
+					{
+						"tag": "Jacobsen syndrome"
+					},
+					{
+						"tag": "Kirrel3"
+					},
+					{
+						"tag": "Membrane Proteins"
+					},
+					{
+						"tag": "Mice"
+					},
+					{
+						"tag": "Mice, Knockout"
+					},
+					{
+						"tag": "Neph2"
+					},
+					{
+						"tag": "Neurogenesis"
+					},
+					{
+						"tag": "Neurons"
+					},
+					{
+						"tag": "Synapses"
+					},
+					{
+						"tag": "attention-deficit hyperactivity disorder"
+					},
+					{
+						"tag": "autism-spectrum disorder"
+					},
+					{
+						"tag": "behavior"
+					},
+					{
+						"tag": "cerebellum"
+					},
+					{
+						"tag": "intellectual disability"
+					},
+					{
+						"tag": "knockout"
+					},
+					{
+						"tag": "neurodevelopmental disorders"
+					},
+					{
+						"tag": "neurofascin"
+					},
+					{
+						"tag": "olfaction"
+					},
+					{
+						"tag": "phenotyping"
 					}
 				],
 				"notes": [],

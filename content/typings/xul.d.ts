@@ -1,6 +1,8 @@
 namespace XUL {
   class Element extends HTMLElement {
     public hidden: boolean
+    public getAttribute(name: string): string
+    public setAttribute(name: string, value: string): void
   }
 
   class Textbox extends XUL.Element {

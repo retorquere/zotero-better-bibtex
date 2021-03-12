@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2020-10-14 13:32:58"
+	"lastUpdated": "2020-12-12 08:54:18"
 }
 
 /*
@@ -219,9 +219,8 @@ function processRIS(text, jid) {
 			}
 			// remove any reviewed authors from the title
 			for (i = 0; i < reviewedAuthors.length; i++) {
-				reviewedTitle = reviewedTitle.replace(reviewedAuthors[i], "");
+				reviewedTitle = reviewedTitle.replace(", "+reviewedAuthors[i], "");
 			}
-			reviewedTitle = reviewedTitle.replace(/[\s.,]+$/, "");
 			item.title = "Review of " + reviewedTitle;
 		}
 		
@@ -660,6 +659,51 @@ var testCases = [
 				"shortTitle": "Errors in Bibliographic Citations",
 				"url": "https://www.jstor.org/stable/4308405",
 				"volume": "59",
+				"attachments": [
+					{
+						"title": "JSTOR Full Text PDF",
+						"mimeType": "application/pdf"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://www.jstor.org/stable/40401968?seq=1#metadata_info_tab_contents",
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "Review of The Communards of Paris, 1871; The Paris Commune of 1871: The View from the Left",
+				"creators": [
+					{
+						"lastName": "Waldman",
+						"firstName": "Martin R.",
+						"creatorType": "author"
+					},
+					{
+						"lastName": "Edwards",
+						"firstName": "Stewart",
+						"creatorType": "reviewedAuthor"
+					},
+					{
+						"lastName": "Schulkind",
+						"firstName": "Eugene",
+						"creatorType": "reviewedAuthor"
+					}
+				],
+				"date": "1976",
+				"ISSN": "0036-8237",
+				"issue": "3",
+				"libraryCatalog": "JSTOR",
+				"pages": "378-381",
+				"publicationTitle": "Science & Society",
+				"shortTitle": "Review of The Communards of Paris, 1871; The Paris Commune of 1871",
+				"url": "https://www.jstor.org/stable/40401968",
+				"volume": "40",
 				"attachments": [
 					{
 						"title": "JSTOR Full Text PDF",

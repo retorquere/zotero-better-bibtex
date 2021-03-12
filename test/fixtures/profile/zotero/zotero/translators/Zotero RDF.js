@@ -16,9 +16,10 @@
 		"exportFileData": false
 	},
 	"inRepository": true,
-	"lastUpdated": "2019-08-11 12:58:13"
+	"lastUpdated": "2021-01-25 06:49:57"
 }
 
+var addedCollections = new Set();
 var item;
 var rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 
@@ -77,6 +78,7 @@ function generateCollection(collection) {
 		// add child list items
 		if (child.type == "collection") {
 			Zotero.RDF.addStatement(collectionResource, n.dcterms+"hasPart", "#collection_"+child.id, false);
+			addedCollections.add(child.id);
 			// do recursive processing of collections
 			generateCollection(child);
 		} else if (itemResources[child.id]) {
@@ -572,6 +574,10 @@ function doExport() {
 	/** RDF COLLECTION STRUCTURE **/
 	var collection;
 	while (collection = Zotero.nextCollection()) {
+		// Skip collections already added via recursion in generateCollection()
+		// TODO: Remove after everyone has 5.0.96, which fixes this with b3220e83b
+		if (addedCollections.has(collection.id)) continue;
+		
 		generateCollection(collection);
 	}
 }

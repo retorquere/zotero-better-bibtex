@@ -528,18 +528,18 @@
                       </menupopup>
                     </menulist>
                   </row>
-                  <row class="better-bibtex-preferences-quickcopy-details" id="id-better-bibtex-preferences-details-latex">
+                  <row class="better-bibtex-preferences-quickcopy-details" id="better-bibtex-preferences-quickcopy-latex">
                     <label bbt:preference="pref-better-bibtex-citeCommand">&better-bibtex.Preferences.citekey.quickCopy.latex.command;</label>
                     <textbox size="10" preference="pref-better-bibtex-citeCommand"
                       onchange="Zotero.BetterBibTeX.Preferences.update();"
                       onkeypress="Zotero.setTimeout(function() { Zotero.BetterBibTeX.Preferences.update() }, 1);"/>
                   </row>
-                  <row class="better-bibtex-preferences-quickcopy-details" id="id-better-bibtex-preferences-details-pandoc">
+                  <row class="better-bibtex-preferences-quickcopy-details" id="better-bibtex-preferences-quickcopy-pandoc">
                     <checkbox id="id-better-bibtex-preferences-quickCopyPandocBrackets"
                       preference="pref-better-bibtex-quickCopyPandocBrackets"
                       label="&better-bibtex.Preferences.citekey.quickCopy.pandoc.brackets;"/>
                   </row>
-                  <row class="better-bibtex-preferences-quickcopy-details" id="better-bibtex-preferences-quickcopy-details-eta">
+                  <row class="better-bibtex-preferences-quickcopy-details" id="better-bibtex-preferences-quickcopy-eta">
                     <label
                       class="text-link"
                       href="https://retorque.re/zotero-better-bibtex/installation/preferences/citation-keys/#quick-copydrag-and-drop-citations"

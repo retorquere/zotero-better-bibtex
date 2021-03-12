@@ -9,30 +9,30 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2020-11-02 11:04:02"
+	"lastUpdated": "2021-01-09 18:02:12"
 }
 
 /*
 	***** BEGIN LICENSE BLOCK *****
 
-    Twitter Translator
-    Copyright © 2020 Bo An, Dan Stillman
-    
-    This file is part of Zotero.
-    
-    Zotero is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-    
-    Zotero is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-    GNU Affero General Public License for more details.
-    
-    You should have received a copy of the GNU Affero General Public License
-    along with Zotero. If not, see <http://www.gnu.org/licenses/>.
-    
+	Twitter Translator
+	Copyright © 2020 Bo An, Dan Stillman
+	
+	This file is part of Zotero.
+	
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+	
+	Zotero is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU Affero General Public License for more details.
+	
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
+	
    	***** END LICENSE BLOCK *****
 */
 
@@ -148,7 +148,7 @@ function scrape(doc, url) {
 			let minute = matches[2];
 			let ampm = matches[3];
 			// If "PM", add 12 hours
-			if (ampm && ampm.toLowerCase() == 'pm') {
+			if (ampm && ampm.toLowerCase() == 'pm' && hour != "12") {
 				hour = parseInt(hour) + 12;
 			}
 			// Convert to UTC and add 'T' and 'Z'
