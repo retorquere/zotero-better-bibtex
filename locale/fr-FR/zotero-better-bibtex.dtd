@@ -82,8 +82,8 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.format "Format de copie : ">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.gitbook "GitBook">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.latex.command "Commande LaTeX">
-<!ENTITY better-bibtex.Preferences.citekey.quickCopy.latex "LaTeX citation">
-<!ENTITY better-bibtex.Preferences.citekey.quickCopy.rtfScan "RTF Scan marker">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.latex "Citation LaTeX">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.rtfScan "Marqueur de scan RTF">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.roamCiteKey "Clé de citation Roam">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgmode_itemkey "Lien de sélection de Zotero avec Org-mode">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgmode_citekey "Lien de sélection clé de citation avec Org-mode">
