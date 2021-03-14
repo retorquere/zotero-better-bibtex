@@ -467,8 +467,15 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         })
       }
 
-      // check for SMB path for #1396
-      if (!this.noWait && Preference.workersMax && !Translators.workers.disabled && (!this.location || !this.location.path.startsWith('\\\\'))) {
+      const backgroundExport = {
+        wait: !this.noWait, // noWait must be synchronous
+        workers: Preference.workersMax, // workers must be enabled
+        enabled: !Translators.workers.disabled, // there wasn't an error starting a worker earlier
+        safePath: (!this.location || !this.location.path.startsWith('\\\\')), // check for SMB path for #1396
+        minHandlers: Object.keys(this._handlers).filter(handler => handler !== 'done').length === 0, // we have only done handlers
+      }
+      log.debug('worker translation:', backgroundExport)
+      if (Object.values(backgroundExport).reduce((acc, cond) => acc && cond)) {
         const path = this.location?.path
 
         // fake out the stuff that complete expects to be set by .translate
@@ -478,9 +485,10 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
 
         Translators.exportItemsByQueuedWorker(translatorID, this._displayOptions, { scope: { ...this._export, getter: this._itemGetter }, path })
           .then(result => {
+            log.debug('worker translation done, result:', !!result)
             // eslint-disable-next-line id-blacklist
             this.string = result
-            this.complete(result)
+            this.complete(result || true)
           })
           .catch(err => {
             log.error('worker translation failed, error:', err)
