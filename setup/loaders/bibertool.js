@@ -14,7 +14,7 @@ function select(selector, node) {
   return xpath.select(selector, node)
 }
 
-module.exports = function bibertool(source) {
+function bibertool(source) {
   const doc = (new DOMParser).parseFromString(source)
 
   const BiberTool = { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
@@ -162,3 +162,5 @@ module.exports = function bibertool(source) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return ejs.render(fs.readFileSync(path.join(__dirname, 'bibertool.ejs'), 'utf8'), BiberTool)
 }
+
+module.exports = { bibertool }

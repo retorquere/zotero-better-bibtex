@@ -2,6 +2,8 @@
   "compilerOptions": {
     "allowUnreachableCode": false,
     "noUnusedLocals": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
     "noUnusedParameters": false,
     "importHelpers": true,
     "target": "es2017",
