@@ -483,7 +483,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         this.saveQueue = []
         this._savingAttachments = []
 
-        Translators.exportItemsByQueuedWorker(translatorID, this._displayOptions, { scope: { ...this._export, getter: this._itemGetter }, path })
+        return Translators.exportItemsByQueuedWorker(translatorID, this._displayOptions, { scope: { ...this._export, getter: this._itemGetter }, path })
           .then(result => {
             log.debug('worker translation done, result:', !!result)
             // eslint-disable-next-line id-blacklist
@@ -494,7 +494,6 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
             log.error('worker translation failed, error:', err)
             this.complete(null, err)
           })
-        return
       }
     }
   }
