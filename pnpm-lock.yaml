@@ -84,7 +84,7 @@ devDependencies:
   webpack-cli: 4.5.0_webpack@5.24.4
   wrapper-webpack-plugin: 2.1.0_webpack@5.24.4
   xml-parser: 1.2.1
-  xmldom: 0.4.0
+  xmldom: 0.5.0
   xpath: 0.0.32
   zotero-plugin: 1.0.40_webpack-cli@4.5.0
 lockfileVersion: 5.2
@@ -5576,11 +5576,18 @@ packages:
     resolution:
       integrity: sha1-wx9MNPKXXbgq0BMiISBZJzYVb80=
   /xmldom/0.4.0:
+    deprecated: Deprecated due to CVE-2021-21366 resolved in 0.5.0
     dev: true
     engines:
       node: '>=10.0.0'
     resolution:
       integrity: sha512-2E93k08T30Ugs+34HBSTQLVtpi6mCddaY8uO+pMNk1pqSjV5vElzn4mmh6KLxN3hki8rNcHSYzILoh3TEWORvA==
+  /xmldom/0.5.0:
+    dev: true
+    engines:
+      node: '>=10.0.0'
+    resolution:
+      integrity: sha512-Foaj5FXVzgn7xFzsKeNIde9g6aFBxTPi37iwsno8QvApmtg7KYrr+OPyRHcJF7dud2a5nGRBXK3n0dL62Gf7PA==
   /xpath/0.0.32:
     dev: true
     engines:
@@ -5798,7 +5805,7 @@ specifiers:
   words-to-numbers: ^1.5.1
   wrapper-webpack-plugin: ^2.1.0
   xml-parser: ^1.2.1
-  xmldom: ^0.4.0
+  xmldom: ^0.5.0
   xpath: ^0.0.32
   xregexp: ^5.0.1
   zotero-plugin: ^1.0.40
