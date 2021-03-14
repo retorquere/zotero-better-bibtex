@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
-import * as preferences from '../gen/preferences.json'
+import preferences from '../gen/preferences.json'
 import type { Preferences, PreferenceName } from '../gen/preferences'
 import { fromEntries } from './object'
 

@@ -1,22 +1,20 @@
-import * as xpath from 'xpath'
-import * as fs from 'fs'
-import * as ejs from 'ejs'
-import * as path from 'path'
-
-import { DOMParser } from 'xmldom'
-
-import jsesc = require('jsesc')
-import _ = require('lodash')
+const xpath = require('xpath')
+const fs = require('fs')
+const path = require('path')
+const ejs = require('ejs')
+const DOMParser = require('xmldom').DOMParser
+const jsesc = require('jsesc')
+const _ = require('lodash')
 
 // TODO: make sure to occasionally check https://sourceforge.net/projects/biblatex-biber/files/biblatex-biber/testfiles/ for updates.
 
 // const _select = xpath.useNamespaces({ bcf: 'https://sourceforge.net/projects/biblatex' })
 function select(selector, node) {
   // return _select(selector, node) as Element[]
-  return xpath.select(selector, node) as Element[]
+  return xpath.select(selector, node)
 }
 
-export = (source: string): string => {
+module.exports = function bibertool(source) {
   const doc = (new DOMParser).parseFromString(source)
 
   const BiberTool = { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
@@ -119,7 +117,7 @@ export = (source: string): string => {
       case 1:
         BiberTool.required[setname] = { types, fields: []}
 
-        for (const constraint of (Array.from(mandatory[0].childNodes) as Element[])) {
+        for (const constraint of Array.from(mandatory[0].childNodes)) {
           switch (constraint.localName || '#text') {
             case '#text':
               break
