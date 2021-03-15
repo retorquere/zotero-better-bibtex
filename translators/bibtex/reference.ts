@@ -17,50 +17,29 @@ import { log } from '../../content/logger'
 
 import { arXiv } from '../../content/arXiv'
 
-const Path = new class { // eslint-disable-line  @typescript-eslint/naming-convention
-  private baseAttachmentPath = Translator.preferences.baseAttachmentPath
-  private exportDir = Translator.export.dir
-
-  constructor() {
-    for (const dir of ['baseAttachmentPath', 'exportDir']) {
-      if (this[dir]) {
-        this[dir] = this.normalize(this[dir])
-        if (this[dir].endsWith(Translator.paths.sep)) this[dir] = this[dir].slice(0, -1)
-      }
-    }
-  }
-
-  normalize(path) {
+const Path = { // eslint-disable-line  @typescript-eslint/naming-convention
+  normalize(path) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
     return Translator.paths.caseSensitive ? path : path.toLowerCase()
-  }
+  },
 
-  drive(path) {
-    return (Translator.preferences.platform === 'win' && path.match(/^[a-z]:\\/i)) ? path.substring(0, 2).toLowerCase() : ''
-  }
+  drive(path) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+    if (Translator.preferences.platform !== 'win') return ''
+    return path.match(/^[a-z]:\//) ? path.substring(0, 2) : ''
+  },
 
-  relative(path) {
-    for (const [dir, dotdot] of ([[this.baseAttachmentPath, false], [this.exportDir, Translator.preferences.relativeFilePaths]] as [string, boolean][])) {
-      if (!dir) continue
+  relative(path) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+    if (this.drive(Translator.export.dir) !== this.drive(path)) return path
 
-      if (this.drive(dir) !== this.drive(path)) continue
+    const from = Translator.export.dir.split(Translator.paths.sep)
+    const to = path.split(Translator.paths.sep)
 
-      if (this.normalize(path).startsWith(`${dir}${Translator.paths.sep}`)) return path.substring(dir.length + 1)
-
-      if (dotdot) {
-        const from = dir.split(Translator.paths.sep)
-        const to = path.split(Translator.paths.sep)
-
-        while (from.length && to.length && this.normalize(from[0]) === this.normalize(to[0])) {
-          from.shift()
-          to.shift()
-        }
-        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-        return [...Array(from.length).fill('..'), ...to].join(Translator.paths.sep)
-      }
+    while (from.length && to.length && this.normalize(from[0]) === this.normalize(to[0])) {
+      from.shift()
+      to.shift()
     }
-
-    return path
-  }
+    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+    return `..${Translator.paths.sep}`.repeat(from.length) + to.join(Translator.paths.sep)
+  },
 }
 
 const Language = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
@@ -1177,13 +1156,15 @@ export class Reference {
 
       if (!att.mimetype && (att.path.slice(-4).toLowerCase() === '.pdf')) att.mimetype = 'application/pdf' // eslint-disable-line no-magic-numbers
 
-      let relative
       if (Translator.preferences.testing) {
         att.path = `files/${this.item.citationKey}/${att.path.replace(/.*[/\\]/, '')}`
       }
-      else if ((relative = Path.relative(att.path)) !== att.path) {
-        this.item.cachable = false
-        att.path = relative
+      else if (Translator.preferences.relativeFilePaths && Translator.export.dir) {
+        const relative = Path.relative(att.path)
+        if (relative !== att.path) {
+          this.item.cachable = false
+          att.path = relative
+        }
       }
 
       attachments.push(att)

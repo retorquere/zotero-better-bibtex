@@ -69,10 +69,10 @@ export function doExport(): void {
       cites: [].concat.apply([],
         (item.extra || '')
           .split('\n')
-          .filter(line => line.startsWith('cites:'))
-          .map(line => line.replace(/^cites:/, '').trim())
-          .filter(keys => keys)
-          .map(keys => keys.split(/\s*,\s*/))
+          .filter((line: string) => line.startsWith('cites:'))
+          .map((line: string) => line.replace(/^cites:/, '').trim())
+          .filter((keys: string) => keys)
+          .map((keys: string) => keys.split(/\s*,\s*/))
       ),
       citationKey: item.citationKey,
       uri: item.uri,

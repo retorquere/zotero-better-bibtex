@@ -207,6 +207,10 @@ export const Translator = new class implements ITranslator { // eslint-disable-l
     if (mode === 'export') {
       this.unicode = (this.BetterBibTeX && !Translator.preferences.asciiBibTeX) || (this.BetterBibLaTeX && !Translator.preferences.asciiBibLaTeX)
 
+      if (this.preferences.baseAttachmentPath && (this.export.dir === this.preferences.baseAttachmentPath || this.export.dir.startsWith(this.preferences.baseAttachmentPath + this.paths.sep))) {
+        this.preferences.relativeFilePaths = true
+      }
+
       // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
       // relative file paths are going to be different based on the file being exported to
       this.cachable = !(
