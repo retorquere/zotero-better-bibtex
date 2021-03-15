@@ -31,6 +31,9 @@ async function rebuild() {
     const globalName = 'BBTTranslator' + path.parse(translator).name.replace(/ /g, '')
     const outfile = path.join('build/dist', path.parse(translator).name + '.js')
 
+    // https://esbuild.github.io/api/#write
+    // https://esbuild.github.io/api/#outbase
+    // https://esbuild.github.io/api/#working-directory
     await esbuild.build({
       entryPoints: [translator],
       format: 'iife',
