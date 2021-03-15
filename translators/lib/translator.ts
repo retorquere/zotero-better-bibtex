@@ -172,7 +172,7 @@ export const Translator = new class implements ITranslator { // eslint-disable-l
         dir: (Zotero.getOption('exportDir') as string),
         path: (Zotero.getOption('exportPath') as string),
       }
-      if (this.export.dir && this.export.dir.endsWith(this.paths.sep)) this.export.dir = this.export.dir.slice(0, -1)
+      if (this.export.dir?.endsWith(this.paths.sep)) this.export.dir = this.export.dir.slice(0, -1)
     }
 
     for (const pref of Object.keys(this.preferences)) {
@@ -207,7 +207,7 @@ export const Translator = new class implements ITranslator { // eslint-disable-l
     if (mode === 'export') {
       this.unicode = (this.BetterBibTeX && !Translator.preferences.asciiBibTeX) || (this.BetterBibLaTeX && !Translator.preferences.asciiBibLaTeX)
 
-      if (this.preferences.baseAttachmentPath && (this.export.dir === this.preferences.baseAttachmentPath || this.export.dir.startsWith(this.preferences.baseAttachmentPath + this.paths.sep))) {
+      if (this.preferences.baseAttachmentPath && (this.export.dir === this.preferences.baseAttachmentPath || this.export.dir?.startsWith(this.preferences.baseAttachmentPath + this.paths.sep))) {
         this.preferences.relativeFilePaths = true
       }
 
