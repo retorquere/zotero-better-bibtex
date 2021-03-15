@@ -1,10 +1,9 @@
 const path = require('path')
 const fs = require('fs')
 const { bibertool } = require('./setup/loaders/bibertool')
-const recast = require("recast")
 const esbuild = require('esbuild')
-const acorn = require('acorn')
-const acornParser = acorn.Parser
+const pegjs = require('pegjs')
+const exec = require('child_process').exec
 
 let resolveShims = {
   name: 'node-shims',
@@ -20,16 +19,48 @@ let resolveShims = {
         loader: 'js'
       }
     })
+
+    build.onLoad({ filter: /\.pegjs$/ }, async (args) => {
+      return {
+        contents: pegjs.generate(await fs.promises.readFile(args.path, 'utf-8'), {
+          output: 'source',
+          cache: false,
+          optimize: 'speed',
+          trace: false,
+          format: 'commonjs',
+        }),
+        loader: 'js'
+      }
+    })
   }
+}
+
+function execShellCommand(cmd) {
+  console.log(cmd)
+  return new Promise((resolve, reject) => {
+    exec(cmd, (error, stdout, stderr) => {
+      if (error) {
+        console.warn(error)
+      }
+      resolve(stdout? stdout : stderr)
+    })
+  })
 }
 
 async function rebuild() {
   for (const translator of process.argv.slice(2)) {
-    // if (translator === 'translators/Better BibLaTeX.ts') continue
-    console.log(path.parse(translator).base)
+    if (!translator.startsWith('translators/')) continue
 
-    const globalName = 'BBTTranslator' + path.parse(translator).name.replace(/ /g, '')
-    const outfile = path.join('build/dist', path.parse(translator).name + '.js')
+    tr = path.parse(translator)
+    console.log(tr.base)
+
+    const header = require('./' + path.join(tr.dir, tr.name + '.json'))
+    const vars = ['Translator']
+      .concat((header.translatorType & 1) ? ['detectImport', 'doImport'] : [])
+      .concat((header.translatorType & 2) ? ['doExport'] : [])
+
+    const globalName = tr.name.replace(/ /g, '') + '__' + vars.join('__')
+    const outfile = path.join('build/dist', tr.name + '.js')
 
     // https://esbuild.github.io/api/#write
     // https://esbuild.github.io/api/#outbase
@@ -39,25 +70,36 @@ async function rebuild() {
       format: 'iife',
       globalName,
       bundle: true,
+      charset: 'utf8',
       plugins: [resolveShims],
       outfile,
       footer: {
-        js: 'const { var1, var2, var3 } = ' + globalName,
+        js: `const { ${vars.join(', ')} } = ${globalName};`
       },
-      banner: {
-        js: '// bloody insane speed',
-      },
+      // banner: { js: '// bloody insane speed', },
       target: ['firefox60'],
     })
+  }
 
-    const ast = recast.parse(await fs.promises.readFile(outfile, 'utf-8'), {
-      parser: {
-        parse (src) {
-          return acornParser.parse(src)
-        }
-      }
+  const entryPoints = process.argv.slice(2).filter(src => {
+    if (!src.startsWith('content/')) return false
+    src = path.parse(src)
+    return (src.base === 'better-bibtex.ts' || src.base.match(/^[A-Z]/))
+  })
+  if (entryPoints.length) {
+    await esbuild.build({
+      entryPoints,
+      format: 'esm',
+      bundle: true,
+      charset: 'utf8',
+      plugins: [resolveShims],
+      splitting: true,
+      outdir: 'build/dist/content',
+      target: ['firefox60'],
     })
-    console.log(typeof ast.program.body)
+  }
+  for (const entryPoint of entryPoints ) {
+    await execShellCommand(`./node_modules/.bin/jscodeshift -t post.js 'build/dist/${entryPoint.replace('.ts', '.js')}'`)
   }
 }
 
