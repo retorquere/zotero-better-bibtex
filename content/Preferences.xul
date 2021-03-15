@@ -362,6 +362,8 @@
         <preference name="extensions.zotero.translators.better-bibtex.autoExportPathReplaceSpace" type="string" default=" "/>
         <preference name="extensions.zotero.translators.better-bibtex.autoExportPathReplaceDiacritics" type="bool" default="false"/>
 
+        <preference name="extensions.zotero.translators.better-bibtex.baseAttachmentPath" type="string" default=""/>
+
         <preference name="extensions.zotero.translators.better-bibtex.postscriptOverride" type="string" default=""/>
         <bbt:doc>
           You can use a custom postscript per export directory:

@@ -34,6 +34,9 @@ export const Preference = new class PreferenceManager {
   public default = meta.defaults
 
   constructor() {
+    this.baseAttachmentPath = Zotero.Prefs.get('baseAttachmentPath')
+    Zotero.Prefs.registerObserver('baseAttachmentPath', val => { this.baseAttachmentPath = val })
+
     // migrate ancient keys
     let old, key
     if (typeof (old = Zotero.Prefs.get(key = '${prefix}workers')) === 'number') {

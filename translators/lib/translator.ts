@@ -209,7 +209,13 @@ export const Translator = new class implements ITranslator { // eslint-disable-l
 
       // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
       // relative file paths are going to be different based on the file being exported to
-      this.cachable = !(this.options.exportFileData || this.preferences.relativeFilePaths)
+      this.cachable = !(
+        this.options.exportFileData
+        ||
+        this.preferences.relativeFilePaths
+        ||
+        (this.preferences.baseAttachmentPath && this.export.dir?.startsWith(this.preferences.baseAttachmentPath))
+      )
     }
 
     this.collections = {}

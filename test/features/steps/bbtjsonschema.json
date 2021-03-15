@@ -144,6 +144,9 @@
             "auxImport": {
               "type": "boolean"
             },
+            "baseAttachmentPath": {
+              "type": "string"
+            },
             "biblatexExtendedDateFormat": {
               "type": "boolean"
             },
