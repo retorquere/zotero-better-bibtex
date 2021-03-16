@@ -281,7 +281,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       output: job.path || '',
       localeDateOrder: Zotero.BetterBibTeX.localeDateOrder,
       debugEnabled: Zotero.Debug.enabled ? 'true' : 'false',
-    }).map(([k, v]) => `${encodeURI(k)}=${encodeURI(v)}`).join('&')
+    }).map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&')
 
     this.workers.total += 1
     const id = this.workers.total
