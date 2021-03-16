@@ -34,7 +34,7 @@
     "Export 1 references for BibLaTeX to BBT yields error with quality report #1387": 360,
     "Export 1 references for BibLaTeX to Be robust against misconfigured journal abbreviator #127": 350,
     "Export 1 references for BibLaTeX to Better BibLaTeX.001": 380,
-    "Export 1 references for BibLaTeX to Better BibLaTeX.004": 320,
+    "Export 1 references for BibLaTeX to Better BibLaTeX.004": 330,
     "Export 1 references for BibLaTeX to Better BibLaTeX.005": 320,
     "Export 1 references for BibLaTeX to Better BibLaTeX.006": 310,
     "Export 1 references for BibLaTeX to Better BibLaTeX.007": 360,
@@ -309,7 +309,7 @@
       "runs": -97
     },
     "Identical Pinned keys lost when merging duplicated records #1721": {
-      "msecs": 6490,
+      "msecs": 6500,
       "runs": -231
     },
     "Ignoring upper cases in German titles #456": 700,
@@ -361,7 +361,7 @@
     "Import 2 references from BibLaTeX Patent author handling, type #1060": 1210,
     "Import 2 references from space after citekey creates confusion #716": 1170,
     "Import 20 references from BBT does not import groups from JabRef 5.1 #1641": {
-      "msecs": 3710,
+      "msecs": 3720,
       "runs": -161
     },
     "Import 3 references from Better BibTeX.009": 1130,
@@ -389,12 +389,12 @@
     "Pandoc-LaTeX-SCHOMD Citation Export": 1280,
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 405750,
+    "Really Big whopping library": 405130,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 43360,
+      "msecs": 43450,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
@@ -406,7 +406,7 @@
     "automatic tags in export #1270": 410,
     "bibtex; url export does not survive underscores #402": 670,
     "ids field should be created in raw mode #1729": {
-      "msecs": 9080,
+      "msecs": 9110,
       "runs": -227
     },
     "importing a title-cased bib #1246": 1320,
@@ -414,7 +414,7 @@
     "thesis zotero entries always create @phdthesis bibtex entries #307": 760,
     "two ISSN number are freezing browser #110 + Generating keys and export broken #111": 3610,
     "unknown command handler #1733": {
-      "msecs": 1150,
+      "msecs": 1160,
       "runs": -231
     },
     "use author dash separation rather than camel casing in citekey #1495": {
@@ -422,7 +422,7 @@
       "runs": -36
     },
     "web_page and other mendeley idiocy": {
-      "msecs": 39160,
+      "msecs": 39430,
       "runs": -239
     }
   },
@@ -718,7 +718,7 @@
       "Identical Pinned keys lost when merging duplicated records #1721"
     ]
   },
-  "runs": 254,
+  "runs": 255,
   "slow": {
     "1": [
       "Export 1 references for BibLaTeX to biber 2.14 rejects the date field generated from Better BibLaTex #1695",
