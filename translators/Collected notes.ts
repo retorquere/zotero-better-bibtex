@@ -10,44 +10,73 @@ import { ZoteroTranslator } from '../gen/typings/serialized-item'
 import * as escape from '../content/escape'
 import * as Extra from '../content/extra'
 
-function cleanExtra(extra) {
-  const cleaned = Extra.get(extra, 'zotero')
-  cleaned.extra = cleaned.extra.split('\n').filter(line => !line.match(/^OCLC:/i)).join('\n')
-  return cleaned
+function clean(item: ZoteroTranslator.Item): ZoteroTranslator.Item {
+  item = {...item, ...Extra.get(item.extra, 'zotero') }
+  item.extra = item.extra.split('\n').filter(line => !line.match(/^OCLC:/i)).join('\n')
+  return item
 }
+
+type ExpandedCollection = {
+  name: string
+  items: ZoteroTranslator.Item[]
+  collections: ExpandedCollection[]
+  root: boolean
+}
+
+function sorted(collections: ExpandedCollection[]) {
+  return collections.sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }))
+}
+
 class Exporter {
   private levels = 0
   private body = ''
-  private items: Record<number, ZoteroTranslator.Item> = {}
   public html = ''
 
   constructor() {
-    for (const item of Translator.items()) {
-      if (!this.keep(item)) continue
-      this.items[item.itemID] = Object.assign(item, cleanExtra(item.extra)) // eslint-disable-line prefer-object-spread
+    const items: Record<number, ZoteroTranslator.Item> = {}
+    const filed: Set<number> = new Set
+    const collections: Record<string, ExpandedCollection> = {}
+
+    for (let item of Translator.items()) {
+      item = clean(item)
+      if (this.keep(item)) items[item.itemID] = item
     }
 
-    const filed = {}
-    const root = []
-    for (const collection of Object.values(Translator.collections)) {
-      for (const itemID of collection.items) filed[itemID] = this.items[itemID]
-      if (!Translator.collections[collection.parent]) delete collection.parent
-      if (!collection.parent && !this.prune(collection)) root.push(collection) // prune empty roots
+    for (const [key, collection] of Object.entries(Translator.collections)) {
+      for (const itemID of collection.items) filed.add(itemID)
+      collections[key] = {
+        name: collection.name,
+        // resolve item IDs to items
+        items: (collection.items || []).map(itemID => items[itemID]).filter(item => item),
+        // resolve collection IDs to collections
+        collections: [],
+        root: !Translator.collections[collection.parent],
+      }
+    }
+    for (const [key, collection] of Object.entries(collections)) {
+      Zotero.debug(`collected notes: ${key}, ${collection.name}, root: ${collection.root}`)
+    }
+    for (const [key, collection] of Object.entries(Translator.collections)) {
+      collections[key].collections = (collection.collections || []).map(coll => collections[coll]).filter(coll => coll)
+      Zotero.debug(`collection ${key} has ${collection.collections.length} subcollections ${collections[key].collections}, is root: ${collections[key].root}`)
     }
 
-    for (const item of (Object.values(this.items) as { itemID: number }[])) {
-      if (!filed[item.itemID] && this.keep(item)) this.item(item)
+    const unfiled = { name: 'Unfiled', items: Object.values(items).filter(item => !filed.has(item.itemID)), collections: [], root: true }
+    if (!this.prune(unfiled)) this.collection(unfiled)
+
+    for (const collection of sorted(Object.values(collections))) {
+      if (collection.root && !this.prune(collection)) this.collection(collection)
     }
 
-    for (const collection of root) {
-      this.collection(collection)
-    }
-
-    let style = `  body { ${ this.reset(1) } }\n`
+    let style = '\n  body {\n    counter-reset: h1;\n  }\n\n'
     for (let level = 1; level <= this.levels; level++) {
-      style += `  h${ level } { ${ this.reset(level + 1) } }\n`
-      const label = Array.from({length: level}, (x, i) => `counter(h${ i + 1 }counter)`).join(' "." ')
-      style += `  h${ level }:before { counter-increment: h${ level }counter; content: ${ label } ".\\0000a0\\0000a0"; }\n`
+      if (level !== this.levels) style += `  h${level} {\n    counter-reset: h${level + 1};\n  }\n`
+
+      style += `  h${level}:before {\n`
+      const label = Array.from({length: level}, (_x, i) => `counter(h${ i + 1 }, decimal)`).join(' "." ')
+      style += `    content: ${label} ".\\0000a0\\0000a0";\n`
+      style += `    counter-increment: h${level};\n`
+      style += '  }\n\n'
     }
     style += '  blockquote { border-left: 1px solid gray; }\n'
 
@@ -59,15 +88,16 @@ class Exporter {
   }
 
   collection(collection, level = 1) {
-    if (level > this.levels) this.levels = level
+    Zotero.debug(`collection ${collection.name} @ ${level} with ${collection.collections.length} subcollections`)
+    this.levels = Math.max(this.levels, level)
 
     this.body += `<h${ level }>${ escape.html(collection.name) }</h${ level }>\n`
-    for (const itemID of collection.items) {
-      this.item(this.items[itemID])
+    for (const item of collection.items) {
+      this.item(item)
     }
 
-    for (const subcoll of collection.collections) {
-      this.collection(Translator.collections[subcoll], level + 1)
+    for (const coll of sorted(collection.collections)) {
+      this.collection(coll, level + 1)
     }
   }
 
@@ -88,9 +118,9 @@ class Exporter {
   prune(collection) {
     if (!collection) return true
 
-    collection.items = collection.items.filter(itemID => this.keep(this.items[itemID]))
-    collection.collections = collection.collections.filter(subcoll => !this.prune(Translator.collections[subcoll]))
+    collection.collections = collection.collections.filter(sub => !this.prune(sub))
 
+    Zotero.debug(`prune: ${collection.name}: ${collection.items.length} items, ${collection.collections.length} collections: ${!collection.items.length && !collection.collections.length}`)
     return !collection.items.length && !collection.collections.length
   }
 
@@ -154,17 +184,6 @@ class Exporter {
     for (const att of item.attachments || []) {
       this.note(att, 'attachment')
     }
-  }
-
-  reset(starting) {
-    if (starting > this.levels) return ''
-
-    let reset = 'counter-reset:'
-    for (let level = starting; level <= this.levels; level++) {
-      reset += ` h${ level }counter 0`
-    }
-    return `${reset};`
-    // return `counter-reset: h${ starting }counter;`
   }
 
   keep(item) {

@@ -533,7 +533,10 @@ Scenario: use author dash separation rather than camel casing in citekey #1495
   And I refresh all citation keys
   Then an export using "Better BibTeX" should match "export/*.bibtex"
 
-@notes
 Scenario: Collected notes
   Given I import 36 references from "export/*.json"
+  Then an export using "Collected notes" should match "export/*.html"
+
+Scenario: Export as Collected Notes does not list subcollections #1768
+  Given I import 47 references from "export/*.json"
   Then an export using "Collected notes" should match "export/*.html"
