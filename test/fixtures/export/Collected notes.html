@@ -1,12 +1,37 @@
-<html><head><style>  body { counter-reset: h1counter 0 h2counter 0 h3counter 0 h4counter 0; }
-  h1 { counter-reset: h2counter 0 h3counter 0 h4counter 0; }
-  h1:before { counter-increment: h1counter; content: counter(h1counter) ".\0000a0\0000a0"; }
-  h2 { counter-reset: h3counter 0 h4counter 0; }
-  h2:before { counter-increment: h2counter; content: counter(h1counter) "." counter(h2counter) ".\0000a0\0000a0"; }
-  h3 { counter-reset: h4counter 0; }
-  h3:before { counter-increment: h3counter; content: counter(h1counter) "." counter(h2counter) "." counter(h3counter) ".\0000a0\0000a0"; }
-  h4 {  }
-  h4:before { counter-increment: h4counter; content: counter(h1counter) "." counter(h2counter) "." counter(h3counter) "." counter(h4counter) ".\0000a0\0000a0"; }
+<html><head><style>
+  body {
+    counter-reset: h1;
+  }
+
+  h1 {
+    counter-reset: h2;
+  }
+  h1:before {
+    content: counter(h1, decimal) ".\0000a0\0000a0";
+    counter-increment: h1;
+  }
+
+  h2 {
+    counter-reset: h3;
+  }
+  h2:before {
+    content: counter(h1, decimal) "." counter(h2, decimal) ".\0000a0\0000a0";
+    counter-increment: h2;
+  }
+
+  h3 {
+    counter-reset: h4;
+  }
+  h3:before {
+    content: counter(h1, decimal) "." counter(h2, decimal) "." counter(h3, decimal) ".\0000a0\0000a0";
+    counter-increment: h3;
+  }
+
+  h4:before {
+    content: counter(h1, decimal) "." counter(h2, decimal) "." counter(h3, decimal) "." counter(h4, decimal) ".\0000a0\0000a0";
+    counter-increment: h4;
+  }
+
   blockquote { border-left: 1px solid gray; }
 </style></head><body><h1>FM</h1>
 <h2>_Auteurs</h2>
