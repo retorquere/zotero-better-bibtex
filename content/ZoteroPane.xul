@@ -7,6 +7,11 @@
     <stringbundle id="zotero-better-bibtex-strings" src="chrome://zotero-better-bibtex/locale/zotero-better-bibtex.properties"/>
   </stringbundleset>
 
+  <hbox id="zotero-items-toolbar">
+    <label insertafter="zotero-tb-attachment-add" id="better-bibtex-startup-label" hidden="false" value="startup"/>
+    <progressmeter style="all:unset" insertafter="zotero-tb-attachment-add" id="better-bibtex-startup-progress" mode="undetermined" value="50" hidden="false"/>
+  </hbox>
+
   <menupopup id="menu_ToolsPopup">
     <menuitem label="&better-bibtex.BetterBibTeX.auxScanner;" oncommand="Zotero.BetterBibTeX.scanAUX('tag')"/>
   </menupopup>
