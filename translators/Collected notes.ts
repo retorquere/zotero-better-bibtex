@@ -52,13 +52,11 @@ class Exporter {
         collections: [],
         root: !Translator.collections[collection.parent],
       }
-    }
-    for (const [key, collection] of Object.entries(collections)) {
-      Zotero.debug(`collected notes: ${key}, ${collection.name}, root: ${collection.root}`)
+      Zotero.debug(`collected notes: ${key}:`, collections[key])
     }
     for (const [key, collection] of Object.entries(Translator.collections)) {
       collections[key].collections = (collection.collections || []).map(coll => collections[coll]).filter(coll => coll)
-      Zotero.debug(`collection ${key} has ${collection.collections.length} subcollections ${collections[key].collections.map(coll => coll.name)}, is root: ${collections[key].root}`)
+      Zotero.debug(`collected notes: ${key}, root:${collections[key].root}:`, collection, 'resolves to', collections[key])
     }
 
     const unfiled = { name: 'Unfiled', items: Object.values(items).filter(item => !filed.has(item.itemID)), collections: [], root: true }
