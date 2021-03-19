@@ -24,17 +24,17 @@
       "collections": [],
       "items": [
         1,
-        13,
-        19,
-        21,
-        24,
-        27,
+        16,
+        23,
+        25,
+        28,
         3,
-        32,
+        31,
+        36,
         4,
-        40,
-        41,
-        47
+        44,
+        45,
+        51
       ],
       "key": "coll:00002",
       "name": "Modelli"
@@ -43,13 +43,13 @@
       "collections": [],
       "items": [
         10,
-        11,
-        12,
-        17,
-        25,
-        26,
-        33,
-        44
+        13,
+        15,
+        21,
+        29,
+        30,
+        37,
+        48
       ],
       "key": "coll:00003",
       "name": "Consensus",
@@ -58,10 +58,11 @@
     "coll:00004": {
       "collections": [],
       "items": [
-        14,
-        34,
-        35,
-        37
+        11,
+        17,
+        38,
+        39,
+        41
       ],
       "key": "coll:00004",
       "name": "Fingerprints"
@@ -69,46 +70,49 @@
     "coll:00005": {
       "collections": [],
       "items": [
-        15,
-        2,
-        28,
-        31,
-        46
+        12,
+        14,
+        19,
+        22,
+        43,
+        46,
+        5
       ],
       "key": "coll:00005",
-      "name": "Classification",
+      "name": "Variable Reduction",
       "parent": "coll:00000"
     },
     "coll:00006": {
       "collections": [],
       "items": [
-        16,
-        20,
-        23,
-        36,
-        38,
-        7
+        18,
+        2,
+        32,
+        35,
+        50
       ],
       "key": "coll:00006",
-      "name": "Distance",
+      "name": "Classification",
       "parent": "coll:00000"
     },
     "coll:00007": {
       "collections": [],
       "items": [
-        18,
-        39,
+        20,
+        24,
+        27,
+        40,
         42,
-        5
+        7
       ],
       "key": "coll:00007",
-      "name": "Variable Reduction",
+      "name": "Distance",
       "parent": "coll:00000"
     },
     "coll:00008": {
       "collections": [],
       "items": [
-        22
+        26
       ],
       "key": "coll:00008",
       "name": "Virtual Screening"
@@ -116,9 +120,9 @@
     "coll:00009": {
       "collections": [],
       "items": [
-        29,
-        30,
-        43,
+        33,
+        34,
+        47,
         6,
         8
       ],
@@ -128,7 +132,7 @@
     "coll:00010": {
       "collections": [],
       "items": [
-        45
+        49
       ],
       "key": "coll:00010",
       "name": "Random Forest",
@@ -198,7 +202,7 @@
         "Number: 4"
       ],
       "issue": "4",
-      "itemID": 19,
+      "itemID": 23,
       "itemType": "journalArticle",
       "journalAbbreviation": "J. Chem. Inf. Comput. Sci.",
       "language": "en",
@@ -279,7 +283,7 @@
         "Number: 11"
       ],
       "issue": "11",
-      "itemID": 43,
+      "itemID": 47,
       "itemType": "journalArticle",
       "journalAbbreviation": "IJMS",
       "language": "en",
@@ -467,7 +471,7 @@
         "Number: 9"
       ],
       "issue": "9",
-      "itemID": 30,
+      "itemID": 34,
       "itemType": "journalArticle",
       "journalAbbreviation": "Nat Rev Microbiol",
       "language": "en",
@@ -533,7 +537,7 @@
         "Number: 7"
       ],
       "issue": "7",
-      "itemID": 29,
+      "itemID": 33,
       "itemType": "journalArticle",
       "journalAbbreviation": "Nat Rev Cancer",
       "language": "en",
@@ -639,7 +643,7 @@
         "Number: 6"
       ],
       "issue": "6",
-      "itemID": 27,
+      "itemID": 31,
       "itemType": "journalArticle",
       "journalAbbreviation": "J. Med. Chem.",
       "language": "en",
@@ -740,7 +744,7 @@
         "Number: 7"
       ],
       "issue": "7",
-      "itemID": 24,
+      "itemID": 28,
       "itemType": "journalArticle",
       "journalAbbreviation": "J. Chem. Inf. Model.",
       "language": "en",
@@ -800,7 +804,7 @@
         "Number: 6"
       ],
       "issue": "6",
-      "itemID": 41,
+      "itemID": 45,
       "itemType": "journalArticle",
       "journalAbbreviation": "PLoS Comput Biol",
       "language": "en",
@@ -918,7 +922,7 @@
         "Number: 6"
       ],
       "issue": "6",
-      "itemID": 21,
+      "itemID": 25,
       "itemType": "journalArticle",
       "journalAbbreviation": "J. Chem. Inf. Model.",
       "language": "en",
@@ -984,7 +988,7 @@
         "Number: 1"
       ],
       "issue": "1",
-      "itemID": 32,
+      "itemID": 36,
       "itemType": "journalArticle",
       "language": "en",
       "libraryCatalog": "DOI.org (Crossref)",
@@ -1053,7 +1057,7 @@
       "extra": [
         "DOI: 10.1002/3527601473.ch20"
       ],
-      "itemID": 47,
+      "itemID": 51,
       "itemType": "bookSection",
       "language": "en",
       "libraryCatalog": "DOI.org (Crossref)",
@@ -1104,7 +1108,7 @@
         "Number: 5"
       ],
       "issue": "5",
-      "itemID": 40,
+      "itemID": 44,
       "itemType": "journalArticle",
       "journalAbbreviation": "PLoS Comput Biol",
       "language": "en",
@@ -1155,7 +1159,7 @@
         "Number: 25"
       ],
       "issue": "25",
-      "itemID": 13,
+      "itemID": 16,
       "itemType": "journalArticle",
       "journalAbbreviation": "Journal of the American College of Cardiology",
       "language": "en",
@@ -1198,7 +1202,7 @@
       "extra": [
         "DOI: 10.1007/978-1-4419-9326-7"
       ],
-      "itemID": 45,
+      "itemID": 49,
       "itemType": "book",
       "language": "en",
       "libraryCatalog": "DOI.org (Crossref)",
@@ -1251,7 +1255,7 @@
         "Number: 3"
       ],
       "issue": "3",
-      "itemID": 17,
+      "itemID": 21,
       "itemType": "journalArticle",
       "journalAbbreviation": "J. Chem. Inf. Model.",
       "language": "en",
@@ -1321,7 +1325,7 @@
         "Number: 4"
       ],
       "issue": "4",
-      "itemID": 26,
+      "itemID": 30,
       "itemType": "journalArticle",
       "journalAbbreviation": "J. Chem. Inf. Model.",
       "language": "en",
@@ -1372,7 +1376,7 @@
         "Number: 1"
       ],
       "issue": "1",
-      "itemID": 11,
+      "itemID": 13,
       "itemType": "journalArticle",
       "journalAbbreviation": "Chemometrics and Intelligent Laboratory Systems",
       "language": "en",
@@ -1471,7 +1475,7 @@
         "Number: 1"
       ],
       "issue": "1",
-      "itemID": 25,
+      "itemID": 29,
       "itemType": "journalArticle",
       "journalAbbreviation": "J. Chem. Inf. Model.",
       "language": "en",
@@ -1529,7 +1533,7 @@
         }
       ],
       "date": "9/2012",
-      "itemID": 12,
+      "itemID": 15,
       "itemType": "journalArticle",
       "journalAbbreviation": "Environment International",
       "language": "en",
@@ -1576,7 +1580,7 @@
       "extra": [
         "DOI: 10.1016/B978-0-444-63984-4.00005-3"
       ],
-      "itemID": 44,
+      "itemID": 48,
       "itemType": "bookSection",
       "language": "en",
       "libraryCatalog": "DOI.org (Crossref)",
@@ -1618,7 +1622,7 @@
         }
       ],
       "date": "2016-08-13",
-      "itemID": 33,
+      "itemID": 37,
       "itemType": "conferencePaper",
       "language": "en",
       "libraryCatalog": "DOI.org (Crossref)",
@@ -1670,7 +1674,7 @@
         "Number: 6"
       ],
       "issue": "6",
-      "itemID": 42,
+      "itemID": 46,
       "itemType": "journalArticle",
       "journalAbbreviation": "PLoS Comput Biol",
       "language": "en",
@@ -1742,7 +1746,7 @@
         "Number: 0"
       ],
       "issue": "0",
-      "itemID": 39,
+      "itemID": 43,
       "itemType": "journalArticle",
       "journalAbbreviation": "Statist. Surv.",
       "language": "en",
@@ -1788,7 +1792,7 @@
         "Number: 4"
       ],
       "issue": "4",
-      "itemID": 18,
+      "itemID": 22,
       "itemType": "journalArticle",
       "journalAbbreviation": "J. Chem. Inf. Comput. Sci.",
       "language": "en",
@@ -1828,7 +1832,7 @@
       ],
       "date": "7/2003",
       "issue": "4",
-      "itemID": 15,
+      "itemID": 18,
       "itemType": "journalArticle",
       "journalAbbreviation": "Decision Support Systems",
       "language": "en",
@@ -1916,7 +1920,7 @@
       ],
       "date": "2011-07-25",
       "issue": "7",
-      "itemID": 20,
+      "itemID": 24,
       "itemType": "journalArticle",
       "journalAbbreviation": "J. Chem. Inf. Model.",
       "language": "en",
@@ -1960,7 +1964,7 @@
       ],
       "date": "12/2015",
       "issue": "1",
-      "itemID": 36,
+      "itemID": 40,
       "itemType": "journalArticle",
       "journalAbbreviation": "J Cheminform",
       "language": "en",
@@ -2004,7 +2008,7 @@
       ],
       "date": "3/2003",
       "issue": "5",
-      "itemID": 16,
+      "itemID": 20,
       "itemType": "journalArticle",
       "journalAbbreviation": "Journal of Molecular Graphics and Modelling",
       "language": "en",
@@ -2047,18 +2051,16 @@
       ],
       "date": "05/2002",
       "issue": "2",
-      "itemID": 38,
+      "itemID": 42,
       "itemType": "journalArticle",
       "journalAbbreviation": "Technometrics",
       "language": "en",
       "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<p>Misura di distanza simmetrica, Tanimoto viene mediato da due contributi, la formula classica e la formula in cui si considerano solo le assenze comuni.</p>\n<p>PROBABILMENTE INUTILE</p>"
+      ],
       "pages": "110-119",
       "publicationTitle": "Technometrics",
-      "tags": [
-        {
-          "tag": "Nuovo"
-        }
-      ],
       "title": "A Modification of the Jaccard\u2013Tanimoto Similarity Index for Diverse Selection of Chemical Compounds Using Binary Strings",
       "url": "http://www.tandfonline.com/doi/abs/10.1198/004017002317375064",
       "volume": "44"
@@ -2091,18 +2093,16 @@
       ],
       "date": "12/2013",
       "issue": "1",
-      "itemID": 35,
+      "itemID": 39,
       "itemType": "journalArticle",
       "journalAbbreviation": "J Cheminform",
       "language": "en",
       "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<p>In order to make ML models more interpretable they decided to make a map visualization.</p>\n<p>The topological map is based on the paths of every single atom and their weight.</p>\n<p>It takes one reference molecule and displays which atoms are more similar and which ones are different.</p>\n<p>Non ho capito cosa significa la mappa che si tira fuori dal modello... la similarit\u00e1 della molecola si pu\u00f3 calcolare senza modello, quella mappa dovrebbe rappresentare come ragiona il modello?</p>"
+      ],
       "pages": "43",
       "publicationTitle": "Journal of Cheminformatics",
-      "tags": [
-        {
-          "tag": "Nuovo"
-        }
-      ],
       "title": "Similarity maps - a visualization strategy for molecular fingerprints and machine-learning methods",
       "url": "https://jcheminf.biomedcentral.com/articles/10.1186/1758-2946-5-43",
       "volume": "5"
@@ -2129,7 +2129,7 @@
       ],
       "date": "12/2006",
       "issue": "12",
-      "itemID": 28,
+      "itemID": 32,
       "itemType": "journalArticle",
       "journalAbbreviation": "Nat Biotechnol",
       "language": "en",
@@ -2171,7 +2171,7 @@
       "extra": [
         "DOI: 10.1007/978-3-319-02300-7"
       ],
-      "itemID": 46,
+      "itemID": 50,
       "itemType": "book",
       "language": "en",
       "libraryCatalog": "DOI.org (Crossref)",
@@ -2218,7 +2218,7 @@
       ],
       "date": "2018",
       "issue": "15",
-      "itemID": 31,
+      "itemID": 35,
       "itemType": "journalArticle",
       "journalAbbreviation": "Analyst",
       "language": "en",
@@ -2325,7 +2325,7 @@
       ],
       "date": "12/2020",
       "issue": "1",
-      "itemID": 37,
+      "itemID": 41,
       "itemType": "journalArticle",
       "journalAbbreviation": "J Cheminform",
       "language": "en",
@@ -2387,7 +2387,7 @@
         }
       ],
       "date": "01/2015",
-      "itemID": 14,
+      "itemID": 17,
       "itemType": "journalArticle",
       "journalAbbreviation": "Methods",
       "language": "en",
@@ -2459,7 +2459,7 @@
       ],
       "date": "2012-04-23",
       "issue": "4",
-      "itemID": 22,
+      "itemID": 26,
       "itemType": "journalArticle",
       "journalAbbreviation": "J. Chem. Inf. Model.",
       "language": "en",
@@ -2504,7 +2504,7 @@
       ],
       "date": "12/2013",
       "issue": "1",
-      "itemID": 34,
+      "itemID": 38,
       "itemType": "journalArticle",
       "journalAbbreviation": "J Cheminform",
       "language": "en",
@@ -2566,7 +2566,7 @@
       ],
       "date": "2012-11-26",
       "issue": "11",
-      "itemID": 23,
+      "itemID": 27,
       "itemType": "journalArticle",
       "journalAbbreviation": "J. Chem. Inf. Model.",
       "language": "en",
@@ -2580,6 +2580,214 @@
       "title": "Similarity Coefficients for Binary Chemoinformatics Data: Overview and Extended Comparison Using Simulated and Real Data Sets",
       "url": "https://pubs.acs.org/doi/10.1021/ci300261r",
       "volume": "52"
+    },
+    {
+      "DOI": "10.1016/j.chemolab.2014.01.011",
+      "ISSN": "01697439",
+      "abstractNote": "A modi\ufb01ed version of the Sequential Replacement (SR) algorithm for variable selection is proposed, featuring modern functionalities aimed to: 1) reduce the computational time; 2) estimate the real predictivity of the model; 3) identify models suffering from pathologies. This redesigned version was called Reshaped Sequential Replacement (RSR) algorithm.",
+      "accessDate": "2021-03-17T07:45:26Z",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "path": "C:\\Users\\anjako.KI\\Zotero\\storage\\MBG5ZG9G\\Cassotti et al. - 2014 - Reshaped Sequential Replacement algorithm An effi.pdf",
+          "title": "Cassotti et al. - 2014 - Reshaped Sequential Replacement algorithm An effi.pdf",
+          "uri": "http://zotero.org/users/local/njfaC9Ph/items/MBG5ZG9G"
+        }
+      ],
+      "citationKey": "cassotti14",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Matteo",
+          "lastName": "Cassotti"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Francesca",
+          "lastName": "Grisoni"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Roberto",
+          "lastName": "Todeschini"
+        }
+      ],
+      "date": "04/2014",
+      "itemID": 14,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Chemometrics and Intelligent Laboratory Systems",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<p>New method of variable selection based on Sequential Replacement.</p>\n<p>Roulette Wheel to favor most correlated variables and QUIK rule to discard correlated models without carrying out the calculation.</p>\n<p>A Tabu list is implemented based off of low Q2 or CMC values of the single variables; these variable are discarded.</p>\n<p>Several validation methods are implemented to avoid chance correlation in the final models.</p>\n<p>Tested on a generated dataset with correlated variables and on QSAR datasets, using the original model as benchmark.</p>\n<p>Calcolo veloce, basato sulla predittivit\u00e1, identifica variabili collineari e rumorose.</p>"
+      ],
+      "pages": "136-148",
+      "publicationTitle": "Chemometrics and Intelligent Laboratory Systems",
+      "shortTitle": "Reshaped Sequential Replacement algorithm",
+      "title": "Reshaped Sequential Replacement algorithm: An efficient approach to variable selection",
+      "url": "https://linkinghub.elsevier.com/retrieve/pii/S0169743914000197",
+      "volume": "133"
+    },
+    {
+      "DOI": "10.1016/j.aca.2009.06.032",
+      "ISSN": "00032670",
+      "abstractNote": "So far, similarity/diversity of objects has been widely studied in different research \ufb01elds and a number of distance measures to estimate diversity between objects have been proposed. However, not much interest has been addressed to analysis of how diverse are con\ufb01gurations of objects in two different multivariate spaces. Since computerisation and automation nowadays lead to a large availability of information, it is apparent that a system could be described in different ways and, consequently, methods for comparison of the different viewpoints are required. These methods, for instance, may be usefully applied to Quantitative Structure\u2013Activity Relationship (QSAR) studies. In this \ufb01eld, several thousands of molecular descriptors have been proposed in the literature and different selections of descriptors de\ufb01ne different chemical spaces that need to be compared.",
+      "accessDate": "2021-03-17T08:58:24Z",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "path": "C:\\Users\\anjako.KI\\Zotero\\storage\\6NQX6B9B\\Todeschini et al. - 2009 - Canonical Measure of Correlation (CMC) and Canonic.pdf",
+          "title": "Todeschini et al. - 2009 - Canonical Measure of Correlation (CMC) and Canonic.pdf",
+          "uri": "http://zotero.org/users/local/njfaC9Ph/items/6NQX6B9B"
+        }
+      ],
+      "citationKey": "todeschini09",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "R.",
+          "lastName": "Todeschini"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "D.",
+          "lastName": "Ballabio"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "V.",
+          "lastName": "Consonni"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Manganaro"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Mauri"
+        }
+      ],
+      "date": "08/2009",
+      "issue": "1",
+      "itemID": 12,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Analytica Chimica Acta",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<p>Canonical Measure of Distance, una misura di distanza tra modelli che migliora la Model Distance. Prende in considerazione tutte le variabili, non \u00e9 necessaria una selezione preliminare.</p>\n<p>Introdotto un indice che misura la correlazione tra le variabili selezionate nei due modelli, utile per capire se due modelli sono in realt\u00e1 lo stesso.</p>"
+      ],
+      "pages": "45-51",
+      "publicationTitle": "Analytica Chimica Acta",
+      "title": "Canonical Measure of Correlation (CMC) and Canonical Measure of Distance (CMD) between sets of data. Part 1. Theory and simple chemometric applications",
+      "url": "https://linkinghub.elsevier.com/retrieve/pii/S0003267009008253",
+      "volume": "648"
+    },
+    {
+      "DOI": "10.1016/S0169-7439(98)00124-5",
+      "ISSN": "01697439",
+      "abstractNote": "A previous paper introduced a new correlation index, K, and tested it to evaluate the correlation content of a set of multivariate data. This paper presents an extension of the K index theory together with some applications in several fields where chemometrics is commonly encountered. Starting from a correlation measurement, evaluated by the K index theory, it becomes possible \u017da. to calculate the information content within a set of multivariate data, \u017db. to give an estimate of data set entropy, \u017dc. to allow variable reduction, preserving the correlation structure in the original data. Moreover, \u017dd. the effect of common scaling procedures on the structure of the original data can be measured, \u017de. and an estimate made of the minimum number of cross-validation groups, without loosing relevant but not predictable information; finally \u017df. a search can be made for the best subset models in regression analysis excluding models without predictive power. q 1999 Elsevier Science B.V. All rights reserved.",
+      "accessDate": "2021-03-17T08:58:38Z",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "path": "C:\\Users\\anjako.KI\\Zotero\\storage\\MXDIZW85\\Todeschini et al. - 1999 - The K correlation index theory development and it.pdf",
+          "title": "Todeschini et al. - 1999 - The K correlation index theory development and it.pdf",
+          "uri": "http://zotero.org/users/local/njfaC9Ph/items/MXDIZW85"
+        }
+      ],
+      "citationKey": "todeschini99",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "R.",
+          "lastName": "Todeschini"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "V.",
+          "lastName": "Consonni"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Maiocchi"
+        }
+      ],
+      "date": "2/1999",
+      "issue": "1",
+      "itemID": 19,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Chemometrics and Intelligent Laboratory Systems",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "pages": "13-29",
+      "publicationTitle": "Chemometrics and Intelligent Laboratory Systems",
+      "shortTitle": "The K correlation index",
+      "tags": [
+        {
+          "tag": "Nuovo"
+        }
+      ],
+      "title": "The K correlation index: theory development and its application in chemometrics",
+      "url": "https://linkinghub.elsevier.com/retrieve/pii/S0169743998001245",
+      "volume": "46"
+    },
+    {
+      "DOI": "10.1002/qsar.200810084",
+      "ISSN": "1611020X, 16110218",
+      "abstractNote": "Quantitative structure \u2013 activity relationships (QSARs) are used to predict many different endpoints, utilize hundreds, and even thousands of different parameters (or descriptors), and are created using a variety of approaches. The one thing they all have in common is the assumption that the chemical structures used are correct. This research investigates this assumption by examining six public and private databases that contain structural information for chemicals. Molecular fingerprinting techniques are used to determine the error rates for structures in each of the databases. It was observed that the databases had error rates ranging from 0.1 to 3.4%. A case study to predict the n-octanol/water partition coefficient was also investigated to highlight the effects of these errors in the predictions of QSARs. In this case study, QSARs were developed using both (i) all correct structures and (ii) structures from a database with an error rate of 3.4%. This case study showed how slight errors in chemical structures, such as misplacing a Cl atom or swapping hydroxy and methoxy functional groups on a multiple ring structure, can result in significant differences in the accuracy of the prediction for those chemicals.",
+      "accessDate": "2021-03-18T11:01:16Z",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "path": "C:\\Users\\anjako.KI\\Zotero\\storage\\X886CNZE\\Young et al. - 2008 - Are the Chemical Structures in Your QSAR Correct.pdf",
+          "title": "Young et al. - 2008 - Are the Chemical Structures in Your QSAR Correct.pdf",
+          "uri": "http://zotero.org/users/local/njfaC9Ph/items/X886CNZE"
+        }
+      ],
+      "citationKey": "young08",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Douglas",
+          "lastName": "Young"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Todd",
+          "lastName": "Martin"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Raghuraman",
+          "lastName": "Venkatapathy"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Paul",
+          "lastName": "Harten"
+        }
+      ],
+      "date": "12/2008",
+      "issue": "11-12",
+      "itemID": 11,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "QSAR Comb. Sci.",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "pages": "1337-1345",
+      "publicationTitle": "QSAR & Combinatorial Science",
+      "tags": [
+        {
+          "tag": "Nuovo"
+        }
+      ],
+      "title": "Are the Chemical Structures in Your QSAR Correct?",
+      "url": "http://doi.wiley.com/10.1002/qsar.200810084",
+      "volume": "27"
     }
   ]
 }

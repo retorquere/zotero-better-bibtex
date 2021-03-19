@@ -538,5 +538,5 @@ Scenario: Collected notes
   Then an export using "Collected notes" should match "export/*.html"
 
 Scenario: Export as Collected Notes does not list subcollections #1768
-  Given I import 47 references from "export/*.json"
+  Given I import 51 references from "export/*.json"
   Then an export using "Collected notes" should match "export/*.html"

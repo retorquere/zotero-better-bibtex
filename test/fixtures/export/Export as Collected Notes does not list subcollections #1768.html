@@ -18,6 +18,11 @@
 
   blockquote { border-left: 1px solid gray; }
 </style></head><body><h1>Fingerprints</h1>
+<div><i>Similarity maps - a visualization strategy for molecular fingerprints and machine-learning methods</i> (Riniker, Sereina and Landrum, Gregory A, 2013)</div>
+<blockquote><p>In order to make ML models more interpretable they decided to make a map visualization.</p>
+<p>The topological map is based on the paths of every single atom and their weight.</p>
+<p>It takes one reference molecule and displays which atoms are more similar and which ones are different.</p>
+<p>Non ho capito cosa significa la mappa che si tira fuori dal modello... la similaritá della molecola si puó calcolare senza modello, quella mappa dovrebbe rappresentare come ragiona il modello?</p></blockquote>
 <div><i>One molecular fingerprint to rule them all: drugs, biomolecules, and the metabolome</i> (Capecchi, Alice and Probst, Daniel and Reymond, Jean-Louis, 2020)</div>
 <blockquote><p>Comparison between fingerprints</p>
 <p>New fingerprint for large and small molecules</p></blockquote>
@@ -137,6 +142,9 @@
 <h2>Distance</h2>
 <div><i>Euclidean chemical spaces from molecular ﬁngerprints: Hamming distance and Hempel’s ravens</i> (Martin, Eric and Cao, Eddie, 2015)</div>
 <blockquote><p>Tanimoto distance is the standard to compare fingerprints</p></blockquote>
+<div><i>A Modification of the Jaccard–Tanimoto Similarity Index for Diverse Selection of Chemical Compounds Using Binary Strings</i> (Fligner, Michael A and Verducci, Joseph S and Blower, Paul E, 2002)</div>
+<blockquote><p>Misura di distanza simmetrica, Tanimoto viene mediato da due contributi, la formula classica e la formula in cui si considerano solo le assenze comuni.</p>
+<p>PROBABILMENTE INUTILE</p></blockquote>
 <div><i>Similarity Coefficients for Binary Chemoinformatics Data: Overview and Extended Comparison Using Simulated and Real Data Sets</i> (Todeschini, Roberto and Consonni, Viviana and Xiang, Hua and Holliday, John and Buscema, Massimo and Willett, Peter, 2012)</div>
 <blockquote><p>Compara 51 differenti indici di similarita' al fine di trovare le migliori per la distanza delle fingerprint.</p>
 <p>6 coefficienti vengono selezionati come i piu' adatti alla cheminformatica, 4 sono Tanimoto e suoi equivalenti, Harrys-Lahey e Consonni-Todeschini4</p>
@@ -151,6 +159,17 @@
 <blockquote><p>Generale, spiega le varie applicazioni in vari ambiti ed i vantaggi rispetto ad altri metodi</p>
 <p>Gini Importance is used to create the nodes</p>
 <p>SKIMMED</p></blockquote>
+<h2>Variable Reduction</h2>
+<div><i>Reshaped Sequential Replacement algorithm: An efficient approach to variable selection</i> (Cassotti, Matteo and Grisoni, Francesca and Todeschini, Roberto, 2014)</div>
+<blockquote><p>New method of variable selection based on Sequential Replacement.</p>
+<p>Roulette Wheel to favor most correlated variables and QUIK rule to discard correlated models without carrying out the calculation.</p>
+<p>A Tabu list is implemented based off of low Q2 or CMC values of the single variables; these variable are discarded.</p>
+<p>Several validation methods are implemented to avoid chance correlation in the final models.</p>
+<p>Tested on a generated dataset with correlated variables and on QSAR datasets, using the original model as benchmark.</p>
+<p>Calcolo veloce, basato sulla predittivitá, identifica variabili collineari e rumorose.</p></blockquote>
+<div><i>Canonical Measure of Correlation (CMC) and Canonical Measure of Distance (CMD) between sets of data. Part 1. Theory and simple chemometric applications</i> (Todeschini, R. and Ballabio, D. and Consonni, V. and Manganaro, A. and Mauri, A., 2009)</div>
+<blockquote><p>Canonical Measure of Distance, una misura di distanza tra modelli che migliora la Model Distance. Prende in considerazione tutte le variabili, non é necessaria una selezione preliminare.</p>
+<p>Introdotto un indice che misura la correlazione tra le variabili selezionate nei due modelli, utile per capire se due modelli sono in realtá lo stesso.</p></blockquote>
 <h1>PGP</h1>
 <div><i>Understanding multidrug resistance: molecular dynamics studies of ligand recognition by P-glycoprotein</i> (Subramanian, Nandhitha, 2015)</div>
 <blockquote><p>Description of PGP</p></blockquote>
