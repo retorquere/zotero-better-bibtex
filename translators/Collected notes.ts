@@ -4,6 +4,7 @@ declare const Zotero: any
 
 import { Translator } from './lib/translator'
 export { Translator }
+import { log } from '../content/logger'
 
 import { ZoteroTranslator } from '../gen/typings/serialized-item'
 
@@ -52,11 +53,11 @@ class Exporter {
         collections: [],
         root: !Translator.collections[collection.parent],
       }
-      Zotero.debug(`collected notes: ${key}:`, collections[key])
+      log.debug(`collected notes: ${key}:`, collections[key])
     }
     for (const [key, collection] of Object.entries(Translator.collections)) {
       collections[key].collections = (collection.collections || []).map(coll => collections[coll]).filter(coll => coll)
-      Zotero.debug(`collected notes: ${key}, root:${collections[key].root}:`, collection, 'resolves to', collections[key])
+      log.debug(`collected notes: ${key}, root:${collections[key].root}:`, collection, 'resolves to', collections[key])
     }
 
     const unfiled = { name: 'Unfiled', items: Object.values(items).filter(item => !filed.has(item.itemID)), collections: [], root: true }
@@ -82,11 +83,11 @@ class Exporter {
   }
 
   show(context, args) {
-    Zotero.debug(`collectednotes.${context}: ${JSON.stringify(Array.from(args))}`)
+    log.debug(`collectednotes.${context}: ${JSON.stringify(Array.from(args))}`)
   }
 
   collection(collection, level = 1) {
-    Zotero.debug(`collection ${collection.name} @ ${level} with ${collection.collections.length} subcollections`)
+    log.debug(`collection ${collection.name} @ ${level} with ${collection.collections.length} subcollections`)
     this.levels = Math.max(this.levels, level)
 
     this.body += `<h${ level }>${ escape.html(collection.name) }</h${ level }>\n`
@@ -118,7 +119,7 @@ class Exporter {
 
     collection.collections = collection.collections.filter(sub => !this.prune(sub))
 
-    Zotero.debug(`prune: ${collection.name}: ${collection.items.length} items, ${collection.collections.length} collections: ${!collection.items.length && !collection.collections.length}`)
+    log.debug(`prune: ${collection.name}: ${collection.items.length} items, ${collection.collections.length} collections: ${!collection.items.length && !collection.collections.length}`)
     return !collection.items.length && !collection.collections.length
   }
 
