@@ -43,6 +43,12 @@ class Exporter {
       if (this.keep(item)) items[item.itemID] = item
     }
 
+    log.debug(Object.values(Translator.collections).map(coll => ({
+      ...coll,
+      collections: (coll.collections || []).map(key => [key, !!Translator.collections[key]]),
+      items: (coll.items || []).map(itemID => [item, !!items[itemID]]),
+    })))
+
     for (const [key, collection] of Object.entries(Translator.collections)) {
       for (const itemID of collection.items) filed.add(itemID)
       collections[key] = {
@@ -53,11 +59,9 @@ class Exporter {
         collections: [],
         root: !Translator.collections[collection.parent],
       }
-      log.debug(`collected notes: ${key}:`, collections[key])
     }
     for (const [key, collection] of Object.entries(Translator.collections)) {
       collections[key].collections = (collection.collections || []).map(coll => collections[coll]).filter(coll => coll)
-      log.debug(`collected notes: ${key}, root:${collections[key].root}:`, collection, 'resolves to', collections[key])
     }
 
     const unfiled = { name: 'Unfiled', items: Object.values(items).filter(item => !filed.has(item.itemID)), collections: [], root: true }
