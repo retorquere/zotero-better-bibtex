@@ -5,6 +5,7 @@ declare const Zotero: any
 import { Translator } from './lib/translator'
 export { Translator }
 import { log } from '../content/logger'
+import { fromEntries } from '../content/object'
 
 import { ZoteroTranslator } from '../gen/typings/serialized-item'
 
@@ -45,14 +46,8 @@ class Exporter {
 
     log.debug(Object.values(Translator.collections).map(coll => ({
       ...coll,
-      collections: (coll.collections || []).reduce((acc, key) => {
-        acc[key] = !!Translator.collections[key]
-        return acc
-      }),
-      items: (coll.items || []).reduce((acc, itemID) => {
-        acc[itemID] = !!items[itemID]
-        return acc
-      }),
+      collections: fromEntries((coll.collections || []).map(key => [ key, !!Translator.collections[key] ])),
+      items: fromEntries((coll.items || []).map(itemID => [ itemID, !!items[itemID] ])),
     })))
 
     for (const [key, collection] of Object.entries(Translator.collections)) {
