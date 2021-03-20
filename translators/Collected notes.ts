@@ -45,8 +45,14 @@ class Exporter {
 
     log.debug(Object.values(Translator.collections).map(coll => ({
       ...coll,
-      collections: (coll.collections || []).map(key => [key, !!Translator.collections[key]]),
-      items: (coll.items || []).map(itemID => [itemID, !!items[itemID]]),
+      collections: (coll.collections || []).reduce((acc, key) => {
+        acc[key] = !!Translator.collections[key]
+        return acc
+      }),
+      items: (coll.items || []).reduce((acc, itemID) => {
+        acc[itemID] = !!items[itemID]
+        return acc
+      }),
     })))
 
     for (const [key, collection] of Object.entries(Translator.collections)) {
