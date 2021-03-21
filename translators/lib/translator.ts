@@ -5,6 +5,7 @@ import { defaults } from '../../content/prefs-meta'
 import { client } from '../../content/client'
 import { ZoteroTranslator } from '../../gen/typings/serialized-item'
 import type { Preferences } from '../../gen/preferences'
+import { log } from '../../content/logger'
 
 type TranslatorMode = 'export' | 'import'
 
@@ -226,6 +227,7 @@ export const Translator = new class implements ITranslator { // eslint-disable-l
     if (mode === 'export' && this.header.configOptions?.getCollections && Zotero.nextCollection) {
       let collection: any
       while (collection = Zotero.nextCollection()) {
+        log.debug('getCollection:', collection)
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const children = collection.children || collection.descendents || []
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment

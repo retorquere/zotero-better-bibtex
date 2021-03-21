@@ -90,7 +90,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
   private queue = new Queue
 
-  public workers: { total: number, running: Set<number>, disabled: boolean, startup: number } = {
+  public workers: { total: number, running: Set<string>, disabled: boolean, startup: number } = {
     total: 0,
     running: new Set,
     disabled: false,
@@ -274,19 +274,19 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     const cache = caching && Cache.getCollection(translator.label)
 
-    const params = Object.entries({
+    this.workers.total += 1
+    const id = `${this.workers.total}`
+    this.workers.running.add(id)
+
+    const workerContext = Object.entries({
       version: Zotero.version,
       platform: Preference.platform,
       translator: translator.label,
       output: job.path || '',
       localeDateOrder: Zotero.BetterBibTeX.localeDateOrder,
       debugEnabled: Zotero.Debug.enabled ? 'true' : 'false',
+      worker: id,
     }).map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&')
-
-    this.workers.total += 1
-    const id = this.workers.total
-    this.workers.running.add(id)
-    const prefix = `{${translator.label} worker ${id}}`
 
     const deferred = Zotero.Promise.defer()
     let worker: ChromeWorker = null
@@ -294,7 +294,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     for (let attempt = 0; !worker && attempt < 5; attempt++) { // eslint-disable-line no-magic-numbers
       try {
         if (attempt > 0) await sleep(2 * 1000 * attempt) // eslint-disable-line no-magic-numbers
-        worker = new ChromeWorker(`resource://zotero-better-bibtex/worker/Zotero.js?${params}`)
+        worker = new ChromeWorker(`resource://zotero-better-bibtex/worker/Zotero.js?${workerContext}`)
       }
       catch (err) {
         log.error('new ChromeWorker:', err)
@@ -324,15 +324,15 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     worker.onmessage = (e: { data: BBTWorker.Message }) => {
       switch (e.data?.kind) {
         case 'error':
-          log.error('QBW failed:', Date.now() - start)
-          log.status({error: true, worker: true}, e.data)
+          log.status({error: true, translator: translator.label, worker: id}, 'QBW failed:', Date.now() - start, e.data)
           deferred.reject(e.data.message)
           worker.terminate()
           this.workers.running.delete(id)
           break
 
         case 'debug':
-          Zotero.debug(`${prefix} ${e.data.message}`)
+          // this is pre-formatted
+          Zotero.debug(e.data.message)
           break
 
         case 'item':
@@ -375,15 +375,14 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
         default:
           if (JSON.stringify(e) !== '{"isTrusted":true}') { // why are we getting this?
-            log.debug(`unexpected message in host from ${prefix} ${JSON.stringify(e)}`)
+            log.status({translator: translator.label, worker: id}, 'enexpected message from worker', e)
           }
           break
       }
     }
 
     worker.onerror = e => {
-      Zotero.debug(`${prefix} error: ${e}`)
-      log.error('QBW: failed:', Date.now() - start)
+      log.status({error: true, translator: translator.label, worker: id}, 'QBW: failed:', Date.now() - start, e)
       deferred.reject(e.message)
       worker.terminate()
       this.workers.running.delete(id)
@@ -502,9 +501,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     catch (err) {
       worker.terminate()
       this.workers.running.delete(id)
-      log.error(err)
+      log.status({error: true, translator: translator.label, worker: id}, 'QBW: failed:', Date.now() - start, err)
       deferred.reject(err)
-      log.error('QBW: failed:', Date.now() - start)
     }
 
     return deferred.promise

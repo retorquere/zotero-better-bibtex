@@ -1,15 +1,16 @@
 declare const Zotero: any
 declare const Translator: any
+declare const workerContext: { worker: string }
 
 import { stringify, asciify } from './stringify'
-import { worker } from './worker'
+import { worker as inWorker } from './worker'
 
 class Logger {
   public verbose = false
 
   protected timestamp: number
 
-  private format(status: { error?: boolean, worker?: boolean}, msg) {
+  private format({ error=false, worker='', translator=''}, msg) {
     let diff = null
     const now = Date.now()
     if (this.timestamp) diff = now - this.timestamp
@@ -40,8 +41,9 @@ class Logger {
       msg = output
     }
 
-    const translator = typeof Translator !== 'undefined' && Translator.header.label
-    const prefix = ['better-bibtex', translator, status.error, worker || status.worker ? '(worker)' : ''].filter(p => p).join(' ')
+    translator = translator || (typeof Translator !== 'undefined' && Translator.header.label)
+    if (inWorker && !worker) worker = workerContext.worker || '??'
+    const prefix = ['better-bibtex', translator, error && 'error', worker && `(worker ${worker})`].filter(p => p).join(' ')
     return `{${prefix}} +${diff} ${asciify(msg)}`
   }
 
@@ -62,8 +64,8 @@ class Logger {
   public error(...msg) {
     Zotero.debug(this.format({error: true}, msg))
   }
-  public status(status: { error?: boolean, worker?: boolean}, ...msg) {
-    Zotero.debug(this.format(status, msg))
+  public status({ error=false, worker='', translator='' }, ...msg) {
+    Zotero.debug(this.format({error, worker, translator}, msg))
   }
 }
 

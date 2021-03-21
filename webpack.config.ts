@@ -195,7 +195,7 @@ if (!process.env.MINITESTS) {
           test: /\.js$/,
           // otherwise these would be contained in the webpack IIFE
           header: 'importScripts("resource://zotero/config.js") // import ZOTERO_CONFIG\n\n',
-          footer: '\nimportScripts(`resource://zotero-better-bibtex/${params.translator}.js`);\n',
+          footer: '\nimportScripts(`resource://zotero-better-bibtex/${workerContext.translator}.js`);\n',
         })
       ],
       context: path.resolve(__dirname, './translators'),
@@ -206,7 +206,7 @@ if (!process.env.MINITESTS) {
         path: path.resolve(__dirname, './build/resource/worker'),
         filename: '[name].js',
         pathinfo: true,
-        library: 'var { Zotero, onmessage, params }',
+        library: 'var { Zotero, onmessage, workerContext }',
         libraryTarget: assign,
       },
     })
