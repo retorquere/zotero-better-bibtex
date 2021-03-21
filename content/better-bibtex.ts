@@ -487,7 +487,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         if (disabled) disabled = `handlers: ${disabled}`
       }
       log.debug('worker translation:', !disabled, disabled)
-      if (disabled) {
+      if (!disabled) {
         const path = this.location?.path
 
         // fake out the stuff that complete expects to be set by .translate

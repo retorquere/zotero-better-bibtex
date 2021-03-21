@@ -389,12 +389,14 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     const scope = this.exportScope(job.scope)
+    log.debug('export scope:', scope)
     let items: any[] = []
     let collections: any[] = []
     switch (scope.type) {
       case 'library':
         items = await Zotero.Items.getAll(scope.id, true)
         collections = Zotero.Collections.getByLibrary(scope.id, true)
+        log.debug('library export, got', collections.length, 'collections')
         break
 
       case 'items':
