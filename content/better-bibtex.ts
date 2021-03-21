@@ -467,15 +467,27 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         })
       }
 
-      const backgroundExport = {
-        wait: !this.noWait, // noWait must be synchronous
-        workers: Preference.workersMax, // workers must be enabled
-        enabled: !Translators.workers.disabled, // there wasn't an error starting a worker earlier
-        safePath: (!this.location || !this.location.path.startsWith('\\\\')), // check for SMB path for #1396
-        minHandlers: Object.keys(this._handlers).filter(handler => handler !== 'done').length === 0, // we have only done handlers
+      let disabled = ''
+      if (this.noWait) { // noWait must be synchronous
+        disabled = 'noWait is active'
       }
-      log.debug('worker translation:', backgroundExport)
-      if (Object.values(backgroundExport).reduce((acc, cond) => acc && cond)) {
+      else if (!Preference.workersMax) {
+        disabled = 'user has disabled worker export'
+      }
+      else if (Translators.workers.disabled) {
+        // there wasn't an error starting a worker earlier
+        disabled = 'failed to start a chromeworker, disabled until restart'
+      }
+      else if (this.location && this.location.path.startsWith('\\\\')) {
+        // check for SMB path for #1396
+        disabled = 'chrome workers fail on smb paths'
+      }
+      else {
+        disabled = Object.keys(this._handlers).filter(handler => handler !== 'done').join(', ')
+        if (disabled) disabled = `handlers: ${disabled}`
+      }
+      log.debug('worker translation:', !disabled, disabled)
+      if (disabled) {
         const path = this.location?.path
 
         // fake out the stuff that complete expects to be set by .translate
