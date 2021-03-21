@@ -395,7 +395,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     switch (scope.type) {
       case 'library':
         items = await Zotero.Items.getAll(scope.id, true)
-        collections = Zotero.Collections.getByLibrary(scope.id, true)
+        collections = Zotero.Collections.getByLibrary(scope.id) // , true)
         log.debug('library export, got', collections.length, 'collections')
         break
 
