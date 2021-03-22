@@ -184,6 +184,7 @@ class WorkerZotero {
   public output: string
   public exportDirectory: string
   public exportFile: string
+  private items = 0
 
   public Utilities = new WorkerZoteroUtilities // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public BetterBibTeX = new WorkerZoteroBetterBibTeX // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
@@ -193,6 +194,7 @@ class WorkerZotero {
     this.config.preferences.platform = workerContext.platform
     this.config.preferences.client = client
     this.output = ''
+    this.items = this.config.items.length
 
     if (this.config.options.exportFileData) {
       for (const item of this.config.items) {
@@ -252,7 +254,7 @@ class WorkerZotero {
   }
 
   public nextItem() {
-    this.send({ kind: 'item' })
+    this.send({ kind: 'item', item: this.items - this.config.items.length })
     return this.config.items.shift()
   }
 

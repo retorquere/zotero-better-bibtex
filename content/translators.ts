@@ -36,6 +36,7 @@ type ExportJob = {
   preferences?: Record<string, boolean | number | string>
   started?: number
   canceled?: boolean
+  translate: any
 }
 
 class Queue {
@@ -321,10 +322,12 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       cache: {},
     }
 
+    let items: any[] = []
     worker.onmessage = (e: { data: BBTWorker.Message }) => {
       switch (e.data?.kind) {
         case 'error':
           log.status({error: true, translator: translator.label, worker: id}, 'QBW failed:', Date.now() - start, e.data)
+          job.translate._runHandler('error', e.data) // eslint-disable-line no-underscore-dangle
           deferred.reject(e.data.message)
           worker.terminate()
           this.workers.running.delete(id)
@@ -339,6 +342,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           now = Date.now()
           current_trace.export.duration.push(now - last_trace)
           last_trace = now
+          job.translate._runHandler('itemDone', items[e.data.item]) // eslint-disable-line no-underscore-dangle
           break
 
         case 'done':
@@ -383,6 +387,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     worker.onerror = e => {
       log.status({error: true, translator: translator.label, worker: id}, 'QBW: failed:', Date.now() - start, e)
+      job.translate._runHandler('error', e) // eslint-disable-line no-underscore-dangle
       deferred.reject(e.message)
       worker.terminate()
       this.workers.running.delete(id)
@@ -390,7 +395,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     const scope = this.exportScope(job.scope)
     log.debug('export scope:', scope)
-    let items: any[] = []
     let collections: any[] = []
     switch (scope.type) {
       case 'library':
