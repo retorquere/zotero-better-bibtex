@@ -178,7 +178,7 @@ class PatternFormatter {
       extra: Extra.get(item.getField('extra'), 'zotero', { kv: true }).extraFields.kv,
     }
 
-    if (['attachment', 'note'].includes(this.item.type)) return { citekey: '', postfix: { start: 0, format: ''} }
+    if (['attachment', 'note', 'annotation'].includes(this.item.type)) return { citekey: '', postfix: { start: 0, format: ''} }
 
     try {
       const date = item.getField('date', false, true)

@@ -87,7 +87,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   public byId: Record<string, ITranslatorHeader>
   public byName: Record<string, ITranslatorHeader>
   public byLabel: Record<string, ITranslatorHeader>
-  public itemType: { note: number, attachment: number }
+  public itemType: { note: number, attachment: number, annotation: number }
 
   private queue = new Queue
 
@@ -108,6 +108,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     this.itemType = {
       note: Zotero.ItemTypes.getID('note'),
       attachment: Zotero.ItemTypes.getID('attachment'),
+      annotation: Zotero.ItemTypes.getID('annotation') || 'NULL',
     }
 
     let reinit = false
@@ -425,6 +426,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       log.debug('export to', job.path, 'started at', job.started, 'canceled')
       return ''
     }
+    items = items.filter(item => !item.isAnnotation?.())
 
     // use a loop instead of map so we can await for beachball protection
     let batch = Date.now()
@@ -665,7 +667,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     let sql: string = null
-    const cond = `i.itemTypeID NOT IN (${this.itemType.note}, ${this.itemType.attachment}) AND i.itemID NOT IN (SELECT itemID FROM deletedItems)`
+    const cond = `i.itemTypeID NOT IN (${this.itemType.note}, ${this.itemType.attachment}, ${this.itemType.annotation}) AND i.itemID NOT IN (SELECT itemID FROM deletedItems)`
     if (scope.library) {
       sql = `SELECT i.itemID FROM items i WHERE i.libraryID = ${scope.library} AND ${cond}`
 
