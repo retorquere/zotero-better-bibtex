@@ -485,7 +485,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
       else {
         disabled = Object.keys(this._handlers).filter(handler => handler !== 'done').join(', ')
         if (disabled) disabled = `handlers: ${disabled}`
-        if (this.handlers.itemDone) log.debug('itemDone', this.handlers.itemDone.map(handler => handler.toString())) // eslint-disable-line @typescript-eslint/no-unsafe-return
+        if (this._handlers.itemDone) log.debug('itemDone', this._handlers.itemDone.map(handler => handler.toString())) // eslint-disable-line @typescript-eslint/no-unsafe-return
       }
       log.debug('worker translation:', !disabled, disabled)
       if (!disabled) {

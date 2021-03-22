@@ -228,42 +228,29 @@ export const Translator = new class implements ITranslator { // eslint-disable-l
       let collection: any
       while (collection = Zotero.nextCollection()) {
         log.debug('getCollection:', collection)
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        const children = collection.children || collection.descendents || []
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        const key = (collection.primary ? collection.primary : collection).key
-
-        this.collections[key] = {
-          // id: collection.id,
-
-          key,
-          parent: collection.fields.parentKey,
-          name: collection.name,
-          items: collection.childItems,
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-          collections: children.filter(coll => coll.type === 'collection').map(coll => coll.key),
-
-          // items: (item.itemID for item in children when item.type != 'collection')
-          // descendents: undefined
-          // children: undefined
-          // childCollections: undefined
-          // primary: undefined
-          // fields: undefined
-          // type: undefined
-          // level: undefined
-        }
-      }
-
-      for (collection of Object.values(this.collections)) {
-        if (collection.parent && !this.collections[collection.parent]) {
-          // collection.parent = false
-          delete collection.parent
-          Zotero.debug(`BBT translator: collection with key ${collection.key} has non-existent parent ${collection.parent}, assuming root collection`)
-        }
+        this.registerCollection(collection, '')
       }
     }
 
     this.initialized = true
+  }
+
+  private registerCollection(collection, parent: string) {
+    const key = (collection.primary ? collection.primary : collection).key
+    const children = collection.children || collection.descendents || []
+    const collections = children.filter(coll => coll.type === 'collection')
+
+    this.collections[key] = {
+      key,
+      parent,
+      name: collection.name,
+      collections: collections.map(coll => coll.key as string),
+      items: children.filter(coll => coll.type === 'item').map(item => item.id as number),
+    }
+
+    for (collection of collections) {
+      this.registerCollection(collection, key)
+    }
   }
 
   public items(): ZoteroTranslator.Item[] {
