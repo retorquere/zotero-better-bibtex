@@ -452,6 +452,8 @@
   "export/referencetype= does not work #278.json",
   "export/remove the field if the override is empty #303.biblatex",
   "export/remove the field if the override is empty #303.json",
+  "export/shortyear adds 00 when date is missing #1769.bibtex",
+  "export/shortyear adds 00 when date is missing #1769.json",
   "export/suppressBraceProtection does not work for BibTeX export (non-English items) #1194.biblatex",
   "export/suppressBraceProtection does not work for BibTeX export (non-English items) #1194.bibtex",
   "export/suppressBraceProtection does not work for BibTeX export (non-English items) #1194.json",
