@@ -59,7 +59,6 @@ class AssignLibraryDammitPlugin extends AssignLibraryPlugin {
     // console.log(JSON.stringify({fnr: fullNameResolved[0], var: fullNameResolved[0].match(/^\{.+\}$/), last, old: old.source, match: last.match(old)}))
     if (!fullNameResolved[0].match(/^\{.+\}$/) || !last.match(old)) return result
 
-    console.log('rebuiling', fullNameResolved[0])
     result = new ConcatSource()
     for (const child of children.slice(0, -1)) {
       result.add(child)
