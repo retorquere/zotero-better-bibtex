@@ -281,6 +281,15 @@
 
         <preference name="extensions.zotero.translators.better-bibtex.importCaseProtection" id="pref-better-bibtex-importCaseProtection" type="string" default="as-needed"/>
 
+        <preference name="extensions.zotero.translators.better-bibtex.startupProgress" type="string" default="popup"/>
+        <bbt:doc>
+          Zotero takes a few seconds to start up, which is sometimes mistakenly attributed to BBT. BBT will tell you what phase the startup process is in (of Zotero and BBT) to
+          prevent support requests for something that I cannot change. Please only use values:
+
+          * `popup`: show a popup during startup
+          * `progressbar`: show a progressbar in the top of the frame
+        </bbt:doc>
+
         <preference name="extensions.zotero.translators.better-bibtex.importUnknownTexCommand" type="string" default="ignore"/>
         <bbt:doc>
           What to do when encountering a TeX command the parser does not know about. Please only use values:

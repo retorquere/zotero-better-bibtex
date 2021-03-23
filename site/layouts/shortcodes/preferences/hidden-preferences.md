@@ -149,6 +149,14 @@ default: `a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,an
 
 list of words to skip in title when generating citation keys
 
+### startupProgress
+
+default: `popup`
+
+Zotero takes a few seconds to start up, which is sometimes mistakenly attributed to BBT. BBT will tell you what phase the startup process is in (of Zotero and BBT) to prevent support requests for something that I cannot change. Please only use values:
+
+* `popup`: show a popup during startup * `progressbar`: show a progressbar in the top of the frame
+
 ### verbatimFields
 
 default: `url,doi,file,eprint,verba,verbb,verbc,groups`

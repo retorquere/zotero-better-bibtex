@@ -344,6 +344,9 @@
             "skipWords": {
               "type": "string"
             },
+            "startupProgress": {
+              "type": "string"
+            },
             "strings": {
               "type": "string"
             },

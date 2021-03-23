@@ -8,8 +8,10 @@
   </stringbundleset>
 
   <hbox id="zotero-items-toolbar">
-    <label insertafter="zotero-tb-attachment-add" id="better-bibtex-startup-label" hidden="false" value="startup"/>
-    <progressmeter style="all:unset" insertafter="zotero-tb-attachment-add" id="better-bibtex-startup-progress" mode="undetermined" value="50" hidden="false"/>
+    <hbox id="better-bibtex-startup" insertafter="zotero-tb-attachment-add" hidden="true">
+      <progressmeter id="better-bibtex-startup-progress" mode="determined" value="0"/>
+      <label id="better-bibtex-startup-label" value="startup"/>
+    </hbox>
   </hbox>
 
   <menupopup id="menu_ToolsPopup">
