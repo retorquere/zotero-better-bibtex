@@ -41,24 +41,25 @@ Options:
 
 #### QuickCopy format
 
-default: `LaTeX`
+default: `LaTeX citation`
 
 Used for drag-and-drop/quick copy using Better BibTeX citekeys. In the Zotero "Export" pane, choose `Better BibTeX Quick Copy` as the default export format for quick copy, and choose the desired format for the drag-and-drop citations here.
 
 Options:
 
-* LaTeX
+* LaTeX citation
 * Cite Keys
-* Pandoc
+* Pandoc citation
 * Org-mode citekey select link
 * Org-mode Zotero select link
-* org-ref
-* RTF Scan
+* org-ref citation
+* RTF Scan marker
 * Roam Cite Key
 * Atom (https://atom.io/packages/zotero-citations)
 * GitBook
 * Citekey select link
 * Zotero select link
+* Eta template
 
 #### LaTeX command
 
@@ -71,6 +72,14 @@ Used for drag-and-drop/quick copy citations in `LaTeX` format. Set the desired L
 default: `no`
 
 Used for drag-and-drop/quick copy citations in `Pandoc` format. You can use this option to select whether you want to have these pandoc citations surrounded with brackets or not.
+
+#### Eta template
+
+default: `<not set>`
+
+Used for drag-and-drop/quick copy citations in `Build your own` format. This is going to get pretty technical, sorry.
+
+You can paste a [Eta](https://eta.js.org/) template here. Inside the template, you will find an array `it.items`, each of which is a serialized Zotero item. To find out what an item looks like inside the template, export some items as BetterBibTeX JSON.
 
 ### BibTeX AUX scanner
 

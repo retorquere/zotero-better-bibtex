@@ -144,6 +144,9 @@
             "auxImport": {
               "type": "boolean"
             },
+            "baseAttachmentPath": {
+              "type": "string"
+            },
             "biblatexExtendedDateFormat": {
               "type": "boolean"
             },
@@ -300,6 +303,9 @@
             "qualityReport": {
               "type": "boolean"
             },
+            "quickCopyEta": {
+              "type": "string"
+            },
             "quickCopyMode": {
               "enum": [
                 "latex",
@@ -313,7 +319,8 @@
                 "atom",
                 "gitbook",
                 "selectLink_citekey",
-                "selectLink"
+                "selectLink",
+                "eta"
               ]
             },
             "quickCopyPandocBrackets": {
@@ -352,7 +359,10 @@
             "warnTitleCased": {
               "type": "boolean"
             },
-            "workers": {
+            "workersCache": {
+              "type": "boolean"
+            },
+            "workersMax": {
               "type": "number"
             }
           },

@@ -12,8 +12,7 @@
       "citeCommand": "citep",
       "citekeyFormat": "[auth:lower][year][veryshorttitle1_0]",
       "keyScope": "global",
-      "skipFields": "shorttitle,month,abstract,archivePrefix,archiveprefix,eprint,eprinttype,file,language,primaryClass,primaryclass,arXiv,arxiv,arxiv.title",
-      "workers": 0
+      "skipFields": "shorttitle,month,abstract,archivePrefix,archiveprefix,eprint,eprinttype,file,language,primaryClass,primaryclass,arXiv,arxiv,arxiv.title"
     }
   },
   "items": [

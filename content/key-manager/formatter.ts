@@ -177,10 +177,11 @@ class PatternFormatter {
       extra: Extra.get(item.getField('extra'), 'zotero', { kv: true }).extraFields.kv,
     }
 
-    if (['attachment', 'note'].includes(this.item.type)) return { citekey: '', postfix: { start: 0, format: ''} }
+    if (['attachment', 'note', 'annotation'].includes(this.item.type)) return { citekey: '', postfix: { start: 0, format: ''} }
 
     try {
-      this.item.date = this.parseDate(item.getField('date', false, true))
+      const date = item.getField('date', false, true)
+      this.item.date = date ? this.parseDate(date) : {}
     }
     catch (err) {
       this.item.date = {}
@@ -192,6 +193,7 @@ class PatternFormatter {
         if (!this.item.date.y) Object.assign(this.item.date, { y: date.y, m: date.m, d: date.d, Y: date.Y })
       }
     }
+    if (Object.keys(this.item.date).length === 0) this.item.date = null
 
     try {
       this.item.title = item.getField('title', false, true) || ''

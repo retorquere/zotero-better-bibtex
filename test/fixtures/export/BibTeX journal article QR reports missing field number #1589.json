@@ -17,7 +17,7 @@
       "itemObserverDelay": 100,
       "keyConflictPolicy": "change",
       "qualityReport": true,
-      "workers": 4
+      "workersMax": 4
     }
   },
   "items": [

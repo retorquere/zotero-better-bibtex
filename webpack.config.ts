@@ -9,6 +9,8 @@ import * as crypto from 'crypto'
 
 import WrapperPlugin = require('wrapper-webpack-plugin')
 import PostCompile = require('post-compile-webpack-plugin')
+import MultiVarAssignLibraryPlugin = require('./setup/plugins/MultiVarAssignLibraryPlugin')
+const assign = 'assign-multi-var'
 
 import * as translators from './gen/translators.json'
 const _ = require('lodash')
@@ -89,6 +91,7 @@ if (!process.env.MINITESTS) {
         },
       },
       plugins: [
+        new MultiVarAssignLibraryPlugin(),
         new webpack.ProvidePlugin({ process: 'process/browser', }),
         new PostCompile(() => {
           if (fs.existsSync(build.runtime)) {
@@ -123,16 +126,12 @@ if (!process.env.MINITESTS) {
       // devtool: '#source-map',
       output: {
         globalObject: 'Zotero',
+        uniqueName: build.uniqueName,
         path: path.resolve(__dirname, path.dirname(build.runtime)),
         filename: '[name].js',
-
-        uniqueName: build.uniqueName,
-
-        // chunkFilename: "[id].chunk.js",
-        // sourceMapFilename: "./[name].js.map",
         pathinfo: true,
         library: 'Zotero.[name]',
-        libraryTarget: 'assign',
+        libraryTarget: assign,
       },
     })
   )
@@ -146,6 +145,7 @@ if (!process.env.MINITESTS) {
     config.push(
       _.merge({}, common, {
         plugins: [
+          new MultiVarAssignLibraryPlugin(),
           new webpack.ProvidePlugin({ process: 'process/browser', }),
           // new CircularDependencyPlugin({ failOnError: true }),
           new webpack.DefinePlugin({
@@ -179,7 +179,7 @@ if (!process.env.MINITESTS) {
           filename: '[name].js',
           pathinfo: true,
           library: `var {${vars}}`,
-          libraryTarget: 'assign',
+          libraryTarget: assign,
         },
       })
     )
@@ -188,13 +188,14 @@ if (!process.env.MINITESTS) {
   config.push(
     _.merge({}, common, {
       plugins: [
+        new MultiVarAssignLibraryPlugin(),
         new webpack.ProvidePlugin({ process: 'process/browser', }),
         // new CircularDependencyPlugin({ failOnError: true }),
         new WrapperPlugin({
           test: /\.js$/,
           // otherwise these would be contained in the webpack IIFE
           header: 'importScripts("resource://zotero/config.js") // import ZOTERO_CONFIG\n\n',
-          footer: '\nimportScripts(`resource://zotero-better-bibtex/${params.translator}.js`);\n',
+          footer: '\nimportScripts(`resource://zotero-better-bibtex/${workerContext.translator}.js`);\n',
         })
       ],
       context: path.resolve(__dirname, './translators'),
@@ -205,8 +206,8 @@ if (!process.env.MINITESTS) {
         path: path.resolve(__dirname, './build/resource/worker'),
         filename: '[name].js',
         pathinfo: true,
-        library: 'var { Zotero, onmessage, params }',
-        libraryTarget: 'assign',
+        library: 'var { Zotero, onmessage, workerContext }',
+        libraryTarget: assign,
       },
     })
   )

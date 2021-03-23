@@ -2,6 +2,7 @@ declare const document: any
 declare const window: any
 declare const Zotero: any
 declare const Zotero_Preferences: any
+declare const MutationObserver: any
 
 declare const Components: any
 Components.utils.import('resource://gre/modules/Services.jsm')
@@ -13,11 +14,13 @@ import * as ZoteroDB from './db/zotero'
 import { DB as Cache } from './db/cache'
 
 import { Preference } from '../gen/preferences'
+import * as preferences from '../gen/preferences.json'
 import { Formatter } from './key-manager/formatter'
 import { KeyManager } from './key-manager'
 import { AutoExport } from './auto-export'
 import { Translators } from './translators'
 import { client } from './client'
+const quickCopyOptions = preferences.find(pref => pref.name === 'quickCopyMode').options
 
 import { override } from './prefs-meta'
 
@@ -249,6 +252,8 @@ export = new class PrefPane {
   public autoexport: AutoExportPane
   private keyformat: any
   private timer: number
+  private observer: MutationObserver
+  private observed: XUL.Element
 
   public getCitekeyFormat(target = null) {
     if (target) this.keyformat = target
@@ -323,7 +328,52 @@ export = new class PrefPane {
     this.loadAsync().catch(err => { log.error('Preferences.load:', err) })
   }
 
+  public setQuickCopy(node) {
+    if (node) {
+      let mode = ''
+      let cmd = ''
+      switch (Preference.quickCopyMode) {
+        case 'latex':
+          cmd = `${Preference.citeCommand}`.trim()
+          mode = (cmd === '') ? 'citation keys' : `\\${cmd}{citation keys}`
+          break
+
+        case 'pandoc':
+          mode = Preference.quickCopyPandocBrackets ? '[@citekeys]' : '@citekeys'
+          break
+
+        default:
+          mode = quickCopyOptions[Preference.quickCopyMode] || Preference.quickCopyMode
+      }
+
+      node.label = `Better BibTeX ${mode} Quick Copy`
+    }
+  }
+
+  mutated(mutations, observer) {
+    let node
+    for(const mutation of mutations) {
+      if (!mutation.addedNodes) continue
+
+      if (this.observed?.id === 'zotero-prefpane-export' && (node = [...mutation.addedNodes].find(added => added.id === 'zotero-prefpane-export-groupbox'))) {
+        observer.disconnect()
+        this.observer = new MutationObserver(this.mutated.bind(this))
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        this.observed = [...node.getElementsByTagNameNS('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', 'menulist')].find(added => added.id === 'zotero-quickCopy-menu')
+        this.observer.observe(this.observed, { childList: true, subtree: true })
+      }
+      else if (this.observed?.tagName === 'menulist' && (node = [...mutation.addedNodes].find(added => added.tagName === 'menuitem' && added.label?.match(/Better BibTeX.*Quick Copy/)))) {
+        node.id = 'translator-bbt-quick-copy'
+        this.setQuickCopy(node)
+      }
+    }
+  }
+
   public async loadAsync() {
+    this.observer = new MutationObserver(this.mutated.bind(this))
+    this.observed = document.getElementById('zotero-prefpane-export')
+    this.observer.observe(this.observed, { childList: true, subtree: true })
+
     const tabbox = document.getElementById('better-bibtex-prefs-tabbox')
     tabbox.hidden = true
 
@@ -424,6 +474,7 @@ export = new class PrefPane {
   private update() {
     this.checkCitekeyFormat()
     this.checkPostscript()
+    this.setQuickCopy(document.getElementById('translator-bbt-quick-copy'))
 
     if (client === 'jurism') {
       Zotero.Styles.init().then(() => {
@@ -451,16 +502,19 @@ export = new class PrefPane {
 
     const quickCopyNode = document.getElementById('id-better-bibtex-preferences-quickCopyMode').selectedItem
     const quickCopyMode = quickCopyNode ? quickCopyNode.getAttribute('value') : ''
-    for (const [row, enabledFor] of [['citeCommand', 'latex'], ['quickCopyPandocBrackets', 'pandoc']]) {
-      document.getElementById(`id-better-bibtex-preferences-${row}`).setAttribute('hidden', quickCopyMode !== enabledFor)
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    for (const node of (Array.from(document.getElementsByClassName('better-bibtex-preferences-quickcopy-details')) as XUL.Element[])) {
+      node.hidden = (node.id !== `better-bibtex-preferences-quickcopy-${quickCopyMode}`)
     }
 
-    for (const state of Array.from(document.getElementsByClassName('better-bibtex-preferences-worker-state'))) {
-      (state as XUL.Textbox).value = Zotero.BetterBibTeX.getString(`BetterBibTeX.workers.${Preference.workers ? 'status' : 'disabled'}`, {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    for (const state of (Array.from(document.getElementsByClassName('better-bibtex-preferences-worker-state')) as XUL.Textbox[])) {
+      state.value = Zotero.BetterBibTeX.getString(`BetterBibTeX.workers.${Preference.workersMax ? 'status' : 'disabled'}`, {
         total: Translators.workers.total,
-        workers: Preference.workers,
+        workers: Preference.workersMax,
         running: Translators.workers.running.size,
       })
+      state.classList[Preference.workersMax ? 'remove' : 'add']('textbox-emph')
     }
     window.sizeToContent()
   }

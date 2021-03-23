@@ -8,7 +8,7 @@
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 1,
-	"lastUpdated": "2020-08-08 23:31:56"
+	"lastUpdated": "2020-12-27 04:34:53"
 }
 
 /*
@@ -185,7 +185,7 @@ function doImport() {
 
 			// then fetch the tag and data from this line
 			tag = line.match(/^[A-Z0-9]+/)[0];
-			data = line.substr(line.indexOf("-") + 1);
+			data = line.substr(line.indexOf("-") + 1).trim();
 		}
 		else if (tag) {
 			// otherwise, assume this is data from the previous line continued
@@ -231,6 +231,14 @@ function finalizeItem(item) {
 			item.pages = fullPageRange;
 		}
 	}
+	// check for and remove duplicate ISSNs
+	if (item.ISSN && item.ISSN.includes(" ")) {
+		let ISSN = item.ISSN.split(/\s/);
+		// convert to Set and back
+		ISSN = [...new Set(ISSN)];
+		item.ISSN = ISSN.join(" ");
+	}
+	
 	// journal article is the fallback item type
 	if (!item.itemType) item.itemType = inputTypeMap["Journal Article"];
 	// titles for books are mapped to bookTitle
@@ -291,7 +299,7 @@ var testCases = [
 					}
 				],
 				"date": "1996 Jul 9",
-				"ISSN": "0027-8424 0027-8424",
+				"ISSN": "0027-8424",
 				"abstractNote": "In the structure of bovine mitochondrial F1-ATPase that was previously determined with crystals grown in the presence of adenylyl-imidodiphosphate (AMP-PNP) and ADP, the three catalytic beta-subunits have different conformations and nucleotide occupancies. Adenylyl-imidodiphosphate is bound to one beta-subunit (betaTP), ADP is bound to the second (betaDP), and no nucleotide is bound to the  third (betaE). Here we show that the uncompetitive inhibitor aurovertin B binds to bovine F1 at two equivalent sites in betaTP and betaE, in a cleft between the  nucleotide binding and C-terminal domains. In betaDP, the aurovertin B pocket is  incomplete and is inaccessible to the inhibitor. The aurovertin B bound to betaTP interacts with alpha-Glu399 in the adjacent alphaTP subunit, whereas the aurovertin B bound to betaE is too distant from alphaE to make an equivalent interaction. Both sites encompass betaArg-412, which was shown by mutational studies to be involved in binding aurovertin. Except for minor changes around the aurovertin pockets, the structure of bovine F1-ATPase is the same as determined previously. Aurovertin B appears to act by preventing closure of the catalytic interfaces, which is essential for a catalytic mechanism involving cyclic interconversion of catalytic sites.",
 				"extra": "PMID: 8692918 \nPMCID: PMC38908",
 				"issue": "14",
@@ -302,21 +310,51 @@ var testCases = [
 				"volume": "93",
 				"attachments": [],
 				"tags": [
-					"*Protein Structure, Secondary",
-					"Adenylyl Imidodiphosphate/pharmacology",
-					"Animals",
-					"Arginine",
-					"Aurovertins/*chemistry/*metabolism",
-					"Binding Sites",
-					"Cattle",
-					"Crystallography, X-Ray",
-					"Enzyme Inhibitors/chemistry/metabolism",
-					"Glutamic Acid",
-					"Macromolecular Substances",
-					"Models, Molecular",
-					"Molecular Structure",
-					"Myocardium/enzymology",
-					"Proton-Translocating ATPases/*chemistry/*metabolism"
+					{
+						"tag": "*Protein Structure, Secondary"
+					},
+					{
+						"tag": "Adenylyl Imidodiphosphate/pharmacology"
+					},
+					{
+						"tag": "Animals"
+					},
+					{
+						"tag": "Arginine"
+					},
+					{
+						"tag": "Aurovertins/*chemistry/*metabolism"
+					},
+					{
+						"tag": "Binding Sites"
+					},
+					{
+						"tag": "Cattle"
+					},
+					{
+						"tag": "Crystallography, X-Ray"
+					},
+					{
+						"tag": "Enzyme Inhibitors/chemistry/metabolism"
+					},
+					{
+						"tag": "Glutamic Acid"
+					},
+					{
+						"tag": "Macromolecular Substances"
+					},
+					{
+						"tag": "Models, Molecular"
+					},
+					{
+						"tag": "Molecular Structure"
+					},
+					{
+						"tag": "Myocardium/enzymology"
+					},
+					{
+						"tag": "Proton-Translocating ATPases/*chemistry/*metabolism"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -456,7 +494,7 @@ var testCases = [
 					}
 				],
 				"date": "1993 Oct 8",
-				"ISSN": "0092-8674 0092-8674",
+				"ISSN": "0092-8674",
 				"abstractNote": "Src homology 3 (SH3) domains have been implicated in mediating protein-protein interactions in receptor signaling processes; however, the precise role of this domain remains unclear. In this report, affinity purification techniques were used to identify the GTPase dynamin as an SH3 domain-binding protein. Selective binding to a subset of 15 different recombinant SH3 domains occurs through proline-rich sequence motifs similar to those that mediate the interaction of the SH3 domains of Grb2 and Abl proteins to the guanine nucleotide exchange protein,  Sos, and to the 3BP1 protein, respectively. Dynamin GTPase activity is stimulated by several of the bound SH3 domains, suggesting that the function of the SH3 module is not restricted to protein-protein interactions but may also include the interactive regulation of GTP-binding proteins.",
 				"extra": "PMID: 8402898",
 				"issue": "1",
@@ -467,24 +505,60 @@ var testCases = [
 				"volume": "75",
 				"attachments": [],
 				"tags": [
-					"Amino Acid Sequence",
-					"Animals",
-					"Binding Sites",
-					"Brain/*enzymology",
-					"Drosophila/genetics",
-					"Dynamins",
-					"Enzyme Activation",
-					"GTP Phosphohydrolases/isolation & purification/*metabolism",
-					"Glutathione Transferase/metabolism",
-					"Humans",
-					"Kinetics",
-					"Mice",
-					"Molecular Sequence Data",
-					"Rats",
-					"Recombinant Fusion Proteins/metabolism",
-					"Recombinant Proteins/isolation & purification/metabolism",
-					"Sequence Homology, Amino Acid",
-					"Signal Transduction"
+					{
+						"tag": "Amino Acid Sequence"
+					},
+					{
+						"tag": "Animals"
+					},
+					{
+						"tag": "Binding Sites"
+					},
+					{
+						"tag": "Brain/*enzymology"
+					},
+					{
+						"tag": "Drosophila/genetics"
+					},
+					{
+						"tag": "Dynamins"
+					},
+					{
+						"tag": "Enzyme Activation"
+					},
+					{
+						"tag": "GTP Phosphohydrolases/isolation & purification/*metabolism"
+					},
+					{
+						"tag": "Glutathione Transferase/metabolism"
+					},
+					{
+						"tag": "Humans"
+					},
+					{
+						"tag": "Kinetics"
+					},
+					{
+						"tag": "Mice"
+					},
+					{
+						"tag": "Molecular Sequence Data"
+					},
+					{
+						"tag": "Rats"
+					},
+					{
+						"tag": "Recombinant Fusion Proteins/metabolism"
+					},
+					{
+						"tag": "Recombinant Proteins/isolation & purification/metabolism"
+					},
+					{
+						"tag": "Sequence Homology, Amino Acid"
+					},
+					{
+						"tag": "Signal Transduction"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -519,34 +593,93 @@ var testCases = [
 				"volume": "129",
 				"attachments": [],
 				"tags": [
-					"*Health Knowledge, Attitudes, Practice",
-					"*Public Health Practice",
-					"Abusive head trauma",
-					"Adolescent",
-					"Adult",
-					"Caregivers/*education/psychology/statistics & numerical data",
-					"Child Abuse/*prevention & control",
-					"Craniocerebral Trauma/*prevention & control",
-					"Cross-Sectional Studies",
-					"Crying",
-					"Crying/psychology",
-					"Female",
-					"Follow-Up Studies",
-					"Humans",
-					"Infant",
-					"Infant, Newborn",
-					"Intervention",
-					"Japan",
-					"Male",
-					"Pamphlets",
-					"Parents/*education/psychology",
-					"Program Evaluation",
-					"Public health",
-					"Questionnaires",
-					"Shaken Baby Syndrome/*prevention & control",
-					"Shaken baby syndrome",
-					"Videodisc Recording",
-					"Young Adult"
+					{
+						"tag": "*Health Knowledge, Attitudes, Practice"
+					},
+					{
+						"tag": "*Public Health Practice"
+					},
+					{
+						"tag": "Abusive head trauma"
+					},
+					{
+						"tag": "Adolescent"
+					},
+					{
+						"tag": "Adult"
+					},
+					{
+						"tag": "Caregivers/*education/psychology/statistics & numerical data"
+					},
+					{
+						"tag": "Child Abuse/*prevention & control"
+					},
+					{
+						"tag": "Craniocerebral Trauma/*prevention & control"
+					},
+					{
+						"tag": "Cross-Sectional Studies"
+					},
+					{
+						"tag": "Crying"
+					},
+					{
+						"tag": "Crying/psychology"
+					},
+					{
+						"tag": "Female"
+					},
+					{
+						"tag": "Follow-Up Studies"
+					},
+					{
+						"tag": "Humans"
+					},
+					{
+						"tag": "Infant"
+					},
+					{
+						"tag": "Infant, Newborn"
+					},
+					{
+						"tag": "Intervention"
+					},
+					{
+						"tag": "Japan"
+					},
+					{
+						"tag": "Japan"
+					},
+					{
+						"tag": "Male"
+					},
+					{
+						"tag": "Pamphlets"
+					},
+					{
+						"tag": "Parents/*education/psychology"
+					},
+					{
+						"tag": "Program Evaluation"
+					},
+					{
+						"tag": "Public health"
+					},
+					{
+						"tag": "Questionnaires"
+					},
+					{
+						"tag": "Shaken Baby Syndrome/*prevention & control"
+					},
+					{
+						"tag": "Shaken baby syndrome"
+					},
+					{
+						"tag": "Videodisc Recording"
+					},
+					{
+						"tag": "Young Adult"
+					}
 				],
 				"notes": [],
 				"seeAlso": []

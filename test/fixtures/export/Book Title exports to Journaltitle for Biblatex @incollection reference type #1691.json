@@ -20,8 +20,7 @@
       "quickCopyMode": "orgRef",
       "skipFields": "abstract, keywords",
       "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
-      "warnBulkModify": 0,
-      "workers": 0
+      "warnBulkModify": 0
     }
   },
   "items": [

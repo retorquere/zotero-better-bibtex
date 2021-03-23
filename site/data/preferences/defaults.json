@@ -6,7 +6,7 @@
   "autoAbbrev": false,
   "autoAbbrevStyle": "",
   "autoExport": "immediate",
-  "autoExportDelay": 1,
+  "autoExportDelay": 5,
   "autoExportIdleWait": 10,
   "autoExportPathReplaceDiacritics": false,
   "autoExportPathReplaceDirSep": "-",
@@ -14,6 +14,7 @@
   "autoPinDelay": 0,
   "automaticTags": true,
   "auxImport": false,
+  "baseAttachmentPath": "",
   "biblatexExtendedDateFormat": true,
   "biblatexExtendedNameFormat": false,
   "biblatexExtractEprint": true,
@@ -58,6 +59,7 @@
   "postscript": "",
   "postscriptOverride": "",
   "qualityReport": false,
+  "quickCopyEta": "",
   "quickCopyMode": "latex",
   "quickCopyPandocBrackets": false,
   "rawImports": false,
@@ -72,5 +74,6 @@
   "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups",
   "warnBulkModify": 10,
   "warnTitleCased": false,
-  "workers": 1
+  "workersCache": true,
+  "workersMax": 1
 }

@@ -56,6 +56,7 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
 
       switch (serialized.itemType) {
         case 'note':
+        case 'annotation':
           break
 
         case 'attachment':
@@ -95,6 +96,7 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
   public enrich(serialized, item) {
     switch (serialized.itemType) {
       case 'note':
+      case 'annotation':
       case 'attachment':
         break
 

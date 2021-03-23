@@ -59,6 +59,7 @@ class fetch(object):
         if not rel['version'] in releases
       ]
       releases = [rel for rel in releases if rel.startswith('5.')]
+      releases = sorted(releases, key=lambda r: [int(n) for n in r.replace('m', '.').split('.')])
       self.update(
         client=client,
         releases=releases,
@@ -79,6 +80,7 @@ class fetch(object):
         if rel != '' and rel not in releases
       ]
       releases = [rel for rel in releases if rel.startswith('5.') and 'm' in rel and not 'beta' in rel]
+      releases = sorted(releases, key=lambda r: [int(n) for n in r.replace('m', '.').split('.')])
       self.update(
         client=client,
         releases=releases,

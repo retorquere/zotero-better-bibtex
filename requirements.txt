@@ -6,6 +6,7 @@ addict
 beautifulsoup4
 behave
 boto3
+bs4
 diff-match-patch
 github3.py
 inflect

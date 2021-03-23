@@ -7,7 +7,7 @@ If you have unicode turned on you can still selectively replace some characters 
 
 ### autoExportDelay
 
-default: `1`
+default: `5`
 
 If you have auto-exports set up, BBT will wait this many seconds before actually kicking off the exports to buffer multiple changes in quick succession setting off an unreasonable number of auto-exports. Minimum is 1 second. Changes to this preference take effect after restarting Zotero.
 

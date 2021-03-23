@@ -14,7 +14,7 @@
       "exportBraceProtection": false,
       "exportTitleCase": false,
       "keyScope": "global",
-      "workers": 2
+      "workersMax": 2
     }
   },
   "items": [

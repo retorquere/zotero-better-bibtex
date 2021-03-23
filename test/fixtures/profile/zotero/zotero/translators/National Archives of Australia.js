@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2020-09-19 02:58:21"
+	"lastUpdated": "2021-02-13 11:39:57"
 }
 
 /*
@@ -237,7 +237,7 @@ function parseItemTable(table) {
 function scrapeItem(doc) {
 	var meta = parseItemTable(ZU.xpath(doc, '//div[@class="detailsTable"]//tbody')[0]);
 	if (!meta) return null;
-	
+
 	var item = new Zotero.Item('manuscript');
 	item.title = meta.title;
 	item.type = 'item';
@@ -248,7 +248,7 @@ function scrapeItem(doc) {
 	item.archiveLocation = series + ', ' + control;
 	item['access status'] = meta['access status'];
 	item['access decision'] = meta['date of decision'];
-	var barcode = encodeURIComponent(meta['item barcode']);
+	var barcode = encodeURIComponent(meta['item id']);
 	item.url = createPersistentLink(barcode, 'I');
 
 	if (meta['item notes']) {
@@ -276,7 +276,7 @@ function scrapeItem(doc) {
 function scrapeSeries(doc) {
 	var meta = parseItemTable(ZU.xpath(doc, '//div[@class="detailsTable"]//tbody')[0]);
 	if (!meta) return null;
-	
+
 	var item = new Zotero.Item('manuscript');
 	item.title = meta.title;
 	item.type = 'series';
@@ -379,7 +379,7 @@ function scrapePhoto(doc) {
 	item.date = meta.date || meta['date range'];
 	item.place = meta.location || meta['item location'];
 	item.archiveLocation = meta['series/control symbol'];
-	item.url = createPersistentLink(encodeURIComponent(meta.barcode), 'PSI');
+	item.url = createPersistentLink(encodeURIComponent(meta['item id']), 'PSI');
 
 	if (meta['related searches']) {
 		item.tags = meta['related searches'];
@@ -402,38 +402,8 @@ function scrapePhoto(doc) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://recordsearch.naa.gov.au/scripts/PhotoSearchItemDetail.asp?M=0&B=1646857&SE=1",
-		"items": [
-			{
-				"itemType": "manuscript",
-				"title": "Ford V8 three ton lorry loaded with mail [rear view]",
-				"creators": [],
-				"date": "1937 - 1937",
-				"archive": "National Archives of Australia",
-				"archiveLocation": "C4078, N1005B",
-				"libraryCatalog": "National Archives of Australia",
-				"manuscriptType": "photograph",
-				"place": "Sydney",
-				"url": "http://www.naa.gov.au/cgi-bin/Search?O=PSI&Number=1646857",
-				"attachments": [
-					{
-						"title": "Digital image of NAA: C4078, N1005B",
-						"mimeType": "image/jpeg"
-					}
-				],
-				"tags": [
-					"Communications",
-					"Photographs in series C4078",
-					"Postal"
-				],
-				"notes": [],
-				"seeAlso": []
-			}
-		]
-	},
-	{
-		"type": "web",
-		"url": "http://recordsearch.naa.gov.au/SearchNRetrieve/Interface/ViewImage.aspx?B=12048&S=4",
+		"url": "https://recordsearch.naa.gov.au/SearchNRetrieve/Interface/ViewImage.aspx?B=12048&S=4",
+		"defer": true,
 		"items": [
 			{
 				"itemType": "manuscript",
@@ -443,7 +413,7 @@ var testCases = [
 				"archive": "National Archives of Australia",
 				"archiveLocation": "A1, 1911/18393",
 				"libraryCatalog": "National Archives of Australia",
-				"url": "http://recordsearch.naa.gov.au/SearchNRetrieve/Interface/ViewImage.aspx?B=12048&S=4",
+				"url": "https://recordsearch.naa.gov.au/SearchNRetrieve/Interface/ViewImage.aspx?B=12048&S=4",
 				"attachments": [
 					{
 						"title": "Folio 4 of 7 [A1, 1911/18393]",
@@ -458,25 +428,25 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://recordsearch.naa.gov.au/scripts/AutoSearch.asp?O=I&Number=8606210",
+		"url": "https://recordsearch.naa.gov.au/scripts/AutoSearch.asp?O=PSI&Number=11404473",
 		"defer": true,
 		"items": [
 			{
 				"itemType": "manuscript",
-				"title": "Prisoner of War/Internee: Wong, Koy; Date of birth - June 1919; Nationality - Chinese",
+				"title": "Antarctica - A Gentoo penguin on Heard Island guards its nesting mate [photographic image]. 1 photographic negative: b&w, acetate",
 				"creators": [],
-				"date": "1944 - 1944",
+				"date": "1949 - 1949",
 				"archive": "National Archives of Australia",
-				"archiveLocation": "MP1103/1, PWJAUSA100061",
+				"archiveLocation": "A1200, L11912",
 				"libraryCatalog": "National Archives of Australia",
-				"place": "Melbourne",
-				"shortTitle": "Prisoner of War/Internee",
-				"url": "http://www.naa.gov.au/cgi-bin/Search?O=I&Number=8606210",
+				"manuscriptType": "photograph",
+				"place": "Canberra",
+				"shortTitle": "Antarctica - A Gentoo penguin on Heard Island guards its nesting mate [photographic image]. 1 photographic negative",
+				"url": "https://recordsearch.naa.gov.au/scripts/AutoSearch.asp?O=PSI&Number=11404473",
 				"attachments": [
 					{
-						"title": "Digital copy at National Archives of Australia",
-						"mimeType": "text/html",
-						"snapshot": false
+						"title": "Digital image of NAA: A1200, L11912",
+						"mimeType": "image/jpeg"
 					}
 				],
 				"tags": [],
@@ -487,20 +457,26 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://recordsearch.naa.gov.au/scripts/AutoSearch.asp?O=I&Number=1339624",
 		"defer": true,
+		"url": "https://recordsearch.naa.gov.au/scripts/AutoSearch.asp?O=I&Number=149309",
 		"items": [
 			{
 				"itemType": "manuscript",
-				"title": "El Alamein War Memorial Ceremony - 1954",
+				"title": "The Wragge Estate. Property for sale.",
 				"creators": [],
-				"date": "1954 - 1954",
+				"date": "1917 - 1917",
 				"archive": "National Archives of Australia",
-				"archiveLocation": "A4940, C1007",
+				"archiveLocation": "A2479, 17/1306",
 				"libraryCatalog": "National Archives of Australia",
+				"manuscriptType": "item",
 				"place": "Canberra",
-				"url": "http://www.naa.gov.au/cgi-bin/Search?O=I&Number=1339624",
-				"attachments": [],
+				"url": "https://recordsearch.naa.gov.au/scripts/AutoSearch.asp?O=I&Number=149309",
+				"attachments": [
+					{
+						"title": "National Archives of Australia item PDF",
+						"mimeType": "application/pdf"
+					}
+				],
 				"tags": [],
 				"notes": [],
 				"seeAlso": []
@@ -509,31 +485,33 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://recordsearch.naa.gov.au/scripts/AutoSearch.asp?O=S&Number=A10950",
+		"url": "https://recordsearch.naa.gov.au/scripts/AutoSearch.asp?O=S&Number=A2",
 		"defer": true,
 		"items": [
 			{
 				"itemType": "manuscript",
-				"title": "'A Report on war crimes by individual members of the armed forces of the enemy against Australians by Sir William Webb Kt' [Second Webb Report]",
+				"title": "Correspondence files, annual single number series",
 				"creators": [
 					{
-						"lastName": "CA 284, Australian War Crimes Commission [I]",
+						"lastName": "CA 588, Prime Minister's Office",
+						"creatorType": "author",
+						"fieldMode": 1
+					},
+					{
+						"lastName": "CA 12, Prime Minister's Department",
 						"creatorType": "author",
 						"fieldMode": 1
 					}
 				],
-				"date": "14 Aug 1944 - 31 Oct 1944",
-				"abstractNote": "This series consists of one volume bound in black with the title 'A report on war crimes by individual members of the armed forces of the enemy against Australians by Sir William Webb Kt' embossed on the front cover in gold.\n\nBackground\n\nThe United Nations War Crimes Commission had two stated objectives (1) to hear evidence of war crimes brought to it by member governments and to list the perpetrator for arrest and (2) to make recommendations to member governments on how war criminals could be brought to trial. It held its first meeting on 20 October 1943 and in reporting to Dr Evatt the Secretary of the Department of External Affairs recommended that a Commission be given to Sir William Webb to investigate war crimes against Australians and to bring to the government such cases as could be forwarded to the UNWCC. \n\nOn 9 February Dr Evatt approached Sir William with an invitation and this was accepted on 24 February. The new commission was issued on 8 June 1944 with prime responsibility for administrative matters held by the Department of External Affairs though the report was to be submitted also to the Attorney Generals Department.\n\nThe hearings commenced on 14 August and concluded on 20 October 1944. The report was tendered to the Minister on 31 October 1944.",
+				"date": "01 Jan 1895 - 31 Dec 1926",
+				"abstractNote": "Name Index Volumes, 1917-1951 (ex CP 602/1, AS12/8)",
 				"archive": "National Archives of Australia",
-				"archiveLocation": "A10950",
+				"archiveLocation": "A2",
 				"libraryCatalog": "National Archives of Australia",
-				"attachments": [
-					{
-						"title": "National Archives of Australia Record",
-						"mimeType": "text/html",
-						"snapshot": false
-					}
-				],
+				"manuscriptType": "series",
+				"place": "35.74 metres held in ACT",
+				"url": "https://recordsearch.naa.gov.au/scripts/AutoSearch.asp?O=S&Number=A2",
+				"attachments": [],
 				"tags": [],
 				"notes": [],
 				"seeAlso": []

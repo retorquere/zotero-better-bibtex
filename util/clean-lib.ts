@@ -70,6 +70,10 @@ for (const lib of argv._) {
       }
 
       if (post.config?.preferences) {
+        if (typeof post.config.preferences.workers === 'number') {
+          if (post.config.preferences.workers) post.config.preferences.workersMax = post.config.preferences.workers
+          delete post.config.preferences.workers
+        }
         for (const [pref, value] of Object.entries(post.config.preferences)) {
           if (!supported.includes(pref) || value === defaults[pref]) delete post.config.preferences[pref]
         }

@@ -1,15 +1,15 @@
 {
 	"translatorID": "874d70a0-6b95-4391-a681-c56dabaa1411",
-	"translatorType": 4,
 	"label": "clinicaltrials.gov",
 	"creator": "Ryan Velazquez",
 	"target": "^https://(www\\.)?clinicaltrials\\.gov/ct2/(show|results\\?)",
 	"minVersion": "3.0",
-	"maxVersion": null,
+	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
+	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2020-05-16 20:55:00"
+	"lastUpdated": "2020-12-13 03:28:31"
 }
 
 /*
@@ -182,7 +182,7 @@ function scrape(doc, url) {
 			)
 		) {
 			const collaboratorList
-				= study.ProtocolSection.SponsorCollaboratorsModule.collaboratorList
+				= study.ProtocolSection.SponsorCollaboratorsModule.CollaboratorList
 					.Collaborator;
 			collaboratorList.forEach((collaborator) => {
 				collaborators.push({
@@ -229,7 +229,7 @@ var testCases = [
 						"fieldMode": 1
 					}
 				],
-				"date": "May 12, 2020",
+				"date": "July 23, 2020",
 				"abstractNote": "The primary objective of this study is to evaluate the efficacy of 2 remdesivir (RDV) regimens with respect to clinical status assessed by a 7-point ordinal scale on Day 14.",
 				"extra": "submitted: February 28, 2020",
 				"institution": "clinicaltrials.gov",
@@ -282,7 +282,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://clinicaltrials.gov/ct2/show/NCT04261517?recrs=e&cond=COVID&draw=2&rank=8",
+		"url": "https://clinicaltrials.gov/ct2/show/NCT04261517?recrs=e&cond=COVID&draw=2",
 		"items": [
 			{
 				"itemType": "report",
@@ -294,13 +294,13 @@ var testCases = [
 						"creatorType": "author"
 					},
 					{
-						"firstName": "Shanghai Public Health Clinical Center",
-						"creatorType": "contributor"
+						"lastName": "Shanghai Public Health Clinical Center",
+						"creatorType": "contributor",
+						"fieldMode": 1
 					}
 				],
 				"date": "April 9, 2020",
 				"abstractNote": "The study aims to evaluate the efficacy and safety of hydroxychloroquine in the treatment of COVID-19 pneumonia.",
-				"accessDate": "2020-04-01",
 				"extra": "submitted: February 6, 2020",
 				"institution": "clinicaltrials.gov",
 				"libraryCatalog": "clinicaltrials.gov",

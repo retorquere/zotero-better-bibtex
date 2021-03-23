@@ -258,7 +258,7 @@ $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function Zoter
   if (col.id !== 'zotero-items-column-citekey') return original.apply(this, arguments)
 
   const item = this.getRow(row).ref
-  if (item.isNote() || item.isAttachment()) return ''
+  if (item.isNote() || item.isAttachment() || item.isAnnotation?.()) return ''
 
   if (BetterBibTeX.ready.isPending()) { // eslint-disable-line @typescript-eslint/no-use-before-define
     if (!itemTreeViewWaiting[item.id]) {
@@ -467,8 +467,27 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         })
       }
 
-      // check for SMB path for #1396
-      if (!this.noWait && Preference.workers && !Translators.workers.disabled && (!this.location || !this.location.path.startsWith('\\\\'))) {
+      let disabled = ''
+      if (this.noWait) { // noWait must be synchronous
+        disabled = 'noWait is active'
+      }
+      else if (!Preference.workersMax) {
+        disabled = 'user has disabled worker export'
+      }
+      else if (Translators.workers.disabled) {
+        // there wasn't an error starting a worker earlier
+        disabled = 'failed to start a chromeworker, disabled until restart'
+      }
+      else if (this.location && this.location.path.startsWith('\\\\')) {
+        // check for SMB path for #1396
+        disabled = 'chrome workers fail on smb paths'
+      }
+      else {
+        disabled = Object.keys(this._handlers).filter(handler => !['done', 'itemDone', 'error'].includes(handler)).join(', ')
+        if (disabled) disabled = `handlers: ${disabled}`
+      }
+      log.debug('worker translation:', !disabled, disabled)
+      if (!disabled) {
         const path = this.location?.path
 
         // fake out the stuff that complete expects to be set by .translate
@@ -476,17 +495,17 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         this.saveQueue = []
         this._savingAttachments = []
 
-        Translators.exportItemsByQueuedWorker(translatorID, this._displayOptions, { scope: { ...this._export, getter: this._itemGetter }, path })
+        return Translators.exportItemsByQueuedWorker(translatorID, this._displayOptions, { translate: this, scope: { ...this._export, getter: this._itemGetter }, path })
           .then(result => {
+            log.debug('worker translation done, result:', !!result)
             // eslint-disable-next-line id-blacklist
             this.string = result
-            this.complete(result)
+            this.complete(result || true)
           })
           .catch(err => {
             log.error('worker translation failed, error:', err)
             this.complete(null, err)
           })
-        return
       }
     }
   }
@@ -533,8 +552,8 @@ notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]:
   // safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
   // https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
   const parents = []
-  const items = action === 'delete' ? [] : Zotero.Items.get(ids).filter((item: { isNote: () => boolean, isAttachment: () => boolean, parentID: number }) => {
-    if (item.isNote() || item.isAttachment()) {
+  const items = action === 'delete' ? [] : Zotero.Items.get(ids).filter((item: { isNote: () => boolean, isAttachment: () => boolean, isAnnotation?: () => boolean, parentID: number }) => {
+    if (item.isNote() || item.isAttachment() || item.isAnnotation?.()) {
       if (typeof item.parentID !== 'boolean') parents.push(item.parentID)
       return false
     }
@@ -556,7 +575,7 @@ notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]:
       let warn_titlecase = Preference.warnTitleCased ? 0 : null
       for (const item of items) {
         KeyManager.update(item)
-        if (typeof warn_titlecase === 'number' && !item.isNote() && !item.isAttachment()) {
+        if (typeof warn_titlecase === 'number' && !item.isNote() && !item.isAttachment() && !item.isAnnotation?.()) {
           const title = item.getField('title')
           if (title !== sentenceCase(title)) warn_titlecase += 1
         }

@@ -144,6 +144,7 @@ Scenario Outline: Export <references> references for BibTeX to <file>
   Examples:
      | file                                                                               | references |
      | Word segmentation for Chinese references #1682                                     | 1          |
+     | shortyear adds 00 when date is missing #1769                                       | 1          |
      | Cannot ignore archivePrefix export field #1744                                     | 1          |
      | url field is having its special characters escaped in BBT Bibtex #1716             | 1          |
      | Match against @string value for export #1597                                       | 1          |
@@ -470,7 +471,7 @@ Scenario: (non-)dropping particle handling #313
 @1420
 Scenario: (non-)dropping particle handling #313
   When I import 53 references from "export/*.json"
-  And I set preference .workers to 0
+  And I set preference .workersMax to 0
   Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
 @1270
@@ -486,15 +487,28 @@ Scenario: Field Institution not available anymore in key pattern for Zotero #156
 
 # tests the cache
 @use.with_client=zotero @use.with_slow=true @timeout=3000
-@rbwl
 Scenario: Really Big whopping library
   When I restart Zotero with "1287" + "export/*.json"
   And I reset the cache
   Then an export using "Better BibTeX" should match "export/*.bibtex"
-  When I reset the cache
-  Then an export using "Better CSL JSON" should match "export/*.csl.json"
-  And an export using "Better BibTeX" should match "export/*.bibtex"
   And an export using "Better BibTeX" should match "export/*.bibtex", but take no more than 150 seconds
+  When I set preference .workersCache to false
+  Then an export using "Better BibTeX" should match "export/*.bibtex", but take no more than 400 seconds
+
+# tests without cache prefill
+@use.with_client=zotero @use.with_slow=true @timeout=3000
+Scenario: Really Big whopping library
+  When I restart Zotero with "1287" + "export/*.json"
+  And I reset the cache
+  And I set preference .workersCache to false
+  Then an export using "Better BibTeX" should match "export/*.bibtex"
+
+# tests the cache for CSL
+@use.with_client=zotero @use.with_slow=true @timeout=3000
+Scenario: Really Big whopping library
+  When I restart Zotero with "1287" + "export/*.json"
+  And I reset the cache
+  Then an export using "Better CSL JSON" should match "export/*.csl.json"
   And an export using "Better CSL JSON" should match "export/*.csl.json", but take no more than 150 seconds
 
 #@use.with_client=zotero @use.with_slow=true @timeout=300
@@ -521,7 +535,10 @@ Scenario: use author dash separation rather than camel casing in citekey #1495
   And I refresh all citation keys
   Then an export using "Better BibTeX" should match "export/*.bibtex"
 
-@notes
 Scenario: Collected notes
   Given I import 36 references from "export/*.json"
+  Then an export using "Collected notes" should match "export/*.html"
+
+Scenario: Export as Collected Notes does not list subcollections #1768
+  Given I import 51 references from "export/*.json"
   Then an export using "Collected notes" should match "export/*.html"

@@ -10,7 +10,7 @@
       "asciiBibLaTeX": true,
       "citekeyFormat": "[auth]_[title]_[year]",
       "itemObserverDelay": 100,
-      "workers": 4
+      "workersMax": 4
     }
   },
   "items": [

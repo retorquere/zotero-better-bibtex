@@ -12,5 +12,5 @@ namespace BBTWorker {
     | { kind: 'debug', message: string }
     | { kind: 'error', message: string }
     | { kind: 'cache', itemID: number, reference: string, metadata: any }
-    | { kind: 'item' }
+    | { kind: 'item', item: number }
 }

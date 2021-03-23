@@ -13,8 +13,7 @@
       "citekeyFormat": "[auth][shorttitle2_2][year]",
       "qualityReport": true,
       "skipFields": "keywords, file,  timestamp",
-      "warnBulkModify": 1,
-      "workers": 0
+      "warnBulkModify": 1
     }
   },
   "items": [

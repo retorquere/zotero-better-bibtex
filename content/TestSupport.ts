@@ -197,7 +197,7 @@ export = new class {
       const items = await ZoteroDB.queryAsync(`
         SELECT item.itemID
         FROM items item
-        JOIN itemTypes it ON item.itemTypeID = it.itemTypeID AND it.typeName NOT IN ('note', 'attachment')
+        JOIN itemTypes it ON item.itemTypeID = it.itemTypeID AND it.typeName NOT IN ('note', 'attachment', 'annotation')
         WHERE item.itemID NOT IN (SELECT itemID FROM deletedItems)
       `)
 

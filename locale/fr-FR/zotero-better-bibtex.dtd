@@ -82,16 +82,17 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.format "Format de copie : ">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.gitbook "GitBook">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.latex.command "Commande LaTeX">
-<!ENTITY better-bibtex.Preferences.citekey.quickCopy.latex "LaTeX">
-<!ENTITY better-bibtex.Preferences.citekey.quickCopy.rtfScan "RTF Scan">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.latex "Citation LaTeX">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.rtfScan "Marqueur de scan RTF">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.roamCiteKey "Clé de citation Roam">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgmode_itemkey "Lien de sélection de Zotero avec Org-mode">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgmode_citekey "Lien de sélection clé de citation avec Org-mode">
-<!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgRef "Org-ref">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgRef "Citation org-ref">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.pandoc.brackets "Encadrer les citations 'Pandoc' avec des parenthèses">
-<!ENTITY better-bibtex.Preferences.citekey.quickCopy.pandoc "Pandoc">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.pandoc "Citation Pandoc">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.selectLink_itemkey "Lien de sélection de Zotero">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.selectLink_citekey "Lien de sélection clé de citation">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.etaTemplate "Canevas Eta">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy "Copie rapide et glisser-déposer">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness "Garder les clés de citation uniques">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict "En cas de conflit, les clés non verrouillées seront">
@@ -142,6 +143,7 @@ En mode « minimal », le nombre d'éléments `span` est minimisé.">
 
 Si cette option est activée et que vous rencontrez un problème autre que l'annulation du cache lors d'une mise à jour, vous *devez* vider le cache et reproduire le problème. Lorsque vous modifiez ce paramètre, le cache est supprimé (comme c'est le cas pour toute modification de paramètre).">
 <!ENTITY better-bibtex.Preferences.advanced.export.workers "Exportation parallèle en arrière-plan :">
+<!ENTITY better-bibtex.Preferences.advanced.export.workers.cache "Activer la mise en cache pour les exportations en arrière-plan">
 
 <!ENTITY better-bibtex.Preferences.advanced.tab.citekeys "Clés de citation">
 

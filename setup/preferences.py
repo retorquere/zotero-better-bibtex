@@ -81,7 +81,7 @@ class Preferences:
         default = pref.get('default')
       )
       pref.var = re.sub(r'-(.)', lambda m: m.group(1).upper(), pref.name.replace('.', '_'))
-      assert pref.var not in self.vars
+      assert pref.var not in self.vars, pref.var
       self.vars.append(pref.var)
 
       # temporary
@@ -265,6 +265,8 @@ class Preferences:
 
 content = os.path.join(root, 'content')
 for xul in os.listdir(content):
-  if xul.endswith('xul'): load(os.path.join(content, xul))
+  if xul.endswith('xul'):
+    print(' ', xul)
+    load(os.path.join(content, xul))
 
 Preferences()

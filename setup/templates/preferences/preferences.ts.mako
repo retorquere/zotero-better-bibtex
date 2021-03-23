@@ -34,31 +34,37 @@ export const Preference = new class PreferenceManager {
   public default = meta.defaults
 
   constructor() {
+    this.baseAttachmentPath = Zotero.Prefs.get('baseAttachmentPath')
+    Zotero.Prefs.registerObserver('baseAttachmentPath', val => { this.baseAttachmentPath = val })
+
     // migrate ancient keys
     let old, key
-    if (typeof (old = Zotero.Prefs.get(key = '${prefix}workers')) !== 'number') {
+    if (typeof (old = Zotero.Prefs.get(key = '${prefix}workers')) === 'number') {
       Zotero.Prefs.clear(key)
-      Zotero.Prefs.set(key, old ? 1 : 0)
+      Zotero.Prefs.set('${prefix}workersMax', 1)
     }
     if (typeof (old = Zotero.Prefs.get(key = '${prefix}suppressTitleCase')) !== 'undefined') {
-      Zotero.Prefs.set('${prefix}exportTitleCase', !old)
       Zotero.Prefs.clear(key)
+      Zotero.Prefs.set('${prefix}exportTitleCase', !old)
     }
     if (typeof (old = Zotero.Prefs.get(key = '${prefix}suppressBraceProtection')) !== 'undefined') {
-      Zotero.Prefs.set('${prefix}exportBraceProtection', !old)
       Zotero.Prefs.clear(key)
+      Zotero.Prefs.set('${prefix}exportBraceProtection', !old)
     }
     if (typeof (old = Zotero.Prefs.get(key = '${prefix}suppressSentenceCase')) !== 'undefined') {
-      Zotero.Prefs.set('${prefix}importSentenceCase', old ? 'off' : 'on+guess')
       Zotero.Prefs.clear(key)
+      Zotero.Prefs.set('${prefix}importSentenceCase', old ? 'off' : 'on+guess')
     }
     if (typeof (old = Zotero.Prefs.get(key = '${prefix}suppressNoCase')) !== 'undefined') {
-      Zotero.Prefs.set('${prefix}importCaseProtection', old ? 'off' : 'as-needed')
       Zotero.Prefs.clear(key)
+      Zotero.Prefs.set('${prefix}importCaseProtection', old ? 'off' : 'as-needed')
     }
     if (typeof (old = Zotero.Prefs.get(key = '${prefix}autoPin')) !== 'undefined') {
-      Zotero.Prefs.set('${prefix}autoPinDelay', old ? 1 : 0)
       Zotero.Prefs.clear(key)
+      Zotero.Prefs.set('${prefix}autoPinDelay', old ? 1 : 0)
+    }
+    if (Zotero.Prefs.get(key = '${prefix}autoExportDelay') === 1) {
+      Zotero.Prefs.set(key, meta.defaults.autoExportDelay)
     }
 
     function changed() { Events.emit('preference-changed', this) }

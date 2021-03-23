@@ -22,7 +22,46 @@ import { flash } from './flash'
 import { override } from './prefs-meta'
 import * as translatorMetadata from '../gen/translators.json'
 
-import { TaskEasy  as Queue } from 'task-easy'
+import { TaskEasy } from 'task-easy'
+
+interface Priority {
+  priority: number
+  timestamp: number
+}
+
+type ExportScope = { type: 'items', items: any[] } | { type: 'library', id: number } | { type: 'collection', collection: any }
+type ExportJob = {
+  scope?: ExportScope
+  path?: string
+  preferences?: Record<string, boolean | number | string>
+  started?: number
+  canceled?: boolean
+  translate: any
+}
+
+class Queue {
+  private queue: TaskEasy<Priority>
+
+  constructor() {
+    this.queue = new TaskEasy((t1: Priority, t2: Priority) => t1.priority === t2.priority ? t1.timestamp < t2.timestamp : t1.priority > t2.priority)
+  }
+
+  public async schedule(task: TaskEasy.Task<string>, translatorID: string, displayOptions: Record<string, boolean>, job: ExportJob) {
+    job.started = Date.now()
+    if (job.path) {
+      for (const scheduled of (this.queue as any).tasks) {
+        if (scheduled.started < job.started && scheduled.args && scheduled.args.length === 3) { // eslint-disable-line no-magic-numbers
+          const scheduledJob = (scheduled.args[2] as ExportJob)
+          if (scheduledJob.path && scheduledJob.path === job.path) {
+            log.debug(job.started, 'cancels export to', job.path, 'started at', scheduledJob.started)
+            scheduledJob.canceled = true
+          }
+        }
+      }
+    }
+    return await this.queue.schedule(task, [translatorID, displayOptions, job], { priority: 1, timestamp: job.started })
+  }
+}
 
 type Trace = {
   translator: string
@@ -43,31 +82,20 @@ type Trace = {
 
 const trace: Trace[] = []
 
-interface IPriority {
-  priority: number
-  timestamp: number
-}
-
-type ExportScope = { type: 'items', items: any[] } | { type: 'library', id: number } | { type: 'collection', collection: any }
-type ExportJob = {
-  scope?: ExportScope
-  path?: string
-  preferences?: Record<string, boolean | number | string>
-}
-
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const Translators = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public byId: Record<string, ITranslatorHeader>
   public byName: Record<string, ITranslatorHeader>
   public byLabel: Record<string, ITranslatorHeader>
-  public itemType: { note: number, attachment: number }
+  public itemType: { note: number, attachment: number, annotation: number }
 
-  private queue = new Queue((t1: IPriority, t2: IPriority) => t1.priority === t2.priority ? t1.timestamp < t2.timestamp : t1.priority > t2.priority)
+  private queue = new Queue
 
-  public workers: { total: number, running: Set<number>, disabled: boolean } = {
+  public workers: { total: number, running: Set<string>, disabled: boolean, startup: number } = {
     total: 0,
     running: new Set,
     disabled: false,
+    startup: 0,
   }
 
   constructor() {
@@ -80,6 +108,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     this.itemType = {
       note: Zotero.ItemTypes.getID('note'),
       attachment: Zotero.ItemTypes.getID('attachment'),
+      annotation: Zotero.ItemTypes.getID('annotation') || 'NULL',
     }
 
     let reinit = false
@@ -176,19 +205,26 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     return translation.newItems
   }
 
-  public async exportItemsByQueuedWorker(translatorID: string, displayOptions: Record<string, boolean>, options: ExportJob) {
-    const workers = Math.max(Preference.workers, 1) // if you're here, at least one worker must be available
-
-    if (this.workers.running.size > workers) {
-      return this.queue.schedule(this.exportItemsByWorker.bind(this, translatorID, displayOptions, options), [], { priority: 1, timestamp: (new Date()).getTime() })
+  public async exportItemsByQueuedWorker(translatorID: string, displayOptions: Record<string, boolean>, job: ExportJob) {
+    if (this.workers.running.size > Preference.workersMax) {
+      return this.queue.schedule(this.exportItemsByWorker.bind(this), translatorID, displayOptions, job)
     }
     else {
-      return this.exportItemsByWorker(translatorID, displayOptions, options)
+      return this.exportItemsByWorker(translatorID, displayOptions, job)
     }
   }
 
-  public async exportItemsByWorker(translatorID: string, displayOptions: Record<string, boolean>, options: ExportJob) {
+  public async exportItemsByWorker(translatorID: string, displayOptions: Record<string, boolean>, job: ExportJob) {
+    if (job.path && job.canceled) {
+      log.debug('export to', job.path, 'started at', job.started, 'canceled')
+      return ''
+    }
+
     await Zotero.BetterBibTeX.ready
+    if (job.path && job.canceled) {
+      log.debug('export to', job.path, 'started at', job.started, 'canceled')
+      return ''
+    }
 
     const translator = this.byId[translatorID]
 
@@ -213,46 +249,46 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
     trace.push(current_trace)
 
-    options.preferences = options.preferences || {}
+    job.preferences = job.preferences || {}
     displayOptions = displayOptions || {}
 
     // undo override smuggling so I can pre-fetch the cache
     const cloaked_override = 'preference_'
     for (const [pref, value] of Object.entries(displayOptions)) {
       if (pref.startsWith(cloaked_override)) {
-        options.preferences[pref.replace(cloaked_override, '')] = (value as unknown as any)
+        job.preferences[pref.replace(cloaked_override, '')] = (value as unknown as any)
         delete displayOptions[pref]
       }
     }
 
-    const caching = !(
+    const caching = Preference.workersCache && !(
       // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
       displayOptions.exportFileData
 
       // jabref 4 stores collection info inside the reference, and collection info depends on which part of your library you're exporting
-      || (translator.label.includes('TeX') && options.preferences.jabrefFormat >= 4) // eslint-disable-line no-magic-numbers
+      || (translator.label.includes('TeX') && job.preferences.jabrefFormat >= 4) // eslint-disable-line no-magic-numbers
 
       // relative file paths are going to be different based on the file being exported to
-      || options.preferences.relativeFilePaths
+      || job.preferences.relativeFilePaths
     )
 
     let last_trace = start
 
     const cache = caching && Cache.getCollection(translator.label)
 
-    const params = Object.entries({
+    this.workers.total += 1
+    const id = `${this.workers.total}`
+    this.workers.running.add(id)
+
+    const workerContext = Object.entries({
       version: Zotero.version,
       platform: Preference.platform,
       translator: translator.label,
-      output: options.path || '',
+      output: job.path || '',
       localeDateOrder: Zotero.BetterBibTeX.localeDateOrder,
       debugEnabled: Zotero.Debug.enabled ? 'true' : 'false',
-    }).map(([k, v]) => `${encodeURI(k)}=${encodeURI(v)}`).join('&')
-
-    this.workers.total += 1
-    const id = this.workers.total
-    this.workers.running.add(id)
-    const prefix = `{${translator.label} worker ${id}}`
+      worker: id,
+    }).map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&')
 
     const deferred = Zotero.Promise.defer()
     let worker: ChromeWorker = null
@@ -260,7 +296,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     for (let attempt = 0; !worker && attempt < 5; attempt++) { // eslint-disable-line no-magic-numbers
       try {
         if (attempt > 0) await sleep(2 * 1000 * attempt) // eslint-disable-line no-magic-numbers
-        worker = new ChromeWorker(`resource://zotero-better-bibtex/worker/Zotero.js?${params}`)
+        worker = new ChromeWorker(`resource://zotero-better-bibtex/worker/Zotero.js?${workerContext}`)
       }
       catch (err) {
         log.error('new ChromeWorker:', err)
@@ -275,11 +311,11 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       )
       this.workers.disabled = true
       // this returns a promise for a new export, but now a foreground export
-      return this.exportItems(translatorID, displayOptions, options.scope, options.path)
+      return this.exportItems(translatorID, displayOptions, job.scope, job.path)
     }
 
     const config: BBTWorker.Config = {
-      preferences: { ...Preference.all, ...options.preferences },
+      preferences: { ...Preference.all, ...job.preferences },
       options: displayOptions || {},
       items: [],
       collections: [],
@@ -287,25 +323,27 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       cache: {},
     }
 
+    let items: any[] = []
     worker.onmessage = (e: { data: BBTWorker.Message }) => {
       switch (e.data?.kind) {
         case 'error':
-          log.error('QBW: failed:', Date.now() - start)
-          log.error(e.data)
-          Zotero.debug(`${prefix} error: ${e.data.message}`)
+          log.status({error: true, translator: translator.label, worker: id}, 'QBW failed:', Date.now() - start, e.data)
+          job.translate._runHandler('error', e.data) // eslint-disable-line no-underscore-dangle
           deferred.reject(e.data.message)
           worker.terminate()
           this.workers.running.delete(id)
           break
 
         case 'debug':
-          Zotero.debug(`${prefix} ${e.data.message}`)
+          // this is pre-formatted
+          Zotero.debug(e.data.message)
           break
 
         case 'item':
           now = Date.now()
           current_trace.export.duration.push(now - last_trace)
           last_trace = now
+          job.translate._runHandler('itemDone', items[e.data.item]) // eslint-disable-line no-underscore-dangle
           break
 
         case 'done':
@@ -342,27 +380,28 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
         default:
           if (JSON.stringify(e) !== '{"isTrusted":true}') { // why are we getting this?
-            log.debug(`unexpected message in host from ${prefix} ${JSON.stringify(e)}`)
+            log.status({translator: translator.label, worker: id}, 'enexpected message from worker', e)
           }
           break
       }
     }
 
     worker.onerror = e => {
-      Zotero.debug(`${prefix} error: ${e}`)
-      log.error('QBW: failed:', Date.now() - start)
+      log.status({error: true, translator: translator.label, worker: id}, 'QBW: failed:', Date.now() - start, e)
+      job.translate._runHandler('error', e) // eslint-disable-line no-underscore-dangle
       deferred.reject(e.message)
       worker.terminate()
       this.workers.running.delete(id)
     }
 
-    const scope = this.exportScope(options.scope)
-    let items: any[] = []
+    const scope = this.exportScope(job.scope)
+    log.debug('export scope:', scope)
     let collections: any[] = []
     switch (scope.type) {
       case 'library':
         items = await Zotero.Items.getAll(scope.id, true)
-        collections = Zotero.Collections.getByLibrary(scope.id, true)
+        collections = Zotero.Collections.getByLibrary(scope.id) // , true)
+        log.debug('library export, got', collections.length, 'collections')
         break
 
       case 'items':
@@ -383,6 +422,11 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       default:
         throw new Error(`Unexpected scope: ${Object.keys(scope)}`)
     }
+    if (job.path && job.canceled) {
+      log.debug('export to', job.path, 'started at', job.started, 'canceled')
+      return ''
+    }
+    items = items.filter(item => !item.isAnnotation?.())
 
     // use a loop instead of map so we can await for beachball protection
     let batch = Date.now()
@@ -403,6 +447,10 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
     current_trace.items = config.items.length
     current_trace.cached.serializer = count.cached
+    if (job.path && job.canceled) {
+      log.debug('export to', job.path, 'started at', job.started, 'canceled')
+      return ''
+    }
 
     if (this.byId[translatorID].configOptions?.getCollections) {
       config.collections = collections.map(collection => {
@@ -444,6 +492,13 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     now = Date.now()
+
+    // if the average startup time is greater than the autoExportDelay, bump up the delay to prevent stall-cascades
+    this.workers.startup += Math.ceil((now - start) / 1000) // eslint-disable-line no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
+    if (this.workers.total > 5 && (this.workers.startup / this.workers.total) > Preference.autoExportDelay) Preference.autoExportDelay = Math.ceil(this.workers.startup / this.workers.total)
+    log.debug('worker:', { avgstartup: this.workers.startup / this.workers.total, startup: now - start, caching, workers: this.workers, autoExportDelay: Preference.autoExportDelay })
+
     current_trace.prep.duration.push(now - last_trace)
     current_trace.prep.total = now - start
     last_trace = now
@@ -454,9 +509,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     catch (err) {
       worker.terminate()
       this.workers.running.delete(id)
-      log.error(err)
+      log.status({error: true, translator: translator.label, worker: id}, 'QBW: failed:', Date.now() - start, err)
       deferred.reject(err)
-      log.error('QBW: failed:', Date.now() - start)
     }
 
     return deferred.promise
@@ -613,7 +667,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     let sql: string = null
-    const cond = `i.itemTypeID NOT IN (${this.itemType.note}, ${this.itemType.attachment}) AND i.itemID NOT IN (SELECT itemID FROM deletedItems)`
+    const cond = `i.itemTypeID NOT IN (${this.itemType.note}, ${this.itemType.attachment}, ${this.itemType.annotation}) AND i.itemID NOT IN (SELECT itemID FROM deletedItems)`
     if (scope.library) {
       sql = `SELECT i.itemID FROM items i WHERE i.libraryID = ${scope.library} AND ${cond}`
 

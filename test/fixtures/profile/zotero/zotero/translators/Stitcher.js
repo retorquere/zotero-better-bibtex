@@ -1,15 +1,15 @@
 {
 	"translatorID": "406d8800-17b2-498c-8e79-49311caedc5f",
+	"translatorType": 4,
 	"label": "Stitcher",
 	"creator": "Sebastian Karcher",
-	"target": "^https?://(www\\.)?stitcher\\.com/(search\\?|podcast/)",
+	"target": "^https?://(www\\.)?stitcher\\.com/(search|show)/",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2020-10-11 15:20:22"
+	"lastUpdated": "2021-03-11 14:10:00"
 }
 
 /*
@@ -41,7 +41,7 @@ function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelec
 
 
 function detectWeb(doc, url) {
-	if (url.includes('/e/')) {
+	if (url.includes('/episode/')) {
 		return "podcast";
 	}
 	else if (getSearchResults(doc, true)) {
@@ -55,31 +55,16 @@ function getSearchResults(doc, checkOnly) {
 	var found = false;
 
 	// Podcast pages
-	var rows = doc.querySelectorAll('li>div#episodeContainer a.title[href*="/e/"]');
-	if (rows.length) {
-		for (let row of rows) {
-			let href = row.href;
-			let title = ZU.trimInternal(row.textContent);
-			if (!href || !title) continue;
-			if (checkOnly) return true;
-			found = true;
-			items[href] = title;
-		}
-		return found ? items : false;
+	var rows = doc.querySelectorAll('a.episode-link');
+	for (let row of rows) {
+		let href = row.href;
+		let title = ZU.trimInternal(row.textContent);
+		if (!href || !title) continue;
+		if (checkOnly) return true;
+		found = true;
+		items[href] = title;
 	}
-	else {
-		// Search results (episodes only)
-		rows = doc.querySelectorAll('ul#episodeResultsList>li');
-		for (let row of rows) {
-			let href = attr(row, 'a', 'data-eid');
-			let title = ZU.trimInternal(text(row, 'h4'));
-			if (!href || !title) continue;
-			if (checkOnly) return true;
-			found = true;
-			items["https://www.stitcher.com/s?eid=" + href] = title;
-		}
-		return found ? items : false;
-	}
+	return found ? items : false;
 }
 
 function doWeb(doc, url) {
@@ -94,45 +79,24 @@ function doWeb(doc, url) {
 }
 
 function scrape(doc, url) {
-	let configJSON = ZU.xpathText(doc, '//script[contains(text(), "stitcherConfig")]');
 	// Z.debug(configJSON)
-	let title = configJSON.match(/title[\t\s]*:[\t\s]*"([^"]+)/);
-	let date = configJSON.match(/pubDate[\t\s]*:[\t\s]*'([^']+)/);
-	let podcast = configJSON.match(/showTitle"[\t\s]*:[\t\s]*"([^"]+)/);
-	let duration = configJSON.match(/simpleDuration[\t\s]*:[\t\s]*"([^"]+)/);
-	let abstract = text(doc, '#description-full p');
-	var translator = Zotero.loadTranslator('web');
-	// Embedded Metadata
-	translator.setTranslator('951c027d-74ac-47d4-a107-9c3069ab7b48');
-	// translator.setDocument(doc);
-
-	translator.setHandler('itemDone', function (obj, item) {
-		if (title) {
-			item.title = title[1];
-		}
-		if (abstract) {
-			item.abstractNote = abstract;
-		}
-		// Zotero will automatically move this to Extra
-		if (date) {
-			item.issued = date[1];
-		}
-		if (podcast) {
-			item.seriesTitle = podcast[1];
-		}
-		if (duration) {
-			item.runningTime = duration[1];
-		}
-
-		// tags are useless
-		item.tags = [];
-		item.complete();
-	});
-
-	translator.getTranslatorObject(function (trans) {
-		trans.itemType = "podcast";
-		trans.doWeb(doc, url);
-	});
+	let title = text(doc, ".episodeTitle");
+	let episodeInfo = text(doc, ".episodeInfo");
+	if (episodeInfo) {
+		var duration = episodeInfo.replace(/\|\n?.+/, "").trim();
+		var date = episodeInfo.replace(/\.+\|/, "").trim();
+	}
+	let podcast = text(doc, ".showTitle");
+	let abstract = text(doc, ".episodeDescription");
+	var item = new Zotero.Item("podcast");
+	item.title = title;
+	item.seriesTitle = podcast;
+	item.abstractNote = abstract;
+	if (duration) item.runningTime = duration;
+	if (date) item.date = ZU.strToISO(date);
+	item.url = url;
+	item.attachments.push({ document: doc, title: "Snapshot" });
+	item.complete();
 }
 
 
@@ -140,18 +104,17 @@ function scrape(doc, url) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "https://www.stitcher.com/podcast/aera-qualitative-research-sig/qualitative-conversations/e/52527940",
+		"url": "https://www.stitcher.com/show/qualitative-conversations/episode/episode-3-the-qualitative-data-repository-dr-sebastian-karcher-52527940",
 		"items": [
 			{
 				"itemType": "podcast",
 				"title": "Episode 3: The Qualitative Data Repository & Dr. Sebastian Karcher",
 				"creators": [],
 				"abstractNote": "Learn about resources available through Syracuse University's Qualitative Data Repository (QDR), as your host, Dr. Jessica Lester, joins in conversation with QDR Associate Director, Dr. Sebastian Karcher.",
-				"language": "en",
 				"runningTime": "23 minutes",
 				"seriesTitle": "Qualitative Conversations",
 				"shortTitle": "Episode 3",
-				"url": "https://www.stitcher.com/s?eid=52527940",
+				"url": "https://www.stitcher.com/show/qualitative-conversations/episode/episode-3-the-qualitative-data-repository-dr-sebastian-karcher-52527940",
 				"attachments": [
 					{
 						"title": "Snapshot",
@@ -166,39 +129,13 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.stitcher.com/podcast/qualitative-conversations",
+		"url": "https://www.stitcher.com/show/qualitative-conversations",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "https://www.stitcher.com/search?q=zotero",
+		"url": "https://www.stitcher.com/search/Zotero/episodes",
 		"items": "multiple"
-	},
-	{
-		"type": "web",
-		"url": "https://www.stitcher.com/podcast/this-american-life/e/77684711",
-		"items": [
-			{
-				"itemType": "podcast",
-				"title": "717: Audience of One",
-				"creators": [],
-				"abstractNote": "At a time when going to the movies is mostly out of the question, we bring the movies to you.",
-				"language": "en",
-				"runningTime": "71 minutes",
-				"seriesTitle": "This American Life",
-				"shortTitle": "717",
-				"url": "https://www.stitcher.com/s?eid=77684711",
-				"attachments": [
-					{
-						"title": "Snapshot",
-						"mimeType": "text/html"
-					}
-				],
-				"tags": [],
-				"notes": [],
-				"seeAlso": []
-			}
-		]
 	}
 ]
 /** END TEST CASES **/

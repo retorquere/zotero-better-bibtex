@@ -13,7 +13,7 @@
       "citekeyFormat": "[auth:lower][year]",
       "postscript": "if (Translator.BetterBibTeX && item.itemType === 'conferencePaper' && item.extraFields.kv && item.publisher) {\n  if ('event-place' in item.extraFields.kv) {\n    let eventPlace = item.extraFields.kv['event-place']\n    reference.add({name: 'address', value: eventPlace})\n  }\n//  if ('publisher-place' in item.extraFields.kv) {\n//    let publisherPlace = item.extraFields.kv['publisher-place']\n//    reference.add({name: 'publisher',  value: item.publisher + ' (' + publisherPlace + ')'})\n//  }\n}",
       "skipFields": "abstract,file,keywords,note",
-      "workers": 2
+      "workersMax": 2
     }
   },
   "items": [

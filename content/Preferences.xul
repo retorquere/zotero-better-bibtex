@@ -106,6 +106,14 @@
           to have these pandoc citations surrounded with brackets or not.
         </bbt:doc>
 
+        <preference name="extensions.zotero.translators.better-bibtex.quickCopyEta" id="pref-better-bibtex-quickCopyEta" type="string" default=""/>
+        <bbt:doc>
+          Used for drag-and-drop/quick copy citations in `Build your own` format. This is going to get pretty technical, sorry.
+
+          You can paste a [Eta](https://eta.js.org/) template here. Inside the template, you will find an array `it.items`, each of which is a serialized Zotero item.
+          To find out what an item looks like inside the template, export some items as BetterBibTeX JSON.
+        </bbt:doc>
+
         <!-- the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly -->
         <preference name="extensions.zotero.translators.better-bibtex.citekeyFormat" id="pref-better-bibtex-citekeyFormat" type="string" default="&#x200B;[auth:lower][shorttitle3_3][year]"/>
         <bbt:doc>
@@ -282,7 +290,7 @@
           * `text`: import without marking it as TeX code, so on re-export it will be treated as regular text
         </bbt:doc>
 
-        <preference name="extensions.zotero.translators.better-bibtex.autoExportDelay" type="int" default="1"/>
+        <preference name="extensions.zotero.translators.better-bibtex.autoExportDelay" type="int" default="5"/>
         <bbt:doc>
           If you have auto-exports set up, BBT will wait this many seconds before actually kicking off the exports to buffer multiple changes in quick succession
           setting off an unreasonable number of auto-exports. Minimum is 1 second. Changes to this preference take effect after restarting Zotero.
@@ -354,6 +362,8 @@
         <preference name="extensions.zotero.translators.better-bibtex.autoExportPathReplaceSpace" type="string" default=" "/>
         <preference name="extensions.zotero.translators.better-bibtex.autoExportPathReplaceDiacritics" type="bool" default="false"/>
 
+        <preference name="extensions.zotero.translators.better-bibtex.baseAttachmentPath" type="string" default=""/>
+
         <preference name="extensions.zotero.translators.better-bibtex.postscriptOverride" type="string" default=""/>
         <bbt:doc>
           You can use a custom postscript per export directory:
@@ -423,11 +433,13 @@
           but you can disable this by checking "Do not ask again" in that dialog.
         </bbt:doc>
 
-        <preference name="extensions.zotero.translators.better-bibtex.workers" id="pref-better-bibtex-workers" type="int" default="1"/>
+        <preference name="extensions.zotero.translators.better-bibtex.workersMax" id="pref-better-bibtex-workersMax" type="int" default="1"/>
         <bbt:doc>
-          BBT can now perform its exports in a separate thread, and should no longer block Zotero's UI pretty much regardless of how large your library is.
-          While it's been tested and seems to work well, I still consider it to be experimental at this stage. You can turn it off by setting this value to `0`
-          and get the old (blocking) behavior back.
+          BBT can now perform its exports in a separate thread, and should no longer block Zotero's UI pretty much regardless of how large your library is. The default of 1 parallel export should suit most needs, but if you have many auto-exports set up, you may want to raise the maximum parallel exports to prevent queueing of exports. It is possible to turn background exports off by setting this value to `0` in the hidden preferences; you will get the old (blocking) behavior back, but you can't complain about Zotero being laggy during auto-exports. All Zotero exports are blocking, and it's a minor miracle I got background exports to work at all.
+        </bbt:doc>
+        <preference name="extensions.zotero.translators.better-bibtex.workersCache" id="pref-better-bibtex-workersCache" type="bool" default="true"/>
+        <bbt:doc>
+          Even though BBT exports happen in a separate thread, some work needs to be done before the background export can start. Part of this work is preloading the cache. You can shorten the (blocking) preparation time by turning off the cache, at the cost of longer export times.
         </bbt:doc>
 
         <preference name="extensions.zotero.translators.better-bibtex.platform" type="string" default=""/>
@@ -518,19 +530,27 @@
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.gitbook;" value="gitbook"/>
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.selectLink_citekey;" value="selectLink_citekey"/>
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.selectLink_itemkey;" value="selectLink"/>
+                        <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.etaTemplate;" value="eta"/>
                       </menupopup>
                     </menulist>
                   </row>
-                  <row id="id-better-bibtex-preferences-citeCommand">
+                  <row class="better-bibtex-preferences-quickcopy-details" id="better-bibtex-preferences-quickcopy-latex">
                     <label bbt:preference="pref-better-bibtex-citeCommand">&better-bibtex.Preferences.citekey.quickCopy.latex.command;</label>
                     <textbox size="10" preference="pref-better-bibtex-citeCommand"
                       onchange="Zotero.BetterBibTeX.Preferences.update();"
                       onkeypress="Zotero.setTimeout(function() { Zotero.BetterBibTeX.Preferences.update() }, 1);"/>
                   </row>
-                  <row id="id-better-bibtex-preferences-quickCopyPandocBrackets">
+                  <row class="better-bibtex-preferences-quickcopy-details" id="better-bibtex-preferences-quickcopy-pandoc">
                     <checkbox id="id-better-bibtex-preferences-quickCopyPandocBrackets"
                       preference="pref-better-bibtex-quickCopyPandocBrackets"
                       label="&better-bibtex.Preferences.citekey.quickCopy.pandoc.brackets;"/>
+                  </row>
+                  <row class="better-bibtex-preferences-quickcopy-details" id="better-bibtex-preferences-quickcopy-eta">
+                    <label
+                      class="text-link"
+                      href="https://retorque.re/zotero-better-bibtex/installation/preferences/citation-keys/#quick-copydrag-and-drop-citations"
+                      bbt:preference="pref-better-bibtex-quickCopyEta">&better-bibtex.Preferences.citekey.quickCopy.etaTemplate;</label>
+                    <textbox rows="10" flex="1" multiline="true" preference="pref-better-bibtex-quickCopyEta"/>
                   </row>
                 </rows>
               </grid>
@@ -775,8 +795,6 @@
                 </tabpanel>
               </tabpanels>
             </tabbox>
-
-            <label class="better-bibtex-preferences-worker-state"/>
           </tabpanel>
 
           <tabpanel id="better-bibtex-prefs-advanced" orient="vertical">
@@ -815,8 +833,9 @@
                     <image tooltip="tooltip-retainCache" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
                   </hbox>
                   <hbox>
-                    <label bbt:preference="pref-better-bibtex-workers">&better-bibtex.Preferences.advanced.export.workers;</label>
-                    <scale min="0" max="10" preference="pref-better-bibtex-workers"/>
+                    <label bbt:preference="pref-better-bibtex-workersMax">&better-bibtex.Preferences.advanced.export.workers;</label>
+                    <scale min="1" max="10" preference="pref-better-bibtex-workersMax"/>
+                    <checkbox preference="pref-better-bibtex-workersCache" label="&better-bibtex.Preferences.advanced.export.workers.cache;"/>
                   </hbox>
                   <label class="better-bibtex-preferences-worker-state"/>
                   <button label="&better-bibtex.Preferences.resetCache;" oncommand="Zotero.BetterBibTeX.Preferences.cacheReset()"/>

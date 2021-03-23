@@ -15,7 +15,7 @@
       "kuroshiro": true,
       "qualityReport": true,
       "skipFields": "abstract, copyright, googlebooks",
-      "workers": 4
+      "workersMax": 4
     }
   },
   "items": [

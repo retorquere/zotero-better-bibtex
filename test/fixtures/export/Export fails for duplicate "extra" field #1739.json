@@ -9,8 +9,7 @@
     "preferences": {
       "asciiBibLaTeX": true,
       "citekeyFormat": "[auth:lower][year]",
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
-      "workers": 0
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc"
     }
   },
   "items": [

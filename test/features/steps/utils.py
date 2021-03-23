@@ -60,6 +60,9 @@ def expand_scenario_variables(context, filename, star=True):
     if star: filename = filename.replace('*', scenario)
   return filename
 
+def clean_html(html):
+  return BeautifulSoup(html, 'html.parser').prettify()
+
 def html2md(html):
   if '<' in html: html = md(BeautifulSoup(html, 'lxml').prettify())
   return html.strip()

@@ -1,13 +1,17 @@
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 declare const Zotero: any
 
-import format = require('string-template')
-
 import { Translator } from './lib/translator'
 export { Translator }
 import { ZoteroTranslator } from '../gen/typings/serialized-item'
 
 import { Exporter } from './bibtex/exporter'
+
+import { simplifyForExport } from '../gen/items/items'
+
+import * as Eta from 'eta'
+
+Eta.config.autoEscape = false
 
 function select_by_key(item) {
   const [ , kind, lib, key ] = item.uri.match(/^https?:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^/]+)\/items\/(.+)/)
@@ -126,11 +130,9 @@ const Mode = {
     Zotero.write(`{${reference.join('; ')}}`)
   },
 
-  'string-template'(items) {
+  eta(items) {
     try {
-      const { citation, item, sep } = JSON.parse(Translator.preferences.citeCommand)
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      Zotero.write(format(citation || '{citation}', { citation: items.map(i => format(item || '{item}', { item: i })).join(sep || '') }))
+      Zotero.write(Eta.render(Translator.preferences.quickCopyEta, { items: items.map(simplifyForExport) }))
     }
     catch (err) {
       Zotero.write(`${err}`)
