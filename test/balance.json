@@ -1,7 +1,7 @@
 {
   "duration": {
     "(non-)dropping particle handling #313": 2800,
-    "AUX scanner": 8980,
+    "AUX scanner": 8970,
     "BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372": 270,
     "Better BibTeX Import 2": 1160,
     "BibTeX name escaping has a million inconsistencies #438": 480,
@@ -79,7 +79,7 @@
     "Export 1 references for BibLaTeX to Export Newspaper Article misses section field #132": 330,
     "Export 1 references for BibLaTeX to Export error for items without publicationTitle and Preserve BibTeX variables enabled #201": 310,
     "Export 1 references for BibLaTeX to Export fails for duplicate \"extra\" field #1739": {
-      "msecs": 380,
+      "msecs": 390,
       "runs": -236
     },
     "Export 1 references for BibLaTeX to Export mapping for reporter field #219": 360,
@@ -228,7 +228,7 @@
       "runs": -80
     },
     "Export 1 references for BibTeX to Word segmentation for Chinese references #1682": {
-      "msecs": 1450,
+      "msecs": 1530,
       "runs": -260
     },
     "Export 1 references for BibTeX to [authN_M] citation key syntax has off-by-one error #899": 370,
@@ -271,7 +271,7 @@
     "Export 2 references for BibLaTeX to biblatex export of Presentation; Use type and venue fields #644": 530,
     "Export 2 references for BibLaTeX to csquotes #302": 420,
     "Export 2 references for BibLaTeX to google-scholar like references #1705": {
-      "msecs": 520,
+      "msecs": 530,
       "runs": -213
     },
     "Export 2 references for BibLaTeX to map csl-json variables #293": 450,
@@ -311,7 +311,7 @@
     "Export 6 references for BibLaTeX to Better BibLaTeX.stable-keys": 620,
     "Export 8 references for BibLaTeX to Don't title-case sup-subscripts #1037": 660,
     "Export as Collected Notes does not list subcollections #1768": {
-      "msecs": 4640,
+      "msecs": 4660,
       "runs": -256
     },
     "Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825": 990,
@@ -354,7 +354,7 @@
     "Import 1 references from Spaces lost when expanding string variables during import #1081": 1020,
     "Import 1 references from Wrong ring-above import #1115": 1020,
     "Import 1 references from collaborators to contributors": {
-      "msecs": 1200,
+      "msecs": 1210,
       "runs": -209
     },
     "Import 1 references from eprinttype field dropped on import #959": 1020,
@@ -377,7 +377,7 @@
       "runs": -161
     },
     "Import 3 references from Better BibTeX.009": 1130,
-    "Import 3 references from Import Jabref fileDirectory, unexpected reference type #1058": 1880,
+    "Import 3 references from Import Jabref fileDirectory, unexpected reference type #1058": 1890,
     "Import 4 references from Title of German entry converted to lowercase during import #1350": 1310,
     "Import 8 references from Overline during Import #1467": 1720,
     "Import 9 references from Better BibLaTeX import improvements #549": 1520,
@@ -401,24 +401,24 @@
     "Pandoc-LaTeX-SCHOMD Citation Export": 1280,
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 401010,
+    "Really Big whopping library": 400340,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 43440,
+      "msecs": 43500,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
     "Square brackets in Publication field (85), and non-pinned keys must change when the pattern does": 450,
-    "Unabbreviate on import #1436-1": 39910,
+    "Unabbreviate on import #1436-1": 39900,
     "Unbalanced vphantom escapes #1043": 760,
     "arXiv identifiers in BibLaTeX export #460": 1180,
     "auto-export": 14370,
     "automatic tags in export #1270": 410,
     "bibtex; url export does not survive underscores #402": 670,
     "ids field should be created in raw mode #1729": {
-      "msecs": 9220,
+      "msecs": 9230,
       "runs": -227
     },
     "importing a title-cased bib #1246": 1320,
@@ -434,7 +434,7 @@
       "runs": -36
     },
     "web_page and other mendeley idiocy": {
-      "msecs": 39710,
+      "msecs": 39790,
       "runs": -239
     }
   },
@@ -569,6 +569,7 @@
       "Export 1 references for BibLaTeX to URL-DOI exclusive export broken for item types with no dedicated DOI field #1331",
       "Export 1 references for BibLaTeX to preserve @strings between import-export #1162",
       "Export 1 references for BibTeX to shortyear adds 00 when date is missing #1769",
+      "Export 1 references for BibTeX to Word segmentation for Chinese references #1682",
       "Export 1 references for BibTeX to Cannot ignore archivePrefix export field #1744",
       "Export 1 references for BibTeX to url field is having its special characters escaped in BBT Bibtex #1716",
       "Export 1 references for BibTeX to Match against @string value for export #1597",
@@ -732,7 +733,7 @@
       "Identical Pinned keys lost when merging duplicated records #1721"
     ]
   },
-  "runs": 261,
+  "runs": 262,
   "slow": {
     "1": [
       "Export 1 references for BibLaTeX to biber 2.14 rejects the date field generated from Better BibLaTex #1695",
@@ -865,6 +866,7 @@
       "Export 5 references for BibLaTeX to date ranges #747+#746",
       "Export 1 references for BibLaTeX to preserve @strings between import-export #1162",
       "Export 1 references for BibTeX to shortyear adds 00 when date is missing #1769",
+      "Export 1 references for BibTeX to Word segmentation for Chinese references #1682",
       "Export 1 references for BibTeX to Cannot ignore archivePrefix export field #1744",
       "Export 1 references for BibTeX to url field is having its special characters escaped in BBT Bibtex #1716",
       "Export 1 references for BibTeX to Match against @string value for export #1597",
@@ -1022,8 +1024,7 @@
       "Merging error with arXiv ID #1373",
       "Duplicate Citation Key Alias #1384",
       "ids field should be created in raw mode #1729",
-      "Identical Pinned keys lost when merging duplicated records #1721",
-      "Export 1 references for BibTeX to Word segmentation for Chinese references #1682"
+      "Identical Pinned keys lost when merging duplicated records #1721"
     ],
     "2": [
       "Really Big whopping library"
