@@ -152,6 +152,10 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!ENTITY better-bibtex.Preferences.advanced.extraMergeCSL "les champs qui sont reconnus comme champs CSL par Zotero">
 <!ENTITY better-bibtex.Preferences.advanced.extraMergeTeX "leurs champs `tex.*`">
 
+<!ENTITY better-bibtex.Preferences.advanced.ideographs "Ideographs in citekeys">
+<!ENTITY better-bibtex.Preferences.advanced.ideographs.kuroshiro "Apply kuroshiro romajization in for Japanese names/titles. Uses a lot of memory.">
+<!ENTITY better-bibtex.Preferences.advanced.ideographs.jieba "Enable 'jieba' filter in citekey patterns. Uses a lot of memory.">
+
 <!ENTITY better-bibtex.Preferences.export.qualityReport "Inclure des commentaires à propos de problèmes potentiels avec les références ">
 <!ENTITY better-bibtex.Preferences.export.automaticTags "Inclure les tags automatiques dans l'export">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat "Inclure les métadonnées spécifiques à JabRef :">
