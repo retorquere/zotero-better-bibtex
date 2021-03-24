@@ -126,7 +126,7 @@ default: `no`
 
 When merging items, also merge their `tex.*` fields.
 
-#### Apply kuroshiro romajization in for Japanese names/titles. Uses a lot of memory.
+#### Apply kuroshiro romajization in Japanese names/titles. Uses a lot of memory.
 
 default: `no`
 
