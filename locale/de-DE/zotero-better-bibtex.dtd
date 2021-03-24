@@ -152,7 +152,7 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.Preferences.advanced.extraMergeTeX "their `tex.*` fields">
 
 <!ENTITY better-bibtex.Preferences.advanced.ideographs "Ideographs in citekeys">
-<!ENTITY better-bibtex.Preferences.advanced.ideographs.kuroshiro "Apply kuroshiro romajization in for Japanese names/titles. Uses a lot of memory.">
+<!ENTITY better-bibtex.Preferences.advanced.ideographs.kuroshiro "Apply kuroshiro romajization in Japanese names/titles. Uses a lot of memory.">
 <!ENTITY better-bibtex.Preferences.advanced.ideographs.jieba "Enable 'jieba' filter in citekey patterns. Uses a lot of memory.">
 
 <!ENTITY better-bibtex.Preferences.export.qualityReport "Füge Kommentare über mögliche Probleme mit den Verweisen hinzu">
