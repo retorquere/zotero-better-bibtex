@@ -126,4 +126,16 @@ default: `no`
 
 When merging items, also merge their `tex.*` fields.
 
+#### Apply kuroshiro romajization in for Japanese names/titles. Uses a lot of memory.
+
+default: `no`
+
+When on, BBT will load kuroshiro for romajization in citekeys. This uses a lot of memory, easily 100MB. If you don't have Japanese titles/names, keep this off.
+
+#### Enable 'jieba' filter in citekey patterns. Uses a lot of memory.
+
+default: `no`
+
+When on, BBT will make Chinese word segmentation available for citekey construction. This uses a lot of memory, easily 70MB. If you don't have Chinese titles/names, keep this off.
+
 
