@@ -464,7 +464,7 @@
           <tab label="&better-bibtex.Preferences.advanced;"/>
         </tabs>
 
-        <tabpanels id="better-bibtex-prefs-tabpanels">
+        <tabpanels id="better-bibtex-prefs-tabpanels" flex="1" style="overflow: auto; width: 100%; height: 100%;">
           <tabpanel id="better-bibtex-prefs-citation-keys" orient="vertical">
             <groupbox>
               <caption label="&better-bibtex.Preferences.citekey.citekeys;"/>
