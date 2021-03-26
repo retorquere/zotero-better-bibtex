@@ -253,6 +253,15 @@ export const Translator = new class implements ITranslator { // eslint-disable-l
     }
   }
 
+  public nestedCollections(collection = null) {
+    if (!collection) return Object.values(this.collections).filter(coll => !coll.parent).map(coll => this.nestedCollections(coll))
+
+    return {
+      ...collection,
+      collections: collection.map(key => this.nestedCollections(this.collections[key]))
+    }
+  }
+
   public items(): ZoteroTranslator.Item[] {
     if (!this.sortedItems) {
       this.sortedItems = []
