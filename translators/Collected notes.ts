@@ -39,7 +39,7 @@ class Exporter {
     const filed: Set<number> = new Set
     const collections: Record<string, ExpandedCollection> = {}
 
-    for (let item of Translator.items()) {
+    for (let item of Translator.items.remaining) {
       item = clean(item)
       if (this.keep(item)) items[item.itemID] = item
     }

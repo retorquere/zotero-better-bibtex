@@ -39,7 +39,7 @@ export function doExport(): void {
   }
 
   const items: Item[] = []
-  for (const item of Translator.items()) {
+  for (const item of Translator.items.remaining) {
     if (['note', 'attachment'].includes(item.itemType)) continue
 
     const label = [ item.citationKey ]

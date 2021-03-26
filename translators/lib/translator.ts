@@ -18,6 +18,14 @@ const cacheDisabler = new class {
   }
 }
 
+type NestedCollection = {
+  key: string
+  name: string
+  items: ZoteroTranslator.Item[]
+  collections: NestedCollection[]
+  parent?: NestedCollection
+}
+
 type TranslatorHeader = {
   translatorID: string
   translatorType: number
@@ -96,7 +104,10 @@ export const Translator = new class implements ITranslator { // eslint-disable-l
   public header: TranslatorHeader
 
   public collections: Record<string, ZoteroTranslator.Collection>
-  private sortedItems: ZoteroTranslator.Item[]
+  private _items: {
+    remaining: ZoteroTranslator.Item[]
+    map: Record<number, ZoteroTranslator.Item>
+  }
   private currentItem: ZoteroTranslator.Item
 
   public isJurisM: boolean
@@ -253,35 +264,44 @@ export const Translator = new class implements ITranslator { // eslint-disable-l
     }
   }
 
-  public nestedCollections(collection = null) {
-    if (!collection) return Object.values(this.collections).filter(coll => !coll.parent).map(coll => this.nestedCollections(coll))
-
-    return {
-      ...collection,
-      collections: collection.map(key => this.nestedCollections(this.collections[key]))
+  get collectionTree(): NestedCollection[] {
+    return Object.values(this.collections).filter(coll => !coll.parent).map(coll => this.nestedCollection(coll))
+  }
+  private nestedCollection(collection: ZoteroTranslator.Collection): NestedCollection {
+    const nested: NestedCollection = {
+      key: collection.key,
+      name: collection.name,
+      items: collection.items.map((itemID: number) => this.items.map[itemID]).filter((item: ZoteroTranslator.Item) => item),
+      collections: collection.collections.map((key: string) => this.nestedCollection(this.collections[key])).filter((coll: NestedCollection) => coll),
     }
+    for (const coll of nested.collections) {
+      coll.parent = nested
+    }
+    return nested
   }
 
-  public items(): ZoteroTranslator.Item[] {
-    if (!this.sortedItems) {
-      this.sortedItems = []
+  get items(): { remaining: ZoteroTranslator.Item[], map: Record<number, ZoteroTranslator.Item> } {
+    if (!this._items) {
+      const remaining: ZoteroTranslator.Item[] = []
+      const map: Record<number, ZoteroTranslator.Item> = {}
       let item: ZoteroTranslator.Item
       while (item = (Zotero.nextItem() as ZoteroTranslator.Item)) {
         item.cachable = this.cachable
         item.journalAbbreviation = item.journalAbbreviation || item.autoJournalAbbreviation
-        this.sortedItems.push(new Proxy(item, cacheDisabler))
+        remaining.push(map[item.itemID] = new Proxy(item, cacheDisabler))
       }
       // fallback to itemType.itemID for notes and attachments. And some items may have duplicate keys
-      this.sortedItems.sort((a, b) => {
+      remaining.sort((a, b) => {
         const ka = [ a.citationKey || a.itemType, a.dateModified || a.dateAdded, a.itemID ].join('\t')
         const kb = [ b.citationKey || b.itemType, b.dateModified || b.dateAdded, b.itemID ].join('\t')
         return ka.localeCompare(kb, undefined, { sensitivity: 'base' })
       })
+      this._items = { remaining, map }
     }
-    return this.sortedItems
+    return this._items
   }
 
   public nextItem() {
-    return (this.currentItem = this.items().shift())
+    return (this.currentItem = this.items.remaining.shift())
   }
 }

@@ -39,7 +39,7 @@ How often the Better BibTeX database should be saved to disk. Defaults to once e
 
 default: `no`
 
-Replaces the "note" field with the bibtex key during citation rendering in Word/Libreoffice. Main use-case is to help migrating word documents to pandoc. This setting only takes effect during startup, so if you change it, you will have to restart Zotero to have this take effect (or to disable it. Please disable it when done). You will want to use a custom CSL style (such as [this](https://raw.githubusercontent.com/retorquere/zotero-better-bibtex/master/better-bibtex-citekeys.csl)) to make this work.
+Replaces the "note" field with the bibtex key during citation rendering in Word/Libreoffice. Main use-case is to help migrating word documents to pandoc. This setting only takes effect during startup, so if you change it, you will have to restart Zotero to have this take effect (or to disable it. Please disable it when done). You will need to use a custom CSL style (such as [this](https://raw.githubusercontent.com/retorquere/zotero-better-bibtex/master/better-bibtex-citekeys.csl)) to make this work. Have Zotero generate the bibliography, which will put the citekeys in the Word/LibreOffice document, which can then be passed through pandoc.
 
 ### csquotes
 
