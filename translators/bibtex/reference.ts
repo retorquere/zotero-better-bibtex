@@ -567,8 +567,8 @@ export class Reference {
         const value = field.bibtex ? 'bibtex' : 'value'
         throw new Error(`duplicate field '${field.name}' for ${this.item.citationKey}: old: ${this.has[field.name][value]}, new: ${field[value]}`)
       }
-      this.quality_report.push(`duplicate "${field.name}" ("${this.has[field.name].value}") ignored`)
-      this.remove(field.name)
+      if (!field.replace) this.quality_report.push(`duplicate "${field.name}" ("${this.has[field.name].value}") ignored`)
+      delete this.has[field.name]
     }
 
     if (!field.bibtex) {
