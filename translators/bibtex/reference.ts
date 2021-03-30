@@ -645,8 +645,7 @@ export class Reference {
    * @return {Object} the removed field, if present
    */
   public remove(name) {
-    if (!this.has[name]) return
-    const removed = this.has[name]
+    const removed = this.has[name] || {}
     delete this.has[name]
     return removed
   }
