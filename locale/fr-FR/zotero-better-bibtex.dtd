@@ -27,13 +27,13 @@
 <!ENTITY better-bibtex.FirstRun.done "Félicitations !">
 <!ENTITY better-bibtex.FirstRun.done.explanation "BBT est maintenant configuré. Vous pouvez toujours modifier l'un de ces paramètres dans les préférences de Zotero, onglet 'Better BibTex'.">
 
-<!ENTITY better-bibtex.ErrorReport.title "Better BibTeX Support Log">
+<!ENTITY better-bibtex.ErrorReport.title "Journal de support de Better BibTeX">
 <!ENTITY better-bibtex.ErrorReport.restartWithLoggingEnabled  "Redémarrer avec le journal activé…">
-<!ENTITY better-bibtex.ErrorReport.enableDebug "Zotero debug logging is currently disabled. It will be easier to diagnose the problem if you enable it before submitting a support log.">
+<!ENTITY better-bibtex.ErrorReport.enableDebug "Le journal de déboggage de Zotero est actuellement désactivé. Il sera plus facile de diagnostiquer le problème si vous l'activez avant de soumettre un rapport d'erreur.">
 <!ENTITY better-bibtex.ErrorReport.context "Contexte d'application">
 <!ENTITY better-bibtex.ErrorReport.errors "Erreurs">
 <!ENTITY better-bibtex.ErrorReport.includeCache "Envoyer le cache">
-<!ENTITY better-bibtex.ErrorReport.debug "Support log">
+<!ENTITY better-bibtex.ErrorReport.debug "Journal de support">
 <!ENTITY better-bibtex.ErrorReport.notReviewed "Support logs can not reviewed unless referred to in the GitHub issue tracker by their ID.">
 <!ENTITY better-bibtex.ErrorReport.postToGitHub "Please post a message to the issue tracker (https://github.com/retorquere/zotero-better-bibtex/issues) with this support log ID, a description of the problem, and any steps necessary to reproduce it.">
 <!ENTITY better-bibtex.ErrorReport.references "Références">
