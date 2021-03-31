@@ -1,7 +1,7 @@
 ---
-name: Export bug/enhancement
-about: You appear to have found a bug in BBTs export, or are proposing an enhancement to the exports.
-labels: export
+name: Export question
+about: You have a question about exporting items.
+labels: export, question
 ---
 
 *Please verify **all** of the below before submitting*:

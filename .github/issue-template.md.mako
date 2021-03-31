@@ -1,9 +1,7 @@
 ---
 name: ${template.title}
 about: ${template.about}
-% if template.labels:
 labels: ${template.labels}
-% endif
 ---
 <% check = iter(range(1,20)) %>
 *Please verify **all** of the below before submitting*:
@@ -35,7 +33,7 @@ If you tried to submit BBT a support log and ended up with an ID looking like `D
 **I AM NOT KIDDING ABOUT THIS. *PLEASE* INCLUDE A DEBUG LOG. I WILL END UP ASKING FOR IT ANYWAY**
 % endif
 
-Picking the right issue category is really important. Each category (${', '.join([f'`{t.name.replace("_", " ")}`' for t in templates])}) has different instructions for gathering the data necessary required to resolve the issue you are experiencing
+Picking the right issue category is really important. Each category (${', '.join(sorted(set([f'`{t.name.replace("_", " ")}`' for t in templates])))}) has different instructions for gathering the data necessary required to resolve the issue you are experiencing
 
 % if template.name in ['Key_generation', 'Export']:
 The support log is important; it gives me your current BBT settings and a copy of the problematic reference as a test case so I can best replicate your problem. Without it, I'm effectively blind.

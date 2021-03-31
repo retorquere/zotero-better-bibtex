@@ -1,6 +1,6 @@
 ---
-name: Question on use, or feature suggestions, not covered by the other categories above.
-about: You want information on how to use BBT, or have an idea for improvement that is not one of the categories above.
+name: Question on use not covered by the other categories above.
+about: You want information on how to use BBT. You can also use the discussions board for this.
 labels: question
 ---
 

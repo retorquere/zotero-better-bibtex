@@ -1,6 +1,6 @@
 ---
-name: Key generation bug/enhancement/question
-about: You appear to have found a bug in BBTs citation key generation, are proposing an enhancement to the key generation, or have a question about key generation.
+name: Key generation bug/enhancement
+about: You appear to have found a bug in BBTs citation key generation, or are proposing an enhancement to the key generation.
 labels: citekey
 ---
 

@@ -1,7 +1,7 @@
 ---
-name: Export bug/enhancement
-about: You appear to have found a bug in BBTs export, or are proposing an enhancement to the exports.
-labels: export
+name: Key generation question
+about: You have a question about key generation.
+labels: citekey, question
 ---
 
 *Please verify **all** of the below before submitting*:
@@ -21,8 +21,6 @@ The support log is important; it gives me your current BBT settings and a copy o
 
 
 **Support log ID:**
-
-**Exporter used:**
 
 **Expected behavior:**
 
