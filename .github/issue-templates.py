@@ -8,7 +8,7 @@ templates = [
     name='Export',
     title='Export bug/enhancement/question',
     about='You appear to have found a bug in BBTs export, are proposing an enhancement to the exports, or have a question about exporting items.',
-    labels='bug',
+    labels='export',
   ),
   Munch(
     name='General_error',
@@ -20,13 +20,13 @@ templates = [
     name='Import',
     title='Import bug/enhancement/question',
     about='You appear to have found a bug in BBTs BibTeX import, are proposing an enhancement to the import, or have a question about importing BibTeX.',
-    labels='bug'
+    labels='import'
   ),
   Munch(
     name='Key_generation',
     title='Key generation bug/enhancement/question',
     about='You appear to have found a bug in BBTs citation key generation, are proposing an enhancement to the key generation, or have a question about key generation.',
-    labels='bug'
+    labels='citekey'
   ),
   Munch(
     name='Question',
