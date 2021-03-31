@@ -27,24 +27,24 @@
 <!ENTITY better-bibtex.FirstRun.done "Fertig!">
 <!ENTITY better-bibtex.FirstRun.done.explanation "BBT kann nun verwendet werden. Sie können alle Einstellungen über den BBT-Reiter in den Zotero-Einstellungen ändern.">
 
-<!ENTITY better-bibtex.ErrorReport.title "Better BibTeX Debug-Report">
+<!ENTITY better-bibtex.ErrorReport.title "Better BibTeX Support Log">
 <!ENTITY better-bibtex.ErrorReport.restartWithLoggingEnabled  "Mit aktiviertem Logging neustarten…">
-<!ENTITY better-bibtex.ErrorReport.enableDebug "Das Zotero Debug-Logging ist derzeit deaktiviert. Es ist einfacher, das Problem zu diagnostizieren, wenn Sie es aktivieren, bevor Sie einen Debug-Report senden.">
+<!ENTITY better-bibtex.ErrorReport.enableDebug "Zotero debug logging is currently disabled. It will be easier to diagnose the problem if you enable it before submitting a support log.">
 <!ENTITY better-bibtex.ErrorReport.context "Anwendungskontext">
 <!ENTITY better-bibtex.ErrorReport.errors "Fehler">
 <!ENTITY better-bibtex.ErrorReport.includeCache "Sende Zwischenspeicher">
-<!ENTITY better-bibtex.ErrorReport.debug "Debug-Protokoll">
-<!ENTITY better-bibtex.ErrorReport.notReviewed "Debug-Reports können nicht überprüft werden, bis sie im GitHub Issue-Tracker genannt werden.">
-<!ENTITY better-bibtex.ErrorReport.postToGitHub "Bitte senden Sie eine Nachricht an den Issue-Tracker (https://github.com/retorquere/zotero-better-bibtex/issues) mit dieser Berichts-ID, einer Beschreibung des Problems und allen notwendigen Schritten zur Reproduktion.">
+<!ENTITY better-bibtex.ErrorReport.debug "Support log">
+<!ENTITY better-bibtex.ErrorReport.notReviewed "Support logs can not reviewed unless referred to in the GitHub issue tracker by their ID.">
+<!ENTITY better-bibtex.ErrorReport.postToGitHub "Please post a message to the issue tracker (https://github.com/retorquere/zotero-better-bibtex/issues) with this support log ID, a description of the problem, and any steps necessary to reproduce it.">
 <!ENTITY better-bibtex.ErrorReport.references "Verweise">
-<!ENTITY better-bibtex.ErrorReport.reportID "Bericht-ID:">
+<!ENTITY better-bibtex.ErrorReport.reportID "Support log ID:">
 <!ENTITY better-bibtex.ErrorReport.review "Die unten aufgeführten Daten werden für die Fehlerbehebung an Better BibTeX gesendet. Bitte prüfen Sie sie auf sensible Daten, die sie nicht senden wollen.
 
 Wenn Sie mit dem Senden einverstanden sind, klicken Sie bitte &quot;Weiter&quot; und posten Sie die im nächsten Fenster erscheinende ID im Issue-Tracker bei
 
 https://github.com/retorquere/zotero-better-bibtex/issue">
-<!ENTITY better-bibtex.ErrorReport.submissionInProgress			"Bitte warten Sie, während der Debug-Report eingereicht wird.">
-<!ENTITY better-bibtex.ErrorReport.submitted						"Ihr Debug-Report wurde eingereicht.">
+<!ENTITY better-bibtex.ErrorReport.submissionInProgress			"Please wait while the support log is submitted.">
+<!ENTITY better-bibtex.ErrorReport.submitted						"Your support log has been submitted.">
 
 <!ENTITY better-bibtex.ItemPane.citekey_column	"Zitierschlüssel">
 
@@ -207,7 +207,7 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.Preferences.prefpane.better-bibtex "Better BibTeX">
 <!ENTITY better-bibtex.Preferences.rescan-citekeys "Scanne angeheftete Zitierschlüssel erneut">
 <!ENTITY better-bibtex.Preferences.resetCache "Cache zurücksetzen">
-<!ENTITY better-bibtex.BetterBibTeX.reportErrors "Sende Better BibTex Debug-Report...">
+<!ENTITY better-bibtex.BetterBibTeX.reportErrors "Send Better BibTeX support log...">
 <!ENTITY better-bibtex.BetterBibTeX.auxScanner "BibTeX AUX-Datei nach Verweisen durchsuchen...">
 <!ENTITY better-bibtex.bulk-keys-confirm.message "Sie ändern mehr als {treshold} Einträge auf einmal. Sind sie sicher?">
 <!ENTITY better-bibtex.bulk-keys-confirm.whatever "OK, nicht noch mal fragen">
