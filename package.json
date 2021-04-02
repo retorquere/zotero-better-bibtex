@@ -116,6 +116,7 @@
     "fs-extra": "^9.1.0",
     "github-release-cli": "^2.0.0",
     "glob": "^7.1.6",
+    "glob-promise": "^4.1.0",
     "ignore-loader": "^0.1.2",
     "indent-string": "^4.0.0",
     "ini": "^2.0.0",
