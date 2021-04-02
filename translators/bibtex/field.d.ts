@@ -1,4 +1,4 @@
-interface IField {
+export interface IField {
   name: string
   verbatim?: string
   value: string | string[] | number | null | { path: string, title?: string, mimeType?: string } | { tag: string, type?: number }[]

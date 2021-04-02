@@ -1,3 +1,5 @@
+// use https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis for `document`
+
 const path = require('path')
 const fs = require('fs')
 const { bibertool } = require('./setup/loaders/bibertool')

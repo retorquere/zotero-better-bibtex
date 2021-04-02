@@ -15,13 +15,7 @@
     "sourceMap": false,
     "downlevelIteration": true,
     "resolveJsonModule": true,
-    "lib": [ "es2017", "dom", "dom.iterable", "webworker" ],
-    "typeRoots": [
-      "./content/typings",
-      "./translators/typings",
-      "./gen/typings",
-      "./node_modules/@types"
-    ]
+    "lib": [ "es2017", "dom", "dom.iterable", "webworker" ]
   },
   "include": [
     "content/**/*",

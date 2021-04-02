@@ -1,4 +1,4 @@
-namespace XUL {
+export namespace XUL {
   class Element extends HTMLElement {
     public hidden: boolean
     public getAttribute(name: string): string
