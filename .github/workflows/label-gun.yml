@@ -10,6 +10,6 @@ jobs:
   nag:
     runs-on: ubuntu-latest
     steps:
-      - uses: retorquere/label-gun@master
+      - uses: retorquere/label-gun@v1
         with:
           token: ${{ github.token }}
