@@ -47,7 +47,7 @@
     "reinstall": "rm -rf node_modules yarn* && pnpm install",
     "test:nightly": "TRAVIS_EVENT_TYPE=cron ./test/behave --tags @nightly",
     "submodules": "git submodule update --init --recursive --remote && git submodule foreach git reset --hard && git submodule foreach git checkout master && git submodule foreach git pull origin master",
-    "ncu": "npm run submodules && ncu -u && pnpm i && ./setup/item.py && git add package.json pnpm-lock.yaml citation-style-language-locales site/themes/learn schema && git commit -m ncu"
+    "ncu": "npm run submodules && ncu -u -x webpack && pnpm i && ./setup/item.py && git add package.json pnpm-lock.yaml citation-style-language-locales site/themes/learn schema && git commit -m ncu"
   },
   "main": "index.js",
   "directories": {
@@ -55,9 +55,9 @@
   },
   "dependencies": {
     "@retorquere/bibtex-parser": "^3.2.35",
-    "@types/lokijs": "^1.5.3",
-    "ajv": "^7.2.1",
-    "ajv-keywords": "^4.0.0",
+    "@types/lokijs": "^1.5.4",
+    "ajv": "^8.0.4",
+    "ajv-keywords": "^5.0.0",
     "assert": "^2.0.0",
     "barcoder": "^2.0.1",
     "citeproc": "^2.4.59",
@@ -95,11 +95,11 @@
     "unicode2latex": "^2.1.35",
     "util": "^0.12.3",
     "words-to-numbers": "^1.5.1",
-    "xregexp": "^5.0.1"
+    "xregexp": "^5.0.2"
   },
   "devDependencies": {
-    "@types/node": "^14.14.34",
-    "@types/webpack": "^4.41.26",
+    "@types/node": "^14.14.37",
+    "@types/webpack": "^5.28.0",
     "archiver": "^5.3.0",
     "bluebird": "^3.7.2",
     "circular-dependency-plugin": "^5.2.2",
@@ -109,7 +109,7 @@
     "deep-cleaner": "^1.2.1",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.6",
-    "eslint": "^7.22.0",
+    "eslint": "^7.23.0",
     "fast-json-patch": "^3.0.0-1",
     "find-up": "^5.0.0",
     "fs-extra": "^9.1.0",
@@ -132,13 +132,13 @@
     "recast": "^0.20.4",
     "rimraf": "^3.0.2",
     "shelljs": "^0.8.4",
-    "ts-loader": "^8.0.18",
+    "ts-loader": "^8.1.0",
     "ts-node": "^9.1.1",
     "tslib": "^2.1.0",
     "typescript": "^4.2.3",
     "uri-templates": "^0.2.0",
     "webpack": "^5.24.4",
-    "webpack-cli": "^4.5.0",
+    "webpack-cli": "^4.6.0",
     "wrapper-webpack-plugin": "^2.1.0",
     "xml-parser": "^1.2.1",
     "xmldom": "^0.5.0",
