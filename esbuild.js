@@ -74,7 +74,6 @@ async function rebuild() {
       footer: {
         js: `const { ${vars.join(', ')} } = ${globalName};`
       },
-      // banner: { js: '// bloody insane speed', },
       target: ['firefox60'],
     })
 
