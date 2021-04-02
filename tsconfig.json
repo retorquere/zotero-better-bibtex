@@ -11,7 +11,7 @@
     "module": "commonjs",
     "noImplicitAny": false,
     "removeComments": false,
-    "preserveConstEnums": false,
+    "preserveConstEnums": true,
     "sourceMap": false,
     "downlevelIteration": true,
     "resolveJsonModule": true,

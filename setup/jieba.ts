@@ -18,3 +18,5 @@ fs.writeFileSync('build/resource/jieba/dict.json', JSON.stringify({
   dictlineArr: fs.readFileSync(jieba.dictPath).toString().split('\n').filter(s => s),
   userDictlineArr: fs.readFileSync(jieba.userDictPath).toString().split('\n').filter(s => s),
 }))
+
+export {}
