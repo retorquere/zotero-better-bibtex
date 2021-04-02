@@ -143,6 +143,8 @@ Scenario Outline: Export <references> references for BibTeX to <file>
 
   Examples:
      | file                                                                               | references |
+     | shortyear adds 00 when date is missing #1769                                       | 1          |
+     | Word segmentation for Chinese references #1682                                     | 1          |
      | Cannot ignore archivePrefix export field #1744                                     | 1          |
      | url field is having its special characters escaped in BBT Bibtex #1716             | 1          |
      | Match against @string value for export #1597                                       | 1          |
@@ -533,7 +535,10 @@ Scenario: use author dash separation rather than camel casing in citekey #1495
   And I refresh all citation keys
   Then an export using "Better BibTeX" should match "export/*.bibtex"
 
-@notes
 Scenario: Collected notes
   Given I import 36 references from "export/*.json"
+  Then an export using "Collected notes" should match "export/*.html"
+
+Scenario: Export as Collected Notes does not list subcollections #1768
+  Given I import 51 references from "export/*.json"
   Then an export using "Collected notes" should match "export/*.html"

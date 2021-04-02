@@ -48,7 +48,7 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
   public doExport() {
     const items = []
     const order: { citationKey: string, i: number}[] = []
-    for (const item of Translator.items()) {
+    for (const item of Translator.items.remaining) {
       if (item.itemType === 'note' || item.itemType === 'attachment') continue
 
       order.push({ citationKey: item.citationKey, i: items.length })

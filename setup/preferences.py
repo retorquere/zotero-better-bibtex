@@ -126,17 +126,22 @@ class Preferences:
     # order matters -- bbt:preference last
     for pref in self.pane.findall(f'.//*[@preference]') + self.pane.findall(f'.//*[@{bbt}preference]'):
       _id = pref.get(f'{bbt}preference') or pref.get('preference')
-      if pref.tag == f'{xul}label':
-        label = pref.text
-      else:
-        label = pref.get('label')
-      if label:
+      if label := pref.get('label'):
         self.preferences[_id].label = label
+      else:
+        self.preferences[_id].label = pref.text
 
     for options in self.pane.findall(f'.//{xul}menulist[@preference]'):
       pref = self.preferences[options.get('preference')]
       pref.options = OrderedDict()
       for option in options.findall(f'.//{xul}menuitem'):
+        value = option.get('value')
+        if pref.type == 'number': value = int(value)
+        pref.options[value] = option.get('label')
+    for options in self.pane.findall(f'.//{xul}radiogroup[@preference]'):
+      pref = self.preferences[options.get('preference')]
+      pref.options = OrderedDict()
+      for option in options.findall(f'.//{xul}radio'):
         value = option.get('value')
         if pref.type == 'number': value = int(value)
         pref.options[value] = option.get('label')

@@ -3,6 +3,7 @@ declare const window: any
 
 import ETA = require('node-eta')
 import { kuroshiro } from './key-manager/kuroshiro'
+import { jieba } from './key-manager/jieba'
 
 import { Scheduler } from './scheduler'
 import { log } from './logger'
@@ -99,7 +100,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
     ids = this.expandSelection(ids)
 
     for (const item of await getItemsAsync(ids)) {
-      if (item.isNote() || item.isAttachment()) continue
+      if (item.isNote() || item.isAttachment() || item.isAnnotation?.()) continue
 
       const extra = this.getField(item, 'extra')
       const parsed = Extra.get(extra, 'zotero')
@@ -131,7 +132,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
     ids = this.expandSelection(ids)
 
     for (const item of await getItemsAsync(ids)) {
-      if (item.isNote() || item.isAttachment()) continue
+      if (item.isNote() || item.isAttachment() || item.isAnnotation?.()) continue
 
       const parsed = Extra.get(item.getField('extra'), 'zotero', { citationKey: true })
       if (!parsed.extraFields.citationKey) continue
@@ -167,7 +168,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
 
     const updates = []
     for (const item of await getItemsAsync(ids)) {
-      if (item.isNote() || item.isAttachment()) continue
+      if (item.isNote() || item.isAttachment() || item.isAnnotation?.()) continue
 
       const extra = item.getField('extra')
 
@@ -198,6 +199,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
 
   public async init() {
     await kuroshiro.init()
+    jieba.init()
 
     this.keys = DB.getCollection('citekey')
 
@@ -427,7 +429,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
   }
 
   public update(item: any, current?: { pinned: boolean, citekey: string }) {
-    if (item.isNote() || item.isAttachment()) return null
+    if (item.isNote() || item.isAttachment() || item.isAnnotation?.()) return null
 
     current = current || this.keys.findOne({ itemID: item.id })
 

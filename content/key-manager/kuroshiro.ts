@@ -4,6 +4,7 @@ import _kuromojiLoader = require('kuromoji/src/loader/NodeDictionaryLoader')
 import { log } from '../logger'
 import { Preference } from '../../gen/preferences'
 import KuromojiAnalyzer from 'kuroshiro-analyzer-kuromoji/src/kuroshiro-analyzer-kuromoji-sync'
+import { Events } from '../events'
 
 _kuromojiLoader.prototype.loadArrayBuffer = function(url, callback) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
   url = `resource://zotero-better-bibtex/kuromoji/${url.replace(/.*\//, '').replace(/\.gz$/, '')}`
@@ -31,18 +32,24 @@ export const kuroshiro = new class {
   private kuroshiro: any
 
   public async init() {
-    if (!Preference.kuroshiro) return
+    Events.on('preference-changed', pref => {
+      if (pref === 'kuroshiro') this.load().catch(err => log.error('kuroshiro load failed:', err))
+    })
+    await this.load()
+  }
 
+  private async load() {
     try {
+      if (!Preference.kuroshiro || this.enabled) return
+
       this.kuroshiro = new Kuroshiro()
       await this.kuroshiro.init(new KuromojiAnalyzer('resource://zotero-better-bibtex/kuromoji'))
+      this.enabled = true
     }
     catch (err) {
       log.error('kuroshiro: initializing failed')
       throw err
     }
-
-    this.enabled = true
   }
 
   public convert(str: string, options): string {

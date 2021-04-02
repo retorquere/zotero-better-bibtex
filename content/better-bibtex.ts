@@ -258,7 +258,7 @@ $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function Zoter
   if (col.id !== 'zotero-items-column-citekey') return original.apply(this, arguments)
 
   const item = this.getRow(row).ref
-  if (item.isNote() || item.isAttachment()) return ''
+  if (item.isNote() || item.isAttachment() || item.isAnnotation?.()) return ''
 
   if (BetterBibTeX.ready.isPending()) { // eslint-disable-line @typescript-eslint/no-use-before-define
     if (!itemTreeViewWaiting[item.id]) {
@@ -467,15 +467,27 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         })
       }
 
-      const backgroundExport = {
-        wait: !this.noWait, // noWait must be synchronous
-        workers: Preference.workersMax, // workers must be enabled
-        enabled: !Translators.workers.disabled, // there wasn't an error starting a worker earlier
-        safePath: (!this.location || !this.location.path.startsWith('\\\\')), // check for SMB path for #1396
-        minHandlers: Object.keys(this._handlers).filter(handler => handler !== 'done').length === 0, // we have only done handlers
+      let disabled = ''
+      if (this.noWait) { // noWait must be synchronous
+        disabled = 'noWait is active'
       }
-      log.debug('worker translation:', backgroundExport)
-      if (Object.values(backgroundExport).reduce((acc, cond) => acc && cond)) {
+      else if (!Preference.workersMax) {
+        disabled = 'user has disabled worker export'
+      }
+      else if (Translators.workers.disabled) {
+        // there wasn't an error starting a worker earlier
+        disabled = 'failed to start a chromeworker, disabled until restart'
+      }
+      else if (this.location && this.location.path.startsWith('\\\\')) {
+        // check for SMB path for #1396
+        disabled = 'chrome workers fail on smb paths'
+      }
+      else {
+        disabled = Object.keys(this._handlers).filter(handler => !['done', 'itemDone', 'error'].includes(handler)).join(', ')
+        if (disabled) disabled = `handlers: ${disabled}`
+      }
+      log.debug('worker translation:', !disabled, disabled)
+      if (!disabled) {
         const path = this.location?.path
 
         // fake out the stuff that complete expects to be set by .translate
@@ -483,7 +495,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         this.saveQueue = []
         this._savingAttachments = []
 
-        return Translators.exportItemsByQueuedWorker(translatorID, this._displayOptions, { scope: { ...this._export, getter: this._itemGetter }, path })
+        return Translators.exportItemsByQueuedWorker(translatorID, this._displayOptions, { translate: this, scope: { ...this._export, getter: this._itemGetter }, path })
           .then(result => {
             log.debug('worker translation done, result:', !!result)
             // eslint-disable-next-line id-blacklist
@@ -540,8 +552,8 @@ notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]:
   // safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
   // https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
   const parents = []
-  const items = action === 'delete' ? [] : Zotero.Items.get(ids).filter((item: { isNote: () => boolean, isAttachment: () => boolean, parentID: number }) => {
-    if (item.isNote() || item.isAttachment()) {
+  const items = action === 'delete' ? [] : Zotero.Items.get(ids).filter((item: { isNote: () => boolean, isAttachment: () => boolean, isAnnotation?: () => boolean, parentID: number }) => {
+    if (item.isNote() || item.isAttachment() || item.isAnnotation?.()) {
       if (typeof item.parentID !== 'boolean') parents.push(item.parentID)
       return false
     }
@@ -563,7 +575,7 @@ notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]:
       let warn_titlecase = Preference.warnTitleCased ? 0 : null
       for (const item of items) {
         KeyManager.update(item)
-        if (typeof warn_titlecase === 'number' && !item.isNote() && !item.isAttachment()) {
+        if (typeof warn_titlecase === 'number' && !item.isNote() && !item.isAttachment() && !item.isAnnotation?.()) {
           const title = item.getField('title')
           if (title !== sentenceCase(title)) warn_titlecase += 1
         }
@@ -613,75 +625,29 @@ notify('collection-item', (_event: any, _type: any, collection_items: any) => {
   INIT
 */
 
-type TimerHandle = ReturnType<typeof setInterval>
+// type TimerHandle = ReturnType<typeof setInterval>
 class Progress {
   private timestamp: number
-  private started: number
   private msg: string
   private progressWin: any
   private progress: any
   private name = 'Startup progress'
-  private timer: TimerHandle
-
-  private waiting() {
-    // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-    function show(v: any) {
-      if (typeof v === 'undefined') return 'unset'
-      return v ? 'pending' : 'resolved'
-    }
-
-    const initPromise = show((Zotero.isStandalone ? Zotero.uiReadyPromise : Zotero.initializationPromise).isPending())
-    const initPromiseName = Zotero.isStandalone ? 'Zotero.uiReadyPromise' : 'Zotero.initializationPromise'
-    const schemaUpdatePromise = show(Zotero.Schema.schemaUpdatePromise.isPending())
-
-    log.debug(`${this.name}: Zotero locks after ${Date.now() - this.started}:`,
-      `${initPromiseName}:`, initPromise,
-      ', Zotero.Schema.schemaUpdatePromise:', schemaUpdatePromise
-    )
-
-    if (initPromise === 'resolved' && schemaUpdatePromise === 'resolved') {
-      clearTimeout(this.timer)
-    }
-  }
+  private mode: string
+  private label: XUL.Label
+  private progressmeter: XUL.ProgressMeter
 
   public start(msg: string) {
-    this.started = this.timestamp = Date.now()
-    this.timer = setInterval(this.waiting.bind(this), 500) // eslint-disable-line no-magic-numbers
+    this.timestamp = Date.now()
 
     this.msg = msg || 'Initializing'
+
+    if (!['progressbar', 'popup'].includes(Preference.startupProgress)) Preference.startupProgress = 'popup'
+    this.mode = Preference.startupProgress
 
     log.debug(`${this.name}: waiting for Zotero locks...`)
 
     log.debug(`${this.name}: ${msg}...`)
-    this.toggle(true)
-    log.debug(`${this.name}: progress window up`)
-  }
-
-  public update(msg: any) {
-    this.bench(msg)
-
-    log.debug(`${this.name}: ${msg}...`)
-    this.progress.setText(msg)
-  }
-
-  public done() {
-    this.bench(null)
-
-    this.toggle(false)
-    log.debug(`${this.name}: done`)
-    clearTimeout(this.timer)
-  }
-
-  private bench(msg: string) {
-    const ts = Date.now()
-    // eslint-disable-next-line no-magic-numbers
-    if (this.msg) log.debug(`${this.name}:`, this.msg, 'took', (ts - this.timestamp) / 1000.0, 's')
-    this.msg = msg
-    this.timestamp = ts
-  }
-
-  private toggle(busy: boolean) {
-    if (busy) {
+    if (this.mode === 'popup') {
       this.progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
       this.progressWin.changeHeadline('Better BibTeX: Initializing')
       // this.progressWin.addDescription(`Found ${this.scanning.length} references without a citation key`)
@@ -690,9 +656,47 @@ class Progress {
       this.progressWin.show()
     }
     else {
+      document.getElementById('better-bibtex-startup').hidden = false
+      this.progressmeter = (document.getElementById('better-bibtex-startup-progress') as XUL.ProgressMeter)
+      this.progressmeter.value = 0
+      this.label = (document.getElementById('better-bibtex-startup-label') as XUL.Label)
+      this.label.value = msg
+    }
+  }
+
+  public update(msg: string, progress: number) {
+    this.bench(msg)
+
+    log.debug(`${this.name}: ${msg}...`)
+    if (this.mode === 'popup') {
+      this.progress.setText(msg)
+    }
+    else {
+      this.progressmeter.value = progress
+      this.label.value = msg
+    }
+  }
+
+  public done() {
+    this.bench(null)
+
+    if (this.mode === 'popup') {
       this.progress.setText('Ready')
       this.progressWin.startCloseTimer(500) // eslint-disable-line no-magic-numbers
     }
+    else {
+      document.getElementById('better-bibtex-startup').hidden = true
+    }
+
+    log.debug(`${this.name}: done`)
+  }
+
+  private bench(msg: string) {
+    const ts = Date.now()
+    // eslint-disable-next-line no-magic-numbers
+    if (this.msg) log.debug(`${this.name}:`, this.msg, 'took', (ts - this.timestamp) / 1000.0, 's')
+    this.msg = msg
+    this.timestamp = ts
   }
 }
 
@@ -832,37 +836,37 @@ export const BetterBibTeX = new class { // eslint-disable-line @typescript-eslin
 
     log.debug("Zotero ready, let's roll!")
 
-    progress.update(this.getString('BetterBibTeX.startup.loadingKeys'))
+    progress.update(this.getString('BetterBibTeX.startup.loadingKeys'), 10) // eslint-disable-line no-magic-numbers
     await Promise.all([Cache.init(), DB.init()])
 
     await KeyManager.init() // loads the existing keys
 
-    progress.update(this.getString('BetterBibTeX.startup.serializationCache'))
+    progress.update(this.getString('BetterBibTeX.startup.serializationCache'), 20) // eslint-disable-line no-magic-numbers
     Serializer.init()
 
-    progress.update(this.getString('BetterBibTeX.startup.autoExport.load'))
+    progress.update(this.getString('BetterBibTeX.startup.autoExport.load'), 30) // eslint-disable-line no-magic-numbers
     await AutoExport.init()
 
     // not yet started
     deferred.loaded.resolve(true)
 
     // this is what really takes long
-    progress.update(this.getString('BetterBibTeX.startup.waitingForTranslators'))
+    progress.update(this.getString('BetterBibTeX.startup.waitingForTranslators'), 40) // eslint-disable-line no-magic-numbers
     await Zotero.Schema.schemaUpdatePromise
 
     // after the caches because I may need to drop items from the cache
-    await dbUpgrade(progress.update.bind(progress))
+    await dbUpgrade(progress.update.bind(progress, 50)) // eslint-disable-line no-magic-numbers
 
-    progress.update(this.getString('BetterBibTeX.startup.journalAbbrev'))
+    progress.update(this.getString('BetterBibTeX.startup.journalAbbrev'), 60) // eslint-disable-line no-magic-numbers
     await JournalAbbrev.init()
 
-    progress.update(this.getString('BetterBibTeX.startup.installingTranslators'))
+    progress.update(this.getString('BetterBibTeX.startup.installingTranslators'), 70) // eslint-disable-line no-magic-numbers
     await Translators.init()
 
-    progress.update(this.getString('BetterBibTeX.startup.keyManager'))
+    progress.update(this.getString('BetterBibTeX.startup.keyManager'), 80) // eslint-disable-line no-magic-numbers
     await KeyManager.start() // inits the key cache by scanning the DB and generating missing keys
 
-    progress.update(this.getString('BetterBibTeX.startup.autoExport'))
+    progress.update(this.getString('BetterBibTeX.startup.autoExport'), 90) // eslint-disable-line no-magic-numbers
     AutoExport.start()
 
     deferred.ready.resolve(true)

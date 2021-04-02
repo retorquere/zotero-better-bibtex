@@ -36,6 +36,7 @@ type ExportJob = {
   preferences?: Record<string, boolean | number | string>
   started?: number
   canceled?: boolean
+  translate: any
 }
 
 class Queue {
@@ -86,11 +87,11 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   public byId: Record<string, ITranslatorHeader>
   public byName: Record<string, ITranslatorHeader>
   public byLabel: Record<string, ITranslatorHeader>
-  public itemType: { note: number, attachment: number }
+  public itemType: { note: number, attachment: number, annotation: number }
 
   private queue = new Queue
 
-  public workers: { total: number, running: Set<number>, disabled: boolean, startup: number } = {
+  public workers: { total: number, running: Set<string>, disabled: boolean, startup: number } = {
     total: 0,
     running: new Set,
     disabled: false,
@@ -107,6 +108,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     this.itemType = {
       note: Zotero.ItemTypes.getID('note'),
       attachment: Zotero.ItemTypes.getID('attachment'),
+      annotation: Zotero.ItemTypes.getID('annotation') || 'NULL',
     }
 
     let reinit = false
@@ -274,19 +276,19 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     const cache = caching && Cache.getCollection(translator.label)
 
-    const params = Object.entries({
+    this.workers.total += 1
+    const id = `${this.workers.total}`
+    this.workers.running.add(id)
+
+    const workerContext = Object.entries({
       version: Zotero.version,
       platform: Preference.platform,
       translator: translator.label,
       output: job.path || '',
       localeDateOrder: Zotero.BetterBibTeX.localeDateOrder,
       debugEnabled: Zotero.Debug.enabled ? 'true' : 'false',
-    }).map(([k, v]) => `${encodeURI(k)}=${encodeURI(v)}`).join('&')
-
-    this.workers.total += 1
-    const id = this.workers.total
-    this.workers.running.add(id)
-    const prefix = `{${translator.label} worker ${id}}`
+      worker: id,
+    }).map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&')
 
     const deferred = Zotero.Promise.defer()
     let worker: ChromeWorker = null
@@ -294,7 +296,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     for (let attempt = 0; !worker && attempt < 5; attempt++) { // eslint-disable-line no-magic-numbers
       try {
         if (attempt > 0) await sleep(2 * 1000 * attempt) // eslint-disable-line no-magic-numbers
-        worker = new ChromeWorker(`resource://zotero-better-bibtex/worker/Zotero.js?${params}`)
+        worker = new ChromeWorker(`resource://zotero-better-bibtex/worker/Zotero.js?${workerContext}`)
       }
       catch (err) {
         log.error('new ChromeWorker:', err)
@@ -321,24 +323,27 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       cache: {},
     }
 
+    let items: any[] = []
     worker.onmessage = (e: { data: BBTWorker.Message }) => {
       switch (e.data?.kind) {
         case 'error':
-          log.error('QBW failed:', Date.now() - start)
-          log.status({error: true, worker: true}, e.data)
+          log.status({error: true, translator: translator.label, worker: id}, 'QBW failed:', Date.now() - start, e.data)
+          job.translate._runHandler('error', e.data) // eslint-disable-line no-underscore-dangle
           deferred.reject(e.data.message)
           worker.terminate()
           this.workers.running.delete(id)
           break
 
         case 'debug':
-          Zotero.debug(`${prefix} ${e.data.message}`)
+          // this is pre-formatted
+          Zotero.debug(e.data.message)
           break
 
         case 'item':
           now = Date.now()
           current_trace.export.duration.push(now - last_trace)
           last_trace = now
+          job.translate._runHandler('itemDone', items[e.data.item]) // eslint-disable-line no-underscore-dangle
           break
 
         case 'done':
@@ -375,27 +380,28 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
         default:
           if (JSON.stringify(e) !== '{"isTrusted":true}') { // why are we getting this?
-            log.debug(`unexpected message in host from ${prefix} ${JSON.stringify(e)}`)
+            log.status({translator: translator.label, worker: id}, 'enexpected message from worker', e)
           }
           break
       }
     }
 
     worker.onerror = e => {
-      Zotero.debug(`${prefix} error: ${e}`)
-      log.error('QBW: failed:', Date.now() - start)
+      log.status({error: true, translator: translator.label, worker: id}, 'QBW: failed:', Date.now() - start, e)
+      job.translate._runHandler('error', e) // eslint-disable-line no-underscore-dangle
       deferred.reject(e.message)
       worker.terminate()
       this.workers.running.delete(id)
     }
 
     const scope = this.exportScope(job.scope)
-    let items: any[] = []
+    log.debug('export scope:', scope)
     let collections: any[] = []
     switch (scope.type) {
       case 'library':
         items = await Zotero.Items.getAll(scope.id, true)
-        collections = Zotero.Collections.getByLibrary(scope.id, true)
+        collections = Zotero.Collections.getByLibrary(scope.id) // , true)
+        log.debug('library export, got', collections.length, 'collections')
         break
 
       case 'items':
@@ -420,6 +426,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       log.debug('export to', job.path, 'started at', job.started, 'canceled')
       return ''
     }
+    items = items.filter(item => !item.isAnnotation?.())
 
     // use a loop instead of map so we can await for beachball protection
     let batch = Date.now()
@@ -502,9 +509,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     catch (err) {
       worker.terminate()
       this.workers.running.delete(id)
-      log.error(err)
+      log.status({error: true, translator: translator.label, worker: id}, 'QBW: failed:', Date.now() - start, err)
       deferred.reject(err)
-      log.error('QBW: failed:', Date.now() - start)
     }
 
     return deferred.promise
@@ -661,7 +667,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     let sql: string = null
-    const cond = `i.itemTypeID NOT IN (${this.itemType.note}, ${this.itemType.attachment}) AND i.itemID NOT IN (SELECT itemID FROM deletedItems)`
+    const cond = `i.itemTypeID NOT IN (${this.itemType.note}, ${this.itemType.attachment}, ${this.itemType.annotation}) AND i.itemID NOT IN (SELECT itemID FROM deletedItems)`
     if (scope.library) {
       sql = `SELECT i.itemID FROM items i WHERE i.libraryID = ${scope.library} AND ${cond}`
 

@@ -19,6 +19,7 @@ import * as DateParser from '../dateparser'
 
 import * as methods from '../../gen/key-formatter-methods.json'
 import * as items from '../../gen/items/items'
+import { jieba } from './jieba'
 
 import parse5 = require('parse5/lib/parser')
 const htmlParser = new parse5()
@@ -159,8 +160,6 @@ class PatternFormatter {
   public parsePattern(pattern) {
     const { formatter, postfixes } = (parser.parse(pattern, { items, methods }) as { formatter: string, postfixes: string[]})
 
-    log.debug('key formatter=', formatter)
-    log.debug('key postfixes=', postfixes)
     for (const postfix of postfixes) {
       const expected = `${Date.now()}`
       const found = sprintf(postfix, { a: expected, A: expected, n: expected })
@@ -178,10 +177,11 @@ class PatternFormatter {
       extra: Extra.get(item.getField('extra'), 'zotero', { kv: true }).extraFields.kv,
     }
 
-    if (['attachment', 'note'].includes(this.item.type)) return { citekey: '', postfix: { start: 0, format: ''} }
+    if (['attachment', 'note', 'annotation'].includes(this.item.type)) return { citekey: '', postfix: { start: 0, format: ''} }
 
     try {
-      this.item.date = this.parseDate(item.getField('date', false, true))
+      const date = item.getField('date', false, true)
+      this.item.date = date ? this.parseDate(date) : {}
     }
     catch (err) {
       this.item.date = {}
@@ -193,6 +193,7 @@ class PatternFormatter {
         if (!this.item.date.y) Object.assign(this.item.date, { y: date.y, m: date.m, d: date.d, Y: date.Y })
       }
     }
+    if (Object.keys(this.item.date).length === 0) this.item.date = null
 
     try {
       this.item.title = item.getField('title', false, true) || ''
@@ -580,9 +581,7 @@ class PatternFormatter {
   /** replaces text, case insensitive; `:replace=.etal,&etal` will replace `.EtAl` with `&etal` */
   public _replace(value: string, find: string, replace: string, mode?: 'string' | 'regex') {
     if (!find) return (value || '')
-    log.debug(':replace', { find, value: value || '', mode})
     const re = mode === 'regex' ? find : find.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&')
-    log.debug(':replace', { find, value: value || '', mode}, (value || '').replace(new RegExp(re, 'ig'), replace || ''))
     return (value || '').replace(new RegExp(re, 'ig'), replace || '')
   }
 
@@ -711,6 +710,12 @@ class PatternFormatter {
     return (value || '').replace(script.han, ' $1 ').trim()
   }
 
+  /** jieba*/
+  public _jieba(value: string): string {
+    if (!Preference.jieba) return value
+    return jieba.cut(value || '').join(' ').trim()
+  }
+
   /** transliterates the citation key and removes unsafe characters */
   public _clean(value: string): string {
     if (!value) return ''
@@ -739,7 +744,7 @@ class PatternFormatter {
     }[mode]
     if (mode && !replace) throw new Error(`Unsupported fold mode "${mode}"`)
 
-    if (kuroshiro.enabled) str = kuroshiro.convert(str, {to: 'romaji'})
+    if (Preference.kuroshiro && kuroshiro.enabled) str = kuroshiro.convert(str, {to: 'romaji'})
     str = transliterate(str || '', {
       unknown: '\uFFFD', // unicode replacement char
       replace,
@@ -760,7 +765,7 @@ class PatternFormatter {
 
     title = this.innerText(title)
 
-    if (options.asciiOnly && kuroshiro.enabled) title = kuroshiro.convert(title, {to: 'romaji', mode: 'spaced'})
+    if (options.asciiOnly && Preference.kuroshiro && kuroshiro.enabled) title = kuroshiro.convert(title, {to: 'romaji', mode: 'spaced'})
 
     // 551
     let words: string[] = (Zotero.Utilities.XRegExp.matchChain(title, [this.re.word]).map(word => this.clean(word).replace(/-/g, '')))

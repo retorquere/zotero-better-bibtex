@@ -20,20 +20,21 @@ import { ZoteroTranslator } from '../../gen/typings/serialized-item'
 
 const ctx: DedicatedWorkerGlobalScope = self as any
 
-export const params = {
+export const workerContext = {
   version: '',
   platform: '',
   translator: '',
   output: '',
   localeDateOrder: '',
   debugEnabled: false,
+  worker: '',
 }
 for(const [key, value] of (new URLSearchParams(ctx.location.search)).entries()) {
   if (key === 'debugEnabled') {
-    params[key] = value === 'true'
+    workerContext[key] = value === 'true'
   }
   else {
-    params[key] = value
+    workerContext[key] = value
   }
 }
 
@@ -41,7 +42,7 @@ class WorkerZoteroBetterBibTeX {
   public localeDateOrder: string
 
   public debugEnabled() {
-    return params.debugEnabled
+    return workerContext.debugEnabled
   }
 
   public cacheFetch(itemID: number) {
@@ -58,10 +59,10 @@ class WorkerZoteroBetterBibTeX {
   }
 
   public parseDate(date) {
-    return DateParser.parse(date, params.localeDateOrder)
+    return DateParser.parse(date, workerContext.localeDateOrder)
   }
   public getLocaleDateOrder() {
-    return params.localeDateOrder
+    return workerContext.localeDateOrder
   }
 
   public isEDTF(date, minuteLevelPrecision = false) {
@@ -83,7 +84,7 @@ class WorkerZoteroBetterBibTeX {
   }
 
   public strToISO(str) {
-    return DateParser.strToISO(str, params.localeDateOrder)
+    return DateParser.strToISO(str, workerContext.localeDateOrder)
   }
 }
 
@@ -91,7 +92,7 @@ class WorkerZoteroUtilities {
   public XRegExp = XRegExp // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
 
   public getVersion() {
-    return params.version
+    return workerContext.version
   }
 
   public text2html(str: string, singleNewlineIsParagraph: boolean) {
@@ -183,15 +184,17 @@ class WorkerZotero {
   public output: string
   public exportDirectory: string
   public exportFile: string
+  private items = 0
 
   public Utilities = new WorkerZoteroUtilities // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public BetterBibTeX = new WorkerZoteroBetterBibTeX // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
 
   public init(config) {
     this.config = config
-    this.config.preferences.platform = params.platform
+    this.config.preferences.platform = workerContext.platform
     this.config.preferences.client = client
     this.output = ''
+    this.items = this.config.items.length
 
     if (this.config.options.exportFileData) {
       for (const item of this.config.items) {
@@ -199,13 +202,13 @@ class WorkerZotero {
       }
     }
 
-    if (params.output) {
+    if (workerContext.output) {
       if (this.config.options.exportFileData) { // output path is a directory
-        this.exportDirectory = OS.Path.normalize(params.output)
+        this.exportDirectory = OS.Path.normalize(workerContext.output)
         this.exportFile = OS.Path.join(this.exportDirectory, `${OS.Path.basename(this.exportDirectory)}.${Translator.header.target}`)
       }
       else {
-        this.exportFile = OS.Path.normalize(params.output)
+        this.exportFile = OS.Path.normalize(workerContext.output)
         const ext = `.${Translator.header.target}`
         if (!this.exportFile.endsWith(ext)) this.exportFile += ext
         this.exportDirectory = OS.Path.dirname(this.exportFile)
@@ -251,7 +254,7 @@ class WorkerZotero {
   }
 
   public nextItem() {
-    this.send({ kind: 'item' })
+    this.send({ kind: 'item', item: this.items - this.config.items.length })
     return this.config.items.shift()
   }
 
@@ -280,7 +283,7 @@ class WorkerZotero {
 export const Zotero = new WorkerZotero // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
 
 export function onmessage(e: { data: BBTWorker.Config }): void {
-  Zotero.BetterBibTeX.localeDateOrder = params.localeDateOrder
+  Zotero.BetterBibTeX.localeDateOrder = workerContext.localeDateOrder
 
   if (e.data?.items && !Zotero.config) {
     try {

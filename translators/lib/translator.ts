@@ -5,6 +5,7 @@ import { defaults } from '../../content/prefs-meta'
 import { client } from '../../content/client'
 import { ZoteroTranslator } from '../../gen/typings/serialized-item'
 import type { Preferences } from '../../gen/preferences'
+import { log } from '../../content/logger'
 
 type TranslatorMode = 'export' | 'import'
 
@@ -15,6 +16,14 @@ const cacheDisabler = new class {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return target[property]
   }
+}
+
+type NestedCollection = {
+  key: string
+  name: string
+  items: ZoteroTranslator.Item[]
+  collections: NestedCollection[]
+  parent?: NestedCollection
 }
 
 type TranslatorHeader = {
@@ -95,7 +104,10 @@ export const Translator = new class implements ITranslator { // eslint-disable-l
   public header: TranslatorHeader
 
   public collections: Record<string, ZoteroTranslator.Collection>
-  private sortedItems: ZoteroTranslator.Item[]
+  private _items: {
+    remaining: ZoteroTranslator.Item[]
+    map: Record<number, ZoteroTranslator.Item>
+  }
   private currentItem: ZoteroTranslator.Item
 
   public isJurisM: boolean
@@ -172,7 +184,7 @@ export const Translator = new class implements ITranslator { // eslint-disable-l
         dir: (Zotero.getOption('exportDir') as string),
         path: (Zotero.getOption('exportPath') as string),
       }
-      if (this.export.dir && this.export.dir.endsWith(this.paths.sep)) this.export.dir = this.export.dir.slice(0, -1)
+      if (this.export.dir?.endsWith(this.paths.sep)) this.export.dir = this.export.dir.slice(0, -1)
     }
 
     for (const pref of Object.keys(this.preferences)) {
@@ -207,73 +219,89 @@ export const Translator = new class implements ITranslator { // eslint-disable-l
     if (mode === 'export') {
       this.unicode = (this.BetterBibTeX && !Translator.preferences.asciiBibTeX) || (this.BetterBibLaTeX && !Translator.preferences.asciiBibLaTeX)
 
+      if (this.preferences.baseAttachmentPath && (this.export.dir === this.preferences.baseAttachmentPath || this.export.dir?.startsWith(this.preferences.baseAttachmentPath + this.paths.sep))) {
+        this.preferences.relativeFilePaths = true
+      }
+
       // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
       // relative file paths are going to be different based on the file being exported to
-      this.cachable = !(this.options.exportFileData || this.preferences.relativeFilePaths)
+      this.cachable = !(
+        this.options.exportFileData
+        ||
+        this.preferences.relativeFilePaths
+        ||
+        (this.preferences.baseAttachmentPath && this.export.dir?.startsWith(this.preferences.baseAttachmentPath))
+      )
     }
 
     this.collections = {}
     if (mode === 'export' && this.header.configOptions?.getCollections && Zotero.nextCollection) {
       let collection: any
       while (collection = Zotero.nextCollection()) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        const children = collection.children || collection.descendents || []
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        const key = (collection.primary ? collection.primary : collection).key
-
-        this.collections[key] = {
-          // id: collection.id,
-
-          key,
-          parent: collection.fields.parentKey,
-          name: collection.name,
-          items: collection.childItems,
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-          collections: children.filter(coll => coll.type === 'collection').map(coll => coll.key),
-
-          // items: (item.itemID for item in children when item.type != 'collection')
-          // descendents: undefined
-          // children: undefined
-          // childCollections: undefined
-          // primary: undefined
-          // fields: undefined
-          // type: undefined
-          // level: undefined
-        }
-      }
-
-      for (collection of Object.values(this.collections)) {
-        if (collection.parent && !this.collections[collection.parent]) {
-          // collection.parent = false
-          delete collection.parent
-          Zotero.debug(`BBT translator: collection with key ${collection.key} has non-existent parent ${collection.parent}, assuming root collection`)
-        }
+        log.debug('getCollection:', collection)
+        this.registerCollection(collection, '')
       }
     }
 
     this.initialized = true
   }
 
-  public items(): ZoteroTranslator.Item[] {
-    if (!this.sortedItems) {
-      this.sortedItems = []
+  private registerCollection(collection, parent: string) {
+    const key = (collection.primary ? collection.primary : collection).key
+    const children = collection.children || collection.descendents || []
+    const collections = children.filter(coll => coll.type === 'collection')
+
+    this.collections[key] = {
+      key,
+      parent,
+      name: collection.name,
+      collections: collections.map(coll => coll.key as string),
+      items: children.filter(coll => coll.type === 'item').map(item => item.id as number),
+    }
+
+    for (collection of collections) {
+      this.registerCollection(collection, key)
+    }
+  }
+
+  get collectionTree(): NestedCollection[] {
+    return Object.values(this.collections).filter(coll => !coll.parent).map(coll => this.nestedCollection(coll))
+  }
+  private nestedCollection(collection: ZoteroTranslator.Collection): NestedCollection {
+    const nested: NestedCollection = {
+      key: collection.key,
+      name: collection.name,
+      items: collection.items.map((itemID: number) => this.items.map[itemID]).filter((item: ZoteroTranslator.Item) => item),
+      collections: collection.collections.map((key: string) => this.nestedCollection(this.collections[key])).filter((coll: NestedCollection) => coll),
+    }
+    for (const coll of nested.collections) {
+      coll.parent = nested
+    }
+    return nested
+  }
+
+  get items(): { remaining: ZoteroTranslator.Item[], map: Record<number, ZoteroTranslator.Item> } {
+    if (!this._items) {
+      const remaining: ZoteroTranslator.Item[] = []
+      const map: Record<number, ZoteroTranslator.Item> = {}
       let item: ZoteroTranslator.Item
       while (item = (Zotero.nextItem() as ZoteroTranslator.Item)) {
         item.cachable = this.cachable
         item.journalAbbreviation = item.journalAbbreviation || item.autoJournalAbbreviation
-        this.sortedItems.push(new Proxy(item, cacheDisabler))
+        remaining.push(map[item.itemID] = new Proxy(item, cacheDisabler))
       }
       // fallback to itemType.itemID for notes and attachments. And some items may have duplicate keys
-      this.sortedItems.sort((a, b) => {
+      remaining.sort((a, b) => {
         const ka = [ a.citationKey || a.itemType, a.dateModified || a.dateAdded, a.itemID ].join('\t')
         const kb = [ b.citationKey || b.itemType, b.dateModified || b.dateAdded, b.itemID ].join('\t')
         return ka.localeCompare(kb, undefined, { sensitivity: 'base' })
       })
+      this._items = { remaining, map }
     }
-    return this.sortedItems
+    return this._items
   }
 
   public nextItem() {
-    return (this.currentItem = this.items().shift())
+    return (this.currentItem = this.items.remaining.shift())
   }
 }

@@ -26,10 +26,25 @@ export function titleCase(text: string): string {
 }
 
 export function sentenceCase(text: string): string {
-  let sentencecased = text.replace(/((?:^|[?!]|[-.:;\[\]<>'*\\(),{}_“”‘’])?\s*)([^-\s;?:.!\[\]<>'*\\(),{}_“”‘’]+)/g, (match, leader, word) => {
+  let haslowercase = false
+  const restore: [number, number, string][] = []
+  let sentencecased = text.replace(/((?:^|[?!]|[-.:;\[\]<>'*\\(),{}_“”‘’])?\s*)([^-\s;?:.!\[\]<>'*\\(),{}_“”‘’]+)/g, (match: string, leader:string, word:string, offset: number) => {
+    if (word.match(/^[A-Z]$/)) {
+      const leaderlen = leader?.length
+      restore.push([offset + leaderlen, offset + leaderlen + word.length, word])
+    }
+    else if (word.match(/^[a-z]/)) {
+      haslowercase = true
+    }
     if (leader && !leader.match(/^[?!]/) && word.match(/^[A-Z][^A-Z]*$/)) word = word.toLowerCase()
     return (leader || '') + word
   })
+
+  if (haslowercase) {
+    for (const [start, end, word] of restore) {
+      sentencecased = sentencecased.substr(0, start) + word + sentencecased.substr(end)
+    }
+  }
 
   // restore protected parts from original
   text.replace(/<span class="nocase">.*?<\/span>|<nc>.*?<\/nc>/gi, (match: string, offset: number) => {

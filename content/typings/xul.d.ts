@@ -5,6 +5,10 @@ namespace XUL {
     public setAttribute(name: string, value: string): void
   }
 
+  class Label extends XUL.Element {
+    public value: string
+  }
+
   class Textbox extends XUL.Element {
     public value: string
     public readonly: boolean
@@ -17,6 +21,10 @@ namespace XUL {
   class Menuitem extends XUL.Element {
     public value: string
     public label: string
+  }
+
+  class ProgressMeter extends XUL.Element {
+    public value: string | number
   }
 
   class Menupopup extends XUL.Element {

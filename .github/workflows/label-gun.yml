@@ -1,14 +1,15 @@
-name: label-gun
+name: 'Manage issues and nag about support logs'
+
 on:
   issues:
-    types: opened
+    types: [opened, edited, closed]
+  issue_comment:
+    types: [created, edited, closed]
+
 jobs:
-  demilestoned:
-    runs-on: [ubuntu-latest]
+  nag:
+    runs-on: ubuntu-latest
     steps:
-      - name: get issue
-        run: |
-          echo ${{ github.event.issue.url }}
-      - name: add label
-        run: |
-          curl -v -u admin:${{ secrets.GITHUB_TOKEN }} -H "Accept: application/vnd.github.antiope-preview+json" -d '{"labels": ["Needs Milestone"]}' ${{ github.event.issue.url }}/labels
+      - uses: retorquere/label-gun@v1
+        with:
+          token: ${{ github.token }}
