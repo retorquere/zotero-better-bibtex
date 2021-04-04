@@ -16,7 +16,7 @@ import * as ZoteroDB from './db/zotero'
 import { DB as Cache } from './db/cache'
 
 import { Preference } from '../gen/preferences'
-import * as preferences from '../gen/preferences.json'
+import preferences from '../gen/preferences.json'
 import { Formatter } from './key-manager/formatter'
 import { KeyManager } from './key-manager'
 import { AutoExport } from './auto-export'

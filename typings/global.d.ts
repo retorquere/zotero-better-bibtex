@@ -1,11 +1,11 @@
-declare interface DirectoryIterator {
-  forEach: (handler: any) => Promise<void>
+interface DirectoryIterator {
+  forEach(handler: any): Promise<void>
 }
-declare interface DirectoryIteratorConstructable {
-  new(path: string): DirectoryIterator
+interface DirectoryIteratorConstructable {
+  new(path: string): DirectoryIterator // eslint-disable-line @typescript-eslint/prefer-function-type
 }
 
-export declare const OS: {
+declare const OS: {
   File: {
     exists: (path: string) => Promise<boolean>
     read: (path: string, options: { encoding: string } ) => Promise<string>

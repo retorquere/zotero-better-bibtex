@@ -5,7 +5,7 @@ declare const Components: any
 declare const Services: any
 
 import { log } from '../logger'
-import 'xpcom'
+// import { OS } from '../../typings/xpcom'
 
 Components.utils.import('resource://gre/modules/osfile.jsm')
 

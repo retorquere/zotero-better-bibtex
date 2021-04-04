@@ -192,7 +192,7 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
     if (node.nocase || !node.childNodes.find(child => child.nocase)) return [ node ]
 
     // expand nested nocase node to sibling of node
-    return node.childNodes.map(child => {
+    return node.childNodes.map((child: MarkupNode) => {
       if (child.nocase) {
         return {
           ...child,
