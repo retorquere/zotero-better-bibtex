@@ -3,7 +3,8 @@ declare const ZOTERO_TRANSLATOR_INFO: any
 
 import { defaults } from '../../content/prefs-meta'
 import { client } from '../../content/client'
-import { ZoteroTranslator } from '../../gen/typings/serialized-item'
+import { Item, Collection } from '../../gen/typings/serialized-item'
+import { ITranslator } from '../../gen/typings/translator'
 import type { Preferences } from '../../gen/preferences'
 import { log } from '../../content/logger'
 
@@ -21,7 +22,7 @@ const cacheDisabler = new class {
 type NestedCollection = {
   key: string
   name: string
-  items: ZoteroTranslator.Item[]
+  items: Item[]
   collections: NestedCollection[]
   parent?: NestedCollection
 }
@@ -103,12 +104,12 @@ export const Translator = new class implements ITranslator { // eslint-disable-l
 
   public header: TranslatorHeader
 
-  public collections: Record<string, ZoteroTranslator.Collection>
+  public collections: Record<string, Collection>
   private _items: {
-    remaining: ZoteroTranslator.Item[]
-    map: Record<number, ZoteroTranslator.Item>
+    remaining: Item[]
+    map: Record<number, Item>
   }
-  private currentItem: ZoteroTranslator.Item
+  private currentItem: Item
 
   public isJurisM: boolean
   public isZotero: boolean
@@ -267,11 +268,11 @@ export const Translator = new class implements ITranslator { // eslint-disable-l
   get collectionTree(): NestedCollection[] {
     return Object.values(this.collections).filter(coll => !coll.parent).map(coll => this.nestedCollection(coll))
   }
-  private nestedCollection(collection: ZoteroTranslator.Collection): NestedCollection {
+  private nestedCollection(collection: Collection): NestedCollection {
     const nested: NestedCollection = {
       key: collection.key,
       name: collection.name,
-      items: collection.items.map((itemID: number) => this.items.map[itemID]).filter((item: ZoteroTranslator.Item) => item),
+      items: collection.items.map((itemID: number) => this.items.map[itemID]).filter((item: Item) => item),
       collections: collection.collections.map((key: string) => this.nestedCollection(this.collections[key])).filter((coll: NestedCollection) => coll),
     }
     for (const coll of nested.collections) {
@@ -280,12 +281,12 @@ export const Translator = new class implements ITranslator { // eslint-disable-l
     return nested
   }
 
-  get items(): { remaining: ZoteroTranslator.Item[], map: Record<number, ZoteroTranslator.Item> } {
+  get items(): { remaining: Item[], map: Record<number, Item> } {
     if (!this._items) {
-      const remaining: ZoteroTranslator.Item[] = []
-      const map: Record<number, ZoteroTranslator.Item> = {}
-      let item: ZoteroTranslator.Item
-      while (item = (Zotero.nextItem() as ZoteroTranslator.Item)) {
+      const remaining: Item[] = []
+      const map: Record<number, Item> = {}
+      let item: Item
+      while (item = (Zotero.nextItem() as Item)) {
         item.cachable = this.cachable
         item.journalAbbreviation = item.journalAbbreviation || item.autoJournalAbbreviation
         remaining.push(map[item.itemID] = new Proxy(item, cacheDisabler))

@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
-import { ParsedDate } from '../../content/typings/bbt'
+import type { ParsedDate } from '../../content/dateparser'
 import { Translator } from '../lib/translator'
+import type { Translators } from '../../typings/translators'
 
 function pad(v:string, padding: string): string {
   if (v.length >= padding.length) return v
@@ -48,7 +49,7 @@ function format(date) {
   return formatted
 }
 
-export function datefield(date: ParsedDate, field: IField): IField {
+export function datefield(date: ParsedDate, field: Translators.BibTeX.Field): Translators.BibTeX.Field {
   field = JSON.parse(JSON.stringify({ ...field, value: '', enc: 'latex' }))
 
   if (!date) return field

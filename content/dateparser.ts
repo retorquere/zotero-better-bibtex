@@ -5,7 +5,22 @@ import edtfy = require('edtfy')
 // import escapeStringRegexp = require('escape-string-regexp')
 
 import * as months from '../gen/dateparser-months.json'
-import { ParsedDate } from './typings/bbt'
+
+export type ParsedDate = {
+  type?: 'date' | 'open' | 'verbatim' | 'season' | 'interval' | 'list'
+  year?: number
+  month?: number
+  day?: number
+  orig?: ParsedDate
+  verbatim?: string
+  from?: ParsedDate
+  to?: ParsedDate
+  dates?: ParsedDate[]
+  season?: number
+  uncertain?: boolean
+  approximate?: boolean
+}
+
 const months_re = new RegExp(Object.keys(months).sort((a, b) => b.length - a.length).join('|'), 'i')
 
 /*

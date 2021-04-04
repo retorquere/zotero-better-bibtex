@@ -3,7 +3,7 @@ declare const Zotero: any
 
 import { Translator } from './lib/translator'
 export { Translator }
-import { ZoteroTranslator } from '../gen/typings/serialized-item'
+import { Item } from '../gen/typings/serialized-item'
 
 import { Exporter } from './bibtex/exporter'
 
@@ -143,7 +143,7 @@ const Mode = {
 export function doExport(): void {
   Translator.init('export')
 
-  let item: ZoteroTranslator.Item
+  let item: Item
   const items = []
   while ((item = Exporter.nextItem())) {
     if (item.citationKey) items.push(item)

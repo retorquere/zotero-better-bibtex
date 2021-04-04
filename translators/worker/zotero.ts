@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment */
 
+import { ITranslator } from '../../gen/typings/translator'
+import type { Translators } from '../../typings/translators'
+
 declare const doExport: () => void
 declare const Translator: ITranslator
 
@@ -16,7 +19,7 @@ import { titleCase } from '../../content/case'
 import * as itemCreators from '../../gen/items/creators.json'
 import { client } from '../../content/client'
 import { log } from '../../content/logger'
-import { ZoteroTranslator } from '../../gen/typings/serialized-item'
+import { Collection } from '../../gen/typings/serialized-item'
 
 const ctx: DedicatedWorkerGlobalScope = self as any
 
@@ -180,7 +183,7 @@ function saveFile(path, overwrite) {
 }
 
 class WorkerZotero {
-  public config: BBTWorker.Config
+  public config: Translators.Worker.Config
   public output: string
   public exportDirectory: string
   public exportFile: string
@@ -230,7 +233,7 @@ class WorkerZotero {
     this.send({ kind: 'done', output: this.exportFile ? true : this.output })
   }
 
-  public send(message: BBTWorker.Message) {
+  public send(message: Translators.Worker.Message) {
     ctx.postMessage(message)
   }
 
@@ -258,7 +261,7 @@ class WorkerZotero {
     return this.config.items.shift()
   }
 
-  public nextCollection(): ZoteroTranslator.Collection {
+  public nextCollection(): Collection {
     return this.config.collections.shift()
   }
 
@@ -282,7 +285,7 @@ class WorkerZotero {
 
 export const Zotero = new WorkerZotero // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
 
-export function onmessage(e: { data: BBTWorker.Config }): void {
+export function onmessage(e: { data: Translators.Worker.Config }): void {
   Zotero.BetterBibTeX.localeDateOrder = workerContext.localeDateOrder
 
   if (e.data?.items && !Zotero.config) {

@@ -50,7 +50,7 @@ with open(os.path.join(root, 'gen/preferences.json')) as f:
 variables.labels = translators.byLabel.keys()
 
 template = """
-interface ITranslator {
+export interface ITranslator {
   preferences: IPreferences
   skipFields: string[]
   skipField: {[key: string]: boolean}

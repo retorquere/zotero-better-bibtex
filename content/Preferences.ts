@@ -1,3 +1,5 @@
+import type { XUL } from '../typings/xul'
+
 declare const document: any
 declare const window: any
 declare const Zotero: any

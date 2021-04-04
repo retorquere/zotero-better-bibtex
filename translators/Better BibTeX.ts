@@ -2,7 +2,7 @@ declare const Zotero: any
 
 import { log } from '../content/logger'
 
-import { ZoteroTranslator } from '../gen/typings/serialized-item'
+import { Item } from '../gen/typings/serialized-item'
 
 const toWordsOrdinal = require('number-to-words/src/toWordsOrdinal')
 function edition(n: string | number): string {
@@ -258,7 +258,7 @@ export function doExport(): void {
   // Zotero.write(`\n% ${Translator.header.label}\n`)
   Zotero.write('\n')
 
-  let item: ZoteroTranslator.Item
+  let item: Item
   while (item = Exporter.nextItem()) {
     const ref = new Reference(item)
     if (item.itemType === 'report' && item.type?.toLowerCase().includes('manual')) ref.referencetype = 'manual'

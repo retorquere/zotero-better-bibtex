@@ -5,6 +5,8 @@ declare const Zotero: any
 Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
 
+import type { XUL } from '../typings/xul'
+// import { OS } from '../typings/xpcom'
 import { clean_pane_persist, patch as $patch$ } from './monkey-patch'
 import { flash } from './flash'
 
@@ -288,7 +290,7 @@ import * as DateParser from './dateparser'
 import { qualityReport } from './qr-check'
 import { titleCase } from './case'
 import { HTMLParser } from './markupparser'
-import { ParsedDate } from './typings/bbt'
+import type { ParsedDate } from './dateparser'
 
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   qrCheck(_sandbox: any, value: string, test: string, params = null) { return qualityReport(value, test, params) },
@@ -657,9 +659,9 @@ class Progress {
     }
     else {
       document.getElementById('better-bibtex-startup').hidden = false
-      this.progressmeter = (document.getElementById('better-bibtex-startup-progress') as XUL.ProgressMeter)
+      this.progressmeter = (document.getElementById('better-bibtex-startup-progress') as unknown as XUL.ProgressMeter)
       this.progressmeter.value = 0
-      this.label = (document.getElementById('better-bibtex-startup-label') as XUL.Label)
+      this.label = (document.getElementById('better-bibtex-startup-label') as unknown as XUL.Label)
       this.label.value = msg
     }
   }

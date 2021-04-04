@@ -15,18 +15,22 @@
     "sourceMap": false,
     "downlevelIteration": true,
     "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "typeRoots": [
+      "./node_modules/@types",
+      "./gen/typings",
+      "./typings"
+    ],
     "lib": [ "es2017", "dom", "dom.iterable", "webworker" ]
   },
   "include": [
     "content/**/*",
     "translators/**/*",
-    "zotero-webpack/**/*",
     "setup/**/*",
     "gen/**/*"
   ],
   "exclude": [
     "node_modules",
-    "**/*.spec.ts",
-    "typings"
+    "**/*.spec.ts"
   ]
 }

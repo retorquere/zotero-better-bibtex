@@ -1,4 +1,4 @@
-interface IZoteroMarkupNode {
+export interface MarkupNode {
   nodeName: string
   childNodes?: IZoteroMarkupNode[]
   attr?: { [key: string]: string }

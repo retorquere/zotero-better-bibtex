@@ -2,7 +2,7 @@ declare const Zotero: any
 
 import { Translator } from './lib/translator'
 export { Translator }
-import { ZoteroTranslator } from '../gen/typings/serialized-item'
+import { Item } from '../gen/typings/serialized-item'
 
 import { Reference } from './bibtex/reference'
 import { Exporter } from './bibtex/exporter'
@@ -287,7 +287,7 @@ export function doExport(): void {
   // Zotero.write(`\n% ${Translator.header.label}\n`)
   Zotero.write('\n')
 
-  let item: ZoteroTranslator.Item
+  let item: Item
   while (item = Exporter.nextItem()) {
     Zotero.debug(`exporting ${item.citationKey}`)
     const ref = new Reference(item)

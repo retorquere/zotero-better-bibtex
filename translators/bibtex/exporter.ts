@@ -1,12 +1,13 @@
 declare const Zotero: any
 
 import { Translator } from '../lib/translator'
-import { ZoteroTranslator } from '../../gen/typings/serialized-item'
+import { Item } from '../../gen/typings/serialized-item'
+import { Cache } from '../../typings/cache'
 
 import { JabRef } from '../bibtex/jabref' // not so nice... BibTeX-specific code
 import * as itemfields from '../../gen/items/items'
 import * as bibtexParser from '@retorquere/bibtex-parser'
-import { Postfix } from '../bibtex/postfix.ts'
+import { Postfix } from './postfix'
 import * as Extra from '../../content/extra'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
@@ -40,10 +41,10 @@ export const Exporter = new class {
     return uniq
   }
 
-  public nextItem(): ZoteroTranslator.Item {
+  public nextItem(): Item {
     this.postfix = this.postfix || (new Postfix(Translator.preferences.qualityReport))
 
-    let item: ZoteroTranslator.Item
+    let item: Item
     while (item = Translator.nextItem()) {
       if (['note', 'attachment'].includes(item.itemType)) continue
 
@@ -55,7 +56,7 @@ export const Exporter = new class {
       this.jabref.citekeys.set(item.itemID, item.citationKey)
 
       // this is not automatically lazy-evaluated?!?!
-      const cached: Types.DB.Cache.ExportedItem = item.cachable ? Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences) : null
+      const cached: Cache.ExportedItem = item.cachable ? Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences) : null
       Translator.cache[cached ? 'hits' : 'misses'] += 1
 
       if (cached) {
