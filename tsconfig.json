@@ -27,7 +27,8 @@
     "content/**/*",
     "translators/**/*",
     "setup/**/*",
-    "gen/**/*"
+    "gen/**/*",
+    "typings/*"
   ],
   "exclude": [
     "node_modules",

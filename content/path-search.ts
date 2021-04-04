@@ -3,6 +3,7 @@ declare const Zotero: any
 
 import { log } from './logger'
 import permutater = require('permutater')
+// import { OS } from '../typings/xpcom'
 
 function permutations(word) {
   const config = {
@@ -94,7 +95,7 @@ export async function pathSearch(bin: string, installationDirectory: { mac?: str
   for (const path of env.path) {
     for (const pathext of env.pathext) {
       try {
-        const cmd = OS.Path.join(path, bin + pathext)
+        const cmd: string = OS.Path.join(path, bin + pathext)
         if (!(await OS.File.exists(cmd))) continue
 
         // eslint-disable-next-line @typescript-eslint/await-thenable

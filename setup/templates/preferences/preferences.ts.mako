@@ -6,7 +6,7 @@ import { Events } from '../content/events'
 %>
 declare const Zotero: any
 const prefix = '${prefix}'
-import * as preferences from './preferences.json'
+import preferences from './preferences.json'
 import * as meta from '../content/prefs-meta'
 import { fromEntries } from '../content/object'
 
