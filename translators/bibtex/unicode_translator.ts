@@ -1,6 +1,7 @@
 declare const Zotero: any
 
 import { Translator } from '../lib/translator'
+import type { MarkupNode } from '../../typings/markup'
 
 import { log } from '../../content/logger'
 import HE = require('he')
@@ -111,7 +112,7 @@ const htmlConverter = new class HTMLConverter {
 
     this.stack = []
 
-    const ast: IZoteroMarkupNode = Zotero.BetterBibTeX.parseHTML(html, this.options)
+    const ast: MarkupNode = Zotero.BetterBibTeX.parseHTML(html, this.options)
     this.walk(ast)
 
     if (!options.commandspacers) this.latex = replace_command_spacers(this.latex)
@@ -127,7 +128,7 @@ const htmlConverter = new class HTMLConverter {
     return { latex: this.latex, raw: ast.nodeName === 'pre', packages: Object.keys(this.packages) }
   }
 
-  private walk(tag: IZoteroMarkupNode, nocased = false) {
+  private walk(tag: MarkupNode, nocased = false) {
     if (!tag) return
 
     switch (tag.nodeName) {

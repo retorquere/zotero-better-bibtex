@@ -7,6 +7,7 @@ import { Translator } from '../lib/translator'
 
 import * as itemfields from '../../gen/items/items'
 import * as Extra from '../../content/extra'
+import { Cache } from '../../typings/cache'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
 import { log } from '../../content/logger'
 import { worker } from '../../content/worker'
@@ -53,7 +54,7 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
 
       order.push({ citationKey: item.citationKey, i: items.length })
 
-      let cached: Types.DB.Cache.ExportedItem
+      let cached: Cache.ExportedItem
       if (cached = Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences)) {
         items.push(cached.reference)
         continue

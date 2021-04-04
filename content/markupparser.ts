@@ -1,3 +1,5 @@
+import type { MarkupNode } from '../typings/markup'
+
 import parse5 = require('parse5/lib/parser')
 const htmlParser = new parse5({ sourceCodeLocationInfo: true })
 import { titleCase } from './case'
@@ -93,10 +95,10 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
   private html: string
   private ligatures = new RegExp(`[${Object.keys(ligatures).join('')}]`, 'g')
 
-  public parse(html, options: HTMLParserOptions): IZoteroMarkupNode {
+  public parse(html, options: HTMLParserOptions): MarkupNode {
     this.html = html
 
-    let doc: IZoteroMarkupNode
+    let doc: MarkupNode
 
     this.caseConversion = options.caseConversion
     this.braceProtection = options.caseConversion && options.exportBraceProtection
@@ -155,7 +157,7 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
     return doc
   }
 
-  private titleCase(node: IZoteroMarkupNode) {
+  private titleCase(node: MarkupNode) {
     if (node.nodeName === '#text') {
       node.value = this.titleCased.substr(node.titleCased, node.value.length)
       return
@@ -167,7 +169,7 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
     }
   }
 
-  private unwrapSpurious(node: IZoteroMarkupNode) {
+  private unwrapSpurious(node: MarkupNode) {
     // debug('spurious:', { nodeName: node.nodeName, attrs: Object.keys(node.attr).length, nocase: node.nocase, childNodes: node.childNodes.length })
 
     if (node.nodeName === '#text') return node
@@ -180,7 +182,7 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
   }
 
   // BibLaTeX is beyond insane https://github.com/retorquere/zotero-better-bibtex/issues/541#issuecomment-240999396
-  private unwrapNocase(node: IZoteroMarkupNode): IZoteroMarkupNode[] {
+  private unwrapNocase(node: MarkupNode): MarkupNode[] {
     if (node.nodeName === '#text') return [ node ]
 
     // unwrap and flatten
@@ -205,7 +207,7 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
     })
   }
 
-  private cleanupNocase(node: IZoteroMarkupNode, nocased = false): IZoteroMarkupNode[] {
+  private cleanupNocase(node: MarkupNode, nocased = false): MarkupNode[] {
     if (node.nodeName === '#text') return null
 
     if (nocased) delete node.nocase
@@ -215,7 +217,7 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
     }
   }
 
-  private collectText(node: IZoteroMarkupNode) {
+  private collectText(node: MarkupNode) {
     switch (node.nodeName) {
       case '#text':
         node.titleCased = this.titleCased.length
@@ -237,7 +239,7 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
     }
   }
 
-  private plaintext(childNodes: IZoteroMarkupNode[], text, offset) {
+  private plaintext(childNodes: MarkupNode[], text, offset) {
     // replace ligatures so titlecasing works for things like "figures"
     text = text.replace(this.ligatures, (ligature: string) => (ligatures[ligature] as string))
     const l = childNodes.length
@@ -267,7 +269,7 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
 
   private walk(node, isNocased = false) {
     // debug('walk:', node.nodeName)
-    const normalized_node: IZoteroMarkupNode = { nodeName: node.nodeName, childNodes: [], attr: {}, class: {} }
+    const normalized_node: MarkupNode = { nodeName: node.nodeName, childNodes: [], attr: {}, class: {} }
     for (const {name, value} of (node.attrs || [])) {
       normalized_node.attr[name] = value
     }

@@ -1,7 +1,7 @@
 /* eslint-disable id-blacklist, @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types */
 
 import { client } from '../../content/client'
-import { ZoteroTranslator } from '../typings/serialized-item'
+import { Item } from '../typings/serialized-item'
 const jurism = client === 'jurism'
 const zotero = !jurism
 
@@ -85,7 +85,7 @@ function unalias(item: any) {
 }
 
 // import & export translators expect different creator formats... nice
-export function simplifyForExport(item: any, dropAttachments = false): ZoteroTranslator.Item {
+export function simplifyForExport(item: any, dropAttachments = false): Item {
   unalias(item)
 
   if (item.filingDate) item.filingDate = item.filingDate.replace(/^0000-00-00 /, '')
@@ -109,10 +109,10 @@ export function simplifyForExport(item: any, dropAttachments = false): ZoteroTra
     item.attachments = (!dropAttachments && item.attachments) || []
   }
 
-  return (item as ZoteroTranslator.Item)
+  return (item as Item)
 }
 
-export function simplifyForImport(item: any): ZoteroTranslator.Item {
+export function simplifyForImport(item: any): Item {
   unalias(item)
 
   if (item.creators) {
@@ -129,5 +129,5 @@ export function simplifyForImport(item: any): ZoteroTranslator.Item {
 
   if (!jurism) delete item.multi
 
-  return (item as ZoteroTranslator.Item)
+  return (item as Item)
 }

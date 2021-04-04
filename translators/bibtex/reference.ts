@@ -3,7 +3,9 @@
 
 declare const Zotero: any
 
-import { ZoteroTranslator } from '../../gen/typings/serialized-item'
+import { Item } from '../../gen/typings/serialized-item'
+import { Cache } from '../../typings/cache'
+import type { Translators } from '../../typings/translators'
 
 import { Translator } from '../lib/translator'
 
@@ -296,7 +298,7 @@ const fieldOrder = [
  */
 export class Reference {
   public has: { [key: string]: any } = {}
-  public item: ZoteroTranslator.Item
+  public item: Item
   public referencetype: string
   public referencetype_source: string
   public useprefix: boolean
@@ -340,7 +342,7 @@ export class Reference {
   private _enc_creators_relax_marker = '\u200C' // zero-width non-joiner
 
   private isBibString = /^[a-z][-a-z0-9_]*$/i
-  private metadata: Types.DB.Cache.ExportedItemMetadata = { DeclarePrefChars: '', noopsort: false, packages: [] }
+  private metadata: Cache.ExportedItemMetadata = { DeclarePrefChars: '', noopsort: false, packages: [] }
   private packages: { [key: string]: boolean }
   private juniorcomma: boolean
 
@@ -492,7 +494,7 @@ export class Reference {
    *   'enc' means 'enc_latex'. If you pass both 'bibtex' and 'latex', 'bibtex' takes precedence (and 'value' will be
    *   ignored)
    */
-  public add(field: IField): string {
+  public add(field: Translators.BibTeX.Field): string {
     if (Translator.preferences.testing && !this.inPostscript && field.name !== field.name.toLowerCase()) throw new Error(`Do not add mixed-case field ${field.name}`)
 
     if (!field.value && !field.bibtex && this.inPostscript) {
@@ -676,7 +678,7 @@ export class Reference {
 
   public hasCreator(type): boolean { return (this.item.creators || []).some(creator => creator.creatorType === type) }
 
-  public override(field: IField): void {
+  public override(field: Translators.BibTeX.Field): void {
     const itemtype_name = field.name.split('.')
     let name
     if (itemtype_name.length === 2) {

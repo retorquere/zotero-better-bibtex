@@ -1,4 +1,4 @@
-export namespace Cache {
+export declare namespace Cache {
   interface ExportedItemMetadata {
     DeclarePrefChars: string
     noopsort: boolean

@@ -11,6 +11,7 @@ declare class ChromeWorker extends Worker { }
 Components.utils.import('resource://zotero/config.js')
 declare const ZOTERO_CONFIG: any
 
+import type { Translators as Translator } from '../typings/translators'
 import { Preference } from '../gen/preferences'
 import { Serializer } from './serializer'
 import { log } from './logger'
@@ -84,9 +85,9 @@ const trace: Trace[] = []
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const Translators = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
-  public byId: Record<string, ITranslatorHeader>
-  public byName: Record<string, ITranslatorHeader>
-  public byLabel: Record<string, ITranslatorHeader>
+  public byId: Record<string, Translator.Header>
+  public byName: Record<string, Translator.Header>
+  public byLabel: Record<string, Translator.Header>
   public itemType: { note: number, attachment: number, annotation: number }
 
   private queue = new Queue
@@ -314,7 +315,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       return this.exportItems(translatorID, displayOptions, job.scope, job.path)
     }
 
-    const config: BBTWorker.Config = {
+    const config: Translator.Worker.Config = {
       preferences: { ...Preference.all, ...job.preferences },
       options: displayOptions || {},
       items: [],
@@ -324,7 +325,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     let items: any[] = []
-    worker.onmessage = (e: { data: BBTWorker.Message }) => {
+    worker.onmessage = (e: { data: Translator.Worker.Message }) => {
       switch (e.data?.kind) {
         case 'error':
           log.status({error: true, translator: translator.label, worker: id}, 'QBW failed:', Date.now() - start, e.data)

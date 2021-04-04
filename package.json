@@ -17,14 +17,16 @@
     "releaseURL": "https://github.com/retorquere/zotero-better-bibtex/releases/download/release/"
   },
   "scripts": {
+    "par": "tmux new-session 'npm run esbuild' \\; split-window 'npm run tsc' \\; split-window 'npm run lint'",
     "pretest": "npm run build",
     "test": "./test/behave --stop",
     "lint": "eslint . --ext .ts",
     "webpack": "webpack",
     "setup": "./setup/setup.py && ts-node setup/index.ts",
-    "prebuild": "pnpm install && npm run setup && npm run lint && npm run tsc",
+    "prebuild": "pnpm install && npm run setup && npm run lint",
     "tsc": "tsc --noEmit",
-    "build": "node esbuild.js",
+    "esbuild": "node esbuild.js",
+    "build": "npm run webpack",
     "postbuild": "./util/patch-install-rdf.py && npm run zipup-better-bibtex && npm run zipup-debug-bridge",
     "zipup-better-bibtex": "zotero-plugin-zipup build zotero-better-bibtex",
     "zipup-debug-bridge": "zotero-plugin-zipup test/fixtures/debug-bridge debug-bridge",

@@ -7,12 +7,12 @@ export { Translator }
 import { log } from '../content/logger'
 import { fromEntries } from '../content/object'
 
-import { ZoteroTranslator } from '../gen/typings/serialized-item'
+import { Item } from '../gen/typings/serialized-item'
 
 import * as escape from '../content/escape'
 import * as Extra from '../content/extra'
 
-function clean(item: ZoteroTranslator.Item): ZoteroTranslator.Item {
+function clean(item: Item): Item {
   item = {...item, ...Extra.get(item.extra, 'zotero') }
   item.extra = item.extra.split('\n').filter(line => !line.match(/^OCLC:/i)).join('\n')
   return item
@@ -20,7 +20,7 @@ function clean(item: ZoteroTranslator.Item): ZoteroTranslator.Item {
 
 type ExpandedCollection = {
   name: string
-  items: ZoteroTranslator.Item[]
+  items: Item[]
   collections: ExpandedCollection[]
   root: boolean
 }
@@ -35,7 +35,7 @@ class Exporter {
   public html = ''
 
   constructor() {
-    const items: Record<number, ZoteroTranslator.Item> = {}
+    const items: Record<number, Item> = {}
     const filed: Set<number> = new Set
     const collections: Record<string, ExpandedCollection> = {}
 

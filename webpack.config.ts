@@ -35,7 +35,7 @@ const common = {
   },
 
   resolve: {
-    extensions: ['.ts', '.js'],
+    extensions: ['.js', '.ts', '.d.ts'],
     // https://github.com/webpack/webpack/pull/8460/commits/a68426e9255edcce7822480b78416837617ab065
     fallback: {
       fs: false,

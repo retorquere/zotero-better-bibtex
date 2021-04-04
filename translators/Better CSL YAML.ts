@@ -3,6 +3,7 @@ declare const Zotero: any
 import YAML = require('js-yaml')
 
 import { Translator } from './lib/translator'
+import type { MarkupNode } from '../typings/markup'
 export { Translator }
 
 import { CSLExporter as Exporter } from './csl/csl'
@@ -17,7 +18,7 @@ const htmlConverter = new class HTML {
     return this.markdown
   }
 
-  private walk(tag: IZoteroMarkupNode) {
+  private walk(tag: MarkupNode) {
     if (!tag) return
 
     if (['#text', 'pre', 'script'].includes(tag.nodeName)) {
