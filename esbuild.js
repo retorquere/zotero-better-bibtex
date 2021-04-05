@@ -8,6 +8,7 @@ const pegjs = require('pegjs')
 const exec = require('child_process').exec
 const glob = require('glob-promise')
 const crypto = require('crypto')
+const jsesc = require('jsesc')
 
 let resolveShims = {
   name: 'node-shims',
@@ -36,6 +37,15 @@ let resolveShims = {
         loader: 'js'
       }
     })
+
+    /*
+    build.onLoad({ filter: /\.json$/ }, async (args) => {
+      return {
+        contents: `var hnse = module.exports = ${jsesc(JSON.parse(await fs.promises.readFile(args.path, 'utf-8')), { compact: false, indent: '  ' })}`,
+        loader: 'js'
+      }
+    })
+    */
   }
 }
 
@@ -53,7 +63,6 @@ function execShellCommand(cmd) {
 
 async function rebuild() {
   for (const translator of (await glob('translators/*.json')).map(tr => path.parse(tr))) {
-    console.log(translator.name)
     const header = require('./' + path.join(translator.dir, translator.name + '.json'))
     const vars = ['Translator']
       .concat((header.translatorType & 1) ? ['detectImport', 'doImport'] : [])
@@ -61,6 +70,7 @@ async function rebuild() {
 
     const globalName = translator.name.replace(/ /g, '') + '__' + vars.join('__')
     const outfile = path.join('build/resource', translator.name + '.js')
+    console.log(outfile)
 
     // https://esbuild.github.io/api/#write
     // https://esbuild.github.io/api/#outbase
@@ -70,7 +80,7 @@ async function rebuild() {
       format: 'iife',
       globalName,
       bundle: true,
-      charset: 'utf8',
+      // charset: 'utf8',
       plugins: [resolveShims],
       outfile,
       footer: {
