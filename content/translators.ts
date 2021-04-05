@@ -11,6 +11,7 @@ declare class ChromeWorker extends Worker { }
 Components.utils.import('resource://zotero/config.js')
 declare const ZOTERO_CONFIG: any
 
+import { Deferred } from './deferred'
 import type { Translators as Translator } from '../typings/translators'
 import { Preference } from '../gen/preferences'
 import { Serializer } from './serializer'
@@ -291,7 +292,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       worker: id,
     }).map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&')
 
-    const deferred = Zotero.Promise.defer()
+    const deferred = new Deferred<string>()
     let worker: ChromeWorker = null
     // WHAT IS GOING ON HERE FIREFOX?!?! A *NetworkError* for a xpi-internal resource:// URL?!
     for (let attempt = 0; !worker && attempt < 5; attempt++) { // eslint-disable-line no-magic-numbers
@@ -348,7 +349,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           break
 
         case 'done':
-          deferred.resolve(e.data.output)
+          deferred.resolve(typeof e.data.output === 'boolean' ? '' : e.data.output)
           worker.terminate()
           this.workers.running.delete(id)
           break

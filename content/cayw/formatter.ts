@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/require-await, @typescript-eslint/no-unsafe-return */
 declare const Zotero: any
 declare const Components: any
+
+Components.utils.import('resource://gre/modules/AddonManager.jsm')
 declare const AddonManager: any
 
 import { Translators } from '../translators'
@@ -210,10 +212,9 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
   }
 
   public async 'scannable-cite'(citations, options) {
-    const deferred = Zotero.Promise.defer()
-    Components.utils.import('resource://gre/modules/AddonManager.jsm')
-    AddonManager.getAddonByID('rtf-odf-scan-for-zotero@mystery-lab.com', addon => deferred.resolve(addon && addon.isActive))
-    const odfScan = await deferred.promise
+    const odfScan = await new Promise((resolve, _reject) => {
+      AddonManager.getAddonByID('rtf-odf-scan-for-zotero@mystery-lab.com', addon => resolve(addon && addon.isActive))
+    })
     if (!odfScan) throw new Error('scannable-cite needs the "RTF/ODF Scan for Zotero" plugin to be installed')
 
     const items = await getItemsAsync(citations.map(picked => picked.id))

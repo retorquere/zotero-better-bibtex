@@ -58,6 +58,7 @@
   },
   "dependencies": {
     "@retorquere/bibtex-parser": "^3.2.35",
+    "@types/bluebird": "^3.5.33",
     "@types/lokijs": "^1.5.4",
     "ajv": "^8.0.4",
     "ajv-keywords": "^5.0.0",

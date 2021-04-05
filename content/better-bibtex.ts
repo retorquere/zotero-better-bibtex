@@ -1,6 +1,8 @@
 /* eslint-disable prefer-rest-params */
 declare const Components: any
-declare const Zotero: any
+// declare const Zotero: any
+
+import type BluebirdPromise from 'bluebird'
 
 Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
@@ -9,6 +11,7 @@ import type { XUL } from '../typings/xul'
 // import { OS } from '../typings/xpcom'
 import { clean_pane_persist, patch as $patch$ } from './monkey-patch'
 import { flash } from './flash'
+import { Deferred } from './deferred'
 
 import { Preference } from '../gen/preferences' // needs to be here early, initializes the prefs observer
 require('./pull-export') // just require, initializes the pull-export end points
@@ -266,7 +269,7 @@ $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function Zoter
     if (!itemTreeViewWaiting[item.id]) {
       // eslint-disable-next-line @typescript-eslint/no-use-before-define
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      BetterBibTeX.ready.then(() => this._treebox.invalidateCell(row, col))
+      BetterBibTeX.ready.then(() => this._treebox.invalidateCell(row, col)) // eslint-disable-line @typescript-eslint/no-floating-promises
       itemTreeViewWaiting[item.id] = true
     }
 
@@ -527,7 +530,7 @@ function notify(event: string, handler: any) {
   Zotero.Notifier.registerObserver({
     // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
     notify(...args: any[]) {
-      BetterBibTeX.ready.then(() => { // eslint-disable-line @typescript-eslint/no-use-before-define
+      BetterBibTeX.ready.then(() => { // eslint-disable-line @typescript-eslint/no-use-before-define, @typescript-eslint/no-floating-promises
         // eslint-disable-next-line prefer-spread
         handler.apply(null, args)
       })
@@ -702,10 +705,10 @@ class Progress {
   }
 }
 
-export const BetterBibTeX = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+class CBetterBibTeX {
   public localeDateOrder: string = Zotero.Date.getLocaleDateOrder()
-  public ready: any
-  public loaded: any
+  public ready: BluebirdPromise<boolean>
+  public loaded: BluebirdPromise<boolean>
   public dir: string
 
   private strings: any
@@ -717,7 +720,7 @@ export const BetterBibTeX = new class { // eslint-disable-line @typescript-eslin
 
     this.strings = this.document.getElementById('zotero-better-bibtex-strings')
 
-    if (!this.loaded) await this.init()
+    if (!this.loaded) await this.init() // eslint-disable-line @typescript-eslint/no-misused-promises
   }
 
   public debugEnabled(): boolean {
@@ -741,7 +744,7 @@ export const BetterBibTeX = new class { // eslint-disable-line @typescript-eslin
   }
 
   public async scanAUX(target: any) {
-    if (!this.loaded) return
+    if (!this.loaded) return // eslint-disable-line @typescript-eslint/no-misused-promises
     await this.loaded
 
     const aux = await AUXScanner.pick()
@@ -776,8 +779,8 @@ export const BetterBibTeX = new class { // eslint-disable-line @typescript-eslin
   // #init
   private async init() {
     const deferred = {
-      loaded: Zotero.Promise.defer(),
-      ready: Zotero.Promise.defer(),
+      loaded: new Deferred<boolean>(),
+      ready: new Deferred<boolean>(),
     }
     this.ready = deferred.ready.promise
     this.loaded = deferred.loaded.promise
@@ -880,3 +883,4 @@ export const BetterBibTeX = new class { // eslint-disable-line @typescript-eslin
     Events.emit('loaded')
   }
 }
+export const BetterBibTeX = new CBetterBibTeX // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match

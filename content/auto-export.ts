@@ -131,20 +131,19 @@ class Git {
     proc.init(cmd)
     // proc.startHidden = true // won't work until Zotero upgrades to post-55 Firefox
 
-    const deferred = Zotero.Promise.defer()
-    proc.runwAsync(args, args.length, { observe: function(subject, topic) { // eslint-disable-line object-shorthand, prefer-arrow/prefer-arrow-functions
-      if (topic !== 'process-finished') {
-        deferred.reject(new Error(`${cmd.path} failed`))
-      }
-      else if (proc.exitValue !== 0) {
-        deferred.reject(new Error(`${cmd.path} returned exit status ${proc.exitValue}`))
-      }
-      else {
-        deferred.resolve(true)
-      }
-    }})
-
-    return (deferred.promise as Promise<boolean>)
+    return new Promise<boolean>((resolve, reject) => {
+      proc.runwAsync(args, args.length, { observe: function(subject, topic) { // eslint-disable-line object-shorthand, prefer-arrow/prefer-arrow-functions
+        if (topic !== 'process-finished') {
+          reject(new Error(`${cmd.path} failed`))
+        }
+        else if (proc.exitValue !== 0) {
+          reject(new Error(`${cmd.path} returned exit status ${proc.exitValue}`))
+        }
+        else {
+          resolve(true)
+        }
+      }})
+    })
   }
 }
 const git = new Git()

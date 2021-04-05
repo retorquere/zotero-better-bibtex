@@ -5,6 +5,10 @@ interface DirectoryIteratorConstructable {
   new(path: string): DirectoryIterator // eslint-disable-line @typescript-eslint/prefer-function-type
 }
 
+interface PromiseConstructable {
+  new(resolver: (resolve: any, reject: any) => void): Promise // eslint-disable-line @typescript-eslint/prefer-function-type
+}
+
 declare const OS: {
   File: {
     exists: (path: string) => Promise<boolean>
@@ -23,4 +27,8 @@ declare const OS: {
     dirname: (path: string) => string
     basename: (path: string) => string
   }
+}
+
+declare const Zotero: {
+  [attr: string]: any
 }

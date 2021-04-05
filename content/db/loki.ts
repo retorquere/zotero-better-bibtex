@@ -128,30 +128,30 @@ export class XULoki extends Loki {
   }
 
   public loadDatabaseAsync(options = {}): Promise<void> {
-    const deferred = Zotero.Promise.defer()
-    this.loadDatabase(options, err => {
-      if (err) return deferred.reject(err)
-      deferred.resolve(null)
+    return new Promise((resolve, reject) => {
+      this.loadDatabase(options, err => {
+        if (err) return reject(err)
+        resolve(null)
+      })
     })
-    return deferred.promise
   }
 
   public saveDatabaseAsync(): Promise<void> {
-    const deferred = Zotero.Promise.defer()
-    this.saveDatabase(err => {
-      if (err) return deferred.reject(err)
-      deferred.resolve(null)
+    return new Promise((resolve, reject) => {
+      this.saveDatabase(err => {
+        if (err) return reject(err)
+        resolve(null)
+      })
     })
-    return deferred.promise
   }
 
   public closeAsync(): Promise<void> {
-    const deferred = Zotero.Promise.defer()
-    this.close(err => {
-      if (err) return deferred.reject(err)
-      deferred.resolve(null)
+    return new Promise((resolve, reject) => {
+      this.close(err => {
+        if (err) return reject(err)
+        resolve(null)
+      })
     })
-    return deferred.promise
   }
 
   public schemaCollection(name: string, options: any) {

@@ -1,5 +1,6 @@
 dependencies:
   '@retorquere/bibtex-parser': 3.2.35
+  '@types/bluebird': 3.5.33
   '@types/lokijs': 1.5.4
   ajv: 8.0.4
   ajv-keywords: 5.0.0_ajv@8.0.4
@@ -683,6 +684,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-/+CRPXpBDpo2RK9C68N3b2cOvO0Cf5B9aPijHsoDQTHivnGSObdOF2BRQOYjojWTDy6nQvMjmqRXIxH55VjxxA==
+  /@types/bluebird/3.5.33:
+    dev: false
+    resolution:
+      integrity: sha512-ndEo1xvnYeHxm7I/5sF6tBvnsA4Tdi3zj1keRKRs12SP+2ye2A27NDJ1B6PqkfMbGAcT+mqQVqbZRIrhfOp5PQ==
   /@types/eslint-scope/3.7.0:
     dependencies:
       '@types/eslint': 7.2.6
@@ -5901,6 +5906,7 @@ packages:
       integrity: sha512-0cLysbFAawZ4kEg5zHBvOgqe4+c/A0k1mD6Ux1H3lgBDpxhHrEF3lwCPbJ6YCQYKcGWunsbza4nZ7lfjfzslqA==
 specifiers:
   '@retorquere/bibtex-parser': ^3.2.35
+  '@types/bluebird': ^3.5.33
   '@types/lokijs': ^1.5.4
   '@types/node': ^14.14.37
   '@types/webpack': ^5.28.0
