@@ -29,6 +29,8 @@ declare const OS: {
   }
 }
 
+// https://stackoverflow.com/questions/39040108/import-class-in-definition-file-d-ts
 declare const Zotero: {
   [attr: string]: any
+  BetterBibTeX: import('../content/better-bibtex').CBetterBibTeX
 }
