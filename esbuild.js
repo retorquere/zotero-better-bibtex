@@ -8,16 +8,30 @@ const pegjs = require('pegjs')
 const exec = require('child_process').exec
 const glob = require('glob-promise')
 const crypto = require('crypto')
-const jsesc = require('jsesc')
 
-let resolveShims = {
-  name: 'node-shims',
+let shims = {
+  name: 'shims',
   setup(build) {
 
     build.onResolve({ filter: /^(path|fs)$/ }, args => {
       return { path: path.resolve(path.join('shims', args.path + '.js')) }
     })
+  }
+}
 
+let throwShims = {
+  name: 'shims-throw',
+  setup(build) {
+
+    build.onResolve({ filter: /^(path|fs)$/ }, args => {
+      return { path: path.resolve(path.join('shims', 'not-' + args.path + '.js')) }
+    })
+  }
+}
+
+const loaders = {
+  name: 'loaders',
+  setup(build) {
     build.onLoad({ filter: /\.bibertool$/ }, async (args) => {
       return {
         contents: bibertool(await fs.promises.readFile(args.path, 'utf-8')),
@@ -37,15 +51,6 @@ let resolveShims = {
         loader: 'js'
       }
     })
-
-    /*
-    build.onLoad({ filter: /\.json$/ }, async (args) => {
-      return {
-        contents: `var hnse = module.exports = ${jsesc(JSON.parse(await fs.promises.readFile(args.path, 'utf-8')), { compact: false, indent: '  ' })}`,
-        loader: 'js'
-      }
-    })
-    */
   }
 }
 
@@ -81,7 +86,7 @@ async function rebuild() {
       globalName,
       bundle: true,
       // charset: 'utf8',
-      plugins: [resolveShims],
+      plugins: [loaders, throwShims],
       outfile,
       footer: {
         js: `const { ${vars.join(', ')} } = ${globalName};`
@@ -98,11 +103,31 @@ async function rebuild() {
     await fs.promises.writeFile(path.join('build/resource', translator.name + '.json'), JSON.stringify(header, null, 2))
   }
 
+  const vars = [ 'Zotero', 'onmessage', 'workerContext' ]
+  const globalName = vars.join('__')
+  await esbuild.build({
+    entryPoints: [ 'translators/worker/zotero.ts' ],
+    format: 'iife',
+    globalName,
+    bundle: true,
+    plugins: [loaders, shims],
+    outdir: 'build/resource/worker',
+    target: ['firefox60'],
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis
+    // banner: "const Global = Function('return this')();\n\n",
+    banner: {
+      js: 'importScripts("resource://zotero/config.js") // import ZOTERO_CONFIG\n\n',
+    },
+    footer: {
+      js: `const { ${vars.join(', ')} } = ${globalName};` +'\n' + 'importScripts(`resource://zotero-better-bibtex/${workerContext.translator}.js`);\n',
+    },
+  })
+
   await esbuild.build({
     entryPoints: [ 'content/better-bibtex.ts' ],
     format: 'iife',
     bundle: true,
-    plugins: [resolveShims],
+    plugins: [loaders, shims],
     outdir: 'build/content',
     target: ['firefox60'],
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis
