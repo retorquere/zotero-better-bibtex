@@ -98,27 +98,16 @@ async function rebuild() {
     await fs.promises.writeFile(path.join('build/resource', translator.name + '.json'), JSON.stringify(header, null, 2))
   }
 
-  /*
-  const entryPoints = process.argv.slice(2).filter(src => {
-    if (!src.startsWith('content/')) return false
-    src = path.parse(src)
-    return (src.base === 'better-bibtex.ts' || src.base.match(/^[A-Z]/))
+  await esbuild.build({
+    entryPoints: [ 'content/better-bibtex.ts' ],
+    format: 'iife',
+    bundle: true,
+    plugins: [resolveShims],
+    outdir: 'build/content',
+    target: ['firefox60'],
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis
+    // banner: "const Global = Function('return this')();\n\n",
   })
-  if (entryPoints.length) {
-    await esbuild.build({
-      entryPoints,
-      format: 'esm',
-      bundle: true,
-      charset: 'utf8',
-      plugins: [resolveShims],
-      splitting: true,
-      outdir: 'build/dist/content',
-      target: ['firefox60'],
-      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis
-      banner: "const Global = Function('return this')();\n\n",
-    })
-  }
-  */
 }
 
 rebuild().catch(err => console.log(err))
