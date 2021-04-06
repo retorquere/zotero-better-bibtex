@@ -3,6 +3,7 @@ declare const Zotero: any
 
 import { log } from './logger'
 import permutater = require('permutater')
+// import { OS } from '../typings/xpcom'
 
 function permutations(word) {
   const config = {
