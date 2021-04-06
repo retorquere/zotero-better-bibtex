@@ -5,10 +5,6 @@ interface DirectoryIteratorConstructable {
   new(path: string): DirectoryIterator // eslint-disable-line @typescript-eslint/prefer-function-type
 }
 
-interface PromiseConstructable {
-  new(resolver: (resolve: any, reject: any) => void): Promise // eslint-disable-line @typescript-eslint/prefer-function-type
-}
-
 declare const OS: {
   File: {
     exists: (path: string) => Promise<boolean>
