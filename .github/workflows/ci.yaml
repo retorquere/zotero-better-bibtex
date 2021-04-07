@@ -42,7 +42,7 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: install node packages
-      uses: pnpm/action-setup@v1.2.1
+      uses: pnpm/action-setup@v2
       with:
         version: latest
         run_install: true
@@ -179,7 +179,7 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: install node packages
-      uses: pnpm/action-setup@v1.2.1
+      uses: pnpm/action-setup@v2
       with:
         version: latest
         run_install: true
