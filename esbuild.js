@@ -66,6 +66,10 @@ function execShellCommand(cmd) {
   })
 }
 
+async function bundle(config) {
+  console.log(Object.keys((await esbuild.build({...config, metafile: true})).metafile.outputs).join(', '))
+}
+
 async function rebuild() {
   for (const translator of (await glob('translators/*.json')).map(tr => path.parse(tr))) {
     const header = require('./' + path.join(translator.dir, translator.name + '.json'))
@@ -75,12 +79,11 @@ async function rebuild() {
 
     const globalName = translator.name.replace(/ /g, '') + '__' + vars.join('__')
     const outfile = path.join('build/resource', translator.name + '.js')
-    console.log(outfile)
 
     // https://esbuild.github.io/api/#write
     // https://esbuild.github.io/api/#outbase
     // https://esbuild.github.io/api/#working-directory
-    await esbuild.build({
+    await bundle({
       entryPoints: [path.join(translator.dir, translator.name + '.ts')],
       format: 'iife',
       globalName,
@@ -105,7 +108,7 @@ async function rebuild() {
 
   const vars = [ 'Zotero', 'onmessage', 'workerContext' ]
   const globalName = vars.join('__')
-  await esbuild.build({
+  await bundle({
     entryPoints: [ 'translators/worker/zotero.ts' ],
     format: 'iife',
     globalName,
@@ -123,7 +126,7 @@ async function rebuild() {
     },
   })
 
-  await esbuild.build({
+  await bundle({
     entryPoints: [ 'content/better-bibtex.ts' ],
     format: 'iife',
     bundle: true,
