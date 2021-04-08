@@ -94,4 +94,24 @@
   <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.ZoteroPane.js"/>
   <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.KeyManager.js"/>
   <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.TestSupport.js"/>
+  <script>
+    var loaded = Promise.resolve();
+    var globals = Function('return this')();
+    var zoteroPane;
+    window.addEventListener('load', () => loaded.resolve());
+    loaded
+      .then(() => Zotero.debug('BBT startup'))
+      .then(() => Zotero.BetterBibTeX.load(document))
+      .then(() => Zotero.debug('BBT started'))
+      .catch(err => Zotero.debug(`Error starting BBT: ${err.message}\n${err.stack ||''}`))
+
+    /*
+      .then(() => Zotero.debug('loading ZoteroPane'))
+      .then(() => Zotero.BetterBibTeX.ZoteroPane.load(globals))
+      .then(
+      .then(() => Zotero.debug('ZoteroPane loaded'))
+      .catch(err => Zotero.debug(`Error loading ZoteroPane: ${err.message}\n${err.stack ||''}`))
+    */
+  </script>
+
 </overlay>

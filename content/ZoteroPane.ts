@@ -76,6 +76,7 @@ $patch$(pane, 'serializePersist', original => function() {
 })
 
 export = new class ZoteroPane {
+  /*
   public constructor() {
     window.addEventListener('load', () => {
       Zotero.BetterBibTeX.load(document)
@@ -87,6 +88,7 @@ export = new class ZoteroPane {
         })
     }, false)
   }
+  */
 
   public pullExport() {
     if (!pane.collectionsView || !pane.collectionsView.selection || !pane.collectionsView.selection.count) return
