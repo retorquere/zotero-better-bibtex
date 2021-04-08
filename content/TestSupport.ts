@@ -14,6 +14,8 @@ import { getItemsAsync } from './get-items-async'
 import { AUXScanner } from './aux-scanner'
 import { DB as Cache } from './db/cache'
 import { upgrade } from './db/upgrade'
+import * as Extra from './extra'
+import { $and } from './db/loki'
 
 import  { defaults } from './prefs-meta'
 
@@ -23,7 +25,7 @@ export = new class {
   }
 
   public autoExportRunning() {
-    return (AutoExport.db.find({ status: 'running' }).length > 0)
+    return (AutoExport.db.find($and({ status: 'running' })).length > 0)
   }
 
   public async reset() {
@@ -162,7 +164,7 @@ export = new class {
     let ids: number[] = []
 
     if (query.contains) ids = ids.concat(KeyManager.keys.where( (item: { citekey: string }) => item.citekey.toLowerCase().includes(query.contains.toLowerCase()) ).map((item: { itemID: number }) => item.itemID))
-    if (query.is) ids = ids.concat(KeyManager.keys.find({ citekey: query.is }).map((item: { itemID: number }) => item.itemID))
+    if (query.is) ids = ids.concat(KeyManager.keys.find($and({ citekey: query.is })).map((item: { itemID: number }) => item.itemID))
 
     const s = new Zotero.Search()
     for (const [mode, text] of Object.entries(query)) {
@@ -187,7 +189,7 @@ export = new class {
     return await CAYWFormatter[format](citations, {})
   }
 
-  public async pinCiteKey(itemID, action) {
+  public async pinCiteKey(itemID, action, citationKey) {
     let ids
     if (typeof itemID === 'number') {
       ids = [itemID]
@@ -207,6 +209,17 @@ export = new class {
     }
 
     if (!ids.length) throw new Error('Nothing to do')
+
+    if (citationKey) {
+      if (action !== 'pin') throw new Error(`Don't know how to ${action} ${citationKey}`)
+      log.debug('conflict: pinning', ids, 'to', citationKey)
+      for (const item of await getItemsAsync(ids)) {
+        item.setField('extra', Extra.set(item.getField('extra'), { citationKey }))
+        log.debug('conflict: extra set to', item.getField('extra'))
+        await item.saveTx()
+      }
+      return
+    }
 
     for (itemID of ids) {
       switch (action) {

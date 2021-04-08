@@ -59,7 +59,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
       libraryID = collection ? collection.libraryID : azp.getSelectedLibraryID()
     }
 
-    const found = (KeyManager.keys.find({ libraryID, citekey: { $in: citekeys } }) as { itemID: number, citekey: string }[])
+    const found = (KeyManager.keys.find({$and: [{ libraryID: {$eq: libraryID} }, { citekey: { $in: citekeys } }]}) as { itemID: number, citekey: string }[])
 
     const itemIDs = found.map(key => key.itemID)
 

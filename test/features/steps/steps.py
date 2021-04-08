@@ -221,6 +221,11 @@ def step_impl(context, change):
   assert change in ['pin', 'unpin', 'refresh']
   context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.pinCiteKey(null, action)', action=change)
 
+@when(u'I pin the citation key to "{citekey}"')
+def step_impl(context, citekey):
+  assert len(context.selected) == 1
+  context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.pinCiteKey(id, "pin", citekey)', id=context.selected[0], citekey=citekey)
+
 @then(u'"{found}" should match "{expected}"')
 def step_impl(context, expected, found):
   expected = expand_scenario_variables(context, expected)

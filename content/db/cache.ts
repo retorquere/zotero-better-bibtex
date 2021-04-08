@@ -17,7 +17,7 @@ class Cache extends Loki {
   public remove(ids, _reason) {
     if (!this.initialized) return
 
-    const query = Array.isArray(ids) ? { itemID : { $in : ids } } : { itemID: ids }
+    const query = Array.isArray(ids) ? { itemID : { $in : ids } } : { itemID: { $eq: ids } }
 
     for (const coll of this.collections) {
       coll.findAndRemove(query)
@@ -102,7 +102,7 @@ class Cache extends Loki {
       })
 
       // old cache, drop
-      if (coll.findOne({ [override.names[0]]: undefined })) coll.removeDataOnly()
+      if (coll.findOne({ [override.names[0]]: {$eq: undefined} })) coll.removeDataOnly()
 
       // should have been dropped after object change/delete
       for (const outdated of coll.data.filter(item => !modified[item.itemID] || modified[item.itemID] >= (item.meta?.updated || item.meta?.created || 0))) {
@@ -154,12 +154,11 @@ if (DB.getCollection('cache')) { DB.removeCollection('cache') }
 if (DB.getCollection('serialized')) { DB.removeCollection('serialized') }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function selector(itemID: number | number[], options: any, prefs: Preferences): any {
+export function selector(itemID: number | number[], options: any, prefs: Preferences) {
   const query = {
-    itemID: Array.isArray(itemID) ? { $in: itemID } : itemID,
-
     exportNotes: !!options.exportNotes,
     useJournalAbbreviation: !!options.useJournalAbbreviation,
+    itemID: Array.isArray(itemID) ? {$in: itemID} : itemID,
   }
   for (const pref of override.names) {
     query[pref] = prefs[pref]

@@ -301,6 +301,13 @@ Scenario: two ISSN number are freezing browser #110 + Generating keys and export
   And I refresh the citation key
   Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
+Scenario: Postfixed keys different between computers #1788
+  When I import 2 references from "export/*.json"
+  And I select the item with a field that contains "Wittgenstein"
+  And I pin the citation key to "heyns2021"
+  And I wait 2 seconds
+  Then an export using "Better BibLaTeX" should match "export/*.biblatex"
+
 @arXiv @85 @bbt
 Scenario: Square brackets in Publication field (85), and non-pinned keys must change when the pattern does
   When I import 1 references from "export/*.json"

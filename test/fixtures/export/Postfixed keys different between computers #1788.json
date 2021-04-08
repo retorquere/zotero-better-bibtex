@@ -1,0 +1,121 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "mdy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "baseAttachmentPath": "/Users/shirdekel/Dropbox (Sydney Uni)/zotero_library",
+      "citekeyFormat": "[auth:lower:alphanum][year]",
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "extraMergeTeX": true,
+      "itemObserverDelay": 100,
+      "keyConflictPolicy": "change",
+      "keyScope": "global",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc"
+    }
+  },
+  "items": [
+    {
+      "abstractNote": "Make Zotero effective for us LaTeX holdouts. Contribute to retorquere/zotero-better-bibtex development by creating an account on GitHub.",
+      "accessDate": "2021-04-08T01:07:32Z",
+      "citationKey": "heyns2021a",
+      "creators": [
+        {
+          "creatorType": "programmer",
+          "firstName": "Ludwig",
+          "lastName": "Wittgenstein"
+        }
+      ],
+      "date": "2021-04-08T00:39:34Z",
+      "extra": [
+        "original-date: 2013-09-20T08:26:14Z"
+      ],
+      "itemID": 1,
+      "itemType": "computerProgram",
+      "libraryCatalog": "GitHub",
+      "programmingLanguage": "TypeScript",
+      "rights": "MIT License         ,                 MIT License",
+      "tags": [
+        {
+          "tag": "bib",
+          "type": 1
+        },
+        {
+          "tag": "biblatex",
+          "type": 1
+        },
+        {
+          "tag": "bibtex",
+          "type": 1
+        },
+        {
+          "tag": "citation-keys",
+          "type": 1
+        },
+        {
+          "tag": "latex",
+          "type": 1
+        },
+        {
+          "tag": "zotero",
+          "type": 1
+        }
+      ],
+      "title": "retorquere/zotero-better-bibtex 2",
+      "url": "https://github.com/retorquere/zotero-better-bibtex"
+    },
+    {
+      "abstractNote": "Make Zotero effective for us LaTeX holdouts. Contribute to retorquere/zotero-better-bibtex development by creating an account on GitHub.",
+      "accessDate": "2021-04-08T01:07:32Z",
+      "citationKey": "heyns2021a",
+      "creators": [
+        {
+          "creatorType": "programmer",
+          "firstName": "Emiliano",
+          "lastName": "Heyns"
+        }
+      ],
+      "date": "2021-04-08T00:39:34Z",
+      "extra": [
+        "original-date: 2013-09-20T08:26:14Z"
+      ],
+      "itemID": 2,
+      "itemType": "computerProgram",
+      "libraryCatalog": "GitHub",
+      "programmingLanguage": "TypeScript",
+      "rights": "MIT License         ,                 MIT License",
+      "tags": [
+        {
+          "tag": "bib",
+          "type": 1
+        },
+        {
+          "tag": "biblatex",
+          "type": 1
+        },
+        {
+          "tag": "bibtex",
+          "type": 1
+        },
+        {
+          "tag": "citation-keys",
+          "type": 1
+        },
+        {
+          "tag": "latex",
+          "type": 1
+        },
+        {
+          "tag": "zotero",
+          "type": 1
+        }
+      ],
+      "title": "retorquere/zotero-better-bibtex 2",
+      "url": "https://github.com/retorquere/zotero-better-bibtex"
+    }
+  ]
+}

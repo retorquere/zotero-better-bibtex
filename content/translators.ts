@@ -20,6 +20,7 @@ import { DB as Cache, selector as cacheSelector } from './db/cache'
 import { DB } from './db/main'
 import { sleep } from './sleep'
 import { flash } from './flash'
+import { $and, Query } from './db/loki'
 
 import { override } from './prefs-meta'
 import * as translatorMetadata from '../gen/translators.json'
@@ -367,7 +368,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           }
 
           const selector = cacheSelector(itemID, config.options, config.preferences)
-          let cached = cache.findOne(selector)
+          let cached = cache.findOne($and(selector))
 
           if (cached) {
             cached.reference = reference
@@ -471,7 +472,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       const cloneObjects = cache.cloneObjects
       cache.cloneObjects = false
       // uncloned is safe because it gets serialized in the transfer
-      config.cache = cache.find(query).reduce((acc, cached) => {
+      config.cache = cache.find($and(query)).reduce((acc, cached) => {
         current_trace.cached.export += 1
         // direct-DB access for speed...
         cached.meta.updated = (new Date).getTime() // touches the cache object so it isn't reaped too early
@@ -631,7 +632,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     cache.removeDataOnly()
     // importing AutoExports would be circular, so access DB directly
     const autoexports = DB.getCollection('autoexport')
-    for (const ae of autoexports.find({ translatorID: header.translatorID })) {
+    for (const ae of autoexports.find($and({ translatorID: header.translatorID }))) {
       autoexports.update({ ...ae, status: 'scheduled' })
     }
 
@@ -650,16 +651,16 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   public async uncached(translatorID: string, displayOptions: any, scope: any): Promise<any[]> {
     // get all itemIDs in cache
     const cache = Cache.getCollection(this.byId[translatorID].label)
-    const query = {
-      exportNotes: !!displayOptions.exportNotes,
-      useJournalAbbreviation: !!displayOptions.useJournalAbbreviation,
-    }
+    const query: Query = {$and: [
+      { exportNotes: {$eq: !!displayOptions.exportNotes} },
+      { useJournalAbbreviation: {$eq: !!displayOptions.useJournalAbbreviation} },
+    ]}
     for (const pref of override.names) {
       if (typeof displayOptions[`preference_${pref}`] === 'undefined') {
-        query[pref] = Preference[pref]
+        query.$and.push({ [pref]: {$eq: Preference[pref]} })
       }
       else {
-        query[pref] = displayOptions[`preference_${pref}`]
+        query.$and.push({ [pref]: {$eq: displayOptions[`preference_${pref}`]} })
       }
     }
     const cached = new Set(cache.find(query).map(item => item.itemID))

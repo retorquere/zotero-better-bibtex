@@ -5,6 +5,7 @@ import { JournalAbbrev } from './journal-abbrev'
 
 import { DB as Cache } from './db/cache'
 import { KeyManager } from './key-manager'
+import { $and } from './db/loki'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const Serializer = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
@@ -21,7 +22,7 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
   private fetch(item) {
     if (!this.cache) return null
 
-    const cached = this.cache.findOne({ itemID: item.id })
+    const cached = this.cache.findOne($and({ itemID: item.id }))
     if (!cached) return null
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return

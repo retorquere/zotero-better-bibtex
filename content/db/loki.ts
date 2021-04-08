@@ -164,3 +164,17 @@ export class XULoki extends Loki {
     return coll
   }
 }
+
+type QueryPrimitive = number | boolean | string | undefined
+export type Query
+  = { [field: string]: { $eq: QueryPrimitive } }
+  | { [field: string]: { $ne: QueryPrimitive } }
+  | { [field: string]: { $in: QueryPrimitive[] } }
+  | { $and: Query[] }
+
+export function $and(query): Query {
+  let and: Query = { $and: Object.entries(query).map(([k, v]: [string, QueryPrimitive | Query]) => ({ [k]: typeof v === 'object' ? v : {$eq: v } })) as Query[] }
+  if (and.$and.length === 1) and = and.$and[0]
+  return and
+}
+

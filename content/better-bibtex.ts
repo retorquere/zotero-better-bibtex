@@ -35,6 +35,7 @@ import { JournalAbbrev } from './journal-abbrev'
 import { AutoExport } from './auto-export'
 import { KeyManager } from './key-manager'
 import { TeXstudio } from './tex-studio'
+import { $and } from './db/loki'
 import format = require('string-template')
 
 // UNINSTALL
@@ -115,7 +116,7 @@ $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(ite
     if (merge.citationKey || merge.tex || merge.kv) {
       const extra = Extra.get(item.getField('extra'), 'zotero', { citationKey: merge.citationKey, aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
       if (!extra.extraFields.citationKey) { // why is the citationkey stripped from extra before we get to this point?!
-        const pinned = KeyManager.keys.findOne({ itemID: item.id })
+        const pinned = KeyManager.keys.findOne($and({ itemID: item.id }))
         log.debug('#bbt merge: repinning key?', pinned)
         if (pinned.pinned) extra.extraFields.citationKey = pinned.citekey
       }
@@ -125,7 +126,7 @@ $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(ite
       if (merge.citationKey) {
         const otherIDs = otherItems.map((i: { id: string }) => parseInt(i.id))
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        extra.extraFields.aliases = [...extra.extraFields.aliases, ...(KeyManager.keys.find({ itemID: { $in: otherIDs }}).map((i: { citekey: string }) => i.citekey))]
+        extra.extraFields.aliases = [...extra.extraFields.aliases, ...(KeyManager.keys.find($and({ itemID: { $in: otherIDs }})).map((i: { citekey: string }) => i.citekey))]
       }
       log.debug('#bbt merge: added stored keys:', { extract: merge, raw: item.getField('extra'), parsed: extra })
 
@@ -161,7 +162,7 @@ $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(ite
       log.debug('#bbt merge: added aliases:', { extra })
 
       if (merge.citationKey) {
-        const citekey = KeyManager.keys.findOne({ itemID: item.id }).citekey
+        const citekey = KeyManager.keys.findOne($and({ itemID: item.id })).citekey
         extra.extraFields.aliases = extra.extraFields.aliases.filter(alias => alias !== citekey)
       }
       log.debug('#bbt merge: aliases cleaned:', { merge, extra })
@@ -189,7 +190,7 @@ $patch$(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => functio
   try {
     const decoded_id = decodeURIComponent(id)
     if (decoded_id[0] === '@') {
-      const item = KeyManager.keys.findOne({ citekey: decoded_id.substring(1) })
+      const item = KeyManager.keys.findOne($and({ citekey: decoded_id.substring(1) }))
       if (item) return { libraryID: item.libraryID, key: item.itemKey }
     }
 
@@ -197,7 +198,7 @@ $patch$(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => functio
     if (m) {
       const [_libraryID, citekey] = m.slice(1)
       const libraryID: number = (!_libraryID || _libraryID === '1') ? Zotero.Libraries.userLibraryID : parseInt(_libraryID)
-      const item = KeyManager.keys.findOne({ libraryID, citekey })
+      const item = KeyManager.keys.findOne($and({ libraryID, citekey }))
       if (item) return { libraryID: item.libraryID, key: item.itemKey }
     }
   }
@@ -327,7 +328,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
     // not safe in async!
     const cloneObjects = collection.cloneObjects
     collection.cloneObjects = false
-    const cached = collection.findOne(query)
+    const cached = collection.findOne($and(query))
     collection.cloneObjects = cloneObjects
 
     if (!cached) return false
@@ -353,7 +354,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
     }
 
     const selector = cacheSelector(itemID, options, prefs)
-    let cached = collection.findOne(selector)
+    let cached = collection.findOne($and(selector))
 
     if (cached) {
       cached.reference = reference
@@ -394,13 +395,10 @@ $patch$(Zotero.Utilities.Internal, 'itemToExportFormat', original => function Zo
 })
 
 // so BBT-JSON can be imported without extra-field meddling
-$patch$(Zotero.Utilities.Internal, 'extractExtraFields', original => function Zotero_Utilities_Internal_extractExtraFields(extra: string, _item: any, additionalFields: any) {
-  log.debug('bbt merge:extractExtraFields')
+$patch$(Zotero.Utilities.Internal, 'extractExtraFields', original => function Zotero_Utilities_Internal_extractExtraFields(extra: string, _item: any, _additionalFields: any) {
   if (extra && extra.startsWith('\x1BBBT\x1B')) {
-    log.debug('bbt merge:extractExtraFields disabled:', JSON.stringify({ extra: extra.replace('\x1BBBT\x1B', ''), additionalFields }))
     return { itemType: null, fields: new Map(), creators: [], extra: extra.replace('\x1BBBT\x1B', '') }
   }
-  log.debug('bbt merge:extractExtraFields:', JSON.stringify({ extra, additionalFields }))
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return original.apply(this, arguments)
 })

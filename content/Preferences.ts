@@ -22,6 +22,7 @@ import { KeyManager } from './key-manager'
 import { AutoExport } from './auto-export'
 import { Translators } from './translators'
 import { client } from './client'
+import type { Query } from './db/loki'
 const quickCopyOptions = preferences.find(pref => pref.name === 'quickCopyMode').options
 
 import { override } from './prefs-meta'
@@ -143,13 +144,13 @@ class AutoExportPane {
             let ratio = 100
 
             if (items.length) {
-              const query = {
-                exportNotes: ae.exportNotes,
-                useJournalAbbreviation: ae.useJournalAbbreviation,
-                itemID: { $in: items },
-              }
+              const query: Query = {$and: [
+                { exportNotes: {$eq: ae.exportNotes} },
+                { useJournalAbbreviation: {$eq: ae.useJournalAbbreviation} },
+                { itemID: {$in: items} },
+              ]}
               for (const pref of override.names) {
-                query[pref] = ae[pref]
+                query.$and.push({[pref]: {$eq: ae[pref]}})
               }
               const cached = Cache.getCollection(Translators.byId[ae.translatorID].label).find(query)
               ratio = Math.round((cached.length * 100) / items.length) // eslint-disable-line no-magic-numbers

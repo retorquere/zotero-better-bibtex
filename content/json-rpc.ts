@@ -10,6 +10,7 @@ import { AutoExport } from './auto-export'
 import { Translators } from './translators'
 import { Preference } from '../gen/preferences'
 import { get as getCollection } from './collection'
+import { $and, Query } from './db/loki'
 
 const OK = 200
 
@@ -53,7 +54,7 @@ class NSAutoExport {
 
     const coll = await getCollection(collection, true)
 
-    const ae = AutoExport.db.findOne({ path })
+    const ae = AutoExport.db.findOne($and({ path }))
     if (ae && ae.translatorID === translatorID && ae.type === 'collection' && ae.id === coll.id) {
       AutoExport.schedule(ae.type, [ae.id])
 
@@ -130,7 +131,7 @@ class NSItem {
       return {
         ...Zotero.Utilities.itemToCSLJSON(item),
         library: libraries[item.libraryID],
-        citekey: KeyManager.keys.findOne({ libraryID: item.libraryID, itemID: item.id }).citekey,
+        citekey: KeyManager.keys.findOne($and({ libraryID: item.libraryID, itemID: item.id })).citekey,
       }
     })
   }
@@ -141,7 +142,7 @@ class NSItem {
    * @param citekey  The citekey to search for
    */
   public async attachments(citekey: string) {
-    const key = KeyManager.keys.findOne({ citekey: citekey.replace(/^@/, '') })
+    const key = KeyManager.keys.findOne($and({ citekey: citekey.replace(/^@/, '') }))
     if (!key) throw { code: INVALID_PARAMETERS, message: `${citekey} not found` }
     const item = await getItemsAsync(key.itemID)
 
@@ -230,10 +231,9 @@ class NSItem {
         itemKey = key
       }
 
-      keys[key] = KeyManager.keys.findOne({ libraryID, itemKey })?.citekey || null
+      keys[key] = KeyManager.keys.findOne($and({ libraryID, itemKey }))?.citekey || null
     }
 
-    log.debug(KeyManager.keys.data)
     return keys
   }
 
@@ -249,14 +249,14 @@ class NSItem {
     const args = { citekeys, translator, libraryID, ...(arguments[0].__arguments__ || {}) }
     if (typeof args.libraryID === 'undefined') args.libraryID = Zotero.Libraries.userLibraryID
 
-    const query = { libraryID: args.libraryID, citekey: { $in: args.citekeys } }
+    const query: Query = {$and: [{citekey: { $in: args.citekeys } } ]}
 
-    if (Preference.keyScope === 'global') {
-      if (typeof args.libraryID === 'number') throw { code: INVALID_PARAMETERS, message: 'keyscope is global, do not provide a library ID' }
-      delete query.libraryID
+    if (Preference.keyScope === 'library') {
+      if (typeof args.libraryID !== 'number') throw { code: INVALID_PARAMETERS, message: 'keyscope is library, please provide a library ID' }
+      query.$and.push({ libraryID: {$eq: args.libraryID} })
     }
-    else {
-      if (typeof args.libraryID !== 'number') throw { code: INVALID_PARAMETERS, message: 'keyscope is per-library, you should provide a library ID' }
+    else if (Preference.keyScope === 'global') {
+      if (typeof args.libraryID === 'number') throw { code: INVALID_PARAMETERS, message: 'keyscope is global, do not provide a library ID' }
     }
 
     const found = KeyManager.keys.find(query)

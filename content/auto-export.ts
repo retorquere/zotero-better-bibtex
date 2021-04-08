@@ -383,13 +383,13 @@ export const AutoExport = new class CAutoExport { // eslint-disable-line @typesc
   }
 
   public schedule(type, ids) {
-    for (const ae of this.db.find({ type, id: { $in: ids } })) {
+    for (const ae of this.db.find({$and: [{ type: {$eq: type} }, {id: { $in: ids } }] })) {
       queue.add(ae)
     }
   }
 
   public remove(type, ids) {
-    for (const ae of this.db.find({ type, id: { $in: ids } })) {
+    for (const ae of this.db.find({$and: [{ type: {$eq: type} }, {id: { $in: ids } }] })) {
       queue.cancel(ae)
       this.db.remove(ae)
     }

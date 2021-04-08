@@ -12,6 +12,7 @@ import { flash } from './flash'
 import { Events, itemsChanged as notifiyItemsChanged } from './events'
 import { arXiv } from './arXiv'
 import * as Extra from './extra'
+import { $and, Query } from './db/loki'
 
 import * as ZoteroDB from './db/zotero'
 
@@ -150,7 +151,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
 
     const warnAt = manual ? Preference.warnBulkModify : 0
     if (warnAt > 0 && ids.length > warnAt) {
-      const affected = this.keys.find({ itemID: { $in: ids }, pinned: false }).length
+      const affected = this.keys.find({ $and: [{ itemID: { $in: ids } }, { pinned: { $eq: false } } ] }).length
       if (affected > warnAt) {
         const params = { treshold: warnAt, response: null }
         window.openDialog('chrome://zotero-better-bibtex/content/bulk-keys-confirm.xul', '', 'chrome,dialog,centerscreen,modal', params)
@@ -292,8 +293,9 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
       // https://groups.google.com/forum/#!topic/zotero-dev/yGP4uJQCrMc
       await sleep(Preference.itemObserverDelay)
 
+      let item
       try {
-        await Zotero.Items.getAsync(citekey.itemID)
+        item = await Zotero.Items.getAsync(citekey.itemID)
       }
       catch (err) {
         // assume item has been deleted before we could get to it -- did I mention I hate async? I hate async
@@ -307,7 +309,21 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
       if (!citekey.pinned && this.autopin.enabled) {
         this.autopin.schedule(citekey.itemID, () => { this.pin([citekey.itemID]).catch(err => log.error('failed to pin', citekey.itemID, ':', err)) })
       }
+      if (citekey.pinned && Preference.keyConflictPolicy === 'change') {
+        const conflictQuery: Query = { $and: [
+          { itemID: { $ne: item.id } },
+          { pinned: { $eq: false } },
+          { citekey: { $eq: citekey.citekey } },
+        ]}
+        if (Preference.keyScope !== 'global')  conflictQuery.$and.push( { libraryID: { $eq: item.libraryID } } )
+
+        for (const conflict of this.keys.find(conflictQuery)) {
+          item = await Zotero.Items.getAsync(conflict.itemID)
+          this.update(item, conflict)
+        }
+      }
     })
+
     this.keys.on('delete', async (citekey: { itemID: any }) => {
       await ZoteroDB.queryAsync('DELETE FROM betterbibtexcitekeys.citekeys WHERE itemID = ?', [ citekey.itemID ])
     })
@@ -357,7 +373,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
       const extra = Extra.get(item.extra, 'zotero', { citationKey: true })
 
       // don't fetch when clean is active because the removeDataOnly will have done it already
-      const existing = clean ? null : this.keys.findOne({ itemID: item.itemID })
+      const existing = clean ? null : this.keys.findOne($and({ itemID: item.itemID }))
       if (!existing) {
         // if the extra doesn't have a citekey, insert marker, next phase will find & fix it
         this.keys.insert({ citekey: extra.extraFields.citationKey || marker, pinned: !!extra.extraFields.citationKey, itemID: item.itemID, libraryID: item.libraryID, itemKey: item.key })
@@ -377,7 +393,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
     this.keys.findAndRemove({ itemID: { $nin: ids } })
 
     // find all references without citekey
-    this.scanning = this.keys.find({ citekey: marker })
+    this.scanning = this.keys.find($and({ citekey: marker }))
 
     if (this.scanning.length !== 0) {
       const progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
@@ -431,7 +447,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
   public update(item: any, current?: { pinned: boolean, citekey: string }) {
     if (item.isNote() || item.isAttachment() || item.isAnnotation?.()) return null
 
-    current = current || this.keys.findOne({ itemID: item.id })
+    current = current || this.keys.findOne($and({ itemID: item.id }))
 
     const proposed = this.propose(item)
 
@@ -459,7 +475,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
     // go-ahead to *start* my init.
     if (!this.keys || !this.started) return { citekey: '', pinned: false, retry: true }
 
-    const key = (this.keys.findOne({ itemID }) as { citekey: string, pinned: boolean })
+    const key = (this.keys.findOne($and({ itemID })) as { citekey: string, pinned: boolean })
     if (key) return key
     return { citekey: '', pinned: false, retry: true }
   }
@@ -471,8 +487,8 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
 
     const proposed = Formatter.format(item)
 
-    const conflictQuery = { libraryID: item.libraryID, itemID: { $ne: item.id } }
-    if (Preference.keyScope === 'global') delete conflictQuery.libraryID
+    const conflictQuery: Query = { $and: [ { itemID: { $ne: item.id } } ] }
+    if (Preference.keyScope !== 'global') conflictQuery.$and.push({ libraryID: { $eq: item.libraryID } })
 
     let postfix: string
     const seen = {}
@@ -491,8 +507,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
       seen[postfix] = true
 
       const postfixed = proposed.citekey + postfix
-
-      const conflict = this.keys.findOne({ ...conflictQuery, citekey: postfixed })
+      const conflict = this.keys.findOne({ $and: [...conflictQuery.$and, { citekey: { $eq: postfixed } }] })
       if (conflict) continue
 
       return { citekey: postfixed, pinned: false }
@@ -511,7 +526,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
     `, [ libraryID, Preference.keyScope, tag ])).map((item: { itemID: number }) => item.itemID)
 
     const citekeys: {[key: string]: any[]} = {}
-    for (const item of this.keys.find(Preference.keyScope === 'global' ? undefined : { libraryID })) {
+    for (const item of this.keys.find(Preference.keyScope === 'global' ? undefined : $and({ libraryID }))) {
       if (!citekeys[item.citekey]) citekeys[item.citekey] = []
       citekeys[item.citekey].push({ itemID: item.itemID, tagged: tagged.includes(item.itemID), duplicate: false })
       if (citekeys[item.citekey].length > 1) citekeys[item.citekey].forEach(i => i.duplicate = true)

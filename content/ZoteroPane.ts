@@ -12,6 +12,7 @@ import { AutoExport } from './auto-export'
 import { flash } from './flash'
 import { sentenceCase } from './case'
 import * as CAYW from './cayw'
+import { $and } from './db/loki'
 
 const pane = Zotero.getActiveZoteroPane()
 
@@ -42,10 +43,10 @@ $patch$(pane, 'buildCollectionContextMenu', original => async function() {
       query = null
     }
     else if (isCollection) {
-      query = { type: 'collection', id: treeRow.ref.id }
+      query = $and({ type: 'collection', id: treeRow.ref.id })
     }
     else if (isLibrary) {
-      query = { type: 'library', id: treeRow.ref.libraryID }
+      query = $and({ type: 'library', id: treeRow.ref.libraryID })
     }
     const auto_exports = query ? AutoExport.db.find(query) : []
 
@@ -127,7 +128,7 @@ export = new class ZoteroPane {
   public startAutoExport(event) {
     event.stopPropagation()
     const path = event.target.getAttribute('label')
-    const ae = AutoExport.db.findOne({ path })
+    const ae = AutoExport.db.findOne($and({ path }))
 
     if (ae) {
       AutoExport.run(ae.$loki)
