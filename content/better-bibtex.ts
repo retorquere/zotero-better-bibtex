@@ -765,10 +765,10 @@ export class BetterBibTeX {
     }
   }
 
-  public async load(doc: any): Promise<void> { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
+  public async load(globals: any): Promise<void> { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
     if (this.loaded) return // eslint-disable-line @typescript-eslint/no-misused-promises
 
-    this.strings = doc.getElementById('zotero-better-bibtex-strings')
+    this.strings = globals.document.getElementById('zotero-better-bibtex-strings')
 
     const deferred = {
       loaded: new Deferred<boolean>(),
@@ -783,7 +783,7 @@ export class BetterBibTeX {
 
     await TeXstudio.init()
 
-    for (const node of [...doc.getElementsByClassName('bbt-texstudio')]) {
+    for (const node of [...globals.document.getElementsByClassName('bbt-texstudio')]) {
       node.hidden = !TeXstudio.enabled
     }
 

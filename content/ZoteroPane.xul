@@ -101,7 +101,7 @@
     window.addEventListener('load', () => loaded.resolve());
     loaded
       .then(() => Zotero.debug('BBT startup'))
-      .then(() => Zotero.BetterBibTeX.load(document))
+      .then(() => Zotero.BetterBibTeX.load(globals))
       .then(() => Zotero.debug('BBT started'))
       .catch(err => Zotero.debug(`Error starting BBT: ${err.message}\n${err.stack ||''}`))
 
