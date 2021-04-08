@@ -302,6 +302,8 @@
   "export/Pandoc-LaTeX-SCHOMD Citation Export.json",
   "export/Pandoc-LaTeX-SCHOMD Citation Export.latex",
   "export/Pandoc-LaTeX-SCHOMD Citation Export.pandoc",
+  "export/Postfixed keys different between computers #1788.biblatex",
+  "export/Postfixed keys different between computers #1788.json",
   "export/Postscript error aborts CSL JSON export #1155.csl.json",
   "export/Postscript error aborts CSL JSON export #1155.json",
   "export/Protect math sections #1148.biblatex",
