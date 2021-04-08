@@ -95,11 +95,8 @@
   <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.KeyManager.js"/>
   <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.TestSupport.js"/>
   <script>
-    var loaded = Promise.resolve();
     var globals = Function('return this')();
-    var zoteroPane;
-    window.addEventListener('load', () => loaded.resolve());
-    loaded
+    new Promise((resolve, reject) => { window.addEventListener('load', resolve) })
       .then(() => Zotero.debug('BBT startup'))
       .then(() => Zotero.BetterBibTeX.load(globals))
       .then(() => Zotero.debug('BBT started'))
