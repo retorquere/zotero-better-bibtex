@@ -711,15 +711,6 @@ export class BetterBibTeX {
 
   private strings: any
   private firstRun: { citekeyFormat: string, dragndrop: boolean, unabbreviate: boolean, strings: boolean }
-  private document: any
-
-  public async load(doc: any): Promise<void> { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
-    this.document = doc
-
-    this.strings = this.document.getElementById('zotero-better-bibtex-strings')
-
-    if (!this.loaded) await this.init() // eslint-disable-line @typescript-eslint/no-misused-promises
-  }
 
   public debugEnabled(): boolean {
     return (Zotero.Debug.enabled as boolean)
@@ -774,8 +765,11 @@ export class BetterBibTeX {
     }
   }
 
-  // #init
-  private async init() {
+  public async load(doc: any): Promise<void> { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
+    if (this.loaded) return // eslint-disable-line @typescript-eslint/no-misused-promises
+
+    this.strings = doc.getElementById('zotero-better-bibtex-strings')
+
     const deferred = {
       loaded: new Deferred<boolean>(),
       ready: new Deferred<boolean>(),
@@ -789,7 +783,7 @@ export class BetterBibTeX {
 
     await TeXstudio.init()
 
-    for (const node of [...this.document.getElementsByClassName('bbt-texstudio')]) {
+    for (const node of [...doc.getElementsByClassName('bbt-texstudio')]) {
       node.hidden = !TeXstudio.enabled
     }
 
