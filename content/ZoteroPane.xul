@@ -96,7 +96,7 @@
   <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.TestSupport.js"/>
   <script>
     var globals = Function('return this')();
-    new Promise((resolve, reject) => { window.addEventListener('load', resolve) })
+    (new Promise((resolve, reject) => { window.addEventListener('load', resolve) }))
       .then(() => Zotero.debug('BBT startup'))
       .then(() => Zotero.BetterBibTeX.load(globals))
       .then(() => Zotero.debug('BBT started'))
