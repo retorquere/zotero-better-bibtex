@@ -4,7 +4,6 @@ declare const document: any
 declare const Components: any
 
 import { log } from './logger'
-import { BetterBibTeX } from './better-bibtex'
 import { TeXstudio } from './tex-studio'
 import { clean_pane_persist, patch as $patch$ } from './monkey-patch'
 import { Preference } from '../gen/preferences'
@@ -79,7 +78,7 @@ $patch$(pane, 'serializePersist', original => function() {
 export = new class ZoteroPane {
   public constructor() {
     window.addEventListener('load', () => {
-      BetterBibTeX.load(document)
+      Zotero.BetterBibTeX.load(document)
         .then(() => {
           log.debug('Better BibTeX load finished successfully')
         })

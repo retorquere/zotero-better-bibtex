@@ -229,7 +229,7 @@ $patch$(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prot
   try {
     switch (field) {
       case 'citekey':
-        if (BetterBibTeX.ready.isPending()) return '' // eslint-disable-line @typescript-eslint/no-use-before-define
+        if (Zotero.BetterBibTeX.ready.isPending()) return '' // eslint-disable-line @typescript-eslint/no-use-before-define
         return KeyManager.get(this.id).citekey
 
       case 'itemID':
@@ -266,11 +266,11 @@ $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function Zoter
   const item = this.getRow(row).ref
   if (item.isNote() || item.isAttachment() || item.isAnnotation?.()) return ''
 
-  if (BetterBibTeX.ready.isPending()) { // eslint-disable-line @typescript-eslint/no-use-before-define
+  if (Zotero.BetterBibTeX.ready.isPending()) { // eslint-disable-line @typescript-eslint/no-use-before-define
     if (!itemTreeViewWaiting[item.id]) {
       // eslint-disable-next-line @typescript-eslint/no-use-before-define
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      BetterBibTeX.ready.then(() => this._treebox.invalidateCell(row, col)) // eslint-disable-line @typescript-eslint/no-floating-promises
+      Zotero.BetterBibTeX.ready.then(() => this._treebox.invalidateCell(row, col)) // eslint-disable-line @typescript-eslint/no-floating-promises
       itemTreeViewWaiting[item.id] = true
     }
 
@@ -528,7 +528,7 @@ function notify(event: string, handler: any) {
   Zotero.Notifier.registerObserver({
     // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
     notify(...args: any[]) {
-      BetterBibTeX.ready.then(() => { // eslint-disable-line @typescript-eslint/no-use-before-define, @typescript-eslint/no-floating-promises
+      Zotero.BetterBibTeX.ready.then(() => { // eslint-disable-line @typescript-eslint/no-use-before-define, @typescript-eslint/no-floating-promises
         // eslint-disable-next-line prefer-spread
         handler.apply(null, args)
       })
@@ -703,7 +703,7 @@ class Progress {
   }
 }
 
-class CBetterBibTeX {
+export class BetterBibTeX {
   public localeDateOrder: string = Zotero.Date.getLocaleDateOrder()
   public ready: BluebirdPromise<boolean>
   public loaded: BluebirdPromise<boolean>
@@ -713,8 +713,8 @@ class CBetterBibTeX {
   private firstRun: { citekeyFormat: string, dragndrop: boolean, unabbreviate: boolean, strings: boolean }
   private document: any
 
-  public async load(document: any) {
-    this.document = document
+  public async load(doc: any): Promise<void> { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
+    this.document = doc
 
     this.strings = this.document.getElementById('zotero-better-bibtex-strings')
 
@@ -741,7 +741,7 @@ class CBetterBibTeX {
     }
   }
 
-  public async scanAUX(target: any) {
+  public async scanAUX(target: string): Promise<void> {
     if (!this.loaded) return // eslint-disable-line @typescript-eslint/no-misused-promises
     await this.loaded
 
@@ -881,4 +881,4 @@ class CBetterBibTeX {
     Events.emit('loaded')
   }
 }
-export const BetterBibTeX = new CBetterBibTeX // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+Zotero.BetterBibTeX = Zotero.BetterBibTeX || new BetterBibTeX

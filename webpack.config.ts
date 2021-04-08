@@ -113,7 +113,7 @@ if (!process.env.MINITESTS) {
 
       context: path.resolve(__dirname, './content'),
       entry: {
-        BetterBibTeX: './BetterBibTeX.ts',
+        BetterBibTeXStartup: './better-bibtex.ts',
         'BetterBibTeX.ZoteroPane': './ZoteroPane.ts',
         'BetterBibTeX.KeyManager': './KeyManager.ts',
         'BetterBibTeX.TestSupport': './TestSupport.ts',
