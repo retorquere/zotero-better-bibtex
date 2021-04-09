@@ -116,7 +116,6 @@ if (!process.env.MINITESTS) {
         BetterBibTeXStartup: './better-bibtex.ts',
         'BetterBibTeX.ZoteroPane': './ZoteroPane.ts',
         'BetterBibTeX.KeyManager': './KeyManager.ts',
-        'BetterBibTeX.TestSupport': './TestSupport.ts',
         'BetterBibTeX.Preferences': './Preferences.ts',
         'BetterBibTeX.ErrorReport': './ErrorReport.ts',
         'BetterBibTeX.FirstRun': './FirstRun.ts',
