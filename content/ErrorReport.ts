@@ -1,7 +1,7 @@
+Components.utils.import('resource://gre/modules/Services.jsm')
+
 declare const window: any
 declare const document: any
-Components.utils.import('resource://gre/modules/Services.jsm')
-declare const Services: any
 
 import { Preference } from '../gen/preferences'
 import { Translators } from './translators'

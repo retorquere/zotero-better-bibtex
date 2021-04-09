@@ -1,11 +1,8 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 
-declare const Services: any
+Components.utils.import('resource://gre/modules/osfile.jsm')
 
 import { log } from '../logger'
-// import { OS } from '../../typings/xpcom'
-
-Components.utils.import('resource://gre/modules/osfile.jsm')
 
 // Components.utils.import('resource://gre/modules/Sqlite.jsm')
 // declare const Sqlite: any
