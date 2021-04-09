@@ -63,7 +63,7 @@ async function title_sentenceCase(label) {
 }
 
 function load() {
-  Zotero.BetterBibTeX.ready.then(() => {
+  Zotero.BetterBibTeX?.ready?.then(() => {
     init()
     const itemBox = document.getElementById('zotero-editpane-item-box')
     const citekeyBox = document.getElementById('better-bibtex-editpane-item-box')

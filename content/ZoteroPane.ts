@@ -1,6 +1,3 @@
-declare const window: any
-declare const document: any
-
 import { log } from './logger'
 import { TeXstudio } from './tex-studio'
 import { clean_pane_persist, patch as $patch$ } from './monkey-patch'
@@ -11,84 +8,82 @@ import { sentenceCase } from './case'
 import * as CAYW from './cayw'
 import { $and } from './db/loki'
 
-const pane = Zotero.getActiveZoteroPane()
+export interface ZoteroPaneConstructable {
+  new(globals: any): ZoteroPane // eslint-disable-line @typescript-eslint/prefer-function-type
+}
 
-$patch$(pane, 'buildCollectionContextMenu', original => async function() {
-  // eslint-disable-next-line prefer-rest-params
-  await original.apply(this, arguments)
+export class ZoteroPane {
+  private globals: any
 
-  try {
-    const treeRow = this.collectionsView.selectedTreeRow
-    const isLibrary = treeRow && treeRow.isLibrary(true)
-    const isCollection = treeRow && treeRow.isCollection()
+  constructor(globals) {
+    this.globals = globals
 
-    document.getElementById('bbt-collectionmenu-separator').hidden = !(isLibrary || isCollection)
-    document.getElementById('bbt-collectionmenu-pull-url').hidden = !(isLibrary || isCollection)
-    document.getElementById('bbt-collectionmenu-report-errors').hidden = !(isLibrary || isCollection)
+    const pane = Zotero.getActiveZoteroPane()
 
-    const tagDuplicates = document.getElementById('bbt-collectionmenu-tag-duplicates')
-    if (isLibrary) {
-      tagDuplicates.hidden = false
-      tagDuplicates.setAttribute('libraryID', treeRow.ref.libraryID.toString())
-    }
-    else {
-      tagDuplicates.hidden = true
-    }
+    $patch$(pane, 'buildCollectionContextMenu', original => async function() {
+      // eslint-disable-next-line prefer-rest-params
+      await original.apply(this, arguments)
 
-    let query = null
-    if (Preference.autoExport === 'immediate') {
-      query = null
-    }
-    else if (isCollection) {
-      query = $and({ type: 'collection', id: treeRow.ref.id })
-    }
-    else if (isLibrary) {
-      query = $and({ type: 'library', id: treeRow.ref.libraryID })
-    }
-    const auto_exports = query ? AutoExport.db.find(query) : []
+      try {
+        const treeRow = this.collectionsView.selectedTreeRow
+        const isLibrary = treeRow && treeRow.isLibrary(true)
+        const isCollection = treeRow && treeRow.isCollection()
 
-    for (const node of [...document.getElementsByClassName('bbt-autoexport')]) {
-      node.hidden = auto_exports.length === 0
-    }
+        globals.document.getElementById('bbt-collectionmenu-separator').hidden = !(isLibrary || isCollection)
+        globals.document.getElementById('bbt-collectionmenu-pull-url').hidden = !(isLibrary || isCollection)
+        globals.document.getElementById('bbt-collectionmenu-report-errors').hidden = !(isLibrary || isCollection)
 
-    if (auto_exports.length !== 0) {
-      const menupopup = document.getElementById('zotero-itemmenu-BetterBibTeX-autoexport-menu')
-      while (menupopup.children.length > 1) menupopup.removeChild(menupopup.firstChild)
-      for (const [index, ae] of auto_exports.entries()) {
-        const menuitem = (index === 0 ? menupopup.firstChild : menupopup.appendChild(menupopup.firstChild.cloneNode(true)))
-        menuitem.label = ae.path
+        const tagDuplicates = globals.document.getElementById('bbt-collectionmenu-tag-duplicates')
+        if (isLibrary) {
+          tagDuplicates.hidden = false
+          tagDuplicates.setAttribute('libraryID', treeRow.ref.libraryID.toString())
+        }
+        else {
+          tagDuplicates.hidden = true
+        }
+
+        let query = null
+        if (Preference.autoExport === 'immediate') {
+          query = null
+        }
+        else if (isCollection) {
+          query = $and({ type: 'collection', id: treeRow.ref.id })
+        }
+        else if (isLibrary) {
+          query = $and({ type: 'library', id: treeRow.ref.libraryID })
+        }
+        const auto_exports = query ? AutoExport.db.find(query) : []
+
+        for (const node of [...globals.document.getElementsByClassName('bbt-autoexport')]) {
+          node.hidden = auto_exports.length === 0
+        }
+
+        if (auto_exports.length !== 0) {
+          const menupopup = globals.document.getElementById('zotero-itemmenu-BetterBibTeX-autoexport-menu')
+          while (menupopup.children.length > 1) menupopup.removeChild(menupopup.firstChild)
+          for (const [index, ae] of auto_exports.entries()) {
+            const menuitem = (index === 0 ? menupopup.firstChild : menupopup.appendChild(menupopup.firstChild.cloneNode(true)))
+            menuitem.label = ae.path
+          }
+        }
+
       }
-    }
+      catch (err) {
+        log.error('ZoteroPane.buildCollectionContextMenu:', err)
+      }
+    })
 
+    // Monkey patch because of https://groups.google.com/forum/#!topic/zotero-dev/zy2fSO1b0aQ
+    $patch$(pane, 'serializePersist', original => function() {
+      // eslint-disable-next-line prefer-rest-params
+      original.apply(this, arguments)
+      if (Zotero.BetterBibTeX.uninstalled) clean_pane_persist()
+    })
   }
-  catch (err) {
-    log.error('ZoteroPane.buildCollectionContextMenu:', err)
-  }
-})
-
-// Monkey patch because of https://groups.google.com/forum/#!topic/zotero-dev/zy2fSO1b0aQ
-$patch$(pane, 'serializePersist', original => function() {
-  // eslint-disable-next-line prefer-rest-params
-  original.apply(this, arguments)
-  if (Zotero.BetterBibTeX.uninstalled) clean_pane_persist()
-})
-
-export = new class ZoteroPane {
-  /*
-  public constructor() {
-    window.addEventListener('load', () => {
-      Zotero.BetterBibTeX.load(document)
-        .then(() => {
-          log.debug('Better BibTeX load finished successfully')
-        })
-        .catch(err => {
-          log.error('Better BibTeX load failed', err)
-        })
-    }, false)
-  }
-  */
 
   public pullExport() {
+    const pane = Zotero.getActiveZoteroPane()
+
     if (!pane.collectionsView || !pane.collectionsView.selection || !pane.collectionsView.selection.count) return
 
     const row = pane.collectionsView.selectedTreeRow
@@ -121,7 +116,7 @@ export = new class ZoteroPane {
 
     if (!params.url.short) return
 
-    window.openDialog('chrome://zotero-better-bibtex/content/ServerURL.xul', '', 'chrome,dialog,centerscreen,modal', params)
+    this.globals.window.openDialog('chrome://zotero-better-bibtex/content/ServerURL.xul', '', 'chrome,dialog,centerscreen,modal', params)
   }
 
   public startAutoExport(event) {
@@ -159,6 +154,7 @@ export = new class ZoteroPane {
   }
 
   public errorReport(includeReferences) {
+    const pane = Zotero.getActiveZoteroPane()
     let scope = null
 
     switch (pane && includeReferences) {
@@ -211,6 +207,3 @@ export = new class ZoteroPane {
     }
   }
 }
-
-// otherwise this entry point won't be reloaded: https://github.com/webpack/webpack/issues/156
-delete require.cache[module.id]

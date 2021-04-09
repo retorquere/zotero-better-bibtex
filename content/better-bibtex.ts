@@ -6,7 +6,7 @@ Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
 
 import type { XUL } from '../typings/xul'
-// import { OS } from '../typings/xpcom'
+import { ZoteroPane, ZoteroPaneConstructable } from './ZoteroPane'
 import { clean_pane_persist, patch as $patch$ } from './monkey-patch'
 import { flash } from './flash'
 import { Deferred } from './deferred'
@@ -704,6 +704,7 @@ class Progress {
 
 export class BetterBibTeX {
   public TestSupport = new TestSupport
+  public ZoteroPane: ZoteroPaneConstructable = ZoteroPane
 
   public localeDateOrder: string = Zotero.Date.getLocaleDateOrder()
   public ready: BluebirdPromise<boolean>
