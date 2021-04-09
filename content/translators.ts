@@ -1,7 +1,5 @@
 /* eslint-disable no-case-declarations, @typescript-eslint/no-unsafe-return */
 
-declare const Components: any
-
 Components.utils.import('resource://gre/modules/Services.jsm')
 declare const Services: any
 declare class ChromeWorker extends Worker { }

@@ -1,5 +1,4 @@
 declare const Zotero_File_Interface: any
-declare const Components: any
 declare const Zotero_Duplicates_Pane: any
 
 import { AutoExport } from './auto-export'

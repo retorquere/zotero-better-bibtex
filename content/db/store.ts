@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 
-declare const Components: any
 declare const Services: any
 
 import { log } from '../logger'

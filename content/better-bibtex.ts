@@ -1,6 +1,5 @@
 /* eslint-disable prefer-rest-params */
 
-declare const Components: any
 import type BluebirdPromise from 'bluebird'
 
 Components.utils.import('resource://gre/modules/FileUtils.jsm')

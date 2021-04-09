@@ -1,5 +1,4 @@
 /* eslint-disable no-magic-numbers */
-declare const Components: any
 declare const XPCOMUtils: any
 
 import { KeyManager } from './key-manager'
