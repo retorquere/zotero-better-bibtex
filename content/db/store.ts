@@ -368,7 +368,8 @@ export class Store {
 
     if (!exists) return null
 
-    const data = JSON.parse(await OS.File.read(path, { encoding: 'utf-8' }))
+    const decoder = new TextDecoder()
+    const data = JSON.parse(decoder.decode(await OS.File.read(path, { encoding: 'utf-8' })))
 
     // this is intentional. If all is well, the database will be retained in memory until it's saved at
     // shutdown. If all is not well, this will make sure the caches are rebuilt from scratch on next start

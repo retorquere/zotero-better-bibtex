@@ -1,7 +1,5 @@
 // tslint:disable:no-console
 
-declare const OS: any
-
 import * as webpack from 'webpack'
 import * as path from 'path'
 import * as fs from 'fs'

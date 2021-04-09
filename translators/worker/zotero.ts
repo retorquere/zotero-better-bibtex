@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment */
 
+importScripts('resource://gre/modules/osfile.jsm')
+
 import { ITranslator } from '../../gen/typings/translator'
 import type { Translators } from '../../typings/translators'
 
 declare const doExport: () => void
 declare const Translator: ITranslator
-
-importScripts('resource://gre/modules/osfile.jsm')
-declare const OS: any
 
 // @ts-ignore
 import XRegExp = require('xregexp')
@@ -138,10 +137,10 @@ function makeDirs(path) {
     path = OS.Path.dirname(path)
   }
 
-  if (!OS.File.stat(path).isDir) throw new Error(`makeDirs: root ${path} is not a directory`)
+  if (!(OS.File.stat(path) as OS.File.Entry).isDir) throw new Error(`makeDirs: root ${path} is not a directory`)
 
   for (path of paths) {
-    OS.File.makeDir(path)
+    OS.File.makeDir(path) as void
   }
 }
 
@@ -171,7 +170,7 @@ function saveFile(path, overwrite) {
     try {
       while (entry = iterator.next()) {
         if (entry.isDir) throw new Error(`Unexpected directory ${entry.path} in snapshot`)
-        OS.File.copy(OS.Path.join(snapshot, entry.name), OS.path.join(target, entry.name), { noOverwrite: !overwrite })
+        OS.File.copy(OS.Path.join(snapshot, entry.name), OS.Path.join(target, entry.name), { noOverwrite: !overwrite })
       }
     }
     finally {
@@ -228,7 +227,7 @@ class WorkerZotero {
     if (this.exportFile) {
       const encoder = new TextEncoder()
       const array = encoder.encode(this.output)
-      OS.File.writeAtomic(this.exportFile, array, {tmpPath: `${this.exportFile}.tmp`})
+      OS.File.writeAtomic(this.exportFile, array, {tmpPath: `${this.exportFile}.tmp`}) as void
     }
     this.send({ kind: 'done', output: this.exportFile ? true : this.output })
   }

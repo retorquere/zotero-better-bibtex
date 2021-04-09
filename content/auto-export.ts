@@ -1,5 +1,3 @@
-declare const OS: any
-
 Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
 
