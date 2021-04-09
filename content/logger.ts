@@ -1,4 +1,3 @@
-declare const Zotero: any
 declare const Translator: any
 declare const workerContext: { worker: string }
 

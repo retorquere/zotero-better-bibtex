@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-declare const Zotero: any
+/* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types */
 
 export function get(name: string) {
   if (!name) return Zotero.Libraries.get(Zotero.Libraries.userLibraryID)

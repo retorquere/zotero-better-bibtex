@@ -1,7 +1,6 @@
 /* eslint-disable no-magic-numbers */
 declare const Components: any
 declare const XPCOMUtils: any
-declare const Zotero: any
 
 import { KeyManager } from './key-manager'
 import { Formatter } from './cayw/formatter'

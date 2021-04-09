@@ -1,5 +1,3 @@
-declare const Zotero: any
-
 export async function getItemsAsync(ids: number | number[]): Promise<any | any[]> {
   let returnSingle: boolean
   if (Array.isArray(ids)) {

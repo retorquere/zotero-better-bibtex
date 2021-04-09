@@ -30,3 +30,6 @@ declare const Zotero: {
   [attr: string]: any
   BetterBibTeX: import('../content/better-bibtex').CBetterBibTeX
 }
+
+declare const Components: any
+declare const Services: any

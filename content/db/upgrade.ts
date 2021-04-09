@@ -1,5 +1,3 @@
-declare const Zotero: any
-
 import * as ZoteroDB from './zotero'
 import { upgradeExtra } from './upgrade-extra'
 // import { getItemsAsync } from '../get-items-async'

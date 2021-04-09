@@ -1,5 +1,3 @@
-declare const Zotero: any
-
 import { XULoki as Loki } from './loki'
 import { Events } from '../events'
 import { Store } from './store'

@@ -1,4 +1,3 @@
-declare const Zotero: any
 declare const window: any
 
 import ETA = require('node-eta')
@@ -97,7 +96,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
     await item.saveTx() // this should cause an update and key registration
   }
 
-  public async pin(ids: any[], inspireHEP = false) {
+  public async pin(ids: 'selected' | number | number[], inspireHEP = false) {
     ids = this.expandSelection(ids)
 
     for (const item of await getItemsAsync(ids)) {
@@ -144,7 +143,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
 
   }
 
-  public async refresh(ids: 'selected' | number[], manual = false) {
+  public async refresh(ids: 'selected' | number | number[], manual = false) {
     ids = this.expandSelection(ids)
 
     Cache.remove(ids, `refreshing keys for ${ids}`)
@@ -546,7 +545,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
     }
   }
 
-  private expandSelection(ids: 'selected' | number[]): number[] {
+  private expandSelection(ids: 'selected' | number | number[]): number[] {
     if (Array.isArray(ids)) return ids
 
     if (ids === 'selected') {

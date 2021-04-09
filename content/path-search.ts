@@ -1,5 +1,4 @@
 declare const Components: any
-declare const Zotero: any
 
 import { log } from './logger'
 import permutater = require('permutater')

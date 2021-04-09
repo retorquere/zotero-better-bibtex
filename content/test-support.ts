@@ -1,4 +1,3 @@
-declare const Zotero: any
 declare const Zotero_File_Interface: any
 declare const Components: any
 declare const Zotero_Duplicates_Pane: any
@@ -20,15 +19,15 @@ import { $and } from './db/loki'
 import  { defaults } from './prefs-meta'
 
 export class TestSupport {
-  public removeAutoExports() {
+  public removeAutoExports(): void {
     AutoExport.db.findAndRemove({ type: { $ne: '' } })
   }
 
-  public autoExportRunning() {
+  public autoExportRunning(): boolean {
     return (AutoExport.db.find($and({ status: 'running' })).length > 0)
   }
 
-  public async reset() {
+  public async reset(): Promise<void> {
     Zotero.BetterBibTeX.localeDateOrder = Zotero.Date.getLocaleDateOrder()
 
     Cache.reset()
@@ -71,7 +70,7 @@ export class TestSupport {
     return itemIDs.length
   }
 
-  public async importFile(path, createNewCollection, preferences, localeDateOrder?) {
+  public async importFile(path: string, createNewCollection: boolean, preferences: Record<string, number | boolean | string>, localeDateOrder?: string): Promise<number> {
     if (localeDateOrder) Zotero.BetterBibTeX.localeDateOrder = localeDateOrder
 
     preferences = preferences || {}
@@ -113,13 +112,13 @@ export class TestSupport {
     return (after - before)
   }
 
-  public async exportLibrary(translatorID, displayOptions, path, collection): Promise<string> {
+  public async exportLibrary(translatorID: string, displayOptions: Record<string, number | string | boolean>, path: string, collectionName: string): Promise<string> {
     let scope
-    log.debug('TestSupport.exportLibrary', { translatorID, displayOptions, path, collection })
-    if (collection) {
-      let name = collection
+    log.debug('TestSupport.exportLibrary', { translatorID, displayOptions, path, collectionName })
+    if (collectionName) {
+      let name = collectionName
       if (name[0] === '/') name = name.substring(1) // don't do full path parsing right now
-      for (collection of Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID)) {
+      for (const collection of Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID)) {
         if (collection.name === name) scope = { type: 'collection', collection: collection.id }
       }
       log.debug('TestSupport.exportLibrary', { name, scope })
@@ -131,7 +130,7 @@ export class TestSupport {
     return await Translators.exportItems(translatorID, displayOptions, scope, path)
   }
 
-  public async select(ids) {
+  public async select(ids: number[]): Promise<boolean> {
     const zoteroPane = Zotero.getActiveZoteroPane()
     // zoteroPane.show()
 
@@ -179,7 +178,7 @@ export class TestSupport {
     return Array.from(new Set(ids))
   }
 
-  public async pick(format, citations) {
+  public async pick(format: string, citations: {id: number[], uri: string, citekey: string}[]): Promise<string> {
     for (const citation of citations) {
       if (citation.id.length !== 1) throw new Error(`Expected 1 item, got ${citation.id.length}`)
       citation.citekey = KeyManager.get(citation.id[0]).citekey
@@ -189,8 +188,8 @@ export class TestSupport {
     return await CAYWFormatter[format](citations, {})
   }
 
-  public async pinCiteKey(itemID, action, citationKey) {
-    let ids
+  public async pinCiteKey(itemID: number, action: string, citationKey?: string): Promise<void> {
+    let ids: number[]
     if (typeof itemID === 'number') {
       ids = [itemID]
     }
@@ -238,11 +237,11 @@ export class TestSupport {
     }
   }
 
-  public resetCache() {
+  public resetCache(): void {
     Cache.reset()
   }
 
-  public async merge(ids) {
+  public async merge(ids: number[]): Promise<void> {
     const zoteroPane = Zotero.getActiveZoteroPane()
     await zoteroPane.selectItems(ids, true)
     const selected = zoteroPane.getSelectedItems()
@@ -270,7 +269,7 @@ export class TestSupport {
     if (before.length - after.length !== (ids.length - 1)) throw new Error(`merging ${ids.length}: before = ${before.length}, after = ${after.length}`)
   }
 
-  public async clearCollection(path) {
+  public async clearCollection(path: string): Promise<void> {
     let collection = null
 
     for (const name of path.split('/')) {

@@ -1,7 +1,6 @@
 declare const window: any
 declare const document: any
 declare const Components: any
-declare const Zotero: any
 Components.utils.import('resource://gre/modules/Services.jsm')
 declare const Services: any
 

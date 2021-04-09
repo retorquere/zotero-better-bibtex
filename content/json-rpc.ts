@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/require-await */
-/* eslint-disable no-throw-literal, max-len */
-declare const Zotero: any
+/* eslint-disable @typescript-eslint/require-await, no-throw-literal, max-len */
 
 import { log } from './logger'
 import { KeyManager } from './key-manager'

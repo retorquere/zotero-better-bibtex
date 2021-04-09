@@ -1,5 +1,3 @@
-declare const Zotero: any
-
 import { log } from './logger'
 
 const seconds = 1000

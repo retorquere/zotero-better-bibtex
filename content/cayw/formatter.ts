@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/require-await, @typescript-eslint/no-unsafe-return */
-declare const Zotero: any
 declare const Components: any
 
 Components.utils.import('resource://gre/modules/AddonManager.jsm')

@@ -1,4 +1,3 @@
-declare const Zotero: any
 declare const window: any
 declare const document: any
 declare const Components: any

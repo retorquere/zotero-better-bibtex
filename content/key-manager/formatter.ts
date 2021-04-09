@@ -1,5 +1,3 @@
-declare const Zotero: any
-
 import { log } from '../logger'
 import { foldMaintaining } from 'fold-to-ascii'
 import ucs2decode = require('punycode2/ucs2/decode')
