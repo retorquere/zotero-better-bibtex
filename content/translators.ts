@@ -1,7 +1,7 @@
 /* eslint-disable no-case-declarations, @typescript-eslint/no-unsafe-return */
 
 Components.utils.import('resource://gre/modules/Services.jsm')
-declare const Services: any
+
 declare class ChromeWorker extends Worker { }
 
 Components.utils.import('resource://zotero/config.js')

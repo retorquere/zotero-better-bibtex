@@ -1,12 +1,11 @@
+Components.utils.import('resource://gre/modules/Services.jsm')
+
 import type { XUL } from '../typings/xul'
 
 declare const document: any
 declare const window: any
 declare const Zotero_Preferences: any
 declare const MutationObserver: any
-
-Components.utils.import('resource://gre/modules/Services.jsm')
-declare const Services: any
 
 import { log } from './logger'
 import { patch as $patch$ } from './monkey-patch'
