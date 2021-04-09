@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-declare const Zotero: any
+
 import { get as getLibrary } from './library'
 
 class CollectionError extends Error {

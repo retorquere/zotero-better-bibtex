@@ -1,5 +1,3 @@
-declare const Zotero: any
-
 import { pathSearch } from './path-search'
 import { KeyManager } from './key-manager'
 import { log } from './logger'

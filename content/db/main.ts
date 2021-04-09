@@ -1,5 +1,3 @@
-declare const Zotero: any
-
 import { XULoki as Loki } from './loki'
 import { Preference } from '../../gen/preferences'
 import { override } from '../prefs-meta'

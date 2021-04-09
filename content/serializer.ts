@@ -1,4 +1,3 @@
-declare const Zotero: any
 declare const OS: any
 
 import { JournalAbbrev } from './journal-abbrev'

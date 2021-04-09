@@ -1,5 +1,3 @@
-declare const Zotero: any
-
 import { Preference } from '../../gen/preferences'
 import { log } from '../logger'
 import { Events } from '../events'

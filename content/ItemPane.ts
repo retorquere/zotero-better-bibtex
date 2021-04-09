@@ -1,7 +1,6 @@
 declare const window: any
 declare const document: any
 declare const ZoteroItemPane: any
-declare const Zotero: any
 
 import { patch as $patch$ } from './monkey-patch'
 import { sentenceCase } from './case'

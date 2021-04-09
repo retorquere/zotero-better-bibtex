@@ -1,5 +1,4 @@
 declare const Components: any
-declare const Zotero: any
 
 Components.utils.import('resource://gre/modules/osfile.jsm')
 declare const OS: any

@@ -1,5 +1,3 @@
-declare const Zotero: any
-
 import { EventEmitter } from 'eventemitter3'
 import { patch as $patch$ } from './monkey-patch'
 

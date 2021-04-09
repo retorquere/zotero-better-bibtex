@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-declare const Zotero: any
-
 const OK = 200
 const SERVER_ERROR = 500
 const NOT_FOUND = 404

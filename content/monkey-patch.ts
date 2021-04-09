@@ -1,5 +1,4 @@
 declare const Components: any
-declare const Zotero: any
 declare const AddonManager: any
 
 import { flash } from './flash'
