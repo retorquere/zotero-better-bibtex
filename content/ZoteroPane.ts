@@ -1,6 +1,5 @@
 declare const window: any
 declare const document: any
-declare const Components: any
 
 import { log } from './logger'
 import { TeXstudio } from './tex-studio'

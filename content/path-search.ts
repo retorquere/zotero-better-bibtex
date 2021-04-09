@@ -1,5 +1,3 @@
-declare const Components: any
-
 import { log } from './logger'
 import permutater = require('permutater')
 // import { OS } from '../typings/xpcom'

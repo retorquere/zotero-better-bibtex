@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types, prefer-arrow/prefer-arrow-functions, prefer-rest-params, @typescript-eslint/no-unsafe-return */
 
-declare const Components: any
-
 Components.utils.import('resource://gre/modules/AsyncShutdown.jsm')
 declare const AsyncShutdown: any
 

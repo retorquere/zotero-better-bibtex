@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/require-await, @typescript-eslint/no-unsafe-return */
-declare const Components: any
 
 Components.utils.import('resource://gre/modules/AddonManager.jsm')
 declare const AddonManager: any

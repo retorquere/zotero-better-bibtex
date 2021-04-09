@@ -5,7 +5,6 @@ declare const window: any
 declare const Zotero_Preferences: any
 declare const MutationObserver: any
 
-declare const Components: any
 Components.utils.import('resource://gre/modules/Services.jsm')
 declare const Services: any
 

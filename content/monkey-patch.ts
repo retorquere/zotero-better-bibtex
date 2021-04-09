@@ -1,4 +1,3 @@
-declare const Components: any
 declare const AddonManager: any
 
 import { flash } from './flash'
