@@ -34,6 +34,7 @@ import { Serializer } from './serializer'
 import { JournalAbbrev } from './journal-abbrev'
 import { AutoExport } from './auto-export'
 import { KeyManager } from './key-manager'
+import { TestSupport } from './test-support'
 import { TeXstudio } from './tex-studio'
 import { $and } from './db/loki'
 import format = require('string-template')
@@ -704,6 +705,8 @@ class Progress {
 }
 
 export class BetterBibTeX {
+  public TestSupport = new TestSupport
+
   public localeDateOrder: string = Zotero.Date.getLocaleDateOrder()
   public ready: BluebirdPromise<boolean>
   public loaded: BluebirdPromise<boolean>

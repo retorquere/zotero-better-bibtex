@@ -19,7 +19,7 @@ import { $and } from './db/loki'
 
 import  { defaults } from './prefs-meta'
 
-export = new class {
+export class TestSupport {
   public removeAutoExports() {
     AutoExport.db.findAndRemove({ type: { $ne: '' } })
   }
