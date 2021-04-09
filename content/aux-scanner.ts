@@ -1,5 +1,4 @@
 Components.utils.import('resource://gre/modules/osfile.jsm')
-declare const OS: any
 
 import { sleep } from './sleep'
 import { KeyManager } from './key-manager'

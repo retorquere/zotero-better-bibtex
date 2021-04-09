@@ -1,5 +1,3 @@
-declare const OS: any
-
 import { JournalAbbrev } from './journal-abbrev'
 
 import { DB as Cache } from './db/cache'
