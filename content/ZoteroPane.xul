@@ -96,19 +96,15 @@
   <script src="chrome://zotero-better-bibtex/content/common.js"/>
   <script src="chrome://zotero-better-bibtex/content/BetterBibTeXStartup.js"/>
   <script>
-    try {
-      (new Promise((resolve, reject) => { window.addEventListener('load', resolve) }))
-        .then(() => Zotero.debug('BBT startup'))
-        .then(() => Zotero.BetterBibTeX.load(globals))
-        .then(() => Zotero.debug('BBT started'))
-        .catch(err => Zotero.debug(`starting BBT error: ${err.message}\n${err.stack ||''}`))
+    (new Promise((resolve, reject) => { window.addEventListener('load', resolve) }))
+      .then(() => Zotero.debug('BBT startup'))
+      .then(() => Zotero.BetterBibTeX.load(globals))
+      .then(() => Zotero.debug('BBT started'))
+      .catch(err => Zotero.debug(`starting BBT error: ${err.message}\n${err.stack ||''}`))
 
-        .then(() => Zotero.debug('loading ZoteroPane'))
-        .then(() => bbt_zoteropane = new Zotero.BetterBibTeX.ZoteroPane(globals))
-        .then(() => Zotero.debug('ZoteroPane loaded'))
-        .catch(err => Zotero.debug(`loading ZoteroPane error: ${err.message}\n${err.stack ||''}`))
-    } catch (err) {
-      Zotero.debug('load error:' + err.message + '\n\n' + err.stack)
-    }
+      .then(() => Zotero.debug('loading ZoteroPane'))
+      .then(() => bbt_zoteropane = new Zotero.BetterBibTeX.ZoteroPane(globals))
+      .then(() => Zotero.debug('ZoteroPane loaded'))
+      .catch(err => Zotero.debug(`loading ZoteroPane error: ${err.message}\n${err.stack ||''}`))
   </script>
 </overlay>

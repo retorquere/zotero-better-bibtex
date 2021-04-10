@@ -7,6 +7,7 @@ declare const FileUtils: any
 
 import type { XUL } from '../typings/xul'
 import { ZoteroPane, ZoteroPaneConstructable } from './ZoteroPane'
+import { ExportOptions, ExportOptionsConstructable } from './ExportOptions'
 import { clean_pane_persist, patch as $patch$ } from './monkey-patch'
 import { flash } from './flash'
 import { Deferred } from './deferred'
@@ -706,6 +707,7 @@ export class BetterBibTeX {
   public TestSupport = new TestSupport
   public KeyManager = new KeyManager
   public ZoteroPane: ZoteroPaneConstructable = ZoteroPane
+  public ExportOptions: ExportOptionsConstructable = ExportOptions
 
   public localeDateOrder: string = Zotero.Date.getLocaleDateOrder()
   public ready: BluebirdPromise<boolean>

@@ -38,6 +38,16 @@ declare const OS: {
   }
 }
 
+interface ZoteroItem {
+  id: number
+  isNote: () => boolean
+  isAttachment: () => boolean
+  isAnnotation?: () => boolean
+  libraryID: number
+  key: string
+  getField: (string) => string | number
+}
+
 // https://stackoverflow.com/questions/39040108/import-class-in-definition-file-d-ts
 declare const Zotero: {
   [attr: string]: any

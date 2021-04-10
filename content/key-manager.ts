@@ -143,7 +143,7 @@ export class KeyManager {
 
   }
 
-  public async refresh(ids: 'selected' | number | number[], manual = false) {
+  public async refresh(ids: 'selected' | number | number[], manual = false): Promise<void> {
     ids = this.expandSelection(ids)
 
     Cache.remove(ids, `refreshing keys for ${ids}`)
@@ -197,7 +197,7 @@ export class KeyManager {
     if (manual) notifiyItemsChanged(updates)
   }
 
-  public async init() {
+  public async init(): Promise<void> {
     await kuroshiro.init()
     jieba.init()
 
@@ -219,7 +219,7 @@ export class KeyManager {
     Formatter.update('init')
   }
 
-  public async start() {
+  public async start(): Promise<void> {
     await this.rescan()
 
     await ZoteroDB.queryAsync('ATTACH DATABASE ":memory:" AS betterbibtexcitekeys')
@@ -330,7 +330,7 @@ export class KeyManager {
     this.started = true
   }
 
-  public async rescan(clean?: boolean) {
+  public async rescan(clean?: boolean): Promise<void> {
     if (Preference.scrubDatabase) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return, no-prototype-builtins
       for (const item of this.keys.where(i => i.hasOwnProperty('extra'))) { // 799
@@ -443,7 +443,7 @@ export class KeyManager {
     this.scanning = null
   }
 
-  public update(item: any, current?: { pinned: boolean, citekey: string }) {
+  public update(item: ZoteroItem, current?: { pinned: boolean, citekey: string }): string {
     if (item.isNote() || item.isAttachment() || item.isAnnotation?.()) return null
 
     current = current || this.keys.findOne($and({ itemID: item.id }))
@@ -464,7 +464,7 @@ export class KeyManager {
     return proposed.citekey
   }
 
-  public remove(ids: any[]) {
+  public remove(ids: any[]): void {
     if (!Array.isArray(ids)) ids = [ids]
     this.keys.findAndRemove({ itemID : { $in : ids } })
   }
@@ -479,8 +479,8 @@ export class KeyManager {
     return { citekey: '', pinned: false, retry: true }
   }
 
-  public propose(item: { getField: (field: string) => string, libraryID: number, id: number }) {
-    const citekey: string = Extra.get(item.getField('extra'), 'zotero', { citationKey: true }).extraFields.citationKey
+  public propose(item: ZoteroItem): { citekey: string, pinned: boolean } {
+    const citekey: string = Extra.get(item.getField('extra') as string, 'zotero', { citationKey: true }).extraFields.citationKey
 
     if (citekey) return { citekey, pinned: true }
 
@@ -513,7 +513,7 @@ export class KeyManager {
     }
   }
 
-  public async tagDuplicates(libraryID: any) {
+  public async tagDuplicates(libraryID: number): Promise<void> {
     const tag = '#duplicate-citation-key'
 
     const tagged = (await ZoteroDB.queryAsync(`
