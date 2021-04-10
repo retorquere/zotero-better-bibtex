@@ -112,7 +112,6 @@ if (!process.env.MINITESTS) {
       context: path.resolve(__dirname, './content'),
       entry: {
         BetterBibTeXStartup: './better-bibtex.ts',
-        'BetterBibTeX.KeyManager': './KeyManager.ts',
         'BetterBibTeX.Preferences': './Preferences.ts',
         'BetterBibTeX.ErrorReport': './ErrorReport.ts',
         'BetterBibTeX.FirstRun': './FirstRun.ts',

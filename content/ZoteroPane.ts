@@ -13,9 +13,9 @@ export interface ZoteroPaneConstructable {
 }
 
 export class ZoteroPane {
-  private globals: any
+  private globals: Record<string, any>
 
-  constructor(globals) {
+  constructor(globals: Record<string, any>) {
     this.globals = globals
 
     const pane = Zotero.getActiveZoteroPane()
@@ -81,7 +81,7 @@ export class ZoteroPane {
     })
   }
 
-  public pullExport() {
+  public pullExport(): void {
     const pane = Zotero.getActiveZoteroPane()
 
     if (!pane.collectionsView || !pane.collectionsView.selection || !pane.collectionsView.selection.count) return
@@ -119,9 +119,9 @@ export class ZoteroPane {
     this.globals.window.openDialog('chrome://zotero-better-bibtex/content/ServerURL.xul', '', 'chrome,dialog,centerscreen,modal', params)
   }
 
-  public startAutoExport(event) {
+  public startAutoExport(event: Event): void {
     event.stopPropagation()
-    const path = event.target.getAttribute('label')
+    const path = (event.target as Element).getAttribute('label')
     const ae = AutoExport.db.findOne($and({ path }))
 
     if (ae) {
@@ -132,7 +132,7 @@ export class ZoteroPane {
     }
   }
 
-  public async addCitationLinks() {
+  public async addCitationLinks(): Promise<void> {
     const items = Zotero.getActiveZoteroPane().getSelectedItems()
     if (items.length !== 1) {
       flash('Citation links only works for a single reference')
@@ -149,16 +149,17 @@ export class ZoteroPane {
     }
   }
 
-  public async toTeXstudio() {
+  public async toTeXstudio(): Promise<void> {
     await TeXstudio.push()
   }
 
-  public errorReport(includeReferences) {
+  public errorReport(includeReferences: string): void {
     const pane = Zotero.getActiveZoteroPane()
     let scope = null
 
     switch (pane && includeReferences) {
-      case 'collection': case 'library':
+      case 'collection':
+      case 'library':
         scope = { type: 'collection', collection: pane.getSelectedCollection() }
         if (!scope.collection) scope = { type: 'library', id: pane.getSelectedLibraryID() }
         break
@@ -182,7 +183,7 @@ export class ZoteroPane {
     ww.openWindow(null, 'chrome://zotero-better-bibtex/content/ErrorReport.xul', 'better-bibtex-error-report', 'chrome,centerscreen,modal', params)
   }
 
-  public async sentenceCase() {
+  public async sentenceCase(): Promise<void> {
     const items = Zotero.getActiveZoteroPane().getSelectedItems()
     for (const item of items) {
       let save = false

@@ -1,7 +1,6 @@
 import { JournalAbbrev } from './journal-abbrev'
 
 import { DB as Cache } from './db/cache'
-import { KeyManager } from './key-manager'
 import { $and } from './db/loki'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
@@ -99,7 +98,7 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
         break
 
       default:
-        serialized.citekey = KeyManager.get(item.id).citekey
+        serialized.citekey = Zotero.BetterBibTeX.KeyManager.get(item.id).citekey
         serialized.citationKey = serialized.citationKey || serialized.citekey // prepare for https://github.com/zotero/translators/pull/1810#issuecomment-456219750
         if (!serialized.journalAbbreviation) serialized.autoJournalAbbreviation = JournalAbbrev.get(serialized)
         break

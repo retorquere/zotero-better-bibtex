@@ -95,8 +95,6 @@
   <script src="chrome://zotero-better-bibtex/content/webpack.js"/>
   <script src="chrome://zotero-better-bibtex/content/common.js"/>
   <script src="chrome://zotero-better-bibtex/content/BetterBibTeXStartup.js"/>
-  <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.ZoteroPane.js"/>
-  <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.KeyManager.js"/>
   <script>
     try {
       (new Promise((resolve, reject) => { window.addEventListener('load', resolve) }))

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/require-await, no-throw-literal, max-len */
 
 import { log } from './logger'
-import { KeyManager } from './key-manager'
 import { getItemsAsync } from './get-items-async'
 import { AUXScanner } from './aux-scanner'
 import { AutoExport } from './auto-export'
@@ -113,7 +112,7 @@ class NSItem {
 
     // add partial-citekey search results.
     for (const partialCitekey of terms.split(/\s+/)) {
-      for (const item of KeyManager.keys.find({ citekey: { $contains: partialCitekey } })) {
+      for (const item of Zotero.BetterBibTeX.KeyManager.keys.find({ citekey: { $contains: partialCitekey } })) {
         ids.add(item.itemID)
       }
     }
@@ -129,7 +128,7 @@ class NSItem {
       return {
         ...Zotero.Utilities.itemToCSLJSON(item),
         library: libraries[item.libraryID],
-        citekey: KeyManager.keys.findOne($and({ libraryID: item.libraryID, itemID: item.id })).citekey,
+        citekey: Zotero.BetterBibTeX.KeyManager.keys.findOne($and({ libraryID: item.libraryID, itemID: item.id })).citekey,
       }
     })
   }
@@ -140,7 +139,7 @@ class NSItem {
    * @param citekey  The citekey to search for
    */
   public async attachments(citekey: string) {
-    const key = KeyManager.keys.findOne($and({ citekey: citekey.replace(/^@/, '') }))
+    const key = Zotero.BetterBibTeX.KeyManager.keys.findOne($and({ citekey: citekey.replace(/^@/, '') }))
     if (!key) throw { code: INVALID_PARAMETERS, message: `${citekey} not found` }
     const item = await getItemsAsync(key.itemID)
 
@@ -157,7 +156,7 @@ class NSItem {
    * @param citekeys An array of citekeys
    */
   public async notes(citekeys: string[]) {
-    const keys = KeyManager.keys.find({ citekey: { $in: citekeys.map(citekey => citekey.replace('@', '')) } })
+    const keys = Zotero.BetterBibTeX.KeyManager.keys.find({ citekey: { $in: citekeys.map(citekey => citekey.replace('@', '')) } })
     if (!keys.length) throw { code: INVALID_PARAMETERS, message: `zero matches for ${citekeys.join(',')}` }
 
     const notes = {}
@@ -199,7 +198,7 @@ class NSItem {
     if (((format as any).mode || 'bibliography') !== 'bibliography') throw new Error(`mode must be bibliograpy, not ${(format as any).mode}`)
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    const items = await getItemsAsync(KeyManager.keys.find({ citekey: { $in: citekeys.map((citekey: string) => citekey.replace('@', '')) } }).map(key => key.itemID))
+    const items = await getItemsAsync(Zotero.BetterBibTeX.KeyManager.keys.find({ citekey: { $in: citekeys.map((citekey: string) => citekey.replace('@', '')) } }).map(key => key.itemID))
 
     const bibliography = Zotero.QuickCopy.getContentFromItems(items, { ...format, mode: 'bibliography' }, null, false)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -229,7 +228,7 @@ class NSItem {
         itemKey = key
       }
 
-      keys[key] = KeyManager.keys.findOne($and({ libraryID, itemKey }))?.citekey || null
+      keys[key] = Zotero.BetterBibTeX.KeyManager.keys.findOne($and({ libraryID, itemKey }))?.citekey || null
     }
 
     return keys
@@ -257,7 +256,7 @@ class NSItem {
       if (typeof args.libraryID === 'number') throw { code: INVALID_PARAMETERS, message: 'keyscope is global, do not provide a library ID' }
     }
 
-    const found = KeyManager.keys.find(query)
+    const found = Zotero.BetterBibTeX.KeyManager.keys.find(query)
 
     const status: Record<string, number> = {}
     for (const citekey of args.citekeys) {

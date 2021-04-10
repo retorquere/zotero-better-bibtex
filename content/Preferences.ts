@@ -15,7 +15,6 @@ import { DB as Cache } from './db/cache'
 import { Preference } from '../gen/preferences'
 import preferences from '../gen/preferences.json'
 import { Formatter } from './key-manager/formatter'
-import { KeyManager } from './key-manager'
 import { AutoExport } from './auto-export'
 import { Translators } from './translators'
 import { client } from './client'
@@ -317,7 +316,7 @@ export = new class PrefPane {
   }
 
   public async rescanCitekeys() {
-    await KeyManager.rescan()
+    await Zotero.BetterBibTeX.KeyManager.rescan()
   }
 
   public cacheReset() {
@@ -397,7 +396,11 @@ export = new class PrefPane {
       SELECT libraryID, itemID
       FROM items item
       WHERE
-        item.itemTypeID NOT IN (${KeyManager.query.type.attachment}, ${KeyManager.query.type.note})
+        item.itemTypeID NOT IN (
+          ${Zotero.BetterBibTeX.KeyManager.query.type.attachment},
+          ${Zotero.BetterBibTeX.KeyManager.query.type.note},
+          ${Zotero.BetterBibTeX.KeyManager.query.type.annotation || Zotero.BetterBibTeX.KeyManager.query.type.note}
+        )
         AND
         item.itemID NOT IN (select itemID from deletedItems)
     `
@@ -410,7 +413,11 @@ export = new class PrefPane {
       SELECT collectionID, itemID
       FROM collectionItems item
       WHERE
-        item.itemID NOT IN (SELECT itemID FROM items WHERE itemTypeID IN (${KeyManager.query.type.attachment}, ${KeyManager.query.type.note}))
+        item.itemID NOT IN (SELECT itemID FROM items WHERE itemTypeID IN (
+          ${Zotero.BetterBibTeX.KeyManager.query.type.attachment},
+          ${Zotero.BetterBibTeX.KeyManager.query.type.note},
+          ${Zotero.BetterBibTeX.KeyManager.query.type.annotation || Zotero.BetterBibTeX.KeyManager.query.type.note}
+        ))
         AND
         item.itemID NOT IN (select itemID from deletedItems)
     `

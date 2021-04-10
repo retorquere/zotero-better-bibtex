@@ -87,7 +87,7 @@ if (Preference.citeprocNoteCitekey) {
     const cslItem = original.apply(this, arguments)
 
     if (typeof Zotero.Item !== 'undefined' && !(zoteroItem instanceof Zotero.Item)) {
-      const citekey = KeyManager.get(zoteroItem.itemID)
+      const citekey = Zotero.BetterBibTeX.KeyManager.get(zoteroItem.itemID)
       if (citekey) {
         cslItem.note = citekey.citekey
       }
@@ -115,7 +115,7 @@ $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(ite
     if (merge.citationKey || merge.tex || merge.kv) {
       const extra = Extra.get(item.getField('extra'), 'zotero', { citationKey: merge.citationKey, aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
       if (!extra.extraFields.citationKey) { // why is the citationkey stripped from extra before we get to this point?!
-        const pinned = KeyManager.keys.findOne($and({ itemID: item.id }))
+        const pinned = Zotero.BetterBibTeX.KeyManager.keys.findOne($and({ itemID: item.id }))
         log.debug('#bbt merge: repinning key?', pinned)
         if (pinned.pinned) extra.extraFields.citationKey = pinned.citekey
       }
@@ -125,7 +125,7 @@ $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(ite
       if (merge.citationKey) {
         const otherIDs = otherItems.map((i: { id: string }) => parseInt(i.id))
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        extra.extraFields.aliases = [...extra.extraFields.aliases, ...(KeyManager.keys.find($and({ itemID: { $in: otherIDs }})).map((i: { citekey: string }) => i.citekey))]
+        extra.extraFields.aliases = [...extra.extraFields.aliases, ...(Zotero.BetterBibTeX.KeyManager.keys.find($and({ itemID: { $in: otherIDs }})).map((i: { citekey: string }) => i.citekey))]
       }
       log.debug('#bbt merge: added stored keys:', { extract: merge, raw: item.getField('extra'), parsed: extra })
 
@@ -161,7 +161,7 @@ $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(ite
       log.debug('#bbt merge: added aliases:', { extra })
 
       if (merge.citationKey) {
-        const citekey = KeyManager.keys.findOne($and({ itemID: item.id })).citekey
+        const citekey = Zotero.BetterBibTeX.KeyManager.keys.findOne($and({ itemID: item.id })).citekey
         extra.extraFields.aliases = extra.extraFields.aliases.filter(alias => alias !== citekey)
       }
       log.debug('#bbt merge: aliases cleaned:', { merge, extra })
@@ -189,7 +189,7 @@ $patch$(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => functio
   try {
     const decoded_id = decodeURIComponent(id)
     if (decoded_id[0] === '@') {
-      const item = KeyManager.keys.findOne($and({ citekey: decoded_id.substring(1) }))
+      const item = Zotero.BetterBibTeX.KeyManager.keys.findOne($and({ citekey: decoded_id.substring(1) }))
       if (item) return { libraryID: item.libraryID, key: item.itemKey }
     }
 
@@ -197,7 +197,7 @@ $patch$(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => functio
     if (m) {
       const [_libraryID, citekey] = m.slice(1)
       const libraryID: number = (!_libraryID || _libraryID === '1') ? Zotero.Libraries.userLibraryID : parseInt(_libraryID)
-      const item = KeyManager.keys.findOne($and({ libraryID, citekey }))
+      const item = Zotero.BetterBibTeX.KeyManager.keys.findOne($and({ libraryID, citekey }))
       if (item) return { libraryID: item.libraryID, key: item.itemKey }
     }
   }
@@ -229,7 +229,7 @@ $patch$(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prot
     switch (field) {
       case 'citekey':
         if (Zotero.BetterBibTeX.ready.isPending()) return '' // eslint-disable-line @typescript-eslint/no-use-before-define
-        return KeyManager.get(this.id).citekey
+        return Zotero.BetterBibTeX.KeyManager.get(this.id).citekey as string
 
       case 'itemID':
         return `${this.id}`
@@ -241,7 +241,7 @@ $patch$(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prot
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return original.apply(this, arguments)
+  return original.apply(this, arguments) as string
 })
 
 // #1579
@@ -258,7 +258,7 @@ $patch$(Zotero.Item.prototype, 'clone', original => function Zotero_Item_prototy
 })
 
 const itemTreeViewWaiting: Record<number, boolean> = {}
-$patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function Zotero_ItemTreeView_prototype_getCellText(row: any, col: { id: string }) {
+$patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function Zotero_ItemTreeView_prototype_getCellText(row: any, col: { id: string }): string {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   if (col.id !== 'zotero-items-column-citekey') return original.apply(this, arguments)
 
@@ -276,8 +276,8 @@ $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function Zoter
     return '\u231B'
   }
 
-  const citekey = KeyManager.get(item.id)
-  return (citekey.citekey || '\u26A0') + (citekey.pinned ? ' \uD83D\uDCCC' : '')
+  const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id)
+  return `${citekey.citekey || '\u26A0'}${citekey.pinned ? ' \uD83D\uDCCC' : ''}`
 })
 
 import * as CAYW from './cayw'
@@ -567,7 +567,7 @@ notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]:
   switch (action) {
     case 'delete':
     case 'trash':
-      KeyManager.remove(ids)
+      Zotero.BetterBibTeX.KeyManager.remove(ids)
       Events.emit('items-removed', ids)
       break
 
@@ -576,7 +576,7 @@ notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]:
       // eslint-disable-next-line no-case-declarations
       let warn_titlecase = Preference.warnTitleCased ? 0 : null
       for (const item of items) {
-        KeyManager.update(item)
+        Zotero.BetterBibTeX.KeyManager.update(item)
         if (typeof warn_titlecase === 'number' && !item.isNote() && !item.isAttachment() && !item.isAnnotation?.()) {
           const title = item.getField('title')
           if (title !== sentenceCase(title)) warn_titlecase += 1
@@ -704,6 +704,7 @@ class Progress {
 
 export class BetterBibTeX {
   public TestSupport = new TestSupport
+  public KeyManager = new KeyManager
   public ZoteroPane: ZoteroPaneConstructable = ZoteroPane
 
   public localeDateOrder: string = Zotero.Date.getLocaleDateOrder()
@@ -838,7 +839,7 @@ export class BetterBibTeX {
     progress.update(this.getString('BetterBibTeX.startup.loadingKeys'), 10) // eslint-disable-line no-magic-numbers
     await Promise.all([Cache.init(), DB.init()])
 
-    await KeyManager.init() // loads the existing keys
+    await this.KeyManager.init() // loads the existing keys
 
     progress.update(this.getString('BetterBibTeX.startup.serializationCache'), 20) // eslint-disable-line no-magic-numbers
     Serializer.init()
@@ -863,7 +864,7 @@ export class BetterBibTeX {
     await Translators.init()
 
     progress.update(this.getString('BetterBibTeX.startup.keyManager'), 80) // eslint-disable-line no-magic-numbers
-    await KeyManager.start() // inits the key cache by scanning the DB and generating missing keys
+    await this.KeyManager.start() // inits the key cache by scanning the DB and generating missing keys
 
     progress.update(this.getString('BetterBibTeX.startup.autoExport'), 90) // eslint-disable-line no-magic-numbers
     AutoExport.start()

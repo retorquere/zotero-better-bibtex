@@ -5,8 +5,6 @@ declare const ZoteroItemPane: any
 import { patch as $patch$ } from './monkey-patch'
 import { sentenceCase } from './case'
 
-import { KeyManager } from './key-manager'
-
 function display(itemID) {
   let menuitem = document.getElementById('zotero-field-transform-menu-better-sentencecase')
   if (!menuitem) {
@@ -23,7 +21,7 @@ function display(itemID) {
   const field = document.getElementById('better-bibtex-citekey-display')
   if (field.getAttribute('itemID') !== `${itemID}`) return null
 
-  const citekey = KeyManager.get(itemID)
+  const citekey = Zotero.BetterBibTeX.KeyManager.get(itemID)
   field.value = citekey.citekey
 
   const pin = ' \uD83D\uDCCC'
@@ -33,9 +31,9 @@ function display(itemID) {
 
 let observer = null
 function init() {
-  if (observer || !KeyManager.keys) return null
+  if (observer || !Zotero.BetterBibTeX.KeyManager.keys) return null
 
-  observer = KeyManager.keys.on(['update', 'insert'], citekey => {
+  observer = Zotero.BetterBibTeX.KeyManager.keys.on(['update', 'insert'], citekey => {
     display(citekey.itemID)
   })
 }
@@ -76,8 +74,8 @@ function load() {
 }
 
 function unload() {
-  if (KeyManager.keys && observer) {
-    KeyManager.keys.removeListener(observer)
+  if (Zotero.BetterBibTeX.KeyManager.keys && observer) {
+    Zotero.BetterBibTeX.KeyManager.keys.removeListener(observer)
   }
 }
 
