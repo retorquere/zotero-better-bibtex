@@ -7,7 +7,6 @@
   </vbox>
 
   <script src="chrome://zotero/content/include.js"/>
-  <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.ExportOptions.js"/>
   <script>
     var globals = Function('return this')();
     (new Promise((resolve, reject) => { window.addEventListener('load', resolve) }))

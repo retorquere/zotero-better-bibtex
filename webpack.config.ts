@@ -115,7 +115,6 @@ if (!process.env.MINITESTS) {
         'BetterBibTeX.Preferences': './Preferences.ts',
         'BetterBibTeX.ErrorReport': './ErrorReport.ts',
         'BetterBibTeX.FirstRun': './FirstRun.ts',
-        'BetterBibTeX.ItemPane': './ItemPane.ts',
       },
       // devtool: '#source-map',
       output: {

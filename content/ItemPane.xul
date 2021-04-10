@@ -29,5 +29,17 @@
   </tabpanels>
 
   <script src="chrome://zotero/content/include.js"/>
-  <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.ItemPane.js"/>
+  <script>
+    var globals = Function('return this')();
+    var bbt_itemPane
+    (new Promise((resolve, reject) => { window.addEventListener('load', resolve) }))
+      .then(() => Zotero.debug('BBT: loading ItemPane'))
+      .then(() => {
+        bbt_itemPane = new Zotero.BetterBibTeX.ItemPane(globals)
+        window.addEventListener('unload', () => bbt_itemPane.unload())
+      })
+      .then(() => bbt_itemPane.load(globals))
+      .then(() => Zotero.debug('BBT: ItemPane loaded'))
+      .catch(err => Zotero.debug(`BBT: loading ItemPane error: ${err.message}\n${err.stack ||''}`))
+  </script>
 </overlay>
