@@ -112,10 +112,10 @@ async function rebuild() {
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis
     // banner: "const Global = Function('return this')();\n\n",
     banner: {
-      js: 'importScripts("resource://zotero/config.js") // import ZOTERO_CONFIG\n\n',
+      js: 'importScripts("resource://zotero/config.js") // import ZOTERO_CONFIG\n\ndump("hello from worker")\n',
     },
     footer: {
-      js: `const { ${vars.join(', ')} } = ${globalName};` +'\n' + 'importScripts(`resource://zotero-better-bibtex/${workerContext.translator}.js`);\n',
+      js: `const { ${vars.join(', ')} } = ${globalName};` +'\ndump("worker ready!"); postMessage({ hello: "world" })\n' + 'importScripts(`resource://zotero-better-bibtex/${workerContext.translator}.js`);\n',
     },
   })
 
