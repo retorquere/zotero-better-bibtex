@@ -112,13 +112,8 @@ if (!process.env.MINITESTS) {
       context: path.resolve(__dirname, './content'),
       entry: {
         BetterBibTeXStartup: './better-bibtex.ts',
-        'BetterBibTeX.ZoteroPane': './ZoteroPane.ts',
-        'BetterBibTeX.KeyManager': './KeyManager.ts',
         'BetterBibTeX.Preferences': './Preferences.ts',
         'BetterBibTeX.ErrorReport': './ErrorReport.ts',
-        'BetterBibTeX.FirstRun': './FirstRun.ts',
-        'BetterBibTeX.ItemPane': './ItemPane.ts',
-        'BetterBibTeX.ExportOptions': './ExportOptions.ts',
       },
       // devtool: '#source-map',
       output: {

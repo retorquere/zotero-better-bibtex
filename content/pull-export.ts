@@ -9,7 +9,6 @@ import { Translators } from './translators'
 import { get as getCollection } from './collection'
 import { get as getLibrary } from './library'
 import { getItemsAsync } from './get-items-async'
-import { KeyManager } from './key-manager'
 import { fromEntries } from './object'
 import { $and } from './db/loki'
 
@@ -145,7 +144,7 @@ Zotero.Server.Endpoints['/better-bibtex/export/item'] = class {
 
       const itemIDs: Record<string, number> = {}
       for (const citekey of citationKeys) {
-        const key = KeyManager.keys.find($and({ libraryID, citekey }))
+        const key = Zotero.BetterBibTeX.KeyManager.keys.find($and({ libraryID, citekey }))
 
         switch (key.length) {
           case 0:

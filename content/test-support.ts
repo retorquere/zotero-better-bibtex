@@ -5,7 +5,6 @@ import { AutoExport } from './auto-export'
 import { sleep } from './sleep'
 import * as ZoteroDB from './db/zotero'
 import { log } from './logger'
-import { KeyManager } from './key-manager'
 import { Translators } from './translators'
 import { Formatter as CAYWFormatter } from './cayw/formatter'
 import { getItemsAsync } from './get-items-async'
@@ -161,8 +160,8 @@ export class TestSupport {
 
     let ids: number[] = []
 
-    if (query.contains) ids = ids.concat(KeyManager.keys.where( (item: { citekey: string }) => item.citekey.toLowerCase().includes(query.contains.toLowerCase()) ).map((item: { itemID: number }) => item.itemID))
-    if (query.is) ids = ids.concat(KeyManager.keys.find($and({ citekey: query.is })).map((item: { itemID: number }) => item.itemID))
+    if (query.contains) ids = ids.concat(Zotero.BetterBibTeX.KeyManager.keys.where( (item: { citekey: string }) => item.citekey.toLowerCase().includes(query.contains.toLowerCase()) ).map((item: { itemID: number }) => item.itemID))
+    if (query.is) ids = ids.concat(Zotero.BetterBibTeX.KeyManager.keys.find($and({ citekey: query.is })).map((item: { itemID: number }) => item.itemID))
 
     const s = new Zotero.Search()
     for (const [mode, text] of Object.entries(query)) {
@@ -180,7 +179,7 @@ export class TestSupport {
   public async pick(format: string, citations: {id: number[], uri: string, citekey: string}[]): Promise<string> {
     for (const citation of citations) {
       if (citation.id.length !== 1) throw new Error(`Expected 1 item, got ${citation.id.length}`)
-      citation.citekey = KeyManager.get(citation.id[0]).citekey
+      citation.citekey = Zotero.BetterBibTeX.KeyManager.get(citation.id[0]).citekey
       citation.uri = Zotero.URI.getItemURI(await getItemsAsync(citation.id[0]))
     }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -222,13 +221,13 @@ export class TestSupport {
     for (itemID of ids) {
       switch (action) {
         case 'pin':
-          await KeyManager.pin(itemID)
+          await Zotero.BetterBibTeX.KeyManager.pin(itemID)
           break
         case 'unpin':
-          await KeyManager.unpin(itemID)
+          await Zotero.BetterBibTeX.KeyManager.unpin(itemID)
           break
         case 'refresh':
-          await KeyManager.refresh(itemID)
+          await Zotero.BetterBibTeX.KeyManager.refresh(itemID)
           break
         default:
           throw new Error(`TestSupport.pinCiteKey: unsupported action ${action}`)

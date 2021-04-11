@@ -1,7 +1,6 @@
 Components.utils.import('resource://gre/modules/osfile.jsm')
 
 import { sleep } from './sleep'
-import { KeyManager } from './key-manager'
 import { Translators } from './translators'
 import { Preference } from '../gen/preferences'
 
@@ -55,7 +54,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
       libraryID = collection ? collection.libraryID : azp.getSelectedLibraryID()
     }
 
-    const found = (KeyManager.keys.find({$and: [{ libraryID: {$eq: libraryID} }, { citekey: { $in: citekeys } }]}) as { itemID: number, citekey: string }[])
+    const found = (Zotero.BetterBibTeX.KeyManager.keys.find({$and: [{ libraryID: {$eq: libraryID} }, { citekey: { $in: citekeys } }]}) as { itemID: number, citekey: string }[])
 
     const itemIDs = found.map(key => key.itemID)
 

@@ -27,14 +27,14 @@ import { patch as $patch$ } from './monkey-patch'
 import { sprintf } from 'sprintf-js'
 import { intToExcelCol } from 'excel-column-name'
 
-// export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export const KeyManager = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export class KeyManager {
   public keys: any
   public query: {
     field: { extra?: number }
     type: {
       note?: number
       attachment?: number
+      annotation?: number
     }
   }
   public autopin: Scheduler = new Scheduler('autoPinDelay', 1000) // eslint-disable-line no-magic-numbers
@@ -82,7 +82,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
     }
   }
 
-  public async set() {
+  public async set(): Promise<void> {
     const ids = this.expandSelection('selected')
     if (ids.length !== 1) return alert(Zotero.BetterBibTeX.getString('Citekey.set.toomany'))
 
@@ -96,7 +96,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
     await item.saveTx() // this should cause an update and key registration
   }
 
-  public async pin(ids: 'selected' | number | number[], inspireHEP = false) {
+  public async pin(ids: 'selected' | number | number[], inspireHEP = false): Promise<void> {
     ids = this.expandSelection(ids)
 
     for (const item of await getItemsAsync(ids)) {
@@ -128,7 +128,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
     }
   }
 
-  public async unpin(ids: any) {
+  public async unpin(ids: 'selected' | number | number[]): Promise<void> {
     ids = this.expandSelection(ids)
 
     for (const item of await getItemsAsync(ids)) {
@@ -143,7 +143,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
 
   }
 
-  public async refresh(ids: 'selected' | number | number[], manual = false) {
+  public async refresh(ids: 'selected' | number | number[], manual = false): Promise<void> {
     ids = this.expandSelection(ids)
 
     Cache.remove(ids, `refreshing keys for ${ids}`)
@@ -197,7 +197,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
     if (manual) notifiyItemsChanged(updates)
   }
 
-  public async init() {
+  public async init(): Promise<void> {
     await kuroshiro.init()
     jieba.init()
 
@@ -219,7 +219,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
     Formatter.update('init')
   }
 
-  public async start() {
+  public async start(): Promise<void> {
     await this.rescan()
 
     await ZoteroDB.queryAsync('ATTACH DATABASE ":memory:" AS betterbibtexcitekeys')
@@ -330,7 +330,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
     this.started = true
   }
 
-  public async rescan(clean?: boolean) {
+  public async rescan(clean?: boolean): Promise<void> {
     if (Preference.scrubDatabase) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return, no-prototype-builtins
       for (const item of this.keys.where(i => i.hasOwnProperty('extra'))) { // 799
@@ -364,7 +364,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
       LEFT JOIN itemData field ON field.itemID = item.itemID AND field.fieldID = ${this.query.field.extra}
       LEFT JOIN itemDataValues extra ON extra.valueID = field.valueID
       WHERE item.itemID NOT IN (select itemID from deletedItems)
-      AND item.itemTypeID NOT IN (${this.query.type.attachment}, ${this.query.type.note})
+      AND item.itemTypeID NOT IN (${this.query.type.attachment}, ${this.query.type.note}, ${this.query.type.annotation || this.query.type.note})
     `)
     for (const item of items) {
       ids.push(item.itemID)
@@ -443,7 +443,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
     this.scanning = null
   }
 
-  public update(item: any, current?: { pinned: boolean, citekey: string }) {
+  public update(item: ZoteroItem, current?: { pinned: boolean, citekey: string }): string {
     if (item.isNote() || item.isAttachment() || item.isAnnotation?.()) return null
 
     current = current || this.keys.findOne($and({ itemID: item.id }))
@@ -464,7 +464,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
     return proposed.citekey
   }
 
-  public remove(ids: any[]) {
+  public remove(ids: any[]): void {
     if (!Array.isArray(ids)) ids = [ids]
     this.keys.findAndRemove({ itemID : { $in : ids } })
   }
@@ -479,8 +479,8 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
     return { citekey: '', pinned: false, retry: true }
   }
 
-  public propose(item: { getField: (field: string) => string, libraryID: number, id: number }) {
-    const citekey: string = Extra.get(item.getField('extra'), 'zotero', { citationKey: true }).extraFields.citationKey
+  public propose(item: ZoteroItem): { citekey: string, pinned: boolean } {
+    const citekey: string = Extra.get(item.getField('extra') as string, 'zotero', { citationKey: true }).extraFields.citationKey
 
     if (citekey) return { citekey, pinned: true }
 
@@ -513,7 +513,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
     }
   }
 
-  public async tagDuplicates(libraryID: any) {
+  public async tagDuplicates(libraryID: number): Promise<void> {
     const tag = '#duplicate-citation-key'
 
     const tagged = (await ZoteroDB.queryAsync(`
