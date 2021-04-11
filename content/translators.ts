@@ -292,16 +292,10 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     const deferred = new Deferred<string>()
     let worker: ChromeWorker = null
     // WHAT IS GOING ON HERE FIREFOX?!?! A *NetworkError* for a xpi-internal resource:// URL?!
-    for (let attempt = 0; !worker && attempt < 5; attempt++) { // eslint-disable-line no-magic-numbers
-      try {
-        if (attempt > 0) await sleep(2 * 1000 * attempt) // eslint-disable-line no-magic-numbers
-        worker = new ChromeWorker(`resource://zotero-better-bibtex/worker/Zotero.js?${workerContext}`)
-      }
-      catch (err) {
-        log.error('new ChromeWorker:', err)
-      }
+    try {
+      worker = new ChromeWorker(`resource://zotero-better-bibtex/worker/Zotero.js?${workerContext}`)
     }
-    if (!worker) {
+    catch (err) {
       deferred.reject('could not get a ChromeWorker')
       flash(
         'Failed to start background export',
@@ -323,8 +317,23 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     let items: any[] = []
+    let started = false
+    const interval = setInterval(() => {
+      if (started) {
+        clearInterval(interval)
+      }
+      else {
+        worker.postMessage({ kind: 'ping' })
+      }
+    }, 500) // eslint-disable-line no-magic-numbers
+
     worker.onmessage = (e: { data: Translator.Worker.Message }) => {
       switch (e.data?.kind) {
+        case 'ready':
+          if (!started) worker.postMessage({ kind: 'start', config: JSON.parse(JSON.stringify(config)) })
+          started = true
+          break
+
         case 'error':
           log.status({error: true, translator: translator.label, worker: id}, 'QBW failed:', Date.now() - start, e.data)
           job.translate._runHandler('error', e.data) // eslint-disable-line no-underscore-dangle
@@ -501,16 +510,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     current_trace.prep.duration.push(now - last_trace)
     current_trace.prep.total = now - start
     last_trace = now
-
-    try {
-      worker.postMessage(JSON.parse(JSON.stringify(config)))
-    }
-    catch (err) {
-      worker.terminate()
-      this.workers.running.delete(id)
-      log.status({error: true, translator: translator.label, worker: id}, 'QBW: failed:', Date.now() - start, err)
-      deferred.reject(err)
-    }
 
     return deferred.promise
   }

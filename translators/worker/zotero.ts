@@ -284,21 +284,32 @@ class WorkerZotero {
 
 export const Zotero = new WorkerZotero // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
 
-export function onmessage(e: { data: Translators.Worker.Config }): void {
+let started = false
+export function onmessage(e: { data: Translators.Worker.Message } ): void {
   Zotero.BetterBibTeX.localeDateOrder = workerContext.localeDateOrder
 
-  if (e.data?.items && !Zotero.config) {
+  if (! e.data?.kind) {
+    log.debug('unexpected message in worker:', e)
+  }
+  else if (e.data.kind === 'ping') {
+    log.debug('worker: ping')
+    ctx.postMessage({ kind: 'ready' })
+  }
+  else if (!started && e.data.kind === 'start') {
+    log.debug('worker: starting')
+    started = true
     try {
-      Zotero.init(e.data)
+      Zotero.init(e.data.config)
       doExport()
       Zotero.done()
     }
     catch (err) {
       Zotero.logError(err)
     }
+    close()
   }
   else {
-    log.debug('unexpected message in worker:', e)
+    log.debug('unexpected message, stopping worker:', e)
+    close()
   }
-  close()
 }

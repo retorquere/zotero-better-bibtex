@@ -12,7 +12,10 @@ export namespace Translators {
     }
 
     type Message = 
-        { kind: 'done', output: boolean | string }
+        { kind: 'ping' }
+      | { kind: 'ready' }
+      | { kind: 'start', config: Config }
+      | { kind: 'done', output: boolean | string }
       | { kind: 'debug', message: string }
       | { kind: 'error', message: string }
       | { kind: 'cache', itemID: number, reference: string, metadata: any }
