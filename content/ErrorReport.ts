@@ -44,7 +44,7 @@ export class ErrorReport {
     globals.window.addEventListener('load', () => this.init(), false)
   }
 
-  public async send() {
+  public async send(): Promise<void> {
     const wizard = this.globals.document.getElementById('better-bibtex-error-report')
     wizard.getButton('next').disabled = true
     wizard.getButton('cancel').disabled = true
@@ -74,7 +74,7 @@ export class ErrorReport {
     }
   }
 
-  public show() {
+  public show(): void {
     const wizard = this.globals.document.getElementById('better-bibtex-error-report')
 
     if (wizard.onLastPage) wizard.canRewind = false
@@ -83,7 +83,7 @@ export class ErrorReport {
     else wizard.canRewind = true
   }
 
-  public restartWithDebugEnabled() {
+  public restartWithDebugEnabled(): void {
     const ps = Services.prompt
     const buttonFlags = ps.BUTTON_POS_0 * ps.BUTTON_TITLE_IS_STRING
         + ps.BUTTON_POS_1 * ps.BUTTON_TITLE_CANCEL

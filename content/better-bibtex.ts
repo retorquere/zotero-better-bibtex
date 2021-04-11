@@ -10,6 +10,7 @@ import { ZoteroPane, ZoteroPaneConstructable } from './ZoteroPane'
 import { ExportOptions, ExportOptionsConstructable } from './ExportOptions'
 import { ItemPane, ItemPaneConstructable } from './ItemPane'
 import { FirstRun } from './FirstRun'
+import { PrefPane, PrefPaneConstructable } from './Preferences'
 import { ErrorReport } from './ErrorReport'
 import { clean_pane_persist, patch as $patch$ } from './monkey-patch'
 import { flash } from './flash'
@@ -714,6 +715,7 @@ export class BetterBibTeX {
   public ItemPane: ItemPaneConstructable = ItemPane
   public FirstRun = FirstRun
   public ErrorReport = ErrorReport
+  public PrefPane: PrefPaneConstructable = PrefPane
 
   public localeDateOrder: string = Zotero.Date.getLocaleDateOrder()
   public ready: BluebirdPromise<boolean>
