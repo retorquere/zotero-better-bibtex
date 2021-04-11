@@ -16,6 +16,20 @@
   xmlns:html="http://www.w3.org/1999/xhtml"
   xmlns:bbt="http://retorque.re/zotero-better-bibtex/">
 
+  <script src="chrome://zotero/content/include.js"/>
+  <script>
+    var globals = Function('return this')();
+    var bbt_prefpane
+    function load() {
+      bbt_prefpane = new Zotero.BetterBibTeX.PrefPane()
+      Promise.resolve()
+        .then(() => Zotero.debug('BBT: loading PrefPane'))
+        .then(() => bbt_prefpane.load(globals))
+        .then(() => Zotero.debug('BBT: PrefPane loaded'))
+        .catch(err => Zotero.debug(`BBT: loading PrefPane error: ${err.message}\n${err.stack ||''}`))
+    }
+  </script>
+
   <popupset>
     <tooltip id="tooltip-bibtexURL">
       <description>&better-bibtex.Preferences.export.fields.doi-and-url.warning;</description>
@@ -44,7 +58,7 @@
             insertafter="zotero-prefpane-advanced"
             label="&better-bibtex.Preferences.prefpane.better-bibtex;"
             image="chrome://zotero-better-bibtex/skin/bibtex.svg"
-            onpaneload="Zotero.BetterBibTeX.Preferences.load()"
+            onpaneload="load()"
             helpTopic="BetterBibTeX">
 
       <preferences id="zotero-preferences-cite">
@@ -471,10 +485,10 @@
               <hbox>
                 <label bbt:preference="pref-better-bibtex-citekeyFormat">&better-bibtex.Preferences.citekey.format;</label>
                 <textbox size="40" id="id-better-bibtex-preferences-citekeyFormat"
-                  onfocus="Zotero.BetterBibTeX.Preferences.getCitekeyFormat(event.target);"
-                  onblur="Zotero.BetterBibTeX.Preferences.saveCitekeyFormat(event.target);"
-                  oninput="Zotero.BetterBibTeX.Preferences.checkCitekeyFormat(event.target);"
-                  onkeypress="Zotero.setTimeout(function() { Zotero.BetterBibTeX.Preferences.checkCitekeyFormat(event.target) }, 1);"/>
+                  onfocus="bbt_prefpane.getCitekeyFormat(event.target);"
+                  onblur="bbt_prefpane.saveCitekeyFormat(event.target);"
+                  oninput="bbt_prefpane.checkCitekeyFormat(event.target);"
+                  onkeypress="Zotero.setTimeout(function() { bbt_prefpane.checkCitekeyFormat(event.target) }, 1);"/>
               </hbox>
               <description>&better-bibtex.FirstRun.citekeyFormat.explanation.bbt.citekeyUpdate;</description>
               <checkbox preference="pref-better-bibtex-citekeyFold" label="&better-bibtex.Preferences.citekey.fold;"/>
@@ -525,7 +539,7 @@
                       id="id-better-bibtex-preferences-quickCopyMode"
                       preference="pref-better-bibtex-quickCopyMode"
                       preference-editable="true"
-                      oncommand="Zotero.BetterBibTeX.Preferences.update();"
+                      oncommand="bbt_prefpane.update();"
                     >
                       <menupopup>
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.latex;" value="latex"/>
@@ -547,8 +561,8 @@
                   <row class="better-bibtex-preferences-quickcopy-details" id="better-bibtex-preferences-quickcopy-latex">
                     <label bbt:preference="pref-better-bibtex-citeCommand">&better-bibtex.Preferences.citekey.quickCopy.latex.command;</label>
                     <textbox size="10" preference="pref-better-bibtex-citeCommand"
-                      onchange="Zotero.BetterBibTeX.Preferences.update();"
-                      onkeypress="Zotero.setTimeout(function() { Zotero.BetterBibTeX.Preferences.update() }, 1);"/>
+                      onchange="bbt_prefpane.update();"
+                      onkeypress="Zotero.setTimeout(function() { bbt_prefpane.update() }, 1);"/>
                   </row>
                   <row class="better-bibtex-preferences-quickcopy-details" id="better-bibtex-preferences-quickcopy-pandoc">
                     <checkbox id="id-better-bibtex-preferences-quickCopyPandocBrackets"
@@ -623,8 +637,8 @@
                   <row>
                     <label bbt:preference="pref-better-bibtex-skipFields">&better-bibtex.Preferences.export.fields.skip;</label>
                     <textbox size="80" id="id-better-bibtex-preferences-skipFields" preference="pref-better-bibtex-skipFields"
-                      oninput="Zotero.BetterBibTeX.Preferences.update();"
-                      onkeypress="Zotero.setTimeout(function() { Zotero.BetterBibTeX.Preferences.update() }, 1);"/>
+                      oninput="bbt_prefpane.update();"
+                      onkeypress="Zotero.setTimeout(function() { bbt_prefpane.update() }, 1);"/>
                   </row>
                   <row>
                     <label bbt:preference="pref-better-bibtex-jabrefFormat">&better-bibtex.Preferences.export.jabrefFormat;</label>
@@ -649,7 +663,7 @@
               <checkbox id="id-better-bibtex-preferences-autoAbbrev" label="&better-bibtex.Preferences.auto-abbrev;" preference="pref-better-bibtex-autoAbbrev"/>
               <separator id="better-bibtex-abbrev-style-separator" class="thin"/>
               <label id="better-bibtex-abbrev-style-label" bbt:preference="pref-better-bibtex-autoAbbrevStyle">&better-bibtex.Preferences.auto-abbrev.style;</label>
-              <menulist id="better-bibtex-abbrev-style" onchange="Zotero.BetterBibTeX.Preferences.styleChanged()">
+              <menulist id="better-bibtex-abbrev-style" onchange="bbt_prefpane.styleChanged()">
                 <menupopup id="better-bibtex-abbrev-style-popup">
                 </menupopup>
               </menulist>
@@ -728,18 +742,18 @@
                       bbt:ae-id=""
                       bbt:ae-field="asciiBibTeX"
                       label="&better-bibtex.Preferences.export.bibtex.ascii;"
-                      oncommand="Zotero.BetterBibTeX.Preferences.autoexport.edit(event.target)"
+                      oncommand="bbt_prefpane.autoexport.edit(event.target)"
                       />
                     <checkbox
                       bbt:ae-id=""
                       bbt:ae-field="bibtexParticleNoOp"
                       label="&better-bibtex.Preferences.export.fields.bibtexParticleNoOp;"
-                      oncommand="Zotero.BetterBibTeX.Preferences.autoexport.edit(event.target)"
+                      oncommand="bbt_prefpane.autoexport.edit(event.target)"
                       />
                     <hbox>
                       <label>&better-bibtex.Preferences.export.bibtex.URLs;</label>
                       <hbox>
-                        <menulist bbt:ae-id="" bbt:ae-field="bibtexURL" oncommand="Zotero.BetterBibTeX.Preferences.autoexport.edit(event.currentTarget)">
+                        <menulist bbt:ae-id="" bbt:ae-field="bibtexURL" oncommand="bbt_prefpane.autoexport.edit(event.currentTarget)">
                           <menupopup>
                             <menuitem label="&better-bibtex.Preferences.export.bibtex.URLs.off;" value="off"/>
                             <menuitem label="&better-bibtex.Preferences.export.bibtex.URLs.note;" value="note"/>
@@ -756,20 +770,20 @@
                       bbt:ae-id=""
                       bbt:ae-field="asciiBibLaTeX"
                       label="&better-bibtex.Preferences.export.biblatex.ascii;"
-                      oncommand="Zotero.BetterBibTeX.Preferences.autoexport.edit(event.target)"
+                      oncommand="bbt_prefpane.autoexport.edit(event.target)"
                       />
                     <checkbox
                       bbt:ae-id=""
                       bbt:ae-field="biblatexExtendedNameFormat"
                       label="&better-bibtex.Preferences.export.biblatex.extendedNameFormat;"
-                      oncommand="Zotero.BetterBibTeX.Preferences.autoexport.edit(event.target)"
+                      oncommand="bbt_prefpane.autoexport.edit(event.target)"
                       />
                   </vbox>
 
                   <vbox hidden="true" class="autoexport-options autoexport-BetterCSLJSON autoexport-BetterCSLYAML autoexport-BetterBibTeX autoexport-BetterBibLaTeX">
                     <hbox class="autoexport-options autoexport-BetterBibTeX autoexport-BetterBibLaTeX">
                       <label>&better-bibtex.Preferences.export.fields.doi-and-url;</label>
-                      <menulist bbt:ae-id="" bbt:ae-field="DOIandURL" oncommand="Zotero.BetterBibTeX.Preferences.autoexport.edit(event.currentTarget)">
+                      <menulist bbt:ae-id="" bbt:ae-field="DOIandURL" oncommand="bbt_prefpane.autoexport.edit(event.currentTarget)">
                         <menupopup>
                           <menuitem label="&better-bibtex.Preferences.export.fields.doi-and-url.both;" value="both"/>
                           <menuitem label="&better-bibtex.Preferences.export.fields.doi-and-url.DOI;" value="doi"/>
@@ -782,25 +796,25 @@
                       bbt:ae-id=""
                       bbt:ae-field="exportNotes"
                       label="&better-bibtex.Preferences.auto-export.fields.notes;"
-                      oncommand="Zotero.BetterBibTeX.Preferences.autoexport.edit(event.target)"
+                      oncommand="bbt_prefpane.autoexport.edit(event.target)"
                       />
                     <checkbox class="autoexport-options autoexport-BetterBibTeX autoexport-BetterBibLaTeX"
                       bbt:ae-id=""
                       bbt:ae-field="useJournalAbbreviation"
                       label="&better-bibtex.Preferences.auto-export.fields.journalAbbrev;"
-                      oncommand="Zotero.BetterBibTeX.Preferences.autoexport.edit(event.target)"
+                      oncommand="bbt_prefpane.autoexport.edit(event.target)"
                       />
                     <checkbox
                       bbt:ae-id=""
                       bbt:ae-field="recursive"
                       label="&better-bibtex.Preferences.auto-export.fields.recursive;"
-                      oncommand="Zotero.BetterBibTeX.Preferences.autoexport.edit(event.target)"
+                      oncommand="bbt_prefpane.autoexport.edit(event.target)"
                       />
                   </vbox>
 
                   <hbox>
-                    <button label="&better-bibtex.Preferences.auto-export.remove;" bbt:ae-id="" oncommand="Zotero.BetterBibTeX.Preferences.autoexport.remove(event.target)"/>
-                    <button label="&better-bibtex.Preferences.auto-export.run;" bbt:ae-id="" oncommand="Zotero.BetterBibTeX.Preferences.autoexport.run(event.target)"/>
+                    <button label="&better-bibtex.Preferences.auto-export.remove;" bbt:ae-id="" oncommand="bbt_prefpane.autoexport.remove(event.target)"/>
+                    <button label="&better-bibtex.Preferences.auto-export.run;" bbt:ae-id="" oncommand="bbt_prefpane.autoexport.run(event.target)"/>
                   </hbox>
                 </tabpanel>
               </tabpanels>
@@ -821,9 +835,9 @@
                 <tabpanel orient="vertical">
                   <textbox rows="10" flex="1" multiline="true"
                         preference="pref-better-bibtex-postscript" id="zotero-better-bibtex-postscript"
-                        onblur="Zotero.BetterBibTeX.Preferences.checkPostscript();"
-                        oninput="Zotero.BetterBibTeX.Preferences.checkPostscript();"
-                        onkeypress="Zotero.setTimeout(function() { Zotero.BetterBibTeX.Preferences.checkPostscript() }, 1);"/>
+                        onblur="bbt_prefpane.checkPostscript();"
+                        oninput="bbt_prefpane.checkPostscript();"
+                        onkeypress="Zotero.setTimeout(function() { bbt_prefpane.checkPostscript() }, 1);"/>
                   <textbox rows="2" multiline="true" flex="1" id="better-bibtex-cache-warn-postscript" class="plain textbox-emph" readonly="true" value="&better-bibtex.Preferences.postscript.warn;"/>
                 </tabpanel>
                 <tabpanel orient="vertical">
@@ -847,7 +861,7 @@
                     <checkbox preference="pref-better-bibtex-workersCache" label="&better-bibtex.Preferences.advanced.export.workers.cache;"/>
                   </hbox>
                   <label class="better-bibtex-preferences-worker-state"/>
-                  <button label="&better-bibtex.Preferences.resetCache;" oncommand="Zotero.BetterBibTeX.Preferences.cacheReset()"/>
+                  <button label="&better-bibtex.Preferences.resetCache;" oncommand="bbt_prefpane.cacheReset()"/>
                 </tabpanel>
 
                 <tabpanel orient="vertical">
@@ -894,7 +908,7 @@
                 </tabpanel>
 
                 <tabpanel orient="vertical">
-                  <button label="&better-bibtex.Preferences.rescan-citekeys;" oncommand="Zotero.BetterBibTeX.Preferences.rescanCitekeys()"/>
+                  <button label="&better-bibtex.Preferences.rescan-citekeys;" oncommand="bbt_prefpane.rescanCitekeys()"/>
 
                   <hbox>
                     <label bbt:preference="pref-better-bibtex-warnBulkModify">&better-bibtex.Preferences.bulkWarning;</label>
@@ -923,7 +937,4 @@
       <label height="20px;" style="margin-bottom: 0px"/>
     </prefpane>
   </prefwindow>
-
-  <script src="chrome://zotero/content/include.js"/>
-  <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.Preferences.js"/>
 </overlay>

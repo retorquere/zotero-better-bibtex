@@ -1,5 +1,5 @@
 import { log } from '../logger'
-import { foldMaintaining } from 'fold-to-ascii'
+import fold2ascii from 'fold-to-ascii'
 import ucs2decode = require('punycode2/ucs2/decode')
 import scripts = require('xregexp/tools/output/scripts')
 import { transliterate } from 'transliteration'
@@ -748,7 +748,7 @@ class PatternFormatter {
       replace,
     })
 
-    str = foldMaintaining(str)
+    str = fold2ascii.foldMaintaining(str)
 
     return str
   }

@@ -1,8 +1,5 @@
 Components.utils.import('resource://gre/modules/Services.jsm')
 
-declare const window: any
-declare const document: any
-
 import { Preference } from '../gen/preferences'
 import { Translators } from './translators'
 import { log } from './logger'
@@ -15,7 +12,6 @@ import * as s3 from './s3.json'
 
 import * as PACKAGE from '../package.json'
 
-
 const kB = 1024
 const MB = kB * kB
 
@@ -25,7 +21,7 @@ const httpRequestOptions = {
   foreground: true,
 }
 
-export = new class ErrorReport {
+export class ErrorReport {
   private chunkSize = 10 * MB // eslint-disable-line no-magic-numbers, yoda
   private previewSize = 3 * kB // eslint-disable-line no-magic-numbers, yoda
 
@@ -33,6 +29,7 @@ export = new class ErrorReport {
   private timestamp: string
   private bucket: string
   private params: any
+  private globals: Record<string, any>
 
   private errorlog: {
     info: string
@@ -42,12 +39,13 @@ export = new class ErrorReport {
     db?: string
   }
 
-  constructor() {
-    window.addEventListener('load', () => this.init(), false)
+  constructor(globals: Record<string, any>) {
+    this.globals = globals
+    globals.window.addEventListener('load', () => this.init(), false)
   }
 
-  public async send() {
-    const wizard = document.getElementById('better-bibtex-error-report')
+  public async send(): Promise<void> {
+    const wizard = this.globals.document.getElementById('better-bibtex-error-report')
     wizard.getButton('next').disabled = true
     wizard.getButton('cancel').disabled = true
     wizard.canRewind = false
@@ -57,7 +55,7 @@ export = new class ErrorReport {
         this.submit('debug', 'text/plain', this.errorlog.debug, `${this.errorlog.info}\n\n${this.errorlog.errors}\n\n`),
       ]
 
-      if (document.getElementById('better-bibtex-error-report-include-db').checked) {
+      if (this.globals.document.getElementById('better-bibtex-error-report-include-db').checked) {
         logs.push(this.submit('DB', 'application/json', DB.serialize({ serializationMethod: 'pretty' })))
         logs.push(this.submit('Cache', 'application/json', Cache.serialize({ serializationMethod: 'pretty' })))
       }
@@ -66,8 +64,8 @@ export = new class ErrorReport {
       await Zotero.Promise.all(logs)
       wizard.advance()
 
-      document.getElementById('better-bibtex-report-id').value = this.key
-      document.getElementById('better-bibtex-report-result').hidden = false
+      this.globals.document.getElementById('better-bibtex-report-id').value = this.key
+      this.globals.document.getElementById('better-bibtex-report-result').hidden = false
     }
     catch (err) {
       const ps = Components.classes['@mozilla.org/embedcomp/prompt-service;1'].getService(Components.interfaces.nsIPromptService)
@@ -76,8 +74,8 @@ export = new class ErrorReport {
     }
   }
 
-  public show() {
-    const wizard = document.getElementById('better-bibtex-error-report')
+  public show(): void {
+    const wizard = this.globals.document.getElementById('better-bibtex-error-report')
 
     if (wizard.onLastPage) wizard.canRewind = false
     else if (wizard.pageIndex === 0) wizard.canRewind = false
@@ -85,7 +83,7 @@ export = new class ErrorReport {
     else wizard.canRewind = true
   }
 
-  public restartWithDebugEnabled() {
+  public restartWithDebugEnabled(): void {
     const ps = Services.prompt
     const buttonFlags = ps.BUTTON_POS_0 * ps.BUTTON_TITLE_IS_STRING
         + ps.BUTTON_POS_1 * ps.BUTTON_TITLE_CANCEL
@@ -126,14 +124,14 @@ export = new class ErrorReport {
   }
 
   private async init() {
-    const wizard = document.getElementById('better-bibtex-error-report')
+    const wizard = this.globals.document.getElementById('better-bibtex-error-report')
 
     if (Zotero.Debug.enabled) wizard.pageIndex = 1
 
     const continueButton = wizard.getButton('next')
     continueButton.disabled = true
 
-    this.params = window.arguments[0].wrappedJSObject
+    this.params = this.globals.window.arguments[0].wrappedJSObject
 
     this.timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
 
@@ -148,19 +146,19 @@ export = new class ErrorReport {
       this.errorlog.references = await Translators.exportItems(Translators.byLabel.BetterBibTeXJSON.translatorID, {exportNotes: true, dropAttachments: true, Normalize: true}, this.params.scope)
     }
 
-    document.getElementById('better-bibtex-error-context').value = this.errorlog.info
-    document.getElementById('better-bibtex-error-errors').value = this.errorlog.errors
-    document.getElementById('better-bibtex-error-debug').value = this.preview(this.errorlog.debug)
-    if (this.errorlog.references) document.getElementById('better-bibtex-error-references').value = this.preview(this.errorlog.references)
-    document.getElementById('better-bibtex-error-tab-references').hidden = !this.errorlog.references
+    this.globals.document.getElementById('better-bibtex-error-context').value = this.errorlog.info
+    this.globals.document.getElementById('better-bibtex-error-errors').value = this.errorlog.errors
+    this.globals.document.getElementById('better-bibtex-error-debug').value = this.preview(this.errorlog.debug)
+    if (this.errorlog.references) this.globals.document.getElementById('better-bibtex-error-references').value = this.preview(this.errorlog.references)
+    this.globals.document.getElementById('better-bibtex-error-tab-references').hidden = !this.errorlog.references
 
     const current = require('../gen/version.js')
-    document.getElementById('better-bibtex-report-current').value = Zotero.BetterBibTeX.getString('ErrorReport.better-bibtex.current', { version: current })
+    this.globals.document.getElementById('better-bibtex-report-current').value = Zotero.BetterBibTeX.getString('ErrorReport.better-bibtex.current', { version: current })
 
     try {
       const latest = await this.latest()
 
-      const show_latest = document.getElementById('better-bibtex-report-latest')
+      const show_latest = this.globals.document.getElementById('better-bibtex-report-latest')
       if (current === latest) {
         show_latest.hidden = true
       }
@@ -346,6 +344,3 @@ export = new class ErrorReport {
 
   }
 }
-
-// otherwise this entry point won't be reloaded: https://github.com/webpack/webpack/issues/156
-delete require.cache[module.id]

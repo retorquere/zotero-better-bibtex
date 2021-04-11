@@ -112,8 +112,6 @@ if (!process.env.MINITESTS) {
       context: path.resolve(__dirname, './content'),
       entry: {
         BetterBibTeXStartup: './better-bibtex.ts',
-        'BetterBibTeX.Preferences': './Preferences.ts',
-        'BetterBibTeX.ErrorReport': './ErrorReport.ts',
       },
       // devtool: '#source-map',
       output: {

@@ -1,5 +1,6 @@
 export namespace XUL {
   class Element extends HTMLElement {
+    public tagName: string
     public hidden: boolean
     public getAttribute(name: string): string
     public setAttribute(name: string, value: string): void
