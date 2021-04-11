@@ -114,7 +114,6 @@ if (!process.env.MINITESTS) {
         BetterBibTeXStartup: './better-bibtex.ts',
         'BetterBibTeX.Preferences': './Preferences.ts',
         'BetterBibTeX.ErrorReport': './ErrorReport.ts',
-        'BetterBibTeX.FirstRun': './FirstRun.ts',
       },
       // devtool: '#source-map',
       output: {

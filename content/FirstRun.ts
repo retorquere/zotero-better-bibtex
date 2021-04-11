@@ -1,54 +1,44 @@
-declare const window: any
-declare const document: any
-
-export = new class FirstRun {
+export class FirstRun {
   private prefix = 'better-bibtex-first-run-'
   private params: { citekeyFormat: string, dragndrop: boolean }
+  private globals: Record<string, any>
 
-  public load() {
-    const wizard = document.getElementById('better-bibtex-first-run')
+  constructor(globals: Record<string, any>) {
+    this.globals = globals
+    const wizard = globals.document.getElementById('better-bibtex-first-run')
     const cancel = wizard.getButton('cancel')
     cancel.disabled = true
 
-    this.params = window.arguments[0].wrappedJSObject
+    this.params = globals.window.arguments[0].wrappedJSObject
 
-    for (const radiogroup of [...document.getElementsByTagName('radiogroup')]) {
+    for (const radiogroup of [...globals.document.getElementsByTagName('radiogroup')]) {
       const option = radiogroup.id.substring(this.prefix.length)
       for (const radio of [...radiogroup.getElementsByTagName('radio')]) {
         if (radio.value === this.params[option]) radiogroup.selectedItem = radio
       }
     }
 
-    for (const checkbox of [...document.getElementsByTagName('checkbox')]) {
+    for (const checkbox of [...globals.document.getElementsByTagName('checkbox')]) {
       const option = checkbox.id.substring(this.prefix.length)
       checkbox.checked = !!this.params[option]
     }
   }
 
-  public update() {
-    for (const radiogroup of [...document.getElementsByTagName('radiogroup')]) {
+  public update(): void {
+    for (const radiogroup of [...this.globals.document.getElementsByTagName('radiogroup')]) {
       const option = radiogroup.id.substring(this.prefix.length)
       this.params[option] = radiogroup.selectedItem.value
     }
 
-    for (const checkbox of [...document.getElementsByTagName('checkbox')]) {
+    for (const checkbox of [...this.globals.document.getElementsByTagName('checkbox')]) {
       const option = checkbox.id.substring(this.prefix.length)
       this.params[option] = checkbox.checked
     }
 
     // special case for dynamic explanation
-    const selected = document.getElementById('better-bibtex-first-run-citekeyFormat').selectedItem.value
+    const selected = this.globals.document.getElementById('better-bibtex-first-run-citekeyFormat').selectedItem.value
     for (const pattern of ['bbt', 'zotero', 'whatever']) {
-      document.getElementById(`better-bibtex-first-run-citekeyFormat-${pattern}`).setAttribute('hidden', pattern !== selected)
+      this.globals.document.getElementById(`better-bibtex-first-run-citekeyFormat-${pattern}`).setAttribute('hidden', pattern !== selected)
     }
   }
-
-  /*
-  public ok() {
-    log.debug('ok')
-  }
-  */
 }
-
-// otherwise this entry point won't be reloaded: https://github.com/webpack/webpack/issues/156
-delete require.cache[module.id]
