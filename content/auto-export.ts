@@ -8,7 +8,7 @@ import { DB } from './db/main'
 import { Translators } from './translators'
 import { Preference } from '../gen/preferences'
 import * as ini from 'ini'
-import { foldMaintaining } from 'fold-to-ascii'
+import fold2ascii from 'fold-to-ascii'
 import { pathSearch } from './path-search'
 import { Scheduler } from './scheduler'
 
@@ -253,7 +253,7 @@ const queue = new class TaskQueue {
             // eslint-disable-next-line no-control-regex
             .map((p: string) => p.replace(/[<>:'"/\\|?*\u0000-\u001F]/g, ''))
             .map((p: string) => p.replace(/ +/g, autoExportPathReplaceSpace || ''))
-            .map((p: string) => autoExportPathReplaceDiacritics ? (foldMaintaining(p) as string) : p)
+            .map((p: string) => autoExportPathReplaceDiacritics ? (fold2ascii.foldMaintaining(p) as string) : p)
             .join(autoExportPathReplaceDirSep || '-') + ext
           )
           jobs.push({ scope: { type: 'collection', collection: collection.id }, path } )

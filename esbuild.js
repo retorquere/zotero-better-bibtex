@@ -69,7 +69,7 @@ function execShellCommand(cmd) {
 async function bundle(config, metafile) {
   if (!config.banner) config.banner = {}
   if (!config.banner.js) config.banner.js = ''
-  config.banner.js = `var global = Function('return this')();\nvar process = { env: {} };\n${config.banner.js}`
+  config.banner.js = `var global = Function('return this')();\n${await fs.promises.readFile('shims/process.js', 'utf-8')};\n${config.banner.js}`
   const meta = (await esbuild.build({...config, metafile: true})).metafile
   console.log(Object.keys(meta.outputs).join(', '))
   if (metafile) await fs.promises.writeFile(metafile, JSON.stringify(meta, null, 2))
@@ -101,7 +101,7 @@ async function rebuild() {
     bundle: true,
     plugins: [loaders, shims],
     outdir: 'build/resource/worker',
-    target: ['firefox60'],
+    target: ['firefox52'],
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis
     // banner: "const Global = Function('return this')();\n\n",
     banner: {
