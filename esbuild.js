@@ -51,6 +51,14 @@ const loaders = {
         loader: 'js'
       }
     })
+
+    build.onLoad({ filter: /\/node_modules\/ooooevan-jieba\/index.js$/ }, async (args) => {
+      const dirname = args.path.replace(/.*\/node_modules\//, '')
+      return {
+        contents: `var __dirname=${JSON.stringify(path.dirname(args.path.replace(/.*\/node_modules\//, '')))};\n${await fs.promises.readFile(args.path, 'utf-8')}`,
+        loader: 'js'
+      }
+    })
   }
 }
 
@@ -71,7 +79,7 @@ async function bundle(config, metafile) {
     ...config,
     target: ['firefox60'],
     metafile: true,
-    inject: (config.inject || []).concat('./shims/process.js'),
+    inject: (config.inject || []).concat('./shims/inject.js'),
     banner: {
       ...(config.banner || {}),
       js: [

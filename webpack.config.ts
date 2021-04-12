@@ -196,7 +196,7 @@ if (!process.env.MINITESTS) {
         path: path.resolve(__dirname, './build/resource/worker'),
         filename: '[name].js',
         pathinfo: true,
-        library: 'var { Zotero, onmessage, workerContext }',
+        library: 'var { Zotero, workerContext }',
         libraryTarget: assign,
       },
     })
