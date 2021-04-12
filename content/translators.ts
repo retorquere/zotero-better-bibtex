@@ -293,7 +293,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     let worker: ChromeWorker = null
     // WHAT IS GOING ON HERE FIREFOX?!?! A *NetworkError* for a xpi-internal resource:// URL?!
     try {
-      worker = new ChromeWorker(`resource://zotero-better-bibtex/worker/Zotero.js?${workerContext}`)
+      worker = new ChromeWorker(`resource://zotero-better-bibtex/worker/zotero.js?${workerContext}`)
     }
     catch (err) {
       deferred.reject('could not get a ChromeWorker')
