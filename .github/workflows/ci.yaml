@@ -75,6 +75,7 @@ jobs:
       matrix:
         client: [zotero]
         bin: ['1', '2']
+        bundler: ['', esbuild]
 #        include:
 #        - client: jurism
 #          bin: '1'
@@ -124,6 +125,7 @@ jobs:
       continue-on-error: ${{ matrix.softfail }}
       env:
         PYTHONUNBUFFERED: true
+        ESBUILD: ${{ matrix.bundler }}
       with:
         run: ./test/behave --client ${{ matrix.client }} --logs logs/logs --format travis --bin ${{ matrix.bin }}
 
