@@ -32,6 +32,7 @@ dependencies:
   ooooevan-jieba: 1.0.3
   parse5: 6.0.1
   permutater: 1.0.2
+  process: 0.11.10
   pug: 3.0.2
   punycode2: 1.0.0
   safe-stable-stringify: 1.1.1
@@ -5973,6 +5974,7 @@ specifiers:
   permutater: ^1.0.2
   post-compile-webpack-plugin: ^0.1.2
   pretty-data: ^0.40.0
+  process: ^0.11.10
   properties-reader: ^2.2.0
   pug: ^3.0.2
   punycode2: ^1.0.0

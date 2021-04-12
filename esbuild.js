@@ -71,18 +71,23 @@ async function bundle(config, metafile) {
     ...config,
     target: ['firefox60'],
     metafile: true,
+    inject: (config.inject || []).concat('./shims/process.js'),
+    banner: {
+      ...(config.banner || {}),
+      js: [
+        'var global = Function("return this")();',
+        (config.banner?.js || '')
+      ].filter(code => code).join('\n\n')
+    },
   }
 
-  if (!config.banner) config.banner = {}
-  if (!config.banner.js) config.banner.js = ''
-  config.banner.js = `var global = Function('return this')();\n${await fs.promises.readFile('shims/process.js', 'utf-8')};\n${config.banner.js}`
-
   const meta = (await esbuild.build(config)).metafile
-  console.log(Object.keys(meta.outputs).join(', '))
+  console.log('bundled', Object.keys(meta.outputs).join(', '))
   if (metafile) await fs.promises.writeFile(metafile, JSON.stringify(meta, null, 2))
 }
 
 async function rebuild() {
+  // plugin code
   await bundle({
     entryPoints: [ 'content/better-bibtex.ts' ],
     format: 'iife',
@@ -99,7 +104,8 @@ async function rebuild() {
     }
   }, 'esbuild.json')
 
-  const vars = [ 'Zotero', 'onmessage', 'workerContext' ]
+  // worker code
+  const vars = [ 'Zotero', 'workerContext' ]
   const globalName = vars.join('__')
   await bundle({
     entryPoints: [ 'translators/worker/zotero.ts' ],
@@ -112,13 +118,23 @@ async function rebuild() {
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis
     // banner: "const Global = Function('return this')();\n\n",
     banner: {
-      js: 'importScripts("resource://zotero/config.js") // import ZOTERO_CONFIG\n\ndump("hello from worker")\n',
+      js: [
+        'importScripts("resource://zotero/config.js") // import ZOTERO_CONFIG',
+        'dump(`worker: loading\n`)', // TODO: look into this
+      ].join('\n'),
     },
     footer: {
-      js: `const { ${vars.join(', ')} } = ${globalName};` +'\ndump("worker ready!"); postMessage({ hello: "world" })\n' + 'importScripts(`resource://zotero-better-bibtex/${workerContext.translator}.js`);\n',
+      js: [
+        `const { ${vars.join(', ')} } = ${globalName};`,
+        'dump(`worker: ready!\\n`);', // TODO: look into this
+        'dump(`worker: onmessage=${typeof self.onmessage}: ${self.onmessage}\\n`);',
+        'postMessage({ kind: "ready" })',
+        'importScripts(`resource://zotero-better-bibtex/${workerContext.translator}.js`);',
+      ].join('\n'),
     },
   })
 
+  // translators
   for (const translator of (await glob('translators/*.json')).map(tr => path.parse(tr))) {
     const header = require('./' + path.join(translator.dir, translator.name + '.json'))
     const vars = ['Translator']
@@ -139,8 +155,13 @@ async function rebuild() {
       // charset: 'utf8',
       plugins: [loaders, throwShims],
       outfile,
+      banner: {
+        js: `if (typeof ZOTERO_TRANSLATOR_INFO === 'undefined') var ZOTERO_TRANSLATOR_INFO = ${JSON.stringify(header)};`
+      },
       footer: {
-        js: `const { ${vars.join(', ')} } = ${globalName};`
+        js: [
+          `const { ${vars.join(', ')} } = ${globalName};`,
+        ].join('\n')
       },
       target: ['firefox60'],
     })

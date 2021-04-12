@@ -317,23 +317,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     let items: any[] = []
-    let started = false
-    const interval = setInterval(() => {
-      if (started) {
-        clearInterval(interval)
-      }
-      else {
-        worker.postMessage({ kind: 'ping' })
-      }
-    }, 500) // eslint-disable-line no-magic-numbers
-
     worker.onmessage = (e: { data: Translator.Worker.Message }) => {
       switch (e.data?.kind) {
-        case 'ready':
-          if (!started) worker.postMessage({ kind: 'start', config: JSON.parse(JSON.stringify(config)) })
-          started = true
-          break
-
         case 'error':
           log.status({error: true, translator: translator.label, worker: id}, 'QBW failed:', Date.now() - start, e.data)
           job.translate._runHandler('error', e.data) // eslint-disable-line no-underscore-dangle
@@ -510,6 +495,20 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     current_trace.prep.duration.push(now - last_trace)
     current_trace.prep.total = now - start
     last_trace = now
+
+    log.debug('worker: kicking off')
+    worker.postMessage({ kind: 'start', config: JSON.parse(JSON.stringify(config)) })
+
+    /*
+    const interval = setInterval(() => {
+      if ((Date.now() - now) > 10000) { // eslint-disable-line no-magic-numbers
+        clearInterval(interval)
+      }
+      else {
+        worker.postMessage({ kind: 'ping' })
+      }
+    }, 500) // eslint-disable-line no-magic-numbers
+    */
 
     return deferred.promise
   }

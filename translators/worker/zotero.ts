@@ -7,6 +7,7 @@ import type { Translators } from '../../typings/translators'
 
 declare const doExport: () => void
 declare const Translator: ITranslator
+declare const dump: (message: string) => void
 
 // @ts-ignore
 import XRegExp = require('xregexp')
@@ -245,9 +246,11 @@ class WorkerZotero {
   }
 
   public debug(message) {
+    dump(`worker: ${message}\n`)
     this.send({ kind: 'debug', message })
   }
   public logError(err) {
+    dump(`worker: error=${err}\n`)
     this.send({ kind: 'error', message: `${err}\n${err.stack}` })
   }
 
@@ -285,8 +288,10 @@ class WorkerZotero {
 export const Zotero = new WorkerZotero // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
 
 let started = false
-export function onmessage(e: { data: Translators.Worker.Message } ): void {
+ctx.onmessage = function(e: { data: Translators.Worker.Message } ): void { // eslint-disable-line prefer-arrow/prefer-arrow-functions
   Zotero.BetterBibTeX.localeDateOrder = workerContext.localeDateOrder
+
+  dump(`worker: ${JSON.stringify(e)}\n`)
 
   if (! e.data?.kind) {
     log.debug('unexpected message in worker:', e)
