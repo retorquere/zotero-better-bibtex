@@ -380,7 +380,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     worker.onerror = e => {
-      log.status({error: true, translator: translator.label, worker: id}, 'QBW: failed:', Date.now() - start, e)
+      log.status({error: true, translator: translator.label, worker: id}, 'QBW: failed:', Date.now() - start, 'message:', e)
       job.translate._runHandler('error', e) // eslint-disable-line no-underscore-dangle
       deferred.reject(e.message)
       worker.terminate()

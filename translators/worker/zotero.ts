@@ -246,8 +246,10 @@ class WorkerZotero {
   }
 
   public debug(message) {
-    dump(`worker: ${message}\n`)
-    this.send({ kind: 'debug', message })
+    if (workerContext.debugEnabled) {
+      dump(`worker: ${message}\n`)
+      this.send({ kind: 'debug', message })
+    }
   }
   public logError(err) {
     dump(`worker: error=${err}\n`)
@@ -289,34 +291,35 @@ export const Zotero = new WorkerZotero // eslint-disable-line @typescript-eslint
 
 let started = false
 ctx.onmessage = function(e: { isTrusted?: boolean, data?: Translators.Worker.Message } ): void { // eslint-disable-line prefer-arrow/prefer-arrow-functions
-  dump(`worker: received ${JSON.stringify({ isTrusted: e.isTrusted, kind: e.data?.kind, started})}\n`)
+  log.debug('worker: received', { isTrusted: e.isTrusted, kind: e.data?.kind, started})
 
   let stop = true
-  if (!e.data) {
-    stop = false // some kind of startup message
-  }
-  else if (e.data.kind === 'ping') {
-    log.debug('worker: ping')
-    ctx.postMessage({ kind: 'ready' })
-    stop = false
-  }
-  else if (!started && e.data.kind === 'start') {
-    started = true
-    log.debug('worker: starting')
-    Zotero.BetterBibTeX.localeDateOrder = workerContext.localeDateOrder
-    try {
+  try {
+    if (!e.data) {
+      stop = false // some kind of startup message
+    }
+    else if (e.data.kind === 'ping') {
+      log.debug('worker: ping')
+      ctx.postMessage({ kind: 'ready' })
+      stop = false
+    }
+    else if (!started && e.data.kind === 'start') {
+      started = true
+      log.debug('worker: starting')
+      Zotero.BetterBibTeX.localeDateOrder = workerContext.localeDateOrder
       Zotero.init(e.data.config)
       doExport()
       Zotero.done()
     }
-    catch (err) {
-      Zotero.logError(err)
+    else {
+      log.debug('unexpected message, stopping worker:', started, e)
     }
   }
-  else {
-    log.debug('unexpected message, stopping worker:', started, e)
+  catch (err) {
+    Zotero.logError(err)
+    // JSON.stringify(err, ["message", "arguments", "type", "name"])
   }
 
-  dump(`worker: handled ${JSON.stringify({ isTrusted: e.isTrusted, kind: e.data?.kind, stop, started})}\n`)
+  log.debug('worker: handled', { isTrusted: e.isTrusted, kind: e.data?.kind, stop, started})
   if (stop) close()
 }
