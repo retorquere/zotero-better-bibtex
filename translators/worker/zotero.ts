@@ -316,7 +316,7 @@ ctx.onmessage = function(e: { isTrusted?: boolean, data?: Translators.Worker.Mes
     }
   }
   catch (err) {
-    Zotero.logError(err)
+    log.error('worker:', err)
     // JSON.stringify(err, ["message", "arguments", "type", "name"])
   }
 
