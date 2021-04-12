@@ -83,6 +83,7 @@ async function bundle(config, metafile) {
     banner: {
       ...(config.banner || {}),
       js: [
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis
         'var global = Function("return this")();',
         (config.banner?.js || '')
       ].filter(code => code).join('\n\n')
@@ -123,20 +124,14 @@ async function rebuild() {
     plugins: [loaders, shims],
     outdir: 'build/resource/worker',
     target: ['firefox60'],
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis
-    // banner: "const Global = Function('return this')();\n\n",
     banner: {
       js: [
         'importScripts("resource://zotero/config.js") // import ZOTERO_CONFIG',
-        'dump(`worker: loading\n`)', // TODO: look into this
       ].join('\n'),
     },
     footer: {
       js: [
         `const { ${vars.join(', ')} } = ${globalName};`,
-        'dump(`worker: ready!\\n`);', // TODO: look into this
-        'dump(`worker: onmessage=${typeof self.onmessage}: ${self.onmessage}\\n`);',
-        'postMessage({ kind: "ready" })',
         'importScripts(`resource://zotero-better-bibtex/${workerContext.translator}.js`);',
       ].join('\n'),
     },
