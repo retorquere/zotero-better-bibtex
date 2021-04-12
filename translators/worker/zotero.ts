@@ -288,21 +288,22 @@ class WorkerZotero {
 export const Zotero = new WorkerZotero // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
 
 let started = false
-ctx.onmessage = function(e: { data: Translators.Worker.Message } ): void { // eslint-disable-line prefer-arrow/prefer-arrow-functions
-  Zotero.BetterBibTeX.localeDateOrder = workerContext.localeDateOrder
+ctx.onmessage = function(e: { isTrusted?: boolean, data?: Translators.Worker.Message } ): void { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+  dump(`worker: received ${JSON.stringify({ isTrusted: e.isTrusted, kind: e.data?.kind, started})}\n`)
 
-  dump(`worker: ${JSON.stringify(e)}\n`)
-
-  if (! e.data?.kind) {
-    log.debug('unexpected message in worker:', e)
+  let stop = true
+  if (!e.data) {
+    stop = false // some kind of startup message
   }
   else if (e.data.kind === 'ping') {
     log.debug('worker: ping')
     ctx.postMessage({ kind: 'ready' })
+    stop = false
   }
   else if (!started && e.data.kind === 'start') {
-    log.debug('worker: starting')
     started = true
+    log.debug('worker: starting')
+    Zotero.BetterBibTeX.localeDateOrder = workerContext.localeDateOrder
     try {
       Zotero.init(e.data.config)
       doExport()
@@ -311,10 +312,11 @@ ctx.onmessage = function(e: { data: Translators.Worker.Message } ): void { // es
     catch (err) {
       Zotero.logError(err)
     }
-    close()
   }
   else {
-    log.debug('unexpected message, stopping worker:', e)
-    close()
+    log.debug('unexpected message, stopping worker:', started, e)
   }
+
+  dump(`worker: handled ${JSON.stringify({ isTrusted: e.isTrusted, kind: e.data?.kind, stop, started})}\n`)
+  if (stop) close()
 }
