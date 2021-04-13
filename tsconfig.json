@@ -32,6 +32,7 @@
   ],
   "exclude": [
     "node_modules",
+    "headless",
     "**/*.spec.ts"
   ]
 }

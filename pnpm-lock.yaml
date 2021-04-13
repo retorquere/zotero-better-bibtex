@@ -81,7 +81,7 @@ devDependencies:
   xml-parser: 1.2.1
   xmldom: 0.5.0
   xpath: 0.0.32
-  zotero-plugin: 1.0.42
+  zotero-plugin: 1.0.43
 lockfileVersion: 5.2
 packages:
   /@babel/code-frame/7.12.11:
@@ -506,7 +506,7 @@ packages:
       '@octokit/auth-token': 2.4.5
       '@octokit/graphql': 4.5.9
       '@octokit/request': 5.4.13
-      '@octokit/types': 6.12.2
+      '@octokit/types': 6.13.0
       before-after-hook: 2.1.0
       universal-user-agent: 6.0.0
     dev: true
@@ -532,10 +532,6 @@ packages:
     dev: true
     resolution:
       integrity: sha512-s3dd32gagPmKaSLNJ9aPNok7U+tl69YLESf6DgQz5Ml/iipPZtif3GLvWpNXoA6qspFm1LFUZX+C3SqWX/Y/TQ==
-  /@octokit/openapi-types/5.3.2:
-    dev: true
-    resolution:
-      integrity: sha512-NxF1yfYOUO92rCx3dwvA2onF30Vdlg7YUkMVXkeptqpzA3tRLplThhFleV/UKWFgh7rpKu1yYRbvNDUtzSopKA==
   /@octokit/openapi-types/6.0.0:
     dev: true
     resolution:
@@ -543,7 +539,7 @@ packages:
   /@octokit/plugin-paginate-rest/2.9.0_@octokit+core@3.2.5:
     dependencies:
       '@octokit/core': 3.2.5
-      '@octokit/types': 6.12.2
+      '@octokit/types': 6.13.0
     dev: true
     peerDependencies:
       '@octokit/core': '>=2'
@@ -616,12 +612,6 @@ packages:
     dev: true
     resolution:
       integrity: sha512-Kz03XYfKS0yYdi61BkL9/aJ0pP2A/WK5vF/syhu9/kY30J8He3P68hv9GRpn8bULFx2K0A9MEErn4v3QEdbZcw==
-  /@octokit/types/6.12.2:
-    dependencies:
-      '@octokit/openapi-types': 5.3.2
-    dev: true
-    resolution:
-      integrity: sha512-kCkiN8scbCmSq+gwdJV0iLgHc0O/GTPY1/cffo9kECu1MvatLPh9E+qFhfRIktKfHEA6ZYvv6S1B4Wnv3bi3pA==
   /@octokit/types/6.13.0:
     dependencies:
       '@octokit/openapi-types': 6.0.0
@@ -4704,7 +4694,7 @@ packages:
     dev: false
     resolution:
       integrity: sha1-UBl+2yihxCymWcyLTmqd3W1ERVQ=
-  /zotero-plugin/1.0.42:
+  /zotero-plugin/1.0.43:
     dependencies:
       '@octokit/rest': 18.5.2
       '@rgrove/parse-xml': 3.0.0
@@ -4741,7 +4731,7 @@ packages:
     dev: true
     hasBin: true
     resolution:
-      integrity: sha512-vkpJrKG3ffp6M0sHAzvcEDQFHgwU2/t2ViQWYtYZojDMM679YTXpIBzYYCQT2ZNweeQ+sFDZeAUA2elq9xdLiA==
+      integrity: sha512-KROVQnPJVzk5+4bXOe+ffbx2zF9q9P+yXSTpcoMVYIvakRtr7JFcJuCf0RIRhvcN2uKCuAIDPVFOarKtoO/5yA==
 specifiers:
   '@retorquere/bibtex-parser': ^3.2.35
   '@types/bluebird': ^3.5.33
@@ -4824,4 +4814,4 @@ specifiers:
   xmldom: ^0.5.0
   xpath: ^0.0.32
   xregexp: ^5.0.2
-  zotero-plugin: ^1.0.42
+  zotero-plugin: ^1.0.43

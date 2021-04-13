@@ -468,7 +468,7 @@ with fetch('zotero') as z, fetch('jurism') as j:
         else:
           min_version[client] = rel
 
-    with open(os.path.join(root, 'gen', 'min-version.json'), 'w') as f:
+    with open(os.path.join(root, 'schema', 'supported.json'), 'w') as f:
       json.dump(min_version, f)
 
 print('  writing creators')

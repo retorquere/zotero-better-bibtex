@@ -137,7 +137,7 @@
     "xml-parser": "^1.2.1",
     "xmldom": "^0.5.0",
     "xpath": "^0.0.32",
-    "zotero-plugin": "^1.0.42"
+    "zotero-plugin": "^1.0.43"
   },
   "repository": {
     "type": "git",
