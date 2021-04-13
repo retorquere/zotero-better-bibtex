@@ -20,6 +20,16 @@ days](https://www.zotero.org/blog/zotero-5-and-firefox-faq/). BBT is installed
 inside Zotero instead of in the browser. Please see the [installation
 instructions]({{< ref "/installation" >}}) to get started with BBT.
 
+## Add-on could not be installed because it appears to be corrupt.
+
+You have downloaded the Better BibTeX plugin by clicking on the
+download link using Firefox. As Zotero and Firefox use the same
+plugin technology, Firefox think the BetterBibTeX plugin is intended
+for itself, tries to install it, and then finds out it won't work.
+You need to download the plugin without installinging it into Firefox
+by right-clicking the download link, choose save-as, and then install
+it into Zotero using [installation instructions]({{< ref "/installation" >}}) to get started with BBT.
+
 ## BBT is changing the capitalization of my titles -- why?
 
 There isn't a straightforward one-to-one mapping for all Zotero to Bib(La)TeX
