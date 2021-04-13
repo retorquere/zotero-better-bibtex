@@ -12,7 +12,6 @@ const crypto = require('crypto')
 let shims = {
   name: 'shims',
   setup(build) {
-
     build.onResolve({ filter: /^(path|fs)$/ }, args => {
       return { path: path.resolve(path.join('shims', args.path + '.js')) }
     })
@@ -52,10 +51,20 @@ const loaders = {
       }
     })
 
-    build.onLoad({ filter: /\/node_modules\/ooooevan-jieba\/index.js$/ }, async (args) => {
-      const dirname = args.path.replace(/.*\/node_modules\//, '')
+    build.onLoad({ filter: /.js$/ }, async (args) => {
+      let contents = await fs.promises.readFile(args.path, 'utf-8')
+
+      if (contents.includes('__dirname') || contents.includes('__filename')) {
+        const filename = args.path.replace(/.*\/node_modules\//, '')
+        contents = [
+          `var __dirname=${JSON.stringify(path.dirname(filename))};`,
+          `var __filename=${JSON.stringify(filename)};`,
+          contents,
+        ].join('\n')
+      }
+
       return {
-        contents: `var __dirname=${JSON.stringify(path.dirname(args.path.replace(/.*\/node_modules\//, '')))};\n${await fs.promises.readFile(args.path, 'utf-8')}`,
+        contents,
         loader: 'js'
       }
     })
@@ -74,67 +83,77 @@ function execShellCommand(cmd) {
   })
 }
 
-async function bundle(config, metafile) {
+async function bundle(config) {
   config = {
     ...config,
     target: ['firefox60'],
-    metafile: true,
-    inject: (config.inject || []).concat('./shims/inject.js'),
-    banner: {
-      ...(config.banner || {}),
-      js: [
-        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis
-        'var global = Function("return this")();',
-        (config.banner?.js || '')
-      ].filter(code => code).join('\n\n')
-    },
+    bundle: true,
+    format: 'iife',
+  }
+  const metafile = config.metafile
+  config.metafile = true
+
+  if (config.globalThis || config.prepend) {
+    if (!config.banner) config.banner = {}
+    if (!config.banner.js) config.banner.js = ''
+  }
+
+  if (config.prepend) {
+    if (!Array.isArray(config.prepend)) config.prepend = [config.prepend]
+    for (const source of config.prepend.reverse()) {
+      config.banner.js = `${await fs.promises.readFile(source, 'utf-8')}\n${config.banner.js}`
+    }
+    delete config.prepend
+  }
+
+  if (config.globalThis) {
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis
+    config.banner.js = `var global = Function("return this")();\n${config.banner.js}`
+    delete config.globalThis
   }
 
   const meta = (await esbuild.build(config)).metafile
   console.log('bundled', Object.keys(meta.outputs).join(', '))
-  if (metafile) await fs.promises.writeFile(metafile, JSON.stringify(meta, null, 2))
+  if (typeof metafile === 'string') await fs.promises.writeFile(metafile, JSON.stringify(meta, null, 2))
 }
 
 async function rebuild() {
+  // process
+  await bundle({
+    globalName: 'process',
+    entryPoints: [ 'node_modules/process/browser.js' ],
+    outfile: 'gen/process.js',
+  })
+
   // plugin code
   await bundle({
     entryPoints: [ 'content/better-bibtex.ts' ],
-    format: 'iife',
-    bundle: true,
     plugins: [loaders, shims],
     outdir: 'build/content',
-    target: ['firefox60'],
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis
-    banner: {
-      js: 'if (!Zotero.BetterBibTeX) {\n'
-    },
-    footer: {
-      js: '\n}'
-    }
-  }, 'esbuild.json')
+    banner: { js: 'if (!Zotero.BetterBibTeX) {\n' },
+    footer: { js: '\n}' },
+    metafile: 'gen/esbuild.json',
+    globalThis: true,
+    prepend: 'gen/process.js',
+  })
 
   // worker code
   const vars = [ 'Zotero', 'workerContext' ]
   const globalName = vars.join('__')
   await bundle({
     entryPoints: [ 'translators/worker/zotero.ts' ],
-    format: 'iife',
     globalName,
-    bundle: true,
     plugins: [loaders, shims],
     outdir: 'build/resource/worker',
-    target: ['firefox60'],
-    banner: {
-      js: [
-        'importScripts("resource://zotero/config.js") // import ZOTERO_CONFIG',
-      ].join('\n'),
-    },
+    banner: { js: 'importScripts("resource://zotero/config.js") // import ZOTERO_CONFIG' },
     footer: {
       js: [
         `const { ${vars.join(', ')} } = ${globalName};`,
         'importScripts(`resource://zotero-better-bibtex/${workerContext.translator}.js`);',
       ].join('\n'),
     },
+    globalThis: true,
+    prepend: 'gen/process.js',
   })
 
   // translators
@@ -152,21 +171,12 @@ async function rebuild() {
     // https://esbuild.github.io/api/#working-directory
     await bundle({
       entryPoints: [path.join(translator.dir, translator.name + '.ts')],
-      format: 'iife',
       globalName,
-      bundle: true,
-      // charset: 'utf8',
       plugins: [loaders, throwShims],
       outfile,
-      banner: {
-        js: `if (typeof ZOTERO_TRANSLATOR_INFO === 'undefined') var ZOTERO_TRANSLATOR_INFO = ${JSON.stringify(header)};`
-      },
-      footer: {
-        js: [
-          `const { ${vars.join(', ')} } = ${globalName};`,
-        ].join('\n')
-      },
-      target: ['firefox60'],
+      banner: { js: `if (typeof ZOTERO_TRANSLATOR_INFO === 'undefined') var ZOTERO_TRANSLATOR_INFO = ${JSON.stringify(header)};` },
+      footer: { js: `const { ${vars.join(', ')} } = ${globalName};` },
+      globalThis: true,
     })
 
     const source = await fs.promises.readFile(outfile, 'utf-8')
