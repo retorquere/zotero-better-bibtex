@@ -17,16 +17,16 @@
     "releaseURL": "https://github.com/retorquere/zotero-better-bibtex/releases/download/release/"
   },
   "scripts": {
-    "build": "parallel --ungroup ::: 'npm run lint' 'npm run esbuild' 'npm run tsc'",
     "pretest": "npm run build",
     "test": "./test/behave --stop",
     "lint": "eslint . --ext .ts",
     "scrub": "sed -i '' -e '/Error: Translate: Could not parse attachment path/d' -e '/Couldn.t read xref table/d' -e '/Couldn.t find trailer dictionary/d' -e '/Error: .Applications.Zotero.app.Contents.MacOS.pdfinfo/d' -e '/Error: .Applications.Zotero.app.Contents.MacOS.pdftotext/d' ~/.BBTZ5TEST.log",
     "setup": "./setup/setup.py && ts-node setup/index.ts",
     "prebuild": "pnpm install && npm run setup",
+    "build": "parallel --ungroup ::: 'npm run lint' 'npm run esbuild' 'npm run tsc'",
+    "postbuild": "npm run zipup-better-bibtex && npm run zipup-debug-bridge",
     "tsc": "tsc --noEmit",
     "esbuild": "node esbuild.js",
-    "postbuild": "./util/patch-install-rdf.py && npm run zipup-better-bibtex && npm run zipup-debug-bridge",
     "zipup-better-bibtex": "zotero-plugin-zipup build zotero-better-bibtex",
     "zipup-debug-bridge": "zotero-plugin-zipup test/fixtures/debug-bridge debug-bridge",
     "release-debug-bridge": "mkdir -p xpi && rm -f xpi/debug-bridge*xpi && npm run zipup-debug-bridge && github-release upload --owner retorquere --repo zotero-better-bibtex --tag debug-bridge xpi/debug-bridge*xpi",
@@ -137,7 +137,7 @@
     "xml-parser": "^1.2.1",
     "xmldom": "^0.5.0",
     "xpath": "^0.0.32",
-    "zotero-plugin": "^1.0.40"
+    "zotero-plugin": "^1.0.42"
   },
   "repository": {
     "type": "git",
