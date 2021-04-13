@@ -311,7 +311,7 @@
     "Export 6 references for BibLaTeX to Better BibLaTeX.stable-keys": 620,
     "Export 8 references for BibLaTeX to Don't title-case sup-subscripts #1037": 660,
     "Export as Collected Notes does not list subcollections #1768": {
-      "msecs": 4600,
+      "msecs": 4570,
       "runs": -256
     },
     "Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825": 990,
@@ -400,22 +400,22 @@
     },
     "Pandoc-LaTeX-SCHOMD Citation Export": 1280,
     "Postfixed keys different between computers #1788": {
-      "msecs": 5670,
+      "msecs": 5660,
       "runs": -276
     },
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 388740,
+    "Really Big whopping library": 388460,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 44860,
+      "msecs": 45130,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
     "Square brackets in Publication field (85), and non-pinned keys must change when the pattern does": 450,
-    "Unabbreviate on import #1436-1": 39470,
+    "Unabbreviate on import #1436-1": 39450,
     "Unbalanced vphantom escapes #1043": 760,
     "arXiv identifiers in BibLaTeX export #460": 1180,
     "auto-export": 14370,
@@ -438,7 +438,7 @@
       "runs": -36
     },
     "web_page and other mendeley idiocy": {
-      "msecs": 38990,
+      "msecs": 38910,
       "runs": -239
     }
   },
@@ -737,7 +737,7 @@
       "Identical Pinned keys lost when merging duplicated records #1721"
     ]
   },
-  "runs": 284,
+  "runs": 285,
   "slow": {
     "1": [
       "Export 1 references for BibLaTeX to biber 2.14 rejects the date field generated from Better BibLaTex #1695",
