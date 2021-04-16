@@ -222,6 +222,7 @@ export class ErrorReport {
     for (const key of ['export.quickCopy.setting']) {
       info += `  Zotero: ${key} = ${JSON.stringify(Zotero.Prefs.get(key))}\n`
     }
+    info += `Zotero.Debug.enabled: ${Zotero.Debug.enabled}\n`
 
     info += `LocaleDateOrder: ${Zotero.Date.getLocaleDateOrder()}\n`
 
