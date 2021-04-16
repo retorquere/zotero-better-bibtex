@@ -16,7 +16,7 @@ declare const OS: {
   // https://developer.mozilla.org/en-US/docs/Mozilla/JavaScript_code_modules/OSFile.jsm/OS.File_for_the_main_thread
   File: {
     exists: (path: string) => boolean | Promise<boolean>
-    read: (path: string, options?: { encoding: string } ) => Uint8Array | Promise<Uint8Array>
+    read: (path: string | BufferSource, options?: { encoding: string } ) => string | Promise<string> | Uint8Array | Promise<Uint8Array> | Promise<BufferSource>
     move: (from: string, to: string) => void | Promise<void>
     remove: (path: string, options?: { ignoreAbsent: boolean }) => Promise<void>
     writeAtomic: (path: string, data: Uint8Array | string, options?: { tmpPath?: string, encoding?: string }) => void | Promise<void>

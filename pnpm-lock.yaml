@@ -2,10 +2,9 @@ lockfileVersion: 5.3
 
 specifiers:
   '@retorquere/bibtex-parser': ^3.2.35
-  '@retorquere/zotero-sync': ^1.0.6
   '@types/bluebird': ^3.5.33
   '@types/lokijs': ^1.5.4
-  '@types/node': ^14.14.41
+  '@types/node': ^14.14.37
   ajv: ^8.1.0
   ajv-keywords: ^5.0.0
   archiver: ^5.3.0
@@ -22,7 +21,7 @@ specifiers:
   edtf: ^3.1.0
   edtfy: ^0.0.8
   ejs: ^3.1.6
-  esbuild: ^0.11.11
+  esbuild: ^0.11.9
   escape-string-regexp: ^4.0.0
   eslint: ^7.24.0
   eta: ^1.12.1
@@ -42,7 +41,7 @@ specifiers:
   indent-string: ^4.0.0
   ini: ^2.0.0
   is-isbn: ^1.1.0
-  js-yaml: ^4.1.0
+  js-yaml: ^4.0.0
   jscodeshift: ^0.11.0
   jsesc: ^3.0.2
   json.sortify: ^2.2.2
@@ -87,7 +86,6 @@ specifiers:
 
 dependencies:
   '@retorquere/bibtex-parser': 3.2.35
-  '@retorquere/zotero-sync': 1.0.6
   '@types/bluebird': 3.5.33
   '@types/lokijs': 1.5.4
   ajv: 8.1.0
@@ -98,7 +96,7 @@ dependencies:
   clp: 4.0.12
   edtf: 3.1.0
   edtfy: 0.0.8
-  esbuild: 0.11.11
+  esbuild: 0.11.9
   escape-string-regexp: 4.0.0
   eta: 1.12.1
   eventemitter3: 4.0.7
@@ -109,7 +107,7 @@ dependencies:
   global: 4.4.0
   he: 1.2.0
   is-isbn: 1.1.0
-  js-yaml: 4.1.0
+  js-yaml: 4.0.0
   json5: 2.2.0
   kuromoji: 0.1.2
   kuroshiro: 1.1.2
@@ -134,7 +132,7 @@ dependencies:
   xregexp: 5.0.2
 
 devDependencies:
-  '@types/node': 14.14.41
+  '@types/node': 14.14.37
   archiver: 5.3.0
   bluebird: 3.7.2
   circular-dependency-plugin: 5.2.2
@@ -737,13 +735,6 @@ packages:
       xregexp: 4.4.1
     dev: false
 
-  /@retorquere/zotero-sync/1.0.6:
-    resolution: {integrity: sha512-IVTYB6nK6uLmE5CAyb+ZR53HwCa3P2TDOFuIWl71rD2RpYQBrJ9PUnmWG+4l0QFDhl9ENeuPEsXC90aO3bLxRg==}
-    dependencies:
-      json-stringify-pretty-compact: 3.0.0
-      node-fetch: 2.6.1
-    dev: false
-
   /@rgrove/parse-xml/3.0.0:
     resolution: {integrity: sha512-GFGDywRwGbuGq9yeL8wTjjLOsZ5Ps4O5tQ71eDcAfaZrZeA7Oe8QJzrnmFgplWtnoaBIBaFBB3n5Ht9iU4jLLw==}
     engines: {node: '>=12.0.0'}
@@ -782,10 +773,6 @@ packages:
 
   /@types/node/14.14.37:
     resolution: {integrity: sha512-XYmBiy+ohOR4Lh5jE379fV2IU+6Jn4g5qASinhitfyO71b/sCo6MKsMLF5tc7Zf2CE8hViVQyYSobJNke8OvUw==}
-    dev: true
-
-  /@types/node/14.14.41:
-    resolution: {integrity: sha512-dueRKfaJL4RTtSa7bWeTK1M+VH+Gns73oCgzvYfHZywRCoPSd8EkXBL0mZ9unPTveBn+D9phZBaxuzpwjWkW0g==}
     dev: true
 
   /@typescript-eslint/eslint-plugin/4.22.0_9acede93a3623dd7abe65c65a7010e73:
@@ -1735,8 +1722,8 @@ packages:
     resolution: {integrity: sha1-wsNYJlYkfDnqEHyx5mUrb58kUjw=}
     dev: false
 
-  /esbuild/0.11.11:
-    resolution: {integrity: sha512-iq5YdV63vY/nUAFIvY92BXVkYjMbOchnofLKoLKMPZIa4uuIJAJG9WRA+ZRjQBZbrsORUwvZcANeG2d3p46PJQ==}
+  /esbuild/0.11.9:
+    resolution: {integrity: sha512-qP7w/oWjJBIh9x+H37DbpkMtmSnLm63VDyA06+vkJJEHlVR7QSDiPAaka7mtMQZHoBn87irUx5rDxbXMKaf8xw==}
     hasBin: true
     requiresBuild: true
     dev: false
@@ -2711,8 +2698,8 @@ packages:
       esprima: 4.0.1
     dev: true
 
-  /js-yaml/4.1.0:
-    resolution: {integrity: sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==}
+  /js-yaml/4.0.0:
+    resolution: {integrity: sha512-pqon0s+4ScYUvX30wxQi3PogGFAlUyH0awepWvwkj4jD4v+ova3RiYw8bmA6x2rDrEaj8i/oWKoRxpVNW+Re8Q==}
     hasBin: true
     dependencies:
       argparse: 2.0.1
@@ -2775,10 +2762,6 @@ packages:
   /json-stable-stringify-without-jsonify/1.0.1:
     resolution: {integrity: sha1-nbe1lJatPzz+8wp1FC0tkwrXJlE=}
     dev: true
-
-  /json-stringify-pretty-compact/3.0.0:
-    resolution: {integrity: sha512-Rc2suX5meI0S3bfdZuA7JMFBGkJ875ApfVyq2WHELjBiiG22My/l7/8zPpH/CfFVQHuVLd8NLR0nv6vi0BYYKA==}
-    dev: false
 
   /json.sortify/2.2.2:
     resolution: {integrity: sha512-wwFLdDffs747s5cqLA3htIKp9wdID2rWNofJKxwDjFo+rqqt5Vg7SnYOh7mc7MW6Iw43rrOFhr6MKytOtNceSA==}
@@ -3145,6 +3128,7 @@ packages:
   /node-fetch/2.6.1:
     resolution: {integrity: sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==}
     engines: {node: 4.x || >=6.0.0}
+    dev: true
 
   /node-modules-regexp/1.0.0:
     resolution: {integrity: sha1-jZ2+KJZKSsVxLpExZCEHxx6Q7EA=}

@@ -89,7 +89,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
   }
 
   private async read(path) {
-    return this.decoder.decode(await OS.File.read(path))
+    return this.decoder.decode(await OS.File.read(path) as BufferSource)
   }
 
   private async parse(path: string, citekeys: string[], bibfiles: Record<string, string> ) {
