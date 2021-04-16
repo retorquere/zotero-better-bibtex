@@ -2,7 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   '@retorquere/bibtex-parser': ^3.2.35
-  '@retorquere/zotero-sync': ^1.0.5
+  '@retorquere/zotero-sync': ^1.0.6
   '@types/bluebird': ^3.5.33
   '@types/lokijs': ^1.5.4
   '@types/node': ^14.14.41
@@ -87,7 +87,7 @@ specifiers:
 
 dependencies:
   '@retorquere/bibtex-parser': 3.2.35
-  '@retorquere/zotero-sync': 1.0.5
+  '@retorquere/zotero-sync': 1.0.6
   '@types/bluebird': 3.5.33
   '@types/lokijs': 1.5.4
   ajv: 8.1.0
@@ -737,8 +737,8 @@ packages:
       xregexp: 4.4.1
     dev: false
 
-  /@retorquere/zotero-sync/1.0.5:
-    resolution: {integrity: sha512-AlnBnJfZ/i+1aLEd6NMnOoH7FM5H+0IDceJD1xw9ZxwR8qcbgFGzHftR97eCsQahAklBbn70wKfH6AF+PbnYFw==}
+  /@retorquere/zotero-sync/1.0.6:
+    resolution: {integrity: sha512-IVTYB6nK6uLmE5CAyb+ZR53HwCa3P2TDOFuIWl71rD2RpYQBrJ9PUnmWG+4l0QFDhl9ENeuPEsXC90aO3bLxRg==}
     dependencies:
       json-stringify-pretty-compact: 3.0.0
       node-fetch: 2.6.1

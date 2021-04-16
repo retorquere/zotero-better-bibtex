@@ -56,7 +56,7 @@
   },
   "dependencies": {
     "@retorquere/bibtex-parser": "^3.2.35",
-    "@retorquere/zotero-sync": "^1.0.5",
+    "@retorquere/zotero-sync": "^1.0.6",
     "@types/bluebird": "^3.5.33",
     "@types/lokijs": "^1.5.4",
     "ajv": "^8.1.0",
