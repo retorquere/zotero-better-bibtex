@@ -2,12 +2,13 @@
 
 const path = require('path')
 const fs = require('fs')
-const { bibertool } = require('./setup/loaders/bibertool')
 const esbuild = require('esbuild')
 const pegjs = require('pegjs')
 const exec = require('child_process').exec
 const glob = require('glob-promise')
 const crypto = require('crypto')
+const { bibertool } = require('./setup/loaders/bibertool')
+const patch = require('./setup/loaders/patch').loader
 
 let shims = {
   name: 'shims',
@@ -27,6 +28,8 @@ let throwShims = {
     })
   }
 }
+
+const kuroshiro = patch('setup/patches')
 
 const loaders = {
   name: 'loaders',
@@ -51,17 +54,16 @@ const loaders = {
       }
     })
 
-    build.onLoad({ filter: /.js$/ }, async (args) => {
+    build.onLoad({ filter: /\/node_modules\/.+\.js$/ }, async (args) => {
       let contents = await fs.promises.readFile(args.path, 'utf-8')
+      const filename = 'resource://zotero-better-bibtex/' + args.path.replace(/.*\/node_modules\/(\.pnpm)?/, '')
+      const dirname = path.dirname(filename)
 
-      if (contents.includes('__dirname') || contents.includes('__filename')) {
-        const filename = args.path.replace(/.*\/node_modules\//, '')
-        contents = [
-          `var __dirname=${JSON.stringify(path.dirname(filename))};`,
-          `var __filename=${JSON.stringify(filename)};`,
-          contents,
-        ].join('\n')
-      }
+      contents = [
+        `var __dirname=${JSON.stringify(dirname)};`,
+        `var __filename=${JSON.stringify(filename)};`,
+        contents,
+      ].join('\n')
 
       return {
         contents,
@@ -113,7 +115,7 @@ async function bundle(config) {
   }
 
   const meta = (await esbuild.build(config)).metafile
-  console.log('bundled', Object.keys(meta.outputs).join(', '))
+  console.log('** bundled', Object.keys(meta.outputs).join(', '))
   if (typeof metafile === 'string') await fs.promises.writeFile(metafile, JSON.stringify(meta, null, 2))
 }
 
@@ -128,7 +130,7 @@ async function rebuild() {
   // plugin code
   await bundle({
     entryPoints: [ 'content/better-bibtex.ts' ],
-    plugins: [loaders, shims],
+    plugins: [kuroshiro, loaders, shims],
     outdir: 'build/content',
     banner: { js: 'if (!Zotero.BetterBibTeX) {\n' },
     footer: { js: '\n}' },

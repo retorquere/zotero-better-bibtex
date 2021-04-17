@@ -1,5 +1,5 @@
 --- node_modules/kuroshiro/src/core.js	2018-10-19 10:25:23.000000000 +0200
-+++ node_modules/kuroshiro/src/core-sync.js	2018-10-24 15:53:21.159782682 +0200
++++ node_modules/kuroshiro/src/core.js	2018-10-24 15:53:21.159782682 +0200
 @@ -67,9 +67,9 @@
       * @param {string} [options.romajiSystem="hepburn"] Romanization System ["nippon"|"passport"|"hepburn"]
       * @param {string} [options.delimiter_start="("] Delimiter(Start)
