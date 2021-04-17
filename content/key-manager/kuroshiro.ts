@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import Kuroshiro from 'kuroshiro/src/core-sync'
+import Kuroshiro from 'kuroshiro'
 import _kuromojiLoader = require('kuromoji/src/loader/NodeDictionaryLoader')
 import { log } from '../logger'
 import { Preference } from '../../gen/preferences'
-import KuromojiAnalyzer from 'kuroshiro-analyzer-kuromoji/src/kuroshiro-analyzer-kuromoji-sync'
+import KuromojiAnalyzer from 'kuroshiro-analyzer-kuromoji'
 import { Events } from '../events'
 
 _kuromojiLoader.prototype.loadArrayBuffer = function(url, callback) { // eslint-disable-line prefer-arrow/prefer-arrow-functions

@@ -1,5 +1,5 @@
 --- node_modules/kuroshiro-analyzer-kuromoji/src/index.js	2018-08-12 15:49:42.000000000 +0200
-+++ node_modules/kuroshiro-analyzer-kuromoji/src/kuroshiro-analyzer-kuromoji-sync.js	2018-08-12 17:03:42.000000000 +0200
++++ node_modules/kuroshiro-analyzer-kuromoji/src/index.js	2018-08-12 17:03:42.000000000 +0200
 @@ -1,11 +1,4 @@
 -import kuromoji from "kuromoji";
 -

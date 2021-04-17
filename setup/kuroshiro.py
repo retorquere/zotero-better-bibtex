@@ -22,12 +22,3 @@ for dic in sorted(glob.glob(os.path.join(root, 'node_modules/kuromoji/dict/*.gz'
   os.makedirs(os.path.dirname(dat), exist_ok=True)
   with gzip.open(dic, 'rb') as f_in, open(dat, 'wb') as f_out:
     shutil.copyfileobj(f_in, f_out)
-
-print('patching kuroshiro')
-run('patch -u -p0 -o node_modules/kuroshiro/src/core-sync.js < setup/kuroshiro.patch')
-run('patch -u -p0 -o node_modules/kuroshiro-analyzer-kuromoji/src/kuroshiro-analyzer-kuromoji-sync.js < setup/kuroshiro-analyzer-kuromoji-sync.patch')
-#print('patching lokijs')
-#try:
-#  run('patch --forward -u -p0 < setup/lokijs.patch')
-#except:
-#  pass
