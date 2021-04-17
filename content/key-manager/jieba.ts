@@ -3,7 +3,6 @@ import { log } from '../logger'
 import { Events } from '../events'
 
 import Jieba = require('ooooevan-jieba')
-import Trie = require('ooooevan-jieba/trieTree')
 
 export const jieba = new class {
   private jieba: any
@@ -19,14 +18,7 @@ export const jieba = new class {
   private load() {
     if (Preference.jieba && !this.jieba) {
       this.jieba = new Jieba()
-      for (const [k, v] of Object.entries(JSON.parse(Zotero.File.getContentsFromURL('resource://zotero-better-bibtex/jieba/probabilities.json')))) {
-        this.jieba[k] = v
-      }
-      const dict = JSON.parse(Zotero.File.getContentsFromURL('resource://zotero-better-bibtex/jieba/dict.json'))
-      this.jieba.tireTree = new Trie()
-      this.jieba.tireTree.insertArr(dict.dictlineArr)
-      this.jieba.tireTree.insertArr(dict.userDictlineArr)
-      this.jieba._loaded = true // eslint-disable-line no-underscore-dangle
+      this.jieba.load()
     }
   }
 
