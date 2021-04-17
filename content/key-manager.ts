@@ -1,6 +1,6 @@
 declare const window: any
 
-import ETA = require('node-eta')
+import ETA from 'node-eta'
 import { kuroshiro } from './key-manager/kuroshiro'
 import { jieba } from './key-manager/jieba'
 
