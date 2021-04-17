@@ -27,6 +27,7 @@ async function bundle(config) {
     bundle: true,
     format: 'iife',
   }
+
   const metafile = config.metafile
   config.metafile = true
 
@@ -49,8 +50,18 @@ async function bundle(config) {
     delete config.globalThis
   }
 
+  let target
+  if (config.outfile) {
+    target = config.outfile
+  }
+  else if (config.entryPoints.length === 1 && config.outdir) {
+    target = path.join(config.outdir, path.basename(config.entryPoints[0]))
+  }
+  else {
+    target = `${config.outdir} [${config.entryPoints.join(', ')}]`
+  }
+  console.log('** bundling', target)
   const meta = (await esbuild.build(config)).metafile
-  console.log('** bundled', Object.keys(meta.outputs).join(', '))
   if (typeof metafile === 'string') await fs.promises.writeFile(metafile, JSON.stringify(meta, null, 2))
 }
 
