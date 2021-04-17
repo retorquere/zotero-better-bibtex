@@ -2,7 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   '@retorquere/bibtex-parser': ^3.2.35
-  '@retorquere/zotero-sync': ^1.0.6
+  '@retorquere/zotero-sync': ^1.0.11
   '@types/bluebird': ^3.5.33
   '@types/lokijs': ^1.5.4
   '@types/node': ^14.14.41
@@ -22,8 +22,8 @@ specifiers:
   edtf: ^3.1.0
   edtfy: ^0.0.8
   ejs: ^3.1.6
-  esbuild: ^0.11.11
-  escape-string-regexp: ^4.0.0
+  esbuild: ^0.11.12
+  escape-string-regexp: ^5.0.0
   eslint: ^7.24.0
   eta: ^1.12.1
   eventemitter3: ^4.0.7
@@ -39,7 +39,7 @@ specifiers:
   glob-promise: ^4.1.0
   global: ^4.4.0
   he: ^1.2.0
-  indent-string: ^4.0.0
+  indent-string: ^5.0.0
   ini: ^2.0.0
   install: ^0.13.0
   is-isbn: ^1.1.0
@@ -82,14 +82,14 @@ specifiers:
   util: ^0.12.3
   words-to-numbers: ^1.5.1
   xml-parser: ^1.2.1
-  xmldom: ^0.5.0
+  xmldom: ^0.6.0
   xpath: ^0.0.32
   xregexp: ^5.0.2
   zotero-plugin: ^1.0.43
 
 dependencies:
   '@retorquere/bibtex-parser': 3.2.35
-  '@retorquere/zotero-sync': 1.0.6
+  '@retorquere/zotero-sync': 1.0.11
   '@types/bluebird': 3.5.33
   '@types/lokijs': 1.5.4
   ajv: 8.1.0
@@ -100,8 +100,8 @@ dependencies:
   clp: 4.0.12
   edtf: 3.1.0
   edtfy: 0.0.8
-  esbuild: 0.11.11
-  escape-string-regexp: 4.0.0
+  esbuild: 0.11.12
+  escape-string-regexp: 5.0.0
   eta: 1.12.1
   eventemitter3: 4.0.7
   excel-column-name: 1.0.1
@@ -152,7 +152,7 @@ devDependencies:
   github-release-cli: 2.0.0
   glob: 7.1.6
   glob-promise: 4.1.0_glob@7.1.6
-  indent-string: 4.0.0
+  indent-string: 5.0.0
   ini: 2.0.0
   install: 0.13.0
   jscodeshift: 0.11.0
@@ -172,7 +172,7 @@ devDependencies:
   typescript: 4.2.4
   uri-templates: 0.2.0
   xml-parser: 1.2.1
-  xmldom: 0.5.0
+  xmldom: 0.6.0
   xpath: 0.0.32
   zotero-plugin: 1.0.43
 
@@ -739,8 +739,8 @@ packages:
       xregexp: 4.4.1
     dev: false
 
-  /@retorquere/zotero-sync/1.0.6:
-    resolution: {integrity: sha512-IVTYB6nK6uLmE5CAyb+ZR53HwCa3P2TDOFuIWl71rD2RpYQBrJ9PUnmWG+4l0QFDhl9ENeuPEsXC90aO3bLxRg==}
+  /@retorquere/zotero-sync/1.0.11:
+    resolution: {integrity: sha512-A1BCTvyCQf+Z9Y2kJ2pbmm2svvNdObqmlJKw/0yz3vg0xd10BOG2PSgPZbBFYDx5Lf6JUCJjtZpCTh0qxqAdhA==}
     dependencies:
       json-stringify-pretty-compact: 3.0.0
       node-fetch: 2.6.1
@@ -1735,8 +1735,8 @@ packages:
     resolution: {integrity: sha1-wsNYJlYkfDnqEHyx5mUrb58kUjw=}
     dev: false
 
-  /esbuild/0.11.11:
-    resolution: {integrity: sha512-iq5YdV63vY/nUAFIvY92BXVkYjMbOchnofLKoLKMPZIa4uuIJAJG9WRA+ZRjQBZbrsORUwvZcANeG2d3p46PJQ==}
+  /esbuild/0.11.12:
+    resolution: {integrity: sha512-c8cso/1RwVj+fbDvLtUgSG4ZJQ0y9Zdrl6Ot/GAjyy4pdMCHaFnDMts5gqFnWRPLajWtEnI+3hlET4R9fVoZng==}
     hasBin: true
     requiresBuild: true
     dev: false
@@ -1750,9 +1750,9 @@ packages:
     engines: {node: '>=0.8.0'}
     dev: true
 
-  /escape-string-regexp/4.0.0:
-    resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
-    engines: {node: '>=10'}
+  /escape-string-regexp/5.0.0:
+    resolution: {integrity: sha512-/veY75JbMK4j1yjvuUxuVsiS/hr/4iHs9FTT6cgTexxdE0Ly/glccBAkloH/DofkjRbZU3bnoj38mOmhkZ0lHw==}
+    engines: {node: '>=12'}
     dev: false
 
   /eslint-import-resolver-node/0.3.4:
@@ -2414,9 +2414,9 @@ packages:
     engines: {node: '>=0.8.19'}
     dev: true
 
-  /indent-string/4.0.0:
-    resolution: {integrity: sha512-EdDDZu4A2OyIK7Lr/2zG+w5jmbuk1DVBnEwREQvBzspBJkCEbRa8GxU1lghYcaGJCnRWibjDXlq779X1/y5xwg==}
-    engines: {node: '>=8'}
+  /indent-string/5.0.0:
+    resolution: {integrity: sha512-m6FAo/spmsW2Ab2fU35JTYwtOKa2yAwXSwgjSv1TJzh4Mh7mC3lzAOVLBprb72XsTrgkEIsl7YrFNAiDiRhIGg==}
+    engines: {node: '>=12'}
     dev: true
 
   /inflight/1.0.6:
@@ -4496,6 +4496,11 @@ packages:
 
   /xmldom/0.5.0:
     resolution: {integrity: sha512-Foaj5FXVzgn7xFzsKeNIde9g6aFBxTPi37iwsno8QvApmtg7KYrr+OPyRHcJF7dud2a5nGRBXK3n0dL62Gf7PA==}
+    engines: {node: '>=10.0.0'}
+    dev: true
+
+  /xmldom/0.6.0:
+    resolution: {integrity: sha512-iAcin401y58LckRZ0TkI4k0VSM1Qg0KGSc3i8rU+xrxe19A/BN1zHyVSJY7uoutVlaTSzYyk/v5AmkewAP7jtg==}
     engines: {node: '>=10.0.0'}
     dev: true
 
