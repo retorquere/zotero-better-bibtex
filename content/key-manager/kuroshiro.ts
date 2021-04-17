@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import Kuroshiro from 'kuroshiro'
-import _kuromojiLoader = require('kuromoji/src/loader/NodeDictionaryLoader')
+import NodeDictionaryLoader from 'kuromoji/src/loader/NodeDictionaryLoader'
 import { log } from '../logger'
 import { Preference } from '../../gen/preferences'
 import KuromojiAnalyzer from 'kuroshiro-analyzer-kuromoji'
 import { Events } from '../events'
 
-_kuromojiLoader.prototype.loadArrayBuffer = function(url, callback) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+NodeDictionaryLoader.prototype.loadArrayBuffer = function(url, callback) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
   url = `resource://zotero-better-bibtex/kuromoji/${url.replace(/.*\//, '').replace(/\.gz$/, '')}`
   const xhr = new XMLHttpRequest()
 
@@ -47,7 +47,7 @@ export const kuroshiro = new class {
       this.enabled = true
     }
     catch (err) {
-      log.error('kuroshiro: initializing failed')
+      log.error('kuroshiro: initializing failed', err)
       throw err
     }
   }

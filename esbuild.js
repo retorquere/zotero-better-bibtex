@@ -1,77 +1,12 @@
-// use https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis for `document`
-
 const path = require('path')
 const fs = require('fs')
 const esbuild = require('esbuild')
-const pegjs = require('pegjs')
 const exec = require('child_process').exec
 const glob = require('glob-promise')
 const crypto = require('crypto')
-const { bibertool } = require('./setup/loaders/bibertool')
-const patch = require('./setup/loaders/patch').loader
 
-let shims = {
-  name: 'shims',
-  setup(build) {
-    build.onResolve({ filter: /^(path|fs)$/ }, args => {
-      return { path: path.resolve(path.join('shims', args.path + '.js')) }
-    })
-  }
-}
-
-let throwShims = {
-  name: 'shims-throw',
-  setup(build) {
-
-    build.onResolve({ filter: /^(path|fs)$/ }, args => {
-      return { path: path.resolve(path.join('shims', 'not-' + args.path + '.js')) }
-    })
-  }
-}
-
-const kuroshiro = patch('setup/patches')
-
-const loaders = {
-  name: 'loaders',
-  setup(build) {
-    build.onLoad({ filter: /\.bibertool$/ }, async (args) => {
-      return {
-        contents: bibertool(await fs.promises.readFile(args.path, 'utf-8')),
-        loader: 'js'
-      }
-    })
-
-    build.onLoad({ filter: /\.pegjs$/ }, async (args) => {
-      return {
-        contents: pegjs.generate(await fs.promises.readFile(args.path, 'utf-8'), {
-          output: 'source',
-          cache: false,
-          optimize: 'speed',
-          trace: false,
-          format: 'commonjs',
-        }),
-        loader: 'js'
-      }
-    })
-
-    build.onLoad({ filter: /\/node_modules\/.+\.js$/ }, async (args) => {
-      let contents = await fs.promises.readFile(args.path, 'utf-8')
-      const filename = 'resource://zotero-better-bibtex/' + args.path.replace(/.*\/node_modules\/(\.pnpm)?/, '')
-      const dirname = path.dirname(filename)
-
-      contents = [
-        `var __dirname=${JSON.stringify(dirname)};`,
-        `var __filename=${JSON.stringify(filename)};`,
-        contents,
-      ].join('\n')
-
-      return {
-        contents,
-        loader: 'js'
-      }
-    })
-  }
-}
+const loader = require('./setup/loaders')
+const shims = require('./setup/shims')
 
 function execShellCommand(cmd) {
   console.log(cmd)
@@ -130,7 +65,7 @@ async function rebuild() {
   // plugin code
   await bundle({
     entryPoints: [ 'content/better-bibtex.ts' ],
-    plugins: [kuroshiro, loaders, shims],
+    plugins: [loader.patcher('setup/patches'), loader.bibertool, loader.pegjs, loader.__dirname, shims],
     outdir: 'build/content',
     banner: { js: 'if (!Zotero.BetterBibTeX) {\n' },
     footer: { js: '\n}' },
@@ -145,7 +80,7 @@ async function rebuild() {
   await bundle({
     entryPoints: [ 'translators/worker/zotero.ts' ],
     globalName,
-    plugins: [loaders, shims],
+    plugins: [loader.bibertool, loader.pegjs, loader.__dirname, shims],
     outdir: 'build/resource/worker',
     banner: { js: 'importScripts("resource://zotero/config.js") // import ZOTERO_CONFIG' },
     footer: {
@@ -174,7 +109,7 @@ async function rebuild() {
     await bundle({
       entryPoints: [path.join(translator.dir, translator.name + '.ts')],
       globalName,
-      plugins: [loaders, throwShims],
+      plugins: [loader.bibertool, loader.pegjs, loader.__dirname, shims],
       outfile,
       banner: { js: `if (typeof ZOTERO_TRANSLATOR_INFO === 'undefined') var ZOTERO_TRANSLATOR_INFO = ${JSON.stringify(header)};` },
       footer: { js: `const { ${vars.join(', ')} } = ${globalName};` },
