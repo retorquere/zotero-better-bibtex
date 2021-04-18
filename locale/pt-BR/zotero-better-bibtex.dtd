@@ -218,6 +218,8 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.BetterBibTeX.citekey.unpin "Des-fixar chave BibTeX">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.refresh "Atualizar chave BibTeX">
 <!ENTITY better-bibtex.BetterBibTeX.addCitationLinks "Adicionar links de citação">
+<!ENTITY better-bibtex.BetterBibTeX.sentenceCase "BBT Sentence-case">
+<!ENTITY better-bibtex.BetterBibTeX.patchDates "Copy date-added/date-modified from extra field">
 <!ENTITY better-bibtex.ZoteroPane.tag-duplicates "Etiquetar chaves de citação duplicadas">
 <!ENTITY better-bibtex.BetterBibTeX.TeXstudio "Enviar referências para TeXstudio">
 <!ENTITY zotero.better-bibtex.csquotes "Substituir aspas duplas ou angulares por \\enquote{...} (exige csquotes)">
