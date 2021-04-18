@@ -64,6 +64,8 @@ def before_scenario(context, scenario):
   context.picked = []
 
   context.timeout = 60
+  # jurism is just generally slower
+  if context.config.userdata.get('client') == 'jurism': context.timeout *= 2
   for tag in scenario.effective_tags:
     if tag == 'use.with_slow=true':
       context.timeout = max(context.timeout, 300)
