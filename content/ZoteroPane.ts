@@ -7,6 +7,8 @@ import { flash } from './flash'
 import { sentenceCase } from './case'
 import * as CAYW from './cayw'
 import { $and } from './db/loki'
+import * as Extra from './extra'
+import * as DateParser from './dateparser'
 
 export interface ZoteroPaneConstructable {
   new(globals: any): ZoteroPane // eslint-disable-line @typescript-eslint/prefer-function-type
@@ -129,6 +131,52 @@ export class ZoteroPane {
     }
     else {
       log.error('cannot find ae for', { path })
+    }
+  }
+
+  public async patchDates(): Promise<void> {
+    const items = Zotero.getActiveZoteroPane().getSelectedItems()
+    const mapping: Record<string, string> = { 'tex.dateadded': 'dateAdded', 'tex.datemodified': 'dateModified' }
+    if (Preference.patchDates.trim()) {
+      try {
+        for (const assignment of Preference.patchDates.trim().split(/\s,\s/)) {
+          const [, k, v ] = assignment.trim().match(/^([-_a-z09]+)\s*=\s*(dateadded|datemodified)$/i)
+          mapping [`tex.${k.toLowerCase()}`] = { dateadded: 'dateAdded', datemodified: 'dateModified' }[v.toLowerCase()]
+        }
+      }
+      catch (err) {
+        flash('could not parse field mapping', `could not parse field mapping ${Preference.patchDates}`)
+        return
+      }
+    }
+    log.debug('patchDates:', mapping)
+
+    const tzdiff = (new Date).getTimezoneOffset()
+    for (const item of items) {
+      let save = false
+      try {
+        const extra = Extra.get(item.getField('extra'), 'zotero', { tex: true })
+        log.debug('patchDates:', extra)
+        for (const [k, v] of Object.entries(extra.extraFields.tex)) {
+          if (mapping[k]) {
+            const date = DateParser.parse(v.value, Zotero.BetterBibTeX.localeDateOrder)
+            log.debug('patchDates:', date)
+            if (date.type === 'date' && date.day) {
+              delete extra.extraFields.tex[k]
+              item.setField(mapping[k], new Date(date.year, date.month - 1, date.day, 0, -tzdiff).toISOString())
+              save = true
+            }
+          }
+        }
+        if (save) {
+          log.debug('patchDates:', extra, Extra.set(extra.extra, extra.extraFields))
+          item.setField('extra', Extra.set(extra.extra, extra.extraFields))
+          await item.saveTx()
+        }
+      }
+      catch (err) {
+        log.debug('patchDates:', err)
+      }
     }
   }
 

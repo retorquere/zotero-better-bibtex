@@ -63,7 +63,8 @@
         <menuitem label="&better-bibtex.BetterBibTeX.citekey.unpin;" oncommand="Zotero.BetterBibTeX.KeyManager.unpin('selected');"/>
         <menuitem label="&better-bibtex.BetterBibTeX.citekey.refresh;" oncommand="Zotero.BetterBibTeX.KeyManager.refresh('selected', true);"/>
         <menuseparator/>
-        <menuitem label="BBT sentencecase" oncommand="bbt_zoteropane.sentenceCase();"/>
+        <menuitem label="&better-bibtex.BetterBibTeX.patchDates;" oncommand="bbt_zoteropane.patchDates();"/>
+        <menuitem label="&better-bibtex.BetterBibTeX.sentenceCase;" oncommand="bbt_zoteropane.sentenceCase();"/>
         <menuitem label="&better-bibtex.BetterBibTeX.addCitationLinks;" oncommand="bbt_zoteropane.addCitationLinks();"/>
 
         <menuseparator class="bbt-texstudio"/>

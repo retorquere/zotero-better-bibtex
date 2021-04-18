@@ -109,6 +109,12 @@ default: `yes`
 
 Name particle handling. Only turn on when requested and we're talking about it on github.
 
+### patchDates
+
+default: `<not set>`
+
+Import translators cannot set the date-added and date-modified of the items that are imported, they always get the current time as their date-added. BBT will leave fields it can't map as `tex.[field]` in the `extra` field of the item. If you enter a list of comma-separated field mappings here, like `date-added = dateAdded, timestamp=dateModified`, BBT will offer a menu option to remove them from the `extra` field and set the corresponding date of the item to their values, assuming they can be parsed as simple dates (no circa and stuff). The default mappings `tex.dateadded=dateadded, tex.datemodified=datemodified` are always active.
+
 ### postscriptOverride
 
 default: `<not set>`

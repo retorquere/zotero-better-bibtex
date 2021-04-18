@@ -55,6 +55,7 @@
   "mapUnicode": "conservative",
   "newTranslatorsAskRestart": true,
   "parseParticles": true,
+  "patchDates": "",
   "platform": "",
   "postscript": "",
   "postscriptOverride": "",

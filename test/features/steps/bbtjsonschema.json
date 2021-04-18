@@ -294,6 +294,9 @@
             "parseParticles": {
               "type": "boolean"
             },
+            "patchDates": {
+              "type": "string"
+            },
             "postscript": {
               "type": "string"
             },
