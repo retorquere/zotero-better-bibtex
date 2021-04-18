@@ -1,0 +1,18 @@
+#!/usr/bin/env python3
+
+ignore = [
+  'SyntaxError: JSON.parse: unexpected character at line',
+  'Error: Translate: No RDF found',
+  'Error: DOMParser error: loading data into data store failed',
+  'Error: Translate: No RDF found',
+  'Error: Translate: Could not parse attachment path',
+  'Couldn.t read xref table',
+  'Couldn.t find trailer dictionary',
+  'Error: .*pdfinfo',
+  'Error: .*pdftotext',
+]
+import os
+with open(os.path.expanduser('~/.BBTZ5TEST.log')) as log, open(os.path.expanduser('~/.BBTZ5TEST.log.scrubbed'), 'w') as scrubbed:
+  for line in log.readlines():
+    if any(txt in line for txt in ignore): continue
+    print(line, end='', file=scrubbed)
