@@ -20,7 +20,7 @@
     "pretest": "npm run build",
     "test": "./test/behave --stop",
     "lint": "eslint . --ext .ts --cache --cache-location .eslintcache/",
-    "scrub": "sed -i '' -e '/Error: Translate: Could not parse attachment path/d' -e '/Couldn.t read xref table/d' -e '/Couldn.t find trailer dictionary/d' -e '/Error: .Applications.Zotero.app.Contents.MacOS.pdfinfo/d' -e '/Error: .Applications.Zotero.app.Contents.MacOS.pdftotext/d' ~/.BBTZ5TEST.log",
+    "scrub": "sed -i.bak -e '/Error: Translate: Could not parse attachment path/d' -e '/Couldn.t read xref table/d' -e '/Couldn.t find trailer dictionary/d' -e '/Error: .*pdfinfo/d' -e '/Error: .*pdftotext/d' ~/.BBTZ5TEST.log",
     "setup": "./setup/setup.py && ts-node setup/index.ts",
     "prebuild": "pnpm install && npm run setup",
     "build": "npm run rebuild",
