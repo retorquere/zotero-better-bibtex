@@ -9,3 +9,4 @@ import kuroshiro
 import item
 import bibertool
 import abbrev
+import jieba
