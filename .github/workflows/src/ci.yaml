@@ -84,15 +84,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        client: [zotero]
+        client: [zotero, jurism]
         bin: ['1', '2']
-        include:
-        - client: jurism
-          bin: '1'
-          softfail: true
-        - client: jurism
-          bin: '2'
-          softfail: true
     steps:
     - uses: actions/checkout@v2
     - name: fetch build artifacts
@@ -113,7 +106,7 @@ jobs:
     # needs logs/logs to have them show up as logs in the artifact... no idea why
     - name: Run headless test
       uses: GabrielBB/xvfb-action@v1
-      continue-on-error: ${{ matrix.softfail }}
+      continue-on-error: ${{ matrix.client == 'jurism' }}
       env:
         PYTHONUNBUFFERED: true
       with:
