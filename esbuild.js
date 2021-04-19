@@ -1,5 +1,6 @@
 const path = require('path')
 const fs = require('fs')
+const exists = fs.existsSync
 const esbuild = require('esbuild')
 const exec = require('child_process').exec
 const glob = require('glob-promise')
@@ -135,6 +136,25 @@ async function rebuild() {
     header.lastUpdated = (new Date).toISOString().replace(/T.*/, '')
     await fs.promises.writeFile(path.join('build/resource', translator.name + '.json'), JSON.stringify(header, null, 2))
   }
+
+  if (exists('headless/formatter.ts')) {
+    await bundle({
+      globalName: 'formatter',
+      entryPoints: [ 'headless/formatter.ts' ],
+      outfile: 'gen/formatter.js',
+      plugins: [
+        loader.node_modules('setup/patches'),
+        loader.patcher('setup/patches'),
+        loader.pegjs,
+        loader.__dirname,
+        shims,
+      ],
+      banner: {
+        js: 'ZOTERO_CONFIG = { GUID: "zotero@" };\n'
+      }
+    })
+  }
+
 }
 
 rebuild().catch(err => console.log(err))

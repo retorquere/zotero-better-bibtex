@@ -1,6 +1,7 @@
 import { log } from './logger'
 import { TeXstudio } from './tex-studio'
-import { clean_pane_persist, patch as $patch$ } from './monkey-patch'
+import { patch as $patch$ } from './monkey-patch'
+import { clean_pane_persist } from './clean_pane_persist'
 import { Preference } from '../gen/preferences'
 import { AutoExport } from './auto-export'
 import { flash } from './flash'

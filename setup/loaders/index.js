@@ -3,8 +3,9 @@ const path = require('path')
 const diff = require('diff')
 const { bibertool } = require('./bibertool')
 const pegjs = require('pegjs')
+const { nodeExternalsPlugin } = require('esbuild-node-externals')
 
-module.exports.patcher = function(dir) {
+function load_patches(dir) {
   const patches = {}
   for (let patchfile of fs.readdirSync(dir)) {
     for (const patch of diff.parsePatch(fs.readFileSync(path.join(dir, patchfile), 'utf-8'))) {
@@ -14,7 +15,11 @@ module.exports.patcher = function(dir) {
       patches[patch.oldFileName] = patch
     }
   }
+  return patches
+}
 
+module.exports.patcher = function(dir) {
+  const patches = load_patches(dir)
   const filter = '.*\\/(' + Object.keys(patches).map(source => source.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')$'
 
   return {
@@ -85,4 +90,20 @@ module.exports.__dirname = {
       }
     })
   }
+}
+
+function modulename(source) {
+  source = source.replace(/^node_modules\//, '').replace(/^.+\/node_modules\//, '').split('/')
+  if (source[0][0] === '@') {
+    return source.unshift(2).join('/')
+  }
+  else {
+    return source[0]
+  }
+}
+module.exports.node_modules = function(dir) {
+  const patched_modules = [...new Set(Object.keys(load_patches(dir)).map(modulename))]
+  console.log('  patched modules:', patched_modules)
+
+  return nodeExternalsPlugin({ allowList: patched_modules })
 }

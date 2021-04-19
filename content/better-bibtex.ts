@@ -6,13 +6,16 @@ Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
 
 import type { XUL } from '../typings/xul'
+import './startup' // disable monkey patching is unsupported environment
+
 import { ZoteroPane, ZoteroPaneConstructable } from './ZoteroPane'
 import { ExportOptions, ExportOptionsConstructable } from './ExportOptions'
 import { ItemPane, ItemPaneConstructable } from './ItemPane'
 import { FirstRun } from './FirstRun'
 import { PrefPane, PrefPaneConstructable } from './Preferences'
 import { ErrorReport } from './ErrorReport'
-import { clean_pane_persist, patch as $patch$ } from './monkey-patch'
+import { patch as $patch$ } from './monkey-patch'
+import { clean_pane_persist } from './clean_pane_persist'
 import { flash } from './flash'
 import { Deferred } from './deferred'
 
