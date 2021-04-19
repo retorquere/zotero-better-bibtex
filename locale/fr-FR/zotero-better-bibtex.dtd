@@ -219,8 +219,8 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!ENTITY better-bibtex.BetterBibTeX.citekey.unpin "Déverrouiller la clé de citation">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.refresh "Rafraichir la clé de citation">
 <!ENTITY better-bibtex.BetterBibTeX.addCitationLinks "Ajouter des liens de citation...">
-<!ENTITY better-bibtex.BetterBibTeX.sentenceCase "BBT Sentence-case">
-<!ENTITY better-bibtex.BetterBibTeX.patchDates "Copy date-added/date-modified from extra field">
+<!ENTITY better-bibtex.BetterBibTeX.sentenceCase "BBT Casse de la phrase">
+<!ENTITY better-bibtex.BetterBibTeX.patchDates "Copier date-added/date-modified à partir du champ extra">
 <!ENTITY better-bibtex.ZoteroPane.tag-duplicates "Tagguer les clés de citation doublons">
 <!ENTITY better-bibtex.BetterBibTeX.TeXstudio "Exporter les références vers TeXstudio">
 <!ENTITY zotero.better-bibtex.csquotes "Remplacer les guillemets par la commande '\\enquote{...}' (nécessite le package « csquotes »)">
