@@ -1,5 +1,5 @@
 import * as mapping from '../gen/items/extra-fields.json'
-import * as CSL from '../gen/citeproc'
+import * as CSL from 'citeproc'
 
 type TeXString = { value: string, raw?: boolean }
 

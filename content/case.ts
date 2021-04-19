@@ -1,5 +1,5 @@
 /* eslint-disable */
-import * as CSL from '../gen/citeproc'
+import * as CSL from 'citeproc'
 
 function makeRegExp(lst) {
   var lst = lst.slice();

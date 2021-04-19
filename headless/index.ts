@@ -7,4 +7,5 @@ export async function init(): Promise<void> {
   await kuroshiro.init()
   jieba.init()
   new KuromojiAnalyzer
+  Zotero.run('me')
 }

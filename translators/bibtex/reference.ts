@@ -14,7 +14,7 @@ import { text2latex, replace_command_spacers } from './unicode_translator'
 import { datefield } from './datefield'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
 import * as Extra from '../../content/extra'
-import * as CSL from '../../gen/citeproc'
+import * as CSL from 'citeproc'
 import { log } from '../../content/logger'
 
 import { arXiv } from '../../content/arXiv'

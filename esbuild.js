@@ -137,31 +137,34 @@ async function rebuild() {
     await fs.promises.writeFile(path.join('build/resource', translator.name + '.json'), JSON.stringify(header, null, 2))
   }
 
-  if (exists('headless/formatter.ts')) {
+  if (exists('headless/index.ts')) {
     await esbuild.build({
-      target: ['node12'],
+      platform: 'node',
+      // target: ['node12'],
+      plugins: [loader.node_modules('setup/patches'), loader.patcher('setup/patches'), loader.bibertool, loader.pegjs ],
       bundle: true,
       format: 'iife',
       globalName: 'Headless',
       entryPoints: [ 'headless/zotero.ts' ],
       outfile: 'gen/headless/zotero.js',
-      footer: { js: 'const { Zotero } = Headless; console.log(Zotero.Debug);\n' }
+      banner: {
+        js: 'var ZOTERO_CONFIG = { GUID: "zotero@" };\n',
+      },
+      footer: {
+        js: 'const { Zotero } = Headless;\n'
+      }
     })
-
     await esbuild.build({
-      globalName: 'formatter',
-      target: ['node12'],
+      platform: 'node',
+      // target: ['node12'],
+      plugins: [loader.node_modules('setup/patches'), loader.patcher('setup/patches'), loader.bibertool, loader.pegjs ],
       bundle: true,
       format: 'iife',
-      entryPoints: [ 'headless/formatter.ts' ],
-      outfile: 'gen/headless/formatter.js',
-      plugins: [
-        loader.node_modules('setup/patches'),
-        loader.patcher('setup/patches'),
-        loader.pegjs,
-      ],
+      globalName: 'Headless',
+      entryPoints: [ 'headless/index.ts' ],
+      outfile: 'gen/headless/index.js',
       banner: {
-        js: 'var ZOTERO_CONFIG = { GUID: "zotero@" };\n' + await fs.promises.readFile('gen/headless/zotero.js', 'utf-8')
+        js: await fs.promises.readFile('gen/headless/zotero.js', 'utf-8')
       }
     })
   }
