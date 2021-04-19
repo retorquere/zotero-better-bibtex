@@ -886,6 +886,7 @@ export class BetterBibTeX {
     if (this.firstRun && this.firstRun.dragndrop) Zotero.Prefs.set('export.quickCopy.setting', `export=${Translators.byLabel.BetterBibTeXCitationKeyQuickCopy.translatorID}`)
 
     Events.emit('loaded')
+    log.debug('Components:', typeof Components)
   }
 }
 Zotero.BetterBibTeX = Zotero.BetterBibTeX || new BetterBibTeX

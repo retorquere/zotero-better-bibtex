@@ -2,7 +2,7 @@ declare const Translator: any
 declare const workerContext: { worker: string }
 
 import { stringify, asciify } from './stringify'
-import { worker as inWorker } from './worker'
+import { worker as inWorker } from './environment'
 
 class Logger {
   public verbose = false

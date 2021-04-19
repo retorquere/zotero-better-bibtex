@@ -10,7 +10,7 @@ import * as Extra from '../../content/extra'
 import { Cache } from '../../typings/cache'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
 import { log } from '../../content/logger'
-import { worker } from '../../content/worker'
+import { worker } from '../../content/environment'
 
 const validCSLTypes: string[] = require('../../gen/items/csl-types.json')
 

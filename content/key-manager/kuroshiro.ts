@@ -5,26 +5,29 @@ import { log } from '../logger'
 import { Preference } from '../../gen/preferences'
 import KuromojiAnalyzer from 'kuroshiro-analyzer-kuromoji'
 import { Events } from '../events'
+import { zotero as inZotero } from '../environment'
 
-NodeDictionaryLoader.prototype.loadArrayBuffer = function(url, callback) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
-  url = `resource://zotero-better-bibtex/kuromoji/${url.replace(/.*\//, '').replace(/\.gz$/, '')}`
-  const xhr = new XMLHttpRequest()
+if (inZotero) {
+  NodeDictionaryLoader.prototype.loadArrayBuffer = function(url, callback) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+    url = `resource://zotero-better-bibtex/kuromoji/${url.replace(/.*\//, '').replace(/\.gz$/, '')}`
+    const xhr = new XMLHttpRequest()
 
-  xhr.open('GET', url, true)
-  xhr.responseType = 'arraybuffer'
+    xhr.open('GET', url, true)
+    xhr.responseType = 'arraybuffer'
 
-  xhr.onload = function() {
-    const err = this.status > 0 && this.status !== 200 // eslint-disable-line no-magic-numbers
-    callback(err ? new Error(xhr.statusText) : null, err ? null : this.response)
+    xhr.onload = function() {
+      const err = this.status > 0 && this.status !== 200 // eslint-disable-line no-magic-numbers
+      callback(err ? new Error(xhr.statusText) : null, err ? null : this.response)
+    }
+
+    xhr.onerror = function(pge) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+      const err = new Error(`could not load ${url}: ${pge}`)
+      log.error('kuromoji: load failed', url, err)
+      callback(err, null)
+    }
+
+    xhr.send()
   }
-
-  xhr.onerror = function(pge) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
-    const err = new Error(`could not load ${url}: ${pge}`)
-    log.error('kuromoji: load failed', url, err)
-    callback(err, null)
-  }
-
-  xhr.send()
 }
 
 export const kuroshiro = new class {
@@ -43,7 +46,7 @@ export const kuroshiro = new class {
       if (!Preference.kuroshiro || this.enabled) return
 
       this.kuroshiro = new Kuroshiro()
-      await this.kuroshiro.init(new KuromojiAnalyzer('resource://zotero-better-bibtex/kuromoji'))
+      await this.kuroshiro.init(new KuromojiAnalyzer(inZotero ? 'resource://zotero-better-bibtex/kuromoji' : undefined))
       this.enabled = true
     }
     catch (err) {
