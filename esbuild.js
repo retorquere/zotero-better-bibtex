@@ -138,19 +138,30 @@ async function rebuild() {
   }
 
   if (exists('headless/formatter.ts')) {
-    await bundle({
+    await esbuild.build({
+      target: ['node12'],
+      bundle: true,
+      format: 'iife',
+      globalName: 'Headless',
+      entryPoints: [ 'headless/zotero.ts' ],
+      outfile: 'gen/headless/zotero.js',
+      footer: { js: 'const { Zotero } = Headless; console.log(Zotero.Debug);\n' }
+    })
+
+    await esbuild.build({
       globalName: 'formatter',
+      target: ['node12'],
+      bundle: true,
+      format: 'iife',
       entryPoints: [ 'headless/formatter.ts' ],
-      outfile: 'gen/formatter.js',
+      outfile: 'gen/headless/formatter.js',
       plugins: [
         loader.node_modules('setup/patches'),
         loader.patcher('setup/patches'),
         loader.pegjs,
-        loader.__dirname,
-        shims,
       ],
       banner: {
-        js: 'ZOTERO_CONFIG = { GUID: "zotero@" };\n'
+        js: 'var ZOTERO_CONFIG = { GUID: "zotero@" };\n' + await fs.promises.readFile('gen/headless/zotero.js', 'utf-8')
       }
     })
   }
