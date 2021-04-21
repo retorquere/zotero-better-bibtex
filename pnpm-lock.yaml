@@ -2,7 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   '@retorquere/bibtex-parser': ^3.2.35
-  '@retorquere/zotero-sync': ^1.0.11
+  '@retorquere/zotero-sync': ^1.0.12
   '@types/bluebird': ^3.5.33
   '@types/lokijs': ^1.5.4
   '@types/node': ^14.14.41
@@ -52,7 +52,7 @@ specifiers:
   kuroshiro: ^1.1.2
   kuroshiro-analyzer-kuromoji: ^1.1.0
   lodash: ^4.17.21
-  lokijs: ^1.5.11
+  lokijs: ^1.5.12
   moment: ^2.29.1
   njstrace: ^1.2.1
   node-eta: ^0.9.0
@@ -89,7 +89,7 @@ specifiers:
 
 dependencies:
   '@retorquere/bibtex-parser': 3.2.35
-  '@retorquere/zotero-sync': 1.0.11
+  '@retorquere/zotero-sync': 1.0.12
   '@types/bluebird': 3.5.33
   '@types/lokijs': 1.5.4
   ajv: 8.1.0
@@ -116,7 +116,7 @@ dependencies:
   kuromoji: 0.1.2
   kuroshiro: 1.1.2
   kuroshiro-analyzer-kuromoji: 1.1.0
-  lokijs: 1.5.11
+  lokijs: 1.5.12
   node-eta: 0.9.0
   number-to-words: 1.2.4
   ooooevan-jieba: 1.0.3
@@ -397,8 +397,8 @@ packages:
       xregexp: 4.4.1
     dev: false
 
-  /@retorquere/zotero-sync/1.0.11:
-    resolution: {integrity: sha512-A1BCTvyCQf+Z9Y2kJ2pbmm2svvNdObqmlJKw/0yz3vg0xd10BOG2PSgPZbBFYDx5Lf6JUCJjtZpCTh0qxqAdhA==}
+  /@retorquere/zotero-sync/1.0.12:
+    resolution: {integrity: sha512-qqBalGEHvqXzRaWfojqHlJiPAW2D0JGElJ3D5B4WHS3jFPNcw+w1lYpFXzE7Z1+Bj16ABfezrHxamUENeiHS4A==}
     dependencies:
       json-stringify-pretty-compact: 3.0.0
       node-fetch: 2.6.1
@@ -2155,8 +2155,8 @@ packages:
       chalk: 4.1.0
     dev: true
 
-  /lokijs/1.5.11:
-    resolution: {integrity: sha512-YYyuBPxMn/oS0tFznQDbIX5XL1ltMcwFqCboDr8voYE4VCDzR5vAsrvQDhlnua4lBeqMqHmLvUXRTmRUzUKH1Q==}
+  /lokijs/1.5.12:
+    resolution: {integrity: sha512-Q5ALD6JiS6xAUWCwX3taQmgwxyveCtIIuL08+ml0nHwT3k0S/GIFJN+Hd38b1qYIMaE5X++iqsqWVksz7SYW+Q==}
     dev: false
 
   /lru-cache/4.1.5:
