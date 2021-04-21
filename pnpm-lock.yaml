@@ -18,6 +18,7 @@ specifiers:
   dedent-js: ^1.0.1
   deep-cleaner: ^1.2.1
   diff: ^5.0.0
+  dom-parser: ^0.1.6
   dotenv: ^8.2.0
   edtf: ^3.1.0
   edtfy: ^0.0.8
@@ -98,6 +99,7 @@ dependencies:
   barcoder: 2.0.1
   citeproc: 2.4.59
   clp: 4.0.12
+  dom-parser: 0.1.6
   edtf: 3.1.0
   edtfy: 0.0.8
   esbuild: 0.11.12
@@ -1111,6 +1113,10 @@ packages:
 
   /doctypes/1.1.0:
     resolution: {integrity: sha1-6oCxBqh1OHdOijpKWv4pPeSJ4Kk=}
+
+  /dom-parser/0.1.6:
+    resolution: {integrity: sha512-3nVRKbLEwmGfghLoeT1dxlK/0votalnOfasP+8VCHYDfDuCETY4LeMblfOeqww6XZk2ymZ1Uewy/hVad6Dy3yw==}
+    dev: false
 
   /dom-walk/0.1.2:
     resolution: {integrity: sha512-6QvTW9mrGeIegrFXdtQi9pk7O/nSK6lSdXW2eqUspN5LWD7UTji2Fqw5V2YLjBpHEoU9Xl/eUWNpDeZvoyOv2w==}

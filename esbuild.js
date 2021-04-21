@@ -141,7 +141,15 @@ async function rebuild() {
     await esbuild.build({
       platform: 'node',
       // target: ['node12'],
-      plugins: [loader.node_modules('setup/patches'), loader.patcher('setup/patches'), loader.bibertool, loader.pegjs ],
+      plugins: [
+        loader.node_modules('setup/patches'),
+        loader.patcher('setup/patches'),
+        loader.bibertool,
+        loader.pegjs,
+      ],
+      inject: [
+        './headless/inject.js',
+      ],
       bundle: true,
       format: 'iife',
       globalName: 'Headless',
@@ -157,7 +165,15 @@ async function rebuild() {
     await esbuild.build({
       platform: 'node',
       // target: ['node12'],
-      plugins: [loader.node_modules('setup/patches'), loader.patcher('setup/patches'), loader.bibertool, loader.pegjs ],
+      plugins: [
+        loader.node_modules('setup/patches'),
+        loader.patcher('setup/patches'),
+        loader.bibertool,
+        loader.pegjs,
+      ],
+      inject: [
+        './headless/inject.js',
+      ],
       bundle: true,
       format: 'iife',
       globalName: 'Headless',
