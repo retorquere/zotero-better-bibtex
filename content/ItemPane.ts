@@ -47,31 +47,35 @@ export class ItemPane {
   }
 
   display(itemID?: number): void {
-    let menuitem = this.globals.document.getElementById('zotero-field-transform-menu-better-sentencecase')
-    if (!menuitem) {
+    const menuid = 'zotero-field-transform-menu-better-sentencecase'
+    let menuitem = this.globals.document.getElementById(menuid)
+    const menu = this.globals.document.getElementById('zotero-field-transform-menu')
+    if (menu && !menuitem) {
       Zotero.debug('adding better-sentencecase')
-      const zotero_field_transform_menu = this.globals.document.getElementById('zotero-field-transform-menu')
-      if (zotero_field_transform_menu) {
-        menuitem = zotero_field_transform_menu.appendChild(this.globals.document.createElementNS('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', 'menuitem'))
-        menuitem.setAttribute('id', 'zotero-field-transform-menu-better-sentencecase')
-        menuitem.setAttribute('label', 'BBT sentence case')
-        menuitem.addEventListener('command', function(_e) { title_sentenceCase.call(this.globals.document.getBindingParent(this), this.globals.document.popupNode) }, false)
-      }
+      menuitem = menu.appendChild(this.globals.document.createElementNS('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', 'menuitem'))
+      menuitem.setAttribute('id', menuid)
+      menuitem.setAttribute('label', 'BBT sentence case')
+      const itempane = this // eslint-disable-line @typescript-eslint/no-this-alias
+      menuitem.addEventListener('command', function(_e) { title_sentenceCase.call(itempane.globals.document.getBindingParent(this), itempane.globals.document.popupNode) }, false)
     }
 
-    const field = this.globals.document.getElementById('better-bibtex-citekey-display')
-    const current = field.getAttribute('itemID')
-    Zotero.debug(`ItemPane.display: current=${current}, new=${itemID}`)
-    if (typeof itemID !== 'undefined' && current === `${itemID}`) return
-    if (typeof itemID === 'undefined') itemID = parseInt(current)
-
-    const citekey = Zotero.BetterBibTeX.KeyManager.get(itemID)
-    field.value = citekey.citekey
-    field.setAttribute('itemID', `${itemID}`)
-
     const pin = ' \uD83D\uDCCC'
+    const field = this.globals.document.getElementById('better-bibtex-citekey-display')
     const label = this.globals.document.getElementById('better-bibtex-citekey-label')
-    label.value = `${label.value.replace(pin, '')}${(citekey.pinned ? pin : '')}`
+    const displayed = {
+      itemID: field.getAttribute('itemID') || '',
+      citekey: field.value || '',
+      pinned: (label.value || '').includes(pin),
+    }
+    const item: { itemID?: string, citekey?: string, pinned?: boolean } = (typeof itemID === 'number' ? Zotero.BetterBibTeX.KeyManager.get(itemID) : undefined) || {}
+    if (typeof item.itemID !== 'undefined') item.itemID = `${item.itemID}`
+
+    if (typeof displayed.itemID === 'undefined' && typeof item.itemID === 'undefined') return
+    if (item.citekey === displayed.citekey && item.pinned === displayed.pinned) return
+
+    field.value = item.citekey || ''
+    field.setAttribute('itemID', item.itemID || '')
+    label.value = `${label.value.replace(pin, '')}${item.pinned ? pin : ''}`
   }
 
   init(): boolean {
