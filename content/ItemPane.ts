@@ -47,16 +47,16 @@ export class ItemPane {
   }
 
   display(itemID?: number): void {
-    let menuitem = this.globals.document.getElementById('zotero-field-transform-menu-better-sentencecase')
-    if (!menuitem) {
+    const menuid = 'zotero-field-transform-menu-better-sentencecase'
+    let menuitem = this.globals.document.getElementById(menuid)
+    const menu = this.globals.document.getElementById('zotero-field-transform-menu')
+    if (menu && !menuitem) {
       Zotero.debug('adding better-sentencecase')
-      const zotero_field_transform_menu = this.globals.document.getElementById('zotero-field-transform-menu')
-      if (zotero_field_transform_menu) {
-        menuitem = zotero_field_transform_menu.appendChild(this.globals.document.createElementNS('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', 'menuitem'))
-        menuitem.setAttribute('id', 'zotero-field-transform-menu-better-sentencecase')
-        menuitem.setAttribute('label', 'BBT sentence case')
-        menuitem.addEventListener('command', function(_e) { title_sentenceCase.call(this.globals.document.getBindingParent(this), this.globals.document.popupNode) }, false)
-      }
+      menuitem = menu.appendChild(this.globals.document.createElementNS('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', 'menuitem'))
+      menuitem.setAttribute('id', menuid)
+      menuitem.setAttribute('label', 'BBT sentence case')
+      const itempane = this // eslint-disable-line @typescript-eslint/no-this-alias
+      menuitem.addEventListener('command', function(_e) { title_sentenceCase.call(itempane.globals.document.getBindingParent(this), itempane.globals.document.popupNode) }, false)
     }
 
     const pin = ' \uD83D\uDCCC'
