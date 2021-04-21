@@ -59,19 +59,23 @@ export class ItemPane {
       }
     }
 
-    const field = this.globals.document.getElementById('better-bibtex-citekey-display')
-    const current = field.getAttribute('itemID')
-    Zotero.debug(`ItemPane.display: current=${current}, new=${itemID}`)
-    if (typeof itemID !== 'undefined' && current === `${itemID}`) return
-    if (typeof itemID === 'undefined') itemID = parseInt(current)
-
-    const citekey = Zotero.BetterBibTeX.KeyManager.get(itemID)
-    field.value = citekey.citekey
-    field.setAttribute('itemID', `${itemID}`)
-
     const pin = ' \uD83D\uDCCC'
+    const field = this.globals.document.getElementById('better-bibtex-citekey-display')
     const label = this.globals.document.getElementById('better-bibtex-citekey-label')
-    label.value = `${label.value.replace(pin, '')}${(citekey.pinned ? pin : '')}`
+    const displayed = {
+      itemID: field.getAttribute('itemID') || '',
+      citekey: field.value || '',
+      pinned: (label.value || '').includes(pin),
+    }
+    const item: { itemID?: string, citekey?: string, pinned?: boolean } = (typeof itemID === 'number' ? Zotero.BetterBibTeX.KeyManager.get(itemID) : undefined) || {}
+    if (typeof item.itemID !== 'undefined') item.itemID = `${item.itemID}`
+
+    if (typeof displayed.itemID === 'undefined' && typeof item.itemID === 'undefined') return
+    if (item.citekey === displayed.citekey && item.pinned === displayed.pinned) return
+
+    field.value = item.citekey || ''
+    field.setAttribute('itemID', item.itemID || '')
+    label.value = `${label.value.replace(pin, '')}${item.pinned ? pin : ''}`
   }
 
   init(): boolean {
