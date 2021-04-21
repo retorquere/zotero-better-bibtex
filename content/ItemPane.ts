@@ -67,6 +67,10 @@ export class ItemPane {
       citekey: field.value || '',
       pinned: (label.value || '').includes(pin),
     }
+    if (typeof itemID === 'undefined') {
+      itemID = parseInt(displayed.itemID)
+      if (isNaN(itemID)) itemID = undefined
+    }
     const item: { itemID?: string, citekey?: string, pinned?: boolean } = (typeof itemID === 'number' ? Zotero.BetterBibTeX.KeyManager.get(itemID) : undefined) || {}
     if (typeof item.itemID !== 'undefined') item.itemID = `${item.itemID}`
 
