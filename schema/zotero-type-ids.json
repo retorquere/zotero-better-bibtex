@@ -924,4 +924,4 @@ INSERT INTO itemTypeCreatorTypes VALUES(36,1,1);
 INSERT INTO itemTypeCreatorTypes VALUES(36,2,0);
 INSERT INTO itemTypeCreatorTypes VALUES(36,3,0);
 INSERT INTO itemTypeCreatorTypes VALUES(36,4,0);
-INSERT INTO itemTypeCreatorTypes VALUES(36,5,0, 'x', "x");
+INSERT INTO itemTypeCreatorTypes VALUES(36,5,0);

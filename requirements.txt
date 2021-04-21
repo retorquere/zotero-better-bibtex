@@ -32,5 +32,4 @@ redo
 requests
 ruamel.yaml
 selenium
-sqlparse
 toml
