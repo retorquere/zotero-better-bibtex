@@ -48,7 +48,8 @@
     "reinstall": "rm -rf node_modules yarn* && pnpm install",
     "test:nightly": "TRAVIS_EVENT_TYPE=cron ./test/behave --tags @nightly",
     "submodules": "git submodule update --init --recursive --remote && git submodule foreach git reset --hard && git submodule foreach git checkout master && git submodule foreach git pull origin master",
-    "ncu": "npm run submodules && ncu -u && pnpm i && ./setup/item.py && git add package.json pnpm-lock.yaml citation-style-language-locales site/themes/learn schema && git commit -m ncu"
+    "preupgrades": "parallel --ungroup ::: './setup/bibertool.py' 'npm run submodules' 'ncu -u && pnpm i' './setup/item.py'",
+    "upgrades": "git add package.json pnpm-lock.yaml citation-style-language-locales site/themes/learn schema  translators/bibtex/biber-tool.conf && git commit -m upgrades"
   },
   "main": "index.js",
   "directories": {
@@ -56,7 +57,7 @@
   },
   "dependencies": {
     "@retorquere/bibtex-parser": "^3.2.35",
-    "@retorquere/zotero-sync": "^1.0.12",
+    "@retorquere/zotero-sync": "^1.0.21",
     "@types/bluebird": "^3.5.33",
     "@types/lokijs": "^1.5.4",
     "ajv": "^8.1.0",
@@ -68,7 +69,7 @@
     "dom-parser": "^0.1.6",
     "edtf": "^3.1.0",
     "edtfy": "^0.0.8",
-    "esbuild": "^0.11.12",
+    "esbuild": "^0.11.14",
     "escape-string-regexp": "^5.0.0",
     "eta": "^1.12.1",
     "eventemitter3": "^4.0.7",
@@ -114,7 +115,7 @@
     "dotenv": "^8.2.0",
     "ejs": "^3.1.6",
     "esbuild-node-externals": "^1.2.0",
-    "eslint": "^7.24.0",
+    "eslint": "^7.25.0",
     "fast-json-patch": "^3.0.0-1",
     "find-up": "^5.0.0",
     "fs-extra": "^9.1.0",
@@ -129,7 +130,7 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "njstrace": "^1.2.1",
-    "npm": "^7.10.0",
+    "npm": "^7.11.1",
     "pegjs": "^0.10.0",
     "pretty-data": "^0.40.0",
     "properties-reader": "^2.2.0",

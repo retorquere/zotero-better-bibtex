@@ -2,7 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   '@retorquere/bibtex-parser': ^3.2.35
-  '@retorquere/zotero-sync': ^1.0.12
+  '@retorquere/zotero-sync': ^1.0.21
   '@types/bluebird': ^3.5.33
   '@types/lokijs': ^1.5.4
   '@types/node': ^14.14.41
@@ -23,10 +23,10 @@ specifiers:
   edtf: ^3.1.0
   edtfy: ^0.0.8
   ejs: ^3.1.6
-  esbuild: ^0.11.12
+  esbuild: ^0.11.14
   esbuild-node-externals: ^1.2.0
   escape-string-regexp: ^5.0.0
-  eslint: ^7.24.0
+  eslint: ^7.25.0
   eta: ^1.12.1
   eventemitter3: ^4.0.7
   excel-column-name: ^1.0.1
@@ -57,7 +57,7 @@ specifiers:
   moment: ^2.29.1
   njstrace: ^1.2.1
   node-eta: ^0.9.0
-  npm: ^7.10.0
+  npm: ^7.11.1
   number-to-words: ^1.2.4
   ooooevan-jieba: ^1.0.3
   parse5: ^6.0.1
@@ -90,7 +90,7 @@ specifiers:
 
 dependencies:
   '@retorquere/bibtex-parser': 3.2.35
-  '@retorquere/zotero-sync': 1.0.12
+  '@retorquere/zotero-sync': 1.0.21
   '@types/bluebird': 3.5.33
   '@types/lokijs': 1.5.4
   ajv: 8.1.0
@@ -102,7 +102,7 @@ dependencies:
   dom-parser: 0.1.6
   edtf: 3.1.0
   edtfy: 0.0.8
-  esbuild: 0.11.12
+  esbuild: 0.11.14
   escape-string-regexp: 5.0.0
   eta: 1.12.1
   eventemitter3: 4.0.7
@@ -147,8 +147,8 @@ devDependencies:
   diff: 5.0.0
   dotenv: 8.2.0
   ejs: 3.1.6
-  esbuild-node-externals: 1.2.0_esbuild@0.11.12
-  eslint: 7.24.0
+  esbuild-node-externals: 1.2.0_esbuild@0.11.14
+  eslint: 7.25.0
   fast-json-patch: 3.0.0-1
   find-up: 5.0.0
   fs-extra: 9.1.0
@@ -163,7 +163,7 @@ devDependencies:
   lodash: 4.17.21
   moment: 2.29.1
   njstrace: 1.2.1
-  npm: 7.10.0
+  npm: 7.11.1
   pegjs: 0.10.0
   pretty-data: 0.40.0
   properties-reader: 2.2.0
@@ -399,8 +399,8 @@ packages:
       xregexp: 4.4.1
     dev: false
 
-  /@retorquere/zotero-sync/1.0.12:
-    resolution: {integrity: sha512-qqBalGEHvqXzRaWfojqHlJiPAW2D0JGElJ3D5B4WHS3jFPNcw+w1lYpFXzE7Z1+Bj16ABfezrHxamUENeiHS4A==}
+  /@retorquere/zotero-sync/1.0.21:
+    resolution: {integrity: sha512-HJqnspIiI/IPT9EzvnJAX+sY46ZfwL+TdvRcFtjnIaH2Dndq91sWXWTSXUmcBZFn8l3cmSSGe1ECMYFU3ld9Eg==}
     dependencies:
       json-stringify-pretty-compact: 3.0.0
       node-fetch: 2.6.1
@@ -1210,18 +1210,18 @@ packages:
     resolution: {integrity: sha1-wsNYJlYkfDnqEHyx5mUrb58kUjw=}
     dev: false
 
-  /esbuild-node-externals/1.2.0_esbuild@0.11.12:
+  /esbuild-node-externals/1.2.0_esbuild@0.11.14:
     resolution: {integrity: sha512-miyxgCJrAGp86WZX080EF+3eHsey8vJTfQEOZ3+oCmAm0FrlQSg4SPr2XHSi6kVFQJD/iqaF81ub3hz4WQca2A==}
     peerDependencies:
       esbuild: ^0.11.0
     dependencies:
-      esbuild: 0.11.12
+      esbuild: 0.11.14
       find-up: 5.0.0
       tslib: 2.1.0
     dev: true
 
-  /esbuild/0.11.12:
-    resolution: {integrity: sha512-c8cso/1RwVj+fbDvLtUgSG4ZJQ0y9Zdrl6Ot/GAjyy4pdMCHaFnDMts5gqFnWRPLajWtEnI+3hlET4R9fVoZng==}
+  /esbuild/0.11.14:
+    resolution: {integrity: sha512-ejheEPkqhq5y0LM9rG9e+3yDihPtqeeE4NZmG7VQiSGJ3CjO4HvPOHmhhttSksfSztjLAGo2+0/zSIvlqj4JOQ==}
     hasBin: true
     requiresBuild: true
     dev: false
@@ -1331,6 +1331,52 @@ packages:
 
   /eslint/7.24.0:
     resolution: {integrity: sha512-k9gaHeHiFmGCDQ2rEfvULlSLruz6tgfA8DEn+rY9/oYPFFTlz55mM/Q/Rij1b2Y42jwZiK3lXvNTw6w6TXzcKQ==}
+    engines: {node: ^10.12.0 || >=12.0.0}
+    hasBin: true
+    dependencies:
+      '@babel/code-frame': 7.12.11
+      '@eslint/eslintrc': 0.4.0
+      ajv: 6.12.6
+      chalk: 4.1.0
+      cross-spawn: 7.0.3
+      debug: 4.3.1
+      doctrine: 3.0.0
+      enquirer: 2.3.6
+      eslint-scope: 5.1.1
+      eslint-utils: 2.1.0
+      eslint-visitor-keys: 2.0.0
+      espree: 7.3.1
+      esquery: 1.4.0
+      esutils: 2.0.3
+      file-entry-cache: 6.0.1
+      functional-red-black-tree: 1.0.1
+      glob-parent: 5.1.2
+      globals: 13.6.0
+      ignore: 4.0.6
+      import-fresh: 3.3.0
+      imurmurhash: 0.1.4
+      is-glob: 4.0.1
+      js-yaml: 3.14.1
+      json-stable-stringify-without-jsonify: 1.0.1
+      levn: 0.4.1
+      lodash: 4.17.21
+      minimatch: 3.0.4
+      natural-compare: 1.4.0
+      optionator: 0.9.1
+      progress: 2.0.3
+      regexpp: 3.1.0
+      semver: 7.3.4
+      strip-ansi: 6.0.0
+      strip-json-comments: 3.1.1
+      table: 6.0.7
+      text-table: 0.2.0
+      v8-compile-cache: 2.3.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /eslint/7.25.0:
+    resolution: {integrity: sha512-TVpSovpvCNpLURIScDRB6g5CYu/ZFq9GfX2hLNIV4dSBKxIWojeDODvYl3t0k0VtMxYeR8OXPCFE5+oHMlGfhw==}
     engines: {node: ^10.12.0 || >=12.0.0}
     hasBin: true
     dependencies:
@@ -2306,8 +2352,8 @@ packages:
       path-key: 2.0.1
     dev: true
 
-  /npm/7.10.0:
-    resolution: {integrity: sha512-DD4eEB71HGVt6pS6n4LmFD4eHsrglJ+QtLhv/kP2UWNKkJalL8TPfsiw9p8LmWKa6ed61LHPw5FE6krS3aGv0A==}
+  /npm/7.11.1:
+    resolution: {integrity: sha512-F9dUPQQBm5me6t74m63CrrBSzUcLART9BmsxiJU3jZK8SBnxiqzxvsU70/uqY0cjYSoYP7AuZ2w8YfGUwhcf6A==}
     engines: {node: '>=10'}
     hasBin: true
     dev: true
@@ -2337,6 +2383,7 @@ packages:
       - leven
       - libnpmaccess
       - libnpmdiff
+      - libnpmexec
       - libnpmfund
       - libnpmhook
       - libnpmorg

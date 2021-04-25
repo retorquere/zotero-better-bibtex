@@ -43,7 +43,7 @@ module.exports.patcher = function(dir) {
 module.exports.bibertool = {
   name: 'bibertool',
   setup(build) {
-    build.onLoad({ filter: /\.bibertool$/ }, async (args) => {
+    build.onLoad({ filter: /\/biber-tool\.conf$/ }, async (args) => {
       return {
         contents: bibertool(await fs.promises.readFile(args.path, 'utf-8')),
         loader: 'js'
