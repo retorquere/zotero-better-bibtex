@@ -1,0 +1,66 @@
+#!/usr/bin/env python3
+
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv())
+
+import subprocess
+import argparse
+import shlex
+import sys
+from github import Github
+import os
+
+g = Github(os.environ['GITHUB_TOKEN'])
+repo = g.get_repo('retorquere/zotero-better-bibtex')
+issues = {'gh-' + str(issue.number): issue.title for issue in repo.get_issues(state='open')}
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--unsnyk', action='store_true')
+parser.add_argument('--orphaned-remote', action='store_true')
+parser.add_argument('--local-closed', action='store_true')
+args = parser.parse_args()
+
+branches = subprocess.check_output('git branch -a'.split()).decode()
+branches = [b.strip('* ') for b in branches.splitlines()]
+
+remote_prefix = 'remotes/origin/'
+
+if args.unsnyk:
+  for branch in branches:
+    if branch.startswith(remote_prefix + 'snyk-upgrade-'):
+      snyk = branch[len(remote_prefix):]
+      print(f'git push origin :{shlex.quote(snyk)}')
+  sys.exit()
+
+local = []
+remote = []
+for branch in branches:
+  if branch.startswith(remote_prefix):
+    if branch not in [ remote_prefix + br for br in ['HEAD -> origin/master', 'gh-pages', 'master' ]]:
+      remote.append(branch[len(remote_prefix):])
+  elif branch not in ['master', 'gh-pages']:
+    local.append(branch)
+
+report = []
+for branch in remote:
+  if not branch in local:
+    report.append(('orphaned remote branch', branch))
+  if branch.startswith('gh-') and not branch in issues:
+    report.append(('remote branch for closed issue', branch))
+for branch in local:
+  if not branch in remote:
+    report.append(('unshared local branch', branch))
+  if branch.startswith('gh-') and not branch in issues:
+    report.append(('local branch for closed issue', branch))
+
+if args.orphaned_remote:
+  for status, branch in sorted(report):
+    if status == 'orphaned remote branch':
+      print(f'git push origin {shlex.quote(":" + branch)}')
+elif args.local_closed:
+  for status, branch in sorted(report):
+    if status == 'local branch for closed issue':
+      print(f'git branch -D {shlex.quote(branch)}')
+else:
+  for status, branch in sorted(report):
+    print(status + ':', branch)

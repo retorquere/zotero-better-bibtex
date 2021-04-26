@@ -6,6 +6,13 @@ from munch import *
 import os
 import sys
 
+logs = [log.lower() for log in sys.argv[1:]]
+if len(logs) == 0:
+  print('please provide one or more log IDs')
+  sys.exit(1)
+
+postfixes = list(set([log.split('-')[1] for log in logs]))
+
 s3 = boto3.resource('s3')
 
 with open('package.json') as f:
@@ -16,6 +23,7 @@ with open('content/s3.json') as f:
 prefix = regions.bucket
 print(prefix)
 for region, details in regions.region.items():
+  if len(postfixes) > 0 and details.short not in postfixes: continue
   print(region, details)
   merge = {}
 
@@ -32,23 +40,16 @@ for region, details in regions.region.items():
     if not target in merge: merge[target] = []
     merge[target].append(obj)
 
-  if len(sys.argv) == 0:
-    pass
-#    for log in set([k.split('.')[[0] for k in merge.keys()]):
-#      print(log)
+if not os.path.exists('logs'): os.makedirs('logs')
+for target, partials in merge.items():
+  log = os.path.join('logs', target)
+  if len([log for log in logs if log in target.lower()]) == 0: continue
+  if os.path.exists(log):
+    print(f'skipping {target}')
+    continue
 
-  else:
-    if not os.path.exists('logs'): os.makedirs('logs')
-    args = [a.lower() for a in sys.argv[1:]]
-    for target, partials in merge.items():
-      log = os.path.join('logs', target)
-      if len([a for a in args if a in target.lower()]) == 0: continue
-      if os.path.exists(log):
-        print(f'skipping {target}')
-        continue
-
-      print(f'saving {target}')
-      with open(log, 'wb') as f:
-        for i, partial in enumerate(sorted(partials, key=lambda p: p.key)):
-          if len(partials) != 1: print(f'  {i+1}/{len(partials)}')
-          f.write(partial.get()['Body'].read())
+  print(f'saving {target}')
+  with open(log, 'wb') as f:
+    for i, partial in enumerate(sorted(partials, key=lambda p: p.key)):
+      if len(partials) != 1: print(f'  {i+1}/{len(partials)}')
+      f.write(partial.get()['Body'].read())

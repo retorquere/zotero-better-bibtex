@@ -1,7 +1,7 @@
 {
   "duration": {
     "(non-)dropping particle handling #313": 2800,
-    "AUX scanner": 8790,
+    "AUX scanner": 8780,
     "BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372": 270,
     "Better BibTeX Import 2": 1160,
     "BibTeX name escaping has a million inconsistencies #438": 480,
@@ -311,7 +311,7 @@
     "Export 6 references for BibLaTeX to Better BibLaTeX.stable-keys": 620,
     "Export 8 references for BibLaTeX to Don't title-case sup-subscripts #1037": 660,
     "Export as Collected Notes does not list subcollections #1768": {
-      "msecs": 4600,
+      "msecs": 4590,
       "runs": -256
     },
     "Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825": 990,
@@ -335,11 +335,11 @@
     "Import 1 references from Better BibTeX.012": 980,
     "Import 1 references from Better BibTeX.014": 1000,
     "Import 1 references from Better BibTeX.015": 1390,
-    "Import 1 references from BibTeX import; preamble with def create problems #732": 1080,
+    "Import 1 references from BibTeX import; preamble with def create problems #732": 1090,
     "Import 1 references from Biblatex Annotation Import Bug #613": 1040,
     "Import 1 references from Endnote should parse": 770,
     "Import 1 references from Failure to handle unparsed author names (92)": 1110,
-    "Import 1 references from Import fails to perform @String substitutions #154": 1030,
+    "Import 1 references from Import fails to perform @String substitutions #154": 1040,
     "Import 1 references from Import location to event-place for conference papers": 1010,
     "Import 1 references from Import of langle and rangle TeX commands #1468": 1050,
     "Import 1 references from Importing changes Journal to The Journal #1601": {
@@ -367,7 +367,7 @@
       "msecs": 1110,
       "runs": -231
     },
-    "Import 1 references from zbb (quietly) chokes on this .bib #664": 1090,
+    "Import 1 references from zbb (quietly) chokes on this .bib #664": 1100,
     "Import 2 references from Better BibTeX.001": 1170,
     "Import 2 references from Better BibTeX.003": 1050,
     "Import 2 references from BibLaTeX Patent author handling, type #1060": 1210,
@@ -385,7 +385,7 @@
     "Include first name initial(s) in cite key generation pattern (86)": 450,
     "Jabref groups import does not work #717": 2810,
     "Jabref import - groups lost #1730": {
-      "msecs": 3150,
+      "msecs": 3170,
       "runs": -228
     },
     "Journal abbreviations": 490,
@@ -405,24 +405,24 @@
     },
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 384270,
+    "Really Big whopping library": 383280,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 46900,
+      "msecs": 46830,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
     "Square brackets in Publication field (85), and non-pinned keys must change when the pattern does": 450,
-    "Unabbreviate on import #1436-1": 39380,
+    "Unabbreviate on import #1436-1": 39370,
     "Unbalanced vphantom escapes #1043": 760,
     "arXiv identifiers in BibLaTeX export #460": 1180,
     "auto-export": 14370,
     "automatic tags in export #1270": 410,
     "bibtex; url export does not survive underscores #402": 670,
     "ids field should be created in raw mode #1729": {
-      "msecs": 9460,
+      "msecs": 9470,
       "runs": -227
     },
     "importing a title-cased bib #1246": 1320,
@@ -438,7 +438,7 @@
       "runs": -36
     },
     "web_page and other mendeley idiocy": {
-      "msecs": 39180,
+      "msecs": 39120,
       "runs": -239
     }
   },
@@ -737,7 +737,7 @@
       "Identical Pinned keys lost when merging duplicated records #1721"
     ]
   },
-  "runs": 297,
+  "runs": 299,
   "slow": {
     "1": [
       "Export 1 references for BibLaTeX to biber 2.14 rejects the date field generated from Better BibLaTex #1695",
