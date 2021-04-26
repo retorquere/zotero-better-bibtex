@@ -168,7 +168,6 @@ class PatternFormatter {
   }
 
   public format(item): { citekey: string, postfix: { start: number, format: string } } {
-    log.debug('$extra:', { extra: item.getField('extra'), get: Extra.get(item.getField('extra'), 'zotero', { kv: true, tex: true }) })
     this.item = {
       item,
       type: Zotero.ItemTypes.getName(item.itemTypeID),
@@ -517,7 +516,6 @@ class PatternFormatter {
   /** A line from the extra field */
   // eslint-disable-next-line @typescript-eslint/no-inferrable-types
   public $extra(variable: string) {
-    log.debug('$extra', { variable, extra: this.item.extra })
     const variables = variable.toLowerCase().trim().split(/\s*\/\s*/).filter(varname => varname)
     if (!variables.length) return ''
 
