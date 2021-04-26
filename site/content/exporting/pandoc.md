@@ -74,7 +74,7 @@ zotero:
 or you can specify them on the pandoc command line:
 
 ```bash
-pandoc -s --lua-filter=zotero.lua --metadata=zotero_scannable_cite:true --metadata=client:jurism ...
+pandoc -s --lua-filter=zotero.lua --metadata=zotero_scannable_cite:true --metadata=zotero_client:jurism ...
 ```
 
 And hey presto, a live LibreOffice/Word file, or an ODT file with
