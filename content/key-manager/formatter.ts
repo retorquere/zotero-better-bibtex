@@ -168,6 +168,7 @@ class PatternFormatter {
   }
 
   public format(item): { citekey: string, postfix: { start: number, format: string } } {
+    log.debug('$extra:', { extra: item.getField('extra'), get: Extra.get(item.getField('extra'), 'zotero', { kv: true, tex: true }) })
     this.item = {
       item,
       type: Zotero.ItemTypes.getName(item.itemTypeID),
@@ -516,12 +517,23 @@ class PatternFormatter {
   /** A line from the extra field */
   // eslint-disable-next-line @typescript-eslint/no-inferrable-types
   public $extra(variable: string) {
-    return variable
-      .toLowerCase()
-      .trim()
-      .split(/\s*\/\s*/)
+    log.debug('$extra', { variable, extra: this.item.extra })
+    const variables = variable.toLowerCase().trim().split(/\s*\/\s*/).filter(varname => varname)
+    if (!variables.length) return ''
+
+    const value = variables
       .map(varname => this.item.extra.kv[varname] || this.item.extra.tex[varname]?.value || this.item.extra.tex[`tex.${varname}`]?.value)
-      .find(val => val) || ''
+      .find(val => val)
+    if (value) return value
+
+    const extra: Record<string, string> = (this.item.item.getField('extra') || '')
+      .split('\n')
+      .map((line: string) => line.match(/^([^:]+?)\s*:\s*(.+)/i))
+      .reduce((acc: Record<string, string>, match) => {
+        if (match) acc[match[1].toLowerCase()] = match[2].trim()
+        return acc
+      }, {})
+    return variables.map(varname => extra[varname]).find(val => val) || ''
   }
 
 
