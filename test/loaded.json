@@ -365,6 +365,8 @@
   "export/Unexpected HTML tags abort export #1575.json",
   "export/Unicode \u00f8 in author name is exported with trailing space which does not work in bibtex #1538.bibtex",
   "export/Unicode \u00f8 in author name is exported with trailing space which does not work in bibtex #1538.json",
+  "export/Using the Extra field in the exported Citation Key #1571.bibtex",
+  "export/Using the Extra field in the exported Citation Key #1571.json",
   "export/When exporting notes, also handle the blockquote tag #1656.biblatex",
   "export/When exporting notes, also handle the blockquote tag #1656.json",
   "export/Word segmentation for Chinese references #1682.bibtex",
