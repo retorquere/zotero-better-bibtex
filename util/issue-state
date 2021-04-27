@@ -20,26 +20,24 @@ parser.add_argument('--orphaned-remote', action='store_true')
 parser.add_argument('--local-closed', action='store_true')
 args = parser.parse_args()
 
-branches = subprocess.check_output('git branch -a'.split()).decode()
+local = []
+branches = subprocess.check_output('git branch'.split()).decode()
 branches = [b.strip('* ') for b in branches.splitlines()]
+for branch in branches:
+  if branch not in ['master', 'gh-pages']:
+    local.append(branch)
 
-remote_prefix = 'remotes/origin/'
+remote = []
+for branch in repo.get_branches():
+  branch = branch.name
+  if branch not in ['master', 'gh-pages']:
+    remote.append(branch)
 
 if args.unsnyk:
-  for branch in branches:
-    if branch.startswith(remote_prefix + 'snyk-upgrade-'):
-      snyk = branch[len(remote_prefix):]
-      print(f'git push origin :{shlex.quote(snyk)}')
+  for branch in remote:
+    if branch.startswith('snyk-upgrade-'):
+      print(f'git push origin :{shlex.quote(branch)}')
   sys.exit()
-
-local = []
-remote = []
-for branch in branches:
-  if branch.startswith(remote_prefix):
-    if branch not in [ remote_prefix + br for br in ['HEAD -> origin/master', 'gh-pages', 'master' ]]:
-      remote.append(branch[len(remote_prefix):])
-  elif branch not in ['master', 'gh-pages']:
-    local.append(branch)
 
 report = []
 for branch in remote:
