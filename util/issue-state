@@ -10,15 +10,21 @@ import sys
 from github import Github
 import os
 
-g = Github(os.environ['GITHUB_TOKEN'])
-repo = g.get_repo('retorquere/zotero-better-bibtex')
-issues = {'gh-' + str(issue.number): issue.title for issue in repo.get_issues(state='open')}
-
 parser = argparse.ArgumentParser()
 parser.add_argument('--unsnyk', action='store_true')
 parser.add_argument('--orphaned-remote', action='store_true')
 parser.add_argument('--local-closed', action='store_true')
 args = parser.parse_args()
+
+g = Github(os.environ['GITHUB_TOKEN'])
+repo = g.get_repo('retorquere/zotero-better-bibtex')
+open_issues = sorted(list(repo.get_issues(state='open')), key=lambda issue: issue.number)
+issue_branch = {'gh-' + str(issue.number): issue.title for issue in open_issues}
+
+for issue in open_issues:
+  comment = list(issue.get_comments())[-1]
+  print(issue.number, issue.title)
+  print(' ', comment.user.login, comment.created_at)
 
 local = []
 branches = subprocess.check_output('git branch'.split()).decode()
@@ -43,12 +49,12 @@ report = []
 for branch in remote:
   if not branch in local:
     report.append(('orphaned remote branch', branch))
-  if branch.startswith('gh-') and not branch in issues:
+  if branch.startswith('gh-') and not branch in issue_branch:
     report.append(('remote branch for closed issue', branch))
 for branch in local:
   if not branch in remote:
     report.append(('unshared local branch', branch))
-  if branch.startswith('gh-') and not branch in issues:
+  if branch.startswith('gh-') and not branch in issue_branch:
     report.append(('local branch for closed issue', branch))
 
 if args.orphaned_remote:

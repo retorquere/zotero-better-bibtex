@@ -63,7 +63,7 @@ local function zotero_bibl_odt_banner()
     .. '<text:p text:style-name="Bibliography_20_1">'
     .. 'The Zotero citations in this document have been converted to a format'
     .. 'that can be safely transferred between word processors. Open this'
-    .. 'document in a supported word processor and press Refresh in the Zotero'
+    .. 'document in a supported word processor and press Refresh in the ' .. config.client
     .. 'plugin to continue working with the citations.'
     .. '</text:p>'
 
@@ -83,7 +83,7 @@ local function zotero_bibl_odt()
     error('zotero_bibl_odt: This should not happen')
   end
 
-  local message = '<Bibliography: Do Zotero Refresh>'
+  local message = '<Bibliography: Do ' .. config.client .. ' Refresh>'
   local bib_settings = '{"uncited":[],"omitted":[],"custom":[]}'
 
   if config.transferable then
@@ -304,7 +304,7 @@ function Meta(meta)
   if config.client == 'zotero' then
     zotero.url = 'http://127.0.0.1:23119/better-bibtex/export/item?pandocFilterData=true'
   elseif config.client == 'jurism' then
-    zotero.url = 'http://127.0.0.1:24119/better-bibtex/export/item'
+    zotero.url = 'http://127.0.0.1:24119/better-bibtex/export/item?pandocFilterData=true'
   end
 
   if string.match(FORMAT, 'odt') and config.scannable_cite then
