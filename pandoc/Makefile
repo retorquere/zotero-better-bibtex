@@ -2,11 +2,15 @@ all: bundle
 
 TIMESTAMP=$(shell date "+%Y-%m-%dT%H:%M:%S")
 MAIN=pandoc-zotero-live-citemarkers.lua
-BUNDLED=../site/content/exporting/zotero.lua
+DEPLOYED=../site/content/exporting/zotero.lua
+BUNDLED=bundle.lua
 
 bundle:
 ifeq ($(shell grep '^local pl =' *.lua), )
+	echo "-- $(shell git rev-parse --short HEAD)" > $(DEPLOYED)
 	~/.luarocks/bin/amalg.lua -o $(BUNDLED) -s $(MAIN) lunajson lunajson.decoder lunajson.encoder lunajson.sax locator utils zotero
+	cat $(BUNDLED) >> $(DEPLOYED)
+	rm $(BUNDLED)
 else
 	@echo $(MAIN) contains debugging code
 	@exit 1
