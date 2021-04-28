@@ -24,10 +24,10 @@ function execShellCommand(cmd) {
 async function bundle(config) {
   config = {
     ...config,
-    target: ['firefox60'],
     bundle: true,
     format: 'iife',
   }
+  if (!config.platform) config.target = ['firefox60']
 
   const metafile = config.metafile
   config.metafile = true
@@ -81,7 +81,7 @@ async function rebuild() {
     outdir: 'build/content',
     banner: { js: 'if (!Zotero.BetterBibTeX) {\n' },
     footer: { js: '\n}' },
-    metafile: 'gen/esbuild.json',
+    metafile: 'gen/plugin.json',
     globalThis: true,
     prepend: 'gen/process.js',
   })
@@ -103,6 +103,7 @@ async function rebuild() {
     },
     globalThis: true,
     prepend: 'gen/process.js',
+    metafile: 'gen/worker.json',
   })
 
   // translators
@@ -126,6 +127,7 @@ async function rebuild() {
       banner: { js: `if (typeof ZOTERO_TRANSLATOR_INFO === 'undefined') var ZOTERO_TRANSLATOR_INFO = ${JSON.stringify(header)};` },
       footer: { js: `const { ${vars.join(', ')} } = ${globalName};` },
       globalThis: true,
+      metafile: `gen/${translator.name}.json`,
     })
 
     const source = await fs.promises.readFile(outfile, 'utf-8')
@@ -138,7 +140,7 @@ async function rebuild() {
   }
 
   if (exists('headless/index.ts')) {
-    await esbuild.build({
+    await bundle({
       platform: 'node',
       // target: ['node12'],
       plugins: [loader.node_modules('setup/patches'), loader.patcher('setup/patches'), loader.bibertool, loader.pegjs ],
@@ -152,9 +154,10 @@ async function rebuild() {
       },
       footer: {
         js: 'const { Zotero } = Headless;\n'
-      }
+      },
+      metafile: 'gen/headless/zotero.json',
     })
-    await esbuild.build({
+    await bundle({
       platform: 'node',
       // target: ['node12'],
       plugins: [loader.node_modules('setup/patches'), loader.patcher('setup/patches'), loader.bibertool, loader.pegjs ],
@@ -163,12 +166,12 @@ async function rebuild() {
       globalName: 'Headless',
       entryPoints: [ 'headless/index.ts' ],
       outfile: 'gen/headless/index.js',
+      metafile: 'gen/headless/index.json',
       banner: {
         js: await fs.promises.readFile('gen/headless/zotero.js', 'utf-8')
       }
     })
   }
-
 }
 
 rebuild().catch(err => console.log(err))
