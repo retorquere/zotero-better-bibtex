@@ -17,7 +17,7 @@ Better BibTeX (BBT) is an extension for [Zotero](https://www.zotero.org) and [Ju
 ### Facilities for generating citation keys
 
 * Automatically generate [citation keys]({{< ref "/citing" >}}) without key clashes! Generate citation keys that take into account existing keys in your library even when they are not part of the items you export. Prevent random breakage!
-* Generate citation keys based on [JabRef patterns](https://docs.jabref.org/setup/bibtexkeypatterns).
+* Generate citation keys based on [JabRef patterns](https://docs.jabref.org/setup/citationkeypatterns).
 * Set your own, stable citation keys, drag and drop LaTeX citations, add other custom BibLaTeX fields.
 
 
