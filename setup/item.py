@@ -451,6 +451,9 @@ with fetch('zotero') as z, fetch('jurism') as j:
   SCHEMA.zotero = Munch.fromDict(patch(json.load(z), 'schema.patch', 'zotero.patch'))
   SCHEMA.jurism = Munch.fromDict(patch(json.load(j), 'schema.patch', 'jurism.patch'))
 
+  #with open('schema.json', 'w') as f:
+  #  json.dump(SCHEMA.jurism, f, indent='  ')
+
   # test for inconsistent basefield mapping
   for schema in ['jurism', 'zotero']:
     fieldmap = {}
@@ -578,7 +581,7 @@ with open(os.path.join(ITEMS, 'items.ts'), 'w') as f:
   except:
     print(exceptions.text_error_template().render())
   #stringizer = lambda x: DG.nodes[x]['name'] if x in DG.nodes else x
-  nx.write_gml(DG, 'fields.gml') # , stringizer)
+  #nx.write_gml(DG, 'fields.gml') # , stringizer)
 
 print('  writing csl-types')
 with open(os.path.join(ITEMS, 'csl-types.json'), 'w') as f:

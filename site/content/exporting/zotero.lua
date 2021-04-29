@@ -1,5 +1,4 @@
-do
-
+-- e47090273
 do
 local _ENV = _ENV
 package.preload[ "locator" ] = function( ... ) local arg = _G.arg;
@@ -156,7 +155,6 @@ function module.parse(suffix)
 end
 
 return module
-
 end
 end
 
@@ -174,7 +172,6 @@ return {
 	newparser = sax.newparser,
 	newfileparser = sax.newfileparser,
 }
-
 end
 end
 
@@ -696,7 +693,6 @@ local function newdecoder()
 end
 
 return newdecoder
-
 end
 end
 
@@ -888,7 +884,6 @@ local function newencoder()
 end
 
 return newencoder
-
 end
 end
 
@@ -1426,7 +1421,9 @@ local function newparser(src, saxtbl)
 		sax_startarray()
 
 		spaces()
-		if byte(json, pos) ~= 0x5D then  -- check closing bracket ']' which means the array empty
+		if byte(json, pos) == 0x5D then  -- check closing bracket ']' which means the array empty
+			pos = pos+1
+		else
 			local newpos
 			while true do
 				f = dispatcher[byte(json, pos)]  -- parse value
@@ -1471,7 +1468,9 @@ local function newparser(src, saxtbl)
 		sax_startobject()
 
 		spaces()
-		if byte(json, pos) ~= 0x7D then  -- check closing bracket '}' which means the object empty
+		if byte(json, pos) == 0x7D then  -- check closing bracket '}' which means the object empty
+			pos = pos+1
+		else
 			local newpos
 			while true do
 				if byte(json, pos) ~= 0x22 then
@@ -1610,7 +1609,6 @@ return {
 	newparser = newparser,
 	newfileparser = newfileparser
 }
-
 end
 end
 
@@ -1667,7 +1665,6 @@ function module.deepcopy(orig)
 end
 
 return module
-
 end
 end
 
@@ -1764,10 +1761,7 @@ function module.get(citekey)
 end
 
 return module
-
 end
-end
-
 end
 
 --
@@ -1835,7 +1829,7 @@ local function zotero_bibl_odt_banner()
     .. '<text:p text:style-name="Bibliography_20_1">'
     .. 'The Zotero citations in this document have been converted to a format'
     .. 'that can be safely transferred between word processors. Open this'
-    .. 'document in a supported word processor and press Refresh in the Zotero'
+    .. 'document in a supported word processor and press Refresh in the ' .. config.client
     .. 'plugin to continue working with the citations.'
     .. '</text:p>'
 
@@ -1855,7 +1849,7 @@ local function zotero_bibl_odt()
     error('zotero_bibl_odt: This should not happen')
   end
 
-  local message = '<Bibliography: Do Zotero Refresh>'
+  local message = '<Bibliography: Do ' .. config.client .. ' Refresh>'
   local bib_settings = '{"uncited":[],"omitted":[],"custom":[]}'
 
   if config.transferable then
@@ -2060,7 +2054,10 @@ function Meta(meta)
 
   -- refuse to create a transferable document, when csl style is not specified
   if config.transferable and not config.csl_style then
-    error('transferable documents need a CSL style')
+    error('Transferable documents need a CSL style')
+  end
+  if config.transferable and not config.scannable_cite then
+    error('Scannable-cite documents are not transferable')
   end
 
   if type(meta.zotero.client) == 'nil' then -- should never happen as the default is 'zotero'
@@ -2073,7 +2070,7 @@ function Meta(meta)
   if config.client == 'zotero' then
     zotero.url = 'http://127.0.0.1:23119/better-bibtex/export/item?pandocFilterData=true'
   elseif config.client == 'jurism' then
-    zotero.url = 'http://127.0.0.1:24119/better-bibtex/export/item'
+    zotero.url = 'http://127.0.0.1:24119/better-bibtex/export/item?pandocFilterData=true'
   end
 
   if string.match(FORMAT, 'odt') and config.scannable_cite then

@@ -5,6 +5,7 @@ const esbuild = require('esbuild')
 const exec = require('child_process').exec
 const glob = require('glob-promise')
 const crypto = require('crypto')
+const branch = require('git-branch')
 
 const loader = require('./setup/loaders')
 const shims = require('./setup/shims')
@@ -24,10 +25,10 @@ function execShellCommand(cmd) {
 async function bundle(config) {
   config = {
     ...config,
-    target: ['firefox60'],
     bundle: true,
     format: 'iife',
   }
+  if (!config.platform) config.target = ['firefox60']
 
   const metafile = config.metafile
   config.metafile = true
@@ -81,7 +82,7 @@ async function rebuild() {
     outdir: 'build/content',
     banner: { js: 'if (!Zotero.BetterBibTeX) {\n' },
     footer: { js: '\n}' },
-    metafile: 'gen/esbuild.json',
+    metafile: 'gen/plugin.json',
     globalThis: true,
     prepend: 'gen/process.js',
   })
@@ -103,6 +104,7 @@ async function rebuild() {
     },
     globalThis: true,
     prepend: 'gen/process.js',
+    metafile: 'gen/worker.json',
   })
 
   // translators
@@ -126,6 +128,7 @@ async function rebuild() {
       banner: { js: `if (typeof ZOTERO_TRANSLATOR_INFO === 'undefined') var ZOTERO_TRANSLATOR_INFO = ${JSON.stringify(header)};` },
       footer: { js: `const { ${vars.join(', ')} } = ${globalName};` },
       globalThis: true,
+      metafile: `gen/${translator.name}.json`,
     })
 
     const source = await fs.promises.readFile(outfile, 'utf-8')
@@ -137,19 +140,14 @@ async function rebuild() {
     await fs.promises.writeFile(path.join('build/resource', translator.name + '.json'), JSON.stringify(header, null, 2))
   }
 
-  if (exists('headless/index.ts')) {
-    await esbuild.build({
+  if (await branch() === 'headless') {
+    await bundle({
       platform: 'node',
       // target: ['node12'],
-      plugins: [
-        loader.node_modules('setup/patches'),
-        loader.patcher('setup/patches'),
-        loader.bibertool,
-        loader.pegjs,
-      ],
       inject: [
         './headless/inject.js',
       ],
+      plugins: [loader.node_modules('setup/patches').plugin, loader.patcher('setup/patches'), loader.bibertool, loader.pegjs ],
       bundle: true,
       format: 'iife',
       globalName: 'Headless',
@@ -160,31 +158,40 @@ async function rebuild() {
       },
       footer: {
         js: 'const { Zotero } = Headless;\n'
-      }
+      },
+      metafile: 'gen/headless/zotero.json',
     })
-    await esbuild.build({
+
+    const node_modules = loader.node_modules('setup/patches')
+    await bundle({
       platform: 'node',
       // target: ['node12'],
-      plugins: [
-        loader.node_modules('setup/patches'),
-        loader.patcher('setup/patches'),
-        loader.bibertool,
-        loader.pegjs,
-      ],
       inject: [
         './headless/inject.js',
       ],
+      plugins: [node_modules.plugin, loader.patcher('setup/patches'), loader.bibertool, loader.pegjs ],
       bundle: true,
       format: 'iife',
       globalName: 'Headless',
       entryPoints: [ 'headless/index.ts' ],
       outfile: 'gen/headless/index.js',
+      metafile: 'gen/headless/index.json',
       banner: {
         js: await fs.promises.readFile('gen/headless/zotero.js', 'utf-8')
       }
     })
+    const metafile = JSON.parse(await fs.promises.readFile('gen/headless/index.json', 'utf-8'))
+    let required_at_runtime = [...new Set(Object.keys(metafile.inputs).filter(input => input.startsWith('node_modules/')).map(loader.modulename))]
+    required_at_runtime = required_at_runtime.filter(module => !node_modules.patched.includes(module))
+    const package_json = JSON.parse(await fs.promises.readFile('package.json', 'utf-8'))
+    const move = Object.keys(package_json.dependencies).filter(pkg => !required_at_runtime.includes(pkg))
+    if (move.length) {
+      console.log('  the following packages should be moved to devDependencies')
+      for (const pkg of move) {
+        console.log('  *', pkg)
+      }
+    }
   }
-
 }
 
 rebuild().catch(err => console.log(err))

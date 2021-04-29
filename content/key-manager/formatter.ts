@@ -86,7 +86,7 @@ class PatternFormatter {
   private item: {
     type: string
     language: string
-    extra: Record<string, string>
+    extra: Extra.Fields
     item: any
 
     date?: PartialDate
@@ -172,7 +172,7 @@ class PatternFormatter {
       item,
       type: Zotero.ItemTypes.getName(item.itemTypeID),
       language: this.language[(item.getField('language') || '').toLowerCase()] || '',
-      extra: Extra.get(item.getField('extra'), 'zotero', { kv: true }).extraFields.kv,
+      extra: Extra.get(item.getField('extra'), 'zotero', { kv: true, tex: true }).extraFields,
     }
 
     if (['attachment', 'note', 'annotation'].includes(this.item.type)) return { citekey: '', postfix: { start: 0, format: ''} }
@@ -184,8 +184,8 @@ class PatternFormatter {
     catch (err) {
       this.item.date = {}
     }
-    if (this.item.extra.originalDate) {
-      const date = this.parseDate(this.item.extra.originalDate)
+    if (this.item.extra.kv.originalDate) {
+      const date = this.parseDate(this.item.extra.kv.originalDate)
       if (date.y) {
         Object.assign(this.item.date, { oy: date.y, om: date.m, od: date.d, oY: date.Y })
         if (!this.item.date.y) Object.assign(this.item.date, { y: date.y, m: date.m, d: date.d, Y: date.Y })
@@ -512,6 +512,28 @@ class PatternFormatter {
   public $date(format: string = '%Y-%m-%d') {
     return this._format_date(this.item.date, format)
   }
+
+  /** A line from the extra field */
+  // eslint-disable-next-line @typescript-eslint/no-inferrable-types
+  public $extra(variable: string) {
+    const variables = variable.toLowerCase().trim().split(/\s*\/\s*/).filter(varname => varname)
+    if (!variables.length) return ''
+
+    const value = variables
+      .map(varname => this.item.extra.kv[varname] || this.item.extra.tex[varname]?.value || this.item.extra.tex[`tex.${varname}`]?.value)
+      .find(val => val)
+    if (value) return value
+
+    const extra: Record<string, string> = (this.item.item.getField('extra') || '')
+      .split('\n')
+      .map((line: string) => line.match(/^([^:]+?)\s*:\s*(.+)/i))
+      .reduce((acc: Record<string, string>, match) => {
+        if (match) acc[match[1].toLowerCase()] = match[2].trim()
+        return acc
+      }, {})
+    return variables.map(varname => extra[varname]).find(val => val) || ''
+  }
+
 
   /** the original year of the publication */
   public $origyear() {
