@@ -1,7 +1,13 @@
+import type { Item, Attachment, Note } from '../gen/typings/serialized-item'
 import { JournalAbbrev } from './journal-abbrev'
-
 import { DB as Cache } from './db/cache'
 import { $and } from './db/loki'
+
+type Serialized = Item | Note | Attachment
+type CacheEntry = {
+  itemID: number
+  item: Serialized
+}
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const Serializer = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
@@ -15,17 +21,17 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
     })
   }
 
-  private fetch(item) {
+  private fetch(item: ZoteroItem): Serialized {
     if (!this.cache) return null
 
-    const cached = this.cache.findOne($and({ itemID: item.id }))
+    const cached: CacheEntry = this.cache.findOne($and({ itemID: item.id }))
     if (!cached) return null
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return this.enrich(cached.item, item)
   }
 
-  private store(item, serialized) {
+  private store(item: ZoteroItem, serialized: Serialized) {
     if (this.cache) {
       this.cache.insert({ itemID: item.id, item: serialized })
     }
@@ -38,16 +44,16 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  public serialize(item) { return Zotero.Utilities.Internal.itemToExportFormat(item, false, true) }
+  public serialize(item: ZoteroItem): Serialized { return Zotero.Utilities.Internal.itemToExportFormat(item, false, true) }
 
-  public fast(item, count?: { cached: number }) {
+  public fast(item: ZoteroItem, count?: { cached: number }): Serialized {
     let serialized = this.fetch(item)
 
     if (serialized) {
       if (count) count.cached += 1
     }
     else {
-      serialized = item.toJSON()
+      serialized = item.toJSON() as Serialized
       serialized.uri = Zotero.URI.getItemURI(item)
       serialized.itemID = item.id
 
@@ -57,7 +63,7 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
           break
 
         case 'attachment':
-          serialized = this.fastAttachment(serialized, item)
+          serialized = this.fastAttachment(serialized as unknown as Attachment, item)
           break
 
         default:
@@ -81,7 +87,7 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
     return this.enrich(serialized, item)
   }
 
-  private fastAttachment(serialized, att) {
+  private fastAttachment(serialized: Attachment, att): Attachment {
     if (att.attachmentLinkMode !== Zotero.Attachments.LINK_MODE_LINKED_URL) {
       serialized.localPath = att.getFilePath()
       if (serialized.localPath) serialized.defaultPath = `files/${att.id}/${OS.Path.basename(serialized.localPath)}`
@@ -90,7 +96,7 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
     return serialized
   }
 
-  public enrich(serialized, item) {
+  public enrich(serialized: Serialized, item: ZoteroItem) {
     switch (serialized.itemType) {
       case 'note':
       case 'annotation':
@@ -98,8 +104,9 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
         break
 
       default:
-        serialized.citekey = Zotero.BetterBibTeX.KeyManager.get(item.id).citekey
-        serialized.citationKey = serialized.citationKey || serialized.citekey // prepare for https://github.com/zotero/translators/pull/1810#issuecomment-456219750
+        serialized.citationKey = Zotero.BetterBibTeX.KeyManager.get(item.id).citekey
+        // @ts-ignore
+        serialized.citekey = serialized.citationKey // legacy
         if (!serialized.journalAbbreviation) serialized.autoJournalAbbreviation = JournalAbbrev.get(serialized)
         break
     }

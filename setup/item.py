@@ -183,6 +183,7 @@ def patch(s, *ps):
   # field/type order doesn't matter for BBT
   for it in s['itemTypes']:
     assert 'creatorTypes' in it
+    # assures primary is first
     assert len(it['creatorTypes'])== 0 or [ct['creatorType'] for ct in it['creatorTypes'] if ct.get('primary', False)] == [it['creatorTypes'][0]['creatorType']]
 
   s['itemTypes'] = {
@@ -451,8 +452,8 @@ with fetch('zotero') as z, fetch('jurism') as j:
   SCHEMA.zotero = Munch.fromDict(patch(json.load(z), 'schema.patch', 'zotero.patch'))
   SCHEMA.jurism = Munch.fromDict(patch(json.load(j), 'schema.patch', 'jurism.patch'))
 
-  #with open('schema.json', 'w') as f:
-  #  json.dump(SCHEMA.jurism, f, indent='  ')
+  with open('schema.json', 'w') as f:
+    json.dump(SCHEMA.jurism, f, indent='  ')
 
   # test for inconsistent basefield mapping
   for schema in ['jurism', 'zotero']:

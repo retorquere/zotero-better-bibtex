@@ -10,15 +10,41 @@ export interface Collection {
   parent?: string
 }
 
-export interface Note { note: string }
+export interface Note {
+  itemType: 'note' | 'annotation'
+  key: string
+  itemID: number
+  libraryID: number
+  uri: string
+
+  note: string
+}
+
 export interface Tag { tag: string, type?: number }
-export interface Attachment { path: string, title?: string, mimeType?: string }
 export interface Creator { creatorType?: string, name?: string, firstName?: string, lastName?:string, fieldMode?: number, source?: string }
 
-export interface Item {
-  // fields common to all items
+export interface Attachment {
+  itemType: 'attachment'
+  key: string
   itemID: number
+  libraryID: number
+  uri: string
+
+  path: string
+  title?: string
+  mimeType?: string
+  localPath?: string
+  defaultPath?: string
+}
+
+export interface Item {
   itemType: ${' | '.join(["'" + itemType + "'" for itemType in itemTypes])}
+  key: string
+  itemID: number
+  libraryID: number
+  uri: string
+
+  // fields common to all items
   dateAdded: string
   dateModified: string
   creators: Array<ZoteroTranslatorObject.Creator>
@@ -34,7 +60,6 @@ export interface Item {
   %endfor
 
   relations: { 'dc:relation': string[] }
-  uri: string
   cslType: string
   cslVolumeTitle: string
   citationKey: string

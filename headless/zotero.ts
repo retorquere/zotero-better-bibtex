@@ -1,7 +1,8 @@
 import { defaults } from '../content/prefs-meta'
 import schema from '../schema/zotero.json'
 import XRegExp from 'xregexp'
-console.log(typeof XRegExp)
+
+export { DOMParser } from 'xmldom'
 
 class Preferences {
   get(name) {

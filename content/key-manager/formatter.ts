@@ -1,3 +1,7 @@
+import type { Item as SerializedItem} from '../../gen/typings/serialized-item'
+
+import { client } from '../client'
+
 import { log } from '../logger'
 import fold2ascii from 'fold-to-ascii'
 import ucs2decode = require('punycode2/ucs2/decode')
@@ -10,12 +14,12 @@ import { JournalAbbrev } from '../journal-abbrev'
 import { kuroshiro } from './kuroshiro'
 import * as Extra from '../extra'
 import { buildCiteKey as zotero_buildCiteKey } from './formatter-zotero'
-import { fromEntries } from '../object'
 
 const parser = require('./formatter.pegjs')
 import * as DateParser from '../dateparser'
 
 import * as methods from '../../gen/key-formatter-methods.json'
+import itemCreators from '../../gen/items/creators.json'
 import * as items from '../../gen/items/items'
 import { jieba } from './jieba'
 
@@ -52,6 +56,11 @@ type PartialDate = {
   S?: string
 }
 
+type Item = SerializedItem & {
+  parsedDate?: PartialDate
+  extraFields: Extra.Fields
+}
+
 const safechars = '-:\\p{L}0-9_!$*+./;\\[\\]'
 class PatternFormatter {
   public generate: () => { citekey: string, postfix: { start: number, format: string } }
@@ -83,18 +92,7 @@ class PatternFormatter {
   // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   private DOMParser = new DOMParser
 
-  private item: {
-    type: string
-    language: string
-    extra: Extra.Fields
-    item: any
-
-    date?: PartialDate
-
-    title?: string
-    tags?: string[]
-    pages?: string
-  }
+  private item: Item
 
   private skipWords: Set<string>
 
@@ -167,43 +165,35 @@ class PatternFormatter {
     return formatter
   }
 
-  public format(item): { citekey: string, postfix: { start: number, format: string } } {
+  public format(item: SerializedItem): { citekey: string, postfix: { start: number, format: string } } {
     this.item = {
-      item,
-      type: Zotero.ItemTypes.getName(item.itemTypeID),
-      language: this.language[(item.getField('language') || '').toLowerCase()] || '',
-      extra: Extra.get(item.getField('extra'), 'zotero', { kv: true, tex: true }).extraFields,
+      ...item,
+      language: this.language[(item.language || '').toLowerCase()] || '',
+      ...Extra.get(item.extra, 'zotero', { kv: true, tex: true }),
     }
 
-    if (['attachment', 'note', 'annotation'].includes(this.item.type)) return { citekey: '', postfix: { start: 0, format: ''} }
+    if (['attachment', 'note', 'annotation'].includes(this.item.itemType)) return { citekey: '', postfix: { start: 0, format: ''} }
 
     try {
-      const date = item.getField('date', false, true)
-      this.item.date = date ? this.parseDate(date) : {}
+      this.item.parsedDate = item.date ? this.parseDate(item.date) : {}
     }
     catch (err) {
-      this.item.date = {}
+      this.item.parsedDate = {}
     }
-    if (this.item.extra.kv.originalDate) {
-      const date = this.parseDate(this.item.extra.kv.originalDate)
+    if (this.item.extraFields.kv.originalDate) {
+      const date = this.parseDate(this.item.extraFields.kv.originalDate)
       if (date.y) {
-        Object.assign(this.item.date, { oy: date.y, om: date.m, od: date.d, oY: date.Y })
-        if (!this.item.date.y) Object.assign(this.item.date, { y: date.y, m: date.m, d: date.d, Y: date.Y })
+        Object.assign(this.item.parsedDate, { oy: date.y, om: date.m, od: date.d, oY: date.Y })
+        if (!this.item.parsedDate.y) Object.assign(this.item.parsedDate, { y: date.y, m: date.m, d: date.d, Y: date.Y })
       }
     }
-    if (Object.keys(this.item.date).length === 0) this.item.date = null
+    if (Object.keys(this.item.parsedDate).length === 0) this.item.parsedDate = null
 
-    try {
-      this.item.title = item.getField('title', false, true) || ''
-      if (this.item.title.includes('<')) this.item.title = innerText(htmlParser.parseFragment(this.item.title))
-    }
-    catch (err) {
-      this.item.title = ''
-    }
+    if (this.item.title.includes('<')) this.item.title = innerText(htmlParser.parseFragment(this.item.title))
 
     const citekey = this.generate()
 
-    if (!citekey.citekey) citekey.citekey = `zotero-${item.id}`
+    if (!citekey.citekey) citekey.citekey = `zotero-${item.itemID}`
     if (citekey.citekey && Preference.citekeyFold) citekey.citekey = this.removeDiacritics(citekey.citekey)
     citekey.citekey = citekey.citekey.replace(/[\s{},@]/g, '')
 
@@ -296,22 +286,17 @@ class PatternFormatter {
    */
   public $zotero() {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return zotero_buildCiteKey({
-      creators: this.item.item.getCreators(),
-      title: this.item.item.getField('title'),
-      date: this.item.item.getField('date'),
-      dateAdded: this.item.item.getField('dateAdded'),
-    }, null, {})
+    return zotero_buildCiteKey(this.item, null, {})
   }
 
   public $property(name: string) {
     try {
-      return this.innerText(this.item.item.getField(name, false, true) || '')
+      return this.innerText(this.item[name] || '')
     }
     catch (err) {}
 
     try {
-      return this.innerText(this.item.item.getField(name[0].toLowerCase() + name.slice(1), false, true) || '')
+      return this.innerText(this.item[name[0].toLowerCase() + name.slice(1)] || '')
     }
     catch (err) {}
 
@@ -320,9 +305,9 @@ class PatternFormatter {
 
   /** returns the name of the shared group library, or nothing if the reference is in your personal library */
   public $library(): string {
-    if (this.item.item.libraryID === Zotero.Libraries.userLibraryID) return ''
+    if (this.item.libraryID === Zotero.Libraries.userLibraryID) return ''
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return Zotero.Libraries.get(this.item.item.libraryID).name
+    return Zotero.Libraries.get(this.item.libraryID).name
   }
 
   /** The first `N` (default: all) characters of the `M`th (default: first) author's last name. */
@@ -358,7 +343,7 @@ class PatternFormatter {
   /** returns the journal abbreviation, or, if not found, the journal title, If 'automatic journal abbreviation' is enabled in the BBT settings,
    * it will use the same abbreviation filter Zotero uses in the wordprocessor integration. You might want to use the `abbr` filter on this.
    */
-  public $journal() { return JournalAbbrev.get(this.item.item, true) || this.item.item.getField('publicationTitle', false, true) } // eslint-disable-line @typescript-eslint/no-unsafe-return
+  public $journal() { return JournalAbbrev.get(this.item, true) || this.item.publicationTitle } // eslint-disable-line @typescript-eslint/no-unsafe-return
 
   /** The last name of up to N authors. If there are more authors, "EtAl" is appended. */
   public $authors(onlyEditors: boolean, withInitials: boolean, joiner: string, n?:number) {
@@ -467,21 +452,20 @@ class PatternFormatter {
 
   /** The number of the first page of the publication (Caution: this will return the lowest number found in the pages field, since BibTeX allows `7,41,73--97` or `43+`.) */
   public $firstpage() {
-    if (typeof this.item.pages !== 'string') this.item.pages = (this.item.item.getField('pages', false, true) || '')
     return this.item.pages.split(/[-\s,–]/)[0] || ''
   }
 
   /** The number of the last page of the publication (See the remark on `firstpage`) */
   public $lastpage() {
-    if (typeof this.item.pages !== 'string') this.item.pages = (this.item.item.getField('pages', false, true) || '')
     return this.item.pages.split(/[-\s,–]/).pop() || ''
   }
 
   /** Tag number `N` */
-  public $keyword(n: number) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    this.item.tags = this.item.tags || this.item.item.getTags().map(tag => tag.tag).sort((a, b) => a.localeCompare(b))
-    return this.item.tags[n] || ''
+  public $keyword(n: number): string {
+    const tag = this.item.tags?.[n]
+    if (typeof tag === 'string') return tag
+    if (typeof tag?.tag === 'string') return tag.tag as string
+    return ''
   }
 
   /** The first `N` (default: 3) words of the title, apply capitalization to first `M` (default: 0) of those */
@@ -499,18 +483,18 @@ class PatternFormatter {
 
   /** The last 2 digits of the publication year */
   public $shortyear() {
-    return this._format_date(this.item.date, '%y')
+    return this._format_date(this.item.parsedDate, '%y')
   }
 
   /** The year of the publication */
   public $year() {
-    return this.padYear(this._format_date(this.item.date, '%-Y'), 2)
+    return this.padYear(this._format_date(this.item.parsedDate, '%-Y'), 2)
   }
 
   /** The date of the publication */
   // eslint-disable-next-line @typescript-eslint/no-inferrable-types
   public $date(format: string = '%Y-%m-%d') {
-    return this._format_date(this.item.date, format)
+    return this._format_date(this.item.parsedDate, format)
   }
 
   /** A line from the extra field */
@@ -520,11 +504,11 @@ class PatternFormatter {
     if (!variables.length) return ''
 
     const value = variables
-      .map(varname => this.item.extra.kv[varname] || this.item.extra.tex[varname]?.value || this.item.extra.tex[`tex.${varname}`]?.value)
+      .map(varname => this.item.extraFields.kv[varname] || this.item.extraFields.tex[varname]?.value || this.item.extraFields.tex[`tex.${varname}`]?.value)
       .find(val => val)
     if (value) return value
 
-    const extra: Record<string, string> = (this.item.item.getField('extra') || '')
+    const extra: Record<string, string> = (this.item.extra || '')
       .split('\n')
       .map((line: string) => line.match(/^([^:]+?)\s*:\s*(.+)/i))
       .reduce((acc: Record<string, string>, match) => {
@@ -537,18 +521,18 @@ class PatternFormatter {
 
   /** the original year of the publication */
   public $origyear() {
-    return this.padYear(this._format_date(this.item.date, '%-oY'), 2)
+    return this.padYear(this._format_date(this.item.parsedDate, '%-oY'), 2)
   }
 
   /** the original date of the publication */
   public $origdate() {
-    return this._format_date(this.item.date, '%oY-%om-%od')
+    return this._format_date(this.item.parsedDate, '%oY-%om-%od')
   }
 
   /** the month of the publication */
   public $month() {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return this.months[this.item.date.m] || ''
+    return this.months[this.item.parsedDate.m] || ''
   }
 
   /** Capitalize all the significant words of the title, and concatenate them. For example, `An awesome paper on JabRef` will become `AnAwesomePaperJabref` */
@@ -825,15 +809,13 @@ class PatternFormatter {
   }
 
   private creators(onlyEditors, options: { initialOnly?: boolean, withInitials?: boolean} = {}): string[] {
-    let types = Zotero.CreatorTypes.getTypesForItemType(this.item.item.itemTypeID)
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    types = fromEntries(types.map(type => [ type.name, type.id ]))
-    const primary = Zotero.CreatorTypes.getPrimaryIDForType(this.item.item.itemTypeID)
+    const types = itemCreators[client][this.item.itemType] || []
+    const primary = types[0]
 
     const creators: Record<string, string[]> = {}
 
-    for (const creator of this.item.item.getCreators()) {
-      if (onlyEditors && ![types.editor, types.seriesEditor].includes(creator.creatorTypeID)) continue
+    for (const creator of this.item.creators) {
+      if (onlyEditors && creator.creatorType !== 'editor' && creator.creatorType !== 'seriesEditor') continue
 
       let name = options.initialOnly ? this.initial(creator) : this.stripQuotes(this.innerText(creator.lastName))
       if (name) {

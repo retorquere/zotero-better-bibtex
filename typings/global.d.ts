@@ -46,6 +46,9 @@ interface ZoteroItem {
   libraryID: number
   key: string
   getField: (string) => string | number
+  getNotes: () => ZoteroItem[]
+  getAttachments: () => ZoteroItem[]
+  toJSON: () => import('../gen/typings/serialized-item').Item
 }
 
 // https://stackoverflow.com/questions/39040108/import-class-in-definition-file-d-ts

@@ -728,6 +728,7 @@ export class BetterBibTeX {
 
   private strings: any
   private firstRun: { citekeyFormat: string, dragndrop: boolean, unabbreviate: boolean, strings: boolean }
+  private globals: Record<string, any>
 
   public debugEnabled(): boolean {
     return (Zotero.Debug.enabled as boolean)
@@ -782,7 +783,12 @@ export class BetterBibTeX {
     }
   }
 
+  public openDialog(url: string, title: string, properties: string, params: Record<string, any>): void {
+    this.globals.window.openDialog(url, title, properties, params)
+  }
+
   public async load(globals: any): Promise<void> { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
+    this.globals = globals
     if (this.loaded) return // eslint-disable-line @typescript-eslint/no-misused-promises
 
     this.strings = globals.document.getElementById('zotero-better-bibtex-strings')

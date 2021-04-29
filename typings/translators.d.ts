@@ -1,11 +1,11 @@
-import { Item, Collection } from '../gen/typings/serialized-item'
+import { Item, Attachment, Collection } from '../gen/typings/serialized-item'
 
 export namespace Translators {
   namespace Worker {
     type Config = {
       preferences: any,
       options: any,
-      items: Item[]
+      items: Array<Item | Attachment | Note>
       collections: Collection[]
       cslItems?: Record<number, any>
       cache: Record<number, {itemID: number, reference: string, metadata: any, meta: { updated: number }}>
