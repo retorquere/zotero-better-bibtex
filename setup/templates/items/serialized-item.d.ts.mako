@@ -10,25 +10,26 @@ export interface Collection {
   parent?: string
 }
 
-export interface Note {
-  itemType: 'note' | 'annotation'
+export interface Tag { tag: string, type?: number }
+export interface Creator { creatorType?: string, name?: string, firstName?: string, lastName?:string, fieldMode?: number, source?: string }
+
+interface ItemBase {
   key: string
   itemID: number
   libraryID: number
   uri: string
+  dateAdded: string
+  dateModified: string
+}
+
+export interface Note extends ItemBase {
+  itemType: 'note' | 'annotation'
 
   note: string
 }
 
-export interface Tag { tag: string, type?: number }
-export interface Creator { creatorType?: string, name?: string, firstName?: string, lastName?:string, fieldMode?: number, source?: string }
-
-export interface Attachment {
+export interface Attachment extends ItemBase{
   itemType: 'attachment'
-  key: string
-  itemID: number
-  libraryID: number
-  uri: string
 
   path: string
   title?: string
@@ -37,20 +38,15 @@ export interface Attachment {
   defaultPath?: string
 }
 
-export interface Item {
-  itemType: ${' | '.join(["'" + itemType + "'" for itemType in itemTypes])}
-  key: string
-  itemID: number
-  libraryID: number
-  uri: string
+export interface Reference extends ItemBase {
+  itemType: ${' | '.join(["'" + itemType + "'" for itemType in itemTypes if itemType not in ['note', 'annotation', 'attachment']])}
+  citationKey: string
 
   // fields common to all items
-  dateAdded: string
-  dateModified: string
-  creators: Array<ZoteroTranslatorObject.Creator>
-  tags: Array<ZoteroTranslatorObject.Tag>
-  notes: Array<ZoteroTranslatorObject.Note>
-  attachments: Array<ZoteroTranslatorObject.Attachment>
+  creators: Array<Creator>
+  tags: Array<Tag>
+  notes: Array<Note>
+  attachments: Array<Attachment>
   raw: boolean
   cachable?: boolean
   autoJournalAbbreviation?: string
@@ -62,7 +58,6 @@ export interface Item {
   relations: { 'dc:relation': string[] }
   cslType: string
   cslVolumeTitle: string
-  citationKey: string
   collections: string[]
   extraFields: Fields
   arXiv: { source?: string, id: string, category?: string }
@@ -76,3 +71,5 @@ export interface Item {
     }
   }
 }
+
+export type Item = Reference | Note | Attachment

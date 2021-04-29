@@ -161,7 +161,7 @@ export function doExport(): void {
 
     delete item.collections
 
-    itemfields.simplifyForExport(item, Translator.options.dropAttachments)
+    itemfields.simplifyForExport(item, { dropAttachments: Translator.options.dropAttachments})
     item.relations = item.relations ? (item.relations['dc:relation'] || []) : []
 
     for (const att of item.attachments || []) {

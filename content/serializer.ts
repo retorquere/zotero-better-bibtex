@@ -1,12 +1,11 @@
-import type { Item, Attachment, Note } from '../gen/typings/serialized-item'
+import type { Attachment, Item } from '../gen/typings/serialized-item'
 import { JournalAbbrev } from './journal-abbrev'
 import { DB as Cache } from './db/cache'
 import { $and } from './db/loki'
 
-type Serialized = Item | Note | Attachment
 type CacheEntry = {
   itemID: number
-  item: Serialized
+  item: Item
 }
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
@@ -21,7 +20,7 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
     })
   }
 
-  private fetch(item: ZoteroItem): Serialized {
+  private fetch(item: ZoteroItem): Item {
     if (!this.cache) return null
 
     const cached: CacheEntry = this.cache.findOne($and({ itemID: item.id }))
@@ -31,7 +30,7 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
     return this.enrich(cached.item, item)
   }
 
-  private store(item: ZoteroItem, serialized: Serialized) {
+  private store(item: ZoteroItem, serialized: Item) {
     if (this.cache) {
       this.cache.insert({ itemID: item.id, item: serialized })
     }
@@ -44,16 +43,16 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  public serialize(item: ZoteroItem): Serialized { return Zotero.Utilities.Internal.itemToExportFormat(item, false, true) }
+  public serialize(item: ZoteroItem): Item { return Zotero.Utilities.Internal.itemToExportFormat(item, false, true) }
 
-  public fast(item: ZoteroItem, count?: { cached: number }): Serialized {
+  public fast(item: ZoteroItem, count?: { cached: number }): Item {
     let serialized = this.fetch(item)
 
     if (serialized) {
       if (count) count.cached += 1
     }
     else {
-      serialized = item.toJSON() as Serialized
+      serialized = item.toJSON()
       serialized.uri = Zotero.URI.getItemURI(item)
       serialized.itemID = item.id
 
@@ -96,7 +95,7 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
     return serialized
   }
 
-  public enrich(serialized: Serialized, item: ZoteroItem) {
+  public enrich(serialized: Item, item: ZoteroItem) {
     switch (serialized.itemType) {
       case 'note':
       case 'annotation':

@@ -1,4 +1,4 @@
-import type { Item as SerializedItem} from '../../gen/typings/serialized-item'
+import type { Reference, Item } from '../../gen/typings/serialized-item'
 
 import { client } from '../client'
 
@@ -56,7 +56,7 @@ type PartialDate = {
   S?: string
 }
 
-type Item = SerializedItem & {
+type ExtendedReference = Reference & {
   parsedDate?: PartialDate
   extraFields: Extra.Fields
 }
@@ -92,7 +92,7 @@ class PatternFormatter {
   // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   private DOMParser = new DOMParser
 
-  private item: Item
+  private item: ExtendedReference
 
   private skipWords: Set<string>
 
@@ -165,17 +165,22 @@ class PatternFormatter {
     return formatter
   }
 
-  public format(item: SerializedItem): { citekey: string, postfix: { start: number, format: string } } {
-    this.item = {
+  public format(item: Item): { citekey: string, postfix: { start: number, format: string } } {
+    switch (item.itemType) {
+      case 'attachment':
+      case 'note':
+      case 'annotation':
+        return { citekey: '', postfix: { start: 0, format: ''} }
+    }
+
+    this.item = items.simplifyForExport({
       ...item,
       language: this.language[(item.language || '').toLowerCase()] || '',
       ...Extra.get(item.extra, 'zotero', { kv: true, tex: true }),
-    }
-
-    if (['attachment', 'note', 'annotation'].includes(this.item.itemType)) return { citekey: '', postfix: { start: 0, format: ''} }
+    }, { scrub: false }) as Reference
 
     try {
-      this.item.parsedDate = item.date ? this.parseDate(item.date) : {}
+      this.item.parsedDate = this.item.date ? this.parseDate(this.item.date) : {}
     }
     catch (err) {
       this.item.parsedDate = {}
@@ -187,13 +192,15 @@ class PatternFormatter {
         if (!this.item.parsedDate.y) Object.assign(this.item.parsedDate, { y: date.y, m: date.m, d: date.d, Y: date.Y })
       }
     }
-    if (Object.keys(this.item.parsedDate).length === 0) this.item.parsedDate = null
+    if (Object.keys(this.item.parsedDate).length === 0) {
+      this.item.parsedDate = null
+    }
 
     if (this.item.title.includes('<')) this.item.title = innerText(htmlParser.parseFragment(this.item.title))
 
     const citekey = this.generate()
 
-    if (!citekey.citekey) citekey.citekey = `zotero-${item.itemID}`
+    if (!citekey.citekey) citekey.citekey = `zotero-${this.item.itemID}`
     if (citekey.citekey && Preference.citekeyFold) citekey.citekey = this.removeDiacritics(citekey.citekey)
     citekey.citekey = citekey.citekey.replace(/[\s{},@]/g, '')
 
@@ -464,7 +471,7 @@ class PatternFormatter {
   public $keyword(n: number): string {
     const tag = this.item.tags?.[n]
     if (typeof tag === 'string') return tag
-    if (typeof tag?.tag === 'string') return tag.tag as string
+    if (typeof tag?.tag === 'string') return tag.tag
     return ''
   }
 
@@ -817,7 +824,7 @@ class PatternFormatter {
     for (const creator of this.item.creators) {
       if (onlyEditors && creator.creatorType !== 'editor' && creator.creatorType !== 'seriesEditor') continue
 
-      let name = options.initialOnly ? this.initial(creator) : this.stripQuotes(this.innerText(creator.lastName))
+      let name = options.initialOnly ? this.initial(creator) : this.stripQuotes(this.innerText(creator.lastName || creator.name))
       if (name) {
         if (options.withInitials && creator.firstName) {
           let initials = Zotero.Utilities.XRegExp.replace(this.stripQuotes(creator.firstName), this.re.caseNotUpperTitle, '', 'all')
@@ -832,14 +839,14 @@ class PatternFormatter {
 
       if (!name) continue
 
-      switch (creator.creatorTypeID) {
-        case types.editor:
-        case types.seriesEditor:
+      switch (creator.creatorType) {
+        case 'editor':
+        case 'seriesEditor':
           creators.editors = creators.editors || []
           creators.editors.push(name)
           break
 
-        case types.translator:
+        case 'translator':
           creators.translators = creators.translators || []
           creators.translators.push(name)
           break

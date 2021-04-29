@@ -2,6 +2,7 @@
 
 import { client } from '../../content/client'
 import { Item } from '../typings/serialized-item'
+
 const jurism = client === 'jurism'
 const zotero = !jurism
 
@@ -58,7 +59,7 @@ export const label: Record<string, string> = {
 %endfor
 }
 
-function unalias(item: any) {
+function unalias(item: any, { scrub = true }: { scrub?: boolean } = {}): void {
   delete item.inPublications
   let v
   %for client, indent in [('both', ''), ('zotero', '  '), ('jurism', '  ')]:
@@ -66,15 +67,16 @@ function unalias(item: any) {
   if (${client}) {
     %endif
     %for field, field_aliases in aliases[client].items():
-
       %if len(field_aliases) == 1:
   ${indent}if (item.${field_aliases[0]}) item.${field} = item.${field_aliases[0]}
       %else:
   ${indent}if (v = (${' || '.join(f'item.{a}' for a in field_aliases)})) item.${field} = v
       %endif
-      %for a in field_aliases:
-  ${indent}delete item.${a}
+  ${indent}if (scrub) {
+      %for field in field_aliases:
+  ${indent}  delete item.${field}
       %endfor
+  ${indent}}
     %endfor
 
     %if client != 'both':
@@ -85,8 +87,8 @@ function unalias(item: any) {
 }
 
 // import & export translators expect different creator formats... nice
-export function simplifyForExport(item: any, dropAttachments = false): Item {
-  unalias(item)
+export function simplifyForExport(item: any, { dropAttachments=false, scrub=true }: { dropAttachments?: boolean, scrub?: boolean } = {}): Item {
+  unalias(item, { scrub })
 
   if (item.filingDate) item.filingDate = item.filingDate.replace(/^0000-00-00 /, '')
 
@@ -113,7 +115,7 @@ export function simplifyForExport(item: any, dropAttachments = false): Item {
 }
 
 export function simplifyForImport(item: any): Item {
-  unalias(item)
+  unalias(item, { scrub: true })
 
   if (item.creators) {
     for (const creator of item.creators) {

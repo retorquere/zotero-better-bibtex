@@ -11,6 +11,9 @@ import { Cache } from '../../typings/cache'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
 import { log } from '../../content/logger'
 import { worker } from '../../content/environment'
+import { Reference } from '../../gen/typings/serialized-item'
+
+type ExtendedItem = Reference & { extraFields: Extra.Fields }
 
 const validCSLTypes: string[] = require('../../gen/items/csl-types.json')
 
@@ -49,9 +52,8 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
   public doExport() {
     const items = []
     const order: { citationKey: string, i: number}[] = []
-    for (const item of Translator.items.remaining) {
-      if (item.itemType === 'note' || item.itemType === 'attachment') continue
-
+    let item: ExtendedItem
+    while (item = Translator.nextReference()) {
       order.push({ citationKey: item.citationKey, i: items.length })
 
       let cached: Cache.ExportedItem

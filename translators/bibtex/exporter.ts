@@ -1,7 +1,7 @@
 declare const Zotero: any
 
 import { Translator } from '../lib/translator'
-import { Item } from '../../gen/typings/serialized-item'
+import { Reference } from '../../gen/typings/serialized-item'
 import { Cache } from '../../typings/cache'
 
 import { JabRef } from '../bibtex/jabref' // not so nice... BibTeX-specific code
@@ -41,13 +41,11 @@ export const Exporter = new class {
     return uniq
   }
 
-  public nextItem(): Item {
+  public nextItem(): Reference {
     this.postfix = this.postfix || (new Postfix(Translator.preferences.qualityReport))
 
-    let item: Item
-    while (item = Translator.nextItem()) {
-      if (['note', 'attachment'].includes(item.itemType)) continue
-
+    let item: Reference
+    while (item = Translator.nextReference()) {
       if (!item.citationKey) {
         throw new Error(`No citation key in ${JSON.stringify(item)}`)
       }

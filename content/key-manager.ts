@@ -1,4 +1,4 @@
-import type { Item as SerializedItem} from '../gen/typings/serialized-item'
+import type { Reference } from '../gen/typings/serialized-item'
 
 import ETA from 'node-eta'
 
@@ -486,7 +486,7 @@ export class KeyManager {
 
     if (citekey) return { citekey, pinned: true }
 
-    const proposed = Formatter.format(Serializer.fast(item) as SerializedItem)
+    const proposed = Formatter.format(Serializer.fast(item) as Reference)
 
     const conflictQuery: Query = { $and: [ { itemID: { $ne: item.id } } ] }
     if (Preference.keyScope !== 'global') conflictQuery.$and.push({ libraryID: { $eq: item.libraryID } })

@@ -7,15 +7,23 @@ export { Translator }
 import { log } from '../content/logger'
 import { fromEntries } from '../content/object'
 
-import { Item } from '../gen/typings/serialized-item'
+import { Reference, Item } from '../gen/typings/serialized-item'
 
 import * as escape from '../content/escape'
 import * as Extra from '../content/extra'
 
-function clean(item: Item): Item {
-  item = {...item, ...Extra.get(item.extra, 'zotero') }
-  item.extra = item.extra.split('\n').filter(line => !line.match(/^OCLC:/i)).join('\n')
-  return item
+type ExtendedItem = Reference & { extraFields: Extra.Fields }
+
+function clean(item: Item) {
+  switch (item.itemType) {
+    case 'note':
+    case 'annotation':
+    case 'attachment':
+      return item
+  }
+  const cleaned: ExtendedItem = {...item, ...Extra.get(item.extra, 'zotero') }
+  cleaned.extra = item.extra.split('\n').filter(line => !line.match(/^OCLC:/i)).join('\n')
+  return cleaned
 }
 
 type ExpandedCollection = {
@@ -39,9 +47,8 @@ class Exporter {
     const filed: Set<number> = new Set
     const collections: Record<string, ExpandedCollection> = {}
 
-    for (let item of Translator.items.remaining) {
-      item = clean(item)
-      if (this.keep(item)) items[item.itemID] = item
+    for (const item of Translator.items.remaining) {
+      if (this.keep(item)) items[item.itemID] = clean(item)
     }
 
     log.debug(Object.values(Translator.collections).map(coll => ({
@@ -192,11 +199,17 @@ class Exporter {
 
   keep(item) {
     if (!item) return false
-    if (item.extra) return true
-    if (item.note) return true
-    if (item.notes && item.notes.find(note => note.note)) return true
-    if (item.attachments && item.attachments.find(att => att.note)) return true
-    return false
+    switch (item.itemType) {
+      case 'note':
+      case 'annotation':
+        return item.note
+
+      case 'attachment':
+        return false
+
+      default:
+        return item.extra || (item.notes && item.notes.find(note => note.note)) || (item.attachments && item.attachments.find(att => att.note))
+    }
   }
 }
 
