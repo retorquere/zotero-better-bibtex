@@ -419,7 +419,7 @@ class ExtraFields:
     # remove phantom labels for clarity
     for label in [node for node, data in self.dg.nodes(data=True) if data['domain'] == 'label' and 'LabelGraphics' in data]:
       self.dg.remove_node(label)
-    nx.write_gml(self.dg, 'mapping.gml', stringizer)
+    #nx.write_gml(self.dg, 'mapping.gml', stringizer)
 
     #with open('mapping.json', 'w') as f:
     #  data = nx.readwrite.json_graph.node_link_data(self.dg)
@@ -439,8 +439,8 @@ with fetch('zotero') as z, fetch('jurism') as j:
   SCHEMA.zotero = Munch.fromDict(patch(json.load(z), 'schema.patch', 'zotero.patch'))
   SCHEMA.jurism = Munch.fromDict(patch(json.load(j), 'schema.patch', 'jurism.patch'))
 
-  with open('schema.json', 'w') as f:
-    json.dump(SCHEMA.jurism, f, indent='  ')
+  #with open('schema.json', 'w') as f:
+  #  json.dump(SCHEMA.jurism, f, indent='  ')
 
   # test for inconsistent basefield mapping
   for schema in ['jurism', 'zotero']:
@@ -569,7 +569,7 @@ with open(os.path.join(ITEMS, 'items.ts'), 'w') as f:
   except:
     print(exceptions.text_error_template().render())
   #stringizer = lambda x: DG.nodes[x]['name'] if x in DG.nodes else x
-  nx.write_gml(DG, 'fields.gml') # , stringizer)
+  #nx.write_gml(DG, 'fields.gml') # , stringizer)
 
 print('  writing csl-types')
 with open(os.path.join(ITEMS, 'csl-types.json'), 'w') as f:

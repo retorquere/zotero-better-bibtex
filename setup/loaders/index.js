@@ -93,7 +93,7 @@ module.exports.__dirname = {
 }
 
 function modulename(source) {
-  source = source.replace(/^node_modules\//, '').replace(/^.+\/node_modules\//, '').split('/')
+  source = source.replace(/^node_modules\//, '').replace(/^.+\/node_modules\//, '').replace(/^\.pnpm\//, '').split('/')
   if (source[0][0] === '@') {
     return source.unshift(2).join('/')
   }
@@ -101,9 +101,12 @@ function modulename(source) {
     return source[0]
   }
 }
+module.exports.modulename = modulename
 module.exports.node_modules = function(dir) {
-  const patched_modules = [...new Set(Object.keys(load_patches(dir)).map(modulename))]
-  console.log('  patched modules:', patched_modules)
+  const patched = [...new Set(Object.keys(load_patches(dir)).map(modulename))]
 
-  return nodeExternalsPlugin({ allowList: patched_modules })
+  return {
+    patched,
+    plugin: nodeExternalsPlugin({ allowList: patched }),
+  }
 }
