@@ -297,17 +297,7 @@ class PatternFormatter {
   }
 
   public $property(name: string) {
-    try {
-      return this.innerText(this.item[name] || '')
-    }
-    catch (err) {}
-
-    try {
-      return this.innerText(this.item[name[0].toLowerCase() + name.slice(1)] || '')
-    }
-    catch (err) {}
-
-    return ''
+    return this.innerText(this.item[name] || this.item[name[0].toLowerCase() + name.slice(1)] || '')
   }
 
   /** returns the name of the shared group library, or nothing if the reference is in your personal library */
@@ -459,12 +449,12 @@ class PatternFormatter {
 
   /** The number of the first page of the publication (Caution: this will return the lowest number found in the pages field, since BibTeX allows `7,41,73--97` or `43+`.) */
   public $firstpage() {
-    return this.item.pages.split(/[-\s,–]/)[0] || ''
+    return this.item.pages?.split(/[-\s,–]/)[0] || ''
   }
 
   /** The number of the last page of the publication (See the remark on `firstpage`) */
   public $lastpage() {
-    return this.item.pages.split(/[-\s,–]/).pop() || ''
+    return this.item.pages?.split(/[-\s,–]/).pop() || ''
   }
 
   /** Tag number `N` */

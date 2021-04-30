@@ -59,7 +59,7 @@ block
       types = types.toLowerCase().split('/').map(type => type.trim()).map(type => options.items.name.type[type.toLowerCase()] || type);
       var unknown = types.find(type => !options.items.valid.type[type])
       if (typeof unknown !== 'undefined') error(`unknown item type "${unknown}; valid types are ${Object.keys(options.items.name.type)}"`);
-      return `if (!${JSON.stringify(types)}.includes(this.item.type)) break`;
+      return `if (!${JSON.stringify(types)}.includes(this.item.itemType)) break`;
     }
   / '[>' limit:$[0-9]+ ']'                 { return `if (citekey.length <= ${limit}) break` }
   / '[' method:method filters:filter* ']' {
