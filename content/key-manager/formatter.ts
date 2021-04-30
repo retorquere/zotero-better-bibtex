@@ -175,6 +175,7 @@ class PatternFormatter {
 
     this.item = items.simplifyForExport({
       ...item,
+      title: item.title || '',
       language: this.language[(item.language || '').toLowerCase()] || '',
       ...Extra.get(item.extra, 'zotero', { kv: true, tex: true }),
     }, { scrub: false }) as Reference
@@ -293,7 +294,10 @@ class PatternFormatter {
    */
   public $zotero() {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return zotero_buildCiteKey(this.item, null, {})
+    return zotero_buildCiteKey({
+      ...this.item,
+      creators: this.item.creators.map(creator => ({ lastName: creator.lastName || creator.name })),
+    }, null, {})
   }
 
   public $property(name: string) {
