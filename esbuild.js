@@ -144,6 +144,7 @@ async function rebuild() {
     await bundle({
       platform: 'node',
       // target: ['node12'],
+      // inject: [ './headless/inject.js' ],
       plugins: [loader.node_modules('setup/patches').plugin, loader.patcher('setup/patches'), loader.bibertool, loader.pegjs ],
       bundle: true,
       format: 'iife',
@@ -154,7 +155,7 @@ async function rebuild() {
         js: 'var ZOTERO_CONFIG = { GUID: "zotero@" };\n',
       },
       footer: {
-        js: 'const { Zotero } = Headless;\n'
+        js: 'const { Zotero, DOMParser } = Headless;\n'
       },
       metafile: 'gen/headless/zotero.json',
     })
@@ -163,6 +164,7 @@ async function rebuild() {
     await bundle({
       platform: 'node',
       // target: ['node12'],
+      // inject: [ './headless/inject.js' ],
       plugins: [node_modules.plugin, loader.patcher('setup/patches'), loader.bibertool, loader.pegjs ],
       bundle: true,
       format: 'iife',
@@ -181,7 +183,7 @@ async function rebuild() {
     const move = Object.keys(package_json.dependencies).filter(pkg => !required_at_runtime.includes(pkg))
     if (move.length) {
       console.log('  the following packages should be moved to devDependencies')
-      for (const pkg of move) {
+      for (const pkg of move.sort()) {
         console.log('  *', pkg)
       }
     }

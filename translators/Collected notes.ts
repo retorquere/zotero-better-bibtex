@@ -13,9 +13,15 @@ import * as escape from '../content/escape'
 import * as Extra from '../content/extra'
 
 function clean(item: Item): Item {
-  item = {...item, ...Extra.get(item.extra, 'zotero') }
-  item.extra = item.extra.split('\n').filter(line => !line.match(/^OCLC:/i)).join('\n')
-  return item
+  switch (item.itemType) {
+    case 'note':
+    case 'annotation':
+    case 'attachment':
+      return item
+  }
+  const cleaned: Item = {...item, extra: Extra.get(item.extra, 'zotero').extra }
+  cleaned.extra = cleaned.extra.split('\n').filter(line => !line.match(/^OCLC:/i)).join('\n')
+  return cleaned
 }
 
 type ExpandedCollection = {
@@ -39,9 +45,9 @@ class Exporter {
     const filed: Set<number> = new Set
     const collections: Record<string, ExpandedCollection> = {}
 
-    for (let item of Translator.items.remaining) {
-      item = clean(item)
-      if (this.keep(item)) items[item.itemID] = item
+    for (const item of Translator.items.remaining) {
+      const cleaned = clean(item)
+      if (this.keep(cleaned)) items[item.itemID] = cleaned
     }
 
     log.debug(Object.values(Translator.collections).map(coll => ({
@@ -192,11 +198,17 @@ class Exporter {
 
   keep(item) {
     if (!item) return false
-    if (item.extra) return true
-    if (item.note) return true
-    if (item.notes && item.notes.find(note => note.note)) return true
-    if (item.attachments && item.attachments.find(att => att.note)) return true
-    return false
+    switch (item.itemType) {
+      case 'note':
+      case 'annotation':
+        return item.note
+
+      case 'attachment':
+        return item.notes?.find(note => note.note)
+
+      default:
+        return item.extra || item.notes?.find(note => note.note) || item.attachments?.find(att => att.note)
+    }
   }
 }
 

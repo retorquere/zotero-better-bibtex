@@ -10,21 +10,43 @@ export interface Collection {
   parent?: string
 }
 
-export interface Note { note: string }
 export interface Tag { tag: string, type?: number }
-export interface Attachment { path: string, title?: string, mimeType?: string }
 export interface Creator { creatorType?: string, name?: string, firstName?: string, lastName?:string, fieldMode?: number, source?: string }
 
-export interface Item {
-  // fields common to all items
+interface ItemBase {
+  key: string
   itemID: number
-  itemType: ${' | '.join(["'" + itemType + "'" for itemType in itemTypes])}
+  libraryID: number
+  uri: string
   dateAdded: string
   dateModified: string
-  creators: Array<ZoteroTranslatorObject.Creator>
-  tags: Array<ZoteroTranslatorObject.Tag>
-  notes: Array<ZoteroTranslatorObject.Note>
-  attachments: Array<ZoteroTranslatorObject.Attachment>
+}
+
+export interface Note extends ItemBase {
+  itemType: 'note' | 'annotation'
+
+  note: string
+}
+
+export interface Attachment extends ItemBase{
+  itemType: 'attachment'
+
+  path: string
+  title?: string
+  mimeType?: string
+  localPath?: string
+  defaultPath?: string
+}
+
+export interface Reference extends ItemBase {
+  itemType: ${' | '.join(["'" + itemType + "'" for itemType in itemTypes if itemType not in ['note', 'annotation', 'attachment']])}
+  citationKey: string
+
+  // fields common to all items
+  creators: Array<Creator>
+  tags: Array<Tag>
+  notes: Array<Note>
+  attachments: Array<Attachment>
   raw: boolean
   cachable?: boolean
   autoJournalAbbreviation?: string
@@ -34,10 +56,8 @@ export interface Item {
   %endfor
 
   relations: { 'dc:relation': string[] }
-  uri: string
   cslType: string
   cslVolumeTitle: string
-  citationKey: string
   collections: string[]
   extraFields: Fields
   arXiv: { source?: string, id: string, category?: string }
@@ -51,3 +71,5 @@ export interface Item {
     }
   }
 }
+
+export type Item = Reference | Note | Attachment

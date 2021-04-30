@@ -44,8 +44,14 @@ interface ZoteroItem {
   isAttachment: () => boolean
   isAnnotation?: () => boolean
   libraryID: number
+  parentID: number
   key: string
-  getField: (string) => string | number
+  getField: (name: string) => string | number
+  setField: (name: string, value: string | number) => void
+  getNotes: () => ZoteroItem[]
+  getCollections: () => number[]
+  getAttachments: () => ZoteroItem[]
+  toJSON: () => import('../gen/typings/serialized-item').Item
 }
 
 // https://stackoverflow.com/questions/39040108/import-class-in-definition-file-d-ts

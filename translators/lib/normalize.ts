@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-return */
 
 import { stringify } from '../../content/stringify'
-import { Item, Collection } from '../../gen/typings/serialized-item'
+import { Reference, Collection } from '../../gen/typings/serialized-item'
 
 function rjust(str: string | number, width: number, padding: string): string {
   if (typeof str === 'number') str = `${str}`
@@ -121,7 +121,7 @@ export function normalize(library: Library): void {
     strip(item)
 
     if (item.extra?.length) {
-      item.extra = (item as Item).extra.split('\n')
+      item.extra = (item as Reference).extra.split('\n')
     }
     else {
       delete item.extra

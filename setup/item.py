@@ -25,6 +25,7 @@ import sys
 import tarfile
 import tempfile
 import zipfile
+import fnmatch
 
 root = os.path.join(os.path.dirname(__file__), '..')
 
@@ -98,6 +99,7 @@ class fetch(object):
 
   def update(self, client, releases, download, jarpath, schema):
     hashes_cache = os.path.join(SCHEMA.root, 'hashes.json')
+    itemtypes = os.path.join(SCHEMA.root, f'{client}-type-ids.json')
 
     if os.path.exists(hashes_cache):
       with open(hashes_cache) as f:
@@ -108,7 +110,7 @@ class fetch(object):
       hashes[client] = OrderedDict()
 
     current = releases[-1]
-    if current in hashes[client] and os.path.exists(self.schema):
+    if current in hashes[client] and os.path.exists(self.schema) and os.path.exists(itemtypes):
       return
     elif 'CI' in os.environ:
       raise ValueError(f'{self.schema} out of date')
@@ -131,6 +133,16 @@ class fetch(object):
           tar.extract(jar, path=os.path.dirname(tarball.name))
 
           jar = zipfile.ZipFile(os.path.join(os.path.dirname(tarball.name), jar.name))
+          itt = fnmatch.filter(jar.namelist(), f'**/system-*-{client}.sql')
+          assert len(itt) <= 1, itt
+          if len(itt) == 1:
+            itt = itt[0]
+          else:
+            itt = fnmatch.filter(jar.namelist(), '**/system-*.sql')
+            assert len(itt) == 1, itt
+            itt = itt[0]
+          with jar.open(itt) as f, open(itemtypes, 'wb') as i:
+            i.write(f.read())
           try:
             with jar.open(schema) as f:
               client_schema = json.load(f)
@@ -171,6 +183,7 @@ def patch(s, *ps):
   # field/type order doesn't matter for BBT
   for it in s['itemTypes']:
     assert 'creatorTypes' in it
+    # assures primary is first
     assert len(it['creatorTypes'])== 0 or [ct['creatorType'] for ct in it['creatorTypes'] if ct.get('primary', False)] == [it['creatorTypes'][0]['creatorType']]
 
   s['itemTypes'] = {
@@ -417,8 +430,8 @@ class ExtraFields:
       json.dump(mapping, f, sort_keys=True, indent='  ')
 
     # remove phantom labels for clarity
-    for label in [node for node, data in self.dg.nodes(data=True) if data['domain'] == 'label' and 'LabelGraphics' in data]:
-      self.dg.remove_node(label)
+    #for label in [node for node, data in self.dg.nodes(data=True) if data['domain'] == 'label' and 'LabelGraphics' in data]:
+    #  self.dg.remove_node(label)
     #nx.write_gml(self.dg, 'mapping.gml', stringizer)
 
     #with open('mapping.json', 'w') as f:
@@ -439,8 +452,8 @@ with fetch('zotero') as z, fetch('jurism') as j:
   SCHEMA.zotero = Munch.fromDict(patch(json.load(z), 'schema.patch', 'zotero.patch'))
   SCHEMA.jurism = Munch.fromDict(patch(json.load(j), 'schema.patch', 'jurism.patch'))
 
-  #with open('schema.json', 'w') as f:
-  #  json.dump(SCHEMA.jurism, f, indent='  ')
+  with open('schema.json', 'w') as f:
+    json.dump(SCHEMA.jurism, f, indent='  ')
 
   # test for inconsistent basefield mapping
   for schema in ['jurism', 'zotero']:

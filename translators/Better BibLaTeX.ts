@@ -2,7 +2,7 @@ declare const Zotero: any
 
 import { Translator } from './lib/translator'
 export { Translator }
-import { Item } from '../gen/typings/serialized-item'
+import { Reference as Item } from '../gen/typings/serialized-item'
 
 import { Reference } from './bibtex/reference'
 import { Exporter } from './bibtex/exporter'

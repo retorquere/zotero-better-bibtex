@@ -146,6 +146,9 @@ function clearOnUpgrade(coll, property, current) {
 Events.on('preference-changed', () => {
   Zotero.BetterBibTeX.loaded.then(() => { DB.reset() })
 })
+Events.on('items-changed', ids => {
+  Zotero.BetterBibTeX.loaded.then(() => { DB.remove(ids, 'items-changed') })
+})
 
 // cleanup
 if (DB.getCollection('cache')) { DB.removeCollection('cache') }

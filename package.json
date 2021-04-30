@@ -66,6 +66,7 @@
     "barcoder": "^2.0.1",
     "citeproc": "^2.4.59",
     "clp": "^4.0.12",
+    "dom-parser": "^0.1.6",
     "edtf": "^3.1.0",
     "edtfy": "^0.0.8",
     "escape-string-regexp": "^5.0.0",

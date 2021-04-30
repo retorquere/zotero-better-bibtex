@@ -110,7 +110,7 @@ if (Preference.citeprocNoteCitekey) {
 }
 
 // https://github.com/retorquere/zotero-better-bibtex/issues/1221
-$patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(item: { getField: (field: string) => string, id: string, setField: (field: string, value: string) => void }, otherItems: any[]) {
+$patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(item: ZoteroItem, otherItems: ZoteroItem[]) {
   try {
     // log.verbose = true
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -121,25 +121,22 @@ $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(ite
     }
 
     if (merge.citationKey || merge.tex || merge.kv) {
-      const extra = Extra.get(item.getField('extra'), 'zotero', { citationKey: merge.citationKey, aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
+      const extra = Extra.get(item.getField('extra') as string, 'zotero', { citationKey: merge.citationKey, aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
       if (!extra.extraFields.citationKey) { // why is the citationkey stripped from extra before we get to this point?!
         const pinned = Zotero.BetterBibTeX.KeyManager.keys.findOne($and({ itemID: item.id }))
-        log.debug('#bbt merge: repinning key?', pinned)
         if (pinned.pinned) extra.extraFields.citationKey = pinned.citekey
       }
-      log.debug('#bbt merge: item:', { extract: merge, raw: item.getField('extra'), id: item.id, parsed: extra })
 
       // get citekeys of other items
       if (merge.citationKey) {
-        const otherIDs = otherItems.map((i: { id: string }) => parseInt(i.id))
+        const otherIDs = otherItems.map(i => i.id)
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         extra.extraFields.aliases = [...extra.extraFields.aliases, ...(Zotero.BetterBibTeX.KeyManager.keys.find($and({ itemID: { $in: otherIDs }})).map((i: { citekey: string }) => i.citekey))]
       }
-      log.debug('#bbt merge: added stored keys:', { extract: merge, raw: item.getField('extra'), parsed: extra })
 
       // add any aliases they were already holding
       for (const i of otherItems) {
-        const otherExtra = Extra.get(i.getField('extra'), 'zotero', { citationKey: merge.citationKey, aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
+        const otherExtra = Extra.get(i.getField('extra') as string, 'zotero', { citationKey: merge.citationKey, aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
 
         if (merge.citationKey) {
           extra.extraFields.aliases = [...extra.extraFields.aliases, ...otherExtra.extraFields.aliases]
@@ -166,13 +163,11 @@ $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(ite
           }
         }
       }
-      log.debug('#bbt merge: added aliases:', { extra })
 
       if (merge.citationKey) {
         const citekey = Zotero.BetterBibTeX.KeyManager.keys.findOne($and({ itemID: item.id })).citekey
         extra.extraFields.aliases = extra.extraFields.aliases.filter(alias => alias !== citekey)
       }
-      log.debug('#bbt merge: aliases cleaned:', { merge, extra })
 
       item.setField('extra', Extra.set(extra.extra, {
         // keep pinned if it was before
@@ -563,7 +558,7 @@ notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]:
   // safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
   // https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
   const parents = []
-  const items = action === 'delete' ? [] : Zotero.Items.get(ids).filter((item: { isNote: () => boolean, isAttachment: () => boolean, isAnnotation?: () => boolean, parentID: number }) => {
+  const items = action === 'delete' ? [] : Zotero.Items.get(ids).filter((item: ZoteroItem) => {
     if (item.isNote() || item.isAttachment() || item.isAnnotation?.()) {
       if (typeof item.parentID !== 'boolean') parents.push(item.parentID)
       return false
@@ -598,8 +593,6 @@ notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]:
           : `${warn_titlecase} items ${actioned} which look like they have title-cased titles`
         flash(`Possibly title-cased title${warn_titlecase > 1 ? 's' : ''} ${actioned}`, msg, 3) // eslint-disable-line no-magic-numbers
       }
-
-      Events.emit('items-changed', ids)
       break
 
     default:
@@ -728,6 +721,7 @@ export class BetterBibTeX {
 
   private strings: any
   private firstRun: { citekeyFormat: string, dragndrop: boolean, unabbreviate: boolean, strings: boolean }
+  private globals: Record<string, any>
 
   public debugEnabled(): boolean {
     return (Zotero.Debug.enabled as boolean)
@@ -782,7 +776,12 @@ export class BetterBibTeX {
     }
   }
 
+  public openDialog(url: string, title: string, properties: string, params: Record<string, any>): void {
+    this.globals.window.openDialog(url, title, properties, params)
+  }
+
   public async load(globals: any): Promise<void> { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
+    this.globals = globals
     if (this.loaded) return // eslint-disable-line @typescript-eslint/no-misused-promises
 
     this.strings = globals.document.getElementById('zotero-better-bibtex-strings')

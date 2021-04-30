@@ -2,7 +2,7 @@ declare const Zotero: any
 
 import { log } from '../content/logger'
 
-import { Item } from '../gen/typings/serialized-item'
+import { Reference as Item } from '../gen/typings/serialized-item'
 
 const toWordsOrdinal = require('number-to-words/src/toWordsOrdinal')
 function edition(n: string | number): string {

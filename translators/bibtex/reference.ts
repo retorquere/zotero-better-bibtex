@@ -3,7 +3,7 @@
 
 declare const Zotero: any
 
-import { Item } from '../../gen/typings/serialized-item'
+import { Reference as Item } from '../../gen/typings/serialized-item'
 import { Cache } from '../../typings/cache'
 import type { Translators } from '../../typings/translators'
 

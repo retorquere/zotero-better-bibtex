@@ -3,12 +3,14 @@ declare const ZOTERO_TRANSLATOR_INFO: any
 
 import { defaults } from '../../content/prefs-meta'
 import { client } from '../../content/client'
-import { Item, Collection } from '../../gen/typings/serialized-item'
+import { Reference, Item, Collection } from '../../gen/typings/serialized-item'
 import { ITranslator } from '../../gen/typings/translator'
 import type { Preferences } from '../../gen/preferences'
 import { log } from '../../content/logger'
 
 type TranslatorMode = 'export' | 'import'
+
+type CachableItem = Item & { cachable: boolean }
 
 const cacheDisabler = new class {
   get(target, property) {
@@ -22,7 +24,7 @@ const cacheDisabler = new class {
 type NestedCollection = {
   key: string
   name: string
-  items: Item[]
+  items: CachableItem[]
   collections: NestedCollection[]
   parent?: NestedCollection
 }
@@ -106,10 +108,10 @@ export const Translator = new class implements ITranslator { // eslint-disable-l
 
   public collections: Record<string, Collection>
   private _items: {
-    remaining: Item[]
-    map: Record<number, Item>
+    remaining: CachableItem[]
+    map: Record<number, CachableItem>
   }
-  private currentItem: Item
+  private currentItem: CachableItem
 
   public isJurisM: boolean
   public isZotero: boolean
@@ -281,28 +283,37 @@ export const Translator = new class implements ITranslator { // eslint-disable-l
     return nested
   }
 
-  get items(): { remaining: Item[], map: Record<number, Item> } {
-    if (!this._items) {
-      const remaining: Item[] = []
-      const map: Record<number, Item> = {}
-      let item: Item
-      while (item = (Zotero.nextItem() as Item)) {
-        item.cachable = this.cachable
-        item.journalAbbreviation = item.journalAbbreviation || item.autoJournalAbbreviation
-        remaining.push(map[item.itemID] = new Proxy(item, cacheDisabler))
-      }
-      // fallback to itemType.itemID for notes and attachments. And some items may have duplicate keys
-      remaining.sort((a, b) => {
-        const ka = [ a.citationKey || a.itemType, a.dateModified || a.dateAdded, a.itemID ].join('\t')
-        const kb = [ b.citationKey || b.itemType, b.dateModified || b.dateAdded, b.itemID ].join('\t')
-        return ka.localeCompare(kb, undefined, { sensitivity: 'base' })
-      })
-      this._items = { remaining, map }
-    }
-    return this._items
+  get items(): { remaining: CachableItem[], map: Record<number, CachableItem> } {
+    return (this._items = this._items || this.load())
   }
 
-  public nextItem() {
-    return (this.currentItem = this.items.remaining.shift())
+  private load() {
+    const remaining: CachableItem[] = []
+    const map: Record<number, CachableItem> = {}
+    let item: CachableItem
+    while (item = Zotero.nextItem()) {
+      item.cachable = this.cachable
+      // @ts-ignore
+      item.journalAbbreviation = item.journalAbbreviation || item.autoJournalAbbreviation
+      remaining.push(map[item.itemID] = new Proxy(item, cacheDisabler))
+    }
+    // fallback to itemType.itemID for notes and attachments. And some items may have duplicate keys
+    remaining.sort((a: any, b: any) => {
+      const ka = [ a.citationKey || a.itemType, a.dateModified || a.dateAdded, a.itemID ].join('\t')
+      const kb = [ b.citationKey || b.itemType, b.dateModified || b.dateAdded, b.itemID ].join('\t')
+      return ka.localeCompare(kb, undefined, { sensitivity: 'base' })
+    })
+    return { remaining, map }
+  }
+
+  public nextItem(): Item {
+    return (this.currentItem = this.items.remaining.shift()) as Item
+  }
+  public nextReference(): Reference {
+    let item: any
+    while ((item = this.nextItem()) && (item.itemType === 'attachment' || item.itemType === 'note' || item.itemType === 'attachment')) {
+      // pass
+    }
+    return item as Reference
   }
 }
