@@ -7,22 +7,20 @@ export { Translator }
 import { log } from '../content/logger'
 import { fromEntries } from '../content/object'
 
-import { Reference, Item } from '../gen/typings/serialized-item'
+import { Item } from '../gen/typings/serialized-item'
 
 import * as escape from '../content/escape'
 import * as Extra from '../content/extra'
 
-type ExtendedItem = Reference & { extraFields: Extra.Fields }
-
-function clean(item: Item) {
+function clean(item: Item): Item {
   switch (item.itemType) {
     case 'note':
     case 'annotation':
     case 'attachment':
       return item
   }
-  const cleaned: ExtendedItem = {...item, ...Extra.get(item.extra, 'zotero') }
-  cleaned.extra = item.extra.split('\n').filter(line => !line.match(/^OCLC:/i)).join('\n')
+  const cleaned: Item = {...item, extra: Extra.get(item.extra, 'zotero').extra }
+  cleaned.extra = cleaned.extra.split('\n').filter(line => !line.match(/^OCLC:/i)).join('\n')
   return cleaned
 }
 
@@ -48,7 +46,8 @@ class Exporter {
     const collections: Record<string, ExpandedCollection> = {}
 
     for (const item of Translator.items.remaining) {
-      if (this.keep(item)) items[item.itemID] = clean(item)
+      const cleaned = clean(item)
+      if (this.keep(cleaned)) items[item.itemID] = cleaned
     }
 
     log.debug(Object.values(Translator.collections).map(coll => ({
@@ -205,10 +204,10 @@ class Exporter {
         return item.note
 
       case 'attachment':
-        return false
+        return item.notes?.find(note => note.note)
 
       default:
-        return item.extra || (item.notes && item.notes.find(note => note.note)) || (item.attachments && item.attachments.find(att => att.note))
+        return item.extra || item.notes?.find(note => note.note) || item.attachments?.find(att => att.note)
     }
   }
 }

@@ -10,7 +10,7 @@ import { Scheduler } from './scheduler'
 import { log } from './logger'
 import { sleep } from './sleep'
 import { flash } from './flash'
-import { Events, itemsChanged as notifiyItemsChanged } from './events'
+import { Events, itemsChanged as notifyItemsChanged } from './events'
 import { arXiv } from './arXiv'
 import * as Extra from './extra'
 import { $and, Query } from './db/loki'
@@ -191,12 +191,14 @@ export class KeyManager {
         else {
           item.setField('extra', aliases.extra)
         }
+        await item.saveTx()
       }
-
-      if (manual) updates.push(item)
+      else {
+        updates.push(item)
+      }
     }
 
-    if (manual) notifiyItemsChanged(updates)
+    if (updates.length) notifyItemsChanged(updates)
   }
 
   public async init(): Promise<void> {
@@ -486,7 +488,7 @@ export class KeyManager {
 
     if (citekey) return { citekey, pinned: true }
 
-    const proposed = Formatter.format(Serializer.fast(item) as Reference)
+    const proposed = Formatter.format(Serializer.serialize(item) as Reference)
 
     const conflictQuery: Query = { $and: [ { itemID: { $ne: item.id } } ] }
     if (Preference.keyScope !== 'global') conflictQuery.$and.push({ libraryID: { $eq: item.libraryID } })

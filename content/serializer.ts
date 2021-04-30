@@ -30,7 +30,7 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
     return this.enrich(cached.item, item)
   }
 
-  private store(item: ZoteroItem, serialized: Item) {
+  private store(item: ZoteroItem, serialized: Item): Item {
     if (this.cache) {
       this.cache.insert({ itemID: item.id, item: serialized })
     }
@@ -38,12 +38,14 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
       Zotero.debug('Serializer.store ignored, DB not yet loaded')
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return this.enrich(serialized, item)
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  public serialize(item: ZoteroItem): Item { return Zotero.Utilities.Internal.itemToExportFormat(item, false, true) }
+  public serialize(item: ZoteroItem): Item {
+    const serialized = Zotero.Utilities.Internal.itemToExportFormat(item, false, true) as Item
+    // if (this.cache) this.cache.insert({ itemID: item.id, item: serialized }) // this causes cache invalidation problems. No idea why.
+    return serialized
+  }
 
   public fast(item: ZoteroItem, count?: { cached: number }): Item {
     let serialized = this.fetch(item)
@@ -95,7 +97,7 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
     return serialized
   }
 
-  public enrich(serialized: Item, item: ZoteroItem) {
+  public enrich(serialized: Item, item: ZoteroItem): Item {
     switch (serialized.itemType) {
       case 'note':
       case 'annotation':

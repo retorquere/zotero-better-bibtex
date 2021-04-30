@@ -32,7 +32,9 @@ if (Zotero.Debug.enabled) {
   })
 }
 
-export function itemsChanged(items: any[]): void {
+export function itemsChanged(items: ZoteroItem[]): void {
+  if (! items.length) return
+
   const changed = {
     collections: new Set,
     libraries: new Set,
@@ -51,6 +53,6 @@ export function itemsChanged(items: any[]): void {
     }
   }
 
-  if (changed.collections.size) Events.emit('collections-changed', Array.from(changed.collections))
-  if (changed.libraries.size) Events.emit('libraries-changed', Array.from(changed.libraries))
+  if (changed.collections.size) Events.emit('collections-changed', [...changed.collections])
+  if (changed.libraries.size) Events.emit('libraries-changed', [...changed.libraries])
 }
