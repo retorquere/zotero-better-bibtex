@@ -141,11 +141,12 @@ async function rebuild() {
   }
 
   if (await branch() === 'headless') {
+    let node_modules = loader.node_modules('setup/patches')
     await bundle({
       platform: 'node',
       // target: ['node12'],
       // inject: [ './headless/inject.js' ],
-      plugins: [loader.node_modules('setup/patches').plugin, loader.patcher('setup/patches'), loader.bibertool, loader.pegjs ],
+      plugins: [node_modules.plugin, loader.patcher('setup/patches'), loader.bibertool, loader.pegjs ],
       bundle: true,
       format: 'iife',
       globalName: 'Headless',
@@ -159,8 +160,9 @@ async function rebuild() {
       },
       metafile: 'gen/headless/zotero.json',
     })
+    let external = node_modules.external
 
-    const node_modules = loader.node_modules('setup/patches')
+    node_modules = loader.node_modules('setup/patches')
     await bundle({
       platform: 'node',
       // target: ['node12'],
@@ -176,11 +178,10 @@ async function rebuild() {
         js: await fs.promises.readFile('gen/headless/zotero.js', 'utf-8')
       }
     })
-    const metafile = JSON.parse(await fs.promises.readFile('gen/headless/index.json', 'utf-8'))
-    let required_at_runtime = [...new Set(Object.keys(metafile.inputs).filter(input => input.startsWith('node_modules/')).map(loader.modulename))]
-    required_at_runtime = required_at_runtime.filter(module => !node_modules.patched.includes(module))
+    external = [...new Set(external.concat(node_modules.external))].sort()
+
     const package_json = JSON.parse(await fs.promises.readFile('package.json', 'utf-8'))
-    const move = Object.keys(package_json.dependencies).filter(pkg => !required_at_runtime.includes(pkg))
+    const move = Object.keys(package_json.dependencies).filter(pkg => !external.includes(pkg))
     if (move.length) {
       console.log('  the following packages should be moved to devDependencies')
       for (const pkg of move.sort()) {

@@ -8,7 +8,7 @@ export async function init(): Promise<void> {
   jieba.init()
   new KuromojiAnalyzer
   Formatter.update('init')
-  Formatter.format(Zotero.items[0])
+  console.log(Formatter.format(Zotero.items[0]))
 }
 
 init()

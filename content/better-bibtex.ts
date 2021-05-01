@@ -35,7 +35,6 @@ import { Events, itemsChanged as notifyItemsChanged } from './events'
 import { Translators } from './translators'
 import { DB } from './db/main'
 import { DB as Cache, selector as cacheSelector } from './db/cache'
-import { upgrade as dbUpgrade } from './db/upgrade'
 import { Serializer } from './serializer'
 import { JournalAbbrev } from './journal-abbrev'
 import { AutoExport } from './auto-export'
@@ -866,9 +865,6 @@ export class BetterBibTeX {
     // this is what really takes long
     progress.update(this.getString('BetterBibTeX.startup.waitingForTranslators'), 40) // eslint-disable-line no-magic-numbers
     await Zotero.Schema.schemaUpdatePromise
-
-    // after the caches because I may need to drop items from the cache
-    await dbUpgrade(progress.update.bind(progress, 50)) // eslint-disable-line no-magic-numbers
 
     progress.update(this.getString('BetterBibTeX.startup.journalAbbrev'), 60) // eslint-disable-line no-magic-numbers
     await JournalAbbrev.init()

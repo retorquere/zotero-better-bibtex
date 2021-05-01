@@ -17,7 +17,7 @@ class Preferences {
 }
 
 class Utilities {
-  XRegExp = XRegExp
+  public XRegExp = XRegExp
 }
 
 const itemTypeID = require('../schema/item-types.json')
@@ -27,11 +27,6 @@ class ItemTypes {
   }
 }
 
-const items = require('../../sync/data/%2Fgroups%2F1844905.json').items
-for (const item of items) {
-  item.itemTypeID = itemTypeID[item.itemType]
-  item.getField = function(field) { return this[field] }
-}
 export const Zotero = new class {
   Prefs = new Preferences
   Utilities = new Utilities

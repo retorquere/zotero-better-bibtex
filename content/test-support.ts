@@ -10,7 +10,6 @@ import { Formatter as CAYWFormatter } from './cayw/formatter'
 import { getItemsAsync } from './get-items-async'
 import { AUXScanner } from './aux-scanner'
 import { DB as Cache } from './db/cache'
-import { upgrade } from './db/upgrade'
 import * as Extra from './extra'
 import { $and } from './db/loki'
 
@@ -106,7 +105,6 @@ export class TestSupport {
 
     log.debug(`import found ${after - before} items`)
 
-    await upgrade(msg => log.debug(msg))
     return (after - before)
   }
 

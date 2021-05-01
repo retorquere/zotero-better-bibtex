@@ -3,7 +3,6 @@ const path = require('path')
 const diff = require('diff')
 const { bibertool } = require('./bibertool')
 const pegjs = require('pegjs')
-const { nodeExternalsPlugin } = require('esbuild-node-externals')
 
 function load_patches(dir) {
   const patches = {}
@@ -93,20 +92,36 @@ module.exports.__dirname = {
 }
 
 function modulename(source) {
-  source = source.replace(/^node_modules\//, '').replace(/^.+\/node_modules\//, '').replace(/^\.pnpm\//, '').split('/')
-  if (source[0][0] === '@') {
-    return source.unshift(2).join('/')
+  source = source.replace(/.*(^|\/)node_modules\//, '')
+  if (source[0] === '.') return null
+  const dirs = source.split('/')
+
+  if (dirs[0][0] === '@') {
+    return dirs.unshift(2).join('/')
   }
   else {
-    return source[0]
+    return dirs[0]
   }
 }
 module.exports.modulename = modulename
 module.exports.node_modules = function(dir) {
   const patched = [...new Set(Object.keys(load_patches(dir)).map(modulename))]
+  const external = []
 
   return {
     patched,
-    plugin: nodeExternalsPlugin({ allowList: patched }),
+    external,
+    // plugin: nodeExternalsPlugin({ allowList: patched }),
+    plugin: {
+      name: 'node-externals',
+      setup(build) {
+        build.onResolve({ namespace: 'file', filter: /.*/ }, args => {
+          const name = modulename(args.path)
+          if (!name || patched.includes(name)) return null
+          if (!external.includes(name)) external.push(name)
+          return { path: args.path, external: true }
+        })
+      }
+    }
   }
 }
