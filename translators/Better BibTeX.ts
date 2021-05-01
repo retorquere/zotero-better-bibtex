@@ -2,8 +2,6 @@ declare const Zotero: any
 
 import { log } from '../content/logger'
 
-import { Reference as Item } from '../gen/typings/serialized-item'
-
 const toWordsOrdinal = require('number-to-words/src/toWordsOrdinal')
 function edition(n: string | number): string {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -258,8 +256,7 @@ export function doExport(): void {
   // Zotero.write(`\n% ${Translator.header.label}\n`)
   Zotero.write('\n')
 
-  let item: Item
-  while (item = Exporter.nextItem()) {
+  for (const item of Exporter.items) {
     const ref = new Reference(item)
     if (item.itemType === 'report' && item.type?.toLowerCase().includes('manual')) ref.referencetype = 'manual'
     if (['zotero.bookSection', 'csl.chapter', 'tex.chapter'].includes(ref.referencetype_source) && ref.hasCreator('bookAuthor')) ref.referencetype = 'inbook'

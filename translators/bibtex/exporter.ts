@@ -41,11 +41,14 @@ export const Exporter = new class {
     return uniq
   }
 
-  public nextItem(): Reference {
+  public get items(): Generator<Reference, void, unknown> {
+    return this.itemsGenerator()
+  }
+
+  private *itemsGenerator(): Generator<Reference, void, unknown> {
     this.postfix = this.postfix || (new Postfix(Translator.preferences.qualityReport))
 
-    let item: Reference
-    while (item = Translator.nextReference()) {
+    for (const item of Translator.references) {
       if (!item.citationKey) {
         throw new Error(`No citation key in ${JSON.stringify(item)}`)
       }
@@ -88,10 +91,8 @@ export const Exporter = new class {
         return true
       })
 
-      return item
+      yield item
     }
-
-    return null
   }
 
   public complete() {

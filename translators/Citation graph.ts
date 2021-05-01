@@ -2,7 +2,6 @@ declare const Zotero: any
 
 import { Translator } from './lib/translator'
 export { Translator }
-import { Reference } from '../gen/typings/serialized-item'
 
 function node(id, attributes = {}) {
   let n = JSON.stringify(id)
@@ -40,8 +39,7 @@ export function doExport(): void {
   }
 
   const items: Item[] = []
-  let ref: Reference
-  while (ref = Translator.nextReference()) {
+  for (const ref of Translator.references) {
     const label = [ ref.citationKey ]
 
     if (add.title && ref.title) {
