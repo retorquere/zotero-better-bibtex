@@ -121,7 +121,6 @@
     "moment": "^2.29.1",
     "njstrace": "^1.2.1",
     "node-eta": "^0.9.0",
-    "npm": "^7.11.2",
     "number-to-words": "^1.2.4",
     "pegjs": "^0.10.0",
     "permutater": "^1.0.2",

@@ -57,7 +57,6 @@ specifiers:
   moment: ^2.29.1
   njstrace: ^1.2.1
   node-eta: ^0.9.0
-  npm: ^7.11.2
   number-to-words: ^1.2.4
   ooooevan-jieba: ^1.0.3
   parse5: ^6.0.1
@@ -154,7 +153,6 @@ devDependencies:
   moment: 2.29.1
   njstrace: 1.2.1
   node-eta: 0.9.0
-  npm: 7.11.2
   number-to-words: 1.2.4
   pegjs: 0.10.0
   permutater: 1.0.2
@@ -2843,80 +2841,6 @@ packages:
     dependencies:
       path-key: 2.0.1
     dev: true
-
-  /npm/7.11.2:
-    resolution: {integrity: sha512-NxcaNqAfdLEubG5dlPFWbXrVAG2zb45lB5y6W3PK1PK2feHaffpCN4rnXPD/BPp1kCJespCAv8Kw/QUYR85BRw==}
-    engines: {node: '>=10'}
-    hasBin: true
-    dev: true
-    bundledDependencies:
-      - '@npmcli/arborist'
-      - '@npmcli/ci-detect'
-      - '@npmcli/config'
-      - '@npmcli/run-script'
-      - abbrev
-      - ansicolors
-      - ansistyles
-      - archy
-      - byte-size
-      - cacache
-      - chalk
-      - chownr
-      - cli-columns
-      - cli-table3
-      - columnify
-      - glob
-      - graceful-fs
-      - hosted-git-info
-      - ini
-      - init-package-json
-      - is-cidr
-      - json-parse-even-better-errors
-      - leven
-      - libnpmaccess
-      - libnpmdiff
-      - libnpmexec
-      - libnpmfund
-      - libnpmhook
-      - libnpmorg
-      - libnpmpack
-      - libnpmpublish
-      - libnpmsearch
-      - libnpmteam
-      - libnpmversion
-      - make-fetch-happen
-      - minipass
-      - minipass-pipeline
-      - mkdirp
-      - mkdirp-infer-owner
-      - ms
-      - node-gyp
-      - nopt
-      - npm-audit-report
-      - npm-package-arg
-      - npm-pick-manifest
-      - npm-profile
-      - npm-registry-fetch
-      - npm-user-validate
-      - npmlog
-      - opener
-      - pacote
-      - parse-conflict-json
-      - qrcode-terminal
-      - read
-      - read-package-json
-      - read-package-json-fast
-      - readdir-scoped-modules
-      - rimraf
-      - semver
-      - ssri
-      - tar
-      - text-table
-      - tiny-relative-date
-      - treeverse
-      - validate-npm-package-name
-      - which
-      - write-file-atomic
 
   /number-to-words/1.2.4:
     resolution: {integrity: sha512-/fYevVkXRcyBiZDg6yzZbm0RuaD6i0qRfn8yr+6D0KgBMOndFPxuW10qCHpzs50nN8qKuv78k8MuotZhcVX6Pw==}
