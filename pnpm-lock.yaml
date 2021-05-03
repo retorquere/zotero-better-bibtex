@@ -1,7 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@retorquere/bibtex-parser': ^3.3.4
+  '@retorquere/bibtex-parser': ^3.3.5
   '@retorquere/zotero-sync': ^1.0.23
   '@types/bluebird': ^3.5.33
   '@types/lokijs': ^1.5.4
@@ -103,7 +103,7 @@ dependencies:
   xregexp: 5.0.2
 
 devDependencies:
-  '@retorquere/bibtex-parser': 3.3.4
+  '@retorquere/bibtex-parser': 3.3.5
   '@retorquere/zotero-sync': 1.0.23
   '@types/bluebird': 3.5.33
   '@types/lokijs': 1.5.4
@@ -391,8 +391,8 @@ packages:
       '@types/node': 14.14.28
     dev: true
 
-  /@retorquere/bibtex-parser/3.3.4:
-    resolution: {integrity: sha512-hwF0WtqFg/TwfyRv4N3m1R/vUkgEmjm7FSMvnnH+8zWbEV5UrLih/O0vhmVDQomoyYSJPik3+ZLfbT47Uo23Qg==}
+  /@retorquere/bibtex-parser/3.3.5:
+    resolution: {integrity: sha512-aI+PTXwX4Td7X2/RZZwTdHI6mKUCv4UtDOXss7pojFeoDEJR9JocuNv42Fz8XSwJ2/30JsaHfBE19dIw9iOViQ==}
     dependencies:
       unicode2latex: 2.1.35
       xregexp: 5.0.2
