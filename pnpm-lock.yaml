@@ -1,12 +1,12 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@retorquere/bibtex-parser': ^3.2.35
-  '@retorquere/zotero-sync': ^1.0.21
+  '@retorquere/bibtex-parser': ^3.3.4
+  '@retorquere/zotero-sync': ^1.0.23
   '@types/bluebird': ^3.5.33
   '@types/lokijs': ^1.5.4
-  '@types/node': ^14.14.41
-  ajv: ^8.1.0
+  '@types/node': ^15.0.1
+  ajv: ^8.2.0
   ajv-keywords: ^5.0.0
   archiver: ^5.3.0
   assert: ^2.0.0
@@ -23,7 +23,7 @@ specifiers:
   edtf: ^3.1.0
   edtfy: ^0.0.8
   ejs: ^3.1.6
-  esbuild: ^0.11.14
+  esbuild: ^0.11.18
   escape-string-regexp: ^5.0.0
   eslint: ^7.25.0
   eta: ^1.12.1
@@ -57,7 +57,7 @@ specifiers:
   moment: ^2.29.1
   njstrace: ^1.2.1
   node-eta: ^0.9.0
-  npm: ^7.11.1
+  npm: ^7.11.2
   number-to-words: ^1.2.4
   ooooevan-jieba: ^1.0.3
   parse5: ^6.0.1
@@ -104,13 +104,13 @@ dependencies:
   xregexp: 5.0.2
 
 devDependencies:
-  '@retorquere/bibtex-parser': 3.2.35
-  '@retorquere/zotero-sync': 1.0.21
+  '@retorquere/bibtex-parser': 3.3.4
+  '@retorquere/zotero-sync': 1.0.23
   '@types/bluebird': 3.5.33
   '@types/lokijs': 1.5.4
-  '@types/node': 14.14.41
-  ajv: 8.1.0
-  ajv-keywords: 5.0.0_ajv@8.1.0
+  '@types/node': 15.0.1
+  ajv: 8.2.0
+  ajv-keywords: 5.0.0_ajv@8.2.0
   archiver: 5.3.0
   assert: 2.0.0
   barcoder: 2.0.1
@@ -123,7 +123,7 @@ devDependencies:
   dom-parser: 0.1.6
   dotenv: 8.2.0
   ejs: 3.1.6
-  esbuild: 0.11.14
+  esbuild: 0.11.18
   escape-string-regexp: 5.0.0
   eslint: 7.25.0
   eta: 1.12.1
@@ -154,7 +154,7 @@ devDependencies:
   moment: 2.29.1
   njstrace: 1.2.1
   node-eta: 0.9.0
-  npm: 7.11.1
+  npm: 7.11.2
   number-to-words: 1.2.4
   pegjs: 0.10.0
   permutater: 1.0.2
@@ -393,16 +393,15 @@ packages:
       '@types/node': 14.14.28
     dev: true
 
-  /@retorquere/bibtex-parser/3.2.35:
-    resolution: {integrity: sha512-gZVeQqzI36Oqax/bKjVzGIqkAJobovkQ8JssxlcuzwWUVFKhcHMPJCBi3Nhsprv5StUh0sGRDHvMnswlsDNdsw==}
+  /@retorquere/bibtex-parser/3.3.4:
+    resolution: {integrity: sha512-hwF0WtqFg/TwfyRv4N3m1R/vUkgEmjm7FSMvnnH+8zWbEV5UrLih/O0vhmVDQomoyYSJPik3+ZLfbT47Uo23Qg==}
     dependencies:
-      chevrotain: 7.1.0
       unicode2latex: 2.1.35
-      xregexp: 4.4.1
+      xregexp: 5.0.2
     dev: true
 
-  /@retorquere/zotero-sync/1.0.21:
-    resolution: {integrity: sha512-HJqnspIiI/IPT9EzvnJAX+sY46ZfwL+TdvRcFtjnIaH2Dndq91sWXWTSXUmcBZFn8l3cmSSGe1ECMYFU3ld9Eg==}
+  /@retorquere/zotero-sync/1.0.23:
+    resolution: {integrity: sha512-5KYTC0dGRTdGQE+x3KIWRncANZ5LQsSklfdjhJas3O7py4O33GOHWSPlCsl3l8WciimyZ/lh3QgecSUNdhyfiQ==}
     dependencies:
       json-stringify-pretty-compact: 3.0.0
       node-fetch: 2.6.1
@@ -448,8 +447,8 @@ packages:
     resolution: {integrity: sha512-XYmBiy+ohOR4Lh5jE379fV2IU+6Jn4g5qASinhitfyO71b/sCo6MKsMLF5tc7Zf2CE8hViVQyYSobJNke8OvUw==}
     dev: true
 
-  /@types/node/14.14.41:
-    resolution: {integrity: sha512-dueRKfaJL4RTtSa7bWeTK1M+VH+Gns73oCgzvYfHZywRCoPSd8EkXBL0mZ9unPTveBn+D9phZBaxuzpwjWkW0g==}
+  /@types/node/15.0.1:
+    resolution: {integrity: sha512-TMkXt0Ck1y0KKsGr9gJtWGjttxlZnnvDtphxUOSd0bfaR6Q1jle+sPvrzNR1urqYTWMinoKvjKfXUGsumaO1PA==}
     dev: true
 
   /@typescript-eslint/eslint-plugin/4.22.0_9acede93a3623dd7abe65c65a7010e73:
@@ -581,6 +580,15 @@ packages:
       fast-deep-equal: 3.1.3
     dev: true
 
+  /ajv-keywords/5.0.0_ajv@8.2.0:
+    resolution: {integrity: sha512-ULd1QMjRoH6JDNUQIfDLrlE+OgZlFaxyYCjzt58uNuUQtKXt8/U+vK/8Ql0gyn/C5mqZzUWtKMqr/4YquvTrWA==}
+    peerDependencies:
+      ajv: ^8.0.0
+    dependencies:
+      ajv: 8.2.0
+      fast-deep-equal: 3.1.3
+    dev: true
+
   /ajv/6.12.6:
     resolution: {integrity: sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==}
     dependencies:
@@ -601,6 +609,15 @@ packages:
 
   /ajv/8.1.0:
     resolution: {integrity: sha512-B/Sk2Ix7A36fs/ZkuGLIR86EdjbgR6fsAcbx9lOP/QBSXujDNbVmIS/U4Itz5k8fPFDeVZl/zQ/gJW4Jrq6XjQ==}
+    dependencies:
+      fast-deep-equal: 3.1.3
+      json-schema-traverse: 1.0.0
+      require-from-string: 2.0.2
+      uri-js: 4.4.1
+    dev: true
+
+  /ajv/8.2.0:
+    resolution: {integrity: sha512-WSNGFuyWd//XO8n/m/EaOlNLtO0yL8EXT/74LqT4khdhpZjP7lkj/kT5uwRmGitKEVp/Oj7ZUHeGfPtgHhQ5CA==}
     dependencies:
       fast-deep-equal: 3.1.3
       json-schema-traverse: 1.0.0
@@ -946,12 +963,6 @@ packages:
     resolution: {integrity: sha1-x84o821LzZdE5f/CxfzeHHMmH8A=}
     dependencies:
       is-regex: 1.1.1
-    dev: true
-
-  /chevrotain/7.1.0:
-    resolution: {integrity: sha512-msTqYIGb+8z4UpNxliBlowlfFJtBQjTSdnOWgMD/llcE5cQHDbFMjHGdCMJSsPG/Op89c6/ERCmYku4UHDhHVA==}
-    dependencies:
-      regexp-to-ast: 0.5.0
     dev: true
 
   /citeproc/2.4.59:
@@ -1358,8 +1369,8 @@ packages:
     resolution: {integrity: sha1-wsNYJlYkfDnqEHyx5mUrb58kUjw=}
     dev: true
 
-  /esbuild/0.11.14:
-    resolution: {integrity: sha512-ejheEPkqhq5y0LM9rG9e+3yDihPtqeeE4NZmG7VQiSGJ3CjO4HvPOHmhhttSksfSztjLAGo2+0/zSIvlqj4JOQ==}
+  /esbuild/0.11.18:
+    resolution: {integrity: sha512-KD7v4N9b5B8bxPUNn/3GA9r0HWo4nJk3iwjZ+2zG1ffg+r8ig+wqj7sW6zgI6Sn4/B2FnbzqWxcAokAGGM5zwQ==}
     hasBin: true
     requiresBuild: true
     dev: true
@@ -2833,8 +2844,8 @@ packages:
       path-key: 2.0.1
     dev: true
 
-  /npm/7.11.1:
-    resolution: {integrity: sha512-F9dUPQQBm5me6t74m63CrrBSzUcLART9BmsxiJU3jZK8SBnxiqzxvsU70/uqY0cjYSoYP7AuZ2w8YfGUwhcf6A==}
+  /npm/7.11.2:
+    resolution: {integrity: sha512-NxcaNqAfdLEubG5dlPFWbXrVAG2zb45lB5y6W3PK1PK2feHaffpCN4rnXPD/BPp1kCJespCAv8Kw/QUYR85BRw==}
     engines: {node: '>=10'}
     hasBin: true
     dev: true
@@ -3398,10 +3409,6 @@ packages:
     dependencies:
       extend-shallow: 3.0.2
       safe-regex: 1.1.0
-    dev: true
-
-  /regexp-to-ast/0.5.0:
-    resolution: {integrity: sha512-tlbJqcMHnPKI9zSrystikWKwHkBqu2a/Sgw01h3zFjvYrMxEDYHzzoMZnUrbIfpTFEsoRnnviOXNCzFiSc54Qw==}
     dev: true
 
   /regexpp/3.1.0:
@@ -4129,17 +4136,10 @@ packages:
     engines: {node: '>=0.6.0'}
     dev: true
 
-  /xregexp/4.4.1:
-    resolution: {integrity: sha512-2u9HwfadaJaY9zHtRRnH6BY6CQVNQKkYm3oLtC9gJXXzfsbACg5X5e4EZZGVAH+YIfa+QA9lsFQTTe3HURF3ag==}
-    dependencies:
-      '@babel/runtime-corejs3': 7.12.5
-    dev: true
-
   /xregexp/5.0.2:
     resolution: {integrity: sha512-JPNfN40YMNSDxZrahMrmtNH1QqPJp0/qNeEJM2nnOlhcBdfCCjekPYFV2OnwKxwvpEYglH1RBotbpRRaEuCG8Q==}
     dependencies:
       '@babel/runtime-corejs3': 7.12.5
-    dev: false
 
   /y18n/5.0.8:
     resolution: {integrity: sha512-0pfFzegeDWJHJIAmTLRP2DwHjdF5s7jo9tuztdQxAhINCdvS+3nGINqPd00AphqJR/0LhANUS6/+7SCb98YOfA==}
