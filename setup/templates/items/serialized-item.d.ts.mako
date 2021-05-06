@@ -11,7 +11,7 @@ export interface Collection {
 }
 
 export interface Tag { tag: string, type?: number }
-export interface Creator { creatorType?: string, name?: string, firstName?: string, lastName?:string, fieldMode?: number, source?: string }
+export interface Creator { creatorType: string, name?: string, firstName?: string, lastName?:string, fieldMode?: number, source?: string }
 
 interface ItemBase {
   key: string
@@ -28,7 +28,7 @@ export interface Note extends ItemBase {
   note: string
 }
 
-export interface Attachment extends ItemBase{
+export interface Attachment extends ItemBase {
   itemType: 'attachment'
 
   path: string

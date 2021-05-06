@@ -1,4 +1,4 @@
-import type { Reference, Item } from '../../gen/typings/serialized-item'
+import type { Tag, Reference as SerializedReference, Item as SerializedItem } from '../../gen/typings/serialized-item'
 
 import { client } from '../client'
 
@@ -36,6 +36,84 @@ function innerText(node): string {
   return ''
 }
 
+function parseDate(v): PartialDate {
+  v = v || ''
+  const parsed: {
+    y?: number
+    m?: number
+    d?: number
+    oy?: number
+    om?: number
+    od?: number
+  } = {}
+
+  let date = DateParser.parse(v, Zotero.BetterBibTeX.localeDateOrder)
+  if (date.type === 'list') date = date.dates.find(d => d.type !== 'open') || date.dates[0]
+  if (date.type === 'interval') date = (date.from && date.from.type !== 'open') ? date.from : date.to
+  if (!date.type) date.type = 'date' // will rescue 'orig' if present
+
+  switch (date.type) {
+    case 'open':
+      break
+
+    case 'verbatim':
+      // eslint-disable-next-line no-case-declarations
+      const reparsed = Zotero.Date.strToDate(date.verbatim)
+      if (typeof reparsed.year === 'number' || reparsed.year) {
+        parsed.y = reparsed.year
+        parsed.m = parseInt(reparsed.month) || undefined
+        parsed.d = parseInt(reparsed.day) || undefined
+
+      }
+      else {
+        parsed.y = parsed.oy = (date.verbatim as unknown as number) // a bit cheaty
+
+      }
+
+      break
+
+    case 'date':
+      Object.assign(parsed, { y: date.year, m: date.month, d: date.day })
+
+      if (date.orig) {
+        Object.assign(parsed, { oy: date.orig.year, om: date.orig.month, od: date.orig.day })
+        if (typeof date.year !== 'number') Object.assign(parsed, { y: date.orig.year, m: date.orig.month, d: date.orig.day })
+      }
+      else {
+        Object.assign(parsed, { oy: date.year, om: date.month, od: date.day })
+      }
+      break
+
+    case 'season':
+      parsed.y = parsed.oy = date.year
+      break
+
+    default:
+      throw new Error(`Unexpected parsed date ${JSON.stringify(v)} => ${JSON.stringify(date)}`)
+  }
+
+  const res: PartialDate = {}
+
+  res.m = (typeof parsed.m !== 'undefined') ? (`${parsed.m}`) : ''
+  res.d = (typeof parsed.d !== 'undefined') ? (`${parsed.d}`) : ''
+  res.y = (typeof parsed.y !== 'undefined') ? (`${parsed.y % 100}`) : '' // eslint-disable-line no-magic-numbers
+  res.Y = (typeof parsed.y !== 'undefined') ? (`${parsed.y}`) : ''
+  res.om = (typeof parsed.om !== 'undefined') ? (`${parsed.om}`) : ''
+  res.od = (typeof parsed.od !== 'undefined') ? (`${parsed.od}`) : ''
+  res.oy = (typeof parsed.oy !== 'undefined') ? (`${parsed.oy % 100}`) : '' // eslint-disable-line no-magic-numbers
+  res.oY = (typeof parsed.oy !== 'undefined') ? (`${parsed.oy}`) : ''
+  if (date.type !== 'verbatim') {
+    const [ , H, M, S ] = v.match(/(?: |T)([0-9]{2}):([0-9]{2})(?::([0-9]{2}))?(?:[A-Z]+|[-+][0-9]+)?$/) || [null, '', '', '']
+    Object.assign(res, { H, M, S })
+    res.S = res.S || ''
+  }
+  else {
+    Object.assign(res, { H: '', M: '', S: '' })
+  }
+
+  return res
+}
+
 const script = {
   // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
   han: new RegExp('([' + scripts.find((s: { name: string }) => s.name === 'Han').bmp + '])', 'g'), // eslint-disable-line  prefer-template
@@ -56,9 +134,79 @@ type PartialDate = {
   S?: string
 }
 
-type ExtendedReference = Reference & {
-  parsedDate?: PartialDate
-  extraFields: Extra.Fields
+class Item {
+  public item: ZoteroItem | SerializedItem
+  private language = {
+    jp: 'japanese',
+    japanese: 'japanese',
+    de: 'german',
+    german: 'german',
+  }
+
+  public itemType: string
+  public date: PartialDate
+  public creators: { lastName?: string, firstName?: string, name?: string, creatorType: string, fieldMode?: number, source?: string }[]
+  public title: string
+  public itemID: number
+  public libraryID: number
+  public removeDiacritics: string
+  public getField: (name: string) => number | string
+  public extra: string
+  public extraFields: Extra.Fields
+
+  constructor(item: ZoteroItem | SerializedItem) { // Reference must have simplifyForExport pre-applied, without scrubbing
+    this.item = item
+
+    if ((item as ZoteroItem).getField) {
+      this.itemID = (item as ZoteroItem).id
+      this.itemType = Zotero.ItemTypes.getName((item as ZoteroItem).itemTypeID)
+      this.getField = (name: string) => (this.item as ZoteroItem).getField(name, false, true) // eslint-disable-line @typescript-eslint/no-unsafe-return
+      this.creators = (item as ZoteroItem).getCreatorsJSON()
+      this.libraryID = item.libraryID
+      this.title = (item as ZoteroItem).getField('title', false, true) as string
+    }
+    else {
+      this.itemType = (item as SerializedReference).itemType
+      this.itemID = (item as SerializedReference).itemID
+      this.getField = (name: string) => this.item[name] // eslint-disable-line @typescript-eslint/no-unsafe-return
+      this.creators = (item as SerializedReference).creators
+      this.libraryID = null
+      this.title = (item as SerializedReference).title
+    }
+
+    for (const creator of this.creators) {
+      creator.lastName = creator.lastName || creator.name
+    }
+
+    this.removeDiacritics = this.language[(this.getField('language') as string || '').toLowerCase()] || ''
+    const extraFields = Extra.get(this.getField('extra') as string, 'zotero', { kv: true, tex: true })
+    this.extra = extraFields.extra
+    this.extraFields = extraFields.extraFields
+
+    try {
+      const date = this.getField('date')
+      this.date = date ? parseDate(date) : {}
+    }
+    catch (err) {
+      this.date = {}
+    }
+    if (this.extraFields.kv.originalDate) {
+      const date = parseDate(this.extraFields.kv.originalDate)
+      if (date.y) {
+        Object.assign(this.date, { oy: date.y, om: date.m, od: date.d, oY: date.Y })
+        if (!this.date.y) Object.assign(this.date, { y: date.y, m: date.m, d: date.d, Y: date.Y })
+      }
+    }
+    if (Object.keys(this.date).length === 0) {
+      this.date = null
+    }
+
+    if (this.title.includes('<')) this.title = innerText(htmlParser.parseFragment(this.title))
+  }
+
+  public getTags(): Tag[] | string[] {
+    return (this.item as ZoteroItem).getTags ? (this.item as ZoteroItem).getTags() : (this.item as SerializedReference).tags
+  }
 }
 
 const safechars = '-:\\p{L}0-9_!$*+./;\\[\\]'
@@ -75,12 +223,6 @@ class PatternFormatter {
     caseNotUpper: Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g'),
     word: Zotero.Utilities.XRegExp('[\\p{L}\\p{Nd}\\{Pc}\\p{M}]+(-[\\p{L}\\p{Nd}\\{Pc}\\p{M}]+)*', 'g'),
   }
-  private language = {
-    jp: 'japanese',
-    japanese: 'japanese',
-    de: 'german',
-    german: 'german',
-  }
 
   /*
    * three-letter month abbreviations. I assume these are the same ones that the
@@ -92,7 +234,7 @@ class PatternFormatter {
   // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   private DOMParser = new DOMParser
 
-  private item: ExtendedReference
+  private item: Item
 
   private skipWords: Set<string>
 
@@ -165,39 +307,15 @@ class PatternFormatter {
     return formatter
   }
 
-  public format(item: Item): { citekey: string, postfix: { start: number, format: string } } {
-    switch (item.itemType) {
+  public format(item: ZoteroItem | SerializedItem): { citekey: string, postfix: { start: number, format: string } } {
+    this.item = new Item(item)
+
+    switch (this.item.itemType) {
       case 'attachment':
       case 'note':
       case 'annotation':
         return { citekey: '', postfix: { start: 0, format: ''} }
     }
-
-    this.item = items.simplifyForExport({
-      ...item,
-      title: item.title || '',
-      language: this.language[(item.language || '').toLowerCase()] || '',
-      ...Extra.get(item.extra, 'zotero', { kv: true, tex: true }),
-    }, { scrub: false }) as Reference
-
-    try {
-      this.item.parsedDate = this.item.date ? this.parseDate(this.item.date) : {}
-    }
-    catch (err) {
-      this.item.parsedDate = {}
-    }
-    if (this.item.extraFields.kv.originalDate) {
-      const date = this.parseDate(this.item.extraFields.kv.originalDate)
-      if (date.y) {
-        Object.assign(this.item.parsedDate, { oy: date.y, om: date.m, od: date.d, oY: date.Y })
-        if (!this.item.parsedDate.y) Object.assign(this.item.parsedDate, { y: date.y, m: date.m, d: date.d, Y: date.Y })
-      }
-    }
-    if (Object.keys(this.item.parsedDate).length === 0) {
-      this.item.parsedDate = null
-    }
-
-    if (this.item.title.includes('<')) this.item.title = innerText(htmlParser.parseFragment(this.item.title))
 
     const citekey = this.generate()
 
@@ -206,84 +324,6 @@ class PatternFormatter {
     citekey.citekey = citekey.citekey.replace(/[\s{},@]/g, '')
 
     return citekey
-  }
-
-  private parseDate(v): PartialDate {
-    v = v || ''
-    const parsed: {
-      y?: number
-      m?: number
-      d?: number
-      oy?: number
-      om?: number
-      od?: number
-    } = {}
-
-    let date = DateParser.parse(v, Zotero.BetterBibTeX.localeDateOrder)
-    if (date.type === 'list') date = date.dates.find(d => d.type !== 'open') || date.dates[0]
-    if (date.type === 'interval') date = (date.from && date.from.type !== 'open') ? date.from : date.to
-    if (!date.type) date.type = 'date' // will rescue 'orig' if present
-
-    switch (date.type) {
-      case 'open':
-        break
-
-      case 'verbatim':
-        // eslint-disable-next-line no-case-declarations
-        const reparsed = Zotero.Date.strToDate(date.verbatim)
-        if (typeof reparsed.year === 'number' || reparsed.year) {
-          parsed.y = reparsed.year
-          parsed.m = parseInt(reparsed.month) || undefined
-          parsed.d = parseInt(reparsed.day) || undefined
-
-        }
-        else {
-          parsed.y = parsed.oy = (date.verbatim as unknown as number) // a bit cheaty
-
-        }
-
-        break
-
-      case 'date':
-        Object.assign(parsed, { y: date.year, m: date.month, d: date.day })
-
-        if (date.orig) {
-          Object.assign(parsed, { oy: date.orig.year, om: date.orig.month, od: date.orig.day })
-          if (typeof date.year !== 'number') Object.assign(parsed, { y: date.orig.year, m: date.orig.month, d: date.orig.day })
-        }
-        else {
-          Object.assign(parsed, { oy: date.year, om: date.month, od: date.day })
-        }
-        break
-
-      case 'season':
-        parsed.y = parsed.oy = date.year
-        break
-
-      default:
-        throw new Error(`Unexpected parsed date ${JSON.stringify(v)} => ${JSON.stringify(date)}`)
-    }
-
-    const res: PartialDate = {}
-
-    res.m = (typeof parsed.m !== 'undefined') ? (`${parsed.m}`) : ''
-    res.d = (typeof parsed.d !== 'undefined') ? (`${parsed.d}`) : ''
-    res.y = (typeof parsed.y !== 'undefined') ? (`${parsed.y % 100}`) : '' // eslint-disable-line no-magic-numbers
-    res.Y = (typeof parsed.y !== 'undefined') ? (`${parsed.y}`) : ''
-    res.om = (typeof parsed.om !== 'undefined') ? (`${parsed.om}`) : ''
-    res.od = (typeof parsed.od !== 'undefined') ? (`${parsed.od}`) : ''
-    res.oy = (typeof parsed.oy !== 'undefined') ? (`${parsed.oy % 100}`) : '' // eslint-disable-line no-magic-numbers
-    res.oY = (typeof parsed.oy !== 'undefined') ? (`${parsed.oy}`) : ''
-    if (date.type !== 'verbatim') {
-      const [ , H, M, S ] = v.match(/(?: |T)([0-9]{2}):([0-9]{2})(?::([0-9]{2}))?(?:[A-Z]+|[-+][0-9]+)?$/) || [null, '', '', '']
-      Object.assign(res, { H, M, S })
-      res.S = res.S || ''
-    }
-    else {
-      Object.assign(res, { H: '', M: '', S: '' })
-    }
-
-    return res
   }
 
   /**
@@ -295,13 +335,15 @@ class PatternFormatter {
   public $zotero() {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return zotero_buildCiteKey({
-      ...this.item,
-      creators: this.item.creators.map(creator => ({ lastName: creator.lastName || creator.name })),
+      creators: this.item.creators,
+      title: this.item.getField('title'),
+      date: this.item.getField('date'),
+      dateAdded: this.item.getField('dateAdded'),
     }, null, {})
   }
 
   public $property(name: string) {
-    return this.innerText(this.item[name] || this.item[name[0].toLowerCase() + name.slice(1)] || '')
+    return this.innerText(`${this.item.getField(name) || this.item.getField(name[0].toLowerCase() + name.slice(1)) || ''}`)
   }
 
   /** returns the name of the shared group library, or nothing if the reference is in your personal library */
@@ -344,7 +386,7 @@ class PatternFormatter {
   /** returns the journal abbreviation, or, if not found, the journal title, If 'automatic journal abbreviation' is enabled in the BBT settings,
    * it will use the same abbreviation filter Zotero uses in the wordprocessor integration. You might want to use the `abbr` filter on this.
    */
-  public $journal() { return JournalAbbrev.get(this.item, true) || this.item.publicationTitle } // eslint-disable-line @typescript-eslint/no-unsafe-return
+  public $journal() { return JournalAbbrev.get(this.item.item, true) || this.item.getField('publicationTitle') } // eslint-disable-line @typescript-eslint/no-unsafe-return
 
   /** The last name of up to N authors. If there are more authors, "EtAl" is appended. */
   public $authors(onlyEditors: boolean, withInitials: boolean, joiner: string, n?:number) {
@@ -453,20 +495,22 @@ class PatternFormatter {
 
   /** The number of the first page of the publication (Caution: this will return the lowest number found in the pages field, since BibTeX allows `7,41,73--97` or `43+`.) */
   public $firstpage() {
-    return this.item.pages?.split(/[-\s,–]/)[0] || ''
+    const pages: string = this.item.getField('pages') as string
+    if (!pages) return ''
+    return pages.split(/[-\s,–]/)[0] || ''
   }
 
   /** The number of the last page of the publication (See the remark on `firstpage`) */
   public $lastpage() {
-    return this.item.pages?.split(/[-\s,–]/).pop() || ''
+    const pages: string = this.item.getField('pages') as string
+    if (!pages) return ''
+    return pages.split(/[-\s,–]/).pop() || ''
   }
 
   /** Tag number `N` */
   public $keyword(n: number): string {
-    const tag = this.item.tags?.[n]
-    if (typeof tag === 'string') return tag
-    if (typeof tag?.tag === 'string') return tag.tag
-    return ''
+    const tag: string | { tag: string} = this.item.getTags()?.[n] || ''
+    return typeof tag === 'string' ? tag : tag.tag
   }
 
   /** The first `N` (default: 3) words of the title, apply capitalization to first `M` (default: 0) of those */
@@ -484,18 +528,18 @@ class PatternFormatter {
 
   /** The last 2 digits of the publication year */
   public $shortyear() {
-    return this._format_date(this.item.parsedDate, '%y')
+    return this._format_date(this.item.date, '%y')
   }
 
   /** The year of the publication */
   public $year() {
-    return this.padYear(this._format_date(this.item.parsedDate, '%-Y'), 2)
+    return this.padYear(this._format_date(this.item.date, '%-Y'), 2)
   }
 
   /** The date of the publication */
   // eslint-disable-next-line @typescript-eslint/no-inferrable-types
   public $date(format: string = '%Y-%m-%d') {
-    return this._format_date(this.item.parsedDate, format)
+    return this._format_date(this.item.date, format)
   }
 
   /** A line from the extra field */
@@ -505,7 +549,7 @@ class PatternFormatter {
     if (!variables.length) return ''
 
     const value = variables
-      .map(varname => this.item.extraFields.kv[varname] || this.item.extraFields.tex[varname]?.value || this.item.extraFields.tex[`tex.${varname}`]?.value)
+      .map((varname: string) => this.item.extraFields.kv[varname] || this.item.extraFields.tex[varname]?.value || this.item.extraFields.tex[`tex.${varname}`]?.value)
       .find(val => val)
     if (value) return value
 
@@ -522,18 +566,18 @@ class PatternFormatter {
 
   /** the original year of the publication */
   public $origyear() {
-    return this.padYear(this._format_date(this.item.parsedDate, '%-oY'), 2)
+    return this.padYear(this._format_date(this.item.date, '%-oY'), 2)
   }
 
   /** the original date of the publication */
   public $origdate() {
-    return this._format_date(this.item.parsedDate, '%oY-%om-%od')
+    return this._format_date(this.item.date, '%oY-%om-%od')
   }
 
   /** the month of the publication */
   public $month() {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return this.months[this.item.parsedDate.m] || ''
+    return this.months[this.item.date.m] || ''
   }
 
   /** Capitalize all the significant words of the title, and concatenate them. For example, `An awesome paper on JabRef` will become `AnAwesomePaperJabref` */
@@ -547,7 +591,7 @@ class PatternFormatter {
   public _format_date(value: string | PartialDate, format: string='%Y-%m-%d') { // eslint-disable-line @typescript-eslint/no-inferrable-types
     if (!value) return ''
 
-    const date = (typeof value === 'string') ? this.parseDate(value) : value
+    const date = (typeof value === 'string') ? parseDate(value) : value
 
     let keep = true
     const formatted = format.split(/(%-?o?[a-z]|%%)/i).map((spec, i) => {
@@ -734,7 +778,7 @@ class PatternFormatter {
   }
 
   private removeDiacritics(str: string, mode?: string): string {
-    mode = mode || this.item.language
+    mode = mode || this.item.removeDiacritics
 
     if (mode === 'japanese') mode = null
     const replace = {

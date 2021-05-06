@@ -43,14 +43,18 @@ interface ZoteroItem {
   isNote: () => boolean
   isAttachment: () => boolean
   isAnnotation?: () => boolean
+  itemTypeID: number
   libraryID: number
   parentID: number
   key: string
-  getField: (name: string) => string | number
+  getField: (name: string, unformatted?: boolean, includeBaseMapped?: boolean) => string | number
   setField: (name: string, value: string | number) => void
+  getCreators: () => {firstName?: string, lastName: string, fieldMode: number, creatorTypeID: number}[]
+  getCreatorsJSON: () => { firstName?: string, lastName?:string, name?: string, creatorType: string }[]
   getNotes: () => ZoteroItem[]
   getCollections: () => number[]
   getAttachments: () => ZoteroItem[]
+  getTags: () => { tag: string, type: number }[]
   toJSON: () => import('../gen/typings/serialized-item').Item
 }
 

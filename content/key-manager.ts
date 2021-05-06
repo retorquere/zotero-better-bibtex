@@ -1,10 +1,7 @@
-import type { Reference } from '../gen/typings/serialized-item'
-
 import ETA from 'node-eta'
 
 import { kuroshiro } from './key-manager/kuroshiro'
 import { jieba } from './key-manager/jieba'
-import { Serializer } from './serializer'
 
 import { Scheduler } from './scheduler'
 import { log } from './logger'
@@ -488,7 +485,7 @@ export class KeyManager {
 
     if (citekey) return { citekey, pinned: true }
 
-    const proposed = Formatter.format(Serializer.serialize(item) as Reference)
+    const proposed = Formatter.format(item)
 
     const conflictQuery: Query = { $and: [ { itemID: { $ne: item.id } } ] }
     if (Preference.keyScope !== 'global') conflictQuery.$and.push({ libraryID: { $eq: item.libraryID } })
