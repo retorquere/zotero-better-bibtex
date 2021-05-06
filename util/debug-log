@@ -11,7 +11,10 @@ if len(logs) == 0:
   print('please provide one or more log IDs')
   sys.exit(1)
 
-postfixes = list(set([log.split('-')[1] for log in logs]))
+postfixes = set([])
+for log in logs:
+  if '-' in log:
+    postfixes.add(log.split('-')[-1])
 
 s3 = boto3.resource('s3')
 
