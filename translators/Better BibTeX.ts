@@ -458,6 +458,7 @@ class ZoteroItem {
     thesis:             'thesis',
     unpublished:        'manuscript',
     web_page:           'webpage', // mendeley made-up entry type
+    webpage:            'webpage', // papers3 made-up entry type
   }
 
   private type: string
