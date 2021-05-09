@@ -898,12 +898,12 @@ export class Reference {
     }
 
     try {
-      if (this.postscript(this, this.item, Translator, Zotero) === false) this.item.cachable = false
+      if (this.postscript(this, this.item, Translator, Zotero) === false) this.item.$cacheable = false
     }
     catch (err) {
       if (Translator.preferences.testing && !Translator.preferences.ignorePostscriptErrors) throw err
       log.error('Reference.postscript failed:', err)
-      this.item.cachable = false
+      this.item.$cacheable = false
     }
 
     for (const name of Translator.skipFields) {
@@ -938,7 +938,7 @@ export class Reference {
     this.metadata.DeclarePrefChars = Exporter.unique_chars(this.metadata.DeclarePrefChars)
 
     this.metadata.packages = Object.keys(this.packages)
-    if (this.item.cachable) Zotero.BetterBibTeX.cacheStore(this.item.itemID, Translator.options, Translator.preferences, ref, this.metadata)
+    if (this.item.$cacheable) Zotero.BetterBibTeX.cacheStore(this.item.itemID, Translator.options, Translator.preferences, ref, this.metadata)
 
     Exporter.postfix.add(this.metadata)
   }
@@ -1163,7 +1163,7 @@ export class Reference {
       else if (Translator.preferences.relativeFilePaths && Translator.export.dir) {
         const relative = Path.relative(att.path)
         if (relative !== att.path) {
-          this.item.cachable = false
+          this.item.$cacheable = false
           att.path = relative
         }
       }
@@ -1364,6 +1364,19 @@ export class Reference {
     if (!report.length) return ''
 
     report.unshift(`== ${Translator.BetterBibTeX ? 'BibTeX' : 'BibLateX'} quality report for ${this.item.citationKey}:`)
+
+    for (const field of this.item.$unused) {
+      const value = this.item[field]
+      if (!value) continue
+
+      switch (field) {
+        case 'libraryCatalog':
+          if (this.item.arXiv && value.toLowerCase().includes('arxiv')) continue
+          break
+      }
+
+      report.push(`? Unused ${field}: ${this.item[field]}`)
+    }
 
     return report.map(line => `% ${line}\n`).join('')
   }

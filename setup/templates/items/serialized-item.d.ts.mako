@@ -47,9 +47,11 @@ export interface Reference extends ItemBase {
   tags: Array<Tag>
   notes: Array<Note>
   attachments: Array<Attachment>
+
   raw: boolean
-  cachable?: boolean
   autoJournalAbbreviation?: string
+  $cacheable?: boolean
+  $unused?: Set<string>
 
   %for field in fields:
   ${field}: string
