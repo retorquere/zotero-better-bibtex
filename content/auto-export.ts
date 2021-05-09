@@ -11,6 +11,7 @@ import * as ini from 'ini'
 import fold2ascii from 'fold-to-ascii'
 import { pathSearch } from './path-search'
 import { Scheduler } from './scheduler'
+import { flash } from './flash'
 
 class Git {
   public enabled: boolean
@@ -96,29 +97,37 @@ class Git {
     if (!this.enabled) return
 
     try {
-      await this.exec(this.git, ['-C', this.path, 'pull'])
+      const warning = await this.exec(this.git, ['-C', this.path, 'pull'])
+      if (warning) flash('autoexport git pull warning', `${this.quote(this.path)}: ${warning}`, 1)
     }
     catch (err) {
+      flash('autoexport git pull failed', `${this.quote(this.path)}: ${err.message}`, 1)
       log.error(`could not pull in ${this.path}:`, err)
-      this.enabled = false
     }
   }
 
   public async push(msg) {
     if (!this.enabled) return
 
+    const warnings: string[] = []
     try {
-      await this.exec(this.git, ['-C', this.path, 'add', this.bib])
-      await this.exec(this.git, ['-C', this.path, 'commit', '-m', msg])
-      await this.exec(this.git, ['-C', this.path, 'push'])
+      warnings.push(await this.exec(this.git, ['-C', this.path, 'add', this.bib]))
+      warnings.push(await this.exec(this.git, ['-C', this.path, 'commit', '-m', msg]))
+      warnings.push(await this.exec(this.git, ['-C', this.path, 'push']))
+      const warning = warnings.find(w => w)
+      if (warning) flash('autoexport git pull warning', `${this.quote(this.path)}: ${warning}`, 1)
     }
     catch (err) {
+      flash('autoexport git push failed', `${this.quote(this.path)}: ${err.message}`, 1)
       log.error(`could not push ${this.bib} in ${this.path}`, err)
-      this.enabled = false
     }
   }
 
-  private async exec(cmd, args): Promise<boolean> {
+  private quote(cmd: string, args?: string[]) {
+    return [cmd].concat(args || []).map((arg: string) => arg.match(/['"]|\s/) ? JSON.stringify(arg) : arg).join(' ')
+  }
+
+  private async exec(cmd, args): Promise<string> {
     if (typeof cmd === 'string') cmd = new FileUtils.File(cmd)
 
     if (!cmd.isExecutable()) throw new Error(`${cmd.path} is not an executable`)
@@ -127,16 +136,16 @@ class Git {
     proc.init(cmd)
     // proc.startHidden = true // won't work until Zotero upgrades to post-55 Firefox
 
-    return new Promise<boolean>((resolve, reject) => {
+    return new Promise<string>((resolve, reject) => {
       proc.runwAsync(args, args.length, { observe: function(subject, topic) { // eslint-disable-line object-shorthand, prefer-arrow/prefer-arrow-functions
         if (topic !== 'process-finished') {
-          reject(new Error(`${cmd.path} failed`))
+          reject(new Error(`${this.quote(cmd.path, args)} failed`))
         }
         else if (proc.exitValue !== 0) {
-          reject(new Error(`${cmd.path} returned exit status ${proc.exitValue}`))
+          resolve(`${this.quote(cmd.path, args)} returned exit status ${proc.exitValue}`)
         }
         else {
-          resolve(true)
+          resolve('')
         }
       }})
     })
