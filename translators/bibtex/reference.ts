@@ -1365,14 +1365,41 @@ export class Reference {
 
     report.unshift(`== ${Translator.BetterBibTeX ? 'BibTeX' : 'BibLateX'} quality report for ${this.item.citationKey}:`)
 
-    for (const field of this.item.$unused) {
-      const value = this.item[field]
+    const ignore_unused_fields = [
+      'abstractNote',
+      'accessDate',
+      'citationKey',
+      'citekey',
+      'collections',
+      'date',
+      'dateAdded',
+      'dateModified',
+      'itemID',
+      'itemType',
+      'key',
+      'libraryID',
+      'relations',
+      'uri',
+    ]
+    const values = Object.values(this.has)
+      .filter(field => typeof field.value === 'string' || typeof field.value === 'number')
+      .map(field => typeof field.value === 'string' ? field.value.toLowerCase().replace(/[^a-zA-z0-9]/g, '') : field.value)
+    for (let [field, value] of Object.entries(this.item)) {
       if (!value) continue
+      if (ignore_unused_fields.includes(field)) continue
 
-      switch (field) {
-        case 'libraryCatalog':
-          if (this.item.arXiv && value.toLowerCase().includes('arxiv')) continue
+      switch (typeof value) {
+        case 'string':
+          value = value.toLowerCase().replace(/[^a-zA-z0-9]/g, '')
+          if (values.includes(value)) continue
+          if (field === 'libraryCatalog' && value === 'arxivorg' && this.item.arXiv) continue
           break
+        case 'number':
+          if (values.includes(value)) continue
+          break
+
+        default:
+          continue
       }
 
       report.push(`? Unused ${field}: ${this.item[field]}`)
