@@ -1393,6 +1393,7 @@ export class Reference {
           value = value.toLowerCase().replace(/[^a-zA-z0-9]/g, '')
           if (values.includes(value)) continue
           if (field === 'libraryCatalog' && value === 'arxivorg' && this.item.arXiv) continue
+          if (field === 'language' && this.has.langid) continue
           break
         case 'number':
           if (values.includes(value)) continue
