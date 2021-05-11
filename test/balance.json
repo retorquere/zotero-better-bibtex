@@ -184,6 +184,10 @@
       "msecs": 560,
       "runs": -240
     },
+    "Export 1 references for BibTeX to DOI not escaped using postscript #1803": {
+      "msecs": 500,
+      "runs": -309
+    },
     "Export 1 references for BibTeX to Double superscript in title field on export #1217": 400,
     "Export 1 references for BibTeX to Edition Numbers in BibTeX Exports #1446": 420,
     "Export 1 references for BibTeX to Empty bibtex clause in extra gobbles whatever follows #99": 370,
@@ -228,11 +232,11 @@
       "runs": -80
     },
     "Export 1 references for BibTeX to Using the Extra field in the exported Citation Key #1571": {
-      "msecs": 590,
+      "msecs": 580,
       "runs": -300
     },
     "Export 1 references for BibTeX to Word segmentation for Chinese references #1682": {
-      "msecs": 1670,
+      "msecs": 1660,
       "runs": -260
     },
     "Export 1 references for BibTeX to [authN_M] citation key syntax has off-by-one error #899": 370,
@@ -315,7 +319,7 @@
     "Export 6 references for BibLaTeX to Better BibLaTeX.stable-keys": 620,
     "Export 8 references for BibLaTeX to Don't title-case sup-subscripts #1037": 660,
     "Export as Collected Notes does not list subcollections #1768": {
-      "msecs": 4670,
+      "msecs": 4680,
       "runs": -256
     },
     "Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825": 990,
@@ -409,17 +413,17 @@
     },
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 379600,
+    "Really Big whopping library": 379130,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 47680,
+      "msecs": 47610,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
     "Square brackets in Publication field (85), and non-pinned keys must change when the pattern does": 450,
-    "Unabbreviate on import #1436-1": 39300,
+    "Unabbreviate on import #1436-1": 39290,
     "Unbalanced vphantom escapes #1043": 760,
     "arXiv identifiers in BibLaTeX export #460": 1180,
     "auto-export": 14370,
@@ -442,7 +446,7 @@
       "runs": -36
     },
     "web_page and other mendeley idiocy": {
-      "msecs": 39230,
+      "msecs": 39220,
       "runs": -239
     }
   },
@@ -742,7 +746,7 @@
       "Identical Pinned keys lost when merging duplicated records #1721"
     ]
   },
-  "runs": 309,
+  "runs": 310,
   "slow": {
     "1": [
       "Export 1 references for BibLaTeX to biber 2.14 rejects the date field generated from Better BibLaTex #1695",
@@ -1034,7 +1038,8 @@
       "Merging error with arXiv ID #1373",
       "Duplicate Citation Key Alias #1384",
       "ids field should be created in raw mode #1729",
-      "Identical Pinned keys lost when merging duplicated records #1721"
+      "Identical Pinned keys lost when merging duplicated records #1721",
+      "Export 1 references for BibTeX to DOI not escaped using postscript #1803"
     ],
     "2": [
       "Really Big whopping library",

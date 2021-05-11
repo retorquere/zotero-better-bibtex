@@ -140,6 +140,8 @@
   "export/Colon in bibtex key #405.json",
   "export/Colon not allowed in citation key format #268.biblatex",
   "export/Colon not allowed in citation key format #268.json",
+  "export/DOI not escaped using postscript #1803.bibtex",
+  "export/DOI not escaped using postscript #1803.json",
   "export/DOI with underscores in extra field #108.biblatex",
   "export/DOI with underscores in extra field #108.json",
   "export/Date export to Better CSL-JSON #360 #811.biblatex",
