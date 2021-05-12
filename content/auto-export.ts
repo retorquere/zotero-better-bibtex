@@ -139,7 +139,7 @@ class Git {
     return new Promise<string>((resolve, reject) => {
       proc.runwAsync(args, args.length, { observe: function(subject, topic) { // eslint-disable-line object-shorthand, prefer-arrow/prefer-arrow-functions
         if (topic !== 'process-finished') {
-          reject(new Error(`${this.quote(cmd.path, args)} failed`))
+          reject(new Error(`${this.quote(cmd.path, args)} failed, exit status: ${topic}`))
         }
         else if (proc.exitValue !== 0) {
           resolve(`${this.quote(cmd.path, args)} returned exit status ${proc.exitValue}`)
