@@ -1,0 +1,77 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "dmy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "bibtexURL": "url",
+      "postscript": "if (Translator.BetterBibTeX && reference.has.doi) { reference.add({ name: 'doi', value: reference.has.doi.value, enc: 'latex' }) }",
+      "citekeyFormat": "[auth:lower][shorttitle3_3][year]"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1007/978-3-030-49186-4_9",
+      "abstractNote": "In last decade, cryptocurrency has emerged in financial area as a key factor in businesses and financial market opportunities. Accurate predictions can assist cryptocurrency investors towards right investing decisions and lead to potential increased profits. Additionally, they can also support policy makers and financial researchers in studying cryptocurrency markets behavior. Nevertheless, cryptocurrency price prediction is considered a very challenging task, due to its chaotic and very complex nature. In this study we evaluate some of the most successful and widely used deep learning algorithms forecasting cryptocurrency prices. The results obtained, provide significant evidence that deep learning models are not able to solve this problem efficiently and effectively. Conducting detailed experimentation and results analysis, we conclude that it is essential to invent and incorporate new techniques, strategies and alternative approaches such as: more sophisticated prediction algorithms, advanced ensemble methods, feature engineering techniques and other validation metrics.",
+      "attachments": [
+        {
+          "accessDate": "2021-05-11T08:26:47Z",
+          "contentType": "text/html",
+          "itemType": "attachment",
+          "key": "34DYYMVH",
+          "linkMode": "linked_url",
+          "title": "Semantic Scholar Link",
+          "uri": "http://zotero.org/users/7972213/items/34DYYMVH",
+          "url": "https://www.semanticscholar.org/paper/Investigating-the-Problem-of-Cryptocurrency-Price-A-Pintelas-Livieris/ac36c0db719d6a6c5bc8e58b0d97d8bcfd78d909"
+        },
+        {
+          "itemType": "attachment",
+          "path": "/Users/t/Zotero/storage/LWIMSQPB/Pintelas et al. - 2020 - Investigating the Problem of Cryptocurrency Price .pdf",
+          "title": "Full Text",
+          "uri": "http://zotero.org/users/7972213/items/LWIMSQPB"
+        }
+      ],
+      "citationKey": "pintelasInvestigatingProblemCryptocurrency2020",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Emmanuel G.",
+          "lastName": "Pintelas"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "I.",
+          "lastName": "Livieris"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "S.",
+          "lastName": "Stavroyiannis"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "T.",
+          "lastName": "Kotsilieris"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "P.",
+          "lastName": "Pintelas"
+        }
+      ],
+      "date": "2020",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "libraryCatalog": "Semantic Scholar",
+      "notes": [
+        "<p>DOI, wenn es geht: 10.1007/978-3-030-49186-4_22</p>"
+      ],
+      "publicationTitle": "AIAI",
+      "shortTitle": "Investigating the Problem of Cryptocurrency Price Prediction",
+      "title": "Investigating the Problem of Cryptocurrency Price Prediction: A Deep Learning Approach"
+    }
+  ]
+}

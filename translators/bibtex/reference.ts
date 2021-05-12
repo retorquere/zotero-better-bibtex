@@ -306,7 +306,7 @@ export class Reference {
   public english: boolean
 
   // patched in by the Bib(La)TeX translators
-  public fieldEncoding: { [key: string]: string }
+  public fieldEncoding: Record<string, 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'latex' | 'tags' | 'attachments' | 'date'>
   public caseConversion: { [key: string]: boolean }
   public typeMap: { csl: { [key: string]: string | { type: string, subtype?: string } }, zotero: { [key: string]: string | { type: string, subtype?: string } } }
   public lint: Function
@@ -580,10 +580,10 @@ export class Reference {
 
       }
       else {
-        const enc = field.enc || this.fieldEncoding[field.name] || 'latex'
+        field.enc = field.enc || this.fieldEncoding[field.name] || 'latex'
 
         let value
-        switch (enc) {
+        switch (field.enc) {
           case 'latex':
             value = this.enc_latex(field, { raw: this.item.raw })
             break
@@ -617,7 +617,7 @@ export class Reference {
             break
 
           default:
-            throw new Error(`Unexpected field encoding: ${JSON.stringify(enc)}`)
+            throw new Error(`Unexpected field encoding: ${JSON.stringify(field.enc)}`)
         }
 
         if (!value) return null
