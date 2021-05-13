@@ -282,7 +282,7 @@ archive`).
 
 Of the packages mentioned above, only one (`biblatex-mla`) has a
 clear schema of how to record archival information (type `@unpublished`;
-fields `number`, `library`, `location`). Note that the library field
+fields `number`, `library`, `location`). Note that the `library` field
 is unique to biblatex-mla. (biblatex does define the field, but
 never uses it in its standard styles, and we find no indication
 that either biblatex-apa or biblatex-chicago would use it for a
