@@ -289,6 +289,11 @@ const fieldOrder = [
   return acc
 }, {})
 
+
+function entry_sort(a: [string, string | number], b: [string, string | number]): number {
+  return Translator.stringCompare(a[0], b[0])
+}
+
 /*
  * The fields are objects with the following keys:
  *   * name: name of the Bib(La)TeX field
@@ -1365,6 +1370,14 @@ export class Reference {
 
     report.unshift(`== ${Translator.BetterBibTeX ? 'BibTeX' : 'BibLateX'} quality report for ${this.item.citationKey}:`)
 
+    const used: Array<string | number> = Object.values(this.has) // eslint-disable-line @typescript-eslint/array-type
+      .filter(field => typeof field.value === 'string' || typeof field.value === 'number')
+      .map(field => typeof field.value === 'string' ? field.value.toLowerCase().replace(/[^a-zA-z0-9]/g, '') : field.value)
+    const fields: [string, any][] = Object.entries(this.item)
+      .sort(entry_sort)
+    const extra_fields: [string, any][] = (Object.entries(this.item.extraFields.kv) as [string, any][])
+      .sort(entry_sort)
+      .map(([field, value]: [string, any]) => [`extraFields.kv.${field}`, value])
     const ignore_unused_fields = [
       'abstractNote',
       'accessDate',
@@ -1381,21 +1394,16 @@ export class Reference {
       'relations',
       'uri',
     ]
-    const used = Object.values(this.has)
-      .filter(field => typeof field.value === 'string' || typeof field.value === 'number')
-      .map(field => typeof field.value === 'string' ? field.value.toLowerCase().replace(/[^a-zA-z0-9]/g, '') : field.value)
-    const data = Object.entries(this.item).concat(
-      Object.entries(this.item.extraFields.kv).map(([field, value]) => [`extraFields.kv.${field}`, value])
-    )
-    for (let [field, value] of data) {
+    for (const [field, value] of fields.concat(extra_fields)) {
       if (!value) continue
       if (ignore_unused_fields.includes(field)) continue
 
+      let v: string
       switch (typeof value) {
         case 'string':
-          value = value.toLowerCase().replace(/[^a-zA-z0-9]/g, '')
-          if (used.includes(value)) continue
-          if (field === 'libraryCatalog' && value === 'arxivorg' && this.item.arXiv) continue
+          v = value.toLowerCase().replace(/[^a-zA-z0-9]/g, '')
+          if (used.includes(v)) continue
+          if (field === 'libraryCatalog' && v === 'arxivorg' && this.item.arXiv) continue
           if (field === 'language' && this.has.langid) continue
           break
         case 'number':
@@ -1406,7 +1414,7 @@ export class Reference {
           continue
       }
 
-      report.push(`? Unused ${field}: ${this.item[field]}`)
+      report.push(`? Unused ${field}: ${value}`)
     }
 
     return report.map(line => `% ${line}\n`).join('')
