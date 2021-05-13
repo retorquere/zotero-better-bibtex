@@ -1,0 +1,34 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "dmy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "extraMergeTeX": true,
+      "quickCopyMode": "pandoc",
+      "postscript": "if (Translator.BetterBibLaTeX) {\n  // biblatex-mla\n  if (item.archive && item.archiveLocation) {\n    reference.add({ name: 'type', value: reference.referencetype })\n    reference.referencetype = 'unpublished'\n    reference.add({ name: 'library', value: item.archive})\n    reference.add({ name: 'number', value: item.archiveLocation })\n  }\n}",
+      "qualityReport": true,
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc"
+    }
+  },
+  "items": [
+    {
+      "accessDate": "2021-04-08T14:44:50Z",
+      "archive": "Archives de la Ville et l'Eurom\u00e9tropole de Strasbourg",
+      "archiveLocation": "114 Z 1 248",
+      "callNumber": "114 Z 1 248",
+      "citationKey": "MillionDemiInfirmes1968",
+      "date": "31/05/1968",
+      "itemID": 1,
+      "itemType": "letter",
+      "title": "Un million et demi d'infirmes, handicap\u00e9s physiques et mentaux",
+      "url": "https://archives.strasbourg.eu/archive/fonds/FRAM67482_0592_114Z/view:115037"
+    }
+  ]
+}
