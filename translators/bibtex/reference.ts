@@ -1381,22 +1381,25 @@ export class Reference {
       'relations',
       'uri',
     ]
-    const values = Object.values(this.has)
+    const used = Object.values(this.has)
       .filter(field => typeof field.value === 'string' || typeof field.value === 'number')
       .map(field => typeof field.value === 'string' ? field.value.toLowerCase().replace(/[^a-zA-z0-9]/g, '') : field.value)
-    for (let [field, value] of Object.entries(this.item)) {
+    const data = Object.entries(this.item).concat(
+      Object.entries(this.item.extraFields.kv).map(([field, value]) => [`extraFields.kv.${field}`, value])
+    )
+    for (let [field, value] of data) {
       if (!value) continue
       if (ignore_unused_fields.includes(field)) continue
 
       switch (typeof value) {
         case 'string':
           value = value.toLowerCase().replace(/[^a-zA-z0-9]/g, '')
-          if (values.includes(value)) continue
+          if (used.includes(value)) continue
           if (field === 'libraryCatalog' && value === 'arxivorg' && this.item.arXiv) continue
           if (field === 'language' && this.has.langid) continue
           break
         case 'number':
-          if (values.includes(value)) continue
+          if (used.includes(value)) continue
           break
 
         default:
