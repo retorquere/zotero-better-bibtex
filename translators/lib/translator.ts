@@ -10,12 +10,18 @@ import { log } from '../../content/logger'
 
 type TranslatorMode = 'export' | 'import'
 
-type CachableItem = Item & { cachable: boolean }
+type CacheableItem = Item & { $cacheable: boolean }
 
 const cacheDisabler = new class {
   get(target, property) {
+    // if (typeof target.$unused === 'undefined') target.$unused = new Set(Object.keys(target).filter(field => !ignore_unused_fields.includes(field)))
+
     // collections: jabref 4 stores collection info inside the reference, and collection info depends on which part of your library you're exporting
-    if (['collections'].includes(property)) target.cachable = false
+    if (property === 'collections') target.$cacheable = false
+
+    // use for the QR to highlight unused data
+    // target.$unused.delete(property)
+
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return target[property]
   }
@@ -24,7 +30,7 @@ const cacheDisabler = new class {
 type NestedCollection = {
   key: string
   name: string
-  items: CachableItem[]
+  items: CacheableItem[]
   collections: NestedCollection[]
   parent?: NestedCollection
 }
@@ -62,14 +68,14 @@ type TranslatorHeader = {
 }
 
 class Items {
-  public list: CachableItem[] = []
-  public map: Record<number, CachableItem> = {}
-  public current: CachableItem
+  public list: CacheableItem[] = []
+  public map: Record<number, CacheableItem> = {}
+  public current: CacheableItem
 
-  constructor(cachable) {
-    let item: CachableItem
+  constructor(cacheable) {
+    let item: CacheableItem
     while (item = Zotero.nextItem()) {
-      item.cachable = cachable
+      item.$cacheable = cacheable
       // @ts-ignore
       item.journalAbbreviation = item.journalAbbreviation || item.autoJournalAbbreviation
       this.list.push(this.map[item.itemID] = new Proxy(item, cacheDisabler))
@@ -140,7 +146,7 @@ export const Translator = new class implements ITranslator { // eslint-disable-l
   // public TeX: boolean
   // public CSL: boolean
 
-  private cachable: boolean
+  private cacheable: boolean
   private _items: Items
 
   public cache: {
@@ -179,12 +185,12 @@ export const Translator = new class implements ITranslator { // eslint-disable-l
   }
 
   public get exportDir(): string {
-    this._items.current.cachable = false
+    this._items.current.$cacheable = false
     return this.export.dir
   }
 
   public get exportPath(): string {
-    this._items.current.cachable = false
+    this._items.current.$cacheable = false
     return this.export.path
   }
 
@@ -267,7 +273,7 @@ export const Translator = new class implements ITranslator { // eslint-disable-l
 
       // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
       // relative file paths are going to be different based on the file being exported to
-      this.cachable = !(
+      this.cacheable = !(
         this.options.exportFileData
         ||
         this.preferences.relativeFilePaths
@@ -310,7 +316,7 @@ export const Translator = new class implements ITranslator { // eslint-disable-l
     return Object.values(this.collections).filter(coll => !coll.parent).map(coll => this.nestedCollection(coll))
   }
   private nestedCollection(collection: Collection): NestedCollection {
-    this._items = this._items || new Items(this.cachable)
+    this._items = this._items || new Items(this.cacheable)
     const nested: NestedCollection = {
       key: collection.key,
       name: collection.name,
@@ -324,11 +330,11 @@ export const Translator = new class implements ITranslator { // eslint-disable-l
   }
 
   get items(): Generator<Item, void, unknown> {
-    this._items = this._items || new Items(this.cachable)
+    this._items = this._items || new Items(this.cacheable)
     return this._items.items()
   }
   get references(): Generator<Reference, void, unknown> {
-    this._items = this._items || new Items(this.cachable)
+    this._items = this._items || new Items(this.cacheable)
     return this._items.references()
   }
 }

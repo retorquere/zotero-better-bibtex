@@ -289,6 +289,11 @@ const fieldOrder = [
   return acc
 }, {})
 
+
+function entry_sort(a: [string, string | number], b: [string, string | number]): number {
+  return Translator.stringCompare(a[0], b[0])
+}
+
 /*
  * The fields are objects with the following keys:
  *   * name: name of the Bib(La)TeX field
@@ -898,12 +903,12 @@ export class Reference {
     }
 
     try {
-      if (this.postscript(this, this.item, Translator, Zotero) === false) this.item.cachable = false
+      if (this.postscript(this, this.item, Translator, Zotero) === false) this.item.$cacheable = false
     }
     catch (err) {
       if (Translator.preferences.testing && !Translator.preferences.ignorePostscriptErrors) throw err
       log.error('Reference.postscript failed:', err)
-      this.item.cachable = false
+      this.item.$cacheable = false
     }
 
     for (const name of Translator.skipFields) {
@@ -938,7 +943,7 @@ export class Reference {
     this.metadata.DeclarePrefChars = Exporter.unique_chars(this.metadata.DeclarePrefChars)
 
     this.metadata.packages = Object.keys(this.packages)
-    if (this.item.cachable) Zotero.BetterBibTeX.cacheStore(this.item.itemID, Translator.options, Translator.preferences, ref, this.metadata)
+    if (this.item.$cacheable) Zotero.BetterBibTeX.cacheStore(this.item.itemID, Translator.options, Translator.preferences, ref, this.metadata)
 
     Exporter.postfix.add(this.metadata)
   }
@@ -1163,7 +1168,7 @@ export class Reference {
       else if (Translator.preferences.relativeFilePaths && Translator.export.dir) {
         const relative = Path.relative(att.path)
         if (relative !== att.path) {
-          this.item.cachable = false
+          this.item.$cacheable = false
           att.path = relative
         }
       }
@@ -1364,6 +1369,53 @@ export class Reference {
     if (!report.length) return ''
 
     report.unshift(`== ${Translator.BetterBibTeX ? 'BibTeX' : 'BibLateX'} quality report for ${this.item.citationKey}:`)
+
+    const used: Array<string | number> = Object.values(this.has) // eslint-disable-line @typescript-eslint/array-type
+      .filter(field => typeof field.value === 'string' || typeof field.value === 'number')
+      .map(field => typeof field.value === 'string' ? field.value.toLowerCase().replace(/[^a-zA-z0-9]/g, '') : field.value)
+    const fields: [string, any][] = Object.entries(this.item)
+      .sort(entry_sort)
+    const extra_fields: [string, any][] = (Object.entries(this.item.extraFields.kv) as [string, any][])
+      .sort(entry_sort)
+      .map(([field, value]: [string, any]) => [`extraFields.kv.${field}`, value])
+    const ignore_unused_fields = [
+      'abstractNote',
+      'accessDate',
+      'citationKey',
+      'citekey',
+      'collections',
+      'date',
+      'dateAdded',
+      'dateModified',
+      'itemID',
+      'itemType',
+      'key',
+      'libraryID',
+      'relations',
+      'uri',
+    ]
+    for (const [field, value] of fields.concat(extra_fields)) {
+      if (!value) continue
+      if (ignore_unused_fields.includes(field)) continue
+
+      let v: string
+      switch (typeof value) {
+        case 'string':
+          v = value.toLowerCase().replace(/[^a-zA-z0-9]/g, '')
+          if (used.includes(v)) continue
+          if (field === 'libraryCatalog' && v === 'arxivorg' && this.item.arXiv) continue
+          if (field === 'language' && this.has.langid) continue
+          break
+        case 'number':
+          if (used.includes(value)) continue
+          break
+
+        default:
+          continue
+      }
+
+      report.push(`? Unused ${field}: ${value}`)
+    }
 
     return report.map(line => `% ${line}\n`).join('')
   }
