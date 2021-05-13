@@ -267,3 +267,75 @@ if (Translator.BetterBibTeX && reference.referencetype === 'article' && item.arX
   if (!reference.has.journal) reference.referencetype = 'misc'
 }
 ```
+
+### Citing documents with a physical archive location
+
+This is one area where some of the supposedly most popular packages -- `biblatex`,
+`biblatex-apa`, `biblatex-chicago`, `biblatex-mla` -- are all over the
+place, if they explicitly support archival material at all. There
+doesn't seem to be a solution that caters for all of these and
+possibly other packages, too. biblatex has no special fields for
+dealing with info about physical archives, even if it does have
+provisions for electronic archives via the fields eprint (`identifier`),
+eprintclass (`section of an archive`), and eprinttype (`name of the
+archive`).
+
+Of the packages mentioned above, only one (`biblatex-mla`) has a
+clear schema of how to record archival information (type `@unpublished`;
+fields `number`, `library`, `location`). Note that the library field
+is unique to biblatex-mla. (biblatex does define the field, but
+never uses it in its standard styles, and we find no indication
+that either biblatex-apa or biblatex-chicago would use it for a
+physical archive.)
+
+Given all of this, I'm going to leave referencing of physical
+location to postscripts for now. If you enable the [quality report]{{< ref "/installation/preferences/export" >}}#include-comments-about-potential-problems-with-the-references), BBT
+will list Zotero fields with data that has not been used in the
+export:
+
+```
+@letter{MillionDemiInfirmes1968,
+  title = {Un Million et Demi d'infirmes, Handicapés Physiques et Mentaux},
+  date = {1968-05-31},
+  url = {https://archives.strasbourg.eu/archive/fonds/FRAM67482_0592_114Z/view:115037},
+  urldate = {2021-04-08},
+  type = {Letter}
+}
+% == BibLateX quality report for MillionDemiInfirmes1968:
+% Unexpected field 'title'
+% Unexpected field 'type'
+% ? Unused archive: Archives de la Ville et l'Eurométropole de Strasbourg
+% ? Unused archiveLocation: 114 Z 1 248
+% ? Unused callNumber: 114 Z 1 248
+```
+
+if you then apply a postscript such as 
+
+```
+if (Translator.BetterBibLaTeX) {
+  // biblatex-mla
+  if (item.archive && item.archiveLocation) {
+    reference.add({ name: 'type', value: reference.referencetype })
+    reference.referencetype = 'unpublished'
+    reference.add({ name: 'library', value: item.archive})
+    reference.add({ name: 'number', value: item.archiveLocation })
+  }
+}
+```
+
+you get
+
+```
+@unpublished{MillionDemiInfirmes1968,
+  title = {Un Million et Demi d'infirmes, Handicapés Physiques et Mentaux},
+  date = {1968-05-31},
+  url = {https://archives.strasbourg.eu/archive/fonds/FRAM67482_0592_114Z/view:115037},
+  urldate = {2021-04-08},
+  type = {letter},
+  library = {Archives de la Ville et l'Eurométropole de Strasbourg},
+  number = {114 Z 1 248}
+}
+% == BibLateX quality report for MillionDemiInfirmes1968:
+% Unexpected field 'number'
+% Missing required field 'author'
+```
