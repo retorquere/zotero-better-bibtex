@@ -289,7 +289,7 @@ that either biblatex-apa or biblatex-chicago would use it for a
 physical archive.)
 
 Given all of this, I'm going to leave referencing of physical
-location to postscripts for now. If you enable the [quality report]{{< ref "/installation/preferences/export" >}}#include-comments-about-potential-problems-with-the-references), BBT
+location to postscripts for now. If you enable the [quality report]({{< ref "/installation/preferences/export" >}}#include-comments-about-potential-problems-with-the-references), BBT
 will list Zotero fields with data that has not been used in the
 export:
 
