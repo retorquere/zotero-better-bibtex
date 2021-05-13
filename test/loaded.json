@@ -132,6 +132,8 @@
   "export/Changing item type for only BibLaTeX does not work #1694.json",
   "export/Citations have month and day next to year #868.biblatex",
   "export/Citations have month and day next to year #868.json",
+  "export/Cite archive documents with BetterBibLaTeX #1799.biblatex",
+  "export/Cite archive documents with BetterBibLaTeX #1799.json",
   "export/Citekey generation failure #708 and sort references on export #957.biblatex",
   "export/Citekey generation failure #708 and sort references on export #957.json",
   "export/Collected notes.html",
