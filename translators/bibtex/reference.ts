@@ -570,11 +570,22 @@ export class Reference {
 
     if (this.has[field.name]) {
       if (this.has[field.name].value === field.value && (this.has[field.name].enc || 'latex') === (field.enc || 'latex')) return null
+
       if (!this.inPostscript && !field.replace) {
         const value = field.bibtex ? 'bibtex' : 'value'
         throw new Error(`duplicate field '${field.name}' for ${this.item.citationKey}: old: ${this.has[field.name][value]}, new: ${field[value]}`)
       }
-      if (!field.replace) this.quality_report.push(`duplicate "${field.name}" ("${this.has[field.name].value}") ignored`)
+
+      if (!field.replace) {
+        let v_old = this.has[field.name].value
+        let v_new = field.value
+        if (typeof v_old === 'string' && typeof v_new === 'string') {
+          v_old = v_old.toLowerCase()
+          v_new = v_new.toLowerCase()
+        }
+        if (v_old !== v_new) this.quality_report.push(`duplicate "${field.name}" ("${this.has[field.name].value}") ignored`)
+      }
+
       delete this.has[field.name]
     }
 
