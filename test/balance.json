@@ -1,7 +1,7 @@
 {
   "duration": {
     "(non-)dropping particle handling #313": 2800,
-    "AUX scanner": 8710,
+    "AUX scanner": 8700,
     "BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372": 270,
     "Better BibTeX Import 2": 1160,
     "BibTeX name escaping has a million inconsistencies #438": 480,
@@ -62,7 +62,7 @@
     "Export 1 references for BibLaTeX to CSL variables only recognized when in lowercase #408": 460,
     "Export 1 references for BibLaTeX to Capitalisation in techreport titles #160": 340,
     "Export 1 references for BibLaTeX to Cite archive documents with BetterBibLaTeX #1799": {
-      "msecs": 590,
+      "msecs": 520,
       "runs": -313
     },
     "Export 1 references for BibLaTeX to Colon in bibtex key #405": 350,
@@ -189,7 +189,7 @@
       "runs": -240
     },
     "Export 1 references for BibTeX to DOI not escaped using postscript #1803": {
-      "msecs": 610,
+      "msecs": 600,
       "runs": -309
     },
     "Export 1 references for BibTeX to Double superscript in title field on export #1217": 400,
@@ -323,7 +323,7 @@
     "Export 6 references for BibLaTeX to Better BibLaTeX.stable-keys": 620,
     "Export 8 references for BibLaTeX to Don't title-case sup-subscripts #1037": 660,
     "Export as Collected Notes does not list subcollections #1768": {
-      "msecs": 4670,
+      "msecs": 4650,
       "runs": -256
     },
     "Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825": 990,
@@ -385,7 +385,7 @@
     "Import 2 references from BibLaTeX Patent author handling, type #1060": 1210,
     "Import 2 references from space after citekey creates confusion #716": 1170,
     "Import 20 references from BBT does not import groups from JabRef 5.1 #1641": {
-      "msecs": 3700,
+      "msecs": 3690,
       "runs": -161
     },
     "Import 3 references from Better BibTeX.009": 1130,
@@ -397,7 +397,7 @@
     "Include first name initial(s) in cite key generation pattern (86)": 450,
     "Jabref groups import does not work #717": 2810,
     "Jabref import - groups lost #1730": {
-      "msecs": 3220,
+      "msecs": 3210,
       "runs": -228
     },
     "Journal abbreviations": 490,
@@ -417,17 +417,17 @@
     },
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 378040,
+    "Really Big whopping library": 377570,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 48350,
+      "msecs": 48390,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
     "Square brackets in Publication field (85), and non-pinned keys must change when the pattern does": 450,
-    "Unabbreviate on import #1436-1": 39250,
+    "Unabbreviate on import #1436-1": 39220,
     "Unbalanced vphantom escapes #1043": 760,
     "arXiv identifiers in BibLaTeX export #460": 1180,
     "auto-export": 14370,
@@ -450,12 +450,13 @@
       "runs": -36
     },
     "web_page and other mendeley idiocy": {
-      "msecs": 39140,
+      "msecs": 39050,
       "runs": -239
     }
   },
   "fast": {
     "1": [
+      "Export 1 references for BibLaTeX to Cite archive documents with BetterBibLaTeX #1799",
       "Export 1 references for BibLaTeX to biber 2.14 rejects the date field generated from Better BibLaTex #1695",
       "Export 1 references for BibLaTeX to Export fails for duplicate \"extra\" field #1739",
       "Export 1 references for BibLaTeX to type dataset exported as @data instead of @dataset for BibLaTeX #1720",
@@ -751,9 +752,10 @@
       "Identical Pinned keys lost when merging duplicated records #1721"
     ]
   },
-  "runs": 314,
+  "runs": 315,
   "slow": {
     "1": [
+      "Export 1 references for BibLaTeX to Cite archive documents with BetterBibLaTeX #1799",
       "Export 1 references for BibLaTeX to biber 2.14 rejects the date field generated from Better BibLaTex #1695",
       "Export 1 references for BibLaTeX to Export fails for duplicate \"extra\" field #1739",
       "Export 1 references for BibLaTeX to type dataset exported as @data instead of @dataset for BibLaTeX #1720",
@@ -1044,8 +1046,7 @@
       "Merging error with arXiv ID #1373",
       "Duplicate Citation Key Alias #1384",
       "ids field should be created in raw mode #1729",
-      "Identical Pinned keys lost when merging duplicated records #1721",
-      "Export 1 references for BibLaTeX to Cite archive documents with BetterBibLaTeX #1799"
+      "Identical Pinned keys lost when merging duplicated records #1721"
     ],
     "2": [
       "Really Big whopping library",
