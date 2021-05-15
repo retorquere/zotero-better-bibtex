@@ -76,6 +76,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.tab.citekey "Zitierschlüssel">
 <!ENTITY better-bibtex.Preferences.citekey.citekeys "Zitierschlüssel">
 <!ENTITY better-bibtex.Preferences.citekey.fold "Erzwinge Plaintext-Format bei Zitierschlüsseln">
+<!ENTITY better-bibtex.Preferences.citekey.search "Enable citation key search">
 <!ENTITY better-bibtex.Preferences.citekey.format "Zitierschlüssel-Format">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.atom "Atom (https://atom.io/packages/zotero-citations)">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.citekeys "Zitierschlüssel">
