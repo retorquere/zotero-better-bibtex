@@ -13,6 +13,12 @@ default: `yes`
 
 If you have deviated from the default citation key format pattern by [specifying your own]({{ ref . "citing" }}), you may wind up with non-ASCII characters in your citation keys. You can prevent that using the `fold` function at the appropriate place in your pattern, but checking this checkbox will just apply `fold` to all your keys.
 
+#### Enable citation key search
+
+default: `yes`
+
+Enable searching on citation keys. Slows down startup on very large libraries.
+
 ### Keeping citation keys unique
 
 #### Keep keys unique
@@ -43,7 +49,7 @@ Options:
 
 default: `LaTeX citation`
 
-Used for drag-and-drop/quick copy using Better BibTeX citekeys. In the Zotero "Export" pane, choose `Better BibTeX Quick Copy` as the default export format for quick copy, and choose the desired format for the drag-and-drop citations here.
+Used for drag-and-drop/quick copy using Better BibTeX citation keys. In the Zotero "Export" pane, choose `Better BibTeX Quick Copy` as the default export format for quick copy, and choose the desired format for the drag-and-drop citations here.
 
 Options:
 

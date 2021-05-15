@@ -223,61 +223,63 @@ export class KeyManager {
   public async start(): Promise<void> {
     await this.rescan()
 
-    await ZoteroDB.queryAsync('ATTACH DATABASE ":memory:" AS betterbibtexcitekeys')
-    await ZoteroDB.queryAsync('CREATE TABLE betterbibtexcitekeys.citekeys (itemID PRIMARY KEY, itemKey, citekey)')
-    await Zotero.DB.executeTransaction(async () => {
-      for (const key of this.keys.data) {
-        await ZoteroDB.queryAsync('INSERT INTO betterbibtexcitekeys.citekeys (itemID, itemKey, citekey) VALUES (?, ?, ?)', [ key.itemID, key.itemKey, key.citekey ])
-      }
-    })
+    if (Preference.citekeySearch) {
+      await ZoteroDB.queryAsync('ATTACH DATABASE ":memory:" AS betterbibtexcitekeys')
+      await ZoteroDB.queryAsync('CREATE TABLE betterbibtexcitekeys.citekeys (itemID PRIMARY KEY, itemKey, citekey)')
+      await Zotero.DB.executeTransaction(async () => {
+        for (const key of this.keys.data) {
+          await ZoteroDB.queryAsync('INSERT INTO betterbibtexcitekeys.citekeys (itemID, itemKey, citekey) VALUES (?, ?, ?)', [ key.itemID, key.itemKey, key.citekey ])
+        }
+      })
 
-    const citekeySearchCondition = {
-      name: 'citationKey',
-      operators: {
-        is: true,
-        isNot: true,
-        contains: true,
-        doesNotContain: true,
-      },
-      table: 'betterbibtexcitekeys.citekeys',
-      field: 'citekey',
-      localized: 'Citation Key',
-    }
-    $patch$(Zotero.Search.prototype, 'addCondition', original => function addCondition(condition: string, operator: any, value: any, _required: any) {
-      // detect a quick search being set up
-      if (condition.match(/^quicksearch/)) this.__add_bbt_citekey = true
-      // creator is always added in a quick search so use it as a trigger
-      if (condition === 'creator' && this.__add_bbt_citekey) {
-        original.call(this, citekeySearchCondition.name, operator, value, false)
-        delete this.__add_bbt_citekey
+      const citekeySearchCondition = {
+        name: 'citationKey',
+        operators: {
+          is: true,
+          isNot: true,
+          contains: true,
+          doesNotContain: true,
+        },
+        table: 'betterbibtexcitekeys.citekeys',
+        field: 'citekey',
+        localized: 'Citation Key',
       }
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
-      return original.apply(this, arguments)
-    })
-    $patch$(Zotero.SearchConditions, 'hasOperator', original => function hasOperator(condition: string, operator: string | number) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      if (condition === citekeySearchCondition.name) return citekeySearchCondition.operators[operator]
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
-      return original.apply(this, arguments)
-    })
-    $patch$(Zotero.SearchConditions, 'get', original => function get(condition: string) {
-      if (condition === citekeySearchCondition.name) return citekeySearchCondition
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
-      return original.apply(this, arguments)
-    })
-    $patch$(Zotero.SearchConditions, 'getStandardConditions', original => function getStandardConditions() {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
-      return original.apply(this, arguments).concat({
-        name: citekeySearchCondition.name,
-        localized: citekeySearchCondition.localized,
-        operators: citekeySearchCondition.operators,
-      }).sort((a: { localized: string }, b: { localized: any }) => a.localized.localeCompare(b.localized))
-    })
-    $patch$(Zotero.SearchConditions, 'getLocalizedName', original => function getLocalizedName(str: string) {
-      if (str === citekeySearchCondition.name) return citekeySearchCondition.localized
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
-      return original.apply(this, arguments)
-    })
+      $patch$(Zotero.Search.prototype, 'addCondition', original => function addCondition(condition: string, operator: any, value: any, _required: any) {
+        // detect a quick search being set up
+        if (condition.match(/^quicksearch/)) this.__add_bbt_citekey = true
+        // creator is always added in a quick search so use it as a trigger
+        if (condition === 'creator' && this.__add_bbt_citekey) {
+          original.call(this, citekeySearchCondition.name, operator, value, false)
+          delete this.__add_bbt_citekey
+        }
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
+        return original.apply(this, arguments)
+      })
+      $patch$(Zotero.SearchConditions, 'hasOperator', original => function hasOperator(condition: string, operator: string | number) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        if (condition === citekeySearchCondition.name) return citekeySearchCondition.operators[operator]
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
+        return original.apply(this, arguments)
+      })
+      $patch$(Zotero.SearchConditions, 'get', original => function get(condition: string) {
+        if (condition === citekeySearchCondition.name) return citekeySearchCondition
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
+        return original.apply(this, arguments)
+      })
+      $patch$(Zotero.SearchConditions, 'getStandardConditions', original => function getStandardConditions() {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
+        return original.apply(this, arguments).concat({
+          name: citekeySearchCondition.name,
+          localized: citekeySearchCondition.localized,
+          operators: citekeySearchCondition.operators,
+        }).sort((a: { localized: string }, b: { localized: any }) => a.localized.localeCompare(b.localized))
+      })
+      $patch$(Zotero.SearchConditions, 'getLocalizedName', original => function getLocalizedName(str: string) {
+        if (str === citekeySearchCondition.name) return citekeySearchCondition.localized
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
+        return original.apply(this, arguments)
+      })
+    }
 
     Events.on('preference-changed', pref => {
       if (['autoAbbrevStyle', 'citekeyFormat', 'citekeyFold', 'skipWords'].includes(pref)) {
@@ -286,7 +288,9 @@ export class KeyManager {
     })
 
     this.keys.on(['insert', 'update'], async (citekey: { itemID: number, itemKey: any, citekey: any, pinned: any }) => {
-      await ZoteroDB.queryAsync('INSERT OR REPLACE INTO betterbibtexcitekeys.citekeys (itemID, itemKey, citekey) VALUES (?, ?, ?)', [ citekey.itemID, citekey.itemKey, citekey.citekey ])
+      if (Preference.citekeySearch) {
+        await ZoteroDB.queryAsync('INSERT OR REPLACE INTO betterbibtexcitekeys.citekeys (itemID, itemKey, citekey) VALUES (?, ?, ?)', [ citekey.itemID, citekey.itemKey, citekey.citekey ])
+      }
 
       // async is just a heap of fun. Who doesn't enjoy a good race condition?
       // https://github.com/retorquere/zotero-better-bibtex/issues/774
@@ -325,7 +329,9 @@ export class KeyManager {
     })
 
     this.keys.on('delete', async (citekey: { itemID: any }) => {
-      await ZoteroDB.queryAsync('DELETE FROM betterbibtexcitekeys.citekeys WHERE itemID = ?', [ citekey.itemID ])
+      if (Preference.citekeySearch) {
+        await ZoteroDB.queryAsync('DELETE FROM betterbibtexcitekeys.citekeys WHERE itemID = ?', [ citekey.itemID ])
+      }
     })
 
     this.started = true

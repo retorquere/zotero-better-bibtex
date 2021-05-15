@@ -180,6 +180,9 @@
             "citekeyFormat": {
               "type": "string"
             },
+            "citekeySearch": {
+              "type": "boolean"
+            },
             "citeprocNoteCitekey": {
               "type": "boolean"
             },
