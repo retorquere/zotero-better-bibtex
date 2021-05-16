@@ -1392,6 +1392,7 @@ export class Reference {
     const ignore_unused_fields = [
       'abstractNote',
       'accessDate',
+      'autoJournalAbbreviation',
       'citationKey',
       'citekey',
       'collections',

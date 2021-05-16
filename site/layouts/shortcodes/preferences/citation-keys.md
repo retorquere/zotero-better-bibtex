@@ -17,7 +17,7 @@ If you have deviated from the default citation key format pattern by [specifying
 
 default: `yes`
 
-Enable searching on citation keys. Slows down startup on very large libraries.
+Enable searching on citation keys. Slows down startup on very large libraries. Requires Zotero restart to enable/disable.
 
 ### Keeping citation keys unique
 
