@@ -144,6 +144,7 @@ Scenario Outline: Export <references> references for BibTeX to <file>
 
   Examples:
      | file                                                                               | references |
+     | bibtex does not export season dates                                                | 1          |
      | DOI not escaped using postscript #1803                                             | 1          |
      | Using the Extra field in the exported Citation Key #1571                           | 1          |
      | shortyear adds 00 when date is missing #1769                                       | 1          |

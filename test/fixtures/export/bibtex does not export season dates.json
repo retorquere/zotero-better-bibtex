@@ -1,0 +1,44 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "dmy",
+    "options": {
+      "Normalize": false
+    },
+    "preferences": {
+      "citekeyFormat": "[auth:lower][year] | [=forumPost/WebPage][Auth:lower:capitalize][Date:format-date=%Y-%m-%d.%H\\:%M\\:%S:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de] | [Auth:lower:capitalize][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de]",
+      "ignorePostscriptErrors": false,
+      "kuroshiro": true
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.2307/41164635",
+      "ISSN": "0008-1256",
+      "abstractNote": "Modern strategic planning systems increasingly confront two difficulties: strategic information about impending threats and opportunities is perceived too late to permit timely and effective response; and the corporate planning cycle is too long to permit timely response to fast-developing events. In response to the first difficulty, the author develops a technique for early identification of early strategic signals and a method for matching the firm's response to the quality of information. In response to the second problem, a real time planning system, called strategic issue management, is developed.",
+      "accessDate": "2021-05-16T15:45:08Z",
+      "citationKey": "ansoff1975",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "H. Igor",
+          "lastName": "Ansoff"
+        }
+      ],
+      "date": "Winter 1975",
+      "extra": [
+        "Publisher: University of California Press"
+      ],
+      "issue": "2",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "libraryCatalog": "JSTOR",
+      "pages": "21-33",
+      "publicationTitle": "California Management Review",
+      "title": "Managing Strategic Surprise by Response to Weak Signals",
+      "url": "https://www.jstor.org/stable/41164635",
+      "volume": "18"
+    }
+  ]
+}

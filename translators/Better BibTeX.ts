@@ -382,6 +382,14 @@ export function doExport(): void {
             ref.add({ name: 'year', value: `${date.year}` })
           }
           break
+
+        case 'season':
+          ref.add({ name: 'year', value: date.year })
+          ref.add({ name: 'month', value: ['', 'spring', 'summer', 'fall', 'winter'][date.season] })
+          break
+
+        default:
+          log.debug('Unexpected date type', date)
       }
     }
 
