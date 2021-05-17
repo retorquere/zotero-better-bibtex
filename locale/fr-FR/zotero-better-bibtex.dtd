@@ -76,7 +76,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.tab.citekey "Clés de citation">
 <!ENTITY better-bibtex.Preferences.citekey.citekeys "Clés de citation">
 <!ENTITY better-bibtex.Preferences.citekey.fold "Forcer le formatage des clés de citation en texte brut">
-<!ENTITY better-bibtex.Preferences.citekey.search "Enable citation key search">
+<!ENTITY better-bibtex.Preferences.citekey.search "Activer la recherche par clé de citation">
 <!ENTITY better-bibtex.Preferences.citekey.format "Format de clé">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.atom "Atom (https://atom.io/packages/zotero-citations)">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.citekeys "Clés de citation">
