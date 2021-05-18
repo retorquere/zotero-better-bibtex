@@ -397,6 +397,8 @@
   "export/biblatex export of Presentation; Use type and venue fields #644.json",
   "export/biblatex; Language tag xx is exported, xx-XX is not #380.biblatex",
   "export/biblatex; Language tag xx is exported, xx-XX is not #380.json",
+  "export/bibtex does not export season dates.bibtex",
+  "export/bibtex does not export season dates.json",
   "export/bibtex export of phdthesis does not case-protect -type- #435.bibtex",
   "export/bibtex export of phdthesis does not case-protect -type- #435.json",
   "export/bibtex; url export does not survive underscores #402.biblatex",
