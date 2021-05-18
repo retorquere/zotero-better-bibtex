@@ -100,11 +100,18 @@ class Cache extends Loki {
       })
 
       // old cache, drop
-      if (coll.findOne({ [override.names[0]]: {$eq: undefined} })) coll.removeDataOnly()
-
-      // should have been dropped after object change/delete
-      for (const outdated of coll.data.filter(item => !modified[item.itemID] || modified[item.itemID] >= (item.meta?.updated || item.meta?.created || 0))) {
-        coll.remove(outdated)
+      if (coll.findOne({ [override.names[0]]: {$eq: undefined} })) {
+        coll.removeDataOnly()
+      }
+      // how did this get in here? #1809
+      else if (coll.data.find(rec => !rec.$loki)) {
+        coll.removeDataOnly()
+      }
+      else {
+        // should have been dropped after object change/delete
+        for (const outdated of coll.data.filter(item => !modified[item.itemID] || modified[item.itemID] >= (item.meta?.updated || item.meta?.created || 0))) {
+          coll.remove(outdated)
+        }
       }
 
       clearOnUpgrade(coll, 'BetterBibTeX', version)
