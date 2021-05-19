@@ -58,14 +58,15 @@ But please fix your postscripts to test for the translator context.
 
 The postscript should be a `javascript` snippet. You can access the data with following objects and methods:
 
-- `reference` is the BibTeX reference you are building, and the reference has a number of fields.
 - `item` is the Zotero item that's the source of the reference. 
+- `reference` is the BibTeX reference you are building, and the reference has a number of fields.
 
   e.g. you can access the date in zotero item `item.date`.
 
 - `reference.has` is a dictionary of fields for output.
+- `reference.date` is the parsed and normalized version of `item.date`.
 
-  e.g. you can see whether the `year` field has been set by testing for `reference.has.year`
+  e.g. you can see whether the `year` field has been set by testing for `reference.has.year`, and when e.g. for a season-date only the year is exported in bibtex, you can find it in `reference.date.season`
 
 - `reference.add` is the function to add or modify keys in `reference.has`. It accepts the following named parameters in the form of an object:
 

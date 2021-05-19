@@ -361,36 +361,32 @@ export function doExport(): void {
     // #1541
     if (ref.referencetype === 'inbook' && ref.has.author && ref.has.editor) delete ref.has.editor
 
-    if (item.date) {
-      const date = Zotero.BetterBibTeX.parseDate(item.date)
-      switch ((date || {}).type || 'verbatim') {
-        case 'verbatim':
-          ref.add({ name: 'year', value: item.date })
-          break
+    switch (ref.date.type) {
+      case 'verbatim':
+        ref.add({ name: 'year', value: ref.date.verbatim })
+        break
 
-        case 'interval':
-          if (date.from.month) ref.add({ name: 'month', value: months[date.from.month - 1], bare: true })
-          ref.add({ name: 'year', value: `${date.from.year}` })
-          break
+      case 'interval':
+        if (ref.date.from.month) ref.add({ name: 'month', value: months[ref.date.from.month - 1], bare: true })
+        ref.add({ name: 'year', value: `${ref.date.from.year}` })
+        break
 
-        case 'date':
-          if (date.month) ref.add({ name: 'month', value: months[date.month - 1], bare: true })
-          if (date.orig?.type === 'date') {
-            ref.add({ name: 'year', value: `[${date.orig.year}] ${date.year}` })
-          }
-          else {
-            ref.add({ name: 'year', value: `${date.year}` })
-          }
-          break
+      case 'date':
+        if (ref.date.month) ref.add({ name: 'month', value: months[ref.date.month - 1], bare: true })
+        if (ref.date.orig?.type === 'date') {
+          ref.add({ name: 'year', value: `[${ref.date.orig.year}] ${ref.date.year}` })
+        }
+        else {
+          ref.add({ name: 'year', value: `${ref.date.year}` })
+        }
+        break
 
-        case 'season':
-          ref.add({ name: 'year', value: date.year })
-          ref.add({ name: 'month', value: ['', 'spring', 'summer', 'fall', 'winter'][date.season] })
-          break
+      case 'season':
+        ref.add({ name: 'year', value: ref.date.year })
+        break
 
-        default:
-          log.debug('Unexpected date type', date)
-      }
+      default:
+        log.debug('Unexpected date type', { date: item.date, parsed: ref.date })
     }
 
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })

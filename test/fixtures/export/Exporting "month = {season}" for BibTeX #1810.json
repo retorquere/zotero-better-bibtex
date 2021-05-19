@@ -1,0 +1,60 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "mdy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "autoAbbrev": true,
+      "autoExport": "idle",
+      "autoExportDelay": 7,
+      "bibtexURL": "url",
+      "citekeyFormat": "[authors1+.:replace=.etal,+:lower][shortyear][title:skipwords:lower:abbr]",
+      "exportTitleCase": false,
+      "keyConflictPolicy": "change",
+      "keyScope": "global",
+      "postscript": "Zotero.debug('date === ' + JSON.stringify(reference.date)); if (Translator.BetterBibTeX && reference.date.type === 'season') { reference.add({ name: 'month', value: ['', 'spring', 'summer', 'fall', 'winter'][reference.date.season] }) }",
+      "qualityReport": true,
+      "quickCopyMode": "citekeys",
+      "skipFields": "abstract,lccn,keywords,file,annotation,call-number"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.2307/1184426",
+      "ISSN": "0095-182X (print); 1534-1828 (elec.)",
+      "callNumber": "N",
+      "citationKey": "hinton88rht",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Leanne",
+          "lastName": "Hinton"
+        },
+        {
+          "creatorType": "reviewedAuthor",
+          "firstName": "Ekkehart",
+          "lastName": "Malotki"
+        }
+      ],
+      "date": "1988 Autumn",
+      "extra": [
+        "Citation Key: hinton88rht"
+      ],
+      "issue": "4",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "pages": "361-364",
+      "publicationTitle": "American Indian Quarterly",
+      "tags": [
+        {
+          "tag": "hopi language"
+        }
+      ],
+      "title": "Hopi Time",
+      "volume": "12"
+    }
+  ]
+}

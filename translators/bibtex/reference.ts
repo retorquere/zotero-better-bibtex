@@ -6,6 +6,7 @@ declare const Zotero: any
 import { Reference as Item } from '../../gen/typings/serialized-item'
 import { Cache } from '../../typings/cache'
 import type { Translators } from '../../typings/translators'
+import type { ParsedDate } from '../../content/dateparser'
 
 import { Translator } from '../lib/translator'
 
@@ -309,6 +310,7 @@ export class Reference {
   public useprefix: boolean
   public language: string
   public english: boolean
+  public date: ParsedDate | { type: 'none' }
 
   // patched in by the Bib(La)TeX translators
   public fieldEncoding: Record<string, 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'latex' | 'tags' | 'attachments' | 'date'>
@@ -354,6 +356,7 @@ export class Reference {
   constructor(item) {
     this.item = item
     this.packages = {}
+    this.date = item.date ? Zotero.BetterBibTeX.parseDate(item.date) : { type: 'none' }
 
     if (!this.item.language) {
       this.english = true
