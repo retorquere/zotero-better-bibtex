@@ -69,7 +69,7 @@ that yields a non-empty string. If all return a empty string, a random key will 
 
 ### Generating citekeys
 
-The full list of functions (extract data from your reference into your citekey) and filters (change the extracted data) is:
+To generate your citekeys, you use a pattern composed of functions and filters. Broadly, functions grab text from your item, and filters transform that text. The full list of functions and filters is:
 
 #### Functions
 
