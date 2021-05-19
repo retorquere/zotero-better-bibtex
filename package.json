@@ -90,7 +90,7 @@
     "dom-parser": "^0.1.6",
     "dotenv": "^9.0.2",
     "ejs": "^3.1.6",
-    "esbuild": "^0.12.0",
+    "esbuild": "^0.12.1",
     "escape-string-regexp": "^5.0.0",
     "eslint": "^7.26.0",
     "eta": "^1.12.1",
@@ -142,7 +142,7 @@
     "xml-parser": "^1.2.1",
     "xmldom": "^0.6.0",
     "xpath": "^0.0.32",
-    "zotero-plugin": "^1.0.51"
+    "zotero-plugin": "^1.0.52"
   },
   "repository": {
     "type": "git",

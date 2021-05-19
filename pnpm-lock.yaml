@@ -23,7 +23,7 @@ specifiers:
   edtf: ^3.1.0
   edtfy: ^0.0.8
   ejs: ^3.1.6
-  esbuild: ^0.12.0
+  esbuild: ^0.12.1
   escape-string-regexp: ^5.0.0
   eslint: ^7.26.0
   eta: ^1.12.1
@@ -85,7 +85,7 @@ specifiers:
   xmldom: ^0.6.0
   xpath: ^0.0.32
   xregexp: ^5.0.2
-  zotero-plugin: ^1.0.51
+  zotero-plugin: ^1.0.52
 
 dependencies:
   citeproc: 2.4.59
@@ -122,7 +122,7 @@ devDependencies:
   dom-parser: 0.1.6
   dotenv: 9.0.2
   ejs: 3.1.6
-  esbuild: 0.12.0
+  esbuild: 0.12.1
   escape-string-regexp: 5.0.0
   eslint: 7.26.0
   eta: 1.12.1
@@ -174,7 +174,7 @@ devDependencies:
   xml-parser: 1.2.1
   xmldom: 0.6.0
   xpath: 0.0.32
-  zotero-plugin: 1.0.51
+  zotero-plugin: 1.0.52
 
 packages:
 
@@ -282,7 +282,7 @@ packages:
       '@octokit/auth-token': 2.4.5
       '@octokit/graphql': 4.5.9
       '@octokit/request': 5.4.13
-      '@octokit/types': 6.13.0
+      '@octokit/types': 6.14.2
       before-after-hook: 2.1.0
       universal-user-agent: 6.0.0
     dev: true
@@ -307,10 +307,6 @@ packages:
     resolution: {integrity: sha512-s3dd32gagPmKaSLNJ9aPNok7U+tl69YLESf6DgQz5Ml/iipPZtif3GLvWpNXoA6qspFm1LFUZX+C3SqWX/Y/TQ==}
     dev: true
 
-  /@octokit/openapi-types/6.0.0:
-    resolution: {integrity: sha512-CnDdK7ivHkBtJYzWzZm7gEkanA7gKH6a09Eguz7flHw//GacPJLmkHA3f3N++MJmlxD1Fl+mB7B32EEpSCwztQ==}
-    dev: true
-
   /@octokit/openapi-types/7.0.0:
     resolution: {integrity: sha512-gV/8DJhAL/04zjTI95a7FhQwS6jlEE0W/7xeYAzuArD0KVAVWDLP2f3vi98hs3HLTczxXdRK/mF0tRoQPpolEw==}
     dev: true
@@ -321,7 +317,7 @@ packages:
       '@octokit/core': '>=2'
     dependencies:
       '@octokit/core': 3.2.5
-      '@octokit/types': 6.13.0
+      '@octokit/types': 6.14.2
     dev: true
 
   /@octokit/plugin-request-log/1.0.3_@octokit+core@3.2.5:
@@ -389,12 +385,6 @@ packages:
       '@octokit/plugin-paginate-rest': 2.9.0_@octokit+core@3.2.5
       '@octokit/plugin-request-log': 1.0.3_@octokit+core@3.2.5
       '@octokit/plugin-rest-endpoint-methods': 5.0.1_@octokit+core@3.2.5
-    dev: true
-
-  /@octokit/types/6.13.0:
-    resolution: {integrity: sha512-W2J9qlVIU11jMwKHUp5/rbVUeErqelCsO5vW5PKNb7wAXQVUz87Rc+imjlEvpvbH8yUb+KHmv8NEjVZdsdpyxA==}
-    dependencies:
-      '@octokit/openapi-types': 6.0.0
     dev: true
 
   /@octokit/types/6.14.2:
@@ -487,7 +477,7 @@ packages:
       functional-red-black-tree: 1.0.1
       lodash: 4.17.21
       regexpp: 3.1.0
-      semver: 7.3.4
+      semver: 7.3.5
       tsutils: 3.20.0_typescript@4.2.4
       typescript: 4.2.4
     transitivePeerDependencies:
@@ -559,7 +549,7 @@ packages:
       debug: 4.3.1
       globby: 11.0.2
       is-glob: 4.0.1
-      semver: 7.3.4
+      semver: 7.3.5
       tsutils: 3.20.0_typescript@4.2.4
       typescript: 4.2.4
     transitivePeerDependencies:
@@ -1371,8 +1361,8 @@ packages:
     resolution: {integrity: sha1-wsNYJlYkfDnqEHyx5mUrb58kUjw=}
     dev: true
 
-  /esbuild/0.12.0:
-    resolution: {integrity: sha512-vUKQ6TiMWGCtI7jLSrMmBVY4aj4As9J6NsFnrS9insd2F5KKD3mr1jUe+SB4KsMACkQIGtTtkksPpRmmqgxDHw==}
+  /esbuild/0.12.1:
+    resolution: {integrity: sha512-WfQ00MKm/Y4ysz1u9PCUAsV66k5lbrcEvS6aG9jhBIavpB94FBdaWeBkaZXxCZB4w+oqh+j4ozJFWnnFprOXbg==}
     hasBin: true
     requiresBuild: true
     dev: true
@@ -4134,8 +4124,8 @@ packages:
   /zlibjs/0.3.1:
     resolution: {integrity: sha1-UBl+2yihxCymWcyLTmqd3W1ERVQ=}
 
-  /zotero-plugin/1.0.51:
-    resolution: {integrity: sha512-9Qy7VImpi5qyOOU3krmXzVpWD+xHfFl9mX5Q7VSW2oY6DiS2vWnFMF4dAkaEB4Q4zrzqcwCozK7waMsE7F/0VQ==}
+  /zotero-plugin/1.0.52:
+    resolution: {integrity: sha512-ClvOP5xWxbvY689OnwG6MHbNZF/43hin96Cz/9PZ3Q9ZgHW4g7L12qovgmboZf8X/hKXLoFpNl6t5HWhbH2NRg==}
     hasBin: true
     dependencies:
       '@octokit/rest': 18.5.3
