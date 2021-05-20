@@ -160,7 +160,7 @@ class Item {
     if ((item as ZoteroItem).getField) {
       this.itemID = (item as ZoteroItem).id
       this.itemType = Zotero.ItemTypes.getName((item as ZoteroItem).itemTypeID)
-      this.getField = (name: string) => (this.item as ZoteroItem).getField(name, false, true) // eslint-disable-line @typescript-eslint/no-unsafe-return
+      this.getField = (name: string) => (name === 'dateAdded' || name === 'dateModified') ? (this.item as any)[name] : (this.item as ZoteroItem).getField(name, false, true) // eslint-disable-line @typescript-eslint/no-unsafe-return
       this.creators = (item as ZoteroItem).getCreatorsJSON()
       this.libraryID = item.libraryID
       this.title = (item as ZoteroItem).getField('title', false, true) as string
