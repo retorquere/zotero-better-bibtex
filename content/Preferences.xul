@@ -747,6 +747,9 @@
                       <row>
                         <label>&better-bibtex.Preferences.auto-export.fields.cached;:</label><textbox class="plain" readonly="true" value="" bbt:ae-field="cached" bbt:ae-id=""/>
                       </row>
+                      <row>
+                        <label>&better-bibtex.Preferences.auto-export.fields.progress;:</label><textbox class="plain" readonly="true" value="" bbt:ae-field="progress" bbt:ae-id=""/>
+                      </row>
                     </rows>
                   </grid>
 

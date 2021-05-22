@@ -659,10 +659,10 @@ class Progress {
       this.progressWin.show()
     }
     else {
-      document.getElementById('better-bibtex-startup').hidden = false
-      this.progressmeter = (document.getElementById('better-bibtex-startup-progress') as unknown as XUL.ProgressMeter)
+      document.getElementById('better-bibtex-progress').hidden = false
+      this.progressmeter = (document.getElementById('better-bibtex-progress-meter') as unknown as XUL.ProgressMeter)
       this.progressmeter.value = 0
-      this.label = (document.getElementById('better-bibtex-startup-label') as unknown as XUL.Label)
+      this.label = (document.getElementById('better-bibtex-progress-label') as unknown as XUL.Label)
       this.label.value = msg
     }
   }
@@ -688,7 +688,7 @@ class Progress {
       this.progressWin.startCloseTimer(500) // eslint-disable-line no-magic-numbers
     }
     else {
-      document.getElementById('better-bibtex-startup').hidden = true
+      document.getElementById('better-bibtex-progress').hidden = true
     }
 
     log.debug(`${this.name}: done`)
@@ -885,7 +885,19 @@ export class BetterBibTeX {
     if (this.firstRun && this.firstRun.dragndrop) Zotero.Prefs.set('export.quickCopy.setting', `export=${Translators.byLabel.BetterBibTeXCitationKeyQuickCopy.translatorID}`)
 
     Events.emit('loaded')
-    log.debug('Components:', typeof Components)
+
+    Events.on('export-progress', (percent: number, translator: string) => {
+      if (percent >= 100) { // eslint-disable-line no-magic-numbers
+        document.getElementById('better-bibtex-progress').hidden = true
+      }
+      else {
+        document.getElementById('better-bibtex-progress').hidden = false
+        const progressmeter = (document.getElementById('better-bibtex-progress-meter') as unknown as XUL.ProgressMeter)
+        progressmeter.value = percent
+        const label = (document.getElementById('better-bibtex-progress-label') as unknown as XUL.Label)
+        label.value = translator
+      }
+    })
   }
 }
 Zotero.BetterBibTeX = Zotero.BetterBibTeX || new BetterBibTeX

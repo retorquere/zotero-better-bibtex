@@ -149,6 +149,11 @@ class AutoExportPane {
               ratio = Math.round((cached.length * 100) / items.length) // eslint-disable-line no-magic-numbers
             }
             (node as XUL.Textbox).value = `${ratio}%`
+            break
+
+          case 'progress':
+            (node as XUL.Textbox).value = `${AutoExport.progress.get(ae.$loki) || 100}%` // eslint-disable-line no-magic-numbers
+            break
 
           case 'exportNotes':
           case 'useJournalAbbreviation':

@@ -17,6 +17,7 @@ import { DB } from './db/main'
 import { sleep } from './sleep'
 import { flash } from './flash'
 import { $and, Query } from './db/loki'
+import { Events } from './events'
 
 import { override } from './prefs-meta'
 import * as translatorMetadata from '../gen/translators.json'
@@ -253,9 +254,15 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     // undo override smuggling so I can pre-fetch the cache
     const cloaked_override = 'preference_'
+    const cloaked_auto_export = 'auto_export_id'
+    let autoExport: number
     for (const [pref, value] of Object.entries(displayOptions)) {
       if (pref.startsWith(cloaked_override)) {
         job.preferences[pref.replace(cloaked_override, '')] = (value as unknown as any)
+        delete displayOptions[pref]
+      }
+      else if (pref === cloaked_auto_export) {
+        autoExport = parseInt(value as unknown as string)
         delete displayOptions[pref]
       }
     }
@@ -314,6 +321,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       collections: [],
       cslItems: {},
       cache: {},
+      autoExport,
     }
 
     let items: any[] = []
@@ -369,6 +377,11 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           else {
             cache.insert({...selector, reference, metadata})
           }
+          break
+
+        case 'progress':
+          log.debug('export-progress', e.data)
+          Events.emit('export-progress', e.data.percent, e.data.translator, e.data.autoExport)
           break
 
         default:
@@ -513,7 +526,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     return deferred.promise
   }
 
-  public async exportItems(translatorID: string, displayOptions: any, scope: ExportScope, path = null): Promise<string> {
+  public async exportItems(translatorID: string, displayOptions: any, scope: ExportScope, path: string = null): Promise<string> {
     await Zotero.BetterBibTeX.ready
 
     const start = Date.now()

@@ -339,12 +339,17 @@ Events.on('preference-changed', pref => {
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const AutoExport = new class CAutoExport { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public db: any
+  public progress: Map<number, number>
 
   constructor() {
+    this.progress = new Map
     Events.on('libraries-changed', ids => this.schedule('library', ids))
     Events.on('libraries-removed', ids => this.remove('library', ids))
     Events.on('collections-changed', ids => this.schedule('collection', ids))
     Events.on('collections-removed', ids => this.remove('collection', ids))
+    Events.on('export-progress', (percent, _translator, ae) => {
+      if (typeof ae === 'number') this.progress.set(ae, percent)
+    })
   }
 
   public async init() {

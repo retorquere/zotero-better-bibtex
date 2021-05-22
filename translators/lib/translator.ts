@@ -7,6 +7,7 @@ import { Reference, Item, Collection } from '../../gen/typings/serialized-item'
 import { ITranslator } from '../../gen/typings/translator'
 import type { Preferences } from '../../gen/preferences'
 import { log } from '../../content/logger'
+import { worker } from '../../content/environment'
 
 type TranslatorMode = 'export' | 'import'
 
@@ -72,6 +73,9 @@ class Items {
   public map: Record<number, CacheableItem> = {}
   public current: CacheableItem
 
+  private step: { notify: number, percent: number }
+  private progress: { notify: number, percent: number }
+
   constructor(cacheable) {
     let item: CacheableItem
     while (item = Zotero.nextItem()) {
@@ -86,12 +90,39 @@ class Items {
       const kb = [ b.citationKey || b.itemType, b.dateModified || b.dateAdded, b.itemID ].join('\t')
       return ka.localeCompare(kb, undefined, { sensitivity: 'base' })
     })
+
+    log.debug('item-progress:', { worker })
+    this.step = {
+      notify: 5,
+      percent: 100 / this.list.length, // eslint-disable-line no-magic-numbers
+    }
+    this.progress = {
+      notify: this.step.notify,
+      percent: 0,
+    }
+  }
+
+  private update(finished?: true) {
+    if (!worker) return
+
+    if (finished) {
+      Zotero.BetterBibTeX.setProgress(100) // eslint-disable-line no-magic-numbers
+      return
+    }
+
+    this.progress.percent += this.step.percent
+    if (this.progress.percent > this.progress.notify) {
+      Zotero.BetterBibTeX.setProgress(this.progress.notify)
+      this.progress.notify += this.step.notify
+    }
   }
 
   *items(): Generator<Item, void, unknown> {
     for (const item of this.list) {
       yield (this.current = item) as Item
+      this.update()
     }
+    this.update(true)
   }
 
   *references(): Generator<Reference, void, unknown> {
@@ -103,9 +134,11 @@ class Items {
           break
 
         default:
-          yield (this.current = item) as Reference
+          yield (this.current = item) as unknown as Reference
       }
+      this.update()
     }
+    this.update(true)
   }
 }
 
