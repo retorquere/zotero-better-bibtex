@@ -9,6 +9,7 @@ export namespace Translators {
       collections: Collection[]
       cslItems?: Record<number, any>
       cache: Record<number, {itemID: number, reference: string, metadata: any, meta: { updated: number }}>
+      autoExport?: number
     }
 
     type Message = 
@@ -20,6 +21,7 @@ export namespace Translators {
       | { kind: 'error', message: string }
       | { kind: 'cache', itemID: number, reference: string, metadata: any }
       | { kind: 'item', item: number }
+      | { kind: 'progress', percent: number, translator: string, autoExport: number }
   }
 
   namespace BibTeX {

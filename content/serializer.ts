@@ -47,13 +47,10 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
     return serialized
   }
 
-  public fast(item: ZoteroItem, count?: { cached: number }): Item {
+  public fast(item: ZoteroItem): Item {
     let serialized = this.fetch(item)
 
-    if (serialized) {
-      if (count) count.cached += 1
-    }
-    else {
+    if (!serialized) {
       serialized = item.toJSON()
       serialized.uri = Zotero.URI.getItemURI(item)
       serialized.itemID = item.id
