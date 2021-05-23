@@ -181,6 +181,7 @@ const queue = new class TaskQueue {
 
   public add(ae) {
     const $loki = (typeof ae === 'number' ? ae : ae.$loki)
+    Events.emit('export-progress', 0, Translators.byId[ae.translatorID].label, $loki)
     this.scheduler.schedule($loki, () => { this.run($loki).catch(err => log.error('autoexport failed:', {$loki}, err)) })
   }
 
@@ -193,6 +194,7 @@ const queue = new class TaskQueue {
     await Zotero.BetterBibTeX.ready
 
     const ae = this.autoexports.get($loki)
+    Events.emit('export-progress', 0, Translators.byId[ae.translatorID].label, $loki)
     if (!ae) throw new Error(`AutoExport ${$loki} not found`)
 
     ae.status = 'running'
@@ -232,6 +234,7 @@ const queue = new class TaskQueue {
       for (const pref of override.names) {
         displayOptions[`preference_${pref}`] = ae[pref]
       }
+      displayOptions.auto_export_id = ae.$loki
 
       const jobs = [ { scope, path: ae.path } ]
 

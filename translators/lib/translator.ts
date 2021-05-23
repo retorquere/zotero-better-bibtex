@@ -97,7 +97,7 @@ class Items {
       percent: 100 / this.list.length, // eslint-disable-line no-magic-numbers
     }
     this.progress = {
-      notify: this.step.notify,
+      notify: 0,
       percent: 0,
     }
   }
