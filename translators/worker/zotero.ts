@@ -167,17 +167,11 @@ function saveFile(path, overwrite) {
 
     const snapshot = OS.Path.dirname(this.localPath)
     const iterator = new OS.File.DirectoryIterator(snapshot)
-    let entry
-    try {
-      while (entry = iterator.next()) {
-        if (entry.isDir) throw new Error(`Unexpected directory ${entry.path} in snapshot`)
-        log.debug('1814:file-copy:', { snapshot, name: entry.name }, { target, name: entry.name })
-        OS.File.copy(OS.Path.join(snapshot, entry.name), OS.Path.join(target, entry.name), { noOverwrite: !overwrite })
-      }
-    }
-    finally {
-      iterator.close()
-    }
+    iterator.forEach(entry => {
+      if (entry.isDir) throw new Error(`Unexpected directory ${entry.path} in snapshot`)
+      log.debug('1814:file-copy:', { snapshot, name: entry.name, nametype: typeof entry.name }, { target, name: entry.name })
+      OS.File.copy(OS.Path.join(snapshot, entry.name), OS.Path.join(target, entry.name), { noOverwrite: !overwrite })
+    })
   }
 
   return true
