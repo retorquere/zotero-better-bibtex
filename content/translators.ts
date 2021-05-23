@@ -394,7 +394,9 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     items = items.filter(item => !item.isAnnotation?.())
 
     // notify every 5 percent
-    const step = ((items.length * (translator.label.includes('CSL') ? 2 : 1)) / 100) * 5 // eslint-disable-line no-magic-numbers
+    const step = 5
+    const incr = Math.round(((items.length * (translator.label.includes('CSL') ? 2 : 1)) / 100) * step) // eslint-disable-line no-magic-numbers
+    log.debug('export-progress:', { items: items.length, incr, step })
     let serialized = 0
 
     let batch = Date.now()
@@ -412,7 +414,10 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       now = Date.now()
 
       serialized += 1
-      if ((serialized % step) === 0) Events.emit('export-progress', -Math.floor(serialized / step), translator, autoExport)
+      if ((serialized % incr) === 0) {
+        log.debug('export-progress: serialized', serialized)
+        Events.emit('export-progress', -Math.floor(serialized / incr) * step, translator.label, autoExport)
+      }
     }
     if (job.path && job.canceled) {
       log.debug('export to', job.path, 'started at', job.started, 'canceled')
@@ -455,7 +460,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
         config.cslItems[item.itemID] = Zotero.Utilities.itemToCSLJSON(item)
         serialized += 1
-        if ((serialized % step) === 0) Events.emit('export-progress', -Math.floor(serialized / step), translator, autoExport)
+        if ((serialized % incr) === 0) Events.emit('export-progress', -Math.floor(serialized / incr) * step, translator.label, autoExport)
       }
     }
 
