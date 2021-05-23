@@ -70,6 +70,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.recursive "Export all child collections">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.error "Erro">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.cached "Em cache">
+<!ENTITY better-bibtex.Preferences.auto-export.fields.progress "Progress">
 <!ENTITY better-bibtex.Preferences.auto-export.warn.long-running "Avisar quando exportações automáticas demorarem mais que (seconds)">
 
 <!ENTITY better-bibtex.Preferences.bulkWarning "Avisar ao modificar chaves de citação em massa">
