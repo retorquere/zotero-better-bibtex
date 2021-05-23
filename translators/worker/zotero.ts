@@ -167,7 +167,8 @@ function saveFile(path, overwrite) {
 
     const snapshot = OS.Path.dirname(this.localPath)
     const iterator = new OS.File.DirectoryIterator(snapshot)
-    iterator.forEach(entry => {
+    // PITA dual-type OS.Path is promises on main thread but sync in worker
+    iterator.forEach(entry => { // eslint-disable-line @typescript-eslint/no-floating-promises
       if (entry.isDir) throw new Error(`Unexpected directory ${entry.path} in snapshot`)
       log.debug('1814:file-copy:', { snapshot, name: entry.name, nametype: typeof entry.name }, { target, name: entry.name })
       OS.File.copy(OS.Path.join(snapshot, entry.name), OS.Path.join(target, entry.name), { noOverwrite: !overwrite })
