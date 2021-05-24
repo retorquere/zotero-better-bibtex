@@ -587,6 +587,14 @@ class PatternFormatter {
     return year ? year.replace(/[0-9]+/, y => y.length >= length ? y : (`0000${y}`).slice(-length)): ''
   }
 
+  public _local_time(value: string) {
+    const m = value.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})[ T]([0-9]{2}):([0-9]{2}):([0-9]{2})Z?$/)
+    if (!m) return value
+    const date = new Date(`${value}Z`)
+    date.setMinutes(date.getMinutes() - date.getTimezoneOffset())
+    return date.toISOString().replace('.000Z', '').replace('T', ' ')
+  }
+
   /** formats date as by replacing y, m and d in the format */
   public _format_date(value: string | PartialDate, format: string='%Y-%m-%d') { // eslint-disable-line @typescript-eslint/no-inferrable-types
     if (!value) return ''
