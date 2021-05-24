@@ -329,7 +329,7 @@ export class PrefPane {
           mode = quickCopyOptions[Preference.quickCopyMode] || Preference.quickCopyMode
       }
 
-      node.label = `Better BibTeX ${mode} Quick Copy`
+      node.label = `Better BibTeX Quick Copy: ${mode}`
     }
   }
 
