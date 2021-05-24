@@ -1,7 +1,7 @@
 {
   "duration": {
     "(non-)dropping particle handling #313": 2800,
-    "AUX scanner": 8670,
+    "AUX scanner": 8660,
     "BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372": 270,
     "Better BibTeX Import 2": 1160,
     "BibTeX name escaping has a million inconsistencies #438": 480,
@@ -189,7 +189,7 @@
       "runs": -240
     },
     "Export 1 references for BibTeX to DOI not escaped using postscript #1803": {
-      "msecs": 640,
+      "msecs": 630,
       "runs": -309
     },
     "Export 1 references for BibTeX to Double superscript in title field on export #1217": 400,
@@ -200,7 +200,7 @@
     "Export 1 references for BibTeX to Export of item to Better Bibtex fails for auth3_1 #98": 490,
     "Export 1 references for BibTeX to Export unicode as plain text fails for Vietnamese characters #977": 380,
     "Export 1 references for BibTeX to Exporting \"month = {season}\" for BibTeX #1810": {
-      "msecs": 670,
+      "msecs": 660,
       "runs": -317
     },
     "Export 1 references for BibTeX to Exporting Book Sections as Inbook #1474": {
@@ -249,7 +249,7 @@
     },
     "Export 1 references for BibTeX to [authN_M] citation key syntax has off-by-one error #899": 370,
     "Export 1 references for BibTeX to bibtex does not export season dates": {
-      "msecs": 620,
+      "msecs": 600,
       "runs": -315
     },
     "Export 1 references for BibTeX to bibtex export of phdthesis does not case-protect -type- #435": 370,
@@ -331,7 +331,7 @@
     "Export 6 references for BibLaTeX to Better BibLaTeX.stable-keys": 620,
     "Export 8 references for BibLaTeX to Don't title-case sup-subscripts #1037": 660,
     "Export as Collected Notes does not list subcollections #1768": {
-      "msecs": 4670,
+      "msecs": 4660,
       "runs": -256
     },
     "Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825": 990,
@@ -425,17 +425,17 @@
     },
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 375300,
+    "Really Big whopping library": 375020,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 48920,
+      "msecs": 49040,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
     "Square brackets in Publication field (85), and non-pinned keys must change when the pattern does": 450,
-    "Unabbreviate on import #1436-1": 39160,
+    "Unabbreviate on import #1436-1": 39140,
     "Unbalanced vphantom escapes #1043": 760,
     "arXiv identifiers in BibLaTeX export #460": 1180,
     "auto-export": 14370,
@@ -458,7 +458,7 @@
       "runs": -36
     },
     "web_page and other mendeley idiocy": {
-      "msecs": 39240,
+      "msecs": 39210,
       "runs": -239
     }
   },
@@ -532,7 +532,6 @@
       "Export 1 references for BibLaTeX to Duplicate number field causes export error #1448",
       "Export 27 references for BibLaTeX to EDTF dates in BibLaTeX #590",
       "Export 1 references for BibLaTeX to Error exporting duplicate eprinttype #1128",
-      "Export 1 references for BibLaTeX to Export Forthcoming as Forthcoming",
       "Export 1 references for BibLaTeX to Export Newspaper Article misses section field #132",
       "Export 2 references for BibLaTeX to Export Patent Applications as such #1413",
       "Export 1 references for BibLaTeX to Export error for items without publicationTitle and Preserve BibTeX variables enabled #201",
@@ -743,6 +742,7 @@
       "unknown command handler #1733"
     ],
     "2": [
+      "Export 1 references for BibLaTeX to Export Forthcoming as Forthcoming",
       "Export 36 references for BibTeX to Better BibTeX does not export collections #901",
       "Bibtex key regenerating issue when trashing items #117",
       "two ISSN number are freezing browser #110 + Generating keys and export broken #111",
@@ -762,7 +762,7 @@
       "Identical Pinned keys lost when merging duplicated records #1721"
     ]
   },
-  "runs": 323,
+  "runs": 324,
   "slow": {
     "1": [
       "Export 1 references for BibLaTeX to Cite archive documents with BetterBibLaTeX #1799",
