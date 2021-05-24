@@ -343,9 +343,11 @@ Events.on('preference-changed', pref => {
 export const AutoExport = new class CAutoExport { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public db: any
   public progress: Map<number, number>
+  public cacherate: Map<number, number>
 
   constructor() {
     this.progress = new Map
+    this.cacherate = new Map
     Events.on('libraries-changed', ids => this.schedule('library', ids))
     Events.on('libraries-removed', ids => this.remove('library', ids))
     Events.on('collections-changed', ids => this.schedule('collection', ids))
@@ -353,6 +355,7 @@ export const AutoExport = new class CAutoExport { // eslint-disable-line @typesc
     Events.on('export-progress', (percent, _translator, ae) => {
       if (typeof ae === 'number') this.progress.set(ae, percent)
     })
+    Events.on('cache-rate', (ae, percent) => { this.cacherate.set(ae, percent) })
   }
 
   public async init() {

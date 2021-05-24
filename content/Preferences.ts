@@ -114,6 +114,12 @@ class AutoExportPane {
             }
             break
 
+          case 'cacherate':
+            // eslint-disable-next-line no-case-declarations
+            const cacherate = AutoExport.cacherate.get(ae.$loki);
+            (node as XUL.Textbox).value = `${typeof cacherate === 'number' ? cacherate : '? '}%`
+            break
+
           case 'updated':
             (node as XUL.Textbox).value = `${new Date(ae.meta.updated || ae.meta.created)}`
             break

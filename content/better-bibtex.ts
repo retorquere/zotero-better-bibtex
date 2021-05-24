@@ -887,10 +887,7 @@ export class BetterBibTeX {
     Events.emit('loaded')
 
     Events.on('export-progress', (percent: number, translator: string) => {
-      log.debug('export-progress: display', percent)
-
       if (percent < 100) { // eslint-disable-line no-magic-numbers
-        log.debug('export-progress: show', translator, percent)
         document.getElementById('better-bibtex-progress').hidden = false
         const progressmeter = (document.getElementById('better-bibtex-progress-meter') as unknown as XUL.ProgressMeter)
         progressmeter.value = Math.abs(percent)

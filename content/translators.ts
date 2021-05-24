@@ -210,7 +210,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     const translator = this.byId[translatorID]
 
     const start = Date.now()
-    let now
 
     job.preferences = job.preferences || {}
     displayOptions = displayOptions || {}
@@ -302,7 +301,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           break
 
         case 'item':
-          now = Date.now()
           job.translate._runHandler('itemDone', items[e.data.item]) // eslint-disable-line no-underscore-dangle
           break
 
@@ -339,7 +337,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           break
 
         case 'progress':
-          log.debug('export-progress', e.data)
           Events.emit('export-progress', e.data.percent, e.data.translator, e.data.autoExport)
           break
 
@@ -395,28 +392,24 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     // notify every 5 percent
     const step = 5
-    const incr = Math.round(((items.length * (translator.label.includes('CSL') ? 2 : 1)) / 100) * step) // eslint-disable-line no-magic-numbers
-    log.debug('export-progress:', { items: items.length, incr, step })
+    const batch = Math.round(((items.length * (translator.label.includes('CSL') ? 2 : 1)) / 100) * step) // eslint-disable-line no-magic-numbers
     let serialized = 0
 
-    let batch = Date.now()
+    let worked = Date.now()
     config.items = []
     // use a loop instead of map so we can await for beachball protection
     for (const item of items) {
       config.items.push(Serializer.fast(item))
 
       // sleep occasionally so the UI gets a breather
-      if ((Date.now() - batch) > 1000) { // eslint-disable-line no-magic-numbers
+      if ((Date.now() - worked) > 1000) { // eslint-disable-line no-magic-numbers
         await sleep(0) // eslint-disable-line no-magic-numbers
-        batch = Date.now()
+        worked = Date.now()
       }
 
-      now = Date.now()
-
       serialized += 1
-      if ((serialized % incr) === 0) {
-        log.debug('export-progress: serialized', serialized)
-        Events.emit('export-progress', -Math.floor(serialized / incr) * step, translator.label, autoExport)
+      if ((serialized % batch) === 0) {
+        Events.emit('export-progress', -Math.floor(serialized / batch) * step, translator.label, autoExport)
       }
     }
     if (job.path && job.canceled) {
@@ -439,8 +432,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
       // not safe in async!
       const cloneObjects = cache.cloneObjects
-      cache.cloneObjects = false
       // uncloned is safe because it gets serialized in the transfer
+      cache.cloneObjects = false
       config.cache = cache.find($and(query)).reduce((acc, cached) => {
         // direct-DB access for speed...
         cached.meta.updated = (new Date).getTime() // touches the cache object so it isn't reaped too early
@@ -449,6 +442,9 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       }, {})
       cache.cloneObjects = cloneObjects
       cache.dirty = true
+
+      // eslint-disable-next-line no-magic-numbers
+      if (typeof autoExport === 'number') Events.emit('cache-rate', autoExport, Math.round((Object.keys(config.cache).length * 100) / config.items.length))
     }
 
     // pre-fetch CSL serializations
@@ -460,17 +456,15 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
         config.cslItems[item.itemID] = Zotero.Utilities.itemToCSLJSON(item)
         serialized += 1
-        if ((serialized % incr) === 0) Events.emit('export-progress', -Math.floor(serialized / incr) * step, translator.label, autoExport)
+        if ((serialized % batch) === 0) Events.emit('export-progress', -Math.floor(serialized / batch) * step, translator.label, autoExport)
       }
     }
 
-    now = Date.now()
-
     // if the average startup time is greater than the autoExportDelay, bump up the delay to prevent stall-cascades
-    this.workers.startup += Math.ceil((now - start) / 1000) // eslint-disable-line no-magic-numbers
+    this.workers.startup += Math.ceil((Date.now() - start) / 1000) // eslint-disable-line no-magic-numbers
     // eslint-disable-next-line no-magic-numbers
     if (this.workers.total > 5 && (this.workers.startup / this.workers.total) > Preference.autoExportDelay) Preference.autoExportDelay = Math.ceil(this.workers.startup / this.workers.total)
-    log.debug('worker:', { avgstartup: this.workers.startup / this.workers.total, startup: now - start, caching, workers: this.workers, autoExportDelay: Preference.autoExportDelay })
+    log.debug('worker:', { avgstartup: this.workers.startup / this.workers.total, startup: Date.now() - start, caching, workers: this.workers, autoExportDelay: Preference.autoExportDelay })
 
     log.debug('worker: kicking off')
     worker.postMessage({ kind: 'start', config: JSON.parse(JSON.stringify(config)) })

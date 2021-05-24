@@ -744,6 +744,9 @@
                       <row>
                         <label>&better-bibtex.Preferences.auto-export.fields.error;:</label><textbox class="plain" readonly="true" value="" bbt:ae-field="error" bbt:ae-id=""/>
                       </row>
+                      <row>
+                         <label>&better-bibtex.Preferences.auto-export.fields.cached;:</label><textbox class="plain" readonly="true" value="" bbt:ae-field="cacherate" bbt:ae-id=""/>
+                       </row>
                     </rows>
                   </grid>
 

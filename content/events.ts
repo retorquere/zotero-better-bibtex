@@ -17,6 +17,7 @@ if (Zotero.Debug.enabled) {
     'collections-removed',
     'libraries-removed',
     'export-progress',
+    'cache-rate',
     'loaded',
   ]
 

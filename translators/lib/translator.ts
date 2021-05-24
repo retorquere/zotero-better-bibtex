@@ -73,8 +73,7 @@ class Items {
   public map: Record<number, CacheableItem> = {}
   public current: CacheableItem
 
-  private step: { notify: number, percent: number }
-  private progress: { notify: number, percent: number }
+  private progress = { step: 5, batch: 0, written: 0 }
 
   constructor(cacheable) {
     let item: CacheableItem
@@ -91,15 +90,8 @@ class Items {
       return ka.localeCompare(kb, undefined, { sensitivity: 'base' })
     })
 
-    log.debug('item-progress:', { worker })
-    this.step = {
-      notify: 5,
-      percent: 100 / this.list.length, // eslint-disable-line no-magic-numbers
-    }
-    this.progress = {
-      notify: 0,
-      percent: 0,
-    }
+    this.progress.batch = Math.round((this.list.length / 100) * this.progress.step) // eslint-disable-line no-magic-numbers
+    this.progress.written = 0
   }
 
   private update(finished?: true) {
@@ -107,13 +99,10 @@ class Items {
 
     if (finished) {
       Zotero.BetterBibTeX.setProgress(100) // eslint-disable-line no-magic-numbers
-      return
     }
-
-    this.progress.percent += this.step.percent
-    if (this.progress.percent > this.progress.notify) {
-      Zotero.BetterBibTeX.setProgress(this.progress.notify)
-      this.progress.notify += this.step.notify
+    else {
+      this.progress.written += 1
+      if ((this.progress.written % this.progress.batch) === 0) Zotero.BetterBibTeX.setProgress((this.progress.written / this.progress.batch) * this.progress.step)
     }
   }
 
