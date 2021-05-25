@@ -4,7 +4,6 @@ import type { XUL } from '../typings/xul'
 
 import { log } from './logger'
 import { patch as $patch$ } from './monkey-patch'
-import * as ZoteroDB from './db/zotero'
 import { DB as Cache } from './db/cache'
 
 import { Preference } from '../gen/preferences'
@@ -13,23 +12,18 @@ import { Formatter } from './key-manager/formatter'
 import { AutoExport } from './auto-export'
 import { Translators } from './translators'
 import { client } from './client'
-import type { Query } from './db/loki'
 const quickCopyOptions = preferences.find(pref => pref.name === 'quickCopyMode').options
-
-import { override } from './prefs-meta'
 
 const namespace = 'http://retorque.re/zotero-better-bibtex/'
 
 class AutoExportPane {
-  public items: { [key: string]: number[] } = {}
-
   private label: { [key: string]: string }
   private globals: Record<string, any>
 
   constructor(globals: Record<string, any>) {
     this.globals = globals
     this.label = {}
-    for (const label of ['scheduled', 'running', 'done', 'error']) {
+    for (const label of ['scheduled', 'running', 'done', 'error', 'preparing']) {
       this.label[label] = Zotero.BetterBibTeX.getString(`Preferences.auto-export.status.${label}`)
     }
 
@@ -110,7 +104,20 @@ class AutoExportPane {
             break
 
           case 'status':
-            (node as XUL.Textbox).value = this.label[ae.status]
+            // eslint-disable-next-line no-case-declarations
+            const progress = AutoExport.progress.get(ae.$loki)
+            if (ae.status === 'running' && Preference.workersMax && typeof progress === 'number') {
+              (node as XUL.Textbox).value = progress < 0 ? `${this.label.preparing} ${-progress}%` : `${progress}%`
+            }
+            else {
+              (node as XUL.Textbox).value = this.label[ae.status]
+            }
+            break
+
+          case 'cacherate':
+            // eslint-disable-next-line no-case-declarations
+            const cacherate = AutoExport.cacherate.get(ae.$loki);
+            (node as XUL.Textbox).value = `${typeof cacherate === 'number' ? cacherate : '? '}%`
             break
 
           case 'updated':
@@ -129,26 +136,6 @@ class AutoExportPane {
             ((node as Element).parentElement as XUL.Element).hidden = !ae[field];
             (node as XUL.Textbox).value = ae[field]
             break
-
-          case 'cached':
-            // eslint-disable-next-line no-case-declarations
-            const items = this.items[`${ae.type}=${ae.id}`] || []
-            // eslint-disable-next-line no-case-declarations
-            let ratio = 100
-
-            if (items.length) {
-              const query: Query = {$and: [
-                { exportNotes: {$eq: ae.exportNotes} },
-                { useJournalAbbreviation: {$eq: ae.useJournalAbbreviation} },
-                { itemID: {$in: items} },
-              ]}
-              for (const pref of override.names) {
-                query.$and.push({[pref]: {$eq: ae[pref]}})
-              }
-              const cached = Cache.getCollection(Translators.byId[ae.translatorID].label).find(query)
-              ratio = Math.round((cached.length * 100) / items.length) // eslint-disable-line no-magic-numbers
-            }
-            (node as XUL.Textbox).value = `${ratio}%`
 
           case 'exportNotes':
           case 'useJournalAbbreviation':
@@ -321,7 +308,7 @@ export class PrefPane {
   }
 
   public cacheReset(): void {
-    Cache.reset()
+    Cache.reset('user-initiated')
   }
 
   public setQuickCopy(node: XUL.Menuitem): void {
@@ -342,7 +329,7 @@ export class PrefPane {
           mode = quickCopyOptions[Preference.quickCopyMode] || Preference.quickCopyMode
       }
 
-      node.label = `Better BibTeX ${mode} Quick Copy`
+      node.label = `Better BibTeX Quick Copy: ${mode}`
     }
   }
 
@@ -387,47 +374,6 @@ export class PrefPane {
     }
 
     this.autoexport = new AutoExportPane(globals)
-
-    let sql
-
-    sql = `
-      SELECT libraryID, itemID
-      FROM items item
-      WHERE
-        item.itemTypeID NOT IN (
-          ${Zotero.BetterBibTeX.KeyManager.query.type.attachment},
-          ${Zotero.BetterBibTeX.KeyManager.query.type.note},
-          ${Zotero.BetterBibTeX.KeyManager.query.type.annotation || Zotero.BetterBibTeX.KeyManager.query.type.note}
-        )
-        AND
-        item.itemID NOT IN (select itemID from deletedItems)
-    `
-    for (const item of await ZoteroDB.queryAsync(sql)) {
-      const id = `library=${item.libraryID}`
-      this.autoexport.items[id] = this.autoexport.items[id] || []
-      this.autoexport.items[id].push(item.itemID)
-    }
-    sql = `
-      SELECT collectionID, itemID
-      FROM collectionItems item
-      WHERE
-        item.itemID NOT IN (SELECT itemID FROM items WHERE itemTypeID IN (
-          ${Zotero.BetterBibTeX.KeyManager.query.type.attachment},
-          ${Zotero.BetterBibTeX.KeyManager.query.type.note},
-          ${Zotero.BetterBibTeX.KeyManager.query.type.annotation || Zotero.BetterBibTeX.KeyManager.query.type.note}
-        ))
-        AND
-        item.itemID NOT IN (select itemID from deletedItems)
-    `
-    for (const item of await ZoteroDB.queryAsync(sql)) {
-      const id = `collection=${item.collectionID}`
-      this.autoexport.items[id] = this.autoexport.items[id] || []
-      this.autoexport.items[id].push(item.itemID)
-    }
-
-    globals.document.getElementById('better-bibtex-abbrev-style').setAttribute('collapsed', client !== 'jurism')
-    globals.document.getElementById('better-bibtex-abbrev-style-label').setAttribute('collapsed', client !== 'jurism')
-    globals.document.getElementById('better-bibtex-abbrev-style-separator').setAttribute('collapsed', client !== 'jurism')
 
     $patch$(this.globals.Zotero_Preferences, 'openHelpLink', original => function() {
       if (globals.document.getElementsByTagName('prefwindow')[0].currentPane.helpTopic === 'BetterBibTeX') {

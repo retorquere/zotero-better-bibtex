@@ -27,7 +27,7 @@ export class TestSupport {
   public async reset(): Promise<void> {
     Zotero.BetterBibTeX.localeDateOrder = Zotero.Date.getLocaleDateOrder()
 
-    Cache.reset()
+    Cache.reset('test environment reset')
 
     let collections
     const prefix = 'translators.better-bibtex.'
@@ -234,7 +234,7 @@ export class TestSupport {
   }
 
   public resetCache(): void {
-    Cache.reset()
+    Cache.reset('requested during test')
   }
 
   public async merge(ids: number[]): Promise<void> {

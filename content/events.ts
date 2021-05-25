@@ -1,3 +1,5 @@
+/* eslint-disable prefer-rest-params */
+
 import { EventEmitter } from 'eventemitter3'
 import { patch as $patch$ } from './monkey-patch'
 
@@ -14,20 +16,19 @@ if (Zotero.Debug.enabled) {
     'collections-changed',
     'collections-removed',
     'libraries-removed',
+    'export-progress',
+    'cache-rate',
     'loaded',
   ]
 
   $patch$(Events, 'on', original => function() {
-    // eslint-disable-next-line prefer-rest-params
     if (!events.includes(arguments[0])) throw new Error(`Unsupported event ${arguments[0]}`)
-    // eslint-disable-next-line prefer-rest-params
     original.apply(this, arguments)
   })
 
   $patch$(Events, 'emit', original => function() {
-    // eslint-disable-next-line prefer-rest-params
     if (!events.includes(arguments[0])) throw new Error(`Unsupported event ${arguments[0]}`)
-    // eslint-disable-next-line prefer-rest-params
+    Zotero.debug(`event-emit: ${arguments[0]}`)
     original.apply(this, arguments)
   })
 }
