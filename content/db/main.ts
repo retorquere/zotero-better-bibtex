@@ -3,7 +3,7 @@ import { Preference } from '../../gen/preferences'
 import { override } from '../prefs-meta'
 import { getItemsAsync } from '../get-items-async'
 
-import * as store from './store'
+import { Store } from './store'
 
 
 class Main extends Loki {
@@ -171,5 +171,5 @@ export const DB = new Main('better-bibtex', { // eslint-disable-line @typescript
   autosave: true,
   autosaveInterval: 5000,
   autosaveOnIdle: true,
-  adapter: new store.SQLite('better-bibtex'),
+  adapter: new Store({ storage: 'sqlite' }),
 })

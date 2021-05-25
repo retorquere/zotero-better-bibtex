@@ -148,7 +148,7 @@ class Preferences:
 
     for override in self.pane.findall(f'.//*[@{bbt}ae-field]'):
       override = override.get(f'{bbt}ae-field')
-      if override in ['type', 'name', 'status', 'updated', 'translator', 'path', 'error', 'cacherate', 'recursive']:
+      if override in ['type', 'name', 'status', 'updated', 'translator', 'path', 'error', 'cached', 'recursive']:
         continue
       if override in ['exportNotes', 'useJournalAbbreviation']:
         continue

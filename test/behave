@@ -60,7 +60,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--stop', '--no-stop', dest='stop', action=BooleanAction, default=(not CI.service))
 parser.add_argument('--jurism', dest='client', action='store_const', const='jurism', default=os.environ.get('CLIENT', 'zotero'))
 parser.add_argument('--client', dest='client', default=os.environ.get('CLIENT', 'zotero'))
-parser.add_argument('--beta', action='store_true', default=('#beta' in CI.message))
+parser.add_argument('--beta', action='store_true')
 parser.add_argument('--keep', '--no-keep', dest='keep', action=BooleanAction, default=False)
 parser.add_argument('--workers', '--no-workers', dest='workers', action=BooleanAction, default=True)
 parser.add_argument('--this', action='store_true')
@@ -107,10 +107,9 @@ elif not CI.service : # local run
 
 if args.nightly and CI.service and not args.tagged: # test for beta on nightly
   args.beta = (args.bin == '2')
+  args.bin = None
 elif CI.service and os.environ.get('BETA') == 'true':
   args.beta = True
-
-if args.beta:
   args.bin = None
 
 if args.this or args.test_this:

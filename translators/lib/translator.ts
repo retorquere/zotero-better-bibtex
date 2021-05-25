@@ -7,7 +7,6 @@ import { Reference, Item, Collection } from '../../gen/typings/serialized-item'
 import { ITranslator } from '../../gen/typings/translator'
 import type { Preferences } from '../../gen/preferences'
 import { log } from '../../content/logger'
-import { worker } from '../../content/environment'
 
 type TranslatorMode = 'export' | 'import'
 
@@ -73,8 +72,6 @@ class Items {
   public map: Record<number, CacheableItem> = {}
   public current: CacheableItem
 
-  private progress = { step: 5, batch: 0, written: 0 }
-
   constructor(cacheable) {
     let item: CacheableItem
     while (item = Zotero.nextItem()) {
@@ -89,29 +86,12 @@ class Items {
       const kb = [ b.citationKey || b.itemType, b.dateModified || b.dateAdded, b.itemID ].join('\t')
       return ka.localeCompare(kb, undefined, { sensitivity: 'base' })
     })
-
-    this.progress.batch = Math.round((this.list.length / 100) * this.progress.step) // eslint-disable-line no-magic-numbers
-    this.progress.written = 0
-  }
-
-  private update(finished?: true) {
-    if (!worker) return
-
-    if (finished) {
-      Zotero.BetterBibTeX.setProgress(100) // eslint-disable-line no-magic-numbers
-    }
-    else {
-      this.progress.written += 1
-      if ((this.progress.written % this.progress.batch) === 0) Zotero.BetterBibTeX.setProgress((this.progress.written / this.progress.batch) * this.progress.step)
-    }
   }
 
   *items(): Generator<Item, void, unknown> {
     for (const item of this.list) {
       yield (this.current = item) as Item
-      this.update()
     }
-    this.update(true)
   }
 
   *references(): Generator<Reference, void, unknown> {
@@ -123,11 +103,9 @@ class Items {
           break
 
         default:
-          yield (this.current = item) as unknown as Reference
+          yield (this.current = item) as Reference
       }
-      this.update()
     }
-    this.update(true)
   }
 }
 

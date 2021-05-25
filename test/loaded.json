@@ -217,8 +217,6 @@
   "export/Export unicode as plain text fails for Vietnamese characters #977.json",
   "export/Export web page to misc type with notes and howpublished custom fields #329.bibtex",
   "export/Export web page to misc type with notes and howpublished custom fields #329.json",
-  "export/Exporting \"month = {season}\" for BibTeX #1810.bibtex",
-  "export/Exporting \"month = {season}\" for BibTeX #1810.json",
   "export/Exporting Book Sections as Inbook #1474.bibtex",
   "export/Exporting Book Sections as Inbook #1474.json",
   "export/Exporting of single-field author lacks braces #130.biblatex",

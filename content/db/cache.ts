@@ -1,8 +1,7 @@
 import { XULoki as Loki } from './loki'
 import { Events } from '../events'
-import * as store from './store'
+import { Store } from './store'
 import { Preference } from '../../gen/preferences'
-import { log } from '../logger'
 
 const version = require('../../gen/version.js')
 import * as translators from '../../gen/translators.json'
@@ -23,10 +22,8 @@ class Cache extends Loki {
     }
   }
 
-  public reset(reason: string) {
+  public reset() {
     if (!this.initialized) return
-
-    log.debug('cache drop:', reason)
 
     for (const coll of this.collections) {
       coll.removeDataOnly()
@@ -126,7 +123,7 @@ class Cache extends Loki {
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const DB = new Cache('cache', { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   autosave: true,
-  adapter: new store.File(),
+  adapter: new Store({ storage: 'file', deleteAfterLoad: true, allowPartial: true }),
 })
 
 const METADATA = 'Better BibTeX metadata'
@@ -153,8 +150,8 @@ function clearOnUpgrade(coll, property, current) {
 }
 
 // the preferences influence the output way too much, no keeping track of that
-Events.on('preference-changed', pref => {
-  Zotero.BetterBibTeX.loaded.then(() => { DB.reset(`pref ${pref} changed`) })
+Events.on('preference-changed', () => {
+  Zotero.BetterBibTeX.loaded.then(() => { DB.reset() })
 })
 Events.on('items-changed', ids => {
   Zotero.BetterBibTeX.loaded.then(() => { DB.remove(ids, 'items-changed') })

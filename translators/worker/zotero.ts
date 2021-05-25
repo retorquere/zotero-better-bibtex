@@ -52,10 +52,6 @@ class WorkerZoteroBetterBibTeX {
     return Zotero.config.cache[itemID]
   }
 
-  public setProgress(percent: number) {
-    Zotero.send({ kind: 'progress', percent, translator: workerContext.translator, autoExport: Zotero.config.autoExport })
-  }
-
   public cacheStore(itemID: number, options: any, prefs: any, reference: string, metadata: any) {
     if (Zotero.config.preferences.workersCache) Zotero.send({ kind: 'cache', itemID, reference, metadata })
     return true
@@ -171,13 +167,16 @@ function saveFile(path, overwrite) {
 
     const snapshot = OS.Path.dirname(this.localPath)
     const iterator = new OS.File.DirectoryIterator(snapshot)
-    // PITA dual-type OS.Path is promises on main thread but sync in worker
-    iterator.forEach(entry => { // eslint-disable-line @typescript-eslint/no-floating-promises
-      if (entry.isDir) throw new Error(`Unexpected directory ${entry.path} in snapshot`)
-      if (entry.name !== '.zotero-ft-cache') {
+    let entry
+    try {
+      while (entry = iterator.next()) {
+        if (entry.isDir) throw new Error(`Unexpected directory ${entry.path} in snapshot`)
         OS.File.copy(OS.Path.join(snapshot, entry.name), OS.Path.join(target, entry.name), { noOverwrite: !overwrite })
       }
-    })
+    }
+    finally {
+      iterator.close()
+    }
   }
 
   return true

@@ -181,7 +181,6 @@ const queue = new class TaskQueue {
 
   public add(ae) {
     const $loki = (typeof ae === 'number' ? ae : ae.$loki)
-    Events.emit('export-progress', 0, Translators.byId[ae.translatorID].label, $loki)
     this.scheduler.schedule($loki, () => { this.run($loki).catch(err => log.error('autoexport failed:', {$loki}, err)) })
   }
 
@@ -194,7 +193,6 @@ const queue = new class TaskQueue {
     await Zotero.BetterBibTeX.ready
 
     const ae = this.autoexports.get($loki)
-    Events.emit('export-progress', 0, Translators.byId[ae.translatorID].label, $loki)
     if (!ae) throw new Error(`AutoExport ${$loki} not found`)
 
     ae.status = 'running'
@@ -234,7 +232,6 @@ const queue = new class TaskQueue {
       for (const pref of override.names) {
         displayOptions[`preference_${pref}`] = ae[pref]
       }
-      displayOptions.auto_export_id = ae.$loki
 
       const jobs = [ { scope, path: ae.path } ]
 
@@ -327,23 +324,27 @@ const queue = new class TaskQueue {
   }
 }
 
+Events.on('preference-changed', pref => {
+  if (pref !== 'autoExport') return
+
+  switch (Preference.autoExport) {
+    case 'immediate':
+      queue.resume()
+      break
+    default: // off / idle
+      queue.pause()
+  }
+})
+
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const AutoExport = new class CAutoExport { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public db: any
-  public progress: Map<number, number>
-  public cacherate: Map<number, number>
 
   constructor() {
-    this.progress = new Map
-    this.cacherate = new Map
     Events.on('libraries-changed', ids => this.schedule('library', ids))
     Events.on('libraries-removed', ids => this.remove('library', ids))
     Events.on('collections-changed', ids => this.schedule('collection', ids))
     Events.on('collections-removed', ids => this.remove('collection', ids))
-    Events.on('export-progress', (percent, _translator, ae) => {
-      if (typeof ae === 'number') this.progress.set(ae, percent)
-    })
-    Events.on('cache-rate', (ae, percent) => { this.cacherate.set(ae, percent) })
   }
 
   public async init() {
@@ -394,17 +395,3 @@ export const AutoExport = new class CAutoExport { // eslint-disable-line @typesc
     queue.run(id).catch(err => log.error('AutoExport.run:', err))
   }
 }
-
-Events.on('preference-changed', pref => {
-  AutoExport.cacherate = new Map
-
-  if (pref !== 'autoExport') return
-
-  switch (Preference.autoExport) {
-    case 'immediate':
-      queue.resume()
-      break
-    default: // off / idle
-      queue.pause()
-  }
-})

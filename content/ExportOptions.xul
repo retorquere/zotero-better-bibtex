@@ -9,15 +9,14 @@
   <script src="chrome://zotero/content/include.js"/>
   <script>
     var globals = Function('return this')();
-    window.addEventListener('load', function() {
+    window.addEventListener('load', async function () {
       try {
         Zotero.debug('BBT: loading ExportOptions')
         const bbt_exportOptions = new Zotero.BetterBibTeX.ExportOptions(globals)
         window.addEventListener('unload', () => bbt_exportOptions.unload())
         Zotero.debug('BBT: ExportOptions loaded')
-      }
-      catch (err) {
-        Zotero.logError(err)
+      } catch (err) {
+        Zotero.debug(`BBT: loading ExportOptions error: ${err.message}\n${err.stack ||''}`)
       }
     })
   </script>
