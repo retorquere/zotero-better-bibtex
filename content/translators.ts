@@ -284,6 +284,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       autoExport,
     }
 
+    let cacherate
     let items: any[] = []
     worker.onmessage = (e: { data: Translator.Worker.Message }) => {
       switch (e.data?.kind) {
@@ -332,6 +333,11 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
           }
           else {
+            if (typeof cacherate !== 'undefined' && cacherate < config.items.length) {
+              cacherate += 1
+              // eslint-disable-next-line no-magic-numbers
+              Events.emit('cache-rate', autoExport, Math.round((cacherate * 100) / config.items.length))
+            }
             cache.insert({...selector, reference, metadata})
           }
           break
@@ -402,7 +408,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       config.items.push(Serializer.fast(item))
 
       // sleep occasionally so the UI gets a breather
-      if ((Date.now() - worked) > 1000) { // eslint-disable-line no-magic-numbers
+      if ((Date.now() - worked) > 100) { // eslint-disable-line no-magic-numbers
         await sleep(0) // eslint-disable-line no-magic-numbers
         worked = Date.now()
       }
@@ -443,8 +449,11 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       cache.cloneObjects = cloneObjects
       cache.dirty = true
 
-      // eslint-disable-next-line no-magic-numbers
-      if (typeof autoExport === 'number') Events.emit('cache-rate', autoExport, Math.round((Object.keys(config.cache).length * 100) / config.items.length))
+      if (typeof autoExport === 'number') {
+        cacherate = Object.keys(config.cache).length
+        // eslint-disable-next-line no-magic-numbers
+        Events.emit('cache-rate', autoExport, Math.round((cacherate * 100) / config.items.length))
+      }
     }
 
     // pre-fetch CSL serializations

@@ -308,7 +308,7 @@ export class PrefPane {
   }
 
   public cacheReset(): void {
-    Cache.reset()
+    Cache.reset('user-initiated')
   }
 
   public setQuickCopy(node: XUL.Menuitem): void {

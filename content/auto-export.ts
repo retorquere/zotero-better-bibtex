@@ -327,18 +327,6 @@ const queue = new class TaskQueue {
   }
 }
 
-Events.on('preference-changed', pref => {
-  if (pref !== 'autoExport') return
-
-  switch (Preference.autoExport) {
-    case 'immediate':
-      queue.resume()
-      break
-    default: // off / idle
-      queue.pause()
-  }
-})
-
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const AutoExport = new class CAutoExport { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public db: any
@@ -406,3 +394,17 @@ export const AutoExport = new class CAutoExport { // eslint-disable-line @typesc
     queue.run(id).catch(err => log.error('AutoExport.run:', err))
   }
 }
+
+Events.on('preference-changed', pref => {
+  AutoExport.cacherate = new Map
+
+  if (pref !== 'autoExport') return
+
+  switch (Preference.autoExport) {
+    case 'immediate':
+      queue.resume()
+      break
+    default: // off / idle
+      queue.pause()
+  }
+})
