@@ -31,15 +31,17 @@
   <script src="chrome://zotero/content/include.js"/>
   <script>
     var globals = Function('return this')();
-    var bbt_itemPane
-    (new Promise((resolve, reject) => { window.addEventListener('load', resolve) }))
-      .then(() => Zotero.debug('BBT: loading ItemPane'))
-      .then(() => {
-        bbt_itemPane = new Zotero.BetterBibTeX.ItemPane(globals)
+    window.addEventListener('load', async function() {
+      try {
+        Zotero.debug('BBT: loading ItemPane')
+        const bbt_itemPane = new Zotero.BetterBibTeX.ItemPane(globals)
+        await bbt_itemPane.load(globals)
         window.addEventListener('unload', () => bbt_itemPane.unload())
-      })
-      .then(() => bbt_itemPane.load(globals))
-      .then(() => Zotero.debug('BBT: ItemPane loaded'))
-      .catch(err => Zotero.debug(`BBT: loading ItemPane error: ${err.message}\n${err.stack ||''}`))
+        Zotero.debug('BBT: ItemPane loaded')
+      }
+      catch (err) {
+        Zotero.logError(err)
+      }
+    })
   </script>
 </overlay>

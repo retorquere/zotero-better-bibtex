@@ -4,7 +4,6 @@
 
 <overlay id="zotero-better-bibtex-zoteroPane-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <script>
-    var globals = Function('return this')();
     var bbt_zoteropane = null;
   </script>
   <stringbundleset>
@@ -95,15 +94,20 @@
   <script src="chrome://zotero/content/include.js"/>
   <script src="chrome://zotero-better-bibtex/content/better-bibtex.js"/>
   <script>
-    (new Promise((resolve, reject) => { window.addEventListener('load', resolve) }))
-      .then(() => Zotero.debug('BBT startup'))
-      .then(() => Zotero.BetterBibTeX.load(globals))
-      .then(() => Zotero.debug('BBT started'))
-      .catch(err => Zotero.debug(`starting BBT error: ${err.message}\n${err.stack ||''}`))
+    var globals = Function('return this')();
+    Zotero.debug('BBT startup')
 
-      .then(() => Zotero.debug('loading ZoteroPane'))
-      .then(() => bbt_zoteropane = new Zotero.BetterBibTeX.ZoteroPane(globals))
-      .then(() => Zotero.debug('ZoteroPane loaded'))
-      .catch(err => Zotero.debug(`loading ZoteroPane error: ${err.message}\n${err.stack ||''}`))
+    window.addEventListener('load', async function () {
+      try {
+        Zotero.debug('BBT loading')
+        await Zotero.BetterBibTeX.load(globals)
+        Zotero.debug('BBT loading zoteroPane')
+        bbt_zoteropane = new Zotero.BetterBibTeX.ZoteroPane(globals)
+        Zotero.debug('BBT running')
+      }
+      catch (err) {
+        Zotero.logError(err)
+      }
+    })
   </script>
 </overlay>

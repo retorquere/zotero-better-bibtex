@@ -20,13 +20,16 @@
   <script>
     var globals = Function('return this')();
     var bbt_prefpane
-    function load() {
-      bbt_prefpane = new Zotero.BetterBibTeX.PrefPane()
-      Promise.resolve()
-        .then(() => Zotero.debug('BBT: loading PrefPane'))
-        .then(() => bbt_prefpane.load(globals))
-        .then(() => Zotero.debug('BBT: PrefPane loaded'))
-        .catch(err => Zotero.debug(`BBT: loading PrefPane error: ${err.message}\n${err.stack ||''}`))
+    async function load() {
+      try {
+        bbt_prefpane = new Zotero.BetterBibTeX.PrefPane()
+        Zotero.debug('BBT: loading PrefPane')
+        await bbt_prefpane.load(globals)
+        Zotero.debug('BBT: PrefPane loaded')
+      } 
+      catch (err) {
+        Zotero.logError(err)
+      }
     }
   </script>
 
