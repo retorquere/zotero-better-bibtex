@@ -58,11 +58,7 @@ function __njsOnCatchClause__(call) {
 
 const logArguments = false
 const logExceptions = true
-export = function loader(source: string): string {
-  const filename = this.resourcePath.substring(process.cwd().length + 1)
-
-  if (filename.split('.').pop() !== 'ts') throw new Error(`Unexpected extension on ${filename}`)
-
+export = function loader(filename, source: string): string {
   if (!selected(filename)) return source
 
   console.log(`!!!!!!!!!!!!!! Instrumenting ${filename} for trace logging !!!!!!!!!!!!!`)

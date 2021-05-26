@@ -473,21 +473,9 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     this.workers.startup += Math.ceil((Date.now() - start) / 1000) // eslint-disable-line no-magic-numbers
     // eslint-disable-next-line no-magic-numbers
     if (this.workers.total > 5 && (this.workers.startup / this.workers.total) > Preference.autoExportDelay) Preference.autoExportDelay = Math.ceil(this.workers.startup / this.workers.total)
-    log.debug('worker:', { avgstartup: this.workers.startup / this.workers.total, startup: Date.now() - start, caching, workers: this.workers, autoExportDelay: Preference.autoExportDelay })
 
     log.debug('worker: kicking off')
     worker.postMessage({ kind: 'start', config: JSON.parse(JSON.stringify(config)) })
-
-    /*
-    const interval = setInterval(() => {
-      if ((Date.now() - now) > 10000) { // eslint-disable-line no-magic-numbers
-        clearInterval(interval)
-      }
-      else {
-        worker.postMessage({ kind: 'ping' })
-      }
-    }, 500) // eslint-disable-line no-magic-numbers
-    */
 
     return deferred.promise
   }

@@ -45,12 +45,19 @@ $patch$(Loki.Collection.prototype, 'update', original => function(doc) {
 
 // TODO: workaround for https://github.com/techfort/LokiJS/issues/595#issuecomment-322032656
 $patch$(Loki.prototype, 'close', original => function(callback) {
+  const store: string = this.persistenceAdapter.constructor.name || 'Unknown'
+  Zotero.debug(`BBT: patched ${store}.close started`)
   return original.call(this, errClose => {
+    Zotero.debug(`BBT: patched ${store}.close has ran: ${errClose}`)
     if (this.persistenceAdapter && (typeof this.persistenceAdapter.close === 'function')) {
-      return this.persistenceAdapter.close(this.filename, errCloseAdapter => callback(errClose || errCloseAdapter))
+      Zotero.debug(`BBT: patched ${store}.persistenceAdapter.close started`)
+      this.persistenceAdapter.close(this.filename, errCloseAdapter => {
+        Zotero.debug(`BBT: patched ${store}.persistenceAdapter.close finished: ${errClose || errCloseAdapter}`)
+        callback(errClose || errCloseAdapter)
+      })
     }
     else {
-      return callback(errClose)
+      callback(errClose)
     }
   })
 })
@@ -101,27 +108,31 @@ export class XULoki extends Loki {
     }
 
     if (this.persistenceAdapter && !nullStore) {
-      try {
-        AsyncShutdown.profileBeforeChange.addBlocker(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: closing ${name}`, async () => {
-        // Sqlite.shutdown.addBlocker(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: close of ${name}`, async () => {
-          // setTimeout is disabled during shutdown and throws errors
-          this.throttledSaves = false
+      (function(db, dbname) {
+        const store: string = db.persistenceAdapter.constructor.name || 'Unknown'
+        try {
+          AsyncShutdown.profileBeforeChange.addBlocker(`Loki.${store}.shutdown: closing ${dbname}`, async () => {
+          // Sqlite.shutdown.addBlocker(`Loki.${store}.shutdown: close of ${dbname}`, async () => {
+            // setTimeout is disabled during shutdown and throws errors
+            db.throttledSaves = false
 
-          try {
-            Zotero.debug(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: close of ${name}`)
-            await this.saveDatabaseAsync()
-            await this.closeAsync()
-            Zotero.debug(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: close of ${name} completed`)
-          }
-          catch (err) {
-            Zotero.debug(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: close of ${name} failed`)
-            log.error(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: close of ${name} failed`, err)
-          }
-        })
-      }
-      catch (err) {
-        log.error(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'} failed to install shutdown blocker!`, err)
-      }
+            try {
+              Zotero.debug(`Loki.${store}.shutdown: saving ${dbname}`)
+              await db.saveDatabaseAsync()
+              Zotero.debug(`Loki.${store}.shutdown: closing ${dbname}`)
+              await db.closeAsync()
+              Zotero.debug(`Loki.${store}.shutdown: shutdown of ${dbname} completed`)
+            }
+            catch (err) {
+              Zotero.debug(`Loki.${store}.shutdown: shutdown of ${dbname} failed`)
+              log.error(`Loki.${store}.shutdown: shutdown of ${dbname} failed`, err)
+            }
+          })
+        }
+        catch (err) {
+          log.error(`Loki.${store} failed to install shutdown blocker!`, err)
+        }
+      })(this, name)
     }
   }
 
@@ -135,19 +146,33 @@ export class XULoki extends Loki {
   }
 
   public saveDatabaseAsync(): Promise<void> {
+    const store = this.persistenceAdapter.constructor.name
+    Zotero.debug(`BBT: ${store}.saveDatabaseAsync started`)
     return new Promise((resolve, reject) => {
       this.saveDatabase(err => {
-        if (err) return reject(err)
-        resolve(null)
+        Zotero.debug(`BBT: ${store}.saveDatabaseAsync finished: ${err}`)
+        if (err) {
+          reject(err)
+        }
+        else {
+          resolve(null)
+        }
       })
     })
   }
 
   public closeAsync(): Promise<void> {
+    const store = this.persistenceAdapter.constructor.name
+    Zotero.debug(`BBT: ${store}.closeAsync started`)
     return new Promise((resolve, reject) => {
       this.close(err => {
-        if (err) return reject(err)
-        resolve(null)
+        Zotero.debug(`BBT: ${store}.closeAsync finished`)
+        if (err) {
+          reject(err)
+        }
+        else {
+          resolve(null)
+        }
       })
     })
   }
