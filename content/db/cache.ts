@@ -126,7 +126,7 @@ class Cache extends Loki {
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const DB = new Cache('cache', { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   autosave: true,
-  adapter: new Store({ storage: 'file', deleteAfterLoad: true, allowPartial: true }),
+  adapter: new Store({ storage: 'file' }),
 })
 
 const METADATA = 'Better BibTeX metadata'

@@ -10,14 +10,11 @@ import { log } from '../logger'
 export class Store {
   public mode = 'reference'
 
-  private versions: number
-  private deleteAfterLoad: boolean
-  private allowPartial: boolean
   private storage: string
 
   private conn: any = {}
 
-  constructor(options: { deleteAfterLoad?: boolean, allowPartial?: boolean, versions?: number, storage: string }) {
+  constructor(options: { storage: string }) {
     Object.assign(this, options)
     if (this.storage !== 'sqlite' && this.storage !== 'file') throw new Error(`Unsupported DBStore storage ${this.storage}`)
   }
@@ -140,17 +137,14 @@ export class Store {
   }
 
   public async loadDatabaseAsync(name: string): Promise<any> {
-    try {
+    if (this.storage === 'sqlite') {
       const db = await this.loadDatabaseSQLiteAsync(name) // always try sqlite first, may be a migration to file
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       if (db) return db
     }
-    catch (err) {
-      log.debug('DB.Store.loadDatabaseAsync:', err)
-    }
 
     if (this.storage === 'file') {
-      const db = await this.loadDatabaseVersionAsync(name, 0)
+      const db = await this.loadJSONAsync(name)
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       if (db) return db
     }
@@ -198,7 +192,6 @@ export class Store {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       db.collections = db.collections.map((coll: string) => collections[coll]).filter(coll => coll)
       if (missing.length) {
-        failed = !this.allowPartial
         log.debug(`DB.Store.loadDatabaseSQLiteAsync: could not find ${name}.${missing.join('.')}`)
       }
 
@@ -216,7 +209,6 @@ export class Store {
     }
     else {
       this.conn[name] = conn
-      if (failed || this.deleteAfterLoad) await conn.queryAsync(`DELETE FROM "${name}"`)
 
     }
 
@@ -279,9 +271,7 @@ export class Store {
     }
   }
 
-  private async loadDatabaseVersionAsync(name: string, version: number) {
-    if (this.versions && version) name += `.${version}`
-
+  private async loadJSONAsync(name: string) {
     const db = await this.load(name)
     if (!db) return null
 
@@ -294,15 +284,8 @@ export class Store {
         return coll
       }
 
-      const msg = `Could not load ${name}.${collname}`
-
-      if (this.allowPartial) {
-        log.debug('DB.Store.loadDatabaseVersionAsync:', msg)
-        return null
-      }
-      else {
-        throw new Error(msg)
-      }
+      log.debug('DB.Store.loadDatabaseVersionAsync:', `Could not load ${name}.${collname}`)
+      return null
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     })).filter(coll => coll)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -319,7 +302,7 @@ export class Store {
 
     // this is intentional. If all is well, the database will be retained in memory until it's saved at
     // shutdown. If all is not well, this will make sure the caches are rebuilt from scratch on next start
-    if (this.deleteAfterLoad) await OS.File.move(path, `${path}.bak`)
+    await OS.File.move(path, `${path}.bak`)
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return data
