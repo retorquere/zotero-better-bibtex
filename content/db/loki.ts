@@ -101,27 +101,30 @@ export class XULoki extends Loki {
     }
 
     if (this.persistenceAdapter && !nullStore) {
-      try {
-        AsyncShutdown.profileBeforeChange.addBlocker(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: closing ${name}`, async () => {
-        // Sqlite.shutdown.addBlocker(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: close of ${name}`, async () => {
-          // setTimeout is disabled during shutdown and throws errors
-          this.throttledSaves = false
+      (function(db, dbname) {
+        const store: string = db.persistenceAdapter.constructor.name || 'Unknown'
+        try {
+          AsyncShutdown.profileBeforeChange.addBlocker(`Loki.${store}.shutdown: closing ${dbname}`, async () => {
+          // Sqlite.shutdown.addBlocker(`Loki.${store}.shutdown: close of ${dbname}`, async () => {
+            // setTimeout is disabled during shutdown and throws errors
+            db.throttledSaves = false
 
-          try {
-            Zotero.debug(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: close of ${name}`)
-            await this.saveDatabaseAsync()
-            await this.closeAsync()
-            Zotero.debug(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: close of ${name} completed`)
-          }
-          catch (err) {
-            Zotero.debug(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: close of ${name} failed`)
-            log.error(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: close of ${name} failed`, err)
-          }
-        })
-      }
-      catch (err) {
-        log.error(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'} failed to install shutdown blocker!`, err)
-      }
+            try {
+              Zotero.debug(`Loki.${store}.shutdown: close of ${dbname}`)
+              await db.saveDatabaseAsync()
+              await db.closeAsync()
+              Zotero.debug(`Loki.${store}.shutdown: close of ${dbname} completed`)
+            }
+            catch (err) {
+              Zotero.debug(`Loki.${store}.shutdown: close of ${dbname} failed`)
+              log.error(`Loki.${store}.shutdown: close of ${dbname} failed`, err)
+            }
+          })
+        }
+        catch (err) {
+          log.error(`Loki.${store} failed to install shutdown blocker!`, err)
+        }
+      })(this, name)
     }
   }
 
