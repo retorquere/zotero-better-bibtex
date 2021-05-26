@@ -1,13 +1,16 @@
-// declare const Zotero: any
+/* eslint-disable no-magic-numbers */
+declare const Zotero: any
 
 type Parameters = {
   total: number
   step?: number
   callback: (pct: number) => void
   start?: number
+  name?: string
 }
 
 export class Pinger {
+  private name: string
   private pct: number
   private step: number
   private callback: (pct: number) => void
@@ -15,37 +18,38 @@ export class Pinger {
   private next: number
   private incr: number
 
-  constructor({ start = 0, total, step = 5, callback }: Parameters) { // eslint-disable-line no-magic-numbers
-    this.incr = 100 / total // eslint-disable-line no-magic-numbers
+  constructor({ start = 0, total, step = 5, name = '', callback }: Parameters) {
+    this.incr = 100 / total
 
+    this.name = name
     this.pct = start * this.incr
     this.step = step
     this.callback = callback
 
     this.next = Math.floor(this.pct / step) * step
 
-    // Zotero.debug(`ping: start ${JSON.stringify({...this, start, total})}`)
+    if (this.name) Zotero.debug(`ping: ${name} start ${JSON.stringify({...this, start, total})}`)
 
     this.emit()
   }
 
   public update(): void {
-    // Zotero.debug(`ping: update ${JSON.stringify(this)}`)
     this.pct += this.incr
-    if (this.pct >= this.next) this.emit()
+    if (this.name) Zotero.debug(`ping: ${this.name} update to ${this.pct}`)
+    if (Math.round(this.pct) >= this.next) this.emit()
   }
 
   private emit() {
     if (this.callback) {
-      // Zotero.debug(`ping: emit ${JSON.stringify(this)}`)
-      this.callback(this.next)
+      if (this.name) Zotero.debug(`ping: ${this.name} emit ${Math.max(this.next, 100)}`)
+      this.callback(Math.max(this.next, 100))
+      if (this.next > 100) this.callback = null
       this.next += this.step
-      if (this.next > 100) this.callback = null // eslint-disable-line no-magic-numbers
-      // Zotero.debug(`ping: after-emit ${JSON.stringify(this)}`)
     }
   }
 
   public done(): void {
-    if (this.callback && this.pct < this.next) this.callback(this.next)
+    if (this.name) Zotero.debug(`ping: ${this.name} done`)
+    if (this.callback && this.pct < this.next) this.callback(Math.max(this.next, 100))
   }
 }
