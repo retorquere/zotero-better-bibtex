@@ -28,7 +28,7 @@ if (Zotero.Debug.enabled) {
 
   $patch$(Events, 'emit', original => function() {
     if (!events.includes(arguments[0])) throw new Error(`Unsupported event ${arguments[0]}`)
-    Zotero.debug(`event-emit: ${arguments[0]}`)
+    Zotero.debug(`event-emit: ${JSON.stringify(Array.from(arguments))}`)
     original.apply(this, arguments)
   })
 }
