@@ -1,6 +1,6 @@
 import { XULoki as Loki } from './loki'
 import { Events } from '../events'
-import { File as Store } from './store'
+import { File } from './store/file'
 import { Preference } from '../../gen/preferences'
 import { log } from '../logger'
 
@@ -126,7 +126,7 @@ class Cache extends Loki {
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const DB = new Cache('cache', { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   autosave: true,
-  adapter: new Store({ storage: 'file' }),
+  adapter: new File(),
 })
 
 const METADATA = 'Better BibTeX metadata'
