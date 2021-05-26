@@ -39,7 +39,7 @@ class Branches:
 branches = Branches()
 
 if args.unsnyk:
-  for branch in brances.remote:
+  for branch in branches.remote:
     if branch.startswith('snyk-upgrade-'):
       print(f'git push origin :{shlex.quote(branch)}')
   sys.exit()
