@@ -23,7 +23,7 @@ specifiers:
   edtf: ^3.1.0
   edtfy: ^0.0.8
   ejs: ^3.1.6
-  esbuild: ^0.12.2
+  esbuild: ^0.12.3
   escape-string-regexp: ^5.0.0
   eslint: ^7.27.0
   eta: ^1.12.1
@@ -122,7 +122,7 @@ devDependencies:
   dom-parser: 0.1.6
   dotenv: 10.0.0
   ejs: 3.1.6
-  esbuild: 0.12.2
+  esbuild: 0.12.3
   escape-string-regexp: 5.0.0
   eslint: 7.27.0
   eta: 1.12.1
@@ -1404,8 +1404,8 @@ packages:
     resolution: {integrity: sha1-wsNYJlYkfDnqEHyx5mUrb58kUjw=}
     dev: true
 
-  /esbuild/0.12.2:
-    resolution: {integrity: sha512-VELu6ndrs0CWMV+Ts8GwO3S08JsFFrEuHCo8ekfqNAv/rHEK4UjoXvZOFyopHvRvQVsbTvqQWfBzYKVeLBm0WA==}
+  /esbuild/0.12.3:
+    resolution: {integrity: sha512-0kuxNbGLGli8DYMHebJ4pk+RQ9ORYL1PmCSrSQpna1ioHvm+fzCAs99jwRYXGSfCNed1mj0vFSM9LbBm6YVbIQ==}
     hasBin: true
     requiresBuild: true
     dev: true

@@ -90,7 +90,7 @@
     "dom-parser": "^0.1.6",
     "dotenv": "^10.0.0",
     "ejs": "^3.1.6",
-    "esbuild": "^0.12.2",
+    "esbuild": "^0.12.3",
     "escape-string-regexp": "^5.0.0",
     "eslint": "^7.27.0",
     "eta": "^1.12.1",
