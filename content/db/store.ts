@@ -78,8 +78,6 @@ export class Store {
   }
 
   private async exportDatabaseFileAsync(name, dbref) {
-    await this.roll(name)
-
     const parts = [
       this.save(name, {...dbref, ...{collections: dbref.collections.map((coll: { name: string }) => coll.name)}}, true),
     ]
@@ -123,51 +121,6 @@ export class Store {
     })
   }
 
-  private async roll(name) {
-    if (!this.versions) return
-
-    const roll = []
-
-    const root = this.storage === 'file' ? Zotero.BetterBibTeX.dir : Zotero.DataDirectory.dir
-    const ext = this.storage === 'file' ? 'json' : 'sqlite'
-    const re = new RegExp(`^${name}(\\.[A-Za-z][^.]+)?(?:\\.([0-9]+))?\\.${ext}$`)
-
-    let version: string
-    let collection: string
-
-    await (new OS.File.DirectoryIterator(root)).forEach(entry => { // really weird half-promise thing
-      try {
-        [ , collection, version ] = entry.name.match(re)
-      }
-      catch (err) {
-        return
-      }
-      const v: number = version ? parseInt(version) : 0
-
-      if (v >= this.versions) {
-        roll.push({ version, remove: OS.Path.join(root, entry.path) })
-      }
-      else {
-        roll.push({ version, move: OS.Path.join(root, entry.path), to: OS.Path.join(root, `${name}${collection || ''}.${v + 1}.${ext}`) } )
-      }
-    })
-
-    // this must be done sequentially, in reverse
-    for (const file of roll.sort((a, b) => b.version - a.version)) {
-      try {
-        if (file.remove) {
-          await OS.File.remove(file.remove, { ignoreAbsent: true })
-        }
-        else {
-          await OS.File.move(file.move, file.to)
-        }
-      }
-      catch (err) {
-        log.debug('DB.Store.roll:', file, err)
-      }
-    }
-  }
-
   private async save(name: string, data, dirty: boolean) {
     const path = OS.Path.join(Zotero.BetterBibTeX.dir, `${name}.json`)
     const save = dirty || !(await OS.File.exists(path))
@@ -197,12 +150,9 @@ export class Store {
     }
 
     if (this.storage === 'file') {
-      const versions = this.versions || 1
-      for (let version = 0; version < versions; version++) {
-        const db = await this.loadDatabaseVersionAsync(name, version)
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        if (db) return db
-      }
+      const db = await this.loadDatabaseVersionAsync(name, 0)
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      if (db) return db
     }
 
     return null
