@@ -54,33 +54,32 @@ export class SQLite {
 
       if (conn === false) {
         log.debug('DB.Store.exportDatabaseSQLiteAsync: save of', name, 'attempted after close')
-        return callback(null)
       }
-
-      if (!conn) {
+      else if (!conn) {
         log.debug('DB.Store.exportDatabaseSQLiteAsync: save of', name, 'to unopened database')
-        return callback(null)
+      }
+      else {
+        await conn.executeTransaction(async () => {
+          const names = (await conn.queryAsync(`SELECT name FROM "${name}"`)).map((coll: { name: string }) => coll.name)
+
+          const parts = []
+          for (const coll of dbref.collections) {
+            const collname = `${name}.${coll.name}`
+            if (coll.dirty || !names.includes(collname)) {
+              parts.push(conn.queryAsync(`REPLACE INTO "${name}" (name, data) VALUES (?, ?)`, [collname, JSON.stringify(coll)]))
+            }
+          }
+
+          parts.push(conn.queryAsync(`REPLACE INTO "${name}" (name, data) VALUES (?, ?)`, [
+            name,
+            JSON.stringify({ ...dbref, ...{collections: dbref.collections.map(coll => `${name}.${coll.name}`)} }),
+          ]))
+
+          await Promise.all(parts)
+        })
       }
 
-      await conn.executeTransaction(async () => {
-        const names = (await conn.queryAsync(`SELECT name FROM "${name}"`)).map((coll: { name: string }) => coll.name)
-
-        const parts = []
-        for (const coll of dbref.collections) {
-          const collname = `${name}.${coll.name}`
-          if (coll.dirty || !names.includes(collname)) {
-            parts.push(conn.queryAsync(`REPLACE INTO "${name}" (name, data) VALUES (?, ?)`, [collname, JSON.stringify(coll)]))
-          }
-        }
-
-        parts.push(conn.queryAsync(`REPLACE INTO "${name}" (name, data) VALUES (?, ?)`, [
-          name,
-          JSON.stringify({ ...dbref, ...{collections: dbref.collections.map(coll => `${name}.${coll.name}`)} }),
-        ]))
-
-        await Promise.all(parts)
-        callback(null)
-      })
+      callback(null)
     }
     catch (err) {
       callback(err)

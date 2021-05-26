@@ -10,11 +10,6 @@ import { log } from '../../logger'
 export class File {
   public mode = 'reference'
 
-  // eslint-disable-next-line @typescript-eslint/require-await
-  public async close(name: string, callback: ((v: null) => void)): Promise<void> {
-    return callback(null)
-  }
-
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public async exportDatabase(name: string, dbref: any, callback: ((v: null) => void)): Promise<void> {
     try {
