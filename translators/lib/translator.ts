@@ -8,6 +8,7 @@ import { ITranslator } from '../../gen/typings/translator'
 import type { Preferences } from '../../gen/preferences'
 import { log } from '../../content/logger'
 import { worker } from '../../content/environment'
+import { Pinger } from '../../content/ping'
 
 type TranslatorMode = 'export' | 'import'
 
@@ -73,7 +74,7 @@ class Items {
   public map: Record<number, CacheableItem> = {}
   public current: CacheableItem
 
-  private progress = { step: 5, batch: 0, written: 0 }
+  private ping: Pinger
 
   constructor(cacheable) {
     let item: CacheableItem
@@ -90,28 +91,18 @@ class Items {
       return ka.localeCompare(kb, undefined, { sensitivity: 'base' })
     })
 
-    this.progress.batch = Math.round((this.list.length / 100) * this.progress.step) // eslint-disable-line no-magic-numbers
-    this.progress.written = 0
-  }
-
-  private update(finished?: true) {
-    if (!worker) return
-
-    if (finished) {
-      Zotero.BetterBibTeX.setProgress(100) // eslint-disable-line no-magic-numbers
-    }
-    else {
-      this.progress.written += 1
-      if ((this.progress.written % this.progress.batch) === 0) Zotero.BetterBibTeX.setProgress((this.progress.written / this.progress.batch) * this.progress.step)
-    }
+    this.ping = new Pinger({
+      total: this.list.length,
+      callback: pct => worker ? Zotero.BetterBibTeX.setProgress(pct) : null, // eslint-disable-line @typescript-eslint/no-unsafe-return
+    })
   }
 
   *items(): Generator<Item, void, unknown> {
     for (const item of this.list) {
       yield (this.current = item) as Item
-      this.update()
+      this.ping.update()
     }
-    this.update(true)
+    this.ping.done()
   }
 
   *references(): Generator<Reference, void, unknown> {
@@ -125,9 +116,9 @@ class Items {
         default:
           yield (this.current = item) as unknown as Reference
       }
-      this.update()
+      this.ping.update()
     }
-    this.update(true)
+    this.ping.done()
   }
 }
 
