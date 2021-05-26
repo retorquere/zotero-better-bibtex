@@ -3,7 +3,7 @@ import { Preference } from '../../gen/preferences'
 import { override } from '../prefs-meta'
 import { getItemsAsync } from '../get-items-async'
 
-import { Store } from './store'
+import { SQLite as Store } from './store'
 
 
 class Main extends Loki {
