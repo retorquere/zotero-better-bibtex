@@ -28,17 +28,6 @@ export class SQLite {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  public async exportDatabase(name: string, dbref: any, callback: ((v: null) => void)): Promise<void> {
-    try {
-      await this.exportDatabaseAsync(name, dbref)
-      callback(null)
-    }
-    catch (err) {
-      callback(err)
-    }
-  }
-
   private async closeDatabase(conn, name, _reason) {
     if (!conn) {
       log.debug('DB.Store.closeDatabase: ', name, typeof conn)
@@ -58,115 +47,106 @@ export class SQLite {
     }
   }
 
-  private async exportDatabaseAsync(name, dbref) {
-    await this.exportDatabaseSQLiteAsync(name, dbref)
-  }
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  public async exportDatabase(name: string, dbref: any, callback: ((v: null) => void)): Promise<void> {
+    try {
+      const conn = this.conn[name]
 
-  private async exportDatabaseSQLiteAsync(name, dbref) {
-    const conn = this.conn[name]
-
-    if (conn === false) {
-      log.debug('DB.Store.exportDatabaseSQLiteAsync: save of', name, 'attempted after close')
-      return
-    }
-
-    if (!conn) {
-      log.debug('DB.Store.exportDatabaseSQLiteAsync: save of', name, 'to unopened database')
-      return
-    }
-
-    await conn.executeTransaction(async () => {
-      const names = (await conn.queryAsync(`SELECT name FROM "${name}"`)).map((coll: { name: string }) => coll.name)
-
-      const parts = []
-      for (const coll of dbref.collections) {
-        const collname = `${name}.${coll.name}`
-        if (coll.dirty || !names.includes(collname)) {
-          parts.push(conn.queryAsync(`REPLACE INTO "${name}" (name, data) VALUES (?, ?)`, [collname, JSON.stringify(coll)]))
-        }
+      if (conn === false) {
+        log.debug('DB.Store.exportDatabaseSQLiteAsync: save of', name, 'attempted after close')
+        return callback(null)
       }
 
-      parts.push(conn.queryAsync(`REPLACE INTO "${name}" (name, data) VALUES (?, ?)`, [
-        name,
-        JSON.stringify({ ...dbref, ...{collections: dbref.collections.map(coll => `${name}.${coll.name}`)} }),
-      ]))
+      if (!conn) {
+        log.debug('DB.Store.exportDatabaseSQLiteAsync: save of', name, 'to unopened database')
+        return callback(null)
+      }
 
-      await Promise.all(parts)
-    })
+      await conn.executeTransaction(async () => {
+        const names = (await conn.queryAsync(`SELECT name FROM "${name}"`)).map((coll: { name: string }) => coll.name)
+
+        const parts = []
+        for (const coll of dbref.collections) {
+          const collname = `${name}.${coll.name}`
+          if (coll.dirty || !names.includes(collname)) {
+            parts.push(conn.queryAsync(`REPLACE INTO "${name}" (name, data) VALUES (?, ?)`, [collname, JSON.stringify(coll)]))
+          }
+        }
+
+        parts.push(conn.queryAsync(`REPLACE INTO "${name}" (name, data) VALUES (?, ?)`, [
+          name,
+          JSON.stringify({ ...dbref, ...{collections: dbref.collections.map(coll => `${name}.${coll.name}`)} }),
+        ]))
+
+        await Promise.all(parts)
+        callback(null)
+      })
+    }
+    catch (err) {
+      callback(err)
+    }
   }
 
   public async loadDatabase(name: string, callback: ((v: null) => void)): Promise<void> {
     try {
-      const db = await this.loadDatabaseAsync(name)
-      callback(db)
+      const conn = await this.openDatabaseSQLiteAsync(name)
+      await conn.queryAsync(`CREATE TABLE IF NOT EXISTS "${name}" (name TEXT PRIMARY KEY NOT NULL, data TEXT NOT NULL)`)
+
+      let db = null
+      const collections: Record<string, any> = {}
+
+      let failed = false
+
+      let rows = 0
+      for (const row of await conn.queryAsync(`SELECT name, data FROM "${name}" ORDER BY name ASC`)) {
+        rows += 1
+        try {
+          if (row.name === name) {
+            db = JSON.parse(row.data)
+          }
+          else {
+            collections[row.name] = JSON.parse(row.data)
+
+            collections[row.name].cloneObjects = true // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
+            collections[row.name].adaptiveBinaryIndices = false // https://github.com/techfort/LokiJS/issues/654
+            collections[row.name].dirty = true
+          }
+        }
+        catch (err) {
+          log.debug(`DB.Store.loadDatabaseSQLiteAsync: failed to load ${name}:`, row.name)
+          failed = true
+        }
+      }
+
+      if (db) {
+        const missing = db.collections.filter(coll => !collections[coll])
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        db.collections = db.collections.map((coll: string) => collections[coll]).filter(coll => coll)
+        if (missing.length) {
+          log.debug(`DB.Store.loadDatabaseSQLiteAsync: could not find ${name}.${missing.join('.')}`)
+        }
+
+      }
+      else if (rows) {
+        log.debug('DB.Store.loadDatabaseSQLiteAsync: could not find metadata for', name, rows)
+        failed = true
+
+      }
+
+      this.conn[name] = conn
+
+      if (failed) {
+        log.debug('DB.Store.loadDatabaseSQLiteAsync failed, returning empty database')
+        callback(null)
+      }
+      else {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        callback(db)
+      }
     }
     catch (err) {
-      log.debug('DB.Store.loadDatabase', name, err)
-      callback(null)
+      callback(err)
     }
-  }
-
-  public async loadDatabaseAsync(name: string): Promise<any> {
-    const db = await this.loadDatabaseSQLiteAsync(name) // always try sqlite first, may be a migration to file
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    if (db) return db
-
-    return null
-  }
-
-  private async loadDatabaseSQLiteAsync(name: string): Promise<any> {
-    const conn = await this.openDatabaseSQLiteAsync(name)
-    await conn.queryAsync(`CREATE TABLE IF NOT EXISTS "${name}" (name TEXT PRIMARY KEY NOT NULL, data TEXT NOT NULL)`)
-
-    let db = null
-    const collections: Record<string, any> = {}
-
-    let failed = false
-
-    let rows = 0
-    for (const row of await conn.queryAsync(`SELECT name, data FROM "${name}" ORDER BY name ASC`)) {
-      rows += 1
-      try {
-        if (row.name === name) {
-          db = JSON.parse(row.data)
-        }
-        else {
-          collections[row.name] = JSON.parse(row.data)
-
-          collections[row.name].cloneObjects = true // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
-          collections[row.name].adaptiveBinaryIndices = false // https://github.com/techfort/LokiJS/issues/654
-          collections[row.name].dirty = true
-        }
-      }
-      catch (err) {
-        log.debug(`DB.Store.loadDatabaseSQLiteAsync: failed to load ${name}:`, row.name)
-        failed = true
-      }
-    }
-
-    if (db) {
-      const missing = db.collections.filter(coll => !collections[coll])
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      db.collections = db.collections.map((coll: string) => collections[coll]).filter(coll => coll)
-      if (missing.length) {
-        log.debug(`DB.Store.loadDatabaseSQLiteAsync: could not find ${name}.${missing.join('.')}`)
-      }
-
-    }
-    else if (rows) {
-      log.debug('DB.Store.loadDatabaseSQLiteAsync: could not find metadata for', name, rows)
-      failed = true
-
-    }
-
-    this.conn[name] = conn
-
-    if (failed) {
-      log.debug('DB.Store.loadDatabaseSQLiteAsync failed, returning empty database')
-      return null
-    }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return db
   }
 
   private async openDatabaseSQLiteAsync(name, fatal = false) {
