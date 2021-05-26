@@ -4,6 +4,7 @@
 
 <overlay id="zotero-better-bibtex-zoteroPane-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <script>
+    var globals = Function('return this')();
     var bbt_zoteropane = null;
   </script>
   <stringbundleset>
@@ -94,19 +95,16 @@
   <script src="chrome://zotero/content/include.js"/>
   <script src="chrome://zotero-better-bibtex/content/better-bibtex.js"/>
   <script>
-    var globals = Function('return this')();
-    Zotero.debug('BBT startup')
-
-    window.addEventListener('load', async function () {
+    window.addEventListener('load', async function() {
       try {
-        Zotero.debug('BBT loading')
+        Zotero.debug('BBT startup')
         await Zotero.BetterBibTeX.load(globals)
-        Zotero.debug('BBT loading zoteroPane')
+        Zotero.debug('BBT started')
+        Zotero.debug('loading ZoteroPane')
         bbt_zoteropane = new Zotero.BetterBibTeX.ZoteroPane(globals)
-        Zotero.debug('BBT running')
-      }
-      catch (err) {
-        Zotero.logError(err)
+        Zotero.debug('ZoteroPane loaded')
+      } catch (err) {
+        Zotero.debug(`loading ZoteroPane error: ${err.message}\n${err.stack ||''}`)
       }
     })
   </script>

@@ -26,9 +26,8 @@
         Zotero.debug('BBT: loading PrefPane')
         await bbt_prefpane.load(globals)
         Zotero.debug('BBT: PrefPane loaded')
-      } 
-      catch (err) {
-        Zotero.logError(err)
+      } catch (err) {
+        Zotero.debug(`BBT: loading PrefPane error: ${err.message}\n${err.stack ||''}`)
       }
     }
   </script>
