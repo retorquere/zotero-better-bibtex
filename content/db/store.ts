@@ -19,28 +19,33 @@ export class Store {
     if (this.storage !== 'sqlite' && this.storage !== 'file') throw new Error(`Unsupported DBStore storage ${this.storage}`)
   }
 
-  public close(name: string, callback: ((v: null) => void)): void {
-    if (this.storage !== 'sqlite') return callback(null)
+  public async close(name: string, callback: ((v: null) => void)): Promise<void> {
+    try {
+      if (this.storage !== 'sqlite') return callback(null)
 
-    if (!this.conn[name]) return callback(null)
+      if (!this.conn[name]) return callback(null)
 
-    const conn = this.conn[name]
-    this.conn[name] = false
+      const conn = this.conn[name]
+      this.conn[name] = false
 
-    this.closeDatabase(conn, name, 'DB.Store.close called')
-      .then(() => {
-        callback(null)
-      })
-      .catch(err => {
-        callback(err)
-      })
+
+      await this.closeDatabase(conn, name, 'DB.Store.close called')
+      callback(null)
+    }
+    catch (err) {
+      callback(err)
+    }
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  public exportDatabase(name: string, dbref: any, callback: ((v: null) => void)): void {
-    this.exportDatabaseAsync(name, dbref)
-      .then(() => callback(null))
-      .catch(callback)
+  public async exportDatabase(name: string, dbref: any, callback: ((v: null) => void)): Promise<void> {
+    try {
+      await this.exportDatabaseAsync(name, dbref)
+      callback(null)
+    }
+    catch (err) {
+      callback(err)
+    }
   }
 
   private async closeDatabase(conn, name, _reason) {
@@ -127,13 +132,15 @@ export class Store {
     await OS.File.writeAtomic(path, JSON.stringify(data), { encoding: 'utf-8', tmpPath: `${path}.tmp`})
   }
 
-  public loadDatabase(name: string, callback: ((v: null) => void)): void {
-    this.loadDatabaseAsync(name)
-      .then(callback)
-      .catch(err => {
-        log.debug('DB.Store.loadDatabase', name, err)
-        callback(null)
-      })
+  public async loadDatabase(name: string, callback: ((v: null) => void)): Promise<void> {
+    try {
+      const db = await this.loadDatabaseAsync(name)
+      callback(db)
+    }
+    catch (err) {
+      log.debug('DB.Store.loadDatabase', name, err)
+      callback(null)
+    }
   }
 
   public async loadDatabaseAsync(name: string): Promise<any> {
