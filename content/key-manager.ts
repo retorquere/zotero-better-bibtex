@@ -224,13 +224,34 @@ export class KeyManager {
     await this.rescan()
 
     if (Preference.citekeySearch) {
-      await ZoteroDB.queryAsync('ATTACH DATABASE ":memory:" AS betterbibtexcitekeys')
-      await ZoteroDB.queryAsync('CREATE TABLE betterbibtexcitekeys.citekeys (itemID PRIMARY KEY, itemKey, citekey)')
-      await Zotero.DB.executeTransaction(async () => {
-        for (const key of this.keys.data) {
-          await ZoteroDB.queryAsync('INSERT INTO betterbibtexcitekeys.citekeys (itemID, itemKey, citekey) VALUES (?, ?, ?)', [ key.itemID, key.itemKey, key.citekey ])
+      const path = OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex-search.sqlite')
+      await Zotero.DB.queryAsync(`ATTACH DATABASE '${path.replace(/'/g, "''")}' AS betterbibtexsearch`)
+      await Zotero.DB.queryAsync('CREATE TABLE IF NOT EXISTS betterbibtexsearch.citekeys (itemID PRIMARY KEY, itemKey UNIQUE, citekey)')
+
+      const match: Record<string, { itemID: number, itemKey: string, citekey: string }> = this.keys.data
+        .reduce((acc: Record<string, { itemID: number, itemKey: string, citekey: string }>, k) => { acc[`${k.itemID}\t${k.itemKey}\t${k.citekey}`] = k; return acc }, {})
+      const remove: string[] = []
+      for (const row of await Zotero.DB.queryAsync('SELECT itemID, itemKey, citekey FROM betterbibtexsearch.citekeys')) {
+        const key = `${row.itemID}\t${row.itemKey}\t${row.citekey}`
+        if (match[key]) {
+          delete match[key]
         }
-      })
+        else {
+          remove.push(`'${row.itemKey}'`)
+        }
+      }
+      const insert = Object.values(match)
+
+      if (remove.length + insert.length) {
+        await Zotero.DB.executeTransaction(async () => {
+          if (remove.length) await Zotero.DB.queryAsync(`DELETE FROM betterbibtexsearch.citekeys WHERE itemKey in (${remove.join(',')})`)
+          if (insert.length) {
+            for (const row of insert) {
+              await ZoteroDB.queryAsync('INSERT INTO betterbibtexsearch.citekeys (itemID, itemKey, citekey) VALUES (?, ?, ?)', [ row.itemID, row.itemKey, row.citekey ])
+            }
+          }
+        })
+      }
 
       const citekeySearchCondition = {
         name: 'citationKey',
@@ -240,7 +261,7 @@ export class KeyManager {
           contains: true,
           doesNotContain: true,
         },
-        table: 'betterbibtexcitekeys.citekeys',
+        table: 'betterbibtexsearch.citekeys',
         field: 'citekey',
         localized: 'Citation Key',
       }
@@ -289,7 +310,7 @@ export class KeyManager {
 
     this.keys.on(['insert', 'update'], async (citekey: { itemID: number, itemKey: any, citekey: any, pinned: any }) => {
       if (Preference.citekeySearch) {
-        await ZoteroDB.queryAsync('INSERT OR REPLACE INTO betterbibtexcitekeys.citekeys (itemID, itemKey, citekey) VALUES (?, ?, ?)', [ citekey.itemID, citekey.itemKey, citekey.citekey ])
+        await ZoteroDB.queryAsync('INSERT OR REPLACE INTO betterbibtexsearch.citekeys (itemID, itemKey, citekey) VALUES (?, ?, ?)', [ citekey.itemID, citekey.itemKey, citekey.citekey ])
       }
 
       // async is just a heap of fun. Who doesn't enjoy a good race condition?
@@ -330,7 +351,7 @@ export class KeyManager {
 
     this.keys.on('delete', async (citekey: { itemID: any }) => {
       if (Preference.citekeySearch) {
-        await ZoteroDB.queryAsync('DELETE FROM betterbibtexcitekeys.citekeys WHERE itemID = ?', [ citekey.itemID ])
+        await ZoteroDB.queryAsync('DELETE FROM betterbibtexsearch.citekeys WHERE itemID = ?', [ citekey.itemID ])
       }
     })
 
