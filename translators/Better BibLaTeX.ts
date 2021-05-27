@@ -287,7 +287,6 @@ export function doExport(): void {
   Zotero.write('\n')
 
   for (const item of Exporter.items) {
-    Zotero.debug(`exporting ${item.citationKey}`)
     const ref = new Reference(item)
 
     if (ref.referencetype === 'incollection' && ref.hasCreator('bookAuthor')) ref.referencetype = 'inbook'
