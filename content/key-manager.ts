@@ -26,6 +26,8 @@ import { patch as $patch$ } from './monkey-patch'
 import { sprintf } from 'sprintf-js'
 import { intToExcelCol } from 'excel-column-name'
 
+type CitekeySearchRecord = { itemID: number, libraryID: number, itemKey: string, citekey: string }
+
 export class KeyManager {
   public keys: any
   public query: {
@@ -226,28 +228,43 @@ export class KeyManager {
     if (Preference.citekeySearch) {
       const path = OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex-search.sqlite')
       await Zotero.DB.queryAsync(`ATTACH DATABASE '${path.replace(/'/g, "''")}' AS betterbibtexsearch`)
-      await Zotero.DB.queryAsync('CREATE TABLE IF NOT EXISTS betterbibtexsearch.citekeys (itemID PRIMARY KEY, itemKey UNIQUE, citekey)')
 
-      const match: Record<string, { itemID: number, itemKey: string, citekey: string }> = this.keys.data
-        .reduce((acc: Record<string, { itemID: number, itemKey: string, citekey: string }>, k) => { acc[`${k.itemID}\t${k.itemKey}\t${k.citekey}`] = k; return acc }, {})
+      // 1829
+      try {
+        // no other way to detect column existence on attached databases
+        await Zotero.DB.valueQueryAsync('SELECT libraryID FROM betterbibtexsearch.citekeys LIMIT 1')
+      }
+      catch (err) {
+        log.debug('dropping betterbibtexsearch.citekeys, assuming libraryID does not exist')
+        await Zotero.DB.queryAsync('DROP TABLE IF EXISTS betterbibtexsearch.citekeys')
+      }
+      await Zotero.DB.queryAsync('CREATE TABLE IF NOT EXISTS betterbibtexsearch.citekeys (itemID PRIMARY KEY, libraryID, itemKey, citekey)')
+
+      const match: Record<string, CitekeySearchRecord> = this.keys.data
+        .reduce((acc: Record<string, CitekeySearchRecord>, k: CitekeySearchRecord) => {
+          acc[`${k.itemID}\t${k.libraryID}\t${k.itemKey}\t${k.citekey}`] = k
+          return acc
+        }, {})
+
       const remove: string[] = []
-      for (const row of await Zotero.DB.queryAsync('SELECT itemID, itemKey, citekey FROM betterbibtexsearch.citekeys')) {
-        const key = `${row.itemID}\t${row.itemKey}\t${row.citekey}`
+      for (const row of await Zotero.DB.queryAsync('SELECT itemID, libraryID, itemKey, citekey FROM betterbibtexsearch.citekeys')) {
+        const key = `${row.itemID}\t${row.libraryID}\t${row.itemKey}\t${row.citekey}`
         if (match[key]) {
           delete match[key]
         }
         else {
-          remove.push(`'${row.itemKey}'`)
+          remove.push(`${row.itemID}`)
         }
       }
       const insert = Object.values(match)
 
       if (remove.length + insert.length) {
         await Zotero.DB.executeTransaction(async () => {
-          if (remove.length) await Zotero.DB.queryAsync(`DELETE FROM betterbibtexsearch.citekeys WHERE itemKey in (${remove.join(',')})`)
+          if (remove.length) await Zotero.DB.queryAsync(`DELETE FROM betterbibtexsearch.citekeys WHERE itemID in (${remove.join(',')})`)
+
           if (insert.length) {
             for (const row of insert) {
-              await ZoteroDB.queryAsync('INSERT INTO betterbibtexsearch.citekeys (itemID, itemKey, citekey) VALUES (?, ?, ?)', [ row.itemID, row.itemKey, row.citekey ])
+              await ZoteroDB.queryAsync('INSERT INTO betterbibtexsearch.citekeys (itemID, libraryID, itemKey, citekey) VALUES (?, ?, ?, ?)', [ row.itemID, row.libraryID, row.itemKey, row.citekey ])
             }
           }
         })
