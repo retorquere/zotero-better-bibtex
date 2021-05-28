@@ -448,7 +448,7 @@ class ZoteroItem {
     magazine_article:   'magazineArticle', // mendeley made-up entry type
     manual:             'report',
     mastersthesis:      'thesis',
-    misc:               'journalArticle',
+    misc:               'document',
     newspaper_article:  'newspaperArticle', // mendeley made-up entry type
     online:             'webpage',
     patent:             'patent',
