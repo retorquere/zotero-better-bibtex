@@ -3,9 +3,7 @@ const path = require('path')
 const shell = require('shelljs')
 const { filePathFilter } = require('file-path-filter')
 const esbuild = require('esbuild')
-const Acorn = require('acorn')
-const Aran = require('aran')
-const Astring = require('astring')
+const {template} = require('putout');
 
 let selected = false
 if (fs.existsSync(path.join(__dirname, '../../.trace.json'))) {
@@ -15,6 +13,34 @@ if (fs.existsSync(path.join(__dirname, '../../.trace.json'))) {
     trace = trace[branch]
     if (trace) selected = filePathFilter(trace)
   }
+}
+
+const logger = template(`Zotero.debug('NAME', arguments)`);
+
+module.exports.fix = (path) => {
+    const {body} = path.node.body;
+    const NAME = getName(path);
+
+    body.unshift(logger({
+        NAME,
+    }));
+};
+
+module.exports.traverse = ({push}) => ({
+    Function(path) {
+        push(path);
+        console.log(path.node.body);
+    }
+});
+
+function getName(path) {
+    if (path.isClassMethod())
+        return path.node.key.name;
+
+    if (path.isFunctionDeclaration())
+        return path.node.id.name;
+
+    return '<undetermined>';
 }
 
 module.exports.trace = ({ logArguments = false, logExceptions = true } = {}) => ({
