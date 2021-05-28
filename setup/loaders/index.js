@@ -125,3 +125,5 @@ module.exports.node_modules = function(dir) {
     }
   }
 }
+
+module.exports.trace = require('./trace').trace
