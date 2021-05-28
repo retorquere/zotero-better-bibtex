@@ -56,9 +56,6 @@
     "test": "test"
   },
   "dependencies": {
-    "acorn": "^8.2.4",
-    "aran": "^3.0.9",
-    "astring": "^1.7.4",
     "citeproc": "^2.4.59",
     "edtf": "^3.1.0",
     "edtfy": "^0.0.8",
@@ -131,6 +128,7 @@
     "process": "^0.11.10",
     "properties-reader": "^2.2.0",
     "pug": "^3.0.2",
+    "putout": "^18.0.0",
     "rimraf": "^3.0.2",
     "shelljs": "^0.8.4",
     "string-template": "^1.0.0",
