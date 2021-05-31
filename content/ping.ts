@@ -1,3 +1,4 @@
+/* eslint-disable no-magic-numbers */
 declare const Zotero: any
 
 type Parameters = {
@@ -17,8 +18,8 @@ export class Pinger {
   private next: number
   private incr: number
 
-  constructor({ start = 0, total, step = 5, name = '', callback }: Parameters) { // eslint-disable-line no-magic-numbers
-    this.incr = 100 / total // eslint-disable-line no-magic-numbers
+  constructor({ start = 0, total, step = 5, name = '', callback }: Parameters) {
+    this.incr = 100 / total
 
     this.name = name
     this.pct = start * this.incr
@@ -40,15 +41,15 @@ export class Pinger {
 
   private emit() {
     if (this.callback) {
-      if (this.name) Zotero.debug(`ping: ${this.name} emit ${Math.max(this.next, 100)}`) // eslint-disable-line no-magic-numbers
-      this.callback(Math.max(this.next, 100)) // eslint-disable-line no-magic-numbers
-      if (this.next > 100) this.callback = null // eslint-disable-line no-magic-numbers
+      if (this.name) Zotero.debug(`ping: ${this.name} emit ${Math.max(this.next, 100)}`)
+      this.callback(Math.max(this.next, 100))
+      if (this.next > 100) this.callback = null
       this.next += this.step
     }
   }
 
   public done(): void {
     if (this.name) Zotero.debug(`ping: ${this.name} done`)
-    if (this.callback && this.pct < this.next) this.callback(this.next)
+    if (this.callback && this.pct < this.next) this.callback(Math.max(this.next, 100)) 
   }
 }
