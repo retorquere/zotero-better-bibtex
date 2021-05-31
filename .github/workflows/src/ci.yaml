@@ -21,7 +21,7 @@ _anchors:
     id: cache
     uses: actions/cache@v2
     env:
-      cache-name: v2
+      cache-name: v3
     with:
       path: |
         ~/.npm
@@ -33,7 +33,7 @@ _anchors:
     run: |
       pip install packaging
       python -m pip install --upgrade pip
-      pip install --upgrade --upgrade-strategy eager -r dev-requirements.txt -e .
+      pip install -r requirements.txt
   install_node_packages: &install_node_packages
     name: install node packages
     uses: pnpm/action-setup@v2
