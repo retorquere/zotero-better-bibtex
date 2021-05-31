@@ -50,6 +50,6 @@ export class Pinger {
 
   public done(): void {
     if (this.name) Zotero.debug(`ping: ${this.name} done`)
-    if (this.callback && this.pct < this.next) this.callback(Math.max(this.next, 100)) 
+    if (this.callback && this.pct < this.next) this.callback(Math.max(this.next, 100))
   }
 }
