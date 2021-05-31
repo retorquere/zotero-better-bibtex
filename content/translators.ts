@@ -445,9 +445,9 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
       if (typeof autoExport === 'number') {
         ping.cache = new Pinger({
+          name: `cache worker ${this.workers.total} auto-export ${autoExport}`,
           start: Object.keys(config.cache).length,
-          // undercount the cache somewhat to hit 100% in the display
-          total: config.items.length * 0.99, // eslint-disable-line no-magic-numbers
+          total: config.items.length,
           callback: pct => Events.emit('cache-rate', autoExport, pct),
         })
       }
