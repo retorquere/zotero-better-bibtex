@@ -26,8 +26,8 @@ _anchors:
       path: |
         ~/.npm
         ~/.pnpm-store
-        ${{ env.pythonLocation }}
-      key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
+        ~/.cache/pip
+      key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
   install_python_packages: &install_python_packages
     name: install python packages
     run: |
