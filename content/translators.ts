@@ -307,6 +307,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           break
 
         case 'done':
+          // Events.emit('export-progress', 100, translator.label, autoExport)
           deferred.resolve(typeof e.data.output === 'boolean' ? '' : e.data.output)
           worker.terminate()
           this.workers.running.delete(id)
