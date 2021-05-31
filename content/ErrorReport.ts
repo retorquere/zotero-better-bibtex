@@ -223,6 +223,7 @@ export class ErrorReport {
       info += `  Zotero: ${key} = ${JSON.stringify(Zotero.Prefs.get(key))}\n`
     }
     info += `Zotero.Debug.enabled: ${Zotero.Debug.enabled}\n`
+    info += `Zotero.Debug.enabled at start: ${Zotero.BetterBibTeX.debugEnabledAtStart}\n`
 
     info += `LocaleDateOrder: ${Zotero.Date.getLocaleDateOrder()}\n`
 

@@ -721,6 +721,11 @@ export class BetterBibTeX {
   private strings: any
   private firstRun: { citekeyFormat: string, dragndrop: boolean, unabbreviate: boolean, strings: boolean }
   private globals: Record<string, any>
+  public debugEnabledAtStart: boolean
+
+  constructor() {
+    this.debugEnabledAtStart = Zotero.Debug.enabled
+  }
 
   public debugEnabled(): boolean {
     return (Zotero.Debug.enabled as boolean)
