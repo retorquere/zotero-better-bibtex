@@ -1,4 +1,4 @@
-// declare const Zotero: any
+declare const Zotero: any
 
 type Parameters = {
   total: number
@@ -24,20 +24,20 @@ export class Pinger {
 
     this.next = Math.floor(this.pct / step) * step
 
-    // Zotero.debug(`ping: start ${JSON.stringify({...this, start, total})}`)
+    Zotero.debug(`ping: start ${JSON.stringify({...this, start, total})}`)
 
     this.emit()
   }
 
   public update(): void {
-    // Zotero.debug(`ping: update ${JSON.stringify(this)}`)
+    Zotero.debug(`ping: update ${JSON.stringify(this)}`)
     this.pct += this.incr
     if (this.pct >= this.next) this.emit()
   }
 
   private emit() {
     if (this.callback) {
-      // Zotero.debug(`ping: emit ${JSON.stringify(this)}`)
+      Zotero.debug(`ping: emit ${JSON.stringify(this)}`)
       this.callback(this.next)
       this.next += this.step
       if (this.next > 100) this.callback = null // eslint-disable-line no-magic-numbers
