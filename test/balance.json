@@ -17,7 +17,7 @@
     },
     "Citekey generation failure #708 and sort references on export #957": 2040,
     "Collected notes": {
-      "msecs": 3470,
+      "msecs": 3480,
       "runs": -71
     },
     "Date export to Better CSL-JSON #360 #811": 1350,
@@ -62,7 +62,7 @@
     "Export 1 references for BibLaTeX to CSL variables only recognized when in lowercase #408": 460,
     "Export 1 references for BibLaTeX to Capitalisation in techreport titles #160": 340,
     "Export 1 references for BibLaTeX to Cite archive documents with BetterBibLaTeX #1799": {
-      "msecs": 490,
+      "msecs": 500,
       "runs": -313
     },
     "Export 1 references for BibLaTeX to Colon in bibtex key #405": 350,
@@ -189,7 +189,7 @@
       "runs": -240
     },
     "Export 1 references for BibTeX to DOI not escaped using postscript #1803": {
-      "msecs": 630,
+      "msecs": 640,
       "runs": -309
     },
     "Export 1 references for BibTeX to Double superscript in title field on export #1217": 400,
@@ -200,7 +200,7 @@
     "Export 1 references for BibTeX to Export of item to Better Bibtex fails for auth3_1 #98": 490,
     "Export 1 references for BibTeX to Export unicode as plain text fails for Vietnamese characters #977": 380,
     "Export 1 references for BibTeX to Exporting \"month = {season}\" for BibTeX #1810": {
-      "msecs": 660,
+      "msecs": 680,
       "runs": -317
     },
     "Export 1 references for BibTeX to Exporting Book Sections as Inbook #1474": {
@@ -331,7 +331,7 @@
     "Export 6 references for BibLaTeX to Better BibLaTeX.stable-keys": 620,
     "Export 8 references for BibLaTeX to Don't title-case sup-subscripts #1037": 660,
     "Export as Collected Notes does not list subcollections #1768": {
-      "msecs": 4660,
+      "msecs": 4670,
       "runs": -256
     },
     "Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825": 990,
@@ -425,17 +425,17 @@
     },
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 372650,
+    "Really Big whopping library": 372360,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 49730,
+      "msecs": 49790,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
     "Square brackets in Publication field (85), and non-pinned keys must change when the pattern does": 450,
-    "Unabbreviate on import #1436-1": 39050,
+    "Unabbreviate on import #1436-1": 39060,
     "Unbalanced vphantom escapes #1043": 760,
     "arXiv identifiers in BibLaTeX export #460": 1180,
     "auto-export": 14370,
@@ -458,7 +458,7 @@
       "runs": -36
     },
     "web_page and other mendeley idiocy": {
-      "msecs": 39130,
+      "msecs": 39200,
       "runs": -239
     }
   },
@@ -762,7 +762,7 @@
       "Identical Pinned keys lost when merging duplicated records #1721"
     ]
   },
-  "runs": 332,
+  "runs": 333,
   "slow": {
     "1": [
       "Export 1 references for BibLaTeX to Cite archive documents with BetterBibLaTeX #1799",
