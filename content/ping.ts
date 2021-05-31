@@ -32,7 +32,7 @@ export class Pinger {
   public update(): void {
     // Zotero.debug(`ping: update ${JSON.stringify(this)}`)
     this.pct += this.incr
-    if (Math.round(this.pct) > this.next) this.emit()
+    if (this.pct >= this.next) this.emit()
   }
 
   private emit() {
@@ -45,8 +45,7 @@ export class Pinger {
     }
   }
 
-  public done(total?: number): void {
-    const pct = typeof total === 'number' ? Math.ceil(total * this.incr) : 100 // eslint-disable-line no-magic-numbers
-    if (this.pct < pct) this.callback(pct)
+  public done(): void {
+    if (this.callback && this.pct < this.next) this.callback(this.next)
   }
 }
