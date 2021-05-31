@@ -160,7 +160,7 @@ class Item {
     if ((item as ZoteroItem).getField) {
       this.itemID = (item as ZoteroItem).id
       this.itemType = Zotero.ItemTypes.getName((item as ZoteroItem).itemTypeID)
-      this.getField = (name: string) => (this.item as ZoteroItem).getField(name, false, true) // eslint-disable-line @typescript-eslint/no-unsafe-return
+      this.getField = (name: string) => (name === 'dateAdded' || name === 'dateModified') ? (this.item as any)[name] : (this.item as ZoteroItem).getField(name, false, true) // eslint-disable-line @typescript-eslint/no-unsafe-return
       this.creators = (item as ZoteroItem).getCreatorsJSON()
       this.libraryID = item.libraryID
       this.title = (item as ZoteroItem).getField('title', false, true) as string
@@ -585,6 +585,15 @@ class PatternFormatter {
 
   private padYear(year: string, length): string {
     return year ? year.replace(/[0-9]+/, y => y.length >= length ? y : (`0000${y}`).slice(-length)): ''
+  }
+
+  /** transforms date/time to local time. Mainly useful for dateAdded and dateModified as it requires an ISO-formatted input. */
+  public _local_time(value: string) {
+    const m = value.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})[ T]([0-9]{2}):([0-9]{2}):([0-9]{2})Z?$/)
+    if (!m) return value
+    const date = new Date(`${value}Z`)
+    date.setMinutes(date.getMinutes() - date.getTimezoneOffset())
+    return date.toISOString().replace('.000Z', '').replace('T', ' ')
   }
 
   /** formats date as by replacing y, m and d in the format */

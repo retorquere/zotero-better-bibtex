@@ -235,7 +235,7 @@ export class KeyManager {
         await Zotero.DB.valueQueryAsync('SELECT libraryID FROM betterbibtexsearch.citekeys LIMIT 1')
       }
       catch (err) {
-        log.debug('dropping betterbibtexsearch.citekeys, assuming libraryID does not exist')
+        log.debug(`dropping betterbibtexsearch.citekeys, assuming libraryID does not exist: ${err}`)
         await Zotero.DB.queryAsync('DROP TABLE IF EXISTS betterbibtexsearch.citekeys')
       }
       await Zotero.DB.queryAsync('CREATE TABLE IF NOT EXISTS betterbibtexsearch.citekeys (itemID PRIMARY KEY, libraryID, itemKey, citekey)')
