@@ -32,8 +32,9 @@ jobs:
         path: |
           ~/.npm
           ~/.pnpm-store
-          ~/.cache/pip
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
+          ~/.nocache/pip
+          ${{ env.pythonLocation }}
+        key: ${{ runner.os }}-build-${{ env.pythonLocation }}-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
     - name: install python packages
       run: |
         pip install packaging
@@ -93,8 +94,9 @@ jobs:
         path: |
           ~/.npm
           ~/.pnpm-store
-          ~/.cache/pip
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
+          ~/.nocache/pip
+          ${{ env.pythonLocation }}
+        key: ${{ runner.os }}-build-${{ env.pythonLocation }}-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
     - name: install python packages
       run: |
         pip install packaging
@@ -169,8 +171,9 @@ jobs:
         path: |
           ~/.npm
           ~/.pnpm-store
-          ~/.cache/pip
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
+          ~/.nocache/pip
+          ${{ env.pythonLocation }}
+        key: ${{ runner.os }}-build-${{ env.pythonLocation }}-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
     - name: install python packages
       run: |
         pip install packaging
