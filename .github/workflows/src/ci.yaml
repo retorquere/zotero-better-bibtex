@@ -21,7 +21,7 @@ _anchors:
     id: cache
     uses: actions/cache@v2
     env:
-      cache-name: v1
+      cache-name: v2
     with:
       path: |
         ~/.npm
