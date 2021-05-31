@@ -336,6 +336,7 @@ export const AutoExport = new class CAutoExport { // eslint-disable-line @typesc
   constructor() {
     this.progress = new Map
     this.cacherate = new Map
+
     Events.on('libraries-changed', ids => this.schedule('library', ids))
     Events.on('libraries-removed', ids => this.remove('library', ids))
     Events.on('collections-changed', ids => this.schedule('collection', ids))
@@ -344,6 +345,7 @@ export const AutoExport = new class CAutoExport { // eslint-disable-line @typesc
       if (typeof ae === 'number') this.progress.set(ae, percent)
     })
     Events.on('cache-rate', (ae, percent) => { this.cacherate.set(ae, percent) })
+    Events.on('cache-reset', () => { this.cacherate.forEach((_value, ae) => this.cacherate.set(ae, 0)) })
   }
 
   public async init() {
@@ -355,6 +357,11 @@ export const AutoExport = new class CAutoExport { // eslint-disable-line @typesc
     for (const ae of this.db.find({ status: { $ne: 'done' } })) {
       queue.add(ae)
     }
+
+    this.db.on(['delete'], ae => {
+      this.progress.delete(ae.$loki)
+      this.cacherate.delete(ae.$loki)
+    })
 
     if (Preference.autoExport === 'immediate') { queue.resume() }
   }
@@ -396,8 +403,6 @@ export const AutoExport = new class CAutoExport { // eslint-disable-line @typesc
 }
 
 Events.on('preference-changed', pref => {
-  AutoExport.cacherate = new Map
-
   if (pref !== 'autoExport') return
 
   switch (Preference.autoExport) {
