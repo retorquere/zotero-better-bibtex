@@ -26,16 +26,14 @@ _anchors:
       path: |
         ~/.npm
         ~/.pnpm-store
-        ~/.cache/pip
-      key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
-      restore-keys: |
-        ${{ runner.os }}-build-${{ env.cache-name }}-
+        ${{ env.pythonLocation }}
+      key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
   install_python_packages: &install_python_packages
     name: install python packages
     run: |
       pip install packaging
       python -m pip install --upgrade pip
-      if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      pip install --upgrade --upgrade-strategy eager -r dev-requirements.txt -e .
   install_node_packages: &install_node_packages
     name: install node packages
     uses: pnpm/action-setup@v2

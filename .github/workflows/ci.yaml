@@ -32,15 +32,13 @@ jobs:
         path: |
           ~/.npm
           ~/.pnpm-store
-          ~/.cache/pip
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ env.pythonLocation }}
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
     - name: install python packages
       run: |
         pip install packaging
         python -m pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        pip install --upgrade --upgrade-strategy eager -r dev-requirements.txt -e .
     - name: install node packages
       uses: pnpm/action-setup@v2
       with:
@@ -95,15 +93,13 @@ jobs:
         path: |
           ~/.npm
           ~/.pnpm-store
-          ~/.cache/pip
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ env.pythonLocation }}
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
     - name: install python packages
       run: |
         pip install packaging
         python -m pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        pip install --upgrade --upgrade-strategy eager -r dev-requirements.txt -e .
 
     - name: install ${{ matrix.client }} + beta
       run: |
@@ -173,15 +169,13 @@ jobs:
         path: |
           ~/.npm
           ~/.pnpm-store
-          ~/.cache/pip
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ env.pythonLocation }}
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
     - name: install python packages
       run: |
         pip install packaging
         python -m pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        pip install --upgrade --upgrade-strategy eager -r dev-requirements.txt -e .
     - name: install node packages
       uses: pnpm/action-setup@v2
       with:
