@@ -331,11 +331,9 @@ const queue = new class TaskQueue {
 export const AutoExport = new class CAutoExport { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public db: any
   public progress: Map<number, number>
-  public cacherate: Map<number, number>
 
   constructor() {
     this.progress = new Map
-    this.cacherate = new Map
 
     Events.on('libraries-changed', ids => this.schedule('library', ids))
     Events.on('libraries-removed', ids => this.remove('library', ids))
@@ -344,8 +342,6 @@ export const AutoExport = new class CAutoExport { // eslint-disable-line @typesc
     Events.on('export-progress', (percent, _translator, ae) => {
       if (typeof ae === 'number') this.progress.set(ae, percent)
     })
-    Events.on('cache-rate', (ae, percent) => { this.cacherate.set(ae, percent) })
-    Events.on('cache-reset', () => { this.cacherate.forEach((_value, ae) => this.cacherate.set(ae, 0)) })
   }
 
   public async init() {
@@ -360,7 +356,6 @@ export const AutoExport = new class CAutoExport { // eslint-disable-line @typesc
 
     this.db.on(['delete'], ae => {
       this.progress.delete(ae.$loki)
-      this.cacherate.delete(ae.$loki)
     })
 
     if (Preference.autoExport === 'immediate') { queue.resume() }
@@ -399,6 +394,24 @@ export const AutoExport = new class CAutoExport { // eslint-disable-line @typesc
 
   public run(id) {
     queue.run(id).catch(err => log.error('AutoExport.run:', err))
+  }
+
+  public async cacheRate($loki: number): number {
+    const ae = this.autoexports.get($loki)
+    let itemIDs: number[]
+
+    switch (ae.type) {
+      case 'collection':
+        itemIDs = (await Zotero.Collections.getAsync(ae.id)).getChildItems(true)
+        break
+      case 'library':
+        itemIDs = await Zotero.Items.getAll(ae.id, false, false, true)
+        break
+    }
+
+    if (itemIDs.length === 0) return 100
+
+    const serialized = this.cache.find({ itemID: { $in: itemIDs } }).length
   }
 }
 
