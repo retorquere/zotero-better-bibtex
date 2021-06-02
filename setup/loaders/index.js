@@ -153,7 +153,11 @@ module.exports.trace = {
       console.log(typeof source.code)
 
       return {
-        contents: putout(source.code, { plugins: require('./trace') }),
+        contents: putout(source.code, {
+          plugins: [
+            ['trace', require('./trace')],
+          ],
+        }),
         loader: 'js',
       }
     })
