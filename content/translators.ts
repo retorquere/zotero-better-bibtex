@@ -329,14 +329,14 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
           if (cached) {
             // this should not happen?
-            log.debug('cache-rate: +0')
+            log.debug('cache-rate: +0?')
             cached.reference = reference
             cached.metadata = metadata
             cached = cache.update(cached)
 
           }
           else {
-            log.debug('cache-rate: +1')
+            // log.debug('cache-rate: +1')
             cache.insert({...selector, reference, metadata})
           }
           break
