@@ -27,6 +27,7 @@ class Cache extends Loki {
     if (!this.initialized) return
 
     log.debug('cache drop:', reason)
+    Events.emit('cache-reset')
 
     for (const coll of this.collections) {
       coll.removeDataOnly()
@@ -158,6 +159,7 @@ Events.on('preference-changed', pref => {
 })
 Events.on('items-changed', ids => {
   Zotero.BetterBibTeX.loaded.then(() => { DB.remove(ids, 'items-changed') })
+  DB.remove(ids, 'items-changed')
 })
 
 // cleanup

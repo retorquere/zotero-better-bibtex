@@ -721,6 +721,11 @@ export class BetterBibTeX {
   private strings: any
   private firstRun: { citekeyFormat: string, dragndrop: boolean, unabbreviate: boolean, strings: boolean }
   private globals: Record<string, any>
+  public debugEnabledAtStart: boolean
+
+  constructor() {
+    this.debugEnabledAtStart = Zotero.Debug.enabled
+  }
 
   public debugEnabled(): boolean {
     return (Zotero.Debug.enabled as boolean)
@@ -887,7 +892,7 @@ export class BetterBibTeX {
     Events.emit('loaded')
 
     Events.on('export-progress', (percent: number, translator: string) => {
-      if (percent < 100) { // eslint-disable-line no-magic-numbers
+      if (percent && percent < 100) { // eslint-disable-line no-magic-numbers
         document.getElementById('better-bibtex-progress').hidden = false
         const progressmeter = (document.getElementById('better-bibtex-progress-meter') as unknown as XUL.ProgressMeter)
         progressmeter.value = Math.abs(percent)

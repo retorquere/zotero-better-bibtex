@@ -21,21 +21,20 @@ _anchors:
     id: cache
     uses: actions/cache@v2
     env:
-      cache-name: v1
+      cache-name: v3
     with:
       path: |
         ~/.npm
         ~/.pnpm-store
-        ~/.cache/pip
-      key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
-      restore-keys: |
-        ${{ runner.os }}-build-${{ env.cache-name }}-
+        ~/.nocache/pip
+        ${{ env.pythonLocation }}
+      key: ${{ runner.os }}-build-${{ env.pythonLocation }}-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
   install_python_packages: &install_python_packages
     name: install python packages
     run: |
       pip install packaging
       python -m pip install --upgrade pip
-      if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      pip install -r requirements.txt
   install_node_packages: &install_node_packages
     name: install node packages
     uses: pnpm/action-setup@v2
@@ -103,6 +102,11 @@ jobs:
         sudo apt-get update
         sudo apt-get install ${{ matrix.client }} ${{ matrix.client }}-beta
 
+    # fast test
+    - if: contains(github.event.commits[0].message, '[fast-test]')
+      run: echo "##[set-output name=this;]--test-this"
+      id: test
+
     # needs logs/logs to have them show up as logs in the artifact... no idea why
     - name: Run headless test
       uses: GabrielBB/xvfb-action@v1
@@ -110,7 +114,7 @@ jobs:
       env:
         PYTHONUNBUFFERED: true
       with:
-        run: ./test/behave --client ${{ matrix.client }} --logs logs/logs --format travis --bin ${{ matrix.bin }}
+        run: ./test/behave --client ${{ matrix.client }} --logs logs/logs --format travis --bin ${{ matrix.bin }} ${{ steps.test.outputs.this }}
 
     - uses: actions/upload-artifact@v2
       if: ${{ failure() }}
