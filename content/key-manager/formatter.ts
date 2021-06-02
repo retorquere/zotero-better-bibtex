@@ -386,7 +386,7 @@ class PatternFormatter {
   /** returns the journal abbreviation, or, if not found, the journal title, If 'automatic journal abbreviation' is enabled in the BBT settings,
    * it will use the same abbreviation filter Zotero uses in the wordprocessor integration. You might want to use the `abbr` filter on this.
    */
-  public $journal() { return JournalAbbrev.get(this.item.item, true) || this.item.getField('publicationTitle') } // eslint-disable-line @typescript-eslint/no-unsafe-return
+  public $journal() { return JournalAbbrev.get(this.item, true) || this.item.getField('publicationTitle') } // eslint-disable-line @typescript-eslint/no-unsafe-return
 
   /** The last name of up to N authors. If there are more authors, "EtAl" is appended. */
   public $authors(onlyEditors: boolean, withInitials: boolean, joiner: string, n?:number) {
