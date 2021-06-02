@@ -2,6 +2,7 @@ name: automated tests
 
 on:
   push: null
+  pull_request: null
   schedule:
   - cron: 0 0 * * *
 
