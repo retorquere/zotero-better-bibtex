@@ -328,12 +328,15 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           let cached = cache.findOne($and(selector))
 
           if (cached) {
+            // this should not happen?
+            log.debug('cache-rate: +0')
             cached.reference = reference
             cached.metadata = metadata
             cached = cache.update(cached)
 
           }
           else {
+            log.debug('cache-rate: +1')
             cache.insert({...selector, reference, metadata})
           }
           break
@@ -398,7 +401,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       total: items.length * (translator.label.includes('CSL') ? 2 : 1),
       callback: pct => Events.emit('export-progress', -pct, translator.label, autoExport),
     })
-    log.debug('starting prep')
+    log.debug('cache-rate: starting prep')
     // use a loop instead of map so we can await for beachball protection
     for (const item of items) {
       config.items.push(Serializer.fast(item))
@@ -415,7 +418,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       log.debug('export to', job.path, 'started at', job.started, 'canceled')
       return ''
     }
-    log.debug('prep done')
+    log.debug('cache-rate: prep done')
 
     if (this.byId[translatorID].configOptions?.getCollections) {
       config.collections = collections.map(collection => {
@@ -427,7 +430,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     // pre-fetch cache
-    log.debug('load cache')
+    log.debug('cache-rate: load cache')
     if (cache) {
       const query = cacheSelector(config.items.map(item => item.itemID), displayOptions, config.preferences)
 
@@ -444,7 +447,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       cache.cloneObjects = cloneObjects
       cache.dirty = true
     }
-    log.debug('cache loaded')
 
     // pre-fetch CSL serializations
     // TODO: I should probably cache these
@@ -456,6 +458,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       }
     }
     prepare.done()
+    log.debug('cache-rate: cache loaded')
 
     // if the average startup time is greater than the autoExportDelay, bump up the delay to prevent stall-cascades
     this.workers.startup += Math.ceil((Date.now() - start) / 1000) // eslint-disable-line no-magic-numbers

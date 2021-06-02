@@ -277,7 +277,7 @@ const queue = new class TaskQueue {
     }
 
     ae.status = 'done'
-    log.debug('ae done')
+    log.debug('auto-export done')
     this.autoexports.update(ae)
   }
 
@@ -399,7 +399,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
   }
 
   public async cached($loki) {
-    log.debug('calculating cache rate for', $loki)
+    log.debug('cache-rate: calculating cache rate for', $loki)
     const start = Date.now()
     const ae = this.db.get($loki)
 
@@ -430,7 +430,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
       export: Cache.getCollection(Translators.byId[ae.translatorID].label).find(cacheSelector([...itemIDs], options, prefs)).length,
     }
 
-    log.debug('cache rate for', $loki, {...cached, items: itemIDs.size}, 'took', Date.now() - start)
+    log.debug('cache-rate: cache rate for', $loki, {...cached, items: itemIDs.size}, 'took', Date.now() - start)
     return Math.min(Math.round((100 * (cached.serialized + cached.export)) / (itemIDs.size * 2)), 100) // eslint-disable-line no-magic-numbers
   }
 
