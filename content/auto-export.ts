@@ -399,6 +399,8 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
   }
 
   public async cached($loki) {
+    log.debug('calculating cache rate for', $loki)
+    const start = Date.now()
     const ae = this.db.get($loki)
 
     const itemTypeIDs: number[] = ['attachment', 'note', 'annotation'].map(type => {
@@ -427,8 +429,8 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
       serialized: Cache.getCollection('itemToExportFormat').find({ itemID: { $in: [...itemIDs] } }).length,
       export: Cache.getCollection(Translators.byId[ae.translatorID].label).find(cacheSelector([...itemIDs], options, prefs)).length,
     }
-    log.debug('ae cache:', {...cached, items: itemIDs.size})
 
+    log.debug('cache rate for', $loki, {...cached, items: itemIDs.size}, 'took', Date.now() - start)
     return Math.min(Math.round((100 * (cached.serialized + cached.export)) / (itemIDs.size * 2)), 100) // eslint-disable-line no-magic-numbers
   }
 
