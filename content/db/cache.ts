@@ -10,6 +10,8 @@ import * as translators from '../../gen/translators.json'
 import { override } from '../prefs-meta'
 import type { Preferences } from '../../gen/preferences'
 
+const METADATA = 'Better BibTeX metadata'
+
 class Cache extends Loki {
   private initialized = false
 
@@ -65,7 +67,7 @@ class Cache extends Loki {
     if (coll.where(o => typeof o.legacy === 'boolean').length) this.drop(coll, 'legacy cache')
 
 
-    clearOnUpgrade(coll, 'Zotero', Zotero.version)
+    this.clearOnUpgrade(coll, 'Zotero', Zotero.version)
 
     // this reaps unused cache entries -- make sure that cacheFetchs updates the object
     //                  secs    mins  hours days
@@ -127,10 +129,31 @@ class Cache extends Loki {
         }
       }
 
-      clearOnUpgrade(coll, 'BetterBibTeX', version)
+      this.clearOnUpgrade(coll, 'BetterBibTeX', version)
     }
 
     this.initialized = true
+  }
+
+  private clearOnUpgrade(coll, property, current) {
+    const dbVersion = (coll.getTransform(METADATA) || [{value: {}}])[0].value[property]
+    if (current && dbVersion === current) return
+
+    const drop = !Preference.retainCache
+    const msg = drop ? { dropping: 'dropping', because: 'because' } : { dropping: 'keeping', because: 'even though' }
+    if (dbVersion) {
+      Zotero.debug(`:Cache:${msg.dropping} cache ${coll.name} ${msg.because} ${property} went from ${dbVersion} to ${current}`)
+    }
+    else {
+      Zotero.debug(`:Cache:${msg.dropping} cache ${coll.name} ${msg.because} ${property} was not set (current: ${current})`)
+    }
+
+    if (drop) this.drop(coll, 'clear on upgrade')
+
+    coll.setTransform(METADATA, [{
+      type: METADATA,
+      value : { [property]: current },
+    }])
   }
 }
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
@@ -138,29 +161,6 @@ export const DB = new Cache('cache', { // eslint-disable-line @typescript-eslint
   autosave: true,
   adapter: new File(),
 })
-
-const METADATA = 'Better BibTeX metadata'
-
-function clearOnUpgrade(coll, property, current) {
-  const dbVersion = (coll.getTransform(METADATA) || [{value: {}}])[0].value[property]
-  if (current && dbVersion === current) return
-
-  const drop = !Preference.retainCache
-  const msg = drop ? { dropping: 'dropping', because: 'because' } : { dropping: 'keeping', because: 'even though' }
-  if (dbVersion) {
-    Zotero.debug(`:Cache:${msg.dropping} cache ${coll.name} ${msg.because} ${property} went from ${dbVersion} to ${current}`)
-  }
-  else {
-    Zotero.debug(`:Cache:${msg.dropping} cache ${coll.name} ${msg.because} ${property} was not set (current: ${current})`)
-  }
-
-  if (drop) this.drop(coll, 'clear on upgrade')
-
-  coll.setTransform(METADATA, [{
-    type: METADATA,
-    value : { [property]: current },
-  }])
-}
 
 // the preferences influence the output way too much, no keeping track of that
 Events.on('preference-changed', pref => {
