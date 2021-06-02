@@ -19,6 +19,7 @@ const namespace = 'http://retorque.re/zotero-better-bibtex/'
 class AutoExportPane {
   private label: { [key: string]: string }
   private globals: Record<string, any>
+  private cacherate: Record<number, number> = {}
 
   constructor(globals: Record<string, any>) {
     this.globals = globals
@@ -89,6 +90,7 @@ class AutoExportPane {
 
       tab.setAttribute('label', `${{ library: '\ud83d\udcbb', collection: '\ud83d\udcc2' }[ae.type]} ${this.name(ae, 'short')}`)
 
+      const progress = AutoExport.progress.get(ae.$loki)
       for (const node of Array.from(tabpanel.querySelectorAll('[*|ae-field]'))) {
         const field = (node as Element).getAttributeNS(namespace, 'ae-field')
 
@@ -104,20 +106,12 @@ class AutoExportPane {
             break
 
           case 'status':
-            // eslint-disable-next-line no-case-declarations
-            const progress = AutoExport.progress.get(ae.$loki)
             if (ae.status === 'running' && Preference.workersMax && typeof progress === 'number') {
               (node as XUL.Textbox).value = progress < 0 ? `${this.label.preparing} ${-progress}%` : `${progress}%`
             }
             else {
               (node as XUL.Textbox).value = this.label[ae.status]
             }
-            break
-
-          case 'cacherate':
-            // eslint-disable-next-line no-case-declarations
-            const cacherate = AutoExport.cacherate.get(ae.$loki);
-            (node as XUL.Textbox).value = `${typeof cacherate === 'number' ? cacherate : '? '}%`
             break
 
           case 'updated':
@@ -152,6 +146,10 @@ class AutoExportPane {
             (node as XUL.Menulist).value = ae[field]
             break
 
+          case 'cacherate':
+            (node as XUL.Textbox).value = typeof this.cacherate[ae.$loki] === 'number' ? `${this.cacherate[ae.$loki]}%`: '? %'
+            break
+
           default:
             throw new Error(`Unexpected field in refresh: ${field}`)
         }
@@ -171,6 +169,19 @@ class AutoExportPane {
   public run(node) {
     AutoExport.run(parseInt(node.getAttributeNS(namespace, 'ae-id')))
     this.refresh()
+  }
+
+  public async refreshCacheRate(node) {
+    try {
+      const $loki = parseInt(node.getAttributeNS(namespace, 'ae-id'))
+      this.cacherate[$loki] = await AutoExport.cached($loki)
+      log.debug('cacherate:', this.cacherate)
+      this.refresh()
+    }
+    catch (err) {
+      log.error('could not refresh cacherate:', err)
+      this.cacherate = {}
+    }
   }
 
   public edit(node) {

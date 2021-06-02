@@ -285,7 +285,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       autoExport,
     }
 
-    const ping: { prepare?: Pinger, cache?: Pinger } = {}
     let items: any[] = []
     worker.onmessage = (e: { data: Translator.Worker.Message }) => {
       switch (e.data?.kind) {
@@ -307,7 +306,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           break
 
         case 'done':
-          // Events.emit('export-progress', 100, translator.label, autoExport)
+          Events.emit('export-progress', 100, translator.label, autoExport) // eslint-disable-line no-magic-numbers
           deferred.resolve(typeof e.data.output === 'boolean' ? '' : e.data.output)
           worker.terminate()
           this.workers.running.delete(id)
@@ -336,7 +335,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           }
           else {
             cache.insert({...selector, reference, metadata})
-            if (ping.cache) ping.cache.update()
           }
           break
 
@@ -396,10 +394,11 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     let worked = Date.now()
     config.items = []
-    ping.prepare = new Pinger({
+    const prepare = new Pinger({
       total: items.length * (translator.label.includes('CSL') ? 2 : 1),
       callback: pct => Events.emit('export-progress', -pct, translator.label, autoExport),
     })
+    log.debug('starting prep')
     // use a loop instead of map so we can await for beachball protection
     for (const item of items) {
       config.items.push(Serializer.fast(item))
@@ -410,12 +409,13 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         worked = Date.now()
       }
 
-      ping.prepare.update()
+      prepare.update()
     }
     if (job.path && job.canceled) {
       log.debug('export to', job.path, 'started at', job.started, 'canceled')
       return ''
     }
+    log.debug('prep done')
 
     if (this.byId[translatorID].configOptions?.getCollections) {
       config.collections = collections.map(collection => {
@@ -427,6 +427,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     // pre-fetch cache
+    log.debug('load cache')
     if (cache) {
       const query = cacheSelector(config.items.map(item => item.itemID), displayOptions, config.preferences)
 
@@ -442,29 +443,19 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       }, {})
       cache.cloneObjects = cloneObjects
       cache.dirty = true
-
-      if (typeof autoExport === 'number') {
-        ping.cache = new Pinger({
-          name: `cache worker ${this.workers.total} auto-export ${autoExport}`,
-          start: Object.keys(config.cache).length,
-          total: config.items.length,
-          callback: pct => Events.emit('cache-rate', autoExport, pct),
-        })
-      }
     }
+    log.debug('cache loaded')
 
     // pre-fetch CSL serializations
     // TODO: I should probably cache these
     if (translator.label.includes('CSL')) {
       for (const item of config.items) {
         // if there's a cached item, we don't need a fresh CSL item since we're not regenerating it anyhow
-        if (config.cache[item.itemID]) continue
-
-        config.cslItems[item.itemID] = Zotero.Utilities.itemToCSLJSON(item)
-        ping.prepare.update()
+        if (!config.cache[item.itemID]) config.cslItems[item.itemID] = Zotero.Utilities.itemToCSLJSON(item)
+        prepare.update()
       }
     }
-    ping.prepare.done()
+    prepare.done()
 
     // if the average startup time is greater than the autoExportDelay, bump up the delay to prevent stall-cascades
     this.workers.startup += Math.ceil((Date.now() - start) / 1000) // eslint-disable-line no-magic-numbers

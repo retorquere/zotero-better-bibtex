@@ -892,13 +892,15 @@ export class BetterBibTeX {
     Events.emit('loaded')
 
     Events.on('export-progress', (percent: number, translator: string) => {
+      const preparing = percent < 0 ? this.getString('Preferences.auto-export.status.preparing') : ''
+      percent = Math.abs(percent)
       if (percent && percent < 100) { // eslint-disable-line no-magic-numbers
         document.getElementById('better-bibtex-progress').hidden = false
         const progressmeter = (document.getElementById('better-bibtex-progress-meter') as unknown as XUL.ProgressMeter)
         progressmeter.value = Math.abs(percent)
 
         const label = (document.getElementById('better-bibtex-progress-label') as unknown as XUL.Label)
-        label.value = `${percent < 0 ? this.getString('Preferences.auto-export.status.preparing') : ''} ${translator}`.trim()
+        label.value = `${preparing} ${translator}`.trim()
       }
       else {
         document.getElementById('better-bibtex-progress').hidden = true

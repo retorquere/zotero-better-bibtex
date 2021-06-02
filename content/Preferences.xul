@@ -747,7 +747,6 @@
                         <label>&better-bibtex.Preferences.auto-export.fields.error;:</label><textbox class="plain" readonly="true" value="" bbt:ae-field="error" bbt:ae-id=""/>
                       </row>
                       <row>
-                         <label>&better-bibtex.Preferences.auto-export.fields.cached;:</label><textbox class="plain" readonly="true" value="" bbt:ae-field="cacherate" bbt:ae-id=""/>
                        </row>
                     </rows>
                   </grid>
@@ -830,6 +829,8 @@
                   <hbox>
                     <button label="&better-bibtex.Preferences.auto-export.remove;" bbt:ae-id="" oncommand="bbt_prefpane.autoexport.remove(event.target)"/>
                     <button label="&better-bibtex.Preferences.auto-export.run;" bbt:ae-id="" oncommand="bbt_prefpane.autoexport.run(event.target)"/>
+                    <button label="&better-bibtex.Preferences.auto-export.fields.cached;:" bbt:ae-id="" oncommand="bbt_prefpane.autoexport.refreshCacheRate(event.target)"/>
+                    <textbox class="plain" readonly="true" value="" bbt:ae-field="cacherate" bbt:ae-id=""/>
                   </hbox>
                 </tabpanel>
               </tabpanels>

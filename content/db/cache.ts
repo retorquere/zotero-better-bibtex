@@ -27,11 +27,15 @@ class Cache extends Loki {
     if (!this.initialized) return
 
     log.debug('cache drop:', reason)
-    Events.emit('cache-reset')
 
     for (const coll of this.collections) {
-      coll.removeDataOnly()
+      this.drop(coll, reason)
     }
+  }
+
+  private drop(coll: any, reason: string) {
+    log.debug(`dropping cache.${coll.name}:`, reason)
+    coll.removeDataOnly()
   }
 
   public async init() {
@@ -55,9 +59,11 @@ class Cache extends Loki {
         additionalProperties: false,
       },
     })
+    log.debug('cache.itemToExportFormat:', coll.data.length)
 
     // old cache, drop
-    if (coll.where(o => typeof o.legacy === 'boolean').length) coll.removeDataOnly()
+    if (coll.where(o => typeof o.legacy === 'boolean').length) this.drop(coll, 'legacy cache')
+
 
     clearOnUpgrade(coll, 'Zotero', Zotero.version)
 
@@ -102,19 +108,22 @@ class Cache extends Loki {
         ttl,
         ttlInterval,
       })
+      log.debug(`cache.${coll.name}:`, coll.data.length)
 
       // old cache, drop
       if (coll.findOne({ [override.names[0]]: {$eq: undefined} })) {
-        coll.removeDataOnly()
+        this.drop(coll, 'legacy cache without overrides')
       }
       // how did this get in here? #1809
       else if (coll.data.find(rec => !rec.$loki)) {
-        coll.removeDataOnly()
+        this.drop(coll, 'entries without id')
       }
       else {
         // should have been dropped after object change/delete
-        for (const outdated of coll.data.filter(item => !modified[item.itemID] || modified[item.itemID] >= (item.meta?.updated || item.meta?.created || 0))) {
-          coll.remove(outdated)
+        const outdated = coll.data.filter(item => !modified[item.itemID] || modified[item.itemID] >= (item.meta?.updated || item.meta?.created || false))
+        if (outdated.length) log.debug('removing', outdated.length, 'mis-cached items')
+        for (const item of outdated) {
+          coll.remove(item)
         }
       }
 
@@ -145,7 +154,7 @@ function clearOnUpgrade(coll, property, current) {
     Zotero.debug(`:Cache:${msg.dropping} cache ${coll.name} ${msg.because} ${property} was not set (current: ${current})`)
   }
 
-  if (drop) coll.removeDataOnly()
+  if (drop) this.drop(coll, 'clear on upgrade')
 
   coll.setTransform(METADATA, [{
     type: METADATA,
@@ -167,7 +176,7 @@ if (DB.getCollection('cache')) { DB.removeCollection('cache') }
 if (DB.getCollection('serialized')) { DB.removeCollection('serialized') }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function selector(itemID: number | number[], options: any, prefs: Preferences) {
+export function selector(itemID: number | number[], options: any, prefs: Partial<Preferences>) {
   const query = {
     exportNotes: !!options.exportNotes,
     useJournalAbbreviation: !!options.useJournalAbbreviation,
