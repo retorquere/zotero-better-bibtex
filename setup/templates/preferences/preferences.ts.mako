@@ -39,6 +39,17 @@ export const Preference = new class PreferenceManager {
 
     // migrate ancient keys
     let old, key
+    if ((old = Zotero.Prefs.get(key = '${prefix}quickCopyMode')) === 'orgmode_citekey') {
+      Zotero.Prefs.set(key, 'orgmode')
+      Zotero.Prefs.set('${prefix}quickCopyOrgMode', 'citationkey')
+    }
+    if ((old = Zotero.Prefs.get(key = '${prefix}quickCopyMode')) === 'selectLink_citekey') {
+      Zotero.Prefs.set(key, 'selectlink')
+      Zotero.Prefs.set('${prefix}quickCopySelectLink', 'citationkey')
+    }
+    if ((old = Zotero.Prefs.get(key = '${prefix}quickCopyMode')) === 'selectLink') {
+      Zotero.Prefs.set(key, 'selectlink')
+    }
     if (typeof (old = Zotero.Prefs.get(key = '${prefix}workers')) === 'number') {
       Zotero.Prefs.clear(key)
       Zotero.Prefs.set('${prefix}workersMax', 1)

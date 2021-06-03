@@ -56,14 +56,12 @@ Options:
 * LaTeX citation
 * Cite Keys
 * Pandoc citation
-* Org-mode citekey select link
-* Org-mode Zotero select link
+* Org-mode select link
 * org-ref citation
 * RTF Scan marker
 * Roam Cite Key
 * Atom (https://atom.io/packages/zotero-citations)
 * GitBook
-* Citekey select link
 * Zotero select link
 * Eta template
 
@@ -78,6 +76,28 @@ Used for drag-and-drop/quick copy citations in `LaTeX` format. Set the desired L
 default: `no`
 
 Used for drag-and-drop/quick copy citations in `Pandoc` format. You can use this option to select whether you want to have these pandoc citations surrounded with brackets or not.
+
+#### Org-mode select link
+
+default: `using Zotero item key`
+
+OrgMode to select items in your library
+
+Options:
+
+* using Zotero item key
+* using Better BibTeX citation key
+
+#### Zotero select link
+
+default: `using Zotero item key`
+
+Hyperlink to select items in your library
+
+Options:
+
+* using Zotero item key
+* using Better BibTeX citation key
 
 #### Eta template
 
