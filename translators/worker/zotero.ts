@@ -131,18 +131,23 @@ class WorkerZoteroUtilities {
   }
 }
 
+function isWinRoot(path) {
+  return workerContext.platform === 'win' && path.match(/^[a-z]:\\?$/i)
+}
 function makeDirs(path) {
-  if (!OS.Path.split(path).absolute) throw new Error(`Will not make relative ${path}`)
+  if (isWinRoot(path)) return
+  if (!OS.Path.split(path).absolute) throw new Error(`Will not create relative ${path}`)
 
   path = OS.Path.normalize(path)
 
   const paths: string[] = []
-  while (path !== paths[0] && !OS.File.exists(path)) {
+  // path === paths[0] means we've hit the root, as the dirname of root is root
+  while (path !== paths[0] && !isWinRoot(path) && !OS.File.exists(path)) {
     paths.unshift(path)
     path = OS.Path.dirname(path)
   }
 
-  if (!(OS.File.stat(path) as OS.File.Entry).isDir) throw new Error(`makeDirs: root ${path} is not a directory`)
+  if (!isWinRoot(path) && !(OS.File.stat(path) as OS.File.Entry).isDir) throw new Error(`makeDirs: root ${path} is not a directory`)
 
   for (path of paths) {
     OS.File.makeDir(path) as void
