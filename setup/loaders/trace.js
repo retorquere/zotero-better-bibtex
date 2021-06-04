@@ -1,6 +1,6 @@
 const {template, types, operator} = require('putout');
 const {replaceWith} = operator;
-const {BlockStatement, ContinueStatement} = types;
+const {isTryStatement, BlockStatement, ContinueStatement} = types;
 
 const buildLog = template(`console.log('TYPE' + ' ' + 'NAME')`);
 const buildLogEnter = template(`console.log('enter' + ' ' + 'NAME' + '(' + JSON.stringify(Array.from(arguments)) + ')')`);
@@ -16,9 +16,21 @@ const buildTryCatch = template(`try {
 
 const JSON = 'JSON';
 
-module.exports.include = () => [
-    'Function',
-];
+module.exports.report = () => 'Log events should be used';
+
+module.exports.traverse = ({push}) => ({
+    Function(path) {
+        const bodyPath = path.get('body');
+        
+        if (!bodyPath.isBlockStatement())
+            return;
+        
+        if (isTryStatement(bodyPath.node.body[1]))
+            return;
+        
+        push(path);
+    }
+});
 
 module.exports.fix = (path) => {
     const name = getName(path);
@@ -40,8 +52,6 @@ module.exports.fix = (path) => {
     
     bodyPath.node.body.unshift(enterLog);
 };
-
-module.exports.report = () => 'Log events should be added';
 
 function getName(path) {
     if (path.isClassMethod())
