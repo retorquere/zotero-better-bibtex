@@ -403,7 +403,7 @@
     "Import 9 references from Better BibLaTeX import improvements #549": 1520,
     "Import support for the online type in BBT #1358": 1170,
     "Include first name initial(s) in cite key generation pattern (86)": 450,
-    "Jabref groups import does not work #717": 2820,
+    "Jabref groups import does not work #717": 2830,
     "Jabref import - groups lost #1730": {
       "msecs": 3260,
       "runs": -228
@@ -425,12 +425,12 @@
     },
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 370630,
+    "Really Big whopping library": 370390,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 50000,
+      "msecs": 50170,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
@@ -458,7 +458,7 @@
       "runs": -36
     },
     "web_page and other mendeley idiocy": {
-      "msecs": 39200,
+      "msecs": 39260,
       "runs": -239
     }
   },
@@ -762,7 +762,7 @@
       "Identical Pinned keys lost when merging duplicated records #1721"
     ]
   },
-  "runs": 338,
+  "runs": 339,
   "slow": {
     "1": [
       "Export 1 references for BibLaTeX to Cite archive documents with BetterBibLaTeX #1799",
