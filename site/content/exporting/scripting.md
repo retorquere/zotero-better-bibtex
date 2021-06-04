@@ -348,3 +348,11 @@ if (Translator.BetterBibTeX && reference.date.type === 'season') {
   reference.add({ name: 'month', value: ['', 'spring', 'summer', 'fall', 'winter'][reference.date.season] })
 }
 ```
+
+### Adding rights field in BibLaTeX
+
+```
+if (Translator.BetterBibLaTeX) {
+  reference.add({ name: 'rights', value: item.rights});
+}
+```
