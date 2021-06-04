@@ -2,9 +2,9 @@ const {template, types, operator} = require('putout');
 const {replaceWith} = operator;
 const {isTryStatement, BlockStatement, ContinueStatement} = types;
 
-const buildLog = template(`console.log('TYPE' + ' ' + 'NAME')`);
-const buildLogEnter = template(`console.log('enter' + ' ' + 'NAME' + '(' + JSON.stringify(Array.from(arguments), trace$circularReplacer()) + ')')`);
-const buildLogException = template(`console.log('TYPE' + ' ' + 'NAME' + ': ' + trace$error.message); throw trace$error`);
+const buildLog = template(`Zotero.debug('TYPE' + ' ' + 'FILENAME' + '.' + 'NAME')`);
+const buildLogEnter = template(`Zotero.debug('enter' + ' ' + 'FILENAME' + '.' + 'NAME' + '(' + JSON.stringify(Array.from(arguments), trace$circularReplacer()) + ')')`);
+const buildLogException = template(`Zotero.debug('TYPE' + ' ' + 'FILENAME' + '.' + 'NAME' + ': ' + trace$error.message); throw trace$error`);
 const buildTryCatch = template(`try {
         BLOCK;
     } catch(trace$error) {
@@ -32,25 +32,31 @@ module.exports.traverse = ({push}) => ({
     }
 });
 
+module.exports.FILENAME = ''
+module.exports.anonymous = false
+
 module.exports.fix = (path) => {
     const name = getName(path);
     
-    const enterLog = buildLogEnter({
-        NAME: name,
-        JSON,
-    });
+    if (name) {
+      const enterLog = buildLogEnter({
+          NAME: name,
+          JSON,
+          FILENAME: module.exports.FILENAME,
+      });
     
-    const exitLog = buildLogEvent(name, 'exit');
-    const errorLog = buildLogExceptionEvent(name, 'error');
+      const exitLog = buildLogEvent(name, 'exit');
+      const errorLog = buildLogExceptionEvent(name, 'error');
     
-    const bodyPath = path.get('body');
-    replaceWith(bodyPath, BlockStatement([buildTryCatch({
-        BLOCK: path.node.body.body,
-        CATCH: errorLog,
-        FINALLY: exitLog,
-    })]));
+      const bodyPath = path.get('body');
+      replaceWith(bodyPath, BlockStatement([buildTryCatch({
+          BLOCK: path.node.body.body,
+          CATCH: errorLog,
+          FINALLY: exitLog,
+      })]));
     
-    bodyPath.node.body.unshift(enterLog);
+      bodyPath.node.body.unshift(enterLog);
+    }
 };
 
 function getName(path) {
@@ -63,19 +69,25 @@ function getName(path) {
         return path.node.id.name;
     }
 
-    const {line} = path.node.loc.start;
-    return `<anonymous:${line}>`;
+    if (module.exports.anonymous) {
+      const {line} = path.node.loc.start;
+      return `<anonymous:${line}>`;
+    }
+
+    return null
 }
 
 function buildLogEvent(name, type) {
     return buildLog({
         NAME: name,
         TYPE: type,
+        FILENAME: module.exports.FILENAME,
     });
 }
 function buildLogExceptionEvent(name, type) {    
     return buildLogException({
         NAME: name,
         TYPE: type,
+        FILENAME: module.exports.FILENAME,
     });
 }

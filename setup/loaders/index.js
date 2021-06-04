@@ -173,9 +173,11 @@ module.exports.trace = {
         console.log('!!', warning)
       }
 
+      const trace = require('./trace')
+      trace.FILENAME = localpath.replace(/\.ts$/, '')
       const contents = circularReplacer + putout(source.code, {
         fixCount: 1,
-        plugins: [ ['trace', require('./trace')] ],
+        plugins: [ ['trace', trace] ],
       }).code
 
       return {
