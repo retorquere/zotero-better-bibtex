@@ -140,6 +140,25 @@ if (fs.existsSync(path.join(__dirname, '../../.trace.json'))) {
   }
 }
 
+const circularReplacer = `
+const trace$circularReplacer = () => {
+  const seen = new WeakSet();
+  return (key, value) => {
+    try {
+      if (typeof value === "object" && value !== null) {
+        if (seen.has(value)) {
+          return;
+        }
+        seen.add(value);
+      }
+      return value;
+    }
+    catch (err) {
+      return;
+    }
+  };
+};
+`
 module.exports.trace = {
   name: 'trace',
   setup(build) {
@@ -154,7 +173,7 @@ module.exports.trace = {
         console.log('!!', warning)
       }
 
-      const contents = putout(source.code, {
+      const contents = circularReplacer + putout(source.code, {
         fixCount: 1,
         plugins: [ ['trace', require('./trace')] ],
       }).code

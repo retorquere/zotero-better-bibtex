@@ -3,7 +3,7 @@ const {replaceWith} = operator;
 const {isTryStatement, BlockStatement, ContinueStatement} = types;
 
 const buildLog = template(`console.log('TYPE' + ' ' + 'NAME')`);
-const buildLogEnter = template(`console.log('enter' + ' ' + 'NAME' + '(' + JSON.stringify(Array.from(arguments)) + ')')`);
+const buildLogEnter = template(`console.log('enter' + ' ' + 'NAME' + '(' + JSON.stringify(Array.from(arguments), trace$circularReplacer()) + ')')`);
 const buildLogException = template(`console.log('TYPE' + ' ' + 'NAME' + ': ' + trace$error.message); throw trace$error`);
 const buildTryCatch = template(`try {
         BLOCK;
@@ -54,12 +54,15 @@ module.exports.fix = (path) => {
 };
 
 function getName(path) {
-    if (path.isClassMethod())
-        return path.node.key.name;
-    
-    if (path.isFunctionDeclaration())
+    if (path.isClassMethod()) {
+        const {name, value} = path.node.key;
+        return name || value;
+    }
+
+    if (path.isFunctionDeclaration()) {
         return path.node.id.name;
-    
+    }
+
     const {line} = path.node.loc.start;
     return `<anonymous:${line}>`;
 }
