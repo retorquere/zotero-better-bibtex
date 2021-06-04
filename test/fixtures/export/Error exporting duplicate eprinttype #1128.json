@@ -9,8 +9,7 @@
     "preferences": {
       "citekeyFormat": "[auth:lower][year]",
       "itemObserverDelay": 100,
-      "keyScope": "global",
-      "quickCopyMode": "orgmode_citekey"
+      "keyScope": "global"
     }
   },
   "items": [

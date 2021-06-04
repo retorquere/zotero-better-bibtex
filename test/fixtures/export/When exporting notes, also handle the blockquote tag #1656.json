@@ -12,7 +12,6 @@
       "itemObserverDelay": 100,
       "jabrefFormat": 4,
       "qualityReport": true,
-      "quickCopyMode": "orgmode_citekey",
       "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
       "warnBulkModify": 0
     }
