@@ -189,7 +189,7 @@
       "runs": -240
     },
     "Export 1 references for BibTeX to DOI not escaped using postscript #1803": {
-      "msecs": 640,
+      "msecs": 650,
       "runs": -309
     },
     "Export 1 references for BibTeX to Double superscript in title field on export #1217": 400,
@@ -425,17 +425,17 @@
     },
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 370870,
+    "Really Big whopping library": 370630,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 49890,
+      "msecs": 50000,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
     "Square brackets in Publication field (85), and non-pinned keys must change when the pattern does": 450,
-    "Unabbreviate on import #1436-1": 39040,
+    "Unabbreviate on import #1436-1": 39030,
     "Unbalanced vphantom escapes #1043": 760,
     "arXiv identifiers in BibLaTeX export #460": 1180,
     "auto-export": 14370,
@@ -458,7 +458,7 @@
       "runs": -36
     },
     "web_page and other mendeley idiocy": {
-      "msecs": 39190,
+      "msecs": 39200,
       "runs": -239
     }
   },
@@ -653,7 +653,6 @@
       "Export 1 references for BibTeX to braces after textemdash followed by unicode #980",
       "Export 2 references for BibTeX to creating a key with [authForeIni] and [authN] not working properly #892",
       "Export 2 references for BibTeX to date not always parsed properly into month and year with PubMed #1112",
-      "Export 5 references for BibTeX to date ranges #747+#746",
       "Export 1 references for BibTeX to preserve @strings between import-export #1162",
       "Export 2 references for BibTeX to titles are title-cased in .bib file #558",
       "Omit URL export when DOI present. #131",
@@ -709,6 +708,7 @@
       "Import 3 references from Better BibTeX.009",
       "Import 1 references from Better BibTeX.011",
       "Import 1 references from Better BibTeX.012",
+      "Import 1 references from Better BibTeX.014",
       "Import 1 references from Biblatex Annotation Import Bug #613",
       "Import 1 references from Endnote should parse",
       "Import 1 references from Import location to event-place for conference papers",
@@ -743,6 +743,7 @@
     ],
     "2": [
       "Export 36 references for BibTeX to Better BibTeX does not export collections #901",
+      "Export 5 references for BibTeX to date ranges #747+#746",
       "Bibtex key regenerating issue when trashing items #117",
       "two ISSN number are freezing browser #110 + Generating keys and export broken #111",
       "Postfixed keys different between computers #1788",
@@ -752,7 +753,6 @@
       "Export as Collected Notes does not list subcollections #1768",
       "AUX scanner",
       "Import 20 references from BBT does not import groups from JabRef 5.1 #1641",
-      "Import 1 references from Better BibTeX.014",
       "Unabbreviate on import #1436-1",
       "web_page and other mendeley idiocy",
       "Set IDS field when merging references with different citation keys #1221",
@@ -762,7 +762,7 @@
       "Identical Pinned keys lost when merging duplicated records #1721"
     ]
   },
-  "runs": 337,
+  "runs": 338,
   "slow": {
     "1": [
       "Export 1 references for BibLaTeX to Cite archive documents with BetterBibLaTeX #1799",
