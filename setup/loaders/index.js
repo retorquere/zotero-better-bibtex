@@ -150,14 +150,17 @@ module.exports.trace = {
       console.log(`!!!!!!!!!!!!!! Instrumenting ${localpath} for trace logging !!!!!!!!!!!!!`)
 
       const source = await esbuild.transform(await fs.promises.readFile(args.path, 'utf-8'), { loader: 'ts' })
-      console.log(typeof source.code)
+      for (const warning of source.warnings) {
+        console.log('!!', warning)
+      }
+
+      const contents = putout(source.code, {
+        fixCount: 1,
+        plugins: [ ['trace', require('./trace')] ],
+      }).code
 
       return {
-        contents: putout(source.code, {
-          plugins: [
-            ['trace', require('./trace')],
-          ],
-        }),
+        contents,
         loader: 'js',
       }
     })
