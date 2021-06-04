@@ -41,8 +41,8 @@ export class Pinger {
 
   private emit() {
     if (this.callback) {
-      if (this.name) Zotero.debug(`ping: ${this.name} emit ${Math.max(this.next, 100)}`)
-      this.callback(Math.max(this.next, 100))
+      if (this.name) Zotero.debug(`ping: ${this.name} emit ${Math.min(this.next, 100)}`)
+      this.callback(Math.min(this.next, 100))
       if (this.next > 100) this.callback = null
       this.next += this.step
     }
@@ -50,6 +50,6 @@ export class Pinger {
 
   public done(): void {
     if (this.name) Zotero.debug(`ping: ${this.name} done`)
-    if (this.callback && this.pct < this.next) this.callback(Math.max(this.next, 100))
+    if (this.callback && this.pct < this.next) this.callback(Math.min(this.next, 100))
   }
 }

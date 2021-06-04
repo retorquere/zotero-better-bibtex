@@ -77,21 +77,29 @@ const Mode = {
   },
 
   orgmode(items) {
-    for (const item of items) {
-      Zotero.write(`[[${select_by_key(item)}][@${item.citationKey}]]`)
-    }
-  },
-  orgmode_citekey(items) {
-    for (const item of items) {
-      Zotero.write(`[[${select_by_citekey(item)}][@${item.citationKey}]]`)
+    switch (Translator.preferences.quickCopyOrgMode) {
+      case 'zotero':
+        for (const item of items) {
+          Zotero.write(`[[${select_by_key(item)}][@${item.citationKey}]]`)
+        }
+        break
+      case 'citationkey':
+        for (const item of items) {
+          Zotero.write(`[[${select_by_citekey(item)}][@${item.citationKey}]]`)
+        }
+        break
     }
   },
 
-  selectLink(items) {
-    Zotero.write(items.map(select_by_key).join('\n'))
-  },
-  selectLink_citekey(items) {
-    Zotero.write(items.map(select_by_citekey).join('\n'))
+  selectlink(items) {
+    switch (Translator.preferences.quickCopySelectLink) {
+      case 'zotero':
+        Zotero.write(items.map(select_by_key).join('\n'))
+        break
+      case 'citationkey':
+        Zotero.write(items.map(select_by_citekey).join('\n'))
+        break
+    }
   },
 
   rtfScan(items) {

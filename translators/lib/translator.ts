@@ -19,7 +19,10 @@ const cacheDisabler = new class {
     // if (typeof target.$unused === 'undefined') target.$unused = new Set(Object.keys(target).filter(field => !ignore_unused_fields.includes(field)))
 
     // collections: jabref 4 stores collection info inside the reference, and collection info depends on which part of your library you're exporting
-    if (property === 'collections') target.$cacheable = false
+    if (property === 'collections') {
+      // log.debug('cache-rate: not for item with collections', target, (new Error).stack)
+      target.$cacheable = false
+    }
 
     // use for the QR to highlight unused data
     // target.$unused.delete(property)
@@ -27,6 +30,14 @@ const cacheDisabler = new class {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return target[property]
   }
+
+  /*
+  set(target, property, value): boolean {
+    if (property === '$cacheable' && target.$cacheable && !value) log.debug('cache-rate: not for', target, (new Error).stack)
+    target[property] = value
+    return true
+  }
+  */
 }
 
 type NestedCollection = {

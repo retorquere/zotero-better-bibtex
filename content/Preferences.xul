@@ -130,6 +130,16 @@
           To find out what an item looks like inside the template, export some items as BetterBibTeX JSON.
         </bbt:doc>
 
+        <preference name="extensions.zotero.translators.better-bibtex.quickCopyOrgMode" id="pref-better-bibtex-quickCopyOrgMode" type="string" default="zotero"/>
+        <bbt:doc>
+          OrgMode to select items in your library
+        </bbt:doc>
+
+        <preference name="extensions.zotero.translators.better-bibtex.quickCopySelectLink" id="pref-better-bibtex-quickCopySelectLink" type="string" default="zotero"/>
+        <bbt:doc>
+          Hyperlink to select items in your library
+        </bbt:doc>
+
         <!-- the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly -->
         <preference name="extensions.zotero.translators.better-bibtex.citekeyFormat" id="pref-better-bibtex-citekeyFormat" type="string" default="&#x200B;[auth:lower][shorttitle3_3][year]"/>
         <bbt:doc>
@@ -560,15 +570,13 @@
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.latex;" value="latex"/>
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.citekeys;" value="citekeys"/>
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.pandoc;" value="pandoc"/>
-                        <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.orgmode_citekey;" value="orgmode_citekey"/>
-                        <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.orgmode_itemkey;" value="orgmode"/>
+                        <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.orgMode;" value="orgmode"/>
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.orgRef;" value="orgRef"/>
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.rtfScan;" value="rtfScan"/>
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.roamCiteKey;" value="roamCiteKey"/>
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.atom;" value="atom"/>
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.gitbook;" value="gitbook"/>
-                        <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.selectLink_citekey;" value="selectLink_citekey"/>
-                        <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.selectLink_itemkey;" value="selectLink"/>
+                        <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.selectLink;" value="selectlink"/>
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.etaTemplate;" value="eta"/>
                       </menupopup>
                     </menulist>
@@ -583,6 +591,24 @@
                     <checkbox id="id-better-bibtex-preferences-quickCopyPandocBrackets"
                       preference="pref-better-bibtex-quickCopyPandocBrackets"
                       label="&better-bibtex.Preferences.citekey.quickCopy.pandoc.brackets;"/>
+                  </row>
+                  <row class="better-bibtex-preferences-quickcopy-details" id="better-bibtex-preferences-quickcopy-orgmode">
+                    <label bbt:preference="pref-better-bibtex-quickCopyOrgMode">&better-bibtex.Preferences.citekey.quickCopy.orgMode;</label>
+                    <menulist preference="pref-better-bibtex-quickCopyOrgMode">
+                      <menupopup>
+                        <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.orgMode.zotero;" value="zotero"/>
+                        <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.orgMode.citekey;" value="citationkey"/>
+                      </menupopup>
+                    </menulist>
+                  </row>
+                  <row class="better-bibtex-preferences-quickcopy-details" id="better-bibtex-preferences-quickcopy-selectlink">
+                    <label bbt:preference="pref-better-bibtex-quickCopySelectLink">&better-bibtex.Preferences.citekey.quickCopy.selectLink;</label>
+                    <menulist preference="pref-better-bibtex-quickCopySelectLink">
+                      <menupopup>
+                        <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.selectLink.zotero;" value="zotero"/>
+                        <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.selectLink.citekey;" value="citationkey"/>
+                      </menupopup>
+                    </menulist>
                   </row>
                   <row class="better-bibtex-preferences-quickcopy-details" id="better-bibtex-preferences-quickcopy-eta">
                     <label
@@ -747,7 +773,6 @@
                         <label>&better-bibtex.Preferences.auto-export.fields.error;:</label><textbox class="plain" readonly="true" value="" bbt:ae-field="error" bbt:ae-id=""/>
                       </row>
                       <row>
-                         <label>&better-bibtex.Preferences.auto-export.fields.cached;:</label><textbox class="plain" readonly="true" value="" bbt:ae-field="cacherate" bbt:ae-id=""/>
                        </row>
                     </rows>
                   </grid>
@@ -830,6 +855,8 @@
                   <hbox>
                     <button label="&better-bibtex.Preferences.auto-export.remove;" bbt:ae-id="" oncommand="bbt_prefpane.autoexport.remove(event.target)"/>
                     <button label="&better-bibtex.Preferences.auto-export.run;" bbt:ae-id="" oncommand="bbt_prefpane.autoexport.run(event.target)"/>
+                    <button label="&better-bibtex.Preferences.auto-export.fields.cached;:" bbt:ae-id="" oncommand="bbt_prefpane.autoexport.refreshCacheRate(event.target)"/>
+                    <textbox class="plain" readonly="true" value="" bbt:ae-field="cacherate" bbt:ae-id=""/>
                   </hbox>
                 </tabpanel>
               </tabpanels>

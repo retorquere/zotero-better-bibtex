@@ -5,8 +5,9 @@ import { log } from './logger'
 
 import { Events } from './events'
 import { DB } from './db/main'
+import { DB as Cache, selector as cacheSelector } from './db/cache'
 import { Translators } from './translators'
-import { Preference } from '../gen/preferences'
+import { Preferences, Preference } from '../gen/preferences'
 import * as ini from 'ini'
 import fold2ascii from 'fold-to-ascii'
 import { pathSearch } from './path-search'
@@ -276,6 +277,7 @@ const queue = new class TaskQueue {
     }
 
     ae.status = 'done'
+    log.debug('auto-export done')
     this.autoexports.update(ae)
   }
 
@@ -328,14 +330,12 @@ const queue = new class TaskQueue {
 }
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export const AutoExport = new class CAutoExport { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export const AutoExport = new class _AutoExport { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public db: any
   public progress: Map<number, number>
-  public cacherate: Map<number, number>
 
   constructor() {
     this.progress = new Map
-    this.cacherate = new Map
 
     Events.on('libraries-changed', ids => this.schedule('library', ids))
     Events.on('libraries-removed', ids => this.remove('library', ids))
@@ -344,8 +344,6 @@ export const AutoExport = new class CAutoExport { // eslint-disable-line @typesc
     Events.on('export-progress', (percent, _translator, ae) => {
       if (typeof ae === 'number') this.progress.set(ae, percent)
     })
-    Events.on('cache-rate', (ae, percent) => { this.cacherate.set(ae, percent) })
-    Events.on('cache-reset', () => { this.cacherate.forEach((_value, ae) => this.cacherate.set(ae, 0)) })
   }
 
   public async init() {
@@ -360,7 +358,6 @@ export const AutoExport = new class CAutoExport { // eslint-disable-line @typesc
 
     this.db.on(['delete'], ae => {
       this.progress.delete(ae.$loki)
-      this.cacherate.delete(ae.$loki)
     })
 
     if (Preference.autoExport === 'immediate') { queue.resume() }
@@ -399,6 +396,60 @@ export const AutoExport = new class CAutoExport { // eslint-disable-line @typesc
 
   public run(id) {
     queue.run(id).catch(err => log.error('AutoExport.run:', err))
+  }
+
+  public async cached($loki) {
+    log.debug('cache-rate: calculating cache rate for', $loki)
+    const start = Date.now()
+    const ae = this.db.get($loki)
+
+    const itemTypeIDs: number[] = ['attachment', 'note', 'annotation'].map(type => {
+      try {
+        return Zotero.ItemTypes.getID(type) as number
+      }
+      catch (err) {
+        return undefined
+      }
+    })
+
+    const itemIDs: Set<number> = new Set
+    await this.itemIDs(ae, ae.id, itemTypeIDs, itemIDs)
+    if (itemIDs.size === 0) return 100 // eslint-disable-line no-magic-numbers
+
+    const options = {
+      exportNotes: !!ae.exportNotes,
+      useJournalAbbreviation: !!ae.useJournalAbbreviation,
+    }
+    const prefs: Partial<Preferences> = override.names.reduce((acc, pref) => {
+      acc[pref] = ae[pref]
+      return acc
+    }, {})
+
+    const cached = {
+      serialized: Cache.getCollection('itemToExportFormat').find({ itemID: { $in: [...itemIDs] } }).length,
+      export: Cache.getCollection(Translators.byId[ae.translatorID].label).find(cacheSelector([...itemIDs], options, prefs)).length,
+    }
+
+    log.debug('cache-rate: cache rate for', $loki, {...cached, items: itemIDs.size}, 'took', Date.now() - start)
+    return Math.min(Math.round((100 * (cached.serialized + cached.export)) / (itemIDs.size * 2)), 100) // eslint-disable-line no-magic-numbers
+  }
+
+  private async itemIDs(ae, id: number, itemTypeIDs: number[], itemIDs: Set<number>) {
+    let items
+    if (ae.type === 'collection') {
+      const coll = await Zotero.Collections.getAsync(id)
+      if (ae.recursive) {
+        for (const collID of coll.getChildren(true)) {
+          await this.itemIDs(ae, collID, itemTypeIDs, itemIDs)
+        }
+      }
+      items = coll.getChildItems()
+    }
+    else if (ae.type === 'library') {
+      items = await Zotero.Items.getAll(id)
+    }
+
+    items.filter(item => !itemTypeIDs.includes(item.itemTypeID)).forEach(item => itemIDs.add(item.id))
   }
 }
 

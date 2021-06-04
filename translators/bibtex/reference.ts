@@ -1343,96 +1343,105 @@ export class Reference {
   private postscript(_reference, _item, _translator, _zotero): boolean { return true } // eslint-disable-line no-empty,@typescript-eslint/no-empty-function
 
   private qualityReport(): string {
-    if (!Translator.preferences.qualityReport) return ''
+    // the quality report will access a bunch of fields not to export them but just to see if they were used, and that triggers the cacheDisabler proxy when
+    // the 'collections' field is accessed... rendering a lot of items uncacheable
+    const $cacheable = this.item.$cacheable
+    try {
+      if (!Translator.preferences.qualityReport) return ''
 
-    let report: string[] = this.lint({
-      timestamp: `added because JabRef format is set to ${Translator.preferences.jabrefFormat || '?'}`,
-    })
+      let report: string[] = this.lint({
+        timestamp: `added because JabRef format is set to ${Translator.preferences.jabrefFormat || '?'}`,
+      })
 
-    if (report) {
-      if (this.has.pages) {
-        const dashes = this.has.pages.bibtex.match(/-+/g)
-        // if (dashes && dashes.includes('-')) report.push('? hyphen found in pages field, did you mean to use an en-dash?')
-        if (dashes && dashes.includes('---')) report.push('? em-dash found in pages field, did you mean to use an en-dash?')
-      }
-      if (this.has.journal && this.has.journal.value.indexOf('.') >= 0) report.push(`? Possibly abbreviated journal title ${this.has.journal.value}`)
-      if (this.has.journaltitle && this.has.journaltitle.value.indexOf('.') >= 0) report.push(`? Possibly abbreviated journal title ${this.has.journaltitle.value}`)
+      if (report) {
+        if (this.has.pages) {
+          const dashes = this.has.pages.bibtex.match(/-+/g)
+          // if (dashes && dashes.includes('-')) report.push('? hyphen found in pages field, did you mean to use an en-dash?')
+          if (dashes && dashes.includes('---')) report.push('? em-dash found in pages field, did you mean to use an en-dash?')
+        }
+        if (this.has.journal && this.has.journal.value.indexOf('.') >= 0) report.push(`? Possibly abbreviated journal title ${this.has.journal.value}`)
+        if (this.has.journaltitle && this.has.journaltitle.value.indexOf('.') >= 0) report.push(`? Possibly abbreviated journal title ${this.has.journaltitle.value}`)
 
-      if (this.referencetype === 'inproceedings' && this.has.booktitle) {
-        if (!this.has.booktitle.value.match(/:|Proceedings|Companion| '/) || this.has.booktitle.value.match(/\.|workshop|conference|symposium/)) {
-          report.push('? Unsure about the formatting of the booktitle')
+        if (this.referencetype === 'inproceedings' && this.has.booktitle) {
+          if (!this.has.booktitle.value.match(/:|Proceedings|Companion| '/) || this.has.booktitle.value.match(/\.|workshop|conference|symposium/)) {
+            report.push('? Unsure about the formatting of the booktitle')
+          }
+        }
+
+        if (this.has.title && Translator.preferences.exportTitleCase) {
+          const titleCased = Zotero.BetterBibTeX.titleCase(this.has.title.value) === this.has.title.value
+          if (this.has.title.value.match(/\s/)) {
+            if (titleCased) report.push('? Title looks like it was stored in title-case in Zotero')
+          }
+          else {
+            if (!titleCased) report.push('? Title looks like it was stored in lower-case in Zotero')
+          }
         }
       }
-
-      if (this.has.title && Translator.preferences.exportTitleCase) {
-        const titleCased = Zotero.BetterBibTeX.titleCase(this.has.title.value) === this.has.title.value
-        if (this.has.title.value.match(/\s/)) {
-          if (titleCased) report.push('? Title looks like it was stored in title-case in Zotero')
-        }
-        else {
-          if (!titleCased) report.push('? Title looks like it was stored in lower-case in Zotero')
-        }
-      }
-    }
-    else {
-      report = [`I don't know how to quality-check ${this.referencetype} references`]
-    }
-
-    report = report.concat(this.quality_report)
-
-    if (!report.length) return ''
-
-    report.unshift(`== ${Translator.BetterBibTeX ? 'BibTeX' : 'BibLateX'} quality report for ${this.item.citationKey}:`)
-
-    const used: Array<string | number> = Object.values(this.has) // eslint-disable-line @typescript-eslint/array-type
-      .filter(field => typeof field.value === 'string' || typeof field.value === 'number')
-      .map(field => typeof field.value === 'string' ? field.value.toLowerCase().replace(/[^a-zA-z0-9]/g, '') : field.value)
-    const fields: [string, any][] = Object.entries(this.item)
-      .sort(entry_sort)
-    const extra_fields: [string, any][] = (Object.entries(this.item.extraFields.kv) as [string, any][])
-      .sort(entry_sort)
-      .map(([field, value]: [string, any]) => [`extraFields.kv.${field}`, value])
-    const ignore_unused_fields = [
-      'abstractNote',
-      'accessDate',
-      'autoJournalAbbreviation',
-      'citationKey',
-      'citekey',
-      'collections',
-      'date',
-      'dateAdded',
-      'dateModified',
-      'itemID',
-      'itemType',
-      'key',
-      'libraryID',
-      'relations',
-      'uri',
-    ]
-    for (const [field, value] of fields.concat(extra_fields)) {
-      if (!value) continue
-      if (ignore_unused_fields.includes(field)) continue
-
-      let v: string
-      switch (typeof value) {
-        case 'string':
-          v = value.toLowerCase().replace(/[^a-zA-z0-9]/g, '')
-          if (used.includes(v)) continue
-          if (field === 'libraryCatalog' && v.includes('arxiv') && this.item.arXiv) continue
-          if (field === 'language' && this.has.langid) continue
-          break
-        case 'number':
-          if (used.includes(value)) continue
-          break
-
-        default:
-          continue
+      else {
+        report = [`I don't know how to quality-check ${this.referencetype} references`]
       }
 
-      report.push(`? Unused ${field}: ${value}`)
-    }
+      report = report.concat(this.quality_report)
 
-    return report.map(line => `% ${line}\n`).join('')
+      if (!report.length) return ''
+
+      report.unshift(`== ${Translator.BetterBibTeX ? 'BibTeX' : 'BibLateX'} quality report for ${this.item.citationKey}:`)
+
+      const used: Array<string | number> = Object.values(this.has) // eslint-disable-line @typescript-eslint/array-type
+        .filter(field => typeof field.value === 'string' || typeof field.value === 'number')
+        .map(field => typeof field.value === 'string' ? field.value.toLowerCase().replace(/[^a-zA-z0-9]/g, '') : field.value)
+      const fields: [string, any][] = Object.entries(this.item)
+        .sort(entry_sort)
+      const extra_fields: [string, any][] = (Object.entries(this.item.extraFields.kv) as [string, any][])
+        .sort(entry_sort)
+        .map(([field, value]: [string, any]) => [`extraFields.kv.${field}`, value])
+      const ignore_unused_fields = [
+        'abstractNote',
+        'accessDate',
+        'autoJournalAbbreviation',
+        'citationKey',
+        'citekey',
+        'collections',
+        'date',
+        'dateAdded',
+        'dateModified',
+        'itemID',
+        'itemType',
+        'key',
+        'libraryID',
+        'relations',
+        'uri',
+      ]
+      for (const [field, value] of fields.concat(extra_fields)) {
+        if (!value) continue
+        if (ignore_unused_fields.includes(field)) continue
+
+        let v: string
+        switch (typeof value) {
+          case 'string':
+            v = value.toLowerCase().replace(/[^a-zA-z0-9]/g, '')
+            if (used.includes(v)) continue
+            if (field === 'libraryCatalog' && v.includes('arxiv') && this.item.arXiv) continue
+            if (field === 'language' && this.has.langid) continue
+            break
+          case 'number':
+            if (used.includes(value)) continue
+            break
+
+          default:
+            continue
+        }
+
+        report.push(`? Unused ${field}: ${value}`)
+      }
+
+      return report.map(line => `% ${line}\n`).join('')
+    }
+    finally {
+      // restore cacheable state
+      this.item.$cacheable = $cacheable
+    }
   }
 }
 

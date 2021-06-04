@@ -86,13 +86,15 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.latex "Citation LaTeX">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.rtfScan "Marqueur de scan RTF">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.roamCiteKey "Clé de citation Roam">
-<!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgmode_itemkey "Lien de sélection de Zotero avec Org-mode">
-<!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgmode_citekey "Lien de sélection clé de citation avec Org-mode">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgMode "Lien de sélection Org-mode">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgMode.zotero "en utilisant la clé d'élément de Zotero">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgMode.citekey "en utilisant la clé de citation de Better BibTeX">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgRef "Citation org-ref">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.pandoc.brackets "Encadrer les citations 'Pandoc' avec des parenthèses">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.pandoc "Citation Pandoc">
-<!ENTITY better-bibtex.Preferences.citekey.quickCopy.selectLink_itemkey "Lien de sélection de Zotero">
-<!ENTITY better-bibtex.Preferences.citekey.quickCopy.selectLink_citekey "Lien de sélection clé de citation">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.selectLink "Lien de sélection de Zotero">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.selectLink.zotero "en utilisant la clé d'élément de Zotero">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.selectLink.citekey "en utilisant la clé de citation de Better BibTeX">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.etaTemplate "Canevas Eta">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy "Copie rapide et glisser-déposer">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness "Garder les clés de citation uniques">

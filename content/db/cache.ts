@@ -10,6 +10,8 @@ import * as translators from '../../gen/translators.json'
 import { override } from '../prefs-meta'
 import type { Preferences } from '../../gen/preferences'
 
+const METADATA = 'Better BibTeX metadata'
+
 class Cache extends Loki {
   private initialized = false
 
@@ -27,11 +29,15 @@ class Cache extends Loki {
     if (!this.initialized) return
 
     log.debug('cache drop:', reason)
-    Events.emit('cache-reset')
 
     for (const coll of this.collections) {
-      coll.removeDataOnly()
+      this.drop(coll, reason)
     }
+  }
+
+  private drop(coll: any, reason: string) {
+    log.debug(`dropping cache.${coll.name}:`, reason)
+    coll.removeDataOnly()
   }
 
   public async init() {
@@ -55,11 +61,13 @@ class Cache extends Loki {
         additionalProperties: false,
       },
     })
+    log.debug('cache.itemToExportFormat:', coll.data.length)
 
     // old cache, drop
-    if (coll.where(o => typeof o.legacy === 'boolean').length) coll.removeDataOnly()
+    if (coll.where(o => typeof o.legacy === 'boolean').length) this.drop(coll, 'legacy cache')
 
-    clearOnUpgrade(coll, 'Zotero', Zotero.version)
+
+    this.clearOnUpgrade(coll, 'Zotero', Zotero.version)
 
     // this reaps unused cache entries -- make sure that cacheFetchs updates the object
     //                  secs    mins  hours days
@@ -102,26 +110,50 @@ class Cache extends Loki {
         ttl,
         ttlInterval,
       })
+      log.debug(`cache.${coll.name}:`, coll.data.length)
 
       // old cache, drop
       if (coll.findOne({ [override.names[0]]: {$eq: undefined} })) {
-        coll.removeDataOnly()
+        this.drop(coll, 'legacy cache without overrides')
       }
       // how did this get in here? #1809
       else if (coll.data.find(rec => !rec.$loki)) {
-        coll.removeDataOnly()
+        this.drop(coll, 'entries without id')
       }
       else {
         // should have been dropped after object change/delete
-        for (const outdated of coll.data.filter(item => !modified[item.itemID] || modified[item.itemID] >= (item.meta?.updated || item.meta?.created || 0))) {
-          coll.remove(outdated)
+        const outdated = coll.data.filter(item => !modified[item.itemID] || modified[item.itemID] >= (item.meta?.updated || item.meta?.created || false))
+        if (outdated.length) log.debug('removing', outdated.length, 'mis-cached items')
+        for (const item of outdated) {
+          coll.remove(item)
         }
       }
 
-      clearOnUpgrade(coll, 'BetterBibTeX', version)
+      this.clearOnUpgrade(coll, 'BetterBibTeX', version)
     }
 
     this.initialized = true
+  }
+
+  private clearOnUpgrade(coll, property, current) {
+    const dbVersion = (coll.getTransform(METADATA) || [{value: {}}])[0].value[property]
+    if (current && dbVersion === current) return
+
+    const drop = !Preference.retainCache
+    const msg = drop ? { dropping: 'dropping', because: 'because' } : { dropping: 'keeping', because: 'even though' }
+    if (dbVersion) {
+      Zotero.debug(`:Cache:${msg.dropping} cache ${coll.name} ${msg.because} ${property} went from ${dbVersion} to ${current}`)
+    }
+    else {
+      Zotero.debug(`:Cache:${msg.dropping} cache ${coll.name} ${msg.because} ${property} was not set (current: ${current})`)
+    }
+
+    if (drop) this.drop(coll, 'clear on upgrade')
+
+    coll.setTransform(METADATA, [{
+      type: METADATA,
+      value : { [property]: current },
+    }])
   }
 }
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
@@ -129,29 +161,6 @@ export const DB = new Cache('cache', { // eslint-disable-line @typescript-eslint
   autosave: true,
   adapter: new File(),
 })
-
-const METADATA = 'Better BibTeX metadata'
-
-function clearOnUpgrade(coll, property, current) {
-  const dbVersion = (coll.getTransform(METADATA) || [{value: {}}])[0].value[property]
-  if (current && dbVersion === current) return
-
-  const drop = !Preference.retainCache
-  const msg = drop ? { dropping: 'dropping', because: 'because' } : { dropping: 'keeping', because: 'even though' }
-  if (dbVersion) {
-    Zotero.debug(`:Cache:${msg.dropping} cache ${coll.name} ${msg.because} ${property} went from ${dbVersion} to ${current}`)
-  }
-  else {
-    Zotero.debug(`:Cache:${msg.dropping} cache ${coll.name} ${msg.because} ${property} was not set (current: ${current})`)
-  }
-
-  if (drop) coll.removeDataOnly()
-
-  coll.setTransform(METADATA, [{
-    type: METADATA,
-    value : { [property]: current },
-  }])
-}
 
 // the preferences influence the output way too much, no keeping track of that
 Events.on('preference-changed', pref => {
@@ -167,7 +176,7 @@ if (DB.getCollection('cache')) { DB.removeCollection('cache') }
 if (DB.getCollection('serialized')) { DB.removeCollection('serialized') }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function selector(itemID: number | number[], options: any, prefs: Preferences) {
+export function selector(itemID: number | number[], options: any, prefs: Partial<Preferences>) {
   const query = {
     exportNotes: !!options.exportNotes,
     useJournalAbbreviation: !!options.useJournalAbbreviation,

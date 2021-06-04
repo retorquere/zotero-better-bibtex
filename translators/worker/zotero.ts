@@ -160,7 +160,6 @@ function saveFile(path, overwrite) {
   if (this.linkMode === 'imported_file' || (this.linkMode === 'imported_url' && this.contentType !== 'text/html')) {
     makeDirs(OS.Path.dirname(this.path))
     OS.File.copy(this.localPath, this.path, { noOverwrite: !overwrite })
-
   }
   else if (this.linkMode === 'imported_url') {
     const target = OS.Path.dirname(this.path)
