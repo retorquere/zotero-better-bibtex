@@ -51,7 +51,7 @@ If you want to run a postscript in the CSL translators but don't care whether it
 
 In the postscript, the reference being built is available as `reference`, and the Zotero item it is being built from is available as `item`. For backwards compatibility, in the `BetterBib(La)TeX` contexts, the reference being built is also available as `this`, and the Zotero item it is being built from as `this.item`, but use of these is discouraged now.
 
-You should really test for the translator context in your postscripts using the `Translator.<name>` tests mentioned above. If you don't because you have a postscript that pre-date postscript CSL support, you will probably be using the legacy use of `this` to set things on the reference being built, and calling `this.add` in those postscripts; since, for CSL postscripts, `this` is not set, it will make the script will non-fatally error out, so you're very probably good to go as-is.
+You should really test for the translator context in your postscripts using the `Translator.<name>` tests mentioned above. If you don't because you have a postscript that pre-date postscript CSL support, you will probably be using the legacy use of `this` to set things on the reference being built, and calling `reference.add` in those postscripts; since, for CSL postscripts, `this` is not set, it will make the script will non-fatally error out, so you're very probably good to go as-is.
 But please fix your postscripts to test for the translator context.
 
 ## The API for `Better BibTeX` and `Better BibLaTeX`
