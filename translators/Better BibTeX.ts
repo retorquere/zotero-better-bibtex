@@ -223,7 +223,6 @@ Reference.prototype.typeMap = {
     email           : 'misc',
     encyclopediaArticle:  'article',
     film            : 'misc',
-    movie           : 'misc',
     forumPost       : 'misc',
     hearing         : 'misc',
     instantMessage  : 'misc',
@@ -449,6 +448,7 @@ class ZoteroItem {
     magazine_article:   'magazineArticle', // mendeley made-up entry type
     manual:             'report',
     mastersthesis:      'thesis',
+    movie:              'film',
     misc:               'document',
     newspaper_article:  'newspaperArticle', // mendeley made-up entry type
     online:             'webpage',
@@ -477,7 +477,7 @@ class ZoteroItem {
     this.bibtex.type = this.bibtex.type.toLowerCase()
     this.type = this.typeMap[this.bibtex.type]
     if (!this.type) {
-      this.errors.push({ message: `Don't know what Zotero type to make of '${this.bibtex.type}' for ${this.bibtex.key ? `@${this.bibtex.key}` : 'unnamed item'}, importing as ${this.type = 'journalArticle'}` })
+      this.errors.push({ message: `Don't know what Zotero type to make of '${this.bibtex.type}' for ${this.bibtex.key ? `@${this.bibtex.key}` : 'unnamed item'}, importing as ${this.type = 'document'}` })
       this.hackyFields.push(`tex.referencetype: ${this.bibtex.type}`)
     }
     if (this.type === 'book' && (this.bibtex.fields.title || []).length && (this.bibtex.fields.booktitle || []).length) this.type = 'bookSection'
@@ -559,7 +559,9 @@ class ZoteroItem {
   protected $institution(value, field) { return this.$publisher(value, field) }
   protected $school(value, field) { return this.$publisher(value, field) }
 
-  protected $address(value) { return this.set('place', value) }
+  protected $address(value) {
+    return this.set('place', value, ['place'])
+  }
   protected $location(value) {
     if (this.type === 'conferencePaper') {
       this.hackyFields.push(`Place: ${value.replace(/\n+/g, '')}`)
