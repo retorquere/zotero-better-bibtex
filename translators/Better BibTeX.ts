@@ -223,6 +223,7 @@ Reference.prototype.typeMap = {
     email           : 'misc',
     encyclopediaArticle:  'article',
     film            : 'misc',
+    movie           : 'misc',
     forumPost       : 'misc',
     hearing         : 'misc',
     instantMessage  : 'misc',
