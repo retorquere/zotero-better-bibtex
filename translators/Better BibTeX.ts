@@ -941,6 +941,11 @@ class ZoteroItem {
     return this.set(field, value)
   }
 
+  protected $origdate(value) {
+    if (!this.fallback(['originaldate'], value)) this.hackyFields.push(`Original Date: ${value}`)
+    return true
+  }
+
   private error(err) {
     log.error(err)
     throw new Error(err)
@@ -1042,16 +1047,20 @@ class ZoteroItem {
             this.hackyFields.push(`ISSN: ${value}`)
             break
 
-          case 'origdate':
-            this.hackyFields.push(`Original Date: ${value}`)
-
-            break
           case 'pmid':
             this.hackyFields.push(`PMID: ${value}`)
             break
 
           case 'subject': // otherwise it's picked up by the sibject -> title mapper, and I don't think that's right
             this.hackyFields.push(`tex.${field}: ${value}`)
+            break
+
+          case 'origtitle':
+            this.hackyFields.push(`Original title: ${value}`)
+            break
+
+          case 'origlocation':
+            this.hackyFields.push(`Original publisher place: ${value}`)
             break
 
           default:
