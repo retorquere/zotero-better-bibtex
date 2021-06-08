@@ -459,6 +459,7 @@ class ZoteroItem {
     software:           'computerProgram',
     softwaremodule:     'computerProgram',
     softwareversion:    'computerProgram',
+    talk:               'presentation',
     techreport:         'report',
     thesis:             'thesis',
     unpublished:        'manuscript',
