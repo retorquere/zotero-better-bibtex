@@ -462,6 +462,7 @@ class ZoteroItem {
     techreport:         'report',
     thesis:             'thesis',
     unpublished:        'manuscript',
+    video:              'film',
     web_page:           'webpage', // mendeley made-up entry type
     webpage:            'webpage', // papers3 made-up entry type
   }
