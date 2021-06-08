@@ -2,56 +2,13 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "localeDateOrder": "ymd",
-    "options": {
-      "exportNotes": true
-    },
+    "localeDateOrder": "dmy",
+    "options": {},
     "preferences": {
-      "citekeyFormat": "[auth][year]",
-      "importCaseProtection": "off"
+      "citekeyFormat": "[auth][year]"
     }
   },
   "items": [
-    {
-      "attachments": [
-        {
-          "itemType": "attachment",
-          "path": "/Users/emile/.BBTZ5TEST/zotero/storage/AIHRLS2S/2.pdf",
-          "title": "2",
-          "uri": "http://zotero.org/users/local/6z7M0kXV/items/AIHRLS2S"
-        },
-        {
-          "itemType": "attachment",
-          "path": "/Users/emile/.BBTZ5TEST/zotero/storage/RIUR67LQ/1.pdf",
-          "title": "stuff",
-          "uri": "http://zotero.org/users/local/6z7M0kXV/items/RIUR67LQ"
-        }
-      ],
-      "citationKey": "Afonso2011",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Anabela",
-          "lastName": "Afonso"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Russell",
-          "lastName": "Alpizar-Jara"
-        }
-      ],
-      "date": "2011",
-      "extra": [
-        "Citation Key: Afonso2011",
-        "tex.location: Poster apresentado no Congresso da SPE",
-        "tex.owner: tiago",
-        "tex.referencetype: talk",
-        "tex.timestamp: 2011.10.04"
-      ],
-      "itemID": 1,
-      "itemType": "journalArticle",
-      "title": "Amostragem em duas fases adaptativa para estimar a abund\u00e2ncia de popula\u00e7\u00f5es raras"
-    },
     {
       "ISSN": "1612-4642",
       "citationKey": "springerlink:10.1007/s10344-009-0327-7",
@@ -85,7 +42,7 @@
       "itemID": 2,
       "itemType": "journalArticle",
       "notes": [
-        "<p>10.1007/s10344-009-0327-7</p>"
+        "10.1007/s10344-009-0327-7"
       ],
       "pages": "335-340",
       "publicationTitle": "European Journal of Wildlife Research",
@@ -99,15 +56,43 @@
       "volume": "56"
     },
     {
-      "itemID": 3,
-      "itemType": "note",
-      "note": "Import errors found: <ul><li>Don&#39;t know what Zotero type to make of &#39;talk&#39; for @Afonso2011, importing as journalArticle</li></ul>",
-      "tags": [
+      "attachments": [
         {
-          "tag": "#Better BibTeX import error",
-          "type": 1
+          "itemType": "attachment",
+          "path": "/Users/emile/.BBTZ5TEST/zotero/storage/PZGFFJ3D/2.pdf",
+          "title": "2",
+          "uri": "http://zotero.org/users/local/6z7M0kXV/items/PZGFFJ3D"
+        },
+        {
+          "itemType": "attachment",
+          "path": "/Users/emile/.BBTZ5TEST/zotero/storage/9MBAP3TF/1.pdf",
+          "title": "stuff",
+          "uri": "http://zotero.org/users/local/6z7M0kXV/items/9MBAP3TF"
         }
-      ]
+      ],
+      "citationKey": "Afonso2011",
+      "creators": [
+        {
+          "creatorType": "contributor",
+          "firstName": "Anabela",
+          "lastName": "Afonso"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "Russell",
+          "lastName": "Alpizar-Jara"
+        }
+      ],
+      "date": "2011",
+      "extra": [
+        "Citation Key: Afonso2011",
+        "tex.owner: tiago",
+        "tex.timestamp: 2011.10.04"
+      ],
+      "itemID": 1,
+      "itemType": "presentation",
+      "place": "Poster apresentado no Congresso da SPE",
+      "title": "Amostragem em duas fases adaptativa para estimar a abund\u00e2ncia de popula\u00e7\u00f5es raras"
     }
   ]
 }
