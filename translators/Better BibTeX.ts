@@ -527,10 +527,10 @@ class ZoteroItem {
     if (this.bibtex.fields.subtitle) title = title.concat(this.bibtex.fields.subtitle)
 
     if (this.type === 'encyclopediaArticle') {
-      this.item.publicationTitle = title.join(' - ')
+      this.item.publicationTitle = title.join('. ')
     }
     else {
-      this.item.title = title.join(' - ')
+      this.item.title = title.join('. ')
     }
     return true
   }
