@@ -966,6 +966,21 @@ class ZoteroItem {
       'editor',
       'translator',
     ]
+    const creatorTypeMap = {
+      author: 'author',
+      'film.author': 'director',
+      editor: 'editor',
+      'film.editor': 'scriptwriter',
+      translator: 'translator',
+      bookauthor: 'bookAuthor',
+      collaborator: 'contributor',
+      commentator: 'commenter',
+      director: 'director',
+      editora: 'editor',
+      editorb: 'editor',
+      editors: 'editor',
+      scriptwriter: 'scriptwriter',
+    }
     const creatorsForType = Zotero.Utilities.getCreatorsForType(this.item.itemType)
     for (const type of creatorTypes.concat(Object.keys(this.bibtex.creators).filter(other => !creatorTypes.includes(other)))) {
       // 'assignee' is not a creator field for Zotero
@@ -975,20 +990,8 @@ class ZoteroItem {
       const creators = this.bibtex.fields[type].length ? this.bibtex.creators[type] : []
       delete this.bibtex.fields[type]
 
-      let creatorType = {
-        author: 'author',
-        editor: 'editor',
-        translator: 'translator',
-        bookauthor: 'bookAuthor',
-        collaborator: 'contributor',
-        commentator: 'commenter',
-        director: 'director',
-        editora: 'editor',
-        editorb: 'editor',
-        editors: 'editor',
-        scriptwriter: 'scriptwriter',
-      }[type]
-      if (creatorType === 'author') creatorType = ['inventor', 'programmer', 'author'].find(t => creatorsForType.includes(t))
+      let creatorType = creatorTypeMap[`${this.item.itemType}.${type}`] || creatorTypeMap[type]
+      if (creatorType === 'author') creatorType = ['director', 'inventor', 'programmer', 'author'].find(t => creatorsForType.includes(t))
       if (!creatorsForType.includes(creatorType)) creatorType = null
       if (!creatorType && type === 'bookauthor' && creatorsForType.includes('author')) creatorType = 'author'
       if (!creatorType) creatorType = 'contributor'

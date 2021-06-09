@@ -42,7 +42,7 @@
       "creators": [
         {
           "creatorType": "director",
-          "firstName": "Sebastian",
+          "firstName": "Sebastiaan",
           "lastName": "Marka"
         }
       ],
@@ -50,8 +50,8 @@
       "extra": [
         "Citation Key: Marka.S:2011movie",
         "Place: DE",
-        "tex.date-added: 2020-09-16 13:56:16 +0200",
-        "tex.date-modified: 2020-09-16 13:56:52 +0200",
+        "tex.date-added: 2021-09-16 13:56:16 +0200",
+        "tex.date-modified: 2021-09-16 13:56:52 +0200",
         "tex.read: 1"
       ],
       "itemID": 1,
@@ -78,6 +78,42 @@
       "itemID": 2,
       "itemType": "film",
       "title": "Interview"
+    },
+    {
+      "citationKey": "Ball.W:2014a",
+      "creators": [
+        {
+          "creatorType": "director",
+          "firstName": "Wes",
+          "lastName": "Ball"
+        },
+        {
+          "creatorType": "scriptwriter",
+          "firstName": "Noah",
+          "lastName": "Oppenheim"
+        },
+        {
+          "creatorType": "scriptwriter",
+          "firstName": "Grant Pierce",
+          "lastName": "Myers"
+        },
+        {
+          "creatorType": "scriptwriter",
+          "firstName": "T.S.",
+          "lastName": "Nowlin"
+        }
+      ],
+      "date": "2014",
+      "dateAdded": "2021-06-08T16:17:49Z",
+      "dateModified": "2021-06-08T16:18:02Z",
+      "extra": [
+        "Citation Key: Ball.W:2014a",
+        "Place: US"
+      ],
+      "itemID": 1,
+      "itemType": "film",
+      "title": "The maze runner",
+      "uri": "http://zotero.org/users/1885/items/35RRABKK"
     }
   ]
 }
