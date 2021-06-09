@@ -35,7 +35,7 @@
       "itemType": "book",
       "place": "New York",
       "publisher": "Oxford University Press",
-      "title": "Jihad and death - The Global Appeal of Islamic State"
+      "title": "Jihad and death. The Global Appeal of Islamic State"
     },
     {
       "citationKey": "Marka.S:2011movie",
@@ -110,7 +110,7 @@
       ],
       "itemID": 1,
       "itemType": "film",
-      "title": "The Maze Runner"
+      "title": "The maze runner"
     }
   ]
 }
