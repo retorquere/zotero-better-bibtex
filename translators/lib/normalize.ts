@@ -75,6 +75,7 @@ export function normalize(library: Library): void {
     delete item.autoJournalAbbreviation
     delete item.libraryID
     delete item.key
+    delete item.itemKey
     delete item.version
     delete item.uniqueFields
     delete item.collections

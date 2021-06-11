@@ -1408,6 +1408,7 @@ export class Reference {
         'dateModified',
         'itemID',
         'itemType',
+        'itemKey',
         'key',
         'libraryID',
         'relations',

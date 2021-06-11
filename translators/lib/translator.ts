@@ -82,7 +82,7 @@ type TranslatorHeader = {
 
 class Items {
   public list: CacheableItem[] = []
-  public map: Record<number, CacheableItem> = {}
+  public map: Record<number | string, CacheableItem> = {}
   public current: CacheableItem
 
   private ping: Pinger
@@ -93,7 +93,7 @@ class Items {
       item.$cacheable = cacheable
       // @ts-ignore
       item.journalAbbreviation = item.journalAbbreviation || item.autoJournalAbbreviation
-      this.list.push(this.map[item.itemID] = new Proxy(item, cacheDisabler))
+      this.list.push(this.map[item.itemID] = this.map[item.itemKey] = new Proxy(item, cacheDisabler))
     }
     // fallback to itemType.itemID for notes and attachments. And some items may have duplicate keys
     this.list.sort((a: any, b: any) => {
