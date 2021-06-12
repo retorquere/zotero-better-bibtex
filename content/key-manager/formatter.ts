@@ -297,6 +297,8 @@ class PatternFormatter {
 
   public parsePattern(pattern) {
     const { formatter, postfixes } = (parser.parse(pattern, { items, methods }) as { formatter: string, postfixes: string[]})
+    log.debug('formatter function:', formatter)
+    log.debug('formatter postfixes:', postfixes)
 
     for (const postfix of postfixes) {
       const expected = `${Date.now()}`

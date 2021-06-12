@@ -161,7 +161,7 @@ flag
 
 filter
   = ':(' text:$[^)]+ ')'  { return `chunk = chunk || ${JSON.stringify(text)}`; }
-  / ':>' min:$[0-9]+ ']'  { return `if (chunk.length <= ${limit}) break` }
+  / ':>' min:$[0-9]+      { return `if (chunk.length <= ${limit}) break` }
   / ':' name:$[-a-z]+ params:stringparam* {
       const method = _method_name(name)
       const expected = options.methods.filter[method]
