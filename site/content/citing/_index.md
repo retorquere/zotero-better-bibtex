@@ -69,7 +69,7 @@ A common pattern is `[auth:lower][year]`, which means
 If you want to get fancy, you can set multiple patterns separated by a vertical bar, of which the first will be applied
 that yields a non-empty string. If all return a empty string, a random key will be generated.
 
-A handy application for this behavior is to use the `tex.shortauthor` in the [extra field]({{< ref "../exporting/extra-fields" >}}) if defined to generate short citation keys for entries with long group author names, but to default to `[auth:lower]` otherwise:
+A handy application for this behavior is to use the `tex.shortauthor` from the [extra field]({{< ref "../exporting/extra-fields" >}}) when defined to generate short citation keys for entries with long group author names, but to default to `[auth:lower]` otherwise:
 
 ```text
 [Extra:transliterate:replace=^.*?(?\:tex\\.shortauthor\[\:\=\]\\s+(\\w+))?.*?$,$1,regex:lower][>0][year] | [auth:lower][year]
