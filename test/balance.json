@@ -161,7 +161,7 @@
     "Export 1 references for BibLaTeX to tex.IDs= foo_bar are escaped despite the equals sign #1449": 250,
     "Export 1 references for BibLaTeX to transliteration for citekey #580": 400,
     "Export 1 references for BibLaTeX to type dataset exported as @data instead of @dataset for BibLaTeX #1720": {
-      "msecs": 410,
+      "msecs": 420,
       "runs": -223
     },
     "Export 1 references for BibLaTeX to typo stature-statute (zotero item type) #284": 380,
@@ -200,7 +200,7 @@
     "Export 1 references for BibTeX to Export of item to Better Bibtex fails for auth3_1 #98": 490,
     "Export 1 references for BibTeX to Export unicode as plain text fails for Vietnamese characters #977": 380,
     "Export 1 references for BibTeX to Exporting \"month = {season}\" for BibTeX #1810": {
-      "msecs": 680,
+      "msecs": 670,
       "runs": -317
     },
     "Export 1 references for BibTeX to Exporting Book Sections as Inbook #1474": {
@@ -370,7 +370,7 @@
     "Import 1 references from Literal names": 1220,
     "Import 1 references from Math formatting lost on import #627": 1020,
     "Import 1 references from Problem when importing BibTeX entries with percent sign #95 or preamble #96": 1200,
-    "Import 1 references from Problem when importing BibTeX entries with square brackets #94": 1140,
+    "Import 1 references from Problem when importing BibTeX entries with square brackets #94": 1150,
     "Import 1 references from Spaces lost when expanding string variables during import #1081": 1030,
     "Import 1 references from Wrong ring-above import #1115": 1020,
     "Import 1 references from collaborators to contributors": {
@@ -405,7 +405,7 @@
     "Include first name initial(s) in cite key generation pattern (86)": 450,
     "Jabref groups import does not work #717": 2840,
     "Jabref import - groups lost #1730": {
-      "msecs": 3270,
+      "msecs": 3260,
       "runs": -228
     },
     "Journal abbreviations": 490,
@@ -425,17 +425,17 @@
     },
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 369100,
+    "Really Big whopping library": 368780,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 50440,
+      "msecs": 50490,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
     "Square brackets in Publication field (85), and non-pinned keys must change when the pattern does": 450,
-    "Unabbreviate on import #1436-1": 39070,
+    "Unabbreviate on import #1436-1": 39060,
     "Unbalanced vphantom escapes #1043": 760,
     "arXiv identifiers in BibLaTeX export #460": 1180,
     "auto-export": 14370,
@@ -762,7 +762,7 @@
       "Identical Pinned keys lost when merging duplicated records #1721"
     ]
   },
-  "runs": 344,
+  "runs": 345,
   "slow": {
     "1": [
       "Export 1 references for BibLaTeX to Cite archive documents with BetterBibLaTeX #1799",
