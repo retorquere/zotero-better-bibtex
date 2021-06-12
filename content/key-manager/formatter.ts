@@ -590,6 +590,11 @@ class PatternFormatter {
     return year ? year.replace(/[0-9]+/, y => y.length >= length ? y : (`0000${y}`).slice(-length)): ''
   }
 
+  /** discards the input */
+  public _discard(value: string) { // eslint-disable-line @typescript-eslint/no-unused-vars
+    return ''
+  }
+
   /** transforms date/time to local time. Mainly useful for dateAdded and dateModified as it requires an ISO-formatted input. */
   public _local_time(value: string) {
     const m = value.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})[ T]([0-9]{2}):([0-9]{2}):([0-9]{2})Z?$/)
