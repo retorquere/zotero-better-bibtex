@@ -546,7 +546,7 @@ class PatternFormatter {
     return this._format_date(this.item.date, format)
   }
 
-  /** A pseudo-field from the extra field. eg if you have `Original date: 1970` in your `extra` field, you can get it as `extra=originalDate`, or `tex.shortauthor: APA` which you could get with `[extra=tex.shortauthor]` */
+  /** A pseudo-field from the extra field. eg if you have `Original date: 1970` in your `extra` field, you can get it as `[extra=originalDate]`, or `tex.shortauthor: APA` which you could get with `[extra=tex.shortauthor]` */
   public $extra(variable: string) { // eslint-disable-line @typescript-eslint/no-inferrable-types
     const variables = variable.toLowerCase().trim().split(/\s*\/\s*/).filter(varname => varname)
     if (!variables.length) return ''
