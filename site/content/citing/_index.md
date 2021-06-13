@@ -69,10 +69,16 @@ A common pattern is `[auth:lower][year]`, which means
 If you want to get fancy, you can set multiple patterns separated by a vertical bar, of which the first will be applied
 that yields a non-empty string. If all return a empty string, a random key will be generated.
 
-A handy application for this behavior is to use the `tex.shortauthor` from the [extra field]({{< ref "../exporting/extra-fields" >}}) when defined to generate short citation keys for entries with long group author names, but to default to `[auth:lower]` otherwise:
+An example application for this behavior is to use the `tex.shortauthor` from the [extra field]({{< ref "../exporting/extra-fields" >}}) when defined to generate short citation keys for entries with long group author names, but to default to `[auth:lower]` otherwise:
 
 ```text
 [Extra:transliterate:replace=(?\:tex\\.shortauthor\[\:\=\]\\s+(\\w+))|.*,$1,regex:clean:lower][>0][year] | [auth:lower][year]
+```
+
+although this particular case can be handled more succinctly with
+
+```text
+[extra=tex.shortauthor:transliterate:clean:lower][>0][year] | [auth:lower][year]
 ```
 
 **note the non-greedy regex pattern before the non-capturing group.** Using this pattern, a reference of the "American Psychological Association" from 2021 and `tex.shortauthor: APA` in the extra field would get the citekey `apa2021`. Without the definition in the extra field the generated citekey would be `americanpsychologicalassociation2021`.
