@@ -91,7 +91,7 @@ To generate your citekeys, you use a pattern composed of functions and filters. 
 
 {{< citekey-formatters/fields >}}
 
-(fields marked `**` are only available in Juris-M).
+(fields marked <sup>JM</sup> are only available in Juris-M).
 
 #### Flags
 

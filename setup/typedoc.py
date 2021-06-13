@@ -7,9 +7,8 @@ import glob
 
 def split_and_mark(names):
   common = set(names['zotero']).intersection(names['jurism'])
-  for stars, client in enumerate(['zotero', 'jurism']):
-    stars = '*' * (stars + 1)
-    names[client] = [field + stars for field in set(names[client]) - common]
+  for client, marker in {'zotero': 'Z', 'jurism': 'JM'}.items():
+    names[client] = [field + f'<sup>{marker}</sup>' for field in set(names[client]) - common]
   return sorted(names['zotero'] + names['jurism'] + list(common))
 
 fields = {}
