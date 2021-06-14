@@ -17,7 +17,7 @@
     },
     "Citekey generation failure #708 and sort references on export #957": 2040,
     "Collected notes": {
-      "msecs": 3480,
+      "msecs": 3490,
       "runs": -71
     },
     "Date export to Better CSL-JSON #360 #811": 1350,
@@ -161,7 +161,7 @@
     "Export 1 references for BibLaTeX to tex.IDs= foo_bar are escaped despite the equals sign #1449": 250,
     "Export 1 references for BibLaTeX to transliteration for citekey #580": 400,
     "Export 1 references for BibLaTeX to type dataset exported as @data instead of @dataset for BibLaTeX #1720": {
-      "msecs": 410,
+      "msecs": 420,
       "runs": -223
     },
     "Export 1 references for BibLaTeX to typo stature-statute (zotero item type) #284": 380,
@@ -189,7 +189,7 @@
       "runs": -240
     },
     "Export 1 references for BibTeX to DOI not escaped using postscript #1803": {
-      "msecs": 650,
+      "msecs": 660,
       "runs": -309
     },
     "Export 1 references for BibTeX to Double superscript in title field on export #1217": 400,
@@ -240,7 +240,7 @@
       "runs": -80
     },
     "Export 1 references for BibTeX to Using the Extra field in the exported Citation Key #1571": {
-      "msecs": 570,
+      "msecs": 580,
       "runs": -300
     },
     "Export 1 references for BibTeX to Word segmentation for Chinese references #1682": {
@@ -331,7 +331,7 @@
     "Export 6 references for BibLaTeX to Better BibLaTeX.stable-keys": 620,
     "Export 8 references for BibLaTeX to Don't title-case sup-subscripts #1037": 660,
     "Export as Collected Notes does not list subcollections #1768": {
-      "msecs": 4690,
+      "msecs": 4710,
       "runs": -256
     },
     "Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825": 990,
@@ -370,7 +370,7 @@
     "Import 1 references from Literal names": 1220,
     "Import 1 references from Math formatting lost on import #627": 1020,
     "Import 1 references from Problem when importing BibTeX entries with percent sign #95 or preamble #96": 1200,
-    "Import 1 references from Problem when importing BibTeX entries with square brackets #94": 1140,
+    "Import 1 references from Problem when importing BibTeX entries with square brackets #94": 1150,
     "Import 1 references from Spaces lost when expanding string variables during import #1081": 1030,
     "Import 1 references from Wrong ring-above import #1115": 1020,
     "Import 1 references from collaborators to contributors": {
@@ -393,19 +393,19 @@
     "Import 2 references from BibLaTeX Patent author handling, type #1060": 1220,
     "Import 2 references from space after citekey creates confusion #716": 1170,
     "Import 20 references from BBT does not import groups from JabRef 5.1 #1641": {
-      "msecs": 3670,
+      "msecs": 3680,
       "runs": -161
     },
     "Import 3 references from Better BibTeX.009": 1130,
-    "Import 3 references from Import Jabref fileDirectory, unexpected reference type #1058": 1900,
+    "Import 3 references from Import Jabref fileDirectory, unexpected reference type #1058": 1910,
     "Import 4 references from Title of German entry converted to lowercase during import #1350": 1310,
     "Import 8 references from Overline during Import #1467": 1720,
     "Import 9 references from Better BibLaTeX import improvements #549": 1520,
     "Import support for the online type in BBT #1358": 1170,
     "Include first name initial(s) in cite key generation pattern (86)": 450,
-    "Jabref groups import does not work #717": 2830,
+    "Jabref groups import does not work #717": 2840,
     "Jabref import - groups lost #1730": {
-      "msecs": 3260,
+      "msecs": 3270,
       "runs": -228
     },
     "Journal abbreviations": 490,
@@ -425,17 +425,17 @@
     },
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 370390,
+    "Really Big whopping library": 368290,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 50170,
+      "msecs": 50670,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
     "Square brackets in Publication field (85), and non-pinned keys must change when the pattern does": 450,
-    "Unabbreviate on import #1436-1": 39030,
+    "Unabbreviate on import #1436-1": 39050,
     "Unbalanced vphantom escapes #1043": 760,
     "arXiv identifiers in BibLaTeX export #460": 1180,
     "auto-export": 14370,
@@ -458,7 +458,7 @@
       "runs": -36
     },
     "web_page and other mendeley idiocy": {
-      "msecs": 39260,
+      "msecs": 39500,
       "runs": -239
     }
   },
@@ -762,7 +762,7 @@
       "Identical Pinned keys lost when merging duplicated records #1721"
     ]
   },
-  "runs": 339,
+  "runs": 347,
   "slow": {
     "1": [
       "Export 1 references for BibLaTeX to Cite archive documents with BetterBibLaTeX #1799",

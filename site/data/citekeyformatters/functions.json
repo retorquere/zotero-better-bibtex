@@ -12,7 +12,7 @@
   "`authorsN` / `editorsN`, `+initials`, `+<joinchar>`": "The last name of up to N authors. If there are more authors, \"EtAl\" is appended.",
   "`authshort` / `edtrshort`, `+initials`, `+<joinchar>`": "The last name if one author is given; the first character of up to three authors' last names if more than one author is given. A plus character is added, if there are more than three authors.",
   "`date`": "The date of the publication",
-  "`extra`": "A line from the extra field",
+  "`extra`": "A pseudo-field from the extra field. eg if you have `Original date: 1970` in your `extra` field, you can get it as `[extra=originalDate]`, or `tex.shortauthor: APA` which you could get with `[extra=tex.shortauthor]`",
   "`firstpage`": "The number of the first page of the publication (Caution: this will return the lowest number found in the pages field, since BibTeX allows `7,41,73--97` or `43+`.)",
   "`journal`": "returns the journal abbreviation, or, if not found, the journal title, If 'automatic journal abbreviation' is enabled in the BBT settings, it will use the same abbreviation filter Zotero uses in the wordprocessor integration. You might want to use the `abbr` filter on this.",
   "`keywordN`": "Tag number `N`",

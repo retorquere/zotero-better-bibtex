@@ -5,6 +5,7 @@
   "`capitalize`": "uppercases the first letter of each word",
   "`clean`": "transliterates the citation key and removes unsafe characters",
   "`condense`=sep? (string)": "this replaces spaces in the value passed in. You can specify what to replace it with by adding it as a parameter, e.g `condense=_` will replace spaces with underscores. **Parameters should not contain spaces** unless you want the spaces in the value passed in to be replaced with those spaces in the parameter",
+  "`discard`": "discards the input",
   "`fold`=mode? ('german' | 'japanese')": "tries to replace diacritics with ascii look-alikes. Removes non-ascii characters it cannot match",
   "`format-date`=format? (string)": "formats date as by replacing y, m and d in the format",
   "`jieba`": "jieba",

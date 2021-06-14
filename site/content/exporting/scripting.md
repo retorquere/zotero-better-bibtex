@@ -131,7 +131,7 @@ If you want to retain commas in your keywords (e.g. for chemical elements) and s
 
 ```javascript
 if (Translator.BetterTeX) {
-  reference.add({ name: 'keywords', value: item.tags, sep: ', ' });
+  reference.add({ name: 'keywords', value: item.tags, sep: ', ', enc: 'tags' });
 }
 ```
 

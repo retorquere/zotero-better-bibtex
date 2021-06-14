@@ -111,7 +111,8 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
 
     // come on -- these are used in the collections export but not provided on the items?!
     serialized.itemID = item.id
-    serialized.key = item.key
+    // serialized.key = serialized.itemKey = item.key
+    serialized.itemKey = item.key
     serialized.libraryID = item.libraryID
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return

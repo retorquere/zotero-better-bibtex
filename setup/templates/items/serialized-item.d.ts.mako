@@ -14,7 +14,7 @@ export interface Tag { tag: string, type?: number }
 export interface Creator { creatorType: string, name?: string, firstName?: string, lastName?:string, fieldMode?: number, source?: string }
 
 interface ItemBase {
-  key: string
+  itemKey: string
   itemID: number
   libraryID: number
   uri: string

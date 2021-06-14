@@ -104,11 +104,15 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: install ${{ matrix.client }} + beta
+    - name: install ${{ matrix.client }}
       run: |
         curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
         sudo apt-get update
-        sudo apt-get install ${{ matrix.client }} ${{ matrix.client }}-beta
+        sudo apt-get install ${{ matrix.client }}
+
+    - name: install ${{ matrix.client }} beta
+      continue-on-error: true
+      run: sudo apt-get install ${{ matrix.client }}-beta
 
     # fast test
     - if: contains(github.event.commits[0].message, '[fast-test]')
