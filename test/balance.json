@@ -1,7 +1,7 @@
 {
   "duration": {
     "(non-)dropping particle handling #313": 2800,
-    "AUX scanner": 8580,
+    "AUX scanner": 8570,
     "BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372": 270,
     "Better BibTeX Import 2": 1160,
     "BibTeX name escaping has a million inconsistencies #438": 480,
@@ -200,7 +200,7 @@
     "Export 1 references for BibTeX to Export of item to Better Bibtex fails for auth3_1 #98": 490,
     "Export 1 references for BibTeX to Export unicode as plain text fails for Vietnamese characters #977": 380,
     "Export 1 references for BibTeX to Exporting \"month = {season}\" for BibTeX #1810": {
-      "msecs": 660,
+      "msecs": 650,
       "runs": -317
     },
     "Export 1 references for BibTeX to Exporting Book Sections as Inbook #1474": {
@@ -331,7 +331,7 @@
     "Export 6 references for BibLaTeX to Better BibLaTeX.stable-keys": 620,
     "Export 8 references for BibLaTeX to Don't title-case sup-subscripts #1037": 660,
     "Export as Collected Notes does not list subcollections #1768": {
-      "msecs": 4700,
+      "msecs": 4690,
       "runs": -256
     },
     "Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825": 990,
@@ -391,13 +391,20 @@
     "Import 2 references from Better BibTeX.001": 1170,
     "Import 2 references from Better BibTeX.003": 1050,
     "Import 2 references from BibLaTeX Patent author handling, type #1060": 1220,
+    "Import 2 references from Import Jabref fileDirectory, unexpected reference type #1058": {
+      "msecs": 1900,
+      "runs": -348
+    },
     "Import 2 references from space after citekey creates confusion #716": 1170,
     "Import 20 references from BBT does not import groups from JabRef 5.1 #1641": {
-      "msecs": 3680,
+      "msecs": 3670,
       "runs": -161
     },
     "Import 3 references from Better BibTeX.009": 1130,
-    "Import 3 references from Import Jabref fileDirectory, unexpected reference type #1058": 1910,
+    "Import 4 references from Improve import of films #1837": {
+      "msecs": 1590,
+      "runs": -348
+    },
     "Import 4 references from Title of German entry converted to lowercase during import #1350": 1310,
     "Import 8 references from Overline during Import #1467": 1720,
     "Import 9 references from Better BibLaTeX import improvements #549": 1520,
@@ -425,17 +432,17 @@
     },
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 367910,
+    "Really Big whopping library": 367620,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 50670,
+      "msecs": 50710,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
     "Square brackets in Publication field (85), and non-pinned keys must change when the pattern does": 450,
-    "Unabbreviate on import #1436-1": 39020,
+    "Unabbreviate on import #1436-1": 38990,
     "Unbalanced vphantom escapes #1043": 760,
     "arXiv identifiers in BibLaTeX export #460": 1180,
     "auto-export": 14370,
@@ -458,7 +465,7 @@
       "runs": -36
     },
     "web_page and other mendeley idiocy": {
-      "msecs": 39430,
+      "msecs": 39350,
       "runs": -239
     }
   },
@@ -653,6 +660,7 @@
       "Export 1 references for BibTeX to braces after textemdash followed by unicode #980",
       "Export 2 references for BibTeX to creating a key with [authForeIni] and [authN] not working properly #892",
       "Export 2 references for BibTeX to date not always parsed properly into month and year with PubMed #1112",
+      "Export 5 references for BibTeX to date ranges #747+#746",
       "Export 1 references for BibTeX to preserve @strings between import-export #1162",
       "Export 2 references for BibTeX to titles are title-cased in .bib file #558",
       "Omit URL export when DOI present. #131",
@@ -726,7 +734,6 @@
       "Import 2 references from BibLaTeX Patent author handling, type #1060",
       "Import 1 references from BibTeX import; preamble with def create problems #732",
       "Import 1 references from Failure to handle unparsed author names (92)",
-      "Import 3 references from Import Jabref fileDirectory, unexpected reference type #1058",
       "Import 1 references from Import fails to perform @String substitutions #154",
       "Import 1 references from Literal names",
       "Import 1 references from Problem when importing BibTeX entries with percent sign #95 or preamble #96",
@@ -743,7 +750,6 @@
     ],
     "2": [
       "Export 36 references for BibTeX to Better BibTeX does not export collections #901",
-      "Export 5 references for BibTeX to date ranges #747+#746",
       "Bibtex key regenerating issue when trashing items #117",
       "two ISSN number are freezing browser #110 + Generating keys and export broken #111",
       "Postfixed keys different between computers #1788",
@@ -762,7 +768,7 @@
       "Identical Pinned keys lost when merging duplicated records #1721"
     ]
   },
-  "runs": 348,
+  "runs": 349,
   "slow": {
     "1": [
       "Export 1 references for BibLaTeX to Cite archive documents with BetterBibLaTeX #1799",
@@ -1038,7 +1044,6 @@
       "Import 2 references from BibLaTeX Patent author handling, type #1060",
       "Import 1 references from BibTeX import; preamble with def create problems #732",
       "Import 1 references from Failure to handle unparsed author names (92)",
-      "Import 3 references from Import Jabref fileDirectory, unexpected reference type #1058",
       "Import 1 references from Import fails to perform @String substitutions #154",
       "Import 1 references from Literal names",
       "Import 1 references from Problem when importing BibTeX entries with percent sign #95 or preamble #96",
@@ -1058,7 +1063,9 @@
       "Merging error with arXiv ID #1373",
       "Duplicate Citation Key Alias #1384",
       "ids field should be created in raw mode #1729",
-      "Identical Pinned keys lost when merging duplicated records #1721"
+      "Identical Pinned keys lost when merging duplicated records #1721",
+      "Import 4 references from Improve import of films #1837",
+      "Import 2 references from Import Jabref fileDirectory, unexpected reference type #1058"
     ],
     "2": [
       "Really Big whopping library",

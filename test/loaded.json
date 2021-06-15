@@ -555,6 +555,8 @@
   "import/Import support for the online type in BBT #1358.roundtrip.bib",
   "import/Importing changes Journal to The Journal #1601.bib",
   "import/Importing changes Journal to The Journal #1601.json",
+  "import/Improve import of films #1837.bib",
+  "import/Improve import of films #1837.json",
   "import/Issues with round instead of curly braces do not import correctly #871.bib",
   "import/Issues with round instead of curly braces do not import correctly #871.json",
   "import/Jabref groups import does not work #717.2.10.bib",
