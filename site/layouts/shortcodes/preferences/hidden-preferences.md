@@ -21,7 +21,7 @@ Number of seconds to wait after your system goes idle before kicking off auto-ex
 
 default: `0`
 
-When > 0, BBT will automatically pin the first citekey it generates for an item after this many seconds.
+When > 0, BBT will automatically pin the first citation keys it generates for an item after this many seconds.
 
 ### biblatexExtendedDateFormat
 
@@ -39,7 +39,7 @@ How often the Better BibTeX database should be saved to disk. Defaults to once e
 
 default: `no`
 
-Replaces the "note" field with the bibtex key during citation rendering in Word/Libreoffice. Main use-case is to help migrating word documents to pandoc. This setting only takes effect during startup, so if you change it, you will have to restart Zotero to have this take effect (or to disable it. Please disable it when done). You will need to use a custom CSL style (such as [this](https://raw.githubusercontent.com/retorquere/zotero-better-bibtex/master/better-bibtex-citekeys.csl)) to make this work. Have Zotero generate the bibliography, which will put the citekeys in the Word/LibreOffice document, which can then be passed through pandoc.
+Replaces the "note" field with the bibtex key during citation rendering in Word/Libreoffice. Main use-case is to help migrating word documents to pandoc. This setting only takes effect during startup, so if you change it, you will have to restart Zotero to have this take effect (or to disable it. Please disable it when done). You will need to use a custom CSL style (such as [this](https://raw.githubusercontent.com/retorquere/zotero-better-bibtex/master/better-bibtex-citekeys.csl)) to make this work. Have Zotero generate the bibliography, which will put the citation keys in the Word/LibreOffice document, which can then be passed through pandoc.
 
 ### csquotes
 
@@ -101,7 +101,7 @@ Any characters entered here will prefer a text-mode LaTeX-command counterpart ov
 
 default: `yes`
 
-New translators installed in Zotero are not immediately usuable for drag-and-drop. If you want to use BBT for drag-and-drop (e.g. to drag and drop citekeys or citations), you will be asked whether you want to restart after installation, or whether you want to reinstall when it is more convenient to you. You will be asked this whenever the BBT translators update, but you can disable this by checking "Do not ask again" in that dialog.
+New translators installed in Zotero are not immediately usuable for drag-and-drop. If you want to use BBT for drag-and-drop (e.g. to drag and drop citation keys or citations), you will be asked whether you want to restart after installation, or whether you want to reinstall when it is more convenient to you. You will be asked this whenever the BBT translators update, but you can disable this by checking "Do not ask again" in that dialog.
 
 ### parseParticles
 

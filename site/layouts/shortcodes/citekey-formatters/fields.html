@@ -2,7 +2,7 @@
   {{ range $row := .Site.Data.citekeyformatters.fields }}
     <tr>
       {{ range $field := $row }}
-        <td>{{ $field }}</td>
+        <td>{{ $field | safeHTML }}</td>
       {{ end }}
     </tr>
   {{ end }}

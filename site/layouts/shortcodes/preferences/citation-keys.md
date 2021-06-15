@@ -13,6 +13,12 @@ default: `yes`
 
 If you have deviated from the default citation key format pattern by [specifying your own]({{ ref . "citing" }}), you may wind up with non-ASCII characters in your citation keys. You can prevent that using the `fold` function at the appropriate place in your pattern, but checking this checkbox will just apply `fold` to all your keys.
 
+#### Enable citation key search
+
+default: `yes`
+
+Enable searching on citation keys. Slows down startup on very large libraries. Requires Zotero restart to enable/disable.
+
 ### Keeping citation keys unique
 
 #### Keep keys unique
@@ -43,21 +49,19 @@ Options:
 
 default: `LaTeX citation`
 
-Used for drag-and-drop/quick copy using Better BibTeX citekeys. In the Zotero "Export" pane, choose `Better BibTeX Quick Copy` as the default export format for quick copy, and choose the desired format for the drag-and-drop citations here.
+Used for drag-and-drop/quick copy using Better BibTeX citation keys. In the Zotero "Export" pane, choose `Better BibTeX Quick Copy` as the default export format for quick copy, and choose the desired format for the drag-and-drop citations here.
 
 Options:
 
 * LaTeX citation
 * Cite Keys
 * Pandoc citation
-* Org-mode citekey select link
-* Org-mode Zotero select link
+* Org-mode select link
 * org-ref citation
 * RTF Scan marker
 * Roam Cite Key
 * Atom (https://atom.io/packages/zotero-citations)
 * GitBook
-* Citekey select link
 * Zotero select link
 * Eta template
 
@@ -72,6 +76,28 @@ Used for drag-and-drop/quick copy citations in `LaTeX` format. Set the desired L
 default: `no`
 
 Used for drag-and-drop/quick copy citations in `Pandoc` format. You can use this option to select whether you want to have these pandoc citations surrounded with brackets or not.
+
+#### Org-mode select link
+
+default: `using Zotero item key`
+
+OrgMode to select items in your library
+
+Options:
+
+* using Zotero item key
+* using Better BibTeX citation key
+
+#### Zotero select link
+
+default: `using Zotero item key`
+
+Hyperlink to select items in your library
+
+Options:
+
+* using Zotero item key
+* using Better BibTeX citation key
 
 #### Eta template
 

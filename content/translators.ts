@@ -17,6 +17,8 @@ import { DB } from './db/main'
 import { sleep } from './sleep'
 import { flash } from './flash'
 import { $and, Query } from './db/loki'
+import { Events } from './events'
+import { Pinger } from './ping'
 
 import { override } from './prefs-meta'
 import * as translatorMetadata from '../gen/translators.json'
@@ -61,25 +63,6 @@ class Queue {
     return await this.queue.schedule(task, [translatorID, displayOptions, job], { priority: 1, timestamp: job.started })
   }
 }
-
-type Trace = {
-  translator: string
-  items: number
-  cached: {
-    serializer: number
-    export: number
-  }
-  prep: {
-    total: number
-    duration: number[]
-  }
-  export: {
-    total: number
-    duration: number[]
-  }
-}
-
-const trace: Trace[] = []
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const Translators = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
@@ -228,34 +211,21 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     const translator = this.byId[translatorID]
 
     const start = Date.now()
-    let now
-
-    const current_trace: Trace = {
-      translator: translator.label,
-      items: 0,
-      cached: {
-        serializer: 0,
-        export: 0,
-      },
-      prep: {
-        total: 0,
-        duration: [],
-      },
-      export: {
-        total: 0,
-        duration: [],
-      },
-    }
-    trace.push(current_trace)
 
     job.preferences = job.preferences || {}
     displayOptions = displayOptions || {}
 
     // undo override smuggling so I can pre-fetch the cache
     const cloaked_override = 'preference_'
+    const cloaked_auto_export = 'auto_export_id'
+    let autoExport: number
     for (const [pref, value] of Object.entries(displayOptions)) {
       if (pref.startsWith(cloaked_override)) {
         job.preferences[pref.replace(cloaked_override, '')] = (value as unknown as any)
+        delete displayOptions[pref]
+      }
+      else if (pref === cloaked_auto_export) {
+        autoExport = parseInt(value as unknown as string)
         delete displayOptions[pref]
       }
     }
@@ -270,8 +240,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       // relative file paths are going to be different based on the file being exported to
       || job.preferences.relativeFilePaths
     )
-
-    let last_trace = start
 
     const cache = caching && Cache.getCollection(translator.label)
 
@@ -314,6 +282,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       collections: [],
       cslItems: {},
       cache: {},
+      autoExport,
     }
 
     let items: any[] = []
@@ -333,13 +302,11 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           break
 
         case 'item':
-          now = Date.now()
-          current_trace.export.duration.push(now - last_trace)
-          last_trace = now
           job.translate._runHandler('itemDone', items[e.data.item]) // eslint-disable-line no-underscore-dangle
           break
 
         case 'done':
+          Events.emit('export-progress', 100, translator.label, autoExport) // eslint-disable-line no-magic-numbers
           deferred.resolve(typeof e.data.output === 'boolean' ? '' : e.data.output)
           worker.terminate()
           this.workers.running.delete(id)
@@ -361,14 +328,21 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           let cached = cache.findOne($and(selector))
 
           if (cached) {
+            // this should not happen?
+            log.debug('cache-rate: +0?')
             cached.reference = reference
             cached.metadata = metadata
             cached = cache.update(cached)
 
           }
           else {
+            // log.debug('cache-rate: +1')
             cache.insert({...selector, reference, metadata})
           }
+          break
+
+        case 'progress':
+          Events.emit('export-progress', e.data.percent, e.data.translator, e.data.autoExport)
           break
 
         default:
@@ -421,29 +395,30 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
     items = items.filter(item => !item.isAnnotation?.())
 
-    // use a loop instead of map so we can await for beachball protection
-    let batch = Date.now()
-    const count = { cached: 0 }
+    let worked = Date.now()
     config.items = []
+    const prepare = new Pinger({
+      total: items.length * (translator.label.includes('CSL') ? 2 : 1),
+      callback: pct => Events.emit('export-progress', -pct, translator.label, autoExport),
+    })
+    log.debug('cache-rate: starting prep')
+    // use a loop instead of map so we can await for beachball protection
     for (const item of items) {
-      config.items.push(Serializer.fast(item, count))
+      config.items.push(Serializer.fast(item))
 
       // sleep occasionally so the UI gets a breather
-      if ((Date.now() - batch) > 1000) { // eslint-disable-line no-magic-numbers
+      if ((Date.now() - worked) > 100) { // eslint-disable-line no-magic-numbers
         await sleep(0) // eslint-disable-line no-magic-numbers
-        batch = Date.now()
+        worked = Date.now()
       }
 
-      now = Date.now()
-      current_trace.prep.duration.push(now - last_trace)
-      last_trace = now
+      prepare.update()
     }
-    current_trace.items = config.items.length
-    current_trace.cached.serializer = count.cached
     if (job.path && job.canceled) {
       log.debug('export to', job.path, 'started at', job.started, 'canceled')
       return ''
     }
+    log.debug('cache-rate: prep done')
 
     if (this.byId[translatorID].configOptions?.getCollections) {
       config.collections = collections.map(collection => {
@@ -455,15 +430,15 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     // pre-fetch cache
+    log.debug('cache-rate: load cache')
     if (cache) {
       const query = cacheSelector(config.items.map(item => item.itemID), displayOptions, config.preferences)
 
       // not safe in async!
       const cloneObjects = cache.cloneObjects
-      cache.cloneObjects = false
       // uncloned is safe because it gets serialized in the transfer
+      cache.cloneObjects = false
       config.cache = cache.find($and(query)).reduce((acc, cached) => {
-        current_trace.cached.export += 1
         // direct-DB access for speed...
         cached.meta.updated = (new Date).getTime() // touches the cache object so it isn't reaped too early
         acc[cached.itemID] = cached
@@ -478,42 +453,25 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     if (translator.label.includes('CSL')) {
       for (const item of config.items) {
         // if there's a cached item, we don't need a fresh CSL item since we're not regenerating it anyhow
-        if (config.cache[item.itemID]) continue
-
-        config.cslItems[item.itemID] = Zotero.Utilities.itemToCSLJSON(item)
+        if (!config.cache[item.itemID]) config.cslItems[item.itemID] = Zotero.Utilities.itemToCSLJSON(item)
+        prepare.update()
       }
     }
-
-    now = Date.now()
+    prepare.done()
+    log.debug('cache-rate: cache loaded')
 
     // if the average startup time is greater than the autoExportDelay, bump up the delay to prevent stall-cascades
-    this.workers.startup += Math.ceil((now - start) / 1000) // eslint-disable-line no-magic-numbers
+    this.workers.startup += Math.ceil((Date.now() - start) / 1000) // eslint-disable-line no-magic-numbers
     // eslint-disable-next-line no-magic-numbers
     if (this.workers.total > 5 && (this.workers.startup / this.workers.total) > Preference.autoExportDelay) Preference.autoExportDelay = Math.ceil(this.workers.startup / this.workers.total)
-    log.debug('worker:', { avgstartup: this.workers.startup / this.workers.total, startup: now - start, caching, workers: this.workers, autoExportDelay: Preference.autoExportDelay })
-
-    current_trace.prep.duration.push(now - last_trace)
-    current_trace.prep.total = now - start
-    last_trace = now
 
     log.debug('worker: kicking off')
     worker.postMessage({ kind: 'start', config: JSON.parse(JSON.stringify(config)) })
 
-    /*
-    const interval = setInterval(() => {
-      if ((Date.now() - now) > 10000) { // eslint-disable-line no-magic-numbers
-        clearInterval(interval)
-      }
-      else {
-        worker.postMessage({ kind: 'ping' })
-      }
-    }, 500) // eslint-disable-line no-magic-numbers
-    */
-
     return deferred.promise
   }
 
-  public async exportItems(translatorID: string, displayOptions: any, scope: ExportScope, path = null): Promise<string> {
+  public async exportItems(translatorID: string, displayOptions: any, scope: ExportScope, path: string = null): Promise<string> {
     await Zotero.BetterBibTeX.ready
 
     const start = Date.now()
@@ -704,21 +662,5 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     return scope
-  }
-}
-
-const OK = 200
-const SERVER_ERROR = 500
-Zotero.Server.Endpoints['/better-bibtex/translations/stats'] = class {
-  public supportedMethods = ['GET']
-
-  public init(_request) {
-    try {
-      return [ OK, 'application/json', JSON.stringify(trace) ]
-
-    }
-    catch (err) {
-      return [SERVER_ERROR, 'text/plain', `${err}`]
-    }
   }
 }

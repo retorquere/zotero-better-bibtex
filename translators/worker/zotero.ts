@@ -52,6 +52,10 @@ class WorkerZoteroBetterBibTeX {
     return Zotero.config.cache[itemID]
   }
 
+  public setProgress(percent: number) {
+    Zotero.send({ kind: 'progress', percent, translator: workerContext.translator, autoExport: Zotero.config.autoExport })
+  }
+
   public cacheStore(itemID: number, options: any, prefs: any, reference: string, metadata: any) {
     if (Zotero.config.preferences.workersCache) Zotero.send({ kind: 'cache', itemID, reference, metadata })
     return true
@@ -127,18 +131,23 @@ class WorkerZoteroUtilities {
   }
 }
 
+function isWinRoot(path) {
+  return workerContext.platform === 'win' && path.match(/^[a-z]:\\?$/i)
+}
 function makeDirs(path) {
-  if (!OS.Path.split(path).absolute) throw new Error(`Will not make relative ${path}`)
+  if (isWinRoot(path)) return
+  if (!OS.Path.split(path).absolute) throw new Error(`Will not create relative ${path}`)
 
   path = OS.Path.normalize(path)
 
   const paths: string[] = []
-  while (path !== paths[0] && !OS.File.exists(path)) {
+  // path === paths[0] means we've hit the root, as the dirname of root is root
+  while (path !== paths[0] && !isWinRoot(path) && !OS.File.exists(path)) {
     paths.unshift(path)
     path = OS.Path.dirname(path)
   }
 
-  if (!(OS.File.stat(path) as OS.File.Entry).isDir) throw new Error(`makeDirs: root ${path} is not a directory`)
+  if (!isWinRoot(path) && !(OS.File.stat(path) as OS.File.Entry).isDir) throw new Error(`makeDirs: root ${path} is not a directory`)
 
   for (path of paths) {
     OS.File.makeDir(path) as void
@@ -156,7 +165,6 @@ function saveFile(path, overwrite) {
   if (this.linkMode === 'imported_file' || (this.linkMode === 'imported_url' && this.contentType !== 'text/html')) {
     makeDirs(OS.Path.dirname(this.path))
     OS.File.copy(this.localPath, this.path, { noOverwrite: !overwrite })
-
   }
   else if (this.linkMode === 'imported_url') {
     const target = OS.Path.dirname(this.path)
@@ -167,16 +175,13 @@ function saveFile(path, overwrite) {
 
     const snapshot = OS.Path.dirname(this.localPath)
     const iterator = new OS.File.DirectoryIterator(snapshot)
-    let entry
-    try {
-      while (entry = iterator.next()) {
-        if (entry.isDir) throw new Error(`Unexpected directory ${entry.path} in snapshot`)
+    // PITA dual-type OS.Path is promises on main thread but sync in worker
+    iterator.forEach(entry => { // eslint-disable-line @typescript-eslint/no-floating-promises
+      if (entry.isDir) throw new Error(`Unexpected directory ${entry.path} in snapshot`)
+      if (entry.name !== '.zotero-ft-cache') {
         OS.File.copy(OS.Path.join(snapshot, entry.name), OS.Path.join(target, entry.name), { noOverwrite: !overwrite })
       }
-    }
-    finally {
-      iterator.close()
-    }
+    })
   }
 
   return true

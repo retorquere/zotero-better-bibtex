@@ -57,7 +57,7 @@ export const Exporter = new class {
       this.jabref.citekeys.set(item.itemID, item.citationKey)
 
       // this is not automatically lazy-evaluated?!?!
-      const cached: Cache.ExportedItem = item.cachable ? Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences) : null
+      const cached: Cache.ExportedItem = item.$cacheable ? Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences) : null
       Translator.cache[cached ? 'hits' : 'misses'] += 1
 
       if (cached) {

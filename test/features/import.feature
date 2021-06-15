@@ -54,6 +54,7 @@ Scenario Outline: Import <references> references from <file>
   Then the library should match "import/*.json"
   Examples:
   | file                                                                        | references  |
+  | Improve import of films #1837                                               | 4           |
   | tex.origdate ignored in citekey generation #1696                            | 1           |
   | collaborators to contributors                                               | 1           |
   | BBT does not import groups from JabRef 5.1 #1641                            | 20          |
@@ -86,7 +87,7 @@ Scenario Outline: Import <references> references from <file>
   | BibLaTeX Patent author handling, type #1060                                 | 2           |
   | BibTeX import; preamble with def create problems #732                       | 1           |
   | Failure to handle unparsed author names (92)                                | 1           |
-  | Import Jabref fileDirectory, unexpected reference type #1058                | 3           |
+  | Import Jabref fileDirectory, unexpected reference type #1058                | 2           |
   | Import fails to perform @String substitutions #154                          | 1           |
   | Literal names                                                               | 1           |
   | Problem when importing BibTeX entries with percent sign #95 or preamble #96 | 1           |

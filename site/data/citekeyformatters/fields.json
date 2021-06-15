@@ -2,20 +2,20 @@
   [
     "AbstractNote",
     "AccessDate",
-    "AdminFlag**",
-    "AdoptionDate**"
+    "AdminFlag<sup>JM</sup>",
+    "AdoptionDate<sup>JM</sup>"
   ],
   [
-    "Album**",
+    "Album<sup>JM</sup>",
     "ApplicationNumber",
     "Archive",
-    "ArchiveCollection**"
+    "ArchiveCollection<sup>JM</sup>"
   ],
   [
     "ArchiveLocation",
     "ArtworkMedium",
     "ArtworkSize",
-    "AssemblyNumber**"
+    "AssemblyNumber<sup>JM</sup>"
   ],
   [
     "Assignee",
@@ -25,7 +25,7 @@
   ],
   [
     "BlogTitle",
-    "BookAbbreviation**",
+    "BookAbbreviation<sup>JM</sup>",
     "BookTitle",
     "CallNumber"
   ],
@@ -39,7 +39,7 @@
     "CodeVolume",
     "Committee",
     "Company",
-    "ConferenceDate**"
+    "ConferenceDate<sup>JM</sup>"
   ],
   [
     "ConferenceName",
@@ -49,18 +49,18 @@
   ],
   [
     "Date",
-    "DateAmended**",
+    "DateAmended<sup>JM</sup>",
     "DateDecided",
     "DateEnacted"
   ],
   [
     "DictionaryTitle",
     "Distributor",
-    "Division**",
+    "Division<sup>JM</sup>",
     "DocketNumber"
   ],
   [
-    "DocumentName**",
+    "DocumentName<sup>JM</sup>",
     "DocumentNumber",
     "Edition",
     "EncyclopediaTitle"
@@ -72,7 +72,7 @@
     "ForumTitle"
   ],
   [
-    "GazetteFlag**",
+    "GazetteFlag<sup>JM</sup>",
     "Genre",
     "History",
     "ISBN"
@@ -87,7 +87,7 @@
     "IssueDate",
     "IssuingAuthority",
     "JournalAbbreviation",
-    "Jurisdiction**"
+    "Jurisdiction<sup>JM</sup>"
   ],
   [
     "Label",
@@ -104,31 +104,31 @@
   [
     "Medium",
     "MeetingName",
-    "MeetingNumber**",
+    "MeetingNumber<sup>JM</sup>",
     "NameOfAct"
   ],
   [
     "Network",
-    "NewsCaseDate**",
+    "NewsCaseDate<sup>JM</sup>",
     "NumPages",
     "Number"
   ],
   [
     "NumberOfVolumes",
-    "OpeningDate**",
-    "Opus**",
-    "OriginalDate**"
+    "OpeningDate<sup>JM</sup>",
+    "Opus<sup>JM</sup>",
+    "OriginalDate<sup>JM</sup>"
   ],
   [
     "Pages",
-    "ParentTreaty**",
+    "ParentTreaty<sup>JM</sup>",
     "PatentNumber",
     "Place"
   ],
   [
     "PostType",
     "PresentationType",
-    "PriorityDate**",
+    "PriorityDate<sup>JM</sup>",
     "PriorityNumbers"
   ],
   [
@@ -138,27 +138,27 @@
     "PublicLawNumber"
   ],
   [
-    "PublicationDate**",
-    "PublicationNumber**",
+    "PublicationDate<sup>JM</sup>",
+    "PublicationNumber<sup>JM</sup>",
     "PublicationTitle",
     "Publisher"
   ],
   [
     "References",
-    "RegnalYear**",
-    "RegulationType**",
-    "RegulatoryBody**"
+    "RegnalYear<sup>JM</sup>",
+    "RegulationType<sup>JM</sup>",
+    "RegulatoryBody<sup>JM</sup>"
   ],
   [
-    "Reign**",
-    "Release**",
+    "Reign<sup>JM</sup>",
+    "Release<sup>JM</sup>",
     "ReportNumber",
     "ReportType"
   ],
   [
     "Reporter",
     "ReporterVolume",
-    "ResolutionLabel**",
+    "ResolutionLabel<sup>JM</sup>",
     "Rights"
   ],
   [
@@ -174,21 +174,21 @@
     "Session"
   ],
   [
-    "SessionType**",
+    "SessionType<sup>JM</sup>",
     "ShortTitle",
-    "SigningDate**",
-    "Status**"
+    "SigningDate<sup>JM</sup>",
+    "Status<sup>JM</sup>"
   ],
   [
     "Studio",
     "Subject",
-    "SupplementName**",
+    "SupplementName<sup>JM</sup>",
     "System"
   ],
   [
     "ThesisType",
     "Title",
-    "TreatyNumber**",
+    "TreatyNumber<sup>JM</sup>",
     "Type"
   ],
   [
@@ -199,12 +199,12 @@
   ],
   [
     "Volume",
-    "VolumeTitle**",
+    "VolumeTitle<sup>JM</sup>",
     "WebsiteTitle",
     "WebsiteType"
   ],
   [
-    "YearAsVolume**",
+    "YearAsVolume<sup>JM</sup>",
     "",
     "",
     ""

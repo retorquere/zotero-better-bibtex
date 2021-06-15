@@ -20,13 +20,15 @@
   <script>
     var globals = Function('return this')();
     var bbt_prefpane
-    function load() {
-      bbt_prefpane = new Zotero.BetterBibTeX.PrefPane()
-      Promise.resolve()
-        .then(() => Zotero.debug('BBT: loading PrefPane'))
-        .then(() => bbt_prefpane.load(globals))
-        .then(() => Zotero.debug('BBT: PrefPane loaded'))
-        .catch(err => Zotero.debug(`BBT: loading PrefPane error: ${err.message}\n${err.stack ||''}`))
+    async function load() {
+      try {
+        bbt_prefpane = new Zotero.BetterBibTeX.PrefPane()
+        Zotero.debug('BBT: loading PrefPane')
+        await bbt_prefpane.load(globals)
+        Zotero.debug('BBT: PrefPane loaded')
+      } catch (err) {
+        Zotero.debug(`BBT: loading PrefPane error: ${err.message}\n${err.stack ||''}`)
+      }
     }
   </script>
 
@@ -104,7 +106,7 @@
 
         <preference name="extensions.zotero.translators.better-bibtex.quickCopyMode" id="pref-better-bibtex-quickCopyMode" type="string" default="latex"/>
         <bbt:doc>
-          Used for drag-and-drop/quick copy using Better BibTeX citekeys. In the Zotero "Export" pane, choose `Better BibTeX Quick Copy`
+          Used for drag-and-drop/quick copy using Better BibTeX citation keys. In the Zotero "Export" pane, choose `Better BibTeX Quick Copy`
           as the default export format for quick copy, and choose the desired format for the drag-and-drop citations here.
         </bbt:doc>
 
@@ -128,10 +130,25 @@
           To find out what an item looks like inside the template, export some items as BetterBibTeX JSON.
         </bbt:doc>
 
+        <preference name="extensions.zotero.translators.better-bibtex.quickCopyOrgMode" id="pref-better-bibtex-quickCopyOrgMode" type="string" default="zotero"/>
+        <bbt:doc>
+          OrgMode to select items in your library
+        </bbt:doc>
+
+        <preference name="extensions.zotero.translators.better-bibtex.quickCopySelectLink" id="pref-better-bibtex-quickCopySelectLink" type="string" default="zotero"/>
+        <bbt:doc>
+          Hyperlink to select items in your library
+        </bbt:doc>
+
         <!-- the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly -->
         <preference name="extensions.zotero.translators.better-bibtex.citekeyFormat" id="pref-better-bibtex-citekeyFormat" type="string" default="&#x200B;[auth:lower][shorttitle3_3][year]"/>
         <bbt:doc>
           Set the pattern used to generate citation keys. The format of the keys is documented [here]({{ ref . "citing" }}).
+        </bbt:doc>
+
+        <preference name="extensions.zotero.translators.better-bibtex.citekeySearch" id="pref-better-bibtex-citekeySearch" type="bool" default="true"/>
+        <bbt:doc>
+          Enable searching on citation keys. Slows down startup on very large libraries. Requires Zotero restart to enable/disable.
         </bbt:doc>
 
         <preference name="extensions.zotero.translators.better-bibtex.citekeyFold" id="pref-better-bibtex-citekeyFold" type="bool" default="true"/>
@@ -342,7 +359,7 @@
 
         <preference name="extensions.zotero.translators.better-bibtex.autoPinDelay" type="int" default="0"/>
         <bbt:doc>
-          When > 0, BBT will automatically pin the first citekey it generates for an item after this many seconds.
+          When > 0, BBT will automatically pin the first citation keys it generates for an item after this many seconds.
         </bbt:doc>
 
         <preference name="extensions.zotero.translators.better-bibtex.parseParticles" type="bool" default="true"/>
@@ -356,7 +373,7 @@
           This setting only takes effect during startup, so if you change it, you will have to restart Zotero to have this take effect (or to disable it.
           Please disable it when done). You will need to use a custom CSL style
           (such as [this](https://raw.githubusercontent.com/retorquere/zotero-better-bibtex/master/better-bibtex-citekeys.csl)) to make this work. Have Zotero generate
-          the bibliography, which will put the citekeys in the Word/LibreOffice document, which can then be passed through pandoc.
+          the bibliography, which will put the citation keys in the Word/LibreOffice document, which can then be passed through pandoc.
         </bbt:doc>
 
         <preference name="extensions.zotero.translators.better-bibtex.import" type="bool" default="true"/>
@@ -414,11 +431,11 @@
 
         <preference id="pref-better-bibtex-kuroshiro" name="extensions.zotero.translators.better-bibtex.kuroshiro" type="bool" default="false"/>
         <bbt:doc>
-          When on, BBT will load kuroshiro for romajization in citekeys. This uses a lot of memory, easily 100MB. If you don't have Japanese titles/names, keep this off.
+          When on, BBT will load kuroshiro for romajization in citation keys. This uses a lot of memory, easily 100MB. If you don't have Japanese titles/names, keep this off.
         </bbt:doc>
         <preference id="pref-better-bibtex-jieba" name="extensions.zotero.translators.better-bibtex.jieba" type="bool" default="false"/>
         <bbt:doc>
-          When on, BBT will make Chinese word segmentation available for citekey construction. This uses a lot of memory, easily 70MB. If you don't have Chinese titles/names, keep this off.
+          When on, BBT will make Chinese word segmentation available for citation keys construction. This uses a lot of memory, easily 70MB. If you don't have Chinese titles/names, keep this off.
         </bbt:doc>
 
         <preference name="extensions.zotero.translators.better-bibtex.relativeFilePaths" type="bool" default="false"/>
@@ -459,7 +476,7 @@
         <preference name="extensions.zotero.translators.better-bibtex.newTranslatorsAskRestart" type="bool" default="true"/>
         <bbt:doc>
           New translators installed in Zotero are not immediately usuable for drag-and-drop. If you want to use BBT for drag-and-drop
-          (e.g. to drag and drop citekeys or citations), you will be asked whether you want to restart after installation,
+          (e.g. to drag and drop citation keys or citations), you will be asked whether you want to restart after installation,
           or whether you want to reinstall when it is more convenient to you. You will be asked this whenever the BBT translators update,
           but you can disable this by checking "Do not ask again" in that dialog.
         </bbt:doc>
@@ -499,6 +516,7 @@
               </hbox>
               <description>&better-bibtex.FirstRun.citekeyFormat.explanation.bbt.citekeyUpdate;</description>
               <checkbox preference="pref-better-bibtex-citekeyFold" label="&better-bibtex.Preferences.citekey.fold;"/>
+              <checkbox preference="pref-better-bibtex-citekeySearch" label="&better-bibtex.Preferences.citekey.search;"/>
             </groupbox>
 
             <groupbox>
@@ -552,15 +570,13 @@
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.latex;" value="latex"/>
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.citekeys;" value="citekeys"/>
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.pandoc;" value="pandoc"/>
-                        <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.orgmode_citekey;" value="orgmode_citekey"/>
-                        <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.orgmode_itemkey;" value="orgmode"/>
+                        <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.orgMode;" value="orgmode"/>
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.orgRef;" value="orgRef"/>
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.rtfScan;" value="rtfScan"/>
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.roamCiteKey;" value="roamCiteKey"/>
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.atom;" value="atom"/>
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.gitbook;" value="gitbook"/>
-                        <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.selectLink_citekey;" value="selectLink_citekey"/>
-                        <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.selectLink_itemkey;" value="selectLink"/>
+                        <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.selectLink;" value="selectlink"/>
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.etaTemplate;" value="eta"/>
                       </menupopup>
                     </menulist>
@@ -575,6 +591,24 @@
                     <checkbox id="id-better-bibtex-preferences-quickCopyPandocBrackets"
                       preference="pref-better-bibtex-quickCopyPandocBrackets"
                       label="&better-bibtex.Preferences.citekey.quickCopy.pandoc.brackets;"/>
+                  </row>
+                  <row class="better-bibtex-preferences-quickcopy-details" id="better-bibtex-preferences-quickcopy-orgmode">
+                    <label bbt:preference="pref-better-bibtex-quickCopyOrgMode">&better-bibtex.Preferences.citekey.quickCopy.orgMode;</label>
+                    <menulist preference="pref-better-bibtex-quickCopyOrgMode">
+                      <menupopup>
+                        <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.orgMode.zotero;" value="zotero"/>
+                        <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.orgMode.citekey;" value="citationkey"/>
+                      </menupopup>
+                    </menulist>
+                  </row>
+                  <row class="better-bibtex-preferences-quickcopy-details" id="better-bibtex-preferences-quickcopy-selectlink">
+                    <label bbt:preference="pref-better-bibtex-quickCopySelectLink">&better-bibtex.Preferences.citekey.quickCopy.selectLink;</label>
+                    <menulist preference="pref-better-bibtex-quickCopySelectLink">
+                      <menupopup>
+                        <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.selectLink.zotero;" value="zotero"/>
+                        <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.selectLink.citekey;" value="citationkey"/>
+                      </menupopup>
+                    </menulist>
                   </row>
                   <row class="better-bibtex-preferences-quickcopy-details" id="better-bibtex-preferences-quickcopy-eta">
                     <label
@@ -739,8 +773,7 @@
                         <label>&better-bibtex.Preferences.auto-export.fields.error;:</label><textbox class="plain" readonly="true" value="" bbt:ae-field="error" bbt:ae-id=""/>
                       </row>
                       <row>
-                        <label>&better-bibtex.Preferences.auto-export.fields.cached;:</label><textbox class="plain" readonly="true" value="" bbt:ae-field="cached" bbt:ae-id=""/>
-                      </row>
+                       </row>
                     </rows>
                   </grid>
 
@@ -822,6 +855,8 @@
                   <hbox>
                     <button label="&better-bibtex.Preferences.auto-export.remove;" bbt:ae-id="" oncommand="bbt_prefpane.autoexport.remove(event.target)"/>
                     <button label="&better-bibtex.Preferences.auto-export.run;" bbt:ae-id="" oncommand="bbt_prefpane.autoexport.run(event.target)"/>
+                    <button label="&better-bibtex.Preferences.auto-export.fields.cached;:" bbt:ae-id="" oncommand="bbt_prefpane.autoexport.refreshCacheRate(event.target)"/>
+                    <textbox class="plain" readonly="true" value="" bbt:ae-field="cacherate" bbt:ae-id=""/>
                   </hbox>
                 </tabpanel>
               </tabpanels>

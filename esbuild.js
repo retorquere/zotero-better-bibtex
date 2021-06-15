@@ -78,7 +78,7 @@ async function rebuild() {
   // plugin code
   await bundle({
     entryPoints: [ 'content/better-bibtex.ts' ],
-    plugins: [loader.patcher('setup/patches'), loader.bibertool, loader.pegjs, loader.__dirname, shims],
+    plugins: [loader.trace, loader.patcher('setup/patches'), loader.bibertool, loader.pegjs, loader.__dirname, shims],
     outdir: 'build/content',
     banner: { js: 'if (!Zotero.BetterBibTeX) {\n' },
     footer: { js: '\n}' },

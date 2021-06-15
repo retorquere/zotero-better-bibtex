@@ -7,6 +7,7 @@ Scenario Outline: Export <references> references for BibLaTeX to <file>
 
   Examples:
      | file                                                                                           | references  |
+     | Cite archive documents with BetterBibLaTeX #1799                                               | 1           |
      | biber 2.14 rejects the date field generated from Better BibLaTex #1695                         | 1           |
      | Export fails for duplicate "extra" field #1739                                                 | 1           |
      | type dataset exported as @data instead of @dataset for BibLaTeX #1720                          | 1           |
@@ -143,6 +144,8 @@ Scenario Outline: Export <references> references for BibTeX to <file>
 
   Examples:
      | file                                                                               | references |
+     | Exporting "month = {season}" for BibTeX #1810                                      | 1          |
+     | bibtex does not export season dates                                                | 1          |
      | DOI not escaped using postscript #1803                                             | 1          |
      | Using the Extra field in the exported Citation Key #1571                           | 1          |
      | shortyear adds 00 when date is missing #1769                                       | 1          |

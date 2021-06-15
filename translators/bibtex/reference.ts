@@ -6,6 +6,7 @@ declare const Zotero: any
 import { Reference as Item } from '../../gen/typings/serialized-item'
 import { Cache } from '../../typings/cache'
 import type { Translators } from '../../typings/translators'
+import type { ParsedDate } from '../../content/dateparser'
 
 import { Translator } from '../lib/translator'
 
@@ -289,6 +290,11 @@ const fieldOrder = [
   return acc
 }, {})
 
+
+function entry_sort(a: [string, string | number], b: [string, string | number]): number {
+  return Translator.stringCompare(a[0], b[0])
+}
+
 /*
  * The fields are objects with the following keys:
  *   * name: name of the Bib(La)TeX field
@@ -304,6 +310,7 @@ export class Reference {
   public useprefix: boolean
   public language: string
   public english: boolean
+  public date: ParsedDate | { type: 'none' }
 
   // patched in by the Bib(La)TeX translators
   public fieldEncoding: Record<string, 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'latex' | 'tags' | 'attachments' | 'date'>
@@ -349,6 +356,7 @@ export class Reference {
   constructor(item) {
     this.item = item
     this.packages = {}
+    this.date = item.date ? Zotero.BetterBibTeX.parseDate(item.date) : { type: 'none' }
 
     if (!this.item.language) {
       this.english = true
@@ -565,11 +573,22 @@ export class Reference {
 
     if (this.has[field.name]) {
       if (this.has[field.name].value === field.value && (this.has[field.name].enc || 'latex') === (field.enc || 'latex')) return null
+
       if (!this.inPostscript && !field.replace) {
         const value = field.bibtex ? 'bibtex' : 'value'
         throw new Error(`duplicate field '${field.name}' for ${this.item.citationKey}: old: ${this.has[field.name][value]}, new: ${field[value]}`)
       }
-      if (!field.replace) this.quality_report.push(`duplicate "${field.name}" ("${this.has[field.name].value}") ignored`)
+
+      if (!field.replace) {
+        let v_old = this.has[field.name].value
+        let v_new = field.value
+        if (typeof v_old === 'string' && typeof v_new === 'string') {
+          v_old = v_old.toLowerCase()
+          v_new = v_new.toLowerCase()
+        }
+        if (v_old !== v_new) this.quality_report.push(`duplicate "${field.name}" ("${this.has[field.name].value}") ignored`)
+      }
+
       delete this.has[field.name]
     }
 
@@ -898,12 +917,12 @@ export class Reference {
     }
 
     try {
-      if (this.postscript(this, this.item, Translator, Zotero) === false) this.item.cachable = false
+      if (this.postscript(this, this.item, Translator, Zotero) === false) this.item.$cacheable = false
     }
     catch (err) {
       if (Translator.preferences.testing && !Translator.preferences.ignorePostscriptErrors) throw err
       log.error('Reference.postscript failed:', err)
-      this.item.cachable = false
+      this.item.$cacheable = false
     }
 
     for (const name of Translator.skipFields) {
@@ -938,7 +957,7 @@ export class Reference {
     this.metadata.DeclarePrefChars = Exporter.unique_chars(this.metadata.DeclarePrefChars)
 
     this.metadata.packages = Object.keys(this.packages)
-    if (this.item.cachable) Zotero.BetterBibTeX.cacheStore(this.item.itemID, Translator.options, Translator.preferences, ref, this.metadata)
+    if (this.item.$cacheable) Zotero.BetterBibTeX.cacheStore(this.item.itemID, Translator.options, Translator.preferences, ref, this.metadata)
 
     Exporter.postfix.add(this.metadata)
   }
@@ -1163,7 +1182,7 @@ export class Reference {
       else if (Translator.preferences.relativeFilePaths && Translator.export.dir) {
         const relative = Path.relative(att.path)
         if (relative !== att.path) {
-          this.item.cachable = false
+          this.item.$cacheable = false
           att.path = relative
         }
       }
@@ -1324,48 +1343,106 @@ export class Reference {
   private postscript(_reference, _item, _translator, _zotero): boolean { return true } // eslint-disable-line no-empty,@typescript-eslint/no-empty-function
 
   private qualityReport(): string {
-    if (!Translator.preferences.qualityReport) return ''
+    // the quality report will access a bunch of fields not to export them but just to see if they were used, and that triggers the cacheDisabler proxy when
+    // the 'collections' field is accessed... rendering a lot of items uncacheable
+    const $cacheable = this.item.$cacheable
+    try {
+      if (!Translator.preferences.qualityReport) return ''
 
-    let report: string[] = this.lint({
-      timestamp: `added because JabRef format is set to ${Translator.preferences.jabrefFormat || '?'}`,
-    })
+      let report: string[] = this.lint({
+        timestamp: `added because JabRef format is set to ${Translator.preferences.jabrefFormat || '?'}`,
+      })
 
-    if (report) {
-      if (this.has.pages) {
-        const dashes = this.has.pages.bibtex.match(/-+/g)
-        // if (dashes && dashes.includes('-')) report.push('? hyphen found in pages field, did you mean to use an en-dash?')
-        if (dashes && dashes.includes('---')) report.push('? em-dash found in pages field, did you mean to use an en-dash?')
-      }
-      if (this.has.journal && this.has.journal.value.indexOf('.') >= 0) report.push(`? Possibly abbreviated journal title ${this.has.journal.value}`)
-      if (this.has.journaltitle && this.has.journaltitle.value.indexOf('.') >= 0) report.push(`? Possibly abbreviated journal title ${this.has.journaltitle.value}`)
+      if (report) {
+        if (this.has.pages) {
+          const dashes = this.has.pages.bibtex.match(/-+/g)
+          // if (dashes && dashes.includes('-')) report.push('? hyphen found in pages field, did you mean to use an en-dash?')
+          if (dashes && dashes.includes('---')) report.push('? em-dash found in pages field, did you mean to use an en-dash?')
+        }
+        if (this.has.journal && this.has.journal.value.indexOf('.') >= 0) report.push(`? Possibly abbreviated journal title ${this.has.journal.value}`)
+        if (this.has.journaltitle && this.has.journaltitle.value.indexOf('.') >= 0) report.push(`? Possibly abbreviated journal title ${this.has.journaltitle.value}`)
 
-      if (this.referencetype === 'inproceedings' && this.has.booktitle) {
-        if (!this.has.booktitle.value.match(/:|Proceedings|Companion| '/) || this.has.booktitle.value.match(/\.|workshop|conference|symposium/)) {
-          report.push('? Unsure about the formatting of the booktitle')
+        if (this.referencetype === 'inproceedings' && this.has.booktitle) {
+          if (!this.has.booktitle.value.match(/:|Proceedings|Companion| '/) || this.has.booktitle.value.match(/\.|workshop|conference|symposium/)) {
+            report.push('? Unsure about the formatting of the booktitle')
+          }
+        }
+
+        if (this.has.title && Translator.preferences.exportTitleCase) {
+          const titleCased = Zotero.BetterBibTeX.titleCase(this.has.title.value) === this.has.title.value
+          if (this.has.title.value.match(/\s/)) {
+            if (titleCased) report.push('? Title looks like it was stored in title-case in Zotero')
+          }
+          else {
+            if (!titleCased) report.push('? Title looks like it was stored in lower-case in Zotero')
+          }
         }
       }
-
-      if (this.has.title && Translator.preferences.exportTitleCase) {
-        const titleCased = Zotero.BetterBibTeX.titleCase(this.has.title.value) === this.has.title.value
-        if (this.has.title.value.match(/\s/)) {
-          if (titleCased) report.push('? Title looks like it was stored in title-case in Zotero')
-        }
-        else {
-          if (!titleCased) report.push('? Title looks like it was stored in lower-case in Zotero')
-        }
+      else {
+        report = [`I don't know how to quality-check ${this.referencetype} references`]
       }
+
+      report = report.concat(this.quality_report)
+
+      if (!report.length) return ''
+
+      report.unshift(`== ${Translator.BetterBibTeX ? 'BibTeX' : 'BibLateX'} quality report for ${this.item.citationKey}:`)
+
+      const used: Array<string | number> = Object.values(this.has) // eslint-disable-line @typescript-eslint/array-type
+        .filter(field => typeof field.value === 'string' || typeof field.value === 'number')
+        .map(field => typeof field.value === 'string' ? field.value.toLowerCase().replace(/[^a-zA-z0-9]/g, '') : field.value)
+      const fields: [string, any][] = Object.entries(this.item)
+        .sort(entry_sort)
+      const extra_fields: [string, any][] = (Object.entries(this.item.extraFields.kv) as [string, any][])
+        .sort(entry_sort)
+        .map(([field, value]: [string, any]) => [`extraFields.kv.${field}`, value])
+      const ignore_unused_fields = [
+        'abstractNote',
+        'accessDate',
+        'autoJournalAbbreviation',
+        'citationKey',
+        'citekey',
+        'collections',
+        'date',
+        'dateAdded',
+        'dateModified',
+        'itemID',
+        'itemType',
+        'itemKey',
+        'key',
+        'libraryID',
+        'relations',
+        'uri',
+      ]
+      for (const [field, value] of fields.concat(extra_fields)) {
+        if (!value) continue
+        if (ignore_unused_fields.includes(field)) continue
+
+        let v: string
+        switch (typeof value) {
+          case 'string':
+            v = value.toLowerCase().replace(/[^a-zA-z0-9]/g, '')
+            if (used.includes(v)) continue
+            if (field === 'libraryCatalog' && v.includes('arxiv') && this.item.arXiv) continue
+            if (field === 'language' && this.has.langid) continue
+            break
+          case 'number':
+            if (used.includes(value)) continue
+            break
+
+          default:
+            continue
+        }
+
+        report.push(`? Unused ${field}: ${value}`)
+      }
+
+      return report.map(line => `% ${line}\n`).join('')
     }
-    else {
-      report = [`I don't know how to quality-check ${this.referencetype} references`]
+    finally {
+      // restore cacheable state
+      this.item.$cacheable = $cacheable
     }
-
-    report = report.concat(this.quality_report)
-
-    if (!report.length) return ''
-
-    report.unshift(`== ${Translator.BetterBibTeX ? 'BibTeX' : 'BibLateX'} quality report for ${this.item.citationKey}:`)
-
-    return report.map(line => `% ${line}\n`).join('')
   }
 }
 

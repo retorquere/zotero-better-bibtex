@@ -35,6 +35,7 @@ declare const OS: {
     basename: (path: string) => string
     normalize: (path: string) => string
     split: (path: string) => { absolute: boolean, components: string[], winDrive?: string }
+    toFileURI: (path: string) => string
   }
 }
 

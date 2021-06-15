@@ -180,6 +180,9 @@
             "citekeyFormat": {
               "type": "string"
             },
+            "citekeySearch": {
+              "type": "boolean"
+            },
             "citeprocNoteCitekey": {
               "type": "boolean"
             },
@@ -314,20 +317,30 @@
                 "latex",
                 "citekeys",
                 "pandoc",
-                "orgmode_citekey",
                 "orgmode",
                 "orgRef",
                 "rtfScan",
                 "roamCiteKey",
                 "atom",
                 "gitbook",
-                "selectLink_citekey",
-                "selectLink",
+                "selectlink",
                 "eta"
+              ]
+            },
+            "quickCopyOrgMode": {
+              "enum": [
+                "zotero",
+                "citationkey"
               ]
             },
             "quickCopyPandocBrackets": {
               "type": "boolean"
+            },
+            "quickCopySelectLink": {
+              "enum": [
+                "zotero",
+                "citationkey"
+              ]
             },
             "rawImports": {
               "type": "boolean"

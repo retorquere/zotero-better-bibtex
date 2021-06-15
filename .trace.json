@@ -1,5 +1,5 @@
 {
-  "none": [
+  "trace": [
     "content/**/*.ts",
     "!content/monkey-patch.ts",
     "!content/flash.ts",

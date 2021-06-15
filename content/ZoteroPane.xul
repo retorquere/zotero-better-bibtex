@@ -12,9 +12,9 @@
   </stringbundleset>
 
   <hbox id="zotero-items-toolbar">
-    <hbox id="better-bibtex-startup" insertafter="zotero-tb-attachment-add" hidden="true">
-      <progressmeter id="better-bibtex-startup-progress" mode="determined" value="0"/>
-      <label id="better-bibtex-startup-label" value="startup"/>
+    <hbox id="better-bibtex-progress" insertafter="zotero-tb-attachment-add" hidden="true">
+      <progressmeter id="better-bibtex-progress-meter" mode="determined" value="0"/>
+      <label id="better-bibtex-progress-label" value="startup"/>
     </hbox>
   </hbox>
 
@@ -26,7 +26,7 @@
   </menupopup>
 
   <menupopup id="zotero-collectionmenu">
-    <menuseparator id="bbt-collectionmenu-separator"/>
+    <menuseparator class="bbt-autoexport" id="bbt-collectionmenu-separator"/>
 
     <menu class="bbt-autoexport" label="&better-bibtex.Preferences.tab.auto-export;">
       <menupopup id="zotero-itemmenu-BetterBibTeX-autoexport-menu">
@@ -93,20 +93,19 @@
   </treecols>
 
   <script src="chrome://zotero/content/include.js"/>
-  <script src="chrome://zotero-better-bibtex/content/webpack.js"/>
-  <script src="chrome://zotero-better-bibtex/content/common.js"/>
-  <script src="chrome://zotero-better-bibtex/content/BetterBibTeXStartup.js"/>
   <script src="chrome://zotero-better-bibtex/content/better-bibtex.js"/>
   <script>
-    (new Promise((resolve, reject) => { window.addEventListener('load', resolve) }))
-      .then(() => Zotero.debug('BBT startup'))
-      .then(() => Zotero.BetterBibTeX.load(globals))
-      .then(() => Zotero.debug('BBT started'))
-      .catch(err => Zotero.debug(`starting BBT error: ${err.message}\n${err.stack ||''}`))
-
-      .then(() => Zotero.debug('loading ZoteroPane'))
-      .then(() => bbt_zoteropane = new Zotero.BetterBibTeX.ZoteroPane(globals))
-      .then(() => Zotero.debug('ZoteroPane loaded'))
-      .catch(err => Zotero.debug(`loading ZoteroPane error: ${err.message}\n${err.stack ||''}`))
+    window.addEventListener('load', async function() {
+      try {
+        Zotero.debug('BBT startup')
+        await Zotero.BetterBibTeX.load(globals)
+        Zotero.debug('BBT started')
+        Zotero.debug('loading ZoteroPane')
+        bbt_zoteropane = new Zotero.BetterBibTeX.ZoteroPane(globals)
+        Zotero.debug('ZoteroPane loaded')
+      } catch (err) {
+        Zotero.debug(`loading ZoteroPane error: ${err.message}\n${err.stack ||''}`)
+      }
+    })
   </script>
 </overlay>

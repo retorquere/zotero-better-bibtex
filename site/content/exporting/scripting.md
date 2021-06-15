@@ -51,21 +51,22 @@ If you want to run a postscript in the CSL translators but don't care whether it
 
 In the postscript, the reference being built is available as `reference`, and the Zotero item it is being built from is available as `item`. For backwards compatibility, in the `BetterBib(La)TeX` contexts, the reference being built is also available as `this`, and the Zotero item it is being built from as `this.item`, but use of these is discouraged now.
 
-You should really test for the translator context in your postscripts using the `Translator.<name>` tests mentioned above. If you don't because you have a postscript that pre-date postscript CSL support, you will probably be using the legacy use of `this` to set things on the reference being built, and calling `this.add` in those postscripts; since, for CSL postscripts, `this` is not set, it will make the script will non-fatally error out, so you're very probably good to go as-is.
+You should really test for the translator context in your postscripts using the `Translator.<name>` tests mentioned above. If you don't because you have a postscript that pre-date postscript CSL support, you will probably be using the legacy use of `this` to set things on the reference being built, and calling `reference.add` in those postscripts; since, for CSL postscripts, `this` is not set, it will make the script will non-fatally error out, so you're very probably good to go as-is.
 But please fix your postscripts to test for the translator context.
 
 ## The API for `Better BibTeX` and `Better BibLaTeX`
 
 The postscript should be a `javascript` snippet. You can access the data with following objects and methods:
 
-- `reference` is the BibTeX reference you are building, and the reference has a number of fields.
 - `item` is the Zotero item that's the source of the reference. 
+- `reference` is the BibTeX reference you are building, and the reference has a number of fields.
 
   e.g. you can access the date in zotero item `item.date`.
 
 - `reference.has` is a dictionary of fields for output.
+- `reference.date` is the parsed and normalized version of `item.date`.
 
-  e.g. you can see whether the `year` field has been set by testing for `reference.has.year`
+  e.g. you can see whether the `year` field has been set by testing for `reference.has.year`, and when e.g. for a season-date only the year is exported in bibtex, you can find it in `reference.date.season`
 
 - `reference.add` is the function to add or modify keys in `reference.has`. It accepts the following named parameters in the form of an object:
 
@@ -130,7 +131,7 @@ If you want to retain commas in your keywords (e.g. for chemical elements) and s
 
 ```javascript
 if (Translator.BetterTeX) {
-  reference.add({ name: 'keywords', value: item.tags, sep: ', ' });
+  reference.add({ name: 'keywords', value: item.tags, sep: ', ', enc: 'tags' });
 }
 ```
 
@@ -265,5 +266,93 @@ if (Translator.BetterBibTeX && reference.referencetype === 'article' && item.arX
     reference.remove('journal');
   }
   if (!reference.has.journal) reference.referencetype = 'misc'
+}
+```
+
+### Citing documents with a physical archive location
+
+This is one area where some of the supposedly most popular packages -- `biblatex`,
+`biblatex-apa`, `biblatex-chicago`, `biblatex-mla` -- are all over the
+place, if they explicitly support archival material at all. There
+doesn't seem to be a solution that caters for all of these and
+possibly other packages, too. biblatex has no special fields for
+dealing with info about physical archives, even if it does have
+provisions for electronic archives via the fields eprint (`identifier`),
+eprintclass (`section of an archive`), and eprinttype (`name of the
+archive`).
+
+Of the packages mentioned above, only one (`biblatex-mla`) has a
+clear schema of how to record archival information (type `@unpublished`;
+fields `number`, `library`, `location`). Note that the `library` field
+is unique to biblatex-mla. (biblatex does define the field, but
+never uses it in its standard styles, and we find no indication
+that either biblatex-apa or biblatex-chicago would use it for a
+physical archive.)
+
+Given all of this, I'm going to leave referencing of physical
+location to postscripts for now. If you enable the [quality report]({{< ref "/installation/preferences/export" >}}#include-comments-about-potential-problems-with-the-references), BBT
+will list Zotero fields with data that has not been used in the
+export:
+
+```
+@letter{MillionDemiInfirmes1968,
+  title = {Un Million et Demi d'infirmes, Handicapés Physiques et Mentaux},
+  date = {1968-05-31},
+  url = {https://archives.strasbourg.eu/archive/fonds/FRAM67482_0592_114Z/view:115037},
+  urldate = {2021-04-08},
+  type = {Letter}
+}
+% == BibLateX quality report for MillionDemiInfirmes1968:
+% Unexpected field 'title'
+% Unexpected field 'type'
+% ? Unused archive: Archives de la Ville et l'Eurométropole de Strasbourg
+% ? Unused archiveLocation: 114 Z 1 248
+% ? Unused callNumber: 114 Z 1 248
+```
+
+if you then apply a postscript such as 
+
+```
+if (Translator.BetterBibLaTeX) {
+  // biblatex-mla
+  if (item.archive && item.archiveLocation) {
+    reference.add({ name: 'type', value: reference.referencetype })
+    reference.referencetype = 'unpublished'
+    reference.add({ name: 'library', value: item.archive})
+    reference.add({ name: 'number', value: item.archiveLocation })
+  }
+}
+```
+
+you get
+
+```
+@unpublished{MillionDemiInfirmes1968,
+  title = {Un Million et Demi d'infirmes, Handicapés Physiques et Mentaux},
+  date = {1968-05-31},
+  url = {https://archives.strasbourg.eu/archive/fonds/FRAM67482_0592_114Z/view:115037},
+  urldate = {2021-04-08},
+  type = {letter},
+  library = {Archives de la Ville et l'Eurométropole de Strasbourg},
+  number = {114 Z 1 248}
+}
+% == BibLateX quality report for MillionDemiInfirmes1968:
+% Unexpected field 'number'
+% Missing required field 'author'
+```
+
+### Export season for BibTeX
+
+```
+if (Translator.BetterBibTeX && reference.date.type === 'season') {
+  reference.add({ name: 'month', value: ['', 'spring', 'summer', 'fall', 'winter'][reference.date.season] })
+}
+```
+
+### Adding rights field in BibLaTeX
+
+```
+if (Translator.BetterBibLaTeX) {
+  reference.add({ name: 'rights', value: item.rights});
 }
 ```

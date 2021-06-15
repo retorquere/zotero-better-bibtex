@@ -3,6 +3,10 @@ const path = require('path')
 const diff = require('diff')
 const { bibertool } = require('./bibertool')
 const pegjs = require('pegjs')
+const shell = require('shelljs')
+const { filePathFilter } = require('file-path-filter')
+const esbuild = require('esbuild')
+const putout = require('putout')
 
 function load_patches(dir) {
   const patches = {}
@@ -125,3 +129,62 @@ module.exports.node_modules = function(dir) {
     }
   }
 }
+
+let selected_for_trace = false
+if (fs.existsSync(path.join(__dirname, '../../.trace.json'))) {
+  const branch = (process.env.GITHUB_REF && process.env.GITHUB_REF.startsWith('refs/heads/')) ? process.env.GITHUB_REF.replace('refs/heads/') : shell.exec('git rev-parse --abbrev-ref HEAD', { silent: true }).stdout.trim()
+  if (branch !== 'master' && branch !== 'main') {
+    let trace = require('../../.trace.json')
+    trace = trace[branch]
+    if (trace) selected_for_trace = filePathFilter(trace)
+  }
+}
+
+const circularReplacer = `
+const trace$circularReplacer = () => {
+  const seen = new WeakSet();
+  return (key, value) => {
+    try {
+      if (typeof value === "object" && value !== null) {
+        if (seen.has(value)) {
+          return;
+        }
+        seen.add(value);
+      }
+      return value;
+    }
+    catch (err) {
+      return;
+    }
+  };
+};
+`
+module.exports.trace = {
+  name: 'trace',
+  setup(build) {
+    build.onLoad({ filter: /\.ts$/ }, async (args) => {
+      const localpath = path.relative(process.cwd(), args.path)
+      if (!selected_for_trace || !selected_for_trace(localpath)) return null
+
+      console.log(`!!!!!!!!!!!!!! Instrumenting ${localpath} for trace logging !!!!!!!!!!!!!`)
+
+      const source = await esbuild.transform(await fs.promises.readFile(args.path, 'utf-8'), { loader: 'ts' })
+      for (const warning of source.warnings) {
+        console.log('!!', warning)
+      }
+
+      const trace = require('./trace')
+      trace.FILENAME = localpath.replace(/\.ts$/, '')
+      const contents = circularReplacer + putout(source.code, {
+        fixCount: 1,
+        plugins: [ ['trace', trace] ],
+      }).code
+
+      return {
+        contents,
+        loader: 'js',
+      }
+    })
+  }
+}
+

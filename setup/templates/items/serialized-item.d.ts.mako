@@ -14,7 +14,7 @@ export interface Tag { tag: string, type?: number }
 export interface Creator { creatorType: string, name?: string, firstName?: string, lastName?:string, fieldMode?: number, source?: string }
 
 interface ItemBase {
-  key: string
+  itemKey: string
   itemID: number
   libraryID: number
   uri: string
@@ -47,9 +47,11 @@ export interface Reference extends ItemBase {
   tags: Array<Tag>
   notes: Array<Note>
   attachments: Array<Attachment>
+
   raw: boolean
-  cachable?: boolean
   autoJournalAbbreviation?: string
+  $cacheable?: boolean
+  $unused?: Set<string>
 
   %for field in fields:
   ${field}: string

@@ -2,6 +2,7 @@ name: automated tests
 
 on:
   push: null
+  pull_request: null
   schedule:
   - cron: 0 0 * * *
 
@@ -21,21 +22,20 @@ _anchors:
     id: cache
     uses: actions/cache@v2
     env:
-      cache-name: v1
+      cache-name: v3
     with:
       path: |
         ~/.npm
         ~/.pnpm-store
-        ~/.cache/pip
-      key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
-      restore-keys: |
-        ${{ runner.os }}-build-${{ env.cache-name }}-
+        ~/.nocache/pip
+        ${{ env.pythonLocation }}
+      key: ${{ runner.os }}-build-${{ env.pythonLocation }}-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
   install_python_packages: &install_python_packages
     name: install python packages
     run: |
       pip install packaging
       python -m pip install --upgrade pip
-      if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      pip install -r requirements.txt
   install_node_packages: &install_node_packages
     name: install node packages
     uses: pnpm/action-setup@v2
@@ -97,11 +97,20 @@ jobs:
     - *cache
     - *install_python_packages
 
-    - name: install ${{ matrix.client }} + beta
+    - name: install ${{ matrix.client }}
       run: |
         curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
         sudo apt-get update
-        sudo apt-get install ${{ matrix.client }} ${{ matrix.client }}-beta
+        sudo apt-get install ${{ matrix.client }}
+
+    - name: install ${{ matrix.client }} beta
+      continue-on-error: true
+      run: sudo apt-get install ${{ matrix.client }}-beta
+
+    # fast test
+    - if: contains(github.event.commits[0].message, '[fast-test]')
+      run: echo "##[set-output name=this;]--test-this"
+      id: test
 
     # needs logs/logs to have them show up as logs in the artifact... no idea why
     - name: Run headless test
@@ -110,7 +119,7 @@ jobs:
       env:
         PYTHONUNBUFFERED: true
       with:
-        run: ./test/behave --client ${{ matrix.client }} --logs logs/logs --format travis --bin ${{ matrix.bin }}
+        run: ./test/behave --client ${{ matrix.client }} --logs logs/logs --format travis --bin ${{ matrix.bin }} ${{ steps.test.outputs.this }}
 
     - uses: actions/upload-artifact@v2
       if: ${{ failure() }}

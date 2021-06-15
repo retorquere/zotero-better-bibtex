@@ -47,13 +47,10 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
     return serialized
   }
 
-  public fast(item: ZoteroItem, count?: { cached: number }): Item {
+  public fast(item: ZoteroItem): Item {
     let serialized = this.fetch(item)
 
-    if (serialized) {
-      if (count) count.cached += 1
-    }
-    else {
+    if (!serialized) {
       serialized = item.toJSON()
       serialized.uri = Zotero.URI.getItemURI(item)
       serialized.itemID = item.id
@@ -114,7 +111,8 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
 
     // come on -- these are used in the collections export but not provided on the items?!
     serialized.itemID = item.id
-    serialized.key = item.key
+    // serialized.key = serialized.itemKey = item.key
+    serialized.itemKey = item.key
     serialized.libraryID = item.libraryID
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return

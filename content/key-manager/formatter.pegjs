@@ -61,7 +61,7 @@ block
       if (typeof unknown !== 'undefined') error(`unknown item type "${unknown}; valid types are ${Object.keys(options.items.name.type)}"`);
       return `if (!${JSON.stringify(types)}.includes(this.item.itemType)) break`;
     }
-  / '[>' limit:$[0-9]+ ']'                 { return `if (citekey.length <= ${limit}) break` }
+  / '[>' min:$[0-9]+ ']'                 { return `if (citekey.length <= ${min}) break` }
   / '[' method:method filters:filter* ']' {
       return [].concat(method, filters, 'citekey += chunk').join('; ');
     }
@@ -161,6 +161,7 @@ flag
 
 filter
   = ':(' text:$[^)]+ ')'  { return `chunk = chunk || ${JSON.stringify(text)}`; }
+  / ':>' min:$[0-9]+      { return `if (chunk.length <= ${min}) break` }
   / ':' name:$[-a-z]+ params:stringparam* {
       const method = _method_name(name)
       const expected = options.methods.filter[method]
