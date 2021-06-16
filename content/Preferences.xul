@@ -221,7 +221,7 @@
           Snippet of javascript to run [after each reference generation]({{ ref . "exporting/scripting.md" }}).
         </bbt:doc>
 
-        <preference name="extensions.zotero.translators.better-bibtex.strings" bbt:affects="" id="pref-better-bibtex-strings" type="string" default=""/>
+        <preference name="extensions.zotero.translators.better-bibtex.strings" bbt:affects="tex" id="pref-better-bibtex-strings" type="string" default=""/>
         <bbt:doc>
           If you have externally maintained `@string` vars paste them here and they will be resolved for subsequent imports. These should be entered as `@string` declarations, such as `@string{IEEE_J_PWRE = &quot;{IEEE} Transactions on Power Electronics&quot;}`, not just the var name.
         </bbt:doc>

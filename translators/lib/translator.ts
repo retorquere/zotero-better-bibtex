@@ -1,7 +1,7 @@
 declare const Zotero: any
 declare const ZOTERO_TRANSLATOR_INFO: any
 
-import { defaults } from '../../content/prefs-meta'
+import { affects, defaults } from '../../content/prefs-meta'
 import { client } from '../../content/client'
 import { Reference, Item, Collection } from '../../gen/typings/serialized-item'
 import { ITranslator } from '../../gen/typings/translator'
@@ -316,6 +316,19 @@ export const Translator = new class implements ITranslator { // eslint-disable-l
     }
 
     this.initialized = true
+
+    if (this.preferences.testing) {
+      const ignored = ['testing']
+      this.preferences = new Proxy(this.preferences, {
+        set: (object, property, _value) => {
+          throw new TypeError(`Unexpected set of preference ${String(property)}`)
+        },
+        get: (object, property: string) => {
+          if (!ignored.includes(property) && !affects[property].includes(this.header.label)) throw new TypeError(`Preference ${property} claims not to affect ${this.header.label}`)
+          return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
+        },
+      })
+    }
   }
 
   private registerCollection(collection, parent: string) {

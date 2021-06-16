@@ -11,3 +11,4 @@ export const override: { names: PreferenceName[], types: Record<string, unknown>
 
 export const defaults = (fromEntries(preferences.map(pref => [ pref.var, pref.name === 'citekey.format' ? (pref.default as string).replace('\u200b', '') : pref.default ])) as Preferences)
 export const names = (Object.freeze(Object.keys(defaults).sort()) as PreferenceName[])
+export const affects: Record<PreferenceName, string[]> = (preferences.reduce((acc, pref) => { acc[pref.name] = pref.affects || []; return acc}, {}) as Record<PreferenceName, string[]>)
