@@ -295,6 +295,11 @@ function entry_sort(a: [string, string | number], b: [string, string | number]):
   return Translator.stringCompare(a[0], b[0])
 }
 
+type PostscriptAllow = {
+  cache: boolean
+  write: boolean
+}
+
 /*
  * The fields are objects with the following keys:
  *   * name: name of the Bib(La)TeX field
@@ -334,14 +339,27 @@ export class Reference {
     if (typeof postscript !== 'string' || postscript.trim() === '') return
 
     try {
-      postscript = `this.inPostscript = true; ${postscript}; this.inPostscript = false;`
+      postscript = `
+        this.inPostscript = true;
+        try {
+          const result = (() => { ${postscript} })()
+          switch (typeof result) {
+            case 'undefined': return { cacheable: true, write: true }
+            case 'boolean': return { cacheable: result, write: true }
+            default: return { cacheable: true, write: true, ...result }
+          }
+        }
+        finally {
+          this.inPostscript = false;
+        }
+      `
       // workaround for https://github.com/Juris-M/zotero/issues/65
-      Reference.prototype.postscript = new Function('reference', 'item', 'Translator', 'Zotero', postscript) as (reference: any, item: any) => boolean
+      Reference.prototype.postscript = new Function('reference', 'item', 'Translator', 'Zotero', postscript) as (reference: any, item: any) => PostscriptAllow
       log.debug(`Installed postscript: ${JSON.stringify(postscript)}`)
     }
     catch (err) {
-      if (Translator.preferences.testing) throw err
       log.error(`Failed to compile postscript: ${err}\n\n${JSON.stringify(postscript)}`)
+      if (Translator.preferences.testing) throw err
     }
   }
 
@@ -916,14 +934,16 @@ export class Reference {
       this.has[field] = value
     }
 
+    let allow: PostscriptAllow = { cache: true, write: true }
     try {
-      if (this.postscript(this, this.item, Translator, Zotero) === false) this.item.$cacheable = false
+      allow = this.postscript(this, this.item, Translator, Zotero)
     }
     catch (err) {
       if (Translator.preferences.testing && !Translator.preferences.ignorePostscriptErrors) throw err
       log.error('Reference.postscript failed:', err)
-      this.item.$cacheable = false
+      allow.cache = false
     }
+    this.item.$cacheable = this.item.$cacheable && allow.cache
 
     for (const name of Translator.skipFields) {
       this.remove(name)
@@ -952,7 +972,7 @@ export class Reference {
     ref += this.qualityReport()
     ref += '\n'
 
-    Zotero.write(ref)
+    if (allow.write) Zotero.write(ref)
 
     this.metadata.DeclarePrefChars = Exporter.unique_chars(this.metadata.DeclarePrefChars)
 
@@ -1340,7 +1360,9 @@ export class Reference {
     return latex
   }
 
-  private postscript(_reference, _item, _translator, _zotero): boolean { return true } // eslint-disable-line no-empty,@typescript-eslint/no-empty-function
+  private postscript(_reference, _item, _translator, _zotero): PostscriptAllow {
+    return { cache: true, write: true }
+  }
 
   private qualityReport(): string {
     // the quality report will access a bunch of fields not to export them but just to see if they were used, and that triggers the cacheDisabler proxy when
