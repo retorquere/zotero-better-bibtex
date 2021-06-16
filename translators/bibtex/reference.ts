@@ -342,7 +342,9 @@ export class Reference {
       postscript = `
         this.inPostscript = true;
         try {
-          const result = (() => { ${postscript} })()
+          const result = (() => {
+            ${postscript};
+          })()
           switch (typeof result) {
             case 'undefined': return { cacheable: true, write: true }
             case 'boolean': return { cacheable: result, write: true }
