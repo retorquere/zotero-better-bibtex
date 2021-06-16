@@ -346,9 +346,9 @@ export class Reference {
             ${postscript};
           })()
           switch (typeof result) {
-            case 'undefined': return { cacheable: true, write: true }
-            case 'boolean': return { cacheable: result, write: true }
-            default: return { cacheable: true, write: true, ...result }
+            case 'undefined': return { cache: true, write: true }
+            case 'boolean': return { cache: result, write: true }
+            default: return { cache: true, write: true, ...result }
           }
         }
         finally {
