@@ -296,6 +296,11 @@ function entry_sort(a: [string, string | number], b: [string, string | number]):
   return Translator.stringCompare(a[0], b[0])
 }
 
+type PostscriptAllow = {
+  cache: boolean
+  write: boolean
+}
+
 /*
  * The fields are objects with the following keys:
  *   * name: name of the Bib(La)TeX field
@@ -922,7 +927,11 @@ export class Reference {
       this.has[field] = value
     }
 
+<<<<<<< HEAD
     let allow: postscript.Allow = { cache: true, write: true }
+=======
+    let allow: PostscriptAllow = { cache: true, write: true }
+>>>>>>> 964bccbfd (allow skipping from postscript)
     try {
       allow = this.postscript(this, this.item, Translator, Zotero)
     }
@@ -1347,7 +1356,11 @@ export class Reference {
     return latex
   }
 
+<<<<<<< HEAD
   private postscript(_reference, _item, _translator, _zotero): postscript.Allow {
+=======
+  private postscript(_reference, _item, _translator, _zotero): PostscriptAllow {
+>>>>>>> 964bccbfd (allow skipping from postscript)
     return { cache: true, write: true }
   }
 
