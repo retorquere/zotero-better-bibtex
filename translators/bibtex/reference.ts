@@ -357,10 +357,10 @@ export class Reference {
       `
       // workaround for https://github.com/Juris-M/zotero/issues/65
       Reference.prototype.postscript = new Function('reference', 'item', 'Translator', 'Zotero', postscript) as (reference: any, item: any) => PostscriptAllow
-      log.debug(`Installed postscript: ${JSON.stringify(postscript)}`)
+      log.debug(`Installed postscript: \n${postscript}`)
     }
     catch (err) {
-      log.error(`Failed to compile postscript: ${err}\n\n${JSON.stringify(postscript)}`)
+      log.error(`Failed to compile postscript: ${err}\n\n${postscript}`)
       if (Translator.preferences.testing) throw err
     }
   }
