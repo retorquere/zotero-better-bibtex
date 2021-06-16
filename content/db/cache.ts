@@ -1,7 +1,7 @@
 import { XULoki as Loki } from './loki'
 import { Events } from '../events'
 import { File } from './store/file'
-import { Preference } from '../../gen/preferences'
+import { affects, Preference } from '../../gen/preferences'
 import { log } from '../logger'
 
 const version = require('../../gen/version.js')
@@ -25,13 +25,13 @@ class Cache extends Loki {
     }
   }
 
-  public reset(reason: string) {
+  public reset(reason: string, affected?: string[]) {
     if (!this.initialized) return
 
-    log.debug('cache drop:', reason)
+    log.debug('cache drop:', reason, affected || '*')
 
     for (const coll of this.collections) {
-      this.drop(coll, reason)
+      if (!affected || affected.includes(coll.name)) this.drop(coll, reason)
     }
   }
 
@@ -164,7 +164,7 @@ export const DB = new Cache('cache', { // eslint-disable-line @typescript-eslint
 
 // the preferences influence the output way too much, no keeping track of that
 Events.on('preference-changed', pref => {
-  Zotero.BetterBibTeX.loaded.then(() => { DB.reset(`pref ${pref} changed`) })
+  Zotero.BetterBibTeX.loaded.then(() => { DB.reset(`pref ${pref} changed`, affects[pref]) })
 })
 Events.on('items-changed', ids => {
   Zotero.BetterBibTeX.loaded.then(() => { DB.remove(ids, 'items-changed') })

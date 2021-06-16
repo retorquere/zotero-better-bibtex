@@ -10,6 +10,7 @@ import os
 import html
 from mako.template import Template
 import re
+from glob import glob
 
 root = os.path.join(os.path.dirname(__file__), '..')
 
@@ -72,13 +73,30 @@ class Preferences:
           links.pop(text)
     if len(links) > 0: raise ValueError(', '.join(list(links.keys())))
 
+    translators = []
+    for tr in glob('translators/*.json'):
+      with open(tr) as f:
+        tr = json.load(f)
+        if 'Better ' in tr['label'] and not 'Quick' in tr['label']:
+          translators.append(tr['label'])
     for pref in self.pane.findall(f'.//{xul}prefpane/{xul}preferences/{xul}preference'):
+      affects = pref.get(f'{bbt}affects')
+      if affects == '':
+        affects = []
+      elif affects == '*':
+        affects = translators
+      elif affects in ['tex', 'bibtex', 'biblatex', 'csl']:
+        affects = [tr for tr in translators if affects in tr.lower()]
+      else:
+        raise ValueError(affects)
+
       doc = pref.getnext()
       pref = Munch(
         id = pref.get('id'),
         name = pref.get('name').replace(self.prefix, ''),
         type = pref.get('type'),
-        default = pref.get('default')
+        default = pref.get('default'),
+        affects = affects
       )
       pref.var = re.sub(r'-(.)', lambda m: m.group(1).upper(), pref.name.replace('.', '_'))
       assert pref.var not in self.vars, pref.var

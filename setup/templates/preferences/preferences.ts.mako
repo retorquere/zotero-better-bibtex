@@ -23,6 +23,7 @@ import { fromEntries } from '../content/object'
 
 export type PreferenceName = ${names}
 export const names: PreferenceName[] = (preferences.map(pref => pref.var) as PreferenceName[])
+export const affects: Record<PreferenceName, string[]> = (preferences.reduce((acc, pref) => { acc[pref.name] = pref.affects || []; return acc}, {}) as Record<PreferenceName, string[]>)
 
 export type Preferences = {
 % for pref in preferences:
