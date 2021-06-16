@@ -927,11 +927,7 @@ export class Reference {
       this.has[field] = value
     }
 
-<<<<<<< HEAD
     let allow: postscript.Allow = { cache: true, write: true }
-=======
-    let allow: PostscriptAllow = { cache: true, write: true }
->>>>>>> 964bccbfd (allow skipping from postscript)
     try {
       allow = this.postscript(this, this.item, Translator, Zotero)
     }
@@ -1356,11 +1352,7 @@ export class Reference {
     return latex
   }
 
-<<<<<<< HEAD
   private postscript(_reference, _item, _translator, _zotero): postscript.Allow {
-=======
-  private postscript(_reference, _item, _translator, _zotero): PostscriptAllow {
->>>>>>> 964bccbfd (allow skipping from postscript)
     return { cache: true, write: true }
   }
 
