@@ -425,7 +425,6 @@
 
         <!-- mainly for testing -->
         <preference name="extensions.zotero.translators.better-bibtex.scrubDatabase" bbt:affects="" type="bool" default="false"/>
-        <preference name="extensions.zotero.translators.better-bibtex.ignorePostscriptErrors" bbt:affects="" type="bool" default="true"/>
         <preference name="extensions.zotero.translators.better-bibtex.debugLogDir" bbt:affects="" type="string" default=""/>
         <preference name="extensions.zotero.translators.better-bibtex.testing" bbt:affects="" type="bool" default="false"/>
 

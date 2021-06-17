@@ -20,7 +20,6 @@
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "off",
       "citekeyFormat": "[authors3][shortyear]",
-      "ignorePostscriptErrors": false,
       "importCaseProtection": "off",
       "itemObserverDelay": 100,
       "keyConflictPolicy": "change",

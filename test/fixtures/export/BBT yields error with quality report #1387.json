@@ -8,7 +8,6 @@
       "DOIandURL": "doi",
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "citekeyFormat": "[auth][shorttitle][year]",
-      "ignorePostscriptErrors": false,
       "importCaseProtection": "off",
       "itemObserverDelay": 100,
       "keyConflictPolicy": "change",

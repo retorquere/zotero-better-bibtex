@@ -35,7 +35,6 @@
   "extraMergeCitekeys": false,
   "extraMergeTeX": false,
   "git": "config",
-  "ignorePostscriptErrors": true,
   "import": true,
   "importBibTeXStrings": true,
   "importCaseProtection": "as-needed",
