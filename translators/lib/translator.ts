@@ -1,11 +1,11 @@
 declare const Zotero: any
 declare const ZOTERO_TRANSLATOR_INFO: any
 
-import { affects, defaults } from '../../content/prefs-meta'
+import { affects, names as preferences, defaults } from '../../content/prefs-meta'
 import { client } from '../../content/client'
 import { Reference, Item, Collection } from '../../gen/typings/serialized-item'
 import { ITranslator } from '../../gen/typings/translator'
-import type { Preferences } from '../../gen/preferences'
+import type { PreferenceName, Preferences } from '../../gen/preferences'
 import { log } from '../../content/logger'
 import { worker } from '../../content/environment'
 import { Pinger } from '../../content/ping'
@@ -289,7 +289,7 @@ export const Translator = new class implements ITranslator { // eslint-disable-l
     this.preferences.testing = (Zotero.getHiddenPref('better-bibtex.testing') as boolean)
 
     if (mode === 'export') {
-      this.unicode = (this.BetterBibTeX && !Translator.preferences.asciiBibTeX) || (this.BetterBibLaTeX && !Translator.preferences.asciiBibLaTeX)
+      this.unicode = !Translator.preferences[`ascii${this.header.label.replace(/Better /, '')}`]
 
       if (this.preferences.baseAttachmentPath && (this.export.dir === this.preferences.baseAttachmentPath || this.export.dir?.startsWith(this.preferences.baseAttachmentPath + this.paths.sep))) {
         this.preferences.relativeFilePaths = true
@@ -315,20 +315,21 @@ export const Translator = new class implements ITranslator { // eslint-disable-l
       }
     }
 
-    this.initialized = true
-
-    if (this.preferences.testing) {
+    if (!this.initialized && this.preferences.testing) {
       const ignored = ['testing']
       this.preferences = new Proxy(this.preferences, {
         set: (object, property, _value) => {
           throw new TypeError(`Unexpected set of preference ${String(property)}`)
         },
-        get: (object, property: string) => {
+        get: (object, property: PreferenceName) => {
+          if (!preferences.includes(property)) throw new TypeError(`Unsupported preference ${property}`)
           if (!ignored.includes(property) && !affects[property].includes(this.header.label)) throw new TypeError(`Preference ${property} claims not to affect ${this.header.label}`)
           return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
         },
       })
     }
+
+    this.initialized = true
   }
 
   private registerCollection(collection, parent: string) {
