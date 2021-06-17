@@ -9,6 +9,7 @@ import type { Translators } from '../../typings/translators'
 import type { ParsedDate } from '../../content/dateparser'
 
 import { Translator } from '../lib/translator'
+import * as postscript from '../lib/postscript'
 
 import { Exporter } from './exporter'
 import { text2latex, replace_command_spacers } from './unicode_translator'
@@ -295,11 +296,6 @@ function entry_sort(a: [string, string | number], b: [string, string | number]):
   return Translator.stringCompare(a[0], b[0])
 }
 
-type PostscriptAllow = {
-  cache: boolean
-  write: boolean
-}
-
 /*
  * The fields are objects with the following keys:
  *   * name: name of the Bib(La)TeX field
@@ -334,34 +330,24 @@ export class Reference {
   private quality_report: string[] = []
 
   public static installPostscript(): void {
-    let postscript = Translator.preferences.postscript
-
-    if (typeof postscript !== 'string' || postscript.trim() === '') return
-
     try {
-      postscript = `
-        this.inPostscript = true;
-        try {
-          const result = (() => {
-            ${postscript};
-          })()
-          switch (typeof result) {
-            case 'undefined': return { cache: true, write: true }
-            case 'boolean': return { cache: result, write: true }
-            default: return { cache: true, write: true, ...result }
-          }
-        }
-        finally {
-          this.inPostscript = false;
-        }
-      `
-      // workaround for https://github.com/Juris-M/zotero/issues/65
-      Reference.prototype.postscript = new Function('reference', 'item', 'Translator', 'Zotero', postscript) as (reference: any, item: any) => PostscriptAllow
-      log.debug(`Installed postscript: \n${postscript}`)
+      if (Translator.preferences.postscript.trim()) {
+        // workaround for https://github.com/Juris-M/zotero/issues/65
+        Reference.prototype.postscript = new Function(
+          'reference',
+          'item',
+          'Translator',
+          'Zotero',
+          postscript.body(Translator.preferences.postscript, 'this.inPostscript')
+        ) as postscript.Postscript
+      }
+      else {
+        Reference.prototype.postscript = postscript.noop as postscript.Postscript
+      }
     }
     catch (err) {
-      log.error(`Failed to compile postscript: ${err}\n\n${postscript}`)
-      if (Translator.preferences.testing) throw err
+      Reference.prototype.postscript = postscript.noop as postscript.Postscript
+      log.debug('failed to install postscript', err, '\n', postscript.body(Translator.preferences.postscript))
     }
   }
 
@@ -936,12 +922,11 @@ export class Reference {
       this.has[field] = value
     }
 
-    let allow: PostscriptAllow = { cache: true, write: true }
+    let allow: postscript.Allow = { cache: true, write: true }
     try {
       allow = this.postscript(this, this.item, Translator, Zotero)
     }
     catch (err) {
-      if (Translator.preferences.testing && !Translator.preferences.ignorePostscriptErrors) throw err
       log.error('Reference.postscript failed:', err)
       allow.cache = false
     }
@@ -1362,7 +1347,7 @@ export class Reference {
     return latex
   }
 
-  private postscript(_reference, _item, _translator, _zotero): PostscriptAllow {
+  private postscript(_reference, _item, _translator, _zotero): postscript.Allow {
     return { cache: true, write: true }
   }
 
