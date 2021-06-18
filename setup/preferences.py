@@ -278,13 +278,35 @@ class Preferences:
 #        print(f'  {pref.var}: {pref.type}', file=f)
 #      print('}', file=f)
 
-    with open(os.path.join(root, 'gen', 'preferences.ts'), 'w') as f:
-      print(template('preferences/preferences.ts.mako').render(prefix=self.prefix, preferences=preferences).strip(), file=f)
-
     os.makedirs(os.path.join(root, 'build/defaults/preferences'), exist_ok=True)
     with open(os.path.join(root, 'build/defaults/preferences/defaults.js'), 'w') as f:
       for pref in preferences:
         print(f'pref({json.dumps(self.prefix + pref.name)}, {json.dumps(pref.default)})', file=f)
+
+    # last because we're adding support data to the prefs
+    affectedBy = {}
+    preferences = sorted(preferences, key=lambda pref: str.casefold(pref.var))
+    for pref in preferences:
+      for affects in pref.affects:
+        if not affects in affectedBy:
+          affectedBy[affects] = []
+        affectedBy[affects].append(pref.var)
+      if 'options' in pref:
+        pref.valid = ' | '.join([ json.dumps(option) for option in pref.options ])
+        pref.quoted_options = json.dumps(list(pref.options.keys()))
+      else:
+        pref.valid = pref.type
+
+    names = [pref.var for pref in preferences]
+
+    with open(os.path.join(root, 'gen', 'preferences.ts'), 'w') as f:
+      print(template('preferences/preferences.ts.mako').render(prefix=self.prefix, names=names, affectedBy=affectedBy, preferences=preferences).strip(), file=f)
+
+    meta = os.path.join(root, 'gen', 'preferences', 'meta.ts')
+    os.makedirs(os.path.dirname(meta), exist_ok=True)
+    with open(meta, 'w') as f:
+      print(template('preferences/meta.ts.mako').render(prefix=self.prefix, names=names, affectedBy=affectedBy, preferences=preferences).strip(), file=f)
+
 
 content = os.path.join(root, 'content')
 for xul in os.listdir(content):

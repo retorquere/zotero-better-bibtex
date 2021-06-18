@@ -1,6 +1,6 @@
 import { XULoki as Loki } from './loki'
 import { Preference } from '../../gen/preferences'
-import { override } from '../prefs-meta'
+import { override } from '../../gen/preferences/meta'
 import { getItemsAsync } from '../get-items-async'
 
 import { SQLite } from './store/sqlite'

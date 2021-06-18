@@ -6,8 +6,10 @@ import { log } from './logger'
 import { Events } from './events'
 import { DB } from './db/main'
 import { DB as Cache, selector as cacheSelector } from './db/cache'
+import { $and } from './db/loki'
 import { Translators } from './translators'
-import { Preferences, Preference } from '../gen/preferences'
+import { Preference } from '../gen/preferences'
+import { Preferences, override } from '../gen/preferences/meta'
 import * as ini from 'ini'
 import fold2ascii from 'fold-to-ascii'
 import { pathSearch } from './path-search'
@@ -153,8 +155,6 @@ class Git {
   }
 }
 const git = new Git()
-
-import { override } from './prefs-meta'
 
 if (Preference.autoExportDelay < 1) Preference.autoExportDelay = 1
 const queue = new class TaskQueue {
@@ -434,9 +434,10 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
       return acc
     }, {})
 
+    const label = Translators.byId[ae.translatorID].label
     const cached = {
       serialized: Cache.getCollection('itemToExportFormat').find({ itemID: { $in: [...itemIDs] } }).length,
-      export: Cache.getCollection(Translators.byId[ae.translatorID].label).find(cacheSelector([...itemIDs], options, prefs)).length,
+      export: Cache.getCollection(label).find($and({...cacheSelector(label, options, prefs), $in: itemIDs})).length,
     }
 
     log.debug('cache-rate: cache rate for', $loki, {...cached, items: itemIDs.size}, 'took', Date.now() - start)

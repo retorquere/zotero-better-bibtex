@@ -6,64 +6,9 @@ import { Events } from '../content/events'
 %>
 declare const Zotero: any
 const prefix = '${prefix}'
-import preferences from './preferences.json'
 
-<%
-  affectedBy = {}
-
-  for pref in preferences:
-    for affects in pref.affects:
-      if not affects in affectedBy:
-        affectedBy[affects] = []
-      affectedBy[affects].append(pref.var)
-    if 'options' in pref:
-      pref.valid = ' | '.join([ json.dumps(option) for option in pref.options ])
-      pref.quoted_options = json.dumps(list(pref.options.keys()))
-    else:
-      pref.valid = pref.type
-
-  names = [pref.var for pref in preferences]
-  names = sorted(names, key=str.casefold)
-%>
-
-export type PreferenceName =
-    '${names[0]}'
-% for pref in names[1:]:
-  | '${pref}'
-% endfor
-
-export const names: PreferenceName[] = [
-% for pref in names:
-  '${pref}',
-% endfor
-]
-
-export const affects: Record<PreferenceName, string[]> = {
-% for pref in preferences:
-  ${pref.var}: ${json.dumps(pref.affects)},
-% endfor
-}
-export const affectedBy: Record<string, PreferenceName[]> = {
-% for tr, prefs in affectedBy.items():
-  '${tr}': [
-%   for pref in prefs:
-    '${pref}',
-%   endfor
-  ],
-% endfor
-}
-
-export type Preferences = {
-% for pref in preferences:
-  ${pref.var}: ${pref.valid | n }
-% endfor
-}
-
-export const defaults = {
-% for pref in preferences:
-  ${pref.var}: ${json.dumps(pref.default.replace('\u200b', '') if pref.var == 'citekeyFormat' else pref.default)},
-% endfor
-}
+import { Preferences, names, defaults } from './preferences/meta'
+import { fromEntries } from '../content/object'
 
 export const Preference = new class PreferenceManager {
   public default = defaults
@@ -115,10 +60,10 @@ export const Preference = new class PreferenceManager {
 
     function changed() { Events.emit('preference-changed', this) }
     // set defaults and install event emitter
-    for (const pref of preferences) {
-      if (pref.var !== 'platform') {
-        if (typeof this[pref.var] === 'undefined') this[pref.var] = (typeof pref.default === 'string' ? pref.default.replace(/^\u200B/, '') : pref.default)
-        Zotero.Prefs.registerObserver(<%text>`${prefix}${pref.name}`</%text>, changed.bind(pref.var))
+    for (const pref of names) {
+      if (pref !== 'platform') {
+        if (typeof this[pref] === 'undefined') (this[pref] as any) = (typeof defaults[pref] === 'string' ? (defaults[pref] as string).replace(/^\u200B/, '') : defaults[pref])
+        Zotero.Prefs.registerObserver(<%text>`${prefix}${pref}`</%text>, changed.bind(pref))
       }
     }
     // put this in a preference so that translators can access this.
@@ -152,6 +97,7 @@ export const Preference = new class PreferenceManager {
 %   if pref.name != 'platform':
   set ${pref.var}(v: ${pref.valid | n} | undefined) {
     if (typeof v === 'undefined') v = ${json.dumps(pref.default) | n}
+    if (v === this.${pref.var}) return
 %   else:
   set ${pref.var}(v: ${pref.valid | n}) {
 %   endif
@@ -169,20 +115,6 @@ export const Preference = new class PreferenceManager {
 % endfor
   get all(): Preferences {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return (fromEntries(preferences.map(pref => [ pref.var, this[pref.var] ])) as Preferences)
-  }
-}
-
-<% overrides = [pref for pref in preferences if pref.get('override', false)] %>
-export const override: { names: PreferenceName[], types: Record<string, { enum: string[] } | { type: boolean }> } = {
-  names: [
-% for pref in overrides:
-    ${json.dumps(pref.var)},
-% endfor
-  },
-  types: {
-% for pref in overrides:
-    ${pref.var}: ${json.dumps({ 'enum': list(pref.options.keys()) } if 'options' in pref else {'type': pref.type})},
-% endfor
+    return fromEntries(names.map(pref => [ pref, this[pref] ])) as Preferences
   }
 }

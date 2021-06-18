@@ -1,11 +1,10 @@
 declare const Zotero: any
 declare const ZOTERO_TRANSLATOR_INFO: any
 
-import { affects, names as preferences, defaults } from '../../content/prefs-meta'
+import { affects, names as preferences, defaults, PreferenceName, Preferences } from '../../gen/preferences/meta'
 import { client } from '../../content/client'
 import { Reference, Item, Collection } from '../../gen/typings/serialized-item'
 import { ITranslator } from '../../gen/typings/translator'
-import type { PreferenceName, Preferences } from '../../gen/preferences'
 import { log } from '../../content/logger'
 import { worker } from '../../content/environment'
 import { Pinger } from '../../content/ping'

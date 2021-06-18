@@ -218,9 +218,6 @@
             "git": {
               "type": "string"
             },
-            "ignorePostscriptErrors": {
-              "type": "boolean"
-            },
             "import": {
               "type": "boolean"
             },

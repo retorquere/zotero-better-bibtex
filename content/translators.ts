@@ -10,6 +10,7 @@ declare const ZOTERO_CONFIG: any
 import { Deferred } from './deferred'
 import type { Translators as Translator } from '../typings/translators'
 import { Preference } from '../gen/preferences'
+import { override } from '../gen/preferences/meta'
 import { Serializer } from './serializer'
 import { log } from './logger'
 import { DB as Cache, selector as cacheSelector } from './db/cache'
@@ -20,7 +21,6 @@ import { $and, Query } from './db/loki'
 import { Events } from './events'
 import { Pinger } from './ping'
 
-import { override } from './prefs-meta'
 import * as translatorMetadata from '../gen/translators.json'
 
 import { TaskEasy } from 'task-easy'
@@ -285,6 +285,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       autoExport,
     }
 
+    const selector = cacheSelector(translator.label, config.options, config.preferences)
+
     let items: any[] = []
     worker.onmessage = (e: { data: Translator.Worker.Message }) => {
       switch (e.data?.kind) {
@@ -324,20 +326,19 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
             this.workers.running.delete(id)
           }
 
-          const selector = cacheSelector(itemID, config.options, config.preferences)
-          let cached = cache.findOne($and(selector))
+          const query = {...selector, itemID}
+          let cached = cache.findOne($and(query))
 
           if (cached) {
             // this should not happen?
-            log.debug('cache-rate: +0?')
+            log.debug('unexpected cache store:', query)
             cached.reference = reference
             cached.metadata = metadata
             cached = cache.update(cached)
 
           }
           else {
-            // log.debug('cache-rate: +1')
-            cache.insert({...selector, reference, metadata})
+            cache.insert({...query, reference, metadata})
           }
           break
 
@@ -432,7 +433,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     // pre-fetch cache
     log.debug('cache-rate: load cache')
     if (cache) {
-      const query = cacheSelector(config.items.map(item => item.itemID), displayOptions, config.preferences)
+      const query = {...selector, itemID: { $in: config.items.map(item => item.itemID) }}
 
       // not safe in async!
       const cloneObjects = cache.cloneObjects

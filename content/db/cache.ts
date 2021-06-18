@@ -1,15 +1,14 @@
 import { XULoki as Loki } from './loki'
 import { Events } from '../events'
 import { File } from './store/file'
-import { affects, Preference } from '../../gen/preferences'
+import { Preference } from '../../gen/preferences'
+import { affects, override, affectedBy } from '../../gen/preferences/meta'
 import { log } from '../logger'
-import { $and, Query } from './loki'
 
 const version = require('../../gen/version.js')
 import * as translators from '../../gen/translators.json'
 
-import { override } from '../prefs-meta'
-import type { Preferences } from '../../gen/preferences'
+import type { Preferences } from '../../gen/preferences/meta'
 
 const METADATA = 'Better BibTeX metadata'
 
@@ -177,14 +176,14 @@ if (DB.getCollection('cache')) { DB.removeCollection('cache') }
 if (DB.getCollection('serialized')) { DB.removeCollection('serialized') }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function selector(itemID: number | number[], options: any, prefs: Partial<Preferences>): Query {
+export function selector(translator: string, options: any, prefs: Partial<Preferences>) {
   const query = {
     exportNotes: !!options.exportNotes,
     useJournalAbbreviation: !!options.useJournalAbbreviation,
-    itemID: Array.isArray(itemID) ? {$in: itemID} : itemID,
+    // itemID: Array.isArray(itemID) ? {$in: itemID} : itemID,
   }
   for (const pref of override.names) {
-    query[pref] = prefs[pref]
+    if (affectedBy[translator].includes(pref)) query[pref] = prefs[pref]
   }
-  return $and(query)
+  return query
 }

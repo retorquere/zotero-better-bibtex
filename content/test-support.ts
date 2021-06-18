@@ -12,8 +12,7 @@ import { AUXScanner } from './aux-scanner'
 import { DB as Cache } from './db/cache'
 import * as Extra from './extra'
 import { $and } from './db/loki'
-
-import  { defaults } from './prefs-meta'
+import  { defaults } from '../gen/preferences/meta'
 
 export class TestSupport {
   public removeAutoExports(): void {
