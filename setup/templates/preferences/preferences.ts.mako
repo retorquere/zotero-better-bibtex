@@ -7,23 +7,51 @@ import { Events } from '../content/events'
 declare const Zotero: any
 const prefix = '${prefix}'
 import preferences from './preferences.json'
-import * as meta from '../content/prefs-meta'
-import { fromEntries } from '../content/object'
 
 <%
+  affectedBy = {}
+
   for pref in preferences:
+    for affects in pref.affects:
+      if not affects in affectedBy:
+        affectedBy[affects] = []
+      affectedBy[affects].append(pref.var)
     if 'options' in pref:
       pref.valid = ' | '.join([ json.dumps(option) for option in pref.options ])
       pref.quoted_options = json.dumps(list(pref.options.keys()))
     else:
       pref.valid = pref.type
 
-  names = ' | '.join([f"'{pref.var}'" for pref in preferences])
+  names = [pref.var for pref in preferences]
+  names = sorted(names, key=str.casefold)
 %>
 
-export type PreferenceName = ${names}
-export const names: PreferenceName[] = (preferences.map(pref => pref.var) as PreferenceName[])
-export const affects: Record<PreferenceName, string[]> = (preferences.reduce((acc, pref) => { acc[pref.name] = pref.affects || []; return acc}, {}) as Record<PreferenceName, string[]>)
+export type PreferenceName =
+    '${names[0]}'
+% for pref in names[1:]:
+  | '${pref}'
+% endfor
+
+export const names: PreferenceName[] = [
+% for pref in names:
+  '${pref}',
+% endfor
+]
+
+export const affects: Record<PreferenceName, string[]> = {
+% for pref in preferences:
+  ${pref.var}: ${json.dumps(pref.affects)},
+% endfor
+}
+export const affectedBy: Record<string, PreferenceName[]> = {
+% for tr, prefs in affectedBy.items():
+  '${tr}': [
+%   for pref in prefs:
+    '${pref}',
+%   endfor
+  ],
+% endfor
+}
 
 export type Preferences = {
 % for pref in preferences:
@@ -31,8 +59,14 @@ export type Preferences = {
 % endfor
 }
 
+export const defaults = {
+% for pref in preferences:
+  ${pref.var}: ${json.dumps(pref.default.replace('\u200b', '') if pref.var == 'citekeyFormat' else pref.default)},
+% endfor
+}
+
 export const Preference = new class PreferenceManager {
-  public default = meta.defaults
+  public default = defaults
 
   constructor() {
     this.baseAttachmentPath = Zotero.Prefs.get('baseAttachmentPath')
@@ -76,7 +110,7 @@ export const Preference = new class PreferenceManager {
       Zotero.Prefs.set('${prefix}autoPinDelay', old ? 1 : 0)
     }
     if (Zotero.Prefs.get(key = '${prefix}autoExportDelay') === 1) {
-      Zotero.Prefs.set(key, meta.defaults.autoExportDelay)
+      Zotero.Prefs.set(key, defaults.autoExportDelay)
     }
 
     function changed() { Events.emit('preference-changed', this) }
@@ -136,5 +170,19 @@ export const Preference = new class PreferenceManager {
   get all(): Preferences {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return (fromEntries(preferences.map(pref => [ pref.var, this[pref.var] ])) as Preferences)
+  }
+}
+
+<% overrides = [pref for pref in preferences if pref.get('override', false)] %>
+export const override: { names: PreferenceName[], types: Record<string, { enum: string[] } | { type: boolean }> } = {
+  names: [
+% for pref in overrides:
+    ${json.dumps(pref.var)},
+% endfor
+  },
+  types: {
+% for pref in overrides:
+    ${pref.var}: ${json.dumps({ 'enum': list(pref.options.keys()) } if 'options' in pref else {'type': pref.type})},
+% endfor
   }
 }

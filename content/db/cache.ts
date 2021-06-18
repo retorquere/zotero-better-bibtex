@@ -3,6 +3,7 @@ import { Events } from '../events'
 import { File } from './store/file'
 import { affects, Preference } from '../../gen/preferences'
 import { log } from '../logger'
+import { $and, Query } from './loki'
 
 const version = require('../../gen/version.js')
 import * as translators from '../../gen/translators.json'
@@ -176,7 +177,7 @@ if (DB.getCollection('cache')) { DB.removeCollection('cache') }
 if (DB.getCollection('serialized')) { DB.removeCollection('serialized') }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function selector(itemID: number | number[], options: any, prefs: Partial<Preferences>) {
+export function selector(itemID: number | number[], options: any, prefs: Partial<Preferences>): Query {
   const query = {
     exportNotes: !!options.exportNotes,
     useJournalAbbreviation: !!options.useJournalAbbreviation,
@@ -185,5 +186,5 @@ export function selector(itemID: number | number[], options: any, prefs: Partial
   for (const pref of override.names) {
     query[pref] = prefs[pref]
   }
-  return query
+  return $and(query)
 }

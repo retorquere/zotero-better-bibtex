@@ -43,6 +43,7 @@ import { TestSupport } from './test-support'
 import { TeXstudio } from './tex-studio'
 import { $and } from './db/loki'
 import format = require('string-template')
+import { cloneDeep } from 'lodash'
 
 // UNINSTALL
 AddonManager.addAddonListener({
@@ -341,9 +342,9 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
     cached.meta.updated = (new Date).getTime() // touches the cache object so it isn't reaped too early
     collection.dirty = true
 
-    // freeze object, because it was not fetched using clone
+    // isolate object, because it was not fetched using clone
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return Object.freeze(cached)
+    return cloneDeep(cached)
   },
 
   cacheStore(sandbox: { translator: { label: string }[] }, itemID: number, options: { exportNotes: boolean, useJournalAbbreviation: boolean }, prefs: any, reference: any, metadata: any) {
