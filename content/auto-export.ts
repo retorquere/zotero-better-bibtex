@@ -9,7 +9,7 @@ import { DB as Cache, selector as cacheSelector } from './db/cache'
 import { $and } from './db/loki'
 import { Translators } from './translators'
 import { Preference } from '../gen/preferences'
-import { Preferences, override } from '../gen/preferences/meta'
+import { Preferences, autoExportOverride } from '../gen/preferences/meta'
 import * as ini from 'ini'
 import fold2ascii from 'fold-to-ascii'
 import { pathSearch } from './path-search'
@@ -241,7 +241,7 @@ const queue = new class TaskQueue {
         4. If you change the jabrefFormat to anything back to 3 or 0, all caches will be dropped anyhow, and we will follow that cache format from that point on
       */
 
-      for (const pref of override.names) {
+      for (const pref of autoExportOverride[Translators.byId[ae.translatorID].label].names) {
         displayOptions[`preference_${pref}`] = ae[pref]
       }
       displayOptions.auto_export_id = ae.$loki
@@ -377,7 +377,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
   }
 
   public add(ae, schedule = false) {
-    for (const pref of override.names) {
+    for (const pref of autoExportOverride[Translators.byId[ae.translatorID].label].names) {
       ae[pref] = Preference[pref]
     }
     this.db.removeWhere({ path: ae.path })
@@ -429,7 +429,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
       exportNotes: !!ae.exportNotes,
       useJournalAbbreviation: !!ae.useJournalAbbreviation,
     }
-    const prefs: Partial<Preferences> = override.names.reduce((acc, pref) => {
+    const prefs: Partial<Preferences> = autoExportOverride[Translators.byId[ae.translatorID].label].names.reduce((acc, pref) => {
       acc[pref] = ae[pref]
       return acc
     }, {})

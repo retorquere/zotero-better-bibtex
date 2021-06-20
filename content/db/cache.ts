@@ -2,11 +2,10 @@ import { XULoki as Loki } from './loki'
 import { Events } from '../events'
 import { File } from './store/file'
 import { Preference } from '../../gen/preferences'
-import { affects, override, affectedBy } from '../../gen/preferences/meta'
+import { affects, autoExportOverride } from '../../gen/preferences/meta'
 import { log } from '../logger'
 
 const version = require('../../gen/version.js')
-import * as translators from '../../gen/translators.json'
 
 import type { Preferences } from '../../gen/preferences/meta'
 
@@ -80,7 +79,7 @@ class Cache extends Loki {
       modified[item.itemID] = item.modified
     }
 
-    for (const translator of Object.keys(translators.byName)) {
+    for (const [translator, override] of Object.entries(autoExportOverride)) {
       coll = this.schemaCollection(translator, {
         logging: false,
         indices: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...(override.names) ],
@@ -112,12 +111,7 @@ class Cache extends Loki {
       })
       log.debug(`cache.${coll.name}:`, coll.data.length)
 
-      // old cache, drop
-      if (coll.findOne({ [override.names[0]]: {$eq: undefined} })) {
-        this.drop(coll, 'legacy cache without overrides')
-      }
-      // how did this get in here? #1809
-      else if (coll.data.find(rec => !rec.$loki)) {
+      if (coll.data.find(rec => !rec.$loki)) {
         this.drop(coll, 'entries without id')
       }
       else {
@@ -182,8 +176,8 @@ export function selector(translator: string, options: any, prefs: Partial<Prefer
     useJournalAbbreviation: !!options.useJournalAbbreviation,
     // itemID: Array.isArray(itemID) ? {$in: itemID} : itemID,
   }
-  for (const pref of override.names) {
-    if (affectedBy[translator].includes(pref)) query[pref] = prefs[pref]
+  for (const pref of autoExportOverride[translator].names) {
+    query[pref] = prefs[pref]
   }
   return query
 }

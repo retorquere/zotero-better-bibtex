@@ -207,7 +207,7 @@
           If there are some fields you don't want in your bibtex files (such as `note` for example), add a list of them here, separated by comma's.
         </bbt:doc>
 
-        <preference name="extensions.zotero.translators.better-bibtex.bibtexURL" bbt:affects="tex" id="pref-better-bibtex-bibtexURL" type="string" default="off"/>
+        <preference name="extensions.zotero.translators.better-bibtex.bibtexURL" bbt:affects="bibtex" id="pref-better-bibtex-bibtexURL" type="string" default="off"/>
 
         <preference name="extensions.zotero.translators.better-bibtex.warnBulkModify" bbt:affects="" id="pref-better-bibtex-warnBulkModify" type="int" default="10"/>
         <bbt:doc>
@@ -819,7 +819,7 @@
                       />
                   </vbox>
 
-                  <vbox hidden="true" class="autoexport-options autoexport-BetterCSLJSON autoexport-BetterCSLYAML autoexport-BetterBibTeX autoexport-BetterBibLaTeX">
+                  <vbox hidden="true" class="autoexport-options autoexport-BetterBibTeX autoexport-BetterBibLaTeX">
                     <hbox class="autoexport-options autoexport-BetterBibTeX autoexport-BetterBibLaTeX">
                       <label>&better-bibtex.Preferences.export.fields.doi-and-url;</label>
                       <menulist bbt:ae-id="" bbt:ae-field="DOIandURL" oncommand="bbt_prefpane.autoexport.edit(event.currentTarget)">

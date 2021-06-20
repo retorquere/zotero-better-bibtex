@@ -73,20 +73,20 @@ class Preferences:
           links.pop(text)
     if len(links) > 0: raise ValueError(', '.join(list(links.keys())))
 
-    translators = []
+    self.translators = []
     for tr in glob('translators/*.json'):
       with open(tr) as f:
         tr = json.load(f)
-        if 'Better ' in tr['label'] and not 'Quick' in tr['label']:
-          translators.append(tr['label'])
+        if tr['label'].startswith('Better') and not 'Quick' in tr['label']:
+          self.translators.append(tr['label'])
     for pref in self.pane.findall(f'.//{xul}prefpane/{xul}preferences/{xul}preference'):
       affects = pref.get(f'{bbt}affects')
       if affects == '':
         affects = []
       elif affects == '*':
-        affects = translators
+        affects = [tr for tr in self.translators if 'Better ' in tr]
       elif affects in ['tex', 'bibtex', 'biblatex', 'csl']:
-        affects = [tr for tr in translators if affects in tr.lower()]
+        affects = [tr for tr in self.translators if 'Better ' in tr and affects in tr.lower()]
       else:
         raise ValueError(affects)
 
@@ -284,12 +284,10 @@ class Preferences:
         print(f'pref({json.dumps(self.prefix + pref.name)}, {json.dumps(pref.default)})', file=f)
 
     # last because we're adding support data to the prefs
-    affectedBy = {}
+    affectedBy = {tr: [] for tr in self.translators}
     preferences = sorted(preferences, key=lambda pref: str.casefold(pref.var))
     for pref in preferences:
       for affects in pref.affects:
-        if not affects in affectedBy:
-          affectedBy[affects] = []
         affectedBy[affects].append(pref.var)
       if 'options' in pref:
         pref.valid = ' | '.join([ json.dumps(option) for option in pref.options ])

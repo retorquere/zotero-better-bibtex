@@ -41,19 +41,21 @@ export const defaults: Preferences = {
 }
 
 <% overrides = [pref for pref in preferences if pref.get('override', false)] %>
-export const override: { names: PreferenceName[], types: Record<string, { enum: string[] } | { type: 'boolean' }> } = {
-  names: [
-% for pref in overrides:
-    ${json.dumps(pref.var)},
-% endfor
-  ],
-  types: {
-% for pref in overrides:
-%   if 'options' in pref:
-    ${pref.var}: { enum: ${json.dumps(list(pref.options.keys()))} },
-%   else:
-    ${pref.var}: { type: ${json.dumps(pref.type)} },
-%   endif
-% endfor
+export const cached: Record<string, { names: PreferenceName[], types: Record<string, { enum: string[] } | { type: 'boolean' }> }> = {
+% for tr, affectors in affectedBy.items():
+  '${tr}': {
+    names: ${json.dumps([pref.var for pref in overrides if pref.var in affectors])},
+    types: {
+%   for pref in overrides:
+%     if pref.var in affectors:
+%       if 'options' in pref:
+      ${pref.var}: { enum: ${json.dumps(list(pref.options.keys()))} },
+%       else:
+      ${pref.var}: { type: ${json.dumps(pref.type)} },
+%       endif
+%     endif
+%   endfor
+    },
   },
+% endfor
 }
