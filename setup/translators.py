@@ -5,7 +5,6 @@ import os
 import glob
 from addict import Dict
 import re
-from Cheetah.Template import Template
 
 print('translators')
 
