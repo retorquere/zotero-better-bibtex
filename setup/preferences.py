@@ -81,6 +81,7 @@ class Preferences:
         tr.keepUpdated = 'displayOptions' in tr and 'keepUpdated' in tr.displayOptions
         tr.cached = tr.label.startswith('Better ') and not 'Quick' in tr.label
         tr.affectedBy = []
+    bbtjson = next(tr.label for tr in self.translators.values() if 'BetterBibTeX' in tr.label)
     for pref in self.pane.findall(f'.//{xul}prefpane/{xul}preferences/{xul}preference'):
       affects = pref.get(f'{bbt}affects')
       if affects == '':
@@ -91,6 +92,8 @@ class Preferences:
         affects = [tr.label for tr in self.translators.values() if 'Better ' in tr.label and not 'Quick' in tr.label and affects in tr.label.lower()]
       else:
         raise ValueError(affects)
+      affects.append(bbtjson)
+      affects = list(set(affects))
 
       doc = pref.getnext()
       pref = Munch(

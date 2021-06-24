@@ -313,15 +313,17 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
       }
     }
 
-    if (!this.initialized && this.preferences.testing) {
+    if (!this.initialized && mode === 'export' && this.preferences.testing) {
       const ignored = ['testing']
       this.preferences = new Proxy(this.preferences, {
         set: (object, property, _value) => {
           throw new TypeError(`Unexpected set of preference ${String(property)}`)
         },
         get: (object, property: PreferenceName) => {
+          // JSON.stringify will attempt to get this
+          if (property as unknown as string === 'toJSON') return object[property]
           if (!preferences.includes(property)) throw new TypeError(`Unsupported preference ${property}`)
-          if (!ignored.includes(property) && !affects[property].includes(this.header.label)) throw new TypeError(`Preference ${property} claims not to affect ${this.header.label}`)
+          if (!ignored.includes(property) && !affects[property]?.includes(this.header.label)) throw new TypeError(`Preference ${property} claims not to affect ${this.header.label}`)
           return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
         },
       })
