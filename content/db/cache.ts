@@ -2,7 +2,7 @@ import { XULoki as Loki } from './loki'
 import { Events } from '../events'
 import { File } from './store/file'
 import { Preference } from '../../gen/preferences'
-import { affects, autoExportOverride } from '../../gen/preferences/meta'
+import { affects, schema } from '../../gen/preferences/meta'
 import { log } from '../logger'
 
 const version = require('../../gen/version.js')
@@ -79,10 +79,12 @@ class Cache extends Loki {
       modified[item.itemID] = item.modified
     }
 
-    for (const [translator, override] of Object.entries(autoExportOverride)) {
-      coll = this.schemaCollection(translator, {
+    for (const [name, translator] of Object.entries(schema.translator)) {
+      if (!translator.cached) continue
+
+      coll = this.schemaCollection(name, {
         logging: false,
-        indices: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...(override.names) ],
+        indices: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...(translator.preferences) ],
         schema: {
           type: 'object',
           properties: {
@@ -94,7 +96,7 @@ class Cache extends Loki {
             useJournalAbbreviation: { type: 'boolean' },
 
             // prefs
-            ...(override.types),
+            ...(translator.types),
 
             // Optional
             metadata: { type: 'object' },
@@ -103,7 +105,7 @@ class Cache extends Loki {
             meta: { type: 'object' },
             $loki: { type: 'integer' },
           },
-          required: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...(override.names), 'reference' ],
+          required: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...(translator.preferences), 'reference' ],
           additionalProperties: false,
         },
         ttl,
@@ -176,7 +178,7 @@ export function selector(translator: string, options: any, prefs: Partial<Prefer
     useJournalAbbreviation: !!options.useJournalAbbreviation,
     // itemID: Array.isArray(itemID) ? {$in: itemID} : itemID,
   }
-  for (const pref of autoExportOverride[translator].names) {
+  for (const pref of schema.translator[translator].preferences) {
     query[pref] = prefs[pref]
   }
   return query

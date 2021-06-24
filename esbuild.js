@@ -27,7 +27,7 @@ async function bundle(config) {
     ...config,
     bundle: true,
     format: 'iife',
-    sourcemap: 'external',
+    sourcemap: true,
   }
   if (!config.platform) config.target = ['firefox60']
 

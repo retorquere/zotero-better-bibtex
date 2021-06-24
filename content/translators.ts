@@ -10,7 +10,7 @@ declare const ZOTERO_CONFIG: any
 import { Deferred } from './deferred'
 import type { Translators as Translator } from '../typings/translators'
 import { Preference } from '../gen/preferences'
-import { autoExportOverride } from '../gen/preferences/meta'
+import { schema } from '../gen/preferences/meta'
 import { Serializer } from './serializer'
 import { log } from './logger'
 import { DB as Cache, selector as cacheSelector } from './db/cache'
@@ -581,10 +581,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     if (installed?.configOptions?.hash === header.configOptions.hash) return false
 
-    if (autoExportOverride
-    const cache = Cache.getCollection(header.label)
+    if (schema.translator[header.label]?.cached) Cache.getCollection(header.label).removeDataOnly()
 
-    cache.removeDataOnly()
     // importing AutoExports would be circular, so access DB directly
     const autoexports = DB.getCollection('autoexport')
     for (const ae of autoexports.find($and({ translatorID: header.translatorID }))) {
@@ -606,11 +604,13 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   public async uncached(translatorID: string, displayOptions: any, scope: any): Promise<any[]> {
     // get all itemIDs in cache
     const cache = Cache.getCollection(this.byId[translatorID].label)
+    if (!cache) return []
+
     const query: Query = {$and: [
       { exportNotes: {$eq: !!displayOptions.exportNotes} },
       { useJournalAbbreviation: {$eq: !!displayOptions.useJournalAbbreviation} },
     ]}
-    for (const pref of autoExportOverride[this.byId[translatorID].label].names) {
+    for (const pref of schema.translator[this.byId[translatorID].label].preferences) {
       if (typeof displayOptions[`preference_${pref}`] === 'undefined') {
         query.$and.push({ [pref]: {$eq: Preference[pref]} })
       }

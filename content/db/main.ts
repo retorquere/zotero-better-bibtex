@@ -1,6 +1,6 @@
 import { XULoki as Loki } from './loki'
 import { Preference } from '../../gen/preferences'
-import { autoExportOverride } from '../../gen/preferences/meta'
+import { schema } from '../../gen/preferences/meta'
 import { getItemsAsync } from '../get-items-async'
 
 import { SQLite } from './store/sqlite'
@@ -60,6 +60,8 @@ class Main extends Loki {
 
         'useJournalAbbreviation',
         'exportNotes',
+
+        ...schema.autoExportPreferences,
       ],
       unique: [ 'path' ],
       logging: true,
@@ -69,22 +71,23 @@ class Main extends Loki {
         additionalProperties: false,
       },
     }
-    for (const [translator, ov] of Object.entries(autoExportOverride)) {
-      config.indices = [...(new Set(config.indices.concat(ov.names)))]
+    for (const [name, translator] of Object.entries(schema.translator)) {
+      if (!translator.autoexport) continue
+
       config.schema.oneOf.push({
         properties: {
           type: { enum: [ 'collection', 'library' ] },
           id: { type: 'integer' },
           path: { type: 'string', minLength: 1 },
           status: { enum: [ 'scheduled', 'running', 'done', 'error' ] },
-          translatorID: { const: Translators.byName[translator].translatorID },
+          translatorID: { const: Translators.byName[name].translatorID },
 
           // options
           exportNotes: { type: 'boolean' },
           useJournalAbbreviation: { type: 'boolean' },
 
           // prefs
-          ...(ov.types),
+          ...(translator.types),
 
           // status
           error: { type: 'string' },
@@ -94,7 +97,7 @@ class Main extends Loki {
           meta: { type: 'object' },
           $loki: { type: 'integer' },
         },
-        required: [ 'type', 'id', 'path', 'status', 'translatorID', 'exportNotes', 'useJournalAbbreviation', ...(ov.names) ],
+        required: [ 'type', 'id', 'path', 'status', 'translatorID', 'exportNotes', 'useJournalAbbreviation', ...(translator.preferences) ],
       })
     }
 

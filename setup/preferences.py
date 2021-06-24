@@ -73,20 +73,22 @@ class Preferences:
           links.pop(text)
     if len(links) > 0: raise ValueError(', '.join(list(links.keys())))
 
-    self.translators = []
+    self.translators = {}
     for tr in glob('translators/*.json'):
       with open(tr) as f:
-        tr = json.load(f)
-        if tr['label'].startswith('Better') and not 'Quick' in tr['label']:
-          self.translators.append(tr['label'])
+        tr = Munch.fromDict(json.load(f))
+        self.translators[tr.label] = tr
+        tr.keepUpdated = 'displayOptions' in tr and 'keepUpdated' in tr.displayOptions
+        tr.cached = tr.label.startswith('Better ') and not 'Quick' in tr.label
+        tr.affectedBy = []
     for pref in self.pane.findall(f'.//{xul}prefpane/{xul}preferences/{xul}preference'):
       affects = pref.get(f'{bbt}affects')
       if affects == '':
         affects = []
       elif affects == '*':
-        affects = [tr for tr in self.translators if 'Better ' in tr]
+        affects = [tr.label for tr in self.translators.values() if 'Better ' in tr.label and not 'Quick' in tr.label]
       elif affects in ['tex', 'bibtex', 'biblatex', 'csl']:
-        affects = [tr for tr in self.translators if 'Better ' in tr and affects in tr.lower()]
+        affects = [tr.label for tr in self.translators.values() if 'Better ' in tr.label and not 'Quick' in tr.label and affects in tr.label.lower()]
       else:
         raise ValueError(affects)
 
@@ -101,6 +103,9 @@ class Preferences:
       pref.var = re.sub(r'-(.)', lambda m: m.group(1).upper(), pref.name.replace('.', '_'))
       assert pref.var not in self.vars, pref.var
       self.vars.append(pref.var)
+
+      for tr in affects:
+        self.translators[tr].affectedBy.append(pref.var)
 
       # temporary
       assert pref.name == pref.var, (pref.name, pref.var)
@@ -284,11 +289,8 @@ class Preferences:
         print(f'pref({json.dumps(self.prefix + pref.name)}, {json.dumps(pref.default)})', file=f)
 
     # last because we're adding support data to the prefs
-    affectedBy = {tr: [] for tr in self.translators}
     preferences = sorted(preferences, key=lambda pref: str.casefold(pref.var))
     for pref in preferences:
-      for affects in pref.affects:
-        affectedBy[affects].append(pref.var)
       if 'options' in pref:
         pref.valid = ' | '.join([ json.dumps(option) for option in pref.options ])
         pref.quoted_options = json.dumps(list(pref.options.keys()))
@@ -297,14 +299,14 @@ class Preferences:
 
     names = [pref.var for pref in preferences]
 
+    translators = self.translators.values()
     with open(os.path.join(root, 'gen', 'preferences.ts'), 'w') as f:
-      print(template('preferences/preferences.ts.mako').render(prefix=self.prefix, names=names, affectedBy=affectedBy, preferences=preferences).strip(), file=f)
+      print(template('preferences/preferences.ts.mako').render(prefix=self.prefix, names=names, translators=translators, preferences=preferences).strip(), file=f)
 
     meta = os.path.join(root, 'gen', 'preferences', 'meta.ts')
     os.makedirs(os.path.dirname(meta), exist_ok=True)
     with open(meta, 'w') as f:
-      print(template('preferences/meta.ts.mako').render(prefix=self.prefix, names=names, affectedBy=affectedBy, preferences=preferences).strip(), file=f)
-
+      print(template('preferences/meta.ts.mako').render(prefix=self.prefix, names=names, translators=translators, preferences=preferences).strip(), file=f)
 
 content = os.path.join(root, 'content')
 for xul in os.listdir(content):
