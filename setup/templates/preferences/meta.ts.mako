@@ -1,4 +1,4 @@
-/* eslint-disable no-magic-numbers, @typescript-eslint/quotes, max-len */
+/* eslint-disable no-magic-numbers, @typescript-eslint/quotes, max-len, quote-props */
 <% import json %>\
 ## export type PreferenceName =
 ##   '${names[0]}'
@@ -29,6 +29,13 @@ export type Preferences = {
 export const defaults: Preferences = {
 % for pref in preferences:
   ${pref.var}: ${json.dumps(pref.default.replace('\u200b', '') if pref.var == 'citekeyFormat' else pref.default)},
+% endfor
+}
+
+<% options = [pref for pref in preferences if 'options' in pref] %>\
+export const options: Partial<Record<PreferenceName, Record<string, string>>> = {
+% for pref in options:
+  ${pref.var}: ${json.dumps(pref.options)},
 % endfor
 }
 

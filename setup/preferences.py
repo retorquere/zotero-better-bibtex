@@ -276,13 +276,6 @@ class Preferences:
     with open(os.path.join(root, 'site/data/preferences/defaults.json'), 'w') as f:
       json.dump({ pref.name: pref.default for pref in preferences }, f, indent=2)
 
-#    os.makedirs(os.path.join(root, 'gen/typings'), exist_ok=True)
-#    with open(os.path.join(root, 'gen/typings/preferences.d.ts'), 'w') as f:
-#      print('export interface IPreferences {', file=f)
-#      for pref in preferences:
-#        print(f'  {pref.var}: {pref.type}', file=f)
-#      print('}', file=f)
-
     os.makedirs(os.path.join(root, 'build/defaults/preferences'), exist_ok=True)
     with open(os.path.join(root, 'build/defaults/preferences/defaults.js'), 'w') as f:
       for pref in preferences:

@@ -2,7 +2,7 @@
 
 importScripts('resource://gre/modules/osfile.jsm')
 
-import { ITranslator } from '../../gen/typings/translator'
+import type { ITranslator } from '../lib/translator'
 import type { Translators } from '../../typings/translators'
 
 declare const doExport: () => void

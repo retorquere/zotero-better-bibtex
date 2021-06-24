@@ -4,7 +4,6 @@ declare const ZOTERO_TRANSLATOR_INFO: any
 import { affects, names as preferences, defaults, PreferenceName, Preferences } from '../../gen/preferences/meta'
 import { client } from '../../content/client'
 import { Reference, Item, Collection } from '../../gen/typings/serialized-item'
-import { ITranslator } from '../../gen/typings/translator'
 import { log } from '../../content/logger'
 import { worker } from '../../content/environment'
 import { Pinger } from '../../content/ping'
@@ -132,7 +131,7 @@ class Items {
   }
 }
 
-export const Translator = new class implements ITranslator { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export class ITranslator { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public preferences: Preferences
   public skipFields: string[]
   public skipField: Record<string, boolean>
@@ -375,3 +374,4 @@ export const Translator = new class implements ITranslator { // eslint-disable-l
     return this._items.references()
   }
 }
+export const Translator = new ITranslator // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
