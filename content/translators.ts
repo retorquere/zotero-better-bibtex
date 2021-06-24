@@ -285,7 +285,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       autoExport,
     }
 
-    const selector = cacheSelector(translator.label, config.options, config.preferences)
+    const selector = schema.translator[translator.label]?.cached ? cacheSelector(translator.label, config.options, config.preferences) : null
 
     let items: any[] = []
     worker.onmessage = (e: { data: Translator.Worker.Message }) => {
