@@ -2,6 +2,7 @@ import { XULoki as Loki } from './loki'
 import { Preference } from '../../gen/preferences'
 import { schema } from '../../gen/preferences/meta'
 import { getItemsAsync } from '../get-items-async'
+import { log } from '../logger'
 
 import { SQLite } from './store/sqlite'
 
@@ -58,23 +59,21 @@ class Main extends Loki {
         'path',
         'translatorID',
 
-        'useJournalAbbreviation',
-        'exportNotes',
-
-        ...schema.autoExportPreferences,
+        ...schema.autoExport.displayOptions,
+        ...schema.autoExport.preferences,
       ],
       unique: [ 'path' ],
       logging: true,
       schema: {
-        type: 'object',
         oneOf: [],
-        additionalProperties: false,
       },
     }
     for (const [name, translator] of Object.entries(schema.translator)) {
       if (!translator.autoexport) continue
 
       config.schema.oneOf.push({
+        type: 'object',
+        additionalProperties: false,
         properties: {
           type: { enum: [ 'collection', 'library' ] },
           id: { type: 'integer' },
@@ -97,9 +96,10 @@ class Main extends Loki {
           meta: { type: 'object' },
           $loki: { type: 'integer' },
         },
-        required: [ 'type', 'id', 'path', 'status', 'translatorID', 'exportNotes', 'useJournalAbbreviation', ...(translator.preferences) ],
+        required: [ 'type', 'id', 'path', 'status', 'translatorID', ...(translator.displayOptions), ...(translator.preferences) ],
       })
     }
+    log.debug('ae schema:', JSON.stringify(config, null, 2))
 
     const autoexport = this.schemaCollection('autoexport', config)
 

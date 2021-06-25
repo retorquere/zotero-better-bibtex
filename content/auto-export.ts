@@ -9,7 +9,7 @@ import { DB as Cache, selector as cacheSelector } from './db/cache'
 import { $and } from './db/loki'
 import { Translators } from './translators'
 import { Preference } from '../gen/preferences'
-import { Preferences, schema, defaults, affects } from '../gen/preferences/meta'
+import { Preferences, schema } from '../gen/preferences/meta'
 import * as ini from 'ini'
 import fold2ascii from 'fold-to-ascii'
 import { pathSearch } from './path-search'
@@ -158,13 +158,15 @@ const git = new Git()
 
 
 function scrub(ae: any) {
-  const translator = Translators.byId[ae.translatorID].label
-  for (const k of Object.keys(ae)) {
-    if (typeof defaults[k] !== 'undefined' && !affects[k].includes(translator)) {
-      log.debug('ae: stripping', k, 'from', ae)
+  const translator = schema.translator[Translators.byId[ae.translatorID].label]
+
+  for (const k of (schema.autoExport.preferences as string[]).concat(schema.autoExport.displayOptions)) {
+    if (!translator.types[k]) {
       delete ae[k]
+      log.debug('ae: stripping', k, 'from', ae)
     }
   }
+
   return ae // eslint-disable-line @typescript-eslint/no-unsafe-return
 }
 
@@ -389,9 +391,14 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
   }
 
   public add(ae, schedule = false) {
-    for (const pref of schema.translator[Translators.byId[ae.translatorID].label].preferences) {
+    const translator = schema.translator[Translators.byId[ae.translatorID].label]
+    for (const pref of translator.preferences) {
       ae[pref] = Preference[pref]
     }
+    for (const option of translator.displayOptions) {
+      ae[option] = ae[option] || false
+    }
+
     this.db.removeWhere({ path: ae.path })
     this.db.insert(scrub(ae))
 

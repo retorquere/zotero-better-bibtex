@@ -41,14 +41,23 @@ export const options: Partial<Record<PreferenceName, Record<string, string>>> = 
 
 <% overrides = [pref for pref in preferences if pref.get('override', false)] %>\
 <% cache_or_autoexport = [tr for tr in translators if tr.cached or tr.keepUpdated] %>\
-export const schema: { autoExportPreferences: PreferenceName[], translator: Record<string, { cached: boolean, autoexport: boolean, preferences: PreferenceName[], types: Partial<Record<PreferenceName, { enum: string[] } | { type: 'boolean' }>> }> } = {
-  autoExportPreferences: ${json.dumps([ pref.var for pref in overrides ])},
+<% ae_options = list(set([ option for tr in translators for option, dflt in tr.get('displayOptions', {}).items() if tr.keepUpdated and type(dflt) == bool and option not in ['exportFileData', 'keepUpdated'] ])) %>\
+export const schema: {
+  autoExport: { preferences: PreferenceName[], displayOptions: string[] }
+  translator: Record<string, { cached: boolean, autoexport: boolean, displayOptions: string[], preferences: PreferenceName[], types: Record<string, { enum: string[] } | { type: 'boolean' }> }>
+} = {
+  autoExport: {
+    preferences: ${json.dumps([ pref.var for pref in overrides ])},
+    displayOptions: ${json.dumps(ae_options)},
+  },
   translator: {
 % for tr in cache_or_autoexport:
+<%  options = [option for option in tr.get('displayOptions', {}).keys() if option in ae_options] %>\
     '${tr.label}': {
       autoexport: ${json.dumps(tr.keepUpdated)},
       cached: ${json.dumps(tr.cached)},
       preferences: ${json.dumps([pref.var for pref in overrides if pref.var in tr.affectedBy])},
+      displayOptions: ${json.dumps(options)},
       types: {
 %   for pref in overrides:
 %     if pref.var in tr.affectedBy:
@@ -58,6 +67,9 @@ export const schema: { autoExportPreferences: PreferenceName[], translator: Reco
         ${pref.var}: { type: ${json.dumps(pref.type)} },
 %       endif
 %     endif
+%   endfor
+%   for option in options:
+        ${option}: { type: 'boolean' },
 %   endfor
       },
     },
