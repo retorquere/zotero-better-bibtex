@@ -7,6 +7,7 @@ import * as itemfields from '../gen/items/items'
 const version = require('../gen/version.js')
 import { stringify } from '../content/stringify'
 import { log } from '../content/logger'
+import { normalize } from './lib/normalize'
 
 const chunkSize = 0x100000
 
@@ -153,8 +154,10 @@ export function doExport(): void {
   while ((item = Zotero.nextItem())) {
     if (Translator.options.dropAttachments && item.itemType === 'attachment') continue
 
-    let [ , kind, lib, key ] = item.uri.match(/^https?:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^/]+)\/items\/(.+)/)
-    item.select = (kind === 'users') ? `zotero://select/library/items/${key}` : `zotero://select/groups/${lib}/items/${key}`
+    if (!Translator.preferences.testing) {
+      const [ , kind, lib, key ] = item.uri.match(/^https?:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^/]+)\/items\/(.+)/)
+      item.select = (kind === 'users') ? `zotero://select/library/items/${key}` : `zotero://select/groups/${lib}/items/${key}`
+    }
 
     delete item.collections
 
@@ -170,8 +173,10 @@ export function doExport(): void {
         att.path = att.localPath
       }
 
-      [ , kind, lib, key ] = att.uri.match(/^https?:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^/]+)\/items\/(.+)/)
-      att.select = (kind === 'users') ? `zotero://select/library/items/${key}` : `zotero://select/groups/${lib}/items/${key}`
+      if (!Translator.preferences.testing) {
+        const [ , kind, lib, key ] = att.uri.match(/^https?:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^/]+)\/items\/(.+)/)
+        att.select = (kind === 'users') ? `zotero://select/library/items/${key}` : `zotero://select/groups/${lib}/items/${key}`
+      }
 
       if (!att.path) continue // amazon/googlebooks etc links show up as atachments without a path
 
@@ -185,6 +190,8 @@ export function doExport(): void {
 
     data.items.push(item)
   }
+
+  if (Translator.preferences.testing) normalize(data)
 
   Zotero.write(stringify(data, null, '  '))
 }
