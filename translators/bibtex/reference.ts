@@ -296,11 +296,6 @@ function entry_sort(a: [string, string | number], b: [string, string | number]):
   return Translator.stringCompare(a[0], b[0])
 }
 
-type PostscriptAllow = {
-  cache: boolean
-  write: boolean
-}
-
 /*
  * The fields are objects with the following keys:
  *   * name: name of the Bib(La)TeX field
