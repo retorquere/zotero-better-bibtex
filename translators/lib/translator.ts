@@ -1,7 +1,7 @@
 declare const Zotero: any
 declare const ZOTERO_TRANSLATOR_INFO: any
 
-import { affects, names as preferences, defaults, PreferenceName, Preferences } from '../../gen/preferences/meta'
+import { affects, names as preferences, defaults, PreferenceName, Preferences, schema } from '../../gen/preferences/meta'
 import { client } from '../../content/client'
 import { Reference, Item, Collection } from '../../gen/typings/serialized-item'
 import { log } from '../../content/logger'
@@ -313,7 +313,7 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
       }
     }
 
-    if (!this.initialized && mode === 'export' && this.preferences.testing) {
+    if (!this.initialized && mode === 'export' && this.preferences.testing && schema.translator[this.header.label]?.cached) {
       const ignored = ['testing']
       this.preferences = new Proxy(this.preferences, {
         set: (object, property, _value) => {
