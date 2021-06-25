@@ -81,19 +81,20 @@ class Preferences:
         tr.keepUpdated = 'displayOptions' in tr and 'keepUpdated' in tr.displayOptions
         tr.cached = tr.label.startswith('Better ') and not 'Quick' in tr.label
         tr.affectedBy = []
-    bbtjson = next(tr.label for tr in self.translators.values() if 'BetterBibTeX' in tr.label)
     for pref in self.pane.findall(f'.//{xul}prefpane/{xul}preferences/{xul}preference'):
-      affects = pref.get(f'{bbt}affects')
-      if affects == '':
-        affects = []
-      elif affects == '*':
-        affects = [tr.label for tr in self.translators.values() if 'Better ' in tr.label and not 'Quick' in tr.label]
-      elif affects in ['tex', 'bibtex', 'biblatex', 'csl']:
-        affects = [tr.label for tr in self.translators.values() if 'Better ' in tr.label and not 'Quick' in tr.label and affects in tr.label.lower()]
-      else:
-        raise ValueError(affects)
-      affects.append(bbtjson)
-      affects = list(set(affects))
+      affected = []
+      for affects in pref.get(f'{bbt}affects').split():
+        if affects == '':
+          pass
+        elif affects == '*':
+          affected += [tr.label for tr in self.translators.values() if 'Better ' in tr.label and not 'Quick' in tr.label]
+        elif affects in ['tex', 'bibtex', 'biblatex', 'csl']:
+          affected += [tr.label for tr in self.translators.values() if 'Better ' in tr.label and not 'Quick' in tr.label and affects in tr.label.lower()]
+        elif affects in ['quickcopy']:
+          affected += [tr.label for tr in self.translators.values() if 'Quick' in tr.label]
+        else:
+          raise ValueError(affects)
+      affects = list(set(affected))
 
       doc = pref.getnext()
       pref = Munch(
