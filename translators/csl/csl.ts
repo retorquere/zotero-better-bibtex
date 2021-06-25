@@ -12,6 +12,7 @@ import * as ExtraFields from '../../gen/items/extra-fields.json'
 import { log } from '../../content/logger'
 import { worker } from '../../content/environment'
 import { Reference } from '../../gen/typings/serialized-item'
+import * as postscript from '../lib/postscript'
 
 type ExtendedReference = Reference & { extraFields: Extra.Fields }
 
@@ -33,21 +34,28 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
   public date2CSL: Function // will be added by JSON/YAML exporter
 
   public initialize() {
-    const postscript = Translator.preferences.postscript
-
-    if (typeof postscript === 'string' && postscript.trim() !== '') {
-      try {
-        this.postscript = new Function('reference', 'item', 'Translator', 'Zotero', postscript) as (reference: any, item: any) => boolean
-        log.debug(`Installed postscript: ${JSON.stringify(postscript)}`)
+    try {
+      if (Translator.preferences.postscript.trim()) {
+        this.postscript = new Function(
+          'reference',
+          'item',
+          'Translator',
+          'Zotero',
+          postscript.body(Translator.preferences.postscript)
+        ) as postscript.Postscript
       }
-      catch (err) {
-        if (Translator.preferences.testing) throw err
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        log.error(`Failed to compile postscript: ${err}\n\n${JSON.stringify(postscript)}`)
+      else {
+        this.postscript = postscript.noop as postscript.Postscript
       }
     }
+    catch (err) {
+      this.postscript = postscript.noop as postscript.Postscript
+      log.debug('failed to install postscript', err, '\n', postscript.body(Translator.preferences.postscript))
+    }
   }
-  public postscript(_reference, _item, _translator, _zotero) {} // eslint-disable-line @typescript-eslint/no-empty-function
+  public postscript(_reference, _item, _translator, _zotero): postscript.Allow {
+    return { cache: true, write: true }
+  }
 
   public doExport() {
     const items = []
@@ -148,13 +156,13 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
       delete csl.multi
       delete csl.system_id
 
-      let cache
+      let allow: postscript.Allow = { cache: true, write: true }
       try {
-        cache = this.postscript(csl, item, Translator, Zotero)
+        allow = this.postscript(csl, item, Translator, Zotero)
       }
       catch (err) {
-        if (Translator.preferences.testing && !Translator.preferences.ignorePostscriptErrors) throw err
-        cache = false
+        log.error('CSL.postscript failed:', err)
+        allow.cache = false
       }
 
       for (const field of Translator.skipFields) {
@@ -163,9 +171,9 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
       csl = this.sortObject(csl)
       csl = this.serialize(csl)
 
-      if (typeof cache !== 'boolean' || cache) Zotero.BetterBibTeX.cacheStore(item.itemID, Translator.options, Translator.preferences, csl)
+      if (allow.cache) Zotero.BetterBibTeX.cacheStore(item.itemID, Translator.options, Translator.preferences, csl)
 
-      items.push(csl)
+      if (allow.write) items.push(csl)
     }
 
     order.sort((a, b) => a.citationKey.localeCompare(b.citationKey, undefined, { sensitivity: 'base' }))

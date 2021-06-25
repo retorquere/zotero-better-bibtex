@@ -6,32 +6,12 @@ import { Events } from '../content/events'
 %>
 declare const Zotero: any
 const prefix = '${prefix}'
-import preferences from './preferences.json'
-import * as meta from '../content/prefs-meta'
+
+import { Preferences, names, defaults } from './preferences/meta'
 import { fromEntries } from '../content/object'
 
-<%
-  for pref in preferences:
-    if 'options' in pref:
-      pref.valid = ' | '.join([ json.dumps(option) for option in pref.options ])
-      pref.quoted_options = json.dumps(list(pref.options.keys()))
-    else:
-      pref.valid = pref.type
-
-  names = ' | '.join([f"'{pref.var}'" for pref in preferences])
-%>
-
-export type PreferenceName = ${names}
-export const names: PreferenceName[] = (preferences.map(pref => pref.var) as PreferenceName[])
-
-export type Preferences = {
-% for pref in preferences:
-  ${pref.var}: ${pref.valid | n }
-% endfor
-}
-
 export const Preference = new class PreferenceManager {
-  public default = meta.defaults
+  public default = defaults
 
   constructor() {
     this.baseAttachmentPath = Zotero.Prefs.get('baseAttachmentPath')
@@ -75,15 +55,15 @@ export const Preference = new class PreferenceManager {
       Zotero.Prefs.set('${prefix}autoPinDelay', old ? 1 : 0)
     }
     if (Zotero.Prefs.get(key = '${prefix}autoExportDelay') === 1) {
-      Zotero.Prefs.set(key, meta.defaults.autoExportDelay)
+      Zotero.Prefs.set(key, defaults.autoExportDelay)
     }
 
     function changed() { Events.emit('preference-changed', this) }
     // set defaults and install event emitter
-    for (const pref of preferences) {
-      if (pref.var !== 'platform') {
-        if (typeof this[pref.var] === 'undefined') this[pref.var] = (typeof pref.default === 'string' ? pref.default.replace(/^\u200B/, '') : pref.default)
-        Zotero.Prefs.registerObserver(<%text>`${prefix}${pref.name}`</%text>, changed.bind(pref.var))
+    for (const pref of names) {
+      if (pref !== 'platform') {
+        if (typeof this[pref] === 'undefined') (this[pref] as any) = (typeof defaults[pref] === 'string' ? (defaults[pref] as string).replace(/^\u200B/, '') : defaults[pref])
+        Zotero.Prefs.registerObserver(<%text>`${prefix}${pref}`</%text>, changed.bind(pref))
       }
     }
     // put this in a preference so that translators can access this.
@@ -117,6 +97,7 @@ export const Preference = new class PreferenceManager {
 %   if pref.name != 'platform':
   set ${pref.var}(v: ${pref.valid | n} | undefined) {
     if (typeof v === 'undefined') v = ${json.dumps(pref.default) | n}
+    if (v === this.${pref.var}) return
 %   else:
   set ${pref.var}(v: ${pref.valid | n}) {
 %   endif
@@ -134,6 +115,6 @@ export const Preference = new class PreferenceManager {
 % endfor
   get all(): Preferences {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return (fromEntries(preferences.map(pref => [ pref.var, this[pref.var] ])) as Preferences)
+    return fromEntries(names.map(pref => [ pref, this[pref] ])) as Preferences
   }
 }

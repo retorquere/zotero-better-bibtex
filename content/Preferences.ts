@@ -7,12 +7,11 @@ import { patch as $patch$ } from './monkey-patch'
 import { DB as Cache } from './db/cache'
 
 import { Preference } from '../gen/preferences'
-import preferences from '../gen/preferences.json'
+import { options as preferenceOptions } from '../gen/preferences/meta'
 import { Formatter } from './key-manager/formatter'
 import { AutoExport } from './auto-export'
 import { Translators } from './translators'
 import { client } from './client'
-const quickCopyOptions = preferences.find(pref => pref.name === 'quickCopyMode').options
 
 const namespace = 'http://retorque.re/zotero-better-bibtex/'
 
@@ -337,7 +336,7 @@ export class PrefPane {
           break
 
         default:
-          mode = quickCopyOptions[Preference.quickCopyMode] || Preference.quickCopyMode
+          mode = preferenceOptions.quickCopyMode[Preference.quickCopyMode] || Preference.quickCopyMode
       }
 
       node.label = `Better BibTeX Quick Copy: ${mode}`

@@ -1,4 +1,4 @@
-import { defaults } from '../content/prefs-meta'
+import { defaults } from '../gen/preferences'
 import schema from '../schema/zotero.json'
 import XRegExp from 'xregexp'
 

@@ -1,4 +1,3 @@
-Cheetah3
 Mako
 PyGithub
 PyHamcrest

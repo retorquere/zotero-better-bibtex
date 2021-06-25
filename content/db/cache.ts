@@ -2,13 +2,12 @@ import { XULoki as Loki } from './loki'
 import { Events } from '../events'
 import { File } from './store/file'
 import { Preference } from '../../gen/preferences'
+import { affects, schema } from '../../gen/preferences/meta'
 import { log } from '../logger'
 
 const version = require('../../gen/version.js')
-import * as translators from '../../gen/translators.json'
 
-import { override } from '../prefs-meta'
-import type { Preferences } from '../../gen/preferences'
+import type { Preferences } from '../../gen/preferences/meta'
 
 const METADATA = 'Better BibTeX metadata'
 
@@ -25,13 +24,13 @@ class Cache extends Loki {
     }
   }
 
-  public reset(reason: string) {
+  public reset(reason: string, affected?: string[]) {
     if (!this.initialized) return
 
-    log.debug('cache drop:', reason)
+    log.debug('cache drop:', reason, affected || '*')
 
     for (const coll of this.collections) {
-      this.drop(coll, reason)
+      if (!affected || affected.includes(coll.name)) this.drop(coll, reason)
     }
   }
 
@@ -80,10 +79,12 @@ class Cache extends Loki {
       modified[item.itemID] = item.modified
     }
 
-    for (const translator of Object.keys(translators.byName)) {
-      coll = this.schemaCollection(translator, {
+    for (const [name, translator] of Object.entries(schema.translator)) {
+      if (!translator.cached) continue
+
+      coll = this.schemaCollection(name, {
         logging: false,
-        indices: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...(override.names) ],
+        indices: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...(translator.preferences) ],
         schema: {
           type: 'object',
           properties: {
@@ -95,7 +96,7 @@ class Cache extends Loki {
             useJournalAbbreviation: { type: 'boolean' },
 
             // prefs
-            ...(override.types),
+            ...(translator.types),
 
             // Optional
             metadata: { type: 'object' },
@@ -104,7 +105,7 @@ class Cache extends Loki {
             meta: { type: 'object' },
             $loki: { type: 'integer' },
           },
-          required: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...(override.names), 'reference' ],
+          required: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...(translator.preferences), 'reference' ],
           additionalProperties: false,
         },
         ttl,
@@ -112,12 +113,7 @@ class Cache extends Loki {
       })
       log.debug(`cache.${coll.name}:`, coll.data.length)
 
-      // old cache, drop
-      if (coll.findOne({ [override.names[0]]: {$eq: undefined} })) {
-        this.drop(coll, 'legacy cache without overrides')
-      }
-      // how did this get in here? #1809
-      else if (coll.data.find(rec => !rec.$loki)) {
+      if (coll.data.find(rec => !rec.$loki)) {
         this.drop(coll, 'entries without id')
       }
       else {
@@ -164,7 +160,7 @@ export const DB = new Cache('cache', { // eslint-disable-line @typescript-eslint
 
 // the preferences influence the output way too much, no keeping track of that
 Events.on('preference-changed', pref => {
-  Zotero.BetterBibTeX.loaded.then(() => { DB.reset(`pref ${pref} changed`) })
+  Zotero.BetterBibTeX.loaded.then(() => { DB.reset(`pref ${pref} changed`, affects[pref]) })
 })
 Events.on('items-changed', ids => {
   Zotero.BetterBibTeX.loaded.then(() => { DB.remove(ids, 'items-changed') })
@@ -176,13 +172,13 @@ if (DB.getCollection('cache')) { DB.removeCollection('cache') }
 if (DB.getCollection('serialized')) { DB.removeCollection('serialized') }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function selector(itemID: number | number[], options: any, prefs: Partial<Preferences>) {
+export function selector(translator: string, options: any, prefs: Partial<Preferences>) {
   const query = {
     exportNotes: !!options.exportNotes,
     useJournalAbbreviation: !!options.useJournalAbbreviation,
-    itemID: Array.isArray(itemID) ? {$in: itemID} : itemID,
+    // itemID: Array.isArray(itemID) ? {$in: itemID} : itemID,
   }
-  for (const pref of override.names) {
+  for (const pref of schema.translator[translator].preferences) {
     query[pref] = prefs[pref]
   }
   return query

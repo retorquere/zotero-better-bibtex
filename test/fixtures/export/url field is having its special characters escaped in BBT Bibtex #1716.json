@@ -4,7 +4,6 @@
     "label": "BetterBibTeX JSON",
     "localeDateOrder": "dmy",
     "options": {
-      "Normalize": false,
       "exportNotes": true
     },
     "preferences": {

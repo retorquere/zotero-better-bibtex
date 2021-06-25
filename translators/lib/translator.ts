@@ -1,11 +1,9 @@
 declare const Zotero: any
 declare const ZOTERO_TRANSLATOR_INFO: any
 
-import { defaults } from '../../content/prefs-meta'
+import { affects, names as preferences, defaults, PreferenceName, Preferences, schema } from '../../gen/preferences/meta'
 import { client } from '../../content/client'
 import { Reference, Item, Collection } from '../../gen/typings/serialized-item'
-import { ITranslator } from '../../gen/typings/translator'
-import type { Preferences } from '../../gen/preferences'
 import { log } from '../../content/logger'
 import { worker } from '../../content/environment'
 import { Pinger } from '../../content/ping'
@@ -133,7 +131,7 @@ class Items {
   }
 }
 
-export const Translator = new class implements ITranslator { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export class ITranslator { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public preferences: Preferences
   public skipFields: string[]
   public skipField: Record<string, boolean>
@@ -289,7 +287,7 @@ export const Translator = new class implements ITranslator { // eslint-disable-l
     this.preferences.testing = (Zotero.getHiddenPref('better-bibtex.testing') as boolean)
 
     if (mode === 'export') {
-      this.unicode = (this.BetterBibTeX && !Translator.preferences.asciiBibTeX) || (this.BetterBibLaTeX && !Translator.preferences.asciiBibLaTeX)
+      this.unicode = !Translator.preferences[`ascii${this.header.label.replace(/Better /, '')}`]
 
       if (this.preferences.baseAttachmentPath && (this.export.dir === this.preferences.baseAttachmentPath || this.export.dir?.startsWith(this.preferences.baseAttachmentPath + this.paths.sep))) {
         this.preferences.relativeFilePaths = true
@@ -313,6 +311,22 @@ export const Translator = new class implements ITranslator { // eslint-disable-l
         log.debug('getCollection:', collection)
         this.registerCollection(collection, '')
       }
+    }
+
+    if (!this.initialized && mode === 'export' && this.preferences.testing && schema.translator[this.header.label]?.cached) {
+      const ignored = ['testing']
+      this.preferences = new Proxy(this.preferences, {
+        set: (object, property, _value) => {
+          throw new TypeError(`Unexpected set of preference ${String(property)}`)
+        },
+        get: (object, property: PreferenceName) => {
+          // JSON.stringify will attempt to get this
+          if (property as unknown as string === 'toJSON') return object[property]
+          if (!preferences.includes(property)) throw new TypeError(`Unsupported preference ${property}`)
+          if (!ignored.includes(property) && !affects[property]?.includes(this.header.label)) throw new TypeError(`Preference ${property} claims not to affect ${this.header.label}`)
+          return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
+        },
+      })
     }
 
     this.initialized = true
@@ -362,3 +376,4 @@ export const Translator = new class implements ITranslator { // eslint-disable-l
     return this._items.references()
   }
 }
+export const Translator = new ITranslator // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match

@@ -43,6 +43,7 @@ import { TestSupport } from './test-support'
 import { TeXstudio } from './tex-studio'
 import { $and } from './db/loki'
 import format = require('string-template')
+import { cloneDeep } from 'lodash'
 
 // UNINSTALL
 AddonManager.addAddonListener({
@@ -321,16 +322,14 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   // extractFields(_sandbox, item) { return Extra.get(item.extra) },
   debugEnabled(_sandbox: any): boolean { return (Zotero.Debug.enabled as boolean) },
 
-  cacheFetch(_sandbox: { translator: { label: string }[] }, itemID: number, options: { exportNotes: boolean, useJournalAbbreviation: boolean }, prefs: any) {
-    const collection = Cache.getCollection(_sandbox.translator[0].label)
+  cacheFetch(sandbox: { translator: { label: string }[] }, itemID: number, options: { exportNotes: boolean, useJournalAbbreviation: boolean }, prefs: any) {
+    const collection = Cache.getCollection(sandbox.translator[0].label)
     if (!collection) return false
-
-    const query = cacheSelector(itemID, options, prefs)
 
     // not safe in async!
     const cloneObjects = collection.cloneObjects
     collection.cloneObjects = false
-    const cached = collection.findOne($and(query))
+    const cached = collection.findOne($and({...cacheSelector(sandbox.translator[0].label, options, prefs), itemID}))
     collection.cloneObjects = cloneObjects
 
     if (!cached) return false
@@ -341,9 +340,9 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
     cached.meta.updated = (new Date).getTime() // touches the cache object so it isn't reaped too early
     collection.dirty = true
 
-    // freeze object, because it was not fetched using clone
+    // isolate object, because it was not fetched using clone
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return Object.freeze(cached)
+    return cloneDeep(cached)
   },
 
   cacheStore(sandbox: { translator: { label: string }[] }, itemID: number, options: { exportNotes: boolean, useJournalAbbreviation: boolean }, prefs: any, reference: any, metadata: any) {
@@ -355,7 +354,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
       return false
     }
 
-    const selector = cacheSelector(itemID, options, prefs)
+    const selector = {...cacheSelector(sandbox.translator[0].label, options, prefs), itemID}
     let cached = collection.findOne($and(selector))
 
     if (cached) {

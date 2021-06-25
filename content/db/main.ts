@@ -1,10 +1,12 @@
 import { XULoki as Loki } from './loki'
 import { Preference } from '../../gen/preferences'
-import { override } from '../prefs-meta'
+import { schema } from '../../gen/preferences/meta'
 import { getItemsAsync } from '../get-items-async'
+import { log } from '../logger'
 
 import { SQLite } from './store/sqlite'
 
+import * as Translators from '../../gen/translators.json'
 
 class Main extends Loki {
   public async init() {
@@ -49,7 +51,7 @@ class Main extends Loki {
       }
     }
 
-    const autoexport = this.schemaCollection('autoexport', {
+    const config = {
       indices: [
         'type',
         'id',
@@ -57,63 +59,55 @@ class Main extends Loki {
         'path',
         'translatorID',
 
-        'useJournalAbbreviation',
-        'exportNotes',
-
-        ...(override.names),
+        ...schema.autoExport.displayOptions,
+        ...schema.autoExport.preferences,
       ],
       unique: [ 'path' ],
       logging: true,
       schema: {
+        oneOf: [],
+      },
+    }
+    for (const [name, translator] of Object.entries(schema.translator)) {
+      if (!translator.autoexport) continue
+
+      config.schema.oneOf.push({
         type: 'object',
+        additionalProperties: false,
         properties: {
           type: { enum: [ 'collection', 'library' ] },
           id: { type: 'integer' },
           path: { type: 'string', minLength: 1 },
           status: { enum: [ 'scheduled', 'running', 'done', 'error' ] },
-          translatorID: { type: 'string', minLength: 1 },
+          translatorID: { const: Translators.byName[name].translatorID },
 
           // options
-          exportNotes: { type: 'boolean', default: false },
-          useJournalAbbreviation: { type: 'boolean', default: false },
+          exportNotes: { type: 'boolean' },
+          useJournalAbbreviation: { type: 'boolean' },
 
           // prefs
-          ...(override.types),
+          ...(translator.types),
 
-          error: { type: 'string', default: '' },
-          recursive: { type: 'boolean', default: false },
+          // status
+          error: { type: 'string' },
+          recursive: { type: 'boolean' },
 
           // LokiJS
           meta: { type: 'object' },
           $loki: { type: 'integer' },
         },
-        required: [ 'type', 'id', 'path', 'status', 'translatorID', 'exportNotes', 'useJournalAbbreviation', ...(override.names) ],
+        required: [ 'type', 'id', 'path', 'status', 'translatorID', ...(translator.displayOptions), ...(translator.preferences) ],
+      })
+    }
+    log.debug('ae schema:', JSON.stringify(config, null, 2))
 
-        additionalProperties: false,
-      },
-    })
+    const autoexport = this.schemaCollection('autoexport', config)
 
     for (const ae of autoexport.find()) {
-      let update = false
-
-      if (ae.updated) {
-        delete ae.updated
-        update = true
-      }
-
-      for (const pref of override.names) {
-        if (typeof ae[pref] === 'undefined') {
-          ae[pref] = Preference[pref]
-          update = true
-        }
-      }
-
       if (typeof ae.recursive !== 'boolean') {
         ae.recursive = false
-        update = true
+        autoexport.update(ae)
       }
-
-      if (update) autoexport.update(ae)
     }
 
     if (Preference.scrubDatabase) {

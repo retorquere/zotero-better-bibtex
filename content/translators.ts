@@ -10,6 +10,7 @@ declare const ZOTERO_CONFIG: any
 import { Deferred } from './deferred'
 import type { Translators as Translator } from '../typings/translators'
 import { Preference } from '../gen/preferences'
+import { schema } from '../gen/preferences/meta'
 import { Serializer } from './serializer'
 import { log } from './logger'
 import { DB as Cache, selector as cacheSelector } from './db/cache'
@@ -20,7 +21,6 @@ import { $and, Query } from './db/loki'
 import { Events } from './events'
 import { Pinger } from './ping'
 
-import { override } from './prefs-meta'
 import * as translatorMetadata from '../gen/translators.json'
 
 import { TaskEasy } from 'task-easy'
@@ -285,6 +285,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       autoExport,
     }
 
+    const selector = schema.translator[translator.label]?.cached ? cacheSelector(translator.label, config.options, config.preferences) : null
+
     let items: any[] = []
     worker.onmessage = (e: { data: Translator.Worker.Message }) => {
       switch (e.data?.kind) {
@@ -324,20 +326,19 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
             this.workers.running.delete(id)
           }
 
-          const selector = cacheSelector(itemID, config.options, config.preferences)
-          let cached = cache.findOne($and(selector))
+          const query = {...selector, itemID}
+          let cached = cache.findOne($and(query))
 
           if (cached) {
             // this should not happen?
-            log.debug('cache-rate: +0?')
+            log.debug('unexpected cache store:', query)
             cached.reference = reference
             cached.metadata = metadata
             cached = cache.update(cached)
 
           }
           else {
-            // log.debug('cache-rate: +1')
-            cache.insert({...selector, reference, metadata})
+            cache.insert({...query, reference, metadata})
           }
           break
 
@@ -432,7 +433,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     // pre-fetch cache
     log.debug('cache-rate: load cache')
     if (cache) {
-      const query = cacheSelector(config.items.map(item => item.itemID), displayOptions, config.preferences)
+      const query = {...selector, itemID: { $in: config.items.map(item => item.itemID) }}
 
       // not safe in async!
       const cloneObjects = cache.cloneObjects
@@ -580,8 +581,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     if (installed?.configOptions?.hash === header.configOptions.hash) return false
 
-    const cache = Cache.getCollection(header.label)
-    cache.removeDataOnly()
+    if (schema.translator[header.label]?.cached) Cache.getCollection(header.label).removeDataOnly()
+
     // importing AutoExports would be circular, so access DB directly
     const autoexports = DB.getCollection('autoexport')
     for (const ae of autoexports.find($and({ translatorID: header.translatorID }))) {
@@ -603,11 +604,13 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   public async uncached(translatorID: string, displayOptions: any, scope: any): Promise<any[]> {
     // get all itemIDs in cache
     const cache = Cache.getCollection(this.byId[translatorID].label)
+    if (!cache) return []
+
     const query: Query = {$and: [
       { exportNotes: {$eq: !!displayOptions.exportNotes} },
       { useJournalAbbreviation: {$eq: !!displayOptions.useJournalAbbreviation} },
     ]}
-    for (const pref of override.names) {
+    for (const pref of schema.translator[this.byId[translatorID].label].preferences) {
       if (typeof displayOptions[`preference_${pref}`] === 'undefined') {
         query.$and.push({ [pref]: {$eq: Preference[pref]} })
       }

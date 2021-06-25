@@ -60,9 +60,6 @@
             "Authors": {
               "type": "boolean"
             },
-            "Normalize": {
-              "type": "boolean"
-            },
             "Title": {
               "type": "boolean"
             },
@@ -217,9 +214,6 @@
             },
             "git": {
               "type": "string"
-            },
-            "ignorePostscriptErrors": {
-              "type": "boolean"
             },
             "import": {
               "type": "boolean"

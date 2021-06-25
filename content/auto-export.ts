@@ -6,8 +6,10 @@ import { log } from './logger'
 import { Events } from './events'
 import { DB } from './db/main'
 import { DB as Cache, selector as cacheSelector } from './db/cache'
+import { $and } from './db/loki'
 import { Translators } from './translators'
-import { Preferences, Preference } from '../gen/preferences'
+import { Preference } from '../gen/preferences'
+import { Preferences, schema } from '../gen/preferences/meta'
 import * as ini from 'ini'
 import fold2ascii from 'fold-to-ascii'
 import { pathSearch } from './path-search'
@@ -154,7 +156,19 @@ class Git {
 }
 const git = new Git()
 
-import { override } from './prefs-meta'
+
+function scrub(ae: any) {
+  const translator = schema.translator[Translators.byId[ae.translatorID].label]
+
+  for (const k of (schema.autoExport.preferences as string[]).concat(schema.autoExport.displayOptions)) {
+    if (!translator.types[k]) {
+      delete ae[k]
+      log.debug('ae: stripping', k, 'from', ae)
+    }
+  }
+
+  return ae // eslint-disable-line @typescript-eslint/no-unsafe-return
+}
 
 if (Preference.autoExportDelay < 1) Preference.autoExportDelay = 1
 const queue = new class TaskQueue {
@@ -208,7 +222,7 @@ const queue = new class TaskQueue {
     if (!ae) throw new Error(`AutoExport ${$loki} not found`)
 
     ae.status = 'running'
-    this.autoexports.update(ae)
+    this.autoexports.update(scrub(ae))
     const started = Date.now()
     log.debug('auto-export', ae.type, ae.id, 'started')
 
@@ -241,7 +255,7 @@ const queue = new class TaskQueue {
         4. If you change the jabrefFormat to anything back to 3 or 0, all caches will be dropped anyhow, and we will follow that cache format from that point on
       */
 
-      for (const pref of override.names) {
+      for (const pref of schema.translator[Translators.byId[ae.translatorID].label].preferences) {
         displayOptions[`preference_${pref}`] = ae[pref]
       }
       displayOptions.auto_export_id = ae.$loki
@@ -287,7 +301,7 @@ const queue = new class TaskQueue {
 
     ae.status = 'done'
     log.debug('auto-export done')
-    this.autoexports.update(ae)
+    this.autoexports.update(scrub(ae))
   }
 
   private getCollectionPath(coll: {name: string, parentID: number}, root: number): string[] {
@@ -377,11 +391,16 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
   }
 
   public add(ae, schedule = false) {
-    for (const pref of override.names) {
+    const translator = schema.translator[Translators.byId[ae.translatorID].label]
+    for (const pref of translator.preferences) {
       ae[pref] = Preference[pref]
     }
+    for (const option of translator.displayOptions) {
+      ae[option] = ae[option] || false
+    }
+
     this.db.removeWhere({ path: ae.path })
-    this.db.insert(ae)
+    this.db.insert(scrub(ae))
 
     git.repo(ae.path).then(repo => {
       if (repo.enabled || schedule) this.schedule(ae.type, [ae.id]) // causes initial push to overleaf at the cost of a unnecesary extra export
@@ -429,14 +448,15 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
       exportNotes: !!ae.exportNotes,
       useJournalAbbreviation: !!ae.useJournalAbbreviation,
     }
-    const prefs: Partial<Preferences> = override.names.reduce((acc, pref) => {
+    const prefs: Partial<Preferences> = schema.translator[Translators.byId[ae.translatorID].label].preferences.reduce((acc, pref) => {
       acc[pref] = ae[pref]
       return acc
     }, {})
 
+    const label = Translators.byId[ae.translatorID].label
     const cached = {
       serialized: Cache.getCollection('itemToExportFormat').find({ itemID: { $in: [...itemIDs] } }).length,
-      export: Cache.getCollection(Translators.byId[ae.translatorID].label).find(cacheSelector([...itemIDs], options, prefs)).length,
+      export: Cache.getCollection(label).find($and({...cacheSelector(label, options, prefs), $in: itemIDs})).length,
     }
 
     log.debug('cache-rate: cache rate for', $loki, {...cached, items: itemIDs.size}, 'took', Date.now() - start)

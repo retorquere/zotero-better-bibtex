@@ -10,6 +10,7 @@ import os
 import html
 from mako.template import Template
 import re
+from glob import glob
 
 root = os.path.join(os.path.dirname(__file__), '..')
 
@@ -72,17 +73,43 @@ class Preferences:
           links.pop(text)
     if len(links) > 0: raise ValueError(', '.join(list(links.keys())))
 
+    self.translators = {}
+    for tr in glob('translators/*.json'):
+      with open(tr) as f:
+        tr = Munch.fromDict(json.load(f))
+        self.translators[tr.label] = tr
+        tr.keepUpdated = 'displayOptions' in tr and 'keepUpdated' in tr.displayOptions
+        tr.cached = tr.label.startswith('Better ') and not 'Quick' in tr.label
+        tr.affectedBy = []
     for pref in self.pane.findall(f'.//{xul}prefpane/{xul}preferences/{xul}preference'):
+      affected = []
+      for affects in pref.get(f'{bbt}affects').split():
+        if affects == '':
+          pass
+        elif affects == '*':
+          affected += [tr.label for tr in self.translators.values() if 'Better ' in tr.label and not 'Quick' in tr.label]
+        elif affects in ['tex', 'bibtex', 'biblatex', 'csl']:
+          affected += [tr.label for tr in self.translators.values() if 'Better ' in tr.label and not 'Quick' in tr.label and affects in tr.label.lower()]
+        elif affects in ['quickcopy']:
+          affected += [tr.label for tr in self.translators.values() if 'Quick' in tr.label]
+        else:
+          raise ValueError(affects)
+      affects = list(set(affected))
+
       doc = pref.getnext()
       pref = Munch(
         id = pref.get('id'),
         name = pref.get('name').replace(self.prefix, ''),
         type = pref.get('type'),
-        default = pref.get('default')
+        default = pref.get('default'),
+        affects = affects
       )
       pref.var = re.sub(r'-(.)', lambda m: m.group(1).upper(), pref.name.replace('.', '_'))
       assert pref.var not in self.vars, pref.var
       self.vars.append(pref.var)
+
+      for tr in affects:
+        self.translators[tr].affectedBy.append(pref.var)
 
       # temporary
       assert pref.name == pref.var, (pref.name, pref.var)
@@ -253,20 +280,30 @@ class Preferences:
     with open(os.path.join(root, 'site/data/preferences/defaults.json'), 'w') as f:
       json.dump({ pref.name: pref.default for pref in preferences }, f, indent=2)
 
-#    os.makedirs(os.path.join(root, 'gen/typings'), exist_ok=True)
-#    with open(os.path.join(root, 'gen/typings/preferences.d.ts'), 'w') as f:
-#      print('export interface IPreferences {', file=f)
-#      for pref in preferences:
-#        print(f'  {pref.var}: {pref.type}', file=f)
-#      print('}', file=f)
-
-    with open(os.path.join(root, 'gen', 'preferences.ts'), 'w') as f:
-      print(template('preferences/preferences.ts.mako').render(prefix=self.prefix, preferences=preferences).strip(), file=f)
-
     os.makedirs(os.path.join(root, 'build/defaults/preferences'), exist_ok=True)
     with open(os.path.join(root, 'build/defaults/preferences/defaults.js'), 'w') as f:
       for pref in preferences:
         print(f'pref({json.dumps(self.prefix + pref.name)}, {json.dumps(pref.default)})', file=f)
+
+    # last because we're adding support data to the prefs
+    preferences = sorted(preferences, key=lambda pref: str.casefold(pref.var))
+    for pref in preferences:
+      if 'options' in pref:
+        pref.valid = ' | '.join([ json.dumps(option) for option in pref.options ])
+        pref.quoted_options = json.dumps(list(pref.options.keys()))
+      else:
+        pref.valid = pref.type
+
+    names = [pref.var for pref in preferences]
+
+    translators = self.translators.values()
+    with open(os.path.join(root, 'gen', 'preferences.ts'), 'w') as f:
+      print(template('preferences/preferences.ts.mako').render(prefix=self.prefix, names=names, translators=translators, preferences=preferences).strip(), file=f)
+
+    meta = os.path.join(root, 'gen', 'preferences', 'meta.ts')
+    os.makedirs(os.path.dirname(meta), exist_ok=True)
+    with open(meta, 'w') as f:
+      print(template('preferences/meta.ts.mako').render(prefix=self.prefix, names=names, translators=translators, preferences=preferences).strip(), file=f)
 
 content = os.path.join(root, 'content')
 for xul in os.listdir(content):

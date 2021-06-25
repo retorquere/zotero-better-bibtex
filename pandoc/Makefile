@@ -5,6 +5,9 @@ MAIN=pandoc-zotero-live-citemarkers.lua
 DEPLOYED=../site/content/exporting/zotero.lua
 BUNDLED=bundle.lua
 
+count:
+	pandoc --lua-filter count-cite.lua main.md | pandoc --bibliography=biblio.bib --citeproc
+
 bundle:
 ifeq ($(shell grep '^local pl =' *.lua), )
 	echo "-- $(shell git rev-parse --short HEAD)" > $(DEPLOYED)

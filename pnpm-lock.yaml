@@ -5009,7 +5009,7 @@ packages:
     dev: true
 
   /nano-memoize/1.2.1:
-    resolution: {integrity: sha512-ANfJ0QFhLzv9BZV8tHxwaDClqr+U8yY65hZA+slbgJrx+ePnHtlY92F2ZJInkkQWUUR71NzCEHBshKCHJnNyaQ==}
+    resolution: {integrity: sha512-ANfJ0QFhLzv9BZV8tHxwaDClqr+U8yY65hZA+slbgJrx+ePnHtlY92F2ZJInkkQWUUR71NzCEHBshKCHJnNyaQ==, tarball: nano-memoize/-/nano-memoize-1.2.1.tgz}
     dev: true
 
   /nanomatch/1.2.13:
