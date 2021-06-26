@@ -90,8 +90,6 @@ class Preferences:
           affected += [tr.label for tr in self.translators.values() if 'Better ' in tr.label and not 'Quick' in tr.label]
         elif affects in ['tex', 'bibtex', 'biblatex', 'csl']:
           affected += [tr.label for tr in self.translators.values() if 'Better ' in tr.label and not 'Quick' in tr.label and affects in tr.label.lower()]
-        elif affects in ['quickcopy']:
-          affected += [tr.label for tr in self.translators.values() if 'Quick' in tr.label]
         else:
           raise ValueError(affects)
       affects = list(set(affected))

@@ -104,25 +104,25 @@
           idle. You mostly want this if your computer is performance-constrained (aka slow).
         </bbt:doc>
 
-        <preference name="extensions.zotero.translators.better-bibtex.quickCopyMode" bbt:affects="quickcopy" id="pref-better-bibtex-quickCopyMode" type="string" default="latex"/>
+        <preference name="extensions.zotero.translators.better-bibtex.quickCopyMode" bbt:affects="" id="pref-better-bibtex-quickCopyMode" type="string" default="latex"/>
         <bbt:doc>
           Used for drag-and-drop/quick copy using Better BibTeX citation keys. In the Zotero "Export" pane, choose `Better BibTeX Quick Copy`
           as the default export format for quick copy, and choose the desired format for the drag-and-drop citations here.
         </bbt:doc>
 
-        <preference name="extensions.zotero.translators.better-bibtex.citeCommand" bbt:affects="quickcopy" id="pref-better-bibtex-citeCommand" type="string" default="cite"/>
+        <preference name="extensions.zotero.translators.better-bibtex.citeCommand" bbt:affects="" id="pref-better-bibtex-citeCommand" type="string" default="cite"/>
         <bbt:doc>
           Used for drag-and-drop/quick copy citations in `LaTeX` format. Set the desired LaTeX citation command here. If you set this to `citep`,
           drag-and-drop citations will yield `\citep{key1,key2,...}`
         </bbt:doc>
 
-        <preference name="extensions.zotero.translators.better-bibtex.quickCopyPandocBrackets" bbt:affects="quickcopy" id="pref-better-bibtex-quickCopyPandocBrackets" type="bool" default="false"/>
+        <preference name="extensions.zotero.translators.better-bibtex.quickCopyPandocBrackets" bbt:affects="" id="pref-better-bibtex-quickCopyPandocBrackets" type="bool" default="false"/>
         <bbt:doc>
           Used for drag-and-drop/quick copy citations in `Pandoc` format. You can use this option to select whether you want
           to have these pandoc citations surrounded with brackets or not.
         </bbt:doc>
 
-        <preference name="extensions.zotero.translators.better-bibtex.quickCopyEta" bbt:affects="quickcopy" id="pref-better-bibtex-quickCopyEta" type="string" default=""/>
+        <preference name="extensions.zotero.translators.better-bibtex.quickCopyEta" bbt:affects="" id="pref-better-bibtex-quickCopyEta" type="string" default=""/>
         <bbt:doc>
           Used for drag-and-drop/quick copy citations in `Build your own` format. This is going to get pretty technical, sorry.
 
@@ -130,12 +130,12 @@
           To find out what an item looks like inside the template, export some items as BetterBibTeX JSON.
         </bbt:doc>
 
-        <preference name="extensions.zotero.translators.better-bibtex.quickCopyOrgMode" bbt:affects="quickcopy" id="pref-better-bibtex-quickCopyOrgMode" type="string" default="zotero"/>
+        <preference name="extensions.zotero.translators.better-bibtex.quickCopyOrgMode" bbt:affects="" id="pref-better-bibtex-quickCopyOrgMode" type="string" default="zotero"/>
         <bbt:doc>
           OrgMode to select items in your library
         </bbt:doc>
 
-        <preference name="extensions.zotero.translators.better-bibtex.quickCopySelectLink" bbt:affects="quickcopy" id="pref-better-bibtex-quickCopySelectLink" type="string" default="zotero"/>
+        <preference name="extensions.zotero.translators.better-bibtex.quickCopySelectLink" bbt:affects="" id="pref-better-bibtex-quickCopySelectLink" type="string" default="zotero"/>
         <bbt:doc>
           Hyperlink to select items in your library
         </bbt:doc>
