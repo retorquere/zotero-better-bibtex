@@ -420,20 +420,23 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         else {
           this._displayOptions.exportDir = this.location.parent.path
           this._displayOptions.exportPath = this.location.path
-        }
 
-        let postscript = Preference.postscriptOverride
-        if (postscript) {
-          postscript = OS.Path.join(this._displayOptions.exportDir, postscript)
-          try {
-            // cannot use await OS.File.exists here because we may be invoked in noWait mode
-            if ((new FileUtils.File(postscript)).exists()) {
-              // adding the literal 'Translator.exportDir' makes sure caching is disabled
-              this._displayOptions.preference_postscript = `// postscript override in Translator.exportDir ${this._displayOptions.exportDir}\n\n${Zotero.File.getContents(postscript)}`
+          if (Preference.postscriptOverride) {
+            // eslint-disable-next-line prefer-template
+            for (let postscript of [ OS.Path.basename(this._displayOptions.exportPath).replace(/\.(bib|csl)$/, '') + '.js', Preference.postscriptOverride ]) {
+              postscript = OS.Path.join(this._displayOptions.exportDir, postscript)
+              try {
+                // cannot use await OS.File.exists here because we may be invoked in noWait mode
+                if ((new FileUtils.File(postscript)).exists()) {
+                  // adding a call to Translator.exportDir makes sure caching is disabled
+                  this._displayOptions.preference_postscript = `Translator.exportDir;\n\n${Zotero.File.getContents(postscript)}`
+                  break
+                }
+              }
+              catch (err) {
+                log.error('failed to load postscript override', postscript, err)
+              }
             }
-          }
-          catch (err) {
-            log.error('failed to load postscript override', postscript, err)
           }
         }
       }
