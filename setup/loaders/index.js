@@ -160,8 +160,8 @@ const trace$circularReplacer = () => {
 };
 
 const __estrace = {
-  enter(name, url, arguments) {
-    Zotero.debug(\`enter \${name} \${url}.(\${JSON.stringify(Array.from(arguments), trace$circularReplacer())})\`);
+  enter(name, url, args) {
+    Zotero.debug(\`enter \${name} \${url}.(\${JSON.stringify(args, trace$circularReplacer())})\`);
   },
   exit(name, url, result) {
     Zotero.debug(\`exit \${name} \${url}\`);
@@ -183,16 +183,11 @@ module.exports.trace = {
         console.log('!!', warning)
       }
 
-      const tracer = await import('estrace/plugin');
+      let trace = { ...(await import('estrace/plugin')), FILENAME: localpath.replace(/\.ts$/, '') }
 
-      const {code} = putout(source.code, {
+      const { code } = putout(source.code, {
         fixCount: 1,
-        rules: {
-          tracer: ['on', { url: localpath.replace(/\.ts$/, '') }],
-        },
-        plugins: [
-          ['tracer', tracer],
-        ],
+        plugins: [ ['trace', trace] ],
       })
 
       const contents = prefix + code
