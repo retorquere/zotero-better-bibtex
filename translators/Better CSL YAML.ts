@@ -167,3 +167,53 @@ export function doExport(): void {
   Exporter.initialize()
   Exporter.doExport()
 }
+
+function parseInput(): any {
+  let src = ''
+  let chunk: string
+  while (chunk = Zotero.read(102400)) { // eslint-disable-line no-magic-numbers
+    src += chunk
+  }
+  return YAML.load(src) // eslint-disable-line @typescript-eslint/no-unsafe-return
+}
+
+export function detectImport(): boolean {
+  try {
+    return parseInput().references // eslint-disable-line @typescript-eslint/no-unsafe-return
+  }
+  catch (err) {
+    return false
+  }
+}
+
+export async function doImport(): Promise<void> {
+  for (const csl of parseInput().references) {
+    const item = new Zotero.Item()
+
+    // Default to 'article' (Document) if no type given. 'type' is required in CSL-JSON,
+    // but some DOI registration agencies provide bad data, and this is better than failing.
+    // (itemFromCSLJSON() will already default to 'article' for unknown 'type' values.)
+    //
+    // Technically this should go in the DOI Content Negotation translator, but it's easier
+    // to do this here after the JSON has been parsed, and it might benefit other translators.
+    //
+    // This is just for imports from other translators. File/clipboard imports without
+    // 'type' still won't work, because a valid 'type' is required in detectImport().
+    //
+    // https://forums.zotero.org/discussion/85273/error-importing-dois-via-add-item-by-identifier
+    if (!csl.type) csl.type = 'article'
+
+    for (const field of ['issued', 'original-date', 'accessed']) {
+      if (Array.isArray(csl[field]) && csl[field].length && !Array.isArray(csl[field][0])) {
+        csl[field] = csl[field].map(date => {
+          let empty = false
+          // eslint-disable-next-line no-magic-numbers, @typescript-eslint/no-unsafe-return
+          return [ date.year, date.season ? 12 + (date.season as number) : date.month, date.day ].filter(dp => !(empty = empty || (typeof dp !== 'number')))
+        })
+      }
+    }
+
+    Zotero.Utilities.itemFromCSLJSON(item, csl)
+    await item.complete()
+  }
+}
