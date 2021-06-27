@@ -12,8 +12,8 @@
   "configOptions": {
     "getCollections": true
   },
-  "translatorType": 2,
+  "translatorType": 3,
   "browserSupport": "gcsv",
-  "priority": 100,
+  "priority": 800,
   "inRepository": false
 }

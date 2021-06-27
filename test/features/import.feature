@@ -14,12 +14,15 @@ Scenario: Better BibTeX Import 2
 #  And the markdown citation for orre2008 should be ''
 #  And the markdown bibliography for orre2008 should be ''
 
-@1380
 Scenario: LaTeX commands in Zotero should be exported untouched #1380
   When I set preference .rawImports to true
   And I import 1 references from "import/*.bib"
   Then the library should match "import/*.json"
   And an export using "Better BibLaTeX" should match "import/*.roundtrip.bib"
+
+Scenario: CSL-YAML import
+  When I import 6 references from "import/*.yml"
+  Then the library should match "import/*.json"
 
 @1358
 Scenario: Import support for the online type in BBT #1358
