@@ -1,5 +1,5 @@
 {
-  "trace": [
+  "gh-1860": [
     "content/**/*.ts",
     "!content/monkey-patch.ts",
     "!content/flash.ts",

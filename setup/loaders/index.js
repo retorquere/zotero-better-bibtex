@@ -140,7 +140,7 @@ if (fs.existsSync(path.join(__dirname, '../../.trace.json'))) {
   }
 }
 
-const circularReplacer = `
+const prefix = `
 const trace$circularReplacer = () => {
   const seen = new WeakSet();
   return (key, value) => {
@@ -158,7 +158,17 @@ const trace$circularReplacer = () => {
     }
   };
 };
+
+const __estrace = {
+  enter(name, url, arguments) {
+    Zotero.debug(\`enter \${name} \${url}.(\${JSON.stringify(Array.from(arguments), trace$circularReplacer())})\`);
+  },
+  exit(name, url, result) {
+    Zotero.debug(\`exit \${name} \${url}\`);
+  },
+};
 `
+
 module.exports.trace = {
   name: 'trace',
   setup(build) {
@@ -173,12 +183,19 @@ module.exports.trace = {
         console.log('!!', warning)
       }
 
-      const trace = require('./trace')
-      trace.FILENAME = localpath.replace(/\.ts$/, '')
-      const contents = circularReplacer + putout(source.code, {
+      const tracer = await import('estrace/plugin');
+
+      const {code} = putout(source.code, {
         fixCount: 1,
-        plugins: [ ['trace', trace] ],
-      }).code
+        rules: {
+          tracer: ['on', { url: localpath.replace(/\.ts$/, '') }],
+        },
+        plugins: [
+          ['tracer', tracer],
+        ],
+      })
+
+      const contents = prefix + code
 
       return {
         contents,
