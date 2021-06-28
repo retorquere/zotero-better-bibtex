@@ -186,8 +186,29 @@ export function detectImport(): boolean {
   }
 }
 
+function fill(n: number, template: string): string {
+  const str = `${Math.abs(n)}`
+  const padded = `${template}${str}`
+  return `${n < 0 ? '-' : ''}${padded.slice(-Math.max(str.length, template.length))}`
+}
+
+function dateparts2date(date: number[]): string {
+  const fills = ['0000', '00', '00']
+  if (date[0] < 0) date[0] += 1
+  return date.filter(dp => dp).map((dp, i) => fill(dp, fills[i])).join('-')
+}
+
+function cslDates(dates: number[][]) {
+  return dates.map(date => !date[0] ? '' : dateparts2date(date)).join('/')
+}
+
+function yamlDates(dates: { year?: number, season?: number, month?: number, day?: number }[]) {
+  // eslint-disable-next-line no-magic-numbers
+  return dates.map(date => !date.year ? '' : dateparts2date([ date.year, date.season ? date.season + 20 : date.month, date.day ])).join('/')
+}
+
 export async function doImport(): Promise<void> {
-  for (const csl of parseInput().references) {
+  for (const source of parseInput().references) {
     const item = new Zotero.Item()
 
     // Default to 'article' (Document) if no type given. 'type' is required in CSL-JSON,
@@ -201,19 +222,33 @@ export async function doImport(): Promise<void> {
     // 'type' still won't work, because a valid 'type' is required in detectImport().
     //
     // https://forums.zotero.org/discussion/85273/error-importing-dois-via-add-item-by-identifier
-    if (!csl.type) csl.type = 'article'
+    if (!source.type) source.type = 'article'
+    Zotero.Utilities.itemFromCSLJSON(item, source)
 
-    for (const field of ['issued', 'original-date', 'accessed']) {
-      if (Array.isArray(csl[field]) && csl[field].length && !Array.isArray(csl[field][0])) {
-        csl[field] = csl[field].map(date => {
-          let empty = false
-          // eslint-disable-next-line no-magic-numbers, @typescript-eslint/no-unsafe-return
-          return [ date.year, date.season ? 12 + (date.season as number) : date.month, date.day ].filter(dp => !(empty = empty || (typeof dp !== 'number')))
-        })
+    for (const [csl, zotero] of Object.entries({ accessed: 'accessDate', issued: 'date', submitted: 'filingDate', 'original-date': 'Original date' })) {
+      // empty
+      if (typeof source[csl] === 'undefined') continue
+
+      let value
+      if (source[csl].raw || source[csl].literal) {
+        value = source[csl].raw || source[csl].literal
+      }
+      else if (source[csl]['date-parts']) {
+        value = cslDates(source[csl]['date-parts'])
+      }
+      // yaml-specific date array
+      else {
+        value = yamlDates(source[csl])
+      }
+
+      if (zotero.includes(' ')) {
+        item.extra = `${item.extra || ''}\n${zotero}: ${value}`.trim()
+      }
+      else {
+        item[zotero] = value
       }
     }
 
-    Zotero.Utilities.itemFromCSLJSON(item, csl)
     await item.complete()
   }
 }
