@@ -538,6 +538,8 @@
   "import/BibTeX import; preamble with def create problems #732.json",
   "import/Biblatex Annotation Import Bug #613.bib",
   "import/Biblatex Annotation Import Bug #613.json",
+  "import/CSL-YAML import.json",
+  "import/CSL-YAML import.yml",
   "import/Endnote should parse.bib",
   "import/Endnote should parse.json",
   "import/Failure to handle unparsed author names (92).bib",
