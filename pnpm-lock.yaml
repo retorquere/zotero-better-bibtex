@@ -23,7 +23,7 @@ specifiers:
   edtf: ^4.0.0
   edtfy: ^0.0.8
   ejs: ^3.1.6
-  esbuild: ^0.12.10
+  esbuild: ^0.12.11
   escape-string-regexp: ^5.0.0
   eslint: ^7.29.0
   estrace: ^1.5.1
@@ -124,7 +124,7 @@ devDependencies:
   dom-parser: 0.1.6
   dotenv: 10.0.0
   ejs: 3.1.6
-  esbuild: 0.12.10
+  esbuild: 0.12.11
   escape-string-regexp: 5.0.0
   eslint: 7.29.0
   estrace: 1.5.1
@@ -3198,8 +3198,8 @@ packages:
     resolution: {integrity: sha1-wsNYJlYkfDnqEHyx5mUrb58kUjw=}
     dev: true
 
-  /esbuild/0.12.10:
-    resolution: {integrity: sha512-KTZ84HqvKL1V76cVwv5W2/es+Bhdv8O9DYRKhJ0wHf1d2iLH6WEGX0zh7W+UzniWnZbUZg2c7GsdH2aWeFsfzQ==}
+  /esbuild/0.12.11:
+    resolution: {integrity: sha512-h83GwI6lYOrnSv5hSY2i2XZ191v3haj2IGDzwrkfWHhuO/kVMX3RYjhwRNG9E5VSxVLPaUjTVwrv8HWLvhk2nQ==}
     hasBin: true
     requiresBuild: true
     dev: true
@@ -5113,7 +5113,7 @@ packages:
     dev: true
 
   /nano-memoize/1.2.1:
-    resolution: {integrity: sha512-ANfJ0QFhLzv9BZV8tHxwaDClqr+U8yY65hZA+slbgJrx+ePnHtlY92F2ZJInkkQWUUR71NzCEHBshKCHJnNyaQ==}
+    resolution: {integrity: sha512-ANfJ0QFhLzv9BZV8tHxwaDClqr+U8yY65hZA+slbgJrx+ePnHtlY92F2ZJInkkQWUUR71NzCEHBshKCHJnNyaQ==, tarball: nano-memoize/-/nano-memoize-1.2.1.tgz}
     dev: true
 
   /nanomatch/1.2.13:
