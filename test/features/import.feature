@@ -21,7 +21,7 @@ Scenario: LaTeX commands in Zotero should be exported untouched #1380
   And an export using "Better BibLaTeX" should match "import/*.roundtrip.bib"
 
 Scenario: CSL-YAML import
-  When I import 6 references from "import/*.yml"
+  When I import 11 references from "import/*.yml"
   Then the library should match "import/*.json"
 
 @1358

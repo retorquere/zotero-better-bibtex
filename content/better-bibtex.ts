@@ -892,6 +892,7 @@ export class BetterBibTeX {
     if (this.firstRun && this.firstRun.dragndrop) Zotero.Prefs.set('export.quickCopy.setting', `export=${Translators.byLabel.BetterBibTeXCitationKeyQuickCopy.translatorID}`)
 
     Events.emit('loaded')
+    log.debug('csl-yaml date mappings', Zotero.Schema.CSL_DATE_MAPPINGS)
 
     Events.on('export-progress', (percent: number, translator: string) => {
       const preparing = percent < 0 ? this.getString('Preferences.auto-export.status.preparing') : ''

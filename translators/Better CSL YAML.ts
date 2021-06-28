@@ -186,8 +186,98 @@ export function detectImport(): boolean {
   }
 }
 
+function fill(n: number, template: string): string {
+  const str = `${Math.abs(n)}`
+  const padded = `${template}${str}`
+  return `${n < 0 ? '-' : ''}${padded.slice(-Math.max(str.length, template.length))}`
+}
+
+function circa(date) {
+  return date.circa ? '?' : ''
+}
+
+const seasons = [undefined, 'Spring', 'Summer', 'Autumn', 'Winter']
+
+function join(dates: string[]): string {
+  switch (dates.length) {
+    case 0:
+      return ''
+    case 1:
+      return dates[0]
+    case 2:
+      // there is one date that is not a yyyy-mm-dd
+      if (dates.find(date => date.includes(' '))) {
+        return dates.join(' - ')
+      }
+      else {
+        return dates.join('/')
+      }
+    default:
+      return dates.join(', ')
+  }
+}
+
+function cslDate(date): string {
+  if (date.raw || date.literal) return date.raw || date.literal // eslint-disable-line @typescript-eslint/no-unsafe-return
+
+  const datepart = date['date-part']
+  if (!datepart || !datepart[0]) return ''
+
+  let year = datepart.unshift()
+  if (!year) return ''
+  if (year < 0) year += 1
+
+  let month = datepart.unshift()
+  const day = datepart.unshift()
+
+  let season
+  if (date.season) {
+    season = date.season
+  }
+  else {
+    for (const offset of [20, 12]) { // eslint-disable-line no-magic-numbers
+      if (month && month > offset) {
+        season = month - offset
+        month = undefined
+      }
+    }
+  }
+
+  if (typeof season === 'number') season = seasons[season] || season
+  if (typeof season === 'number') return `${fill(year, '0000')}-${fill(season, '00')}${circa(date)}`
+  if (season) return `${season} ${fill(year, '0000')}`
+
+  if (day && month) return `${fill(year, '0000')}-${fill(month, '00')}-${fill(day, '0000')}${circa(date)}`
+  if (month) return `${fill(year, '0000')}-${fill(month, '00')}${circa(date)}`
+  return `${fill(year, '0000')}${circa(date)}`
+}
+
+function yamlDate(date): string {
+  if (date.literal) return date.literal // eslint-disable-line @typescript-eslint/no-unsafe-return
+
+  if (!date.year) return ''
+  if (date.year < 0) date.year += 1
+
+  if (!date.season) {
+    for (const offset of [20, 12]) { // eslint-disable-line no-magic-numbers
+      if (date.month && date.month > offset) {
+        date.season = date.month - offset
+        delete date.month
+      }
+    }
+  }
+
+  if (typeof date.season === 'number') date.season = seasons[date.season] || date.season
+  if (typeof date.season === 'number') return `${fill(date.year, '0000')}-${fill(date.season, '00')}${circa(date)}`
+  if (date.season) return `${date.season} ${fill(date.year, '0000')}`
+
+  if (date.day && date.month) return `${fill(date.year, '0000')}-${fill(date.month, '00')}-${fill(date.day, '0000')}${circa(date)}`
+  if (date.month) return `${fill(date.year, '0000')}-${fill(date.month, '00')}${circa(date)}`
+  return `${fill(date.year, '0000')}${circa(date)}`
+}
+
 export async function doImport(): Promise<void> {
-  for (const csl of parseInput().references) {
+  for (const source of parseInput().references) {
     const item = new Zotero.Item()
 
     // Default to 'article' (Document) if no type given. 'type' is required in CSL-JSON,
@@ -201,19 +291,33 @@ export async function doImport(): Promise<void> {
     // 'type' still won't work, because a valid 'type' is required in detectImport().
     //
     // https://forums.zotero.org/discussion/85273/error-importing-dois-via-add-item-by-identifier
-    if (!csl.type) csl.type = 'article'
+    if (!source.type) source.type = 'article'
+    Zotero.Utilities.itemFromCSLJSON(item, source)
 
-    for (const field of ['issued', 'original-date', 'accessed']) {
-      if (Array.isArray(csl[field]) && csl[field].length && !Array.isArray(csl[field][0])) {
-        csl[field] = csl[field].map(date => {
-          let empty = false
-          // eslint-disable-next-line no-magic-numbers, @typescript-eslint/no-unsafe-return
-          return [ date.year, date.season ? 12 + (date.season as number) : date.month, date.day ].filter(dp => !(empty = empty || (typeof dp !== 'number')))
-        })
+    for (const [csl, zotero] of Object.entries({ accessed: 'accessDate', issued: 'date', submitted: 'filingDate', 'original-date': 'Original date' })) {
+      // empty
+      if (typeof source[csl] === 'undefined') continue
+
+      let value
+      if (source[csl].raw || source[csl].literal) {
+        value = source[csl].raw || source[csl].literal
+      }
+      else if (source[csl]['date-parts']) {
+        value = join(source[csl]['date-parts'].map(dp => cslDate({...source[csl], 'date-part': dp})))
+      }
+      // yaml-specific date array
+      else {
+        value = join(source[csl].map(yamlDate))
+      }
+
+      if (zotero.includes(' ')) {
+        item.extra = `${item.extra || ''}\n${zotero}: ${value}`.trim()
+      }
+      else {
+        item[zotero] = value
       }
     }
 
-    Zotero.Utilities.itemFromCSLJSON(item, csl)
     await item.complete()
   }
 }

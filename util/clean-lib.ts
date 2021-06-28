@@ -13,7 +13,7 @@ import * as fs from 'fs'
 import { sync as glob } from 'glob'
 import cleaner = require('deep-cleaner')
 
-import { defaults, names } from '../gen/preferences'
+import { defaults, names } from '../gen/preferences/meta'
 const supported: string[] = names.filter(name => !['client', 'testing', 'platform', 'newTranslatorsAskRestart'].includes(name))
 
 const argv = require("clp")()

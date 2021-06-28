@@ -25,7 +25,7 @@ def refresh():
         else:
           assert False, os.path.basename(translator) + '.' + option + '=' + str(type(default))
 
-  with open(os.path.join(root, 'gen/preferences.json')) as f:
+  with open(os.path.join(os.path.dirname(__file__), 'preferences.json')) as f:
     prefs = Munch.fromDict(json.load(f))
   schema.properties.config.properties.preferences.properties = {}
   for pref in prefs:

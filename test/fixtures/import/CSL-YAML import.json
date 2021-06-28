@@ -1,1 +1,201 @@
-{"config": {"id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db", "label": "BetterBibTeX JSON", "localeDateOrder": "ymd", "options": {"exportNotes": true}, "preferences": {"biblatexExtendedNameFormat": true, "citekeyFormat": "[shorttitle]=[year]", "itemObserverDelay": 100, "skipFields": "rights"}}, "items": [{"date": "-0011-21/-0012-22", "itemID": 1, "itemType": "webpage", "title": "-0011-21/-0012-22"}, {"date": "-2011-21/-2012-22", "itemID": 2, "itemType": "webpage", "title": "-2011-21/-2012-22"}, {"date": "0000-21/0000-24", "itemID": 3, "itemType": "webpage", "title": "0000-21/0000-24"}, {"date": "0011-21/0012-22", "itemID": 4, "itemType": "webpage", "title": "0011-21/0012-22"}, {"date": "2017-14/2017-15", "extra": ["original-date: 2017-14/2017-99"], "itemID": 5, "itemType": "webpage", "title": "months out of range"}, {"date": "2017-23/2017-24", "extra": ["original-date: Spring 2015 - Summer 2016"], "itemID": 6, "itemType": "webpage", "title": "Season ranges: EDTF and literal"}]}
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "dmy",
+    "options": {},
+    "preferences": {
+      "citekeyFormat": "[auth][year]"
+    }
+  },
+  "items": [
+    {
+      "ISBN": "979-10-239-0085-9",
+      "abstractNote": "Le Cine\u00b4ma, art subversif est un livre culte dans l'histoire de la cine\u00b4philie, cite\u00b4 en re\u00b4fe\u00b4rence par de nombreux cine\u00b4astes et artistes depuis sa parution en 1974. Ce\u00b4le\u00b4brant les formes de la subversion au cine\u00b4ma, Amos Vogel analyse comment les films peuvent contourner, transgresser ou annihiler les re`gles et les conventions e\u00b4tablies, qu'elles soient esthe\u00b4tiques ou morales. Illustre\u00b4 par plus de 300 images, souvent side\u00b4rantes, l'ouvrage alterne textes the\u00b4oriques et notules critiques, consacre\u00b4es aussi bien a` des \u0153uvres ce\u00b4le`bres qu'a` des films inconnus, de tous pays et de toutes e\u00b4poques. Contre les tabous, contre toute forme de censure, c'est une ode a` la liberte\u00b4 cine\u00b4matographique. Traduit en franc\u00b8ais en 1977, Le Cine\u00b4ma, art subversif n'avait jamais e\u00b4te\u00b4 re\u00b4e\u00b4dite\u00b4. A` l'heure ou` la subversion, rele\u00b4gue\u00b4e dans les marges, semble avoir de\u00b4serte\u00b4 les e\u00b4crans, il apparai^t plus indispensable que jamais. Amos Vogel (1921-2012) est le fondateur et programmateur du Cinema 16, le plus influent cine\u00b4-club d'avant-garde new- yorkais. Il est le premier a` y avoir montre\u00b4 aux E\u00b4tats-Unis les films de Roman Polanski, John Cassavetes, Nagisa Oshima, Jacques Rivette ou encore Alain Resnais. Il a e\u00b4galement co-fonde\u00b4 le Festival du Film de New York, dont il a dirige\u00b4 la programmation jusqu'en 1968",
+      "callNumber": "791.430 1",
+      "citationKey": "Vogel2016",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Amos",
+          "lastName": "Vogel"
+        },
+        {
+          "creatorType": "translator",
+          "firstName": "Claude",
+          "lastName": "Fr\u00e9gnac"
+        }
+      ],
+      "date": "2016",
+      "extra": [
+        "Original date: 1974"
+      ],
+      "itemID": 11,
+      "itemType": "book",
+      "language": "fre",
+      "libraryCatalog": "BnF Catalogue g\u00e9n\u00e9ral (http://catalogue.bnf.fr)",
+      "numPages": "349",
+      "place": "Paris",
+      "publisher": "Capricci",
+      "title": "Le Cin\u00e9ma, art subversif"
+    },
+    {
+      "citationKey": "Dunning2016",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Andrew N.J.",
+          "lastName": "Dunning"
+        }
+      ],
+      "date": "2016",
+      "itemID": 8,
+      "itemType": "book",
+      "place": "Toronto",
+      "publisher": "Pontifical Institute of Mediaeval Studies",
+      "series": "Toronto Medieval Latin Texts",
+      "seriesNumber": "33",
+      "shortTitle": "Notes from the school of William de Montibus",
+      "title": "Samuel Presbiter: Notes from the school of William de Montibus. <span class=\"nocase\">Collecta ex diuersis auditis in scola magistri Willelmi de Monte</span>"
+    },
+    {
+      "citationKey": "Wordsworth1883",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "John",
+          "lastName": "Wordsworth"
+        }
+      ],
+      "date": "1883",
+      "itemID": 9,
+      "itemType": "book",
+      "language": "English",
+      "libraryCatalog": "Internet Archive",
+      "numPages": "139",
+      "place": "Oxford",
+      "publisher": "Clarendon Press",
+      "series": "Old-Latin Biblical Texts",
+      "seriesNumber": "1",
+      "shortTitle": "The Gospel according to St. Matthew",
+      "title": "The Gospel according to St. Matthew, from the St. Germain ms. (g~1~), now numbered Lat. 11553 in the National Library at Paris",
+      "url": "https://archive.org/details/gospelaccording00goog"
+    },
+    {
+      "DOI": "10.1484/J.SE.2.303788",
+      "citationKey": "Berndt1994",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Rainer",
+          "lastName": "Berndt"
+        }
+      ],
+      "date": "1994",
+      "itemID": 10,
+      "itemType": "journalArticle",
+      "language": "German",
+      "libraryCatalog": "MetaPress",
+      "pages": "5\u201332",
+      "publicationTitle": "Sacris Erudiri",
+      "title": "Skizze zur Auslegungsgeschichte der B\u00fccher *Prouerbia* und *Ecclesiastes* in der abendl\u00e4ndischen Kirche",
+      "url": "http://dx.doi.org/10.1484/J.SE.2.303788",
+      "volume": "34"
+    },
+    {
+      "citationKey": "Adams2014",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Nancy K",
+          "lastName": "Adams"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Shanaka L",
+          "lastName": "DeSilva"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Steven",
+          "lastName": "Self"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Guido",
+          "lastName": "Salas"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Steven",
+          "lastName": "Schubring"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jason L",
+          "lastName": "Permenter"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Kendra",
+          "lastName": "Arbesman"
+        }
+      ],
+      "date": "2014-12-0031/2015-01-0001",
+      "itemID": 7,
+      "itemType": "journalArticle",
+      "pages": "493\u2013518",
+      "publicationTitle": "Bulletin of Volcanology",
+      "title": "The physical volcanology of the 1600 eruption of **Huaynaputina**, southern Peru",
+      "volume": "62"
+    },
+    {
+      "citationKey": "0000",
+      "date": "Spring 0000 - Winter 0000",
+      "itemID": 1,
+      "itemType": "webpage",
+      "title": "0000-21/0000-24"
+    },
+    {
+      "citationKey": "0011",
+      "date": "Spring -0011 - Summer -0012",
+      "itemID": 2,
+      "itemType": "webpage",
+      "title": "-0011-21/-0012-22"
+    },
+    {
+      "citationKey": "11",
+      "date": "Spring 0011 - Summer 0012",
+      "itemID": 3,
+      "itemType": "webpage",
+      "title": "0011-21/0012-22"
+    },
+    {
+      "citationKey": "2011",
+      "date": "Spring -2011 - Summer -2012",
+      "itemID": 4,
+      "itemType": "webpage",
+      "title": "-2011-21/-2012-22"
+    },
+    {
+      "citationKey": "2017",
+      "date": "2017-14/2017-15",
+      "extra": [
+        "Original date: 2017-14/2017-99"
+      ],
+      "itemID": 5,
+      "itemType": "webpage",
+      "title": "months out of range"
+    },
+    {
+      "citationKey": "2017a",
+      "date": "Autumn 2017 - Winter 2017",
+      "extra": [
+        "Original date: Spring 2015 - Summer 2016"
+      ],
+      "itemID": 6,
+      "itemType": "webpage",
+      "title": "Season ranges: EDTF and literal"
+    }
+  ]
+}
