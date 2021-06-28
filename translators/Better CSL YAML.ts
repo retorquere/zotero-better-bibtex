@@ -192,19 +192,88 @@ function fill(n: number, template: string): string {
   return `${n < 0 ? '-' : ''}${padded.slice(-Math.max(str.length, template.length))}`
 }
 
-function dateparts2date(date: number[]): string {
-  const fills = ['0000', '00', '00']
-  if (date[0] < 0) date[0] += 1
-  return date.filter(dp => dp).map((dp, i) => fill(dp, fills[i])).join('-')
+function circa(date) {
+  return date.circa ? '?' : ''
 }
 
-function cslDates(dates: number[][]) {
-  return dates.map(date => !date[0] ? '' : dateparts2date(date)).join('/')
+const seasons = [undefined, 'Spring', 'Summer', 'Autumn', 'Winter']
+
+function join(dates: string[]): string {
+  switch (dates.length) {
+    case 0:
+      return ''
+    case 1:
+      return dates[0]
+    case 2:
+      // there is one date that is not a yyyy-mm-dd
+      if (dates.find(date => date.includes(' '))) {
+        return dates.join(' - ')
+      }
+      else {
+        return dates.join('/')
+      }
+    default:
+      return dates.join(', ')
+  }
 }
 
-function yamlDates(dates: { year?: number, season?: number, month?: number, day?: number }[]) {
-  // eslint-disable-next-line no-magic-numbers
-  return dates.map(date => !date.year ? '' : dateparts2date([ date.year, date.season ? date.season + 20 : date.month, date.day ])).join('/')
+function cslDate(date): string {
+  if (date.raw || date.literal) return date.raw || date.literal // eslint-disable-line @typescript-eslint/no-unsafe-return
+
+  const datepart = date['date-part']
+  if (!datepart || !datepart[0]) return ''
+
+  let year = datepart.unshift()
+  if (!year) return ''
+  if (year < 0) year += 1
+
+  let month = datepart.unshift()
+  const day = datepart.unshift()
+
+  let season
+  if (date.season) {
+    season = date.season
+  }
+  else {
+    for (const offset of [20, 12]) { // eslint-disable-line no-magic-numbers
+      if (month && month > offset) {
+        season = month - offset
+        month = undefined
+      }
+    }
+  }
+
+  if (typeof season === 'number') season = seasons[season] || season
+  if (typeof season === 'number') return `${fill(year, '0000')}-${fill(season, '00')}${circa(date)}`
+  if (season) return `${season} ${fill(year, '0000')}`
+
+  if (day && month) return `${fill(year, '0000')}-${fill(month, '00')}-${fill(day, '0000')}${circa(date)}`
+  if (month) return `${fill(year, '0000')}-${fill(month, '00')}${circa(date)}`
+  return `${fill(year, '0000')}${circa(date)}`
+}
+
+function yamlDate(date): string {
+  if (date.literal) return date.literal // eslint-disable-line @typescript-eslint/no-unsafe-return
+
+  if (!date.year) return ''
+  if (date.year < 0) date.year += 1
+
+  if (!date.season) {
+    for (const offset of [20, 12]) { // eslint-disable-line no-magic-numbers
+      if (date.month && date.month > offset) {
+        date.season = date.month - offset
+        delete date.month
+      }
+    }
+  }
+
+  if (typeof date.season === 'number') date.season = seasons[date.season] || date.season
+  if (typeof date.season === 'number') return `${fill(date.year, '0000')}-${fill(date.season, '00')}${circa(date)}`
+  if (date.season) return `${date.season} ${fill(date.year, '0000')}`
+
+  if (date.day && date.month) return `${fill(date.year, '0000')}-${fill(date.month, '00')}-${fill(date.day, '0000')}${circa(date)}`
+  if (date.month) return `${fill(date.year, '0000')}-${fill(date.month, '00')}${circa(date)}`
+  return `${fill(date.year, '0000')}${circa(date)}`
 }
 
 export async function doImport(): Promise<void> {
@@ -234,11 +303,11 @@ export async function doImport(): Promise<void> {
         value = source[csl].raw || source[csl].literal
       }
       else if (source[csl]['date-parts']) {
-        value = cslDates(source[csl]['date-parts'])
+        value = join(source[csl]['date-parts'].map(dp => cslDate({...source[csl], 'date-part': dp})))
       }
       // yaml-specific date array
       else {
-        value = yamlDates(source[csl])
+        value = join(source[csl].map(yamlDate))
       }
 
       if (zotero.includes(' ')) {
