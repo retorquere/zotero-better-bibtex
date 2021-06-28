@@ -1,0 +1,790 @@
+[
+  {
+    "name": "DOIandURL",
+    "type": "string",
+    "default": "both",
+    "affects": [
+      "Better BibTeX",
+      "Better BibLaTeX"
+    ],
+    "var": "DOIandURL",
+    "label": "When a reference has both a DOI and a URL, export",
+    "options": {
+      "both": "both",
+      "doi": "DOI",
+      "url": "URL"
+    },
+    "override": true
+  },
+  {
+    "name": "ascii",
+    "type": "string",
+    "default": "",
+    "affects": [
+      "Better BibTeX",
+      "Better BibLaTeX"
+    ],
+    "var": "ascii"
+  },
+  {
+    "name": "asciiBibLaTeX",
+    "type": "boolean",
+    "default": false,
+    "affects": [
+      "Better BibLaTeX"
+    ],
+    "var": "asciiBibLaTeX",
+    "label": "Export unicode as plain-text latex commands",
+    "override": true
+  },
+  {
+    "name": "asciiBibTeX",
+    "type": "boolean",
+    "default": true,
+    "affects": [
+      "Better BibTeX"
+    ],
+    "var": "asciiBibTeX",
+    "label": "Export unicode as plain-text latex commands (recommended)",
+    "override": true
+  },
+  {
+    "name": "autoAbbrev",
+    "type": "boolean",
+    "default": false,
+    "affects": [
+      "Better BibTeX",
+      "Better CSL YAML",
+      "Better CSL JSON",
+      "Better BibLaTeX"
+    ],
+    "var": "autoAbbrev",
+    "label": "Automatically abbreviate journal title if none is set explicitly"
+  },
+  {
+    "name": "autoAbbrevStyle",
+    "type": "string",
+    "default": "",
+    "affects": [
+      "Better BibTeX",
+      "Better CSL YAML",
+      "Better CSL JSON",
+      "Better BibLaTeX"
+    ],
+    "var": "autoAbbrevStyle",
+    "label": "Abbreviation style:"
+  },
+  {
+    "name": "autoExport",
+    "type": "string",
+    "default": "immediate",
+    "affects": [],
+    "var": "autoExport",
+    "label": "Automatic export",
+    "options": {
+      "off": "Disabled",
+      "immediate": "On Change",
+      "idle": "When Idle"
+    }
+  },
+  {
+    "name": "autoExportDelay",
+    "type": "number",
+    "default": 5,
+    "affects": [],
+    "var": "autoExportDelay"
+  },
+  {
+    "name": "autoExportIdleWait",
+    "type": "number",
+    "default": 10,
+    "affects": [],
+    "var": "autoExportIdleWait"
+  },
+  {
+    "name": "autoExportPathReplaceDiacritics",
+    "type": "boolean",
+    "default": false,
+    "affects": [],
+    "var": "autoExportPathReplaceDiacritics"
+  },
+  {
+    "name": "autoExportPathReplaceDirSep",
+    "type": "string",
+    "default": "-",
+    "affects": [],
+    "var": "autoExportPathReplaceDirSep"
+  },
+  {
+    "name": "autoExportPathReplaceSpace",
+    "type": "string",
+    "default": " ",
+    "affects": [],
+    "var": "autoExportPathReplaceSpace"
+  },
+  {
+    "name": "autoPinDelay",
+    "type": "number",
+    "default": 0,
+    "affects": [],
+    "var": "autoPinDelay"
+  },
+  {
+    "name": "automaticTags",
+    "type": "boolean",
+    "default": true,
+    "affects": [
+      "Better BibTeX",
+      "Better CSL YAML",
+      "Better CSL JSON",
+      "Better BibLaTeX"
+    ],
+    "var": "automaticTags",
+    "label": "Include automatic tags in export"
+  },
+  {
+    "name": "auxImport",
+    "type": "boolean",
+    "default": false,
+    "affects": [],
+    "var": "auxImport",
+    "label": "When scanning an AUX file, attempt to import references from the attached bib file when their citation keys are not in Zotero"
+  },
+  {
+    "name": "baseAttachmentPath",
+    "type": "string",
+    "default": "",
+    "affects": [
+      "Better BibTeX",
+      "Better CSL YAML",
+      "Better CSL JSON",
+      "Better BibLaTeX"
+    ],
+    "var": "baseAttachmentPath"
+  },
+  {
+    "name": "biblatexExtendedDateFormat",
+    "type": "boolean",
+    "default": true,
+    "affects": [
+      "Better BibLaTeX"
+    ],
+    "var": "biblatexExtendedDateFormat"
+  },
+  {
+    "name": "biblatexExtendedNameFormat",
+    "type": "boolean",
+    "default": false,
+    "affects": [
+      "Better BibLaTeX"
+    ],
+    "var": "biblatexExtendedNameFormat",
+    "label": "Use BibLaTeX extended name format (requires biblatex 3.5)",
+    "override": true
+  },
+  {
+    "name": "biblatexExtractEprint",
+    "type": "boolean",
+    "default": true,
+    "affects": [
+      "Better BibTeX",
+      "Better BibLaTeX"
+    ],
+    "var": "biblatexExtractEprint",
+    "label": "Extract JSTOR/Google Books/PubMed info from the URL field into eprint fields"
+  },
+  {
+    "name": "bibtexParticleNoOp",
+    "type": "boolean",
+    "default": false,
+    "affects": [
+      "Better BibTeX"
+    ],
+    "var": "bibtexParticleNoOp",
+    "label": "Disregard name prefixes when sorting",
+    "override": true
+  },
+  {
+    "name": "bibtexURL",
+    "type": "string",
+    "default": "off",
+    "affects": [
+      "Better BibTeX"
+    ],
+    "var": "bibtexURL",
+    "label": "Add URLs to BibTeX export",
+    "options": {
+      "off": "no",
+      "note": "in the 'note' field",
+      "note-url-ish": "in the 'note' field, but assuming the 'url' package is not loaded",
+      "url": "in the 'url' field",
+      "url-ish": "in the 'url' field, but assuming the 'url' package is not loaded"
+    },
+    "override": true
+  },
+  {
+    "name": "cacheFlushInterval",
+    "type": "number",
+    "default": 5,
+    "affects": [],
+    "var": "cacheFlushInterval"
+  },
+  {
+    "name": "citeCommand",
+    "type": "string",
+    "default": "cite",
+    "affects": [],
+    "var": "citeCommand",
+    "label": "LaTeX command"
+  },
+  {
+    "name": "citekeyFold",
+    "type": "boolean",
+    "default": true,
+    "affects": [],
+    "var": "citekeyFold",
+    "label": "Force citation key to plain text"
+  },
+  {
+    "name": "citekeyFormat",
+    "type": "string",
+    "default": "\u200b[auth:lower][shorttitle3_3][year]",
+    "affects": [],
+    "var": "citekeyFormat",
+    "label": "Citation key format"
+  },
+  {
+    "name": "citekeySearch",
+    "type": "boolean",
+    "default": true,
+    "affects": [],
+    "var": "citekeySearch",
+    "label": "Enable citation key search"
+  },
+  {
+    "name": "citeprocNoteCitekey",
+    "type": "boolean",
+    "default": false,
+    "affects": [
+      "Better BibTeX",
+      "Better CSL YAML",
+      "Better CSL JSON",
+      "Better BibLaTeX"
+    ],
+    "var": "citeprocNoteCitekey"
+  },
+  {
+    "name": "csquotes",
+    "type": "string",
+    "default": "",
+    "affects": [
+      "Better BibTeX",
+      "Better BibLaTeX"
+    ],
+    "var": "csquotes"
+  },
+  {
+    "name": "debugLogDir",
+    "type": "string",
+    "default": "",
+    "affects": [],
+    "var": "debugLogDir"
+  },
+  {
+    "name": "exportBibTeXStrings",
+    "type": "string",
+    "default": "off",
+    "affects": [
+      "Better BibTeX",
+      "Better BibLaTeX"
+    ],
+    "var": "exportBibTeXStrings",
+    "label": "If a field could be a @string reference, export it as an unbraced @string reference",
+    "options": {
+      "off": "No",
+      "detect": "Assume single-word fields to be @string vars",
+      "match": "Match against the @string declarations below",
+      "match+reverse": "Match against the @string declarations and their values below"
+    }
+  },
+  {
+    "name": "exportBraceProtection",
+    "type": "boolean",
+    "default": true,
+    "affects": [
+      "Better BibTeX",
+      "Better BibLaTeX"
+    ],
+    "var": "exportBraceProtection",
+    "label": "Apply case-protection to capitalized words by enclosing them in braces"
+  },
+  {
+    "name": "exportTitleCase",
+    "type": "boolean",
+    "default": true,
+    "affects": [
+      "Better BibTeX",
+      "Better BibLaTeX"
+    ],
+    "var": "exportTitleCase",
+    "label": "Apply title-casing to titles"
+  },
+  {
+    "name": "extraMergeCSL",
+    "type": "boolean",
+    "default": false,
+    "affects": [],
+    "var": "extraMergeCSL",
+    "label": "fields that are understood to be CSL fields by Zotero"
+  },
+  {
+    "name": "extraMergeCitekeys",
+    "type": "boolean",
+    "default": false,
+    "affects": [],
+    "var": "extraMergeCitekeys",
+    "label": "their citation keys into an bib(la)tex `ids` field"
+  },
+  {
+    "name": "extraMergeTeX",
+    "type": "boolean",
+    "default": false,
+    "affects": [],
+    "var": "extraMergeTeX",
+    "label": "their `tex.*` fields"
+  },
+  {
+    "name": "git",
+    "type": "string",
+    "default": "config",
+    "affects": [],
+    "var": "git"
+  },
+  {
+    "name": "import",
+    "type": "boolean",
+    "default": true,
+    "affects": [],
+    "var": "import"
+  },
+  {
+    "name": "importBibTeXStrings",
+    "type": "boolean",
+    "default": true,
+    "affects": [],
+    "var": "importBibTeXStrings",
+    "label": "Expand the @string vars below during imports"
+  },
+  {
+    "name": "importCaseProtection",
+    "type": "string",
+    "default": "as-needed",
+    "affects": [],
+    "var": "importCaseProtection",
+    "label": "Insert case-protection for braces:",
+    "options": {
+      "as-needed": "minimal",
+      "on": "yes",
+      "off": "no"
+    }
+  },
+  {
+    "name": "importCitationKey",
+    "type": "boolean",
+    "default": true,
+    "affects": [],
+    "var": "importCitationKey"
+  },
+  {
+    "name": "importExtra",
+    "type": "boolean",
+    "default": true,
+    "affects": [],
+    "var": "importExtra"
+  },
+  {
+    "name": "importJabRefAbbreviations",
+    "type": "boolean",
+    "default": true,
+    "affects": [],
+    "var": "importJabRefAbbreviations"
+  },
+  {
+    "name": "importJabRefStrings",
+    "type": "boolean",
+    "default": true,
+    "affects": [],
+    "var": "importJabRefStrings"
+  },
+  {
+    "name": "importSentenceCase",
+    "type": "string",
+    "default": "on+guess",
+    "affects": [],
+    "var": "importSentenceCase",
+    "label": "Sentence-case titles on import:",
+    "options": {
+      "on+guess": "yes, but try to exclude already-sentence-cased titles",
+      "on": "yes",
+      "off": "no (import titles as-is)"
+    }
+  },
+  {
+    "name": "importUnknownTexCommand",
+    "type": "string",
+    "default": "ignore",
+    "affects": [],
+    "var": "importUnknownTexCommand"
+  },
+  {
+    "name": "itemObserverDelay",
+    "type": "number",
+    "default": 5,
+    "affects": [],
+    "var": "itemObserverDelay"
+  },
+  {
+    "name": "jabrefFormat",
+    "type": "number",
+    "default": 0,
+    "affects": [
+      "Better BibTeX",
+      "Better BibLaTeX"
+    ],
+    "var": "jabrefFormat",
+    "label": "Include JabRef-specific metadata:",
+    "options": {
+      "0": "no",
+      "3": "for JabRef 3",
+      "4": "for JabRef 4",
+      "5": "for JabRef 5"
+    }
+  },
+  {
+    "name": "jieba",
+    "type": "boolean",
+    "default": false,
+    "affects": [],
+    "var": "jieba",
+    "label": "Enable 'jieba' filter in citekey patterns. Uses a lot of memory."
+  },
+  {
+    "name": "keyConflictPolicy",
+    "type": "string",
+    "default": "keep",
+    "affects": [],
+    "var": "keyConflictPolicy",
+    "label": "On conflict with a pinned key, non-pinned keys will be",
+    "options": {
+      "change": "postfixed (causes key changes)",
+      "keep": "kept (causes key duplicates)"
+    }
+  },
+  {
+    "name": "keyScope",
+    "type": "string",
+    "default": "library",
+    "affects": [],
+    "var": "keyScope",
+    "label": "Keep keys unique",
+    "options": {
+      "global": "across all libraries",
+      "library": "within each library"
+    }
+  },
+  {
+    "name": "kuroshiro",
+    "type": "boolean",
+    "default": false,
+    "affects": [],
+    "var": "kuroshiro",
+    "label": "Apply kuroshiro romajization in Japanese names/titles. Uses a lot of memory."
+  },
+  {
+    "name": "mapMath",
+    "type": "string",
+    "default": "",
+    "affects": [
+      "Better BibTeX",
+      "Better BibLaTeX"
+    ],
+    "var": "mapMath"
+  },
+  {
+    "name": "mapText",
+    "type": "string",
+    "default": "",
+    "affects": [
+      "Better BibTeX",
+      "Better BibLaTeX"
+    ],
+    "var": "mapText"
+  },
+  {
+    "name": "mapUnicode",
+    "type": "string",
+    "default": "conservative",
+    "affects": [
+      "Better BibTeX",
+      "Better BibLaTeX"
+    ],
+    "var": "mapUnicode",
+    "label": "When converting to plain-text latex commands:",
+    "options": {
+      "minimal-packages": "Minimize additional latex packages required",
+      "conservative": "Minimize the number of switches between math-mode and text-mode",
+      "text": "Prefer text-mode replacements",
+      "math": "Prefer math-mode replacements"
+    }
+  },
+  {
+    "name": "newTranslatorsAskRestart",
+    "type": "boolean",
+    "default": true,
+    "affects": [],
+    "var": "newTranslatorsAskRestart"
+  },
+  {
+    "name": "parseParticles",
+    "type": "boolean",
+    "default": true,
+    "affects": [
+      "Better BibTeX",
+      "Better CSL YAML",
+      "Better CSL JSON",
+      "Better BibLaTeX"
+    ],
+    "var": "parseParticles"
+  },
+  {
+    "name": "patchDates",
+    "type": "string",
+    "default": "",
+    "affects": [],
+    "var": "patchDates"
+  },
+  {
+    "name": "platform",
+    "type": "string",
+    "default": "",
+    "affects": [],
+    "var": "platform"
+  },
+  {
+    "name": "postscript",
+    "type": "string",
+    "default": "",
+    "affects": [
+      "Better BibTeX",
+      "Better CSL YAML",
+      "Better CSL JSON",
+      "Better BibLaTeX"
+    ],
+    "var": "postscript",
+    "label": "postscript"
+  },
+  {
+    "name": "postscriptOverride",
+    "type": "string",
+    "default": "",
+    "affects": [],
+    "var": "postscriptOverride"
+  },
+  {
+    "name": "qualityReport",
+    "type": "boolean",
+    "default": false,
+    "affects": [
+      "Better BibTeX",
+      "Better BibLaTeX"
+    ],
+    "var": "qualityReport",
+    "label": "Include comments about potential problems with the references"
+  },
+  {
+    "name": "quickCopyEta",
+    "type": "string",
+    "default": "",
+    "affects": [],
+    "var": "quickCopyEta",
+    "label": "Eta template"
+  },
+  {
+    "name": "quickCopyMode",
+    "type": "string",
+    "default": "latex",
+    "affects": [],
+    "var": "quickCopyMode",
+    "label": "QuickCopy format",
+    "options": {
+      "latex": "LaTeX citation",
+      "citekeys": "Cite Keys",
+      "pandoc": "Pandoc citation",
+      "orgmode": "Org-mode select link",
+      "orgRef": "org-ref citation",
+      "rtfScan": "RTF Scan marker",
+      "roamCiteKey": "Roam Cite Key",
+      "atom": "Atom (https://atom.io/packages/zotero-citations)",
+      "gitbook": "GitBook",
+      "selectlink": "Zotero select link",
+      "eta": "Eta template"
+    }
+  },
+  {
+    "name": "quickCopyOrgMode",
+    "type": "string",
+    "default": "zotero",
+    "affects": [],
+    "var": "quickCopyOrgMode",
+    "label": "Org-mode select link",
+    "options": {
+      "zotero": "using Zotero item key",
+      "citationkey": "using Better BibTeX citation key"
+    }
+  },
+  {
+    "name": "quickCopyPandocBrackets",
+    "type": "boolean",
+    "default": false,
+    "affects": [],
+    "var": "quickCopyPandocBrackets",
+    "label": "Surround Pandoc citations with brackets"
+  },
+  {
+    "name": "quickCopySelectLink",
+    "type": "string",
+    "default": "zotero",
+    "affects": [],
+    "var": "quickCopySelectLink",
+    "label": "Zotero select link",
+    "options": {
+      "zotero": "using Zotero item key",
+      "citationkey": "using Better BibTeX citation key"
+    }
+  },
+  {
+    "name": "rawImports",
+    "type": "boolean",
+    "default": false,
+    "affects": [],
+    "var": "rawImports"
+  },
+  {
+    "name": "rawLaTag",
+    "type": "string",
+    "default": "#LaTeX",
+    "affects": [
+      "Better BibTeX",
+      "Better BibLaTeX"
+    ],
+    "var": "rawLaTag"
+  },
+  {
+    "name": "relativeFilePaths",
+    "type": "boolean",
+    "default": false,
+    "affects": [],
+    "var": "relativeFilePaths"
+  },
+  {
+    "name": "retainCache",
+    "type": "boolean",
+    "default": false,
+    "affects": [],
+    "var": "retainCache",
+    "label": "Retain export cache across upgrades"
+  },
+  {
+    "name": "scrubDatabase",
+    "type": "boolean",
+    "default": false,
+    "affects": [],
+    "var": "scrubDatabase"
+  },
+  {
+    "name": "skipFields",
+    "type": "string",
+    "default": "",
+    "affects": [
+      "Better BibTeX",
+      "Better CSL YAML",
+      "Better CSL JSON",
+      "Better BibLaTeX"
+    ],
+    "var": "skipFields",
+    "label": "Fields to omit from export (comma-separated)"
+  },
+  {
+    "name": "skipWords",
+    "type": "string",
+    "default": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+    "affects": [
+      "Better BibTeX",
+      "Better BibLaTeX"
+    ],
+    "var": "skipWords"
+  },
+  {
+    "name": "startupProgress",
+    "type": "string",
+    "default": "popup",
+    "affects": [],
+    "var": "startupProgress"
+  },
+  {
+    "name": "strings",
+    "type": "string",
+    "default": "",
+    "affects": [
+      "Better BibTeX",
+      "Better BibLaTeX"
+    ],
+    "var": "strings",
+    "label": "@string definitions"
+  },
+  {
+    "name": "testing",
+    "type": "boolean",
+    "default": false,
+    "affects": [],
+    "var": "testing"
+  },
+  {
+    "name": "verbatimFields",
+    "type": "string",
+    "default": "url,doi,file,eprint,verba,verbb,verbc,groups",
+    "affects": [],
+    "var": "verbatimFields"
+  },
+  {
+    "name": "warnBulkModify",
+    "type": "number",
+    "default": 10,
+    "affects": [],
+    "var": "warnBulkModify",
+    "label": "Warn me when changing citation keys in bulk"
+  },
+  {
+    "name": "warnTitleCased",
+    "type": "boolean",
+    "default": false,
+    "affects": [],
+    "var": "warnTitleCased"
+  },
+  {
+    "name": "workersCache",
+    "type": "boolean",
+    "default": true,
+    "affects": [],
+    "var": "workersCache",
+    "label": "Enable caching for background exports"
+  },
+  {
+    "name": "workersMax",
+    "type": "number",
+    "default": 1,
+    "affects": [],
+    "var": "workersMax",
+    "label": "Parallel background exports:"
+  }
+]

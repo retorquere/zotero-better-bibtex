@@ -3,161 +3,104 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "localeDateOrder": "dmy",
-    "options": {
-      "exportFileData": false,
-      "exportNotes": false,
-      "keepUpdated": false
-    },
+    "options": {},
     "preferences": {
-      "DOIandURL": "both",
-      "ascii": "",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportDelay": 5,
-      "autoExportIdleWait": 10,
-      "autoExportPathReplaceDiacritics": false,
-      "autoExportPathReplaceDirSep": "-",
-      "autoExportPathReplaceSpace": " ",
-      "autoPinDelay": 0,
-      "automaticTags": true,
-      "auxImport": false,
-      "baseAttachmentPath": "",
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "biblatexExtractEprint": true,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
-      "citekeyFormat": "[auth][year]",
-      "citekeySearch": true,
-      "citeprocNoteCitekey": false,
-      "csquotes": "",
-      "debugLogDir": "",
-      "exportBibTeXStrings": "off",
-      "exportBraceProtection": true,
-      "exportTitleCase": true,
-      "extraMergeCSL": false,
-      "extraMergeCitekeys": false,
-      "extraMergeTeX": false,
-      "git": "config",
-      "import": true,
-      "importBibTeXStrings": true,
-      "importCaseProtection": "as-needed",
-      "importCitationKey": true,
-      "importExtra": true,
-      "importJabRefAbbreviations": true,
-      "importJabRefStrings": true,
-      "importSentenceCase": "on+guess",
-      "importUnknownTexCommand": "ignore",
-      "itemObserverDelay": 5,
-      "jabrefFormat": 0,
-      "jieba": false,
-      "keyConflictPolicy": "keep",
-      "keyScope": "library",
-      "kuroshiro": false,
-      "mapMath": "",
-      "mapText": "",
-      "mapUnicode": "conservative",
-      "newTranslatorsAskRestart": true,
-      "parseParticles": true,
-      "patchDates": "",
-      "platform": "",
-      "postscript": "",
-      "postscriptOverride": "",
-      "qualityReport": false,
-      "quickCopyEta": "",
-      "quickCopyMode": "latex",
-      "quickCopyOrgMode": "zotero",
-      "quickCopyPandocBrackets": false,
-      "quickCopySelectLink": "zotero",
-      "rawImports": false,
-      "rawLaTag": "#LaTeX",
-      "relativeFilePaths": false,
-      "retainCache": false,
-      "scrubDatabase": false,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "startupProgress": "popup",
-      "strings": "",
-      "testing": true,
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups",
-      "warnBulkModify": 10,
-      "warnTitleCased": false,
-      "workersCache": true,
-      "workersMax": 1
+      "citekeyFormat": "[auth][year]"
     }
   },
   "items": [
     {
-      "citationKey": "0000",
-      "date": "Spring 0000 - Winter 0000",
-      "dateAdded": "2021-06-28T19:39:48Z",
-      "dateModified": "2021-06-28T19:39:48Z",
-      "itemID": 1,
-      "itemType": "webpage",
-      "title": "0000-21/0000-24",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/7J6CYE9X"
-    },
-    {
-      "citationKey": "0011",
-      "date": "Spring -0011 - Summer -0012",
-      "dateAdded": "2021-06-28T19:39:48Z",
-      "dateModified": "2021-06-28T19:39:48Z",
-      "itemID": 2,
-      "itemType": "webpage",
-      "title": "-0011-21/-0012-22",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/AQIZWN3E"
-    },
-    {
-      "citationKey": "11",
-      "date": "Spring 0011 - Summer 0012",
-      "dateAdded": "2021-06-28T19:39:48Z",
-      "dateModified": "2021-06-28T19:39:48Z",
-      "itemID": 3,
-      "itemType": "webpage",
-      "title": "0011-21/0012-22",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/YV5MQJA9"
-    },
-    {
-      "citationKey": "2011",
-      "date": "Spring -2011 - Summer -2012",
-      "dateAdded": "2021-06-28T19:39:48Z",
-      "dateModified": "2021-06-28T19:39:48Z",
-      "itemID": 4,
-      "itemType": "webpage",
-      "title": "-2011-21/-2012-22",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/BI49FECS"
-    },
-    {
-      "citationKey": "2017",
-      "date": "2017-14/2017-15",
-      "dateAdded": "2021-06-28T19:39:48Z",
-      "dateModified": "2021-06-28T19:39:48Z",
-      "extra": [
-        "Original date: 2017-14/2017-99"
+      "ISBN": "979-10-239-0085-9",
+      "abstractNote": "Le Cine\u00b4ma, art subversif est un livre culte dans l'histoire de la cine\u00b4philie, cite\u00b4 en re\u00b4fe\u00b4rence par de nombreux cine\u00b4astes et artistes depuis sa parution en 1974. Ce\u00b4le\u00b4brant les formes de la subversion au cine\u00b4ma, Amos Vogel analyse comment les films peuvent contourner, transgresser ou annihiler les re`gles et les conventions e\u00b4tablies, qu'elles soient esthe\u00b4tiques ou morales. Illustre\u00b4 par plus de 300 images, souvent side\u00b4rantes, l'ouvrage alterne textes the\u00b4oriques et notules critiques, consacre\u00b4es aussi bien a` des \u0153uvres ce\u00b4le`bres qu'a` des films inconnus, de tous pays et de toutes e\u00b4poques. Contre les tabous, contre toute forme de censure, c'est une ode a` la liberte\u00b4 cine\u00b4matographique. Traduit en franc\u00b8ais en 1977, Le Cine\u00b4ma, art subversif n'avait jamais e\u00b4te\u00b4 re\u00b4e\u00b4dite\u00b4. A` l'heure ou` la subversion, rele\u00b4gue\u00b4e dans les marges, semble avoir de\u00b4serte\u00b4 les e\u00b4crans, il apparai^t plus indispensable que jamais. Amos Vogel (1921-2012) est le fondateur et programmateur du Cinema 16, le plus influent cine\u00b4-club d'avant-garde new- yorkais. Il est le premier a` y avoir montre\u00b4 aux E\u00b4tats-Unis les films de Roman Polanski, John Cassavetes, Nagisa Oshima, Jacques Rivette ou encore Alain Resnais. Il a e\u00b4galement co-fonde\u00b4 le Festival du Film de New York, dont il a dirige\u00b4 la programmation jusqu'en 1968",
+      "callNumber": "791.430 1",
+      "citationKey": "Vogel2016",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Amos",
+          "lastName": "Vogel"
+        },
+        {
+          "creatorType": "translator",
+          "firstName": "Claude",
+          "lastName": "Fr\u00e9gnac"
+        }
       ],
-      "itemID": 5,
-      "itemType": "webpage",
-      "title": "months out of range",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/DLGLLEIH"
+      "date": "2016",
+      "extra": [
+        "Original date: 1974"
+      ],
+      "itemID": 11,
+      "itemType": "book",
+      "language": "fre",
+      "libraryCatalog": "BnF Catalogue g\u00e9n\u00e9ral (http://catalogue.bnf.fr)",
+      "numPages": "349",
+      "place": "Paris",
+      "publisher": "Capricci",
+      "title": "Le Cin\u00e9ma, art subversif"
     },
     {
-      "citationKey": "2017a",
-      "date": "Autumn 2017 - Winter 2017",
-      "dateAdded": "2021-06-28T19:39:48Z",
-      "dateModified": "2021-06-28T19:39:48Z",
-      "extra": [
-        "Original date: Spring 2015 - Summer 2016"
+      "citationKey": "Dunning2016",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Andrew N.J.",
+          "lastName": "Dunning"
+        }
       ],
-      "itemID": 6,
-      "itemType": "webpage",
-      "title": "Season ranges: EDTF and literal",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/RQHPE6Z4"
+      "date": "2016",
+      "itemID": 8,
+      "itemType": "book",
+      "place": "Toronto",
+      "publisher": "Pontifical Institute of Mediaeval Studies",
+      "series": "Toronto Medieval Latin Texts",
+      "seriesNumber": "33",
+      "shortTitle": "Notes from the school of William de Montibus",
+      "title": "Samuel Presbiter: Notes from the school of William de Montibus. <span class=\"nocase\">Collecta ex diuersis auditis in scola magistri Willelmi de Monte</span>"
+    },
+    {
+      "citationKey": "Wordsworth1883",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "John",
+          "lastName": "Wordsworth"
+        }
+      ],
+      "date": "1883",
+      "itemID": 9,
+      "itemType": "book",
+      "language": "English",
+      "libraryCatalog": "Internet Archive",
+      "numPages": "139",
+      "place": "Oxford",
+      "publisher": "Clarendon Press",
+      "series": "Old-Latin Biblical Texts",
+      "seriesNumber": "1",
+      "shortTitle": "The Gospel according to St. Matthew",
+      "title": "The Gospel according to St. Matthew, from the St. Germain ms. (g~1~), now numbered Lat. 11553 in the National Library at Paris",
+      "url": "https://archive.org/details/gospelaccording00goog"
+    },
+    {
+      "DOI": "10.1484/J.SE.2.303788",
+      "citationKey": "Berndt1994",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Rainer",
+          "lastName": "Berndt"
+        }
+      ],
+      "date": "1994",
+      "itemID": 10,
+      "itemType": "journalArticle",
+      "language": "German",
+      "libraryCatalog": "MetaPress",
+      "pages": "5\u201332",
+      "publicationTitle": "Sacris Erudiri",
+      "title": "Skizze zur Auslegungsgeschichte der B\u00fccher *Prouerbia* und *Ecclesiastes* in der abendl\u00e4ndischen Kirche",
+      "url": "http://dx.doi.org/10.1484/J.SE.2.303788",
+      "volume": "34"
     },
     {
       "citationKey": "Adams2014",
@@ -199,124 +142,60 @@
         }
       ],
       "date": "2014-12-0031/2015-01-0001",
-      "dateAdded": "2021-06-28T19:39:48Z",
-      "dateModified": "2021-06-28T19:39:48Z",
       "itemID": 7,
       "itemType": "journalArticle",
-      "pages": "493–518",
+      "pages": "493\u2013518",
       "publicationTitle": "Bulletin of Volcanology",
       "title": "The physical volcanology of the 1600 eruption of **Huaynaputina**, southern Peru",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/B9X4YM9J",
       "volume": "62"
     },
     {
-      "citationKey": "Dunning2016",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Andrew N.J.",
-          "lastName": "Dunning"
-        }
-      ],
-      "date": "2016",
-      "dateAdded": "2021-06-28T19:39:48Z",
-      "dateModified": "2021-06-28T19:39:48Z",
-      "itemID": 8,
-      "itemType": "book",
-      "place": "Toronto",
-      "publisher": "Pontifical Institute of Mediaeval Studies",
-      "series": "Toronto Medieval Latin Texts",
-      "seriesNumber": "33",
-      "shortTitle": "Notes from the school of William de Montibus",
-      "title": "Samuel Presbiter: Notes from the school of William de Montibus. <span class=\"nocase\">Collecta ex diuersis auditis in scola magistri Willelmi de Monte</span>",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/KQ6CHX3J"
+      "citationKey": "0000",
+      "date": "Spring 0000 - Winter 0000",
+      "itemID": 1,
+      "itemType": "webpage",
+      "title": "0000-21/0000-24"
     },
     {
-      "citationKey": "Wordsworth1883",
-      "creators": [
-        {
-          "creatorType": "editor",
-          "firstName": "John",
-          "lastName": "Wordsworth"
-        }
-      ],
-      "date": "1883",
-      "dateAdded": "2021-06-28T19:39:48Z",
-      "dateModified": "2021-06-28T19:39:48Z",
-      "itemID": 9,
-      "itemType": "book",
-      "language": "English",
-      "libraryCatalog": "Internet Archive",
-      "numPages": "139",
-      "place": "Oxford",
-      "publisher": "Clarendon Press",
-      "series": "Old-Latin Biblical Texts",
-      "seriesNumber": "1",
-      "shortTitle": "The Gospel according to St. Matthew",
-      "title": "The Gospel according to St. Matthew, from the St. Germain ms. (g~1~), now numbered Lat. 11553 in the National Library at Paris",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/3GJMGTVP",
-      "url": "https://archive.org/details/gospelaccording00goog"
+      "citationKey": "0011",
+      "date": "Spring -0011 - Summer -0012",
+      "itemID": 2,
+      "itemType": "webpage",
+      "title": "-0011-21/-0012-22"
     },
     {
-      "DOI": "10.1484/J.SE.2.303788",
-      "citationKey": "Berndt1994",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Rainer",
-          "lastName": "Berndt"
-        }
-      ],
-      "date": "1994",
-      "dateAdded": "2021-06-28T19:39:48Z",
-      "dateModified": "2021-06-28T19:39:48Z",
-      "itemID": 10,
-      "itemType": "journalArticle",
-      "language": "German",
-      "libraryCatalog": "MetaPress",
-      "pages": "5–32",
-      "publicationTitle": "Sacris Erudiri",
-      "title": "Skizze zur Auslegungsgeschichte der Bücher *Prouerbia* und *Ecclesiastes* in der abendländischen Kirche",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/D2WE7TG5",
-      "url": "http://dx.doi.org/10.1484/J.SE.2.303788",
-      "volume": "34"
+      "citationKey": "11",
+      "date": "Spring 0011 - Summer 0012",
+      "itemID": 3,
+      "itemType": "webpage",
+      "title": "0011-21/0012-22"
     },
     {
-      "ISBN": "979-10-239-0085-9",
-      "abstractNote": "Le Cine´ma, art subversif est un livre culte dans l'histoire de la cine´philie, cite´ en re´fe´rence par de nombreux cine´astes et artistes depuis sa parution en 1974. Ce´le´brant les formes de la subversion au cine´ma, Amos Vogel analyse comment les films peuvent contourner, transgresser ou annihiler les re`gles et les conventions e´tablies, qu'elles soient esthe´tiques ou morales. Illustre´ par plus de 300 images, souvent side´rantes, l'ouvrage alterne textes the´oriques et notules critiques, consacre´es aussi bien a` des œuvres ce´le`bres qu'a` des films inconnus, de tous pays et de toutes e´poques. Contre les tabous, contre toute forme de censure, c'est une ode a` la liberte´ cine´matographique. Traduit en franc¸ais en 1977, Le Cine´ma, art subversif n'avait jamais e´te´ re´e´dite´. A` l'heure ou` la subversion, rele´gue´e dans les marges, semble avoir de´serte´ les e´crans, il apparai^t plus indispensable que jamais. Amos Vogel (1921-2012) est le fondateur et programmateur du Cinema 16, le plus influent cine´-club d'avant-garde new- yorkais. Il est le premier a` y avoir montre´ aux E´tats-Unis les films de Roman Polanski, John Cassavetes, Nagisa Oshima, Jacques Rivette ou encore Alain Resnais. Il a e´galement co-fonde´ le Festival du Film de New York, dont il a dirige´ la programmation jusqu'en 1968",
-      "callNumber": "791.430 1",
-      "citationKey": "Vogel2016",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Amos",
-          "lastName": "Vogel"
-        },
-        {
-          "creatorType": "translator",
-          "firstName": "Claude",
-          "lastName": "Frégnac"
-        }
-      ],
-      "date": "2016",
-      "dateAdded": "2021-06-28T19:39:48Z",
-      "dateModified": "2021-06-28T19:39:48Z",
+      "citationKey": "2011",
+      "date": "Spring -2011 - Summer -2012",
+      "itemID": 4,
+      "itemType": "webpage",
+      "title": "-2011-21/-2012-22"
+    },
+    {
+      "citationKey": "2017",
+      "date": "2017-14/2017-15",
       "extra": [
-        "Original date: 1974"
+        "Original date: 2017-14/2017-99"
       ],
-      "itemID": 11,
-      "itemType": "book",
-      "language": "fre",
-      "libraryCatalog": "BnF Catalogue général (http://catalogue.bnf.fr)",
-      "numPages": "349",
-      "place": "Paris",
-      "publisher": "Capricci",
-      "title": "Le Cinéma, art subversif",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/TE53KU8J"
+      "itemID": 5,
+      "itemType": "webpage",
+      "title": "months out of range"
+    },
+    {
+      "citationKey": "2017a",
+      "date": "Autumn 2017 - Winter 2017",
+      "extra": [
+        "Original date: Spring 2015 - Summer 2016"
+      ],
+      "itemID": 6,
+      "itemType": "webpage",
+      "title": "Season ranges: EDTF and literal"
     }
-  ],
-  "version": {
-    "bbt": "5.4.25.emile.limonia",
-    "zotero": "5.0.96.2"
-  }
+  ]
 }

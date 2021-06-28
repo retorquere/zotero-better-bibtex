@@ -272,8 +272,8 @@ class Preferences:
       if 'id' in pref:
         del pref['id']
 
-    #with open(os.path.join(root, 'preferences.json'), 'w') as f:
-    #  json.dump([{ k: v for k, v in pref.items() if k != 'description'} for pref in preferences], f, indent=2)
+    with open(os.path.join(root, 'test/features/steps/preferences.json'), 'w') as f:
+      json.dump([{ k: v for k, v in pref.items() if k != 'description'} for pref in preferences], f, indent=2)
 
     with open(os.path.join(root, 'site/data/preferences/defaults.json'), 'w') as f:
       json.dump({ pref.name: pref.default for pref in preferences }, f, indent=2)
