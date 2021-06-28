@@ -328,6 +328,7 @@ export class Reference {
 
   private inPostscript = false
   private quality_report: string[] = []
+  private extraFields: Extra.Fields
 
   public static installPostscript(): void {
     try {
@@ -338,6 +339,7 @@ export class Reference {
           'item',
           'Translator',
           'Zotero',
+          'extra',
           postscript.body(Translator.preferences.postscript, 'this.inPostscript')
         ) as postscript.Postscript
       }
@@ -391,6 +393,8 @@ export class Reference {
 
     // remove ordinal from edition
     this.item.edition = (this.item.edition || '').replace(/^([0-9]+)(nd|th)$/, '$1')
+
+    this.extraFields = JSON.parse(JSON.stringify(this.item.extraFields))
 
     // preserve for thesis type etc
     let csl_type = this.item.extraFields.kv.type
@@ -924,7 +928,7 @@ export class Reference {
 
     let allow: postscript.Allow = { cache: true, write: true }
     try {
-      allow = this.postscript(this, this.item, Translator, Zotero)
+      allow = this.postscript(this, this.item, Translator, Zotero, this.extraFields)
     }
     catch (err) {
       log.error('Reference.postscript failed:', err)
@@ -1347,7 +1351,7 @@ export class Reference {
     return latex
   }
 
-  private postscript(_reference, _item, _translator, _zotero): postscript.Allow {
+  private postscript(_reference, _item, _translator, _zotero, _extra): postscript.Allow {
     return { cache: true, write: true }
   }
 
