@@ -183,23 +183,29 @@ module.exports.trace = {
         console.log('!!', warning)
       }
 
-      const tracer = await import('estrace/plugin');
-      const {code} = putout(source.code, {
-        fixCount: 1,
-        rules: {
-          tracer: ['on', { url: localpath.replace(/\.ts$/, '') }],
-        },
-        plugins: [
-          ['tracer', tracer],
-        ],
-      })
+      try {
+        const tracer = await import('estrace/plugin');
+        const {code} = putout(source.code, {
+          fixCount: 1,
+          rules: {
+            tracer: ['on', { url: localpath.replace(/\.ts$/, '') }],
+          },
+          plugins: [
+            ['tracer', tracer],
+          ],
+        })
+        const contents = prefix + code
 
-      const contents = prefix + code
-
-      return {
-        contents,
-        loader: 'js',
+        return {
+          contents,
+          loader: 'js',
+        }
       }
+      catch (err) {
+        await fs.promises.writeFile('/tmp/tt', `/* ${localpath.replace(/\.ts$/, '')}\n${err.stack}\n*/\n/${source.code}`)
+        throw err
+      }
+
     })
   }
 }

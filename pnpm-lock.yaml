@@ -26,7 +26,7 @@ specifiers:
   esbuild: ^0.12.11
   escape-string-regexp: ^5.0.0
   eslint: ^7.29.0
-  estrace: ^1.5.1
+  estrace: ^1.6.0
   eta: ^1.12.2
   eventemitter3: ^4.0.7
   excel-column-name: ^1.0.1
@@ -127,7 +127,7 @@ devDependencies:
   esbuild: 0.12.11
   escape-string-regexp: 5.0.0
   eslint: 7.29.0
-  estrace: 1.5.1
+  estrace: 1.6.0
   eta: 1.12.2
   excel-column-name: 1.0.1
   fast-chunk-string: 1.0.1
@@ -3450,8 +3450,8 @@ packages:
       estraverse: 5.2.0
     dev: true
 
-  /estrace/1.5.1:
-    resolution: {integrity: sha512-sOrrftuGOQxpYB9jiBY9Vy7gX7nph2mCDmDrhtFmNNFJoxM/rm4wxTxdevjlcZG9msDwSXInivTmkr/xR4X55w==}
+  /estrace/1.6.0:
+    resolution: {integrity: sha512-mW3EORAvSTqTmKtBLKiM4RS4ouoGFwLsKvDbVwSudnEXdqpe0j/TYCuvQKgVCDPteRv+KIlTpZ1PwhDqJoLVqA==}
     engines: {node: '>=14'}
     dependencies:
       putout: 18.3.0
