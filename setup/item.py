@@ -430,9 +430,9 @@ class ExtraFields:
       json.dump(mapping, f, sort_keys=True, indent='  ')
 
     # remove phantom labels for clarity
-    #for label in [node for node, data in self.dg.nodes(data=True) if data['domain'] == 'label' and 'LabelGraphics' in data]:
-    #  self.dg.remove_node(label)
-    #nx.write_gml(self.dg, 'mapping.gml', stringizer)
+    for label in [node for node, data in self.dg.nodes(data=True) if data['domain'] == 'label' and 'LabelGraphics' in data]:
+      self.dg.remove_node(label)
+    nx.write_gml(self.dg, 'mapping.gml', stringizer)
 
     #with open('mapping.json', 'w') as f:
     #  data = nx.readwrite.json_graph.node_link_data(self.dg)
