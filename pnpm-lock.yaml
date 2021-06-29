@@ -23,10 +23,10 @@ specifiers:
   edtf: ^4.0.0
   edtfy: ^0.0.8
   ejs: ^3.1.6
-  esbuild: ^0.12.11
+  esbuild: ^0.12.12
   escape-string-regexp: ^5.0.0
   eslint: ^7.29.0
-  estrace: ^1.6.0
+  estrace: ^1.6.1
   eta: ^1.12.2
   eventemitter3: ^4.0.7
   excel-column-name: ^1.0.1
@@ -124,10 +124,10 @@ devDependencies:
   dom-parser: 0.1.6
   dotenv: 10.0.0
   ejs: 3.1.6
-  esbuild: 0.12.11
+  esbuild: 0.12.12
   escape-string-regexp: 5.0.0
   eslint: 7.29.0
-  estrace: 1.6.0
+  estrace: 1.6.1
   eta: 1.12.2
   excel-column-name: 1.0.1
   fast-chunk-string: 1.0.1
@@ -3198,8 +3198,8 @@ packages:
     resolution: {integrity: sha1-wsNYJlYkfDnqEHyx5mUrb58kUjw=}
     dev: true
 
-  /esbuild/0.12.11:
-    resolution: {integrity: sha512-h83GwI6lYOrnSv5hSY2i2XZ191v3haj2IGDzwrkfWHhuO/kVMX3RYjhwRNG9E5VSxVLPaUjTVwrv8HWLvhk2nQ==}
+  /esbuild/0.12.12:
+    resolution: {integrity: sha512-fdB/8HRg9u95Zi4/qV+osrfzpvLzubFKUr8SkZf/kUKImLiX61Y7qBzV14FCKphFk7YoXWY85nbPGkI6pq+Zeg==}
     hasBin: true
     requiresBuild: true
     dev: true
@@ -3450,8 +3450,8 @@ packages:
       estraverse: 5.2.0
     dev: true
 
-  /estrace/1.6.0:
-    resolution: {integrity: sha512-mW3EORAvSTqTmKtBLKiM4RS4ouoGFwLsKvDbVwSudnEXdqpe0j/TYCuvQKgVCDPteRv+KIlTpZ1PwhDqJoLVqA==}
+  /estrace/1.6.1:
+    resolution: {integrity: sha512-z3652OLvPf0AqBFKk6XLImbPIWVy2cBXV/E9z7agS2I5weWU7XLyIAMdSlf/J2l6CkZSu8Ev9I16NNrg3pFFdg==}
     engines: {node: '>=14'}
     dependencies:
       putout: 18.3.0

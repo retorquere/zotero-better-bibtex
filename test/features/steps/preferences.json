@@ -54,9 +54,9 @@
     "default": false,
     "affects": [
       "Better BibTeX",
-      "Better CSL YAML",
       "Better CSL JSON",
-      "Better BibLaTeX"
+      "Better BibLaTeX",
+      "Better CSL YAML"
     ],
     "var": "autoAbbrev",
     "label": "Automatically abbreviate journal title if none is set explicitly"
@@ -67,9 +67,9 @@
     "default": "",
     "affects": [
       "Better BibTeX",
-      "Better CSL YAML",
       "Better CSL JSON",
-      "Better BibLaTeX"
+      "Better BibLaTeX",
+      "Better CSL YAML"
     ],
     "var": "autoAbbrevStyle",
     "label": "Abbreviation style:"
@@ -135,9 +135,9 @@
     "default": true,
     "affects": [
       "Better BibTeX",
-      "Better CSL YAML",
       "Better CSL JSON",
-      "Better BibLaTeX"
+      "Better BibLaTeX",
+      "Better CSL YAML"
     ],
     "var": "automaticTags",
     "label": "Include automatic tags in export"
@@ -156,9 +156,9 @@
     "default": "",
     "affects": [
       "Better BibTeX",
-      "Better CSL YAML",
       "Better CSL JSON",
-      "Better BibLaTeX"
+      "Better BibLaTeX",
+      "Better CSL YAML"
     ],
     "var": "baseAttachmentPath"
   },
@@ -267,9 +267,9 @@
     "default": false,
     "affects": [
       "Better BibTeX",
-      "Better CSL YAML",
       "Better CSL JSON",
-      "Better BibLaTeX"
+      "Better BibLaTeX",
+      "Better CSL YAML"
     ],
     "var": "citeprocNoteCitekey"
   },
@@ -550,9 +550,9 @@
     "default": true,
     "affects": [
       "Better BibTeX",
-      "Better CSL YAML",
       "Better CSL JSON",
-      "Better BibLaTeX"
+      "Better BibLaTeX",
+      "Better CSL YAML"
     ],
     "var": "parseParticles"
   },
@@ -576,9 +576,9 @@
     "default": "",
     "affects": [
       "Better BibTeX",
-      "Better CSL YAML",
       "Better CSL JSON",
-      "Better BibLaTeX"
+      "Better BibLaTeX",
+      "Better CSL YAML"
     ],
     "var": "postscript",
     "label": "postscript"
@@ -707,9 +707,9 @@
     "default": "",
     "affects": [
       "Better BibTeX",
-      "Better CSL YAML",
       "Better CSL JSON",
-      "Better BibLaTeX"
+      "Better BibLaTeX",
+      "Better CSL YAML"
     ],
     "var": "skipFields",
     "label": "Fields to omit from export (comma-separated)"
