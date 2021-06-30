@@ -1,21 +1,21 @@
 {
 	"translatorID": "455fe24a-f7e8-4546-81d2-ad4f9aa10487",
+	"translatorType": 4,
 	"label": "The Intercept",
 	"creator": "czar",
 	"target": "^https?://(www\\.)?theintercept\\.com",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-04-15 16:59:35"
+	"lastUpdated": "2021-06-14 20:00:00"
 }
 
 /*
 	***** BEGIN LICENSE BLOCK *****
 
-	Copyright © 2017 czar
+	Copyright © 2017-2021 czar
 	http://en.wikipedia.org/wiki/User_talk:Czar
 
 	This file is part of Zotero.
@@ -36,45 +36,45 @@
 	***** END LICENSE BLOCK *****
 */
 
-// attr()/text() v2
-function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
-
 function detectWeb(doc, url) {
 	if (/theintercept\.com\/\d{4}\/\d{2}\/\d{2}\//.test(url)) {
 		return "blogPost";
-	} else if (url.includes("/document/")) {
+	}
+	else if (url.includes("/document/")) {
 		return "document";
-	} else if (/(theintercept\.com\/search\/\?s=)|(theintercept\.com\/?$)/.test(url) && getSearchResults(doc, true) ) {
+	}
+	else if (/(theintercept\.com\/search\/\?s=)|(theintercept\.com\/?$)/.test(url) && getSearchResults(doc, true)) {
 		return "multiple";
 	}
+	return false;
 }
 
-function scrape(doc, url) {
+function scrape(doc, _url) {
 	var item = new Zotero.Item("blogPost");
 	item.blogTitle = "The Intercept";
 	item.language = "en-US";
-	var ldjson = JSON.parse(text(doc,'script[type="application/ld+json"]'));
+	var ldjson = JSON.parse(text(doc, 'script[type="application/ld+json"]'));
 	item.url = ldjson.url;
 	item.title = ldjson.headline;
 	item.date = ldjson.dateCreated;
-	item.abstractNote = text(doc,'meta[name="description"]');
+	item.abstractNote = text(doc, 'meta[name="description"]');
 	item.attachments.push({
 		document: doc,
 		title: "Snapshot"
 	});
 
 	// Authors
-	if (ldjson.authors.length) {
+	if (ldjson.author.length) {
 		do {
-			item.creators.push(ZU.cleanAuthor(ldjson.authors[0], "author"));
-			ldjson.authors.shift();
+			item.creators.push(ZU.cleanAuthor(ldjson.author[0], "author"));
+			ldjson.author.shift();
 		}
-		while (ldjson.authors.length);
+		while (ldjson.author.length);
 	}
 
 	// Feature articles json omits the feature title
-	var featureTitle = text(doc,'.Post-feature-title');
-	if (featureTitle){
+	var featureTitle = text(doc, '.Post-feature-title');
+	if (featureTitle) {
 		item.title = featureTitle.concat(": ", item.title);
 	}
 	item.complete();
@@ -85,16 +85,16 @@ function scrapeDocument(doc, url) {
 	item.publisher = "The Intercept";
 	item.language = "en-US";
 	item.url = url;
-	item.title = text(doc,'.BasicDocumentDetail-title');
-	item.date = text(doc,'.BasicDocumentDetail-date');
+	item.title = text(doc, '.BasicDocumentPage-title');
+	item.date = text(doc, '.BasicDocumentPage-date');
 	if (item.date) { // don't perform on empty string
 		item.date = ZU.strToISO(item.date);
-	}	
+	}
 	// no item.abstractNote: no description given
 	item.attachments.push({
 		title: item.title,
 		mimeType: "application/pdf",
-		url: attr(doc,'a[class$="-navigation-download"]','href')
+		url: attr(doc, 'a[class$="-navigation-download"]', 'href')
 	});
 
 	item.complete();
@@ -105,7 +105,7 @@ function getSearchResults(doc, checkOnly) {
 	var found = false;
 	var rows = doc.querySelectorAll('.Promo-title, h1.HomeFeature-title');
 	var links = doc.querySelectorAll('.Promo-link, a.HomeFeature-link');
-	for (var i=0; i<rows.length; i++) {
+	for (var i = 0; i < rows.length; i++) {
 		var href = links[i].href;
 		var title = ZU.trimInternal(rows[i].textContent);
 		if (!href || !title) continue;
@@ -120,7 +120,7 @@ function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
 		Zotero.selectItems(getSearchResults(doc, false), function (items) {
 			if (!items) {
-				return true;
+				return;
 			}
 			var articles = [];
 			for (var i in items) {
@@ -128,9 +128,11 @@ function doWeb(doc, url) {
 			}
 			ZU.processDocuments(articles, scrape);
 		});
-	} else if (detectWeb(doc, url) == "document") {
+	}
+	else if (detectWeb(doc, url) == "document") {
 		scrapeDocument(doc, url);
-	} else if (detectWeb(doc, url) == "blogPost") {
+	}
+	else if (detectWeb(doc, url) == "blogPost") {
 		// if this if statement is removed, the multi page attempts to feed itself into the scrape function
 		scrape(doc, url);
 	}
@@ -171,7 +173,8 @@ var testCases = [
 				"url": "https://theintercept.com/2017/06/05/top-secret-nsa-report-details-russian-hacking-effort-days-before-2016-election/",
 				"attachments": [
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -206,7 +209,8 @@ var testCases = [
 				"url": "https://theintercept.com/2015/11/19/an-fbi-informant-seduced-eric-mcdavid-into-a-bomb-plot-then-the-government-lied-about-it/",
 				"attachments": [
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],

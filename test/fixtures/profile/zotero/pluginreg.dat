@@ -7,9 +7,9 @@ Arch:x86_64-gcc3:$
 [PLUGINS]
 
 [INVALID]
-/Library/Internet Plug-Ins/AdobePDFViewer.plugin:$
-1607357606000:$
+/Library/Internet Plug-Ins/JavaAppletPlugin.plugin:$
+1617847062000:$
 /Library/Internet Plug-Ins/AdobePDFViewerNPAPI.plugin:$
 1607357623000:$
-/Library/Internet Plug-Ins/JavaAppletPlugin.plugin:$
-1607520528000:$
+/Library/Internet Plug-Ins/AdobePDFViewer.plugin:$
+1607357606000:$

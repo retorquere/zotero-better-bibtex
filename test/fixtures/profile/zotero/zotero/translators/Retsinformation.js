@@ -1,21 +1,21 @@
 {
 	"translatorID": "feef66bf-4b52-498f-a586-8e9a99dc07a0",
+	"translatorType": 4,
 	"label": "Retsinformation",
-	"creator": "Roald Frøsig",
+	"creator": "Roald Frøsig and Abe Jellinek",
 	"target": "^https?://(www\\.)?retsinformation\\.dk/",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2016-02-24 02:31:08"
+	"lastUpdated": "2021-06-07 20:00:00"
 }
 
 /*
 	***** BEGIN LICENSE BLOCK *****
 
-	Copyright © 2016 Roald Frøsig
+	Copyright © 2021 Roald Frøsig and Abe Jellinek
 
 	This file is part of Zotero.
 
@@ -35,44 +35,41 @@
 	***** END LICENSE BLOCK *****
 */
 
-function detectWeb(doc, url){
+// Retsinformation exposes two types of data: ELI metadata in the HTML and
+// custom XML/JSON schema via a separate GET request. ELI is standard, so it
+// would be great to use it... but unfortunately, it's inserted client-side
+// by React. in order to make this translator work without a hidden browser,
+// we'll use the JSON.
+
+function detectWeb(doc, url) {
 	if (getSearchResults(doc, url, true)) {
 		return "multiple";
-	} else if (url.indexOf("R0710") != -1) {
-		return getType(doc);
 	}
+	else if (url.includes("/eli/")) {
+		return getType(text(doc, '.m-0'));
+	}
+	return false;
 }
 
 function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
-		Z.selectItems(getSearchResults(doc, url), function(selectedItems) {
-			if (!selectedItems) return true;
+		Z.selectItems(getSearchResults(doc, url), function (selectedItems) {
+			if (!selectedItems) return;
 			var urls = [];
 			for (var i in selectedItems) {
 				urls.push(i);
 			}
 			ZU.processDocuments(urls, scrape);
 		});
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }
 
 function getSearchResults(doc, url, checkOnly) {
-	var titles,
-		table = doc.getElementById("ctl00_MainContent_ResultGrid1");
-	if (!table) return false;
+	var titles = doc.querySelectorAll("a.document-title");
 
-	if (/(R0210|R0310)/.test(url)) {
-		titles = ZU.xpath(table, './/tr[@class!="th"]/td[2]/a[1]');
-	} else if (/R0700.aspx\\?res/.test(url)) {
-		titles = ZU.xpath(table, './/tr[@class!="th"]/td[3]/a[1]');
-	} else if (/(R0220|R0415|R0700)/.test(url)) {
-		titles = ZU.xpath(table, './/tr[@class!="th"]/td[4]/a[1]');
-	} else {
-		titles = ZU.xpath(table, './/tr[@class!="th"]/td[1]/a[1]');
-	}
-	
 	if (checkOnly || !titles.length) return !!titles.length;
 
 	var items = {};
@@ -84,141 +81,95 @@ function getSearchResults(doc, url, checkOnly) {
 }
 
 function scrape(doc, url) {
-	var type = getType(doc);
-	var newItem = new Zotero.Item(type);
-	newItem.title = getTitle(doc);
-	newItem.url = url;
-	
-	var kortNavn = getKortNavn(doc);
-	var ressort = getRessort(doc);
-	
-	if (!/LBK|LOV/.test(kortNavn.threeLetters)) {
-		newItem.creators[0] = {
-			creatorType: "author",
-			fieldMode: 1
-		};
+	ZU.doGet(url.replace(/\/dan.*/, '').replace('/eli', '/api/document/eli'), function (respText) {
+		let json = JSON.parse(respText)[0];
+		let item = new Zotero.Item(getType(json.shortName));
 		
-		if (/EDP|ISP|FOU/.test(kortNavn.threeLetters)) {
-			newItem.creators[0].lastName = "Folketingets Ombudsmand";
-		} else {
-			newItem.creators[0].lastName = ressort.ressort;		
+		let signingDate;
+		let admissionDate;
+		let firstAdmissionDate;
+
+		for (let { displayName: name, displayValue: value } of json.metadata) {
+			if (name == 'Dato for underskrift') {
+				signingDate = value;
+			}
+			else if (name == 'Dato for indlæggelse') {
+				admissionDate = value;
+			}
+			else if (name == 'Dato for førstegangsindlæggelse') {
+				firstAdmissionDate = value;
+			}
 		}
-	}
-	
-	newItem.number = kortNavn.id;
-	
-	if (type == "statute" || type == "case") {
-		newItem.date = kortNavn.date;
-		newItem.shortTitle = ressort.shortTitle;
-	} else {
-		newItem.date = ressort.pubDate;
-	}
-	
-	newItem.complete();
+
+		item.title = json.title;
+		item.shortTitle = json.popularTitle;
+		
+		let number = json.shortName;
+		let date = ZU.strToISO(signingDate || admissionDate || firstAdmissionDate);
+
+		if (item.itemType == 'statute') {
+			item.codeNumber = number;
+			item.dateEnacted = date;
+		}
+		else if (item.itemType == 'case') {
+			item.docketNumber = number;
+			item.dateDecided = date;
+		}
+		else if (item.itemType == 'bill') {
+			item.billNumber = number;
+			item.date = date;
+		}
+		
+		if (json.ressort) {
+			item.creators.push({
+				creatorType: 'author',
+				lastName: json.ressort,
+				fieldMode: 1
+			});
+		}
+		item.url = url;
+		item.complete();
+	});
 }
 
-function getType (doc) {
-	var threeLetters = getKortNavn(doc).threeLetters;
+function getType(documentType) {
 	if (/ADI|AND|BEK|BKI|BST|CIR|CIS|DSK|FIN|KON|LBK|LOV|LTB|PJE|SKR|VEJ|ÅBR/
-		.test(threeLetters)
-	) {
+		.test(documentType)) {
 		return "statute";
 	}
 
-	if (/DOM|AFG|KEN|UDT/.test(threeLetters)) {
+	if (/DOM|AFG|KEN|UDT/.test(documentType)) {
 		return "case";
 	}
 
-	if (/\d{3}/.test(threeLetters)) {
+	if (/\d{3}|BSF|Beslutningsforslag/.test(documentType)) {
 		return "bill";
 	}
 
 	return "webpage";
 }
 
-function getTitle (doc) {
-	var title;
-	// the html for 'bill' type is very idiosynchratic, so we wont attempt to
-	// scrape the title of bills from the <body> element.
-	if (getType(doc) != "bill") {
-		title = ZU.xpathText(doc, '//div[@class="wrapper2"]//p[@class="Titel2"]');
-		if (!title) {
-			var indhold = doc.getElementById("INDHOLD");
-			if (indhold) {
-				title = ZU.xpathText(indhold, './/p[@class="Titel"]')
-					 || ZU.xpathText(indhold, './/font/p[@align="CENTER"]') 
-					 || ZU.xpathText(indhold, './/h1[@class="TITLE"]') 
-					 || ZU.xpathText(indhold, './/span[1]');
-			}
-		}
-		
-		if (title) {
-			title = title.trim();
-		}
-	}
-
-	// If it's a 'bill' or the xpaths above fail to find the title, we will
-	// scrape the title from the <head> element.
-	// The <title>-element consist of three parts: a short title (if one
-	// exists); the title of the document; and "- retsinformation.dk".
-	if (!title) {
-		title = doc.title.substring(0, doc.title.lastIndexOf("-"));
-		if (getRessort(doc).shortTitle) {
-			title = title.substr(getRessort(doc).shortTitle.length+2);
-		}
-	}
-
-	return ZU.trimInternal(title);
-}
-
-function getKortNavn (doc) {
-	var fodder = doc.getElementsByClassName("kortNavn")[0].textContent;
-	var m = fodder.match(/^\s*(.+)\s+af\s+(\d{2})\/(\d{2})\/(\d{4})\b/);
-	if (m) {
-		return {
-			id: m[1],
-			date: m[4] + '-' + m[3] + '-' + m[2],
-			threeLetters: m[1].substr(0,3)
-		};
-	} else {
-		return {
-			id: fodder,
-			threeLetters: fodder.substr(0,3)
-		};
-	}
-}
-
-function getRessort (doc) {
-	var fodder = ZU.trimInternal(
-		doc.getElementsByClassName('ressort')[0].textContent);
-
-	// the 'fodder' string here consists of three parts:
-	//  - a short title in parentheses (if one exists)
-	//  - the publication date in the form dd-mm-yyyy
-	//  - the 'ressort', i.e. the ministry responsible for the document
-	var m = fodder.match(/(?:\((.+)\))?.*\b(\d{2})-(\d{2})-(\d{4})(.+)/);
-
-	return {
-		shortTitle: m[1],
-		pubDate: m[4] + '-' + m[3] + '-' + m[2],
-		ressort: m[5].trim()
-	};
-}
-
 /** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "https://www.retsinformation.dk/forms/R0710.aspx?id=168340",
+		"url": "https://www.retsinformation.dk/eli/lta/2015/167",
+		"defer": true,
 		"items": [
 			{
 				"itemType": "statute",
 				"nameOfAct": "Bekendtgørelse af lov om dag-, fritids- og klubtilbud m.v. til børn og unge (dagtilbudsloven)",
-				"creators": [],
+				"creators": [
+					{
+						"creatorType": "author",
+						"lastName": "Børne- og Undervisningsministeriet",
+						"fieldMode": 1
+					}
+				],
 				"dateEnacted": "2015-02-20",
-				"publicLawNumber": "LBK nr 167",
+				"codeNumber": "LBK nr 167 af 20/02/2015",
 				"shortTitle": "Dagtilbudsloven",
-				"url": "https://www.retsinformation.dk/forms/R0710.aspx?id=168340",
+				"url": "https://www.retsinformation.dk/eli/lta/2015/167",
 				"attachments": [],
 				"tags": [],
 				"notes": [],
@@ -228,7 +179,8 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.retsinformation.dk/forms/R0710.aspx?id=160621",
+		"url": "https://www.retsinformation.dk/eli/lta/2013/1490",
+		"defer": true,
 		"items": [
 			{
 				"itemType": "statute",
@@ -236,14 +188,14 @@ var testCases = [
 				"creators": [
 					{
 						"creatorType": "author",
-						"fieldMode": 1,
-						"lastName": "Ministeriet for Børn, Undervisning og Ligestilling"
+						"lastName": "Børne- og Undervisningsministeriet",
+						"fieldMode": 1
 					}
 				],
 				"dateEnacted": "2013-12-16",
-				"publicLawNumber": "BEK nr 1490",
+				"codeNumber": "BEK nr 1490 af 16/12/2013",
 				"shortTitle": "Regnskabsbekendtgørelse",
-				"url": "https://www.retsinformation.dk/forms/R0710.aspx?id=160621",
+				"url": "https://www.retsinformation.dk/eli/lta/2013/1490",
 				"attachments": [],
 				"tags": [],
 				"notes": [],
@@ -253,7 +205,8 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.retsinformation.dk/forms/R0710.aspx?id=170044",
+		"url": "https://www.retsinformation.dk/eli/lta/2015/599",
+		"defer": true,
 		"items": [
 			{
 				"itemType": "statute",
@@ -261,13 +214,13 @@ var testCases = [
 				"creators": [
 					{
 						"creatorType": "author",
-						"fieldMode": 1,
-						"lastName": "Ministeriet for Børn, Undervisning og Ligestilling"
+						"lastName": "Børne- og Undervisningsministeriet",
+						"fieldMode": 1
 					}
 				],
 				"dateEnacted": "2015-04-30",
-				"publicLawNumber": "BEK nr 599",
-				"url": "https://www.retsinformation.dk/forms/R0710.aspx?id=170044",
+				"codeNumber": "BEK nr 599 af 30/04/2015",
+				"url": "https://www.retsinformation.dk/eli/lta/2015/599",
 				"attachments": [],
 				"tags": [],
 				"notes": [],
@@ -277,7 +230,8 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.retsinformation.dk/forms/R0710.aspx?id=95024",
+		"url": "https://www.retsinformation.dk/eli/ft/20012BB00055",
+		"defer": true,
 		"items": [
 			{
 				"itemType": "bill",
@@ -285,13 +239,13 @@ var testCases = [
 				"creators": [
 					{
 						"creatorType": "author",
-						"fieldMode": 1,
-						"lastName": "Folketinget"
+						"lastName": "Folketinget",
+						"fieldMode": 1
 					}
 				],
 				"date": "2002-01-17",
 				"billNumber": "2001/2 BSF 55",
-				"url": "https://www.retsinformation.dk/forms/R0710.aspx?id=95024",
+				"url": "https://www.retsinformation.dk/eli/ft/20012BB00055",
 				"attachments": [],
 				"tags": [],
 				"notes": [],
@@ -301,7 +255,8 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.retsinformation.dk/forms/R0710.aspx?id=131109",
+		"url": "https://www.retsinformation.dk/eli/ft/20091BB00193",
+		"defer": true,
 		"items": [
 			{
 				"itemType": "bill",
@@ -309,13 +264,13 @@ var testCases = [
 				"creators": [
 					{
 						"creatorType": "author",
-						"fieldMode": 1,
-						"lastName": "Folketinget"
+						"lastName": "Folketinget",
+						"fieldMode": 1
 					}
 				],
 				"date": "2010-03-27",
 				"billNumber": "2009/1 BSF 193",
-				"url": "https://www.retsinformation.dk/forms/R0710.aspx?id=131109",
+				"url": "https://www.retsinformation.dk/eli/ft/20091BB00193",
 				"attachments": [],
 				"tags": [],
 				"notes": [],
@@ -325,7 +280,8 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.retsinformation.dk/forms/R0710.aspx?id=141932",
+		"url": "https://www.retsinformation.dk/eli/lta/2012/956",
+		"defer": true,
 		"items": [
 			{
 				"itemType": "statute",
@@ -333,13 +289,13 @@ var testCases = [
 				"creators": [
 					{
 						"creatorType": "author",
-						"fieldMode": 1,
-						"lastName": "Erhvervs- og Vækstministeriet"
+						"lastName": "Erhvervsministeriet",
+						"fieldMode": 1
 					}
 				],
 				"dateEnacted": "2012-09-26",
-				"publicLawNumber": "BEK nr 956",
-				"url": "https://www.retsinformation.dk/forms/R0710.aspx?id=141932",
+				"codeNumber": "BEK nr 956 af 26/09/2012",
+				"url": "https://www.retsinformation.dk/eli/lta/2012/956",
 				"attachments": [],
 				"tags": [],
 				"notes": [],
@@ -349,17 +305,33 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.retsinformation.dk/Forms/R0930.aspx?q=huse&col=a&smode=simpel",
-		"items": "multiple"
+		"url": "https://www.retsinformation.dk/eli/retsinfo/2016/9874",
+		"defer": true,
+		"items": [
+			{
+				"itemType": "case",
+				"caseName": "Afslag på aktindsigt i form af dataudtræk efter offentlighedslovens § 11. Dataudtræk kunne ikke foretages ved få og enkle kommandoer",
+				"creators": [
+					{
+						"creatorType": "author",
+						"lastName": "Folketinget",
+						"fieldMode": 1
+					}
+				],
+				"dateDecided": "2016-05-08",
+				"docketNumber": "UDT nr 9874 af 05/08/2016",
+				"url": "https://www.retsinformation.dk/eli/retsinfo/2016/9874",
+				"attachments": [],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
 	},
 	{
 		"type": "web",
-		"url": "https://www.retsinformation.dk/Forms/R0310.aspx?res=5&nres=1",
-		"items": "multiple"
-	},
-	{
-		"type": "web",
-		"url": "https://www.retsinformation.dk/Forms/R0220.aspx?char=R",
+		"url": "https://www.retsinformation.dk/documents?t=huse",
+		"defer": true,
 		"items": "multiple"
 	}
 ]

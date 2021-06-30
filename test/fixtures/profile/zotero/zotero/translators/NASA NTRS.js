@@ -1,315 +1,238 @@
 {
 	"translatorID": "5a697ab5-913a-478a-b4ec-98d019aa5dc6",
+	"translatorType": 4,
 	"label": "NASA NTRS",
-	"creator": "Andrew Bergan",
-	"target": "^https?://ntrs\\.nasa\\.gov/(search\\.jsp)?\\?",
+	"creator": "Andrew Bergan and Abe Jellinek",
+	"target": "^https?://ntrs\\.nasa\\.gov/(citations/|search)",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
-	"browserSupport": "gcsbv",
-	"lastUpdated": "2014-04-03 17:46:53"
+	"browserSupport": "gcsibv",
+	"lastUpdated": "2021-06-09 17:20:00"
 }
+
+/*
+	***** BEGIN LICENSE BLOCK *****
+
+	Copyright © 2021 Andrew Bergan and Abe Jellinek
+	
+	This file is part of Zotero.
+
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Zotero is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU Affero General Public License for more details.
+
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
+
+	***** END LICENSE BLOCK *****
+*/
 
 function detectWeb(doc, url) {
-	// Make sure that we are on a record page or details page
-	var contentLabel = ZU.xpathText(doc, '//p[@class="sectiontitle"]');
-
-	if (!contentLabel) return;
-	
-	if (contentLabel.indexOf("Search Results") != -1) {
+	if (url.includes('/search') && getSearchResults(doc, true)) {
 		return "multiple";
 	}
-	else if (contentLabel.indexOf("Record Details") != -1) {
-		
-		var docType = "";
-		
-		// Look in the document type field
-		var docType = ZU.xpathText(doc, '//td[contains(text(), "Document Type:")]/following-sibling::td/text()')
-		
-		// remove leading and trailing whitespace
-		//var docType = docType.replace(/^\s*|\s*$/g, '');
-		
-		// Check against implemented document types
-		if (docType.indexOf("Conference Paper") != -1) {
-			return "conferencePaper"
-			
-		} else if (docType.indexOf("Bibliographic Database") != -1 || 
-		docType.indexOf("Congressional Report") != -1 ||
-		docType.indexOf("Bibliography") != -1 ||
-		docType.indexOf("Collected Works") != -1 ||
-		docType.indexOf("Technical Report") != -1) {
-			return "report"
-			
-		} else if (docType.indexOf("Journal Article") != -1 ||
-		docType.indexOf("Journal Issue") != -1) {
-			return "journalArticle";
-			
-		} else if (docType.indexOf("Presentation") != -1) {
-			return "presentation";
-		
-		} else if (docType.indexOf("Thesis") != -1 || 
-		docType.indexOf("PhD Dissertation") != -1) {
-			return "thesis"
-			
-		} else if (docType.indexOf("Book Chapter") != -1) {
-			return "bookSection"
-			
-		} else if (docType.indexOf("Book/Monograph") != -1 ||
-		docType.indexOf("Conference Proceedings") != -1) {
-			return "book"
-			
-		} else if (docType.indexOf("Patent") != -1) {
-			return "patent"
-			
-		} else if (docType.indexOf("Brief Communication/Note") != -1 ||
-		docType.indexOf("NASA Tech Brief") != -1) {
-			return "note"
-			
-		} else if (docType.indexOf("Computer Program") != -1) {
-			return "computerProgram"
-			
-		} else if (docType.indexOf("Motion Picture") != -1) {
-			return "videoRecording"
-			
-		} else if (docType.indexOf("Preprint") != -1) {
-			return "manuscript"
-		
-		} else if (docType.indexOf("Data Set") != -1 || 
-		docType.indexOf("Dictionary") != -1 ||
-		docType.indexOf("Extended Abstract") != -1 ||
-		docType.indexOf("Full Text Database") != -1 ||
-		docType.indexOf("Multimedia Database") != -1 ||
-		docType.indexOf("Numeric Database") != -1 ||
-		docType.indexOf("News Release/Speech") != -1 ||
-		docType.indexOf("Other") != -1 ||
-		docType.indexOf("Photograph") != -1) {
-			return "document"
-			
-		} else {
-			// No match
-			return null;
-		}
+	else if (url.includes('/citations/')) {
+		return mapType(
+			ZU.xpathText(doc,
+				'//div[@class="label" and contains(text(), "Document Type")]/following-sibling::div/text()'));
 	}
+	return false;
 }
 
-function scrape(doc, url) {
-
-	// Get the item
-	var newItem = new Zotero.Item(detectWeb(doc, url));
-	
-	// Get the url
-	newItem.url = doc.location.href.replace(/\?.*?\b(R=\d+)(?:&.*)?$/, '?$1');
-	
-	// Build an array of the items containing the bibliographic data
-	var items = new Object();
-	
-	// Get the title
-	newItem.title = "No title found";
-	items["Title"] = ZU.xpathText(doc, '//div[@id="doctext"]/table/tbody/tr/td[@id="recordtitle"]')
-	if (items["Title"]) newItem.title = items["Title"];
-	
-	// Loop through each row in table following the "recordtitle" row
-	var rows = ZU.xpath(doc, '//div[@id="doctext"]/table/tbody/tr[td[@id!="recordtitle"]]');
-	for (var i in rows) {
-		var label = ZU.xpathText(rows[i], './td[@id="colTitle"]').replace(/^\s*|\s*$/g, '').replace(/:/, '');
-		
-		// Handle the document link differently
-		if (label.indexOf("Online Source") != -1||label.indexOf("NTRS Full-Text")!=-1) {
-			var content = ZU.xpathText(rows[i], './/a/@href');
-			
-		// Grab the content and remove extra white space and parenthetical info
-		} else {
-			var content = ZU.xpathText(rows[i], './td[@id="colTitle"]/following-sibling::td').replace(/\([^)]*\)/g, '').replace(/^\s*|\s*$/g, '');
-		}
-
-		items[label] = content;
+function getSearchResults(doc, checkOnly) {
+	var items = {};
+	var found = false;
+	var rows = doc.querySelectorAll('app-record-item mat-card-title a');
+	for (let row of rows) {
+		let href = row.href;
+		let title = ZU.trimInternal(row.textContent);
+		if (!href || !title) continue;
+		if (checkOnly) return true;
+		found = true;
+		items[href] = title;
 	}
-	
-	// Save the document as a link attachment
-	if (items["Online Source"] || items["External Online Source"]) {
-		Z.debug("here")
-		var linkurl = items["Online Source"] ? items["Online Source"] : items["External Online Source"];
-		
-		if (linkurl.match("doi.org")) {
-			newItem.DOI = linkurl.replace(/http:\/\/dx.doi.org\//, '');
-		} else {
-			newItem.attachments = [{ 
-				url: linkurl,
-				title: "NASA NTRS Full Text PDF",
-				mimeType: "application/pdf"
-			}];
-		}
-	}
-	if (items["NTRS Full-Text"]){
-		newItem.attachments.push({
-			url: items["NTRS Full-Text"],
-			title: "NASA NTRS Full Text PDF",
-			mimeType: "application/pdf"
-		})
-	}
-	// Save a snapshot
-	newItem.attachments.push({title: "Snapshot", document: doc});
-
-	// Format and save author field
-	if (items["Author and Affiliation"]) {
-		var author = items["Author and Affiliation"];
-
-		// Handle multiple authors
-		var authors = author.split(";");
-
-		for (var i in authors) {
-			var authorName = authors[i];
-			authorName= authorName.replace(/\[.+?\]/g, "");
-			newItem.creators.push(Zotero.Utilities.cleanAuthor(authorName, "author", authorName.indexOf(', ') != -1));
-		}	
-	}
-	
-	// Save tags
-	if (items["NASA Terms"]) {
-		var tags = items["NASA Terms"].split(";");
-		for (var i = 0; i < tags.length; i++) {
-			newItem.tags[i] = tags[i].toLowerCase().trim();
-		}
-	}
-	
-	// Save the date
-	if (items["Publication Date"]) {
-		newItem.date = items["Publication Date"].replace(/\[(.*?)\]/g, "$1");
-	}
-	
-	// Save the place / conference name
-	if (newItem.itemType == "conferencePaper") {
-		if (items["Meeting Information"]) {
-			if (items["Meeting Information"].match(";")) {
-				var confNameLocation = items["Meeting Information"].split("; ");
-
-				// Save the conference name
-				newItem.conferenceName = confNameLocation.shift();
-				
-				// Save the location
-				
-				if (confNameLocation.length > 2){
-					var daterange = confNameLocation.shift();//right now we discard this, but may be useful later
-					newItem.place = confNameLocation.shift() + ", "  + confNameLocation.pop();
-				} else if (confNameLocation.length) {
-					newItem.place = confNameLocation.shift();
-				}
-			}
-		}
-	} else {
-		if (items["Meeting Information"]) newItem.notes.push("Meeting Information: " + items["Meeting Information"]);
-	}
-	
-	// Save journal publication information: journal name, vol, issue, pages
-	if (newItem.itemType == "journalArticle") {
-		if (items["Publication Information"]) {
-			journalInfo = items["Publication Information"].split('; ');
-			
-			// Save the journal name
-			if (journalInfo[0].indexOf("=") == -1) {
-				newItem.publicationTitle = journalInfo[0].replace(/\(.*\)/, '');
-			}
-			
-			for (var i in journalInfo) {
-				
-				var content =journalInfo[i];
-				Z.debug(content)
-				
-				// Save the volume
-				if (content.indexOf("Volume") != -1) {
-					newItem.volume = content.replace(/Volume /, '');
-				}
-				
-				// Save the page numbers
-				if (content.match(/^(.*)[0-9]+-[0-9]+$/)) {
-					newItem.pages = content;
-				}
-				
-				// Save the issue number
-				if (content.indexOf("no.") != -1) {
-					newItem.issue = content.replace(/no. /, '');
-				} else if (content.indexOf("Issue") != -1) {
-					newItem.issue = content.replace(/Issue /, '');
-				}
-			}
-		}
-	} else {
-		if (items["Publication Information"]) newItem.notes.push("Publication Information: " + items["Publication Information"]);
-	}
-	
-	// Save the report/paper number
-	if (items["Report/Patent Number"]) {
-		if (newItem["reportNumber"]) {
-			newItem.reportNumber = items["Report/Patent Number"];
-		} else {
-			newItem.notes.push("Report/Patent Number: " + items["Report/Patent Number"]);
-		}
-	}
-	
-	// Save the abstract
-	newItem.abstractNote = items["Abstract"];
-	
-	var note = [];
-	// Store extra info as notes
-	if (items["Document ID"]) note.push("Document ID: " + items["Document ID"]);
-	if (items["Accession Number"]) note.push("Accession Number: " + items["Accession Number"]);
-	if (items["Subject Category"]) note.push("Subject Category: " + items["Subject Category"]);
-	if (items["Publisher Information"]) note.push("Publisher Information: " + items["Publisher Information"]);
-	if (items["Financial Sponsor"]) note.push("Financial Sponsor: " + items["Financial Sponsor"]);
-	if (items["Organization Source"]) note.push("Organization Source: " + items["Organization Source"]);
-	if (items["Description"]) note.push("Description: " + items["Description"]);
-	if (items["Imprint And Other Notes"]) note.push("Imprint And Other Notes: " + items["Imprint And Other Notes"]);
-	if (items["Notes"]) note.push(items["Notes"]);
-	if(note.length){
-		newItem.notes.push(note.join("; "))
-	}
-	newItem.complete();
+	return found ? items : false;
 }
 
 function doWeb(doc, url) {
-	
-	// Local variables
-	var nextTitle;
-	var articles = new Object();
+	if (detectWeb(doc, url) == "multiple") {
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
+			if (!items) return;
+			for (let url of Object.keys(items)) {
+				// don't bother fetching the doc, it's useless
+				scrape(null, url);
+			}
+		});
+	}
+	else {
+		scrape(doc, url);
+	}
+}
 
-	// Handle multiple entries ie search results
-	if (detectWeb(doc,url) == "multiple") {
-		var titles = ZU.xpath(doc, '//table[@class="recordTable"]/tbody/tr/td/a[1]');
-		//var titles = doc.evaluate('//table[@class="recordTable"]/tbody/tr/td/a[1]',doc, null, XPathResult.ANY_TYPE, null);
+function mapType(docType) {
+	if (!docType) return false;
+	
+	docType = docType.trim().toLowerCase();
+
+	let mapping = {
+		'conference paper|conference publication': 'conferencePaper',
+		'bibliograph(y|ic)|report|collected works|brief|memo|note|white paper': 'report',
+		'journal (article|issue)|^reprint': 'journalArticle',
+		'presentation|poster': 'presentation',
+		'thesis|dissertation': 'thesis',
+		chapter: 'bookSection',
+		'book/monograph|conference proceedings': 'book',
+		patent: 'patent',
+		'computer program': 'computerProgram',
+		'motion picture|video': 'videoRecording',
+		'preprint|manuscript': 'manuscript'
+	};
+
+	for (let [regex, itemType] of Object.entries(mapping)) {
+		if (docType.match(new RegExp(regex))) {
+			return itemType;
+		}
+	}
+
+	return 'document';
+}
+
+function processJSON(json) {
+	let item = new Zotero.Item(mapType(json.stiTypeDetails || json.stiType));
+	
+	function addToExtra(label, value) {
+		if (item.extra == undefined) item.extra = '';
+		item.extra += `NTRS ${label}: ${value}\n`;
+	}
+	
+	item.title = json.title;
+	
+	if (json.sourceIdentifiers) {
+		for (let identifier of json.sourceIdentifiers) {
+			if (identifier.type == 'DOI') {
+				item.DOI = ZU.cleanDOI(identifier.number);
+				break;
+			}
+		}
+	}
+	
+	if (json.downloads) {
+		for (let download of json.downloads) {
+			item.attachments.push({
+				url: download.links.pdf || download.links.original,
+				title: download.name,
+				mimeType: download.mimetype
+			});
+		}
+	}
+	
+	if (json.authorAffiliations) {
+		let affiliations = [];
 		
-		// Loop through each title and grab the link to the document page
-		// store the link in articles
-		for (var i in titles) {
-			articles[titles[i].href] = titles[i].textContent;
+		for (let entry of json.authorAffiliations) {
+			let name = entry.meta.author.name;
+			item.creators.push(ZU.cleanAuthor(name, 'author', name.includes(', ')));
+			affiliations.push(entry.meta.organization.name);
 		}
 		
-		// Get pages the user wants to save
-		Zotero.selectItems(articles, function(articles) {
-			// If the user doesn't select any, quit
-			if(!articles) return true;
-			
-			// Build an array with the user selected items
-			var urls = [];
-			for (var article in articles) urls.push(article);
-			
-			// Call scrape for each article selected
-			Zotero.Utilities.processDocuments(urls, scrape);
-		});
-	} else {
-		scrape(doc, url)
+		if (affiliations.length) {
+			affiliations = ZU.arrayUnique(affiliations);
+			addToExtra('Author Affiliations', affiliations.join(', '));
+		}
 	}
+	
+	if (json.subjectCategories) {
+		for (let subjectCategory of json.subjectCategories) {
+			item.tags.push({ tag: subjectCategory });
+		}
+	}
+	
+	if (json.publications && json.publications.length) {
+		let earliest;
+		for (let publication of json.publications) {
+			// we're comparing +00:00 ISO dates here, so string comparison
+			// *should* be safe. either way i've never seen an item with more
+			// than one publication in this database.
+			if (!earliest || publication.publicationDate < earliest.publicationDate) {
+				earliest = publication;
+			}
+		}
+		
+		item.date = ZU.strToISO(earliest.publicationDate);
+		if (item.itemType == 'journalArticle') {
+			item.publicationTitle = earliest.publicationName;
+			item.volume = earliest.volume;
+			item.issue = earliest.issue;
+		}
+	}
+	
+	if (json.meetings && json.meetings.length) {
+		let meeting = json.meetings[0];
+		if (item.itemType == 'conferencePaper') {
+			item.conferenceName = meeting.name;
+			item.place = meeting.location;
+		}
+		else {
+			let start = meeting.startDate.substring(0, 10);
+			let end = meeting.endDate.substring(0, 10);
+			addToExtra('Meeting Information', `${meeting.name}; ${start} to ${end}; ${meeting.place}`);
+		}
+	}
+	
+	if (json.otherReportNumbers && json.otherReportNumbers.length) {
+		if (item.itemType == 'report') {
+			item.reportNumber = json.otherReportNumbers[0];
+		}
+		else {
+			addToExtra('Report/Patent Number', json.otherReportNumbers[0]);
+		}
+	}
+	
+	if (json.abstract != 'No abstract available') {
+		item.abstractNote = json.abstract;
+	}
+	
+	if (json.id) {
+		addToExtra('Document ID', json.id);
+	}
+	
+	if (json.center) {
+		addToExtra('Research Center', `${json.center.name} (${json.center.code})`);
+	}
+	
+	return item;
+}
+
+function scrape(doc, url) {
+	ZU.doGet(url.replace('/citations', '/api/citations'), function (text) {
+		let json = JSON.parse(text);
+		let item = processJSON(json);
+		item.url = url;
+		if (doc) {
+			item.attachments.push({ title: "Snapshot", document: doc });
+		}
+		item.complete();
+	});
 }
 
 /** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://ntrs.nasa.gov/search.jsp?R=20130010248&qs=N%3D4294967219",
+		"url": "https://ntrs.nasa.gov/citations/20130010248",
+		"defer": true,
 		"items": [
 			{
 				"itemType": "conferencePaper",
+				"title": "Integration of Airborne Aerosol Prediction Systems and Vegetation Phenology to Track Pollen for Asthma Alerts in Public Health Decision Support Systems",
 				"creators": [
 					{
 						"firstName": "Jeffrey C.",
@@ -402,54 +325,40 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"notes": [
-					"Report/Patent Number: M12-2358",
-					"Document ID: 20130010248; Subject Category: LIFE SCIENCES; Financial Sponsor: NASA Marshall Space Flight Center; Huntsville, AL, United States; Organization Source: NASA Marshall Space Flight Center; Huntsville, AL, United States; Description: 38p; In English; Original contains color illustrations"
-				],
-				"tags": [
-					"aerosols",
-					"asthma",
-					"atmospheric models",
-					"decision support systems",
-					"meteorology",
-					"phenology",
-					"pollen",
-					"public health",
-					"regression analysis",
-					"seasons",
-					"texas",
-					"trajectory analysis",
-					"trees",
-					"vegetation",
-					"wind direction"
-				],
-				"seeAlso": [],
+				"date": "2013-01-06",
+				"conferenceName": "213th American Meteorological Society (AMS) Meeting",
+				"extra": "NTRS Author Affiliations: NASA Marshall Space Flight Center, Chapman Univ., Belgrade Univ., Tulsa Univ., California State Univ., New Mexico Univ., University of Technology, Saint Louis Univ., Geological Survey, Department of Health\nNTRS Report/Patent Number: M12-2358\nNTRS Document ID: 20130010248\nNTRS Research Center: Marshall Space Flight Center (MSFC)",
+				"libraryCatalog": "NASA NTRS",
+				"place": "Austin, TX",
+				"url": "https://ntrs.nasa.gov/citations/20130010248",
 				"attachments": [
 					{
-						"title": "NASA NTRS Full Text PDF",
+						"title": "20130010248.pdf",
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
-				"url": "http://ntrs.nasa.gov/search.jsp?R=20130010248",
-				"title": "Integration of Airborne Aerosol Prediction Systems and Vegetation Phenology to Track Pollen for Asthma Alerts in Public Health Decision Support Systems",
-				"date": "Jan 06, 2013",
-				"conferenceName": "213th American Meteorological Society  Meeting",
-				"place": "Austin, TX, United States",
-				"abstractNote": "No abstract available",
-				"libraryCatalog": "NASA NTRS",
-				"accessDate": "CURRENT_TIMESTAMP"
+				"tags": [
+					{
+						"tag": "Life Sciences (General)"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "http://ntrs.nasa.gov/search.jsp?R=20130010247&qs=N%3D4294967219",
+		"url": "https://ntrs.nasa.gov/citations/20130010247",
+		"defer": true,
 		"items": [
 			{
 				"itemType": "conferencePaper",
+				"title": "Extreme Transients in the High Energy Universe",
 				"creators": [
 					{
 						"firstName": "Chryssa",
@@ -457,47 +366,41 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"notes": [
-					"Report/Patent Number: M12-2354",
-					"Document ID: 20130010247; Subject Category: ASTROPHYSICS; Financial Sponsor: NASA Marshall Space Flight Center; Huntsville, AL, United States; Organization Source: NASA Marshall Space Flight Center; Huntsville, AL, United States; Description: 1p; In English"
-				],
-				"tags": [
-					"astrophysics",
-					"cosmology",
-					"gamma ray bursts",
-					"gravitational fields",
-					"magnetars",
-					"magnetic fields",
-					"red shift",
-					"universe"
-				],
-				"seeAlso": [],
+				"date": "2013-01-08",
+				"abstractNote": "The High Energy Universe is rich in diverse populations of objects spanning the entire cosmological (time)scale, from our own present-day Milky Way to the re-ionization epoch. Several of these are associated with extreme conditions irreproducible in laboratories on Earth. Their study thus sheds light on the behavior of matter under extreme conditions, such as super-strong magnetic fields (in excess of 10^14 G), high gravitational potentials (e.g., Super Massive Black Holes), very energetic collimated explosions resulting in relativistic jet flows (e.g., Gamma Ray Bursts, exceeding 10^53 ergs). In the last thirty years, my work has been mostly focused on two apparently different but potentially linked populations of such transients: magnetars (highly magnetized neutron stars) and Gamma Ray Bursts (strongly beamed emission from relativistic jets), two populations that constitute unique astrophysical laboratories, while also giving us the tools to probe matter conditions in the Universe to redshifts beyond z=10, when the first stars and galaxies were assembled. I did not make this journey alone I have either led or participated in several international collaborations studying these phenomena in multi-wavelength observations; solitary perfection is not sufficient anymore in the world of High Energy Astrophysics. I will describe this journey, present crucial observational breakthroughs, discuss key results and muse on the future of this field.",
+				"conferenceName": "219th American Astronomical Society (AAS) Meeting",
+				"extra": "NTRS Author Affiliations: NASA Marshall Space Flight Center\nNTRS Report/Patent Number: M12-2354\nNTRS Document ID: 20130010247\nNTRS Research Center: Marshall Space Flight Center (MSFC)",
+				"libraryCatalog": "NASA NTRS",
+				"place": "Austin, TX",
+				"url": "https://ntrs.nasa.gov/citations/20130010247",
 				"attachments": [
 					{
-						"title": "NASA NTRS Full Text PDF",
+						"title": "20130010247.pdf",
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
-				"url": "http://ntrs.nasa.gov/search.jsp?R=20130010247",
-				"title": "Extreme Transients in the High Energy Universe",
-				"date": "Jan 08, 2013",
-				"conferenceName": "219th American Astronomical Society  Meeting",
-				"place": "Austin, TX, United States",
-				"abstractNote": "The High Energy Universe is rich in diverse populations of objects spanning the entire cosmological scale, from our own present-day Milky Way to the re-ionization epoch. Several of these are associated with extreme conditions irreproducible in laboratories on Earth. Their study thus sheds light on the behavior of matter under extreme conditions, such as super-strong magnetic fields , high gravitational potentials , very energetic collimated explosions resulting in relativistic jet flows . In the last thirty years, my work has been mostly focused on two apparently different but potentially linked populations of such transients: magnetars  and Gamma Ray Bursts , two populations that constitute unique astrophysical laboratories, while also giving us the tools to probe matter conditions in the Universe to redshifts beyond z=10, when the first stars and galaxies were assembled. I did not make this journey alone I have either led or participated in several international collaborations studying these phenomena in multi-wavelength observations; solitary perfection is not sufficient anymore in the world of High Energy Astrophysics. I will describe this journey, present crucial observational breakthroughs, discuss key results and muse on the future of this field.",
-				"libraryCatalog": "NASA NTRS",
-				"accessDate": "CURRENT_TIMESTAMP"
+				"tags": [
+					{
+						"tag": "Astrophysics"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "http://ntrs.nasa.gov/search.jsp?R=20130010221&qs=N%3D4294967061",
+		"url": "https://ntrs.nasa.gov/citations/20130010221",
+		"defer": true,
 		"items": [
 			{
-				"itemType": "report",
+				"itemType": "document",
+				"title": "Gas-Liquid Supersonic Cleaning and Cleaning Verification Spray System",
 				"creators": [
 					{
 						"firstName": "Lewis M.",
@@ -505,50 +408,39 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"notes": [
-					"Report/Patent Number: KSC-2009-044",
-					"Document ID: 20130010221; Subject Category: ENGINEERING; Financial Sponsor: NASA Kennedy Space Center; Cocoa Beach, FL, United States; Organization Source: NASA Kennedy Space Center; Cocoa Beach, FL, United States; Description: 3p; In English; Original contains color illustrations"
-				],
-				"tags": [
-					"carbon dioxide",
-					"chemical cleaning",
-					"convergent-divergent nozzles",
-					"cryogenic equipment",
-					"heat exchangers",
-					"liquid air",
-					"liquid nitrogen",
-					"liquid-gas mixtures",
-					"natural gas",
-					"pipes",
-					"spray nozzles",
-					"supercritical pressures",
-					"supersonic nozzles"
-				],
-				"seeAlso": [],
+				"date": "2009-03-01",
+				"abstractNote": "NASA Kennedy Space Center (KSC) recently entered into a nonexclusive license agreement with Applied Cryogenic Solutions (ACS), Inc. (Galveston, TX) to commercialize its Gas-Liquid Supersonic Cleaning and Cleaning Verification Spray System technology. This technology, developed by KSC, is a critical component of processes being developed and commercialized by ACS to replace current mechanical and chemical cleaning and descaling methods used by numerous industries. Pilot trials on heat exchanger tubing components have shown that the ACS technology provides for: Superior cleaning in a much shorter period of time. Lower energy and labor requirements for cleaning and de-scaling uper.ninih. Significant reductions in waste volumes by not using water, acidic or basic solutions, organic solvents, or nonvolatile solid abrasives as components in the cleaning process. Improved energy efficiency in post-cleaning heat exchanger operations. The ACS process consists of a spray head containing supersonic converging/diverging nozzles, a source of liquid gas; a novel, proprietary pumping system that permits pumping liquid nitrogen, liquid air, or supercritical carbon dioxide to pressures in the range of 20,000 to 60,000 psi; and various hoses, fittings, valves, and gauges. The size and number of nozzles can be varied so the system can be built in configurations ranging from small hand-held spray heads to large multinozzle cleaners. The system also can be used to verify if a part has been adequately cleaned.",
+				"extra": "NTRS Author Affiliations: QinetiQ North America\nNTRS Report/Patent Number: KSC-2009-044\nNTRS Document ID: 20130010221\nNTRS Research Center: Kennedy Space Center (KSC)",
+				"libraryCatalog": "NASA NTRS",
+				"url": "https://ntrs.nasa.gov/citations/20130010221",
 				"attachments": [
 					{
-						"title": "NASA NTRS Full Text PDF",
+						"title": "20130010221.pdf",
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
-				"url": "http://ntrs.nasa.gov/search.jsp?R=20130010221",
-				"title": "Gas-Liquid Supersonic Cleaning and Cleaning Verification Spray System",
-				"date": "Mar 01, 2009",
-				"abstractNote": "NASA Kennedy Space Center  recently entered into a nonexclusive license agreement with Applied Cryogenic Solutions , Inc.  to commercialize its Gas-Liquid Supersonic Cleaning and Cleaning Verification Spray System technology. This technology, developed by KSC, is a critical component of processes being developed and commercialized by ACS to replace current mechanical and chemical cleaning and descaling methods used by numerous industries. Pilot trials on heat exchanger tubing components have shown that the ACS technology provides for: Superior cleaning in a much shorter period of time. Lower energy and labor requirements for cleaning and de-scaling uper.ninih. Significant reductions in waste volumes by not using water, acidic or basic solutions, organic solvents, or nonvolatile solid abrasives as components in the cleaning process. Improved energy efficiency in post-cleaning heat exchanger operations. The ACS process consists of a spray head containing supersonic converging/diverging nozzles, a source of liquid gas; a novel, proprietary pumping system that permits pumping liquid nitrogen, liquid air, or supercritical carbon dioxide to pressures in the range of 20,000 to 60,000 psi; and various hoses, fittings, valves, and gauges. The size and number of nozzles can be varied so the system can be built in configurations ranging from small hand-held spray heads to large multinozzle cleaners. The system also can be used to verify if a part has been adequately cleaned.",
-				"libraryCatalog": "NASA NTRS",
-				"accessDate": "CURRENT_TIMESTAMP"
+				"tags": [
+					{
+						"tag": "Engineering (General)"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "http://ntrs.nasa.gov/search.jsp?R=20130010127&qs=N%3D4294937145",
+		"url": "https://ntrs.nasa.gov/citations/20130010127",
+		"defer": true,
 		"items": [
 			{
 				"itemType": "journalArticle",
+				"title": "Mineralogy of Meteorite Groups: An Update",
 				"creators": [
 					{
 						"firstName": "Alan E.",
@@ -556,47 +448,40 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"notes": [
-					"Document ID: 20130010127; Subject Category: GEOPHYSICS; Financial Sponsor: NASA; Washington, DC, United States; Organization Source: California Univ.; Inst. of Geophysics and Planetary Physics; Los Angeles, CA, United States; Description: 2p; In English"
-				],
-				"tags": [
-					"chondrites",
-					"ilmenite",
-					"impact melts",
-					"meteorites",
-					"meteoritic composition",
-					"mineralogy",
-					"minerals",
-					"phosphates",
-					"snc meteorites"
-				],
-				"seeAlso": [],
+				"date": "1997-09-01",
+				"DOI": "10.1111/j.1945-5100.1997.tb01558.x",
+				"abstractNote": "Twenty minerals that were not included in the most recent list of meteoritic minerals have been reported as occurring in meteorites. Extraterrestrial anhydrous Ca phosphate should be called menillite, not whitlockite.",
+				"extra": "NTRS Author Affiliations: California Univ.\nNTRS Document ID: 20130010127\nNTRS Research Center: Headquarters (HQ)",
+				"issue": "5",
+				"libraryCatalog": "NASA NTRS",
+				"publicationTitle": "Meteoritics and Planetary Science",
+				"shortTitle": "Mineralogy of Meteorite Groups",
+				"url": "https://ntrs.nasa.gov/citations/20130010127",
+				"volume": "32",
 				"attachments": [
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
-				"url": "http://ntrs.nasa.gov/search.jsp?R=20130010127",
-				"title": "Mineralogy of Meteorite Groups: An Update",
-				"DOI": "10.1111/j.1945-5100.1997.tb01558.x",
-				"date": "Sep 01, 1997",
-				"publicationTitle": "Meteoritics and Planetary Science",
-				"volume": "32",
-				"issue": "5",
-				"pages": "733-734",
-				"abstractNote": "Twenty minerals that were not included in the most recent list of meteoritic minerals have been reported as occurring in meteorites. Extraterrestrial anhydrous Ca phosphate should be called menillite, not whitlockite.",
-				"libraryCatalog": "NASA NTRS",
-				"accessDate": "CURRENT_TIMESTAMP",
-				"shortTitle": "Mineralogy of Meteorite Groups"
+				"tags": [
+					{
+						"tag": "Geophysics"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "http://ntrs.nasa.gov/search.jsp?R=20040200977",
+		"url": "https://ntrs.nasa.gov/citations/20040200977",
+		"defer": true,
 		"items": [
 			{
 				"itemType": "thesis",
+				"title": "Validation of Design and Analysis Techniques of Tailored Composite Structures",
 				"creators": [
 					{
 						"firstName": "Dawn C.",
@@ -609,86 +494,69 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"notes": [
-					"Report/Patent Number: NASA/CR-2004-212650",
-					"Document ID: 20040200977; Subject Category: STRUCTURAL MECHANICS; Financial Sponsor: NASA Langley Research Center; Hampton, VA, United States; Organization Source: George Washington Univ.; Joint Inst. for Advancement of Flight Sciences; Hampton, VA, United States; Description: 85p; In English"
-				],
-				"tags": [
-					"aerodynamics",
-					"aeroelasticity",
-					"bending",
-					"box beams",
-					"composite structures",
-					"data processing",
-					"design analysis",
-					"displacement",
-					"fiber composites",
-					"finite element method",
-					"flutter",
-					"loads",
-					"mathematical models",
-					"panels",
-					"predictions",
-					"stability",
-					"wings"
-				],
-				"seeAlso": [],
+				"date": "2004-12-01",
+				"abstractNote": "Aeroelasticity is the relationship between the elasticity of an aircraft structure and its aerodynamics. This relationship can cause instabilities such as flutter in a wing. Engineers have long studied aeroelasticity to ensure such instabilities do not become a problem within normal operating conditions. In recent decades structural tailoring has been used to take advantage of aeroelasticity. It is possible to tailor an aircraft structure to respond favorably to multiple different flight regimes such as takeoff, landing, cruise, 2-g pull up, etc. Structures can be designed so that these responses provide an aerodynamic advantage. This research investigates the ability to design and analyze tailored structures made from filamentary composites. Specifically the accuracy of tailored composite analysis must be verified if this design technique is to become feasible. To pursue this idea, a validation experiment has been performed on a small-scale filamentary composite wing box. The box is tailored such that its cover panels induce a global bend-twist coupling under an applied load. Two types of analysis were chosen for the experiment. The first is a closed form analysis based on a theoretical model of a single cell tailored box beam and the second is a finite element analysis. The predicted results are compared with the measured data to validate the analyses. The comparison of results show that the finite element analysis is capable of predicting displacements and strains to within 10% on the small-scale structure. The closed form code is consistently able to predict the wing box bending to 25% of the measured value. This error is expected due to simplifying assumptions in the closed form analysis. Differences between the closed form code representation and the wing box specimen caused large errors in the twist prediction. The closed form analysis prediction of twist has not been validated from this test.",
+				"extra": "NTRS Author Affiliations: NASA Langley Research Center, George Washington Univ.\nNTRS Report/Patent Number: NASA/CR-2004-212650\nNTRS Document ID: 20040200977\nNTRS Research Center: Langley Research Center (LaRC)",
+				"libraryCatalog": "NASA NTRS",
+				"url": "https://ntrs.nasa.gov/citations/20040200977",
 				"attachments": [
 					{
-						"title": "NASA NTRS Full Text PDF",
+						"title": "20040200977.pdf",
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
-				"url": "http://ntrs.nasa.gov/search.jsp?R=20040200977",
-				"title": "Validation of Design and Analysis Techniques of Tailored Composite Structures",
-				"date": "Dec 01, 2004",
-				"abstractNote": "Aeroelasticity is the relationship between the elasticity of an aircraft structure and its aerodynamics. This relationship can cause instabilities such as flutter in a wing. Engineers have long studied aeroelasticity to ensure such instabilities do not become a problem within normal operating conditions. In recent decades structural tailoring has been used to take advantage of aeroelasticity. It is possible to tailor an aircraft structure to respond favorably to multiple different flight regimes such as takeoff, landing, cruise, 2-g pull up, etc. Structures can be designed so that these responses provide an aerodynamic advantage. This research investigates the ability to design and analyze tailored structures made from filamentary composites. Specifically the accuracy of tailored composite analysis must be verified if this design technique is to become feasible. To pursue this idea, a validation experiment has been performed on a small-scale filamentary composite wing box. The box is tailored such that its cover panels induce a global bend-twist coupling under an applied load. Two types of analysis were chosen for the experiment. The first is a closed form analysis based on a theoretical model of a single cell tailored box beam and the second is a finite element analysis. The predicted results are compared with the measured data to validate the analyses. The comparison of results show that the finite element analysis is capable of predicting displacements and strains to within 10% on the small-scale structure. The closed form code is consistently able to predict the wing box bending to 25% of the measured value. This error is expected due to simplifying assumptions in the closed form analysis. Differences between the closed form code representation and the wing box specimen caused large errors in the twist prediction. The closed form analysis prediction of twist has not been validated from this test.",
-				"libraryCatalog": "NASA NTRS",
-				"accessDate": "CURRENT_TIMESTAMP"
+				"tags": [
+					{
+						"tag": "Structural Mechanics"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "http://ntrs.nasa.gov/search.jsp?R=19630002484&hterms=Apollo+Separation+Systems+Comparisons&qs=Ntx%3Dmode%2520matchallpartial%26Ntk%3DAll%26Ns%3DPublication-Date%7C0%26N%3D0%26Ntt%3DApollo%2520Separation%2520Systems%2520Comparisons",
+		"url": "https://ntrs.nasa.gov/citations/19630002484",
+		"defer": true,
 		"items": [
 			{
-				"itemType": "report",
+				"itemType": "document",
+				"title": "Third Saturn Rocket to be Launched",
 				"creators": [],
-				"notes": [
-					"Document ID: 19630002484; Accession Number: 63N12360; Subject Category: SPACE VEHICLES; Publisher Information: United States; Financial Sponsor: NASA; United States; Description: 23p; In Other; Imprint And Other Notes: NATIONAL AERONAUTICS AND SPACE ADMINISTRATION, WASHINGTON, D.C. THIRD SATURN ROCKET TO BE LAUNCHED  NEWS RELEASE NO. 62-237 NOV. 13, 1962  22P"
-				],
-				"tags": [
-					"launching",
-					"news",
-					"saturn 1 sa-1 launch vehicle",
-					"water"
-				],
-				"seeAlso": [],
+				"date": "1962-11-13",
+				"abstractNote": "Saturn sa-3 launch - high water project",
+				"extra": "NTRS Document ID: 19630002484\nNTRS Research Center: Legacy CDMS (CDMS)",
+				"libraryCatalog": "NASA NTRS",
+				"url": "https://ntrs.nasa.gov/citations/19630002484",
 				"attachments": [
 					{
-						"title": "NASA NTRS Full Text PDF",
+						"title": "19630002484.pdf",
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
-				"url": "http://ntrs.nasa.gov/search.jsp?R=19630002484",
-				"title": "Third Saturn Rocket to be Launched",
-				"date": "Nov 13, 1962",
-				"abstractNote": "Saturn sa-3 launch - high water project",
-				"libraryCatalog": "NASA NTRS",
-				"accessDate": "CURRENT_TIMESTAMP"
+				"tags": [
+					{
+						"tag": "SPACE VEHICLES"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "http://ntrs.nasa.gov/search.jsp?N=0&Ntk=All&Ntt=Microphone%20Array%20Phased%20Processing%20System%20(MAPPS)%3A%20Phased%20Array%20System%20for%20Acoustic%20Measurements%20in%20a%20Wind%20Tunnel&Ntx=mode%20matchallpartial",
+		"url": "https://ntrs.nasa.gov/search?q=saturn%20v",
+		"defer": true,
 		"items": "multiple"
 	}
 ]

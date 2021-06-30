@@ -1,20 +1,20 @@
 {
 	"translatorID": "635c1246-e0c8-40a0-8799-a73a0b013ad8",
+	"translatorType": 4,
 	"label": "Bryn Mawr Classical Review",
-	"creator": "Michael Berkowitz",
+	"creator": "Michael Berkowitz, John Muccigrosso, and Abe Jellinek",
 	"target": "^https?://bmcr\\.brynmawr\\.edu/",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2016-08-23 05:51:18"
+	"lastUpdated": "2021-06-28 18:50:00"
 }
 
 /*
 	***** BEGIN LICENSE BLOCK *****
-	Copyright © 2016 Michael Berkowitz and John Muccigrosso
+	Copyright © 2016-2021 Michael Berkowitz, John Muccigrosso, and Abe Jellinek
 	This file is part of Zotero.
 	Zotero is free software: you can redistribute it and/or modify
 	it under the terms of the GNU Affero General Public License as published by
@@ -30,22 +30,23 @@
 */
 
 function detectWeb(doc, url) {
-	if (url.search(/by_reviewer|by_author|recent\.html|\/\d{4}\/(indexb?\.html)?$/) != -1) {
-		return "multiple";
-	} else if (url.search(/\d\.html$/)>-1 && ZU.xpathText(doc, '//h3/i')) {
+	if (url.match(/\d\/?$/) && doc.querySelector('.entry-title')) {
 		return "journalArticle";
 	}
+	else if (getSearchResults(doc, true)) {
+		return "multiple";
+	}
+	return false;
 }
 
 
 function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
-	var rows = ZU.xpath(doc, '//*[@id="indexcontent" or @id="twocol-mainContent"]//li//a');
-	for (var i=0; i<rows.length; i++) {
+	var rows = doc.querySelectorAll('a.ref-wrapper');
+	for (var i = 0; i < rows.length; i++) {
 		var href = rows[i].href;
-		var title = ZU.trimInternal(rows[i].textContent);
-		var title = ZU.xpathText(rows[i], '..');
+		var title = ZU.trimInternal(text(rows[i], '.ref-title'));
 		if (!href || !title) continue;
 		if (checkOnly) return true;
 		found = true;
@@ -59,7 +60,7 @@ function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
 		Zotero.selectItems(getSearchResults(doc, false), function (items) {
 			if (!items) {
-				return true;
+				return;
 			}
 			var articles = [];
 			for (var i in items) {
@@ -67,69 +68,44 @@ function doWeb(doc, url) {
 			}
 			ZU.processDocuments(articles, scrape);
 		});
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }
 
 function scrape(doc, url) {
-	var item = new Zotero.Item("journalArticle");
+	let item = new Zotero.Item("journalArticle");
 	
-	var title = ZU.xpathText(doc, '//h3/i');
-	item.title = "Review of: " + Zotero.Utilities.trimInternal(title);
+	let bmcrID = text(doc, '.ref-id').replace(/^BMCR /, '');
 	
-	var author = ZU.xpathText(doc, '//b[contains(text(), "Reviewed by")]');
-	if (author) {
-		author = author.match(/Reviewed by\s+([^,\(]+)/);
-		if (author) {
-			item.creators.push(ZU.cleanAuthor(author[1], "author"));
-		}
+	let title = text(doc, '.entry-title');
+	// trim BMCR ID off the beginning when present
+	item.title = "Review of: "
+		+ ZU.trimInternal(title).replace(/^\d{2,4}\.\d{1,2}\.\d{1,2}, /, '');
+	item.shortTitle = '';
+	
+	let authors = doc.querySelectorAll('.meta-affiliation[itemprop="author"] [itemprop="name"]');
+	for (let author of authors) {
+		item.creators.push(ZU.cleanAuthor(author.textContent, "author"));
+	}
+	
+	let reviewedAuthors = doc.querySelectorAll('.entry-citation [itemprop="author"]');
+	for (let author of reviewedAuthors) {
+		item.creators.push(ZU.cleanAuthor(author.textContent, "reviewedAuthor"));
 	}
 
-	//The authors of the reviewed book are also child nodes of h3
-	//and before the book title which is set in italics.
-	var dataChildrens = ZU.xpath(doc, '//h3[i]')[0].childNodes;
-	var authorString = "";
-	for (var i=0; i<dataChildrens.length; i++) {
-		if (dataChildrens[i].tagName == "I") {
-			break;
-		}
-		authorString += dataChildrens[i].textContent;
-	}
-	var authors = authorString.replace(/\([^)]+\)/, "").split(/(,|and)\s+/);
-	//Zotero.debug(authors);
-	for (var i=0; i<authors.length; i++) {
-		var aut = authors[i];
-		if (aut.match(/\w/) && (aut !== "and")) {
-			item.creators.push(ZU.cleanAuthor(aut, "reviewedAuthor"));
-		}
-	}
-
-	//The BMCR ID for 1998ff contains the 4-digit year, 2-digit month and an increasing number.
-	//The BMCR ID for 1994-1998 contains the 2-digit year, 1- or 2-digit month and an increasing number.
-	//The BMCR ID for 1990-1993 is different.
-	var m = url.match(/(\d{4})\/(\d{2,4})[\-\.](\d{1,2})[\-\.](\d{2})/);
-	if (m) {
-		item.extra = "BMCR ID: " + m[2] + "." + m[3] + "." + m[4];
-		if (m[1]>=1994) {
-			if (m[2].length==2) {
-				m[2] = "19" + m[2];
-			}
-			if (m[3].length==1) {
-				m[3] = "0" + m[3];
-			}
-			item.date = m[2] + "-" + m[3];
-		}
-		if (m[1]<=1993) {
-			item.date = m[1];
-		}
-	}
+	item.date = ZU.strToISO(attr(doc, 'meta[itemprop="datePublished"]', 'content'));
+	item.extra = "BMCR ID: " + bmcrID;
 	
 	item.publicationTitle = "Bryn Mawr Classical Review";
-	item.journalAbbreviation = "BMCR";
+	item.journalAbbreviation = "Bryn Mawr Class. Rev.";
 	item.ISSN = "1055-7660";
 	item.url = url;
-	item.attachments.push({url:url, title:item.title, mimeType:"text/html"});
+	item.attachments.push({
+		document: doc,
+		title: "Full Text Snapshot"
+	});
 	
 	item.complete();
 }
@@ -138,7 +114,7 @@ function scrape(doc, url) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://bmcr.brynmawr.edu/2010/2010-01-02.html",
+		"url": "https://bmcr.brynmawr.edu/2010/2010.01.02",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -160,17 +136,16 @@ var testCases = [
 						"creatorType": "reviewedAuthor"
 					}
 				],
-				"date": "2010-01",
+				"date": "2010-01-02",
 				"ISSN": "1055-7660",
 				"extra": "BMCR ID: 2010.01.02",
-				"journalAbbreviation": "BMCR",
+				"journalAbbreviation": "Bryn Mawr Class. Rev.",
 				"libraryCatalog": "Bryn Mawr Classical Review",
 				"publicationTitle": "Bryn Mawr Classical Review",
-				"shortTitle": "Review of",
-				"url": "http://bmcr.brynmawr.edu/2010/2010-01-02.html",
+				"url": "https://bmcr.brynmawr.edu/2010/2010.01.02",
 				"attachments": [
 					{
-						"title": "Review of: Sallust: The War Against Jugurtha. Aris and Phillips Classical Texts",
+						"title": "Full Text Snapshot",
 						"mimeType": "text/html"
 					}
 				],
@@ -182,7 +157,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://bmcr.brynmawr.edu/2013/2013-01-44.html",
+		"url": "https://bmcr.brynmawr.edu/2013/2013.01.44",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -209,17 +184,16 @@ var testCases = [
 						"creatorType": "reviewedAuthor"
 					}
 				],
-				"date": "2013-01",
+				"date": "2013-01-30",
 				"ISSN": "1055-7660",
 				"extra": "BMCR ID: 2013.01.44",
-				"journalAbbreviation": "BMCR",
+				"journalAbbreviation": "Bryn Mawr Class. Rev.",
 				"libraryCatalog": "Bryn Mawr Classical Review",
 				"publicationTitle": "Bryn Mawr Classical Review",
-				"shortTitle": "Review of",
-				"url": "http://bmcr.brynmawr.edu/2013/2013-01-44.html",
+				"url": "https://bmcr.brynmawr.edu/2013/2013.01.44",
 				"attachments": [
 					{
-						"title": "Review of: The Classical Tradition",
+						"title": "Full Text Snapshot",
 						"mimeType": "text/html"
 					}
 				],
@@ -231,17 +205,22 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://bmcr.brynmawr.edu/recent.html",
+		"url": "https://bmcr.brynmawr.edu/Archive/",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://bmcr.brynmawr.edu/1999/1999-11-02.html",
+		"url": "https://bmcr.brynmawr.edu/1999/1999.11.02",
 		"items": [
 			{
 				"itemType": "journalArticle",
-				"title": "Review of: Epic Traditions in the Contemporary World. The Poetics of Community",
+				"title": "Review of: Epic traditions in the contemporary world : the poetics of community",
 				"creators": [
+					{
+						"firstName": "James V.",
+						"lastName": "Morrison",
+						"creatorType": "author"
+					},
 					{
 						"firstName": "Margaret",
 						"lastName": "Beissinger",
@@ -258,17 +237,16 @@ var testCases = [
 						"creatorType": "reviewedAuthor"
 					}
 				],
-				"date": "1999-11",
+				"date": "1999-11-02",
 				"ISSN": "1055-7660",
 				"extra": "BMCR ID: 1999.11.02",
-				"journalAbbreviation": "BMCR",
+				"journalAbbreviation": "Bryn Mawr Class. Rev.",
 				"libraryCatalog": "Bryn Mawr Classical Review",
 				"publicationTitle": "Bryn Mawr Classical Review",
-				"shortTitle": "Review of",
-				"url": "http://bmcr.brynmawr.edu/1999/1999-11-02.html",
+				"url": "https://bmcr.brynmawr.edu/1999/1999.11.02",
 				"attachments": [
 					{
-						"title": "Review of: Epic Traditions in the Contemporary World. The Poetics of Community",
+						"title": "Full Text Snapshot",
 						"mimeType": "text/html"
 					}
 				],
@@ -280,29 +258,33 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://bmcr.brynmawr.edu/1998/98.1.04.html",
+		"url": "https://bmcr.brynmawr.edu/1998/1998.01.04/",
 		"items": [
 			{
 				"itemType": "journalArticle",
-				"title": "Review of: Athens and Persians in the Fifth Century BC: A Study in Cultural Receptivity.",
+				"title": "Review of: Athens and Persians in the Fifth Century BC: A Study in Cultural Receptivity",
 				"creators": [
 					{
-						"firstName": "Margaret C.",
+						"firstName": "Balbina",
+						"lastName": "Baebler",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Margaret Christina",
 						"lastName": "Miller",
 						"creatorType": "reviewedAuthor"
 					}
 				],
-				"date": "1998-01",
+				"date": "1998-01-04",
 				"ISSN": "1055-7660",
-				"extra": "BMCR ID: 98.1.04",
-				"journalAbbreviation": "BMCR",
+				"extra": "BMCR ID: 1998.01.04",
+				"journalAbbreviation": "Bryn Mawr Class. Rev.",
 				"libraryCatalog": "Bryn Mawr Classical Review",
 				"publicationTitle": "Bryn Mawr Classical Review",
-				"shortTitle": "Review of",
-				"url": "http://bmcr.brynmawr.edu/1998/98.1.04.html",
+				"url": "https://bmcr.brynmawr.edu/1998/1998.01.04/",
 				"attachments": [
 					{
-						"title": "Review of: Athens and Persians in the Fifth Century BC: A Study in Cultural Receptivity.",
+						"title": "Full Text Snapshot",
 						"mimeType": "text/html"
 					}
 				],
@@ -311,6 +293,11 @@ var testCases = [
 				"seeAlso": []
 			}
 		]
+	},
+	{
+		"type": "web",
+		"url": "https://bmcr.brynmawr.edu/?s=cicero",
+		"items": "multiple"
 	}
 ]
 /** END TEST CASES **/

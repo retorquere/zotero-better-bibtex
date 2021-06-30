@@ -4,8 +4,8 @@
     "type": "string",
     "default": "both",
     "affects": [
-      "Better BibTeX",
-      "Better BibLaTeX"
+      "Better BibLaTeX",
+      "Better BibTeX"
     ],
     "var": "DOIandURL",
     "label": "When a reference has both a DOI and a URL, export",
@@ -21,8 +21,8 @@
     "type": "string",
     "default": "",
     "affects": [
-      "Better BibTeX",
-      "Better BibLaTeX"
+      "Better BibLaTeX",
+      "Better BibTeX"
     ],
     "var": "ascii"
   },
@@ -53,10 +53,10 @@
     "type": "boolean",
     "default": false,
     "affects": [
-      "Better BibTeX",
-      "Better CSL JSON",
       "Better BibLaTeX",
-      "Better CSL YAML"
+      "Better BibTeX",
+      "Better CSL YAML",
+      "Better CSL JSON"
     ],
     "var": "autoAbbrev",
     "label": "Automatically abbreviate journal title if none is set explicitly"
@@ -66,10 +66,10 @@
     "type": "string",
     "default": "",
     "affects": [
-      "Better BibTeX",
-      "Better CSL JSON",
       "Better BibLaTeX",
-      "Better CSL YAML"
+      "Better BibTeX",
+      "Better CSL YAML",
+      "Better CSL JSON"
     ],
     "var": "autoAbbrevStyle",
     "label": "Abbreviation style:"
@@ -134,10 +134,10 @@
     "type": "boolean",
     "default": true,
     "affects": [
-      "Better BibTeX",
-      "Better CSL JSON",
       "Better BibLaTeX",
-      "Better CSL YAML"
+      "Better BibTeX",
+      "Better CSL YAML",
+      "Better CSL JSON"
     ],
     "var": "automaticTags",
     "label": "Include automatic tags in export"
@@ -155,10 +155,10 @@
     "type": "string",
     "default": "",
     "affects": [
-      "Better BibTeX",
-      "Better CSL JSON",
       "Better BibLaTeX",
-      "Better CSL YAML"
+      "Better BibTeX",
+      "Better CSL YAML",
+      "Better CSL JSON"
     ],
     "var": "baseAttachmentPath"
   },
@@ -187,8 +187,8 @@
     "type": "boolean",
     "default": true,
     "affects": [
-      "Better BibTeX",
-      "Better BibLaTeX"
+      "Better BibLaTeX",
+      "Better BibTeX"
     ],
     "var": "biblatexExtractEprint",
     "label": "Extract JSTOR/Google Books/PubMed info from the URL field into eprint fields"
@@ -266,10 +266,10 @@
     "type": "boolean",
     "default": false,
     "affects": [
-      "Better BibTeX",
-      "Better CSL JSON",
       "Better BibLaTeX",
-      "Better CSL YAML"
+      "Better BibTeX",
+      "Better CSL YAML",
+      "Better CSL JSON"
     ],
     "var": "citeprocNoteCitekey"
   },
@@ -278,8 +278,8 @@
     "type": "string",
     "default": "",
     "affects": [
-      "Better BibTeX",
-      "Better BibLaTeX"
+      "Better BibLaTeX",
+      "Better BibTeX"
     ],
     "var": "csquotes"
   },
@@ -295,8 +295,8 @@
     "type": "string",
     "default": "off",
     "affects": [
-      "Better BibTeX",
-      "Better BibLaTeX"
+      "Better BibLaTeX",
+      "Better BibTeX"
     ],
     "var": "exportBibTeXStrings",
     "label": "If a field could be a @string reference, export it as an unbraced @string reference",
@@ -312,8 +312,8 @@
     "type": "boolean",
     "default": true,
     "affects": [
-      "Better BibTeX",
-      "Better BibLaTeX"
+      "Better BibLaTeX",
+      "Better BibTeX"
     ],
     "var": "exportBraceProtection",
     "label": "Apply case-protection to capitalized words by enclosing them in braces"
@@ -323,8 +323,8 @@
     "type": "boolean",
     "default": true,
     "affects": [
-      "Better BibTeX",
-      "Better BibLaTeX"
+      "Better BibLaTeX",
+      "Better BibTeX"
     ],
     "var": "exportTitleCase",
     "label": "Apply title-casing to titles"
@@ -448,8 +448,8 @@
     "type": "number",
     "default": 0,
     "affects": [
-      "Better BibTeX",
-      "Better BibLaTeX"
+      "Better BibLaTeX",
+      "Better BibTeX"
     ],
     "var": "jabrefFormat",
     "label": "Include JabRef-specific metadata:",
@@ -505,8 +505,8 @@
     "type": "string",
     "default": "",
     "affects": [
-      "Better BibTeX",
-      "Better BibLaTeX"
+      "Better BibLaTeX",
+      "Better BibTeX"
     ],
     "var": "mapMath"
   },
@@ -515,8 +515,8 @@
     "type": "string",
     "default": "",
     "affects": [
-      "Better BibTeX",
-      "Better BibLaTeX"
+      "Better BibLaTeX",
+      "Better BibTeX"
     ],
     "var": "mapText"
   },
@@ -525,8 +525,8 @@
     "type": "string",
     "default": "conservative",
     "affects": [
-      "Better BibTeX",
-      "Better BibLaTeX"
+      "Better BibLaTeX",
+      "Better BibTeX"
     ],
     "var": "mapUnicode",
     "label": "When converting to plain-text latex commands:",
@@ -549,10 +549,10 @@
     "type": "boolean",
     "default": true,
     "affects": [
-      "Better BibTeX",
-      "Better CSL JSON",
       "Better BibLaTeX",
-      "Better CSL YAML"
+      "Better BibTeX",
+      "Better CSL YAML",
+      "Better CSL JSON"
     ],
     "var": "parseParticles"
   },
@@ -575,10 +575,10 @@
     "type": "string",
     "default": "",
     "affects": [
-      "Better BibTeX",
-      "Better CSL JSON",
       "Better BibLaTeX",
-      "Better CSL YAML"
+      "Better BibTeX",
+      "Better CSL YAML",
+      "Better CSL JSON"
     ],
     "var": "postscript",
     "label": "postscript"
@@ -595,8 +595,8 @@
     "type": "boolean",
     "default": false,
     "affects": [
-      "Better BibTeX",
-      "Better BibLaTeX"
+      "Better BibLaTeX",
+      "Better BibTeX"
     ],
     "var": "qualityReport",
     "label": "Include comments about potential problems with the references"
@@ -674,8 +674,8 @@
     "type": "string",
     "default": "#LaTeX",
     "affects": [
-      "Better BibTeX",
-      "Better BibLaTeX"
+      "Better BibLaTeX",
+      "Better BibTeX"
     ],
     "var": "rawLaTag"
   },
@@ -706,10 +706,10 @@
     "type": "string",
     "default": "",
     "affects": [
-      "Better BibTeX",
-      "Better CSL JSON",
       "Better BibLaTeX",
-      "Better CSL YAML"
+      "Better BibTeX",
+      "Better CSL YAML",
+      "Better CSL JSON"
     ],
     "var": "skipFields",
     "label": "Fields to omit from export (comma-separated)"
@@ -719,8 +719,8 @@
     "type": "string",
     "default": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
     "affects": [
-      "Better BibTeX",
-      "Better BibLaTeX"
+      "Better BibLaTeX",
+      "Better BibTeX"
     ],
     "var": "skipWords"
   },
@@ -736,8 +736,8 @@
     "type": "string",
     "default": "",
     "affects": [
-      "Better BibTeX",
-      "Better BibLaTeX"
+      "Better BibLaTeX",
+      "Better BibTeX"
     ],
     "var": "strings",
     "label": "@string definitions"

@@ -1,15 +1,15 @@
 {
 	"translatorID": "e034d9be-c420-42cf-8311-23bca5735a32",
+	"translatorType": 4,
 	"label": "Baidu Scholar",
 	"creator": "Philipp Zumstein",
 	"target": "^https?://(www\\.)?xueshu\\.baidu\\.com/",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2019-12-24 12:46:21"
+	"lastUpdated": "2021-06-17 15:20:00"
 }
 
 /*
@@ -88,9 +88,12 @@ function doWeb(doc, url) {
 
 function scrape(doc, _url) {
 	var dataUrl = attr(doc, 'i.reqdata', 'url');
-	var diversion = attr(doc, 'i.reqdata', 'diversion');
-	var sign = attr(doc, 'a.sc_q', 'data-sign');
-	var risUrl = "http://xueshu.baidu.com/u/citation?&url=" + encodeURIComponent(dataUrl) + "&sign=" + sign + "&diversion=" + diversion + "&t=ris";
+	let paperId = undefined;
+	const paperIdMatches = _url.match(/paperid=([a-z0-9]*)/i);
+	if (paperIdMatches[1]) {
+		paperId = paperIdMatches[1];
+	}
+	const risUrl = `https://xueshu.baidu.com/u/citation?type=ris&paperid=${paperId}`;
 	var title = doc.title.replace('_百度学术', '');
 
 	var tags = [];
@@ -99,7 +102,6 @@ function scrape(doc, _url) {
 		// Z.debug({ ris });
 		// delete parenthesis in pages information, e.g. SP  - 5-7(3)
 		ris = ris.replace(/(SP\s+-\s\d+-\d+)\(\d+\)$/m, "$1");
-
 		var translator = Zotero.loadTranslator("import");
 		translator.setTranslator("32d59d2d-b65a-4da4-b0a3-bdd3cfb979e7");
 		translator.setString(ris);
@@ -151,19 +153,20 @@ function scrape(doc, _url) {
 	});
 }
 
+
 /** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://xueshu.baidu.com/usercenter/paper/show?paperid=b3ab239032d44d951d8eee26d7bc44bf&site=xueshu_se",
+		"url": "https://xueshu.baidu.com/usercenter/paper/show?paperid=b3ab239032d44d951d8eee26d7bc44bf&site=xueshu_se",
 		"items": [
 			{
 				"itemType": "journalArticle",
-				"title": "Zotero: Information management software 2.0",
+				"title": "Zotero: information management software 2.0",
 				"creators": [
 					{
 						"lastName": "Fernandez",
-						"firstName": "Peter",
+						"firstName": "P.",
 						"creatorType": "author"
 					}
 				],
@@ -175,11 +178,12 @@ var testCases = [
 				"pages": "5-7",
 				"publicationTitle": "Library Hi Tech News",
 				"shortTitle": "Zotero",
-				"url": "http://www.emeraldinsight.com/doi/full/10.1108/07419051111154758",
+				"url": "http://www.emeraldinsight.com/doi/pdfplus/10.1108/07419051111154758",
 				"volume": "28",
 				"attachments": [
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [
@@ -209,7 +213,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://xueshu.baidu.com/s?wd=paperuri%3A%2829fcf50a863692823c3f336a9ee1efea%29&filter=sc_long_sign&sc_ks_para=q%3DComparativo%20dos%20softwares%20de%20gerenciamento%20de%20refer%C3%AAncias%20bibliogr%C3%A1ficas%3A%20Mendeley%2C%20EndNote%20e%20Zotero&sc_us=1497086148200551335&tn=SE_baiduxueshu_c1gjeupa&ie=utf-8",
+		"url": "https://xueshu.baidu.com/usercenter/paper/show?paperid=29fcf50a863692823c3f336a9ee1efea&site=xueshu_se",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -217,30 +221,44 @@ var testCases = [
 				"creators": [
 					{
 						"lastName": "Yamakawa",
-						"firstName": "Eduardo Kazumi",
+						"firstName": "E. K.",
 						"creatorType": "author"
 					},
 					{
 						"lastName": "Kubota",
-						"firstName": "Flávio Issao",
+						"firstName": "F. I.",
 						"creatorType": "author"
 					},
 					{
 						"lastName": "Beuren",
-						"firstName": "Fernanda Hansch",
+						"firstName": "F. H.",
+						"creatorType": "author"
+					},
+					{
+						"lastName": "Scalvenzi",
+						"firstName": "L.",
+						"creatorType": "author"
+					},
+					{
+						"lastName": "Miguel",
+						"firstName": "Pac",
 						"creatorType": "author"
 					}
 				],
 				"date": "2014",
 				"DOI": "10.1590/0103-37862014000200006",
 				"abstractNote": "A elaboração de uma revisão bibliográfica confiável, a partir de trabalhos relevantes publicados anteriormente, é fundamental para evidenciar a originalidade e a contribuição científica dos trabalhos de pesquisa. Devido à grande quantidade de bases de dados e de publicações disponíveis, torna-se necessário utilizar ferramentas que auxiliem na gestão das referências bibliográficas de uma maneira fácil e padronizada. O objetivo deste artigo é examinar três de gerenciamento bibliográfico utilizados com frequência por pesquisadores acadêmicos, são eles: , e . Nesse sentido, buscou-se, em primeiro lugar, evidenciar seus principais benefícios e as possíveis dificuldades de utilização. Em segundo lugar, procurou-se comparar suas principais características por meio de uma pesquisa teórico-conceitual baseada em literatura especializada, o que permitiu utilizá-los e analisá-los de maneira crítica. Assim sendo, evidenciou-se as principais particularidades de cada e foi elaborado um quadro comparativo entre os mesmos. Considerando as características analisadas nos três , concluiu-se que todos, ao mesmo tempo em que facilitam o trabalho dos pesquisadores, possuem ferramentas que facilitam as buscas, a organização e a análise dos artigos.",
+				"issue": "2",
 				"libraryCatalog": "Baidu Scholar",
-				"publicationTitle": "Transinformação",
+				"pages": "167-176",
+				"publicationTitle": "Transinformao",
 				"shortTitle": "Comparativo dos softwares de gerenciamento de referências bibliográficas",
 				"url": "http://www.scielo.br/scielo.php?script=sci_arttext&amp;pid=S0103-37862014000200167&amp;lng=pt&amp;nrm=is",
+				"volume": "26",
 				"attachments": [
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -251,7 +269,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://xueshu.baidu.com/s?wd=zotero&rsv_bp=0&tn=SE_baiduxueshu_c1gjeupa&rsv_spt=3&ie=utf-8&f=8&rsv_sug2=0&sc_f_para=sc_tasktype%3D%7BfirstSimpleSearch%7D",
+		"url": "https://xueshu.baidu.com/s?wd=zotero&rsv_bp=0&tn=SE_baiduxueshu_c1gjeupa&rsv_spt=3&ie=utf-8&f=8&rsv_sug2=0&sc_f_para=sc_tasktype%3D%7BfirstSimpleSearch%7D",
 		"items": "multiple"
 	}
 ]

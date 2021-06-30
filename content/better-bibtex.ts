@@ -4,6 +4,7 @@ import type BluebirdPromise from 'bluebird'
 
 Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
+declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
 import type { XUL } from '../typings/xul'
 import './startup' // disable monkey patching is unsupported environment
@@ -836,7 +837,7 @@ export class BetterBibTeX {
       this.firstRun = null
     }
 
-    if (Zotero.BBTTRacer) {
+    if (typeof __estrace !== 'undefined') {
       flash(
         'BBT TRACE LOGGING IS ENABLED',
         'BBT trace logging is enabled in this build.\nZotero will run very slowly.\nThis is intended for debugging ONLY.',

@@ -141,6 +141,8 @@ if (fs.existsSync(path.join(__dirname, '../../.trace.json'))) {
 }
 
 const prefix = `
+Zotero.Debug.enabled = true;
+
 const trace$circularReplacer = () => {
   const seen = new WeakSet();
   return (key, value) => {
@@ -161,10 +163,12 @@ const trace$circularReplacer = () => {
 
 const __estrace = {
   enter(name, url, args) {
-    Zotero.debug(\`enter \${name} \${url}.(\${JSON.stringify(args, trace$circularReplacer())})\`);
+    if (!Zotero || !Zotero.BetterBibTeX || !Zotero.BetterBibTeX.ready || Zotero.BetterBibTeX.ready.isPending()) return
+    Zotero.debug(\`trace.enter \${name} \${url}.(\${JSON.stringify(Array.from(args), trace$circularReplacer())})\`);
   },
   exit(name, url, result) {
-    Zotero.debug(\`exit \${name} \${url}\`);
+    if (!Zotero || !Zotero.BetterBibTeX || !Zotero.BetterBibTeX.ready || Zotero.BetterBibTeX.ready.isPending()) return
+    Zotero.debug(\`trace.exit \${name} \${url} \${JSON.stringify(result, trace$circularReplacer())}\`);
   },
 };
 `

@@ -1,14 +1,14 @@
 {
 	"translatorID": "9ec64cfd-bea7-472a-9557-493c0c26b0fb",
+	"translatorType": 1,
 	"label": "MEDLINE/nbib",
 	"creator": "Sebastian Karcher",
 	"target": "txt",
 	"minVersion": "4.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 1,
-	"lastUpdated": "2020-12-27 04:34:53"
+	"lastUpdated": "2021-06-21 17:20:00"
 }
 
 /*
@@ -145,6 +145,13 @@ function processTag(item, tag, value) {
 	}
 	else if (tag == "DP") {
 		item.date = value;
+	}
+	// Save link to attached link
+	else if (tag == "LID") {
+		// Pubmed adds all sorts of different IDs in here, so make sure these are URLs
+		if (value.startsWith("http")) {
+			item.attachments.push({ url: value, title: "Catalog Link", snapshot: false });
+		}
 	}
 	else if (tag == "MH" || tag == "OT") {
 		item.tags.push(value);
@@ -713,7 +720,12 @@ var testCases = [
 				"pages": "12-24",
 				"publicationTitle": "Journal of Applied Testing Technology",
 				"volume": "21",
-				"attachments": [],
+				"attachments": [
+					{
+						"title": "Catalog Link",
+						"snapshot": false
+					}
+				],
 				"tags": [
 					{
 						"tag": "Adaptive Testing"
@@ -764,7 +776,12 @@ var testCases = [
 				"language": "English",
 				"publicationTitle": "Language Testing in Asia",
 				"volume": "9",
-				"attachments": [],
+				"attachments": [
+					{
+						"title": "Catalog Link",
+						"snapshot": false
+					}
+				],
 				"tags": [
 					{
 						"tag": "College Students"
@@ -832,7 +849,12 @@ var testCases = [
 				"date": "2019",
 				"abstractNote": "As test preparation becomes widely accessible through different delivery systems, large-scale studies of test preparation efficacy that involve a variety of test preparation activities become more important to understanding the value and impact of test preparation activities on both the ACT and SAT. In this paper, the authors examine the impact of participating in test preparation prior to retaking the ACT test. The study focused on addressing three questions: (1) Using a pretest-posttest design, do students who participate in test preparation have larger score gains relative to students who did not participate in test preparation; does the test preparation effect depend on students' pretest scores?; (2) Among students who participated in test preparation, is the number of hours spent participating in each of 10 test preparation activities related to retest scores?; and (3) Among students who participated in test preparation, do their own beliefs that they might have been ill-prepared to take the test, regardless of the test preparation activities they engaged in, impact retest scores? The study findings showed that test preparation improved students' retest scores, and this effect did not differ depending on students' first ACT score. Among specific test prep activities, only the number of hours using a private tutor resulted in increased score gains above the overall effect of test prep. Students who reported feeling inadequately prepared for the second test had ACT Composite scores that were lower than those students who felt adequately prepared.",
 				"publicationTitle": "ACT, Inc.",
-				"attachments": [],
+				"attachments": [
+					{
+						"title": "Catalog Link",
+						"snapshot": false
+					}
+				],
 				"tags": [
 					{
 						"tag": "Achievement Gains"

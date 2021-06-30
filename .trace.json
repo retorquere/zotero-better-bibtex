@@ -1,14 +1,6 @@
 {
-  "gh-1860": [
-    "content/**/*.ts",
-    "!content/monkey-patch.ts",
-    "!content/flash.ts",
-    "!content/debug.ts",
-    "!content/prefs.ts",
-    "!content/logger.ts",
-    "!content/events.ts",
-    "!content/db/loki.ts",
-    "!translators/**/*.ts"
+  "gh-1860x": [
+    "!content/**/*.ts"
   ],
   "-gh-1389": [
     "content/translators.ts",

@@ -1,22 +1,22 @@
 {
 	"translatorID": "5d506fe3-dbde-4424-90e8-d219c63faf72",
+	"translatorType": 4,
 	"label": "Library Catalog (BiblioCommons)",
-	"creator": "Avram Lyon",
+	"creator": "Avram Lyon and Abe Jellinek",
 	"target": "^https?://[^/]+\\.bibliocommons\\.com/",
 	"minVersion": "2.1",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 250,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2015-06-02 20:44:02"
+	"lastUpdated": "2021-05-26 17:00:00"
 }
 
 /*
 	***** BEGIN LICENSE BLOCK *****
 
 	BiblioCommons Translator
-	Copyright © 2011 Avram Lyon, ajlyon@gmail.com
+	Copyright © 2021 Avram Lyon <ajlyon@gmail.com> and Abe Jellinek
 
 	This file is part of Zotero.
 
@@ -37,127 +37,102 @@
 */
 
 function detectWeb(doc, url) {
-	if (url.match(/\/item\/(?:show|catalogue_info)/))
+	if (url.match(/\/v2\/record\//)) {
 		return "book";
-	if (url.match(/\/search\?t=/))
+	}
+	if (url.match(/\/v2\/search\?[^/]*query=/)) {
 		return "multiple";
+	}
 	return false;
 }
 
+function getSearchResults(doc, checkOnly) {
+	var items = {};
+	var found = false;
+	var rows = doc.querySelectorAll('h2.cp-title > a[href*="/item/show"]');
+	for (let row of rows) {
+		let href = row.href;
+		let title = ZU.trimInternal(text(row, '.title-content'));
+		if (!href || !title) continue;
+		if (checkOnly) return true;
+		found = true;
+		items[href] = title;
+	}
+	return found ? items : false;
+}
+
 function doWeb(doc, url) {
-	var n = doc.documentElement.namespaceURI;
-	var ns = n ? function(prefix) {
-		if (prefix == 'x') return n; else return null;
-	} : null;
-
-	// Load MARC
-	var translator = Z.loadTranslator("import");
-	translator.setTranslator("a6ee60df-1ddc-4aae-bb25-45e0537be973");
-
-	var domain = url.match(/https?:\/\/([^.\/]+)/)[1];
-
-	if (url.match(/\/item\/show/)) {
-		Zotero.Utilities.doGet(url.replace(/\/item\/show/,"/item/catalogue_info"),
-					function (text) {
-						//Z.debug(text)
-						translator.getTranslatorObject(function (obj) {
-							processor({	
-								translator: obj,
-								text: text,
-								domain: domain
-							});
-						})
-					}, function() {Zotero.done()});
-	} else if (url.match(/\/item\/catalogue_info/)) {
-		translator.getTranslatorObject(function (obj) {
-			processor({	
-				translator: obj,
-				text: doc.documentElement.innerHTML,
-				domain: domain
-			});
-		})
-	} else if (url.match(/\/search\?t=/)) {
-		var results = doc.evaluate('//div[@id="bibList"]/div/div//span[@class="title"]/a[1]', doc, ns, XPathResult.ANY_TYPE, null);
-		var items = new Array();
-		var result;
-		while(result = results.iterateNext()) {
-				var title = result.textContent;
-				var url = result.href.replace(/\/show\//,"/catalogue_info/");
-				items[url] = title;
-		}
-		Zotero.selectItems(items, function (items) {
-			var urls = [];
-			var i;
-			for (i in items) urls.push(i);
-			Zotero.Utilities.doGet(urls, function (text) {
-				translator.getTranslatorObject(function (obj) {
-					processor({
-						translator: obj,
-						text: text,
-						domain: domain
-					});
-				})
-			}, function() {Zotero.done()});
+	if (detectWeb(doc, url) == "multiple") {
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
+			if (items) ZU.processDocuments(Object.keys(items), scrape);
 		});
-		Zotero.wait();
+	}
+	else {
+		scrape(doc, url);
 	}
 }
 
-function processor (obj) {
-		// Gets {translator: , text: }
-		//	Z.debug(obj.text)
-		// Here, we split up the table and insert little placeholders between record bits
-		var marced = obj.text.replace(/\s+/g," ")
-					.replace(/^.*<div id="marc_details">(?:\s*<[^>"]+>\s*)*/,"")
-					.replace(/\s*(<table.*?>|<tbody>)\s*/g, "")
-					//looks like the odd/even attribute has mostly been remove from tr
-					.replace(/<tr( +class="(?:odd|even)")?>\s*/g,"")
-					.replace(/<td +scope="row" +class="marcTag"><strong>(\d+)<\/strong><\/td>\s*/g,"$1\x1F")
-					// We may be breaking the indicator here
-					.replace(/<td\s+class="marcIndicator">\s*(\d*)\s*<\/td>\s*/g,"$1\x1F")
-					.replace(/<td +class="marcTagData">(.*?)<\/td>\s*<\/tr>\s*/g,"$1\x1E")
-					.replace(/\x1F(?:[^\x1F]*)$/,"\x1F")
-					// We have some extra 0's at the start of the leader
-					.replace(/^000/,"");
-		//Z.debug(marced);
-		// We've used the record delimiter to delimit fields
-		var fields = marced.split("\x1E");
-		
-		// The preprocess function gets the translator object, if available
-		// This is pretty vital for fancy translators like MARC
-		var marc = obj["translator"];
-		// Make a record, only one.
-		var record = new marc.record();
-		// The first piece is the MARC leader
-		record.leader = fields.shift();
-		for (var i=0; i<fields.length; i++) {
-			var field = fields[i];
-			//Z.debug(field)
-			// Skip blanks
-			if (field.replace(/\x1F|\s/g,"") == "") continue;
-			// We're using the subfield delimiter to separate the field code,
-			// indicator, and the content.
-			var pieces = field.split("\x1F");
-			if (pieces.length>2){
-			record.addField(pieces[0].trim(),
-							pieces[1].trim(),
-							// Now we insert the subfield delimiter
-							pieces[2].replace(/\$([a-z]|$)/g,"\x1F$1").trim());
-			}				
+function scrape(doc, url) {
+	let item = new Zotero.Item();
+	item.libraryCatalog = attr(doc, 'meta[property="og:site_name"]', 'content');
+	
+	let recordUrl = url.endsWith('/originalrecord') ? url : url + '/originalrecord';
+	ZU.processDocuments(recordUrl, function (marcDoc) {
+		if (!marcDoc.querySelector('.bib-item-row')) {
+			// a small number of items don't have MARC data
+			// in that case, we just do our best
+			Z.debug("No MARC data");
+			
+			item.itemType = 'book';
+			item.title = text(doc, '.cp-bib-title span[aria-hidden]');
+			let subtitle = text(doc, '.cp-bib-subtitle');
+			if (subtitle) {
+				item.title += ": " + subtitle;
+			}
+			let authors = doc.querySelectorAll('.main-info .cp-bib-authors span[aria-hidden]');
+			for (let author of authors) {
+				item.creators.push(ZU.cleanAuthor(author.innerText, "author", true));
+			}
+			let bibFields = doc.querySelectorAll('.cp-bib-field');
+			for (let bibField of bibFields) {
+				if (text(bibField, '.cp-bib-field-label').includes("Publication")) {
+					let value = text(bibField, '.main-content').split(', ');
+					item.publisher = value[0];
+					item.date = value[1];
+				}
+			}
+			
+			let isbnMatches = text(doc, 'script[data-iso-key="_0"]')
+				.match(/"values":\["([0-9]{10}|[0-9]{13})"\]/);
+			let isbn = isbnMatches && isbnMatches[1];
+			if (isbn) {
+				item.ISBN = ZU.cleanISBN(isbn);
+			}
+			item.complete();
+			
+			return;
 		}
-		// returns {translator: , text: false, items: [Zotero.Item[]]}
-		var item = new Zotero.Item();
-		record.translate(item);
-		item.libraryCatalog = obj.domain + " Library Catalog";
-		item.complete();
-		return true;
+		
+		// Load MARC
+		let translator = Z.loadTranslator("import");
+		translator.setTranslator("a6ee60df-1ddc-4aae-bb25-45e0537be973");
+		
+		translator.getTranslatorObject(function (marc) {
+			let record = new marc.record();
+			for (let row of marcDoc.querySelectorAll('.bib-item-row')) {
+				record.addField(text(row, '.tag'), text(row, '.indicator'), row.lastChild.innerText.replace(/\$/g, '\x1F'));
+			}
+			record.translate(item);
+			item.complete();
+		});
+	});
 }
 
 /** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "https://bostonpl.bibliocommons.com/item/show/2051015075_labor",
+		"url": "https://bostonpl.bibliocommons.com/v2/record/S75C2051015",
 		"items": [
 			{
 				"itemType": "book",
@@ -173,17 +148,43 @@ var testCases = [
 				"ISBN": "9780875181677",
 				"abstractNote": "Brief biographies of five women prominently involved in the labor movement in the United States: Mother Jones, Mary Heaton Vorse, Frances Perkins, Addie Wyatt, and Dolores Huerta. Also includes 11 other women who have made outstanding contributions",
 				"callNumber": "HD6079.2.U5 B52",
-				"libraryCatalog": "bostonpl Library Catalog",
+				"libraryCatalog": "Boston Public Library",
 				"numPages": "126",
 				"place": "Minneapolis",
 				"publisher": "Dillon Press",
 				"series": "Contributions of women",
 				"attachments": [],
 				"tags": [
-					"United States",
-					"Women",
-					"Women labor union members",
-					"Working class"
+					{
+						"tag": "Biography Juvenile literature"
+					},
+					{
+						"tag": "Biography Juvenile literature"
+					},
+					{
+						"tag": "Juvenile biography"
+					},
+					{
+						"tag": "Juvenile literature"
+					},
+					{
+						"tag": "United States"
+					},
+					{
+						"tag": "United States"
+					},
+					{
+						"tag": "Women"
+					},
+					{
+						"tag": "Women labor union members"
+					},
+					{
+						"tag": "Women labor union members"
+					},
+					{
+						"tag": "Working class"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -192,44 +193,54 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://bostonpl.bibliocommons.com/search?t=smart&search_category=keyword&q=labor&commit=Search",
+		"url": "https://bostonpl.bibliocommons.com/v2/search?query=labor&searchType=smart",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "https://nypl.bibliocommons.com/item/show/10974089052_labour",
+		"url": "https://markham.bibliocommons.com/v2/record/S34C297846",
 		"items": [
 			{
 				"itemType": "book",
-				"title": "Labour",
+				"title": "The raven",
 				"creators": [
 					{
-						"firstName": "György",
-						"lastName": "Lukács",
+						"firstName": "Edgar Allan",
+						"lastName": "Poe",
 						"creatorType": "author"
 					},
 					{
-						"firstName": "György",
-						"lastName": "Lukács",
+						"firstName": "Ryan",
+						"lastName": "Price",
 						"creatorType": "author"
 					}
 				],
-				"date": "1980",
-				"callNumber": "JFD 87-5272",
-				"language": "eng",
-				"libraryCatalog": "nypl Library Catalog",
-				"numPages": "139",
-				"place": "London",
-				"publisher": "Merlin Press",
-				"series": "The Ontology of social being",
-				"seriesNumber": "3",
+				"date": "2006",
+				"ISBN": "9781553374732",
+				"abstractNote": "An illustrated version of Edgar Allan Poe's poem",
+				"callNumber": "J 811.3 Poe 9254tc",
+				"libraryCatalog": "Markham Public Library",
+				"numPages": "1",
+				"place": "Toronto",
+				"publisher": "Kids Can Press",
+				"series": "Visions in poetry",
 				"attachments": [],
 				"tags": [
-					"Labor",
-					"Philosophy",
-					"Philosophy, Marxist"
+					{
+						"tag": "Fantasy poetry, American"
+					},
+					{
+						"tag": "Poetry"
+					},
+					{
+						"tag": "Ravens"
+					}
 				],
-				"notes": [],
+				"notes": [
+					{
+						"note": "\"KCP Poetry.\""
+					}
+				],
 				"seeAlso": []
 			}
 		]

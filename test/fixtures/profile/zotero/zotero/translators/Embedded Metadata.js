@@ -9,7 +9,7 @@
 	"priority": 320,
 	"inRepository": true,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2021-03-10 04:50:00"
+	"lastUpdated": "2021-06-21 17:25:00"
 }
 
 /*
@@ -36,11 +36,6 @@
 
 	***** END LICENSE BLOCK *****
 */
-
-
-// attr()/text() v2
-// eslint-disable-next-line
-function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
 
 
 /* eslint-disable camelcase */
@@ -107,6 +102,8 @@ var _prefixes = {
 	book: "http://ogp.me/ns/book#",
 	music: "http://ogp.me/ns/music#",
 	video: "http://ogp.me/ns/video#",
+	so: "http://schema.org/",
+	codemeta: "https://codemeta.github.io/terms/",
 	rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 };
 
@@ -270,13 +267,21 @@ function init(doc, url, callback, forceLoadRDF) {
 		tags = tags.split(/\s+/);
 		for (var j = 0, m = tags.length; j < m; j++) {
 			var tag = tags[j];
-			// We allow three delimiters between the namespace and the property
-			var delimIndex = tag.search(/[.:_]/);
-			// if(delimIndex === -1) continue;
-
-			var prefix = tag.substr(0, delimIndex).toLowerCase();
+			let parts = tag.split(/[.:_]/);
+			let prefix;
+			let prefixLength;
+			if (parts.length > 2) {
+				// e.g. og:video:release_date
+				prefix = parts[1].toLowerCase();
+				prefixLength = parts[0].length + parts[1].length + 1;
+			}
+			if (!prefix || !_prefixes[prefix]) {
+				prefix = parts[0].toLowerCase();
+				prefixLength = parts[0].length;
+			}
 			if (_prefixes[prefix]) {
-				var prop = tag.substr(delimIndex + 1, 1).toLowerCase() + tag.substr(delimIndex + 2);
+				var prop = tag.substr(prefixLength + 1);
+				prop = prop.charAt(0).toLowerCase() + prop.slice(1);
 				// bib and bibo types are special, they use rdf:type to define type
 				var specialNS = [_prefixes.bib, _prefixes.bibo];
 				if (prop == 'type' && specialNS.includes(_prefixes[prefix])) {
@@ -790,6 +795,17 @@ function getAuthorFromByline(doc, newItem) {
 	}
 
 	if (actualByline) {
+		// are any of these actual likely to appear in the real world?
+		// well, no, but things happen:
+		//   https://github.com/zotero/translators/issues/2001
+		let irrelevantTags = 'time, button, textarea, script';
+		if (actualByline.querySelector(irrelevantTags)) {
+			actualByline = actualByline.cloneNode(true);
+			for (let child of actualByline.querySelectorAll(irrelevantTags)) {
+				child.parentNode.removeChild(child);
+			}
+		}
+		
 		byline = ZU.trimInternal(actualByline.textContent);
 		Z.debug("Extracting author(s) from byline: " + byline);
 		var li = actualByline.getElementsByTagName('li');
@@ -884,6 +900,12 @@ function finalDataCleanup(doc, newItem) {
 			newItem.extra = "DOI: " + newItem.DOI;
 		}
 	}
+	
+	// URLs in meta tags can technically be relative (see the ccc.de test for
+	// an example), so we need to handle that
+	if (newItem.url) {
+		newItem.url = relativeToAbsolute(doc, newItem.url);
+	}
 
 
 	// remove itemID - comes from RDF translator, doesn't make any sense for online data
@@ -891,6 +913,37 @@ function finalDataCleanup(doc, newItem) {
 
 	// worst case, if this is not called from another translator, use URL for title
 	if (!newItem.title && !Zotero.parentTranslator) newItem.title = newItem.url;
+}
+
+function relativeToAbsolute(doc, url) {
+	if (ZU.resolveURL) {
+		return ZU.resolveURL(url);
+	}
+	
+	// adapted from Nuclear Receptor Signaling translator
+
+	if (!url) {
+		return doc.location.href;
+	}
+
+	// check whether it's already absolute
+	if (url.match(/^(\w+:)?\/\//)) {
+		return url;
+	}
+
+	if (url[0] == '/') {
+		// relative to root
+		return doc.location.protocol + '//' + doc.location.host
+			+ url;
+	}
+	else {
+		// relative to current directory
+		let location = doc.location.href;
+		if (location.includes('?')) {
+			location = location.slice(0, location.indexOf('?'));
+		}
+		return location.replace(/([^/]\/)[^/]+$/, '$1') + url;
+	}
 }
 
 var exports = {
@@ -1350,7 +1403,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.diva-portal.org/smash/record.jsf?pid=diva2%3A766397&dswid=510",
+		"url": "http://www.diva-portal.org/smash/record.jsf?pid=diva2%3A766397&dswid=3874",
 		"items": [
 			{
 				"itemType": "conferencePaper",
@@ -1513,6 +1566,37 @@ var testCases = [
 						"title": "Full Text PDF",
 						"mimeType": "application/pdf"
 					},
+					{
+						"title": "Snapshot",
+						"mimeType": "text/html"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://media.ccc.de/v/35c3-9386-introduction_to_deep_learning",
+		"items": [
+			{
+				"itemType": "videoRecording",
+				"title": "Introduction to Deep Learning",
+				"creators": [
+					{
+						"firstName": "",
+						"lastName": "teubi",
+						"creatorType": "author"
+					}
+				],
+				"date": "2018-12-27 01:00:00 +0100",
+				"abstractNote": "This talk will teach you the fundamentals of machine learning and give you a sneak peek into the internals of the mystical black box. You...",
+				"language": "en",
+				"libraryCatalog": "media.ccc.de",
+				"url": "https://media.ccc.de/v/35c3-9386-introduction_to_deep_learning",
+				"attachments": [
 					{
 						"title": "Snapshot",
 						"mimeType": "text/html"

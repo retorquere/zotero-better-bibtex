@@ -1,15 +1,15 @@
 {
 	"translatorID": "e8544423-1515-4daf-bb5d-3202bf422b58",
+	"translatorType": 4,
 	"label": "beck-online",
 	"creator": "Philipp Zumstein",
 	"target": "^https?://beck-online\\.beck\\.de/",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcs",
-	"lastUpdated": "2019-06-03 15:12:35"
+	"lastUpdated": "2021-06-08 14:40:00"
 }
 
 /*
@@ -353,10 +353,10 @@ function scrapeCase(doc, url) {
 	// add jurisdiction to item.extra - in accordance with citeproc-js - for compatability with Zotero-MLZ
 	item.extra = "";
 	if (item.court.indexOf('EuG') == 0) {
-		item.extra += "{:jurisdiction: europa.eu}";
+		item.extra += "Jurisdiction: europa.eu";
 	}
 	else {
-		item.extra += "{:jurisdiction: de}";
+		item.extra += "Jurisdiction: de";
 	}
 	
 	var decisionDateStr = ZU.xpathText(doc, '(//span[@class="edat"] | //span[@class="EDAT"] | //span[@class="datum"])[1]');
@@ -390,10 +390,10 @@ function scrapeCase(doc, url) {
 	
 	if (decisionType) {
 		if (/Beschluss|Beschl\./i.test(decisionType)) {
-			item.extra += "\n{:genre: Beschl.}";
+			item.extra += "\nGenre: Beschl.";
 		}
 		else if (/Urteil|(Urt\.)/i.test(decisionType)) {
-			item.extra += "\n{:genre: Urt.}";
+			item.extra += "\nGenre: Urt.";
 		}
 	}
 	
@@ -587,8 +587,15 @@ function finalize(doc, url, item) {
 		title: "Snapshot",
 		document: doc
 	}];
+	
+	var perma = ZU.xpathText(doc, '//div[@class="doc-link"]/a/@href');
+	if (perma) {
+		item.url = perma;
+	}
+	
 	item.complete();
 }
+
 
 
 /** BEGIN TEST CASES **/
@@ -613,6 +620,7 @@ var testCases = [
 				"libraryCatalog": "beck-online",
 				"pages": "88-95",
 				"publicationTitle": "Sonderheft der Deutschen Notar-Zeitschrift",
+				"url": "https://beck-online.beck.de/Bcid/Y-300-Z-DNOTZ-SONDERH-B-2012-S-88-N-1",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -636,11 +644,12 @@ var testCases = [
 				"abstractNote": "Leitsätze der Redaktion:\n    1. Ad-hoc-Mitteilungen richten sich nicht nur an ein bilanz- und fachkundiges Publikum, sondern an alle tatsächlichen oder potenziellen Anleger und Aktionäre.\n    2. \n    § BOERSG § 88 Abs. BOERSG § 88 Absatz 1 Nr. 1 BörsG dient neben dem Schutz der Allgemeinheit gerade auch dazu, das Vermögen des einzelnen Kapitalanlegers vor möglichen Schäden durch eine unredliche Beeinflussung der Preisbildung an Börsen und Märkten zu schützen.",
 				"court": "LG Augsburg",
 				"docketNumber": "3 O 4995/00",
-				"extra": "{:jurisdiction: de}\n{:genre: Urt.}",
+				"extra": "Jurisdiction: de\nGenre: Urt.",
 				"firstPage": "99-101",
 				"reporter": "BKR",
 				"reporterVolume": "2001",
 				"shortTitle": "Infomatec",
+				"url": "https://beck-online.beck.de/Bcid/Y-300-Z-BKR-B-2001-S-99-N-1",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -687,6 +696,7 @@ var testCases = [
 				"libraryCatalog": "beck-online",
 				"pages": "898-903",
 				"publicationTitle": "Neue Juristische Wochenschrift",
+				"url": "https://beck-online.beck.de/Bcid/Y-300-Z-NJW-B-2014-S-898-N-1",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -729,6 +739,7 @@ var testCases = [
 				"libraryCatalog": "beck-online",
 				"pages": "3329-3334",
 				"publicationTitle": "Neue Juristische Wochenschrift",
+				"url": "https://beck-online.beck.de/Bcid/Y-300-Z-NJW-B-2014-S-3329-N-1",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -766,6 +777,7 @@ var testCases = [
 				"libraryCatalog": "beck-online",
 				"pages": "431-436",
 				"publicationTitle": "Gewerblicher Rechtsschutz und Urheberrecht",
+				"url": "https://beck-online.beck.de/Bcid/Y-300-Z-GRUR-B-2014-S-431-N-1",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -798,6 +810,7 @@ var testCases = [
 				"libraryCatalog": "beck-online",
 				"pages": "2261-2267",
 				"publicationTitle": "Deutsches Steuerrecht",
+				"url": "https://beck-online.beck.de/Bcid/Y-300-Z-DSTR-B-2014-S-2261-N-1",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -829,6 +842,7 @@ var testCases = [
 				"libraryCatalog": "beck-online",
 				"pages": "88-95",
 				"publicationTitle": "Sonderheft der Deutschen Notar-Zeitschrift",
+				"url": "https://beck-online.beck.de/Bcid/Y-300-Z-DNOTZ-SONDERH-B-2012-S-88-N-1",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -866,6 +880,7 @@ var testCases = [
 				"libraryCatalog": "beck-online",
 				"pages": "3329-3334",
 				"publicationTitle": "Neue Juristische Wochenschrift",
+				"url": "https://beck-online.beck.de/Bcid/Y-300-Z-NJW-B-2014-S-3329-N-1",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -938,6 +953,7 @@ var testCases = [
 				"libraryCatalog": "beck-online",
 				"pages": "898-903",
 				"publicationTitle": "Neue Juristische Wochenschrift",
+				"url": "https://beck-online.beck.de/Bcid/Y-300-Z-NJW-B-2014-S-898-N-1",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -961,7 +977,8 @@ var testCases = [
 				"abstractNote": "Amtliche Leitsätze:\n\t\t\t\t\t1. Die Eltern eines 13-jährigen Sohnes, dem sie einen PC mit Internetanschluss überlassen haben, können ihrer aus § BGB § 832 BGB § 832 Absatz I BGB resultierenden Aufsichtspflicht zur Verhinderung der Teilnahme des Kindes an illegalen sog. Tauschbörsen durch die Installation einer Firewall und eines Passwortes sowie monatliche stichprobenmäßige Kontrollen genügen. Diese Kontrollen sind aber nicht hinreichend durchgeführt worden, wenn die Eltern über Monate das trotz der installierten Schutzmaßnahmen erfolgte Herunterladen zweier Filesharingprogramme nicht entdecken, für die Ikons auf dem Desktop sichtbar waren.\n\t\t\t\t\t2. Die Höhe des dem Rechteinhaber durch die Teilnahme an einer sog. Tauschbörse entstandenen, im Wege der Lizenzanalogie berechneten Schadens ist mangels besser geeigneter Grundlagen an dem GEMA Tarif zu orientieren, der dem zu beurteilenden Sachverhalt am nächsten kommt. Das ist nicht der Tarif VR W 1, sondern der (frühere) Tarif VR-OD 5. Es sind weiter alle in Betracht kommenden Umstände wie die Länge des Zeitraumes, in dem der Titel in die \"Tauschbörse\" eingestellt war, und die Höhe des Lizenzbetrages zu berücksichtigen, der für vergleichbare Titel nach Lizenzierung gezahlt wird. Sind gängige Titel über Monate durch die Tauschbörse öffentlich zugänglichgemacht worden, so kann ein Betrag von 200 € für jeden Titel geschuldet sein.",
 				"court": "OLG Köln",
 				"docketNumber": "6 U 67/11",
-				"extra": "{:jurisdiction: de}\n{:genre: Urt.}",
+				"extra": "Jurisdiction: de\nGenre: Urt.",
+				"url": "https://beck-online.beck.de/Bcid/Y-300-Z-BECKRS-B-2012-N-09546",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -988,11 +1005,12 @@ var testCases = [
 				"dateDecided": "2014-3-27",
 				"court": "EuGH",
 				"docketNumber": "C-314/12",
-				"extra": "{:jurisdiction: europa.eu}\n{:genre: Urt.}",
+				"extra": "Jurisdiction: europa.eu\nGenre: Urt.",
 				"firstPage": "468-473",
 				"reporter": "GRUR",
 				"reporterVolume": "2014",
 				"shortTitle": "UPC Telekabel/Constantin Film ua [kino.to]",
+				"url": "https://beck-online.beck.de/Bcid/Y-300-Z-GRUR-B-2014-S-468-N-1",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -1020,11 +1038,12 @@ var testCases = [
 				"abstractNote": "1. Ein pornographischer Roman kann Kunst i. S. von Art. GG Artikel 5 GG Artikel 5 Absatz III 1 GG sein.\n    2. Die Indizierung einer als Kunstwerk anzusehenden Schrift setzt auch dann eine Abwägung mit der Kunstfreiheit voraus, wenn die Schrift offensichtlich geeignet ist, Kinder oder Jugendliche sittlich schwer zu gefährden (§ 6 Nr. 3 des Gesetzes über die Verbreitung jugendgefährdender Schriften - GjS).\n    3. Die Vorschrift des § 9 II GjS ist verfassungsrechtlich unzulänglich, weil die Auswahl der Beisitzer für die Bundesprüfstelle nicht ausreichend geregelt ist.",
 				"court": "BVerfG",
 				"docketNumber": "1 BvR 402/87",
-				"extra": "{:jurisdiction: de}",
+				"extra": "Jurisdiction: de",
 				"firstPage": "1471-1475",
 				"reporter": "NJW",
 				"reporterVolume": "1991",
 				"shortTitle": "Indizierung eines pornographischen Romans (\"Josefine Mutzenbacher\")\n zur Fussnote †",
+				"url": "https://beck-online.beck.de/Bcid/Y-300-Z-NJW-B-1991-S-1471-N-1",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -1068,6 +1087,7 @@ var testCases = [
 				"edition": "38",
 				"encyclopediaTitle": "Beck'scher Online-Kommentar BGB",
 				"libraryCatalog": "beck-online",
+				"url": "https://beck-online.beck.de/Bcid/Y-400-W-beckok-G-BGB-P-489",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -1112,6 +1132,7 @@ var testCases = [
 				"edition": "2",
 				"encyclopediaTitle": "BGB | Schuldrecht",
 				"libraryCatalog": "beck-online",
+				"url": "https://beck-online.beck.de/Bcid/Y-400-W-DauLanKoBGB-G-BGB-P-489",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -1146,6 +1167,7 @@ var testCases = [
 				"edition": "5",
 				"encyclopediaTitle": "Münchener Anwaltshandbuch Erbrecht",
 				"libraryCatalog": "beck-online",
+				"url": "https://beck-online.beck.de/Bcid/Y-400-W-ScheAnwHdb-GL-sect19-II-2-a",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -1289,6 +1311,7 @@ var testCases = [
 				"publisher": "Verlag C. H. Beck",
 				"rights": "© 2018 Verlag C. H. Beck oHG",
 				"shortTitle": "Kühling/Buchner, DS-GVO BDSG",
+				"url": "https://beck-online.beck.de/Bcid/Y-400-W-KueBuchnerKoDSGVO",
 				"attachments": [],
 				"tags": [],
 				"notes": [],

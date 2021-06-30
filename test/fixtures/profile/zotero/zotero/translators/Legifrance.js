@@ -1,15 +1,15 @@
 {
 	"translatorID": "2dc0b23d-64d8-4933-b629-5c003451ccf7",
+	"translatorType": 4,
 	"label": "Légifrance",
 	"creator": "Guillaume Adreani",
-	"target": "^https?://(www.)?legifrance\\.gouv\\.fr/",
+	"target": "^https?://(www\\.)?legifrance\\.gouv\\.fr/",
 	"minVersion": "2.1.9",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2020-11-01 22:46:15"
+	"lastUpdated": "2021-06-07 17:30:00"
 }
 
 /*

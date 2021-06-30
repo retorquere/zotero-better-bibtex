@@ -9,7 +9,7 @@
 	"priority": 100,
 	"inRepository": true,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2020-05-10 19:10:00"
+	"lastUpdated": "2021-06-01 15:00:00"
 }
 
 /**
@@ -546,7 +546,7 @@ function scrape(doc, url) {
 			item = items[1];
 		}
 		else if (items[1]) {
-			var preferredRisFields = ['journalAbbreviation', 'date', 'abstractNote'];
+			var preferredRisFields = ['date', 'abstractNote'];
 			// palgrave-macmillan journals
 			if (!isNature(url)) {
 				preferredRisFields.push('publisher'); // all others are going to be dropped since we only handle journalArticle
@@ -673,7 +673,9 @@ function scrape(doc, url) {
 		if (item.journalAbbreviation && !item.publicationTitle) {
 			item.publicationTitle = 'Nature';// old articles mess this up
 		}
-		delete item.journalAbbreviation;
+		if (item.journalAbbreviation == item.publicationTitle) {
+			delete item.journalAbbreviation;
+		}
 		var hasPDF = false;
 		for (let attach of item.attachments) {
 			if (attach.mimeType && attach.mimeType == "application/pdf") {
@@ -1125,7 +1127,7 @@ ISO8879CharMap.prime = "\u2032";	// same as vprime
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.nature.com/onc/journal/v31/n6/index.html",
+		"url": "https://www.nature.com/onc/volumes/31/issues/6",
 		"items": "multiple"
 	},
 	{
@@ -1196,7 +1198,7 @@ var testCases = [
 				"libraryCatalog": "www.nature.com",
 				"pages": "671-682",
 				"publicationTitle": "Oncogene",
-				"rights": "2011 Nature Publishing Group",
+				"rights": "2012 Macmillan Publishers Limited",
 				"url": "https://www.nature.com/articles/onc2011282",
 				"volume": "31",
 				"attachments": [
@@ -1205,7 +1207,8 @@ var testCases = [
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -1256,13 +1259,13 @@ var testCases = [
 				"date": "2012-01",
 				"DOI": "10.1038/nature10669",
 				"ISSN": "1476-4687",
-				"abstractNote": "The mass function of dwarf satellite galaxies that are observed around Local Group galaxies differs substantially from simulations1,2,3,4,5 based on cold dark matter: the simulations predict many more dwarf galaxies than are seen. The Local Group, however, may be anomalous in this regard6,7. A massive dark satellite in an early-type lens galaxy at a redshift of 0.222 was recently found8 using a method based on gravitational lensing9,10, suggesting that the mass fraction contained in substructure could be higher than is predicted from simulations. The lack of very low-mass detections, however, prohibited any constraint on their mass function. Here we report the presence of a (1.9 ± 0.1) × 108 dark satellite galaxy in the Einstein ring system JVAS B1938+666 (ref. 11) at a redshift of 0.881, where denotes the solar mass. This satellite galaxy has a mass similar to that of the Sagittarius12 galaxy, which is a satellite of the Milky Way. We determine the logarithmic slope of the mass function for substructure beyond the local Universe to be , with an average mass fraction of per cent, by combining data on both of these recently discovered galaxies. Our results are consistent with the predictions from cold dark matter simulations13,14,15 at the 95 per cent confidence level, and therefore agree with the view that galaxies formed hierarchically in a Universe composed of cold dark matter.",
+				"abstractNote": "The discovery of a distant, low-mass satellite galaxy helps to constrain the mass function for substructure beyond the local Universe to a form that agrees at the 95 per cent confidence level with predictions based on cold dark matter.",
 				"issue": "7381",
 				"language": "en",
 				"libraryCatalog": "www.nature.com",
 				"pages": "341-343",
 				"publicationTitle": "Nature",
-				"rights": "2012 Nature Publishing Group",
+				"rights": "2012 Nature Publishing Group, a division of Macmillan Publishers Limited. All Rights Reserved.",
 				"url": "https://www.nature.com/articles/nature10669",
 				"volume": "481",
 				"attachments": [
@@ -1271,7 +1274,8 @@ var testCases = [
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -1295,9 +1299,9 @@ var testCases = [
 				"issue": "7381",
 				"language": "en",
 				"libraryCatalog": "www.nature.com",
-				"pages": "237",
+				"pages": "237-237",
 				"publicationTitle": "Nature",
-				"rights": "2012 Nature Publishing Group",
+				"rights": "2012 Nature Publishing Group, a division of Macmillan Publishers Limited. All Rights Reserved.",
 				"url": "https://www.nature.com/articles/481237a",
 				"volume": "481",
 				"attachments": [
@@ -1306,7 +1310,8 @@ var testCases = [
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -1353,7 +1358,7 @@ var testCases = [
 				"libraryCatalog": "www.nature.com",
 				"pages": "335-340",
 				"publicationTitle": "Nature",
-				"rights": "2012 Nature Publishing Group",
+				"rights": "2011 Nature Publishing Group, a division of Macmillan Publishers Limited. All Rights Reserved.",
 				"url": "https://www.nature.com/articles/nature10728",
 				"volume": "481",
 				"attachments": [
@@ -1362,7 +1367,8 @@ var testCases = [
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -1475,6 +1481,7 @@ var testCases = [
 				"ISSN": "1546-1718",
 				"abstractNote": "The estrogen receptor is the master transcriptional regulator of breast cancer phenotype and the archetype of a molecular therapeutic target. We mapped all estrogen receptor and RNA polymerase II binding sites on a genome-wide scale, identifying the authentic cis binding sites and target genes, in breast cancer cells. Combining this unique resource with gene expression data demonstrates distinct temporal mechanisms of estrogen-mediated gene regulation, particularly in the case of estrogen-suppressed genes. Furthermore, this resource has allowed the identification of cis-regulatory sites in previously unexplored regions of the genome and the cooperating transcription factors underlying estrogen signaling in breast cancer.",
 				"issue": "11",
+				"journalAbbreviation": "Nat Genet",
 				"language": "en",
 				"libraryCatalog": "www.nature.com",
 				"pages": "1289-1297",
@@ -1488,7 +1495,8 @@ var testCases = [
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -1720,7 +1728,7 @@ var testCases = [
 				"libraryCatalog": "www.nature.com",
 				"pages": "58-64",
 				"publicationTitle": "Nature",
-				"rights": "2009 Nature Publishing Group",
+				"rights": "2009 Macmillan Publishers Limited. All rights reserved",
 				"url": "https://www.nature.com/articles/nature08497",
 				"volume": "462",
 				"attachments": [
@@ -1729,7 +1737,8 @@ var testCases = [
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -1744,7 +1753,7 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "journalArticle",
-				"title": "Structure of the SAM-II riboswitch bound to <i>S</i>-adenosylmethionine",
+				"title": "Structure of the SAM-II riboswitch bound to S -adenosylmethionine",
 				"creators": [
 					{
 						"firstName": "Sunny D.",
@@ -1772,6 +1781,7 @@ var testCases = [
 				"ISSN": "1545-9985",
 				"abstractNote": "In bacteria, numerous genes harbor regulatory elements in the 5′ untranslated regions of their mRNA, termed riboswitches, which control gene expression by binding small-molecule metabolites. These sequences influence the secondary and tertiary structure of the RNA in a ligand-dependent manner, thereby directing its transcription or translation. The crystal structure of an S-adenosylmethionine–responsive riboswitch found predominantly in proteobacteria, SAM-II, has been solved to reveal a second means by which RNA interacts with this important cellular metabolite. Notably, this is the first structure of a complete riboswitch containing all sequences associated with both the ligand binding aptamer domain and the regulatory expression platform. Chemical probing of this RNA in the absence and presence of ligand shows how the structure changes in response to S-adenosylmethionine to sequester the ribosomal binding site and affect translational gene regulation.",
 				"issue": "2",
+				"journalAbbreviation": "Nat Struct Mol Biol",
 				"language": "en",
 				"libraryCatalog": "www.nature.com",
 				"pages": "177-182",
@@ -1785,7 +1795,8 @@ var testCases = [
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -1801,7 +1812,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.nature.com/nbt/journal/v30/n3/index.html",
+		"url": "https://www.nature.com/nbt/volumes/30/issues/3",
 		"items": "multiple"
 	},
 	{
@@ -1846,13 +1857,13 @@ var testCases = [
 				"date": "2012-01",
 				"DOI": "10.1038/nature10669",
 				"ISSN": "1476-4687",
-				"abstractNote": "The mass function of dwarf satellite galaxies that are observed around Local Group galaxies differs substantially from simulations1,2,3,4,5 based on cold dark matter: the simulations predict many more dwarf galaxies than are seen. The Local Group, however, may be anomalous in this regard6,7. A massive dark satellite in an early-type lens galaxy at a redshift of 0.222 was recently found8 using a method based on gravitational lensing9,10, suggesting that the mass fraction contained in substructure could be higher than is predicted from simulations. The lack of very low-mass detections, however, prohibited any constraint on their mass function. Here we report the presence of a (1.9 ± 0.1) × 108 dark satellite galaxy in the Einstein ring system JVAS B1938+666 (ref. 11) at a redshift of 0.881, where denotes the solar mass. This satellite galaxy has a mass similar to that of the Sagittarius12 galaxy, which is a satellite of the Milky Way. We determine the logarithmic slope of the mass function for substructure beyond the local Universe to be , with an average mass fraction of per cent, by combining data on both of these recently discovered galaxies. Our results are consistent with the predictions from cold dark matter simulations13,14,15 at the 95 per cent confidence level, and therefore agree with the view that galaxies formed hierarchically in a Universe composed of cold dark matter.",
+				"abstractNote": "The discovery of a distant, low-mass satellite galaxy helps to constrain the mass function for substructure beyond the local Universe to a form that agrees at the 95 per cent confidence level with predictions based on cold dark matter.",
 				"issue": "7381",
 				"language": "en",
 				"libraryCatalog": "www.nature.com",
 				"pages": "341-343",
 				"publicationTitle": "Nature",
-				"rights": "2012 Nature Publishing Group",
+				"rights": "2012 Nature Publishing Group, a division of Macmillan Publishers Limited. All Rights Reserved.",
 				"url": "https://www.nature.com/articles/nature10669",
 				"volume": "481",
 				"attachments": [
@@ -1861,7 +1872,8 @@ var testCases = [
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -1943,7 +1955,7 @@ var testCases = [
 				"libraryCatalog": "www.nature.com",
 				"pages": "193-198",
 				"publicationTitle": "Nature",
-				"rights": "2013 Nature Publishing Group",
+				"rights": "2013 The Author(s)",
 				"url": "https://www.nature.com/articles/nature11968",
 				"volume": "495",
 				"attachments": [
@@ -1952,7 +1964,8 @@ var testCases = [
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -1967,7 +1980,7 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "journalArticle",
-				"title": "Crystal structures of the calcium pump and sarcolipin in the Mg<sup>2+</sup>-bound E1 state",
+				"title": "Crystal structures of the calcium pump and sarcolipin in the Mg 2+ -bound E1 state",
 				"creators": [
 					{
 						"firstName": "Chikashi",
@@ -2003,13 +2016,13 @@ var testCases = [
 				"date": "2013-03",
 				"DOI": "10.1038/nature11899",
 				"ISSN": "1476-4687",
-				"abstractNote": "P-type ATPases are ATP-powered ion pumps that establish ion concentration gradients across biological membranes, and are distinct from other ATPases in that the reaction cycle includes an autophosphorylation step. The best studied is Ca2+-ATPase from muscle sarcoplasmic reticulum (SERCA1a), a Ca2+ pump that relaxes muscle cells after contraction, and crystal structures have been determined for most of the reaction intermediates1,2. An important outstanding structure is that of the E1 intermediate, which has empty high-affinity Ca2+-binding sites ready to accept new cytosolic Ca2+. In the absence of Ca2+ and at pH 7 or higher, the ATPase is predominantly in E1, not in E2 (low affinity for Ca2+)3, and if millimolar Mg2+ is present, one Mg2+ is expected to occupy one of the Ca2+-binding sites with a millimolar dissociation constant4,5. This Mg2+ accelerates the reaction cycle4, not permitting phosphorylation without Ca2+ binding. Here we describe the crystal structure of native SERCA1a (from rabbit) in this E1·Mg2+ state at 3.0 Å resolution in addition to crystal structures of SERCA1a in E2 free from exogenous inhibitors, and address the structural basis of the activation signal for phosphoryl transfer. Unexpectedly, sarcolipin6, a small regulatory membrane protein of Ca2+-ATPase7, is bound, stabilizing the E1·Mg2+ state. Sarcolipin is a close homologue of phospholamban, which is a critical mediator of β-adrenergic signal in Ca2+ regulation in heart (for reviews, see, for example, refs 8–10), and seems to play an important role in muscle-based thermogenesis11. We also determined the crystal structure of recombinant SERCA1a devoid of sarcolipin, and describe the structural basis of inhibition by sarcolipin/phospholamban. Thus, the crystal structures reported here fill a gap in the structural elucidation of the reaction cycle and provide a solid basis for understanding the physiological regulation of the calcium pump.",
+				"abstractNote": "The X-ray crystal structures of SERCA1a, a Ca2+-ATPase from the sarcoplasmic reticulum, in the presence and absence of sarcolipin are reported; the structures indicate that sarcolipin stabilizes SERCA1a in an ‘open’ state that has not been well characterised previously, in which SERCA1a has not yet accepted calcium into its two high-affinity binding sites.",
 				"issue": "7440",
 				"language": "en",
 				"libraryCatalog": "www.nature.com",
 				"pages": "260-264",
 				"publicationTitle": "Nature",
-				"rights": "2013 Nature Publishing Group",
+				"rights": "2013 Nature Publishing Group, a division of Macmillan Publishers Limited. All Rights Reserved.",
 				"url": "https://www.nature.com/articles/nature11899",
 				"volume": "495",
 				"attachments": [
@@ -2018,7 +2031,8 @@ var testCases = [
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -2231,226 +2245,6 @@ var testCases = [
 						"creatorType": "author"
 					},
 					{
-						"lastName": "MetaHIT Consortium (additional Members)",
-						"creatorType": "author",
-						"fieldMode": 1
-					},
-					{
-						"firstName": "María",
-						"lastName": "Antolín",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "François",
-						"lastName": "Artiguenave",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Hervé M.",
-						"lastName": "Blottiere",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Mathieu",
-						"lastName": "Almeida",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Christian",
-						"lastName": "Brechot",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Carlos",
-						"lastName": "Cara",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Christian",
-						"lastName": "Chervaux",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Antonella",
-						"lastName": "Cultrone",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Christine",
-						"lastName": "Delorme",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Gérard",
-						"lastName": "Denariaz",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Rozenn",
-						"lastName": "Dervyn",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Konrad U.",
-						"lastName": "Foerstner",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Carsten",
-						"lastName": "Friss",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Maarten",
-						"lastName": "van de Guchte",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Eric",
-						"lastName": "Guedon",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Florence",
-						"lastName": "Haimet",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Wolfgang",
-						"lastName": "Huber",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Johan",
-						"lastName": "van Hylckama-Vlieg",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Alexandre",
-						"lastName": "Jamet",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Catherine",
-						"lastName": "Juste",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Ghalia",
-						"lastName": "Kaci",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Jan",
-						"lastName": "Knol",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Karsten",
-						"lastName": "Kristiansen",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Omar",
-						"lastName": "Lakhdari",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Severine",
-						"lastName": "Layec",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Karine",
-						"lastName": "Le Roux",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Emmanuelle",
-						"lastName": "Maguin",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Alexandre",
-						"lastName": "Mérieux",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Raquel",
-						"lastName": "Melo Minardi",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Christine",
-						"lastName": "M'rini",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Jean",
-						"lastName": "Muller",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Raish",
-						"lastName": "Oozeer",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Julian",
-						"lastName": "Parkhill",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Pierre",
-						"lastName": "Renault",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Maria",
-						"lastName": "Rescigno",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Nicolas",
-						"lastName": "Sanchez",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Shinichi",
-						"lastName": "Sunagawa",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Antonio",
-						"lastName": "Torrejon",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Keith",
-						"lastName": "Turner",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Gaetana",
-						"lastName": "Vandemeulebrouck",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Encarna",
-						"lastName": "Varela",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Yohanan",
-						"lastName": "Winogradsky",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Georg",
-						"lastName": "Zeller",
-						"creatorType": "author"
-					},
-					{
 						"firstName": "Jean",
 						"lastName": "Weissenbach",
 						"creatorType": "author"
@@ -2475,7 +2269,7 @@ var testCases = [
 				"libraryCatalog": "www.nature.com",
 				"pages": "174-180",
 				"publicationTitle": "Nature",
-				"rights": "2011 Nature Publishing Group",
+				"rights": "2011 Nature Publishing Group, a division of Macmillan Publishers Limited. All Rights Reserved.",
 				"url": "https://www.nature.com/articles/nature09944",
 				"volume": "473",
 				"attachments": [
@@ -2484,7 +2278,8 @@ var testCases = [
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -2522,6 +2317,7 @@ var testCases = [
 				"ISSN": "1750-2799",
 				"abstractNote": "A substantial range of protein-protein interactions can be readily monitored in real time using bioluminescence resonance energy transfer (BRET). The procedure involves heterologous coexpression of fusion proteins, which link proteins of interest to a bioluminescent donor enzyme or acceptor fluorophore. Energy transfer between these proteins is then detected. This protocol encompasses BRET1, BRET2 and the recently described eBRET, including selection of the donor, acceptor and substrate combination, fusion construct generation and validation, cell culture, fluorescence and luminescence detection, BRET detection and data analysis. The protocol is particularly suited to studying protein-protein interactions in live cells (adherent or in suspension), but cell extracts and purified proteins can also be used. Furthermore, although the procedure is illustrated with references to mammalian cell culture conditions, this protocol can be readily used for bacterial or plant studies. Once fusion proteins are generated and validated, the procedure typically takes 48–72 h depending on cell culture requirements.",
 				"issue": "1",
+				"journalAbbreviation": "Nat Protoc",
 				"language": "en",
 				"libraryCatalog": "www.nature.com",
 				"pages": "337-345",
@@ -2535,7 +2331,8 @@ var testCases = [
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -2607,11 +2404,13 @@ var testCases = [
 				"DOI": "10.1038/ncomms7186",
 				"ISSN": "2041-1723",
 				"abstractNote": "Chromatin interactions connect distal regulatory elements to target gene promoters guiding stimulus- and lineage-specific transcription. Few factors securing chromatin interactions have so far been identified. Here, by integrating chromatin interaction maps with the large collection of transcription factor-binding profiles provided by the ENCODE project, we demonstrate that the zinc-finger protein ZNF143 preferentially occupies anchors of chromatin interactions connecting promoters with distal regulatory elements. It binds directly to promoters and associates with lineage-specific chromatin interactions and gene expression. Silencing ZNF143 or modulating its DNA-binding affinity using single-nucleotide polymorphisms (SNPs) as a surrogate of site-directed mutagenesis reveals the sequence dependency of chromatin interactions at gene promoters. We also find that chromatin interactions alone do not regulate gene expression. Together, our results identify ZNF143 as a novel chromatin-looping factor that contributes to the architectural foundation of the genome by providing sequence specificity at promoters connected with distal regulatory elements.",
+				"issue": "1",
+				"journalAbbreviation": "Nat Commun",
 				"language": "en",
 				"libraryCatalog": "www.nature.com",
 				"pages": "6186",
 				"publicationTitle": "Nature Communications",
-				"rights": "2015 Nature Publishing Group",
+				"rights": "2015 Nature Publishing Group, a division of Macmillan Publishers Limited. All Rights Reserved.",
 				"url": "https://www.nature.com/articles/ncomms7186",
 				"volume": "6",
 				"attachments": [
@@ -2620,7 +2419,8 @@ var testCases = [
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -2912,20 +2712,216 @@ var testCases = [
 				"DOI": "10.1038/sdata.2016.18",
 				"ISSN": "2052-4463",
 				"abstractNote": "There is an urgent need to improve the infrastructure supporting the reuse of scholarly data. A diverse set of stakeholders—representing academia, industry, funding agencies, and scholarly publishers—have come together to design and jointly endorse a concise and measureable set of principles that we refer to as the FAIR Data Principles. The intent is that these may act as a guideline for those wishing to enhance the reusability of their data holdings. Distinct from peer initiatives that focus on the human scholar, the FAIR Principles put specific emphasis on enhancing the ability of machines to automatically find and use the data, in addition to supporting its reuse by individuals. This Comment is the first formal publication of the FAIR Principles, and includes the rationale behind them, and some exemplar implementations in the community.",
+				"issue": "1",
+				"journalAbbreviation": "Sci Data",
 				"language": "en",
 				"libraryCatalog": "www.nature.com",
 				"pages": "160018",
 				"publicationTitle": "Scientific Data",
-				"rights": "2016 Nature Publishing Group",
+				"rights": "2016 The Author(s)",
 				"url": "https://www.nature.com/articles/sdata201618",
 				"volume": "3",
 				"attachments": [
 					{
-						"title": "Snapshot"
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
 					},
+					{
+						"title": "Snapshot",
+						"mimeType": "text/html"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://www.nature.com/articles/s41563-020-00871-7",
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "Evidence for a higher-order topological insulator in a three-dimensional material built from van der Waals stacking of bismuth-halide chains",
+				"creators": [
+					{
+						"firstName": "Ryo",
+						"lastName": "Noguchi",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Masaru",
+						"lastName": "Kobayashi",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Zhanzhi",
+						"lastName": "Jiang",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Kenta",
+						"lastName": "Kuroda",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Takanari",
+						"lastName": "Takahashi",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Zifan",
+						"lastName": "Xu",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Daehun",
+						"lastName": "Lee",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Motoaki",
+						"lastName": "Hirayama",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Masayuki",
+						"lastName": "Ochi",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Tetsuroh",
+						"lastName": "Shirasawa",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Peng",
+						"lastName": "Zhang",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Chun",
+						"lastName": "Lin",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Cédric",
+						"lastName": "Bareille",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Shunsuke",
+						"lastName": "Sakuragi",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Hiroaki",
+						"lastName": "Tanaka",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "So",
+						"lastName": "Kunisada",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Kifu",
+						"lastName": "Kurokawa",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Koichiro",
+						"lastName": "Yaji",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Ayumi",
+						"lastName": "Harasawa",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Viktor",
+						"lastName": "Kandyba",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Alessio",
+						"lastName": "Giampietri",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Alexei",
+						"lastName": "Barinov",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Timur K.",
+						"lastName": "Kim",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Cephise",
+						"lastName": "Cacho",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Makoto",
+						"lastName": "Hashimoto",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Donghui",
+						"lastName": "Lu",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Shik",
+						"lastName": "Shin",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Ryotaro",
+						"lastName": "Arita",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Keji",
+						"lastName": "Lai",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Takao",
+						"lastName": "Sasagawa",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Takeshi",
+						"lastName": "Kondo",
+						"creatorType": "author"
+					}
+				],
+				"date": "2021-04",
+				"DOI": "10.1038/s41563-020-00871-7",
+				"ISSN": "1476-4660",
+				"abstractNote": "Low-dimensional van der Waals materials have been extensively studied as a platform with which to generate quantum effects. Advancing this research, topological quantum materials with van der Waals structures are currently receiving a great deal of attention. Here, we use the concept of designing topological materials by the van der Waals stacking of quantum spin Hall insulators. Most interestingly, we find that a slight shift of inversion centre in the unit cell caused by a modification of stacking induces a transition from a trivial insulator to a higher-order topological insulator. Based on this, we present angle-resolved photoemission spectroscopy results showing that the real three-dimensional material Bi4Br4 is a higher-order topological insulator. Our demonstration that various topological states can be selected by stacking chains differently, combined with the advantages of van der Waals materials, offers a playground for engineering topologically non-trivial edge states towards future spintronics applications.",
+				"issue": "4",
+				"journalAbbreviation": "Nat. Mater.",
+				"language": "en",
+				"libraryCatalog": "www.nature.com",
+				"pages": "473-479",
+				"publicationTitle": "Nature Materials",
+				"rights": "2021 The Author(s), under exclusive licence to Springer Nature Limited",
+				"url": "https://www.nature.com/articles/s41563-020-00871-7",
+				"volume": "20",
+				"attachments": [
 					{
 						"title": "Full Text PDF",
 						"mimeType": "application/pdf"
+					},
+					{
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],

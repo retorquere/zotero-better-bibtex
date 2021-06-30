@@ -1,15 +1,15 @@
 {
 	"translatorID": "c54d1932-73ce-dfd4-a943-109380e06574",
+	"translatorType": 4,
 	"label": "Project MUSE",
-	"creator": "Sebastian Karcher",
+	"creator": "Sebastian Karcher and Abe Jellinek",
 	"target": "^https?://[^/]*muse\\.jhu\\.edu/(book/|article/|issue/|search\\?)",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2020-12-15 03:03:06"
+	"lastUpdated": "2021-05-19 18:10:00"
 }
 
 /*
@@ -71,8 +71,8 @@ function doWeb(doc, url) {
 			if (!items) {
 				return true;
 			}
-			var articles = [];
-			for (var i in items) {
+			let articles = [];
+			for (let i in items) {
 				articles.push(i);
 			}
 			ZU.processDocuments(articles, scrape);
@@ -87,14 +87,14 @@ function doWeb(doc, url) {
 
 function scrape(doc) {
 	let citationURL = ZU.xpathText(doc, '//li[@class="view_citation"]//a/@href');
-	ZU.processDocuments(citationURL, function (text) {
-		let risEntry = ZU.xpathText(text, '//*[(@id = "tabs-4")]//p');
-		let doiEntry = ZU.xpathText(text, '//*[(@id = "tabs-1")]//p');
+	ZU.processDocuments(citationURL, function (respText) {
+		let risEntry = ZU.xpathText(respText, '//*[(@id = "tabs-4")]//p');
+		let doiEntry = ZU.xpathText(respText, '//*[(@id = "tabs-1")]//p');
 		if (doiEntry.includes('doi:')) {
 			var doi = doiEntry.split('doi:')[1].replace(/.$/, '');
 		}
 		// RIS translator
-		var translator = Zotero.loadTranslator("import");
+		let translator = Zotero.loadTranslator("import");
 		translator.setTranslator("32d59d2d-b65a-4da4-b0a3-bdd3cfb979e7");
 		translator.setString(risEntry);
 		translator.setHandler("itemDone", function (obj, item) {
@@ -110,11 +110,24 @@ function scrape(doc) {
 				item.tags = tags.split(",");
 			}
 			item.notes = [];
+			
+			let cards = doc.querySelectorAll('.card');
+			for (let card of cards) {
+				let url = attr(card, 'a[href*="/pdf"]', 'href');
+				if (!url) continue;
+				item.attachments.push({
+					url,
+					title: text(card, '.title') || "Full Text PDF",
+					mimeType: 'application/pdf'
+				});
+			}
 			item.complete();
 		});
 		translator.translate();
 	});
-}/** BEGIN TEST CASES **/
+}
+
+/** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
@@ -138,7 +151,12 @@ var testCases = [
 				"publicationTitle": "Past & Present",
 				"url": "https://muse.jhu.edu/article/200965",
 				"volume": "191",
-				"attachments": [],
+				"attachments": [
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
+					}
+				],
 				"tags": [],
 				"notes": [],
 				"seeAlso": []
@@ -172,7 +190,80 @@ var testCases = [
 				"publisher": "Duquesne University Press",
 				"shortTitle": "Writing the Forest in Early Modern England",
 				"url": "https://muse.jhu.edu/book/785",
-				"attachments": [],
+				"attachments": [
+					{
+						"title": "Cover",
+						"mimeType": "application/pdf"
+					},
+					{
+						"title": "Title Page, Copyright",
+						"mimeType": "application/pdf"
+					},
+					{
+						"title": "CONTENTS",
+						"mimeType": "application/pdf"
+					},
+					{
+						"title": "FIGURES",
+						"mimeType": "application/pdf"
+					},
+					{
+						"title": "ACKNOWLEDGMENTS",
+						"mimeType": "application/pdf"
+					},
+					{
+						"title": "INTRODUCTION: Sylvan Pastoral in Early Modern England",
+						"mimeType": "application/pdf"
+					},
+					{
+						"title": "ONE. The Rise of Sylvan Pastoral: LITERARY FORM MEETS FOREST HISTORY",
+						"mimeType": "application/pdf"
+					},
+					{
+						"title": "Part I. Sylvan Pastoral, Shakespeare, and 1590s England",
+						"mimeType": "application/pdf"
+					},
+					{
+						"title": "TWO. Shakespeare’s Green Plot: THE STAGE AS FOREST AND THE FOREST AS STAGE IN AS YOU LIKE IT",
+						"mimeType": "application/pdf"
+					},
+					{
+						"title": "THREE. Green Plots and Green Plotters: A MIDSUMMER NIGHT’S DREAM AND SYLVAN STRUGGLE",
+						"mimeType": "application/pdf"
+					},
+					{
+						"title": "FOUR. A Border Skirmish: COMMUNITY, DEER POACHING, AND SPATIAL TRANSGRESSION IN THE MERRY WIVES OF WINDSOR",
+						"mimeType": "application/pdf"
+					},
+					{
+						"title": "Part II. Forest Knowledge/Forest Power: Sylvan Pastoral in Mid-Seventeenth Century England",
+						"mimeType": "application/pdf"
+					},
+					{
+						"title": "FIVE. Sylvan Pastoral and the Civil War: REPRESENTING NATIONAL TRAUMA IN SYLVAN TERMS",
+						"mimeType": "application/pdf"
+					},
+					{
+						"title": "SIX. Royalist Woods",
+						"mimeType": "application/pdf"
+					},
+					{
+						"title": "SEVEN. John Milton’s Sylvan Pastorals and the Theatrical and Godly Individual",
+						"mimeType": "application/pdf"
+					},
+					{
+						"title": "NOTES",
+						"mimeType": "application/pdf"
+					},
+					{
+						"title": "BIBLIOGRAPHY",
+						"mimeType": "application/pdf"
+					},
+					{
+						"title": "INDEX",
+						"mimeType": "application/pdf"
+					}
+				],
 				"tags": [],
 				"notes": [],
 				"seeAlso": []
@@ -204,7 +295,12 @@ var testCases = [
 				"shortTitle": "The Pill at Fifty",
 				"url": "https://muse.jhu.edu/article/530509",
 				"volume": "54",
-				"attachments": [],
+				"attachments": [
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
+					}
+				],
 				"tags": [],
 				"notes": [],
 				"seeAlso": []
@@ -235,7 +331,12 @@ var testCases = [
 				"publicationTitle": "Latin American Research Review",
 				"url": "https://muse.jhu.edu/article/551992",
 				"volume": "49",
-				"attachments": [],
+				"attachments": [
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
+					}
+				],
 				"tags": [],
 				"notes": [],
 				"seeAlso": []
@@ -267,7 +368,12 @@ var testCases = [
 				"shortTitle": "American Judaism and the Second Vatican Council",
 				"url": "https://muse.jhu.edu/article/762340",
 				"volume": "38",
-				"attachments": [],
+				"attachments": [
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
+					}
+				],
 				"tags": [
 					{
 						"tag": " Abram"

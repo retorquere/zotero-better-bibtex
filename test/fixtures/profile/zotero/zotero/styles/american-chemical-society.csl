@@ -5,7 +5,8 @@
     <title-short>ACS</title-short>
     <id>http://www.zotero.org/styles/american-chemical-society</id>
     <link href="http://www.zotero.org/styles/american-chemical-society" rel="self"/>
-    <link href="https://pubs.acs.org/doi/pdf/10.1021/bk-2006-STYG.ch014" rel="documentation"/>
+    <link href="https://pubs.acs.org/doi/full/10.1021/acsguide.40303" rel="documentation"/>
+    <link href="https://pubs.acs.org/doi/book/10.1021/acsguide" rel="documentation"/>
     <author>
       <name>Julian Onions</name>
       <email>julian.onions@gmail.com</email>
@@ -20,7 +21,7 @@
     <category citation-format="numeric"/>
     <category field="chemistry"/>
     <summary>The American Chemical Society style</summary>
-    <updated>2020-03-10T23:19:30+00:00</updated>
+    <updated>2021-06-04T03:27:50+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -253,9 +254,9 @@
             <text variable="title"/>
             <text variable="URL"/>
             <date variable="accessed" prefix="(accessed " suffix=")" delimiter=" ">
-              <date-part name="month" form="short" strip-periods="true"/>
-              <date-part name="day" suffix=", "/>
               <date-part name="year"/>
+              <date-part name="month" prefix="-" form="numeric-leading-zeros"/>
+              <date-part name="day" prefix="-" form="numeric-leading-zeros"/>
             </date>
           </group>
         </else-if>

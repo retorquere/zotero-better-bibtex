@@ -1,15 +1,15 @@
 {
 	"translatorID": "4883f662-29df-44ad-959e-27c9d036d165",
+	"translatorType": 4,
 	"label": "FAO Publications",
 	"creator": "Bin Liu <lieubean@gmail.com>",
 	"target": "^https?://www\\.fao\\.org/documents|publications/",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2020-05-17 12:27:13"
+	"lastUpdated": "2021-06-09 13:20:00"
 }
 
 /*
@@ -29,9 +29,29 @@
 	***** END LICENSE BLOCK *****
 */
 function detectWeb(doc, url) {
-	// Just differentiate single and multiple. Correct itemType (either book or conferencePaper) will be determined in scrape().
+	// Just differentiate single and multiple.
+	// Identify item type (book or conferencePaper) based on "fdr_label" class.
 	if (url.includes('card')) {
-		return 'book';
+		let isConferencePaper = false;
+		let confMetaName = ['اسم الاجتماع', '会议名称', 'Meeting Name', 'Nom de la réunion', 'Название мероприятия', 'Nombre de la reunión'];
+		let labelArray = doc.querySelectorAll('.fdr_label');
+		for (let i = 0; i < labelArray.length; i++) {
+			for (let j = 0; j < confMetaName.length; j++) {
+				isConferencePaper = labelArray[i].innerText.includes(confMetaName[j]);
+				if (isConferencePaper) {
+					break;
+				}
+			}
+			if (isConferencePaper) {
+				break;
+			}
+		}
+		if (isConferencePaper) {
+			return 'conferencePaper';
+		}
+		else {
+			return 'book';
+		}
 	}
 
 	/* Multiples currently don't load properly
@@ -59,12 +79,12 @@ function scrape(doc, url) {
 	if (url.includes('card')) {
 		// attach document card URL and snapshot
 		// TEMP: Disable at least until we have post-JS snapshots
-		/*newItem.attachments.push({
+		/* newItem.attachments.push({
 			url: url,
 			title: 'FAO Document Record Snapshot',
 			mimeType: 'text/html',
 			snapshot: true
-		});*/
+		}); */
 
 		//* ********* Begin fixed-location variables **********
 
@@ -98,10 +118,11 @@ function scrape(doc, url) {
 					newItem.abstractNote = child.textContent;
 				}
 			}
-			// DOI: Some docs contain DOI as the last paragraph in abs field
+			// DOI: Some docs contain DOI as a separate paragraph in abs field
 			var DOILead = 'https://doi.org/';
-			if (abs.textContent.includes(DOILead)) {
-				newItem.DOI = abs.textContent.slice(abs.textContent.indexOf(DOILead) + DOILead.length);
+			if (abs.innerText.includes(DOILead)) {
+				var DOIMatch = abs.innerText.match(/https:\/\/doi\.org\/(.+)/i);
+				newItem.DOI = DOIMatch[1];
 			}
 		}
 		// attach PDF
@@ -153,7 +174,7 @@ function scrape(doc, url) {
 		if (!subTitle) {
 			newItem.title = mainTitle;
 		}
-		else if ((newItem.language == 'zh') || (newItem.language == 'ja') || (newItem.language == 'ko')) {
+		else if ((newItem.language == 'zh') || (newItem.language == 'ja')) {
 			newItem.title = mainTitle + '：' + subTitle;
 		}
 		else {
@@ -169,10 +190,10 @@ function scrape(doc, url) {
 		var metaText = ZU.xpath(doc, '//*[@id="mainN0"]')[0].innerText.split('\n'); // scrape text of meta area and split into an array based on line breaks.
 		// get what variables are listed in the page, save to object existingMeta
 		var textVariable = { // declarations for metadata names as appeared in document pages in different languages
-			date: ['سنة النشر', '出版年代', 'Year of publication', 'Année de publication', 'Год издания', 'Fecha de publicación'],
+			date: ['سنة النشر', '出版年份', 'Year of publication', 'Année de publication', 'Год издания', 'Fecha de publicación'],
 			publisher: ['الناشر', '出版方', 'Publisher', 'Éditeur', 'Издатель', 'Editor'],
-			place: ['مكان النشر', '出版地點', 'Place of publication', 'Lieu de publication', 'Место публикации', 'Lugar de publicacion'],
-			pages: ['الصفحات', '页次', 'Pages', 'Страницы', 'Páginas'],
+			place: ['مكان النشر', '出版地点', 'Place of publication', 'Lieu de publication', 'Место публикации', 'Lugar de publicacion'],
+			pages: ['الصفحات', '页数', 'Pages', 'Страницы', 'Páginas'],
 			ISBN: ['الرقم الدولي الموحد للكتاب', 'ISBN'],
 			author: ['الكاتب', '作者', 'Author', 'Auteur', 'Автор', 'Autor'],
 			seriesTitle: ['العنوان التسلسي', '系列标题', 'Serial Title', 'Titre de la série', 'Название серии', 'Título de la serie'],
@@ -251,9 +272,9 @@ function scrape(doc, url) {
 			if (key.includes('seriesTitle')) {
 				newItem.series = metaResult;
 			}
-			// seriesNumber: convert first letter to upper case
+			// seriesNumber: extract the number.
 			if (key.includes('seriesNumber')) {
-				newItem.seriesNumber = metaResult[0].toUpperCase() + metaResult.slice(1);
+				newItem.seriesNumber = (metaResult.match(/\d+/) || [])[0];
 			}
 			// conferenceName: save for later conditions.
 			if (key.includes('conference')) {
@@ -331,6 +352,58 @@ function doWeb(doc, url) {
 var testCases = [
 	{
 		"type": "web",
+		"url": "http://www.fao.org/documents/card/en/c/ca8466en",
+		"defer": true,
+		"items": [
+			{
+				"itemType": "book",
+				"title": "Responding to the impact of the COVID-19 outbreak on food value chains through efficient logistics",
+				"creators": [
+					{
+						"lastName": "FAO",
+						"creatorType": "author",
+						"fieldMode": 1
+					}
+				],
+				"date": "2020",
+				"ISBN": "9789251323717",
+				"abstractNote": "Measures implemented around the world to contain the COVID-19 pandemic have entailed a severe reduction not only in the transportation of goods and services that rely on transport, but also in the migration of labour domestically and internationally. Workers are less available reflecting both disruptions in transportation systems and restrictions to stop the transmission of the disease, within and across borders. \n\nThe Food and Agriculture Organization of the United Nations (FAO) urges countries to maintain functioning food value chains to avoid food shortages, following practices that are being proven to work. This note summarizes some practices that could be useful for governments and the private sector to maintain critical logistical elements in food value chain.\n\nRevised 26 April 2020.\n\nSee the full list of policy briefs related to COVID-19\n\n.",
+				"language": "en",
+				"libraryCatalog": "FAO Publications",
+				"numPages": "4",
+				"place": "Rome, Italy",
+				"publisher": "FAO",
+				"url": "http://www.fao.org/documents/card/en/c/ca8466en",
+				"attachments": [
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
+					}
+				],
+				"tags": [
+					{
+						"tag": "Coronavirus"
+					},
+					{
+						"tag": "agrifood sector"
+					},
+					{
+						"tag": "infectious diseases"
+					},
+					{
+						"tag": "logistics"
+					},
+					{
+						"tag": "value chains"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
 		"url": "http://www.fao.org/documents/card/en/c/ca8751en/",
 		"defer": true,
 		"items": [
@@ -358,7 +431,7 @@ var testCases = [
 				"place": "Rome, Italy",
 				"publisher": "FAO",
 				"series": "FAO Fisheries and Aquaculture Circular",
-				"seriesNumber": "No. 1207",
+				"seriesNumber": "1207",
 				"url": "http://www.fao.org/documents/card/en/c/ca8751en/",
 				"attachments": [
 					{
@@ -517,14 +590,14 @@ var testCases = [
 				"title": "Vivre et se nourir de la forêt en Afrique centrale",
 				"creators": [
 					{
-						"lastName": "Ousseynou Ndoye",
-						"creatorType": "author",
-						"fieldMode": 1
+						"firstName": "O.",
+						"lastName": "Ndoye",
+						"creatorType": "author"
 					},
 					{
-						"lastName": " Paul Vantomme",
-						"creatorType": "author",
-						"fieldMode": 1
+						"firstName": "P.",
+						"lastName": "Vantomme",
+						"creatorType": "author"
 					}
 				],
 				"date": "2016",
@@ -535,7 +608,7 @@ var testCases = [
 				"numPages": "251",
 				"place": "Rome, Italy",
 				"publisher": "FAO",
-				"series": "Non-wood forest products working paper",
+				"series": "Produits Forestiers Non-Ligneux",
 				"seriesNumber": "21",
 				"url": "http://www.fao.org/publications/card/fr/c/77dbd058-8dd4-4295-af77-23f6b28cc683/",
 				"attachments": [
@@ -549,64 +622,34 @@ var testCases = [
 						"tag": "Afrique centrale"
 					},
 					{
-						"tag": "Aménagement forestier"
+						"tag": "Commerce international"
 					},
 					{
-						"tag": "Burundi"
-					},
-					{
-						"tag": "Cameroun"
-					},
-					{
-						"tag": "Congo"
+						"tag": "Communauté rurale"
 					},
 					{
 						"tag": "Connaissance indigène"
 					},
 					{
-						"tag": "Conservation de la diversité biologique"
+						"tag": "Nouvelle technologie"
 					},
 					{
-						"tag": "Forêt humide"
+						"tag": "Petite entreprise"
 					},
 					{
-						"tag": "Gabon"
-					},
-					{
-						"tag": "Gnetum"
-					},
-					{
-						"tag": "Guinée Équatoriale"
+						"tag": "Politique forestière"
 					},
 					{
 						"tag": "Produit forestier non ligneux"
 					},
 					{
-						"tag": "Ricinodendron heudelotii"
+						"tag": "Ressource forestière"
 					},
 					{
-						"tag": "Rwanda"
+						"tag": "Sécurité alimentaire"
 					},
 					{
-						"tag": "République centrafricaine"
-					},
-					{
-						"tag": "République démocratique du Congo"
-					},
-					{
-						"tag": "Sao Tomé-et-Principe"
-					},
-					{
-						"tag": "Tchad"
-					},
-					{
-						"tag": "Technologie traditionnelle"
-					},
-					{
-						"tag": "forest products derivation"
-					},
-					{
-						"tag": "méthode traditionnelle"
+						"tag": "Valeur économique"
 					},
 					{
 						"tag": "sustainable forest management"
@@ -765,12 +808,12 @@ var testCases = [
 				"notes": [],
 				"seeAlso": []
 			}
-		],
-		"defer": true
+		]
 	},
 	{
 		"type": "web",
 		"url": "http://www.fao.org/publications/card/ar/c/c6c2c8d7-3683-53a7-ab58-ce480c65f36c/",
+		"defer": true,
 		"items": [
 			{
 				"itemType": "book",
@@ -798,32 +841,31 @@ var testCases = [
 				],
 				"tags": [
 					{
-						"tag": "fishery economics"
+						"tag": "null"
 					},
 					{
-						"tag": "forestry economics"
+						"tag": "null"
 					},
 					{
-						"tag": "gender"
+						"tag": "null"
 					},
 					{
-						"tag": "governance"
-					},
-					{
-						"tag": "guidelines"
-					},
-					{
-						"tag": "land tenure"
+						"tag": "null"
 					},
 					{
 						"tag": "أمن غذائي"
+					},
+					{
+						"tag": "الحكم"
+					},
+					{
+						"tag": "حيازة الأراضي"
 					}
 				],
 				"notes": [],
 				"seeAlso": []
 			}
-		],
-		"defer": true
+		]
 	}
 ]
 /** END TEST CASES **/
