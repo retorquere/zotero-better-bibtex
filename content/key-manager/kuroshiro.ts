@@ -9,7 +9,7 @@ import { zotero as inZotero } from '../environment'
 
 if (inZotero) {
   NodeDictionaryLoader.prototype.loadArrayBuffer = function(url, callback) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
-    url = `resource://zotero-better-bibtex/kuromoji/${url.replace(/.*\//, '').replace(/\.gz$/, '')}`
+    url = `resource://zotero-better-bibtex/kuromoji/${url.replace(/.*[\\/]/, '').replace(/\.gz$/, '')}`
     const xhr = new XMLHttpRequest()
 
     xhr.open('GET', url, true)
