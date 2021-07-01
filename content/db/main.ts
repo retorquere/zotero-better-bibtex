@@ -8,6 +8,19 @@ import { SQLite } from './store/sqlite'
 
 import * as Translators from '../../gen/translators.json'
 
+export function scrubAutoExport(ae: any) {
+  const translator = schema.translator[Translators.byId[ae.translatorID].label]
+
+  for (const k of (schema.autoExport.preferences as string[]).concat(schema.autoExport.displayOptions)) {
+    if (typeof ae[k] !== 'undefined' && !translator.types[k]) {
+      delete ae[k]
+      log.debug('ae: stripping', k, 'from', ae)
+    }
+  }
+
+  return ae // eslint-disable-line @typescript-eslint/no-unsafe-return
+}
+
 class Main extends Loki {
   public async init() {
     await this.loadDatabaseAsync()
@@ -106,8 +119,10 @@ class Main extends Loki {
     for (const ae of autoexport.find()) {
       if (typeof ae.recursive !== 'boolean') {
         ae.recursive = false
-        autoexport.update(ae)
       }
+
+      scrubAutoExport(ae)
+      autoexport.update(ae)
     }
 
     if (Preference.scrubDatabase) {
