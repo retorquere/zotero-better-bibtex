@@ -4,7 +4,7 @@ declare const FileUtils: any
 import { log } from './logger'
 
 import { Events } from './events'
-import { DB } from './db/main'
+import { DB, scrubAutoExport } from './db/main'
 import { DB as Cache, selector as cacheSelector } from './db/cache'
 import { $and } from './db/loki'
 import { Translators } from './translators'
@@ -157,19 +157,6 @@ class Git {
 const git = new Git()
 
 
-function scrub(ae: any) {
-  const translator = schema.translator[Translators.byId[ae.translatorID].label]
-
-  for (const k of (schema.autoExport.preferences as string[]).concat(schema.autoExport.displayOptions)) {
-    if (!translator.types[k]) {
-      delete ae[k]
-      log.debug('ae: stripping', k, 'from', ae)
-    }
-  }
-
-  return ae // eslint-disable-line @typescript-eslint/no-unsafe-return
-}
-
 if (Preference.autoExportDelay < 1) Preference.autoExportDelay = 1
 const queue = new class TaskQueue {
   private scheduler = new Scheduler('autoExportDelay', 1000) // eslint-disable-line no-magic-numbers
@@ -222,7 +209,7 @@ const queue = new class TaskQueue {
     if (!ae) throw new Error(`AutoExport ${$loki} not found`)
 
     ae.status = 'running'
-    this.autoexports.update(scrub(ae))
+    this.autoexports.update(scrubAutoExport(ae))
     const started = Date.now()
     log.debug('auto-export', ae.type, ae.id, 'started')
 
@@ -301,7 +288,7 @@ const queue = new class TaskQueue {
 
     ae.status = 'done'
     log.debug('auto-export done')
-    this.autoexports.update(scrub(ae))
+    this.autoexports.update(scrubAutoExport(ae))
   }
 
   private getCollectionPath(coll: {name: string, parentID: number}, root: number): string[] {
@@ -400,7 +387,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
     }
 
     this.db.removeWhere({ path: ae.path })
-    this.db.insert(scrub(ae))
+    this.db.insert(scrubAutoExport(ae))
 
     git.repo(ae.path).then(repo => {
       if (repo.enabled || schedule) this.schedule(ae.type, [ae.id]) // causes initial push to overleaf at the cost of a unnecesary extra export
