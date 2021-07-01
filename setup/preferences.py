@@ -92,7 +92,7 @@ class Preferences:
           affected += [tr.label for tr in self.translators.values() if 'Better ' in tr.label and not 'Quick' in tr.label and affects in tr.label.lower()]
         else:
           raise ValueError(affects)
-      affects = list(set(affected))
+      affects = sorted(list(set(affected)))
 
       doc = pref.getnext()
       pref = Munch(
