@@ -1,5 +1,5 @@
 export function join() {
-  return OS.Path.join.apply(null, arguments)
+  return OS.Path.join(...arguments)
 }
 
 export function dirname(filename) {
