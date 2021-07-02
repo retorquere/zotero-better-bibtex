@@ -53,7 +53,7 @@ def clean_item(item):
 
   # make diffs more readable
   if 'extra' in item and type(item['extra']) != list:
-    item['extra'] = item['extra'].split('\n')
+    item['extra'] = item['extra'].lower().split('\n')
 
   if 'notes' in item:
     item['notes'] = sorted(strip_obj([html2md(unnest(note, 'note')) for note in item.get('notes', [])]))
