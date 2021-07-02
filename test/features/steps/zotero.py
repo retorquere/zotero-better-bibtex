@@ -12,7 +12,7 @@ import toml
 import urllib
 import tempfile
 from munch import *
-from steps.utils import running, nested_dict_iter, benchmark, ROOT, assert_equal_diff, serialize, html2md, post_log, clean_html
+from steps.utils import running, nested_dict_iter, benchmark, ROOT, assert_equal_diff, serialize, html2md, post_log, clean_html, extra_lower
 from steps.library import load as Library
 from steps.bbtjsonschema import validate as validate_bbt_json
 import steps.utils as utils
@@ -368,7 +368,7 @@ class Zotero:
 
       expected = Library(expected)
       found = Library(json.loads(found, object_pairs_hook=OrderedDict))
-      assert_equal_diff(serialize(expected), serialize(found))
+      assert_equal_diff(serialize(extra_lower(expected)), serialize(extra_lower(found)))
 
     elif expected_file.endswith('.html'):
       assert_equal_diff(clean_html(expected).strip(), clean_html(found).strip())
