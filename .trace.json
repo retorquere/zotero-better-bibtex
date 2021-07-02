@@ -1,6 +1,8 @@
 {
-  "gh-1860x": [
-    "content/**/*.ts"
+  "gh-1860": [
+    "content/better-bibtex.ts",
+    "!gen",
+    "!translators"
   ],
   "-gh-1389": [
     "content/translators.ts",
