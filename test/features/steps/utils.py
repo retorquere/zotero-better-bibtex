@@ -72,7 +72,7 @@ def serialize(obj):
   return json.dumps(obj, indent=2, ensure_ascii=True, sort_keys=True)
 
 def extra_lower(obj):
-  if type(obj) == dict and 'items' in obj:
+  if isinstance(obj, dict) and 'items' in obj:
     obj = copy.deepcopy(obj)
     for item in obj['items']:
       if 'extra' in item:
