@@ -254,8 +254,9 @@ $patch$(Zotero.Item.prototype, 'clone', original => function Zotero_Item_prototy
   const item = original.apply(this, arguments)
   try {
     // # 1860
-    log.debug('Zotero.Item.prototype.clone: stripping citation key?', this.libraryID === libraryID)
-    if (this.libraryID === libraryID && item.isRegularItem()) item.setField('extra', (item.getField('extra') || '').split('\n').filter((line: string) => !(line.toLowerCase().startsWith('citation key:'))).join('\n'))
+    if ((typeof libraryID === 'undefined' || this.libraryID === libraryID) && item.isRegularItem()) {
+      item.setField('extra', item.getField('extra').replace(/(^|\n)citation key:[^\n]*(\n|$)/i, '\n').trim())
+    }
   }
   catch (err) {
     log.error('patched clone:', {libraryID, options, err})
