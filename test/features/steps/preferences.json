@@ -752,7 +752,7 @@
   {
     "name": "verbatimFields",
     "type": "string",
-    "default": "url,doi,file,eprint,verba,verbb,verbc,groups",
+    "default": "url,doi,file,ids,eprint,verba,verbb,verbc,groups",
     "affects": [],
     "var": "verbatimFields"
   },
