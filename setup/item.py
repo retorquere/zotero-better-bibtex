@@ -236,23 +236,23 @@ class ExtraFields:
       self.dg.add_node(f'label:{label}', **attrs)
       self.dg.add_edge(f'label:{label}', f'{domain}:{name}', graphics={ 'targetArrow': 'standard' })
 
-  def add_mapping(self, f, t, reverse=True):
-    mappings = [(f, t)]
-    if reverse: mappings.append((t, f))
-    for f, t in mappings:
-      self.dg.add_edge(':'.join(f), ':'.join(t), graphics={ 'targetArrow': 'standard' })
+  def add_mapping(self, from_, to, reverse=True):
+    mappings = [(from_, to)]
+    if reverse: mappings.append((to, from_))
+    for from_, to in mappings:
+      self.dg.add_edge(':'.join(from_), ':'.join(to), graphics={ 'targetArrow': 'standard' })
 
-  def add_var(self, domain, name, tpe, client):
+  def add_var(self, domain, name, type_, client):
     assert domain in ['csl', 'zotero']
     assert type(name) == str
-    assert tpe in ['name', 'date', 'text']
+    assert type_ in ['name', 'date', 'text']
 
     node_id = f'{domain}:{name}'
 
     if node_id in self.dg.nodes:
-      assert self.dg.nodes[node_id]['type'] == tpe, (domain, name, self.dg.nodes[node_id]['type'], tpe)
+      assert self.dg.nodes[node_id]['type'] == type_, (domain, name, self.dg.nodes[node_id]['type'], type_)
     else:
-      self.dg.add_node(f'{domain}:{name}', domain=domain, name=name, type=tpe, graphics={'h': 30.0, 'w': 7 * len(name), 'fill': self.color[domain]})
+      self.dg.add_node(f'{domain}:{name}', domain=domain, name=name, type=type_, graphics={'h': 30.0, 'w': 7 * len(name), 'fill': self.color[domain]})
     self.dg.nodes[node_id][client] = True
 
 
@@ -263,33 +263,33 @@ class ExtraFields:
 
     # add nodes & edges
     for field, baseField in {str(f.path): f.value for f in jsonpath.parse('$.itemTypes.*.fields.*').find(schema)}.items():
-      self.add_var('zotero', baseField, typeof.get(baseField, 'text'), client)
+      self.add_var(domain='zotero', name=baseField, type_=typeof.get(baseField, 'text'), client=client)
 
     for field in jsonpath.parse('$.itemTypes.*.creatorTypes[*]').find(schema):
-      self.add_var('zotero', field.value, 'name', client)
+      self.add_var(domain='zotero', name=field.value, type_='name', client=client)
 
     for fields in jsonpath.parse('$.csl.fields.text').find(schema):
       for csl, zotero in fields.value.items():
-        self.add_var('csl', csl, 'text', client)
+        self.add_var(domain='csl', name=csl, type_='text', client=client)
         for field in zotero:
-          self.add_var('zotero', field, 'text', client)
-          self.add_mapping(('csl', csl), ('zotero', field))
+          self.add_var(domain='zotero', name=field, type_='text', client=client)
+          self.add_mapping(from_=('csl', csl), to=('zotero', field))
 
     for fields in jsonpath.parse('$.csl.fields.date').find(schema):
       for csl, zotero in fields.value.items():
-        self.add_var('csl', csl, 'date', client)
+        self.add_var(domain='csl', name=csl, type_='date', client=client)
         if type(zotero) == str: zotero = [zotero] # juris-m has a list here, zotero strings
         for field in zotero:
-          self.add_var('zotero', field, 'date', client)
-          self.add_mapping(('csl', csl), ('zotero', field))
+          self.add_var(domain='zotero', name=field, type_='date', client=client)
+          self.add_mapping(from_=('csl', csl), to=('zotero', field))
 
     for zotero, csl in schema.csl.names.items():
-      self.add_var('csl', csl, 'name', client)
-      self.add_var('zotero', zotero, 'name', client)
-      self.add_mapping(('csl', csl), ('zotero', zotero))
+      self.add_var(domain='csl', name=csl, type_='name', client=client)
+      self.add_var(domain='zotero', name=zotero, type_='name', client=client)
+      self.add_mapping(from_=('csl', csl), to=('zotero', zotero))
 
-    for field, tpe in schema.csl.unmapped.items():
-      if tpe != 'type': self.add_var('csl', field, tpe, client)
+    for field, type_ in schema.csl.unmapped.items():
+      if type_ != 'type': self.add_var(domain='csl', name=field, type_=type_, client=client)
 
     # add labels
     for node, data in list(self.dg.nodes(data=True)):
@@ -452,8 +452,8 @@ with fetch('zotero') as z, fetch('jurism') as j:
   SCHEMA.zotero = Munch.fromDict(patch(json.load(z), 'schema.patch', 'zotero.patch'))
   SCHEMA.jurism = Munch.fromDict(patch(json.load(j), 'schema.patch', 'jurism.patch'))
 
-  with open('schema.json', 'w') as f:
-    json.dump(SCHEMA.jurism, f, indent='  ')
+  #with open('schema.json', 'w') as f:
+  #  json.dump(SCHEMA.jurism, f, indent='  ')
 
   # test for inconsistent basefield mapping
   for schema in ['jurism', 'zotero']:
@@ -587,8 +587,8 @@ with open(os.path.join(ITEMS, 'items.ts'), 'w') as f:
 print('  writing csl-types')
 with open(os.path.join(ITEMS, 'csl-types.json'), 'w') as f:
   types = set()
-  for tpe in jsonpath.parse('*.csl.types.*').find(SCHEMA):
-    types.add(str(tpe.full_path).split('.')[-1])
-  for tpe in jsonpath.parse('*.csl.unmapped.*').find(SCHEMA):
-    if tpe.value == 'type': types.add(str(tpe.full_path).split('.')[-1])
+  for type_ in jsonpath.parse('*.csl.types.*').find(SCHEMA):
+    types.add(str(type_.full_path).split('.')[-1])
+  for type_ in jsonpath.parse('*.csl.unmapped.*').find(SCHEMA):
+    if type_.value == 'type': types.add(str(type_.full_path).split('.')[-1])
   json.dump(list(types), f)
