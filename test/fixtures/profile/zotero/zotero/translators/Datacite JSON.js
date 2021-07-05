@@ -8,7 +8,7 @@
 	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"lastUpdated": "2020-04-20 20:45:00"
+	"lastUpdated": "2021-06-08 14:40:00"
 }
 
 /*
@@ -105,7 +105,7 @@ function doImport() {
 
 	var item = new Zotero.Item(type);
 	if (data.types.citeproc == "dataset") {
-		item.extra = "type: dataset";
+		item.extra = "Type: dataset";
 	}
 	var title = "";
 	for (let titleElement of data.titles) {
@@ -433,7 +433,7 @@ var testCases = [
 					}
 				],
 				"date": "2016",
-				"extra": "type: dataset\nDOI: 10.17171/2-3-12-1",
+				"extra": "Type: dataset\nDOI: 10.17171/2-3-12-1",
 				"publisher": "Edition Topoi",
 				"url": "http://repository.edition-topoi.org/collection/MAGN/single/0012/0",
 				"attachments": [],

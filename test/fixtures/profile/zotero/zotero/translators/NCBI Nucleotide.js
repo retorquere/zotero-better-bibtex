@@ -1,15 +1,15 @@
 {
 	"translatorID": "5e385e77-2f51-41b4-a29b-908e23d5d3e8",
+	"translatorType": 4,
 	"label": "NCBI Nucleotide",
 	"creator": "Martin Fenner",
 	"target": "^https?://(www\\.)?ncbi\\.nlm\\.nih\\.gov/nuccore/",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcs",
-	"lastUpdated": "2014-11-15 11:25:19"
+	"lastUpdated": "2021-06-08 14:40:00"
 }
 
 /**
@@ -119,11 +119,11 @@ function parseJSON(text) {
 		item.archiveLocation = uid;
 
 		// indicate that this is in fact a dataset
-		item.extra = "{:itemType: dataset}";
+		item.extra = "Type: dataset";
 
 		var version = data.accessionversion.match(/\.(\d{1,2})$/);
 		if (version && version[1] != '1') {
-			item.extra += "\n{:version: " + version[1] + "}";
+			item.extra += "\nVersion: " + version[1];
 		}
 
 		item.url = "http://www.ncbi.nlm.nih.gov/nuccore/" + encodeURIComponent(data.accessionversion);
@@ -168,7 +168,7 @@ var testCases = [
 				"archive": "NCBI Nucleotide Database",
 				"archiveLocation": "270186",
 				"callNumber": "I01425.1",
-				"extra": "{:itemType: dataset}",
+				"extra": "Type: dataset",
 				"language": "en-US",
 				"libraryCatalog": "NCBI Nucleotide",
 				"rights": "Public domain",
@@ -201,7 +201,7 @@ var testCases = [
 				"archive": "NCBI Nucleotide Database",
 				"archiveLocation": "665390239",
 				"callNumber": "NM_078524.4",
-				"extra": "{:itemType: dataset}\n{:version: 4}",
+				"extra": "Type: dataset\nVersion: 4",
 				"language": "en-US",
 				"libraryCatalog": "NCBI Nucleotide",
 				"rights": "Public domain",

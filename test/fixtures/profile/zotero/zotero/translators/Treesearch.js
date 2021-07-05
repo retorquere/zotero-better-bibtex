@@ -1,15 +1,15 @@
 {
 	"translatorID": "4ee9dc8f-66d3-4c18-984b-6335408a24af",
+	"translatorType": 4,
 	"label": "Treesearch",
 	"creator": "Aurimas Vinckevicius",
 	"target": "^https?://([^/]+\\.)?treesearch\\.fs\\.fed\\.us/(pubs/\\d+$|search\\.php)",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2019-06-10 23:05:56"
+	"lastUpdated": "2021-06-08 14:40:00"
 }
 
 /**
@@ -43,7 +43,7 @@ function parseSource(sourceStr) {
 		/^(.*[^.])\.?\s+(\d+\w?)(?:\((\d+)\))?:\s*(\w?\d+(?:-\w?\d+)?)(?:\.?\s+\[[^\]]+\])?\s*\.?$/);
 	if (matches) {
 		return {
-			type: 'journalArticle',
+			Type: 'journalArticle',
 			publicationTitle: matches[1],
 			volume: matches[2],
 			issue: matches[3],
@@ -55,14 +55,14 @@ function parseSource(sourceStr) {
 			// book section
 			matches = sourceStr.match(/\d+-\d+/);
 			return {
-				type: 'bookSection',
+				Type: 'bookSection',
 				pages: matches ? matches[0] : null
 			};
 		}
 
 		matches = sourceStr.match(/\.\s+(\d+)\s+p\./);
 		return {
-			type: 'book',
+			Type: 'book',
 			numPages: matches ? matches[1] : null
 		};
 	}

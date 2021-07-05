@@ -1,15 +1,15 @@
 {
 	"translatorID": "7f74d823-d2ba-481c-b717-8b12c90ed874",
+	"translatorType": 4,
 	"label": "Bangkok Post",
 	"creator": "Matt Mayer",
-	"target": "^https://www.bangkokpost.com/[a-z0-9-]+/([a-z0-9-]+/)?[0-9]+",
+	"target": "^https://www\\.bangkokpost\\.com/[a-z0-9-]+/([a-z0-9-]+/)?[0-9]+",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2020-09-08 07:45:28"
+	"lastUpdated": "2021-06-07 17:30:00"
 }
 
 /*

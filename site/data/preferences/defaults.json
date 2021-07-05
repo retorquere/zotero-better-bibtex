@@ -75,7 +75,7 @@
   "startupProgress": "popup",
   "strings": "",
   "testing": false,
-  "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups",
+  "verbatimFields": "url,doi,file,ids,eprint,verba,verbb,verbc,groups",
   "warnBulkModify": 10,
   "warnTitleCased": false,
   "workersCache": true,

@@ -10,3 +10,6 @@
   #body-inner h3 { text-decoration: underline green }
 </style>
 {{ end }}
+{{ if in .Permalink "/exporting/extra-fields/" }}
+<link rel="stylesheet" href="http://cdn.graphalchemist.com/alchemy.min.css"/>
+{{ end }}

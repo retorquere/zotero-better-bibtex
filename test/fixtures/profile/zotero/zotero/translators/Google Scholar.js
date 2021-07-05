@@ -1,15 +1,15 @@
 {
 	"translatorID": "57a00950-f0d1-4b41-b6ba-44ff0fc30289",
+	"translatorType": 4,
 	"label": "Google Scholar",
 	"creator": "Simon Kornblith, Frank Bennett, Aurimas Vinckevicius",
 	"target": "^https?://scholar[-.]google[-.](com|cat|(com?[-.])?[a-z]{2})(\\.[^/]+)?/(scholar(_case)?\\?|citations\\?)",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-11-16 05:56:18"
+	"lastUpdated": "2021-06-08 14:40:00"
 }
 
 // attr()/text() v2
@@ -462,7 +462,7 @@ ItemFactory.prototype.getCourt = function () {
 		this.v.court = court;
 	}
 	if (jurisdiction) {
-		this.v.extra = "{:jurisdiction: " + jurisdiction + "}";
+		this.v.extra = "Jurisdiction: " + jurisdiction;
 	}
 };
 
@@ -762,7 +762,7 @@ var testCases = [
 				"creators": [],
 				"dateDecided": "September 21, 2005",
 				"court": "Court of Appeals, 9th Appellate Dist.",
-				"extra": "{:jurisdiction: Ohio}",
+				"extra": "Jurisdiction: Ohio",
 				"firstPage": "4933",
 				"itemID": "1",
 				"reporter": "Ohio",
@@ -789,7 +789,7 @@ var testCases = [
 				"creators": [],
 				"dateDecided": "June 13, 2007",
 				"court": "Court of Appeals, 4th Appellate Dist.",
-				"extra": "{:jurisdiction: Ohio}",
+				"extra": "Jurisdiction: Ohio",
 				"firstPage": "3029",
 				"itemID": "1",
 				"reporter": "Ohio",
@@ -816,7 +816,7 @@ var testCases = [
 				"creators": [],
 				"dateDecided": "July 5, 1995",
 				"court": "Supreme Court",
-				"extra": "{:jurisdiction: Ohio}",
+				"extra": "Jurisdiction: Ohio",
 				"firstPage": "415",
 				"itemID": "1",
 				"reporter": "Ohio St. 3d",
@@ -896,7 +896,7 @@ var testCases = [
 				"dateDecided": "February 27, 2013",
 				"court": "Dist. Court",
 				"docketNumber": "Case No. 3:08cv408",
-				"extra": "{:jurisdiction: SD Ohio}",
+				"extra": "Jurisdiction: SD Ohio",
 				"attachments": [
 					{
 						"title": "Google Scholar Judgement",

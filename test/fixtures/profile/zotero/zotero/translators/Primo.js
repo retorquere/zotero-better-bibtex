@@ -1,15 +1,15 @@
 {
 	"translatorID": "1300cd65-d23a-4bbf-93e5-a3c9e00d1066",
+	"translatorType": 4,
 	"label": "Primo",
 	"creator": "Matt Burton, Avram Lyon, Etienne Cavalié, Rintze Zelle, Philipp Zumstein, Sebastian Karcher, Aurimas Vinckevicius",
 	"target": "/primo_library/|/nebis/|^https?://www\\.recherche-portal\\.ch/zbz/",
 	"minVersion": "2.1.9",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 101,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsbv",
-	"lastUpdated": "2019-03-26 01:29:32"
+	"lastUpdated": "2021-06-14 17:05:00"
 }
 
 /*
@@ -207,7 +207,7 @@ function fetchPNX(itemData) {
 				gotPNX = true;
 				PNXUrlGenerator.confirmed = true;
 			}
-			
+
 			importPNX(text, url);
 		},
 		function () {
@@ -250,7 +250,7 @@ var testCases = [
 				"title": "China and foreign missionaries.",
 				"creators": [
 					{
-						"lastName": "Great Britain. Foreign Office",
+						"lastName": "Great Britain Foreign Office",
 						"creatorType": "author",
 						"fieldMode": 1
 					}
@@ -260,110 +260,30 @@ var testCases = [
 				"language": "eng",
 				"libraryCatalog": "princeton-primo.com",
 				"place": "London",
-				"publisher": "London 1860-1912",
+				"publisher": "1860-1912",
 				"attachments": [],
 				"tags": [
-					"China Foreign relations Great Britain.",
-					"China Religion.",
-					"Great Britain Foreign relations China.",
-					"Missions China."
-				],
-				"notes": [],
-				"seeAlso": []
-			}
-		]
-	},
-	{
-		"type": "web",
-		"url": "http://virtuose.uqam.ca/primo_library/libweb/action/dlDisplay.do?vid=UQAM&docId=UQAM_BIB000969205&fn=permalink",
-		"items": [
-			{
-				"itemType": "book",
-				"title": "War",
-				"creators": [
 					{
-						"firstName": "Ken",
-						"lastName": "Baynes",
-						"creatorType": "author"
+						"tag": "China"
 					},
 					{
-						"lastName": "Welsh Arts Council",
-						"creatorType": "contributor",
-						"fieldMode": 1
+						"tag": "China; China"
 					},
 					{
-						"lastName": "Glynn Vivian Art Gallery",
-						"creatorType": "contributor",
-						"fieldMode": 1
+						"tag": "Foreign relations"
+					},
+					{
+						"tag": "Foreign relations"
+					},
+					{
+						"tag": "Great Britain; Great Britain"
+					},
+					{
+						"tag": "Missions"
+					},
+					{
+						"tag": "Religion; China"
 					}
-				],
-				"date": "1970",
-				"callNumber": "NX650G8B38",
-				"language": "eng",
-				"libraryCatalog": "virtuose.uqam.ca",
-				"place": "Boston",
-				"publisher": "Boston Book and Art Chop",
-				"series": "Art and society 1",
-				"attachments": [],
-				"tags": [
-					"ART",
-					"GUERRE",
-					"WAR"
-				],
-				"notes": [],
-				"seeAlso": []
-			}
-		]
-	},
-	{
-		"type": "web",
-		"url": "http://primo-prod.u-paris10.fr/primo_library/libweb/action/dlDisplay.do?vid=UPON&search_scope=default_scope&docId=SCD_ALEPH000546633&fn=permalink",
-		"items": [
-			{
-				"itemType": "thesis",
-				"title": "Les espaces publics au prisme de l'art à Johannesburg (Afrique du Sud) : quand la ville fait œuvre d'art et l'art œuvre de ville",
-				"creators": [
-					{
-						"firstName": "Pauline",
-						"lastName": "Guinard",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Philippe )",
-						"lastName": "Gervais-Lambony",
-						"creatorType": "contributor"
-					},
-					{
-						"lastName": "Université Paris Ouest Nanterre La Défense",
-						"creatorType": "contributor",
-						"fieldMode": 1
-					},
-					{
-						"firstName": "cultures et sociétés du passé et du présent Nanterre",
-						"lastName": "Ecole doctorale Milieux",
-						"creatorType": "contributor"
-					}
-				],
-				"date": "2012",
-				"abstractNote": "Thèse de doctorat, Cette thèse porte sur les espaces publics à Johannesburg, capitale économique de l’Afrique du Sud. Dans le contexte contemporain, l’utilisation de la notion occidentale d’espaces publics pose problème : d’une part, du fait des ségrégations passées qui ont eu tendance à faire de ces espaces des lieux de séparation et de mise à distance des différents publics ; et d’autre part, du fait des forts taux de violence et du fort sentiment d’insécurité, qui tendent à encourager la sécurisation et la privatisation de ces mêmes espaces. L’enjeu est alors de comprendre les éventuels processus de construction de la publicité (au sens de caractère public) de ces espaces, à la fois sur le plan juridique, social et politique. Pour ce faire, l’art qui se déploie dans les espaces juridiquement publics de la métropole depuis la fin de l’apartheid, est utilisé comme une clef de lecture privilégiée de ces phénomènes, en tant qu’il permettrait, ainsi que nous entendons le montrer, de créer des espaces de rencontre et de débats ou, à l’inverse, de mieux réguler et contrôler ces espaces. Selon une approche qualitative, notre étude se base à la fois sur des observations de terrain et sur des entretiens conduits auprès des producteurs mais aussi des récepteurs de cet art qui a lieu dans les espaces publics. A la croisée de la géographie urbaine et de la géographie culturelle, nous envisageons donc de réexaminer la notion d’espaces publics au prisme de l’art à Johannesburg en vue de saisir – entre tentative de normalisation et résistance à cette normalisation – quelle ville est aujourd’hui à l’œuvre non seulement à Johannesburg, mais aussi, à travers elle, dans d’autres villes du monde., This Ph.D. thesis deals with public spaces in Johannesburg, the economic capital of South Africa. In the current context, the issues raised by the use of the western notion of public spaces are explored. On one hand, the previous segregations tended to mark off spaces into different publics completely separated from each other. On the other hand, the high rates of violence and sense of insecurity enhance securitization and privatization of these same spaces. What is at stake is to understand how the publicness of these spaces can be legally, socially, and politically built. In that framework, art spread in legally public spaces of Johannesburg since the end of apartheid is used as a tool to understand and reveal these phenomena since it is presented, as we aim at demonstrating, as a mean to create spaces of encounter and debate or, conversely, to regulate and control better these spaces. In a qualitative approach, our study is based on field observations and interviews with both producers and receivers of this art which takes place in public spaces. At the crossroads of urban geography and cultural geography, we are therefore re-examining the concept of public spaces through the prism of art in Johannesburg to figure out – between normalization and resistance to this normalization – which city is today at work not only in Johannesburg, but also, through her, in other cities of the world.",
-				"language": "fre",
-				"libraryCatalog": "Primo",
-				"place": "Sl",
-				"shortTitle": "Les espaces publics au prisme de l'art à Johannesburg (Afrique du Sud)",
-				"university": "sn",
-				"attachments": [],
-				"tags": [
-					"Art",
-					"Art urbain -- Thèses et écrits académiques -- Afrique du Sud -- Johannesburg (Afrique du Sud)",
-					"Espaces publics -- Normalisation -- Thèses et écrits académiques",
-					"Espaces publics -- Thèses et écrits académiques -- Afrique du Sud -- Johannesburg (Afrique du Sud)",
-					"Géographie culturelle -- Thèses et écrits académiques",
-					"Géographie urbaine -- Thèses et écrits académiques",
-					"Johannesburg",
-					"Johannesburg (Afrique du Sud) -- Thèses et écrits académiques -- Afrique du Sud",
-					"Normalisation",
-					"Prisme",
-					"Publicisation"
 				],
 				"notes": [],
 				"seeAlso": []
@@ -392,53 +312,6 @@ var testCases = [
 				"attachments": [],
 				"tags": [
 					"LEGGI;ITALIA - STORIA MEDIOEVALE"
-				],
-				"notes": [],
-				"seeAlso": []
-			}
-		]
-	},
-	{
-		"type": "web",
-		"url": "http://bcujas-catalogue.univ-paris1.fr/CUJAS_V1:LSCOP_ALL:33CUJAS_ALEPH000070200",
-		"items": [
-			{
-				"itemType": "book",
-				"title": "Test pattern for living",
-				"creators": [
-					{
-						"firstName": "Nicholas",
-						"lastName": "Johnson",
-						"creatorType": "author"
-					}
-				],
-				"date": "1972",
-				"callNumber": "203.206",
-				"language": "eng",
-				"libraryCatalog": "bcujas-catalogue.univ-paris1.fr",
-				"numPages": "xx+154",
-				"place": "Toronto New York",
-				"publisher": "Bantam Books",
-				"attachments": [],
-				"tags": [
-					{
-						"tag": "301.16/1/0973"
-					},
-					{
-						"tag": "Mass media"
-					},
-					{
-						"tag": "Mass media -- Social aspects -- United States"
-					},
-					{
-						"tag": "Social aspects"
-					},
-					{
-						"tag": "United States"
-					},
-					{
-						"tag": "United States -- Social conditions -- 1960-"
-					}
 				],
 				"notes": [],
 				"seeAlso": []

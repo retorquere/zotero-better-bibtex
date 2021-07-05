@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-08-11 14:19:06"
+	"lastUpdated": "2021-03-30 19:51:18"
 }
 
 /*
@@ -17,7 +17,7 @@
 
 	Copyright © 2018 czar
 	http://en.wikipedia.org/wiki/User_talk:Czar
-	
+
 	This file is part of Zotero.
 
 	Zotero is free software: you can redistribute it and/or modify
@@ -54,7 +54,7 @@ function scrape(doc, url) {
 	var translator = Zotero.loadTranslator('web');
 	translator.setTranslator('951c027d-74ac-47d4-a107-9c3069ab7b48'); // embedded metadata
 	translator.setDocument(doc);
-	
+
 	translator.setHandler('itemDone', function (obj, item) {
 		item.itemType = "magazineArticle";
 		if (url.includes("wired.co.uk/article")) {
@@ -66,7 +66,7 @@ function scrape(doc, url) {
 			item.ISSN = "1059-1028";
 			item.date = attr(doc,'meta[name="DisplayDate"], meta[name="parsely-pub-date"]','content');
 			item.creators = [];
-			var authorMetadata = attr(doc,'meta[name="Author"], meta[name="parsely-author"]','content');
+			var authorMetadata = attr(doc,'meta[name="Author"], meta[name="parsely-author"]','content') || text(doc, 'a[href^="/author"]');
 			if (authorMetadata) {
 				item.creators.push(ZU.cleanAuthor(authorMetadata, "author"));
 			}
@@ -110,69 +110,25 @@ function getSearchResults(doc, checkOnly) {
 
 function doWeb(doc, url) {
 	switch (detectWeb(doc, url)) {
-		case "multiple":
-			Zotero.selectItems(getSearchResults(doc, false), function (items) {
-				if (!items) {
-					return true;
-				}
-				var articles = [];
-				for (var i in items) {
-					articles.push(i);
-				}
-				ZU.processDocuments(articles, scrape);
-			});
-			break;
-		case "magazineArticle":
-			scrape(doc, url);
-			break;
+	case "multiple":
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
+			if (!items) {
+				return true;
+			}
+			var articles = [];
+			for (var i in items) {
+				articles.push(i);
+			}
+			ZU.processDocuments(articles, scrape);
+		});
+		break;
+	case "magazineArticle":
+		scrape(doc, url);
+		break;
 	}
 }
 /** BEGIN TEST CASES **/
 var testCases = [
-	{
-		"type": "web",
-		"url": "https://www.wired.com/2011/03/ff_kickstarter/",
-		"items": [
-			{
-				"itemType": "magazineArticle",
-				"title": "How Kickstarter Became a Lab for Daring Prototypes and Ingenious Products",
-				"creators": [
-					{
-						"firstName": "Carlye",
-						"lastName": "Adler",
-						"creatorType": "author"
-					}
-				],
-				"date": "2011-03-18",
-				"ISSN": "1059-1028",
-				"abstractNote": "A group of modern makers kick-started a website for passion projects and patrons.",
-				"issue": 4,
-				"language": "en-US",
-				"libraryCatalog": "www.wired.com",
-				"publicationTitle": "Wired",
-				"url": "https://www.wired.com/2011/03/ff_kickstarter/",
-				"volume": "19",
-				"attachments": [
-					{
-						"title": "Snapshot"
-					}
-				],
-				"tags": [
-					{
-						"tag": "Kickstarter"
-					},
-					{
-						"tag": "Startups"
-					},
-					{
-						"tag": "features"
-					}
-				],
-				"notes": [],
-				"seeAlso": []
-			}
-		]
-	},
 	{
 		"type": "web",
 		"url": "https://www.wired.com/story/in-defense-of-the-vegan-hot-dog/",
@@ -246,12 +202,14 @@ var testCases = [
 				"date": "2015-09-03",
 				"ISSN": "1357-0978",
 				"abstractNote": "A high-performance, solar-powered phone charger designed by artist Olafur Eliasson and engineer Frederik Ottesen has raised more than €40,000 (£29,100) on Kickstarter",
+				"language": "en-GB",
 				"libraryCatalog": "www.wired.co.uk",
 				"publicationTitle": "Wired UK",
 				"url": "https://www.wired.co.uk/article/olafur-eliasson-little-sun-charge",
 				"attachments": [
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [
@@ -259,16 +217,7 @@ var testCases = [
 						"tag": "Design"
 					},
 					{
-						"tag": "Smartphones"
-					},
-					{
-						"tag": "Solar Power"
-					},
-					{
 						"tag": "Technology"
-					},
-					{
-						"tag": "Wired Video"
 					}
 				],
 				"notes": [],

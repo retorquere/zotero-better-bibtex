@@ -140,7 +140,9 @@ if (fs.existsSync(path.join(__dirname, '../../.trace.json'))) {
   }
 }
 
-const circularReplacer = `
+const prefix = `
+Zotero.Debug.enabled = true;
+
 const trace$circularReplacer = () => {
   const seen = new WeakSet();
   return (key, value) => {
@@ -158,7 +160,19 @@ const trace$circularReplacer = () => {
     }
   };
 };
+
+const __estrace = {
+  enter(name, url, args) {
+    if (!Zotero || !Zotero.BetterBibTeX || !Zotero.BetterBibTeX.ready || Zotero.BetterBibTeX.ready.isPending()) return
+    Zotero.debug(\`trace.enter \${name} \${url}.(\${JSON.stringify(Array.from(args), trace$circularReplacer())})\`);
+  },
+  exit(name, url, result) {
+    if (!Zotero || !Zotero.BetterBibTeX || !Zotero.BetterBibTeX.ready || Zotero.BetterBibTeX.ready.isPending()) return
+    Zotero.debug(\`trace.exit \${name} \${url} \${JSON.stringify(result, trace$circularReplacer())}\`);
+  },
+};
 `
+
 module.exports.trace = {
   name: 'trace',
   setup(build) {
@@ -173,17 +187,29 @@ module.exports.trace = {
         console.log('!!', warning)
       }
 
-      const trace = require('./trace')
-      trace.FILENAME = localpath.replace(/\.ts$/, '')
-      const contents = circularReplacer + putout(source.code, {
-        fixCount: 1,
-        plugins: [ ['trace', trace] ],
-      }).code
+      try {
+        const tracer = await import('estrace/plugin');
+        const {code} = putout(source.code, {
+          fixCount: 1,
+          rules: {
+            tracer: ['on', { url: localpath.replace(/\.ts$/, '') }],
+          },
+          plugins: [
+            ['tracer', tracer],
+          ],
+        })
+        const contents = prefix + code
 
-      return {
-        contents,
-        loader: 'js',
+        return {
+          contents,
+          loader: 'js',
+        }
       }
+      catch (err) {
+        await fs.promises.writeFile('/tmp/tt', `/* ${localpath.replace(/\.ts$/, '')}\n${err.stack}\n*/\n/${source.code}`)
+        throw err
+      }
+
     })
   }
 }

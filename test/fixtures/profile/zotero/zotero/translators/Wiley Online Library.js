@@ -1,15 +1,15 @@
 {
 	"translatorID": "fe728bc9-595a-4f03-98fc-766f1d8d0936",
+	"translatorType": 4,
 	"label": "Wiley Online Library",
 	"creator": "Sean Takats, Michael Berkowitz, Avram Lyon and Aurimas Vinckevicius",
 	"target": "^https?://([\\w-]+\\.)?onlinelibrary\\.wiley\\.com[^/]*/(book|doi|toc|advanced/search|search-web/cochrane|cochranelibrary/search|o/cochrane/(clcentral|cldare|clcmr|clhta|cleed|clabout)/articles/.+/sect0\\.html)",
 	"minVersion": "3.1",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2020-09-08 01:32:51"
+	"lastUpdated": "2021-06-07 18:00:00"
 }
 
 /*
@@ -103,7 +103,7 @@ function scrapeBook(doc, url) {
 				isbn.push(match[2]);
 				break;
 			case 'doi':
-				newItem.DOI = match[2];
+				newItem.DOI = ZU.cleanDOI(match[2]);
 				break;
 			case 'book series':
 				newItem.series = match[2];
@@ -318,6 +318,14 @@ function scrapeBibTeX(doc, url) {
 				|| ZU.xpathText(doc,
 					'//meta[@name="citation_fulltext_html_url"][1]/@content')
 				|| url;
+			
+			if (item.DOI) {
+				item.DOI = ZU.cleanDOI(item.DOI);
+			}
+			
+			if (item.itemID) {
+				item.itemID = 'doi:' + ZU.cleanDOI(item.itemID);
+			}
 
 			// bookTitle
 			if (!item.bookTitle) {
@@ -495,7 +503,7 @@ function doWeb(doc, url) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "https://onlinelibrary.wiley.com/action/doSearch?field1=AllField&text1=zotero&field2=AllField&text2=&field3=AllField&text3=&Ppub=&AfterMonth=&AfterYear=&BeforeMonth=&BeforeYear=",
+		"url": "https://onlinelibrary.wiley.com/action/doSearch?AfterMonth=&AfterYear=&BeforeMonth=&BeforeYear=&Ppub=&field1=AllField&field2=AllField&field3=AllField&text1=zotero&text2=&text3=",
 		"items": "multiple"
 	},
 	{
@@ -506,7 +514,6 @@ var testCases = [
 				"itemType": "bookSection",
 				"title": "Endnotes",
 				"creators": [],
-				"date": "2012",
 				"ISBN": "9781118269381",
 				"bookTitle": "The World is Open",
 				"extra": "DOI: 10.1002/9781118269381.notes",
@@ -514,7 +521,7 @@ var testCases = [
 				"language": "en",
 				"libraryCatalog": "Wiley Online Library",
 				"pages": "427-467",
-				"publisher": "Wiley-Blackwell",
+				"publisher": "John Wiley & Sons, Ltd",
 				"url": "https://onlinelibrary.wiley.com/doi/abs/10.1002/9781118269381.notes",
 				"attachments": [
 					{
@@ -539,7 +546,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://onlinelibrary.wiley.com/book/10.1002/9783527610853",
+		"url": "https://onlinelibrary.wiley.com/doi/book/10.1002/9783527610853",
 		"items": "multiple"
 	},
 	{
@@ -550,7 +557,7 @@ var testCases = [
 				"itemType": "bookSection",
 				"title": "Silent Cinema and its Pioneers (1906–1930)",
 				"creators": [],
-				"date": "2009",
+				"date": "2008",
 				"ISBN": "9781444304794",
 				"abstractNote": "This chapter contains sections titled: Historical and Political Overview of the Period Context11 Film Scenes: Close Readings Directors (Life and Works) Critical Commentary",
 				"bookTitle": "100 Years of Spanish Cinema",
@@ -559,7 +566,7 @@ var testCases = [
 				"language": "en",
 				"libraryCatalog": "Wiley Online Library",
 				"pages": "1-20",
-				"publisher": "Wiley-Blackwell",
+				"publisher": "John Wiley & Sons, Ltd",
 				"url": "https://onlinelibrary.wiley.com/doi/abs/10.1002/9781444304794.ch1",
 				"attachments": [
 					{
@@ -619,17 +626,17 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://onlinelibrary.wiley.com/book/10.1002/9781444390124",
+		"url": "https://onlinelibrary.wiley.com/doi/book/10.1002/9781444390124",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://onlinelibrary.wiley.com/book/10.1002/9780470320419",
+		"url": "https://ceramics.onlinelibrary.wiley.com/doi/book/10.1002/9780470320419",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "https://onlinelibrary.wiley.com/doi/abs/10.1002/pmic.201100327",
+		"url": "https://analyticalsciencejournals.onlinelibrary.wiley.com/doi/abs/10.1002/pmic.201100327",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -656,7 +663,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2012-01-01",
+				"date": "2012",
 				"DOI": "10.1002/pmic.201100327",
 				"ISSN": "1615-9861",
 				"abstractNote": "Amidation is a post-translational modification found at the C-terminus of ∼50% of all neuropeptide hormones. Cleavage of the Cα–N bond of a C-terminal glycine yields the α-amidated peptide in a reaction catalyzed by peptidylglycine α-amidating monooxygenase (PAM). The mass of an α-amidated peptide decreases by 58 Da relative to its precursor. The amino acid sequences of an α-amidated peptide and its precursor differ only by the C-terminal glycine meaning that the peptides exhibit similar RP-HPLC properties and tandem mass spectral (MS/MS) fragmentation patterns. Growth of cultured cells in the presence of a PAM inhibitor ensured the coexistence of α-amidated peptides and their precursors. A strategy was developed for precursor and α-amidated peptide pairing (PAPP): LC-MS/MS data of peptide extracts were scanned for peptide pairs that differed by 58 Da in mass, but had similar RP-HPLC retention times. The resulting peptide pairs were validated by checking for similar fragmentation patterns in their MS/MS data prior to identification by database searching or manual interpretation. This approach significantly reduced the number of spectra requiring interpretation, decreasing the computing time required for database searching and enabling manual interpretation of unidentified spectra. Reported here are the α-amidated peptides identified from AtT-20 cells using the PAPP method.",
@@ -666,7 +673,7 @@ var testCases = [
 				"libraryCatalog": "Wiley Online Library",
 				"pages": "173-182",
 				"publicationTitle": "PROTEOMICS",
-				"url": "https://onlinelibrary.wiley.com/doi/abs/10.1002/pmic.201100327",
+				"url": "https://analyticalsciencejournals.onlinelibrary.wiley.com/doi/abs/10.1002/pmic.201100327",
 				"volume": "12",
 				"attachments": [
 					{
@@ -699,7 +706,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://onlinelibrary.wiley.com/doi/full/10.1002/pmic.201100327",
+		"url": "https://analyticalsciencejournals.onlinelibrary.wiley.com/doi/full/10.1002/pmic.201100327",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -726,7 +733,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2012-01-01",
+				"date": "2012",
 				"DOI": "10.1002/pmic.201100327",
 				"ISSN": "1615-9861",
 				"abstractNote": "Amidation is a post-translational modification found at the C-terminus of ∼50% of all neuropeptide hormones. Cleavage of the Cα–N bond of a C-terminal glycine yields the α-amidated peptide in a reaction catalyzed by peptidylglycine α-amidating monooxygenase (PAM). The mass of an α-amidated peptide decreases by 58 Da relative to its precursor. The amino acid sequences of an α-amidated peptide and its precursor differ only by the C-terminal glycine meaning that the peptides exhibit similar RP-HPLC properties and tandem mass spectral (MS/MS) fragmentation patterns. Growth of cultured cells in the presence of a PAM inhibitor ensured the coexistence of α-amidated peptides and their precursors. A strategy was developed for precursor and α-amidated peptide pairing (PAPP): LC-MS/MS data of peptide extracts were scanned for peptide pairs that differed by 58 Da in mass, but had similar RP-HPLC retention times. The resulting peptide pairs were validated by checking for similar fragmentation patterns in their MS/MS data prior to identification by database searching or manual interpretation. This approach significantly reduced the number of spectra requiring interpretation, decreasing the computing time required for database searching and enabling manual interpretation of unidentified spectra. Reported here are the α-amidated peptides identified from AtT-20 cells using the PAPP method.",
@@ -736,7 +743,7 @@ var testCases = [
 				"libraryCatalog": "Wiley Online Library",
 				"pages": "173-182",
 				"publicationTitle": "PROTEOMICS",
-				"url": "https://onlinelibrary.wiley.com/doi/abs/10.1002/pmic.201100327",
+				"url": "https://analyticalsciencejournals.onlinelibrary.wiley.com/doi/abs/10.1002/pmic.201100327",
 				"volume": "12",
 				"attachments": [
 					{
@@ -769,7 +776,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://onlinelibrary.wiley.com/doi/full/10.1002/pmic.201100327#references-section",
+		"url": "https://analyticalsciencejournals.onlinelibrary.wiley.com/doi/full/10.1002/pmic.201100327#references-section",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -796,7 +803,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2012-01-01",
+				"date": "2012",
 				"DOI": "10.1002/pmic.201100327",
 				"ISSN": "1615-9861",
 				"abstractNote": "Amidation is a post-translational modification found at the C-terminus of ∼50% of all neuropeptide hormones. Cleavage of the Cα–N bond of a C-terminal glycine yields the α-amidated peptide in a reaction catalyzed by peptidylglycine α-amidating monooxygenase (PAM). The mass of an α-amidated peptide decreases by 58 Da relative to its precursor. The amino acid sequences of an α-amidated peptide and its precursor differ only by the C-terminal glycine meaning that the peptides exhibit similar RP-HPLC properties and tandem mass spectral (MS/MS) fragmentation patterns. Growth of cultured cells in the presence of a PAM inhibitor ensured the coexistence of α-amidated peptides and their precursors. A strategy was developed for precursor and α-amidated peptide pairing (PAPP): LC-MS/MS data of peptide extracts were scanned for peptide pairs that differed by 58 Da in mass, but had similar RP-HPLC retention times. The resulting peptide pairs were validated by checking for similar fragmentation patterns in their MS/MS data prior to identification by database searching or manual interpretation. This approach significantly reduced the number of spectra requiring interpretation, decreasing the computing time required for database searching and enabling manual interpretation of unidentified spectra. Reported here are the α-amidated peptides identified from AtT-20 cells using the PAPP method.",
@@ -806,7 +813,7 @@ var testCases = [
 				"libraryCatalog": "Wiley Online Library",
 				"pages": "173-182",
 				"publicationTitle": "PROTEOMICS",
-				"url": "https://onlinelibrary.wiley.com/doi/abs/10.1002/pmic.201100327",
+				"url": "https://analyticalsciencejournals.onlinelibrary.wiley.com/doi/abs/10.1002/pmic.201100327",
 				"volume": "12",
 				"attachments": [
 					{
@@ -839,7 +846,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://onlinelibrary.wiley.com/doi/full/10.1002/pmic.201100327#citedBy",
+		"url": "https://analyticalsciencejournals.onlinelibrary.wiley.com/doi/full/10.1002/pmic.201100327#citedBy",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -866,7 +873,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2012-01-01",
+				"date": "2012",
 				"DOI": "10.1002/pmic.201100327",
 				"ISSN": "1615-9861",
 				"abstractNote": "Amidation is a post-translational modification found at the C-terminus of ∼50% of all neuropeptide hormones. Cleavage of the Cα–N bond of a C-terminal glycine yields the α-amidated peptide in a reaction catalyzed by peptidylglycine α-amidating monooxygenase (PAM). The mass of an α-amidated peptide decreases by 58 Da relative to its precursor. The amino acid sequences of an α-amidated peptide and its precursor differ only by the C-terminal glycine meaning that the peptides exhibit similar RP-HPLC properties and tandem mass spectral (MS/MS) fragmentation patterns. Growth of cultured cells in the presence of a PAM inhibitor ensured the coexistence of α-amidated peptides and their precursors. A strategy was developed for precursor and α-amidated peptide pairing (PAPP): LC-MS/MS data of peptide extracts were scanned for peptide pairs that differed by 58 Da in mass, but had similar RP-HPLC retention times. The resulting peptide pairs were validated by checking for similar fragmentation patterns in their MS/MS data prior to identification by database searching or manual interpretation. This approach significantly reduced the number of spectra requiring interpretation, decreasing the computing time required for database searching and enabling manual interpretation of unidentified spectra. Reported here are the α-amidated peptides identified from AtT-20 cells using the PAPP method.",
@@ -876,7 +883,8 @@ var testCases = [
 				"libraryCatalog": "Wiley Online Library",
 				"pages": "173-182",
 				"publicationTitle": "PROTEOMICS",
-				"url": "https://onlinelibrary.wiley.com/doi/abs/10.1002/pmic.201100327",
+				"rights": "Copyright © 2012 WILEY-VCH Verlag GmbH & Co. KGaA, Weinheim",
+				"url": "https://analyticalsciencejournals.onlinelibrary.wiley.com/doi/abs/10.1002/pmic.201100327",
 				"volume": "12",
 				"attachments": [
 					{
@@ -926,7 +934,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2005",
+				"date": "2002",
 				"ISBN": "9783527603015",
 				"abstractNote": "Immunoassay Hochleistungsflüssigkeitschromatographie (HPLC) Gaschromatographie Medizinische Beurteilung und klinische Interpretation Literatur",
 				"bookTitle": "Klinisch-toxikologische Analytik",
@@ -935,7 +943,8 @@ var testCases = [
 				"language": "de",
 				"libraryCatalog": "Wiley Online Library",
 				"pages": "365-370",
-				"publisher": "Wiley-Blackwell",
+				"publisher": "John Wiley & Sons, Ltd",
+				"rights": "Copyright © 2002 Wiley-VCH Verlag GmbH",
 				"url": "https://onlinelibrary.wiley.com/doi/abs/10.1002/3527603018.ch17",
 				"attachments": [
 					{
@@ -959,7 +968,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1468-5930.2011.00548.x",
+		"url": "https://onlinelibrary.wiley.com/doi/full/10.1111/j.1468-5930.2011.00548.x",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -976,7 +985,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2012-02-01",
+				"date": "2012",
 				"DOI": "10.1111/j.1468-5930.2011.00548.x",
 				"ISSN": "1468-5930",
 				"abstractNote": "The possibility of using private military and security companies to bolster the capacity to undertake intervention for human rights purposes (humanitarian intervention and peacekeeping) has been increasingly debated. The focus of such discussions has, however, largely been on practical issues and the contingent problems posed by private force. By contrast, this article considers the principled case for privatising humanitarian intervention. It focuses on two central issues. First, does outsourcing humanitarian intervention to private military and security companies pose some fundamental, deeper problems in this context, such as an abdication of a state's duties? Second, on the other hand, is there a case for preferring these firms to other, state-based agents of humanitarian intervention? For instance, given a state's duties to their own military personnel, should the use of private military and security contractors be preferred to regular soldiers for humanitarian intervention?",
@@ -1023,7 +1032,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "1986-09-01",
+				"date": "1986",
 				"DOI": "10.1111/j.1540-6261.1986.tb04559.x",
 				"ISSN": "1540-6261",
 				"abstractNote": "Capital gains taxes create incentives to trade. Our major finding is that turnover is higher for winners (stocks, the prices of which have increased) than for losers, which is not consistent with the tax prediction. However, the turnover in December and January is evidence of tax-motivated trading; there is a relatively high turnover for losers in December and for winners in January. We conclude that taxes influence turnover, but other motives for trading are more important. We were unable to find evidence that changing the length of the holding period required to qualify for long-term capital gains treatment affected turnover.",
@@ -1054,7 +1063,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://onlinelibrary.wiley.com/doi/abs/10.1002/%28SICI%291521-3773%2820000103%2939%3A1%3C165%3A%3AAID-ANIE165%3E3.0.CO%3B2-B",
+		"url": "https://onlinelibrary.wiley.com/doi/abs/10.1002/(SICI)1521-3773(20000103)39:1%3C165::AID-ANIE165%3E3.0.CO;2-B",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -1071,7 +1080,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2000-01-03",
+				"date": "2000",
 				"DOI": "10.1002/(SICI)1521-3773(20000103)39:1<165::AID-ANIE165>3.0.CO;2-B",
 				"ISSN": "1521-3773",
 				"abstractNote": "Nanosized palladium colloids, generated in situ by reduction of PdII to Pd0 [Eq. (a)], are involved in the catalysis of phosphane-free Heck and Suzuki reactions with simple palladium salts such as PdCl2 or Pd(OAc)2, as demonstrated by transmission electron microscopic investigations.",
@@ -1132,7 +1141,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "1983-07-01",
+				"date": "1983",
 				"DOI": "10.1002/jhet.5570200408",
 				"ISSN": "1943-5193",
 				"abstractNote": "The representative mono- and dialkyl-substituted derivatives of 4-carbamoylimidazolium-5-olate (1) were synthesized unequivocally. On the basis of their spectral data for ultraviolet absorption spectra in acidic, basic and neutral solutions, we have found some spectral characteristics which make it facile to clarify the position of substituents.",
@@ -1142,6 +1151,7 @@ var testCases = [
 				"libraryCatalog": "Wiley Online Library",
 				"pages": "875-885",
 				"publicationTitle": "Journal of Heterocyclic Chemistry",
+				"rights": "Copyright © 1983 Journal of Heterocyclic Chemistry",
 				"url": "https://onlinelibrary.wiley.com/doi/abs/10.1002/jhet.5570200408",
 				"volume": "20",
 				"attachments": [
@@ -1179,7 +1189,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2014-03-01",
+				"date": "2014",
 				"DOI": "10.1002/ev.20077",
 				"ISSN": "1534-875X",
 				"abstractNote": "Research on organizational evaluation capacity building (ECB) has focused very much on the capacity to do evaluation, neglecting organizational demand for evaluation and the capacity to use it. This qualitative multiple case study comprises a systematic examination of organizational capacity within eight distinct organizations guided by a common conceptual framework. Described in this chapter are the rationale and methods for the study and then the sequential presentation of findings for each of the eight case organizations. Data collection and analyses for these studies occurred six years ago; findings are cross-sectional and do not reflect changes in organizations or their capacity for evaluation since that time. The format for presenting the findings was standardized so as to foster cross-case analyses, the focus for the next and final chapter of this volume.",

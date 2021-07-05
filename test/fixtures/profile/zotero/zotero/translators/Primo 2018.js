@@ -1,15 +1,15 @@
 {
 	"translatorID": "cd669d1f-96b8-4040-aa36-48f843248399",
+	"translatorType": 4,
 	"label": "Primo 2018",
 	"creator": "Philipp Zumstein",
 	"target": "(/primo-explore/|/discovery/(search|fulldisplay|jsearch|dbsearch|npsearch|openurl|jfulldisplay|dbfulldisplay|npfulldisplay)\\?)",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-06-14 05:49:37"
+	"lastUpdated": "2021-06-14 17:05:00"
 }
 
 /*
@@ -36,14 +36,11 @@
 */
 
 
-// attr()/text() v2
-function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
-
-
-function detectWeb(doc, url) {
+function detectWeb(doc, _url) {
 	var rows = doc.querySelectorAll('.urlToXmlPnx[data-url]');
-	if (rows.length==1) return "book";
-	if (rows.length>1) return "multiple";
+	if (rows.length == 1) return "book";
+	if (rows.length > 1) return "multiple";
+	return false;
 }
 
 
@@ -51,7 +48,7 @@ function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
 	var rows = doc.querySelectorAll('.urlToXmlPnx[data-url]');
-	for (let i=0; i<rows.length; i++) {
+	for (let i = 0; i < rows.length; i++) {
 		let href = rows[i].dataset.url;
 		let title = rows[i].parentNode.textContent;
 		if (!href || !title) continue;
@@ -67,7 +64,7 @@ function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
 		Zotero.selectItems(getSearchResults(doc, false), function (items) {
 			if (!items) {
-				return true;
+				return;
 			}
 			var articles = [];
 			for (var i in items) {
@@ -75,7 +72,8 @@ function doWeb(doc, url) {
 			}
 			ZU.processDocuments(articles, scrape);
 		});
-	} else {
+	}
+	else {
 		var urlpnx = attr(doc, '.urlToXmlPnx[data-url]', 'data-url');
 		scrape(doc, urlpnx);
 	}
@@ -83,11 +81,11 @@ function doWeb(doc, url) {
 
 
 function scrape(doc, pnxurl) {
-	ZU.doGet(pnxurl, function(text) {
+	ZU.doGet(pnxurl, function (text) {
 		var translator = Zotero.loadTranslator("import");
 		translator.setTranslator("efd737c9-a227-4113-866e-d57fbc0684ca");
 		translator.setString(text);
-		translator.setHandler("itemDone", function(obj, item) {
+		translator.setHandler("itemDone", function (obj, item) {
 			if (pnxurl) {
 				item.libraryCatalog = pnxurl.match(/^https?:\/\/(.+?)\//)[1].replace(/\.hosted\.exlibrisgroup/, "");
 			}
@@ -101,48 +99,93 @@ function scrape(doc, pnxurl) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "https://primo-qa.hosted.exlibrisgroup.com/primo-explore/search?query=any,contains,zotero&tab=everything&search_scope=TCCDALMA_EVERYTHING&vid=TCCDALMA&lang=en_US&offset=0",
-		"items": "multiple"
-	},
-	{
-		"type": "web",
-		"url": "https://primo-qa.hosted.exlibrisgroup.com/primo-explore/fulldisplay?vid=TCCDALMA&search_scope=TCCDALMA_EVERYTHING&tab=everything&docid=TCCD_ALMA2136169630001641&lang=en_US&context=L&adaptor=Local%20Search%20Engine&isFrbr=true&query=any,contains,adam%20smith&sortby=rank&offset=0",
-		"items": "multiple"
-	},
-	{
-		"type": "web",
-		"url": "https://primo-qa.hosted.exlibrisgroup.com/primo-explore/search?query=any,contains,mannheim&tab=everything&search_scope=TCCDALMA_EVERYTHING&vid=TCCDALMA&sortby=rank&lang=en_US",
-		"items": "multiple"
-	},
-	{
-		"type": "web",
-		"url": "http://primo-demo.exlibrisgroup.com:1701/primo-explore/fulldisplay?docid=TN_gvrl_refCX4183000563&context=PC&vid=NORTH&search_scope=PC&tab=articles&lang=en_US",
+		"url": "http://virtuose.uqam.ca/primo-explore/fulldisplay?vid=UQAM&docid=UQAM_BIB000969205&context=L",
+		"defer": true,
 		"items": [
 			{
-				"itemType": "encyclopediaArticle",
-				"title": "Water",
-				"creators": [],
-				"date": "2012",
-				"ISBN": "9781452218557",
+				"itemType": "book",
+				"title": "War",
+				"creators": [
+					{
+						"lastName": "Baynes",
+						"firstName": "Ken",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Ken",
+						"lastName": "Baynes",
+						"creatorType": "author"
+					},
+					{
+						"lastName": "Welsh Arts Council",
+						"creatorType": "contributor",
+						"fieldMode": 1
+					},
+					{
+						"lastName": "Glynn Vivian Art Gallery",
+						"creatorType": "contributor",
+						"fieldMode": 1
+					}
+				],
+				"date": "1970",
+				"callNumber": "NX650G8B38",
 				"language": "eng",
-				"libraryCatalog": "primo-demo.exlibrisgroup.com:1701",
-				"pages": "1775–1778",
+				"libraryCatalog": "virtuose.uqam.ca",
+				"place": "Boston",
+				"publisher": "Book and Art Chop",
+				"series": "Art and society 1",
 				"attachments": [],
 				"tags": [
 					{
-						"tag": "Drinking Water"
+						"tag": "ART; GUERRE; WAR"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "http://bcujas-catalogue.univ-paris1.fr/primo-explore/fulldisplay?vid=CUJAS_V1&docid=33CUJAS_ALEPH000070200&context=L&search_scope=LSCOP_ALL",
+		"defer": true,
+		"items": [
+			{
+				"itemType": "book",
+				"title": "Test pattern for living",
+				"creators": [
+					{
+						"firstName": "Nicholas",
+						"lastName": "Johnson",
+						"creatorType": "author"
+					}
+				],
+				"date": "1972",
+				"callNumber": "203.206",
+				"language": "eng",
+				"libraryCatalog": "bcujas-catalogue.univ-paris1.fr",
+				"numPages": "xx+154",
+				"place": "Toronto New York",
+				"publisher": "Bantam Books",
+				"attachments": [],
+				"tags": [
+					{
+						"tag": "Mass media"
 					},
 					{
-						"tag": "Fresh Water"
+						"tag": "Social aspects"
 					},
 					{
-						"tag": "Residential Water Supply"
+						"tag": "United States"
 					},
 					{
-						"tag": "Water Distribution"
+						"tag": "United States"
 					},
 					{
-						"tag": "Water Treatment"
+						"tag": "Social conditions"
+					},
+					{
+						"tag": "1960-"
 					}
 				],
 				"notes": [],

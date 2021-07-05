@@ -64,6 +64,7 @@ const casing = {
 
 export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions): { extra: string, extraFields: Fields } {
   if (!options) options = { citationKey: true , aliases: true, kv: true, tex: true }
+  Zotero.debug(`extra.get ${JSON.stringify({extra, mode, options})}`)
 
   const other = {zotero: 'csl', csl: 'zotero'}[mode]
 
@@ -142,10 +143,12 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
 
   extraFields.aliases = Array.from(new Set(extraFields.aliases)).filter(key => key !== extraFields.citationKey)
 
+  Zotero.debug(`extra.get: ${JSON.stringify({extra, extraFields})}`)
   return { extra, extraFields }
 }
 
 export function set(extra: string, options: SetOptions = {}): string {
+  Zotero.debug(`extra.set ${JSON.stringify({extra, options})}`)
   const parsed = get(extra, 'zotero', options)
 
   if (options.citationKey) parsed.extra += `\nCitation Key: ${options.citationKey}`
@@ -184,5 +187,7 @@ export function set(extra: string, options: SetOptions = {}): string {
     }
   }
 
-  return parsed.extra.trim()
+  extra = parsed.extra.trim()
+  Zotero.debug(`extra.set ${JSON.stringify({extra})}`)
+  return extra
 }

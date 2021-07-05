@@ -1,11 +1,13 @@
 {
 	"translatorID": "32d59d2d-b65a-4da4-b0a3-bdd3cfb979e7",
+	"translatorType": 3,
 	"label": "RIS",
 	"creator": "Simon Kornblith and Aurimas Vinckevicius",
 	"target": "ris",
 	"minVersion": "3.0.4",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
+	"inRepository": true,
 	"configOptions": {
 		"async": true,
 		"getCollections": "true"
@@ -15,9 +17,7 @@
 		"exportNotes": true,
 		"exportFileData": false
 	},
-	"inRepository": true,
-	"translatorType": 3,
-	"lastUpdated": "2019-10-19 17:04:49"
+	"lastUpdated": "2021-06-09 16:55:00"
 }
 
 function detectImport() {
@@ -233,6 +233,17 @@ var fieldMap = {
 		"creators/podcaster":["podcast"],
 		"creators/programmer":["computerProgram"]
 	},
+	A1: {
+		"__default":"creators/author",
+		"creators/artist":["artwork"],
+		"creators/cartographer":["map"],
+		"creators/composer":["audioRecording"],
+		"creators/director":["film", "radioBroadcast", "tvBroadcast", "videoRecording"], //this clashes with audioRecording
+		"creators/interviewee":["interview"],
+		"creators/inventor":["patent"],
+		"creators/podcaster":["podcast"],
+		"creators/programmer":["computerProgram"]
+	},
 	A2: {
 		"creators/sponsor":["bill"],
 		"creators/performer":["audioRecording"],
@@ -390,7 +401,6 @@ var fieldMap = {
 //used ONLY for importing and only if these fields are not specified above (e.g. M3)
 //these are not exported the same way
 var degenerateImportFieldMap = {
-	A1: fieldMap["AU"],
 	AD: {
 		"__default": "unsupported/Author Address",
 		"unsupported/Inventor Address": ["patent"]
@@ -461,12 +471,21 @@ var degenerateImportFieldMap = {
  *   not present in the list, the next list is checked. If the RIS tag is
  *   present, but an item type does not match (no __default) or is explicit
  *   excluded from matching (__exclude), the next list is checked.
+ *   The `deprecatedMap` should be a subset of the maps in this list.
+ * @param {Tag <-> zotero field map} deprecatedMap A map, in the same format as
+ *   the entries in the `mapList`, containing deprecated tags that should only
+ *   be used if no other tag maps to the same Zotero item field.
  */
-var TagMapper = function(mapList) {
+var TagMapper = function(mapList, deprecatedMap) {
 	this.cache = {};
 	this.reverseCache = {};
 	this.mapList = mapList;
+	this.deprecatedMap = deprecatedMap;
 };
+
+TagMapper.prototype.isDeprecated = function (tag) {
+	return this.deprecatedMap.hasOwnProperty(tag);
+}
 
 /**
  * Given an item type and a RIS tag, return Zotero field data should be mapped to.
@@ -1201,13 +1220,21 @@ var CitaviCleaner = new function() {
 	}
 }
 
-function processTag(item, tagValue, risEntry) {
+/**
+ * Returns false and fails to process if the provided tag is deprecated and
+ * allowDeprecated is false.
+ */
+function processTag(item, tagValue, risEntry, allowDeprecated) {
 	var tag = tagValue.tag;
 	var value = tagValue.value.trim();
 	var rawLine = tagValue.raw;
 	
 	//drop empty fields
 	if (value === "") return;
+	
+	if (!allowDeprecated && importFields.isDeprecated(tag)) {
+		return false;
+	}
 	
 	var zField = importFields.getField(item.itemType, tag);
 	if (!zField) {
@@ -1394,6 +1421,7 @@ function processTag(item, tagValue, risEntry) {
 	}
 
 	applyValue(item, zField[0], value, rawLine);
+	return true;
 }
 
 function applyValue(item, zField, value, rawLine) {
@@ -1729,7 +1757,7 @@ function startImport(resolve, reject) {
 		//set up import field mapper
 		var maps = [fieldMap, degenerateImportFieldMap];
 		if (exportedOptions.fieldMap) maps.unshift(exportedOptions.fieldMap);
-		importFields = new TagMapper(maps);
+		importFields = new TagMapper(maps, degenerateImportFieldMap);
 		
 		//prepare some configurable options
 		if (Zotero.getHiddenPref) {
@@ -1784,10 +1812,19 @@ function importNext(resolve, reject) {
 			EndNoteCleaner.cleanTags(entry, item); //some tweaks to EndNote export
 			CitaviCleaner.cleanTags(entry, item);
 			
+			var deferredEntries = [];
+			
 			for (var i=0, n=entry.length; i<n; i++) {
-				if ((['TY', 'ER']).indexOf(entry[i].tag) == -1) { //ignore TY and ER tags
-					processTag(item, entry[i], entry);
+				//ignore TY and ER tags
+				if ((['TY', 'ER']).indexOf(entry[i].tag) != -1) continue;
+				
+				if (!processTag(item, entry[i], entry, false)) {
+					deferredEntries.push(entry[i]);
 				}
+			}
+			
+			for (let deferred of deferredEntries) {
+				processTag(item, deferred, entry, true);
 			}
 			
 			var maybePromise = completeItem(item);
@@ -6390,6 +6427,66 @@ var testCases = [
 					"Law"
 				],
 				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "import",
+		"input": "TY  - JOUR\nT1  - Deprecated tag test\nN1  - The Y1 date tag is deprecated. Its value should not be used when DA is present, even if Y1 comes first.\nY1  - 1900/01/01\nDA  - 1950/01/01\nER  - ",
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "Deprecated tag test",
+				"creators": [],
+				"date": "January 1, 1950",
+				"attachments": [],
+				"tags": [],
+				"notes": [
+					{
+						"note": "<p>The Y1 date tag is deprecated. Its value should not be used when DA is present, even if Y1 comes first.</p>"
+					}
+				],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "import",
+		"input": "TY  - JOUR\nTI  - Mixed author tags\nN1  - A1 should not be treated as deprecated or authors will appear out of order.\nA1  - Georgiev, Danko\nAU  - Bello, Leon\nAU  - Carmi, Avishy\nAU  - Cohen, Eliahu\nER  - ",
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "Mixed author tags",
+				"creators": [
+					{
+						"lastName": "Georgiev",
+						"firstName": "Danko",
+						"creatorType": "author"
+					},
+					{
+						"lastName": "Bello",
+						"firstName": "Leon",
+						"creatorType": "author"
+					},
+					{
+						"lastName": "Carmi",
+						"firstName": "Avishy",
+						"creatorType": "author"
+					},
+					{
+						"lastName": "Cohen",
+						"firstName": "Eliahu",
+						"creatorType": "author"
+					}
+				],
+				"attachments": [],
+				"tags": [],
+				"notes": [
+					{
+						"note": "<p>A1 should not be treated as deprecated or authors will appear out of order.</p>"
+					}
+				],
 				"seeAlso": []
 			}
 		]

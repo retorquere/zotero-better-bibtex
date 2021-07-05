@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2016-01-06 16:10:00"
+	"lastUpdated": "2021-03-17 20:39:31"
 }
 
 /*
@@ -86,6 +86,8 @@ function scrape(doc, url) {
 	if (node.length > 0) {
 		risURL = node[0].href;
 	} else {
+		// Trim query string and hash
+		url = url.replace(/(\?.*)?(#.*)?$/, '');
 		risURL = url + "/cite/refworks";
 	}
 
@@ -106,6 +108,10 @@ function scrape(doc, url) {
 				title: "Snapshot",
 				document: doc
 			});
+			// Some JF fields have trailing commas
+			if (item.publicationTitle) {
+				item.publicationTitle = item.publicationTitle.replace(/,$/, '');
+			}
 			var abstract = ZU.xpath(doc,'//div[contains(@class, "abstract")]//div[contains(@class,"article-container")]');
 			if (abstract.length > 0) {
 				item.abstractNote = abstract[0].textContent.replace(/^\s*Summary/, '').trim();
@@ -227,6 +233,92 @@ var testCases = [
 		"type": "web",
 		"url": "http://mic.microbiologyresearch.org/search?value1=h2o&option1=all&option2=pub_serialIdent&value2=&operator2=AND",
 		"items": "multiple"
+	},
+	{
+		"type": "web",
+		"url": "https://www.microbiologyresearch.org/content/journal/ijsem/10.1099/ijsem.0.004683?crawler=true",
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "Desulfovibrio subterraneus sp. nov., a mesophilic sulfate-reducing deltaproteobacterium isolated from a deep siliceous mudstone formation",
+				"creators": [
+					{
+						"lastName": "Ueno",
+						"firstName": "Akio",
+						"creatorType": "author"
+					},
+					{
+						"lastName": "Tamazawa",
+						"firstName": "Satoshi",
+						"creatorType": "author"
+					},
+					{
+						"lastName": "Tamamura",
+						"firstName": "Shuji",
+						"creatorType": "author"
+					},
+					{
+						"lastName": "Murakami",
+						"firstName": "Takuma",
+						"creatorType": "author"
+					},
+					{
+						"lastName": "Kiyama",
+						"firstName": "Tamotsu",
+						"creatorType": "author"
+					},
+					{
+						"lastName": "Inomata",
+						"firstName": "Hidenori",
+						"creatorType": "author"
+					},
+					{
+						"lastName": "Amano",
+						"firstName": "Yuki",
+						"creatorType": "author"
+					},
+					{
+						"lastName": "Miyakawa",
+						"firstName": "Kazuya",
+						"creatorType": "author"
+					},
+					{
+						"lastName": "Tamaki",
+						"firstName": "Hideyuki",
+						"creatorType": "author"
+					},
+					{
+						"lastName": "Naganuma",
+						"firstName": "Takeshi",
+						"creatorType": "author"
+					},
+					{
+						"lastName": "Kaneko",
+						"firstName": "Katsuhiko",
+						"creatorType": "author"
+					}
+				],
+				"date": "2021",
+				"DOI": "10.1099/ijsem.0.004683",
+				"ISSN": "1466-5026,",
+				"abstractNote": "A novel mesophilic sulfate-reducing bacterium, strain HN2<span class=\"jp-sup\">T</span>, was isolated from groundwater sampled from the subsurface siliceous mudstone of the Wakkanai Formation located in Horonobe, Hokkaido, Japan. The bacterium was Gram-negative and vibrio-shaped, and its motility was conferred by a single polar flagellum. Cells had desulfoviridin. Catalase and oxidase activities were not detected. It grew in the temperature range of 25–40 °C (optimum, 35 °C) and pH range of 6.3–8.1 (optimum, pH 7.2–7.6). It used sulfate, thiosulfate, dimethyl sulfoxide, anthraquinone-2,6-disulfonate, Fe<span class=\"jp-sup\">3+</span>, and manganese oxide, but not elemental sulfur, nitrite, nitrate, or fumarate as electron acceptors. The strain showed weak growth with sulfite as the electron acceptor. Fermentative growth with pyruvate, lactate and cysteine was observed in the absence of sulfate, but not with malate or fumarate. NaCl was not required, but the strain tolerated up to 40 g l<span class=\"jp-sup\">–1</span>. Strain HN2<span class=\"jp-sup\">T</span> did not require vitamins. The major cellular fatty acids were iso-C<span class=\"jp-sub\">15 : 0</span> (23.8 %), C<span class=\"jp-sub\">18 : 1</span>                <span class=\"jp-italic\"> ω</span>9<span class=\"jp-italic\">t</span> (18.4 %), C<span class=\"jp-sub\">18 : 0</span> (15.0 %), C<span class=\"jp-sub\">16 : 0</span> (14.5 %), and anteiso-C<span class=\"jp-sub\">17 :0</span> (10.1 %). The major respiratory quinone was menaquinone MK-6(H<span class=\"jp-sub\">2</span>). The G+C content of the genomic DNA was 56.7 mol%. Based on 16S rRNA gene sequence analysis, the closest phylogenetic relative of strain HN2<span class=\"jp-sup\">T</span> is <span class=\"jp-italic\">                   <span class=\"named-content-species\">                      <a class=\"namesforlife\" href=\"http://doi.org/10.1601/nm.13309\" rel=\"namesforlife-name\" target=\"xrefwindow\" title=\"Desulfovibrio psychrotolerans - Click to open Names for Life widget\">Desulfovibrio psychrotolerans</a>                   </span>                </span> JS1<span class=\"jp-sup\">T</span> (97.0 %). Digital DNA–DNA hybridization (dDDH) and average nucleotide identity (ANI) values of the strains HN2<span class=\"jp-sup\">T</span> and <span class=\"jp-italic\">                   <span class=\"named-content-species\">                      <a class=\"namesforlife\" href=\"http://doi.org/10.1601/nm.13309\" rel=\"namesforlife-name\" target=\"xrefwindow\" title=\"D. psychrotolerans - Click to open Names for Life widget\">D. psychrotolerans</a>                   </span>                </span> JS1<span class=\"jp-sup\">T</span> were 22.2 and 79.8 %, respectively. Based on the phenotypic and molecular genetic evidence, we propose a novel species, <span class=\"jp-italic\">D. subterraneus</span> sp. nov. with the type strain HN2<span class=\"jp-sup\">T</span> (=DSM 101010<span class=\"jp-sup\">T</span>=NBRC 112213<span class=\"jp-sup\">T</span>).,",
+				"issue": "2",
+				"libraryCatalog": "Microbiology Society Journals",
+				"pages": "004683",
+				"publicationTitle": "International Journal of Systematic and Evolutionary Microbiology",
+				"url": "https://www.microbiologyresearch.org/content/journal/ijsem/10.1099/ijsem.0.004683",
+				"volume": "71",
+				"attachments": [
+					{
+						"title": "Snapshot",
+						"mimeType": "text/html"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
 	}
 ]
 /** END TEST CASES **/

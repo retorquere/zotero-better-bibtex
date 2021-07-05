@@ -4,6 +4,7 @@ import type BluebirdPromise from 'bluebird'
 
 Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
+declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
 import type { XUL } from '../typings/xul'
 import './startup' // disable monkey patching is unsupported environment
@@ -249,10 +250,11 @@ $patch$(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prot
 })
 
 // #1579
-$patch$(Zotero.Item.prototype, 'clone', original => function Zotero_Item_prototype_clone(libraryID: any, options = {}) {
+$patch$(Zotero.Item.prototype, 'clone', original => function Zotero_Item_prototype_clone(libraryID: number, options = {}) {
   const item = original.apply(this, arguments)
   try {
-    if (item.isRegularItem()) item.setField('extra', (item.getField('extra') || '').split('\n').filter((line: string) => !(line.toLowerCase().startsWith('citation key:'))).join('\n'))
+    // # 1860
+    if (this.libraryID === libraryID && item.isRegularItem()) item.setField('extra', (item.getField('extra') || '').split('\n').filter((line: string) => !(line.toLowerCase().startsWith('citation key:'))).join('\n'))
   }
   catch (err) {
     log.error('patched clone:', {libraryID, options, err})
@@ -726,7 +728,7 @@ export class BetterBibTeX {
   public debugEnabledAtStart: boolean
 
   constructor() {
-    this.debugEnabledAtStart = Zotero.Debug.enabled
+    this.debugEnabledAtStart = !!Zotero.Debug.enabled
   }
 
   public debugEnabled(): boolean {
@@ -836,7 +838,7 @@ export class BetterBibTeX {
       this.firstRun = null
     }
 
-    if (Zotero.BBTTRacer) {
+    if (typeof __estrace !== 'undefined') {
       flash(
         'BBT TRACE LOGGING IS ENABLED',
         'BBT trace logging is enabled in this build.\nZotero will run very slowly.\nThis is intended for debugging ONLY.',

@@ -12,6 +12,7 @@ import urllib.request
 import psutil
 import shlex
 from collections import UserDict
+import copy
 
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning, module='bs4', message='.*looks like a URL.*')
@@ -69,6 +70,17 @@ def html2md(html):
 
 def serialize(obj):
   return json.dumps(obj, indent=2, ensure_ascii=True, sort_keys=True)
+
+def extra_lower(obj):
+  if isinstance(obj, dict) and 'items' in obj:
+    obj = copy.deepcopy(obj)
+    for item in obj['items']:
+      if 'extra' in item:
+        if type(item['extra']) == list:
+          item['extra'] = [line.lower() for line in item['extra']]
+        else:
+          item['extra'] = item['extra'].lower()
+  return obj
 
 def running(id):
   if type(id) == int:

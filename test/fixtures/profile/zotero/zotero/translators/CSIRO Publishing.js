@@ -1,15 +1,15 @@
 {
 	"translatorID": "303c2744-ea37-4806-853d-e1ca67be6818",
+	"translatorType": 4,
 	"label": "CSIRO Publishing",
 	"creator": "Michael Berkowitz",
-	"target": "^https?://(www.)?publish\\.csiro\\.au/",
+	"target": "^https?://(www\\.)?publish\\.csiro\\.au/",
 	"minVersion": "1.0.0b4.r5",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2012-09-04 21:24:38"
+	"lastUpdated": "2021-06-07 17:30:00"
 }
 
 function detectWeb(doc, url) {

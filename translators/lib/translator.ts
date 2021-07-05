@@ -1,5 +1,6 @@
 declare const Zotero: any
 declare const ZOTERO_TRANSLATOR_INFO: any
+declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
 import { affects, names as preferences, defaults, PreferenceName, Preferences, schema } from '../../gen/preferences/meta'
 import { client } from '../../content/client'
@@ -313,7 +314,7 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
       }
     }
 
-    if (!this.initialized && mode === 'export' && this.preferences.testing && schema.translator[this.header.label]?.cached) {
+    if (!this.initialized && mode === 'export' && this.preferences.testing && typeof __estrace === 'undefined' && schema.translator[this.header.label]?.cached) {
       const ignored = ['testing']
       this.preferences = new Proxy(this.preferences, {
         set: (object, property, _value) => {

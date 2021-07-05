@@ -1,125 +1,186 @@
 {
 	"translatorID": "1c5b122c-7e58-4cd5-932b-93f5ca0b7e1a",
+	"translatorType": 4,
 	"label": "National Post",
-	"creator": "Adam Crymble",
-	"target": "http://www.(national|financial)post.com/",
+	"creator": "Adam Crymble and Abe Jellinek",
+	"target": "^https://(www\\.)?(national|financial)post\\.com/",
 	"minVersion": "1.0.0b4.r5",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
-	"browserSupport": "g",
-	"lastUpdated": "2017-05-23 21:23:02"
+	"browserSupport": "gcsibv",
+	"lastUpdated": "2021-06-15 16:25:00"
 }
 
-function detectWeb(doc, url) {
+/*
+	***** BEGIN LICENSE BLOCK *****
+
+	Copyright © 2021 Abe Jellinek
 	
-	if (doc.title.match("Search Results")) {
-		return "multiple";
-	} else if (doc.location.href.match("story")) {
+	This file is part of Zotero.
+
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Zotero is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU Affero General Public License for more details.
+
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
+
+	***** END LICENSE BLOCK *****
+*/
+
+
+function detectWeb(doc, _url) {
+	let jsonText = text(doc, 'script[type="application/ld+json"]');
+	if (jsonText && JSON.parse(jsonText)['@type'] == 'NewsArticle') {
 		return "newspaperArticle";
-	} else if (doc.location.href.match("blog")) {
-		return "blogPost";
 	}
-	
+	else if (getSearchResults(doc, true)) {
+		return "multiple";
+	}
+	return false;
 }
 
-function associateData (newItem, dataTags, field, zoteroField) {
-	if (dataTags[field]) {
-		newItem[zoteroField] = dataTags[field];
+function getSearchResults(doc, checkOnly) {
+	var items = {};
+	var found = false;
+	var rows = doc.querySelectorAll('a.article-card__link');
+	for (let row of rows) {
+		let href = row.href;
+		let title = ZU.trimInternal(row.textContent);
+		if (!href || !title) continue;
+		if (checkOnly) return true;
+		found = true;
+		items[href] = title;
 	}
+	return found ? items : false;
 }
-
-function scrape(doc) {
-	var namespace = doc.documentElement.namespaceURI;
-	var nsResolver = namespace ? function(prefix) {
-		if (prefix == "x" ) return namespace; else return null;
-	} : null;
-	
-	var dataTags = new Object();
-	var author = new Array();
-	
-	var mediaType = detectWeb(doc,doc.location.href);
-	if (mediaType == "newspaperArticle") {
-		var newItem = new Zotero.Item("newspaperArticle");
-	
-	//metadata	
-		var dataTagHTML = doc.getElementsByTagName("meta");
-		for (var i = 0 ; i < dataTagHTML.length ; i++) {
-			dataTags[dataTagHTML[i].getAttribute("name")] = Zotero.Utilities.cleanTags(dataTagHTML[i].getAttribute("content"));
-		}
-		
-		associateData (newItem, dataTags, "Description", "abstractNote");
-		associateData (newItem, dataTags, "PubDate", "date");
-		
-	//author
-		if (dataTags["Author"]) {
-			newItem.creators.push(Zotero.Utilities.cleanAuthor(dataTags["Author"], "author"));
-		} else {
-		
-			author = doc.evaluate('//strong', doc, nsResolver, XPathResult.ANY_TYPE, null).iterateNext().textContent.split(",");
-			newItem.creators.push(Zotero.Utilities.cleanAuthor(author[0], "author"));
-		}
-		
-	} else if (mediaType == "blogPost") {
-		
-		var newItem = new Zotero.Item("blogPost");
-		
-		var blog = doc.evaluate('//div[@class="entryviewfooter"]', doc, nsResolver, XPathResult.ANY_TYPE, null).iterateNext().textContent;
-		blog = blog.replace("Posted:", '').split("by");
-		newItem.date = blog[0].replace(/^\s*|\s*$/g, '');
-		
-		var author = doc.evaluate('//span[@class="MoreRecentPostsAuthor"]', doc, nsResolver, XPathResult.ANY_TYPE, null).iterateNext().textContent.replace("by ", '');
-		newItem.creators.push(Zotero.Utilities.cleanAuthor(author, "author"));
-	}
-
-	Zotero.debug(doc.location.href);
-	newItem.url = doc.location.href;
-	
-	// This is ACTUALLY returning This URL: http://www.nationalpost.com/components/npemail.aspx?id=591742&ref=http://www.nationalpost.com/story.html
-
-
-	var title1 = doc.title;
-	Zotero.debug(title1);
-	
-	newItem.title = title1;
-	newItem.publication = "The National Post";
-	newItem.ISSN = 	"1486-8008";
-	newItem.language = "en-CA";
-	
-	newItem.complete();
-}
-
 
 function doWeb(doc, url) {
-	var namespace = doc.documentElement.namespaceURI;
-	var nsResolver = namespace ? function(prefix) {
-		if (prefix == 'x') return namespace; else return null;
-	} : null;
-	
-	var articles = new Array();
-	
 	if (detectWeb(doc, url) == "multiple") {
-		var items = new Object();
-		var titles = doc.evaluate('//h3[@class="alt"]/a', doc, nsResolver, XPathResult.ANY_TYPE, null);
-		var next_title;
-		while (next_title = titles.iterateNext()) {
-			if (next_title.href.match("nationalpost")) {
-				items[next_title.href] = next_title.textContent;
-				Zotero.debug(next_title.href);
-				Zotero.debug(next_title.textContent);
-			}
-		}
-		items = Zotero.selectItems(items);
-		for (var i in items) {
-			articles.push(i);
-		}
-	} else {
-		articles = [url];
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
+			if (items) ZU.processDocuments(Object.keys(items), scrape);
+		});
 	}
-	Zotero.Utilities.processDocuments(articles, scrape, function() {Zotero.done();});
-	Zotero.wait();
-	
-	
-	
+	else {
+		scrape(doc, url);
+	}
 }
+
+function scrape(doc, _url) {
+	let item = new Zotero.Item('newspaperArticle');
+	let json = JSON.parse(text(doc, 'script[type="application/ld+json"]'));
+	item.title = json.headline;
+	item.url = json.url;
+	item.date = ZU.strToISO(json.dateModified || json.datePublished);
+	item.abstractNote = json.description;
+	item.publicationTitle = json.publisher.name;
+	item.language = 'en';
+	item.creators.push(ZU.cleanAuthor(json.author.name, 'author'));
+	
+	if (doc.querySelector('.wire-published-by__authors')) {
+		item.creators = [];
+		for (let author of text(doc, '.wire-published-by__authors').split(/, | and /)) {
+			item.creators.push(ZU.cleanAuthor(author, 'author'));
+		}
+	}
+	
+	item.attachments.push({ title: 'Snapshot', document: doc });
+	item.libraryCatalog = '';
+	
+	item.complete();
+}
+
+/** BEGIN TEST CASES **/
+var testCases = [
+	{
+		"type": "web",
+		"url": "https://financialpost.com/news/economy/a-really-tough-sell-multinationals-shrug-off-g7-tax-assault",
+		"items": [
+			{
+				"itemType": "newspaperArticle",
+				"title": "'A really tough sell': Multinationals shrug off G7 tax assault",
+				"creators": [
+					{
+						"firstName": "Richard",
+						"lastName": "Waters",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Emma",
+						"lastName": "Agyemang",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Aziza",
+						"lastName": "Kasumov",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Tim",
+						"lastName": "Bradshaw",
+						"creatorType": "author"
+					}
+				],
+				"date": "2021-06-11",
+				"abstractNote": "The stock market's response has been a collective yawn, while big tech gave a muted welcome to the plans",
+				"language": "en",
+				"publicationTitle": "Financial Post",
+				"shortTitle": "'A really tough sell'",
+				"url": "https://financialpost.com/news/economy/a-really-tough-sell-multinationals-shrug-off-g7-tax-assault",
+				"attachments": [
+					{
+						"title": "Snapshot",
+						"mimeType": "text/html"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://nationalpost.com/entertainment/weekend-post/massive-genre-nerd-kate-herron-calls-loki-a-love-letter-to-sci-fi",
+		"items": [
+			{
+				"itemType": "newspaperArticle",
+				"title": "'Massive genre nerd' Kate Herron calls Loki a love letter to sci-fi",
+				"creators": [
+					{
+						"firstName": "Chris",
+						"lastName": "Knight",
+						"creatorType": "author"
+					}
+				],
+				"date": "2021-06-11",
+				"abstractNote": "Riffs and references include Brazil, Dune, Blade Runner, The Hitchhiker's Guide to the Galaxy and (almost) Sesame Street",
+				"language": "en",
+				"publicationTitle": "National Post",
+				"url": "https://nationalpost.com/entertainment/weekend-post/massive-genre-nerd-kate-herron-calls-loki-a-love-letter-to-sci-fi",
+				"attachments": [
+					{
+						"title": "Snapshot",
+						"mimeType": "text/html"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://nationalpost.com/search/?search_text=uefa&date_range=-30d&sort=score",
+		"items": "multiple"
+	}
+]
+/** END TEST CASES **/
