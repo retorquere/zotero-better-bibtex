@@ -11,7 +11,7 @@
     "CSL YAML export of date with original publication date in [brackets] #922": 360,
     "CSL exporters; ignore [Fields to omit from export] setting #1179": 1970,
     "CSL-YAML import": {
-      "msecs": 1350,
+      "msecs": 1330,
       "runs": -353
     },
     "Capitalize all title-fields for language en #383": 680,
@@ -354,7 +354,7 @@
     "Import 1 references from Better BibTeX.005": 970,
     "Import 1 references from Better BibTeX.006": 980,
     "Import 1 references from Better BibTeX.008": 1060,
-    "Import 1 references from Better BibTeX.010": 1140,
+    "Import 1 references from Better BibTeX.010": 1150,
     "Import 1 references from Better BibTeX.011": 1060,
     "Import 1 references from Better BibTeX.012": 980,
     "Import 1 references from Better BibTeX.014": 1010,
@@ -406,7 +406,7 @@
     },
     "Import 3 references from Better BibTeX.009": 1130,
     "Import 4 references from Improve import of films #1837": {
-      "msecs": 1360,
+      "msecs": 1350,
       "runs": -348
     },
     "Import 4 references from Title of German entry converted to lowercase during import #1350": 1310,
@@ -436,12 +436,12 @@
     },
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 363630,
+    "Really Big whopping library": 363400,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 51260,
+      "msecs": 51270,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
@@ -469,7 +469,7 @@
       "runs": -36
     },
     "web_page and other mendeley idiocy": {
-      "msecs": 39420,
+      "msecs": 39440,
       "runs": -239
     }
   },
@@ -775,7 +775,7 @@
       "Identical Pinned keys lost when merging duplicated records #1721"
     ]
   },
-  "runs": 363,
+  "runs": 364,
   "slow": {
     "1": [
       "Export 1 references for BibLaTeX to Cite archive documents with BetterBibLaTeX #1799",
