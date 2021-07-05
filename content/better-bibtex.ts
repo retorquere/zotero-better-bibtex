@@ -1,5 +1,4 @@
 /* eslint-disable prefer-rest-params */
-
 import type BluebirdPromise from 'bluebird'
 
 Components.utils.import('resource://gre/modules/FileUtils.jsm')

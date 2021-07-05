@@ -142,38 +142,7 @@ if (fs.existsSync(path.join(__dirname, '../../.trace.json'))) {
   }
 }
 
-const prefix = `
-Zotero.Debug.enabled = true;
-
-const trace$circularReplacer = () => {
-  const seen = new WeakSet();
-  return (key, value) => {
-    try {
-      if (typeof value === "object" && value !== null) {
-        if (seen.has(value)) {
-          return;
-        }
-        seen.add(value);
-      }
-      return value;
-    }
-    catch (err) {
-      return;
-    }
-  };
-};
-
-const __estrace = {
-  enter(name, url, args) {
-    if (!Zotero || !Zotero.BetterBibTeX || !Zotero.BetterBibTeX.ready || Zotero.BetterBibTeX.ready.isPending()) return
-    Zotero.debug(\`trace.enter \${name} \${url}.(\${JSON.stringify(Array.from(args), trace$circularReplacer())})\`);
-  },
-  exit(name, url, result) {
-    if (!Zotero || !Zotero.BetterBibTeX || !Zotero.BetterBibTeX.ready || Zotero.BetterBibTeX.ready.isPending()) return
-    Zotero.debug(\`trace.exit \${name} \${url} \${JSON.stringify(result, trace$circularReplacer())}\`);
-  },
-};
-`
+const prefix = fs.readFileSync(path.join(__dirname, 'trace.js'), 'utf-8')
 
 module.exports.trace = {
   name: 'trace',
