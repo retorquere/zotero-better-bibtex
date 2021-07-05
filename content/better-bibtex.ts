@@ -728,7 +728,7 @@ export class BetterBibTeX {
   public debugEnabledAtStart: boolean
 
   constructor() {
-    this.debugEnabledAtStart = Zotero.Debug.enabled
+    this.debugEnabledAtStart = !!Zotero.Debug.enabled
   }
 
   public debugEnabled(): boolean {
