@@ -159,9 +159,9 @@ Zotero takes a few seconds to start up, which is sometimes mistakenly attributed
 
 ### verbatimFields
 
-default: `url,doi,file,eprint,verba,verbb,verbc,groups`
+default: `url,doi,file,ids,eprint,verba,verbb,verbc,groups`
 
-list of fields to treat as verbatim during import. If you're importing e.g. Mendeley-generated BibTeX, try removing `file` from this list before import.
+list of fields to treat as verbatim during import. If you're importing e.g. Mendeley-generated BibTeX, which is out of spec in various ways, try removing `file` from this list before import.
 
 ### warnTitleCased
 

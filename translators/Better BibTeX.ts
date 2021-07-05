@@ -406,7 +406,7 @@ export function detectImport(): boolean {
   let detected = (Zotero.getHiddenPref('better-bibtex.import') as boolean)
   if (detected) {
     const input = Zotero.read(102400) // eslint-disable-line no-magic-numbers
-    const bib = bibtexParser.chunker(input, { max_entries: 1 })
+    const bib = bibtexParser.chunker.parse(input, { max_entries: 1 })
     detected = !!bib.find(chunk => chunk.entry)
   }
   return detected
@@ -1254,8 +1254,7 @@ export async function doImport(): Promise<void> {
 
   if (Translator.preferences.strings && Translator.preferences.importBibTeXStrings) input = `${Translator.preferences.strings}\n${input}`
 
-  const bib = await bibtexParser.parse(input, {
-    async: true,
+  const bib = await bibtexParser.promises.parse(input, {
     caseProtection: (Translator.preferences.importCaseProtection as 'as-needed'), // we are actually sure it's a valid enum value; stupid workaround for TS2322: Type 'string' is not assignable to type 'boolean | "as-needed" | "strict"'.
     errorHandler: (Translator.preferences.testing ? undefined : function(err) { log.error(err) }), // eslint-disable-line prefer-arrow/prefer-arrow-functions
     unknownCommandHandler: function(node) { // eslint-disable-line object-shorthand
