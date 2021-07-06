@@ -41,6 +41,7 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
           'item',
           'Translator',
           'Zotero',
+          'extra',
           postscript.body(Translator.preferences.postscript)
         ) as postscript.Postscript
       }
@@ -53,7 +54,7 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
       log.debug('failed to install postscript', err, '\n', postscript.body(Translator.preferences.postscript))
     }
   }
-  public postscript(_reference, _item, _translator, _zotero): postscript.Allow {
+  public postscript(_reference, _item, _translator, _zotero, _extra): postscript.Allow {
     return { cache: true, write: true }
   }
 
@@ -115,6 +116,8 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
 
       if (csl.type === 'broadcast' && csl.genre === 'television broadcast') delete csl.genre
 
+      const extraFields: Extra.Fields = JSON.parse(JSON.stringify(item.extraFields))
+
       // special case for #587... not pretty
       // checked separately because .type isn't actually a CSL var so wouldn't pass the ef.type test below
       if (!validCSLTypes.includes(item.extraFields.kv['csl-type']) && validCSLTypes.includes(item.extraFields.kv.type)) {
@@ -158,7 +161,7 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
 
       let allow: postscript.Allow = { cache: true, write: true }
       try {
-        allow = this.postscript(csl, item, Translator, Zotero)
+        allow = this.postscript(csl, item, Translator, Zotero, extraFields)
       }
       catch (err) {
         log.error('CSL.postscript failed:', err)

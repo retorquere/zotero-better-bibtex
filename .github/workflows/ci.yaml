@@ -10,16 +10,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - run: echo "::set-output name=version::"`jq -r .version package.json`
-      id: version
-    - name: cancel spurious build on tagged version
-      uses: andymckay/cancel-action@master
-      if: github.event.head_commit.message == steps.version.outputs.version && !startsWith(github.ref, 'refs/tags/')
     - uses: actions/checkout@v2
       with:
         persist-credentials: false
         submodules: true  # Fetch Hugo themes (true OR recursive)
         fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+    - run: echo "::set-output name=version::"`jq -r .version package.json`
+      id: version
+    - name: cancel spurious build on tagged version
+      run: echo cancelling spurious build of ${{ github.event.head_commit.message }}
+      if: github.event.head_commit.message == steps.version.outputs.version && !startsWith(github.ref, 'refs/tags/')
+    - name: cancel spurious build on tagged version
+      uses: andymckay/cancel-action@master
+      if: github.event.head_commit.message == steps.version.outputs.version && !startsWith(github.ref, 'refs/tags/')
 
     - name: install python
       uses: actions/setup-python@v2
