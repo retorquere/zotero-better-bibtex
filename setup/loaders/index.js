@@ -173,7 +173,7 @@ module.exports.trace = {
         const {code} = putout(source.code, {
           fixCount: 1,
           rules: {
-            tracer: ['on', { url: localpath.replace(/\.ts$/, '') }],
+            tracer: ['on', { url: localpath.replace(/\.ts$/, ''), exclude: [ 'ArrowFunctionExpression' ] }],
           },
           plugins: [
             ['tracer', tracer],
