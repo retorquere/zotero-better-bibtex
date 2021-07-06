@@ -147,7 +147,7 @@ const prefix = fs.readFileSync(path.join(__dirname, 'trace.js'), 'utf-8')
 module.exports.trace = {
   name: 'trace',
   setup(build) {
-    build.onLoad({ filter: /\.ts$/ }, async (args) => {
+    build.onLoad({ filter: selected_for_trace ? /\.ts$/ : /^$/ }, async (args) => {
       if (!selected_for_trace) return null
 
       const source = await esbuild.transform(await fs.promises.readFile(args.path, 'utf-8'), { loader: 'ts' })
