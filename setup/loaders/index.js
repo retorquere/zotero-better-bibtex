@@ -169,14 +169,14 @@ module.exports.trace = {
       console.log(`!!!!!!!!!!!!!! Instrumenting ${localpath} for trace logging !!!!!!!!!!!!!`)
 
       try {
-        const tracer = await import('estrace/plugin');
+        const estrace = await import('estrace/plugin');
         const {code} = putout(source.code, {
           fixCount: 1,
           rules: {
-            tracer: ['on', { url: localpath.replace(/\.ts$/, ''), exclude: [ 'ArrowFunctionExpression' ] }],
+            estrace: ['on', { url: localpath.replace(/\.ts$/, ''), exclude: [ 'FunctionExpression', 'ArrowFunctionExpression' ] }]
           },
           plugins: [
-            ['tracer', tracer],
+            ['estrace', estrace],
           ],
         })
         const contents = prefix + code
