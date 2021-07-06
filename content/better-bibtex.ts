@@ -248,6 +248,7 @@ $patch$(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prot
   return original.apply(this, arguments) as string
 })
 
+Zotero.debug('patching Zotero.Item.prototype clone')
 // #1579
 $patch$(Zotero.Item.prototype, 'clone', original => function Zotero_Item_prototype_clone(libraryID: number, options = {}) {
   const item = original.apply(this, arguments)
@@ -269,6 +270,7 @@ $patch$(Zotero.Item.prototype, 'clone', original => function Zotero_Item_prototy
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return item
 })
+Zotero.debug('patched Zotero.Item.prototype clone')
 
 const itemTreeViewWaiting: Record<number, boolean> = {}
 $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function Zotero_ItemTreeView_prototype_getCellText(row: any, col: { id: string }): string {
