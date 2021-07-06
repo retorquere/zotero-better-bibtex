@@ -120,7 +120,6 @@
     "lodash": "^4.17.21",
     "lokijs": "^1.5.12",
     "moment": "^2.29.1",
-    "njstrace": "^2.0.1",
     "node-eta": "^0.9.0",
     "number-to-words": "^1.2.4",
     "pegjs": "^0.10.0",

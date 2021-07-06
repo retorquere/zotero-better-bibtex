@@ -1,24 +1,25 @@
-if (typeof Zotero !== 'undefined' && Zotero.Debug) Zotero.Debug.enabled = true;
+;if (typeof Zotero !== 'undefined' && Zotero.Debug) Zotero.Debug.enabled = true
 
-const trace$circularReplacer = () => {
-  const seen = new WeakSet();
+const __estrace$circularReplacer = () => {
+  const seen = new WeakSet()
   return (key, value) => {
     try {
       if (typeof value === "object" && value !== null) {
-        if (seen.has(value)) {
-          return;
-        }
-        seen.add(value);
+        if (seen.has(value)) return
+        seen.add(value)
+        return { ...value }
       }
-      return value;
+      else {
+        return value
+      }
     }
     catch (err) {
-      return;
+      return
     }
-  };
-};
+  }
+}
 
-function report(event, name, url, args) {
+function __estrace$report(event, name, url, args) {
   function logger(msg) {
     const zotero = typeof Zotero !== 'undefined'
     const debug = zotero && Zotero.Debug
@@ -48,7 +49,7 @@ function report(event, name, url, args) {
   }
 
   if (event === 'enter') {
-    logger(`bbt trace.${event} ${name} ${url}.(${JSON.stringify(Array.from(args), trace$circularReplacer())})`)
+    logger(`bbt trace.${event} ${name} ${url}.(${JSON.stringify(Array.from(args), __estrace$circularReplacer())})`)
   }
   else {
     logger(`bbt trace.${event} ${name} ${url}`)
@@ -57,9 +58,9 @@ function report(event, name, url, args) {
 
 const __estrace = {
   enter(name, url, args) {
-    report('enter', name, url, args)
+    __estrace$report('enter', name, url, args)
   },
   exit(name, url, result) {
-    report('exit', name, url)
+    __estrace$report('exit', name, url)
   },
 };

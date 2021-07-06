@@ -56,7 +56,6 @@ specifiers:
   lodash: ^4.17.21
   lokijs: ^1.5.12
   moment: ^2.29.1
-  njstrace: ^2.0.1
   node-eta: ^0.9.0
   number-to-words: ^1.2.4
   ooooevan-jieba: ^1.0.3
@@ -154,7 +153,6 @@ devDependencies:
   lodash: 4.17.21
   lokijs: 1.5.12
   moment: 2.29.1
-  njstrace: 2.0.1
   node-eta: 0.9.0
   number-to-words: 1.2.4
   pegjs: 0.10.0
@@ -5194,11 +5192,6 @@ packages:
     engines: {node: '>=4.0.0'}
     dev: true
 
-  /idgen/2.1.0:
-    resolution: {integrity: sha512-gFqW29tHfEpjScFOa42slt3UWL+SKhhqD/0ryh0/bGtYiLkvmTG9jWAcXpvQRROdm+0yBjJngA1VukCiJAzj1A==}
-    hasBin: true
-    dev: true
-
   /ieee754/1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
     dev: true
@@ -6256,15 +6249,6 @@ packages:
   /nessy/4.0.0:
     resolution: {integrity: sha512-XH4zOfmpxJhxXIp0Eb4vtJDtxfSjcbjY89/Rt64BNpkiBQ1mNumJWwDGq1kXWluCDQCu5LSrwABi58lWcfsWDQ==}
     engines: {node: '>=8'}
-    dev: true
-
-  /njstrace/2.0.1:
-    resolution: {integrity: sha512-FI0U+BWjVchcaINDRd4ZbiNcY3TVyhIzxIZ/kYY4swRgUxIkcpgFF9r6rdLRqnecDsLxgRM/NpUsfWmrxK6gKQ==}
-    dependencies:
-      espree: 7.3.1
-      extend: 3.0.2
-      idgen: 2.1.0
-      minimatch: 3.0.4
     dev: true
 
   /node-dir/0.1.17:
