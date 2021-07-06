@@ -19,48 +19,38 @@ const __estrace$circularReplacer = () => {
   }
 }
 
-function __estrace$report(event, name, url, args) {
-  function logger(msg) {
-    const zotero = typeof Zotero !== 'undefined'
-    const debug = zotero && Zotero.Debug
-    const bbt = zotero && typeof Zotero.BetterBibTeX !== 'undefined'
-    const ready = bbt && Zotero.BetterBibTeX.ready && !Zotero.BetterBibTeX.ready.isPending()
+function __estrace$report(msg) {
+  const zotero = typeof Zotero !== 'undefined'
+  const debug = zotero && Zotero.Debug
+  const bbt = zotero && typeof Zotero.BetterBibTeX !== 'undefined'
+  const ready = bbt && Zotero.BetterBibTeX.ready && !Zotero.BetterBibTeX.ready.isPending()
 
-    let context = ''
-    if (!zotero) {
-      context = 'Before Zotero load:'
-    }
-    else if (!debug) {
-      context = 'Zotero loaded, but not debug-ready:'
-    }
-    else if (!bbt) {
-      context = 'Zotero ready, BBT not loaded:'
-    }
-    else if (!ready) {
-      context = 'Zotero ready, BBT not ready:'
-    }
-
-    if (debug) {
-      Zotero.debug(`${context} ${msg}`)
-    }
-    else {
-      // console.log(context, msg)
-    }
+  if (!zotero) {
+    msg = `Before Zotero load: ${msg}`
+  }
+  else if (!debug) {
+    msg = `Zotero loaded, but not debug-ready: ${msg}`
+  }
+  else if (!bbt) {
+    msg = `Zotero ready, BBT not loaded: ${msg}`
+  }
+  else if (!ready) {
+    msg = `Zotero ready, BBT not ready: ${msg}`
   }
 
-  if (event === 'enter') {
-    logger(`bbt trace.${event} ${name} ${url}.(${JSON.stringify(Array.from(args), __estrace$circularReplacer())})`)
+  if (debug) {
+    Zotero.debug(msg)
   }
   else {
-    logger(`bbt trace.${event} ${name} ${url}`)
+    // console.log(msg)
   }
 }
 
 const __estrace = {
   enter(name, url, args) {
-    __estrace$report('enter', name, url, args)
+    __estrace$report(`bbt trace.enter ${url}.${name}(${JSON.stringify(Array.from(args), __estrace$circularReplacer())})`)
   },
   exit(name, url, result) {
-    __estrace$report('exit', name, url)
+    __estrace$report(`bbt trace.exit ${url}.${name} => ${JSON.stringify(result, __estrace$circularReplacer())}`)
   },
 };
