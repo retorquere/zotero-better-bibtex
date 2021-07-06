@@ -30,6 +30,7 @@ import threading
 import socket
 from pathlib import PurePath
 from diff_match_patch import diff_match_patch
+from pygit2 import Repository
 
 from ruamel.yaml import YAML
 yaml = YAML(typ='safe')
@@ -64,8 +65,15 @@ class Config:
         'first_run': userdata.get('first-run', 'false') == 'true',
         'timeout': 60,
         'profile': '',
+        'trace_factor': 1,
       }
     ]
+    trace = os.path.join(ROOT, '.trace.json')
+    if os.path.exists(trace):
+      with open(trace) as f:
+        trace = json.load(f)
+        if Repository('.').head.shorthand in trace:
+          self.data[0]['trace_factor'] = 10
     self.reset()
 
   def __getattr__(self, name):
@@ -155,7 +163,7 @@ class Zotero:
 
     with Pinger(20):
       req = urllib.request.Request(f'http://127.0.0.1:{self.port}/debug-bridge/execute?password={self.password}', data=script.encode('utf-8'), headers={'Content-type': 'application/javascript'})
-      res = urllib.request.urlopen(req, timeout=self.config.timeout).read().decode()
+      res = urllib.request.urlopen(req, timeout=self.config.timeout * self.config.trace_factor).read().decode()
       return json.loads(res)
 
   def shutdown(self):
