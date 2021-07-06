@@ -132,10 +132,12 @@ module.exports.node_modules = function(dir) {
 
 let selected_for_trace = false
 if (fs.existsSync(path.join(__dirname, '../../.trace.json'))) {
-  const branch = (process.env.GITHUB_REF && process.env.GITHUB_REF.startsWith('refs/heads/')) ? process.env.GITHUB_REF.replace('refs/heads/') : shell.exec('git rev-parse --abbrev-ref HEAD', { silent: true }).stdout.trim()
+  const branch = (process.env.GITHUB_REF && process.env.GITHUB_REF.startsWith('refs/heads/')) ? process.env.GITHUB_REF.replace('refs/heads/', '') : shell.exec('git rev-parse --abbrev-ref HEAD', { silent: true }).stdout.trim()
+  console.log('building on', branch)
   if (branch !== 'master' && branch !== 'main') {
     let trace = require('../../.trace.json')
     trace = trace[branch]
+    console.log(`instrumenting ${branch}: ${!!trace}`)
     if (trace) selected_for_trace = filePathFilter(trace)
   }
 }
