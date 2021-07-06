@@ -148,15 +148,25 @@ module.exports.trace = {
   name: 'trace',
   setup(build) {
     build.onLoad({ filter: /\.ts$/ }, async (args) => {
-      const localpath = path.relative(process.cwd(), args.path)
-      if (!selected_for_trace || !selected_for_trace(localpath)) return null
-
-      console.log(`!!!!!!!!!!!!!! Instrumenting ${localpath} for trace logging !!!!!!!!!!!!!`)
+      if (!selected_for_trace) return null
 
       const source = await esbuild.transform(await fs.promises.readFile(args.path, 'utf-8'), { loader: 'ts' })
       for (const warning of source.warnings) {
         console.log('!!', warning)
       }
+
+      const localpath = path.relative(process.cwd(), args.path)
+
+      // inject __estrace so sources can tell an instrumented build is active even if not on the current source
+      if (!selected_for_trace(localpath)) {
+        const contents = `const __estrace = true;\n${source.code}`
+        return {
+          contents,
+          loader: 'js',
+        }
+      }
+
+      console.log(`!!!!!!!!!!!!!! Instrumenting ${localpath} for trace logging !!!!!!!!!!!!!`)
 
       try {
         const tracer = await import('estrace/plugin');
