@@ -43,7 +43,7 @@ function report(event, name, url, args) {
       Zotero.debug(`${context} ${msg}`)
     }
     else {
-      console.log(context, msg)
+      // console.log(context, msg)
     }
   }
 
