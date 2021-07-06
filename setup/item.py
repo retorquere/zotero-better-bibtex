@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+from networkx.readwrite import json_graph
+
 from collections import OrderedDict
 import hashlib
 import operator
@@ -433,6 +435,10 @@ class ExtraFields:
     for label in [node for node, data in self.dg.nodes(data=True) if data['domain'] == 'label' and 'LabelGraphics' in data]:
       self.dg.remove_node(label)
     nx.write_gml(self.dg, 'mapping.gml', stringizer)
+    #with open('extra-fields-graph.json', 'w') as f:
+    #  json.dump(json_graph.node_link_data(self.dg, {"link": "edges", "source": "from", "target": "to"}), f)
+    #  # https://github.com/vasturiano/3d-force-graph
+    # https://neo4j.com/developer-blog/visualizing-graphs-in-3d-with-webgl/
 
     #with open('mapping.json', 'w') as f:
     #  data = nx.readwrite.json_graph.node_link_data(self.dg)
