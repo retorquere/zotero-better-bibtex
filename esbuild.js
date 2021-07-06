@@ -27,7 +27,6 @@ async function bundle(config) {
     ...config,
     bundle: true,
     format: 'iife',
-    sourcemap: true,
   }
   if (!config.platform) config.target = ['firefox60']
 
@@ -94,7 +93,7 @@ async function rebuild() {
   await bundle({
     entryPoints: [ 'translators/worker/zotero.ts' ],
     globalName,
-    plugins: [loader.bibertool, loader.pegjs, loader.__dirname, shims],
+    plugins: [loader.trace, loader.bibertool, loader.pegjs, loader.__dirname, shims],
     outdir: 'build/resource/worker',
     banner: { js: 'importScripts("resource://zotero/config.js") // import ZOTERO_CONFIG' },
     footer: {
@@ -124,7 +123,7 @@ async function rebuild() {
     await bundle({
       entryPoints: [path.join(translator.dir, translator.name + '.ts')],
       globalName,
-      plugins: [loader.bibertool, loader.pegjs, loader.__dirname, shims],
+      plugins: [loader.trace, loader.bibertool, loader.pegjs, loader.__dirname, shims],
       outfile,
       banner: { js: `if (typeof ZOTERO_TRANSLATOR_INFO === 'undefined') var ZOTERO_TRANSLATOR_INFO = ${JSON.stringify(header)};` },
       footer: { js: `const { ${vars.join(', ')} } = ${globalName};` },
