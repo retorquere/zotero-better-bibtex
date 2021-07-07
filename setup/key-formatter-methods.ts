@@ -3,7 +3,7 @@
 
 import * as ts from 'typescript'
 import * as fs from 'fs'
-import stringify = require('json.sortify')
+const stringify = require('safe-stable-stringify')
 
 const filename = 'content/key-manager/formatter.ts'
 const ast = ts.createSourceFile(filename, fs.readFileSync(filename, 'utf8'), ts.ScriptTarget.Latest)
