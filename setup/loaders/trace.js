@@ -48,7 +48,8 @@ function __estrace$report(msg) {
 
 const __estrace = {
   enter(name, url, args) {
-    __estrace$report(`bbt trace.enter ${url}.${name}(${JSON.stringify(Array.from(args), __estrace$circularReplacer())})`)
+    const replacer = __estrace$circularReplacer()
+    __estrace$report(`bbt trace.enter ${url}.${name}(${Array.from(args).map(arg => JSON.stringify(arg, replacer)).join(', ')})`)
   },
   exit(name, url, result) {
     __estrace$report(`bbt trace.exit ${url}.${name} => ${JSON.stringify(result, __estrace$circularReplacer())}`)
