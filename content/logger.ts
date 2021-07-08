@@ -4,6 +4,15 @@ declare const workerContext: { worker: string }
 import { stringify, asciify } from './stringify'
 import { worker as inWorker } from './environment'
 
+let running_translator = null
+
+try {
+  running_translator = Translator || null
+}
+catch (err) {
+  running_translator = null
+}
+
 class Logger {
   public verbose = false
 
@@ -40,7 +49,7 @@ class Logger {
       msg = output
     }
 
-    translator = translator || (typeof Translator !== 'undefined' && Translator.header.label)
+    translator = translator || running_translator?.header.label
     if (inWorker && !worker) worker = workerContext.worker || '??'
     const prefix = ['better-bibtex', translator, error && 'error', worker && `(worker ${worker})`].filter(p => p).join(' ')
     return `{${prefix}} +${diff} ${asciify(msg)}`
@@ -56,8 +65,8 @@ class Logger {
   }
 
   public debug(...msg) {
-    // cannot user Zotero.Debug.enabled because it is not available in foreground exporters
-    if (!Zotero.BetterBibTeX || Zotero.BetterBibTeX.debugEnabled()) Zotero.debug(this.format({}, msg))
+    // cannot user Zotero.Debug.enabled in foreground exporters
+    if (!Zotero.BetterBibTeX || running_translator?.debug || Zotero.Debug?.enabled) Zotero.debug(this.format({}, msg))
   }
 
   public error(...msg) {

@@ -133,6 +133,7 @@ class Items {
 }
 
 export class ITranslator { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+  public debug: boolean = Zotero.BetterBibTeX.debugEnabled()
   public preferences: Preferences
   public skipFields: string[]
   public skipField: Record<string, boolean>
