@@ -29,9 +29,9 @@ jobs:
       with:
         python-version: 3.8
     - name: install node
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v2
       with:
-        node-version: 14.x
+        node-version: 16.x
     - name: Cache python/node dependencies
       id: cache
       uses: actions/cache@v2
@@ -40,7 +40,6 @@ jobs:
       with:
         path: |
           ~/.npm
-          ~/.pnpm-store
           ~/.nocache/pip
           ${{ env.pythonLocation }}
         key: ${{ runner.os }}-build-${{ env.pythonLocation }}-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
@@ -50,10 +49,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: install node packages
-      uses: pnpm/action-setup@v2
-      with:
-        version: latest
-        run_install: true
+      run: npm install
 
 
     - run: npm run build
@@ -102,7 +98,6 @@ jobs:
       with:
         path: |
           ~/.npm
-          ~/.pnpm-store
           ~/.nocache/pip
           ${{ env.pythonLocation }}
         key: ${{ runner.os }}-build-${{ env.pythonLocation }}-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
@@ -172,9 +167,9 @@ jobs:
       with:
         python-version: 3.8
     - name: install node
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v2
       with:
-        node-version: 14.x
+        node-version: 16.x
     - name: Cache python/node dependencies
       id: cache
       uses: actions/cache@v2
@@ -183,7 +178,6 @@ jobs:
       with:
         path: |
           ~/.npm
-          ~/.pnpm-store
           ~/.nocache/pip
           ${{ env.pythonLocation }}
         key: ${{ runner.os }}-build-${{ env.pythonLocation }}-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
@@ -193,10 +187,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: install node packages
-      uses: pnpm/action-setup@v2
-      with:
-        version: latest
-        run_install: true
+      run: npm install
 
 
     - run: npm run release
