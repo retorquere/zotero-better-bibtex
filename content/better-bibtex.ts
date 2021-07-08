@@ -253,13 +253,6 @@ Zotero.debug('patching Zotero.Item.prototype clone')
 $patch$(Zotero.Item.prototype, 'clone', original => function Zotero_Item_prototype_clone(libraryID: number, options = {}) {
   const item = original.apply(this, arguments)
   try {
-    // # 1860
-    log.debug('Zotero.Item.prototype.clone:', {
-      samelib: typeof libraryID === 'undefined' || this.libraryID === libraryID,
-      regular: item.isRegularItem(),
-      extra: item.getField('extra'),
-      stripped: item.getField('extra').replace(/(^|\n)citation key:[^\n]*(\n|$)/i, '\n').trim(),
-    })
     if ((typeof libraryID === 'undefined' || this.libraryID === libraryID) && item.isRegularItem()) {
       item.setField('extra', item.getField('extra').replace(/(^|\n)citation key:[^\n]*(\n|$)/i, '\n').trim())
     }
