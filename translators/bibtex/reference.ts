@@ -396,6 +396,10 @@ export class Reference {
 
     this.extraFields = JSON.parse(JSON.stringify(this.item.extraFields))
 
+    // https://forums.zotero.org/discussion/comment/385524#Comment_385524
+    if (item.itemType === 'report' && this.extraFields.kv.type?.toLowerCase() === 'article') {
+    }
+
     // preserve for thesis type etc
     let csl_type = this.item.extraFields.kv.type
     if (this.typeMap.csl[csl_type]) {
