@@ -445,7 +445,7 @@ export class Reference {
     for (const [name, value] of Object.entries(item.extraFields.creator)) {
       if (ExtraFields[name].zotero) {
         for (const creator of (value as string[])) {
-          item.creators.push({...Extra.zoteroCreator(creator), creatorType: name, source: creator})
+          item.creators.push({...Extra.zoteroCreator(creator, name), source: creator})
         }
         delete item.extraFields.creator[name]
       }

@@ -174,14 +174,17 @@ class Item {
       this.title = (item as SerializedReference).title
     }
 
-    for (const creator of this.creators) {
-      creator.lastName = creator.lastName || creator.name
-    }
-
     this.removeDiacritics = this.language[(this.getField('language') as string || '').toLowerCase()] || ''
     const extraFields = Extra.get(this.getField('extra') as string, 'zotero', { kv: true, tex: true })
     this.extra = extraFields.extra
     this.extraFields = extraFields.extraFields
+
+    for (const [creatorType, creators] of Object.entries(this.extraFields.creator || {})) {
+      this.creators = this.creators.concat(creators.map(creator => Extra.zoteroCreator(creator, creatorType)))
+    }
+    for (const creator of this.creators) {
+      creator.lastName = creator.lastName || creator.name
+    }
 
     try {
       const date = this.getField('date')
