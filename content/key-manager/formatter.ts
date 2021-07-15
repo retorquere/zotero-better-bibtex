@@ -559,14 +559,11 @@ class PatternFormatter {
       .find(val => val)
     if (value) return value
 
-    const extra: Record<string, string> = (this.item.extra || '')
+    const extra: RegExpMatchArray = (this.item.extra || '')
       .split('\n')
-      .map((line: string) => line.match(/^([^:]+?)\s*:\s*(.+)/i))
-      .reduce((acc: Record<string, string>, match) => {
-        if (match) acc[match[1].toLowerCase()] = match[2].trim()
-        return acc
-      }, {})
-    return variables.map(varname => extra[varname]).find(val => val) || ''
+      .map((line: string) => line.match(/^([^:\s]+)\s*:\s*(.+)/i))
+      .find(match => match && variables.includes(match[1].toLowerCase()))
+    return extra?.[2] || ''
   }
 
 
