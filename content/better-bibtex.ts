@@ -322,7 +322,6 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
     return HTMLParser.parse(text.toString(), options)
   },
   // extractFields(_sandbox, item) { return Extra.get(item.extra) },
-  debugEnabled(_sandbox: any): boolean { return (Zotero.Debug.enabled as boolean) },
 
   cacheFetch(sandbox: { translator: { label: string }[] }, itemID: number, options: { exportNotes: boolean, useJournalAbbreviation: boolean }, prefs: any) {
     const collection = Cache.getCollection(sandbox.translator[0].label)
@@ -377,7 +376,6 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
 }
 
 Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
-  debugEnabled(_sandbox: any): boolean { return (Zotero.Debug.enabled as boolean) },
   parseHTML(_sandbox: any, text: { toString: () => any }, options: { html?: boolean, caseConversion?: boolean, exportBraceProtection: boolean, csquotes: string, exportTitleCase: boolean }) {
     options = {
       ...options,
@@ -729,10 +727,6 @@ export class BetterBibTeX {
 
   constructor() {
     this.debugEnabledAtStart = !!Zotero.Debug.enabled
-  }
-
-  public debugEnabled(): boolean {
-    return (Zotero.Debug.enabled as boolean)
   }
 
   public getString(id: string, params: any = null): string {
