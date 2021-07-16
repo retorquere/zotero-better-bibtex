@@ -1,18 +1,18 @@
 
 @patent{wernerThisPatentApplication,
+  type = {patreqeu},
   title = {This Is a Patent Application. It Has the Application Number EP456456456},
   author = {Werner, Nils},
-  number = {456456456},
   holder = {{My Employer}},
-  type = {patreqeu}
+  number = {456456456}
 }
 
 @patent{wernerThisPatentIt,
+  type = {patenteu},
   title = {This Is a Patent. It Has the Patent Number EP123123123. It Had the Application Number EP789789789 When It Was First Submitted.},
   author = {Werner, Nils},
-  number = {123123123},
   holder = {{My Employer}},
-  type = {patenteu}
+  number = {123123123}
 }
 
 

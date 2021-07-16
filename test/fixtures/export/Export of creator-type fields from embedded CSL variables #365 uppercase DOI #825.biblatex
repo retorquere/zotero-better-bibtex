@@ -1,5 +1,6 @@
 
 @report{Author2015,
+  type = {working paper},
   title = {A Report},
   author = {Author, Ann},
   editor = {Editrix, Emma and Editor, Ed},
@@ -7,7 +8,6 @@
   number = {77},
   institution = {{Institution}},
   location = {{Place}},
-  type = {working paper},
   annotation = {\{:X-genre: xxx\}}
 }
 

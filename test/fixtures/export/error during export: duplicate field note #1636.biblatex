@@ -1,5 +1,6 @@
 
 @online{LichessTeamLichessEndYear,
+  type = {Lichess Official Blog},
   title = {Lichess {{End}} of {{Year Update}} 2019},
   author = {{Lichess Team}},
   date = {2019-12-31},
@@ -7,7 +8,6 @@
   urldate = {2020-03-30},
   langid = {american},
   organization = {{lichess.org}},
-  type = {Lichess Official Blog},
   note = {Siehe auch \url{https://lichess.org/analysis}}
 }
 

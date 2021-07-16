@@ -1,10 +1,10 @@
 
 @unpublished{derasmo2000,
+  type = {lecture},
   title = {The Craft and Career of Writing},
   author = {D’Erasmo, Stacy},
   date = {2000-04-26},
   langid = {american},
-  type = {lecture},
   venue = {{Northwestern University, Evanston, IL}}
 }
 
