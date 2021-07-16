@@ -1,5 +1,6 @@
 
 @online{leishuku,
+  type = {Full-text databse},
   title = {中國類書庫},
   shorttitle = {leishuku},
   author = {{愛如生}},
@@ -7,19 +8,18 @@
   url = {http://server.wenzibase.com},
   urldate = {2016-04-20},
   langid = {pinyin},
-  organization = {{中國類書庫}},
-  type = {Full-text databse}
+  organization = {{中國類書庫}}
 }
 
 @thesis{yan_cairong__2003,
+  type = {Ph.D. Dissertation},
   title = {明清時期出版與文化─以「才子佳人」小說為中心},
   author = {{顏采容}},
   date = {2003},
   institution = {{國立暨南國際大學}},
   url = {http://ndltd.ncl.edu.tw/cgi-bin/gs32/gsweb.cgi?o=dnclcdr&s=id=%22091NCNU0493006%22.&searchmode=basic},
   langid = {Chinese},
-  pagetotal = {214},
-  type = {Ph.D. Dissertation}
+  pagetotal = {214}
 }
 
 

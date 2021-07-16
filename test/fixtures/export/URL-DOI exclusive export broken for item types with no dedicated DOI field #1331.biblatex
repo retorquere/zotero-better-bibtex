@@ -3,6 +3,7 @@
   title = {Bioinformatics and {{Computational Biology Solutions Using R}} and {{Bioconductor}}},
   editor = {Gentleman, Robert and Carey, Vincent J. and Huber, Wolfgang and Irizarry, Rafael A. and Dudoit, Sandrine},
   date = {2005},
+  series = {Statistics for {{Biology}} and {{Health}}},
   publisher = {{Springer New York}},
   location = {{New York, NY}},
   doi = {10.1007/0-387-29362-0},
@@ -10,7 +11,6 @@
   editorb = {Wong, Wing and Gail, M. and Krickeberg, K. and Tsiatis, A. and Samet, J.},
   editorbtype = {redactor},
   isbn = {978-0-387-25146-2 978-0-387-29362-2},
-  series = {Statistics for {{Biology}} and {{Health}}},
   keywords = {\#nosource}
 }
 

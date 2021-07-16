@@ -5,10 +5,10 @@
   author = {Mitchell, Don P.},
   editor = {Rushmeier, Holly},
   date = {1996-08},
+  series = ACS,
   pages = {277--280},
   publisher = AW,
-  organization = ACM_SIGGRAPH,
-  series = ACS
+  organization = ACM_SIGGRAPH
 }
 
 
