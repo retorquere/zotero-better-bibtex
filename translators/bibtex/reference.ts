@@ -268,6 +268,9 @@ const fieldOrder = [
   'shortjournal',
   'edition',
   'volume',
+  'eprint',
+  'eprinttype',
+  'primaryclass',
   'pages',
   'publisher',
   'address',
@@ -278,9 +281,9 @@ const fieldOrder = [
   'url',
   'urldate',
 
-  // '-keywords',
-  // '-annotation',
-  // '-note',
+  '-keywords',
+  '-annotation',
+  '-note',
 ].reduce((acc, field, idx) => {
   if (field[0] === '-') {
     acc[field.substring(1)] = -(idx + 1)
@@ -396,22 +399,22 @@ export class Reference {
 
     this.extraFields = JSON.parse(JSON.stringify(this.item.extraFields))
 
-    // https://forums.zotero.org/discussion/comment/385524#Comment_385524
-    if (item.itemType === 'report' && this.extraFields.kv.type?.toLowerCase() === 'article') {
-    }
+    // should be const referencetype: string | { type: string, subtype?: string }
+    // https://github.com/Microsoft/TypeScript/issues/10422
+    let referencetype: any
+
+    // workaround for preprints, https://forums.zotero.org/discussion/comment/385524#Comment_385524
+    const isPrePrint = Translator.BetterBibTeX && this.item.itemType === 'report' && this.item.extraFields.kv.type?.toLowerCase() === 'article'
 
     // preserve for thesis type etc
     let csl_type = this.item.extraFields.kv.type
-    if (this.typeMap.csl[csl_type]) {
+    if (!isPrePrint && this.typeMap.csl[csl_type]) {
       delete this.item.extraFields.kv.type
     }
     else {
       csl_type = null
     }
 
-    // should be const referencetype: string | { type: string, subtype?: string }
-    // https://github.com/Microsoft/TypeScript/issues/10422
-    let referencetype: any
     if (this.item.extraFields.tex.referencetype) {
       referencetype = this.item.extraFields.tex.referencetype.value
       this.referencetype_source = `tex.${referencetype}`
@@ -420,10 +423,16 @@ export class Reference {
       referencetype = this.typeMap.csl[csl_type]
       this.referencetype_source = `csl.${csl_type}`
     }
+    else if (isPrePrint) {
+      referencetype = 'misc'
+      delete this.item.extraFields.kv.type
+      this.referencetype_source = `zotero.${this.item.itemType}`
+    }
     else {
       referencetype = this.typeMap.zotero[this.item.itemType] || 'misc'
       this.referencetype_source = `zotero.${this.item.itemType}`
     }
+
     if (typeof referencetype === 'string') {
       this.referencetype = referencetype
     }
@@ -517,6 +526,7 @@ export class Reference {
    *   ignored)
    */
   public add(field: Translators.BibTeX.Field): string {
+    Zotero.debug(`field: ${JSON.stringify(field)}`)
     if (Translator.preferences.testing && !this.inPostscript && field.name !== field.name.toLowerCase()) throw new Error(`Do not add mixed-case field ${field.name}`)
 
     if (!field.value && !field.bibtex && this.inPostscript) {
@@ -536,6 +546,9 @@ export class Reference {
           enc: 'verbatim',
         })
       }
+
+      // bare year
+      // if (Translator.BetterBibLaTeX && (typeof field.value === 'number' || (typeof field.value === 'string' && field.value.match(/^[0-9]+$/)))) return this.add({...field, bibtex: `${field.value}`, enc: 'latex'})
 
       if (Translator.BetterBibLaTeX && Translator.preferences.biblatexExtendedDateFormat && Zotero.BetterBibTeX.isEDTF(field.value, true)) {
         return this.add({
@@ -656,6 +669,8 @@ export class Reference {
         if (!value) return null
 
         value = value.trim()
+
+        log.debug('field:', { name: field.name, value: field.value, bibtex: value, bare: field.bare})
 
         // scrub fields of unwanted {}, but not if it's a raw field or a bare field without spaces
         if (!field.bare || (field.value as string).match(/\s/)) {

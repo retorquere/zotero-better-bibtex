@@ -44,10 +44,6 @@ for(const [key, value] of (new URLSearchParams(ctx.location.search)).entries()) 
 class WorkerZoteroBetterBibTeX {
   public localeDateOrder: string
 
-  public debugEnabled() {
-    return workerContext.debugEnabled
-  }
-
   public cacheFetch(itemID: number) {
     return Zotero.config.cache[itemID]
   }
@@ -252,7 +248,7 @@ class WorkerZotero {
 
   public debug(message) {
     if (workerContext.debugEnabled) {
-      dump(`worker: ${message}\n`)
+      // dump(`worker: ${message}\n`)
       this.send({ kind: 'debug', message })
     }
   }
