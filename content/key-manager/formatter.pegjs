@@ -35,21 +35,24 @@
 
 start
   = patterns:pattern+ {
-      var body = "\nvar loop, citekey, postfix, chunk;"
+      var body = '\nlet citekey, postfix, chunk;'
 
-      for (var pattern = 0; pattern < patterns.length; pattern++) {
-        body += `\nfor (loop = true; loop; loop=false) {\n  citekey = ''; postfix = ${postfix.alpha()};\n\n`
-        body += patterns[pattern] + "\n"
+      for (const pattern of patterns) {
+        body += `\ndo {\n  citekey = ''; postfix = ${postfix.alpha()};\n\n`
+        for (const block of pattern) {
+          body += `  ${block};\n`
+        }
+        body += '\n'
         body += "  citekey = citekey.replace(/[\\s{},]/g, '');\n"
-        body += "  if (citekey) return {citekey: citekey, postfix: postfix};\n}\n"
+        body += '  if (citekey) return {citekey: citekey, postfix: postfix};\n} while (false);\n'
       }
-      body += `return {citekey: '', postfix: ${postfix.alpha()}};`
+      body += `\nreturn {citekey: '', postfix: ${postfix.alpha()}};`
 
       return { formatter: body, postfixes: postfix.postfixes }
     }
 
 pattern
-  = blocks:block+ [\|]? { return blocks.filter(block => block).map(block => `  ${block}`).concat(['']).join(";\n") }
+  = blocks:block+ [\|]? { return blocks.filter(block => block) }
 
 block
   = [ \t\r\n]+                            { return '' }
