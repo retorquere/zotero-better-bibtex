@@ -144,6 +144,8 @@ Scenario Outline: Export <references> references for BibTeX to <file>
 
   Examples:
      | file                                                                               | references |
+     | Export report+type as preprint                                                                 | 1           |
+     | Use creator in extra field when there is no creator in the usual places? #1873     | 1          |
      | Exporting "month = {season}" for BibTeX #1810                                      | 1          |
      | bibtex does not export season dates                                                | 1          |
      | DOI not escaped using postscript #1803                                             | 1          |
