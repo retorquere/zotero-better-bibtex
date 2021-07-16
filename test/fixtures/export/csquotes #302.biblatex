@@ -5,11 +5,11 @@
   date = {1964},
   journaltitle = {The Philosophical Review},
   volume = {73},
+  number = {1},
   pages = {43--58},
   issn = {00318108},
   doi = {10.2307/2183201},
-  langid = {english},
-  number = {1}
+  langid = {english}
 }
 
 @article{tusseau_critique_2009,
@@ -19,9 +19,9 @@
   date = {2009},
   journaltitle = {Revue française de droit administratif},
   shortjournal = {RFDA},
+  number = {4},
   pages = {641--656},
-  langid = {french},
-  number = {4}
+  langid = {french}
 }
 
 

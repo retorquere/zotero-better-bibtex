@@ -2,12 +2,12 @@
 @book{hicks2001,
   title = {Design of a {{Carbon Fiber Composite Grid Structure}} for the {{GLAST}} Spacecraft Using a Novel Manufacturing Technique},
   author = {von Hicks, III, Michael},
+  options = {useprefix=true},
   date = {2001},
   edition = {1st,},
   publisher = {{Stanford Press}},
   location = {{Palo Alto}},
-  isbn = {0-69-697269-4},
-  options = {useprefix=true}
+  isbn = {0-69-697269-4}
 }
 
 

@@ -10,9 +10,9 @@
   date = {2017-10},
   issn = {2376-4562},
   doi = {10.1109/TETC.2016.2606384},
-  annotation = {ZSCC: NoCitationData[s0]},
+  number = {4},
   keywords = {Availability,Biological system modeling,compact smart devices,computation power,Computational modeling,confidentiality,countermeasures,cyber attacks,data privacy,edge computing,edge nodes,energy capacity,integrity,Internet,Internet of things,Internet of Things,Internet technologies,Internet-of-Things,IoT reference models,IoT security,Monitoring,organized crime,personal privacy issues,privacy,public security concerns,security,Security,security of data,Smart devices,smart things,vulnerabilities,Wireless sensor networks},
-  number = {4}
+  annotation = {ZSCC: NoCitationData[s0]}
 }
 % == BibLateX quality report for mosenia2017ComprehensiveStudySecurity:
 % Unexpected field 'publisher'

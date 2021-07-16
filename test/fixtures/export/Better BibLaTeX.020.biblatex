@@ -9,8 +9,8 @@
   location = {{Paris}},
   bookauthor = {Cavaillès, Jean},
   isbn = {2-7056-6221-9},
-  keywords = {Mathematics,Philosophy,Science},
-  langid = {french}
+  langid = {french},
+  keywords = {Mathematics,Philosophy,Science}
 }
 
 
