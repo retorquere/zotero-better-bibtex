@@ -76,6 +76,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         client: [zotero, jurism]
         bin: ['1', '2']
