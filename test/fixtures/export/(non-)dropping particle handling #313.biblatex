@@ -35,8 +35,8 @@
 @article{bugreports_ApostropheOnParticle,
   title = {Bugreports\_{{ApostropheOnParticle}}},
   author = {d' Jones, John},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{bugreports_AsmJournals,
@@ -72,8 +72,8 @@
 @article{bugreports_parseName,
   title = {Bugreports\_{{parseName}}},
   author = {van Happel, Eduard and von Hoppel, Gustav},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{bugreports_ProcessorHang1,
@@ -91,15 +91,15 @@
 @article{decorations_AndTermUnaffectedByNameDecorations,
   title = {Decorations\_{{AndTermUnaffectedByNameDecorations}}},
   author = {Doe, III, John and van Roe, Jane},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{disambiguate_CitationLabelInData,
   title = {Disambiguate\_{{CitationLabelInData}}},
   author = {von Dipheria, Doug},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{disambiguate_FailWithYearSuffix,
@@ -124,12 +124,12 @@
   title = {Norm and {{Action}}. {{A Logical Enquiry}}},
   shorttitle = {Norm and {{Action}}},
   author = {von Humboldt, Alexander and Gooding, Jr., Cuba and de La Fontaine, Jean and von Wright, Georg Henrik Auto and {von Wright}, Georg Henrik Explicit},
+  options = {useprefix=true},
   date = {1963},
   publisher = {{Routledge \& Kegan Paul}},
   location = {{Londres}},
   isbn = {0-7100-3616-7},
   langid = {anglais},
-  options = {useprefix=true},
   pagetotal = {xviii+214},
   series = {International {{Library}} of {{Philosophy}} and {{Scientific Method}}}
 }
@@ -143,8 +143,8 @@
 @article{integration_DuplicateItem,
   title = {Integration\_{{DuplicateItem}}},
   author = {la Berge, S. P},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @book{king_have_1968,
@@ -159,15 +159,15 @@
 @article{magic_CapitalizeFirstOccurringNameParticle,
   title = {Magic\_{{CapitalizeFirstOccurringNameParticle}}},
   author = {de Simone, Samuel},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{magic_NameParticle,
   title = {Magic\_{{NameParticle}}},
   author = {von Doe, John},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{magic_SuppressDuplicateVariableRendering,
@@ -203,15 +203,15 @@
 @article{name_FormattingOfParticles,
   title = {Name\_{{FormattingOfParticles}}},
   author = {van der Meer, Gerard},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{name_HyphenatedNonDroppingParticle1,
   title = {Name\_{{HyphenatedNonDroppingParticle1}}},
   author = {al- One, Alan},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{name_Institution,
@@ -229,8 +229,8 @@
 @article{name_MixedFormatsInitialSortOrderAllWithDecorationsEtAl,
   title = {Name\_{{MixedFormatsInitialSortOrderAllWithDecorationsEtAl}}},
   author = {van Winkle, Rip and Thucydides, III, Carl},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{name_MultipleLiteral,
@@ -242,8 +242,8 @@
 @article{name_namepartAffixes,
   title = {Name\_{{namepartAffixes}}},
   author = {de La Fontaine, III, Jean},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{name_ParsedDroppingParticleWithAffixes,
@@ -255,29 +255,29 @@
 @article{name_ParsedNonDroppingParticleWithAffixes,
   title = {Name\_{{ParsedNonDroppingParticleWithAffixes}}},
   author = {de la Fontaine, Jean},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{name_ParsedNonDroppingParticleWithApostrophe,
   title = {Name\_{{ParsedNonDroppingParticleWithApostrophe}}},
   author = {d' Aubignac, abbé d', François Hédelin},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{name_ParseNames,
   title = {Name\_{{ParseNames}}},
   author = {van der Vlist, Eric and van Gogh, Vincent},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{name_ParticleCaps1,
   title = {Name\_{{ParticleCaps1}}},
   author = {van One, Onename and van Two, Twoname and van Three, Threename and Van Four, Fourname},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{name_ParticleCaps3,
@@ -289,29 +289,29 @@
 @article{name_ParticleFormatting,
   title = {Name\_{{ParticleFormatting}}},
   author = {de la Doe, John},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{name_ParticlesDemoteNonDroppingNever,
   title = {Name\_{{ParticlesDemoteNonDroppingNever}}},
   author = {de Las Familyname, Givenname and del Familyname, Givenname and Di Familyname, Givenname and Da Familyname, Givenname and Do Familyname, Givenname and Des Familyname, Givenname and Lou Familyname, Givenname and Pietro Familyname, Givenname and de Familyname, Givenname and de La Familyname, Givenname and Le Familyname, Givenname and La Familyname, Givenname and L'Familyname, Givenname and Saint Familyname, Givenname and Sainte Familyname, Givenname and St. Familyname, Givenname and Ste. Familyname, Givenname and van Familyname, Givenname and van de Familyname, Givenname and van der Familyname, Givenname and van den Familyname, Givenname and vander Familyname, Givenname and v.d. Familyname, Givenname and vd Familyname, Givenname and van het Familyname, Givenname and ver Familyname, Givenname},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{name_WesternArticularLowercase,
   title = {Name\_{{WesternArticularLowercase}}},
   author = {van Doe, Jacques},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{nameorder_Long,
   title = {Nameorder\_{{Long}}},
   author = {de la Martinière, III, Gérard},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{position_IbidWithSuffix,
@@ -341,15 +341,15 @@
 @article{sort_LeadingApostropheOnNameParticle,
   title = {Sort\_{{LeadingApostropheOnNameParticle}}},
   author = {'t Horvath, Peter A.C. and in 't Horvath, Peter A.D.},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{sort_NameParticleInNameSortFalse,
   title = {Sort\_{{NameParticleInNameSortFalse}}},
   author = {di Noakes, John},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{sort_NameVariable,

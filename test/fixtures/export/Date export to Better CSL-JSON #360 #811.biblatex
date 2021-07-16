@@ -42,10 +42,10 @@
   date = {1985-21},
   journaltitle = {Cinema Journal},
   volume = {24},
-  pages = {4--23},
+  number = {3},
   eprint = {1225428},
   eprinttype = {jstor},
-  number = {3}
+  pages = {4--23}
 }
 
 @online{doe8_title_2017,

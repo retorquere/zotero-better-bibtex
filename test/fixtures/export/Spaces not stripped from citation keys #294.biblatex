@@ -5,11 +5,11 @@
   date = {2014-05-15},
   journaltitle = {Surgical and Radiologic Anatomy},
   shortjournal = {Surg Radiol Anat},
+  eprint = {24828123},
+  eprinttype = {pmid},
   issn = {1279-8517},
   doi = {10.1007/s00276-014-1305-7},
   url = {http://link.springer.com/10.1007/s00276-014-1305-7},
-  eprint = {24828123},
-  eprinttype = {pmid},
   langid = {english}
 }
 

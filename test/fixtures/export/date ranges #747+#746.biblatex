@@ -6,8 +6,8 @@
   journaltitle = {Bulletin of Volcanology},
   volume = {62},
   pages = {493--518},
-  file = {files/Adams2015/Adams_Huaynaputina.pdf},
-  keywords = {breadcrust,plinian,Vulcanian eruptions}
+  keywords = {breadcrust,plinian,Vulcanian eruptions},
+  file = {files/Adams2015/Adams_Huaynaputina.pdf}
 }
 
 @article{Adams2017,
@@ -17,8 +17,8 @@
   journaltitle = {Bulletin of Volcanology},
   volume = {62},
   pages = {493--518},
-  file = {files/Adams2017/Adams_Huaynaputina.pdf},
-  keywords = {breadcrust,plinian,Vulcanian eruptions}
+  keywords = {breadcrust,plinian,Vulcanian eruptions},
+  file = {files/Adams2017/Adams_Huaynaputina.pdf}
 }
 
 @inproceedings{P.Widhalm2011,

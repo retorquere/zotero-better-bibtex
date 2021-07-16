@@ -10,8 +10,8 @@
   editorb = {Wong, Wing and Gail, M. and Krickeberg, K. and Tsiatis, A. and Samet, J.},
   editorbtype = {redactor},
   isbn = {978-0-387-25146-2 978-0-387-29362-2},
-  keywords = {\#nosource},
-  series = {Statistics for {{Biology}} and {{Health}}}
+  series = {Statistics for {{Biology}} and {{Health}}},
+  keywords = {\#nosource}
 }
 
 

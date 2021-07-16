@@ -1,8 +1,8 @@
 
 @book{al-hakim,
   author = {al- Hakim, Tawfiq},
-  annotation = {[al-Hakim][Tawfiq]},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  annotation = {[al-Hakim][Tawfiq]}
 }
 
 @book{beauvoir,
@@ -12,8 +12,8 @@
 
 @book{bovendeert,
   author = {boven d' Eert, Christianus},
-  annotation = {[boven d'Eert][Christianus]},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  annotation = {[boven d'Eert][Christianus]}
 }
 
 @book{dagama,
@@ -23,8 +23,8 @@
 
 @book{dalembert,
   author = {d’ Alembert, Jean le Rond},
-  annotation = {[d’Alembert][Jean le Rond]},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  annotation = {[d’Alembert][Jean le Rond]}
 }
 
 @book{damato,
@@ -74,8 +74,8 @@
 
 @book{dupuydeclinchamps,
   author = {du Puy de Clinchamps, {\relax Ph}ilippe},
-  annotation = {[du Puy de Clinchamps][PhU+0097ilippe]},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  annotation = {[du Puy de Clinchamps][PhU+0097ilippe]}
 }
 
 @book{este,
@@ -145,8 +145,8 @@
 
 @book{s-gravesande,
   author = {'s- Gravesande, Goverdus},
-  annotation = {['s-Gravesande][Goverdus]},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  annotation = {['s-Gravesande][Goverdus]}
 }
 
 @book{sackville-west,
@@ -186,8 +186,8 @@
 
 @book{vangogh,
   author = {van Gogh, Vincent},
-  annotation = {[van Gogh][Vincent]},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  annotation = {[van Gogh][Vincent]}
 }
 
 @book{vangulik,

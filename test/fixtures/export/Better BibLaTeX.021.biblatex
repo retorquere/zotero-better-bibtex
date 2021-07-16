@@ -2,18 +2,18 @@
 @article{deOliveira2010,
   title = {({{Liquid}}+liquid) Equilibrium of \{water+phenol+(1-Butanol, or 2-Butanol, or Tert-Butanol)\} Systems},
   author = {de Oliveira, Leonardo Hadlich and Aznar, Martín},
+  options = {useprefix=true},
   date = {2010-11},
   journaltitle = {The Journal of Chemical Thermodynamics},
   volume = {42},
+  number = {11},
   pages = {1379--1385},
   issn = {00219614},
   doi = {10.1016/j.jct.2010.06.007},
   url = {http://linkinghub.elsevier.com/retrieve/pii/S0021961410002107},
   urldate = {2014-06-18},
-  file = {files/deOliveira2010/de Oliveira, Aznar-2010-(Liquid+liquid) equilibrium of water+phenol+(1-butanol, or 2-butanol, or2.pdf},
   langid = {english},
-  number = {11},
-  options = {useprefix=true}
+  file = {files/deOliveira2010/de Oliveira, Aznar-2010-(Liquid+liquid) equilibrium of water+phenol+(1-butanol, or 2-butanol, or2.pdf}
 }
 
 

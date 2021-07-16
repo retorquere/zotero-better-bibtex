@@ -254,20 +254,27 @@ const Language = new class { // eslint-disable-line @typescript-eslint/naming-co
  */
 
 const fieldOrder = [
+  'type',
   'ids',
   'title',
   'shorttitle',
   'booktitle',
   'author',
   'editor',
+  'translator',
+  'holder',
+  'options',
   'date',
   'origdate',
   'year',
   'month',
+  'journal',
   'journaltitle',
   'shortjournal',
+  'series',
   'edition',
   'volume',
+  'number',
   'eprint',
   'eprinttype',
   'primaryclass',
@@ -284,6 +291,9 @@ const fieldOrder = [
   '-keywords',
   '-annotation',
   '-note',
+  '-timestamp',
+  '-files',
+  '-file',
 ].reduce((acc, field, idx) => {
   if (field[0] === '-') {
     acc[field.substring(1)] = -(idx + 1)

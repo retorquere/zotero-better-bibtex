@@ -20,11 +20,11 @@
   title = {A {{Post}}-{{Quantum Digital Signature Scheme Based}} on {{Supersingular Isogenies}}},
   author = {Yoo, Youngho and Azarderakhsh, Reza and Jalali, Amir and Jao, David and Soukharev, Vladimir},
   date = {2017},
+  number = {186},
   url = {http://eprint.iacr.org/2017/186},
   urldate = {2020-11-03},
   abstract = {We present the first general-purpose digital signature scheme based on supersingular elliptic curve isogenies secure against quantum adversaries in the quantum random oracle model with small key sizes. This scheme is an application of Unruh’s construction of non-interactive zero-knowledge proofs to an interactive zero-knowledge proof proposed by De Feo, Jao, and Plût. We implement our proposed scheme on an x86-64 PC platform as well as an ARM-powered device. We exploit the state-of-the-art techniques to speed up the computations for general C and assembly. Finally, we provide timing results for real world applications.},
-  keywords = {digital signatures,isogenies,post-quantum cryptography,public-key cryptography},
-  number = {186}
+  keywords = {digital signatures,isogenies,post-quantum cryptography,public-key cryptography}
 }
 
 

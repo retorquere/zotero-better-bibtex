@@ -5,6 +5,7 @@
   author = {Bonomi, Flavio and Mitzenmacher, Michael and Panigrahy, Rina and Singh, Sushil and Varghese, George},
   editor = {Azar, Yossi and Erlebach, Thomas},
   date = {2006-09-11},
+  number = {4168},
   pages = {684--695},
   publisher = {{Springer Berlin Heidelberg}},
   doi = {10.1007/11841036_61},
@@ -12,10 +13,9 @@
   urldate = {2015-11-16},
   abstract = {A counting Bloom filter (CBF) generalizes a Bloom filter data structure so as to allow membership queries on a set that can be changing dynamically via insertions and deletions. As with a Bloom filter, a CBF obtains space savings by allowing false positives. We provide a simple hashing-based alternative based on d-left hashing called a d-left CBF (dlCBF). The dlCBF offers the same functionality as a CBF, but uses less space, generally saving a factor of two or more. We describe the construction of dlCBFs, provide an analysis, and demonstrate their effectiveness experimentally.},
   isbn = {978-3-540-38875-3 978-3-540-38876-0},
-  keywords = {Algorithm Analysis and Problem Complexity,Computer Communication Networks,Computer Graphics,data structures,Discrete Mathematics in Computer Science,Numeric Computing},
   langid = {english},
-  number = {4168},
-  series = {Lecture {{Notes}} in {{Computer Science}}}
+  series = {Lecture {{Notes}} in {{Computer Science}}},
+  keywords = {Algorithm Analysis and Problem Complexity,Computer Communication Networks,Computer Graphics,data structures,Discrete Mathematics in Computer Science,Numeric Computing}
 }
 
 
