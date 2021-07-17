@@ -161,7 +161,7 @@ class Item {
       this.itemID = (item as ZoteroItem).id
       this.itemType = Zotero.ItemTypes.getName((item as ZoteroItem).itemTypeID)
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      this.getField = (name: string) => ((name === 'dateAdded' || name === 'dateModified') ? (this.item as any)[name] : (this.item as ZoteroItem).getField(name, false, true)) || this.extraFields.kv[name]
+      this.getField = (name: string) => ((name === 'dateAdded' || name === 'dateModified') ? (this.item as any)[name] : (this.item as ZoteroItem).getField(name, false, true)) || this.extraFields?.kv[name]
       this.creators = (item as ZoteroItem).getCreatorsJSON()
       this.libraryID = item.libraryID
       this.title = (item as ZoteroItem).getField('title', false, true) as string
@@ -170,7 +170,7 @@ class Item {
       this.itemType = (item as SerializedReference).itemType
       this.itemID = (item as SerializedReference).itemID
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      this.getField = (name: string) => this.item[name] || this.extraFields.kv[name]
+      this.getField = (name: string) => this.item[name] || this.extraFields?.kv[name]
       this.creators = (item as SerializedReference).creators
       this.libraryID = null
       this.title = (item as SerializedReference).title
