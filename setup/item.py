@@ -235,6 +235,7 @@ class ExtraFields:
       }
       if re.search(r'[-_A-Z]', label): attrs['LabelGraphics'] = { 'color': self.color.label }
 
+      assert self.dg.has_node(f'{domain}:{name}'), f'missing {domain}:{name} for label:{label} =>'
       self.dg.add_node(f'label:{label}', **attrs)
       self.dg.add_edge(f'label:{label}', f'{domain}:{name}', graphics={ 'targetArrow': 'standard' })
 
@@ -254,17 +255,19 @@ class ExtraFields:
     if node_id in self.dg.nodes:
       assert self.dg.nodes[node_id]['type'] == type_, (domain, name, self.dg.nodes[node_id]['type'], type_)
     else:
-      self.dg.add_node(f'{domain}:{name}', domain=domain, name=name, type=type_, graphics={'h': 30.0, 'w': 7 * len(name), 'fill': self.color[domain]})
+      self.dg.add_node(node_id, domain=domain, name=name, type=type_, graphics={'h': 30.0, 'w': 7 * len(name), 'fill': self.color[domain]})
     self.dg.nodes[node_id][client] = True
 
-
   def load(self, schema, client):
+    print('loading', client)
     typeof = {}
     for field, meta in schema.meta.fields.items():
       typeof[field] = meta.type
 
     # add nodes & edges
+    baseFields = {}
     for field, baseField in {str(f.path): f.value for f in jsonpath.parse('$.itemTypes.*.fields.*').find(schema)}.items():
+      baseFields[field] = baseField
       self.add_var(domain='zotero', name=baseField, type_=typeof.get(baseField, 'text'), client=client)
 
     for field in jsonpath.parse('$.itemTypes.*.creatorTypes[*]').find(schema):
@@ -296,14 +299,24 @@ class ExtraFields:
     # add labels
     for node, data in list(self.dg.nodes(data=True)):
       if data['domain'] == 'label': continue # how is this possible?
-      self.add_label(data['domain'], data['name'], data['name'])
+      self.add_label(domain=data['domain'], name=data['name'], label=data['name'])
 
     for field, baseField in {str(f.path): f.value for f in jsonpath.parse('$.itemTypes.*.fields.*').find(schema)}.items():
       if field == baseField: continue
-      self.add_label('zotero', baseField, field)
+      self.add_label(domain='zotero', name=baseField, label=field)
 
     for alias, field in schema.csl.alias.items():
-      self.add_label('csl', field, alias)
+      self.add_label(domain='csl', name=field, label=alias)
+
+    # translations
+    # for name, label in [(str(f.path), f.value) for f in jsonpath.parse('$.locales.*.fields.*').find(schema)]:
+    #   name = baseFields.get(name, name)
+    #   if name in ['dateAdded', 'dateModified', 'itemType']: continue
+    #   self.add_label(domain='zotero', name=name, label=label)
+    #
+    # for name, label in {str(f.path): f.value for f in jsonpath.parse('$.locales.*.creatorTypes.*').find(schema)}.items():
+    #   name = baseFields.get(name, name)
+    #   self.add_label(domain='zotero', name=name, label=label)
 
   def add_change(self, label, change):
     if not label or label == '':
@@ -382,10 +395,11 @@ class ExtraFields:
       if len(var_nodes) == 0:
         self.dg.remove_node(label)
       else:
-        for var in var_nodes:
-          var = self.dg.nodes[var]
+        for var_id in var_nodes:
+          var = self.dg.nodes[var_id]
+          # print('debug:', name, var_id, var)
           if not name in mapping: mapping[name] = {}
-          assert 'type' not in mapping[name] or mapping[name]['type'] == var['type']
+          assert mapping[name].get('type') in (None, var['type']), (var_id, mapping[name].get('type'), var)
           mapping[name]['type'] = var['type']
 
           domain = var['domain']
