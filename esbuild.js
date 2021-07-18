@@ -78,7 +78,14 @@ async function rebuild() {
   // plugin code
   await bundle({
     entryPoints: [ 'content/better-bibtex.ts' ],
-    plugins: [loader.trace, loader.patcher('setup/patches'), loader.bibertool, loader.pegjs, loader.__dirname, shims],
+    plugins: [
+      loader.trace,
+      loader.patcher('setup/patches'),
+      // loader.bibertool,
+      loader.pegjs,
+      loader.__dirname,
+      shims
+    ],
     outdir: 'build/content',
     banner: { js: 'if (!Zotero.BetterBibTeX) {\n' },
     footer: { js: '\n}' },
@@ -93,7 +100,13 @@ async function rebuild() {
   await bundle({
     entryPoints: [ 'translators/worker/zotero.ts' ],
     globalName,
-    plugins: [loader.trace, loader.bibertool, loader.pegjs, loader.__dirname, shims],
+    plugins: [
+      // loader.trace,
+      // loader.bibertool,
+      // loader.pegjs,
+      loader.__dirname,
+      shims
+    ],
     outdir: 'build/resource/worker',
     banner: { js: 'importScripts("resource://zotero/config.js") // import ZOTERO_CONFIG' },
     footer: {
@@ -124,7 +137,13 @@ async function rebuild() {
     await bundle({
       entryPoints: [path.join(translator.dir, translator.name + '.ts')],
       globalName,
-      plugins: [loader.trace, loader.bibertool, loader.pegjs, loader.__dirname, shims],
+      plugins: [
+        // loader.trace,
+        loader.bibertool,
+        // loader.pegjs,
+        loader.__dirname,
+        shims
+      ],
       outfile,
       banner: { js: `if (typeof ZOTERO_TRANSLATOR_INFO === 'undefined') var ZOTERO_TRANSLATOR_INFO = ${JSON.stringify(header)};` },
       // make these var, not const, so they get hoisted and are available in the global scope. See logger.ts
