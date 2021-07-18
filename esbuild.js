@@ -98,7 +98,8 @@ async function rebuild() {
     banner: { js: 'importScripts("resource://zotero/config.js") // import ZOTERO_CONFIG' },
     footer: {
       js: [
-        `const { ${vars.join(', ')} } = ${globalName};`,
+        // make these var, not const, so they get hoisted and are available in the global scope. See logger.ts
+        `var { ${vars.join(', ')} } = ${globalName};`,
         'importScripts(`resource://zotero-better-bibtex/${workerContext.translator}.js`);',
       ].join('\n'),
     },
@@ -126,7 +127,8 @@ async function rebuild() {
       plugins: [loader.trace, loader.bibertool, loader.pegjs, loader.__dirname, shims],
       outfile,
       banner: { js: `if (typeof ZOTERO_TRANSLATOR_INFO === 'undefined') var ZOTERO_TRANSLATOR_INFO = ${JSON.stringify(header)};` },
-      footer: { js: `const { ${vars.join(', ')} } = ${globalName};` },
+      // make these var, not const, so they get hoisted and are available in the global scope. See logger.ts
+      footer: { js: `var { ${vars.join(', ')} } = ${globalName};` },
       globalThis: true,
       metafile: `gen/${translator.name}.json`,
     })

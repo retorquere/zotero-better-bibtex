@@ -174,14 +174,17 @@ class Item {
       this.title = (item as SerializedReference).title
     }
 
-    for (const creator of this.creators) {
-      creator.lastName = creator.lastName || creator.name
-    }
-
     this.removeDiacritics = this.language[(this.getField('language') as string || '').toLowerCase()] || ''
     const extraFields = Extra.get(this.getField('extra') as string, 'zotero', { kv: true, tex: true })
     this.extra = extraFields.extra
     this.extraFields = extraFields.extraFields
+
+    for (const [creatorType, creators] of Object.entries(this.extraFields.creator || {})) {
+      this.creators = this.creators.concat(creators.map(creator => Extra.zoteroCreator(creator, creatorType)))
+    }
+    for (const creator of this.creators) {
+      creator.lastName = creator.lastName || creator.name
+    }
 
     try {
       const date = this.getField('date')
@@ -546,7 +549,7 @@ class PatternFormatter {
     return this._format_date(this.item.date, format)
   }
 
-  /** A pseudo-field from the extra field. eg if you have `Original date: 1970` in your `extra` field, you can get it as `[extra=originalDate]`, or `tex.shortauthor: APA` which you could get with `[extra=tex.shortauthor]` */
+  /** A pseudo-field from the extra field. eg if you have `Original date: 1970` in your `extra` field, you can get it as `[extra=originalDate]`, or `tex.shortauthor: APA` which you could get with `[extra=tex.shortauthor]`. Any `tex.` field will be picked up, the other fields can be selected from [this list](https://retorque.re/zotero-better-bibtex/exporting/extra-fields/) of key names. */
   public $extra(variable: string) { // eslint-disable-line @typescript-eslint/no-inferrable-types
     const variables = variable.toLowerCase().trim().split(/\s*\/\s*/).filter(varname => varname)
     if (!variables.length) return ''
@@ -556,14 +559,11 @@ class PatternFormatter {
       .find(val => val)
     if (value) return value
 
-    const extra: Record<string, string> = (this.item.extra || '')
+    const extra: RegExpMatchArray = (this.item.extra || '')
       .split('\n')
-      .map((line: string) => line.match(/^([^:]+?)\s*:\s*(.+)/i))
-      .reduce((acc: Record<string, string>, match) => {
-        if (match) acc[match[1].toLowerCase()] = match[2].trim()
-        return acc
-      }, {})
-    return variables.map(varname => extra[varname]).find(val => val) || ''
+      .map((line: string) => line.match(/^([^:\s]+)\s*:\s*(.+)/i))
+      .find(match => match && variables.includes(match[1].toLowerCase()))
+    return extra?.[2] || ''
   }
 
 

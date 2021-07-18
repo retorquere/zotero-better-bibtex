@@ -1,0 +1,48 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "dmy",
+    "options": {},
+    "preferences": {
+      "DOIandURL": "doi",
+      "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
+      "autoExport": "idle",
+      "autoExportDelay": 15,
+      "autoExportIdleWait": 60,
+      "citekeyFormat": "[auth:lower][year] | [=forumPost/WebPage][Auth:lower:capitalize][Date:format-date=%Y-%m-%d.%H\\:%M\\:%S:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de] | [Auth:lower:capitalize][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de]",
+      "citekeySearch": false,
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "extraMergeTeX": true,
+      "keyConflictPolicy": "change",
+      "kuroshiro": true,
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc"
+    }
+  },
+  "items": [
+    {
+      "citationKey": "muhlleitner2014",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Muhlleitner"
+        }
+      ],
+      "date": "2014-10",
+      "extra": [
+        "Type: article",
+        "arXiv: 1410.5093 [hep-ph]"
+      ],
+      "itemID": 1,
+      "itemType": "report",
+      "tags": [
+        {
+          "tag": "High Energy Physics - Phenomenology"
+        }
+      ],
+      "title": "Higgs physics beyond the standard model"
+    }
+  ]
+}

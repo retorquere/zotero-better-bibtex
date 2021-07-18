@@ -17,6 +17,7 @@
   booktitle = {Proceedings of the International Conference for {{High Performance Computing}}, {{Networking}}, {{Storage}} and {{Analysis}}},
   author = {Cumming, Ben and Fourestey, Gilles and Fuhrer, Oliver and Gysi, Tobias and Fatica, Massimiliano and Schulthess, Thomas C.},
   date = {2014},
+  series = {{{SC}} '14},
   pages = {819--829},
   publisher = {{IEEE Press}},
   location = {{Piscataway, NJ, USA}},
@@ -25,7 +26,6 @@
   groups = {Omit URL export when DOI present. #131},
   isbn = {978-1-4799-5500-8},
   keywords = {bdec15,zotero_testcase},
-  series = {{{SC}} '14},
   timestamp = {2015-02-24 12:14:36 +0100}
 }
 

@@ -14,9 +14,9 @@ _anchors:
       python-version: 3.8
   install_node: &install_node
     name: install node
-    uses: actions/setup-node@v1
+    uses: actions/setup-node@v2
     with:
-      node-version: 14.x
+      node-version: 16.x
   cache: &cache
     name: Cache python/node dependencies
     id: cache
@@ -26,7 +26,6 @@ _anchors:
     with:
       path: |
         ~/.npm
-        ~/.pnpm-store
         ~/.nocache/pip
         ${{ env.pythonLocation }}
       key: ${{ runner.os }}-build-${{ env.pythonLocation }}-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
@@ -38,10 +37,7 @@ _anchors:
       pip install -r requirements.txt
   install_node_packages: &install_node_packages
     name: install node packages
-    uses: pnpm/action-setup@v2
-    with:
-      version: latest
-      run_install: true
+    run: npm install
 
 jobs:
   build:
@@ -91,6 +87,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         client: [zotero, jurism]
         bin: ['1', '2']

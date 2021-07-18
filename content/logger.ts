@@ -1,17 +1,11 @@
-declare const Translator: any
-declare const workerContext: { worker: string }
+// workerContext and Translator must be var-hoisted by esbuild to make this work
+declare const ZOTERO_TRANSLATOR_INFO: any
+declare const workerContext: { translator: string, debugEnabled: boolean, worker: string }
 
 import { stringify, asciify } from './stringify'
 import { worker as inWorker } from './environment'
 
-let running_translator = null
-
-try {
-  running_translator = Translator || null
-}
-catch (err) {
-  running_translator = null
-}
+const inTranslator = inWorker || typeof ZOTERO_TRANSLATOR_INFO !== 'undefined'
 
 class Logger {
   public verbose = false
@@ -49,8 +43,15 @@ class Logger {
       msg = output
     }
 
-    translator = translator || running_translator?.header.label
-    if (inWorker && !worker) worker = workerContext.worker || '??'
+    if (inWorker) {
+      worker = worker || workerContext.worker
+      translator = translator || workerContext.translator
+    }
+    else {
+      if (worker) worker = `not a worker: ${worker}`
+      // Translator must be var-hoisted by esbuild for this to work
+      if (!translator && inTranslator) translator = ZOTERO_TRANSLATOR_INFO.label
+    }
     const prefix = ['better-bibtex', translator, error && 'error', worker && `(worker ${worker})`].filter(p => p).join(' ')
     return `{${prefix}} +${diff} ${asciify(msg)}`
   }
@@ -64,16 +65,21 @@ class Logger {
     return `${indent}<Error: ${msg}>`
   }
 
+  public get enabled(): boolean {
+    if (!inTranslator) return Zotero.Debug.enabled as boolean
+    if (!inWorker) return true
+    return !workerContext || workerContext.debugEnabled
+  }
+
   public debug(...msg) {
-    // cannot user Zotero.Debug.enabled in foreground exporters
-    if (!Zotero.BetterBibTeX || running_translator?.debug || Zotero.Debug?.enabled) Zotero.debug(this.format({}, msg))
+    if (this.enabled) Zotero.debug(this.format({}, msg))
   }
 
   public error(...msg) {
     Zotero.debug(this.format({error: true}, msg))
   }
   public status({ error=false, worker='', translator='' }, ...msg) {
-    Zotero.debug(this.format({error, worker, translator}, msg))
+    if (error || this.enabled) Zotero.debug(this.format({error, worker, translator}, msg))
   }
 }
 

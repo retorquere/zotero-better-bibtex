@@ -6,13 +6,13 @@
   journaltitle = {Genetics},
   shortjournal = {Genetics},
   volume = {121},
+  number = {1},
   pages = {185--199},
   issn = {0016-6731, 1943-2631},
   url = {http://www.genetics.org/content/121/1/185},
   urldate = {2014-10-13},
   abstract = {The advent of complete genetic linkage maps consisting of codominant DNA markers [typically restriction fragment length polymorphisms (RFLPs)] has stimulated interest in the systematic genetic dissection of discrete Mendelian factors underlying quantitative traits in experimental organisms. We describe here a set of analytical methods that modify and extend the classical theory for mapping such quantitative trait loci (QTLs). These include: (i) a method of identifying promising crosses for QTL mapping by exploiting a classical formula of SEWALL WRIGHT; (ii) a method (interval mapping) for exploiting the full power of RFLP linkage maps by adapting the approach of LOD score analysis used in human genetics, to obtain accurate estimates of the genetic location and phenotypic effect of QTLs; and (iii) a method (selective genotyping) that allows a substantial reduction in the number of progeny that need to be scored with the DNA markers. In addition to the exposition of the methods, explicit graphs are provided that allow experimental geneticists to estimate, in any particular case, the number of progeny required to map QTLs underlying a quantitative trait.},
-  langid = {english},
-  number = {1}
+  langid = {english}
 }
 
 

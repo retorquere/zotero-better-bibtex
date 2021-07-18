@@ -2,8 +2,10 @@
 @book{kelsen_democratie_2004,
   title = {La démocratie. Sa nature, sa valeur},
   author = {Kelsen, Hans},
+  translator = {Eisenmann, Charles},
   date = {2004},
   origdate = {1929},
+  series = {Bibliothèque Dalloz},
   edition = {2},
   publisher = {{Dalloz}},
   location = {{Paris}},
@@ -13,9 +15,7 @@
   origlocation = {{Tübingen}},
   origpublisher = {{J.C.B. Mohr}},
   origtitle = {Vom Wesen und Wert der Demokratie},
-  pagetotal = {x+121},
-  series = {Bibliothèque Dalloz},
-  translator = {Eisenmann, Charles}
+  pagetotal = {x+121}
 }
 
 @book{latour_ny_2008,

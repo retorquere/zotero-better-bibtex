@@ -3,13 +3,13 @@
   title = {Kartinyeri v {{Commonwealth}}},
   shorttitle = {Kartinyeri},
   author = {Kaetinyeri v Commonwealth},
+  translator = {Kartinyeri},
   date = {1998-04-01},
   journaltitle = {CLR},
   volume = {195},
   pages = {337},
   institution = {{HCA}},
-  keywords = {au},
-  translator = {Kartinyeri}
+  keywords = {au}
 }
 
 

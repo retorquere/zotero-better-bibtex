@@ -1,14 +1,14 @@
 
 @report{Author2015,
+  type = {working paper},
   title = {A Report},
   author = {Author, Ann},
   editor = {Editrix, Emma and Editor, Ed},
   date = {2015},
+  number = {77},
   institution = {{Institution}},
   location = {{Place}},
-  annotation = {\{:X-genre: xxx\}},
-  number = {77},
-  type = {working paper}
+  annotation = {\{:X-genre: xxx\}}
 }
 
 @inreference{Blair2004,
@@ -45,13 +45,13 @@
   date = {2003},
   origdate = {1996-09-16},
   volume = {3},
+  number = {1},
   publisher = {{Warner Home Video}},
   location = {{US}},
   editora = {Curtis, Michael and Malins, Gregory S.},
   editoratype = {scriptwriter},
   editortype = {director},
   langid = {american},
-  number = {1},
   origpublisher = {{NBC}}
 }
 
@@ -61,13 +61,13 @@
   editor = {Mancuso, Gail},
   date = {1996-09-16},
   volume = {3},
+  number = {1},
   publisher = {{NBC}},
   location = {{US}},
   editora = {Curtis, Michael and Malins, Gregory S.},
   editoratype = {scriptwriter},
   editortype = {director},
-  langid = {american},
-  number = {1}
+  langid = {american}
 }
 
 @video{Kubrick1964,

@@ -574,12 +574,12 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     header = JSON.parse(Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${header.label}.json`))
+    if (installed?.configOptions?.hash === header.configOptions.hash) return false
+
     const code = [
       `ZOTERO_CONFIG = ${JSON.stringify(ZOTERO_CONFIG)}`,
       Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${header.label}.js`),
     ].join('\n')
-
-    if (installed?.configOptions?.hash === header.configOptions.hash) return false
 
     if (schema.translator[header.label]?.cached) Cache.getCollection(header.label).removeDataOnly()
 
