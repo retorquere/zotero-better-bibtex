@@ -1,12 +1,11 @@
 // workerContext and Translator must be var-hoisted by esbuild to make this work
-declare const ZOTERO_CONFIG: any
-declare const Translator: any
+declare const ZOTERO_TRANSLATOR_INFO: any
 declare const workerContext: { translator: string, debugEnabled: boolean, worker: string }
 
 import { stringify, asciify } from './stringify'
 import { worker as inWorker } from './environment'
 
-const inTranslator = typeof ZOTERO_CONFIG !== 'undefined'
+const inTranslator = inWorker || typeof ZOTERO_TRANSLATOR_INFO !== 'undefined'
 
 class Logger {
   public verbose = false
@@ -51,7 +50,7 @@ class Logger {
     else {
       if (worker) worker = `not a worker: ${worker}`
       // Translator must be var-hoisted by esbuild for this to work
-      if (!translator && typeof Translator !== 'undefined') translator = Translator.header.label
+      if (!translator && inTranslator) translator = ZOTERO_TRANSLATOR_INFO.label
     }
     const prefix = ['better-bibtex', translator, error && 'error', worker && `(worker ${worker})`].filter(p => p).join(' ')
     return `{${prefix}} +${diff} ${asciify(msg)}`
