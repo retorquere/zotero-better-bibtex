@@ -38,9 +38,9 @@
 <!ENTITY better-bibtex.ErrorReport.postToGitHub "Please post a message to the issue tracker (https://github.com/retorquere/zotero-better-bibtex/issues) with this support log ID, a description of the problem, and any steps necessary to reproduce it.">
 <!ENTITY better-bibtex.ErrorReport.references "Referências">
 <!ENTITY better-bibtex.ErrorReport.reportID "Support log ID:">
-<!ENTITY better-bibtex.ErrorReport.review "Os dados abaixo serão enviados para o Better BibTeX para depuração. Você pode reexaminar os dados para verificar se há informações sigilosas que você não quer enviar.
+<!ENTITY better-bibtex.ErrorReport.review "The data below is about to submitted to Better BibTeX for debugging. You can review the data to see whether there's sensitive information that you do not wish to send.
 
-Se você está de acordo com o envio desses dados, por favor clique &quot;Continuar&quot; e envie o ID de depuração apresentado na próxima tela no issue tracker em
+If you are OK with sending this data, please proceed to the next screen and post the debug ID presented in the next screen in the issue tracker at
 
 https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.ErrorReport.submissionInProgress			"Please wait while the support log is submitted.">
@@ -69,7 +69,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.journalAbbrev "Usar abreviações de periódicos">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.recursive "Export all child collections">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.error "Erro">
-<!ENTITY better-bibtex.Preferences.auto-export.fields.cached "Em cache">
+<!ENTITY better-bibtex.Preferences.auto-export.fields.cached "Cached">
 <!ENTITY better-bibtex.Preferences.auto-export.warn.long-running "Avisar quando exportações automáticas demorarem mais que (seconds)">
 
 <!ENTITY better-bibtex.Preferences.bulkWarning "Avisar ao modificar chaves de citação em massa">
