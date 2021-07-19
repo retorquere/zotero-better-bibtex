@@ -38,9 +38,9 @@
 <!ENTITY better-bibtex.ErrorReport.postToGitHub "Merci d'envoyer un message au gestionnaire de tickets de GitHub (https://github.com/retorquere/zotero-better-bibtex/issues), en précisant cet identifiant de débogage, une description du problème ainsi que toutes les étapes nécessaires pour le reproduire.">
 <!ENTITY better-bibtex.ErrorReport.references "Références">
 <!ENTITY better-bibtex.ErrorReport.reportID "Identifiant du rapport d'erreur :">
-<!ENTITY better-bibtex.ErrorReport.review "Les données ci-dessous sont sur le point d'être envoyées à Better BibTeX pour le débogage. Vous pouvez consulter les données pour voir s'il existe des informations sensibles que vous ne souhaitez pas envoyer.
+<!ENTITY better-bibtex.ErrorReport.review "The data below is about to submitted to Better BibTeX for debugging. You can review the data to see whether there's sensitive information that you do not wish to send.
 
-Si vous acceptez d'envoyer ces données, cliquez sur « Suivant » et publiez l'ID de débogage présenté dans l'écran suivant dans le suivi des problèmes à : 
+If you are OK with sending this data, please proceed to the next screen and post the debug ID presented in the next screen in the issue tracker at
 
 https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.ErrorReport.submissionInProgress			"Veuillez patienter pendant la transmission du rapport d'erreur.">
