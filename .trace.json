@@ -1,7 +1,7 @@
 {
   "gh-1860": [
-    "content/better-bibtex.ts",
-    "!content/extra.ts",
+    "!content/better-bibtex.ts",
+    "content/extra.ts",
     "!gen",
     "!translators"
   ],

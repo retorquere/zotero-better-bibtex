@@ -79,7 +79,7 @@ async function rebuild() {
   await bundle({
     entryPoints: [ 'content/better-bibtex.ts' ],
     plugins: [
-      // loader.trace,
+      loader.trace,
       loader.patcher('setup/patches'),
       // loader.bibertool,
       loader.pegjs,
