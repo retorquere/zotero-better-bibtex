@@ -170,6 +170,7 @@ module.exports.trace = {
 
       await fs.promises.writeFile('/tmp/trace-before', source.code)
       try {
+        const newLine = await import('./putout-new-line-plugin.js');
         const estrace = await import('estrace/plugin');
         const {code} = putout(source.code, {
           fixCount: 1,
@@ -177,7 +178,8 @@ module.exports.trace = {
             estrace: ['on', { url: localpath.replace(/\.ts$/, ''), exclude: [ 'FunctionExpression', 'ArrowFunctionExpression' ] }]
           },
           plugins: [
-            ['estrace', estrace],
+            [ 'new-line', newLine ],
+            [ 'estrace', estrace ],
           ],
         })
         const contents = prefix + code

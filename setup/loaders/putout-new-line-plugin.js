@@ -2,6 +2,7 @@ module.exports.report = () => 'fix newlines'
 
 module.exports.fix = (path) => {
     path.node.value.raw = path.node.value.raw.replace(/\n/g,'\\n');
+    path.node.original = null;
 };
 
 module.exports.traverse = ({push}) => ({
