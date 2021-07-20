@@ -774,7 +774,7 @@ class PatternFormatter {
     return (value || '').replace(script.han, ' $1 ').trim()
   }
 
-  /** jieba*/
+  /** word segmentation for Chinese references. Uses substantial memory; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
   public _jieba(value: string): string {
     if (!Preference.jieba) return value
     return jieba.cut(value || '').join(' ').trim()

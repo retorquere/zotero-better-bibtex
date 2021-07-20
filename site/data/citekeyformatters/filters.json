@@ -8,7 +8,7 @@
   "`discard`": "discards the input",
   "`fold`=mode? ('german' | 'japanese')": "tries to replace diacritics with ascii look-alikes. Removes non-ascii characters it cannot match",
   "`format-date`=format? (string)": "formats date as by replacing y, m and d in the format",
-  "`jieba`": "jieba",
+  "`jieba`": "word segmentation for Chinese references. Uses substantial memory; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys",
   "`local-time`": "transforms date/time to local time. Mainly useful for dateAdded and dateModified as it requires an ISO-formatted input.",
   "`lower`": "Forces the text inserted by the field marker to be in lowercase. For example, `[auth:lower]` expands the last name of the first author in lowercase.",
   "`nopunct`": "Removes punctuation",
