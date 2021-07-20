@@ -168,7 +168,6 @@ module.exports.trace = {
 
       console.log(`!!!!!!!!!!!!!! Instrumenting ${localpath} for trace logging !!!!!!!!!!!!!`)
 
-      await fs.promises.writeFile('/tmp/trace-before', source.code)
       try {
         const newLine = await import('./putout-new-line-plugin.js');
         const estrace = await import('estrace/plugin');
@@ -183,8 +182,6 @@ module.exports.trace = {
           ],
         })
         const contents = prefix + code
-
-        await fs.promises.writeFile('/tmp/trace-after', code)
 
         return {
           contents,
