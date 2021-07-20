@@ -296,6 +296,13 @@ class ExtraFields:
     for field, type_ in schema.csl.unmapped.items():
       if type_ != 'type': self.add_var(domain='csl', name=field, type_=type_, client=client)
 
+    for locale in jsonpath.parse('$.locales.*.fields.*').find(schema):
+      name = str(locale.path)
+      label = locale.value
+      # no multiline fields
+      if name in [ 'abstractNote', 'extra' ]: continue
+      print(label, '=>', name)
+
     # add labels
     for node, data in list(self.dg.nodes(data=True)):
       if data['domain'] == 'label': continue # how is this possible?
