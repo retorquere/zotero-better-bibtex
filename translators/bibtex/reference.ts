@@ -291,6 +291,7 @@ const fieldOrder = [
   '-keywords',
   '-annotation',
   '-note',
+  '-groups',
   '-timestamp',
   '-files',
   '-file',
