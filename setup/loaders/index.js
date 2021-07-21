@@ -130,70 +130,69 @@ module.exports.node_modules = function(dir) {
   }
 }
 
-let selected_for_trace = false
+let trace
 if (fs.existsSync(path.join(__dirname, '../../.trace.json'))) {
   const branch = (process.env.GITHUB_REF && process.env.GITHUB_REF.startsWith('refs/heads/')) ? process.env.GITHUB_REF.replace('refs/heads/', '') : shell.exec('git rev-parse --abbrev-ref HEAD', { silent: true }).stdout.trim()
   console.log('building on', branch)
   if (branch !== 'master' && branch !== 'main') {
-    let trace = require('../../.trace.json')
+    trace = require('../../.trace.json')
     trace = trace[branch]
     console.log(`instrumenting ${branch}: ${!!trace}`)
-    if (trace) selected_for_trace = filePathFilter(trace)
   }
 }
 
 const prefix = fs.readFileSync(path.join(__dirname, 'trace.js'), 'utf-8')
 
-module.exports.trace = {
-  name: 'trace',
-  setup(build) {
-    build.onLoad({ filter: selected_for_trace ? /\.ts$/ : /^$/ }, async (args) => {
-      if (!selected_for_trace) return null
+module.exports.trace = function(section) {
+  const selected = trace && trace[section] ? filePathFilter(trace[section]) : null
 
-      const source = await esbuild.transform(await fs.promises.readFile(args.path, 'utf-8'), { loader: 'ts' })
-      for (const warning of source.warnings) {
-        console.log('!!', warning)
-      }
-
-      const localpath = path.relative(process.cwd(), args.path)
-
-      // inject __estrace so sources can tell an instrumented build is active even if not on the current source
-      if (!selected_for_trace(localpath)) {
-        const contents = `const __estrace = true;\n${source.code}`
-        return {
-          contents,
-          loader: 'js',
+  return {
+    name: 'trace',
+    setup(build) {
+      build.onLoad({ filter: selected ? /\.ts$/ : /^$/ }, async (args) => {
+        const source = await esbuild.transform(await fs.promises.readFile(args.path, 'utf-8'), { loader: 'ts' })
+        for (const warning of source.warnings) {
+          console.log('!!', warning)
         }
-      }
 
-      console.log(`!!!!!!!!!!!!!! Instrumenting ${localpath} for trace logging !!!!!!!!!!!!!`)
+        const localpath = path.relative(process.cwd(), args.path)
 
-      try {
-        const newLine = await import('./putout-new-line-plugin.js');
-        const estrace = await import('estrace/plugin');
-        const {code} = putout(source.code, {
-          fixCount: 1,
-          rules: {
-            estrace: ['on', { url: localpath.replace(/\.ts$/, ''), exclude: [ 'FunctionExpression', 'ArrowFunctionExpression' ] }]
-          },
-          plugins: [
-            [ 'new-line', newLine ],
-            [ 'estrace', estrace ],
-          ],
-        })
-        const contents = prefix + code
-
-        return {
-          contents,
-          loader: 'js',
+        // inject __estrace so sources can tell an instrumented build is active even if not on the current source
+        if (!selected(localpath)) {
+          const contents = `const __estrace = true;\n${source.code}`
+          return {
+            contents,
+            loader: 'js',
+          }
         }
-      }
-      catch (err) {
-        await fs.promises.writeFile('/tmp/tt', `/* ${localpath.replace(/\.ts$/, '')}\n${err.stack}\n*/\n/${source.code}`)
-        throw err
-      }
 
-    })
+        console.log(`!!!!!!!!!!!!!! Instrumenting ${localpath} for trace logging !!!!!!!!!!!!!`)
+
+        try {
+          const newLine = await import('./putout-new-line-plugin.js');
+          const estrace = await import('estrace/plugin');
+          const {code} = putout(source.code, {
+            fixCount: 1,
+            rules: {
+              estrace: ['on', { url: localpath.replace(/\.ts$/, ''), exclude: [ 'FunctionExpression', 'ArrowFunctionExpression' ] }]
+            },
+            plugins: [
+              [ 'new-line', newLine ],
+              [ 'estrace', estrace ],
+            ],
+          })
+          const contents = prefix + code
+
+          return {
+            contents,
+            loader: 'js',
+          }
+        }
+        catch (err) {
+          await fs.promises.writeFile('/tmp/tt', `/* ${localpath.replace(/\.ts$/, '')}\n${err.stack}\n*/\n/${source.code}`)
+          throw err
+        }
+      })
+    }
   }
 }
-

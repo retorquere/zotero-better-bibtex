@@ -1,10 +1,11 @@
 {
-  "gh-1860x": [
-    "!content/better-bibtex.ts",
-    "content/extra.ts",
-    "!gen",
-    "!translators"
-  ],
+  "gh-1877": {
+    "plugin": [
+      "content/better-bibtex.ts",
+      "!content/extra.ts",
+      "!gen"
+    ]
+  },
   "-gh-1389": [
     "content/translators.ts",
     "translators/**/*.ts",
