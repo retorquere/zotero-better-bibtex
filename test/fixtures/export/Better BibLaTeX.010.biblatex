@@ -12,12 +12,12 @@
   crossref = {conf/icdm/2009w},
   description = {dblp},
   ee = {http://doi.ieeecomputersociety.org/10.1109/ICDMW.2009.35},
-  groups = {selekcja},
   interhash = {aad604c231737dbf8f6155082e3535ae},
   intrahash = {c97a29e90fbd958a0990360f70252458},
   isbn = {978-0-7695-3902-7},
   owner = {sstudent},
   keywords = {dblp},
+  groups = {selekcja},
   file = {files/Hulse2009/Hulse2009.pdf}
 }
 
