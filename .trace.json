@@ -2,7 +2,7 @@
   "gh-1877": {
     "plugin": [
       "content/better-bibtex.ts",
-      "!content/extra.ts",
+      "content/extra.ts",
       "!gen"
     ]
   },
