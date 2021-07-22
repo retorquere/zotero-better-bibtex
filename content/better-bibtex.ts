@@ -427,6 +427,10 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
     if (translatorID.translatorID) translatorID = translatorID.translatorID
     const translator = Translators.byId[translatorID]
 
+    const override = {
+      postscript: findOverride(this._displayOptions.exportPath, '.js', Preference.postscriptOverride),
+      preferences: findOverride(this._displayOptions.exportPath, '.json', Preference.preferencesOverride),
+    }
     if (translator) {
       if (this.location) {
         if (this._displayOptions.exportFileData) { // when exporting file data, the user was asked to pick a directory rather than a file
@@ -435,30 +439,27 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
           this._displayOptions.caching = false
         }
         else {
-          const override = {
-            postscript: findOverride(this._displayOptions.exportPath, '.js', Preference.postscriptOverride),
-            preferences: findOverride(this._displayOptions.exportPath, '.js', Preference.preferencesOverride),
-          }
 
           this._displayOptions.exportDir = this.location.parent.path
           this._displayOptions.exportPath = this.location.path
           this._displayOptions.caching = !override.postscript && !override.preferences
 
           if (override.postscript) this._displayOptions.preference_postscript = Zotero.File.getContents(override.postscript)
-          if (override.preferences) {
-            try {
-              const prefs = JSON.parse(Zotero.File.getContents(override.preferences))
-              for (const [pref, value] of Object.entries(prefs.preferences || prefs)) {
-                if (typeof value !== typeof preferences.defaults[pref]) throw new Error(`preference override for ${pref}: expected ${typeof preferences.defaults[pref]}, got ${typeof value}`)
-                if (preferences.options[pref] && !preferences.options[pref][value]) throw new Error(`preference override for ${pref}: expected ${Object.keys(preferences.options[pref]).join(' / ')}, got ${value}`)
-                this._displayOptions[`preference_${pref}`] = value
-              }
-            }
-            catch (err) {
-              log.debug('failed to load preference overrides from', preferences, ':', err)
-              this._displayOptions.caching = false
-            }
+        }
+      }
+
+      if (override.preferences) {
+        try {
+          const prefs = JSON.parse(Zotero.File.getContents(override.preferences))
+          for (const [pref, value] of Object.entries(prefs.preferences || prefs)) {
+            if (typeof value !== typeof preferences.defaults[pref]) throw new Error(`preference override for ${pref}: expected ${typeof preferences.defaults[pref]}, got ${typeof value}`)
+            if (preferences.options[pref] && !preferences.options[pref][value]) throw new Error(`preference override for ${pref}: expected ${Object.keys(preferences.options[pref]).join(' / ')}, got ${value}`)
+            this._displayOptions[`preference_${pref}`] = value
           }
+        }
+        catch (err) {
+          log.debug('failed to load preference overrides from', preferences, ':', err)
+          this._displayOptions.caching = false
         }
       }
 
