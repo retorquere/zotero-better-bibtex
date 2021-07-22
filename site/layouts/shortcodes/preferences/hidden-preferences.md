@@ -125,6 +125,16 @@ You can use a custom postscript per export directory:
 
 A postscript override will disable caching for that export.
 
+### preferencesOverride
+
+default: `<not set>`
+
+You can use custom preferences per export directory:
+
+1. Edit the hidden preference `preferencesOverride`, and set it to a filename like `preferences.json` 2. In the directory where you intend to export to, create a file called `preferences.json` (or whatever you set the preference to) and add the desired preference overrides. You can get your current preferences by exporting to `BetterBibTeX JSON` and removing everything except `preferences`. 3. Export to that directory.
+
+A preferences override will disable caching for that export.
+
 ### rawImports
 
 default: `no`

@@ -20,6 +20,7 @@ import { flash } from './flash'
 import { Deferred } from './deferred'
 
 import { Preference } from '../gen/preferences' // needs to be here early, initializes the prefs observer
+import * as preferences from '../gen/preferences/meta'
 require('./pull-export') // just require, initializes the pull-export end points
 require('./json-rpc') // just require, initializes the json-rpc end point
 import { AUXScanner } from './aux-scanner'
@@ -404,6 +405,21 @@ $patch$(Zotero.Utilities.Internal, 'extractExtraFields', original => function Zo
   return original.apply(this, arguments)
 })
 
+function findOverride(exportPath: string, extension: string, filename: string): string {
+  if (!filename) return null
+
+  const candidates = [
+    OS.Path.basename(exportPath).replace(/\.[^.]+$/, '') + extension,
+    filename,
+  ]
+  const exportDir = OS.Path.dirname(exportPath)
+  for (let candidate of candidates) {
+    candidate = OS.Path.join(exportDir, candidate)
+    // cannot use await OS.File.exists here because we may be invoked in noWait mode
+    if ((new FileUtils.File(candidate)).exists()) return candidate
+  }
+  return null
+}
 $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zotero_Translate_Export_prototype_translate() {
   try {
     /* requested translator */
@@ -416,26 +432,31 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         if (this._displayOptions.exportFileData) { // when exporting file data, the user was asked to pick a directory rather than a file
           this._displayOptions.exportDir = this.location.path
           this._displayOptions.exportPath = OS.Path.join(this.location.path, `${this.location.leafName}.${translator.target}`)
+          this._displayOptions.caching = false
         }
         else {
+          const override = {
+            postscript: findOverride(this._displayOptions.exportPath, '.js', Preference.postscriptOverride),
+            preferences: findOverride(this._displayOptions.exportPath, '.js', Preference.preferencesOverride),
+          }
+
           this._displayOptions.exportDir = this.location.parent.path
           this._displayOptions.exportPath = this.location.path
+          this._displayOptions.caching = !override.postscript && !override.preferences
 
-          if (Preference.postscriptOverride) {
-            // eslint-disable-next-line prefer-template
-            for (let postscript of [ OS.Path.basename(this._displayOptions.exportPath).replace(/\.(bib|csl)$/, '') + '.js', Preference.postscriptOverride ]) {
-              postscript = OS.Path.join(this._displayOptions.exportDir, postscript)
-              try {
-                // cannot use await OS.File.exists here because we may be invoked in noWait mode
-                if ((new FileUtils.File(postscript)).exists()) {
-                  // adding a call to Translator.exportDir makes sure caching is disabled
-                  this._displayOptions.preference_postscript = `Translator.exportDir;\n\n${Zotero.File.getContents(postscript)}`
-                  break
-                }
+          if (override.postscript) this._displayOptions.preference_postscript = Zotero.File.getContents(override.postscript)
+          if (override.preferences) {
+            try {
+              const prefs = JSON.parse(Zotero.File.getContents(override.preferences))
+              for (const [pref, value] of Object.entries(prefs.preferences || prefs)) {
+                if (typeof value !== typeof preferences.defaults[pref]) throw new Error(`preference override for ${pref}: expected ${typeof preferences.defaults[pref]}, got ${typeof value}`)
+                if (preferences.options[pref] && !preferences.options[pref][value]) throw new Error(`preference override for ${pref}: expected ${Object.keys(preferences.options[pref]).join(' / ')}, got ${value}`)
+                this._displayOptions[`preference_${pref}`] = value
               }
-              catch (err) {
-                log.error('failed to load postscript override', postscript, err)
-              }
+            }
+            catch (err) {
+              log.debug('failed to load preference overrides from', preferences, ':', err)
+              this._displayOptions.caching = false
             }
           }
         }

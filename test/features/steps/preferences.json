@@ -591,6 +591,13 @@
     "var": "postscriptOverride"
   },
   {
+    "name": "preferencesOverride",
+    "type": "string",
+    "default": "",
+    "affects": [],
+    "var": "preferencesOverride"
+  },
+  {
     "name": "qualityReport",
     "type": "boolean",
     "default": false,

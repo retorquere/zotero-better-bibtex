@@ -296,7 +296,7 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
 
       // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
       // relative file paths are going to be different based on the file being exported to
-      this.cacheable = !(
+      this.cacheable = Zotero.getOption('caching') && !(
         this.options.exportFileData
         ||
         this.preferences.relativeFilePaths

@@ -300,6 +300,9 @@
             "postscriptOverride": {
               "type": "string"
             },
+            "preferencesOverride": {
+              "type": "string"
+            },
             "qualityReport": {
               "type": "boolean"
             },
