@@ -525,11 +525,11 @@ export class KeyManager {
   }
 
   public propose(item: ZoteroItem): { citekey: string, pinned: boolean } {
-    const citekey: string = Extra.get(item.getField('extra') as string, 'zotero', { citationKey: true }).extraFields.citationKey
+    let citekey: string = Extra.get(item.getField('extra') as string, 'zotero', { citationKey: true }).extraFields.citationKey
 
     if (citekey) return { citekey, pinned: true }
 
-    const proposed = Formatter.format(item)
+    citekey = Formatter.format(item)
 
     const conflictQuery: Query = { $and: [ { itemID: { $ne: item.id } } ] }
     if (Preference.keyScope !== 'global') conflictQuery.$and.push({ libraryID: { $eq: item.libraryID } })
@@ -537,20 +537,20 @@ export class KeyManager {
     let postfix: string
     const seen = {}
     // eslint-disable-next-line no-constant-condition
-    for (let n = proposed.postfix.start; true; n += 1) {
+    for (let n = Formatter.postfix.start; true; n += 1) {
       if (n) {
         const alpha = intToExcelCol(n)
-        postfix = sprintf(proposed.postfix.format, { a: alpha.toLowerCase(), A: alpha, n })
+        postfix = sprintf(Formatter.postfix.format, { a: alpha.toLowerCase(), A: alpha, n })
       }
       else {
         postfix = ''
       }
 
       // this should never happen, it'd mean the postfix pattern doesn't have placeholders, which should have been caught by parsePattern
-      if (seen[postfix]) throw new Error(`${JSON.stringify(proposed.postfix)} does not generate unique postfixes`)
+      if (seen[postfix]) throw new Error(`${JSON.stringify(Formatter.postfix)} does not generate unique postfixes`)
       seen[postfix] = true
 
-      const postfixed = proposed.citekey + postfix
+      const postfixed = citekey + postfix
       const conflict = this.keys.findOne({ $and: [...conflictQuery.$and, { citekey: { $eq: postfixed } }] })
       if (conflict) continue
 

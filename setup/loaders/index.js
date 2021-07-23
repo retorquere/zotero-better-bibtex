@@ -142,7 +142,6 @@ if (fs.existsSync(path.join(__dirname, '../../.trace.json'))) {
 }
 
 const prefix = fs.readFileSync(path.join(__dirname, 'trace.js'), 'utf-8')
-
 module.exports.trace = function(section) {
   const selected = trace && trace[section] ? filePathFilter(trace[section]) : null
 
@@ -169,22 +168,19 @@ module.exports.trace = function(section) {
         console.log(`!!!!!!!!!!!!!! Instrumenting ${localpath} for trace logging !!!!!!!!!!!!!`)
 
         try {
-          const newLine = await import('./putout-new-line-plugin.js');
           const estrace = await import('estrace/plugin');
-          const {code} = putout(source.code, {
+          const {code} = putout(await fs.promises.readFile(source, 'utf-8'), {
             fixCount: 1,
             rules: {
-              estrace: ['on', { url: localpath.replace(/\.ts$/, ''), exclude: [ 'FunctionExpression', 'ArrowFunctionExpression' ] }]
+              'estrace/trace': ['on', { url: 'inline', exclude: [ 'FunctionExpression', 'ArrowFunctionExpression' ] }],
             },
             plugins: [
-              [ 'new-line', newLine ],
-              [ 'estrace', estrace ],
+              [ 'estrace/trace', estrace ],
             ],
           })
-          const contents = prefix + code
 
           return {
-            contents,
+            contents: prefix + code,
             loader: 'js',
           }
         }

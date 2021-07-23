@@ -18,37 +18,42 @@
   }
 
   const postfix = {
-    postfixes: [],
+    postfix: null,
+    alpha: { start: 0, format: '%(a)s' },
+    numeric: { start: 0, format: '-%(n)s' },
 
-    numeric: function() {
-      return this.set('-%(n)s', 0)
-    },
-    alpha: function() {
-      return this.set('%(a)s', 0)
-    },
-    set: function(pf, start) {
-      this.postfixes.push(pf)
-      return `{ start: ${start ? 1 : 0}, format: ${JSON.stringify(pf)} }`
+    set: function(pf) {
+      if (this.postfix && (this.postfix.start !== pf.start || this.postfix.format !== pf.format)) error(`postfix changed from ${this.postfix.format}+${this.postfix.start} to ${pf.format}+${pf.start}`)
+      const expected = `${Date.now()}`
+      const found = options.sprintf(pf.format, { a: expected, A: expected, n: expected })
+      if (!found.includes(expected)) error(`postfix ${pf.format} does not contain %(a)s, %(A)s or %(n)s`)
+      if (found.split(expected).length > 2) error(`postfix ${pf.format} contains multiple instances of %(a)s/%(A)s/%(n)s`)
+      this.postfix = { format: pf.format, start: pf.start ? 1 : 0 }
     },
   }
+  
+  const chunk = '{{{@}}}'
 }
 
 start
   = patterns:pattern+ {
-      var body = '\nlet citekey, postfix, chunk;'
+      var body = [
+        '',
+        'function _gt(v, n) { if (v.length > n) return ""; throw { next: true } }',
+        'function _fallback(v, f) { return v ? v : f }',
+        '',
+      ].join('\n')
 
       for (const pattern of patterns) {
-        body += `\ndo {\n  citekey = ''; postfix = ${postfix.alpha()};\n\n`
+        body += `\ntry {\n  let citekey = '';\n`
         for (const block of pattern) {
           body += `  ${block};\n`
         }
-        body += '\n'
-        body += "  citekey = citekey.replace(/[\\s{},]/g, '');\n"
-        body += '  if (citekey) return {citekey: citekey, postfix: postfix};\n} while (false);\n'
+        body += '  if (citekey) return citekey;\n}\ncatch (err) {\n  if (!err.next) throw err\n}\n'
       }
-      body += `\nreturn {citekey: '', postfix: ${postfix.alpha()}};`
+      body += `\nreturn '';`
 
-      return { formatter: body, postfixes: postfix.postfixes }
+      return { formatter: body, postfix: postfix.postfix || postfix.alpha }
     }
 
 pattern
@@ -56,17 +61,17 @@ pattern
 
 block
   = [ \t\r\n]+                            { return '' }
-  / '[0]'                                 { return `postfix = ${postfix.numeric()}` }
-  / '[postfix' start:'+1'? pf:stringparam ']' { return `postfix = ${postfix.set(pf, start)}` }
+  / '[0]'                                 { postfix.set(postfix.numeric); return '' }
+  / '[postfix' start:'+1'? pf:stringparam ']' { postfix.set({ start: start, format: pf}); return '' }
   / '[=' types:$[a-zA-Z/]+ ']'            {
       types = types.toLowerCase().split('/').map(type => type.trim()).map(type => options.items.name.type[type.toLowerCase()] || type);
       var unknown = types.find(type => !options.items.valid.type[type])
       if (typeof unknown !== 'undefined') error(`unknown item type "${unknown}; valid types are ${Object.keys(options.items.name.type)}"`);
-      return `if (!${JSON.stringify(types)}.includes(this.item.itemType)) break`;
+      return `if (!${JSON.stringify(types)}.includes(this.item.itemType)) throw { next: true }`;
     }
-  / '[>' min:$[0-9]+ ']'                 { return `if (citekey.length <= ${min}) break` }
+  / '[>' min:$[0-9]+ ']'                 { return `if (citekey.length <= ${min}) throw { next: true }` }
   / '[' method:method filters:filter* ']' {
-      return [].concat(method, filters, 'citekey += chunk').join('; ');
+      return `citekey += ${filters.reduce((chain, filter) => filter.replace(chunk, chain), method)}`
     }
   / chars:$[^\|>\[\]]+                     { return `citekey += ${JSON.stringify(chars)}` }
 
@@ -123,33 +128,31 @@ method
       args = _trim_args(`function ${text()}`, expected, pnames.map(p => args[p])).join(', ')
       let code = `this.$${method}(${args})`;
       if (scrub) code = `this.clean(${code}, true)`
-      code = `chunk = ${code}`
 
       return code;
     }
   / name:$([a-z][.a-zA-Z]+) &{ return _method('function', name, ['number']) } params:nparam? {
       params = params || []
-      return `chunk = this.$${_method_name(name)}(${params.join(', ')})`
+      return `this.$${_method_name(name)}(${params.join(', ')})`
     }
   / name:$([a-z][.a-zA-Z]+) &{ return _method('function', name, ['number', 'number']) } params:n_mparams? {
       params = params || []
-      return `chunk = this.$${_method_name(name)}(${params.join(', ')})`
+      return `this.$${_method_name(name)}(${params.join(', ')})`
     }
   / name:$([a-z][.a-zA-Z]+) &{ return _method('function', name, ['string']) } param:stringparam { // single string param
-      return `chunk = this.$${_method_name(name)}(${JSON.stringify(param)})`
+      return `this.$${_method_name(name)}(${JSON.stringify(param)})`
     }
   / name:$([a-z][.a-zA-Z]+) &{ return options.methods.function[_method_name(name)] } {
       const params = options.methods.function[_method_name(name)]
       if (params.length !== 0) error(`function '${name}' expects at least one parameter (${params.map(p => p.type + (p.optional ? '?' : '')).join(', ')})`)
 
-      var code = `chunk = this.$${_method_name(name)}()`
-      if (name == 'zotero') code += `; postfix = ${postfix.numeric()}`
-      return code
+      if (name == 'zotero') postfix.set(postfix.numeric);
+      return `this.$${_method_name(name)}()`
     }
   / prop:$([a-zA-Z]+) {
       const field = options.items.name.field[prop.toLowerCase()]
       if (!field) error(`Unknown field ${JSON.stringify(prop)}`)
-      return `chunk = this.$property(${JSON.stringify(field)})`
+      return `this.$property(${JSON.stringify(field)})`
     }
 
 nparam
@@ -163,8 +166,8 @@ flag
   = '+' flag:$[^_:\]]+                 { return flag }
 
 filter
-  = ':(' text:$[^)]+ ')'  { return `chunk = chunk || ${JSON.stringify(text)}`; }
-  / ':>' min:$[0-9]+      { return `if (chunk.length <= ${min}) break` }
+  = ':(' text:$[^)]+ ')'  { return `_fallback(${chunk}, ${JSON.stringify(text)})` }
+  / ':>' min:$[0-9]+      { return `_gt(${chunk}, ${min})` }
   / ':' name:$[-a-z]+ params:stringparam* {
       const method = _method_name(name)
       const expected = options.methods.filter[method]
@@ -172,7 +175,7 @@ filter
 
       if (params.length > expected.length) error(`filter '${name}' expects at most ${expected.length} parameters`)
 
-      const escaped_params = ['chunk'].concat(_trim_args(`filter ${text()}`, expected, expected.map((p, i) => {
+      const escaped_params = [''].concat(_trim_args(`filter ${text()}`, expected, expected.map((p, i) => {
         if (typeof params[i] === 'undefined') return 'undefined'
 
         switch (p.type) {
@@ -191,9 +194,9 @@ filter
             }
             error(`expected parameter ${i + 1} (${p.name}) of type ${p.type} on filter ${name}`)
         }
-      })))
+      }))).join(', ')
 
-      return `chunk = this._${method}(${escaped_params.join(', ')})`;
+      return `this._${method}(${chunk}${escaped_params})`
     }
 
 stringparam

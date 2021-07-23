@@ -216,7 +216,8 @@ class Item {
 
 const safechars = '-:\\p{L}0-9_!$*+./;\\[\\]'
 class PatternFormatter {
-  public generate: () => { citekey: string, postfix: { start: number, format: string } }
+  public generate: () => string
+  public postfix: { start: number, format: string }
 
   private re = {
     unsafechars_allow_spaces: Zotero.Utilities.XRegExp(`[^${safechars}\\s]`),
@@ -290,8 +291,10 @@ class PatternFormatter {
       }
 
       try {
+        const { formatter, postfix } = this.parsePattern(this.citekeyFormat)
         // @ts-ignore
-        this.generate = new Function(this.parsePattern(this.citekeyFormat))
+        this.generate = new Function(formatter)
+        this.postfix = postfix
         break
       }
       catch (err) {
@@ -300,35 +303,27 @@ class PatternFormatter {
     }
   }
 
-  public parsePattern(pattern) {
-    const { formatter, postfixes } = (parser.parse(pattern, { items, methods }) as { formatter: string, postfixes: string[]})
-    log.debug('formatter function:', formatter)
-    log.debug('formatter postfixes:', postfixes)
+  public parsePattern(pattern): { formatter: string, postfix: { start: number, format: string } } {
+    const formatter = (parser.parse(pattern, { sprintf, items, methods }) as { formatter: string, postfix: { start: number, format: string } })
+    log.debug('formatter function:', formatter.formatter)
+    log.debug('formatter postfix:', formatter.postfix)
 
-    for (const postfix of postfixes) {
-      const expected = `${Date.now()}`
-      const found = sprintf(postfix, { a: expected, A: expected, n: expected })
-      if (!found.includes(expected)) throw new Error(`postfix ${postfix} does not contain %(a)s, %(A)s or %(n)s`)
-      if (found.split(expected).length > 2) throw new Error(`postfix ${postfix} contains multiple instances of %(a)s/%(A)s/%(n)s`)
-    }
     return formatter
   }
 
-  public format(item: ZoteroItem | SerializedItem): { citekey: string, postfix: { start: number, format: string } } {
+  public format(item: ZoteroItem | SerializedItem): string {
     this.item = new Item(item)
 
     switch (this.item.itemType) {
       case 'attachment':
       case 'note':
       case 'annotation':
-        return { citekey: '', postfix: { start: 0, format: ''} }
+        return ''
     }
 
-    const citekey = this.generate()
-
-    if (!citekey.citekey) citekey.citekey = `zotero-${this.item.itemID}`
-    if (citekey.citekey && Preference.citekeyFold) citekey.citekey = this.removeDiacritics(citekey.citekey)
-    citekey.citekey = citekey.citekey.replace(/[\s{},@]/g, '')
+    let citekey = this.generate() || `zotero-${this.item.itemID}`
+    if (citekey && Preference.citekeyFold) citekey = this.removeDiacritics(citekey)
+    citekey = citekey.replace(/[\s{},@]/g, '')
 
     return citekey
   }
