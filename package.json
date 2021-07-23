@@ -93,7 +93,7 @@
     "esbuild": "^0.12.15",
     "escape-string-regexp": "^5.0.0",
     "eslint": "^7.31.0",
-    "estrace": "^2.0.0",
+    "estrace": "^2.1.0",
     "eta": "^1.12.3",
     "excel-column-name": "^1.0.1",
     "fast-chunk-string": "^1.0.1",
