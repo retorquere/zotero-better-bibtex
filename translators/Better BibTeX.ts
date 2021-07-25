@@ -1286,8 +1286,6 @@ export async function doImport(): Promise<void> {
     .filter(comment => comment.startsWith('zotero-better-bibtex:whitelist:'))
     .map(comment => comment.toLowerCase().replace(/\s/g, '').split(':').pop().split(',').filter(key => key))[0]
 
-  const jabref = bibtexParser.jabref(bib.comments)
-
   const itemIDS = {}
   let imported = 0
   let id = 0
@@ -1298,7 +1296,7 @@ export async function doImport(): Promise<void> {
     if (bibtex.key) itemIDS[bibtex.key] = id // Endnote has no citation keys
 
     try {
-      await (new ZoteroItem(id, bibtex, jabref, errors)).complete()
+      await (new ZoteroItem(id, bibtex, bib.jabref, errors)).complete()
     }
     catch (err) {
       log.error('bbt import error:', err)
@@ -1309,7 +1307,7 @@ export async function doImport(): Promise<void> {
     Zotero.setProgress(imported / bib.entries.length * 100) // eslint-disable-line no-magic-numbers
   }
 
-  for (const group of jabref.root || []) {
+  for (const group of bib.jabref.root || []) {
     importGroup(group, itemIDS, true)
   }
 
