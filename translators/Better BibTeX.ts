@@ -1212,14 +1212,17 @@ class ZoteroItem {
 //   @item.publicationTitle = value
 //   return true
 
-async function fetch_polyfill(url): Promise<{ json: () => Promise<any> }> {
+async function fetch_polyfill(url): Promise<{ json: () => Promise<any>, text: () => Promise<string> }> {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest()
     xhr.open('GET', url)
 
     xhr.onload = function() {
       if (this.status >= 200 && this.status < 300) { // eslint-disable-line no-magic-numbers
-        resolve({ json: () => JSON.parse(xhr.response) }) // eslint-disable-line @typescript-eslint/no-unsafe-return
+        resolve({
+          json: () => JSON.parse(xhr.response), // eslint-disable-line @typescript-eslint/no-unsafe-return
+          text: () => xhr.response, // eslint-disable-line @typescript-eslint/no-unsafe-return
+        })
       }
       else {
         reject({
@@ -1243,8 +1246,8 @@ async function fetch_polyfill(url): Promise<{ json: () => Promise<any> }> {
 export async function doImport(): Promise<void> {
   Translator.init('import')
 
-  const unabbreviate = Translator.preferences.importJabRefAbbreviations ? await (await fetch_polyfill('resource://zotero-better-bibtex/unabbrev/unabbrev.json')).json() : null
-  const strings = Translator.preferences.importJabRefStrings ? await (await fetch_polyfill('resource://zotero-better-bibtex/unabbrev/strings.json')).json() : null
+  const unabbreviate = Translator.preferences.importJabRefAbbreviations ? await (await fetch_polyfill('resource://zotero-better-bibtex/unabbrev/unabbrev.json')).json() : undefined
+  const strings = Translator.preferences.importJabRefStrings ? await (await fetch_polyfill('resource://zotero-better-bibtex/unabbrev/strings.bib')).text() : undefined
 
   let read
   let input = ''
