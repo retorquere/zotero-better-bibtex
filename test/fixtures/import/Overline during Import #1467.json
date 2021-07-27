@@ -2,7 +2,6 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "localeDateOrder": "dmy",
     "options": {},
     "preferences": {
       "citekeyFormat": "[auth][year]"
@@ -108,9 +107,8 @@
       "issue": "1",
       "itemID": 2,
       "itemType": "journalArticle",
-      "journalAbbreviation": "ACS Appl. Mater. Interfaces",
       "pages": "273\u2013278",
-      "publicationTitle": "ACS Applied Materials & Interfaces",
+      "publicationTitle": "ACS Appl. Mater. Interfaces",
       "title": "Significantly improved luminescence properties of nitrogen-polar (0001\u0305) InGaN multiple quantum wells grown by pulsed metalorganic chemical vapor deposition",
       "volume": "7"
     },
@@ -183,9 +181,8 @@
       "issue": "4",
       "itemID": 4,
       "itemType": "journalArticle",
-      "journalAbbreviation": "Appl. Phys. Lett.",
       "pages": "487\u2013489",
-      "publicationTitle": "Applied Physics Letters",
+      "publicationTitle": "Appl. Phys. Lett.",
       "title": "Adatom diffusion at GaN (0001) and (0001\u0304) surfaces",
       "volume": "73"
     },
@@ -298,9 +295,8 @@
       "issue": "11",
       "itemID": 6,
       "itemType": "journalArticle",
-      "journalAbbreviation": "Semicond. Sci. Technol.",
       "pages": "113001",
-      "publicationTitle": "Semiconductor Science and Technology",
+      "publicationTitle": "Semicond. Sci. Technol.",
       "title": "Recent progress in metal-organic chemical vapor deposition of ( 0001\u0304 ) N-Polar group-III nitrides",
       "volume": "29"
     },
@@ -341,9 +337,8 @@
       "issue": "03n04",
       "itemID": 7,
       "itemType": "journalArticle",
-      "journalAbbreviation": "Surf. Rev. Lett.",
       "pages": "913\u2013934",
-      "publicationTitle": "Surface Review and Letters",
+      "publicationTitle": "Surf. Rev. Lett.",
       "title": "N-Limited Versus Ga-Limited Growth on GaN(0001\u0304) by MBE Using NH\u00b3",
       "volume": "05"
     },
@@ -394,9 +389,8 @@
       "issue": "6",
       "itemID": 8,
       "itemType": "journalArticle",
-      "journalAbbreviation": "Appl. Phys. Express",
       "pages": "061005",
-      "publicationTitle": "Applied Physics Express",
+      "publicationTitle": "Appl. Phys. Express",
       "title": "Red to blue wavelength emission of N-Polar (0001\u0304) InGaN light-emitting diodes grown by metalorganic vapor phase epitaxy",
       "volume": "8"
     }

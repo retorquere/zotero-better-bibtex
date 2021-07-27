@@ -2,7 +2,6 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "localeDateOrder": "dmy",
     "options": {},
     "preferences": {
       "citekeyFormat": "[auth][year]"
@@ -25,8 +24,9 @@
       "issue": "2",
       "itemID": 1,
       "itemType": "journalArticle",
+      "journalAbbreviation": "Journal",
       "pages": "3",
-      "publicationTitle": "Journal",
+      "publicationTitle": "The Journal",
       "title": "Title",
       "volume": "1"
     }

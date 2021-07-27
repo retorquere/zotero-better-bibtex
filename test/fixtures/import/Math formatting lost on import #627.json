@@ -2,7 +2,6 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "localeDateOrder": "ymd",
     "options": {},
     "preferences": {
       "citekeyFormat": "[auth][year]"
@@ -36,9 +35,8 @@
       "issue": "15",
       "itemID": 1,
       "itemType": "journalArticle",
-      "journalAbbreviation": "Phys. Rev. Lett.",
       "pages": "156404",
-      "publicationTitle": "Physical Review Letters",
+      "publicationTitle": "Phys. Rev. Lett.",
       "title": "Nonequilibrium propagation and decay of a bound pair in driven <span class=\"nocase\">t</span>-J models",
       "volume": "109"
     }
