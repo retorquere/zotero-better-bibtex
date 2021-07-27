@@ -786,14 +786,14 @@
    "date": "2020",
    "extra": [
     "Citation Key: Black2020",
-    "Publisher: Educational Publishing Foundation",
     "tex.city: US"
    ],
    "itemID": 311,
    "itemType": "journalArticle",
    "pages": "No Pagination Specified-No Pagination Specified",
    "publicationTitle": "Psychology of Popular Media",
-   "title": "Fiction and morality: Investigating the associations between reading exposure, empathy, morality, and moral judgment"
+   "title": "Fiction and morality: Investigating the associations between reading exposure, empathy, morality, and moral judgment",
+   "publisher": "Educational Publishing Foundation"
   },
   {
    "DOI": "10.1177/1464884919845458",
@@ -846,8 +846,7 @@
    ],
    "date": "1978",
    "extra": [
-    "Citation Key: Chambers1978",
-    "Publisher: Johns Hopkins University Press"
+    "Citation Key: Chambers1978"
    ],
    "issue": "1",
    "itemID": 395,
@@ -856,7 +855,8 @@
    "publicationTitle": "Children's Literature Association Quarterly",
    "title": "The reader in the book: Notes from work in progress",
    "url": "https://muse.jhu.edu/article/457372/summary",
-   "volume": "1978"
+   "volume": "1978",
+   "publisher": "Johns Hopkins University Press"
   },
   {
    "ISSN": "0034-527X",
@@ -917,8 +917,7 @@
    ],
    "date": "2008",
    "extra": [
-    "Citation Key: Cai2008",
-    "Publisher: National Council of Teachers of English"
+    "Citation Key: Cai2008"
    ],
    "issue": "3",
    "itemID": 478,
@@ -930,7 +929,8 @@
    "publicationTitle": "Language Arts",
    "title": "Transactional theory and the study of multicultural literature",
    "url": "http://www.jstor.org/stable/41962269",
-   "volume": "85"
+   "volume": "85",
+   "publisher": "National Council of Teachers of English"
   },
   {
    "ISSN": "1521-7779",
@@ -955,8 +955,7 @@
    ],
    "date": "2016",
    "extra": [
-    "Citation Key: Thomas2016",
-    "Publisher: Children's Literature Assembly. 940 Vandalia Road, Morgantown, WV 26501. Tel: 304-291-2393; Fax: 304-291-2393; e-mail: jcl@wvnet.edu; Web site: http://www.childrensliteratureassembly.org"
+    "Citation Key: Thomas2016"
    ],
    "issue": "2",
    "itemID": 499,
@@ -964,7 +963,8 @@
    "pages": "6-17",
    "publicationTitle": "Journal of Children's Literature",
    "title": "Much ado about a \"Fine Dessert\": The cultural politics of representing slavery in children's literature",
-   "volume": "42"
+   "volume": "42",
+   "publisher": "Children's Literature Assembly. 940 Vandalia Road, Morgantown, WV 26501. Tel: 304-291-2393; Fax: 304-291-2393; e-mail: jcl@wvnet.edu; Web site: http://www.childrensliteratureassembly.org"
   },
   {
    "ISSN": "1941-2258",
@@ -1362,8 +1362,7 @@
    ],
    "date": "2008",
    "extra": [
-    "Citation Key: McNair2008",
-    "Publisher: Springer"
+    "Citation Key: McNair2008"
    ],
    "issue": "3",
    "itemID": 232,
@@ -1371,7 +1370,8 @@
    "pages": "201-212",
    "publicationTitle": "Children's Literature in Education",
    "title": "\u201cI may be crackin\u2019, but um fackin\u2019\u201d: Racial humor in the watsons go to Birmingham\u20141963",
-   "volume": "39"
+   "volume": "39",
+   "publisher": "Springer"
   },
   {
    "abstractNote": "A short reflection on my time in Americorps, when I chose loyalty to Whiteness over loyalty to humanity.",
@@ -1413,8 +1413,7 @@
    "date": "2011",
    "extra": [
     "Citation Key: Callahan2011",
-    "ISBN: 1532-2882",
-    "Publisher: John Wiley & Sons, Inc"
+    "ISBN: 1532-2882"
    ],
    "issue": "10",
    "itemID": 280,
@@ -1423,7 +1422,8 @@
    "publicationTitle": "Journal of the American Society for Information Science & Technology",
    "title": "Cultural bias in Wikipedia content on famous persons",
    "url": "http://ezproxy.library.arizona.edu/login?url=https://search.ebscohost.com/login.aspx?direct=true&db=bsu&AN=65302187&site=ehost-live",
-   "volume": "62"
+   "volume": "62",
+   "publisher": "John Wiley & Sons, Inc"
   },
   {
    "DOI": "10.1016/j.ijcci.2014.02.002",
@@ -1531,7 +1531,6 @@
    "date": "2017",
    "extra": [
     "Citation Key: Milazzo2017",
-    "Publisher: HOBOKEN: Wiley",
     "tex.city: HOBOKEN"
    ],
    "issue": "4",
@@ -1543,7 +1542,8 @@
    "pages": "557-572",
    "publicationTitle": "Journal of applied philosophy",
    "title": "On white ignorance, white shame, and other pitfalls in critical philosophy of race",
-   "volume": "34"
+   "volume": "34",
+   "publisher": "HOBOKEN: Wiley"
   },
   {
    "DOI": "10.1111/japp.12230",
@@ -1560,7 +1560,6 @@
    "date": "2017",
    "extra": [
     "Citation Key: Milazzo2017",
-    "Publisher: HOBOKEN: Wiley",
     "tex.city: HOBOKEN"
    ],
    "issue": "4",
@@ -1572,7 +1571,8 @@
    "pages": "557-572",
    "publicationTitle": "Journal of applied philosophy",
    "title": "On white ignorance, white shame, and other pitfalls in critical philosophy of race",
-   "volume": "34"
+   "volume": "34",
+   "publisher": "HOBOKEN: Wiley"
   },
   {
    "DOI": "10.1111/japp.12306",
@@ -1589,7 +1589,6 @@
    "date": "2019",
    "extra": [
     "Citation Key: Moore2019",
-    "Publisher: HOBOKEN: WILEY",
     "tex.city: HOBOKEN"
    ],
    "issue": "2",
@@ -1601,7 +1600,8 @@
    "pages": "257-267",
    "publicationTitle": "Journal of applied philosophy",
    "title": "Resolving the tensions between white people's active investment in racial inequality and white ignorance: A response to marzia milazzo",
-   "volume": "36"
+   "volume": "36",
+   "publisher": "HOBOKEN: WILEY"
   },
   {
    "DOI": "10.1177/1354067X18796805",
@@ -1699,7 +1699,6 @@
    "date": "1970",
    "extra": [
     "Citation Key: Fish1970",
-    "Publisher: Baltimore, etc: JSTOR",
     "tex.city: Baltimore, etc"
    ],
    "issue": "1",
@@ -1711,7 +1710,8 @@
    "pages": "123-162",
    "publicationTitle": "New literary history",
    "title": "Literature in the reader: Affective stylistics",
-   "volume": "2"
+   "volume": "2",
+   "publisher": "Baltimore, etc: JSTOR"
   },
   {
    "abstractNote": "Critical Content Analysis is an explicit method for the study of text that also offers flexibility in theoretical approach and textual selection. In this introduction to the Understanding and Dismantling Privilege special issue featuring Critical Content Analysis focusing on race, racism, and racial oppression, we introduce the method itself and highlight the flexibility of the Critical Content Analysis. Additionally, we highlight the ways that thinking with theory differentiates Critical Content Analysis from other forms of textual analysis and is central to the critical nature of the method.",
@@ -1779,7 +1779,6 @@
    "date": "2012",
    "extra": [
     "Citation Key: Gilton2012",
-    "Publisher: American Library Association",
     "tex.city: Chicago, United States Chicago, Chicago"
    ],
    "issue": "3",
@@ -1792,7 +1791,8 @@
    "publicationTitle": "Knowledge Quest",
    "title": "The future of multicultural youth literature",
    "url": "http://ezproxy.library.arizona.edu/login?url=https://search-proquest-com.ezproxy3.library.arizona.edu/docview/1016285052?accountid=8360",
-   "volume": "40"
+   "volume": "40",
+   "publisher": "American Library Association"
   },
   {
    "ISSN": "1364-7431",
@@ -2236,8 +2236,7 @@
    ],
    "date": "1992",
    "extra": [
-    "Citation Key: Dowd1992",
-    "Publisher: Taylor & Francis Ltd."
+    "Citation Key: Dowd1992"
    ],
    "issue": "4",
    "itemID": 178,
@@ -2245,7 +2244,8 @@
    "pages": "219",
    "publicationTitle": "Childhood Education",
    "title": "Evaluating children's books portraying native american and asian cultures",
-   "volume": "68"
+   "volume": "68",
+   "publisher": "Taylor & Francis Ltd."
   },
   {
    "citationKey": "Goldsmith2017",
@@ -2364,8 +2364,7 @@
    ],
    "date": "2008",
    "extra": [
-    "Citation Key: Maynard2008",
-    "Publisher: Routledge"
+    "Citation Key: Maynard2008"
    ],
    "issue": "1",
    "itemID": 331,
@@ -2374,7 +2373,8 @@
    "publicationTitle": "New Review of Children's Literature and Librarianship",
    "title": "A survey of young people's reading: thinking about fiction",
    "url": "https://doi.org/10.1080/13614540802170379",
-   "volume": "14"
+   "volume": "14",
+   "publisher": "Routledge"
   },
   {
    "abstractNote": "As a publishing phenomenon, YA literature entered the decade like a lion. Now it seems to be eating itself alive.",
@@ -2411,7 +2411,6 @@
    "date": "2017",
    "extra": [
     "Citation Key: Milazzo2017",
-    "Publisher: HOBOKEN: Wiley",
     "tex.city: HOBOKEN"
    ],
    "issue": "4",
@@ -2423,7 +2422,8 @@
    "pages": "557-572",
    "publicationTitle": "Journal of applied philosophy",
    "title": "On white ignorance, white shame, and other pitfalls in critical philosophy of race",
-   "volume": "34"
+   "volume": "34",
+   "publisher": "HOBOKEN: Wiley"
   },
   {
    "abstractNote": "As educators who teach antiracism education, we seek to interrupt relations of racial inequity by enabling students to identify, name, and challenge the norms, patterns, traditions, structures, and institutions that hold racism and White supremacy in place. In this article, we share three strategies that we have developed out of our own practice as white educators who work in university and community settings, and which have been effective in our antiracism education efforts: The first we call Silence Breakers. This strategy addresses common fears that keep participants \u2013 and white participants in particular \u2013 on the sidelines in race discussions and in doing so prevent them from engagement; The second are analogies we have developed to help students conceptualize antiracism as a lens of inquiry rather than as something they have to agree or disagree with; And the third strategy are vignettes which are in essence stories that students can relate to but that are not as politically charged as explicit discussions of racism can be. Because they put the student in the protagonist position, these vignettes can unsettle expectations, reduce tensions, and evoke curiosity.",
@@ -2470,9 +2470,6 @@
     }
    ],
    "date": "2002",
-   "extra": [
-    "Publisher: SAGE Publications Inc"
-   ],
    "issue": "1",
    "itemID": 367,
    "itemType": "journalArticle",
@@ -2483,7 +2480,8 @@
    "publicationTitle": "Qualitative Inquiry",
    "title": "Critical race methodology: Counter-storytelling as an analytical framework for education research",
    "url": "https://doi.org/10.1177/107780040200800103",
-   "volume": "8"
+   "volume": "8",
+   "publisher": "SAGE Publications Inc"
   },
   {
    "DOI": "10.17077/0021-065x.7594",
@@ -2525,7 +2523,6 @@
    "date": "1994",
    "extra": [
     "Citation Key: Reissman1994",
-    "Publisher: Urbana, Ill., etc: National Council of Teachers of English",
     "tex.city: Urbana, Ill., etc"
    ],
    "issue": "2",
@@ -2537,7 +2534,8 @@
    "pages": "20-23",
    "publicationTitle": "English journal",
    "title": "Leaving out to pull in: Using reader response to teach multicultural literature",
-   "volume": "83"
+   "volume": "83",
+   "publisher": "Urbana, Ill., etc: National Council of Teachers of English"
   },
   {
    "DOI": "10.7202/1060971ar",
@@ -2618,8 +2616,7 @@
    ],
    "date": "1976",
    "extra": [
-    "Citation Key: Mailloux1976",
-    "Publisher: University of Arkansas"
+    "Citation Key: Mailloux1976"
    ],
    "issue": "3",
    "itemID": 465,
@@ -2630,7 +2627,8 @@
    "pages": "329-343",
    "publicationTitle": "Style (University Park, PA)",
    "title": "Evaluation and reader response criticism: Values implicit in affective stylistics",
-   "volume": "10"
+   "volume": "10",
+   "publisher": "University of Arkansas"
   },
   {
    "ISSN": "0046-385X",
@@ -3424,15 +3422,15 @@
    ],
    "date": "2004",
    "extra": [
-    "Citation Key: Berlin2004",
-    "Publisher: ProQuest Dissertations Publishing"
+    "Citation Key: Berlin2004"
    ],
    "itemID": 33,
    "itemType": "journalArticle",
    "notes": [
     "ID: TN\u209aroquest305040598"
    ],
-   "title": "Librarian-book reviewers and librarianship"
+   "title": "Librarian-book reviewers and librarianship",
+   "publisher": "ProQuest Dissertations Publishing"
   },
   {
    "DOI": "10.1080/13614541.2015.976073",
@@ -3448,8 +3446,7 @@
    ],
    "date": "2015",
    "extra": [
-    "Citation Key: Merga2015",
-    "Publisher: Routledge"
+    "Citation Key: Merga2015"
    ],
    "issue": "1",
    "itemID": 333,
@@ -3458,7 +3455,8 @@
    "publicationTitle": "New Review of Children's Literature and Librarianship",
    "title": "Are avid adolescent readers social networking about books?",
    "url": "https://doi.org/10.1080/13614541.2015.976073",
-   "volume": "21"
+   "volume": "21",
+   "publisher": "Routledge"
   },
   {
    "DOI": "10.1145/3148330.3154512",
@@ -3631,8 +3629,7 @@
    ],
    "date": "1982",
    "extra": [
-    "Citation Key: Brown1982",
-    "Publisher: Johns Hopkins University Press"
+    "Citation Key: Brown1982"
    ],
    "issue": "14",
    "itemID": 411,
@@ -3643,7 +3640,8 @@
    "pages": "55-89",
    "publicationTitle": "Callaloo",
    "title": "Negro character as seen by white authors",
-   "url": "http://www.jstor.org/stable/3044046"
+   "url": "http://www.jstor.org/stable/3044046",
+   "publisher": "Johns Hopkins University Press"
   },
   {
    "abstractNote": "Censorship expert Pat Scales fields questions on cultural misrepresentation in fiction, challenged books,and more.",
@@ -3703,7 +3701,6 @@
    "date": "2002",
    "extra": [
     "Citation Key: Taxel2002",
-    "Publisher: National Council of Teachers of English",
     "tex.city: Urbana"
    ],
    "issue": "2",
@@ -3713,7 +3710,8 @@
    "publicationTitle": "Research in the Teaching of English",
    "title": "Children's literature at the turn of the century: \"Toward a Political Economy of the Publishing Industry\"",
    "url": "https://www.jstor.org/stable/40171621",
-   "volume": "37"
+   "volume": "37",
+   "publisher": "National Council of Teachers of English"
   },
   {
    "ISSN": "1054-7711",
@@ -3764,7 +3762,6 @@
    "date": "2012",
    "extra": [
     "Citation Key: Lapp2012",
-    "Publisher: National Council of Teachers of English",
     "tex.city: Urbana, United States Urbana, Urbana"
    ],
    "issue": "4",
@@ -3777,7 +3774,8 @@
    "publicationTitle": "Voices From the Middle",
    "title": "Are you as \"Literate\" as your students?",
    "url": "http://ezproxy.library.arizona.edu/login?url=https://www-proquest-com.ezproxy4.library.arizona.edu/docview/1011487043?accountid=8360",
-   "volume": "19"
+   "volume": "19",
+   "publisher": "National Council of Teachers of English"
   },
   {
    "ISSN": "1541-4302",
@@ -3791,8 +3789,7 @@
    ],
    "date": "2018-6",
    "extra": [
-    "Citation Key: Campbell2018",
-    "Publisher: American Library Association"
+    "Citation Key: Campbell2018"
    ],
    "issue": "4",
    "itemID": 500,
@@ -3801,7 +3798,8 @@
    "publicationTitle": "Young Adult Library Services",
    "title": "Building competency by being community: Understand how to develop the proper groundwork to evaluate problematic books",
    "url": "https://go-gale-com.ezproxy3.library.arizona.edu/ps/i.do?p=AONE&sw=w&issn=15414302&v=2.1&it=r&id=GALE%7CA574695155&sid=googleScholar&linkaccess=abs",
-   "volume": "16"
+   "volume": "16",
+   "publisher": "American Library Association"
   },
   {
    "ISSN": "1749-8716",
@@ -4025,15 +4023,15 @@
    ],
    "date": "2009",
    "extra": [
-    "Citation Key: Chapleau2009",
-    "Publisher: ProQuest Dissertations Publishing"
+    "Citation Key: Chapleau2009"
    ],
    "itemID": 129,
    "itemType": "journalArticle",
    "notes": [
     "ID: TN\u209aroquest1399381926"
    ],
-   "title": "Work in progress : children's literature and childist criticism : towards an institutional re-consideration"
+   "title": "Work in progress : children's literature and childist criticism : towards an institutional re-consideration",
+   "publisher": "ProQuest Dissertations Publishing"
   },
   {
    "citationKey": "Griffin2018",
@@ -4071,8 +4069,7 @@
    "date": "2008",
    "extra": [
     "Citation Key: Pardo2008",
-    "ISBN: 0360-9170",
-    "Publisher: National Council of Teachers of English"
+    "ISBN: 0360-9170"
    ],
    "issue": "3",
    "itemID": 249,
@@ -4082,7 +4079,8 @@
    ],
    "pages": "242-245",
    "title": "Professional book reviews: Challenges and solutions: Children's literature in today's K\u201312 classrooms",
-   "volume": "85"
+   "volume": "85",
+   "publisher": "National Council of Teachers of English"
   },
   {
    "abstractNote": "Abstract This paper aims to explore the potential of social network site Twitter as a site for audience research. Drawing on notions of `liveness', participation, convergence and interactivity, it argues that Twitter provides a potentially significant development in our understanding of audiences and their relationship with media, both `old' and `new'. The study looks at examples of Twitter users engaging with (and in some cases creating) the news and discussing television programmes. The author's own experiences of using Twitter in audience research provide a case study suggesting possible directions for future research using this medium.",
@@ -4144,8 +4142,7 @@
    "date": "2008",
    "extra": [
     "Citation Key: Thompson2008",
-    "ISBN: 0360-9170",
-    "Publisher: National Council of Teachers of English"
+    "ISBN: 0360-9170"
    ],
    "issue": "3",
    "itemID": 267,
@@ -4155,7 +4152,8 @@
    ],
    "pages": "246-254",
    "title": "Children's literature reviews: Challenges to children's literature: Deskilling, censoring, and obsolescence",
-   "volume": "85"
+   "volume": "85",
+   "publisher": "National Council of Teachers of English"
   },
   {
    "DOI": "10.1002/jaal.329",
@@ -4777,7 +4775,7 @@
    "date": "2014",
    "extra": [
     "DOI: 10.3886/ICPSR35596.v1",
-    "Publisher: Inter-university Consortium for Political and Social Research distributor]"
+    "publisher: Inter-university Consortium for Political and Social Research distributor]"
    ],
    "itemID": 189,
    "itemType": "webpage",
@@ -5073,7 +5071,6 @@
    "date": "2017-9",
    "extra": [
     "Citation Key: Laing2017",
-    "Publisher: Springer US",
     "tex.city: New York"
    ],
    "issue": "3",
@@ -5083,7 +5080,8 @@
    "publicationTitle": "Publishing Research Quarterly",
    "title": "Authors using social media: Layers of identity and the online author community",
    "url": "https://search.proquest.com/docview/1925766855",
-   "volume": "33"
+   "volume": "33",
+   "publisher": "Springer US"
   },
   {
    "DOI": "10.1016/j.chb.2007.08.004",
@@ -5365,7 +5363,6 @@
    "extra": [
     "Citation Key: Phruksachart2018",
     "Edition: Rev. ed",
-    "Publisher: Routledge",
     "tex.city: New York"
    ],
    "issue": "1",
@@ -5378,7 +5375,8 @@
    "publicationTitle": "Callaloo",
    "title": "Herd behavior in purchasing books online",
    "url": "https://go-gale-com.ezproxy3.library.arizona.edu/ps/i.do?p=AONE&sw=w&issn=15414302&v=2.1&it=r&id=GALE%7CA574695155&sid=googleScholar&linkaccess=abs https://eric.ed.gov/?q=Multicultural+Literature+and+the+Politics+of+Reaction&ft=on&id=ED376381 http://ezpro",
-   "volume": "21"
+   "volume": "21",
+   "publisher": "Routledge"
   },
   {
    "DOI": "10.1080/0309877910150304",
@@ -5393,8 +5391,7 @@
    ],
    "date": "1991",
    "extra": [
-    "Citation Key: Furnham1991",
-    "Publisher: Routledge"
+    "Citation Key: Furnham1991"
    ],
    "issue": "3",
    "itemID": 317,
@@ -5403,7 +5400,8 @@
    "publicationTitle": "Journal of Further and Higher Education",
    "title": "The art of book reviewing",
    "url": "https://doi.org/10.1080/0309877910150304",
-   "volume": "15"
+   "volume": "15",
+   "publisher": "Routledge"
   },
   {
    "DOI": "10.1086/601047",
@@ -5550,8 +5548,7 @@
    ],
    "date": "1989",
    "extra": [
-    "Citation Key: DeLuca1989",
-    "Publisher: Johns Hopkins University Press"
+    "Citation Key: DeLuca1989"
    ],
    "issue": "3",
    "itemID": 391,
@@ -5560,7 +5557,8 @@
    "publicationTitle": "Children's Literature Association Quarterly",
    "title": "The romance of the book: Writers defining themselves",
    "url": "https://muse-jhu-edu.ezproxy3.library.arizona.edu/article/249103",
-   "volume": "14"
+   "volume": "14",
+   "publisher": "Johns Hopkins University Press"
   },
   {
    "DOI": "10.5860/cal.15.3.9",
@@ -5676,7 +5674,6 @@
    "date": "2011",
    "extra": [
     "Citation Key: Janks2011",
-    "Publisher: University of Waikato, Department of English",
     "tex.city: Hamilton, New Zealand Hamilton, Hamilton"
    ],
    "issue": "1",
@@ -5689,7 +5686,8 @@
    "publicationTitle": "English Teaching",
    "title": "Editorial: Critical literacy revisited: Writing as critique",
    "url": "http://ezproxy.library.arizona.edu/login?url=https://search.proquest.com/docview/926187154?accountid=8360",
-   "volume": "10"
+   "volume": "10",
+   "publisher": "University of Waikato, Department of English"
   },
   {
    "abstractNote": "I\u2019ll just come out and say it. Children\u2019s literature criticism is antiblack as hell. Things were bad before the pandemic, but manageable. I\u2019d found ways. \u201cThat\u2019s just how they are.\u201d Things were bad before the pandemic, but manageable. I\u2019d found ways. \u201cIt\u2019s a very White field.\u201d&nbsp; Things",
@@ -6180,7 +6178,6 @@
    "date": "2007",
    "extra": [
     "Citation Key: Bird2007",
-    "Publisher: MSI Information Services",
     "tex.city: Boston, United States Boston, Boston"
    ],
    "issue": "3",
@@ -6193,7 +6190,8 @@
    "publicationTitle": "The Horn Book Magazine",
    "title": "Blogging the kidlitosphere",
    "url": "http://ezproxy.library.arizona.edu/login?url=https://www-proquest-com.ezproxy1.library.arizona.edu/docview/199371612?accountid=8360",
-   "volume": "83"
+   "volume": "83",
+   "publisher": "MSI Information Services"
   },
   {
    "ISSN": "0160-4201",
@@ -6277,15 +6275,15 @@
    ],
    "date": "1999",
    "extra": [
-    "Citation Key: Stevenson1999",
-    "Publisher: ProQuest Dissertations Publishing"
+    "Citation Key: Stevenson1999"
    ],
    "itemID": 84,
    "itemType": "journalArticle",
    "notes": [
     "ID: TN\u209aroquest304544124"
    ],
-   "title": "\"For all our children's fate\": Children's literature and contemporary culture"
+   "title": "\"For all our children's fate\": Children's literature and contemporary culture",
+   "publisher": "ProQuest Dissertations Publishing"
   },
   {
    "abstractNote": "Nikola-Lisa offers his perspectives on Jacqueline Woodson's \"Who Can Tell My Story.\" It is not wrong for multicultural literature to bring out how negative intercultural experiences can heighten readers' awareness of their own prejudices.",
@@ -6695,8 +6693,7 @@
    ],
    "date": "2002",
    "extra": [
-    "Citation Key: Smith2002",
-    "Publisher: Routledge"
+    "Citation Key: Smith2002"
    ],
    "issue": "1",
    "itemID": 330,
@@ -6705,7 +6702,8 @@
    "publicationTitle": "New Review of Children's Literature and Librarianship",
    "title": "Exploring the history and controversy of young adult literature",
    "url": "https://doi.org/10.1080/13614540209510656",
-   "volume": "8"
+   "volume": "8",
+   "publisher": "Routledge"
   },
   {
    "DOI": "10.1177/0263276407075956",
@@ -6866,8 +6864,7 @@
    ],
    "date": "2001",
    "extra": [
-    "Citation Key: Smagorinsky2001",
-    "Publisher: American Educational Research Association"
+    "Citation Key: Smagorinsky2001"
    ],
    "issue": "1",
    "itemID": 417,
@@ -6879,7 +6876,8 @@
    "publicationTitle": "Review of Educational Research",
    "title": "If meaning is constructed, what is it made from? Toward a cultural theory of reading",
    "url": "https://doi.org/10.3102/00346543071001133",
-   "volume": "71"
+   "volume": "71",
+   "publisher": "American Educational Research Association"
   },
   {
    "ISSN": "0023-2653",
@@ -6984,7 +6982,6 @@
    "extra": [
     "Citation Key: Leland1999",
     "ISBN: 0360-9170",
-    "Publisher: National Council of Teachers of English",
     "tex.city: Urbana"
    ],
    "issue": "1",
@@ -6994,7 +6991,8 @@
    "publicationTitle": "Language Arts",
    "title": "Talking about books: Exploring critical literacy: You can hear a pin drop",
    "url": "https://www.jstor.org/stable/41483031",
-   "volume": "77"
+   "volume": "77",
+   "publisher": "National Council of Teachers of English"
   },
   {
    "abstractNote": "This study examines the impact of Critical White Studies on teacher education and children's literature. Teacher education literature dealing with white privilege and its effects on pre- and in-service teachers are examined for common themes and ways teacher educators work to expose and mitigate the effects of white privilege. The study also offers educators who work with children's literature a way of assessing white privilege issues in those texts, through the use of Janet Helms' White Racial Identity Development theory. The culminating aspect of the study is an in-depth analysis of a popular children's novel, Maniac Magee. Application of the Helms' approach to this novel delineates how the main character progresses though stages of development as he contacts characters who come from backgrounds both similar to and different from his own.",
@@ -7444,7 +7442,6 @@
    "date": "2017-6",
    "extra": [
     "Citation Key: Johnson2017",
-    "Publisher: Springer Nature B.V",
     "tex.city: New York"
    ],
    "issue": "2",
@@ -7454,7 +7451,8 @@
    "publicationTitle": "Publishing Research Quarterly",
    "title": "The rise of the citizen author: Writing within social media",
    "url": "https://search.proquest.com/docview/1899616739",
-   "volume": "33"
+   "volume": "33",
+   "publisher": "Springer Nature B.V"
   },
   {
    "DOI": "10.1080/13614541.2015.1078618",
@@ -7475,8 +7473,7 @@
    ],
    "date": "2015",
    "extra": [
-    "Citation Key: Immroth2015",
-    "Publisher: Routledge"
+    "Citation Key: Immroth2015"
    ],
    "issue": "2",
    "itemID": 332,
@@ -7485,7 +7482,8 @@
    "publicationTitle": "New Review of Children's Literature and Librarianship",
    "title": "Who writes for youth? A second look at the social structure of american authors for youth",
    "url": "https://doi.org/10.1080/13614541.2015.1078618",
-   "volume": "21"
+   "volume": "21",
+   "publisher": "Routledge"
   },
   {
    "DOI": "10.1080/21689725.2016.1230508",
@@ -7501,8 +7499,7 @@
    ],
    "date": "2016",
    "extra": [
-    "Citation Key: Vatz2016",
-    "Publisher: Routledge"
+    "Citation Key: Vatz2016"
    ],
    "issue": "2",
    "itemID": 339,
@@ -7511,7 +7508,8 @@
    "publicationTitle": "First Amendment Studies",
    "title": "The academically destructive nature of trigger warnings",
    "url": "https://doi.org/10.1080/21689725.2016.1230508",
-   "volume": "50"
+   "volume": "50",
+   "publisher": "Routledge"
   },
   {
    "DOI": "10.1177/1464700107078139",
@@ -7612,8 +7610,7 @@
    ],
    "date": "2017",
    "extra": [
-    "Citation Key: Sich2017",
-    "Publisher: University of Alberta Learning Services"
+    "Citation Key: Sich2017"
    ],
    "issue": "1",
    "itemID": 407,
@@ -7622,7 +7619,8 @@
     "ID: TN<sub>d</sub>atacite10622566"
    ],
    "title": "A comparison of traditional book reviews and Amazon.com book reviews of fiction using a content analysis approach",
-   "volume": "12"
+   "volume": "12",
+   "publisher": "University of Alberta Learning Services"
   },
   {
    "DOI": "10.7202/1009347ar",
@@ -7783,14 +7781,12 @@
     }
    ],
    "date": "2013",
-   "extra": [
-    "Publisher: Taylor & Francis Group"
-   ],
    "itemID": 487,
    "itemType": "journalArticle",
    "publicationTitle": "Cataloging & Classification Quarterly",
    "title": "Four views of a novel: Characteristics of novels as described by publishers, librarians, literary theorists, and readers",
-   "url": "https://www.tandfonline.com/doi/pdf/10.1080/01639374.2013.773953?casa_token=5lKjmHO28cEAAAAA:73arhNCvUwDuRwBQ9t7jBprq9cuKJIsn_S5orIVqi7UqqN7XhQ9CE5GB8R73N9Plt6DfCjNRtA"
+   "url": "https://www.tandfonline.com/doi/pdf/10.1080/01639374.2013.773953?casa_token=5lKjmHO28cEAAAAA:73arhNCvUwDuRwBQ9t7jBprq9cuKJIsn_S5orIVqi7UqqN7XhQ9CE5GB8R73N9Plt6DfCjNRtA",
+   "publisher": "Taylor & Francis Group"
   },
   {
    "ISSN": "1059-1028",
@@ -7826,8 +7822,7 @@
    ],
    "date": "2017",
    "extra": [
-    "Citation Key: Reese2017",
-    "Publisher: American Association of School Librarians"
+    "Citation Key: Reese2017"
    ],
    "issue": "3",
    "itemID": 494,
@@ -7836,7 +7831,8 @@
    "publicationTitle": "Knowledge Quest",
    "title": "When worlds collide: Recent developments in children's literature",
    "url": "https://eric.ed.gov/?q=book+reviews&ft=on&pg=2&id=EJ1125370",
-   "volume": "45"
+   "volume": "45",
+   "publisher": "American Association of School Librarians"
   },
   {
    "ISSN": "2059-5727",
@@ -7857,7 +7853,6 @@
    "date": "2011",
    "extra": [
     "Citation Key: Burnett2011",
-    "Publisher: University of Waikato, Department of English",
     "tex.city: Hamilton, New Zealand Hamilton, Hamilton"
    ],
    "issue": "1",
@@ -7870,7 +7865,8 @@
    "publicationTitle": "English Teaching",
    "title": "Is there a space for critical literacy in the context of social media?",
    "url": "http://ezproxy.library.arizona.edu/login?url=https://search.proquest.com/docview/926187141?accountid=8360",
-   "volume": "10"
+   "volume": "10",
+   "publisher": "University of Waikato, Department of English"
   },
   {
    "abstractNote": "Fan studies has been critical and groundbreaking in a number of respects. However, in regard to methodology, discussion seems decidedly thin on the ground. Such a missing discourse has wider implications, raising questions such as: what kinds of knowledge do fan studies researchers want to produce? What are the objects being studied? How does fan studies inform a general approach to research? And how is the area going to maintain itself, if we don\u2019t start talking about our methodology and world - view? This paper is an attempt to bring the discussion of methodology to the fore in fan studies. In doing so, we show how the history of methodology in media and cultural studies implies certain methods. We then turn to newer methodologies in interpretative qualitative research. From here, we argue that there is room for mutual dialogue between fan studies and methodology: namely in work around the \u2018aca-fan\u2019 subject position of the researcher; and in digital research opened up by online modes of fandom and fan activism.",
@@ -7889,8 +7885,7 @@
    ],
    "date": "2014-11",
    "extra": [
-    "Citation Key: Evans2014",
-    "Publisher: Participations"
+    "Citation Key: Evans2014"
    ],
    "issue": "2",
    "itemID": 53,
@@ -7899,7 +7894,8 @@
    "publicationTitle": "Participations",
    "title": "Desperately seeking methods: new directions in fan studies research",
    "url": "https://pureportal.coventry.ac.uk/en/publications/desperately-seeking-methods-new-directions-in-fan-studies-researc-2",
-   "volume": "11"
+   "volume": "11",
+   "publisher": "Participations"
   },
   {
    "abstractNote": "Publishers are finally marketing books about non-white cultures, but far too many of them are written by whites who have a poor ear for black English. More minority authors need to be recruited and encouraged to impart their authentic viewpoints.",
@@ -8658,7 +8654,6 @@
    "date": "2018",
    "extra": [
     "Citation Key: Tanner2018",
-    "Publisher: Foundation for Curriculum Theory",
     "tex.city: Rochester"
    ],
    "issue": "3",
@@ -8668,7 +8663,8 @@
    "publicationTitle": "JCT (Online)",
    "title": "My teaching, my whiteness",
    "url": "https://search.proquest.com/docview/2066562406",
-   "volume": "32"
+   "volume": "32",
+   "publisher": "Foundation for Curriculum Theory"
   },
   {
    "ISSN": "0033-3107",
@@ -9211,8 +9207,7 @@
    ],
    "date": "2009",
    "extra": [
-    "Citation Key: Kidd2009",
-    "Publisher: Springer"
+    "Citation Key: Kidd2009"
    ],
    "issue": "3",
    "itemID": 287,
@@ -9221,7 +9216,8 @@
    "publicationTitle": "Children's Literature in Education: An International Quarterly",
    "title": "'Not censorship but selection': Censorship and/as prizing",
    "url": "http://gateway.proquest.com/openurl?ctx_ver=Z39.88-2003&xri:pqil:res_ver=0.2&res_id=xri:ilcs-us&rft_id=xri:ilcs:rec:abell:R04216711",
-   "volume": "40"
+   "volume": "40",
+   "publisher": "Springer"
   },
   {
    "DOI": "10.1016/j.socscimed.2012.11.031",
@@ -9262,8 +9258,7 @@
    ],
    "date": "2013-10",
    "extra": [
-    "Citation Key: Priest2013",
-    "Publisher: Pergamon"
+    "Citation Key: Priest2013"
    ],
    "itemID": 304,
    "itemType": "journalArticle",
@@ -9271,7 +9266,8 @@
    "publicationTitle": "Social Science & Medicine",
    "title": "A systematic review of studies examining the relationship between reported racism and health and wellbeing for children and young people",
    "url": "https://www-sciencedirect-com.ezproxy3.library.arizona.edu/science/article/pii/S0277953612007927",
-   "volume": "95"
+   "volume": "95",
+   "publisher": "Pergamon"
   },
   {
    "DOI": "10.1080/15358593.2016.1183871",
@@ -9313,8 +9309,7 @@
    ],
    "date": "2016",
    "extra": [
-    "Citation Key: Rae2016",
-    "Publisher: Routledge"
+    "Citation Key: Rae2016"
    ],
    "issue": "2",
    "itemID": 338,
@@ -9323,7 +9318,8 @@
    "publicationTitle": "First Amendment Studies",
    "title": "Re-focusing the debate on trigger warnings: Privilege, trauma, and disability in the classroom",
    "url": "https://doi.org/10.1080/21689725.2016.1224677",
-   "volume": "50"
+   "volume": "50",
+   "publisher": "Routledge"
   },
   {
    "DOI": "10.1080/21689725.2016.1232623",
@@ -9339,8 +9335,7 @@
    ],
    "date": "2016",
    "extra": [
-    "Citation Key: Lockhart2016",
-    "Publisher: Routledge"
+    "Citation Key: Lockhart2016"
    ],
    "issue": "2",
    "itemID": 340,
@@ -9349,7 +9344,8 @@
    "publicationTitle": "First Amendment Studies",
    "title": "Why trigger warnings are beneficial, perhaps even necessary",
    "url": "https://doi.org/10.1080/21689725.2016.1232623",
-   "volume": "50"
+   "volume": "50",
+   "publisher": "Routledge"
   },
   {
    "DOI": "10.1080/21689725.2016.1233073",
@@ -9365,8 +9361,7 @@
    ],
    "date": "2016",
    "extra": [
-    "Citation Key: Hickey2016",
-    "Publisher: Routledge"
+    "Citation Key: Hickey2016"
    ],
    "issue": "2",
    "itemID": 341,
@@ -9375,7 +9370,8 @@
    "publicationTitle": "First Amendment Studies",
    "title": "Exempting the university: Trigger warnings and intellectual space",
    "url": "https://doi.org/10.1080/21689725.2016.1233073",
-   "volume": "50"
+   "volume": "50",
+   "publisher": "Routledge"
   },
   {
    "DOI": "10.1353/chq.0.0100",
@@ -9538,8 +9534,7 @@
    ],
    "date": "2004",
    "extra": [
-    "Citation Key: Wilson2004",
-    "Publisher: Modern Humanities Research Association"
+    "Citation Key: Wilson2004"
    ],
    "issue": "2",
    "itemID": 412,
@@ -9548,7 +9543,8 @@
    "publicationTitle": "The Modern Language Review",
    "title": "Foucault on the \"Question of the Author\": A critical exegesis",
    "url": "http://www.jstor.org/stable/3738750",
-   "volume": "99"
+   "volume": "99",
+   "publisher": "Modern Humanities Research Association"
   },
   {
    "DOI": "10.33137/ijidi.v3i2.32592",
@@ -10619,7 +10615,6 @@
    "date": "2007",
    "extra": [
     "Citation Key: Rabaka2007",
-    "Publisher: Boston: Springer Science and Business Media LLC",
     "tex.city: Boston"
    ],
    "issue": "1",
@@ -10714,7 +10709,8 @@
     }
    ],
    "title": "The souls of white folk: W.E.B. du bois\u2019s critique of white supremacy and contributions to critical white studies",
-   "volume": "11"
+   "volume": "11",
+   "publisher": "Boston: Springer Science and Business Media LLC"
   },
   {
    "DOI": "10.1016/S0147-1767(02)00064-0",
@@ -10730,8 +10726,7 @@
    ],
    "date": "2003-2",
    "extra": [
-    "Citation Key: Fox2003",
-    "Publisher: Elsevier Ltd"
+    "Citation Key: Fox2003"
    ],
    "issue": "1",
    "itemID": 305,
@@ -10739,7 +10734,8 @@
    "pages": "99-123",
    "publicationTitle": "International Journal of Intercultural Relations",
    "title": "Reducing intercultural friction through fiction: Virtual cultural learning",
-   "volume": "27"
+   "volume": "27",
+   "publisher": "Elsevier Ltd"
   },
   {
    "DOI": "10.1080/15210960.2010.481199",
@@ -10761,7 +10757,6 @@
    "date": "2010",
    "extra": [
     "Citation Key: DiAngelo2010",
-    "Publisher: Philadelphia: Informa UK Limited",
     "tex.city: Philadelphia"
    ],
    "issue": "2",
@@ -10796,7 +10791,8 @@
     }
    ],
    "title": "\u201cOK, I get it! Now tell me how to do it!\u201d: Why we can\u2019t just tell you how to do critical multicultural education",
-   "volume": "12"
+   "volume": "12",
+   "publisher": "Philadelphia: Informa UK Limited"
   },
   {
    "DOI": "10.1111/iej.13172",
@@ -10836,7 +10832,6 @@
    "date": "2016",
    "extra": [
     "Citation Key: Lewis2016",
-    "Publisher: Los Angeles, CA: SAGE Publications",
     "tex.city: Los Angeles, CA"
    ],
    "issue": "4",
@@ -10880,7 +10875,8 @@
     }
    ],
    "title": "\u201cWhat Group?\u201d Studying Whites and Whiteness in the Era of \u201cColor-Blindness\u201d",
-   "volume": "22"
+   "volume": "22",
+   "publisher": "Los Angeles, CA: SAGE Publications"
   },
   {
    "DOI": "10.1353/lib.2017.0015",
@@ -10896,8 +10892,7 @@
    ],
    "date": "2017",
    "extra": [
-    "Citation Key: Mabbott2017",
-    "Publisher: Johns Hopkins University Press"
+    "Citation Key: Mabbott2017"
    ],
    "issue": "4",
    "itemID": 397,
@@ -10906,7 +10901,8 @@
    "publicationTitle": "Library Trends",
    "title": "The we need diverse books campaign and critical race theory: Charlemae rollins and the call for diverse children's books",
    "url": "https://muse.jhu.edu/article/669454",
-   "volume": "65"
+   "volume": "65",
+   "publisher": "Johns Hopkins University Press"
   },
   {
    "DOI": "10.7202/1046988ar",
@@ -10951,7 +10947,6 @@
    "date": "2009",
    "extra": [
     "Citation Key: Short2009",
-    "Publisher: Basel: Bookbird, Inc",
     "tex.city: Basel"
    ],
    "issue": "2",
@@ -11004,7 +10999,8 @@
     }
    ],
    "title": "Critically reading the word and the world",
-   "volume": "47"
+   "volume": "47",
+   "publisher": "Basel: Bookbird, Inc"
   },
   {
    "ISSN": "0026-5667",
@@ -11666,7 +11662,6 @@
    "date": "2019",
    "extra": [
     "Citation Key: Gerdes2019",
-    "Publisher: ABINGDON: Routledge",
     "tex.city: ABINGDON"
    ],
    "issue": "1",
@@ -11719,7 +11714,8 @@
     }
    ],
    "title": "Trauma, trigger warnings, and the rhetoric of sensitivity",
-   "volume": "49"
+   "volume": "49",
+   "publisher": "ABINGDON: Routledge"
   },
   {
    "DOI": "10.1080/13613324.2012.674023",
@@ -11741,7 +11737,6 @@
    "date": "2012",
    "extra": [
     "Citation Key: DiAngelo2012",
-    "Publisher: ABINGDON: Informa UK Limited",
     "tex.city: ABINGDON"
    ],
    "issue": "1",
@@ -11815,7 +11810,8 @@
     }
    ],
    "title": "Getting slammed: White depictions of race discussions as arenas of violence",
-   "volume": "17"
+   "volume": "17",
+   "publisher": "ABINGDON: Informa UK Limited"
   },
   {
    "DOI": "10.1111/j.1468-5906.2008.00414.x",
@@ -11837,7 +11833,6 @@
    "date": "2008",
    "extra": [
     "Citation Key: Tranby2008",
-    "Publisher: Malden, USA: Wiley",
     "tex.city: Malden, USA"
    ],
    "issue": "3",
@@ -11881,7 +11876,8 @@
     }
    ],
    "title": "Critical whiteness theories and the evangelical \u201cRace problem\u201d: Extending emerson and smith's divided by faith",
-   "volume": "47"
+   "volume": "47",
+   "publisher": "Malden, USA: Wiley"
   },
   {
    "DOI": "10.1177/003172170909000508",
@@ -11903,7 +11899,6 @@
    "date": "2009",
    "extra": [
     "Citation Key: Sensoy2009",
-    "Publisher: Los Angeles, CA: SAGE Publications",
     "tex.city: Los Angeles, CA"
    ],
    "issue": "5",
@@ -12013,7 +12008,8 @@
     }
    ],
    "title": "Developing social justice literacy: an open letter to our faculty colleagues",
-   "volume": "90"
+   "volume": "90",
+   "publisher": "Los Angeles, CA: SAGE Publications"
   },
   {
    "DOI": "10.1177/2378023119866268",
@@ -12035,7 +12031,6 @@
    "date": "2019",
    "extra": [
     "Citation Key: Wetts2019",
-    "Publisher: Los Angeles, CA: SAGE Publications",
     "tex.city: Los Angeles, CA"
    ],
    "itemID": 383,
@@ -12075,7 +12070,8 @@
     }
    ],
    "title": "Who is called by the dog whistle? Experimental evidence that racial resentment and political ideology condition responses to racially encoded messages",
-   "volume": "5"
+   "volume": "5",
+   "publisher": "Los Angeles, CA: SAGE Publications"
   },
   {
    "ISSN": "0017811X",
@@ -12090,8 +12086,7 @@
    ],
    "date": "1993-6",
    "extra": [
-    "Citation Key: Harris1993",
-    "Publisher: Harvard Law Review Association"
+    "Citation Key: Harris1993"
    ],
    "issue": "8",
    "itemID": 449,
@@ -12111,7 +12106,8 @@
    ],
    "title": "Whiteness as property",
    "url": "http://10.0.9.3/1341787 http://ezproxy.library.arizona.edu/login?url=https://search.ebscohost.com/login.aspx?direct=true&db=bsu&AN=7736644&site=ehost-live",
-   "volume": "106"
+   "volume": "106",
+   "publisher": "Harvard Law Review Association"
   },
   {
    "abstractNote": "This thesis uses ethnographic research into online media fandom, focusing on self-reflexive analytical documents that fans call meta, to investigate longstanding questions about the nature of virtual community. It argues that virtual documents should be seen as complete and complex interactions in their original form and as social contexts in their own right, and presents a new approach to ethnographic methodology and ethics suited to working in this context. Fans have incorporated various technologies into the infrastructure that constitutes their community, and these have had various effects on the structure and substance of fannish documents and interactions \u2013 and on the character of the community as a whole. The stability and visibility of the digital archive is an important feature of virtual community \u2013 one that makes fandom more visible, accessible, and historically grounded for both old and new members. This research also deals with conflict, not as a necessarily divisive force but as a natural and important part of how communities evolve and how members negotiate and articulate what their community should be. It discusses fanfiction as a controversial and sometimes problematic genre, and considers trigger warnings as the solution fans have developed to protect vulnerable members of their community from potentially harmful content (such as rape). It also examines conflict with outside authorities, like creators and the administrators who control the virtual spaces that fans inhabit. These conflicts illuminate creativity and feminism as fannish values, presenting fandom as a community that embraces sex-positive female sexuality. More importantly, they suggest that the creation and maintenance of a \u2018safe space\u2019 where all members feel respected and comfortable is a key feature of online community. In addition, fannish storytelling (particularly the creation of what fans call fanon) is part of the production of local knowledge, of boundary mechanisms that mark and separate members of the community from outsiders. These stories as part of the process by which fans position themselves within the broader community \u2013 and in so doing, locate themselves within smaller cohorts of fans who affirm and support aspects of their personal experiences and marginalised identities (e.g. as women, members of the LGBTQIA+ community, or people of colour) through the reorientation and appropriation of story.",
@@ -12883,7 +12879,6 @@
    "date": "2013",
    "extra": [
     "Citation Key: Embrick2013",
-    "Publisher: Malden, US: Wiley",
     "tex.city: Malden, US"
    ],
    "issue": "2",
@@ -12960,7 +12955,8 @@
     }
    ],
    "title": "Discursive colorlines at work: How epithets and stereotypes are racially unequal",
-   "volume": "36"
+   "volume": "36",
+   "publisher": "Malden, US: Wiley"
   },
   {
    "DOI": "10.1080/01419870601143927",
@@ -12977,7 +12973,6 @@
    "date": "2007",
    "extra": [
     "Citation Key: Ahmed2007",
-    "Publisher: United Kingdom: Informa UK Limited",
     "tex.city: United Kingdom"
    ],
    "issue": "2",
@@ -13033,7 +13028,8 @@
     }
    ],
    "title": "The language of diversity",
-   "volume": "30"
+   "volume": "30",
+   "publisher": "United Kingdom: Informa UK Limited"
   },
   {
    "DOI": "10.1080/10646175.2014.955929",
@@ -13055,7 +13051,6 @@
    "date": "2014",
    "extra": [
     "Citation Key: Morris2014",
-    "Publisher: USA: Routledge",
     "tex.city: USA"
    ],
    "issue": "4",
@@ -13090,7 +13085,8 @@
     }
    ],
    "title": "Whiteness theory in advertising: Racial beliefs and attitudes toward ads",
-   "volume": "25"
+   "volume": "25",
+   "publisher": "USA: Routledge"
   },
   {
    "DOI": "10.1086/669666",
@@ -13106,8 +13102,7 @@
    ],
    "date": "2013-6",
    "extra": [
-    "Citation Key: Carbado2013",
-    "Publisher: University of Chicago Press"
+    "Citation Key: Carbado2013"
    ],
    "issue": "4",
    "itemID": 343,
@@ -13181,7 +13176,8 @@
    ],
    "title": "Colorblind intersectionality",
    "url": "https://www.journals.uchicago.edu/doi/10.1086/669666",
-   "volume": "38"
+   "volume": "38",
+   "publisher": "University of Chicago Press"
   },
   {
    "DOI": "10.1111/j.1548-1492.2008.00020.x",
@@ -13198,7 +13194,6 @@
    "date": "2008",
    "extra": [
     "Citation Key: Akom2008",
-    "Publisher: Malden, USA: Blackwell Publishing",
     "tex.city: Malden, USA"
    ],
    "issue": "3",
@@ -13275,7 +13270,8 @@
     }
    ],
    "title": "Black metropolis and mental life: Beyond the burden of acting white toward a third wave of critical racial studies",
-   "volume": "39"
+   "volume": "39",
+   "publisher": "Malden, USA: Blackwell Publishing"
   },
   {
    "DOI": "10.1177/1745691614554658",
@@ -13307,7 +13303,6 @@
    "date": "2014",
    "extra": [
     "Citation Key: Knowles2014",
-    "Publisher: Los Angeles, CA: SAGE Publications",
     "tex.city: Los Angeles, CA"
    ],
    "issue": "6",
@@ -13381,7 +13376,8 @@
     }
    ],
    "title": "Deny, distance, or dismantle? How white americans manage a privileged identity",
-   "volume": "9"
+   "volume": "9",
+   "publisher": "Los Angeles, CA: SAGE Publications"
   },
   {
    "abstractNote": "The impact of public narratives has been so broad (including effects on beliefs and behavior but extending beyond to emotion and personality), that the stakeholders in the process have been located across disciplines, institutions, governments, and, indeed, across epochs. Narrative Impact draws upon scholars in diverse branches of psychology and media research to explore the subjective experience of public narratives, the affordances of the narrative environment, and the roles played by narratives in both personal and collective spheres. The book brings together current theory and resea",
@@ -14348,7 +14344,6 @@
    "date": "2012-3",
    "extra": [
     "Citation Key: Brooks2012",
-    "Publisher: Springer Netherlands",
     "tex.city: Dordrecht"
    ],
    "issue": "1",
@@ -14453,7 +14448,8 @@
    ],
    "title": "Towards a culturally situated reader response theory",
    "url": "http://link.springer.com/10.1007/s10583-011-9154-z",
-   "volume": "43"
+   "volume": "43",
+   "publisher": "Springer Netherlands"
   },
   {
    "DOI": "10.1080/09502386.2015.1094499",
@@ -14470,7 +14466,6 @@
    "date": "2016",
    "extra": [
     "Citation Key: Radway2016",
-    "Publisher: ABINGDON: Routledge",
     "tex.city: ABINGDON"
    ],
    "issue": "2",
@@ -14511,7 +14506,8 @@
     }
    ],
    "title": "In honour of stuart hall",
-   "volume": "30"
+   "volume": "30",
+   "publisher": "ABINGDON: Routledge"
   },
   {
    "DOI": "10.1177/0042085918789733",
@@ -14598,7 +14594,6 @@
    "date": "2018",
    "extra": [
     "Citation Key: Brooks2018",
-    "Publisher: SAGE Publications Inc",
     "tex.city: Los Angeles, CA"
    ],
    "issue": "1",
@@ -14699,7 +14694,8 @@
     }
    ],
    "title": "Contemplating and extending the scholarship on children\u2019s and young adult literature",
-   "volume": "50"
+   "volume": "50",
+   "publisher": "SAGE Publications Inc"
   },
   {
    "DOI": "10.3102/0034654308324653",
@@ -14721,7 +14717,6 @@
    "date": "2009",
    "extra": [
     "Citation Key: Brooks2009",
-    "Publisher: American Educational Research Association",
     "tex.city: Los Angeles, CA"
    ],
    "issue": "1",
@@ -14861,7 +14856,8 @@
     }
    ],
    "title": "\"But This Story of Mine Is Not Unique\": A review of research on african american children's literature",
-   "volume": "79"
+   "volume": "79",
+   "publisher": "American Educational Research Association"
   },
   {
    "citationKey": "Turner-Neal2015",
@@ -15354,7 +15350,6 @@
    "date": "2008",
    "extra": [
     "Citation Key: Baszile2008",
-    "Publisher: Springer Science and Business Media LLC",
     "tex.city: Dordrecht"
    ],
    "issue": "4",
@@ -15431,7 +15426,8 @@
     }
    ],
    "title": "The oppressor within: A counterstory of race, repression, and teacher reflection",
-   "volume": "40"
+   "volume": "40",
+   "publisher": "Springer Science and Business Media LLC"
   },
   {
    "DOI": "10.1017/S0021875815002625",
@@ -15448,7 +15444,6 @@
    "date": "2016",
    "extra": [
     "Citation Key: Radway2016",
-    "Publisher: Cambridge University Press",
     "tex.city: Cambridge, UK"
    ],
    "issue": "1",
@@ -15510,7 +15505,8 @@
     }
    ],
    "title": "Girl zine networks, underground itineraries, and riot grrrl history: Making sense of the struggle for new social forms in the 1990s and beyond",
-   "volume": "50"
+   "volume": "50",
+   "publisher": "Cambridge University Press"
   },
   {
    "DOI": "10.1080/00131946.2015.1120205",
@@ -15537,7 +15533,6 @@
    "date": "2016",
    "extra": [
     "Citation Key: Matias2016",
-    "Publisher: Informa UK Limited",
     "tex.city: Philadelphia"
    ],
    "issue": "1",
@@ -15602,7 +15597,8 @@
     }
    ],
    "title": "Blocking CRT: How the emotionality of whiteness blocks CRT in urban teacher education",
-   "volume": "52"
+   "volume": "52",
+   "publisher": "Informa UK Limited"
   },
   {
    "DOI": "10.1080/10476210.2015.1068749",
@@ -15619,7 +15615,6 @@
    "date": "2016",
    "extra": [
     "Citation Key: Matias2016",
-    "Publisher: Brisbane: Routledge",
     "tex.city: Brisbane"
    ],
    "issue": "2",
@@ -15711,7 +15706,8 @@
     }
    ],
    "title": "\"Why do you make me hate myself?\": Re-teaching Whiteness, abuse, and love in urban teacher education",
-   "volume": "27"
+   "volume": "27",
+   "publisher": "Brisbane: Routledge"
   },
   {
    "DOI": "10.1080/10665684.2014.933692",
@@ -15748,7 +15744,6 @@
    "date": "2014",
    "extra": [
     "Citation Key: Matias2014",
-    "Publisher: Informa UK Limited",
     "tex.city: USA"
    ],
    "issue": "3",
@@ -15816,7 +15811,8 @@
     }
    ],
    "title": "\u201cWhat is critical whiteness doing in OUR nice field like critical race theory?\u201d applying CRT and CWS to understand the white imaginations of white teacher candidates",
-   "volume": "47"
+   "volume": "47",
+   "publisher": "Informa UK Limited"
   },
   {
    "DOI": "10.1080/10714410802426574",
@@ -15832,8 +15828,7 @@
    ],
    "date": "2008",
    "extra": [
-    "Citation Key: King2008",
-    "Publisher: Taylor & Francis"
+    "Citation Key: King2008"
    ],
    "issue": "5",
    "itemID": 328,
@@ -15897,7 +15892,8 @@
     }
    ],
    "title": "Teaching intolerance: Anti-indian imagery, racial politics, and (Anti)Racist pedagogy",
-   "volume": "30"
+   "volume": "30",
+   "publisher": "Taylor & Francis"
   },
   {
    "DOI": "10.1080/17508487.2014.922489",
@@ -15919,7 +15915,6 @@
    "date": "2014",
    "extra": [
     "Citation Key: Matias2014",
-    "Publisher: Routledge",
     "tex.city: ABINGDON"
    ],
    "issue": "3",
@@ -16008,7 +16003,8 @@
     }
    ],
    "title": "'When saying you care is not really caring': emotions of disgust, whiteness ideology, and teacher education",
-   "volume": "55"
+   "volume": "55",
+   "publisher": "Routledge"
   },
   {
    "DOI": "10.1353/lib.2017.0015",
@@ -16025,7 +16021,6 @@
    "date": "2017",
    "extra": [
     "Citation Key: Mabbott2017",
-    "Publisher: Baltimore: Johns Hopkins University Press",
     "tex.city: Baltimore"
    ],
    "issue": "4",
@@ -16090,7 +16085,8 @@
     }
    ],
    "title": "The we need diverse books campaign and critical race theory: Charlemae rollins and the call for diverse children's books",
-   "volume": "65"
+   "volume": "65",
+   "publisher": "Baltimore: Johns Hopkins University Press"
   },
   {
    "DOI": "10.29107/rr2018.2.5",
@@ -16105,9 +16101,6 @@
     }
    ],
    "date": "2018",
-   "extra": [
-    "Publisher: Polish Rhetoric Society"
-   ],
    "issue": "2",
    "itemID": 416,
    "itemType": "journalArticle",
@@ -16164,7 +16157,8 @@
     }
    ],
    "title": "\u201cSlavery with a smile\u201d - the media controversy about children\u2019s literature on the topic of slavery and the rhetoric of the publishing industry",
-   "volume": "5"
+   "volume": "5",
+   "publisher": "Polish Rhetoric Society"
   },
   {
    "DOI": "10.3102/00346543076002209",
@@ -16181,7 +16175,6 @@
    "date": "2016",
    "extra": [
     "Citation Key: Franzak2016",
-    "Publisher: Thousand Oaks, CA: American Educational Research Association (AERA)",
     "tex.city: Thousand Oaks, CA"
    ],
    "issue": "2",
@@ -16261,7 +16254,8 @@
     }
    ],
    "title": "Zoom: A review of the literature on marginalized adolescent readers, literacy theory, and policy implications",
-   "volume": "76"
+   "volume": "76",
+   "publisher": "Thousand Oaks, CA: American Educational Research Association (AERA)"
   },
   {
    "ISSN": "0738-9183",
@@ -16277,7 +16271,6 @@
    "date": "2015",
    "extra": [
     "Citation Key: Edelman2015",
-    "Publisher: San Diego, Calif: La Prensa San Diego, Arturo Casta\u00f1ares",
     "tex.city: San Diego, Calif"
    ],
    "issue": "42",
@@ -16299,7 +16292,8 @@
     }
    ],
    "title": "It's hard to be what you can't see",
-   "volume": "39"
+   "volume": "39",
+   "publisher": "San Diego, Calif: La Prensa San Diego, Arturo Casta\u00f1ares"
   },
   {
    "citationKey": "Larrick1965",
@@ -16673,8 +16667,7 @@
    ],
    "date": "2019",
    "extra": [
-    "Citation Key: Kraus2019",
-    "Publisher: Elsevier Inc"
+    "Citation Key: Kraus2019"
    ],
    "itemID": 300,
    "itemType": "journalArticle",
@@ -16716,7 +16709,8 @@
     }
    ],
    "title": "Dog whistle mascots: Native American mascots as normative expressions of prejudice",
-   "volume": "84"
+   "volume": "84",
+   "publisher": "Elsevier Inc"
   },
   {
    "DOI": "10.1080/02690050903205512",
@@ -16752,8 +16746,7 @@
    ],
    "date": "1986",
    "extra": [
-    "Citation Key: Taxel1986",
-    "Publisher: Routledge"
+    "Citation Key: Taxel1986"
    ],
    "issue": "3",
    "itemID": 318,
@@ -16793,7 +16786,8 @@
     }
    ],
    "title": "The black experience in children's fiction: Controversies surrounding award winning books",
-   "volume": "16"
+   "volume": "16",
+   "publisher": "Routledge"
   },
   {
    "DOI": "10.1093/melus/mly058",
@@ -16809,8 +16803,7 @@
    ],
    "date": "2019",
    "extra": [
-    "Citation Key: Ardoin2019",
-    "Publisher: Oxford University Press"
+    "Citation Key: Ardoin2019"
    ],
    "issue": "1",
    "itemID": 346,
@@ -16853,7 +16846,8 @@
     }
    ],
    "title": "\u201cHave you to this point assumed that I am white?\u201d: Narrative withholding since playing in the dark",
-   "volume": "44"
+   "volume": "44",
+   "publisher": "Oxford University Press"
   },
   {
    "DOI": "10.1177/1049732305276687",
@@ -16875,7 +16869,6 @@
    "date": "2016",
    "extra": [
     "Citation Key: Hsieh2016",
-    "Publisher: Thousand Oaks, CA: SAGE Publications",
     "tex.city: Thousand Oaks, CA"
    ],
    "issue": "9",
@@ -16904,7 +16897,8 @@
     }
    ],
    "title": "Three approaches to qualitative content analysis",
-   "volume": "15"
+   "volume": "15",
+   "publisher": "Thousand Oaks, CA: SAGE Publications"
   },
   {
    "DOI": "10.1353/uni.1997.0036",
@@ -16921,7 +16915,6 @@
    "extra": [
     "Citation Key: Taxel1997",
     "ISBN: 1080-6563",
-    "Publisher: Brooklyn, N.Y: Johns Hopkins University Press, etc",
     "tex.city: Brooklyn, N.Y"
    ],
    "issue": "2",
@@ -16959,7 +16952,8 @@
     }
    ],
    "title": "The analysis of power in children's literature",
-   "volume": "21"
+   "volume": "21",
+   "publisher": "Brooklyn, N.Y: Johns Hopkins University Press, etc"
   },
   {
    "ISSN": "0018-5078",
@@ -16975,7 +16969,6 @@
    "date": "2019",
    "extra": [
     "Citation Key: Bishop2019",
-    "Publisher: Boston: The Horn Book, Inc",
     "tex.city: Boston"
    ],
    "issue": "3",
@@ -17025,7 +17018,8 @@
     }
    ],
    "title": "Let our rejoicing rise: Celebrating fifty years of the coretta scott king book awards",
-   "volume": "95"
+   "volume": "95",
+   "publisher": "Boston: The Horn Book, Inc"
   },
   {
    "ISSN": "0018-5078",
@@ -17041,7 +17035,6 @@
    "date": "1995",
    "extra": [
     "Citation Key: Seto1995",
-    "Publisher: Boston: The Horn Book, Inc",
     "tex.city: Boston"
    ],
    "issue": "2",
@@ -17073,7 +17066,8 @@
     }
    ],
    "title": "Multiculturalism is not Halloween.(multiculturalism and children's literature)",
-   "volume": "71"
+   "volume": "71",
+   "publisher": "Boston: The Horn Book, Inc"
   },
   {
    "ISSN": "0033362X, 15375331",
@@ -17087,8 +17081,7 @@
    ],
    "date": "1997",
    "extra": [
-    "Citation Key: Mendelberg1997",
-    "Publisher: [Oxford University Press, American Association for Public Opinion Research]"
+    "Citation Key: Mendelberg1997"
    ],
    "issue": "1",
    "itemID": 461,
@@ -17097,7 +17090,8 @@
    "publicationTitle": "The Public Opinion Quarterly",
    "title": "Executing hortons: Racial crime in the 1988 presidential campaign",
    "url": "http://www.jstor.org.ezproxy2.library.arizona.edu/stable/2749515",
-   "volume": "61"
+   "volume": "61",
+   "publisher": "[Oxford University Press, American Association for Public Opinion Research]"
   },
   {
    "ISSN": "0161-4681",
@@ -17113,7 +17107,6 @@
    "date": "1997",
    "extra": [
     "Citation Key: Taxel1997",
-    "Publisher: New York: Teachers College, Columbia University",
     "tex.city: New York"
    ],
    "issue": "3",
@@ -17133,7 +17126,8 @@
     }
    ],
    "title": "Multicultural literture and the politics of reaction",
-   "volume": "98"
+   "volume": "98",
+   "publisher": "New York: Teachers College, Columbia University"
   },
   {
    "ISSN": "0360-9170",
@@ -17149,7 +17143,6 @@
    "date": "2020",
    "extra": [
     "Citation Key: Bishop2020",
-    "Publisher: Urbana: National Council of Teachers of English",
     "tex.city: Urbana"
    ],
    "issue": "1",
@@ -17196,7 +17189,8 @@
     }
    ],
    "title": "An invited dialogue with jacqueline woodson",
-   "volume": "98"
+   "volume": "98",
+   "publisher": "Urbana: National Council of Teachers of English"
   },
   {
    "ISSN": "1080-7551",
@@ -17212,7 +17206,6 @@
    "date": "2017",
    "extra": [
     "Citation Key: Horowitz2017",
-    "Publisher: Livonia: Pride Source Media Group",
     "tex.city: Livonia"
    ],
    "issue": "1028",
@@ -17237,7 +17230,8 @@
     }
    ],
    "title": "A dog whistle is a dog whistle is a dog whistle",
-   "volume": "2533"
+   "volume": "2533",
+   "publisher": "Livonia: Pride Source Media Group"
   },
   {
    "ISSN": "1521-7779",
@@ -17253,7 +17247,6 @@
    "date": "2012",
    "extra": [
     "Citation Key: Bishop2012",
-    "Publisher: Las Vegas: Children's Literature Assembly",
     "tex.city: Las Vegas"
    ],
    "issue": "2",
@@ -17321,7 +17314,8 @@
     }
    ],
    "title": "Reflections on the development of African American children's literature",
-   "volume": "38"
+   "volume": "38",
+   "publisher": "Las Vegas: Children's Literature Assembly"
   },
   {
    "abstractNote": "Shortly after 9/11, the English Journal, the NCTE's journal for high school English teachers, for which Short served as Editor, devoted an entire issue to World Literature curriculum suggestions. Since that May 2002 issue, the English Journal has continued its commitment to World Literature running a regular column dedicated to issues in World Literature. [...]the bulk of the essays concern the difficulty and complexity in representing cultures accurately, a view that belittles the politics of dominant cultures writing minority stories.",
@@ -17337,7 +17331,6 @@
    "extra": [
     "Citation Key: Chappel2017",
     "PMID: 1881110575",
-    "Publisher: Foundation for Curriculum Theory",
     "tex.city: Rochester"
    ],
    "issue": "3",
@@ -17409,7 +17402,8 @@
    ],
    "title": "The trouble with reader-response theory when reading multicultural literature: A critique of dana fox's and kathy's short's stories matter",
    "url": "http://ezproxy.library.arizona.edu/login?url=https://www.proquest.com/scholarly-journals/trouble-with-reader-response-theory-when-reading/docview/1881110575/se-2?accountid=8360 https://arizona-primo.hosted.exlibrisgroup.com/openurl/01UA/01UA?&aufirst=Jacquelyn&aulast=Chappel&atitle=The+Trouble+with+Reader-response+Theory+when+Reading+Multicultural+Literature%3A+A+Critique+of+Dana+Fox%27s+and+Kathy%27s+Short%27s+Stories+Matter&title=The+Trouble+with+Reader-response+Theory+when+Reading+Multicultural+Literature%3A+A+Critique+of+Dana+Fox%27s+and+Kathy%27s+Short%27s+Stories+Matter&volume=31&date=2017&spage=81&issn=",
-   "volume": "31"
+   "volume": "31",
+   "publisher": "Foundation for Curriculum Theory"
   },
   {
    "citationKey": "Delacroix2020",
@@ -17534,6 +17528,7 @@
    ],
    "itemID": 122,
    "itemType": "report",
+   "publicationTitle": "Journal of Language and Literacy Education, Language Arts, and Language Arts Journal of Michigan",
    "tags": [
     {
      "tag": "cultural authenticity"
