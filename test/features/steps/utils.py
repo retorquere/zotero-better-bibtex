@@ -23,13 +23,14 @@ for d in pathlib.Path(__file__).resolve().parents:
     ROOT = d
     break
 
-class HashableDict(dict):
-  def __hash__(self):
-    return str(hash(json.dumps(self, sort_keys=True)))
-
 def print(txt, end='\n'):
   sys.stdout.write(txt + end)
   sys.stdout.flush()
+
+class HashableDict(dict):
+  def __hash__(self):
+    # lower case before hash?
+    return str(hash(json.dumps(self, sort_keys=True)))
 
 class benchmark(object):
   def __init__(self,name):

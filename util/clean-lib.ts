@@ -44,9 +44,11 @@ const extensions = [
   '.csl.json',
   '.json',
 ]
+/*
 function sortkey(item) {
   return [ item.dateModified || item.dateAdded, item.itemType, `${item.itemID}` ].join('\t')
 }
+*/
 for (const lib of argv._) {
   const ext = extensions.find(ext => lib.endsWith(ext))
 
@@ -79,7 +81,7 @@ for (const lib of argv._) {
         }
       }
 
-      post.items.sort((a, b) => sortkey(a).localeCompare(sortkey(b)))
+      // post.items.sort((a, b) => sortkey(a).localeCompare(sortkey(b)))
       for (const item of (post.items || [])) {
         delete item.uri
         delete item.dateAdded
