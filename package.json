@@ -68,7 +68,7 @@
     "safe-stable-stringify": "^1.1.1",
     "sprintf-js": "^1.1.2",
     "transliteration": "^2.2.0",
-    "xregexp": "^5.0.2"
+    "xregexp": "^5.1.0"
   },
   "devDependencies": {
     "@retorquere/bibtex-parser": "^5.2.4",
