@@ -11,7 +11,7 @@
     "CSL YAML export of date with original publication date in [brackets] #922": 360,
     "CSL exporters; ignore [Fields to omit from export] setting #1179": 1970,
     "CSL-YAML import": {
-      "msecs": 1290,
+      "msecs": 1280,
       "runs": -353
     },
     "Capitalize all title-fields for language en #383": 680,
@@ -343,7 +343,7 @@
     "Export 6 references for BibLaTeX to Better BibLaTeX.stable-keys": 620,
     "Export 8 references for BibLaTeX to Don't title-case sup-subscripts #1037": 660,
     "Export as Collected Notes does not list subcollections #1768": {
-      "msecs": 4740,
+      "msecs": 4730,
       "runs": -256
     },
     "Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825": 990,
@@ -404,7 +404,7 @@
     "Import 2 references from Better BibTeX.003": 1050,
     "Import 2 references from BibLaTeX Patent author handling, type #1060": 1220,
     "Import 2 references from Import Jabref fileDirectory, unexpected reference type #1058": {
-      "msecs": 1920,
+      "msecs": 1910,
       "runs": -348
     },
     "Import 2 references from space after citekey creates confusion #716": 1170,
@@ -414,7 +414,7 @@
     },
     "Import 3 references from Better BibTeX.009": 1130,
     "Import 4 references from Improve import of films #1837": {
-      "msecs": 1390,
+      "msecs": 1380,
       "runs": -348
     },
     "Import 4 references from Title of German entry converted to lowercase during import #1350": 1310,
@@ -444,17 +444,17 @@
     },
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 360140,
+    "Really Big whopping library": 359850,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 51430,
+      "msecs": 51400,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
     "Square brackets in Publication field (85), and non-pinned keys must change when the pattern does": 450,
-    "Unabbreviate on import #1436-1": 38850,
+    "Unabbreviate on import #1436-1": 38830,
     "Unbalanced vphantom escapes #1043": 760,
     "arXiv identifiers in BibLaTeX export #460": 1180,
     "auto-export": 14370,
@@ -477,7 +477,7 @@
       "runs": -36
     },
     "web_page and other mendeley idiocy": {
-      "msecs": 39490,
+      "msecs": 39450,
       "runs": -239
     }
   },
@@ -785,7 +785,7 @@
       "Identical Pinned keys lost when merging duplicated records #1721"
     ]
   },
-  "runs": 375,
+  "runs": 376,
   "slow": {
     "1": [
       "Export 1 references for BibLaTeX to Cite archive documents with BetterBibLaTeX #1799",
