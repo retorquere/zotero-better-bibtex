@@ -18,6 +18,7 @@
 
   <script src="chrome://zotero/content/include.js"/>
   <script>
+    // <![CDATA[
     var globals = Function('return this')();
     var bbt_prefpane
     async function load() {
@@ -29,7 +30,32 @@
       } catch (err) {
         Zotero.debug(`BBT: loading PrefPane error: ${err.message}\n${err.stack ||''}`)
       }
+
+      function isVisible(el) {
+        const rect = el.getBoundingClientRect();
+        const elemTop = rect.top;
+        const elemBottom = rect.bottom;
+
+        // Only completely visible elements return true:
+        return (elemTop >= 0) && (elemBottom <= window.innerHeight)
+
+        // Partially visible elements return true:
+        // return elemTop < window.innerHeight && elemBottom >= 0;
+      }
+      try {
+        const tabbox = document.getElementById('better-bibtex-prefs-tabbox')
+        const raiser = document.getElementById('better-bibtex-prefs-raiser')
+        let height = 20
+        while (!isVisible(tabbox) && height < 200) {
+          height += 20
+          raiser.setAttribute('height', `${height}px;`)
+        }
+      }
+      catch (err) {
+        Zotero.debug(`BBT: raising PrefPane error: ${err.message}\n${err.stack ||''}`)
+      }
     }
+    //]]>
   </script>
 
   <popupset>
@@ -987,7 +1013,7 @@
 
         </tabpanels>
       </tabbox>
-      <label height="20px;" style="margin-bottom: 0px"/>
+      <label id="better-bibtex-prefs-raiser" height="20px;" style="margin-bottom: 0px"/>
     </prefpane>
   </prefwindow>
 </overlay>
