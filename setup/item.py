@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv(), override=True)
+
 from networkx.readwrite import json_graph
 
 from collections import OrderedDict
@@ -42,7 +45,8 @@ os.makedirs(TYPINGS, exist_ok=True)
 
 def readurl(url):
   req = Request(url)
-  if ('api.github.com' in url) and (token := os.environ.get('GITHUB_TOKEN', None)): req.add_header('Authorization', f'token {token}')
+  if ('api.github.com' in url) and (token := os.environ.get('GITHUB_TOKEN', None)):
+    req.add_header('Authorization', f'token {token}')
   return urlopen(req).read().decode('utf-8')
 
 class fetch(object):
