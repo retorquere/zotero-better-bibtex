@@ -109,7 +109,7 @@ jobs:
         sudo apt-get install ${{ matrix.client }}
 
     - name: install ${{ matrix.client }} beta
-      continue-on-error: true
+      if: matrix.client != 'jurism'
       run: sudo apt-get install ${{ matrix.client }}-beta
 
     # fast test
