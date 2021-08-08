@@ -137,7 +137,7 @@ class Git {
 
     const proc = Components.classes['@mozilla.org/process/util;1'].createInstance(Components.interfaces.nsIProcess)
     proc.init(cmd)
-    // proc.startHidden = true // won't work until Zotero upgrades to post-55 Firefox
+    proc.startHidden = true // requires post-55 Firefox
 
     return new Promise<string>((resolve, reject) => {
       proc.runwAsync(args, args.length, { observe: function(subject, topic) { // eslint-disable-line object-shorthand, prefer-arrow/prefer-arrow-functions
