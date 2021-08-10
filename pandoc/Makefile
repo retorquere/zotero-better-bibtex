@@ -10,7 +10,7 @@ count:
 
 bundle:
 ifeq ($(shell grep '^local pl =' *.lua), )
-	echo "print('zotero-live-citationes $(shell git rev-parse --short HEAD)')" > $(DEPLOYED)
+	echo "print('zotero-live-citations $(shell git rev-parse --short HEAD)')" > $(DEPLOYED)
 	~/.luarocks/bin/amalg.lua -o $(BUNDLED) -s $(MAIN) lunajson lunajson.decoder lunajson.encoder lunajson.sax locator utils zotero
 	cat $(BUNDLED) >> $(DEPLOYED)
 	rm $(BUNDLED)
