@@ -247,7 +247,6 @@ export interface PrefPaneConstructable {
 export class PrefPane {
   public autoexport: AutoExportPane
   private keyformat: any
-  private timer: number
   private observer: MutationObserver
   private observed: XUL.Element
   private globals: Record<string, any>
@@ -345,7 +344,7 @@ export class PrefPane {
 
   mutated(mutations: MutationRecord[], observer: MutationObserver): void {
     let node
-    for(const mutation of mutations) {
+    for (const mutation of mutations) {
       if (!mutation.addedNodes) continue
 
       if (this.observed?.id === 'zotero-prefpane-export' && (node = [...mutation.addedNodes].find((added: XUL.Element) => added.id === 'zotero-prefpane-export-groupbox'))) {
@@ -376,7 +375,7 @@ export class PrefPane {
     this.keyformat = this.globals.document.getElementById('id-better-bibtex-preferences-citekeyFormat')
     this.keyformat.disabled = false
 
-    tabbox.hidden = false
+    // tabbox.hidden = false
 
     if (typeof this.globals.Zotero_Preferences === 'undefined') {
       log.error('Preferences.load: Zotero_Preferences not ready')
@@ -397,7 +396,6 @@ export class PrefPane {
     })
 
     this.getCitekeyFormat()
-    this.update()
 
     if (this.globals.document.location.hash === '#better-bibtex') {
       // runs into the 'TypeError: aId is undefined' problem for some reason unless I delay the activation of the pane
@@ -405,34 +403,43 @@ export class PrefPane {
       Zotero.setTimeout(() => this.globals.document.getElementById('zotero-prefs').showPane(this.globals.document.getElementById('zotero-prefpane-better-bibtex')), 500)
     }
 
-    globals.window.sizeToContent()
-
     // no other way that I know of to know that I've just been selected
-    this.timer = this.timer || this.globals.window.setInterval(this.refresh.bind(this), 500)  // eslint-disable-line no-magic-numbers
+    const observer = new IntersectionObserver(this.resize.bind(this), { rootMargin: '0px', threshold: 1.0 })
+    observer.observe(tabbox)
+    this.refresh()
   }
 
-  private refresh() {
+  private resize() {
+    log.debug('preference.resize')
+    /*
+    const tabbox = this.globals.document.getElementById('better-bibtex-prefs-auto-export-tabbox')
+
+    this.globals.window.sizeToContent()
+
+    const raiser = this.globals.document.getElementById('better-bibtex-prefs-raiser')
+    let height = 0
+    const step = 20
+    const steps = 15
+    do {
+      log.debug('bbt-prefs raiser height:', height, 'visible:', this.isVisible(tabbox))
+      height += step // eslint-disable-line no-magic-numbers
+      raiser.setAttribute('height', `${height}px;`)
+    } while (!this.isVisible(tabbox) && height < (step * steps)) // eslint-disable-line no-magic-numbers
+    */
+  }
+
+  /*
+  private isVisible(el) {
+    const rect = el.getBoundingClientRect()
+    return (rect.top >= 0) && (rect.bottom <= this.globals.window.innerHeight)
+  }
+  */
+
+  public refresh() {
     const pane = this.globals.document.getElementById('zotero-prefpane-better-bibtex')
-
     // unloaded
-    if (!pane) {
-      if (this.timer) {
-        this.globals.window.clearInterval(this.timer)
-        this.timer = null
-      }
-      return
-    }
+    if (!pane) return
 
-    // no other way that I know of to know that I've just been selected
-    // and if I just alway do sizeToContent regardless of what's selected,
-    // it makes the zotero panes too big.
-    if (pane.selected) this.globals.window.sizeToContent()
-
-    this.update()
-    if (this.autoexport) this.autoexport.refresh()
-  }
-
-  private update() {
     this.checkCitekeyFormat()
     this.checkPostscript()
     this.setQuickCopy(this.globals.document.getElementById('translator-bbt-quick-copy'))
@@ -477,7 +484,9 @@ export class PrefPane {
       })
       state.classList[Preference.workersMax ? 'remove' : 'add']('textbox-emph')
     }
-    this.globals.window.sizeToContent()
+
+    if (this.autoexport) this.autoexport.refresh()
+    this.resize()
   }
 
   private styleChanged(index) {

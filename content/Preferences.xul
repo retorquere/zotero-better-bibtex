@@ -18,9 +18,12 @@
 
   <script src="chrome://zotero/content/include.js"/>
   <script>
-    // <![CDATA[
     var globals = Function('return this')();
-    var bbt_prefpane
+    var bbt_prefpane = {
+      refresh: function() {
+        Zotero.debug('bbt prefpane: awaiting load')
+      }
+    }
     async function load() {
       try {
         bbt_prefpane = new Zotero.BetterBibTeX.PrefPane()
@@ -30,32 +33,7 @@
       } catch (err) {
         Zotero.debug(`BBT: loading PrefPane error: ${err.message}\n${err.stack ||''}`)
       }
-
-      function isVisible(el) {
-        const rect = el.getBoundingClientRect();
-        const elemTop = rect.top;
-        const elemBottom = rect.bottom;
-
-        // Only completely visible elements return true:
-        return (elemTop >= 0) && (elemBottom <= window.innerHeight)
-
-        // Partially visible elements return true:
-        // return elemTop < window.innerHeight && elemBottom >= 0;
-      }
-      try {
-        const tabbox = document.getElementById('better-bibtex-prefs-tabbox')
-        const raiser = document.getElementById('better-bibtex-prefs-raiser')
-        let height = 20
-        while (!isVisible(tabbox) && height < 200) {
-          height += 20
-          raiser.setAttribute('height', `${height}px;`)
-        }
-      }
-      catch (err) {
-        Zotero.debug(`BBT: raising PrefPane error: ${err.message}\n${err.stack ||''}`)
-      }
     }
-    //]]>
   </script>
 
   <popupset>
@@ -532,14 +510,14 @@
       </preferences>
 
       <tabbox id="better-bibtex-prefs-tabbox">
-        <tabs id="better-bibtex-prefs-tabs" onselect="window.sizeToContent()">
+        <tabs id="better-bibtex-prefs-tabs" onselect="bbt_prefpane.refresh()">
           <tab label="&better-bibtex.Preferences.tab.citekey;"/>
           <tab label="&better-bibtex.Preferences.tab.export;"/>
           <tab id="better-bibtex-prefs-auto-export" label="&better-bibtex.Preferences.tab.auto-export;"/>
           <tab label="&better-bibtex.Preferences.advanced;"/>
         </tabs>
 
-        <tabpanels id="better-bibtex-prefs-tabpanels" flex="1" style="overflow: auto; width: 100%; height: 100%;">
+        <tabpanels id="better-bibtex-prefs-tabpanels" flex="1">
           <tabpanel id="better-bibtex-prefs-citation-keys" orient="vertical">
             <groupbox>
               <caption label="&better-bibtex.Preferences.citekey.citekeys;"/>
@@ -601,7 +579,7 @@
                       id="id-better-bibtex-preferences-quickCopyMode"
                       preference="pref-better-bibtex-quickCopyMode"
                       preference-editable="true"
-                      oncommand="bbt_prefpane.update();"
+                      oncommand="bbt_prefpane.refresh();"
                     >
                       <menupopup>
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.latex;" value="latex"/>
@@ -621,8 +599,8 @@
                   <row class="better-bibtex-preferences-quickcopy-details" id="better-bibtex-preferences-quickcopy-latex">
                     <label bbt:preference="pref-better-bibtex-citeCommand">&better-bibtex.Preferences.citekey.quickCopy.latex.command;</label>
                     <textbox size="10" preference="pref-better-bibtex-citeCommand"
-                      onchange="bbt_prefpane.update();"
-                      onkeypress="Zotero.setTimeout(function() { bbt_prefpane.update() }, 1);"/>
+                      onchange="bbt_prefpane.refresh();"
+                      onkeypress="Zotero.setTimeout(function() { bbt_prefpane.refresh() }, 1);"/>
                   </row>
                   <row class="better-bibtex-preferences-quickcopy-details" id="better-bibtex-preferences-quickcopy-pandoc">
                     <checkbox id="id-better-bibtex-preferences-quickCopyPandocBrackets"
@@ -715,8 +693,8 @@
                   <row>
                     <label bbt:preference="pref-better-bibtex-skipFields">&better-bibtex.Preferences.export.fields.skip;</label>
                     <textbox size="80" id="id-better-bibtex-preferences-skipFields" preference="pref-better-bibtex-skipFields"
-                      oninput="bbt_prefpane.update();"
-                      onkeypress="Zotero.setTimeout(function() { bbt_prefpane.update() }, 1);"/>
+                      oninput="bbt_prefpane.refresh();"
+                      onkeypress="Zotero.setTimeout(function() { bbt_prefpane.refresh() }, 1);"/>
                   </row>
                   <row>
                     <label bbt:preference="pref-better-bibtex-jabrefFormat">&better-bibtex.Preferences.export.jabrefFormat;</label>
@@ -900,7 +878,7 @@
             </tabbox>
           </tabpanel>
 
-          <tabpanel id="better-bibtex-prefs-advanced" orient="vertical" flex="1" style="overflow: auto; width: 100%; height: 100%;">
+          <tabpanel id="better-bibtex-prefs-advanced" orient="vertical" flex="1">
             <description>&better-bibtex.Preferences.advanced.warning;</description>
             <tabbox>
               <tabs>
@@ -1013,7 +991,7 @@
 
         </tabpanels>
       </tabbox>
-      <label id="better-bibtex-prefs-raiser" height="20px;" style="margin-bottom: 0px"/>
+      <label id="better-bibtex-prefs-raiser" height="0" style="margin-bottom: 0px"/>
     </prefpane>
   </prefwindow>
 </overlay>
