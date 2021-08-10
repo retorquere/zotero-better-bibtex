@@ -124,43 +124,49 @@ local function zotero_ref(cite)
   }
   local author_in_text = ''
 
+  notfound = false
   for k, item in pairs(cite.citations) do
     local itemData, zoteroData = zotero.get(item.id)
     if itemData == nil then
-      return cite
-    end
+      notfound = true
+    else
 
-    local citation = {
-      id = zoteroData.itemID,
-      uris = { zoteroData.uri },
-      uri = { zoteroData.uri },
-      itemData = itemData,
-    }
+      local citation = {
+        id = zoteroData.itemID,
+        uris = { zoteroData.uri },
+        uri = { zoteroData.uri },
+        itemData = itemData,
+      }
 
-    if item.mode == 'AuthorInText' then -- not formally supported in Zotero
-      if config.author_in_text then
-        local authors = zotero.authors(itemData)
-        if authors == nil then
-          return cite
+      if item.mode == 'AuthorInText' then -- not formally supported in Zotero
+        if config.author_in_text then
+          local authors = zotero.authors(itemData)
+          if authors == nil then
+            return cite
+          else
+            author_in_text = pandoc.utils.stringify(pandoc.Str(authors)) .. ' '
+            citation['suppress-author'] = true
+          end
         else
-          author_in_text = pandoc.utils.stringify(pandoc.Str(authors)) .. ' '
-          citation['suppress-author'] = true
+          return cite
         end
-      else
-        return cite
       end
-    end
 
-    if item.mode == 'SuppressAuthor' then
-      citation['suppress-author'] = true
-    end
-    citation.prefix = pandoc.utils.stringify(item.prefix)
-    local label, locator, suffix = csl_locator.parse(pandoc.utils.stringify(item.suffix))
-    citation.suffix = suffix
-    citation.label = label
-    citation.locator = locator
+      if item.mode == 'SuppressAuthor' then
+        citation['suppress-author'] = true
+      end
+      citation.prefix = pandoc.utils.stringify(item.prefix)
+      local label, locator, suffix = csl_locator.parse(pandoc.utils.stringify(item.suffix))
+      citation.suffix = suffix
+      citation.label = label
+      citation.locator = locator
 
-    table.insert(csl.citationItems, citation)
+      table.insert(csl.citationItems, citation)
+    end
+  end
+
+  if notfound then
+    return cite
   end
 
   local message = '<Do Zotero Refresh: ' .. content .. '>'

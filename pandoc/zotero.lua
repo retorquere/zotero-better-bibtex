@@ -80,10 +80,10 @@ function module.get(citekey)
 
   if state.fetched.items[citekey] == nil then
     state.reported[citekey] = true
-    print('@' .. citekey .. ' not found')
+    print('@' .. citekey .. ' not in Zotero')
     return nil
   end
-  
+
   return state.fetched.items[citekey], state.fetched.zotero[citekey]
 end
 
