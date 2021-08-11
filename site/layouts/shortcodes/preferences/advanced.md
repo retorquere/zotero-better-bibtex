@@ -11,6 +11,44 @@ default: `<not set>`
 
 If you have externally maintained `@string` vars paste them here and they will be resolved for subsequent imports. These should be entered as `@string` declarations, such as `@string{IEEE_J_PWRE = "{IEEE} Transactions on Power Electronics"}`, not just the var name.
 
+### Citation keys
+
+#### Warn me when changing citation keys in bulk
+
+default: `10`
+
+For those who are curious about what the `Clear/Generate BibTeX key` right-click options do, this will warn you if you are doing this on more than 10 (default) at the same time, to prevent your curiosity from changing all your citation keys at once.
+
+#### their citation keys into an bib(la)tex `ids` field
+
+default: `no`
+
+When merging items, also merge their citation keys into an bib(la)tex `ids` field.
+
+#### fields that are understood to be CSL fields by Zotero
+
+default: `no`
+
+When merging items, also merge fields that are understood to be CSL fields by Zotero.
+
+#### their `tex.*` fields
+
+default: `no`
+
+When merging items, also merge their `tex.*` fields.
+
+#### Apply kuroshiro romajization in Japanese names/titles. Uses a lot of memory.
+
+default: `no`
+
+When on, BBT will load kuroshiro for romajization in citation keys. This uses a lot of memory, easily 100MB. If you don't have Japanese titles/names, keep this off.
+
+#### Enable 'jieba' filter in citekey patterns. Uses a lot of memory.
+
+default: `no`
+
+When on, BBT will make Chinese word segmentation available for citation keys construction. This uses a lot of memory, easily 70MB. If you don't have Chinese titles/names, keep this off.
+
 ### Export
 
 #### Apply title-casing to titles
@@ -80,6 +118,12 @@ Options:
 * yes
 * no
 
+#### When scanning an AUX file, attempt to import references from the attached bib file when their citation keys are not in Zotero
+
+default: `no`
+
+By default, when scanning for cited items in the aux file, BBT will just generate a note listing all citation keys it cannot find in Zotero. When this option is turned on, BBT will attempt to import such missing items from the bib file that the AUX file being scanned points to.
+
 ### @string definitions
 
 #### Expand the @string vars below during imports
@@ -100,51 +144,5 @@ Options:
 * Assume single-word fields to be @string vars
 * Match against the @string declarations below
 * Match against the @string declarations and their values below
-
-### Citation keys
-
-#### Warn me when changing citation keys in bulk
-
-default: `10`
-
-For those who are curious about what the `Clear/Generate BibTeX key` right-click options do, this will warn you if you are doing this on more than 10 (default) at the same time, to prevent your curiosity from changing all your citation keys at once.
-
-#### their citation keys into an bib(la)tex `ids` field
-
-default: `no`
-
-When merging items, also merge their citation keys into an bib(la)tex `ids` field.
-
-#### fields that are understood to be CSL fields by Zotero
-
-default: `no`
-
-When merging items, also merge fields that are understood to be CSL fields by Zotero.
-
-#### their `tex.*` fields
-
-default: `no`
-
-When merging items, also merge their `tex.*` fields.
-
-#### Apply kuroshiro romajization in Japanese names/titles. Uses a lot of memory.
-
-default: `no`
-
-When on, BBT will load kuroshiro for romajization in citation keys. This uses a lot of memory, easily 100MB. If you don't have Japanese titles/names, keep this off.
-
-#### Enable 'jieba' filter in citekey patterns. Uses a lot of memory.
-
-default: `no`
-
-When on, BBT will make Chinese word segmentation available for citation keys construction. This uses a lot of memory, easily 70MB. If you don't have Chinese titles/names, keep this off.
-
-### BibTeX AUX scanner
-
-#### When scanning an AUX file, attempt to import references from the attached bib file when their citation keys are not in Zotero
-
-default: `no`
-
-By default, when scanning for cited items in the aux file, BBT will just generate a note listing all citation keys it cannot find in Zotero. When this option is turned on, BBT will attempt to import such missing items from the bib file that the AUX file being scanned points to.
 
 

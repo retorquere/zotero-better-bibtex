@@ -1,0 +1,14 @@
+checkbox#id-better-bibtex-preferences-autoAbbrev(label="&better-bibtex.Preferences.auto-abbrev;" preference="pref-better-bibtex-autoAbbrev")
+separator#better-bibtex-abbrev-style-separator.thin.jurism
+label#better-bibtex-abbrev-style-label.jurism(bbt:preference="pref-better-bibtex-autoAbbrevStyle") &better-bibtex.Preferences.auto-abbrev.style;
+menulist#better-bibtex-abbrev-style.jurism(onchange="bbt_prefpane.styleChanged()")
+  menupopup#better-bibtex-abbrev-style-popup
+checkbox(label="&better-bibtex.Preferences.export.qualityReport;" preference="pref-better-bibtex-qualityReport")
+checkbox(label="&better-bibtex.Preferences.export.automaticTags;" preference="pref-better-bibtex-automaticTags")
+label(bbt:preference="pref-better-bibtex-mapUnicode") &better-bibtex.Preferences.export.map-unicode;
+menulist(preference="pref-better-bibtex-mapUnicode")
+  menupopup
+    menuitem(label="&better-bibtex.Preferences.export.map-unicode.minimal-packages;" value="minimal-packages")
+    menuitem(label="&better-bibtex.Preferences.export.map-unicode.conservative;" value="conservative")
+    menuitem(label="&better-bibtex.Preferences.export.map-unicode.text;" value="text")
+    menuitem(label="&better-bibtex.Preferences.export.map-unicode.math;" value="math")

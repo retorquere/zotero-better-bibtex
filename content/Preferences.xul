@@ -696,23 +696,44 @@
             </tabbox>
           </tabpanel>
           <tabpanel id="better-bibtex-prefs-advanced" flex="1" orient="vertical">
-            <vbox class="scrollable" hidden="true">
-              <description>&better-bibtex.Preferences.advanced.warning;</description>
-              <tabbox>
-                <tabs>
-                  <tab bbt:preference="pref-better-bibtex-postscript" label="&better-bibtex.Preferences.advanced.tab.postscript;"></tab>
-                  <tab label="&better-bibtex.Preferences.advanced.tab.export;"></tab>
-                  <tab label="&better-bibtex.Preferences.advanced.tab.import;"></tab>
-                  <tab bbt:preference="pref-better-bibtex-strings" label="&better-bibtex.Preferences.advanced.tab.strings;"></tab>
-                  <tab label="&better-bibtex.Preferences.advanced.tab.citekeys;"></tab>
-                  <tab label="&better-bibtex.Preferences.citekey.AUXScanner;"></tab>
-                </tabs>
-                <tabpanels class="better-bibtex-scroll">
-                  <tabpanel orient="vertical">
+            <description>&better-bibtex.Preferences.advanced.warning;</description>
+            <tabbox>
+              <tabs>
+                <tab bbt:preference="pref-better-bibtex-postscript" label="&better-bibtex.Preferences.advanced.tab.postscript;"></tab>
+                <tab label="&better-bibtex.Preferences.advanced.tab.citekeys;"></tab>
+                <tab label="&better-bibtex.Preferences.advanced.tab.export;"></tab>
+                <tab label="&better-bibtex.Preferences.advanced.tab.import;"></tab>
+                <tab bbt:preference="pref-better-bibtex-strings" label="&better-bibtex.Preferences.advanced.tab.strings;"></tab>
+              </tabs>
+              <tabpanels>
+                <tabpanel orient="vertical">
+                  <vbox class="hidden">
                     <textbox id="zotero-better-bibtex-postscript" rows="10" flex="1" multiline="true" preference="pref-better-bibtex-postscript" onblur="bbt_prefpane.checkPostscript();" oninput="bbt_prefpane.checkPostscript();" onkeypress="Zotero.setTimeout(function() { bbt_prefpane.checkPostscript() }, 1);"></textbox>
                     <textbox class="plain textbox-emph" id="better-bibtex-cache-warn-postscript" rows="2" multiline="true" flex="1" readonly="true" value="&better-bibtex.Preferences.postscript.warn;"></textbox>
-                  </tabpanel>
-                  <tabpanel orient="vertical">
+                  </vbox>
+                </tabpanel>
+                <tabpanel orient="vertical">
+                  <vbox class="hidden">
+                    <button label="&better-bibtex.Preferences.rescan-citekeys;" oncommand="bbt_prefpane.rescanCitekeys()"></button>
+                    <hbox>
+                      <label bbt:preference="pref-better-bibtex-warnBulkModify">&better-bibtex.Preferences.bulkWarning;</label>
+                      <textbox size="5" preference="pref-better-bibtex-warnBulkModify"></textbox>
+                    </hbox>
+                    <groupbox>
+                      <caption label="&better-bibtex.Preferences.advanced.extraMerge;"></caption>
+                      <checkbox preference="pref-better-bibtex-extraMergeCitekeys" label="&better-bibtex.Preferences.advanced.extraMergeCitekeys;"></checkbox>
+                      <checkbox preference="pref-better-bibtex-extraMergeCSL" label="&better-bibtex.Preferences.advanced.extraMergeCSL;"></checkbox>
+                      <checkbox preference="pref-better-bibtex-extraMergeTeX" label="&better-bibtex.Preferences.advanced.extraMergeTeX;"></checkbox>
+                    </groupbox>
+                    <groupbox>
+                      <caption label="&better-bibtex.Preferences.advanced.ideographs;"></caption>
+                      <checkbox preference="pref-better-bibtex-kuroshiro" label="&better-bibtex.Preferences.advanced.ideographs.kuroshiro;"></checkbox>
+                      <checkbox preference="pref-better-bibtex-jieba" label="&better-bibtex.Preferences.advanced.ideographs.jieba;"></checkbox>
+                    </groupbox>
+                  </vbox>
+                </tabpanel>
+                <tabpanel orient="vertical">
+                  <vbox class="hidden">
                     <hbox>
                       <checkbox preference="pref-better-bibtex-exportTitleCase" label="&better-bibtex.Preferences.advanced.export.titleCase;"></checkbox>
                       <image tooltip="tooltip-exportTitleCase" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"></image>
@@ -732,8 +753,10 @@
                     </hbox>
                     <label class="better-bibtex-preferences-worker-state"></label>
                     <button label="&better-bibtex.Preferences.resetCache;" oncommand="bbt_prefpane.cacheReset()"></button>
-                  </tabpanel>
-                  <tabpanel orient="vertical">
+                  </vbox>
+                </tabpanel>
+                <tabpanel orient="vertical">
+                  <vbox class="hidden">
                     <hbox>
                       <groupbox>
                         <caption bbt:preference="pref-better-bibtex-importSentenceCase">&better-bibtex.Preferences.advanced.import.sentenceCase;
@@ -757,8 +780,11 @@
                       </menulist>
                       <image tooltip="tooltip-importCaseProtection" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"></image>
                     </hbox>
-                  </tabpanel>
-                  <tabpanel orient="vertical">
+                    <checkbox preference="pref-better-bibtex-aux-import" label="&better-bibtex.Preferences.citekey.AUXScanner.import;"></checkbox>
+                  </vbox>
+                </tabpanel>
+                <tabpanel orient="vertical">
+                  <vbox class="hidden">
                     <checkbox preference="pref-better-bibtex-importBibTeXStrings" label="&better-bibtex.Preferences.export.fields.import-strings;"></checkbox>
                     <textbox rows="10" flex="1" multiline="true" preference="pref-better-bibtex-strings"></textbox>
                     <groupbox>
@@ -770,31 +796,10 @@
                         <radio label="&better-bibtex.Preferences.export.fields.export-strings.match_reverse;" value="match+reverse"></radio>
                       </radiogroup>
                     </groupbox>
-                  </tabpanel>
-                  <tabpanel orient="vertical">
-                    <button label="&better-bibtex.Preferences.rescan-citekeys;" oncommand="bbt_prefpane.rescanCitekeys()"></button>
-                    <hbox>
-                      <label bbt:preference="pref-better-bibtex-warnBulkModify">&better-bibtex.Preferences.bulkWarning;</label>
-                      <textbox size="5" preference="pref-better-bibtex-warnBulkModify"></textbox>
-                    </hbox>
-                    <groupbox>
-                      <caption label="&better-bibtex.Preferences.advanced.extraMerge;"></caption>
-                      <checkbox preference="pref-better-bibtex-extraMergeCitekeys" label="&better-bibtex.Preferences.advanced.extraMergeCitekeys;"></checkbox>
-                      <checkbox preference="pref-better-bibtex-extraMergeCSL" label="&better-bibtex.Preferences.advanced.extraMergeCSL;"></checkbox>
-                      <checkbox preference="pref-better-bibtex-extraMergeTeX" label="&better-bibtex.Preferences.advanced.extraMergeTeX;"></checkbox>
-                    </groupbox>
-                    <groupbox>
-                      <caption label="&better-bibtex.Preferences.advanced.ideographs;"></caption>
-                      <checkbox preference="pref-better-bibtex-kuroshiro" label="&better-bibtex.Preferences.advanced.ideographs.kuroshiro;"></checkbox>
-                      <checkbox preference="pref-better-bibtex-jieba" label="&better-bibtex.Preferences.advanced.ideographs.jieba;"></checkbox>
-                    </groupbox>
-                  </tabpanel>
-                  <tabpanel orient="vertical">
-                    <checkbox preference="pref-better-bibtex-aux-import" label="&better-bibtex.Preferences.citekey.AUXScanner.import;"></checkbox>
-                  </tabpanel>
-                </tabpanels>
-              </tabbox>
-            </vbox>
+                  </vbox>
+                </tabpanel>
+              </tabpanels>
+            </tabbox>
           </tabpanel>
         </tabpanels>
       </tabbox>
