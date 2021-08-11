@@ -444,6 +444,11 @@ export class PrefPane {
     this.checkPostscript()
     this.setQuickCopy(this.globals.document.getElementById('translator-bbt-quick-copy'))
 
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    for (const node of (Array.from(this.globals.document.getElementsByClassName('jurism')) as XUL.Element[])) {
+      node.hidden = client !== 'jurism'
+    }
+
     if (client === 'jurism') {
       Zotero.Styles.init().then(() => {
         const styles = Zotero.Styles.getVisible().filter((style: { usesAbbreviation: boolean }) => style.usesAbbreviation)
