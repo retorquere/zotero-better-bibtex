@@ -229,7 +229,7 @@ class WorkerZotero {
     if (this.exportFile) {
       const encoder = new TextEncoder()
       const array = encoder.encode(this.output)
-      OS.File.writeAtomic(this.exportFile, array, {tmpPath: `${this.exportFile}.tmp`}) as void
+      OS.File.writeAtomic(this.exportFile, array) as void
     }
     this.send({ kind: 'done', output: this.exportFile ? true : this.output })
   }
