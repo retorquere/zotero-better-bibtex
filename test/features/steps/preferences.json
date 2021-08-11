@@ -719,7 +719,7 @@
       "Better CSL YAML"
     ],
     "var": "skipFields",
-    "label": "Fields to omit from export (comma-separated)"
+    "label": "Fields to omit from export (comma-separated):"
   },
   {
     "name": "skipWords",

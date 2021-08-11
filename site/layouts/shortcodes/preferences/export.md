@@ -55,7 +55,7 @@ Options:
 * DOI
 * URL
 
-#### Fields to omit from export (comma-separated)
+#### Fields to omit from export (comma-separated):
 
 default: `<not set>`
 

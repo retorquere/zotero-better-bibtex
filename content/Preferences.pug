@@ -59,14 +59,11 @@ overlay#zotero-better-bibtex-preferences(xmlns="http://www.mozilla.org/keymaster
 
         tabpanels#better-bibtex-prefs-tabpanels(flex="1")
           tabpanel#better-bibtex-prefs-citation-keys(flex="1" orient="vertical")
-            vbox.scrollable(hidden='true')
-              include Preferences/citekeys.pug
+            include Preferences/citekeys.pug
           tabpanel#better-bibtex-prefs-export(flex="1" orient="vertical")
-            vbox.scrollable(hidden='true')
-              include Preferences/export.pug
+            include Preferences/export.pug
           tabpanel(flex="1" orient="vertical")
-            vbox.scrollable
-              include Preferences/quickcopy.pug
+            include Preferences/quickcopy.pug
           tabpanel#better-bibtex-prefs-automatic-export(flex="1" orient="vertical")
             vbox.scrollable(hidden='true')
               include Preferences/autoexport.pug
