@@ -1,6 +1,4 @@
 {{/* DO NOT EDIT. This shortcode is created automatically from Preferences.xul */}}
-### Quick copy/drag-and-drop citations
-
 #### QuickCopy format
 
 default: `LaTeX citation`
