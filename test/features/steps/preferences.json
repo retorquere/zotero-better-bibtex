@@ -212,7 +212,7 @@
       "Better BibTeX"
     ],
     "var": "bibtexURL",
-    "label": "Add URLs to BibTeX export",
+    "label": "Add URLs to BibTeX export:",
     "options": {
       "off": "no",
       "note": "in the 'note' field",

@@ -210,6 +210,7 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.Preferences.postscript.warn "Use of 'Translator.options.exportPath' in postscripts disables the cache. Exports will be substantially slower.">
 <!ENTITY better-bibtex.Preferences.advanced.tab.strings "@string definitions">
 <!ENTITY better-bibtex.Preferences.prefpane.better-bibtex "Better BibTeX">
+<!ENTITY better-bibtex.Preferences.prefpane.loading "Better BibTeX is loading">
 <!ENTITY better-bibtex.Preferences.rescan-citekeys "Re-scan pinned citekeys">
 <!ENTITY better-bibtex.Preferences.resetCache "Reset cache">
 <!ENTITY better-bibtex.BetterBibTeX.reportErrors "Send Better BibTeX support log...">

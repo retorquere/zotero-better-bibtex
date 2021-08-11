@@ -49,12 +49,14 @@ overlay#zotero-better-bibtex-preferences(xmlns="http://www.mozilla.org/keymaster
       preferences#zotero-preferences-cite
         include Preferences/preferences.pug
 
+      // deck#better-bibtex-prefs-deck(selectedIndex='0')
+      //   label#better-bibtex-loading &better-bibtex.Preferences.prefpane.loading;
       tabbox#better-bibtex-prefs-tabbox
         tabs#better-bibtex-prefs-tabs(onselect="bbt_prefpane.refresh()")
-          tab(label="&better-bibtex.Preferences.tab.citekey;")
-          tab(label="&better-bibtex.Preferences.tab.export;")
+          tab#better-bibtex-prefs-citekey(label="&better-bibtex.Preferences.tab.citekey;")
+          tab#better-bibtex-prefs-export(label="&better-bibtex.Preferences.tab.export;")
           tab#better-bibtex-prefs-auto-export(label="&better-bibtex.Preferences.tab.auto-export;")
-          tab(label="&better-bibtex.Preferences.advanced;")
+          tab#better-bibtex-prefs-auto-advanced(label="&better-bibtex.Preferences.advanced;")
 
         tabpanels#better-bibtex-prefs-tabpanels(flex="1")
           tabpanel#better-bibtex-prefs-citation-keys(flex="1" orient="vertical")

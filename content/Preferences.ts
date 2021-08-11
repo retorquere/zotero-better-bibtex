@@ -247,6 +247,7 @@ export interface PrefPaneConstructable {
 export class PrefPane {
   public autoexport: AutoExportPane
   private keyformat: any
+  private timer: number
   private observer: MutationObserver
   private observed: XUL.Element
   private globals: Record<string, any>
@@ -367,15 +368,15 @@ export class PrefPane {
     this.observed = this.globals.document.getElementById('zotero-prefpane-export')
     this.observer.observe(this.observed, { childList: true, subtree: true })
 
-    const tabbox = globals.document.getElementById('better-bibtex-prefs-tabbox')
-    tabbox.hidden = true
+    // const deck = globals.document.getElementById('better-bibtex-prefs-deck')
+    // deck.selectedIndex = 0
 
     await Zotero.BetterBibTeX.ready
 
     this.keyformat = this.globals.document.getElementById('id-better-bibtex-preferences-citekeyFormat')
     this.keyformat.disabled = false
 
-    tabbox.hidden = false
+    // deck.selectedIndex = 1
 
     if (typeof this.globals.Zotero_Preferences === 'undefined') {
       log.error('Preferences.load: Zotero_Preferences not ready')
@@ -384,6 +385,7 @@ export class PrefPane {
 
     this.autoexport = new AutoExportPane(globals)
 
+    const tabbox = globals.document.getElementById('better-bibtex-prefs-tabbox')
     $patch$(this.globals.Zotero_Preferences, 'openHelpLink', original => function() {
       if (globals.document.getElementsByTagName('prefwindow')[0].currentPane.helpTopic === 'BetterBibTeX') {
         const id = tabbox.selectedPanel.id
@@ -404,9 +406,10 @@ export class PrefPane {
     }
 
     // no other way that I know of to know that I've just been selected
-    const observer = new IntersectionObserver(this.resize.bind(this), { rootMargin: '0px', threshold: 1.0 })
-    observer.observe(tabbox)
+    // const observer = new IntersectionObserver(this.resize.bind(this), { rootMargin: '0px', threshold: 1.0 })
+    // observer.observe(tabbox)
     this.refresh()
+    this.timer = typeof this.timer === 'number' ? this.timer : this.globals.window.setInterval(this.refresh.bind(this), 500)  // eslint-disable-line no-magic-numbers
   }
 
   private resize() {
@@ -438,7 +441,13 @@ export class PrefPane {
   public refresh() {
     const pane = this.globals.document.getElementById('zotero-prefpane-better-bibtex')
     // unloaded
-    if (!pane) return
+    if (!pane) {
+      if (typeof this.timer === 'number') {
+        this.globals.window.clearInterval(this.timer)
+        this.timer = null
+      }
+      return
+    }
 
     this.checkCitekeyFormat()
     this.checkPostscript()

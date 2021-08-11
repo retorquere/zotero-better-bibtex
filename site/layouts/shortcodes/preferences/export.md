@@ -13,7 +13,7 @@ default: `no`
 
 Name handling is a lot more complex than I had ever thought it to be. A *lot* more complex. BibTeX has really limited ways of dealing with names with particles (van, von, de, etc). If you turn this on, BBT will add code to have `van Gogh` sorted under `Gogh`.
 
-#### Add URLs to BibTeX export
+#### Add URLs to BibTeX export:
 
 default: `no`
 
