@@ -106,7 +106,7 @@ default: `Minimize the number of switches between math-mode and text-mode`
 
 When a unicode character can be exported as either a math-mode or text-mode command, map to:
 
-* `minimal-packages`: if both a math-mode and a text-mode mapping is available, use the version that does not require    extra packages to be loaded. * `conservative`: if both a math-mode and a text-mode mapping is available, stay in the mode of the previously mapped    character if possible. This minimizes the number of generated `$`s in the output. * `text`: if both a math-mode and a text-mode mapping is available, prefer text. * `math`: if both a math-mode and a text-mode mapping is available, prefer math.
+* `minimal-packages`: if both a math-mode and a text-mode mapping is available, use the version that does not require extra packages to be loaded. * `conservative`: if both a math-mode and a text-mode mapping is available, stay in the mode of the previously mapped character if possible. This minimizes the number of generated `$`s in the output. * `text`: if both a math-mode and a text-mode mapping is available, prefer text. * `math`: if both a math-mode and a text-mode mapping is available, prefer math.
 
 Options:
 

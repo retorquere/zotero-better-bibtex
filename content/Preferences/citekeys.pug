@@ -1,0 +1,25 @@
+label(bbt:preference="pref-better-bibtex-citekeyFormat") &better-bibtex.Preferences.citekey.format;
+textbox#id-better-bibtex-preferences-citekeyFormat(
+  onfocus="bbt_prefpane.getCitekeyFormat(event.target);"
+  onblur="bbt_prefpane.saveCitekeyFormat(event.target);"
+  oninput="bbt_prefpane.checkCitekeyFormat(event.target);"
+  onkeypress="Zotero.setTimeout(function() { bbt_prefpane.checkCitekeyFormat(event.target) }, 1);"
+)
+label &better-bibtex.FirstRun.citekeyFormat.explanation.bbt.citekeyUpdate;
+checkbox(preference="pref-better-bibtex-citekeyFold" label="&better-bibtex.Preferences.citekey.fold;")
+checkbox(preference="pref-better-bibtex-citekeySearch" label="&better-bibtex.Preferences.citekey.search;")
+
+groupbox
+  caption(label="&better-bibtex.Preferences.citekey.uniqueness;")
+  // <description>&better-bibtex.Preferences.citekey.uniqueness.pin.description;</description>               
+  hbox
+    label(bbt:preference="pref-better-bibtex-keyScope") &better-bibtex.Preferences.citekey.uniqueness.scope;
+    menulist(preference="pref-better-bibtex-keyScope")
+      menupopup
+        menuitem(label="&better-bibtex.Preferences.citekey.uniqueness.scope.global;" value="global")
+        menuitem(label="&better-bibtex.Preferences.citekey.uniqueness.scope.library;" value="library")
+  label(bbt:preference="pref-better-bibtex-keyConflictPolicy") &better-bibtex.Preferences.citekey.uniqueness.conflict;
+  menulist(preference="pref-better-bibtex-keyConflictPolicy")
+    menupopup
+      menuitem(label="&better-bibtex.Preferences.citekey.uniqueness.conflict.change;" value="change")
+      menuitem(label="&better-bibtex.Preferences.citekey.uniqueness.conflict.keep;" value="keep")

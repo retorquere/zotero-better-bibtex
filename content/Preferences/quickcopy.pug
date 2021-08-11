@@ -1,0 +1,43 @@
+groupbox
+  caption(label='&better-bibtex.Preferences.citekey.quickCopy;')
+    vbox(style='height: 14em;' box-flex='1')
+      hbox
+        label(bbt:preference='pref-better-bibtex-quickCopyMode') &better-bibtex.Preferences.citekey.quickCopy.format;
+        menulist#id-better-bibtex-preferences-quickCopyMode(preference='pref-better-bibtex-quickCopyMode' preference-editable='true' oncommand='bbt_prefpane.refresh();')
+          menupopup
+            menuitem(label='&better-bibtex.Preferences.citekey.quickCopy.latex;' value='latex')
+            menuitem(label='&better-bibtex.Preferences.citekey.quickCopy.citekeys;' value='citekeys')
+            menuitem(label='&better-bibtex.Preferences.citekey.quickCopy.pandoc;' value='pandoc')
+            menuitem(label='&better-bibtex.Preferences.citekey.quickCopy.orgMode;' value='orgmode')
+            menuitem(label='&better-bibtex.Preferences.citekey.quickCopy.orgRef;' value='orgRef')
+            menuitem(label='&better-bibtex.Preferences.citekey.quickCopy.rtfScan;' value='rtfScan')
+            menuitem(label='&better-bibtex.Preferences.citekey.quickCopy.roamCiteKey;' value='roamCiteKey')
+            menuitem(label='&better-bibtex.Preferences.citekey.quickCopy.atom;' value='atom')
+            menuitem(label='&better-bibtex.Preferences.citekey.quickCopy.gitbook;' value='gitbook')
+            menuitem(label='&better-bibtex.Preferences.citekey.quickCopy.selectLink;' value='selectlink')
+            menuitem(label='&better-bibtex.Preferences.citekey.quickCopy.etaTemplate;' value='eta')
+
+      hbox#better-bibtex-preferences-quickcopy-latex.better-bibtex-preferences-quickcopy-details
+        label(bbt:preference='pref-better-bibtex-citeCommand') &better-bibtex.Preferences.citekey.quickCopy.latex.command;
+        textbox(size='10' preference='pref-better-bibtex-citeCommand' onchange='bbt_prefpane.refresh();' onkeypress='Zotero.setTimeout(function() { bbt_prefpane.refresh() }, 1);')
+
+      hbox#better-bibtex-preferences-quickcopy-pandoc.better-bibtex-preferences-quickcopy-details
+        checkbox#id-better-bibtex-preferences-quickCopyPandocBrackets(preference='pref-better-bibtex-quickCopyPandocBrackets' label='&better-bibtex.Preferences.citekey.quickCopy.pandoc.brackets;')
+
+      hbox#better-bibtex-preferences-quickcopy-orgmode.better-bibtex-preferences-quickcopy-details
+        label(bbt:preference='pref-better-bibtex-quickCopyOrgMode') &better-bibtex.Preferences.citekey.quickCopy.orgMode;
+        menulist(preference='pref-better-bibtex-quickCopyOrgMode')
+          menupopup
+            menuitem(label='&better-bibtex.Preferences.citekey.quickCopy.orgMode.zotero;' value='zotero')
+            menuitem(label='&better-bibtex.Preferences.citekey.quickCopy.orgMode.citekey;' value='citationkey')
+
+      hbox#better-bibtex-preferences-quickcopy-selectlink.better-bibtex-preferences-quickcopy-details
+        label(bbt:preference='pref-better-bibtex-quickCopySelectLink') &better-bibtex.Preferences.citekey.quickCopy.selectLink;
+        menulist(preference='pref-better-bibtex-quickCopySelectLink')
+          menupopup
+            menuitem(label='&better-bibtex.Preferences.citekey.quickCopy.selectLink.zotero;' value='zotero')
+            menuitem(label='&better-bibtex.Preferences.citekey.quickCopy.selectLink.citekey;' value='citationkey')
+
+      vbox#better-bibtex-preferences-quickcopy-eta.better-bibtex-preferences-quickcopy-details
+        label.text-link(href='https://retorque.re/zotero-better-bibtex/installation/preferences/citation-keys/#quick-copydrag-and-drop-citations' bbt:preference='pref-better-bibtex-quickCopyEta') &better-bibtex.Preferences.citekey.quickCopy.etaTemplate;
+        textbox(rows='10' multiline='true' preference='pref-better-bibtex-quickCopyEta')

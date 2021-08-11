@@ -48,6 +48,7 @@ Even though BBT exports happen in a separate thread, some work needs to be done 
 ### Import
 
 #### Sentence-case titles on import:
+                          
 
 default: `yes, but try to exclude already-sentence-cased titles`
 
@@ -137,5 +138,13 @@ When on, BBT will load kuroshiro for romajization in citation keys. This uses a 
 default: `no`
 
 When on, BBT will make Chinese word segmentation available for citation keys construction. This uses a lot of memory, easily 70MB. If you don't have Chinese titles/names, keep this off.
+
+### BibTeX AUX scanner
+
+#### When scanning an AUX file, attempt to import references from the attached bib file when their citation keys are not in Zotero
+
+default: `no`
+
+By default, when scanning for cited items in the aux file, BBT will just generate a note listing all citation keys it cannot find in Zotero. When this option is turned on, BBT will attempt to import such missing items from the bib file that the AUX file being scanned points to.
 
 

@@ -375,7 +375,7 @@ export class PrefPane {
     this.keyformat = this.globals.document.getElementById('id-better-bibtex-preferences-citekeyFormat')
     this.keyformat.disabled = false
 
-    // tabbox.hidden = false
+    tabbox.hidden = false
 
     if (typeof this.globals.Zotero_Preferences === 'undefined') {
       log.error('Preferences.load: Zotero_Preferences not ready')

@@ -6,11 +6,15 @@ from slugify import slugify
 import textwrap
 import json
 from collections import OrderedDict
-import os
+import os, sys
 import html
 from mako.template import Template
 import re
 from glob import glob
+
+if os.system('setup/preferences.js') != 0:
+  print('unpug failed')
+  sys.exit(1)
 
 root = os.path.join(os.path.dirname(__file__), '..')
 
