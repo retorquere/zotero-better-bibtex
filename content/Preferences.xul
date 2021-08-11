@@ -419,7 +419,6 @@
         <tabs id="better-bibtex-prefs-tabs" onselect="bbt_prefpane.refresh()">
           <tab label="&better-bibtex.Preferences.tab.citekey;"></tab>
           <tab label="&better-bibtex.Preferences.tab.export;"></tab>
-          <tab label="&better-bibtex.Preferences.tab.quickCopy;"></tab>
           <tab id="better-bibtex-prefs-auto-export" label="&better-bibtex.Preferences.tab.auto-export;"></tab>
           <tab label="&better-bibtex.Preferences.advanced;"></tab>
         </tabs>
@@ -459,6 +458,7 @@
                 <tab label="&better-bibtex.Preferences.export.bibtex;"></tab>
                 <tab label="&better-bibtex.Preferences.export.biblatex;"></tab>
                 <tab label="&better-bibtex.Preferences.export.fields;"></tab>
+                <tab label="&better-bibtex.Preferences.export.quickCopy;"></tab>
                 <tab label="&better-bibtex.Preferences.export.misc;"></tab>
               </tabs>
               <tabpanels>
@@ -515,6 +515,60 @@
                     <image tooltip="tooltip-jabrefFormat" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"></image>
                   </hbox>
                 </tabpanel>
+                <tabpanel flex="1" orient="vertical">
+                  <groupbox>
+                    <caption>&better-bibtex.Preferences.export.quickCopy.explanation;</caption>
+                    <vbox style="height: 14em;" flex="1">
+                      <hbox>
+                        <label bbt:preference="pref-better-bibtex-quickCopyMode">&better-bibtex.Preferences.export.quickCopy.format;</label>
+                        <menulist id="id-better-bibtex-preferences-quickCopyMode" preference="pref-better-bibtex-quickCopyMode" preference-editable="true" oncommand="bbt_prefpane.refresh();">
+                          <menupopup>
+                            <menuitem label="&better-bibtex.Preferences.export.quickCopy.latex;" value="latex"></menuitem>
+                            <menuitem label="&better-bibtex.Preferences.export.quickCopy.citekeys;" value="citekeys"></menuitem>
+                            <menuitem label="&better-bibtex.Preferences.export.quickCopy.pandoc;" value="pandoc"></menuitem>
+                            <menuitem label="&better-bibtex.Preferences.export.quickCopy.orgMode;" value="orgmode"></menuitem>
+                            <menuitem label="&better-bibtex.Preferences.export.quickCopy.orgRef;" value="orgRef"></menuitem>
+                            <menuitem label="&better-bibtex.Preferences.export.quickCopy.rtfScan;" value="rtfScan"></menuitem>
+                            <menuitem label="&better-bibtex.Preferences.export.quickCopy.roamCiteKey;" value="roamCiteKey"></menuitem>
+                            <menuitem label="&better-bibtex.Preferences.export.quickCopy.atom;" value="atom"></menuitem>
+                            <menuitem label="&better-bibtex.Preferences.export.quickCopy.gitbook;" value="gitbook"></menuitem>
+                            <menuitem label="&better-bibtex.Preferences.export.quickCopy.selectLink;" value="selectlink"></menuitem>
+                            <menuitem label="&better-bibtex.Preferences.export.quickCopy.etaTemplate;" value="eta"></menuitem>
+                          </menupopup>
+                        </menulist>
+                      </hbox>
+                      <hbox class="better-bibtex-preferences-quickcopy-details" id="better-bibtex-preferences-quickcopy-latex">
+                        <label bbt:preference="pref-better-bibtex-citeCommand">&better-bibtex.Preferences.export.quickCopy.latex.command;</label>
+                        <textbox size="10" preference="pref-better-bibtex-citeCommand" onchange="bbt_prefpane.refresh();" onkeypress="Zotero.setTimeout(function() { bbt_prefpane.refresh() }, 1);"></textbox>
+                      </hbox>
+                      <hbox class="better-bibtex-preferences-quickcopy-details" id="better-bibtex-preferences-quickcopy-pandoc">
+                        <checkbox id="id-better-bibtex-preferences-quickCopyPandocBrackets" preference="pref-better-bibtex-quickCopyPandocBrackets" label="&better-bibtex.Preferences.export.quickCopy.pandoc.brackets;"></checkbox>
+                      </hbox>
+                      <hbox class="better-bibtex-preferences-quickcopy-details" id="better-bibtex-preferences-quickcopy-orgmode">
+                        <label bbt:preference="pref-better-bibtex-quickCopyOrgMode">&better-bibtex.Preferences.export.quickCopy.orgMode;</label>
+                        <menulist preference="pref-better-bibtex-quickCopyOrgMode">
+                          <menupopup>
+                            <menuitem label="&better-bibtex.Preferences.export.quickCopy.orgMode.zotero;" value="zotero"></menuitem>
+                            <menuitem label="&better-bibtex.Preferences.export.quickCopy.orgMode.citekey;" value="citationkey"></menuitem>
+                          </menupopup>
+                        </menulist>
+                      </hbox>
+                      <hbox class="better-bibtex-preferences-quickcopy-details" id="better-bibtex-preferences-quickcopy-selectlink">
+                        <label bbt:preference="pref-better-bibtex-quickCopySelectLink">&better-bibtex.Preferences.export.quickCopy.selectLink;</label>
+                        <menulist preference="pref-better-bibtex-quickCopySelectLink">
+                          <menupopup>
+                            <menuitem label="&better-bibtex.Preferences.export.quickCopy.selectLink.zotero;" value="zotero"></menuitem>
+                            <menuitem label="&better-bibtex.Preferences.export.quickCopy.selectLink.citekey;" value="citationkey"></menuitem>
+                          </menupopup>
+                        </menulist>
+                      </hbox>
+                      <vbox class="better-bibtex-preferences-quickcopy-details" id="better-bibtex-preferences-quickcopy-eta">
+                        <label class="text-link" href="https://retorque.re/zotero-better-bibtex/installation/preferences/citation-keys/#quick-copydrag-and-drop-citations" bbt:preference="pref-better-bibtex-quickCopyEta">&better-bibtex.Preferences.export.quickCopy.etaTemplate;</label>
+                        <textbox rows="10" multiline="true" preference="pref-better-bibtex-quickCopyEta"></textbox>
+                      </vbox>
+                    </vbox>
+                  </groupbox>
+                </tabpanel>
                 <tabpanel orient="vertical">
                   <checkbox id="id-better-bibtex-preferences-autoAbbrev" label="&better-bibtex.Preferences.auto-abbrev;" preference="pref-better-bibtex-autoAbbrev"></checkbox>
                   <separator class="thin jurism" id="better-bibtex-abbrev-style-separator"></separator>
@@ -537,84 +591,30 @@
               </tabpanels>
             </tabbox>
           </tabpanel>
-          <tabpanel flex="1" orient="vertical">
-            <groupbox>
-              <caption>&better-bibtex.Preferences.quickCopy;</caption>
-              <vbox style="height: 14em;" flex="1">
-                <hbox>
-                  <label bbt:preference="pref-better-bibtex-quickCopyMode">&better-bibtex.Preferences.quickCopy.format;</label>
-                  <menulist id="id-better-bibtex-preferences-quickCopyMode" preference="pref-better-bibtex-quickCopyMode" preference-editable="true" oncommand="bbt_prefpane.refresh();">
-                    <menupopup>
-                      <menuitem label="&better-bibtex.Preferences.quickCopy.latex;" value="latex"></menuitem>
-                      <menuitem label="&better-bibtex.Preferences.quickCopy.citekeys;" value="citekeys"></menuitem>
-                      <menuitem label="&better-bibtex.Preferences.quickCopy.pandoc;" value="pandoc"></menuitem>
-                      <menuitem label="&better-bibtex.Preferences.quickCopy.orgMode;" value="orgmode"></menuitem>
-                      <menuitem label="&better-bibtex.Preferences.quickCopy.orgRef;" value="orgRef"></menuitem>
-                      <menuitem label="&better-bibtex.Preferences.quickCopy.rtfScan;" value="rtfScan"></menuitem>
-                      <menuitem label="&better-bibtex.Preferences.quickCopy.roamCiteKey;" value="roamCiteKey"></menuitem>
-                      <menuitem label="&better-bibtex.Preferences.quickCopy.atom;" value="atom"></menuitem>
-                      <menuitem label="&better-bibtex.Preferences.quickCopy.gitbook;" value="gitbook"></menuitem>
-                      <menuitem label="&better-bibtex.Preferences.quickCopy.selectLink;" value="selectlink"></menuitem>
-                      <menuitem label="&better-bibtex.Preferences.quickCopy.etaTemplate;" value="eta"></menuitem>
-                    </menupopup>
-                  </menulist>
-                </hbox>
-                <hbox class="better-bibtex-preferences-quickcopy-details" id="better-bibtex-preferences-quickcopy-latex">
-                  <label bbt:preference="pref-better-bibtex-citeCommand">&better-bibtex.Preferences.quickCopy.latex.command;</label>
-                  <textbox size="10" preference="pref-better-bibtex-citeCommand" onchange="bbt_prefpane.refresh();" onkeypress="Zotero.setTimeout(function() { bbt_prefpane.refresh() }, 1);"></textbox>
-                </hbox>
-                <hbox class="better-bibtex-preferences-quickcopy-details" id="better-bibtex-preferences-quickcopy-pandoc">
-                  <checkbox id="id-better-bibtex-preferences-quickCopyPandocBrackets" preference="pref-better-bibtex-quickCopyPandocBrackets" label="&better-bibtex.Preferences.quickCopy.pandoc.brackets;"></checkbox>
-                </hbox>
-                <hbox class="better-bibtex-preferences-quickcopy-details" id="better-bibtex-preferences-quickcopy-orgmode">
-                  <label bbt:preference="pref-better-bibtex-quickCopyOrgMode">&better-bibtex.Preferences.quickCopy.orgMode;</label>
-                  <menulist preference="pref-better-bibtex-quickCopyOrgMode">
-                    <menupopup>
-                      <menuitem label="&better-bibtex.Preferences.quickCopy.orgMode.zotero;" value="zotero"></menuitem>
-                      <menuitem label="&better-bibtex.Preferences.quickCopy.orgMode.citekey;" value="citationkey"></menuitem>
-                    </menupopup>
-                  </menulist>
-                </hbox>
-                <hbox class="better-bibtex-preferences-quickcopy-details" id="better-bibtex-preferences-quickcopy-selectlink">
-                  <label bbt:preference="pref-better-bibtex-quickCopySelectLink">&better-bibtex.Preferences.quickCopy.selectLink;</label>
-                  <menulist preference="pref-better-bibtex-quickCopySelectLink">
-                    <menupopup>
-                      <menuitem label="&better-bibtex.Preferences.quickCopy.selectLink.zotero;" value="zotero"></menuitem>
-                      <menuitem label="&better-bibtex.Preferences.quickCopy.selectLink.citekey;" value="citationkey"></menuitem>
-                    </menupopup>
-                  </menulist>
-                </hbox>
-                <vbox class="better-bibtex-preferences-quickcopy-details" id="better-bibtex-preferences-quickcopy-eta">
-                  <label class="text-link" href="https://retorque.re/zotero-better-bibtex/installation/preferences/citation-keys/#quick-copydrag-and-drop-citations" bbt:preference="pref-better-bibtex-quickCopyEta">&better-bibtex.Preferences.quickCopy.etaTemplate;</label>
-                  <textbox rows="10" multiline="true" preference="pref-better-bibtex-quickCopyEta"></textbox>
-                </vbox>
-              </vbox>
-            </groupbox>
-          </tabpanel>
           <tabpanel id="better-bibtex-prefs-automatic-export" flex="1" orient="vertical">
-            <vbox class="scrollable" hidden="true">
-              <vbox flex="1">
-                <label>&better-bibtex.Preferences.auto-export.explanation;</label>
-                <separator class="thin"></separator>
-                <hbox>
-                  <label bbt:preference="pref-better-bibtex-autoExport">&better-bibtex.Preferences.auto-export;</label>
-                  <menulist preference="pref-better-bibtex-autoExport">
-                    <menupopup>
-                      <menuitem label="&better-bibtex.Preferences.auto-export.off;" value="off"></menuitem>
-                      <menuitem label="&better-bibtex.Preferences.auto-export.immediate;" value="immediate"></menuitem>
-                      <menuitem label="&better-bibtex.Preferences.auto-export.idle;" value="idle"></menuitem>
-                    </menupopup>
-                  </menulist>
-                </hbox>
-              </vbox>
-              <tabbox id="better-bibtex-prefs-auto-export-tabbox" hidden="true">
-                <arrowscrollbox class="tabbrowser-arrowscrollbox" allowevents="true" orient="horizontal">
-                  <tabs id="better-bibtex-prefs-auto-export-tabs">
-                    <tab label="auto-export"></tab>
-                  </tabs>
-                </arrowscrollbox>
-                <tabpanels id="better-bibtex-prefs-auto-export-tabpanels" flex="1">
-                  <tabpanel class="better-bibtex-scroll" flex="1" orient="vertical">
+            <vbox flex="1">
+              <label>&better-bibtex.Preferences.auto-export.explanation;</label>
+              <separator class="thin"></separator>
+              <hbox>
+                <label bbt:preference="pref-better-bibtex-autoExport">&better-bibtex.Preferences.auto-export;</label>
+                <menulist preference="pref-better-bibtex-autoExport">
+                  <menupopup>
+                    <menuitem label="&better-bibtex.Preferences.auto-export.off;" value="off"></menuitem>
+                    <menuitem label="&better-bibtex.Preferences.auto-export.immediate;" value="immediate"></menuitem>
+                    <menuitem label="&better-bibtex.Preferences.auto-export.idle;" value="idle"></menuitem>
+                  </menupopup>
+                </menulist>
+              </hbox>
+            </vbox>
+            <tabbox id="better-bibtex-prefs-auto-export-tabbox" hidden="true">
+              <arrowscrollbox class="tabbrowser-arrowscrollbox" allowevents="true" orient="horizontal">
+                <tabs id="better-bibtex-prefs-auto-export-tabs">
+                  <tab label="auto-export"></tab>
+                </tabs>
+              </arrowscrollbox>
+              <tabpanels id="better-bibtex-prefs-auto-export-tabpanels" flex="1">
+                <tabpanel flex="1" orient="vertical">
+                  <vbox class="scrollable">
                     <grid flex="1">
                       <columns>
                         <column></column>
@@ -690,10 +690,10 @@
                       <button label="&better-bibtex.Preferences.auto-export.fields.cached;:" bbt:ae-id="" oncommand="bbt_prefpane.autoexport.refreshCacheRate(event.target)"></button>
                       <textbox class="plain" readonly="true" value="" bbt:ae-field="cacherate" bbt:ae-id=""></textbox>
                     </hbox>
-                  </tabpanel>
-                </tabpanels>
-              </tabbox>
-            </vbox>
+                  </vbox>
+                </tabpanel>
+              </tabpanels>
+            </tabbox>
           </tabpanel>
           <tabpanel id="better-bibtex-prefs-advanced" flex="1" orient="vertical">
             <vbox class="scrollable" hidden="true">

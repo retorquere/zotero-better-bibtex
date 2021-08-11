@@ -53,7 +53,6 @@ overlay#zotero-better-bibtex-preferences(xmlns="http://www.mozilla.org/keymaster
         tabs#better-bibtex-prefs-tabs(onselect="bbt_prefpane.refresh()")
           tab(label="&better-bibtex.Preferences.tab.citekey;")
           tab(label="&better-bibtex.Preferences.tab.export;")
-          tab(label="&better-bibtex.Preferences.tab.quickCopy;")
           tab#better-bibtex-prefs-auto-export(label="&better-bibtex.Preferences.tab.auto-export;")
           tab(label="&better-bibtex.Preferences.advanced;")
 
@@ -62,11 +61,8 @@ overlay#zotero-better-bibtex-preferences(xmlns="http://www.mozilla.org/keymaster
             include Preferences/citekeys.pug
           tabpanel#better-bibtex-prefs-export(flex="1" orient="vertical")
             include Preferences/export.pug
-          tabpanel(flex="1" orient="vertical")
-            include Preferences/quickcopy.pug
           tabpanel#better-bibtex-prefs-automatic-export(flex="1" orient="vertical")
-            vbox.scrollable(hidden='true')
-              include Preferences/autoexport.pug
+            include Preferences/autoexport.pug
           tabpanel#better-bibtex-prefs-advanced(flex="1" orient="vertical")
             vbox.scrollable(hidden='true')
               include Preferences/advanced.pug
