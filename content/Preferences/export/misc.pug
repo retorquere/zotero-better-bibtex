@@ -1,10 +1,14 @@
 checkbox#id-better-bibtex-preferences-autoAbbrev(label="&better-bibtex.Preferences.auto-abbrev;" preference="pref-better-bibtex-autoAbbrev")
+
 separator#better-bibtex-abbrev-style-separator.thin.jurism
+
 label#better-bibtex-abbrev-style-label.jurism(bbt:preference="pref-better-bibtex-autoAbbrevStyle") &better-bibtex.Preferences.auto-abbrev.style;
 menulist#better-bibtex-abbrev-style.jurism(onchange="bbt_prefpane.styleChanged()")
   menupopup#better-bibtex-abbrev-style-popup
+
 checkbox(label="&better-bibtex.Preferences.export.qualityReport;" preference="pref-better-bibtex-qualityReport")
 checkbox(label="&better-bibtex.Preferences.export.automaticTags;" preference="pref-better-bibtex-automaticTags")
+
 label(bbt:preference="pref-better-bibtex-mapUnicode") &better-bibtex.Preferences.export.map-unicode;
 menulist(preference="pref-better-bibtex-mapUnicode")
   menupopup
@@ -12,3 +16,21 @@ menulist(preference="pref-better-bibtex-mapUnicode")
     menuitem(label="&better-bibtex.Preferences.export.map-unicode.conservative;" value="conservative")
     menuitem(label="&better-bibtex.Preferences.export.map-unicode.text;" value="text")
     menuitem(label="&better-bibtex.Preferences.export.map-unicode.math;" value="math")
+
+hbox
+  checkbox(preference="pref-better-bibtex-exportTitleCase" label="&better-bibtex.Preferences.advanced.export.titleCase;")
+  image(tooltip="tooltip-exportTitleCase" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16")
+hbox
+  checkbox(preference="pref-better-bibtex-exportBraceProtection" label="&better-bibtex.Preferences.advanced.export.braceProtection;")
+  image(tooltip="tooltip-exportBraceProtection" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16")
+hbox
+  checkbox(preference="pref-better-bibtex-retainCache" label="&better-bibtex.Preferences.advanced.export.retainCache;")
+  image(tooltip="tooltip-retainCache" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16")
+hbox
+  label(bbt:preference="pref-better-bibtex-workersMax") &better-bibtex.Preferences.advanced.export.workers;
+  scale(min="1" max="10" preference="pref-better-bibtex-workersMax")
+  checkbox(preference="pref-better-bibtex-workersCache" label="&better-bibtex.Preferences.advanced.export.workers.cache;")
+label.better-bibtex-preferences-worker-state
+hbox
+  button(label="&better-bibtex.Preferences.resetCache;" oncommand="bbt_prefpane.cacheReset()")
+  hbox(flex='1')

@@ -415,6 +415,28 @@ export class PrefPane {
   private resize() {
     log.debug('preference.resize')
     /*
+    function unpx(size: string): number { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+      if (typeof size === 'number') return size
+      const px = parseInt(size.replace(/px$/, ''))
+      if (isNaN(px)) throw new Error(`${size} is not in px`)
+      return px
+    }
+    for (const prefpane of [...this.globals.document.getElementsByTagNameNS('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', 'prefpane')]) {
+      log.debug('prefpane', prefpane.id, 'height:', prefpane.getBoundingClientRect().height, 'parent:', prefpane.parentElement.tagName)
+      let height = 300 // eslint-disable-line no-magic-numbers
+      for (const child of [...prefpane.children]) {
+        const bbox = child.getBoundingClientRect()
+        const style = this.globals.window.getComputedStyle(child)
+
+        log.debug('  child:', child.tagName, 'height:', unpx(bbox.height) + unpx(style.marginTop) + unpx(style.marginBottom))
+        height += unpx(bbox.height) + unpx(style.marginTop) + unpx(style.marginBottom)
+      }
+      // prefpane.style.height = `${height}px`
+      prefpane.parentElement.style.height = `${height}px`
+      log.debug('prefpane', prefpane.id, 'reset to', height, 'actual:', prefpane.getBoundingClientRect().height)
+
+    }
+
     const tabbox = this.globals.document.getElementById('better-bibtex-prefs-auto-export-tabbox')
 
     this.globals.window.sizeToContent()

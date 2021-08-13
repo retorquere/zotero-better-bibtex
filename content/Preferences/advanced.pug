@@ -1,29 +1,16 @@
 description &better-bibtex.Preferences.advanced.warning;
 tabbox
   tabs
-    tab(bbt:preference="pref-better-bibtex-postscript" label="&better-bibtex.Preferences.advanced.tab.postscript;")
     tab(label="&better-bibtex.Preferences.advanced.tab.citekeys;")
-    tab(label="&better-bibtex.Preferences.advanced.tab.export;")
     tab(label="&better-bibtex.Preferences.advanced.tab.import;")
     tab(bbt:preference="pref-better-bibtex-strings" label="&better-bibtex.Preferences.advanced.tab.strings;")
 
   tabpanels
     tabpanel(orient="vertical")
-      vbox.hidden
-        include advanced/postscript.pug
+      include advanced/citekeys.pug
 
     tabpanel(orient="vertical")
-      vbox.hidden
-        include advanced/citekeys.pug
+      include advanced/import.pug
 
     tabpanel(orient="vertical")
-      vbox.hidden
-        include advanced/export.pug
-
-    tabpanel(orient="vertical")
-      vbox.hidden
-        include advanced/import.pug
-
-    tabpanel(orient="vertical")
-      vbox.hidden
-        include advanced/strings.pug
+      include advanced/strings.pug

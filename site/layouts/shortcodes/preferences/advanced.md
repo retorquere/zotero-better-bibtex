@@ -1,10 +1,4 @@
 {{/* DO NOT EDIT. This shortcode is created automatically from Preferences.xul */}}
-#### postscript
-
-default: `<not set>`
-
-Snippet of javascript to run [after each reference generation]({{ ref . "exporting/scripting.md" }}).
-
 #### @string definitions
 
 default: `<not set>`
@@ -12,12 +6,6 @@ default: `<not set>`
 If you have externally maintained `@string` vars paste them here and they will be resolved for subsequent imports. These should be entered as `@string` declarations, such as `@string{IEEE_J_PWRE = "{IEEE} Transactions on Power Electronics"}`, not just the var name.
 
 ### Citation keys
-
-#### Warn me when changing citation keys in bulk
-
-default: `10`
-
-For those who are curious about what the `Clear/Generate BibTeX key` right-click options do, this will warn you if you are doing this on more than 10 (default) at the same time, to prevent your curiosity from changing all your citation keys at once.
 
 #### their citation keys into an bib(la)tex `ids` field
 
@@ -37,56 +25,10 @@ default: `no`
 
 When merging items, also merge their `tex.*` fields.
 
-#### Apply kuroshiro romajization in Japanese names/titles. Uses a lot of memory.
-
-default: `no`
-
-When on, BBT will load kuroshiro for romajization in citation keys. This uses a lot of memory, easily 100MB. If you don't have Japanese titles/names, keep this off.
-
-#### Enable 'jieba' filter in citekey patterns. Uses a lot of memory.
-
-default: `no`
-
-When on, BBT will make Chinese word segmentation available for citation keys construction. This uses a lot of memory, easily 70MB. If you don't have Chinese titles/names, keep this off.
-
-### Export
-
-#### Apply title-casing to titles
-
-default: `yes`
-
-If you're dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero recommendations on title/sentence casing, you can turn this off to suppress [title casing for English references]({{ ref . "support/faq#bbt-is-changing-the-capitalization-of-my-titles-why" }})
-
-#### Apply case-protection to capitalized words by enclosing them in braces
-
-default: `yes`
-
-If you're dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero recommendations on title/sentence casing, you can turn this off to suppress [automatic brace-protection for words with uppercase letters]({{ ref . "support/faq#why-the-double-braces" }}).
-
-#### Retain export cache across upgrades
-
-default: `no`
-
-By default, BBT clears all caches whenever BBT or Zotero is upgraded. I can't realistically predict whether a change in Zotero or BBT is going to affect the output generated for any given item, so to be sure you always have the latest export-affecting fixes, the caches are discarded when a new version of either is detected. If you have a very large library however, of which you regularly export significant portions, you might want to retain the cached items even if that does come with the risk that you get wrong output on export that has been fixed in the interim.
-
-If you have this on, and you experience any problem that is not the cache getting dropped on upgrade, you *must* clear the cache and reproduce the problem. When you change this setting, as with any setting change, the cache will be dropped.
-
-#### Parallel background exports:
-
-default: `1`
-
-BBT can now perform its exports in a separate thread, and should no longer block Zotero's UI pretty much regardless of how large your library is. The default of 1 parallel export should suit most needs, but if you have many auto-exports set up, you may want to raise the maximum parallel exports to prevent queueing of exports. It is possible to turn background exports off by setting this value to `0` in the hidden preferences; you will get the old (blocking) behavior back, but you can't complain about Zotero being laggy during auto-exports. All Zotero exports are blocking, and it's a minor miracle I got background exports to work at all.
-
-#### Enable caching for background exports
-
-default: `yes`
-
-Even though BBT exports happen in a separate thread, some work needs to be done before the background export can start. Part of this work is preloading the cache. You can shorten the (blocking) preparation time by turning off the cache, at the cost of longer export times.
-
 ### Import
 
 #### Sentence-case titles on import:
-                          
+                        
 
 default: `yes, but try to exclude already-sentence-cased titles`
 

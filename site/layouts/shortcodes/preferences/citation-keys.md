@@ -41,4 +41,24 @@ Options:
 * postfixed (causes key changes)
 * kept (causes key duplicates)
 
+### Ideographs in citekeys
+
+#### Apply kuroshiro romajization in Japanese names/titles. Uses a lot of memory.
+
+default: `no`
+
+When on, BBT will load kuroshiro for romajization in citation keys. This uses a lot of memory, easily 100MB. If you don't have Japanese titles/names, keep this off.
+
+#### Enable 'jieba' filter in citekey patterns. Uses a lot of memory.
+
+default: `no`
+
+When on, BBT will make Chinese word segmentation available for citation keys construction. This uses a lot of memory, easily 70MB. If you don't have Chinese titles/names, keep this off.
+
+#### Warn me when changing citation keys in bulk
+
+default: `10`
+
+For those who are curious about what the `Clear/Generate BibTeX key` right-click options do, this will warn you if you are doing this on more than 10 (default) at the same time, to prevent your curiosity from changing all your citation keys at once.
+
 
