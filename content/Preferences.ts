@@ -439,6 +439,7 @@ export class PrefPane {
     this.globals.window.sizeToContent()
     const tabbox = this.globals.document.getElementById('better-bibtex-prefs-tabbox')
     tabbox.height = tabbox.boxObject.height
+    tabbox.width = tabbox.boxObject.width
     this.globals.window.sizeToContent()
 
     /*
