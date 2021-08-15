@@ -5,11 +5,6 @@
 #better-bibtex-export-list listitem.export-state-running  { background:url("auto-export/running.svg") center left no-repeat; background-size: 18px 18px;}
 #better-bibtex-export-list listitem.export-state-done     { background:url("auto-export/done.svg")    center left no-repeat; background-size: 18px 18px;}
 
-prefpane {
-  background: cyan !important;
-  border: 2px solid red !important;
-}
-
 .scrollable {
   overflow: auto;
 }

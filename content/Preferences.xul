@@ -422,7 +422,8 @@
           <tab id="better-bibtex-prefs-citekey" label="&better-bibtex.Preferences.tab.citekey;"></tab>
           <tab id="better-bibtex-prefs-export" label="&better-bibtex.Preferences.tab.export;"></tab>
           <tab id="better-bibtex-prefs-auto-export" label="&better-bibtex.Preferences.tab.auto-export;"></tab>
-          <tab id="better-bibtex-prefs-auto-advanced" label="&better-bibtex.Preferences.advanced;"></tab>
+          <tab label="&better-bibtex.Preferences.advanced.tab.import;"></tab>
+          <tab label="&better-bibtex.Preferences.export.misc;"></tab>
         </tabs>
         <tabpanels id="better-bibtex-prefs-tabpanels" flex="1">
           <tabpanel id="better-bibtex-prefs-citation-keys" flex="1" orient="vertical">
@@ -464,7 +465,7 @@
               <textbox size="5" preference="pref-better-bibtex-warnBulkModify"></textbox>
             </hbox>
             <hbox>
-              <button label="&better-bibtex.Preferences.rescan-citekeys;" oncommand="bbt_prefpane.rescanCitekeys()"></button>
+              <button class="hidden" id="rescan-citekeys" label="&better-bibtex.Preferences.rescan-citekeys;" oncommand="bbt_prefpane.rescanCitekeys()"></button>
             </hbox>
           </tabpanel>
           <tabpanel id="better-bibtex-prefs-export" flex="1" orient="vertical">
@@ -485,15 +486,18 @@
                     <label bbt:preference="pref-better-bibtex-bibtexURL">&better-bibtex.Preferences.export.bibtex.URLs;:</label>
                     <image tooltip="tooltip-bibtexURL" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"></image>
                   </hbox>
-                  <menulist preference="pref-better-bibtex-bibtexURL">
-                    <menupopup>
-                      <menuitem label="&better-bibtex.Preferences.export.bibtex.URLs.off;" value="off"></menuitem>
-                      <menuitem label="&better-bibtex.Preferences.export.bibtex.URLs.note;" value="note"></menuitem>
-                      <menuitem label="&better-bibtex.Preferences.export.bibtex.URLs.note-url-ish;" value="note-url-ish"></menuitem>
-                      <menuitem label="&better-bibtex.Preferences.export.bibtex.URLs.url;" value="url"></menuitem>
-                      <menuitem label="&better-bibtex.Preferences.export.bibtex.URLs.url-ish;" value="url-ish"></menuitem>
-                    </menupopup>
-                  </menulist>
+                  <hbox>
+                    <menulist preference="pref-better-bibtex-bibtexURL">
+                      <menupopup>
+                        <menuitem label="&better-bibtex.Preferences.export.bibtex.URLs.off;" value="off"></menuitem>
+                        <menuitem label="&better-bibtex.Preferences.export.bibtex.URLs.note;" value="note"></menuitem>
+                        <menuitem label="&better-bibtex.Preferences.export.bibtex.URLs.note-url-ish;" value="note-url-ish"></menuitem>
+                        <menuitem label="&better-bibtex.Preferences.export.bibtex.URLs.url;" value="url"></menuitem>
+                        <menuitem label="&better-bibtex.Preferences.export.bibtex.URLs.url-ish;" value="url-ish"></menuitem>
+                      </menupopup>
+                    </menulist>
+                    <hbox flex="1"></hbox>
+                  </hbox>
                 </tabpanel>
                 <tabpanel orient="vertical">
                   <checkbox preference="pref-better-bibtex-asciiBibLaTeX" label="&better-bibtex.Preferences.export.biblatex.ascii;"></checkbox>
@@ -578,17 +582,14 @@
                       </hbox>
                       <vbox class="better-bibtex-preferences-quickcopy-details" id="better-bibtex-preferences-quickcopy-eta">
                         <label class="text-link" href="https://retorque.re/zotero-better-bibtex/installation/preferences/citation-keys/#quick-copydrag-and-drop-citations" bbt:preference="pref-better-bibtex-quickCopyEta">&better-bibtex.Preferences.export.quickCopy.etaTemplate;</label>
-                        <!-- textbox(rows='10' multiline='true' preference='pref-better-bibtex-quickCopyEta')-->
-                        <textbox preference="pref-better-bibtex-quickCopyEta"></textbox>
+                        <textbox rows="10" multiline="true" preference="pref-better-bibtex-quickCopyEta"></textbox>
                       </vbox>
                     </vbox>
                   </groupbox>
                 </tabpanel>
                 <tabpanel orient="vertical">
-                  <!-- textbox#zotero-better-bibtex-postscript(rows="10" flex="1" multiline="true" preference="pref-better-bibtex-postscript" onblur="bbt_prefpane.checkPostscript();" oninput="bbt_prefpane.checkPostscript();" onkeypress="Zotero.setTimeout(function() { bbt_prefpane.checkPostscript() }, 1);")-->
-                  <textbox id="zotero-better-bibtex-postscript" preference="pref-better-bibtex-postscript" onblur="bbt_prefpane.checkPostscript();" oninput="bbt_prefpane.checkPostscript();" onkeypress="Zotero.setTimeout(function() { bbt_prefpane.checkPostscript() }, 1);"></textbox>
-                  <!-- textbox#better-bibtex-cache-warn-postscript.plain.textbox-emph(rows="2" multiline="true" flex="1" readonly="true" value="&better-bibtex.Preferences.postscript.warn;")-->
-                  <textbox class="plain textbox-emph" id="better-bibtex-cache-warn-postscript" readonly="true" value="&better-bibtex.Preferences.postscript.warn;"></textbox>
+                  <textbox id="zotero-better-bibtex-postscript" rows="10" multiline="true" preference="pref-better-bibtex-postscript" onblur="bbt_prefpane.checkPostscript();" oninput="bbt_prefpane.checkPostscript();" onkeypress="Zotero.setTimeout(function() { bbt_prefpane.checkPostscript() }, 1);"></textbox>
+                  <textbox class="plain textbox-emph" id="better-bibtex-cache-warn-postscript" rows="2" multiline="true" readonly="true" value="&better-bibtex.Preferences.postscript.warn;"></textbox>
                 </tabpanel>
                 <tabpanel orient="vertical">
                   <checkbox id="id-better-bibtex-preferences-autoAbbrev" label="&better-bibtex.Preferences.auto-abbrev;" preference="pref-better-bibtex-autoAbbrev"></checkbox>
@@ -616,20 +617,23 @@
                     <checkbox preference="pref-better-bibtex-exportBraceProtection" label="&better-bibtex.Preferences.advanced.export.braceProtection;"></checkbox>
                     <image tooltip="tooltip-exportBraceProtection" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"></image>
                   </hbox>
-                  <hbox>
-                    <checkbox preference="pref-better-bibtex-retainCache" label="&better-bibtex.Preferences.advanced.export.retainCache;"></checkbox>
-                    <image tooltip="tooltip-retainCache" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"></image>
-                  </hbox>
-                  <hbox>
-                    <label bbt:preference="pref-better-bibtex-workersMax">&better-bibtex.Preferences.advanced.export.workers;</label>
-                    <scale min="1" max="10" preference="pref-better-bibtex-workersMax"></scale>
-                    <checkbox preference="pref-better-bibtex-workersCache" label="&better-bibtex.Preferences.advanced.export.workers.cache;"></checkbox>
-                  </hbox>
-                  <label class="better-bibtex-preferences-worker-state"></label>
-                  <hbox>
-                    <button label="&better-bibtex.Preferences.resetCache;" oncommand="bbt_prefpane.cacheReset()"></button>
-                    <hbox flex="1"></hbox>
-                  </hbox>
+                  <groupbox>
+                    <caption>Cache</caption>
+                    <hbox>
+                      <checkbox preference="pref-better-bibtex-retainCache" label="&better-bibtex.Preferences.advanced.export.retainCache;"></checkbox>
+                      <image tooltip="tooltip-retainCache" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"></image>
+                    </hbox>
+                    <hbox>
+                      <label bbt:preference="pref-better-bibtex-workersMax">&better-bibtex.Preferences.advanced.export.workers;</label>
+                      <scale min="1" max="10" preference="pref-better-bibtex-workersMax"></scale>
+                      <checkbox preference="pref-better-bibtex-workersCache" label="&better-bibtex.Preferences.advanced.export.workers.cache;"></checkbox>
+                    </hbox>
+                    <label class="better-bibtex-preferences-worker-state"></label>
+                    <hbox>
+                      <button label="&better-bibtex.Preferences.resetCache;" oncommand="bbt_prefpane.cacheReset()"></button>
+                      <hbox flex="1"></hbox>
+                    </hbox>
+                  </groupbox>
                 </tabpanel>
               </tabpanels>
             </tabbox>
@@ -738,12 +742,36 @@
               </tabpanels>
             </tabbox>
           </tabpanel>
+          <tabpanel id="better-bibtex-prefs-import" flex="1" orient="vertical">
+            <hbox>
+              <groupbox>
+                <caption bbt:preference="pref-better-bibtex-importSentenceCase">&better-bibtex.Preferences.advanced.import.sentenceCase;
+                  <image tooltip="tooltip-importSentenceCase" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"></image>
+                </caption>
+                <radiogroup preference="pref-better-bibtex-importSentenceCase">
+                  <radio label="&better-bibtex.Preferences.advanced.import.sentenceCase.on_guess;" value="on+guess"></radio>
+                  <radio label="&better-bibtex.Preferences.advanced.import.sentenceCase.on;" value="on"></radio>
+                  <radio label="&better-bibtex.Preferences.advanced.import.sentenceCase.off;" value="off"></radio>
+                </radiogroup>
+              </groupbox>
+            </hbox>
+            <hbox>
+              <label bbt:preference="pref-better-bibtex-importCaseProtection">&better-bibtex.Preferences.advanced.import.caseProtection;</label>
+              <menulist preference="pref-better-bibtex-importCaseProtection">
+                <menupopup>
+                  <menuitem label="&better-bibtex.Preferences.advanced.import.caseProtection.as_needed;" value="as-needed"></menuitem>
+                  <menuitem label="&better-bibtex.Preferences.advanced.import.caseProtection.on;" value="on"></menuitem>
+                  <menuitem label="&better-bibtex.Preferences.advanced.import.caseProtection.off;" value="off"></menuitem>
+                </menupopup>
+              </menulist>
+              <image tooltip="tooltip-importCaseProtection" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"></image>
+            </hbox>
+            <checkbox preference="pref-better-bibtex-aux-import" label="&better-bibtex.Preferences.citekey.AUXScanner.import;"></checkbox>
+          </tabpanel>
           <tabpanel id="better-bibtex-prefs-advanced" flex="1" orient="vertical">
-            <description>&better-bibtex.Preferences.advanced.warning;</description>
             <tabbox>
               <tabs>
-                <tab label="&better-bibtex.Preferences.advanced.tab.citekeys;"></tab>
-                <tab label="&better-bibtex.Preferences.advanced.tab.import;"></tab>
+                <tab label="&better-bibtex.Preferences.export.fields;"></tab>
                 <tab bbt:preference="pref-better-bibtex-strings" label="&better-bibtex.Preferences.advanced.tab.strings;"></tab>
               </tabs>
               <tabpanels>
@@ -756,32 +784,6 @@
                   </groupbox>
                 </tabpanel>
                 <tabpanel orient="vertical">
-                  <hbox>
-                    <groupbox>
-                      <caption bbt:preference="pref-better-bibtex-importSentenceCase">&better-bibtex.Preferences.advanced.import.sentenceCase;
-                        <image tooltip="tooltip-importSentenceCase" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"></image>
-                      </caption>
-                      <radiogroup preference="pref-better-bibtex-importSentenceCase">
-                        <radio label="&better-bibtex.Preferences.advanced.import.sentenceCase.on_guess;" value="on+guess"></radio>
-                        <radio label="&better-bibtex.Preferences.advanced.import.sentenceCase.on;" value="on"></radio>
-                        <radio label="&better-bibtex.Preferences.advanced.import.sentenceCase.off;" value="off"></radio>
-                      </radiogroup>
-                    </groupbox>
-                  </hbox>
-                  <hbox>
-                    <label bbt:preference="pref-better-bibtex-importCaseProtection">&better-bibtex.Preferences.advanced.import.caseProtection;</label>
-                    <menulist preference="pref-better-bibtex-importCaseProtection">
-                      <menupopup>
-                        <menuitem label="&better-bibtex.Preferences.advanced.import.caseProtection.as_needed;" value="as-needed"></menuitem>
-                        <menuitem label="&better-bibtex.Preferences.advanced.import.caseProtection.on;" value="on"></menuitem>
-                        <menuitem label="&better-bibtex.Preferences.advanced.import.caseProtection.off;" value="off"></menuitem>
-                      </menupopup>
-                    </menulist>
-                    <image tooltip="tooltip-importCaseProtection" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"></image>
-                  </hbox>
-                  <checkbox preference="pref-better-bibtex-aux-import" label="&better-bibtex.Preferences.citekey.AUXScanner.import;"></checkbox>
-                </tabpanel>
-                <tabpanel orient="vertical">
                   <checkbox preference="pref-better-bibtex-importBibTeXStrings" label="&better-bibtex.Preferences.export.fields.import-strings;"></checkbox>
                   <groupbox>
                     <caption label="&better-bibtex.Preferences.export.fields.export-strings;" bbt:preference="pref-better-bibtex-exportBibTeXStrings"></caption>
@@ -792,8 +794,7 @@
                       <radio label="&better-bibtex.Preferences.export.fields.export-strings.match_reverse;" value="match+reverse"></radio>
                     </radiogroup>
                   </groupbox>
-                  <!-- textbox(rows="10" flex="1" multiline="true" preference="pref-better-bibtex-strings")-->
-                  <textbox preference="pref-better-bibtex-strings"></textbox>
+                  <textbox rows="10" multiline="true" preference="pref-better-bibtex-strings"></textbox>
                 </tabpanel>
               </tabpanels>
             </tabbox>

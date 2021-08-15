@@ -251,6 +251,7 @@ export class PrefPane {
   private observer: MutationObserver
   private observed: XUL.Element
   private globals: Record<string, any>
+  // private prefwindow: HTMLElement
 
   public getCitekeyFormat(target = null): void {
     if (target) this.keyformat = target
@@ -364,9 +365,13 @@ export class PrefPane {
 
   public async load(globals: Record<string, any>): Promise<void> {
     this.globals = globals
+
+    this.globals.window.addEventListener('unload', this.unload.bind(this))
+
     this.observer = new MutationObserver(this.mutated.bind(this))
     this.observed = this.globals.document.getElementById('zotero-prefpane-export')
     this.observer.observe(this.observed, { childList: true, subtree: true })
+    // this.prefwindow = globals.document.getElementsByTagName('prefwindow')[0]
 
     // const deck = globals.document.getElementById('better-bibtex-prefs-deck')
     // deck.selectedIndex = 0
@@ -375,6 +380,8 @@ export class PrefPane {
 
     this.keyformat = this.globals.document.getElementById('id-better-bibtex-preferences-citekeyFormat')
     this.keyformat.disabled = false
+
+    this.globals.document.getElementById('rescan-citekeys').hidden = !Zotero.Debug.enabled
 
     // deck.selectedIndex = 1
 
@@ -387,7 +394,7 @@ export class PrefPane {
 
     const tabbox = globals.document.getElementById('better-bibtex-prefs-tabbox')
     $patch$(this.globals.Zotero_Preferences, 'openHelpLink', original => function() {
-      if (globals.document.getElementsByTagName('prefwindow')[0].currentPane.helpTopic === 'BetterBibTeX') {
+      if (this.prefwindow.currentPane.helpTopic === 'BetterBibTeX') {
         const id = tabbox.selectedPanel.id
         if (id) this.openURL(`https://retorque.re/zotero-better-bibtex/configuration/#${id.replace('better-bibtex-prefs-', '')}`)
       }
@@ -412,62 +419,66 @@ export class PrefPane {
     this.timer = typeof this.timer === 'number' ? this.timer : this.globals.window.setInterval(this.refresh.bind(this), 500)  // eslint-disable-line no-magic-numbers
   }
 
-  private resize() {
-    log.debug('preference.resize')
-    /*
-    function unpx(size: string): number { // eslint-disable-line prefer-arrow/prefer-arrow-functions
-      if (typeof size === 'number') return size
-      const px = parseInt(size.replace(/px$/, ''))
-      if (isNaN(px)) throw new Error(`${size} is not in px`)
-      return px
-    }
-    for (const prefpane of [...this.globals.document.getElementsByTagNameNS('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', 'prefpane')]) {
-      log.debug('prefpane', prefpane.id, 'height:', prefpane.getBoundingClientRect().height, 'parent:', prefpane.parentElement.tagName)
-      let height = 300 // eslint-disable-line no-magic-numbers
-      for (const child of [...prefpane.children]) {
-        const bbox = child.getBoundingClientRect()
-        const style = this.globals.window.getComputedStyle(child)
-
-        log.debug('  child:', child.tagName, 'height:', unpx(bbox.height) + unpx(style.marginTop) + unpx(style.marginBottom))
-        height += unpx(bbox.height) + unpx(style.marginTop) + unpx(style.marginBottom)
-      }
-      // prefpane.style.height = `${height}px`
-      prefpane.parentElement.style.height = `${height}px`
-      log.debug('prefpane', prefpane.id, 'reset to', height, 'actual:', prefpane.getBoundingClientRect().height)
-
-    }
-
-    const tabbox = this.globals.document.getElementById('better-bibtex-prefs-auto-export-tabbox')
-
-    this.globals.window.sizeToContent()
-
-    const raiser = this.globals.document.getElementById('better-bibtex-prefs-raiser')
-    let height = 0
-    const step = 20
-    const steps = 15
-    do {
-      log.debug('bbt-prefs raiser height:', height, 'visible:', this.isVisible(tabbox))
-      height += step // eslint-disable-line no-magic-numbers
-      raiser.setAttribute('height', `${height}px;`)
-    } while (!this.isVisible(tabbox) && height < (step * steps)) // eslint-disable-line no-magic-numbers
-    */
-  }
-
   /*
+  private unpx(size: string | number): number {
+    if (typeof size === 'number') return size
+    const px = parseInt(size.replace(/px$/, ''))
+    return isNaN(px) ? 0 : px
+  }
   private isVisible(el) {
     const rect = el.getBoundingClientRect()
     return (rect.top >= 0) && (rect.bottom <= this.globals.window.innerHeight)
   }
   */
+  private resize() {
+    log.debug('preference.resize')
+    // https://stackoverflow.com/questions/4707712/prefwindow-sizing-itself-to-the-wrong-tab-when-browser-preferences-animatefade
+    Zotero.Prefs.set('browser.preferences.animateFadeIn', false, true)
+
+    // https://stackoverflow.com/questions/5762023/xul-prefwindow-size-problems
+    this.globals.window.sizeToContent()
+    const tabbox = this.globals.document.getElementById('better-bibtex-prefs-tabbox')
+    tabbox.height = tabbox.boxObject.height
+    this.globals.window.sizeToContent()
+
+    /*
+    const prefpane: HTMLElement = (this.prefwindow as any).currentPane
+
+    log.debug('prefpane', prefpane.id, 'height:', prefpane.getBoundingClientRect().height, 'parent:', prefpane.parentElement.tagName)
+    let height = 0
+    for (const child of [...prefpane.children]) {
+      const bbox = child.getBoundingClientRect()
+      const style = this.globals.window.getComputedStyle(child)
+
+      log.debug('  child:', child.tagName, 'height:', this.unpx(bbox.height) + this.unpx(style.marginTop) + this.unpx(style.marginBottom))
+      height += this.unpx(bbox.height) + this.unpx(style.marginTop) + this.unpx(style.marginBottom)
+    }
+
+    this.prefwindow.style.height = `${height}px`
+    log.debug('prefpane', prefpane.id, 'reset to', height, 'actual:', prefpane.getBoundingClientRect().height)
+
+    // this.globals.window.sizeToContent()
+
+    const step = 20
+    do {
+      height += step // eslint-disable-line no-magic-numbers
+      this.prefwindow.style.height = `${height}px`
+    } while (!this.isVisible(prefpane))
+    */
+  }
+
+  private unload() {
+    if (typeof this.timer === 'number') {
+      this.globals.window.clearInterval(this.timer)
+      this.timer = null
+    }
+  }
 
   public refresh() {
     const pane = this.globals.document.getElementById('zotero-prefpane-better-bibtex')
     // unloaded
     if (!pane) {
-      if (typeof this.timer === 'number') {
-        this.globals.window.clearInterval(this.timer)
-        this.timer = null
-      }
+      this.unload()
       return
     }
 

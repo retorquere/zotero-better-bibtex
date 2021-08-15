@@ -10,5 +10,5 @@ weight: 14
 
 {{% preferences/header %}}
 
-{{% preferences/advanced %}}
+{{% preferences/import %}}
 

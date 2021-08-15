@@ -422,7 +422,7 @@
     "default": "on+guess",
     "affects": [],
     "var": "importSentenceCase",
-    "label": "Sentence-case titles on import:\n                        ",
+    "label": "Sentence-case titles on import:\n                  ",
     "options": {
       "on+guess": "yes, but try to exclude already-sentence-cased titles",
       "on": "yes",
