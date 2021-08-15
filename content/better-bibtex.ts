@@ -270,7 +270,7 @@ $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function Zoter
   if (col.id !== 'zotero-items-column-citekey') return original.apply(this, arguments)
 
   const item = this.getRow(row).ref
-  if (item.isNote() || item.isAttachment() || item.isAnnotation?.()) return ''
+  if (!item.isRegularItem()) return ''
 
   if (Zotero.BetterBibTeX.ready.isPending()) { // eslint-disable-line @typescript-eslint/no-use-before-define
     if (!itemTreeViewWaiting[item.id]) {
@@ -581,7 +581,7 @@ notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]:
   // https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
   const parents = []
   const items = action === 'delete' ? [] : Zotero.Items.get(ids).filter((item: ZoteroItem) => {
-    if (item.isNote() || item.isAttachment() || item.isAnnotation?.()) {
+    if (item.isRegularItem()) {
       if (typeof item.parentID !== 'boolean') parents.push(item.parentID)
       return false
     }
@@ -603,7 +603,7 @@ notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]:
       let warn_titlecase = Preference.warnTitleCased ? 0 : null
       for (const item of items) {
         Zotero.BetterBibTeX.KeyManager.update(item)
-        if (typeof warn_titlecase === 'number' && !item.isNote() && !item.isAttachment() && !item.isAnnotation?.()) {
+        if (typeof warn_titlecase === 'number' && item.isRegularItem()) {
           const title = item.getField('title')
           if (title !== sentenceCase(title)) warn_titlecase += 1
         }
