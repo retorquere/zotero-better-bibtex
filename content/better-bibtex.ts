@@ -579,16 +579,17 @@ notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]:
 
   // safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
   // https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
-  const parents = []
+  const parentIDs = []
   const items = action === 'delete' ? [] : Zotero.Items.get(ids).filter((item: ZoteroItem) => {
-    if (item.isRegularItem()) {
-      if (typeof item.parentID !== 'boolean') parents.push(item.parentID)
+    if (typeof item.parentID !== 'boolean') {
+      parentIDs.push(item.parentID)
       return false
     }
 
     return true
   })
-  if (parents.length) Cache.remove(parents, `parent items ${parents} changed`)
+  if (parentIDs.length) Cache.remove(parentIDs, `parent items ${parentIDs} changed`)
+  const parents = parentIDs.length ? Zotero.Items.get(parentIDs) : []
 
   switch (action) {
     case 'delete':
@@ -621,7 +622,7 @@ notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]:
       return
   }
 
-  notifyItemsChanged(items)
+  notifyItemsChanged(items.concat(parents))
 })
 
 notify('collection', (event: string, _type: any, ids: string | any[], _extraData: any) => {
