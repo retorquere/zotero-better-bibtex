@@ -559,8 +559,8 @@ class Zotero:
     install_xpis(os.path.join(ROOT, 'xpi'), profile.firefox)
 
     install_xpis(os.path.join(ROOT, 'other-xpis'), profile.firefox)
-    if self.config.db: self.install_xpis(os.path.join(ROOT, 'test/db', self.config.db, 'xpis'), profile.firefox)
-    if self.config.profile: self.install_xpis(os.path.join(ROOT, 'test/db', self.config.profile, 'xpis'), profile.firefox)
+    if self.config.db: install_xpis(os.path.join(ROOT, 'test/db', self.config.db, 'xpis'), profile.firefox)
+    if self.config.profile: install_xpis(os.path.join(ROOT, 'test/db', self.config.profile, 'xpis'), profile.firefox)
 
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.testing', self.testing)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.workers', self.workers)
