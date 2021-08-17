@@ -1034,7 +1034,7 @@ class ZoteroItem {
           if (this.$url(value, field)) continue
         }
         else if (field.match(/^note_[0-9]+$/)) { // jabref, #1878
-          if (this.$note(value, field)) continue
+          if (this.$note(value)) continue
         }
 
         if (this[`$${field}`] && this[`$${field}`](value, field)) continue
