@@ -161,8 +161,15 @@ class Exporter {
   }
 
   creators(cr: string[]): string {
-    if (cr.length < 2) return cr.join('')
-    return `${cr.slice(0, cr.length - 1).join(', ')}, and ${cr[cr.length - 1]}`
+    switch (cr.length) {
+      case 0:
+      case 1:
+        return cr[0]
+      case 2:
+        return cr.join(' and ')
+      default:
+        return `${cr.slice(0, cr.length - 1).join(', ')}, and ${cr[cr.length - 1]}`
+    }
   }
 
   reference(item) {
