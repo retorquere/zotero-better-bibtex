@@ -56,6 +56,7 @@
     "test": "test"
   },
   "dependencies": {
+    "@inkdropapp/html2markdown": "^2.6.5",
     "citeproc": "^2.4.59",
     "edtf": "^4.0.0",
     "edtfy": "^0.0.8",
