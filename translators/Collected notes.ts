@@ -157,7 +157,12 @@ class Exporter {
   }
 
   creator(cr) {
-    return [cr.lastName, cr.firstName, cr.name].filter(v => v).join(', ')
+    return [cr.lastName, cr.name, cr.firstName].find(v => v) || ''
+  }
+
+  creators(cr: string[]): string {
+    if (cr.length < 2) return cr.join('')
+    return `${cr.slice(0, cr.length - 1).join(', ')}, and ${cr[cr.length - 1]}`
   }
 
   reference(item) {
@@ -172,7 +177,7 @@ class Exporter {
     else {
       notes = (item.notes || []).filter(note => note.note)
 
-      const creators = item.creators.map(creator => this.creator(creator)).filter(v => v).join(' and ')
+      const creators = this.creators(item.creators.map(creator => this.creator(creator)).filter(v => v))
 
       let date = null
       if (item.date) {
