@@ -161,7 +161,7 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!ENTITY better-bibtex.Preferences.advanced.ideographs.kuroshiro "Appliquer la romanisation kuroshiro dans les noms/titres japonais. Monopolise beaucoup de mémoire.">
 <!ENTITY better-bibtex.Preferences.advanced.ideographs.jieba "Activer le filtre « jieba » dans les motifs de clés de citation. Monopolise beaucoup de mémoire.">
 
-<!ENTITY better-bibtex.Preferences.export.qualityReport "Inclure des commentaires à propos de problèmes potentiels avec les références ">
+<!ENTITY better-bibtex.Preferences.export.qualityReport "Include comments about potential problems with the exported references">
 <!ENTITY better-bibtex.Preferences.export.automaticTags "Inclure les tags automatiques dans l'export">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat "Inclure les métadonnées spécifiques à JabRef :">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.0 "Non">
