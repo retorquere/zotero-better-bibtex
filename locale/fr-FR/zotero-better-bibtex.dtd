@@ -79,11 +79,11 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.search "Activer la recherche par clé de citation">
 <!ENTITY better-bibtex.Preferences.citekey.format "Format de clé">
 
-<!ENTITY better-bibtex.Preferences.export.quickCopy "Copie rapide">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.explanation "Copie/glisser-déposer rapide des citations">
+<!ENTITY better-bibtex.Preferences.export.quickCopy "Quick-Copy">
+<!ENTITY better-bibtex.Preferences.export.quickCopy.explanation "Quick-Copy/drag-and-drop citations">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.atom "Atom (https://atom.io/packages/zotero-citations)">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.citekeys "Clés de citation">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.format "Format de copie rapide">
+<!ENTITY better-bibtex.Preferences.export.quickCopy.format "Quick-Copy format">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.gitbook "GitBook">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.latex.command "Commande LaTeX">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.latex "Citation LaTeX">
