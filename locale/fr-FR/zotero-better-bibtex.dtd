@@ -79,20 +79,20 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.search "Activer la recherche par clé de citation">
 <!ENTITY better-bibtex.Preferences.citekey.format "Format de clé">
 
-<!ENTITY better-bibtex.Preferences.export.quickCopy "Quick copy">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.explanation "Quick copy/drag-and-drop citations">
+<!ENTITY better-bibtex.Preferences.export.quickCopy "Copie rapide">
+<!ENTITY better-bibtex.Preferences.export.quickCopy.explanation "Copie/glisser-déposer rapide des citations">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.atom "Atom (https://atom.io/packages/zotero-citations)">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.citekeys "Cite Keys">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.format "QuickCopy format">
+<!ENTITY better-bibtex.Preferences.export.quickCopy.citekeys "Clés de citation">
+<!ENTITY better-bibtex.Preferences.export.quickCopy.format "Format de copie rapide">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.gitbook "GitBook">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.latex.command "LaTeX command">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.latex "LaTeX citation">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.rtfScan "RTF Scan marker">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.roamCiteKey "Roam Cite Key">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.orgMode "Org-mode select link">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.orgMode.zotero "using Zotero item key">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.orgMode.citekey "using Better BibTeX citation key">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.orgRef "org-ref citation">
+<!ENTITY better-bibtex.Preferences.export.quickCopy.latex.command "Commande LaTeX">
+<!ENTITY better-bibtex.Preferences.export.quickCopy.latex "Citation LaTeX">
+<!ENTITY better-bibtex.Preferences.export.quickCopy.rtfScan "Marqueur de scan RTF">
+<!ENTITY better-bibtex.Preferences.export.quickCopy.roamCiteKey "Clé de citation Roam">
+<!ENTITY better-bibtex.Preferences.export.quickCopy.orgMode "Lien de sélection Org-mode">
+<!ENTITY better-bibtex.Preferences.export.quickCopy.orgMode.zotero "en utilisant la clé d'élément de Zotero">
+<!ENTITY better-bibtex.Preferences.export.quickCopy.orgMode.citekey "en utilisant la clé de citation de Better BibTeX">
+<!ENTITY better-bibtex.Preferences.export.quickCopy.orgRef "Citation org-ref">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.pandoc.brackets "Surround Pandoc citations with brackets">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.pandoc "Pandoc citation">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.selectLink "Zotero select link">
