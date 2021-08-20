@@ -116,10 +116,16 @@ class fetch(object):
       hashes[client] = OrderedDict()
 
     current = releases[-1]
-    if current in hashes[client] and os.path.exists(self.schema) and os.path.exists(itemtypes):
+    if current not in hashes[client]:
+      ood = f'{current} not in f{client}.json'
+    elif not os.path.exists(self.schema):
+      ood = f'{self.schema} does not exist'
+    elif not os.path.exists(itemtypes):
+      ood = f'{itemtypes} does not exist'
+    else:
       return
-    elif 'CI' in os.environ:
-      raise ValueError(f'{self.schema} out of date')
+    if 'CI' in os.environ:
+      raise ValueError(f'{self.schema} out of date: {ood}')
 
     print('  updating', os.path.basename(self.schema))
 
@@ -203,7 +209,7 @@ def patch(s, *ps):
   del s['locales']
 
   for p in ps:
-    print('applying', p)
+    print('  applying', p)
     with open(os.path.join(SCHEMA.root, p)) as f:
       s = jsonpatch.apply_patch(s, json.load(f))
   return s
@@ -263,7 +269,7 @@ class ExtraFields:
     self.dg.nodes[node_id][client] = True
 
   def load(self, schema, client):
-    print('loading', client)
+    print('  loading', client)
     typeof = {}
     for field, meta in schema.meta.fields.items():
       typeof[field] = meta.type
