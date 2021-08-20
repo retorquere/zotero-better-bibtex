@@ -38,9 +38,9 @@
 <!ENTITY better-bibtex.ErrorReport.postToGitHub "Merci d'envoyer un message au gestionnaire de tickets de GitHub (https://github.com/retorquere/zotero-better-bibtex/issues), en précisant cet identifiant de débogage, une description du problème ainsi que toutes les étapes nécessaires pour le reproduire.">
 <!ENTITY better-bibtex.ErrorReport.references "Références">
 <!ENTITY better-bibtex.ErrorReport.reportID "Identifiant du rapport d'erreur :">
-<!ENTITY better-bibtex.ErrorReport.review "The data below is about to submitted to Better BibTeX for debugging. You can review the data to see whether there's sensitive information that you do not wish to send.
+<!ENTITY better-bibtex.ErrorReport.review "Les données ci-dessous sont sur le point d'être soumises à Better BibTeX à fins de débogage. Vous pouvez les examiner pour contrôler s'il y a des informations sensibles que vous ne souhaitez pas envoyer.
 
-If you are OK with sending this data, please proceed to the next screen and post the debug ID presented in the next screen in the issue tracker at
+Si vous êtes d'accord pour envoyer ces données, veuillez passer à l'écran suivant et publier l'ID de débogage qui y figure dans le gestionnaire de problèmes à l'adresse suivante :
 
 https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.ErrorReport.submissionInProgress			"Veuillez patienter pendant la transmission du rapport d'erreur.">
@@ -93,12 +93,12 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.orgMode.zotero "en utilisant la clé d'élément de Zotero">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.orgMode.citekey "en utilisant la clé de citation de Better BibTeX">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.orgRef "Citation org-ref">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.pandoc.brackets "Surround Pandoc citations with brackets">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.pandoc "Pandoc citation">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.selectLink "Zotero select link">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.selectLink.zotero "using Zotero item key">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.selectLink.citekey "using Better BibTeX citation key">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.etaTemplate "Eta template">
+<!ENTITY better-bibtex.Preferences.export.quickCopy.pandoc.brackets "Encadrer les citations 'Pandoc' avec des crochets">
+<!ENTITY better-bibtex.Preferences.export.quickCopy.pandoc "Citation Pandoc">
+<!ENTITY better-bibtex.Preferences.export.quickCopy.selectLink "Lien de sélection de Zotero">
+<!ENTITY better-bibtex.Preferences.export.quickCopy.selectLink.zotero "en utilisant la clé d'élément de Zotero">
+<!ENTITY better-bibtex.Preferences.export.quickCopy.selectLink.citekey "en utilisant la clé de citation de Better BibTeX">
+<!ENTITY better-bibtex.Preferences.export.quickCopy.etaTemplate "Canevas Eta">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness "Garder les clés de citation uniques">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict "En cas de conflit, les clés non verrouillées seront">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict.change "modifiées (risque de changements)">
@@ -211,7 +211,7 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!ENTITY better-bibtex.Preferences.postscript.warn "L'utilisation de 'Translator.options.exportPath' dans les post scripts désactive le cache. Les exportations seront sensiblement plus lentes.">
 <!ENTITY better-bibtex.Preferences.advanced.tab.strings "Définitions des @string">
 <!ENTITY better-bibtex.Preferences.prefpane.better-bibtex "Better BibTeX">
-<!ENTITY better-bibtex.Preferences.prefpane.loading "Better BibTeX is loading">
+<!ENTITY better-bibtex.Preferences.prefpane.loading "Chargement de Better BibTeX en cours">
 <!ENTITY better-bibtex.Preferences.rescan-citekeys "Réanalyse des clés de citation verrouillées">
 <!ENTITY better-bibtex.Preferences.resetCache "Réinitialiser le cache">
 <!ENTITY better-bibtex.BetterBibTeX.reportErrors "Envoyer le rapport d'erreur de Better BibTeX...">
