@@ -9,6 +9,7 @@ from hamcrest import assert_that, equal_to
 from steps.utils import assert_equal_diff, expand_scenario_variables
 import steps.utils as utils
 import steps.zotero as zotero
+import glob
 
 import pathlib
 for d in pathlib.Path(__file__).resolve().parents:
@@ -16,9 +17,44 @@ for d in pathlib.Path(__file__).resolve().parents:
     ROOT = d
     break
 
+@given(u'I set the temp directory to {value}')
+def step_impl(context, value):
+  context.tmpDir = os.path.join(ROOT, json.loads(value))
+  if os.path.isdir(context.tmpDir):
+    for f in glob.glob(os.path.join(context.tmpDir, '*')):
+      os.remove(f)
+  else:
+    os.mkdir(context.tmpDir)
+
+@when(u'I create preference override {value}')
+def step_impl(context, value):
+  value = os.path.join(context.tmpDir, json.loads(value))
+  with open(value, 'w') as f:
+    json.dump({}, f)
+  context.preferenceOverride = value
+
+@when(u'I remove preference override {value}')
+def step_impl(context, value):
+  os.remove(context.preferenceOverride)
+
+@step('I set preference override {pref} to {value}')
+def step_impl(context, pref, value):
+  assert pref.startswith('.'), pref
+  pref = pref[1:]
+
+  value = json.loads(value)
+  # bit of a cheat...
+  if pref.endswith('.postscript'):
+    value = expand_scenario_variables(context, value)
+  with open(context.preferenceOverride) as f:
+    override = json.load(f)
+  override[pref] = value
+  with open(context.preferenceOverride, 'w') as f:
+    json.dump(override, f)
+
 @step('I set preference {pref} to {value}')
 def step_impl(context, pref, value):
-  value = json.parse(value)
+  value = json.loads(value)
   # bit of a cheat...
   if pref.endswith('.postscript'):
     value = expand_scenario_variables(context, value)
@@ -98,7 +134,8 @@ def export_library(context, translator='BetterBibTeX JSON', collection=None, exp
   expected = expand_scenario_variables(context, expected)
   displayOptions = { **context.displayOptions }
   if displayOption: displayOptions[displayOption] = True
-
+  if output: output = os.path.join(context.tmpDir, output)
+  
   start = time.time()
   context.zotero.export_library(
     displayOptions = displayOptions,
@@ -113,33 +150,41 @@ def export_library(context, translator='BetterBibTeX JSON', collection=None, exp
   if timeout is not None:
     assert(runtime < timeout), f'Export runtime of {runtime} exceeded set maximum of {timeout}'
 
-@step(u'an auto-export to "{output}" using "{translator}" should match "{expected}"')
+@then(u'an export to "{output}" using "{translator}" should match {path}')
+def step_impl(context, output, translator, path):
+  export_library(context,
+    translator=translator,
+    expected=json.loads(path),
+    output=output
+  )
+
+@step(u'an auto-export to "{output}" using "{translator}" should match {expected}')
 def step_impl(context, translator, output, expected):
   export_library(context,
     translator=translator,
-    expected=expected,
+    expected=json.loads(expected),
     output=output,
     displayOption='keepUpdated',
     resetCache = True
   )
 
-@then(u'an auto-export of "{collection}" to "{output}" using "{translator}" should match "{expected}"')
+@then(u'an auto-export of "{collection}" to "{output}" using "{translator}" should match {expected}')
 def step_impl(context, translator, collection, output, expected):
   export_library(context,
     displayOption = 'keepUpdated',
     translator = translator,
     collection = collection,
     output = output,
-    expected = expected,
+    expected = json.loads(expected),
     resetCache = True
   )
 
-@step('an export using "{translator}" with {displayOption} on should match "{expected}"')
+@step('an export using "{translator}" with {displayOption} on should match {expected}')
 def step_impl(context, translator, displayOption, expected):
   export_library(context,
     displayOption = displayOption,
     translator = translator,
-    expected = expected
+    expected = json.loads(expected)
   )
 
 @step('an export using "{translator}" should match "{expected}"')

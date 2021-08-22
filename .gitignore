@@ -23,6 +23,7 @@ build
 .depend.mf
 resource/translators/*.json
 test/fixtures/plugins
+test/tmp
 tmp
 *.xpi
 *.log
