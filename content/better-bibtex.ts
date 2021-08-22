@@ -459,7 +459,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
           }
         }
         catch (err) {
-          log.debug('failed to load preference overrides from', preferences, ':', err)
+          log.debug('failed to load preference overrides from', override.preferences, ':', err)
           this._displayOptions.caching = false
         }
       }
