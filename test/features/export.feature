@@ -473,13 +473,13 @@ Scenario: auto-export
   Given I import 3 references with 2 attachments from "export/*.json" into a new collection
   And I set preference .autoExport to "immediate"
   And I set preference .jabrefFormat to 3
-  Then an auto-export to "autoexport.bib" using "Better BibLaTeX" should match "export/*.before.biblatex"
+  Then an auto-export to "/autoexport.bib" using "Better BibLaTeX" should match "export/*.before.biblatex"
   And an auto-export of "/auto-export" to "autoexport.coll.bib" using "Better BibLaTeX" should match "export/*.before.coll.biblatex"
   When I select the item with a field that is "IEEE"
   And I remove the selected item
   And I wait 10 seconds
-  Then "autoexport.bib" should match "export/*.after.biblatex"
-  And "autoexport.coll.bib" should match "export/*.after.coll.biblatex"
+  Then "/autoexport.bib" should match "export/*.after.biblatex"
+  And "/autoexport.coll.bib" should match "export/*.after.coll.biblatex"
 
 Scenario: Choose fields to exclude for each exported file #1827
   Given I import 1 reference from "export/*.json"
