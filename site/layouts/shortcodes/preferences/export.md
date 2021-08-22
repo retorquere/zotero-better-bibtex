@@ -80,9 +80,9 @@ Options:
 * for JabRef 4
 * for JabRef 5
 
-### Quick copy
+### Quick-Copy
 
-#### QuickCopy format
+#### Quick-Copy format
 
 default: `LaTeX citation`
 
@@ -156,7 +156,7 @@ default: `<not set>`
 
 Select the style for auto-abbreviation. Only applicable to Juris-M; in Zotero, the style for automatic abbreviation is not configurable.
 
-#### Include comments about potential problems with the references
+#### Include comments about potential problems with the exported references
 
 default: `no`
 
