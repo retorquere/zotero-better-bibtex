@@ -478,19 +478,19 @@ Scenario: auto-export
   When I select the item with a field that is "IEEE"
   And I remove the selected item
   And I wait 10 seconds
-  Then "/tmp/autoexport.bib" should match "export/*.after.biblatex"
-  And "/tmp/autoexport.coll.bib" should match "export/*.after.coll.biblatex"
+  Then "autoexport.bib" should match "export/*.after.biblatex"
+  And "autoexport.coll.bib" should match "export/*.after.coll.biblatex"
 
 Scenario: Choose fields to exclude for each exported file #1827
   Given I import 1 reference from "export/*.json"
   And I set preference .skipFields to "title"
   And I set preference .preferencesOverride to "better-bibtex.json"
-  Then an export to "override.bib" using "Better BibLaTeX" should match "export/*.biblatex"
-  When I create preference override "override.json"
+  Then an export to "/override.bib" using "Better BibLaTeX" should match "export/*.biblatex"
+  When I create preference override "/override.json"
   And I set preference override .skipFields to ""
-  Then an export to "override.bib" using "Better BibLaTeX" should match "export/*.override.biblatex"
-  When I remove preference override "override.json"
-  Then an export to "override.bib" using "Better BibLaTeX" should match "export/*.biblatex"
+  Then an export to "/override.bib" using "Better BibLaTeX" should match "export/*.override.biblatex"
+  When I remove preference override "/override.json"
+  Then an export to "/override.bib" using "Better BibLaTeX" should match "export/*.biblatex"
 
 @313 @bblt
 Scenario: (non-)dropping particle handling #313

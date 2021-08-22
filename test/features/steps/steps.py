@@ -28,7 +28,9 @@ def step_impl(context, value):
 
 @when(u'I create preference override {value}')
 def step_impl(context, value):
-  value = os.path.join(context.tmpDir, json.loads(value))
+  value = json.loads(value)
+  assert value[0] == '/', value
+  value = os.path.join(context.tmpDir, value[1:])
   with open(value, 'w') as f:
     json.dump({}, f)
   context.preferenceOverride = value
@@ -134,7 +136,9 @@ def export_library(context, translator='BetterBibTeX JSON', collection=None, exp
   expected = expand_scenario_variables(context, expected)
   displayOptions = { **context.displayOptions }
   if displayOption: displayOptions[displayOption] = True
-  if output: output = os.path.join(context.tmpDir, output)
+  if output:
+    assert output[0] == '/', output
+    output = os.path.join(context.tmpDir, output[1:])
   
   start = time.time()
   context.zotero.export_library(
@@ -275,13 +279,18 @@ def step_impl(context, citekey):
 @then(u'"{found}" should match "{expected}"')
 def step_impl(context, expected, found):
   expected = expand_scenario_variables(context, expected)
-  if expected[0] != '/':
+  if expected[0] == '/':
+    expected = os.path.join(context.tmpDir, expected[1:])
+  else:
     expected = os.path.join(ROOT, 'test/fixtures', expected)
     context.zotero.loaded(expected)
   with open(expected) as f:
     expected = f.read()
 
-  if found[0] != '/': found = os.path.join(ROOT, 'test/fixtures', found)
+  if found[0] == '/':
+    found = os.path.join(context.tmpDir, found[1:])
+  else:
+    found = os.path.join(ROOT, 'test/fixtures', found)
   with open(found) as f:
     found = f.read()
 
