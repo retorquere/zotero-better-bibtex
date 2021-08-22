@@ -1029,11 +1029,12 @@ class ZoteroItem {
       for (const value of (values as string[])) {
         if (field.match(/^(local-zo-url-[0-9]+)|(file-[0-9]+)$/)) {
           if (this.$file(value)) continue
-
         }
         else if (field.match(/^bdsk-url-[0-9]+$/)) {
           if (this.$url(value, field)) continue
-
+        }
+        else if (field.match(/^note_[0-9]+$/)) { // jabref, #1878
+          if (this.$note(value)) continue
         }
 
         if (this[`$${field}`] && this[`$${field}`](value, field)) continue

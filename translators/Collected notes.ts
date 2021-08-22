@@ -2,6 +2,8 @@
 
 declare const Zotero: any
 
+import html2markdown from '@inkdropapp/html2markdown'
+
 import { Translator } from './lib/translator'
 export { Translator }
 import { log } from '../content/logger'
@@ -39,6 +41,7 @@ class Exporter {
   private levels = 0
   private body = ''
   public html = ''
+  public markdown = ''
 
   constructor() {
     const items: Record<number, Item> = {}
@@ -91,6 +94,8 @@ class Exporter {
     style += '  blockquote { border-left: 1px solid gray; }\n'
 
     this.html = `<html><head><style>${ style }</style></head><body>${ this.body }</body></html>`
+    log.debug('Translator options:', Translator.options)
+    if (Translator.options.markdown) this.markdown = html2markdown(this.html)
   }
 
   show(context, args) {
@@ -152,7 +157,19 @@ class Exporter {
   }
 
   creator(cr) {
-    return [cr.lastName, cr.firstName, cr.name].filter(v => v).join(', ')
+    return [cr.lastName, cr.name, cr.firstName].find(v => v) || ''
+  }
+
+  creators(cr: string[]): string {
+    switch (cr.length) {
+      case 0:
+      case 1:
+        return cr[0]
+      case 2:
+        return cr.join(' and ')
+      default:
+        return `${cr.slice(0, cr.length - 1).join(', ')}, and ${cr[cr.length - 1]}`
+    }
   }
 
   reference(item) {
@@ -167,7 +184,7 @@ class Exporter {
     else {
       notes = (item.notes || []).filter(note => note.note)
 
-      const creators = item.creators.map(creator => this.creator(creator)).filter(v => v).join(' and ')
+      const creators = this.creators(item.creators.map(creator => this.creator(creator)).filter(v => v))
 
       let date = null
       if (item.date) {
@@ -214,5 +231,10 @@ class Exporter {
 
 export function doExport(): void {
   Translator.init('export')
-  Zotero.write((new Exporter).html)
+  if (Translator.options.markdown) {
+    Zotero.write((new Exporter).markdown)
+  }
+  else {
+    Zotero.write((new Exporter).html)
+  }
 }

@@ -1,7 +1,7 @@
 {
   "duration": {
     "(non-)dropping particle handling #313": 2800,
-    "AUX scanner": 8530,
+    "AUX scanner": 8510,
     "BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372": 270,
     "Better BibTeX Import 2": 1160,
     "BibTeX name escaping has a million inconsistencies #438": 480,
@@ -11,7 +11,7 @@
     "CSL YAML export of date with original publication date in [brackets] #922": 360,
     "CSL exporters; ignore [Fields to omit from export] setting #1179": 1970,
     "CSL-YAML import": {
-      "msecs": 1280,
+      "msecs": 1230,
       "runs": -353
     },
     "Capitalize all title-fields for language en #383": 680,
@@ -29,7 +29,7 @@
     "Diacritics stripped from keys regardless of ascii or fold filters #266": 700,
     "Do not caps-protect name fields #384 #565 #566": 3460,
     "Duplicate Citation Key Alias #1384": 10180,
-    "Edition Numbers in BibTeX Exports #1446": 1090,
+    "Edition Numbers in BibTeX Exports #1446": 1100,
     "Export 1 references for BibLaTeX to @jurisdiction; map court,authority to institution #326": 320,
     "Export 1 references for BibLaTeX to @legislation; map code,container-title to journaltitle #327": 340,
     "Export 1 references for BibLaTeX to ADS exports dates like 1993-00-00 #1066": 370,
@@ -248,7 +248,7 @@
       "runs": -80
     },
     "Export 1 references for BibTeX to Use creator in extra field when there is no creator in the usual places? #1873": {
-      "msecs": 460,
+      "msecs": 480,
       "runs": -367
     },
     "Export 1 references for BibTeX to Using the Extra field in the exported Citation Key #1571": {
@@ -256,7 +256,7 @@
       "runs": -300
     },
     "Export 1 references for BibTeX to Word segmentation for Chinese references #1682": {
-      "msecs": 1700,
+      "msecs": 1630,
       "runs": -260
     },
     "Export 1 references for BibTeX to [authN_M] citation key syntax has off-by-one error #899": 370,
@@ -267,6 +267,10 @@
     "Export 1 references for BibTeX to bibtex export of phdthesis does not case-protect -type- #435": 370,
     "Export 1 references for BibTeX to braces after textemdash followed by unicode #980": 400,
     "Export 1 references for BibTeX to capital delta breaks .bib output #141": 410,
+    "Export 1 references for BibTeX to citation key format nopunctordash filter list #1880": {
+      "msecs": 1810,
+      "runs": -380
+    },
     "Export 1 references for BibTeX to custom fields should be exported as-is #441": 480,
     "Export 1 references for BibTeX to lone ogonek should have brace": {
       "msecs": 420,
@@ -343,7 +347,7 @@
     "Export 6 references for BibLaTeX to Better BibLaTeX.stable-keys": 620,
     "Export 8 references for BibLaTeX to Don't title-case sup-subscripts #1037": 660,
     "Export as Collected Notes does not list subcollections #1768": {
-      "msecs": 4740,
+      "msecs": 4730,
       "runs": -256
     },
     "Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825": 990,
@@ -404,7 +408,7 @@
     "Import 2 references from Better BibTeX.003": 1050,
     "Import 2 references from BibLaTeX Patent author handling, type #1060": 1220,
     "Import 2 references from Import Jabref fileDirectory, unexpected reference type #1058": {
-      "msecs": 1910,
+      "msecs": 1940,
       "runs": -348
     },
     "Import 2 references from space after citekey creates confusion #716": 1170,
@@ -424,7 +428,7 @@
     "Include first name initial(s) in cite key generation pattern (86)": 450,
     "Jabref groups import does not work #717": 2840,
     "Jabref import - groups lost #1730": {
-      "msecs": 3260,
+      "msecs": 3270,
       "runs": -228
     },
     "Journal abbreviations": 490,
@@ -444,17 +448,17 @@
     },
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 359290,
+    "Really Big whopping library": 356400,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 51610,
+      "msecs": 51490,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
     "Square brackets in Publication field (85), and non-pinned keys must change when the pattern does": 450,
-    "Unabbreviate on import #1436-1": 38830,
+    "Unabbreviate on import #1436-1": 38740,
     "Unbalanced vphantom escapes #1043": 760,
     "arXiv identifiers in BibLaTeX export #460": 1180,
     "auto-export": 14370,
@@ -477,7 +481,7 @@
       "runs": -36
     },
     "web_page and other mendeley idiocy": {
-      "msecs": 39450,
+      "msecs": 39320,
       "runs": -239
     }
   },
@@ -613,6 +617,7 @@
       "Export 1 references for BibLaTeX to URL-DOI exclusive export broken for item types with no dedicated DOI field #1331",
       "Export 5 references for BibLaTeX to date ranges #747+#746",
       "Export 1 references for BibLaTeX to preserve @strings between import-export #1162",
+      "Export 1 references for BibTeX to citation key format nopunctordash filter list #1880",
       "Export 1 references for BibTeX to Export report+type as preprint",
       "Export 1 references for BibTeX to Use creator in extra field when there is no creator in the usual places? #1873",
       "Export 1 references for BibTeX to Exporting \"month = {season}\" for BibTeX #1810",
@@ -785,7 +790,7 @@
       "Identical Pinned keys lost when merging duplicated records #1721"
     ]
   },
-  "runs": 378,
+  "runs": 388,
   "slow": {
     "1": [
       "Export 1 references for BibLaTeX to Cite archive documents with BetterBibLaTeX #1799",
@@ -918,6 +923,7 @@
       "Export 1 references for BibLaTeX to URL-DOI exclusive export broken for item types with no dedicated DOI field #1331",
       "Export 5 references for BibLaTeX to date ranges #747+#746",
       "Export 1 references for BibLaTeX to preserve @strings between import-export #1162",
+      "Export 1 references for BibTeX to citation key format nopunctordash filter list #1880",
       "Export 1 references for BibTeX to Export report+type as preprint",
       "Export 1 references for BibTeX to Use creator in extra field when there is no creator in the usual places? #1873",
       "Export 1 references for BibTeX to Exporting \"month = {season}\" for BibTeX #1810",

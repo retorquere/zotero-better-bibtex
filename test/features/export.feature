@@ -1,6 +1,9 @@
 @export
 Feature: Export
 
+Background:
+  Given I set the temp directory to "test/tmp"
+
 Scenario Outline: Export <references> references for BibLaTeX to <file>
   When I import <references> references from "export/<file>.json"
   Then an export using "Better BibLaTeX" should match "export/*.biblatex"
@@ -144,7 +147,8 @@ Scenario Outline: Export <references> references for BibTeX to <file>
 
   Examples:
      | file                                                                               | references |
-     | Export report+type as preprint                                                                 | 1           |
+     | citation key format nopunctordash filter list #1880                                | 1          |
+     | Export report+type as preprint                                                     | 1          |
      | Use creator in extra field when there is no creator in the usual places? #1873     | 1          |
      | Exporting "month = {season}" for BibTeX #1810                                      | 1          |
      | bibtex does not export season dates                                                | 1          |
@@ -213,14 +217,14 @@ Scenario Outline: Export <references> references for BibTeX to <file>
 @131
 Scenario: Omit URL export when DOI present. #131
   When I import 3 references with 2 attachments from "export/*.json" into a new collection
-  And I set preference .DOIandURL to both
+  And I set preference .DOIandURL to "both"
   And I set preference .jabrefFormat to 3
   Then an export using "Better BibLaTeX" should match "export/*.groups3.biblatex"
   And I set preference .jabrefFormat to 4
   Then an export using "Better BibLaTeX" should match "export/*.default.biblatex"
-  And I set preference .DOIandURL to doi
+  And I set preference .DOIandURL to "doi"
   Then an export using "Better BibLaTeX" should match "export/*.prefer-DOI.biblatex"
-  And I set preference .DOIandURL to url
+  And I set preference .DOIandURL to "url"
   Then an export using "Better BibLaTeX" should match "export/*.prefer-url.biblatex"
 
 Scenario: Changing item type for only BibLaTeX does not work #1694
@@ -243,9 +247,9 @@ Scenario: suppressBraceProtection does not work for BibTeX export (non-English i
 
 @708 @957
 Scenario: Citekey generation failure #708 and sort references on export #957
-  When I set preference .citekeyFormat to [auth.etal][shortyear:prefix,.][0][Title:fold:nopunct:skipwords:select,1,1:abbr:lower:alphanum:prefix,.]
+  When I set preference .citekeyFormat to "[auth.etal][shortyear:prefix,.][0][Title:fold:nopunct:skipwords:select,1,1:abbr:lower:alphanum:prefix,.]"
   And I import 6 references from "export/*.json"
-  And I set preference .citekeyFormat to [auth:lower]_[veryshorttitle:lower]_[year]
+  And I set preference .citekeyFormat to "[auth:lower]_[veryshorttitle:lower]_[year]"
   And I import 6 references from "export/*.json"
   Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
@@ -322,7 +326,7 @@ Scenario: Square brackets in Publication field (85), and non-pinned keys must ch
 
 @86 @bbt @arXiv
 Scenario: Include first name initial(s) in cite key generation pattern (86)
-  When I set preference .citekeyFormat to [auth+initials][year]
+  When I set preference .citekeyFormat to "[auth+initials][year]"
    And I import 1 reference from "export/*.json"
   Then an export using "Better BibTeX" should match "export/*.bibtex"
 
@@ -467,15 +471,26 @@ Scenario: Sorting and optional particle handling #411
 @ae
 Scenario: auto-export
   Given I import 3 references with 2 attachments from "export/*.json" into a new collection
-  And I set preference .autoExport to immediate
+  And I set preference .autoExport to "immediate"
   And I set preference .jabrefFormat to 3
-  Then an auto-export to "/tmp/autoexport.bib" using "Better BibLaTeX" should match "export/*.before.biblatex"
-  And an auto-export of "/auto-export" to "/tmp/autoexport.coll.bib" using "Better BibLaTeX" should match "export/*.before.coll.biblatex"
+  Then an auto-export to "~/autoexport.bib" using "Better BibLaTeX" should match "export/*.before.biblatex"
+  And an auto-export of "/auto-export" to "~/autoexport.coll.bib" using "Better BibLaTeX" should match "export/*.before.coll.biblatex"
   When I select the item with a field that is "IEEE"
   And I remove the selected item
   And I wait 10 seconds
-  Then "/tmp/autoexport.bib" should match "export/*.after.biblatex"
-  And "/tmp/autoexport.coll.bib" should match "export/*.after.coll.biblatex"
+  Then "~/autoexport.bib" should match "export/*.after.biblatex"
+  And "~/autoexport.coll.bib" should match "export/*.after.coll.biblatex"
+
+Scenario: Choose fields to exclude for each exported file #1827
+  Given I import 1 reference from "export/*.json"
+  And I set preference .skipFields to "title"
+  And I set preference .preferencesOverride to "better-bibtex.json"
+  Then an export to "~/override.bib" using "Better BibLaTeX" should match "export/*.biblatex"
+  When I create preference override "~/override.json"
+  And I set preference override .skipFields to ""
+  Then an export to "~/override.bib" using "Better BibLaTeX" should match "export/*.override.biblatex"
+  When I remove preference override "~/override.json"
+  Then an export to "~/override.bib" using "Better BibLaTeX" should match "export/*.biblatex"
 
 @313 @bblt
 Scenario: (non-)dropping particle handling #313
@@ -542,10 +557,10 @@ Scenario: Really Big whopping library
 @1495
 Scenario: use author dash separation rather than camel casing in citekey #1495
   Given I import 1 reference from "export/*.json"
-  When I set preference .citekeyFormat to [authors2+-:lower]_[year]-[shorttitle:condense=-:lower]
+  When I set preference .citekeyFormat to "[authors2+-:lower]_[year]-[shorttitle:condense=-:lower]"
   And I refresh all citation keys
   Then an export using "Better BibTeX" should match "export/*.bibtex"
-  When I set preference .citekeyFormat to [authors2:condense=-:lower]_[year]-[shorttitle:condense=-:lower]
+  When I set preference .citekeyFormat to "[authors2:condense=-:lower]_[year]-[shorttitle:condense=-:lower]"
   And I refresh all citation keys
   Then an export using "Better BibTeX" should match "export/*.bibtex"
 

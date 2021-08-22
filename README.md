@@ -78,3 +78,8 @@ the line, head on over to [Patreon](https://www.patreon.com/retorquere),
 but mind that Patreon takes a fairly large cut of what you give.
 
 Many, many thanks, also to the existing contributors -- thanks to you I've hit my first target and have been able to replace my trusty macbook air with a newer macbook pro which has much more breathing room.
+
+
+![My github stats](https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark)
+
+![Metrics](https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo)

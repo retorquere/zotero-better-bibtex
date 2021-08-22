@@ -48,7 +48,7 @@ class Logger {
       translator = translator || workerContext.translator
     }
     else {
-      if (worker) worker = `not a worker: ${worker}`
+      if (worker) worker = `${worker} (but inWorker is false?)`
       // Translator must be var-hoisted by esbuild for this to work
       if (!translator && inTranslator) translator = ZOTERO_TRANSLATOR_INFO.label
     }
@@ -57,9 +57,12 @@ class Logger {
   }
 
   private formatError(e, indent='') {
-    let msg = `${indent}${e.message || e.name || ''}`
-    if (e.filename) msg += ` in ${e.filename}`
-    if (e.lineno && e.colno) msg += ` line ${e.lineno}, col ${e.colno}`
+    let msg = `${e.message || e.name || ''}`
+    if (e.filename || e.fileName) msg += ` in ${e.filename || e.fileName}`
+    if (e.lineno || e.lineNumber) {
+      msg += ` line ${e.lineno}`
+      if (e.colno) msg += `, col ${e.colno}`
+    }
     if (e.stack) msg += `\n${indent}${e.stack.replace(/\n/g, `${indent}\n`)}`
     if (e.error) msg += `\n${indent}${this.formatError(e.error, '  ')}\n`
     return `${indent}<Error: ${msg}>`

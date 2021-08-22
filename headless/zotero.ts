@@ -2,7 +2,7 @@ import { defaults } from '../gen/preferences'
 import schema from '../schema/zotero.json'
 import XRegExp from 'xregexp'
 
-export { DOMParser } from 'xmldom'
+export { DOMParser } from '@xmldom/xmldom'
 
 class Preferences {
   get(name) {

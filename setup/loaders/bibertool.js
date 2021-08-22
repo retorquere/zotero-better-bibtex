@@ -2,7 +2,7 @@ const xpath = require('xpath')
 const fs = require('fs')
 const path = require('path')
 const ejs = require('ejs')
-const DOMParser = require('xmldom').DOMParser
+const DOMParser = require('@xmldom/xmldom').DOMParser
 const jsesc = require('jsesc')
 const _ = require('lodash')
 

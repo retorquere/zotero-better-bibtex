@@ -417,6 +417,8 @@
   "export/capital delta breaks .bib output #141.bibtex",
   "export/capital delta breaks .bib output #141.json",
   "export/cayw.json",
+  "export/citation key format nopunctordash filter list #1880.bibtex",
+  "export/citation key format nopunctordash filter list #1880.json",
   "export/citekey firstpage-lastpage #1147.bibtex",
   "export/citekey firstpage-lastpage #1147.json",
   "export/condense in cite key format not working #308.biblatex",

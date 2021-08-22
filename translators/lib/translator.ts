@@ -71,6 +71,7 @@ type TranslatorHeader = {
     Authors: boolean
     Year: boolean
     Normalize: boolean
+    markdown: boolean
   }
 
   configOptions: {
@@ -147,6 +148,7 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
     quickCopyMode?: string
     dropAttachments?: boolean
     exportNotes?: boolean
+    markdown?: boolean
     exportFileData?: boolean
     useJournalAbbreviation?: boolean
     keepUpdated?: boolean

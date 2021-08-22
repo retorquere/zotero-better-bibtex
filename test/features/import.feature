@@ -2,7 +2,7 @@
 Feature: Import
 
 Background:
-  Given I set preference .citekeyFormat to [auth][year]
+  Given I set preference .citekeyFormat to "[auth][year]"
   And I set preference .jabrefFormat to 0
 
 @schomd
@@ -36,7 +36,7 @@ Scenario: Math markup to unicode not always imported correctly #472
   And I set preference .importJabRefAbbreviations to false
   When I import 3 references from "import/*.bib"
   Then the library should match "import/*.json"
-  And I set preference .exportBibTeXStrings to detect
+  And I set preference .exportBibTeXStrings to "detect"
   Then an export using "Better BibTeX" should match "import/*.roundtrip.bib"
 
 @1246
