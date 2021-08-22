@@ -29,7 +29,7 @@ def step_impl(context, value):
 @when(u'I create preference override {value}')
 def step_impl(context, value):
   value = json.loads(value)
-  assert value[0].startswith('~/'), value
+  assert value.startswith('~/'), value
   value = os.path.join(context.tmpDir, value[2:])
   with open(value, 'w') as f:
     json.dump({}, f)
@@ -279,7 +279,7 @@ def step_impl(context, citekey):
 @then(u'"{found}" should match "{expected}"')
 def step_impl(context, expected, found):
   expected = expand_scenario_variables(context, expected)
-  if expected[0].startswith('~/'):
+  if expected.startswith('~/'):
     expected = os.path.join(context.tmpDir, expected[2:])
   else:
     expected = os.path.join(ROOT, 'test/fixtures', expected)
@@ -287,7 +287,7 @@ def step_impl(context, expected, found):
   with open(expected) as f:
     expected = f.read()
 
-  if found[0].startswith('~/'):
+  if found.startswith('~/'):
     found = os.path.join(context.tmpDir, found[2:])
   else:
     found = os.path.join(ROOT, 'test/fixtures', found)
