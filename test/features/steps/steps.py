@@ -136,14 +136,10 @@ def export_library(context, translator='BetterBibTeX JSON', collection=None, exp
   expected = expand_scenario_variables(context, expected)
   displayOptions = { **context.displayOptions }
   if displayOption: displayOptions[displayOption] = True
-<<<<<<< HEAD
-  if output: output = os.path.join(context.tmpDir, output)
-=======
   if output:
     assert output.startswith('~/'), output
     output = os.path.join(context.tmpDir, output[2:])
->>>>>>> master
-  
+
   start = time.time()
   context.zotero.export_library(
     displayOptions = displayOptions,
