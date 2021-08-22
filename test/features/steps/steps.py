@@ -287,7 +287,7 @@ def step_impl(context, expected, found):
   with open(expected) as f:
     expected = f.read()
 
-  if found[0].startswith('~/')
+  if found[0].startswith('~/'):
     found = os.path.join(context.tmpDir, found[2:])
   else:
     found = os.path.join(ROOT, 'test/fixtures', found)
