@@ -606,7 +606,7 @@
       "Better BibTeX"
     ],
     "var": "qualityReport",
-    "label": "Include comments about potential problems with the references"
+    "label": "Include comments about potential problems with the exported references"
   },
   {
     "name": "quickCopyEta",
@@ -622,7 +622,7 @@
     "default": "latex",
     "affects": [],
     "var": "quickCopyMode",
-    "label": "QuickCopy format",
+    "label": "Quick-Copy format",
     "options": {
       "latex": "LaTeX citation",
       "citekeys": "Cite Keys",
