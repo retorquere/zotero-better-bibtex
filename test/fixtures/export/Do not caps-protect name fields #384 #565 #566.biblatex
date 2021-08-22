@@ -124,7 +124,7 @@
 }
 
 @book{medici,
-  author = {de’\mbox{} Medici, Lorenzo},
+  author = {de’\hspace{0pt} Medici, Lorenzo},
   annotation = {[Medici][Lorenzo de’U+200B]}
 }
 
