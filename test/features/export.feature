@@ -474,7 +474,7 @@ Scenario: auto-export
   And I set preference .autoExport to "immediate"
   And I set preference .jabrefFormat to 3
   Then an auto-export to "/autoexport.bib" using "Better BibLaTeX" should match "export/*.before.biblatex"
-  And an auto-export of "/auto-export" to "autoexport.coll.bib" using "Better BibLaTeX" should match "export/*.before.coll.biblatex"
+  And an auto-export of "/auto-export" to "/autoexport.coll.bib" using "Better BibLaTeX" should match "export/*.before.coll.biblatex"
   When I select the item with a field that is "IEEE"
   And I remove the selected item
   And I wait 10 seconds
