@@ -18,10 +18,11 @@ for d in pathlib.Path(__file__).resolve().parents:
 
 @step('I set preference {pref} to {value}')
 def step_impl(context, pref, value):
+  value = json.parse(value)
   # bit of a cheat...
   if pref.endswith('.postscript'):
     value = expand_scenario_variables(context, value)
-  context.zotero.preferences[pref] = context.zotero.preferences.parse(value)
+  context.zotero.preferences[pref] = value
 
 @step(r'I restart Zotero with "{db}" + "{source}"')
 def step_impl(context, db, source):
