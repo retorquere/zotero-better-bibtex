@@ -450,9 +450,10 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
       if (override.postscript) this._displayOptions.preference_postscript = Zotero.File.getContents(override.postscript)
       if (override.preferences) {
         try {
-          const prefs = JSON.parse(Zotero.File.getContents(override.preferences))
+          let prefs = JSON.parse(Zotero.File.getContents(override.preferences))
+          prefs = prefs.preferences || prefs
           log.debug('prefs override:', prefs)
-          for (const [pref, value] of Object.entries(prefs.preferences || prefs)) {
+          for (const [pref, value] of Object.entries(prefs)) {
             if (typeof value !== typeof preferences.defaults[pref]) throw new Error(`preference override for ${pref}: expected ${typeof preferences.defaults[pref]}, got ${typeof value}`)
             if (preferences.options[pref] && !preferences.options[pref][value]) throw new Error(`preference override for ${pref}: expected ${Object.keys(preferences.options[pref]).join(' / ')}, got ${value}`)
             this._displayOptions[`preference_${pref}`] = value
