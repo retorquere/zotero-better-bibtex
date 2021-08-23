@@ -405,7 +405,7 @@ $patch$(Zotero.Utilities.Internal, 'extractExtraFields', original => function Zo
   return original.apply(this, arguments)
 })
 
-function findOverride(exportPath: string, extension: string, filename: string): string {
+function findOverride(exportPath: string, extension: string, filename: string, load: (path: string) => any): any {
   if (!filename) return null
 
   const candidates = [
@@ -416,7 +416,15 @@ function findOverride(exportPath: string, extension: string, filename: string): 
   for (let candidate of candidates) {
     candidate = OS.Path.join(exportDir, candidate)
     // cannot use await OS.File.exists here because we may be invoked in noWait mode
-    if ((new FileUtils.File(candidate)).exists()) return candidate
+    if ((new FileUtils.File(candidate)).exists()) {
+      try {
+        const loaded = load(candidate)
+        if (typeof loaded === 'string' || loaded) return loaded
+      }
+      catch (err) {
+        log.debug('failed to load override', candidate)
+      }
+    }
   }
   return null
 }
@@ -441,27 +449,34 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         }
       }
       const override = {
-        postscript: findOverride(this._displayOptions.exportPath, '.js', Preference.postscriptOverride),
-        preferences: findOverride(this._displayOptions.exportPath, '.json', Preference.preferencesOverride),
+        postscript: findOverride(
+          this._displayOptions.exportPath, '.js',
+          Preference.postscriptOverride,
+          (path: string) => Zotero.File.getContents(path) // eslint-disable-line @typescript-eslint/no-unsafe-return
+        ),
+        preferences: findOverride(
+          this._displayOptions.exportPath, '.json',
+          Preference.preferencesOverride,
+          (path: any) => { const content = JSON.parse(Zotero.File.getContents(path)); return content.override?.preferences } // eslint-disable-line @typescript-eslint/no-unsafe-return
+        ),
       }
       log.debug('export overrides:', override)
       this._displayOptions.caching = this._displayOptions.caching && !override.postscript && !override.preferences
 
-      if (override.postscript) this._displayOptions.preference_postscript = Zotero.File.getContents(override.postscript)
+      if (override.postscript) this._displayOptions.preference_postscript = override.postscript
       if (override.preferences) {
-        try {
-          let prefs = JSON.parse(Zotero.File.getContents(override.preferences))
-          prefs = prefs.config?.preferences || prefs
-          log.debug('prefs override:', prefs)
-          for (const [pref, value] of Object.entries(prefs)) {
-            if (typeof value !== typeof preferences.defaults[pref]) throw new Error(`preference override for ${pref}: expected ${typeof preferences.defaults[pref]}, got ${typeof value}`)
-            if (preferences.options[pref] && !preferences.options[pref][value]) throw new Error(`preference override for ${pref}: expected ${Object.keys(preferences.options[pref]).join(' / ')}, got ${value}`)
+        this._displayOptions.caching = false
+        log.debug('prefs override:', override.preferences)
+        for (const [pref, value] of Object.entries(override.preferences)) {
+          if (typeof value !== typeof preferences.defaults[pref]) {
+            log.debug(`preference override for ${pref}: expected ${typeof preferences.defaults[pref]}, got ${typeof value}`)
+          }
+          else if (preferences.options[pref] && !preferences.options[pref][value]) {
+            log.debug(`preference override for ${pref}: expected ${Object.keys(preferences.options[pref]).join(' / ')}, got ${value}`)
+          }
+          else {
             this._displayOptions[`preference_${pref}`] = value
           }
-        }
-        catch (err) {
-          log.debug('failed to load preference overrides from', override.preferences, ':', err)
-          this._displayOptions.caching = false
         }
       }
 

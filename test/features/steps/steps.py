@@ -32,7 +32,7 @@ def step_impl(context, value):
   assert value.startswith('~/'), value
   value = os.path.join(context.tmpDir, value[2:])
   with open(value, 'w') as f:
-    json.dump({}, f)
+    json.dump({'override': { 'preferences': {} }}, f)
   context.preferenceOverride = value
 
 @when(u'I remove preference override {value}')
@@ -50,7 +50,7 @@ def step_impl(context, pref, value):
     value = expand_scenario_variables(context, value)
   with open(context.preferenceOverride) as f:
     override = json.load(f)
-  override[pref] = value
+  override['override']['preferences'][pref] = value
   with open(context.preferenceOverride, 'w') as f:
     json.dump(override, f)
 
