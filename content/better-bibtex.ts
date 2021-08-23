@@ -451,8 +451,9 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
       if (override.preferences) {
         try {
           let prefs = JSON.parse(Zotero.File.getContents(override.preferences))
+          log.debug('prefs override:', typeof prefs, Object.keys(prefs), prefs)
           prefs = prefs.preferences || prefs
-          log.debug('prefs override:', prefs)
+          log.debug('resolved prefs override:', prefs)
           for (const [pref, value] of Object.entries(prefs)) {
             if (typeof value !== typeof preferences.defaults[pref]) throw new Error(`preference override for ${pref}: expected ${typeof preferences.defaults[pref]}, got ${typeof value}`)
             if (preferences.options[pref] && !preferences.options[pref][value]) throw new Error(`preference override for ${pref}: expected ${Object.keys(preferences.options[pref]).join(' / ')}, got ${value}`)
