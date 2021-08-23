@@ -11,13 +11,17 @@
     "CSL YAML export of date with original publication date in [brackets] #922": 360,
     "CSL exporters; ignore [Fields to omit from export] setting #1179": 1970,
     "CSL-YAML import": {
-      "msecs": 1230,
+      "msecs": 1240,
       "runs": -353
     },
     "Capitalize all title-fields for language en #383": 680,
     "Changing item type for only BibLaTeX does not work #1694": {
       "msecs": 720,
       "runs": -198
+    },
+    "Choose fields to exclude for each exported file #1827": {
+      "msecs": 1260,
+      "runs": -388
     },
     "Citekey generation failure #708 and sort references on export #957": 2040,
     "Collected notes": {
@@ -56,6 +60,10 @@
     "Export 1 references for BibLaTeX to Better BibLaTeX.022": 350,
     "Export 1 references for BibLaTeX to Better BibLaTeX.023": 400,
     "Export 1 references for BibLaTeX to Better BibTeX does not use biblatex fields eprint and eprinttype #170": 400,
+    "Export 1 references for BibLaTeX to Better Biblatex export generates invalid latex when processing zero-width spaces #1892": {
+      "msecs": 450,
+      "runs": -388
+    },
     "Export 1 references for BibLaTeX to BetterBibLaTeX; Software field company is mapped to publisher instead of organization #1054": 310,
     "Export 1 references for BibLaTeX to BibLaTeX; export CSL override 'issued' to date or year #351": 340,
     "Export 1 references for BibLaTeX to BibTeX variable support for journal titles. #309": 330,
@@ -256,7 +264,7 @@
       "runs": -300
     },
     "Export 1 references for BibTeX to Word segmentation for Chinese references #1682": {
-      "msecs": 1630,
+      "msecs": 1620,
       "runs": -260
     },
     "Export 1 references for BibTeX to [authN_M] citation key syntax has off-by-one error #899": 370,
@@ -268,7 +276,7 @@
     "Export 1 references for BibTeX to braces after textemdash followed by unicode #980": 400,
     "Export 1 references for BibTeX to capital delta breaks .bib output #141": 410,
     "Export 1 references for BibTeX to citation key format nopunctordash filter list #1880": {
-      "msecs": 1810,
+      "msecs": 1820,
       "runs": -380
     },
     "Export 1 references for BibTeX to custom fields should be exported as-is #441": 480,
@@ -347,7 +355,7 @@
     "Export 6 references for BibLaTeX to Better BibLaTeX.stable-keys": 620,
     "Export 8 references for BibLaTeX to Don't title-case sup-subscripts #1037": 660,
     "Export as Collected Notes does not list subcollections #1768": {
-      "msecs": 4730,
+      "msecs": 4740,
       "runs": -256
     },
     "Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825": 990,
@@ -448,17 +456,17 @@
     },
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 356400,
+    "Really Big whopping library": 356130,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 51490,
+      "msecs": 51510,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
     "Square brackets in Publication field (85), and non-pinned keys must change when the pattern does": 450,
-    "Unabbreviate on import #1436-1": 38740,
+    "Unabbreviate on import #1436-1": 38750,
     "Unbalanced vphantom escapes #1043": 760,
     "arXiv identifiers in BibLaTeX export #460": 1180,
     "auto-export": 14370,
@@ -481,7 +489,7 @@
       "runs": -36
     },
     "web_page and other mendeley idiocy": {
-      "msecs": 39320,
+      "msecs": 39360,
       "runs": -239
     }
   },
@@ -790,7 +798,7 @@
       "Identical Pinned keys lost when merging duplicated records #1721"
     ]
   },
-  "runs": 388,
+  "runs": 389,
   "slow": {
     "1": [
       "Export 1 references for BibLaTeX to Cite archive documents with BetterBibLaTeX #1799",
@@ -1091,7 +1099,9 @@
       "Merging error with arXiv ID #1373",
       "Duplicate Citation Key Alias #1384",
       "ids field should be created in raw mode #1729",
-      "Identical Pinned keys lost when merging duplicated records #1721"
+      "Identical Pinned keys lost when merging duplicated records #1721",
+      "Export 1 references for BibLaTeX to Better Biblatex export generates invalid latex when processing zero-width spaces #1892",
+      "Choose fields to exclude for each exported file #1827"
     ],
     "2": [
       "Really Big whopping library",
