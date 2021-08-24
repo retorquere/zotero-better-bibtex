@@ -22,3 +22,5 @@ Options:
 * Disabled
 * On Change
 * When Idle
+
+## auto-export

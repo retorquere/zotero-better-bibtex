@@ -202,9 +202,11 @@ class Preferences:
     doc.pages[hidden].metadata['weight'] = doc.weight + len(page.pages)
 
     def gettabs(node, path):
-      tabs = node.findall(f'{path}/{xul}tabs/{xul}tab')
+      for tabs in [f'{path}/{xul}tabs/{xul}tab', f'{path}/{xul}arrowscrollbox/{xul}tabs/{xul}tab']:
+        tabs = node.findall(tabs)
+        if len(tabs) > 0: break
       panels = node.findall(f'{path}/{xul}tabpanels/{xul}tabpanel')
-      assert len(tabs) == len(panels), (len(tabs), len(panels))
+      assert len(tabs) == len(panels), (len(tabs), len(panels), etree.tostring(node[1], pretty_print=True).decode('utf-8'))
       return zip(tabs, panels)
 
     # prepare labels
@@ -219,8 +221,8 @@ class Preferences:
       assert panel.attrib[f'{bbt}page'] in page.pages, (panel.attrib, page.pages)
       page.pages.remove(panel.attrib[f'{bbt}page'])
 
-      for subtab, subtabpanel in gettabs(panel, '.'):
-        subpanel.attrib[f'{bbt}label'] = subtab.attrib[f'{xul}label']
+      for subtab, subpanel in gettabs(panel, f'./{xul}tabbox'):
+        subpanel.attrib[f'{bbt}label'] = subtab.attrib['label']
     assert list(page.pages) == [hidden], page.pages
 
     for groupbox in self.pane.findall(f'.//{xul}groupbox'):
@@ -229,6 +231,7 @@ class Preferences:
 
     def walk(node, level=None):
       levelup = 0
+
       if (node.tag == f'{xul}tabpanel') and (pagename := node.get(f'{bbt}page')):
         level = None
         doc.weight += 1

@@ -12,19 +12,21 @@ weight: 11
 
 {{% preferences/header %}}
 
-## Export unicode as plain-text latex commands (recommended)
+## BibTeX
+
+### Export unicode as plain-text latex commands (recommended)
 
 default: `yes`
 
 BibTeX has really spotty Unicode support, so you generally want this on. It will translate things like accented characters to their equivalent LaTeX constructs on export.
 
-## Disregard name prefixes when sorting
+### Disregard name prefixes when sorting
 
 default: `no`
 
 Name handling is a lot more complex than I had ever thought it to be. A *lot* more complex. BibTeX has really limited ways of dealing with names with particles (van, von, de, etc). If you turn this on, BBT will add code to have `van Gogh` sorted under `Gogh`.
 
-## Add URLs to BibTeX export:
+### Add URLs to BibTeX export:
 
 default: `no`
 
@@ -38,19 +40,23 @@ Options:
 * in the 'url' field
 * in the 'url' field, but assuming the 'url' package is not loaded
 
-## Export unicode as plain-text latex commands
+## BibLaTeX
+
+### Export unicode as plain-text latex commands
 
 default: `no`
 
 BibLaTeX actually has really good Unicode support, so you generally want this off. But for some geezers such as me it is simply more pleasing to have things like accented characters translated to their equivalent LaTeX constructs on export.
 
-## Use BibLaTeX extended name format (requires biblatex 3.5)
+### Use BibLaTeX extended name format (requires biblatex 3.5)
 
 default: `no`
 
 Use the extended biber 2.7 format for names with particles - only works in BibLaTeX 3.5 or later. This biblatex has a new (less ambiguous) way to store creator names. It's technically superior, but the LaTeX world moves slowly, so many people won't have it yet. But if you're an early adopter, you can enable it here
 
-## When a reference has both a DOI and a URL, export
+## Fields
+
+### When a reference has both a DOI and a URL, export
 
 default: `both`
 
@@ -62,13 +68,13 @@ Options:
 * DOI
 * URL
 
-## Fields to omit from export (comma-separated):
+### Fields to omit from export (comma-separated):
 
 default: `<not set>`
 
 If there are some fields you don't want in your bibtex files (such as `note` for example), add a list of them here, separated by comma's.
 
-## Include JabRef-specific metadata:
+### Include JabRef-specific metadata:
 
 default: `no`
 
@@ -81,9 +87,11 @@ Options:
 * for JabRef 4
 * for JabRef 5
 
-## Quick-Copy/drag-and-drop citations
+## Quick-Copy
 
-### Quick-Copy format
+### Quick-Copy/drag-and-drop citations
+
+#### Quick-Copy format
 
 default: `LaTeX citation`
 
@@ -103,19 +111,19 @@ Options:
 * Zotero select link
 * Eta template
 
-### LaTeX command
+#### LaTeX command
 
 default: `cite`
 
 Used for drag-and-drop/quick copy citations in `LaTeX` format. Set the desired LaTeX citation command here. If you set this to `citep`, drag-and-drop citations will yield `\citep{key1,key2,...}`
 
-### Surround Pandoc citations with brackets
+#### Surround Pandoc citations with brackets
 
 default: `no`
 
 Used for drag-and-drop/quick copy citations in `Pandoc` format. You can use this option to select whether you want to have these pandoc citations surrounded with brackets or not.
 
-### Org-mode select link
+#### Org-mode select link
 
 default: `using Zotero item key`
 
@@ -126,7 +134,7 @@ Options:
 * using Zotero item key
 * using Better BibTeX citation key
 
-### Zotero select link
+#### Zotero select link
 
 default: `using Zotero item key`
 
@@ -137,7 +145,7 @@ Options:
 * using Zotero item key
 * using Better BibTeX citation key
 
-### Eta template
+#### Eta template
 
 default: `<not set>`
 
@@ -145,29 +153,33 @@ Used for drag-and-drop/quick copy citations in `Build your own` format. This is 
 
 ## postscript
 
+### postscript
+
 default: `<not set>`
 
 Snippet of javascript to run [after each reference generation]({{ ref . "exporting/scripting.md" }}).
 
-## Automatically abbreviate journal title if none is set explicitly
+## Miscellaneous
+
+### Automatically abbreviate journal title if none is set explicitly
 
 default: `no`
 
 If set, generates journal abbreviations on export using the Zotero journal abbreviator, according to the abbreviation style selected in the list below the checkbox.
 
-## Include comments about potential problems with the exported references
+### Include comments about potential problems with the exported references
 
 default: `no`
 
 Generate quality reports for exported references. These show up only in BibTeX and BibLaTeX report formats and indicate things like missing required fields and duplicate citation keys.
 
-## Include automatic tags in export
+### Include automatic tags in export
 
 default: `yes`
 
 Some importers or Zotero extensions (such as the ShortDOI manager for example) create tags on items that are more for item management than that they are descriptive of the item. When this is off, such tags will not be included in the export.
 
-## When converting to plain-text latex commands:
+### When converting to plain-text latex commands:
 
 default: `Minimize the number of switches between math-mode and text-mode`
 
@@ -182,21 +194,21 @@ Options:
 * Prefer text-mode replacements
 * Prefer math-mode replacements
 
-## Apply title-casing to titles
+### Apply title-casing to titles
 
 default: `yes`
 
 If you're dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero recommendations on title/sentence casing, you can turn this off to suppress [title casing for English references]({{ ref . "support/faq#bbt-is-changing-the-capitalization-of-my-titles-why" }})
 
-## Apply case-protection to capitalized words by enclosing them in braces
+### Apply case-protection to capitalized words by enclosing them in braces
 
 default: `yes`
 
 If you're dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero recommendations on title/sentence casing, you can turn this off to suppress [automatic brace-protection for words with uppercase letters]({{ ref . "support/faq#why-the-double-braces" }}).
 
-## Cache
+### Cache
 
-### Retain export cache across upgrades
+#### Retain export cache across upgrades
 
 default: `no`
 
@@ -204,13 +216,13 @@ By default, BBT clears all caches whenever BBT or Zotero is upgraded. I can't re
 
 If you have this on, and you experience any problem that is not the cache getting dropped on upgrade, you *must* clear the cache and reproduce the problem. When you change this setting, as with any setting change, the cache will be dropped.
 
-### Parallel background exports:
+#### Parallel background exports:
 
 default: `1`
 
 BBT can now perform its exports in a separate thread, and should no longer block Zotero's UI pretty much regardless of how large your library is. The default of 1 parallel export should suit most needs, but if you have many auto-exports set up, you may want to raise the maximum parallel exports to prevent queueing of exports. It is possible to turn background exports off by setting this value to `0` in the hidden preferences; you will get the old (blocking) behavior back, but you can't complain about Zotero being laggy during auto-exports. All Zotero exports are blocking, and it's a minor miracle I got background exports to work at all.
 
-### Enable caching for background exports
+#### Enable caching for background exports
 
 default: `yes`
 

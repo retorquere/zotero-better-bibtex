@@ -10,35 +10,39 @@ weight: 14
 
 {{% preferences/header %}}
 
-## When merging items, also merge:
+## Fields
 
-### their citation keys into an bib(la)tex `ids` field
+### When merging items, also merge:
+
+#### their citation keys into an bib(la)tex `ids` field
 
 default: `no`
 
 When merging items, also merge their citation keys into an bib(la)tex `ids` field.
 
-### fields that are understood to be CSL fields by Zotero
+#### fields that are understood to be CSL fields by Zotero
 
 default: `no`
 
 When merging items, also merge fields that are understood to be CSL fields by Zotero.
 
-### their `tex.*` fields
+#### their `tex.*` fields
 
 default: `no`
 
 When merging items, also merge their `tex.*` fields.
 
-## Expand the @string vars below during imports
+## @string definitions
+
+### Expand the @string vars below during imports
 
 default: `yes`
 
 When enabled, BBT will prepend the @strings section below to all Bib(La)TeX imports and will expand the strings during export.
 
-## If a field could be a @string reference, export it as an unbraced @string reference
-
 ### If a field could be a @string reference, export it as an unbraced @string reference
+
+#### If a field could be a @string reference, export it as an unbraced @string reference
 
 default: `No`
 
@@ -51,7 +55,7 @@ Options:
 * Match against the @string declarations below
 * Match against the @string declarations and their values below
 
-## @string definitions
+### @string definitions
 
 default: `<not set>`
 
