@@ -1,7 +1,7 @@
 {
   "duration": {
     "(non-)dropping particle handling #313": 2800,
-    "AUX scanner": 8510,
+    "AUX scanner": 8500,
     "BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372": 270,
     "Better BibTeX Import 2": 1160,
     "BibTeX name escaping has a million inconsistencies #438": 480,
@@ -11,7 +11,7 @@
     "CSL YAML export of date with original publication date in [brackets] #922": 360,
     "CSL exporters; ignore [Fields to omit from export] setting #1179": 1970,
     "CSL-YAML import": {
-      "msecs": 1240,
+      "msecs": 1230,
       "runs": -353
     },
     "Capitalize all title-fields for language en #383": 680,
@@ -20,7 +20,7 @@
       "runs": -198
     },
     "Choose fields to exclude for each exported file #1827": {
-      "msecs": 1350,
+      "msecs": 1240,
       "runs": -388
     },
     "Citekey generation failure #708 and sort references on export #957": 2040,
@@ -61,7 +61,7 @@
     "Export 1 references for BibLaTeX to Better BibLaTeX.023": 400,
     "Export 1 references for BibLaTeX to Better BibTeX does not use biblatex fields eprint and eprinttype #170": 400,
     "Export 1 references for BibLaTeX to Better Biblatex export generates invalid latex when processing zero-width spaces #1892": {
-      "msecs": 490,
+      "msecs": 460,
       "runs": -388
     },
     "Export 1 references for BibLaTeX to BetterBibLaTeX; Software field company is mapped to publisher instead of organization #1054": 310,
@@ -264,7 +264,7 @@
       "runs": -300
     },
     "Export 1 references for BibTeX to Word segmentation for Chinese references #1682": {
-      "msecs": 1610,
+      "msecs": 1600,
       "runs": -260
     },
     "Export 1 references for BibTeX to [authN_M] citation key syntax has off-by-one error #899": 370,
@@ -276,7 +276,7 @@
     "Export 1 references for BibTeX to braces after textemdash followed by unicode #980": 400,
     "Export 1 references for BibTeX to capital delta breaks .bib output #141": 410,
     "Export 1 references for BibTeX to citation key format nopunctordash filter list #1880": {
-      "msecs": 1820,
+      "msecs": 1780,
       "runs": -380
     },
     "Export 1 references for BibTeX to custom fields should be exported as-is #441": 480,
@@ -355,7 +355,7 @@
     "Export 6 references for BibLaTeX to Better BibLaTeX.stable-keys": 620,
     "Export 8 references for BibLaTeX to Don't title-case sup-subscripts #1037": 660,
     "Export as Collected Notes does not list subcollections #1768": {
-      "msecs": 4750,
+      "msecs": 4740,
       "runs": -256
     },
     "Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825": 990,
@@ -416,7 +416,7 @@
     "Import 2 references from Better BibTeX.003": 1050,
     "Import 2 references from BibLaTeX Patent author handling, type #1060": 1220,
     "Import 2 references from Import Jabref fileDirectory, unexpected reference type #1058": {
-      "msecs": 1940,
+      "msecs": 1930,
       "runs": -348
     },
     "Import 2 references from space after citekey creates confusion #716": 1170,
@@ -426,7 +426,7 @@
     },
     "Import 3 references from Better BibTeX.009": 1130,
     "Import 4 references from Improve import of films #1837": {
-      "msecs": 1390,
+      "msecs": 1380,
       "runs": -348
     },
     "Import 4 references from Title of German entry converted to lowercase during import #1350": 1310,
@@ -456,17 +456,17 @@
     },
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 355860,
+    "Really Big whopping library": 355660,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 51520,
+      "msecs": 51600,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
     "Square brackets in Publication field (85), and non-pinned keys must change when the pattern does": 450,
-    "Unabbreviate on import #1436-1": 38760,
+    "Unabbreviate on import #1436-1": 38740,
     "Unbalanced vphantom escapes #1043": 760,
     "arXiv identifiers in BibLaTeX export #460": 1180,
     "auto-export": 14370,
@@ -489,7 +489,7 @@
       "runs": -36
     },
     "web_page and other mendeley idiocy": {
-      "msecs": 39390,
+      "msecs": 39330,
       "runs": -239
     }
   },
@@ -688,7 +688,6 @@
       "Export 1 references for BibTeX to braces after textemdash followed by unicode #980",
       "Export 2 references for BibTeX to creating a key with [authForeIni] and [authN] not working properly #892",
       "Export 2 references for BibTeX to date not always parsed properly into month and year with PubMed #1112",
-      "Export 5 references for BibTeX to date ranges #747+#746",
       "Export 1 references for BibTeX to preserve @strings between import-export #1162",
       "Export 2 references for BibTeX to titles are title-cased in .bib file #558",
       "Omit URL export when DOI present. #131",
@@ -761,6 +760,7 @@
       "Import 2 references from Better BibTeX.001",
       "Import 1 references from Better BibTeX.008",
       "Import 1 references from Better BibTeX.010",
+      "Import 1 references from Better BibTeX.015",
       "Import 2 references from BibLaTeX Patent author handling, type #1060",
       "Import 1 references from BibTeX import; preamble with def create problems #732",
       "Import 1 references from Failure to handle unparsed author names (92)",
@@ -780,6 +780,7 @@
     ],
     "2": [
       "Export 36 references for BibTeX to Better BibTeX does not export collections #901",
+      "Export 5 references for BibTeX to date ranges #747+#746",
       "Bibtex key regenerating issue when trashing items #117",
       "two ISSN number are freezing browser #110 + Generating keys and export broken #111",
       "Postfixed keys different between computers #1788",
@@ -789,7 +790,6 @@
       "Export as Collected Notes does not list subcollections #1768",
       "AUX scanner",
       "Import 20 references from BBT does not import groups from JabRef 5.1 #1641",
-      "Import 1 references from Better BibTeX.015",
       "Jabref import - groups lost #1730",
       "Unabbreviate on import #1436-1",
       "web_page and other mendeley idiocy",
@@ -800,7 +800,7 @@
       "Identical Pinned keys lost when merging duplicated records #1721"
     ]
   },
-  "runs": 390,
+  "runs": 391,
   "slow": {
     "1": [
       "Export 1 references for BibLaTeX to Better Biblatex export generates invalid latex when processing zero-width spaces #1892",
