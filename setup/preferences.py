@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from lxml import etree, sax
+from lxml import etree
 from munch import Munch
 from slugify import slugify
 import textwrap
@@ -11,6 +11,8 @@ import html
 from mako.template import Template
 import re
 from glob import glob
+import frontmatter
+from types import SimpleNamespace
 
 if os.system('setup/preferences.js') != 0:
   print('unpug failed')
@@ -53,6 +55,7 @@ class Preferences:
 
     self.pane, self.ns = load(os.path.join(root, 'content/Preferences.xul'))
     self.parse()
+    self.doc()
     self.save()
 
   def parse(self):
@@ -187,65 +190,89 @@ class Preferences:
 
     self.preferences['#skipWords'].default = self.preferences['#skipWords'].default.replace(' ', '')
 
-    sections = [section.get('label') for section in self.pane.findall(f'.//{xul}prefwindow/{xul}prefpane/{xul}tabbox/{xul}tabs/{xul}tab')]
-    sections.append('Hidden preferences')
-
-    for panel in self.pane.findall(f'.//{xul}prefwindow/{xul}prefpane/{xul}tabbox/{xul}tabpanels/{xul}tabpanel'):
-      self.tabs = [tab.get('label') for tab in panel.findall(f'.//{xul}tab')]
-      with open(os.path.join(root, 'site/layouts/shortcodes/preferences', f'{slugify(sections.pop(0))}.md'), 'w') as f:
-        print('{{/* DO NOT EDIT. This shortcode is created automatically from Preferences.xul */}}', file=f)
-
-        print(self.doc(panel), file=f)
-
-    with open(os.path.join(root, f'site/layouts/shortcodes/preferences/{slugify(sections.pop(0))}.md'), 'w') as f:
-      print('{{/* DO NOT EDIT. This shortcode is created automatically from Preferences.xul */}}', file=f)
-
-      doc = ''
-      for pref in sorted(self.preferences.keys()):
-        pref = self.preferences[pref]
-        if pref.name not in self.hidden: continue
-        if pref.name not in self.undocumented: continue
-
-        doc += self.pref(pref)
-      print(doc, file=f)
-
-  def doc(self, node, section=False):
+  def doc(self):
     xul = f'{{{self.ns.xul}}}'
     bbt = f'{{{self.ns.bbt}}}'
 
-    doc = ''
-    pref = node.get('preference') or node.get(f'{bbt}preference')
-    if pref is not None:
-      doc += self.pref(self.preferences[pref])
+    page = SimpleNamespace(root='site/content/installation/preferences')
+    page.pages = set([os.path.splitext(os.path.basename(p))[0] for p in glob(os.path.join(page.root, '*.md'))])
 
-    for child in node:
-      if child.tag == f'{xul}groupbox':
-        label = child.find(f'./{xul}caption').get(f'label')
-      elif child.tag == f'{xul}tabpanel':
-        label = self.tabs.pop(0)
-      else:
-        label = None
+    hidden = 'hidden-preferences'
+    doc = SimpleNamespace(weight=9, pages={hidden: frontmatter.load(os.path.join(page.root, hidden + '.md'))})
+    doc.pages[hidden].metadata['weight'] = doc.weight + len(page.pages)
 
-      child = self.doc(child, section or label is not None)
-      if child.strip() == '': continue
+    def gettabs(node, path):
+      tabs = node.findall(f'{path}/{xul}tabs/{xul}tab')
+      panels = node.findall(f'{path}/{xul}tabpanels/{xul}tabpanel')
+      assert len(tabs) == len(panels), (len(tabs), len(panels))
+      return zip(tabs, panels)
 
-      #if label: doc += '<fieldset><legend>\n\n' + html.escape(label) + '\n\n</legend>\n\n'
-      if not section and label: doc += f'### {label}\n\n'
-      doc += child
-      #if label: doc += '</fieldset>\n\n'
+    # prepare labels
+    index = False
+    for tab, panel in gettabs(self.pane, f'.//{xul}prefwindow/{xul}prefpane/{xul}tabbox'):
+      panel.attrib[f'{bbt}label'] = tab.attrib['label']
 
-    return doc
+      if not index:
+        panel.attrib[f'{bbt}page'] = '_index'
+        index = True
 
-  def pref(self, pref):
+      assert panel.attrib[f'{bbt}page'] in page.pages, (panel.attrib, page.pages)
+      page.pages.remove(panel.attrib[f'{bbt}page'])
+
+      for subtab, subtabpanel in gettabs(panel, '.'):
+        subpanel.attrib[f'{bbt}label'] = subtab.attrib[f'{xul}label']
+    assert list(page.pages) == [hidden], page.pages
+
+    for groupbox in self.pane.findall(f'.//{xul}groupbox'):
+      if len(groupbox) > 0 and groupbox[0].tag == f'{xul}caption':
+        groupbox.attrib[f'{bbt}label'] = groupbox[0].get('label') or groupbox[0].text
+
+    def walk(node, level=None):
+      levelup = 0
+      if (node.tag == f'{xul}tabpanel') and (pagename := node.get(f'{bbt}page')):
+        level = None
+        doc.weight += 1
+        doc.pages[pagename] = frontmatter.load(os.path.join(page.root, pagename + '.md'))
+        doc.pages[pagename].content = '{{% preferences/header %}}\n\n'
+        doc.pages[pagename].metadata['title'] = node.attrib[f'{bbt}label']
+        doc.pages[pagename].metadata['weight'] = doc.weight
+        doc.current = pagename
+
+      elif (node.tag in [f'{xul}tabpanel', f'{xul}groupbox']) and (label := node.get(f'{bbt}label')):
+        levelup = 1
+        doc.pages[doc.current].content += ('#' * (level + 2)) + ' ' + label + '\n\n'
+
+      elif pref := node.get('preference'):
+        doc.pages[doc.current].content += self.pref(self.preferences[pref], level + 2)
+
+      for child in node:
+        walk(child, (level or 0) + levelup)
+
+    walk(self.pane)
+
+    doc.pages['hidden-preferences'].content = "{{% preferences/header %}}\n\nThe following settings are not exposed in the UI, but can be found under `Preferences`/`Advanced`/`Config editor`. Zotero knows these as [hidden parameters](https://www.zotero.org/support/preferences/hidden_preferences).\n\n"
+
+    for pref in sorted(self.preferences.keys()):
+      pref = self.preferences[pref]
+      if pref.name not in self.hidden: continue
+      if pref.name not in self.undocumented: continue
+
+      doc.pages['hidden-preferences'].content += self.pref(pref, 2)
+
+    for name, content in doc.pages.items():
+      with open(os.path.join(page.root, name + '.md'), 'wb') as f:
+        frontmatter.dump(content, f)
+
+  def pref(self, pref, level):
     if pref.name in self.printed: return ''
     if not 'description' in pref: return ''
 
     self.printed.append(pref.name)
 
     if 'label' in pref:
-      doc = f'#### {pref.label}\n\n'
+      doc = ('#' * level) + f' {pref.label}\n\n'
     else:
-      doc = f'### {pref.name}\n\n' # hidden pref
+      doc = ('#' * level) + f' {pref.name}\n\n' # hidden pref
 
     dflt = pref.default
     if 'options' in pref:

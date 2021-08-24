@@ -60,13 +60,13 @@ overlay#zotero-better-bibtex-preferences(xmlns="http://www.mozilla.org/keymaster
           tab(label='&better-bibtex.Preferences.export.misc;')
 
         tabpanels#better-bibtex-prefs-tabpanels(flex="1")
-          tabpanel#better-bibtex-prefs-citation-keys(flex="1" orient="vertical")
+          tabpanel(bbt:page='citation-keys' flex="1" orient="vertical")
             include Preferences/citekeys.pug
-          tabpanel#better-bibtex-prefs-export(flex="1" orient="vertical")
+          tabpanel(bbt:page='export' flex="1" orient="vertical")
             include Preferences/export.pug
-          tabpanel#better-bibtex-prefs-automatic-export(flex="1" orient="vertical")
+          tabpanel(bbt:page='automatic-export' flex="1" orient="vertical")
             include Preferences/autoexport.pug
-          tabpanel#better-bibtex-prefs-import(flex="1" orient="vertical")
+          tabpanel(bbt:page='import' flex="1" orient="vertical")
             include Preferences/import.pug
-          tabpanel#better-bibtex-prefs-advanced(flex="1" orient="vertical")
+          tabpanel(bbt:page='miscellaneous' flex="1" orient="vertical")
             include Preferences/misc.pug

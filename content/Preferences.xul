@@ -426,7 +426,7 @@
           <tab label="&better-bibtex.Preferences.export.misc;"></tab>
         </tabs>
         <tabpanels id="better-bibtex-prefs-tabpanels" flex="1">
-          <tabpanel id="better-bibtex-prefs-citation-keys" flex="1" orient="vertical">
+          <tabpanel bbt:page="citation-keys" flex="1" orient="vertical">
             <hbox>
               <label bbt:preference="pref-better-bibtex-citekeyFormat">&better-bibtex.Preferences.citekey.format;</label>
               <textbox id="id-better-bibtex-preferences-citekeyFormat" flex="1" onfocus="bbt_prefpane.getCitekeyFormat(event.target);" onblur="bbt_prefpane.saveCitekeyFormat(event.target);" oninput="bbt_prefpane.checkCitekeyFormat(event.target);" onkeypress="Zotero.setTimeout(function() { bbt_prefpane.checkCitekeyFormat(event.target) }, 1);"></textbox>
@@ -468,7 +468,7 @@
               <button class="hidden" id="rescan-citekeys" label="&better-bibtex.Preferences.rescan-citekeys;" oncommand="bbt_prefpane.rescanCitekeys()"></button>
             </hbox>
           </tabpanel>
-          <tabpanel id="better-bibtex-prefs-export" flex="1" orient="vertical">
+          <tabpanel bbt:page="export" flex="1" orient="vertical">
             <tabbox>
               <tabs>
                 <tab label="&better-bibtex.Preferences.export.bibtex;"></tab>
@@ -638,7 +638,7 @@
               </tabpanels>
             </tabbox>
           </tabpanel>
-          <tabpanel id="better-bibtex-prefs-automatic-export" flex="1" orient="vertical">
+          <tabpanel bbt:page="automatic-export" flex="1" orient="vertical">
             <vbox flex="1">
               <label>&better-bibtex.Preferences.auto-export.explanation;</label>
               <separator class="thin"></separator>
@@ -740,7 +740,7 @@
               </tabpanels>
             </tabbox>
           </tabpanel>
-          <tabpanel id="better-bibtex-prefs-import" flex="1" orient="vertical">
+          <tabpanel bbt:page="import" flex="1" orient="vertical">
             <hbox>
               <groupbox>
                 <caption bbt:preference="pref-better-bibtex-importSentenceCase">&better-bibtex.Preferences.advanced.import.sentenceCase;
@@ -766,7 +766,7 @@
             </hbox>
             <checkbox preference="pref-better-bibtex-aux-import" label="&better-bibtex.Preferences.citekey.AUXScanner.import;"></checkbox>
           </tabpanel>
-          <tabpanel id="better-bibtex-prefs-advanced" flex="1" orient="vertical">
+          <tabpanel bbt:page="miscellaneous" flex="1" orient="vertical">
             <tabbox>
               <tabs>
                 <tab label="&better-bibtex.Preferences.export.fields;"></tab>

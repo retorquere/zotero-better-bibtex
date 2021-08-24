@@ -25,6 +25,7 @@ pygtrie
 pylint
 pytablewriter
 python-dotenv
+python-frontmatter
 python-slugify
 readmd
 redo
