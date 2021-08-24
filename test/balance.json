@@ -20,7 +20,7 @@
       "runs": -198
     },
     "Choose fields to exclude for each exported file #1827": {
-      "msecs": 1260,
+      "msecs": 1350,
       "runs": -388
     },
     "Citekey generation failure #708 and sort references on export #957": 2040,
@@ -61,7 +61,7 @@
     "Export 1 references for BibLaTeX to Better BibLaTeX.023": 400,
     "Export 1 references for BibLaTeX to Better BibTeX does not use biblatex fields eprint and eprinttype #170": 400,
     "Export 1 references for BibLaTeX to Better Biblatex export generates invalid latex when processing zero-width spaces #1892": {
-      "msecs": 450,
+      "msecs": 490,
       "runs": -388
     },
     "Export 1 references for BibLaTeX to BetterBibLaTeX; Software field company is mapped to publisher instead of organization #1054": 310,
@@ -264,7 +264,7 @@
       "runs": -300
     },
     "Export 1 references for BibTeX to Word segmentation for Chinese references #1682": {
-      "msecs": 1620,
+      "msecs": 1610,
       "runs": -260
     },
     "Export 1 references for BibTeX to [authN_M] citation key syntax has off-by-one error #899": 370,
@@ -355,7 +355,7 @@
     "Export 6 references for BibLaTeX to Better BibLaTeX.stable-keys": 620,
     "Export 8 references for BibLaTeX to Don't title-case sup-subscripts #1037": 660,
     "Export as Collected Notes does not list subcollections #1768": {
-      "msecs": 4740,
+      "msecs": 4750,
       "runs": -256
     },
     "Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825": 990,
@@ -436,7 +436,7 @@
     "Include first name initial(s) in cite key generation pattern (86)": 450,
     "Jabref groups import does not work #717": 2840,
     "Jabref import - groups lost #1730": {
-      "msecs": 3270,
+      "msecs": 3280,
       "runs": -228
     },
     "Journal abbreviations": 490,
@@ -456,17 +456,17 @@
     },
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 356130,
+    "Really Big whopping library": 355860,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 51510,
+      "msecs": 51520,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
     "Square brackets in Publication field (85), and non-pinned keys must change when the pattern does": 450,
-    "Unabbreviate on import #1436-1": 38750,
+    "Unabbreviate on import #1436-1": 38760,
     "Unbalanced vphantom escapes #1043": 760,
     "arXiv identifiers in BibLaTeX export #460": 1180,
     "auto-export": 14370,
@@ -489,12 +489,13 @@
       "runs": -36
     },
     "web_page and other mendeley idiocy": {
-      "msecs": 39360,
+      "msecs": 39390,
       "runs": -239
     }
   },
   "fast": {
     "1": [
+      "Export 1 references for BibLaTeX to Better Biblatex export generates invalid latex when processing zero-width spaces #1892",
       "Export 1 references for BibLaTeX to Cite archive documents with BetterBibLaTeX #1799",
       "Export 1 references for BibLaTeX to biber 2.14 rejects the date field generated from Better BibLaTex #1695",
       "Export 1 references for BibLaTeX to Export fails for duplicate \"extra\" field #1739",
@@ -721,6 +722,7 @@
       "Diacritics stripped from keys regardless of ascii or fold filters #266",
       "Capitalize all title-fields for language en #383",
       "Sorting and optional particle handling #411",
+      "Choose fields to exclude for each exported file #1827",
       "(non-)dropping particle handling #313",
       "automatic tags in export #1270",
       "Field Institution not available anymore in key pattern for Zotero #1568",
@@ -759,7 +761,6 @@
       "Import 2 references from Better BibTeX.001",
       "Import 1 references from Better BibTeX.008",
       "Import 1 references from Better BibTeX.010",
-      "Import 1 references from Better BibTeX.015",
       "Import 2 references from BibLaTeX Patent author handling, type #1060",
       "Import 1 references from BibTeX import; preamble with def create problems #732",
       "Import 1 references from Failure to handle unparsed author names (92)",
@@ -788,6 +789,7 @@
       "Export as Collected Notes does not list subcollections #1768",
       "AUX scanner",
       "Import 20 references from BBT does not import groups from JabRef 5.1 #1641",
+      "Import 1 references from Better BibTeX.015",
       "Jabref import - groups lost #1730",
       "Unabbreviate on import #1436-1",
       "web_page and other mendeley idiocy",
@@ -798,9 +800,10 @@
       "Identical Pinned keys lost when merging duplicated records #1721"
     ]
   },
-  "runs": 389,
+  "runs": 390,
   "slow": {
     "1": [
+      "Export 1 references for BibLaTeX to Better Biblatex export generates invalid latex when processing zero-width spaces #1892",
       "Export 1 references for BibLaTeX to Cite archive documents with BetterBibLaTeX #1799",
       "Export 1 references for BibLaTeX to biber 2.14 rejects the date field generated from Better BibLaTex #1695",
       "Export 1 references for BibLaTeX to Export fails for duplicate \"extra\" field #1739",
@@ -1033,6 +1036,7 @@
       "Capitalize all title-fields for language en #383",
       "Sorting and optional particle handling #411",
       "auto-export",
+      "Choose fields to exclude for each exported file #1827",
       "(non-)dropping particle handling #313",
       "automatic tags in export #1270",
       "Field Institution not available anymore in key pattern for Zotero #1568",
@@ -1099,9 +1103,7 @@
       "Merging error with arXiv ID #1373",
       "Duplicate Citation Key Alias #1384",
       "ids field should be created in raw mode #1729",
-      "Identical Pinned keys lost when merging duplicated records #1721",
-      "Export 1 references for BibLaTeX to Better Biblatex export generates invalid latex when processing zero-width spaces #1892",
-      "Choose fields to exclude for each exported file #1827"
+      "Identical Pinned keys lost when merging duplicated records #1721"
     ],
     "2": [
       "Really Big whopping library",
