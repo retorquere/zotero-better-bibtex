@@ -202,9 +202,10 @@ class Preferences:
     doc.pages[hidden].metadata['weight'] = doc.weight + len(page.pages)
 
     def gettabs(node, path):
-      for tabs in [f'{path}/{xul}tabs/{xul}tab', f'{path}/{xul}arrowscrollbox/{xul}tabs/{xul}tab']:
-        tabs = node.findall(tabs)
-        if len(tabs) > 0: break
+      if len(node.findall(f'{path}/{xul}arrowscrollbox/{xul}tabs/{xul}tab')) > 0:
+        # auto-export overview
+        return []
+      tabs = node.findall(f'{path}/{xul}tabs/{xul}tab')
       panels = node.findall(f'{path}/{xul}tabpanels/{xul}tabpanel')
       assert len(tabs) == len(panels), (len(tabs), len(panels), etree.tostring(node[1], pretty_print=True).decode('utf-8'))
       return zip(tabs, panels)
