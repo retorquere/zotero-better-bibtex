@@ -11,10 +11,9 @@ weight: 13
 {{% preferences/header %}}
 
 ## Sentence-case titles on import:
-                  
+                    
 
 ### Sentence-case titles on import:
-                  
 
 default: `yes, but try to exclude already-sentence-cased titles`
 

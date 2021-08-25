@@ -49,24 +49,25 @@ overlay#zotero-better-bibtex-preferences(xmlns="http://www.mozilla.org/keymaster
       preferences#zotero-preferences-cite
         include Preferences/preferences.pug
 
-      // deck#better-bibtex-prefs-deck(selectedIndex='0')
-      //   label#better-bibtex-loading &better-bibtex.Preferences.prefpane.loading;
-      tabbox#better-bibtex-prefs-tabbox
-        tabs#better-bibtex-prefs-tabs(onselect="bbt_prefpane.refresh()")
-          tab#better-bibtex-prefs-citekey(label="&better-bibtex.Preferences.tab.citekey;")
-          tab#better-bibtex-prefs-export(label="&better-bibtex.Preferences.tab.export;")
-          tab#better-bibtex-prefs-auto-export(label="&better-bibtex.Preferences.tab.auto-export;")
-          tab(label='&better-bibtex.Preferences.advanced.tab.import;')
-          tab(label='&better-bibtex.Preferences.export.misc;')
+      deck#better-bibtex-prefs-deck(selectedIndex='0')
+        label#better-bibtex-loading &better-bibtex.Preferences.prefpane.loading;
 
-        tabpanels#better-bibtex-prefs-tabpanels(flex="1")
-          tabpanel(bbt:page='citation-keys' flex="1" orient="vertical")
-            include Preferences/citekeys.pug
-          tabpanel(bbt:page='export' flex="1" orient="vertical")
-            include Preferences/export.pug
-          tabpanel(bbt:page='automatic-export' flex="1" orient="vertical")
-            include Preferences/autoexport.pug
-          tabpanel(bbt:page='import' flex="1" orient="vertical")
-            include Preferences/import.pug
-          tabpanel(bbt:page='miscellaneous' flex="1" orient="vertical")
-            include Preferences/misc.pug
+        tabbox#better-bibtex-prefs-tabbox
+          tabs#better-bibtex-prefs-tabs(onselect="bbt_prefpane.refresh()")
+            tab#better-bibtex-prefs-citekey(label="&better-bibtex.Preferences.tab.citekey;")
+            tab#better-bibtex-prefs-export(label="&better-bibtex.Preferences.tab.export;")
+            tab#better-bibtex-prefs-auto-export(label="&better-bibtex.Preferences.tab.auto-export;")
+            tab(label='&better-bibtex.Preferences.advanced.tab.import;')
+            tab(label='&better-bibtex.Preferences.export.misc;')
+
+          tabpanels#better-bibtex-prefs-tabpanels(flex="1")
+            tabpanel(bbt:page='citation-keys' flex="1" orient="vertical")
+              include Preferences/citekeys.pug
+            tabpanel(bbt:page='export' flex="1" orient="vertical")
+              include Preferences/export.pug
+            tabpanel(bbt:page='automatic-export' flex="1" orient="vertical")
+              include Preferences/autoexport.pug
+            tabpanel(bbt:page='import' flex="1" orient="vertical")
+              include Preferences/import.pug
+            tabpanel(bbt:page='miscellaneous' flex="1" orient="vertical")
+              include Preferences/misc.pug

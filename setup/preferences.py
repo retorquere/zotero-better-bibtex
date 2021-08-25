@@ -163,6 +163,9 @@ class Preferences:
       else:
         self.preferences[_id].label = pref.text
 
+      if self.preferences[_id].label:
+        self.preferences[_id].label = self.preferences[_id].label.strip()
+
     for options in self.pane.findall(f'.//{xul}menulist[@preference]'):
       pref = self.preferences[options.get('preference')]
       pref.options = OrderedDict()
@@ -212,7 +215,7 @@ class Preferences:
 
     # prepare labels
     index = False
-    for tab, panel in gettabs(self.pane, f'.//{xul}prefwindow/{xul}prefpane/{xul}tabbox'):
+    for tab, panel in gettabs(self.pane, f'.//{xul}prefwindow/{xul}prefpane/{xul}deck/{xul}tabbox'):
       panel.attrib[f'{bbt}label'] = tab.attrib['label']
 
       if not index:

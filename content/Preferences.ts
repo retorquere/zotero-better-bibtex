@@ -373,8 +373,8 @@ export class PrefPane {
     this.observer.observe(this.observed, { childList: true, subtree: true })
     // this.prefwindow = globals.document.getElementsByTagName('prefwindow')[0]
 
-    // const deck = globals.document.getElementById('better-bibtex-prefs-deck')
-    // deck.selectedIndex = 0
+    const deck = globals.document.getElementById('better-bibtex-prefs-deck')
+    deck.selectedIndex = 0
 
     await Zotero.BetterBibTeX.ready
 
@@ -383,7 +383,7 @@ export class PrefPane {
 
     this.globals.document.getElementById('rescan-citekeys').hidden = !Zotero.Debug.enabled
 
-    // deck.selectedIndex = 1
+    deck.selectedIndex = 1
 
     if (typeof this.globals.Zotero_Preferences === 'undefined') {
       log.error('Preferences.load: Zotero_Preferences not ready')
