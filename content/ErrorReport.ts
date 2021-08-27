@@ -4,9 +4,11 @@ import { Preference } from '../gen/preferences'
 import { Translators } from './translators'
 import { log } from './logger'
 import fastChunkString = require('fast-chunk-string')
+import Tar from 'tar-js'
 
 import { DB } from './db/main'
 import { DB as Cache } from './db/cache'
+import { pick } from './file-picker'
 
 import * as s3 from './s3.json'
 
@@ -111,6 +113,25 @@ export class ErrorReport {
     catch (err) {
       return null
     }
+  }
+
+  public async save() {
+    const filename = await pick('Logs', 'save', [['Tape Archive (*.tar)', '*.tar']], `${this.key}.tar`)
+    if (!filename) return
+
+    let tape = new Tar
+
+    const logtext = [
+      this.errorlog.info,
+      this.errorlog.errors,
+      Array.isArray(this.errorlog.debug) ? this.errorlog.debug.join('\n') : this.errorlog.debug,
+    ].filter(chunk => chunk).join('\n\n')
+
+    if (logtext) tape = tape.append(`${this.key}/debug.txt`, logtext)
+    if (this.errorlog.references) tape = tape.append(`${this.key}/references.json`, this.errorlog.references)
+    if (this.errorlog.db) tape = tape.append(`${this.key}/db.json`, this.errorlog.db)
+
+    await OS.File.writeAtomic(filename, tape)
   }
 
   private async ping(region: string) {

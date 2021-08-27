@@ -3,31 +3,13 @@ Components.utils.import('resource://gre/modules/osfile.jsm')
 import { sleep } from './sleep'
 import { Translators } from './translators'
 import { Preference } from '../gen/preferences'
+import { pick } from './file-picker'
 
 export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   private decoder = new TextDecoder
 
-  // eslint-disable-next-line @typescript-eslint/require-await
-  public async pick(): Promise<string> {
-    const fp = Components.classes['@mozilla.org/filepicker;1'].createInstance(Components.interfaces.nsIFilePicker)
-    fp.init(window, Zotero.getString('fileInterface.import'), Components.interfaces.nsIFilePicker.modeOpen)
-    fp.appendFilter('AUX file', '*.aux')
-
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return new Zotero.Promise(resolve => {
-      fp.open(userChoice => {
-        switch (userChoice) {
-          case Components.interfaces.nsIFilePicker.returnOK:
-          case Components.interfaces.nsIFilePicker.returnReplace:
-            resolve(fp.file.path)
-            break
-
-          default: // aka returnCancel
-            resolve('')
-            break
-        }
-      })
-    })
+  public async pick(): Promise<string> { // eslint-disable-line @typescript-eslint/no-unsafe-return
+    return await pick(Zotero.getString('fileInterface.import'), 'open', [['AUX file', '*.aux']])
   }
 
   public async scan(path: string, options: { tag?: string, libraryID?: number, collection?: { libraryID: number, key: string, replace?: boolean } } = {}) {
