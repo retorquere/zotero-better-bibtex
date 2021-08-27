@@ -431,8 +431,9 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     // pre-fetch cache
-    log.debug('cache-rate: load cache')
+    log.debug('cache-rate: load cache?', !!cache)
     if (cache) {
+      log.debug('cache-rate: load item cache')
       const query = {...selector, itemID: { $in: config.items.map(item => item.itemID) }}
 
       // not safe in async!
@@ -452,6 +453,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     // pre-fetch CSL serializations
     // TODO: I should probably cache these
     if (translator.label.includes('CSL')) {
+      log.debug('cache-rate: load CSL cache')
       for (const item of config.items) {
         // if there's a cached item, we don't need a fresh CSL item since we're not regenerating it anyhow
         if (!config.cache[item.itemID]) config.cslItems[item.itemID] = Zotero.Utilities.itemToCSLJSON(item)

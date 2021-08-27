@@ -305,8 +305,10 @@ class PatternFormatter {
 
   public parsePattern(pattern): { formatter: string, postfix: { start: number, format: string } } {
     const formatter = (parser.parse(pattern, { sprintf, items, methods }) as { formatter: string, postfix: { start: number, format: string } })
-    log.debug('formatter function:', formatter.formatter)
-    log.debug('formatter postfix:', formatter.postfix)
+    if (Preference.testing) {
+      log.debug('formatter function:', formatter.formatter)
+      log.debug('formatter postfix:', formatter.postfix)
+    }
 
     return formatter
   }
