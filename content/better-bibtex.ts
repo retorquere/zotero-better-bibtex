@@ -281,12 +281,14 @@ if (typeof Zotero.ItemTreeView === 'undefined') {
     return columns
   })
 
-  /*
   $patch$(itemTree.prototype, '_renderCell', original => function Zotero_ItemTree_prototype_renderCell(index, data, col) {
     if (col.dataKey !== 'citekey') return original.apply(this, arguments)
 
+    const item = this.getRow(index).ref
+
     const icon = document.createElementNS('http://www.w3.org/1999/xhtml', 'span')
-    icon.className = 'icon icon-bg cell-icon'
+    icon.innerText = '\uD83D\uDCCC'
+    // icon.className = 'icon icon-bg cell-icon'
 
     const text = document.createElementNS('http://www.w3.org/1999/xhtml', 'span')
     text.className = 'cell-text'
@@ -294,11 +296,10 @@ if (typeof Zotero.ItemTreeView === 'undefined') {
 
     const cell = document.createElementNS('http://www.w3.org/1999/xhtml', 'span')
     cell.className = `cell ${column.className} scite-cell`
-    cell.append(icon, textSpan)
+    cell.append(text, icon)
 
     return cell
   })
-  */
 }
 else {
   const itemTreeViewWaiting: Record<number, boolean> = {}
