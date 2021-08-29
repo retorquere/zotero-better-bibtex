@@ -431,7 +431,6 @@ export class PrefPane {
   }
   */
   private resize() {
-    log.debug('preference.resize')
     // https://stackoverflow.com/questions/4707712/prefwindow-sizing-itself-to-the-wrong-tab-when-browser-preferences-animatefade
     Zotero.Prefs.set('browser.preferences.animateFadeIn', false, true)
 
