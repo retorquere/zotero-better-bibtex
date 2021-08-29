@@ -274,7 +274,7 @@ if (typeof Zotero.ItemTreeView === 'undefined') {
     const insertAfter: number = columns.findIndex(column => column.dataKey === 'title')
     columns.splice(insertAfter + 1, 0, {
       dataKey: 'citekey',
-      label: 'Citation key',
+      label: l10n.localize('ZoteroPane.column.citekey'),
       flex: '1',
       zoteroPersist: new Set(['width', 'ordinal', 'hidden', 'sortActive', 'sortDirection']),
     })
@@ -949,6 +949,7 @@ export class BetterBibTeX {
     progress.done()
 
     if (typeof Zotero.ItemTreeView === 'undefined') ZoteroPane.itemsView.refreshAndMaintainSelection()
+
     const selected = ZoteroPane.getSelectedItems(true)
     if (selected.length) Zotero.Notifier.trigger('refresh', 'item', selected)
 
