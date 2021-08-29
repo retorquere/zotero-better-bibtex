@@ -32,7 +32,7 @@
 <!ENTITY better-bibtex.ErrorReport.enableDebug "Zotero debug logging is currently disabled. It will be easier to diagnose the problem if you enable it before submitting a support log.">
 <!ENTITY better-bibtex.ErrorReport.context "Contexto da aplicação">
 <!ENTITY better-bibtex.ErrorReport.errors "Erros">
-<!ENTITY better-bibtex.ErrorReport.includeCache "Enviar cache">
+<!ENTITY better-bibtex.ErrorReport.includeCache "Include cache">
 <!ENTITY better-bibtex.ErrorReport.debug "Support log">
 <!ENTITY better-bibtex.ErrorReport.notReviewed "Support logs can not reviewed unless referred to in the GitHub issue tracker by their ID.">
 <!ENTITY better-bibtex.ErrorReport.postToGitHub "Please post a message to the issue tracker (https://github.com/retorquere/zotero-better-bibtex/issues) with this support log ID, a description of the problem, and any steps necessary to reproduce it.">
@@ -45,6 +45,7 @@ If you are OK with sending this data, please proceed to the next screen and post
 https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.ErrorReport.submissionInProgress			"Please wait while the support log is submitted.">
 <!ENTITY better-bibtex.ErrorReport.submitted						"Your support log has been submitted.">
+<!ENTITY better-bibtex.ErrorReport.save						"Save copy of log">
 
 <!ENTITY better-bibtex.ItemPane.citekey_column	"Chave de Citação">
 
