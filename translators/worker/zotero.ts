@@ -193,7 +193,7 @@ class WorkerZotero {
   public Utilities = new WorkerZoteroUtilities // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public BetterBibTeX = new WorkerZoteroBetterBibTeX // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
 
-  public init(config) {
+  public init(config: Translators.Worker.Config) {
     this.config = config
     this.config.preferences.platform = workerContext.platform
     this.config.preferences.client = client
@@ -308,7 +308,8 @@ ctx.onmessage = function(e: { isTrusted?: boolean, data?: Translators.Worker.Mes
       started = true
       log.debug('worker: starting')
       Zotero.BetterBibTeX.localeDateOrder = workerContext.localeDateOrder
-      Zotero.init(e.data.config)
+      const dec = new TextDecoder('utf-8')
+      Zotero.init(JSON.parse(dec.decode(new Uint8Array(e.data.config))))
       doExport()
       Zotero.done()
     }

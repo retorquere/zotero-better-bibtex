@@ -15,7 +15,7 @@ export namespace Translators {
     type Message = 
         { kind: 'ping' }
       | { kind: 'ready' }
-      | { kind: 'start', config: Config }
+      | { kind: 'start', config: ArrayBuffer }
       | { kind: 'done', output: boolean | string }
       | { kind: 'debug', message: string }
       | { kind: 'error', message: string }
