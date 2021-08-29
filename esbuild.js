@@ -92,6 +92,9 @@ async function rebuild() {
     metafile: 'gen/plugin.json',
     globalThis: true,
     prepend: 'gen/process.js',
+    external: [
+      'zotero/itemTree',
+    ]
   })
 
   // worker code

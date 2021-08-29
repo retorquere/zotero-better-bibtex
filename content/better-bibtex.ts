@@ -3,12 +3,13 @@ import type BluebirdPromise from 'bluebird'
 
 Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
+declare const ZoteroPane: any
 declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
 import type { XUL } from '../typings/xul'
 import './startup' // disable monkey patching is unsupported environment
 
-import { ZoteroPane, ZoteroPaneConstructable } from './ZoteroPane'
+import { ZoteroPane as ZoteroPaneHelper, ZoteroPaneConstructable as ZoteroPaneHelperConstructable } from './ZoteroPane'
 import { ExportOptions, ExportOptionsConstructable } from './ExportOptions'
 import { ItemPane, ItemPaneConstructable } from './ItemPane'
 import { FirstRun } from './FirstRun'
@@ -233,12 +234,12 @@ $patch$(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prot
     switch (field) {
       case 'citekey':
       case 'citationKey':
+        log.debug('getField is', Zotero.BetterBibTeX.ready.isPending() ? 'pending' : 'live')
         if (Zotero.BetterBibTeX.ready.isPending()) return '' // eslint-disable-line @typescript-eslint/no-use-before-define
         return Zotero.BetterBibTeX.KeyManager.get(this.id).citekey as string
 
       case 'itemID':
         return `${this.id}`
-
     }
   }
   catch (err) {
@@ -264,28 +265,70 @@ $patch$(Zotero.Item.prototype, 'clone', original => function Zotero_Item_prototy
   return item
 })
 
-const itemTreeViewWaiting: Record<number, boolean> = {}
-$patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function Zotero_ItemTreeView_prototype_getCellText(row: any, col: { id: string }): string {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  if (col.id !== 'zotero-items-column-citekey') return original.apply(this, arguments)
 
-  const item = this.getRow(row).ref
-  if (!item.isRegularItem()) return ''
+if (typeof Zotero.ItemTreeView === 'undefined') {
+  const itemTree = require('zotero/itemTree')
 
-  if (Zotero.BetterBibTeX.ready.isPending()) { // eslint-disable-line @typescript-eslint/no-use-before-define
-    if (!itemTreeViewWaiting[item.id]) {
-      // eslint-disable-next-line @typescript-eslint/no-use-before-define
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      Zotero.BetterBibTeX.ready.then(() => this._treebox.invalidateCell(row, col)) // eslint-disable-line @typescript-eslint/no-floating-promises
-      itemTreeViewWaiting[item.id] = true
+  $patch$(itemTree.prototype, 'getColumns', original => function Zotero_ItemTree_prototype_getColumns() {
+    const columns = original.apply(this, arguments)
+    const insertAfter: number = columns.findIndex(column => column.dataKey === 'title')
+    columns.splice(insertAfter + 1, 0, {
+      dataKey: 'citekey',
+      label: 'Citation key',
+      flex: '1',
+      zoteroPersist: new Set(['width', 'ordinal', 'hidden', 'sortActive', 'sortDirection']),
+    })
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return columns
+  })
+
+  $patch$(itemTree.prototype, '_renderCell', original => function Zotero_ItemTree_prototype_renderCell(index, data, col) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    if (col.dataKey !== 'citekey') return original.apply(this, arguments)
+
+    const item = this.getRow(index).ref
+    const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id)
+
+    const icon = document.createElementNS('http://www.w3.org/1999/xhtml', 'span')
+    icon.innerText = citekey.pinned ? '\uD83D\uDCCC' : ''
+    // icon.className = 'icon icon-bg cell-icon'
+
+    const text = document.createElementNS('http://www.w3.org/1999/xhtml', 'span')
+    text.className = 'cell-text'
+    text.innerText = data
+
+    const cell = document.createElementNS('http://www.w3.org/1999/xhtml', 'span')
+    cell.className = `cell ${col.className}`
+    cell.append(text, icon)
+
+    return cell
+  })
+}
+else {
+  const itemTreeViewWaiting: Record<number, boolean> = {}
+  $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function Zotero_ItemTreeView_prototype_getCellText(row: any, col: { id: string }): string {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    if (col.id !== 'zotero-items-column-citekey') return original.apply(this, arguments)
+
+    const item = this.getRow(row).ref
+    if (!item.isRegularItem()) return ''
+
+    if (Zotero.BetterBibTeX.ready.isPending()) { // eslint-disable-line @typescript-eslint/no-use-before-define
+      if (!itemTreeViewWaiting[item.id]) {
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        Zotero.BetterBibTeX.ready.then(() => this.tree.invalidateRow(row)) // eslint-disable-line @typescript-eslint/no-floating-promises
+        itemTreeViewWaiting[item.id] = true
+      }
+
+      return '\u231B'
     }
 
-    return '\u231B'
-  }
-
-  const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id)
-  return `${citekey.citekey || '\u26A0'}${citekey.pinned ? ' \uD83D\uDCCC' : ''}`
-})
+    const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id)
+    return `${citekey.citekey || '\u26A0'}${citekey.pinned ? ' \uD83D\uDCCC' : ''}`
+  })
+}
 
 import * as CAYW from './cayw'
 $patch$(Zotero.Integration, 'getApplication', original => function Zotero_Integration_getApplication(agent: string, _command: any, _docId: any) {
@@ -748,7 +791,7 @@ class Progress {
 export class BetterBibTeX {
   public TestSupport = new TestSupport
   public KeyManager = new KeyManager
-  public ZoteroPane: ZoteroPaneConstructable = ZoteroPane
+  public ZoteroPane: ZoteroPaneHelperConstructable = ZoteroPaneHelper
   public ExportOptions: ExportOptionsConstructable = ExportOptions
   public ItemPane: ItemPaneConstructable = ItemPane
   public FirstRun = FirstRun
@@ -882,8 +925,7 @@ export class BetterBibTeX {
     const progress = new Progress
     progress.start(this.getString('BetterBibTeX.startup.waitingForZotero'))
 
-    // Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
-    // await (Zotero.isStandalone ? Zotero.uiReadyPromise : Zotero.initializationPromise)
+    // https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
     await Zotero.Schema.schemaUpdatePromise
 
     this.dir = OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex')
@@ -924,6 +966,8 @@ export class BetterBibTeX {
     deferred.ready.resolve(true)
 
     progress.done()
+
+    if (typeof Zotero.ItemTreeView === 'undefined') ZoteroPane.itemsView.refreshAndMaintainSelection()
 
     if (this.firstRun && this.firstRun.dragndrop) Zotero.Prefs.set('export.quickCopy.setting', `export=${Translators.byLabel.BetterBibTeXCitationKeyQuickCopy.translatorID}`)
 
