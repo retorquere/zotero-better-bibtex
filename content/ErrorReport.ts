@@ -156,7 +156,8 @@ export class ErrorReport {
     this.errorlog = {
       info: await this.info(),
       errors: Zotero.getErrors(true).join('\n'),
-      debug: Zotero.Debug.getConsoleViewerOutput().join('\n'),
+      // # 1896
+      debug: Zotero.Debug.getConsoleViewerOutput().slice(-250000).join('\n'), // eslint-disable-line no-magic-numbers
     }
 
     if (Zotero.BetterBibTeX.ready && this.params.scope) {
