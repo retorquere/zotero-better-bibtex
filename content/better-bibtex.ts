@@ -968,6 +968,8 @@ export class BetterBibTeX {
     progress.done()
 
     if (typeof Zotero.ItemTreeView === 'undefined') ZoteroPane.itemsView.refreshAndMaintainSelection()
+    const selected = ZoteroPane.getSelectedItems(true)
+    if (selected.length) Zotero.Notifier.trigger('refresh', 'item', selected)
 
     if (this.firstRun && this.firstRun.dragndrop) Zotero.Prefs.set('export.quickCopy.setting', `export=${Translators.byLabel.BetterBibTeXCitationKeyQuickCopy.translatorID}`)
 
