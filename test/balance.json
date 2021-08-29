@@ -211,7 +211,7 @@
     "Export 1 references for BibTeX to Export C as {v C}, not v{C} #152": 550,
     "Export 1 references for BibTeX to Export of item to Better Bibtex fails for auth3_1 #98": 490,
     "Export 1 references for BibTeX to Export report+type as preprint": {
-      "msecs": 560,
+      "msecs": 570,
       "runs": -367
     },
     "Export 1 references for BibTeX to Export unicode as plain text fails for Vietnamese characters #977": 380,
@@ -264,7 +264,7 @@
       "runs": -300
     },
     "Export 1 references for BibTeX to Word segmentation for Chinese references #1682": {
-      "msecs": 1530,
+      "msecs": 1520,
       "runs": -260
     },
     "Export 1 references for BibTeX to [authN_M] citation key syntax has off-by-one error #899": 370,
@@ -276,7 +276,7 @@
     "Export 1 references for BibTeX to braces after textemdash followed by unicode #980": 400,
     "Export 1 references for BibTeX to capital delta breaks .bib output #141": 410,
     "Export 1 references for BibTeX to citation key format nopunctordash filter list #1880": {
-      "msecs": 1890,
+      "msecs": 1900,
       "runs": -380
     },
     "Export 1 references for BibTeX to custom fields should be exported as-is #441": 480,
@@ -436,7 +436,7 @@
     "Include first name initial(s) in cite key generation pattern (86)": 450,
     "Jabref groups import does not work #717": 2840,
     "Jabref import - groups lost #1730": {
-      "msecs": 3300,
+      "msecs": 3310,
       "runs": -228
     },
     "Journal abbreviations": 490,
@@ -456,12 +456,12 @@
     },
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 354210,
+    "Really Big whopping library": 354050,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 51770,
+      "msecs": 51830,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
@@ -634,7 +634,6 @@
       "Export 1 references for BibTeX to DOI not escaped using postscript #1803",
       "Export 1 references for BibTeX to Using the Extra field in the exported Citation Key #1571",
       "Export 1 references for BibTeX to shortyear adds 00 when date is missing #1769",
-      "Export 1 references for BibTeX to Word segmentation for Chinese references #1682",
       "Export 1 references for BibTeX to Cannot ignore archivePrefix export field #1744",
       "Export 1 references for BibTeX to url field is having its special characters escaped in BBT Bibtex #1716",
       "Export 1 references for BibTeX to Match against @string value for export #1597",
@@ -698,6 +697,7 @@
       "Citekey generation failure #708 and sort references on export #957",
       "BibTeX; URL missing in bibtex for Book Section #412",
       "CAYW picker",
+      "thesis zotero entries always create @phdthesis bibtex entries #307",
       "bibtex; url export does not survive underscores #402",
       "Square brackets in Publication field (85), and non-pinned keys must change when the pattern does",
       "Include first name initial(s) in cite key generation pattern (86)",
@@ -779,9 +779,9 @@
       "unknown command handler #1733"
     ],
     "2": [
+      "Export 1 references for BibTeX to Word segmentation for Chinese references #1682",
       "Export 36 references for BibTeX to Better BibTeX does not export collections #901",
       "Bibtex key regenerating issue when trashing items #117",
-      "thesis zotero entries always create @phdthesis bibtex entries #307",
       "two ISSN number are freezing browser #110 + Generating keys and export broken #111",
       "Postfixed keys different between computers #1788",
       "Do not caps-protect name fields #384 #565 #566",
@@ -800,7 +800,7 @@
       "Identical Pinned keys lost when merging duplicated records #1721"
     ]
   },
-  "runs": 398,
+  "runs": 399,
   "slow": {
     "1": [
       "Export 1 references for BibLaTeX to Better Biblatex export generates invalid latex when processing zero-width spaces #1892",
