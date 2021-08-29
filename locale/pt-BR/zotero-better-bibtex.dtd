@@ -238,3 +238,6 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.ServerURL.or "or">
 <!ENTITY better-bibtex.ServerURL.format "Download items as">
 <!ENTITY better-bibtex.ServerURL.OK "OK">
+
+<!-- remove after reactified zoteropane is in release -->
+<!ENTITY ZoteroPane.column.citekey "Citation Key">
