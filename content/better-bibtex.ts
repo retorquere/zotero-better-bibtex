@@ -281,7 +281,8 @@ if (typeof Zotero.ItemTreeView === 'undefined') {
     return columns
   })
 
-  $patch$(itemTree.prototype, '_renderCell', original => function Zotero_ItemTree_prototype_renderCell(index, data, col) {
+  $patch$(itemTree.prototype, '_renderCell', original => function Zotero_ItemTree_prototype_renderCell(index, _data, col) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     if (col.dataKey !== 'citekey') return original.apply(this, arguments)
 
     const item = this.getRow(index).ref
@@ -293,7 +294,7 @@ if (typeof Zotero.ItemTreeView === 'undefined') {
 
     const text = document.createElementNS('http://www.w3.org/1999/xhtml', 'span')
     text.className = 'cell-text'
-    text.innerText = data
+    text.innerText = citekey.citekey
 
     const cell = document.createElementNS('http://www.w3.org/1999/xhtml', 'span')
     cell.className = `cell ${col.className} scite-cell`
