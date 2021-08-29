@@ -472,7 +472,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     if (this.workers.total > 5 && (this.workers.startup / this.workers.total) > Preference.autoExportDelay) Preference.autoExportDelay = Math.ceil(this.workers.startup / this.workers.total)
 
     log.debug('worker: kicking off')
-    worker.postMessage({ kind: 'start', config })
+    // stringify-parse to get around 'object could not be cloned'
+    worker.postMessage({ kind: 'start', config: JSON.parse(JSON.stringify(config)) })
 
     return deferred.promise
   }
