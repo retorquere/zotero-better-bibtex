@@ -239,3 +239,6 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!ENTITY better-bibtex.ServerURL.or "ou">
 <!ENTITY better-bibtex.ServerURL.format "Télécharger les éléments en tant que">
 <!ENTITY better-bibtex.ServerURL.OK "OK">
+
+<!-- remove after reactified zoteropane is in release -->
+<!ENTITY ZoteroPane.column.citekey "Citation Key">
