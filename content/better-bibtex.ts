@@ -285,9 +285,10 @@ if (typeof Zotero.ItemTreeView === 'undefined') {
     if (col.dataKey !== 'citekey') return original.apply(this, arguments)
 
     const item = this.getRow(index).ref
+    const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id)
 
     const icon = document.createElementNS('http://www.w3.org/1999/xhtml', 'span')
-    icon.innerText = '\uD83D\uDCCC'
+    icon.innerText = citekey.pinned ? '\uD83D\uDCCC' : ''
     // icon.className = 'icon icon-bg cell-icon'
 
     const text = document.createElementNS('http://www.w3.org/1999/xhtml', 'span')
@@ -295,7 +296,7 @@ if (typeof Zotero.ItemTreeView === 'undefined') {
     text.innerText = data
 
     const cell = document.createElementNS('http://www.w3.org/1999/xhtml', 'span')
-    cell.className = `cell ${column.className} scite-cell`
+    cell.className = `cell ${col.className} scite-cell`
     cell.append(text, icon)
 
     return cell
