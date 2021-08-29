@@ -12,6 +12,7 @@ import { Formatter } from './key-manager/formatter'
 import { AutoExport } from './auto-export'
 import { Translators } from './translators'
 import { client } from './client'
+import * as l10n from './l10n'
 
 const namespace = 'http://retorque.re/zotero-better-bibtex/'
 
@@ -24,7 +25,7 @@ class AutoExportPane {
     this.globals = globals
     this.label = {}
     for (const label of ['scheduled', 'running', 'done', 'error', 'preparing']) {
-      this.label[label] = Zotero.BetterBibTeX.getString(`Preferences.auto-export.status.${label}`)
+      this.label[label] = l10n.localize(`Preferences.auto-export.status.${label}`)
     }
 
     this.refresh()
@@ -97,7 +98,7 @@ class AutoExportPane {
 
         switch (field) {
           case 'type':
-            (node as XUL.Textbox).value = `${Zotero.BetterBibTeX.getString(`Preferences.auto-export.type.${ae.type}`)}:`
+            (node as XUL.Textbox).value = `${l10n.localize(`Preferences.auto-export.type.${ae.type}`)}:`
             break
 
           case 'name':
@@ -157,7 +158,7 @@ class AutoExportPane {
   }
 
   public remove(node) {
-    if (!Services.prompt.confirm(null, Zotero.BetterBibTeX.getString('AutoExport.delete'), Zotero.BetterBibTeX.getString('AutoExport.delete.confirm'))) return
+    if (!Services.prompt.confirm(null, l10n.localize('AutoExport.delete'), l10n.localize('AutoExport.delete.confirm'))) return
 
     const ae = AutoExport.db.get(parseInt(node.getAttributeNS(namespace, 'ae-id')))
     Cache.getCollection(Translators.byId[ae.translatorID].label).removeDataOnly()
@@ -524,7 +525,7 @@ export class PrefPane {
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     for (const state of (Array.from(this.globals.document.getElementsByClassName('better-bibtex-preferences-worker-state')) as XUL.Textbox[])) {
-      state.value = Zotero.BetterBibTeX.getString(`BetterBibTeX.workers.${Preference.workersMax ? 'status' : 'disabled'}`, {
+      state.value = l10n.localize(`BetterBibTeX.workers.${Preference.workersMax ? 'status' : 'disabled'}`, {
         total: Translators.workers.total,
         workers: Preference.workersMax,
         running: Translators.workers.running.size,

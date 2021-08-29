@@ -7,9 +7,6 @@
     var globals = Function('return this')();
     var bbt_zoteropane = null;
   </script>
-  <stringbundleset>
-    <stringbundle id="zotero-better-bibtex-strings" src="chrome://zotero-better-bibtex/locale/zotero-better-bibtex.properties"/>
-  </stringbundleset>
 
   <hbox id="zotero-items-toolbar">
     <hbox id="better-bibtex-progress" insertafter="zotero-tb-attachment-add" hidden="true">

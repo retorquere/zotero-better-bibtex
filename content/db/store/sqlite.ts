@@ -3,6 +3,7 @@
 Components.utils.import('resource://gre/modules/osfile.jsm')
 
 import { log } from '../../logger'
+import * as l10n from '../../l10n'
 
 // Components.utils.import('resource://gre/modules/Sqlite.jsm')
 // declare const Sqlite: any
@@ -166,15 +167,15 @@ export class SQLite {
       const ps = Services.prompt
       const index = ps.confirmEx(
         null, // parent
-        Zotero.BetterBibTeX.getString('DB.corrupt'), // dialogTitle
-        Zotero.BetterBibTeX.getString('DB.corrupt.explanation', { error: err.message }), // text
+        l10n.localize('DB.corrupt'), // dialogTitle
+        l10n.localize('DB.corrupt.explanation', { error: err.message }), // text
         // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
         ps.BUTTON_POS_0 * ps.BUTTON_TITLE_IS_STRING + ps.BUTTON_POS_0_DEFAULT // buttons
           + ps.BUTTON_POS_1 * ps.BUTTON_TITLE_IS_STRING
           + 0, // disabled: (fatal ? 0 : ps.BUTTON_POS_2 * ps.BUTTON_TITLE_IS_STRING),
-        Zotero.BetterBibTeX.getString('DB.corrupt.quit'), // button 0
-        Zotero.BetterBibTeX.getString('DB.corrupt.reset'), // button 1
-        null, // disabled: (fatal ? null : Zotero.BetterBibTeX.getString('DB.corrupt.restore')), // button 2
+        l10n.localize('DB.corrupt.quit'), // button 0
+        l10n.localize('DB.corrupt.reset'), // button 1
+        null, // disabled: (fatal ? null : l10n.localize('DB.corrupt.restore')), // button 2
         null, // check message
         {} // check state
       )

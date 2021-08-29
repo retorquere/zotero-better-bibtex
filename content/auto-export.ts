@@ -15,6 +15,7 @@ import fold2ascii from 'fold-to-ascii'
 import { pathSearch } from './path-search'
 import { Scheduler } from './scheduler'
 import { flash } from './flash'
+import * as l10n from './l10n'
 
 class Git {
   public enabled: boolean
@@ -276,7 +277,7 @@ const queue = new class TaskQueue {
 
       await Promise.all(jobs.map(job => Translators.exportItems(ae.translatorID, displayOptions, job.scope, job.path)))
 
-      await repo.push(Zotero.BetterBibTeX.getString('Preferences.auto-export.git.message', { type: Translators.byId[ae.translatorID].label.replace('Better ', '') }))
+      await repo.push(l10n.localize('Preferences.auto-export.git.message', { type: Translators.byId[ae.translatorID].label.replace('Better ', '') }))
 
       ae.error = ''
       log.debug('auto-export', ae.type, ae.id, 'took', Date.now() - started, 'msecs')

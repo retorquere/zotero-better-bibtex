@@ -25,6 +25,8 @@ import * as translatorMetadata from '../gen/translators.json'
 
 import { TaskEasy } from 'task-easy'
 
+import * as l10n from './l10n'
+
 interface Priority {
   priority: number
   timestamp: number
@@ -111,8 +113,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         const ps = Services.prompt
         const index = ps.confirmEx(
           null, // parent
-          Zotero.BetterBibTeX.getString('BetterBibTeX.startup.installingTranslators.new'), // dialogTitle
-          Zotero.BetterBibTeX.getString('BetterBibTeX.startup.installingTranslators.new.DnD'), // text
+          l10n.localize('BetterBibTeX.startup.installingTranslators.new'), // dialogTitle
+          l10n.localize('BetterBibTeX.startup.installingTranslators.new.DnD'), // text
 
           // button flags
           // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
@@ -123,8 +125,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           Zotero.getString('general.restartNow'),
           Zotero.getString('general.restartLater'),
           null,
-
-          Zotero.BetterBibTeX.getString('BetterBibTeX.startup.installingTranslators.new.dontAskAgain'), // check message
+          l10n.localize('BetterBibTeX.startup.installingTranslators.new.dontAskAgain'), // check message
           dontAskAgain // check state
         )
 
@@ -525,13 +526,13 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         file = null
       }
       if (!file) {
-        deferred.reject(Zotero.BetterBibTeX.getString('Translate.error.target.notaFile', { path }))
+        deferred.reject(l10n.localize('Translate.error.target.notaFile', { path }))
         return deferred.promise
       }
 
       // the parent directory could have been removed
       if (!file.parent || !file.parent.exists()) {
-        deferred.reject(Zotero.BetterBibTeX.getString('Translate.error.target.noParent', { path }))
+        deferred.reject(l10n.localize('Translate.error.target.noParent', { path }))
         return deferred.promise
       }
 
