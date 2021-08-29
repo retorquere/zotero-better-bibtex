@@ -472,7 +472,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     if (this.workers.total > 5 && (this.workers.startup / this.workers.total) > Preference.autoExportDelay) Preference.autoExportDelay = Math.ceil(this.workers.startup / this.workers.total)
 
     log.debug('worker: kicking off')
-    worker.postMessage({ kind: 'start', config: JSON.parse(JSON.stringify(config)) })
+    worker.postMessage({ kind: 'start', config })
 
     return deferred.promise
   }
