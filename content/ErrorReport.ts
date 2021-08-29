@@ -3,7 +3,6 @@ Components.utils.import('resource://gre/modules/Services.jsm')
 import { Preference } from '../gen/preferences'
 import { Translators } from './translators'
 import { log } from './logger'
-import fastChunkString = require('fast-chunk-string')
 import Tar from 'tar-js'
 
 import { DB } from './db/main'
@@ -15,16 +14,8 @@ import * as s3 from './s3.json'
 import * as PACKAGE from '../package.json'
 
 const kB = 1024
-const MB = kB * kB
-
-const httpRequestOptions = {
-  followRedirects: true,
-  noCache: true,
-  foreground: true,
-}
 
 export class ErrorReport {
-  private chunkSize = 10 * MB // eslint-disable-line no-magic-numbers, yoda
   private previewSize = 3 * kB // eslint-disable-line no-magic-numbers, yoda
 
   private key: string
@@ -36,9 +27,8 @@ export class ErrorReport {
   private errorlog: {
     info: string
     errors: string
-    debug: string | string[]
+    debug: string
     references?: string
-    db?: string
   }
 
   constructor(globals: Record<string, any>) {
@@ -53,23 +43,28 @@ export class ErrorReport {
     wizard.canRewind = false
 
     try {
-      const logs = [
-        this.submit('debug', 'text/plain', this.errorlog.debug, `${this.errorlog.info}\n\n${this.errorlog.errors}\n\n`),
-      ]
+      await fetch(`${this.bucket}/${this.key}-${this.timestamp}.tar`, {
+        method: 'PUT',
+        cache: 'no-cache',
+        // followRedirects: true,
+        // noCache: true,
+        // foreground: true,
+        headers: {
+          'x-amz-storage-class': 'STANDARD',
+          'x-amz-acl': 'bucket-owner-full-control',
+          'Content-Type': 'application/x-tar',
+        },
+        redirect: 'follow',
+        body: this.tar(),
+      })
 
-      if (this.globals.document.getElementById('better-bibtex-error-report-include-db').checked) {
-        logs.push(this.submit('DB', 'application/json', DB.serialize({ serializationMethod: 'pretty' })))
-        logs.push(this.submit('Cache', 'application/json', Cache.serialize({ serializationMethod: 'pretty' })))
-      }
-
-      if (this.errorlog.references) logs.push(this.submit('references', 'application/json', this.errorlog.references))
-      await Zotero.Promise.all(logs)
       wizard.advance()
 
       this.globals.document.getElementById('better-bibtex-report-id').value = this.key
       this.globals.document.getElementById('better-bibtex-report-result').hidden = false
     }
     catch (err) {
+      log.error('failed to submit', this.key, err)
       const ps = Components.classes['@mozilla.org/embedcomp/prompt-service;1'].getService(Components.interfaces.nsIPromptService)
       ps.alert(null, Zotero.getString('general.error'), `${err} (${this.key}, references: ${!!this.errorlog.references})`)
       if (wizard.rewind) wizard.rewind()
@@ -115,23 +110,25 @@ export class ErrorReport {
     }
   }
 
-  public async save() {
-    const filename = await pick('Logs', 'save', [['Tape Archive (*.tar)', '*.tar']], `${this.key}.tar`)
-    if (!filename) return
-
+  public tar(): Uint8Array {
     let tape = new Tar
 
-    const logtext = [
-      this.errorlog.info,
-      this.errorlog.errors,
-      Array.isArray(this.errorlog.debug) ? this.errorlog.debug.join('\n') : this.errorlog.debug,
-    ].filter(chunk => chunk).join('\n\n')
+    tape = tape.append(`${this.key}/debug.txt`, [ this.errorlog.info, this.errorlog.errors, this.errorlog.debug ].filter(chunk => chunk).join('\n\n'))
 
-    if (logtext) tape = tape.append(`${this.key}/debug.txt`, logtext)
     if (this.errorlog.references) tape = tape.append(`${this.key}/references.json`, this.errorlog.references)
-    if (this.errorlog.db) tape = tape.append(`${this.key}/db.json`, this.errorlog.db)
 
-    await OS.File.writeAtomic(filename, tape)
+    if (this.globals.document.getElementById('better-bibtex-error-report-include-db').checked) {
+      tape = tape.append(`${this.key}/database.json`, DB.serialize({ serializationMethod: 'pretty' }))
+      tape = tape.append(`${this.key}/cache.json`, Cache.serialize({ serializationMethod: 'pretty' }))
+    }
+
+    return tape as Uint8Array
+  }
+
+  public async save() {
+    const filename = await pick('Logs', 'save', [['Tape Archive (*.tar)', '*.tar']], `${this.key}.tar`)
+    log.debug('saving logs to', filename)
+    if (filename) await OS.File.writeAtomic(filename, this.tar())
   }
 
   private async ping(region: string) {
@@ -159,7 +156,7 @@ export class ErrorReport {
     this.errorlog = {
       info: await this.info(),
       errors: Zotero.getErrors(true).join('\n'),
-      debug: Zotero.Debug.getConsoleViewerOutput(),
+      debug: Zotero.Debug.getConsoleViewerOutput().join('\n'),
     }
 
     if (Zotero.BetterBibTeX.ready && this.params.scope) {
@@ -191,9 +188,9 @@ export class ErrorReport {
       const region = await Zotero.Promise.any(Object.keys(s3.region).map(this.ping.bind(this)))
       this.bucket = `http://${s3.bucket}-${region.short}.s3-${region.region}.amazonaws.com${region.tld || ''}`
       this.key = `${Zotero.Utilities.generateObjectKey()}${this.params.scope ? '-refs' : ''}-${region.short}`
+
       continueButton.disabled = false
       continueButton.focus()
-
     }
     catch (err) {
       alert(`No AWS region can be reached: ${err.message}`)
@@ -201,23 +198,8 @@ export class ErrorReport {
     }
   }
 
-  private preview(lines: string | string[]): string {
-    if (Array.isArray(lines)) {
-      let preview = ''
-      for (const line of lines) {
-        if (line.startsWith('(4)(+')) continue // DB statements
-
-        preview += `${line}\n`
-        if (preview.length > this.previewSize) return `${preview} ...`
-      }
-
-      return preview
-    }
-    else if (lines.length > this.previewSize) {
-      return `${lines.substr(0, this.previewSize)} ...`
-    }
-
-    return lines
+  private preview(text: string): string {
+    return text.length > this.previewSize ? `${text.substr(0, this.previewSize)} ...` : text
   }
 
   // general state of Zotero
@@ -251,119 +233,5 @@ export class ErrorReport {
     info += `Total export workers started: ${Translators.workers.total}, currently running: ${Translators.workers.running.size}\n`
 
     return info
-  }
-
-  private async put(url, options) {
-    let error = null
-
-    for (let attempt = 0; attempt < 5; attempt++) { // eslint-disable-line no-magic-numbers
-      try {
-        // await Zotero.HTTP.request('PUT', url, options)
-
-        await fetch(url, {
-          method: 'PUT',
-          cache: 'no-cache',
-          headers: options.headers || {},
-          redirect: 'follow',
-          body: options.body,
-        })
-        return
-
-      }
-      catch (err) {
-        log.error('ErrorReport: failed to PUT to', url, attempt)
-        error = err
-
-      }
-    }
-
-    throw error
-  }
-
-  /*
-  private put(url, options) {
-    return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest()
-      xhr.open('PUT', url)
-      for (const [header, value] of (options.headers || {})) {
-        xhr.setRequestHeader(header, value)
-      }
-      xhr.onload = function() {
-        if (this.status >= 200 && this.status < 300) {
-          resolve(xhr.response)
-        }
-        else {
-          reject({ status: this.status, statusText: xhr.statusText })
-        }
-      }
-      xhr.onerror = function() {
-        reject({ status: this.status, statusText: xhr.statusText })
-      }
-      xhr.send(options.body)
-    })
-  }
-  */
-
-  private async submit(filename, contentType, data: Promise<string | string[]> | string | string[], prefix = '') {
-    data = await Promise.resolve(data)
-
-    const headers = {
-      'x-amz-storage-class': 'STANDARD',
-      'x-amz-acl': 'bucket-owner-full-control',
-      'Content-Type': contentType,
-    }
-
-    let ext = ''
-    switch (contentType) {
-      case 'text/plain':
-        ext = 'txt'
-        break
-
-      case 'application/json':
-        ext = 'json'
-        break
-    }
-
-    if (Preference.debugLogDir) {
-      if (Array.isArray(data)) data = data.join('\n')
-      await Zotero.File.putContentsAsync(`${Preference.debugLogDir}/${filename}.${ext}`, prefix + data)
-      return
-    }
-
-    const url = `${this.bucket}/${this.key}-${this.timestamp}/${this.key}-${filename}`
-
-    let chunks = []
-    if (Array.isArray(data)) {
-      let chunk = prefix
-      for (const line of data) {
-        if (filename === 'zotero' && line.startsWith('(4)(+')) continue // DB statements
-
-        if ((chunk.length + line.length) > this.chunkSize) {
-          if (chunk.length !== 0) chunks.push(chunk)
-          chunk = `${line}\n`
-
-        }
-        else {
-          chunk += `${line}\n`
-
-        }
-      }
-      if (chunk.length) chunks.push(chunk)
-
-    }
-    else {
-      chunks = fastChunkString(`${prefix}${data}`, { size: this.chunkSize })
-
-    }
-
-    chunks = chunks.map((chunk, n) => ({ n: `.${(n + 1).toString().padStart(4, '0')}`, body: chunk })) // eslint-disable-line no-magic-numbers
-    if (chunks.length === 1) chunks[0].n = ''
-
-    await Promise.all(chunks.map(chunk => this.put(`${url}${chunk.n}.${ext}`, {
-      ...httpRequestOptions,
-      body: chunk.body,
-      headers,
-    })))
-
   }
 }

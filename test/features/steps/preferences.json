@@ -284,13 +284,6 @@
     "var": "csquotes"
   },
   {
-    "name": "debugLogDir",
-    "type": "string",
-    "default": "",
-    "affects": [],
-    "var": "debugLogDir"
-  },
-  {
     "name": "exportBibTeXStrings",
     "type": "string",
     "default": "off",

@@ -189,9 +189,6 @@
             "csquotes": {
               "type": "string"
             },
-            "debugLogDir": {
-              "type": "string"
-            },
             "exportBibTeXStrings": {
               "enum": [
                 "off",
