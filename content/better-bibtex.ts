@@ -970,9 +970,12 @@ export class BetterBibTeX {
       $patch$(Zotero.getActiveZoteroPane().itemsView, '_getRowData', original => function Zotero_ItemTree_prototype_getRowData(index) {
         const row = original.apply(this, arguments)
 
-        const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id)
-        row['citekey'] = `${citekey.citekey || '\u26A0'}${citekey.pinned ? ' \uD83D\uDCCC' : ''}`
+        const item = this.getRow(index).ref
 
+        const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id)
+        row.citekey = `${citekey.citekey || '\u26A0'}${citekey.pinned ? ' \uD83D\uDCCC' : ''}`
+
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         return row
       })
     }
