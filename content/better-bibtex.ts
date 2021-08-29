@@ -318,7 +318,7 @@ else {
       if (!itemTreeViewWaiting[item.id]) {
         // eslint-disable-next-line @typescript-eslint/no-use-before-define
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        Zotero.BetterBibTeX.ready.then(() => this.tree.invalidateRow(row)) // eslint-disable-line @typescript-eslint/no-floating-promises
+        Zotero.BetterBibTeX.ready.then(() => this._treebox.invalidateRow(row)) // eslint-disable-line @typescript-eslint/no-floating-promises
         itemTreeViewWaiting[item.id] = true
       }
 
@@ -968,6 +968,8 @@ export class BetterBibTeX {
     progress.done()
 
     if (typeof Zotero.ItemTreeView === 'undefined') ZoteroPane.itemsView.refreshAndMaintainSelection()
+    const selected = ZoteroPane.getSelectedItems(true)
+    if (selected.length) Zotero.Notifier.trigger('refresh', 'item', selected)
 
     if (this.firstRun && this.firstRun.dragndrop) Zotero.Prefs.set('export.quickCopy.setting', `export=${Translators.byLabel.BetterBibTeXCitationKeyQuickCopy.translatorID}`)
 
