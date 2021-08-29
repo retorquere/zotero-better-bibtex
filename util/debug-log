@@ -6,6 +6,7 @@ from munch import *
 import os
 import sys
 import tarfile
+from zipfile import ZipFile
 
 logs = [log.lower() for log in sys.argv[1:]]
 if len(logs) == 0:
@@ -61,4 +62,8 @@ for target, partials in merge.items():
     tar = tarfile.open(log)
     tar.extractall('logs')
     tar.close()
+    os.remove(log)
+  elif log.endswith('.zip'):
+    with ZipFile(log) as f:
+      f.extractall(path='logs')
     os.remove(log)
