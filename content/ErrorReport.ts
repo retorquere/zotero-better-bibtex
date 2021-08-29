@@ -135,7 +135,6 @@ export class ErrorReport {
 
   public async save() {
     const filename = await pick('Logs', 'save', [['ZIP Archive (*.zip)', '*.zip']], `${this.key}.zip`)
-    log.debug('saving logs to', filename)
     if (filename) await OS.File.writeAtomic(filename, await this.zip())
   }
 
