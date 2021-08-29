@@ -3,12 +3,13 @@ import type BluebirdPromise from 'bluebird'
 
 Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
+declare const ZoteroPane: any
 declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
 import type { XUL } from '../typings/xul'
 import './startup' // disable monkey patching is unsupported environment
 
-import { ZoteroPane, ZoteroPaneConstructable } from './ZoteroPane'
+import { ZoteroPane as ZoteroPaneHelper, ZoteroPaneConstructable as ZoteroPaneHelperConstructable } from './ZoteroPane'
 import { ExportOptions, ExportOptionsConstructable } from './ExportOptions'
 import { ItemPane, ItemPaneConstructable } from './ItemPane'
 import { FirstRun } from './FirstRun'
@@ -234,6 +235,7 @@ $patch$(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prot
       case 'citekey':
       case 'citationKey':
         if (Zotero.BetterBibTeX.ready.isPending()) return '' // eslint-disable-line @typescript-eslint/no-use-before-define
+        log.debug('getField is live')
         return Zotero.BetterBibTeX.KeyManager.get(this.id).citekey as string
 
       case 'itemID':
@@ -789,7 +791,7 @@ class Progress {
 export class BetterBibTeX {
   public TestSupport = new TestSupport
   public KeyManager = new KeyManager
-  public ZoteroPane: ZoteroPaneConstructable = ZoteroPane
+  public ZoteroPane: ZoteroPaneHelperConstructable = ZoteroPaneHelper
   public ExportOptions: ExportOptionsConstructable = ExportOptions
   public ItemPane: ItemPaneConstructable = ItemPane
   public FirstRun = FirstRun
@@ -964,6 +966,8 @@ export class BetterBibTeX {
     deferred.ready.resolve(true)
 
     progress.done()
+
+    if (typeof Zotero.ItemTreeView === 'undefined') ZoteroPane.itemsView.tree.invalidate()
 
     if (this.firstRun && this.firstRun.dragndrop) Zotero.Prefs.set('export.quickCopy.setting', `export=${Translators.byLabel.BetterBibTeXCitationKeyQuickCopy.translatorID}`)
 
