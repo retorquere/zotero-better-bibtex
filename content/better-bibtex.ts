@@ -960,21 +960,6 @@ export class BetterBibTeX {
 
     deferred.ready.resolve(true)
 
-    // #1899 getcelltext
-    if (typeof Zotero.ItemTreeView === 'undefined') {
-      $patch$(Zotero.getActiveZoteroPane().itemsView, '_getRowData', original => function Zotero_ItemTree_prototype_getRowData(index) {
-        const row = original.apply(this, arguments)
-
-        const item = this.getRow(index).ref
-
-        const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id)
-        row.citekey = `${citekey.citekey || '\u26A0'}${citekey.pinned ? ' \uD83D\uDCCC' : ''}`
-
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return row
-      })
-    }
-
     progress.done()
 
     if (this.firstRun && this.firstRun.dragndrop) Zotero.Prefs.set('export.quickCopy.setting', `export=${Translators.byLabel.BetterBibTeXCitationKeyQuickCopy.translatorID}`)
