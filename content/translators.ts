@@ -471,9 +471,12 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     // eslint-disable-next-line no-magic-numbers
     if (this.workers.total > 5 && (this.workers.startup / this.workers.total) > Preference.autoExportDelay) Preference.autoExportDelay = Math.ceil(this.workers.startup / this.workers.total)
 
-    log.debug('worker: kicking off')
-    // stringify-parse to get around 'object could not be cloned'
-    worker.postMessage({ kind: 'start', config: JSON.parse(JSON.stringify(config)) })
+    const enc = new TextEncoder()
+    // stringify gets around 'object could not be cloned', and arraybuffers can be passed zero-copy. win-win
+    const abconfig = enc.encode(JSON.stringify(config)).buffer
+    log.debug('worker: kicking off, config is', abconfig.byteLength)
+    worker.postMessage({ kind: 'start', config: abconfig }, [ abconfig ])
+    log.debug('worker: post-kickoff, config now', abconfig.byteLength)
 
     return deferred.promise
   }
