@@ -318,7 +318,7 @@ else {
       if (!itemTreeViewWaiting[item.id]) {
         // eslint-disable-next-line @typescript-eslint/no-use-before-define
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        Zotero.BetterBibTeX.ready.then(() => this.tree.invalidateRow(row)) // eslint-disable-line @typescript-eslint/no-floating-promises
+        Zotero.BetterBibTeX.ready.then(() => this._treebox.invalidateRow(row)) // eslint-disable-line @typescript-eslint/no-floating-promises
         itemTreeViewWaiting[item.id] = true
       }
 
@@ -964,6 +964,18 @@ export class BetterBibTeX {
     AutoExport.start()
 
     deferred.ready.resolve(true)
+
+    // #1899 getcelltext
+    if (typeof Zotero.ItemTreeView === 'undefined') {
+      $patch$(Zotero.getActiveZoteroPane().itemsView, '_getRowData', original => function Zotero_ItemTree_prototype_getRowData(index) {
+        const row = original.apply(this, arguments)
+
+        const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id)
+        row['citekey'] = `${citekey.citekey || '\u26A0'}${citekey.pinned ? ' \uD83D\uDCCC' : ''}`
+
+        return row
+      })
+    }
 
     progress.done()
 
