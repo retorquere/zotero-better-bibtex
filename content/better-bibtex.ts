@@ -270,12 +270,12 @@ if (typeof Zotero.ItemTreeView === 'undefined') {
   $patch$(itemTree.prototype, 'getColumns', original => function Zotero_ItemTree_prototype_getColumns() {
     const columns = original.apply(this, arguments)
     const insertAfter: number = columns.findIndex(column => column.dataKey === 'title')
-    columns.splice(insertAfter + 1, 0, [{
+    columns.splice(insertAfter + 1, 0, {
       dataKey: 'citekey',
       label: 'Citation key',
       flex: '1',
       zoteroPersist: new Set(['width', 'ordinal', 'hidden', 'sortActive', 'sortDirection']),
-    }])
+    })
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return columns
