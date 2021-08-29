@@ -5,6 +5,7 @@ import json
 from munch import *
 import os
 import sys
+import tarfile
 
 logs = [log.lower() for log in sys.argv[1:]]
 if len(logs) == 0:
@@ -56,3 +57,8 @@ for target, partials in merge.items():
     for i, partial in enumerate(sorted(partials, key=lambda p: p.key)):
       if len(partials) != 1: print(f'  {i+1}/{len(partials)}')
       f.write(partial.get()['Body'].read())
+  if log.endswith('.tar'):
+    tar = tarfile.open(log)
+    tar.extractall('logs')
+    tar.close()
+    os.remove(log)
