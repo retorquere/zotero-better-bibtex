@@ -456,7 +456,10 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       log.debug('cache-rate: load CSL cache')
       for (const item of config.items) {
         // if there's a cached item, we don't need a fresh CSL item since we're not regenerating it anyhow
-        if (!config.cache[item.itemID]) config.cslItems[item.itemID] = Zotero.Utilities.itemToCSLJSON(item)
+        if (!config.cache[item.itemID]) {
+          if (item.creators?.find(cr => !cr.creatorType)) log.debug('cache-rate: csl', item.creators)
+          config.cslItems[item.itemID] = Zotero.Utilities.itemToCSLJSON(item)
+        }
         prepare.update()
       }
     }

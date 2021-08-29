@@ -3,7 +3,7 @@ Components.utils.import('resource://gre/modules/Services.jsm')
 import { Preference } from '../gen/preferences'
 import { Translators } from './translators'
 import { log } from './logger'
-import Tar from 'tar-js'
+import Zip from 'jszip'
 
 import { DB } from './db/main'
 import { DB as Cache } from './db/cache'
@@ -23,6 +23,7 @@ export class ErrorReport {
   private bucket: string
   private params: any
   private globals: Record<string, any>
+  private zipped: Uint8Array
 
   private errorlog: {
     info: string
@@ -43,7 +44,7 @@ export class ErrorReport {
     wizard.canRewind = false
 
     try {
-      await fetch(`${this.bucket}/${this.key}-${this.timestamp}.tar`, {
+      await fetch(`${this.bucket}/${this.key}-${this.timestamp}.zip`, {
         method: 'PUT',
         cache: 'no-cache',
         // followRedirects: true,
@@ -52,10 +53,10 @@ export class ErrorReport {
         headers: {
           'x-amz-storage-class': 'STANDARD',
           'x-amz-acl': 'bucket-owner-full-control',
-          'Content-Type': 'application/x-tar',
+          'Content-Type': 'application/zip',
         },
         redirect: 'follow',
-        body: this.tar(),
+        body: await this.zip(),
       })
 
       wizard.advance()
@@ -110,25 +111,32 @@ export class ErrorReport {
     }
   }
 
-  public tar(): Uint8Array {
-    let tape = new Tar
+  public async zip(): Promise<Uint8Array> {
+    if (!this.zipped) {
+      const zip = new Zip
 
-    tape = tape.append(`${this.key}/debug.txt`, [ this.errorlog.info, this.errorlog.errors, this.errorlog.debug ].filter(chunk => chunk).join('\n\n'))
+      zip.file(`${this.key}/debug.txt`, [ this.errorlog.info, this.errorlog.errors, this.errorlog.debug ].filter(chunk => chunk).join('\n\n'))
 
-    if (this.errorlog.references) tape = tape.append(`${this.key}/references.json`, this.errorlog.references)
+      if (this.errorlog.references) zip.file(`${this.key}/references.json`, this.errorlog.references)
 
-    if (this.globals.document.getElementById('better-bibtex-error-report-include-db').checked) {
-      tape = tape.append(`${this.key}/database.json`, DB.serialize({ serializationMethod: 'pretty' }))
-      tape = tape.append(`${this.key}/cache.json`, Cache.serialize({ serializationMethod: 'pretty' }))
+      if (this.globals.document.getElementById('better-bibtex-error-report-include-db').checked) {
+        zip.file(`${this.key}/database.json`, DB.serialize({ serializationMethod: 'pretty' }))
+        zip.file(`${this.key}/cache.json`, Cache.serialize({ serializationMethod: 'pretty' }))
+      }
+
+      this.zipped = await zip.generateAsync({
+        type: 'uint8array',
+        compression: 'DEFLATE',
+        compressionOptions: { level: 9 },
+      })
     }
-
-    return tape as Uint8Array
+    return this.zipped
   }
 
   public async save() {
-    const filename = await pick('Logs', 'save', [['Tape Archive (*.tar)', '*.tar']], `${this.key}.tar`)
+    const filename = await pick('Logs', 'save', [['ZIP Archive (*.zip)', '*.zip']], `${this.key}.zip`)
     log.debug('saving logs to', filename)
-    if (filename) await OS.File.writeAtomic(filename, this.tar())
+    if (filename) await OS.File.writeAtomic(filename, await this.zip())
   }
 
   private async ping(region: string) {
