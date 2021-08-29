@@ -269,13 +269,15 @@ if (typeof Zotero.ItemTreeView === 'undefined') {
 
   $patch$(itemTree.prototype, 'getColumns', original => function Zotero_ItemTree_prototype_getColumns() {
     const columns = original.apply(this, arguments)
-    const insertAfter = columns.findIndex(column => column.dataKey === 'title');
-    columns.splice(insertAfter + 1, 0, [
+    const insertAfter: number = columns.findIndex(column => column.dataKey === 'title')
+    columns.splice(insertAfter + 1, 0, [{
       dataKey: 'citekey',
       label: 'Citation key',
       flex: '1',
       zoteroPersist: new Set(['width', 'ordinal', 'hidden', 'sortActive', 'sortDirection']),
-    ])
+    }])
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return columns
   })
 
@@ -292,7 +294,7 @@ if (typeof Zotero.ItemTreeView === 'undefined') {
 
     const cell = document.createElementNS('http://www.w3.org/1999/xhtml', 'span')
     cell.className = `cell ${column.className} scite-cell`
-    cell.append(icon, textSpan);
+    cell.append(icon, textSpan)
 
     return cell
   })
@@ -918,8 +920,7 @@ export class BetterBibTeX {
     const progress = new Progress
     progress.start(this.getString('BetterBibTeX.startup.waitingForZotero'))
 
-    // Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
-    // await (Zotero.isStandalone ? Zotero.uiReadyPromise : Zotero.initializationPromise)
+    // https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
     await Zotero.Schema.schemaUpdatePromise
 
     this.dir = OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex')
@@ -964,9 +965,12 @@ export class BetterBibTeX {
       $patch$(Zotero.getActiveZoteroPane().itemsView, '_getRowData', original => function Zotero_ItemTree_prototype_getRowData(index) {
         const row = original.apply(this, arguments)
 
-        const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id)
-        row['citekey'] = `${citekey.citekey || '\u26A0'}${citekey.pinned ? ' \uD83D\uDCCC' : ''}`
+        const item = this.getRow(index).ref
 
+        const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id)
+        row.citekey = `${citekey.citekey || '\u26A0'}${citekey.pinned ? ' \uD83D\uDCCC' : ''}`
+
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         return row
       })
     }
