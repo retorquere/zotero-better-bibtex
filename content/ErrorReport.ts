@@ -8,6 +8,7 @@ import Zip from 'jszip'
 import { DB } from './db/main'
 import { DB as Cache } from './db/cache'
 import { pick } from './file-picker'
+import * as l10n from './l10n'
 
 import * as s3 from './s3.json'
 
@@ -179,7 +180,7 @@ export class ErrorReport {
     this.globals.document.getElementById('better-bibtex-error-tab-references').hidden = !this.errorlog.references
 
     const current = require('../gen/version.js')
-    this.globals.document.getElementById('better-bibtex-report-current').value = Zotero.BetterBibTeX.getString('ErrorReport.better-bibtex.current', { version: current })
+    this.globals.document.getElementById('better-bibtex-report-current').value = l10n.localize('ErrorReport.better-bibtex.current', { version: current })
 
     try {
       const latest = await this.latest()
@@ -189,7 +190,7 @@ export class ErrorReport {
         show_latest.hidden = true
       }
       else {
-        show_latest.value = Zotero.BetterBibTeX.getString('ErrorReport.better-bibtex.latest', { version: latest || '<could not be established>' })
+        show_latest.value = l10n.localize('ErrorReport.better-bibtex.latest', { version: latest || '<could not be established>' })
         show_latest.hidden = false
       }
 

@@ -44,8 +44,8 @@ import { KeyManager } from './key-manager'
 import { TestSupport } from './test-support'
 import { TeXstudio } from './tex-studio'
 import { $and } from './db/loki'
-import format = require('string-template')
 import { cloneDeep } from 'lodash'
+import * as l10n from './l10n'
 
 // UNINSTALL
 AddonManager.addAddonListener({
@@ -274,7 +274,7 @@ if (typeof Zotero.ItemTreeView === 'undefined') {
     const insertAfter: number = columns.findIndex(column => column.dataKey === 'title')
     columns.splice(insertAfter + 1, 0, {
       dataKey: 'citekey',
-      label: 'Citation key',
+      label: l10n.localize('ZoteroPane.column.citekey'),
       flex: '1',
       zoteroPersist: new Set(['width', 'ordinal', 'hidden', 'sortActive', 'sortDirection']),
     })
@@ -803,29 +803,12 @@ export class BetterBibTeX {
   public loaded: BluebirdPromise<boolean>
   public dir: string
 
-  private strings: any
   private firstRun: { citekeyFormat: string, dragndrop: boolean, unabbreviate: boolean, strings: boolean }
   private globals: Record<string, any>
   public debugEnabledAtStart: boolean
 
   constructor() {
     this.debugEnabledAtStart = !!Zotero.Debug.enabled
-  }
-
-  public getString(id: string, params: any = null): string {
-    if (!this.strings || typeof this.strings.getString !== 'function') {
-      log.error('getString called before strings were loaded', id)
-      return id
-    }
-
-    try {
-      const str: string = this.strings.getString(id)
-      return params ? (format(str, params) as string) : str
-    }
-    catch (err) {
-      log.error('getString', id, err)
-      return id
-    }
   }
 
   public async scanAUX(target: string): Promise<void> {
@@ -849,7 +832,7 @@ export class BetterBibTeX {
         name = name.lastIndexOf('.') > 0 ? name.substr(0, name.lastIndexOf('.')) : name
         // eslint-disable-next-line no-case-declarations
         const tag = { value: name }
-        if (!ps.prompt(null, this.getString('BetterBibTeX.auxScan.title'), this.getString('BetterBibTeX.auxScan.prompt'), tag, null, {})) return
+        if (!ps.prompt(null, l10n.localize('BetterBibTeX.auxScan.title'), l10n.localize('BetterBibTeX.auxScan.prompt'), tag, null, {})) return
         if (!tag.value) return
 
         await AUXScanner.scan(aux, { tag: tag.value })
@@ -868,8 +851,6 @@ export class BetterBibTeX {
   public async load(globals: any): Promise<void> { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
     this.globals = globals
     if (this.loaded) return // eslint-disable-line @typescript-eslint/no-misused-promises
-
-    this.strings = globals.document.getElementById('zotero-better-bibtex-strings')
 
     const deferred = {
       loaded: new Deferred<boolean>(),
@@ -923,7 +904,7 @@ export class BetterBibTeX {
       )
     }
     const progress = new Progress
-    progress.start(this.getString('BetterBibTeX.startup.waitingForZotero'))
+    progress.start(l10n.localize('BetterBibTeX.startup.waitingForZotero'))
 
     // https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
     await Zotero.Schema.schemaUpdatePromise
@@ -933,34 +914,34 @@ export class BetterBibTeX {
 
     log.debug("Zotero ready, let's roll!")
 
-    progress.update(this.getString('BetterBibTeX.startup.loadingKeys'), 10) // eslint-disable-line no-magic-numbers
+    progress.update(l10n.localize('BetterBibTeX.startup.loadingKeys'), 10) // eslint-disable-line no-magic-numbers
     await Promise.all([Cache.init(), DB.init()])
 
     await this.KeyManager.init() // loads the existing keys
 
-    progress.update(this.getString('BetterBibTeX.startup.serializationCache'), 20) // eslint-disable-line no-magic-numbers
+    progress.update(l10n.localize('BetterBibTeX.startup.serializationCache'), 20) // eslint-disable-line no-magic-numbers
     Serializer.init()
 
-    progress.update(this.getString('BetterBibTeX.startup.autoExport.load'), 30) // eslint-disable-line no-magic-numbers
+    progress.update(l10n.localize('BetterBibTeX.startup.autoExport.load'), 30) // eslint-disable-line no-magic-numbers
     await AutoExport.init()
 
     // not yet started
     deferred.loaded.resolve(true)
 
     // this is what really takes long
-    progress.update(this.getString('BetterBibTeX.startup.waitingForTranslators'), 40) // eslint-disable-line no-magic-numbers
+    progress.update(l10n.localize('BetterBibTeX.startup.waitingForTranslators'), 40) // eslint-disable-line no-magic-numbers
     await Zotero.Schema.schemaUpdatePromise
 
-    progress.update(this.getString('BetterBibTeX.startup.journalAbbrev'), 60) // eslint-disable-line no-magic-numbers
+    progress.update(l10n.localize('BetterBibTeX.startup.journalAbbrev'), 60) // eslint-disable-line no-magic-numbers
     await JournalAbbrev.init()
 
-    progress.update(this.getString('BetterBibTeX.startup.installingTranslators'), 70) // eslint-disable-line no-magic-numbers
+    progress.update(l10n.localize('BetterBibTeX.startup.installingTranslators'), 70) // eslint-disable-line no-magic-numbers
     await Translators.init()
 
-    progress.update(this.getString('BetterBibTeX.startup.keyManager'), 80) // eslint-disable-line no-magic-numbers
+    progress.update(l10n.localize('BetterBibTeX.startup.keyManager'), 80) // eslint-disable-line no-magic-numbers
     await this.KeyManager.start() // inits the key cache by scanning the DB and generating missing keys
 
-    progress.update(this.getString('BetterBibTeX.startup.autoExport'), 90) // eslint-disable-line no-magic-numbers
+    progress.update(l10n.localize('BetterBibTeX.startup.autoExport'), 90) // eslint-disable-line no-magic-numbers
     AutoExport.start()
 
     deferred.ready.resolve(true)
@@ -968,6 +949,7 @@ export class BetterBibTeX {
     progress.done()
 
     if (typeof Zotero.ItemTreeView === 'undefined') ZoteroPane.itemsView.refreshAndMaintainSelection()
+
     const selected = ZoteroPane.getSelectedItems(true)
     if (selected.length) Zotero.Notifier.trigger('refresh', 'item', selected)
 
@@ -977,7 +959,7 @@ export class BetterBibTeX {
     log.debug('csl-yaml date mappings', Zotero.Schema.CSL_DATE_MAPPINGS)
 
     Events.on('export-progress', (percent: number, translator: string) => {
-      const preparing = percent < 0 ? this.getString('Preferences.auto-export.status.preparing') : ''
+      const preparing = percent < 0 ? l10n.localize('Preferences.auto-export.status.preparing') : ''
       percent = Math.abs(percent)
       if (percent && percent < 100) { // eslint-disable-line no-magic-numbers
         document.getElementById('better-bibtex-progress').hidden = false

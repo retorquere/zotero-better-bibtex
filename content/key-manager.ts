@@ -26,6 +26,8 @@ import { patch as $patch$ } from './monkey-patch'
 import { sprintf } from 'sprintf-js'
 import { intToExcelCol } from 'excel-column-name'
 
+import * as l10n from './l10n'
+
 type CitekeySearchRecord = { itemID: number, libraryID: number, itemKey: string, citekey: string }
 
 export class KeyManager {
@@ -85,11 +87,11 @@ export class KeyManager {
 
   public async set(): Promise<void> {
     const ids = this.expandSelection('selected')
-    if (ids.length !== 1) return alert(Zotero.BetterBibTeX.getString('Citekey.set.toomany'))
+    if (ids.length !== 1) return alert(l10n.localize('Citekey.set.toomany'))
 
     Cache.remove(ids, `setting key for ${ids}`)
     const existingKey = this.get(ids[0]).citekey
-    const citationKey = prompt(Zotero.BetterBibTeX.getString('Citekey.set.change'), existingKey) || existingKey
+    const citationKey = prompt(l10n.localize('Citekey.set.change'), existingKey) || existingKey
     if (citationKey === existingKey) return
 
     const item = await getItemsAsync(ids[0])

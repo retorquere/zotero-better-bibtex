@@ -7,9 +7,6 @@
     var globals = Function('return this')();
     var bbt_zoteropane = null;
   </script>
-  <stringbundleset>
-    <stringbundle id="zotero-better-bibtex-strings" src="chrome://zotero-better-bibtex/locale/zotero-better-bibtex.properties"/>
-  </stringbundleset>
 
   <hbox id="zotero-items-toolbar">
     <hbox id="better-bibtex-progress" insertafter="zotero-tb-attachment-add" hidden="true">
@@ -79,7 +76,7 @@
   <treecols id="zotero-items-columns-header">
     <treecol
       id="zotero-items-column-citekey"
-      label="Citekey"
+      label="&ZoteroPane.column.citekey;"
       flex="1"
       insertafter="zotero-items-column-title"
       zotero-persist="width ordinal hidden sortActive sortDirection"

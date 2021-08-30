@@ -1,4 +1,5 @@
 import { patch as $patch$ } from './monkey-patch'
+import * as l10n from './l10n'
 
 export interface ExportOptionsConstructable {
   new(globals: any): ExportOptions // eslint-disable-line @typescript-eslint/prefer-function-type
@@ -34,11 +35,11 @@ export class ExportOptions {
       let textContent = ''
       switch (translator) {
         case 'b6e39b57-8942-4d11-8259-342c46ce395f':
-          textContent = Zotero.BetterBibTeX.getString('exportOptions.reminder', { translator: 'Better BibLaTeX' })
+          textContent = l10n.localize('exportOptions.reminder', { translator: 'Better BibLaTeX' })
           break
 
         case '9cb70025-a888-4a29-a210-93ec52da40d4':
-          textContent = Zotero.BetterBibTeX.getString('exportOptions.reminder', { translator: 'Better BibTeX' })
+          textContent = l10n.localize('exportOptions.reminder', { translator: 'Better BibTeX' })
           break
 
         default:
@@ -84,7 +85,7 @@ export class ExportOptions {
         node.checked = false
         this.reset = false
 
-        node.setAttribute('label', Zotero.BetterBibTeX.getString('exportOptions.keepUpdated'))
+        node.setAttribute('label', l10n.localize('exportOptions.keepUpdated'))
       }
 
       if (node.getAttribute('better-bibtex')) return null
