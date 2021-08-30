@@ -537,7 +537,6 @@ export class Reference {
    *   ignored)
    */
   public add(field: Translators.BibTeX.Field): string {
-    Zotero.debug(`field: ${JSON.stringify(field)}`)
     if (Translator.preferences.testing && !this.inPostscript && field.name !== field.name.toLowerCase()) throw new Error(`Do not add mixed-case field ${field.name}`)
 
     if (!field.value && !field.bibtex && this.inPostscript) {
@@ -680,8 +679,6 @@ export class Reference {
         if (!value) return null
 
         value = value.trim()
-
-        log.debug('field:', { name: field.name, value: field.value, bibtex: value, bare: field.bare})
 
         // scrub fields of unwanted {}, but not if it's a raw field or a bare field without spaces
         if (!field.bare || (field.value as string).match(/\s/)) {
