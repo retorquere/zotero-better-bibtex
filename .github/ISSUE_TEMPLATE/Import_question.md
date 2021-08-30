@@ -24,6 +24,10 @@ Picking the right issue category is really important. Each category (`Export`, `
 The support log is important; it gives me your current BBT settings and a log of what Zotero was doing at the time of import. Without it, I'm effectively blind.
 
 
+**Zotero version:**
+
+**BBT version:**
+
 **Support log ID:**
 
 **Full Bib(La)TeX item you are trying to import:**

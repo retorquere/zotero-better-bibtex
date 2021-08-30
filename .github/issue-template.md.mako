@@ -46,6 +46,10 @@ The support log is important; it gives me your current BBT settings and a log of
 
 % endif
 
+**Zotero version:**
+
+**BBT version:**
+
 % if template.name != 'Question':
 **Support log ID:**
 

@@ -23,6 +23,10 @@ Picking the right issue category is really important. Each category (`Export`, `
 The support log is important; it gives me your current BBT settings and a log of what Zotero was doing at the time of error. Without it, I'm effectively blind.
 
 
+**Zotero version:**
+
+**BBT version:**
+
 **Support log ID:**
 
 **Expected behavior:**
