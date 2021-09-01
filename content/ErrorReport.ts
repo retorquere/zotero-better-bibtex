@@ -25,6 +25,7 @@ export class ErrorReport {
   private params: any
   private globals: Record<string, any>
   private zipped: Uint8Array
+  private cacheState: string
 
   private errorlog: {
     info: string
@@ -116,7 +117,7 @@ export class ErrorReport {
     if (!this.zipped) {
       const zip = new Zip
 
-      zip.file(`${this.key}/debug.txt`, [ this.errorlog.info, this.errorlog.errors, this.errorlog.debug ].filter(chunk => chunk).join('\n\n'))
+      zip.file(`${this.key}/debug.txt`, [ this.errorlog.info, this.cacheState, this.errorlog.errors, this.errorlog.debug ].filter(chunk => chunk).join('\n\n'))
 
       if (this.errorlog.references) zip.file(`${this.key}/references.json`, this.errorlog.references)
 
@@ -193,6 +194,8 @@ export class ErrorReport {
         show_latest.value = l10n.localize('ErrorReport.better-bibtex.latest', { version: latest || '<could not be established>' })
         show_latest.hidden = false
       }
+
+      this.globals.document.getElementById('better-bibtex-report-cache').value = this.cacheState = l10n.localize('ErrorReport.better-bibtex.cache', Cache.state())
 
       const region = await Zotero.Promise.any(Object.keys(s3.region).map(this.ping.bind(this)))
       this.bucket = `http://${s3.bucket}-${region.short}.s3-${region.region}.amazonaws.com${region.tld || ''}`

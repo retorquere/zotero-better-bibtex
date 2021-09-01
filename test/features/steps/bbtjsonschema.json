@@ -171,6 +171,9 @@
             "cacheFlushInterval": {
               "type": "number"
             },
+            "caching": {
+              "type": "boolean"
+            },
             "citeCommand": {
               "type": "string"
             },
@@ -373,9 +376,6 @@
               "type": "number"
             },
             "warnTitleCased": {
-              "type": "boolean"
-            },
-            "workersCache": {
               "type": "boolean"
             },
             "workersMax": {
