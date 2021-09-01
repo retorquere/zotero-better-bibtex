@@ -23,6 +23,18 @@
   <script>
     var globals = Function('return this')();
     var bbt_errorreport = new Zotero.BetterBibTeX.ErrorReport(globals);
+
+    const MB = 1024 * 1024
+    var memuse
+
+    const reporterManager = Components.classes['@mozilla.org/memory-reporter-manager;1'].getService(Components.interfaces.nsIMemoryReporterManager)
+    reporterManager.init()
+
+    function gc() {
+      memuse.value = 'collecting'
+      window.QueryInterface(Components.interfaces.nsIInterfaceRequestor).getInterface(Components.interfaces.nsIDOMWindowUtils).garbageCollect()
+      memuse.value = `memory: ${reporterManager.resident / MB }MB`
+    }
   </script>
 
   <wizardpage onpageshow="bbt_errorreport.show()" label=" ">
@@ -63,8 +75,10 @@
     <hbox>
       <button label="&better-bibtex.ErrorReport.save;" oncommand="bbt_errorreport.save()"/>
       <button label="Memory use" oncommand="Zotero.openInViewer('about:memory')"/>
+      <button label="Garbage collect" oncommand="gc()"/>
       <hbox flex="1"/>
     </hbox>
+    <description id="better-bibtex-error-memory-use" style="white-space: pre-wrap;"></description>
     <!-- description id="zotero-unrelated-message">&zotero.general.note; &zotero.errorReport.unrelatedMessages;</description>
     <description id="zotero-advance-message"/ -->
   </wizardpage>
@@ -83,4 +97,8 @@
     <description>&better-bibtex.ErrorReport.postToGitHub;</description>
     <description>&better-bibtex.ErrorReport.notReviewed;</description>
   </wizardpage>
+  <script>
+    memuse = document.getElementById('better-bibtex-error-memory-use')
+    memuse.value = `memory: ${reporterManager.resident / MB }MB`
+  </script>
 </wizard>
