@@ -21,6 +21,7 @@
   "bibtexParticleNoOp": false,
   "bibtexURL": "off",
   "cacheFlushInterval": 5,
+  "caching": true,
   "citeCommand": "cite",
   "citekeyFold": true,
   "citekeyFormat": "\u200b[auth:lower][shorttitle3_3][year]",
@@ -78,6 +79,5 @@
   "verbatimFields": "url,doi,file,ids,eprint,verba,verbb,verbc,groups",
   "warnBulkModify": 10,
   "warnTitleCased": false,
-  "workersCache": true,
   "workersMax": 1
 }

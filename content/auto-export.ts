@@ -415,6 +415,8 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
   }
 
   public async cached($loki) {
+    if (!Preference.caching) return 0
+
     log.debug('cache-rate: calculating cache rate for', $loki)
     const start = Date.now()
     const ae = this.db.get($loki)

@@ -2,6 +2,7 @@ import type { Attachment, Item } from '../gen/typings/serialized-item'
 import { JournalAbbrev } from './journal-abbrev'
 import { DB as Cache } from './db/cache'
 import { $and } from './db/loki'
+import { Preference } from '../gen/preferences'
 
 type CacheEntry = {
   itemID: number
@@ -21,7 +22,7 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
   }
 
   private fetch(item: ZoteroItem): Item {
-    if (!this.cache) return null
+    if (!Preference.caching || !this.cache) return null
 
     const cached: CacheEntry = this.cache.findOne($and({ itemID: item.id }))
     if (!cached) return null
@@ -32,7 +33,7 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
 
   private store(item: ZoteroItem, serialized: Item): Item {
     if (this.cache) {
-      this.cache.insert({ itemID: item.id, item: serialized })
+      if (Preference.caching) this.cache.insert({ itemID: item.id, item: serialized })
     }
     else {
       Zotero.debug('Serializer.store ignored, DB not yet loaded')
@@ -42,9 +43,7 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
   }
 
   public serialize(item: ZoteroItem): Item {
-    const serialized = Zotero.Utilities.Internal.itemToExportFormat(item, false, true) as Item
-    // if (this.cache) this.cache.insert({ itemID: item.id, item: serialized }) // this causes cache invalidation problems. No idea why.
-    return serialized
+    return Zotero.Utilities.Internal.itemToExportFormat(item, false, true) as Item
   }
 
   public fast(item: ZoteroItem): Item {

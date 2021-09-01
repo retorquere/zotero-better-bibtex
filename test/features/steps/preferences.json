@@ -230,6 +230,19 @@
     "var": "cacheFlushInterval"
   },
   {
+    "name": "caching",
+    "type": "boolean",
+    "default": true,
+    "affects": [
+      "Better BibLaTeX",
+      "Better BibTeX",
+      "Better CSL JSON",
+      "Better CSL YAML"
+    ],
+    "var": "caching",
+    "label": "Enable caching for background exports"
+  },
+  {
     "name": "citeCommand",
     "type": "string",
     "default": "cite",
@@ -770,14 +783,6 @@
     "default": false,
     "affects": [],
     "var": "warnTitleCased"
-  },
-  {
-    "name": "workersCache",
-    "type": "boolean",
-    "default": true,
-    "affects": [],
-    "var": "workersCache",
-    "label": "Enable caching for background exports"
   },
   {
     "name": "workersMax",
