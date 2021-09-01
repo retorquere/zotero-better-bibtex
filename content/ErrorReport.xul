@@ -34,6 +34,7 @@
     <description style="white-space: pre-wrap;" class="header">&better-bibtex.ErrorReport.review;</description>
     <textbox flex="1" id="better-bibtex-report-current" class="plain" readonly="true"/>
     <textbox flex="1" id="better-bibtex-report-latest" class="plain textbox-emph" readonly="true"/>
+    <textbox flex="1" id="better-bibtex-report-cache" class="plain" readonly="true"/>
     <checkbox label="&better-bibtex.ErrorReport.includeCache;" id="better-bibtex-error-report-include-db"/>
     <tabbox flex="1" class="debug-on">
       <tabs>
