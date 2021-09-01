@@ -60,11 +60,8 @@ class Cache extends Loki {
         additionalProperties: false,
       },
     })
+    if (!Preference.caching) coll.removeDataOnly()
     log.debug('cache.itemToExportFormat:', coll.data.length)
-
-    // old cache, drop
-    if (coll.where(o => typeof o.legacy === 'boolean').length) this.drop(coll, 'legacy cache')
-
 
     this.clearOnUpgrade(coll, 'Zotero', Zotero.version)
 
@@ -111,19 +108,8 @@ class Cache extends Loki {
         ttl,
         ttlInterval,
       })
+      if (!Preference.caching) coll.removeDataOnly()
       log.debug(`cache.${coll.name}:`, coll.data.length)
-
-      if (coll.data.find(rec => !rec.$loki)) {
-        this.drop(coll, 'entries without id')
-      }
-      else {
-        // should have been dropped after object change/delete
-        const outdated = coll.data.filter(item => !modified[item.itemID] || modified[item.itemID] >= (item.meta?.updated || item.meta?.created || false))
-        if (outdated.length) log.debug('removing', outdated.length, 'mis-cached items')
-        for (const item of outdated) {
-          coll.remove(item)
-        }
-      }
 
       this.clearOnUpgrade(coll, 'BetterBibTeX', version)
     }

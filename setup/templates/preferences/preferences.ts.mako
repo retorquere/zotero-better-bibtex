@@ -34,6 +34,10 @@ export const Preference = new class PreferenceManager {
       Zotero.Prefs.clear(key)
       Zotero.Prefs.set('${prefix}workersMax', 1)
     }
+    if (typeof (old = Zotero.Prefs.get(key = '${prefix}workersCache')) !== 'undefined') {
+      Zotero.Prefs.clear(key)
+      Zotero.Prefs.set('${prefix}caching', !!old)
+    }
     if (typeof (old = Zotero.Prefs.get(key = '${prefix}suppressTitleCase')) !== 'undefined') {
       Zotero.Prefs.clear(key)
       Zotero.Prefs.set('${prefix}exportTitleCase', !old)

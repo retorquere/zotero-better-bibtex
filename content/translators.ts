@@ -231,7 +231,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       }
     }
 
-    const caching = Preference.workersCache && !(
+    const caching = Preference.caching && !(
       // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
       displayOptions.exportFileData
 
@@ -613,7 +613,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
   public async uncached(translatorID: string, displayOptions: any, scope: any): Promise<any[]> {
     // get all itemIDs in cache
-    const cache = Cache.getCollection(this.byId[translatorID].label)
+    const cache = Preference.caching && Cache.getCollection(this.byId[translatorID].label)
     if (!cache) return []
 
     const query: Query = {$and: [
