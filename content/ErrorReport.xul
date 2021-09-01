@@ -62,6 +62,7 @@
 
     <hbox>
       <button label="&better-bibtex.ErrorReport.save;" oncommand="bbt_errorreport.save()"/>
+      <button label="Memory use" oncommand="Zotero.openInViewer('about:memory')"/>
       <hbox flex="1"/>
     </hbox>
     <!-- description id="zotero-unrelated-message">&zotero.general.note; &zotero.errorReport.unrelatedMessages;</description>
