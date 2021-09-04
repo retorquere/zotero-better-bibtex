@@ -9,7 +9,7 @@
   </script>
 
   <hbox id="zotero-items-toolbar">
-    <hbox id="better-bibtex-progress" insertafter="zotero-tb-attachment-add" hidden="true">
+    <hbox id="better-bibtex-progress" insertbefore="zotero-tb-search-spinner" hidden="true">
       <progressmeter id="better-bibtex-progress-meter" mode="determined" value="0"/>
       <label id="better-bibtex-progress-label" value="startup"/>
     </hbox>
