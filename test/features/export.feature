@@ -388,7 +388,7 @@ Scenario: Date export to Better CSL-JSON #360 #811
   And an export using "Better CSL JSON" should match "export/*.csl.json"
   And an export using "Better BibLaTeX" should match "export/*.biblatex"
 
-@432 @447 @pandoc @598 @cslyml
+@432 @447 @pandoc @598 @cslyml @qc
 Scenario: Pandoc-LaTeX-SCHOMD Citation Export
   When I import 4 references with 3 attachments from "export/*.json"
   And I set preference .quickCopyMode to "pandoc"
