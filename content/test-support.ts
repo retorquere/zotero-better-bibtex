@@ -13,8 +13,25 @@ import { DB as Cache } from './db/cache'
 import * as Extra from './extra'
 import { $and } from './db/loki'
 import  { defaults } from '../gen/preferences/meta'
+import { Preference } from '../gen/preferences'
+import * as memory from './memory'
+
+const setatstart: string[] = ['workersMax', 'testing', 'caching'].filter(p => Preference[p] !== defaults[p])
 
 export class TestSupport {
+  constructor() {
+    // log memory use every second to try to pinpoint the memory leak
+    let memuse = memory.resident()
+    log.debug('memory use:', memuse)
+    setInterval(() => {
+      // (window as any).QueryInterface(Components.interfaces.nsIInterfaceRequestor).getInterface(Components.interfaces.nsIDOMWindowUtils).garbageCollect()
+      const memcur = memory.resident()
+      const memdiff = memcur - memuse
+      log.debug(`memory use: ${memcur} (${memdiff < 0 ? '' : '+'}${memdiff})`)
+      memuse = memcur
+    }, 1000) // eslint-disable-line no-magic-numbers
+  }
+
   public removeAutoExports(): void {
     AutoExport.db.findAndRemove({ type: { $ne: '' } })
   }
@@ -31,7 +48,7 @@ export class TestSupport {
     let collections
     const prefix = 'translators.better-bibtex.'
     for (const [pref, value] of Object.entries(defaults)) {
-      if (pref === 'testing') continue
+      if (setatstart.includes(pref)) continue
       Zotero.Prefs.set(prefix + pref, value)
     }
 

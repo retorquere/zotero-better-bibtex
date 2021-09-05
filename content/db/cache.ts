@@ -4,14 +4,13 @@ import { File } from './store/file'
 import { Preference } from '../../gen/preferences'
 import { affects, schema } from '../../gen/preferences/meta'
 import { log } from '../logger'
+import * as memory from '../memory'
 
 const version = require('../../gen/version.js')
 
 import type { Preferences } from '../../gen/preferences/meta'
 
 const METADATA = 'Better BibTeX metadata'
-const kB = 1024
-const MB = kB * kB
 
 class Cache extends Loki {
   private initialized = false
@@ -140,38 +139,9 @@ class Cache extends Loki {
     }])
   }
 
-  private roughSize(object): number {
-    const objects = []
-    const stack = [ object ]
-    let bytes = 0
-
-    while (stack.length) {
-      const value = stack.pop()
-
-      if (typeof value === 'boolean') {
-        bytes += 4 // eslint-disable-line no-magic-numbers
-      }
-      else if (typeof value === 'string') {
-        bytes += value.length * 2 // eslint-disable-line no-magic-numbers
-      }
-      else if (typeof value === 'number') {
-        bytes += 8 // eslint-disable-line no-magic-numbers
-      }
-      else if (typeof value === 'object' && !objects.includes(value)) {
-        objects.push(value)
-
-        for (const i in value) { // eslint-disable-line guard-for-in
-          stack.push(value[i])
-        }
-      }
-    }
-
-    return bytes
-  }
-
   public state(): { size: number, entries: number } {
     return {
-      size: Math.ceil(this.roughSize(this) / MB),
+      size: Math.ceil(memory.approximateSize(this)),
       entries: this.collections.reduce((acc, coll) => acc + coll.data.length, 0),
     }
   }

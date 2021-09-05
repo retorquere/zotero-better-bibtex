@@ -63,6 +63,7 @@ parser.add_argument('--client', dest='client', default=os.environ.get('CLIENT', 
 parser.add_argument('--beta', action='store_true', default=('#beta' in CI.message))
 parser.add_argument('--keep', '--no-keep', dest='keep', action=BooleanAction, default=False)
 parser.add_argument('--workers', '--no-workers', dest='workers', action=BooleanAction, default=True)
+parser.add_argument('--caching', '--no-caching', dest='caching', action=BooleanAction, default=True)
 parser.add_argument('--this', action='store_true')
 parser.add_argument('--test-this', action='store_true')
 parser.add_argument('--slow', action='store_true',
@@ -128,11 +129,12 @@ if args.client == 'jurism' and args.beta and CI.service:
 
 sys.argv.extend(['--define', f"client={args.client}"])
 sys.argv.extend(['--define', f'workers={str(args.workers).lower()}'])
+sys.argv.extend(['--define', f'caching={str(args.workers).lower()}'])
 if args.bin: sys.argv.extend(['--define', f"bin={args.bin}"])
 sys.argv.extend(['--define', f'kill={str(not args.keep).lower()}'])
 if args.stop: sys.argv.append('--stop')
 if args.slow: sys.argv.extend(['--define', 'slow=true'])
-if args.beta: sys.argv.extend(['--define', f'beta=true'])
+if args.beta: sys.argv.extend(['--define', 'beta=true'])
 if args.test: sys.argv.extend(['--define', f'test={args.test}'])
 if args.this: sys.argv.extend(['--tags', args.this ])
 

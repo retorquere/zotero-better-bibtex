@@ -7,13 +7,15 @@ const __estrace = {
 
   enter(name, url, args) {
     const replacer = this.circularReplacer()
-    this.report(`bbt trace.enter ${url}.${name}(${Array.from(args).map(arg => JSON.stringify(arg, replacer)).join(', ')})`)
-    this.state(1)
+    Zotero.debug(`bbt.trace.enter ${url}.${name}`)
+    //this.report(`bbt trace.enter ${url}.${name}(${Array.from(args).map(arg => JSON.stringify(arg, replacer)).join(', ')})`)
+    //this.state(1)
   },
 
   exit(name, url, result) {
-    this.state(-1)
-    this.report(`bbt trace.exit ${url}.${name} => ${JSON.stringify(result, this.circularReplacer())}`)
+    Zotero.debug(`bbt.trace.exit ${url}.${name}`)
+    // this.state(-1)
+    // this.report(`bbt trace.exit ${url}.${name} => ${JSON.stringify(result, this.circularReplacer())}`)
   },
 
   state(inc) {
@@ -27,7 +29,7 @@ const __estrace = {
     if (inc) host.trace$depth += inc
     
     return {
-      depth: host.trace$depth,
+      depth: Math.max(host.trace$depth, 0),
       zotero: {
         loaded: zotero,
         ready: debug,

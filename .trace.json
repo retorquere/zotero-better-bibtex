@@ -1,14 +1,9 @@
 {
-  "gh-1877": {
+  "gh-1896": {
     "plugin": [
       "content/better-bibtex.ts",
-      "content/extra.ts",
-      "!gen"
+      "content/serializer.ts",
+      "content/db/*.ts"
     ]
-  },
-  "-gh-1389": [
-    "content/translators.ts",
-    "translators/**/*.ts",
-    "!translators/worker/zotero.ts"
-  ]
+  }
 }
