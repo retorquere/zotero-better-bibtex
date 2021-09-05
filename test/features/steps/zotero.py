@@ -187,6 +187,7 @@ class Zotero:
       self.workers = 1
     else:
       self.workers = 0
+    self.caching = userdata.get('caching', 'true') == 'true'
 
     self.preferences = Preferences(self)
     self.redir = '>'
@@ -563,7 +564,8 @@ class Zotero:
     if self.config.profile: install_xpis(os.path.join(ROOT, 'test/db', self.config.profile, 'xpis'), profile.firefox)
 
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.testing', self.testing)
-    profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.workers', self.workers)
+    profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.workersMax', self.workers)
+    profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.caching', self.workers)
     profile.firefox.set_preference('extensions.zotero.debug-bridge.password', self.password)
     profile.firefox.set_preference('dom.max_chrome_script_run_time', self.config.timeout)
     utils.print(f'dom.max_chrome_script_run_time={self.config.timeout}')

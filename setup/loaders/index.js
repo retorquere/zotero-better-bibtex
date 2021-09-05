@@ -168,11 +168,11 @@ module.exports.trace = function(section) {
         console.log(`!!!!!!!!!!!!!! Instrumenting ${localpath} for trace logging !!!!!!!!!!!!!`)
 
         try {
-          const { estracePlugin: estrace } = await require('estrace/plugin')
-          const {code} = putout(await fs.promises.readFile(source, 'utf-8'), {
+          const estrace = await import('estrace/plugin');
+          const {code} = putout(source.code, {
             fixCount: 1,
             rules: {
-              'estrace/trace': ['on', { url: 'inline', exclude: [ 'FunctionExpression', 'ArrowFunctionExpression' ] }],
+              'estrace/trace': ['on', { url: `file://${args.path}`, exclude: [ 'FunctionExpression', 'ArrowFunctionExpression' ] }],
             },
             plugins: [ estrace ],
           })
