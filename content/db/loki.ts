@@ -8,13 +8,13 @@ declare const AsyncShutdown: any
 
 import { patch as $patch$ } from '../monkey-patch'
 
-import AJV from 'ajv'
 import { log } from '../logger'
 // import { Preferences as Prefs } from '../prefs'
 
 // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
 import Loki = require('lokijs')
 
+import AJV from 'ajv'
 const validator = new AJV({ useDefaults: true, coerceTypes: true })
 require('ajv-keywords')(validator)
 

@@ -78,7 +78,7 @@ module.exports.__dirname = {
   setup(build) {
     build.onLoad({ filter: /\/node_modules\/.+\.js$/ }, async (args) => {
       let contents = await fs.promises.readFile(args.path, 'utf-8')
-      const filename = 'resource://zotero-better-bibtex/' + args.path.replace(/.*\/node_modules\/(\.pnpm)?/, '')
+      const filename = 'resource://zotero-better-bibtex/' + (args.path.includes('/node_modules/') ? args.path.replace(/.*\/node_modules\//, '') : path.resolve(__dirname, args.path))
       const dirname = path.dirname(filename)
 
       contents = [
@@ -169,16 +169,16 @@ module.exports.trace = function(section) {
 
         try {
           const estrace = await import('estrace/plugin');
-          const {code} = putout(source.code, {
+          let {code} = putout(source.code, {
             fixCount: 1,
             rules: {
-              'estrace/trace': ['on', { url: `file://${args.path}`, exclude: [ 'FunctionExpression', 'ArrowFunctionExpression' ] }],
+              'estrace/trace': ['on', { url: localpath, exclude: [ 'FunctionExpression', 'ArrowFunctionExpression' ] }],
             },
             plugins: [ estrace ],
           })
 
           return {
-            contents: prefix + code,
+            contents: `${prefix};${code}`,
             loader: 'js',
           }
         }

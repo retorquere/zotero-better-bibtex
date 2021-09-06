@@ -14,23 +14,29 @@ import * as Extra from './extra'
 import { $and } from './db/loki'
 import  { defaults } from '../gen/preferences/meta'
 import { Preference } from '../gen/preferences'
-import * as memory from './memory'
+// import * as memory from './memory'
 
 const setatstart: string[] = ['workersMax', 'testing', 'caching'].filter(p => Preference[p] !== defaults[p])
 
 export class TestSupport {
+  // private residentMem: number
+
+  /*
   constructor() {
     // log memory use every second to try to pinpoint the memory leak
-    let memuse = memory.resident()
-    log.debug('memory use:', memuse)
-    setInterval(() => {
-      // (window as any).QueryInterface(Components.interfaces.nsIInterfaceRequestor).getInterface(Components.interfaces.nsIDOMWindowUtils).garbageCollect()
-      const memcur = memory.resident()
-      const memdiff = memcur - memuse
-      log.debug(`memory use: ${memcur} (${memdiff < 0 ? '' : '+'}${memdiff})`)
-      memuse = memcur
-    }, 1000) // eslint-disable-line no-magic-numbers
+    this.residentMem = memory.resident()
+    log.debug('memory use:', this.residentMem)
+    setInterval(() => { this.logMemoryUse() }, 500) // eslint-disable-line no-magic-numbers
   }
+
+  public logMemoryUse(msg = ''): void {
+    // (window as any).QueryInterface(Components.interfaces.nsIInterfaceRequestor).getInterface(Components.interfaces.nsIDOMWindowUtils).garbageCollect()
+    const memcur = memory.resident()
+    const memdiff = memcur - this.residentMem
+    log.debug(`${msg}memory use: ${memcur} (${memdiff < 0 ? '' : '+'}${memdiff})`)
+    this.residentMem = memcur
+  }
+  */
 
   public removeAutoExports(): void {
     AutoExport.db.findAndRemove({ type: { $ne: '' } })
