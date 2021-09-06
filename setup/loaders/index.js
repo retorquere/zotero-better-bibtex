@@ -7,6 +7,7 @@ const shell = require('shelljs')
 const { filePathFilter } = require('file-path-filter')
 const esbuild = require('esbuild')
 const putout = require('putout')
+const { estracePlugin: estrace } from 'estrace/plugin'
 
 function load_patches(dir) {
   const patches = {}
@@ -168,15 +169,12 @@ module.exports.trace = function(section) {
         console.log(`!!!!!!!!!!!!!! Instrumenting ${localpath} for trace logging !!!!!!!!!!!!!`)
 
         try {
-          const estrace = await import('estrace/plugin');
           let {code} = putout(source.code, {
             fixCount: 1,
             rules: {
               'estrace/trace': ['on', { url: localpath, exclude: [ 'FunctionExpression', 'ArrowFunctionExpression' ] }],
             },
-            plugins: [
-              [ 'estrace', estrace ],
-            ],
+            plugins: [ estrace ],
           })
 
           return {
