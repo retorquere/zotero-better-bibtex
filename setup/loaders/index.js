@@ -7,6 +7,7 @@ const shell = require('shelljs')
 const { filePathFilter } = require('file-path-filter')
 const esbuild = require('esbuild')
 const putout = require('putout')
+const { estracePlugin: estrace } from 'estrace/plugin'
 
 function load_patches(dir) {
   const patches = {}
