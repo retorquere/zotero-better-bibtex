@@ -74,8 +74,6 @@
 
     <hbox>
       <button label="&better-bibtex.ErrorReport.save;" oncommand="bbt_errorreport.save()"/>
-      <button label="Memory use" oncommand="Zotero.openInViewer('about:memory')"/>
-      <button label="Garbage collect" oncommand="gc()"/>
       <hbox flex="1"/>
     </hbox>
     <description id="better-bibtex-error-memory-use" style="white-space: pre-wrap;"></description>

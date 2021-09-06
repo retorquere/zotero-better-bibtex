@@ -1,65 +1,54 @@
 ;if (typeof Zotero !== 'undefined' && Zotero.Debug) Zotero.Debug.enabled = true
 
 const __estrace = {
-  depth: 0,
   hold: '',
   prefix: 'zotero(?)(+0000000): ',
+  MB: 1024 * 1024,
+
+  ready() {
+    if (!Zotero
+      || !Zotero.BetterBibTeX
+      || !Zotero.BetterBibTeX.ready
+      || Zotero.BetterBibTeX.ready.isPending()
+      || !Zotero.BetterBibTeX.TestSupport
+    ) return false
+
+    if (!Zotero.BetterBibTeX.TestSupport.memoryReporterManager) {
+      Zotero.BetterBibTeX.TestSupport.memoryReporterManager = Components.classes['@mozilla.org/memory-reporter-manager;1'].getService(Components.interfaces.nsIMemoryReporterManager)
+      Zotero.BetterBibTeX.TestSupport.memoryReporterManager.init()
+    }
+    return true
+  },
+
+  mem() {
+    if (!this.ready()) return ''
+    let memInUse = Zotero.BetterBibTeX.TestSupport.memoryReporterManager.resident / this.MB
+    if (!this.memInUse) this.memAtStart = this.memInUse = memInUse
+    if (memInUse == this.memInUse) return ''
+    const diff = {
+      start: `${memInUse > this.memAtStart ? '+' : ''}${memInUse - this.memAtStart}`,
+      recent: `${memInUse > this.memInUse ? '+' : ''}${memInUse - this.memInUse}`,
+    }
+    this.memInUse = memInUse
+    return ` (memory in use: ${memInUse}) (${diff.recent} / ${diff.start})`
+  },
 
   enter(name, url, args) {
-    const replacer = this.circularReplacer()
-    Zotero.debug(`bbt.trace.enter ${url}.${name}`)
+    if (name.startsWith('<anonymous')) return
+    this.log(`bbt.trace.enter ${url} : ${name}`)
+    // const replacer = this.circularReplacer()
     //this.report(`bbt trace.enter ${url}.${name}(${Array.from(args).map(arg => JSON.stringify(arg, replacer)).join(', ')})`)
-    //this.state(1)
   },
 
   exit(name, url, result) {
-    Zotero.debug(`bbt.trace.exit ${url}.${name}`)
-    // this.state(-1)
+    if (name.startsWith('<anonymous')) return
+    this.log(`bbt.trace.exit ${url} : ${name}${this.mem()}`)
     // this.report(`bbt trace.exit ${url}.${name} => ${JSON.stringify(result, this.circularReplacer())}`)
   },
 
-  state(inc) {
-    const zotero = typeof Zotero !== 'undefined'
-    const debug = zotero && Zotero.Debug
-    const bbt = zotero && typeof Zotero.BetterBibTeX !== 'undefined'
-    const ready = bbt && Zotero.BetterBibTeX.ready && !Zotero.BetterBibTeX.ready.isPending()
-    const host = bbt ? Zotero.BetterBibTeX : this
-
-    host.trace$depth = host.trace$depth || 0
-    if (inc) host.trace$depth += inc
-    
-    return {
-      depth: Math.max(host.trace$depth, 0),
-      zotero: {
-        loaded: zotero,
-        ready: debug,
-      },
-      bbt: {
-        loaded: bbt,
-        ready: ready,
-      },
-    }
-  },
-
-  report(msg) {
-    const state = this.state()
-
-    msg = '  '.repeat(state.depth || 0) + msg
-    if (!state.zotero.loaded) {
-      msg = `Before Zotero load: ${msg}`
-    }
-    else if (!state.zotero.ready) {
-      msg = `Zotero loaded, but not debug-ready: ${msg}`
-    }
-    else if (!state.bbt.loaded) {
-      msg = `Zotero ready, BBT not loaded: ${msg}`
-    }
-    else if (!state.bbt.ready) {
-      msg = `Zotero ready, BBT not ready: ${msg}`
-    }
-
+  log(msg) {
     const now = Date.now()
-    if (state.zotero.ready && (!this.last || (now - this.last) > 1000)) {
+    if (this.ready() && (!this.last || (now - this.last) > 1000)) {
       Zotero.debug((this.hold ? this.hold.replace(this.prefix, '') + this.prefix : '') + msg)
       this.last = now
       this.hold = ''

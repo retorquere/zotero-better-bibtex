@@ -563,6 +563,7 @@ class Zotero:
     if self.config.db: install_xpis(os.path.join(ROOT, 'test/db', self.config.db, 'xpis'), profile.firefox)
     if self.config.profile: install_xpis(os.path.join(ROOT, 'test/db', self.config.profile, 'xpis'), profile.firefox)
 
+    profile.firefox.set_preference('extensions.zotero.debug.memoryInfo', True)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.testing', self.testing)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.workersMax', self.workers)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.caching', self.workers)
