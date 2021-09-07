@@ -7,7 +7,6 @@ const shell = require('shelljs')
 const { filePathFilter } = require('file-path-filter')
 const esbuild = require('esbuild')
 const putout = require('putout')
-const { estracePlugin: estrace } = require('estrace/plugin')
 
 function load_patches(dir) {
   const patches = {}
@@ -169,6 +168,7 @@ module.exports.trace = function(section) {
         console.log(`!!!!!!!!!!!!!! Instrumenting ${localpath} for trace logging !!!!!!!!!!!!!`)
 
         try {
+          const { estracePlugin: estrace } = await require('estrace/plugin')
           const {code} = putout(await fs.promises.readFile(source, 'utf-8'), {
             fixCount: 1,
             rules: {
