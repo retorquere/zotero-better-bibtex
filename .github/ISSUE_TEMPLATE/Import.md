@@ -24,6 +24,8 @@ Picking the right issue category is really important. Each category (`Export`, `
 The support log is important; it gives me your current BBT settings and a log of what Zotero was doing at the time of import. Without it, I'm effectively blind.
 
 
+If you've verified all of the above, please remove the instructions up to and including this line.
+
 **Zotero version:**
 
 **BBT version:**

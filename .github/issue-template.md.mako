@@ -46,6 +46,8 @@ The support log is important; it gives me your current BBT settings and a log of
 
 % endif
 
+If you've verified all of the above, please remove the instructions up to and including this line.
+
 **Zotero version:**
 
 **BBT version:**
