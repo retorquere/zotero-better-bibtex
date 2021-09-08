@@ -34,7 +34,7 @@ const Mode = {
       Zotero.write(`[](#@${keys[0]})`)
     }
     else {
-      Zotero.write(`[](?@${keys.join(',')})`)
+      Zotero.write(`[](?@${keys.join(', ')})`)
     }
   },
 
@@ -47,14 +47,14 @@ const Mode = {
       Zotero.write(keys.join(','))
     }
     else {
-      Zotero.write(`\\${cmd}{${keys.join(',')}}`)
+      Zotero.write(`\\${cmd}{${keys.join(', ')}}`)
     }
   },
 
   citekeys(items) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     const keys = items.map(item => item.citationKey)
-    Zotero.write(keys.join(','))
+    Zotero.write(keys.join(', '))
   },
 
   pandoc(items) {
@@ -73,7 +73,7 @@ const Mode = {
   orgRef(items) {
     if (!items.length) return  ''
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    Zotero.write(`cite:${items.map(item => item.citationKey).join(',')}`)
+    Zotero.write(`cite:${items.map(item => item.citationKey).join(', ')}`)
   },
 
   orgmode(items) {
