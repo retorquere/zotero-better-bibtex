@@ -22,7 +22,15 @@ class State {
 }
 
 export function titleCase(text: string): string {
-  return CSL.Output.Formatters.title(new State, text)
+  let titlecased = CSL.Output.Formatters.title(new State, text)
+
+  // restore protected parts from original
+  text.replace(/<span class="nocase">.*?<\/span>|<nc>.*?<\/nc>/gi, (match: string, offset: number) => {
+    titlecased = titlecased.substr(0, offset) + match + titlecased.substr(offset + match.length)
+    return match
+  })
+
+  return titlecased
 }
 
 export function sentenceCase(text: string): string {
