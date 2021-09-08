@@ -16,6 +16,8 @@ labels: question
 Picking the right issue category is really important. Each category (`Export`, `General error`, `Import`, `Key generation`, `Question`) has different instructions for gathering the data necessary required to resolve the issue you are experiencing
 
 
+If you've verified all of the above, please remove the instructions up to and including this line.
+
 **Zotero version:**
 
 **BBT version:**
