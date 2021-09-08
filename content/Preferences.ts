@@ -21,7 +21,7 @@ class AutoExportPane {
   private globals: Record<string, any>
   private cacherate: Record<number, number> = {}
 
-  constructor(globals: Record<string, any>) {
+  public load(globals: Record<string, any>) {
     this.globals = globals
     this.label = {}
     for (const label of ['scheduled', 'running', 'done', 'error', 'preparing']) {
@@ -246,7 +246,7 @@ export interface PrefPaneConstructable {
   new(): PrefPane // eslint-disable-line @typescript-eslint/prefer-function-type
 }
 export class PrefPane {
-  public autoexport: AutoExportPane
+  public autoexport = new AutoExportPane
   private keyformat: any
   private timer: number
   private observer: MutationObserver
@@ -391,7 +391,7 @@ export class PrefPane {
       return
     }
 
-    this.autoexport = new AutoExportPane(globals)
+    this.autoexport.load(globals)
 
     const tabbox = globals.document.getElementById('better-bibtex-prefs-tabbox')
     $patch$(this.globals.Zotero_Preferences, 'openHelpLink', original => function() {
@@ -482,6 +482,7 @@ export class PrefPane {
       this.unload()
       return
     }
+    if (!this.globals) return
 
     this.checkCitekeyFormat()
     this.checkPostscript()

@@ -13,21 +13,15 @@ overlay#zotero-better-bibtex-preferences(xmlns="http://www.mozilla.org/keymaster
   script(src="chrome://zotero/content/include.js")
   script.
     var globals = Function('return this')();
-        var bbt_prefpane = {
-          refresh: function() {
-            Zotero.debug('bbt prefpane: awaiting load')
-          }
-        }
-        async function load() {
-          try {
-            bbt_prefpane = new Zotero.BetterBibTeX.PrefPane()
-            Zotero.debug('BBT: loading PrefPane')
-            await bbt_prefpane.load(globals)
-            Zotero.debug('BBT: PrefPane loaded')
-          } catch (err) {
-            Zotero.debug(`BBT: loading PrefPane error: ${err.message}\n${err.stack ||''}`)
-          }
-        }
+    async function load() {
+      try {
+        Zotero.debug('BBT: loading PrefPane')
+        await Zotero.BetterBibTeX.PrefPane.load(globals)
+        Zotero.debug('BBT: PrefPane loaded')
+      } catch (err) {
+        Zotero.debug(`BBT: loading PrefPane error: ${err.message}\n${err.stack ||''}`)
+      }
+    }
   popupset
     tooltip#tooltip-bibtexURL
       description &better-bibtex.Preferences.export.fields.doi-and-url.warning;
@@ -53,7 +47,7 @@ overlay#zotero-better-bibtex-preferences(xmlns="http://www.mozilla.org/keymaster
         label#better-bibtex-loading &better-bibtex.Preferences.prefpane.loading;
 
         tabbox#better-bibtex-prefs-tabbox
-          tabs#better-bibtex-prefs-tabs(onselect="bbt_prefpane.refresh()")
+          tabs#better-bibtex-prefs-tabs(onselect="Zotero.BetterBibTeX.PrefPane.refresh()")
             tab#better-bibtex-prefs-citekey(label="&better-bibtex.Preferences.tab.citekey;")
             tab#better-bibtex-prefs-export(label="&better-bibtex.Preferences.tab.export;")
             tab#better-bibtex-prefs-auto-export(label="&better-bibtex.Preferences.tab.auto-export;")

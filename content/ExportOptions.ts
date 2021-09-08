@@ -9,7 +9,7 @@ export class ExportOptions {
   private DOM_OBSERVER: MutationObserver = null
   private reset = true
 
-  constructor(globals: Record<string, any>) {
+  public load(globals: Record<string, any>) {
     this.globals = globals
 
     this.DOM_OBSERVER = new MutationObserver(this.addEventHandlers.bind(this))

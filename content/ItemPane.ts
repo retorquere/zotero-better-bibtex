@@ -31,22 +31,7 @@ export class ItemPane {
   globals: Record<string, any>
   observer: number
 
-  constructor(globals: Record<string, any>) {
-    this.globals = globals
-
-    const itempane = this // eslint-disable-line @typescript-eslint/no-this-alias
-    $patch$(this.globals.ZoteroItemPane, 'viewItem', original => async function(item, _mode, _index) {
-      // eslint-disable-next-line prefer-rest-params
-      await original.apply(this, arguments)
-      itempane.init()
-
-      itempane.display(item.id)
-    })
-
-    this.init()
-  }
-
-  display(itemID?: number): void {
+  private display(itemID?: number): void {
     const menuid = 'zotero-field-transform-menu-better-sentencecase'
     let menuitem = this.globals.document.getElementById(menuid)
     const menu = this.globals.document.getElementById('zotero-field-transform-menu')
@@ -92,10 +77,23 @@ export class ItemPane {
     return true
   }
 
-  public async load(): Promise<void> {
+  public async load(globals: Record<string, any>): Promise<void> {
     if (!Zotero.BetterBibTeX?.ready) return
     await Zotero.BetterBibTeX.ready
+
+    this.globals = globals
+
+    const itempane = this // eslint-disable-line @typescript-eslint/no-this-alias
+    $patch$(this.globals.ZoteroItemPane, 'viewItem', original => async function(item, _mode, _index) {
+      // eslint-disable-next-line prefer-rest-params
+      await original.apply(this, arguments)
+      itempane.init()
+
+      itempane.display(item.id)
+    })
+
     this.init()
+
     const itemBox = this.globals.document.getElementById('zotero-editpane-item-box')
     const citekeyBox = this.globals.document.getElementById('better-bibtex-editpane-item-box')
 

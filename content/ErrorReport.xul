@@ -22,7 +22,7 @@
   <script src="chrome://zotero/content/include.js"/>
   <script>
     var globals = Function('return this')();
-    var bbt_errorreport = new Zotero.BetterBibTeX.ErrorReport(globals);
+    Zotero.BetterBibTeX.ErrorReport.load(globals);
 
     const MB = 1024 * 1024
     var memuse
@@ -37,12 +37,12 @@
     }
   </script>
 
-  <wizardpage onpageshow="bbt_errorreport.show()" label=" ">
+  <wizardpage onpageshow="Zotero.BetterBibTeX.ErrorReport.show()" label=" ">
     <description style="white-space: pre-wrap;" class="header">&better-bibtex.ErrorReport.enableDebug;</description>
-    <button label="&better-bibtex.ErrorReport.restartWithLoggingEnabled;" oncommand="bbt_errorreport.restartWithDebugEnabled()"/>
+    <button label="&better-bibtex.ErrorReport.restartWithLoggingEnabled;" oncommand="Zotero.BetterBibTeX.ErrorReport.restartWithDebugEnabled()"/>
   </wizardpage>
 
-  <wizardpage onpageshow="bbt_errorreport.show()" label=" ">
+  <wizardpage onpageshow="Zotero.BetterBibTeX.ErrorReport.show()" label=" ">
     <description style="white-space: pre-wrap;" class="header">&better-bibtex.ErrorReport.review;</description>
     <textbox flex="1" id="better-bibtex-report-current" class="plain" readonly="true"/>
     <textbox flex="1" id="better-bibtex-report-latest" class="plain textbox-emph" readonly="true"/>
@@ -73,7 +73,7 @@
     </tabbox>
 
     <hbox>
-      <button label="&better-bibtex.ErrorReport.save;" oncommand="bbt_errorreport.save()"/>
+      <button label="&better-bibtex.ErrorReport.save;" oncommand="Zotero.BetterBibTeX.ErrorReport.save()"/>
       <hbox flex="1"/>
     </hbox>
     <description id="better-bibtex-error-memory-use" style="white-space: pre-wrap;"></description>
@@ -81,11 +81,11 @@
     <description id="zotero-advance-message"/ -->
   </wizardpage>
 
-  <wizardpage onpageshow="bbt_errorreport.send()" label=" ">
+  <wizardpage onpageshow="Zotero.BetterBibTeX.ErrorReport.send()" label=" ">
     <description>&better-bibtex.ErrorReport.submissionInProgress;</description>
   </wizardpage>
 
-  <wizardpage onpageshow="bbt_errorreport.show()" label=" ">
+  <wizardpage onpageshow="Zotero.BetterBibTeX.ErrorReport.show()" label=" ">
     <description>&better-bibtex.ErrorReport.submitted;</description>
     <description id="better-bibtex-report-result" hidden="true">
       <description>

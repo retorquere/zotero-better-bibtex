@@ -34,7 +34,7 @@ export class ErrorReport {
     references?: string
   }
 
-  constructor(globals: Record<string, any>) {
+  public load(globals: Record<string, any>) {
     this.globals = globals
     globals.window.addEventListener('load', () => this.init(), false)
   }

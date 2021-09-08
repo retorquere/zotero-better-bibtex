@@ -9,11 +9,15 @@ declare const __estrace: any // eslint-disable-line no-underscore-dangle
 import type { XUL } from '../typings/xul'
 import './startup' // disable monkey patching is unsupported environment
 
-import { ZoteroPane as ZoteroPaneHelper, ZoteroPaneConstructable as ZoteroPaneHelperConstructable } from './ZoteroPane'
-import { ExportOptions, ExportOptionsConstructable } from './ExportOptions'
-import { ItemPane, ItemPaneConstructable } from './ItemPane'
+// import { ZoteroPane as ZoteroPaneHelper, ZoteroPaneConstructable as ZoteroPaneHelperConstructable } from './ZoteroPane'
+import { ZoteroPane as ZoteroPaneHelper } from './ZoteroPane'
+// import { ExportOptions, ExportOptionsConstructable } from './ExportOptions'
+import { ExportOptions } from './ExportOptions'
+// import { ItemPane, ItemPaneConstructable } from './ItemPane'
+import { ItemPane } from './ItemPane'
+// import { PrefPane, PrefPaneConstructable } from './Preferences'
+import { PrefPane } from './Preferences'
 import { FirstRun } from './FirstRun'
-import { PrefPane, PrefPaneConstructable } from './Preferences'
 import { ErrorReport } from './ErrorReport'
 import { patch as $patch$ } from './monkey-patch'
 import { clean_pane_persist } from './clean_pane_persist'
@@ -795,12 +799,14 @@ class Progress {
 export class BetterBibTeX {
   public TestSupport = new TestSupport
   public KeyManager = new KeyManager
-  public ZoteroPane: ZoteroPaneHelperConstructable = ZoteroPaneHelper
-  public ExportOptions: ExportOptionsConstructable = ExportOptions
-  public ItemPane: ItemPaneConstructable = ItemPane
-  public FirstRun = FirstRun
-  public ErrorReport = ErrorReport
-  public PrefPane: PrefPaneConstructable = PrefPane
+
+  // panes
+  public ZoteroPane: ZoteroPaneHelper = new ZoteroPaneHelper
+  public ExportOptions: ExportOptions = new ExportOptions
+  public ItemPane: ItemPane = new ItemPane
+  public FirstRun = new FirstRun
+  public ErrorReport = new ErrorReport
+  public PrefPane = new PrefPane
 
   public localeDateOrder: string = Zotero.Date.getLocaleDateOrder()
   public ready: BluebirdPromise<boolean>
