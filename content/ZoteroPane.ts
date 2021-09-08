@@ -18,7 +18,7 @@ export interface ZoteroPaneConstructable {
 export class ZoteroPane {
   private globals: Record<string, any>
 
-  constructor(globals: Record<string, any>) {
+  public load(globals: Record<string, any>) {
     this.globals = globals
 
     const pane = Zotero.getActiveZoteroPane()

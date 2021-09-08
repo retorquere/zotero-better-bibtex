@@ -22,18 +22,17 @@
   <script src="chrome://zotero/content/include.js"/>
   <script>
     var globals = Function('return this')();
-    var bbt_firstrun = null
   </script>
 
-  <wizardpage onpageshow="bbt_firstrun = new Zotero.BetterBibTeX.FirstRun(globals)" label="&better-bibtex.FirstRun.title;">
+  <wizardpage onpageshow="Zotero.BetterBibTeX.FirstRun.load(globals)" label="&better-bibtex.FirstRun.title;">
     <description style="white-space: pre-wrap;">&better-bibtex.FirstRun.welcome;</description>
   </wizardpage>
 
-  <wizardpage label=" " onpageshow="bbt_firstrun.update()">
+  <wizardpage label=" " onpageshow="Zotero.BetterBibTeX.FirstRun.update()">
     <description style="white-space: pre-wrap;" class="header">&better-bibtex.FirstRun.citekeyFormat;</description>
     <description style="white-space: pre-wrap;">&better-bibtex.FirstRun.citekeyFormat.explanation;</description>
 
-    <radiogroup id="better-bibtex-first-run-citekeyFormat" oncommand="bbt_firstrun.update();">
+    <radiogroup id="better-bibtex-first-run-citekeyFormat" oncommand="Zotero.BetterBibTeX.FirstRun.update();">
       <radio label="&better-bibtex.FirstRun.citekeyFormat.bbt;" value="bbt"/>
       <radio label="&better-bibtex.FirstRun.citekeyFormat.zotero;" value="zotero"/>
     </radiogroup>
@@ -44,18 +43,18 @@
     <description id="better-bibtex-first-run-citekeyFormat-zotero" style="white-space: pre-wrap;">&better-bibtex.FirstRun.citekeyFormat.explanation.zotero;; &better-bibtex.FirstRun.citekeyFormat.explanation.example; <box class="textbox-emph">goffman_forms_1981</box>.</description>
   </wizardpage>
 
-  <wizardpage label=" " onpageshow="bbt_firstrun.update()">
+  <wizardpage label=" " onpageshow="Zotero.BetterBibTeX.FirstRun.update()">
     <description style="white-space: pre-wrap;" class="header">&better-bibtex.FirstRun.dragndrop;</description>
     <description>&better-bibtex.FirstRun.dragndrop.explanation;</description>
-    <checkbox label="&better-bibtex.FirstRun.dragndrop.enable;" id="better-bibtex-first-run-dragndrop" oncommand="bbt_firstrun.update()"/>
+    <checkbox label="&better-bibtex.FirstRun.dragndrop.enable;" id="better-bibtex-first-run-dragndrop" oncommand="Zotero.BetterBibTeX.FirstRun.update()"/>
   </wizardpage>
 
-  <wizardpage label=" " onpageshow="bbt_firstrun.update()">
+  <wizardpage label=" " onpageshow="Zotero.BetterBibTeX.FirstRun.update()">
     <description style="white-space: pre-wrap;" class="header">&better-bibtex.FirstRun.importUnabbreviate;</description>
     <description>&better-bibtex.FirstRun.importUnabbreviate.explanation;</description>
-    <checkbox label="&better-bibtex.FirstRun.importUnabbreviate.enable;" checked="true" id="better-bibtex-first-run-unabbreviate" oncommand="bbt_firstrun.update()"/>
+    <checkbox label="&better-bibtex.FirstRun.importUnabbreviate.enable;" checked="true" id="better-bibtex-first-run-unabbreviate" oncommand="Zotero.BetterBibTeX.FirstRun.update()"/>
     <description>&better-bibtex.FirstRun.importStrings.explanation;</description>
-    <checkbox label="&better-bibtex.FirstRun.importStrings.enable;" checked="true" id="better-bibtex-first-run-strings" oncommand="bbt_firstrun.update()"/>
+    <checkbox label="&better-bibtex.FirstRun.importStrings.enable;" checked="true" id="better-bibtex-first-run-strings" oncommand="Zotero.BetterBibTeX.FirstRun.update()"/>
   </wizardpage>
 
   <wizardpage label=" ">

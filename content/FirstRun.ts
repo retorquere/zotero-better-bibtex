@@ -3,7 +3,7 @@ export class FirstRun {
   private params: { citekeyFormat: string, dragndrop: boolean }
   private globals: Record<string, any>
 
-  constructor(globals: Record<string, any>) {
+  public load(globals: Record<string, any>) {
     this.globals = globals
     const wizard = globals.document.getElementById('better-bibtex-first-run')
     const cancel = wizard.getButton('cancel')

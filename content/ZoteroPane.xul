@@ -3,11 +3,6 @@
 <!DOCTYPE overlay SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd">
 
 <overlay id="zotero-better-bibtex-zoteroPane-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-  <script>
-    var globals = Function('return this')();
-    var bbt_zoteropane = null;
-  </script>
-
   <hbox id="zotero-items-toolbar">
     <hbox id="better-bibtex-progress" insertbefore="zotero-tb-search-spinner" hidden="true">
       <progressmeter id="better-bibtex-progress-meter" mode="determined" value="0"/>
@@ -19,7 +14,7 @@
     <menuitem label="&better-bibtex.BetterBibTeX.auxScanner;" oncommand="Zotero.BetterBibTeX.scanAUX('tag')"/>
   </menupopup>
   <menupopup id="menu_HelpPopup">
-    <menuitem insertafter="reportErrors" label="&better-bibtex.BetterBibTeX.reportErrors;" oncommand="bbt_zoteropane.errorReport()"/>
+    <menuitem insertafter="reportErrors" label="&better-bibtex.BetterBibTeX.reportErrors;" oncommand="Zotero.BetterBibTeX.ZoteroPane.errorReport()"/>
   </menupopup>
 
   <menupopup id="zotero-collectionmenu">
@@ -27,14 +22,14 @@
 
     <menu class="bbt-autoexport" label="&better-bibtex.Preferences.tab.auto-export;">
       <menupopup id="zotero-itemmenu-BetterBibTeX-autoexport-menu">
-        <menuitem label="" oncommand="event.stopPropagation(); bbt_zoteropane.startAutoExport(event);"/>
+        <menuitem label="" oncommand="event.stopPropagation(); Zotero.BetterBibTeX.ZoteroPane.startAutoExport(event);"/>
       </menupopup>
     </menu>
 
     <menuitem
       id="bbt-collectionmenu-pull-url"
       label="&better-bibtex.BetterBibTeX.show-collection-key;"
-      oncommand="event.stopPropagation(); bbt_zoteropane.pullExport()"
+      oncommand="event.stopPropagation(); Zotero.BetterBibTeX.ZoteroPane.pullExport()"
       class="menuitem-iconic" image="chrome://zotero-better-bibtex/skin/bibtex-menu.svg"
     />
     <menuitem
@@ -48,7 +43,7 @@
       label="&better-bibtex.ZoteroPane.tag-duplicates;"
       oncommand="event.stopPropagation(); Zotero.BetterBibTeX.KeyManager.tagDuplicates(parseInt(event.target.getAttribute('libraryID')))"
     />
-    <menuitem id="bbt-collectionmenu-report-errors" label="&better-bibtex.BetterBibTeX.reportErrors;" oncommand="event.stopPropagation(); bbt_zoteropane.errorReport('collection')"/>
+    <menuitem id="bbt-collectionmenu-report-errors" label="&better-bibtex.BetterBibTeX.reportErrors;" oncommand="event.stopPropagation(); Zotero.BetterBibTeX.ZoteroPane.errorReport('collection')"/>
   </menupopup>
 
   <menupopup id="zotero-itemmenu">
@@ -60,15 +55,15 @@
         <menuitem label="&better-bibtex.BetterBibTeX.citekey.unpin;" oncommand="Zotero.BetterBibTeX.KeyManager.unpin('selected');"/>
         <menuitem label="&better-bibtex.BetterBibTeX.citekey.refresh;" oncommand="Zotero.BetterBibTeX.KeyManager.refresh('selected', true);"/>
         <menuseparator/>
-        <menuitem label="&better-bibtex.BetterBibTeX.patchDates;" oncommand="bbt_zoteropane.patchDates();"/>
-        <menuitem label="&better-bibtex.BetterBibTeX.sentenceCase;" oncommand="bbt_zoteropane.sentenceCase();"/>
-        <menuitem label="&better-bibtex.BetterBibTeX.addCitationLinks;" oncommand="bbt_zoteropane.addCitationLinks();"/>
+        <menuitem label="&better-bibtex.BetterBibTeX.patchDates;" oncommand="Zotero.BetterBibTeX.ZoteroPane.patchDates();"/>
+        <menuitem label="&better-bibtex.BetterBibTeX.sentenceCase;" oncommand="Zotero.BetterBibTeX.ZoteroPane.sentenceCase();"/>
+        <menuitem label="&better-bibtex.BetterBibTeX.addCitationLinks;" oncommand="Zotero.BetterBibTeX.ZoteroPane.addCitationLinks();"/>
 
         <menuseparator class="bbt-texstudio"/>
-        <menuitem class="bbt-texstudio" label="&better-bibtex.BetterBibTeX.TeXstudio;" oncommand="bbt_zoteropane.toTeXstudio()"/>
+        <menuitem class="bbt-texstudio" label="&better-bibtex.BetterBibTeX.TeXstudio;" oncommand="Zotero.BetterBibTeX.ZoteroPane.toTeXstudio()"/>
 
         <menuseparator/>
-        <menuitem label="&better-bibtex.BetterBibTeX.reportErrors;" oncommand="bbt_zoteropane.errorReport('items')"/>
+        <menuitem label="&better-bibtex.BetterBibTeX.reportErrors;" oncommand="Zotero.BetterBibTeX.ZoteroPane.errorReport('items')"/>
       </menupopup>
     </menu>
   </menupopup>
@@ -95,11 +90,11 @@
     window.addEventListener('load', async function() {
       try {
         Zotero.debug('BBT startup')
+        var globals = Function('return this')();
         await Zotero.BetterBibTeX.load(globals)
-        Zotero.debug('BBT started')
-        Zotero.debug('loading ZoteroPane')
-        bbt_zoteropane = new Zotero.BetterBibTeX.ZoteroPane(globals)
-        Zotero.debug('ZoteroPane loaded')
+        Zotero.debug('BBT started, loading ZoteroPane')
+        Zotero.BetterBibTeX.ZoteroPane.load(globals)
+        Zotero.debug('ZoteroPane started')
       } catch (err) {
         Zotero.debug(`loading ZoteroPane error: ${err.message}\n${err.stack ||''}`)
       }

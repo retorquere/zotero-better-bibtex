@@ -12,8 +12,8 @@
     window.addEventListener('load', async function () {
       try {
         Zotero.debug('BBT: loading ExportOptions')
-        const bbt_exportOptions = new Zotero.BetterBibTeX.ExportOptions(globals)
-        window.addEventListener('unload', () => bbt_exportOptions.unload())
+        Zotero.BetterBibTeX.ExportOptions.load(globals)
+        window.addEventListener('unload', () => Zotero.BetterBibTeX.ExportOptions.unload())
         Zotero.debug('BBT: ExportOptions loaded')
       } catch (err) {
         Zotero.debug(`BBT: loading ExportOptions error: ${err.message}\n${err.stack ||''}`)

@@ -13,24 +13,7 @@ const __estrace = {
       || !Zotero.BetterBibTeX.TestSupport
     ) return false
 
-    if (!Zotero.BetterBibTeX.TestSupport.memoryReporterManager) {
-      Zotero.BetterBibTeX.TestSupport.memoryReporterManager = Components.classes['@mozilla.org/memory-reporter-manager;1'].getService(Components.interfaces.nsIMemoryReporterManager)
-      Zotero.BetterBibTeX.TestSupport.memoryReporterManager.init()
-    }
     return true
-  },
-
-  mem() {
-    if (!this.ready()) return ''
-    let memInUse = Zotero.BetterBibTeX.TestSupport.memoryReporterManager.resident / this.MB
-    if (!this.memInUse) this.memAtStart = this.memInUse = memInUse
-    if (memInUse == this.memInUse) return ''
-    const diff = {
-      start: `${memInUse > this.memAtStart ? '+' : ''}${memInUse - this.memAtStart}`,
-      recent: `${memInUse > this.memInUse ? '+' : ''}${memInUse - this.memInUse}`,
-    }
-    this.memInUse = memInUse
-    return ` (memory in use: ${memInUse}) (${diff.recent} / ${diff.start})`
   },
 
   enter(name, url, args) {
@@ -42,7 +25,7 @@ const __estrace = {
 
   exit(name, url, result) {
     if (name.startsWith('<anonymous')) return
-    this.log(`bbt.trace.exit ${url} : ${name}${this.mem()}`)
+    this.log(`bbt.trace.exit ${url} : ${name}`)
     // this.report(`bbt trace.exit ${url}.${name} => ${JSON.stringify(result, this.circularReplacer())}`)
   },
 

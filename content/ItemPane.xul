@@ -31,12 +31,10 @@
   <script src="chrome://zotero/content/include.js"/>
   <script>
     var globals = Function('return this')();
-    var bbt_itemPane
     window.addEventListener('load', async function() {
       try {
         Zotero.debug('BBT: loading ItemPane')
-        bbt_itemPane = new Zotero.BetterBibTeX.ItemPane(globals)
-        await bbt_itemPane.load(globals)
+        await Zotero.BetterBibTeX.ItemPane.load(globals)
         window.addEventListener('unload', () => bbt_itemPane.unload())
         Zotero.debug('BBT: ItemPane loaded')
       } catch (err) {

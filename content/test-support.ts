@@ -14,29 +14,23 @@ import * as Extra from './extra'
 import { $and } from './db/loki'
 import  { defaults } from '../gen/preferences/meta'
 import { Preference } from '../gen/preferences'
-// import * as memory from './memory'
+import * as memory from './memory'
 
 const setatstart: string[] = ['workersMax', 'testing', 'caching'].filter(p => Preference[p] !== defaults[p])
 
 export class TestSupport {
-  // private residentMem: number
+  public memory = memory
 
-  /*
   constructor() {
     // log memory use every second to try to pinpoint the memory leak
-    this.residentMem = memory.resident()
-    log.debug('memory use:', this.residentMem)
     setInterval(() => { this.logMemoryUse() }, 500) // eslint-disable-line no-magic-numbers
   }
 
-  public logMemoryUse(msg = ''): void {
+  public logMemoryUse(): void {
     // (window as any).QueryInterface(Components.interfaces.nsIInterfaceRequestor).getInterface(Components.interfaces.nsIDOMWindowUtils).garbageCollect()
-    const memcur = memory.resident()
-    const memdiff = memcur - this.residentMem
-    log.debug(`${msg}memory use: ${memcur} (${memdiff < 0 ? '' : '+'}${memdiff})`)
-    this.residentMem = memcur
+    const state = memory.state()
+    log.debug(`memory use: ${state.resident} (${state.delta < 0 ? '' : '+'}${state.delta} / ${state.deltaSinceStart < 0 ? '' : '+'}${state.deltaSinceStart})`)
   }
-  */
 
   public removeAutoExports(): void {
     AutoExport.db.findAndRemove({ type: { $ne: '' } })
