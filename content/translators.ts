@@ -295,6 +295,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           log.status({error: true, translator: translator.label, worker: id}, 'QBW failed:', Date.now() - start, e.data)
           job.translate._runHandler('error', e.data) // eslint-disable-line no-underscore-dangle
           deferred.reject(e.data.message)
+          worker.postMessage({ kind: 'stop' })
           worker.terminate()
           this.workers.running.delete(id)
           break
@@ -311,6 +312,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         case 'done':
           Events.emit('export-progress', 100, translator.label, autoExport) // eslint-disable-line no-magic-numbers
           deferred.resolve(typeof e.data.output === 'boolean' ? '' : e.data.output)
+          worker.postMessage({ kind: 'stop' })
           worker.terminate()
           this.workers.running.delete(id)
           break
@@ -323,6 +325,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
             const msg = `worker.cacheStore: cache ${translator.label} not found`
             log.error(msg)
             deferred.reject(msg)
+            worker.postMessage({ kind: 'stop' })
             worker.terminate()
             this.workers.running.delete(id)
           }
@@ -359,6 +362,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       log.status({error: true, translator: translator.label, worker: id}, 'QBW: failed:', Date.now() - start, 'message:', e)
       job.translate._runHandler('error', e) // eslint-disable-line no-underscore-dangle
       deferred.reject(e.message)
+      worker.postMessage({ kind: 'stop' })
       worker.terminate()
       this.workers.running.delete(id)
     }

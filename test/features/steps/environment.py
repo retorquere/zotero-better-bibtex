@@ -31,6 +31,7 @@ def before_feature(context, feature):
       patch_scenario_with_autoretry(scenario, max_attempts=retries + 1)
 
 def before_all(context):
+  context.memory = Munch(total=None, increase=None)
   context.zotero = Zotero(context.config.userdata)
   setup_active_tag_values(active_tag_value_provider, context.config.userdata)
   # test whether the existing references, if any, have gotten a cite key
@@ -41,6 +42,10 @@ try:
     balance = json.load(f)
 except FileNotFoundError:
   balance = None
+
+def before_feature(context, feature):
+  if lme:= context.config.userdata.get('log_memory_every'):
+    context.zotero.execute('Zotero.BetterBibTeX.TestSupport.startTimedMemoryLog(msecs)', msecs=int(lme))
 
 def before_scenario(context, scenario):
   if active_tag_matcher.should_exclude_with(scenario.effective_tags):
@@ -72,3 +77,11 @@ def before_scenario(context, scenario):
     elif tag.startswith('timeout='):
       context.timeout = max(context.timeout, int(tag.split('=')[1]))
   context.zotero.config.timeout = context.timeout
+
+def after_scenario(context, scenario):
+  if context.memory.increase or context.memory.total:
+    memory = Munch.fromDict(context.zotero.execute('return Zotero.BetterBibTeX.TestSupport.memoryState("behave cap")'))
+    if context.memory.increase and memory.delta > context.memory.increase:
+      raise AssertionError(f'Memory increase cap of {context.memory.increase}MB exceeded by {memory.delta - context.memory.increase}MB')
+    if context.memory.total and memory.resident > context.memory.total:
+      raise AssertionError(f'Total memory cap of {context.memory.total}MB exceeded by {memory.resident - context.memory.total}MB')

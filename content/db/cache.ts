@@ -4,7 +4,6 @@ import { File } from './store/file'
 import { Preference } from '../../gen/preferences'
 import { affects, schema } from '../../gen/preferences/meta'
 import { log } from '../logger'
-import * as memory from '../memory'
 
 const version = require('../../gen/version.js')
 
@@ -139,9 +138,8 @@ class Cache extends Loki {
     }])
   }
 
-  public state(): { size: number, entries: number } {
+  public state(): { entries: number } {
     return {
-      size: Math.ceil(memory.approximateSize(this)),
       entries: this.collections.reduce((acc, coll) => acc + coll.data.length, 0),
     }
   }
