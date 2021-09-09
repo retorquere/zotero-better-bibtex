@@ -232,6 +232,7 @@ class WorkerZotero {
       OS.File.writeAtomic(this.exportFile, array) as void
     }
     this.send({ kind: 'done', output: this.exportFile ? true : this.output })
+    close()
   }
 
   public send(message: Translators.Worker.Message) {
@@ -255,6 +256,7 @@ class WorkerZotero {
   public logError(err) {
     dump(`worker: error=${err}\n`)
     this.send({ kind: 'error', message: `${err}\n${err.stack}` })
+    close()
   }
 
   public write(str) {
@@ -290,38 +292,32 @@ class WorkerZotero {
 
 export const Zotero = new WorkerZotero // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
 
-let started = false
+const dec = new TextDecoder('utf-8')
 ctx.onmessage = function(e: { isTrusted?: boolean, data?: Translators.Worker.Message } ): void { // eslint-disable-line prefer-arrow/prefer-arrow-functions
-  log.debug('worker: received', { isTrusted: e.isTrusted, kind: e.data?.kind, started})
+  log.debug('worker: received', { isTrusted: e.isTrusted, kind: e.data?.kind })
+  if (!e.data) return // some kind of startup message
 
-  let stop = true
   try {
-    if (!e.data) {
-      stop = false // some kind of startup message
-    }
-    else if (e.data.kind === 'ping') {
-      log.debug('worker: ping')
-      ctx.postMessage({ kind: 'ready' })
-      stop = false
-    }
-    else if (!started && e.data.kind === 'start') {
-      started = true
-      log.debug('worker: starting')
-      Zotero.BetterBibTeX.localeDateOrder = workerContext.localeDateOrder
-      const dec = new TextDecoder('utf-8')
-      Zotero.init(JSON.parse(dec.decode(new Uint8Array(e.data.config))))
-      doExport()
-      Zotero.done()
-    }
-    else {
-      log.debug('unexpected message, stopping worker:', started, e)
+    switch (e.data.kind) {
+      case 'start':
+        log.debug('worker: starting')
+        Zotero.BetterBibTeX.localeDateOrder = workerContext.localeDateOrder
+        Zotero.init(JSON.parse(dec.decode(new Uint8Array(e.data.config))))
+        doExport()
+        Zotero.done()
+        break
+
+      case 'stop':
+        close()
+        break
+
+      default:
+        log.debug('unexpected message, stopping worker:', e)
+        close()
+        break
     }
   }
   catch (err) {
-    log.error('worker:', err)
-    // JSON.stringify(err, ["message", "arguments", "type", "name"])
+    Zotero.logError(err)
   }
-
-  log.debug('worker: handled', { isTrusted: e.isTrusted, kind: e.data?.kind, stop, started})
-  if (stop) close()
 }

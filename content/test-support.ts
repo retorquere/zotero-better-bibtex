@@ -19,17 +19,18 @@ import * as memory from './memory'
 const setatstart: string[] = ['workersMax', 'testing', 'caching'].filter(p => Preference[p] !== defaults[p])
 
 export class TestSupport {
-  public memory = memory
+  public timedMemoryLog: any
 
-  constructor() {
-    // log memory use every second to try to pinpoint the memory leak
-    setInterval(() => { this.logMemoryUse() }, 500) // eslint-disable-line no-magic-numbers
+  public startTimedMemoryLog(msecs: number): void {
+    if (typeof this.timedMemoryLog === 'undefined') {
+      this.timedMemoryLog = setInterval(() => { log.debug('memory use:', memory.state('periodic snapshot')) }, msecs)
+    }
   }
 
-  public logMemoryUse(): void {
-    // (window as any).QueryInterface(Components.interfaces.nsIInterfaceRequestor).getInterface(Components.interfaces.nsIDOMWindowUtils).garbageCollect()
-    const state = memory.state()
-    log.debug(`memory use: ${state.resident} (${state.delta < 0 ? '' : '+'}${state.delta} / ${state.deltaSinceStart < 0 ? '' : '+'}${state.deltaSinceStart})`)
+  public memoryState(snapshot) {
+    const state = memory.state(snapshot)
+    log.debug(snapshot, 'memory use:', state)
+    return state
   }
 
   public removeAutoExports(): void {
