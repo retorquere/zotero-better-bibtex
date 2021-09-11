@@ -20,6 +20,7 @@ const setatstart: string[] = ['workersMax', 'testing', 'caching'].filter(p => Pr
 
 export class TestSupport {
   public timedMemoryLog: any
+  public memory = memory
 
   public startTimedMemoryLog(msecs: number): void {
     if (typeof this.timedMemoryLog === 'undefined') {

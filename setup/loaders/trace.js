@@ -19,14 +19,24 @@ const __estrace = {
   enter(name, url, args) {
     if (name.startsWith('<anonymous')) return
     this.log(`bbt.trace.enter ${url} : ${name}`)
-    // const replacer = this.circularReplacer()
-    //this.report(`bbt trace.enter ${url}.${name}(${Array.from(args).map(arg => JSON.stringify(arg, replacer)).join(', ')})`)
+
+    if (this.ready()) return Zotero.BetterBibTeX.TestSupport.memory.state()
   },
 
-  exit(name, url, result) {
+  exit(name, url, pre) {
     if (name.startsWith('<anonymous')) return
-    this.log(`bbt.trace.exit ${url} : ${name}`)
-    // this.report(`bbt trace.exit ${url}.${name} => ${JSON.stringify(result, this.circularReplacer())}`)
+    let diff = ''
+    if (pre && this.ready()) {
+      let post = Zotero.BetterBibTeX.TestSupport.memory.state()
+      diff = (post.resident - pre.resident)
+      if (diff > 1) {
+        window.QueryInterface(Components.interfaces.nsIInterfaceRequestor).getInterface(Components.interfaces.nsIDOMWindowUtils).garbageCollect()
+        post = Zotero.BetterBibTeX.TestSupport.memory.state()
+        diff = (post.resident - pre.resident)
+      }
+      diff = ` (${diff >= 0 ? '+' : ''}${diff}: +${post.deltaSinceStart})`
+    }
+    this.log(`bbt.trace.exit ${url} : ${name}${diff}`)
   },
 
   log(msg) {
