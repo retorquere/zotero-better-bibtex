@@ -1,0 +1,94 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "dmy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "autoAbbrev": true,
+      "autoExport": "idle",
+      "autoExportDelay": 42,
+      "autoExportIdleWait": 3,
+      "automaticTags": false,
+      "baseAttachmentPath": "F:\\Paper\\Archiv",
+      "citekeyFormat": "[auth1_1][auth1_2][auth1_3][auth1_4][>1][shortyear] | [auth3_1][shortyear]",
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "extraMergeTeX": true,
+      "keyConflictPolicy": "change",
+      "keyScope": "global",
+      "qualityReport": true,
+      "quickCopyMode": "citekeys",
+      "skipFields": "abstract",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1109/TCE.1960.6368474",
+      "ISSN": "2379-674X",
+      "abstractNote": "Thermoelectric generators are presently being developed for many uses which range from small flame-operated power supplies for automatic control systems to several kilowatt-size thermopiles for prototype evaluation of marine propulsion systems.1 This renewal of interest in thermoelectric power generation and thermoelectric heat pumping is based on recent advances in the development of special semiconducting materials which exhibit properties intermediate to metals and semiconductors of the type used in P-N junction transistor devices. Often called \u201csemimetals,\u201d these thermoelectric materials are prepared from semiconducting crystals which are more heavily doped than transistor devices to provide higher electrical conductivity. Such materials exhibit much lower thermal conductivity than do metals and substantially higher thermal emf (electromotive force).",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "path": "F:\\Paper\\Archiv\\Fri60.pdf",
+          "title": "Fri60.pdf",
+          "uri": "http://zotero.org/users/local/jYMquTrd/items/W6KKS9RA"
+        }
+      ],
+      "citationKey": "Fri60",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "R. W.",
+          "lastName": "Fritts"
+        }
+      ],
+      "date": "1960-01",
+      "extra": [
+        "Conference Name: Transactions of the American Institute of Electrical Engineers, Part I: Communication and Electronics"
+      ],
+      "issue": "6",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "libraryCatalog": "IEEE Xplore",
+      "pages": "817-820",
+      "publicationTitle": "Transactions of the American Institute of Electrical Engineers, Part I: Communication and Electronics",
+      "tags": [
+        {
+          "tag": "Conductivity",
+          "type": 1
+        },
+        {
+          "tag": "Doping",
+          "type": 1
+        },
+        {
+          "tag": "Generators",
+          "type": 1
+        },
+        {
+          "tag": "Materials",
+          "type": 1
+        },
+        {
+          "tag": "Metals",
+          "type": 1
+        },
+        {
+          "tag": "Temperature",
+          "type": 1
+        },
+        {
+          "tag": "Thermal conductivity",
+          "type": 1
+        }
+      ],
+      "title": "Design parameters for optimizing the efficiency of thermoelectric generators utilizing p-type and n-type lead telluride",
+      "volume": "78"
+    }
+  ]
+}
