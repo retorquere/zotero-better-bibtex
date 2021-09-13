@@ -81,17 +81,21 @@ const ligatures = {
 /* eslint-enable */
 
 
-const titleCaseKeep = new RegExp(`(?:(?:(?:[:?]? +)|^)[${re.L}][${re.P}]?(?:[${re.Whitespace}]|$))|(?:(?:<span class="nocase">.*?</span>)|(?:<nc>.*?</nc>))`, 'gi')
-const singleLetter = /^([:?])? +(.)/
+const titleCaseKeep = new RegExp(`(?:(?:[:?]?[${re.Whitespace}]+)[${re.L}][${re.P}]?(?:[${re.Whitespace}]|$))|(?:(?:<span class="nocase">.*?</span>)|(?:<nc>.*?</nc>))`, 'gi')
+const singleLetter = new RegExp(`^([:?])?[${re.Whitespace}]+(.)`)
 
 export function titleCase(text: string): string {
   // let titlecased = CSL.Output.Formatters.title(new State, text)
   let titlecased: string = titleCased(text)
 
-  let m
   // restore single-letter "words". Shame firefox doesn't do lookbehind, but this will work
   text.replace(titleCaseKeep, (match: string, offset: number) => {
-    if (match[0] !== '<' && (m = match.match(singleLetter)) && (m[1] || m[2] !== 'a')) match = match.toUpperCase()
+    if (match[0] !== '<') {
+      const [ , punc, l ] = match.match(singleLetter)
+      if (punc && (l === 'a' || l === 'A')) {
+        match = match.toUpperCase()
+      }
+    }
     titlecased = titlecased.substr(0, offset) + match + titlecased.substr(offset + match.length)
     return match
   })
