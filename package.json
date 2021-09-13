@@ -56,7 +56,11 @@
     "test": "test"
   },
   "dependencies": {
+    "@artsy/to-title-case": "^1.0.3",
+    "@caeser1996/titlecase": "^3.0.2",
     "@inkdropapp/html2markdown": "^2.6.5",
+    "@lifeparticle/ap-style-title-case": "^1.5.0",
+    "case": "^1.6.3",
     "citeproc": "^2.4.59",
     "edtf": "^4.1.0",
     "edtfy": "^0.0.8",
@@ -69,6 +73,9 @@
     "punycode2": "^1.0.0",
     "safe-stable-stringify": "^1.1.1",
     "sprintf-js": "^1.1.2",
+    "text-title-case": "^1.0.2",
+    "title": "^3.4.3",
+    "title-case": "^3.0.3",
     "transliteration": "^2.2.0",
     "xregexp": "^5.1.0"
   },

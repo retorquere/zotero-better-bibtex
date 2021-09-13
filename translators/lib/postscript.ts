@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+
 export type Allow = {
   cache: boolean
   write: boolean

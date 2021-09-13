@@ -8,7 +8,7 @@ import { SQLite } from './store/sqlite'
 
 import * as Translators from '../../gen/translators.json'
 
-export function scrubAutoExport(ae: any) {
+export function scrubAutoExport(ae: any): void { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
   const translator = schema.translator[Translators.byId[ae.translatorID].label]
 
   for (const k of (schema.autoExport.preferences as string[]).concat(schema.autoExport.displayOptions)) {

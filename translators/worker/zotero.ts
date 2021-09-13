@@ -11,11 +11,10 @@ declare const dump: (message: string) => void
 
 // @ts-ignore
 import XRegExp = require('xregexp')
-import { HTMLParser } from '../../content/markupparser'
 import * as DateParser from '../../content/dateparser'
 // import * as Extra from '../../content/extra'
 import { qualityReport } from '../../content/qr-check'
-import { titleCase } from '../../content/case'
+import { titleCase, HTMLParser } from '../../content/text'
 import itemCreators from '../../gen/items/creators.json'
 import { client } from '../../content/client'
 import { log } from '../../content/logger'
