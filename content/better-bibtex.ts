@@ -30,7 +30,7 @@ require('./pull-export') // just require, initializes the pull-export end points
 require('./json-rpc') // just require, initializes the json-rpc end point
 import { AUXScanner } from './aux-scanner'
 import * as Extra from './extra'
-import { sentenceCase } from './case'
+import { sentenceCase, titleCase, HTMLParser } from './text'
 
 Components.utils.import('resource://gre/modules/AddonManager.jsm')
 declare const AddonManager: any
@@ -345,8 +345,6 @@ $patch$(Zotero.Integration, 'getApplication', original => function Zotero_Integr
 import * as DateParser from './dateparser'
 // import CiteProc = require('./citeproc.ts')
 import { qualityReport } from './qr-check'
-import { titleCase } from './case'
-import { HTMLParser } from './markupparser'
 import type { ParsedDate } from './dateparser'
 
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {

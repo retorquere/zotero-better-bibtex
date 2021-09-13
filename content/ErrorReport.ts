@@ -34,7 +34,7 @@ export class ErrorReport {
     references?: string
   }
 
-  public load(globals: Record<string, any>) {
+  public load(globals: Record<string, any>): void {
     this.globals = globals
     globals.window.addEventListener('load', () => this.init(), false)
   }
@@ -135,7 +135,7 @@ export class ErrorReport {
     return this.zipped
   }
 
-  public async save() {
+  public async save(): Promise<void> {
     const filename = await pick('Logs', 'save', [['ZIP Archive (*.zip)', '*.zip']], `${this.key}.zip`)
     if (filename) await OS.File.writeAtomic(filename, await this.zip())
   }

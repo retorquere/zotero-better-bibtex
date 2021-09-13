@@ -27,7 +27,7 @@ export class TestSupport {
     }
   }
 
-  public memoryState(snapshot) {
+  public memoryState(snapshot: string): memory.State {
     const state = memory.state(snapshot)
     log.debug(snapshot, 'memory use:', state)
     return state

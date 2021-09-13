@@ -2,7 +2,8 @@ import type { MarkupNode } from '../typings/markup'
 
 import parse5 = require('parse5/lib/parser')
 const htmlParser = new parse5({ sourceCodeLocationInfo: true })
-import { titleCase } from './case'
+
+import { titleCased } from '../title-case'
 
 import charCategories = require('xregexp/tools/output/categories')
 
@@ -26,6 +27,7 @@ const re = {
   // calculated below
   lcChar: null,
   char: null,
+  L: null,
   protectedWord: null,
 
   leadingUnprotectedWord: null,
@@ -33,12 +35,14 @@ const re = {
   unprotectedWord: null,
   url: null,
   whitespace: null,
+  sentenceEnd: /^[:?]/,
 }
 
 // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
 re.lcChar = re.Ll + re.Lt + re.Lm + re.Lo + re.Mn + re.Mc + re.Nd + re.Nl
 // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
 re.char = re.Lu + re.lcChar
+re.L = `${re.Lu}${re.Ll}${re.Lt}${re.Lm}${re.Lo}`
 re.protectedWord = `[${re.lcChar}]*[${re.Lu}][${re.char}]*`
 
 /* actual regexps */
@@ -76,7 +80,55 @@ const ligatures = {
 }
 /* eslint-enable */
 
-// export singleton: https://k94n.com/es6-modules-single-instance-pattern
+
+const titleCaseKeep = new RegExp(`(?:(?:(?:[:?]? +)|^)[${re.L}][${re.P}]?(?:[${re.Whitespace}]|$))|(?:(?:<span class="nocase">.*?</span>)|(?:<nc>.*?</nc>))`, 'gi')
+const singleLetter = /^([:?])? +(.)/
+
+export function titleCase(text: string): string {
+  // let titlecased = CSL.Output.Formatters.title(new State, text)
+  let titlecased: string = titleCased(text)
+
+  let m
+  // restore single-letter "words". Shame firefox doesn't do lookbehind, but this will work
+  text.replace(titleCaseKeep, (match: string, offset: number) => {
+    if (match[0] !== '<' && (m = match.match(singleLetter)) && (m[1] || m[2] !== 'a')) match = match.toUpperCase()
+    titlecased = titlecased.substr(0, offset) + match + titlecased.substr(offset + match.length)
+    return match
+  })
+
+  Zotero.debug(`titleCase: ${JSON.stringify(text)} => ${JSON.stringify(titlecased)}`)
+  return titlecased
+}
+
+export function sentenceCase(text: string): string {
+  let haslowercase = false
+  const restore: [number, number, string][] = []
+  let sentencecased = text.replace(/((?:^|[?!]|[-.:;[\]<>'*\\(),{}_“”‘’])?\s*)([^-\s;?:.![\]<>'*\\(),{}_“”‘’]+)/g, (match: string, leader:string, word:string, offset: number) => {
+    if (word.match(/^[A-Z]$/)) {
+      const leaderlen = leader?.length
+      restore.push([offset + leaderlen, offset + leaderlen + word.length, word])
+    }
+    else if (word.match(/^[a-z]/)) {
+      haslowercase = true
+    }
+    if (leader && !leader.match(/^[?!]/) && word.match(/^[A-Z][^A-Z]*$/)) word = word.toLowerCase()
+    return (leader || '') + word
+  })
+
+  if (haslowercase) {
+    for (const [start, end, word] of restore) {
+      sentencecased = sentencecased.substr(0, start) + word + sentencecased.substr(end)
+    }
+  }
+
+  // restore protected parts from original
+  text.replace(/<span class="nocase">.*?<\/span>|<nc>.*?<\/nc>/gi, (match: string, offset: number) => {
+    sentencecased = sentencecased.substr(0, offset) + match + sentencecased.substr(offset + match.length)
+    return match
+  })
+
+  return sentencecased
+}
 
 type HTMLParserOptions = {
   html?: boolean
@@ -87,8 +139,7 @@ type HTMLParserOptions = {
 }
 
 export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
-  private caseConversion: boolean
-  private braceProtection: boolean
+  private options: HTMLParserOptions
   private sentenceStart: boolean
   private spuriousNode = new Set(['#document-fragment', '#document', 'div', 'span'])
   private titleCased: string
@@ -100,12 +151,11 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
 
     let doc: MarkupNode
 
-    this.caseConversion = options.caseConversion
-    this.braceProtection = options.caseConversion && options.exportBraceProtection
+    this.options = { ...options, exportBraceProtection: options.caseConversion && options.exportBraceProtection }
     this.sentenceStart = true
 
     // add enquote tags.
-    const csquotes = options.csquotes
+    const csquotes = this.options.csquotes
     if (csquotes) {
       const space = '\\s*'
       for (const close of [0, 1]) {
@@ -114,7 +164,7 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
       }
     }
 
-    if (!options.html) {
+    if (!this.options.html) {
       this.html = this.html.replace(/&/g, '&amp;')
 
       // this pseudo-html is a PITA to parse
@@ -131,8 +181,8 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
 
     doc = this.walk(htmlParser.parseFragment(this.html))
 
-    if (options.caseConversion) {
-      if (options.exportTitleCase) {
+    if (this.options.caseConversion) {
+      if (this.options.exportTitleCase) {
         this.titleCased = ''
         this.collectText(doc)
         this.titleCased = titleCase(this.titleCased)
@@ -333,7 +383,7 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
           continue
         }
 
-        if (!this.caseConversion || isNocased) {
+        if (!this.options.caseConversion || isNocased) {
           this.plaintext(normalized_node.childNodes, child.value, child.sourceCodeLocation.startOffset)
           continue
         }
@@ -348,6 +398,14 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
             continue
           }
 
+          if (m = re.sentenceEnd.exec(text)) {
+            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+            this.plaintext(normalized_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
+            text = text.substring(m[0].length)
+            this.sentenceStart = true
+            continue
+          }
+
           if (this.sentenceStart && (m = re.leadingUnprotectedWord.exec(`${text} `))) {
             this.sentenceStart = false
             // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
@@ -358,7 +416,7 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
 
           this.sentenceStart = false
 
-          if (!isNocased && this.braceProtection && (m = re.protectedWords.exec(text))) {
+          if (!isNocased && this.options.exportBraceProtection && (m = re.protectedWords.exec(text))) {
             // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
             this.nocase(normalized_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[0].length)
