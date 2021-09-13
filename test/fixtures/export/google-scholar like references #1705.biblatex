@@ -1,6 +1,6 @@
 
 @inproceedings{el2020lossy,
-  title = {Lossy {{CSI}}-{{FiSh}}: {{Efficient Signature Scheme}} with {{Tight Reduction}} to {{Decisional CSIDH}}-512},
+  title = {Lossy {{CSI}}-{{FiSh}}: Efficient {{Signature Scheme}} with {{Tight Reduction}} to {{Decisional CSIDH}}-512},
   shorttitle = {Lossy {{CSI}}-{{FiSh}}},
   booktitle = {Public-{{Key Cryptography}} – {{PKC}} 2020},
   author = {El Kaafarani, Ali and Katsumata, Shuichi and Pintore, Federico},
