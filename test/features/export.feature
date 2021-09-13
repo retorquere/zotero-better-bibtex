@@ -12,6 +12,7 @@ Scenario Outline: Export <references> references for BibLaTeX to <file>
 
   Examples:
      | file                                                                                           | references  |
+     | Export article title capitalisation; P-Type vs n-type #1913                                    | 1           |
      | Better Biblatex export generates invalid latex when processing zero-width spaces #1892         | 1           |
      | Cite archive documents with BetterBibLaTeX #1799                                               | 1           |
      | biber 2.14 rejects the date field generated from Better BibLaTex #1695                         | 1           |
