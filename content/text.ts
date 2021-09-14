@@ -1,9 +1,8 @@
 import type { MarkupNode } from '../typings/markup'
+import { titleCased } from './csl-titlecase'
 
 import parse5 = require('parse5/lib/parser')
 const htmlParser = new parse5({ sourceCodeLocationInfo: true })
-
-import { titleCased } from '../title-case'
 
 import charCategories = require('xregexp/tools/output/categories')
 
@@ -81,11 +80,10 @@ const ligatures = {
 /* eslint-enable */
 
 
-const titleCaseKeep = new RegExp(`(?:(?:[:?]?[${re.Whitespace}]+)[${re.L}][${re.P}]?(?:[${re.Whitespace}]|$))|(?:(?:<span class="nocase">.*?</span>)|(?:<nc>.*?</nc>))`, 'gi')
-const singleLetter = new RegExp(`^([:?])?[${re.Whitespace}]+(.)`)
+const titleCaseKeep = new RegExp(`(?:(?:[>:?]?[${re.Whitespace}]+)[${re.L}][${re.P}]?(?:[${re.Whitespace}]|$))|(?:(?:<span class="nocase">.*?</span>)|(?:<nc>.*?</nc>))`, 'gi')
+const singleLetter = new RegExp(`^([>:?])?[${re.Whitespace}]+(.)`)
 
 export function titleCase(text: string): string {
-  // let titlecased = CSL.Output.Formatters.title(new State, text)
   let titlecased: string = titleCased(text)
 
   // restore single-letter "words". Shame firefox doesn't do lookbehind, but this will work
