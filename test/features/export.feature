@@ -519,7 +519,7 @@ Scenario: Field Institution not available anymore in key pattern for Zotero #156
   Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
 # tests the cache
-@use.with_client=zotero @use.with_slow=true @timeout=3000
+@use.with_client=zotero @use.with_slow=true @timeout=3000 @whopper
 Scenario: Really Big whopping library
   When I restart Zotero with "1287" + "export/*.json"
   And I reset the cache
@@ -529,7 +529,7 @@ Scenario: Really Big whopping library
   Then an export using "Better BibTeX" should match "export/*.bibtex", but take no more than 400 seconds
 
 # tests without cache prefill
-@use.with_client=zotero @use.with_slow=true @timeout=3000
+@use.with_client=zotero @use.with_slow=true @timeout=3000 @whopper
 Scenario: Really Big whopping library
   When I restart Zotero with "1287" + "export/*.json"
   And I reset the cache
@@ -537,7 +537,7 @@ Scenario: Really Big whopping library
   Then an export using "Better BibTeX" should match "export/*.bibtex"
 
 # tests the cache for CSL
-@use.with_client=zotero @use.with_slow=true @timeout=3000
+@use.with_client=zotero @use.with_slow=true @timeout=3000 @whopper
 Scenario: Really Big whopping library
   When I restart Zotero with "1287" + "export/*.json"
   And I reset the cache

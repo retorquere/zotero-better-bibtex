@@ -23,7 +23,6 @@ def before_feature(context, feature):
     feature.skip(reason="DISABLED ACTIVE-TAG")
 
   for scenario in feature.walk_scenarios():
-    utils.print(f'\n\nscenario {json.dumps(scenario.name)}: tags={json.dumps(scenario.effective_tags)}\n\n')
     retries = 0
     for tag in scenario.effective_tags:
       if tag.startswith('retries='):
