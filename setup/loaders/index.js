@@ -168,8 +168,8 @@ module.exports.trace = function(section) {
         console.log(`!!!!!!!!!!!!!! Instrumenting ${localpath} for trace logging !!!!!!!!!!!!!`)
 
         try {
-          const estrace = await import('estrace/plugin');
-          let {code} = putout(source.code, {
+          const { estracePlugin: estrace } = await import('estrace/plugin')
+          const { code } = putout(source.code, {
             fixCount: 1,
             rules: {
               'estrace/trace': ['on', { url: localpath, exclude: [ 'FunctionExpression', 'ArrowFunctionExpression' ] }],
