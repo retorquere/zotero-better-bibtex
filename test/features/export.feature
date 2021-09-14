@@ -525,7 +525,7 @@ Scenario: Really Big whopping library
   And I reset the cache
   Then an export using "Better BibTeX" should match "export/*.bibtex"
   And an export using "Better BibTeX" should match "export/*.bibtex", but take no more than 150 seconds
-  When I set preference .workersCache to false
+  When I set preference .caching to false
   Then an export using "Better BibTeX" should match "export/*.bibtex", but take no more than 400 seconds
 
 # tests without cache prefill
@@ -533,7 +533,7 @@ Scenario: Really Big whopping library
 Scenario: Really Big whopping library
   When I restart Zotero with "1287" + "export/*.json"
   And I reset the cache
-  And I set preference .workersCache to false
+  And I set preference .caching to false
   Then an export using "Better BibTeX" should match "export/*.bibtex"
 
 # tests the cache for CSL
