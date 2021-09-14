@@ -5,7 +5,7 @@ import { clean_pane_persist } from './clean_pane_persist'
 import { Preference } from '../gen/preferences'
 import { AutoExport } from './auto-export'
 import { flash } from './flash'
-import { sentenceCase } from './case'
+import { sentenceCase } from './text'
 import * as CAYW from './cayw'
 import { $and } from './db/loki'
 import * as Extra from './extra'
@@ -18,7 +18,7 @@ export interface ZoteroPaneConstructable {
 export class ZoteroPane {
   private globals: Record<string, any>
 
-  public load(globals: Record<string, any>) {
+  public load(globals: Record<string, any>): void {
     this.globals = globals
 
     const pane = Zotero.getActiveZoteroPane()

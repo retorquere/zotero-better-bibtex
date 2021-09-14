@@ -16,8 +16,9 @@ active_tag_value_provider = {
 }
 active_tag_matcher = ActiveTagMatcher(active_tag_value_provider)
 
-@contextmanager
 def before_feature(context, feature):
+  if lme:= context.config.userdata.get('log_memory_every'):
+    context.zotero.execute('Zotero.BetterBibTeX.TestSupport.startTimedMemoryLog(msecs)', msecs=int(lme))
   if active_tag_matcher.should_exclude_with(feature.tags):
     feature.skip(reason="DISABLED ACTIVE-TAG")
 
@@ -42,10 +43,6 @@ try:
     balance = json.load(f)
 except FileNotFoundError:
   balance = None
-
-def before_feature(context, feature):
-  if lme:= context.config.userdata.get('log_memory_every'):
-    context.zotero.execute('Zotero.BetterBibTeX.TestSupport.startTimedMemoryLog(msecs)', msecs=int(lme))
 
 def before_scenario(context, scenario):
   if active_tag_matcher.should_exclude_with(scenario.effective_tags):

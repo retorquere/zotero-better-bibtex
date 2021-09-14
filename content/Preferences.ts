@@ -475,7 +475,7 @@ export class PrefPane {
     }
   }
 
-  public refresh() {
+  public refresh(): void {
     const pane = this.globals.document.getElementById('zotero-prefpane-better-bibtex')
     // unloaded
     if (!pane) {

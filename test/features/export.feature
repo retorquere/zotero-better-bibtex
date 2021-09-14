@@ -12,6 +12,7 @@ Scenario Outline: Export <references> references for BibLaTeX to <file>
 
   Examples:
      | file                                                                                           | references  |
+     | Export article title capitalisation; P-Type vs n-type #1913                                    | 1           |
      | Better Biblatex export generates invalid latex when processing zero-width spaces #1892         | 1           |
      | Cite archive documents with BetterBibLaTeX #1799                                               | 1           |
      | biber 2.14 rejects the date field generated from Better BibLaTex #1695                         | 1           |
@@ -518,25 +519,25 @@ Scenario: Field Institution not available anymore in key pattern for Zotero #156
   Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
 # tests the cache
-@use.with_client=zotero @use.with_slow=true @timeout=3000
+@use.with_client=zotero @use.with_slow=true @timeout=3000 @whopper
 Scenario: Really Big whopping library
   When I restart Zotero with "1287" + "export/*.json"
   And I reset the cache
   Then an export using "Better BibTeX" should match "export/*.bibtex"
   And an export using "Better BibTeX" should match "export/*.bibtex", but take no more than 150 seconds
-  When I set preference .workersCache to false
+  When I set preference .caching to false
   Then an export using "Better BibTeX" should match "export/*.bibtex", but take no more than 400 seconds
 
 # tests without cache prefill
-@use.with_client=zotero @use.with_slow=true @timeout=3000
+@use.with_client=zotero @use.with_slow=true @timeout=3000 @whopper
 Scenario: Really Big whopping library
   When I restart Zotero with "1287" + "export/*.json"
   And I reset the cache
-  And I set preference .workersCache to false
+  And I set preference .caching to false
   Then an export using "Better BibTeX" should match "export/*.bibtex"
 
 # tests the cache for CSL
-@use.with_client=zotero @use.with_slow=true @timeout=3000
+@use.with_client=zotero @use.with_slow=true @timeout=3000 @whopper
 Scenario: Really Big whopping library
   When I restart Zotero with "1287" + "export/*.json"
   And I reset the cache

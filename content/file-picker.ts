@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/require-await
-export async function pick(title, mode: 'open' | 'save' | 'folder', filters?: [string, string][], suggestion?: string): Promise<string> {
+export async function pick(title: string, mode: 'open' | 'save' | 'folder', filters?: [string, string][], suggestion?: string): Promise<string> {
   const fp = Components.classes['@mozilla.org/filepicker;1'].createInstance(Components.interfaces.nsIFilePicker)
 
   if (suggestion) fp.defaultString = suggestion

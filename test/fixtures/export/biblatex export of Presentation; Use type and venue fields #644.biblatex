@@ -9,7 +9,7 @@
 }
 
 @inproceedings{kingma2015,
-  title = {Adam: {{A Method}} for {{Stochastic Optimization}}},
+  title = {Adam: A {{Method}} for {{Stochastic Optimization}}},
   booktitle = {Proceedings of the 3rd {{International Conference}} on {{Learning Representations}} ({{ICLR}} 2015)},
   author = {Kingma, Diederik P. and Ba, Jimmy},
   date = {2015},

@@ -27,7 +27,6 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
     const cached: CacheEntry = this.cache.findOne($and({ itemID: item.id }))
     if (!cached) return null
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return this.enrich(cached.item, item)
   }
 

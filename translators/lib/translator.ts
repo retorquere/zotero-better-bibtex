@@ -226,7 +226,7 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
     return field
   }
 
-  public init(mode: TranslatorMode) {
+  public init(mode: TranslatorMode): void {
     this.platform = (Zotero.getHiddenPref('better-bibtex.platform') as string)
     this.isJurisM = client === 'jurism'
     this.isZotero = !this.isJurisM
