@@ -20,7 +20,7 @@
       "qualityReport": true,
       "skipFields": "abstract, language, note, keywords, file, month, shorttitle",
       "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
-      "workersMax": 4
+      "workers": 4
     }
   },
   "items": [

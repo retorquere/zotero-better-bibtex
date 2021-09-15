@@ -16,7 +16,7 @@
       "exportBraceProtection": false,
       "quickCopyMode": "citekeys",
       "skipFields": "abstract",
-      "workersMax": 2
+      "workers": 2
     }
   },
   "items": [
