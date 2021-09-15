@@ -16,7 +16,7 @@ import  { defaults } from '../gen/preferences/meta'
 import { Preference } from '../gen/preferences'
 import * as memory from './memory'
 
-const setatstart: string[] = ['workersMax', 'testing', 'caching'].filter(p => Preference[p] !== defaults[p])
+const setatstart: string[] = ['workers', 'testing', 'caching'].filter(p => Preference[p] !== defaults[p])
 
 export class TestSupport {
   public timedMemoryLog: any
