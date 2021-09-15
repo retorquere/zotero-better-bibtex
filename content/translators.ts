@@ -659,6 +659,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
   private exportScope(scope: ExportScope): ExportScope {
     if (!scope) scope = { type: 'library', id: Zotero.Libraries.userLibraryID }
+    log.debug('exportScope:', scope.type)
 
     if (scope.type === 'collection' && typeof scope.collection === 'number') {
       return { type: 'collection', collection: Zotero.Collections.get(scope.collection) }

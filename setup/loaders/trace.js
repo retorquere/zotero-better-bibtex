@@ -18,7 +18,7 @@ const __estrace = {
 
   enter(name, url, args) {
     if (name.startsWith('<anonymous')) return
-    // this.log(`bbt.trace.enter ${url} : ${name}`)
+    this.log(`bbt.trace.enter ${url} : ${name}`)
 
     if (this.ready()) return Zotero.BetterBibTeX.TestSupport.memory.state()
   },
@@ -30,9 +30,13 @@ const __estrace = {
     window.QueryInterface(Components.interfaces.nsIInterfaceRequestor).getInterface(Components.interfaces.nsIDOMWindowUtils).garbageCollect()
     const post = Zotero.BetterBibTeX.TestSupport.memory.state()
     const diff = post.resident - pre.resident
-    if (diff < 10) return
 
-    this.log(`bbt.trace.exit ${url} : ${name} +${diff}, total ${post.deltaSinceStart}`)
+    if (diff < 10) {
+      this.log(`bbt.trace.exit ${url} : ${name}`)
+    }
+    else {
+      this.log(`bbt.trace.exit ${url} : ${name} +${diff}, total ${post.deltaSinceStart}`)
+    }
   },
 
   log(msg) {
