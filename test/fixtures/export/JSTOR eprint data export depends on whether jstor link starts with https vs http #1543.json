@@ -12,7 +12,7 @@
       "citekeyFormat": "[auth:lower]_[shorttitle1_1:lower]_[year]",
       "itemObserverDelay": 100,
       "skipFields": "file",
-      "workersMax": 4
+      "workers": 4
     }
   },
   "items": [

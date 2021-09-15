@@ -11,7 +11,7 @@
       "citekeyFormat": "[Auth:nopunctordash:fold][>0][Title:skipwords:capitalize:nopunct:replace=/,-:select=1,4:fold:clean:prefix=_][year:prefix=_]|[Institution:nopunctordash:fold][shorttitle3_3:condense:nopunct:prefix=_][year:prefix=_]",
       "itemObserverDelay": 100,
       "skipFields": "abstract,file,note,series",
-      "workersMax": 4
+      "workers": 4
     }
   },
   "items": [

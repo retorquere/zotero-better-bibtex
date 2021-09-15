@@ -30,13 +30,19 @@ export const Preference = new class PreferenceManager {
     if ((old = Zotero.Prefs.get(key = '${prefix}quickCopyMode')) === 'selectLink') {
       Zotero.Prefs.set(key, 'selectlink')
     }
-    if (typeof (old = Zotero.Prefs.get(key = '${prefix}workers')) === 'number') {
+    if (typeof (old = Zotero.Prefs.get(key = '${prefix}workers')) !== 'undefined') {
+      Zotero.Prefs.rootBranch.setIntPref('extensions.zotero.${prefix}workers', typeof old === 'number' ? old : 1)
+    }
+    if (typeof (old = Zotero.Prefs.get(key = '${prefix}workersMax')) !== 'undefined') {
       Zotero.Prefs.clear(key)
-      Zotero.Prefs.set('${prefix}workersMax', 1)
+      Zotero.Prefs.set('${prefix}workers', typeof old === 'number' ? old : 1)
     }
     if (typeof (old = Zotero.Prefs.get(key = '${prefix}workersCache')) !== 'undefined') {
       Zotero.Prefs.clear(key)
-      Zotero.Prefs.set('${prefix}caching', !!old)
+      Zotero.Prefs.rootBranch.setBoolPref('extensions.zotero.${prefix}caching', !!old)
+    }
+    if (typeof (old = Zotero.Prefs.get(key = '${prefix}caching')) !== 'boolean') {
+      Zotero.Prefs.rootBranch.setBoolPref('extensions.zotero.${prefix}caching', !!old)
     }
     if (typeof (old = Zotero.Prefs.get(key = '${prefix}suppressTitleCase')) !== 'undefined') {
       Zotero.Prefs.clear(key)

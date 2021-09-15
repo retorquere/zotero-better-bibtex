@@ -378,7 +378,7 @@
             "warnTitleCased": {
               "type": "boolean"
             },
-            "workersMax": {
+            "workers": {
               "type": "number"
             }
           },

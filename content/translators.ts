@@ -189,7 +189,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   public async exportItemsByQueuedWorker(translatorID: string, displayOptions: Record<string, boolean>, job: ExportJob) {
-    if (this.workers.running.size > Preference.workersMax) {
+    if (this.workers.running.size > Preference.workers) {
       return this.queue.schedule(this.exportItemsByWorker.bind(this), translatorID, displayOptions, job)
     }
     else {

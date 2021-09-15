@@ -566,7 +566,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
       if (this.noWait) { // noWait must be synchronous
         disabled = 'noWait is active'
       }
-      else if (!Preference.workersMax) {
+      else if (!Preference.workers) {
         disabled = 'user has disabled worker export'
       }
       else if (Translators.workers.disabled) {

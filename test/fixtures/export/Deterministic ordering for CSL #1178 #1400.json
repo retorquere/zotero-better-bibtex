@@ -17,7 +17,7 @@
       "quickCopyMode": "pandoc",
       "quickCopyPandocBrackets": true,
       "skipFields": "abstract",
-      "workersMax": 4
+      "workers": 4
     }
   },
   "items": [

@@ -205,6 +205,8 @@
   "export/Export Newspaper Article misses section field #132.json",
   "export/Export Patent Applications as such #1413.biblatex",
   "export/Export Patent Applications as such #1413.json",
+  "export/Export article title capitalisation; P-Type vs n-type #1913.biblatex",
+  "export/Export article title capitalisation; P-Type vs n-type #1913.json",
   "export/Export as Collected Notes does not list subcollections #1768.html",
   "export/Export as Collected Notes does not list subcollections #1768.json",
   "export/Export error for items without publicationTitle and Preserve BibTeX variables enabled #201.biblatex",

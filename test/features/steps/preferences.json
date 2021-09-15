@@ -785,11 +785,11 @@
     "var": "warnTitleCased"
   },
   {
-    "name": "workersMax",
+    "name": "workers",
     "type": "number",
     "default": 1,
     "affects": [],
-    "var": "workersMax",
+    "var": "workers",
     "label": "Parallel background exports:"
   }
 ]
