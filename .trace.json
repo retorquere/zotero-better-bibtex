@@ -2,10 +2,8 @@
   "gh-1896": {
     "plugin": [
       "content/better-bibtex.ts",
-      "content/key-manager.ts",
       "content/serializer.ts",
       "content/auto-export.ts",
-      "content/startup.ts",
       "content/translators.ts"
     ]
   }

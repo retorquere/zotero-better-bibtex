@@ -956,6 +956,8 @@ export class BetterBibTeX {
 
     progress.done()
 
+    if (Preference.testing) this.TestSupport.startTimedMemoryLog(5000) // eslint-disable-line no-magic-numbers
+
     if (typeof Zotero.ItemTreeView === 'undefined') ZoteroPane.itemsView.refreshAndMaintainSelection()
 
     const selected = ZoteroPane.getSelectedItems(true)
