@@ -11,7 +11,7 @@
     "CSL YAML export of date with original publication date in [brackets] #922": 360,
     "CSL exporters; ignore [Fields to omit from export] setting #1179": 1970,
     "CSL-YAML import": {
-      "msecs": 1230,
+      "msecs": 1240,
       "runs": -353
     },
     "Capitalize all title-fields for language en #383": 680,
@@ -20,7 +20,7 @@
       "runs": -198
     },
     "Choose fields to exclude for each exported file #1827": {
-      "msecs": 1310,
+      "msecs": 1320,
       "runs": -388
     },
     "Citekey generation failure #708 and sort references on export #957": 2040,
@@ -94,7 +94,7 @@
     "Export 1 references for BibLaTeX to Export Forthcoming as Forthcoming": 390,
     "Export 1 references for BibLaTeX to Export Newspaper Article misses section field #132": 330,
     "Export 1 references for BibLaTeX to Export article title capitalisation; P-Type vs n-type #1913": {
-      "msecs": 610,
+      "msecs": 660,
       "runs": -402
     },
     "Export 1 references for BibLaTeX to Export error for items without publicationTitle and Preserve BibTeX variables enabled #201": 310,
@@ -268,7 +268,7 @@
       "runs": -300
     },
     "Export 1 references for BibTeX to Word segmentation for Chinese references #1682": {
-      "msecs": 1480,
+      "msecs": 1470,
       "runs": -260
     },
     "Export 1 references for BibTeX to [authN_M] citation key syntax has off-by-one error #899": 370,
@@ -280,7 +280,7 @@
     "Export 1 references for BibTeX to braces after textemdash followed by unicode #980": 400,
     "Export 1 references for BibTeX to capital delta breaks .bib output #141": 410,
     "Export 1 references for BibTeX to citation key format nopunctordash filter list #1880": {
-      "msecs": 1890,
+      "msecs": 1900,
       "runs": -380
     },
     "Export 1 references for BibTeX to custom fields should be exported as-is #441": 480,
@@ -359,7 +359,7 @@
     "Export 6 references for BibLaTeX to Better BibLaTeX.stable-keys": 620,
     "Export 8 references for BibLaTeX to Don't title-case sup-subscripts #1037": 660,
     "Export as Collected Notes does not list subcollections #1768": {
-      "msecs": 4790,
+      "msecs": 4800,
       "runs": -256
     },
     "Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825": 990,
@@ -402,7 +402,7 @@
     "Import 1 references from Spaces lost when expanding string variables during import #1081": 1030,
     "Import 1 references from Wrong ring-above import #1115": 1020,
     "Import 1 references from collaborators to contributors": {
-      "msecs": 1290,
+      "msecs": 1300,
       "runs": -209
     },
     "Import 1 references from eprinttype field dropped on import #959": 1020,
@@ -420,7 +420,7 @@
     "Import 2 references from Better BibTeX.003": 1050,
     "Import 2 references from BibLaTeX Patent author handling, type #1060": 1220,
     "Import 2 references from Import Jabref fileDirectory, unexpected reference type #1058": {
-      "msecs": 1940,
+      "msecs": 1950,
       "runs": -348
     },
     "Import 2 references from space after citekey creates confusion #716": 1170,
@@ -438,9 +438,9 @@
     "Import 9 references from Better BibLaTeX import improvements #549": 1520,
     "Import support for the online type in BBT #1358": 1170,
     "Include first name initial(s) in cite key generation pattern (86)": 450,
-    "Jabref groups import does not work #717": 2840,
+    "Jabref groups import does not work #717": 2850,
     "Jabref import - groups lost #1730": {
-      "msecs": 3330,
+      "msecs": 3340,
       "runs": -228
     },
     "Journal abbreviations": 490,
@@ -460,17 +460,17 @@
     },
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 352930,
+    "Really Big whopping library": 352760,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 51850,
+      "msecs": 51900,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
     "Square brackets in Publication field (85), and non-pinned keys must change when the pattern does": 450,
-    "Unabbreviate on import #1436-1": 38770,
+    "Unabbreviate on import #1436-1": 38790,
     "Unbalanced vphantom escapes #1043": 760,
     "arXiv identifiers in BibLaTeX export #460": 1180,
     "auto-export": 14370,
@@ -493,12 +493,13 @@
       "runs": -36
     },
     "web_page and other mendeley idiocy": {
-      "msecs": 39570,
+      "msecs": 39600,
       "runs": -239
     }
   },
   "fast": {
     "1": [
+      "Export 1 references for BibLaTeX to Export article title capitalisation; P-Type vs n-type #1913",
       "Export 1 references for BibLaTeX to Better Biblatex export generates invalid latex when processing zero-width spaces #1892",
       "Export 1 references for BibLaTeX to Cite archive documents with BetterBibLaTeX #1799",
       "Export 1 references for BibLaTeX to biber 2.14 rejects the date field generated from Better BibLaTex #1695",
@@ -628,7 +629,6 @@
       "Export 1 references for BibLaTeX to biblatex; Language tag xx is exported, xx-XX is not #380",
       "Export 2 references for BibLaTeX to biblatex export of Presentation; Use type and venue fields #644",
       "Export 1 references for BibLaTeX to URL-DOI exclusive export broken for item types with no dedicated DOI field #1331",
-      "Export 5 references for BibLaTeX to date ranges #747+#746",
       "Export 1 references for BibLaTeX to preserve @strings between import-export #1162",
       "Export 1 references for BibTeX to citation key format nopunctordash filter list #1880",
       "Export 1 references for BibTeX to Export report+type as preprint",
@@ -692,6 +692,7 @@
       "Export 1 references for BibTeX to braces after textemdash followed by unicode #980",
       "Export 2 references for BibTeX to creating a key with [authForeIni] and [authN] not working properly #892",
       "Export 2 references for BibTeX to date not always parsed properly into month and year with PubMed #1112",
+      "Export 5 references for BibTeX to date ranges #747+#746",
       "Export 1 references for BibTeX to preserve @strings between import-export #1162",
       "Export 2 references for BibTeX to titles are title-cased in .bib file #558",
       "Omit URL export when DOI present. #131",
@@ -783,8 +784,8 @@
       "unknown command handler #1733"
     ],
     "2": [
+      "Export 5 references for BibLaTeX to date ranges #747+#746",
       "Export 36 references for BibTeX to Better BibTeX does not export collections #901",
-      "Export 5 references for BibTeX to date ranges #747+#746",
       "Bibtex key regenerating issue when trashing items #117",
       "two ISSN number are freezing browser #110 + Generating keys and export broken #111",
       "Postfixed keys different between computers #1788",
@@ -804,9 +805,10 @@
       "Identical Pinned keys lost when merging duplicated records #1721"
     ]
   },
-  "runs": 403,
+  "runs": 404,
   "slow": {
     "1": [
+      "Export 1 references for BibLaTeX to Export article title capitalisation; P-Type vs n-type #1913",
       "Export 1 references for BibLaTeX to Better Biblatex export generates invalid latex when processing zero-width spaces #1892",
       "Export 1 references for BibLaTeX to Cite archive documents with BetterBibLaTeX #1799",
       "Export 1 references for BibLaTeX to biber 2.14 rejects the date field generated from Better BibLaTex #1695",
@@ -1107,8 +1109,7 @@
       "Merging error with arXiv ID #1373",
       "Duplicate Citation Key Alias #1384",
       "ids field should be created in raw mode #1729",
-      "Identical Pinned keys lost when merging duplicated records #1721",
-      "Export 1 references for BibLaTeX to Export article title capitalisation; P-Type vs n-type #1913"
+      "Identical Pinned keys lost when merging duplicated records #1721"
     ],
     "2": [
       "Really Big whopping library",
