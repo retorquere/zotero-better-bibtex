@@ -47,7 +47,7 @@
     "docs:deploy": "npm run docs:prep && cd site && hugo --baseURL /zotero-better-bibtex",
     "reinstall": "rm -rf node_modules yarn* && npm install",
     "test:nightly": "TRAVIS_EVENT_TYPE=cron ./test/behave --tags @nightly",
-    "submodules": "git submodule update --init --recursive --remote && git submodule foreach git reset --hard && git submodule foreach git checkout master && git submodule foreach git pull origin master",
+    "submodules": "git submodule update --init --recursive --remote && git submodule foreach git reset --hard && git submodule foreach git pull origin",
     "preupgrades": "parallel --ungroup ::: './setup/bibertool.py' 'npm run submodules' 'ncu --timeout 900001 -u && npm i' './setup/item.py'",
     "upgrades": "git add package.json package-lock.json citation-style-language-locales site/themes/learn schema translators/bibtex/biber-tool.conf && git commit -m upgrades"
   },

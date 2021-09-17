@@ -12,6 +12,7 @@ Scenario Outline: Export <references> references for BibLaTeX to <file>
 
   Examples:
      | file                                                                                           | references  |
+     | Language field in the metadata exported incorrectly #1921                                      | 1           |
      | Export article title capitalisation; P-Type vs n-type #1913                                    | 1           |
      | Better Biblatex export generates invalid latex when processing zero-width spaces #1892         | 1           |
      | Cite archive documents with BetterBibLaTeX #1799                                               | 1           |

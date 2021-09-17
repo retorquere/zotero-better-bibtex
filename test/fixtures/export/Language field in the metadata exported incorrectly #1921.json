@@ -1,0 +1,31 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
+    "options": {
+    },
+    "preferences": {
+    }
+  },
+  "items": [
+    {
+      "citationKey": "koller2012",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Alfred",
+          "lastName": "Koller"
+        }
+      ],
+      "date": "2012",
+      "itemID": 1,
+      "itemType": "book",
+      "language": "de-CH",
+      "place": "Bern",
+      "publisher": "St\u00e4mpfli Verlag",
+      "shortTitle": "OR BT I",
+      "title": "Schweizerisches Obligationenrecht Besonderer Teil Band I"
+    }
+  ]
+}

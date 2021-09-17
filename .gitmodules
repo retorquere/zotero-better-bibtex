@@ -8,3 +8,4 @@
 [submodule "babel"]
 	path = babel
 	url = https://github.com/latex3/babel.git
+	branch = main

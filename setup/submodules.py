@@ -18,7 +18,7 @@ if online:
   submodules = run('git submodule update --init --recursive --remote')
   if submodules.strip() == '': submodules = '  up to date'
   print(submodules)
-  print(run('git submodule foreach git checkout master'))
-  print(run('git submodule foreach git pull origin master'))
+  print(run('git submodule foreach git checkout'))
+  print(run('git submodule foreach git pull origin'))
 else:
   print('  GitHub offline -- you may not have network access -- skipping submodule update')
