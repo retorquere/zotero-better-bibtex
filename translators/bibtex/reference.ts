@@ -19,6 +19,9 @@ import * as Extra from '../../content/extra'
 import * as CSL from 'citeproc'
 import { log } from '../../content/logger'
 
+import Language from '../../gen/language.json'
+const English = ['english-unitedstates', 'american', 'british', 'canadian', 'english', 'australian', 'newzealand', 'usenglish', 'ukenglish', 'anglais']
+
 import { arXiv } from '../../content/arXiv'
 
 const Path = { // eslint-disable-line  @typescript-eslint/naming-convention
@@ -44,194 +47,6 @@ const Path = { // eslint-disable-line  @typescript-eslint/naming-convention
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     return `..${Translator.paths.sep}`.repeat(from.length) + to.join(Translator.paths.sep)
   },
-}
-
-const Language = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
-  public babelMap = {
-    af: 'afrikaans',
-    am: 'amharic',
-    ar: 'arabic',
-    ast: 'asturian',
-    bg: 'bulgarian',
-    bn: 'bengali',
-    bo: 'tibetan',
-    br: 'breton',
-    ca: 'catalan',
-    cop: 'coptic',
-    cy: 'welsh',
-    cz: 'czech',
-    da: 'danish',
-    de_1996: 'ngerman',
-    de_at_1996: 'naustrian',
-    de_at: 'austrian',
-    de_de_1996: 'ngerman',
-    de: ['german', 'germanb'],
-    dsb: ['lsorbian', 'lowersorbian'],
-    dv: 'divehi',
-    el: 'greek',
-    el_polyton: 'polutonikogreek',
-    en_au: 'australian',
-    en_ca: 'canadian',
-    en: 'english',
-    en_gb: ['british', 'ukenglish'],
-    en_nz: 'newzealand',
-    en_us: ['american', 'usenglish'],
-    eo: 'esperanto',
-    es: 'spanish',
-    et: 'estonian',
-    eu: 'basque',
-    fa: 'farsi',
-    fi: 'finnish',
-    fr_ca: [ 'acadian', 'canadian', 'canadien' ],
-    fr: ['french', 'francais', 'français'],
-    fur: 'friulan',
-    ga: 'irish',
-    gd: ['scottish', 'gaelic'],
-    gl: 'galician',
-    he: 'hebrew',
-    hi: 'hindi',
-    hr: 'croatian',
-    hsb: ['usorbian', 'uppersorbian'],
-    hu: 'magyar',
-    hy: 'armenian',
-    ia: 'interlingua',
-    id: [ 'indonesian', 'bahasa', 'bahasai', 'indon', 'meyalu' ],
-    is: 'icelandic',
-    it: 'italian',
-    ja: 'japanese',
-    kn: 'kannada',
-    la: 'latin',
-    lo: 'lao',
-    lt: 'lithuanian',
-    lv: 'latvian',
-    ml: 'malayalam',
-    mn: 'mongolian',
-    mr: 'marathi',
-    nb: ['norsk', 'bokmal', 'nob'],
-    nl: 'dutch',
-    nn: 'nynorsk',
-    no: ['norwegian', 'norsk'],
-    oc: 'occitan',
-    pl: 'polish',
-    pms: 'piedmontese',
-    pt_br: ['brazil', 'brazilian'],
-    pt: ['portuguese', 'portuges'],
-    pt_pt: 'portuguese',
-    rm: 'romansh',
-    ro: 'romanian',
-    ru: 'russian',
-    sa: 'sanskrit',
-    se: 'samin',
-    sk: 'slovak',
-    sl: ['slovenian', 'slovene'],
-    sq_al: 'albanian',
-    sr_cyrl: 'serbianc',
-    sr_latn: 'serbian',
-    sr: 'serbian',
-    sv: 'swedish',
-    syr: 'syriac',
-    ta: 'tamil',
-    te: 'telugu',
-    th: ['thai', 'thaicjk'],
-    tk: 'turkmen',
-    tr: 'turkish',
-    uk: 'ukrainian',
-    ur: 'urdu',
-    vi: 'vietnamese',
-    zh_latn: 'pinyin',
-    zh: 'pinyin',
-    zlm: [ 'malay', 'bahasam', 'melayu' ],
-  }
-
-  private prefix: { [key: string]: boolean | string }
-  private babelList: string[]
-  private cache: { [key: string]: { lang: string, sim: number }[] }
-
-  constructor() {
-    for (const [key, value] of Object.entries(this.babelMap)) {
-      if (typeof value === 'string') this.babelMap[key] = [value]
-    }
-
-    // list of unique languages
-    this.babelList = []
-    for (const v of Object.values(this.babelMap)) {
-      for (const lang of v) {
-        if (this.babelList.indexOf(lang) < 0) this.babelList.push(lang)
-      }
-    }
-
-    this.cache = {}
-    this.prefix = {}
-  }
-
-  public lookup(langcode) {
-    if (!this.cache[langcode]) {
-      this.cache[langcode] = []
-      for (const lc of Language.babelList) {
-        this.cache[langcode].push({ lang: lc, sim: this.string_similarity(langcode, lc) })
-      }
-      this.cache[langcode].sort((a, b) => b.sim - a.sim)
-    }
-
-    return this.cache[langcode]
-  }
-
-  public fromPrefix(langcode) {
-    if (!langcode || (langcode.length < 2)) return false
-
-    if (this.prefix[langcode] == null) {
-      // consider a langcode matched if it is the prefix of exactly one language in the map
-      const lc = langcode.toLowerCase()
-      const matches = []
-      for (const languages of Object.values(Language.babelMap)) {
-        for (const lang of languages) {
-          if (lang.toLowerCase().indexOf(lc) !== 0) continue
-          matches.push(languages)
-          break
-        }
-      }
-      if (matches.length === 1) {
-        this.prefix[langcode] = matches[0]
-      }
-      else {
-        this.prefix[langcode] = false
-      }
-    }
-
-    return this.prefix[langcode]
-  }
-
-  private get_bigrams(str) {
-    const s = str.toLowerCase()
-    const bigrams = [...Array(s.length).keys()].map(i => s.slice(i, i + 2))
-    bigrams.sort()
-    return bigrams
-  }
-
-  private string_similarity(str1, str2) {
-    const pairs1 = this.get_bigrams(str1)
-    const pairs2 = this.get_bigrams(str2)
-    const union = pairs1.length + pairs2.length
-    let hit_count = 0
-
-    while ((pairs1.length > 0) && (pairs2.length > 0)) {
-      if (pairs1[0] === pairs2[0]) {
-        hit_count++
-        pairs1.shift()
-        pairs2.shift()
-        continue
-      }
-
-      if (pairs1[0] < pairs2[0]) {
-        pairs1.shift()
-      }
-      else {
-        pairs2.shift()
-      }
-    }
-
-    return (hit_count * 2) / union
-  }
 }
 
 /*
@@ -384,25 +199,14 @@ export class Reference {
       this.english = true
     }
     else {
-      const langlc = this.item.language.toLowerCase()
-
-      let language = Language.babelMap[langlc.replace(/[^a-z0-9]/, '_')]
-      if (!language) language = Language.babelMap[langlc.replace(/-[a-z]+$/i, '').replace(/[^a-z0-9]/, '_')]
-      if (!language) language = Language.fromPrefix(langlc)
-      if (language) {
-        this.language = language[0]
+      const lang = this.item.language.toLowerCase()
+      this.language = Language[lang] || Language[lang.replace(/[^a-z0-9]/, '-')]
+      if (!this.language) {
+        const candidates = Object.keys(Language).filter(l => lang.startsWith(l))
+        if (candidates.length === 1) this.language = Language[candidates[0]]
       }
-      else {
-        const match = Language.lookup(langlc)
-        if (match[0].sim >= 0.9) { // eslint-disable-line no-magic-numbers
-          this.language = match[0].lang
-        }
-        else {
-          this.language = this.item.language
-        }
-      }
-
-      this.english = ['american', 'british', 'canadian', 'english', 'australian', 'newzealand', 'usenglish', 'ukenglish', 'anglais'].includes(this.language.toLowerCase())
+      this.language = this.language || this.item.language
+      this.english = English.includes(this.language.toLowerCase())
     }
 
     // remove ordinal from edition
