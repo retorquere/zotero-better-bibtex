@@ -106,8 +106,10 @@ alts = defaultdict(list)
 for path in Path('babel/locale').rglob('*.ini'):
   locale = RawConfigParser(dict_type=MultiOrderedDict, strict=False)
   locale.read(str(path))
-  names = [n for n in sorted(locale['identification'].keys()) if n.startswith('name.babel')]
-  names = list(itertools.chain.from_iterable([locale['identification'][n].split(' ') for n in names]))
+  locale = locale['identification']
+  names = [n for n in sorted(locale.keys()) if n.startswith('name.babel')]
+  names = list(itertools.chain.from_iterable([locale[n].split(' ') for n in names]))
+
   pref = prefered
   if path.name.startswith('babel-de'):
     new = set([n for n in prefered if n.startswith('n')])
@@ -131,13 +133,16 @@ for path in Path('babel/locale').rglob('*.ini'):
     print(path.name, 'has no name')
     continue
 
-  locale = locale['identification']
   name = name.lower()
 
-  for lst, key in [(languages, 'tag.bcp47'), (alts, 'name.local'), (alts, 'name.english')]:
-    if not key in locale: continue
-    key = locale[key].lower()
-    lst[key] = sorted(list(set(lst[key] + [name])))
+  for alt in names:
+    if alt != name:
+      alts[alt] = sorted(list(set(alts[alt] + [name])))
+
+  for lst, key in [(languages, 'tag.bcp47'), (alts, 'name.polyglossia'), (alts, 'name.local'), (alts, 'name.english')]:
+    if key in locale:
+      key = locale[key].lower()
+      lst[key] = sorted(list(set(lst[key] + [name])))
 
 # prefixes
 for short, long in Trie.prefix(list(languages.keys())).items():
