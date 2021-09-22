@@ -21,6 +21,8 @@ import * as bibtexParser from '@retorquere/bibtex-parser'
 import { valid, label } from '../gen/items/items'
 import { arXiv } from '../content/arXiv'
 
+import { babelLanguage } from '../content/text'
+
 Reference.prototype.caseConversion = {
   title: true,
   series: true,
@@ -275,7 +277,7 @@ export function doExport(): void {
     ref.add({name: 'shorttitle', value: item.shortTitle})
     ref.add({name: 'abstract', value: item.abstractNote?.replace(/\n+/g, ' ')})
     ref.add({name: 'nationality', value: item.country})
-    ref.add({name: 'language', value: item.language})
+    ref.add({name: 'langid', value: babelLanguage(item.language) }) // help explain why bracing is weird on bibtex
     ref.add({name: 'assignee', value: item.assignee})
 
     if (!['book', 'inbook', 'incollection', 'proceedings', 'inproceedings'].includes(ref.referencetype) || !ref.has.volume) ref.add({ name: 'number', value: item.number || item.issue || item.seriesNumber })
@@ -473,7 +475,6 @@ class ZoteroItem {
   private eprint: { [key: string]: string } = {}
   private validFields: Record<string, boolean>
   private numberPrefix: string
-  private english = 'English'
 
   constructor(private id: number, private bibtex: any, private jabref, private errors: bibtexParser.ParseError[]) {
     this.bibtex.type = this.bibtex.type.toLowerCase()
@@ -900,7 +901,7 @@ class ZoteroItem {
 
   protected $language(_value, _field) {
     const language = (this.bibtex.fields.language || []).concat(this.bibtex.fields.langid || [])
-      .map(lang => ['en', 'eng', 'usenglish', 'english'].includes(lang.toLowerCase()) ? this.english : lang) // eslint-disable-line @typescript-eslint/no-unsafe-return
+      .map(babelLanguage) // eslint-disable-line @typescript-eslint/no-unsafe-return
       .join(' and ')
 
     return this.set('language', language)

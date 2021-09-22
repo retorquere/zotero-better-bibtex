@@ -142,7 +142,7 @@ export class Reference {
 
   // patched in by the Bib(La)TeX translators
   public fieldEncoding: Record<string, 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'latex' | 'tags' | 'attachments' | 'date'>
-  public caseConversion: { [key: string]: boolean }
+  public caseConversion: Record<string, boolean>
   public typeMap: { csl: { [key: string]: string | { type: string, subtype?: string } }, zotero: { [key: string]: string | { type: string, subtype?: string } } }
   public lint: Function
   public addCreators: Function
