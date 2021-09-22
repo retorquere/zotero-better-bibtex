@@ -268,7 +268,7 @@
       "runs": -300
     },
     "Export 1 references for BibTeX to Word segmentation for Chinese references #1682": {
-      "msecs": 1460,
+      "msecs": 1450,
       "runs": -260
     },
     "Export 1 references for BibTeX to [authN_M] citation key syntax has off-by-one error #899": 370,
@@ -280,7 +280,7 @@
     "Export 1 references for BibTeX to braces after textemdash followed by unicode #980": 400,
     "Export 1 references for BibTeX to capital delta breaks .bib output #141": 410,
     "Export 1 references for BibTeX to citation key format nopunctordash filter list #1880": {
-      "msecs": 1890,
+      "msecs": 1900,
       "runs": -380
     },
     "Export 1 references for BibTeX to custom fields should be exported as-is #441": 480,
@@ -358,6 +358,10 @@
     "Export 5 references for BibTeX to date ranges #747+#746": 1330,
     "Export 6 references for BibLaTeX to Better BibLaTeX.stable-keys": 620,
     "Export 8 references for BibLaTeX to Don't title-case sup-subscripts #1037": 660,
+    "Export 86 references for BibLaTeX to Language field in the metadata exported incorrectly #1921": {
+      "msecs": 5730,
+      "runs": -405
+    },
     "Export as Collected Notes does not list subcollections #1768": {
       "msecs": 4800,
       "runs": -256
@@ -460,12 +464,12 @@
     },
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 352420,
+    "Really Big whopping library": 352270,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 51850,
+      "msecs": 51950,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
@@ -805,7 +809,7 @@
       "Identical Pinned keys lost when merging duplicated records #1721"
     ]
   },
-  "runs": 405,
+  "runs": 406,
   "slow": {
     "1": [
       "Export 1 references for BibLaTeX to Export article title capitalisation; P-Type vs n-type #1913",
@@ -1109,7 +1113,8 @@
       "Merging error with arXiv ID #1373",
       "Duplicate Citation Key Alias #1384",
       "ids field should be created in raw mode #1729",
-      "Identical Pinned keys lost when merging duplicated records #1721"
+      "Identical Pinned keys lost when merging duplicated records #1721",
+      "Export 86 references for BibLaTeX to Language field in the metadata exported incorrectly #1921"
     ],
     "2": [
       "Really Big whopping library",
