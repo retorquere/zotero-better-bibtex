@@ -2,7 +2,7 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "localeDateOrder": "ymd",
+    "localeDateOrder": "dmy",
     "options": {},
     "preferences": {
       "citekeyFormat": "[auth][year]"
@@ -71,7 +71,7 @@
       ],
       "itemID": 1,
       "itemType": "book",
-      "language": "en-US",
+      "language": "american",
       "place": "Philadelphia, PA",
       "publisher": "Society for Industrial and Applied Mathematics",
       "shortTitle": "Templates for the solution of linear systems",

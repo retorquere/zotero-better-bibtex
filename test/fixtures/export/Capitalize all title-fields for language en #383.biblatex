@@ -1,17 +1,17 @@
 
 @book{_alkanethiolate,
   title = {Alkanethiolate Gold Cluster Molecules with Core Diameters from 1.5 to 5.2~{{nm}}},
-  langid = {usenglish}
+  langid = {american}
 }
 
 @article{_carbocyclic,
   title = {A Carbocyclic Carbene as an Efficient Catalyst Ligand for {{C}}–{{C}} Coupling Reactions},
-  langid = {ukenglish}
+  langid = {british}
 }
 
 @article{_effect,
   title = {Effect of Immobilization on Catalytic Characteristics of Saturated {{Pd}}-{{N}}-Heterocyclic Carbenes in {{Mizoroki}}-{{Heck}} Reactions},
-  langid = {usenglish}
+  langid = {american}
 }
 
 @book{_estimateur,
@@ -22,12 +22,12 @@
 
 @book{_highspeed,
   title = {High-Speed Digital-to-{{RF}} Converter},
-  langid = {usenglish}
+  langid = {american}
 }
 
 @article{_pleistocene,
   title = {Pleistocene {{{\emph{Homo sapiens}}}} from {{Middle Awash}}, {{Ethiopia}}},
-  langid = {ukenglish}
+  langid = {british}
 }
 
 @book{_remarks,
@@ -37,7 +37,7 @@
 
 @book{_stochastic,
   title = {A Stochastic Model of {{TCP Reno}} Congestion Avoidance and Control},
-  langid = {usenglish}
+  langid = {american}
 }
 
 

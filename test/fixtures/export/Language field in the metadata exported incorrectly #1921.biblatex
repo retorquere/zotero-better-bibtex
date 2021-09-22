@@ -1020,4 +1020,23 @@
   langid = {austrian}
 }
 
+@article{ZoiaBlasonDOttavioEtAl13,
+  title = {The Development of Upper Limb Movements: From Fetal to Post-Natal Life},
+  shorttitle = {The Development of Upper Limb Movements},
+  author = {Zoia, Stefania and Blason, Laura and D’Ottavio, Giuseppina and Biancotto, Marina and Bulgheroni, Maria and Castiello, Umberto},
+  date = {2013-12-04},
+  journaltitle = {PLOS ONE},
+  shortjournal = {PLOS ONE},
+  volume = {8},
+  number = {12},
+  pages = {e80876},
+  issn = {1932-6203},
+  doi = {10.1371/journal.pone.0080876},
+  url = {https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0080876},
+  urldate = {2019-08-14},
+  abstract = {Background The aim of this longitudinal study was to investigate how the kinematic organization of upper limb movements changes from fetal to post-natal life. By means of off-line kinematical techniques we compared the kinematics of hand-to-mouth and hand-to-eye movements, in the same individuals, during prenatal life and early postnatal life, as well as the kinematics of hand-to-mouth and reaching-toward-object movements in the later age periods. Methodology/Principal Findings Movements recorded at the 14th, 18th and 22nd week of gestation were compared with similar movements recorded in an ecological context at 1, 2, 3, 4, 8, and 12 months after birth. The results indicate a similar kinematic organization depending on movement type (i.e., eye, mouth) for the infants at one month and for the fetuses at 22 weeks of gestation. At two and three months such differential motor planning depending on target is lost and no statistical differences emerge. Hand to eye movements were no longer observed after the fourth month of life, therefore we compared kinematics for hand to mouth with hand to object movements. Results of these analyses revealed differences in the performance of hand to mouth and reaching to object movements in the length of the deceleration phase of the movement, depending on target. Conclusion/Significance Data are discussed in terms of how the passage from intrauterine to extra-uterine environments modifies motor planning. These results provide novel evidence of how different types of upper extremity movements, those directed towards one’s own face and those directed to external objects, develop.},
+  langid = {english},
+  keywords = {Birth,Eye movements,Eyes,Fetuses,Hands,Infants,Kinematics,Musculoskeletal system}
+}
+
 

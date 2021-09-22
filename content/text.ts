@@ -454,9 +454,14 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
 }
 
 export function babelLanguage(language: string): string {
+  if (!language) return ''
   const lc = language.toLowerCase()
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return Language[lc] || Language[lc.replace(/[^a-z0-9]/, '-')] || Language[LanguagePrefixes.find((prefix: string) => lc.startsWith(prefix))] || language
+  return Language[lc]
+    || Language[lc.replace(/[^a-z0-9]/, '-')]
+    || Language[lc.replace(/[^a-z0-9]/, '')]
+    || (!lc.includes(' ') && Language[LanguagePrefixes.find((prefix: string) => lc.startsWith(prefix))])
+    || language
 }
 
 export function isBabelLanguage(tag: string, language: string): boolean {
