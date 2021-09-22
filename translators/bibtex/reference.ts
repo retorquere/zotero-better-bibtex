@@ -20,9 +20,6 @@ import * as CSL from 'citeproc'
 import { log } from '../../content/logger'
 import { babelLanguage, isBabelLanguage } from '../../content/text'
 
-import Language from '../../gen/language.json'
-const English = ['english-unitedstates', 'american', 'british', 'canadian', 'english', 'australian', 'newzealand', 'usenglish', 'ukenglish', 'anglais']
-
 import { arXiv } from '../../content/arXiv'
 
 const Path = { // eslint-disable-line  @typescript-eslint/naming-convention
