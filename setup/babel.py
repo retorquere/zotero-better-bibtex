@@ -224,6 +224,7 @@ os.makedirs('gen/babel', exist_ok=True)
 with open('gen/babel/langmap.json', 'w') as f:
   json.dump({ row.language: row.langid for row in DB.execute('SELECT * from langmap ORDER BY language DESC')}, f, indent='  ')
 isLang = defaultdict(list)
+
 with open('gen/babel/is.json', 'w') as f:
   for langid in ['en', 'ja']:
     language = f"SELECT DISTINCT langid FROM langmap WHERE language = '{langid}' OR language LIKE '{langid}-%'"

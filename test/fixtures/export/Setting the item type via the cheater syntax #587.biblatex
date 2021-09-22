@@ -16,7 +16,7 @@
   abstract = {Example from CMoS, 16e, 14.125},
   editora = {Pollan, Michael},
   editoratype = {collaborator},
-  langid = {american}
+  langid = {usenglish}
 }
 
 @audio{mozart_sonatas_1960,
@@ -48,7 +48,7 @@
   abstract = {Example from CMoS, 16e, 14.215 “ed. and trans. John Charles Chasteen”},
   editora = {{Hermano Vianna}},
   editoratype = {collaborator},
-  langid = {american},
+  langid = {usenglish},
   note = {biblatex-chicago example, adapted from \href{http://mirrors.ctan.org/macros/latex/contrib/biblatex-contrib/biblatex-chicago/doc/examples/dates-test.bib}{http://mirrors.ctan.org/macros/latex/contrib/biblatex-contrib/biblatex-chicago/doc/examples/dates-test.bib}
 \par
 Original annotation:
