@@ -4,6 +4,10 @@ import { titleCased } from './csl-titlecase'
 import parse5 = require('parse5/lib/parser')
 const htmlParser = new parse5({ sourceCodeLocationInfo: true })
 
+import Language from '../gen/babel/langmap.json'
+import isLanguage from '../gen/babel/is.json'
+const LanguagePrefixes = Object.keys(Language).sort().reverse().filter(prefix => prefix.length > 3) // eslint-disable-line no-magic-numbers
+
 import charCategories = require('xregexp/tools/output/categories')
 
 const re = {
@@ -447,4 +451,15 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
 
     return normalized_node
   }
+}
+
+export function babelLanguage(language: string): string {
+  const lc = language.toLowerCase()
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return Language[lc] || Language[lc.replace(/[^a-z0-9]/, '-')] || Language[LanguagePrefixes.find((prefix: string) => lc.startsWith(prefix))] || language
+}
+
+export function isBabelLanguage(tag: string, language: string): boolean {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return isLanguage[tag]?.includes(language.toLowerCase())
 }

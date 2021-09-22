@@ -9,3 +9,6 @@
 	path = babel
 	url = https://github.com/latex3/babel.git
 	branch = main
+[submodule "biblatex"]
+	path = biblatex
+	url = https://github.com/plk/biblatex.git

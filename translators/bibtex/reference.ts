@@ -18,9 +18,7 @@ import * as ExtraFields from '../../gen/items/extra-fields.json'
 import * as Extra from '../../content/extra'
 import * as CSL from 'citeproc'
 import { log } from '../../content/logger'
-
-import Language from '../../gen/language.json'
-const English = ['english-unitedstates', 'american', 'british', 'canadian', 'english', 'australian', 'newzealand', 'usenglish', 'ukenglish', 'anglais']
+import { babelLanguage, isBabelLanguage } from '../../content/text'
 
 import { arXiv } from '../../content/arXiv'
 
@@ -199,14 +197,8 @@ export class Reference {
       this.english = true
     }
     else {
-      const lang = this.item.language.toLowerCase()
-      this.language = Language[lang] || Language[lang.replace(/[^a-z0-9]/, '-')]
-      if (!this.language) {
-        const candidates = Object.keys(Language).filter(l => lang.startsWith(l))
-        if (candidates.length === 1) this.language = Language[candidates[0]]
-      }
-      this.language = this.language || this.item.language
-      this.english = English.includes(this.language.toLowerCase())
+      this.language = babelLanguage(this.item.language)
+      this.english = isBabelLanguage('en', this.language)
     }
 
     // remove ordinal from edition

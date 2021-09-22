@@ -121,12 +121,12 @@
 }
 
 @book{fixedkey,
-  title = {Norm and {{Action}}. {{A Logical Enquiry}}},
-  shorttitle = {Norm and {{Action}}},
+  title = {Norm and Action. A Logical Enquiry},
+  shorttitle = {Norm and Action},
   author = {von Humboldt, Alexander and Gooding, Jr., Cuba and de La Fontaine, Jean and von Wright, Georg Henrik Auto and {von Wright}, Georg Henrik Explicit},
   options = {useprefix=true},
   date = {1963},
-  series = {International {{Library}} of {{Philosophy}} and {{Scientific Method}}},
+  series = {International Library of Philosophy and Scientific Method},
   publisher = {{Routledge \& Kegan Paul}},
   location = {{Londres}},
   isbn = {0-7100-3616-7},

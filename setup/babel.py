@@ -6,6 +6,19 @@ from collections import OrderedDict
 import itertools
 import json
 from collections import defaultdict
+import os
+
+print('parsing babel language mapping')
+import sqlite3
+DB = sqlite3.connect(':memory:')
+class Row(sqlite3.Row):
+  def __getattr__(self, name):
+    return self[name]
+  def __repr__(self):
+    return str(tuple([self[k] for k in self.keys()]))
+  def as_dict(self):
+    return { k: self[k] for k in self.keys() }
+DB.row_factory = Row
 
 class Trie:
   def __init__(self):
@@ -43,146 +56,185 @@ class Trie:
       ans.append(prefix)
     return {k: next(v for v in A if v.startswith(k)) for k in ans}
 
-# biblatex language ids
-prefered = {
-  'usenglish', # override
-
-  'basque',
-  'bulgarian',
-  'catalan',
-  'croatian',
-  'czech',
-  'danish',
-  'dutch',
-  'english',
-  'ukenglish',
-  'canadian',
-  'australian',
-  'newzealand',
-  'estonian',
-  'finnish',
-  'french',
-  'german',
-  'austrian',
-  'swissgerman',
-  'ngerman',
-  'naustrian',
-  'nswissgerman',
-  'greek',
-  'hungarian',
-  'icelandic',
-  'italian',
-  'latvian',
-  'lithuanian',
-  'marathi',
-  'norsk',
-  'nynorsk',
-  'polish',
-  'brazil',
-  'portuges',
-  'romanian',
-  'russian',
-  'serbian',
-  'serbianc',
-  'slovak',
-  'slovenian',
-  'spanish',
-  'swedish',
-  'turkish',
-  'ukrainian',
-}
+DB.execute('CREATE TABLE biblatex (langid NOT NULL PRIMARY KEY)')
+DB.executemany('INSERT INTO biblatex (langid) VALUES (?)', [(path.stem.lower(),) for path in Path('biblatex/tex/latex/biblatex/lbx').glob('*.lbx')])
 
 class MultiOrderedDict(OrderedDict):
   def __setitem__(self, key, value):
     if isinstance(value, list) and key in self:
       self[key].extend(value)
     else:
-      #super(MultiOrderedDict, self).__setitem__(key, value)
-      super().__setitem__(key, value) # in Python 3
+      super().__setitem__(key, value)
 
-languages = defaultdict(list)
-alts = defaultdict(list)
-
-for path in Path('babel/locale').rglob('*.ini'):
+DB.execute('CREATE TABLE babel (tag NOT NULL, prio NOT NULL, rel NOT NULL, langid NOT NULL)')
+for path in sorted(Path('babel/locale').rglob('*.ini'), key=lambda p: p.name):
   locale = RawConfigParser(dict_type=MultiOrderedDict, strict=False)
   locale.read(str(path))
   locale = locale['identification']
-  names = [n for n in sorted(locale.keys()) if n.startswith('name.babel')]
-  names = list(itertools.chain.from_iterable([locale[n].split(' ') for n in names]))
 
-  pref = prefered
-  if path.name.startswith('babel-de'):
-    new = set([n for n in prefered if n.startswith('n')])
-    if path.name.endswith('-1901.ini'):
-      pref = prefered - new
-    elif path.name.endswith('-1996.ini'):
-      pref = new
-    elif len(new.intersection(set(names))) == 1:
-      pref = new
-  pref = pref.intersection(set(names))
-  assert len(pref) <= 1, (path.name, pref)
-
-  if len(pref) == 0 and len(names) > 0:
-    name = names[0]
-  elif len(pref) == 1:
-    name = list(pref)[0]
-  else:
-    name = None
-
-  if not name:
-    print(path.name, 'has no name')
+  if 'name.babel' not in locale:
+    print(' ', path.name, 'has no name')
     continue
 
-  name = name.lower()
+  tag = locale['tag.bcp47'].lower()
+  for prio, rel, name in zip([1] + [2] * len(locale['name.babel']), ['name'] + ['alias'] * len(locale['name.babel']), locale['name.babel'].split(' ')):
+    DB.execute('INSERT INTO babel (tag, prio, rel, langid) VALUES (?, ?, ?, ?)', (tag, prio, rel, name.lower()))
 
-  for alt in names:
-    if alt != name:
-      alts[alt] = sorted(list(set(alts[alt] + [name])))
+  for key, name in locale.items():
+    if key.startswith('name.babel.'):
+      DB.execute('''
+        INSERT INTO babel (tag, prio, rel, langid)
+        SELECT :tag, :prio, :rel, :name
+        WHERE NOT EXISTS(SELECT 1 FROM babel WHERE tag = :tag AND langid = :name)
+      ''', { 'tag': tag, 'prio': 3, 'rel': 'alias', 'name': name.lower() })
 
-  for lst, key in [(languages, 'tag.bcp47'), (alts, 'name.polyglossia'), (alts, 'name.local'), (alts, 'name.english')]:
+  for rel in ['polyglossia', 'local', 'english']:
+    key = 'name.' + rel
     if key in locale:
-      key = locale[key].lower()
-      lst[key] = sorted(list(set(lst[key] + [name])))
+      DB.execute('''
+        INSERT INTO babel (tag, prio, rel, langid)
+        SELECT :tag, :prio, :rel, :langid
+        WHERE NOT EXISTS(SELECT 1 FROM babel WHERE tag = :tag AND langid = :langid)
+      ''', { 'tag': tag, 'prio': 4, 'rel': rel, 'langid': locale[key].lower() })
 
-# prefixes
-for short, long in Trie.prefix(list(languages.keys())).items():
-  if not short in languages:
-    languages[short] = languages[long]
+# cleanup
+DB.execute('''
+  DELETE FROM babel
+  WHERE
+    (tag LIKE 'de%-1901' AND langid LIKE 'n%')
+    OR
+    (tag LIKE 'de%-1996' AND langid NOT LIKE 'n%')
+    OR
+    (tag = 'es-mx' AND langid = 'spanish')
+''')
 
-# merge alts, but not at the cost of mains
-for key, names in alts.items():
-  if key in languages:
-    continue
-  
-  if len(names) > 1:
-    shortest = sorted(names)[0]
-    if all(n.startswith(shortest) for n in names):
-      names = [shortest]
+# select name from biblatex-preferred, mark with 0 as selected
+DB.execute('''
+  WITH preferred AS (
+    SELECT ROWID, tag, prio, langid, ROW_NUMBER () OVER (PARTITION BY tag ORDER BY prio, langid) as ranking
+    FROM babel
+    WHERE langid IN (SELECT langid FROM biblatex)
+  )
+  UPDATE babel
+  SET prio = 0
+  WHERE ROWID IN (SELECT ROWID FROM preferred WHERE ranking = 1)
+''')
+# mark babel name as selected for all others
+DB.execute('''
+  UPDATE babel
+  SET prio = 0
+  WHERE prio = 1 AND NOT EXISTS(SELECT 1 FROM babel sel WHERE sel.prio = 0 AND sel.tag = babel.tag)
+''')
 
-  if len(names) > 1:
-    print(key, ': cannot choose between alts', names)
-  else:
-    languages[key] = [names[0]]
+DB.execute('CREATE TABLE langmap (language NOT NULL PRIMARY KEY, langid NOT NULL)')
+DB.execute('INSERT INTO langmap (language, langid) SELECT tag, langid FROM babel WHERE prio = 0')
 
-for tag, names in languages.items():
-  names = sorted(names)
-  if len(names) > 1:
-    print(tag, ': ignoring', names[1:], 'in favor of', names[0])
-  languages[tag] = names[0]
+# set self-alias
+DB.execute('''
+  INSERT INTO langmap (language, langid)
+  SELECT DISTINCT langid, langid
+  FROM langmap
+  WHERE langid NOT IN (SELECT language FROM langmap)
+''')
 
-for tag, name in list(languages.items()):
-  if '-' not in tag and len(tag) == 2:
-    tagtag = '-'.join([tag, tag])
-    if tagtag not in languages:
-      languages[tagtag] = languages[tag]
+# 3-char abbreviation
+DB.execute('''
+  WITH abbr AS (
+    SELECT DISTINCT REPLACE(SUBSTR(language, 1, 3), '-', '') AS language, langid
+    FROM langmap
+  ),
+  abbr_groups AS (
+    SELECT language, COUNT(*) AS n FROM abbr GROUP BY language
+  )
+  INSERT INTO langmap (language, langid)
+  SELECT a.language, a.langid
+  FROM abbr a
+  JOIN abbr_groups g ON a.language = g.language
+  WHERE LENGTH(a.language) = 3 AND g.n = 1 AND a.language NOT IN (SELECT language FROM langmap)
+''')
 
-for name in list(languages.values()):
-  if name not in languages:
-    languages[name] = name
+# langids that map to a single tag (strict alias)
+DB.execute('''
+  WITH groupcount AS (
+    SELECT langid, COUNT(*) AS groupcount
+    FROM babel
+    WHERE prio <> 0
+    GROUP BY langid
+  )
+  INSERT INTO langmap (language, langid)
+  SELECT alias.langid as tag, lang.langid as langid
+  FROM groupcount
+  JOIN babel alias ON alias.langid = groupcount.langid AND alias.prio <> 0
+  JOIN babel lang ON lang.tag = alias.tag AND lang.prio = 0
+  WHERE
+    groupcount.groupcount = 1
+    AND
+    alias.langid NOT IN (SELECT language FROM langmap)
+''')
 
-for key, names in alts.items():
-  if key not in languages:
-    languages[key] = names[0]
+# add tag-tag
+DB.execute('''
+  WITH tagtag AS (
+    SELECT language || '-' || language as tag, langid
+    FROM langmap
+    WHERE language NOT LIKE '%-%' AND LENGTH(language) = 2
+  )
+  INSERT INTO langmap (language, langid)
+  SELECT tag, langid
+  FROM tagtag
+  WHERE tag NOT IN (SELECT language FROM langmap)
+''')
 
-with open('gen/language.json', 'w') as f:
-  json.dump(languages, f, indent='  ')
+# language alias all with same prefix
+langids = defaultdict(list)
+for row in DB.execute('SELECT * FROM babel WHERE prio <> 0 AND langid NOT IN (SELECT language FROM langmap) ORDER BY langid'):
+  langids[row.langid].append(row)
+for langid, mapping in langids.items():
+  prefix = os.path.commonprefix([lang.tag for lang in mapping])
+  if len(prefix) > 0:
+    if prefix[-1] == '-':
+      prefix = prefix[:-1]
+    DB.execute('INSERT INTO langmap (language, langid) SELECT ?, langid FROM langmap WHERE language = ?', (langid, prefix))
+
+# manual patchups
+patchups = {
+  'gaelic': 'scottishgaelic',
+  'norwegian': 'norsk',
+}
+for language, langid in patchups.items():
+  DB.execute('INSERT INTO langmap (language, langid) SELECT ?, ? WHERE EXISTS (SELECT 1 FROM langmap WHERE langid = ?)', (language, langid, langid))
+
+# all unique prefixes
+for prefix, language in Trie.prefix([row.language for row in DB.execute('SELECT language FROM langmap')]).items():
+  continue # disable for now
+
+  if prefix[-1] == '-': prefix = prefix[:-1]
+  if len(prefix) < 3: continue # don't match very short IDs
+  DB.execute('''
+    INSERT INTO langmap (language, langid)
+    SELECT ?, langid
+    FROM langmap
+    WHERE language = ? AND NOT EXISTS (SELECT 1 FROM langmap WHERE language = ?)
+  ''', (prefix, language, prefix))
+
+for row in DB.execute('SELECT * FROM babel WHERE prio <> 0 AND langid NOT IN (SELECT language FROM langmap) ORDER BY langid'):
+  print(' ', row.langid, '=>', row.tag, 'not mapped')
+
+os.makedirs('gen/babel', exist_ok=True)
+with open('gen/babel/langmap.json', 'w') as f:
+  json.dump({ row.language: row.langid for row in DB.execute('SELECT * from langmap ORDER BY language DESC')}, f, indent='  ')
+isLang = defaultdict(list)
+with open('gen/babel/is.json', 'w') as f:
+  for langid in ['en', 'ja']:
+    language = f"SELECT DISTINCT langid FROM langmap WHERE language = '{langid}' OR language LIKE '{langid}-%'"
+    language = DB.execute(f'''
+      {language}
+      UNION
+      SELECT DISTINCT language FROM langmap WHERE langid IN ({language})
+    ''')
+    isLang[langid] = sorted(list(set([row[0] for row in language])))
+  json.dump(isLang, f, indent='  ')
+
+#for line in DB.iterdump():
+#  print(line)
+
