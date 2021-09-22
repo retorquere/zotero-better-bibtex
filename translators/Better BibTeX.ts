@@ -269,7 +269,6 @@ export function doExport(): void {
     ref.add({name: 'type', value: item.type})
     ref.add({name: 'series', value: item.series, bibtexStrings: true})
     ref.add({name: 'title', value: item.title})
-    ref.add({name: 'volume', value: item.volume})
     ref.add({name: 'copyright', value: item.rights})
     ref.add({name: 'isbn', value: item.ISBN})
     ref.add({name: 'issn', value: item.ISSN})
@@ -394,6 +393,7 @@ export function doExport(): void {
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
 
     ref.add({ name: 'pages', value: ref.normalizeDashes(item.pages) })
+    ref.add({name: 'volume', value: ref.normalizeDashes(item.volume) })
 
     ref.add({ name: 'file', value: item.attachments, enc: 'attachments' })
 
