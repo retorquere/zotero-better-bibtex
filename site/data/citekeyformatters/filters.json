@@ -21,6 +21,6 @@
   "`skipwords`": "filters out common words like 'of', 'the', ... the list of words can be seen and changed by going into `about:config` under the key `extensions.zotero.translators.better-bibtex.skipWords` as a comma-separated, case-insensitive list of words.\n\nIf you want to strip words like 'Jr.' from names, you could use something like `[Auth:nopunct:skipwords:fold]` after adding `jr` to the skipWords list. Note that this filter is always applied if you use `title` (which is different from `Title`) or `shorttitle`.",
   "`split-ideographs`": "Treat ideaographs as individual words",
   "`substring`=start? (number), n? (number)": "(`substring=start,n`) selects `n` (default: all) characters starting at `start` (default: 1)",
-  "`transliterate`": "transliterates the citation key",
+  "`transliterate`=mode? ('minimal' | 'german' | 'de' | 'japanese' | 'ja')": "transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field",
   "`upper`": "Forces the text inserted by the field marker to be in uppercase. For example, `[auth:upper]` expands the last name of the first author in uppercase."
 }

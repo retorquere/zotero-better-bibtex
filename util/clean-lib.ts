@@ -11,7 +11,6 @@ import { normalize } from '../translators/lib/normalize'
 import { stringify } from '../content/stringify'
 import * as fs from 'fs'
 import { sync as glob } from 'glob'
-import cleaner = require('deep-cleaner')
 
 import { defaults, names } from '../gen/preferences/meta'
 const supported: string[] = names.filter(name => !['client', 'testing', 'platform', 'newTranslatorsAskRestart'].includes(name))
@@ -85,12 +84,10 @@ for (const lib of argv._) {
         delete item.relations
         delete item.select
 
-        cleaner(item.multi)
-        if (item.multi && Object.keys(item.multi).length === 0) delete item.multi
+        delete item.multi
 
         for (const creator of (item.creators || [])) {
-          cleaner(creator.multi)
-          if (creator.multi && Object.keys(creator.multi).length === 0) delete creator.multi
+          delete creator.multi
         }
 
         for (const att of (item.attachments || [])) {
