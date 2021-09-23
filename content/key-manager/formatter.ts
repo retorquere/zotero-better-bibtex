@@ -292,8 +292,7 @@ class PatternFormatter {
 
       try {
         const { formatter, postfix } = this.parsePattern(this.citekeyFormat)
-        // @ts-ignore
-        this.generate = new Function(formatter)
+        this.generate = (new Function(formatter) as () => string)
         this.postfix = postfix
         break
       }
@@ -548,6 +547,7 @@ class PatternFormatter {
     return this._format_date(this.item.date, format)
   }
 
+  // eslint-disable-next-line max-len
   /** A pseudo-field from the extra field. eg if you have `Original date: 1970` in your `extra` field, you can get it as `[extra=originalDate]`, or `tex.shortauthor: APA` which you could get with `[extra=tex.shortauthor]`. Any `tex.` field will be picked up, the other fields can be selected from [this list](https://retorque.re/zotero-better-bibtex/exporting/extra-fields/) of key names. */
   public $extra(variable: string) { // eslint-disable-line @typescript-eslint/no-inferrable-types
     const variables = variable.toLowerCase().trim().split(/\s*\/\s*/).filter(varname => varname)
