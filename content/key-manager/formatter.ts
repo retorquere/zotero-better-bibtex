@@ -145,7 +145,7 @@ class Item {
   public title: string
   public itemID: number
   public libraryID: number
-  public transliterateMode: 'german' | 'japanese' | ''
+  public transliterateMode: 'german' | 'japanese' | 'chinese' | ''
   public getField: (name: string) => number | string
   public extra: string
   public extraFields: Extra.Fields
@@ -177,6 +177,9 @@ class Item {
       this.transliterateMode = 'german'
     }
     else if (this.isBabelLanguage('ja')) {
+      this.transliterateMode = 'japanese'
+    }
+    else if (this.isBabelLanguage('zh')) {
       this.transliterateMode = 'japanese'
     }
     else {
@@ -340,7 +343,14 @@ class PatternFormatter {
   }
 
   public $language(name: 'zh' | 'chinese' | 'ja' | 'japanese' | 'de' | 'german'): string {
-    const map = { zh: 'zh', chinese: 'zh', ja: 'ja', japanese: 'ja', de: 'de', german: 'de' }
+    const map = {
+      zh: 'zh',
+      chinese: 'zh',
+      ja: 'ja',
+      japanese: 'ja',
+      de: 'de',
+      german: 'de'
+    }
     if (!map[name]) throw new Error(`unexpected language ${JSON.stringify(name)}, choose one of ${Object.keys(map).join(', ')}`)
     if (!this.item.isBabelLanguage(name)) throw { next: true } // eslint-disable-line no-throw-literal
     return ''
@@ -815,15 +825,15 @@ class PatternFormatter {
   }
 
   /** transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field */
-  public _transliterate(value: string, mode?: 'minimal' | 'german' | 'de' | 'japanese' | 'ja' ): string {
+  public _transliterate(value: string, mode?: 'minimal' | 'german' | 'de' | 'japanese' | 'ja' | 'zh' | 'chinese'): string {
     if (!value) return ''
     return this.transliterate(value, mode)
   }
 
-  private transliterate(str: string, mode?: 'minimal' | 'de' | 'german' | 'ja' | 'japanese'): string {
+  private transliterate(str: string, mode?: 'minimal' | 'de' | 'german' | 'ja' | 'japanese' | 'zh' | 'chinese'): string {
     mode = mode || this.item.transliterateMode || 'japanese'
 
-    log.debug('transliterate:', { input: str, mode, kuroshiro: Preference.kuroshiro && kuroshiro.enabled })
+    log.debug('transliterate:', { input: str, mode, jieba: Preference.jieba, kuroshiro: Preference.kuroshiro && kuroshiro.enabled })
 
     let replace: Record<string, string> = {}
     switch (mode) {
@@ -840,6 +850,11 @@ class PatternFormatter {
           '\u00D6': 'Oe', // eslint-disable-line quote-props
           '\u00DC': 'Ue', // eslint-disable-line quote-props
         }
+        break
+
+      case 'zh':
+      case 'chinese':
+        if (Preference.kuroshiro && kuroshiro.enabled) str = kuroshiro.convert(str, {to: 'romaji'})
         break
 
       case 'ja':
