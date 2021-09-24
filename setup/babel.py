@@ -229,7 +229,7 @@ with open('gen/babel/ids.json', 'w') as f:
 
 isLang = defaultdict(list)
 with open('gen/babel/is.json', 'w') as f:
-  for langid in ['en', 'ja']:
+  for langid in ['en', 'ja', 'zh', 'de']:
     language = f"SELECT DISTINCT langid FROM langmap WHERE language = '{langid}' OR language LIKE '{langid}-%'"
     language = DB.execute(f'''
       {language}
