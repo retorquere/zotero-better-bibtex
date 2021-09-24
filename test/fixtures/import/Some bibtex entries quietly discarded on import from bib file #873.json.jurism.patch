@@ -1,756 +1,756 @@
 [
   {
     "op": "add",
-    "path": "/items/8/issue",
-    "value": "8"
+    "path": "/items/0/publisher",
+    "value": "Taylor & Francis"
   },
   {
     "op": "remove",
-    "path": "/items/8/extra/1",
-    ":value": "Number: 8"
+    "path": "/items/0/extra/1",
+    ":value": "Publisher: Taylor & Francis"
   },
   {
     "op": "move",
-    "from": "/items/21/publisher",
-    "path": "/items/21/institution",
+    "from": "/items/7/publisher",
+    "path": "/items/7/institution",
+    ":value": "University of Maryland, College Park"
+  },
+  {
+    "op": "move",
+    "from": "/items/9/publisher",
+    "path": "/items/9/institution",
+    ":value": "Institut f\u00fcr Informatik, Universit\u00e4t Freiburg"
+  },
+  {
+    "op": "move",
+    "from": "/items/14/publisher",
+    "path": "/items/14/institution",
     ":value": "Stanford University Artificial Intelligence Laboratory"
   },
   {
     "op": "move",
-    "from": "/items/22/publisher",
-    "path": "/items/22/institution",
-    ":value": "University of Maryland Department of Computer Science"
-  },
-  {
-    "op": "move",
-    "from": "/items/23/publisher",
-    "path": "/items/23/institution",
-    ":value": "Massachusetts Institute of Technology, Artificial Intelligence Laboratory"
-  },
-  {
-    "op": "add",
-    "path": "/items/37/issue",
-    "value": "64"
-  },
-  {
-    "op": "remove",
-    "path": "/items/37/extra/1",
-    ":value": "Number: 64"
-  },
-  {
-    "op": "move",
-    "from": "/items/45/publisher",
-    "path": "/items/45/institution",
-    ":value": "University of Edinburgh Department of Artificial Intelligence"
+    "from": "/items/39/publisher",
+    "path": "/items/39/institution",
+    ":value": "Department of Computer Science and Engineering, University of Washington"
   },
   {
     "op": "move",
     "from": "/items/46/publisher",
     "path": "/items/46/institution",
-    ":value": "MIT Artificial Intelligence Laboratory"
-  },
-  {
-    "op": "move",
-    "from": "/items/48/publisher",
-    "path": "/items/48/institution",
-    ":value": "Yale University Department of Computer Science"
+    ":value": "Stanford University Artificial Intelligence Laboratory"
   },
   {
     "op": "move",
     "from": "/items/49/publisher",
     "path": "/items/49/institution",
-    ":value": "MIT Artificial Intelligence Laboratory"
+    ":value": "Department of Computer and Information Science, University of Massachusetts, Amherst"
   },
   {
     "op": "move",
-    "from": "/items/50/publisher",
-    "path": "/items/50/institution",
-    ":value": "MIT Artificial Intelligence Laboratory"
+    "from": "/items/63/publisher",
+    "path": "/items/63/institution",
+    ":value": "MIT Department of Electrical Engineering and Computer Science"
   },
   {
     "op": "move",
-    "from": "/items/51/publisher",
-    "path": "/items/51/institution",
+    "from": "/items/71/publisher",
+    "path": "/items/71/institution",
     ":value": "Yale University Department of Computer Science"
   },
   {
     "op": "move",
-    "from": "/items/52/publisher",
-    "path": "/items/52/institution",
+    "from": "/items/75/publisher",
+    "path": "/items/75/institution",
+    ":value": "University of Texas at Austin Department of Mathematics and Computer Sciences"
+  },
+  {
+    "op": "move",
+    "from": "/items/98/publisher",
+    "path": "/items/98/institution",
     ":value": "Bolt Beranek and Newman"
-  },
-  {
-    "op": "move",
-    "from": "/items/79/publisher",
-    "path": "/items/79/institution",
-    ":value": "MIT Artificial Intelligence Laboratory"
-  },
-  {
-    "op": "move",
-    "from": "/items/80/publisher",
-    "path": "/items/80/institution",
-    ":value": "Project MAC, MIT"
-  },
-  {
-    "op": "move",
-    "from": "/items/81/publisher",
-    "path": "/items/81/institution",
-    ":value": "MIT Artificial Intelligence Laboratory"
-  },
-  {
-    "op": "move",
-    "from": "/items/82/publisher",
-    "path": "/items/82/institution",
-    ":value": "MIT Artificial Intelligence Laboratory"
-  },
-  {
-    "op": "move",
-    "from": "/items/109/publisher",
-    "path": "/items/109/institution",
-    ":value": "Yale University Department of Computer Science"
   },
   {
     "op": "move",
     "from": "/items/110/publisher",
     "path": "/items/110/institution",
-    ":value": "University of Rochester Department of Computer Science"
-  },
-  {
-    "op": "move",
-    "from": "/items/111/publisher",
-    "path": "/items/111/institution",
-    ":value": "Yale University Department of Computer Science"
-  },
-  {
-    "op": "move",
-    "from": "/items/112/publisher",
-    "path": "/items/112/institution",
-    ":value": "MIT Artificial Intelligence Laboratory"
-  },
-  {
-    "op": "move",
-    "from": "/items/134/publisher",
-    "path": "/items/134/institution",
-    ":value": "Institute for Semantic and Cognitive Studies"
-  },
-  {
-    "op": "move",
-    "from": "/items/136/publisher",
-    "path": "/items/136/institution",
-    ":value": "Brown University Department of Computer Science"
-  },
-  {
-    "op": "move",
-    "from": "/items/169/publisher",
-    "path": "/items/169/institution",
-    ":value": "MIT"
-  },
-  {
-    "op": "move",
-    "from": "/items/170/publisher",
-    "path": "/items/170/institution",
-    ":value": "Bolt Beranek and Newman"
-  },
-  {
-    "op": "move",
-    "from": "/items/171/publisher",
-    "path": "/items/171/institution",
-    ":value": "Bolt Beranek and Newman"
-  },
-  {
-    "op": "move",
-    "from": "/items/207/publisher",
-    "path": "/items/207/institution",
-    ":value": "CSLI"
-  },
-  {
-    "op": "move",
-    "from": "/items/208/publisher",
-    "path": "/items/208/institution",
-    ":value": "MIT Artificial Intelligence Laboratory"
-  },
-  {
-    "op": "move",
-    "from": "/items/209/publisher",
-    "path": "/items/209/institution",
-    ":value": "National Academy of Sciences/National Research Council"
-  },
-  {
-    "op": "move",
-    "from": "/items/254/publisher",
-    "path": "/items/254/institution",
     ":value": "MITAI"
   },
   {
     "op": "move",
-    "from": "/items/255/publisher",
-    "path": "/items/255/institution",
-    ":value": "Stanford University Artificial Intelligence Laboratory"
+    "from": "/items/123/publisher",
+    "path": "/items/123/institution",
+    ":value": "University of Edinburgh Department of Artificial Intelligence"
+  },
+  {
+    "op": "move",
+    "from": "/items/141/publisher",
+    "path": "/items/141/institution",
+    ":value": "SRI Artificial Intelligence Center"
+  },
+  {
+    "op": "move",
+    "from": "/items/164/publisher",
+    "path": "/items/164/institution",
+    ":value": "Department of Computer Science, Yale University"
+  },
+  {
+    "op": "move",
+    "from": "/items/188/publisher",
+    "path": "/items/188/institution",
+    ":value": "Yale University Department of Computer Science"
+  },
+  {
+    "op": "move",
+    "from": "/items/192/publisher",
+    "path": "/items/192/institution",
+    ":value": "Yale University Computer Science Department"
+  },
+  {
+    "op": "move",
+    "from": "/items/194/publisher",
+    "path": "/items/194/institution",
+    ":value": "Yale University Computer Science Department"
+  },
+  {
+    "op": "move",
+    "from": "/items/198/publisher",
+    "path": "/items/198/institution",
+    ":value": "Brown University, Department of Computer Science"
+  },
+  {
+    "op": "move",
+    "from": "/items/204/publisher",
+    "path": "/items/204/institution",
+    ":value": "Yale University Computer Science Department"
+  },
+  {
+    "op": "add",
+    "path": "/items/216/issue",
+    "value": "8"
+  },
+  {
+    "op": "remove",
+    "path": "/items/216/extra/1",
+    ":value": "Number: 8"
+  },
+  {
+    "op": "add",
+    "path": "/items/217/issue",
+    "value": "WS-98-15"
+  },
+  {
+    "op": "remove",
+    "path": "/items/217/extra/1",
+    ":value": "Number: WS-98-15"
+  },
+  {
+    "op": "move",
+    "from": "/items/221/publisher",
+    "path": "/items/221/institution",
+    ":value": "MIT Artificial Intelligence Laboratory"
+  },
+  {
+    "op": "move",
+    "from": "/items/223/publisher",
+    "path": "/items/223/institution",
+    ":value": "UDUB"
+  },
+  {
+    "op": "move",
+    "from": "/items/241/publisher",
+    "path": "/items/241/institution",
+    ":value": "Computer Science Department, University of Maryland"
+  },
+  {
+    "op": "move",
+    "from": "/items/242/publisher",
+    "path": "/items/242/institution",
+    ":value": "Bilkent University, Department of Computer Engineering and Information Science"
   },
   {
     "op": "move",
     "from": "/items/256/publisher",
     "path": "/items/256/institution",
-    ":value": "MIT Department of Electrical Engineering and Computer Science"
+    ":value": "Univeristy of Rochester Computer Science Department"
   },
   {
     "op": "move",
-    "from": "/items/257/publisher",
-    "path": "/items/257/institution",
-    ":value": "University of Texas at Austin Department of Mathematics and Computer Sciences"
+    "from": "/items/264/publisher",
+    "path": "/items/264/institution",
+    ":value": "Department of Computer Science University of Illinois at"
   },
   {
     "op": "move",
-    "from": "/items/258/publisher",
-    "path": "/items/258/institution",
-    ":value": "Yale University Department of Computer Science"
+    "from": "/items/265/publisher",
+    "path": "/items/265/institution",
+    ":value": "CMUSCS"
   },
   {
     "op": "move",
-    "from": "/items/305/publisher",
-    "path": "/items/305/institution",
-    ":value": "Yale University Department of Computer Science"
+    "from": "/items/270/publisher",
+    "path": "/items/270/institution",
+    ":value": "MIT Artificial Intelligence Laboratory"
+  },
+  {
+    "op": "move",
+    "from": "/items/289/publisher",
+    "path": "/items/289/institution",
+    ":value": "University of British Columbia Department of Computer Science"
+  },
+  {
+    "op": "move",
+    "from": "/items/292/publisher",
+    "path": "/items/292/institution",
+    ":value": "Carnegie-Mellon University"
+  },
+  {
+    "op": "move",
+    "from": "/items/296/publisher",
+    "path": "/items/296/institution",
+    ":value": "CSLI"
+  },
+  {
+    "op": "move",
+    "from": "/items/301/publisher",
+    "path": "/items/301/institution",
+    ":value": "Computer Science Department, Stanford University"
+  },
+  {
+    "op": "move",
+    "from": "/items/303/publisher",
+    "path": "/items/303/institution",
+    ":value": "SRI"
   },
   {
     "op": "move",
     "from": "/items/306/publisher",
     "path": "/items/306/institution",
-    ":value": "MIT Artificial Intelligence Laboratory"
+    ":value": "Dept. of Electronics for Automation, University of Brescia"
   },
   {
     "op": "move",
-    "from": "/items/307/publisher",
-    "path": "/items/307/institution",
-    ":value": "MIT Artificial Intelligence Laboratory"
+    "from": "/items/333/publisher",
+    "path": "/items/333/institution",
+    ":value": "Yale University Department of Computer Science"
   },
   {
     "op": "move",
-    "from": "/items/308/publisher",
-    "path": "/items/308/institution",
-    ":value": "University of British Columbia Department of Computer Science"
-  },
-  {
-    "op": "move",
-    "from": "/items/309/publisher",
-    "path": "/items/309/institution",
+    "from": "/items/341/publisher",
+    "path": "/items/341/institution",
     ":value": "Stanford University Artificial Intelligence Laboratory"
   },
   {
     "op": "move",
-    "from": "/items/310/publisher",
-    "path": "/items/310/institution",
+    "from": "/items/347/publisher",
+    "path": "/items/347/institution",
+    ":value": "KSL"
+  },
+  {
+    "op": "move",
+    "from": "/items/348/publisher",
+    "path": "/items/348/institution",
+    ":value": "KSL"
+  },
+  {
+    "op": "move",
+    "from": "/items/353/publisher",
+    "path": "/items/353/institution",
+    ":value": "UDUB"
+  },
+  {
+    "op": "move",
+    "from": "/items/371/publisher",
+    "path": "/items/371/institution",
+    ":value": "Institute for Semantic and Cognitive Studies"
+  },
+  {
+    "op": "move",
+    "from": "/items/373/publisher",
+    "path": "/items/373/institution",
     ":value": "University of Essex Computer Science Department"
   },
   {
     "op": "move",
-    "from": "/items/311/publisher",
-    "path": "/items/311/institution",
-    ":value": "University of Waterloo Department of Computer Science"
-  },
-  {
-    "op": "move",
-    "from": "/items/358/publisher",
-    "path": "/items/358/institution",
+    "from": "/items/380/publisher",
+    "path": "/items/380/institution",
     ":value": "MIT Artificial Intelligence Laboratory"
   },
   {
     "op": "move",
-    "from": "/items/359/publisher",
-    "path": "/items/359/institution",
-    ":value": "MIT Artificial Intelligence Laboratory"
+    "from": "/items/385/publisher",
+    "path": "/items/385/institution",
+    ":value": "University of British Columbia Department of Computer Science"
   },
   {
     "op": "move",
-    "from": "/items/360/publisher",
-    "path": "/items/360/institution",
-    ":value": "MIT Artificial Intelligence Laboratory"
+    "from": "/items/388/publisher",
+    "path": "/items/388/institution",
+    ":value": "Brown University Department of Computer Science"
   },
   {
     "op": "move",
-    "from": "/items/361/publisher",
-    "path": "/items/361/institution",
-    ":value": "Massachusetts Institute of Technology, Artificial Intelligence Laboratory"
+    "from": "/items/393/publisher",
+    "path": "/items/393/institution",
+    ":value": "New York University"
   },
   {
     "op": "move",
-    "from": "/items/362/publisher",
-    "path": "/items/362/institution",
-    ":value": "Yale University Computer Science Department"
+    "from": "/items/398/publisher",
+    "path": "/items/398/institution",
+    ":value": "Artificial Intelligence Center, SRI International"
   },
   {
     "op": "move",
-    "from": "/items/363/publisher",
-    "path": "/items/363/institution",
-    ":value": "Yale University Computer Science Department"
+    "from": "/items/423/publisher",
+    "path": "/items/423/institution",
+    ":value": "CSLI"
   },
   {
     "op": "move",
-    "from": "/items/364/publisher",
-    "path": "/items/364/institution",
-    ":value": "Yale University Department of Computer Science"
-  },
-  {
-    "op": "move",
-    "from": "/items/365/publisher",
-    "path": "/items/365/institution",
-    ":value": "Yale University Department of Computer Science"
-  },
-  {
-    "op": "move",
-    "from": "/items/412/publisher",
-    "path": "/items/412/institution",
-    ":value": "Yale Center for Computational Vision and Control"
-  },
-  {
-    "op": "move",
-    "from": "/items/413/publisher",
-    "path": "/items/413/institution",
-    ":value": "Yale University Department of Computer Science"
-  },
-  {
-    "op": "move",
-    "from": "/items/414/publisher",
-    "path": "/items/414/institution",
-    ":value": "SRI Artificial Intelligence Center"
-  },
-  {
-    "op": "move",
-    "from": "/items/415/publisher",
-    "path": "/items/415/institution",
-    ":value": "MIT Artificial Intelligence Laboratory"
-  },
-  {
-    "op": "move",
-    "from": "/items/416/publisher",
-    "path": "/items/416/institution",
-    ":value": "University of Maryland, College Park"
+    "from": "/items/436/publisher",
+    "path": "/items/436/institution",
+    ":value": "Computer Science Dept., University of Sherbrooke"
   },
   {
     "op": "add",
-    "path": "/items/431/issue",
-    "value": "8"
+    "path": "/items/446/issue",
+    "value": "64"
   },
   {
     "op": "remove",
-    "path": "/items/431/extra/1",
-    ":value": "Number: 8"
-  },
-  {
-    "op": "move",
-    "from": "/items/450/publisher",
-    "path": "/items/450/institution",
-    ":value": "Yale University Computer Science Department"
-  },
-  {
-    "op": "move",
-    "from": "/items/451/publisher",
-    "path": "/items/451/institution",
-    ":value": "MIT Artificial Intelligence Laboratory"
+    "path": "/items/446/extra/1",
+    ":value": "Number: 64"
   },
   {
     "op": "move",
     "from": "/items/452/publisher",
     "path": "/items/452/institution",
-    ":value": "Yale University Computer Science Department"
+    ":value": "Department of Computer Science, University of Rochester"
   },
   {
     "op": "move",
-    "from": "/items/453/publisher",
-    "path": "/items/453/institution",
-    ":value": "Syracuse University School of Computer and Information Sciences"
+    "from": "/items/486/publisher",
+    "path": "/items/486/institution",
+    ":value": "UDUB"
   },
   {
     "op": "move",
-    "from": "/items/454/publisher",
-    "path": "/items/454/institution",
-    ":value": "Stanford University Computer Science Department"
+    "from": "/items/493/publisher",
+    "path": "/items/493/institution",
+    ":value": "NASA Ames Research Center"
   },
   {
     "op": "move",
-    "from": "/items/496/publisher",
-    "path": "/items/496/institution",
-    ":value": "Department of Computer Science University of Illinois at"
+    "from": "/items/509/publisher",
+    "path": "/items/509/institution",
+    ":value": "MIT Laboratory for Computer Science"
   },
   {
     "op": "move",
-    "from": "/items/498/publisher",
-    "path": "/items/498/institution",
-    ":value": "Department of Computer Science, University of California at Berkeley"
+    "from": "/items/517/publisher",
+    "path": "/items/517/institution",
+    ":value": "MIT Artificial Intelligence Laboratory"
   },
   {
     "op": "move",
-    "from": "/items/499/publisher",
-    "path": "/items/499/institution",
-    ":value": "University of Rochester Department of Computer Science"
+    "from": "/items/524/publisher",
+    "path": "/items/524/institution",
+    ":value": "University of Maryland Department of Computer Science"
   },
   {
     "op": "move",
-    "from": "/items/542/publisher",
-    "path": "/items/542/institution",
-    ":value": "Univeristy of Rochester Computer Science Department"
-  },
-  {
-    "op": "move",
-    "from": "/items/543/publisher",
-    "path": "/items/543/institution",
-    ":value": "University of British Columbia Department of Computer Science"
-  },
-  {
-    "op": "move",
-    "from": "/items/544/publisher",
-    "path": "/items/544/institution",
-    ":value": "Brown University Department of Computer Science"
+    "from": "/items/540/publisher",
+    "path": "/items/540/institution",
+    ":value": "MIT Center for Cognitive Science"
   },
   {
     "op": "move",
     "from": "/items/545/publisher",
     "path": "/items/545/institution",
-    ":value": "New York University"
-  },
-  {
-    "op": "move",
-    "from": "/items/546/publisher",
-    "path": "/items/546/institution",
-    ":value": "Artificial Intelligence Center, SRI International"
-  },
-  {
-    "op": "move",
-    "from": "/items/547/publisher",
-    "path": "/items/547/institution",
-    ":value": "CSLI"
-  },
-  {
-    "op": "move",
-    "from": "/items/548/publisher",
-    "path": "/items/548/institution",
-    ":value": "Department of Computer Science, University of Rochester"
+    ":value": "Project MAC, MIT"
   },
   {
     "op": "move",
     "from": "/items/549/publisher",
     "path": "/items/549/institution",
-    ":value": "Department of Computer Science Yale University"
+    ":value": "Massachusetts Institute of Technology, Artificial Intelligence Laboratory"
   },
   {
     "op": "move",
-    "from": "/items/550/publisher",
-    "path": "/items/550/institution",
-    ":value": "Computer Systems Research Institute, University of Toronto"
+    "from": "/items/561/publisher",
+    "path": "/items/561/institution",
+    ":value": "Department of Computer Science, The University of Huddersfield"
   },
   {
     "op": "move",
-    "from": "/items/551/publisher",
-    "path": "/items/551/institution",
-    ":value": "Artificial Intelligence Center,SRI International"
+    "from": "/items/564/publisher",
+    "path": "/items/564/institution",
+    ":value": "MIT Artificial Intelligence Laboratory"
   },
   {
     "op": "move",
-    "from": "/items/601/publisher",
-    "path": "/items/601/institution",
-    ":value": "SRI Artificial Intelligence Center"
+    "from": "/items/565/publisher",
+    "path": "/items/565/institution",
+    ":value": "MIT Artificial Intelligence Laboratory"
   },
   {
     "op": "move",
-    "from": "/items/602/publisher",
-    "path": "/items/602/institution",
+    "from": "/items/566/publisher",
+    "path": "/items/566/institution",
+    ":value": "MIT Artificial Intelligence Laboratory"
+  },
+  {
+    "op": "move",
+    "from": "/items/567/publisher",
+    "path": "/items/567/institution",
+    ":value": "Massachusetts Institute of Technology, Artificial Intelligence Laboratory"
+  },
+  {
+    "op": "move",
+    "from": "/items/573/publisher",
+    "path": "/items/573/institution",
     ":value": "Yale University Computer Science Department"
+  },
+  {
+    "op": "move",
+    "from": "/items/576/publisher",
+    "path": "/items/576/institution",
+    ":value": "Yale University Computer Science Department"
+  },
+  {
+    "op": "move",
+    "from": "/items/579/publisher",
+    "path": "/items/579/institution",
+    ":value": "Yale University Department of Computer Science"
+  },
+  {
+    "op": "move",
+    "from": "/items/580/publisher",
+    "path": "/items/580/institution",
+    ":value": "Yale University Department of Computer Science"
+  },
+  {
+    "op": "move",
+    "from": "/items/588/publisher",
+    "path": "/items/588/institution",
+    ":value": "Yale Center for Computational Vision and Control"
+  },
+  {
+    "op": "move",
+    "from": "/items/599/publisher",
+    "path": "/items/599/institution",
+    ":value": "Yale University Department of Computer Science"
   },
   {
     "op": "move",
     "from": "/items/603/publisher",
     "path": "/items/603/institution",
-    ":value": "Yale University Computer Science Department"
+    ":value": "Cognitive Science Laboratory, Princeton University"
   },
   {
     "op": "move",
     "from": "/items/604/publisher",
     "path": "/items/604/institution",
-    ":value": "Brown University, Department of Computer Science"
+    ":value": "Computer Science Department, Indiana University"
   },
   {
     "op": "move",
-    "from": "/items/605/publisher",
-    "path": "/items/605/institution",
-    ":value": "Yale University Computer Science Department"
+    "from": "/items/622/publisher",
+    "path": "/items/622/institution",
+    ":value": "MIT Artificial Intelligence Laboratory"
   },
   {
     "op": "move",
-    "from": "/items/606/publisher",
-    "path": "/items/606/institution",
-    ":value": "MIT Laboratory for Computer Science"
+    "from": "/items/624/publisher",
+    "path": "/items/624/institution",
+    ":value": "SRI Artificial Intelligence Center"
   },
   {
     "op": "move",
-    "from": "/items/607/publisher",
-    "path": "/items/607/institution",
-    ":value": "MIT Center for Cognitive Science"
+    "from": "/items/644/publisher",
+    "path": "/items/644/institution",
+    ":value": "Computer Science Department, University of Maryland"
+  },
+  {
+    "op": "move",
+    "from": "/items/646/publisher",
+    "path": "/items/646/institution",
+    ":value": "Albert-Ludwigs-Universit\u00e4t, Institut f\u00fcr Informatik"
   },
   {
     "op": "move",
     "from": "/items/650/publisher",
     "path": "/items/650/institution",
-    ":value": "UDUB"
+    ":value": "MIT Artificial Intelligence Laboratory"
   },
   {
     "op": "move",
-    "from": "/items/651/publisher",
-    "path": "/items/651/institution",
-    ":value": "Department of Computer Science and Engineering, University of Washington"
+    "from": "/items/665/publisher",
+    "path": "/items/665/institution",
+    ":value": "Department of Computer Science, University of California at Berkeley"
   },
   {
     "op": "move",
-    "from": "/items/652/publisher",
-    "path": "/items/652/institution",
-    ":value": "UDUB"
+    "from": "/items/702/publisher",
+    "path": "/items/702/institution",
+    ":value": "MIT"
   },
   {
     "op": "move",
-    "from": "/items/653/publisher",
-    "path": "/items/653/institution",
-    ":value": "Department of Computer and Information Science, University of Massachusetts, Amherst"
-  },
-  {
-    "op": "move",
-    "from": "/items/654/publisher",
-    "path": "/items/654/institution",
-    ":value": "Computer Science Department, Indiana University"
-  },
-  {
-    "op": "move",
-    "from": "/items/655/publisher",
-    "path": "/items/655/institution",
-    ":value": "Link\u00f6ping University"
-  },
-  {
-    "op": "move",
-    "from": "/items/656/publisher",
-    "path": "/items/656/institution",
-    ":value": "Link\u00f6ping University"
-  },
-  {
-    "op": "move",
-    "from": "/items/704/publisher",
-    "path": "/items/704/institution",
-    ":value": "Department of Computer Science, Yale University"
+    "from": "/items/703/publisher",
+    "path": "/items/703/institution",
+    ":value": "University of Rochester Department of Computer Science"
   },
   {
     "op": "move",
     "from": "/items/705/publisher",
     "path": "/items/705/institution",
-    ":value": "UDUB"
+    ":value": "National Academy of Sciences/National Research Council"
   },
   {
     "op": "move",
     "from": "/items/706/publisher",
     "path": "/items/706/institution",
-    ":value": "Computer Science Department, Stanford University"
+    ":value": "University of Waterloo Department of Computer Science"
+  },
+  {
+    "op": "add",
+    "path": "/items/719/publisher",
+    "value": "AI Access Foundation"
+  },
+  {
+    "op": "remove",
+    "path": "/items/719/extra/1",
+    ":value": "Publisher: AI Access Foundation"
   },
   {
     "op": "move",
-    "from": "/items/707/publisher",
-    "path": "/items/707/institution",
+    "from": "/items/724/publisher",
+    "path": "/items/724/institution",
     ":value": "The Institute for the Learning Sciences, Northwestern University"
   },
   {
     "op": "move",
-    "from": "/items/708/publisher",
-    "path": "/items/708/institution",
+    "from": "/items/728/publisher",
+    "path": "/items/728/institution",
     ":value": "The Institute for the Learning Sciences, Northwestern University"
   },
   {
     "op": "move",
-    "from": "/items/709/publisher",
-    "path": "/items/709/institution",
+    "from": "/items/729/publisher",
+    "path": "/items/729/institution",
+    ":value": "School of Computer and Information Science, Syracuse University"
+  },
+  {
+    "op": "move",
+    "from": "/items/730/publisher",
+    "path": "/items/730/institution",
+    ":value": "School of Computer and Information Science, Syracuse University"
+  },
+  {
+    "op": "move",
+    "from": "/items/731/publisher",
+    "path": "/items/731/institution",
+    ":value": "School of Computer and Information Science, Syracuse University"
+  },
+  {
+    "op": "move",
+    "from": "/items/733/publisher",
+    "path": "/items/733/institution",
+    ":value": "Bolt Beranek and Newman"
+  },
+  {
+    "op": "move",
+    "from": "/items/765/publisher",
+    "path": "/items/765/institution",
+    ":value": "Yale University Computer Science Department"
+  },
+  {
+    "op": "move",
+    "from": "/items/768/publisher",
+    "path": "/items/768/institution",
+    ":value": "Department of Computer Science Yale University"
+  },
+  {
+    "op": "move",
+    "from": "/items/774/publisher",
+    "path": "/items/774/institution",
+    ":value": "MIT Artificial Intelligence Laboratory"
+  },
+  {
+    "op": "move",
+    "from": "/items/780/publisher",
+    "path": "/items/780/institution",
+    ":value": "MIT Artificial Intelligence Laboratory"
+  },
+  {
+    "op": "move",
+    "from": "/items/790/publisher",
+    "path": "/items/790/institution",
+    ":value": "Link\u00f6ping University"
+  },
+  {
+    "op": "move",
+    "from": "/items/792/publisher",
+    "path": "/items/792/institution",
+    ":value": "Link\u00f6ping University"
+  },
+  {
+    "op": "move",
+    "from": "/items/797/publisher",
+    "path": "/items/797/institution",
+    ":value": "Yale University Department of Computer Science"
+  },
+  {
+    "op": "move",
+    "from": "/items/799/publisher",
+    "path": "/items/799/institution",
+    ":value": "MIT Artificial Intelligence Laboratory"
+  },
+  {
+    "op": "move",
+    "from": "/items/811/publisher",
+    "path": "/items/811/institution",
+    ":value": "Yale University Department of Computer Science"
+  },
+  {
+    "op": "move",
+    "from": "/items/812/publisher",
+    "path": "/items/812/institution",
+    ":value": "Computer Systems Research Institute, University of Toronto"
+  },
+  {
+    "op": "move",
+    "from": "/items/819/publisher",
+    "path": "/items/819/institution",
+    ":value": "Yale University Computer Science Department"
+  },
+  {
+    "op": "move",
+    "from": "/items/826/publisher",
+    "path": "/items/826/institution",
+    ":value": "MIT Artificial Intelligence Laboratory"
+  },
+  {
+    "op": "move",
+    "from": "/items/833/publisher",
+    "path": "/items/833/institution",
+    ":value": "Syracuse University School of Computer and Information Sciences"
+  },
+  {
+    "op": "move",
+    "from": "/items/835/publisher",
+    "path": "/items/835/institution",
+    ":value": "MIT Artificial Intelligence Laboratory"
+  },
+  {
+    "op": "move",
+    "from": "/items/840/publisher",
+    "path": "/items/840/institution",
     ":value": "University of Pennsylvania Institute for Research in Cognitive Science"
   },
   {
     "op": "move",
-    "from": "/items/710/publisher",
-    "path": "/items/710/institution",
-    ":value": "ICSI"
-  },
-  {
-    "op": "move",
-    "from": "/items/711/publisher",
-    "path": "/items/711/institution",
-    ":value": "ICSI"
-  },
-  {
-    "op": "move",
-    "from": "/items/758/publisher",
-    "path": "/items/758/institution",
-    ":value": "Computer Science Department, University of Maryland"
-  },
-  {
-    "op": "move",
-    "from": "/items/759/publisher",
-    "path": "/items/759/institution",
-    ":value": "Bilkent University, Department of Computer Engineering and Information Science"
-  },
-  {
-    "op": "move",
-    "from": "/items/760/publisher",
-    "path": "/items/760/institution",
-    ":value": "NASA Ames Research Center"
-  },
-  {
-    "op": "move",
-    "from": "/items/782/publisher",
-    "path": "/items/782/institution",
-    ":value": "CMUSCS"
-  },
-  {
-    "op": "move",
-    "from": "/items/783/publisher",
-    "path": "/items/783/institution",
-    ":value": "SRI"
-  },
-  {
-    "op": "move",
-    "from": "/items/784/publisher",
-    "path": "/items/784/institution",
-    ":value": "KSL"
-  },
-  {
-    "op": "move",
-    "from": "/items/785/publisher",
-    "path": "/items/785/institution",
-    ":value": "KSL"
-  },
-  {
-    "op": "move",
-    "from": "/items/786/publisher",
-    "path": "/items/786/institution",
-    ":value": "Computer Science Dept., University of Sherbrooke"
-  },
-  {
-    "op": "add",
-    "path": "/items/802/publisher",
-    "value": "Taylor & Francis"
-  },
-  {
-    "op": "remove",
-    "path": "/items/802/extra/1",
-    ":value": "Publisher: Taylor & Francis"
-  },
-  {
-    "op": "move",
-    "from": "/items/821/publisher",
-    "path": "/items/821/institution",
-    ":value": "Albert-Ludwigs-Universit\u00e4t, Institut f\u00fcr Informatik"
-  },
-  {
-    "op": "move",
-    "from": "/items/822/publisher",
-    "path": "/items/822/institution",
+    "from": "/items/846/publisher",
+    "path": "/items/846/institution",
     ":value": "AAII"
   },
   {
     "op": "move",
-    "from": "/items/823/publisher",
-    "path": "/items/823/institution",
-    ":value": "Department of Computer Science, Brown University"
+    "from": "/items/848/publisher",
+    "path": "/items/848/institution",
+    ":value": "University of Rochester Department of Computer Science"
   },
   {
     "op": "move",
-    "from": "/items/824/publisher",
-    "path": "/items/824/institution",
-    ":value": "Intelligent Systems Program, University of Pittsburgh"
-  },
-  {
-    "op": "move",
-    "from": "/items/856/publisher",
-    "path": "/items/856/institution",
-    ":value": "Carnegie-Mellon University"
-  },
-  {
-    "op": "move",
-    "from": "/items/857/publisher",
-    "path": "/items/857/institution",
-    ":value": "Cognitive Science Laboratory, Princeton University"
-  },
-  {
-    "op": "move",
-    "from": "/items/858/publisher",
-    "path": "/items/858/institution",
-    ":value": "School of Computer and Information Science, Syracuse University"
-  },
-  {
-    "op": "move",
-    "from": "/items/859/publisher",
-    "path": "/items/859/institution",
-    ":value": "School of Computer and Information Science, Syracuse University"
+    "from": "/items/854/publisher",
+    "path": "/items/854/institution",
+    ":value": "Stanford University Computer Science Department"
   },
   {
     "op": "move",
     "from": "/items/860/publisher",
     "path": "/items/860/institution",
-    ":value": "School of Computer and Information Science, Syracuse University"
+    ":value": "Artificial Intelligence Center,SRI International"
   },
   {
     "op": "move",
-    "from": "/items/861/publisher",
-    "path": "/items/861/institution",
-    ":value": "Computing Research Laboratory, New Mexico State University"
-  },
-  {
-    "op": "add",
-    "path": "/items/873/issue",
-    "value": "WS-98-15"
-  },
-  {
-    "op": "remove",
-    "path": "/items/873/extra/1",
-    ":value": "Number: WS-98-15"
-  },
-  {
-    "op": "add",
-    "path": "/items/899/publisher",
-    "value": "Elsevier Science Inc."
-  },
-  {
-    "op": "remove",
-    "path": "/items/899/extra/1",
-    ":value": "Publisher: Elsevier Science Inc."
+    "from": "/items/862/publisher",
+    "path": "/items/862/institution",
+    ":value": "ICSI"
   },
   {
     "op": "move",
-    "from": "/items/903/publisher",
-    "path": "/items/903/institution",
-    ":value": "Institut f\u00fcr Informatik, Universit\u00e4t Freiburg"
+    "from": "/items/866/publisher",
+    "path": "/items/866/institution",
+    ":value": "MIT Artificial Intelligence Laboratory"
   },
   {
     "op": "move",
-    "from": "/items/904/publisher",
-    "path": "/items/904/institution",
-    ":value": "Dept. of Electronics for Automation, University of Brescia"
+    "from": "/items/882/publisher",
+    "path": "/items/882/institution",
+    ":value": "ICSI"
   },
   {
     "op": "move",
-    "from": "/items/905/publisher",
-    "path": "/items/905/institution",
-    ":value": "Department of Computer Science, The University of Huddersfield"
-  },
-  {
-    "op": "move",
-    "from": "/items/906/publisher",
-    "path": "/items/906/institution",
-    ":value": "Computer Science Department, University of Maryland"
-  },
-  {
-    "op": "move",
-    "from": "/items/907/publisher",
-    "path": "/items/907/institution",
+    "from": "/items/886/publisher",
+    "path": "/items/886/institution",
     ":value": "Insitut f\u00fcr Informatik, Universit\u00e4t Freiburg"
   },
   {
     "op": "add",
-    "path": "/items/959/publisher",
-    "value": "AI Access Foundation"
+    "path": "/items/902/publisher",
+    "value": "Elsevier Science Inc."
   },
   {
     "op": "remove",
-    "path": "/items/959/extra/1",
-    ":value": "Publisher: AI Access Foundation"
+    "path": "/items/902/extra/1",
+    ":value": "Publisher: Elsevier Science Inc."
+  },
+  {
+    "op": "add",
+    "path": "/items/910/issue",
+    "value": "8"
+  },
+  {
+    "op": "remove",
+    "path": "/items/910/extra/1",
+    ":value": "Number: 8"
+  },
+  {
+    "op": "move",
+    "from": "/items/925/publisher",
+    "path": "/items/925/institution",
+    ":value": "Yale University Department of Computer Science"
+  },
+  {
+    "op": "move",
+    "from": "/items/936/publisher",
+    "path": "/items/936/institution",
+    ":value": "Computing Research Laboratory, New Mexico State University"
+  },
+  {
+    "op": "move",
+    "from": "/items/957/publisher",
+    "path": "/items/957/institution",
+    ":value": "Brown University Department of Computer Science"
+  },
+  {
+    "op": "move",
+    "from": "/items/963/publisher",
+    "path": "/items/963/institution",
+    ":value": "Bolt Beranek and Newman"
+  },
+  {
+    "op": "move",
+    "from": "/items/966/publisher",
+    "path": "/items/966/institution",
+    ":value": "Department of Computer Science, Brown University"
+  },
+  {
+    "op": "move",
+    "from": "/items/968/publisher",
+    "path": "/items/968/institution",
+    ":value": "Intelligent Systems Program, University of Pittsburgh"
   }
 ]

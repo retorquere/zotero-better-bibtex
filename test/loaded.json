@@ -269,6 +269,8 @@
   "export/Journal abbreviations.json",
   "export/Juris-M missing multi-lingual fields #482.biblatex",
   "export/Juris-M missing multi-lingual fields #482.json",
+  "export/Language field in the metadata exported incorrectly #1921.biblatex",
+  "export/Language field in the metadata exported incorrectly #1921.json",
   "export/Latex commands in extra-field treated differently #1207.biblatex",
   "export/Latex commands in extra-field treated differently #1207.json",
   "export/Malformed HTML.biblatex",

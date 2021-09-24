@@ -14,6 +14,7 @@ import { JournalAbbrev } from '../journal-abbrev'
 import { kuroshiro } from './kuroshiro'
 import * as Extra from '../extra'
 import { buildCiteKey as zotero_buildCiteKey } from './formatter-zotero'
+import { babelLanguage, isBabelLanguage } from '../text'
 
 const parser = require('./formatter.pegjs')
 import * as DateParser from '../dateparser'
@@ -136,12 +137,7 @@ type PartialDate = {
 
 class Item {
   public item: ZoteroItem | SerializedItem
-  private language = {
-    jp: 'japanese',
-    japanese: 'japanese',
-    de: 'german',
-    german: 'german',
-  }
+  private language = ''
 
   public itemType: string
   public date: PartialDate
@@ -149,7 +145,7 @@ class Item {
   public title: string
   public itemID: number
   public libraryID: number
-  public removeDiacritics: string
+  public transliterateMode: 'german' | 'japanese' | ''
   public getField: (name: string) => number | string
   public extra: string
   public extraFields: Extra.Fields
@@ -176,7 +172,17 @@ class Item {
       this.title = (item as SerializedReference).title
     }
 
-    this.removeDiacritics = this.language[(this.getField('language') as string || '').toLowerCase()] || ''
+    this.language = babelLanguage((this.getField('language') as string) || '')
+    if (this.isBabelLanguage('de')) {
+      this.transliterateMode = 'german'
+    }
+    else if (this.isBabelLanguage('ja')) {
+      this.transliterateMode = 'japanese'
+    }
+    else {
+      this.transliterateMode = ''
+    }
+
     const extraFields = Extra.get(this.getField('extra') as string, 'zotero', { kv: true, tex: true })
     this.extra = extraFields.extra
     this.extraFields = extraFields.extraFields
@@ -207,6 +213,10 @@ class Item {
     }
 
     if (this.title.includes('<')) this.title = innerText(htmlParser.parseFragment(this.title))
+  }
+
+  public isBabelLanguage(lang: string): boolean {
+    return this.language && lang && isBabelLanguage(lang, this.language)
   }
 
   public getTags(): Tag[] | string[] {
@@ -292,8 +302,7 @@ class PatternFormatter {
 
       try {
         const { formatter, postfix } = this.parsePattern(this.citekeyFormat)
-        // @ts-ignore
-        this.generate = new Function(formatter)
+        this.generate = (new Function(formatter) as () => string)
         this.postfix = postfix
         break
       }
@@ -324,10 +333,17 @@ class PatternFormatter {
     }
 
     let citekey = this.generate() || `zotero-${this.item.itemID}`
-    if (citekey && Preference.citekeyFold) citekey = this.removeDiacritics(citekey)
+    if (citekey && Preference.citekeyFold) citekey = this.transliterate(citekey)
     citekey = citekey.replace(/[\s{},@]/g, '')
 
     return citekey
+  }
+
+  public $language(name: 'zh' | 'chinese' | 'ja' | 'japanese' | 'de' | 'german'): string {
+    const map = { zh: 'zh', chinese: 'zh', ja: 'ja', japanese: 'ja', de: 'de', german: 'de' }
+    if (!map[name]) throw new Error(`unexpected language ${JSON.stringify(name)}, choose one of ${Object.keys(map).join(', ')}`)
+    if (!this.item.isBabelLanguage(name)) throw { next: true } // eslint-disable-line no-throw-literal
+    return ''
   }
 
   /**
@@ -548,7 +564,14 @@ class PatternFormatter {
     return this._format_date(this.item.date, format)
   }
 
-  /** A pseudo-field from the extra field. eg if you have `Original date: 1970` in your `extra` field, you can get it as `[extra=originalDate]`, or `tex.shortauthor: APA` which you could get with `[extra=tex.shortauthor]`. Any `tex.` field will be picked up, the other fields can be selected from [this list](https://retorque.re/zotero-better-bibtex/exporting/extra-fields/) of key names. */
+  /** A pseudo-field from the extra field. eg if you have `Original
+      date: 1970` in your `extra` field, you can get it as
+      `[extra=originalDate]`, or `tex.shortauthor: APA` which you could
+      get with `[extra=tex.shortauthor]`. Any `tex.` field will be
+      picked up, the other fields can be selected from [this
+      list](https://retorque.re/zotero-better-bibtex/exporting/extra-fields/)
+      of key names.
+   */
   public $extra(variable: string) { // eslint-disable-line @typescript-eslint/no-inferrable-types
     const variables = variable.toLowerCase().trim().split(/\s*\/\s*/).filter(varname => varname)
     if (!variables.length) return ''
@@ -744,7 +767,7 @@ class PatternFormatter {
 
   /** tries to replace diacritics with ascii look-alikes. Removes non-ascii characters it cannot match */
   public _fold(value: string, mode?: 'german' | 'japanese'): string {
-    return this.removeDiacritics(value, mode).split(/\s+/).join(' ').trim()
+    return this.transliterate(value, mode).split(/\s+/).join(' ').trim()
   }
 
   /** uppercases the first letter of each word */
@@ -785,42 +808,60 @@ class PatternFormatter {
     return this.clean(value)
   }
 
-  /** transliterates the citation key */
-  public _transliterate(value: string): string {
+  /** transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field */
+  public _transliterate(value: string, mode?: 'minimal' | 'german' | 'de' | 'japanese' | 'ja' ): string {
     if (!value) return ''
-    return this.removeDiacritics(value)
+    return this.transliterate(value, mode)
   }
 
-  private removeDiacritics(str: string, mode?: string): string {
-    mode = mode || this.item.removeDiacritics
+  private transliterate(str: string, mode?: 'minimal' | 'de' | 'german' | 'ja' | 'japanese'): string {
+    mode = mode || this.item.transliterateMode || 'japanese'
 
-    if (mode === 'japanese') mode = null
-    const replace = {
-      german: {
-        '\u00E4': 'ae', // eslint-disable-line quote-props
-        '\u00F6': 'oe', // eslint-disable-line quote-props
-        '\u00FC': 'ue', // eslint-disable-line quote-props
-        '\u00C4': 'Ae', // eslint-disable-line quote-props
-        '\u00D6': 'Oe', // eslint-disable-line quote-props
-        '\u00DC': 'Ue', // eslint-disable-line quote-props
-      },
-    }[mode]
-    if (mode && !replace) throw new Error(`Unsupported fold mode "${mode}"`)
+    log.debug('transliterate:', { input: str, mode, kuroshiro: Preference.kuroshiro && kuroshiro.enabled })
 
-    if (Preference.kuroshiro && kuroshiro.enabled) str = kuroshiro.convert(str, {to: 'romaji'})
+    let replace: Record<string, string> = {}
+    switch (mode) {
+      case 'minimal':
+        break
+
+      case 'de':
+      case 'german':
+        replace = {
+          '\u00E4': 'ae', // eslint-disable-line quote-props
+          '\u00F6': 'oe', // eslint-disable-line quote-props
+          '\u00FC': 'ue', // eslint-disable-line quote-props
+          '\u00C4': 'Ae', // eslint-disable-line quote-props
+          '\u00D6': 'Oe', // eslint-disable-line quote-props
+          '\u00DC': 'Ue', // eslint-disable-line quote-props
+        }
+        break
+
+      case 'ja':
+      case 'japanese':
+        if (Preference.kuroshiro && kuroshiro.enabled) str = kuroshiro.convert(str, {to: 'romaji'})
+        break
+
+      default:
+        throw new Error(`Unsupported fold mode "${mode}"`)
+    }
+
     str = transliterate(str || '', {
       unknown: '\uFFFD', // unicode replacement char
       replace,
     })
 
+    log.debug('transliterate replace:', str)
+
     str = fold2ascii.foldMaintaining(str)
+
+    log.debug('transliterate fold:', str)
 
     return str
   }
 
   private clean(str: string, allow_spaces = false): string {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return Zotero.Utilities.XRegExp.replace(this.removeDiacritics(str), allow_spaces ? this.re.unsafechars_allow_spaces : this.re.unsafechars, '', 'all').trim()
+    return Zotero.Utilities.XRegExp.replace(this.transliterate(str, 'ja'), allow_spaces ? this.re.unsafechars_allow_spaces : this.re.unsafechars, '', 'all').trim()
   }
 
   private titleWords(title, options: { asciiOnly?: boolean, skipWords?: boolean} = {}): string[] {
@@ -864,7 +905,7 @@ class PatternFormatter {
       initial = firstName[0]
     }
 
-    return this.removeDiacritics(initial)
+    return this.transliterate(initial)
   }
 
   private creators(onlyEditors, options: { initialOnly?: boolean, withInitials?: boolean} = {}): string[] {
@@ -880,7 +921,7 @@ class PatternFormatter {
       if (name) {
         if (options.withInitials && creator.firstName) {
           let initials = Zotero.Utilities.XRegExp.replace(this.stripQuotes(creator.firstName), this.re.caseNotUpperTitle, '', 'all')
-          initials = this.removeDiacritics(initials)
+          initials = this.transliterate(initials)
           initials = Zotero.Utilities.XRegExp.replace(initials, this.re.caseNotUpper, '', 'all')
           name += initials
         }

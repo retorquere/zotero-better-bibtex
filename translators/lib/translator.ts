@@ -87,12 +87,11 @@ class Items {
 
   private ping: Pinger
 
-  constructor(cacheable) {
+  constructor(cacheable: boolean) {
     let item: CacheableItem
     while (item = Zotero.nextItem()) {
-      item.$cacheable = cacheable
-      // @ts-ignore
-      item.journalAbbreviation = item.journalAbbreviation || item.autoJournalAbbreviation
+      item.$cacheable = cacheable;
+      (item as Reference).journalAbbreviation = (item as Reference).journalAbbreviation || (item as Reference).autoJournalAbbreviation
       this.list.push(this.map[item.itemID] = this.map[item.itemKey] = new Proxy(item, cacheDisabler))
     }
     // fallback to itemType.itemID for notes and attachments. And some items may have duplicate keys

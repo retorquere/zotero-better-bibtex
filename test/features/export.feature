@@ -13,6 +13,7 @@ Scenario Outline: Export <references> references for BibLaTeX to <file>
   Examples:
      | file                                                                                           | references  |
      | Export of hypen for range in the volume field #1929                                            | 1           |
+     | Kuroshiro hardcoded to apply to all CJK language items when option checked #1928               | 2           |
      | Language field in the metadata exported incorrectly #1921                                      | 86          |
      | Export article title capitalisation; P-Type vs n-type #1913                                    | 1           |
      | Better Biblatex export generates invalid latex when processing zero-width spaces #1892         | 1           |

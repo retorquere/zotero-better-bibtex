@@ -9,7 +9,6 @@ declare const doExport: () => void
 declare const Translator: ITranslator
 declare const dump: (message: string) => void
 
-// @ts-ignore
 import XRegExp = require('xregexp')
 import * as DateParser from '../../content/dateparser'
 // import * as Extra from '../../content/extra'
