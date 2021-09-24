@@ -802,6 +802,12 @@ class PatternFormatter {
     return jieba.cut(value || '').join(' ').trim()
   }
 
+  /** word segmentation for Japanese references. Uses substantial memory; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
+  public _kuromoji(value: string): string {
+    if (!Preference.kuroshiro || !kuroshiro.enabled) return value
+    return kuroshiro.cut(value || '').join(' ').trim()
+  }
+
   /** transliterates the citation key and removes unsafe characters */
   public _clean(value: string): string {
     if (!value) return ''
