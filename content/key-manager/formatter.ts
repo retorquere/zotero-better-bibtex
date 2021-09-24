@@ -14,7 +14,7 @@ import { JournalAbbrev } from '../journal-abbrev'
 import { kuroshiro } from './kuroshiro'
 import * as Extra from '../extra'
 import { buildCiteKey as zotero_buildCiteKey } from './formatter-zotero'
-import { babelLanguage, isBabelLanguage } from '../text'
+import { babelLanguage, babelTag } from '../text'
 
 const parser = require('./formatter.pegjs')
 import * as DateParser from '../dateparser'
@@ -173,14 +173,18 @@ class Item {
     }
 
     this.language = babelLanguage((this.getField('language') as string) || '')
-    if (this.isBabelLanguage('de')) {
-      this.transliterateMode = 'german'
-    }
-    else if (this.isBabelLanguage('ja')) {
-      this.transliterateMode = 'japanese'
-    }
-    else {
-      this.transliterateMode = ''
+    switch (this.babelTag()) {
+      case 'de':
+        this.transliterateMode = 'german'
+        break
+
+      case 'ja':
+        this.transliterateMode = 'japanese'
+        break
+
+      default:
+        this.transliterateMode = ''
+        break
     }
 
     const extraFields = Extra.get(this.getField('extra') as string, 'zotero', { kv: true, tex: true })
@@ -215,8 +219,8 @@ class Item {
     if (this.title.includes('<')) this.title = innerText(htmlParser.parseFragment(this.title))
   }
 
-  public isBabelLanguage(lang: string): boolean {
-    return this.language && lang && isBabelLanguage(lang, this.language)
+  public babelTag(): string {
+    return babelTag(this.language)
   }
 
   public getTags(): Tag[] | string[] {
@@ -342,7 +346,7 @@ class PatternFormatter {
   public $language(name: 'zh' | 'chinese' | 'ja' | 'japanese' | 'de' | 'german'): string {
     const map = { zh: 'zh', chinese: 'zh', ja: 'ja', japanese: 'ja', de: 'de', german: 'de' }
     if (!map[name]) throw new Error(`unexpected language ${JSON.stringify(name)}, choose one of ${Object.keys(map).join(', ')}`)
-    if (!this.item.isBabelLanguage(name)) throw { next: true } // eslint-disable-line no-throw-literal
+    if (this.item.babelTag() !== map[name]) throw { next: true } // eslint-disable-line no-throw-literal
     return ''
   }
 
