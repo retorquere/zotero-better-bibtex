@@ -18,7 +18,7 @@ import * as ExtraFields from '../../gen/items/extra-fields.json'
 import * as Extra from '../../content/extra'
 import * as CSL from 'citeproc'
 import { log } from '../../content/logger'
-import { babelLanguage, isBabelLanguage } from '../../content/text'
+import { babelLanguage, babelTag } from '../../content/text'
 
 import { arXiv } from '../../content/arXiv'
 
@@ -198,7 +198,7 @@ export class Reference {
     }
     else {
       this.language = babelLanguage(this.item.language)
-      this.english = isBabelLanguage('en', this.language)
+      this.english = babelTag(this.language) === 'en'
     }
 
     // remove ordinal from edition

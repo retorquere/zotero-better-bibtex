@@ -227,8 +227,8 @@ with open('gen/babel/langmap.json', 'w') as f:
 with open('gen/babel/ids.json', 'w') as f:
   json.dump([ row.langid for row in DB.execute('SELECT DISTINCT langid from langmap ORDER BY langid')], f, indent='  ')
 
-isLang = defaultdict(list)
-with open('gen/babel/is.json', 'w') as f:
+with open('gen/babel/tag.json', 'w') as f:
+  tag = {}
   for langid in ['en', 'ja', 'zh', 'de']:
     language = f"SELECT DISTINCT langid FROM langmap WHERE language = '{langid}' OR language LIKE '{langid}-%'"
     language = DB.execute(f'''
@@ -236,8 +236,9 @@ with open('gen/babel/is.json', 'w') as f:
       UNION
       SELECT DISTINCT language FROM langmap WHERE langid IN ({language})
     ''')
-    isLang[langid] = sorted(list(set([row[0] for row in language])))
-  json.dump(isLang, f, indent='  ')
+    for row in language:
+      tag[row.langid] = langid
+  json.dump(tag, f, indent='  ')
 
 #for line in DB.iterdump():
 #  print(line)

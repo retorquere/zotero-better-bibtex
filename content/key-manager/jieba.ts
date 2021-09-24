@@ -34,6 +34,6 @@ export const jieba = new class {
   }
 
   public convert(str: string): string {
-    return pinyin(str).map(c => c[0]).join('')
+    return (pinyin(str) as string[][]).map((c: string[]) => c[0]).join('')
   }
 }
