@@ -257,6 +257,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       debugEnabled: Zotero.Debug.enabled ? 'true' : 'false',
       worker: id,
     }).map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&')
+    log.debug('worker context:', workerContext)
 
     const deferred = new Deferred<string>()
     let worker: ChromeWorker = null
