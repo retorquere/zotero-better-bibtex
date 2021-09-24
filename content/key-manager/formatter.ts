@@ -815,7 +815,9 @@ class PatternFormatter {
   }
 
   private transliterate(str: string, mode?: 'minimal' | 'de' | 'german' | 'ja' | 'japanese'): string {
-    mode = mode || this.item.transliterateMode || 'minimal'
+    mode = mode || this.item.transliterateMode || 'japanese'
+
+    log.debug('transliterate:', { input: str, mode, kuroshiro: Preference.kuroshiro && kuroshiro.enabled })
 
     let replace: Record<string, string> = {}
     switch (mode) {
@@ -848,7 +850,11 @@ class PatternFormatter {
       replace,
     })
 
+    log.debug('transliterate replace:', str)
+
     str = fold2ascii.foldMaintaining(str)
+
+    log.debug('transliterate fold:', str)
 
     return str
   }
