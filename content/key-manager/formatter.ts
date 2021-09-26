@@ -11,7 +11,6 @@ import { transliterate } from 'transliteration'
 import { flash } from '../flash'
 import { Preference } from '../../gen/preferences'
 import { JournalAbbrev } from '../journal-abbrev'
-import { kuroshiro } from './kuroshiro'
 import * as Extra from '../extra'
 import { buildCiteKey as zotero_buildCiteKey } from './formatter-zotero'
 import { babelLanguage, babelTag } from '../text'
@@ -22,12 +21,14 @@ import * as DateParser from '../dateparser'
 import * as methods from '../../gen/key-formatter-methods.json'
 import itemCreators from '../../gen/items/creators.json'
 import * as items from '../../gen/items/items'
-import { jieba } from './jieba'
 
 import parse5 = require('parse5/lib/parser')
 const htmlParser = new parse5()
 
 import { sprintf } from 'sprintf-js'
+
+import { jieba, pinyin } from './chinese'
+import { kuroshiro } from './japanese'
 
 function innerText(node): string {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -820,7 +821,7 @@ class PatternFormatter {
   /** word segmentation for Japanese references. Uses substantial memory; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
   public _kuromoji(value: string): string {
     if (!Preference.kuroshiro || !kuroshiro.enabled) return value
-    return kuroshiro.cut(value || '').join(' ').trim()
+    return kuroshiro.tokenize(value || '').join(' ').trim()
   }
 
   /** transliterates the citation key and removes unsafe characters */
@@ -859,7 +860,7 @@ class PatternFormatter {
 
       case 'zh':
       case 'chinese':
-        if (Preference.kuroshiro && kuroshiro.enabled) str = jieba.convert(str)
+        if (Preference.kuroshiro && kuroshiro.enabled) str = pinyin(str)
         break
 
       case 'ja':

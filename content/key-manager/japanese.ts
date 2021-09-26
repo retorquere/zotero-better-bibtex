@@ -6,7 +6,6 @@ import { Preference } from '../../gen/preferences'
 import KuromojiAnalyzer from 'kuroshiro-analyzer-kuromoji'
 import { Events } from '../events'
 import { zotero as inZotero } from '../environment'
-import * as kuromoji from 'kuromoji'
 
 if (inZotero) {
   NodeDictionaryLoader.prototype.loadArrayBuffer = function(url, callback) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
@@ -31,19 +30,6 @@ if (inZotero) {
   }
 }
 
-function kuromoji_tokenizer(): Promise<any> {
-  return new Promise((resolve, reject) => {
-    kuromoji.builder({ dicPath: inZotero ? 'resource://zotero-better-bibtex/kuromoji' : undefined }).build((err, tokenizer) => {
-      if (err) {
-        reject(err)
-      }
-      else {
-        resolve(tokenizer)
-      }
-    })
-  })
-}
-
 export const kuroshiro = new class {
   public enabled = false
   private kuroshiro: any
@@ -61,8 +47,9 @@ export const kuroshiro = new class {
       if (!Preference.kuroshiro || this.enabled) return
 
       this.kuroshiro = new Kuroshiro()
-      await this.kuroshiro.init(new KuromojiAnalyzer(inZotero ? 'resource://zotero-better-bibtex/kuromoji' : undefined))
-      this.kuromiji = await kuromoji_tokenizer()
+      const analyzer = new KuromojiAnalyzer(inZotero ? 'resource://zotero-better-bibtex/kuromoji' : undefined)
+      await this.kuroshiro.init(analyzer)
+      this.kuromiji = analyzer._analyzer // eslint-disable-line no-underscore-dangle
       this.enabled = true
     }
     catch (err) {
@@ -71,13 +58,13 @@ export const kuroshiro = new class {
     }
   }
 
-  public convert(str: string, options): string {
+  public convert(str: string, options: any): string {
     if (!this.enabled) throw new Error('kuroshiro not initialized')
     if (str && Kuroshiro.Util.hasJapanese(str)) return this.kuroshiro.convert(str, options)
     return str
   }
 
-  public cut(str: string): string[] {
+  public tokenize(str: string): string[] {
     if (!this.enabled) throw new Error('kuroshiro not initialized')
     return this.kuromiji.tokenize(str).map(c => c.surface_form)
   }
