@@ -142,6 +142,7 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
     dir: undefined,
     path: undefined,
   }
+  public and: { list: string, names: string }
 
   public options: {
     quickCopyMode?: string
@@ -329,6 +330,11 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
           return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
         },
       })
+    }
+
+    this.and = {
+      list: ` ${this.preferences.separatorList} `,
+      names: ` ${this.preferences.separatorNames} `,
     }
 
     this.initialized = true

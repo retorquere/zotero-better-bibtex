@@ -1,0 +1,47 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "dmy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "citekeyFormat": "[auth:lower][year] | [=forumPost/WebPage][Auth:lower:capitalize][Date:format-date=%Y-%m-%d.%H\\:%M\\:%S:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de] | [Auth:lower:capitalize][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de]",
+      "kuroshiro": true,
+      "separatorList": "|",
+      "separatorNames": "|"
+    }
+  },
+  "items": [
+    {
+      "citationKey": "kripke1707",
+      "creators": [
+        {
+          "creatorType": "contributor",
+          "firstName": "Gottlob",
+          "lastName": "Frege"
+        },
+        {
+          "creatorType": "sponsor",
+          "firstName": "Saul",
+          "lastName": "Kripke"
+        },
+        {
+          "creatorType": "sponsor",
+          "firstName": "Albert",
+          "lastName": "Camus"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "Carl",
+          "lastName": "Marx"
+        }
+      ],
+      "date": "1707",
+      "itemID": 1,
+      "itemType": "bill",
+      "title": "of Rights"
+    }
+  ]
+}

@@ -715,6 +715,26 @@
     "var": "scrubDatabase"
   },
   {
+    "name": "separatorList",
+    "type": "string",
+    "default": "and",
+    "affects": [
+      "Better BibLaTeX",
+      "Better BibTeX"
+    ],
+    "var": "separatorList"
+  },
+  {
+    "name": "separatorNames",
+    "type": "string",
+    "default": "and",
+    "affects": [
+      "Better BibLaTeX",
+      "Better BibTeX"
+    ],
+    "var": "separatorNames"
+  },
+  {
     "name": "skipFields",
     "type": "string",
     "default": "",

@@ -322,6 +322,13 @@ bbt:doc.
   shorten the (blocking) preparation time by turning off
   the cache, at the cost of longer export times.
 
+preference(name="extensions.zotero.translators.better-bibtex.separatorList" bbt:affects="tex" type="string" default="and")
+bbt:doc.
+  Separator between list elements in list-type fields. You will need to add `--listsep='|'` to your biber calls.
+preference(name="extensions.zotero.translators.better-bibtex.separatorNames" bbt:affects="tex" type="string" default="and")
+bbt:doc.
+  Separator between author names. You will need to add `--namesep='|'` to your biber calls.
+
 // documented in tooltip
 preference#pref-better-bibtex-retainCache(name="extensions.zotero.translators.better-bibtex.retainCache" bbt:affects="" type="bool" default="false")
 preference#pref-better-bibtex-exportTitleCase(name="extensions.zotero.translators.better-bibtex.exportTitleCase" bbt:affects="tex" type="bool" default="true")

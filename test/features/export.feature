@@ -153,6 +153,7 @@ Scenario Outline: Export <references> references for BibTeX to <file>
 
   Examples:
      | file                                                                               | references |
+     | Customise name-separator and list-separator #1927                                  | 1          |
      | citation key format nopunctordash filter list #1880                                | 1          |
      | Export report+type as preprint                                                     | 1          |
      | Use creator in extra field when there is no creator in the usual places? #1873     | 1          |

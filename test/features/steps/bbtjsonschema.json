@@ -357,6 +357,12 @@
             "scrubDatabase": {
               "type": "boolean"
             },
+            "separatorList": {
+              "type": "string"
+            },
+            "separatorNames": {
+              "type": "string"
+            },
             "skipFields": {
               "type": "string"
             },

@@ -357,7 +357,7 @@ export function doExport(): void {
         sponsors.push(creator.source)
         return false
       })
-      ref.add({ name: 'organization', value: sponsors.join(' and ') })
+      ref.add({ name: 'organization', value: sponsors.join(Translator.and.list) })
     }
     ref.addCreators()
     // #1541
@@ -552,9 +552,9 @@ class ZoteroItem {
     if (!field) return this.fallback(candidates, value)
 
     this.item[field] = [
-      (this.bibtex.fields.publisher || []).join(' and '),
-      (this.bibtex.fields.institution || []).join(' and '),
-      (this.bibtex.fields.school || []).join(' and '),
+      (this.bibtex.fields.publisher || []).join(Translator.and.list),
+      (this.bibtex.fields.institution || []).join(Translator.and.list),
+      (this.bibtex.fields.school || []).join(Translator.and.list),
     ].filter(v => v.replace(/[ \t\r\n]+/g, ' ').trim()).join(' / ')
 
     return true
