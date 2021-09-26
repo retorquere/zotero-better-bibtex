@@ -123,6 +123,20 @@ function entry_sort(a: [string, string | number], b: [string, string | number]):
   return Translator.stringCompare(a[0], b[0])
 }
 
+const re = {
+  // private nonLetters: new Zotero.Utilities.XRegExp('[^\\p{Letter}]', 'g')
+  punctuationAtEnd: new Zotero.Utilities.XRegExp('[\\p{Punctuation}]$'),
+  startsWithLowercase: new Zotero.Utilities.XRegExp('^[\\p{Ll}]'),
+  hasLowercaseWord: new Zotero.Utilities.XRegExp('\\s[\\p{Ll}]'),
+  whitespace: new Zotero.Utilities.XRegExp('\\p{Zs}'),
+}
+
+const enc_creators_marker = {
+  initials: '\u0097', // end of guarded area
+  relax: '\u200C', // zero-width non-joiner
+}
+const isBibString = /^[a-z][-a-z0-9_]*$/i
+
 /*
  * The fields are objects with the following keys:
  *   * name: name of the Bib(La)TeX field
@@ -146,12 +160,6 @@ export class Reference {
   public typeMap: { csl: { [key: string]: string | { type: string, subtype?: string } }, zotero: { [key: string]: string | { type: string, subtype?: string } } }
   public lint: Function
   public addCreators: Function
-
-  // private nonLetters = new Zotero.Utilities.XRegExp('[^\\p{Letter}]', 'g')
-  private punctuationAtEnd = new Zotero.Utilities.XRegExp('[\\p{Punctuation}]$')
-  private startsWithLowercase = new Zotero.Utilities.XRegExp('^[\\p{Ll}]')
-  private hasLowercaseWord = new Zotero.Utilities.XRegExp('\\s[\\p{Ll}]')
-  private whitespace = new Zotero.Utilities.XRegExp('\\p{Zs}')
 
   private inPostscript = false
   private quality_report: string[] = []
@@ -180,10 +188,6 @@ export class Reference {
     }
   }
 
-  private _enc_creators_initials_marker = '\u0097' // end of guarded area
-  private _enc_creators_relax_marker = '\u200C' // zero-width non-joiner
-
-  private isBibString = /^[a-z][-a-z0-9_]*$/i
   private metadata: Cache.ExportedItemMetadata = { DeclarePrefChars: '', noopsort: false, packages: [] }
   private packages: { [key: string]: boolean }
   private juniorcomma: boolean
@@ -512,7 +516,7 @@ export class Reference {
         return null
 
       case 'detect':
-        return this.isBibString.test(value) && value
+        return isBibString.test(value) && value
 
       case 'match':
         // the importer uppercases string declarations
@@ -836,7 +840,7 @@ export class Reference {
   }
 
   protected _enc_creators_scrub_name(name: string): string {
-    return Zotero.Utilities.XRegExp.replace(name, this.whitespace, ' ', 'all')
+    return Zotero.Utilities.XRegExp.replace(name, re.whitespace, ' ', 'all')
   }
   /*
    * Encode creators to author-style field
@@ -881,6 +885,7 @@ export class Reference {
         }
 
         name = name.replace(/ and /g, ' {and} ')
+        if (Translator.and.names.repl !== ' {and} ') name = name.replace(Translator.and.names.re, Translator.and.names.repl)
 
       }
       else {
@@ -890,7 +895,7 @@ export class Reference {
       encoded.push(name.trim())
     }
 
-    return replace_command_spacers(encoded.join(Translator.and.names))
+    return replace_command_spacers(encoded.join(Translator.and.names.re.source))
   }
 
   /*
@@ -1042,7 +1047,7 @@ export class Reference {
     if (particle[particle.length - 1] === ' ') return particle
 
     if (Translator.BetterBibLaTeX) {
-      if (Zotero.Utilities.XRegExp.test(particle, this.punctuationAtEnd)) this.metadata.DeclarePrefChars += particle[particle.length - 1]
+      if (Zotero.Utilities.XRegExp.test(particle, re.punctuationAtEnd)) this.metadata.DeclarePrefChars += particle[particle.length - 1]
       // if BBLT, always add a space if it isn't there
       return `${particle} `
     }
@@ -1053,8 +1058,8 @@ export class Reference {
     if (particle[particle.length - 1] === '.') return `${particle} `
 
     // if it ends in any other punctuation, it's probably something like d'Medici -- no space
-    if (Zotero.Utilities.XRegExp.test(particle, this.punctuationAtEnd)) {
-      if (relax) return `${particle}${this._enc_creators_relax_marker} `
+    if (Zotero.Utilities.XRegExp.test(particle, re.punctuationAtEnd)) {
+      if (relax) return `${particle}${enc_creators_marker.relax} `
       return particle
     }
 
@@ -1079,14 +1084,14 @@ export class Reference {
       ({ family } = name)
     }
 
-    const initials_marker_pos: number = (name.given || '').indexOf(this._enc_creators_initials_marker) // end of guarded area
+    const initials_marker_pos: number = (name.given || '').indexOf(enc_creators_marker.initials) // end of guarded area
     let initials: string | String
 
     if (Translator.preferences.biblatexExtendedNameFormat && (name['dropping-particle'] || name['non-dropping-particle'] || name['comma-suffix'])) {
       if (initials_marker_pos >= 0) {
         initials = name.given.substring(0, initials_marker_pos)
         if (initials.length > 1) initials = new String(initials) // eslint-disable-line no-new-wrappers
-        name.given = name.given.replace(this._enc_creators_initials_marker, '')
+        name.given = name.given.replace(enc_creators_marker.initials, '')
       }
       else {
         initials = ''
@@ -1105,11 +1110,11 @@ export class Reference {
       return namebuilder.join(', ')
     }
 
-    if (family && Zotero.Utilities.XRegExp.test(family, this.startsWithLowercase)) family = new String(family) // eslint-disable-line no-new-wrappers
+    if (family && Zotero.Utilities.XRegExp.test(family, re.startsWithLowercase)) family = new String(family) // eslint-disable-line no-new-wrappers
 
     if (family) family = this._enc_creator_part(family)
 
-    if (initials_marker_pos >= 0) name.given = `<span relax="true">${name.given.replace(this._enc_creators_initials_marker, '</span>')}`
+    if (initials_marker_pos >= 0) name.given = `<span relax="true">${name.given.replace(enc_creators_marker.initials, '</span>')}`
 
     let latex = ''
     if (name['dropping-particle']) latex += this._enc_creator_part(this._enc_creators_pad_particle(name['dropping-particle']))
@@ -1130,8 +1135,8 @@ export class Reference {
       family = name.family
     }
 
-    if (name.given && (name.given.indexOf(this._enc_creators_initials_marker) >= 0)) {
-      name.given = `<span relax="true">${name.given.replace(this._enc_creators_initials_marker, '</span>')}`
+    if (name.given && (name.given.indexOf(enc_creators_marker.initials) >= 0)) {
+      name.given = `<span relax="true">${name.given.replace(enc_creators_marker.initials, '</span>')}`
     }
 
     /*
@@ -1149,7 +1154,7 @@ export class Reference {
 
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     if (name['non-dropping-particle']) family = new String(this._enc_creators_pad_particle(name['non-dropping-particle']) + family) // eslint-disable-line no-new-wrappers
-    if (Zotero.Utilities.XRegExp.test(family, this.startsWithLowercase) || Zotero.Utilities.XRegExp.test(family, this.hasLowercaseWord)) family = new String(family) // eslint-disable-line no-new-wrappers
+    if (Zotero.Utilities.XRegExp.test(family, re.startsWithLowercase) || Zotero.Utilities.XRegExp.test(family, re.hasLowercaseWord)) family = new String(family) // eslint-disable-line no-new-wrappers
 
     // https://github.com/retorquere/zotero-better-bibtex/issues/978 -- enc_latex can return null
     family = family ? this._enc_creator_part(family) : ''

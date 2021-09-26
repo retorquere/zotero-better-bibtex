@@ -354,10 +354,14 @@ export function doExport(): void {
       item.creators = item.creators.filter(creator => {
         if (creator.creatorType !== 'sponsor') return true
 
-        sponsors.push(creator.source)
+        let sponsor = creator.source
+        sponsor = sponsor.replace(/ and /g, ' {and} ')
+        if (Translator.and.names.repl !== ' {and} ') sponsor = sponsor.replace(Translator.and.names.re, Translator.and.names.repl)
+
+        sponsors.push(sponsor)
         return false
       })
-      ref.add({ name: 'organization', value: sponsors.join(Translator.and.list) })
+      ref.add({ name: 'organization', value: sponsors.join(Translator.and.list.re.source) })
     }
     ref.addCreators()
     // #1541
@@ -552,9 +556,9 @@ class ZoteroItem {
     if (!field) return this.fallback(candidates, value)
 
     this.item[field] = [
-      (this.bibtex.fields.publisher || []).join(Translator.and.list),
-      (this.bibtex.fields.institution || []).join(Translator.and.list),
-      (this.bibtex.fields.school || []).join(Translator.and.list),
+      (this.bibtex.fields.publisher || []).join(' and '),
+      (this.bibtex.fields.institution || []).join(' and '),
+      (this.bibtex.fields.school || []).join(' and '),
     ].filter(v => v.replace(/[ \t\r\n]+/g, ' ').trim()).join(' / ')
 
     return true

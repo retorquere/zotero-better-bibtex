@@ -132,6 +132,10 @@ class Items {
   }
 }
 
+function escapeRegExp(text: string): string {
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
+}
+
 export class ITranslator { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public preferences: Preferences
   public skipFields: string[]
@@ -142,7 +146,6 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
     dir: undefined,
     path: undefined,
   }
-  public and: { list: string, names: string }
 
   public options: {
     quickCopyMode?: string
@@ -193,6 +196,8 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
   }
 
   public stringCompare: (a: string, b: string) => number
+
+  public and: { list: { re: any, repl: string }, names: { re: any, repl: string } }
 
   public initialized = false
 
@@ -258,6 +263,19 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
         path: (Zotero.getOption('exportPath') as string),
       }
       if (this.export.dir?.endsWith(this.paths.sep)) this.export.dir = this.export.dir.slice(0, -1)
+
+      if (this.BetterTeX) {
+        this.and = {
+          list: {
+            re: new RegExp(` ${escapeRegExp(Translator.preferences.separatorList.trim())} `, 'g'),
+            repl: ` {${Translator.preferences.separatorList.trim()}} `,
+          },
+          names: {
+            re: new RegExp(` ${escapeRegExp(Translator.preferences.separatorNames.trim())} `, 'g'),
+            repl: ` {${Translator.preferences.separatorNames.trim()}} `,
+          },
+        }
+      }
     }
 
     for (const pref of Object.keys(this.preferences)) {
@@ -330,11 +348,6 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
           return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
         },
       })
-    }
-
-    this.and = {
-      list: ` ${this.preferences.separatorList} `,
-      names: ` ${this.preferences.separatorNames} `,
     }
 
     this.initialized = true
