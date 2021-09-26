@@ -96,8 +96,12 @@ for issue in sorted(issues.values(), key=lambda x: x.number):
   if issue.state == 'open' or issue.branch.local is not None or issue.branch.remote is not None:
     if issue.state == 'open':
       print('*', issue.number, issue.title)
-      comment = list(issue.get_comments())[-1]
-      print(' ', comment.user.login, comment.created_at)
+      comment = list(issue.get_comments())
+      if len(comment) == 0:
+        print('  has no comment')
+      else:
+        comment = comment[-1]
+        print(' ', comment.user.login, comment.created_at)
     else:
       print('!', issue.number, issue.title)
 
