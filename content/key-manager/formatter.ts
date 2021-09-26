@@ -11,10 +11,9 @@ import { transliterate } from 'transliteration'
 import { flash } from '../flash'
 import { Preference } from '../../gen/preferences'
 import { JournalAbbrev } from '../journal-abbrev'
-import { kuroshiro } from './kuroshiro'
 import * as Extra from '../extra'
 import { buildCiteKey as zotero_buildCiteKey } from './formatter-zotero'
-import { babelLanguage, isBabelLanguage } from '../text'
+import { babelLanguage, babelTag } from '../text'
 
 const parser = require('./formatter.pegjs')
 import * as DateParser from '../dateparser'
@@ -22,12 +21,14 @@ import * as DateParser from '../dateparser'
 import * as methods from '../../gen/key-formatter-methods.json'
 import itemCreators from '../../gen/items/creators.json'
 import * as items from '../../gen/items/items'
-import { jieba } from './jieba'
 
 import parse5 = require('parse5/lib/parser')
 const htmlParser = new parse5()
 
 import { sprintf } from 'sprintf-js'
+
+import { jieba, pinyin } from './chinese'
+import { kuroshiro } from './japanese'
 
 function innerText(node): string {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -145,7 +146,7 @@ class Item {
   public title: string
   public itemID: number
   public libraryID: number
-  public transliterateMode: 'german' | 'japanese' | ''
+  public transliterateMode: 'german' | 'japanese' | 'chinese' | ''
   public getField: (name: string) => number | string
   public extra: string
   public extraFields: Extra.Fields
@@ -173,14 +174,22 @@ class Item {
     }
 
     this.language = babelLanguage((this.getField('language') as string) || '')
-    if (this.isBabelLanguage('de')) {
-      this.transliterateMode = 'german'
-    }
-    else if (this.isBabelLanguage('ja')) {
-      this.transliterateMode = 'japanese'
-    }
-    else {
-      this.transliterateMode = ''
+    switch (this.babelTag()) {
+      case 'de':
+        this.transliterateMode = 'german'
+        break
+
+      case 'ja':
+        this.transliterateMode = 'japanese'
+        break
+
+      case 'zh':
+        this.transliterateMode = 'chinese'
+        break
+
+      default:
+        this.transliterateMode = ''
+        break
     }
 
     const extraFields = Extra.get(this.getField('extra') as string, 'zotero', { kv: true, tex: true })
@@ -215,8 +224,8 @@ class Item {
     if (this.title.includes('<')) this.title = innerText(htmlParser.parseFragment(this.title))
   }
 
-  public isBabelLanguage(lang: string): boolean {
-    return this.language && lang && isBabelLanguage(lang, this.language)
+  public babelTag(): string {
+    return babelTag(this.language)
   }
 
   public getTags(): Tag[] | string[] {
@@ -340,9 +349,16 @@ class PatternFormatter {
   }
 
   public $language(name: 'zh' | 'chinese' | 'ja' | 'japanese' | 'de' | 'german'): string {
-    const map = { zh: 'zh', chinese: 'zh', ja: 'ja', japanese: 'ja', de: 'de', german: 'de' }
+    const map = {
+      zh: 'zh',
+      chinese: 'zh',
+      ja: 'ja',
+      japanese: 'ja',
+      de: 'de',
+      german: 'de',
+    }
     if (!map[name]) throw new Error(`unexpected language ${JSON.stringify(name)}, choose one of ${Object.keys(map).join(', ')}`)
-    if (!this.item.isBabelLanguage(name)) throw { next: true } // eslint-disable-line no-throw-literal
+    if (this.item.babelTag() !== map[name]) throw { next: true } // eslint-disable-line no-throw-literal
     return ''
   }
 
@@ -766,7 +782,7 @@ class PatternFormatter {
   }
 
   /** tries to replace diacritics with ascii look-alikes. Removes non-ascii characters it cannot match */
-  public _fold(value: string, mode?: 'german' | 'japanese'): string {
+  public _fold(value: string, mode?: 'german' | 'japanese' | 'chinese'): string {
     return this.transliterate(value, mode).split(/\s+/).join(' ').trim()
   }
 
@@ -802,6 +818,12 @@ class PatternFormatter {
     return jieba.cut(value || '').join(' ').trim()
   }
 
+  /** word segmentation for Japanese references. Uses substantial memory; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
+  public _kuromoji(value: string): string {
+    if (!Preference.kuroshiro || !kuroshiro.enabled) return value
+    return kuroshiro.tokenize(value || '').join(' ').trim()
+  }
+
   /** transliterates the citation key and removes unsafe characters */
   public _clean(value: string): string {
     if (!value) return ''
@@ -809,15 +831,15 @@ class PatternFormatter {
   }
 
   /** transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field */
-  public _transliterate(value: string, mode?: 'minimal' | 'german' | 'de' | 'japanese' | 'ja' ): string {
+  public _transliterate(value: string, mode?: 'minimal' | 'german' | 'de' | 'japanese' | 'ja' | 'zh' | 'chinese'): string {
     if (!value) return ''
     return this.transliterate(value, mode)
   }
 
-  private transliterate(str: string, mode?: 'minimal' | 'de' | 'german' | 'ja' | 'japanese'): string {
+  private transliterate(str: string, mode?: 'minimal' | 'de' | 'german' | 'ja' | 'japanese' | 'zh' | 'chinese'): string {
     mode = mode || this.item.transliterateMode || 'japanese'
 
-    log.debug('transliterate:', { input: str, mode, kuroshiro: Preference.kuroshiro && kuroshiro.enabled })
+    log.debug('transliterate:', { input: str, mode, jieba: Preference.jieba, kuroshiro: Preference.kuroshiro && kuroshiro.enabled })
 
     let replace: Record<string, string> = {}
     switch (mode) {
@@ -834,6 +856,11 @@ class PatternFormatter {
           '\u00D6': 'Oe', // eslint-disable-line quote-props
           '\u00DC': 'Ue', // eslint-disable-line quote-props
         }
+        break
+
+      case 'zh':
+      case 'chinese':
+        if (Preference.kuroshiro && kuroshiro.enabled) str = pinyin(str)
         break
 
       case 'ja':

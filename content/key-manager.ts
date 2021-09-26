@@ -1,7 +1,7 @@
 import ETA from 'node-eta'
 
-import { kuroshiro } from './key-manager/kuroshiro'
-import { jieba } from './key-manager/jieba'
+import { kuroshiro } from './key-manager/japanese'
+import { jieba } from './key-manager/chinese'
 
 import { Scheduler } from './scheduler'
 import { log } from './logger'

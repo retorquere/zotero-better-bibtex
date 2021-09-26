@@ -3,6 +3,7 @@ import { log } from '../logger'
 import { Events } from '../events'
 
 import Jieba = require('ooooevan-jieba')
+import Pinyin from 'pinyin'
 
 export const jieba = new class {
   private jieba: any
@@ -22,7 +23,7 @@ export const jieba = new class {
     }
   }
 
-  cut(input: string): string[] {
+  public cut(input: string): string[] {
     if (Preference.jieba) {
       this.init()
     }
@@ -31,4 +32,8 @@ export const jieba = new class {
     }
     return (this.jieba.cut(input, { cutAll: false, dag: false, hmm: true, cutForSearch: false }) as string[])
   }
+}
+
+export function pinyin(str: string): string {
+  return (Pinyin(str) as string[][]).map((c: string[]) => c[0]).join('')
 }
