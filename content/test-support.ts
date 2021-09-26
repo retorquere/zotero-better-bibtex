@@ -20,6 +20,7 @@ const setatstart: string[] = ['workers', 'testing', 'caching'].filter(p => Prefe
 
 export class TestSupport {
   public timedMemoryLog: any
+  public scenario: string
 
   public startTimedMemoryLog(msecs: number): void {
     if (typeof this.timedMemoryLog === 'undefined') {

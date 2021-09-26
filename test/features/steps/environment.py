@@ -60,6 +60,7 @@ def before_scenario(context, scenario):
     scenario.skip(f"ONLY TESTING SCENARIOS WITH {context.config.userdata['test']}")
 
   context.zotero.reset()
+  context.zotero.execute('Zotero.BetterBibTeX.TestSupport.scenario = scenario', scenario=scenario.name)
   context.displayOptions = {}
   context.selected = []
   context.imported = None
