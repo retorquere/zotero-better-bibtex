@@ -354,7 +354,7 @@ class PatternFormatter {
       ja: 'ja',
       japanese: 'ja',
       de: 'de',
-      german: 'de'
+      german: 'de',
     }
     if (!map[name]) throw new Error(`unexpected language ${JSON.stringify(name)}, choose one of ${Object.keys(map).join(', ')}`)
     if (this.item.babelTag() !== map[name]) throw { next: true } // eslint-disable-line no-throw-literal
@@ -781,7 +781,7 @@ class PatternFormatter {
   }
 
   /** tries to replace diacritics with ascii look-alikes. Removes non-ascii characters it cannot match */
-  public _fold(value: string, mode?: 'german' | 'japanese', 'chinese'): string {
+  public _fold(value: string, mode?: 'german' | 'japanese' | 'chinese'): string {
     return this.transliterate(value, mode).split(/\s+/).join(' ').trim()
   }
 
@@ -859,7 +859,7 @@ class PatternFormatter {
 
       case 'zh':
       case 'chinese':
-        if (Preference.kuroshiro && kuroshiro.enabled) str = jieba.convert(str, {to: 'romaji'})
+        if (Preference.kuroshiro && kuroshiro.enabled) str = jieba.convert(str)
         break
 
       case 'ja':

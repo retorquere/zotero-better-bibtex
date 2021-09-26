@@ -9,7 +9,7 @@
     "preferences": {
       "baseAttachmentPath": "C:\\Users\\jtcar\\Dropbox\\Juris-M",
       "citekeyFold": false,
-      "citekeyFormat": "[language=ja][authEtAl][shorttitle2_2][year] | [Authors:jieba:select=1,2:transliterate][Title:jieba:skipwords:select=1,2:nopunct:transliterate][year]",
+      "citekeyFormat": "[language=ja][authEtAl][shorttitle2_2][year] | [Authors:jieba:select=1,2:transliterate=zh][Title:jieba:skipwords:select=1,2:nopunct:transliterate=zh][year]",
       "jieba": true,
       "kuroshiro": true,
       "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups"
