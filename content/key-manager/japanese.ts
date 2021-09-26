@@ -33,7 +33,7 @@ if (inZotero) {
 export const kuroshiro = new class {
   public enabled = false
   private kuroshiro: any
-  private kuromiji: any
+  private kuromoji: any
 
   public async init() {
     Events.on('preference-changed', pref => {
@@ -49,7 +49,7 @@ export const kuroshiro = new class {
       this.kuroshiro = new Kuroshiro()
       const analyzer = new KuromojiAnalyzer(inZotero ? 'resource://zotero-better-bibtex/kuromoji' : undefined)
       await this.kuroshiro.init(analyzer)
-      this.kuromiji = analyzer._analyzer // eslint-disable-line no-underscore-dangle
+      this.kuromoji = analyzer._analyzer // eslint-disable-line no-underscore-dangle
       this.enabled = true
     }
     catch (err) {
@@ -66,6 +66,6 @@ export const kuroshiro = new class {
 
   public tokenize(str: string): string[] {
     if (!this.enabled) throw new Error('kuroshiro not initialized')
-    return this.kuromiji.tokenize(str).map(c => c.surface_form)
+    return this.kuromoji.tokenize(str).map(c => c.surface_form)
   }
 }
