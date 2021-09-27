@@ -361,7 +361,7 @@ export function doExport(): void {
         sponsors.push(sponsor)
         return false
       })
-      ref.add({ name: 'organization', value: sponsors.join(Translator.and.list.re.source) })
+      ref.add({ name: 'organization', value: sponsors.join(Translator.preferences.separatorList) })
     }
     ref.addCreators()
     // #1541

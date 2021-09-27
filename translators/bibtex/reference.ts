@@ -895,7 +895,7 @@ export class Reference {
       encoded.push(name.trim())
     }
 
-    return replace_command_spacers(encoded.join(Translator.and.names.re.source))
+    return replace_command_spacers(encoded.join(Translator.preferences.separatorNames))
   }
 
   /*

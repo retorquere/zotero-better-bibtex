@@ -263,19 +263,6 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
         path: (Zotero.getOption('exportPath') as string),
       }
       if (this.export.dir?.endsWith(this.paths.sep)) this.export.dir = this.export.dir.slice(0, -1)
-
-      if (this.BetterTeX) {
-        this.and = {
-          list: {
-            re: new RegExp(` ${escapeRegExp(Translator.preferences.separatorList.trim())} `, 'g'),
-            repl: ` {${Translator.preferences.separatorList.trim()}} `,
-          },
-          names: {
-            re: new RegExp(` ${escapeRegExp(Translator.preferences.separatorNames.trim())} `, 'g'),
-            repl: ` {${Translator.preferences.separatorNames.trim()}} `,
-          },
-        }
-      }
     }
 
     for (const pref of Object.keys(this.preferences)) {
@@ -323,6 +310,23 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
         ||
         (this.preferences.baseAttachmentPath && this.export.dir?.startsWith(this.preferences.baseAttachmentPath))
       )
+
+      if (this.BetterTeX) {
+        Translator.preferences.separatorList = Translator.preferences.separatorList.trim()
+        Translator.preferences.separatorNames = Translator.preferences.separatorNames.trim()
+        this.and = {
+          list: {
+            re: new RegExp(escapeRegExp(Translator.preferences.separatorList), 'g'),
+            repl: ` {${Translator.preferences.separatorList}} `,
+          },
+          names: {
+            re: new RegExp(` ${escapeRegExp(Translator.preferences.separatorNames)} `, 'g'),
+            repl: ` {${Translator.preferences.separatorNames}} `,
+          },
+        }
+        Translator.preferences.separatorList = ` ${Translator.preferences.separatorList} `
+        Translator.preferences.separatorNames = ` ${Translator.preferences.separatorNames} `
+      }
     }
 
     this.collections = {}
