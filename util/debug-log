@@ -65,5 +65,7 @@ for target, partials in merge.items():
     os.remove(log)
   elif log.endswith('.zip'):
     with ZipFile(log) as f:
+      for name in f.namelist():
+        print(name)
       f.extractall(path='logs')
     os.remove(log)
