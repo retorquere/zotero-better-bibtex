@@ -2,10 +2,10 @@ hbox
   label(bbt:preference="pref-better-bibtex-citekeyFormat") &better-bibtex.Preferences.citekey.format;
   textbox#id-better-bibtex-preferences-citekeyFormat(
     flex='1'
-    onfocus="bbt_prefpane.getCitekeyFormat(event.target);"
-    onblur="bbt_prefpane.saveCitekeyFormat(event.target);"
-    oninput="bbt_prefpane.checkCitekeyFormat(event.target);"
-    onkeypress="Zotero.setTimeout(function() { bbt_prefpane.checkCitekeyFormat(event.target) }, 1);"
+    onfocus="Zotero.BetterBibTeX.PrefPane.getCitekeyFormat(event.target);"
+    onblur="Zotero.BetterBibTeX.PrefPane.saveCitekeyFormat(event.target);"
+    oninput="Zotero.BetterBibTeX.PrefPane.checkCitekeyFormat(event.target);"
+    onkeypress="Zotero.setTimeout(function() { Zotero.BetterBibTeX.PrefPane.checkCitekeyFormat(event.target) }, 1);"
   )
 checkbox(preference="pref-better-bibtex-citekeyFold" label="&better-bibtex.Preferences.citekey.fold;")
 checkbox(preference="pref-better-bibtex-citekeySearch" label="&better-bibtex.Preferences.citekey.search;")
@@ -34,4 +34,4 @@ hbox
   label(bbt:preference="pref-better-bibtex-warnBulkModify") &better-bibtex.Preferences.bulkWarning;
   textbox(size="5" preference="pref-better-bibtex-warnBulkModify")
 hbox
-  button#rescan-citekeys.hidden(label="&better-bibtex.Preferences.rescan-citekeys;" oncommand="bbt_prefpane.rescanCitekeys()")
+  button#rescan-citekeys.hidden(label="&better-bibtex.Preferences.rescan-citekeys;" oncommand="Zotero.BetterBibTeX.PrefPane.rescanCitekeys()")

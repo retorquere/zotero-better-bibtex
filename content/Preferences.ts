@@ -476,13 +476,14 @@ export class PrefPane {
   }
 
   public refresh(): void {
+    if (!this.globals) return
+
     const pane = this.globals.document.getElementById('zotero-prefpane-better-bibtex')
     // unloaded
     if (!pane) {
       this.unload()
       return
     }
-    if (!this.globals) return
 
     this.checkCitekeyFormat()
     this.checkPostscript()

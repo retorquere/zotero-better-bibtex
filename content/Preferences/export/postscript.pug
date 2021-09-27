@@ -2,9 +2,9 @@ textbox#zotero-better-bibtex-postscript(
   rows='10'
   multiline='true'
   preference='pref-better-bibtex-postscript'
-  onblur='bbt_prefpane.checkPostscript();'
-  oninput='bbt_prefpane.checkPostscript();'
-  onkeypress='Zotero.setTimeout(function() { bbt_prefpane.checkPostscript() }, 1);'
+  onblur='Zotero.BetterBibTeX.PrefPane.checkPostscript();'
+  oninput='Zotero.BetterBibTeX.PrefPane.checkPostscript();'
+  onkeypress='Zotero.setTimeout(function() { Zotero.BetterBibTeX.PrefPane.checkPostscript() }, 1);'
 )
 textbox#better-bibtex-cache-warn-postscript.plain.textbox-emph(
   rows='2'
