@@ -269,7 +269,6 @@ export function doExport(): void {
     ref.add({name: 'type', value: item.type})
     ref.add({name: 'series', value: item.series, bibtexStrings: true})
     ref.add({name: 'title', value: item.title})
-    ref.add({name: 'volume', value: item.volume})
     ref.add({name: 'copyright', value: item.rights})
     ref.add({name: 'isbn', value: item.ISBN})
     ref.add({name: 'issn', value: item.ISSN})
@@ -280,6 +279,8 @@ export function doExport(): void {
     ref.add({name: 'langid', value: babelLanguage(item.language) }) // help explain why bracing is weird on bibtex
     ref.add({name: 'assignee', value: item.assignee})
 
+    // this needs to be order volume - number for #1475
+    ref.add({name: 'volume', value: ref.normalizeDashes(item.volume) })
     if (!['book', 'inbook', 'incollection', 'proceedings', 'inproceedings'].includes(ref.referencetype) || !ref.has.volume) ref.add({ name: 'number', value: item.number || item.issue || item.seriesNumber })
     ref.add({ name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') })
 

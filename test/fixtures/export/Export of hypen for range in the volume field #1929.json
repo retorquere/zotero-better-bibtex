@@ -1,0 +1,46 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "dmy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "citekeyFormat": "[auth:lower][year]",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups"
+    }
+  },
+  "items": [
+    {
+      "citationKey": "begovic2002",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Milan",
+          "lastName": "Begovi\u0107"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Nina",
+          "lastName": "Vinski"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Snje\u017eana",
+          "lastName": "Feren\u010di\u0107"
+        }
+      ],
+      "date": "2002",
+      "extra": [
+        "tex.shorthand: GB 2002"
+      ],
+      "itemID": 1,
+      "itemType": "book",
+      "language": "hr",
+      "place": "Zagreb",
+      "title": "Giga Bari\u0107eva. Roman iz zagreba\u010dkog poslijeratnog \u017eivota",
+      "volume": "1-3"
+    }
+  ]
+}

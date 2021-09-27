@@ -346,7 +346,6 @@ export function doExport(): void {
     ref.add({ name: 'title', value: item.title })
 
     ref.add({ name: 'edition', value: item.edition })
-    ref.add({ name: 'volume', value: item.volume })
     // ref.add({ name: 'rights', value: item.rights })
     ref.add({ name: 'isbn', value: item.ISBN })
     ref.add({ name: 'issn', value: item.ISSN })
@@ -512,7 +511,8 @@ export function doExport(): void {
     })
     ref.add({ name: 'eventdate', value: item.conferenceDate, enc: 'date' })
 
-    ref.add({ name: 'pages', value: ref.normalizeDashes(item.pages)})
+    ref.add({ name: 'pages', value: ref.normalizeDashes(item.pages) })
+    ref.add({ name: 'volume', value: ref.normalizeDashes(item.volume) })
 
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
 
