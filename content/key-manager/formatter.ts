@@ -599,8 +599,8 @@ class PatternFormatter {
 
     const extra: RegExpMatchArray = (this.item.extra || '')
       .split('\n')
-      .map((line: string) => line.match(/^([^:\s]+)\s*:\s*(.+)/i))
-      .find(match => match && variables.includes(match[1].toLowerCase()))
+      .map((line: string) => line.match(/^([^:]+):\s*(.+)/i))
+      .find(match => match && variables.includes(match[1].trim().toLowerCase()) || variable.toLowerCase() === match[1].trim().toLowerCase())
     return extra?.[2] || ''
   }
 
