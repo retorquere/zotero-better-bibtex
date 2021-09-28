@@ -34,11 +34,6 @@ export class ErrorReport {
     references?: string
   }
 
-  public load(globals: Record<string, any>): void {
-    this.globals = globals
-    globals.window.addEventListener('load', () => this.init(), false)
-  }
-
   public async send(): Promise<void> {
     const wizard = this.globals.document.getElementById('better-bibtex-error-report')
     wizard.getButton('next').disabled = true
@@ -150,7 +145,8 @@ export class ErrorReport {
     return { region, ...s3.region[region] }
   }
 
-  private async init() {
+  public async load(globals: Record<string, any>): Promise<void> {
+    this.globals = globals
     const wizard = this.globals.document.getElementById('better-bibtex-error-report')
 
     if (Zotero.Debug.enabled) wizard.pageIndex = 1

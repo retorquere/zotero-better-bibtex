@@ -21,6 +21,6 @@ if os.environ.get('CI') != 'true':
     if submodules.strip() == '': submodules = '  up to date'
     print(submodules)
     print(run('git submodule foreach git checkout'))
-    print(run('git submodule foreach git pull origin'))
+    print(run('git submodule foreach git pull'))
   else:
     print('  GitHub offline -- you may not have network access -- skipping submodule update')

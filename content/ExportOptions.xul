@@ -12,7 +12,7 @@
     window.addEventListener('load', async function () {
       try {
         Zotero.debug('BBT: loading ExportOptions')
-        Zotero.BetterBibTeX.ExportOptions.load(globals)
+        await Zotero.BetterBibTeX.ExportOptions.load(globals)
         window.addEventListener('unload', () => Zotero.BetterBibTeX.ExportOptions.unload())
         Zotero.debug('BBT: ExportOptions loaded')
       } catch (err) {
