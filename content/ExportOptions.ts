@@ -79,13 +79,17 @@ export class ExportOptions {
   addEventHandlers(): void {
     for (const id of [ 'export-option-exportFileData', 'export-option-keepUpdated' ]) {
       const node = this.globals.document.getElementById(id)
-      if (!node) break
+      if (!node) {
+        Zotero.debug(`exportoptions: ${id} not found`)
+        break
+      }
 
-      if (this.reset && (id === 'export-option-keepUpdated')) {
-        node.checked = false
-        this.reset = false
-
+      if (id === 'export-option-keepUpdated') {
         node.setAttribute('label', l10n.localize('exportOptions.keepUpdated'))
+        if (this.reset) {
+          node.checked = false
+          this.reset = false
+        }
       }
 
       if (node.getAttribute('better-bibtex')) return null
