@@ -20,22 +20,6 @@
   width="550" height="550">
 
   <script src="chrome://zotero/content/include.js"/>
-  <script>
-    var globals = Function('return this')();
-    Zotero.BetterBibTeX.ErrorReport.load(globals);
-
-    const MB = 1024 * 1024
-    var memuse
-
-    const reporterManager = Components.classes['@mozilla.org/memory-reporter-manager;1'].getService(Components.interfaces.nsIMemoryReporterManager)
-    reporterManager.init()
-
-    function gc() {
-      memuse.value = 'collecting'
-      window.QueryInterface(Components.interfaces.nsIInterfaceRequestor).getInterface(Components.interfaces.nsIDOMWindowUtils).garbageCollect()
-      memuse.value = `memory: ${reporterManager.resident / MB }MB`
-    }
-  </script>
 
   <wizardpage onpageshow="Zotero.BetterBibTeX.ErrorReport.show()" label=" ">
     <description style="white-space: pre-wrap;" class="header">&better-bibtex.ErrorReport.enableDebug;</description>
@@ -95,8 +79,13 @@
     <description>&better-bibtex.ErrorReport.postToGitHub;</description>
     <description>&better-bibtex.ErrorReport.notReviewed;</description>
   </wizardpage>
+
   <script>
-    memuse = document.getElementById('better-bibtex-error-memory-use')
-    memuse.value = `memory: ${reporterManager.resident / MB }MB`
+    var globals = Function('return this')();
+    window.addEventListener('load', async function() {
+      Zotero.debug('loading ErrorReport')
+      await Zotero.BetterBibTeX.ErrorReport.load(globals);
+      Zotero.debug('loaded ErrorReport')
+    })
   </script>
 </wizard>
