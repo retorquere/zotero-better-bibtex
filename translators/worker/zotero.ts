@@ -283,7 +283,6 @@ class WorkerZotero {
       for (const att of item.attachments) {
         this.patchAttachments(att)
       }
-
     }
   }
 }

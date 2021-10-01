@@ -265,7 +265,7 @@ bbt:doc When on, BBT will load kuroshiro for romajization in citation keys. This
 preference#pref-better-bibtex-jieba(name="extensions.zotero.translators.better-bibtex.jieba" bbt:affects="" type="bool" default="false")
 bbt:doc When on, BBT will make Chinese word segmentation available for citation keys construction. This uses a lot of memory, easily 70MB. If you don't have Chinese titles/names, keep this off.
 
-preference(name="extensions.zotero.translators.better-bibtex.relativeFilePaths" bbt:affects="" type="bool" default="false")
+preference(name="extensions.zotero.translators.better-bibtex.relativeFilePaths" bbt:affects="tex" type="bool" default="false")
 bbt:doc.
   When exporting a Bib(La)TeX file, if the attachments are stored anywhere under the directory the bibliography is exported to, use relative paths
   to those attachments. Caching is disabled when this option is on, so it affects performance.

@@ -426,6 +426,13 @@ Scenario: Export web page to misc type with notes and howpublished custom fields
   And I set preference .postscript to "export/*.js"
   Then an export using "Better BibTeX" should match "export/*.bibtex"
 
+@postscript @bbt
+Scenario: Transforming exported file names (windows path conversion) #1939
+  Given I import 1 reference from "export/*.json"
+  And I set preference .postscript to "export/*.js"
+  And I set preference .workers to 0
+  Then an export using "Better BibTeX" should match "export/*.bibtex"
+
 @postscript @1043
 Scenario: Unbalanced vphantom escapes #1043
   Given I import 1 references from "export/*.json"
