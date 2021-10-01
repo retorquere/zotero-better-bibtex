@@ -991,6 +991,7 @@ export class Reference {
     if (!f.value || (f.value.length === 0)) return null
     const attachments: {title: string, mimetype: string, path: string}[] = []
 
+    // #1939
     if (modify) this.item.$cacheable = false
 
     for (const attachment of f.value) {
