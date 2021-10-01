@@ -67,8 +67,8 @@ function strip(obj) {
   return obj
 }
 
-export function normalize(library: Library): void {
-  library.items.sort((a, b) => key(a).localeCompare(key(b)))
+export function normalize(library: Library, sort=true): void {
+  if (sort) library.items.sort((a, b) => key(a).localeCompare(key(b)))
 
   for (const item of (library.items as any[])) {
     delete item.citekey

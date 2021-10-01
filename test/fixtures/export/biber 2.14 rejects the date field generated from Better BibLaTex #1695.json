@@ -6,22 +6,13 @@
     "options": {
       "exportNotes": true
     },
-    "preferences": {
-      "citekeyFormat": "[auth:lower][shorttitle3_3][year]"
-    }
+    "preferences": {}
   },
   "items": [
     {
       "abstractNote": "Gradient descent is the preferred way to optimize neural networks and many other machine learning algorithms but is often used as a black box. This post explores how many of the most popular gradient-based optimization algorithms such as Momentum, Adagrad, and Adam actually work.",
       "accessDate": "2020-11-24T02:09:29Z",
-      "attachments": [
-        {
-          "itemType": "attachment",
-          "path": "/home/byakuya/Zotero/storage/3HRV92HZ/optimizing-gradient-descent.html",
-          "title": "Snapshot",
-          "uri": "http://zotero.org/users/local/huQURJBK/items/3HRV92HZ"
-        }
-      ],
+      "attachments": [],
       "citationKey": "ruderOverviewGradientDescent2016",
       "creators": [
         {

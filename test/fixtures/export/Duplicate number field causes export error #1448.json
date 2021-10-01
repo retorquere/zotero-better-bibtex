@@ -30,20 +30,7 @@
       "ISSN": "2052-4463",
       "abstractNote": "There is an urgent need to improve the infrastructure supporting the reuse of scholarly data. A diverse set of stakeholders\u2014representing academia, industry, funding agencies, and scholarly publishers\u2014have come together to design and jointly endorse a concise and measureable set of principles that we refer to as the FAIR Data Principles. The intent is that these may act as a guideline for those wishing to enhance the reusability of their data holdings. Distinct from peer initiatives that focus on the human scholar, the FAIR Principles put specific emphasis on enhancing the ability of machines to automatically find and use the data, in addition to supporting its reuse by individuals. This Comment is the first formal publication of the FAIR Principles, and includes the rationale behind them, and some exemplar implementations in the community.",
       "accessDate": "2020-02-28T20:46:08Z",
-      "attachments": [
-        {
-          "itemType": "attachment",
-          "path": "/Users/jrennstich/Zotero/storage/8J9PDCJE/sdata201618.html",
-          "title": "Snapshot",
-          "uri": "http://zotero.org/users/3959/items/8J9PDCJE"
-        },
-        {
-          "itemType": "attachment",
-          "path": "/Users/jrennstich/Zotero/storage/GAFSI93D/Wilkinson et al. - 2016 - The FAIR Guiding Principles for scientific data ma.pdf",
-          "title": "Wilkinson et al. - 2016 - The FAIR Guiding Principles for scientific data ma.pdf",
-          "uri": "http://zotero.org/users/3959/items/GAFSI93D"
-        }
-      ],
+      "attachments": [],
       "citationKey": "wilkinson-fair-2016",
       "creators": [
         {

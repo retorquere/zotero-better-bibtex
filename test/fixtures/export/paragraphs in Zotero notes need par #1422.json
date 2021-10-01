@@ -11,7 +11,6 @@
       "automaticTags": false,
       "bibtexURL": "url",
       "citeCommand": "citep",
-      "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
       "exportTitleCase": false,
       "skipFields": "file",
       "workers": 2
@@ -23,14 +22,7 @@
       "ISSN": "0035-8711",
       "abstractNote": "When averaged over large scales, star formation in galaxies is observed \nto follow the empirical Kennicutt-Schmidt (KS) law for surface densities\nabove a constant threshold. While the observed law involves surface\ndensities, theoretical models and simulations generally work with volume\ndensity laws (i.e. Schmidt laws). We derive analytic relations between\nstar formation laws expressed in terms of surface densities, volume\ndensities, and pressures and we show how these relations depend on\nparameters such as the effective equation of state of the multiphase\ninterstellar medium. Our analytic relations enable us to implement\nobserved surface density laws into simulations. Because the parameters\nof our prescription for star formation are observables, we are not free\nto tune them to match the observations. We test our theoretical\nframework using high-resolution simulations of isolated disc galaxies\nthat assume an effective equation of state for the multiphase\ninterstellar medium. We are able to reproduce the star formation\nthreshold and both the slope and the normalization of arbitrary input KS\nlaws without tuning any parameters and with very little scatter, even\nfor unstable galaxies and even if we use poor numerical resolution.\nMoreover, we can do so for arbitrary effective equations of state. Our\nprescription therefore enables simulations of galaxies to bypass our\ncurrent inability to simulate the formation of stars. On the other hand,\nthe fact that we can reproduce arbitrary input thresholds and KS laws,\nrather than just the particular ones picked out by nature, indicates\nthat simulations that lack the physics and/or resolution to simulate the\nmultiphase interstellar medium can only provide limited insight into the\norigin of the observed star formation laws.",
       "accessDate": "2020-01-17T20:41:25Z",
-      "attachments": [
-        {
-          "itemType": "attachment",
-          "path": "/home/claire/Zotero/storage/TV6THWM5/Schaye and Dalla Vecchia - 2008 - On the relation between the Schmidt and Kennicutt-.pdf",
-          "title": "Full Text PDF",
-          "uri": "http://zotero.org/users/5611573/items/TV6THWM5"
-        }
-      ],
+      "attachments": [],
       "citationKey": "schayeRelationSchmidtKennicuttSchmidt2008",
       "creators": [
         {

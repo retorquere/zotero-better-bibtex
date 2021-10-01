@@ -446,6 +446,11 @@ class Zotero:
       for k, v in preferences.items():
         assert self.preferences.prefix + k in self.preferences.supported, f'Unsupported preference "{k}"'
         assert type(v) == self.preferences.supported[self.preferences.prefix + k], f'Value for preference {k} has unexpected type {type(v)}'
+      for item in data['items']:
+        for att in item.get('attachments') or []:
+          if path := att.get('path'):
+            path = os.path.join(os.path.dirname(references), path)
+            assert os.path.exists(path), f'attachment {path} does not exist'
     else:
       context.displayOptions = {}
       preferences = None
