@@ -696,7 +696,10 @@
     "name": "relativeFilePaths",
     "type": "boolean",
     "default": false,
-    "affects": [],
+    "affects": [
+      "Better BibLaTeX",
+      "Better BibTeX"
+    ],
     "var": "relativeFilePaths"
   },
   {

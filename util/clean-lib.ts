@@ -11,6 +11,7 @@ import { normalize } from '../translators/lib/normalize'
 import { stringify } from '../content/stringify'
 import * as fs from 'fs'
 import { sync as glob } from 'glob'
+import * as path from 'path'
 
 import { defaults, names } from '../gen/preferences/meta'
 const supported: string[] = names.filter(name => !['client', 'testing', 'platform', 'newTranslatorsAskRestart'].includes(name))
@@ -55,6 +56,7 @@ for (const lib of argv._) {
 
   const pre = JSON.parse(fs.readFileSync(lib, 'utf-8'))
   const post = JSON.parse(JSON.stringify(pre))
+  const missing = []
 
   switch (ext) {
     case '.json':
@@ -92,7 +94,17 @@ for (const lib of argv._) {
 
         for (const att of (item.attachments || [])) {
           delete att.libraryID
+          if (att.path && !fs.existsSync(path.join(path.dirname(lib), att.path))) {
+            missing.push(att.path)
+          }
         }
+      }
+      if (missing.length) {
+        console.log(`${lib}: non-existent attachments:`)
+        for (const att of missing) {
+          console.log(`* ${att}`)
+        }
+        process.exit(1)
       }
       break
     case '.csl.json':

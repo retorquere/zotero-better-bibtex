@@ -986,6 +986,7 @@ export class Reference {
   }
 
   protected enc_attachments(f): string {
+    log.debug('encoding attachments', f)
     if (!f.value || (f.value.length === 0)) return null
     const attachments: {title: string, mimetype: string, path: string}[] = []
 
@@ -1002,6 +1003,7 @@ export class Reference {
       else if (attachment.localPath) {
         att.path = attachment.localPath
       }
+      log.debug('encoding attachment', att)
 
       if (!att.path) continue // amazon/googlebooks etc links show up as atachments without a path
       // att.path = att.path.replace(/^storage:/, '')
@@ -1015,10 +1017,7 @@ export class Reference {
 
       if (!att.mimetype && (att.path.slice(-4).toLowerCase() === '.pdf')) att.mimetype = 'application/pdf' // eslint-disable-line no-magic-numbers
 
-      if (Translator.preferences.testing) {
-        att.path = `files/${this.item.citationKey}/${att.path.replace(/.*[/\\]/, '')}`
-      }
-      else if (Translator.preferences.relativeFilePaths && Translator.export.dir) {
+      if (Translator.preferences.relativeFilePaths && Translator.export.dir) {
         const relative = Path.relative(att.path)
         if (relative !== att.path) {
           this.item.$cacheable = false
@@ -1028,6 +1027,7 @@ export class Reference {
 
       attachments.push(att)
     }
+    log.debug('encoded attachments', attachments)
 
     if (attachments.length === 0) return null
 
