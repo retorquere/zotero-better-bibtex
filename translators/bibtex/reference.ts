@@ -758,6 +758,7 @@ export class Reference {
       allow = this.postscript(this, this.item, Translator, Zotero, this.extraFields)
     }
     catch (err) {
+      if (Translator.preferences.testing) throw err
       log.error('Reference.postscript failed:', err)
       allow.cache = false
     }
@@ -985,10 +986,12 @@ export class Reference {
     return tags.map(tag => tag.tag).join(',')
   }
 
-  protected enc_attachments(f): string {
+  protected enc_attachments(f, modify?: (path: string) => string): string {
     log.debug('encoding attachments', f)
     if (!f.value || (f.value.length === 0)) return null
     const attachments: {title: string, mimetype: string, path: string}[] = []
+
+    if (modify) this.item.$cacheable = false
 
     for (const attachment of f.value) {
       const att = {
@@ -1026,6 +1029,7 @@ export class Reference {
       }
       if (Translator.preferences.testing) att.path = att.path.replace(/.*[.]BBTZ5TEST\//, '~/BBTZ5TEST/').replace(/\/storage\/[^/]+\//, '/storage/')
 
+      if (modify) att.path = modify(att.path)
       attachments.push(att)
     }
     log.debug('encoded attachments', attachments)

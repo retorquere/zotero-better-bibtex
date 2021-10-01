@@ -1,0 +1,53 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "citekeyFormat": "[auth:lower]-[year]-[shorttitle3_3]"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1561/2200000001",
+      "ISSN": "1935-8237, 1935-8245",
+      "accessDate": "2021-09-29T04:45:27Z",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "path": "attachments/Baltes_Staudinger_2000_Wisdom.pdf",
+          "title": "Wainwright and Jordan - 2007 - Graphical Models, Exponential Families, and Variat.pdf",
+          "uri": "http://zotero.org/users/local/1vAghc4M/items/SJGFJW9F"
+        }
+      ],
+      "citationKey": "wainwright-2007-GraphicalModelsExponential",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Martin J.",
+          "lastName": "Wainwright"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Michael I.",
+          "lastName": "Jordan"
+        }
+      ],
+      "date": "2007",
+      "issue": "1\u20132",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "FNT in Machine Learning",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "pages": "1-305",
+      "publicationTitle": "Foundations and Trends\u00ae in Machine Learning",
+      "title": "Graphical Models, Exponential Families, and Variational Inference",
+      "url": "http://www.nowpublishers.com/article/Details/MAL-001",
+      "volume": "1"
+    }
+  ]
+}
