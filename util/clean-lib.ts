@@ -56,11 +56,10 @@ for (const lib of argv._) {
 
   const pre = JSON.parse(fs.readFileSync(lib, 'utf-8'))
   const post = JSON.parse(JSON.stringify(pre))
-  const missing = []
 
   switch (ext) {
     case '.json':
-      normalize(post)
+      normalize(post, false)
       delete post.version
 
       if (localeDateOrder && post.config.localeDateOrder === localeDateOrder[0]) post.config.localeDateOrder = localeDateOrder[1]
@@ -92,19 +91,17 @@ for (const lib of argv._) {
           delete creator.multi
         }
 
-        for (const att of (item.attachments || [])) {
-          delete att.libraryID
-          if (att.path && !fs.existsSync(path.join(path.dirname(lib), att.path))) {
-            missing.push(att.path)
-          }
+        if (item.attachments) {
+          item.attachments = item.attachments.filter(att => {
+            if (att.path && !fs.existsSync(path.join(path.dirname(lib), att.path))) {
+              return false
+            }
+            else {
+              delete att.libraryID
+              return true
+            }
+          })
         }
-      }
-      if (missing.length) {
-        console.log(`${lib}: non-existent attachments:`)
-        for (const att of missing) {
-          console.log(`* ${att}`)
-        }
-        process.exit(1)
       }
       break
     case '.csl.json':

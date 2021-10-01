@@ -23,14 +23,7 @@
       "ISBN": "978-1-4503-2311-6",
       "abstractNote": "While requirements for open source projects originate from a variety of sources like e.g. mailing lists or blogs, typically, they eventually end up as feature requests in an issue tracking system. When analyzing how these issue trackers are used for requirements evolution, we witnessed a high percentage of duplicates in a number of high-prole projects. Further investigation of six open source projects and their users led us to a number of important observations and a categorization of the root causes of these duplicates. Based on this, we propose a set of improvements for future issue tracking systems.",
       "accessDate": "2021-03-03",
-      "attachments": [
-        {
-          "itemType": "attachment",
-          "path": "/Users/Hermes/GSuite/AppSyncs/ZoteroStorage/2013/Heck_IWPSE_2013.pdf",
-          "title": "Heck_IWPSE_2013.pdf",
-          "uri": "http://zotero.org/users/3387002/items/97476HGG"
-        }
-      ],
+      "attachments": [],
       "citationKey": "Heck__2013",
       "creators": [
         {

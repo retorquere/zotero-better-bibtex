@@ -1024,6 +1024,7 @@ export class Reference {
           att.path = relative
         }
       }
+      if (Translator.preferences.testing) att.path = att.path.replace(/.*[.]BBTZ5TEST\//, '~/BBTZ5TEST/').replace(/\/storage\/[^/]+\//, '/storage/')
 
       attachments.push(att)
     }

@@ -25,20 +25,7 @@
       "ISSN": "0090-6778, 1558-0857",
       "abstractNote": "Imagine a coverage area with many wireless access points that cooperate to jointly serve the users, instead of creating autonomous cells. Such a cell-free network operation can potentially resolve many of the interference issues that appear in current cellular networks. This ambition was previously called Network MIMO (multiple-input multiple-output) and has recently reappeared under the name Cell-Free Massive MIMO. The main challenge is to achieve the benefits of cell-free operation in a practically feasible way, with computational complexity and fronthaul requirements that are scalable to large networks with many users. We propose a new framework for scalable Cell-Free Massive MIMO systems by exploiting the dynamic cooperation cluster concept from the Network MIMO literature. We provide a novel algorithm for joint initial access, pilot assignment, and cluster formation that is proved to be scalable. Moreover, we adapt the standard channel estimation, precoding, and combining methods to become scalable. A new uplink and downlink duality is proved and used to heuristically design the precoding vectors on the basis of the combining vectors. Interestingly, the proposed scalable precoding and combining outperform conventional maximum ratio processing and also performs closely to the best unscalable alternatives.",
       "accessDate": "2020-05-19T16:57:03Z",
-      "attachments": [
-        {
-          "itemType": "attachment",
-          "path": "/Users/haochuan/Zotero/storage/UVRZKNCW/1908.html",
-          "title": "arXiv.org Snapshot",
-          "uri": "http://zotero.org/users/6242341/items/UVRZKNCW"
-        },
-        {
-          "itemType": "attachment",
-          "path": "/Users/haochuan/Zotero/storage/GYCMJS38/Bj\u00f6rnson \u548c Sanguinetti - 2020 - Scalable Cell-Free Massive MIMO Systems.pdf",
-          "title": "arXiv Fulltext PDF",
-          "uri": "http://zotero.org/users/6242341/items/GYCMJS38"
-        }
-      ],
+      "attachments": [],
       "citationKey": "bjornsonScalable2020",
       "creators": [
         {
