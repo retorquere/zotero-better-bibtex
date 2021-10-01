@@ -1028,7 +1028,7 @@ export class Reference {
           att.path = relative
         }
       }
-      if (Translator.preferences.testing) att.path = att.path.replace(/.*[.]BBTZ5TEST\/(zotero|jurism)/, '~/BBTZ5TEST/').replace(/\/storage\/[^/]+\//, '/storage/')
+      if (Translator.preferences.testing) att.path = att.path.replace(/.*[.]BBTZ5TEST\/(zotero|jurism)\//, '~/BBTZ5TEST/').replace(/\/storage\/[^/]+\//, '/storage/')
 
       if (modify) att.path = modify(att.path)
       attachments.push(att)
