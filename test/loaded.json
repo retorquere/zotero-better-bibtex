@@ -373,6 +373,8 @@
   "export/Thin space in author name #859.json",
   "export/Title case of latex greek text on biblatex export #564.biblatex",
   "export/Title case of latex greek text on biblatex export #564.json",
+  "export/Transforming exported file names (windows path conversion) #1939.bibtex",
+  "export/Transforming exported file names (windows path conversion) #1939.json",
   "export/Treat dash-connected words as a single word for citekey generation #619.biblatex",
   "export/Treat dash-connected words as a single word for citekey generation #619.json",
   "export/Treat ideographs as individual words for key generation #1353.biblatex",
