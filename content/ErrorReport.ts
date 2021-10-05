@@ -41,9 +41,8 @@ export class ErrorReport {
     wizard.canRewind = false
 
     try {
-      await fetch(`${this.bucket}/${this.key}-${this.timestamp}.zip`, {
-        method: 'PUT',
-        cache: 'no-cache',
+      await Zotero.HTTP.request('PUT', `${this.bucket}/${this.key}-${this.timestamp}.zip`, {
+        noCache: true,
         // followRedirects: true,
         // noCache: true,
         // foreground: true,
@@ -52,7 +51,6 @@ export class ErrorReport {
           'x-amz-acl': 'bucket-owner-full-control',
           'Content-Type': 'application/zip',
         },
-        redirect: 'follow',
         body: await this.zip(),
       })
 
@@ -101,9 +99,10 @@ export class ErrorReport {
     try {
       const latest = PACKAGE.xpi.releaseURL.replace('https://github.com/', 'https://api.github.com/repos/').replace(/\/releases\/.*/, '/releases/latest')
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return JSON.parse(await (await fetch(latest, { method: 'GET', cache: 'no-cache', redirect: 'follow' })).text()).tag_name.replace('v', '')
+      return JSON.parse((await Zotero.HTTP.request('GET', latest, { noCache: true })).response).tag_name.replace('v', '')
     }
     catch (err) {
+      log.debug('errorreport.latest:', err)
       return null
     }
   }
@@ -136,11 +135,7 @@ export class ErrorReport {
   }
 
   private async ping(region: string) {
-    await fetch(`http://s3.${region}.amazonaws.com${s3.region[region].tld || ''}/ping`, {
-      method: 'GET',
-      cache: 'no-cache',
-      redirect: 'follow',
-    })
+    await Zotero.HTTP.request('GET', `http://s3.${region}.amazonaws.com${s3.region[region].tld || ''}/ping`, { noCache: true })
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return { region, ...s3.region[region] }
   }
