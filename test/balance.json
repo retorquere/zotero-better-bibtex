@@ -11,7 +11,7 @@
     "CSL YAML export of date with original publication date in [brackets] #922": 360,
     "CSL exporters; ignore [Fields to omit from export] setting #1179": 1970,
     "CSL-YAML import": {
-      "msecs": 1250,
+      "msecs": 1260,
       "runs": -353
     },
     "Capitalize all title-fields for language en #383": 680,
@@ -20,7 +20,7 @@
       "runs": -198
     },
     "Choose fields to exclude for each exported file #1827": {
-      "msecs": 1350,
+      "msecs": 1360,
       "runs": -388
     },
     "Citekey generation failure #708 and sort references on export #957": 2040,
@@ -61,7 +61,7 @@
     "Export 1 references for BibLaTeX to Better BibLaTeX.023": 400,
     "Export 1 references for BibLaTeX to Better BibTeX does not use biblatex fields eprint and eprinttype #170": 400,
     "Export 1 references for BibLaTeX to Better Biblatex export generates invalid latex when processing zero-width spaces #1892": {
-      "msecs": 490,
+      "msecs": 500,
       "runs": -388
     },
     "Export 1 references for BibLaTeX to BetterBibLaTeX; Software field company is mapped to publisher instead of organization #1054": 310,
@@ -94,7 +94,7 @@
     "Export 1 references for BibLaTeX to Export Forthcoming as Forthcoming": 390,
     "Export 1 references for BibLaTeX to Export Newspaper Article misses section field #132": 330,
     "Export 1 references for BibLaTeX to Export article title capitalisation; P-Type vs n-type #1913": {
-      "msecs": 660,
+      "msecs": 710,
       "runs": -402
     },
     "Export 1 references for BibLaTeX to Export error for items without publicationTitle and Preserve BibTeX variables enabled #201": 310,
@@ -104,7 +104,7 @@
     },
     "Export 1 references for BibLaTeX to Export mapping for reporter field #219": 360,
     "Export 1 references for BibLaTeX to Export of hypen for range in the volume field #1929": {
-      "msecs": 580,
+      "msecs": 610,
       "runs": -411
     },
     "Export 1 references for BibLaTeX to Exporting of single-field author lacks braces #130": 410,
@@ -209,7 +209,7 @@
       "runs": -240
     },
     "Export 1 references for BibTeX to Customise name-separator and list-separator #1927": {
-      "msecs": 580,
+      "msecs": 610,
       "runs": -411
     },
     "Export 1 references for BibTeX to DOI not escaped using postscript #1803": {
@@ -223,7 +223,7 @@
     "Export 1 references for BibTeX to Export C as {v C}, not v{C} #152": 550,
     "Export 1 references for BibTeX to Export of item to Better Bibtex fails for auth3_1 #98": 490,
     "Export 1 references for BibTeX to Export report+type as preprint": {
-      "msecs": 590,
+      "msecs": 600,
       "runs": -367
     },
     "Export 1 references for BibTeX to Export unicode as plain text fails for Vietnamese characters #977": 380,
@@ -288,7 +288,7 @@
     "Export 1 references for BibTeX to braces after textemdash followed by unicode #980": 400,
     "Export 1 references for BibTeX to capital delta breaks .bib output #141": 410,
     "Export 1 references for BibTeX to citation key format nopunctordash filter list #1880": {
-      "msecs": 1790,
+      "msecs": 1770,
       "runs": -380
     },
     "Export 1 references for BibTeX to custom fields should be exported as-is #441": 480,
@@ -324,7 +324,7 @@
     "Export 2 references for BibLaTeX to Hang on non-file attachment export #112 - URL export broken #114": 460,
     "Export 2 references for BibLaTeX to Juris-M missing multi-lingual fields #482": 430,
     "Export 2 references for BibLaTeX to Kuroshiro hardcoded to apply to all CJK language items when option checked #1928": {
-      "msecs": 1930,
+      "msecs": 1950,
       "runs": -409
     },
     "Export 2 references for BibLaTeX to Title case of latex greek text on biblatex export #564": 550,
@@ -371,7 +371,7 @@
     "Export 6 references for BibLaTeX to Better BibLaTeX.stable-keys": 620,
     "Export 8 references for BibLaTeX to Don't title-case sup-subscripts #1037": 660,
     "Export 86 references for BibLaTeX to Language field in the metadata exported incorrectly #1921": {
-      "msecs": 5590,
+      "msecs": 5630,
       "runs": -405
     },
     "Export as Collected Notes does not list subcollections #1768": {
@@ -456,7 +456,7 @@
     "Include first name initial(s) in cite key generation pattern (86)": 450,
     "Jabref groups import does not work #717": 2860,
     "Jabref import - groups lost #1730": {
-      "msecs": 3360,
+      "msecs": 3370,
       "runs": -228
     },
     "Journal abbreviations": 490,
@@ -476,18 +476,18 @@
     },
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 350840,
+    "Really Big whopping library": 350640,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 52360,
+      "msecs": 52400,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
     "Square brackets in Publication field (85), and non-pinned keys must change when the pattern does": 450,
     "Transforming exported file names (windows path conversion) #1939": {
-      "msecs": 580,
+      "msecs": 640,
       "runs": -413
     },
     "Unabbreviate on import #1436-1": 38800,
@@ -513,7 +513,7 @@
       "runs": -36
     },
     "web_page and other mendeley idiocy": {
-      "msecs": 39790,
+      "msecs": 39810,
       "runs": -239
     }
   },
@@ -744,6 +744,7 @@
       "Journal abbreviations",
       "Journal abbreviations exported in bibtex (81)",
       "Export web page to misc type with notes and howpublished custom fields #329",
+      "Transforming exported file names (windows path conversion) #1939",
       "Unbalanced vphantom escapes #1043",
       "arXiv identifiers in BibLaTeX export #460",
       "Ignoring upper cases in German titles #456",
@@ -829,7 +830,7 @@
       "Identical Pinned keys lost when merging duplicated records #1721"
     ]
   },
-  "runs": 414,
+  "runs": 415,
   "slow": {
     "1": [
       "Export 1 references for BibLaTeX to Export of hypen for range in the volume field #1929",
@@ -1062,6 +1063,7 @@
       "Journal abbreviations",
       "Journal abbreviations exported in bibtex (81)",
       "Export web page to misc type with notes and howpublished custom fields #329",
+      "Transforming exported file names (windows path conversion) #1939",
       "Unbalanced vphantom escapes #1043",
       "arXiv identifiers in BibLaTeX export #460",
       "Ignoring upper cases in German titles #456",
@@ -1137,8 +1139,7 @@
       "Merging error with arXiv ID #1373",
       "Duplicate Citation Key Alias #1384",
       "ids field should be created in raw mode #1729",
-      "Identical Pinned keys lost when merging duplicated records #1721",
-      "Transforming exported file names (windows path conversion) #1939"
+      "Identical Pinned keys lost when merging duplicated records #1721"
     ],
     "2": [
       "Really Big whopping library",
