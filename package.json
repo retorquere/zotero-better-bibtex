@@ -56,7 +56,7 @@
     "test": "test"
   },
   "dependencies": {
-    "@artsy/to-title-case": "^1.0.3",
+    "@artsy/to-title-case": "^1.1.0",
     "@caeser1996/titlecase": "^3.0.2",
     "@inkdropapp/html2markdown": "^2.6.5",
     "@lifeparticle/ap-style-title-case": "^1.5.0",
