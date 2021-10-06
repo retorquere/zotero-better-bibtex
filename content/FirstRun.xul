@@ -21,10 +21,10 @@
 
   <script src="chrome://zotero/content/include.js"/>
   <script>
-    var globals = Function('return this')();
+    Zotero.BetterBibTeX.FirstRun.globals = Function('return this')()
   </script>
 
-  <wizardpage onpageshow="Zotero.BetterBibTeX.FirstRun.load(globals)" label="&better-bibtex.FirstRun.title;">
+  <wizardpage onpageshow="Zotero.BetterBibTeX.FirstRun.load()" label="&better-bibtex.FirstRun.title;">
     <description style="white-space: pre-wrap;">&better-bibtex.FirstRun.welcome;</description>
   </wizardpage>
 

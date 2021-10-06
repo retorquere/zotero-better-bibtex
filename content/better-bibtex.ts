@@ -856,8 +856,7 @@ export class BetterBibTeX {
     this.globals.window.openDialog(url, title, properties, params)
   }
 
-  public async load(globals: any): Promise<void> { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
-    this.globals = globals
+  public async load(): Promise<void> { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
     if (this.loaded) return // eslint-disable-line @typescript-eslint/no-misused-promises
 
     const deferred = {
@@ -873,7 +872,7 @@ export class BetterBibTeX {
 
     await TeXstudio.init()
 
-    for (const node of [...globals.document.getElementsByClassName('bbt-texstudio')]) {
+    for (const node of [...this.globals.document.getElementsByClassName('bbt-texstudio')]) {
       node.hidden = !TeXstudio.enabled
     }
 

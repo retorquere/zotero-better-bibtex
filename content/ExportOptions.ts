@@ -1,35 +1,30 @@
 import { patch as $patch$ } from './monkey-patch'
 import * as l10n from './l10n'
 
-export interface ExportOptionsConstructable {
-  new(globals: any): ExportOptions // eslint-disable-line @typescript-eslint/prefer-function-type
-}
 export class ExportOptions {
   private globals: Record<string, any>
   private DOM_OBSERVER: MutationObserver = null
   private reset = true
 
-  public load(globals: Record<string, any>): void {
-    this.globals = globals
-
+  public load(): void {
     this.DOM_OBSERVER = new MutationObserver(this.addEventHandlers.bind(this))
-    this.DOM_OBSERVER.observe(globals.document.getElementById('translator-options'), { attributes: true, subtree: true, childList: true })
+    this.DOM_OBSERVER.observe(this.globals.document.getElementById('translator-options'), { attributes: true, subtree: true, childList: true })
     this.addEventHandlers()
 
-    $patch$(globals.Zotero_File_Interface_Export, 'init', original => function(_options) {
-      for (const translator of globals.window.arguments[0].translators) {
+    $patch$(this.globals.Zotero_File_Interface_Export, 'init', original => function(_options) {
+      for (const translator of this.globals.window.arguments[0].translators) {
         if (translator.label === 'BetterBibTeX JSON') translator.label = 'BetterBibTeX debug JSON'
       }
       // eslint-disable-next-line prefer-rest-params
       original.apply(this, arguments)
     })
 
-    $patch$(globals.Zotero_File_Interface_Export, 'updateOptions', original => function(_options) {
+    $patch$(this.globals.Zotero_File_Interface_Export, 'updateOptions', original => function(_options) {
       // eslint-disable-next-line prefer-rest-params
       original.apply(this, arguments)
 
-      const index = globals.document.getElementById('format-menu').selectedIndex
-      const translator = (index >= 0) ? globals.window.arguments[0].translators[index].translatorID : null
+      const index = this.globals.document.getElementById('format-menu').selectedIndex
+      const translator = (index >= 0) ? this.globals.window.arguments[0].translators[index].translatorID : null
 
       let hidden = false
       let textContent = ''
@@ -47,11 +42,11 @@ export class ExportOptions {
           break
       }
 
-      const reminder = globals.document.getElementById('better-bibtex-reminder')
+      const reminder = this.globals.document.getElementById('better-bibtex-reminder')
       reminder.setAttribute('hidden', hidden)
       reminder.textContent = textContent
 
-      globals.window.sizeToContent()
+      this.globals.window.sizeToContent()
     })
   }
 

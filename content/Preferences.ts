@@ -21,8 +21,7 @@ class AutoExportPane {
   private globals: Record<string, any>
   private cacherate: Record<number, number> = {}
 
-  public load(globals: Record<string, any>) {
-    this.globals = globals
+  public load() {
     this.label = {}
     for (const label of ['scheduled', 'running', 'done', 'error', 'preparing']) {
       this.label[label] = l10n.localize(`Preferences.auto-export.status.${label}`)
@@ -242,9 +241,6 @@ class AutoExportPane {
   }
 }
 
-export interface PrefPaneConstructable {
-  new(): PrefPane // eslint-disable-line @typescript-eslint/prefer-function-type
-}
 export class PrefPane {
   public autoexport = new AutoExportPane
   private keyformat: any
@@ -364,17 +360,15 @@ export class PrefPane {
     }
   }
 
-  public async load(globals: Record<string, any>): Promise<void> {
-    this.globals = globals
-
+  public async load(): Promise<void> {
     this.globals.window.addEventListener('unload', this.unload.bind(this))
 
     this.observer = new MutationObserver(this.mutated.bind(this))
     this.observed = this.globals.document.getElementById('zotero-prefpane-export')
     this.observer.observe(this.observed, { childList: true, subtree: true })
-    // this.prefwindow = globals.document.getElementsByTagName('prefwindow')[0]
+    // this.prefwindow = this.globals.document.getElementsByTagName('prefwindow')[0]
 
-    const deck = globals.document.getElementById('better-bibtex-prefs-deck')
+    const deck = this.globals.document.getElementById('better-bibtex-prefs-deck')
     deck.selectedIndex = 0
 
     await Zotero.BetterBibTeX.ready
@@ -391,9 +385,9 @@ export class PrefPane {
       return
     }
 
-    this.autoexport.load(globals)
+    this.autoexport.load()
 
-    const tabbox = globals.document.getElementById('better-bibtex-prefs-tabbox')
+    const tabbox = this.globals.document.getElementById('better-bibtex-prefs-tabbox')
     $patch$(this.globals.Zotero_Preferences, 'openHelpLink', original => function() {
       if (this.prefwindow.currentPane.helpTopic === 'BetterBibTeX') {
         const id = tabbox.selectedPanel.id

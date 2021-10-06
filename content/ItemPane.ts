@@ -77,11 +77,9 @@ export class ItemPane {
     return true
   }
 
-  public async load(globals: Record<string, any>): Promise<void> {
+  public async load(): Promise<void> {
     if (!Zotero.BetterBibTeX?.ready) return
     await Zotero.BetterBibTeX.ready
-
-    this.globals = globals
 
     const itempane = this // eslint-disable-line @typescript-eslint/no-this-alias
     $patch$(this.globals.ZoteroItemPane, 'viewItem', original => async function(item, _mode, _index) {

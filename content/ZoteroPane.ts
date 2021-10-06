@@ -11,16 +11,10 @@ import { $and } from './db/loki'
 import * as Extra from './extra'
 import * as DateParser from './dateparser'
 
-export interface ZoteroPaneConstructable {
-  new(globals: any): ZoteroPane // eslint-disable-line @typescript-eslint/prefer-function-type
-}
-
 export class ZoteroPane {
   private globals: Record<string, any>
 
-  public load(globals: Record<string, any>): void {
-    this.globals = globals
-
+  public load(): void {
     const pane = Zotero.getActiveZoteroPane()
 
     $patch$(pane, 'buildCollectionContextMenu', original => async function() {
@@ -32,11 +26,11 @@ export class ZoteroPane {
         const isLibrary = treeRow && treeRow.isLibrary(true)
         const isCollection = treeRow && treeRow.isCollection()
 
-        globals.document.getElementById('bbt-collectionmenu-separator').hidden = !(isLibrary || isCollection)
-        globals.document.getElementById('bbt-collectionmenu-pull-url').hidden = !(isLibrary || isCollection)
-        globals.document.getElementById('bbt-collectionmenu-report-errors').hidden = !(isLibrary || isCollection)
+        this.globals.document.getElementById('bbt-collectionmenu-separator').hidden = !(isLibrary || isCollection)
+        this.globals.document.getElementById('bbt-collectionmenu-pull-url').hidden = !(isLibrary || isCollection)
+        this.globals.document.getElementById('bbt-collectionmenu-report-errors').hidden = !(isLibrary || isCollection)
 
-        const tagDuplicates = globals.document.getElementById('bbt-collectionmenu-tag-duplicates')
+        const tagDuplicates = this.globals.document.getElementById('bbt-collectionmenu-tag-duplicates')
         if (isLibrary) {
           tagDuplicates.hidden = false
           tagDuplicates.setAttribute('libraryID', treeRow.ref.libraryID.toString())
@@ -57,12 +51,12 @@ export class ZoteroPane {
         }
         const auto_exports = query ? AutoExport.db.find(query) : []
 
-        for (const node of [...globals.document.getElementsByClassName('bbt-autoexport')]) {
+        for (const node of [...this.globals.document.getElementsByClassName('bbt-autoexport')]) {
           node.hidden = auto_exports.length === 0
         }
 
         if (auto_exports.length !== 0) {
-          const menupopup = globals.document.getElementById('zotero-itemmenu-BetterBibTeX-autoexport-menu')
+          const menupopup = this.globals.document.getElementById('zotero-itemmenu-BetterBibTeX-autoexport-menu')
           while (menupopup.children.length > 1) menupopup.removeChild(menupopup.firstChild)
           for (const [index, ae] of auto_exports.entries()) {
             const menuitem = (index === 0 ? menupopup.firstChild : menupopup.appendChild(menupopup.firstChild.cloneNode(true)))

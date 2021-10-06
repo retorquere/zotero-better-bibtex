@@ -145,8 +145,7 @@ export class ErrorReport {
     return { region, ...s3.region[region] }
   }
 
-  public async load(globals: Record<string, any>): Promise<void> {
-    this.globals = globals
+  public async load(): Promise<void> {
     const wizard = this.globals.document.getElementById('better-bibtex-error-report')
 
     if (Zotero.Debug.enabled) wizard.pageIndex = 1

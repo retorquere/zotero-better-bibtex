@@ -8,11 +8,11 @@
 
   <script src="chrome://zotero/content/include.js"/>
   <script>
-    var globals = Function('return this')();
+    Zotero.BetterBibTeX.ExportOptions.globals = Function('return this')();
     window.addEventListener('load', async function () {
       try {
         Zotero.debug('BBT: loading ExportOptions')
-        await Zotero.BetterBibTeX.ExportOptions.load(globals)
+        await Zotero.BetterBibTeX.ExportOptions.load()
         window.addEventListener('unload', () => Zotero.BetterBibTeX.ExportOptions.unload())
         Zotero.debug('BBT: ExportOptions loaded')
       } catch (err) {
