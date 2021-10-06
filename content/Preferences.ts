@@ -257,7 +257,7 @@ export class PrefPane {
 
   public checkCitekeyFormat(target = null): void {
     if (target) this.keyformat = target
-    if (this.keyformat.disabled) return // itemTypes not available yet
+    if (!this.keyformat || Zotero.BetterBibTeX.ready.isPending()) return // itemTypes not available yet
 
     let msg
     try {
@@ -271,7 +271,7 @@ export class PrefPane {
       log.error('prefs: key format error:', msg)
     }
 
-    if (!this.keyformat.value && !msg) { msg = 'pattern is empty' }
+    if (!this.keyformat.value && !msg) msg = 'pattern is empty'
 
     this.keyformat.setAttribute('style', (msg ? '-moz-appearance: none !important; background-color: DarkOrange' : ''))
     this.keyformat.setAttribute('tooltiptext', msg)
