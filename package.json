@@ -48,7 +48,7 @@
     "reinstall": "rm -rf node_modules yarn* && npm install",
     "test:nightly": "TRAVIS_EVENT_TYPE=cron ./test/behave --tags @nightly",
     "submodules": "git submodule update --init --recursive --remote && git submodule foreach git reset --hard && git submodule foreach git pull origin",
-    "preupgrades": "parallel --ungroup ::: './setup/bibertool.py' 'npm run submodules' 'ncu --timeout 900001 -u && npm i' './setup/item.py'",
+    "preupgrades": "parallel --ungroup ::: './setup/bibertool.py' './setup/submodules.py' 'ncu --timeout 900001 -u && npm i' './setup/item.py'",
     "upgrades": "git add package.json package-lock.json citation-style-language-locales site/themes/learn schema translators/bibtex/biber-tool.conf && git commit -m upgrades"
   },
   "main": "index.js",
@@ -137,7 +137,7 @@
     "process": "^0.11.10",
     "properties-reader": "^2.2.0",
     "pug": "^3.0.2",
-    "putout": "^20.9.0",
+    "putout": "^20.10.0",
     "rimraf": "^3.0.2",
     "shelljs": "^0.8.4",
     "string-template": "^1.0.0",

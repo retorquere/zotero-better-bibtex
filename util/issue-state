@@ -11,12 +11,16 @@ from github import Github
 import os
 import re
 from types import SimpleNamespace
+import json
+from pathlib import Path
+import shutil
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--all', action='store_true')
 parser.add_argument('--unsnyk', action='store_true')
 parser.add_argument('--orphaned-remote', action='store_true')
 parser.add_argument('--close-branch', action='store_true')
+parser.add_argument('--test-case', type=str)
 args = parser.parse_args()
 
 g = Github(os.environ['GITHUB_TOKEN'])
@@ -26,10 +30,12 @@ class Branches:
   def __init__(self):
     self.local = []
     branches = subprocess.check_output('git branch'.split()).decode()
-    branches = [b.strip('* ') for b in branches.splitlines()]
-    for branch in branches:
+    branches = [(b.strip('* '), b.startswith('* ')) for b in branches.splitlines()]
+    for branch, local in branches:
       if branch not in ['master', 'gh-pages']:
         self.local.append(branch)
+      if local:
+        self.current = branch
 
     self.remote = []
     for branch in repo.get_branches():
@@ -69,6 +75,38 @@ for issue in issues.values():
     local=next((branch for branch in branches.local if branch == f'gh-{issue.number}'), None),
     remote=next((branch for branch in branches.local if branch == f'gh-{issue.number}'), None)
   )
+
+if args.test_case:
+  issue = issues[int(branches.current.replace('gh-', ''))]
+  lib = os.path.join('logs', args.test_case, 'references.json')
+  print(subprocess.check_output(['./util/clean-lib.ts', lib, '--save']).decode())
+
+  print(issue.number, args.test_case)
+  title = f' {issue.title} #{issue.number}'
+  title = "{:<95}".format(title)
+  with open(lib) as f:
+    n = ' ' + str(len(json.load(f)['items']))
+    n = "{:<12}".format(n)
+  print(title, n)
+  with open('test/features/export.feature') as f:
+    feature = f.readlines()
+  with open('test/features/export.feature', 'w') as f:
+    replaced = False
+    for line in feature:
+      if f' #{issue.number} ' in line:
+        print('replacing')
+        print(line)
+      elif not replaced and line.strip().replace(' ', '') == '|file|references|':
+        f.write(line)
+        print(f'     |{title} |{n} |', file=f)
+        replaced = True
+      else:
+        f.write(line)
+
+  shutil.copyfile(lib, os.path.join('test/fixtures/export', title.strip() + '.json'))
+  Path(os.path.join('test/fixtures/export', title.strip() + '.biblatex')).touch()
+
+  sys.exit(0)
 
 if args.orphaned_remote or args.close_branch:
   for issue in sorted(issues.values(), key=lambda x: x.number):
