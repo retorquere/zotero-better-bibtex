@@ -43,6 +43,7 @@ if os.environ.get('CI') != 'true':
         print(section)
         print(' ', run(os.path.join(root, module['path']), 'git checkout ' + module['branch']))
         print(' ', run(os.path.join(root, module['path']), 'git pull'))
+        print(' ', run(root, 'git add ' + module['path']))
 
   else:
     print('  GitHub offline -- you may not have network access -- skipping submodule update')
