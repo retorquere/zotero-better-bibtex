@@ -227,10 +227,19 @@ export class KeyManager {
   public async start(): Promise<void> {
     await this.rescan()
 
-    if (Preference.citekeySearch) {
-      const path = OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex-search.sqlite')
-      await Zotero.DB.queryAsync(`ATTACH DATABASE '${path.replace(/'/g, "''")}' AS betterbibtexsearch`)
-
+    let search = Preference.citekeySearch
+    if (search) {
+      try {
+        const path = OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex-search.sqlite')
+        await Zotero.DB.queryAsync(`ATTACH DATABASE '${path.replace(/'/g, "''")}' AS betterbibtexsearch`)
+      }
+      catch (err) {
+        log.debug('failed to attach the search database:', err)
+        flash('Error loading citekey search database, citekey search is disabled')
+        search = false
+      }
+    }
+    if (search) {
       // 1829
       try {
         // no other way to detect column existence on attached databases
