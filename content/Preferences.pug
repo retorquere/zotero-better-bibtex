@@ -12,11 +12,11 @@
 overlay#zotero-better-bibtex-preferences(xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:bbt="http://retorque.re/zotero-better-bibtex/")
   script(src="chrome://zotero/content/include.js")
   script.
-    var globals = Function('return this')();
+    Zotero.BetterBibTeX.PrefPane.globals = Zotero.BetterBibTeX.PrefPane.autoexport.globals = Function('return this')();
     async function load() {
       try {
         Zotero.debug('BBT: loading PrefPane')
-        await Zotero.BetterBibTeX.PrefPane.load(globals)
+        await Zotero.BetterBibTeX.PrefPane.load()
         Zotero.debug('BBT: PrefPane loaded')
       } catch (err) {
         Zotero.debug(`BBT: loading PrefPane error: ${err.message}\n${err.stack ||''}`)

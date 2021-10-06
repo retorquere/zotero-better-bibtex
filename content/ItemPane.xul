@@ -11,7 +11,7 @@
     window.addEventListener('load', async function() {
       try {
         Zotero.debug('BBT: loading ItemPane')
-        await Zotero.BetterBibTeX.ItemPane.load(globals)
+        await Zotero.BetterBibTeX.ItemPane.load()
         window.addEventListener('unload', () => Zotero.BetterBibTeX.ItemPane.unload())
         Zotero.debug('BBT: ItemPane loaded')
       } catch (err) {
