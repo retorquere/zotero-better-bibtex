@@ -622,7 +622,9 @@ class PatternFormatter {
   }
 
   /** Capitalize all the significant words of the title, and concatenate them. For example, `An awesome paper on JabRef` will become `AnAwesomePaperJabref` */
-  public $title() { return (this.titleWords(this.item.title) || []).join(' ') }
+  public $title() {
+    return (this.titleWords(this.item.title) || []).join(' ')
+  }
 
   private padYear(year: string, length): string {
     return year ? year.replace(/[0-9]+/, y => y.length >= length ? y : (`0000${y}`).slice(-length)): ''

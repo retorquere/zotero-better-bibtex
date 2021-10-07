@@ -12,6 +12,7 @@ Scenario Outline: Export <references> references for BibLaTeX to <file>
 
   Examples:
      | file                                                                                           | references  |
+     | Define word delimiter characters #1943                                                         | 1           |
      | Export of hypen for range in the volume field #1929                                            | 1           |
      | Kuroshiro hardcoded to apply to all CJK language items when option checked #1928               | 2           |
      | Language field in the metadata exported incorrectly #1921                                      | 86          |
