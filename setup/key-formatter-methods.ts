@@ -8,6 +8,12 @@ const stringify = require('safe-stable-stringify')
 const filename = 'content/key-manager/formatter.ts'
 const ast = ts.createSourceFile(filename, fs.readFileSync(filename, 'utf8'), ts.ScriptTarget.Latest)
 
+function kindName(node) {
+  node.kindName = ts.SyntaxKind[node.kind]
+  node.forEachChild(kindName)
+}
+kindName(ast)
+
 const types = { function: {}, filter: {} }
 let m
 
@@ -75,8 +81,21 @@ ast.forEachChild((node: ts.Node) => {
         // if (m = method.name.getText(ast).match(/^([$_])(.+)/)) {
         if (m = method.name.getText(ast).match(/^([$_])(.+)/)) {
           const [ , kind, name ] = m
-          const parameters = method.parameters.map(p => ({ name: p.name.getText(ast), type: p.type?.getText(ast) || null, optional: !!(p.initializer || p.questionToken)}))
-          parameters.forEach(p => { if (!p.optional) delete p.optional })
+          const parameters = method.parameters.map(p => ({
+            name: p.name.getText(ast),
+            type: p.type?.getText(ast) || null,
+            optional: !!(p.initializer || p.questionToken),
+            default: p.initializer,
+          }))
+          parameters.forEach(p => {
+            if (!p.optional) delete p.optional
+            if (typeof p.default === 'undefined') delete p.default
+            if (p.type[0] === "'") console.log(p.type, p.name, method.parameters.map(p => ts.SyntaxKind[p.kind]), JSON.stringify(method.parameters, null, 2))
+          })
+          if (kind === '_') {
+            if (parameters[0]?.name !== 'value') throw new Error(`${kind}${name}: ${JSON.stringify(parameters)}`)
+            parameters.shift()
+          }
           if (parameters.find(p => !p.type)) throw new Error(`${kind}${name}: ${JSON.stringify(parameters)}`)
 
           types[{$: 'function', _: 'filter'}[kind]][name] = parameters
