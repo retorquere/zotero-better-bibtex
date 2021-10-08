@@ -154,6 +154,7 @@ Scenario Outline: Export <references> references for BibTeX to <file>
 
   Examples:
      | file                                                                               | references |
+     | Debugging translator issue for PhD Dissertation type #1950                         | 1          |
      | Customise name-separator and list-separator #1927                                  | 1          |
      | citation key format nopunctordash filter list #1880                                | 1          |
      | Export report+type as preprint                                                     | 1          |

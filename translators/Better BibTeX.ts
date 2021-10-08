@@ -337,12 +337,13 @@ export function doExport(): void {
     if (ref.referencetype_source.split('.')[1] === 'thesis') {
       const thesistype = {
         phdthesis: 'phdthesis',
+        dissertation: 'phdthesis',
         phd: 'phdthesis',
         mastersthesis: 'mastersthesis',
         masterthesis: 'mastersthesis',
         master: 'mastersthesis',
         ma: 'mastersthesis',
-      }[item.type?.toLowerCase()]
+      }[item.type?.toLowerCase().replace(/[^a-z]/g, '')]
       if (thesistype) {
         ref.referencetype = thesistype
         ref.remove('type')
