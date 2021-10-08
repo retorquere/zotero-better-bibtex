@@ -14,12 +14,94 @@ function kindName(node) {
 }
 kindName(ast)
 
-const types = { function: {}, filter: {} }
-let m
+const typesFor = { function: {}, filter: {} }
 
 const doc = {
   filters: {},
   functions: {},
+}
+
+function assert(cond, msg) {
+  if (!cond) throw new Error(msg)
+}
+
+const Method = new class {
+  public signature: Record<string, any> = {}
+
+  const2enum(types) {
+    const consts = []
+    const other = types.filter(type => {
+      if (typeof type.const === 'undefined') return true
+      consts.push(type.const)
+      return false
+    })
+
+    switch (consts.length) {
+      case 0:
+      case 1:
+        return types
+      default:
+        return other.concat({ enum: consts })
+    }
+  }
+
+  types(node) {
+    switch (node.kind) {
+      case ts.SyntaxKind.UnionType:
+        return { oneOf: this.const2enum(node.types.map(t => this.types(t)).filter(type => type)) }
+
+      case ts.SyntaxKind.LiteralType:
+        return { const: node.literal.text }
+
+      case ts.SyntaxKind.StringKeyword:
+        return { type: 'string' }
+
+      case ts.SyntaxKind.BooleanKeyword:
+        return { type: 'boolean' }
+
+      case ts.SyntaxKind.TypeReference:
+        return null
+
+      case ts.SyntaxKind.NumberKeyword:
+        return { type: 'number' }
+
+      default:
+        throw {...node, kindName: ts.SyntaxKind[node.kind] }
+    }
+  }
+
+  type(node) {
+    const types = this.types(node)
+
+    if (types.oneOf) {
+      assert(types.oneOf.length, types)
+      if (types.oneOf.length === 1) {
+        return types.oneOf[0]
+      }
+    }
+
+    return types
+  }
+
+  add(method, method_name?: string): string {
+    if (!method_name) method_name = method.name.kind === ts.SyntaxKind.Identifier ? method.name.escapedText : ''
+    assert(method_name, method.name.getText(ast))
+    if (!method_name.match(/^[$_])/)) return ''
+
+    assert(!this.signature[method_name], `${method_name} already exists`))
+    this.signature[method_name] = method.parameters.map(p => ({
+      name: p.name.kind === ts.SyntaxKind.Identifier ? p.name.escapedText : '',
+      type: this.type(p.type),
+      optional: !!(p.initializer || p.questionToken),
+      default: p.initializer,
+    })
+    this.signature[method_name].forEach(p => {
+      if (!p.optional) delete p.optional
+      if (typeof p.default === 'undefined') delete p.default
+    })
+
+    return method_name
+  }
 }
 
 function function_name(name: string, parameters: { name: string }[]) {
@@ -64,6 +146,8 @@ function filter_name({ name, parameters }: { name: string, parameters: { name: s
 }
 
 ast.forEachChild((node: ts.Node) => {
+  let method_name
+
   // process only classes
   if (node.kind === ts.SyntaxKind.ClassDeclaration) {
 
@@ -74,47 +158,28 @@ ast.forEachChild((node: ts.Node) => {
     cls.forEachChild((_method: ts.Node) => {
 
       // limit proecssing to methods
-      if (_method.kind === ts.SyntaxKind.MethodDeclaration) {
-        const method = _method as ts.MethodDeclaration
+      if (method.kind === ts.SyntaxKind.MethodDeclaration && (method_name = Method.add(method as ts.MethodDeclaration))) {
+        const kind = method_name[0]
+        const name = method_name.substr(1)
 
-        // process the right method with the right count of parameters
-        // if (m = method.name.getText(ast).match(/^([$_])(.+)/)) {
-        if (m = method.name.getText(ast).match(/^([$_])(.+)/)) {
-          const [ , kind, name ] = m
-          const parameters = method.parameters.map(p => ({
-            name: p.name.getText(ast),
-            type: p.type?.getText(ast) || null,
-            optional: !!(p.initializer || p.questionToken),
-            default: p.initializer,
-          }))
-          parameters.forEach(p => {
-            if (!p.optional) delete p.optional
-            if (typeof p.default === 'undefined') delete p.default
-            if (p.type[0] === "'") console.log(p.type, p.name, method.parameters.map(p => ts.SyntaxKind[p.kind]), JSON.stringify(method.parameters, null, 2))
-          })
-          if (kind === '_') {
-            if (parameters[0]?.name !== 'value') throw new Error(`${kind}${name}: ${JSON.stringify(parameters)}`)
-            parameters.shift()
-          }
-          if (parameters.find(p => !p.type)) throw new Error(`${kind}${name}: ${JSON.stringify(parameters)}`)
+        if (kind === '_') {
+          if (Method.signature[method_name][0]?.name !== 'value') throw new Error(`${kind}${name}: ${JSON.stringify(parameters)}`)
+          parameters.shift()
+        }
 
-          types[{$: 'function', _: 'filter'}[kind]][name] = parameters
+        const comment_ranges = ts.getLeadingCommentRanges(ast.getFullText(), method.getFullStart())
+        assert(comment_ranges, `${method_name} has no documentation`)
+        let comment = ast.getFullText().slice(comment_ranges[0].pos, comment_ranges[0].end)
+        if (comment.startsWith('/**')) {
+          comment = comment.replace(/^\/\*\*/, '').replace(/\*\/$/, '').trim().split('\n').map(line => line.replace(/^\s*[*]\s*/, '')).join('\n').replace(/\n+/g, newlines => newlines.length > 1 ? '\n\n' : ' ')
 
-          const comment_ranges = ts.getLeadingCommentRanges(ast.getFullText(), method.getFullStart())
-          if (comment_ranges) {
-            let comment = ast.getFullText().slice(comment_ranges[0].pos, comment_ranges[0].end)
-            if (comment.startsWith('/**')) {
-              comment = comment.replace(/^\/\*\*/, '').replace(/\*\/$/, '').trim().split('\n').map(line => line.replace(/^\s*[*]\s*/, '')).join('\n').replace(/\n+/g, newlines => newlines.length > 1 ? '\n\n' : ' ')
-
-              switch(kind) {
-                case '$':
-                  doc.functions[function_name(name, parameters)] = comment
-                  break
-                case '_':
-                  doc.filters[filter_name({ name, parameters })] = comment
-                  break
-              }
-            }
+          switch(kind) {
+            case '$':
+              doc.functions[function_name(name, parameters)] = comment
+              break
+            case '_':
+              doc.filters[filter_name({ name, parameters })] = comment
+              break
           }
         }
       }
@@ -122,6 +187,6 @@ ast.forEachChild((node: ts.Node) => {
   }
 })
 
-fs.writeFileSync('gen/key-formatter-methods.json', JSON.stringify(types, null, 2))
+fs.writeFileSync('gen/key-formatter-methods.json', JSON.stringify(typesFor, null, 2))
 fs.writeFileSync('site/data/citekeyformatters/functions.json', stringify(doc.functions, null, 2))
 fs.writeFileSync('site/data/citekeyformatters/filters.json', stringify(doc.filters, null, 2))
