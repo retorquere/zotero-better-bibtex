@@ -1189,19 +1189,23 @@ export class Reference {
     return { cache: true, write: true }
   }
 
-  public thesistype(type: string, phdthesis: string, mastersthesis: string): string {
+  public thesistype(type: string, phdthesis: string, mastersthesis: string, bathesis?: string, candthesis?: string): string {
     return {
-      phdthesis,
       phd: phdthesis,
       dissertation: phdthesis,
       phddissertation: phdthesis,
       doctoraldissertation: phdthesis,
 
-      mastersthesis,
-      masterthesis: mastersthesis,
-      master: mastersthesis,
       ma: mastersthesis,
-    }[type?.toLowerCase().replace(/[^a-z]/g, '')]
+      masters: mastersthesis,
+      master: mastersthesis,
+
+      ba: bathesis,
+      bachelor: bathesis,
+
+      cand: candthesis,
+      candidate: candthesis,
+    }[type?.toLowerCase().replace(/[^a-z]/g, '').replace(/thesis$/, '')]
   }
 
   private qualityReport(): string {

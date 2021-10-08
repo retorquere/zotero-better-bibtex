@@ -462,7 +462,7 @@ export function doExport(): void {
         break
 
       case 'thesis':
-        ref.add({ name: 'type', value: ref.thesistype(item.type, 'phdthesis', 'mathesis')  || item.type })
+        ref.add({ name: 'type', value: ref.thesistype(item.type, 'phdthesis', 'mathesis', 'bathesis', 'candthesis')  || item.type })
         break
 
       case 'report':
