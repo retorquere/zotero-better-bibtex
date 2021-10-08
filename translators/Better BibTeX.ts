@@ -335,17 +335,7 @@ export function doExport(): void {
     if (Translator.preferences.DOIandURL === 'both' || !url) ref.add({ name: 'doi', value: (doi || '').replace(/^https?:\/\/doi.org\//i, '') })
 
     if (ref.referencetype_source.split('.')[1] === 'thesis') {
-      const thesistype = {
-        phd: 'phdthesis',
-        phdthesis: 'phdthesis',
-        dissertation: 'phdthesis',
-        phddissertation: 'phdthesis',
-        doctoraldissertation: 'phdthesis',
-        mastersthesis: 'mastersthesis',
-        masterthesis: 'mastersthesis',
-        master: 'mastersthesis',
-        ma: 'mastersthesis',
-      }[item.type?.toLowerCase().replace(/[^a-z]/g, '')]
+      const thesistype = ref.thesistype(item.type, 'phdthesis', 'mastersthesis')
       if (thesistype) {
         ref.referencetype = thesistype
         ref.remove('type')

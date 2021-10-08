@@ -456,23 +456,13 @@ export function doExport(): void {
         ref.add({ name: 'publisher', value: item.publisher, bibtexStrings: true })
     }
 
-    let thesistype: string
     switch (ref.referencetype) {
       case 'letter':
         ref.add({ name: 'type', value: item.type || (item.itemType === 'email' ? 'E-mail' : 'Letter') })
         break
 
       case 'thesis':
-        thesistype = {
-          phdthesis: 'phdthesis',
-          phd: 'phdthesis',
-          mastersthesis: 'mathesis',
-          masterthesis: 'mathesis',
-          master: 'mathesis',
-          ma: 'mathesis',
-        }[item.type?.toLowerCase()]
-
-        ref.add({ name: 'type', value: thesistype || item.type })
+        ref.add({ name: 'type', value: ref.thesistype(item.type, 'phdthesis', 'mathesis')  || item.type })
         break
 
       case 'report':
