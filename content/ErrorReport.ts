@@ -141,6 +141,9 @@ export class ErrorReport {
   }
 
   public async load(): Promise<void> {
+    this.key = this.timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
+    this.zipped = null
+
     const wizard = this.globals.document.getElementById('better-bibtex-error-report')
 
     if (Zotero.Debug.enabled) wizard.pageIndex = 1
@@ -149,8 +152,6 @@ export class ErrorReport {
     continueButton.disabled = true
 
     this.params = this.globals.window.arguments[0].wrappedJSObject
-
-    this.timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
 
     this.errorlog = {
       info: await this.info(),
