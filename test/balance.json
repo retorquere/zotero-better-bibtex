@@ -20,7 +20,7 @@
       "runs": -198
     },
     "Choose fields to exclude for each exported file #1827": {
-      "msecs": 1370,
+      "msecs": 1380,
       "runs": -388
     },
     "Citekey generation failure #708 and sort references on export #957": 2040,
@@ -86,6 +86,10 @@
       "runs": -47
     },
     "Export 1 references for BibLaTeX to Dates incorrect when Zotero date field includes times #934": 330,
+    "Export 1 references for BibLaTeX to Detect journal abbreviation in the publication field #1951": {
+      "msecs": 590,
+      "runs": -416
+    },
     "Export 1 references for BibLaTeX to Do not use more than three initials in case of authshort key #1079": 340,
     "Export 1 references for BibLaTeX to Does the publisher field work when put in Zoteros extra field #1370": 510,
     "Export 1 references for BibLaTeX to Dollar sign in title not properly escaped #485": 330,
@@ -104,7 +108,7 @@
     },
     "Export 1 references for BibLaTeX to Export mapping for reporter field #219": 360,
     "Export 1 references for BibLaTeX to Export of hypen for range in the volume field #1929": {
-      "msecs": 630,
+      "msecs": 640,
       "runs": -411
     },
     "Export 1 references for BibLaTeX to Exporting of single-field author lacks braces #130": 410,
@@ -217,7 +221,7 @@
       "runs": -309
     },
     "Export 1 references for BibTeX to Debugging translator issue for PhD Dissertation type #1950": {
-      "msecs": 740,
+      "msecs": 770,
       "runs": -415
     },
     "Export 1 references for BibTeX to Double superscript in title field on export #1217": 400,
@@ -292,7 +296,7 @@
     "Export 1 references for BibTeX to braces after textemdash followed by unicode #980": 400,
     "Export 1 references for BibTeX to capital delta breaks .bib output #141": 410,
     "Export 1 references for BibTeX to citation key format nopunctordash filter list #1880": {
-      "msecs": 1750,
+      "msecs": 1730,
       "runs": -380
     },
     "Export 1 references for BibTeX to custom fields should be exported as-is #441": 480,
@@ -328,7 +332,7 @@
     "Export 2 references for BibLaTeX to Hang on non-file attachment export #112 - URL export broken #114": 460,
     "Export 2 references for BibLaTeX to Juris-M missing multi-lingual fields #482": 430,
     "Export 2 references for BibLaTeX to Kuroshiro hardcoded to apply to all CJK language items when option checked #1928": {
-      "msecs": 1980,
+      "msecs": 1970,
       "runs": -409
     },
     "Export 2 references for BibLaTeX to Title case of latex greek text on biblatex export #564": 550,
@@ -375,7 +379,7 @@
     "Export 6 references for BibLaTeX to Better BibLaTeX.stable-keys": 620,
     "Export 8 references for BibLaTeX to Don't title-case sup-subscripts #1037": 660,
     "Export 86 references for BibLaTeX to Language field in the metadata exported incorrectly #1921": {
-      "msecs": 5730,
+      "msecs": 5780,
       "runs": -405
     },
     "Export as Collected Notes does not list subcollections #1768": {
@@ -480,18 +484,18 @@
     },
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 350360,
+    "Really Big whopping library": 350070,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 52390,
+      "msecs": 52380,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
     "Square brackets in Publication field (85), and non-pinned keys must change when the pattern does": 450,
     "Transforming exported file names (windows path conversion) #1939": {
-      "msecs": 720,
+      "msecs": 730,
       "runs": -413
     },
     "Unabbreviate on import #1436-1": 38820,
@@ -517,7 +521,7 @@
       "runs": -36
     },
     "web_page and other mendeley idiocy": {
-      "msecs": 39870,
+      "msecs": 39910,
       "runs": -239
     }
   },
@@ -657,6 +661,7 @@
       "Export 1 references for BibLaTeX to URL-DOI exclusive export broken for item types with no dedicated DOI field #1331",
       "Export 5 references for BibLaTeX to date ranges #747+#746",
       "Export 1 references for BibLaTeX to preserve @strings between import-export #1162",
+      "Export 1 references for BibTeX to Debugging translator issue for PhD Dissertation type #1950",
       "Export 1 references for BibTeX to Customise name-separator and list-separator #1927",
       "Export 1 references for BibTeX to citation key format nopunctordash filter list #1880",
       "Export 1 references for BibTeX to Export report+type as preprint",
@@ -736,7 +741,6 @@
       "Include first name initial(s) in cite key generation pattern (86)",
       "Postscript error aborts CSL JSON export #1155",
       "Deterministic ordering for CSL #1178 #1400",
-      "CSL exporters; ignore [Fields to omit from export] setting #1179",
       "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860",
       "CSL YAML export of date with original publication date in [brackets] #922",
       "Quotes around last names should be removed from citekeys #856",
@@ -818,6 +822,7 @@
       "Bibtex key regenerating issue when trashing items #117",
       "two ISSN number are freezing browser #110 + Generating keys and export broken #111",
       "Postfixed keys different between computers #1788",
+      "CSL exporters; ignore [Fields to omit from export] setting #1179",
       "Do not caps-protect name fields #384 #565 #566",
       "auto-export",
       "Collected notes",
@@ -834,7 +839,7 @@
       "Identical Pinned keys lost when merging duplicated records #1721"
     ]
   },
-  "runs": 416,
+  "runs": 417,
   "slow": {
     "1": [
       "Export 1 references for BibLaTeX to Export of hypen for range in the volume field #1929",
@@ -972,6 +977,7 @@
       "Export 1 references for BibLaTeX to URL-DOI exclusive export broken for item types with no dedicated DOI field #1331",
       "Export 5 references for BibLaTeX to date ranges #747+#746",
       "Export 1 references for BibLaTeX to preserve @strings between import-export #1162",
+      "Export 1 references for BibTeX to Debugging translator issue for PhD Dissertation type #1950",
       "Export 1 references for BibTeX to Customise name-separator and list-separator #1927",
       "Export 1 references for BibTeX to citation key format nopunctordash filter list #1880",
       "Export 1 references for BibTeX to Export report+type as preprint",
@@ -1144,7 +1150,7 @@
       "Duplicate Citation Key Alias #1384",
       "ids field should be created in raw mode #1729",
       "Identical Pinned keys lost when merging duplicated records #1721",
-      "Export 1 references for BibTeX to Debugging translator issue for PhD Dissertation type #1950"
+      "Export 1 references for BibLaTeX to Detect journal abbreviation in the publication field #1951"
     ],
     "2": [
       "Really Big whopping library",

@@ -164,6 +164,8 @@
   "export/Dates incorrect when Zotero date field includes times #934.json",
   "export/Debugging translator issue for PhD Dissertation type #1950.bibtex",
   "export/Debugging translator issue for PhD Dissertation type #1950.json",
+  "export/Detect journal abbreviation in the publication field #1951.biblatex",
+  "export/Detect journal abbreviation in the publication field #1951.json",
   "export/Deterministic ordering for CSL #1178 #1400.csl.json",
   "export/Deterministic ordering for CSL #1178 #1400.json",
   "export/Diacritics stripped from keys regardless of ascii or fold filters #266-fold.biblatex",
