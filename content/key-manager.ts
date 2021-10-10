@@ -8,7 +8,7 @@ import { log } from './logger'
 import { sleep } from './sleep'
 import { flash } from './flash'
 import { Events, itemsChanged as notifyItemsChanged } from './events'
-import { arXiv } from './arXiv'
+import { fetchAsync as fetchInspireHEP } from './inspire-hep'
 import * as Extra from './extra'
 import { $and, Query } from './db/loki'
 
@@ -45,37 +45,6 @@ export class KeyManager {
   private scanning: any[]
   private started = false
 
-  private async inspireHEP(doi: string, arxiv: string) {
-    for (const [type, id] of [['DOI', doi], ['arXiv ID', arxiv]]) {
-      if (!id) continue
-      const url = type === 'DOI' ? `https://inspirehep.net/api/doi/${id}` : `https://inspirehep.net/api/arxiv/${id}`
-
-      try {
-        const results = await (await fetch(url, { method: 'GET', cache: 'no-cache', redirect: 'follow' })).json()
-
-        if (results.status && (results.status < 200 || results.status > 299)) { // eslint-disable-line no-magic-numbers
-          flash(`Could not fetch inspireHEP key from ${type}`, `Could not fetch inspireHEP key for ${type} ${JSON.stringify(id)},\n\nInspireHEP says: ${results.message}`)
-
-        }
-        else if (results.metadata.texkeys.length === 0) {
-          flash(`No inspireHEP key found for ${type}`)
-
-        }
-        else {
-          if (results.metadata.texkeys.length > 1) {
-            flash(`Multiple inspireHEP keys found for ${type}`, `Multiple inspireHEP keys found for ${type} (${results.metadata.texkeys.join(' / ')}), selected ${results.metadata.texkeys[0]}`)
-          }
-          return (results.metadata.texkeys[0] as string)
-        }
-      }
-      catch (err) {
-        flash(`Error fetching inspireHEP key from ${type}`, `Could not fetch inspireHEP key for ${type} ${JSON.stringify(id)}\n\n${err.message}`)
-        log.error('inspireHEP', url, err)
-      }
-    }
-    return null
-  }
-
   private getField(item: { getField: ((str: string) => string)}, field: string): string {
     try {
       return item.getField(field) || ''
@@ -110,15 +79,8 @@ export class KeyManager {
       let citationKey: string = null
 
       if (inspireHEP) {
-        const doi = (this.getField(item, 'DOI') || parsed.extraFields.kv.DOI || '').replace(/^https?:\/\/doi.org\//i, '')
-        const arxiv = ((['arxiv.org', 'arxiv'].includes((this.getField(item, 'libraryCatalog') || '').toLowerCase())) && arXiv.parse(this.getField(item, 'publicationTitle')).id) || arXiv.parse(parsed.extraFields.tex.arxiv).id
-
-        if (!doi && !arxiv) continue
-        citationKey = await this.inspireHEP(doi, arxiv)
-        if (!citationKey) continue
-
-        if (parsed.extraFields.citationKey === citationKey) continue
-
+        citationKey = await fetchInspireHEP(item)
+        if (!citationKey || parsed.extraFields.citationKey === citationKey) continue
       }
       else {
         if (parsed.extraFields.citationKey) continue

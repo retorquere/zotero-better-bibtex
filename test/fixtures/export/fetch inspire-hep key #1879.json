@@ -1,0 +1,64 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "dmy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "citekeyFormat": "[auth:lower][year] | [=forumPost/WebPage][Auth:lower:capitalize][Date:format-date=%Y-%m-%d.%H\\:%M\\:%S:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de] | [Auth:lower:capitalize][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de]",
+      "kuroshiro": true
+    }
+  },
+  "items": [
+    {
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "path": "/Users/emile/.BBTZ5TEST/zotero/storage/2SGN358B/Bhupal Dev and others - 2019 - Neutrino Non-Standard Interactions A Status Repor.pdf",
+          "title": "Full Text",
+          "uri": "http://zotero.org/users/8230813/items/2SGN358B"
+        }
+      ],
+      "citationKey": "bhupaldev2019",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "P. S.",
+          "lastName": "Bhupal Dev"
+        },
+        {
+          "creatorType": "author",
+          "name": "others"
+        }
+      ],
+      "date": "2019",
+      "extra": [
+        "_eprint: 1907.00991",
+        "DOI: 10.21468/SciPostPhysProc.2.001"
+      ],
+      "itemID": 1,
+      "itemType": "book",
+      "libraryCatalog": "INSPIRE",
+      "numPages": "001",
+      "shortTitle": "Neutrino Non-Standard Interactions",
+      "tags": [
+        {
+          "tag": "activity report",
+          "type": 1
+        },
+        {
+          "tag": "neutrino: interaction",
+          "type": 1
+        },
+        {
+          "tag": "neutrino: mass",
+          "type": 1
+        }
+      ],
+      "title": "Neutrino Non-Standard Interactions: A Status Report",
+      "volume": "2"
+    }
+  ]
+}

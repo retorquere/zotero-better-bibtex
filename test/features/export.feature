@@ -588,3 +588,12 @@ Scenario: Collected notes
 Scenario: Export as Collected Notes does not list subcollections #1768
   Given I import 51 references from "export/*.json"
   Then an export using "Collected notes" should match "export/*.html"
+
+Scenario: fetch inspire-hep key #1879
+  When I import 1 reference from "export/*.json"
+  And I select the item with a field that contains "Neutrino"
+  And I pin the citation key from inspire-hep
+  And I wait 2 seconds
+  And I set preference .citekeyFormat to [inspire-hep]
+  And I import 1 reference from "export/*.json"
+  Then an export using "Better BibTeX" should match "export/*.bibtex"

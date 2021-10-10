@@ -17,7 +17,7 @@ const doc = {
 }
 
 function function_name(name: string, parameters: { name: string }[]) {
-  name = name.replace(/_/g, '.')
+  name = name.replace(/__/g, '-').replace(/_/g, '.')
   let names = [ name ]
 
   if (parameters.find(p => p.name === 'onlyEditors')) {
