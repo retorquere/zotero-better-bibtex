@@ -77,10 +77,6 @@ ast.forEachChild((node: ts.Node) => {
           const [ , kind, name ] = m
           const parameters = method.parameters.map(p => ({ name: p.name.getText(ast), type: p.type?.getText(ast) || null, optional: !!(p.initializer || p.questionToken)}))
           parameters.forEach(p => { if (!p.optional) delete p.optional })
-          if (kind === '_') {
-            if (parameters[0]?.name !== 'value') throw new Error(`${kind}${name}: ${JSON.stringify(parameters)}`)
-            parameters.shift()
-          }
           if (parameters.find(p => !p.type)) throw new Error(`${kind}${name}: ${JSON.stringify(parameters)}`)
 
           types[{$: 'function', _: 'filter'}[kind]][name] = parameters
