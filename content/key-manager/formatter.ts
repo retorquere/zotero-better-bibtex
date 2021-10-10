@@ -386,8 +386,18 @@ class PatternFormatter {
     }, null, {}))
   }
 
-  public $property(name: string) {
-    return this.set(this.innerText(`${this.item.getField(name) || this.item.getField(name[0].toLowerCase() + name.slice(1)) || ''}`))
+  public $getField(name: string) {
+    const value = this.item.getField(name)
+    switch (typeof value) {
+      case 'number':
+        return this.set(`${value}`)
+      case 'string':
+        return this.set(this.innerText(value))
+      case 'undefined':
+        return this.set('')
+      default:
+        throw new Error(`Unexpected value ${JSON.stringify(value)} of type ${typeof value}`)
+    }
   }
 
   /** returns the name of the shared group library, or nothing if the reference is in your personal library */
@@ -849,7 +859,8 @@ class PatternFormatter {
     return this.set(this.clean(this.value))
   }
 
-  public clean_except_spaces() {
+  // used by the `auth*` functions
+  public scrub() {
     if (!this.value) return this
     return this.set(this.clean(this.value, true))
   }

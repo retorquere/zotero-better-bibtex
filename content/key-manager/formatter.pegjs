@@ -120,7 +120,7 @@ method
 
       args = _trim_args(`function ${text()}`, expected, pnames.map(p => args[p])).join(', ')
       let code = `$${method}(${args})`;
-      if (scrub) code += '.clean_except_spaces()'
+      if (scrub) code += '.scrub()'
 
       return code;
     }
@@ -145,7 +145,7 @@ method
   / prop:$([a-zA-Z]+) {
       const field = options.items.name.field[prop.toLowerCase()]
       if (!field) error(`Unknown field ${JSON.stringify(prop)}`)
-      return `$property(${JSON.stringify(field)})`
+      return `$getField(${JSON.stringify(field)})`
     }
 
 nparam
