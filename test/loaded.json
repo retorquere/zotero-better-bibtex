@@ -567,6 +567,8 @@
   "import/Biblatex Annotation Import Bug #613.json",
   "import/CSL-YAML import.json",
   "import/CSL-YAML import.yml",
+  "import/Detect journal abbreviation in the publication field #1951.bib",
+  "import/Detect journal abbreviation in the publication field #1951.json",
   "import/Endnote should parse.bib",
   "import/Endnote should parse.json",
   "import/Failure to handle unparsed author names (92).bib",
