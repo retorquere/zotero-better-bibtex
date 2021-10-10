@@ -432,7 +432,7 @@ class PatternFormatter {
    */
   public $journal() {
     // this.item.item is the native item stored inside the this.item sorta-proxy
-    return this.set(JournalAbbrev.get(this.item.item, true) || this.item.getField('publicationTitle'))
+    return this.set(JournalAbbrev.get(this.item.item, true) || this.item.getField('publicationTitle') || '')
   }
 
   /** The last name of up to N authors. If there are more authors, "EtAl" is appended. */
@@ -570,7 +570,7 @@ class PatternFormatter {
 
   /** The first `N` (default: 1) words of the title, apply capitalization to first `M` (default: 0) of those */
   public $veryshorttitle(n: number = 1, m: number = 0) { // eslint-disable-line no-magic-numbers, @typescript-eslint/no-inferrable-types
-    return this.set(this.$shorttitle(n, m))
+    return this.$shorttitle(n, m)
   }
 
   /** The last 2 digits of the publication year */
