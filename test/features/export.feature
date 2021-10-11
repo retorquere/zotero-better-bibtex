@@ -13,6 +13,7 @@ Scenario Outline: Export <references> references for BibLaTeX to <file>
   Examples:
      | file                                                                                           | references  |
      | Define word delimiter characters #1943                                                         | 1           |
+     | Detect journal abbreviation in the publication field #1951                                     | 1           |
      | Export of hypen for range in the volume field #1929                                            | 1           |
      | Kuroshiro hardcoded to apply to all CJK language items when option checked #1928               | 2           |
      | Language field in the metadata exported incorrectly #1921                                      | 86          |
@@ -155,6 +156,7 @@ Scenario Outline: Export <references> references for BibTeX to <file>
 
   Examples:
      | file                                                                               | references |
+     | Debugging translator issue for PhD Dissertation type #1950                         | 1          |
      | Customise name-separator and list-separator #1927                                  | 1          |
      | citation key format nopunctordash filter list #1880                                | 1          |
      | Export report+type as preprint                                                     | 1          |

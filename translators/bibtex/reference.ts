@@ -1189,6 +1189,25 @@ export class Reference {
     return { cache: true, write: true }
   }
 
+  public thesistype(type: string, phdthesis: string, mastersthesis: string, bathesis?: string, candthesis?: string): string {
+    return {
+      phd: phdthesis,
+      dissertation: phdthesis,
+      phddissertation: phdthesis,
+      doctoraldissertation: phdthesis,
+
+      ma: mastersthesis,
+      masters: mastersthesis,
+      master: mastersthesis,
+
+      ba: bathesis,
+      bachelor: bathesis,
+
+      cand: candthesis,
+      candidate: candthesis,
+    }[type?.toLowerCase().replace(/[^a-z]/g, '').replace(/thesis$/, '')]
+  }
+
   private qualityReport(): string {
     // the quality report will access a bunch of fields not to export them but just to see if they were used, and that triggers the cacheDisabler proxy when
     // the 'collections' field is accessed... rendering a lot of items uncacheable

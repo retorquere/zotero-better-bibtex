@@ -31,18 +31,11 @@
       this.postfix = { format: pf.format, start: pf.start ? 1 : 0 }
     },
   }
-  
-  const chunk = '{{{@}}}'
 }
 
 start
   = patterns:pattern+ {
-      var body = [
-        '',
-        'function _gt(v, n) { if (v.length > n) return ""; throw { next: true } }',
-        'function _fallback(v, f) { return v ? v : f }',
-        '',
-      ].join('\n')
+      var body = ''
 
       for (const pattern of patterns) {
         body += `\ntry {\n  let citekey = '';\n`
@@ -71,7 +64,7 @@ block
     }
   / '[>' min:$[0-9]+ ']'                 { return `if (citekey.length <= ${min}) throw { next: true }` }
   / '[' method:method filters:filter* ']' {
-      return `citekey += ${filters.reduce((chain, filter) => filter.replace(chunk, chain), method)}`
+      return `citekey += this.${[method].concat(filters).join('.')}.value`
     }
   / chars:$[^\|>\[\]]+                     { return `citekey += ${JSON.stringify(chars)}` }
 
@@ -126,33 +119,33 @@ method
       }
 
       args = _trim_args(`function ${text()}`, expected, pnames.map(p => args[p])).join(', ')
-      let code = `this.$${method}(${args})`;
-      if (scrub) code = `this.clean(${code}, true)`
+      let code = `$${method}(${args})`;
+      if (scrub) code += '.scrub()'
 
       return code;
     }
   / name:$([a-z][.a-zA-Z]+) &{ return _method('function', name, ['number']) } params:nparam? {
       params = params || []
-      return `this.$${_method_name(name)}(${params.join(', ')})`
+      return `$${_method_name(name)}(${params.join(', ')})`
     }
   / name:$([a-z][.a-zA-Z]+) &{ return _method('function', name, ['number', 'number']) } params:n_mparams? {
       params = params || []
-      return `this.$${_method_name(name)}(${params.join(', ')})`
+      return `$${_method_name(name)}(${params.join(', ')})`
     }
   / name:$([a-z][.a-zA-Z]+) &{ return _method('function', name, ['string']) } param:stringparam { // single string param
-      return `this.$${_method_name(name)}(${JSON.stringify(param)})`
+      return `$${_method_name(name)}(${JSON.stringify(param)})`
     }
   / name:$([a-z][.a-zA-Z]+) &{ return options.methods.function[_method_name(name)] } {
       const params = options.methods.function[_method_name(name)]
       if (params.length !== 0) error(`function '${name}' expects at least one parameter (${params.map(p => p.type + (p.optional ? '?' : '')).join(', ')})`)
 
       if (name == 'zotero') postfix.set(postfix.numeric);
-      return `this.$${_method_name(name)}()`
+      return `$${_method_name(name)}()`
     }
   / prop:$([a-zA-Z]+) {
       const field = options.items.name.field[prop.toLowerCase()]
       if (!field) error(`Unknown field ${JSON.stringify(prop)}`)
-      return `this.$property(${JSON.stringify(field)})`
+      return `$getField(${JSON.stringify(field)})`
     }
 
 nparam
@@ -166,8 +159,8 @@ flag
   = '+' flag:$[^_:\]]+                 { return flag }
 
 filter
-  = ':(' text:$[^)]+ ')'  { return `_fallback(${chunk}, ${JSON.stringify(text)})` }
-  / ':>' min:$[0-9]+      { return `_gt(${chunk}, ${min})` }
+  = ':(' text:$[^)]+ ')'  { return `_default(${JSON.stringify(text)})` }
+  / ':>' min:$[0-9]+      { return `_minlength(${min})` }
   / ':' name:$[-a-z]+ params:stringparam* {
       const method = _method_name(name)
       const expected = options.methods.filter[method]
@@ -175,7 +168,7 @@ filter
 
       if (params.length > expected.length) error(`filter '${name}' expects at most ${expected.length} parameters`)
 
-      const escaped_params = [''].concat(_trim_args(`filter ${text()}`, expected, expected.map((p, i) => {
+      const escaped_params = _trim_args(`filter ${text()}`, expected, expected.map((p, i) => {
         if (typeof params[i] === 'undefined') return 'undefined'
 
         switch (p.type) {
@@ -194,9 +187,9 @@ filter
             }
             error(`expected parameter ${i + 1} (${p.name}) of type ${p.type} on filter ${name}`)
         }
-      }))).join(', ')
+      })).join(', ')
 
-      return `this._${method}(${chunk}${escaped_params})`
+      return `_${method}(${escaped_params})`
     }
 
 stringparam
