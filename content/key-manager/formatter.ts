@@ -32,8 +32,8 @@ import { kuroshiro } from './japanese'
 
 import AJV from 'ajv'
 const methodValidator = new AJV({ coerceTypes: true })
-for (const method, meta of Object.entries(methods)) {
-  meta.validate = methodValidator.compile(meta.schema)
+for (const method of Object.values(methods)) {
+  method.validate = methodValidator.compile(method.schema)
 }
 
 function innerText(node): string {
@@ -329,7 +329,7 @@ class PatternFormatter {
     }
   }
 
-  public validate(method: string: args: any[]) {
+  public validate(method: string, args: any[]) {
     const meta = methods[method]
     if (args.length > meta.names.length) throw new Error(`too many arguments for ${method}`)
     const params = args.reduce((acc, arg, i) => {
@@ -337,7 +337,7 @@ class PatternFormatter {
       return acc
     }, {})
     if (meta.validate(params)) {
-      return args.map((_arg, i) => acc[meta.names[i]]) // returns the coerced arguments
+      return args.map((_arg, i) => params[meta.names[i]]) // returns the coerced arguments
     }
     else {
       throw new Error(meta.validate.errors[0].message)
