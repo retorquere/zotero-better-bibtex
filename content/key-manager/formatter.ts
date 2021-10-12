@@ -32,6 +32,9 @@ import { kuroshiro } from './japanese'
 
 import AJV from 'ajv'
 const methodValidator = new AJV({ coerceTypes: true })
+for (const method, meta of Object.entries(methods)) {
+  meta.validate = methodValidator.compile(meta.schema)
+}
 
 function innerText(node): string {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -239,18 +242,6 @@ class Item {
 const safechars = '-:\\p{L}0-9_!$*+./;\\[\\]'
 class PatternFormatter {
   public value = ''
-  public methodValidator: Record<string, any[]> = Object.entries(methods)
-    .reduce((acc: Record<string, any>, [method, params]: [string, any[]]) => {
-      acc[method] = params.map(p => {
-        const validator = methodValidator.compile(p.type)
-        return function(v) {
-          if (typeof v === 'undefined' && !p.optional) return `missing required parameter ${p.name}`
-          if (!validator(v)) return validator.errors
-          return false
-        }
-      })
-      return acc
-    }, {})
 
   public generate: () => string
   public postfix: { start: number, format: string }
@@ -339,6 +330,18 @@ class PatternFormatter {
   }
 
   public validate(method: string: args: any[]) {
+    const meta = methods[method]
+    if (args.length > meta.names.length) throw new Error(`too many arguments for ${method}`)
+    const params = args.reduce((acc, arg, i) => {
+      acc[meta.names[i]] = arg
+      return acc
+    }, {})
+    if (meta.validate(params)) {
+      return args.map((_arg, i) => acc[meta.names[i]]) // returns the coerced arguments
+    }
+    else {
+      throw new Error(meta.validate.errors[0].message)
+    }
   }
 
   public parsePattern(pattern): { formatter: string, postfix: { start: number, format: string } } {
