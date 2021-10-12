@@ -30,6 +30,9 @@ import { sprintf } from 'sprintf-js'
 import { jieba, pinyin } from './chinese'
 import { kuroshiro } from './japanese'
 
+import AJV from 'ajv'
+const methodValidator = new AJV({ coerceTypes: true })
+
 function innerText(node): string {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   if (node.nodeName === '#text') return node.value
@@ -236,6 +239,18 @@ class Item {
 const safechars = '-:\\p{L}0-9_!$*+./;\\[\\]'
 class PatternFormatter {
   public value = ''
+  public methodValidator: Record<string, any[]> = Object.entries(methods)
+    .reduce((acc: Record<string, any>, [method, params]: [string, any[]]) => {
+      acc[method] = params.map(p => {
+        const validator = methodValidator.compile(p.type)
+        return function(v) {
+          if (typeof v === 'undefined' && !p.optional) return `missing required parameter ${p.name}`
+          if (!validator(v)) return validator.errors
+          return false
+        }
+      })
+      return acc
+    }, {})
 
   public generate: () => string
   public postfix: { start: number, format: string }
@@ -323,6 +338,9 @@ class PatternFormatter {
     }
   }
 
+  public validate(method: string: args: any[]) {
+  }
+
   public parsePattern(pattern): { formatter: string, postfix: { start: number, format: string } } {
     const formatter = (parser.parse(pattern, { sprintf, items, methods }) as { formatter: string, postfix: { start: number, format: string } })
     if (Preference.testing) {
@@ -356,6 +374,9 @@ class PatternFormatter {
     return this
   }
 
+  /**
+   * Tests whether the entry has the given language set, and skips to the next pattern if not
+   */
   public $language(name: 'zh' | 'chinese' | 'ja' | 'japanese' | 'de' | 'german') {
     const map = {
       zh: 'zh',
@@ -386,7 +407,7 @@ class PatternFormatter {
     }, null, {}))
   }
 
-  public $getField(name: string) {
+  public getField(name: string) {
     const value = this.item.getField(name)
     switch (typeof value) {
       case 'number':
@@ -499,7 +520,7 @@ class PatternFormatter {
   }
 
   /** The last name of the first two authors, and ".ea" if there are more than two. */
-  public $auth_auth_ea(onlyEditors: boolean, withInitials: boolean, joiner: string) {
+  public $auth__auth__ea(onlyEditors: boolean, withInitials: boolean, joiner: string) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return this.set('')
 
@@ -523,7 +544,7 @@ class PatternFormatter {
   }
 
   /** The last name of the first author, and the last name of the second author if there are two authors or ".etal" if there are more than two. */
-  public $auth_etal(onlyEditors: boolean, withInitials: boolean, joiner: string) {
+  public $auth__etal(onlyEditors: boolean, withInitials: boolean, joiner: string) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return this.set('')
 
@@ -648,11 +669,17 @@ class PatternFormatter {
     return year ? year.replace(/[0-9]+/, y => y.length >= length ? y : (`0000${y}`).slice(-length)): ''
   }
 
-  public _default(value: string) {
-    return this.value ? this : this.set(value)
+  /**
+   * Returns the given text if no output was generated
+   */
+  public _default(text: string) {
+    return this.value ? this : this.set(text)
   }
 
-  public _minlength(n: number) {
+  /**
+    * If the length of the output is not longer than the given number, skip to the next pattern
+    */
+  public _longer(n: number) {
     if (this.value.length < n) throw { next: true } // eslint-disable-line no-throw-literal
     return this
   }
@@ -672,11 +699,11 @@ class PatternFormatter {
   }
 
   /** formats date as by replacing y, m and d in the format */
-  public _format_date(format: string='%Y-%m-%d') { // eslint-disable-line @typescript-eslint/no-inferrable-types
+  public _format_date(format='%Y-%m-%d') {
     return this.set(this.format_date(this.value, format))
   }
 
-  public format_date(value: string | PartialDate, format: string) { // eslint-disable-line @typescript-eslint/no-inferrable-types
+  public format_date(value: string | PartialDate, format: string) {
     if (!value) return ''
 
     const date = (typeof value === 'string') ? parseDate(value) : value
