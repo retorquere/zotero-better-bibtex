@@ -1,6 +1,6 @@
 {
   function _method_name(name) {
-    return name.replace(/[.-]/g, '_')
+    return name.replace(/[.]/g, '__').replace(/-/g, '_')
   }
   function _method(section, name, argtypes) {
     const expected = options.methods[section][_method_name(name)]
@@ -145,7 +145,7 @@ method
   / prop:$([a-zA-Z]+) {
       const field = options.items.name.field[prop.toLowerCase()]
       if (!field) error(`Unknown field ${JSON.stringify(prop)}`)
-      return `$getField(${JSON.stringify(field)})`
+      return `getField(${JSON.stringify(field)})`
     }
 
 nparam
@@ -160,7 +160,7 @@ flag
 
 filter
   = ':(' text:$[^)]+ ')'  { return `_default(${JSON.stringify(text)})` }
-  / ':>' min:$[0-9]+      { return `_minlength(${min})` }
+  / ':>' min:$[0-9]+      { return `_longer(${min})` }
   / ':' name:$[-a-z]+ params:stringparam* {
       const method = _method_name(name)
       const expected = options.methods.filter[method]
