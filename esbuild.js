@@ -82,7 +82,7 @@ async function rebuild() {
       loader.trace('plugin'),
       loader.patcher('setup/patches'),
       // loader.bibertool,
-      loader.pegjs,
+      loader.peggy,
       loader.__dirname,
       shims
     ],
@@ -106,7 +106,7 @@ async function rebuild() {
     plugins: [
       loader.trace('worker'),
       // loader.bibertool,
-      // loader.pegjs,
+      // loader.peggy,
       loader.__dirname,
       shims
     ],
@@ -143,7 +143,7 @@ async function rebuild() {
       plugins: [
         loader.trace('translators'),
         loader.bibertool,
-        // loader.pegjs,
+        // loader.peggy,
         loader.__dirname,
         shims
       ],
@@ -170,7 +170,7 @@ async function rebuild() {
       platform: 'node',
       // target: ['node12'],
       // inject: [ './headless/inject.js' ],
-      plugins: [node_modules.plugin, loader.patcher('setup/patches'), loader.bibertool, loader.pegjs ],
+      plugins: [node_modules.plugin, loader.patcher('setup/patches'), loader.bibertool, loader.peggy ],
       bundle: true,
       format: 'iife',
       globalName: 'Headless',
@@ -191,7 +191,7 @@ async function rebuild() {
       platform: 'node',
       // target: ['node12'],
       // inject: [ './headless/inject.js' ],
-      plugins: [node_modules.plugin, loader.patcher('setup/patches'), loader.bibertool, loader.pegjs ],
+      plugins: [node_modules.plugin, loader.patcher('setup/patches'), loader.bibertool, loader.peggy ],
       bundle: true,
       format: 'iife',
       globalName: 'Headless',

@@ -1,5 +1,5 @@
 
-@inproceedings{voita-etal-2019-bottom-up,
+@inproceedings{voita-etal-2019-bottom,
   title = {The {{Bottom}}-up {{Evolution}} of {{Representations}} in the {{Transformer}}: A {{Study}} with {{Machine Translation}} and {{Language Modeling Objectives}}},
   shorttitle = {The {{Bottom}}-up {{Evolution}} of {{Representations}} in the {{Transformer}}},
   booktitle = {Proceedings of the 2019 {{Conference}} on {{Empirical Methods}} in {{Natural Language Processing}} and the 9th {{International Joint Conference}} on {{Natural Language Processing}} ({{EMNLP}}-{{IJCNLP}})},
