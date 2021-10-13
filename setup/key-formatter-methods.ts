@@ -1,5 +1,5 @@
 #!/usr/bin/env npx ts-node
-/* eslint-disable prefer-template */
+/* eslint-disable prefer-template, @typescript-eslint/no-unsafe-return */
 
 import * as ts from 'typescript'
 import * as fs from 'fs'
@@ -60,7 +60,7 @@ const Method = new class {
         return { type: 'number' }
 
       default:
-        throw {...node, kindName: ts.SyntaxKind[node.kind] }
+        throw {...node, kindName: ts.SyntaxKind[node.kind] } // eslint-disable-line no-throw-literal
     }
   }
 
@@ -76,7 +76,7 @@ const Method = new class {
 
     return types
   }
-  
+
   private typedoc(type): string {
     if (['boolean', 'string', 'number'].includes(type.type)) return type.type
     if (type.oneOf) return type.oneOf.map(t => this.typedoc(t)).join(' | ')
@@ -112,7 +112,7 @@ const Method = new class {
       name: p.name.kind === ts.SyntaxKind.Identifier ? (p.name.escapedText as string) : '',
       type: p.type? this.type(p.type) : { type: typeof this.initializer(p.initializer) },
       optional: !!(p.initializer || p.questionToken),
-      default: this.initializer(p.initializer,)
+      default: this.initializer(p.initializer),
     }))
     const kind = {$: 'function', _: 'filter'}[method_name[0]]
     let names = [ method_name.substr(1) ]
@@ -152,14 +152,16 @@ const Method = new class {
       type: 'object',
       properties: {},
       additionalProperties: false,
-      requiredProperties: []
+      required: [],
     }
     names = []
     for (const p of params) {
       names.push(p.name)
-      if (!p.optional) schema.requiredProperties.push(p.name)
+      if (!p.optional) schema.required.push(p.name)
       schema.properties[p.name] = p.type
     }
+    if (!schema.required.length) delete schema.required
+
     this.signature[method_name] = JSON.parse(JSON.stringify({
       arguments: names,
       schema,
@@ -186,7 +188,7 @@ ast.forEachChild((node: ts.Node) => {
 
     // process class childs
     cls.forEachChild((method: ts.Node) => {
-      if (method.kind === ts.SyntaxKind.MethodDeclaration) Method.add(method as ts.MethodDeclaration) 
+      if (method.kind === ts.SyntaxKind.MethodDeclaration) Method.add(method as ts.MethodDeclaration)
     })
   }
 })

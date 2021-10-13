@@ -15,10 +15,10 @@ import * as Extra from '../extra'
 import { buildCiteKey as zotero_buildCiteKey } from './formatter-zotero'
 import { babelLanguage, babelTag } from '../text'
 
-const parser = require('./formatter.pegjs')
+const parser = require('./formatter.peggy')
 import * as DateParser from '../dateparser'
 
-import * as methods from '../../gen/key-formatter-methods.json'
+import methods from '../../gen/key-formatter-methods.json'
 import itemCreators from '../../gen/items/creators.json'
 import * as items from '../../gen/items/items'
 
@@ -31,9 +31,13 @@ import { jieba, pinyin } from './chinese'
 import { kuroshiro } from './japanese'
 
 import AJV from 'ajv'
+import betterAjvErrors from '@readme/better-ajv-errors'
 const methodValidator = new AJV({ coerceTypes: true })
-for (const method of Object.values(methods)) {
-  method.validate = methodValidator.compile(method.schema)
+for (const [method, meta] of Object.entries(methods)) {
+  log.debug('compiling', method, meta)
+  const validate = methodValidator.compile(meta.schema);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  (meta as unknown as any).validate = (data => validate(data) ? '' : betterAjvErrors(meta.schema, data, validate.errors)[0].message)
 }
 
 function innerText(node): string {
@@ -326,21 +330,6 @@ class PatternFormatter {
       catch (err) {
         log.error('PatternFormatter.update: Error parsing citekeyFormat ', {pattern: this.citekeyFormat}, err, err.location)
       }
-    }
-  }
-
-  public validate(method: string, args: any[]) {
-    const meta = methods[method]
-    if (args.length > meta.names.length) throw new Error(`too many arguments for ${method}`)
-    const params = args.reduce((acc, arg, i) => {
-      acc[meta.names[i]] = arg
-      return acc
-    }, {})
-    if (meta.validate(params)) {
-      return args.map((_arg, i) => params[meta.names[i]]) // returns the coerced arguments
-    }
-    else {
-      throw new Error(meta.validate.errors[0].message)
     }
   }
 
@@ -665,7 +654,7 @@ class PatternFormatter {
 
   /** Capitalize all the significant words of the title, and concatenate them. For example, `An awesome paper on JabRef` will become `AnAwesomePaperJabref` */
   public $title() {
-    return this.set((this.titleWords(this.item.title) || []).join(' '))
+    return this.set((this.titleWords(this.item.title, { skipWords: true }) || []).join(' '))
   }
 
   private padYear(year: string, length): string {
@@ -748,8 +737,8 @@ class PatternFormatter {
   /** replaces text, case insensitive; `:replace=.etal,&etal` will replace `.EtAl` with `&etal` */
   public _replace(find: string, replace: string, mode?: 'string' | 'regex') {
     if (!find) return this
-    const re = mode === 'regex' ? find : find.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&')
-    return this.set(this.value.replace(new RegExp(re, 'ig'), replace || ''))
+    const re = mode === 'regex' ? find : find.replace(/[[\](){}*+?|^$.\\]/g, '\\$&')
+    return this.set(this.value.replace(new RegExp(re, 'ig'), replace))
   }
 
   /**
