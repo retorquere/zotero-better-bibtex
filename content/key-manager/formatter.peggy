@@ -123,6 +123,7 @@ method
       return method;
     }
   / name:$([a-z][.a-zA-Z]+) &{ return options.methods['$' + name] } p:fparams? {
+      if (name === 'zotero') postfix.set(postfix.numeric)
       return match('$' + name, p || [], name, error)
     }
   / prop:$([a-zA-Z]+) {
