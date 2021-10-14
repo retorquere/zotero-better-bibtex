@@ -8,6 +8,7 @@ import { Translators } from './translators'
 import { Preference } from '../gen/preferences'
 import { get as getCollection } from './collection'
 import { $and, Query } from './db/loki'
+import * as library from './library'
 
 const OK = 200
 
@@ -92,7 +93,7 @@ class NSItem {
    *
    * @param searchterms  Terms as typed into the search box in Zotero
    */
-  public async search(searchterms: string | { terms: string }) {
+  public async search(searchterms: string | { terms: string }, libraryID?: string | number) {
     let terms: string = typeof searchterms === 'string' ? searchterms : searchterms.terms
 
     // quicksearch-titleCreatorYear / quicksearch-fields
@@ -107,6 +108,7 @@ class NSItem {
     }
     search.addCondition('quicksearch-titleCreatorYear', 'contains', terms)
     search.addCondition('itemType', 'isNot', 'attachment')
+    if (typeof library !== 'undefined') search.addCondition('libraryID', 'is', library.get(libraryID))
 
     const ids: Set<number> = new Set(await search.search())
 
