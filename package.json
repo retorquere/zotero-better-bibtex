@@ -81,12 +81,12 @@
     "xregexp": "^5.1.0"
   },
   "devDependencies": {
-    "@readme/better-ajv-errors": "^1.0.1",
+    "@readme/better-ajv-errors": "^1.1.0",
     "@retorquere/bibtex-parser": "^5.3.0",
     "@retorquere/zotero-sync": "^1.0.23",
     "@types/bluebird": "^3.5.36",
     "@types/lokijs": "^1.5.7",
-    "@types/node": "^16.10.4",
+    "@types/node": "^16.11.1",
     "@xmldom/xmldom": "^0.7.5",
     "ajv": "^8.6.3",
     "ajv-keywords": "^5.0.0",
@@ -102,9 +102,9 @@
     "dom-parser": "^0.1.6",
     "dotenv": "^10.0.0",
     "ejs": "^3.1.6",
-    "esbuild": "^0.13.4",
+    "esbuild": "^0.13.8",
     "escape-string-regexp": "^5.0.0",
-    "eslint": "^8.0.0",
+    "eslint": "^8.0.1",
     "estrace": "^3.0.2",
     "eta": "^1.12.3",
     "excel-column-name": "^1.0.1",
@@ -152,7 +152,7 @@
     "words-to-numbers": "^1.5.1",
     "xml-parser": "^1.2.1",
     "xpath": "^0.0.32",
-    "zotero-plugin": "^1.0.61"
+    "zotero-plugin": "^1.0.62"
   },
   "repository": {
     "type": "git",
