@@ -98,9 +98,10 @@ method
 
       const args = {
         onlyEditors: onlyEditors,
-        n: params[0],
-        m: params[1],
       }
+      if (params[0]) args.n = params[0]
+      if (params[1]) args.m = params[1]
+
       const argnames = options.methods[fn.replace(/[.]/g, '__').replace(/-/g, '_')].arguments
       if (argnames.includes('withInitials')) args.withInitials = false
       if (argnames.includes('joiner')) args.joiner = ''
