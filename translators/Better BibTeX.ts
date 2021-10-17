@@ -597,52 +597,71 @@ class ZoteroItem {
   }
 
   protected $journaltitle() {
-    let journal, abbr = null
+    let journal: { field: string, value: string}, abbr: { field: string, value: string} = null
 
-    if (this.bibtex.fields['journal-full']) { // bibdesk
-      journal = this.bibtex.fields['journal-full'][0]
+    // journal-full is bibdesk
+    const titles = [ 'journal-full', 'journal', 'journaltitle', 'shortjournal' ].map(field => {
+      const value = this.bibtex.fields[field]?.[0] || ''
+      delete this.bibtex.fields[field] // this makes sure we're not ran again
+      return { field, value }
+    })
+      .filter(candidate => candidate.value) // skip empty
+      .filter(candidate => {
+        if (!abbr && candidate.field === 'shortjournal') { // shortjournal is assumed to be an abbrev
+          abbr = candidate
+          return false
+        }
+        return true
+      })
+      .filter(candidate => {
+        // to be considered an abbrev, it must have at least two periods, and there can be no periods that are not followed by a space, and no spaced that are not preceded by a period
+        const assumed_abbrev = candidate.value.match(/[.].+[.]/) && !candidate.value.match(/[.][^ ]/) && !candidate.value.match(/[^.] /)
+        if (assumed_abbrev) {
+          if (!abbr) {
+            abbr = candidate
+            return false
+          }
+        }
+        else if (!journal) { // first title is assumed to be the journal title
+          journal = candidate
+          return false
+        }
+        return true
+      }).filter(candidate => {
+        if (!abbr) {
+          abbr = candidate
+          return false
+        }
+        return true
+      })
 
-      if (this.bibtex.fields.journal) {
-        abbr = this.bibtex.fields.journal[0]
+    for (const candidate of titles) {
+      this.hackyFields.push(`tex.${candidate.field}: ${candidate.value}`)
+    }
+
+    if (journal) {
+      switch (this.type) {
+        case 'conferencePaper':
+          this.set('series', journal.value)
+          break
+
+        default:
+          this.set('publicationTitle', journal.value)
+          break
       }
-      else if (this.bibtex.fields.journaltitle) {
-        abbr = this.bibtex.fields.journaltitle[0]
-      }
-
-      if (abbr === journal) abbr = null
-
     }
-    else if (this.bibtex.fields.journal) {
-      journal = this.bibtex.fields.journal[0]
-
-    }
-    else if (this.bibtex.fields.journaltitle) {
-      journal = this.bibtex.fields.journaltitle[0]
-
-    }
-
-    if (!abbr && this.bibtex.fields.shortjournal) abbr = this.bibtex.fields.shortjournal[0]
 
     if (abbr) {
       if (this.validFields.journalAbbreviation) {
-        this.item.journalAbbreviation = abbr
+        this.item.journalAbbreviation = abbr.value
       }
       else if (!this.hackyFields.find(line => line.startsWith('Journal abbreviation:'))) {
-        this.hackyFields.push(`Journal abbreviation: ${abbr}`)
+        this.hackyFields.push(`Journal abbreviation: ${abbr.value}`)
+      }
+      else {
+        this.hackyFields.push(`tex.${abbr.field}: ${abbr.value}`)
       }
     }
-
-    switch (this.type) {
-      case 'conferencePaper':
-        this.set('series', journal)
-        break
-
-      default:
-        this.set('publicationTitle', journal)
-        break
-    }
-
-    log.debug('$journal:', this.item)
 
     return true
   }
