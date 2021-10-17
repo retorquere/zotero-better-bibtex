@@ -21,6 +21,8 @@ export class ZoteroPane {
       // eslint-disable-next-line prefer-rest-params
       await original.apply(this, arguments)
 
+      if (!this.globals) return
+
       try {
         const treeRow = this.collectionsView.selectedTreeRow
         const isLibrary = treeRow && treeRow.isLibrary(true)
