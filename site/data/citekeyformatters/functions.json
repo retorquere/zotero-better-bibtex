@@ -1,5 +1,5 @@
 {
-  "`auth.auth.ea` / `edtr.edtr.ea`, `+initials`, `+<joinchar>`": "The last name of the first two authors, and \".ea\" if there are more than two.",
+  "`auth.auth.ea` / `edtr.auth.ea`, `+initials`, `+<joinchar>`": "The last name of the first two authors, and \".ea\" if there are more than two.",
   "`auth.etal` / `edtr.etal`, `+initials`, `+<joinchar>`": "The last name of the first author, and the last name of the second author if there are two authors or \".etal\" if there are more than two.",
   "`authEtAl` / `edtrEtAl`, `+initials`, `+<joinchar>`": "The last name of the first author, and the last name of the second author if there are two authors or \"EtAl\" if there are more than two. This is similar to `auth.etal`. The difference is that the authors are not separated by \".\" and in case of more than 2 authors \"EtAl\" instead of \".etal\" is appended.",
   "`authForeIni` / `edtrForeIni`": "The forename initial of the first author.",
@@ -17,6 +17,7 @@
   "`inspire-hep`": "Fetches the key from inspire-hep based on DOI or arXiv ID",
   "`journal`": "returns the journal abbreviation, or, if not found, the journal title, If 'automatic journal abbreviation' is enabled in the BBT settings, it will use the same abbreviation filter Zotero uses in the wordprocessor integration. You might want to use the `abbr` filter on this.",
   "`keywordN`": "Tag number `N`",
+  "`language`": "Tests whether the entry has the given language set, and skips to the next pattern if not",
   "`lastpage`": "The number of the last page of the publication (See the remark on `firstpage`)",
   "`library`": "returns the name of the shared group library, or nothing if the reference is in your personal library",
   "`month`": "the month of the publication",

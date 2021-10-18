@@ -22,9 +22,11 @@ class AutoExportPane {
   private cacherate: Record<number, number> = {}
 
   public load() {
-    this.label = {}
-    for (const label of ['scheduled', 'running', 'done', 'error', 'preparing']) {
-      this.label[label] = l10n.localize(`Preferences.auto-export.status.${label}`)
+    if (!this.label) {
+      this.label = {}
+      for (const label of ['scheduled', 'running', 'done', 'error', 'preparing']) {
+        this.label[label] = l10n.localize(`Preferences.auto-export.status.${label}`)
+      }
     }
 
     this.refresh()
@@ -106,10 +108,10 @@ class AutoExportPane {
 
           case 'status':
             if (ae.status === 'running' && Preference.workers && typeof progress === 'number') {
-              (node as XUL.Textbox).value = progress < 0 ? `${this.label.preparing} ${-progress}%` : `${progress}%`
+              (node as XUL.Textbox).value = progress < 0 ? `${this.label?.preparing || 'preparing'} ${-progress}%` : `${progress}%`
             }
             else {
-              (node as XUL.Textbox).value = this.label[ae.status]
+              (node as XUL.Textbox).value = this.label?.[ae.status] || ae.status
             }
             break
 

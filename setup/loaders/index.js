@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const diff = require('diff')
 const { bibertool } = require('./bibertool')
-const pegjs = require('pegjs')
+const peggy = require('peggy')
 const shell = require('shelljs')
 const { filePathFilter } = require('file-path-filter')
 const esbuild = require('esbuild')
@@ -55,12 +55,12 @@ module.exports.bibertool = {
   }
 }
 
-module.exports.pegjs = {
-  name: 'pegjs',
+module.exports.peggy = {
+  name: 'peggy',
   setup(build) {
-    build.onLoad({ filter: /\.pegjs$/ }, async (args) => {
+    build.onLoad({ filter: /\.peggy$/ }, async (args) => {
       return {
-        contents: pegjs.generate(await fs.promises.readFile(args.path, 'utf-8'), {
+        contents: peggy.generate(await fs.promises.readFile(args.path, 'utf-8'), {
           output: 'source',
           cache: false,
           optimize: 'speed',

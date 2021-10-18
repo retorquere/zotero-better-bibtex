@@ -10,18 +10,6 @@
 | <?xml-stylesheet href="chrome://zotero-better-bibtex/skin/error-report.css" type="text/css"?>
 | <!DOCTYPE window SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd">
 overlay#zotero-better-bibtex-preferences(xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:bbt="http://retorque.re/zotero-better-bibtex/")
-  script(src="chrome://zotero/content/include.js")
-  script.
-    Zotero.BetterBibTeX.PrefPane.globals = Zotero.BetterBibTeX.PrefPane.autoexport.globals = Function('return this')();
-    async function load() {
-      try {
-        Zotero.debug('BBT: loading PrefPane')
-        await Zotero.BetterBibTeX.PrefPane.load()
-        Zotero.debug('BBT: PrefPane loaded')
-      } catch (err) {
-        Zotero.debug(`BBT: loading PrefPane error: ${err.message}\n${err.stack ||''}`)
-      }
-    }
   popupset
     tooltip#tooltip-bibtexURL
       description &better-bibtex.Preferences.export.fields.doi-and-url.warning;
@@ -65,3 +53,16 @@ overlay#zotero-better-bibtex-preferences(xmlns="http://www.mozilla.org/keymaster
               include Preferences/import.pug
             tabpanel(bbt:page='miscellaneous' flex="1" orient="vertical")
               include Preferences/misc.pug
+  // http://udn.realityripple.com/docs/Archive/Mozilla/XUL/prefpane, "using multiple prefpanes"... ugh
+  script.
+    Zotero.debug('BBT: overlay PrefPane')
+    Zotero.BetterBibTeX.PrefPane.globals = Zotero.BetterBibTeX.PrefPane.autoexport.globals = Function('return this')();
+    async function load() {
+      try {
+        Zotero.debug('BBT: loading PrefPane')
+        await Zotero.BetterBibTeX.PrefPane.load()
+        Zotero.debug('BBT: PrefPane loaded')
+      } catch (err) {
+        Zotero.debug(`BBT: loading PrefPane error: ${err.message}\n${err.stack ||''}`)
+      }
+    }

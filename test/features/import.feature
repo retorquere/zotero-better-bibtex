@@ -57,6 +57,7 @@ Scenario Outline: Import <references> references from <file>
   Then the library should match "import/*.json"
   Examples:
   | file                                                                        | references  |
+  | Detect journal abbreviation in the publication field #1951                  | 1           |
   | Improve import of films #1837                                               | 4           |
   | tex.origdate ignored in citekey generation #1696                            | 1           |
   | collaborators to contributors                                               | 1           |

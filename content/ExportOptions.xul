@@ -6,7 +6,6 @@
     <description insertbefore="translator-options" class="textbox-emph" hidden="true" id="better-bibtex-reminder">&better-bibtex.ErrorReport.postToGitHub;</description>
   </vbox>
 
-  <script src="chrome://zotero/content/include.js"/>
   <script>
     Zotero.BetterBibTeX.ExportOptions.globals = Function('return this')();
     window.addEventListener('load', async function () {
