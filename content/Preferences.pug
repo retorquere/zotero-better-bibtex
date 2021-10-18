@@ -54,7 +54,6 @@ overlay#zotero-better-bibtex-preferences(xmlns="http://www.mozilla.org/keymaster
             tabpanel(bbt:page='miscellaneous' flex="1" orient="vertical")
               include Preferences/misc.pug
   // http://udn.realityripple.com/docs/Archive/Mozilla/XUL/prefpane, "using multiple prefpanes"... ugh
-  script(src="chrome://zotero/content/include.js")
   script.
     Zotero.debug('BBT: overlay PrefPane')
     Zotero.BetterBibTeX.PrefPane.globals = Zotero.BetterBibTeX.PrefPane.autoexport.globals = Function('return this')();
