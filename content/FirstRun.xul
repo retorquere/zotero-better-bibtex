@@ -19,11 +19,6 @@
   id="better-bibtex-first-run" title="&better-bibtex.FirstRun.title;"
   width="550" height="500">
 
-  <script src="chrome://zotero/content/include.js"/>
-  <script>
-    Zotero.BetterBibTeX.FirstRun.globals = Function('return this')()
-  </script>
-
   <wizardpage onpageshow="Zotero.BetterBibTeX.FirstRun.load()" label="&better-bibtex.FirstRun.title;">
     <description style="white-space: pre-wrap;">&better-bibtex.FirstRun.welcome;</description>
   </wizardpage>
@@ -66,4 +61,8 @@
     <description style="white-space: pre-wrap;" class="header">&better-bibtex.FirstRun.done;</description>
     <description>&better-bibtex.FirstRun.done.explanation;</description>
   </wizardpage>
+
+  <script>
+    Zotero.BetterBibTeX.FirstRun.globals = Function('return this')()
+  </script>
 </wizard>
