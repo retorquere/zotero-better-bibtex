@@ -1,8 +1,12 @@
 {
+  function method_name(method, prefix) {
+    return (prefix || '') + method.replace(/[.]/g, '__').replace(/-/g, '_')
+  }
+
   function match(fn, args, text, error) {
     if (!fn.match(/^[$_]/)) error(`unknown operator ${fn}`)
 
-    const method = fn.replace(/[.]/g, '__').replace(/-/g, '_')
+    const method = method_name(fn)
 
     const meta = options.methods[method]
     if (!meta) {
@@ -94,7 +98,7 @@ method
         if (prefix.startsWith('edtr')) rest = rest.replace(/^\.edtr\./i, '.auth.')
         prefix = { edtr: 'auth', editors: 'authors' }[prefix]
       }
-      const fn = '$' + prefix + rest
+      const fn = method_name(prefix + rest, '$')
 
       const args = {
         onlyEditors: onlyEditors,
@@ -102,7 +106,7 @@ method
       if (params[0]) args.n = params[0]
       if (params[1]) args.m = params[1]
 
-      const argnames = options.methods[fn.replace(/[.]/g, '__').replace(/-/g, '_')].arguments
+      const argnames = options.methods[fn].arguments
       if (argnames.includes('withInitials')) args.withInitials = false
       if (argnames.includes('joiner')) args.joiner = ''
 
@@ -123,7 +127,7 @@ method
 
       return method;
     }
-  / name:$([a-z][.a-zA-Z]+) &{ return options.methods['$' + name] } p:fparams? {
+  / name:$([a-z][-.a-zA-Z]+) &{ return options.methods[method_name(name, '$')] } p:fparams? {
       if (name === 'zotero') postfix.set(postfix.numeric)
       return match('$' + name, p || [], name, error)
     }
