@@ -72,7 +72,7 @@
     "parse5": "^6.0.1",
     "pinyin": "^2.10.2",
     "punycode2": "^1.0.0",
-    "safe-stable-stringify": "^2.0.0",
+    "safe-stable-stringify": "^2.1.0",
     "sprintf-js": "^1.1.2",
     "text-title-case": "^1.0.2",
     "title": "^3.4.3",
