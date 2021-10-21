@@ -12,7 +12,7 @@
       "extraMergeCSL": true,
       "extraMergeCitekeys": true,
       "extraMergeTeX": true,
-      "postscript": "if (Translator.BetterTeX) {\n  reference.add({ name: 'keywords', value: item.tags, sep: ',  ', enc: 'tags' });\n  reference.add({ name: 'dateadded', value: item.dateAdded });\n  reference.add({ name: 'datemodified', value: item.dateModified });\n  reference.add({ name: 'url', value: item.url });\n  reference.add({ name: 'uri', value: item.uri });\n  reference.add({ name: 'pdfAttachments', value: item.pdfAttachments });\n\nreference.add({ name: 'collections', value: item.collections.map(key => Translator.collections[key] && Translator.collections[key].name).filter(name => name), sep: ', ' })\n\n\nconst [ , kind, lib, key ] = item.uri.match(/^https?:\\/\\/zotero\\.org\\/(users|groups)\\/((?:local\\/)?[^/]+)\\/items\\/(.+)/);\nreference.add({ name: 'localLibrary', value: (kind === 'users') ? `zotero://select/library/items/${key}` : `zotero://select/groups/${lib}/items/${key}` });\n}\n\n",
+      "postscript": "reference.add({ name: 'collections', value: item.collections.map(key => Translator.collections[key] && Translator.collections[key].name).filter(name => name), sep: ', '})",
       "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
       "warnBulkModify": 0
     }
