@@ -590,5 +590,9 @@ Scenario: Export as Collected Notes does not list subcollections #1768
   Then an export using "Collected notes" should match "export/*.html"
 
 Scenario: Exporting folder, previous postscript does not work anymore #1962
+  Given I import 2 references from "export/*.json" into a new collection
+  Then an export using "Better BibLaTeX" should match "export/*.biblatex"
+
+Scenario: Exporting folder, previous postscript does not work anymore #1962
   When I import 4 references from "export/*.json" into a new collection
   Then an export using "Better BibTeX" should match "export/*.bibtex"

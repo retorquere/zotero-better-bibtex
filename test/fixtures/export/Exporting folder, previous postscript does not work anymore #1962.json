@@ -3,97 +3,61 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "localeDateOrder": "dmy",
-    "options": {},
+    "options": {
+      "exportNotes": true
+    },
     "preferences": {
-      "citekeyFormat": "[auth:lower][year] | [=forumPost/WebPage][Auth:lower:capitalize][Date:format-date=%Y-%m-%d.%H\\:%M\\:%S:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de] | [Auth:lower:capitalize][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de]",
-      "kuroshiro": true,
-      "postscript": "reference.add({ name: 'collections', value: item.collections.map(key => Translator.collections[key] && Translator.collections[key].name).filter(name => name), sep: ', ' }) "
+      "autoExportDelay": 30,
+      "citekeyFormat": "[auth][shorttitle3_3][year]",
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "extraMergeTeX": true,
+      "postscript": "if (Translator.BetterTeX) {\n  reference.add({ name: 'keywords', value: item.tags, sep: ',  ', enc: 'tags' });\n  reference.add({ name: 'dateadded', value: item.dateAdded });\n  reference.add({ name: 'datemodified', value: item.dateModified });\n  reference.add({ name: 'url', value: item.url });\n  reference.add({ name: 'uri', value: item.uri });\n  reference.add({ name: 'pdfAttachments', value: item.pdfAttachments });\n\nreference.add({ name: 'collections', value: item.collections.map(key => Translator.collections[key] && Translator.collections[key].name).filter(name => name), sep: ', ' })\n\n\nconst [ , kind, lib, key ] = item.uri.match(/^https?:\\/\\/zotero\\.org\\/(users|groups)\\/((?:local\\/)?[^/]+)\\/items\\/(.+)/);\nreference.add({ name: 'localLibrary', value: (kind === 'users') ? `zotero://select/library/items/${key}` : `zotero://select/groups/${lib}/items/${key}` });\n}\n\n",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
+      "warnBulkModify": 0
     }
   },
   "items": [
     {
-      "citationKey": "bentley_academic_2011",
+      "itemType": "journalArticle",
+      "title": "dummy"
+    },
+    {
+      "DOI": "10/d9c537",
+      "ISSN": "1559-7431, 1559-744X",
+      "abstractNote": "This study focuses on interactions between intergovernmental organizations (IOs) working in the anti-corruption realm. It investigates the factors that enhance IO cooperation. Based on expectations derived primarily from the organization theory literature and, more specifically, from exchange theory, we develop a set of hypotheses regarding the relevance of IO financial resources, expertise, prestige, and bureaucratic culture on the likelihood that IOs will engage in cooperative behavior. The study tests these hypotheses on the formal and informal collaborative networks formed between seventeen IOs engaged in anti-corruption work. The results of the tests offer support for most of the hypotheses and suggest several additional arguments explaining the likelihood of inter-organizational collaboration.",
+      "accessDate": "2021-06-01T20:46:56Z",
+      "attachments": [],
+      "citationKey": "GestInteractionsIntergovernmentalOrganizations2010",
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Saharon",
-          "lastName": "Shelah"
+          "firstName": "Nathaniel",
+          "lastName": "Gest"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Alexandru",
+          "lastName": "Grigorescu"
         }
       ],
-      "date": "1972",
-      "extra": [
-        "Citation Key: bentley_academic_2011",
-        "tex.xref= welker_andreas_1999"
-      ],
+      "date": "3/2010",
+      "issue": "1",
       "itemID": 1,
       "itemType": "journalArticle",
-      "notes": [
-        "<p>MR 46:7018</p>"
-      ],
-      "pages": "247\u2013261",
-      "publicationTitle": "Pacific Journal of Mathematics",
-      "title": "A combinatorial problem; stability and order for models and theories in infinitary languages",
-      "volume": "41"
-    },
-    {
-      "citationKey": "shelah1970c",
-      "creators": [
+      "journalAbbreviation": "Rev Int Organ",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "pages": "53-72",
+      "publicationTitle": "The Review of International Organizations",
+      "tags": [
         {
-          "creatorType": "author",
-          "firstName": "Saharon",
-          "lastName": "Shelah"
+          "tag": "#todo/process"
         }
       ],
-      "date": "1970",
-      "itemID": 2,
-      "itemType": "journalArticle",
-      "notes": [
-        "<p>MR 42-2932</p>"
-      ],
-      "pages": "541\u2013545",
-      "publicationTitle": "Pacific Journal of Mathematics",
-      "title": "A note on Hanf numbers",
-      "volume": "34"
-    },
-    {
-      "citationKey": "shelah1972d",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Saharon",
-          "lastName": "Shelah"
-        }
-      ],
-      "date": "1972",
-      "itemID": 3,
-      "itemType": "journalArticle",
-      "notes": [
-        "<p>MR 45:3188</p>"
-      ],
-      "pages": "509\u2013514",
-      "publicationTitle": "Proceedings of the American Mathematical Society",
-      "title": "A note on model complete models and generic models",
-      "volume": "34"
-    },
-    {
-      "citationKey": "shelah1974",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Saharon",
-          "lastName": "Shelah"
-        }
-      ],
-      "date": "1974",
-      "itemID": 4,
-      "itemType": "journalArticle",
-      "notes": [
-        "<p>MR 48:10824</p>"
-      ],
-      "pages": "199\u2013208",
-      "publicationTitle": "Journal of Combinatorial Theory. Ser. A",
-      "title": "A substitute for Hall's theorem for families with infinite sets",
-      "volume": "16"
+      "title": "Interactions among intergovernmental organizations in the anti-corruption realm",
+      "url": "http://link.springer.com/10.1007/s11558-009-9070-9",
+      "volume": "5"
     }
   ]
 }
