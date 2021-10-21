@@ -90,7 +90,7 @@ export async function doImport(): Promise<void> {
     Object.assign(item, source)
 
     // marker so BBT-JSON can be imported without extra-field meddling
-    item.extra = `\x1BBBT\x1B${item.extra || ''}`
+    if (item.extra) item.extra = `\x1BBBT\x1B${item.extra}`
 
     for (const att of item.attachments || []) {
       if (att.url) delete att.path

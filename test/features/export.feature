@@ -318,7 +318,8 @@ Scenario: bibtex; url export does not survive underscores #402
 @110 @111
 Scenario: two ISSN number are freezing browser #110 + Generating keys and export broken #111
   When I import 1 reference from "export/*.json"
-  And I select the item with a field that contains "Genetics"
+  Then an export using "Better BibLaTeX" should match "export/*.pinned.biblatex"
+  When I select the item with a field that contains "Genetics"
   And I unpin the citation key
   And I refresh the citation key
   Then an export using "Better BibLaTeX" should match "export/*.biblatex"
