@@ -108,7 +108,7 @@ class NSItem {
     }
     search.addCondition('quicksearch-titleCreatorYear', 'contains', terms)
     search.addCondition('itemType', 'isNot', 'attachment')
-    if (typeof library !== 'undefined') search.addCondition('libraryID', 'is', library.get(libraryID))
+    if (typeof libraryID !== 'undefined') search.addCondition('libraryID', 'is', library.get(libraryID))
 
     const ids: Set<number> = new Set(await search.search())
 
