@@ -225,7 +225,6 @@ Scenario Outline: Export <references> references for BibTeX to <file>
      | preserve @strings between import-export #1162                                      | 1          |
      | titles are title-cased in .bib file #558                                           | 2          |
 
-@131
 Scenario: Omit URL export when DOI present. #131
   When I import 3 references with 2 attachments from "export/*.json" into a new collection
   And I set preference .DOIandURL to "both"
@@ -318,7 +317,8 @@ Scenario: bibtex; url export does not survive underscores #402
 @110 @111
 Scenario: two ISSN number are freezing browser #110 + Generating keys and export broken #111
   When I import 1 reference from "export/*.json"
-  And I select the item with a field that contains "Genetics"
+  Then an export using "Better BibLaTeX" should match "export/*.pinned.biblatex"
+  When I select the item with a field that contains "Genetics"
   And I unpin the citation key
   And I refresh the citation key
   Then an export using "Better BibLaTeX" should match "export/*.biblatex"
@@ -589,3 +589,11 @@ Scenario: Collected notes
 Scenario: Export as Collected Notes does not list subcollections #1768
   Given I import 51 references from "export/*.json"
   Then an export using "Collected notes" should match "export/*.html"
+
+Scenario: Exporting folder, previous postscript does not work anymore #1962
+  Given I import 2 references from "export/*.json" into a new collection
+  Then an export using "Better BibLaTeX" should match "export/*.biblatex"
+
+Scenario: Exporting folder, previous postscript does not work anymore #1962
+  When I import 4 references from "export/*.json" into a new collection
+  Then an export using "Better BibTeX" should match "export/*.bibtex"

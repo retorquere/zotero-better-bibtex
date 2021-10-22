@@ -5,21 +5,6 @@
 <!DOCTYPE window SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd">
 
 <overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-  <script src="chrome://zotero/content/include.js"/>
-  <script>
-    Zotero.BetterBibTeX.ItemPane.globals = Function('return this')();
-    window.addEventListener('load', async function() {
-      try {
-        Zotero.debug('BBT: loading ItemPane')
-        await Zotero.BetterBibTeX.ItemPane.load()
-        window.addEventListener('unload', () => Zotero.BetterBibTeX.ItemPane.unload())
-        Zotero.debug('BBT: ItemPane loaded')
-      } catch (err) {
-        Zotero.debug(`BBT: loading ItemPane error: ${err.message}\n${err.stack ||''}`)
-      }
-    })
-  </script>
-
   <tabs id="zotero-editpane-tabs">
     <tab hidden="true" id="zotero-editpane-better-bibtex-tab" label="Better BibTeX"/>
   </tabs>
@@ -42,4 +27,18 @@
       </vbox>
     </tabpanel>
   </tabpanels>
+
+  <script>
+    Zotero.BetterBibTeX.ItemPane.globals = Function('return this')();
+    window.addEventListener('load', async function() {
+      try {
+        Zotero.debug('BBT: loading ItemPane')
+        await Zotero.BetterBibTeX.ItemPane.load()
+        window.addEventListener('unload', () => Zotero.BetterBibTeX.ItemPane.unload())
+        Zotero.debug('BBT: ItemPane loaded')
+      } catch (err) {
+        Zotero.debug(`BBT: loading ItemPane error: ${err.message}\n${err.stack ||''}`)
+      }
+    })
+  </script>
 </overlay>

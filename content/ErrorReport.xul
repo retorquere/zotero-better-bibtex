@@ -19,16 +19,6 @@
   id="better-bibtex-error-report" title="&better-bibtex.ErrorReport.title;"
   width="550" height="550">
 
-  <script src="chrome://zotero/content/include.js"/>
-  <script>
-    Zotero.BetterBibTeX.ErrorReport.globals = Function('return this')();
-    window.addEventListener('load', async function() {
-      Zotero.debug('loading ErrorReport')
-      await Zotero.BetterBibTeX.ErrorReport.load();
-      Zotero.debug('loaded ErrorReport')
-    })
-  </script>
-
   <wizardpage onpageshow="Zotero.BetterBibTeX.ErrorReport.show()" label=" ">
     <description style="white-space: pre-wrap;" class="header">&better-bibtex.ErrorReport.enableDebug;</description>
     <button label="&better-bibtex.ErrorReport.restartWithLoggingEnabled;" oncommand="Zotero.BetterBibTeX.ErrorReport.restartWithDebugEnabled()"/>
@@ -87,4 +77,13 @@
     <description>&better-bibtex.ErrorReport.postToGitHub;</description>
     <description>&better-bibtex.ErrorReport.notReviewed;</description>
   </wizardpage>
+
+  <script>
+    Zotero.BetterBibTeX.ErrorReport.globals = Function('return this')();
+    window.addEventListener('load', async function() {
+      Zotero.debug('loading ErrorReport')
+      await Zotero.BetterBibTeX.ErrorReport.load();
+      Zotero.debug('loaded ErrorReport')
+    })
+  </script>
 </wizard>
