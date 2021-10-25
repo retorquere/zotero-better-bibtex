@@ -14,6 +14,7 @@ import { JournalAbbrev } from '../journal-abbrev'
 import * as Extra from '../extra'
 import { buildCiteKey as zotero_buildCiteKey } from './formatter-zotero'
 import { babelLanguage, babelTag } from '../text'
+import { fetchSync as fetchInspireHEP } from '../inspire-hep'
 
 const parser = require('./formatter.peggy')
 import * as DateParser from '../dateparser'
@@ -397,6 +398,13 @@ class PatternFormatter {
       date: this.item.getField('date'),
       dateAdded: this.item.getField('dateAdded'),
     }, null, {}))
+  }
+
+  /**
+   * Fetches the key from inspire-hep based on DOI or arXiv ID
+   */
+  public $inspire_hep() {
+    return this.set(fetchInspireHEP(this.item) || '')
   }
 
   public getField(name: string) {
