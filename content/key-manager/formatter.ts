@@ -808,8 +808,20 @@ class PatternFormatter {
     const values = this.value.split(/\s+/)
     let end = values.length
 
-    start -= 1
-    if (typeof n !== 'undefined') end = start + n
+    if (start === 0) start = 1
+
+    if (start < 0) {
+      start = end + start
+    }
+    else {
+      start -= 1
+    }
+
+    if (typeof n !== 'undefined') {
+      if (n < 1) n = 1
+      end = start + n
+    }
+
     return this.set(values.slice(start, end).join(' '))
   }
 

@@ -12,6 +12,7 @@ Scenario Outline: Export <references> references for BibLaTeX to <file>
 
   Examples:
      | file                                                                                           | references  |
+     | How to use the last word of the title? #1746                                                   | 1           |
      | Detect journal abbreviation in the publication field #1951                                     | 1           |
      | Define word delimiter characters #1943                                                         | 1           |
      | Export of hypen for range in the volume field #1929                                            | 1           |
