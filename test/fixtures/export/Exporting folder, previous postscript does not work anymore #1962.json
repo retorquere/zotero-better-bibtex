@@ -1,0 +1,63 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "dmy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "autoExportDelay": 30,
+      "citekeyFormat": "[auth][shorttitle3_3][year]",
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "extraMergeTeX": true,
+      "postscript": "reference.add({ name: 'collections', value: item.collections.map(key => Translator.collections[key] && Translator.collections[key].name).filter(name => name), sep: ', '})",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
+      "warnBulkModify": 0
+    }
+  },
+  "items": [
+    {
+      "itemType": "journalArticle",
+      "title": "dummy"
+    },
+    {
+      "DOI": "10/d9c537",
+      "ISSN": "1559-7431, 1559-744X",
+      "abstractNote": "This study focuses on interactions between intergovernmental organizations (IOs) working in the anti-corruption realm. It investigates the factors that enhance IO cooperation. Based on expectations derived primarily from the organization theory literature and, more specifically, from exchange theory, we develop a set of hypotheses regarding the relevance of IO financial resources, expertise, prestige, and bureaucratic culture on the likelihood that IOs will engage in cooperative behavior. The study tests these hypotheses on the formal and informal collaborative networks formed between seventeen IOs engaged in anti-corruption work. The results of the tests offer support for most of the hypotheses and suggest several additional arguments explaining the likelihood of inter-organizational collaboration.",
+      "accessDate": "2021-06-01T20:46:56Z",
+      "attachments": [],
+      "citationKey": "GestInteractionsIntergovernmentalOrganizations2010",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Nathaniel",
+          "lastName": "Gest"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Alexandru",
+          "lastName": "Grigorescu"
+        }
+      ],
+      "date": "3/2010",
+      "issue": "1",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Rev Int Organ",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "pages": "53-72",
+      "publicationTitle": "The Review of International Organizations",
+      "tags": [
+        {
+          "tag": "#todo/process"
+        }
+      ],
+      "title": "Interactions among intergovernmental organizations in the anti-corruption realm",
+      "url": "http://link.springer.com/10.1007/s11558-009-9070-9",
+      "volume": "5"
+    }
+  ]
+}

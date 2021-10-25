@@ -6,13 +6,12 @@
     <description insertbefore="translator-options" class="textbox-emph" hidden="true" id="better-bibtex-reminder">&better-bibtex.ErrorReport.postToGitHub;</description>
   </vbox>
 
-  <script src="chrome://zotero/content/include.js"/>
   <script>
-    Zotero.BetterBibTeX.ExportOptions.globals = Function('return this')();
+    const globals = Function('return this')();
     window.addEventListener('load', async function () {
       try {
         Zotero.debug('BBT: loading ExportOptions')
-        await Zotero.BetterBibTeX.ExportOptions.load()
+        await Zotero.BetterBibTeX.ExportOptions.load(globals)
         window.addEventListener('unload', () => Zotero.BetterBibTeX.ExportOptions.unload())
         Zotero.debug('BBT: ExportOptions loaded')
       } catch (err) {

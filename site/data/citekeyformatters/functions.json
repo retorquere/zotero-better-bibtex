@@ -14,6 +14,7 @@
   "`date`": "The date of the publication",
   "`extra`": "A pseudo-field from the extra field. eg if you have `Original       date: 1970` in your `extra` field, you can get it as       `[extra=originalDate]`, or `tex.shortauthor: APA` which you could       get with `[extra=tex.shortauthor]`. Any `tex.` field will be       picked up, the other fields can be selected from [this       list](https://retorque.re/zotero-better-bibtex/exporting/extra-fields/)       of key names.",
   "`firstpage`": "The number of the first page of the publication (Caution: this will return the lowest number found in the pages field, since BibTeX allows `7,41,73--97` or `43+`.)",
+  "`inspire-hep`": "Fetches the key from inspire-hep based on DOI or arXiv ID",
   "`journal`": "returns the journal abbreviation, or, if not found, the journal title, If 'automatic journal abbreviation' is enabled in the BBT settings, it will use the same abbreviation filter Zotero uses in the wordprocessor integration. You might want to use the `abbr` filter on this.",
   "`keywordN`": "Tag number `N`",
   "`language`": "Tests whether the entry has the given language set, and skips to the next pattern if not",

@@ -1197,14 +1197,16 @@ export class Reference {
       doctoraldissertation: phdthesis,
 
       ma: mastersthesis,
-      masters: mastersthesis,
       master: mastersthesis,
+      masters: mastersthesis,
 
       ba: bathesis,
       bachelor: bathesis,
+      bachelors: bathesis,
 
       cand: candthesis,
       candidate: candthesis,
+      candidates: candthesis,
     }[type?.toLowerCase().replace(/[^a-z]/g, '').replace(/thesis$/, '')]
   }
 

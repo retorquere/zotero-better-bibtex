@@ -297,7 +297,9 @@ export function doExport(): void {
 
     }
 
-    switch (ref.referencetype_source.split('.')[1]) {
+    let reftype = ref.referencetype_source.split('.')[1]
+    if (reftype.endsWith('thesis')) reftype = 'thesis' // # 1965
+    switch (reftype) {
       case 'thesis':
         ref.add({ name: 'school', value: item.publisher, bibtexStrings: true })
         break

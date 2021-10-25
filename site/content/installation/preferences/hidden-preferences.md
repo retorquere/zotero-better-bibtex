@@ -192,6 +192,16 @@ Zotero takes a few seconds to start up, which is sometimes mistakenly attributed
 
 * `popup`: show a popup during startup * `progressbar`: show a progressbar in the top of the frame
 
+## stringsOverride
+
+default: `<not set>`
+
+You can use a custom @string list per export directory:
+
+1. Edit the hidden preference `stringstOverride`, and set it to a filename like `strings.bib` 2. In the directory where you intend to export to, create a file called `strings.bib` (or whatever you set the preference to) and add the @string declarations you want there 3. Export to that directory.
+
+A strings override will disable caching for that export.
+
 ## verbatimFields
 
 default: `url,doi,file,ids,eprint,verba,verbb,verbc,groups`

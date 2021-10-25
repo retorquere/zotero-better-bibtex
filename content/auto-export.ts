@@ -101,11 +101,10 @@ class Git {
     if (!this.enabled) return
 
     try {
-      const warning = await this.exec(this.git, ['-C', this.path, 'pull'])
-      if (warning) flash('autoexport git pull warning', `${this.quote(this.path)}: ${warning}`, 1)
+      await this.exec(this.git, ['-C', this.path, 'pull'])
     }
     catch (err) {
-      flash('autoexport git pull failed', `${this.quote(this.path)}: ${err.message}`, 1)
+      flash('autoexport git pull failed', err.message, 1)
       log.error(`could not pull in ${this.path}:`, err)
     }
   }
@@ -113,16 +112,13 @@ class Git {
   public async push(msg) {
     if (!this.enabled) return
 
-    const warnings: string[] = []
     try {
-      warnings.push(await this.exec(this.git, ['-C', this.path, 'add', this.bib]))
-      warnings.push(await this.exec(this.git, ['-C', this.path, 'commit', '-m', msg]))
-      warnings.push(await this.exec(this.git, ['-C', this.path, 'push']))
-      const warning = warnings.find(w => w)
-      if (warning) flash('autoexport git pull warning', `${this.quote(this.path)}: ${warning}`, 1)
+      await this.exec(this.git, ['-C', this.path, 'add', this.bib])
+      await this.exec(this.git, ['-C', this.path, 'commit', '-m', msg])
+      await this.exec(this.git, ['-C', this.path, 'push'])
     }
     catch (err) {
-      flash('autoexport git push failed', `${this.quote(this.path)}: ${err.message}`, 1)
+      flash('autoexport git push failed', err.message, 1)
       log.error(`could not push ${this.bib} in ${this.path}`, err)
     }
   }
@@ -131,8 +127,8 @@ class Git {
     return [cmd].concat(args || []).map((arg: string) => arg.match(/['"]|\s/) ? JSON.stringify(arg) : arg).join(' ')
   }
 
-  private async exec(cmd, args): Promise<string> {
-    if (typeof cmd === 'string') cmd = new FileUtils.File(cmd)
+  private async exec(exe: string, args?: string[]): Promise<boolean> { // eslint-disable-line @typescript-eslint/require-await
+    const cmd = new FileUtils.File(exe)
 
     if (!cmd.isExecutable()) throw new Error(`${cmd.path} is not an executable`)
 
@@ -140,19 +136,25 @@ class Git {
     proc.init(cmd)
     proc.startHidden = true // requires post-55 Firefox
 
-    return new Promise<string>((resolve, reject) => {
-      proc.runwAsync(args, args.length, { observe: function(subject, topic) { // eslint-disable-line object-shorthand, prefer-arrow/prefer-arrow-functions
+    const command = this.quote(cmd.path, args)
+    log.debug('running:', command)
+
+    const deferred = Zotero.Promise.defer()
+    proc.runwAsync(args, args.length, {
+      observe: (subject, topic) => {
         if (topic !== 'process-finished') {
-          reject(new Error(`${this.quote(cmd.path, args)} failed, exit status: ${topic}`))
+          deferred.reject(new Error(`failed: ${command}`))
         }
         else if (proc.exitValue !== 0) {
-          resolve(`${this.quote(cmd.path, args)} returned exit status ${proc.exitValue}`)
+          deferred.reject(new Error(`failed with exit status ${proc.exitValue}: ${command}`))
         }
         else {
-          resolve('')
+          deferred.resolve(true)
         }
-      }})
+      },
     })
+
+    return deferred.promise as Promise<boolean>
   }
 }
 const git = new Git()
