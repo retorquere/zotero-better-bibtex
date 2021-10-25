@@ -375,6 +375,9 @@
             "strings": {
               "type": "string"
             },
+            "stringsOverride": {
+              "type": "string"
+            },
             "verbatimFields": {
               "type": "string"
             },

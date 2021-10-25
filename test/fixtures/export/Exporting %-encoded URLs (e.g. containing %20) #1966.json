@@ -1,0 +1,74 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "mdy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "bibtexURL": "url",
+      "caching": false,
+      "citekeyFold": false,
+      "citekeyFormat": "[auth][year]",
+      "skipFields": "file,language,urldate,shorttitle,copyright,month,note,abstract,langid"
+    }
+  },
+  "items": [
+    {
+      "ISBN": "978-0-15-658446-3",
+      "accessDate": "2021-10-22",
+      "callNumber": "BF463.M4 O39 1989",
+      "citationKey": "Ogden1923",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Charles Kay",
+          "lastName": "Ogden"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Ivor Armstrong",
+          "lastName": "Richards"
+        }
+      ],
+      "date": "1923",
+      "edition": "1989",
+      "itemID": 1,
+      "itemType": "book",
+      "libraryCatalog": "Library of Congress ISBN",
+      "notes": [
+        "<p>Reprint. Originally published: London : K. Paul, Trench, Trubner ; New York : Harcourt, Brace, 1923 \"A Harvest/HBJ book.\"</p>"
+      ],
+      "numPages": "363",
+      "place": "San Diego",
+      "publisher": "Harcourt Brace Jovanovich",
+      "shortTitle": "The meaning of meaning",
+      "tags": [
+        {
+          "tag": "Language and languages",
+          "type": 1
+        },
+        {
+          "tag": "Meaning (Psychology)",
+          "type": 1
+        },
+        {
+          "tag": "Philosophy",
+          "type": 1
+        },
+        {
+          "tag": "Psycholinguistics",
+          "type": 1
+        },
+        {
+          "tag": "Semiotics",
+          "type": 1
+        }
+      ],
+      "title": "The meaning of meaning: a study of the influence of language upon thought and of the science of symbolism",
+      "url": "http://courses.media.mit.edu/2004spring/mas966/Ogden%20Richards%201923.pdf"
+    }
+  ]
+}

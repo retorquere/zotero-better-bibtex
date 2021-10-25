@@ -597,3 +597,13 @@ Scenario: Export as Collected Notes does not list subcollections #1768
 Scenario: Exporting folder, previous postscript does not work anymore #1962
   Given I import 2 references from "export/*.json" into a new collection
   Then an export using "Better BibLaTeX" should match "export/*.biblatex"
+
+Scenario: Exporting %-encoded URLs (e.g. containing %20) #1966
+  Given I import 1 reference from "export/*.json"
+  And I set preference .bibtexURL to "url"
+  Then an export using "Better BibTeX" should match "export/*.url.bibtex"
+  When I set preference .bibtexURL to "url-ish"
+  Then an export using "Better BibTeX" should match "export/*.url-ish.bibtex"
+  When I set preference .bibtexURL to "url"
+  And I set preference .verbatimFields to "doi,file,ids,eprint,verba,verbb,verbc,groups"
+  Then an export using "Better BibTeX" should match "export/*.bibtex"
