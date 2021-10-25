@@ -1,12 +1,26 @@
 /* eslint-disable no-case-declarations */
-declare const Zotero
 import EDTF = require('edtf')
 import edtfy = require('edtfy')
 
 // import escapeStringRegexp = require('escape-string-regexp')
 
 import * as months from '../gen/dateparser-months.json'
-import { ParsedDate } from './typings/bbt'
+
+export type ParsedDate = {
+  type?: 'date' | 'open' | 'verbatim' | 'season' | 'interval' | 'list'
+  year?: number
+  month?: number
+  day?: number
+  orig?: ParsedDate
+  verbatim?: string
+  from?: ParsedDate
+  to?: ParsedDate
+  dates?: ParsedDate[]
+  season?: number
+  uncertain?: boolean
+  approximate?: boolean
+}
+
 const months_re = new RegExp(Object.keys(months).sort((a, b) => b.length - a.length).join('|'), 'i')
 
 /*
@@ -118,10 +132,7 @@ export function parse(value: string, localeDateOrder: string, as_range_part = fa
   if ((m = (/^([0-9]+) (de )?([a-z]+) (de )?([0-9]+)$/i).exec(value)) && (m[2] || m[4]) && (months[m[3].toLowerCase()])) return parse(`${m[1]} ${m[3]} ${m[5]}`, localeDateOrder, as_range_part)
 
   // '30-Mar-2020'
-  Zotero.debug(`${value}: 30-Mar-2020`)
   if (!as_range_part && (m = (/^([0-9]+)-([a-z]+)-([0-9]+)$/i).exec(value))) {
-    Zotero.debug('30-Mar-2020: yes')
-    // eslint-disable-next-line @typescript-eslint/tslint/config
     let [ , day, month, year ] = m
     if (parseInt(day) > 31 && parseInt(year) < 31) [ day, year ] = [ year, day ] // eslint-disable-line no-magic-numbers
     const date = parse(`${month} ${day} ${year}`, localeDateOrder, false)

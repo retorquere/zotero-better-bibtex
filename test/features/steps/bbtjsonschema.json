@@ -60,9 +60,6 @@
             "Authors": {
               "type": "boolean"
             },
-            "Normalize": {
-              "type": "boolean"
-            },
             "Title": {
               "type": "boolean"
             },
@@ -76,6 +73,9 @@
               "type": "boolean"
             },
             "keepUpdated": {
+              "type": "boolean"
+            },
+            "markdown": {
               "type": "boolean"
             },
             "quickCopyMode": {
@@ -144,6 +144,9 @@
             "auxImport": {
               "type": "boolean"
             },
+            "baseAttachmentPath": {
+              "type": "string"
+            },
             "biblatexExtendedDateFormat": {
               "type": "boolean"
             },
@@ -168,6 +171,9 @@
             "cacheFlushInterval": {
               "type": "number"
             },
+            "caching": {
+              "type": "boolean"
+            },
             "citeCommand": {
               "type": "string"
             },
@@ -177,13 +183,13 @@
             "citekeyFormat": {
               "type": "string"
             },
+            "citekeySearch": {
+              "type": "boolean"
+            },
             "citeprocNoteCitekey": {
               "type": "boolean"
             },
             "csquotes": {
-              "type": "string"
-            },
-            "debugLogDir": {
               "type": "string"
             },
             "exportBibTeXStrings": {
@@ -211,9 +217,6 @@
             },
             "git": {
               "type": "string"
-            },
-            "ignorePostscriptErrors": {
-              "type": "boolean"
             },
             "import": {
               "type": "boolean"
@@ -256,6 +259,9 @@
             "jabrefFormat": {
               "type": "number"
             },
+            "jieba": {
+              "type": "boolean"
+            },
             "keyConflictPolicy": {
               "enum": [
                 "change",
@@ -288,33 +294,53 @@
             "parseParticles": {
               "type": "boolean"
             },
+            "patchDates": {
+              "type": "string"
+            },
             "postscript": {
               "type": "string"
             },
             "postscriptOverride": {
               "type": "string"
             },
+            "preferencesOverride": {
+              "type": "string"
+            },
             "qualityReport": {
               "type": "boolean"
+            },
+            "quickCopyEta": {
+              "type": "string"
             },
             "quickCopyMode": {
               "enum": [
                 "latex",
                 "citekeys",
                 "pandoc",
-                "orgmode_citekey",
                 "orgmode",
                 "orgRef",
                 "rtfScan",
                 "roamCiteKey",
                 "atom",
                 "gitbook",
-                "selectLink_citekey",
-                "selectLink"
+                "selectlink",
+                "eta"
+              ]
+            },
+            "quickCopyOrgMode": {
+              "enum": [
+                "zotero",
+                "citationkey"
               ]
             },
             "quickCopyPandocBrackets": {
               "type": "boolean"
+            },
+            "quickCopySelectLink": {
+              "enum": [
+                "zotero",
+                "citationkey"
+              ]
             },
             "rawImports": {
               "type": "boolean"
@@ -331,10 +357,19 @@
             "scrubDatabase": {
               "type": "boolean"
             },
+            "separatorList": {
+              "type": "string"
+            },
+            "separatorNames": {
+              "type": "string"
+            },
             "skipFields": {
               "type": "string"
             },
             "skipWords": {
+              "type": "string"
+            },
+            "startupProgress": {
               "type": "string"
             },
             "strings": {

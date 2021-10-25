@@ -12,21 +12,13 @@
       "citekeyFormat": "[zotero:clean]",
       "itemObserverDelay": 100,
       "qualityReport": true,
-      "skipFields": "file",
-      "workers": 0
+      "skipFields": "file"
     }
   },
   "items": [
     {
       "accessDate": "2014-08-19T00:03:18Z",
-      "attachments": [
-        {
-          "itemType": "attachment",
-          "path": "/home/muelli/Zotero/storage/FAFQ332R/rfc4880.html",
-          "title": "Snapshot",
-          "uri": "http://zotero.org/users/45772/items/FAFQ332R"
-        }
-      ],
+      "attachments": [],
       "citationKey": "shaw_rfc4880_2007",
       "creators": [
         {

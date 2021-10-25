@@ -1,6 +1,6 @@
 ---
-name: Question on use, or feature suggestions, not covered by the other categories above.
-about: You want information on how to use BBT, or have an idea for improvement that is not one of the categories above.
+name: Question on use not covered by the other categories above.
+about: You want information on how to use BBT. You can also use the discussions board for this.
 labels: question
 ---
 
@@ -15,6 +15,12 @@ labels: question
 
 Picking the right issue category is really important. Each category (`Export`, `General error`, `Import`, `Key generation`, `Question`) has different instructions for gathering the data necessary required to resolve the issue you are experiencing
 
+
+If you've verified all of the above, please remove the instructions up to and including this line.
+
+**Zotero version:**
+
+**BBT version:**
 
 **Your question/suggestion:**
 

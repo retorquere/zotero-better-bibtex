@@ -10,21 +10,13 @@
       "auxImport": true,
       "bibtexURL": "url",
       "citekeyFormat": "[auth][shorttitle3_3]",
-      "keyConflictPolicy": "change",
-      "workers": 0
+      "keyConflictPolicy": "change"
     }
   },
   "items": [
     {
       "accessDate": "2020-03-30",
-      "attachments": [
-        {
-          "itemType": "attachment",
-          "path": "/home/jendrik/Zotero/storage/LNM5AFG9/lichess-end-of-year-update-2019.html",
-          "title": "Snapshot",
-          "uri": "http://zotero.org/users/local/EQj9ErDL/items/LNM5AFG9"
-        }
-      ],
+      "attachments": [],
       "citationKey": "LichessTeamLichessEndYear",
       "creators": [
         {

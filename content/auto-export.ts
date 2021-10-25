@@ -1,20 +1,21 @@
-declare const Zotero: any
-declare const Components: any
-declare const OS: any
-
 Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
 
 import { log } from './logger'
 
 import { Events } from './events'
-import { DB } from './db/main'
+import { DB, scrubAutoExport } from './db/main'
+import { DB as Cache, selector as cacheSelector } from './db/cache'
+import { $and } from './db/loki'
 import { Translators } from './translators'
-import { Preferences as Prefs } from './prefs'
+import { Preference } from '../gen/preferences'
+import { Preferences, schema } from '../gen/preferences/meta'
 import * as ini from 'ini'
-import { foldMaintaining } from 'fold-to-ascii'
+import fold2ascii from 'fold-to-ascii'
 import { pathSearch } from './path-search'
 import { Scheduler } from './scheduler'
+import { flash } from './flash'
+import * as l10n from './l10n'
 
 class Git {
   public enabled: boolean
@@ -42,7 +43,7 @@ class Git {
 
     if (!this.git) return repo
 
-    switch (Prefs.get('git')) {
+    switch (Preference.git) {
       case 'off':
         return repo
 
@@ -83,7 +84,7 @@ class Git {
         break
 
       default:
-        log.error('git.repo: unexpected git config', Prefs.get('git'))
+        log.error('git.repo: unexpected git config', Preference.git)
         return repo
     }
 
@@ -103,8 +104,8 @@ class Git {
       await this.exec(this.git, ['-C', this.path, 'pull'])
     }
     catch (err) {
+      flash('autoexport git pull failed', err.message, 1)
       log.error(`could not pull in ${this.path}:`, err)
-      this.enabled = false
     }
   }
 
@@ -117,41 +118,49 @@ class Git {
       await this.exec(this.git, ['-C', this.path, 'push'])
     }
     catch (err) {
+      flash('autoexport git push failed', err.message, 1)
       log.error(`could not push ${this.bib} in ${this.path}`, err)
-      this.enabled = false
     }
   }
 
-  private async exec(cmd, args): Promise<boolean> {
-    if (typeof cmd === 'string') cmd = new FileUtils.File(cmd)
+  private quote(cmd: string, args?: string[]) {
+    return [cmd].concat(args || []).map((arg: string) => arg.match(/['"]|\s/) ? JSON.stringify(arg) : arg).join(' ')
+  }
+
+  private async exec(exe: string, args?: string[]): Promise<boolean> { // eslint-disable-line @typescript-eslint/require-await
+    const cmd = new FileUtils.File(exe)
 
     if (!cmd.isExecutable()) throw new Error(`${cmd.path} is not an executable`)
 
     const proc = Components.classes['@mozilla.org/process/util;1'].createInstance(Components.interfaces.nsIProcess)
     proc.init(cmd)
-    // proc.startHidden = true // won't work until Zotero upgrades to post-55 Firefox
+    proc.startHidden = true // requires post-55 Firefox
+
+    const command = this.quote(cmd.path, args)
+    log.debug('running:', command)
 
     const deferred = Zotero.Promise.defer()
-    proc.runwAsync(args, args.length, { observe: function(subject, topic) { // eslint-disable-line object-shorthand, prefer-arrow/prefer-arrow-functions
-      if (topic !== 'process-finished') {
-        deferred.reject(new Error(`${cmd.path} failed`))
-      }
-      else if (proc.exitValue !== 0) {
-        deferred.reject(new Error(`${cmd.path} returned exit status ${proc.exitValue}`))
-      }
-      else {
-        deferred.resolve(true)
-      }
-    }})
+    proc.runwAsync(args, args.length, {
+      observe: (subject, topic) => {
+        if (topic !== 'process-finished') {
+          deferred.reject(new Error(`failed: ${command}`))
+        }
+        else if (proc.exitValue !== 0) {
+          deferred.reject(new Error(`failed with exit status ${proc.exitValue}: ${command}`))
+        }
+        else {
+          deferred.resolve(true)
+        }
+      },
+    })
 
-    return (deferred.promise as Promise<boolean>)
+    return deferred.promise as Promise<boolean>
   }
 }
 const git = new Git()
 
-import * as prefOverrides from '../gen/preferences/auto-export-overrides.json'
 
-if (Prefs.get('autoExportDelay') < 1) Prefs.set('autoExportDelay', 1)
+if (Preference.autoExportDelay < 1) Preference.autoExportDelay = 1
 const queue = new class TaskQueue {
   private scheduler = new Scheduler('autoExportDelay', 1000) // eslint-disable-line no-magic-numbers
   private autoexports: any
@@ -164,10 +173,10 @@ const queue = new class TaskQueue {
   public start() {
     if (this.started) return
     this.started = true
-    if (Prefs.get('autoExport') === 'immediate') this.resume()
+    if (Preference.autoExport === 'immediate') this.resume()
 
     const idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
-    idleService.addIdleObserver(this, Prefs.get('autoExportIdleWait'))
+    idleService.addIdleObserver(this, Preference.autoExportIdleWait)
 
     Zotero.Notifier.registerObserver(this, ['sync'], 'BetterBibTeX', 1)
   }
@@ -186,6 +195,7 @@ const queue = new class TaskQueue {
 
   public add(ae) {
     const $loki = (typeof ae === 'number' ? ae : ae.$loki)
+    Events.emit('export-progress', 0, Translators.byId[ae.translatorID].label, $loki)
     this.scheduler.schedule($loki, () => { this.run($loki).catch(err => log.error('autoexport failed:', {$loki}, err)) })
   }
 
@@ -198,10 +208,13 @@ const queue = new class TaskQueue {
     await Zotero.BetterBibTeX.ready
 
     const ae = this.autoexports.get($loki)
+    Events.emit('export-progress', 0, Translators.byId[ae.translatorID].label, $loki)
     if (!ae) throw new Error(`AutoExport ${$loki} not found`)
 
     ae.status = 'running'
-    this.autoexports.update(ae)
+    this.autoexports.update(scrubAutoExport(ae))
+    const started = Date.now()
+    log.debug('auto-export', ae.type, ae.id, 'started')
 
     try {
       let scope
@@ -232,9 +245,10 @@ const queue = new class TaskQueue {
         4. If you change the jabrefFormat to anything back to 3 or 0, all caches will be dropped anyhow, and we will follow that cache format from that point on
       */
 
-      for (const pref of prefOverrides) {
+      for (const pref of schema.translator[Translators.byId[ae.translatorID].label].preferences) {
         displayOptions[`preference_${pref}`] = ae[pref]
       }
+      displayOptions.auto_export_id = ae.$loki
 
       const jobs = [ { scope, path: ae.path } ]
 
@@ -247,16 +261,16 @@ const queue = new class TaskQueue {
         const dir = OS.Path.dirname(ae.path)
         const base = OS.Path.basename(ae.path).replace(new RegExp(`${ext.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')}$`), '')
 
-        const autoExportPathReplaceDiacritics: boolean = Prefs.get('autoExportPathReplaceDiacritics')
-        const autoExportPathReplaceDirSep: string = Prefs.get('autoExportPathReplaceDirSep')
-        const autoExportPathReplaceSpace: string = Prefs.get('autoExportPathReplaceSpace')
+        const autoExportPathReplaceDiacritics: boolean = Preference.autoExportPathReplaceDiacritics
+        const autoExportPathReplaceDirSep: string = Preference.autoExportPathReplaceDirSep
+        const autoExportPathReplaceSpace: string = Preference.autoExportPathReplaceSpace
         for (const collection of collections) {
           const path = OS.Path.join(dir, [base]
             .concat(this.getCollectionPath(collection, root))
             // eslint-disable-next-line no-control-regex
             .map((p: string) => p.replace(/[<>:'"/\\|?*\u0000-\u001F]/g, ''))
-            .map((p: string) => p.replace(/ +/g, Prefs.get(autoExportPathReplaceSpace) || ''))
-            .map((p: string) => autoExportPathReplaceDiacritics ? (foldMaintaining(p) as string) : p)
+            .map((p: string) => p.replace(/ +/g, autoExportPathReplaceSpace || ''))
+            .map((p: string) => autoExportPathReplaceDiacritics ? (fold2ascii.foldMaintaining(p) as string) : p)
             .join(autoExportPathReplaceDirSep || '-') + ext
           )
           jobs.push({ scope: { type: 'collection', collection: collection.id }, path } )
@@ -265,17 +279,19 @@ const queue = new class TaskQueue {
 
       await Promise.all(jobs.map(job => Translators.exportItems(ae.translatorID, displayOptions, job.scope, job.path)))
 
-      await repo.push(Zotero.BetterBibTeX.getString('Preferences.auto-export.git.message', { type: Translators.byId[ae.translatorID].label.replace('Better ', '') }))
+      await repo.push(l10n.localize('Preferences.auto-export.git.message', { type: Translators.byId[ae.translatorID].label.replace('Better ', '') }))
 
       ae.error = ''
+      log.debug('auto-export', ae.type, ae.id, 'took', Date.now() - started, 'msecs')
     }
     catch (err) {
-      log.error('AutoExport.queue.run: failed', ae, err)
+      log.error('auto-export', ae.type, ae.id, 'failed:', ae, err)
       ae.error = `${err}`
     }
 
     ae.status = 'done'
-    this.autoexports.update(ae)
+    log.debug('auto-export done')
+    this.autoexports.update(scrubAutoExport(ae))
   }
 
   private getCollectionPath(coll: {name: string, parentID: number}, root: number): string[] {
@@ -286,12 +302,12 @@ const queue = new class TaskQueue {
 
   // idle observer
   protected observe(_subject, topic, _data) {
-    if (!this.started || Prefs.get('autoExport') === 'off') return
+    if (!this.started || Preference.autoExport === 'off') return
 
     switch (topic) {
       case 'back':
       case 'active':
-        if (Prefs.get('autoExport') === 'idle') this.pause()
+        if (Preference.autoExport === 'idle') this.pause()
         break
 
       case 'idle':
@@ -308,7 +324,7 @@ const queue = new class TaskQueue {
   // It is theoretically possible that auto-export is paused because Zotero is idle and then restarted when the sync finishes, but
   // I can't see how a system can be considered idle when Zotero is syncing.
   protected notify(action, type) {
-    if (!this.started || Prefs.get('autoExport') === 'off') return
+    if (!this.started || Preference.autoExport === 'off') return
 
     switch(`${type}.${action}`) {
       case 'sync.start':
@@ -326,27 +342,21 @@ const queue = new class TaskQueue {
   }
 }
 
-Events.on('preference-changed', pref => {
-  if (pref !== 'autoExport') return
-
-  switch (Prefs.get('autoExport')) {
-    case 'immediate':
-      queue.resume()
-      break
-    default: // off / idle
-      queue.pause()
-  }
-})
-
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export const AutoExport = new class CAutoExport { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export const AutoExport = new class _AutoExport { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public db: any
+  public progress: Map<number, number>
 
   constructor() {
+    this.progress = new Map
+
     Events.on('libraries-changed', ids => this.schedule('library', ids))
     Events.on('libraries-removed', ids => this.remove('library', ids))
     Events.on('collections-changed', ids => this.schedule('collection', ids))
     Events.on('collections-removed', ids => this.remove('collection', ids))
+    Events.on('export-progress', (percent, _translator, ae) => {
+      if (typeof ae === 'number') this.progress.set(ae, percent)
+    })
   }
 
   public async init() {
@@ -359,7 +369,11 @@ export const AutoExport = new class CAutoExport { // eslint-disable-line @typesc
       queue.add(ae)
     }
 
-    if (Prefs.get('autoExport') === 'immediate') { queue.resume() }
+    this.db.on(['delete'], ae => {
+      this.progress.delete(ae.$loki)
+    })
+
+    if (Preference.autoExport === 'immediate') { queue.resume() }
   }
 
   public start() {
@@ -367,11 +381,16 @@ export const AutoExport = new class CAutoExport { // eslint-disable-line @typesc
   }
 
   public add(ae, schedule = false) {
-    for (const pref of prefOverrides) {
-      ae[pref] = Prefs.get(pref)
+    const translator = schema.translator[Translators.byId[ae.translatorID].label]
+    for (const pref of translator.preferences) {
+      ae[pref] = Preference[pref]
     }
+    for (const option of translator.displayOptions) {
+      ae[option] = ae[option] || false
+    }
+
     this.db.removeWhere({ path: ae.path })
-    this.db.insert(ae)
+    this.db.insert(scrubAutoExport(ae))
 
     git.repo(ae.path).then(repo => {
       if (repo.enabled || schedule) this.schedule(ae.type, [ae.id]) // causes initial push to overleaf at the cost of a unnecesary extra export
@@ -381,13 +400,13 @@ export const AutoExport = new class CAutoExport { // eslint-disable-line @typesc
   }
 
   public schedule(type, ids) {
-    for (const ae of this.db.find({ type, id: { $in: ids } })) {
+    for (const ae of this.db.find({$and: [{ type: {$eq: type} }, {id: { $in: ids } }] })) {
       queue.add(ae)
     }
   }
 
   public remove(type, ids) {
-    for (const ae of this.db.find({ type, id: { $in: ids } })) {
+    for (const ae of this.db.find({$and: [{ type: {$eq: type} }, {id: { $in: ids } }] })) {
       queue.cancel(ae)
       this.db.remove(ae)
     }
@@ -396,4 +415,73 @@ export const AutoExport = new class CAutoExport { // eslint-disable-line @typesc
   public run(id) {
     queue.run(id).catch(err => log.error('AutoExport.run:', err))
   }
+
+  public async cached($loki) {
+    if (!Preference.caching) return 0
+
+    log.debug('cache-rate: calculating cache rate for', $loki)
+    const start = Date.now()
+    const ae = this.db.get($loki)
+
+    const itemTypeIDs: number[] = ['attachment', 'note', 'annotation'].map(type => {
+      try {
+        return Zotero.ItemTypes.getID(type) as number
+      }
+      catch (err) {
+        return undefined
+      }
+    })
+
+    const itemIDs: Set<number> = new Set
+    await this.itemIDs(ae, ae.id, itemTypeIDs, itemIDs)
+    if (itemIDs.size === 0) return 100 // eslint-disable-line no-magic-numbers
+
+    const options = {
+      exportNotes: !!ae.exportNotes,
+      useJournalAbbreviation: !!ae.useJournalAbbreviation,
+    }
+    const prefs: Partial<Preferences> = schema.translator[Translators.byId[ae.translatorID].label].preferences.reduce((acc, pref) => {
+      acc[pref] = ae[pref]
+      return acc
+    }, {})
+
+    const label = Translators.byId[ae.translatorID].label
+    const cached = {
+      serialized: Cache.getCollection('itemToExportFormat').find({ itemID: { $in: [...itemIDs] } }).length,
+      export: Cache.getCollection(label).find($and({...cacheSelector(label, options, prefs), $in: itemIDs})).length,
+    }
+
+    log.debug('cache-rate: cache rate for', $loki, {...cached, items: itemIDs.size}, 'took', Date.now() - start)
+    return Math.min(Math.round((100 * (cached.serialized + cached.export)) / (itemIDs.size * 2)), 100) // eslint-disable-line no-magic-numbers
+  }
+
+  private async itemIDs(ae, id: number, itemTypeIDs: number[], itemIDs: Set<number>) {
+    let items
+    if (ae.type === 'collection') {
+      const coll = await Zotero.Collections.getAsync(id)
+      if (ae.recursive) {
+        for (const collID of coll.getChildren(true)) {
+          await this.itemIDs(ae, collID, itemTypeIDs, itemIDs)
+        }
+      }
+      items = coll.getChildItems()
+    }
+    else if (ae.type === 'library') {
+      items = await Zotero.Items.getAll(id)
+    }
+
+    items.filter(item => !itemTypeIDs.includes(item.itemTypeID)).forEach(item => itemIDs.add(item.id))
+  }
 }
+
+Events.on('preference-changed', pref => {
+  if (pref !== 'autoExport') return
+
+  switch (Preference.autoExport) {
+    case 'immediate':
+      queue.resume()
+      break
+    default: // off / idle
+      queue.pause()
+  }
+})

@@ -2,7 +2,6 @@ declare const Zotero: any
 
 import { Translator } from './lib/translator'
 export { Translator }
-import { ZoteroTranslator } from '../gen/typings/serialized-item'
 
 import { Reference } from './bibtex/reference'
 import { Exporter } from './bibtex/exporter'
@@ -38,7 +37,7 @@ Reference.prototype.caseConversion = {
   eventtitle: true,
 }
 
-Reference.prototype.lint = require('./bibtex/35440492ce37b2caf4b5fe1edfe86f832f1df8321688b1f546292255ae57720c.bibertool')
+Reference.prototype.lint = require('./bibtex/biber-tool.conf')
 
 type CreatorArray = any[] & { type?: string }
 
@@ -287,9 +286,7 @@ export function doExport(): void {
   // Zotero.write(`\n% ${Translator.header.label}\n`)
   Zotero.write('\n')
 
-  let item: ZoteroTranslator.Item
-  while (item = Exporter.nextItem()) {
-    Zotero.debug(`exporting ${item.citationKey}`)
+  for (const item of Exporter.items) {
     const ref = new Reference(item)
 
     if (ref.referencetype === 'incollection' && ref.hasCreator('bookAuthor')) ref.referencetype = 'inbook'
@@ -302,8 +299,8 @@ export function doExport(): void {
       if (item.url && (m = item.url.match(/^https?:\/\/www.jstor.org\/stable\/([\S]+)$/i))) {
         ref.override({ name: 'eprinttype', value: 'jstor'})
         ref.override({ name: 'eprint', value: m[1].replace(/\?.*/, '') })
-        ref.remove('archivePrefix')
-        ref.remove('primaryClass')
+        ref.remove('archiveprefix')
+        ref.remove('primaryclass')
         delete item.url
         ref.remove('url')
 
@@ -311,8 +308,8 @@ export function doExport(): void {
       else if (item.url && (m = item.url.match(/^https?:\/\/books.google.com\/books?id=([\S]+)$/i))) {
         ref.override({ name: 'eprinttype', value: 'googlebooks'})
         ref.override({ name: 'eprint', value: m[1] })
-        ref.remove('archivePrefix')
-        ref.remove('primaryClass')
+        ref.remove('archiveprefix')
+        ref.remove('primaryclass')
         delete item.url
         ref.remove('url')
 
@@ -320,8 +317,8 @@ export function doExport(): void {
       else if (item.url && (m = item.url.match(/^https?:\/\/www.ncbi.nlm.nih.gov\/pubmed\/([\S]+)$/i))) {
         ref.override({ name: 'eprinttype', value: 'pubmed'})
         ref.override({ name: 'eprint', value: m[1] })
-        ref.remove('archivePrefix')
-        ref.remove('primaryClass')
+        ref.remove('archiveprefix')
+        ref.remove('primaryclass')
         delete item.url
         ref.remove('url')
       }
@@ -349,7 +346,6 @@ export function doExport(): void {
     ref.add({ name: 'title', value: item.title })
 
     ref.add({ name: 'edition', value: item.edition })
-    ref.add({ name: 'volume', value: item.volume })
     // ref.add({ name: 'rights', value: item.rights })
     ref.add({ name: 'isbn', value: item.ISBN })
     ref.add({ name: 'issn', value: item.ISSN })
@@ -460,23 +456,13 @@ export function doExport(): void {
         ref.add({ name: 'publisher', value: item.publisher, bibtexStrings: true })
     }
 
-    let thesistype: string
     switch (ref.referencetype) {
       case 'letter':
         ref.add({ name: 'type', value: item.type || (item.itemType === 'email' ? 'E-mail' : 'Letter') })
         break
 
       case 'thesis':
-        thesistype = {
-          phdthesis: 'phdthesis',
-          phd: 'phdthesis',
-          mastersthesis: 'mathesis',
-          masterthesis: 'mathesis',
-          master: 'mathesis',
-          ma: 'mathesis',
-        }[item.type?.toLowerCase()]
-
-        ref.add({ name: 'type', value: thesistype || item.type })
+        ref.add({ name: 'type', value: ref.thesistype(item.type, 'phdthesis', 'mathesis', 'bathesis', 'candthesis')  || item.type })
         break
 
       case 'report':
@@ -515,7 +501,8 @@ export function doExport(): void {
     })
     ref.add({ name: 'eventdate', value: item.conferenceDate, enc: 'date' })
 
-    ref.add({ name: 'pages', value: ref.normalizeDashes(item.pages)})
+    ref.add({ name: 'pages', value: ref.normalizeDashes(item.pages) })
+    ref.add({ name: 'volume', value: ref.normalizeDashes(item.volume) })
 
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
 

@@ -6,16 +6,19 @@
   journaltitle = {Scientific Data},
   shortjournal = {Sci Data},
   volume = {3},
+  number = {1},
   pages = {1--9},
   publisher = {{Nature Publishing Group}},
   issn = {2052-4463},
   doi = {10.1038/sdata.2016.18},
   issue = {1},
-  keywords = {data,data-collection,data-gathering,data-generation,data-management,data-quality,methodology,open-acccess},
   langid = {english},
-  number = {1}
+  keywords = {data,data-collection,data-gathering,data-generation,data-management,data-quality,methodology,open-acccess}
 }
 % == BibLateX quality report for wilkinson-fair-2016:
 % Unexpected field 'publisher'
+% ? Unused libraryCatalog: www.nature.com
+% ? Unused rights: 2016 The Author(s)
+% ? Unused url: https://www.nature.com/articles/sdata201618
 
 

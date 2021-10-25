@@ -1,12 +1,13 @@
 declare const Zotero: any
 
 import { Translator } from '../lib/translator'
-import { ZoteroTranslator } from '../../gen/typings/serialized-item'
+import { Reference } from '../../gen/typings/serialized-item'
+import { Cache } from '../../typings/cache'
 
 import { JabRef } from '../bibtex/jabref' // not so nice... BibTeX-specific code
 import * as itemfields from '../../gen/items/items'
 import * as bibtexParser from '@retorquere/bibtex-parser'
-import { Postfix } from '../bibtex/postfix.ts'
+import { Postfix } from './postfix'
 import * as Extra from '../../content/extra'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
@@ -24,8 +25,8 @@ export const Exporter = new class {
   public prepare_strings() {
     if (!Translator.BetterTeX || !Translator.preferences.strings) return
 
-    if (Translator.preferences.exportBibTeXStrings.startsWith('match')) {
-      this.strings = (bibtexParser.parse(Translator.preferences.strings, { markup: (Translator.csquotes ? { enquote: Translator.csquotes } : {}) }) as bibtexParser.Bibliography).strings
+    if (Translator.BetterTeX && Translator.preferences.exportBibTeXStrings.startsWith('match')) {
+      this.strings = bibtexParser.parse(Translator.preferences.strings, { markup: (Translator.csquotes ? { enquote: Translator.csquotes } : {}) }).strings
       for (const [k, v] of Object.entries(this.strings)) {
         this.strings_reverse[v.toUpperCase()] = k.toUpperCase()
       }
@@ -40,13 +41,14 @@ export const Exporter = new class {
     return uniq
   }
 
-  public nextItem(): ZoteroTranslator.Item {
-    this.postfix = this.postfix || (new Postfix(Translator.preferences.qualityReport))
+  public get items(): Generator<Reference, void, unknown> {
+    return this.itemsGenerator()
+  }
 
-    let item: ZoteroTranslator.Item
-    while (item = Translator.nextItem()) {
-      if (['note', 'attachment'].includes(item.itemType)) continue
+  private *itemsGenerator(): Generator<Reference, void, unknown> {
+    if (!this.postfix && Translator.BetterTeX) this.postfix = new Postfix(Translator.preferences.qualityReport)
 
+    for (const item of Translator.references) {
       if (!item.citationKey) {
         throw new Error(`No citation key in ${JSON.stringify(item)}`)
       }
@@ -55,12 +57,12 @@ export const Exporter = new class {
       this.jabref.citekeys.set(item.itemID, item.citationKey)
 
       // this is not automatically lazy-evaluated?!?!
-      const cached: Types.DB.Cache.ExportedItem = item.cachable ? Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences) : null
+      const cached: Cache.ExportedItem = item.$cacheable && Translator.BetterTeX ? Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences) : null
       Translator.cache[cached ? 'hits' : 'misses'] += 1
 
       if (cached) {
         Zotero.write(cached.reference)
-        this.postfix.add(cached.metadata)
+        this.postfix?.add(cached.metadata)
         continue
       }
 
@@ -80,25 +82,23 @@ export const Exporter = new class {
         delete item.extraFields.tex[name]
       }
 
-      item.raw = Translator.preferences.rawLaTag === '*'
+      item.raw = Translator.BetterTeX && Translator.preferences.rawLaTag === '*'
       item.tags = item.tags.filter(tag => {
-        if (tag.tag === Translator.preferences.rawLaTag) {
+        if (Translator.BetterTeX && tag.tag === Translator.preferences.rawLaTag) {
           item.raw = true
           return false
         }
         return true
       })
 
-      return item
+      yield item
     }
-
-    return null
   }
 
   public complete() {
     this.jabref.exportGroups()
-    Zotero.write(this.postfix.toString())
-    if (Translator.preferences.qualityReport) {
+    if (this.postfix) Zotero.write(this.postfix.toString())
+    if (Translator.BetterTeX && Translator.preferences.qualityReport) {
       let sep = '\n% == Citekey duplicates in this file:\n'
       for (const [citekey, n] of Object.entries(this.citekeys).sort((a, b) => a[0].localeCompare(b[0]))) {
         if (n > 1) {

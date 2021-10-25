@@ -1,0 +1,198 @@
+references:
+- id: 000021000024=00
+  issued:
+  - year: -1
+    season: 1
+  - year: -1
+    season: 4
+  title: 0000-21/0000-24
+  type: webpage
+
+- id: 001121001222=-11
+  issued:
+  - year: -12
+    season: 1
+  - year: -13
+    season: 2
+  title: -0011-21/-0012-22
+  type: webpage
+
+- id: 001121001222=11
+  issued:
+  - year: 11
+    season: 1
+  - year: 12
+    season: 2
+  title: 0011-21/0012-22
+  type: webpage
+
+- id: 201121201222=-2011
+  issued:
+  - year: -2012
+    season: 1
+  - year: -2013
+    season: 2
+  title: -2011-21/-2012-22
+  type: webpage
+
+- id: monthsoutrange=2017
+  issued:
+  - literal: 2017-14/2017-15
+  original-date:
+  - literal: 2017-14/2017-99
+  title: months out of range
+  type: webpage
+
+- id: SeasonrangesEDTF=2017
+  issued:
+  - year: 2017
+    season: 3
+  - year: 2017
+    season: 4
+  original-date:
+  - year: 2015
+    season: 1
+  - year: 2016
+    season: 2
+  title: 'Season ranges: EDTF and literal'
+  type: webpage
+- id: vogel_cinema_2016
+  abstract: >-
+    Le Cine´ma, art subversif est un livre culte dans l'histoire de la
+    cine´philie, cite´ en re´fe´rence par de nombreux cine´astes et artistes
+    depuis sa parution en 1974. Ce´le´brant les formes de la subversion au
+    cine´ma, Amos Vogel analyse comment les films peuvent contourner,
+    transgresser ou annihiler les re`gles et les conventions e´tablies, qu'elles
+    soient esthe´tiques ou morales. Illustre´ par plus de 300 images, souvent
+    side´rantes, l'ouvrage alterne textes the´oriques et notules critiques,
+    consacre´es aussi bien a` des œuvres ce´le`bres qu'a` des films inconnus, de
+    tous pays et de toutes e´poques. Contre les tabous, contre toute forme de
+    censure, c'est une ode a` la liberte´ cine´matographique. Traduit en
+    franc¸ais en 1977, Le Cine´ma, art subversif n'avait jamais e´te´
+    re´e´dite´. A` l'heure ou` la subversion, rele´gue´e dans les marges, semble
+    avoir de´serte´ les e´crans, il apparai^t plus indispensable que jamais.
+    Amos Vogel (1921-2012) est le fondateur et programmateur du Cinema 16, le
+    plus influent cine´-club d'avant-garde new- yorkais. Il est le premier a` y
+    avoir montre´ aux E´tats-Unis les films de Roman Polanski, John Cassavetes,
+    Nagisa Oshima, Jacques Rivette ou encore Alain Resnais. Il a e´galement
+    co-fonde´ le Festival du Film de New York, dont il a dirige´ la
+    programmation jusqu'en 1968
+  accessed:
+  - year: 2017
+    month: 6
+    day: 29
+  author:
+  - family: Vogel
+    given: Amos
+  call-number: 791.430 1
+  event-place: Paris
+  ISBN: 979-10-239-0085-9
+  issued:
+  - year: 2016
+  language: fre
+  number-of-pages: '349'
+  original-date:
+  - year: 1974
+  publisher: Capricci
+  publisher-place: Paris
+  source: BnF Catalogue général (http://catalogue.bnf.fr)
+  title: Le Cinéma, art subversif
+  translator:
+  - family: Frégnac
+    given: Claude
+  type: book
+- id: Adams2001
+  author:
+  - family: Adams
+    given: Nancy K
+  - family: DeSilva
+    given: Shanaka L
+  - family: Self
+    given: Steven
+  - family: Salas
+    given: Guido
+  - family: Schubring
+    given: Steven
+  - family: Permenter
+    given: Jason L
+  - family: Arbesman
+    given: Kendra
+  container-title: Bulletin of Volcanology
+  issued:
+  - year: 2014
+    month: 12
+    day: 31
+  - year: 2015
+    month: 1
+    day: 1
+  page: 493–518
+  title: >-
+    The physical volcanology of the 1600 eruption of **Huaynaputina**, southern
+    Peru
+  type: article-journal
+  volume: '62'
+
+- id: Berndt1994
+  accessed:
+  - year: 2014
+    month: 10
+    day: 2
+  author:
+  - family: Berndt
+    given: Rainer
+  container-title: Sacris Erudiri
+  DOI: 10.1484/J.SE.2.303788
+  issued:
+  - year: 1994
+  language: German
+  page: 5–32
+  source: MetaPress
+  title: >-
+    Skizze zur Auslegungsgeschichte der Bücher *Prouerbia* und *Ecclesiastes* in
+    der abendländischen Kirche
+  type: article-journal
+  URL: http://dx.doi.org/10.1484/J.SE.2.303788
+  volume: '34'
+
+- id: Dunning2016
+  author:
+  - family: Dunning
+    given: Andrew N.J.
+  collection-number: '33'
+  collection-title: Toronto Medieval Latin Texts
+  event-place: Toronto
+  issued:
+  - year: 2016
+  publisher: Pontifical Institute of Mediaeval Studies
+  publisher-place: Toronto
+  title: >-
+    Samuel Presbiter: Notes from the school of William de Montibus. <span
+    class="nocase">Collecta ex diuersis auditis in scola magistri Willelmi de
+    Monte</span>
+  title-short: Notes from the school of William de Montibus
+  type: book
+
+- id: Wordsworth1883
+  accessed:
+  - year: 2014
+    month: 4
+    day: 29
+  collection-number: '1'
+  collection-title: Old-Latin Biblical Texts
+  editor:
+  - family: Wordsworth
+    given: John
+  event-place: Oxford
+  issued:
+  - year: 1883
+  language: English
+  number-of-pages: '139'
+  publisher: Clarendon Press
+  publisher-place: Oxford
+  source: Internet Archive
+  title: >-
+    The Gospel according to St. Matthew, from the St. Germain ms. (g~1~), now
+    numbered Lat. 11553 in the National Library at Paris
+  title-short: The Gospel according to St. Matthew
+  type: book
+  URL: https://archive.org/details/gospelaccording00goog

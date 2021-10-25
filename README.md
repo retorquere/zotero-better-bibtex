@@ -10,7 +10,7 @@ Better BibTeX (BBT) is an extension for [Zotero](https://www.zotero.org) and [Ju
 ### Facilities for generating citation keys
 
 * Automatically generate [citation keys](https://retorque.re/zotero-better-bibtex/citing/) without key clashes! Generate citation keys that take into account existing keys in your library even when they are not part of the items you export. Prevent random breakage!
-* Generate citation keys based on [JabRef patterns](https://docs.jabref.org/setup/bibtexkeypatterns).
+* Generate citation keys based on [JabRef patterns](https://docs.jabref.org/setup/citationkeypatterns).
 * Set your own, stable citation keys, drag and drop LaTeX citations, add other custom BibLaTeX fields.
 
 
@@ -78,3 +78,8 @@ the line, head on over to [Patreon](https://www.patreon.com/retorquere),
 but mind that Patreon takes a fairly large cut of what you give.
 
 Many, many thanks, also to the existing contributors -- thanks to you I've hit my first target and have been able to replace my trusty macbook air with a newer macbook pro which has much more breathing room.
+
+
+![My github stats](https://github-readme-stats.vercel.app/api?username=retorquere&show_icons=true&hide_border=true&theme=dark)
+
+![Metrics](https://metrics.lecoq.io/retorquere?template=classic&config.timezone=Europe%2FOslo)

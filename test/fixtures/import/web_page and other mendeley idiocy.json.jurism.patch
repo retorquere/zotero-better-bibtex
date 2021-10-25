@@ -1,0 +1,983 @@
+[
+  {
+    "op": "add",
+    "path": "/items/10/publisher",
+    "value": "Educational Publishing Foundation"
+  },
+  {
+    "op": "remove",
+    "path": "/items/10/extra/1",
+    ":value": "Publisher: Educational Publishing Foundation"
+  },
+  {
+    "op": "add",
+    "path": "/items/12/publisher",
+    "value": "Johns Hopkins University Press"
+  },
+  {
+    "op": "remove",
+    "path": "/items/12/extra/1",
+    ":value": "Publisher: Johns Hopkins University Press"
+  },
+  {
+    "op": "add",
+    "path": "/items/15/publisher",
+    "value": "National Council of Teachers of English"
+  },
+  {
+    "op": "remove",
+    "path": "/items/15/extra/1",
+    ":value": "Publisher: National Council of Teachers of English"
+  },
+  {
+    "op": "add",
+    "path": "/items/16/publisher",
+    "value": "Children's Literature Assembly. 940 Vandalia Road, Morgantown, WV 26501. Tel: 304-291-2393; Fax: 304-291-2393; e-mail: jcl@wvnet.edu; Web site: http://www.childrensliteratureassembly.org"
+  },
+  {
+    "op": "remove",
+    "path": "/items/16/extra/1",
+    ":value": "Publisher: Children's Literature Assembly. 940 Vandalia Road, Morgantown, WV 26501. Tel: 304-291-2393; Fax: 304-291-2393; e-mail: jcl@wvnet.edu; Web site: http://www.childrensliteratureassembly.org"
+  },
+  {
+    "op": "add",
+    "path": "/items/32/publisher",
+    "value": "Springer"
+  },
+  {
+    "op": "remove",
+    "path": "/items/32/extra/1",
+    ":value": "Publisher: Springer"
+  },
+  {
+    "op": "add",
+    "path": "/items/34/publisher",
+    "value": "John Wiley & Sons, Inc"
+  },
+  {
+    "op": "remove",
+    "path": "/items/34/extra/2",
+    ":value": "Publisher: John Wiley & Sons, Inc"
+  },
+  {
+    "op": "add",
+    "path": "/items/38/publisher",
+    "value": "HOBOKEN: Wiley"
+  },
+  {
+    "op": "remove",
+    "path": "/items/38/extra/1",
+    ":value": "Publisher: HOBOKEN: Wiley"
+  },
+  {
+    "op": "add",
+    "path": "/items/39/publisher",
+    "value": "HOBOKEN: Wiley"
+  },
+  {
+    "op": "remove",
+    "path": "/items/39/extra/1",
+    ":value": "Publisher: HOBOKEN: Wiley"
+  },
+  {
+    "op": "add",
+    "path": "/items/40/publisher",
+    "value": "HOBOKEN: WILEY"
+  },
+  {
+    "op": "remove",
+    "path": "/items/40/extra/1",
+    ":value": "Publisher: HOBOKEN: WILEY"
+  },
+  {
+    "op": "add",
+    "path": "/items/44/publisher",
+    "value": "Baltimore, etc: JSTOR"
+  },
+  {
+    "op": "remove",
+    "path": "/items/44/extra/1",
+    ":value": "Publisher: Baltimore, etc: JSTOR"
+  },
+  {
+    "op": "add",
+    "path": "/items/47/publisher",
+    "value": "American Library Association"
+  },
+  {
+    "op": "remove",
+    "path": "/items/47/extra/1",
+    ":value": "Publisher: American Library Association"
+  },
+  {
+    "op": "add",
+    "path": "/items/66/publisher",
+    "value": "Taylor & Francis Ltd."
+  },
+  {
+    "op": "remove",
+    "path": "/items/66/extra/1",
+    ":value": "Publisher: Taylor & Francis Ltd."
+  },
+  {
+    "op": "add",
+    "path": "/items/70/publisher",
+    "value": "Routledge"
+  },
+  {
+    "op": "remove",
+    "path": "/items/70/extra/1",
+    ":value": "Publisher: Routledge"
+  },
+  {
+    "op": "add",
+    "path": "/items/72/publisher",
+    "value": "HOBOKEN: Wiley"
+  },
+  {
+    "op": "remove",
+    "path": "/items/72/extra/1",
+    ":value": "Publisher: HOBOKEN: Wiley"
+  },
+  {
+    "op": "remove",
+    "path": "/items/74/extra",
+    ":value": [
+      "Publisher: SAGE Publications Inc"
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/items/74/publisher",
+    "value": "SAGE Publications Inc"
+  },
+  {
+    "op": "add",
+    "path": "/items/76/publisher",
+    "value": "Urbana, Ill., etc: National Council of Teachers of English"
+  },
+  {
+    "op": "remove",
+    "path": "/items/76/extra/1",
+    ":value": "Publisher: Urbana, Ill., etc: National Council of Teachers of English"
+  },
+  {
+    "op": "add",
+    "path": "/items/79/publisher",
+    "value": "University of Arkansas"
+  },
+  {
+    "op": "remove",
+    "path": "/items/79/extra/1",
+    ":value": "Publisher: University of Arkansas"
+  },
+  {
+    "op": "add",
+    "path": "/items/112/publisher",
+    "value": "ProQuest Dissertations Publishing"
+  },
+  {
+    "op": "remove",
+    "path": "/items/112/extra/1",
+    ":value": "Publisher: ProQuest Dissertations Publishing"
+  },
+  {
+    "op": "add",
+    "path": "/items/113/publisher",
+    "value": "Routledge"
+  },
+  {
+    "op": "remove",
+    "path": "/items/113/extra/1",
+    ":value": "Publisher: Routledge"
+  },
+  {
+    "op": "add",
+    "path": "/items/119/publisher",
+    "value": "Johns Hopkins University Press"
+  },
+  {
+    "op": "remove",
+    "path": "/items/119/extra/1",
+    ":value": "Publisher: Johns Hopkins University Press"
+  },
+  {
+    "op": "add",
+    "path": "/items/122/publisher",
+    "value": "National Council of Teachers of English"
+  },
+  {
+    "op": "remove",
+    "path": "/items/122/extra/1",
+    ":value": "Publisher: National Council of Teachers of English"
+  },
+  {
+    "op": "add",
+    "path": "/items/124/publisher",
+    "value": "National Council of Teachers of English"
+  },
+  {
+    "op": "remove",
+    "path": "/items/124/extra/1",
+    ":value": "Publisher: National Council of Teachers of English"
+  },
+  {
+    "op": "add",
+    "path": "/items/125/publisher",
+    "value": "American Library Association"
+  },
+  {
+    "op": "remove",
+    "path": "/items/125/extra/1",
+    ":value": "Publisher: American Library Association"
+  },
+  {
+    "op": "add",
+    "path": "/items/135/publisher",
+    "value": "ProQuest Dissertations Publishing"
+  },
+  {
+    "op": "remove",
+    "path": "/items/135/extra/1",
+    ":value": "Publisher: ProQuest Dissertations Publishing"
+  },
+  {
+    "op": "add",
+    "path": "/items/137/publisher",
+    "value": "National Council of Teachers of English"
+  },
+  {
+    "op": "remove",
+    "path": "/items/137/extra/2",
+    ":value": "Publisher: National Council of Teachers of English"
+  },
+  {
+    "op": "add",
+    "path": "/items/140/publisher",
+    "value": "National Council of Teachers of English"
+  },
+  {
+    "op": "remove",
+    "path": "/items/140/extra/2",
+    ":value": "Publisher: National Council of Teachers of English"
+  },
+  {
+    "op": "add",
+    "path": "/items/173/publisher",
+    "value": "Springer US"
+  },
+  {
+    "op": "remove",
+    "path": "/items/173/extra/1",
+    ":value": "Publisher: Springer US"
+  },
+  {
+    "op": "add",
+    "path": "/items/176/publisher",
+    "value": "Routledge"
+  },
+  {
+    "op": "remove",
+    "path": "/items/176/extra/2",
+    ":value": "Publisher: Routledge"
+  },
+  {
+    "op": "add",
+    "path": "/items/177/publisher",
+    "value": "Routledge"
+  },
+  {
+    "op": "remove",
+    "path": "/items/177/extra/1",
+    ":value": "Publisher: Routledge"
+  },
+  {
+    "op": "add",
+    "path": "/items/183/publisher",
+    "value": "Johns Hopkins University Press"
+  },
+  {
+    "op": "remove",
+    "path": "/items/183/extra/1",
+    ":value": "Publisher: Johns Hopkins University Press"
+  },
+  {
+    "op": "add",
+    "path": "/items/188/publisher",
+    "value": "University of Waikato, Department of English"
+  },
+  {
+    "op": "remove",
+    "path": "/items/188/extra/1",
+    ":value": "Publisher: University of Waikato, Department of English"
+  },
+  {
+    "op": "add",
+    "path": "/items/207/publisher",
+    "value": "MSI Information Services"
+  },
+  {
+    "op": "remove",
+    "path": "/items/207/extra/1",
+    ":value": "Publisher: MSI Information Services"
+  },
+  {
+    "op": "add",
+    "path": "/items/211/publisher",
+    "value": "ProQuest Dissertations Publishing"
+  },
+  {
+    "op": "remove",
+    "path": "/items/211/extra/1",
+    ":value": "Publisher: ProQuest Dissertations Publishing"
+  },
+  {
+    "op": "add",
+    "path": "/items/227/publisher",
+    "value": "Routledge"
+  },
+  {
+    "op": "remove",
+    "path": "/items/227/extra/1",
+    ":value": "Publisher: Routledge"
+  },
+  {
+    "op": "add",
+    "path": "/items/233/publisher",
+    "value": "American Educational Research Association"
+  },
+  {
+    "op": "remove",
+    "path": "/items/233/extra/1",
+    ":value": "Publisher: American Educational Research Association"
+  },
+  {
+    "op": "add",
+    "path": "/items/236/publisher",
+    "value": "National Council of Teachers of English"
+  },
+  {
+    "op": "remove",
+    "path": "/items/236/extra/2",
+    ":value": "Publisher: National Council of Teachers of English"
+  },
+  {
+    "op": "add",
+    "path": "/items/253/publisher",
+    "value": "Springer Nature B.V"
+  },
+  {
+    "op": "remove",
+    "path": "/items/253/extra/1",
+    ":value": "Publisher: Springer Nature B.V"
+  },
+  {
+    "op": "add",
+    "path": "/items/254/publisher",
+    "value": "Routledge"
+  },
+  {
+    "op": "remove",
+    "path": "/items/254/extra/1",
+    ":value": "Publisher: Routledge"
+  },
+  {
+    "op": "add",
+    "path": "/items/255/publisher",
+    "value": "Routledge"
+  },
+  {
+    "op": "remove",
+    "path": "/items/255/extra/1",
+    ":value": "Publisher: Routledge"
+  },
+  {
+    "op": "add",
+    "path": "/items/259/publisher",
+    "value": "University of Alberta Learning Services"
+  },
+  {
+    "op": "remove",
+    "path": "/items/259/extra/1",
+    ":value": "Publisher: University of Alberta Learning Services"
+  },
+  {
+    "op": "remove",
+    "path": "/items/265/extra",
+    ":value": [
+      "Publisher: Taylor & Francis Group"
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/items/265/publisher",
+    "value": "Taylor & Francis Group"
+  },
+  {
+    "op": "add",
+    "path": "/items/267/publisher",
+    "value": "American Association of School Librarians"
+  },
+  {
+    "op": "remove",
+    "path": "/items/267/extra/1",
+    ":value": "Publisher: American Association of School Librarians"
+  },
+  {
+    "op": "add",
+    "path": "/items/268/publisher",
+    "value": "University of Waikato, Department of English"
+  },
+  {
+    "op": "remove",
+    "path": "/items/268/extra/1",
+    ":value": "Publisher: University of Waikato, Department of English"
+  },
+  {
+    "op": "add",
+    "path": "/items/269/publisher",
+    "value": "Participations"
+  },
+  {
+    "op": "remove",
+    "path": "/items/269/extra/1",
+    ":value": "Publisher: Participations"
+  },
+  {
+    "op": "add",
+    "path": "/items/297/publisher",
+    "value": "Foundation for Curriculum Theory"
+  },
+  {
+    "op": "remove",
+    "path": "/items/297/extra/1",
+    ":value": "Publisher: Foundation for Curriculum Theory"
+  },
+  {
+    "op": "add",
+    "path": "/items/320/publisher",
+    "value": "Springer"
+  },
+  {
+    "op": "remove",
+    "path": "/items/320/extra/1",
+    ":value": "Publisher: Springer"
+  },
+  {
+    "op": "add",
+    "path": "/items/321/publisher",
+    "value": "Pergamon"
+  },
+  {
+    "op": "remove",
+    "path": "/items/321/extra/1",
+    ":value": "Publisher: Pergamon"
+  },
+  {
+    "op": "add",
+    "path": "/items/323/publisher",
+    "value": "Routledge"
+  },
+  {
+    "op": "remove",
+    "path": "/items/323/extra/1",
+    ":value": "Publisher: Routledge"
+  },
+  {
+    "op": "add",
+    "path": "/items/324/publisher",
+    "value": "Routledge"
+  },
+  {
+    "op": "remove",
+    "path": "/items/324/extra/1",
+    ":value": "Publisher: Routledge"
+  },
+  {
+    "op": "add",
+    "path": "/items/325/publisher",
+    "value": "Routledge"
+  },
+  {
+    "op": "remove",
+    "path": "/items/325/extra/1",
+    ":value": "Publisher: Routledge"
+  },
+  {
+    "op": "add",
+    "path": "/items/331/publisher",
+    "value": "Modern Humanities Research Association"
+  },
+  {
+    "op": "remove",
+    "path": "/items/331/extra/1",
+    ":value": "Publisher: Modern Humanities Research Association"
+  },
+  {
+    "op": "add",
+    "path": "/items/362/publisher",
+    "value": "Boston: Springer Science and Business Media LLC"
+  },
+  {
+    "op": "remove",
+    "path": "/items/362/extra/1",
+    ":value": "Publisher: Boston: Springer Science and Business Media LLC"
+  },
+  {
+    "op": "add",
+    "path": "/items/363/publisher",
+    "value": "Elsevier Ltd"
+  },
+  {
+    "op": "remove",
+    "path": "/items/363/extra/1",
+    ":value": "Publisher: Elsevier Ltd"
+  },
+  {
+    "op": "add",
+    "path": "/items/364/publisher",
+    "value": "Philadelphia: Informa UK Limited"
+  },
+  {
+    "op": "remove",
+    "path": "/items/364/extra/1",
+    ":value": "Publisher: Philadelphia: Informa UK Limited"
+  },
+  {
+    "op": "add",
+    "path": "/items/366/publisher",
+    "value": "Los Angeles, CA: SAGE Publications"
+  },
+  {
+    "op": "remove",
+    "path": "/items/366/extra/1",
+    ":value": "Publisher: Los Angeles, CA: SAGE Publications"
+  },
+  {
+    "op": "add",
+    "path": "/items/367/publisher",
+    "value": "Johns Hopkins University Press"
+  },
+  {
+    "op": "remove",
+    "path": "/items/367/extra/1",
+    ":value": "Publisher: Johns Hopkins University Press"
+  },
+  {
+    "op": "add",
+    "path": "/items/369/publisher",
+    "value": "Basel: Bookbird, Inc"
+  },
+  {
+    "op": "remove",
+    "path": "/items/369/extra/1",
+    ":value": "Publisher: Basel: Bookbird, Inc"
+  },
+  {
+    "op": "add",
+    "path": "/items/384/publisher",
+    "value": "ABINGDON: Routledge"
+  },
+  {
+    "op": "remove",
+    "path": "/items/384/extra/1",
+    ":value": "Publisher: ABINGDON: Routledge"
+  },
+  {
+    "op": "add",
+    "path": "/items/385/publisher",
+    "value": "ABINGDON: Informa UK Limited"
+  },
+  {
+    "op": "remove",
+    "path": "/items/385/extra/1",
+    ":value": "Publisher: ABINGDON: Informa UK Limited"
+  },
+  {
+    "op": "add",
+    "path": "/items/386/publisher",
+    "value": "Malden, USA: Wiley"
+  },
+  {
+    "op": "remove",
+    "path": "/items/386/extra/1",
+    ":value": "Publisher: Malden, USA: Wiley"
+  },
+  {
+    "op": "add",
+    "path": "/items/387/publisher",
+    "value": "Los Angeles, CA: SAGE Publications"
+  },
+  {
+    "op": "remove",
+    "path": "/items/387/extra/1",
+    ":value": "Publisher: Los Angeles, CA: SAGE Publications"
+  },
+  {
+    "op": "add",
+    "path": "/items/388/publisher",
+    "value": "Los Angeles, CA: SAGE Publications"
+  },
+  {
+    "op": "remove",
+    "path": "/items/388/extra/1",
+    ":value": "Publisher: Los Angeles, CA: SAGE Publications"
+  },
+  {
+    "op": "add",
+    "path": "/items/389/publisher",
+    "value": "Harvard Law Review Association"
+  },
+  {
+    "op": "remove",
+    "path": "/items/389/extra/1",
+    ":value": "Publisher: Harvard Law Review Association"
+  },
+  {
+    "op": "add",
+    "path": "/items/406/publisher",
+    "value": "Malden, US: Wiley"
+  },
+  {
+    "op": "remove",
+    "path": "/items/406/extra/1",
+    ":value": "Publisher: Malden, US: Wiley"
+  },
+  {
+    "op": "add",
+    "path": "/items/407/publisher",
+    "value": "United Kingdom: Informa UK Limited"
+  },
+  {
+    "op": "remove",
+    "path": "/items/407/extra/1",
+    ":value": "Publisher: United Kingdom: Informa UK Limited"
+  },
+  {
+    "op": "add",
+    "path": "/items/408/publisher",
+    "value": "USA: Routledge"
+  },
+  {
+    "op": "remove",
+    "path": "/items/408/extra/1",
+    ":value": "Publisher: USA: Routledge"
+  },
+  {
+    "op": "add",
+    "path": "/items/409/publisher",
+    "value": "University of Chicago Press"
+  },
+  {
+    "op": "remove",
+    "path": "/items/409/extra/1",
+    ":value": "Publisher: University of Chicago Press"
+  },
+  {
+    "op": "add",
+    "path": "/items/410/publisher",
+    "value": "Malden, USA: Blackwell Publishing"
+  },
+  {
+    "op": "remove",
+    "path": "/items/410/extra/1",
+    ":value": "Publisher: Malden, USA: Blackwell Publishing"
+  },
+  {
+    "op": "add",
+    "path": "/items/411/publisher",
+    "value": "Los Angeles, CA: SAGE Publications"
+  },
+  {
+    "op": "remove",
+    "path": "/items/411/extra/1",
+    ":value": "Publisher: Los Angeles, CA: SAGE Publications"
+  },
+  {
+    "op": "add",
+    "path": "/items/438/publisher",
+    "value": "Springer Netherlands"
+  },
+  {
+    "op": "remove",
+    "path": "/items/438/extra/1",
+    ":value": "Publisher: Springer Netherlands"
+  },
+  {
+    "op": "add",
+    "path": "/items/439/publisher",
+    "value": "ABINGDON: Routledge"
+  },
+  {
+    "op": "remove",
+    "path": "/items/439/extra/1",
+    ":value": "Publisher: ABINGDON: Routledge"
+  },
+  {
+    "op": "add",
+    "path": "/items/441/publisher",
+    "value": "SAGE Publications Inc"
+  },
+  {
+    "op": "remove",
+    "path": "/items/441/extra/1",
+    ":value": "Publisher: SAGE Publications Inc"
+  },
+  {
+    "op": "add",
+    "path": "/items/442/publisher",
+    "value": "American Educational Research Association"
+  },
+  {
+    "op": "remove",
+    "path": "/items/442/extra/1",
+    ":value": "Publisher: American Educational Research Association"
+  },
+  {
+    "op": "add",
+    "path": "/items/455/publisher",
+    "value": "Springer Science and Business Media LLC"
+  },
+  {
+    "op": "remove",
+    "path": "/items/455/extra/1",
+    ":value": "Publisher: Springer Science and Business Media LLC"
+  },
+  {
+    "op": "add",
+    "path": "/items/456/publisher",
+    "value": "Cambridge University Press"
+  },
+  {
+    "op": "remove",
+    "path": "/items/456/extra/1",
+    ":value": "Publisher: Cambridge University Press"
+  },
+  {
+    "op": "add",
+    "path": "/items/457/publisher",
+    "value": "Informa UK Limited"
+  },
+  {
+    "op": "remove",
+    "path": "/items/457/extra/1",
+    ":value": "Publisher: Informa UK Limited"
+  },
+  {
+    "op": "add",
+    "path": "/items/458/publisher",
+    "value": "Brisbane: Routledge"
+  },
+  {
+    "op": "remove",
+    "path": "/items/458/extra/1",
+    ":value": "Publisher: Brisbane: Routledge"
+  },
+  {
+    "op": "add",
+    "path": "/items/459/publisher",
+    "value": "Informa UK Limited"
+  },
+  {
+    "op": "remove",
+    "path": "/items/459/extra/1",
+    ":value": "Publisher: Informa UK Limited"
+  },
+  {
+    "op": "add",
+    "path": "/items/460/publisher",
+    "value": "Taylor & Francis"
+  },
+  {
+    "op": "remove",
+    "path": "/items/460/extra/1",
+    ":value": "Publisher: Taylor & Francis"
+  },
+  {
+    "op": "add",
+    "path": "/items/461/publisher",
+    "value": "Routledge"
+  },
+  {
+    "op": "remove",
+    "path": "/items/461/extra/1",
+    ":value": "Publisher: Routledge"
+  },
+  {
+    "op": "add",
+    "path": "/items/462/publisher",
+    "value": "Baltimore: Johns Hopkins University Press"
+  },
+  {
+    "op": "remove",
+    "path": "/items/462/extra/1",
+    ":value": "Publisher: Baltimore: Johns Hopkins University Press"
+  },
+  {
+    "op": "remove",
+    "path": "/items/463/extra",
+    ":value": [
+      "Publisher: Polish Rhetoric Society"
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/items/463/publisher",
+    "value": "Polish Rhetoric Society"
+  },
+  {
+    "op": "add",
+    "path": "/items/464/publisher",
+    "value": "Thousand Oaks, CA: American Educational Research Association (AERA)"
+  },
+  {
+    "op": "remove",
+    "path": "/items/464/extra/1",
+    ":value": "Publisher: Thousand Oaks, CA: American Educational Research Association (AERA)"
+  },
+  {
+    "op": "add",
+    "path": "/items/465/publisher",
+    "value": "San Diego, Calif: La Prensa San Diego, Arturo Casta\u00f1ares"
+  },
+  {
+    "op": "remove",
+    "path": "/items/465/extra/1",
+    ":value": "Publisher: San Diego, Calif: La Prensa San Diego, Arturo Casta\u00f1ares"
+  },
+  {
+    "op": "add",
+    "path": "/items/479/publisher",
+    "value": "Elsevier Inc"
+  },
+  {
+    "op": "remove",
+    "path": "/items/479/extra/1",
+    ":value": "Publisher: Elsevier Inc"
+  },
+  {
+    "op": "add",
+    "path": "/items/481/publisher",
+    "value": "Routledge"
+  },
+  {
+    "op": "remove",
+    "path": "/items/481/extra/1",
+    ":value": "Publisher: Routledge"
+  },
+  {
+    "op": "add",
+    "path": "/items/482/publisher",
+    "value": "Oxford University Press"
+  },
+  {
+    "op": "remove",
+    "path": "/items/482/extra/1",
+    ":value": "Publisher: Oxford University Press"
+  },
+  {
+    "op": "add",
+    "path": "/items/483/publisher",
+    "value": "Thousand Oaks, CA: SAGE Publications"
+  },
+  {
+    "op": "remove",
+    "path": "/items/483/extra/1",
+    ":value": "Publisher: Thousand Oaks, CA: SAGE Publications"
+  },
+  {
+    "op": "add",
+    "path": "/items/484/publisher",
+    "value": "Brooklyn, N.Y: Johns Hopkins University Press, etc"
+  },
+  {
+    "op": "remove",
+    "path": "/items/484/extra/2",
+    ":value": "Publisher: Brooklyn, N.Y: Johns Hopkins University Press, etc"
+  },
+  {
+    "op": "add",
+    "path": "/items/485/publisher",
+    "value": "Boston: The Horn Book, Inc"
+  },
+  {
+    "op": "remove",
+    "path": "/items/485/extra/1",
+    ":value": "Publisher: Boston: The Horn Book, Inc"
+  },
+  {
+    "op": "add",
+    "path": "/items/486/publisher",
+    "value": "Boston: The Horn Book, Inc"
+  },
+  {
+    "op": "remove",
+    "path": "/items/486/extra/1",
+    ":value": "Publisher: Boston: The Horn Book, Inc"
+  },
+  {
+    "op": "add",
+    "path": "/items/487/publisher",
+    "value": "[Oxford University Press, American Association for Public Opinion Research]"
+  },
+  {
+    "op": "remove",
+    "path": "/items/487/extra/1",
+    ":value": "Publisher: [Oxford University Press, American Association for Public Opinion Research]"
+  },
+  {
+    "op": "add",
+    "path": "/items/488/publisher",
+    "value": "New York: Teachers College, Columbia University"
+  },
+  {
+    "op": "remove",
+    "path": "/items/488/extra/1",
+    ":value": "Publisher: New York: Teachers College, Columbia University"
+  },
+  {
+    "op": "add",
+    "path": "/items/489/publisher",
+    "value": "Urbana: National Council of Teachers of English"
+  },
+  {
+    "op": "remove",
+    "path": "/items/489/extra/1",
+    ":value": "Publisher: Urbana: National Council of Teachers of English"
+  },
+  {
+    "op": "add",
+    "path": "/items/490/publisher",
+    "value": "Livonia: Pride Source Media Group"
+  },
+  {
+    "op": "remove",
+    "path": "/items/490/extra/1",
+    ":value": "Publisher: Livonia: Pride Source Media Group"
+  },
+  {
+    "op": "add",
+    "path": "/items/491/publisher",
+    "value": "Las Vegas: Children's Literature Assembly"
+  },
+  {
+    "op": "remove",
+    "path": "/items/491/extra/1",
+    ":value": "Publisher: Las Vegas: Children's Literature Assembly"
+  },
+  {
+    "op": "add",
+    "path": "/items/492/publisher",
+    "value": "Foundation for Curriculum Theory"
+  },
+  {
+    "op": "remove",
+    "path": "/items/492/extra/2",
+    ":value": "Publisher: Foundation for Curriculum Theory"
+  },
+  {
+    "op": "add",
+    "path": "/items/498/publicationTitle",
+    "value": "Journal of Language and Literacy Education, Language Arts, and Language Arts Journal of Michigan"
+  }
+]

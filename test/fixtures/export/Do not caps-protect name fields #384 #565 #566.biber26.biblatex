@@ -120,7 +120,7 @@
 }
 
 @book{medici,
-  author = {family=Medici, given=Lorenzo, prefix=de’\mbox, useprefix=false},
+  author = {family=Medici, given=Lorenzo, prefix=de’\hspace{0pt}, useprefix=false},
   annotation = {[Medici][Lorenzo de’U+200B]}
 }
 

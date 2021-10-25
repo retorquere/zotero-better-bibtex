@@ -2,6 +2,7 @@ name: automated tests
 
 on:
   push: null
+  pull_request: null
   schedule:
   - cron: 0 0 * * *
 
@@ -13,35 +14,30 @@ _anchors:
       python-version: 3.8
   install_node: &install_node
     name: install node
-    uses: actions/setup-node@v1
+    uses: actions/setup-node@v2
     with:
-      node-version: 14.x
+      node-version: 16.x
   cache: &cache
     name: Cache python/node dependencies
     id: cache
     uses: actions/cache@v2
     env:
-      cache-name: v1
+      cache-name: v3
     with:
       path: |
         ~/.npm
-        ~/.pnpm-store
-        ~/.cache/pip
-      key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
-      restore-keys: |
-        ${{ runner.os }}-build-${{ env.cache-name }}-
+        ~/.nocache/pip
+        ${{ env.pythonLocation }}
+      key: ${{ runner.os }}-build-${{ env.pythonLocation }}-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
   install_python_packages: &install_python_packages
     name: install python packages
     run: |
       pip install packaging
       python -m pip install --upgrade pip
-      if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      pip install -r requirements.txt
   install_node_packages: &install_node_packages
     name: install node packages
-    uses: pnpm/action-setup@v1.2.1
-    with:
-      version: latest
-      run_install: true
+    run: npm install
 
 jobs:
   build:
@@ -52,6 +48,14 @@ jobs:
         persist-credentials: false
         submodules: true  # Fetch Hugo themes (true OR recursive)
         fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+    - run: echo "::set-output name=version::"`jq -r .version package.json`
+      id: version
+    - name: cancel spurious build on tagged version
+      run: echo cancelling spurious build of ${{ github.event.head_commit.message }}
+      if: github.event.head_commit.message == steps.version.outputs.version && !startsWith(github.ref, 'refs/tags/')
+    - name: cancel spurious build on tagged version
+      uses: andymckay/cancel-action@master
+      if: github.event.head_commit.message == steps.version.outputs.version && !startsWith(github.ref, 'refs/tags/')
 
     - *install_python
     - *install_node
@@ -83,6 +87,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         client: [zotero, jurism]
         bin: ['1', '2']
@@ -97,19 +102,29 @@ jobs:
     - *cache
     - *install_python_packages
 
-    - name: install ${{ matrix.client }} + beta
+    - name: install ${{ matrix.client }}
       run: |
         curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
         sudo apt-get update
-        sudo apt-get install ${{ matrix.client }} ${{ matrix.client }}-beta
+        sudo apt-get install ${{ matrix.client }}
+
+    - name: install ${{ matrix.client }} beta
+      if: matrix.client != 'jurism'
+      run: sudo apt-get install ${{ matrix.client }}-beta
+
+    # fast test
+    - if: contains(github.event.commits[0].message, '[fast-test]')
+      run: echo "##[set-output name=this;]--test-this"
+      id: test
 
     # needs logs/logs to have them show up as logs in the artifact... no idea why
     - name: Run headless test
       uses: GabrielBB/xvfb-action@v1
+      # continue-on-error: ${{ matrix.client == 'jurism' }}
       env:
         PYTHONUNBUFFERED: true
       with:
-        run: ./test/behave --client ${{ matrix.client }} --logs logs/logs --format travis --bin ${{ matrix.bin }}
+        run: ./test/behave --client ${{ matrix.client }} --logs logs/logs --format travis --bin ${{ matrix.bin }} ${{ steps.test.outputs.this }}
 
     - uses: actions/upload-artifact@v2
       if: ${{ failure() }}
@@ -123,6 +138,12 @@ jobs:
         name: build-artifacts
         path: |
           logs/
+
+#    - name: Setup tmate session
+#      if: ${{ failure() }}
+#      uses: mxschmitt/action-tmate@v3
+#      with:
+#        limit-access-to-actor: true
 
   release:
     if: github.event_name != 'schedule'

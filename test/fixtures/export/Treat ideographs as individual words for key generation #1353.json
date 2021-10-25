@@ -8,6 +8,7 @@
     },
     "preferences": {
       "citekeyFormat": "[Auth]_[year]_[Title:split-ideographs:select=1,3]",
+      "kuroshiro": true,
       "importBibTeXStrings": false,
       "importCaseProtection": "off",
       "itemObserverDelay": 100,

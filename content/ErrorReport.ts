@@ -1,87 +1,74 @@
-declare const window: any
-declare const document: any
-declare const Components: any
-declare const Zotero: any
 Components.utils.import('resource://gre/modules/Services.jsm')
-declare const Services: any
 
-import { Preferences as Prefs } from './prefs'
+import { Preference } from '../gen/preferences'
 import { Translators } from './translators'
 import { log } from './logger'
-import fastChunkString = require('fast-chunk-string')
+import Zip from 'jszip'
 
 import { DB } from './db/main'
 import { DB as Cache } from './db/cache'
+import { pick } from './file-picker'
+import * as l10n from './l10n'
 
 import * as s3 from './s3.json'
-import * as preferences_defaults from '../gen/preferences/defaults.json'
-const preferences = Object.keys(preferences_defaults).sort()
 
 import * as PACKAGE from '../package.json'
 
-
 const kB = 1024
-const MB = kB * kB
 
-const httpRequestOptions = {
-  followRedirects: true,
-  noCache: true,
-  foreground: true,
-}
-
-export = new class ErrorReport {
-  private chunkSize = 10 * MB // eslint-disable-line no-magic-numbers, yoda
+export class ErrorReport {
   private previewSize = 3 * kB // eslint-disable-line no-magic-numbers, yoda
 
   private key: string
   private timestamp: string
   private bucket: string
   private params: any
+  private globals: Record<string, any>
+  private zipped: Uint8Array
+  private cacheState: string
 
   private errorlog: {
     info: string
     errors: string
-    debug: string | string[]
+    debug: string
     references?: string
-    db?: string
   }
 
-  constructor() {
-    window.addEventListener('load', () => this.init(), false)
-  }
-
-  public async send() {
-    const wizard = document.getElementById('better-bibtex-error-report')
+  public async send(): Promise<void> {
+    const wizard = this.globals.document.getElementById('better-bibtex-error-report')
     wizard.getButton('next').disabled = true
     wizard.getButton('cancel').disabled = true
     wizard.canRewind = false
 
     try {
-      const logs = [
-        this.submit('debug', 'text/plain', this.errorlog.debug, `${this.errorlog.info}\n\n${this.errorlog.errors}\n\n`),
-      ]
+      await Zotero.HTTP.request('PUT', `${this.bucket}/${this.key}-${this.timestamp}.zip`, {
+        noCache: true,
+        // followRedirects: true,
+        // noCache: true,
+        // foreground: true,
+        headers: {
+          'x-amz-storage-class': 'STANDARD',
+          'x-amz-acl': 'bucket-owner-full-control',
+          'Content-Type': 'application/zip',
+        },
+        body: await this.zip(),
+      })
 
-      if (document.getElementById('better-bibtex-error-report-include-db').checked) {
-        logs.push(this.submit('DB', 'application/json', DB.serialize({ serializationMethod: 'pretty' })))
-        logs.push(this.submit('Cache', 'application/json', Cache.serialize({ serializationMethod: 'pretty' })))
-      }
-
-      if (this.errorlog.references) logs.push(this.submit('references', 'application/json', this.errorlog.references))
-      await Zotero.Promise.all(logs)
       wizard.advance()
 
-      document.getElementById('better-bibtex-report-id').value = this.key
-      document.getElementById('better-bibtex-report-result').hidden = false
+      this.globals.document.getElementById('better-bibtex-report-id').value = this.key
+      this.globals.document.getElementById('better-bibtex-report-result').hidden = false
     }
     catch (err) {
+      log.error('failed to submit', this.key, err)
       const ps = Components.classes['@mozilla.org/embedcomp/prompt-service;1'].getService(Components.interfaces.nsIPromptService)
       ps.alert(null, Zotero.getString('general.error'), `${err} (${this.key}, references: ${!!this.errorlog.references})`)
       if (wizard.rewind) wizard.rewind()
     }
   }
 
-  public show() {
-    const wizard = document.getElementById('better-bibtex-error-report')
+  public show(): void {
+    const wizard = this.globals.document.getElementById('better-bibtex-error-report')
 
     if (wizard.onLastPage) wizard.canRewind = false
     else if (wizard.pageIndex === 0) wizard.canRewind = false
@@ -89,7 +76,7 @@ export = new class ErrorReport {
     else wizard.canRewind = true
   }
 
-  public restartWithDebugEnabled() {
+  public restartWithDebugEnabled(): void {
     const ps = Services.prompt
     const buttonFlags = ps.BUTTON_POS_0 * ps.BUTTON_TITLE_IS_STRING
         + ps.BUTTON_POS_1 * ps.BUTTON_TITLE_CANCEL
@@ -112,39 +99,65 @@ export = new class ErrorReport {
     try {
       const latest = PACKAGE.xpi.releaseURL.replace('https://github.com/', 'https://api.github.com/repos/').replace(/\/releases\/.*/, '/releases/latest')
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return JSON.parse(await (await fetch(latest, { method: 'GET', cache: 'no-cache', redirect: 'follow' })).text()).tag_name.replace('v', '')
+      return JSON.parse((await Zotero.HTTP.request('GET', latest, { noCache: true })).response).tag_name.replace('v', '')
     }
     catch (err) {
+      log.debug('errorreport.latest:', err)
       return null
     }
   }
 
+  public async zip(): Promise<Uint8Array> {
+    if (!this.zipped) {
+      const zip = new Zip
+
+      zip.file(`${this.key}/debug.txt`, [ this.errorlog.info, this.cacheState, this.errorlog.errors, this.errorlog.debug ].filter(chunk => chunk).join('\n\n'))
+
+      if (this.errorlog.references) zip.file(`${this.key}/references.json`, this.errorlog.references)
+
+      if (this.globals.document.getElementById('better-bibtex-error-report-include-db').checked) {
+        zip.file(`${this.key}/database.json`, DB.serialize({ serializationMethod: 'pretty' }))
+        zip.file(`${this.key}/cache.json`, Cache.serialize({ serializationMethod: 'pretty' }))
+      }
+
+      this.zipped = await zip.generateAsync({
+        type: 'uint8array',
+        compression: 'DEFLATE',
+        compressionOptions: { level: 9 },
+      })
+    }
+    return this.zipped
+  }
+
+  public async save(): Promise<void> {
+    const filename = await pick('Logs', 'save', [['ZIP Archive (*.zip)', '*.zip']], `${this.key}.zip`)
+    if (filename) await OS.File.writeAtomic(filename, await this.zip())
+  }
+
   private async ping(region: string) {
-    await fetch(`http://s3.${region}.amazonaws.com${s3.region[region].tld || ''}/ping`, {
-      method: 'GET',
-      cache: 'no-cache',
-      redirect: 'follow',
-    })
+    await Zotero.HTTP.request('GET', `http://s3.${region}.amazonaws.com${s3.region[region].tld || ''}/ping`, { noCache: true })
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return { region, ...s3.region[region] }
   }
 
-  private async init() {
-    const wizard = document.getElementById('better-bibtex-error-report')
+  public async load(): Promise<void> {
+    this.key = this.timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
+    this.zipped = null
+
+    const wizard = this.globals.document.getElementById('better-bibtex-error-report')
 
     if (Zotero.Debug.enabled) wizard.pageIndex = 1
 
     const continueButton = wizard.getButton('next')
     continueButton.disabled = true
 
-    this.params = window.arguments[0].wrappedJSObject
-
-    this.timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
+    this.params = this.globals.window.arguments[0].wrappedJSObject
 
     this.errorlog = {
       info: await this.info(),
       errors: Zotero.getErrors(true).join('\n'),
-      debug: Zotero.Debug.getConsoleViewerOutput(),
+      // # 1896
+      debug: Zotero.Debug.getConsoleViewerOutput().slice(-500000).join('\n'), // eslint-disable-line no-magic-numbers
     }
 
     if (Zotero.BetterBibTeX.ready && this.params.scope) {
@@ -152,33 +165,35 @@ export = new class ErrorReport {
       this.errorlog.references = await Translators.exportItems(Translators.byLabel.BetterBibTeXJSON.translatorID, {exportNotes: true, dropAttachments: true, Normalize: true}, this.params.scope)
     }
 
-    document.getElementById('better-bibtex-error-context').value = this.errorlog.info
-    document.getElementById('better-bibtex-error-errors').value = this.errorlog.errors
-    document.getElementById('better-bibtex-error-debug').value = this.preview(this.errorlog.debug)
-    if (this.errorlog.references) document.getElementById('better-bibtex-error-references').value = this.preview(this.errorlog.references)
-    document.getElementById('better-bibtex-error-tab-references').hidden = !this.errorlog.references
+    this.globals.document.getElementById('better-bibtex-error-context').value = this.errorlog.info
+    this.globals.document.getElementById('better-bibtex-error-errors').value = this.errorlog.errors
+    this.globals.document.getElementById('better-bibtex-error-debug').value = this.preview(this.errorlog.debug)
+    if (this.errorlog.references) this.globals.document.getElementById('better-bibtex-error-references').value = this.preview(this.errorlog.references)
+    this.globals.document.getElementById('better-bibtex-error-tab-references').hidden = !this.errorlog.references
 
     const current = require('../gen/version.js')
-    document.getElementById('better-bibtex-report-current').value = Zotero.BetterBibTeX.getString('ErrorReport.better-bibtex.current', { version: current })
+    this.globals.document.getElementById('better-bibtex-report-current').value = l10n.localize('ErrorReport.better-bibtex.current', { version: current })
 
     try {
       const latest = await this.latest()
 
-      const show_latest = document.getElementById('better-bibtex-report-latest')
+      const show_latest = this.globals.document.getElementById('better-bibtex-report-latest')
       if (current === latest) {
         show_latest.hidden = true
       }
       else {
-        show_latest.value = Zotero.BetterBibTeX.getString('ErrorReport.better-bibtex.latest', { version: latest || '<could not be established>' })
+        show_latest.value = l10n.localize('ErrorReport.better-bibtex.latest', { version: latest || '<could not be established>' })
         show_latest.hidden = false
       }
 
+      this.globals.document.getElementById('better-bibtex-report-cache').value = this.cacheState = l10n.localize('ErrorReport.better-bibtex.cache', Cache.state())
+
       const region = await Zotero.Promise.any(Object.keys(s3.region).map(this.ping.bind(this)))
       this.bucket = `http://${s3.bucket}-${region.short}.s3-${region.region}.amazonaws.com${region.tld || ''}`
-      this.key = `${Zotero.Utilities.generateObjectKey()}-${region.short}`
+      this.key = `${Zotero.Utilities.generateObjectKey()}${this.params.scope ? '-refs' : ''}-${region.short}`
+
       continueButton.disabled = false
       continueButton.focus()
-
     }
     catch (err) {
       alert(`No AWS region can be reached: ${err.message}`)
@@ -186,23 +201,8 @@ export = new class ErrorReport {
     }
   }
 
-  private preview(lines: string | string[]): string {
-    if (Array.isArray(lines)) {
-      let preview = ''
-      for (const line of lines) {
-        if (line.startsWith('(4)(+')) continue // DB statements
-
-        preview += `${line}\n`
-        if (preview.length > this.previewSize) return `${preview} ...`
-      }
-
-      return preview
-    }
-    else if (lines.length > this.previewSize) {
-      return `${lines.substr(0, this.previewSize)} ...`
-    }
-
-    return lines
+  private preview(text: string): string {
+    return text.length > this.previewSize ? `${text.substr(0, this.previewSize)} ...` : text
   }
 
   // general state of Zotero
@@ -222,12 +222,14 @@ export = new class ErrorReport {
     }
 
     info += 'Settings:\n'
-    for (const key of preferences) {
-      info += `  ${key} = ${JSON.stringify(Prefs.get(key))}\n`
+    for (const [key, value] of Object.entries(Preference.all)) {
+      info += `  ${key} = ${JSON.stringify(value)}\n`
     }
     for (const key of ['export.quickCopy.setting']) {
       info += `  Zotero: ${key} = ${JSON.stringify(Zotero.Prefs.get(key))}\n`
     }
+    info += `Zotero.Debug.enabled: ${Zotero.Debug.enabled}\n`
+    info += `Zotero.Debug.enabled at start: ${Zotero.BetterBibTeX.debugEnabledAtStart}\n`
 
     info += `LocaleDateOrder: ${Zotero.Date.getLocaleDateOrder()}\n`
 
@@ -235,122 +237,4 @@ export = new class ErrorReport {
 
     return info
   }
-
-  private async put(url, options) {
-    let error = null
-
-    for (let attempt = 0; attempt < 5; attempt++) { // eslint-disable-line no-magic-numbers
-      try {
-        // await Zotero.HTTP.request('PUT', url, options)
-
-        await fetch(url, {
-          method: 'PUT',
-          cache: 'no-cache',
-          headers: options.headers || {},
-          redirect: 'follow',
-          body: options.body,
-        })
-        return
-
-      }
-      catch (err) {
-        log.error('ErrorReport: failed to PUT to', url, attempt)
-        error = err
-
-      }
-    }
-
-    throw error
-  }
-
-  /*
-  private put(url, options) {
-    return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest()
-      xhr.open('PUT', url)
-      for (const [header, value] of (options.headers || {})) {
-        xhr.setRequestHeader(header, value)
-      }
-      xhr.onload = function() {
-        if (this.status >= 200 && this.status < 300) {
-          resolve(xhr.response)
-        }
-        else {
-          reject({ status: this.status, statusText: xhr.statusText })
-        }
-      }
-      xhr.onerror = function() {
-        reject({ status: this.status, statusText: xhr.statusText })
-      }
-      xhr.send(options.body)
-    })
-  }
-  */
-
-  private async submit(filename, contentType, data: Promise<string | string[]> | string | string[], prefix = '') {
-    data = await Promise.resolve(data)
-
-    const headers = {
-      'x-amz-storage-class': 'STANDARD',
-      'x-amz-acl': 'bucket-owner-full-control',
-      'Content-Type': contentType,
-    }
-
-    let ext = ''
-    switch (contentType) {
-      case 'text/plain':
-        ext = 'txt'
-        break
-
-      case 'application/json':
-        ext = 'json'
-        break
-    }
-
-    const debugLogDir = Prefs.get('debugLogDir')
-    if (debugLogDir) {
-      if (Array.isArray(data)) data = data.join('\n')
-      await Zotero.File.putContentsAsync(`${debugLogDir}/${filename}.${ext}`, prefix + data)
-      return
-    }
-
-    const url = `${this.bucket}/${this.key}-${this.timestamp}/${this.key}-${filename}`
-
-    let chunks = []
-    if (Array.isArray(data)) {
-      let chunk = prefix
-      for (const line of data) {
-        if (filename === 'zotero' && line.startsWith('(4)(+')) continue // DB statements
-
-        if ((chunk.length + line.length) > this.chunkSize) {
-          if (chunk.length !== 0) chunks.push(chunk)
-          chunk = `${line}\n`
-
-        }
-        else {
-          chunk += `${line}\n`
-
-        }
-      }
-      if (chunk.length) chunks.push(chunk)
-
-    }
-    else {
-      chunks = fastChunkString(`${prefix}${data}`, { size: this.chunkSize })
-
-    }
-
-    chunks = chunks.map((chunk, n) => ({ n: `.${(n + 1).toString().padStart(4, '0')}`, body: chunk })) // eslint-disable-line no-magic-numbers
-    if (chunks.length === 1) chunks[0].n = ''
-
-    await Promise.all(chunks.map(chunk => this.put(`${url}${chunk.n}.${ext}`, {
-      ...httpRequestOptions,
-      body: chunk.body,
-      headers,
-    })))
-
-  }
 }
-
-// otherwise this entry point won't be reloaded: https://github.com/webpack/webpack/issues/156
-delete require.cache[module.id]

@@ -4,10 +4,10 @@ import { Translator } from './lib/translator'
 export { Translator }
 
 import * as itemfields from '../gen/items/items'
-import { normalize } from './lib/normalize'
 const version = require('../gen/version.js')
 import { stringify } from '../content/stringify'
 import { log } from '../content/logger'
+import { normalize } from './lib/normalize'
 
 const chunkSize = 0x100000
 
@@ -90,7 +90,7 @@ export async function doImport(): Promise<void> {
     Object.assign(item, source)
 
     // marker so BBT-JSON can be imported without extra-field meddling
-    item.extra = `\x1BBBT\x1B${item.extra || ''}`
+    if (item.extra) item.extra = `\x1BBBT\x1B${item.extra}`
 
     for (const att of item.attachments || []) {
       if (att.url) delete att.path
@@ -154,14 +154,14 @@ export function doExport(): void {
   while ((item = Zotero.nextItem())) {
     if (Translator.options.dropAttachments && item.itemType === 'attachment') continue
 
-    if (!Translator.options.Normalize) {
+    if (!Translator.preferences.testing) {
       const [ , kind, lib, key ] = item.uri.match(/^https?:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^/]+)\/items\/(.+)/)
       item.select = (kind === 'users') ? `zotero://select/library/items/${key}` : `zotero://select/groups/${lib}/items/${key}`
     }
 
     delete item.collections
 
-    itemfields.simplifyForExport(item, Translator.options.dropAttachments)
+    itemfields.simplifyForExport(item, { dropAttachments: Translator.options.dropAttachments})
     item.relations = item.relations ? (item.relations['dc:relation'] || []) : []
 
     for (const att of item.attachments || []) {
@@ -173,7 +173,7 @@ export function doExport(): void {
         att.path = att.localPath
       }
 
-      if (!Translator.options.Normalize) {
+      if (!Translator.preferences.testing) {
         const [ , kind, lib, key ] = att.uri.match(/^https?:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^/]+)\/items\/(.+)/)
         att.select = (kind === 'users') ? `zotero://select/library/items/${key}` : `zotero://select/groups/${lib}/items/${key}`
       }
@@ -191,7 +191,7 @@ export function doExport(): void {
     data.items.push(item)
   }
 
-  if (Translator.options.Normalize) normalize(data)
+  if (Translator.preferences.testing) normalize(data)
 
   Zotero.write(stringify(data, null, '  '))
 }

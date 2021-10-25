@@ -7,8 +7,7 @@
       "exportNotes": true
     },
     "preferences": {
-      "citekeyFormat": "[authors1:lower:select=1,1][authForeIni:lower:prefix=\\.][authors1:lower:select=2,1:replace=etal,ea:prefix=\\.][year:prefix=\\:][postfix=.%(n)s]",
-      "workers": 0
+      "citekeyFormat": "[authors1:lower:select=1,1][authForeIni:lower:prefix=\\.][authors1:lower:select=2,1:replace=etal,ea:prefix=\\.][year:prefix=\\:][postfix=.%(n)s]"
     }
   },
   "items": [

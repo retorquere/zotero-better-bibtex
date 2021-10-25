@@ -1,15 +1,15 @@
 {
 	"translatorID": "f4a5876a-3e53-40e2-9032-d99a30d7a6fc",
+	"translatorType": 4,
 	"label": "ACLWeb",
 	"creator": "Guy Aglionby",
-	"target": "^https?://(www\\.)?aclweb\\.org/anthology/[^#]+",
+	"target": "^https?://(www\\.)?(aclanthology\\.org|aclweb\\.org/anthology)/",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2020-07-08 09:55:39"
+	"lastUpdated": "2021-06-28 19:25:00"
 }
 
 /*
@@ -101,7 +101,7 @@ function doWeb(doc, url) {
 }
 
 function scrape(doc) {
-	let bibtex = ZU.xpath(doc, '//button[contains(text(), "Copy BibTeX to Clipboard")]/@data-clipboard-text')[0].value;
+	let bibtex = ZU.xpath(doc, '//pre[@id = "citeBibtexContent"]')[0].textContent;
 	let pdfURL = ZU.xpath(doc, '//a[span[contains(text(), "PDF")]]/@href')[0].value;
 	let translator = Zotero.loadTranslator("import");
 	translator.setTranslator("9cb70025-a888-4a29-a210-93ec52da40d4");
@@ -163,7 +163,7 @@ function getVenue(doc, pubTitle) {
 		// better to use full proceedingsTitle to cite these publications
 		return '';
 	}
-	if (venueString.includes('*SEMEVAL')) {
+	if (venueString.includes('SemEval')) {
 		if (pubTitle.includes('SENSEVAL')) {
 			return 'SENSEVAL ' + year;
 		}
@@ -210,7 +210,7 @@ function getSearchResults(doc, url) {
 		}
 	}
 	else {
-		let papers = ZU.xpath(doc, '//strong/a[contains(@href, "/anthology/")]');
+		let papers = ZU.xpath(doc, '//section[@id="main"]//strong/a');
 		for (let paper of papers) {
 			items[paper.href] = paper.text;
 		}
@@ -222,22 +222,22 @@ function getSearchResults(doc, url) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "https://aclweb.org/anthology/events/acl-2018/",
+		"url": "https://www.aclanthology.org/events/acl-2018/",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "https://aclweb.org/anthology/volumes/P18-1/",
+		"url": "https://www.aclanthology.org/volumes/P18-1/",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "https://aclweb.org/anthology/people/i/iryna-gurevych/",
+		"url": "https://www.aclanthology.org/people/i/iryna-gurevych/",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "https://aclweb.org/anthology/Q18-1001/",
+		"url": "https://www.aclanthology.org/Q18-1001/",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -282,7 +282,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.aclweb.org/anthology/W04-0801/",
+		"url": "https://www.aclanthology.org/W04-0801/",
 		"items": [
 			{
 				"itemType": "conferencePaper",
@@ -341,7 +341,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.aclweb.org/anthology/W19-0101/",
+		"url": "https://www.aclanthology.org/W19-0101/",
 		"items": [
 			{
 				"itemType": "conferencePaper",
@@ -378,7 +378,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.aclweb.org/anthology/N12-2001/",
+		"url": "https://www.aclanthology.org/N12-2001/",
 		"items": [
 			{
 				"itemType": "conferencePaper",
@@ -427,7 +427,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.aclweb.org/anthology/N18-1001/",
+		"url": "https://www.aclanthology.org/N18-1001/",
 		"items": [
 			{
 				"itemType": "conferencePaper",
@@ -508,7 +508,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.aclweb.org/anthology/2020.lrec-1.2/",
+		"url": "https://www.aclanthology.org/2020.lrec-1.2/",
 		"items": [
 			{
 				"itemType": "conferencePaper",
@@ -538,7 +538,7 @@ var testCases = [
 				"libraryCatalog": "ACLWeb",
 				"pages": "11–20",
 				"place": "Marseille, France",
-				"proceedingsTitle": "Proceedings of The 12th Language Resources and Evaluation Conference",
+				"proceedingsTitle": "Proceedings of the 12th Language Resources and Evaluation Conference",
 				"publisher": "European Language Resources Association",
 				"url": "https://www.aclweb.org/anthology/2020.lrec-1.2",
 				"attachments": [
@@ -555,12 +555,12 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.aclweb.org/anthology/volumes/2020.lrec-1/",
+		"url": "https://www.aclanthology.org/volumes/2020.lrec-1/",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "https://www.aclweb.org/anthology/T87-1010.bib",
+		"url": "https://www.aclanthology.org/T87-1010.bib",
 		"items": [
 			{
 				"itemType": "conferencePaper",

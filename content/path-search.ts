@@ -1,8 +1,6 @@
-declare const Components: any
-declare const Zotero: any
-
 import { log } from './logger'
 import permutater = require('permutater')
+// import { OS } from '../typings/xpcom'
 
 function permutations(word) {
   const config = {
@@ -51,7 +49,7 @@ function expandWinVars(value: string): string {
 }
 
 // https://searchfox.org/mozilla-central/source/toolkit/modules/subprocess/subprocess_win.jsm#135 doesn't seem to work on Windows.
-export async function pathSearch(bin: string, installationDirectory: { mac?: string, win?: string } = {}): Promise<string> {
+export async function pathSearch(bin: string, installationDirectory: { mac?: string[], win?: string[] } = {}): Promise<string> {
   const env: {path: string[], pathext: string[], sep: string} = {
     path: [],
     pathext: [],
@@ -62,7 +60,7 @@ export async function pathSearch(bin: string, installationDirectory: { mac?: str
     env.sep = '\\'
 
     env.path = []
-    if (installationDirectory.win) env.path.push(installationDirectory.win)
+    if (installationDirectory.win) env.path.push(...installationDirectory.win)
     env.path = env.path.concat(getEnv('PATH').split(';').filter(p => p).map(expandWinVars))
 
     env.pathext = getEnv('PATHEXT').split(';').filter(pe => pe.length > 1 && pe.startsWith('.'))
@@ -77,7 +75,7 @@ export async function pathSearch(bin: string, installationDirectory: { mac?: str
     env.sep = '/'
 
     env.path = []
-    if (Zotero.isMac && installationDirectory.mac) env.path.push(installationDirectory.mac)
+    if (Zotero.isMac && installationDirectory.mac) env.path.push(...installationDirectory.mac)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     env.path = env.path.concat((ENV.get('PATH') || '').split(':').filter(p => p))
 
@@ -94,7 +92,7 @@ export async function pathSearch(bin: string, installationDirectory: { mac?: str
   for (const path of env.path) {
     for (const pathext of env.pathext) {
       try {
-        const cmd = OS.Path.join(path, bin + pathext)
+        const cmd: string = OS.Path.join(path, bin + pathext)
         if (!(await OS.File.exists(cmd))) continue
 
         // eslint-disable-next-line @typescript-eslint/await-thenable

@@ -11,15 +11,10 @@ import { normalize } from '../translators/lib/normalize'
 import { stringify } from '../content/stringify'
 import * as fs from 'fs'
 import { sync as glob } from 'glob'
-import cleaner = require('deep-cleaner')
-const preferences = {
-  defaults: require('../gen/preferences/defaults.json'),
-  supported: []
-}
-for (const pref of ['client', 'testing', 'platform', 'newTranslatorsAskRestart']) {
-  delete preferences.defaults[pref]
-}
-preferences.supported = Object.keys(preferences.defaults)
+import * as path from 'path'
+
+import { defaults, names } from '../gen/preferences/meta'
+const supported: string[] = names.filter(name => !['client', 'testing', 'platform', 'newTranslatorsAskRestart'].includes(name))
 
 const argv = require("clp")()
 if (argv.save && typeof argv.save !== 'boolean') {
@@ -49,9 +44,11 @@ const extensions = [
   '.csl.json',
   '.json',
 ]
+/*
 function sortkey(item) {
   return [ item.dateModified || item.dateAdded, item.itemType, `${item.itemID}` ].join('\t')
 }
+*/
 for (const lib of argv._) {
   const ext = extensions.find(ext => lib.endsWith(ext))
 
@@ -62,7 +59,7 @@ for (const lib of argv._) {
 
   switch (ext) {
     case '.json':
-      normalize(post)
+      normalize(post, false)
       delete post.version
 
       if (localeDateOrder && post.config.localeDateOrder === localeDateOrder[0]) post.config.localeDateOrder = localeDateOrder[1]
@@ -76,11 +73,11 @@ for (const lib of argv._) {
 
       if (post.config?.preferences) {
         for (const [pref, value] of Object.entries(post.config.preferences)) {
-          if (!preferences.supported.includes(pref) || value === preferences.defaults[pref]) delete post.config.preferences[pref]
+          if (!supported.includes(pref) || value === defaults[pref]) delete post.config.preferences[pref]
         }
       }
 
-      post.items.sort((a, b) => sortkey(a).localeCompare(sortkey(b)))
+      // post.items.sort((a, b) => sortkey(a).localeCompare(sortkey(b)))
       for (const item of (post.items || [])) {
         delete item.uri
         delete item.dateAdded
@@ -88,16 +85,22 @@ for (const lib of argv._) {
         delete item.relations
         delete item.select
 
-        cleaner(item.multi)
-        if (item.multi && Object.keys(item.multi).length === 0) delete item.multi
+        delete item.multi
 
         for (const creator of (item.creators || [])) {
-          cleaner(creator.multi)
-          if (creator.multi && Object.keys(creator.multi).length === 0) delete creator.multi
+          delete creator.multi
         }
 
-        for (const att of (item.attachments || [])) {
-          delete att.libraryID
+        if (item.attachments) {
+          item.attachments = item.attachments.filter(att => {
+            if (att.path && !fs.existsSync(path.join(path.dirname(lib), att.path))) {
+              return false
+            }
+            else {
+              delete att.libraryID
+              return true
+            }
+          })
         }
       }
       break

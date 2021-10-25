@@ -1,21 +1,21 @@
 {
 	"translatorID": "99f958ab-0732-483d-833f-6bd8e42f6277",
+	"translatorType": 4,
 	"label": "National Bureau of Economic Research",
-	"creator": "Michael Berkowitz, Philipp Zumstein",
-	"target": "^https?://(papers\\.|www\\.)?nber\\.org/(papers|s|new|custom)",
+	"creator": "Michael Berkowitz, Philipp Zumstein, Abe Jellinek",
+	"target": "^https?://(papers\\.|www\\.)?nber\\.org/(papers|s|new|custom|books-and-chapters)",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-02-11 13:50:53"
+	"lastUpdated": "2021-06-15 16:25:00"
 }
 
 /*
 	***** BEGIN LICENSE BLOCK *****
 
-	Copyright © 2018 Philipp Zumstein
+	Copyright © 2018-2021 Philipp Zumstein and Abe Jellinek
 	
 	This file is part of Zotero.
 
@@ -36,24 +36,33 @@
 */
 
 
-// attr()/text() v2
-function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
-
-
 function detectWeb(doc, url) {
-	if (ZU.xpathText(doc, '//a[contains(text(), "RIS")]')) {
-		return "report";
-	} else if (getSearchResults(doc, true)) {
+	if (doc.querySelector('meta[name="citation_title"]')) {
+		if (url.includes('nber.org/papers/')) {
+			return "report";
+		}
+		else if (url.includes('/books-and-chapters/')) {
+			if (url.match(/\/books-and-chapters\/[^/]+\/[^/]+/)) {
+				// if the URL has two locators, we're on a chapter
+				return "bookSection";
+			}
+			else {
+				return "book";
+			}
+		}
+	}
+	else if (getSearchResults(doc, true)) {
 		return "multiple";
 	}
+	return false;
 }
 
 
 function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
-	var rows = doc.querySelectorAll('a.resultTitle, li>a[href*="papers/w"], td>a[href*="papers/w"]');
-	for (let i=0; i<rows.length; i++) {
+	var rows = doc.querySelectorAll('.digest-card__title a');
+	for (let i = 0; i < rows.length; i++) {
 		let href = rows[i].href;
 		let title = ZU.trimInternal(rows[i].textContent);
 		if (!href || !title) continue;
@@ -69,53 +78,86 @@ function getSearchResults(doc, checkOnly) {
 function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
 		Zotero.selectItems(getSearchResults(doc, false), function (items) {
-			if (!items) {
-				return true;
-			}
-			var articles = [];
-			for (var i in items) {
-				articles.push(bibURL(i));
-			}
-			scrape(doc, articles);
+			if (items) ZU.processDocuments(Object.keys(items), scrape);
 		});
-	} else {
-		scrape(doc, bibURL(url));
+	}
+	else {
+		scrape(doc, url);
 	}
 }
 
 
-function scrape(doc, url){
-	// url is either a single url or an array of urls
-	Zotero.Utilities.HTTP.doGet(url, function(text) {
+function scrape(doc, url) {
+	if (doc.querySelector('form.download-citation')) {
+		scrapeWithBib(doc, url, getBibURL(doc));
+	}
+	else {
+		// if we're on a book page without a citation form, we'll navigate to
+		// the first chapter and grab the BibTeX from there. it'll contain a
+		// citation for the book.
+		ZU.processDocuments(attr(doc, '.table-of-contents__title a', 'href'),
+			chapterDoc => scrapeWithBib(doc, url, getBibURL(chapterDoc)));
+	}
+}
+
+
+function scrapeWithBib(doc, url, bibURL) {
+	ZU.doGet(bibURL, function (respText) {
+		// first we preprocess a bit: the BibTeX sometimes contains unescaped
+		// quotes within the quoted title, so we'll fix it
+		respText = respText.replace(/(^\s*)title = "(.+)"/gm, (_, spaces, title) => {
+			let escapedTitle = title.replace(/"(.+)"/g, "``$1''");
+			return `${spaces}title = "${escapedTitle}"`;
+		});
+		
 		var translator = Zotero.loadTranslator("import");
 		translator.setTranslator("9cb70025-a888-4a29-a210-93ec52da40d4");
-		translator.setString(text);
-		translator.setHandler("itemDone", function(obj, item) {
-			var pdfurl = item.url + ".pdf";
-			item.attachments = [];
+		translator.setString(respText);
+		translator.setHandler("itemDone", function (obj, item) {
+			// NBER gives us a BibTeX citation for the book when we try to pull
+			// the citation for one chapter, so we'll just skip it. vice versa
+			// for generating book citations by grabbing a chapter detail page.
+			// we don't want to blindly skip when itemType != detected, because
+			// detectWeb might make mistakes.
+			let detected = detectWeb(doc, url);
+			if ((item.itemType == 'book' && detected == 'bookSection')
+				|| (item.itemType == 'bookSection' && detected == 'book')) {
+				return;
+			}
+			
+			var pdfurl = attr(doc, 'meta[name="citation_pdf_url"]', 'content');
 			item.attachments.push({
-				url:pdfurl,
+				url: pdfurl,
 				title: "Full Text PDF",
-				mimeType:"application/pdf"
+				mimeType: "application/pdf"
 			});
-			item.complete();	
+			
+			item.url = attr(doc, 'link[rel="canonical"]', 'href') || item.url;
+			
+			for (let creator of item.creators) {
+				// fix initials without period ("William H Macy")
+				if (creator.firstName && creator.firstName.match(/\b[A-Z]$/)) {
+					creator.firstName += '.';
+				}
+			}
+			
+			item.complete();
 		});
 		translator.translate();
 	});
 }
 
 
-function bibURL(url){
-	url = url.replace(/[\?\#].+/, "");
-	url = url + ".bib";
-	return url;
+function getBibURL(doc) {
+	let paperNumber = attr(doc, 'meta[name="citation_technical_report_number"]', 'content');
+	return `https://back.nber.org/bibliographic/${paperNumber}.bib`;
 }
 
 /** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.nber.org/papers/w17577",
+		"url": "https://www.nber.org/papers/w17577",
 		"items": [
 			{
 				"itemType": "report",
@@ -145,10 +187,10 @@ var testCases = [
 				"libraryCatalog": "National Bureau of Economic Research",
 				"reportNumber": "17577",
 				"reportType": "Working Paper",
-				"url": "http://www.nber.org/papers/w17577",
+				"url": "https://www.nber.org/papers/w17577",
 				"attachments": [
 					{
-						"title": "NBER Full Text PDF",
+						"title": "Full Text PDF",
 						"mimeType": "application/pdf"
 					}
 				],
@@ -160,13 +202,84 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://papers.nber.org/s/search?restrict_papers=yes&whichsearch=db&client=test3_fe&proxystylesheet=test3_fe&site=default_collection&entqr=0&ud=1&output=xml_no_dtd&oe=UTF-8&ie=UTF-8&sort=date%253AD%253AL%253Ad1&q=labor",
+		"url": "https://papers.nber.org/s/search?restrict_papers=yes&whichsearch=db&client=test3_fe&proxystylesheet=test3_fe&site=default_collection&entqr=0&ud=1&output=xml_no_dtd&oe=UTF-8&ie=UTF-8&sort=date%253AD%253AL%253Ad1&q=labor",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://papers.nber.org/new.html",
+		"url": "https://papers.nber.org/new.html",
 		"items": "multiple"
+	},
+	{
+		"type": "web",
+		"url": "https://www.nber.org/books-and-chapters/economics-research-and-innovation-agriculture/introduction-economics-research-and-innovation-agriculture",
+		"items": [
+			{
+				"itemType": "bookSection",
+				"title": "Introduction to “Economics of Research and Innovation in Agriculture”",
+				"creators": [
+					{
+						"firstName": "Petra",
+						"lastName": "Moser",
+						"creatorType": "author"
+					}
+				],
+				"date": "September 2020",
+				"bookTitle": "Economics of Research and Innovation in Agriculture",
+				"itemID": "NBERc14291",
+				"libraryCatalog": "National Bureau of Economic Research",
+				"publisher": "University of Chicago Press",
+				"url": "https://www.nber.org/books-and-chapters/economics-research-and-innovation-agriculture/introduction-economics-research-and-innovation-agriculture",
+				"attachments": [
+					{
+						"url": "",
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://www.nber.org/books-and-chapters/incentives-and-limitations-employment-policies-retirement-transitions-comparisons-public-and-private",
+		"items": [
+			{
+				"itemType": "book",
+				"title": "Incentives and Limitations of Employment Policies on Retirement Transitions: Comparisons of Public and Private Sectors",
+				"creators": [
+					{
+						"firstName": "Robert L.",
+						"lastName": "Clark",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Joseph P.",
+						"lastName": "Newhouse",
+						"creatorType": "author"
+					}
+				],
+				"date": "2020",
+				"itemID": "NBERclar-12",
+				"libraryCatalog": "National Bureau of Economic Research",
+				"publisher": "Journal of Pension Economics and Finance (Cambridge University Press)",
+				"shortTitle": "Incentives and Limitations of Employment Policies on Retirement Transitions",
+				"url": "https://www.nber.org/books-and-chapters/incentives-and-limitations-employment-policies-retirement-transitions-comparisons-public-and-private",
+				"attachments": [
+					{
+						"url": "",
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
 	}
 ]
 /** END TEST CASES **/

@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv(), override=True)
+
+from networkx.readwrite import json_graph
+
 from collections import OrderedDict
 import hashlib
 import operator
@@ -25,6 +30,7 @@ import sys
 import tarfile
 import tempfile
 import zipfile
+import fnmatch
 
 root = os.path.join(os.path.dirname(__file__), '..')
 
@@ -39,7 +45,8 @@ os.makedirs(TYPINGS, exist_ok=True)
 
 def readurl(url):
   req = Request(url)
-  if ('api.github.com' in url) and (token := os.environ.get('GITHUB_TOKEN', None)): req.add_header('Authorization', f'token {token}')
+  if ('api.github.com' in url) and (token := os.environ.get('GITHUB_TOKEN', None)):
+    req.add_header('Authorization', f'token {token}')
   return urlopen(req).read().decode('utf-8')
 
 class fetch(object):
@@ -59,6 +66,7 @@ class fetch(object):
         if not rel['version'] in releases
       ]
       releases = [rel for rel in releases if rel.startswith('5.')]
+      releases = sorted(releases, key=lambda r: [int(n) for n in r.replace('m', '.').split('.')])
       self.update(
         client=client,
         releases=releases,
@@ -79,6 +87,7 @@ class fetch(object):
         if rel != '' and rel not in releases
       ]
       releases = [rel for rel in releases if rel.startswith('5.') and 'm' in rel and not 'beta' in rel]
+      releases = sorted(releases, key=lambda r: [int(n) for n in r.replace('m', '.').split('.')])
       self.update(
         client=client,
         releases=releases,
@@ -96,6 +105,7 @@ class fetch(object):
 
   def update(self, client, releases, download, jarpath, schema):
     hashes_cache = os.path.join(SCHEMA.root, 'hashes.json')
+    itemtypes = os.path.join(SCHEMA.root, f'{client}-type-ids.json')
 
     if os.path.exists(hashes_cache):
       with open(hashes_cache) as f:
@@ -106,10 +116,16 @@ class fetch(object):
       hashes[client] = OrderedDict()
 
     current = releases[-1]
-    if current in hashes[client] and os.path.exists(self.schema):
+    if current not in hashes[client]:
+      ood = f'{current} not in f{client}.json'
+    elif not os.path.exists(self.schema):
+      ood = f'{self.schema} does not exist'
+    elif not os.path.exists(itemtypes):
+      ood = f'{itemtypes} does not exist'
+    else:
       return
-    elif 'CI' in os.environ:
-      raise ValueError(f'{self.schema} out of date')
+    if 'CI' in os.environ:
+      raise ValueError(f'{self.schema} out of date: {ood}')
 
     print('  updating', os.path.basename(self.schema))
 
@@ -129,6 +145,16 @@ class fetch(object):
           tar.extract(jar, path=os.path.dirname(tarball.name))
 
           jar = zipfile.ZipFile(os.path.join(os.path.dirname(tarball.name), jar.name))
+          itt = fnmatch.filter(jar.namelist(), f'**/system-*-{client}.sql')
+          assert len(itt) <= 1, itt
+          if len(itt) == 1:
+            itt = itt[0]
+          else:
+            itt = fnmatch.filter(jar.namelist(), '**/system-*.sql')
+            assert len(itt) == 1, itt
+            itt = itt[0]
+          with jar.open(itt) as f, open(itemtypes, 'wb') as i:
+            i.write(f.read())
           try:
             with jar.open(schema) as f:
               client_schema = json.load(f)
@@ -169,6 +195,7 @@ def patch(s, *ps):
   # field/type order doesn't matter for BBT
   for it in s['itemTypes']:
     assert 'creatorTypes' in it
+    # assures primary is first
     assert len(it['creatorTypes'])== 0 or [ct['creatorType'] for ct in it['creatorTypes'] if ct.get('primary', False)] == [it['creatorTypes'][0]['creatorType']]
 
   s['itemTypes'] = {
@@ -182,7 +209,7 @@ def patch(s, *ps):
   del s['locales']
 
   for p in ps:
-    print('applying', p)
+    print('  applying', p)
     with open(os.path.join(SCHEMA.root, p)) as f:
       s = jsonpatch.apply_patch(s, json.load(f))
   return s
@@ -218,75 +245,95 @@ class ExtraFields:
       }
       if re.search(r'[-_A-Z]', label): attrs['LabelGraphics'] = { 'color': self.color.label }
 
+      assert self.dg.has_node(f'{domain}:{name}'), f'missing {domain}:{name} for label:{label} =>'
       self.dg.add_node(f'label:{label}', **attrs)
       self.dg.add_edge(f'label:{label}', f'{domain}:{name}', graphics={ 'targetArrow': 'standard' })
 
-  def add_mapping(self, f, t, reverse=True):
-    mappings = [(f, t)]
-    if reverse: mappings.append((t, f))
-    for f, t in mappings:
-      self.dg.add_edge(':'.join(f), ':'.join(t), graphics={ 'targetArrow': 'standard' })
+  def add_mapping(self, from_, to, reverse=True):
+    mappings = [(from_, to)]
+    if reverse: mappings.append((to, from_))
+    for from_, to in mappings:
+      self.dg.add_edge(':'.join(from_), ':'.join(to), graphics={ 'targetArrow': 'standard' })
 
-  def add_var(self, domain, name, tpe, client):
+  def add_var(self, domain, name, type_, client):
     assert domain in ['csl', 'zotero']
     assert type(name) == str
-    assert tpe in ['name', 'date', 'text']
+    assert type_ in ['name', 'date', 'text']
 
     node_id = f'{domain}:{name}'
 
     if node_id in self.dg.nodes:
-      assert self.dg.nodes[node_id]['type'] == tpe, (domain, name, self.dg.nodes[node_id]['type'], tpe)
+      assert self.dg.nodes[node_id]['type'] == type_, (domain, name, self.dg.nodes[node_id]['type'], type_)
     else:
-      self.dg.add_node(f'{domain}:{name}', domain=domain, name=name, type=tpe, graphics={'h': 30.0, 'w': 7 * len(name), 'fill': self.color[domain]})
+      self.dg.add_node(node_id, domain=domain, name=name, type=type_, graphics={'h': 30.0, 'w': 7 * len(name), 'fill': self.color[domain]})
     self.dg.nodes[node_id][client] = True
 
-
   def load(self, schema, client):
+    print('  loading', client)
     typeof = {}
     for field, meta in schema.meta.fields.items():
       typeof[field] = meta.type
 
     # add nodes & edges
+    baseFields = {}
     for field, baseField in {str(f.path): f.value for f in jsonpath.parse('$.itemTypes.*.fields.*').find(schema)}.items():
-      self.add_var('zotero', baseField, typeof.get(baseField, 'text'), client)
+      baseFields[field] = baseField
+      self.add_var(domain='zotero', name=baseField, type_=typeof.get(baseField, 'text'), client=client)
 
     for field in jsonpath.parse('$.itemTypes.*.creatorTypes[*]').find(schema):
-      self.add_var('zotero', field.value, 'name', client)
+      self.add_var(domain='zotero', name=field.value, type_='name', client=client)
 
     for fields in jsonpath.parse('$.csl.fields.text').find(schema):
       for csl, zotero in fields.value.items():
-        self.add_var('csl', csl, 'text', client)
+        self.add_var(domain='csl', name=csl, type_='text', client=client)
         for field in zotero:
-          self.add_var('zotero', field, 'text', client)
-          self.add_mapping(('csl', csl), ('zotero', field))
+          self.add_var(domain='zotero', name=field, type_='text', client=client)
+          self.add_mapping(from_=('csl', csl), to=('zotero', field))
 
     for fields in jsonpath.parse('$.csl.fields.date').find(schema):
       for csl, zotero in fields.value.items():
-        self.add_var('csl', csl, 'date', client)
+        self.add_var(domain='csl', name=csl, type_='date', client=client)
         if type(zotero) == str: zotero = [zotero] # juris-m has a list here, zotero strings
         for field in zotero:
-          self.add_var('zotero', field, 'date', client)
-          self.add_mapping(('csl', csl), ('zotero', field))
+          self.add_var(domain='zotero', name=field, type_='date', client=client)
+          self.add_mapping(from_=('csl', csl), to=('zotero', field))
 
     for zotero, csl in schema.csl.names.items():
-      self.add_var('csl', csl, 'name', client)
-      self.add_var('zotero', zotero, 'name', client)
-      self.add_mapping(('csl', csl), ('zotero', zotero))
+      self.add_var(domain='csl', name=csl, type_='name', client=client)
+      self.add_var(domain='zotero', name=zotero, type_='name', client=client)
+      self.add_mapping(from_=('csl', csl), to=('zotero', zotero))
 
-    for field, tpe in schema.csl.unmapped.items():
-      if tpe != 'type': self.add_var('csl', field, tpe, client)
+    for field, type_ in schema.csl.unmapped.items():
+      if type_ != 'type': self.add_var(domain='csl', name=field, type_=type_, client=client)
+
+    for locale in jsonpath.parse('$.locales.*.fields.*').find(schema):
+      name = str(locale.path)
+      label = locale.value
+      # no multiline fields
+      if name in [ 'abstractNote', 'extra' ]: continue
+      print(label, '=>', name)
 
     # add labels
     for node, data in list(self.dg.nodes(data=True)):
       if data['domain'] == 'label': continue # how is this possible?
-      self.add_label(data['domain'], data['name'], data['name'])
+      self.add_label(domain=data['domain'], name=data['name'], label=data['name'])
 
     for field, baseField in {str(f.path): f.value for f in jsonpath.parse('$.itemTypes.*.fields.*').find(schema)}.items():
       if field == baseField: continue
-      self.add_label('zotero', baseField, field)
+      self.add_label(domain='zotero', name=baseField, label=field)
 
     for alias, field in schema.csl.alias.items():
-      self.add_label('csl', field, alias)
+      self.add_label(domain='csl', name=field, label=alias)
+
+    # translations
+    # for name, label in [(str(f.path), f.value) for f in jsonpath.parse('$.locales.*.fields.*').find(schema)]:
+    #   name = baseFields.get(name, name)
+    #   if name in ['dateAdded', 'dateModified', 'itemType']: continue
+    #   self.add_label(domain='zotero', name=name, label=label)
+    #
+    # for name, label in {str(f.path): f.value for f in jsonpath.parse('$.locales.*.creatorTypes.*').find(schema)}.items():
+    #   name = baseFields.get(name, name)
+    #   self.add_label(domain='zotero', name=name, label=label)
 
   def add_change(self, label, change):
     if not label or label == '':
@@ -365,10 +412,11 @@ class ExtraFields:
       if len(var_nodes) == 0:
         self.dg.remove_node(label)
       else:
-        for var in var_nodes:
-          var = self.dg.nodes[var]
+        for var_id in var_nodes:
+          var = self.dg.nodes[var_id]
+          # print('debug:', name, var_id, var)
           if not name in mapping: mapping[name] = {}
-          assert 'type' not in mapping[name] or mapping[name]['type'] == var['type']
+          assert mapping[name].get('type') in (None, var['type']), (var_id, mapping[name].get('type'), var)
           mapping[name]['type'] = var['type']
 
           domain = var['domain']
@@ -418,6 +466,10 @@ class ExtraFields:
     for label in [node for node, data in self.dg.nodes(data=True) if data['domain'] == 'label' and 'LabelGraphics' in data]:
       self.dg.remove_node(label)
     nx.write_gml(self.dg, 'mapping.gml', stringizer)
+    #with open('extra-fields-graph.json', 'w') as f:
+    #  json.dump(json_graph.node_link_data(self.dg, {"link": "edges", "source": "from", "target": "to"}), f)
+    #  # https://github.com/vasturiano/3d-force-graph
+    # https://neo4j.com/developer-blog/visualizing-graphs-in-3d-with-webgl/
 
     #with open('mapping.json', 'w') as f:
     #  data = nx.readwrite.json_graph.node_link_data(self.dg)
@@ -437,8 +489,8 @@ with fetch('zotero') as z, fetch('jurism') as j:
   SCHEMA.zotero = Munch.fromDict(patch(json.load(z), 'schema.patch', 'zotero.patch'))
   SCHEMA.jurism = Munch.fromDict(patch(json.load(j), 'schema.patch', 'jurism.patch'))
 
-  with open('schema.json', 'w') as f:
-    json.dump(SCHEMA.jurism, f, indent='  ')
+  #with open('schema.json', 'w') as f:
+  #  json.dump(SCHEMA.jurism, f, indent='  ')
 
   # test for inconsistent basefield mapping
   for schema in ['jurism', 'zotero']:
@@ -466,7 +518,7 @@ with fetch('zotero') as z, fetch('jurism') as j:
         else:
           min_version[client] = rel
 
-    with open(os.path.join(root, 'gen', 'min-version.json'), 'w') as f:
+    with open(os.path.join(root, 'schema', 'supported.json'), 'w') as f:
       json.dump(min_version, f)
 
 print('  writing creators')
@@ -567,13 +619,13 @@ with open(os.path.join(ITEMS, 'items.ts'), 'w') as f:
   except:
     print(exceptions.text_error_template().render())
   #stringizer = lambda x: DG.nodes[x]['name'] if x in DG.nodes else x
-  nx.write_gml(DG, 'fields.gml') # , stringizer)
+  #nx.write_gml(DG, 'fields.gml') # , stringizer)
 
 print('  writing csl-types')
 with open(os.path.join(ITEMS, 'csl-types.json'), 'w') as f:
   types = set()
-  for tpe in jsonpath.parse('*.csl.types.*').find(SCHEMA):
-    types.add(str(tpe.full_path).split('.')[-1])
-  for tpe in jsonpath.parse('*.csl.unmapped.*').find(SCHEMA):
-    if tpe.value == 'type': types.add(str(tpe.full_path).split('.')[-1])
+  for type_ in jsonpath.parse('*.csl.types.*').find(SCHEMA):
+    types.add(str(type_.full_path).split('.')[-1])
+  for type_ in jsonpath.parse('*.csl.unmapped.*').find(SCHEMA):
+    if type_.value == 'type': types.add(str(type_.full_path).split('.')[-1])
   json.dump(list(types), f)

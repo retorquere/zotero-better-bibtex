@@ -19,9 +19,6 @@
   id="better-bibtex-error-report" title="&better-bibtex.ErrorReport.title;"
   width="550" height="550">
 
-  <script src="chrome://zotero/content/include.js"/>
-  <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.ErrorReport.js"/>
-
   <wizardpage onpageshow="Zotero.BetterBibTeX.ErrorReport.show()" label=" ">
     <description style="white-space: pre-wrap;" class="header">&better-bibtex.ErrorReport.enableDebug;</description>
     <button label="&better-bibtex.ErrorReport.restartWithLoggingEnabled;" oncommand="Zotero.BetterBibTeX.ErrorReport.restartWithDebugEnabled()"/>
@@ -31,6 +28,7 @@
     <description style="white-space: pre-wrap;" class="header">&better-bibtex.ErrorReport.review;</description>
     <textbox flex="1" id="better-bibtex-report-current" class="plain" readonly="true"/>
     <textbox flex="1" id="better-bibtex-report-latest" class="plain textbox-emph" readonly="true"/>
+    <textbox flex="1" id="better-bibtex-report-cache" class="plain" readonly="true"/>
     <checkbox label="&better-bibtex.ErrorReport.includeCache;" id="better-bibtex-error-report-include-db"/>
     <tabbox flex="1" class="debug-on">
       <tabs>
@@ -56,6 +54,11 @@
       </tabpanels>
     </tabbox>
 
+    <hbox>
+      <button label="&better-bibtex.ErrorReport.save;" oncommand="Zotero.BetterBibTeX.ErrorReport.save()"/>
+      <hbox flex="1"/>
+    </hbox>
+    <description id="better-bibtex-error-memory-use" style="white-space: pre-wrap;"></description>
     <!-- description id="zotero-unrelated-message">&zotero.general.note; &zotero.errorReport.unrelatedMessages;</description>
     <description id="zotero-advance-message"/ -->
   </wizardpage>
@@ -74,4 +77,13 @@
     <description>&better-bibtex.ErrorReport.postToGitHub;</description>
     <description>&better-bibtex.ErrorReport.notReviewed;</description>
   </wizardpage>
+
+  <script>
+    Zotero.BetterBibTeX.ErrorReport.globals = Function('return this')();
+    window.addEventListener('load', async function() {
+      Zotero.debug('loading ErrorReport')
+      await Zotero.BetterBibTeX.ErrorReport.load();
+      Zotero.debug('loaded ErrorReport')
+    })
+  </script>
 </wizard>

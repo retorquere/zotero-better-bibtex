@@ -1,5 +1,5 @@
 import * as mapping from '../gen/items/extra-fields.json'
-import * as CSL from '../gen/citeproc'
+import * as CSL from 'citeproc'
 
 type TeXString = { value: string, raw?: boolean }
 
@@ -12,7 +12,7 @@ export type Fields = {
 }
 
 type CSLCreator = { literal?: string, isInstitution?: 1, family?: string, given?: string }
-type ZoteroCreator = { name?: string, lastName?: string, firstName?: string }
+type ZoteroCreator = { name?: string, lastName?: string, firstName?: string, creatorType: string }
 
 export function cslCreator(value: string): CSLCreator {
   const creator = value.split(/\s*\|\|\s*/)
@@ -27,13 +27,13 @@ export function cslCreator(value: string): CSLCreator {
   }
 }
 
-export function zoteroCreator(value: string): ZoteroCreator {
+export function zoteroCreator(value: string, creatorType: string): ZoteroCreator {
   const creator = value.split(/\s*\|\|\s*/)
   if (creator.length === 2) { // eslint-disable-line no-magic-numbers
-    return { lastName: creator[0] || '', firstName: creator[1] || '' }
+    return { lastName: creator[0] || '', firstName: creator[1] || '', creatorType }
   }
   else {
-    return { name: value }
+    return { name: value, creatorType }
   }
 }
 

@@ -39,43 +39,41 @@ export function doExport(): void {
   }
 
   const items: Item[] = []
-  for (const item of Translator.items()) {
-    if (['note', 'attachment'].includes(item.itemType)) continue
+  for (const ref of Translator.references) {
+    const label = [ ref.citationKey ]
 
-    const label = [ item.citationKey ]
-
-    if (add.title && item.title) {
-      label.push(`\u201C${item.title.replace(/"/g, "'")}\u201D`)
+    if (add.title && ref.title) {
+      label.push(`\u201C${ref.title.replace(/"/g, "'")}\u201D`)
     }
 
     const author = []
-    if (add.authors && item.creators && item.creators.length) {
+    if (add.authors && ref.creators && ref.creators.length) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      const name = item.creators?.map(creator => (creator.name || creator.lastName || '').replace(/"/g, "'")).filter(creator => creator).join(', ')
+      const name = ref.creators?.map(creator => (creator.name || creator.lastName || '').replace(/"/g, "'")).filter(creator => creator).join(', ')
       if (name) author.push(name)
     }
-    if (add.year && item.date) {
-      let date = Zotero.BetterBibTeX.parseDate(item.date)
+    if (add.year && ref.date) {
+      let date = Zotero.BetterBibTeX.parseDate(ref.date)
       if (date.from) date = date.from
       if (date.year) author.push(`(${date.year})`)
     }
     if (author.length) label.push(author.join(' '))
 
     items.push({
-      id: `node-${item.uri.replace(/.*\//, '')}`,
+      id: `node-${ref.uri.replace(/.*\//, '')}`,
       label: label.join('\n'),
-      relations: (item.relations?.['dc:relation'] || []),
+      relations: (ref.relations?.['dc:relation'] || []),
       // eslint-disable-next-line prefer-spread
       cites: [].concat.apply([],
-        (item.extra || '')
+        (ref.extra || '')
           .split('\n')
-          .filter(line => line.startsWith('cites:'))
-          .map(line => line.replace(/^cites:/, '').trim())
-          .filter(keys => keys)
-          .map(keys => keys.split(/\s*,\s*/))
+          .filter((line: string) => line.startsWith('cites:'))
+          .map((line: string) => line.replace(/^cites:/, '').trim())
+          .filter((keys: string) => keys)
+          .map((keys: string) => keys.split(/\s*,\s*/))
       ),
-      citationKey: item.citationKey,
-      uri: item.uri,
+      citationKey: ref.citationKey,
+      uri: ref.uri,
     })
   }
 

@@ -25,18 +25,18 @@ def refresh():
         else:
           assert False, os.path.basename(translator) + '.' + option + '=' + str(type(default))
 
-  with open(os.path.join(root, 'gen/preferences/preferences.json')) as f:
+  with open(os.path.join(os.path.dirname(__file__), 'preferences.json')) as f:
     prefs = Munch.fromDict(json.load(f))
   schema.properties.config.properties.preferences.properties = {}
-  for pref, meta in prefs.items():
-    if pref in ['client', 'platform', 'newTranslatorsAskRestart', 'testing']:
+  for pref in prefs:
+    if pref.var in ['client', 'platform', 'newTranslatorsAskRestart', 'testing']:
       pass
-    elif meta.type == 'string' and 'options' in meta:
-      schema.properties.config.properties.preferences.properties[pref] = { 'enum': list(meta.options.keys()) }
-    elif meta.type in [ 'string', 'boolean', 'number' ]:
-      schema.properties.config.properties.preferences.properties[pref] = { 'type': meta.type }
+    elif pref.type == 'string' and 'options' in pref:
+      schema.properties.config.properties.preferences.properties[pref.var] = { 'enum': list(pref.options.keys()) }
+    elif pref.type in [ 'string', 'boolean', 'number' ]:
+      schema.properties.config.properties.preferences.properties[pref.var] = { 'type': pref.type }
     else:
-      raise ValueError(meta.type)
+      raise ValueError(pref.type)
 
   schema.properties['items'].properties = Munch.fromDict({
     k: v

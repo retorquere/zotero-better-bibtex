@@ -1,15 +1,15 @@
 {
 	"translatorID": "327cacea-9603-4554-91a8-ed0587e0d83a",
+	"translatorType": 4,
 	"label": "JISC Historical Texts",
 	"creator": "Sebastian Karcher",
-	"target": "^https?://(data.)?[^/]*historicaltexts\\.jisc\\.ac\\.uk/(view|results)\\?",
+	"target": "^https?://(data\\.)?[^/]*historicaltexts\\.jisc\\.ac\\.uk/(view|results)\\?",
 	"minVersion": "4.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-10-12 02:32:08"
+	"lastUpdated": "2021-06-07 17:30:00"
 }
 
 /*

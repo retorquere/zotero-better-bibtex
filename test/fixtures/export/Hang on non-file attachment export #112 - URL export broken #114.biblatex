@@ -7,9 +7,9 @@
   url = {http://www.google.com},
   abstract = {Since it appeared in 1971, John Rawls's "A Theory of Justice" has become a classic. The author has now revised the original edition to clear up a number of difficulties he and others have found in the original book.  Rawls aims to express an essential part of the common core of the democratic tradition--justice as fairness--and to provide an alternative to utilitarianism, which had dominated the Anglo-Saxon tradition of political thought since the nineteenth century. Rawls substitutes the ideal of the social contract as a more satisfactory account of the basic rights and liberties of citizens as free and equal persons. "Each person," writes Rawls, "possesses an inviolability founded on justice that even the welfare of society as a whole cannot override." Advancing the ideas of Rousseau, Kant, Emerson, and Lincoln, Rawls's theory is as powerful today as it was when first published.},
   isbn = {978-0-674-04258-2},
-  keywords = {Law / General},
   langid = {english},
-  pagetotal = {564}
+  pagetotal = {564},
+  keywords = {Law / General}
 }
 
 @book{Stowe2009,
@@ -19,9 +19,9 @@
   publisher = {{Broadview Press}},
   abstract = {With its gripping plot and pungent dialogue, Uncle Tom's Cabin offers readers today a passionate portrait of a nation on the verge of disunion and a surprisingly subtle examination of the relationship between race and nationalism that has always been at the heart of the American experience. This Broadview edition is based upon the first American edition of the novel and reprints its original illustrations and preface. In addition, it reprints all of the prefaces that Stowe wrote for authorized European editions of Uncle Tom's Cabin, offers a wide array of appendices that clarify the novel's participation in antebellum debates about domesticity, colonization, abolitionism, and the law, and includes sections on dramatic adaptations of the novel.},
   isbn = {978-1-77048-257-9},
-  keywords = {Fiction / Literary},
   langid = {english},
-  pagetotal = {629}
+  pagetotal = {629},
+  keywords = {Fiction / Literary}
 }
 
 

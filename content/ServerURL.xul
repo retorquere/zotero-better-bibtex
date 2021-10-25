@@ -9,25 +9,6 @@
   buttonlabelaccept="&better-bibtex.ServerURL.OK;"
   buttonaccesskeyaccept="O"
 >
-  <script>
-    function setURL(id, url) {
-      const elt = document.getElementById(id);
-      elt.value = url
-      elt.setAttribute('style', `min-width: ${url.length / 2}em; color: blue;`)
-    }
-
-    function update() {
-      const params = window.arguments[0];
-      const ext = document.getElementById('formats').value
-
-      setURL('pull-export-short', params.url.short + ext)
-      setURL('pull-export-long', params.url.long + ext)
-      document.getElementById('pull-export-long-available').hidden = !params.url.long
-
-      window.sizeToContent();
-    }
-  </script>
-
   <dialogheader title="&better-bibtex.ServerURL.title;"/>
   <groupbox flex="1">
     <vbox flex="1">
@@ -50,4 +31,23 @@
       </hbox>
     </vbox>
   </groupbox>
+
+  <script>
+    function setURL(id, url) {
+      const elt = document.getElementById(id);
+      elt.value = url
+      elt.setAttribute('style', `min-width: ${url.length / 2}em; color: blue;`)
+    }
+
+    function update() {
+      const params = window.arguments[0];
+      const ext = document.getElementById('formats').value
+
+      setURL('pull-export-short', params.url.short + ext)
+      setURL('pull-export-long', params.url.long + ext)
+      document.getElementById('pull-export-long-available').hidden = !params.url.long
+
+      window.sizeToContent();
+    }
+  </script>
 </dialog>

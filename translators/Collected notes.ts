@@ -2,72 +2,117 @@
 
 declare const Zotero: any
 
+import html2markdown from '@inkdropapp/html2markdown'
+
 import { Translator } from './lib/translator'
 export { Translator }
+import { log } from '../content/logger'
+import { fromEntries } from '../content/object'
 
-import { ZoteroTranslator } from '../gen/typings/serialized-item'
+import { Item } from '../gen/typings/serialized-item'
 
 import * as escape from '../content/escape'
 import * as Extra from '../content/extra'
 
-function cleanExtra(extra) {
-  const cleaned = Extra.get(extra, 'zotero')
+function clean(item: Item): Item {
+  switch (item.itemType) {
+    case 'note':
+    case 'annotation':
+    case 'attachment':
+      return item
+  }
+  const cleaned: Item = {...item, extra: Extra.get(item.extra, 'zotero').extra }
   cleaned.extra = cleaned.extra.split('\n').filter(line => !line.match(/^OCLC:/i)).join('\n')
   return cleaned
 }
+
+type ExpandedCollection = {
+  name: string
+  items: Item[]
+  collections: ExpandedCollection[]
+  root: boolean
+}
+
+function sorted(collections: ExpandedCollection[]) {
+  return collections.sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }))
+}
+
 class Exporter {
   private levels = 0
   private body = ''
-  private items: Record<number, ZoteroTranslator.Item> = {}
   public html = ''
+  public markdown = ''
 
   constructor() {
-    for (const item of Translator.items()) {
-      if (!this.keep(item)) continue
-      this.items[item.itemID] = Object.assign(item, cleanExtra(item.extra)) // eslint-disable-line prefer-object-spread
+    const items: Record<number, Item> = {}
+    const filed: Set<number> = new Set
+    const collections: Record<string, ExpandedCollection> = {}
+
+    for (const item of Translator.items) {
+      const cleaned = clean(item)
+      if (this.keep(cleaned)) items[item.itemID] = cleaned
     }
 
-    const filed = {}
-    const root = []
-    for (const collection of Object.values(Translator.collections)) {
-      for (const itemID of collection.items) filed[itemID] = this.items[itemID]
-      if (!Translator.collections[collection.parent]) delete collection.parent
-      if (!collection.parent && !this.prune(collection)) root.push(collection) // prune empty roots
+    log.debug(Object.values(Translator.collections).map(coll => ({
+      ...coll,
+      collections: fromEntries((coll.collections || []).map(key => [ key, !!Translator.collections[key] ])),
+      items: fromEntries((coll.items || []).map(itemID => [ itemID, !!items[itemID] ])),
+    })))
+
+    for (const [key, collection] of Object.entries(Translator.collections)) {
+      for (const itemID of collection.items) filed.add(itemID)
+      collections[key] = {
+        name: collection.name,
+        // resolve item IDs to items
+        items: (collection.items || []).map(itemID => items[itemID]).filter(item => item),
+        // resolve collection IDs to collections
+        collections: [],
+        root: !Translator.collections[collection.parent],
+      }
+    }
+    for (const [key, collection] of Object.entries(Translator.collections)) {
+      collections[key].collections = (collection.collections || []).map(coll => collections[coll]).filter(coll => coll)
     }
 
-    for (const item of (Object.values(this.items) as { itemID: number }[])) {
-      if (!filed[item.itemID] && this.keep(item)) this.item(item)
+    const unfiled = { name: 'Unfiled', items: Object.values(items).filter(item => !filed.has(item.itemID)), collections: [], root: true }
+    if (!this.prune(unfiled)) this.collection(unfiled)
+
+    for (const collection of sorted(Object.values(collections))) {
+      if (collection.root && !this.prune(collection)) this.collection(collection)
     }
 
-    for (const collection of root) {
-      this.collection(collection)
-    }
-
-    let style = `  body { ${ this.reset(1) } }\n`
+    let style = '\n  body {\n    counter-reset: h1;\n  }\n\n'
     for (let level = 1; level <= this.levels; level++) {
-      style += `  h${ level } { ${ this.reset(level + 1) } }\n`
-      const label = Array.from({length: level}, (x, i) => `counter(h${ i + 1 }counter)`).join(' "." ')
-      style += `  h${ level }:before { counter-increment: h${ level }counter; content: ${ label } ".\\0000a0\\0000a0"; }\n`
+      if (level !== this.levels) style += `  h${level} {\n    counter-reset: h${level + 1};\n  }\n`
+
+      style += `  h${level}:before {\n`
+      const label = Array.from({length: level}, (_x, i) => `counter(h${ i + 1 }, decimal)`).join(' "." ')
+      style += `    content: ${label} ".\\0000a0\\0000a0";\n`
+      style += `    counter-increment: h${level};\n`
+      style += '  }\n\n'
     }
     style += '  blockquote { border-left: 1px solid gray; }\n'
 
     this.html = `<html><head><style>${ style }</style></head><body>${ this.body }</body></html>`
+    log.debug('Translator options:', Translator.options)
+    if (Translator.options.markdown) this.markdown = html2markdown(this.html)
   }
 
   show(context, args) {
-    Zotero.debug(`collectednotes.${context}: ${JSON.stringify(Array.from(args))}`)
+    log.debug(`collectednotes.${context}: ${JSON.stringify(Array.from(args))}`)
   }
 
   collection(collection, level = 1) {
-    if (level > this.levels) this.levels = level
+    log.debug(`collection ${collection.name} @ ${level} with ${collection.collections.length} subcollections`)
+    this.levels = Math.max(this.levels, level)
 
     this.body += `<h${ level }>${ escape.html(collection.name) }</h${ level }>\n`
-    for (const itemID of collection.items) {
-      this.item(this.items[itemID])
+    for (const item of collection.items) {
+      this.item(item)
     }
 
-    for (const subcoll of collection.collections) {
-      this.collection(Translator.collections[subcoll], level + 1)
+    for (const coll of sorted(collection.collections)) {
+      this.collection(coll, level + 1)
     }
   }
 
@@ -88,9 +133,9 @@ class Exporter {
   prune(collection) {
     if (!collection) return true
 
-    collection.items = collection.items.filter(itemID => this.keep(this.items[itemID]))
-    collection.collections = collection.collections.filter(subcoll => !this.prune(Translator.collections[subcoll]))
+    collection.collections = collection.collections.filter(sub => !this.prune(sub))
 
+    log.debug(`prune: ${collection.name}: ${collection.items.length} items, ${collection.collections.length} collections: ${!collection.items.length && !collection.collections.length}`)
     return !collection.items.length && !collection.collections.length
   }
 
@@ -112,7 +157,19 @@ class Exporter {
   }
 
   creator(cr) {
-    return [cr.lastName, cr.firstName, cr.name].filter(v => v).join(', ')
+    return [cr.lastName, cr.name, cr.firstName].find(v => v) || ''
+  }
+
+  creators(cr: string[]): string {
+    switch (cr.length) {
+      case 0:
+      case 1:
+        return cr[0]
+      case 2:
+        return cr.join(' and ')
+      default:
+        return `${cr.slice(0, cr.length - 1).join(', ')}, and ${cr[cr.length - 1]}`
+    }
   }
 
   reference(item) {
@@ -127,7 +184,7 @@ class Exporter {
     else {
       notes = (item.notes || []).filter(note => note.note)
 
-      const creators = item.creators.map(creator => this.creator(creator)).filter(v => v).join(' and ')
+      const creators = this.creators(item.creators.map(creator => this.creator(creator)).filter(v => v))
 
       let date = null
       if (item.date) {
@@ -156,28 +213,28 @@ class Exporter {
     }
   }
 
-  reset(starting) {
-    if (starting > this.levels) return ''
-
-    let reset = 'counter-reset:'
-    for (let level = starting; level <= this.levels; level++) {
-      reset += ` h${ level }counter 0`
-    }
-    return `${reset};`
-    // return `counter-reset: h${ starting }counter;`
-  }
-
   keep(item) {
     if (!item) return false
-    if (item.extra) return true
-    if (item.note) return true
-    if (item.notes && item.notes.find(note => note.note)) return true
-    if (item.attachments && item.attachments.find(att => att.note)) return true
-    return false
+    switch (item.itemType) {
+      case 'note':
+      case 'annotation':
+        return item.note
+
+      case 'attachment':
+        return item.notes?.find(note => note.note)
+
+      default:
+        return item.extra || item.notes?.find(note => note.note) || item.attachments?.find(att => att.note)
+    }
   }
 }
 
 export function doExport(): void {
   Translator.init('export')
-  Zotero.write((new Exporter).html)
+  if (Translator.options.markdown) {
+    Zotero.write((new Exporter).markdown)
+  }
+  else {
+    Zotero.write((new Exporter).html)
+  }
 }

@@ -1,0 +1,11 @@
+tabbox
+  tabs
+    tab(label="&better-bibtex.Preferences.export.fields;")
+    tab(bbt:preference="pref-better-bibtex-strings" label="&better-bibtex.Preferences.advanced.tab.strings;")
+
+  tabpanels
+    tabpanel(orient="vertical")
+      include misc/fields.pug
+
+    tabpanel(orient="vertical")
+      include misc/strings.pug

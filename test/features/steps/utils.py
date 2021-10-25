@@ -12,6 +12,7 @@ import urllib.request
 import psutil
 import shlex
 from collections import UserDict
+import copy
 
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning, module='bs4', message='.*looks like a URL.*')
@@ -22,13 +23,14 @@ for d in pathlib.Path(__file__).resolve().parents:
     ROOT = d
     break
 
-class HashableDict(dict):
-  def __hash__(self):
-    return str(hash(json.dumps(self, sort_keys=True)))
-
 def print(txt, end='\n'):
   sys.stdout.write(txt + end)
   sys.stdout.flush()
+
+class HashableDict(dict):
+  def __hash__(self):
+    # lower case before hash?
+    return str(hash(json.dumps(self, sort_keys=True)))
 
 class benchmark(object):
   def __init__(self,name):
@@ -60,12 +62,26 @@ def expand_scenario_variables(context, filename, star=True):
     if star: filename = filename.replace('*', scenario)
   return filename
 
+def clean_html(html):
+  return BeautifulSoup(html, 'html.parser').prettify()
+
 def html2md(html):
   if '<' in html: html = md(BeautifulSoup(html, 'lxml').prettify())
   return html.strip()
 
 def serialize(obj):
   return json.dumps(obj, indent=2, ensure_ascii=True, sort_keys=True)
+
+def extra_lower(obj):
+  if isinstance(obj, dict) and 'items' in obj:
+    obj = copy.deepcopy(obj)
+    for item in obj['items']:
+      if 'extra' in item:
+        if type(item['extra']) == list:
+          item['extra'] = [line.lower() for line in item['extra']]
+        else:
+          item['extra'] = item['extra'].lower()
+  return obj
 
 def running(id):
   if type(id) == int:

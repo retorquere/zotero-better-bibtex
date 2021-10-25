@@ -8,7 +8,6 @@
     },
     "preferences": {
       "citekeyFormat": "[auth][shorttitle][year]",
-      "ignorePostscriptErrors": false,
       "kuroshiro": true
     }
   },

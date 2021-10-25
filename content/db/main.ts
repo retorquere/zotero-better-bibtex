@@ -1,19 +1,29 @@
-declare const Zotero: any
-
 import { XULoki as Loki } from './loki'
-import { Preferences as Prefs } from '../prefs'
+import { Preference } from '../../gen/preferences'
+import { schema } from '../../gen/preferences/meta'
 import { getItemsAsync } from '../get-items-async'
+import { log } from '../logger'
 
-import { Store } from './store'
+import { SQLite } from './store/sqlite'
 
-import * as prefOverrides from '../../gen/preferences/auto-export-overrides.json'
-import * as prefOverridesSchema from '../../gen/preferences/auto-export-overrides-schema.json'
+import * as Translators from '../../gen/translators.json'
+
+export function scrubAutoExport(ae: any): void { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
+  const translator = schema.translator[Translators.byId[ae.translatorID].label]
+
+  for (const k of (schema.autoExport.preferences as string[]).concat(schema.autoExport.displayOptions)) {
+    if (typeof ae[k] !== 'undefined' && !translator.types[k]) {
+      delete ae[k]
+      log.debug('ae: stripping', k, 'from', ae)
+    }
+  }
+
+  return ae // eslint-disable-line @typescript-eslint/no-unsafe-return
+}
 
 class Main extends Loki {
   public async init() {
     await this.loadDatabaseAsync()
-
-    const scrub = Prefs.get('scrubDatabase')
 
     const citekeys = this.schemaCollection('citekey', {
       indices: [ 'itemID', 'itemKey', 'libraryID', 'citekey', 'pinned' ],
@@ -38,7 +48,7 @@ class Main extends Loki {
     })
 
     // https://github.com/retorquere/zotero-better-bibtex/issues/1073
-    if (scrub) {
+    if (Preference.scrubDatabase) {
       for (const citekey of citekeys.find()) {
         if (typeof(citekey.extra) !== 'undefined') {
           delete citekey.extra
@@ -54,7 +64,7 @@ class Main extends Loki {
       }
     }
 
-    const autoexport = this.schemaCollection('autoexport', {
+    const config = {
       indices: [
         'type',
         'id',
@@ -62,66 +72,60 @@ class Main extends Loki {
         'path',
         'translatorID',
 
-        'useJournalAbbreviation',
-        'exportNotes',
-
-        ...prefOverrides,
+        ...schema.autoExport.displayOptions,
+        ...schema.autoExport.preferences,
       ],
       unique: [ 'path' ],
       logging: true,
       schema: {
+        oneOf: [],
+      },
+    }
+    for (const [name, translator] of Object.entries(schema.translator)) {
+      if (!translator.autoexport) continue
+
+      config.schema.oneOf.push({
         type: 'object',
+        additionalProperties: false,
         properties: {
           type: { enum: [ 'collection', 'library' ] },
           id: { type: 'integer' },
           path: { type: 'string', minLength: 1 },
           status: { enum: [ 'scheduled', 'running', 'done', 'error' ] },
-          translatorID: { type: 'string', minLength: 1 },
+          translatorID: { const: Translators.byName[name].translatorID },
 
           // options
-          exportNotes: { type: 'boolean', default: false },
-          useJournalAbbreviation: { type: 'boolean', default: false },
+          exportNotes: { type: 'boolean' },
+          useJournalAbbreviation: { type: 'boolean' },
 
           // prefs
-          ...prefOverridesSchema,
+          ...(translator.types),
 
-          error: { type: 'string', default: '' },
-          recursive: { type: 'boolean', default: false },
+          // status
+          error: { type: 'string' },
+          recursive: { type: 'boolean' },
 
           // LokiJS
           meta: { type: 'object' },
           $loki: { type: 'integer' },
         },
-        required: [ 'type', 'id', 'path', 'status', 'translatorID', 'exportNotes', 'useJournalAbbreviation', ...prefOverrides ],
+        required: [ 'type', 'id', 'path', 'status', 'translatorID', ...(translator.displayOptions), ...(translator.preferences) ],
+      })
+    }
+    log.debug('ae schema:', JSON.stringify(config, null, 2))
 
-        additionalProperties: false,
-      },
-    })
+    const autoexport = this.schemaCollection('autoexport', config)
 
     for (const ae of autoexport.find()) {
-      let update = false
-
-      if (ae.updated) {
-        delete ae.updated
-        update = true
-      }
-
-      for (const pref of prefOverrides) {
-        if (typeof ae[pref] === 'undefined') {
-          ae[pref] = Prefs.get(pref)
-          update = true
-        }
-      }
-
       if (typeof ae.recursive !== 'boolean') {
         ae.recursive = false
-        update = true
       }
 
-      if (update) autoexport.update(ae)
+      scrubAutoExport(ae)
+      autoexport.update(ae)
     }
 
-    if (scrub) {
+    if (Preference.scrubDatabase) {
       // directly change the data objects and rebuild indexes https://github.com/techfort/LokiJS/issues/660
       const length = autoexport.data.length
       autoexport.data = autoexport.data.filter(doc => typeof doc.$loki === 'number' && typeof doc.meta === 'object')
@@ -176,5 +180,5 @@ export const DB = new Main('better-bibtex', { // eslint-disable-line @typescript
   autosave: true,
   autosaveInterval: 5000,
   autosaveOnIdle: true,
-  adapter: new Store({ storage: 'sqlite' }),
+  adapter: new SQLite(),
 })

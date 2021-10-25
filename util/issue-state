@@ -1,0 +1,154 @@
+#!/usr/bin/env python3
+
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv())
+
+import subprocess
+import argparse
+import shlex
+import sys
+from github import Github
+import os
+import re
+from types import SimpleNamespace
+import json
+from pathlib import Path
+import shutil
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--all', action='store_true')
+parser.add_argument('--unsnyk', action='store_true')
+parser.add_argument('--orphaned-remote', action='store_true')
+parser.add_argument('--close-branch', action='store_true')
+parser.add_argument('--test-case', type=str)
+args = parser.parse_args()
+
+g = Github(os.environ['GITHUB_TOKEN'])
+repo = g.get_repo('retorquere/zotero-better-bibtex')
+
+class Branches:
+  def __init__(self):
+    self.local = []
+    branches = subprocess.check_output('git branch'.split()).decode()
+    branches = [(b.strip('* '), b.startswith('* ')) for b in branches.splitlines()]
+    for branch, local in branches:
+      if branch not in ['master', 'gh-pages']:
+        self.local.append(branch)
+      if local:
+        self.current = branch
+
+    self.remote = []
+    for branch in repo.get_branches():
+      branch = branch.name
+      if branch not in ['master', 'gh-pages']:
+        self.remote.append(branch)
+branches = Branches()
+
+if args.unsnyk:
+  for branch in branches.remote:
+    if branch.startswith('snyk-upgrade-'):
+      print(f'git push origin :{shlex.quote(branch)}')
+  sys.exit()
+
+if args.all:
+  issues = list(repo.get_issues(state='all'))
+else:
+  issues = list(repo.get_issues(state='open'))
+  numbers = [issue.number for issue in issues]
+  missing = set(
+    [ int(branch[3:]) for branch in branches.local if branch.startswith('gh-') ]
+    +
+    [ int(branch[3:]) for branch in branches.remote if branch.startswith('gh-') ]
+  )
+  missing = [number for number in missing if number not in numbers]
+  for number in missing:
+    issues.append(SimpleNamespace(
+      number=number,
+      title=None,
+      state=None,
+      branch=None
+    ))
+
+issues = { issue.number: issue for issue in issues }
+for issue in issues.values():
+  issue.branch = SimpleNamespace(
+    local=next((branch for branch in branches.local if branch == f'gh-{issue.number}'), None),
+    remote=next((branch for branch in branches.local if branch == f'gh-{issue.number}'), None)
+  )
+
+if args.test_case:
+  issue = issues[int(branches.current.replace('gh-', ''))]
+  lib = os.path.join('logs', args.test_case, 'references.json')
+  print(subprocess.check_output(['./util/clean-lib.ts', lib, '--save']).decode())
+
+  print(issue.number, args.test_case)
+  title = f' {issue.title} #{issue.number}'
+  title = "{:<95}".format(title)
+  with open(lib) as f:
+    n = ' ' + str(len(json.load(f)['items']))
+    n = "{:<12}".format(n)
+  print(title, n)
+  with open('test/features/export.feature') as f:
+    feature = f.readlines()
+  with open('test/features/export.feature', 'w') as f:
+    replaced = False
+    for line in feature:
+      if f' #{issue.number} ' in line:
+        print('replacing')
+        print(line)
+      elif not replaced and line.strip().replace(' ', '') == '|file|references|':
+        f.write(line)
+        print(f'     |{title} |{n} |', file=f)
+        replaced = True
+      else:
+        f.write(line)
+
+  shutil.copyfile(lib, os.path.join('test/fixtures/export', title.strip() + '.json'))
+  Path(os.path.join('test/fixtures/export', title.strip() + '.biblatex')).touch()
+
+  sys.exit(0)
+
+if args.orphaned_remote or args.close_branch:
+  for issue in sorted(issues.values(), key=lambda x: x.number):
+    if args.orphaned_remote and issue.branch.local is None and issue.branch.remote is not None: # orphaned remote
+      print(f'git push origin {shlex.quote(":" + issue.branch.remote)}')
+
+    if args.close_branch and issue.state != 'open':
+      if issue.branch.local is not None:
+        print(f'git branch -D {shlex.quote(issue.branch.local)}')
+      if issue.branch.remote is not None:
+        print(f'git push origin {shlex.quote(":" + issue.branch.remote)}')
+  sys.exit()
+
+for branch in set(branches.local + branches.remote):
+  if m := re.match(r'^gh-([0-9]+)$', branch):
+    assert int(m[1]) in issues, (m[1], issues.keys())
+  elif branch in branches.local and branch in branches.remote:
+    print('* branch', branch, 'local and remote')
+  elif branch in branches.local:
+    print('* branch', branch, 'local')
+  elif branch in branches.remote:
+    print('* branch', branch, 'remote')
+
+for issue in sorted(issues.values(), key=lambda x: x.number):
+  if issue.state == 'open' or issue.branch.local is not None or issue.branch.remote is not None:
+    if issue.state == 'open':
+      print('*', issue.number, issue.title)
+      comment = list(issue.get_comments())
+      if len(comment) == 0:
+        print('  has no comment')
+      else:
+        comment = comment[-1]
+        print(' ', comment.user.login, comment.created_at)
+    else:
+      print('!', issue.number, issue.title)
+
+    if issue.state != 'open' and (issue.branch.remote is not None or issue.branch.local is not None):
+      if issue.branch.local:
+        print(' ', 'local', issue.branch.remote, 'for closed issue')
+      if issue.branch.remote:
+        print(' ', 'remote', issue.branch.remote, 'for closed issue')
+    elif issue.branch.local is not None and issue.branch.remote is None:
+      print(' ', 'unshared local', issue.branch.local)
+    elif issue.branch.local is None and issue.branch.remote is not None:
+      print(' ', 'orphaned remote', issue.branch.local)

@@ -1,197 +1,32 @@
 [
   {
     "op": "add",
-    "path": "/items/0/place",
-    "value": "Poster apresentado no Congresso da SPE"
+    "path": "/items/0/publisher",
+    "value": "Springer Berlin / Heidelberg"
   },
   {
     "op": "remove",
     "path": "/items/0/extra/1",
-    ":value": "tex.location: Poster apresentado no Congresso da SPE"
+    ":value": "Publisher: Springer Berlin / Heidelberg"
   },
   {
     "op": "replace",
-    "path": "/items/0/attachments/0/path",
-    "value": "/Users/emile/.BBTZ5TEST/jurism/storage/IKK46N6D/2.pdf"
+    "path": "/items/1/attachments/0/path",
+    "value": "/Users/emile/.BBTZ5TEST/jurism/storage/G6LZV9WG/2.pdf"
   },
   {
     "op": "replace",
-    "path": "/items/0/attachments/0/uri",
-    "value": "http://zotero.org/users/local/NaNzQo9n/items/IKK46N6D"
+    "path": "/items/1/attachments/0/uri",
+    "value": "http://zotero.org/users/local/NaNzQo9n/items/G6LZV9WG"
   },
   {
     "op": "replace",
-    "path": "/items/0/attachments/1/path",
-    "value": "/Users/emile/.BBTZ5TEST/jurism/storage/BFAAQA7U/1.pdf"
+    "path": "/items/1/attachments/1/path",
+    "value": "/Users/emile/.BBTZ5TEST/jurism/storage/FPIB6JTN/1.pdf"
   },
   {
     "op": "replace",
-    "path": "/items/0/attachments/1/uri",
-    "value": "http://zotero.org/users/local/NaNzQo9n/items/BFAAQA7U"
-  },
-  {
-    "op": "remove",
-    "path": "/items/1/extra",
-    ":value": [
-      "Citation Key: springerlink:10.1007/s10344-009-0327-7",
-      "Publisher: Springer Berlin / Heidelberg",
-      "tex.affiliation: University of Cordoba Department of Zoology Campus de Rabanales Ed. Darwin 14071 C\u00c3\u00b3rdoba Spain",
-      "tex.owner: tiago",
-      "tex.subdatabase: distance",
-      "tex.timestamp: 2011.06.17"
-    ]
-  },
-  {
-    "op": "remove",
-    "path": "/items/1/notes",
-    ":value": [
-      "<p>10.1007/s10344-009-0327-7</p>"
-    ]
-  },
-  {
-    "op": "replace",
-    "path": "/items/1/itemType",
-    "value": "note"
-  },
-  {
-    "op": "replace",
-    "path": "/items/1/tags/0/tag",
-    "value": "#Better BibTeX import error"
-  },
-  {
-    "op": "move",
-    "from": "/items/2/note",
-    "path": "/items/1/note",
-    ":value": "Import errors found: <ul><li>Don&#39;t know what Zotero type to make of &#39;talk&#39; for @Afonso2011, importing as journalArticle</li></ul>"
-  },
-  {
-    "op": "move",
-    "from": "/items/1/title",
-    "path": "/items/2/title",
-    ":value": "Assessment of methods for estimating wild rabbit population abundance in agricultural landscapes"
-  },
-  {
-    "op": "move",
-    "from": "/items/1/creators",
-    "path": "/items/2/creators",
-    ":value": [
-      {
-        "creatorType": "author",
-        "firstName": "Isabel",
-        "lastName": "Barrio"
-      },
-      {
-        "creatorType": "author",
-        "firstName": "Pelayo",
-        "lastName": "Acevedo"
-      },
-      {
-        "creatorType": "author",
-        "firstName": "Francisco",
-        "lastName": "Tortosa"
-      }
-    ]
-  },
-  {
-    "op": "add",
-    "path": "/items/2/extra",
-    "value": [
-      "Citation Key: springerlink:10.1007/s10344-009-0327-7",
-      "tex.affiliation: University of Cordoba Department of Zoology Campus de Rabanales Ed. Darwin 14071 C\u00c3\u00b3rdoba Spain",
-      "tex.owner: tiago",
-      "tex.subdatabase: distance",
-      "tex.timestamp: 2011.06.17"
-    ]
-  },
-  {
-    "op": "add",
-    "path": "/items/2/notes",
-    "value": [
-      "10.1007/s10344-009-0327-7"
-    ]
-  },
-  {
-    "op": "move",
-    "from": "/items/1/publicationTitle",
-    "path": "/items/2/publicationTitle",
-    ":value": "European Journal of Wildlife Research"
-  },
-  {
-    "op": "move",
-    "from": "/items/1/date",
-    "path": "/items/2/date",
-    ":value": "2010"
-  },
-  {
-    "op": "move",
-    "from": "/items/1/url",
-    "path": "/items/2/url",
-    ":value": "http://dx.doi.org/10.1007/s10344-009-0327-7"
-  },
-  {
-    "op": "move",
-    "from": "/items/1/citationKey",
-    "path": "/items/2/citationKey",
-    ":value": "springerlink:10.1007/s10344-009-0327-7"
-  },
-  {
-    "op": "add",
-    "path": "/items/2/publisher",
-    "value": "Springer Berlin / Heidelberg"
-  },
-  {
-    "op": "move",
-    "from": "/items/1/ISSN",
-    "path": "/items/2/ISSN",
-    ":value": "1612-4642"
-  },
-  {
-    "op": "move",
-    "from": "/items/1/issue",
-    "path": "/items/2/issue",
-    ":value": "3"
-  },
-  {
-    "op": "move",
-    "from": "/items/1/volume",
-    "path": "/items/2/volume",
-    ":value": "56"
-  },
-  {
-    "op": "move",
-    "from": "/items/1/pages",
-    "path": "/items/2/pages",
-    ":value": "335-340"
-  },
-  {
-    "op": "replace",
-    "path": "/items/2/itemType",
-    "value": "journalArticle"
-  },
-  {
-    "op": "move",
-    "from": "/items/2/tags/0/type",
-    "path": "/items/1/tags/0/type",
-    ":value": 1
-  },
-  {
-    "op": "replace",
-    "path": "/items/2/tags/0/tag",
-    "value": "Biomedical and Life Sciences"
-  },
-  {
-    "op": "replace",
-    "path": "/config/localeDateOrder",
-    "value": "dmy"
-  },
-  {
-    "op": "remove",
-    "path": "/config/options/exportNotes",
-    ":value": true
-  },
-  {
-    "op": "remove",
-    "path": "/config/preferences/importCaseProtection",
-    ":value": "off"
+    "path": "/items/1/attachments/1/uri",
+    "value": "http://zotero.org/users/local/NaNzQo9n/items/FPIB6JTN"
   }
 ]

@@ -1,45 +1,22 @@
-declare const Components: any
-declare const Zotero: any
-
 Components.utils.import('resource://gre/modules/osfile.jsm')
-declare const OS: any
 
 import { sleep } from './sleep'
-import { KeyManager } from './key-manager'
 import { Translators } from './translators'
-import { Preferences as Prefs } from './prefs'
+import { Preference } from '../gen/preferences'
+import { pick } from './file-picker'
 
 export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   private decoder = new TextDecoder
 
-  // eslint-disable-next-line @typescript-eslint/require-await
-  public async pick(): Promise<string> {
-    const fp = Components.classes['@mozilla.org/filepicker;1'].createInstance(Components.interfaces.nsIFilePicker)
-    fp.init(window, Zotero.getString('fileInterface.import'), Components.interfaces.nsIFilePicker.modeOpen)
-    fp.appendFilter('AUX file', '*.aux')
-
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return new Zotero.Promise(resolve => {
-      fp.open(userChoice => {
-        switch (userChoice) {
-          case Components.interfaces.nsIFilePicker.returnOK:
-          case Components.interfaces.nsIFilePicker.returnReplace:
-            resolve(fp.file.path)
-            break
-
-          default: // aka returnCancel
-            resolve('')
-            break
-        }
-      })
-    })
+  public async pick(): Promise<string> { // eslint-disable-line @typescript-eslint/no-unsafe-return
+    return await pick(Zotero.getString('fileInterface.import'), 'open', [['AUX file', '*.aux']])
   }
 
   public async scan(path: string, options: { tag?: string, libraryID?: number, collection?: { libraryID: number, key: string, replace?: boolean } } = {}) {
     if ([options.tag, options.libraryID, options.collection].filter(tgt => tgt).length > 1) throw new Error('You can only specify one of tag, libraryID, or collection')
 
     const citekeys: string[] = []
-    const bibfiles: Record<string, string> = Prefs.get('auxImport') ? {} : null
+    const bibfiles: Record<string, string> = Preference.auxImport ? {} : null
     await this.parse(path, citekeys, bibfiles)
 
     if (!citekeys.length) return
@@ -59,7 +36,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
       libraryID = collection ? collection.libraryID : azp.getSelectedLibraryID()
     }
 
-    const found = (KeyManager.keys.find({ libraryID, citekey: { $in: citekeys } }) as { itemID: number, citekey: string }[])
+    const found = (Zotero.BetterBibTeX.KeyManager.keys.find({$and: [{ libraryID: {$eq: libraryID} }, { citekey: { $in: citekeys } }]}) as { itemID: number, citekey: string }[])
 
     const itemIDs = found.map(key => key.itemID)
 
@@ -94,7 +71,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
   }
 
   private async read(path) {
-    return this.decoder.decode(await OS.File.read(path))
+    return this.decoder.decode(await OS.File.read(path) as BufferSource)
   }
 
   private async parse(path: string, citekeys: string[], bibfiles: Record<string, string> ) {

@@ -3,10 +3,10 @@
   title = {Stability {{Analysis}} and {{Clustering}} of {{Electrical Transmission Systems}}},
   author = {Brato, Sebastian and Surmann, Dirk and Krey, Sebastian and Götze, Jürgen and Ligges, Uwe and Weihs, Claus},
   date = {2014-02-11},
+  number = {2003/32864},
   institution = {{Technische Universität Dortmund}},
   location = {{Eldorado}},
-  url = {http://dx.doi.org/10.17877/DE290R-13190},
-  number = {2003/32864}
+  url = {http://dx.doi.org/10.17877/DE290R-13190}
 }
 
 @article{michigami_development_1995,
@@ -15,9 +15,9 @@
   date = {1995-12},
   journaltitle = {Electrical Engineering in Japan},
   volume = {115},
+  number = {7},
   pages = {49--68},
-  doi = {10.1002/eej.4391150705},
-  number = {7}
+  doi = {10.1002/eej.4391150705}
 }
 
 @book{skubala_modellierung_2012,

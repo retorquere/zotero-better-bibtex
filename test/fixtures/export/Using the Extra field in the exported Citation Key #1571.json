@@ -1,0 +1,57 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "baseAttachmentPath": "/Users/Hermes/GSuite/AppSyncs/ZoteroStorage",
+      "citekeyFold": false,
+      "citekeyFormat": "[auth:postfix=_][extra=vns:postfix=_][year]",
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "extraMergeTeX": true,
+      "skipFields": "abstract, file, annotation",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1145/2501543.2501550",
+      "ISBN": "978-1-4503-2311-6",
+      "abstractNote": "While requirements for open source projects originate from a variety of sources like e.g. mailing lists or blogs, typically, they eventually end up as feature requests in an issue tracking system. When analyzing how these issue trackers are used for requirements evolution, we witnessed a high percentage of duplicates in a number of high-prole projects. Further investigation of six open source projects and their users led us to a number of important observations and a categorization of the root causes of these duplicates. Based on this, we propose a set of improvements for future issue tracking systems.",
+      "accessDate": "2021-03-03",
+      "attachments": [],
+      "citationKey": "Heck__2013",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Petra",
+          "lastName": "Heck"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Andy",
+          "lastName": "Zaidman"
+        }
+      ],
+      "date": "August 19, 2013",
+      "extra": [
+        "vns: IWPSE"
+      ],
+      "itemID": 1,
+      "itemType": "conferencePaper",
+      "libraryCatalog": "ACM Digital Library",
+      "pages": "43\u201352",
+      "place": "New York, NY, USA",
+      "publicationTitle": "Proceedings of the 2013 International Workshop on Principles of Software Evolution",
+      "publisher": "Association for Computing Machinery",
+      "series": "IWPSE 2013",
+      "shortTitle": "An analysis of requirements evolution in open source projects",
+      "title": "An analysis of requirements evolution in open source projects: recommendations for issue trackers",
+      "url": "https://doi.org/10.1145/2501543.2501550"
+    }
+  ]
+}

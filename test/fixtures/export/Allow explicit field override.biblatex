@@ -1,12 +1,12 @@
 
 @article{anand2014technicalreportformally,
-  title = {Technical {{Report}} : {{Towards}} a {{Formally Verified Proof Assistant}}},
+  title = {Technical {{Report}} : Towards a {{Formally Verified Proof Assistant}}},
   author = {Anand, Abhishek and Rahli, Vincent},
   date = {2014},
   origdate = {1856},
   url = {http://www.nuprl.org/html/verification/},
-  annotation = {http://www.nuprl.org/html/verification/},
   origtitle = {An Old Title},
+  annotation = {http://www.nuprl.org/html/verification/},
   timestamp = {2011.03.22}
 }
 

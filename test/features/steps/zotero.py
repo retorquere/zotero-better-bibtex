@@ -1,3 +1,4 @@
+import bs4
 import sqlite3
 import uuid
 import json, jsonpatch
@@ -11,7 +12,7 @@ import toml
 import urllib
 import tempfile
 from munch import *
-from steps.utils import running, nested_dict_iter, benchmark, ROOT, assert_equal_diff, serialize, html2md, post_log
+from steps.utils import running, nested_dict_iter, benchmark, ROOT, assert_equal_diff, serialize, html2md, post_log, clean_html, extra_lower
 from steps.library import load as Library
 from steps.bbtjsonschema import validate as validate_bbt_json
 import steps.utils as utils
@@ -29,6 +30,8 @@ import threading
 import socket
 from pathlib import PurePath
 from diff_match_patch import diff_match_patch
+from pygit2 import Repository
+from lxml import etree
 
 from ruamel.yaml import YAML
 yaml = YAML(typ='safe')
@@ -36,6 +39,41 @@ yaml.default_flow_style = False
 
 EXPORTED = os.path.join(ROOT, 'exported')
 FIXTURES = os.path.join(ROOT, 'test/fixtures')
+
+def install_proxies(xpis, profile):
+  for xpi in xpis:
+    assert os.path.isdir(xpi)
+    utils.print(f'installing {xpi}')
+    rdf = etree.parse(os.path.join(xpi, 'install.rdf'))
+    xpi_id = rdf.xpath('/rdf:RDF/rdf:Description/em:id', namespaces={'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'em': 'http://www.mozilla.org/2004/em-rdf#'})[0].text
+    proxy = os.path.join(profile, 'extensions', xpi_id)
+    if not os.path.isdir(os.path.dirname(proxy)):
+      os.mkdir
+      os.makedirs(os.path.dirname(proxy))
+    elif os.path.isdir(proxy) and not os.path.islink(proxy):
+      shutil.rmtree(proxy)
+    elif os.path.exists(proxy):
+      os.remove(proxy)
+    with open(proxy, 'w') as f:
+      f.write(xpi)
+  
+  with open(os.path.join(profile, 'prefs.js'), 'r+') as f:
+    utils.print('stripping prefs.js')
+    lines = f.readlines()
+    f.seek(0)
+    for line in lines:
+      if 'extensions.lastAppBuildId' in line: continue
+      if 'extensions.lastAppVersion' in line: continue
+      f.write(line)
+    f.truncate()
+
+def install_xpis(path, profile):
+  if not os.path.exists(path): return
+  utils.print(f'Installing xpis in {path}')
+
+  for xpi in glob.glob(os.path.join(path, '*.xpi')):
+    utils.print(f'installing {xpi}')
+    profile.add_extension(xpi)
 
 class Pinger():
   def __init__(self, every):
@@ -63,8 +101,15 @@ class Config:
         'first_run': userdata.get('first-run', 'false') == 'true',
         'timeout': 60,
         'profile': '',
+        'trace_factor': 1,
       }
     ]
+    trace = os.path.join(ROOT, '.trace.json')
+    if os.path.exists(trace):
+      with open(trace) as f:
+        trace = json.load(f)
+        if Repository('.').head.shorthand in trace:
+          self.data[0]['trace_factor'] = 10
     self.reset()
 
   def __getattr__(self, name):
@@ -142,6 +187,7 @@ class Zotero:
       self.workers = 1
     else:
       self.workers = 0
+    self.caching = userdata.get('caching', 'true') == 'true'
 
     self.preferences = Preferences(self)
     self.redir = '>'
@@ -154,7 +200,7 @@ class Zotero:
 
     with Pinger(20):
       req = urllib.request.Request(f'http://127.0.0.1:{self.port}/debug-bridge/execute?password={self.password}', data=script.encode('utf-8'), headers={'Content-type': 'application/javascript'})
-      res = urllib.request.urlopen(req, timeout=self.config.timeout).read().decode()
+      res = urllib.request.urlopen(req, timeout=self.config.timeout * self.config.trace_factor).read().decode()
       return json.loads(res)
 
   def shutdown(self):
@@ -212,7 +258,7 @@ class Zotero:
     else:
       utils.print('\n\n** WORKAROUNDS FOR JURIS-M IN PLACE -- SEE https://github.com/Juris-M/zotero/issues/34 **\n\n')
       datadir_profile = ''
-    cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -jsconsole -ZoteroDebugText {datadir_profile} {self.redir} {shlex.quote(profile.path + ".log")} 2>&1'
+    cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -jsconsole -purgecaches -ZoteroDebugText {datadir_profile} {self.redir} {shlex.quote(profile.path + ".log")} 2>&1'
     utils.print(f'Starting {self.client}: {cmd}')
     self.proc = subprocess.Popen(cmd, shell=True)
     utils.print(f'{self.client} started: {self.proc.pid}')
@@ -367,7 +413,10 @@ class Zotero:
 
       expected = Library(expected)
       found = Library(json.loads(found, object_pairs_hook=OrderedDict))
-      assert_equal_diff(serialize(expected), serialize(found))
+      assert_equal_diff(serialize(extra_lower(expected)), serialize(extra_lower(found)))
+
+    elif expected_file.endswith('.html'):
+      assert_equal_diff(clean_html(expected).strip(), clean_html(found).strip())
 
     else:
       assert_equal_diff(expected.strip(), found.strip())
@@ -397,6 +446,11 @@ class Zotero:
       for k, v in preferences.items():
         assert self.preferences.prefix + k in self.preferences.supported, f'Unsupported preference "{k}"'
         assert type(v) == self.preferences.supported[self.preferences.prefix + k], f'Value for preference {k} has unexpected type {type(v)}'
+      for item in data['items']:
+        for att in item.get('attachments') or []:
+          if path := att.get('path'):
+            path = os.path.join(os.path.dirname(references), path)
+            assert os.path.exists(path), f'attachment {path} does not exist'
     else:
       context.displayOptions = {}
       preferences = None
@@ -447,14 +501,6 @@ class Zotero:
       if os.path.exists(variant): return [variant, ext]
 
     return [None, None]
-
-  def install_xpis(self, path, profile):
-    if not os.path.exists(path): return
-    utils.print(f'Installing xpis in {path}')
-
-    for xpi in glob.glob(os.path.join(path, '*.xpi')):
-      utils.print(f'installing {xpi}')
-      profile.add_extension(xpi)
 
   def create_profile(self):
     profile = Munch(
@@ -516,13 +562,16 @@ class Zotero:
     else:
       profile.firefox = webdriver.FirefoxProfile(os.path.join(FIXTURES, 'profile', self.client))
 
-    self.install_xpis(os.path.join(ROOT, 'xpi'), profile.firefox)
-    self.install_xpis(os.path.join(ROOT, 'other-xpis'), profile.firefox)
-    if self.config.db: self.install_xpis(os.path.join(ROOT, 'test/db', self.config.db, 'xpis'), profile.firefox)
-    if self.config.profile: self.install_xpis(os.path.join(ROOT, 'test/db', self.config.profile, 'xpis'), profile.firefox)
+    install_xpis(os.path.join(ROOT, 'xpi'), profile.firefox)
 
+    install_xpis(os.path.join(ROOT, 'other-xpis'), profile.firefox)
+    if self.config.db: install_xpis(os.path.join(ROOT, 'test/db', self.config.db, 'xpis'), profile.firefox)
+    if self.config.profile: install_xpis(os.path.join(ROOT, 'test/db', self.config.profile, 'xpis'), profile.firefox)
+
+    profile.firefox.set_preference('extensions.zotero.debug.memoryInfo', True)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.testing', self.testing)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.workers', self.workers)
+    profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.caching', self.caching)
     profile.firefox.set_preference('extensions.zotero.debug-bridge.password', self.password)
     profile.firefox.set_preference('dom.max_chrome_script_run_time', self.config.timeout)
     utils.print(f'dom.max_chrome_script_run_time={self.config.timeout}')
@@ -601,8 +650,8 @@ class Preferences:
     self.zotero = zotero
     self.pref = {}
     self.prefix = 'translators.better-bibtex.'
-    with open(os.path.join(ROOT, 'gen/preferences/defaults.json')) as f:
-      self.supported = {self.prefix + k: type(v) for (k, v) in json.load(f).items()}
+    with open(os.path.join(os.path.dirname(__file__), 'preferences.json')) as f:
+      self.supported = {self.prefix + pref['var']: type(pref['default']) for pref in json.load(f)}
     self.supported[self.prefix + 'removeStock'] = bool
     self.supported[self.prefix + 'ignorePostscriptErrors'] = bool
 

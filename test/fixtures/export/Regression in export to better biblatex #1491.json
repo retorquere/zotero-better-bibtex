@@ -8,8 +8,7 @@
     },
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/vancouver",
-      "citekeyFormat": "[zotero:clean]",
-      "workers": 0
+      "citekeyFormat": "[zotero:clean]"
     }
   },
   "items": [
@@ -17,14 +16,7 @@
       "DOI": "10.1006/jfls.1994.1024",
       "ISSN": "08899746",
       "accessDate": "2020-03-09T10:28:22Z",
-      "attachments": [
-        {
-          "itemType": "attachment",
-          "path": "/mnt/system/Documents and Settings/pho17.EFZN-DSC007/Zotero-Old/storage/ICD6CBLX/Mateescu_et_al_1994_Unsteady_Annular_Viscous_Flows_Between_Oscillating_Cylinders.pdf",
-          "title": "Mateescu_et_al_1994_Unsteady_Annular_Viscous_Flows_Between_Oscillating_Cylinders.pdf",
-          "uri": "http://zotero.org/users/1/items/ICD6CBLX"
-        }
-      ],
+      "attachments": [],
       "citationKey": "mateescu_unsteady_1994",
       "creators": [
         {

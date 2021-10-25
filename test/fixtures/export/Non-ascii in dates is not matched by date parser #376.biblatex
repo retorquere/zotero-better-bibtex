@@ -5,13 +5,13 @@
   date = {2008-03-01},
   journaltitle = {Psychophysiology},
   volume = {45},
+  number = {2},
   pages = {205--215},
   doi = {10.1111/j.1469-8986.2007.00620.x},
   url = {http://onlinelibrary.wiley.com/doi/10.1111/j.1469-8986.2007.00620.x/abstract},
   urldate = {2014-05-12},
-  keywords = {Amygdala,fMRI,Insula,Spider phobia,Startle},
   langid = {english},
-  number = {2}
+  keywords = {Amygdala,fMRI,Insula,Spider phobia,Startle}
 }
 
 

@@ -24,7 +24,7 @@ or the older format you migh have seen, which is supported but considered deprac
 
 The full list of labels and the Zotero/CSL variables they translate to can be found in the table at the end.
 
-These extra-fields are available to [postscripts]({{< ref "./scripting" >}}) as `item.extraField.kv.<variable-name>`. Which variable it is depends (sorry):
+These extra-fields are available to [postscripts]({{< ref "./scripting" >}}) as `extra.kv.<variable-name>`. Which variable it is depends (sorry):
 
 * when you export to CSL, it is attempted to map it to the corrsponding CSL fields; if none are available, it is available under their *zotero* name
 * when you export to Better BibTeX/Better BibLaTeX, it is attempted to map it to the corresponding zotero fields; if none are available, it is available under their *csl variable* name
@@ -82,3 +82,21 @@ It is important to note that these BBT-specific fields are not recognized by any
 {{% extra-fields %}}
 
 ¹ only supported in Juris-M
+
+<div class="alchemy" id="alchemy"></div>
+<script src="http://cdn.graphalchemist.com/alchemy.min.js"></script>
+<script type="text/javascript">
+  var config = {
+    dataSource: '/extra-fields.json',
+    forceLocked: false,
+    graphHeight: function(){ return 400; },
+    graphWidth: function(){ return 400; },      
+    linkDistance: function(){ return 40; },
+    nodeTypes: {"node_type":[ "Maintainer", "Contributor"]},
+    nodeCaption: function(node){ 
+      return node.caption + " " + node.fun_fact;
+    }
+  };
+
+  alchemy = new Alchemy(config)
+</script>

@@ -3,17 +3,22 @@
 
 declare const Zotero: any
 
-import { ZoteroTranslator } from '../../gen/typings/serialized-item'
+import { Reference as Item } from '../../gen/typings/serialized-item'
+import { Cache } from '../../typings/cache'
+import type { Translators } from '../../typings/translators'
+import type { ParsedDate } from '../../content/dateparser'
 
 import { Translator } from '../lib/translator'
+import * as postscript from '../lib/postscript'
 
 import { Exporter } from './exporter'
 import { text2latex, replace_command_spacers } from './unicode_translator'
 import { datefield } from './datefield'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
 import * as Extra from '../../content/extra'
-import * as CSL from '../../gen/citeproc'
+import * as CSL from 'citeproc'
 import { log } from '../../content/logger'
+import { babelLanguage, babelTag } from '../../content/text'
 
 import { arXiv } from '../../content/arXiv'
 
@@ -42,194 +47,6 @@ const Path = { // eslint-disable-line  @typescript-eslint/naming-convention
   },
 }
 
-const Language = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
-  public babelMap = {
-    af: 'afrikaans',
-    am: 'amharic',
-    ar: 'arabic',
-    ast: 'asturian',
-    bg: 'bulgarian',
-    bn: 'bengali',
-    bo: 'tibetan',
-    br: 'breton',
-    ca: 'catalan',
-    cop: 'coptic',
-    cy: 'welsh',
-    cz: 'czech',
-    da: 'danish',
-    de_1996: 'ngerman',
-    de_at_1996: 'naustrian',
-    de_at: 'austrian',
-    de_de_1996: 'ngerman',
-    de: ['german', 'germanb'],
-    dsb: ['lsorbian', 'lowersorbian'],
-    dv: 'divehi',
-    el: 'greek',
-    el_polyton: 'polutonikogreek',
-    en_au: 'australian',
-    en_ca: 'canadian',
-    en: 'english',
-    en_gb: ['british', 'ukenglish'],
-    en_nz: 'newzealand',
-    en_us: ['american', 'usenglish'],
-    eo: 'esperanto',
-    es: 'spanish',
-    et: 'estonian',
-    eu: 'basque',
-    fa: 'farsi',
-    fi: 'finnish',
-    fr_ca: [ 'acadian', 'canadian', 'canadien' ],
-    fr: ['french', 'francais', 'français'],
-    fur: 'friulan',
-    ga: 'irish',
-    gd: ['scottish', 'gaelic'],
-    gl: 'galician',
-    he: 'hebrew',
-    hi: 'hindi',
-    hr: 'croatian',
-    hsb: ['usorbian', 'uppersorbian'],
-    hu: 'magyar',
-    hy: 'armenian',
-    ia: 'interlingua',
-    id: [ 'indonesian', 'bahasa', 'bahasai', 'indon', 'meyalu' ],
-    is: 'icelandic',
-    it: 'italian',
-    ja: 'japanese',
-    kn: 'kannada',
-    la: 'latin',
-    lo: 'lao',
-    lt: 'lithuanian',
-    lv: 'latvian',
-    ml: 'malayalam',
-    mn: 'mongolian',
-    mr: 'marathi',
-    nb: ['norsk', 'bokmal', 'nob'],
-    nl: 'dutch',
-    nn: 'nynorsk',
-    no: ['norwegian', 'norsk'],
-    oc: 'occitan',
-    pl: 'polish',
-    pms: 'piedmontese',
-    pt_br: ['brazil', 'brazilian'],
-    pt: ['portuguese', 'portuges'],
-    pt_pt: 'portuguese',
-    rm: 'romansh',
-    ro: 'romanian',
-    ru: 'russian',
-    sa: 'sanskrit',
-    se: 'samin',
-    sk: 'slovak',
-    sl: ['slovenian', 'slovene'],
-    sq_al: 'albanian',
-    sr_cyrl: 'serbianc',
-    sr_latn: 'serbian',
-    sr: 'serbian',
-    sv: 'swedish',
-    syr: 'syriac',
-    ta: 'tamil',
-    te: 'telugu',
-    th: ['thai', 'thaicjk'],
-    tk: 'turkmen',
-    tr: 'turkish',
-    uk: 'ukrainian',
-    ur: 'urdu',
-    vi: 'vietnamese',
-    zh_latn: 'pinyin',
-    zh: 'pinyin',
-    zlm: [ 'malay', 'bahasam', 'melayu' ],
-  }
-
-  private prefix: { [key: string]: boolean | string }
-  private babelList: string[]
-  private cache: { [key: string]: { lang: string, sim: number }[] }
-
-  constructor() {
-    for (const [key, value] of Object.entries(this.babelMap)) {
-      if (typeof value === 'string') this.babelMap[key] = [value]
-    }
-
-    // list of unique languages
-    this.babelList = []
-    for (const v of Object.values(this.babelMap)) {
-      for (const lang of v) {
-        if (this.babelList.indexOf(lang) < 0) this.babelList.push(lang)
-      }
-    }
-
-    this.cache = {}
-    this.prefix = {}
-  }
-
-  public lookup(langcode) {
-    if (!this.cache[langcode]) {
-      this.cache[langcode] = []
-      for (const lc of Language.babelList) {
-        this.cache[langcode].push({ lang: lc, sim: this.string_similarity(langcode, lc) })
-      }
-      this.cache[langcode].sort((a, b) => b.sim - a.sim)
-    }
-
-    return this.cache[langcode]
-  }
-
-  public fromPrefix(langcode) {
-    if (!langcode || (langcode.length < 2)) return false
-
-    if (this.prefix[langcode] == null) {
-      // consider a langcode matched if it is the prefix of exactly one language in the map
-      const lc = langcode.toLowerCase()
-      const matches = []
-      for (const languages of Object.values(Language.babelMap)) {
-        for (const lang of languages) {
-          if (lang.toLowerCase().indexOf(lc) !== 0) continue
-          matches.push(languages)
-          break
-        }
-      }
-      if (matches.length === 1) {
-        this.prefix[langcode] = matches[0]
-      }
-      else {
-        this.prefix[langcode] = false
-      }
-    }
-
-    return this.prefix[langcode]
-  }
-
-  private get_bigrams(str) {
-    const s = str.toLowerCase()
-    const bigrams = [...Array(s.length).keys()].map(i => s.slice(i, i + 2))
-    bigrams.sort()
-    return bigrams
-  }
-
-  private string_similarity(str1, str2) {
-    const pairs1 = this.get_bigrams(str1)
-    const pairs2 = this.get_bigrams(str2)
-    const union = pairs1.length + pairs2.length
-    let hit_count = 0
-
-    while ((pairs1.length > 0) && (pairs2.length > 0)) {
-      if (pairs1[0] === pairs2[0]) {
-        hit_count++
-        pairs1.shift()
-        pairs2.shift()
-        continue
-      }
-
-      if (pairs1[0] < pairs2[0]) {
-        pairs1.shift()
-      }
-      else {
-        pairs2.shift()
-      }
-    }
-
-    return (hit_count * 2) / union
-  }
-}
-
 /*
  * h1 Global object: Translator
  *
@@ -250,20 +67,30 @@ const Language = new class { // eslint-disable-line @typescript-eslint/naming-co
  */
 
 const fieldOrder = [
+  'type',
   'ids',
   'title',
   'shorttitle',
   'booktitle',
   'author',
   'editor',
+  'translator',
+  'holder',
+  'options',
   'date',
   'origdate',
   'year',
   'month',
+  'journal',
   'journaltitle',
   'shortjournal',
+  'series',
   'edition',
   'volume',
+  'number',
+  'eprint',
+  'eprinttype',
+  'primaryclass',
   'pages',
   'publisher',
   'address',
@@ -274,9 +101,13 @@ const fieldOrder = [
   'url',
   'urldate',
 
-  // '-keywords',
-  // '-annotation',
-  // '-note',
+  '-keywords',
+  '-annotation',
+  '-note',
+  '-groups',
+  '-timestamp',
+  '-files',
+  '-file',
 ].reduce((acc, field, idx) => {
   if (field[0] === '-') {
     acc[field.substring(1)] = -(idx + 1)
@@ -287,6 +118,25 @@ const fieldOrder = [
   return acc
 }, {})
 
+
+function entry_sort(a: [string, string | number], b: [string, string | number]): number {
+  return Translator.stringCompare(a[0], b[0])
+}
+
+const re = {
+  // private nonLetters: new Zotero.Utilities.XRegExp('[^\\p{Letter}]', 'g')
+  punctuationAtEnd: new Zotero.Utilities.XRegExp('[\\p{Punctuation}]$'),
+  startsWithLowercase: new Zotero.Utilities.XRegExp('^[\\p{Ll}]'),
+  hasLowercaseWord: new Zotero.Utilities.XRegExp('\\s[\\p{Ll}]'),
+  whitespace: new Zotero.Utilities.XRegExp('\\p{Zs}'),
+}
+
+const enc_creators_marker = {
+  initials: '\u0097', // end of guarded area
+  relax: '\u200C', // zero-width non-joiner
+}
+const isBibString = /^[a-z][-a-z0-9_]*$/i
+
 /*
  * The fields are objects with the following keys:
  *   * name: name of the Bib(La)TeX field
@@ -296,98 +146,86 @@ const fieldOrder = [
  */
 export class Reference {
   public has: { [key: string]: any } = {}
-  public item: ZoteroTranslator.Item
+  public item: Item
   public referencetype: string
   public referencetype_source: string
   public useprefix: boolean
   public language: string
   public english: boolean
+  public date: ParsedDate | { type: 'none' }
 
   // patched in by the Bib(La)TeX translators
-  public fieldEncoding: { [key: string]: string }
-  public caseConversion: { [key: string]: boolean }
+  public fieldEncoding: Record<string, 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'latex' | 'tags' | 'attachments' | 'date'>
+  public caseConversion: Record<string, boolean>
   public typeMap: { csl: { [key: string]: string | { type: string, subtype?: string } }, zotero: { [key: string]: string | { type: string, subtype?: string } } }
   public lint: Function
   public addCreators: Function
 
-  // private nonLetters = new Zotero.Utilities.XRegExp('[^\\p{Letter}]', 'g')
-  private punctuationAtEnd = new Zotero.Utilities.XRegExp('[\\p{Punctuation}]$')
-  private startsWithLowercase = new Zotero.Utilities.XRegExp('^[\\p{Ll}]')
-  private hasLowercaseWord = new Zotero.Utilities.XRegExp('\\s[\\p{Ll}]')
-  private whitespace = new Zotero.Utilities.XRegExp('\\p{Zs}')
-
   private inPostscript = false
   private quality_report: string[] = []
+  private extraFields: Extra.Fields
 
   public static installPostscript(): void {
-    let postscript = Translator.preferences.postscript
-
-    if (typeof postscript !== 'string' || postscript.trim() === '') return
-
     try {
-      postscript = `this.inPostscript = true; ${postscript}; this.inPostscript = false;`
-      // workaround for https://github.com/Juris-M/zotero/issues/65
-      Reference.prototype.postscript = new Function('reference', 'item', 'Translator', 'Zotero', postscript) as (reference: any, item: any) => boolean
-      log.debug(`Installed postscript: ${JSON.stringify(postscript)}`)
+      if (Translator.preferences.postscript.trim()) {
+        // workaround for https://github.com/Juris-M/zotero/issues/65
+        Reference.prototype.postscript = new Function(
+          'reference',
+          'item',
+          'Translator',
+          'Zotero',
+          'extra',
+          postscript.body(Translator.preferences.postscript, 'this.inPostscript')
+        ) as postscript.Postscript
+      }
+      else {
+        Reference.prototype.postscript = postscript.noop as postscript.Postscript
+      }
     }
     catch (err) {
-      if (Translator.preferences.testing) throw err
-      log.error(`Failed to compile postscript: ${err}\n\n${JSON.stringify(postscript)}`)
+      Reference.prototype.postscript = postscript.noop as postscript.Postscript
+      log.debug('failed to install postscript', err, '\n', postscript.body(Translator.preferences.postscript))
     }
   }
 
-  private _enc_creators_initials_marker = '\u0097' // end of guarded area
-  private _enc_creators_relax_marker = '\u200C' // zero-width non-joiner
-
-  private isBibString = /^[a-z][-a-z0-9_]*$/i
-  private metadata: Types.DB.Cache.ExportedItemMetadata = { DeclarePrefChars: '', noopsort: false, packages: [] }
+  private metadata: Cache.ExportedItemMetadata = { DeclarePrefChars: '', noopsort: false, packages: [] }
   private packages: { [key: string]: boolean }
   private juniorcomma: boolean
 
   constructor(item) {
     this.item = item
     this.packages = {}
+    this.date = item.date ? Zotero.BetterBibTeX.parseDate(item.date) : { type: 'none' }
 
     if (!this.item.language) {
       this.english = true
     }
     else {
-      const langlc = this.item.language.toLowerCase()
-
-      let language = Language.babelMap[langlc.replace(/[^a-z0-9]/, '_')]
-      if (!language) language = Language.babelMap[langlc.replace(/-[a-z]+$/i, '').replace(/[^a-z0-9]/, '_')]
-      if (!language) language = Language.fromPrefix(langlc)
-      if (language) {
-        this.language = language[0]
-      }
-      else {
-        const match = Language.lookup(langlc)
-        if (match[0].sim >= 0.9) { // eslint-disable-line no-magic-numbers
-          this.language = match[0].lang
-        }
-        else {
-          this.language = this.item.language
-        }
-      }
-
-      this.english = ['american', 'british', 'canadian', 'english', 'australian', 'newzealand', 'usenglish', 'ukenglish', 'anglais'].includes(this.language.toLowerCase())
+      this.language = babelLanguage(this.item.language)
+      this.english = babelTag(this.language) === 'en'
     }
 
     // remove ordinal from edition
     this.item.edition = (this.item.edition || '').replace(/^([0-9]+)(nd|th)$/, '$1')
 
+    this.extraFields = JSON.parse(JSON.stringify(this.item.extraFields))
+
+    // should be const referencetype: string | { type: string, subtype?: string }
+    // https://github.com/Microsoft/TypeScript/issues/10422
+    let referencetype: any
+
+    // workaround for preprints, https://forums.zotero.org/discussion/comment/385524#Comment_385524
+    const isPrePrint = Translator.BetterBibTeX && this.item.itemType === 'report' && this.item.extraFields.kv.type?.toLowerCase() === 'article'
+
     // preserve for thesis type etc
     let csl_type = this.item.extraFields.kv.type
-    if (this.typeMap.csl[csl_type]) {
+    if (!isPrePrint && this.typeMap.csl[csl_type]) {
       delete this.item.extraFields.kv.type
     }
     else {
       csl_type = null
     }
 
-    // should be const referencetype: string | { type: string, subtype?: string }
-    // https://github.com/Microsoft/TypeScript/issues/10422
-    let referencetype: any
     if (this.item.extraFields.tex.referencetype) {
       referencetype = this.item.extraFields.tex.referencetype.value
       this.referencetype_source = `tex.${referencetype}`
@@ -396,10 +234,16 @@ export class Reference {
       referencetype = this.typeMap.csl[csl_type]
       this.referencetype_source = `csl.${csl_type}`
     }
+    else if (isPrePrint) {
+      referencetype = 'misc'
+      delete this.item.extraFields.kv.type
+      this.referencetype_source = `zotero.${this.item.itemType}`
+    }
     else {
       referencetype = this.typeMap.zotero[this.item.itemType] || 'misc'
       this.referencetype_source = `zotero.${this.item.itemType}`
     }
+
     if (typeof referencetype === 'string') {
       this.referencetype = referencetype
     }
@@ -425,7 +269,7 @@ export class Reference {
     for (const [name, value] of Object.entries(item.extraFields.creator)) {
       if (ExtraFields[name].zotero) {
         for (const creator of (value as string[])) {
-          item.creators.push({...Extra.zoteroCreator(creator), creatorType: name, source: creator})
+          item.creators.push({...Extra.zoteroCreator(creator, name), source: creator})
         }
         delete item.extraFields.creator[name]
       }
@@ -456,10 +300,10 @@ export class Reference {
 
     if (this.item.arXiv) {
       delete this.item.extraFields.tex.arxiv
-      this.add({ name: 'archivePrefix', value: 'arXiv'} )
+      this.add({ name: 'archiveprefix', value: 'arXiv'} )
       this.add({ name: 'eprinttype', value: 'arxiv'})
       this.add({ name: 'eprint', value: this.item.arXiv.id })
-      this.add({ name: 'primaryClass', value: this.item.arXiv.category })
+      this.add({ name: 'primaryclass', value: this.item.arXiv.category })
     }
   }
 
@@ -492,7 +336,9 @@ export class Reference {
    *   'enc' means 'enc_latex'. If you pass both 'bibtex' and 'latex', 'bibtex' takes precedence (and 'value' will be
    *   ignored)
    */
-  public add(field: IField): string {
+  public add(field: Translators.BibTeX.Field): string {
+    if (Translator.preferences.testing && !this.inPostscript && field.name !== field.name.toLowerCase()) throw new Error(`Do not add mixed-case field ${field.name}`)
+
     if (!field.value && !field.bibtex && this.inPostscript) {
       delete this.has[field.name]
       return null
@@ -510,6 +356,9 @@ export class Reference {
           enc: 'verbatim',
         })
       }
+
+      // bare year
+      // if (Translator.BetterBibLaTeX && (typeof field.value === 'number' || (typeof field.value === 'string' && field.value.match(/^[0-9]+$/)))) return this.add({...field, bibtex: `${field.value}`, enc: 'latex'})
 
       if (Translator.BetterBibLaTeX && Translator.preferences.biblatexExtendedDateFormat && Zotero.BetterBibTeX.isEDTF(field.value, true)) {
         return this.add({
@@ -561,12 +410,23 @@ export class Reference {
 
     if (this.has[field.name]) {
       if (this.has[field.name].value === field.value && (this.has[field.name].enc || 'latex') === (field.enc || 'latex')) return null
+
       if (!this.inPostscript && !field.replace) {
         const value = field.bibtex ? 'bibtex' : 'value'
         throw new Error(`duplicate field '${field.name}' for ${this.item.citationKey}: old: ${this.has[field.name][value]}, new: ${field[value]}`)
       }
-      this.quality_report.push(`duplicate "${field.name}" ("${this.has[field.name].value}") ignored`)
-      this.remove(field.name)
+
+      if (!field.replace) {
+        let v_old = this.has[field.name].value
+        let v_new = field.value
+        if (typeof v_old === 'string' && typeof v_new === 'string') {
+          v_old = v_old.toLowerCase()
+          v_new = v_new.toLowerCase()
+        }
+        if (v_old !== v_new) this.quality_report.push(`duplicate "${field.name}" ("${this.has[field.name].value}") ignored`)
+      }
+
+      delete this.has[field.name]
     }
 
     if (!field.bibtex) {
@@ -576,10 +436,10 @@ export class Reference {
 
       }
       else {
-        const enc = field.enc || this.fieldEncoding[field.name] || 'latex'
+        field.enc = field.enc || this.fieldEncoding[field.name] || 'latex'
 
         let value
-        switch (enc) {
+        switch (field.enc) {
           case 'latex':
             value = this.enc_latex(field, { raw: this.item.raw })
             break
@@ -613,7 +473,7 @@ export class Reference {
             break
 
           default:
-            throw new Error(`Unexpected field encoding: ${JSON.stringify(enc)}`)
+            throw new Error(`Unexpected field encoding: ${JSON.stringify(field.enc)}`)
         }
 
         if (!value) return null
@@ -643,8 +503,7 @@ export class Reference {
    * @return {Object} the removed field, if present
    */
   public remove(name) {
-    if (!this.has[name]) return
-    const removed = this.has[name]
+    const removed = this.has[name] || {}
     delete this.has[name]
     return removed
   }
@@ -657,7 +516,7 @@ export class Reference {
         return null
 
       case 'detect':
-        return this.isBibString.test(value) && value
+        return isBibString.test(value) && value
 
       case 'match':
         // the importer uppercases string declarations
@@ -675,7 +534,7 @@ export class Reference {
 
   public hasCreator(type): boolean { return (this.item.creators || []).some(creator => creator.creatorType === type) }
 
-  public override(field: IField): void {
+  public override(field: Translators.BibTeX.Field): void {
     const itemtype_name = field.name.split('.')
     let name
     if (itemtype_name.length === 2) {
@@ -894,14 +753,16 @@ export class Reference {
       this.has[field] = value
     }
 
+    let allow: postscript.Allow = { cache: true, write: true }
     try {
-      if (this.postscript(this, this.item, Translator, Zotero) === false) this.item.cachable = false
+      allow = this.postscript(this, this.item, Translator, Zotero, this.extraFields)
     }
     catch (err) {
-      if (Translator.preferences.testing && !Translator.preferences.ignorePostscriptErrors) throw err
+      if (Translator.preferences.testing) throw err
       log.error('Reference.postscript failed:', err)
-      this.item.cachable = false
+      allow.cache = false
     }
+    this.item.$cacheable = this.item.$cacheable && allow.cache
 
     for (const name of Translator.skipFields) {
       this.remove(name)
@@ -930,12 +791,12 @@ export class Reference {
     ref += this.qualityReport()
     ref += '\n'
 
-    Zotero.write(ref)
+    if (allow.write) Zotero.write(ref)
 
     this.metadata.DeclarePrefChars = Exporter.unique_chars(this.metadata.DeclarePrefChars)
 
     this.metadata.packages = Object.keys(this.packages)
-    if (this.item.cachable) Zotero.BetterBibTeX.cacheStore(this.item.itemID, Translator.options, Translator.preferences, ref, this.metadata)
+    if (this.item.$cacheable) Zotero.BetterBibTeX.cacheStore(this.item.itemID, Translator.options, Translator.preferences, ref, this.metadata)
 
     Exporter.postfix.add(this.metadata)
   }
@@ -980,7 +841,7 @@ export class Reference {
   }
 
   protected _enc_creators_scrub_name(name: string): string {
-    return Zotero.Utilities.XRegExp.replace(name, this.whitespace, ' ', 'all')
+    return Zotero.Utilities.XRegExp.replace(name, re.whitespace, ' ', 'all')
   }
   /*
    * Encode creators to author-style field
@@ -1025,6 +886,7 @@ export class Reference {
         }
 
         name = name.replace(/ and /g, ' {and} ')
+        if (Translator.and.names.repl !== ' {and} ') name = name.replace(Translator.and.names.re, Translator.and.names.repl)
 
       }
       else {
@@ -1034,7 +896,7 @@ export class Reference {
       encoded.push(name.trim())
     }
 
-    return replace_command_spacers(encoded.join(' and '))
+    return replace_command_spacers(encoded.join(Translator.preferences.separatorNames))
   }
 
   /*
@@ -1124,9 +986,13 @@ export class Reference {
     return tags.map(tag => tag.tag).join(',')
   }
 
-  protected enc_attachments(f): string {
+  protected enc_attachments(f, modify?: (path: string) => string): string {
+    log.debug('encoding attachments', f)
     if (!f.value || (f.value.length === 0)) return null
     const attachments: {title: string, mimetype: string, path: string}[] = []
+
+    // #1939
+    if (modify) this.item.$cacheable = false
 
     for (const attachment of f.value) {
       const att = {
@@ -1141,6 +1007,7 @@ export class Reference {
       else if (attachment.localPath) {
         att.path = attachment.localPath
       }
+      log.debug('encoding attachment', att)
 
       if (!att.path) continue // amazon/googlebooks etc links show up as atachments without a path
       // att.path = att.path.replace(/^storage:/, '')
@@ -1154,19 +1021,19 @@ export class Reference {
 
       if (!att.mimetype && (att.path.slice(-4).toLowerCase() === '.pdf')) att.mimetype = 'application/pdf' // eslint-disable-line no-magic-numbers
 
-      if (Translator.preferences.testing) {
-        att.path = `files/${this.item.citationKey}/${att.path.replace(/.*[/\\]/, '')}`
-      }
-      else if (Translator.preferences.relativeFilePaths && Translator.export.dir) {
+      if (Translator.preferences.relativeFilePaths && Translator.export.dir) {
         const relative = Path.relative(att.path)
         if (relative !== att.path) {
-          this.item.cachable = false
+          this.item.$cacheable = false
           att.path = relative
         }
       }
+      if (Translator.preferences.testing) att.path = att.path.replace(/.*[.]BBTZ5TEST\/(zotero|jurism)\//, '~/BBTZ5TEST/').replace(/\/storage\/[^/]+\//, '/storage/')
 
+      if (modify) att.path = modify(att.path)
       attachments.push(att)
     }
+    log.debug('encoded attachments', attachments)
 
     if (attachments.length === 0) return null
 
@@ -1186,7 +1053,7 @@ export class Reference {
     if (particle[particle.length - 1] === ' ') return particle
 
     if (Translator.BetterBibLaTeX) {
-      if (Zotero.Utilities.XRegExp.test(particle, this.punctuationAtEnd)) this.metadata.DeclarePrefChars += particle[particle.length - 1]
+      if (Zotero.Utilities.XRegExp.test(particle, re.punctuationAtEnd)) this.metadata.DeclarePrefChars += particle[particle.length - 1]
       // if BBLT, always add a space if it isn't there
       return `${particle} `
     }
@@ -1197,8 +1064,8 @@ export class Reference {
     if (particle[particle.length - 1] === '.') return `${particle} `
 
     // if it ends in any other punctuation, it's probably something like d'Medici -- no space
-    if (Zotero.Utilities.XRegExp.test(particle, this.punctuationAtEnd)) {
-      if (relax) return `${particle}${this._enc_creators_relax_marker} `
+    if (Zotero.Utilities.XRegExp.test(particle, re.punctuationAtEnd)) {
+      if (relax) return `${particle}${enc_creators_marker.relax} `
       return particle
     }
 
@@ -1223,14 +1090,14 @@ export class Reference {
       ({ family } = name)
     }
 
-    const initials_marker_pos: number = (name.given || '').indexOf(this._enc_creators_initials_marker) // end of guarded area
+    const initials_marker_pos: number = (name.given || '').indexOf(enc_creators_marker.initials) // end of guarded area
     let initials: string | String
 
     if (Translator.preferences.biblatexExtendedNameFormat && (name['dropping-particle'] || name['non-dropping-particle'] || name['comma-suffix'])) {
       if (initials_marker_pos >= 0) {
         initials = name.given.substring(0, initials_marker_pos)
         if (initials.length > 1) initials = new String(initials) // eslint-disable-line no-new-wrappers
-        name.given = name.given.replace(this._enc_creators_initials_marker, '')
+        name.given = name.given.replace(enc_creators_marker.initials, '')
       }
       else {
         initials = ''
@@ -1249,11 +1116,11 @@ export class Reference {
       return namebuilder.join(', ')
     }
 
-    if (family && Zotero.Utilities.XRegExp.test(family, this.startsWithLowercase)) family = new String(family) // eslint-disable-line no-new-wrappers
+    if (family && Zotero.Utilities.XRegExp.test(family, re.startsWithLowercase)) family = new String(family) // eslint-disable-line no-new-wrappers
 
     if (family) family = this._enc_creator_part(family)
 
-    if (initials_marker_pos >= 0) name.given = `<span relax="true">${name.given.replace(this._enc_creators_initials_marker, '</span>')}`
+    if (initials_marker_pos >= 0) name.given = `<span relax="true">${name.given.replace(enc_creators_marker.initials, '</span>')}`
 
     let latex = ''
     if (name['dropping-particle']) latex += this._enc_creator_part(this._enc_creators_pad_particle(name['dropping-particle']))
@@ -1274,8 +1141,8 @@ export class Reference {
       family = name.family
     }
 
-    if (name.given && (name.given.indexOf(this._enc_creators_initials_marker) >= 0)) {
-      name.given = `<span relax="true">${name.given.replace(this._enc_creators_initials_marker, '</span>')}`
+    if (name.given && (name.given.indexOf(enc_creators_marker.initials) >= 0)) {
+      name.given = `<span relax="true">${name.given.replace(enc_creators_marker.initials, '</span>')}`
     }
 
     /*
@@ -1293,7 +1160,7 @@ export class Reference {
 
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     if (name['non-dropping-particle']) family = new String(this._enc_creators_pad_particle(name['non-dropping-particle']) + family) // eslint-disable-line no-new-wrappers
-    if (Zotero.Utilities.XRegExp.test(family, this.startsWithLowercase) || Zotero.Utilities.XRegExp.test(family, this.hasLowercaseWord)) family = new String(family) // eslint-disable-line no-new-wrappers
+    if (Zotero.Utilities.XRegExp.test(family, re.startsWithLowercase) || Zotero.Utilities.XRegExp.test(family, re.hasLowercaseWord)) family = new String(family) // eslint-disable-line no-new-wrappers
 
     // https://github.com/retorquere/zotero-better-bibtex/issues/978 -- enc_latex can return null
     family = family ? this._enc_creator_part(family) : ''
@@ -1318,51 +1185,132 @@ export class Reference {
     return latex
   }
 
-  private postscript(_reference, _item, _translator, _zotero): boolean { return true } // eslint-disable-line no-empty,@typescript-eslint/no-empty-function
+  private postscript(_reference, _item, _translator, _zotero, _extra): postscript.Allow {
+    return { cache: true, write: true }
+  }
+
+  public thesistype(type: string, phdthesis: string, mastersthesis: string, bathesis?: string, candthesis?: string): string {
+    return {
+      phd: phdthesis,
+      dissertation: phdthesis,
+      phddissertation: phdthesis,
+      doctoraldissertation: phdthesis,
+
+      ma: mastersthesis,
+      master: mastersthesis,
+      masters: mastersthesis,
+
+      ba: bathesis,
+      bachelor: bathesis,
+      bachelors: bathesis,
+
+      cand: candthesis,
+      candidate: candthesis,
+      candidates: candthesis,
+    }[type?.toLowerCase().replace(/[^a-z]/g, '').replace(/thesis$/, '')]
+  }
 
   private qualityReport(): string {
-    if (!Translator.preferences.qualityReport) return ''
+    // the quality report will access a bunch of fields not to export them but just to see if they were used, and that triggers the cacheDisabler proxy when
+    // the 'collections' field is accessed... rendering a lot of items uncacheable
+    const $cacheable = this.item.$cacheable
+    try {
+      if (!Translator.preferences.qualityReport) return ''
 
-    let report: string[] = this.lint({
-      timestamp: `added because JabRef format is set to ${Translator.preferences.jabrefFormat || '?'}`,
-    })
+      let report: string[] = this.lint({
+        timestamp: `added because JabRef format is set to ${Translator.preferences.jabrefFormat || '?'}`,
+      })
 
-    if (report) {
-      if (this.has.pages) {
-        const dashes = this.has.pages.bibtex.match(/-+/g)
-        // if (dashes && dashes.includes('-')) report.push('? hyphen found in pages field, did you mean to use an en-dash?')
-        if (dashes && dashes.includes('---')) report.push('? em-dash found in pages field, did you mean to use an en-dash?')
-      }
-      if (this.has.journal && this.has.journal.value.indexOf('.') >= 0) report.push(`? Possibly abbreviated journal title ${this.has.journal.value}`)
-      if (this.has.journaltitle && this.has.journaltitle.value.indexOf('.') >= 0) report.push(`? Possibly abbreviated journal title ${this.has.journaltitle.value}`)
+      if (report) {
+        if (this.has.pages) {
+          const dashes = this.has.pages.bibtex.match(/-+/g)
+          // if (dashes && dashes.includes('-')) report.push('? hyphen found in pages field, did you mean to use an en-dash?')
+          if (dashes && dashes.includes('---')) report.push('? em-dash found in pages field, did you mean to use an en-dash?')
+        }
+        if (this.has.journal && this.has.journal.value.indexOf('.') >= 0) report.push(`? Possibly abbreviated journal title ${this.has.journal.value}`)
+        if (this.has.journaltitle && this.has.journaltitle.value.indexOf('.') >= 0) report.push(`? Possibly abbreviated journal title ${this.has.journaltitle.value}`)
 
-      if (this.referencetype === 'inproceedings' && this.has.booktitle) {
-        if (!this.has.booktitle.value.match(/:|Proceedings|Companion| '/) || this.has.booktitle.value.match(/\.|workshop|conference|symposium/)) {
-          report.push('? Unsure about the formatting of the booktitle')
+        if (this.referencetype === 'inproceedings' && this.has.booktitle) {
+          if (!this.has.booktitle.value.match(/:|Proceedings|Companion| '/) || this.has.booktitle.value.match(/\.|workshop|conference|symposium/)) {
+            report.push('? Unsure about the formatting of the booktitle')
+          }
+        }
+
+        if (this.has.title && Translator.preferences.exportTitleCase) {
+          const titleCased = Zotero.BetterBibTeX.titleCase(this.has.title.value) === this.has.title.value
+          if (this.has.title.value.match(/\s/)) {
+            if (titleCased) report.push('? Title looks like it was stored in title-case in Zotero')
+          }
+          else {
+            if (!titleCased) report.push('? Title looks like it was stored in lower-case in Zotero')
+          }
         }
       }
-
-      if (this.has.title && Translator.preferences.exportTitleCase) {
-        const titleCased = Zotero.BetterBibTeX.titleCase(this.has.title.value) === this.has.title.value
-        if (this.has.title.value.match(/\s/)) {
-          if (titleCased) report.push('? Title looks like it was stored in title-case in Zotero')
-        }
-        else {
-          if (!titleCased) report.push('? Title looks like it was stored in lower-case in Zotero')
-        }
+      else {
+        report = [`I don't know how to quality-check ${this.referencetype} references`]
       }
+
+      report = report.concat(this.quality_report)
+
+      if (!report.length) return ''
+
+      report.unshift(`== ${Translator.BetterBibTeX ? 'BibTeX' : 'BibLateX'} quality report for ${this.item.citationKey}:`)
+
+      const used: Array<string | number> = Object.values(this.has) // eslint-disable-line @typescript-eslint/array-type
+        .filter(field => typeof field.value === 'string' || typeof field.value === 'number')
+        .map(field => typeof field.value === 'string' ? field.value.toLowerCase().replace(/[^a-zA-z0-9]/g, '') : field.value)
+      const fields: [string, any][] = Object.entries(this.item)
+        .sort(entry_sort)
+      const extra_fields: [string, any][] = (Object.entries(this.item.extraFields.kv) as [string, any][])
+        .sort(entry_sort)
+        .map(([field, value]: [string, any]) => [`extraFields.kv.${field}`, value])
+      const ignore_unused_fields = [
+        'abstractNote',
+        'accessDate',
+        'autoJournalAbbreviation',
+        'citationKey',
+        'citekey',
+        'collections',
+        'date',
+        'dateAdded',
+        'dateModified',
+        'itemID',
+        'itemType',
+        'itemKey',
+        'key',
+        'libraryID',
+        'relations',
+        'uri',
+      ]
+      for (const [field, value] of fields.concat(extra_fields)) {
+        if (!value) continue
+        if (ignore_unused_fields.includes(field)) continue
+
+        let v: string
+        switch (typeof value) {
+          case 'string':
+            v = value.toLowerCase().replace(/[^a-zA-z0-9]/g, '')
+            if (used.includes(v)) continue
+            if (field === 'libraryCatalog' && v.includes('arxiv') && this.item.arXiv) continue
+            if (field === 'language' && this.has.langid) continue
+            break
+          case 'number':
+            if (used.includes(value)) continue
+            break
+
+          default:
+            continue
+        }
+
+        report.push(`? Unused ${field}: ${value}`)
+      }
+
+      return report.map(line => `% ${line}\n`).join('')
     }
-    else {
-      report = [`I don't know how to quality-check ${this.referencetype} references`]
+    finally {
+      // restore cacheable state
+      this.item.$cacheable = $cacheable
     }
-
-    report = report.concat(this.quality_report)
-
-    if (!report.length) return ''
-
-    report.unshift(`== ${Translator.BetterBibTeX ? 'BibTeX' : 'BibLateX'} quality report for ${this.item.citationKey}:`)
-
-    return report.map(line => `% ${line}\n`).join('')
   }
 }
 

@@ -1,20 +1,21 @@
 /* eslint-disable @typescript-eslint/require-await, @typescript-eslint/no-unsafe-return */
-declare const Zotero: any
-declare const Components: any
+
+Components.utils.import('resource://gre/modules/AddonManager.jsm')
 declare const AddonManager: any
 
 import { Translators } from '../translators'
 import { getItemsAsync } from '../get-items-async'
-import { Preferences as Prefs } from '../prefs'
+import { Preference } from '../../gen/preferences'
 import { log } from '../logger'
+import { fromEntries } from '../object'
 
 import * as unicode_table from 'unicode2latex/tables/unicode.json'
-const unicode2latex = Object.entries(unicode_table).reduce((acc, pair) => {
-  const unicode = pair[0]
-  const latex = pair[1] as { text: string, math: string }
-  acc[unicode] = { text: latex.text || latex.math, math: !(latex.text) }
-  return acc
-}, {})
+
+const unicode2latex = (fromEntries(
+  Object
+    .entries(unicode_table)
+    .map(([unicode, latex]: [string, { text: string, math: string }]) => [ unicode, { text: latex.text || latex.math, math: !(latex.text) }])
+) as Record<string, { text: string, math: boolean }>)
 
 function tolatex(s: string): string {
   if (!s) return ''
@@ -209,10 +210,9 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
   }
 
   public async 'scannable-cite'(citations, options) {
-    const deferred = Zotero.Promise.defer()
-    Components.utils.import('resource://gre/modules/AddonManager.jsm')
-    AddonManager.getAddonByID('rtf-odf-scan-for-zotero@mystery-lab.com', addon => deferred.resolve(addon && addon.isActive))
-    const odfScan = await deferred.promise
+    const odfScan = await new Promise((resolve, _reject) => {
+      AddonManager.getAddonByID('rtf-odf-scan-for-zotero@mystery-lab.com', addon => resolve(addon && addon.isActive))
+    })
     if (!odfScan) throw new Error('scannable-cite needs the "RTF/ODF Scan for Zotero" plugin to be installed')
 
     const items = await getItemsAsync(citations.map(picked => picked.id))
@@ -235,7 +235,7 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
         `${item.suppressAuthor ? '-' : ''}${labels[id]}`,
         item.locator ? `${shortLabel(item.label, options)} ${item.locator}`.trim() : '',
         item.suffix || '',
-        Prefs.testing ? 'zu:0:ITEMKEY' : id,
+        Preference.testing ? 'zu:0:ITEMKEY' : id,
       ].join(' | ').replace(/ +/g, ' ')
 
       citation += `{ ${enriched.trim()} }`

@@ -11,8 +11,7 @@
       "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
       "exportBraceProtection": false,
       "itemObserverDelay": 100,
-      "skipFields": "file,abstract",
-      "workers": 0
+      "skipFields": "file,abstract"
     }
   },
   "items": [

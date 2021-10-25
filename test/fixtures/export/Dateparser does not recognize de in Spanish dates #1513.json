@@ -13,8 +13,7 @@
       "keyScope": "global",
       "qualityReport": true,
       "quickCopyMode": "orgRef",
-      "warnBulkModify": 0,
-      "workers": 0
+      "warnBulkModify": 0
     }
   },
   "items": [
@@ -46,7 +45,6 @@
       "itemID": 1,
       "itemType": "book",
       "language": "English",
-      "libraryCatalog": "Amazon",
       "numPages": "416",
       "place": "New York",
       "publisher": "W. W. Norton & Company",

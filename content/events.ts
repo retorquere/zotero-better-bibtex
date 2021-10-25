@@ -1,4 +1,4 @@
-declare const Zotero: any
+/* eslint-disable prefer-rest-params */
 
 import { EventEmitter } from 'eventemitter3'
 import { patch as $patch$ } from './monkey-patch'
@@ -16,25 +16,25 @@ if (Zotero.Debug.enabled) {
     'collections-changed',
     'collections-removed',
     'libraries-removed',
+    'export-progress',
     'loaded',
   ]
 
   $patch$(Events, 'on', original => function() {
-    // eslint-disable-next-line prefer-rest-params
     if (!events.includes(arguments[0])) throw new Error(`Unsupported event ${arguments[0]}`)
-    // eslint-disable-next-line prefer-rest-params
     original.apply(this, arguments)
   })
 
   $patch$(Events, 'emit', original => function() {
-    // eslint-disable-next-line prefer-rest-params
     if (!events.includes(arguments[0])) throw new Error(`Unsupported event ${arguments[0]}`)
-    // eslint-disable-next-line prefer-rest-params
+    Zotero.debug(`event-emit: ${JSON.stringify(Array.from(arguments))}`)
     original.apply(this, arguments)
   })
 }
 
-export function itemsChanged(items: any[]): void {
+export function itemsChanged(items: ZoteroItem[]): void {
+  if (! items.length) return
+
   const changed = {
     collections: new Set,
     libraries: new Set,
@@ -53,6 +53,6 @@ export function itemsChanged(items: any[]): void {
     }
   }
 
-  if (changed.collections.size) Events.emit('collections-changed', Array.from(changed.collections))
-  if (changed.libraries.size) Events.emit('libraries-changed', Array.from(changed.libraries))
+  if (changed.collections.size) Events.emit('collections-changed', [...changed.collections])
+  if (changed.libraries.size) Events.emit('libraries-changed', [...changed.libraries])
 }

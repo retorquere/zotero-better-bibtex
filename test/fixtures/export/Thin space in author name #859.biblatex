@@ -6,9 +6,9 @@
   journaltitle = {Physical Review Letters},
   shortjournal = {Phys. Rev. Lett.},
   volume = {115},
+  number = {25},
   pages = {250401},
-  doi = {10.1103/PhysRevLett.115.250401},
-  number = {25}
+  doi = {10.1103/PhysRevLett.115.250401}
 }
 
 

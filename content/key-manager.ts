@@ -1,22 +1,22 @@
-declare const Zotero: any
-declare const window: any
+import ETA from 'node-eta'
 
-import ETA = require('node-eta')
-import { kuroshiro } from './key-manager/kuroshiro'
+import { kuroshiro } from './key-manager/japanese'
+import { jieba } from './key-manager/chinese'
 
 import { Scheduler } from './scheduler'
 import { log } from './logger'
 import { sleep } from './sleep'
 import { flash } from './flash'
-import { Events, itemsChanged as notifiyItemsChanged } from './events'
+import { Events, itemsChanged as notifyItemsChanged } from './events'
 import { arXiv } from './arXiv'
 import * as Extra from './extra'
+import { $and, Query } from './db/loki'
 
 import * as ZoteroDB from './db/zotero'
 
 import { getItemsAsync } from './get-items-async'
 
-import { Preferences as Prefs } from './prefs'
+import { Preference } from '../gen/preferences'
 import { Formatter } from './key-manager/formatter'
 import { DB } from './db/main'
 import { DB as Cache } from './db/cache'
@@ -26,14 +26,18 @@ import { patch as $patch$ } from './monkey-patch'
 import { sprintf } from 'sprintf-js'
 import { intToExcelCol } from 'excel-column-name'
 
-// export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export const KeyManager = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+import * as l10n from './l10n'
+
+type CitekeySearchRecord = { itemID: number, libraryID: number, itemKey: string, citekey: string }
+
+export class KeyManager {
   public keys: any
   public query: {
     field: { extra?: number }
     type: {
       note?: number
       attachment?: number
+      annotation?: number
     }
   }
   public autopin: Scheduler = new Scheduler('autoPinDelay', 1000) // eslint-disable-line no-magic-numbers
@@ -81,13 +85,13 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
     }
   }
 
-  public async set() {
+  public async set(): Promise<void> {
     const ids = this.expandSelection('selected')
-    if (ids.length !== 1) return alert(Zotero.BetterBibTeX.getString('Citekey.set.toomany'))
+    if (ids.length !== 1) return alert(l10n.localize('Citekey.set.toomany'))
 
     Cache.remove(ids, `setting key for ${ids}`)
     const existingKey = this.get(ids[0]).citekey
-    const citationKey = prompt(Zotero.BetterBibTeX.getString('Citekey.set.change'), existingKey) || existingKey
+    const citationKey = prompt(l10n.localize('Citekey.set.change'), existingKey) || existingKey
     if (citationKey === existingKey) return
 
     const item = await getItemsAsync(ids[0])
@@ -95,11 +99,11 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
     await item.saveTx() // this should cause an update and key registration
   }
 
-  public async pin(ids: any[], inspireHEP = false) {
+  public async pin(ids: 'selected' | number | number[], inspireHEP = false): Promise<void> {
     ids = this.expandSelection(ids)
 
     for (const item of await getItemsAsync(ids)) {
-      if (item.isNote() || item.isAttachment()) continue
+      if (!item.isRegularItem()) continue
 
       const extra = this.getField(item, 'extra')
       const parsed = Extra.get(extra, 'zotero')
@@ -127,11 +131,11 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
     }
   }
 
-  public async unpin(ids: any) {
+  public async unpin(ids: 'selected' | number | number[]): Promise<void> {
     ids = this.expandSelection(ids)
 
     for (const item of await getItemsAsync(ids)) {
-      if (item.isNote() || item.isAttachment()) continue
+      if (!item.isRegularItem()) continue
 
       const parsed = Extra.get(item.getField('extra'), 'zotero', { citationKey: true })
       if (!parsed.extraFields.citationKey) continue
@@ -142,22 +146,22 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
 
   }
 
-  public async refresh(ids: 'selected' | number[], manual = false) {
+  public async refresh(ids: 'selected' | number | number[], manual = false): Promise<void> {
     ids = this.expandSelection(ids)
 
     Cache.remove(ids, `refreshing keys for ${ids}`)
 
-    const warnAt = manual ? Prefs.get('warnBulkModify') : 0
+    const warnAt = manual ? Preference.warnBulkModify : 0
     if (warnAt > 0 && ids.length > warnAt) {
-      const affected = this.keys.find({ itemID: { $in: ids }, pinned: false }).length
+      const affected = this.keys.find({ $and: [{ itemID: { $in: ids } }, { pinned: { $eq: false } } ] }).length
       if (affected > warnAt) {
         const params = { treshold: warnAt, response: null }
-        window.openDialog('chrome://zotero-better-bibtex/content/bulk-keys-confirm.xul', '', 'chrome,dialog,centerscreen,modal', params)
+        Zotero.BetterBibTeX.openDialog('chrome://zotero-better-bibtex/content/bulk-keys-confirm.xul', '', 'chrome,dialog,centerscreen,modal', params)
         switch (params.response) {
           case 'ok':
             break
           case 'whatever':
-            Prefs.set('warnBulkModify', 0)
+            Preference.warnBulkModify = 0
             break
           default:
             return
@@ -167,7 +171,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
 
     const updates = []
     for (const item of await getItemsAsync(ids)) {
-      if (item.isNote() || item.isAttachment()) continue
+      if (!item.isRegularItem()) continue
 
       const extra = item.getField('extra')
 
@@ -188,16 +192,19 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
         else {
           item.setField('extra', aliases.extra)
         }
+        await item.saveTx()
       }
-
-      if (manual) updates.push(item)
+      else {
+        updates.push(item)
+      }
     }
 
-    if (manual) notifiyItemsChanged(updates)
+    if (updates.length) notifyItemsChanged(updates)
   }
 
-  public async init() {
+  public async init(): Promise<void> {
     await kuroshiro.init()
+    jieba.init()
 
     this.keys = DB.getCollection('citekey')
 
@@ -217,64 +224,111 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
     Formatter.update('init')
   }
 
-  public async start() {
+  public async start(): Promise<void> {
     await this.rescan()
 
-    await ZoteroDB.queryAsync('ATTACH DATABASE ":memory:" AS betterbibtexcitekeys')
-    await ZoteroDB.queryAsync('CREATE TABLE betterbibtexcitekeys.citekeys (itemID PRIMARY KEY, itemKey, citekey)')
-    await Zotero.DB.executeTransaction(async () => {
-      for (const key of this.keys.data) {
-        await ZoteroDB.queryAsync('INSERT INTO betterbibtexcitekeys.citekeys (itemID, itemKey, citekey) VALUES (?, ?, ?)', [ key.itemID, key.itemKey, key.citekey ])
+    let search = Preference.citekeySearch
+    if (search) {
+      try {
+        const path = OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex-search.sqlite')
+        await Zotero.DB.queryAsync(`ATTACH DATABASE '${path.replace(/'/g, "''")}' AS betterbibtexsearch`)
       }
-    })
-
-    const citekeySearchCondition = {
-      name: 'citationKey',
-      operators: {
-        is: true,
-        isNot: true,
-        contains: true,
-        doesNotContain: true,
-      },
-      table: 'betterbibtexcitekeys.citekeys',
-      field: 'citekey',
-      localized: 'Citation Key',
+      catch (err) {
+        log.debug('failed to attach the search database:', err)
+        flash('Error loading citekey search database, citekey search is disabled')
+        search = false
+      }
     }
-    $patch$(Zotero.Search.prototype, 'addCondition', original => function addCondition(condition: string, operator: any, value: any, _required: any) {
-      // detect a quick search being set up
-      if (condition.match(/^quicksearch/)) this.__add_bbt_citekey = true
-      // creator is always added in a quick search so use it as a trigger
-      if (condition === 'creator' && this.__add_bbt_citekey) {
-        original.call(this, citekeySearchCondition.name, operator, value, false)
-        delete this.__add_bbt_citekey
+    if (search) {
+      // 1829
+      try {
+        // no other way to detect column existence on attached databases
+        await Zotero.DB.valueQueryAsync('SELECT libraryID FROM betterbibtexsearch.citekeys LIMIT 1')
       }
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
-      return original.apply(this, arguments)
-    })
-    $patch$(Zotero.SearchConditions, 'hasOperator', original => function hasOperator(condition: string, operator: string | number) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      if (condition === citekeySearchCondition.name) return citekeySearchCondition.operators[operator]
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
-      return original.apply(this, arguments)
-    })
-    $patch$(Zotero.SearchConditions, 'get', original => function get(condition: string) {
-      if (condition === citekeySearchCondition.name) return citekeySearchCondition
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
-      return original.apply(this, arguments)
-    })
-    $patch$(Zotero.SearchConditions, 'getStandardConditions', original => function getStandardConditions() {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
-      return original.apply(this, arguments).concat({
-        name: citekeySearchCondition.name,
-        localized: citekeySearchCondition.localized,
-        operators: citekeySearchCondition.operators,
-      }).sort((a: { localized: string }, b: { localized: any }) => a.localized.localeCompare(b.localized))
-    })
-    $patch$(Zotero.SearchConditions, 'getLocalizedName', original => function getLocalizedName(str: string) {
-      if (str === citekeySearchCondition.name) return citekeySearchCondition.localized
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
-      return original.apply(this, arguments)
-    })
+      catch (err) {
+        log.debug(`dropping betterbibtexsearch.citekeys, assuming libraryID does not exist: ${err}`)
+        await Zotero.DB.queryAsync('DROP TABLE IF EXISTS betterbibtexsearch.citekeys')
+      }
+      await Zotero.DB.queryAsync('CREATE TABLE IF NOT EXISTS betterbibtexsearch.citekeys (itemID PRIMARY KEY, libraryID, itemKey, citekey)')
+
+      const match: Record<string, CitekeySearchRecord> = this.keys.data
+        .reduce((acc: Record<string, CitekeySearchRecord>, k: CitekeySearchRecord) => {
+          acc[`${k.itemID}\t${k.libraryID}\t${k.itemKey}\t${k.citekey}`] = k
+          return acc
+        }, {})
+
+      const remove: string[] = []
+      for (const row of await Zotero.DB.queryAsync('SELECT itemID, libraryID, itemKey, citekey FROM betterbibtexsearch.citekeys')) {
+        const key = `${row.itemID}\t${row.libraryID}\t${row.itemKey}\t${row.citekey}`
+        if (match[key]) {
+          delete match[key]
+        }
+        else {
+          remove.push(`${row.itemID}`)
+        }
+      }
+      const insert = Object.values(match)
+
+      if (remove.length + insert.length) {
+        await Zotero.DB.executeTransaction(async () => {
+          if (remove.length) await Zotero.DB.queryAsync(`DELETE FROM betterbibtexsearch.citekeys WHERE itemID in (${remove.join(',')})`)
+
+          if (insert.length) {
+            for (const row of insert) {
+              await ZoteroDB.queryAsync('INSERT INTO betterbibtexsearch.citekeys (itemID, libraryID, itemKey, citekey) VALUES (?, ?, ?, ?)', [ row.itemID, row.libraryID, row.itemKey, row.citekey ])
+            }
+          }
+        })
+      }
+
+      const citekeySearchCondition = {
+        name: 'citationKey',
+        operators: {
+          is: true,
+          isNot: true,
+          contains: true,
+          doesNotContain: true,
+        },
+        table: 'betterbibtexsearch.citekeys',
+        field: 'citekey',
+        localized: 'Citation Key',
+      }
+      $patch$(Zotero.Search.prototype, 'addCondition', original => function addCondition(condition: string, operator: any, value: any, _required: any) {
+        // detect a quick search being set up
+        if (condition.match(/^quicksearch/)) this.__add_bbt_citekey = true
+        // creator is always added in a quick search so use it as a trigger
+        if (condition === 'creator' && this.__add_bbt_citekey) {
+          original.call(this, citekeySearchCondition.name, operator, value, false)
+          delete this.__add_bbt_citekey
+        }
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
+        return original.apply(this, arguments)
+      })
+      $patch$(Zotero.SearchConditions, 'hasOperator', original => function hasOperator(condition: string, operator: string | number) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        if (condition === citekeySearchCondition.name) return citekeySearchCondition.operators[operator]
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
+        return original.apply(this, arguments)
+      })
+      $patch$(Zotero.SearchConditions, 'get', original => function get(condition: string) {
+        if (condition === citekeySearchCondition.name) return citekeySearchCondition
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
+        return original.apply(this, arguments)
+      })
+      $patch$(Zotero.SearchConditions, 'getStandardConditions', original => function getStandardConditions() {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
+        return original.apply(this, arguments).concat({
+          name: citekeySearchCondition.name,
+          localized: citekeySearchCondition.localized,
+          operators: citekeySearchCondition.operators,
+        }).sort((a: { localized: string }, b: { localized: any }) => a.localized.localeCompare(b.localized))
+      })
+      $patch$(Zotero.SearchConditions, 'getLocalizedName', original => function getLocalizedName(str: string) {
+        if (str === citekeySearchCondition.name) return citekeySearchCondition.localized
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
+        return original.apply(this, arguments)
+      })
+    }
 
     Events.on('preference-changed', pref => {
       if (['autoAbbrevStyle', 'citekeyFormat', 'citekeyFold', 'skipWords'].includes(pref)) {
@@ -283,15 +337,18 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
     })
 
     this.keys.on(['insert', 'update'], async (citekey: { itemID: number, itemKey: any, citekey: any, pinned: any }) => {
-      await ZoteroDB.queryAsync('INSERT OR REPLACE INTO betterbibtexcitekeys.citekeys (itemID, itemKey, citekey) VALUES (?, ?, ?)', [ citekey.itemID, citekey.itemKey, citekey.citekey ])
+      if (Preference.citekeySearch) {
+        await ZoteroDB.queryAsync('INSERT OR REPLACE INTO betterbibtexsearch.citekeys (itemID, itemKey, citekey) VALUES (?, ?, ?)', [ citekey.itemID, citekey.itemKey, citekey.citekey ])
+      }
 
       // async is just a heap of fun. Who doesn't enjoy a good race condition?
       // https://github.com/retorquere/zotero-better-bibtex/issues/774
       // https://groups.google.com/forum/#!topic/zotero-dev/yGP4uJQCrMc
-      await sleep(Prefs.get('itemObserverDelay'))
+      await sleep(Preference.itemObserverDelay)
 
+      let item
       try {
-        await Zotero.Items.getAsync(citekey.itemID)
+        item = await Zotero.Items.getAsync(citekey.itemID)
       }
       catch (err) {
         // assume item has been deleted before we could get to it -- did I mention I hate async? I hate async
@@ -305,16 +362,32 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
       if (!citekey.pinned && this.autopin.enabled) {
         this.autopin.schedule(citekey.itemID, () => { this.pin([citekey.itemID]).catch(err => log.error('failed to pin', citekey.itemID, ':', err)) })
       }
+      if (citekey.pinned && Preference.keyConflictPolicy === 'change') {
+        const conflictQuery: Query = { $and: [
+          { itemID: { $ne: item.id } },
+          { pinned: { $eq: false } },
+          { citekey: { $eq: citekey.citekey } },
+        ]}
+        if (Preference.keyScope !== 'global')  conflictQuery.$and.push( { libraryID: { $eq: item.libraryID } } )
+
+        for (const conflict of this.keys.find(conflictQuery)) {
+          item = await Zotero.Items.getAsync(conflict.itemID)
+          this.update(item, conflict)
+        }
+      }
     })
+
     this.keys.on('delete', async (citekey: { itemID: any }) => {
-      await ZoteroDB.queryAsync('DELETE FROM betterbibtexcitekeys.citekeys WHERE itemID = ?', [ citekey.itemID ])
+      if (Preference.citekeySearch) {
+        await ZoteroDB.queryAsync('DELETE FROM betterbibtexsearch.citekeys WHERE itemID = ?', [ citekey.itemID ])
+      }
     })
 
     this.started = true
   }
 
-  public async rescan(clean?: boolean) {
-    if (Prefs.get('scrubDatabase')) {
+  public async rescan(clean?: boolean): Promise<void> {
+    if (Preference.scrubDatabase) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return, no-prototype-builtins
       for (const item of this.keys.where(i => i.hasOwnProperty('extra'))) { // 799
         delete item.extra
@@ -347,7 +420,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
       LEFT JOIN itemData field ON field.itemID = item.itemID AND field.fieldID = ${this.query.field.extra}
       LEFT JOIN itemDataValues extra ON extra.valueID = field.valueID
       WHERE item.itemID NOT IN (select itemID from deletedItems)
-      AND item.itemTypeID NOT IN (${this.query.type.attachment}, ${this.query.type.note})
+      AND item.itemTypeID NOT IN (${this.query.type.attachment}, ${this.query.type.note}, ${this.query.type.annotation || this.query.type.note})
     `)
     for (const item of items) {
       ids.push(item.itemID)
@@ -355,7 +428,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
       const extra = Extra.get(item.extra, 'zotero', { citationKey: true })
 
       // don't fetch when clean is active because the removeDataOnly will have done it already
-      const existing = clean ? null : this.keys.findOne({ itemID: item.itemID })
+      const existing = clean ? null : this.keys.findOne($and({ itemID: item.itemID }))
       if (!existing) {
         // if the extra doesn't have a citekey, insert marker, next phase will find & fix it
         this.keys.insert({ citekey: extra.extraFields.citationKey || marker, pinned: !!extra.extraFields.citationKey, itemID: item.itemID, libraryID: item.libraryID, itemKey: item.key })
@@ -375,7 +448,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
     this.keys.findAndRemove({ itemID: { $nin: ids } })
 
     // find all references without citekey
-    this.scanning = this.keys.find({ citekey: marker })
+    this.scanning = this.keys.find($and({ citekey: marker }))
 
     if (this.scanning.length !== 0) {
       const progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
@@ -426,10 +499,10 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
     this.scanning = null
   }
 
-  public update(item: any, current?: { pinned: boolean, citekey: string }) {
-    if (item.isNote() || item.isAttachment()) return null
+  public update(item: ZoteroItem, current?: { pinned: boolean, citekey: string }): string {
+    if (!item.isRegularItem()) return null
 
-    current = current || this.keys.findOne({ itemID: item.id })
+    current = current || this.keys.findOne($and({ itemID: item.id }))
 
     const proposed = this.propose(item)
 
@@ -447,7 +520,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
     return proposed.citekey
   }
 
-  public remove(ids: any[]) {
+  public remove(ids: any[]): void {
     if (!Array.isArray(ids)) ids = [ids]
     this.keys.findAndRemove({ itemID : { $in : ids } })
   }
@@ -457,49 +530,47 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
     // go-ahead to *start* my init.
     if (!this.keys || !this.started) return { citekey: '', pinned: false, retry: true }
 
-    const key = (this.keys.findOne({ itemID }) as { citekey: string, pinned: boolean })
+    const key = (this.keys.findOne($and({ itemID })) as { citekey: string, pinned: boolean })
     if (key) return key
     return { citekey: '', pinned: false, retry: true }
   }
 
-  public propose(item: { getField: (field: string) => string, libraryID: number, id: number }) {
-    const citekey: string = Extra.get(item.getField('extra'), 'zotero', { citationKey: true }).extraFields.citationKey
+  public propose(item: ZoteroItem): { citekey: string, pinned: boolean } {
+    let citekey: string = Extra.get(item.getField('extra') as string, 'zotero', { citationKey: true }).extraFields.citationKey
 
     if (citekey) return { citekey, pinned: true }
 
-    const proposed = Formatter.format(item)
+    citekey = Formatter.format(item)
 
-    const conflictQuery = { libraryID: item.libraryID, itemID: { $ne: item.id } }
-    if (Prefs.get('keyScope') === 'global') delete conflictQuery.libraryID
+    const conflictQuery: Query = { $and: [ { itemID: { $ne: item.id } } ] }
+    if (Preference.keyScope !== 'global') conflictQuery.$and.push({ libraryID: { $eq: item.libraryID } })
 
     let postfix: string
     const seen = {}
     // eslint-disable-next-line no-constant-condition
-    for (let n = proposed.postfix.start; true; n += 1) {
+    for (let n = Formatter.postfix.start; true; n += 1) {
       if (n) {
         const alpha = intToExcelCol(n)
-        postfix = sprintf(proposed.postfix.format, { a: alpha.toLowerCase(), A: alpha, n })
+        postfix = sprintf(Formatter.postfix.format, { a: alpha.toLowerCase(), A: alpha, n })
       }
       else {
         postfix = ''
       }
 
       // this should never happen, it'd mean the postfix pattern doesn't have placeholders, which should have been caught by parsePattern
-      if (seen[postfix]) throw new Error(`${JSON.stringify(proposed.postfix)} does not generate unique postfixes`)
+      if (seen[postfix]) throw new Error(`${JSON.stringify(Formatter.postfix)} does not generate unique postfixes`)
       seen[postfix] = true
 
-      const postfixed = proposed.citekey + postfix
-
-      const conflict = this.keys.findOne({ ...conflictQuery, citekey: postfixed })
+      const postfixed = citekey + postfix
+      const conflict = this.keys.findOne({ $and: [...conflictQuery.$and, { citekey: { $eq: postfixed } }] })
       if (conflict) continue
 
       return { citekey: postfixed, pinned: false }
     }
   }
 
-  public async tagDuplicates(libraryID: any) {
+  public async tagDuplicates(libraryID: number): Promise<void> {
     const tag = '#duplicate-citation-key'
-    const scope = Prefs.get('keyScope')
 
     const tagged = (await ZoteroDB.queryAsync(`
       SELECT items.itemID
@@ -507,10 +578,10 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
       JOIN itemTags ON itemTags.itemID = items.itemID
       JOIN tags ON tags.tagID = itemTags.tagID
       WHERE (items.libraryID = ? OR 'global' = ?) AND tags.name = ? AND items.itemID NOT IN (select itemID from deletedItems)
-    `, [ libraryID, scope, tag ])).map((item: { itemID: number }) => item.itemID)
+    `, [ libraryID, Preference.keyScope, tag ])).map((item: { itemID: number }) => item.itemID)
 
     const citekeys: {[key: string]: any[]} = {}
-    for (const item of this.keys.find(scope === 'global' ? undefined : { libraryID })) {
+    for (const item of this.keys.find(Preference.keyScope === 'global' ? undefined : $and({ libraryID }))) {
       if (!citekeys[item.citekey]) citekeys[item.citekey] = []
       citekeys[item.citekey].push({ itemID: item.itemID, tagged: tagged.includes(item.itemID), duplicate: false })
       if (citekeys[item.citekey].length > 1) citekeys[item.citekey].forEach(i => i.duplicate = true)
@@ -530,7 +601,7 @@ export const KeyManager = new class { // eslint-disable-line @typescript-eslint/
     }
   }
 
-  private expandSelection(ids: 'selected' | number[]): number[] {
+  private expandSelection(ids: 'selected' | number | number[]): number[] {
     if (Array.isArray(ids)) return ids
 
     if (ids === 'selected') {

@@ -7,7 +7,7 @@ aliases:
 
 In addition to LaTeX, BBT plays very well with pandoc:
 
-* you can [drag and drop]({{< ref "/installation/preferences/citation-keys#quick-copydrag-and-drop-citations" >}}) citations from Zotero into your markdown documents.
+* you can [drag and drop]({{< ref "/installation/preferences/#quick-copydrag-and-drop-citations" >}}) citations from Zotero into your markdown documents.
 * you can [cite as you write]({{< ref "/citing/cayw" >}}) in your favorite editor with varying levels of comfort, mostly depending on how easy (VSCode, Sublime) or hard (looking at you Scrivener) it is to extend your editor.
 * you can even convert your markdown document into a LibreOffice/Word document with actual live Zotero references as if you had entered them into Zotero all along (see below)
 
@@ -64,7 +64,7 @@ You can convert a Pandoc-compatible markdown source to a LibreOffice or Word doc
 # all the regular stuff you have here
 zotero:
   library: <group name> # omitted to use your personal library
-  scannable-cite: false # only relevant when your compiling to scannable-cite .odt
+  scannable-cite: false # only relevant when you're compiling to scannable-cite .odt
   client: <zotero or jurism> # defaults to zotero
   author-in-text: false # when true, enabled fake author-name-only cites by replacing it with the text of the last names of the authors
   csl-style: apa # pre-fill the style
@@ -74,7 +74,7 @@ zotero:
 or you can specify them on the pandoc command line:
 
 ```bash
-pandoc -s --lua-filter=zotero.lua --metadata=zotero_scannable_cite:true --metadata=client:jurism ...
+pandoc -s --lua-filter=zotero.lua --metadata=zotero_scannable_cite:true --metadata=zotero_client:jurism ...
 ```
 
 And hey presto, a live LibreOffice/Word file, or an ODT file with

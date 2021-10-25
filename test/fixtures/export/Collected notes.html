@@ -1,54 +1,79 @@
-<html><head><style>  body { counter-reset: h1counter 0 h2counter 0 h3counter 0 h4counter 0; }
-  h1 { counter-reset: h2counter 0 h3counter 0 h4counter 0; }
-  h1:before { counter-increment: h1counter; content: counter(h1counter) ".\0000a0\0000a0"; }
-  h2 { counter-reset: h3counter 0 h4counter 0; }
-  h2:before { counter-increment: h2counter; content: counter(h1counter) "." counter(h2counter) ".\0000a0\0000a0"; }
-  h3 { counter-reset: h4counter 0; }
-  h3:before { counter-increment: h3counter; content: counter(h1counter) "." counter(h2counter) "." counter(h3counter) ".\0000a0\0000a0"; }
-  h4 {  }
-  h4:before { counter-increment: h4counter; content: counter(h1counter) "." counter(h2counter) "." counter(h3counter) "." counter(h4counter) ".\0000a0\0000a0"; }
+<html><head><style>
+  body {
+    counter-reset: h1;
+  }
+
+  h1 {
+    counter-reset: h2;
+  }
+  h1:before {
+    content: counter(h1, decimal) ".\0000a0\0000a0";
+    counter-increment: h1;
+  }
+
+  h2 {
+    counter-reset: h3;
+  }
+  h2:before {
+    content: counter(h1, decimal) "." counter(h2, decimal) ".\0000a0\0000a0";
+    counter-increment: h2;
+  }
+
+  h3 {
+    counter-reset: h4;
+  }
+  h3:before {
+    content: counter(h1, decimal) "." counter(h2, decimal) "." counter(h3, decimal) ".\0000a0\0000a0";
+    counter-increment: h3;
+  }
+
+  h4:before {
+    content: counter(h1, decimal) "." counter(h2, decimal) "." counter(h3, decimal) "." counter(h4, decimal) ".\0000a0\0000a0";
+    counter-increment: h4;
+  }
+
   blockquote { border-left: 1px solid gray; }
 </style></head><body><h1>FM</h1>
 <h2>_Auteurs</h2>
 <h3>Russell</h3>
-<div><i>My philosophical development</i> (Russell, Bertrand, 1959)</div>
+<div><i>My philosophical development</i> (Russell, 1959)</div>
 <blockquote><pre>My philosophical development</pre></blockquote>
 <h2>_References</h2>
-<div><i>Routledge dictionary of economics</i> (Rutherford, Donald, 2002)</div>
+<div><i>Routledge dictionary of economics</i> (Rutherford, 2002)</div>
 <blockquote><pre>Routledge dictionary of economics</pre></blockquote>
 <blockquote>Title from e-book title screen (viewed October 15, 2007)</blockquote>
 <h3>Handbook of the philosophy of science</h3>
-<div><i>Philosophy of complex systems</i> (Hooker, Cliff, 2011)</div>
+<div><i>Philosophy of complex systems</i> (Hooker, 2011)</div>
 <blockquote><pre>Philosophy of complex systems</pre></blockquote>
 <h3>Stanford Encyclopdia of Philosophy</h3>
-<div><i>Abduction</i> (Douven, Igor and Zalta, Edward N., 2011)</div>
+<div><i>Abduction</i> (Douven and Zalta, 2011)</div>
 <blockquote><pre>Abduction</pre></blockquote>
-<div><i>Scientific Realism</i> (Chakravartty, Anjan and Zalta, Edward N., 2011)</div>
+<div><i>Scientific Realism</i> (Chakravartty and Zalta, 2011)</div>
 <blockquote><pre>Scientific Realism</pre></blockquote>
 <h2>0013_Realisme_Scientifique</h2>
-<div><i>Is water H₂O?: evidence, realism and pluralism</i> (Chang, Hasok, 2014)</div>
+<div><i>Is water H₂O?: evidence, realism and pluralism</i> (Chang, 2014)</div>
 <blockquote><pre>Is water H₂O?: evidence, realism and pluralism</pre></blockquote>
-<div><i>Scientific Realism</i> (Chakravartty, Anjan and Zalta, Edward N., 2011)</div>
+<div><i>Scientific Realism</i> (Chakravartty and Zalta, 2011)</div>
 <blockquote><pre>Scientific Realism</pre></blockquote>
 <h2>0018_MarioBunge</h2>
 <h3>Oeuvres</h3>
-<div><i>Chasing reality: strife over realism</i> (Bunge, Mario, 2006)</div>
+<div><i>Chasing reality: strife over realism</i> (Bunge, 2006)</div>
 <blockquote><pre>Chasing reality: strife over realism</pre></blockquote>
-<div><i>Treatise On Basic Philosophy Vol 5 Epistemology I Exploring the World</i> (Bunge, Mario, 1983)</div>
+<div><i>Treatise On Basic Philosophy Vol 5 Epistemology I Exploring the World</i> (Bunge, 1983)</div>
 <blockquote><pre>Treatise On Basic Philosophy Vol 5 Epistemology I Exploring the World</pre></blockquote>
-<div><i>Exact Philosophy</i> (Bunge, Mario, 1973)</div>
+<div><i>Exact Philosophy</i> (Bunge, 1973)</div>
 <blockquote><pre>Exact Philosophy</pre></blockquote>
-<div><i>Technoethics</i> (Bunge, Mario, 1980)</div>
+<div><i>Technoethics</i> (Bunge, 1980)</div>
 <blockquote><pre>Technoethics</pre></blockquote>
-<div><i>The Turn of the Tide</i> (Bunge, Mario, 1967)</div>
+<div><i>The Turn of the Tide</i> (Bunge, 1967)</div>
 <blockquote><pre>The Turn of the Tide</pre></blockquote>
-<div><i>Two Faces and Three Masks of Probability</i> (Bunge, Mario and Agazzi, 1988)</div>
+<div><i>Two Faces and Three Masks of Probability</i> (Bunge and Agazzi, 1988)</div>
 <blockquote><pre>Two Faces and Three Masks of Probability</pre></blockquote>
-<div><i>A model of evolution</i> (Bunge, Mario, 1978)</div>
+<div><i>A model of evolution</i> (Bunge, 1978)</div>
 <blockquote><pre>A model of evolution</pre></blockquote>
-<div><i>Systems and Emergence, Rationality and Imprecision, Free-Wheeling and Evidence, Science and Ideology: Social Science and Its Philosophy According to van den Berg</i> (Bunge, M., 2001)</div>
+<div><i>Systems and Emergence, Rationality and Imprecision, Free-Wheeling and Evidence, Science and Ideology: Social Science and Its Philosophy According to van den Berg</i> (Bunge, 2001)</div>
 <blockquote><pre>Systems and Emergence, Rationality and Imprecision, Free-Wheeling and Evidence, Science and Ideology: Social Science and Its Philosophy According to van den Berg</pre></blockquote>
-<div><i>Considérations d&#39;un philosophe sur l&#39;économique du néo-conservatisme (néo-libéralisme)</i> (Bunge, Mario and Services de traduction de l&#39;Université McGil, 2003)</div>
+<div><i>Considérations d&#39;un philosophe sur l&#39;économique du néo-conservatisme (néo-libéralisme)</i> (Bunge and Services de traduction de l&#39;Université McGil, 2003)</div>
 <blockquote><pre>Considérations d&#39;un philosophe sur l&#39;économique du néo-conservatisme (néo-libéralisme)</pre></blockquote>
 <blockquote><div style="left: 270px; top: 1125.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.801445);">L'essentiel de ce texte est tiré d'une étude inédite, intitulée</div>
 <div style="left: 718.001px; top: 1125.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.828156);">The</div>
@@ -61,85 +86,85 @@
 <div style="left: 283.601px; top: 1161.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.826636);">filosofia</div>
 <div style="left: 337.201px; top: 1161.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.746873);">, Madrid, Tecnos, 1982, 1985. Une première version de la <span class="highlight selected">traduction</span> de ce texte a été</div>
 <div style="left: 270px; top: 1179.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.777761);">assurée par les services de traduction de l'Université McGill.</div></blockquote>
-<div><i>The Philosophical Richness of Technology</i> (Bunge, Mario, 1976)</div>
+<div><i>The Philosophical Richness of Technology</i> (Bunge, 1976)</div>
 <blockquote><pre>The Philosophical Richness of Technology</pre></blockquote>
-<div><i>General Systems and Holism</i> (Bunge, MA, 1977)</div>
+<div><i>General Systems and Holism</i> (Bunge, 1977)</div>
 <blockquote><pre>General Systems and Holism</pre></blockquote>
-<div><i>Riot, Revolution and National Breakdown</i> (Bunge, M., 1999)</div>
+<div><i>Riot, Revolution and National Breakdown</i> (Bunge, 1999)</div>
 <blockquote><pre>Riot, Revolution and National Breakdown</pre></blockquote>
 <h3>Ouvrages</h3>
-<div><i>Scientific philosophy today: Essays in honor of Mario Bunge</i> (Agassi, Joseph and Cohen, R. S., 1982)</div>
+<div><i>Scientific philosophy today: Essays in honor of Mario Bunge</i> (Agassi and Cohen, 1982)</div>
 <blockquote><pre>Scientific philosophy today: Essays in honor of Mario Bunge</pre></blockquote>
-<div><i>Basic Questions on Truth</i> (Weingartner, Paul, 2000)</div>
+<div><i>Basic Questions on Truth</i> (Weingartner, 2000)</div>
 <blockquote><pre>Basic Questions on Truth</pre></blockquote>
-<div><i>The difference between everyday knowledge, ideology, and scientific knowledge</i> (Perrez, Meinrad, 1991)</div>
+<div><i>The difference between everyday knowledge, ideology, and scientific knowledge</i> (Perrez, 1991)</div>
 <blockquote><pre>The difference between everyday knowledge, ideology, and scientific knowledge</pre></blockquote>
-<div><i>About Mario Bunge&#39;s &#39;A Critical Examination of Dialectics&#39;</i> (Apostol, Pavel, 1985)</div>
+<div><i>About Mario Bunge&#39;s &#39;A Critical Examination of Dialectics&#39;</i> (Apostol, 1985)</div>
 <blockquote><pre>About Mario Bunge&#39;s &#39;A Critical Examination of Dialectics&#39;</pre></blockquote>
 <h2>0027_Theorie-de-la-verite</h2>
-<div><i>Basic Questions on Truth</i> (Weingartner, Paul, 2000)</div>
+<div><i>Basic Questions on Truth</i> (Weingartner, 2000)</div>
 <blockquote><pre>Basic Questions on Truth</pre></blockquote>
-<div><i>On Denoting</i> (Russell, Bertrand, 1905)</div>
+<div><i>On Denoting</i> (Russell, 1905)</div>
 <blockquote><pre>On Denoting</pre></blockquote>
 <div><i>__&quot;theory of truth&quot; inauthor:bunge - Recherche Google</i></div>
 <blockquote><pre>__&quot;theory of truth&quot; inauthor:bunge - Recherche Google</pre></blockquote>
 <h2>Sciences conceptuelles</h2>
 <h3>Philosophie des sciences</h3>
-<div><i>Methodological individualism: background, history, and meaning</i> (Udehn, Lars, 2001)</div>
+<div><i>Methodological individualism: background, history, and meaning</i> (Udehn, 2001)</div>
 <blockquote><pre>Methodological individualism: background, history, and meaning</pre></blockquote>
 <h3>Sémantique</h3>
-<div><i>Basic Questions on Truth</i> (Weingartner, Paul, 2000)</div>
+<div><i>Basic Questions on Truth</i> (Weingartner, 2000)</div>
 <blockquote><pre>Basic Questions on Truth</pre></blockquote>
 <h2>Sciences factuelles</h2>
 <h3>Sciences sociales</h3>
 <h4>Économie</h4>
-<div><i>Routledge dictionary of economics</i> (Rutherford, Donald, 2002)</div>
+<div><i>Routledge dictionary of economics</i> (Rutherford, 2002)</div>
 <blockquote><pre>Routledge dictionary of economics</pre></blockquote>
 <blockquote>Title from e-book title screen (viewed October 15, 2007)</blockquote>
 <h2>Sciences formelles</h2>
 <h3>Logique mathématique</h3>
-<div><i>Metalogic: an introduction to the metatheory of standard first order logic</i> (Hunter, Geoffrey, 1973)</div>
+<div><i>Metalogic: an introduction to the metatheory of standard first order logic</i> (Hunter, 1973)</div>
 <blockquote><pre>Metalogic: an introduction to the metatheory of standard first order logic</pre></blockquote>
 <h3>Probabilités</h3>
-<div><i>Probability in the Sciences</i> (Agazzi, Evandro, 1988)</div>
+<div><i>Probability in the Sciences</i> (Agazzi, 1988)</div>
 <blockquote><pre>Probability in the Sciences</pre></blockquote>
 <h1>Isa</h1>
 <h2>Références</h2>
 <h3>Objectivité et naturalisme</h3>
-<div><i>Contemporary metaethics: an introduction</i> (Miller, Alexander, 2013)</div>
+<div><i>Contemporary metaethics: an introduction</i> (Miller, 2013)</div>
 <blockquote><pre>Contemporary metaethics: an introduction</pre></blockquote>
-<div><i>Moral Theory and Explanatory Impotence</i> (Sayre-McCord, Geoffrey and Sayre-McCord, Geoffrey, 1988)</div>
+<div><i>Moral Theory and Explanatory Impotence</i> (Sayre-McCord and Sayre-McCord, 1988)</div>
 <blockquote><pre>Moral Theory and Explanatory Impotence</pre></blockquote>
 <h4>Débat Harman-Sturgeon</h4>
-<div><i>Moral Theory and Explanatory Impotence</i> (Sayre-McCord, Geoffrey and Sayre-McCord, Geoffrey, 1988)</div>
+<div><i>Moral Theory and Explanatory Impotence</i> (Sayre-McCord and Sayre-McCord, 1988)</div>
 <blockquote><pre>Moral Theory and Explanatory Impotence</pre></blockquote>
 <h2>Refworks</h2>
 <h3>_Non-classees</h3>
-<div><i>Deconstructing Dennett&#39;s Darwin</i> (Fodor, Jerry, 1996)</div>
+<div><i>Deconstructing Dennett&#39;s Darwin</i> (Fodor, 1996)</div>
 <blockquote><pre>Deconstructing Dennett&#39;s Darwin</pre></blockquote>
-<div><i>What is Wrong with Etiological Accounts of Biological Function?</i> (Prior, Elizabeth W., 1985)</div>
+<div><i>What is Wrong with Etiological Accounts of Biological Function?</i> (Prior, 1985)</div>
 <blockquote><pre>What is Wrong with Etiological Accounts of Biological Function?</pre></blockquote>
 <h3>Contenu intentionnel (en relation avec Dretske)</h3>
-<div><i>Fred Dretske on the Explanatory Role of Semantic Content</i> (Hassrick, Beth, 1995)</div>
+<div><i>Fred Dretske on the Explanatory Role of Semantic Content</i> (Hassrick, 1995)</div>
 <blockquote><pre>Fred Dretske on the Explanatory Role of Semantic Content</pre></blockquote>
 <h3>Explaining Behavior (C-R et critiques)</h3>
-<div><i>Explaining Behavior</i> (Dretske, Fred, 1993)</div>
+<div><i>Explaining Behavior</i> (Dretske, 1993)</div>
 <blockquote><pre>Explaining Behavior</pre></blockquote>
 <h3>Indication (relation d&#39;, en lien avec Dretske)</h3>
-<div><i>Intrinsic Information</i> (Collier, John and Hanson, Philip P., 1990)</div>
+<div><i>Intrinsic Information</i> (Collier and Hanson, 1990)</div>
 <blockquote><pre>Intrinsic Information</pre></blockquote>
 <h3>Intentionnalité naturalisation</h3>
-<div><i>Consciousness</i> (Villanueva, Enrique, 1991)</div>
+<div><i>Consciousness</i> (Villanueva, 1991)</div>
 <blockquote><pre>Consciousness</pre></blockquote>
-<div><i>Deconstructing Dennett&#39;s Darwin</i> (Fodor, Jerry, 1996)</div>
+<div><i>Deconstructing Dennett&#39;s Darwin</i> (Fodor, 1996)</div>
 <blockquote><pre>Deconstructing Dennett&#39;s Darwin</pre></blockquote>
 <h3>Naturalisme (en général)</h3>
-<div><i>The Naturalists Return</i> (Kitcher, Philip, 1992)</div>
+<div><i>The Naturalists Return</i> (Kitcher, 1992)</div>
 <blockquote><pre>The Naturalists Return</pre></blockquote>
 <h3>Références mémoire (créé le 16 oct. 2006)</h3>
-<div><i>What is Wrong with Etiological Accounts of Biological Function?</i> (Prior, Elizabeth W., 1985)</div>
+<div><i>What is Wrong with Etiological Accounts of Biological Function?</i> (Prior, 1985)</div>
 <blockquote><pre>What is Wrong with Etiological Accounts of Biological Function?</pre></blockquote>
 <h3>séminaire perception et raison</h3>
-<div><i>Consciousness</i> (Villanueva, Enrique, 1991)</div>
+<div><i>Consciousness</i> (Villanueva, 1991)</div>
 <blockquote><pre>Consciousness</pre></blockquote>
 </body></html>

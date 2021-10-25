@@ -18,6 +18,7 @@
   booktitle = {Proceedings of the International Conference for {{High Performance Computing}}, {{Networking}}, {{Storage}} and {{Analysis}}},
   author = {Cumming, Ben and Fourestey, Gilles and Fuhrer, Oliver and Gysi, Tobias and Fatica, Massimiliano and Schulthess, Thomas C.},
   date = {2014},
+  series = {{{SC}} '14},
   pages = {819--829},
   publisher = {{IEEE Press}},
   location = {{Piscataway, NJ, USA}},
@@ -27,7 +28,6 @@
   abstract = {We study the energy used by a production-level regional climate and weather simulation code on a distributed memory system with hybrid CPU-GPU nodes. The code is optimised for both processor architectures, for which we investigate both time and energy to solution. Operational constraints for time to solution can be met with both processor types, although on different numbers of nodes. Energy to solution is a factor 3 lower with GPUs, but strong scaling can be pushed to larger node counts with CPUs to minimize time to solution. Our data shows that an affine relationship exists between energy and nodehours consumed by the simulation. We use this property to devise a simple and practical methodology for optimising for energy efficiency that can be applied to other applications, which we demonstrate with the HPCG benchmark. We conclude with a discussion about the relationship to the commonly-used GF/Watt metric.},
   isbn = {978-1-4799-5500-8},
   keywords = {bdec15,zotero_testcase},
-  series = {{{SC}} '14},
   timestamp = {2015-02-24 12:14:36 +0100}
 }
 

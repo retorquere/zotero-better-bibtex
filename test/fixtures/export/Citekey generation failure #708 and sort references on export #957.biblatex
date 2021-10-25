@@ -6,13 +6,13 @@
   journaltitle = {MIS Quarterly},
   shortjournal = {MIS Q.},
   volume = {25},
+  number = {3},
+  eprint = {3250920},
+  eprinttype = {jstor},
   pages = {321--350},
   issn = {0276-7783},
   doi = {10.2307/3250920},
-  abstract = {Organizations have significantly increased their use of contracting in information systems (IS), hiring contractors to work with permanent professionals. Based on theories of social exchange and social comparison, we hypothesize differences in work attitudes, behaviors, and performance across the two groups, and evaluate our hypotheses with a sequential mixed-methods design. Our first study surveys contract and permanent professionals on software development teams in a large transportation company. Our second study involves in-depth interviews with contract and permanent IS professionals in three organizations. We find support for many of our hypotheses but also some surprising results. Contrary to our predictions, contractors perceive a more favorable work environment than permanent professionals but exhibit lower in-role and extra-role behaviors than their permanent counterparts. Supervisors perceive their contract subordinates as lower-performing and less loyal, obedient, and trustworthy. In-depth interviews help to explain these findings. Job design emerges as an important factor influencing contractors' work attitudes, behaviors, and performance. Supervisors restrict the scope of contractors' jobs, limiting their job behaviors and performance. To compensate, permanent professionals are assigned considerably enlarged job scopes, leading to their lower perceptions of the work environment. We propose a theoretical model that embraces job design in explaining differences in work outcomes for contract versus permanent professionals on software development teams. The results from our study imply that organizations should carefully design and balance the jobs of their contractors and permanent employees to improve attitudes, behaviors, and workplace performance.},
-  eprint = {3250920},
-  eprinttype = {jstor},
-  number = {3}
+  abstract = {Organizations have significantly increased their use of contracting in information systems (IS), hiring contractors to work with permanent professionals. Based on theories of social exchange and social comparison, we hypothesize differences in work attitudes, behaviors, and performance across the two groups, and evaluate our hypotheses with a sequential mixed-methods design. Our first study surveys contract and permanent professionals on software development teams in a large transportation company. Our second study involves in-depth interviews with contract and permanent IS professionals in three organizations. We find support for many of our hypotheses but also some surprising results. Contrary to our predictions, contractors perceive a more favorable work environment than permanent professionals but exhibit lower in-role and extra-role behaviors than their permanent counterparts. Supervisors perceive their contract subordinates as lower-performing and less loyal, obedient, and trustworthy. In-depth interviews help to explain these findings. Job design emerges as an important factor influencing contractors' work attitudes, behaviors, and performance. Supervisors restrict the scope of contractors' jobs, limiting their job behaviors and performance. To compensate, permanent professionals are assigned considerably enlarged job scopes, leading to their lower perceptions of the work environment. We propose a theoretical model that embraces job design in explaining differences in work outcomes for contract versus permanent professionals on software development teams. The results from our study imply that organizations should carefully design and balance the jobs of their contractors and permanent employees to improve attitudes, behaviors, and workplace performance.}
 }
 
 @article{Ang.Slaughter.01.w,
@@ -22,83 +22,83 @@
   journaltitle = {MIS Quarterly},
   shortjournal = {MIS Q.},
   volume = {25},
+  number = {3},
+  eprint = {3250920},
+  eprinttype = {jstor},
   pages = {321--350},
   issn = {0276-7783},
   doi = {10.2307/3250920},
-  abstract = {Organizations have significantly increased their use of contracting in information systems (IS), hiring contractors to work with permanent professionals. Based on theories of social exchange and social comparison, we hypothesize differences in work attitudes, behaviors, and performance across the two groups, and evaluate our hypotheses with a sequential mixed-methods design. Our first study surveys contract and permanent professionals on software development teams in a large transportation company. Our second study involves in-depth interviews with contract and permanent IS professionals in three organizations. We find support for many of our hypotheses but also some surprising results. Contrary to our predictions, contractors perceive a more favorable work environment than permanent professionals but exhibit lower in-role and extra-role behaviors than their permanent counterparts. Supervisors perceive their contract subordinates as lower-performing and less loyal, obedient, and trustworthy. In-depth interviews help to explain these findings. Job design emerges as an important factor influencing contractors' work attitudes, behaviors, and performance. Supervisors restrict the scope of contractors' jobs, limiting their job behaviors and performance. To compensate, permanent professionals are assigned considerably enlarged job scopes, leading to their lower perceptions of the work environment. We propose a theoretical model that embraces job design in explaining differences in work outcomes for contract versus permanent professionals on software development teams. The results from our study imply that organizations should carefully design and balance the jobs of their contractors and permanent employees to improve attitudes, behaviors, and workplace performance.},
-  eprint = {3250920},
-  eprinttype = {jstor},
-  number = {3}
+  abstract = {Organizations have significantly increased their use of contracting in information systems (IS), hiring contractors to work with permanent professionals. Based on theories of social exchange and social comparison, we hypothesize differences in work attitudes, behaviors, and performance across the two groups, and evaluate our hypotheses with a sequential mixed-methods design. Our first study surveys contract and permanent professionals on software development teams in a large transportation company. Our second study involves in-depth interviews with contract and permanent IS professionals in three organizations. We find support for many of our hypotheses but also some surprising results. Contrary to our predictions, contractors perceive a more favorable work environment than permanent professionals but exhibit lower in-role and extra-role behaviors than their permanent counterparts. Supervisors perceive their contract subordinates as lower-performing and less loyal, obedient, and trustworthy. In-depth interviews help to explain these findings. Job design emerges as an important factor influencing contractors' work attitudes, behaviors, and performance. Supervisors restrict the scope of contractors' jobs, limiting their job behaviors and performance. To compensate, permanent professionals are assigned considerably enlarged job scopes, leading to their lower perceptions of the work environment. We propose a theoretical model that embraces job design in explaining differences in work outcomes for contract versus permanent professionals on software development teams. The results from our study imply that organizations should carefully design and balance the jobs of their contractors and permanent employees to improve attitudes, behaviors, and workplace performance.}
 }
 
 @article{bhattacherjee_understanding_2001,
-  title = {Understanding {{Information Systems Continuance}}: {{An Expectation}}-{{Confirmation Model}}},
+  title = {Understanding {{Information Systems Continuance}}: An {{Expectation}}-{{Confirmation Model}}},
   shorttitle = {Understanding {{Information Systems Continuance}}},
   author = {Bhattacherjee, Anol},
   date = {2001},
   journaltitle = {MIS Quarterly},
   shortjournal = {MIS Q.},
   volume = {25},
+  number = {3},
+  eprint = {3250921},
+  eprinttype = {jstor},
   pages = {351--370},
   issn = {0276-7783},
   doi = {10.2307/3250921},
-  abstract = {This paper examines cognitive beliefs and affect influencing one's intention to continue using (continuance) information systems (IS). Expectation-confirmation theory is adapted from the consumer behavior literature and integrated with theoretical and empirical findings from prior IS usage research to theorize a model of IS continuance. Five research hypotheses derived from this model are empirically validated using a field survey of online banking users. The results suggest that users' continuance intention is determined by their satisfaction with IS use and perceived usefulness of continued IS use. User satisfaction, in turn, is influenced by their confirmation of expectation from prior IS use and perceived usefulness. Post-acceptance perceived usefulness is influenced by users' confirmation level. This study draws attention to the substantive differences between acceptance and continuance behaviors, theorizes and validates one of the earliest theoretical models of IS continuance, integrates confirmation and user satisfaction constructs within our current understanding of IS use, conceptualizes and creates an initial scale for measuring IS continuance, and offers an initial explanation for the acceptance-discontinuance anomaly.},
-  eprint = {3250921},
-  eprinttype = {jstor},
-  number = {3}
+  abstract = {This paper examines cognitive beliefs and affect influencing one's intention to continue using (continuance) information systems (IS). Expectation-confirmation theory is adapted from the consumer behavior literature and integrated with theoretical and empirical findings from prior IS usage research to theorize a model of IS continuance. Five research hypotheses derived from this model are empirically validated using a field survey of online banking users. The results suggest that users' continuance intention is determined by their satisfaction with IS use and perceived usefulness of continued IS use. User satisfaction, in turn, is influenced by their confirmation of expectation from prior IS use and perceived usefulness. Post-acceptance perceived usefulness is influenced by users' confirmation level. This study draws attention to the substantive differences between acceptance and continuance behaviors, theorizes and validates one of the earliest theoretical models of IS continuance, integrates confirmation and user satisfaction constructs within our current understanding of IS use, conceptualizes and creates an initial scale for measuring IS continuance, and offers an initial explanation for the acceptance-discontinuance anomaly.}
 }
 
 @article{Bhattacherjee.01.u,
-  title = {Understanding {{Information Systems Continuance}}: {{An Expectation}}-{{Confirmation Model}}},
+  title = {Understanding {{Information Systems Continuance}}: An {{Expectation}}-{{Confirmation Model}}},
   shorttitle = {Understanding {{Information Systems Continuance}}},
   author = {Bhattacherjee, Anol},
   date = {2001},
   journaltitle = {MIS Quarterly},
   shortjournal = {MIS Q.},
   volume = {25},
+  number = {3},
+  eprint = {3250921},
+  eprinttype = {jstor},
   pages = {351--370},
   issn = {0276-7783},
   doi = {10.2307/3250921},
-  abstract = {This paper examines cognitive beliefs and affect influencing one's intention to continue using (continuance) information systems (IS). Expectation-confirmation theory is adapted from the consumer behavior literature and integrated with theoretical and empirical findings from prior IS usage research to theorize a model of IS continuance. Five research hypotheses derived from this model are empirically validated using a field survey of online banking users. The results suggest that users' continuance intention is determined by their satisfaction with IS use and perceived usefulness of continued IS use. User satisfaction, in turn, is influenced by their confirmation of expectation from prior IS use and perceived usefulness. Post-acceptance perceived usefulness is influenced by users' confirmation level. This study draws attention to the substantive differences between acceptance and continuance behaviors, theorizes and validates one of the earliest theoretical models of IS continuance, integrates confirmation and user satisfaction constructs within our current understanding of IS use, conceptualizes and creates an initial scale for measuring IS continuance, and offers an initial explanation for the acceptance-discontinuance anomaly.},
-  eprint = {3250921},
-  eprinttype = {jstor},
-  number = {3}
+  abstract = {This paper examines cognitive beliefs and affect influencing one's intention to continue using (continuance) information systems (IS). Expectation-confirmation theory is adapted from the consumer behavior literature and integrated with theoretical and empirical findings from prior IS usage research to theorize a model of IS continuance. Five research hypotheses derived from this model are empirically validated using a field survey of online banking users. The results suggest that users' continuance intention is determined by their satisfaction with IS use and perceived usefulness of continued IS use. User satisfaction, in turn, is influenced by their confirmation of expectation from prior IS use and perceived usefulness. Post-acceptance perceived usefulness is influenced by users' confirmation level. This study draws attention to the substantive differences between acceptance and continuance behaviors, theorizes and validates one of the earliest theoretical models of IS continuance, integrates confirmation and user satisfaction constructs within our current understanding of IS use, conceptualizes and creates an initial scale for measuring IS continuance, and offers an initial explanation for the acceptance-discontinuance anomaly.}
 }
 
 @article{delone_delone_2003,
-  title = {The {{DeLone}} and {{McLean Model}} of {{Information Systems Success}}: {{A Ten}}-{{Year Update}}},
+  title = {The {{DeLone}} and {{McLean Model}} of {{Information Systems Success}}: A {{Ten}}-{{Year Update}}},
   shorttitle = {The {{DeLone}} and {{McLean Model}} of {{Information Systems Success}}},
   author = {Delone, William H. and McLean, Ephraim R.},
   date = {2003-04-01},
   journaltitle = {Journal of Management Information Systems},
   shortjournal = {J. Manag. Inf. Syst.},
   volume = {19},
+  number = {4},
   pages = {9--30},
   issn = {0742-1222},
   doi = {10.1080/07421222.2003.11045748},
   url = {http://dx.doi.org/10.1080/07421222.2003.11045748},
   urldate = {2017-08-25},
   abstract = {Ten years ago, we presented the DeLone and McLean Information Systems (IS) Success Model as a framework and model for measuring the complex-dependent variable in IS research. In this paper, we discuss many of the important IS success research contributions of the last decade, focusing especially on research efforts that apply, validate, challenge, and propose enhancements to our original model. Based on our evaluation of those contributions, we propose minor refinements to the model and propose an updated DeLone and McLean IS Success Model. We discuss the utility of the updated model for measuring e-commerce system success. Finally, we make a series of recommendations regarding current and future measurement of IS success.},
-  keywords = {EVALUATION OF INFORMATION SYSTEMS,IMPACT OF INFORMATION TECHNOLOGY,INFORMATION QUALITY,INFORMATION SYSTEMS SUCCESS,QUALITY,SERVICE QUALITY,SYSTEMS,USE OF INFORMATION SYSTEMS,USER SATISFACTION},
-  number = {4}
+  keywords = {EVALUATION OF INFORMATION SYSTEMS,IMPACT OF INFORMATION TECHNOLOGY,INFORMATION QUALITY,INFORMATION SYSTEMS SUCCESS,QUALITY,SERVICE QUALITY,SYSTEMS,USE OF INFORMATION SYSTEMS,USER SATISFACTION}
 }
 
 @article{Delone.McLean.03.d,
-  title = {The {{DeLone}} and {{McLean Model}} of {{Information Systems Success}}: {{A Ten}}-{{Year Update}}},
+  title = {The {{DeLone}} and {{McLean Model}} of {{Information Systems Success}}: A {{Ten}}-{{Year Update}}},
   shorttitle = {The {{DeLone}} and {{McLean Model}} of {{Information Systems Success}}},
   author = {Delone, William H. and McLean, Ephraim R.},
   date = {2003-04-01},
   journaltitle = {Journal of Management Information Systems},
   shortjournal = {J. Manag. Inf. Syst.},
   volume = {19},
+  number = {4},
   pages = {9--30},
   issn = {0742-1222},
   doi = {10.1080/07421222.2003.11045748},
   url = {http://dx.doi.org/10.1080/07421222.2003.11045748},
   urldate = {2017-08-25},
   abstract = {Ten years ago, we presented the DeLone and McLean Information Systems (IS) Success Model as a framework and model for measuring the complex-dependent variable in IS research. In this paper, we discuss many of the important IS success research contributions of the last decade, focusing especially on research efforts that apply, validate, challenge, and propose enhancements to our original model. Based on our evaluation of those contributions, we propose minor refinements to the model and propose an updated DeLone and McLean IS Success Model. We discuss the utility of the updated model for measuring e-commerce system success. Finally, we make a series of recommendations regarding current and future measurement of IS success.},
-  keywords = {EVALUATION OF INFORMATION SYSTEMS,IMPACT OF INFORMATION TECHNOLOGY,INFORMATION QUALITY,INFORMATION SYSTEMS SUCCESS,QUALITY,SERVICE QUALITY,SYSTEMS,USE OF INFORMATION SYSTEMS,USER SATISFACTION},
-  number = {4}
+  keywords = {EVALUATION OF INFORMATION SYSTEMS,IMPACT OF INFORMATION TECHNOLOGY,INFORMATION QUALITY,INFORMATION SYSTEMS SUCCESS,QUALITY,SERVICE QUALITY,SYSTEMS,USE OF INFORMATION SYSTEMS,USER SATISFACTION}
 }
 
 @article{melone_theoretical_1990,
@@ -108,13 +108,13 @@
   journaltitle = {Management Science},
   shortjournal = {Management Science},
   volume = {36},
+  number = {1},
   pages = {76--91},
   issn = {0025-1909},
   doi = {10.1287/mnsc.36.1.76},
   url = {http://pubsonline.informs.org/doi/abs/10.1287/mnsc.36.1.76},
   urldate = {2017-08-25},
-  abstract = {For nearly two decades, the user-satisfaction construct has occupied a central role in behavioral research in Information Systems (IS). In industry, the construct has often been used as a surrogate for IS effectiveness. Given its widespread use by both academics and practitioners, it is surprising that no comprehensive theoretical assessment of this construct has been performed. This paper provides such a review. It begins by examining conceptual and theoretical limitations of the construct's use as a measure of IS effectiveness. Attention is then focused on the evolution of the construct in the literature and the theoretical problems associated with its broader use. The fundamental similarity between user satisfaction and the social and cognitive psychologists' notion of an attitude is suggested. The next sections focus on a discussion of attitude structures and function. First, alternative theoretical views on attitude structure are presented. While one of these structures, the family of expectancy-value models, is reflected in current research on user satisfaction, the second, the family of cognitive approaches, is not. The two attitude structures are considered from the perspective of possible refinements to future work in IS. Next, an examination is made of the ways in which these structures have been integrated in terms of understanding the relationship of users' affective responses to other responses (i.e., behavior or cognition). This leads to a discussion of the function attitudes might serve for the user other than the evaluation of an information system or IS staff. Finally, the question of how behavior influences attitude is considered. The paper concludes with suggestions for future work.},
-  number = {1}
+  abstract = {For nearly two decades, the user-satisfaction construct has occupied a central role in behavioral research in Information Systems (IS). In industry, the construct has often been used as a surrogate for IS effectiveness. Given its widespread use by both academics and practitioners, it is surprising that no comprehensive theoretical assessment of this construct has been performed. This paper provides such a review. It begins by examining conceptual and theoretical limitations of the construct's use as a measure of IS effectiveness. Attention is then focused on the evolution of the construct in the literature and the theoretical problems associated with its broader use. The fundamental similarity between user satisfaction and the social and cognitive psychologists' notion of an attitude is suggested. The next sections focus on a discussion of attitude structures and function. First, alternative theoretical views on attitude structure are presented. While one of these structures, the family of expectancy-value models, is reflected in current research on user satisfaction, the second, the family of cognitive approaches, is not. The two attitude structures are considered from the perspective of possible refinements to future work in IS. Next, an examination is made of the ways in which these structures have been integrated in terms of understanding the relationship of users' affective responses to other responses (i.e., behavior or cognition). This leads to a discussion of the function attitudes might serve for the user other than the evaluation of an information system or IS staff. Finally, the question of how behavior influences attitude is considered. The paper concludes with suggestions for future work.}
 }
 
 @article{Melone.90.t,
@@ -124,13 +124,13 @@
   journaltitle = {Management Science},
   shortjournal = {Management Science},
   volume = {36},
+  number = {1},
   pages = {76--91},
   issn = {0025-1909},
   doi = {10.1287/mnsc.36.1.76},
   url = {http://pubsonline.informs.org/doi/abs/10.1287/mnsc.36.1.76},
   urldate = {2017-08-25},
-  abstract = {For nearly two decades, the user-satisfaction construct has occupied a central role in behavioral research in Information Systems (IS). In industry, the construct has often been used as a surrogate for IS effectiveness. Given its widespread use by both academics and practitioners, it is surprising that no comprehensive theoretical assessment of this construct has been performed. This paper provides such a review. It begins by examining conceptual and theoretical limitations of the construct's use as a measure of IS effectiveness. Attention is then focused on the evolution of the construct in the literature and the theoretical problems associated with its broader use. The fundamental similarity between user satisfaction and the social and cognitive psychologists' notion of an attitude is suggested. The next sections focus on a discussion of attitude structures and function. First, alternative theoretical views on attitude structure are presented. While one of these structures, the family of expectancy-value models, is reflected in current research on user satisfaction, the second, the family of cognitive approaches, is not. The two attitude structures are considered from the perspective of possible refinements to future work in IS. Next, an examination is made of the ways in which these structures have been integrated in terms of understanding the relationship of users' affective responses to other responses (i.e., behavior or cognition). This leads to a discussion of the function attitudes might serve for the user other than the evaluation of an information system or IS staff. Finally, the question of how behavior influences attitude is considered. The paper concludes with suggestions for future work.},
-  number = {1}
+  abstract = {For nearly two decades, the user-satisfaction construct has occupied a central role in behavioral research in Information Systems (IS). In industry, the construct has often been used as a surrogate for IS effectiveness. Given its widespread use by both academics and practitioners, it is surprising that no comprehensive theoretical assessment of this construct has been performed. This paper provides such a review. It begins by examining conceptual and theoretical limitations of the construct's use as a measure of IS effectiveness. Attention is then focused on the evolution of the construct in the literature and the theoretical problems associated with its broader use. The fundamental similarity between user satisfaction and the social and cognitive psychologists' notion of an attitude is suggested. The next sections focus on a discussion of attitude structures and function. First, alternative theoretical views on attitude structure are presented. While one of these structures, the family of expectancy-value models, is reflected in current research on user satisfaction, the second, the family of cognitive approaches, is not. The two attitude structures are considered from the perspective of possible refinements to future work in IS. Next, an examination is made of the ways in which these structures have been integrated in terms of understanding the relationship of users' affective responses to other responses (i.e., behavior or cognition). This leads to a discussion of the function attitudes might serve for the user other than the evaluation of an information system or IS staff. Finally, the question of how behavior influences attitude is considered. The paper concludes with suggestions for future work.}
 }
 
 @article{myers_dialectical_1995,
@@ -141,15 +141,15 @@
   journaltitle = {Information Systems Journal},
   shortjournal = {Inf. Syst. J.},
   volume = {5},
+  number = {1},
   pages = {51--70},
   issn = {1365-2575},
   doi = {10.1111/j.1365-2575.1995.tb00089.x},
   url = {http://onlinelibrary.wiley.com/doi/10.1111/j.1365-2575.1995.tb00089.x/abstract},
   urldate = {2017-08-25},
   abstract = {Abstract.  Despite the proliferation of information technology, the implementation of information systems remains problematic. Many systems fail to live up to expectations and some end up as disasters. Research on implementation has been conducted for the past two decades, but no theoretical framework for IS implementation has been widely accepted. This paper proposes dialectical hermeneutics as a theoretical framework for IS implementation research. Dialectical hermeneutics, as an integrative theoretical framework, combines both interpretive and critical elements, and addresses those social and organizational issues which are critical to the successful implementation of information systems. The case study research method was used to examine the implementation of systems in three organizations.},
-  keywords = {critical theory,hermeneutics,information systems development,information systems implementation},
   langid = {english},
-  number = {1}
+  keywords = {critical theory,hermeneutics,information systems development,information systems implementation}
 }
 
 @article{Myers.95.d,
@@ -160,49 +160,49 @@
   journaltitle = {Information Systems Journal},
   shortjournal = {Inf. Syst. J.},
   volume = {5},
+  number = {1},
   pages = {51--70},
   issn = {1365-2575},
   doi = {10.1111/j.1365-2575.1995.tb00089.x},
   url = {http://onlinelibrary.wiley.com/doi/10.1111/j.1365-2575.1995.tb00089.x/abstract},
   urldate = {2017-08-25},
   abstract = {Abstract.  Despite the proliferation of information technology, the implementation of information systems remains problematic. Many systems fail to live up to expectations and some end up as disasters. Research on implementation has been conducted for the past two decades, but no theoretical framework for IS implementation has been widely accepted. This paper proposes dialectical hermeneutics as a theoretical framework for IS implementation research. Dialectical hermeneutics, as an integrative theoretical framework, combines both interpretive and critical elements, and addresses those social and organizational issues which are critical to the successful implementation of information systems. The case study research method was used to examine the implementation of systems in three organizations.},
-  keywords = {critical theory,hermeneutics,information systems development,information systems implementation},
   langid = {english},
-  number = {1}
+  keywords = {critical theory,hermeneutics,information systems development,information systems implementation}
 }
 
 @article{yoo_media_2001,
-  title = {Media and {{Group Cohesion}}: {{Relative Influences}} on {{Social Presence}}, {{Task Participation}}, and {{Group Consensus}}},
+  title = {Media and {{Group Cohesion}}: Relative {{Influences}} on {{Social Presence}}, {{Task Participation}}, and {{Group Consensus}}},
   shorttitle = {Media and {{Group Cohesion}}},
   author = {Yoo, Youngjin and Alavi, Maryam},
   date = {2001},
   journaltitle = {MIS Quarterly},
   shortjournal = {MIS Q.},
   volume = {25},
+  number = {3},
+  eprint = {3250922},
+  eprinttype = {jstor},
   pages = {371--390},
   issn = {0276-7783},
   doi = {10.2307/3250922},
-  abstract = {Organizations deploy advanced communication media such as audio and videoconferencing to enhance and extend group communication interactions. However, established groups (i.e., groups with a history of working together) can view and use the same technology differently from groups without any past experiences of working together. This study examines the relative influences of media condition and group cohesion on social presence, task participation, and group consensus. Results from a controlled laboratory experiment with 45 triads of college students working on a decision-making task showed that media condition (audio conferencing vs. desktop video-conferencing) has significantly smaller influences on social presence and task participation than group cohesion in established groups. The study found that influence of group cohesion over social presence is additive, rather than substitutive, to that of media condition. The study also established that task participation played a more important role than social presence in determining the degree of consensus among group members in computer-mediated communication environments.},
-  eprint = {3250922},
-  eprinttype = {jstor},
-  number = {3}
+  abstract = {Organizations deploy advanced communication media such as audio and videoconferencing to enhance and extend group communication interactions. However, established groups (i.e., groups with a history of working together) can view and use the same technology differently from groups without any past experiences of working together. This study examines the relative influences of media condition and group cohesion on social presence, task participation, and group consensus. Results from a controlled laboratory experiment with 45 triads of college students working on a decision-making task showed that media condition (audio conferencing vs. desktop video-conferencing) has significantly smaller influences on social presence and task participation than group cohesion in established groups. The study found that influence of group cohesion over social presence is additive, rather than substitutive, to that of media condition. The study also established that task participation played a more important role than social presence in determining the degree of consensus among group members in computer-mediated communication environments.}
 }
 
 @article{Yoo.Alavi.01.m,
-  title = {Media and {{Group Cohesion}}: {{Relative Influences}} on {{Social Presence}}, {{Task Participation}}, and {{Group Consensus}}},
+  title = {Media and {{Group Cohesion}}: Relative {{Influences}} on {{Social Presence}}, {{Task Participation}}, and {{Group Consensus}}},
   shorttitle = {Media and {{Group Cohesion}}},
   author = {Yoo, Youngjin and Alavi, Maryam},
   date = {2001},
   journaltitle = {MIS Quarterly},
   shortjournal = {MIS Q.},
   volume = {25},
+  number = {3},
+  eprint = {3250922},
+  eprinttype = {jstor},
   pages = {371--390},
   issn = {0276-7783},
   doi = {10.2307/3250922},
-  abstract = {Organizations deploy advanced communication media such as audio and videoconferencing to enhance and extend group communication interactions. However, established groups (i.e., groups with a history of working together) can view and use the same technology differently from groups without any past experiences of working together. This study examines the relative influences of media condition and group cohesion on social presence, task participation, and group consensus. Results from a controlled laboratory experiment with 45 triads of college students working on a decision-making task showed that media condition (audio conferencing vs. desktop video-conferencing) has significantly smaller influences on social presence and task participation than group cohesion in established groups. The study found that influence of group cohesion over social presence is additive, rather than substitutive, to that of media condition. The study also established that task participation played a more important role than social presence in determining the degree of consensus among group members in computer-mediated communication environments.},
-  eprint = {3250922},
-  eprinttype = {jstor},
-  number = {3}
+  abstract = {Organizations deploy advanced communication media such as audio and videoconferencing to enhance and extend group communication interactions. However, established groups (i.e., groups with a history of working together) can view and use the same technology differently from groups without any past experiences of working together. This study examines the relative influences of media condition and group cohesion on social presence, task participation, and group consensus. Results from a controlled laboratory experiment with 45 triads of college students working on a decision-making task showed that media condition (audio conferencing vs. desktop video-conferencing) has significantly smaller influences on social presence and task participation than group cohesion in established groups. The study found that influence of group cohesion over social presence is additive, rather than substitutive, to that of media condition. The study also established that task participation played a more important role than social presence in determining the degree of consensus among group members in computer-mediated communication environments.}
 }
 
 

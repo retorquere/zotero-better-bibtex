@@ -1,9 +1,6 @@
 /* eslint-disable no-magic-numbers */
-declare const Components: any
 declare const XPCOMUtils: any
-declare const Zotero: any
 
-import { KeyManager } from './key-manager'
 import { Formatter } from './cayw/formatter'
 import { TeXstudio } from './tex-studio'
 import * as escape from './escape'
@@ -276,7 +273,7 @@ class Document {
       prefix: item.prefix || '',
       suffix: item.suffix || '',
       label: item.locator ? (item.label || 'page') : '',
-      citekey: KeyManager.get(item.id).citekey,
+      citekey: Zotero.BetterBibTeX.KeyManager.get(item.id).citekey,
 
       uri: Array.isArray(item.uri) ? item.uri[0] : undefined,
       itemType: item.itemData ? item.itemData.type : undefined,
@@ -354,7 +351,7 @@ async function selected(options): Promise<string> {
     prefix: '',
     suffix: '',
     label: '',
-    citekey: KeyManager.get(item.id).citekey,
+    citekey: Zotero.BetterBibTeX.KeyManager.get(item.id).citekey,
 
     uri: undefined,
     itemType: undefined,

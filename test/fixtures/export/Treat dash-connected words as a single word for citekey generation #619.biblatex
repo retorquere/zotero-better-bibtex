@@ -3,11 +3,11 @@
   title = {A {{Frame Tracking Model}} for {{Memory}}-{{Enhanced Dialogue Systems}}},
   author = {Schulz, Hannes and Zumer, Jeremie and Asri, Layla El and Sharma, Shikhar},
   date = {2017},
-  url = {https://arxiv.org/abs/1706.01690},
-  urldate = {2017-08-17},
-  archivePrefix = {arXiv},
   eprint = {1706.01690},
   eprinttype = {arxiv},
+  url = {https://arxiv.org/abs/1706.01690},
+  urldate = {2017-08-17},
+  archiveprefix = {arXiv},
   keywords = {_tablet_modified}
 }
 

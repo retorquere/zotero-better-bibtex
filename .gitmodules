@@ -5,3 +5,12 @@
 [submodule "bbt/themes/learn"]
 	path = site/themes/learn
 	url = https://github.com/matcornic/hugo-theme-learn.git
+	branch = master
+[submodule "babel"]
+	path = babel
+	url = https://github.com/latex3/babel.git
+	branch = main
+[submodule "biblatex"]
+	path = biblatex
+	url = https://github.com/plk/biblatex.git
+	branch = dev

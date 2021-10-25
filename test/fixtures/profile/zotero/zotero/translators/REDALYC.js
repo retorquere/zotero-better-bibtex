@@ -1,15 +1,15 @@
 {
 	"translatorID": "d1ac3b4f-1aa7-4a76-a97e-cf3580a41c37",
+	"translatorType": 4,
 	"label": "REDALYC",
 	"creator": "Sebastian Karcher",
-	"target": "^https?://(www.)?redalyc\\.(uaemex\\.mx|org)",
+	"target": "^https?://(www\\.)?redalyc\\.(uaemex\\.mx|org)",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-06-04 09:52:26"
+	"lastUpdated": "2021-06-07 17:30:00"
 }
 
 /*

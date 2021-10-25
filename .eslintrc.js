@@ -12,7 +12,9 @@ config.rules['@typescript-eslint/no-unsafe-call'] = 'off'
 config.rules['@typescript-eslint/prefer-regexp-exec'] = 'off'
 config.rules['@typescript-eslint/no-implied-eval'] = 'off'
 config.rules['@typescript-eslint/no-unsafe-assignment'] = 'off'
+config.rules['@typescript-eslint/no-unsafe-argument'] = 'off'
 config.rules['@typescript-eslint/restrict-template-expressions'] = 'off'
+config.rules['@typescript-eslint/explicit-module-boundary-types'] = 'error'
 
 config.rules['@typescript-eslint/ban-ts-comment'] = 'warn'
 config.rules['@typescript-eslint/member-delimiter-style'] = [ 'error', {

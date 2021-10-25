@@ -7,9 +7,14 @@ import { Translator } from '../lib/translator'
 
 import * as itemfields from '../../gen/items/items'
 import * as Extra from '../../content/extra'
+import { Cache } from '../../typings/cache'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
 import { log } from '../../content/logger'
-import { worker } from '../../content/worker'
+import { worker } from '../../content/environment'
+import { Reference } from '../../gen/typings/serialized-item'
+import * as postscript from '../lib/postscript'
+
+type ExtendedReference = Reference & { extraFields: Extra.Fields }
 
 const validCSLTypes: string[] = require('../../gen/items/csl-types.json')
 
@@ -29,31 +34,37 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
   public date2CSL: Function // will be added by JSON/YAML exporter
 
   public initialize() {
-    const postscript = Translator.preferences.postscript
-
-    if (typeof postscript === 'string' && postscript.trim() !== '') {
-      try {
-        this.postscript = new Function('reference', 'item', 'Translator', 'Zotero', postscript) as (reference: any, item: any) => boolean
-        log.debug(`Installed postscript: ${JSON.stringify(postscript)}`)
+    try {
+      if (Translator.preferences.postscript.trim()) {
+        this.postscript = new Function(
+          'reference',
+          'item',
+          'Translator',
+          'Zotero',
+          'extra',
+          postscript.body(Translator.preferences.postscript)
+        ) as postscript.Postscript
       }
-      catch (err) {
-        if (Translator.preferences.testing) throw err
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        log.error(`Failed to compile postscript: ${err}\n\n${JSON.stringify(postscript)}`)
+      else {
+        this.postscript = postscript.noop as postscript.Postscript
       }
     }
+    catch (err) {
+      this.postscript = postscript.noop as postscript.Postscript
+      log.debug('failed to install postscript', err, '\n', postscript.body(Translator.preferences.postscript))
+    }
   }
-  public postscript(_reference, _item, _translator, _zotero) {} // eslint-disable-line @typescript-eslint/no-empty-function
+  public postscript(_reference, _item, _translator, _zotero, _extra): postscript.Allow {
+    return { cache: true, write: true }
+  }
 
   public doExport() {
     const items = []
     const order: { citationKey: string, i: number}[] = []
-    for (const item of Translator.items()) {
-      if (item.itemType === 'note' || item.itemType === 'attachment') continue
-
+    for (const item of (Translator.references as Generator<ExtendedReference, void, unknown>)) {
       order.push({ citationKey: item.citationKey, i: items.length })
 
-      let cached: Types.DB.Cache.ExportedItem
+      let cached: Cache.ExportedItem
       if (cached = Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences)) {
         items.push(cached.reference)
         continue
@@ -105,6 +116,8 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
 
       if (csl.type === 'broadcast' && csl.genre === 'television broadcast') delete csl.genre
 
+      const extraFields: Extra.Fields = JSON.parse(JSON.stringify(item.extraFields))
+
       // special case for #587... not pretty
       // checked separately because .type isn't actually a CSL var so wouldn't pass the ef.type test below
       if (!validCSLTypes.includes(item.extraFields.kv['csl-type']) && validCSLTypes.includes(item.extraFields.kv.type)) {
@@ -146,13 +159,13 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
       delete csl.multi
       delete csl.system_id
 
-      let cache
+      let allow: postscript.Allow = { cache: true, write: true }
       try {
-        cache = this.postscript(csl, item, Translator, Zotero)
+        allow = this.postscript(csl, item, Translator, Zotero, extraFields)
       }
       catch (err) {
-        if (Translator.preferences.testing && !Translator.preferences.ignorePostscriptErrors) throw err
-        cache = false
+        log.error('CSL.postscript failed:', err)
+        allow.cache = false
       }
 
       for (const field of Translator.skipFields) {
@@ -161,9 +174,9 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
       csl = this.sortObject(csl)
       csl = this.serialize(csl)
 
-      if (typeof cache !== 'boolean' || cache) Zotero.BetterBibTeX.cacheStore(item.itemID, Translator.options, Translator.preferences, csl)
+      if (allow.cache) Zotero.BetterBibTeX.cacheStore(item.itemID, Translator.options, Translator.preferences, csl)
 
-      items.push(csl)
+      if (allow.write) items.push(csl)
     }
 
     order.sort((a, b) => a.citationKey.localeCompare(b.citationKey, undefined, { sensitivity: 'base' }))

@@ -54,7 +54,6 @@ user_pref("extensions.zotero.reportTranslationFailure", false);
 user_pref("extensions.zotero.translators.better-bibtex.kuroshiro", true);
 user_pref("extensions.zotero.translators.better-bibtex.lockedInit", false);
 user_pref("extensions.zotero.translators.better-bibtex.removeStock", false);
-user_pref("extensions.zotero.translators.better-bibtex.ignorePostscriptErrors", false);
 user_pref("extensions.zotero.debug.log", true);
 user_pref("extensions.zotero.debug.time", true);
 user_pref("extensions.zotero.debug.store", true);

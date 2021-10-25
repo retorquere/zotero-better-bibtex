@@ -2,11 +2,18 @@ all: bundle
 
 TIMESTAMP=$(shell date "+%Y-%m-%dT%H:%M:%S")
 MAIN=pandoc-zotero-live-citemarkers.lua
-BUNDLED=../site/content/exporting/zotero.lua
+DEPLOYED=../site/content/exporting/zotero.lua
+BUNDLED=bundle.lua
+
+count:
+	pandoc --lua-filter count-cite.lua main.md | pandoc --bibliography=biblio.bib --citeproc
 
 bundle:
 ifeq ($(shell grep '^local pl =' *.lua), )
-	amalg.lua -o $(BUNDLED) -s $(MAIN) lunajson lunajson.decoder lunajson.encoder lunajson.sax locator utils zotero
+	echo "print('zotero-live-citations $(shell git rev-parse --short HEAD)')" > $(DEPLOYED)
+	~/.luarocks/bin/amalg.lua -o $(BUNDLED) -s $(MAIN) lunajson lunajson.decoder lunajson.encoder lunajson.sax locator utils zotero
+	cat $(BUNDLED) >> $(DEPLOYED)
+	rm $(BUNDLED)
 else
 	@echo $(MAIN) contains debugging code
 	@exit 1
@@ -17,6 +24,10 @@ test:
 	#@pandoc -s --lua-filter=$(MAIN) -o paper$(TIMESTAMP).docx main.md
 	@pandoc -s --lua-filter=$(MAIN) -o paper$(TIMESTAMP).odt main.md
 	pandoc -s --metadata=zotero_scannable_cite:true --lua-filter=$(MAIN) -o paper$(TIMESTAMP)-scannable-cite.odt main.md
+
+jurism:
+	@rm -f *.docx *.odt *.json
+	@pandoc -s --lua-filter=$(MAIN) -o paper$(TIMESTAMP).odt jurism.md
 
 1581:
 	@rm -f *.docx *.odt *.json content.xml

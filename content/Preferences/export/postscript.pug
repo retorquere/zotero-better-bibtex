@@ -1,0 +1,14 @@
+textbox#zotero-better-bibtex-postscript(
+  rows='10'
+  multiline='true'
+  preference='pref-better-bibtex-postscript'
+  onblur='Zotero.BetterBibTeX.PrefPane.checkPostscript();'
+  oninput='Zotero.BetterBibTeX.PrefPane.checkPostscript();'
+  onkeypress='Zotero.setTimeout(function() { Zotero.BetterBibTeX.PrefPane.checkPostscript() }, 1);'
+)
+textbox#better-bibtex-cache-warn-postscript.plain.textbox-emph(
+  rows='2'
+  multiline='true'
+  readonly='true'
+  value='&better-bibtex.Preferences.postscript.warn;'
+)

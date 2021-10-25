@@ -2,14 +2,14 @@
 	"translatorID": "3d0231ce-fd4b-478c-b1d3-840389e5b68c",
 	"label": "PubMed",
 	"creator": "Philipp Zumstein",
-	"target": "^https?://([^/]+\\.)?(www|preview)\\.ncbi\\.nlm\\.nih\\.gov[^/]*/(m/)?(books|pubmed|labs/pubmed|myncbi|sites/pubmed|sites/entrez|entrez/query\\.fcgi\\?.*db=PubMed|myncbi/browse/collection/?|myncbi/collections/)|^https?://pubmed\\.ncbi\\.nlm\\.nih\\.gov/(\\d|\\?)",
+	"target": "^https?://([^/]+\\.)?(www|preview)\\.ncbi\\.nlm\\.nih\\.gov[^/]*/(m/)?(books|pubmed|labs/pubmed|myncbi|sites/pubmed|sites/entrez|entrez/query\\.fcgi\\?.*db=PubMed|myncbi/browse/collection/?|myncbi/collections/)|^https?://pubmed\\.ncbi\\.nlm\\.nih\\.gov/(\\d|\\?|searches/)",
 	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 12,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2020-07-19 18:21:10"
+	"lastUpdated": "2020-12-16 03:19:29"
 }
 
 /*
@@ -43,7 +43,7 @@
 function lookupPMIDs(ids) {
 	var newUri = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?"
 		+ "db=PubMed&tool=Zotero&retmode=xml&rettype=citation&id=" + ids.join(",");
-	//Zotero.debug(newUri);
+	// Zotero.debug(newUri);
 	Zotero.Utilities.HTTP.doGet(newUri, function (text) {
 		if (!text.includes('PubmedArticle') && !text.includes('PubmedBookArticle')) { // e.g. http://www.ncbi.nlm.nih.gov/pubmed/1477919937
 			throw new Error("No Pubmed Data found - Most likely eutils is temporarily down");
@@ -801,7 +801,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.ncbi.nlm.nih.gov/pubmed/20981092",
+		"url": "https://pubmed.ncbi.nlm.nih.gov/20981092/",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -853,7 +853,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "Oct 28, 2010",
+				"date": "2010-10-28",
 				"DOI": "10.1038/nature09534",
 				"ISSN": "1476-4687",
 				"abstractNote": "The 1000 Genomes Project aims to provide a deep characterization of human genome sequence variation as a foundation for investigating the relationship between genotype and phenotype. Here we present results of the pilot phase of the project, designed to develop and compare different strategies for genome-wide sequencing with high-throughput platforms. We undertook three projects: low-coverage whole-genome sequencing of 179 individuals from four populations; high-coverage sequencing of two mother-father-child trios; and exon-targeted sequencing of 697 individuals from seven populations. We describe the location, allele frequency and local haplotype structure of approximately 15 million single nucleotide polymorphisms, 1 million short insertions and deletions, and 20,000 structural variants, most of which were previously undescribed. We show that, because we have catalogued the vast majority of common variation, over 95% of the currently accessible variants found in any individual are present in this data set. On average, each person is found to carry approximately 250 to 300 loss-of-function variants in annotated genes and 50 to 100 variants previously implicated in inherited disorders. We demonstrate how these results can be used to inform association and functional studies. From the two trios, we directly estimate the rate of de novo germline base substitution mutations to be approximately 10(-8) per base pair per generation. We explore the data with regard to signatures of natural selection, and identify a marked reduction of genetic variation in the neighbourhood of genes, due to selection at linked sites. These methods and public data will support the next phase of human genetic research.",
@@ -873,31 +873,81 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Calibration",
-					"Chromosomes, Human, Y",
-					"Computational Biology",
-					"DNA Mutational Analysis",
-					"DNA, Mitochondrial",
-					"Evolution, Molecular",
-					"Female",
-					"Genetic Association Studies",
-					"Genetic Variation",
-					"Genetics, Population",
-					"Genome, Human",
-					"Genome-Wide Association Study",
-					"Genomics",
-					"Genotype",
-					"Haplotypes",
-					"Humans",
-					"Male",
-					"Mutation",
-					"Pilot Projects",
-					"Polymorphism, Single Nucleotide",
-					"Recombination, Genetic",
-					"Sample Size",
-					"Selection, Genetic",
-					"Sequence Alignment",
-					"Sequence Analysis, DNA"
+					{
+						"tag": "Calibration"
+					},
+					{
+						"tag": "Chromosomes, Human, Y"
+					},
+					{
+						"tag": "Computational Biology"
+					},
+					{
+						"tag": "DNA Mutational Analysis"
+					},
+					{
+						"tag": "DNA, Mitochondrial"
+					},
+					{
+						"tag": "Evolution, Molecular"
+					},
+					{
+						"tag": "Female"
+					},
+					{
+						"tag": "Genetic Association Studies"
+					},
+					{
+						"tag": "Genetic Variation"
+					},
+					{
+						"tag": "Genetics, Population"
+					},
+					{
+						"tag": "Genome, Human"
+					},
+					{
+						"tag": "Genome-Wide Association Study"
+					},
+					{
+						"tag": "Genomics"
+					},
+					{
+						"tag": "Genotype"
+					},
+					{
+						"tag": "Haplotypes"
+					},
+					{
+						"tag": "Humans"
+					},
+					{
+						"tag": "Male"
+					},
+					{
+						"tag": "Mutation"
+					},
+					{
+						"tag": "Pilot Projects"
+					},
+					{
+						"tag": "Polymorphism, Single Nucleotide"
+					},
+					{
+						"tag": "Recombination, Genetic"
+					},
+					{
+						"tag": "Sample Size"
+					},
+					{
+						"tag": "Selection, Genetic"
+					},
+					{
+						"tag": "Sequence Alignment"
+					},
+					{
+						"tag": "Sequence Analysis, DNA"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -958,7 +1008,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.ncbi.nlm.nih.gov/pubmed/14779137",
+		"url": "https://pubmed.ncbi.nlm.nih.gov/14779137/",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -970,7 +1020,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "Oct 1950",
+				"date": "1950-10",
 				"ISSN": "0025-7044",
 				"extra": "PMID: 14779137",
 				"issue": "4",
@@ -988,9 +1038,15 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Humans",
-					"PANCREATITIS",
-					"Pancreatitis"
+					{
+						"tag": "Humans"
+					},
+					{
+						"tag": "PANCREATITIS"
+					},
+					{
+						"tag": "Pancreatitis"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -1093,7 +1149,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "Aug 2019",
+				"date": "2019-08",
 				"DOI": "10.1136/emermed-2019-208447",
 				"ISSN": "1472-0213",
 				"abstractNote": "Multiple pitfalls can occur with the conduct and analysis of a study of diagnostic tests, resulting in biased accuracy. Our conceptual model includes three stages: patient selection, interpretation of the index test and disease verification. In part 2, we focus on (1) Interpretation bias (or workup bias): where the classification of an indeterminate index test result can bias the accuracy of a test or how lack of blinding can bias a subjective test result, and (2) Disease verification bias: where the index test result is incorporated into the gold standard or when the gold standard is applied only to a select population as the gold standard is an invasive test. In an example with age-adjusted D-dimer for pulmonary embolism, differential verification bias was a limitation due to the use of two gold standards-CT for a high-risk population and follow-up for symptoms in a low-risk population. However, there are circumstances when certain choices in study design are unavoidable, and result in biased test characteristics. In this case, the informed reader will better judge the quality of a study by recognising the potential biases and limitations by being methodical in their approach to understanding the methods, and in turn, better apply studies of diagnostic tests into their clinical practice.",
@@ -1146,6 +1202,88 @@ var testCases = [
 				"seeAlso": []
 			}
 		]
+	},
+	{
+		"type": "web",
+		"url": "https://pubmed.ncbi.nlm.nih.gov/32633716/",
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "Muscle-derived Myoglianin regulates Drosophila imaginal disc growth",
+				"creators": [
+					{
+						"firstName": "Ambuj",
+						"lastName": "Upadhyay",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Aidan J.",
+						"lastName": "Peterson",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Myung-Jun",
+						"lastName": "Kim",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Michael B.",
+						"lastName": "O'Connor",
+						"creatorType": "author"
+					}
+				],
+				"date": "2020-07-07",
+				"DOI": "10.7554/eLife.51710",
+				"ISSN": "2050-084X",
+				"abstractNote": "Organ growth and size are finely tuned by intrinsic and extrinsic signaling molecules. In Drosophila, the BMP family member Dpp is produced in a limited set of imaginal disc cells and functions as a classic morphogen to regulate pattern and growth by diffusing throughout imaginal discs. However, the role of TGFβ/Activin-like ligands in disc growth control remains ill-defined. Here, we demonstrate that Myoglianin (Myo), an Activin family member, and a close homolog of mammalian Myostatin (Mstn), is a muscle-derived extrinsic factor that uses canonical dSmad2-mediated signaling to regulate wing size. We propose that Myo is a myokine that helps mediate an allometric relationship between muscles and their associated appendages.",
+				"extra": "PMID: 32633716\nPMCID: PMC7371420",
+				"journalAbbreviation": "Elife",
+				"language": "eng",
+				"libraryCatalog": "PubMed",
+				"publicationTitle": "eLife",
+				"volume": "9",
+				"attachments": [
+					{
+						"title": "PubMed entry",
+						"mimeType": "text/html",
+						"snapshot": false
+					}
+				],
+				"tags": [
+					{
+						"tag": "D. melanogaster"
+					},
+					{
+						"tag": "Myoglianin"
+					},
+					{
+						"tag": "Myostatin"
+					},
+					{
+						"tag": "developmental biology"
+					},
+					{
+						"tag": "growth factors"
+					},
+					{
+						"tag": "imaginal disc"
+					},
+					{
+						"tag": "muscle fiber"
+					},
+					{
+						"tag": "tgf beta"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://pubmed.ncbi.nlm.nih.gov/searches/3851259/?startDate=2020-11-07+06%3A06%3A14&endDate=2020-12-05+06%3A04%3A39&token=1J3VmSOOIDc&sort=date",
+		"items": "multiple"
 	}
 ]
 /** END TEST CASES **/

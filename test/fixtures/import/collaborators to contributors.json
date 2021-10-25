@@ -3,14 +3,9 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "localeDateOrder": "dmy",
-    "options": {
-      "Normalize": false,
-      "exportNotes": true
-    },
+    "options": {},
     "preferences": {
-      "citekeyFormat": "[auth:lower][year] | [=forumPost/WebPage][Auth:lower:capitalize][Date:format-date=%Y-%m-%d.%H\\:%M\\:%S:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de] | [Auth:lower:capitalize][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de]",
-      "ignorePostscriptErrors": false,
-      "kuroshiro": true
+      "citekeyFormat": "[auth][year]"
     }
   },
   "items": [
@@ -115,8 +110,8 @@
         "Type: Virtuelle Ausstellung"
       ],
       "itemID": 1,
-      "itemType": "journalArticle",
-      "language": "de",
+      "itemType": "document",
+      "language": "german",
       "shortTitle": "Vom Kalten Krieg zum europ\u00e4ischen Umbruch",
       "title": "Vom Kalten Krieg zum europ\u00e4ischen Umbruch. Das Institut f\u00fcr Europ\u00e4ische Geschichte 1950\u20131990",
       "url": "https://ausstellungen.deutsche-digitale-bibliothek.de/ieg2020/"

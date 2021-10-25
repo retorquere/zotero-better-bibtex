@@ -1,0 +1,116 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "dmy",
+    "options": {},
+    "preferences": {
+      "citekeyFormat": "[auth][year]"
+    }
+  },
+  "items": [
+    {
+      "citationKey": "Roy.O:2017a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Olivier",
+          "lastName": "Roy"
+        },
+        {
+          "creatorType": "translator",
+          "firstName": "Cynthia",
+          "lastName": "Schoch"
+        }
+      ],
+      "date": "2017",
+      "extra": [
+        "Citation Key: Roy.O:2017a",
+        "Original Date: 2016",
+        "Original publisher place: Paris",
+        "Original title: Le djihad et la mort Le djihad et la mort",
+        "tex.origlanguage: french"
+      ],
+      "itemID": 4,
+      "itemType": "book",
+      "place": "New York",
+      "publisher": "Oxford University Press",
+      "title": "Jihad and death. The Global Appeal of Islamic State"
+    },
+    {
+      "citationKey": "Marka.S:2011movie",
+      "creators": [
+        {
+          "creatorType": "director",
+          "firstName": "Sebastiaan",
+          "lastName": "Marka"
+        }
+      ],
+      "date": "2011",
+      "extra": [
+        "Citation Key: Marka.S:2011movie",
+        "Place: DE",
+        "tex.date-added: 2021-09-16 13:56:16 +0200",
+        "tex.date-modified: 2021-09-16 13:56:52 +0200",
+        "tex.read: 1"
+      ],
+      "itemID": 2,
+      "itemType": "film",
+      "title": "Interview"
+    },
+    {
+      "citationKey": "Marka.S:2011video",
+      "creators": [
+        {
+          "creatorType": "director",
+          "firstName": "Sebastian",
+          "lastName": "Marka"
+        }
+      ],
+      "date": "2011",
+      "extra": [
+        "Citation Key: Marka.S:2011video",
+        "Place: DE",
+        "tex.date-added: 2020-09-16 13:56:16 +0200",
+        "tex.date-modified: 2020-09-16 13:56:52 +0200",
+        "tex.read: 1"
+      ],
+      "itemID": 3,
+      "itemType": "film",
+      "title": "Interview"
+    },
+        {
+      "citationKey": "Ball.W:2014a",
+      "creators": [
+        {
+          "creatorType": "director",
+          "firstName": "Wes",
+          "lastName": "Ball"
+        },
+        {
+          "creatorType": "scriptwriter",
+          "firstName": "Noah",
+          "lastName": "Oppenheim"
+        },
+        {
+          "creatorType": "scriptwriter",
+          "firstName": "Grant Pierce",
+          "lastName": "Myers"
+        },
+        {
+          "creatorType": "scriptwriter",
+          "firstName": "T.S.",
+          "lastName": "Nowlin"
+        }
+      ],
+      "date": "2014",
+      "extra": [
+        "Citation Key: Ball.W:2014a",
+        "Place: US"
+      ],
+      "itemID": 1,
+      "itemType": "film",
+      "title": "The maze runner"
+    }
+  ]
+}

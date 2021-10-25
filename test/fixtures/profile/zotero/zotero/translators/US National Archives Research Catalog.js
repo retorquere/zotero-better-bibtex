@@ -1,15 +1,15 @@
 {
 	"translatorID": "f8b5501a-1acc-4ffa-a0a5-594add5e6bd3",
+	"translatorType": 4,
 	"label": "US National Archives Research Catalog",
 	"creator": "Philipp Zumstein",
-	"target": "^https?://catalog\\.archives\\.gov",
+	"target": "^https?://catalog\\.archives\\.gov/",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2019-06-11 13:43:26"
+	"lastUpdated": "2021-06-28 18:50:00"
 }
 
 /*
@@ -66,7 +66,8 @@ function doWeb(doc, url) {
 			for (var i = 0; i < creators.length; i++) {
 				creators[i] = creators[i].replace('(Most Recent)', '');
 				if (creators[i].includes(", ")) {
-					item.creators.push(ZU.cleanAuthor(creators[i], "author"));
+					creators[i] = creators[i].replace(/, \d{4}\s*-\s*(\d{4})?$/, '').replace(/\([^(]+\)/, '');
+					item.creators.push(ZU.cleanAuthor(creators[i], "author", true));
 				}
 				else {
 					creators[i] = creators[i].replace(/\.? ?\d\d?\/\d\d?\/\d\d\d\d-\d\d?\/\d\d?\/\d\d\d\d/, '');
@@ -123,7 +124,8 @@ var testCases = [
 				"series": "Series: Topical File, 1945 - 1952",
 				"attachments": [
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -155,7 +157,40 @@ var testCases = [
 				"series": "Series: Alien Case Files, 1944 - 2003",
 				"attachments": [
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://catalog.archives.gov/id/603604",
+		"items": [
+			{
+				"itemType": "book",
+				"title": "Manuscripts and Notes",
+				"creators": [
+					{
+						"firstName": "Harriet C.",
+						"lastName": "Brown",
+						"creatorType": "author"
+					}
+				],
+				"date": "1890 - 1956",
+				"abstractNote": "This series contains book drafts and correspondence.",
+				"archive": "Herbert Hoover Library(LP-HH)",
+				"extra": "National Archives Identifier: 603604",
+				"libraryCatalog": "US National Archives Research Catalog",
+				"series": "Collection HH-HCB: Harriet Connor Brown Papers",
+				"attachments": [
+					{
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],

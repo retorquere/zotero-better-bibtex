@@ -13,27 +13,27 @@
   url = {http://onlinelibrary.wiley.com.ep.fjernadgang.kb.dk/doi/10.1111/1467-9655.12097/abstract},
   urldate = {2014-12-27},
   abstract = {State planning has been a defining means for modern subjects to regulate the passage of time. In practice, it is the focus of multiple conflicts and doubts, which planners attempt to mediate. In this paper, I address the regimes of time that planning both promotes and encounters, and tease out what these imply for anthropology. Using ethnography of Norwegian and Swedish planning offices and their encounters with participatory planning, I question recent claims that there has been an evacuation of the near future or a retreat of administrative intervention. I also suggest that recent anthropological concerns with time have been confined by their attempts to characterize the changing timescapes of specific modal shifts, such as from the modern to the neoliberal. Instead, in my ethnography, I focus not on tracking epochal breaks in time, but on demonstrating how time is manipulated, and how multiple temporalities are performed in ongoing projects of democratic planning.},
-  keywords = {måske},
   langid = {english},
-  note = {This is the child note},
-  xref = {welker_andreas_1999}
+  xref = {welker_andreas_1999},
+  keywords = {måske},
+  note = {This is the child note}
 }
 
 @jurisdiction{kartinyeri,
   title = {Kartinyeri v {{Commonwealth}}},
   shorttitle = {Kartinyeri},
   author = {Kaetinyeri v Commonwealth},
+  translator = {Kartinyeri},
   date = {1998-04-01},
   journaltitle = {CLR},
   volume = {195},
   pages = {337},
   institution = {{HCA}},
-  keywords = {au},
-  translator = {Kartinyeri}
+  keywords = {au}
 }
 
 @article{pollard_bicycle_2007,
-  title = {A Bicycle Made for Two? {{The}} Integration of Scientific Techniques into Archaeological Interpretation},
+  title = {A Bicycle Made for Two? The Integration of Scientific Techniques into Archaeological Interpretation},
   author = {Pollard, A. Mark and Bray, Peter},
   origdate = {2007},
   journaltitle = {Annu. Rev. Anthropol.},

@@ -1,29 +1,33 @@
 {
 	"translatorID": "c73a4a8c-3ef1-4ec8-8229-7531ee384cc4",
+	"translatorType": 12,
 	"label": "Open WorldCat",
 	"creator": "Simon Kornblith, Sebastian Karcher",
 	"target": "^https?://[^/]+\\.worldcat\\.org/",
 	"minVersion": "3.0.9",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 12,
 	"browserSupport": "gcsbv",
-	"lastUpdated": "2017-03-19 23:26:57"
+	"lastUpdated": "2021-05-07 18:50:00"
 }
+
+// attr()/text() v2
+// eslint-disable-next-line
+function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
 
 /**
  * Gets Zotero item from a WorldCat icon src
  */
 function getZoteroType(iconSrc) {
 	// only specify types not specified in COinS
-	if (iconSrc.indexOf("icon-rec") != -1) {
+	if (iconSrc.includes("icon-rec")) {
 		return "audioRecording";
 	}
-	if (iconSrc.indexOf("icon-com") != -1) {
+	if (iconSrc.includes("icon-com")) {
 		return "computerProgram";
 	}
-	if (iconSrc.indexOf("icon-map") != -1) {
+	if (iconSrc.includes("icon-map")) {
 		return "map";
 	}
 	return false;
@@ -49,8 +53,8 @@ function generateItem(doc, co) {
 
 function getSearchResults(doc) {
 	var results = doc.getElementsByClassName('result');
-	for(var i=0; i<results.length; i++) {
-		if(!results[i].getElementsByClassName('name').length) {
+	for (let i = 0; i < results.length; i++) {
+		if (!results[i].getElementsByClassName('name').length) {
 			delete results[i];
 			i--;
 		}
@@ -66,19 +70,21 @@ function getFirstContextObj(doc) {
 	return ZU.xpathText(doc, '//span[@class="Z3988"][1]/@title');
 }
 
-function detectWeb(doc, url) {
-	//distinguish from Worldcat Discovery
+function detectWeb(doc, _url) {
+	// distinguish from Worldcat Discovery
 	if (doc.body.id == "worldcat") {
-		if(getSearchResults(doc).length) {
+		if (getSearchResults(doc).length) {
 			return "multiple";
 		}
 
 		var co = getFirstContextObj(doc);
-		if(!co) return false;
+		if (!co) return false;
 
 		// generate item and return type
 		return generateItem(doc, co).itemType;
 	}
+	
+	return false;
 }
 
 /**
@@ -86,7 +92,7 @@ function detectWeb(doc, url) {
  */
 function extractOCLCID(url) {
 	var id = url.match(/\/(\d+)(?=[&?]|$)/);
-	if(!id) return false;
+	if (!id) return false;
 	return id[1];
 }
 
@@ -95,11 +101,12 @@ function cleanBrackets(field) {
 	field = field.replace(/^\[|\]\.?$/g, "");
 	return field;
 }
+
 /**
  * RIS Scraper Function
  *
  */
-var baseURL = ''; //we need to set this when calling from doSearch
+var baseURL = ''; // we need to set this when calling from doSearch
 function scrape(ids, data) {
 	var oclcID = ids.shift(),
 		itemData = (data || []).shift();
@@ -118,28 +125,28 @@ function scrape(ids, data) {
 			return;
 		}
 		
-		//2013-05-28 RIS export currently has messed up authors
-		// e.g. A1  - Gabbay, Dov M., Woods, John Hayden., Hartmann, Stephan, 
-		text = text.replace(/^((?:A[123U]|ED)\s+-\s+)(.+)/mg, function(m, tag, value) {
+		// 2013-05-28 RIS export currently has messed up authors
+		// e.g. A1  - Gabbay, Dov M., Woods, John Hayden., Hartmann, Stephan,
+		text = text.replace(/^((?:A[123U]|ED)\s+-\s+)(.+)/mg, function (m, tag, value) {
 			var authors = value.replace(/[.,\s]+$/, '')
 					.split(/[.,],/);
 			var replStr = '';
 			var author;
-			for(var i=0, n=authors.length; i<n; i++) {
-					author = authors[i].trim();
-					if(author) replStr += tag + author + '\n';
+			for (let i = 0, n = authors.length; i < n; i++) {
+				author = authors[i].trim();
+				if (author) replStr += tag + author + '\n';
 			}
 			return replStr.trim();
 		});
 		
 		// Conference proceedings should be imported as book (below), but authors
 		// are actually editors
-		text = text.replace(/^TY\s+-\s+CONF\s[\s\S]*?^ER\s+-\s/mg, function(m) {
+		text = text.replace(/^TY\s+-\s+CONF\s[\s\S]*?^ER\s+-\s/mg, function (m) {
 			if (!/^ED\s+-/m.test(m)) {
 				m = m.replace(/^A[U1](\s+-)/mg, 'ED$1');
 			}
 			return m;
-		})
+		});
 		
 		Zotero.debug("Importing corrected RIS: \n" + text);
 		
@@ -150,26 +157,30 @@ function scrape(ids, data) {
 			item.extra = undefined;
 			item.archive = undefined;
 
-			if(item.libraryCatalog == "http://worldcat.org") {
+			if (item.libraryCatalog == "http://worldcat.org") {
 				item.libraryCatalog = "Open WorldCat";
 			}
-			//remove space before colon
-			item.title = item.title.replace(/\s+:/, ":")
+			// remove space before colon
+			item.title = item.title.replace(/\s+:/, ":");
 			
 			
-			//correct field mode for corporate authors
-			for (i in item.creators) {
-				if (!item.creators[i].firstName){
-					item.creators[i].fieldMode=1;
+			// correct field mode for corporate authors
+			for (let creator of item.creators) {
+				if (!creator.firstName) {
+					creator.fieldMode = 1;
 				}
 			}
 
 			item.title = cleanBrackets(item.title);
 			item.place = cleanBrackets(item.place);
 			item.publisher = cleanBrackets(item.publisher);
-			//attach notes
-			if(itemData && itemData.notes) {
-				item.notes.push({note: itemData.notes});
+			// Strip possible trailing period
+			if (item.language) {
+				item.language = item.language.replace(/\.$/, '');
+			}
+			// attach notes
+			if (itemData && itemData.notes) {
+				item.notes.push({ note: itemData.notes });
 			}
 			if (oclcID) {
 				item.extra = "OCLC: " + oclcID;
@@ -178,11 +189,11 @@ function scrape(ids, data) {
 			item.complete();
 		});
 		
-		translator.getTranslatorObject(function(trans) {
-			trans.options.defaultItemType = 'book'; //if not supplied, default to book
+		translator.getTranslatorObject(function (trans) {
+			trans.options.defaultItemType = 'book'; // if not supplied, default to book
 			trans.options.typeMap = {
-				'ELEC': 'book', //ebooks should be imported as books
-				'CONF': 'book' // proceedings rather than papers
+				ELEC: 'book', // ebooks should be imported as books
+				CONF: 'book' // proceedings rather than papers
 			};
 			
 			trans.doImport();
@@ -194,38 +205,38 @@ function scrape(ids, data) {
 
 function doWeb(doc, url) {
 	var results = getSearchResults(doc);
-	if(results.length) {
+	if (results.length) {
 		var items = {}, itemData = {};
-		for(var i=0, n=results.length; i<n; i++) {
+		for (let i = 0, n = results.length; i < n; i++) {
 			var title = getTitleNode(results[i]);
-			if(!title || !title.href) continue;
-			var url = title.href;
+			if (!title || !title.href) continue;
+			let url = title.href;
 			var oclcID = extractOCLCID(url);
-			if(!oclcID) {
+			if (!oclcID) {
 				Zotero.debug("WorldCat: Failed to extract OCLC ID from URL: " + url);
 				continue;
 			}
 			items[oclcID] = title.textContent;
 			
 			var notes = ZU.xpath(results[i], './div[@class="description" and ./strong[contains(text(), "Notes")]]');
-			if(!notes.length) {
-				//maybe we're looking at our own list
+			if (!notes.length) {
+				// maybe we're looking at our own list
 				notes = ZU.xpath(results[i], './div/div[@class="description"]/div[contains(@id,"saved_comments_") and normalize-space(text())]');
 			}
-			if(notes.length) {
+			if (notes.length) {
 				notes = ZU.trimInternal(notes[0].innerHTML)
 					.replace(/^<strong>\s*Notes:\s*<\/strong>\s*<br>\s*/i, '');
 				
-				if(notes) {
+				if (notes) {
 					itemData[oclcID] = {
-						notes: ZU.unescapeHTML(ZU.unescapeHTML(notes)) //it's double-escaped on WorldCat
+						notes: ZU.unescapeHTML(ZU.unescapeHTML(notes)) // it's double-escaped on WorldCat
 					};
 				}
 			}
 		}
 
-		Zotero.selectItems(items, function(items) {
-			if (!items) return true;
+		Zotero.selectItems(items, function (items) {
+			if (!items) return;
 			
 			var ids = [], data = [];
 			for (var i in items) {
@@ -235,18 +246,19 @@ function doWeb(doc, url) {
 			
 			scrape(ids, data);
 		});
-	} else {
-		var oclcID = extractOCLCID(url);
+	}
+	else {
+		let oclcID = extractOCLCID(url);
 		if (!oclcID) {
 			// Seems like some single search results redirect to the item page,
 			// but the URL is still a search URL. Grab cannonical URL from meta tag
 			// to extract the OCLC ID
-			var canonicalURL = ZU.xpath(doc, '/html/head/link[@rel="canonical"][1]')[0];
+			let canonicalURL = attr(doc, "link[rel='canonical']", "href");
 			if (canonicalURL) {
-				oclcID = extractOCLCID(canonicalURL.href);
+				oclcID = extractOCLCID(canonicalURL);
 			}
 		}
-		if(!oclcID) throw new Error("WorldCat: Failed to extract OCLC ID from URL: " + url);
+		if (!oclcID) throw new Error("WorldCat: Failed to extract OCLC ID from URL: " + url);
 		scrape([oclcID]);
 	}
 }
@@ -257,14 +269,15 @@ function sanitizeInput(items, checkOnly) {
 	}
 	
 	var cleanItems = [];
-	for (var i=0; i<items.length; i++) {
+	for (let i = 0; i < items.length; i++) {
 		var item = ZU.deepCopy(items[i]),
 			valid = false;
 		if (item.ISBN && typeof item.ISBN == 'string'
 			&& (item.ISBN = ZU.cleanISBN(item.ISBN))
 		) {
 			valid = true;
-		} else {
+		}
+		else {
 			delete item.ISBN;
 		}
 		
@@ -273,7 +286,8 @@ function sanitizeInput(items, checkOnly) {
 		) {
 			valid = true;
 			item.identifiers.oclc = item.identifiers.oclc.trim();
-		} else if (item.identifiers) {
+		}
+		else if (item.identifiers) {
 			delete item.identifiers.oclc;
 		}
 		
@@ -294,13 +308,13 @@ function doSearch(items) {
 	items = sanitizeInput(items);
 	if (!items.length) {
 		Z.debug("Search query does not contain valid identifiers");
-		return false;
+		return;
 	}
 	
 	baseURL = "http://www.worldcat.org"; // Translator-global
 	
 	var ids = [], isbns = [];
-	for (var i=0; i<items.length; i++) {
+	for (let i = 0; i < items.length; i++) {
 		if (items[i].identifiers && items[i].identifiers.oclc) {
 			ids.push(items[i].identifiers.oclc);
 			continue;
@@ -309,7 +323,7 @@ function doSearch(items) {
 		isbns.push(items[i].ISBN);
 	}
 	
-	fetchIDs(isbns, ids, function(ids) {
+	fetchIDs(isbns, ids, function (ids) {
 		if (!ids.length) {
 			Z.debug("Could not retrieve any OCLC IDs");
 			Zotero.done(false);
@@ -330,35 +344,38 @@ function fetchIDs(isbns, ids, callback) {
 		+ encodeURIComponent(isbn);
 	ZU.processDocuments(url,
 		function (doc) {
-			//mostly these are search results; for those, we take the first search result
+			// mostly these are search results; for those, we take the first search result
 			var results = getSearchResults(doc);
 			if (results.length) {
 				var title = getTitleNode(results[0]);
 				if (title) {
 					var id = extractOCLCID(title.href);
 					if (id) ids.push(id);
-				} else {
+				}
+				else {
 					Z.debug("Could not extract OCLC ID for ISBN " + isbn);
 				}
 			}
-			//but sometimes we have single items
-			else  {
-				var canonicalURL = ZU.xpathText(doc, '/html/head/link[@rel="canonical"]/@href');
-   				if (canonicalURL) {
-      					oclcID = extractOCLCID(canonicalURL);
-      					if(!oclcID) throw new Error("WorldCat: Failed to extract OCLC ID from URL: " + url);
-         				scrape([oclcID]);
-   				} else {
-     					 Z.debug("No search results found for ISBN " + isbn);
-   				}
+			// but sometimes we have single items
+			else {
+				let canonicalURL = attr(doc, "link[rel='canonical']", "href");
+				if (canonicalURL) {
+					let oclcID = extractOCLCID(canonicalURL);
+					if (!oclcID) {
+						throw new Error("WorldCat: Failed to extract OCLC ID from URL: " + url);
+					}
+					scrape([oclcID]);
+				}
+				else {
+					Z.debug("No search results found for ISBN " + isbn);
+				}
 			}
 		},
-		function() {
-			fetchIDs(isbns, ids, callback)
+		function () {
+			fetchIDs(isbns, ids, callback);
 		}
 	);
 }
-
 
 
 /** BEGIN TEST CASES **/
@@ -370,7 +387,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.worldcat.org/title/argentina/oclc/489605&referer=brief_results",
+		"url": "https://www.worldcat.org/title/argentina/oclc/489605&referer=brief_results",
 		"items": [
 			{
 				"itemType": "book",
@@ -383,6 +400,7 @@ var testCases = [
 					}
 				],
 				"date": "1964",
+				"abstractNote": "\"This book delves into the Argentine past seeking the origins of the political, social, and economic conflicts that have stunted Argentina's development after her spectacular progress during the late nineteenth and early twentieth centuries\"--From book jacket.",
 				"extra": "OCLC: 489605",
 				"language": "English",
 				"libraryCatalog": "Open WorldCat",
@@ -431,7 +449,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://melvyl.worldcat.org/title/cambridge-companion-to-adam-smith/oclc/60321422&referer=brief_results",
+		"url": "https://www.worldcat.org/title/cambridge-companion-to-adam-smith/oclc/60321422&referer=brief_results",
 		"items": [
 			{
 				"itemType": "book",

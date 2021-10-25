@@ -1,15 +1,15 @@
 {
 	"translatorID": "d921155f-0186-1684-615c-ca57682ced9b",
+	"translatorType": 4,
 	"label": "JSTOR",
 	"creator": "Simon Kornblith, Sean Takats, Michael Berkowitz, Eli Osherovich, czar",
 	"target": "^https?://([^/]+\\.)?jstor\\.org/(discover/|action/(showArticle|doBasicSearch|doAdvancedSearch|doLocatorSearch|doAdvancedResults|doBasicResults)|stable/|pss/|openurl\\?|sici\\?)",
 	"minVersion": "3.0.12",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2020-10-14 13:32:58"
+	"lastUpdated": "2021-06-11 13:15:00"
 }
 
 /*
@@ -54,6 +54,11 @@ function detectWeb(doc, url) {
 	if ((favLink && getJID(favLink.href)) || getJID(url)) {
 		if (ZU.xpathText(doc, '//li[@class="book_info_button"]')) {
 			return "book";
+		}
+		else if (text(doc, 'script[data-analytics-provider]').includes('"chapter view"')) {
+			// might not stick around, but this is really just for the toolbar icon
+			// (and tests)
+			return "bookSection";
 		}
 		else {
 			return "journalArticle";
@@ -204,6 +209,7 @@ function processRIS(text, jid) {
 		// add any other jid for DOI because they are only internal.
 		
 		if (maintitle && subtitle) {
+			maintitle[1] = maintitle[1].replace(/:\s*$/, '');
 			item.title = maintitle[1] + ": " + subtitle[1];
 		}
 		// reviews don't have titles in RIS - we get them from the item page
@@ -219,9 +225,8 @@ function processRIS(text, jid) {
 			}
 			// remove any reviewed authors from the title
 			for (i = 0; i < reviewedAuthors.length; i++) {
-				reviewedTitle = reviewedTitle.replace(reviewedAuthors[i], "");
+				reviewedTitle = reviewedTitle.replace(", "+reviewedAuthors[i], "");
 			}
-			reviewedTitle = reviewedTitle.replace(/[\s.,]+$/, "");
 			item.title = "Review of " + reviewedTitle;
 		}
 		
@@ -660,6 +665,87 @@ var testCases = [
 				"shortTitle": "Errors in Bibliographic Citations",
 				"url": "https://www.jstor.org/stable/4308405",
 				"volume": "59",
+				"attachments": [
+					{
+						"title": "JSTOR Full Text PDF",
+						"mimeType": "application/pdf"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://www.jstor.org/stable/40401968?seq=1#metadata_info_tab_contents",
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "Review of The Communards of Paris, 1871; The Paris Commune of 1871: The View from the Left",
+				"creators": [
+					{
+						"lastName": "Waldman",
+						"firstName": "Martin R.",
+						"creatorType": "author"
+					},
+					{
+						"lastName": "Edwards",
+						"firstName": "Stewart",
+						"creatorType": "reviewedAuthor"
+					},
+					{
+						"lastName": "Schulkind",
+						"firstName": "Eugene",
+						"creatorType": "reviewedAuthor"
+					}
+				],
+				"date": "1976",
+				"ISSN": "0036-8237",
+				"issue": "3",
+				"libraryCatalog": "JSTOR",
+				"pages": "378-381",
+				"publicationTitle": "Science & Society",
+				"shortTitle": "Review of The Communards of Paris, 1871; The Paris Commune of 1871",
+				"url": "https://www.jstor.org/stable/40401968",
+				"volume": "40",
+				"attachments": [
+					{
+						"title": "JSTOR Full Text PDF",
+						"mimeType": "application/pdf"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://www.jstor.org/stable/j.ctt19jcg63.12",
+		"items": [
+			{
+				"itemType": "bookSection",
+				"title": "“OUR CLIMATE AND SOIL IS COMPLETELY ADAPTED TO THEIR CUSTOMS”: Whiteness, Railroad Promotion, and the Settlement of the Great Plains",
+				"creators": [
+					{
+						"lastName": "Pierce",
+						"firstName": "Jason E.",
+						"creatorType": "author"
+					}
+				],
+				"date": "2016",
+				"ISBN": "9781607323952",
+				"abstractNote": "Dr. William A. Bell, a transplanted English physician and promoter for the Denver and Rio Grande Western Railway, observed in his 1869 book <i>New Tracks in North America</i>  that the West offered unlimited potential for creating prosperous new towns and generating profits for discerning investors, but its development would require men of vision, courage, and capital to make dreams a reality. The West stood forth as a vast region “where continuous settlement is impossible, where, instead of navigable rivers, we find arid deserts, but where, nevertheless, spots of great fertility and the richest prizes of the mineral kingdom tempt men",
+				"bookTitle": "Making the White Man's West",
+				"libraryCatalog": "JSTOR",
+				"pages": "151-178",
+				"publisher": "University Press of Colorado",
+				"series": "Whiteness and the Creation of the American West",
+				"shortTitle": "“OUR CLIMATE AND SOIL IS COMPLETELY ADAPTED TO THEIR CUSTOMS”",
+				"url": "https://www.jstor.org/stable/j.ctt19jcg63.12",
 				"attachments": [
 					{
 						"title": "JSTOR Full Text PDF",

@@ -13,8 +13,7 @@
   "displayOptions": {
     "exportNotes": true,
     "exportFileData": false,
-    "keepUpdated": false,
-    "Normalize": false
+    "keepUpdated": false
   },
   "translatorType": 3,
   "browserSupport": "gcsv",

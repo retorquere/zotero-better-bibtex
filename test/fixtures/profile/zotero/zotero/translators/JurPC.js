@@ -1,15 +1,15 @@
 {
 	"translatorID": "b662c6eb-e478-46bd- bad4-23cdfd0c9d67",
+	"translatorType": 4,
 	"label": "JurPC",
 	"creator": "Oliver Vivell and Michael Berkowitz",
 	"target": "^https?://www\\.jurpc\\.de/jurpc/show\\?id=",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2015-01-02 18:03:03"
+	"lastUpdated": "2021-06-08 14:40:00"
 }
 
 function detectWeb(doc, url) {
@@ -106,10 +106,10 @@ function doWeb(doc, url) {
 		
 		// store type of decision
 		if (/Beschluss./i.test(caseInformation[1])) {
-			item.extra = "{:genre: Beschl.}";
+			item.extra = "Genre: Beschl.";
 		}
 		else if (/Urteil/i.test(caseInformation[1])) {
-				item.extra = "{:genre: Urt.}";
+				item.extra = "Genre: Urt.";
 		}
 		
 		var doi = ZU.xpathText(doc, '//span[@class="resultinfo left"]')
@@ -170,7 +170,7 @@ var testCases = [
 				"dateDecided": "2000-07-06",
 				"court": "BGH",
 				"docketNumber": "I ZR 244/97",
-				"extra": "{:genre: Urt.}",
+				"extra": "Genre: Urt.",
 				"language": "de-DE",
 				"reporter": "JurPC WebDok",
 				"reporterVolume": "220/2000",
@@ -197,7 +197,7 @@ var testCases = [
 				"dateDecided": "2014-10-22",
 				"court": "Saarländisches Oberlandesgericht",
 				"docketNumber": "1 U 25/14",
-				"extra": "{:genre: Urt.}",
+				"extra": "Genre: Urt.",
 				"language": "de-DE",
 				"reporter": "JurPC WebDok",
 				"reporterVolume": "193/2014",
@@ -224,7 +224,7 @@ var testCases = [
 				"dateDecided": "2014-05-15",
 				"court": "BGH",
 				"docketNumber": "I ZB 71/13",
-				"extra": "{:genre: Beschl.}",
+				"extra": "Genre: Beschl.",
 				"language": "de-DE",
 				"reporter": "JurPC WebDok",
 				"reporterVolume": "165/2014",

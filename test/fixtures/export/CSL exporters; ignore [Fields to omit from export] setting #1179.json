@@ -8,7 +8,6 @@
     },
     "preferences": {
       "asciiBibLaTeX": true,
-      "autoExportDelay": 5,
       "biblatexExtendedNameFormat": true,
       "bibtexURL": "url",
       "citekeyFormat": "[auth:nopunct:lower][year]",

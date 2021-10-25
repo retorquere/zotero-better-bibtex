@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-declare const Zotero: any
-
 const OK = 200
 const SERVER_ERROR = 500
 const NOT_FOUND = 404
@@ -11,7 +9,8 @@ import { Translators } from './translators'
 import { get as getCollection } from './collection'
 import { get as getLibrary } from './library'
 import { getItemsAsync } from './get-items-async'
-import { KeyManager } from './key-manager'
+import { fromEntries } from './object'
+import { $and } from './db/loki'
 
 function displayOptions(request) {
   const isTrue = new Set([ 'y', 'yes', 'true' ])
@@ -145,7 +144,7 @@ Zotero.Server.Endpoints['/better-bibtex/export/item'] = class {
 
       const itemIDs: Record<string, number> = {}
       for (const citekey of citationKeys) {
-        const key = KeyManager.keys.find({ libraryID, citekey })
+        const key = Zotero.BetterBibTeX.KeyManager.keys.find($and({ libraryID, citekey }))
 
         switch (key.length) {
           case 0:
@@ -162,7 +161,7 @@ Zotero.Server.Endpoints['/better-bibtex/export/item'] = class {
 
       if (!Object.keys(itemIDs).length) return [ SERVER_ERROR, 'text/plain', 'no items found' ]
       // itemID => zotero item
-      const items = (await getItemsAsync(Object.values(itemIDs))).reduce((acc, item) => { acc[item.itemID] = item; return acc }, {})
+      const items = fromEntries((await getItemsAsync(Object.values(itemIDs))).map(item => [ item.itemID , item ]))
       let contents = await Translators.exportItems(translatorID, displayOptions(request), { type: 'items', items: Object.values(items) })
 
       if (pandocFilterData) {

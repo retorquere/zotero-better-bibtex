@@ -1,0 +1,31 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "mdy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {}
+  },
+  "items": [
+    {
+      "citationKey": "barnabe2017rhetorique",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Fanny",
+          "lastName": "Barnab\u00e9"
+        }
+      ],
+      "date": "2017",
+      "extra": [
+        "Citation Key: barnabe2017rhetorique"
+      ],
+      "itemID": 1,
+      "itemType": "thesis",
+      "publisher": "Universit\u00e9 de Li\u00e8ge,\u200b Li\u00e8ge,\u200b\u200b Belgique",
+      "title": "Rh\u00e9torique du d\u00e9tournement vid\u00e9oludique. Le cas de pok\u00e9mon"
+    }
+  ]
+}

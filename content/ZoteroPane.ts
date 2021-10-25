@@ -1,94 +1,88 @@
-declare const Zotero: any
-declare const window: any
-declare const document: any
-declare const Components: any
-
 import { log } from './logger'
-import { BetterBibTeX } from './better-bibtex'
 import { TeXstudio } from './tex-studio'
-import { clean_pane_persist, patch as $patch$ } from './monkey-patch'
-import { Preferences as Prefs } from './prefs'
+import { patch as $patch$ } from './monkey-patch'
+import { clean_pane_persist } from './clean_pane_persist'
+import { Preference } from '../gen/preferences'
 import { AutoExport } from './auto-export'
 import { flash } from './flash'
-import { sentenceCase } from './case'
+import { sentenceCase } from './text'
 import * as CAYW from './cayw'
+import { $and } from './db/loki'
+import * as Extra from './extra'
+import * as DateParser from './dateparser'
 
-const pane = Zotero.getActiveZoteroPane()
+export class ZoteroPane {
+  private globals: Record<string, any>
 
-$patch$(pane, 'buildCollectionContextMenu', original => async function() {
-  // eslint-disable-next-line prefer-rest-params
-  await original.apply(this, arguments)
+  public load(): void {
+    const pane = Zotero.getActiveZoteroPane()
 
-  try {
-    const treeRow = this.collectionsView.selectedTreeRow
-    const isLibrary = treeRow && treeRow.isLibrary(true)
-    const isCollection = treeRow && treeRow.isCollection()
+    $patch$(pane, 'buildCollectionContextMenu', original => async function() {
+      // eslint-disable-next-line prefer-rest-params
+      await original.apply(this, arguments)
 
-    document.getElementById('bbt-collectionmenu-separator').hidden = !(isLibrary || isCollection)
-    document.getElementById('bbt-collectionmenu-pull-url').hidden = !(isLibrary || isCollection)
-    document.getElementById('bbt-collectionmenu-report-errors').hidden = !(isLibrary || isCollection)
+      if (!this.globals) return
 
-    const tagDuplicates = document.getElementById('bbt-collectionmenu-tag-duplicates')
-    if (isLibrary) {
-      tagDuplicates.hidden = false
-      tagDuplicates.setAttribute('libraryID', treeRow.ref.libraryID.toString())
-    }
-    else {
-      tagDuplicates.hidden = true
-    }
+      try {
+        const treeRow = this.collectionsView.selectedTreeRow
+        const isLibrary = treeRow && treeRow.isLibrary(true)
+        const isCollection = treeRow && treeRow.isCollection()
 
-    let query = null
-    if (Prefs.get('autoExport') === 'immediate') {
-      query = null
-    }
-    else if (isCollection) {
-      query = { type: 'collection', id: treeRow.ref.id }
-    }
-    else if (isLibrary) {
-      query = { type: 'library', id: treeRow.ref.libraryID }
-    }
-    const auto_exports = query ? AutoExport.db.find(query) : []
+        this.globals.document.getElementById('bbt-collectionmenu-separator').hidden = !(isLibrary || isCollection)
+        this.globals.document.getElementById('bbt-collectionmenu-pull-url').hidden = !(isLibrary || isCollection)
+        this.globals.document.getElementById('bbt-collectionmenu-report-errors').hidden = !(isLibrary || isCollection)
 
-    for (const node of [...document.getElementsByClassName('bbt-autoexport')]) {
-      node.hidden = auto_exports.length === 0
-    }
+        const tagDuplicates = this.globals.document.getElementById('bbt-collectionmenu-tag-duplicates')
+        if (isLibrary) {
+          tagDuplicates.hidden = false
+          tagDuplicates.setAttribute('libraryID', treeRow.ref.libraryID.toString())
+        }
+        else {
+          tagDuplicates.hidden = true
+        }
 
-    if (auto_exports.length !== 0) {
-      const menupopup = document.getElementById('zotero-itemmenu-BetterBibTeX-autoexport-menu')
-      while (menupopup.children.length > 1) menupopup.removeChild(menupopup.firstChild)
-      for (const [index, ae] of auto_exports.entries()) {
-        const menuitem = (index === 0 ? menupopup.firstChild : menupopup.appendChild(menupopup.firstChild.cloneNode(true)))
-        menuitem.label = ae.path
+        let query = null
+        if (Preference.autoExport === 'immediate') {
+          query = null
+        }
+        else if (isCollection) {
+          query = $and({ type: 'collection', id: treeRow.ref.id })
+        }
+        else if (isLibrary) {
+          query = $and({ type: 'library', id: treeRow.ref.libraryID })
+        }
+        const auto_exports = query ? AutoExport.db.find(query) : []
+
+        for (const node of [...this.globals.document.getElementsByClassName('bbt-autoexport')]) {
+          node.hidden = auto_exports.length === 0
+        }
+
+        if (auto_exports.length !== 0) {
+          const menupopup = this.globals.document.getElementById('zotero-itemmenu-BetterBibTeX-autoexport-menu')
+          while (menupopup.children.length > 1) menupopup.removeChild(menupopup.firstChild)
+          for (const [index, ae] of auto_exports.entries()) {
+            const menuitem = (index === 0 ? menupopup.firstChild : menupopup.appendChild(menupopup.firstChild.cloneNode(true)))
+            menuitem.label = ae.path
+          }
+        }
+
       }
-    }
+      catch (err) {
+        log.error('ZoteroPane.buildCollectionContextMenu:', err)
+      }
+    })
 
-  }
-  catch (err) {
-    log.error('ZoteroPane.buildCollectionContextMenu:', err)
-  }
-})
-
-// Monkey patch because of https://groups.google.com/forum/#!topic/zotero-dev/zy2fSO1b0aQ
-$patch$(pane, 'serializePersist', original => function() {
-  // eslint-disable-next-line prefer-rest-params
-  original.apply(this, arguments)
-  if (Zotero.BetterBibTeX.uninstalled) clean_pane_persist()
-})
-
-export = new class ZoteroPane {
-  public constructor() {
-    window.addEventListener('load', () => {
-      BetterBibTeX.load(document)
-        .then(() => {
-          log.debug('Better BibTeX load finished successfully')
-        })
-        .catch(err => {
-          log.error('Better BibTeX load failed', err)
-        })
-    }, false)
+    // Monkey patch because of https://groups.google.com/forum/#!topic/zotero-dev/zy2fSO1b0aQ
+    $patch$(pane, 'serializePersist', original => function() {
+      // eslint-disable-next-line prefer-rest-params
+      original.apply(this, arguments)
+      if (Zotero.BetterBibTeX.uninstalled) clean_pane_persist()
+    })
   }
 
-  public pullExport() {
+  public pullExport(): void {
+    const pane = Zotero.getActiveZoteroPane()
+
     if (!pane.collectionsView || !pane.collectionsView.selection || !pane.collectionsView.selection.count) return
 
     const row = pane.collectionsView.selectedTreeRow
@@ -121,13 +115,13 @@ export = new class ZoteroPane {
 
     if (!params.url.short) return
 
-    window.openDialog('chrome://zotero-better-bibtex/content/ServerURL.xul', '', 'chrome,dialog,centerscreen,modal', params)
+    this.globals.window.openDialog('chrome://zotero-better-bibtex/content/ServerURL.xul', '', 'chrome,dialog,centerscreen,modal', params)
   }
 
-  public startAutoExport(event) {
+  public startAutoExport(event: Event): void {
     event.stopPropagation()
-    const path = event.target.getAttribute('label')
-    const ae = AutoExport.db.findOne({ path })
+    const path = (event.target as Element).getAttribute('label')
+    const ae = AutoExport.db.findOne($and({ path }))
 
     if (ae) {
       AutoExport.run(ae.$loki)
@@ -137,7 +131,53 @@ export = new class ZoteroPane {
     }
   }
 
-  public async addCitationLinks() {
+  public async patchDates(): Promise<void> {
+    const items = Zotero.getActiveZoteroPane().getSelectedItems()
+    const mapping: Record<string, string> = { 'tex.dateadded': 'dateAdded', 'tex.datemodified': 'dateModified' }
+    if (Preference.patchDates.trim()) {
+      try {
+        for (const assignment of Preference.patchDates.trim().split(/\s,\s/)) {
+          const [, k, v ] = assignment.trim().match(/^([-_a-z09]+)\s*=\s*(dateadded|datemodified)$/i)
+          mapping [`tex.${k.toLowerCase()}`] = { dateadded: 'dateAdded', datemodified: 'dateModified' }[v.toLowerCase()]
+        }
+      }
+      catch (err) {
+        flash('could not parse field mapping', `could not parse field mapping ${Preference.patchDates}`)
+        return
+      }
+    }
+    log.debug('patchDates:', mapping)
+
+    const tzdiff = (new Date).getTimezoneOffset()
+    for (const item of items) {
+      let save = false
+      try {
+        const extra = Extra.get(item.getField('extra'), 'zotero', { tex: true })
+        log.debug('patchDates:', extra)
+        for (const [k, v] of Object.entries(extra.extraFields.tex)) {
+          if (mapping[k]) {
+            const date = DateParser.parse(v.value, Zotero.BetterBibTeX.localeDateOrder)
+            log.debug('patchDates:', date)
+            if (date.type === 'date' && date.day) {
+              delete extra.extraFields.tex[k]
+              item.setField(mapping[k], new Date(date.year, date.month - 1, date.day, 0, -tzdiff).toISOString())
+              save = true
+            }
+          }
+        }
+        if (save) {
+          log.debug('patchDates:', extra, Extra.set(extra.extra, extra.extraFields))
+          item.setField('extra', Extra.set(extra.extra, extra.extraFields))
+          await item.saveTx()
+        }
+      }
+      catch (err) {
+        log.debug('patchDates:', err)
+      }
+    }
+  }
+
+  public async addCitationLinks(): Promise<void> {
     const items = Zotero.getActiveZoteroPane().getSelectedItems()
     if (items.length !== 1) {
       flash('Citation links only works for a single reference')
@@ -154,15 +194,17 @@ export = new class ZoteroPane {
     }
   }
 
-  public async toTeXstudio() {
+  public async toTeXstudio(): Promise<void> {
     await TeXstudio.push()
   }
 
-  public errorReport(includeReferences) {
+  public errorReport(includeReferences: string): void {
+    const pane = Zotero.getActiveZoteroPane()
     let scope = null
 
     switch (pane && includeReferences) {
-      case 'collection': case 'library':
+      case 'collection':
+      case 'library':
         scope = { type: 'collection', collection: pane.getSelectedCollection() }
         if (!scope.collection) scope = { type: 'library', id: pane.getSelectedLibraryID() }
         break
@@ -186,7 +228,7 @@ export = new class ZoteroPane {
     ww.openWindow(null, 'chrome://zotero-better-bibtex/content/ErrorReport.xul', 'better-bibtex-error-report', 'chrome,centerscreen,modal', params)
   }
 
-  public async sentenceCase() {
+  public async sentenceCase(): Promise<void> {
     const items = Zotero.getActiveZoteroPane().getSelectedItems()
     for (const item of items) {
       let save = false
@@ -211,6 +253,3 @@ export = new class ZoteroPane {
     }
   }
 }
-
-// otherwise this entry point won't be reloaded: https://github.com/webpack/webpack/issues/156
-delete require.cache[module.id]

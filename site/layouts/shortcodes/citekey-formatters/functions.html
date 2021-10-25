@@ -10,5 +10,7 @@
   </li>
   <li><code>0</code>: an alias for <code>[postfix=-%(n)s]</code>. Emulates the disambiguator of the standard Zotero exports. When you use <code>[zotero]</code> in your pattern, <code>[zotero][0]</code> is implied</li>
   <li><code>&gt;X</code>: a pseudo-function which aborts the current pattern generation if what came before it is <code>X</code> characters or less (<code>[&gt;0]</code> is a typical use. You would typically use this with something like <code>[auth][&gt;0][year] | [title][year]</code> which means if there's no author you get <code>title-year</code> rather than just <code>year</code>.</li>
-  <li><code>=typeName</code>: a pseudo-function that aborts the current pattern generation if the Zotero reference type does not equal <code>typeName</code>. You can test for multiple typenames at once by separating them with slashes (<code>[=journalArticle/report]</code>). Valid typeNames are: {{ range $index, $tn := .Site.Data.citekeyformatters.typeNames }}{{ if (eq $index 0) }}, {{ end }}<code>{{ $tn }}</code>{{ end }}.</li>
+  <li><code>=typeName</code>: a pseudo-function that aborts the current pattern generation if the Zotero reference type does not equal <code>typeName</code>. You can test for multiple typenames at once by separating them with slashes (<code>[=journalArticle/report]</code>). Valid typeNames are: {{ range $index, $tn := .Site.Data.citekeyformatters.typeNames }}{{ if (ne $index 0) }}, {{ end }}<code>{{ $tn | safeHTML }}</code>{{ end }}.</li>
 </ul>
+
+(type names marked <sup>JM</sup> are only available in Juris-M).

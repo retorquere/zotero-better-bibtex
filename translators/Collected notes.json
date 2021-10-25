@@ -4,6 +4,9 @@
   "description": "exports your notes",
   "creator": "Emiliano heyns",
   "target": "html",
+  "displayOptions": {
+    "markdown": false
+  },
   "minVersion": "4.0.27",
   "maxVersion": "",
   "translatorType": 2,

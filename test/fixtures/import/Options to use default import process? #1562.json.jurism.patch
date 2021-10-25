@@ -12,6 +12,11 @@
   {
     "op": "remove",
     "path": "/items/0/extra/0",
+    ":value": "Place: THE BOULEVARD, LANGFORD LANE, KIDLINGTON, OXFORD OX5 1GB, ENGLAND"
+  },
+  {
+    "op": "remove",
+    "path": "/items/0/extra/0",
     ":value": "Publisher: PERGAMON-ELSEVIER SCIENCE LTD"
   }
 ]

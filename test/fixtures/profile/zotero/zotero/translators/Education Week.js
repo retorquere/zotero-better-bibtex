@@ -9,120 +9,189 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2015-06-02 11:18:49"
+	"lastUpdated": "2021-01-29 15:47:14"
 }
 
-function detectWeb(doc,url)
-{
-	   var namespace = doc.documentElement.namespaceURI;
-	   var nsResolver = namespace ? function(prefix) {
-	   if (prefix == 'x') return namespace; else return null;
-	   } : null;
+/*
+	***** BEGIN LICENSE BLOCK *****
 
-	   var xpath='//meta[@name="Story_type"]/@content';
-	   var temp=doc.evaluate(xpath, doc, nsResolver,XPathResult.ANY_TYPE,null).iterateNext();
-	   if(temp)
-	   {
-			   if(temp.value=="Blog")
-					   {return "blogPost";}
-			   if(temp.value.indexOf("Story")>-1)
-					   {return "magazineArticle";}
-	   }
+	Copyright © 2021 Sebastian Karcher
+	
+	This file is part of Zotero.
+
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Zotero is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU Affero General Public License for more details.
+
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
+
+	***** END LICENSE BLOCK *****
+*/
+
+// eslint-disable-next-line no-unused-vars
+function detectWeb(doc, url) {
+	if (doc.getElementsByClassName('m-article-title').length) {
+		return "newspaperArticle";
+	}
+	else if (getSearchResults(doc, true)) {
+		return "multiple";
+	}
+	return false;
 }
 
-function associateMeta(newItem, metaTags, field, zoteroField) {
-	  if(metaTags[field]) {
-			  newItem[zoteroField] = metaTags[field];
-	  }
+function getSearchResults(doc, checkOnly) {
+	var items = {};
+	var found = false;
+	var rows = doc.querySelectorAll('a.m-promo__title');
+	for (let row of rows) {
+		let href = row.href;
+		let title = ZU.trimInternal(row.textContent);
+		if (!href || !title) continue;
+		if (checkOnly) return true;
+		found = true;
+		items[href] = title;
+	}
+	return found ? items : false;
 }
 
+function doWeb(doc, url) {
+	if (detectWeb(doc, url) == "multiple") {
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
+			if (items) ZU.processDocuments(Object.keys(items), scrape);
+		});
+	}
+	else {
+		scrape(doc, url);
+	}
+}
 function scrape(doc, url) {
+	var translator = Zotero.loadTranslator('web');
+	// Embedded Metadata
+	translator.setTranslator('951c027d-74ac-47d4-a107-9c3069ab7b48');
+	// translator.setDocument(doc);
+	
+	translator.setHandler('itemDone', function (obj, item) {
+		// some garbage makes it into item tags
+		for (let i = item.tags.length - 1; i > -1; i--) {
+			if (item.tags[i].search(/premium\d|^lytics/) != -1) {
+				item.tags.splice(i, 1);
+			}
+		}
+		item.title = item.title.replace(/\(.+?\)$/, "");
+		item.ISSN = "0277-4232";
+		item.publicationTitle = "Education Week";
+		item.complete();
+	});
 
-	  var newItem = new Zotero.Item("magazineArticle");
-	   if(url&&url.indexOf("blogs.edweek.org")>-1)
-			   {newItem.itemType="blogPost";}
-
-	  newItem.url = doc.location.href;
-
-	  var metaTags = new Object();
-
-	  var metaTagHTML = doc.getElementsByTagName("meta");
-	  var i;
-	  for (i = 0 ; i < metaTagHTML.length ; i++) {
-			  metaTags[metaTagHTML[i].getAttribute("name")]=Zotero.Utilities.cleanTags(metaTagHTML[i].getAttribute("content"));
-	  }
-	  associateMeta(newItem, metaTags, "Title", "title");
-	  associateMeta(newItem, metaTags, "Cover_date", "date");
-	  associateMeta(newItem, metaTags, "Description", "abstractNote");
-	  associateMeta(newItem, metaTags, "ArticleID", "accessionNumber");
-	  associateMeta(newItem,metaTags,"Source","publicationTitle");
-
-
-		if (metaTags["Authors"]) {
-			  var author = Zotero.Utilities.trimInternal(metaTags["Authors"]);
-			  if (author.substr(0,3).toLowerCase() == "by ") {
-					  author = author.substr(3);
-			  }
-
-			  var authors = author.split(" and ");
-			  for (var j=0; j<authors.length; j++) {
-					var author = authors[j];
-					  var words = author.split(" ");
-					  for (var i in words) {
-							  words[i] = words[i][0].toUpperCase() +words[i].substr(1).toLowerCase();
-					  }
-					  author = words.join(" ");
-
-		newItem.creators.push(Zotero.Utilities.cleanAuthor(author, "author"));
-			  }
-	  }
-
-	   newItem.complete();
-}
-
-function doWeb(doc,url)
-{
-	   var namespace = doc.documentElement.namespaceURI;
-	   var nsResolver = namespace ? function(prefix) {
-	   if (prefix == 'x') return namespace; else return null;
-	   } : null;
-
-	  var xpath='//meta[@name="Story_type"]/@content';
-	  var temp=doc.evaluate(xpath, doc, nsResolver,XPathResult.ANY_TYPE,null).iterateNext();
-	  if(temp)
-	  {
-			 if(temp.value.indexOf("Story")>-1 || temp.value=="Blog")
-					   {scrape(doc,url);}
-	  }
+	translator.getTranslatorObject(function (trans) {
+		trans.itemType = "newspaperArticle";
+		trans.doWeb(doc, url);
+	});
 }
 
 /** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.edweek.org/ew/articles/2011/10/28/10jobs.h31.html?tkn=PUOFjigAbQPNufjjHPxYeafVz7T5Tf16qNb4&cmp=clp-edweek",
+		"url": "https://www.edweek.org/policy-politics/obama-using-education-issue-as-political-sword/2011/10?tkn=PUOFjigAbQPNufjjHPxYeafVz7T5Tf16qNb4&cmp=clp-edweek",
 		"items": [
 			{
-				"itemType": "magazineArticle",
-				"title": "Obama Using Education Issue as Political Sword - Education Week",
+				"itemType": "newspaperArticle",
+				"title": "Obama Using Education Issue as Political Sword",
 				"creators": [
 					{
 						"firstName": "Michele",
-						"lastName": "Mcneil",
+						"lastName": "McNeil",
 						"creatorType": "author"
 					}
 				],
-				"date": "2011-11-02",
+				"date": "2011-10-28T00:01:02",
+				"ISSN": "0277-4232",
 				"abstractNote": "The Obama administration highlights its education record, while drawing a sharp contrast with the GOP in Congress.",
-				"libraryCatalog": "Education Week",
+				"language": "en",
+				"libraryCatalog": "www.edweek.org",
 				"publicationTitle": "Education Week",
-				"url": "http://www.edweek.org/ew/articles/2011/10/28/10jobs.h31.html?tkn=PUOFjigAbQPNufjjHPxYeafVz7T5Tf16qNb4&cmp=clp-edweek",
-				"attachments": [],
-				"tags": [],
+				"section": "Education Funding",
+				"url": "https://www.edweek.org/policy-politics/obama-using-education-issue-as-political-sword/2011/10",
+				"attachments": [
+					{
+						"title": "Snapshot",
+						"mimeType": "text/html"
+					}
+				],
+				"tags": [
+					{
+						"tag": "Barack Obama"
+					},
+					{
+						"tag": "Elections"
+					},
+					{
+						"tag": "Federal Policy"
+					}
+				],
 				"notes": [],
 				"seeAlso": []
 			}
 		]
+	},
+	{
+		"type": "web",
+		"url": "https://www.edweek.org/leadership/opinion-a-better-turnaround-strategy/2011/10?qs=%22character%20education%22%20inmeta%3ACover_year%3D2011%20inmeta%3Agsaentity_Source%2520U%E2%80%A6",
+		"items": [
+			{
+				"itemType": "newspaperArticle",
+				"title": "A Better Turnaround Strategy",
+				"creators": [
+					{
+						"firstName": "Sheldon H.",
+						"lastName": "Berman",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Arthur",
+						"lastName": "Camins",
+						"creatorType": "author"
+					}
+				],
+				"date": "2011-10-31T17:22:41",
+				"ISSN": "0277-4232",
+				"abstractNote": "Sheldon H. Berman and Arthur Camins describe a successful turnaround model which promotes a  professionalized and collaborative teaching culture that is also student centered.",
+				"language": "en",
+				"libraryCatalog": "www.edweek.org",
+				"publicationTitle": "Education Week",
+				"section": "Equity & Diversity",
+				"url": "https://www.edweek.org/leadership/opinion-a-better-turnaround-strategy/2011/10",
+				"attachments": [
+					{
+						"title": "Snapshot",
+						"mimeType": "text/html"
+					}
+				],
+				"tags": [
+					{
+						"tag": "Innovation"
+					},
+					{
+						"tag": "Underserved Students"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://www.edweek.org/search?q=testing#nt=navsearch",
+		"items": "multiple"
 	}
 ]
 /** END TEST CASES **/

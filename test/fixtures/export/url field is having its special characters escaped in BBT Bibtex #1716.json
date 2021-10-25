@@ -4,7 +4,6 @@
     "label": "BetterBibTeX JSON",
     "localeDateOrder": "dmy",
     "options": {
-      "Normalize": false,
       "exportNotes": true
     },
     "preferences": {
@@ -13,22 +12,13 @@
       "citekeyFormat": "[auth][shorttitle2_2][year]",
       "qualityReport": true,
       "skipFields": "keywords, file,  timestamp",
-      "warnBulkModify": 1,
-      "workers": 0
+      "warnBulkModify": 1
     }
   },
   "items": [
     {
       "abstractNote": "Em aprendizagem de m\u00e1quina, a medi\u00e7\u00e3o de desempenho \u00e9 uma tarefa crucial. As m\u00e9tricas ROC (Receiver Operating Characteristics) e AUC (Area\u2026",
       "accessDate": "2020-11-23",
-      "attachments": [
-        {
-          "itemType": "attachment",
-          "path": "/Users/rflmorais/Zotero/storage/JER6PBMW/o-que-\u00e9-auc-e-roc-nos-modelos-de-machine-learning-2e2c4112033d.html",
-          "title": "Snapshot",
-          "uri": "http://zotero.org/users/7315465/items/JER6PBMW"
-        }
-      ],
       "citationKey": "AvelarQueAUC2019",
       "creators": [
         {

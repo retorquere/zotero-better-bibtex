@@ -1,21 +1,21 @@
 {
 	"translatorID": "22d17fb9-ae32-412e-bcc4-7650ed3359bc",
-	"label": "Musee du Louvre",
-	"creator": "Philipp Zumstein",
-	"target": "^https?://www\\.louvre\\.fr/",
+	"translatorType": 4,
+	"label": "Musée du Louvre",
+	"creator": "Philipp Zumstein and Abe Jellinek",
+	"target": "^https?://collections\\.louvre\\.fr/",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-03-05 07:35:01"
+	"lastUpdated": "2021-06-17 15:25:00"
 }
 
 /*
 	***** BEGIN LICENSE BLOCK *****
 
-	Copyright © 2018 Philipp Zumstein
+	Copyright © 2021 Philipp Zumstein and Abe Jellinek
 	
 	This file is part of Zotero.
 
@@ -36,26 +36,24 @@
 */
 
 
-// attr()/text() v2
-function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
-
-
 function detectWeb(doc, url) {
-	if (url.includes('/oeuvre')) {
+	if (url.includes('/ark:/')) {
 		return "artwork";
-	} else if (url.includes('recherche') && getSearchResults(doc, true)) {
+	}
+	else if (url.includes('/recherche') && getSearchResults(doc, true)) {
 		return "multiple";
 	}
+	return false;
 }
 
 
 function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
-	var rows = doc.querySelectorAll('a[href*="/oeuvre"]');
-	for (let i=0; i<rows.length; i++) {
-		let href = rows[i].href;
-		let title = ZU.trimInternal(rows[i].textContent);
+	var rows = doc.querySelectorAll('a[href*="/ark:/"]');
+	for (let row of rows) {
+		let href = row.href;
+		let title = ZU.trimInternal(row.textContent);
 		if (!href || !title) continue;
 		if (checkOnly) return true;
 		found = true;
@@ -69,7 +67,7 @@ function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
 		Zotero.selectItems(getSearchResults(doc, false), function (items) {
 			if (!items) {
-				return true;
+				return;
 			}
 			var articles = [];
 			for (var i in items) {
@@ -77,37 +75,78 @@ function doWeb(doc, url) {
 			}
 			ZU.processDocuments(articles, scrape);
 		});
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }
 
 
-function scrape(doc, url) {
-	var item = new Zotero.Item("artwork");
+function scrape(doc, _url) {
+	let item = new Zotero.Item('artwork');
+	let json = JSON.parse(text(doc, 'script[type="application/ld+json"]'));
 	
-	var box = doc.querySelector('.box-cartel ul');
-	var artist = text(box, 'li p', 0);
-	if (artist) {
-		artist = artist.replace(/\(.*\)/, '');
-		item.creators.push({
-			lastName: ZU.trimInternal(artist),
-			creatorType: "artist"
+	item.title = json.name || 'Untitled';
+	item.artworkMedium = json.material;
+	item.callNumber = json.identifier;
+	item.archive = "Louvre";
+	item.abstractNote = json.description;
+	item.url = json.url;
+	
+	if (json.creator) {
+		for (let artist of json.creator) {
+			// sometimes these aren't really artists ("School / Artistic centre"),
+			// but it's a royal pain to strip those out and there's nothing to
+			// clearly identify them
+			
+			let surnameMatch = artist.name.match(/^([^a-z\s.]{2,})\s*(.*)/);
+			if (surnameMatch) {
+				// if the artist's name starts with an uppercase surname
+				// (like "GOGH Vincent van") then pull that out.
+				
+				item.creators.push({
+					lastName: ZU.capitalizeTitle(surnameMatch[1], true),
+					firstName: surnameMatch[2],
+					creatorType: 'artist'
+				});
+			}
+			else {
+				item.creators.push(ZU.cleanAuthor(
+					artist.name,
+					'artist',
+					artist.name.includes(', ')
+				));
+			}
+		}
+	}
+	
+	if (json.dateCreated) {
+		let bceDateMatch = json.dateCreated.match(/([0-9]+) av\./);
+		if (bceDateMatch) {
+			// this generates a date in EDTF format, which works like ISO 8601:
+			// https://en.wikipedia.org/wiki/ISO_8601#Years
+			// so we need to add one; 200 BCE is represented as -0199
+			let year = parseInt(bceDateMatch[1]);
+			if (!isNaN(year)) {
+				item.date = '-' + (year - 1).toString().padStart(4, '0');
+			}
+		}
+		else {
+			item.date = ZU.strToISO(json.dateCreated);
+		}
+	}
+	
+	if (json.width && json.height && json.width.length && json.height.length) {
+		item.artworkSize = `${json.width[0].name} x ${json.height[0].name}`;
+	}
+	
+	if (json.image) {
+		item.attachments.push({
+			title: 'Image',
+			url: json.image,
+			mimeType: 'image/jpeg'
 		});
 	}
-	item.title = text(doc, 'h1>span');
-	if (!item.title) {
-		item.title = text(box, 'li p', 1);
-	}
-	item.date = text(box, 'li p', 2);
-	item.artworkMedium = text(box, 'li:nth-child(2) p', 0);
-	item.artworkSize = text(box, 'li:nth-child(2) p', 1);
-	item.callNumber = text(box, 'li:nth-child(3) p', 2);
-	
-	item.archive = "Louvre";
-	
-	item.abstractNote = text(doc, '.col-desc strong');
-	item.url = url;
 	
 	item.complete();
 }
@@ -116,71 +155,36 @@ function scrape(doc, url) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "https://www.louvre.fr/oeuvre-notices/stele-figurant-la-deesse-ishtar",
+		"url": "https://collections.louvre.fr/en/ark:/53355/cl010208581",
 		"items": [
 			{
 				"itemType": "artwork",
-				"title": "Stèle figurant la déesse Ishtar",
-				"creators": [],
-				"date": "VIIIe siècle avant J.-C.",
-				"abstractNote": "Cette stèle figurant la déesse Ishtar témoigne de l'art provincial de l'empire assyrien au sommet de sa puissance et de son expansion. Souvent représentée dans l'art du Proche-Orient, la déesse revêt ici un caractère guerrier, peu attesté sur des oeuvres monumentales telles que celle-ci.",
-				"archive": "Louvre",
-				"artworkMedium": "Brèche",
-				"callNumber": "AO 11503",
-				"libraryCatalog": "Musee du Louvre",
-				"url": "https://www.louvre.fr/oeuvre-notices/stele-figurant-la-deesse-ishtar",
-				"attachments": [],
-				"tags": [],
-				"notes": [],
-				"seeAlso": []
-			}
-		]
-	},
-	{
-		"type": "web",
-		"url": "https://www.louvre.fr/en/oeuvre-notices/stele-warrior-god",
-		"items": [
-			{
-				"itemType": "artwork",
-				"title": "Stele with warrior god",
-				"creators": [],
-				"date": "Late Bronze Age or Iron Age? (c. 1200 or 800 BC)",
-				"abstractNote": "This basalt stele, sometimes called the Shihan stele, was the oldest monument from the Holy Land to be found in the Louvre's collection until the inter-war excavations bore their fruit. The figure represented on the stele, for a long time identified as a king or prince, might also be a warrior god. The dating of the work, however, still poses many questions, with the current estimate ranging from the Late Bronze (c. 1200 BC), to the Iron Age (c. 800 BC).",
-				"archive": "Louvre",
-				"artworkMedium": "Stone",
-				"artworkSize": "H. 13 cm; W. 58 cm",
-				"callNumber": "AO 5055",
-				"libraryCatalog": "Musee du Louvre",
-				"url": "https://www.louvre.fr/en/oeuvre-notices/stele-warrior-god",
-				"attachments": [],
-				"tags": [],
-				"notes": [],
-				"seeAlso": []
-			}
-		]
-	},
-	{
-		"type": "web",
-		"url": "https://www.louvre.fr/en/oeuvre-notices/mona-lisa-portrait-lisa-gherardini-wife-francesco-del-giocondo?sous_dept=1",
-		"items": [
-			{
-				"itemType": "artwork",
-				"title": "Mona Lisa – Portrait of Lisa Gherardini, wife of Francesco del Giocondo",
+				"title": "Hyacinthe Collin de Vermont (1693-1761), peintre",
 				"creators": [
 					{
-						"lastName": "Leonardo di ser Piero da Vinci, known as LEONARDO DA VINCI",
+						"firstName": "Alexandre",
+						"lastName": "Roslin",
+						"creatorType": "artist"
+					},
+					{
+						"firstName": "",
+						"lastName": "Suède",
 						"creatorType": "artist"
 					}
 				],
-				"date": "c. 1503–19",
-				"abstractNote": "This portrait was doubtless started in Florence around 1503. It is thought to be of Lisa Gherardini, wife of a Florentine cloth merchant named Francesco del Giocondo - hence the alternative title, La Gioconda. However, Leonardo seems to have taken the completed portrait to France rather than giving it to the person who commissioned it. After his death, the painting entered François I's collection.",
+				"date": "1753",
 				"archive": "Louvre",
-				"artworkMedium": "Wood (poplar)",
-				"artworkSize": "H. 0.77 m; W. 0.53 m",
-				"callNumber": "INV. 779",
-				"libraryCatalog": "Musee du Louvre",
-				"url": "https://www.louvre.fr/en/oeuvre-notices/mona-lisa-portrait-lisa-gherardini-wife-francesco-del-giocondo?sous_dept=1",
-				"attachments": [],
+				"artworkMedium": "huile sur toile",
+				"artworkSize": "0,98 m x 1,28 m",
+				"callNumber": "/ark:/53355/cl010208581",
+				"libraryCatalog": "Musée du Louvre",
+				"url": "https://collections.louvre.fr/ark:/53355/cl010208581",
+				"attachments": [
+					{
+						"title": "Image",
+						"mimeType": "image/jpeg"
+					}
+				],
 				"tags": [],
 				"notes": [],
 				"seeAlso": []
@@ -189,7 +193,72 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.louvre.fr/en/recherche-globale?f_search_cles=lisa&f_search_univers=",
+		"url": "https://collections.louvre.fr/ark:/53355/cl020032677",
+		"items": [
+			{
+				"itemType": "artwork",
+				"title": "Tête de jeune homme coiffé d'un grand chapeau",
+				"creators": [
+					{
+						"lastName": "Gogh",
+						"firstName": "Vincent van",
+						"creatorType": "artist"
+					}
+				],
+				"archive": "Louvre",
+				"artworkMedium": "Fusain sur feuillet de carnet initialement quadrillé très jauni à tranche rouge et coins arrondis",
+				"artworkSize": "0.087 m x 0.132 m",
+				"callNumber": "/ark:/53355/cl020032677",
+				"libraryCatalog": "Musée du Louvre",
+				"url": "https://collections.louvre.fr/ark:/53355/cl020032677",
+				"attachments": [
+					{
+						"title": "Image",
+						"mimeType": "image/jpeg"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://collections.louvre.fr/ark:/53355/cl010123452",
+		"items": [
+			{
+				"itemType": "artwork",
+				"title": "stèle",
+				"creators": [],
+				"date": "-2299",
+				"abstractNote": "stèle ;  ; Décor : scène de victoire ; Sargon d'Akkad (?, kaunakès, masse d'armes, capturant, ennemi : plusieurs, filet) ; Ishtar (?) ; inscription ;  ; Etat de l'oeuvre : incomplet ; Précisions de l'objet : Sommet d'une scène de victoire. Le roi, peut-être Sargon d'Akkad, capture dans un filet des ennemis et assomme le roi vaincu avec sa masse d'armes. La scène se passe devant une divinité, peut-être la déesse Ishtar",
+				"archive": "Louvre",
+				"artworkMedium": "Matériau : diorite ; Technique : bas-relief",
+				"artworkSize": "0,26 cm x 0,54 cm",
+				"callNumber": "/ark:/53355/cl010123452",
+				"libraryCatalog": "Musée du Louvre",
+				"url": "https://collections.louvre.fr/ark:/53355/cl010123452",
+				"attachments": [
+					{
+						"title": "Image",
+						"mimeType": "image/jpeg"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://collections.louvre.fr/en/recherche?q=marseille",
+		"items": "multiple"
+	},
+	{
+		"type": "web",
+		"url": "https://collections.louvre.fr/recherche?collection%5B0%5D=3",
 		"items": "multiple"
 	}
 ]
