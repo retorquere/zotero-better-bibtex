@@ -156,6 +156,7 @@ Scenario Outline: Export <references> references for BibTeX to <file>
 
   Examples:
      | file                                                                               | references |
+     | University is exported as publisher as soon as tex.referencetype is specified in Extra field #1965 | 1           |
      | Debugging translator issue for PhD Dissertation type #1950                         | 1          |
      | Customise name-separator and list-separator #1927                                  | 1          |
      | citation key format nopunctordash filter list #1880                                | 1          |
