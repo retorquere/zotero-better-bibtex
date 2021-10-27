@@ -12,6 +12,7 @@ Scenario Outline: Export <references> references for BibLaTeX to <file>
 
   Examples:
      | file                                                                                           | references  |
+     | Specific BBT citation key format is no longer working for my use case after update #1970       | 1           |
      | Define word delimiter characters #1943                                                         | 1           |
      | How to use the last word of the title? #1746                                                   | 1           |
      | Detect journal abbreviation in the publication field #1951                                     | 1           |

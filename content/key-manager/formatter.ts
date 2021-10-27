@@ -680,7 +680,7 @@ class PatternFormatter {
     * If the length of the output is not longer than the given number, skip to the next pattern
     */
   public _longer(n: number) {
-    if (this.value.length < n) throw { next: true } // eslint-disable-line no-throw-literal
+    if (this.value.length <= n) throw { next: true } // eslint-disable-line no-throw-literal
     return this
   }
 
