@@ -1,11 +1,9 @@
 name: automated tests
-
 on:
   push: null
   pull_request: null
   schedule:
   - cron: 0 0 * * *
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,8 +11,8 @@ jobs:
     - uses: actions/checkout@v2
       with:
         persist-credentials: false
-        submodules: true  # Fetch Hugo themes (true OR recursive)
-        fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+        submodules: true
+        fetch-depth: 0
     - run: echo "::set-output name=version::"`jq -r .version package.json`
       id: version
     - name: cancel spurious build on tagged version
@@ -23,7 +21,6 @@ jobs:
     - name: cancel spurious build on tagged version
       uses: andymckay/cancel-action@master
       if: github.event.head_commit.message == steps.version.outputs.version && !startsWith(github.ref, 'refs/tags/')
-
     - name: install python
       uses: actions/setup-python@v2
       with:
@@ -51,9 +48,7 @@ jobs:
     - name: install node packages
       run: npm install
 
-
     - run: npm run build
-
     - name: store build artifacts
       uses: actions/upload-artifact@v2
       with:
@@ -61,7 +56,6 @@ jobs:
         path: |
           xpi/
           gen/
-
     - uses: peaceiris/actions-hugo@v2
       with:
         hugo-version: latest
@@ -71,7 +65,6 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./site/public
-
   test:
     needs: build
     runs-on: ubuntu-latest
@@ -86,7 +79,6 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: build-artifacts
-
     - name: install python
       uses: actions/setup-python@v2
       with:
@@ -113,56 +105,39 @@ jobs:
         curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
         sudo apt-get update
         sudo apt-get install ${{ matrix.client }}
-
     - name: install ${{ matrix.client }} beta
       if: matrix.client != 'jurism'
       run: sudo apt-get install ${{ matrix.client }}-beta
-
-    # fast test
     - if: contains(github.event.commits[0].message, '[fast-test]')
       run: echo "##[set-output name=this;]--test-this"
       id: test
-
-    # needs logs/logs to have them show up as logs in the artifact... no idea why
     - name: Run headless test
       uses: GabrielBB/xvfb-action@v1
-      # continue-on-error: ${{ matrix.client == 'jurism' }}
       env:
         PYTHONUNBUFFERED: true
       with:
         run: ./test/behave --client ${{ matrix.client }} --logs logs/logs --format travis --bin ${{ matrix.bin }} ${{ steps.test.outputs.this }}
-
     - uses: actions/upload-artifact@v2
       if: ${{ failure() }}
       with:
         name: debug log ${{ matrix.client }} ${{ matrix.bin }}
         path: ~/.BBTZ5TEST.log
-
     - name: store test artifacts
       uses: actions/upload-artifact@v2
       with:
         name: build-artifacts
         path: |
           logs/
-
-#    - name: Setup tmate session
-#      if: ${{ failure() }}
-#      uses: mxschmitt/action-tmate@v3
-#      with:
-#        limit-access-to-actor: true
-
   release:
     if: github.event_name != 'schedule'
     needs: test
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-
     - name: fetch build artifacts
       uses: actions/download-artifact@v2
       with:
         name: build-artifacts
-
     - name: install python
       uses: actions/setup-python@v2
       with:
@@ -190,11 +165,9 @@ jobs:
     - name: install node packages
       run: npm install
 
-
     - run: npm run release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
     - name: rebalance tests
       id: logs
       if: github.ref == 'refs/heads/master'
@@ -208,4 +181,3 @@ jobs:
         commit_message: Rebalance test suite
         file_pattern: ${{ steps.logs.outputs.balance }} ${{ steps.logs.outputs.loaded }}
         skip_dirty_check: false
-

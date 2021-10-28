@@ -508,11 +508,17 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
           Preference.preferencesOverride,
           (path: any) => { const content = JSON.parse(Zotero.File.getContents(path)); return content.override?.preferences } // eslint-disable-line @typescript-eslint/no-unsafe-return
         ),
+        strings: findOverride(
+          this._displayOptions.exportPath, '.bib',
+          Preference.stringsOverride,
+          (path: string) => Zotero.File.getContents(path) // eslint-disable-line @typescript-eslint/no-unsafe-return
+        ),
       }
       log.debug('export overrides:', override)
-      this._displayOptions.caching = this._displayOptions.caching && !override.postscript && !override.preferences
+      this._displayOptions.caching = this._displayOptions.caching && !override.postscript && !override.preferences && !override.strings
 
       if (override.postscript) this._displayOptions.preference_postscript = override.postscript
+      if (typeof override.strings === 'string') this._displayOptions.preference_strings = override.strings
       if (override.preferences) {
         this._displayOptions.caching = false
         log.debug('prefs override:', override.preferences)

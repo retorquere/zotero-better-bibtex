@@ -78,11 +78,12 @@
     <description>&better-bibtex.ErrorReport.notReviewed;</description>
   </wizardpage>
 
+  <script src="chrome://zotero/content/include.js"/>
   <script>
-    Zotero.BetterBibTeX.ErrorReport.globals = Function('return this')();
+    const globals = Function('return this')()
     window.addEventListener('load', async function() {
       Zotero.debug('loading ErrorReport')
-      await Zotero.BetterBibTeX.ErrorReport.load();
+      await Zotero.BetterBibTeX.ErrorReport.load(globals)
       Zotero.debug('loaded ErrorReport')
     })
   </script>

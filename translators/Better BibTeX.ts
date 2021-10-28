@@ -297,7 +297,9 @@ export function doExport(): void {
 
     }
 
-    switch (ref.referencetype_source.split('.')[1]) {
+    let reftype = ref.referencetype_source.split('.')[1]
+    if (reftype.endsWith('thesis')) reftype = 'thesis' // # 1965
+    switch (reftype) {
       case 'thesis':
         ref.add({ name: 'school', value: item.publisher, bibtexStrings: true })
         break
@@ -316,23 +318,25 @@ export function doExport(): void {
     }
 
     const doi = item.DOI || item.extraFields.kv.DOI
-    let url = null
+    let urlfield = null
     if (Translator.preferences.DOIandURL === 'both' || !doi) {
       switch (Translator.preferences.bibtexURL) {
         case 'url':
-          url = ref.add({ name: 'url', value: item.url || item.extraFields.kv.url, enc: 'url' })
+        case 'url-ish':
+          urlfield = ref.add({ name: 'url', value: item.url || item.extraFields.kv.url, enc: Translator.verbatimFields.includes('url') ? 'url' : 'latex' })
           break
 
         case 'note':
-          url = ref.add({ name: (['misc', 'booklet'].includes(ref.referencetype) && !ref.has.howpublished ? 'howpublished' : 'note'), value: item.url || item.extraFields.kv.url, enc: 'url' })
+        case 'note-url-ish':
+          urlfield = ref.add({ name: (['misc', 'booklet'].includes(ref.referencetype) && !ref.has.howpublished ? 'howpublished' : 'note'), value: item.url || item.extraFields.kv.url, enc: 'url' })
           break
 
         default:
-          if (['csl.webpage', 'zotero.webpage', 'csl.post', 'csl.post-weblog'].includes(ref.referencetype_source)) url = ref.add({ name: 'howpublished', value: item.url || item.extraFields.kv.url })
+          if (['csl.webpage', 'zotero.webpage', 'csl.post', 'csl.post-weblog'].includes(ref.referencetype_source)) urlfield = ref.add({ name: 'howpublished', value: item.url || item.extraFields.kv.url })
           break
       }
     }
-    if (Translator.preferences.DOIandURL === 'both' || !url) ref.add({ name: 'doi', value: (doi || '').replace(/^https?:\/\/doi.org\//i, '') })
+    if (Translator.preferences.DOIandURL === 'both' || !urlfield) ref.add({ name: 'doi', value: (doi || '').replace(/^https?:\/\/doi.org\//i, '') })
 
     if (ref.referencetype_source.split('.')[1] === 'thesis') {
       const thesistype = ref.thesistype(item.type, 'phdthesis', 'mastersthesis')

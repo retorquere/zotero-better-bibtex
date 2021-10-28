@@ -779,6 +779,13 @@
     "label": "@string definitions"
   },
   {
+    "name": "stringsOverride",
+    "type": "string",
+    "default": "",
+    "affects": [],
+    "var": "stringsOverride"
+  },
+  {
     "name": "testing",
     "type": "boolean",
     "default": false,

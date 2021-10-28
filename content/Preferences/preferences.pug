@@ -259,6 +259,16 @@ bbt:doc.
 
   A preferences override will disable caching for that export.
 
+preference(name="extensions.zotero.translators.better-bibtex.stringsOverride" bbt:affects="" type="string" default="")
+bbt:doc.
+  You can use a custom @string list per export directory:
+
+  1. Edit the hidden preference `stringstOverride`, and set it to a filename like `strings.bib`
+  2. In the directory where you intend to export to, create a file called `strings.bib` (or whatever you set the preference to) and add the @string declarations you want there
+  3. Export to that directory.
+
+  A strings override will disable caching for that export.
+
 preference#pref-better-bibtex-kuroshiro(name="extensions.zotero.translators.better-bibtex.kuroshiro" bbt:affects="" type="bool" default="false")
 bbt:doc When on, BBT will load kuroshiro for romajization in citation keys. This uses a lot of memory, easily 100MB. If you don't have Japanese titles/names, keep this off.
 
