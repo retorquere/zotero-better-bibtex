@@ -140,8 +140,7 @@ export class ErrorReport {
     return { region, ...s3.region[region] }
   }
 
-  public async load(globals: Record<string, any>): Promise<void> {
-    this.globals = globals
+  public async load(): Promise<void> {
     this.key = this.timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
     this.zipped = null
 
