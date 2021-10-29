@@ -377,6 +377,8 @@
   "export/Sorting and optional particle handling #411.on.biblatex",
   "export/Spaces not stripped from citation keys #294.biblatex",
   "export/Spaces not stripped from citation keys #294.json",
+  "export/Specific BBT citation key format is no longer working for my use case after update #1970.biblatex",
+  "export/Specific BBT citation key format is no longer working for my use case after update #1970.json",
   "export/Square brackets in Publication field (85), and non-pinned keys must change when the pattern does.bibtex",
   "export/Square brackets in Publication field (85), and non-pinned keys must change when the pattern does.json",
   "export/Suppress brace protection #1139.biblatex",
