@@ -114,10 +114,7 @@ export class API {
   }
 
   private LiteralType(type: ts.LiteralTypeNode): any {
-    let value: string = type.literal.getText(this.ast)
-    if (ts.isStringLiteral(type.literal)) value = JSON.parse(value)
-
-    return { const: value }
+    return { const: ts.isStringLiteral(type.literal) ? type.literal.text : type.literal.getText(this.ast) }
   }
 
   private UnionType(type: ts.UnionType): any {
