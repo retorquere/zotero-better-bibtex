@@ -61,7 +61,7 @@
     "@inkdropapp/html2markdown": "^2.6.5",
     "@lifeparticle/ap-style-title-case": "^1.5.0",
     "case": "^1.6.3",
-    "citeproc": "^2.4.59",
+    "citeproc": "^2.4.62",
     "edtf": "^4.1.0",
     "edtfy": "^0.0.8",
     "eventemitter3": "^4.0.7",
