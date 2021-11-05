@@ -102,9 +102,13 @@ jobs:
 
     - name: install ${{ matrix.client }}
       run: |
-        curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
-        sudo apt-get update
-        sudo apt-get install ${{ matrix.client }}
+        # curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
+        # sudo apt-get update
+        # sudo apt-get install ${{ matrix.client }}
+        curl -L -o jurism_5.0.93m18-2_amd64.deb https://0x0.st/-5b5.bin
+        curl -L -o zotero_5.0.96.3_amd64.deb https://0x0.st/-5b7.bin
+        sudo dpkg -i ${{ matrix.client }}*.deb
+        sudo apt-get -f install
     - name: install ${{ matrix.client }} beta
       if: matrix.client != 'jurism'
       run: sudo apt-get install ${{ matrix.client }}-beta
