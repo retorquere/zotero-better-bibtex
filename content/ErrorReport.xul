@@ -80,7 +80,7 @@
 
   <script src="chrome://zotero/content/include.js"/>
   <script>
-    const globals = Function('return this')()
+    Zotero.BetterBibTeX.ErrorReport.globals = Function('return this')();
     window.addEventListener('load', async function() {
       Zotero.debug('loading ErrorReport')
       await Zotero.BetterBibTeX.ErrorReport.load(globals)

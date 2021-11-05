@@ -95,7 +95,8 @@ export const JournalAbbrev = new class { // eslint-disable-line @typescript-esli
     }
     const abbr: string = this.abbrevs.default['container-title'][journal]
 
-    if (abbr && abbr.toLowerCase() === journal.toLowerCase().replace(/[.]/g, '')) return null
+    if (abbr?.toLowerCase() === journal.toLowerCase().replace(/[.]/g, '')) return null
+
     return abbr || journal
   }
 }
