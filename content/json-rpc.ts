@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/require-await, no-throw-literal, max-len */
 
 import AJV from 'ajv'
-import betterAjvErrors from '@readme/better-ajv-errors'
 
 import { log } from './logger'
 import { getItemsAsync } from './get-items-async'
@@ -14,19 +13,13 @@ import { $and, Query } from './db/loki'
 import * as library from './library'
 
 import methods from '../gen/api/json-rpc.json'
+import { validator } from './ajv'
 
 const ajv = new AJV()
-function validator(schema) {
-  const ok = ajv.compile(schema)
-  return function(data) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
-    log.debug('json-rpc:', { data, schema, validates: ok(data) })
-    return ok(data) ? '' : betterAjvErrors(schema, data, ok.errors, { colorize: false, format: 'js' })[0].error // eslint-disable-line @typescript-eslint/no-unsafe-return
-  }
-}
 
 for (const [method, meta] of Object.entries(methods)) {
   log.debug('compiling', method, meta);
-  (meta as unknown as any).validate = validator(meta.schema) // eslint-disable-line @typescript-eslint/no-unsafe-return
+  (meta as unknown as any).validate = validator(ajv, meta.schema) // eslint-disable-line @typescript-eslint/no-unsafe-return
 }
 
 const OK = 200
