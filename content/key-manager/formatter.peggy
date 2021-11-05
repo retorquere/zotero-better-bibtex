@@ -16,10 +16,10 @@
       }
     }
 
-    if (args.length > meta.arguments.length) error(`too many arguments for ${text}`)
+    if (args.length > meta.parameters.length) error(`too many arguments for ${text}`)
 
     const params = args.reduce((acc, v, i) => {
-      acc[meta.arguments[i]] = v
+      acc[meta.parameters[i]] = v
       return acc
     }, {})
 
@@ -28,7 +28,7 @@
       error(`${text}: ${argerror}`)
     }
     else {
-      args = JSON.stringify(meta.arguments.slice(0, args.length).map(k => params[k])).slice(1, -1)
+      args = JSON.stringify(meta.parameters.slice(0, args.length).map(k => params[k])).slice(1, -1)
       return `${method}(${args})`
     }
   }
@@ -106,9 +106,9 @@ method
       if (params[0]) args.n = params[0]
       if (params[1]) args.m = params[1]
 
-      const argnames = options.methods[fn].arguments
-      if (argnames.includes('withInitials')) args.withInitials = false
-      if (argnames.includes('joiner')) args.joiner = ''
+      const paramnames = options.methods[fn].parameters
+      if (paramnames.includes('withInitials')) args.withInitials = false
+      if (paramnames.includes('joiner')) args.joiner = ''
 
       for (const flag of flags) {
         if (flag == 'initials') {
@@ -122,7 +122,7 @@ method
         }
       }
 
-      let method = match(fn, argnames.slice(0, Object.keys(args).length).map(n => args[n]), input, error);
+      let method = match(fn, paramnames.slice(0, Object.keys(args).length).map(n => args[n]), input, error);
       if (scrub) method += '.scrub()';
 
       return method;

@@ -19,7 +19,7 @@ import { fetchSync as fetchInspireHEP } from '../inspire-hep'
 const parser = require('./formatter.peggy')
 import * as DateParser from '../dateparser'
 
-import methods from '../../gen/key-formatter-methods.json'
+import methods from '../../gen/api/key-formatter.json'
 import itemCreators from '../../gen/items/creators.json'
 import * as items from '../../gen/items/items'
 
@@ -32,13 +32,12 @@ import { jieba, pinyin } from './chinese'
 import { kuroshiro } from './japanese'
 
 import AJV from 'ajv'
-import betterAjvErrors from '@readme/better-ajv-errors'
-const methodValidator = new AJV({ coerceTypes: true })
+import { validator } from '../ajv'
+const ajv = new AJV({ coerceTypes: true })
+
 for (const [method, meta] of Object.entries(methods)) {
-  log.debug('compiling', method, meta)
-  const validate = methodValidator.compile(meta.schema);
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  (meta as unknown as any).validate = (data => validate(data) ? '' : betterAjvErrors(meta.schema, data, validate.errors)[0].message)
+  log.debug('compiling', method, meta);
+  (meta as unknown as any).validate = validator(ajv, meta.schema)
 }
 
 function innerText(node): string {
