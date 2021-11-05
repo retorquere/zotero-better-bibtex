@@ -111,7 +111,7 @@ jobs:
         sudo apt-get -f install
     - name: install ${{ matrix.client }} beta
       if: matrix.client != 'jurism'
-      run: sudo apt-get install ${{ matrix.client }}-beta
+      run: echo sudo apt-get install ${{ matrix.client }}-beta
     - if: contains(github.event.commits[0].message, '[fast-test]')
       run: echo "##[set-output name=this;]--test-this"
       id: test
