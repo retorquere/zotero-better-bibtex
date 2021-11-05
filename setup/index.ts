@@ -4,4 +4,4 @@ process.chdir(root)
 import 'zotero-plugin/copy-assets'
 import 'zotero-plugin/rdf'
 import 'zotero-plugin/version'
-import './key-formatter-methods'
+import './extract-apis'

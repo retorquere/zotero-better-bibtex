@@ -19,7 +19,7 @@ import { fetchSync as fetchInspireHEP } from '../inspire-hep'
 const parser = require('./formatter.peggy')
 import * as DateParser from '../dateparser'
 
-import methods from '../../gen/key-formatter-methods.json'
+import methods from '../../gen/api/key-formatter.json'
 import itemCreators from '../../gen/items/creators.json'
 import * as items from '../../gen/items/items'
 

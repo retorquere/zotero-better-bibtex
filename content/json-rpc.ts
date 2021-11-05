@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/require-await, no-throw-literal, max-len */
 
+import AJV from 'ajv'
+import betterAjvErrors from '@readme/better-ajv-errors'
+
 import { log } from './logger'
 import { getItemsAsync } from './get-items-async'
 import { AUXScanner } from './aux-scanner'
@@ -9,6 +12,22 @@ import { Preference } from '../gen/preferences'
 import { get as getCollection } from './collection'
 import { $and, Query } from './db/loki'
 import * as library from './library'
+
+import methods from '../gen/api/json-rpc.json'
+
+const ajv = new AJV()
+function validator(schema) {
+  const ok = ajv.compile(schema)
+  return function(data) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+    log.debug('json-rpc:', { data, schema, validates: ok(data) })
+    return ok(data) ? '' : betterAjvErrors(schema, data, ok.errors, { colorize: false, format: 'js' })[0].error // eslint-disable-line @typescript-eslint/no-unsafe-return
+  }
+}
+
+for (const [method, meta] of Object.entries(methods)) {
+  log.debug('compiling', method, meta);
+  (meta as unknown as any).validate = validator(meta.schema) // eslint-disable-line @typescript-eslint/no-unsafe-return
+}
 
 const OK = 200
 
@@ -91,11 +110,9 @@ class NSItem {
   /**
    * Quick-search for items in Zotero.
    *
-   * @param searchterms  Terms as typed into the search box in Zotero
+   * @param terms  Terms as typed into the search box in Zotero
    */
-  public async search(searchterms: string | { terms: string }, libraryID?: string | number) {
-    let terms: string = typeof searchterms === 'string' ? searchterms : searchterms.terms
-
+  public async search(terms: string, libraryID?: string | number) {
     // quicksearch-titleCreatorYear / quicksearch-fields
     // const mode = Prefs.get('caywAPIsearchMode')
 
@@ -182,7 +199,7 @@ class NSItem {
    *
    * @returns  A formatted bibliography
    */
-  public async bibliography(citekeys, format: { quickCopy?: boolean, contentType?: 'html' | 'text', locale?: string, id?: string} = {}) {
+  public async bibliography(citekeys: string[], format: { quickCopy?: boolean, contentType?: 'html' | 'text', locale?: string, id?: string} = {}) {
     const qc = format.quickCopy ? Zotero.QuickCopy.unserializeSetting(Zotero.Prefs.get('export.quickCopy.setting')) : {}
     delete format.quickCopy
 
@@ -212,7 +229,7 @@ class NSItem {
    *
    * @param item_keys  A list of [libraryID]:[itemKey] strings. If [libraryID] is omitted, assume 'My Library'
    */
-  public async citationkey(item_keys) {
+  public async citationkey(item_keys: string[]) {
     const keys = {}
 
     let libraryIDstr: string
@@ -245,23 +262,22 @@ class NSItem {
    */
   public async export(citekeys: string[], translator: string, libraryID: number) {
     // eslint-disable-next-line no-underscore-dangle, prefer-rest-params
-    const args = { citekeys, translator, libraryID, ...(arguments[0].__arguments__ || {}) }
-    if (typeof args.libraryID === 'undefined') args.libraryID = Zotero.Libraries.userLibraryID
+    if (typeof libraryID === 'undefined') libraryID = Zotero.Libraries.userLibraryID
 
-    const query: Query = {$and: [{citekey: { $in: args.citekeys } } ]}
+    const query: Query = {$and: [{citekey: { $in: citekeys } } ]}
 
     if (Preference.keyScope === 'library') {
-      if (typeof args.libraryID !== 'number') throw { code: INVALID_PARAMETERS, message: 'keyscope is library, please provide a library ID' }
-      query.$and.push({ libraryID: {$eq: args.libraryID} })
+      if (typeof libraryID !== 'number') throw { code: INVALID_PARAMETERS, message: 'keyscope is library, please provide a library ID' }
+      query.$and.push({ libraryID: {$eq: libraryID} })
     }
     else if (Preference.keyScope === 'global') {
-      if (typeof args.libraryID === 'number') throw { code: INVALID_PARAMETERS, message: 'keyscope is global, do not provide a library ID' }
+      if (typeof libraryID === 'number') throw { code: INVALID_PARAMETERS, message: 'keyscope is global, do not provide a library ID' }
     }
 
     const found = Zotero.BetterBibTeX.KeyManager.keys.find(query)
 
     const status: Record<string, number> = {}
-    for (const citekey of args.citekeys) {
+    for (const citekey of citekeys) {
       status[citekey] = 0
     }
     for (const item of found) {
@@ -290,7 +306,7 @@ class NSItem {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return [OK, 'text/plain', await Translators.exportItems(Translators.getTranslatorId(args.translator), null, { type: 'items', items: await getItemsAsync(found.map(key => key.itemID)) }) ]
+    return [OK, 'text/plain', await Translators.exportItems(Translators.getTranslatorId(translator), null, { type: 'items', items: await getItemsAsync(found.map(key => key.itemID)) }) ]
   }
 }
 
@@ -307,19 +323,49 @@ const api = new class API {
 
   public async handle(request) {
     if (!this.validRequest(request)) return {jsonrpc: '2.0', error: {code: INVALID_REQUEST, message: 'Invalid Request'}, id: null}
-    if (request.params && (!Array.isArray(request.params) && typeof request.params !== 'object')) return {jsonrpc: '2.0', error: {code: INVALID_PARAMETERS, message: 'Invalid Parameters'}, id: null}
 
     const [ namespace, methodName ] = request.method.split('.')
     const method = this[`$${namespace}`]?.[methodName]
-
     if (!method) return {jsonrpc: '2.0', error: {code: METHOD_NOT_FOUND, message: `Method not found: ${request.method}`}, id: null}
+    const schema = methods[request.method]
+    if (!schema) return {jsonrpc: '2.0', error: {code: METHOD_NOT_FOUND, message: `Method schema not found: ${request.method}`}, id: null}
+
+    const args: { array: any[], object: any } = {
+      array: [],
+      object: {},
+    }
+    if (request.params) {
+      if (Array.isArray(request.params)) {
+        if (request.params.length > schema.parameters.length) {
+          return {jsonrpc: '2.0', error: {code: INVALID_PARAMETERS, message: `${request.method}: expected (max) ${schema.parameters.length} arguments, got ${request.params.length}`}, id: null}
+        }
+
+        args.array = request.params
+        args.object = schema.parameters.reduce((acc, p, i) => {
+          acc[p] = request.params[i]
+          return acc // eslint-disable-line @typescript-eslint/no-unsafe-return
+        }, {})
+      }
+      else if (typeof request.params === 'object') {
+        const unknown = Object.keys(request.params).find(p => !schema.parameters.includes(p))
+        if (unknown) {
+          return {jsonrpc: '2.0', error: {code: INVALID_PARAMETERS, message: `${request.method}: unexpected argument ${unknown}`}, id: null}
+        }
+
+        args.array = schema.parameters.map(p => request.params[p]) // eslint-disable-line @typescript-eslint/no-unsafe-return
+        args.object = request.params
+      }
+      else {
+        return {jsonrpc: '2.0', error: {code: INVALID_PARAMETERS, message: 'Invalid Parameters'}, id: null}
+      }
+    }
+
+    const argerror = schema.validate(args.object)
+    log.debug('json-rpc:', { ...args, method: request.method, schema: schema.schema, argerror })
+    if (argerror) return {jsonrpc: '2.0', error: {code: INVALID_PARAMETERS, message: argerror}, id: null}
 
     try {
-      if (!request.params) return {jsonrpc: '2.0', result: await method(), id: request.id || null}
-      // eslint-disable-next-line prefer-spread
-      if (Array.isArray(request.params)) return {jsonrpc: '2.0', result: await method.apply(null, request.params), id: request.id || null}
-      if (typeof request.params === 'object') return {jsonrpc: '2.0', result: await method.call(null, { __arguments__: request.params }), id: request.id || null}
-      throw new Error('params must be either an array or an object')
+      return {jsonrpc: '2.0', result: await method(...args.array), id: request.id || null}
     }
     catch (err) {
       log.error('JSON-RPC:', err)

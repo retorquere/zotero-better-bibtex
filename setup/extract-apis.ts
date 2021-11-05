@@ -69,8 +69,34 @@ class FormatterAPI {
   }
 }
 
-const api = new FormatterAPI('content/key-manager/formatter.ts')
+if (!fs.existsSync('gen/api')) fs.mkdirSync('gen/api', { recursive: true })
 
-fs.writeFileSync('gen/key-formatter-methods.json', JSON.stringify(api.signature, null, 2))
-fs.writeFileSync('site/data/citekeyformatters/functions.json', stringify(api.doc.function, null, 2))
-fs.writeFileSync('site/data/citekeyformatters/filters.json', stringify(api.doc.filter, null, 2))
+const formatters = new FormatterAPI('content/key-manager/formatter.ts')
+fs.writeFileSync('gen/api/key-formatter.json', JSON.stringify(formatters.signature, null, 2))
+fs.writeFileSync('site/data/citekeyformatters/functions.json', stringify(formatters.doc.function, null, 2))
+fs.writeFileSync('site/data/citekeyformatters/filters.json', stringify(formatters.doc.filter, null, 2))
+
+class JSONRPCAPI {
+  private classes: Record<string, Record<string, Method>>
+  public signature: Record<string, any> = {}
+  public doc: Record<string, string> = {}
+
+  constructor(source: string) {
+    this.classes = new API(source).classes
+
+    for (const [className, methods] of Object.entries(this.classes)) {
+      if (className.startsWith('NS')) {
+        const namespace = className.substr(2).toLowerCase()
+        for (const [methodName, method] of Object.entries(methods)) {
+          this.signature[`${namespace}.${methodName}`] = {
+            parameters: method.parameters.map(p => p.name),
+            schema: method.schema,
+          }
+        }
+      }
+    }
+  }
+}
+
+const jsonrpc = new JSONRPCAPI('content/json-rpc.ts')
+fs.writeFileSync('gen/api/json-rpc.json', JSON.stringify(jsonrpc.signature, null, 2))

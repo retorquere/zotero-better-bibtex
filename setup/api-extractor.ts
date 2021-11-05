@@ -1,9 +1,19 @@
 import * as ts from 'typescript'
 import * as fs from 'fs'
 
+// type Json = string | number | boolean | null | Json[] | { [key: string]: Json };
+
+export type SimpleLiteral = boolean | number | string | { [key: string]: SimpleLiteral }
+
+function assert(cond, msg) {
+  if (cond) return
+  if (typeof msg !== 'string') msg = JSON.stringify(msg, null, 2)
+  throw new Error(`assertion failed: ${msg}`)
+}
+
 export type Parameter = {
   name: string
-  default: string | number | boolean
+  default: SimpleLiteral
 }
 export type Method = {
   doc: string
@@ -64,15 +74,22 @@ export class API {
   private ParameterDeclaration(method: Method, param: ts.ParameterDeclaration) {
     const p: Parameter = {
       name: param.name.getText(this.ast),
-      default: this.initializer(param.initializer),
+      default: this.Literal(param.initializer),
     }
     method.parameters.push(p)
 
-    method.schema.properties[p.name] = param.type ? this.schema(param.type) : { type: typeof p.default }
+    if (param.type) {
+      method.schema.properties[p.name] = this.schema(param.type)
+    }
+    else {
+      assert(typeof p.default !== 'undefined', p.name)
+      method.schema.properties[p.name] = { type: typeof p.default }
+    }
+
     if (!param.initializer && !param.questionToken) method.schema.required.push(p.name)
   }
 
-  private initializer(init): string | number {
+  private Literal(init): SimpleLiteral {
     if (!init) return undefined
 
     switch (init.kind) {
@@ -82,6 +99,12 @@ export class API {
       case ts.SyntaxKind.NumericLiteral:
       case ts.SyntaxKind.FirstLiteralToken: // https://github.com/microsoft/TypeScript/issues/18062
         return parseFloat(init.getText(this.ast))
+
+      case ts.SyntaxKind.ObjectLiteralExpression:
+        return this.ObjectLiteralExpression(init)
+
+      case ts.SyntaxKind.FalseKeyword:
+        return false
 
       default:
         throw new Error(`Unexpected kind ${init.kind} ${ts.SyntaxKind[init.kind]} of initializer ${JSON.stringify(init)}`)
@@ -102,15 +125,76 @@ export class API {
       case ts.SyntaxKind.BooleanKeyword:
         return { type: 'boolean' }
 
-        // case ts.SyntaxKind.TypeReference:
-        //   return null
-
       case ts.SyntaxKind.NumberKeyword:
         return { type: 'number' }
+
+      case ts.SyntaxKind.TypeReference:
+        return this.TypeReference(type as ts.TypeReferenceNode)
+
+      case ts.SyntaxKind.TypeLiteral:
+        return this.TypeLiteral(type as ts.TypeLiteralNode)
+
+      case ts.SyntaxKind.ArrayType:
+        return this.ArrayType(type as ts.ArrayTypeNode)
 
       default:
         throw {...type, kindName: ts.SyntaxKind[type.kind] } // eslint-disable-line no-throw-literal
     }
+  }
+
+  private ArrayType(array: ts.ArrayTypeNode) {
+    return {
+      type: 'array',
+      items: this.schema(array.elementType),
+    }
+  }
+
+  private TypeLiteral(literal: ts.TypeLiteralNode) {
+    const schema = {
+      type: 'object',
+      properties: {},
+      required: [],
+      additionalProperties: false,
+    }
+
+    literal.forEachChild(prop => {
+      if (ts.isPropertySignature(prop)) {
+        const name = prop.name.getText(this.ast)
+        schema.properties[name] = this.schema(prop.type)
+        if (!prop.questionToken) schema.required.push(name)
+      }
+    })
+
+    return schema
+  }
+
+  private TypeReference(typeref: ts.TypeReferenceNode) {
+    assert(typeref.typeName.getText(this.ast) === 'Record', `unexpected TypeReference ${typeref.typeName.getText(this.ast)}`)
+    assert(typeref.typeArguments.length === 2, `expected 2 types, found ${typeref.typeArguments.length}`)
+
+    const key = this.schema(typeref.typeArguments[0])
+    assert(key.type === 'string', key)
+
+    return {
+      type: 'object',
+      additionalProperties: this.schema(typeref.typeArguments[1]),
+    }
+  }
+
+  private ObjectLiteralExpression(literal: ts.ObjectLiteralExpression): SimpleLiteral {
+    const object: Record<string, any> = {}
+
+    literal.forEachChild(prop => {
+      if (ts.isPropertyAssignment(prop)) {
+        assert(ts.isIdentifier(prop.name), ts.SyntaxKind[prop.name.kind])
+        const key = prop.name.getText(this.ast)
+
+        const value = this.Literal(prop.initializer)
+        object[key] = value
+      }
+    })
+
+    return object
   }
 
   private LiteralType(type: ts.LiteralTypeNode): any {
