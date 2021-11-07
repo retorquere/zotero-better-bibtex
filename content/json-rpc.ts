@@ -105,7 +105,7 @@ class NSItem {
    *
    * @param terms  Terms as typed into the search box in Zotero
    */
-  public async search(terms: string, libraryID?: string | number) {
+  public async search(terms: string, library?: string | number) {
     // quicksearch-titleCreatorYear / quicksearch-fields
     // const mode = Prefs.get('caywAPIsearchMode')
 
@@ -118,7 +118,7 @@ class NSItem {
     }
     search.addCondition('quicksearch-titleCreatorYear', 'contains', terms)
     search.addCondition('itemType', 'isNot', 'attachment')
-    if (typeof libraryID !== 'undefined') search.addCondition('libraryID', 'is', library.get(libraryID))
+    if (typeof library !== 'undefined') search.addCondition('libraryID', 'is', library.get(library))
 
     const ids: Set<number> = new Set(await search.search())
 
