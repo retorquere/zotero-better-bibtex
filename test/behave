@@ -129,10 +129,6 @@ if args.this or args.test_this:
 
 if args.test or args.this or args.nightly or args.tagged or args.beta: args.slow = True
 
-if args.beta and CI.service:
-  print(f"********* SKIPPING BETA BUILD FOR {args.client.upper()} UNTIL GITHUB ACTIONS IS FIXED ****************")
-  sys.exit()
-
 if args.client == 'jurism' and args.beta and CI.service:
   print(f"********* SKIPPING{' BETA' if args.beta else ''} BUILD FOR {args.client.upper()} UNTIL FURTHER NOTICE ****************")
   sys.exit()
