@@ -109,7 +109,7 @@ export function titleCase(text: string): string {
 export function sentenceCase(text: string): string {
   let haslowercase = false
   const restore: [number, number, string][] = []
-  let sentencecased = text.replace(/((?:^|[?!]|[-.:;[\]<>'*\\(),{}_“”‘’])?\s*)([^-\s;?:.![\]<>'*\\(),{}_“”‘’]+)/g, (match: string, leader:string, word:string, offset: number) => {
+  let sentencecased = text.replace(/((?:^|[?!]|[-.:;[\]<>'*\\(),{}—_“”‘’])?\s*)([^-\s;?:.![\]<>'*\\(),{}—_“”‘’]+)/g, (match: string, leader:string, word:string, offset: number) => {
     if (word.match(/^[A-Z]$/)) {
       const leaderlen = leader?.length
       restore.push([offset + leaderlen, offset + leaderlen + word.length, word])

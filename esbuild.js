@@ -33,10 +33,8 @@ async function bundle(config) {
   const metafile = config.metafile
   config.metafile = true
 
-  if (config.globalThis || config.prepend) {
-    if (!config.banner) config.banner = {}
-    if (!config.banner.js) config.banner.js = ''
-  }
+  if (!config.banner) config.banner = {}
+  if (!config.banner.js) config.banner.js = ''
 
   if (config.prepend) {
     if (!Array.isArray(config.prepend)) config.prepend = [config.prepend]
@@ -46,11 +44,8 @@ async function bundle(config) {
     delete config.prepend
   }
 
-  if (config.globalThis) {
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis
-    config.banner.js = `var global = Function("return this")();\n${config.banner.js}`
-    delete config.globalThis
-  }
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis
+  config.banner.js = `var global = Function("return this")();\n${config.banner.js}`
 
   let target
   if (config.outfile) {
@@ -90,7 +85,6 @@ async function rebuild() {
     banner: { js: 'if (!Zotero.BetterBibTeX) {\n' },
     footer: { js: '\n}' },
     metafile: 'gen/plugin.json',
-    globalThis: true,
     prepend: 'gen/process.js',
     external: [
       'zotero/itemTree',
@@ -119,7 +113,6 @@ async function rebuild() {
         'importScripts(`resource://zotero-better-bibtex/${workerContext.translator}.js`);',
       ].join('\n'),
     },
-    globalThis: true,
     prepend: 'gen/process.js',
     metafile: 'gen/worker.json',
   })
@@ -151,7 +144,6 @@ async function rebuild() {
       banner: { js: `if (typeof ZOTERO_TRANSLATOR_INFO === 'undefined') var ZOTERO_TRANSLATOR_INFO = ${JSON.stringify(header)};` },
       // make these var, not const, so they get hoisted and are available in the global scope. See logger.ts
       footer: { js: `var { ${vars.join(', ')} } = ${globalName};` },
-      globalThis: true,
       metafile: `gen/${translator.name}.json`,
     })
 
