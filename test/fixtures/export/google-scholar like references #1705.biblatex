@@ -1,7 +1,7 @@
 
 @inproceedings{el2020lossy,
-  title = {Lossy {{CSI}}-{{FiSh}}: Efficient {{Signature Scheme}} with {{Tight Reduction}} to {{Decisional CSIDH}}-512},
-  shorttitle = {Lossy {{CSI}}-{{FiSh}}},
+  title = {Lossy {{CSI-FiSh}}: {{Efficient Signature Scheme}} with {{Tight Reduction}} to {{Decisional CSIDH-512}}},
+  shorttitle = {Lossy {{CSI-FiSh}}},
   booktitle = {Public-{{Key Cryptography}} – {{PKC}} 2020},
   author = {El Kaafarani, Ali and Katsumata, Shuichi and Pintore, Federico},
   editor = {Kiayias, Aggelos and Kohlweiss, Markulf and Wallden, Petros and Zikas, Vassilis},
@@ -17,7 +17,7 @@
 }
 
 @report{yoo2017post,
-  title = {A {{Post}}-{{Quantum Digital Signature Scheme Based}} on {{Supersingular Isogenies}}},
+  title = {A {{Post-Quantum Digital Signature Scheme Based}} on {{Supersingular Isogenies}}},
   author = {Yoo, Youngho and Azarderakhsh, Reza and Jalali, Amir and Jao, David and Soukharev, Vladimir},
   date = {2017},
   number = {186},
