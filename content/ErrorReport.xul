@@ -82,9 +82,14 @@
   <script>
     Zotero.BetterBibTeX.ErrorReport.globals = Function('return this')();
     window.addEventListener('load', async function() {
-      Zotero.debug('loading ErrorReport')
-      await Zotero.BetterBibTeX.ErrorReport.load(globals)
-      Zotero.debug('loaded ErrorReport')
+      try {
+        Zotero.debug('loading ErrorReport')
+        await Zotero.BetterBibTeX.ErrorReport.load()
+        Zotero.debug('loaded ErrorReport')
+      }
+      catch (err) {
+        Zotero.debug('failed to load ErrorReport' + err.message)
+      }
     })
   </script>
 </wizard>
