@@ -28,7 +28,6 @@ async function bundle(config) {
     format: 'iife',
     target: ['firefox60'],
     inject: [],
-    banner: { js: '' },
     ...config,
   }
 
@@ -36,9 +35,6 @@ async function bundle(config) {
 
   const metafile = config.metafile
   config.metafile = true
-
-  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis
-  config.banner.js = `var global = Function("return this")();\n${config.banner.js || ''}`
 
   let target
   if (config.outfile) {
@@ -148,7 +144,6 @@ async function rebuild() {
       // inject: [ './headless/inject.js' ],
       plugins: [node_modules.plugin, loader.patcher('setup/patches'), loader.bibertool, loader.peggy ],
       bundle: true,
-      format: 'iife',
       globalName: 'Headless',
       entryPoints: [ 'headless/zotero.ts' ],
       outfile: 'gen/headless/zotero.js',
@@ -169,7 +164,6 @@ async function rebuild() {
       // inject: [ './headless/inject.js' ],
       plugins: [node_modules.plugin, loader.patcher('setup/patches'), loader.bibertool, loader.peggy ],
       bundle: true,
-      format: 'iife',
       globalName: 'Headless',
       entryPoints: [ 'headless/index.ts' ],
       outfile: 'gen/headless/index.js',
