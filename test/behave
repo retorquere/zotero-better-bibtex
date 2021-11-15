@@ -23,11 +23,11 @@ os.chdir(ROOT)
 sys.path.insert(0, os.path.abspath('test/features/steps'))
 
 CI = Munch(
-  service = (os.environ.get('TRAVIS_BRANCH') and 'travis') or (os.environ.get('GITHUB_SHA') and 'github'),
-  branch = os.environ.get('TRAVIS_BRANCH') or (os.environ.get('GITHUB_REF', '').startswith('refs/heads/') and os.environ['GITHUB_REF'].split('/')[-1]) or '',
-  event = (os.environ.get('TRAVIS_EVENT_TYPE') and ('schedule' if os.environ['TRAVIS_EVENT_TYPE'] == 'cron' else os.environ['TRAVIS_EVENT_TYPE'])) or os.environ.get('GITHUB_EVENT_NAME') or '',
-  tag = os.environ.get('TRAVIS_TAG') or (os.environ.get('GITHUB_REF', '').startswith('refs/tags/') and os.environ['GITHUB_REF'].split('/')[-1]) or '',
-  message = os.environ.get('TRAVIS_COMMIT_MESSAGE') or (os.environ.get('GITHUB_SHA') and subprocess.check_output(['git', 'log', '--format=%B', '-n', '1', os.environ['GITHUB_SHA']], encoding='UTF-8').strip()) or ''
+  service = (os.environ.get('GITHUB_SHA') and 'github'),
+  branch = (os.environ.get('GITHUB_REF', '').startswith('refs/heads/') and os.environ['GITHUB_REF'].split('/')[-1]) or '',
+  event = os.environ.get('GITHUB_EVENT_NAME') or '',
+  tag = (os.environ.get('GITHUB_REF', '').startswith('refs/tags/') and os.environ['GITHUB_REF'].split('/')[-1]) or '',
+  message = (os.environ.get('GITHUB_SHA') and subprocess.check_output(['git', 'log', '--format=%B', '-n', '1', os.environ['GITHUB_SHA']], encoding='UTF-8').strip()) or ''
 )
 
 def load_json(path, default):
@@ -159,12 +159,6 @@ if CI.branch != '' and args.logs:
     else:
       return f'loaded={name}'
   sys.argv = [replace_logfile(arg) for arg in sys.argv]
-
-# *no* idea
-def cleanup():
-  if os.path.exists('travis.output'): os.remove('travis.output')
-import atexit
-atexit.register(cleanup)
 
 print('prepped with', args)
 print('starting with', ' '.join(sys.argv))
