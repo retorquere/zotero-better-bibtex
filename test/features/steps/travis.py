@@ -12,7 +12,7 @@ import os
 # CLASS: PlainFormatter
 # -----------------------------------------------------------------------------
 
-class CILogFormatter(PlainFormatter):
+class TravisFormatter(PlainFormatter):
     """
     Provides a simple plain formatter without coloring/formatting.
     The formatter displays now also:
