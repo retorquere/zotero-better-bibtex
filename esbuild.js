@@ -28,10 +28,14 @@ async function bundle(config) {
     format: 'iife',
     target: ['firefox60'],
     inject: [],
+    banner: { js: '' },
     ...config,
   }
 
   config.inject.push('./setup/loaders/globals.js')
+
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis
+  config.banner.js = `var global = Function("return this")();\n${config.banner.js || ''}`
 
   const metafile = config.metafile
   config.metafile = true
