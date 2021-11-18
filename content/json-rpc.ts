@@ -118,7 +118,14 @@ class NSItem {
     }
     search.addCondition('quicksearch-titleCreatorYear', 'contains', terms)
     search.addCondition('itemType', 'isNot', 'attachment')
-    if (typeof library !== 'undefined') search.addCondition('libraryID', 'is', Library.get(library))
+    if (typeof library !== 'undefined') {
+      try {
+        search.addCondition('libraryID', 'is', Library.get(library).id)
+      }
+      catch (err) {
+        throw new Error(`library ${JSON.stringify(library)} not found`)
+      }
+    }
 
     const ids: Set<number> = new Set(await search.search())
 
@@ -354,7 +361,6 @@ const api = new class API {
     }
 
     const argerror = schema.validate(args.object)
-    log.debug('json-rpc:', { ...args, method: request.method, schema: schema.schema, argerror })
     if (argerror) return {jsonrpc: '2.0', error: {code: INVALID_PARAMETERS, message: argerror}, id: null}
 
     try {
