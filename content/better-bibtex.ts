@@ -97,15 +97,18 @@ AddonManager.addAddonListener({
 */
 
 if (Preference.citeprocNoteCitekey) {
+  log.debug('patching itemToCSLJSON')
   $patch$(Zotero.Utilities, 'itemToCSLJSON', original => function itemToCSLJSON(zoteroItem: { itemID: any }) {
     const cslItem = original.apply(this, arguments)
 
     if (typeof Zotero.Item !== 'undefined' && !(zoteroItem instanceof Zotero.Item)) {
       const citekey = Zotero.BetterBibTeX.KeyManager.get(zoteroItem.itemID)
       if (citekey) {
+        log.debug('patching CSL-JSON:', citekey.citekey)
         cslItem.note = citekey.citekey
       }
       else {
+        log.debug('patching CSL-JSON: no citekey')
         delete cslItem.note
       }
     }
