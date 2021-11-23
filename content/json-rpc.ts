@@ -260,7 +260,7 @@ class NSItem {
    * @param translator BBT translator name or GUID
    * @param libraryID  ID of library to select the items from. When omitted, assume 'My Library'
    */
-  public async export(citekeys: string[], translator: string, libraryID: number) {
+  public async export(citekeys: string[], translator: string, libraryID?: number) {
     // eslint-disable-next-line no-underscore-dangle, prefer-rest-params
     if (typeof libraryID === 'undefined') libraryID = Zotero.Libraries.userLibraryID
 
