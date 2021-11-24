@@ -250,6 +250,8 @@
   "export/Exporting of single-field author lacks braces #130.json",
   "export/Exporting to bibtex with unicode as plain-text latex commands does not convert U+2040 #1265.bibtex",
   "export/Exporting to bibtex with unicode as plain-text latex commands does not convert U+2040 #1265.json",
+  "export/Extensions to citation format syntax #1933.biblatex",
+  "export/Extensions to citation format syntax #1933.json",
   "export/Extra semicolon in biblatexadata causes export failure #133.biblatex",
   "export/Extra semicolon in biblatexadata causes export failure #133.json",
   "export/Field Institution not available anymore in key pattern for Zotero #1568.biblatex",
