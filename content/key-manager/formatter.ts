@@ -676,11 +676,58 @@ class PatternFormatter {
   }
 
   /**
-    * If the length of the output is not longer than the given number, skip to the next pattern
+    * If the length of the output is not equal to the given number, skip to the next pattern. Alias: `=[number]`.
+    */
+  public _eq(n: number) {
+    if (this.value.length === n) return this
+    throw { next: true } // eslint-disable-line no-throw-literal
+  }
+
+  /**
+    * If the length of the output is not less than the given number, skip to the next pattern. Alias: `<[number]`.
+    */
+  public _lt(n: number) {
+    if (this.value.length < n) return this
+    throw { next: true } // eslint-disable-line no-throw-literal
+  }
+
+  /**
+    * If the length of the output is not greater than the given number, skip to the next pattern. Alias: `>[number]`.
+    */
+  public _gt(n: number) {
+    if (this.value.length > n) return this
+    throw { next: true } // eslint-disable-line no-throw-literal
+  }
+
+  /**
+    * If the length of the output is not lower than or equal to the given number, skip to the next pattern. Alias: `<=[number]`.
+    */
+  public _le(n: number) {
+    if (this.value.length <= n) return this
+    throw { next: true } // eslint-disable-line no-throw-literal
+  }
+
+  /**
+    * If the length of the output is not greater than or equal to the given number, skip to the next pattern. Alias: `>=[number]`.
+    */
+  public _ge(n: number) {
+    if (this.value.length >= n) return this
+    throw { next: true } // eslint-disable-line no-throw-literal
+  }
+
+  /**
+    * If the length of the output is equal to the given number, skip to the next pattern. Alias: `!=[number]`.
+    */
+  public _ne(n: number) {
+    if (this.value.length !== n) return this
+    throw { next: true } // eslint-disable-line no-throw-literal
+  }
+
+  /**
+    * If the length of the output is not longer than the given number, skip to the next pattern. Alias: `>[number]`.
     */
   public _longer(n: number) {
-    if (this.value.length <= n) throw { next: true } // eslint-disable-line no-throw-literal
-    return this
+    return this._gt(n)
   }
 
   /** discards the input */

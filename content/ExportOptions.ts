@@ -12,8 +12,9 @@ export class ExportOptions {
     this.DOM_OBSERVER.observe(this.globals.document.getElementById('translator-options'), { attributes: true, subtree: true, childList: true })
     this.addEventHandlers()
 
+    const self = this // eslint-disable-line @typescript-eslint/no-this-alias
     $patch$(this.globals.Zotero_File_Interface_Export, 'init', original => function(_options) {
-      for (const translator of this.globals.window.arguments[0].translators) {
+      for (const translator of self.globals.window.arguments[0].translators) {
         if (translator.label === 'BetterBibTeX JSON') translator.label = 'BetterBibTeX debug JSON'
       }
       // eslint-disable-next-line prefer-rest-params
@@ -24,8 +25,8 @@ export class ExportOptions {
       // eslint-disable-next-line prefer-rest-params
       original.apply(this, arguments)
 
-      const index = this.globals.document.getElementById('format-menu').selectedIndex
-      const translator = (index >= 0) ? this.globals.window.arguments[0].translators[index].translatorID : null
+      const index = self.globals.document.getElementById('format-menu').selectedIndex
+      const translator = (index >= 0) ? self.globals.window.arguments[0].translators[index].translatorID : null
 
       let hidden = false
       let textContent = ''
@@ -43,11 +44,11 @@ export class ExportOptions {
           break
       }
 
-      const reminder = this.globals.document.getElementById('better-bibtex-reminder')
+      const reminder = self.globals.document.getElementById('better-bibtex-reminder')
       reminder.setAttribute('hidden', hidden)
       reminder.textContent = textContent
 
-      this.globals.window.sizeToContent()
+      self.globals.window.sizeToContent()
     })
   }
 

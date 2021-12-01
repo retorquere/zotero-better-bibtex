@@ -1,6 +1,5 @@
 # Better BibTeX for Zotero
 
-[![Build Status](https://travis-ci.org/retorquere/zotero-better-bibtex.svg?branch=master)](https://travis-ci.org/retorquere/zotero-better-bibtex)
 [![Join the chat at https://gitter.im/retorquere/zotero-better-bibtex](https://badges.gitter.im/retorquere/zotero-better-bibtex.svg)](https://gitter.im/retorquere/zotero-better-bibtex?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Greenkeeper badge](https://badges.greenkeeper.io/retorquere/zotero-better-bibtex.svg)](https://greenkeeper.io/)
 
 Better BibTeX (BBT) is an extension for [Zotero](https://www.zotero.org) and [Juris-M](https://juris-m.github.io) that makes it easier to manage bibliographic data, especially for people authoring documents using text-based toolchains (e.g. based on [LaTeX](https://www.latex-project.org) / [Markdown](https://www.markdownguide.org)).
@@ -68,7 +67,7 @@ I of course prefer very clearly documented issue reports over fuzzy ones, but I 
 
 While the development needs of BBT are to a large extent covered
 by the generosity towards open-source developers of services such
-as github and travis, my development system does require the
+as github, my development system does require the
 occasional upgrade; also, I enjoy getting the occasional frivolous
 tech-toy that I wouldn't otherwise grant myself. While you should
 feel in no way obligated to pay for BBT, [anything you can spare](https://www.paypal.me/retorquere) is very much appreciated.

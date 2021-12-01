@@ -1,4 +1,4 @@
-import betterAjvErrors from '@readme/better-ajv-errors'
+import betterAjvErrors from 'better-ajv-errors'
 
 export function validator(ajv, schema): (data: any) => string { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
   const ok = ajv.compile(schema)
