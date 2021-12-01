@@ -129,6 +129,8 @@
   "export/Capitalisation in techreport titles #160.json",
   "export/Capitalize all title-fields for language en #383.biblatex",
   "export/Capitalize all title-fields for language en #383.json",
+  "export/Capitalized words after colons not brace protected #1978.biblatex",
+  "export/Capitalized words after colons not brace protected #1978.json",
   "export/Changing item type for only BibLaTeX does not work #1694.biblatex",
   "export/Changing item type for only BibLaTeX does not work #1694.bibtex",
   "export/Changing item type for only BibLaTeX does not work #1694.json",
