@@ -97,7 +97,8 @@ AddonManager.addAddonListener({
 */
 
 if (Preference.citeprocNoteCitekey) {
-  $patch$(Zotero.Utilities, 'itemToCSLJSON', original => function itemToCSLJSON(zoteroItem: { itemID: any }) {
+  // zotero beta moves itemToCSLJSON to Zotero.Utilities.Item
+  $patch$(Zotero.Utilities.Item?.itemToCSLJSON ? Zotero.Utilities.Item : Zotero.Utilities, 'itemToCSLJSON', original => function itemToCSLJSON(zoteroItem: { itemID: any }) {
     const cslItem = original.apply(this, arguments)
 
     if (typeof Zotero.Item !== 'undefined' && !(zoteroItem instanceof Zotero.Item)) {
