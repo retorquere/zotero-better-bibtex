@@ -96,7 +96,7 @@ AddonManager.addAddonListener({
   MONKEY PATCHES
 */
 
-log.debug('patching itemToCSLJSON:' Preference.citeprocNoteCitekey, Preferences.all())
+log.debug('patching itemToCSLJSON:', Preference.citeprocNoteCitekey, Preference.all)
 if (Preference.citeprocNoteCitekey) {
   log.debug('now patching itemToCSLJSON')
   $patch$(Zotero.Utilities, 'itemToCSLJSON', original => function itemToCSLJSON(zoteroItem: { itemID: any }) {
