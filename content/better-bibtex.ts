@@ -96,9 +96,13 @@ AddonManager.addAddonListener({
   MONKEY PATCHES
 */
 
-log.debug('patching itemToCSLJSON:', Preference.citeprocNoteCitekey, Preference.all)
+const citeprocNoteCitekey = {
+  enabled: Preference.citeprocNoteCitekey,
+  prefsAtStart: Preference.all,
+  patched: false,
+}
 if (Preference.citeprocNoteCitekey) {
-  log.debug('now patching itemToCSLJSON')
+  citeprocNoteCitekey.patched = true
   $patch$(Zotero.Utilities, 'itemToCSLJSON', original => function itemToCSLJSON(zoteroItem: { itemID: any }) {
     const cslItem = original.apply(this, arguments)
 
@@ -990,6 +994,8 @@ export class BetterBibTeX {
         document.getElementById('better-bibtex-progress').hidden = true
       }
     })
+
+    log.debug('citeprocNoteCitekey:', citeprocNoteCitekey)
   }
 }
 Zotero.BetterBibTeX = Zotero.BetterBibTeX || new BetterBibTeX
