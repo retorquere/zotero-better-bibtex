@@ -134,7 +134,7 @@ jobs:
         run: ./test/behave --client ${{ matrix.client }} --logs logs/logs --format travis --bin ${{ matrix.bin }} ${{ steps.test.outputs.this }}
 
     - uses: actions/upload-artifact@v2
-      if: ${{ failure() }}
+      if: ${{ failure() || cancelled() }}
       with:
         name: debug log ${{ matrix.client }} ${{ matrix.bin }}
         path: ~/.BBTZ5TEST.log
