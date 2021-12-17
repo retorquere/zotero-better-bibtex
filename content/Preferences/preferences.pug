@@ -213,14 +213,6 @@ bbt:doc When > 0, BBT will automatically pin the first citation keys it generate
 preference(name="extensions.zotero.translators.better-bibtex.parseParticles" bbt:affects="*" type="bool" default="true")
 bbt:doc Name particle handling. Only turn on when requested and we're talking about it on github.
 
-preference(name="extensions.zotero.translators.better-bibtex.citeprocNoteCitekey" bbt:affects="*" type="bool" default="false")
-bbt:doc.
-  Replaces the "note" field with the bibtex key during citation rendering in Word/Libreoffice. Main use-case is to help migrating word documents to pandoc.
-  This setting only takes effect during startup, so if you change it, you will have to restart Zotero to have this take effect (or to disable it.
-  Please disable it when done). You will need to use a custom CSL style
-  (such as [this](https://raw.githubusercontent.com/retorquere/zotero-better-bibtex/master/better-bibtex-citekeys.csl)) to make this work. Have Zotero generate
-  the bibliography, which will put the citation keys in the Word/LibreOffice document, which can then be passed through pandoc.
-
 preference(name="extensions.zotero.translators.better-bibtex.import" bbt:affects="" type="bool" default="true")
 bbt:doc Use BBTs importer instead of Zotero's importer
 

@@ -14,11 +14,17 @@ export const Preference = new class PreferenceManager {
   public default = defaults
 
   constructor() {
+    let old, key
+
     this.baseAttachmentPath = Zotero.Prefs.get('baseAttachmentPath')
     Zotero.Prefs.registerObserver('baseAttachmentPath', val => { this.baseAttachmentPath = val })
 
+    // clear out old keys
+    if (typeof (old = Zotero.Prefs.get(key = '${prefix}citeprocNoteCitekey')) !== 'undefined') {
+      Zotero.Prefs.clear(key)
+    }
+
     // migrate ancient keys
-    let old, key
     if ((old = Zotero.Prefs.get(key = '${prefix}quickCopyMode')) === 'orgmode_citekey') {
       Zotero.Prefs.set(key, 'orgmode')
       Zotero.Prefs.set('${prefix}quickCopyOrgMode', 'citationkey')
