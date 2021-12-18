@@ -1,60 +1,64 @@
----
 references:
 - id: 000021000024=00
   issued:
-    - year: -1
-      season: 1
-    - year: -1
-      season: 4
+  - year: -1
+    season: 1
+  - year: -1
+    season: 4
   title: 0000-21/0000-24
   type: webpage
 
+  citation-key: 000021000024=00
 - id: 001121001222=-11
   issued:
-    - year: -12
-      season: 1
-    - year: -13
-      season: 2
-  title: '-0011-21/-0012-22'
+  - year: -12
+    season: 1
+  - year: -13
+    season: 2
+  title: -0011-21/-0012-22
   type: webpage
 
+  citation-key: 001121001222=-11
 - id: 001121001222=11
   issued:
-    - year: 11
-      season: 1
-    - year: 12
-      season: 2
+  - year: 11
+    season: 1
+  - year: 12
+    season: 2
   title: 0011-21/0012-22
   type: webpage
 
+  citation-key: 001121001222=11
 - id: 201121201222=-2011
   issued:
-    - year: -2012
-      season: 1
-    - year: -2013
-      season: 2
-  title: '-2011-21/-2012-22'
+  - year: -2012
+    season: 1
+  - year: -2013
+    season: 2
+  title: -2011-21/-2012-22
   type: webpage
 
+  citation-key: 201121201222=-2011
 - id: monthsoutrange=2017
   issued:
-    - literal: 2017-14/2017-15
+  - literal: 2017-14/2017-15
   original-date:
-    - literal: 2017-14/2017-99
+  - literal: 2017-14/2017-99
   title: months out of range
   type: webpage
 
+  citation-key: monthsoutrange=2017
 - id: SeasonrangesEDTF=2017
   issued:
-    - year: 2017
-      season: 3
-    - year: 2017
-      season: 4
+  - year: 2017
+    season: 3
+  - year: 2017
+    season: 4
   original-date:
-    - year: 2015
-      season: 1
-    - year: 2016
-      season: 2
+  - year: 2015
+    season: 1
+  - year: 2016
+    season: 2
   title: 'Season ranges: EDTF and literal'
   type: webpage
-...
+  citation-key: SeasonrangesEDTF=2017
