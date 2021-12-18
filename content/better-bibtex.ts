@@ -106,7 +106,7 @@ $patch$(Zotero.Utilities.Item?.itemToCSLJSON ? Zotero.Utilities.Item : Zotero.Ut
       if (citekey) {
         if (! (cslItem.note?.match(/(^|\n)citation key:/i))) {
           log.debug('patching CSL-JSON:', citekey.citekey)
-          cslItem.note = `${cslItem.note || ''}\nCitation Key: ${citekey.citekey}`.trim()
+          // cslItem.note = `${cslItem.note || ''}\nCitation Key: ${citekey.citekey}`.trim()
           cslItem['citation-key'] = citekey.citekey
         }
       }
