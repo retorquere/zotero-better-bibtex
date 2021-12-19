@@ -1,5 +1,5 @@
 ---
-title: Migrating Word/Libreoffice documents to LaTeX/Markdown
+title: Migrating from Word/Libreoffice
 weight: 5
 tags:
   - citation keys
