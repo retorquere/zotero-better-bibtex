@@ -15,7 +15,11 @@ of them will do is keep your citations intact. This will not do.
 
 If you install [this](better-bibtex-citekeys.csl) CSL style in
 Zotero (or modify it further and use that), Zotero will render the
-in-text citations as `[@citekey]`. If you want LaTeX, modify the
-style accordingly. BBT does this by patching in the `citation-key`
-variable to make it available to the CSL processor.
+in-text citations as `[@citekey]` when you ask Zotero to render the bibliography. If you want LaTeX, modify the
+style accordingly. You can then put your document through pandoc or whatnot to get LaTeX/Markdown.
+
+For the curious, BBT does this by patching in the `citation-key`
+variable in the CSL processing so it can be rendered using a CSL
+style. If you previously used the `citeprocNoteCitekey` preference,
+that is now gone, so you'll have to update the style you used.
 
