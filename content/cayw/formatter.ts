@@ -224,6 +224,7 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
 
     if (citations.length !== Object.keys(labels).length) throw new Error(`Scannable Cite parse error: picked ${citations.length}, found ${Object.keys(labels).length}`)
 
+    log.debug('cayw.scannable-cite:', citations)
     let citation = ''
     for (const item of citations) {
       const [ , kind, lib, key ] = item.uri.match(/^http:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^/]+)\/items\/(.+)/)
