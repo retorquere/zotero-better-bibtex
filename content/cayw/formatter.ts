@@ -225,10 +225,14 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
     if (citations.length !== Object.keys(labels).length) throw new Error(`Scannable Cite parse error: picked ${citations.length}, found ${Object.keys(labels).length}`)
 
     log.debug('cayw.scannable-cite:', citations)
-    let citation = ''
-    for (const item of citations) {
-      const [ , kind, lib, key ] = item.uri.match(/^http:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^/]+)\/items\/(.+)/)
-      const id = `${kind === 'users' ? 'zu' : 'zg'}:${lib.startsWith('local/') ? '0' : lib}:${key}`
+    let scannable = ''
+    for (const citation of citations) {
+      const item = await getItemsAsync(citation.id)
+      const id = [
+        Zotero.Libraries.get(item.libraryID).libraryType === 'group' ? 'zg' : 'zu',
+        item.libraryID === Zotero.Libraries.userLibraryID ? '0' : `${item.libraryID}`,
+        item.key,
+      ].join(':')
       if (!labels[id]) throw new Error(`No formatted citation found for ${id}`)
 
       const enriched = [
@@ -239,9 +243,9 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
         Preference.testing ? 'zu:0:ITEMKEY' : id,
       ].join(' | ').replace(/ +/g, ' ')
 
-      citation += `{ ${enriched.trim()} }`
+      scannable += `{ ${enriched.trim()} }`
     }
-    return citation
+    return scannable
   }
 
   public async 'formatted-citation'(citations, options) {
