@@ -14,3 +14,7 @@
 	path = biblatex
 	url = https://github.com/plk/biblatex.git
 	branch = dev
+[submodule "zotero-odf-scan-plugin"]
+	path = zotero-odf-scan-plugin
+	url = https://github.com/Juris-M/zotero-odf-scan-plugin.git
+	branch = master

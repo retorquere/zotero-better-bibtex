@@ -28,6 +28,7 @@ config.ignorePatterns = [
   'util/*.ts',
   'minitests/*.ts',
   'content/minitests/*.ts',
+  'zotero-odf-scan-plugin',
 ]
 
 module.exports = config
