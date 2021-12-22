@@ -233,7 +233,7 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
         item.libraryID === Zotero.Libraries.userLibraryID ? '0' : `${item.libraryID}`,
         item.key,
       ].join(':')
-      if (!labels[id]) throw new Error(`No formatted citation found for ${id}`)
+      if (!labels[id]) throw new Error(`No formatted citation found for ${JSON.stringify(id)} in ${JSON.stringify(Object.keys(labels))}`)
 
       const enriched = [
         item.prefix || '',
