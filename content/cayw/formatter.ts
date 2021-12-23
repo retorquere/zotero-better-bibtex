@@ -210,14 +210,13 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
   public async 'scannable-cite'(citations, options) {
     let markers = ''
     for (const citation of citations) {
-      const item = await getItemsAsync(citation.id)
-      const scannable = scannableCite(item)
+      const scannable = scannableCite(await getItemsAsync(citation.id))
 
       const enriched = [
-        item.prefix || '',
-        `${item.suppressAuthor ? '-' : ''}${scannable.label}`,
-        item.locator ? `${shortLabel(item.label, options)} ${item.locator}`.trim() : '',
-        item.suffix || '',
+        citation.prefix || '',
+        `${citation.suppressAuthor ? '-' : ''}${scannable.label}`,
+        citation.locator ? `${shortLabel(citation.label, options)} ${citation.locator}`.trim() : '',
+        citation.suffix || '',
         Preference.testing ? 'zu:0:ITEMKEY' : scannable.id,
       ].join(' | ').replace(/ +/g, ' ')
 
