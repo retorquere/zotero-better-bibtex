@@ -7,7 +7,7 @@ function strToDate(str) {
 }
 
 function itemToExportFormat(item) {
-  return Zotero.Utilities.Internal.itemToExportFormat(item, false, true)
+  return Zotero.Utilities.Internal.itemToExportFormat(item, true, true) // scannable cite uses legacy format
 }
 
 function getHiddenPref(key: string) {
