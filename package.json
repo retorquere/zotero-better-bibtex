@@ -35,7 +35,7 @@
     "jurism": "npm start -- --jurism",
     "start": "./test/behave --keep --tags=@none",
     "s3form": "zotero-plugin-s3form",
-    "release": "zotero-plugin-release \"You can verify you are on the latest version by going into 'Tools' -> 'Addons' in Zotero/Juris-M, clicking the gear icon, and selecting 'Check for updates'\"",
+    "release": "zotero-plugin-release \"$(<setup/release-message.md)\"",
     "branches": "zotero-plugin-branches",
     "fix-fixtures": "ts-node ./util/fix-test-fixtures.ts",
     "preversion": "npm run docs:prep",
