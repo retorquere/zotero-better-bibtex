@@ -8,7 +8,7 @@ import json
 root = os.path.join(os.path.dirname(__file__), '..')
 
 print('generating date parser month translations')
-locales = os.path.join(root, 'citation-style-language-locales')
+locales = os.path.join(root, 'submodules', 'citation-style-language-locales')
 
 months = {}
 mapping = {

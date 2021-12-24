@@ -2,7 +2,7 @@
 
 from mako.template import Template
 
-with open('zotero-odf-scan-plugin/resource/translators/Scannable Cite.js') as f:
+with open('submodules/zotero-odf-scan-plugin/resource/translators/Scannable Cite.js') as f:
   src = f.read()
 
 with open('gen/ScannableCite.ts', 'w') as f:
