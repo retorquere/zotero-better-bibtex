@@ -104,15 +104,7 @@ $patch$(Zotero.Utilities.Item?.itemToCSLJSON ? Zotero.Utilities.Item : Zotero.Ut
     if (typeof Zotero.Item !== 'undefined' && !(zoteroItem instanceof Zotero.Item)) {
       const citekey = Zotero.BetterBibTeX.KeyManager.get(zoteroItem.itemID)
       if (citekey) {
-        if (! (cslItem.note?.match(/(^|\n)citation key:/i))) {
-          log.debug('patching CSL-JSON:', citekey.citekey)
-          // cslItem.note = `${cslItem.note || ''}\nCitation Key: ${citekey.citekey}`.trim()
-        }
         cslItem['citation-key'] = citekey.citekey
-      }
-      else {
-        log.debug('patching CSL-JSON: no citekey')
-        delete cslItem.note
       }
     }
   }
