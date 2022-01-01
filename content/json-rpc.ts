@@ -261,12 +261,10 @@ class NSItem {
    * @param libraryID  ID of library to select the items from. When omitted, assume 'My Library'
    */
   public async export(citekeys: string[], translator: string, libraryID?: number) {
-    // eslint-disable-next-line no-underscore-dangle, prefer-rest-params
-    if (typeof libraryID === 'undefined') libraryID = Zotero.Libraries.userLibraryID
-
     const query: Query = {$and: [{citekey: { $in: citekeys } } ]}
 
     if (Preference.keyScope === 'library') {
+      if (typeof libraryID === 'undefined') libraryID = Zotero.Libraries.userLibraryID
       if (typeof libraryID !== 'number') throw { code: INVALID_PARAMETERS, message: 'keyscope is library, please provide a library ID' }
       query.$and.push({ libraryID: {$eq: libraryID} })
     }
