@@ -354,6 +354,10 @@ Scenario: Postscript error aborts CSL JSON export #1155
   When I import 4 references from "export/*.json"
   Then an export using "Better CSL JSON" should match "export/*.csl.json"
 
+Scenario: Multiple creators in Extra not exported in Better CSL JSON #2015
+  When I import 1 reference from "export/*.json"
+  Then an export using "Better CSL JSON" should match "export/*.csl.json"
+
 @1400
 Scenario: Deterministic ordering for CSL #1178 #1400
   When I import 26 references from "export/*.json"
