@@ -3,7 +3,7 @@
   "`alphanum`": "clears out everything but unicode alphanumeric characters (unicode character classes `L` and `N`)",
   "`ascii`": "removes all non-ascii characters",
   "`capitalize`": "uppercases the first letter of each word",
-  "`clean`": "transliterates the citation key and removes unsafe characters",
+  "`clean`=allow_spaces? (boolean)": "transliterates the citation key and removes unsafe characters",
   "`condense`=sep? (string)": "this replaces spaces in the value passed in. You can specify what to replace it with by adding it as a parameter, e.g `condense=_` will replace spaces with underscores. **Parameters should not contain spaces** unless you want the spaces in the value passed in to be replaced with those spaces in the parameter",
   "`default`=text (string)": "Returns the given text if no output was generated",
   "`discard`": "discards the input",

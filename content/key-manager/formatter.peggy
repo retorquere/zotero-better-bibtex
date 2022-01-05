@@ -123,7 +123,7 @@ method
       }
 
       let method = match(fn, paramnames.slice(0, Object.keys(args).length).map(n => args[n]), input, error);
-      if (scrub) method += '.scrub()';
+      if (scrub) method += '._clean(true)';
 
       return method;
     }
