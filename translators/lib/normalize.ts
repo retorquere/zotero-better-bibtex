@@ -46,6 +46,8 @@ function strip(obj) {
     return obj.length ? obj : undefined
   }
 
+  if (obj === null) return undefined
+
   if (typeof obj === 'object') {
     let keep = false
     for (let [k, v] of Object.entries(obj)) {
@@ -62,7 +64,6 @@ function strip(obj) {
   }
 
   if (typeof obj === 'string' && !obj) return undefined
-  if (obj === null) return undefined
 
   return obj
 }
