@@ -1,7 +1,7 @@
 {
   "filename": "auto-dk.json",
   "name": "Denmark",
-  "version": "2019-08-19 06:21:44 UTC",
+  "version": "2020-10-15 22:01:46 UTC",
   "xdata": {
     "default": {
       "place": {
@@ -46,84 +46,87 @@
       "institution-part": {
         "lrc": "Tinglysningsretten",
         "mcc": "Sø- og Handelsretten",
-        "sc": "Højesteret"
+        "sc": "H",
+        "om": "Ombudsmanden",
+        "neab": "Natur-og Miljøklagenævnet",
+        "tc": "Landsskatteretten"
       }
     },
     "dk:copenhagen": {
       "institution-part": {
-        "hc": "Landsret",
+        "ehc": "Østre Landsret",
         "mcc": "Sø- og Handelsretten"
       }
     },
     "dk:copenhagen:bornholm": {
       "institution-part": {
-        "dc": "Byret"
+        "dc": "Byret Bornholm"
       }
     },
     "dk:copenhagen:copenhagen": {
       "institution-part": {
-        "dc": "Byret"
+        "dc": "Byret Copenhagen"
       }
     },
     "dk:copenhagen:elsinore": {
       "institution-part": {
-        "dc": "Byret"
+        "dc": "Byret Elsinore"
       }
     },
     "dk:copenhagen:frederiksberg": {
       "institution-part": {
-        "dc": "Byret"
+        "dc": "Byret Frederiksberg"
       }
     },
     "dk:copenhagen:glostrup": {
       "institution-part": {
-        "dc": "Byret"
+        "dc": "Byret Glostrup"
       }
     },
     "dk:copenhagen:hillerod": {
       "institution-part": {
-        "dc": "Byret"
+        "dc": "Byret Hillerød"
       }
     },
     "dk:copenhagen:holbaek": {
       "institution-part": {
-        "dc": "Byret"
+        "dc": "Byret Holbæk"
       }
     },
     "dk:copenhagen:lyngby": {
       "institution-part": {
-        "dc": "Byret"
+        "dc": "Byret Lyngby"
       }
     },
     "dk:copenhagen:nykobing.falster": {
       "institution-part": {
-        "dc": "Byret"
+        "dc": "Byret Nykøbing Falster"
       }
     },
     "dk:copenhagen:odense": {
       "institution-part": {
-        "dc": "Byret"
+        "dc": "Byret Odense"
       }
     },
     "dk:copenhagen:roskilde": {
       "institution-part": {
-        "dc": "Byret"
+        "dc": "Byret Roskilde"
       }
     },
     "dk:copenhagen:svendborg": {
       "institution-part": {
-        "dc": "Byret"
+        "dc": "Byret Svendborg"
       }
     },
     "dk:copenhagen:torshaven": {
       "institution-part": {
-        "dc": "Byret"
+        "dc": "Byret Tórshaven"
       }
     },
     "dk:nuuk": {
       "institution-part": {
-        "dc": "Byret",
-        "hc": "Landsret"
+        "dc": "Byret Nuuk",
+        "ghc": "Grønlands Landsret"
       }
     },
     "dk:nuuk:kujalleq": {
@@ -148,37 +151,37 @@
     },
     "dk:viborg": {
       "institution-part": {
-        "hc": "Landsret"
+        "whc": "Vestre Landsret"
       }
     },
     "dk:viborg:aalborg": {
       "institution-part": {
-        "dc": "Byret"
+        "dc": "Byret Aalborg"
       }
     },
     "dk:viborg:aarhus": {
       "institution-part": {
-        "dc": "Byret"
+        "dc": "Byret Aarhus"
       }
     },
     "dk:viborg:grenaa": {
       "institution-part": {
-        "dc": "Byret"
+        "dc": "Byret Grenaa"
       }
     },
     "dk:viborg:haderslev": {
       "institution-part": {
-        "dc": "Byret"
+        "dc": "Byret Haderslev"
       }
     },
     "dk:viborg:herning": {
       "institution-part": {
-        "dc": "Byret"
+        "dc": "Byret Herning"
       }
     },
     "dk:viborg:hjorring": {
       "institution-part": {
-        "dc": "Byret"
+        "dc": "Byret Hjørring"
       }
     },
     "dk:viborg:hobro": {
@@ -188,37 +191,37 @@
     },
     "dk:viborg:holstebro": {
       "institution-part": {
-        "dc": "Byret"
+        "dc": "Byret Holstebro"
       }
     },
     "dk:viborg:horsens": {
       "institution-part": {
-        "dc": "Byret"
+        "dc": "Byret Horsens"
       }
     },
     "dk:viborg:randers": {
       "institution-part": {
-        "dc": "Byret"
+        "dc": "Byret Randers"
       }
     },
     "dk:viborg:sonderborg": {
       "institution-part": {
-        "dc": "Byret"
+        "dc": "Byret Sønderborg"
       }
     },
     "dk:viborg:thisted": {
       "institution-part": {
-        "dc": "Byret"
+        "dc": "Byret Thisted"
       }
     },
     "dk:viborg:tonder": {
       "institution-part": {
-        "dc": "Byret"
+        "dc": "Byret Tønder"
       }
     },
     "dk:viborg:viborg": {
       "institution-part": {
-        "dc": "Byret"
+        "dc": "Byret Viborg"
       }
     }
   }

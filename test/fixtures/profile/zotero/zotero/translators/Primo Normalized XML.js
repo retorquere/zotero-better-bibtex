@@ -1,17 +1,17 @@
 {
 	"translatorID": "efd737c9-a227-4113-866e-d57fbc0684ca",
+	"translatorType": 1,
 	"label": "Primo Normalized XML",
 	"creator": "Philipp Zumstein",
 	"target": "xml",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
+	"inRepository": true,
 	"configOptions": {
 		"dataMode": "xml/dom"
 	},
-	"inRepository": true,
-	"translatorType": 1,
-	"lastUpdated": "2019-06-10 08:28:21"
+	"lastUpdated": "2021-06-14 17:05:00"
 }
 
 /*
@@ -50,78 +50,78 @@ function doImport() {
 		p: 'http://www.exlibrisgroup.com/xsd/primo/primo_nm_bib',
 		sear: 'http://www.exlibrisgroup.com/xsd/jaguar/search'
 	};
-	
+
 	var item = new Zotero.Item();
 	var itemType = ZU.xpathText(doc, '//p:display/p:type', ns) || ZU.xpathText(doc, '//p:facets/p:rsrctype', ns) || ZU.xpathText(doc, '//p:search/p:rsrctype', ns);
 	if (!itemType) {
 		throw new Error('Could not locate item type');
 	}
-	
+
 	switch (itemType.toLowerCase()) {
-	case 'book':
-	case 'ebook':
-	case 'pbook':
-	case 'books':
-	case 'score':
-	case 'journal':		// as long as we don't have a periodical item type;
-		item.itemType = "book";
-		break;
-	case 'audio':
-	case 'sound_recording':
-		item.itemType = "audioRecording";
-		break;
-	case 'video':
-	case 'dvd':
-		item.itemType = "videoRecording";
-		break;
-	case 'computer_file':
-		item.itemType = "computerProgram";
-		break;
-	case 'report':
-		item.itemType = "report";
-		break;
-	case 'webpage':
-		item.itemType = "webpage";
-		break;
-	case 'article':
-	case 'review':
-		item.itemType = "journalArticle";
-		break;
-	case 'thesis':
-	case 'dissertation':
-		item.itemType = "thesis";
-		break;
-	case 'archive_manuscript':
-	case 'object':
-		item.itemType = "manuscript";
-		break;
-	case 'map':
-		item.itemType = "map";
-		break;
-	case 'reference_entry':
-		item.itemType = "encyclopediaArticle";
-		break;
-	case 'image':
-		item.itemType = "artwork";
-		break;
-	case 'newspaper_article':
-		item.itemType = "newspaperArticle";
-		break;
-	case 'conference_proceeding':
-		item.itemType = "conferencePaper";
-		break;
-	default:
-		item.itemType = "document";
-		var risType = ZU.xpathText(doc, '//p:addata/p:ristype', ns);
-		if (risType) {
-			switch (risType.toUpperCase()) {
-			case 'THES':
-				item.itemType = "thesis";
-				break;
+		case 'book':
+		case 'ebook':
+		case 'pbook':
+		case 'books':
+		case 'score':
+		case 'journal':		// as long as we don't have a periodical item type;
+			item.itemType = "book";
+			break;
+		case 'audio':
+		case 'sound_recording':
+			item.itemType = "audioRecording";
+			break;
+		case 'video':
+		case 'dvd':
+			item.itemType = "videoRecording";
+			break;
+		case 'computer_file':
+			item.itemType = "computerProgram";
+			break;
+		case 'report':
+			item.itemType = "report";
+			break;
+		case 'webpage':
+			item.itemType = "webpage";
+			break;
+		case 'article':
+		case 'review':
+			item.itemType = "journalArticle";
+			break;
+		case 'thesis':
+		case 'dissertation':
+			item.itemType = "thesis";
+			break;
+		case 'archive_manuscript':
+		case 'object':
+			item.itemType = "manuscript";
+			break;
+		case 'map':
+			item.itemType = "map";
+			break;
+		case 'reference_entry':
+			item.itemType = "encyclopediaArticle";
+			break;
+		case 'image':
+			item.itemType = "artwork";
+			break;
+		case 'newspaper_article':
+			item.itemType = "newspaperArticle";
+			break;
+		case 'conference_proceeding':
+			item.itemType = "conferencePaper";
+			break;
+		default:
+			item.itemType = "document";
+			var risType = ZU.xpathText(doc, '//p:addata/p:ristype', ns);
+			if (risType) {
+				switch (risType.toUpperCase()) {
+					case 'THES':
+						item.itemType = "thesis";
+						break;
+				}
 			}
-		}
 	}
-	
+
 	item.title = ZU.xpathText(doc, '//p:display/p:title', ns);
 	if (item.title) {
 		item.title = ZU.unescapeHTML(item.title);
@@ -134,7 +134,7 @@ function doImport() {
 		creators = contributors;
 		contributors = [];
 	}
-	
+
 	// //addata/au is great because it lists authors in last, first format,
 	// but it can also have a bunch of junk. We'll use it to help split authors
 	var splitGuidance = {};
@@ -146,7 +146,7 @@ function doImport() {
 			if (splitAu.length > 2) continue;
 			var name = splitAu[1].trim().toLowerCase() + ' '
 				+ splitAu[0].trim().toLowerCase();
-			splitGuidance[name] = author;
+			splitGuidance[name.replace(/\./g, "")] = author;
 		}
 	}
 
@@ -192,15 +192,15 @@ function doImport() {
 			item.date = m[0];
 		}
 	}
-	
+
 	// the three letter ISO codes that should be in the language field work well:
 	item.language = ZU.xpathText(doc, '(//p:display/p:language|//p:facets/p:language)[1]', ns);
-	
+
 	var pages = ZU.xpathText(doc, '//p:display/p:format', ns);
 	if (item.itemType == 'book' && pages && pages.search(/\d/) != -1) {
 		item.numPages = extractNumPages(pages);
 	}
-	
+
 	item.series = ZU.xpathText(doc, '(//p:addata/p:seriestitle)[1]', ns);
 	if (item.series) {
 		let m = item.series.match(/^(.*);\s*(\d+)/);
@@ -215,11 +215,11 @@ function doImport() {
 	if (isbn) {
 		item.ISBN = ZU.cleanISBN(isbn);
 	}
-	
+
 	if (issn) {
 		item.ISSN = ZU.cleanISSN(issn);
 	}
-	
+
 	// Try this if we can't find an isbn/issn in addata
 	// The identifier field is supposed to have standardized format, but
 	// the super-tolerant idCheck should be better than a regex.
@@ -231,7 +231,7 @@ function doImport() {
 	}
 
 	item.edition = ZU.xpathText(doc, '//p:display/p:edition', ns);
-	
+
 	var subjects = ZU.xpath(doc, '//p:display/p:subject', ns);
 	if (!subjects.length) {
 		subjects = ZU.xpath(doc, '//p:search/p:subject', ns);
@@ -240,28 +240,35 @@ function doImport() {
 	for (let i = 0, n = subjects.length; i < n; i++) {
 		let tagChain = ZU.trimInternal(subjects[i].textContent);
 		// Split chain of tags, e.g. "Deutschland / Gerichtsverhandlung / Schallaufzeichnung / Bildaufzeichnung"
-		for (let tag of tagChain.split(/ (?:\/|--) /)) {
+		for (let tag of tagChain.split(/ (?:\/|--|;) /)) {
 			item.tags.push(tag);
 		}
 	}
-	
+
 	item.abstractNote = ZU.xpathText(doc, '//p:display/p:description', ns)
 		|| ZU.xpathText(doc, '//p:addata/p:abstract', ns);
 	if (item.abstractNote) item.abstractNote = ZU.unescapeHTML(item.abstractNote);
-	
+
 	item.DOI = ZU.xpathText(doc, '//p:addata/p:doi', ns);
 	item.issue = ZU.xpathText(doc, '//p:addata/p:issue', ns);
 	item.volume = ZU.xpathText(doc, '//p:addata/p:volume', ns);
 	item.publicationTitle = ZU.xpathText(doc, '//p:addata/p:jtitle', ns);
-	
+
 	var startPage = ZU.xpathText(doc, '//p:addata/p:spage', ns);
 	var endPage = ZU.xpathText(doc, '//p:addata/p:epage', ns);
 	var overallPages = ZU.xpathText(doc, '//p:addata/p:pages', ns);
+	
+	var pageRangeTypes = ["journalArticle", "magazineArticle", "newspaperArticle", "dictionaryEntry", "encyclopediaArticle", "conferencePaper"];
 	if (startPage && endPage) {
 		item.pages = startPage + '–' + endPage;
 	}
 	else if (overallPages) {
-		item.pages = overallPages;
+		if (pageRangeTypes.includes(item.itemType)) {
+			item.pages = overallPages;
+		}
+		else {
+			item.numPages = overallPages;
+		}
 	}
 	else if (startPage) {
 		item.pages = startPage;
@@ -269,7 +276,7 @@ function doImport() {
 	else if (endPage) {
 		item.pages = endPage;
 	}
-	
+
 	// these are actual local full text links (e.g. to google-scanned books)
 	// e.g http://solo.bodleian.ox.ac.uk/OXVU1:LSCOP_OX:oxfaleph013370702
 	var URL = ZU.xpathText(doc, '//p:links/p:linktorsrc', ns);
@@ -342,10 +349,10 @@ function stripAuthor(str) {
 	// e.g. Wheaton, Barbara Ketcham [former owner]$$QWheaton, Barbara Ketcham
 	str = str.replace(/^(.*)\$\$Q(.*)$/, "$2");
 	return str
-		// Remove year
-		.replace(/\s*,?\s*\(?\d{4}-?(\d{4})?\)?/g, '')
-		// Remove things like (illustrator). TODO: use this to assign creator type?
-		.replace(/\s*,?\s*[[(][^()]*[\])]$/, '')
+	// Remove year
+		.replace(/\s*,?\s*\(?\d{4}-?(\d{4}|\.{3})?\)?/g, '')
+		// Remove creator type like (illustrator)
+		.replace(/(\s*,?\s*[[(][^()]*[\])])+$/, '')
 		// The full "continuous" name uses no separators, which need be removed
 		// cf. "Luc, Jean André : de (1727-1817)"
 		.replace(/\s*:\s+/, " ");
@@ -355,18 +362,18 @@ function fetchCreators(item, creators, type, splitGuidance) {
 	for (let i = 0; i < creators.length; i++) {
 		var creator = ZU.unescapeHTML(creators[i].textContent).split(/\s*;\s*/);
 		for (var j = 0; j < creator.length; j++) {
-			var c = stripAuthor(creator[j]);
+			var c = stripAuthor(creator[j]).replace(/\./g, "");
 			c = ZU.cleanAuthor(
 				splitGuidance[c.toLowerCase()] || c,
 				type,
 				true
 			);
-			
+
 			if (!c.firstName) {
 				delete c.firstName;
 				c.fieldMode = 1;
 			}
-			
+
 			item.creators.push(c);
 		}
 	}
@@ -437,10 +444,10 @@ var testCases = [
 				"attachments": [],
 				"tags": [
 					{
-						"tag": "Chemistry"
+						"tag": "Water"
 					},
 					{
-						"tag": "Water"
+						"tag": "Chemistry"
 					}
 				],
 				"notes": [],
@@ -543,46 +550,37 @@ var testCases = [
 				"attachments": [],
 				"tags": [
 					{
-						"tag": "Bildaufzeichnung"
-					},
-					{
 						"tag": "Conduct of court proceedings"
 					},
 					{
-						"tag": "Deutschland"
+						"tag": "Germany"
+					},
+					{
+						"tag": "Constitutional law"
+					},
+					{
+						"tag": "Freedom of information"
 					},
 					{
 						"tag": "Deutschland"
 					},
 					{
-						"tag": "Deutschland"
-					},
-					{
-						"tag": "Elektronische Medien"
-					},
-					{
-						"tag": "Gerichtsberichterstattung"
-					},
-					{
-						"tag": "Gerichtsverhandlung"
-					},
-					{
-						"tag": "Germany; Constitutional law"
-					},
-					{
-						"tag": "Germany; Freedom of information"
-					},
-					{
-						"tag": "Germany; Hochschulschrift"
-					},
-					{
-						"tag": "Informationsfreiheit"
+						"tag": "Hochschulschrift"
 					},
 					{
 						"tag": "Rechtsprechende Gewalt"
 					},
 					{
-						"tag": "Schallaufzeichnung"
+						"tag": "Öffentlichkeitsgrundsatz"
+					},
+					{
+						"tag": "Informationsfreiheit"
+					},
+					{
+						"tag": "Gerichtsberichterstattung"
+					},
+					{
+						"tag": "Elektronische Medien"
 					},
 					{
 						"tag": "Verbot"
@@ -591,7 +589,13 @@ var testCases = [
 						"tag": "Verfassungsmäßigkeit"
 					},
 					{
-						"tag": "Öffentlichkeitsgrundsatz"
+						"tag": "Gerichtsverhandlung"
+					},
+					{
+						"tag": "Schallaufzeichnung"
+					},
+					{
+						"tag": "Bildaufzeichnung"
 					}
 				],
 				"notes": [],

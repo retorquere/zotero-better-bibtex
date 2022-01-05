@@ -116,14 +116,14 @@ function doWeb(doc, url) {
 		var tablerow = doc.evaluate('//table[@class="books_list"]/tbody/tr', doc, ns, XPathResult.ANY_TYPE, null);
 		var items = new Array();
 		var row;
-		while(row = tablerow.iterateNext()) {
+		while (row = tablerow.iterateNext()) {
 			var link = doc.evaluate('./td/a[@class="book_title"]', row, ns, XPathResult.ANY_TYPE, null).iterateNext();
 			var title = link.textContent;
 			var url = link.href;
 			items[url] = title;
 		}
 		Zotero.selectItems(items, function(items) {
-			if(!items) return true;
+			if (!items) return true;
 			var books = new Array();
 			for (var i in items) {
 				books.push(i);

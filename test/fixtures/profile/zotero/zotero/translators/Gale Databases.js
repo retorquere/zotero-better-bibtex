@@ -1,52 +1,62 @@
 {
 	"translatorID": "e3748cf3-36dc-4816-bf86-95a0b63feb03",
+	"translatorType": 4,
 	"label": "Gale Databases",
-	"creator": "Sebastian Karcher",
-	"target": "^https?://go\\.galegroup\\.com/",
+	"creator": "Abe Jellinek and Jim Miazek",
+	"target": "^https?://[^?&]*(?:gale|galegroup|galetesting|ggtest)\\.com(?:\\:\\d+)?/ps/",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-10-07 15:50:14"
+	"lastUpdated": "2021-05-25 18:20:00"
 }
 
 /*
 	***** BEGIN LICENSE BLOCK *****
+
+	Copyright © 2021 Abe Jellinek and Jim Miazek
 	
-	Galegroup Translator - Copyright © 2018 Sebastian Karcher 
 	This file is part of Zotero.
-	
+
 	Zotero is free software: you can redistribute it and/or modify
 	it under the terms of the GNU Affero General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
 	(at your option) any later version.
-	
+
 	Zotero is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 	GNU Affero General Public License for more details.
-	
+
 	You should have received a copy of the GNU Affero General Public License
-	along with Zotero.  If not, see <http://www.gnu.org/licenses/>.
-	
+	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
+
 	***** END LICENSE BLOCK *****
 */
-function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null}
 
+
+function detectWeb(doc, url) {
+	if (url.includes('/ps/eToc.do')
+		|| text(doc, 'h1.page-header').includes("Table of Contents")) {
+		return "book";
+	}
+	if (url.includes('Search.do') && getSearchResults(doc, true)) {
+		return "multiple";
+	}
+	if (doc.querySelector('a[data-gtm-feature="bookView"]')) {
+		return "bookSection";
+	}
+	return "magazineArticle";
+}
 
 function getSearchResults(doc, checkOnly) {
-	var items = {};
-	var found = false;
-
-	var rows = doc.querySelectorAll('ul.SearchResultsList span.title a.documentLink');
-	if (!rows.length) {
-		rows = doc.querySelectorAll('ul.SearchResultsList p.subTitle a.title');
-	}
-	for (var i=0; i<rows.length; i++) {
-		var href = rows[i].href;
-		var title = ZU.trimInternal(rows[i].textContent);
+	let items = {};
+	let found = false;
+	let rows = doc.querySelectorAll('h3.title > a.documentLink');
+	for (let row of rows) {
+		let href = row.href;
+		let title = ZU.trimInternal(row.textContent);
 		if (!href || !title) continue;
 		if (checkOnly) return true;
 		found = true;
@@ -54,131 +64,180 @@ function getSearchResults(doc, checkOnly) {
 	}
 	return found ? items : false;
 }
-function detectWeb(doc, url) {
-	if ((url.includes('/retrieve.do') || url.includes('/i.do?')) && text(doc, 'li#docTools-citation, li.docTools-citation')) {
-		return "journalArticle";
-	}
-	
-	else if (getSearchResults(doc, true)) return "multiple";
-}
-
-
-function scrape(doc, url) {
-	var postURL = "/ps/citationtools/rest/cite/download";
-	
-	var docId = attr(doc, 'input.citationToolsData', 'data-docid');
-	var documentUrl = attr(doc, 'input.citationToolsData', 'data-url');
-	var productName = attr(doc, 'input.citationToolsData', 'data-productname');
- 
-	var documentData = '{"docId":"' + docId +'","documentUrl":"' + documentUrl + '","productName":"' + productName + '"}';
-	var post = "citationFormat=RIS&documentData=" + encodeURIComponent(documentData).replace(/%20/g, "+");
-	var pdfurl = attr(doc, '#docTools-pdf a', 'href');
-
-	// Z.debug(post)
-	ZU.doPost(postURL, post, function(text){
-
-		text = text.trim();
-		// gale puts issue numbers in M1
-		text = text.replace(/M1\s*\-/g, "IS  -");
-		// L2 is probably meant to be UR, but we can ignore it altogether
-		text = text.replace(/^L2\s+-.+\n/gm, '');
-		// we can map copyright notes via CR
-		text = text.replace(/^N1(?=\s+-\s+copyright)/igm, 'CR');
-		// Z.debug(text);
-		
-		var translator = Zotero.loadTranslator("import");
-		translator.setTranslator("32d59d2d-b65a-4da4-b0a3-bdd3cfb979e7");
-		translator.setString(text);
-		translator.setHandler("itemDone", function (obj, item) {
-			if (item.ISSN) {
-				item.ISSN = ZU.cleanISSN(item.ISSN);
-			}
-			if (item.pages && item.pages.endsWith("+")) {
-				item.pages = item.pages.replace(/\+/, "-");
-			}
-			if (pdfurl) {
-				item.attachments.push({
-					url: pdfurl,
-					title: "Full Text PDF",
-					mimeType:'application/pdf'
-				});
-			} else {
-				item.attachments.push({document: doc, title: "Snapshot"});
-			}
-			item.complete();
-		});
-		translator.translate();
-	});
-}
 
 function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
 		Zotero.selectItems(getSearchResults(doc, false), function (items) {
-			if (!items) {
-				return true;
-			}
-			var articles = [];
-			for (var i in items) {
-				articles.push(i);
-			}
-			ZU.processDocuments(articles, scrape);
+			if (items) ZU.processDocuments(Object.keys(items), scrape);
 		});
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }
+
+function scrape(doc, url) {
+	let citeData = doc.querySelector('input.citationToolsData');
+	let documentUrl = decodeURIComponent(citeData.dataset.url);
+	let mcode = citeData.dataset.mcode; // undefined for bookSections
+	let productName = citeData.dataset.productname;
+	let docId = mcode ? undefined : decodeURIComponent(url.match(/(?:docId|id)=([^&]+)/)[1]);
+	let risPostBody = JSON.stringify([{
+		documentUrl: `<span class="docUrl">${documentUrl}</span>`,
+		mcode,
+		docId,
+		productName
+	}]);
+	let pdfURL = attr(doc, 'button[data-gtm-feature="download"]', 'data-url');
+
+	ZU.doPost('https://go.gale.com/ps/citationtools/rest/cite/getcitations/', risPostBody, function (text) {
+		let citations = JSON.parse(text);
+		let translator = Zotero.loadTranslator("import");
+		translator.setTranslator("32d59d2d-b65a-4da4-b0a3-bdd3cfb979e7"); // RIS
+		translator.setString(citations.RIS[0]);
+		translator.setHandler("itemDone", function (obj, item) {
+			if (pdfURL) {
+				item.attachments.push({
+					url: pdfURL,
+					title: "Full Text PDF",
+					mimeType: "application/pdf"
+				});
+			}
+			item.attachments.push({
+				title: "Snapshot",
+				document: doc
+			});
+			item.notes = [];
+			item.url = item.url.replace(/u=[^&]+&?/, '');
+			item.complete();
+		});
+		translator.translate();
+	}, {
+		'Content-Type': 'application/json; charset=utf-8',
+		Accept: 'application/json'
+	});
+}
+
 /** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://go.galegroup.com/ps/i.do?p=PROF&u=nysl_ce_syr&id=GALE|A213083272&v=2.1&it=r&sid=PROF&asid=a8973dd8",
+		"url": "https://link.gale.com/apps/pub/5BBU/GVRL?sid=GVRL",
 		"items": [
 			{
-				"itemType": "magazineArticle",
-				"title": "Improving a counselor education Web site through usability testing: the bibliotherapy education project",
+				"itemType": "book",
+				"title": "Arts and Humanities Through the Eras",
 				"creators": [
 					{
-						"lastName": "McMillen",
-						"firstName": "Paula S.",
-						"creatorType": "author"
+						"lastName": "Bleiberg",
+						"firstName": "Edward I.",
+						"creatorType": "editor"
 					},
 					{
-						"lastName": "Pehrsson",
-						"firstName": "Dale-Elizabeth",
-						"creatorType": "author"
+						"lastName": "Evans",
+						"firstName": "James Allan",
+						"creatorType": "editor"
+					},
+					{
+						"lastName": "Figg",
+						"firstName": "Kristen Mossler",
+						"creatorType": "editor"
+					},
+					{
+						"lastName": "Soergel",
+						"firstName": "Philip M.",
+						"creatorType": "editor"
+					},
+					{
+						"lastName": "Friedman",
+						"firstName": "John Block",
+						"creatorType": "editor"
 					}
 				],
-				"date": "December 2009",
-				"ISSN": "0011-0035",
-				"archive": "Educators Reference Complete",
-				"issue": "2",
-				"language": "English",
+				"date": "2005",
+				"archive": "Gale eBooks",
 				"libraryCatalog": "Gale",
-				"pages": "122-",
-				"publicationTitle": "Counselor Education and Supervision",
-				"shortTitle": "Improving a counselor education Web site through usability testing",
-				"url": "http://link.galegroup.com/apps/doc/A213083272/PROF?u=nysl_ce_syr&sid=PROF&xid=a8973dd8",
-				"volume": "49",
+				"place": "Detroit, MI",
+				"publisher": "Gale",
+				"series": "Ancient Egypt 2675-332 B.C.E.",
+				"url": "https://link.gale.com/apps/pub/5BBU/GVRL?sid=GVRL",
+				"volume": "1",
 				"attachments": [
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://link.gale.com/apps/doc/CX3427400755/GVRL?sid=GVRL&xid=77ea673e",
+		"items": [
+			{
+				"itemType": "bookSection",
+				"title": "Ariosto, Ludovico",
+				"creators": [
+					{
+						"lastName": "Bleiberg",
+						"firstName": "Edward I.",
+						"creatorType": "editor"
+					},
+					{
+						"lastName": "Evans",
+						"firstName": "James Allan",
+						"creatorType": "editor"
+					},
+					{
+						"lastName": "Figg",
+						"firstName": "Kristen Mossler",
+						"creatorType": "editor"
+					},
+					{
+						"lastName": "Soergel",
+						"firstName": "Philip M.",
+						"creatorType": "editor"
+					},
+					{
+						"lastName": "Friedman",
+						"firstName": "John Block",
+						"creatorType": "editor"
+					}
+				],
+				"date": "2005",
+				"archive": "Gale eBooks",
+				"bookTitle": "Arts and Humanities Through the Eras",
+				"language": "English",
+				"libraryCatalog": "Gale",
+				"pages": "350-351",
+				"place": "Detroit, MI",
+				"publisher": "Gale",
+				"series": "Renaissance Europe 1300-1600",
+				"url": "https://link.gale.com/apps/doc/CX3427400755/GVRL?sid=GVRL&xid=77ea673e",
+				"volume": "4",
+				"attachments": [
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
+					},
+					{
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [
 					{
-						"tag": "Bibliotherapy"
+						"tag": "Ariosto, Ludovico"
 					},
 					{
-						"tag": "Counseling"
+						"tag": "Playwrights"
 					},
 					{
-						"tag": "Counselling"
-					},
-					{
-						"tag": "Usability testing"
-					},
-					{
-						"tag": "Web sites (World Wide Web)"
+						"tag": "Poets"
 					}
 				],
 				"notes": [],

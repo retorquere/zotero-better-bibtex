@@ -36,7 +36,7 @@
 function detectWeb(doc, url) {
 	var definePath = '//div[@class="blog_content"]';
 	var XpathObject = doc.evaluate(definePath, doc, null, XPathResult.ANY_TYPE, null).iterateNext();
-	if(XpathObject){
+	if (XpathObject){
 		return "blogPost";
 	} else {
 		var definePath = '//div[@class="story_landing"]';
@@ -75,9 +75,9 @@ function scrape(doc, url) {
 					newItem.creators =blogAuthorObject.textContent.replace(/\s*/g,'');
 					}
 					
-					else{
+					else {
 						blogAuthorObject = blogAuthorObject.textContent;
-						if(blogAuthorObject.match(/[\s\n\r\t]+-[\s\n\r\t]+[a-zA-Z\s\n\r\t]*/g)){
+						if (blogAuthorObject.match(/[\s\n\r\t]+-[\s\n\r\t]+[a-zA-Z\s\n\r\t]*/g)){
 							blogAuthorObject = blogAuthorObject.replace(/([\s\n\r\t]+-[\s\n\r\t]+[a-zA-Z\s\n\r\t]*)/g, '').replace(/\bBy \b/g,'');
 							splitIntoArray = blogAuthorObject.split (" ");
 							for (var i = 0; i < splitIntoArray.length; i++){
@@ -161,7 +161,7 @@ function scrape(doc, url) {
 			var authorArray = new Array("NZPA", "The Press", "The Dominion Post");
 			authorXPathObject = authorXPathObject.textContent;
 			
-			if(authorXPathObject.match(/[\s\n\r\t]+-[\s\n\r\t]+\b[a-zA-Z\s\n\r\t]*|^\s+\bBy\s*/g)){
+			if (authorXPathObject.match(/[\s\n\r\t]+-[\s\n\r\t]+\b[a-zA-Z\s\n\r\t]*|^\s+\bBy\s*/g)){
 				authorXPathObject = authorXPathObject.replace(/([\s\n\r\t]+-[\s\n\r\t]+\b[a-zA-Z\s\n\r\t]*)|\b.co.nz|\b.com|(-[a-zA-Z0-9]*)/g, '');
 				var authorString = authorXPathObject.replace(/^\s+\bBy\s*|^\s+\bBY\s*/g, '');
 				
@@ -171,7 +171,7 @@ function scrape(doc, url) {
 				} else if (!authorString.match(/\W\band\W+/g)) {
 						authorArray = authorString.toLowerCase();
 				}
-				if( authorArray instanceof Array ) {
+				if ( authorArray instanceof Array ) {
 					for (var i in authorArray){			
 					splitIntoArray = authorArray[i].split (" ");
 						for (var i = 0; i < splitIntoArray.length; i++){
@@ -216,7 +216,7 @@ function scrape(doc, url) {
 				}
 			}  else {
 				
-				if(authorXPathObject.match(/[\s\n\r]+/g)){
+				if (authorXPathObject.match(/[\s\n\r]+/g)){
 					authorXPathObject = ZU.capitalizeTitle( authorXPathObject.trim(), true ); //.replace(/\s+/g, '-');
 					newItem.creators.push(ZU.cleanAuthor(authorXPathObject, "author"));
 				} else {
@@ -382,7 +382,7 @@ function doDate(doc, url){
 			var ArrayMonth = new Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec");
 			var ArrayNumber = new Array("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12");
 			for (var i=0; i <ArrayNumber.length; i++){
-				if(ArrayDate[1] ==ArrayNumber[i]) {
+				if (ArrayDate[1] ==ArrayNumber[i]) {
 					
 					ArrayNumber[i] = ArrayMonth[i];
 					var month = ArrayNumber[i] + emptyString;

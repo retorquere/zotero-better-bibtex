@@ -16,7 +16,7 @@ function detectWeb(doc, url) {
 	// make sure there are multiple results
 	if (getSearchResults(doc).length) {
 	  return "multiple";
-	} else if(url.match(/[&?]uri=[^&#]+/)) {	//single item entries have a ui parameter
+	} else if (url.match(/[&?]uri=[^&#]+/)) {	//single item entries have a ui parameter
 		return "book";
 	}
 }
@@ -26,7 +26,7 @@ function getSearchResults(doc) {
 	var res = ZU.xpath(doc, '(//center[1])/table/tbody/tr/td\
 					/table//td[1]/a[starts-with(@href,"javascript:buildNewList")]');
 	//search results, different format (see porbase.bnportugal.pt test cases)
-	if(!res.length) {
+	if (!res.length) {
 		res = ZU.xpath(doc, 'html/body/table/tbody/tr[1]/td/table[5]/tbody/tr/td\
 								/table/tbody/tr/td[2]/a[@href]');
 	}
@@ -39,7 +39,7 @@ function doWeb(doc, url) {
 	var detailsRe = new RegExp('ipac\.jsp\?.*uri=(?:full|link)=[0-9]');
 	
 	var uris = new Array();
-	if(detectWeb(doc,uri) == "book") {
+	if (detectWeb(doc,uri) == "book") {
 		if (uri.indexOf("#") !== -1) {
 			uris.push(uri.replace(/#/,'&fullmarc=true#'));
 		} else {
@@ -49,7 +49,7 @@ function doWeb(doc, url) {
 	} else {
 		var results = getSearchResults(doc);
 		var items = {};
-		for(var i=0, n=results.length; i<n; i++) {
+		for (var i=0, n=results.length; i<n; i++) {
 			items[results[i].href] = results[i].textContent;
 		}
 
@@ -60,9 +60,9 @@ function doWeb(doc, url) {
 
 			var uriRe = new RegExp("^javascript:buildNewList\\('([^']+)");
 			var uris = new Array();
-			for(var i in items) {
+			for (var i in items) {
 				var m = uriRe.exec(i);
-				if(m) {
+				if (m) {
 					uris.push(unescape(m[1]) + '&fullmarc=true');
 				} else {
 					uris.push(i+'&fullmarc=true');
@@ -85,10 +85,10 @@ function marcscrape(uris){
 
 function scrape(newDoc, marc) {
 	var elmts = ZU.xpath(newDoc, '//form/table[@class="tableBackground"]/tbody/tr/td/table[@class="tableBackground"]/tbody/tr[td[1]/a[@class="normalBlackFont1"]]');
-	if(!elmts.length) elmts = ZU.xpath(newDoc, '//form/table[@class="tableBackground"]/tbody/tr/td/table[@class="tableBackground"]/tbody/tr[td[1]/a[@class="boldBlackFont1"]]');
+	if (!elmts.length) elmts = ZU.xpath(newDoc, '//form/table[@class="tableBackground"]/tbody/tr/td/table[@class="tableBackground"]/tbody/tr[td[1]/a[@class="boldBlackFont1"]]');
 
 	var record = new marc.record();		
-	for(var i=0, n=elmts.length; i<n; i++) {
+	for (var i=0, n=elmts.length; i<n; i++) {
 		var elmt = elmts[i];
 		var field = ZU.superCleanString(ZU.xpathText(elmt, './TD[1]/A[1]/text()[1]') || '');
 		var value = (ZU.xpathText(elmt, './TD[2]/TABLE[1]/TBODY[1]/TR[1]/TD/A[1]', null, '') || '').trim();
@@ -97,15 +97,15 @@ function scrape(newDoc, marc) {
 		field = field.replace(/[\s:]/g, "");
 		if (field == "LDR"){
   			record.leader = value;
-		} else if(field != "FMT") {
+		} else if (field != "FMT") {
 			// In french catalogs (in unimarc), the delimiter isn't the $ but \xA4 is used. Added there
 			// Also added the fact that subfield codes can be numerics
 			value = value.replace(/[\xA4\$]([a-z0-9]) ?/g, marc.subfieldDelimiter+"$1");
 			var code = field.substring(0, 3);
 			var ind = "";
-			if(field.length > 3) {
+			if (field.length > 3) {
 				ind = field[3];
-				if(field.length > 4) {
+				if (field.length > 4) {
 					ind += field[4];
 				}
 			}

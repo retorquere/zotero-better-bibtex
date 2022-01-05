@@ -1,0 +1,217 @@
+{
+  "filename": "auto-ca-fr.json",
+  "name": "Canada",
+  "version": "2020-11-27 02:47:36 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "CA": "Can",
+        "CA:AB": "Alta",
+        "CA:BC": "BC",
+        "CA:MB": "Man",
+        "CA:NB": "N-B",
+        "CA:NL": "NL",
+        "CA:NS": "NS",
+        "CA:NT": "TN-O",
+        "CA:NU": "NU",
+        "CA:ON": "Ont",
+        "CA:PE": "PEI",
+        "CA:QC": "Qc",
+        "CA:SK": "Sask",
+        "CA:YK": "Y"
+      }
+    },
+    "ca": {
+      "institution-part": {
+        "supreme.court": "CSC",
+        "federal.court": "CF",
+        "federal.court.appeal": "CAF",
+        "tax.court": "CCI",
+        "court.martial.appeal.court": "CACM Can"
+      },
+      "institution-entire": {
+        "supreme.court": "CSC",
+        "federal.court": "CF",
+        "federal.court.appeal": "CAF",
+        "tax.court": "CCI",
+        "court.martial.appeal.court": "CACM"
+      }
+    },
+    "ca:ab": {
+      "institution-part": {
+        "court.appeal": "Alta CA",
+        "court.queens.bench": "Alta QB",
+        "provincial.court": "Alta CP"
+      },
+      "institution-entire": {
+        "court.appeal": "ABCA",
+        "court.queens.bench": "ABQB",
+        "provincial.court": "ABPC"
+      }
+    },
+    "ca:bc": {
+      "institution-part": {
+        "court.appeal": "BC CA",
+        "supreme.court.prov": "BC C Supr",
+        "provincial.court": "BC CP"
+      },
+      "institution-entire": {
+        "court.appeal": "BCCA",
+        "supreme.court.prov": "BCSC",
+        "provincial.court": "BCPC"
+      }
+    },
+    "ca:mb": {
+      "institution-part": {
+        "court.appeal": "Man CA",
+        "court.queens.bench": "Man QB",
+        "provincial.court": "Man CP"
+      },
+      "institution-entire": {
+        "court.appeal": "MBCA",
+        "court.queens.bench": "MBQB",
+        "provincial.court": "MBPC"
+      }
+    },
+    "ca:nb": {
+      "institution-part": {
+        "court.appeal": "CA N-B",
+        "court.queens.bench": "BR N-B",
+        "provincial.court": "CP N-B"
+      },
+      "institution-entire": {
+        "court.appeal": "NBCA",
+        "court.queens.bench": "NBBR",
+        "provincial.court": "NBCP"
+      }
+    },
+    "ca:nl": {
+      "institution-part": {
+        "court.appeal": "NL CA",
+        "supreme.court.prov": "NL C Supr",
+        "provincial.court": "NL CP",
+        "supreme.court.trial.division.nl": "NL SC (TD)"
+      },
+      "institution-entire": {
+        "court.appeal": "NLCA",
+        "supreme.court.prov": "NLSC",
+        "provincial.court": "NLPC",
+        "supreme.court.trial.division.nl": "NLTD"
+      }
+    },
+    "ca:ns": {
+      "institution-part": {
+        "court.appeal": "NS CA",
+        "supreme.court.prov": "NS C Supr",
+        "supreme.court.family": "NS SC (Fam Div)",
+        "provincial.court": "NS CP",
+        "small.claims.court": "NS C pet cré",
+        "probate.court": "Prob Ct NS",
+        "family.court": "NS FC"
+      },
+      "institution-entire": {
+        "court.appeal": "NSCA",
+        "supreme.court.prov": "NSSC",
+        "supreme.court.family": "NSSF",
+        "provincial.court": "NSPC",
+        "small.claims.court": "NSSM",
+        "probate.court": "NSPB",
+        "family.court": "NSFC"
+      }
+    },
+    "ca:nt": {
+      "institution-part": {
+        "court.appeal": "TN-O CA",
+        "supreme.court.prov": "TN-O C Supr",
+        "territorial.court": "TN-O CT"
+      },
+      "institution-entire": {
+        "court.appeal": "NWTCA",
+        "supreme.court.prov": "NWTSC",
+        "territorial.court": "NWTTC"
+      }
+    },
+    "ca:nu": {
+      "institution-part": {
+        "court.appeal": "NU CA",
+        "court.justice": "NU CJ",
+        "youth.court": "NU Trib jeun"
+      },
+      "institution-entire": {
+        "court.appeal": "NUCA",
+        "court.justice": "NUCJ",
+        "youth.court": "NUCN"
+      }
+    },
+    "ca:on": {
+      "institution-part": {
+        "court.appeal": "CA Ont",
+        "superior.court": "CS Ont",
+        "court.justice": "CJ Ont"
+      },
+      "institution-entire": {
+        "court.appeal": "ONCA",
+        "superior.court": "ONSC",
+        "court.justice": "ONCJ"
+      }
+    },
+    "ca:pe": {
+      "institution-part": {
+        "court.appeal": "PEI CA",
+        "supreme.court.prov": "PEI C Supr",
+        "provincial.court": "PEI CP"
+      },
+      "institution-entire": {
+        "court.appeal": "PECA",
+        "supreme.court.prov": "PESC",
+        "provincial.court": "PEPC"
+      }
+    },
+    "ca:qc": {
+      "institution-part": {
+        "court.appeal": "CA Qc",
+        "superior.court": "CS Qc",
+        "court.quebec": "Qc CQ",
+        "tribunal.professions": "TP Qc",
+        "quebec.admin.tribunal": "TAQ",
+        "human.rights.tribunal": "TDP Qc",
+        "municipal.courts": "CM Qc"
+      },
+      "institution-entire": {
+        "court.appeal": "QCCA",
+        "superior.court": "QCCS",
+        "court.quebec": "QCCQ",
+        "tribunal.professions": "QCTP",
+        "quebec.admin.tribunal": "TAQ",
+        "human.rights.tribunal": "TDP",
+        "municipal.courts": "QCCM"
+      }
+    },
+    "ca:sk": {
+      "institution-part": {
+        "court.appeal": "Sask CA",
+        "court.queens.bench": "Sask QB",
+        "provincial.court": "Sask CP"
+      },
+      "institution-entire": {
+        "court.appeal": "SKCA",
+        "court.queens.bench": "SKQB",
+        "provincial.court": "SKPC"
+      }
+    },
+    "ca:yk": {
+      "institution-part": {
+        "court.appeal": "Y CA",
+        "supreme.court.prov": "Y C Supr",
+        "territorial.court": "Y CT",
+        "small.claims.court": "Y C pet cré"
+      },
+      "institution-entire": {
+        "court.appeal": "YKCA",
+        "supreme.court.prov": "YKSC",
+        "territorial.court": "YKTC",
+        "small.claims.court": "YKSM"
+      }
+    }
+  }
+}

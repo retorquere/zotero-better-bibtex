@@ -36,45 +36,45 @@
 */
 
 function detectWeb(doc, url) {
-	if (url.indexOf('/record/')>-1) {
+	if (url.includes('/record/')) {
 		var collections = ZU.xpath(doc, '//span[@class="pull-right"]/span[contains(@class, "label-default")]');
 		for (var i=0; i<collections.length; i++) {
 			var type = collections[i].textContent.toLowerCase();
 			//Z.debug(type)
 			switch (type) {
-				case "software":
-					return "computerProgram";
-				case "video/audio":
-					return "videoRecording";//or audioRecording?
-				case "figure":
-				case "drawing":
-				case "photo":
-				case "diagram":
-				case "plot":
-					return "artwork";
-				case "presentation":
-				case "conference paper":
-				case "poster":
-				case "lesson":
-					return "presentation";
-				case "book":
-					return "book";
-				case "book section":
-					return "bookSection";
-				case "patent":
-					return "patent";
-				case "report":
-				case "working paper":
-				case "project deliverables":
-				case "preprint":
-					return "report";
-				case "thesis":
-					return "thesis";
-				case "dataset":
-					//change when dataset as itemtype is available
-					return "document";
-				case "journal article":
-					return "journalArticle";
+			case "software":
+				return "computerProgram";
+			case "video/audio":
+				return "videoRecording";//or audioRecording?
+			case "figure":
+			case "drawing":
+			case "photo":
+			case "diagram":
+			case "plot":
+				return "artwork";
+			case "presentation":
+			case "conference paper":
+			case "poster":
+			case "lesson":
+				return "presentation";
+			case "book":
+				return "book";
+			case "book section":
+				return "bookSection";
+			case "patent":
+				return "patent";
+			case "report":
+			case "working paper":
+			case "project deliverables":
+			case "preprint":
+				return "report";
+			case "thesis":
+				return "thesis";
+			case "dataset":
+				//change when dataset as itemtype is available
+				return "document";
+			case "journal article":
+				return "journalArticle";
 			}
 		}
 		return "journalArticle";
@@ -172,7 +172,7 @@ function scrape(doc, url) {
 			//e.g. https://zenodo.org/record/569323
 			for (var i = 0; i< item.creators.length; i++) {
 				if (!item.creators[i].firstName) {
-					if (item.creators[i].lastName.indexOf(",")!=-1) {
+					if (item.creators[i].lastName.includes(",")) {
 						item.creators[i].firstName = item.creators[i].lastName.replace(/.+?,\s*/, "");
 						item.creators[i].lastName = item.creators[i].lastName.replace(/,.+/, "");
 					} else {
@@ -526,5 +526,5 @@ var testCases = [
 			}
 		]
 	}
-]
+];
 /** END TEST CASES **/

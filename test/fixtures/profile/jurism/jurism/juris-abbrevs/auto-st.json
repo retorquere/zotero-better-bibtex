@@ -1,15 +1,12 @@
 {
   "filename": "auto-st.json",
   "name": "São Tomé and Príncipe",
-  "version": "2019-08-19 06:21:44 UTC",
+  "version": "2020-09-07 21:01:30 UTC",
   "xdata": {
     "default": {
       "place": {
         "ST": "São Tomé and Príncipe"
       }
-    },
-    "st": {
-      "institution-part": {}
     }
   }
 }

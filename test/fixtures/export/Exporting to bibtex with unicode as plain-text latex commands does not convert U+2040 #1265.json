@@ -1,75 +1,15 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
-      "ascii": "",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportDelay": 1,
-      "autoExportIdleWait": 10,
-      "autoPin": false,
-      "auxImport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[zotero:clean]",
-      "citeprocNoteCitekey": false,
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "exportBraceProtection": true,
-      "exportTitleCase": true,
-      "git": "config",
-      "importBibTeXStrings": true,
       "importCaseProtection": "off",
-      "importSentenceCase": "on+guess",
-      "itemObserverDelay": 100,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "keyScope": "library",
-      "kuroshiro": false,
-      "mapMath": "",
-      "mapText": "",
-      "mapUnicode": "conservative",
-      "parseParticles": true,
-      "qualityReport": false,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "rawLaTag": "#LaTeX",
-      "relativeFilePaths": false,
-      "scrubDatabase": false,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
-      "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.1.131",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.74",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "en-GB",
-        "oscpu": "Windows NT 10.0; WOW64",
-        "platform": "Win32",
-        "version": "5.0.74"
-      }
+      "itemObserverDelay": 100
     }
   },
   "items": [
@@ -77,10 +17,7 @@
       "ISBN": "978-0-471-54821-8",
       "abstractNote": "This translation of the important Russian text covers the theory and computational methods of modified Lagrangian functions (MLFs) - a new branch of mathematical programming used to solve optimization problems. Providing a thorough analysis for both traditional convex programming and monotone maps, the book shows the advantages of MLFs over classical Lagrangian functions in such practical applications as numerical algorithms, economic modeling, decomposition, and nonconvex local constrained optimization. For mathematicians involved in discrete math and optimization, and for graduate students taking courses in complex analysis and mathematical programming, Modified Lagrangians and Monotone Maps in Optimization serves as an indispensable professional reference and graduate-level text that goes beyond the classical Lagrange scheme, and offers diverse techniques for tackling this field.  ix, 438 p. ; 24 cm. Mathematical optimization. Lagrangian functions.",
       "accessDate": "2019-08-27T20:39:57Z",
-      "attachments": [],
       "citationKey": "golshtein_modified_1996-1",
-      "citekey": "golshtein_modified_1996-1",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -94,26 +31,21 @@
         }
       ],
       "date": "1996",
-      "dateAdded": "2019-08-27T20:39:57Z",
-      "dateModified": "2019-08-27T20:39:57Z",
-      "itemID": 104,
+      "itemID": 1,
       "itemType": "book",
-      "key": "EQTSB3ZE",
       "language": "English",
       "libraryCatalog": "Trove",
-      "libraryID": 1,
       "notes": [
         "<p> &quot;A Wiley-Interscience publication.&quot; </p>"
       ],
       "publisher": "New York : Wiley",
-      "relations": [],
       "tags": [
-        "Separating axis theorem"
+        {
+          "tag": "Separating axis theorem"
+        }
       ],
       "title": "Modified Lagrangians and monotone maps in optimization",
-      "uri": "http://zotero.org/users/5887176/items/EQTSB3ZE",
-      "url": "https://trove.nla.gov.au/version/45641460",
-      "version": 0
+      "url": "https://trove.nla.gov.au/version/45641460"
     }
   ]
 }

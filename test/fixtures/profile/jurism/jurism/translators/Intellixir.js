@@ -43,7 +43,7 @@ function detectWeb(doc,url) {
  *
  */
 function doWeb(doc, url) {
-  if(detectWeb(doc,url) == "document"){
+  if (detectWeb(doc,url) == "document"){
   	/* Collect columns name */ 
   	var columnNames = collectColumnTitle(doc);
   	/* Collect all the documents */
@@ -66,9 +66,9 @@ function collectColumnTitle(doc){
 	while (title = titles.iterateNext()) {
 		columnNames.push(title.textContent.trim());
 	}
-	if(debug == 1){
+	if (debug == 1){
 		Zotero.debug("------collectColumnTitle------")
-		for(var i = 0; i < columnNames.length;++i){
+		for (var i = 0; i < columnNames.length;++i){
 			Zotero.debug("Column[" + i + "] : " + columnNames[i]);
 		}
 	}
@@ -86,9 +86,9 @@ function collectDocuments(doc,className){
 	while (line = lines.iterateNext()) {
 		linesCollected.push(line);
 	}
-	if(debug == 1){
+	if (debug == 1){
 		Zotero.debug("------collectDocuments class='" + className + "' ------")
-		for(var i = 0; i < linesCollected.length;++i){
+		for (var i = 0; i < linesCollected.length;++i){
 			Zotero.debug("Line[" + i + "] : " + linesCollected[i]);
 		}
 	}
@@ -102,14 +102,14 @@ function collectDocuments(doc,className){
 function documentsTreatment(titles,lines,doc){
 	var documents = new Array();
 	var typeColumn = titles.indexOf("Type");
-	if(typeColumn != -1){
-		for(var i = 0; i < lines.length ; ++i){
+	if (typeColumn != -1){
+		for (var i = 0; i < lines.length ; ++i){
 			documents.push(documentTreatment(lines[i],titles,typeColumn,doc));
 		}
 	}
-	if(debug == 1){
+	if (debug == 1){
 		Zotero.debug("------ Documents Treatment ------")
-		for(var i = 0; i < documents.length;++i){
+		for (var i = 0; i < documents.length;++i){
 			Zotero.debug("documents [" + i + "] : " + documents[i].title);
 		}
 	}
@@ -132,15 +132,15 @@ function documentTreatment(line,titles,typeColumn,doc){
 	}
 	
 	/* Parsing values*/
- 	if(values[typeColumn].textContent == "Article"){
+ 	if (values[typeColumn].textContent == "Article"){
  		document = new Zotero.Item("journalArticle");
- 		for(var i=0; i<titles.length; ++i ){
- 			switch(titles[i]){
+ 		for (var i=0; i<titles.length; ++i ){
+ 			switch (titles[i]){
  				case "Titre":
  				case "Title":
  					/*Collecting the authors*/
  					var authors = doc.evaluate('.//i', values[i], null, XPathResult.ANY_TYPE, null).iterateNext();
- 					if(authors){
+ 					if (authors){
  						var authorslist = authors.textContent.split(",");
  						for (var elt in authorslist) {
 							document.creators.push(Zotero.Utilities.cleanAuthor(authorslist[elt], "author"));
@@ -148,16 +148,16 @@ function documentTreatment(line,titles,typeColumn,doc){
  					}
  					/*Collecting the title*/
  					var title = doc.evaluate('.//b', values[i], null, XPathResult.ANY_TYPE, null).iterateNext();
- 					if(title){ /* If the title is contained in a <b> balise ==> Abstract is include in the web-page */
+ 					if (title){ /* If the title is contained in a <b> balise ==> Abstract is include in the web-page */
  						document.title = title.textContent;
  						/*Collecting the abstract*/
  						document.abstractNote = values[i].textContent.replace(title.textContent,"");
- 						if(authors){
+ 						if (authors){
  							document.abstractNote = document.abstractNote.replace(authors.textContent,"");
  						}
- 					}else{
+ 					} else {
  						document.title = values[i].textContent;
- 						if(authors){
+ 						if (authors){
  							document.title = document.title.replace(authors.textContent,"");
  						}
  					}
@@ -176,7 +176,7 @@ function documentTreatment(line,titles,typeColumn,doc){
  				break;
  			}
  		}
- 		if(debug == 1){
+ 		if (debug == 1){
 			Zotero.debug("------ Display Article ------");
 			Zotero.debug("Titre : " + document.title);
 			Zotero.debug("Auteurs : " + document.creators);
@@ -187,16 +187,16 @@ function documentTreatment(line,titles,typeColumn,doc){
 			Zotero.debug("Abstract : " + document.abstractNote);
 			
 		}
- 	} else{
+ 	} else {
  		document = new Zotero.Item("patent");
  		var i;
- 		for(i=0; i<titles.length; ++i ){
- 			switch(titles[i]){
+ 		for (i=0; i<titles.length; ++i ){
+ 			switch (titles[i]){
  				case "Titre":
  				case "Title":
  					/*Collecting the authors*/
  					var authors = doc.evaluate('.//i', values[i], null, XPathResult.ANY_TYPE, null).iterateNext();
- 					if(authors){
+ 					if (authors){
  						var authorslist = authors.textContent.split(",");
  						for (var elt in authorslist) {
 							document.creators.push(Zotero.Utilities.cleanAuthor(authorslist[elt], "author"));
@@ -204,21 +204,21 @@ function documentTreatment(line,titles,typeColumn,doc){
  					}
  					/*Collecting the title*/
  					var title = doc.evaluate('.//b', values[i], null, XPathResult.ANY_TYPE, null).iterateNext();
- 					if(title){ /* If the title is contained in a <b> balise ==> Abstract is include in the web-page */
+ 					if (title){ /* If the title is contained in a <b> balise ==> Abstract is include in the web-page */
  						document.title = title.textContent;
  						/*Collecting the abstract*/
  						document.abstractNote = values[i].textContent.replace(title.textContent,"");
- 						if(authors){
+ 						if (authors){
  							document.abstractNote = document.abstractNote.replace(authors.textContent,"");
  						}
- 					}else{
+ 					} else {
  						document.title = values[i].textContent;
- 						if(authors){
+ 						if (authors){
  							document.title = document.title.replace(authors.textContent,"");
  						}
  					}
  					/*Split the patent number from the title*/
- 					if(document.title[document.title.length - 1] == ')'){
+ 					if (document.title[document.title.length - 1] == ')'){
  						var titleElmnts = document.title.split("(");
  						var patentNumber = titleElmnts[titleElmnts.length - 1]
  						/* Deleting patent Number information from the title. */
@@ -240,7 +240,7 @@ function documentTreatment(line,titles,typeColumn,doc){
  				break;
  			}
  		}
- 		if(debug == 1){
+ 		if (debug == 1){
 			Zotero.debug("------ Display Patent ------");
 			Zotero.debug("Titre : " + document.title);
 			Zotero.debug("Numéro de brevet : " + document.patentNumber);

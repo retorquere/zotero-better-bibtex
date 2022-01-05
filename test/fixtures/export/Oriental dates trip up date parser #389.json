@@ -1,27 +1,19 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "preferences": {
-      "DOIandURL": "both",
-      "asciiBibLaTeX": false,
       "asciiBibTeX": false,
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]",
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "postscript": "",
-      "skipFields": ""
-    },
-    "release": "1.6.3"
+      "citekeyFormat": "[auth][year]"
+    }
   },
   "items": [
     {
       "DOI": "10.1364/AO.15.001040",
       "abstractNote": "Because they are not proper spectral modes, leaky modes do not obey the usual power orthogonality relations for an ideal waveguide. Two methods for circumventing this problem are presented in this paper. One approach is to use the fact that weakly leaky modes are approximately power orthogonal within a restricted region of space to define a new set of slightly coupled modes. The other is to abandon power orthogonality in favor of a more general, mathematically exact orthogonality relation. The relative merits of these two approaches are discussed.",
       "accessDate": "2015-04-02 02:09:00",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -36,7 +28,7 @@
       ],
       "date": "\u56db\u6708 1, 1976",
       "issue": "4",
-      "itemID": 844,
+      "itemID": 1,
       "itemType": "journalArticle",
       "journalAbbreviation": "Appl. Opt.",
       "libraryCatalog": "Optical Society of America",

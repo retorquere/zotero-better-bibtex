@@ -7,6 +7,7 @@ import { Reference } from './bibtex/reference'
 import { Exporter } from './bibtex/exporter'
 
 Reference.prototype.fieldEncoding = {
+  groups: 'verbatim', // blegh jabref field
   url: 'url',
   doi: 'verbatim',
   eprint: 'verbatim',
@@ -36,7 +37,7 @@ Reference.prototype.caseConversion = {
   eventtitle: true,
 }
 
-Reference.prototype.lint = require('./bibtex/biblatex.qr.bcf')
+Reference.prototype.lint = require('./bibtex/biber-tool.conf')
 
 type CreatorArray = any[] & { type?: string }
 
@@ -65,7 +66,8 @@ Reference.prototype.addCreators = function() {
         if (['video', 'movie'].includes(this.referencetype)) {
           creators.editor.push(creator)
           creators.editor.type = 'director'
-        } else {
+        }
+        else {
           creators.author.push(creator)
         }
         break
@@ -119,7 +121,7 @@ Reference.prototype.addCreators = function() {
 
   for (const [field, value] of Object.entries(creators)) {
     this.remove(field)
-    this.remove(field + 'type')
+    this.remove(`${field}type`)
 
     if (!value.length) continue
 
@@ -138,7 +140,8 @@ Reference.prototype.typeMap = {
     book                  : 'book',
     broadcast             : {type: 'misc', subtype: 'broadcast'},
     chapter               : 'incollection',
-    dataset               : 'data',
+    data                  : 'dataset',
+    dataset               : 'dataset',
     entry                 : 'inreference',
     'entry-dictionary'    : 'inreference',
     'entry-encyclopedia'  : 'inreference',
@@ -182,6 +185,7 @@ Reference.prototype.typeMap = {
     encyclopediaArticle: 'inreference',
     film               : 'movie',
     forumPost          : 'online',
+    gazette            : 'jurisdiction',
     hearing            : 'jurisdiction',
     instantMessage     : 'misc',
     interview          : 'misc',
@@ -204,22 +208,22 @@ Reference.prototype.typeMap = {
   },
 }
 
-function looks_like_number(n) {
+function looks_like_number(n): string | boolean {
   if (n.match(/^(?=[MDCLXVI])M*(C[MD]|D?C*)(X[CL]|L?X*)(I[XV]|V?I*)$/)) return 'roman'
   if (n.match(/^[A-Z]?[0-9]+(\.[0-9]+)?$/i)) return 'arabic'
   if (n.match(/^[A-Z]$/i)) return 'arabic'
   return false
 }
-function looks_like_number_field(n) {
+function looks_like_number_field(n: string): boolean {
   if (!n) return false
 
-  n = n.split(/-+|–|,|\//).map(_n => _n.trim())
-  switch (n.length) {
+  const ns: string[] = n.trim().split(/\s*-+|–|,|\/\s*/)
+  switch (ns.length) {
     case 1:
-      return looks_like_number(n[0])
+      return (looks_like_number(ns[0]) as boolean)
 
     case 2:
-      return looks_like_number(n[0]) && (looks_like_number(n[0]) === looks_like_number(n[1]))
+      return (looks_like_number(ns[0]) as boolean) && (looks_like_number(ns[0]) === looks_like_number(ns[1]))
 
     default:
       return false
@@ -230,17 +234,17 @@ const patent = new class {
   private countries = ['de', 'eu', 'fr', 'uk', 'us']
   private prefix = {us: 'us', ep: 'eu', gb: 'uk', de: 'de', fr: 'fr' }
 
-  public region(item) {
+  public region(item): string {
     if (item.itemType !== 'patent') return ''
 
     if (item.country) {
-      const country = item.country.toLowerCase()
+      const country: string = item.country.toLowerCase()
       if (this.countries.includes(country)) return country
     }
 
     for (const patentNumber of [item.number, item.applicationNumber]) {
       if (patentNumber) {
-        const prefix = this.prefix[patentNumber.substr(0, 2).toLowerCase()]
+        const prefix: string = this.prefix[patentNumber.substr(0, 2).toLowerCase()]
         if (prefix) return prefix
       }
     }
@@ -248,15 +252,17 @@ const patent = new class {
     return ''
   }
 
-  public number(item) {
+  // eslint-disable-next-line id-blacklist
+  public number(item): string {
     if (item.itemType !== 'patent' || (!item.number && !item.applicationNumber)) return ''
 
-    for (const patentNumber of [item.number, item.applicationNumber]) {
+    for (const patentNumber of ([item.number, item.applicationNumber] as string[])) {
       if (patentNumber) {
         const country = patentNumber.substr(0, 2).toLowerCase()
         if (this.prefix[country]) return patentNumber.substr(country.length)
       }
     }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return item.number || item.applicationNumber
   }
 
@@ -272,7 +278,7 @@ const patent = new class {
   }
 }
 
-export function doExport() {
+export function doExport(): void {
   Translator.init('export')
   Reference.installPostscript()
   Exporter.prepare_strings()
@@ -280,56 +286,54 @@ export function doExport() {
   // Zotero.write(`\n% ${Translator.header.label}\n`)
   Zotero.write('\n')
 
-  let item: ISerializedItem
-  while (item = Exporter.nextItem()) {
+  for (const item of Exporter.items) {
     const ref = new Reference(item)
 
-    if (['bookSection', 'chapter'].includes(item.referenceType) && ref.hasCreator('bookAuthor')) ref.referencetype = 'inbook'
-    if (item.referenceType === 'book' && !ref.hasCreator('author') && ref.hasCreator('editor')) ref.referencetype = 'collection'
+    if (ref.referencetype === 'incollection' && ref.hasCreator('bookAuthor')) ref.referencetype = 'inbook'
+    // if (ref.referencetype_source === 'csl.book' && !ref.hasCreator('author') && ref.hasCreator('editor')) ref.referencetype = 'collection'
     if (ref.referencetype === 'book' && item.numberOfVolumes) ref.referencetype = 'mvbook'
+    if (ref.referencetype === 'report' && item.type?.toLowerCase().includes('manual')) ref.referencetype = 'manual'
 
-    let m
-    if (item.url && (m = item.url.match(/^http:\/\/www.jstor.org\/stable\/([\S]+)$/i))) {
-      ref.override({ name: 'eprinttype', value: 'jstor'})
-      ref.override({ name: 'eprint', value: m[1] })
-      ref.remove('archivePrefix')
-      ref.remove('primaryClass')
-      delete item.url
-      ref.remove('url')
-    }
+    if (Translator.preferences.biblatexExtractEprint) {
+      let m
+      if (item.url && (m = item.url.match(/^https?:\/\/www.jstor.org\/stable\/([\S]+)$/i))) {
+        ref.override({ name: 'eprinttype', value: 'jstor'})
+        ref.override({ name: 'eprint', value: m[1].replace(/\?.*/, '') })
+        ref.remove('archiveprefix')
+        ref.remove('primaryclass')
+        delete item.url
+        ref.remove('url')
 
-    if (item.url && (m = item.url.match(/^http:\/\/books.google.com\/books?id=([\S]+)$/i))) {
-      ref.override({ name: 'eprinttype', value: 'googlebooks'})
-      ref.override({ name: 'eprint', value: m[1] })
-      ref.remove('archivePrefix')
-      ref.remove('primaryClass')
-      delete item.url
-      ref.remove('url')
-    }
+      }
+      else if (item.url && (m = item.url.match(/^https?:\/\/books.google.com\/books?id=([\S]+)$/i))) {
+        ref.override({ name: 'eprinttype', value: 'googlebooks'})
+        ref.override({ name: 'eprint', value: m[1] })
+        ref.remove('archiveprefix')
+        ref.remove('primaryclass')
+        delete item.url
+        ref.remove('url')
 
-    if (item.url && (m = item.url.match(/^http:\/\/www.ncbi.nlm.nih.gov\/pubmed\/([\S]+)$/i))) {
-      ref.override({ name: 'eprinttype', value: 'pubmed'})
-      ref.override({ name: 'eprint', value: m[1] })
-      ref.remove('archivePrefix')
-      ref.remove('primaryClass')
-      delete item.url
-      ref.remove('url')
+      }
+      else if (item.url && (m = item.url.match(/^https?:\/\/www.ncbi.nlm.nih.gov\/pubmed\/([\S]+)$/i))) {
+        ref.override({ name: 'eprinttype', value: 'pubmed'})
+        ref.override({ name: 'eprint', value: m[1] })
+        ref.remove('archiveprefix')
+        ref.remove('primaryclass')
+        delete item.url
+        ref.remove('url')
+      }
     }
 
     ref.add({ name: 'langid', value: ref.language })
 
-    switch (item.referenceType) {
-      case 'presentation':
-        ref.add({ name: 'venue', value: item.place, enc: 'literal' })
-        break
-
-      case 'patent':
-        if (item.country && !patent.region(item)) ref.add({ name: 'location', value: item.country })
-        break
-
-      default:
-        ref.add({ name: 'location', value: item.place, enc: 'literal' })
-        break
+    if (ref.referencetype === 'patent') {
+      if (item.country && !patent.region(item)) ref.add({ name: 'location', value: item.country || item.extraFields.kv['publisher-place'] })
+    }
+    else if (ref.referencetype === 'unpublished' && item.itemType === 'presentation') {
+      ref.add({ name: 'venue', value: item.place, enc: 'literal' })
+    }
+    else {
+      ref.add({ name: 'location', value: item.place || item.extraFields.kv['publisher-place'] , enc: 'literal' })
     }
 
     /*
@@ -342,91 +346,78 @@ export function doExport() {
     ref.add({ name: 'title', value: item.title })
 
     ref.add({ name: 'edition', value: item.edition })
-    ref.add({ name: 'volume', value: item.volume })
     // ref.add({ name: 'rights', value: item.rights })
     ref.add({ name: 'isbn', value: item.ISBN })
     ref.add({ name: 'issn', value: item.ISSN })
 
-    ref.add({ name: 'url', value: item.extraFields.csl.URL || item.url })
-    ref.add({ name: 'doi', value: item.extraFields.csl.DOI || item.DOI })
+    ref.add({ name: 'url', value: item.url || item.extraFields.kv.url })
+    ref.add({ name: 'doi', value: (item.DOI || item.extraFields.kv.DOI || '').replace(/^https?:\/\/doi.org\//i, '') })
 
     ref.add({ name: 'shorttitle', value: item.shortTitle })
-    ref.add({ name: 'abstract', value: item.abstractNote })
+    ref.add({ name: 'abstract', value: item.abstractNote?.replace(/\n+/g, ' ') })
     ref.add({ name: 'volumes', value: item.numberOfVolumes })
     ref.add({ name: 'version', value: item.versionNumber })
+
     ref.add({ name: 'eventtitle', value: item.conferenceName })
+    ref.add({ name: 'eventtitle', value: item.meetingName, replace: true })
+
     ref.add({ name: 'pagetotal', value: item.numPages })
 
-    ref.add({ name: 'number', value: patent.number(item) || item.number || item.seriesNumber })
-    ref.add({ name: looks_like_number_field(item.issue) ? 'number' : 'issue', value: item.issue })
+    const number_added = ref.add({ name: 'number', value: patent.number(item) || item.number || item.seriesNumber })
+    ref.add({ name: !number_added && looks_like_number_field(item.issue) ? 'number' : 'issue', value: item.issue })
 
-    switch (item.referenceType) {
-      case 'case':
-      case 'gazette':
-      case 'legal_case':
-        ref.add({ name: 'journaltitle', value: item.reporter, bibtexStrings: true })
+    switch (ref.referencetype) {
+      case 'jurisdiction':
+        ref.add({ name: 'journaltitle', value: item.reporter || (item.publicationTitle !== item.title && item.publicationTitle), bibtexStrings: true })
         break
 
-      case 'statute':
-      case 'bill':
       case 'legislation':
-        ref.add({ name: 'journaltitle', value: item.code, bibtexStrings: true })
+        ref.add({ name: 'journaltitle', value: item.code || (item.publicationTitle !== item.title && item.publicationTitle), bibtexStrings: true })
         break
-    }
 
-    if (item.publicationTitle) {
-      switch (item.referenceType) {
-        case 'bookSection':
-        case 'conferencePaper':
-        case 'dictionaryEntry':
-        case 'encyclopediaArticle':
-        case 'chapter':
-        case 'chapter':
-          ref.add({ name: 'booktitle', value: item.publicationTitle, bibtexStrings: true })
-          break
+      case 'incollection':
+      case 'chapter':
+      case 'inproceedings':
+      case 'inreference':
+      case 'movie':
+      case 'video':
+      case 'inbook':
+        if (!ref.has.booktitle) ref.add({ name: 'booktitle', value: item.publicationTitle, bibtexStrings: true })
+        break
 
-        case 'magazineArticle':
-        case 'newspaperArticle':
-        case 'article-magazine':
-        case 'article-newspaper':
-          ref.add({ name: 'journaltitle', value: item.publicationTitle, bibtexStrings: true})
-          if (['newspaperArticle', 'article-newspaper'].includes(item.referenceType)) ref.add({ name: 'journalsubtitle', value: item.section })
-          break
+      case 'online':
+        ref.add({ name: 'organization', value: item.publicationTitle, bibtexStrings: true })
+        break
 
-        case 'journalArticle':
-        case 'article':
-        case 'article-journal':
-          if (ref.isBibString(item.publicationTitle)) {
-            ref.add({ name: 'journaltitle', value: item.publicationTitle, bibtexStrings: true })
-          } else {
-            if (Translator.options.useJournalAbbreviation && item.journalAbbreviation) {
-              ref.add({ name: 'journaltitle', value: item.journalAbbreviation, bibtexStrings: true })
-            } else {
-              ref.add({ name: 'journaltitle', value: item.publicationTitle, bibtexStrings: true })
-              ref.add({ name: 'shortjournal', value: item.journalAbbreviation, bibtexStrings: true })
-            }
+      case 'article':
+        if (ref.getBibString(item.publicationTitle)) {
+          ref.add({ name: 'journaltitle', value: item.publicationTitle, bibtexStrings: true })
+
+        }
+        else if (Translator.options.useJournalAbbreviation && item.publicationTitle && item.journalAbbreviation) {
+          ref.add({ name: 'journaltitle', value: item.journalAbbreviation, bibtexStrings: true })
+
+        }
+        else {
+          ref.add({ name: 'journaltitle', value: item.publicationTitle, bibtexStrings: true })
+
+          if (ref.has.entrysubtype?.value === 'newspaper') {
+            ref.add({ name: 'journalsubtitle', value: item.section })
           }
-          break
-
-        default:
-          if (!ref.has.journaltitle && (item.publicationTitle !== item.title)) ref.add({ name: 'journaltitle', value: item.publicationTitle })
-      }
-    }
-
-    switch (item.referenceType) {
-      case 'bookSection':
-      case 'encyclopediaArticle':
-      case 'dictionaryEntry':
-      case 'conferencePaper':
-      case 'film':
-      case 'videoRecording':
-      case 'tvBroadcast':
-        if (!ref.has.booktitle) ref.add({ name: 'booktitle', value: item.publicationTitle })
+          else {
+            ref.add({ name: 'shortjournal', value: item.journalAbbreviation, bibtexStrings: true })
+          }
+        }
         break
+
+      default:
+        if (!ref.has.journaltitle && (item.publicationTitle !== item.title)) ref.add({ name: 'journaltitle', value: item.publicationTitle })
     }
 
     let main
+    // eslint-disable-next-line no-underscore-dangle
     if (item.multi?._keys?.title && (main = item.multi.main?.title || item.language)) {
+      // eslint-disable-next-line no-underscore-dangle
       const languages = Object.keys(item.multi._keys.title).filter(lang => lang !== main)
       main += '-'
       languages.sort((a, b) => {
@@ -439,6 +430,7 @@ export function doExport() {
       for (let i = 0; i < languages.length; i++) {
         ref.add({
           name: i === 0 ? 'titleaddon' : `user${String.fromCharCode('d'.charCodeAt(0) + i)}`,
+          // eslint-disable-next-line no-underscore-dangle
           value: item.multi._keys.title[languages[i]],
         })
       }
@@ -446,19 +438,17 @@ export function doExport() {
 
     ref.add({ name: 'series', value: item.seriesTitle || item.series, bibtexStrings: true })
 
-    switch (item.referenceType) {
+    switch (ref.referencetype) {
       case 'report':
       case 'thesis':
         ref.add({ name: 'institution', value: item.publisher, bibtexStrings: true })
         break
 
-      case 'case':
-      case 'hearing':
-      case 'legal_case':
+      case 'jurisdiction':
         ref.add({ name: 'institution', value: item.court, bibtexStrings: true })
         break
 
-      case 'computerProgram':
+      case 'software':
         ref.add({ name: 'organization', value: item.publisher, bibtexStrings: true })
         break
 
@@ -466,29 +456,20 @@ export function doExport() {
         ref.add({ name: 'publisher', value: item.publisher, bibtexStrings: true })
     }
 
-    switch (item.referenceType) {
+    switch (ref.referencetype) {
       case 'letter':
-      case 'personal_communication':
-        ref.add({ name: 'type', value: item.type || 'Letter' })
-        break
-
-      case 'email':
-        ref.add({ name: 'type', value: 'E-mail' })
+        ref.add({ name: 'type', value: item.type || (item.itemType === 'email' ? 'E-mail' : 'Letter') })
         break
 
       case 'thesis':
-        const thesistype = item.type ? item.type.toLowerCase() : null
-        if (['phdthesis', 'mastersthesis'].includes(thesistype)) {
-          ref.referencetype = thesistype
-        } else {
-          ref.add({ name: 'type', value: item.type })
-        }
+        ref.add({ name: 'type', value: ref.thesistype(item.type, 'phdthesis', 'mathesis', 'bathesis', 'candthesis')  || item.type })
         break
 
       case 'report':
-        if ((item.type || '').toLowerCase().trim() === 'techreport') {
-          ref.referencetype = 'techreport'
-        } else {
+        if (item.type?.toLowerCase().trim() === 'techreport') {
+          ref.add({ name: 'type', value: 'techreport' })
+        }
+        else {
           ref.add({ name: 'type', value: item.type })
         }
         break
@@ -501,9 +482,7 @@ export function doExport() {
         ref.add({ name: 'type', value: item.type })
     }
 
-    if (item.referenceType === 'manuscript') ref.add({ name: 'howpublished', value: item.type })
-
-    ref.add({ name: 'eventtitle', value: item.meetingName })
+    if (ref.referencetype === 'unpublished' && item.itemType !== 'presentation') ref.add({ name: 'howpublished', value: item.type })
 
     if (item.accessDate && item.url) ref.add({ name: 'urldate', value: Zotero.BetterBibTeX.strToISO(item.accessDate), enc: 'date' })
 
@@ -514,8 +493,16 @@ export function doExport() {
       value: item.date,
       enc: 'date',
     })
+    ref.add({
+      name: 'origdate',
+      value: item.originalDate,
+      enc: 'date',
+      replace: true, // #293 has both date="year [origyear]" and extra="original-date: origyear"
+    })
+    ref.add({ name: 'eventdate', value: item.conferenceDate, enc: 'date' })
 
-    ref.add({ name: 'pages', value: ref.normalizeDashes(item.pages)})
+    ref.add({ name: 'pages', value: ref.normalizeDashes(item.pages) })
+    ref.add({ name: 'volume', value: ref.normalizeDashes(item.volume) })
 
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
 
@@ -536,15 +523,15 @@ export function doExport() {
 
     ref.add({ name: 'file', value: item.attachments, enc: 'attachments' })
 
-    if (item.cslVolumeTitle) { // #381
-      if (item.referenceType === 'book' && ref.has.title) {
-        ref.add({name: 'maintitle', value: item.cslVolumeTitle }); // ; to prevent chaining
+    if (item.volumeTitle) { // #381
+      if (ref.referencetype === 'book' && ref.has.title) {
+        ref.add({name: 'maintitle', value: item.volumeTitle }); // ; to prevent chaining
         [ref.has.title.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.title.bibtex]; // ; to prevent chaining
         [ref.has.title.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.title.value]
       }
 
-      if (['bookSection', 'chapter'].includes(item.referenceType) && ref.has.booktitle) {
-        ref.add({name: 'maintitle', value: item.cslVolumeTitle }); // ; to prevent chaining
+      if (['incollection', 'chapter'].includes(ref.referencetype) && ref.has.booktitle) {
+        ref.add({name: 'maintitle', value: item.volumeTitle }); // ; to prevent chaining
         [ref.has.booktitle.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.booktitle.bibtex]; // ; to preven chaining
         [ref.has.booktitle.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.booktitle.value]
       }
@@ -593,6 +580,8 @@ export function doExport() {
         if (!ref.has.eprint) ref.add({ name: 'eprint', value: item.archiveLocation })
       }
     }
+
+    if (item.arXiv && !ref.has.journaltitle && ref.referencetype === 'article') ref.referencetype = 'online'
 
     ref.complete()
   }

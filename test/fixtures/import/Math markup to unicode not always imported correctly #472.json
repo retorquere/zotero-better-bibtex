@@ -1,80 +1,19 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
-    },
+    "options": {},
     "preferences": {
-      "DOIandURL": "both",
-      "ascii": "",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportDelay": 1,
-      "autoExportIdleWait": 10,
-      "autoPin": false,
-      "automaticTags": true,
-      "auxImport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[auth][year]",
-      "citeprocNoteCitekey": false,
-      "client": "",
-      "csquotes": "",
-      "debugLogDir": "",
-      "exportBibTeXStrings": "off",
-      "exportBraceProtection": true,
-      "exportTitleCase": true,
-      "git": "config",
-      "ignorePostscriptErrors": true,
-      "importBibTeXStrings": true,
-      "importCaseProtection": "off",
-      "importSentenceCase": "on+guess",
-      "itemObserverDelay": 5,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "keyScope": "library",
-      "kuroshiro": false,
-      "mapMath": "",
-      "mapText": "",
-      "mapUnicode": "conservative",
-      "newTranslatorsAskRestart": true,
-      "parseParticles": true,
-      "platform": "",
-      "postscript": "",
-      "qualityReport": false,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "rawLaTag": "#LaTeX",
-      "relativeFilePaths": false,
-      "removeStock": false,
-      "scrubDatabase": false,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
-      "warnBulkModify": 10
+      "importJabRefAbbreviations": false,
+      "importJabRefStrings": false
     }
   },
   "items": [
     {
       "DOI": "10.1109/JPROC.2016.2526118",
       "abstractNote": "Abstract here",
-      "attachments": [],
       "citationKey": "test_citation1",
-      "citekey": "test_citation1",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -88,17 +27,14 @@
         }
       ],
       "date": "2016-02",
-      "dateAdded": "2019-12-22T01:25:01Z",
-      "dateModified": "2019-12-22T01:25:01Z",
-      "extra": "Citation Key: test_citation1\nISSN: 0193-6530",
-      "itemID": 650,
+      "extra": [
+        "Citation Key: test_citation1",
+        "ISSN: 0193-6530"
+      ],
+      "itemID": 1,
       "itemType": "conferencePaper",
-      "key": "UYQCM68W",
-      "libraryID": 1,
-      "notes": [],
-      "pages": "300-301",
+      "pages": "300\u2013301",
       "publicationTitle": "IEEE_J_PROC",
-      "relations": [],
       "tags": [
         {
           "tag": "Keyword 1"
@@ -107,17 +43,12 @@
           "tag": "Keyword 2"
         }
       ],
-      "title": "Test Title With 100 <span class=\"nocase\">\u03bc</span>J, 200\u2009<span class=\"nocase\">\u03bcJ</span> Energy, and \u00b10.1% Accuracy, 0.2\u2009mm\u00b2 Size, and -50\u2009dB Attenuation",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/UYQCM68W",
-      "version": 0
+      "title": "Test Title With 100 \ud835\udf07J, 200\u2009\ud835\udf07J Energy, and \u00b10.1% Accuracy, 0.2\u2009mm\u00b2 Size, and -50\u2009dB Attenuation"
     },
     {
       "DOI": "10.1109/JPROC.2016.2526118",
       "abstractNote": "Abstract here",
-      "attachments": [],
       "citationKey": "test_citation2",
-      "citekey": "test_citation2",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -131,17 +62,14 @@
         }
       ],
       "date": "2016-02",
-      "dateAdded": "2019-12-22T01:25:01Z",
-      "dateModified": "2019-12-22T01:25:01Z",
-      "extra": "Citation Key: test_citation2\nISSN: 0193-6530",
-      "itemID": 651,
+      "extra": [
+        "Citation Key: test_citation2",
+        "ISSN: 0193-6530"
+      ],
+      "itemID": 2,
       "itemType": "conferencePaper",
-      "key": "NNJJZQBD",
-      "libraryID": 1,
-      "notes": [],
-      "pages": "300-301",
+      "pages": "300\u2013301",
       "publicationTitle": "IEEE_J_PROC",
-      "relations": [],
       "tags": [
         {
           "tag": "Keyword 1"
@@ -150,29 +78,18 @@
           "tag": "Keyword 2"
         }
       ],
-      "title": "Test Title with space\u2003quad, space\u2004semi-colon, space\u205fcolon, space\u2009comma, space nbsp",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/NNJJZQBD",
-      "version": 0
+      "title": "Test Title with space\u2003quad, space\u2004semi-colon, space\u205fcolon, space\u2009comma, space nbsp"
     },
     {
-      "attachments": [],
-      "collections": [],
-      "dateAdded": "2019-12-22T01:25:02Z",
-      "dateModified": "2019-12-22T01:25:02Z",
-      "itemID": 652,
+      "itemID": 3,
       "itemType": "note",
-      "key": "YT3U8N4L",
       "note": "Import errors found: <ul><li>Unresolved @string reference &quot;IEEE_J_PROC&quot;</li></ul>",
-      "notes": [],
-      "relations": [],
       "tags": [
         {
           "tag": "#Better BibTeX import error",
           "type": 1
         }
-      ],
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/YT3U8N4L",
-      "version": 0
+      ]
     }
   ]
 }

@@ -1,0 +1,347 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "autoAbbrevStyle": "http://www.zotero.org/styles/annual-review-of-political-science",
+      "autoExport": "off",
+      "automaticTags": false,
+      "auxImport": true,
+      "biblatexExtendedNameFormat": true,
+      "citeCommand": "@",
+      "citekeyFormat": "[auth:lower]-[veryshorttitle:lower]-[year]",
+      "itemObserverDelay": 100,
+      "keyConflictPolicy": "change",
+      "keyScope": "global",
+      "qualityReport": true,
+      "quickCopyMode": "citekeys",
+      "quickCopyPandocBrackets": true,
+      "skipFields": "abstract, note, file, tag, attachment"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1038/sdata.2016.18",
+      "ISSN": "2052-4463",
+      "abstractNote": "There is an urgent need to improve the infrastructure supporting the reuse of scholarly data. A diverse set of stakeholders\u2014representing academia, industry, funding agencies, and scholarly publishers\u2014have come together to design and jointly endorse a concise and measureable set of principles that we refer to as the FAIR Data Principles. The intent is that these may act as a guideline for those wishing to enhance the reusability of their data holdings. Distinct from peer initiatives that focus on the human scholar, the FAIR Principles put specific emphasis on enhancing the ability of machines to automatically find and use the data, in addition to supporting its reuse by individuals. This Comment is the first formal publication of the FAIR Principles, and includes the rationale behind them, and some exemplar implementations in the community.",
+      "accessDate": "2020-02-28T20:46:08Z",
+      "attachments": [],
+      "citationKey": "wilkinson-fair-2016",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Mark D.",
+          "lastName": "Wilkinson"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Michel",
+          "lastName": "Dumontier"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "IJsbrand Jan",
+          "lastName": "Aalbersberg"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Gabrielle",
+          "lastName": "Appleton"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Myles",
+          "lastName": "Axton"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Arie",
+          "lastName": "Baak"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Niklas",
+          "lastName": "Blomberg"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jan-Willem",
+          "lastName": "Boiten"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Luiz Bonino da Silva",
+          "lastName": "Santos"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Philip E.",
+          "lastName": "Bourne"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jildau",
+          "lastName": "Bouwman"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Anthony J.",
+          "lastName": "Brookes"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Tim",
+          "lastName": "Clark"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Merc\u00e8",
+          "lastName": "Crosas"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Ingrid",
+          "lastName": "Dillo"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Olivier",
+          "lastName": "Dumon"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Scott",
+          "lastName": "Edmunds"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Chris T.",
+          "lastName": "Evelo"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Richard",
+          "lastName": "Finkers"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Alejandra",
+          "lastName": "Gonzalez-Beltran"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Alasdair J. G.",
+          "lastName": "Gray"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Paul",
+          "lastName": "Groth"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Carole",
+          "lastName": "Goble"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jeffrey S.",
+          "lastName": "Grethe"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jaap",
+          "lastName": "Heringa"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Peter A. C. \u2019t",
+          "lastName": "Hoen"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Rob",
+          "lastName": "Hooft"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Tobias",
+          "lastName": "Kuhn"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Ruben",
+          "lastName": "Kok"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Joost",
+          "lastName": "Kok"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Scott J.",
+          "lastName": "Lusher"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Maryann E.",
+          "lastName": "Martone"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Albert",
+          "lastName": "Mons"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Abel L.",
+          "lastName": "Packer"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Bengt",
+          "lastName": "Persson"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Philippe",
+          "lastName": "Rocca-Serra"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Marco",
+          "lastName": "Roos"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Rene van",
+          "lastName": "Schaik"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Susanna-Assunta",
+          "lastName": "Sansone"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Erik",
+          "lastName": "Schultes"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Thierry",
+          "lastName": "Sengstag"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Ted",
+          "lastName": "Slater"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "George",
+          "lastName": "Strawn"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Morris A.",
+          "lastName": "Swertz"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Mark",
+          "lastName": "Thompson"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Johan van der",
+          "lastName": "Lei"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Erik van",
+          "lastName": "Mulligen"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jan",
+          "lastName": "Velterop"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Andra",
+          "lastName": "Waagmeester"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Peter",
+          "lastName": "Wittenburg"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Katherine",
+          "lastName": "Wolstencroft"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jun",
+          "lastName": "Zhao"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Barend",
+          "lastName": "Mons"
+        }
+      ],
+      "date": "2016-03-15",
+      "extra": [
+        "Number: 1",
+        "Publisher: Nature Publishing Group"
+      ],
+      "issue": "1",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Sci Data",
+      "language": "en",
+      "libraryCatalog": "www.nature.com",
+      "pages": "1-9",
+      "publicationTitle": "Scientific Data",
+      "rights": "2016 The Author(s)",
+      "tags": [
+        {
+          "tag": "data"
+        },
+        {
+          "tag": "data-collection"
+        },
+        {
+          "tag": "data-gathering"
+        },
+        {
+          "tag": "data-generation"
+        },
+        {
+          "tag": "data-management"
+        },
+        {
+          "tag": "data-quality"
+        },
+        {
+          "tag": "methodology"
+        },
+        {
+          "tag": "open-acccess"
+        }
+      ],
+      "title": "The FAIR Guiding Principles for scientific data management and stewardship",
+      "url": "https://www.nature.com/articles/sdata201618",
+      "volume": "3"
+    }
+  ]
+}

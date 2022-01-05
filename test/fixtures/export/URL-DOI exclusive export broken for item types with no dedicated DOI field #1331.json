@@ -1,65 +1,18 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "doi",
-      "ascii": "",
       "asciiBibLaTeX": true,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportDelay": 1,
-      "autoExportIdleWait": 10,
-      "autoPin": false,
-      "automaticTags": true,
-      "auxImport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
       "bibtexURL": "url",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
-      "citeprocNoteCitekey": false,
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "exportBraceProtection": true,
-      "exportTitleCase": true,
-      "git": "config",
-      "importBibTeXStrings": true,
       "importCaseProtection": "off",
-      "importSentenceCase": "on+guess",
-      "itemObserverDelay": 100,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "keyScope": "library",
-      "kuroshiro": false,
-      "mapMath": "",
-      "mapText": "",
-      "mapUnicode": "conservative",
-      "newTranslatorsAskRestart": true,
-      "parseParticles": true,
-      "postscript": "",
-      "qualityReport": false,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "rawLaTag": "#LaTeX",
-      "relativeFilePaths": false,
-      "scrubDatabase": false,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
-      "warnBulkModify": 10
+      "itemObserverDelay": 100
     }
   },
   "items": [
@@ -67,10 +20,7 @@
       "ISBN": "978-0-387-25146-2 978-0-387-29362-2",
       "abstractNote": "Bioconductor is a widely used open source and open development software project for the analysis and comprehension of data arising from high-throughput experimentation in genomics and molecular biology. Bioconductor is rooted in the open source statistical computing environment R. This volume's coverage is broad and ranges across most of the key capabilities of the Bioconductor project, including\n\nimportation and preprocessing of high-throughput data from microarray, proteomic, and flow cytometry platforms\n\ncuration and delivery of biological metadata for use in statistical modeling and interpretation\n\nstatistical analysis of high-throughput data, including machine learning and visualization,\n\nmodeling and visualization of graphs and networks.\n\nThe developers of the software, who are in many cases leading academic researchers, jointly authored chapters. All methods are illustrated with publicly available data, and a major section of the book is devoted to exposition of fully worked case studies.\n\nThis book is more than a static collection of descriptive text, figures, and code examples that were run by the authors to produce the text; it is a dynamic document. Code underlying all of the computations that are shown is made available on a companion website, and readers can reproduce every number, figure, and table on their own computers.",
       "accessDate": "2019-11-15T00:15:57Z",
-      "attachments": [],
       "citationKey": "Gentleman2005",
-      "citekey": "Gentleman2005",
-      "collections": [],
       "creators": [
         {
           "creatorType": "editor",
@@ -124,18 +74,15 @@
         }
       ],
       "date": "2005",
-      "dateAdded": "2019-10-03T07:11:42Z",
-      "dateModified": "2019-11-15T00:18:52Z",
-      "extra": "DOI: 10.1007/0-387-29362-0\nCitation Key: Gentleman2005",
-      "itemID": 3791,
+      "extra": [
+        "DOI: 10.1007/0-387-29362-0",
+        "Citation Key: Gentleman2005"
+      ],
+      "itemID": 1,
       "itemType": "book",
-      "key": "HI8MWNJ8",
       "libraryCatalog": "DOI.org (Crossref)",
-      "libraryID": 1,
-      "notes": [],
       "place": "New York, NY",
       "publisher": "Springer New York",
-      "relations": [],
       "series": "Statistics for Biology and Health",
       "tags": [
         {
@@ -143,9 +90,7 @@
         }
       ],
       "title": "Bioinformatics and Computational Biology Solutions Using R and Bioconductor",
-      "uri": "http://zotero.org/users/local/XvY1xbc4/items/HI8MWNJ8",
-      "url": "http://link.springer.com/10.1007/0-387-29362-0",
-      "version": 0
+      "url": "http://link.springer.com/10.1007/0-387-29362-0"
     }
   ]
 }

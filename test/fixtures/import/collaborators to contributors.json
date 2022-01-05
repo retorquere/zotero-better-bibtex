@@ -1,0 +1,120 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "dmy",
+    "options": {},
+    "preferences": {
+      "citekeyFormat": "[auth][year]"
+    }
+  },
+  "items": [
+    {
+      "abstractNote": "Anl\u00e4sslich seines 70. Jubil\u00e4ums pr\u00e4sentiert das Leibniz-Institut f\u00fcr Europ\u00e4ische Geschichte (IEG) seit dem 12.09.2020 die Ausstellung \u00bbVom Kalten Krieg zum europ\u00e4ischen Umbruch. Das Institut f\u00fcr Europ\u00e4ische Geschichte 1950\u20131990\u00ab. Die Ausstellung ist gleichzeitig als virtuelle Ausstellung zu sehen. Das IEG wurde f\u00fcnf Jahre nach Kriegsende 1950 in Mainz gegr\u00fcndet. Ende 1952 konnte es in die f\u00fcr diesen Zweck wiederaufgebaute Domus Universitatis einziehen. Bei der Gr\u00fcndung des Instituts wirkten die \u00bbBesatzungsm\u00e4chte\u00ab Frankreich und USA mit dem jungen Land Rheinland-Pfalz zusammen. Denn die franz\u00f6sische Milit\u00e4rregierung f\u00f6rderte Einrichtungen, die der \u00bbUmerziehung\u00ab der Deutschen zur Demokratie und der Verst\u00e4ndigung mit Frankreich dienen sollten. Auch die USA unterst\u00fctzen Einrichtungen, die die junge Demokratie in Westdeutschland st\u00e4rken sollten. Rheinland-Pfalz \u00fcbernahm die Tr\u00e4gerschaft und schlie\u00dflich auch die Finanzierung. Das neue Institut sollte die konfliktreiche historische Entwicklung Europas erforschen und so auf wissenschaftlichem Weg auf Frieden und Verst\u00e4ndigung in Europa hinarbeiten. Die Ausstellung geht der Gr\u00fcndungsgeschichte des Instituts und seiner Entwicklung \u00fcber vier Jahrzehnte nach. Von Anfang an war umstritten, worauf ein friedliches Europa gr\u00fcnden sollte, und welches Geschichtsbild das Institut in der Bundesrepublik bef\u00f6rdern sollte. Die Pr\u00e4sentation thematisiert beispielsweise, wie das Institut seine \u00bbeurop\u00e4ische Mission\u00ab legitimierte und mit der \u00bbLast\u00ab des Nationalsozialismus umging. Von Beginn an machte sich das Institut die F\u00f6rderung junger Wissenschaftlerinnen und Wissenschaftler aus dem In- und Ausland zur Aufgabe. Das internationale Stipendienprogramm wurde zu einem Pfeiler des IEG. Angesichts der Wohnungsnot im Mainz der Nachkriegszeit war es selbstverst\u00e4ndlich, dass das Institutsgeb\u00e4ude neben Bibliothek, Konferenzraum und B\u00fcros auch Wohnraum f\u00fcr wissenschaftliche G\u00e4ste und f\u00fcr die beiden Direktoren bot. Unter dem Dach der Domus Universitatis entfaltete sich das Arbeiten und Leben der Institutsangeh\u00f6rigen als Arbeits- und Konfliktgemeinschaft. Wie sich das Institut in der westdeutschen und in der internationalen Wissenschaftslandschaft etablierte, und wie es seit den 1960er-Jahren f\u00fcr Wissenschaftler/innen aus dem \u00bbOstblock\u00ab ein \u00bbFenster zum Westen\u00ab wurde, erz\u00e4hlt die Ausstellung anhand historischer Dokumente und Zeitzeugenberichte.",
+      "citationKey": "berger_vom_2020",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Joachim",
+          "lastName": "Berger"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "Monika",
+          "lastName": "Barget"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "Leonie",
+          "lastName": "Berger"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "Fabian",
+          "lastName": "Cremer"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "Susanne",
+          "lastName": "Hartmann"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "Anne",
+          "lastName": "Heumann"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "Percy",
+          "lastName": "Latzke"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "Stefanie",
+          "lastName": "Mainz"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "Sabine",
+          "lastName": "Mischner"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "Barbara",
+          "lastName": "M\u00fcller"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "Markus",
+          "lastName": "M\u00fcller"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "Annette",
+          "lastName": "Reichardt"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "Juliane",
+          "lastName": "Schwoch"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "Jannik",
+          "lastName": "Schulze-Selmig"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "Sophie",
+          "lastName": "Treins"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "Demival",
+          "lastName": "Vasques Filho"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "Thomas",
+          "lastName": "Weller"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "Linda de",
+          "lastName": "Wilde"
+        }
+      ],
+      "date": "2020-09",
+      "extra": [
+        "Citation Key: berger_vom_2020",
+        "Type: Virtuelle Ausstellung"
+      ],
+      "itemID": 1,
+      "itemType": "document",
+      "language": "german",
+      "shortTitle": "Vom Kalten Krieg zum europ\u00e4ischen Umbruch",
+      "title": "Vom Kalten Krieg zum europ\u00e4ischen Umbruch. Das Institut f\u00fcr Europ\u00e4ische Geschichte 1950\u20131990",
+      "url": "https://ausstellungen.deutsche-digitale-bibliothek.de/ieg2020/"
+    }
+  ]
+}

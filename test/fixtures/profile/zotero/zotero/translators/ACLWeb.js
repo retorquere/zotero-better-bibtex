@@ -1,15 +1,15 @@
 {
 	"translatorID": "f4a5876a-3e53-40e2-9032-d99a30d7a6fc",
+	"translatorType": 4,
 	"label": "ACLWeb",
 	"creator": "Guy Aglionby",
-	"target": "^https?://(www\\.)?aclweb\\.org/anthology/[^#]+",
+	"target": "^https?://(www\\.)?(aclanthology\\.org|aclweb\\.org/anthology)/",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2019-11-07 17:17:11"
+	"lastUpdated": "2021-06-28 19:25:00"
 }
 
 /*
@@ -58,14 +58,17 @@ var ext2mime = {
 };
 
 function detectWeb(doc, url) {
-	let paperIdUrl = /[/][A-Z][0-9]{2}-[0-9]{4}[/]?$/;
-	if (doc.contentType === 'application/pdf' || url.endsWith('.pdf') || url.endsWith('.bib')
-		|| url.match(paperIdUrl)) {
-		if (url.endsWith('/')) {
-			url = url.slice(0, -1);
+	let paperIdRegex = /([A-Z])\d{2}-\d{4}|\d{4}\.([\w\d]+)-[\w\d]+\.\d+/;
+	let paperMatch = url.match(paperIdRegex);
+	if (paperMatch) {
+		let venue = paperMatch[1] ? paperMatch[1] : paperMatch[2];
+		venue = venue.toLowerCase();
+		if (venue == 'j' || venue == 'q' || venue == 'tacl' || venue == 'cl') {
+			return 'journalArticle';
 		}
-		let id = url.split('/').pop().toLowerCase();
-		return id[0] == 'j' || id[0] == 'q' ? 'journalArticle' : 'conferencePaper';
+		else {
+			return 'conferencePaper';
+		}
 	}
 	else if ((url.includes('/events/') || url.includes('/people/')
 		|| url.includes('/volumes/') || url.includes('/search/'))
@@ -84,14 +87,12 @@ function doWeb(doc, url) {
 		});
 	}
 	else if (url.endsWith('.bib')) {
-		// e.g. http://aclweb.org/anthology/papers/P/P18/P18-1001.bib
-		let paperURL = url.replace('.bib', '');
+		let paperURL = url.slice(0, -'.bib'.length);
 		ZU.processDocuments(paperURL, scrape);
 	}
-	else if (doc.contentType === 'application/pdf' || url.endsWith('.pdf')) {
+	else if (url.endsWith('.pdf')) {
 		// e.g. http://aclweb.org/anthology/P18-1001.pdf
-		let paperID = url.split('/').pop().match(/[A-Z]\d{2}-\d{4}/)[0];
-		let paperURL = constructPaperURL(paperID);
+		let paperURL = url.slice(0, -'.pdf'.length);
 		ZU.processDocuments(paperURL, scrape);
 	}
 	else {
@@ -100,7 +101,7 @@ function doWeb(doc, url) {
 }
 
 function scrape(doc) {
-	let bibtex = ZU.xpath(doc, '//button[contains(text(), "Copy BibTeX to Clipboard")]/@data-clipboard-text')[0].value;
+	let bibtex = ZU.xpath(doc, '//pre[@id = "citeBibtexContent"]')[0].textContent;
 	let pdfURL = ZU.xpath(doc, '//a[span[contains(text(), "PDF")]]/@href')[0].value;
 	let translator = Zotero.loadTranslator("import");
 	translator.setTranslator("9cb70025-a888-4a29-a210-93ec52da40d4");
@@ -115,6 +116,10 @@ function scrape(doc) {
 		
 		if (item.date) {
 			item.date = ZU.strToISO(item.date);
+		}
+		
+		if (item.abstractNote) {
+			item.abstractNote = ZU.cleanTags(item.abstractNote);
 		}
 		
 		if (item.itemType == 'conferencePaper') {
@@ -158,7 +163,7 @@ function getVenue(doc, pubTitle) {
 		// better to use full proceedingsTitle to cite these publications
 		return '';
 	}
-	if (venueString.includes('*SEMEVAL')) {
+	if (venueString.includes('SemEval')) {
 		if (pubTitle.includes('SENSEVAL')) {
 			return 'SENSEVAL ' + year;
 		}
@@ -189,51 +194,50 @@ function getVenue(doc, pubTitle) {
 }
 
 function getSearchResults(doc, url) {
-	let papers;
 	let items = {};
 	if (url.includes('/search/')) {
 		// e.g. https://www.aclweb.org/anthology/search/?q=foo+bar
-		papers = ZU.xpath(doc, '//div[contains(@class, "gsc-webResult")]//div[contains(@class, "gs-title")]/a');
-		for (let i = 0; i < papers.length; i++) {
-			let paperId = papers[i].href.split('/').pop();
-			items[constructPaperURL(paperId)] = papers[i].text;
+		let results = ZU.xpath(doc, '//div[contains(@class, "gsc-webResult")]//div[contains(@class, "gs-title")]/a');
+		let paperRegex = /[A-Z]\d{2}-\d{4}|\d{4}\.[\w\d]+-[\w\d]+\.\d+/;
+		for (let result of results) {
+			let url = result.href;
+			if (url.match(paperRegex)) {
+				if (url.endsWith('.pdf')) {
+					url = url.slice(0, -'.pdf'.length);
+				}
+				items[url] = result.text;
+			}
 		}
 	}
 	else {
-		papers = ZU.xpath(doc, '//strong/a[contains(@href, "/anthology/")]');
-		for (let i = 0; i < papers.length; i++) {
-			items[papers[i].href] = papers[i].text;
+		let papers = ZU.xpath(doc, '//section[@id="main"]//strong/a');
+		for (let paper of papers) {
+			items[paper.href] = paper.text;
 		}
 	}
 	return Object.keys(items).length ? items : false;
-}
-
-function constructPaperURL(id) {
-	const STUB_URL = 'https://aclweb.org/anthology/papers/';
-	let idComponents = id.split('-');
-	return STUB_URL + idComponents[0][0] + '/' + idComponents[0] + '/' + id;
 }
 
 /** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "https://aclweb.org/anthology/events/acl-2018/",
+		"url": "https://www.aclanthology.org/events/acl-2018/",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "https://aclweb.org/anthology/volumes/P18-1/",
+		"url": "https://www.aclanthology.org/volumes/P18-1/",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "https://aclweb.org/anthology/people/i/iryna-gurevych/",
+		"url": "https://www.aclanthology.org/people/i/iryna-gurevych/",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "https://aclweb.org/anthology/Q18-1001/",
+		"url": "https://www.aclanthology.org/Q18-1001/",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -278,7 +282,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.aclweb.org/anthology/W04-0801/",
+		"url": "https://www.aclanthology.org/W04-0801/",
 		"items": [
 			{
 				"itemType": "conferencePaper",
@@ -337,7 +341,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.aclweb.org/anthology/W19-0101/",
+		"url": "https://www.aclanthology.org/W19-0101/",
 		"items": [
 			{
 				"itemType": "conferencePaper",
@@ -374,7 +378,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.aclweb.org/anthology/N12-2001/",
+		"url": "https://www.aclanthology.org/N12-2001/",
 		"items": [
 			{
 				"itemType": "conferencePaper",
@@ -423,7 +427,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.aclweb.org/anthology/N18-1001/",
+		"url": "https://www.aclanthology.org/N18-1001/",
 		"items": [
 			{
 				"itemType": "conferencePaper",
@@ -490,6 +494,89 @@ var testCases = [
 				"proceedingsTitle": "Proceedings of the 2018 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long Papers)",
 				"publisher": "Association for Computational Linguistics",
 				"url": "https://www.aclweb.org/anthology/N18-1001",
+				"attachments": [
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://www.aclanthology.org/2020.lrec-1.2/",
+		"items": [
+			{
+				"itemType": "conferencePaper",
+				"title": "A Cluster Ranking Model for Full Anaphora Resolution",
+				"creators": [
+					{
+						"firstName": "Juntao",
+						"lastName": "Yu",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Alexandra",
+						"lastName": "Uma",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Massimo",
+						"lastName": "Poesio",
+						"creatorType": "author"
+					}
+				],
+				"date": "2020-05",
+				"ISBN": "9791095546344",
+				"abstractNote": "Anaphora resolution (coreference) systems designed for the CONLL 2012 dataset typically cannot handle key aspects of the full anaphora resolution task such as the identification of singletons and of certain types of non-referring expressions (e.g., expletives), as these aspects are not annotated in that corpus. However, the recently released dataset for the CRAC 2018 Shared Task can now be used for that purpose. In this paper, we introduce an architecture to simultaneously identify non-referring expressions (including expletives, predicative s, and other types) and build coreference chains, including singletons. Our cluster-ranking system uses an attention mechanism to determine the relative importance of the mentions in the same cluster. Additional classifiers are used to identify singletons and non-referring markables. Our contributions are as follows. First all, we report the first result on the CRAC data using system mentions; our result is 5.8% better than the shared task baseline system, which used gold mentions. Second, we demonstrate that the availability of singleton clusters and non-referring expressions can lead to substantially improved performance on non-singleton clusters as well. Third, we show that despite our model not being designed specifically for the CONLL data, it achieves a score equivalent to that of the state-of-the-art system by Kantor and Globerson (2019) on that dataset.",
+				"conferenceName": "LREC 2020",
+				"language": "English",
+				"libraryCatalog": "ACLWeb",
+				"pages": "11–20",
+				"place": "Marseille, France",
+				"proceedingsTitle": "Proceedings of the 12th Language Resources and Evaluation Conference",
+				"publisher": "European Language Resources Association",
+				"url": "https://www.aclweb.org/anthology/2020.lrec-1.2",
+				"attachments": [
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://www.aclanthology.org/volumes/2020.lrec-1/",
+		"items": "multiple"
+	},
+	{
+		"type": "web",
+		"url": "https://www.aclanthology.org/T87-1010.bib",
+		"items": [
+			{
+				"itemType": "conferencePaper",
+				"title": "Unification and the new grammatism",
+				"creators": [
+					{
+						"firstName": "Steve",
+						"lastName": "Pulman",
+						"creatorType": "author"
+					}
+				],
+				"date": "1987",
+				"conferenceName": "TINLAP 1987",
+				"libraryCatalog": "ACLWeb",
+				"proceedingsTitle": "Theoretical Issues in Natural Language Processing 3",
+				"url": "https://www.aclweb.org/anthology/T87-1010",
 				"attachments": [
 					{
 						"title": "Full Text PDF",

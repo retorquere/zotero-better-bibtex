@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2019-10-29 01:43:27"
+	"lastUpdated": "2019-12-25 15:35:07"
 }
 
 /*
@@ -34,10 +34,10 @@
 
 	***** END LICENSE BLOCK *****
 */
+
 // attr()/text() v2
 // eslint-disable-next-line
 function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
-
 
 function detectWeb(doc, url) {
 	// ensure that we only detect where scrape will (most likely) work
@@ -119,15 +119,15 @@ function scrape(doc, url) {
 	}
 
 	// Z.debug("pdfURL: " + pdfURL);
-	ZU.doGet(risURL, function (text) {
+	ZU.doGet(risURL, function (response) {
 		// they number authors in their RIS...
-		text = text.replace(/A\d+\s+-/g, "AU  -");
+		response = response.replace(/A\d+\s+-/g, "AU  -");
 
 		var abstract = doc.getElementById('abstract');
 		var translator = Zotero.loadTranslator("import");
 		var tags = doc.querySelectorAll('li .intent_text');
 		translator.setTranslator("32d59d2d-b65a-4da4-b0a3-bdd3cfb979e7");
-		translator.setString(text);
+		translator.setString(response);
 		translator.setHandler("itemDone", function (obj, item) {
 			if (pdfURL) {
 				item.attachments.push({
@@ -146,15 +146,28 @@ function scrape(doc, url) {
 			for (let tag of tags) {
 				item.tags.push(tag.textContent);
 			}
-			// authors are in RIS as lastname firstname(s), though not necessarily correctly so
-			// trying to correct for this
-			for (let i = 0; i < item.creators.length; i++) {
-				if (!item.creators[i].firstName && item.creators[i].lastName.includes(" ")) {
-					item.creators[i].firstName = item.creators[i].lastName.match(/^\w+\s+(.+)/)[1];
-					item.creators[i].lastName = item.creators[i].lastName.replace(/\s.+/, "");
-					delete item.creators[i].fieldMode;
+			
+			var authorsNodes = doc.querySelectorAll("div > a.contrib-search");
+			if (authorsNodes.length > 0) {
+				// prefer the authors information from the website as it contains the last and first name separately
+				// where the RIS data does not separate them correctly (it uses a space instead of comma)
+				// but the editors are only part of the RIS data
+				var authors = [];
+				for (let author of authorsNodes) {
+					authors.push({
+						firstName: text(author, "span.given-names"),
+						lastName: text(author, "span.surname"),
+						creatorType: "author"
+					});
 				}
+				var otherContributors = item.creators.filter(creator => creator.creatorType !== "author");
+				item.creators = otherContributors.length !== 0 ? authors.concat(separateNames(otherContributors)) : authors;
 			}
+			else {
+				Z.debug("No tags available for authors");
+				item.creators = separateNames(item.creators);
+			}
+
 			if (item.date) {
 				item.date = ZU.strToISO(item.date);
 			}
@@ -165,6 +178,27 @@ function scrape(doc, url) {
 		});
 		translator.translate();
 	});
+}
+
+function separateNames(creators) {
+	for (let i = 0; i < creators.length; i++) {
+		var lastName = creators[i].lastName.split(" ");
+		// Only authors are in the format lastname firstname in RIS
+		// Other creators are firstname lastname
+		if (!creators[i].firstName && lastName.length > 1) {
+			if (creators[i].creatorType === "author") {
+				creators[i].firstName = lastName.slice(1).join(" ");
+				creators[i].lastName = lastName[0];
+			}
+			else {
+				creators[i].firstName = lastName[0];
+				creators[i].lastName = lastName.slice(1).join(" ");
+			}
+			delete creators[i].fieldMode;
+		}
+		delete creators[i].fieldMode;
+	}
+	return creators;
 }
 
 /** BEGIN TEST CASES **/
@@ -295,6 +329,224 @@ var testCases = [
 		"type": "web",
 		"url": "https://www.emerald.com/insight/publication/issn/0140-9174/vol/32/iss/12",
 		"items": "multiple"
+	},
+	{
+		"type": "web",
+		"url": "https://www.emerald.com/insight/content/doi/10.1108/00070700410528754/full/html",
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "The influence of context upon consumer sensory evaluation of chicken‐meat quality",
+				"creators": [
+					{
+						"lastName": "Kennedy",
+						"creatorType": "author",
+						"firstName": "Orla"
+					},
+					{
+						"lastName": "Stewart‐Knox",
+						"creatorType": "author",
+						"firstName": "Barbara"
+					},
+					{
+						"lastName": "Mitchell",
+						"creatorType": "author",
+						"firstName": "Peter"
+					},
+					{
+						"lastName": "Thurnham",
+						"creatorType": "author",
+						"firstName": "David"
+					}
+				],
+				"date": "2004-01-01",
+				"DOI": "10.1108/00070700410528754",
+				"ISSN": "0007-070X",
+				"abstractNote": "There is an apparent lack of research investigating how different test conditions influence or bias consumer sensory evaluation of food. The aim of the present pilot study was to determine if testing conditions had any effect on responses of an untrained panel to a novel chicken product. Assessments of flavour, texture and overall liking of corn‐fed chicken were made across three different testing conditions (laboratory‐based under normal lighting; laboratory‐based under controlled lighting; and, home testing). Least favourable evaluations occurred under laboratory‐based conditions irrespective of what lighting was used. Consumers perceived the product more favourably in terms of flavour (p < 0.001), texture (p < 0.001) and overall preference (p < 0.001) when evaluated in the familiar setting of the home. Home testing produced more consistent assessments than under either of the two laboratory‐based test conditions. The results imply that home evaluation should be undertaken routinely in new food product development.",
+				"issue": "3",
+				"libraryCatalog": "Emerald Insight",
+				"pages": "158-165",
+				"publicationTitle": "British Food Journal",
+				"url": "https://doi.org/10.1108/00070700410528754",
+				"volume": "106",
+				"attachments": [
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
+					}
+				],
+				"tags": [
+					{
+						"tag": "Food products"
+					},
+					{
+						"tag": "Poultry"
+					},
+					{
+						"tag": "Sensory perception"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://www.emerald.com/insight/content/doi/10.1108/S0163-786X(2012)0000033008/full/html",
+		"items": [
+			{
+				"itemType": "bookSection",
+				"title": "Media Framing of the Pittsburgh G-20 Protests",
+				"creators": [
+					{
+						"lastName": "Kutz-Flamenbaum",
+						"creatorType": "author",
+						"firstName": "Rachel V."
+					},
+					{
+						"lastName": "Staggenborg",
+						"creatorType": "author",
+						"firstName": "Suzanne"
+					},
+					{
+						"lastName": "Duncan",
+						"creatorType": "author",
+						"firstName": "Brittany J."
+					},
+					{
+						"lastName": "Earl",
+						"creatorType": "editor",
+						"firstName": "Jennifer"
+					},
+					{
+						"lastName": "A. Rohlinger",
+						"creatorType": "editor",
+						"firstName": "Deana"
+					}
+				],
+				"date": "2012-01-01",
+				"ISBN": "9781780528816 9781780528809",
+				"abstractNote": "Research implications – We argue that events such as the G-20 meetings provide protesters with opportunities to gain temporary “standing” with the media. During such times, activists can use tactics and frames to alter the balance of power in relations with the media and the state and to attract positive media coverage, particularly when activists develop strategies that are not exclusively focused on the media. We argue that a combination of political opportunities and activist media strategies enabled protest organizers to position themselves as central figures in the G-20 news story and leverage that position to build media interest, develop relationships with reporters, and influence newspaper coverage.",
+				"bookTitle": "Media, Movements, and Political Change",
+				"extra": "DOI: 10.1108/S0163-786X(2012)0000033008",
+				"libraryCatalog": "Emerald Insight",
+				"pages": "109-135",
+				"publisher": "Emerald Group Publishing Limited",
+				"series": "Research in Social Movements, Conflicts and Change",
+				"url": "https://doi.org/10.1108/S0163-786X(2012)0000033008",
+				"volume": "33",
+				"attachments": [
+					{
+						"title": "Snapshot"
+					}
+				],
+				"tags": [
+					{
+						"tag": "Anarchist(s)"
+					},
+					{
+						"tag": "Framing"
+					},
+					{
+						"tag": "G-20"
+					},
+					{
+						"tag": "Media strategy"
+					},
+					{
+						"tag": "Strategy"
+					},
+					{
+						"tag": "Summit protests"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://www.emerald.com/insight/content/doi/10.1108/eb058217/full/html",
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "Tourism research in Spain: The contribution of geography (1960–1995)",
+				"creators": [
+					{
+						"lastName": "Antón i Clavé",
+						"creatorType": "author",
+						"firstName": "Salvador"
+					},
+					{
+						"lastName": "López Palomeque",
+						"creatorType": "author",
+						"firstName": "Francisco"
+					},
+					{
+						"lastName": "Marchena Gómez",
+						"creatorType": "author",
+						"firstName": "Manuel J."
+					},
+					{
+						"lastName": "Vera Rebollo",
+						"creatorType": "author",
+						"firstName": "Sevilla"
+					},
+					{
+						"lastName": "Fernando Vera Rebollo",
+						"creatorType": "author",
+						"firstName": "J."
+					}
+				],
+				"date": "1996-01-01",
+				"DOI": "10.1108/eb058217",
+				"ISSN": "0251-3102",
+				"abstractNote": "The Geography of Tourism in Spain is now at a par in terms of its scientific production with other European countries. Since the middle of the '80s the quality and volume of contributions is analogous to the rest of the European Union, although as a part of University Geography in Spain it has not achieved the level of dedication reached by other subjects considering the importance of tourist activities to the economy, the society and the territory of Spain. It could be said that the Geography of Tourism in Spain is in the international vanguard in dealing with Mediterranean coastal tourism, with the relationships between the residential real estate and tourism sectors and with aspects related to tourism and leisure in rural and protected areas.",
+				"issue": "1",
+				"libraryCatalog": "Emerald Insight",
+				"pages": "46-64",
+				"publicationTitle": "The Tourist Review",
+				"shortTitle": "Tourism research in Spain",
+				"url": "https://doi.org/10.1108/eb058217",
+				"volume": "51",
+				"attachments": [
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
+					}
+				],
+				"tags": [
+					{
+						"tag": "Environment"
+					},
+					{
+						"tag": "Geography of Leisure"
+					},
+					{
+						"tag": "Regional Paradigms"
+					},
+					{
+						"tag": "Rural"
+					},
+					{
+						"tag": "Territory"
+					},
+					{
+						"tag": "Tourism"
+					},
+					{
+						"tag": "Tourism Real‐Estate"
+					},
+					{
+						"tag": "Urban and Coastal Geography"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
 	}
 ]
 /** END TEST CASES **/

@@ -1,19 +1,19 @@
 {
 	"translatorID": "e5dc9733-f8fc-4c00-8c40-e53e0bb14664",
+	"translatorType": 4,
 	"label": "Wikipedia",
 	"creator": "Aurimas Vinckevicius",
 	"target": "^https?://[^/]*wikipedia\\.org/",
 	"minVersion": "2.1.9",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2015-02-16 04:51:10"
+	"lastUpdated": "2021-06-01 23:20:00"
 }
 
 /**
-	Copyright (c) 2012 Aurimas Vinckevicius
+	Copyright (c) 2021 Aurimas Vinckevicius and Abe Jellinek
 	
 	This program is free software: you can redistribute it and/or
 	modify it under the terms of the GNU Affero General Public License
@@ -31,14 +31,16 @@
 */
 
 function detectWeb(doc, url) {
-	if(doc.getElementById('firstHeading')) {
+	// on desktop, the article title is in #firstHeading.
+	// on mobile, it's #section_0.
+	if (doc.getElementById('firstHeading') || doc.getElementById('section_0')) {
 		return 'encyclopediaArticle';
 	}
 }
 
 function doWeb(doc, url) {
 	var item = new Zotero.Item('encyclopediaArticle');
-	item.title = ZU.trimInternal(doc.getElementById('firstHeading').textContent);
+	item.title = ZU.trimInternal((doc.getElementById('firstHeading') || doc.getElementById('section_0')).textContent);
 	
 	/* Removing the creator and publisher. Wikipedia is pushing the creator in their own
   	directions on how to cite http://en.wikipedia.org/w/index.php?title=Special%3ACite&page=Psychology
@@ -63,21 +65,30 @@ function doWeb(doc, url) {
 	 * title only says "- Wikipedia" (in some other language)
 	 */
 	var m = doc.title.match(/[\u002D\u00AD\u2010-\u2015\u2212\u2E3A\u2E3B]\s*([^\u002D\u00AD\u2010-\u2015\u2212\u2E3A\u2E3B]+)$/);
-	if(m) {
+	if (m) {
 		item.encyclopediaTitle = m[1];
 	} else {
 		item.encyclopediaTitle = 'Wikipedia, the free encyclopedia';
 	}
 
-	item.url = ZU.xpathText(doc, '//li[@id="t-permalink"]/a/@href');
+	// we don't get a permalink directly on mobile, but it goes into the
+	// "retrieved from" footer
+	let permalink = ZU.xpathText(doc, '//li[@id="t-permalink"]/a/@href')
+		|| attr(doc, '.printfooter a', 'href');
 	var revID;
-	if(item.url) {
-		revID = item.url.match(/[&?]oldid=(\d+)/)[1];
+	if (permalink) {
+		revID = permalink.match(/[&?]oldid=(\d+)/)[1];
 		item.extra = 'Page Version ID: ' + revID;
-		item.url = doc.location.protocol + '//' + doc.location.hostname
-					+ item.url;
-	} else {
-		item.url = url
+		if (permalink.startsWith('/')) {
+			item.url = 'https://' + doc.location.hostname + permalink;
+		}
+		else {
+			item.url = permalink;
+		}
+	}
+	else {
+		// if we can't find a link, just use the page URL
+		item.url = url;
 	}
 
 	item.attachments.push({
@@ -100,16 +111,26 @@ function doWeb(doc, url) {
 		);
 	ZU.doGet(pageInfoURL, function(text) {
 		var retObj = JSON.parse(text);
-		if(retObj && !retObj.query.pages['-1']) {
+		if (retObj && !retObj.query.pages['-1']) {
 			var pages = retObj.query.pages;
-			for(var i in pages) {
+			for (var i in pages) {
 				if (pages[i].revisions) {
 					item.date = pages[i].revisions[0].timestamp;
 				} else {
 					item.date = pages[i].touched;
 				}
-				
-				item.title = pages[i].displaytitle;
+
+				let displayTitle = pages[i].displaytitle
+					.replace(/<em>/g, '<i>')
+					.replace(/<\/em>/g, '</i>')
+					.replace(/<strong>/, '<b>')
+					.replace(/<\/strong>/, '</b>');
+
+				// https://www.zotero.org/support/kb/rich_text_bibliography
+				item.title = filterTagsInHTML(displayTitle,
+					'i, b, sub, sup, '
+					+ 'span[style="font-variant:small-caps;"], '
+					+ 'span[class="nocase"]');
 				
 				// Note that this is the abstract for the latest revision,
 				// not necessarily the revision that is being queried
@@ -122,7 +143,35 @@ function doWeb(doc, url) {
 		}
 		item.complete();
 	});
-}/** BEGIN TEST CASES **/
+}
+
+function filterTagsInHTML(html, allowSelector) {
+	let elem = new DOMParser().parseFromString(html, 'text/html');
+	filterTags(elem.body, allowSelector);
+	return elem.body.innerHTML;
+}
+
+function filterTags(root, allowSelector) {
+	for (let node of root.childNodes) {
+		if (!(node instanceof Element)) {
+			return;
+		}
+		
+		if (node.matches(allowSelector)) {
+			filterTags(node);
+		}
+		else {
+			while (node.firstChild) {
+				let firstChild = node.firstChild;
+				node.parentNode.insertBefore(firstChild, node);
+				filterTags(firstChild, allowSelector);
+			}
+			node.remove();
+		}
+	}
+}
+
+/** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
@@ -133,7 +182,7 @@ var testCases = [
 				"title": "Россия",
 				"creators": [],
 				"date": "2012-04-06T20:11:32Z",
-				"abstractNote": "Росси́я (от греч. Ρωσία — Русь; официально также Росси́йская Федера́ция, на практике используется и аббревиатура РФ) — государство в Восточной Европе и Северной Азии. Население — 146 804 372 чел. (2017). Территория России, определяемая её Конституцией, составляет 17 125 191 км². Занимает первое место в мире по территории, шестое — по объёму ВВП по ППС и девятое — по численности населения.\nСтолица — Москва. Государственный язык — русский.\nСмешанная республика федеративного устройства. В мае 2012 года пост президента занял Владимир Владимирович Путин, председателя правительства — Дмитрий Анатольевич Медведев.\nВ состав Российской Федерации входят 85 субъектов, 46 из которых именуются областями, 22 — республиками, 9 — краями, 3 — городами федерального значения, 4 — автономными округами и 1 — автономной областью.\nРоссия граничит с восемнадцатью государствами (самый большой показатель в мире), включая два частично признанных и два непризнанных:\nпо суше — с Норвегией, Финляндией, Эстонией, Латвией, Литвой, Польшей, Белоруссией, Украиной, Грузией, Азербайджаном, Казахстаном, Монголией, КНР, КНДР, Южной Осетией, Абхазией, ЛНР, ДНР;\nпо морю — с Японией и США.\nРоссия — многонациональное государство, отличающееся большим этнокультурным многообразием. Бо́льшая часть (около 75 %) населения относит себя к православию, что делает Россию страной с самым многочисленным православным населением в мире.\nРоссия — одна из ведущих космических держав мира: мировой лидер по количеству запусков космических аппаратов, экспортёр ракетных двигателей, имеет самый большой в мире радиотелескоп, а также крупнейший в мире космический радиотелескоп, в России создана одна из двух существующих в мире глобальных систем спутниковой навигации; входит в десятку мировых лидеров по ядерной энергетике, экспортёр ядерных реакторов и сопутствующих систем, крупнейший экспортёр топлива для атомной промышленности, обладает уникальными технологиями переработки отработавшего ядерного топлива; один из крупнейших мировых производителей и экспортёров программного обеспечения и информационных технологий, входит в десятку мировых лидеров по количеству эксплуатируемых суперкомпьютеров (2014); входит в шестёрку мировых лидеров по количеству патентов на инновационные технологии (2017); имеет крупнейший в мире ледокольный флот и единственный в мире атомный ледокольный флот; входит в пятёрку мировых лидеров по производству сельхозтехники, мировой лидер по производству титана для высокотехнологичной продукции, мировой лидер по производству морских навигационных систем и электронных карт, мировой лидер в сфере кораблестроения судов на подводных крыльях, воздушной подушке и экранопланов;мировой лидер в строительстве гиперзвуковых авиационных систем; мировой лидер в производстве аммиака; второе место в мире по производству азотно-калийных минеральных удобрений;; первое место в мире по добыче и экспорту алмазов (2013) и платины; первое место в мире по экспорту стали (2013); второе место в мире по добыче нефти (2015) и газа (2014); первое место в мире по экспорту зерна (2016); входит в пятерку мировых лидеров по протяженности железных дорог, первое место в мире по протяжённости электрифицированных железных дорог; входит в пятерку мировых лидеров по производству электроэнергии; является одним из мировых лидеров в разработке установок для термоядерной энергетики, занимает второе место в мире (после США) по экспорту вооружений, обладает вторым в мире арсеналом ядерного оружия, входит в число стран с наиболее богатым культурным наследием и обладает самым большим запасом природных ресурсов на Земле. Россия занимает седьмое место в мире по объёмам золотовалютных резервов и седьмое место в мире по официально заявленным запасам золота в резервах. Постоянный член Совета безопасности ООН с правом вето. Является одной из современных великих держав мира.\nПосле распада СССР в конце 1991 года Российская Федерация была признана международным сообществом как государство-продолжатель СССР в вопросах ядерного потенциала, внешнего долга, государственной собственности за рубежом, а также членства в Совете Безопасности ООН. Россия состоит в ряде международных организаций — ООН, ОБСЕ, Совет Европы, ЕАЭС, СНГ, ОЧЭС, ОДКБ, ГКМЧП, ВОИС, ММО, ВТО, ЮНВТО, ВФП, ШОС, АТЭС, БРИКС, КООМЕТ, МОК, МЭК, ISO, EUREKA, IRENA, G20 и других.\nПо данным Всемирного банка, объём ВВП по ППС за 2014 год составил 3,745 трлн долларов (25 636 долларов на человека). Денежная единица — российский рубль (усреднённый курс за 2016 год — 67 рублей за 1 доллар США).",
+				"abstractNote": "Росси́я или Росси́йская Федера́ция (РФ), — государство в Восточной Европе и Северной Азии. Территория России в её конституционных границах составляет 17 125 191 км²; население страны (в пределах её заявленной территории) составляет 146 171 015 чел. (2021). Занимает первое место в мире по территории, шестое — по объёму ВВП по ППС, и девятое — по численности населения.\nСтолица — Москва. Государственный язык — русский. Денежная единица — российский рубль.\nГосударственный строй — президентско-парламентская республика с федеративным устройством. С 31 декабря 1999 года (с перерывом в 2008—2012 годах, когда Дмитрий Медведев был президентом) должность президента Российской Федерации занимает Владимир Путин. C 16 января 2020 года должность председателя Правительства РФ занимает Михаил Мишустин.\nРоссия имеет 18 границ (16 сухопутных и 2 морских). В состав Российской Федерации входят 85 субъектов, 46 из которых именуются областями, 22 — республиками, 9 — краями, 3 — городами федерального значения, 4 — автономными округами и 1 — автономной областью. Всего в стране около 157 тысяч населённых пунктов. Россия является самой холодной страной в мире: 65 % её территории покрыты вечной мерзлотой; в России самая низкая среднегодовая температура воздуха среди всех стран мира, составляющая −5,5 °С; в России расположены: Северный полюс холода; Санкт-Петербург — самый северный в мире город с населением более одного миллиона человек; Мурманск — крупнейший в мире город, расположенный за Северным полярным кругом, и крупнейший такой город в Европе; Норильск — крупнейший заполярный город Азии; Сабетта — крупнейшее поселение севернее 70° с. ш. Также Россия является страной с максимальным перепадом температур в мире: 116,6 °C.\nРоссия — многонациональное государство с широким этнокультурным многообразием. Бо́льшая часть населения (около 75 %) относит себя к православию, что делает Россию страной с самым многочисленным православным населением в мире.\nРоссия — ядерная держава; одна из ведущих промышленных и космических держав мира; занимает 3-е место в рейтинге самых влиятельных стран мира (2020). Русский язык — язык мирового значения, один из шести официальных и рабочих языков ООН, ЮНЕСКО и других международных организаций.\nРоссия является постоянным членом Совета Безопасности ООН с правом вето; одна из современных великих держав мира. Также Россия состоит в ряде международных организаций: ООН, G20, ОБСЕ, Совете Европы, ЕАЭС, СНГ, ОДКБ, ВТО, ШОС, АТЭС, БРИКС, МОК и других.\nПосле распада СССР в конце 1991 года Российская Федерация была признана международным сообществом как государство-правопреемник СССР в вопросах ядерного потенциала, внешнего долга, государственной собственности за рубежом, а также членства в Совете Безопасности ООН.\nПо данным МВФ, объём ВВП по номиналу за 2019 год составил 1,7 трлн долларов (11 585 долларов на человека, 61-е место в мире). Объём ВВП по ППС за 2019 год составил 4,39 трлн долларов (29 181 долларов на человека, 50-е место в мире).",
 				"encyclopediaTitle": "Википедия",
 				"extra": "Page Version ID: 43336101",
 				"language": "ru",
@@ -162,7 +211,7 @@ var testCases = [
 				"title": "Zotero",
 				"creators": [],
 				"date": "2012-04-03T14:41:27Z",
-				"abstractNote": "Zotero /zoʊˈtɛroʊ/ is free and open-source reference management software to manage bibliographic data and related research materials (such as PDF files). Notable features include web browser integration, online syncing, generation of in-text citations, footnotes and bibliographies, as well as integration with the word processors Microsoft Word, LibreOffice, OpenOffice.org Writer and NeoOffice. It is produced by the Center for History and New Media at George Mason University.",
+				"abstractNote": "Zotero  is a free and open-source reference management software to manage bibliographic data and related research materials (such as PDF files). Notable features include web browser integration, online syncing, generation of in-text citations, footnotes, and bibliographies, as well as integration with the word processors Microsoft Word, LibreOffice Writer, and Google Docs. It is produced by the Center for History and New Media at George Mason University.",
 				"encyclopediaTitle": "Wikipedia",
 				"extra": "Page Version ID: 485342619",
 				"language": "en",
@@ -190,14 +239,72 @@ var testCases = [
 				"itemType": "encyclopediaArticle",
 				"title": "Wikipedia:Article wizard",
 				"creators": [],
-				"date": "2016-10-24T18:43:24Z",
+				"date": "2020-11-06T04:29:05Z",
 				"encyclopediaTitle": "Wikipedia",
-				"extra": "Page Version ID: 746008393",
+				"extra": "Page Version ID: 987303078",
 				"language": "en",
 				"libraryCatalog": "Wikipedia",
 				"rights": "Creative Commons Attribution-ShareAlike License",
 				"shortTitle": "Wikipedia",
-				"url": "https://en.wikipedia.org/w/index.php?title=Wikipedia:Article_wizard&oldid=746008393",
+				"url": "https://en.wikipedia.org/w/index.php?title=Wikipedia:Article_wizard&oldid=987303078",
+				"attachments": [
+					{
+						"title": "Snapshot",
+						"mimeType": "text/html",
+						"snapshot": true
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://en.m.wikipedia.org/w/index.php?title=1%25_rule_(Internet_culture)&oldid=999756024",
+		"items": [
+			{
+				"itemType": "encyclopediaArticle",
+				"title": "1% rule (Internet culture)",
+				"creators": [],
+				"date": "2021-01-11T20:19:42Z",
+				"abstractNote": "In Internet culture, the 1% rule is a rule of thumb pertaining to participation in an internet community, stating that only 1% of the users of a website add content, while the other 99% of the participants only lurk. Variants include the 1–9–90 rule (sometimes 90–9–1 principle or the 89:10:1 ratio), which states that in a collaborative website such as a wiki, 90% of the participants of a community only consume content, 9% of the participants change or update content, and 1% of the participants add content. This also applies, approximately, to Wikipedia.Similar rules are known in information science; for instance, the 80/20 rule known as the Pareto principle states that 20 percent of a group will produce 80 percent of the activity, however the activity is defined.",
+				"encyclopediaTitle": "Wikipedia",
+				"extra": "Page Version ID: 999756024",
+				"language": "en",
+				"libraryCatalog": "Wikipedia",
+				"rights": "Creative Commons Attribution-ShareAlike License",
+				"url": "https://en.wikipedia.org/w/index.php?title=1%25_rule_(Internet_culture)&oldid=999756024",
+				"attachments": [
+					{
+						"title": "Snapshot",
+						"mimeType": "text/html",
+						"snapshot": true
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://en.wikipedia.org/w/index.php?title=List_of_Sex_and_the_City_episodes&oldid=964829978",
+		"items": [
+			{
+				"itemType": "encyclopediaArticle",
+				"title": "List of <i>Sex and the City</i> episodes",
+				"creators": [],
+				"date": "2020-06-27T20:48:06Z",
+				"abstractNote": "The following is a list of episodes from the American television series Sex and the City.",
+				"encyclopediaTitle": "Wikipedia",
+				"extra": "Page Version ID: 964829978",
+				"language": "en",
+				"libraryCatalog": "Wikipedia",
+				"rights": "Creative Commons Attribution-ShareAlike License",
+				"url": "https://en.wikipedia.org/w/index.php?title=List_of_Sex_and_the_City_episodes&oldid=964829978",
 				"attachments": [
 					{
 						"title": "Snapshot",

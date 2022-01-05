@@ -1,6 +1,7 @@
+import bs4
 import sqlite3
 import uuid
-import json
+import json, jsonpatch
 import os
 import redo
 import platform
@@ -11,8 +12,9 @@ import toml
 import urllib
 import tempfile
 from munch import *
-from steps.utils import running, nested_dict_iter, benchmark, ROOT, assert_equal_diff, serialize, html2md, post_log
+from steps.utils import running, nested_dict_iter, benchmark, ROOT, assert_equal_diff, serialize, html2md, clean_html, extra_lower
 from steps.library import load as Library
+from steps.bbtjsonschema import validate as validate_bbt_json
 import steps.utils as utils
 import shutil
 import shlex
@@ -22,16 +24,56 @@ import subprocess
 import atexit
 import time
 import datetime
-import collections
+from collections import OrderedDict, MutableMapping
 import sys
 import threading
 import socket
+from pathlib import PurePath
+from diff_match_patch import diff_match_patch
+from pygit2 import Repository
+from lxml import etree
 
 from ruamel.yaml import YAML
 yaml = YAML(typ='safe')
 yaml.default_flow_style = False
 
 EXPORTED = os.path.join(ROOT, 'exported')
+FIXTURES = os.path.join(ROOT, 'test/fixtures')
+
+def install_proxies(xpis, profile):
+  for xpi in xpis:
+    assert os.path.isdir(xpi)
+    utils.print(f'installing {xpi}')
+    rdf = etree.parse(os.path.join(xpi, 'install.rdf'))
+    xpi_id = rdf.xpath('/rdf:RDF/rdf:Description/em:id', namespaces={'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'em': 'http://www.mozilla.org/2004/em-rdf#'})[0].text
+    proxy = os.path.join(profile, 'extensions', xpi_id)
+    if not os.path.isdir(os.path.dirname(proxy)):
+      os.mkdir
+      os.makedirs(os.path.dirname(proxy))
+    elif os.path.isdir(proxy) and not os.path.islink(proxy):
+      shutil.rmtree(proxy)
+    elif os.path.exists(proxy):
+      os.remove(proxy)
+    with open(proxy, 'w') as f:
+      f.write(xpi)
+  
+  with open(os.path.join(profile, 'prefs.js'), 'r+') as f:
+    utils.print('stripping prefs.js')
+    lines = f.readlines()
+    f.seek(0)
+    for line in lines:
+      if 'extensions.lastAppBuildId' in line: continue
+      if 'extensions.lastAppVersion' in line: continue
+      f.write(line)
+    f.truncate()
+
+def install_xpis(path, profile):
+  if not os.path.exists(path): return
+  utils.print(f'Installing xpis in {path}')
+
+  for xpi in glob.glob(os.path.join(path, '*.xpi')):
+    utils.print(f'installing {xpi}')
+    profile.add_extension(xpi)
 
 class Pinger():
   def __init__(self, every):
@@ -59,8 +101,15 @@ class Config:
         'first_run': userdata.get('first-run', 'false') == 'true',
         'timeout': 60,
         'profile': '',
+        'trace_factor': 1,
       }
     ]
+    trace = os.path.join(ROOT, '.trace.json')
+    if os.path.exists(trace):
+      with open(trace) as f:
+        trace = json.load(f)
+        if Repository('.').head.shorthand in trace:
+          self.data[0]['trace_factor'] = 10
     self.reset()
 
   def __getattr__(self, name):
@@ -101,9 +150,13 @@ class Zotero:
   def __init__(self, userdata):
     assert not running('Zotero'), 'Zotero is running'
 
+    self.fixtures_loaded = set()
+    self.fixtures_loaded_log = userdata.get('loaded')
+
     self.client = userdata.get('client', 'zotero')
     self.beta = userdata.get('beta') == 'true'
     self.password = str(uuid.uuid4())
+    self.import_at_start = os.environ.get('ZOTERO_IMPORT', None)
 
     self.config = Config(userdata)
 
@@ -134,6 +187,7 @@ class Zotero:
       self.workers = 1
     else:
       self.workers = 0
+    self.caching = userdata.get('caching', 'true') == 'true'
 
     self.preferences = Preferences(self)
     self.redir = '>'
@@ -146,7 +200,7 @@ class Zotero:
 
     with Pinger(20):
       req = urllib.request.Request(f'http://127.0.0.1:{self.port}/debug-bridge/execute?password={self.password}', data=script.encode('utf-8'), headers={'Content-type': 'application/javascript'})
-      res = urllib.request.urlopen(req, timeout=self.config.timeout).read().decode()
+      res = urllib.request.urlopen(req, timeout=self.config.timeout * self.config.trace_factor).read().decode()
       return json.loads(res)
 
   def shutdown(self):
@@ -199,7 +253,12 @@ class Zotero:
     profile = self.create_profile()
     shutil.rmtree(os.path.join(profile.path, self.client, 'better-bibtex'), ignore_errors=True)
 
-    cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -jsconsole -ZoteroDebugText -datadir profile {self.redir} {shlex.quote(profile.path + ".log")} 2>&1'
+    if self.client == 'zotero':
+      datadir_profile = '-datadir profile'
+    else:
+      utils.print('\n\n** WORKAROUNDS FOR JURIS-M IN PLACE -- SEE https://github.com/Juris-M/zotero/issues/34 **\n\n')
+      datadir_profile = ''
+    cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -jsconsole -purgecaches -ZoteroDebugText {datadir_profile} {self.redir} {shlex.quote(profile.path + ".log")} 2>&1'
     utils.print(f'Starting {self.client}: {cmd}')
     self.proc = subprocess.Popen(cmd, shell=True)
     utils.print(f'{self.client} started: {self.proc.pid}')
@@ -238,10 +297,12 @@ class Zotero:
         except (urllib.error.HTTPError, urllib.error.URLError,socket.timeout):
           pass
 
-        if bm.elapsed > 2000 and not posted: posted = post_log()
-
     assert ready, f'{self.client} did not start'
     self.config.pop()
+
+    if self.import_at_start:
+      self.execute(f'return await Zotero.BetterBibTeX.TestSupport.importFile({json.dumps(self.import_at_start)})')
+      self.import_at_start = None
 
   def reset(self):
     if self.needs_restart:
@@ -255,8 +316,66 @@ class Zotero:
   def reset_cache(self):
     self.execute('Zotero.BetterBibTeX.TestSupport.resetCache()')
 
+  def loaded(self, path):
+    self.fixtures_loaded.add(str(PurePath(path).relative_to(FIXTURES)))
+    if self.fixtures_loaded_log:
+      with open(self.fixtures_loaded_log, 'w') as f:
+        json.dump(sorted(list(self.fixtures_loaded)), f, indent='  ')
+
+  def load(self, path, attempt_patch=False):
+    path = os.path.join(FIXTURES, path)
+
+    with open(path) as f:
+      if path.endswith('.json'):
+        data = json.load(f, object_pairs_hook=OrderedDict)
+      elif path.endswith('.yml'):
+        data = yaml.load(f)
+      else:
+        data = f.read()
+
+    patch = path + '.' + self.client + '.patch'
+
+    if not attempt_patch or not os.path.exists(patch):
+      loaded = path
+    else:
+      for ext in ['.schomd.json', '.csl.json', os.path.splitext(path)[1]]:
+        if path.endswith(ext):
+          loaded = path[:-len(ext)] + '.' + self.client + ext
+          break
+
+      if path.endswith('.json') or path.endswith('.yml'):
+        with open(patch) as f:
+          data = jsonpatch.JsonPatch(json.load(f)).apply(data)
+      else:
+        with open(patch) as f:
+          dmp = diff_match_patch()
+          data = dmp.patch_apply(dmp.patch_fromText(f.read()), data)[0]
+
+    if path.endswith('.json') and not (path.endswith('.csl.json') or path.endswith('.schomd.json')):
+      validate_bbt_json(data)
+
+    self.loaded(loaded)
+    return (data, loaded)
+
+  def exported(self, path, data=None):
+    path = os.path.join(EXPORTED, os.path.basename(os.path.dirname(path)), os.path.basename(path))
+
+    if data is None:
+      os.remove(path)
+      exdir = os.path.dirname(path)
+      if len(os.listdir(exdir)) == 0:
+        os.rmdir(exdir)
+    else:
+      os.makedirs(os.path.dirname(path), exist_ok = True)
+
+      with open(path, 'w') as f:
+        f.write(data)
+
+    return path
+
   def export_library(self, translator, displayOptions = {}, collection = None, output = None, expected = None, resetCache = False):
     assert not displayOptions.get('keepUpdated', False) or output # Auto-export needs a destination
+    displayOptions['Normalize'] = True
 
     if translator.startswith('id:'):
       translator = translator[len('id:'):]
@@ -277,70 +396,63 @@ class Zotero:
       with open(output) as f:
         found = f.read()
 
-    expected, ext = self.expand_expected(expected)
-    exported = os.path.join(EXPORTED, os.path.basename(os.path.dirname(expected)) + '-' + os.path.basename(expected))
+    expected_file = expected
+    expected, loaded_file = self.load(expected_file, True)
+    exported = self.exported(loaded_file, found)
 
-    with open(expected) as f:
-      expected = f.read()
+    if expected_file.endswith('.csl.json'):
+      assert_equal_diff(json.dumps(expected, sort_keys=True, indent='  '), json.dumps(json.loads(found), sort_keys=True, indent='  '))
 
-    if ext == '.csl.json':
-      with open(exported, 'w') as f: f.write(found)
-      assert_equal_diff(serialize(json.loads(expected)), serialize(json.loads(found)))
-      os.remove(exported)
-      return
+    elif expected_file.endswith('.csl.yml'):
+      assert_equal_diff(serialize(expected), serialize(yaml.load(io.StringIO(found))))
 
-    elif ext == '.csl.yml':
-      with open(exported, 'w') as f: f.write(found)
-      assert_equal_diff(
-        serialize(yaml.load(io.StringIO(expected))),
-        serialize(yaml.load(io.StringIO(found)))
-      )
-      os.remove(exported)
-      return
+    elif expected_file.endswith('.json'):
+      # TODO: clean lib and test against schema
 
-    elif ext == '.json':
-      with open(exported, 'w') as f: f.write(found)
+      expected = Library(expected)
+      found = Library(json.loads(found, object_pairs_hook=OrderedDict))
+      assert_equal_diff(serialize(extra_lower(expected)), serialize(extra_lower(found)))
 
-      found = Library(json.loads(found))
-      expected = Library(json.loads(expected))
+    elif expected_file.endswith('.html'):
+      assert_equal_diff(clean_html(expected).strip(), clean_html(found).strip())
 
-      assert_equal_diff(serialize(expected), serialize(found))
+    else:
+      assert_equal_diff(expected.strip(), found.strip())
 
-      os.remove(exported)
-      return
-
-    with open(exported, 'w') as f: f.write(found)
-    expected = expected.strip()
-    found = found.strip()
-
-    assert_equal_diff(expected, found)
-    os.remove(exported)
-    return
+    self.exported(exported)
 
   def import_file(self, context, references, collection = False, items=True):
     assert type(collection) in [bool, str]
 
-    fixtures = os.path.join(ROOT, 'test/fixtures')
-    references = os.path.join(fixtures, references)
+    data, references = self.load(references)
 
     if references.endswith('.json'):
-      with open(references) as f:
-        config = json.load(f).get('config', {})
+      # TODO: clean lib and test against schema
+      config = data.get('config', {})
       preferences = config.get('preferences', {})
+      localeDateOrder = config.get('localeDateOrder', None)
       context.displayOptions = config.get('options', {})
 
+      # TODO: this can go because the schema check will assure it won't get passed in
       if 'testing' in preferences: del preferences['testing']
       preferences = {
         pref: (','.join(value) if type(value) == list else value)
         for pref, value in preferences.items()
         if not self.preferences.prefix + pref in self.preferences.keys()
       }
+
       for k, v in preferences.items():
         assert self.preferences.prefix + k in self.preferences.supported, f'Unsupported preference "{k}"'
         assert type(v) == self.preferences.supported[self.preferences.prefix + k], f'Value for preference {k} has unexpected type {type(v)}'
+      for item in data['items']:
+        for att in item.get('attachments') or []:
+          if path := att.get('path'):
+            path = os.path.join(os.path.dirname(references), path)
+            assert os.path.exists(path), f'attachment {path} does not exist'
     else:
       context.displayOptions = {}
       preferences = None
+      localeDateOrder = None
 
     with tempfile.TemporaryDirectory() as d:
       if type(collection) is str:
@@ -365,10 +477,11 @@ class Zotero:
 
       filename = references
       if not items: filename = None
-      return self.execute('return await Zotero.BetterBibTeX.TestSupport.importFile(filename, createNewCollection, preferences)',
+      return self.execute('return await Zotero.BetterBibTeX.TestSupport.importFile(filename, createNewCollection, preferences, localeDateOrder)',
         filename = filename,
         createNewCollection = (collection != False),
-        preferences = preferences
+        preferences = preferences,
+        localeDateOrder = localeDateOrder
       )
 
   def expand_expected(self, expected):
@@ -378,24 +491,14 @@ class Zotero:
       ext = '.csl' + ext
     assert ext != ''
 
-    fixtures = os.path.join(ROOT, 'test/fixtures')
-
-    if self.client == 'zotero': return [ os.path.join(fixtures, expected), ext ]
+    if self.client == 'zotero': return [ os.path.join(FIXTURES, expected), ext ]
 
     expected = None
     for variant in ['.juris-m', '']:
-      variant = os.path.join(fixtures, f'{base}{variant}{ext}')
+      variant = os.path.join(FIXTURES, f'{base}{variant}{ext}')
       if os.path.exists(variant): return [variant, ext]
 
     return [None, None]
-
-  def install_xpis(self, path, profile):
-    if not os.path.exists(path): return
-    utils.print(f'Installing xpis in {path}')
-
-    for xpi in glob.glob(os.path.join(path, '*.xpi')):
-      utils.print(f'installing {xpi}')
-      profile.add_extension(xpi)
 
   def create_profile(self):
     profile = Munch(
@@ -407,7 +510,8 @@ class Zotero:
     profile.profiles = {
       # 'Linux': os.path.expanduser(f'~/.{self.client}/{self.client}'),
       'Linux': os.path.expanduser(f'~/.{self.client}/zotero'),
-      'Darwin': os.path.expanduser('~/Library/Application Support/' + {'zotero': 'Zotero', 'jurism': 'Juris-M'}[self.client]),
+      # 'Darwin': os.path.expanduser('~/Library/Application Support/' + {'zotero': 'Zotero', 'jurism': 'Juris-M'}[self.client]),
+      'Darwin': os.path.expanduser('~/Library/Application Support/Zotero'),
     }[platform.system()]
     os.makedirs(profile.profiles, exist_ok = True)
 
@@ -454,15 +558,18 @@ class Zotero:
       profile.firefox.set_preference('extensions.zotero.useDataDir', True)
       profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.removeStock', False)
     else:
-      profile.firefox = webdriver.FirefoxProfile(os.path.join(ROOT, 'test/fixtures/profile', self.client))
+      profile.firefox = webdriver.FirefoxProfile(os.path.join(FIXTURES, 'profile', self.client))
 
-    self.install_xpis(os.path.join(ROOT, 'xpi'), profile.firefox)
-    self.install_xpis(os.path.join(ROOT, 'other-xpis'), profile.firefox)
-    if self.config.db: self.install_xpis(os.path.join(ROOT, 'test/db', self.config.db, 'xpis'), profile.firefox)
-    if self.config.profile: self.install_xpis(os.path.join(ROOT, 'test/db', self.config.profile, 'xpis'), profile.firefox)
+    install_xpis(os.path.join(ROOT, 'xpi'), profile.firefox)
 
+    install_xpis(os.path.join(ROOT, 'other-xpis'), profile.firefox)
+    if self.config.db: install_xpis(os.path.join(ROOT, 'test/db', self.config.db, 'xpis'), profile.firefox)
+    if self.config.profile: install_xpis(os.path.join(ROOT, 'test/db', self.config.profile, 'xpis'), profile.firefox)
+
+    profile.firefox.set_preference('extensions.zotero.debug.memoryInfo', True)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.testing', self.testing)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.workers', self.workers)
+    profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.caching', self.caching)
     profile.firefox.set_preference('extensions.zotero.debug-bridge.password', self.password)
     profile.firefox.set_preference('dom.max_chrome_script_run_time', self.config.timeout)
     utils.print(f'dom.max_chrome_script_run_time={self.config.timeout}')
@@ -477,7 +584,8 @@ class Zotero:
           profile.firefox.firefox.set_preference(p, v)
 
     if not self.config.first_run:
-      profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.citekeyFormat', '[auth][shorttitle][year]')
+      # force stripping of the pattern
+      profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.citekeyFormat', "[auth:lower][year] | [=forumPost/WebPage][Auth:lower:capitalize][Date:format-date=%Y-%m-%d.%H\\:%M\\:%S:prefix=.][PublicationTitle1_1:lower:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de] | [Auth:lower:capitalize][date:%oY:prefix=.][PublicationTitle1_1:lower:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de]")
 
     if self.client == 'jurism':
       utils.print('\n\n** WORKAROUNDS FOR JURIS-M IN PLACE -- SEE https://github.com/Juris-M/zotero/issues/34 **\n\n')
@@ -540,8 +648,8 @@ class Preferences:
     self.zotero = zotero
     self.pref = {}
     self.prefix = 'translators.better-bibtex.'
-    with open(os.path.join(ROOT, 'gen/preferences/defaults.json')) as f:
-      self.supported = {self.prefix + k: type(v) for (k, v) in json.load(f).items()}
+    with open(os.path.join(os.path.dirname(__file__), 'preferences.json')) as f:
+      self.supported = {self.prefix + pref['var']: type(pref['default']) for pref in json.load(f)}
     self.supported[self.prefix + 'removeStock'] = bool
     self.supported[self.prefix + 'ignorePostscriptErrors'] = bool
 
@@ -553,7 +661,7 @@ class Preferences:
       assert type(value) == self.supported[key], f'Unexpected value of type {type(value)} for preference {key}'
 
     if key == 'translators.better-bibtex.postscript':
-      with open(os.path.join('test/fixtures', value)) as f:
+      with open(os.path.join(FIXTURES, value)) as f:
         value = f.read()
 
     self.pref[key] = value
@@ -578,7 +686,7 @@ class Preferences:
 
     return value
 
-class Pick(collections.MutableMapping):
+class Pick(MutableMapping):
   labels = [
     'article',
     'chapter',

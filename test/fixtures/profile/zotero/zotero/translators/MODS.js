@@ -14,8 +14,7 @@
 	},
 	"inRepository": true,
 	"translatorType": 3,
-	"browserSupport": "gcsibv",
-	"lastUpdated": "2019-05-20 09:05:38"
+	"lastUpdated": "2020-05-29 00:25:03"
 }
 
 
@@ -301,7 +300,10 @@ var marcRelators = {
 	edt: "editor",
 	ctb: "contributor",
 	pbd: "seriesEditor",
-	trl: "translator"
+	trl: "translator",
+	cmp: "composer",
+	lyr: "wordsBy",
+	prf: "performer"
 };
 
 // Item types that are part of a larger work
@@ -423,6 +425,16 @@ function doExport() {
 			else if (creator.creatorType == "seriesEditor") {
 				roleTerm = "pbd";
 			}
+			else if (creator.creatorType == "composer") {
+				roleTerm = "cmp";
+			}
+			else if (creator.creatorType == "wordsBy") {
+				roleTerm = "lyr";
+			}
+			else if (creator.creatorType == "performer") {
+				roleTerm = "prf";
+			}
+
 			else {
 				roleTerm = "ctb";
 			}
@@ -940,15 +952,15 @@ function processExtent(extent, newItem) {
 					if (!rt[i]) continue;
 
 					switch (rt[i].charAt(0).toLowerCase()) {
-					case 'h':
-						hrs = rt[i - 1];
-						break;
-					case 'm':
-						mins = rt[i - 1];
-						break;
-					case 's':
-						secs = rt[i - 1];
-						break;
+						case 'h':
+							hrs = rt[i - 1];
+							break;
+						case 'm':
+							mins = rt[i - 1];
+							break;
+						case 's':
+							secs = rt[i - 1];
+							break;
 					}
 				}
 

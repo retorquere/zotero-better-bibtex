@@ -1,15 +1,15 @@
 
 @article{Yeh1985,
-  title = {Atomic Subshell Photoionization Cross Sections and Asymmetry Parameters: 1⩽{$<$} {{i}}{$>$} {{Z}}⩽ 103},
+  title = {Atomic Subshell Photoionization Cross Sections and Asymmetry Parameters: 1{$\leqslant<$} {{i}}{$>$} {{Z}}{$\leqslant$} 103},
   shorttitle = {Atomic Subshell Photoionization Cross Sections and Asymmetry Parameters},
   author = {Yeh, J. J. and Lindau, I.},
   date = {1985},
   journaltitle = {Atomic data and nuclear data tables},
   volume = {32},
+  number = {1},
   pages = {1--155},
   url = {http://www.sciencedirect.com/science/article/pii/0092640X85900166},
-  urldate = {2013-01-11},
-  number = {1}
+  urldate = {2013-01-11}
 }
 
 

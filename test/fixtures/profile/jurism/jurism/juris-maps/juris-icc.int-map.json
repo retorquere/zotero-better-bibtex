@@ -1,1 +1,1 @@
-{"jurisdictions":[["icc.int","International Criminal Court"]],"courtNames":["Appeals Chamber","Pre-Trial Chamber","Trial Chamber"],"countryCourtLinks":[[0,0],[1,0],[2,0]],"courts":[["appeals.chamber",0],["pre.trial.chamber",1],["trial.chamber",2]],"courtJurisdictionLinks":[[0,0],[0,1],[0,2]]}
+{"courts":[["appeals.chamber","Appeals Chamber"],["pre.trial.chamber","Pre-Trial Chamber"],["trial.chamber","Trial Chamber"]],"jurisdictions":{"default":[["icc.int","International Criminal Court",null,0,1,2]]}}

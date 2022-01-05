@@ -1,15 +1,15 @@
 {
 	"translatorID": "7a81d945-7d9c-4f8c-bd7b-4226c1cab40e",
+	"translatorType": 4,
 	"label": "Dryad Digital Repository",
 	"creator": "Nathan Day",
 	"target": "^https?://(www\\.)?datadryad\\.org/",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2015-06-23 02:09:11"
+	"lastUpdated": "2021-06-08 14:40:00"
 }
 
 /*
@@ -105,7 +105,7 @@ function scrape(doc, url) {
 		item.itemType 	= 'journalArticle';
 		// signal a dataset until supported per
 		// https://www.zotero.org/support/dev/translators/datasets
-		item.extra = '{:itemType: dataset}';
+		item.extra = 'Type: dataset';
 		item.archive = 'Dryad Digital Repository';
 		item.attachments = [];
 		item.shortTitle = '';
@@ -179,7 +179,7 @@ var testCases = [
 				"DOI": "10.5061/dryad.9025",
 				"abstractNote": "The genus Stomoxys Geoffroy (Diptera; Muscidae) contains species of parasitic flies that are of medical and economic importance. We conducted a phylogenetic analysis including 10 representative species of the genus including multiple exemplars, together with the closely related genera Prostomoxys Zumpt, Haematobosca Bezzi, and Haematobia Lepeletier & Serville. Phylogenetic relationships were inferred using maximum likelihood and Bayesian methods from DNA fragments from the cytochrome c oxidase subunit I (COI, 753 bp) and cytochrome b (CytB, 587 bp) mitochondrial genes, and the nuclear ribosomal internal transcribed spacer 2 (ITS2, 426 bp). The combination of mitochondrial and nuclear data strongly supports the paraphyly of the genus Stomoxys because of the inclusion of Prostomoxys saegerae Zumpt. This unexpected result suggests that Prostomoxys should be renamed into Stomoxys. Also, the deep molecular divergence observed between the subspecies Stomoxys niger niger Macquart and S. niger bilineatus Grünbreg led us to propose that they should rather be considered as distinct species, in agreement with ecological data. Bayesian phylogenetic analyses support three distinct lineages within the genus Stomoxys with a strong biogeographical component. The first lineage consists solely of the divergent Asian species S. indicus Picard which appears as the sister-group to all remaining Stomoxys species. The second clade groups the strictly African species Stomoxys inornatus Grünbreg, Stomoxys transvittatus Villeneuve, Stomoxys omega Newstead, and Stomoxys pallidus Roubaud. Finally, the third clade includes both African occurring and more widespread species such as the livestock pest Stomoxys calcitrans Linnaeus. Divergence time estimates indicate that the genus Stomoxys originated in the late Oligocene around 30 million years ago, with the major lineages diversifying in the Early Miocene between 20 and 15 million years ago at a time when temperate forests developed in the Northern Hemisphere.",
 				"archive": "Dryad Digital Repository",
-				"extra": "{:itemType: dataset}",
+				"extra": "Type: dataset",
 				"itemID": "10.5061/dryad.9025",
 				"libraryCatalog": "datadryad.org",
 				"attachments": [],
@@ -241,7 +241,7 @@ var testCases = [
 				"DOI": "10.5061/dryad.9025/2",
 				"abstractNote": "This phylogram is the 50% majority\r\nrule consensus tree presented in Figure 1. It was obtained with Bayesian inference using MrBayes under the GTR + G model. Numbers at nodes indicate posterior probabilities (PP).",
 				"archive": "Dryad Digital Repository",
-				"extra": "{:itemType: dataset}",
+				"extra": "Type: dataset",
 				"itemID": "10.5061/dryad.9025/2",
 				"libraryCatalog": "datadryad.org",
 				"rights": "http://creativecommons.org/publicdomain/zero/1.0/",
@@ -300,7 +300,7 @@ var testCases = [
 				"DOI": "10.5061/dryad.9025",
 				"abstractNote": "The genus Stomoxys Geoffroy (Diptera; Muscidae) contains species of parasitic flies that are of medical and economic importance. We conducted a phylogenetic analysis including 10 representative species of the genus including multiple exemplars, together with the closely related genera Prostomoxys Zumpt, Haematobosca Bezzi, and Haematobia Lepeletier & Serville. Phylogenetic relationships were inferred using maximum likelihood and Bayesian methods from DNA fragments from the cytochrome c oxidase subunit I (COI, 753 bp) and cytochrome b (CytB, 587 bp) mitochondrial genes, and the nuclear ribosomal internal transcribed spacer 2 (ITS2, 426 bp). The combination of mitochondrial and nuclear data strongly supports the paraphyly of the genus Stomoxys because of the inclusion of Prostomoxys saegerae Zumpt. This unexpected result suggests that Prostomoxys should be renamed into Stomoxys. Also, the deep molecular divergence observed between the subspecies Stomoxys niger niger Macquart and S. niger bilineatus Grünbreg led us to propose that they should rather be considered as distinct species, in agreement with ecological data. Bayesian phylogenetic analyses support three distinct lineages within the genus Stomoxys with a strong biogeographical component. The first lineage consists solely of the divergent Asian species S. indicus Picard which appears as the sister-group to all remaining Stomoxys species. The second clade groups the strictly African species Stomoxys inornatus Grünbreg, Stomoxys transvittatus Villeneuve, Stomoxys omega Newstead, and Stomoxys pallidus Roubaud. Finally, the third clade includes both African occurring and more widespread species such as the livestock pest Stomoxys calcitrans Linnaeus. Divergence time estimates indicate that the genus Stomoxys originated in the late Oligocene around 30 million years ago, with the major lineages diversifying in the Early Miocene between 20 and 15 million years ago at a time when temperate forests developed in the Northern Hemisphere.",
 				"archive": "Dryad Digital Repository",
-				"extra": "{:itemType: dataset}",
+				"extra": "Type: dataset",
 				"itemID": "10.5061/dryad.9025",
 				"libraryCatalog": "datadryad.org",
 				"attachments": [],

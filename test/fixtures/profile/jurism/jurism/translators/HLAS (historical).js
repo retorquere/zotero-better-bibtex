@@ -47,7 +47,7 @@ function detectWeb(doc, url) {
 function doWeb(doc, url){
 
 	var articles = new Array();
-	if(detectWeb(doc, url) == "multiple") { 
+	if (detectWeb(doc, url) == "multiple") { 
 		var items = {};
 		var titlerows = doc.evaluate('//p/table/tbody/tr[td/a[contains(@href, "/cgi-bin/query/D?hlasbib")]]', doc, null, XPathResult.ANY_TYPE, null);
 		while (titlerow = titlerows.iterateNext()) {

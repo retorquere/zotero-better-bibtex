@@ -1,27 +1,49 @@
 {
 	"translatorID": "594ebe3c-90a0-4830-83bc-9502825a6810",
+	"translatorType": 1,
 	"label": "Web of Science Tagged",
 	"creator": "Michael Berkowitz, Avram Lyon",
 	"target": "txt",
 	"minVersion": "2.1",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 1,
-	"browserSupport": "gcsibv",
-	"lastUpdated": "2015-06-02 21:33:13"
+	"lastUpdated": "2020-03-28 23:05:00"
 }
+
+/*
+	***** BEGIN LICENSE BLOCK *****
+
+	Copyright © 2015-2019 Michael Berkowitz, Avram Lyon
+
+	This file is part of Zotero.
+
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Zotero is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU Affero General Public License for more details.
+
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
+
+	***** END LICENSE BLOCK *****
+*/
 
 function detectImport() {
 	var line;
 	var i = 0;
-	while((line = Zotero.read()) !== false) {
+	while ((line = Zotero.read()) !== false) {
 		line = line.replace(/^\s+/, "");
-		if(line != "") {
-			if(line.substr(0, 4).match(/^PT [A-Z]/)) {
+		if (line != "") {
+			if (line.substr(0, 4).match(/^PT [A-Z]/)) {
 				return true;
 			} else {
-				if(i++ > 3) {
+				if (i++ > 3) {
 					return false;
 				}
 			}
@@ -44,7 +66,7 @@ function processTag(item, field, content) {
 		}
 	} else if ((field == "AF" || field == "AU")) {
 		//Z.debug("author: " + content);
-		authors = content.split("\n");
+		const authors = content.split("\n");
 		for (var i=0; i<authors.length; i++) {
 			var author = authors[i];
 			author = author.replace(/\s+\(.*/, '');
@@ -52,7 +74,7 @@ function processTag(item, field, content) {
 		}
 	} else if ((field == "BE")) {
 		//Z.debug(content);
-		authors = content.split("\n");
+		const authors = content.split("\n");
 		for (var i=0; i<authors.length; i++) {
 			var author = authors[i];
 			item.creators[1].push(ZU.cleanAuthor(author, "editor", author.match(/,/)));
@@ -76,7 +98,7 @@ function processTag(item, field, content) {
 		}
 		var year = item.date.match(/\d{4}/);
 		// If we have a double year, eliminate one
-		if (year && item.date.replace(year[0],"").indexOf(year[0]) !== -1)
+		if (year && item.date.replace(year[0],"").includes(year[0]))
 			item.date = item.date.replace(year[0],"");
 	} else if (field == "VL") {
 		item.volume = content;
@@ -149,7 +171,7 @@ function completeItem(item) {
 	
 	if (item.articleNumber){
 		if (!item.pages) item.pages = item.articleNumber;
-		delete item.articleNumber
+		delete item.articleNumber;
 	}
 	
 	// Fix caps, trim in various places
@@ -175,13 +197,13 @@ function doImport(text) {
 	var linesRead = 0, bufferMax = 100;
 	var line = Zotero.read();
 	// first valid line is type
-	while(line !== false && line.replace(/^\s+/, "").substr(0, 6).search(/^PT [A-Z]/) == -1) {
-		if(linesRead < bufferMax) debugBuffer += line + '\n';
+	while (line !== false && line.replace(/^\s+/, "").substr(0, 6).search(/^PT [A-Z]/) == -1) {
+		if (linesRead < bufferMax) debugBuffer += line + '\n';
 		linesRead++;
 		line = Zotero.read();
 	}
 
-	if(line === false) {
+	if (line === false) {
 		Z.debug("No valid data found\n" +
 			"Read " + linesRead + " lines.\n" +
 			"Here are the first " + (linesRead<bufferMax?linesRead:bufferMax) + " lines:\n" +
@@ -200,31 +222,29 @@ function doImport(text) {
 	var data = line.substr(3);
 	
 	var rawLine;
-	while((rawLine = Zotero.read()) !== false) {    // until EOF
-		// trim leading space if this line is not part of a note
-		line = rawLine.replace(/^\s+/, "");
-		//Z.debug("line: " + line);
-		var split = line.match(/^([A-Z0-9]{2})\s(?:([^\n]*))?/);
+	while ((rawLine = Zotero.read()) !== false) {    // until EOF
+		//Z.debug("line: " + rawLine);
+		let split = rawLine.match(/^([A-Z0-9]{2})\s(?:([^\n]*))?/);
 		// Force a match for ER
-		if (line == "ER") split = ["","ER",""];
-		if(split) {
+		if (rawLine == "ER") split = ["","ER",""];
+		if (split) {
 			// if this line is a tag, take a look at the previous line to map
 			// its tag
-			if(tag) {
+			if (tag) {
 				//Zotero.debug("tag: '"+tag+"'; data: '"+data+"'");
 				processTag(item, tag, data);
 			}
 
 			// then fetch the tag and data from this line
 			tag = split[1];
-			data = split[2];
+			data = split[2] || '';
 			
-			if(tag == "ER") {	       // ER signals end of reference
+			if (tag == "ER") {	       // ER signals end of reference
 				// unset info
 				tag = data = false;
 				completeItem(item);
 			}
-			if(tag == "PT") {
+			if (tag == "PT") {
 				// new item
 				item = new Zotero.Item();
 				item.creators = [{"AU":[], "AF":[]}, []];
@@ -233,13 +253,13 @@ function doImport(text) {
 			}
 		} else {
 			// otherwise, assume this is data from the previous line continued
-			if(tag == "AU" || tag == "AF" || tag == "BE") {
+			if (tag == "AU" || tag == "AF" || tag == "BE") {
 				//Z.debug(rawLine);
 				// preserve line endings for AU fields
 				data += "\n" + rawLine;
-			} else if(tag) {
+			} else if (tag) {
 				// otherwise, concatenate and avoid extra spaces
-				if(data[data.length-1] == " " || rawLine[0] == " ") {
+				if (data[data.length-1] == " " || rawLine[0] == " ") {
 					data += rawLine;
 				} else {
 					data += " "+rawLine;
@@ -248,7 +268,7 @@ function doImport(text) {
 		}
 	}
 
-	if(tag && tag != "ER") {	// save any unprocessed tags
+	if (tag && tag != "ER") {	// save any unprocessed tags
 		//Zotero.debug(tag);
 		processTag(item, tag, data);
 		completeItem(item);
@@ -849,6 +869,36 @@ var testCases = [
 				"pages": "221-230",
 				"publicationTitle": "Hydrobiologia",
 				"volume": "700",
+				"attachments": [],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "import",
+		"input": "FN Clarivate Analytics Web of Science\nVR 1.0\nPT P\nAU YANG Y\n   LI W\nTI Use of reagent for detecting syntaxin 12 protein autoantibodies in\n   preparation of lung cancer screening kit\nPN CN110836969-A\nAE UNIV SICHUAN WEST CHINA HOSPITAL\nAB \n   NOVELTY - Use of reagent for detecting syntaxin 12 (STX12) protein\n   autoantibodies, is claimed in preparation of a lung cancer screening\n   kit.\n   USE - The reagent for detecting STX12 protein autoantibodies is useful\n   in preparation of a lung cancer screening kit (claimed).\n   ADVANTAGE - The reagent realizes effective screening of lung cancer and\n   detects that the autoantibody level of the STX12 protein in the serum of\n   lung cancer patients is significantly lower than that of healthy\n   patients.\nZ9 0\nUT DIIDW:202018799C\nER\n\nEF",
+		"items": [
+			{
+				"itemType": "patent",
+				"title": "Use of reagent for detecting syntaxin 12 protein autoantibodies in preparation of lung cancer screening kit",
+				"creators": [
+					{
+						"firstName": "YANG",
+						"lastName": "Y",
+						"creatorType": "inventor"
+					},
+					{
+						"firstName": "LI",
+						"lastName": "W",
+						"creatorType": "inventor"
+					}
+				],
+				"abstractNote": "NOVELTY - Use of reagent for detecting syntaxin 12 (STX12) protein autoantibodies, is claimed in preparation of a lung cancer screening kit. USE - The reagent for detecting STX12 protein autoantibodies is useful in preparation of a lung cancer screening kit (claimed). ADVANTAGE - The reagent realizes effective screening of lung cancer and detects that the autoantibody level of the STX12 protein in the serum of lung cancer patients is significantly lower than that of healthy patients.",
+				"assignee": "UNIV SICHUAN WEST CHINA HOSPITAL",
+				"extra": "DIIDW:202018799C",
+				"patentNumber": "CN110836969-A",
 				"attachments": [],
 				"tags": [],
 				"notes": [],

@@ -4,7 +4,7 @@
   {{ .Content }}
 {{end}}
 
-{{ if or (eq .Kind "taxonomy") (eq .Kind "taxonomyTerm") }}
+{{ if or (eq .Kind "taxonomy") (eq .Kind "taxonomyTerm") (eq .Kind "term") }}
 <ul>
   {{ range .Pages }}
     <li>{{ template "page-path" dict "currentPage" . "id" .UniqueID }}</li>

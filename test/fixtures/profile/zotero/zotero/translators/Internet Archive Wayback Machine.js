@@ -9,7 +9,7 @@
 	"priority": 100,
 	"inRepository": true,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2019-12-07 16:55:00"
+	"lastUpdated": "2021-06-12 13:40:00"
 }
 
 /*
@@ -36,17 +36,15 @@
 */
 
 
-// attr()/text() v2
-// eslint-disable-next-line
-function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
-
-
 function detectWeb(doc, url) {
 	if (url.match(/\/web\/\d{14}\/http/)) {
 		return "webpage";
 	}
 	if (getSearchResults(doc, true)) {
 		return "multiple";
+	}
+	else if (url.includes('/web/*/')) {
+		Z.monitorDOMChanges(doc.querySelector('#react-wayback-search'));
 	}
 	return false;
 }
@@ -147,6 +145,7 @@ var testCases = [
 	{
 		"type": "web",
 		"url": "https://web.archive.org/web/*/zotero",
+		"defer": true,
 		"items": "multiple"
 	}
 ]

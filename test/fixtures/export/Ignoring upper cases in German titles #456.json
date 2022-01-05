@@ -1,41 +1,25 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "url",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "idle",
-      "autoExportIdleWait": 10,
       "bibtexURL": "note",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[auth][origyear]",
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "jabrefFormat": 0,
       "keyConflictPolicy": "change",
-      "postscript": "",
-      "skipFields": "file,isbn,issn,abstract,keywords,copyright,language,timestamp,urldate,note",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "warnBulkModify": 10
-    },
-    "release": "1.6.36-travis-2437"
+      "skipFields": "file,isbn,issn,abstract,keywords,copyright,language,timestamp,urldate,note"
+    }
   },
   "items": [
     {
       "ISBN": "978-3-322-99963-4 978-3-322-99962-7",
       "accessDate": "2016-01-23 11:04:33",
-      "attachments": [],
-      "bookTitle": "Sozialpolitik und Sozialstaat: Soziologische Analysen",
       "creators": [
         {
           "creatorType": "author",
@@ -49,8 +33,10 @@
         }
       ],
       "date": "[1990]2002",
-      "extra": "DOI: 10.1007/978-3-322-99962-7_7",
-      "itemID": 362,
+      "extra": [
+        "DOI: 10.1007/978-3-322-99962-7_7"
+      ],
+      "itemID": 1,
       "itemType": "bookSection",
       "language": "de",
       "libraryCatalog": "link.springer.com",
@@ -64,8 +50,6 @@
     {
       "ISBN": "978-3-322-99963-4 978-3-322-99962-7",
       "accessDate": "2016-01-23 11:04:33",
-      "attachments": [],
-      "bookTitle": "Sozialpolitik und Sozialstaat: Soziologische Analysen",
       "creators": [
         {
           "creatorType": "author",
@@ -79,8 +63,10 @@
         }
       ],
       "date": "[1997]2002",
-      "extra": "DOI: 10.1007/978-3-322-99962-7_11",
-      "itemID": 386,
+      "extra": [
+        "DOI: 10.1007/978-3-322-99962-7_11"
+      ],
+      "itemID": 2,
       "itemType": "bookSection",
       "language": "de",
       "libraryCatalog": "link.springer.com",

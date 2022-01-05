@@ -1,76 +1,26 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
-      "ascii": "",
-      "asciiBibLaTeX": false,
       "asciiBibTeX": false,
-      "autoAbbrev": false,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "idle",
-      "autoExportDelay": 1,
-      "autoExportIdleWait": 10,
-      "autoPin": false,
-      "auxImport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[auth.etal].[year]",
-      "citeprocNoteCitekey": false,
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
       "exportBraceProtection": false,
       "exportTitleCase": false,
-      "git": "config",
-      "importBibTeXStrings": true,
       "itemObserverDelay": 100,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "keyScope": "library",
-      "kuroshiro": false,
-      "parseParticles": true,
       "postscript": "// Add `pagetotal' field for `book' items in BibTeX bibliography\nif (Translator.BetterBibTeX) {\n\tswitch (item.itemType) {\n\t\tcase 'book':\n\t\t\tthis.add({ name: 'pagetotal', value: item.numPages });\n\t\t\tbreak;\n\t}\n}\n\n// https://github.com/retorquere/zotero-better-bibtex/issues/512#issuecomment-489435978\nif (Translator.BetterTeX) { // covers both Translator.BetterBibTeX and Translator.BetterBibLaTeX\n\tvar order = [\n\t\t'author',\n\t\t'title',\n\t\t'type', // techreport\n\t\t'institution', // techreport\n\t\t'journal',\n\t\t'editor',\n\t\t'booktitle',\n\t\t'edition',\n\t\t'series',\n\t\t'address',\n\t\t'publisher',\n\t\t'year',\n\t\t'volume',\n\t\t'number',\n\t\t'pages',\n\t\t'pagetotal',\n\t\t'note',\n\t\t'doi',\n\t\t'url',\n\t\t'isbn',\n\t\t'language',\n\t\t'abstract',\n\t];\n\n\tconst keys = Object.keys(this.has)\n\tfor (const field of keys.sort((a, b) => ((order.indexOf(a) + 1) || (keys.length + order.length + 1)) - ((order.indexOf(b) + 1) || (keys.length + order.length + 1)))) {\n\t\tconst value = this.has[field]\n\t\tdelete this.has[field]\n\t\tthis.has[field] = value\n\t}\n}\n",
-      "qualityReport": false,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "rawLaTag": "#LaTeX",
-      "relativeFilePaths": false,
-      "scrubDatabase": false,
-      "skipFields": "keywords,file,copyright,shorttitle",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.1.84",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.66",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "en-US",
-        "oscpu": "Windows NT 10.0; WOW64",
-        "platform": "Win32",
-        "version": "5.0.66"
-      }
+      "skipFields": "keywords,file,copyright,shorttitle"
     }
   },
   "items": [
     {
       "ISBN": "5-9221-0122-6",
-      "attachments": [],
-      "citekey": "Landafshits.V7",
       "creators": [
         {
           "creatorType": "author",
@@ -84,23 +34,19 @@
         }
       ],
       "date": "2007",
-      "dateAdded": "2019-05-05T10:48:49Z",
-      "dateModified": "2019-05-06T03:01:51Z",
       "edition": "5",
-      "extra": "Citation Key: Landafshits.V7",
-      "itemID": 660,
+      "extra": [
+        "Citation Key: Landafshits.V7"
+      ],
+      "itemID": 1,
       "itemType": "book",
       "language": "russian",
-      "notes": [],
       "numPages": "259",
       "numberOfVolumes": "10",
       "place": "\u041c.",
       "publisher": "\u0424\u0438\u0437\u043c\u0430\u0442\u043b\u0438\u0442",
-      "relations": [],
       "series": "\u0422\u0435\u043e\u0440\u0435\u0442\u0438\u0447\u0435\u0441\u043a\u0430\u044f \u0444\u0438\u0437\u0438\u043a\u0430",
-      "tags": [],
       "title": "\u0422\u0435\u043e\u0440\u0438\u044f \u0443\u043f\u0440\u0443\u0433\u043e\u0441\u0442\u0438",
-      "uri": "http://zotero.org/users/2263031/items/2AZZBNTJ",
       "volume": "7"
     }
   ]

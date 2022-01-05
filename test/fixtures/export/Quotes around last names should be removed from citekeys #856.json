@@ -1,54 +1,16 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
       "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportIdleWait": 10,
-      "biblatexExtendedDateFormat": true,
       "biblatexExtendedNameFormat": true,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[auth][shorttitle][year]",
-      "citeprocNoteCitekey": false,
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "exportTitleCase": true,
       "itemObserverDelay": 100,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "parseParticles": true,
-      "postscript": "",
-      "qualityReport": false,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "scrubDatabase": false,
-      "skipFields": "rights",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.0.60.5193.issue-856",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.33",
-        "locale": "en-US",
-        "oscpu": "Intel Mac OS X 10.12",
-        "platform": "MacIntel",
-        "version": "5.0.33"
-      }
+      "skipFields": "rights"
     }
   },
   "items": [
@@ -61,9 +23,7 @@
         }
       ],
       "date": "2017",
-      "dateAdded": "2017-12-26 15:49:33",
-      "dateModified": "2017-12-26 16:05:02",
-      "itemID": 362,
+      "itemID": 1,
       "itemType": "journalArticle",
       "title": "Title"
     }

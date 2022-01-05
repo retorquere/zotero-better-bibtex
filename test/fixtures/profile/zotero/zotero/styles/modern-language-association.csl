@@ -12,7 +12,7 @@
     <category citation-format="author"/>
     <category field="generic-base"/>
     <summary>This style adheres to the MLA 8th edition handbook. Follows the structure of references as outlined in the MLA Manual closely</summary>
-    <updated>2019-10-11T02:36:27+00:00</updated>
+    <updated>2020-08-24T03:25:13+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -89,26 +89,40 @@
     <text variable="container-title" font-style="italic" text-case="title"/>
   </macro>
   <macro name="other-contributors">
-    <group delimiter=", ">
-      <choose>
-        <if variable="container-title" match="any">
-          <names variable="container-author editor illustrator interviewer translator" delimiter=", ">
+    <choose>
+      <if variable="container-title" match="any">
+        <group delimiter=", ">
+          <names variable="container-author" delimiter=", ">
             <label form="verb" suffix=" "/>
             <name and="text"/>
           </names>
-        </if>
-        <else>
-          <names variable="container-author editor illustrator interviewer translator" delimiter=", ">
+          <names variable="editor translator" delimiter=", ">
+            <label form="verb" suffix=" "/>
+            <name and="text"/>
+          </names>
+          <names variable="director illustrator interviewer" delimiter=", ">
+            <label form="verb" suffix=" "/>
+            <name and="text"/>
+          </names>
+        </group>
+      </if>
+      <else>
+        <group delimiter=", ">
+          <names variable="container-author" delimiter=", ">
             <label form="verb" suffix=" " text-case="capitalize-first"/>
             <name and="text"/>
           </names>
-        </else>
-      </choose>
-      <names variable="director">
-        <label form="verb" suffix=" " text-case="capitalize-first"/>
-        <name and="text"/>
-      </names>
-    </group>
+          <names variable="editor translator" delimiter=", ">
+            <label form="verb" suffix=" " text-case="capitalize-first"/>
+            <name and="text"/>
+          </names>
+          <names variable="director illustrator interviewer" delimiter=", ">
+            <label form="verb" suffix=" " text-case="capitalize-first"/>
+            <name and="text"/>
+          </names>
+        </group>
+      </else>
+    </choose>
   </macro>
   <macro name="version">
     <group delimiter=", ">

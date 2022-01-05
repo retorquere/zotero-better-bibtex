@@ -1,80 +1,20 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
-      "ascii": "",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportDelay": 1,
-      "autoExportIdleWait": 10,
-      "autoPin": false,
-      "automaticTags": true,
-      "auxImport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
-      "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
-      "citeprocNoteCitekey": false,
-      "client": "zotero",
-      "csquotes": "",
-      "debugLogDir": "",
-      "exportBibTeXStrings": "off",
-      "exportBraceProtection": true,
-      "exportTitleCase": true,
-      "git": "config",
-      "ignorePostscriptErrors": true,
-      "importBibTeXStrings": true,
-      "importCaseProtection": "as-needed",
-      "importSentenceCase": "on+guess",
-      "itemObserverDelay": 5,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "keyScope": "library",
-      "kuroshiro": false,
-      "mapMath": "",
-      "mapText": "",
-      "mapUnicode": "conservative",
-      "newTranslatorsAskRestart": true,
-      "parseParticles": true,
-      "platform": "win",
-      "postscript": "",
-      "qualityReport": false,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "rawLaTag": "#LaTeX",
-      "relativeFilePaths": false,
-      "removeStock": false,
-      "scrubDatabase": false,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
-      "warnBulkModify": 10
+      "citekeyFormat": "[auth:lower][shorttitle3_3][year]"
     }
   },
   "items": [
     {
       "abstractNote": "To mark the 20th anniversary of the (14 Aug 1991) commencement of hep-th@xxx.lanl.gov (now arXiv.org), I've adapted this article from one that first appeared in Physics World (2008), was later reprinted (with permission) in Learned Publishing (2009), but never appeared in arXiv. I trace some historical context and early development of the resource, its later trajectory, and close with some thoughts about the future. This version is closer to my original draft, with some updates for this occasion, plus an astounding $2^5$ added footnotes.",
       "accessDate": "2020-01-05T21:41:05Z",
-      "attachments": [],
       "citationKey": "ginspargItWasTwenty2011",
-      "citekey": "ginspargItWasTwenty2011",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -83,22 +23,16 @@
         }
       ],
       "date": "2011-09-12",
-      "dateAdded": "2020-01-05T21:41:05Z",
-      "dateModified": "2020-01-05T21:41:48Z",
-      "extra": "tex.ids: ginspargItWasTwentyone2011\narXiv: 1108.2700",
+      "extra": [
+        "tex.ids= ginspargItWasTwentyone2011",
+        "arXiv: 1108.2700"
+      ],
       "itemID": 1,
       "itemType": "journalArticle",
-      "key": "UQENV5R5",
       "libraryCatalog": "arXiv.org",
-      "libraryID": 1,
-      "notes": [],
       "publicationTitle": "arXiv:1108.2700 [astro-ph, physics:cond-mat, physics:gr-qc, physics:hep-ph, physics:hep-th, physics:physics, physics:quant-ph]",
-      "relations": [],
-      "tags": [],
       "title": "It was twenty years ago today ...",
-      "uri": "http://zotero.org/users/local/xRq3gKcT/items/UQENV5R5",
-      "url": "http://arxiv.org/abs/1108.2700",
-      "version": 0
+      "url": "http://arxiv.org/abs/1108.2700"
     }
   ]
 }

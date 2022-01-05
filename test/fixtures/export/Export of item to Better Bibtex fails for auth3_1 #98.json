@@ -1,17 +1,14 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "Export collections": true,
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
       "bibtexURL": "note",
       "citekeyFormat": "[auth3][auth3_1][auth3_2][auth3_3][auth3_4][shortyear]",
-      "jabrefFormat": 0,
       "skipFields": "url,issn"
     }
   },
@@ -24,20 +21,21 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Horst-Moritz",
           "lastName": "Maus"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Andre",
           "lastName": "Seyfarth"
         }
       ],
       "date": "10/06/2014",
-      "extra": "PMID: 25056215",
+      "extra": [
+        "PMID: 25056215"
+      ],
       "issue": "99",
+      "itemID": 1,
       "itemType": "journalArticle",
       "journalAbbreviation": "J. R. Soc. Interface",
       "language": "en",
@@ -46,11 +44,21 @@
       "publicationTitle": "Journal of The Royal Society Interface",
       "shortTitle": "Walking in circles",
       "tags": [
-        "locomotion",
-        "slip",
-        "template model",
-        "veering",
-        "walking"
+        {
+          "tag": "locomotion"
+        },
+        {
+          "tag": "slip"
+        },
+        {
+          "tag": "template model"
+        },
+        {
+          "tag": "veering"
+        },
+        {
+          "tag": "walking"
+        }
       ],
       "title": "Walking in circles: a modelling approach",
       "volume": "11"

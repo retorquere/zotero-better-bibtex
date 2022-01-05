@@ -1,43 +1,35 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "Preserve BibTeX variables": true,
-      "exportFileData": false,
-      "exportNotes": true,
-      "preserveBibTeXVariables": true
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "url",
       "autoAbbrevStyle": "http://www.zotero.org/styles/physical-review-d",
       "bibtexURL": "note",
       "citekeyFormat": "[auth][year]",
-      "jabrefFormat": 0,
       "skipFields": "file,keywords,abstract,copyright,language,timestamp"
-    },
-    "release": "0.10.22"
+    }
   },
   "items": [
     {
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Roger D.",
           "lastName": "Blandford"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Kip S.",
           "lastName": "Thorne"
         }
       ],
       "date": "2006",
-      "itemID": 124,
+      "itemID": 1,
       "itemType": "book",
       "publisher": "Caltech",
       "title": "Applications of Classical Physics"

@@ -1,73 +1,10 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
-    },
+    "options": {},
     "preferences": {
-      "DOIandURL": "both",
-      "ascii": "",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportDelay": 1,
-      "autoExportIdleWait": 10,
-      "autoPin": false,
-      "auxImport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
-      "citekeyFormat": "[auth][year]",
-      "citeprocNoteCitekey": false,
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "exportBraceProtection": true,
-      "exportTitleCase": true,
-      "git": "config",
-      "importBibTeXStrings": true,
-      "itemObserverDelay": 100,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "keyScope": "library",
-      "kuroshiro": false,
-      "mapMath": "",
-      "mapText": "",
-      "mapUnicode": "conservative",
-      "parseParticles": true,
-      "postscript": "",
-      "qualityReport": false,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "rawLaTag": "#LaTeX",
-      "relativeFilePaths": false,
-      "scrubDatabase": false,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.1.118.emile.limonia",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.71",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "en-US",
-        "oscpu": "Intel Mac OS X 10.14",
-        "platform": "MacIntel",
-        "version": "5.0.71"
-      }
+      "citekeyFormat": "[auth][year]"
     }
   },
   "items": [
@@ -75,10 +12,7 @@
       "DOI": "10.1016/j.tsf.2009.05.016",
       "ISSN": "0040-6090",
       "abstractNote": "In this study, electrochromic properties of cuprous oxide nanoparticles, self-accumulated on the surface of a sol-gel silica thin film, have been investigated by using UV-visible spectrophotometry in a lithium-based electrolyte cell. The cuprous oxide nanoparticles showed a reversible electrochromic process with a thin film transmission reduction of about 50% in a narrow wavelength range of 400-500\u00c2nm, as compared to the bleached state of the film. Using optical transmission measurement, we have found that the band gap energy of the films reduced from 2.7\u00c2eV for Cu2O to 1.3\u00c2eV for CuO by increasing the annealing temperature from 220 to 300\u00c2\u00b0C in an N2 environment for 1\u00c2h. Study of the band gaps of the as-deposited, colored and bleached states of the nanoparticles showed that the electrochromic process corresponded to a reversible red-ox conversion of Cu2O to CuO on the film surface, in addition to the reversible red-ox reaction of the Cu2O film. X-ray photoelectron spectroscopy indicated that the copper oxide nanoparticles accumulated on the film surface, after annealing the samples at 200\u00c2\u00b0C. Surface morphology of the films and particle size of the surface copper oxides have also been studied by atomic force microscopy analysis. The copper oxide nanoparticles with average size of about 100\u00c2nm increased the surface area ratio and surface roughness of the silica films from 2.2% and 0.8\u00c2nm to 51% and 21\u00c2nm, respectively.",
-      "attachments": [],
       "citationKey": "Akhavan_2009",
-      "citekey": "Akhavan_2009",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -97,29 +31,37 @@
         }
       ],
       "date": "2009",
-      "dateAdded": "2019-07-20T22:24:11Z",
-      "dateModified": "2019-07-20T22:24:11Z",
-      "extra": "Citation Key: Akhavan_2009\ntex.owner: Francesco\ntex.timestamp: 2010.03.08",
+      "extra": [
+        "Citation Key: Akhavan_2009",
+        "tex.owner: Francesco",
+        "tex.timestamp: 2010.03.08"
+      ],
       "issue": "24",
-      "itemID": 317,
+      "itemID": 1,
       "itemType": "journalArticle",
-      "key": "TRZMTC7T",
-      "libraryID": 1,
-      "notes": [],
-      "pages": "6700-6706",
+      "pages": "6700\u20136706",
       "publicationTitle": "Thin Solid Films",
-      "relations": [],
       "tags": [
-        "Band-gap energy",
-        "Copper oxides",
-        "Electrochromic properties",
-        "Nanoparticles",
-        "Optical properties",
-        "Sol-gel deposition"
+        {
+          "tag": "Band-gap energy"
+        },
+        {
+          "tag": "Copper oxides"
+        },
+        {
+          "tag": "Electrochromic properties"
+        },
+        {
+          "tag": "Nanoparticles"
+        },
+        {
+          "tag": "Optical properties"
+        },
+        {
+          "tag": "Sol-gel deposition"
+        }
       ],
       "title": "Synthesis and electrochromic study of sol-gel cuprous oxide nanoparticles accumulated on silica thin film",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/TRZMTC7T",
-      "version": 0,
       "volume": "517"
     }
   ]

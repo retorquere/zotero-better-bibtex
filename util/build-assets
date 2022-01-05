@@ -27,6 +27,7 @@ if action not in ['stash', 'fetch', 'pop']:
 generated = [
   'gen/translators.json',
   'gen/preferences/defaults.json',
+  'gen/preferences/preferences.json',
   'gen/update.rdf',
 ]
 

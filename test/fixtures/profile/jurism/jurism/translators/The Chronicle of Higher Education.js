@@ -25,7 +25,7 @@ function detectWeb(doc, url) {
 	   of the translator; they don't appear to still be on the Chronicle site, but
 	   they might persist in older URLs. */
 	var articleRegexp = /\/(daily|weekly|article|blogPost|blogs\/\w+)\/[^/]+\// ;
-	if(articleRegexp.test(url) && ZU.xpathText(doc, '//h1')) {
+	if (articleRegexp.test(url) && ZU.xpathText(doc, '//h1')) {
 		var section = url.match(articleRegexp);
 		switch (section[1]) {
 			case "weekly":
@@ -104,12 +104,12 @@ function scrape (doc, url){
 		}
 		
 		// Behavior for some items is different:
-		if(type === "blogPost") {
+		if (type === "blogPost") {
 			item.date = ZU.xpathText(doc, '//div[@class="blog__author"]/time');
 			item.title = ZU.xpathText(doc, '//h2[@class="blog__title"]');
 			//legacy blogs
 			if (!item.title) item.title = ZU.xpathText(doc, '//h1[@class="title"]')
-			if(!item.date) item.date= ZU.xpathText(doc, '//p[@class="time"]');
+			if (!item.date) item.date= ZU.xpathText(doc, '//p[@class="time"]');
 			
 			var blogname = ZU.xpathText(doc, '//div[@class="blog__mast"]//h2[contains(@class, "blog__name")]');
 			if (blogname) item.publicationTitle = item.publicationTitle + " Blogs: " + blogname;
@@ -143,7 +143,7 @@ function scrape (doc, url){
 
 function parseAuthors(author) {
 		// Sometimes we have "By Author and Author"
-		if(author.substr(0, 3).toLowerCase() == "by ") {
+		if (author.substr(0, 3).toLowerCase() == "by ") {
 			author = author.substr(3);
 		}
 		

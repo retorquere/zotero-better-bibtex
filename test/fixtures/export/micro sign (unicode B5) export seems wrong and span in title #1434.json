@@ -1,0 +1,45 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "asciiBibLaTeX": true,
+      "citekeyFormat": "[auth]_[title]_[year]",
+      "itemObserverDelay": 100,
+      "workers": 4
+    }
+  },
+  "items": [
+    {
+      "abstractNote": "This is an example\nThe first mu should be a greek mu which will turn out italic, the second is a textmu which schould look the same as the surrounding text",
+      "citationKey": "author_-d_2025",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "P. A.",
+          "lastName": "Author"
+        }
+      ],
+      "date": "2025",
+      "itemID": 1,
+      "itemType": "conferencePaper",
+      "language": "Dutch",
+      "pages": "123  ----      432",
+      "publicationTitle": "Proceedings of the test",
+      "title": "<span class=\"novase\">A-D test </span>title with lower case greek letter \u03bcPC4570, which is not the same as 1\u00b5F"
+    },
+    {
+      "citationKey": "noauthor_nec_nodate",
+      "itemID": 2,
+      "itemType": "document",
+      "notes": [
+        "<p>In Yamaha tuner IC101 en IC102</p>"
+      ],
+      "title": "NEC \u00b5PC577H Tri state hex buffers"
+    }
+  ]
+}

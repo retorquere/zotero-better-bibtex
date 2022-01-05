@@ -92,7 +92,7 @@ function Remplace(expr,a,b) {
  
  //We're currrently not using this - leaving this here in case problems come up
 function getAuthors(newItem, author, managed) {
-	if(managed=="true") newItem.creators.push(Zotero.Utilities.cleanAuthor(author, "author"));
+	if (managed=="true") newItem.creators.push(Zotero.Utilities.cleanAuthor(author, "author"));
 }
 
 /**
@@ -103,7 +103,7 @@ function getAuthors(newItem, author, managed) {
 function getTag(newItem, book) {
 	var Tags = new Array();
 	
-	for(var i=0; i<book.subject.length(); i++) {
+	for (var i=0; i<book.subject.length(); i++) {
 		Tags.push(Zotero.Utilities.superCleanString(book.subject[i].text().toString()));
 	}
 
@@ -130,7 +130,7 @@ function scrape(url) {
 		var doc = parser.parseFromString(text, "text/xml");
 		var books = ZU.xpath(doc, '//book');
 		
-		for(var i in books) {
+		for (var i in books) {
 			var newItem = new Zotero.Item("book");
 			var book = books[i];
 			var authors = ZU.xpath(book, './author');
@@ -155,7 +155,7 @@ function scrape(url) {
 			newItem.libraryCatalog = ZU.xpathText(book, './serverName');
 			newItem.callNumber = ZU.xpathText(book, './cote');
 			
-			if(note) newItem.notes.push(note);
+			if (note) newItem.notes.push(note);
 			newItem.complete();
 		}
 	})
@@ -190,11 +190,11 @@ function getMultipleQid(doc,url)
 		text = Zotero.Utilities.trim(text);
 		var temp1;
 		
-		if(url.match("base=ead") && url.match("results.html")) {
+		if (url.match("base=ead") && url.match("results.html")) {
 			temp1 = text.substr(text.indexOf("var oid")+11,30);
 			qId = temp1.substring(0,temp1.indexOf("\""));
 		}
-		else if(url.match("list-results.html") && url.match("mode=")) {
+		else if (url.match("list-results.html") && url.match("mode=")) {
 			temp1 = text.substr(text.indexOf("id=")+12,30);
 			Z.debug(temp1)
 			qId = temp1.substring(0,temp1.indexOf("\""));
@@ -220,7 +220,7 @@ function getMultipleQid(doc,url)
 			max=parseInt(max.substring(max.indexOf("\>")+1, max.lastIndexOf("\<")));
 			
 			//this loop get fields from Pleade
-			for(var i=0; i< max; i++) 
+			for (var i=0; i< max; i++) 
 			{
 				var title = temp.substring(temp.indexOf("\<title\>")+7,temp.indexOf("\<\/title\>"));
 				var pleadeId = temp.substring(temp.indexOf("\<pleadeId\>")+10,temp.indexOf("\<\/pleadeId\>"));
@@ -232,7 +232,7 @@ function getMultipleQid(doc,url)
 			var newURL2 = url.substring(url.indexOf("http"), url.indexOf("results.html"))+"functions/zotero/";
 		
 			Zotero.selectItems(pids, function (tpids) {
-				for(var i in tpids) {
+				for (var i in tpids) {
 					scrape(newURL2+i+".xml?fragment=null");
 				}
 			});
@@ -254,8 +254,8 @@ function doWeb(doc, url) {
 	else if (detectWeb(doc, url) == "book") {
 
 		// Building the Pleade id of the actual document
-		if(url.indexOf("&") != -1) pleadeId = url.substring(url.indexOf("id=")+3,url.indexOf("&"));
-		else if(url.indexOf("#") != -1) pleadeId = url.substring(url.indexOf("id=")+3,url.indexOf("#"));
+		if (url.indexOf("&") != -1) pleadeId = url.substring(url.indexOf("id=")+3,url.indexOf("&"));
+		else if (url.indexOf("#") != -1) pleadeId = url.substring(url.indexOf("id=")+3,url.indexOf("#"));
 		else pleadeId = url.substring(url.indexOf("id=")+3,url.length);
 		// Building the Pleade fragment id of the actual document
 		var temp1 = url.substring(url.indexOf("#"),url.length);

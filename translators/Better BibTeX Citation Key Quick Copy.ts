@@ -1,79 +1,105 @@
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
 declare const Zotero: any
-
-import format = require('string-template')
 
 import { Translator } from './lib/translator'
 export { Translator }
 
 import { Exporter } from './bibtex/exporter'
 
+import { simplifyForExport } from '../gen/items/items'
+
+import * as Eta from 'eta'
+
+Eta.config.autoEscape = false
+
 function select_by_key(item) {
-  const [ , kind, lib, key ] = item.uri.match(/^http:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^\/]+)\/items\/(.+)/)
+  const [ , kind, lib, key ] = item.uri.match(/^https?:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^/]+)\/items\/(.+)/)
   return (kind === 'users') ? `zotero://select/library/items/${key}` : `zotero://select/groups/${lib}/items/${key}`
 }
 function select_by_citekey(item) {
-  return `zotero://select/items/@${encodeURIComponent(item.citekey)}`
+  return `zotero://select/items/@${encodeURIComponent(item.citationKey)}`
 }
 
-const Mode = { // tslint:disable-line:variable-name
+const Mode = {
+  // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
   gitbook(items) {
-    const citations = items.map(item => `{{ \"${item.citekey}\" | cite }}`)
+    const citations = items.map(item => `{{ "${item.citationKey}" | cite }}`)
     Zotero.write(citations.join(''))
   },
 
   atom(items) {
-    const keys = items.map(item => item.citekey)
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    const keys = items.map(item => item.citationKey)
     if (keys.length === 1) {
       Zotero.write(`[](#@${keys[0]})`)
-    } else {
-      Zotero.write(`[](?@${keys.join(',')})`)
+    }
+    else {
+      Zotero.write(`[](?@${keys.join(', ')})`)
     }
   },
 
   latex(items) {
-    const keys = items.map(item => item.citekey)
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    const keys = items.map(item => item.citationKey)
 
     const cmd = `${Translator.preferences.citeCommand}`.trim()
     if (cmd === '') {
       Zotero.write(keys.join(','))
-    } else {
-      Zotero.write(`\\${cmd}{${keys.join(',')}}`)
+    }
+    else {
+      Zotero.write(`\\${cmd}{${keys.join(', ')}}`)
     }
   },
 
   citekeys(items) {
-    const keys = items.map(item => item.citekey)
-    Zotero.write(keys.join(','))
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    const keys = items.map(item => item.citationKey)
+    Zotero.write(keys.join(', '))
   },
 
   pandoc(items) {
-    let keys = items.map(item => `@${item.citekey}`)
+    let keys = items.map(item => `@${item.citationKey}`)
     keys = keys.join('; ')
     if (Translator.preferences.quickCopyPandocBrackets) keys = `[${keys}]`
     Zotero.write(keys)
   },
 
+  roamCiteKey(items) {
+    let keys = items.map(item => `[[@${item.citationKey}]]`)
+    keys = keys.join(' ')
+    Zotero.write(keys)
+  },
+
   orgRef(items) {
     if (!items.length) return  ''
-    Zotero.write(`cite:${items.map(item => item.citekey).join(',')}`)
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    Zotero.write(`cite:${items.map(item => item.citationKey).join(', ')}`)
   },
 
   orgmode(items) {
-    for (const item of items) {
-      Zotero.write(`[[${select_by_key(item)}][@${item.citekey}]]`)
-    }
-  },
-  orgmode_citekey(items) {
-    for (const item of items) {
-      Zotero.write(`[[${select_by_citekey(item)}][@${item.citekey}]]`)
+    switch (Translator.preferences.quickCopyOrgMode) {
+      case 'zotero':
+        for (const item of items) {
+          Zotero.write(`[[${select_by_key(item)}][@${item.citationKey}]]`)
+        }
+        break
+      case 'citationkey':
+        for (const item of items) {
+          Zotero.write(`[[${select_by_citekey(item)}][@${item.citationKey}]]`)
+        }
+        break
     }
   },
 
-  selectLink(items) {
-    Zotero.write(items.map(select_by_key).join('\n'))
-  },
-  selectLink_citekey(items) {
-    Zotero.write(items.map(select_by_citekey).join('\n'))
+  selectlink(items) {
+    switch (Translator.preferences.quickCopySelectLink) {
+      case 'zotero':
+        Zotero.write(items.map(select_by_key).join('\n'))
+        break
+      case 'citationkey':
+        Zotero.write(items.map(select_by_citekey).join('\n'))
+        break
+    }
   },
 
   rtfScan(items) {
@@ -97,10 +123,12 @@ const Mode = { // tslint:disable-line:variable-name
 
         if (date.type === 'verbatim' || !date.year) {
           ref.push(item.date)
-        } else {
+        }
+        else {
           ref.push(date.year)
         }
-      } else {
+      }
+      else {
         ref.push('no date')
       }
 
@@ -109,29 +137,29 @@ const Mode = { // tslint:disable-line:variable-name
     Zotero.write(`{${reference.join('; ')}}`)
   },
 
-  'string-template'(items) {
+  eta(items) {
     try {
-      const { citation, item, sep } = JSON.parse(Translator.preferences.citeCommand)
-      Zotero.write(format(citation || '{citation}', { citation: items.map(i => format(item || '{item}', { item: i })).join(sep || '') }))
-    } catch (err) {
+      Zotero.write(Eta.render(Translator.preferences.quickCopyEta, { items: items.map(simplifyForExport) }))
+    }
+    catch (err) {
       Zotero.write(`${err}`)
     }
   },
 }
 
-export function doExport() {
+export function doExport(): void {
   Translator.init('export')
 
-  let item: ISerializedItem
   const items = []
-  while ((item = Exporter.nextItem())) {
-    items.push(item)
+  for (const item of Exporter.items) {
+    if (item.citationKey) items.push(item)
   }
 
   const mode = Mode[`${Translator.options.quickCopyMode}`] || Mode[`${Translator.preferences.quickCopyMode}`]
   if (mode) {
     mode.call(null, items)
-  } else {
+  }
+  else {
     throw new Error(`Unsupported Quick Copy format '${Translator.options.quickCopyMode || Translator.preferences.quickCopyMode}', I only know about: ${Object.keys(Mode).join(', ')}`)
   }
 }

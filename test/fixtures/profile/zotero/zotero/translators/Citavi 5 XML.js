@@ -11,8 +11,7 @@
 	},
 	"inRepository": true,
 	"translatorType": 1,
-	"browserSupport": "gcsi",
-	"lastUpdated": "2018-08-26 10:46:17"
+	"lastUpdated": "2020-06-11 13:27:10"
 }
 
 /*
@@ -131,7 +130,6 @@ function doImport() {
 			item = new Zotero.Item("journalArticle");
 		}
 		item.itemID = ZU.xpathText(references[i], './@id');
-		item.type = type;
 		//Z.debug(item.itemID);
 		
 		item.title = ZU.xpathText(references[i], './Title');

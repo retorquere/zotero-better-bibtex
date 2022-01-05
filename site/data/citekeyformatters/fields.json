@@ -2,97 +2,163 @@
   [
     "AbstractNote",
     "AccessDate",
-    "AdoptionDate**",
-    "ApplicationNumber"
+    "AdminFlag<sup>JM</sup>",
+    "AdoptionDate<sup>JM</sup>"
   ],
   [
+    "Album<sup>JM</sup>",
+    "ApplicationNumber",
     "Archive",
+    "ArchiveCollection<sup>JM</sup>"
+  ],
+  [
     "ArchiveLocation",
+    "ArtworkMedium",
     "ArtworkSize",
-    "AssemblyNumber**"
+    "AssemblyNumber<sup>JM</sup>"
   ],
   [
     "Assignee",
-    "CallNumber",
+    "AudioFileType",
+    "AudioRecordingFormat",
+    "BillNumber"
+  ],
+  [
+    "BlogTitle",
+    "BookAbbreviation<sup>JM</sup>",
+    "BookTitle",
+    "CallNumber"
+  ],
+  [
+    "CaseName",
     "Code",
-    "CodeNumber"
+    "CodeNumber",
+    "CodePages"
   ],
   [
+    "CodeVolume",
     "Committee",
-    "ConferenceDate**",
+    "Company",
+    "ConferenceDate<sup>JM</sup>"
+  ],
+  [
     "ConferenceName",
-    "Country"
-  ],
-  [
+    "Country",
     "Court",
-    "DOI",
+    "DOI"
+  ],
+  [
     "Date",
-    "DateAmended**"
+    "DateAmended<sup>JM</sup>",
+    "DateDecided",
+    "DateEnacted"
   ],
   [
-    "DocumentName**",
+    "DictionaryTitle",
+    "Distributor",
+    "Division<sup>JM</sup>",
+    "DocketNumber"
+  ],
+  [
+    "DocumentName<sup>JM</sup>",
+    "DocumentNumber",
     "Edition",
-    "Extra",
-    "FilingDate"
+    "EncyclopediaTitle"
   ],
   [
-    "GazetteFlag**",
-    "Genre**",
+    "EpisodeNumber",
+    "FilingDate",
+    "FirstPage",
+    "ForumTitle"
+  ],
+  [
+    "GazetteFlag<sup>JM</sup>",
+    "Genre",
     "History",
     "ISBN"
   ],
   [
     "ISSN",
-    "Institution**",
-    "Issue",
-    "IssuingAuthority"
+    "Institution",
+    "InterviewMedium",
+    "Issue"
   ],
   [
+    "IssueDate",
+    "IssuingAuthority",
     "JournalAbbreviation",
-    "Jurisdiction**",
+    "Jurisdiction<sup>JM</sup>"
+  ],
+  [
+    "Label",
     "Language",
-    "LegalStatus"
+    "LegalStatus",
+    "LegislativeBody"
   ],
   [
-    "LegislativeBody",
+    "LetterType",
     "LibraryCatalog",
-    "Medium",
-    "MeetingName"
+    "ManuscriptType",
+    "MapType"
   ],
   [
-    "MeetingNumber**",
-    "NewsCaseDate**",
+    "Medium",
+    "MeetingName",
+    "MeetingNumber<sup>JM</sup>",
+    "NameOfAct"
+  ],
+  [
+    "Network",
+    "NewsCaseDate<sup>JM</sup>",
     "NumPages",
     "Number"
   ],
   [
     "NumberOfVolumes",
-    "OpeningDate**",
-    "Opus**",
-    "OriginalDate**"
+    "OpeningDate<sup>JM</sup>",
+    "Opus<sup>JM</sup>",
+    "OriginalDate<sup>JM</sup>"
   ],
   [
     "Pages",
-    "ParentTreaty**",
-    "Place",
-    "PriorityDate**"
+    "ParentTreaty<sup>JM</sup>",
+    "PatentNumber",
+    "Place"
   ],
   [
-    "PriorityNumbers",
+    "PostType",
+    "PresentationType",
+    "PriorityDate<sup>JM</sup>",
+    "PriorityNumbers"
+  ],
+  [
+    "ProceedingsTitle",
+    "ProgramTitle",
     "ProgrammingLanguage",
-    "PublicationDate**",
-    "PublicationNumber**"
+    "PublicLawNumber"
   ],
   [
+    "PublicationDate<sup>JM</sup>",
+    "PublicationNumber<sup>JM</sup>",
     "PublicationTitle",
-    "Publisher",
-    "References",
-    "RegnalYear**"
+    "Publisher"
   ],
   [
-    "Reign**",
+    "References",
+    "RegnalYear<sup>JM</sup>",
+    "RegulationType<sup>JM</sup>",
+    "RegulatoryBody<sup>JM</sup>"
+  ],
+  [
+    "Reign<sup>JM</sup>",
+    "Release<sup>JM</sup>",
+    "ReportNumber",
+    "ReportType"
+  ],
+  [
     "Reporter",
-    "ResolutionLabel**",
+    "ReporterVolume",
+    "ResolutionLabel<sup>JM</sup>",
     "Rights"
   ],
   [
@@ -108,21 +174,39 @@
     "Session"
   ],
   [
+    "SessionType<sup>JM</sup>",
     "ShortTitle",
-    "SigningDate**",
-    "Status**",
-    "SupplementName**"
+    "SigningDate<sup>JM</sup>",
+    "Status<sup>JM</sup>"
   ],
   [
-    "System",
+    "Studio",
+    "Subject",
+    "SupplementName<sup>JM</sup>",
+    "System"
+  ],
+  [
+    "ThesisType",
     "Title",
-    "Type",
-    "Url"
+    "TreatyNumber<sup>JM</sup>",
+    "Type"
   ],
   [
+    "University",
+    "Url",
     "VersionNumber",
+    "VideoRecordingFormat"
+  ],
+  [
     "Volume",
-    "VolumeTitle**",
-    "YearAsVolume**"
+    "VolumeTitle<sup>JM</sup>",
+    "WebsiteTitle",
+    "WebsiteType"
+  ],
+  [
+    "YearAsVolume<sup>JM</sup>",
+    "",
+    "",
+    ""
   ]
 ]

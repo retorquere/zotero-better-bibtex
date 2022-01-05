@@ -1,18 +1,19 @@
 {
-  "none": [
-    "content/**/*.ts",
-    "!content/monkey-patch.ts",
-    "!content/flash.ts",
-    "!content/debug.ts",
-    "!content/prefs.ts",
-    "!content/logger.ts",
-    "!content/events.ts",
-    "!content/db/loki.ts",
-    "!translators/**/*.ts"
-  ],
-  "-gh-1389": [
-    "content/translators.ts",
-    "translators/**/*.ts",
-    "!translators/worker/zotero.ts"
-  ]
+  "gh-1896": {
+    "plugin": [
+      "content/better-bibtex.ts",
+      "content/key-manager.ts",
+      "content/serializer.ts",
+      "content/db/*.ts",
+      "content/auto-export.ts",
+      "content/dateparser.ts",
+      "content/escape.ts",
+      "content/get-items-async.ts",
+      "content/journal-abbrev.ts",
+      "content/markupparser.ts",
+      "content/scheduler.ts",
+      "content/startup.ts",
+      "content/translators.ts"
+    ]
+  }
 }

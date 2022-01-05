@@ -20,7 +20,7 @@ fuzzy ones over missed ones.
 
 ## Submitting an issue
 
-You can report problems with BBT by [opening a new issue](https://github.com/retorquere/zotero-better-bibtex/issues/new) on github.
+You can report problems with BBT by [opening a new issue](https://github.com/retorquere/zotero-better-bibtex/issues/new/choose) on github.
 Unfortunately, my time is extremely limited for a number of very great reasons (you shall have to trust me on this). Because of this, I
 cannot accept bug reports or support requests on anything but the latest version. By the time I get to your issue, the latest
 version might have bumped up already, and you will have to upgrade (you might have auto-upgraded already however) and

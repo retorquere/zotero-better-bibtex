@@ -1,79 +1,17 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false,
-      "exportNotes": false,
-      "keepUpdated": false
-    },
+    "localeDateOrder": "ymd",
+    "options": {},
     "preferences": {
-      "DOIandURL": "both",
-      "ascii": "",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportDelay": 1,
-      "autoExportIdleWait": 10,
-      "autoPin": false,
-      "auxImport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[auth][shorttitle][year]",
-      "citeprocNoteCitekey": false,
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "exportBraceProtection": true,
-      "exportTitleCase": true,
-      "git": "config",
-      "importBibTeXStrings": true,
       "itemObserverDelay": 100,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "keyScope": "library",
-      "kuroshiro": true,
-      "mapMath": "",
-      "mapText": "",
-      "mapUnicode": "conservative",
-      "parseParticles": true,
-      "postscript": "",
-      "qualityReport": false,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "rawLaTag": "#LaTeX",
-      "relativeFilePaths": false,
-      "scrubDatabase": false,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.1.101.emile.limonia",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.69",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "en-US",
-        "oscpu": "Intel Mac OS X 10.14",
-        "platform": "MacIntel",
-        "version": "5.0.69"
-      }
+      "kuroshiro": true
     }
   },
   "items": [
     {
-      "attachments": [],
-      "citekey": "ShelahErrataFirstorder1973",
       "creators": [
         {
           "creatorType": "author",
@@ -82,44 +20,31 @@
         }
       ],
       "date": "1973",
-      "dateAdded": "2018-03-04T10:57:41Z",
-      "dateModified": "2018-03-04T10:57:41Z",
-      "itemID": 50,
-      "itemType": "journalArticle",
-      "notes": [],
-      "pages": "437\u2013441",
-      "publicationTitle": "Israel Journal of Mathematics",
-      "relations": [],
-      "tags": [],
-      "title": "Errata to: First order theory of permutation groups",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/LFYS3RRV",
-      "volume": "15"
-    },
-    {
-      "attachments": [],
-      "citekey": "ShelahDifferentiallyclosedfields1973",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Saharon",
-          "lastName": "Shelah"
-        }
-      ],
-      "date": "1973",
-      "dateAdded": "2018-03-04T10:57:42Z",
-      "dateModified": "2018-03-04T10:57:42Z",
-      "itemID": 77,
+      "itemID": 1,
       "itemType": "journalArticle",
       "notes": [
         "<p>MR 49:8856</p>"
       ],
       "pages": "314\u2013328",
       "publicationTitle": "Israel Journal of Mathematics",
-      "relations": [],
-      "tags": [],
       "title": "Differentially closed fields",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/EJKS8NQD",
       "volume": "16"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Saharon",
+          "lastName": "Shelah"
+        }
+      ],
+      "date": "1973",
+      "itemID": 2,
+      "itemType": "journalArticle",
+      "pages": "437\u2013441",
+      "publicationTitle": "Israel Journal of Mathematics",
+      "title": "Errata to: First order theory of permutation groups",
+      "volume": "15"
     }
   ]
 }

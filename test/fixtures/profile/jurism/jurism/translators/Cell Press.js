@@ -38,9 +38,9 @@
 
 
 function detectWeb(doc, url) {
-	if(ZU.xpathText(doc, '//meta[@name="citation_journal_title"]/@content')) {
+	if (ZU.xpathText(doc, '//meta[@name="citation_journal_title"]/@content')) {
 		return 'journalArticle';
-	} else if(url.indexOf('doSearch?') != -1 &&
+	} else if (url.indexOf('doSearch?') != -1 &&
 		ZU.xpath(doc, '//form[contains(@id, "Search")]\
 			//a[contains(@href, "abstract") or contains(@href, "fulltext")]') ) {
 		return 'multiple';
@@ -56,10 +56,10 @@ function scrape(doc, url) {
 	translator.setHandler('itemDone', function(obj, item) {
 		//occasionally creators are not supplied,
 		//but we can get them from the page
-		if(!item.creators.length) {
+		if (!item.creators.length) {
 			var creators = ZU.xpath(doc, '//div[@id="article_meta"]\
 								//p[./a[starts-with(@href,"mailto:")]]/strong');
-			for(var i=0, n=creators.length; i<n; i++) {
+			for (var i=0, n=creators.length; i<n; i++) {
 				item.creators.push(
 					ZU.cleanAuthor(creators[i].textContent, 'author'));
 			}
@@ -89,8 +89,8 @@ function scrape(doc, url) {
 
 		//fetch direct PDF link (ScienceDirect)
 		var pdfUrl;
-		for(var i=0, n=item.attachments.length; i<n; i++) {
-			if(item.attachments[i].mimeType &&
+		for (var i=0, n=item.attachments.length; i<n; i++) {
+			if (item.attachments[i].mimeType &&
 				item.attachments[i].mimeType == 'application/pdf') {
 				pdfUrl = item.attachments[i].url;
 				//delete attachment
@@ -100,14 +100,14 @@ function scrape(doc, url) {
 			}
 		}
 		
-		if(pdfUrl) {
+		if (pdfUrl) {
 			ZU.doGet(pdfUrl, function(text) {
-				if(text.indexOf('onload="javascript:redirectToScienceURL();"') != -1) {
+				if (text.indexOf('onload="javascript:redirectToScienceURL();"') != -1) {
 					var m = text.match(/value\s*=\s*"([^"]+)"/);
-					if(m) {
+					if (m) {
 						pdfUrl = m[1];
 					}
-				} else if(text.indexOf('onload="javascript:trackPDFDownload();"') != -1) {
+				} else if (text.indexOf('onload="javascript:trackPDFDownload();"') != -1) {
 					pdfUrl += (pdfUrl.indexOf('?') != -1 ? '&' : '?') +
 								'intermediate=true';
 				}
@@ -139,25 +139,25 @@ var suppTypeMap = {
 };
 
 function finalize(item, doc, url, pdfUrl) {
-	if(Z.getHiddenPref && Z.getHiddenPref('attachSupplementary')) {
+	if (Z.getHiddenPref && Z.getHiddenPref('attachSupplementary')) {
 		try {
 			//check if there is supplementary data
 			var tabs = doc.getElementById('aotftabs');
 			var suppLink;
-			if(tabs) {
+			if (tabs) {
 				//enhanced view (AJAX driven), but let's see if we even have supp. data
 				suppLink = ZU.xpath(tabs, './/a[@href="#suppinfo"]')[0];
-				if(suppLink) {
+				if (suppLink) {
 					//construct a link to the standard view of supp. data
 					suppLink = url.replace(/[^\/]+(?=\/[^\/]*$)/, 'supplemental')
 						.replace(/[?#].*/, '');
 				}
-			} else if(tabs = doc.getElementById('article_options')) {
+			} else if (tabs = doc.getElementById('article_options')) {
 				//standard view
 				suppLink = ZU.xpathText(tabs, './/a[text()="Supplemental Data"]/@href');
 			}
-			if(suppLink) {
-				if(Z.getHiddenPref('supplementaryAsLink')) {
+			if (suppLink) {
+				if (Z.getHiddenPref('supplementaryAsLink')) {
 					item.attachments.push({
 						title: 'Supplementary Data',
 						url: suppLink,
@@ -167,18 +167,18 @@ function finalize(item, doc, url, pdfUrl) {
 				} else {
 					ZU.processDocuments(suppLink, function(suppDoc) {
 						var suppEntries = ZU.xpath(suppDoc, '//div[@id="main_supp"]/dl/dt');
-						for(var i=0, n=suppEntries.length; i<n; i++) {
+						for (var i=0, n=suppEntries.length; i<n; i++) {
 							var link = suppEntries[i].getElementsByTagName('a')[0];
-							if(!link) return;
+							if (!link) return;
 							
 							link = link.href;
 							
 							var title = ZU.trimInternal(suppEntries[i].textContent)
 								.replace(/\s*\([^()]+kb\)$/, '');
 							var desc = suppEntries[i].nextSibling;
-							if(desc && desc.nodeName.toUpperCase() == 'DD'
+							if (desc && desc.nodeName.toUpperCase() == 'DD'
 								&& (desc = ZU.trimInternal(desc.textContent))) {
-								if(title) title += ': ';
+								if (title) title += ': ';
 								title += desc;
 							}
 							
@@ -207,21 +207,21 @@ function finalize(item, doc, url, pdfUrl) {
 }
 
 function doWeb(doc, url) {
-	if(detectWeb(doc, url) == 'multiple') {
+	if (detectWeb(doc, url) == 'multiple') {
 		var res = ZU.xpath(doc,'//form[contains(@id, "Search")]\
 									//div[@class="article-details"]');
 		var url, items = new Object();
-		for(var i=0, n=res.length; i<n; i++) {
+		for (var i=0, n=res.length; i<n; i++) {
 			url = ZU.xpathText(res[i], './h2/a/@href');
-			if(url) {
+			if (url) {
 				items[url] = ZU.xpathText(res[i], './h2/a');
 			}
 		}
 		Zotero.selectItems(items, function(selectedItems) {
-			if(!selectedItems) return true;
+			if (!selectedItems) return true;
 
 			var urls = new Array();
-			for(var i in selectedItems) {
+			for (var i in selectedItems) {
 				urls.push(i);
 			}
 			ZU.processDocuments(urls, scrape);

@@ -1,30 +1,22 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false,
-      "exportNotes": false
-    },
+    "localeDateOrder": "ymd",
+    "options": {},
     "preferences": {
-      "DOIandURL": "both",
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:lower:nopunct]:[year][Title:lower:nopunct:skipwords:select,1,1][0]",
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "jabrefFormat": 0,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum"
-    },
-    "release": "1.2.20"
+      "citekeyFormat": "[auth:lower:nopunct]:[year][Title:lower:nopunct:skipwords:select,1,1][0]"
+    }
   },
   "items": [
     {
       "accessDate": "2014-10-18",
-      "extra": "Citation Key: zotero-1855286-1414",
-      "itemID": 5,
+      "extra": [
+        "Citation Key: zotero-1855286-1414"
+      ],
+      "itemID": 1,
       "itemType": "journalArticle",
       "title": "patent Landscape analysis: sample from SPECFEM3D_GLOBE",
       "url": "http://www.patanalyse.com/sample-analysis.html"

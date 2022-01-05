@@ -92,7 +92,7 @@ function scrape(doc, url) {
 		var content = ZU.xpathText(meta[i], './dd[contains(@class, "value")]');
 		//Z.debug(heading + content)
 
-		switch(heading) {
+		switch (heading) {
 			case 'date':
 			case 'medium':
 				item[heading] = content;
@@ -124,7 +124,7 @@ function scrape(doc, url) {
 	item.url = ZU.xpathText(doc, '//link[@rel="canonical"]/@href');
 	
 	var download = ZU.xpathText(doc, '//li[contains(@class, "utility-menu__item--download")]/a/@href');
-	if(download) {
+	if (download) {
 		item.attachments.push({
 			title: 'Met Image',
 			url: download

@@ -1,20 +1,20 @@
 {
 	"translatorID": "cee0cca2-e82a-4618-b6cf-16327970169d",
+	"translatorType": 4,
 	"label": "Gene Ontology",
-	"creator": "Amelia Ireland",
-	"target": "^https?://.*\\.geneontology\\.org",
+	"creator": "Amelia Ireland and Abe Jellinek",
+	"target": "^https?://(amigo\\.)?geneontology\\.org/",
 	"minVersion": "2.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
-	"browserSupport": "gcv",
-	"lastUpdated": "2014-01-05 11:26:46"
+	"browserSupport": "gcsibv",
+	"lastUpdated": "2021-06-23 01:35:00"
 }
 
 /*
-	Gene Ontology website translator
-	Copyright (C) 2010-2011 girlwithglasses, amelia.ireland@gmail.com
+	Copyright (C) 2010-2021 girlwithglasses (amelia.ireland@gmail.com)
+							and Abe Jellinek
 
 	This program is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -38,98 +38,80 @@
 
 
 var items = {};
-var selectArray = {};	
-function detectWeb(doc, url) {
-	var xPath = '//cite//*[@class="pmid"] | //cite//a[contains (@href, "pubmed")]';
-	var cites = doc.evaluate(xPath, doc, null, XPathResult.ANY_TYPE, null).iterateNext();
+var choices = {};
+var itemsRemaining = 0;
 
-	if (cites)
-	{	Zotero.debug("Found some cites!");
+function detectWeb(doc, _url) {
+	if (getPMIDs(doc, true)) {
+		Zotero.debug("Found some cites!");
 		return "multiple";
 	}
+	return false;
 }
 
-function doWeb(doc, url) {
-	var PMIDs = getPMIDs(doc);
-	retrievePMIDs(PMIDs, doc);
+function getPMIDs(doc, checkOnly) {
+	var items = {};
+	var found = false;
+	var rows = doc.querySelectorAll('cite a[title*="PMID:"], cite a[href*="/pubmed/"]');
+	for (let row of rows) {
+		let pmid = (row.href.match(/\/pubmed\/([0-9]+)/) || [])[1];
+		if (!pmid) pmid = (row.textContent.match(/PMID:([0-9]+)/) || [])[1];
+		let title = ZU.trimInternal(row.textContent);
+		if (!pmid || !title) continue;
+		if (checkOnly) return true;
+		found = true;
+		items[pmid] = title;
+	}
+	return found ? items : false;
 }
 
-
-function getPMIDs(doc){
-	var myPMID = '//cite//*[@class="pmid"] | //cite//a[contains (@href, "pubmed")]';
-	var pmids = doc.evaluate(myPMID, doc, null, XPathResult.ANY_TYPE, null);
-	var pmid_list = new Array();
-	var unknown_list = new Array();
-	var x;
-	while (x = pmids.iterateNext()) {
-		if (x.href && x.href.match('pubmed')) {
-			// get the number
-			var n = x.href.lastIndexOf("/");
-			n++;
-			pmid_list.push(x.href.substr(n));
-//			Zotero.debug("Got a pubmed href! " + x.href.substr(n));
-		}
-		else {
-			unknown_list.push(x);
-		}
+function doWeb(doc, _url) {
+	choices = getPMIDs(doc, false);
+	items = {};
+	
+	let pmids = Object.keys(choices);
+	itemsRemaining = pmids.length;
+	
+	for (let pmid of pmids) {
+		searchWithPMID(pmid, itemLookupComplete);
 	}
-	if (unknown_list.length > 0) {
-//		Zotero.debug("Couldn't work out what to do with these refs: " + unknown_list.join("\n"));
-	}
-	if (pmid_list.length > 0) {
-		Zotero.debug( "Found " + pmid_list.length + " PMIDs!" );
-	}
-	return pmid_list;
 }
 
-function retrievePMIDs(PMIDs, doc){
-	_numPMIDs = PMIDs.length;
-	for (var i=0; i<_numPMIDs; i++){
-		(function(doc, PMID) {
-			var translate = Zotero.loadTranslator("search");
-			translate.setTranslator("fcf41bed-0cbc-3704-85c7-8062a0068a7a");
+function searchWithPMID(pmid, callback) {
+	var translate = Zotero.loadTranslator("search");
+	translate.setTranslator("3d0231ce-fd4b-478c-b1d3-840389e5b68c"); // PubMed
 	
-			var item = {"itemType":"journalArticle", "PMID":PMID};
-			translate.setSearch(item);
+	var item = { itemType: "journalArticle", PMID: pmid };
+	translate.setSearch(item);
 	
-			// don't save when item is done
-			translate.setHandler("itemDone", function(translate, item) {
-				item.repository = "CrossRef";
-				items[PMID] = item;
-				selectArray[PMID] = item.title;
-			});
+	// Don't throw on error
+	translate.setHandler("error", function () {
+		callback(null);
+	});
+
+	// don't save immediately when item is done
+	translate.setHandler("itemDone", function (translate, item) {
+		item.itemID = pmid;
+		callback(item);
+	});
+
+	translate.translate();
+}
+
+function itemLookupComplete(item) {
+	itemsRemaining--;
 	
-			translate.setHandler("done", function(translate) {
-				_numPMIDs--;
-				if(_numPMIDs <= 0) {
-					completePMIDs(doc);
+	if (item) {
+		choices[item.itemID] = item.title;
+		items[item.itemID] = item;
+	}
+	
+	if (itemsRemaining <= 0) {
+		Zotero.selectItems(choices, function (selected) {
+			if (selected) {
+				for (let selectedPMID of Object.keys(selected)) {
+					items[selectedPMID].complete();
 				}
-			});
-	
-			// Don't throw on error
-			translate.setHandler("error", function() {});
-	
-			translate.translate();
-		})(doc, PMIDs[i]);	
-	}
-}
-
-function completePMIDs(doc) {
-	// all PMIDs retrieved now
-	// check to see if there is more than one DOI
-	var numPMIDs = 0;
-	for(var PMID in selectArray) {
-		numPMIDs++;
-		if(numPMIDs == 1) break;
-	}
-	if(numPMIDs == 0) {
-		throw "Could not find PMID";
-	}  else {
-		Zotero.selectItems(selectArray, function(selectedPMIDs) {
-			if(!selectedPMIDs) return true;
-
-			for(var PMID in selectedPMIDs) {
-				items[PMID].complete();
 			}
 		});
 	}
@@ -139,7 +121,7 @@ function completePMIDs(doc) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.geneontology.org/GO.cite.shtml",
+		"url": "http://amigo.geneontology.org/amigo/term/GO:0048003",
 		"items": "multiple"
 	}
 ]

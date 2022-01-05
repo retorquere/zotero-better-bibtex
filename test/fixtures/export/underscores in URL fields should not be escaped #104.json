@@ -1,12 +1,11 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]",
-      "jabrefFormat": 0
+      "citekeyFormat": "[auth][year]"
     }
   },
   "items": [
@@ -20,7 +19,10 @@
         }
       ],
       "date": "2012",
-      "extra": "Citation Key: american_rights_at_work_public_2012",
+      "extra": [
+        "Citation Key: american_rights_at_work_public_2012"
+      ],
+      "itemID": 1,
       "itemType": "journalArticle",
       "title": "Public Service Research Foundation",
       "url": "http://www.americanrightsatwork.org/blogcategory_275/"

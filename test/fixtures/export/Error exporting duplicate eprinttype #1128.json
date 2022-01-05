@@ -2,63 +2,14 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportDelay": 1,
-      "autoExportIdleWait": 10,
-      "autoPin": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[auth:lower][year]",
-      "citeprocNoteCitekey": false,
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "exportTitleCase": true,
-      "git": "config",
       "itemObserverDelay": 100,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "keyScope": "global",
-      "kuroshiro": false,
-      "parseParticles": true,
-      "postscript": "",
-      "qualityReport": false,
-      "quickCopyMode": "orgmode_citekey",
-      "quickCopyPandocBrackets": false,
-      "rawLaTag": "#LaTeX",
-      "relativeFilePaths": false,
-      "scrubDatabase": false,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.1.45",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.60",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "en-US",
-        "oscpu": "Intel Mac OS X 10.13",
-        "platform": "MacIntel",
-        "version": "5.0.60"
-      }
+      "keyScope": "global"
     }
   },
   "items": [
@@ -67,8 +18,6 @@
       "ISSN": "1091-6490",
       "abstractNote": "Functional connectivity analysis of resting state blood oxygen level-dependent (BOLD) functional MRI is widely used for noninvasively studying brain functional networks. Recent findings have indicated, however, that even small (\u22641 mm) amounts of head movement during scanning can disproportionately bias connectivity estimates, despite various preprocessing efforts. Further complications for interregional connectivity estimation from time domain signals include the unaccounted reduction in BOLD degrees of freedom related to sensitivity losses from high subject motion. To address these issues, we describe an integrated strategy for data acquisition, denoising, and connectivity estimation. This strategy builds on our previously published technique combining data acquisition with multiecho (ME) echo planar imaging and analysis with spatial independent component analysis (ICA), called ME-ICA, which distinguishes BOLD (neuronal) and non-BOLD (artifactual) components based on linear echo-time dependence of signals-a characteristic property of BOLD T*2 signal changes. Here we show for 32 control subjects that this method provides a physically principled and nearly operator-independent way of removing complex artifacts such as motion from resting state data. We then describe a robust estimator of functional connectivity based on interregional correlation of BOLD-independent component coefficients. This estimator, called independent components regression, considerably simplifies statistical inference for functional connectivity because degrees of freedom equals the number of independent coefficients. Compared with traditional connectivity estimation methods, the proposed strategy results in fourfold improvements in signal-to-noise ratio, functional connectivity analysis with improved specificity, and valid statistical inference with nominal control of type 1 error in contrasts of connectivity between groups with different levels of subject motion.",
       "accessDate": "2014-03-19",
-      "attachments": [],
-      "citekey": "Kundu2013",
       "creators": [
         {
           "creatorType": "author",
@@ -117,40 +66,80 @@
         }
       ],
       "date": "2013-10-01",
-      "dateAdded": "2017-03-02T13:25:55Z",
-      "dateModified": "2019-02-02T11:35:12Z",
-      "extra": "Citation Key: Kundu2013\nPMID: 24038744\narXiv: 1408.1149\nISBN: 1301725110",
+      "extra": [
+        "Citation Key: Kundu2013",
+        "PMID: 24038744",
+        "arXiv: 1408.1149",
+        "ISBN: 1301725110"
+      ],
       "issue": "40",
-      "itemID": 396,
+      "itemID": 1,
       "itemType": "journalArticle",
-      "notes": [],
       "pages": "16187-92",
       "publicationTitle": "Proc. Natl. Acad. Sci.",
-      "relations": [],
       "tags": [
-        "Artifacts",
-        "Brain Mapping",
-        "Brain Mapping: methods",
-        "Humans",
-        "Image Processing, Computer-Assisted",
-        "Magnetic Resonance Imaging",
-        "Magnetic Resonance Imaging: methods",
-        "Oxygen",
-        "Oxygen: blood",
-        "Sensitivity and Specificity",
-        "Neural Pathways",
-        "Neural Pathways: physiology",
-        "Computer-Assisted",
-        "Image Processing",
-        "Neural Pathways: cytology",
-        "Signal-To-Noise Ratio",
-        "Research Design",
-        "human neuroimaging",
-        "resting state fMRI",
-        "time series"
+        {
+          "tag": "Artifacts"
+        },
+        {
+          "tag": "Brain Mapping"
+        },
+        {
+          "tag": "Brain Mapping: methods"
+        },
+        {
+          "tag": "Computer-Assisted"
+        },
+        {
+          "tag": "human neuroimaging"
+        },
+        {
+          "tag": "Humans"
+        },
+        {
+          "tag": "Image Processing"
+        },
+        {
+          "tag": "Image Processing, Computer-Assisted"
+        },
+        {
+          "tag": "Magnetic Resonance Imaging"
+        },
+        {
+          "tag": "Magnetic Resonance Imaging: methods"
+        },
+        {
+          "tag": "Neural Pathways"
+        },
+        {
+          "tag": "Neural Pathways: cytology"
+        },
+        {
+          "tag": "Neural Pathways: physiology"
+        },
+        {
+          "tag": "Oxygen"
+        },
+        {
+          "tag": "Oxygen: blood"
+        },
+        {
+          "tag": "Research Design"
+        },
+        {
+          "tag": "resting state fMRI"
+        },
+        {
+          "tag": "Sensitivity and Specificity"
+        },
+        {
+          "tag": "Signal-To-Noise Ratio"
+        },
+        {
+          "tag": "time series"
+        }
       ],
       "title": "Integrated strategy for improving functional connectivity mapping using multiecho fMRI.",
-      "uri": "http://zotero.org/users/3702016/items/Y6U48GFH",
       "url": "http://www.ncbi.nlm.nih.gov/pubmed/24038744",
       "volume": "110"
     }

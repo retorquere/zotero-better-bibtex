@@ -3,9 +3,12 @@
 <!DOCTYPE overlay SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd">
 
 <overlay id="zotero-better-bibtex-zoteroPane-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-  <stringbundleset>
-    <stringbundle id="zotero-better-bibtex-strings" src="chrome://zotero-better-bibtex/locale/zotero-better-bibtex.properties"/>
-  </stringbundleset>
+  <hbox id="zotero-items-toolbar">
+    <hbox id="better-bibtex-progress" insertbefore="zotero-tb-search-spinner" hidden="true">
+      <progressmeter id="better-bibtex-progress-meter" mode="determined" value="0"/>
+      <label id="better-bibtex-progress-label" value="startup"/>
+    </hbox>
+  </hbox>
 
   <menupopup id="menu_ToolsPopup">
     <menuitem label="&better-bibtex.BetterBibTeX.auxScanner;" oncommand="Zotero.BetterBibTeX.scanAUX('tag')"/>
@@ -15,10 +18,10 @@
   </menupopup>
 
   <menupopup id="zotero-collectionmenu">
-    <menuseparator id="bbt-collectionmenu-separator"/>
+    <menuseparator class="zotero-collectionmenu-bbt-autoexport" id="bbt-collectionmenu-separator"/>
 
-    <menu class="bbt-autoexport" label="&better-bibtex.Preferences.tab.auto-export;">
-      <menupopup id="zotero-itemmenu-BetterBibTeX-autoexport-menu">
+    <menu class="zotero-collectionmenu-bbt-autoexport" label="&better-bibtex.Preferences.tab.auto-export;">
+      <menupopup id="zotero-collectionmenu-bbt-autoexport-menupopup">
         <menuitem label="" oncommand="event.stopPropagation(); Zotero.BetterBibTeX.ZoteroPane.startAutoExport(event);"/>
       </menupopup>
     </menu>
@@ -46,10 +49,14 @@
   <menupopup id="zotero-itemmenu">
     <menu id="zotero-itemmenu-BetterBibTeX-menu" label="&better-bibtex.BetterBibTeX.menu;" class="menu-iconic" image="chrome://zotero-better-bibtex/skin/bibtex-menu.svg">
       <menupopup id="zotero-itemmenu-BetterBibTeX-menupopup">
+        <menuitem label="&better-bibtex.BetterBibTeX.citekey.set;" oncommand="Zotero.BetterBibTeX.KeyManager.set();"/>
         <menuitem label="&better-bibtex.BetterBibTeX.citekey.pin;" oncommand="Zotero.BetterBibTeX.KeyManager.pin('selected');"/>
         <menuitem label="&better-bibtex.BetterBibTeX.citekey.pinInspireHEP;" oncommand="Zotero.BetterBibTeX.KeyManager.pin('selected', true);"/>
         <menuitem label="&better-bibtex.BetterBibTeX.citekey.unpin;" oncommand="Zotero.BetterBibTeX.KeyManager.unpin('selected');"/>
         <menuitem label="&better-bibtex.BetterBibTeX.citekey.refresh;" oncommand="Zotero.BetterBibTeX.KeyManager.refresh('selected', true);"/>
+        <menuseparator/>
+        <menuitem label="&better-bibtex.BetterBibTeX.patchDates;" oncommand="Zotero.BetterBibTeX.ZoteroPane.patchDates();"/>
+        <menuitem label="&better-bibtex.BetterBibTeX.sentenceCase;" oncommand="Zotero.BetterBibTeX.ZoteroPane.sentenceCase();"/>
         <menuitem label="&better-bibtex.BetterBibTeX.addCitationLinks;" oncommand="Zotero.BetterBibTeX.ZoteroPane.addCitationLinks();"/>
 
         <menuseparator class="bbt-texstudio"/>
@@ -64,7 +71,7 @@
   <treecols id="zotero-items-columns-header">
     <treecol
       id="zotero-items-column-citekey"
-      label="Citekey"
+      label="&ZoteroPane.column.citekey;"
       flex="1"
       insertafter="zotero-items-column-title"
       zotero-persist="width ordinal hidden sortActive sortDirection"
@@ -77,11 +84,19 @@
     / -->
   </treecols>
 
-  <script src="chrome://zotero/content/include.js"/>
-  <script src="chrome://zotero-better-bibtex/content/webpack.js"/>
-  <script src="chrome://zotero-better-bibtex/content/common.js"/>
-  <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.js"/>
-  <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.ZoteroPane.js"/>
-  <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.KeyManager.js"/>
-  <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.TestSupport.js"/>
+  <script src="chrome://zotero-better-bibtex/content/better-bibtex.js"/>
+  <script>
+    Zotero.BetterBibTeX.globals = Zotero.BetterBibTeX.ZoteroPane.globals = Function('return this')();
+    window.addEventListener('load', async function() {
+      try {
+        Zotero.debug('BBT startup')
+        await Zotero.BetterBibTeX.load()
+        Zotero.debug('BBT started, loading ZoteroPane')
+        Zotero.BetterBibTeX.ZoteroPane.load()
+        Zotero.debug('ZoteroPane started')
+      } catch (err) {
+        Zotero.debug(`loading ZoteroPane error: ${err.message}\n${err.stack ||''}`)
+      }
+    })
+  </script>
 </overlay>

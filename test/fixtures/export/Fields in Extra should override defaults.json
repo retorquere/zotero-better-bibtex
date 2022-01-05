@@ -1,21 +1,16 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
       "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]",
-      "jabrefFormat": 0,
-      "skipFields": ""
-    },
-    "release": "0.9.25"
+      "citekeyFormat": "[auth][year]"
+    }
   },
   "items": [
     {
@@ -24,20 +19,21 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Tom",
           "lastName": "Simonite"
         }
       ],
       "date": "2013-10-22",
-      "extra": "Citation Key: simonite2013declinewikipediaeven\ntex.titleaddon= MIT Technology Review",
-      "itemID": 1708,
+      "extra": [
+        "Citation Key: simonite2013declinewikipediaeven",
+        "tex.titleaddon= MIT Technology Review"
+      ],
+      "itemID": 1,
       "itemType": "webpage",
       "publicationTitle": "MIT Technology Review",
       "shortTitle": "The decline of Wikipedia",
       "title": "The decline of Wikipedia: even as more people than ever rely on it, fewer people create it",
-      "url": "http://www.technologyreview.com/featuredstory/520446/the-decline-of-wikipedia/",
-      "websiteTitle": "MIT Technology Review"
+      "url": "http://www.technologyreview.com/featuredstory/520446/the-decline-of-wikipedia/"
     }
   ]
 }

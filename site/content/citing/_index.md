@@ -22,7 +22,7 @@ people usually pick a naming scheme related to them. As the citation key is *the
 bibliography, this is a piece of data you want to have control over. BBT offers you this control:
 
 * Stable citation keys, without key clashes. BBT generates citation keys that take into account other existing keys in your library in a deterministic way, regardless of what part of your library you export, or the order in which you do it.
-* BBT is conservative about citation key changes, and allows you to fixate keys to any value of your choosing.
+* BBT is conservative about citation key changes, and allows you to fix keys to any value of your choosing.
 * Generate citation keys from JabRef(-ish) patterns.
 
 You can also
@@ -30,17 +30,19 @@ You can also
 * Drag and drop LaTeX citations using these keys to your favorite LaTeX editor
 * Show your citation keys in the reference list view.
 
-## Set your own, fixated citation keys
+## Set your own, fixed citation keys
 
 By default, BBT generates the citation key from the item information, and this key may change when you edit the item. Such keys are called `dynamic` keys, which are marked with an asterisk (`*`) in the reference list view, and are displayed in italics in the item details.
 
-You can fixate the citation key (called `pinning` in BBT) for an item by adding the text `Citation Key: [your citekey]` anywhere in the
+You can fix the citation key (called `pinning` in BBT) for an item by adding the text `Citation Key: [your citekey]` anywhere in the
 `extra` field of the reference on a line of its own. You can generate a pinned citation key by selecting one or more items, right-clicking, and selecting `Generate BibTeX key`, which will add the current citation key to the `extra` field, thereby pinning it. These keys are shown without the asterisk (`*`) marker in the middle column, and non-italicized in the details view, to distinguish them from dynamic keys.
 
 ## Drag and drop/hotkey citations
 
 You can drag and drop citations into your LaTeX/Markdown/Orgmode editor, and it will add a proper `\cite{citekey}`/`[@citekey]`/`[[zotero://select...][@citekey]`. The `cite` command is
-configurable for LaTeX by setting the config option in the [preferences]({{< ref "installation/preferences" >}}). Do not include the leading backslash. This feature requires a one-time setup: go to Zotero preferences, tab Export, under Default Output Format, select "Better BibTeX Quick Copy", and choose the Quick Copy format under the `Citation keys` preferences for BBT.
+configurable for LaTeX by setting the config option in the [preferences]({{< ref "installation/preferences" >}}). Do not include the leading backslash.
+
+This feature requires a one-time setup: choose the Quick Copy format under the `Citation keys` preferences for BBT, and go to Zotero preferences, tab Export, under Default Output Format, select "Better BibTeX Quick Copy: [format you just selected]".
 
 ## Find duplicate keys through integration with [Report Customizer](https://github.com/retorquere/zotero-report-customizer)
 
@@ -67,13 +69,30 @@ A common pattern is `[auth:lower][year]`, which means
 If you want to get fancy, you can set multiple patterns separated by a vertical bar, of which the first will be applied
 that yields a non-empty string. If all return a empty string, a random key will be generated.
 
+An example application for this behavior is to use the `tex.shortauthor` from the [extra field]({{< ref "../exporting/extra-fields" >}}) when defined to generate short citation keys for entries with long group author names, but to default to `[auth:lower]` otherwise:
+
+```text
+[Extra:transliterate:replace=(?\:tex\\.shortauthor\[\:\=\]\\s+(\\w+))|.*,$1,regex:clean:lower][>0][year] | [auth:lower][year]
+```
+
+although this particular case can be handled more succinctly with
+
+```text
+[extra=tex.shortauthor:transliterate:clean:lower][>0][year] | [auth:lower][year]
+```
+
+**note the non-greedy regex pattern before the non-capturing group.** Using this pattern, a reference of the "American Psychological Association" from 2021 and `tex.shortauthor: APA` in the extra field would get the citekey `apa2021`. Without the definition in the extra field the generated citekey would be `americanpsychologicalassociation2021`.
+
 ### Generating citekeys
 
-The full list of functions (extract data from your reference into your citekey) and filters (change the extracted data) is:
+To generate your citekeys, you use a pattern composed of functions and filters. Broadly, functions grab text from your item, and filters transform that text. The full list of functions and filters is:
 
 #### Functions
 
+
 {{< citekey-formatters/functions >}}
+
+**Note**: All `auth...` functions will fall back to editors if no authors are present on the item.
 
 **Note**: the functions above all have the `clean` filter (see below) automatically applied to them. If you want more control, `auth`, `authIni`, `edtr`, ... and all the author-related fields that mimic the JabRef equivalents also have capitalized versions (so `Auth`, `AuthIni`, `Edtr`, ...) which follow the same algorithm but do not have any cleaning (diacritic folding, space removal, stripping of invalid citekey characters) applied. These can be used to pass through the filters specified below much like the fields from the table above. See also "usage note" below. For all the non-author fields, you can use the unprocessed reference fields directly:
 
@@ -81,7 +100,7 @@ The full list of functions (extract data from your reference into your citekey) 
 
 {{< citekey-formatters/fields >}}
 
-(fields marked `**` are only available in Juris-M).
+(fields marked <sup>JM</sup> are only available in Juris-M).
 
 #### Flags
 

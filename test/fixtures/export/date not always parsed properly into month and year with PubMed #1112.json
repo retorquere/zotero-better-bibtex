@@ -1,64 +1,13 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false,
-      "exportNotes": false
-    },
+    "localeDateOrder": "ymd",
+    "options": {},
     "preferences": {
-      "DOIandURL": "both",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportIdleWait": 10,
-      "autoPin": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[auth][shorttitle][year]",
-      "citeprocNoteCitekey": false,
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "exportTitleCase": true,
-      "git": "config",
       "itemObserverDelay": 100,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "keyScope": "library",
-      "kuroshiro": true,
-      "parseParticles": true,
-      "postscript": "",
-      "qualityReport": false,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "rawLaTag": "#LaTeX",
-      "relativeFilePaths": false,
-      "scrubDatabase": false,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.1.33.emile.titanarum",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.59",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "en-US",
-        "oscpu": "Linux x86_64",
-        "platform": "Linux x86_64",
-        "version": "5.0.59"
-      }
+      "kuroshiro": true
     }
   },
   "items": [
@@ -66,8 +15,6 @@
       "DOI": "10.1093/hmg/ddy068",
       "ISSN": "1460-2083",
       "abstractNote": "Centronuclear myopathies (CNM) are a subtype of congenital myopathies (CM) characterized by skeletal muscle weakness and an increase in the number of central myonuclei. We have previously identified three CNM probands, two with associated dilated cardiomyopathy, carrying striated preferentially expressed gene (SPEG) mutations. Currently, the role of SPEG in skeletal muscle function is unclear as constitutive SPEG-deficient mice developed severe dilated cardiomyopathy and died in utero. We have generated a conditional Speg-KO mouse model and excised Speg by crosses with striated muscle-specific cre-expressing mice (MCK-Cre). The resulting litters had a delay in Speg excision consistent with cre expression starting in early postnatal life and, therefore, an extended lifespan up to a few months. KO mice were significantly smaller and weaker than their littermate-matched controls. Histopathological skeletal muscle analysis revealed smaller myofibers, marked fiber-size variability, and poor integrity and low number of triads. Further, SPEG-deficient muscle fibers were weaker by physiological and in vitro studies and exhibited abnormal Ca2+ handling and excitation-contraction (E-C) coupling. Overall, SPEG deficiency in skeletal muscle is associated with fewer and abnormal triads, and defective calcium handling and excitation-contraction coupling, suggesting that therapies targeting calcium signaling may be beneficial in such patients.",
-      "attachments": [],
-      "citekey": "HuntoonSPEGdeficientskeletalmuscles2018",
       "creators": [
         {
           "creatorType": "author",
@@ -131,30 +78,25 @@
         }
       ],
       "date": "05 01, 2018",
-      "dateAdded": "2018-12-30T15:34:36Z",
-      "dateModified": "2018-12-30T15:34:36Z",
-      "extra": "PMID: 29474540\nPMCID: PMC5905626",
+      "extra": [
+        "PMID: 29474540",
+        "PMCID: PMC5905626"
+      ],
       "issue": "9",
-      "itemID": 100,
+      "itemID": 1,
       "itemType": "journalArticle",
       "journalAbbreviation": "Hum. Mol. Genet.",
       "language": "eng",
       "libraryCatalog": "PubMed",
-      "notes": [],
       "pages": "1608-1617",
       "publicationTitle": "Human Molecular Genetics",
-      "relations": [],
-      "tags": [],
       "title": "SPEG-deficient skeletal muscles exhibit abnormal triad and defective calcium handling",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/9B6E853J",
       "volume": "27"
     },
     {
       "DOI": "10.1371/journal.pgen.1007226",
       "ISSN": "1553-7404",
       "abstractNote": "Gene expression in a tissue-specific context depends on the combined efforts of epigenetic, transcriptional and post-transcriptional processes that lead to the production of specific proteins that are important determinants of cellular identity. Ribosomes are a central component of the protein biosynthesis machinery in cells; however, their regulatory roles in the translational control of gene expression in skeletal muscle remain to be defined. In a genetic screen to identify critical regulators of myogenesis, we identified a DEAD-Box RNA helicase, DDX27, that is required for skeletal muscle growth and regeneration. We demonstrate that DDX27 regulates ribosomal RNA (rRNA) maturation, and thereby the ribosome biogenesis and the translation of specific transcripts during myogenesis. These findings provide insight into the translational regulation of gene expression in myogenesis and suggest novel functions for ribosomes in regulating gene expression in skeletal muscles.",
-      "attachments": [],
-      "citekey": "BennettRNAhelicaseDDX272018",
       "creators": [
         {
           "creatorType": "author",
@@ -218,40 +160,72 @@
         }
       ],
       "date": "03 2018",
-      "dateAdded": "2018-12-30T15:35:12Z",
-      "dateModified": "2018-12-30T15:35:12Z",
-      "extra": "PMID: 29518074\nPMCID: PMC5843160",
+      "extra": [
+        "PMID: 29518074",
+        "PMCID: PMC5843160"
+      ],
       "issue": "3",
-      "itemID": 102,
+      "itemID": 2,
       "itemType": "journalArticle",
       "journalAbbreviation": "PLoS Genet.",
       "language": "eng",
       "libraryCatalog": "PubMed",
-      "notes": [],
       "pages": "e1007226",
       "publicationTitle": "PLoS genetics",
-      "relations": [],
       "tags": [
-        "Animals",
-        "Animals, Genetically Modified",
-        "Cell Line",
-        "Cell Nucleolus",
-        "Cell Proliferation",
-        "DEAD-box RNA Helicases",
-        "Embryo, Nonmammalian",
-        "Mice",
-        "Muscle Development",
-        "Muscle, Skeletal",
-        "Myoblasts",
-        "PAX2 Transcription Factor",
-        "Protein Biosynthesis",
-        "Regeneration",
-        "RNA, Ribosomal",
-        "Zebrafish",
-        "Zebrafish Proteins"
+        {
+          "tag": "Animals"
+        },
+        {
+          "tag": "Animals, Genetically Modified"
+        },
+        {
+          "tag": "Cell Line"
+        },
+        {
+          "tag": "Cell Nucleolus"
+        },
+        {
+          "tag": "Cell Proliferation"
+        },
+        {
+          "tag": "DEAD-box RNA Helicases"
+        },
+        {
+          "tag": "Embryo, Nonmammalian"
+        },
+        {
+          "tag": "Mice"
+        },
+        {
+          "tag": "Muscle Development"
+        },
+        {
+          "tag": "Muscle, Skeletal"
+        },
+        {
+          "tag": "Myoblasts"
+        },
+        {
+          "tag": "PAX2 Transcription Factor"
+        },
+        {
+          "tag": "Protein Biosynthesis"
+        },
+        {
+          "tag": "Regeneration"
+        },
+        {
+          "tag": "RNA, Ribosomal"
+        },
+        {
+          "tag": "Zebrafish"
+        },
+        {
+          "tag": "Zebrafish Proteins"
+        }
       ],
       "title": "RNA helicase, DDX27 regulates skeletal muscle growth and regeneration by modulation of translational processes",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/VDZANJE6",
       "volume": "14"
     }
   ]

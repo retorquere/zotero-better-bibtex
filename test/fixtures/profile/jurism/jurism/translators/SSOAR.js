@@ -123,18 +123,18 @@ function scrape(doc, url) {
 			
 			//add place of publication
 			var place = ZU.xpath(doc, '//td[contains(@class, "resourceDetailTableCellLabel") and text()="Erscheinungsort"] | //td[contains(@class, "resourceDetailTableCellLabel") and text()="City"]');
-			if(place.length>0) {
+			if (place.length>0) {
 				item.place = place[0].nextElementSibling.textContent;
 			}
 			
 			//books in book series with numbers are handled wrong
 			//add in this case series name, correct volume to number
 			var series = ZU.xpath(doc, '//td[contains(@class, "resourceDetailTableCellLabel") and text()="Schriftenreihe"] | //td[contains(@class, "resourceDetailTableCellLabel") and text()="Series"]');
-			if(series.length>0) {
+			if (series.length>0) {
 				var seriesLine = series[0].nextElementSibling.textContent;
 				var seriesLineParts = seriesLine.split(",");
 				item.series = ZU.trimInternal(seriesLineParts[0]);
-				if(seriesLineParts.length>1) {
+				if (seriesLineParts.length>1) {
 					item.seriesNumber = ZU.trimInternal(seriesLineParts[1]);
 					if (item.volume = item.seriesNumber) {
 						delete item.volume;

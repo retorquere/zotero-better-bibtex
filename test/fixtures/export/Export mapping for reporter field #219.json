@@ -1,39 +1,36 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "url",
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:fold:lower]_[Title:fold:nopunct:skipwords:select,1,1:lower]_[year]",
-      "exportBibTeXStrings": "off",
-      "jabrefFormat": 0,
-      "skipFields": ""
-    },
-    "release": "0.13.7"
+      "citekeyFormat": "[auth:fold:lower]_[Title:fold:nopunct:skipwords:select,1,1:lower]_[year]"
+    }
   },
   "items": [
     {
-      "caseName": "Kartinyeri v Commonwealth",
       "court": "HCA",
       "date": "1998-04-01",
-      "dateDecided": "1998-04-01",
-      "extra": "Citation Key: kartinyeri\ntex.author= Kaetinyeri v Commonwealth\ntex.translator= Kartinyeri",
-      "firstPage": "337",
-      "itemID": 10,
+      "extra": [
+        "Citation Key: kartinyeri",
+        "tex.author= Kaetinyeri v Commonwealth",
+        "tex.translator= Kartinyeri"
+      ],
+      "itemID": 1,
       "itemType": "case",
       "pages": "337",
-      "reporter": "CLR",
-      "reporterVolume": "195",
+      "publicationTitle": "CLR",
       "shortTitle": "Kartinyeri",
       "tags": [
-        "au"
+        {
+          "tag": "au"
+        }
       ],
       "title": "Kartinyeri v Commonwealth",
       "volume": "195"

@@ -1,0 +1,90 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "mdy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
+      "autoExport": "idle",
+      "autoExportIdleWait": 60,
+      "autoPinDelay": 1,
+      "citekeyFormat": "[auth:nopunct][year][0]",
+      "importSentenceCase": "off",
+      "itemObserverDelay": 100,
+      "keyConflictPolicy": "change",
+      "qualityReport": true,
+      "workers": 4
+    }
+  },
+  "items": [
+    {
+      "accessDate": "2019-10-01T11:29:13Z",
+      "citationKey": "Leone2007",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "Anna",
+          "lastName": "Leone"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Domenico",
+          "lastName": "Palombi"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Susan",
+          "lastName": "Walker"
+        }
+      ],
+      "date": "2007",
+      "extra": [
+        "OCLC: 1017659336"
+      ],
+      "itemID": 1,
+      "itemType": "book",
+      "language": "Italian, English, French and German.",
+      "libraryCatalog": "Open WorldCat",
+      "place": "Roma",
+      "publisher": "Quasar",
+      "shortTitle": "Res bene gestae",
+      "title": "Res bene gestae: ricerche di storia urbana su Roma antica in onore di Eva Margareta Steinby",
+      "url": "http://books.google.com/books?id=yCQpAQAAMAAJ"
+    },
+    {
+      "ISSN": "0391-8165",
+      "abstractNote": "Recent research carried out during organisation of the Cori Museum (Latina) has resulted in a significant revision and substantial updating of all our knowledge of the ancient city of Cora (Cori), in Latium. The study presented here is an updated and critical report on all the available sources and finds related to the history and the archaeology of the city and its territory, from its origins to medieval times. The analysis considers all these elements, specifically in the context of the history of Latium as a whole and its connections with Rome. With the help of unpublished or little-known information, the following elements are analysed in detail: the city's foundation myth; the important role of the archaic and high-republican city; the urban phases (focussing principally on the earliest organisation, dated to the archaic period, and on the 2nd century B.C. monumental building programme); the local pantheon and the principal sanctuaries; the monuments and the urban buildings; the organisation of the territory; the first evidence of the Christian cult.",
+      "accessDate": "2019-12-14T13:33:17Z",
+      "archive": "JSTOR",
+      "attachments": [
+      ],
+      "citationKey": "Palombi2003",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Domenico",
+          "lastName": "Palombi"
+        }
+      ],
+      "date": "2003",
+      "itemID": 2,
+      "itemType": "journalArticle",
+      "libraryCatalog": "JSTOR",
+      "pages": "197-252",
+      "publicationTitle": "Archeologia Classica",
+      "shortTitle": "CORA",
+      "tags": [
+        {
+          "tag": "temples"
+        }
+      ],
+      "title": "Cora: Bilancio storico e archeologico",
+      "url": "www.jstor.org/stable/44367597",
+      "volume": "54"
+    }
+  ]
+}

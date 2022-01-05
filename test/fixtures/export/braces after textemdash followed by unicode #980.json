@@ -1,58 +1,19 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
       "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "doi",
       "asciiBibLaTeX": true,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportIdleWait": 10,
-      "autoPin": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[zotero:clean]",
-      "citeprocNoteCitekey": false,
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "exportTitleCase": true,
       "itemObserverDelay": 100,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "parseParticles": true,
       "postscript": "if (Translator.BetterBibTeX && this.has.title) {\n  delete this.has['language']\n}",
-      "qualityReport": false,
       "quickCopyMode": "citekeys",
-      "quickCopyPandocBrackets": false,
-      "scrubDatabase": false,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
       "warnBulkModify": 0
-    },
-    "release": {
-      "BetterBibTeX": "5.0.145",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.48",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "zh-CN",
-        "oscpu": "Windows NT 10.0; WOW64",
-        "platform": "Win32",
-        "version": "5.0.48"
-      }
     }
   },
   "items": [
@@ -60,7 +21,6 @@
       "ISSN": "1000-0852",
       "abstractNote": "\u672c\u6587\u63a2\u8ba8\u4e86\u652f\u6301\u5411\u91cf\u673a\u65b9\u6cd5\u5728\u964d\u96e8-\u5f84\u6d41\u9884\u6d4b\u4e2d\u7684\u5e94\u7528\u3002\u8be5\u65b9\u6cd5\u91c7\u7528\u7ed3\u6784\u98ce\u9669\u6700\u5c0f\u5316\u51c6\u5219,\u5f25\u8865\u4e86\u4eba\u5de5\u795e\u7ecf\u7f51\u7edc\u5728\u9884\u6d4b\u5e94\u7528\u4e2d\u7684\u4e0d\u8db3,\u8f83\u597d\u5730\u89e3\u51b3\u4e86\u5c0f\u6837\u672c,\u975e\u7ebf\u6027\u3001\u9ad8\u7ef4\u6570\u548c\u5c40\u90e8\u6700\u5c0f\u70b9\u7b49\u5b9e\u9645\u95ee\u9898\u3002\u5e76\u4e14\u672c\u7814\u7a76\u901a\u8fc7\u4e0e\u4eba\u5de5\u795e\u7ecf\u7f51\u7edc\u9884\u6d4b\u65b9\u6cd5\u3001\u4f20\u7edf\u7684\u56de\u5f52\u5206\u6790\u9884\u6d4b\u65b9\u6cd5\u6bd4\u8f83\u7814\u7a76,\u5f97\u51fa\u652f\u6301\u5411\u91cf\u673a\u80fd\u53d6\u5f97\u66f4\u9ad8\u7cbe\u5ea6\u7684\u964d\u96e8-\u5f84\u6d41\u9884\u6d4b\u503c\u3002",
       "accessDate": "2018-06-07 08:55:34",
-      "attachments": [],
       "callNumber": "11-1814/P",
       "creators": [
         {
@@ -80,18 +40,13 @@
         }
       ],
       "date": "2009",
-      "dateAdded": "2018-06-07 08:55:34",
-      "dateModified": "2018-06-07 08:55:34",
       "issue": "01",
-      "itemID": 1629,
+      "itemID": 1,
       "itemType": "journalArticle",
       "language": "\u4e2d\u6587;",
       "libraryCatalog": "CNKI",
-      "notes": [],
       "pages": "13-16",
       "publicationTitle": "\u6c34\u6587",
-      "seeAlso": [],
-      "tags": [],
       "title": "\u57fa\u4e8e\u652f\u6301\u5411\u91cf\u673a\u7684\u964d\u96e8\u2014\u5f84\u6d41\u9884\u6d4b\u7814\u7a76",
       "url": "http://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CJFQ&dbname=CJFD2009&filename=SWZZ200901003&uid=WEEvREcwSlJHSldRa1FhcEE0RVZycFZqd1NScUtXTk9zd3RUUDFrNlYwST0=$9A4hF_YAuvQ5obgVAqNKPCYcEjKensW4ggI8Fm4gTkoUKaID8j8gFw!!&v=MTk5NTBoMVQzcVRyV00xRnJDVVJMS2ZZZVpvRnkvaFY3dkFOanJSZExHNEh0ak1ybzlGWjRSOGVYMUx1eFlTN0Q="
     }

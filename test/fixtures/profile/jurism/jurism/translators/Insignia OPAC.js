@@ -20,11 +20,11 @@
 function detectWeb(doc, url) {
 	var type =  ZU.xpathText(doc, '//input[@id="__ZoteroType"]/@value');
 	
-	if(type=="book"){
+	if (type=="book"){
 		
 		var xPathTitle = '//table[@id="tbDetailInfo_Basic"]/tbody/tr/td/label[@name="Title"]';
 		var title = ZU.xpathText(doc, xPathTitle);
-		if(title){
+		if (title){
 			return "book";
 		}
 	}
@@ -50,11 +50,11 @@ function doWeb(doc, url) {
 	item.title = ZU.xpathText(doc, xPathTitle);
 	var isbns = ZU.xpathText(doc, xpathISBN);
 
-	if(isbns) {
+	if (isbns) {
 		isbns = isbns.split(';');
-		for(var i=0, n=isbns.length; i<n; i++) {
+		for (var i=0, n=isbns.length; i<n; i++) {
 			isbns[i] = ZU.cleanISBN(isbns[i]);
-			if(!isbns[i]) {
+			if (!isbns[i]) {
 				isbns.splice(i,1);
 			}
 		}
@@ -66,11 +66,11 @@ function doWeb(doc, url) {
 	item.edition = ZU.xpathText(doc, xpathEdition);
 
 	var publisher = ZU.xpathText(doc, xpathPublisher);
-	if(publisher) {
+	if (publisher) {
 		var dateRE = /[\s,[]+c?(\d{4})[\]\s.]*$/gi;
 		var date;
-		while(date = dateRE.exec(publisher)) {
-			if(!item.date) item.date = date[1];
+		while (date = dateRE.exec(publisher)) {
+			if (!item.date) item.date = date[1];
 			publisher = publisher.substring(0, publisher.length - date[0].length);
 			dateRE.lastIndex = 0;
 		}
@@ -78,16 +78,16 @@ function doWeb(doc, url) {
 	}
 
 	var note = ZU.xpathText(doc, xpathDescription);
-	if(note)
+	if (note)
 		item.notes.push(note);
 	note = ZU.xpathText(doc, xpathDescription2);
-	if(note)
+	if (note)
 		item.notes.push(note);
 	
 	//112 p. : col. ill. ; 15 cm..
 	var textContent = ZU.xpathText(doc, xpathPageNumber);
 	
-	if(textContent){
+	if (textContent){
 		item.numPages = textContent.split(" p")[0];
 	}
 	saveAuthor(item,xpathAuthor,doc);

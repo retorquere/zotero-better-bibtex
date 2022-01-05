@@ -1,33 +1,14 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]",
-      "jabrefFormat": 0
+      "citekeyFormat": "[auth][year]"
     }
   },
   "items": [
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "First",
-          "lastName": "Author"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Second",
-          "lastName": "Author"
-        }
-      ],
-      "extra": "Citation Key: author:06\ntex.crossref= conference:06",
-      "itemType": "conferencePaper",
-      "pages": "330\u2014331",
-      "title": "Some publication title"
-    },
     {
       "creators": [
         {
@@ -42,9 +23,34 @@
         }
       ],
       "date": "October 2006",
-      "extra": "Citation Key: conference:06",
+      "extra": [
+        "Citation Key: conference:06"
+      ],
+      "itemID": 2,
       "itemType": "book",
       "title": "Proceedings of the Xth conference on XYZ"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "First",
+          "lastName": "Author"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Second",
+          "lastName": "Author"
+        }
+      ],
+      "extra": [
+        "Citation Key: author:06",
+        "tex.crossref= conference:06"
+      ],
+      "itemID": 1,
+      "itemType": "conferencePaper",
+      "pages": "330\u2014331",
+      "title": "Some publication title"
     }
   ]
 }

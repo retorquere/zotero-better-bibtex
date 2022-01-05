@@ -1,5 +1,6 @@
 ---
 title: AUX Scanner
+weight: 7
 tags:
   - citation keys
 ---

@@ -1,0 +1,43 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "mdy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "auxImport": true,
+      "bibtexURL": "url",
+      "citekeyFormat": "[auth][shorttitle3_3]",
+      "keyConflictPolicy": "change"
+    }
+  },
+  "items": [
+    {
+      "accessDate": "2020-03-30",
+      "attachments": [],
+      "citationKey": "LichessTeamLichessEndYear",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "Lichess Team"
+        }
+      ],
+      "date": "2019-12-31",
+      "extra": [
+        "tex.note=Siehe auch \\url{https://lichess.org/analysis}"
+      ],
+      "itemID": 1,
+      "itemType": "blogPost",
+      "language": "en-US",
+      "notes": [
+        "<p>https://lichess.org/analysis</p>"
+      ],
+      "publicationTitle": "lichess.org",
+      "title": "Lichess End of Year Update 2019",
+      "type": "Lichess Official Blog",
+      "url": "https://lichess.org/blog/XgttDRAAAB8AmHcb/lichess-end-of-year-update-2019"
+    }
+  ]
+}

@@ -37,7 +37,7 @@
 function detectWeb(doc, url) {
 	//this may not always get the right item type, but doing that may neither be possible nor terribly important.
 	if (url.indexOf("searchFullrec.do?")!=-1||url.indexOf("searchFulltext.do?")!=-1){ 
-		if(ZU.xpathText(doc, '//a[@class="bold" and contains(text(), "Download citation")]/@href')) return "journalArticle";
+		if (ZU.xpathText(doc, '//a[@class="bold" and contains(text(), "Download citation")]/@href')) return "journalArticle";
 	}
 	//I think these are all possible search results - not sure, though, may need to add
 	if (url.indexOf("searchQuick")!=-1||url.indexOf("searchTexts") != -1) return "multiple";
@@ -45,7 +45,7 @@ function detectWeb(doc, url) {
 
 
 function doWeb(doc, url){
-	if(detectWeb(doc, url) == "multiple") { 
+	if (detectWeb(doc, url) == "multiple") { 
 		var results = ZU.xpath(doc, '//tr/td/a[contains(@href, "/searchFull") and not(contains(@href, "area=authors"))]|//dl/a[contains(@href, "/searchFull")]')
 		var hits = {};
 		var urls = [];		
@@ -84,7 +84,7 @@ function fetchRIS(risurl, downloadurl, retry){
 		var foundRIS = (text.indexOf('TY  - ') != -1);
 		//Cookie weirdness - on some, but not all pages, this requires a cookie set by loading the citation page. 
 		//That's what we do when the first try fails (modeled after APA Psycnet)
-		if(!foundRIS && retry) {		
+		if (!foundRIS && retry) {		
 			//retry after accessing citation download page
 			Z.debug('No RIS data. Retrying (' + retry + ').');
 			ZU.doGet(downloadurl, function(){fetchRIS(risurl, --retry);});

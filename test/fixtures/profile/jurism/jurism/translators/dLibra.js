@@ -37,9 +37,9 @@ function detectWeb(doc, url) {
 	
 	var singleRe = /.*dlibra\/(doccontent|docmetadata|publication).*/;
 	var multipleRe = /.*dlibra\/(collectiondescription|results).*|.*\/dlibra\/?/;
-	if(singleRe.test(url)) 
+	if (singleRe.test(url)) 
 		return "book"; 
-	if(multipleRe.test(url)) 
+	if (multipleRe.test(url)) 
 		return "multiple";
 }
 
@@ -47,14 +47,14 @@ function detectWeb(doc, url) {
  
 
 function doWeb(doc, url) {
-	if(detectWeb(doc,url)=="multiple"){
+	if (detectWeb(doc,url)=="multiple"){
 
 var articles = new Array();
 		var itemsXPath = '//ol[@class="itemlist"]/li/a | //td[@class="searchhit"]/b/a | //p[@class="resultTitle"]/b/a[@class="dLSearchResultTitle"]';
 		var titles = doc.evaluate(itemsXPath, doc, null, XPathResult.ANY_TYPE, null); 
 		var title;
 		var items= {};
-		while(title = titles.iterateNext()){
+		while (title = titles.iterateNext()){
 			items[title.href] = title.textContent;}
 		
 	Zotero.selectItems(items, function (items) {
@@ -67,7 +67,7 @@ var articles = new Array();
 			}
 			Zotero.Utilities.processDocuments(articles, scrape);	
 		});
-	}else
+	} else
 		scrape(doc, url);
 	
 }
@@ -76,7 +76,7 @@ function scrape(doc, url)
 {
 	var reSingle= new RegExp("(.*/dlibra)/(?:doccontent|docmetadata|publication).*[?&]id=([0-9]*).*");	
 	var m = reSingle.exec(url);
-	if(!m)
+	if (!m)
 		return "";
 	var baseUrl = m[1];
 	var id = m[2];

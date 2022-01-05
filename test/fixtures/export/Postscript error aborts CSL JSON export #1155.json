@@ -1,20 +1,65 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "preferences": {
       "bibtexURL": "note",
       "citekeyFormat": "[auth][year]",
-      "jabrefFormat": 0,
       "postscript": "if (this.item.DOI) {\n  var doi = this.item.DOI;\n  if (doi.indexOf('doi:') != 0) { doi = 'doi:' + doi; }\n  this.add({ name: 'note', duplicate: true, value: '[' + doi + ']' });\n}\nif (this.item.DOI) {\n  var doi = this.item.DOI;\n  if (doi.indexOf('doi:') != 0) { doi = 'doi:' + doi; }\n  this.add({ name: 'note', duplicate: true, value: '[' + doi + ']' });\n}"
     }
   },
   "items": [
     {
+      "accessDate": "2014-04-29 13:50:49",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "John",
+          "lastName": "Wordsworth"
+        }
+      ],
+      "date": "1883",
+      "itemID": 1,
+      "itemType": "book",
+      "language": "English",
+      "libraryCatalog": "Internet Archive",
+      "numPages": "139",
+      "place": "Oxford",
+      "publisher": "Clarendon Press",
+      "series": "Old-Latin Biblical Texts",
+      "seriesNumber": "1",
+      "shortTitle": "The Gospel according to St. Matthew",
+      "tags": [
+        {
+          "tag": "Vulgate"
+        }
+      ],
+      "title": "The Gospel according to St. Matthew, from the St. Germain ms. (g<sub>1</sub>), now numbered Lat. 11553 in the National Library at Paris",
+      "url": "https://archive.org/details/gospelaccording00goog"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Andrew N.J.",
+          "lastName": "Dunning"
+        }
+      ],
+      "date": "2016",
+      "itemID": 3,
+      "itemType": "book",
+      "place": "Toronto",
+      "publisher": "Pontifical Institute of Mediaeval Studies",
+      "series": "Toronto Medieval Latin Texts",
+      "seriesNumber": "33",
+      "shortTitle": "Notes from the school of William de Montibus",
+      "title": "Samuel Presbiter: Notes from the school of William de Montibus. <span class=\"nocase\">Collecta ex diuersis auditis in scola magistri Willelmi de Monte</span>"
+    },
+    {
       "attachments": [
         {
-          "mimeType": "application/pdf",
+          "contentType": "application/pdf",
           "path": "attachments/Adams_Huaynaputina.pdf",
           "title": "Attachment"
         }
@@ -57,14 +102,24 @@
         }
       ],
       "date": "2001",
-      "extra": "Citation Key: Adams2001\n{:issued:2014-12-31/2015-01-01}",
+      "extra": [
+        "Citation Key: Adams2001",
+        "{:issued:2014-12-31/2015-01-01}"
+      ],
+      "itemID": 2,
       "itemType": "journalArticle",
       "pages": "493\u2013518",
       "publicationTitle": "Bulletin of Volcanology",
       "tags": [
-        "Vulcanian eruptions",
-        "breadcrust",
-        "plinian"
+        {
+          "tag": "breadcrust"
+        },
+        {
+          "tag": "plinian"
+        },
+        {
+          "tag": "Vulcanian eruptions"
+        }
       ],
       "title": "The physical volcanology of the 1600 eruption of <b>Huaynaputina</b>, southern Peru",
       "volume": "62"
@@ -72,7 +127,6 @@
     {
       "DOI": "10.1484/J.SE.2.303788",
       "accessDate": "2014-10-02 00:07:46",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -81,7 +135,7 @@
         }
       ],
       "date": "1994",
-      "itemID": 5451,
+      "itemID": 4,
       "itemType": "journalArticle",
       "language": "German",
       "libraryCatalog": "MetaPress",
@@ -90,50 +144,6 @@
       "title": "Skizze zur Auslegungsgeschichte der B\u00fccher <i>Prouerbia</i> und <i>Ecclesiastes</i> in der abendl\u00e4ndischen Kirche",
       "url": "http://dx.doi.org/10.1484/J.SE.2.303788",
       "volume": "34"
-    },
-    {
-      "accessDate": "2014-04-29 13:50:49",
-      "creators": [
-        {
-          "creatorType": "editor",
-          "firstName": "John",
-          "lastName": "Wordsworth"
-        }
-      ],
-      "date": "1883",
-      "itemID": 947,
-      "itemType": "book",
-      "language": "English",
-      "libraryCatalog": "Internet Archive",
-      "numPages": "139",
-      "place": "Oxford",
-      "publisher": "Clarendon Press",
-      "series": "Old-Latin Biblical Texts",
-      "seriesNumber": "1",
-      "shortTitle": "The Gospel according to St. Matthew",
-      "tags": [
-        "Vulgate"
-      ],
-      "title": "The Gospel according to St. Matthew, from the St. Germain ms. (g<sub>1</sub>), now numbered Lat. 11553 in the National Library at Paris",
-      "url": "https://archive.org/details/gospelaccording00goog"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Andrew N.J.",
-          "lastName": "Dunning"
-        }
-      ],
-      "date": "2016",
-      "itemID": 5725,
-      "itemType": "book",
-      "place": "Toronto",
-      "publisher": "Pontifical Institute of Mediaeval Studies",
-      "series": "Toronto Medieval Latin Texts",
-      "seriesNumber": "33",
-      "shortTitle": "Notes from the school of William de Montibus",
-      "title": "Samuel Presbiter: Notes from the school of William de Montibus. <span class=\"nocase\">Collecta ex diuersis auditis in scola magistri Willelmi de Monte</span>"
     }
   ]
 }

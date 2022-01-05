@@ -1,51 +1,69 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "doi",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
       "autoAbbrevStyle": "http://citationstylist.org/styles/mlz-cms-full",
       "autoExport": "idle",
-      "autoExportIdleWait": 10,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
       "citekeyFold": false,
-      "citekeyFormat": "[auth][year][0]",
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "postscript": "",
-      "quickCopyMode": "latex",
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "warnBulkModify": 10
-    },
-    "release": "1.6.51-circle-2379"
+      "citekeyFormat": "[auth][year][0]"
+    }
   },
   "items": [
     {
+      "creators": [
+        {
+          "creatorType": "author",
+          "multi": {
+            "_key": {
+              "zh-alalc97": {
+                "lastName": "Yan Cairong"
+              }
+            }
+          },
+          "name": "\u984f\u91c7\u5bb9"
+        }
+      ],
+      "date": "2003",
+      "extra": [
+        "Citation Key: yan_cairong__2003"
+      ],
+      "itemID": 2,
+      "itemType": "thesis",
+      "language": "Chinese",
+      "multi": {
+        "_keys": {
+          "title": {
+            "en": "Publishing and Culture in Ming-Qing period : The Scholar-Beauty Novels as an Example"
+          }
+        },
+        "main": {
+          "title": "zh",
+          "university": "zh"
+        }
+      },
+      "numPages": "214",
+      "publisher": "\u570b\u7acb\u66a8\u5357\u570b\u969b\u5927\u5b78",
+      "title": "\u660e\u6e05\u6642\u671f\u51fa\u7248\u8207\u6587\u5316\u2500\u4ee5\u300c\u624d\u5b50\u4f73\u4eba\u300d\u5c0f\u8aaa\u70ba\u4e2d\u5fc3",
+      "type": "Ph.D. Dissertation",
+      "url": "http://ndltd.ncl.edu.tw/cgi-bin/gs32/gsweb.cgi?o=dnclcdr&s=id=%22091NCNU0493006%22.&searchmode=basic"
+    },
+    {
       "accessDate": "2016-04-20 13:56:34",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
           "multi": {
             "_key": {
               "en": {
-                "firstName": "",
                 "lastName": "Erudition"
               },
               "zh-alalc97": {
-                "firstName": "",
                 "lastName": "\u00c0i r\u00fa sh\u0113ng"
               }
             }
@@ -54,8 +72,10 @@
         }
       ],
       "date": "n.d.",
-      "extra": "Citation Key: leishuku",
-      "itemID": 6701,
+      "extra": [
+        "Citation Key: leishuku"
+      ],
+      "itemID": 1,
       "itemType": "webpage",
       "language": "zh",
       "multi": {
@@ -77,48 +97,7 @@
       "shortTitle": "leishuku",
       "title": "\u4e2d\u570b\u985e\u66f8\u5eab",
       "type": "Full-text databse",
-      "url": "http://server.wenzibase.com",
-      "websiteTitle": "\u4e2d\u570b\u985e\u66f8\u5eab",
-      "websiteType": "Full-text databse"
-    },
-    {
-      "attachments": [],
-      "creators": [
-        {
-          "creatorType": "author",
-          "multi": {
-            "_key": {
-              "zh-alalc97": {
-                "firstName": "",
-                "lastName": "Yan Cairong"
-              }
-            }
-          },
-          "name": "\u984f\u91c7\u5bb9"
-        }
-      ],
-      "date": "2003",
-      "extra": "Citation Key: yan_cairong__2003",
-      "itemID": 2796,
-      "itemType": "thesis",
-      "language": "Chinese",
-      "multi": {
-        "_keys": {
-          "title": {
-            "en": "Publishing and Culture in Ming-Qing period : The Scholar-Beauty Novels as an Example"
-          }
-        },
-        "main": {
-          "title": "zh",
-          "university": "zh"
-        }
-      },
-      "numPages": "214",
-      "publisher": "\u570b\u7acb\u66a8\u5357\u570b\u969b\u5927\u5b78",
-      "title": "\u660e\u6e05\u6642\u671f\u51fa\u7248\u8207\u6587\u5316\u2500\u4ee5\u300c\u624d\u5b50\u4f73\u4eba\u300d\u5c0f\u8aaa\u70ba\u4e2d\u5fc3",
-      "type": "Ph.D. Dissertation",
-      "university": "\u570b\u7acb\u66a8\u5357\u570b\u969b\u5927\u5b78",
-      "url": "http://ndltd.ncl.edu.tw/cgi-bin/gs32/gsweb.cgi?o=dnclcdr&s=id=%22091NCNU0493006%22.&searchmode=basic"
+      "url": "http://server.wenzibase.com"
     }
   ]
 }

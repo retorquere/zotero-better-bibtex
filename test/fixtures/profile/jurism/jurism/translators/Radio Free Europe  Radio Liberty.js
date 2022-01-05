@@ -101,7 +101,7 @@ function doWeb(doc, url){
 		var results = doc.evaluate('//div[@class="searchResultItem"]', doc, null, XPathResult.ANY_TYPE, null);
 		var items = new Array();
 		var result;
-		while(result = results.iterateNext()) {
+		while (result = results.iterateNext()) {
 			var link = doc.evaluate('./a[@class="resultLink"]', result, null, XPathResult.ANY_TYPE, null).iterateNext();
 			var title = link.textContent;
 			var url = link.href;
@@ -130,7 +130,7 @@ function scrape(doc, url){
 		if ((author = author.iterateNext()) !== null) {
 			author = author.textContent;
 			// Sometimes we have "By Author"
-			if(author.substr(0, 3).toLowerCase() == "by ") {
+			if (author.substr(0, 3).toLowerCase() == "by ") {
 				author = author.substr(3);
 			}
 			var cleaned = Zotero.Utilities.cleanAuthor(author, "author");

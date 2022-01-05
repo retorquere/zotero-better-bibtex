@@ -13,31 +13,33 @@
 }
 
 /*
-	WikiLeaks PlusD Translator
-	Copyright (C) 2016 Sebastian Karcher
-	Codeblocks by Philipp Zumstein via
-	https://github.com/zuphilip/translators/wiki/Common-code-blocks-for-translators
+	***** BEGIN LICENSE BLOCK *****
 
-	This program is free software: you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
+	Copyright © 2017-2019 Sebastian Karcher
+
+	This file is part of Zotero.
+
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
 	(at your option) any later version.
 
-	This program is distributed in the hope that it will be useful,
+	Zotero is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-	GNU General Public License for more details.
+	GNU Affero General Public License for more details.
 
-	You should have received a copy of the GNU General Public License
-	along with this program. If not, see <http://www.gnu.org/licenses/>.
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
+
+	***** END LICENSE BLOCK *****
 */
 
-
 function detectWeb(doc, url) {
-	if (url.indexOf("/plusd/?")!=-1  && getSearchResults(doc, url, true)) {
+	if (url.includes("/plusd/?") && getSearchResults(doc, url, true)) {
 		return "multiple";
 	}
-	else if (url.indexOf("/plusd/cables/")!=-1) {
+	else if (url.includes("/plusd/cables/")) {
 		return "report";
 	}
 }
@@ -81,7 +83,7 @@ var fieldMap = {
 	"canonical id": "reportNumber",
 	"from": "publisher", //not sure -- could also be place
 	"date": "date"
-}
+};
 function scrape(doc, url) {
 	var item = new Zotero.Item('report');
 	item.url = url;
@@ -176,5 +178,5 @@ var testCases = [
 		"url": "https://search.wikileaks.org/plusd/?qproject[]=ps&qproject[]=cc&qproject[]=fp&qproject[]=cg&q=&qtfrom=1975-01-01#result",
 		"items": "multiple"
 	}
-]
+];
 /** END TEST CASES **/

@@ -14,12 +14,12 @@
 
 function detectWeb(doc, url) {
 	var liiRegexp = /\/supct\/html\/.+/
-	if(liiRegexp.test(url)) {
+	if (liiRegexp.test(url)) {
 		return "case";
 	} else {
 		var aTags = doc.getElementsByTagName("a");
-		for(var i=0; i<aTags.length; i++) {
-			if(liiRegexp.test(aTags[i].href)) { 
+		for (var i=0; i<aTags.length; i++) {
+			if (liiRegexp.test(aTags[i].href)) { 
 				return "multiple";
 			}
 		}
@@ -72,21 +72,21 @@ function scrape(doc, url) {
 
 	// judge
 	var j = ZU.xpathText(doc, '//meta[contains(@name,"AUTHOR")]/@content');
-	if(j) {
+	if (j) {
 		// Some entries the AUTHOR meta tag content is empty, this makes zotero unhappy, adding a default
 		newItem.creators.push({lastName:j ? j : "Author Not Provided", creatorType:"judge", fieldMode:true});
 	}
 
 	// group meta tags
 	var tags = ZU.xpath(doc, '//meta[contains(@name,"GROUP")]/@content');
-	for(var i in tags) {
+	for (var i in tags) {
 		var value =tags[i].textContent;
 			newItem.tags.push(value);		
 	}
 	
 	// parse year out of decision date
 	var decdateField =  ZU.xpathText(doc, '//meta[contains(@name,"DECDATE")]/@content');   
-	if(decdateField ) {
+	if (decdateField ) {
 		var decisionYearRegex = /(\w+)\s+(\d+),\s+(\d+)/
 		var decisionDateMatch = decisionYearRegex.exec(decdateField);
 		var dy;
@@ -134,8 +134,8 @@ function scrape(doc, url) {
 	// look for offcite span element
 	var spanTags = doc.getElementsByTagName("span");
 	if (spanTags.length > 0) {
-		for(var i=0; i<spanTags.length; i++) {
-			if(spanTags[i].className == "offcite") {
+		for (var i=0; i<spanTags.length; i++) {
+			if (spanTags[i].className == "offcite") {
 				var citeRegex = /([0-9]+)\s+U\.S\.\s+([0-9]+)/;
 				var citeMatch = citeRegex.exec(spanTags[i].innerHTML);
 				if (citeMatch) {
@@ -181,7 +181,7 @@ function doWeb(doc, url) {
 	//sample search result URL:
 	//http://www.law.cornell.edu/supct/search/display.html?terms=citizens&url=/supct/html/94-1340.ZS.html
 	var liiRegexp = /\/supct\/html\/.+/
-	if(liiRegexp.test(url)) {
+	if (liiRegexp.test(url)) {
 		scrape(doc, url);
 	} else {
 		

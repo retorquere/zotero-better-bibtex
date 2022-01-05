@@ -2,5 +2,6 @@
   {{ range $filter, $description := .Site.Data.citekeyformatters.filters }}
     <li>{{ $filter | markdownify }}: {{ $description | markdownify }}</li>
   {{ end }}
+  <li><code>&gt;X</code>: a pseudo-filter which aborts the current pattern generation if what came before it is <code>X</code> characters or less (<code>[&gt;0]</code> is a typical use. You would typically use this with something like <code>[auth][journal:&gt;0][year] | [title][year]</code> which means if there's no journal you get <code>title-year</code> rather than just <code>auth+year</code>.</li>
   <li><code>(x)</code>: The string between the parentheses will be inserted if the field marker preceding this modifier resolves to an empty value. The placeholder <code>x</code> may be any string. For instance, the marker <code>[volume:(unknown)]</code> will return the entry's volume if set, and the string <code>unknown</code> if the entry's volume field is not set.
 </ul>

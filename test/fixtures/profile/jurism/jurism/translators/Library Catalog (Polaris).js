@@ -152,7 +152,7 @@ function scrape(pos) {
 				tag = tag.textContent.trim();
 				ind = ind.textContent;
 				
-				switch(tag) {
+				switch (tag) {
 					case 'LDR':
 						record.leader = data.textContent;
 						continue;

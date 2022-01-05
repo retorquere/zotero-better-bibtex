@@ -1,0 +1,53 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "mdy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "asciiBibLaTeX": true,
+      "bibtexURL": "url",
+      "citekeyFormat": "[auth:lower]_[shorttitle1_1:lower]_[year]",
+      "itemObserverDelay": 100,
+      "skipFields": "file",
+      "workers": 4
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.2307/2938351",
+      "ISSN": "0012-9682",
+      "abstractNote": "This paper considers asymptotically efficient instrumental variables estimation of nonlinear models in an i.i.d. environment. The class of models includes nonlinear simultaneous equations models and other models of interest. A problem in constructing efficient instrumental variables estimators for such models is that the optimal instruments involve a conditional expectation, calculation of which can require functional form assumptions for the conditional distribution of endogenous variables, as well as integration. Nonparametric methods provide a way of avoiding this difficulty. Here it is shown that nonparametric estimates of the optimal instruments can give asymptotically efficient instrumental variables estimators. Also, ways of choosing the nonparametric estimate in applications are discussed. Two types of nonparametric estimates of the optimal instruments are considered. Each involves nonparametric regression, one by nearest neighbor and the other by series approximation. The finite sample properties of the estimators are considered in a small sampling experiment involving an endogenous dummy variable model.",
+      "accessDate": "2020-04-30T01:30:54Z",
+      "archive": "JSTOR",
+      "citationKey": "newey_efficient_1990",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Whitney K.",
+          "lastName": "Newey"
+        }
+      ],
+      "date": "1990",
+      "extra": [
+        "Publisher: [Wiley, Econometric Society]"
+      ],
+      "issue": "4",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "libraryCatalog": "JSTOR",
+      "pages": "809-837",
+      "publicationTitle": "Econometrica",
+      "tags": [
+        {
+          "tag": "626"
+        }
+      ],
+      "title": "Efficient Instrumental Variables Estimation of Nonlinear Models",
+      "url": "https://www.jstor.org/stable/2938351",
+      "volume": "58"
+    }
+  ]
+}

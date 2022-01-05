@@ -37,15 +37,15 @@
 
 
 function detectWeb(doc, url) {
-	if (url.indexOf('/heft')>-1 && url.indexOf('/zip')>-1) {
+	if (url.includes('/heft') && url.includes('/zip')) {
 		//Z.debug(ZU.xpathText(doc, '//meta[@property="article:section"]/@content'));
 		var articleSection = ZU.xpathText(doc, '//meta[@property="article:section"]/@content');
-		if (articleSection.indexOf('Rechtsprechung')>-1) {
+		if (articleSection.includes('Rechtsprechung')) {
 			return "case";
 		}
 		return "journalArticle";
 		
-	} else if (url.indexOf('/archivsuche/')>-1 || url.indexOf('/aktuelles-heft/')>-1 || url.indexOf('/heft-')>-1) {
+	} else if (url.includes('/archivsuche/') || url.includes('/aktuelles-heft/') || url.includes('/heft-')) {
 		if (getSearchResults(doc, true)) {
 			return "multiple";
 		}
@@ -263,5 +263,5 @@ var testCases = [
 		"url": "https://www.zip-online.de/heft-23-24-1987/",
 		"items": "multiple"
 	}
-]
+];
 /** END TEST CASES **/

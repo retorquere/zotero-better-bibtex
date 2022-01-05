@@ -40,10 +40,10 @@ function doWeb(doc, url) {
 	var item = new Zotero.Item('newspaperArticle');
 	item.title = ZU.xpathText(doc, '//header//h1');
 	item.url = url;
-	if(url.indexOf('haaretz.com') != -1) {
+	if (url.indexOf('haaretz.com') != -1) {
 		item.publicationTitle = 'Haaretz';
 		item.language = 'en';
-	} else{
+	} else {
 		item.publicationTitle = 'הארץ';
 		item.language = 'he';
 	}
@@ -53,14 +53,14 @@ function doWeb(doc, url) {
 	item.abstractNote = abstract;
 
 	var authors = ZU.xpath(doc, '//address/a[@rel="author"]');
-	for(var i=0; i<authors.length; i++) {
+	for (var i=0; i<authors.length; i++) {
 		item.creators.push(ZU.cleanAuthor(authors[i].textContent, 'author'));
 	}
 
 	item.date = ZU.strToISO(ZU.xpathText(doc, '//time[@itemprop="datePublished"]/@datetime'));
 	var keywords = ZU.xpathText(doc, '//meta[@name="news_keywords"]/@content').split(',');
-	for(var i=0; i<keywords.length; i++) {
-		if(keywords[i].length>0) item.tags.push(keywords[i].trim());
+	for (var i=0; i<keywords.length; i++) {
+		if (keywords[i].length>0) item.tags.push(keywords[i].trim());
 	}
 	item.complete();
 }

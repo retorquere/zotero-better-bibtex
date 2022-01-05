@@ -2,14 +2,14 @@
 	"translatorID": "4c272290-7ac4-433e-862d-244884ed285a",
 	"label": "sbn.it",
 	"creator": "Philipp Zumstein",
-	"target": "^https?://(www|opac)\\.sbn\\.it/opacsbn/opaclib\\?",
+	"target": "^https?://(www|opac)\\.sbn\\.it/opacsbn/opaclib",
 	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-06-24 10:05:03"
+	"lastUpdated": "2019-12-27 16:51:43"
 }
 
 /*
@@ -36,36 +36,38 @@
 */
 
 var typeMapping = {
-	"testo a stampa" : "book",
-	//"musica a stampa" ,
-	"documento da proiettare o video" : "videoRecording",
-	"registrazione sonora" : "audioRecording",
-	//"musica manoscritta",
-	"documento grafico" : "artwork",
-	//"risorsa elettronica",
-	"documento cartografico a stampa" : "map",
-	"registrazione sonora non musicale" : "audioRecording",
-	//"documento multimediale",
-	//"testo manoscritto",
-	//"oggetto tridimensionale",
-	//"documento cartografico manoscritto"
+	"testo a stampa": "book",
+	// "musica a stampa" ,
+	"documento da proiettare o video": "videoRecording",
+	"registrazione sonora": "audioRecording",
+	// "musica manoscritta",
+	"documento grafico": "artwork",
+	// "risorsa elettronica",
+	"documento cartografico a stampa": "map",
+	"registrazione sonora non musicale": "audioRecording",
+	// "documento multimediale",
+	// "testo manoscritto",
+	// "oggetto tridimensionale",
+	// "documento cartografico manoscritto"
 };
 
 function detectWeb(doc, url) {
-	if (url.indexOf("full.jsp")>-1) {
-		var type = ZU.xpathText(doc, '//tr[ td[contains(@class,"detail_key") and contains(text(), "Tipo documento")] ]/td[contains(@class,"detail_value")]');
-		//Z.debug(type.trim());
+	if (url.includes("full.jsp")) {
+		var type = ZU.xpathText(doc, '//tr[ td[contains(text(), "Tipo documento")] ]/td[contains(@class,"detail_value")]');
+		// Z.debug(type.trim());
 		return typeMapping[type.trim().toLowerCase()] || "book";
-	} else if (getSearchResults(doc, true)) {
+	}
+	else if (getSearchResults(doc, true)) {
 		return "multiple";
 	}
+	return false;
 }
 
 function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
-	var rows = ZU.xpath(doc, '//table[@id="records"]//td/div[contains(@class, "rectitolo")]/a');
-	for (var i=0; i<rows.length; i++) {
+	var rows = ZU.xpath(doc, '//li[contains(@class, "element")]//div[contains(@class, "content")]/strong/a');
+	for (var i = 0; i < rows.length; i++) {
 		var href = rows[i].href;
 		var title = ZU.trimInternal(rows[i].textContent);
 		if (!href || !title) continue;
@@ -81,24 +83,25 @@ function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
 		Zotero.selectItems(getSearchResults(doc, false), function (items) {
 			if (!items) {
-				return true;
+				return;
 			}
-			var articles = new Array();
+			var articles = [];
 			for (var i in items) {
 				articles.push(i);
 			}
 			ZU.processDocuments(articles, scrape);
 		});
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }
 
-function scrape(doc, url) {
-	var urlMarc = ZU.xpathText(doc, '//a[contains(@title, "Scarico Marc21 del record") or contains(@title, "Download Marc21 record")]/@href');
-	//Z.debug(urlMarc);
-	ZU.doGet(urlMarc, function(text) {
-		//call MARC translator
+function scrape(doc, _url) {
+	var urlMarc = ZU.xpathText(doc, '(//a[contains(@title, "Scarico Marc21 del record") or contains(@title, "Download Marc21 record")]/@href)[1]');
+	// Z.debug(urlMarc);
+	ZU.doGet(urlMarc, function (text) {
+		// call MARC translator
 		var translator = Zotero.loadTranslator("import");
 		translator.setTranslator("a6ee60df-1ddc-4aae-bb25-45e0537be973");
 		translator.setString(text);

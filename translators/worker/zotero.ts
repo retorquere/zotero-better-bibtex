@@ -1,53 +1,57 @@
-declare const doExport: () => void
-declare const Translator: ITranslator
+/* eslint-disable @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment */
 
 importScripts('resource://gre/modules/osfile.jsm')
-declare const OS: any
+
+import type { ITranslator } from '../lib/translator'
+import type { Translators } from '../../typings/translators'
+
+declare const doExport: () => void
+declare const Translator: ITranslator
+declare const dump: (message: string) => void
 
 import XRegExp = require('xregexp')
-import stringify = require('json-stringify-safe')
-import { HTMLParser } from '../../content/markupparser'
 import * as DateParser from '../../content/dateparser'
-import * as Extra from '../../content/extra'
+// import * as Extra from '../../content/extra'
 import { qualityReport } from '../../content/qr-check'
-import { titleCase } from '../../content/title-case'
-import * as itemCreators from '../../gen/item-creators.json'
+import { titleCase, HTMLParser } from '../../content/text'
+import itemCreators from '../../gen/items/creators.json'
+import { client } from '../../content/client'
+import { log } from '../../content/logger'
+import { Collection } from '../../gen/typings/serialized-item'
 
 const ctx: DedicatedWorkerGlobalScope = self as any
 
-export const params: { client: string, version: string, platform: string, translator: string, output: string } = (ctx.location.search || '')
-  .replace(/^\?/, '') // remove leading question mark if present
-  .split('&') // split into k-v pairs
-  .filter(kv => kv) // there might be none
-  .map(kv => kv.split('=').map(decodeURIComponent)) // decode k & v
-  .reduce((acc, kv) => {
-    if (kv.length === 2) acc[kv[0]] = kv[1]
-    return acc
-  }, { client: '', version: '', platform: '', translator: '', output: '' })
+export const workerContext = {
+  version: '',
+  platform: '',
+  translator: '',
+  output: '',
+  localeDateOrder: '',
+  debugEnabled: false,
+  worker: '',
+}
+for(const [key, value] of (new URLSearchParams(ctx.location.search)).entries()) {
+  if (key === 'debugEnabled') {
+    workerContext[key] = value === 'true'
+  }
+  else {
+    workerContext[key] = value
+  }
+}
 
 class WorkerZoteroBetterBibTeX {
-  private timestamp: number
-
-  public worker() {
-    return true
-  }
-
-  public client() {
-    return params.client
-  }
-
-  public debugEnabled() {
-    return true
-  }
+  public localeDateOrder: string
 
   public cacheFetch(itemID: number) {
-    const cached = Zotero.config.cache[itemID]
-    Zotero.debug(`cache ${cached ? 'hit' : 'miss'} for ${itemID}`)
-    return cached
+    return Zotero.config.cache[itemID]
+  }
+
+  public setProgress(percent: number) {
+    Zotero.send({ kind: 'progress', percent, translator: workerContext.translator, autoExport: Zotero.config.autoExport })
   }
 
   public cacheStore(itemID: number, options: any, prefs: any, reference: string, metadata: any) {
-    Zotero.send({ kind: 'cache', itemID, reference, metadata })
+    if (Zotero.config.preferences.caching) Zotero.send({ kind: 'cache', itemID, reference, metadata })
     return true
   }
 
@@ -56,43 +60,18 @@ class WorkerZoteroBetterBibTeX {
   }
 
   public parseDate(date) {
-    return DateParser.parse(date)
+    return DateParser.parse(date, workerContext.localeDateOrder)
   }
+  public getLocaleDateOrder() {
+    return workerContext.localeDateOrder
+  }
+
   public isEDTF(date, minuteLevelPrecision = false) {
     return DateParser.isEDTF(date, minuteLevelPrecision)
   }
 
   public titleCase(text) {
     return titleCase(text)
-  }
-
-  public extractFields(item) {
-    return Extra.get(item.extra)
-  }
-
-  public debug(...msg) {
-    const now = Date.now()
-    const diff = typeof this.timestamp === 'number' ? now - this.timestamp : ''
-    this.timestamp = now
-
-    let _msg = ''
-    for (const m of msg) {
-      const type = typeof m
-      if (type === 'string' || m instanceof String || type === 'number' || type === 'undefined' || type === 'boolean' || m === null) {
-        _msg += m
-      } else if (m instanceof Error) {
-        _msg += `<Error: ${m.message || m.name}${m.stack ? `\n${m.stack}` : ''}>`
-      } else if (m && type === 'object' && m.message) { // mozilla exception, no idea on the actual instance type
-        // message,fileName,lineNumber,column,stack,errorCode
-        _msg += `<Error: ${m.message}#\n${m.stack}>`
-      } else {
-        _msg += stringify(m)
-      }
-
-      _msg += ' '
-    }
-
-    Zotero.debug(`+${diff} ${_msg}`)
   }
 
   public parseHTML(text, options) {
@@ -106,15 +85,15 @@ class WorkerZoteroBetterBibTeX {
   }
 
   public strToISO(str) {
-    return DateParser.strToISO(str)
+    return DateParser.strToISO(str, workerContext.localeDateOrder)
   }
 }
 
 class WorkerZoteroUtilities {
-  public XRegExp = XRegExp // tslint:disable-line:variable-name
+  public XRegExp = XRegExp // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
 
   public getVersion() {
-    return params.version
+    return workerContext.version
   }
 
   public text2html(str: string, singleNewlineIsParagraph: boolean) {
@@ -127,17 +106,18 @@ class WorkerZoteroUtilities {
 
     if (singleNewlineIsParagraph) {
       // \n => <p>
-      str = `<p>${str.replace(/\n/g, '</p><p>').replace(/  /g, '&nbsp; ')}</p>`
-    } else {
+      str = `<p>${str.replace(/\n/g, '</p><p>').replace(/ {2}/g, '&nbsp; ')}</p>`
+    }
+    else {
       // \n\n => <p>, \n => <br/>
-      str = `<p>${str.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br/>').replace(/  /g, '&nbsp; ')}</p>`
+      str = `<p>${str.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br/>').replace(/ {2}/g, '&nbsp; ')}</p>`
     }
 
     return str.replace(/<p>\s*<\/p>/g, '<p>&nbsp;</p>')
   }
 
   public getCreatorsForType(itemType) {
-    return itemCreators[(params.client as string)][itemType]
+    return itemCreators[client][itemType]
   }
 
   public itemToCSLJSON(item) {
@@ -145,21 +125,26 @@ class WorkerZoteroUtilities {
   }
 }
 
+function isWinRoot(path) {
+  return workerContext.platform === 'win' && path.match(/^[a-z]:\\?$/i)
+}
 function makeDirs(path) {
-  if (!OS.Path.split(path).absolute) throw new Error(`Will not make relative ${path}`)
+  if (isWinRoot(path)) return
+  if (!OS.Path.split(path).absolute) throw new Error(`Will not create relative ${path}`)
 
   path = OS.Path.normalize(path)
 
   const paths: string[] = []
-  while (path !== paths[0] && !OS.File.exists(path)) {
+  // path === paths[0] means we've hit the root, as the dirname of root is root
+  while (path !== paths[0] && !isWinRoot(path) && !OS.File.exists(path)) {
     paths.unshift(path)
     path = OS.Path.dirname(path)
   }
 
-  if (!OS.File.stat(path).isDir) throw new Error(`makeDirs: root ${path} is not a directory`)
+  if (!isWinRoot(path) && !(OS.File.stat(path) as OS.File.Entry).isDir) throw new Error(`makeDirs: root ${path} is not a directory`)
 
   for (path of paths) {
-    OS.File.makeDir(path)
+    OS.File.makeDir(path) as void
   }
 }
 
@@ -174,8 +159,8 @@ function saveFile(path, overwrite) {
   if (this.linkMode === 'imported_file' || (this.linkMode === 'imported_url' && this.contentType !== 'text/html')) {
     makeDirs(OS.Path.dirname(this.path))
     OS.File.copy(this.localPath, this.path, { noOverwrite: !overwrite })
-
-  } else if (this.linkMode === 'imported_url') {
+  }
+  else if (this.linkMode === 'imported_url') {
     const target = OS.Path.dirname(this.path)
     if (!overwrite && OS.File.exists(target)) throw new Error(`${path} would overwite ${target}`)
 
@@ -184,34 +169,34 @@ function saveFile(path, overwrite) {
 
     const snapshot = OS.Path.dirname(this.localPath)
     const iterator = new OS.File.DirectoryIterator(snapshot)
-    let entry
-    try {
-      while (entry = iterator.next()) {
-        if (entry.isDir) throw new Error(`Unexpected directory ${entry.path} in snapshot`)
-        OS.File.copy(OS.Path.join(snapshot, entry.name), OS.path.join(target, entry.name), { noOverwrite: !overwrite })
+    // PITA dual-type OS.Path is promises on main thread but sync in worker
+    iterator.forEach(entry => { // eslint-disable-line @typescript-eslint/no-floating-promises
+      if (entry.isDir) throw new Error(`Unexpected directory ${entry.path} in snapshot`)
+      if (entry.name !== '.zotero-ft-cache') {
+        OS.File.copy(OS.Path.join(snapshot, entry.name), OS.Path.join(target, entry.name), { noOverwrite: !overwrite })
       }
-    } finally {
-      iterator.close()
-    }
+    })
   }
 
   return true
 }
 
 class WorkerZotero {
-  public config: BBTWorker.Config
+  public config: Translators.Worker.Config
   public output: string
   public exportDirectory: string
   public exportFile: string
+  private items = 0
 
-  public Utilities = new WorkerZoteroUtilities // tslint:disable-line:variable-name
-  public BetterBibTeX = new WorkerZoteroBetterBibTeX // tslint:disable-line:variable-name
+  public Utilities = new WorkerZoteroUtilities // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+  public BetterBibTeX = new WorkerZoteroBetterBibTeX // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
 
-  public init(config) {
+  public init(config: Translators.Worker.Config) {
     this.config = config
-    this.config.preferences.platform = params.platform
-    this.config.preferences.client = params.client
+    this.config.preferences.platform = workerContext.platform
+    this.config.preferences.client = client
     this.output = ''
+    this.items = this.config.items.length
 
     if (this.config.options.exportFileData) {
       for (const item of this.config.items) {
@@ -219,18 +204,20 @@ class WorkerZotero {
       }
     }
 
-    if (params.output) {
+    if (workerContext.output) {
       if (this.config.options.exportFileData) { // output path is a directory
-        this.exportDirectory = OS.Path.normalize(params.output)
+        this.exportDirectory = OS.Path.normalize(workerContext.output)
         this.exportFile = OS.Path.join(this.exportDirectory, `${OS.Path.basename(this.exportDirectory)}.${Translator.header.target}`)
-      } else {
-        this.exportFile = OS.Path.normalize(params.output)
+      }
+      else {
+        this.exportFile = OS.Path.normalize(workerContext.output)
         const ext = `.${Translator.header.target}`
         if (!this.exportFile.endsWith(ext)) this.exportFile += ext
         this.exportDirectory = OS.Path.dirname(this.exportFile)
       }
       makeDirs(this.exportDirectory)
-    } else {
+    }
+    else {
       this.exportFile = ''
       this.exportDirectory = ''
     }
@@ -238,18 +225,15 @@ class WorkerZotero {
 
   public done() {
     if (this.exportFile) {
-      this.debug(`writing ${this.output.length} bytes to ${this.exportFile}`)
       const encoder = new TextEncoder()
       const array = encoder.encode(this.output)
-      OS.File.writeAtomic(this.exportFile, array, {tmpPath: this.exportFile + '.tmp'})
-    } else {
-      this.debug(`returning ${this.output.length} bytes to caller:`)
+      OS.File.writeAtomic(this.exportFile, array) as void
     }
-    this.debug('writing done, bye!')
     this.send({ kind: 'done', output: this.exportFile ? true : this.output })
+    close()
   }
 
-  public send(message: BBTWorker.Message) {
+  public send(message: Translators.Worker.Message) {
     ctx.postMessage(message)
   }
 
@@ -262,10 +246,15 @@ class WorkerZotero {
   }
 
   public debug(message) {
-    this.send({ kind: 'debug', message })
+    if (workerContext.debugEnabled) {
+      // dump(`worker: ${message}\n`)
+      this.send({ kind: 'debug', message })
+    }
   }
   public logError(err) {
+    dump(`worker: error=${err}\n`)
     this.send({ kind: 'error', message: `${err}\n${err.stack}` })
+    close()
   }
 
   public write(str) {
@@ -273,15 +262,15 @@ class WorkerZotero {
   }
 
   public nextItem() {
-    this.send({ kind: 'item' })
+    this.send({ kind: 'item', item: this.items - this.config.items.length })
     return this.config.items.shift()
   }
 
-  public nextCollection() {
+  public nextCollection(): Collection {
     return this.config.collections.shift()
   }
 
-  private patchAttachments(item) {
+  private patchAttachments(item): void {
     if (item.itemType === 'attachment') {
       item.saveFile = saveFile.bind(item)
 
@@ -289,31 +278,43 @@ class WorkerZotero {
         item.defaultPath = `files/${item.itemID}/${OS.Path.basename(item.localPath)}`
       }
 
-    } else if (item.attachments) {
+    }
+    else if (item.attachments) {
       for (const att of item.attachments) {
         this.patchAttachments(att)
       }
-
     }
   }
 }
 
-export const Zotero = new WorkerZotero // tslint:disable-line:variable-name
+export const Zotero = new WorkerZotero // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
 
-export function onmessage(e: { data: BBTWorker.Config }) {
-  if (e.data?.items && !Zotero.config) {
-    try {
-      const start = Date.now()
-      Zotero.init(e.data)
-      Zotero.BetterBibTeX.debug('starting export for', { params, items: Zotero.config.items.length, collections: Zotero.config.collections.length }, 'to', Zotero.exportFile || 'text' )
-      doExport()
-      Zotero.done()
-      Zotero.debug(`export done in ${Date.now() - start}`)
-    } catch (err) {
-      Zotero.logError(err)
+const dec = new TextDecoder('utf-8')
+ctx.onmessage = function(e: { isTrusted?: boolean, data?: Translators.Worker.Message } ): void { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+  log.debug('worker: received', { isTrusted: e.isTrusted, kind: e.data?.kind })
+  if (!e.data) return // some kind of startup message
+
+  try {
+    switch (e.data.kind) {
+      case 'start':
+        log.debug('worker: starting')
+        Zotero.BetterBibTeX.localeDateOrder = workerContext.localeDateOrder
+        Zotero.init(JSON.parse(dec.decode(new Uint8Array(e.data.config))))
+        doExport()
+        Zotero.done()
+        break
+
+      case 'stop':
+        close()
+        break
+
+      default:
+        log.debug('unexpected message, stopping worker:', e)
+        close()
+        break
     }
-  } else {
-    Zotero.BetterBibTeX.debug('unexpected message in worker:', e)
   }
-  close()
+  catch (err) {
+    Zotero.logError(err)
+  }
 }

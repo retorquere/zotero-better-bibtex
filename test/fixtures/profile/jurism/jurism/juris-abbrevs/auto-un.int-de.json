@@ -1,0 +1,21 @@
+{
+  "filename": "auto-un.int-de.json",
+  "name": "United Nations",
+  "version": "2020-10-15 22:01:48 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "UN.INT": "United Nations"
+      }
+    },
+    "un.int": {
+      "institution-part": {
+        "icj": "IGH",
+        "ictr": "International Criminal Tribunal for Rwanda",
+        "icty": "International Criminal Tribunal for the Former Yugoslavia",
+        "itlos": "ISGH",
+        "pca": "PCA"
+      }
+    }
+  }
+}

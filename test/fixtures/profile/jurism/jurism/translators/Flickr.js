@@ -43,7 +43,7 @@ function getSearchResults(doc, checkOnly) {
 	}
 	
 	var items = {}, found = false;
-	for(var i=0, n=elmts.length; i<n; i++) {
+	for (var i=0, n=elmts.length; i<n; i++) {
 		var title = elmts[i].title;
 		//in photostreams, the <a> element doesn't have a title attribute
 		if (title == "") {

@@ -39,7 +39,7 @@
 function detectWeb(doc, url) {
 	if (url.indexOf("/content/document")>-1) {
 		var type = ZU.xpathText(doc, '//span[contains(@class, "lineage-item")]');
-		switch(type) {
+		switch (type) {
 			case "Letter":
 			case "Postcard":
 				return "letter";

@@ -1,12 +1,11 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]",
-      "jabrefFormat": 0
+      "citekeyFormat": "[auth][year]"
     }
   },
   "items": [
@@ -16,7 +15,7 @@
       "accessDate": "2014-06-18 10:30:55",
       "attachments": [
         {
-          "mimeType": "application/pdf",
+          "contentType": "application/pdf",
           "path": "attachments/de Oliveira, Aznar-2010-(Liquid+liquid) equilibrium of {water+phenol+(1-butanol, or 2-butanol, or2.pdf",
           "title": "de Oliveira, Aznar-2010-(Liquid+liquid) equilibrium of {water+phenol+(1-butanol, or 2-butanol, or2.pdf"
         }
@@ -35,6 +34,7 @@
       ],
       "date": "11/2010",
       "issue": "11",
+      "itemID": 1,
       "itemType": "journalArticle",
       "language": "en",
       "libraryCatalog": "CrossRef",

@@ -1,43 +1,22 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
-      "asciiBibLaTeX": false,
       "asciiBibTeX": false,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "idle",
-      "autoExportIdleWait": 10,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
       "bibtexURL": "url",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[auth][year]",
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "exportTitleCase": true,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "change",
-      "postscript": "",
-      "qualityReport": false,
-      "quickCopyMode": "latex",
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "warnBulkModify": 10
-    },
-    "release": "1.6.77"
+      "keyConflictPolicy": "change"
+    }
   },
   "items": [
     {
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -46,17 +25,25 @@
         }
       ],
       "date": "2002",
-      "itemID": 3185,
+      "itemID": 1,
       "itemType": "book",
       "language": "ru",
       "libraryCatalog": "Google Books",
       "numPages": "520",
       "publisher": "\u041c\u041a-\u041f\u0435\u0440\u0438\u043e\u0434\u0438\u043a\u0430",
       "tags": [
-        "Chernobyl Nuclear Accident, Chornobyl\u02b9, Ukraine, 1986",
-        "Nuclear industry",
-        "Nuclear reactor accidents",
-        "Radioactive wastes"
+        {
+          "tag": "Chernobyl Nuclear Accident, Chornobyl\u02b9, Ukraine, 1986"
+        },
+        {
+          "tag": "Nuclear industry"
+        },
+        {
+          "tag": "Nuclear reactor accidents"
+        },
+        {
+          "tag": "Radioactive wastes"
+        }
       ],
       "title": "\u042f\u0434\u0435\u0440\u043d\u044b\u0439 \u0437\u0430\u0433\u0430\u0440"
     }

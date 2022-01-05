@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2019-06-10 23:08:00"
+	"lastUpdated": "2020-09-15 01:24:23"
 }
 
 /*
@@ -32,15 +32,21 @@
 
 
 function detectWeb(doc, url) {
+	// Note that the url for search results has changed,
+	// so the first pattern will never match.
+	// However, results scraping needs to be rewritten due to the redesign,
+	// so leave this as is for now.
 	if (url.includes('/result?') || url.includes('/newspaper/page')) {
 		return getSearchResults(doc, url, true) ? 'multiple' : false;
 	}
 	else if (url.includes('/newspaper/article')) {
 		return "newspaperArticle";
 	}
-	else if (url.includes('/work/')) {
-		return "book";
-	}
+	//  Scraping from works is very brokened due to site redesign
+	//  Prevent detection until a fix is available
+	//	else if (url.includes('/work/')) {
+	//		return "book";
+	//	}
 	return false;
 }
 
@@ -116,19 +122,28 @@ function scrapeNewspaper(doc, url) {
 				// Add tags
 				var tags = ZU.xpath(doc, "//ul[contains(@class,'nlaTagContainer')]/li");
 				for (let tag of tags) {
-					tag = ZU.xpathText(tag, "a[not(contains(@class,'anno-remove'))]");
+					tag = ZU.xpathText(tag, "div/a[not(contains(@class,'anno-remove'))]");
 					item.tags.push(tag);
 				}
 			}
 
 			// I've created a proxy server to generate the PDF and return the URL without locking up the browser.
-			var proxyURL = "http://trove-proxy.herokuapp.com/pdf/" + articleID;
-			ZU.HTTP.doGet(proxyURL, function (pdfURL) {
-				item.attachments.push({
-					url: pdfURL,
-					title: 'Trove newspaper PDF',
-					mimeType: 'application/pdf'
-				});
+			var proxyURL = "https://trove-proxy.herokuapp.com/pdf/" + articleID;
+			ZU.doGet(proxyURL, function (pdfURL) {
+				// With the last argument 'false' passed to doGet
+				// we allow all status codes to continue and reach
+				// the item.complete() command.
+				if (pdfURL.startsWith('http')) {
+					item.attachments.push({
+						url: pdfURL,
+						title: 'Trove newspaper PDF',
+						mimeType: 'application/pdf'
+					});
+				}
+				else {
+					Zotero.debug("No PDF because unexpected return from trove-proxy " + proxyURL);
+					Zotero.debug(pdfURL);
+				}
 
 				// Get the OCRd text and save in a note.
 				var textURL = "http://trove.nla.gov.au/newspaper/rendition/nla.news-article" + articleID + ".txt";
@@ -138,7 +153,7 @@ function scrapeNewspaper(doc, url) {
 					});
 					item.complete();
 				});
-			});
+			}, null, null, null, false);
 		});
 		translator.translate();
 	});
@@ -257,7 +272,7 @@ function scrapeWork(doc, url) {
 				item.abstractNote = ZU.xpathText(doc, "//meta[@property='og:description']/@content");
 				
 				// Add tags
-				let tags = ZU.xpath(doc, "//div[@id='tagswork']/ul/li");
+				let tags = ZU.xpath(doc, "//div[@id='tagswork' or @id='content-tags']/ul/li");
 				for (var i = 0; i < tags.length; i++) {
 					let tag = ZU.xpathText(tags[i], "a");
 					item.tags.push(tag);
@@ -281,7 +296,7 @@ function scrapeWork(doc, url) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://trove.nla.gov.au/work/9958833?q&versionId=11567057",
+		"url": "https://trove.nla.gov.au/work/9958833?q&versionId=11567057",
 		"items": [
 			{
 				"itemType": "book",
@@ -295,12 +310,12 @@ var testCases = [
 				],
 				"date": "1980",
 				"ISBN": "9780908065073",
-				"abstractNote": "In 14 libraries. 24 p. : ill. ; 22 cm. Wragge, Clement L. (Clement Lindley), 1852-1922. South Australia. Climate, 1883-1884. Meteorologists -- South Australia -- Biography. South Australia -- Climate -- History.",
+				"abstractNote": "In 14 libraries. 24 p. : ill. ; 22 cm. Wragge, Clement L. (Clement Lindley), 1852-1922. South Australia. Climate, 1883-1884. Meteorologists -- South Australia -- Biography. South Australia -- Description and travel. South Australia -- Climate -- History.",
 				"itemID": "trove.nla.gov.au/work/9958833",
 				"language": "English",
 				"libraryCatalog": "Trove",
 				"publisher": "Warradale, S.Aust. : Pioneer Books",
-				"url": "http://trove.nla.gov.au/version/11567057",
+				"url": "https://trove.nla.gov.au/version/11567057",
 				"attachments": [],
 				"tags": [],
 				"notes": [
@@ -314,7 +329,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://trove.nla.gov.au/newspaper/article/70068753",
+		"url": "https://trove.nla.gov.au/newspaper/article/70068753",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
@@ -325,7 +340,7 @@ var testCases = [
 				"libraryCatalog": "Trove",
 				"pages": "4",
 				"place": "Vic.",
-				"publicationTitle": "Sunbury News (Vic. : 1900 - 1910)",
+				"publicationTitle": "Sunbury News (Vic. : 1900 - 1927)",
 				"url": "http://nla.gov.au/nla.news-article70068753",
 				"attachments": [
 					{
@@ -334,11 +349,13 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Meteorology Journal - Clement Wragge"
+					{
+						"tag": "Meteorology Journal - Clement Wragge"
+					}
 				],
 				"notes": [
 					{
-						"note": "<html>\n  <head>\n    <title>07 Feb 1903 - 'WRAGGE.'</title>\n  </head>\n  <body>\n      <p>Sunbury News (Vic. : 1900 - 1910), Saturday 7 February 1903, page 4</p>\n      <hr/>\n    <div class='zone'><p>'WRAGGE' - we have received a copy of the above, which is a journal devoted chiefly to the science of meteorology. It is owned and conducted by Mr. Clement Wragge. </p></div>\n  </body>\n</html>"
+						"note": "<html>\n  <head>\n    <title>07 Feb 1903 - 'WRAGGE.'</title>\n  </head>\n  <body>\n      <p>Sunbury News (Vic. : 1900 - 1927), Saturday 7 February 1903, page 4</p>\n      <hr/>\n    <div class='zone'><p>'WRAGGE' - we have received a copy of the above, which is a journal devoted chiefly to the science of meteorology. It is owned and conducted by Mr. Clement Wragge. </p></div>\n  </body>\n</html>"
 					}
 				],
 				"seeAlso": []
@@ -357,12 +374,12 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://trove.nla.gov.au/newspaper/page/7013947",
+		"url": "https://trove.nla.gov.au/newspaper/page/7013947",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://trove.nla.gov.au/work/9531118?q&sort=holdings+desc&_=1483112824975&versionId=14744047",
+		"url": "https://trove.nla.gov.au/work/9531118?q&sort=holdings+desc&_=1483112824975&versionId=14744047",
 		"items": [
 			{
 				"itemType": "book",
@@ -375,12 +392,12 @@ var testCases = [
 					}
 				],
 				"date": "1969",
-				"abstractNote": "In 19 libraries. 40 p. : ill., map ; 22 cm. Great Zig Zag Railway (Lithgow, N.S.W.) Railroads -- Blue Mountains (N.S.W. : Mountains) Zig Zag Railway -- Lithgow, Australia. Railroads -- New South Wales -- Blue Mountains. Blue Mountains (N.S.W.)",
+				"abstractNote": "In 19 libraries. 40 p. : ill., map ; 22 cm. Great Zig Zag Railway (Lithgow, N.S.W.) Railroads -- Blue Mountains (N.S.W. : Mountains) Zig Zag Railway -- Lithgow, Australia. Railroads -- New South Wales. Railroads -- New South Wales -- Blue Mountains. Blue Mountains (N.S.W.)",
 				"itemID": "trove.nla.gov.au/work/9531118",
 				"language": "English",
 				"libraryCatalog": "Trove",
 				"publisher": "[Bulli, N.S.W. : Zig Zag Press",
-				"url": "http://trove.nla.gov.au/version/14744047",
+				"url": "https://trove.nla.gov.au/version/14744047",
 				"attachments": [],
 				"tags": [],
 				"notes": [

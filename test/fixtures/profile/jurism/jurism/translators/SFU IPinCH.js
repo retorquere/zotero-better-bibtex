@@ -37,13 +37,13 @@
 */
 
 function detectWeb(doc, url) {
-	if(url.indexOf('/browse/') != -1 || url.indexOf('/search/') != -1) {
-		if(ZU.xpath(doc, '//div[@class="citation"]').length) {
+	if (url.indexOf('/browse/') != -1 || url.indexOf('/search/') != -1) {
+		if (ZU.xpath(doc, '//div[@class="citation"]').length) {
 			return 'multiple';
 		}
 	} else if (url.indexOf('/records/') != -1) {
 		var type = ZU.xpathText(doc, '//meta[@name="itemType"]/@content');
-		if(type && ZU.itemTypeExists(type)) {
+		if (type && ZU.itemTypeExists(type)) {
 			return type;
 		}
 	}
@@ -56,8 +56,8 @@ function scrape(doc, url) {
 	var date = ['', '', ''];
 	var months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun',
 				'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
-	for(var i=0, n=meta.length; i<n; i++) {
-		switch(meta[i].name) {
+	for (var i=0, n=meta.length; i<n; i++) {
+		switch (meta[i].name) {
 			case 'author':
 			case 'editor':
 			case 'persenter':
@@ -113,10 +113,10 @@ function scrape(doc, url) {
 		}
 	}
 
-	if(!item.title) item.title = ZU.xpathText(doc, '//title')
+	if (!item.title) item.title = ZU.xpathText(doc, '//title')
 									.split(/\s*\|/)[0].trim();
 
-	if(place[0]) item.place = place.join(', ');
+	if (place[0]) item.place = place.join(', ');
 	else item.place = place[1];
 
 	item.date = date.join('-').replace(/(^-.*|--.*|-$)/g,'');
@@ -126,13 +126,13 @@ function scrape(doc, url) {
 }
 
 function doWeb(doc, url) {
-	if(detectWeb(doc, url) == 'multiple') {
+	if (detectWeb(doc, url) == 'multiple') {
 		var links = ZU.xpath(doc, '//div[@class="citation"]');
 		Zotero.selectItems(ZU.getItemArray(doc, links), function(selectedItems) {
-			if(!selectedItems) return true;
+			if (!selectedItems) return true;
 
 			var urls = new Array();
-			for(var i in selectedItems) {
+			for (var i in selectedItems) {
 				urls.push(i);
 			}
 			ZU.processDocuments(urls,

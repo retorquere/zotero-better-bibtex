@@ -1,0 +1,82 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "dmy",
+    "options": {},
+    "preferences": {
+      "citekeyFormat": "[auth][year]"
+    }
+  },
+  "items": [
+    {
+      "accessDate": "2020-01-31",
+      "citationKey": "barrett1994",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Richard",
+          "lastName": "Barrett"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Michael",
+          "lastName": "Berry"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Tony F.",
+          "lastName": "Chan"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "James",
+          "lastName": "Demmel"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "June M.",
+          "lastName": "Donato"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jack",
+          "lastName": "Dongarra"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Victor",
+          "lastName": "Eijkhout"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Roldan",
+          "lastName": "Pozo"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Charles",
+          "lastName": "Romine"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Henk",
+          "lastName": "van der Vorst"
+        }
+      ],
+      "date": "1994",
+      "edition": "2",
+      "extra": [
+        "Citation Key: barrett1994"
+      ],
+      "itemID": 1,
+      "itemType": "book",
+      "language": "american",
+      "place": "Philadelphia, PA",
+      "publisher": "Society for Industrial and Applied Mathematics",
+      "shortTitle": "Templates for the solution of linear systems",
+      "title": "Templates for the solution of linear systems: Building blocks for iterative methods",
+      "url": "https://www.netlib.org/linalg/html_templates/Templates.html"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 
 @article{mosenia2017ComprehensiveStudySecurity,
   author = {Mosenia, Arsalan and Jha, Niraj K.},
-  title = {A {{Comprehensive Study}} of {{Security}} of {{Internet}}-of-{{Things}}},
+  title = {A {{Comprehensive Study}} of {{Security}} of {{Internet-of-Things}}},
   journaltitle = {IEEE Transactions on Emerging Topics in Computing},
   shortjournal = {IEEE Trans. Emerg. Top. Comput.},
   volume = {5},
@@ -10,11 +10,13 @@
   date = {2017-10},
   issn = {2376-4562},
   doi = {10.1109/TETC.2016.2606384},
+  number = {4},
   keywords = {Availability,Biological system modeling,compact smart devices,computation power,Computational modeling,confidentiality,countermeasures,cyber attacks,data privacy,edge computing,edge nodes,energy capacity,integrity,Internet,Internet of things,Internet of Things,Internet technologies,Internet-of-Things,IoT reference models,IoT security,Monitoring,organized crime,personal privacy issues,privacy,public security concerns,security,Security,security of data,Smart devices,smart things,vulnerabilities,Wireless sensor networks},
-  number = {4}
+  annotation = {ZSCC: NoCitationData[s0]}
 }
 % == BibLateX quality report for mosenia2017ComprehensiveStudySecurity:
 % Unexpected field 'publisher'
 % ? Title looks like it was stored in title-case in Zotero
+% ? Unused libraryCatalog: IEEE Xplore
 
 

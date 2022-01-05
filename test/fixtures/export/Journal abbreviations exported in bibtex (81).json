@@ -1,13 +1,12 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "preferences": {
       "autoAbbrev": true,
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]",
-      "jabrefFormat": 0
+      "citekeyFormat": "[auth][year]"
     }
   },
   "items": [
@@ -29,7 +28,7 @@
       ],
       "date": "11/2011",
       "issue": "6",
-      "itemID": "Hammond.Bortz2011AMaC",
+      "itemID": 1,
       "itemType": "journalArticle",
       "language": "en",
       "libraryCatalog": "CrossRef",

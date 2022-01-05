@@ -222,7 +222,7 @@ function scrape(doc, url, item){
 	if (publishing.match(/(13|14|15|16|17|18|19|20)\d\d/)) {
 		var pos = publishing.search(/(13|14|15|16|17|18|19|20)\d\d/);
 		var date = publishing.substring(pos, publishing.lastIndexOf('.')).match(/\d\d\d\d/);
-		if(date) item.date = date[0];
+		if (date) item.date = date[0];
 		var place = publishing.substring(0, publishing.indexOf(':'));
 		item.place = place.replace(/^\s+|\s+$/g, '');
 		var publisher = publishing.substring(publishing.indexOf(':')+1, pos); 
@@ -237,13 +237,13 @@ function scrape(doc, url, item){
 	
 	isbn=isbn.replace(/^\D+|\D+$/g, "");	
 	isbn = isbn.substring(0).match(/\d+/);
-	if(isbn) item.ISBN = isbn[0];
+	if (isbn) item.ISBN = isbn[0];
 
 	var series		  = getField(doc, 'Series');
 	var pos2 =series.lastIndexOf(';');
 	if (pos2==-1){
 		item.series=series.replace(/^\s+|\s+$/g, '');
-	}else{
+	} else {
 		var seriesName = series.substring(0, pos2);
 		item.series = seriesName.replace(/^\s+|\s+$/g, '');
 		var seriesNumber = series.substring(pos2+1);
@@ -326,7 +326,7 @@ function scrape(doc, url, item){
 				shelfmark[i] = shelfmark[i].replace(/\s*\/*(?:xc_d.write.*\;)/, '');
 			}
 		}
-	}else if (authorModeObject.innerHTML.match(/arrow/)){
+	} else if (authorModeObject.innerHTML.match(/arrow/)){
 		for (var i=0; i < 4; i ++){
 			var shelfmarkObject = new Array();
 			var shelfmarkElements = new Array();
@@ -410,7 +410,7 @@ function doWeb(doc, url) {
 			names.push(nextTitle.textContent);	
 		}
 		Zotero.selectItems(items, function(items) {
-			if(!items) return true;
+			if (!items) return true;
 
 			var articles = new Array ();
 			for (var i in items) {
@@ -427,7 +427,7 @@ function doWeb(doc, url) {
 		}
 
 		Zotero.selectItems(items, function(items) {
-			if(!items) return true;
+			if (!items) return true;
 
 			var articles = new Array ();
 			for (var i in items) {

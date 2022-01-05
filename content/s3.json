@@ -1,12 +1,13 @@
 {
-  "ap-southeast-1": {
-    "tld": "",
-    "short": "apse",
-    "name": "Asia Pacific (Singapore)"
-  },
-  "eu-central-1": {
-    "tld": "",
-    "short": "euc",
-    "name": "EU (Frankfurt)"
+  "bucket": "better-bibtex-error-reports-62200312",
+  "region": {
+    "ap-southeast-1": {
+      "short": "apse",
+      "name": "Asia Pacific (Singapore)"
+    },
+    "eu-central-1": {
+      "short": "euc",
+      "name": "EU (Frankfurt)"
+    }
   }
 }

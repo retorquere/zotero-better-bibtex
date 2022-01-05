@@ -1,35 +1,17 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
-      "exportFilename": "Exported Items.json",
       "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
       "asciiBibLaTeX": true,
-      "asciiBibTeX": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
-      "autoExport": "on-change",
-      "autoExportIdleWait": 10,
       "bibtexURL": "note",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
-      "citekeyFormat": "[auth][year]",
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "postscript": "",
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "warnBulkModify": 10
-    },
-    "release": "1.6.31-travis-2383"
+      "citekeyFormat": "[auth][year]"
+    }
   },
   "items": [
     {
@@ -48,28 +30,61 @@
         }
       ],
       "date": "2002",
-      "extra": "tex.related= key_2\ntex.relatedtype= bytranslator",
+      "extra": [
+        "tex.related= key_2",
+        "tex.relatedtype= bytranslator"
+      ],
       "issue": "6",
-      "itemID": 9,
+      "itemID": 1,
       "itemType": "journalArticle",
       "pages": "885\u2013898",
       "publicationTitle": "Canadian Journal of Civil Engineering",
       "tags": [
-        "Air entrainment",
-        "Cavity subpressure",
-        "Civil engineering",
-        "High speed jets",
-        "Jet length",
-        "Jets",
-        "Pressure effects",
-        "Scale effect",
-        "Spillway aerators",
-        "Spillways",
-        "Structural design",
-        "Water aeration",
-        "aerator",
-        "jet flow",
-        "spillway"
+        {
+          "tag": "aerator"
+        },
+        {
+          "tag": "Air entrainment"
+        },
+        {
+          "tag": "Cavity subpressure"
+        },
+        {
+          "tag": "Civil engineering"
+        },
+        {
+          "tag": "High speed jets"
+        },
+        {
+          "tag": "jet flow"
+        },
+        {
+          "tag": "Jet length"
+        },
+        {
+          "tag": "Jets"
+        },
+        {
+          "tag": "Pressure effects"
+        },
+        {
+          "tag": "Scale effect"
+        },
+        {
+          "tag": "spillway"
+        },
+        {
+          "tag": "Spillway aerators"
+        },
+        {
+          "tag": "Spillways"
+        },
+        {
+          "tag": "Structural design"
+        },
+        {
+          "tag": "Water aeration"
+        }
       ],
       "title": "High-speed jet flows over spillway aerators",
       "volume": "29"

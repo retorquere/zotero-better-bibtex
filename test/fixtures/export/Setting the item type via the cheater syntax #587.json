@@ -1,68 +1,18 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "idle",
-      "autoExportIdleWait": 10,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
-      "citekeyFormat": "[zotero]",
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "exportTitleCase": true,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "postscript": "",
-      "qualityReport": false,
-      "quickCopyMode": "latex",
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "warnBulkModify": 10
-    },
-    "release": "1.6.78"
+      "citekeyFormat": "[zotero]"
+    }
   },
   "items": [
-    {
-      "abstractNote": "Example from CMoS, 16e, 14.249",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Hazel V.",
-          "lastName": "Clark"
-        }
-      ],
-      "date": "1957",
-      "extra": "type: pamphlet",
-      "itemID": 17,
-      "itemType": "bookSection",
-      "place": "Mesopotamia, OH",
-      "publisher": "Trumbull County Historical Society",
-      "title": "Mesopotamia: between two rivers"
-    },
-    {
-      "abstractNote": "Example from CMoS, 16e, 14.272",
-      "accessDate": "2009-10-06",
-      "extra": "type: dataset",
-      "itemID": 18,
-      "itemType": "journalArticle",
-      "publicationTitle": "NASA/IPAC Extragalactic Database",
-      "title": "object name IRAS F00400+4059",
-      "url": "http://nedwww.ipac.caltech.edu/"
-    },
     {
       "abstractNote": "Example from CMoS, 16e, 14.269\n\u201cPrepared from the autographs and earliest printed sources by Nathan\nBroder\u201d",
       "creators": [
@@ -79,12 +29,33 @@
       ],
       "date": "1960",
       "edition": "Rev. ed.",
-      "extra": "type: musical_score",
-      "itemID": 19,
+      "extra": [
+        "type: musical_score"
+      ],
+      "itemID": 4,
       "itemType": "book",
       "place": "Bryn Mawr, PA",
       "publisher": "Theodore Presser",
       "title": "Sonatas and fantasies for the piano"
+    },
+    {
+      "abstractNote": "Example from CMoS, 16e, 14.249",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Hazel V.",
+          "lastName": "Clark"
+        }
+      ],
+      "date": "1957",
+      "extra": [
+        "type: pamphlet"
+      ],
+      "itemID": 3,
+      "itemType": "bookSection",
+      "place": "Mesopotamia, OH",
+      "publisher": "Trumbull County Historical Society",
+      "title": "Mesopotamia: between two rivers"
     },
     {
       "abstractNote": "Example from CMoS, 16e, 14.215\n\u201ced. and trans. John Charles Chasteen\u201d",
@@ -100,8 +71,10 @@
         }
       ],
       "date": "1999-04",
-      "extra": "type: review-book",
-      "itemID": 20,
+      "extra": [
+        "type: review-book"
+      ],
+      "itemID": 2,
       "itemType": "journalArticle",
       "language": "en-US",
       "notes": [
@@ -111,6 +84,18 @@
       "publicationTitle": "Lingua Franca",
       "title": "The mystery of samba: Popular music and national identity in Brazil",
       "volume": "9"
+    },
+    {
+      "abstractNote": "Example from CMoS, 16e, 14.272",
+      "accessDate": "2009-10-06",
+      "extra": [
+        "type: dataset"
+      ],
+      "itemID": 5,
+      "itemType": "journalArticle",
+      "publicationTitle": "NASA/IPAC Extragalactic Database",
+      "title": "object name IRAS F00400+4059",
+      "url": "http://nedwww.ipac.caltech.edu/"
     },
     {
       "abstractNote": "Example from CMoS, 16e, 14.125",
@@ -127,8 +112,11 @@
         }
       ],
       "date": "2006-04-23",
-      "extra": "type: review-book\nreviewed-title: The omnivore\u2019s dilemma: a natural history of four meals",
-      "itemID": 22,
+      "extra": [
+        "type: review-book",
+        "reviewed-title: The omnivore\u2019s dilemma: a natural history of four meals"
+      ],
+      "itemID": 1,
       "itemType": "newspaperArticle",
       "language": "en-US",
       "section": "Sunday Book Review",

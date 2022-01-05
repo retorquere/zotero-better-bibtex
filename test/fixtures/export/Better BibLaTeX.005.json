@@ -1,12 +1,11 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]",
-      "jabrefFormat": 0
+      "citekeyFormat": "[auth][year]"
     }
   },
   "items": [
@@ -19,8 +18,11 @@
         }
       ],
       "date": "2009",
-      "extra": "Citation Key: Oliveira_2009",
+      "extra": [
+        "Citation Key: Oliveira_2009"
+      ],
       "issue": "29",
+      "itemID": 1,
       "itemType": "journalArticle",
       "pages": "29",
       "publicationTitle": "Oil & Gas Journal",

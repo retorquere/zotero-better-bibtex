@@ -43,7 +43,7 @@ function detectWeb(doc, url) {
 	} else if (url.indexOf("/csdl/mags/") > 1) {
 		return "magazineArticle";
 	} else if (url.search(/\/portal\/web\/computingnow\/.*content/) > 1) {
-		if(ZU.xpath(doc, '//li/a[contains(text(), "BibTex") and contains(@href, ".bib")]|//div[@id="bibText-content"]').length > 0) return "magazineArticle";
+		if (ZU.xpath(doc, '//li/a[contains(text(), "BibTex") and contains(@href, ".bib")]|//div[@id="bibText-content"]').length > 0) return "magazineArticle";
 	} else if (url.indexOf("/csdl/trans/") > 1) {
 		return "journalArticle";
 	} else if (url.indexOf("/csdl/proceedings/") > 1) {

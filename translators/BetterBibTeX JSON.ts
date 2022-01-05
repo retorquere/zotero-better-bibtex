@@ -3,12 +3,15 @@ declare const Zotero: any
 import { Translator } from './lib/translator'
 export { Translator }
 
-import { debug } from './lib/debug'
-import * as itemfields from '../gen/itemfields'
+import * as itemfields from '../gen/items/items'
+const version = require('../gen/version.js')
+import { stringify } from '../content/stringify'
+import { log } from '../content/logger'
+import { normalize } from './lib/normalize'
 
 const chunkSize = 0x100000
 
-export function detectImport() {
+export function detectImport(): boolean {
   let str
   let json = ''
   while ((str = Zotero.read(chunkSize)) !== false) {
@@ -19,7 +22,8 @@ export function detectImport() {
   let data
   try {
     data = JSON.parse(json)
-  } catch (err) {
+  }
+  catch (err) {
     return false
   }
 
@@ -27,7 +31,7 @@ export function detectImport() {
   return true
 }
 
-export async function doImport() {
+export async function doImport(): Promise<void> {
   Translator.init('import')
 
   let str
@@ -53,6 +57,17 @@ export async function doImport() {
     delete source.version
     delete source.libraryID
     delete source.collections
+    delete source.autoJournalAbbreviation
+
+    if (source.creators) {
+      for (const creator of source.creators) {
+        // if .name is not set, *both* first and last must be set, even if empty
+        if (!creator.name) {
+          creator.lastName = creator.lastName || ''
+          creator.firstName = creator.firstName || ''
+        }
+      }
+    }
 
     if (!itemfields.valid.type[source.itemType]) throw new Error(`unexpected item type '${source.itemType}'`)
     const validFields = itemfields.valid.field[source.itemType]
@@ -62,14 +77,21 @@ export async function doImport() {
 
       const msg = `${valid}: unexpected ${source.itemType}.${field} for ${Translator.isZotero ? 'zotero' : 'juris-m'} in ${JSON.stringify(source)} / ${JSON.stringify(validFields)}`
       if (valid === false) {
-        debug(msg)
-      } else {
+        log.error(msg)
+      }
+      else {
         throw new Error(msg)
       }
     }
 
+    if (Array.isArray(source.extra)) source.extra = source.extra.join('\n')
+
     const item = new Zotero.Item()
     Object.assign(item, source)
+
+    // marker so BBT-JSON can be imported without extra-field meddling
+    if (item.extra) item.extra = `\x1BBBT\x1B${item.extra}`
+
     for (const att of item.attachments || []) {
       if (att.url) delete att.path
       delete att.relations
@@ -77,26 +99,27 @@ export async function doImport() {
     }
     await item.complete()
     items.add(source.itemID)
-    Zotero.setProgress(items.size / data.items.length * 100) // tslint:disable-line:no-magic-numbers
+    Zotero.setProgress(items.size / data.items.length * 100) // eslint-disable-line no-magic-numbers
   }
-  Zotero.setProgress(100) // tslint:disable-line:no-magic-numbers
+  Zotero.setProgress(100) // eslint-disable-line no-magic-numbers
 
   const collections: any[] = Object.values(data.collections || {})
   for (const collection of collections) {
-    collection.zoteroCollection = (new Zotero.Collection()) as any
+    collection.zoteroCollection = new Zotero.Collection()
     collection.zoteroCollection.type = 'collection'
     collection.zoteroCollection.name = collection.name
     collection.zoteroCollection.children = collection.items.filter(id => {
       if (items.has(id)) return true
-      debug(`Collection ${collection.key} has non-existent item ${id}`)
+      log.error(`Collection ${collection.key} has non-existent item ${id}`)
       return false
     }).map(id => ({type: 'item', id}))
   }
   for (const collection of collections) {
     if (collection.parent && data.collections[collection.parent]) {
       data.collections[collection.parent].zoteroCollection.children.push(collection.zoteroCollection)
-    } else {
-      if (collection.parent) debug(`Collection ${collection.key} has non-existent parent ${collection.parent}`)
+    }
+    else {
+      if (collection.parent) log.debug(`Collection ${collection.key} has non-existent parent ${collection.parent}`)
       collection.parent = false
     }
   }
@@ -106,7 +129,7 @@ export async function doImport() {
   }
 }
 
-export function doExport() {
+export function doExport(): void {
   Translator.init('export')
 
   let item
@@ -116,6 +139,11 @@ export function doExport() {
       label: Translator.header.label,
       preferences: Translator.preferences,
       options: Translator.options,
+      localeDateOrder: Zotero.BetterBibTeX.getLocaleDateOrder(),
+    },
+    version: {
+      zotero: Zotero.Utilities.getVersion(),
+      bbt: version,
     },
     collections: Translator.collections,
     items: [],
@@ -124,17 +152,30 @@ export function doExport() {
   const validAttachmentFields = new Set([ 'relations', 'uri', 'itemType', 'title', 'path', 'tags', 'dateAdded', 'dateModified', 'seeAlso', 'mimeType' ])
 
   while ((item = Zotero.nextItem())) {
-    if (item.itemType === 'attachment') continue
+    if (Translator.options.dropAttachments && item.itemType === 'attachment') continue
 
-    itemfields.simplifyForExport(item, Translator.options.dropAttachments)
+    if (!Translator.preferences.testing) {
+      const [ , kind, lib, key ] = item.uri.match(/^https?:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^/]+)\/items\/(.+)/)
+      item.select = (kind === 'users') ? `zotero://select/library/items/${key}` : `zotero://select/groups/${lib}/items/${key}`
+    }
+
+    delete item.collections
+
+    itemfields.simplifyForExport(item, { dropAttachments: Translator.options.dropAttachments})
     item.relations = item.relations ? (item.relations['dc:relation'] || []) : []
 
     for (const att of item.attachments || []) {
       if (Translator.options.exportFileData && att.saveFile && att.defaultPath) {
         att.saveFile(att.defaultPath, true)
         att.path = att.defaultPath
-      } else if (att.localPath) {
+      }
+      else if (att.localPath) {
         att.path = att.localPath
+      }
+
+      if (!Translator.preferences.testing) {
+        const [ , kind, lib, key ] = att.uri.match(/^https?:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^/]+)\/items\/(.+)/)
+        att.select = (kind === 'users') ? `zotero://select/library/items/${key}` : `zotero://select/groups/${lib}/items/${key}`
       }
 
       if (!att.path) continue // amazon/googlebooks etc links show up as atachments without a path
@@ -150,5 +191,7 @@ export function doExport() {
     data.items.push(item)
   }
 
-  Zotero.write(JSON.stringify(data, null, '  '))
+  if (Translator.preferences.testing) normalize(data)
+
+  Zotero.write(stringify(data, null, '  '))
 }

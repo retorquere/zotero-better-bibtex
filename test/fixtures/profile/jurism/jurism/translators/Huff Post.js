@@ -88,7 +88,7 @@ function scrape(doc, url) {
 	item.title = object.headline;
 	item.date = object.datePublished;
 	if (object.author) {
-		if(!Array.isArray(object.author)) {
+		if (!Array.isArray(object.author)) {
 			object.author = [object.author];
 		}
 		for (var i=0; i<object.author.length; i++) {

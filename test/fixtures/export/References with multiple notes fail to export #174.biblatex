@@ -4,7 +4,7 @@
   author = {Torre, Joe and Verducci, Tom},
   date = {2008},
   publisher = {{Doubleday}},
-  annotation = {note 1
+  note = {note 1
 \par
 note 2}
 }

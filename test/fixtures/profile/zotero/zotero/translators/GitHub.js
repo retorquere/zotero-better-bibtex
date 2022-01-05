@@ -1,19 +1,19 @@
 {
 	"translatorID": "a7747ba7-42c6-4a22-9415-1dafae6262a9",
+	"translatorType": 4,
 	"label": "GitHub",
 	"creator": "Martin Fenner, Philipp Zumstein",
-	"target": "^https?://(www\\.)?github\\.com/[^/]+/[^/]+/?$",
+	"target": "^https?://(www\\.)?github\\.com/([^/]+/[^/]+|search\\?)",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2019-08-29 10:16:28"
+	"lastUpdated": "2021-06-29 07:00:00"
 }
 
 /**
-	Copyright (c) 2017 Martin Fenner, Philipp Zumstein
+	Copyright (c) 2017-2021 Martin Fenner, Philipp Zumstein
 
 	This program is free software: you can redistribute it and/or
 	modify it under the terms of the GNU Affero General Public License
@@ -37,17 +37,26 @@ function detectWeb(doc, url) {
 			return "multiple";
 		}
 	}
-	else if (ZU.xpathText(doc, '/html/head/meta[@property="og:type" and @content="object"]/@content')) {
-		return "computerProgram";
+	
+	if (!doc.querySelector('meta[property="og:type"][content="object"]')) {
+		// exclude the home page and marketing pages
+		return false;
 	}
-	return false;
+	
+	if (!/^[^/\s]+\/[^/\s]+$/.test(attr(doc, 'meta[property="og:title"]', 'content'))) {
+		// and anything without a repo name (abc/xyz) as its og:title.
+		// deals with repo pages that we can't scrape, like GitHub Discussions.
+		return false;
+	}
+	
+	return "computerProgram";
 }
 
 
 function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
-	var rows = ZU.xpath(doc, '//*[contains(@class, "repo-list-item")]//h3/a');
+	var rows = doc.querySelectorAll('.repo-list-item .f4 a');
 	for (var i = 0; i < rows.length; i++) {
 		var href = rows[i].href;
 		var title = ZU.trimInternal(rows[i].textContent);
@@ -79,26 +88,39 @@ function doWeb(doc, url) {
 }
 
 
-function scrape(doc, _url) {
+function scrape(doc, url) {
 	var item = new Z.Item("computerProgram");
 	
-	var repo = ZU.xpathText(doc, '//meta[@property="og:title"]/@content');
+	var repo = attr(doc, 'meta[property="og:title"]', 'content');
 	
 	// basic metadata from the meta tags in the head
-	item.url = ZU.xpathText(doc, '//meta[@property="og:url"]/@content');
-	item.title = ZU.xpathText(doc, '//meta[@property="og:title"]/@content');
-	item.abstractNote = ZU.xpathText(doc, '//meta[@property="og:description"]/@content').split(' - ')[0];
+	item.url = attr(doc, 'meta[property="og:url"]', 'content');
+	if (url.includes('/blob/') && !item.url.includes('/blob/')) {
+		// github is doing something weird with the og:url meta tag right now -
+		// it always points to the repo root (e.g. zotero/translators), even
+		// when we're in a specific directory/file (e.g. zotero/translators/
+		// blob/master/GitHub.js). this fix (hopefully) won't stick around
+		// long-term, but for now, let's just grab the user-facing permalink
+		let permalink = attr(doc, '.js-permalink-shortcut', 'href');
+		if (permalink) {
+			item.url = 'https://github.com' + permalink;
+		}
+		else {
+			let clipboardCopyPermalink = attr(doc, '#blob-more-options-details clipboard-copy', 'value');
+			if (clipboardCopyPermalink) {
+				item.url = clipboardCopyPermalink;
+			}
+		}
+	}
+	item.title = attr(doc, 'meta[property="og:title"]', 'content');
+	item.abstractNote = attr(doc, 'meta[property="og:description"]', 'content').split(' - ')[0]
+		.replace(` Contribute to ${repo} development by creating an account on GitHub.`, '');
 	item.libraryCatalog = "GitHub";
 	var topics = doc.getElementsByClassName('topic-tag');
 	for (var i = 0; i < topics.length; i++) {
 		item.tags.push(topics[i].textContent.trim());
 	}
 
-	item.rights = ZU.xpathText(doc, '//a[*[contains(@class, "octicon-law")]]');
-	if (item.rights && item.rights.trim() == "View license") {
-		delete item.rights;
-	}
-	
 	// api calls for more information (owner, date, programming language)
 	var apiUrl = "https://api.github.com/";
 	ZU.doGet(apiUrl + "repos/" + repo, function (result) {
@@ -114,7 +136,12 @@ function scrape(doc, _url) {
 		item.programmingLanguage = json.language;
 		item.extra = "original-date: " + json.created_at;
 		item.date = json.updated_at;
-		
+		if (json.license && json.license.spdx_id != "NOASSERTION") {
+			item.rights = json.license.spdx_id;
+		}
+		item.abstractNote = json.description;
+		// always the best source, so use it if we can get it
+
 		ZU.doGet(apiUrl + "users/" + owner, function (user) {
 			var jsonUser = JSON.parse(user);
 			var ownerName = jsonUser.name || jsonUser.login;
@@ -141,9 +168,9 @@ var testCases = [
 				"itemType": "computerProgram",
 				"title": "zotero/zotero",
 				"creators": [],
-				"date": "2019-08-29T02:15:36Z",
+				"date": "2021-06-24T17:42:05Z",
 				"abstractNote": "Zotero is a free, easy-to-use tool to help you collect, organize, cite, and share your research sources.",
-				"company": "zotero",
+				"company": "Zotero",
 				"extra": "original-date: 2011-10-27T07:46:48Z",
 				"libraryCatalog": "GitHub",
 				"programmingLanguage": "JavaScript",
@@ -168,8 +195,8 @@ var testCases = [
 				"itemType": "computerProgram",
 				"title": "datacite/schema",
 				"creators": [],
-				"date": "2019-08-16T13:21:08Z",
-				"abstractNote": "DataCite Metadata Schema Repository. Contribute to datacite/schema development by creating an account on GitHub.",
+				"date": "2021-05-25T20:33:01Z",
+				"abstractNote": "DataCite Metadata Schema Repository",
 				"company": "DataCite",
 				"extra": "original-date: 2011-04-13T07:08:41Z",
 				"libraryCatalog": "GitHub",
@@ -196,8 +223,8 @@ var testCases = [
 						"creatorType": "programmer"
 					}
 				],
-				"date": "2019-08-23T12:32:51Z",
-				"abstractNote": "OCR engine for all the languages. Contribute to mittagessen/kraken development by creating an account on GitHub.",
+				"date": "2021-06-23T04:54:38Z",
+				"abstractNote": "OCR engine for all the languages",
 				"extra": "original-date: 2015-05-19T09:24:38Z",
 				"libraryCatalog": "GitHub",
 				"programmingLanguage": "Python",
@@ -240,12 +267,34 @@ var testCases = [
 						"creatorType": "programmer"
 					}
 				],
-				"date": "2019-07-12T17:57:05Z",
+				"date": "2021-03-20T15:33:50Z",
 				"abstractNote": "Zotero extension for creating Zotero to CSL item type and field mappings.",
 				"extra": "original-date: 2012-05-20T07:53:58Z",
 				"libraryCatalog": "GitHub",
 				"programmingLanguage": "JavaScript",
 				"url": "https://github.com/aurimasv/z2csl",
+				"attachments": [],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://github.com/zotero/translators/blob/master/GitHub.js",
+		"items": [
+			{
+				"itemType": "computerProgram",
+				"title": "zotero/translators",
+				"creators": [],
+				"date": "2021-06-24T18:06:16Z",
+				"abstractNote": "Zotero Translators",
+				"company": "Zotero",
+				"extra": "original-date: 2011-07-03T17:40:38Z",
+				"libraryCatalog": "GitHub",
+				"programmingLanguage": "JavaScript",
+				"url": "https://github.com/zotero/translators/blob/b96d50feb4a6e74c4ac5583437e4f16323203ca5/GitHub.js",
 				"attachments": [],
 				"tags": [],
 				"notes": [],

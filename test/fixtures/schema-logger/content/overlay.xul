@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script src="chrome://zotero/content/include.js"/>
+  <script>
+    const start = Date.now()
+
+    window.addEventListener('load', () => {
+      let progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
+      progressWin.changeHeadline('Zotero startup trace')
+      const progress = new progressWin.ItemProgress(`chrome://zotero/skin/treesource-unfiled${Zotero.hiDPI ? '@2x' : ''}.png`, 'Waiting for Zotero.Schema.schemaUpdatePromise...')
+      progressWin.show()
+
+      let interval
+      function ping() {
+        const msg = `After ${Date.now() - start}, schemaUpdatePromise pending = ${Zotero.Schema.schemaUpdatePromise.isPending()}`
+        Zotero.debug(`waiting for Zotero: ${msg}`)
+        progress.setText(msg)
+        if (!Zotero.Schema.schemaUpdatePromise.isPending()) {
+          if (interval) clearTimeout(interval)
+          interval = null
+          if (progressWin) progressWin.startCloseTimer(2000)
+          progressWin = null
+        }
+      }
+      setInterval(ping, 500)
+    })
+  </script>
+</overlay>

@@ -1,60 +1,22 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
       "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "off",
-      "autoExportIdleWait": 10,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[authors3][shortyear]",
-      "citeprocNoteCitekey": false,
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "exportTitleCase": true,
       "itemObserverDelay": 100,
-      "jabrefFormat": 0,
       "keyConflictPolicy": "change",
-      "parseParticles": true,
-      "postscript": "",
-      "qualityReport": false,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "scrubDatabase": false,
-      "skipFields": "abstract,copyright",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.0.78",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.34.2",
-        "locale": "en-US",
-        "oscpu": "Intel Mac OS X 10.12",
-        "platform": "MacIntel",
-        "version": "5.0.34.2"
-      }
+      "skipFields": "abstract,copyright"
     }
   },
   "items": [
     {
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -68,17 +30,14 @@
         }
       ],
       "date": "08 1995",
-      "dateAdded": "2015-04-01 06:29:02",
-      "dateModified": "2015-05-15 10:51:58",
-      "extra": "Citation Key: HoukWise95",
+      "extra": [
+        "Citation Key: HoukWise95"
+      ],
       "issue": "2",
-      "itemID": 27912,
+      "itemID": 1,
       "itemType": "journalArticle",
-      "notes": [],
       "pages": "95\u2013110",
       "publicationTitle": "Cerebral Cortex",
-      "seeAlso": [],
-      "tags": [],
       "title": "Distributed modular architectures linking basal ganglia, cerebellum, and cerebral cortex: Their role in planning and controlling action.",
       "url": "http://www.ncbi.nlm.nih.gov/pubmed/7620294",
       "volume": "5"

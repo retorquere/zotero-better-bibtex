@@ -1,58 +1,22 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
       "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "doi",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportIdleWait": 10,
       "biblatexExtendedDateFormat": false,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[auth:lower][year]",
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "exportTitleCase": true,
       "itemObserverDelay": 100,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "parseParticles": true,
-      "postscript": "",
-      "qualityReport": false,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "skipFields": "doi",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.0.41",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.25",
-        "locale": "en-US",
-        "oscpu": "Linux x86_64",
-        "platform": "Linux x86_64",
-        "version": "5.0.25"
-      }
+      "skipFields": "doi"
     }
   },
   "items": [
     {
       "abstractNote": "We introduce Adam, an algorithm for first-order gradient-based optimization of stochastic objective functions, based on adaptive estimates of lower-order moments. The method is straightforward to implement, is computationally efficient, has little memory requirements, is invariant to diagonal rescaling of the gradients, and is well suited for problems that are large in terms of data and/or parameters. The method is also appropriate for non-stationary objectives and problems with very noisy and/or sparse gradients. The hyper-parameters have intuitive interpretations and typically require little tuning. Some connections to related algorithms, on which Adam was inspired, are discussed. We also analyze the theoretical convergence properties of the algorithm and provide a regret bound on the convergence rate that is comparable to the best known results under the online convex optimization framework. Empirical results demonstrate that Adam works well in practice and compares favorably to other stochastic optimization methods. Finally, we discuss AdaMax, a variant of Adam based on the infinity norm.",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -66,31 +30,15 @@
         }
       ],
       "date": "2015",
-      "dateAdded": "2017-09-05 15:18:50",
-      "dateModified": "2017-11-17 18:09:52",
-      "extra": "tex.eventdate= 2015-05-07/2015-05-09\ntex.venue= San Diego, CA, USA",
-      "itemID": 117,
+      "extra": [
+        "tex.eventdate= 2015-05-07/2015-05-09",
+        "tex.venue= San Diego, CA, USA"
+      ],
+      "itemID": 1,
       "itemType": "conferencePaper",
       "notes": [
-        {
-          "dateAdded": "2017-09-05 15:18:50",
-          "dateModified": "2017-09-06 14:07:12",
-          "itemID": 376,
-          "itemType": "note",
-          "key": "93GFH4QZ",
-          "libraryID": null,
-          "note": "<p>Comment: Published as a conference paper at the 3rd International Conference for Learning Representations, San Diego, 2015</p>",
-          "parentItem": "KGS7MIWD",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "KGS7MIWD",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<p>Comment: Published as a conference paper at the 3rd International Conference for Learning Representations, San Diego, 2015</p>"
-          }
-        }
+        "<p>Comment: Published as a conference paper at the 3rd International Conference for Learning Representations, San Diego, 2015</p>"
       ],
-      "proceedingsTitle": "Proceedings of the 3rd International Conference on Learning Representations (ICLR 2015)",
       "publicationTitle": "Proceedings of the 3rd International Conference on Learning Representations (ICLR 2015)",
       "tags": [
         {
@@ -101,7 +49,6 @@
       "title": "Adam: A Method for Stochastic Optimization"
     },
     {
-      "attachments": [],
       "creators": [
         {
           "creatorType": "presenter",
@@ -110,17 +57,11 @@
         }
       ],
       "date": "2000-04-26",
-      "dateAdded": "2014-05-24 10:18:28",
-      "dateModified": "2015-01-19 19:47:37",
-      "itemID": 2499,
+      "itemID": 2,
       "itemType": "presentation",
       "language": "en-US",
-      "notes": [],
       "place": "Northwestern University, Evanston, IL",
-      "presentationType": "lecture",
       "rights": "CMS16e",
-      "seeAlso": [],
-      "tags": [],
       "title": "The craft and career of writing",
       "type": "lecture"
     }

@@ -1,6 +1,6 @@
 ---
 title: Scripting
-weight: 6
+weight: 7
 tags:
   - scripting
 aliases:
@@ -22,7 +22,7 @@ here (it's how the examples got here). Postscripts are available in 4 of the tra
 You can (and totally should) check in which translator your postscript is running, which you can do by testing for
 `Translator.<id>` where `<id>` is one of these four names, using something like
 
-```
+```javascript
 if (Translator.BetterBibLaTeX) {
   ...
 }
@@ -30,7 +30,7 @@ if (Translator.BetterBibLaTeX) {
 
 or alternately on the full name using a switch
 
-```
+```javascript
 switch (Translator.header.label) {
   case 'Better BibLaTeX':
     ...
@@ -51,21 +51,22 @@ If you want to run a postscript in the CSL translators but don't care whether it
 
 In the postscript, the reference being built is available as `reference`, and the Zotero item it is being built from is available as `item`. For backwards compatibility, in the `BetterBib(La)TeX` contexts, the reference being built is also available as `this`, and the Zotero item it is being built from as `this.item`, but use of these is discouraged now.
 
-You should really test for the translator context in your postscripts using the `Translator.<name>` tests mentioned above. If you don't because you have a postscript that pre-date postscript CSL support, you will probably be using the legacy use of `this` to set things on the reference being built, and calling `this.add` in those postscripts; since, for CSL postscripts, `this` is not set, it will make the script will non-fatally error out, so you're very probably good to go as-is.
+You should really test for the translator context in your postscripts using the `Translator.<name>` tests mentioned above. If you don't because you have a postscript that pre-date postscript CSL support, you will probably be using the legacy use of `this` to set things on the reference being built, and calling `reference.add` in those postscripts; since, for CSL postscripts, `this` is not set, it will make the script will non-fatally error out, so you're very probably good to go as-is.
 But please fix your postscripts to test for the translator context.
 
 ## The API for `Better BibTeX` and `Better BibLaTeX`
 
 The postscript should be a `javascript` snippet. You can access the data with following objects and methods:
 
-- `reference` is the BibTeX reference you are building, and the reference has a number of fields.
 - `item` is the Zotero item that's the source of the reference. 
+- `reference` is the BibTeX reference you are building, and the reference has a number of fields.
 
   e.g. you can access the date in zotero item `item.date`.
 
 - `reference.has` is a dictionary of fields for output.
+- `reference.date` is the parsed and normalized version of `item.date`.
 
-  e.g. you can see whether the `year` field has been set by testing for `reference.has.year`
+  e.g. you can see whether the `year` field has been set by testing for `reference.has.year`, and when e.g. for a season-date only the year is exported in bibtex, you can find it in `reference.date.season`
 
 - `reference.add` is the function to add or modify keys in `reference.has`. It accepts the following named parameters in the form of an object:
 
@@ -113,10 +114,10 @@ the Zotero item looks like to the translator.
 
 Since BibTeX doesn't really have well-defined behavior across styles the way BibLaTeX does, BBT can't generate URL data which is compatible with all BibTeX styles. If you know the style you use yourself, you can add the data in the format you want using a postscript. The script below will add a note for the last accessed date, and a `\url` tag within the `howpublished` field, but only for BibTeX, not for BibLaTeX, and only for `webpage` entries:
 
-```
+```javascript
 if (Translator.BetterBibTeX && item.itemType === 'webpage') {
     if (item.accessDate) {
-      reference.add({ name: 'note', value: "(accessed " + item.accessDate + ")" });
+      reference.add({ name: 'note', value: "(accessed " + item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') + ")" });
     }
     if (item.url) {
       reference.add({ name: 'howpublished', bibtex: "{\\url{" + reference.enc_verbatim({value: item.url}) + "}}" });
@@ -128,9 +129,9 @@ if (Translator.BetterBibTeX && item.itemType === 'webpage') {
 
 If you want to retain commas in your keywords (e.g. for chemical elements) and separate with a comma-space, you could do:
 
-```
+```javascript
 if (Translator.BetterTeX) {
-  reference.add({ name: 'keywords', value: item.tags, sep: ', ' });
+  reference.add({ name: 'keywords', value: item.tags, sep: ', ', enc: 'tags' });
 }
 ```
 
@@ -138,7 +139,7 @@ as the default encoder knows what to do with arrays, if you give it a separator.
 
 ### Add DOI in note field
 
-```
+```javascript
 if (Translator.BetterTeX && item.DOI) {
   var doi = item.DOI;
   if (doi.indexOf('doi:') != 0) { doi = 'doi:' + doi; }
@@ -152,7 +153,7 @@ arXiv is a bit of an odd duck. It really isn't a journal, so it shouldn't be the
 
 But for arguments' sake, let's say you get the desired output by including an empty `journaltitle` field (ugh) and stuff the `arXiv:...` ID in the `pages` field (*ugh*). You could do that with the following postscript:
 
-```
+```javascript
 if (Translator.BetterTeX && item.arXiv.id) {
   reference.add({ name: 'pages', value: item.arXiv.id });
   if (!reference.has.journaltitle) { reference.add({ name: 'journaltitle', bibtex: '{}' }); }
@@ -163,19 +164,16 @@ if (Translator.BetterTeX && item.arXiv.id) {
 
 Specify the ordering of the listing of fields in an exported Biblatex/Bibtex entry. Your postscript:
 
-```
+```javascript
 if (Translator.BetterTeX) {
   // the bib(la)tex fields are ordered according to this array.
-  // If a field is not in this list, it will show up at after the ordered fields.
+  // If a field is not in this list, it will show up after the ordered fields.
   // https://github.com/retorquere/zotero-better-bibtex/issues/512
 
   const order = ['author', 'date', 'title', 'publisher']
-  for (const field of order.concat(Object.keys(reference.has).filter(other => !order.includes(other)))) {
-    const value = reference.has[field]
-    if (value) {
-      delete reference.has[field]
-      reference.has[field] = value
-    }
+  for (const [field, value] of order.filter(front => reference.has[first]).concat(Object.keys(reference.has).filter(other => !order.includes(other))).map(f => [f, reference.has[f]])) {
+    delete reference.has[field]
+    reference.has[field] = value
   }
 }
 ```
@@ -202,15 +200,23 @@ Further details [Export to Biblatex/Bibtex. Custom field order. #512](https://gi
 
 ### Detect and protect LaTeX math formulas
 
-```
+```javascript
 if (Translator.BetterTeX && reference.has.title) {
   reference.add({ name: 'title', value: item.title.replace(/(\$.*?\$)/g, '<script>{$1}</script>') });
 }
 ```
 
+### Or, detect and protect (simple) LaTeX commands
+
+```javascript
+if (Translator.BetterTeX && reference.has.journal) {
+  reference.add({ name: 'journal', value: reference.has.journal.value.replace(/(\\\w+)/g, '<script>{$1}</script>') });
+}
+```
+
 ### Detect and protect MathJax
 
-```
+```javascript
 if (Translator.BetterTeX) {
   // different for bibtex and biblatex exporters
   const note = ['annotation', 'note'].find(field => reference.has[field])
@@ -230,7 +236,7 @@ if (Translator.BetterTeX) {
 
 Creator handling is fairly complicated, so to change the authors/editors/creators of any kind, you must change them on `item` and then call `addCreators` to do the needful. `addCreators` will *replace* the existing creators that were added to `reference` with the current state in `item.creators`, however you left it.
 
-```
+```javascript
 if (Translator.BetterBibLaTeX) {
   switch (item.itemType) {
     case 'videoRecording':
@@ -246,10 +252,107 @@ if (Translator.BetterBibLaTeX) {
 
 ### Changing the reference type from collection to book
 
-```
+```javascript
 if (Translator.BetterBibLaTeX) {
   if (reference.referencetype === 'collection') reference.referencetype = 'book'
 }
 ```
 
+### Set the reference type to `misc` for arXiv preprints in BibTeX
 
+```
+if (Translator.BetterBibTeX && reference.referencetype === 'article' && item.arXiv) {
+  if (reference.has.journal && item.arXiv.source === 'publicationTitle') {
+    reference.remove('journal');
+  }
+  if (!reference.has.journal) reference.referencetype = 'misc'
+}
+```
+
+### Citing documents with a physical archive location
+
+This is one area where some of the supposedly most popular packages -- `biblatex`,
+`biblatex-apa`, `biblatex-chicago`, `biblatex-mla` -- are all over the
+place, if they explicitly support archival material at all. There
+doesn't seem to be a solution that caters for all of these and
+possibly other packages, too. biblatex has no special fields for
+dealing with info about physical archives, even if it does have
+provisions for electronic archives via the fields eprint (`identifier`),
+eprintclass (`section of an archive`), and eprinttype (`name of the
+archive`).
+
+Of the packages mentioned above, only one (`biblatex-mla`) has a
+clear schema of how to record archival information (type `@unpublished`;
+fields `number`, `library`, `location`). Note that the `library` field
+is unique to biblatex-mla. (biblatex does define the field, but
+never uses it in its standard styles, and we find no indication
+that either biblatex-apa or biblatex-chicago would use it for a
+physical archive.)
+
+Given all of this, I'm going to leave referencing of physical
+location to postscripts for now. If you enable the [quality report]({{< ref "/installation/preferences/export" >}}#include-comments-about-potential-problems-with-the-references), BBT
+will list Zotero fields with data that has not been used in the
+export:
+
+```
+@letter{MillionDemiInfirmes1968,
+  title = {Un Million et Demi d'infirmes, Handicapés Physiques et Mentaux},
+  date = {1968-05-31},
+  url = {https://archives.strasbourg.eu/archive/fonds/FRAM67482_0592_114Z/view:115037},
+  urldate = {2021-04-08},
+  type = {Letter}
+}
+% == BibLateX quality report for MillionDemiInfirmes1968:
+% Unexpected field 'title'
+% Unexpected field 'type'
+% ? Unused archive: Archives de la Ville et l'Eurométropole de Strasbourg
+% ? Unused archiveLocation: 114 Z 1 248
+% ? Unused callNumber: 114 Z 1 248
+```
+
+if you then apply a postscript such as 
+
+```
+if (Translator.BetterBibLaTeX) {
+  // biblatex-mla
+  if (item.archive && item.archiveLocation) {
+    reference.add({ name: 'type', value: reference.referencetype })
+    reference.referencetype = 'unpublished'
+    reference.add({ name: 'library', value: item.archive})
+    reference.add({ name: 'number', value: item.archiveLocation })
+  }
+}
+```
+
+you get
+
+```
+@unpublished{MillionDemiInfirmes1968,
+  title = {Un Million et Demi d'infirmes, Handicapés Physiques et Mentaux},
+  date = {1968-05-31},
+  url = {https://archives.strasbourg.eu/archive/fonds/FRAM67482_0592_114Z/view:115037},
+  urldate = {2021-04-08},
+  type = {letter},
+  library = {Archives de la Ville et l'Eurométropole de Strasbourg},
+  number = {114 Z 1 248}
+}
+% == BibLateX quality report for MillionDemiInfirmes1968:
+% Unexpected field 'number'
+% Missing required field 'author'
+```
+
+### Export season for BibTeX
+
+```
+if (Translator.BetterBibTeX && reference.date.type === 'season') {
+  reference.add({ name: 'month', value: ['', 'spring', 'summer', 'fall', 'winter'][reference.date.season] })
+}
+```
+
+### Adding rights field in BibLaTeX
+
+```
+if (Translator.BetterBibLaTeX) {
+  reference.add({ name: 'rights', value: item.rights});
+}
+```

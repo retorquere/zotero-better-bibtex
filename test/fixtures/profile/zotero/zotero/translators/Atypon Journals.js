@@ -1,22 +1,22 @@
 {
 	"translatorID": "5af42734-7cd5-4c69-97fc-bc406999bdba",
+	"translatorType": 4,
 	"label": "Atypon Journals",
-	"creator": "Sebastian Karcher",
+	"creator": "Sebastian Karcher and Abe Jellinek",
 	"target": "^https?://[^?#]+(/doi/((abs|abstract|full|figure|ref|citedby|book)/)?10\\.|/action/doSearch\\?)|^https?://[^/]+/toc/",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 270,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2019-11-02 15:43:51"
+	"lastUpdated": "2021-06-18 17:40:00"
 }
 
 /*
 	***** BEGIN LICENSE BLOCK *****
 
 	Atypon Journals Translator
-	Copyright © 2011-2014 Sebastian Karcher
+	Copyright © 2011-2021 Sebastian Karcher and Abe Jellinek
 
 	This file is part of Zotero.
 
@@ -38,26 +38,29 @@
 
 
 function detectWeb(doc, url) {
-	if (url.search(/^https?:\/\/[^\/]+\/toc\/|\/action\/doSearch\?/) != -1) {
+	if (url.search(/^https?:\/\/[^/]+\/toc\/|\/action\/doSearch\?/) != -1) {
 		return getSearchResults(doc, true) ? "multiple" : false;
 	}
 	
-	var citLinks = ZU.xpath(doc, '//a[contains(@href, "/action/showCitFormats")]');
-	if (citLinks.length > 0) {
+	var citLink = doc.querySelector('a[href*="/action/showCitFormats"], a[href*="#pill-citations"]');
+	if (citLink) {
 		if (url.includes('/doi/book/')) {
 			return 'book';
 		}
-		else if (url.search(/\.ch\d+$/)!=-1){
+		else if (url.search(/\.ch\d+$/) != -1) {
 			return 'bookSection';
 		}
 		return "journalArticle";
 	}
+
+	return false;
 }
 
 function getSearchResults(doc, checkOnly, extras) {
 	var articles = {};
 	var container = doc.getElementsByName('frmSearchResults')[0]
-		|| doc.getElementsByName('frmAbs')[0];
+		|| doc.getElementsByName('frmAbs')[0]
+		|| doc.querySelector('.search__body, .search-result, .table-of-content');
 	if (!container) {
 		Z.debug('Atypon: multiples container not found.');
 		return false;
@@ -66,7 +69,7 @@ function getSearchResults(doc, checkOnly, extras) {
 		found = false,
 		doiLink = 'a[contains(@href, "/doi/abs/") or contains(@href, "/doi/abstract/") or '
 			+ 'contains(@href, "/doi/full/") or contains(@href, "/doi/book/")]';
-	for (var i = 0; i<rows.length; i++) {
+	for (var i = 0; i < rows.length; i++) {
 		var title = rows[i].getElementsByClassName('art_title')[0];
 		if (!title) continue;
 		title = ZU.trimInternal(title.textContent);
@@ -93,16 +96,38 @@ function getSearchResults(doc, checkOnly, extras) {
 		articles[url] = title;
 	}
 	
-	if (!found){
-		Z.debug("Trying an alternate multiple format");
-		var rows = container.getElementsByClassName("item-details");
-		for (var i = 0; i<rows.length; i++) {
-			var title = ZU.xpathText(rows[i], './h3');
+	if (!found) {
+		Z.debug("Trying alternate multiple format #1");
+		rows = container.getElementsByClassName("item-details");
+		for (let i = 0; i < rows.length; i++) {
+			let title = ZU.xpathText(rows[i], './h3');
 			if (!title) continue;
 			title = ZU.trimInternal(title);
 			
-			var url = ZU.xpathText(rows[i], '(.//ul[contains(@class, "icon-list")]/li/'
+			let url = ZU.xpathText(rows[i], '(.//ul[contains(@class, "icon-list")]/li/'
 				+ doiLink + ')[1]/@href');
+			if (!url) continue;
+			
+			if (checkOnly) return true;
+			found = true;
+			
+			if (extras) {
+				extras[url] = { pdf: buildPdfUrl(url, rows[i]) };
+			}
+			
+			articles[url] = title;
+		}
+	}
+	
+	if (!found) {
+		Z.debug("Trying alternate multiple format #2");
+		rows = container.querySelectorAll('.issue-item, .item__body');
+		for (let i = 0; i < rows.length; i++) {
+			let title = text(rows[i], 'a');
+			if (!title) continue;
+			title = ZU.trimInternal(title);
+			
+			let url = attr(rows[i], 'a', 'href');
 			if (!url) continue;
 			
 			if (checkOnly) return true;
@@ -126,18 +151,18 @@ function buildPdfUrl(url, root) {
 	if (!replURLRegExp.test(url)) return false; // The whole thing is probably going to fail anyway
 	
 	var pdfPaths = ['/doi/pdf/', '/doi/pdfplus/'];
-	for (var i=0; i<pdfPaths.length; i++) {
+	for (let i = 0; i < pdfPaths.length; i++) {
 		if (ZU.xpath(root, './/a[contains(@href, "' + pdfPaths[i] + '")]').length) {
 			return url.replace(replURLRegExp, pdfPaths[i]);
 		}
 	}
 	
 	Z.debug('PDF link not found.');
-	if (root.nodeType != 9 /*DOCUMENT_NODE*/) {
+	if (root.nodeType != 9 /* DOCUMENT_NODE*/) {
 		Z.debug('Available links:');
 		var links = root.getElementsByTagName('a');
 		if (!links.length) Z.debug('No links');
-		for (var i=0; i<links.length; i++) {
+		for (let i = 0; i < links.length; i++) {
 			Z.debug(links[i].href);
 		}
 	}
@@ -150,7 +175,7 @@ function doWeb(doc, url) {
 		var extras = {};
 		Zotero.selectItems(getSearchResults(doc, false, extras), function (items) {
 			if (!items) {
-				return true;
+				return;
 			}
 			var articles = [];
 			for (var itemurl in items) {
@@ -162,9 +187,9 @@ function doWeb(doc, url) {
 			
 			fetchArticles(articles);
 		});
-
-	} else {
-		scrape(doc, url, {pdf: buildPdfUrl(url, doc)});
+	}
+	else {
+		scrape(doc, url, { pdf: buildPdfUrl(url, doc) });
 	}
 }
 
@@ -182,10 +207,10 @@ function fetchArticles(articles) {
 	if (!articles.length) return;
 	
 	var article = articles.shift();
-	ZU.processDocuments(article.url, function(doc, url) {
+	ZU.processDocuments(article.url, function (doc, url) {
 		scrape(doc, url, article.extras);
 	},
-	function() {
+	function () {
 		if (articles.length) fetchArticles(articles);
 	});
 }
@@ -197,31 +222,62 @@ function scrape(doc, url, extras) {
 	var abstract = doc.getElementsByClassName('abstractSection')[0];
 	var tags = ZU.xpath(doc, '//p[@class="fulltext"]//a[contains(@href, "keyword") or contains(@href, "Keyword=")]');
 	Z.debug("Citation URL: " + citationurl);
-	ZU.processDocuments(citationurl, function(citationDoc){
-		var filename = citationDoc.evaluate('//form//input[@name="downloadFileName"]', citationDoc, null, XPathResult.ANY_TYPE, null).iterateNext().value;
+	
+	function finalize(filename) {
 		Z.debug("Filename: " + filename);
 		var get = '/action/downloadCitation';
 		var post = 'doi=' + doi + '&downloadFileName=' + filename + '&format=ris&direct=true&include=cit';
-		ZU.doPost(get, post, function (text) {
-			//Z.debug(text);
+		ZU.doPost(get, post, function (risText) {
+			// Z.debug(risText);
 			var translator = Zotero.loadTranslator("import");
 			// Calling the RIS translator
 			translator.setTranslator("32d59d2d-b65a-4da4-b0a3-bdd3cfb979e7");
-			translator.setString(text);
+			translator.setString(risText);
 			translator.setHandler("itemDone", function (obj, item) {
 				// Sometimes we get titles and authors in all caps
 				item.title = fixCase(item.title);
 				
-				for (var i=0; i<item.creators.length; i++) {
-					item.creators[i].lastName = fixCase(item.creators[i].lastName, true);
-					if (item.creators[i].firstName) {
-						item.creators[i].firstName = fixCase(item.creators[i].firstName, true);
+				if (item.journalAbbreviation == item.publicationTitle) {
+					delete item.journalAbbreviation;
+				}
+				
+				if (url.startsWith('https://journals.asm.org/')) {
+					// the creator names ASM gives us in their RIS look like
+					// "Kirstahler Philipp" - reversed with no comma.
+					// we'll just use the HTML.
+					item.creators = [];
+					let contributors = doc.querySelector('div.contributors');
+					for (let authorLink of contributors.querySelectorAll('[property="author"] a:first-child')) {
+						let givenName = text(authorLink, '[property="givenName"]');
+						let familyName = text(authorLink, '[property="familyName"]');
+						if (!givenName && !familyName) {
+							item.creators.push({
+								lastName: authorLink.innerText,
+								creatorType: 'author',
+								fieldMode: 1
+							});
+						}
+						else {
+							item.creators.push({
+								firstName: givenName,
+								lastName: familyName,
+								creatorType: 'author'
+							});
+						}
+					}
+				}
+				else {
+					for (let creator of item.creators) {
+						creator.lastName = fixCase(creator.lastName, true);
+						if (creator.firstName) {
+							creator.firstName = fixCase(creator.firstName, true);
+						}
 					}
 				}
 				
 				item.url = url;
 				item.notes = [];
-				for (var i in tags){
+				for (var i in tags) {
 					item.tags.push(tags[i].textContent);
 				}
 				
@@ -248,12 +304,23 @@ function scrape(doc, url, extras) {
 					mimeType: "text/html"
 				});
 				item.libraryCatalog = url.replace(/^https?:\/\/(?:www\.)?/, '')
-					.replace(/[\/:].*/, '') + " (Atypon)";
+					.replace(/[/:].*/, '') + " (Atypon)";
 				item.complete();
 			});
 			translator.translate();
 		});
-	});
+	}
+	
+	if (doc.querySelector('a[href*="#pill-citations')) { // newer Atypon installs
+		let filename = attr(doc, 'input[name="downloadFileName"]', 'value');
+		finalize(filename);
+	}
+	else {
+		ZU.processDocuments(citationurl, function (citationDoc) {
+			let filename = citationDoc.evaluate('//form//input[@name="downloadFileName"]', citationDoc, null, XPathResult.ANY_TYPE, null).iterateNext().value;
+			finalize(filename);
+		});
+	}
 }
 
 /** BEGIN TEST CASES **/
@@ -265,7 +332,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://pubs.rsna.org/doi/abs/10.1148/rg.337125073",
+		"url": "https://pubs.rsna.org/doi/full/10.1148/rg.337125073",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -307,12 +374,11 @@ var testCases = [
 				"ISSN": "0271-5333",
 				"abstractNote": "Sudden cardiac death is defined as death from unexpected circulatory arrest—usually a result of cardiac arrhythmia—that occurs within 1 hour of the onset of symptoms. Proper and timely identification of individuals at risk for sudden cardiac death and the diagnosis of its predisposing conditions are vital. A careful history and physical examination, in addition to electrocardiography and cardiac imaging, are essential to identify conditions associated with sudden cardiac death. Among young adults (18–35 years), sudden cardiac death most commonly results from a previously undiagnosed congenital or hereditary condition, such as coronary artery anomalies and inherited cardiomyopathies (eg, hypertrophic cardiomyopathy, arrhythmogenic right ventricular cardiomyopathy [ARVC], dilated cardiomyopathy, and noncompaction cardiomyopathy). Overall, the most common causes of sudden cardiac death in young adults are, in descending order of frequency, hypertrophic cardiomyopathy, coronary artery anomalies with an interarterial or intramural course, and ARVC. Often, sudden cardiac death is precipitated by ventricular tachycardia or fibrillation and may be prevented with an implantable cardioverter defibrillator (ICD). Risk stratification to determine the need for an ICD is challenging and involves imaging, particularly echocardiography and cardiac magnetic resonance (MR) imaging. Coronary artery anomalies, a diverse group of congenital disorders with a variable manifestation, may be depicted at coronary computed tomographic angiography or MR angiography. A thorough understanding of clinical risk stratification, imaging features, and complementary diagnostic tools for the evaluation of cardiac disorders that may lead to sudden cardiac death is essential to effectively use imaging to guide diagnosis and therapy.",
 				"issue": "7",
-				"journalAbbreviation": "RadioGraphics",
 				"libraryCatalog": "pubs.rsna.org (Atypon)",
 				"pages": "1977-2001",
 				"publicationTitle": "RadioGraphics",
 				"shortTitle": "Congenital and Hereditary Causes of Sudden Cardiac Death in Young Adults",
-				"url": "http://pubs.rsna.org/doi/abs/10.1148/rg.337125073",
+				"url": "https://pubs.rsna.org/doi/full/10.1148/rg.337125073",
 				"volume": "33",
 				"attachments": [
 					{
@@ -337,7 +403,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://epubs.siam.org/doi/book/10.1137/1.9780898718553",
+		"url": "https://epubs.siam.org/doi/book/10.1137/1.9780898718553",
 		"items": [
 			{
 				"itemType": "book",
@@ -345,17 +411,17 @@ var testCases = [
 				"creators": [
 					{
 						"lastName": "Hubert",
-						"firstName": "L.",
+						"firstName": "Lawrence",
 						"creatorType": "author"
 					},
 					{
 						"lastName": "Arabie",
-						"firstName": "P.",
+						"firstName": "Phipps",
 						"creatorType": "author"
 					},
 					{
 						"lastName": "Meulman",
-						"firstName": "J.",
+						"firstName": "Jacqueline",
 						"creatorType": "author"
 					}
 				],
@@ -367,7 +433,7 @@ var testCases = [
 				"numPages": "172",
 				"publisher": "Society for Industrial and Applied Mathematics",
 				"series": "Discrete Mathematics and Applications",
-				"url": "http://epubs.siam.org/doi/book/10.1137/1.9780898718553",
+				"url": "https://epubs.siam.org/doi/book/10.1137/1.9780898718553",
 				"attachments": [
 					{
 						"title": "Full Text PDF",
@@ -386,7 +452,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://epubs.siam.org/doi/abs/10.1137/1.9780898718553.ch6",
+		"url": "https://epubs.siam.org/doi/abs/10.1137/1.9780898718553.ch6",
 		"items": [
 			{
 				"itemType": "bookSection",
@@ -402,7 +468,7 @@ var testCases = [
 				"pages": "103-114",
 				"publisher": "Society for Industrial and Applied Mathematics",
 				"series": "Discrete Mathematics and Applications",
-				"url": "http://epubs.siam.org/doi/abs/10.1137/1.9780898718553.ch6",
+				"url": "https://epubs.siam.org/doi/abs/10.1137/1.9780898718553.ch6",
 				"attachments": [
 					{
 						"title": "Full Text PDF",
@@ -421,7 +487,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.liebertpub.com/doi/abs/10.1089/cmb.2009.0238",
+		"url": "https://www.liebertpub.com/doi/full/10.1089/cmb.2009.0238",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -443,16 +509,15 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "October 20, 2010",
+				"date": "November 1, 2010",
 				"DOI": "10.1089/cmb.2009.0238",
 				"abstractNote": "An accurate genome sequence of a desired species is now a pre-requisite for genome research. An important step in obtaining a high-quality genome sequence is to correctly assemble short reads into longer sequences accurately representing contiguous genomic regions. Current sequencing technologies continue to offer increases in throughput, and corresponding reductions in cost and time. Unfortunately, the benefit of obtaining a large number of reads is complicated by sequencing errors, with different biases being observed with each platform. Although software are available to assemble reads for each individual system, no procedure has been proposed for high-quality simultaneous assembly based on reads from a mix of different technologies. In this paper, we describe a parallel short-read assembler, called Ray, which has been developed to assemble reads obtained from a combination of sequencing platforms. We compared its performance to other assemblers on simulated and real datasets. We used a combination of Roche/454 and Illumina reads to assemble three different genomes. We showed that mixing sequencing technologies systematically reduces the number of contigs and the number of errors. Because of its open nature, this new tool will hopefully serve as a basis to develop an assembler that can be of universal utilization (availability: http://deNovoAssembler.sf.Net/). For online Supplementary Material, see www.liebertonline.com.",
 				"issue": "11",
-				"journalAbbreviation": "Journal of Computational Biology",
 				"libraryCatalog": "liebertpub.com (Atypon)",
 				"pages": "1519-1533",
 				"publicationTitle": "Journal of Computational Biology",
 				"shortTitle": "Ray",
-				"url": "https://www.liebertpub.com/doi/abs/10.1089/cmb.2009.0238",
+				"url": "https://www.liebertpub.com/doi/full/10.1089/cmb.2009.0238",
 				"volume": "17",
 				"attachments": [
 					{
@@ -477,7 +542,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.worldscientific.com/doi/abs/10.1142/S0219749904000195",
+		"url": "https://www.worldscientific.com/doi/abs/10.1142/S0219749904000195",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -498,7 +563,7 @@ var testCases = [
 				"libraryCatalog": "worldscientific.com (Atypon)",
 				"pages": "221-229",
 				"publicationTitle": "International Journal of Quantum Information",
-				"url": "http://www.worldscientific.com/doi/abs/10.1142/S0219749904000195",
+				"url": "https://www.worldscientific.com/doi/abs/10.1142/S0219749904000195",
 				"volume": "02",
 				"attachments": [
 					{
@@ -518,7 +583,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.annualreviews.org/doi/abs/10.1146/annurev.matsci.31.1.323",
+		"url": "https://www.annualreviews.org/doi/abs/10.1146/annurev.matsci.31.1.323",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -545,7 +610,7 @@ var testCases = [
 				"pages": "323-355",
 				"publicationTitle": "Annual Review of Materials Research",
 				"shortTitle": "Block Copolymer Thin Films",
-				"url": "http://www.annualreviews.org/doi/abs/10.1146/annurev.matsci.31.1.323",
+				"url": "https://www.annualreviews.org/doi/abs/10.1146/annurev.matsci.31.1.323",
 				"volume": "31",
 				"attachments": [
 					{
@@ -565,44 +630,475 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://journals.ametsoc.org/doi/abs/10.1175/JAS-D-14-0363.1",
+		"url": "https://journals.asm.org/doi/10.1128/mSystems.00122-21",
 		"items": [
 			{
 				"itemType": "journalArticle",
-				"title": "Observations of Ice Microphysics through the Melting Layer",
+				"title": "Dietary Supplements and Nutraceuticals under Investigation for COVID-19 Prevention and Treatment",
 				"creators": [
 					{
-						"lastName": "Heymsfield",
-						"firstName": "Andrew J.",
+						"firstName": "Ronan",
+						"lastName": "Lordan",
 						"creatorType": "author"
 					},
 					{
-						"lastName": "Bansemer",
-						"firstName": "Aaron",
+						"firstName": "Halie M.",
+						"lastName": "Rando",
 						"creatorType": "author"
 					},
 					{
-						"lastName": "Poellot",
-						"firstName": "Michael R.",
+						"lastName": "COVID-19 Review Consortium",
+						"creatorType": "author",
+						"fieldMode": 1
+					},
+					{
+						"firstName": "John P.",
+						"lastName": "Barton",
 						"creatorType": "author"
 					},
 					{
-						"lastName": "Wood",
-						"firstName": "Norm",
+						"firstName": "Simina M.",
+						"lastName": "Boca",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Christian",
+						"lastName": "Brueffer",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "James Brian",
+						"lastName": "Byrd",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Stephen",
+						"lastName": "Capone",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Shikta",
+						"lastName": "Das",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Anna Ada",
+						"lastName": "Dattoli",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "John J.",
+						"lastName": "Dziak",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Jeffrey M.",
+						"lastName": "Field",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Soumita",
+						"lastName": "Ghosh",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Anthony",
+						"lastName": "Gitter",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Rishi Raj",
+						"lastName": "Goel",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Casey S.",
+						"lastName": "Greene",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Marouen Ben",
+						"lastName": "Guebila",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Fengling",
+						"lastName": "Hu",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Nafisa M.",
+						"lastName": "Jadavji",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Sergey",
+						"lastName": "Knyazev",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Likhitha",
+						"lastName": "Kolla",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Alexandra J.",
+						"lastName": "Lee",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Ronan",
+						"lastName": "Lordan",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Tiago",
+						"lastName": "Lubiana",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Temitayo",
+						"lastName": "Lukan",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Adam L.",
+						"lastName": "MacLean",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "David",
+						"lastName": "Mai",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Serghei",
+						"lastName": "Mangul",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "David",
+						"lastName": "Manheim",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Lucy",
+						"lastName": "D'Agostino McGowan",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "YoSon",
+						"lastName": "Park",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Dimitri",
+						"lastName": "Perrin",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Yanjun",
+						"lastName": "Qi",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Diane N.",
+						"lastName": "Rafizadeh",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Bharath",
+						"lastName": "Ramsundar",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Halie M.",
+						"lastName": "Rando",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Sandipan",
+						"lastName": "Ray",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Michael P.",
+						"lastName": "Robson",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Elizabeth",
+						"lastName": "Sell",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Lamonica",
+						"lastName": "Shinholster",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Ashwin N.",
+						"lastName": "Skelly",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Yuchen",
+						"lastName": "Sun",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Gregory L.",
+						"lastName": "Szeto",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Ryan",
+						"lastName": "Velazquez",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Jinhui",
+						"lastName": "Wang",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Nils",
+						"lastName": "Wellhausen",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Vikas",
+						"lastName": "Bansal",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "John P.",
+						"lastName": "Barton",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Simina M.",
+						"lastName": "Boca",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Christian",
+						"lastName": "Brueffer",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "James Brian",
+						"lastName": "Byrd",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Stephen",
+						"lastName": "Capone",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Shikta",
+						"lastName": "Das",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Anna Ada",
+						"lastName": "Dattoli",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "John J.",
+						"lastName": "Dziak",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Jeffrey M.",
+						"lastName": "Field",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Soumita",
+						"lastName": "Ghosh",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Anthony",
+						"lastName": "Gitter",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Rishi Raj",
+						"lastName": "Goel",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Casey S.",
+						"lastName": "Greene",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Marouen Ben",
+						"lastName": "Guebila",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Fengling",
+						"lastName": "Hu",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Nafisa M.",
+						"lastName": "Jadavji",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Sergey",
+						"lastName": "Knyazev",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Likhitha",
+						"lastName": "Kolla",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Alexandra J.",
+						"lastName": "Lee",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Ronan",
+						"lastName": "Lordan",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Tiago",
+						"lastName": "Lubiana",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Temitayo",
+						"lastName": "Lukan",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Adam L.",
+						"lastName": "MacLean",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "David",
+						"lastName": "Mai",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Serghei",
+						"lastName": "Mangul",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "David",
+						"lastName": "Manheim",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Lucy",
+						"lastName": "D'Agostino McGowan",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "YoSon",
+						"lastName": "Park",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Dimitri",
+						"lastName": "Perrin",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Yanjun",
+						"lastName": "Qi",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Diane N.",
+						"lastName": "Rafizadeh",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Bharath",
+						"lastName": "Ramsundar",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Halie M.",
+						"lastName": "Rando",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Sandipan",
+						"lastName": "Ray",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Michael P.",
+						"lastName": "Robson",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Elizabeth",
+						"lastName": "Sell",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Lamonica",
+						"lastName": "Shinholster",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Ashwin N.",
+						"lastName": "Skelly",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Yuchen",
+						"lastName": "Sun",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Gregory L.",
+						"lastName": "Szeto",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Ryan",
+						"lastName": "Velazquez",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Jinhui",
+						"lastName": "Wang",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Nils",
+						"lastName": "Wellhausen",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Casey S.",
+						"lastName": "Greene",
 						"creatorType": "author"
 					}
 				],
-				"date": "April 30, 2015",
-				"DOI": "10.1175/JAS-D-14-0363.1",
-				"ISSN": "0022-4928",
-				"abstractNote": "The detailed microphysical processes and properties within the melting layer (ML)—the continued growth of the aggregates by the collection of the small particles, the breakup of these aggregates, the effects of relative humidity on particle melting—are largely unresolved. This study focuses on addressing these questions for in-cloud heights from just above to just below the ML. Observations from four field programs employing in situ measurements from above to below the ML are used to characterize the microphysics through this region. With increasing temperatures from about −4° to +1°C, and for saturated conditions, slope and intercept parameters of exponential fits to the particle size distributions (PSD) fitted to the data continue to decrease downward, the maximum particle size (largest particle sampled for each 5-s PSD) increases, and melting proceeds from the smallest to the largest particles. With increasing temperature from about −4° to +2°C for highly subsaturated conditions, the PSD slope and intercept continue to decrease downward, the maximum particle size increases, and there is relatively little melting, but all particles experience sublimation.",
-				"issue": "8",
-				"journalAbbreviation": "J. Atmos. Sci.",
-				"libraryCatalog": "journals.ametsoc.org (Atypon)",
-				"pages": "2902-2928",
-				"publicationTitle": "Journal of the Atmospheric Sciences",
-				"url": "http://journals.ametsoc.org/doi/abs/10.1175/JAS-D-14-0363.1",
-				"volume": "72",
+				"DOI": "10.1128/mSystems.00122-21",
+				"issue": "0",
+				"libraryCatalog": "journals.asm.org (Atypon)",
+				"pages": "e00122-21",
+				"publicationTitle": "mSystems",
+				"url": "https://journals.asm.org/doi/10.1128/mSystems.00122-21",
+				"volume": "0",
 				"attachments": [
 					{
 						"title": "Full Text PDF",
@@ -621,83 +1117,8 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://trrjournalonline.trb.org/doi/10.3141/2503-12",
-		"items": [
-			{
-				"itemType": "journalArticle",
-				"title": "Development of the Worldwide Harmonized Test Procedure for Light-Duty Vehicles",
-				"creators": [
-					{
-						"lastName": "Ciuffo",
-						"firstName": "Biagio",
-						"creatorType": "author"
-					},
-					{
-						"lastName": "Marotta",
-						"firstName": "Alessandro",
-						"creatorType": "author"
-					},
-					{
-						"lastName": "Tutuianu",
-						"firstName": "Monica",
-						"creatorType": "author"
-					},
-					{
-						"lastName": "Anagnostopoulos",
-						"firstName": "Konstantinos",
-						"creatorType": "author"
-					},
-					{
-						"lastName": "Fontaras",
-						"firstName": "Georgios",
-						"creatorType": "author"
-					},
-					{
-						"lastName": "Pavlovic",
-						"firstName": "Jelica",
-						"creatorType": "author"
-					},
-					{
-						"lastName": "Serra",
-						"firstName": "Simone",
-						"creatorType": "author"
-					},
-					{
-						"lastName": "Tsiakmakis",
-						"firstName": "Stefanos",
-						"creatorType": "author"
-					},
-					{
-						"lastName": "Zacharof",
-						"firstName": "Nikiforos",
-						"creatorType": "author"
-					}
-				],
-				"date": "January 1, 2015",
-				"DOI": "10.3141/2503-12",
-				"ISSN": "0361-1981",
-				"abstractNote": "To assess vehicle performance on criteria compounds, carbon dioxide emissions, and fuel energy consumption, laboratory tests are generally carried out. During these tests, a vehicle is driven on a chassis dynamometer (which simulates the resistances the vehicle encounters during its motion) to follow a predefined test cycle. In addition, all conditions for running a test must strictly adhere to a predefined test procedure. The procedure is necessary to ensure that all tests are carried out in a comparable way, following the requirements set by the relevant legislation. Test results are used to assess vehicle compliance with emissions limits or to evaluate the fuel consumption that will be communicated to customers. Every region in the world follows its own approach in carrying out these types of tests. The variations in approaches have resulted in a series of drawbacks for vehicle manufacturers and regulating authorities, leading to a plethora of different conditions and results. As a step toward the harmonization of the test procedures, the United Nations Economic Commission for Europe launched a project in 2009 for the development of a worldwide harmonized light-duty test procedure (WLTP), including a new test cycle. The objective of the study reported here was to provide a brief description of WLTP and outline the plausible pathway for its introduction in European legislation.",
-				"journalAbbreviation": "Transportation Research Record: Journal of the Transportation Research Board",
-				"libraryCatalog": "trrjournalonline.trb.org (Atypon)",
-				"pages": "110-118",
-				"publicationTitle": "Transportation Research Record: Journal of the Transportation Research Board",
-				"url": "http://trrjournalonline.trb.org/doi/10.3141/2503-12",
-				"volume": "2503",
-				"attachments": [
-					{
-						"title": "Full Text PDF",
-						"mimeType": "application/pdf"
-					},
-					{
-						"title": "Snapshot",
-						"mimeType": "text/html"
-					}
-				],
-				"tags": [],
-				"notes": [],
-				"seeAlso": []
-			}
-		]
+		"url": "https://journals.asm.org/action/doSearch?AllField=E.+coli&SeriesKey=mra",
+		"items": "multiple"
 	}
 ]
 /** END TEST CASES **/

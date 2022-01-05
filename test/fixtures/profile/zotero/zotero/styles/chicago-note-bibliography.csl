@@ -28,10 +28,13 @@
     <contributor>
       <name>Sebastian Karcher</name>
     </contributor>
+    <contributor>
+      <name>Brenton M. Wiernik</name>
+    </contributor>
     <category citation-format="note"/>
     <category field="generic-base"/>
     <summary>Chicago format with short notes and bibliography</summary>
-    <updated>2019-10-15T13:45:17+00:00</updated>
+    <updated>2020-04-26T18:22:50+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -516,10 +519,10 @@
       <if type="article-journal">
         <group delimiter=", ">
           <text macro="collection-title-journal"/>
-          <number variable="volume"/>
+          <text variable="volume"/>
           <group delimiter=" ">
             <text term="issue" form="short"/>
-            <number variable="issue"/>
+            <text variable="issue"/>
           </group>
         </group>
       </if>
@@ -637,10 +640,10 @@
       <if type="article-journal">
         <group delimiter=", ">
           <text macro="collection-title-journal"/>
-          <number variable="volume"/>
+          <text variable="volume"/>
           <group delimiter=" ">
             <text term="issue" form="short"/>
-            <number variable="issue"/>
+            <text variable="issue"/>
           </group>
         </group>
       </if>
@@ -698,7 +701,14 @@
     <choose>
       <if variable="title">
         <group delimiter=" ">
-          <text term="presented at"/>
+          <choose>
+            <if variable="genre">
+              <text term="presented at"/>
+            </if>
+            <else>
+              <text term="presented at" text-case="capitalize-first"/>
+            </else>
+          </choose>
           <text variable="event"/>
         </group>
       </if>
@@ -837,7 +847,7 @@
         <choose>
           <if locator="page">
             <group delimiter=":">
-              <number variable="volume"/>
+              <text variable="volume"/>
               <text variable="locator"/>
             </group>
           </if>
@@ -955,7 +965,7 @@
           <else>
             <choose>
               <if variable="page">
-                <number variable="volume" suffix=":"/>
+                <text variable="volume" suffix=":"/>
                 <text variable="page"/>
               </if>
             </choose>
@@ -1041,10 +1051,9 @@
   </macro>
   <macro name="issue-note-join-with-comma">
     <choose>
-      <if type="graphic map" match="any"/>
-      <else-if type="article-journal bill legislation legal_case manuscript thesis" variable="event-place publisher-place publisher" match="none">
+      <if type="article-journal bill legislation legal_case manuscript speech thesis" variable="publisher-place publisher" match="none">
         <text macro="issue-note"/>
-      </else-if>
+      </if>
       <else-if type="article-newspaper">
         <text macro="issue-note"/>
       </else-if>
@@ -1094,6 +1103,8 @@
               <text variable="genre"/>
             </if>
           </choose>
+          <text variable="event"/>
+          <text variable="event-place"/>
           <text variable="publisher"/>
           <text macro="issued"/>
         </group>

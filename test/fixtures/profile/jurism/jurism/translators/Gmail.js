@@ -15,7 +15,7 @@
 function detectWeb(doc, url) {
 	//only trigger on print pages
 	var docOnLoad = doc.body.attributes.onload;
-	if(docOnLoad && docOnLoad.textContent == 'Print()') {
+	if (docOnLoad && docOnLoad.textContent == 'Print()') {
 		return 'email';
 	}
 	var scriptNodesText = ZU.xpathText(doc, '//script');
@@ -32,26 +32,26 @@ function doWeb(doc, url) {
 	//use "to" and "from" from the first message in the thread
 	var from = ZU.xpathText(doc,
 		'(//div[@class="maincontent"]/table[@class="message"][1]//tr)[1]/td[1]//b');
-	if(from) item.creators.push(ZU.cleanAuthor(ZU.trimInternal(from), "author"));
+	if (from) item.creators.push(ZU.cleanAuthor(ZU.trimInternal(from), "author"));
 
 	//To, CC, and BCC(?) fields
 	var to = ZU.xpath(doc,
 		'//div[@class="maincontent"]/table[@class="message"][1]\
 			//font[@class="recipient"]/div[not(@class="replyto")]');
-	for(var j=0, m=to.length; j<m; j++) {
+	for (var j=0, m=to.length; j<m; j++) {
 		var rec = to[j].textContent
 			.replace(/^[\s\S]+?:\s*/,'')	// remove "To:", "CC:", etc.,
 											//   but it could be something else in other languages
 			.replace(/\s*<.+?>\s*/g,'')		// remove email addresses if name exists
 			.split(/\s*,\s*/);				// There can be more than one email
-		for(var i=0, n=rec.length; i<n; i++) {
+		for (var i=0, n=rec.length; i<n; i++) {
 			item.creators.push(ZU.cleanAuthor(ZU.trimInternal(rec[i]), "recipient"));
 		}
 	}
 
 	item.date = ZU.xpathText(doc,
 		'(//div[@class="maincontent"]/table[@class="message"][1]//tr[1]/td[2])[1]');
-	if(item.date) item.date = ZU.trimInternal(item.date);
+	if (item.date) item.date = ZU.trimInternal(item.date);
 
 	//clear the automatic Print popup
 	doc.body.removeAttribute('onload');

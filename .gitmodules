@@ -1,7 +1,20 @@
 [submodule "citation-style-language-locales"]
-	path = citation-style-language-locales
+	path = submodules/citation-style-language-locales
 	url = https://github.com/citation-style-language/locales.git
 	branch = master
 [submodule "bbt/themes/learn"]
 	path = site/themes/learn
 	url = https://github.com/matcornic/hugo-theme-learn.git
+	branch = master
+[submodule "babel"]
+	path = submodules/babel
+	url = https://github.com/latex3/babel.git
+	branch = main
+[submodule "biblatex"]
+	path = submodules/biblatex
+	url = https://github.com/plk/biblatex.git
+	branch = dev
+[submodule "zotero-odf-scan-plugin"]
+	path = submodules/zotero-odf-scan-plugin
+	url = https://github.com/Juris-M/zotero-odf-scan-plugin.git
+	branch = master

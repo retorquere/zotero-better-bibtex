@@ -1,0 +1,42 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "mdy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "asciiBibLaTeX": true,
+      "autoExport": "idle",
+      "citeCommand": "",
+      "citekeyFormat": "[authors2][year]",
+      "csquotes": "\u201c\u201d",
+      "exportBraceProtection": false,
+      "quickCopyMode": "citekeys",
+      "skipFields": "abstract",
+      "workers": 2
+    }
+  },
+  "items": [
+    {
+      "accessDate": "2019-04-10",
+      "citationKey": "Beckford2019",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Neil",
+          "lastName": "Beckford"
+        }
+      ],
+      "date": "4/10/2019",
+      "itemID": 1,
+      "itemType": "webpage",
+      "language": "English",
+      "publicationTitle": "Cryptoline news",
+      "title": "Blockchain Africa Conference 2019 was a success",
+      "url": "www.cryptolinenews.com/industry-analysis/blockchain-africa-conference-2019"
+    }
+  ]
+}

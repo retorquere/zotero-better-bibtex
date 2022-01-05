@@ -36,7 +36,7 @@
 
 
 function detectWeb(doc, url) {
-	if(doc.body.classList.contains('articleView')) {
+	if (doc.body.classList.contains('articleView')) {
 		// This is not sufficient for multiples, because the class does not change when filtering results
 		Z.monitorDOMChanges(doc.body, {attributes: true, attributeFilter: ['class']});
 		return "newspaperArticle";
@@ -52,7 +52,7 @@ function getSearchResults(doc, checkOnly) {
 	var rows = doc.getElementById('headlines');
 	if (!rows) return false;
 	rows = rows.getElementsByTagName('tr');
-	for(var i=0; i<rows.length; i++) {
+	for (var i=0; i<rows.length; i++) {
 		var count = rows[i].getElementsByClassName('count')[0];
 		if (!count) count = "";
 		else count = count.textContent.replace(/^\s*(\d+)[\s\S]*/, '$1') + '. ';
@@ -61,7 +61,7 @@ function getSearchResults(doc, checkOnly) {
 		if (!title) continue;
 		
 		var hdl = rows[i].getElementsByTagName('input')[0];
-		if(!hdl) continue;
+		if (!hdl) continue;
 		
 		if (checkOnly) return true;
 		found = true;
@@ -132,7 +132,7 @@ function getPostParams(doc) {
 			value = input ? input.value : 0;
 		}
 		
-		if(name == 'ipfCtrl') {
+		if (name == 'ipfCtrl') {
 			name = 'ipf'
 			value = input.getAttribute('value'); // Not actually inputs
 		}
@@ -255,7 +255,7 @@ function scrapeArticles(articles) {
 		newItem.rights = element["CY"];
 		
 		// Eventually replace this with PDF of the "Full Article" view
-		if(element['TD']) {
+		if (element['TD']) {
 			var html = element['TD'].innerHTML
 				.replace(/<\/?b>/g, '')
 				.replace(/<\/?a[^>]*>/g, '');
@@ -269,7 +269,7 @@ function scrapeArticles(articles) {
 			var byline = ZU.trimInternal(element["BY"].replace(/By/i, ""));
 			authors = byline.split(/(?:\&| and |,| et )/i);
 		}
-		for(var j=0; j<authors.length; j++) {
+		for (var j=0; j<authors.length; j++) {
 			newItem.creators.push(ZU.cleanAuthor(authors[j], "author"));
 		}
 		
@@ -285,7 +285,7 @@ function scrapeArticles(articles) {
 		}
 		if (tagString) {
 			var tagArray = tagString.split("|");
-			for(var j=0; j<tagArray.length; j++) {
+			for (var j=0; j<tagArray.length; j++) {
 				var tagCodeNamePair = tagArray[j].split(":");
 				newItem.tags.push(ZU.trimInternal(tagCodeNamePair[1]));
 			}

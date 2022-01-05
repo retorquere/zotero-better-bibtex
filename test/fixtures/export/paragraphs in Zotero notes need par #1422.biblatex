@@ -1,6 +1,6 @@
 
 @article{schayeRelationSchmidtKennicuttSchmidt2008,
-  title = {On the relation between the {{Schmidt}} and {{Kennicutt}}-{{Schmidt}} star formation laws and its implications for numerical simulations},
+  title = {On the relation between the {{Schmidt}} and {{Kennicutt-Schmidt}} star formation laws and its implications for numerical simulations},
   author = {Schaye, Joop and Dalla Vecchia, Claudio},
   date = {2008-01-01},
   journaltitle = {Monthly Notices of the Royal Astronomical Society},
@@ -11,33 +11,8 @@
   doi = {10.1111/j.1365-2966.2007.12639.x},
   url = {http://adsabs.harvard.edu/abs/2008MNRAS.383.1210S},
   urldate = {2020-01-17},
-  abstract = {When averaged over large scales, star formation in galaxies is observed 
-to follow the empirical Kennicutt-Schmidt (KS) law for surface densities
-above a constant threshold. While the observed law involves surface
-densities, theoretical models and simulations generally work with volume
-density laws (i.e. Schmidt laws). We derive analytic relations between
-star formation laws expressed in terms of surface densities, volume
-densities, and pressures and we show how these relations depend on
-parameters such as the effective equation of state of the multiphase
-interstellar medium. Our analytic relations enable us to implement
-observed surface density laws into simulations. Because the parameters
-of our prescription for star formation are observables, we are not free
-to tune them to match the observations. We test our theoretical
-framework using high-resolution simulations of isolated disc galaxies
-that assume an effective equation of state for the multiphase
-interstellar medium. We are able to reproduce the star formation
-threshold and both the slope and the normalization of arbitrary input KS
-laws without tuning any parameters and with very little scatter, even
-for unstable galaxies and even if we use poor numerical resolution.
-Moreover, we can do so for arbitrary effective equations of state. Our
-prescription therefore enables simulations of galaxies to bypass our
-current inability to simulate the formation of stars. On the other hand,
-the fact that we can reproduce arbitrary input thresholds and KS laws,
-rather than just the particular ones picked out by nature, indicates
-that simulations that lack the physics and/or resolution to simulate the
-multiphase interstellar medium can only provide limited insight into the
-origin of the observed star formation laws.},
-  annotation = {For implementing observed KS relations into simulation. Describes the connection between SF law based on surface density (KS) and volume density (Schmidt). Includes some implementation advice for SF based on Schmidt laws. Suggests the use of a (polytropic) effective EOS to encapsulate the multiphase nature \& unmodeled physics of the ISM.
+  abstract = {When averaged over large scales, star formation in galaxies is observed  to follow the empirical Kennicutt-Schmidt (KS) law for surface densities above a constant threshold. While the observed law involves surface densities, theoretical models and simulations generally work with volume density laws (i.e. Schmidt laws). We derive analytic relations between star formation laws expressed in terms of surface densities, volume densities, and pressures and we show how these relations depend on parameters such as the effective equation of state of the multiphase interstellar medium. Our analytic relations enable us to implement observed surface density laws into simulations. Because the parameters of our prescription for star formation are observables, we are not free to tune them to match the observations. We test our theoretical framework using high-resolution simulations of isolated disc galaxies that assume an effective equation of state for the multiphase interstellar medium. We are able to reproduce the star formation threshold and both the slope and the normalization of arbitrary input KS laws without tuning any parameters and with very little scatter, even for unstable galaxies and even if we use poor numerical resolution. Moreover, we can do so for arbitrary effective equations of state. Our prescription therefore enables simulations of galaxies to bypass our current inability to simulate the formation of stars. On the other hand, the fact that we can reproduce arbitrary input thresholds and KS laws, rather than just the particular ones picked out by nature, indicates that simulations that lack the physics and/or resolution to simulate the multiphase interstellar medium can only provide limited insight into the origin of the observed star formation laws.},
+  note = {For implementing observed KS relations into simulation. Describes the connection between SF law based on surface density (KS) and volume density (Schmidt). Includes some implementation advice for SF based on Schmidt laws. Suggests the use of a (polytropic) effective EOS to encapsulate the multiphase nature \& unmodeled physics of the ISM.
 \par
 Simulations show the KS-Schmidt connection developed herein, and the Schmidt implementation, do a good job of reproducing the input KS relation (incl. surface density threshold). Result is robust to winds and low resolution, though with wind it may deviate near threshold depending on how surface density is calculated. Result also roughly holds for changes in the polytropic index, but changing the effective EOS can cause instability \& therefore increase SF. Authors stress that matching local SF conditions is more informative than matching global relations.}
 }

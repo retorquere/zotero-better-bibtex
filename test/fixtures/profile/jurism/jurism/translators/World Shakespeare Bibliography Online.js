@@ -57,8 +57,10 @@ function Entry() {
 		currentTDstart=0;
 		var TD=new Array();
 	
+		let currentTDstart;
+		// eslint-disable-next-line zotero-translator/prefer-index-of
 		while ((currentTDstart=tableHTML.indexOf("<td>",currentTDstart))!=-1) {
-			currentTD=tableHTML.substring(currentTDstart+4, (currentTDstart=tableHTML.indexOf("</td>",currentTDstart)));
+			const currentTD=tableHTML.substring(currentTDstart+4, (currentTDstart=tableHTML.indexOf("</td>",currentTDstart)));
 		
 			// remove enclosing <b> tag, enclosing <i> tag, enclosing brackets, and enclosing quotation marks
 			if (currentTD.substr(0,3)+currentTD.substr(-4)=="<b></b>") currentTD=currentTD.slice(3,-4);
@@ -73,15 +75,18 @@ function Entry() {
 			
 			// remove enclosing <a> tag, except if preceding element is a "Head Entry", in which case only the href-URL is retained
 			if (currentTD.substr(0,2)+currentTD.substr(-4)=="<a</a>") {
-				if (TD[TD.length-1]=="Head Entry") currentTD=currentTD.substring(currentTD.indexOf("href=\"")+6,currentTD.indexOf("\">"))
+				if (TD[TD.length-1]=="Head Entry") currentTD=currentTD.substring(currentTD.indexOf("href=\"")+6,currentTD.indexOf("\">"));
 				else currentTD=currentTD.slice(currentTD.indexOf(">")+1,-4);
 			}
 		
 			// remove font-color red tags, as these only highlight search items. Could probably be done with a regexp.
+			let redstart;
+			// eslint-disable-next-line zotero-translator/prefer-index-of
 			while ((redstart=currentTD.indexOf('<font color="red">'))!=-1) {
 				currentTD=currentTD.substring(0,redstart)+currentTD.substring(redstart+18);
+				// eslint-disable-next-line zotero-translator/prefer-index-of
 				if ((redstart=currentTD.indexOf('</font>'))!=-1)
-				 	currentTD=currentTD.substring(0,redstart)+currentTD.substring(redstart+7);
+					currentTD=currentTD.substring(0,redstart)+currentTD.substring(redstart+7);
 			}
 		
 		
@@ -94,11 +99,12 @@ function Entry() {
 		}
 	
 		return TD;
-	}
+	};
 
 	this.addTable = function(tableHTML) {
 		// turn table into array
 		var tableArray=this.tableIntoArray(tableHTML);
+		let entryno;
 		
 		// Some names are followed by an entry for their roles, simply replace name-index entry with role
 		if ((entryno=arrayTableIndexOf(tableArray,"Role"))!=-1) {
@@ -126,14 +132,14 @@ function Entry() {
 					
 					tableArray[arrayTableIndexOf(tableArray, "Title")-1]="bookTitle";
 					
-					redundantname=arrayTableIndexOf(tableArray,"Name");
+					const redundantname=arrayTableIndexOf(tableArray,"Name");
 					if (redundantname!=-1) tableArray.splice(redundantname-1,2);
 					
 					tableArray.splice(arrayTableIndexOf(tableArray,"Notes/Performers")-1,2); // would refer only to collection, not to essay
 					tableArray.splice(arrayTableIndexOf(tableArray,"Language")-1,2);
 					tableArray.splice(arrayTableIndexOf(tableArray,"Record Number")-1,2);
 					
-					entryno2=arrayTableIndexOf(this.dictionary, "Venue/Publisher");
+					const entryno2=arrayTableIndexOf(this.dictionary, "Venue/Publisher");
 					this.dictionary[entryno2-1]="Pages";
 					this.dictionary[entryno2]=this.dictionary[entryno2].substring(this.dictionary[entryno2].lastIndexOf(" "));
 				} else {
@@ -148,7 +154,8 @@ function Entry() {
 		}
 		
 		// assign all items from tableArray to this.dictionary
-		for (entryno=0; entryno<tableArray.length; entryno+=2) {
+		for (let entryno=0; entryno<tableArray.length; entryno+=2) {
+			let entryno2;
 			if ((entryno2=arrayTableIndexOf(this.dictionary, tableArray[entryno]))!=-1) {
 				this.dictionary[entryno2]=tableArray[entryno+1];
 			} else {
@@ -161,7 +168,7 @@ function Entry() {
 			// fetch next entry, follow up on item refered to in the table as Head Entry
 			// retrieve item number (this) in global array, for later reference in callback
 			for (var entrynum=0; entrynum<entries.length; entrynum++) if (entries[entrynum]===this) break;
-			Zotero.Utilities.processDocuments(headEntry, function(newDoc) {entries[entrynum].addPage(newDoc)});
+			Zotero.Utilities.processDocuments(headEntry, function(newDoc) {entries[entrynum].addPage(newDoc);});
 		} else {
 			// commit to  ZoteroDatabase
 			/*s="";
@@ -169,38 +176,38 @@ function Entry() {
 			Zotero.debug(s);*/
 			this.commitToZotero();
 		}
-	}
+	};
 	
 	this.commitToZotero = function() {
 		switch (this.item_type) {
-				case "Article":
-					this.item_type = "journalArticle";
-					break;
-				case "Book monograph":
-				case "Book collection": // Zotero does not distinguish the two
-					this.item_type = "book"
-					break;
-				case "Dissertation":
-					this.item_type = "thesis"
-					break;
-				case "Production":
-					// this is most likely a theatre production, but videoRecording offers the closest alternative in Zotero
-					this.item_type = "videoRecording";
-					break;
-				case "Audio Recording":
-					this.item_type = "audioRecording";
-					break;
-				case "Film":
-					this.item_type = "film";
-					break;
-				case "bookSection": break;
-				default:
-					Zotero.debug("This document type, "+this.item_type+", does not seem to exist in Zotero.")
-					this.item_type = "";
-					// unrecognized item? return empty, as no entry present
-			}
+		case "Article":
+			this.item_type = "journalArticle";
+			break;
+		case "Book monograph":
+		case "Book collection": // Zotero does not distinguish the two
+			this.item_type = "book";
+			break;
+		case "Dissertation":
+			this.item_type = "thesis";
+			break;
+		case "Production":
+			// this is most likely a theatre production, but videoRecording offers the closest alternative in Zotero
+			this.item_type = "videoRecording";
+			break;
+		case "Audio Recording":
+			this.item_type = "audioRecording";
+			break;
+		case "Film":
+			this.item_type = "film";
+			break;
+		case "bookSection": break;
+		default:
+			Zotero.debug("This document type, "+this.item_type+", does not seem to exist in Zotero.");
+			this.item_type = "";
+			// unrecognized item? return empty, as no entry present
+		}
 		if (this.item_type=="") return; // unrecognized item
-		Zotero.debug(this.item_type)
+		Zotero.debug(this.item_type);
 		var newItem = new Zotero.Item(this.item_type);
 		newItem.title = arrayTableExtractItem(this.dictionary, "Title");
 		
@@ -212,38 +219,38 @@ function Entry() {
 		// standardize name entries
 		for (counter=0; counter<this.dictionary.length; counter+=2) {
 			switch (this.dictionary[counter]){
-				case "Names":
-				case "Name":
-					this.dictionary[counter]="author";
-					break;
-				case "editor":
-				case "editors":
-					this.dictionary[counter]="editor";
-					break;
-				case "director":
-				case "directors":
-				case "conductor":
-				case "conductors":
-					this.dictionary[counter]="director";
-					break;
-				case "translators":
-					this.dictionary[counter]="translator";
-					break;
-				case "narrator":
-				case "narrators":
-				case "lecturer":
-				case "lecturers":
-					this.dictionary[counter]="performer";
-					break;
-				case "general editor":
-				case "general editors":
-					this.dictionary[counter]="seriesEditor";
-					break;
+			case "Names":
+			case "Name":
+				this.dictionary[counter]="author";
+				break;
+			case "editor":
+			case "editors":
+				this.dictionary[counter]="editor";
+				break;
+			case "director":
+			case "directors":
+			case "conductor":
+			case "conductors":
+				this.dictionary[counter]="director";
+				break;
+			case "translators":
+				this.dictionary[counter]="translator";
+				break;
+			case "narrator":
+			case "narrators":
+			case "lecturer":
+			case "lecturers":
+				this.dictionary[counter]="performer";
+				break;
+			case "general editor":
+			case "general editors":
+				this.dictionary[counter]="seriesEditor";
+				break;
 			}
 		}
 		
 		// add names in order found on/in pages
-		counter=0;
+		let counter=0;
 		while (counter<this.dictionary.length) {
 			if ((this.dictionary[counter]=="director") || 
 				(this.dictionary[counter]=="performer") || 
@@ -252,105 +259,113 @@ function Entry() {
 				(this.dictionary[counter]=="translator") ||
 				(this.dictionary[counter]=="seriesEditor")) 
 			{
-				names=this.dictionary[counter+1].split(";");
-				for (counter2=0; counter2<names.length; counter2++)
+				const names=this.dictionary[counter+1].split(";");
+				for (let counter2=0; counter2<names.length; counter2++)
 					newItem.creators.push(Zotero.Utilities.cleanAuthor(names[counter2], this.dictionary[counter], true));
 				this.dictionary.splice(counter,2);
 			} else counter+=2;
 		}
 		
-		publisher=arrayTableExtractItem(this.dictionary, "Venue/Publisher");
+		let publisher=arrayTableExtractItem(this.dictionary, "Venue/Publisher");
 		if (publisher!=-1) {
 			// extract URL (from the rare items when it is present here, mostly obscure web-journals, no snapshot, as these URLs are often invalid)
 			// again, this is only almost perfect. If a bookSection contains an URL, the pages will not be extracted correctly, and the 
 			// (other) URL from the book's head entry will be taken into account. This is a a very rare case though.
+			let url_index;
+			// eslint-disable-next-line zotero-translator/prefer-index-of
 			if ((url_index=publisher.indexOf("(http"))!=-1) { // common format
-				url_lastindex=publisher.indexOf(")",url_index+4);
+				const url_lastindex=publisher.indexOf(")",url_index+4);
 				if (url_lastindex==-1) url_lastindex=publisher.length;
 				newItem.url=publisher.slice(url_index+1,url_lastindex);
 				publisher=publisher.slice(0,url_index)+publisher.slice(url_lastindex+1);
-				while (publisher.charAt(publisher.length-1)==" ") publisher=publisher.slice(0,publisher.length-1)
+				while (publisher.charAt(publisher.length-1)==" ") publisher=publisher.slice(0,publisher.length-1);
 			}
+			// eslint-disable-next-line zotero-translator/prefer-index-of
 			if ((url_index=publisher.indexOf("<a"))!=-1) { // common format for precise links
+				// eslint-disable-next-line zotero-translator/prefer-index-of
 				if ((url_index=publisher.indexOf("href=",url_index))!=-1){
-					url_lastindex=publisher.indexOf('"',url_index+6);
+					const url_lastindex=publisher.indexOf('"',url_index+6);
 					if (url_lastindex==-1) url_lastindex=publisher.length; // an unlikely case
 					newItem.url=publisher.slice(url_index+6,url_lastindex);
 					publisher=publisher.slice(0,publisher.indexOf("<a"))+publisher.slice(publisher.indexOf("</a>")+4);
-					while (publisher.charAt(publisher.length-1)==" ") publisher=publisher.slice(0,publisher.length-1)
+					while (publisher.charAt(publisher.length-1)==" ") publisher=publisher.slice(0,publisher.length-1);
 				}
 			}
+			// eslint-disable-next-line zotero-translator/prefer-index-of
 			if ((url_index=publisher.indexOf("http"))!=-1) { // final common format, more difficult to parse safely
-				url_lastindex=publisher.indexOf(" ",url_index+4);
+				const url_lastindex=publisher.indexOf(" ",url_index+4);
 				if (url_lastindex==-1) url_lastindex=publisher.length;
 				newItem.url=publisher.slice(url_index,url_lastindex);
 				publisher=publisher.slice(0,url_index)+publisher.slice(url_lastindex+1);
-				while (publisher.charAt(publisher.length-1)==" ") publisher=publisher.slice(0,publisher.length-1)
+				while (publisher.charAt(publisher.length-1)==" ") publisher=publisher.slice(0,publisher.length-1);
 			}
 			
 			//e.g. Manchester and New York: Manchester University Press, 2003. x + 227 pp.
 			if ((this.item_type=="book") || (this.item_type=="bookSection")) {
-		  	 	if ((this.item_type=="book") && (publisher.slice(-3)==" pp")) newItem.numPages=publisher.slice(publisher.slice(0,-3).lastIndexOf(" ")+1,-3);
-		  		newItem.place=publisher.slice(0,publisher.indexOf(":"));
-		  		newItem.publisher=publisher.slice(publisher.indexOf(":")+2, publisher.lastIndexOf(","));
-		  	}
+				if ((this.item_type=="book") && (publisher.slice(-3)==" pp")) newItem.numPages=publisher.slice(publisher.slice(0,-3).lastIndexOf(" ")+1,-3);
+				newItem.place=publisher.slice(0,publisher.indexOf(":"));
+				newItem.publisher=publisher.slice(publisher.indexOf(":")+2, publisher.lastIndexOf(","));
+			}
 		
 			// article publication info: e.g.
 			// <i>Shakespeare Quarterly</i> 61, no. 2 (2010): 56-77
 			if ((this.item_type=="journalArticle") || (this.item_type=="thesis")) {
-		  	  	publisher+=" ";
-		  		// dissertations are poorly parsed, but this format works for 
-			  	// most dissertations in the database
-			  	if (this.item_type!="thesis") // usually unpaginated
-			  		newItem.pages=publisher.slice((i=publisher.indexOf("): ")+3),publisher.indexOf(" ", i));
-			  	else newItem.university=publisher.slice(publisher.lastIndexOf("(")+1, publisher.lastIndexOf(")"));
-		  	
-			  	newItem.publicationTitle=publisher.slice(publisher.indexOf("<i>")+3,publisher.indexOf("</i>"));
-			  	publisher=publisher.slice(publisher.indexOf("</i>")+5,publisher.indexOf(" ("));
-			  	if ((issuestart=publisher.indexOf(", no."))!=-1) {
-			  		newItem.volume=publisher.slice(0,issuestart);
-			  		newItem.issue=publisher.slice(issuestart+6);
-			  	} else newItem.volume=publisher;		  
+				publisher+=" ";
+				// dissertations are poorly parsed, but this format works for 
+				// most dissertations in the database
+				let i;
+				if (this.item_type!="thesis") // usually unpaginated
+					newItem.pages=publisher.slice((i=publisher.indexOf("): ")+3),publisher.indexOf(" ", i));
+				else newItem.university=publisher.slice(publisher.lastIndexOf("(")+1, publisher.lastIndexOf(")"));
+
+				newItem.publicationTitle=publisher.slice(publisher.indexOf("<i>")+3,publisher.indexOf("</i>"));
+				publisher=publisher.slice(publisher.indexOf("</i>")+5,publisher.indexOf(" ("));
+				let issuestart;
+				// eslint-disable-next-line zotero-translator/prefer-index-of
+				if ((issuestart=publisher.indexOf(", no."))!=-1) {
+					newItem.volume=publisher.slice(0,issuestart);
+					newItem.issue=publisher.slice(issuestart+6);
+				} else newItem.volume=publisher;			
 			}
 		
 			// All the items below lack a standard format
 			// The information usually includes date, label, running time, etc.
 			// It is copied into the field that matches the usual information most closely
 			if ((this.item_type=="audioRecording") || (this.item_type=="videoRecording") || (this.item_type=="film")) {
-		  		if (this.item_type=="audioRecording") newItem.label=publisher;
-		  		if (this.item_type=="videoRecording") newItem.videoRecordingFormat=publisher;
-		  		if (this.item_type=="film") newItem.distributor=publisher;
-		  	}
+				if (this.item_type=="audioRecording") newItem.label=publisher;
+				if (this.item_type=="videoRecording") newItem.videoRecordingFormat=publisher;
+				if (this.item_type=="film") newItem.distributor=publisher;
+			}
 		}
 
 		
-		series=arrayTableExtractItem(this.dictionary, "Series Statement");
+		const series=arrayTableExtractItem(this.dictionary, "Series Statement");
 		if ((series!=-1) && ((this.item_type=="book") || (this.item_type=="bookSection") || (this.item_type=="journalArticle"))) newItem.series=series;
 		if ((series!=-1) && ((this.item_type=="audioRecording") || (this.item_type="videoRecording"))) newItem.seriesTitle=series;
 		
-		language=arrayTableExtractItem(this.dictionary, "Language");
+		const language=arrayTableExtractItem(this.dictionary, "Language");
 		if (language!=-1) newItem.language=language;
-		archiveLocation=arrayTableExtractItem(this.dictionary, "Index Location");
+		const archiveLocation=arrayTableExtractItem(this.dictionary, "Index Location");
 		if (archiveLocation!=-1) newItem.archiveLocation=archiveLocation;
-		callNumber=arrayTableExtractItem(this.dictionary, "Record Number");
+		const callNumber=arrayTableExtractItem(this.dictionary, "Record Number");
 		if (callNumber!=-1) newItem.callNumber=callNumber;
 		
-		date=arrayTableExtractItem(this.dictionary, "Date");
+		const date=arrayTableExtractItem(this.dictionary, "Date");
 		if (date!=-1) newItem.date=date;
 		
 		arrayTableExtractItem(this.dictionary, "Cross Reference"); // To be discarded
 		
-		AdditionalTitleInfo=arrayTableExtractItem(this.dictionary, "Additional Title Info");
-		NotesPerformers=arrayTableExtractItem(this.dictionary,"Notes/Performers");
+		const AdditionalTitleInfo=arrayTableExtractItem(this.dictionary, "Additional Title Info");
+		const NotesPerformers=arrayTableExtractItem(this.dictionary,"Notes/Performers");
 		newItem.abstractNote=((AdditionalTitleInfo!=-1)?(AdditionalTitleInfo+((NotesPerformers!=-1)?"\n":"")):"")+((NotesPerformers!=-1)?NotesPerformers:"");
 		
-		reviews=arrayTableExtractItem(this.dictionary,"Reviews");
+		const reviews=arrayTableExtractItem(this.dictionary,"Reviews");
 		if (reviews!=-1) {
 			newItem.notes.push({note:reviews});
 		}
 		
 		// Extract tags
-		tags=arrayTableExtractItem(this.dictionary,"Descriptive Terms");
+		let tags=arrayTableExtractItem(this.dictionary,"Descriptive Terms");
 		if (tags!=-1) {
 			newItem.tags=newItem.tags.concat(tags.split("; "));
 		}
@@ -361,10 +376,12 @@ function Entry() {
 		
 		
 		// see also links are saved as attached URLs
-		seeAlso=arrayTableExtractItem(this.dictionary,"See Also");
+		let seeAlso=arrayTableExtractItem(this.dictionary,"See Also");
+		let j;
 		if (seeAlso!=-1) {
 			seeAlso=seeAlso.split("<a");
-			for (i=0; i<seeAlso.length; i++) {
+			for (let i=0; i<seeAlso.length; i++) {
+				// eslint-disable-next-line zotero-translator/prefer-index-of
 				if ((j=seeAlso[i].indexOf("href="))!=-1) {
 					newItem.attachments.push({url:this.baseURL+seeAlso[i].slice(j+6,seeAlso[i].indexOf('"',j+6)), title:"See also: "+seeAlso[i].slice(seeAlso[i].lastIndexOf("</a>")+5), mimeType: "text/html", snapshot: false});
 				}
@@ -373,13 +390,13 @@ function Entry() {
 		
 		while (arrayTableExtractItem(this.dictionary,"Document Type")!=-1); // sometimes survives as a duplicate, discard
 		
-		otherInformation="Other Information:";
-		for (i=0; i<this.dictionary.length; i+=2)
-		  otherInformation+="\n"+this.dictionary[i]+": "+this.dictionary[i+1];
+		let otherInformation="Other Information:";
+		for (let i=0; i<this.dictionary.length; i+=2)
+			otherInformation+="\n"+this.dictionary[i]+": "+this.dictionary[i+1];
 		if (otherInformation!="Other Information:") newItem.notes.push({note:otherInformation});
 		
 		newItem.complete();
-	}
+	};
 
 	this.addPage =  function(doc) {
 		if (doc.getElementById("records")!= null) {
@@ -388,9 +405,9 @@ function Entry() {
 			var entry_start=records_content.indexOf("<tbody><tr><td><b>Index Location</b></td>");
 			if (entry_start != -1) {
 				this.addTable(records_content.substring(entry_start, records_content.indexOf("</tbody>", entry_start)+8));
-			} else Zotero.debug("No entry could be found on page")
+			} else Zotero.debug("No entry could be found on page");
 		} else Zotero.debug("No result could be found");
-	}
+	};
 }
 
 
@@ -406,10 +423,11 @@ function doWeb(doc, url) {
 		var records_content=doc.getElementById("records").innerHTML;
 		// each entry is always presented in a table beginning in the same string
 		var entry_start=0;
- 		while ((entry_start=records_content.indexOf("<tbody><tr><td><b>Index Location</b></td>",entry_start))!=-1) { // at least one entry present
-		  entries.push(new Entry());
-		  entries[entries.length-1].baseURL=url.substring(0, url.indexOf("/",7));
-		  entries[entries.length-1].addTable(records_content.substring(entry_start, (entry_start=records_content.indexOf("</tbody>", entry_start)+8)));
+		// eslint-disable-next-line zotero-translator/prefer-index-of
+		while ((entry_start=records_content.indexOf("<tbody><tr><td><b>Index Location</b></td>",entry_start))!=-1) { // at least one entry present
+			entries.push(new Entry());
+			entries[entries.length-1].baseURL=url.substring(0, url.indexOf("/",7));
+			entries[entries.length-1].addTable(records_content.substring(entry_start, (entry_start=records_content.indexOf("</tbody>", entry_start)+8)));
 		}
 	} else Zotero.debug("No results could be found"); // This is where search and browse results could be parsed!
 }
@@ -423,11 +441,11 @@ function arrayTableIndexOf(narray, nvalue) {
 }
 
 function arrayTableExtractItem(narray, nvalue) {
-	neach=arrayTableIndexOf(narray, nvalue);
+	const neach=arrayTableIndexOf(narray, nvalue);
 	if (neach==-1) {
 		return -1;
 	} else {
-		ncontent=narray[neach];
+		const ncontent=narray[neach];
 		narray.splice(neach-1,2);
 		return ncontent;
 	}
@@ -439,43 +457,45 @@ function detectWeb(doc, url) {
 	if (doc.getElementById("records")!= null) {
 		var records_content=doc.getElementById("records").innerHTML;
 		// each entry is always presented in a table beginning in the same string
- 	   var first_entry=records_content.indexOf("<tbody><tr><td><b>Index Location</b></td>"); // at least one entry present
+		var first_entry=records_content.indexOf("<tbody><tr><td><b>Index Location</b></td>"); // at least one entry present
 		if (first_entry != -1) { // at least one entry is present
 			// a note on "multiple"
 			// This only works on the "View Saved Entries" (http://www.worldshakesbib.org/export) page, not in the search!
 			// Completely different code would be necessary for browse or search pages
 			// Since this page always already represents a selection made by the user, the handler will indiscriminately save all items, and not offer an Item Selection Dialogue
 			// TODO: either behaviour may of course be changed in subsequent versions
-			
+
+			// eslint-disable-next-line zotero-translator/prefer-index-of
 			if (records_content.indexOf("<tbody><tr><td><b>Index Location</b></td>",first_entry+1)!=-1)	return "multiple"; // several entries present
 		
 			// if only one entry is present, its type can be retrieved from the 'Document type' entry in the table
 			// e.g. <tr><td><b>Document Type</b></td><td>Article</td></tr>
 			// Note that Article can also mean bookSection, a distinction that only the doWeb function will test, as it involves a GET command
-			document_type=records_content.substring(startindex=(records_content.indexOf("<tr><td><b>Document Type</b></td><td>")+37),records_content.indexOf("</td>",startindex));
+			let startindex;
+			const document_type=records_content.substring(startindex=(records_content.indexOf("<tr><td><b>Document Type</b></td><td>")+37),records_content.indexOf("</td>",startindex));
 			switch (document_type) {
-				case "Article":
-					return "journalArticle"; // but could equally be "bookSection", see above
-					break;
-				case "Book monograph":
-				case "Book collection": // Zotero does not distinguish the two
-					return "book"
-					break;
-				case "Dissertation":
-					return "thesis"
-					break;
-				case "Production":
-					// this is most likely a theatre production, but videoRecording offers the closest alternative in Zotero
-					return "videoRecording";
-					break;
-				case "Audio Recording":
-					return "audioRecording";
-					break;
-				case "Film":
-					return "film";
-					break;
-				default:
-					// unrecognized item? return empty, as no entry present
+			case "Article":
+				return "journalArticle"; // but could equally be "bookSection", see above
+				break;
+			case "Book monograph":
+			case "Book collection": // Zotero does not distinguish the two
+				return "book";
+				break;
+			case "Dissertation":
+				return "thesis";
+				break;
+			case "Production":
+				// this is most likely a theatre production, but videoRecording offers the closest alternative in Zotero
+				return "videoRecording";
+				break;
+			case "Audio Recording":
+				return "audioRecording";
+				break;
+			case "Film":
+				return "film";
+				break;
+			default:
+				// unrecognized item? return empty, as no entry present
 			}
 		} // else no entry present
 	}
@@ -571,5 +591,5 @@ var testCases = [
 			}
 		]
 	}
-]
+];
 /** END TEST CASES **/

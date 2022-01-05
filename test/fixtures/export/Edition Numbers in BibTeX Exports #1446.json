@@ -1,0 +1,88 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "biblatexExtendedNameFormat": true,
+      "bibtexURL": "url",
+      "citekeyFormat": "[auth:lower][year]",
+      "postscript": "if (Translator.BetterBibTeX && item.itemType === 'conferencePaper' && item.extra) {\n    const lines = item.extra.split('\\n')\n    for (let line of lines) {\n        let matches = /^([A-Za-z0-9]+): *(.+)$/.exec(line);\n        if (matches === null || matches[1] !== 'Sponsor') {\n            continue\n        }\n        reference.add({name: 'organization', value: matches[2]})\n    }\n}",
+      "skipFields": "abstract,file,keywords,note",
+      "workers": 2
+    }
+  },
+  "items": [
+    {
+      "accessDate": "2020-01-31T17:55:21Z",
+      "attachments": [],
+      "citationKey": "barrett1994",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Richard",
+          "lastName": "Barrett"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Michael",
+          "lastName": "Berry"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Tony F.",
+          "lastName": "Chan"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "James",
+          "lastName": "Demmel"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "June M.",
+          "lastName": "Donato"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jack",
+          "lastName": "Dongarra"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Victor",
+          "lastName": "Eijkhout"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Roldan",
+          "lastName": "Pozo"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Charles",
+          "lastName": "Romine"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Henk",
+          "lastName": "van der Vorst"
+        }
+      ],
+      "date": "1994",
+      "edition": "2",
+      "itemID": 1,
+      "itemType": "book",
+      "language": "en-US",
+      "numPages": "106",
+      "place": "Philadelphia, PA",
+      "publisher": "Society for Industrial and Applied Mathematics",
+      "shortTitle": "Templates for the solution of linear systems",
+      "title": "Templates for the solution of linear systems: building blocks for iterative methods",
+      "url": "https://www.netlib.org/linalg/html_templates/Templates.html"
+    }
+  ]
+}

@@ -1,15 +1,12 @@
 {
   "filename": "auto-az.json",
   "name": "Azerbaijan",
-  "version": "2019-08-19 06:21:43 UTC",
+  "version": "2020-09-07 21:01:29 UTC",
   "xdata": {
     "default": {
       "place": {
         "AZ": "Azerbaijan"
       }
-    },
-    "az": {
-      "institution-part": {}
     }
   }
 }

@@ -1,0 +1,58 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "dmy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "citekeyFormat": "[inspire-hep]",
+      "kuroshiro": true
+    }
+  },
+  "items": [
+    {
+      "attachments": [
+      ],
+      "citationKey": "bhupaldev2019",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "P. S.",
+          "lastName": "Bhupal Dev"
+        },
+        {
+          "creatorType": "author",
+          "name": "others"
+        }
+      ],
+      "date": "2019",
+      "extra": [
+        "_eprint: 1907.00991",
+        "DOI: 10.21468/SciPostPhysProc.2.001"
+      ],
+      "itemID": 1,
+      "itemType": "book",
+      "libraryCatalog": "INSPIRE",
+      "numPages": "001",
+      "shortTitle": "Neutrino Non-Standard Interactions",
+      "tags": [
+        {
+          "tag": "activity report",
+          "type": 1
+        },
+        {
+          "tag": "neutrino: interaction",
+          "type": 1
+        },
+        {
+          "tag": "neutrino: mass",
+          "type": 1
+        }
+      ],
+      "title": "Neutrino Non-Standard Interactions: A Status Report",
+      "volume": "2"
+    }
+  ]
+}

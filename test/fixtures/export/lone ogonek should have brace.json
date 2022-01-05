@@ -1,0 +1,63 @@
+{
+  "collections": {
+    "coll:00000": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00000",
+      "name": "Untitled"
+    }
+  },
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "asciiBibLaTeX": true,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
+      "autoExport": "off",
+      "citekeyFormat": "[authors3][shortyear]",
+      "importCaseProtection": "off",
+      "itemObserverDelay": 100,
+      "keyConflictPolicy": "change",
+      "skipFields": "abstract, copyright, googlebooks"
+    }
+  },
+  "items": [
+    {
+      "citationKey": "MunafAClarkFlint05",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M. R.",
+          "lastName": "Munaf\u0102\u02db"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "T.",
+          "lastName": "Clark"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Flint"
+        }
+      ],
+      "date": "April 2005",
+      "extra": [
+        "Citation Key: MunafAClarkFlint05"
+      ],
+      "issue": "4",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "pages": "415\u2013419",
+      "publicationTitle": "Molecular psychiatry",
+      "title": "Does measurement instrument moderate the association between the serotonin transporter gene and anxiety-related personality traits? A meta-analysis.",
+      "url": "http://www.ncbi.nlm.nih.gov/pubmed/15599377",
+      "volume": "10"
+    }
+  ]
+}

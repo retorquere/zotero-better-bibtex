@@ -12,6 +12,7 @@ import urllib.request
 import psutil
 import shlex
 from collections import UserDict
+import copy
 
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning, module='bs4', message='.*looks like a URL.*')
@@ -22,13 +23,14 @@ for d in pathlib.Path(__file__).resolve().parents:
     ROOT = d
     break
 
-class HashableDict(dict):
-  def __hash__(self):
-    return str(hash(json.dumps(self, sort_keys=True)))
-
 def print(txt, end='\n'):
   sys.stdout.write(txt + end)
   sys.stdout.flush()
+
+class HashableDict(dict):
+  def __hash__(self):
+    # lower case before hash?
+    return str(hash(json.dumps(self, sort_keys=True)))
 
 class benchmark(object):
   def __init__(self,name):
@@ -60,12 +62,26 @@ def expand_scenario_variables(context, filename, star=True):
     if star: filename = filename.replace('*', scenario)
   return filename
 
+def clean_html(html):
+  return BeautifulSoup(html, 'html.parser').prettify()
+
 def html2md(html):
   if '<' in html: html = md(BeautifulSoup(html, 'lxml').prettify())
   return html.strip()
 
 def serialize(obj):
-  return json.dumps(obj, indent=2, sort_keys=True)
+  return json.dumps(obj, indent=2, ensure_ascii=True, sort_keys=True)
+
+def extra_lower(obj):
+  if isinstance(obj, dict) and 'items' in obj:
+    obj = copy.deepcopy(obj)
+    for item in obj['items']:
+      if 'extra' in item:
+        if type(item['extra']) == list:
+          item['extra'] = [line.lower() for line in item['extra']]
+        else:
+          item['extra'] = item['extra'].lower()
+  return obj
 
 def running(id):
   if type(id) == int:
@@ -76,7 +92,13 @@ def running(id):
       return True
 
   if platform.system() == 'Darwin':
-    count = int(subprocess.check_output(['osascript', '-e', 'tell application "System Events"', '-e', f'count (every process whose name is "{id}")', '-e', 'end tell']).strip())
+    try:
+      count = int(subprocess.check_output(['osascript', '-e', 'tell application "System Events"', '-e', f'count (every process whose name is "{id}")', '-e', 'end tell']).strip())
+    except subprocess.CalledProcessError as err:
+      print(err.output)
+      if err.output.decode('utf-8') == 'Application isn’t running.': return False
+      raise
+
   else:
     count = 0
     for proc in psutil.process_iter():
@@ -98,17 +120,3 @@ def nested_dict_iter(nested, root = []):
     else:
       yield '.'.join(root) + '.' + key, value
 
-
-def post_log():
-  logid = os.environ.get('TRAVIS_JOB_NUMBER', 'travis')
-  bucket = f'http://better-bibtex-travis-logs.s3.amazonaws.com/travis/{logid}.log'
-  logfile = shlex.quote(os.path.join(os.environ['HOME'], '.BBTZ5TEST.log'))
-  headers = [
-    ('x-amz-storage-class', 'STANDARD')
-    ('x-amz-acl', 'bucket-owner-full-control')
-    ('Content-Type', 'text/plain')
-  ]
-  headers = [ f'--header "{h[0]}: {h[1]}"' for h in headers ]
-  headers = ' '.join(headers)
-  os.system(f'curl {bucket} {headers} --upload-file {logfile} &')
-  raise ValueError('client did not start')

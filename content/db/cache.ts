@@ -1,44 +1,42 @@
-declare const Zotero: any
-
 import { XULoki as Loki } from './loki'
-import * as log from '../debug'
 import { Events } from '../events'
-import { Store } from './store'
-import { Preferences as Prefs } from '../prefs'
+import { File } from './store/file'
+import { Preference } from '../../gen/preferences'
+import { affects, schema } from '../../gen/preferences/meta'
+import { log } from '../logger'
 
 const version = require('../../gen/version.js')
-import * as translators from '../../gen/translators.json'
 
-import * as prefOverrides from '../../gen/preferences/auto-export-overrides.json'
-import * as prefOverridesSchema from '../../gen/preferences/auto-export-overrides-schema.json'
+import type { Preferences } from '../../gen/preferences/meta'
+
+const METADATA = 'Better BibTeX metadata'
 
 class Cache extends Loki {
   private initialized = false
 
-  public remove(ids, reason) {
-    if (!this.initialized) {
-      log.debug(':Cache:remove', reason, 'skipped, not initialized')
-      return
-    }
+  public remove(ids, _reason) {
+    if (!this.initialized) return
 
-    log.debug(':Cache:remove', reason, ids)
-
-    const query = Array.isArray(ids) ? { itemID : { $in : ids } } : { itemID: ids }
+    const query = Array.isArray(ids) ? { itemID : { $in : ids } } : { itemID: { $eq: ids } }
 
     for (const coll of this.collections) {
       coll.findAndRemove(query)
     }
   }
 
-  public reset() {
-    if (!this.initialized) {
-      log.debug(':Cache:reset skipped, not initialized')
-      return
-    }
+  public reset(reason: string, affected?: string[]) {
+    if (!this.initialized) return
+
+    log.debug('cache drop:', reason, affected || '*')
+
     for (const coll of this.collections) {
-      log.debug('Cache:reset', coll.name)
-      coll.removeDataOnly()
+      if (!affected || affected.includes(coll.name)) this.drop(coll, reason)
     }
+  }
+
+  private drop(coll: any, reason: string) {
+    log.debug(`dropping cache.${coll.name}:`, reason)
+    coll.removeDataOnly()
   }
 
   public async init() {
@@ -62,16 +60,15 @@ class Cache extends Loki {
         additionalProperties: false,
       },
     })
+    if (!Preference.caching) coll.removeDataOnly()
+    log.debug('cache.itemToExportFormat:', coll.data.length)
 
-    // old cache, drop
-    if (coll.where(o => typeof o.legacy === 'boolean').length) coll.removeDataOnly()
-
-    clearOnUpgrade(coll, 'Zotero', Zotero.version)
+    this.clearOnUpgrade(coll, 'Zotero', Zotero.version)
 
     // this reaps unused cache entries -- make sure that cacheFetchs updates the object
     //                  secs    mins  hours days
-    const ttl =         1000  * 60  * 60  * 24 * 30 // tslint:disable-line:no-magic-numbers
-    const ttlInterval = 1000  * 60  * 60  * 4       // tslint:disable-line:no-magic-numbers
+    const ttl =         1000  * 60  * 60  * 24 * 30 // eslint-disable-line no-magic-numbers
+    const ttlInterval = 1000  * 60  * 60  * 4       // eslint-disable-line no-magic-numbers
 
     const modified = {}
     // SQLITE gives time in seconds, LokiJS time is in milliseconds
@@ -79,10 +76,12 @@ class Cache extends Loki {
       modified[item.itemID] = item.modified
     }
 
-    for (const translator of Object.keys(translators.byName)) {
-      coll = this.schemaCollection(translator, {
+    for (const [name, translator] of Object.entries(schema.translator)) {
+      if (!translator.cached) continue
+
+      coll = this.schemaCollection(name, {
         logging: false,
-        indices: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...prefOverrides ],
+        indices: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...(translator.preferences) ],
         schema: {
           type: 'object',
           properties: {
@@ -94,7 +93,7 @@ class Cache extends Loki {
             useJournalAbbreviation: { type: 'boolean' },
 
             // prefs
-            ...prefOverridesSchema,
+            ...(translator.types),
 
             // Optional
             metadata: { type: 'object' },
@@ -103,77 +102,76 @@ class Cache extends Loki {
             meta: { type: 'object' },
             $loki: { type: 'integer' },
           },
-          required: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...prefOverrides, 'reference' ],
+          required: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...(translator.preferences), 'reference' ],
           additionalProperties: false,
         },
         ttl,
         ttlInterval,
       })
+      if (!Preference.caching) coll.removeDataOnly()
+      log.debug(`cache.${coll.name}:`, coll.data.length)
 
-      // old cache, drop
-      if (coll.findOne({ [prefOverrides[0]]: undefined })) coll.removeDataOnly()
-
-      // should have been dropped after object change/delete
-      for (const outdated of coll.data.filter(item => !modified[item.itemID] || modified[item.itemID] >= (item.meta?.updated || item.meta?.created || 0))) {
-        coll.remove(outdated)
-      }
-
-      clearOnUpgrade(coll, 'BetterBibTeX', version)
+      this.clearOnUpgrade(coll, 'BetterBibTeX', version)
     }
 
     this.initialized = true
   }
+
+  private clearOnUpgrade(coll, property, current) {
+    const dbVersion = (coll.getTransform(METADATA) || [{value: {}}])[0].value[property]
+    if (current && dbVersion === current) return
+
+    const drop = !Preference.retainCache
+    const msg = drop ? { dropping: 'dropping', because: 'because' } : { dropping: 'keeping', because: 'even though' }
+    if (dbVersion) {
+      Zotero.debug(`:Cache:${msg.dropping} cache ${coll.name} ${msg.because} ${property} went from ${dbVersion} to ${current}`)
+    }
+    else {
+      Zotero.debug(`:Cache:${msg.dropping} cache ${coll.name} ${msg.because} ${property} was not set (current: ${current})`)
+    }
+
+    if (drop) this.drop(coll, 'clear on upgrade')
+
+    coll.setTransform(METADATA, [{
+      type: METADATA,
+      value : { [property]: current },
+    }])
+  }
+
+  public state(): { entries: number } {
+    return {
+      entries: this.collections.reduce((acc, coll) => acc + coll.data.length, 0),
+    }
+  }
 }
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let DB = new Cache('cache', { // tslint:disable-line:variable-name
+export const DB = new Cache('cache', { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   autosave: true,
-  adapter: new Store({ storage: 'file', deleteAfterLoad: true, allowPartial: true }),
+  adapter: new File(),
 })
 
-const METADATA = 'Better BibTeX metadata'
-
-function clearOnUpgrade(coll, property, current) {
-  const dbVersion = (coll.getTransform(METADATA) || [{value: {}}])[0].value[property]
-  if (current && dbVersion === current) {
-    Zotero.debug(`:Cache:retaining cache ${coll.name} because stored ${property} is ${dbVersion} (current: ${current})`)
-    return
-  }
-
-  const drop = !Prefs.get('retainCache')
-  const msg = drop ? { dropping: 'dropping', because: 'because' } : { dropping: 'keeping', because: 'even though' }
-  if (dbVersion) {
-    Zotero.debug(`:Cache:${msg.dropping} cache ${coll.name} ${msg.because} ${property} went from ${dbVersion} to ${current}`)
-  } else {
-    Zotero.debug(`:Cache:${msg.dropping} cache ${coll.name} ${msg.because} ${property} was not set (current: ${current})`)
-  }
-
-  if (drop) coll.removeDataOnly()
-
-  coll.setTransform(METADATA, [{
-    type: METADATA,
-    value : { [property]: current },
-  }])
-}
-
 // the preferences influence the output way too much, no keeping track of that
-Events.on('preference-changed', async () => {
-  await Zotero.BetterBibTeX.loaded
-  DB.reset()
+Events.on('preference-changed', pref => {
+  Zotero.BetterBibTeX.loaded.then(() => { DB.reset(`pref ${pref} changed`, affects[pref]) })
+})
+Events.on('items-changed', ids => {
+  Zotero.BetterBibTeX.loaded.then(() => { DB.remove(ids, 'items-changed') })
+  DB.remove(ids, 'items-changed')
 })
 
 // cleanup
 if (DB.getCollection('cache')) { DB.removeCollection('cache') }
 if (DB.getCollection('serialized')) { DB.removeCollection('serialized') }
 
-export function selector(itemID, options, prefs) {
-  const _selector = {
-    itemID: Array.isArray(itemID) ? { $in: itemID } : itemID,
-
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function selector(translator: string, options: any, prefs: Partial<Preferences>) {
+  const query = {
     exportNotes: !!options.exportNotes,
     useJournalAbbreviation: !!options.useJournalAbbreviation,
+    // itemID: Array.isArray(itemID) ? {$in: itemID} : itemID,
   }
-  for (const pref of prefOverrides) {
-    _selector[pref] = prefs[pref]
+  for (const pref of schema.translator[translator].preferences) {
+    query[pref] = prefs[pref]
   }
-  return _selector
+  return query
 }

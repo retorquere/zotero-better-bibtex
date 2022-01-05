@@ -1,69 +1,21 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportIdleWait": 10,
-      "autoPin": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[auth:lower][year]",
-      "citeprocNoteCitekey": false,
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "exportTitleCase": true,
       "itemObserverDelay": 100,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "keyScope": "library",
-      "kuroshiro": false,
-      "parseParticles": true,
       "postscript": "if(item.itemType == \"conferencePaper\" ) {\n    this.add({name: \"booktitle\", replace: false, value: item.conferenceName});\n}",
-      "qualityReport": false,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "relativeFilePaths": false,
-      "scrubDatabase": false,
-      "skipFields": "note,abstract,file,url,keywords,shorttitle,primaryclass,eprint,eprinttype,archiveprefix",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.1.1",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.55",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "en-US",
-        "oscpu": "Linux x86_64",
-        "platform": "Linux x86_64",
-        "version": "5.0.55"
-      }
+      "skipFields": "note,abstract,file,url,keywords,shorttitle,primaryclass,eprint,eprinttype,archiveprefix"
     }
   },
   "items": [
     {
       "accessDate": "2018-10-06T03:54:36Z",
-      "attachments": [],
-      "citekey": "kendall2015",
       "conferenceName": "Proceedings of the IEEE International Conference on Computer Vision",
       "creators": [
         {
@@ -83,20 +35,17 @@
         }
       ],
       "date": "2015",
-      "dateAdded": "2018-10-06T03:54:36Z",
-      "dateModified": "2018-10-06T05:19:31Z",
-      "itemID": 109,
+      "itemID": 1,
       "itemType": "conferencePaper",
       "libraryCatalog": "www.cv-foundation.org",
-      "notes": [],
       "pages": "2938-2946",
-      "relations": [],
       "shortTitle": "PoseNet",
       "tags": [
-        "read"
+        {
+          "tag": "read"
+        }
       ],
       "title": "PoseNet: A Convolutional Network for Real-Time 6-DOF Camera Relocalization",
-      "uri": "http://zotero.org/users/5206226/items/VCJPTZRJ",
       "url": "https://www.cv-foundation.org/openaccess/content_iccv_2015/html/Kendall_PoseNet_A_Convolutional_ICCV_2015_paper.html"
     }
   ]

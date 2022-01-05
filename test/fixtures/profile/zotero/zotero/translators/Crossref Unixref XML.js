@@ -12,7 +12,7 @@
 	"configOptions": {
 		"dataMode": "xml/dom"
 	},
-	"lastUpdated": "2019-04-27 02:15:00"
+	"lastUpdated": "2021-06-08 14:40:00"
 }
 
 /*
@@ -304,7 +304,7 @@ function doImport() {
 	else if ((itemXML = ZU.xpath(doiRecord, 'crossref/database')).length) {
 		item = new Zotero.Item("report"); // should be dataset
 		refXML = ZU.xpath(itemXML, 'dataset');
-		item.extra = "type: dataset";
+		item.extra = "Type: dataset";
 		metadataXML = ZU.xpath(itemXML, 'database_metadata');
 		
 		var pubDate = ZU.xpath(refXML, 'database_date/publication_date');

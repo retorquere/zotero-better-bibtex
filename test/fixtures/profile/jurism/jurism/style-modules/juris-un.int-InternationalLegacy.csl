@@ -211,7 +211,7 @@
         </group>
         <number variable="collection-number" prefix="-"/>
         <number variable="number" prefix="-"/>
-        <text variable="container-title" form="short" strip-periods="true" prefix=", "/>
+        <text variable="container-title" strip-periods="true" prefix=", " form="short"/>
       </else-if>
       <else-if type="bill">
         <group delimiter=" ">
@@ -331,7 +331,7 @@
             <if variable="container-title">
               <group delimiter=", ">
                 <group delimiter=" ">
-                  <text variable="container-title"/>
+                  <text variable="container-title" form="short"/>
                   <date variable="issued" form="text" date-parts="year"/>
                 </group>
                 <group delimiter=" ">
@@ -427,7 +427,7 @@
             </conditions>
             <group delimiter=" ">
               <number variable="volume"/>
-              <text variable="container-title"/>
+              <text variable="container-title" form="short"/>
               <number variable="page"/>
             </group>
           </else-if>

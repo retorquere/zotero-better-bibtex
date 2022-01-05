@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2019-06-15 16:21:59"
+	"lastUpdated": "2021-01-22 19:34:13"
 }
 
 /*
@@ -113,6 +113,8 @@ function scrape(doc, url) {
 		if (item.title == item.title.toUpperCase()) {
 			item.title = ZU.capitalizeTitle(item.title, true);
 		}
+		// Strip "(Published [YEAR])" from old articles
+		item.title = item.title.replace(/\s+\(Published \d{4}\)$/, '');
 		// Only force all caps to title case when all tags are all caps
 		var allcaps = true;
 		for (let i = 0; i < item.tags.length; i++) {
@@ -126,11 +128,7 @@ function scrape(doc, url) {
 				item.tags[i] = ZU.capitalizeTitle(item.tags[i], true);
 			}
 		}
-		
-		// Jan. 2019: Disable snapshot saving, since saved snapshots currently
-		// don't load properly (even via Save As in Firefox and Chrome)
-		item.attachments = [];
-		
+
 		/* TODO: Fix saving the PDF attachment which is currently broken
 		
 		// PDF attachments are in subURL with key & signature
@@ -229,7 +227,12 @@ var testCases = [
 				"publicationTitle": "The New York Times",
 				"section": "Archives",
 				"url": "https://www.nytimes.com/1912/03/05/archives/two-money-inquiries-hearings-of-trust-charges-and-aldrich-plan-at.html",
-				"attachments": [],
+				"attachments": [
+					{
+						"title": "Snapshot",
+						"mimeType": "text/html"
+					}
+				],
 				"tags": [
 					{
 						"tag": "Banks and Banking"
@@ -246,7 +249,7 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "newspaperArticle",
-				"title": "Harvard Finds Marc Hauser Guilty of Scientific Misconduct",
+				"title": "Harvard Finds Scientist Guilty of Misconduct",
 				"creators": [
 					{
 						"firstName": "Nicholas",
@@ -254,7 +257,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2010-08-20",
+				"date": "2010-08-21",
 				"ISSN": "0362-4331",
 				"abstractNote": "The university has found Marc Hauser “solely responsible” for eight instances of scientific misconduct.",
 				"language": "en-US",
@@ -262,7 +265,12 @@ var testCases = [
 				"publicationTitle": "The New York Times",
 				"section": "Education",
 				"url": "https://www.nytimes.com/2010/08/21/education/21harvard.html",
-				"attachments": [],
+				"attachments": [
+					{
+						"title": "Snapshot",
+						"mimeType": "text/html"
+					}
+				],
 				"tags": [
 					{
 						"tag": "Ethics"
@@ -310,7 +318,12 @@ var testCases = [
 				"blogTitle": "Opinionator",
 				"language": "en-US",
 				"url": "https://opinionator.blogs.nytimes.com/2013/06/19/our-broken-social-contract/",
-				"attachments": [],
+				"attachments": [
+					{
+						"title": "Snapshot",
+						"mimeType": "text/html"
+					}
+				],
 				"tags": [
 					{
 						"tag": "Economic Conditions and Trends"
@@ -358,7 +371,12 @@ var testCases = [
 				"publicationTitle": "The New York Times",
 				"section": "New York",
 				"url": "https://www.nytimes.com/2015/05/10/nyregion/manicurists-in-new-york-area-are-underpaid-and-unprotected.html",
-				"attachments": [],
+				"attachments": [
+					{
+						"title": "Snapshot",
+						"mimeType": "text/html"
+					}
+				],
 				"tags": [
 					{
 						"tag": "Beauty Salons"
@@ -416,7 +434,12 @@ var testCases = [
 				"publicationTitle": "The New York Times",
 				"section": "U.S.",
 				"url": "https://www.nytimes.com/2017/05/24/us/politics/russia-trump-manafort-flynn.html",
-				"attachments": [],
+				"attachments": [
+					{
+						"title": "Snapshot",
+						"mimeType": "text/html"
+					}
+				],
 				"tags": [
 					{
 						"tag": "Cyberwarfare and Defense"
@@ -464,7 +487,12 @@ var testCases = [
 				"publicationTitle": "The New York Times",
 				"section": "Archives",
 				"url": "https://www.nytimes.com/1966/09/12/archives/draft-deferment-scored-at-rutgers.html",
-				"attachments": [],
+				"attachments": [
+					{
+						"title": "Snapshot",
+						"mimeType": "text/html"
+					}
+				],
 				"tags": [
 					{
 						"tag": "Colleges and Universities"
@@ -509,7 +537,12 @@ var testCases = [
 				"publicationTitle": "The New York Times",
 				"section": "Archives",
 				"url": "https://www.nytimes.com/1970/11/12/archives/ideological-labels-changing-along-with-the-labelmakers-ideological.html",
-				"attachments": [],
+				"attachments": [
+					{
+						"title": "Snapshot",
+						"mimeType": "text/html"
+					}
+				],
 				"tags": [
 					{
 						"tag": "Bell, Daniel"
@@ -572,7 +605,12 @@ var testCases = [
 				"publicationTitle": "The New York Times",
 				"section": "Business",
 				"url": "https://www.nytimes.com/2017/07/03/business/oreo-new-flavors.html",
-				"attachments": [],
+				"attachments": [
+					{
+						"title": "Snapshot",
+						"mimeType": "text/html"
+					}
+				],
 				"tags": [
 					{
 						"tag": "Contests and Prizes"
@@ -609,7 +647,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2018-01-11",
+				"date": "2018-01-12",
 				"ISSN": "0362-4331",
 				"abstractNote": "Steven Pinker is a liberal, Jewish professor. But social media convinced people that he’s a darling of the alt-right.",
 				"language": "en-US",
@@ -617,7 +655,12 @@ var testCases = [
 				"publicationTitle": "The New York Times",
 				"section": "Opinion",
 				"url": "https://www.nytimes.com/2018/01/11/opinion/social-media-dumber-steven-pinker.html",
-				"attachments": [],
+				"attachments": [
+					{
+						"title": "Snapshot",
+						"mimeType": "text/html"
+					}
+				],
 				"tags": [
 					{
 						"tag": "Anti-Semitism"
@@ -679,7 +722,12 @@ var testCases = [
 				"section": "U.S.",
 				"shortTitle": "After Weinstein",
 				"url": "https://www.nytimes.com/interactive/2017/11/10/us/men-accused-sexual-misconduct-weinstein.html, https://www.nytimes.com/interactive/2017/11/10/us/men-accused-sexual-misconduct-weinstein.html",
-				"attachments": [],
+				"attachments": [
+					{
+						"title": "Snapshot",
+						"mimeType": "text/html"
+					}
+				],
 				"tags": [
 					{
 						"tag": "#MeToo Movement"
@@ -772,7 +820,12 @@ var testCases = [
 				"publicationTitle": "The New York Times",
 				"section": "World",
 				"url": "https://www.nytimes.com/2017/05/22/world/europe/greece-athens-anarchy-austerity.html",
-				"attachments": [],
+				"attachments": [
+					{
+						"title": "Snapshot",
+						"mimeType": "text/html"
+					}
+				],
 				"tags": [
 					{
 						"tag": "Coalition of the Radical Left (Greece)"

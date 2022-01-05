@@ -24,37 +24,37 @@ UNED: http://biblio15.uned.es/
 function detectWeb(doc, url) {
 
 	var xpath = '//tr[th[@class="viewmarctags"]][td[@class="viewmarctags"]]';
-	if(doc.evaluate(xpath, doc, null, XPathResult.ANY_TYPE, null).iterateNext()) {
+	if (doc.evaluate(xpath, doc, null, XPathResult.ANY_TYPE, null).iterateNext()) {
 		Zotero.debug("SIRSI detectWeb: viewmarctags");
 		return "book";
 	}
 	
 	var xpath = '//dl[dt[@class="viewmarctags"]][dd[@class="viewmarctags"]]';
-	if(doc.evaluate(xpath, doc, null, XPathResult.ANY_TYPE, null).iterateNext()) {
+	if (doc.evaluate(xpath, doc, null, XPathResult.ANY_TYPE, null).iterateNext()) {
 		Zotero.debug("SIRSI detectWeb: viewmarctags");
 		return "book";
 	}
 	var xpath = '//input[@name="VOPTIONS"]';
-	if(doc.evaluate(xpath, doc, null, XPathResult.ANY_TYPE, null).iterateNext()) {
+	if (doc.evaluate(xpath, doc, null, XPathResult.ANY_TYPE, null).iterateNext()) {
 		Zotero.debug("SIRSI detectWeb: VOPTIONS");
 		return "book";
 	}
 	var elmts = doc.evaluate('/html/body/form//text()', doc, null,
 					 XPathResult.ANY_TYPE, null);
-	while(elmt = elmts.iterateNext()) {
-		if(Zotero.Utilities.superCleanString(elmt.nodeValue) == "Viewing record") {
+	while (elmt = elmts.iterateNext()) {
+		if (Zotero.Utilities.superCleanString(elmt.nodeValue) == "Viewing record") {
 			Zotero.debug("SIRSI detectWeb: Viewing record");
 			return "book";
 		}
 	}
 	
 	var xpath = '//td[@class="searchsum"]/table';
-	if(doc.evaluate(xpath, doc, null, XPathResult.ANY_TYPE, null).iterateNext()) {
+	if (doc.evaluate(xpath, doc, null, XPathResult.ANY_TYPE, null).iterateNext()) {
 		Zotero.debug("SIRSI detectWeb: searchsum");
 		return "multiple";
 	}
 	var xpath = '//form[@name="hitlist"]/table/tbody/tr';
-	if(doc.evaluate(xpath, doc, null, XPathResult.ANY_TYPE, null).iterateNext()) {
+	if (doc.evaluate(xpath, doc, null, XPathResult.ANY_TYPE, null).iterateNext()) {
 		Zotero.debug("SIRSI detectWeb: hitlist");
 		return "multiple";
 	}
@@ -66,7 +66,7 @@ function scrape(doc) {
 	var xpath = '//tr[th[@class="viewmarctags"]][td[@class="viewmarctags"]]|//dl/dt[@class="viewmarctags"]';
 	var elmts = doc.evaluate(xpath, doc, null, XPathResult.ANY_TYPE, null);
 	var elmt = elmts.iterateNext();
-	if(!elmt) {
+	if (!elmt) {
 		return false;
 	}
 	var newItem = new Zotero.Item("book");
@@ -74,47 +74,47 @@ function scrape(doc) {
 	var note;
 	authors = [];
 	
-	while(elmt) {
+	while (elmt) {
 		try {
 			var node = ZU.xpathText(elmt, './TD[1]/A[1]/span/text()[1]|./following-sibling::dd[1]/a[1]/span/text()');
-			if(!node) {
+			if (!node) {
 				var node = ZU.xpathText(elmt, './TD[1]/A[1]/text()[1]|./following-sibling::dd[1]/a[1]/text()');	
 			}
-			if(!node) {
+			if (!node) {
 				var node = ZU.xpathText(elmt, './TD[1]/text()[1]|./following-sibling::dd[1]/text()')
 			}
-			if(node) {
+			if (node) {
 				var casedField = Zotero.Utilities.superCleanString(ZU.xpathText(elmt, './th[1]/text()|./text()'));
 				field = casedField.toLowerCase();
 				//Z.debug(field)
  				field = field.replace(/:./,"").trim();
 				var value = Zotero.Utilities.superCleanString(node);
 				//Z.debug(value)
-				if(field == "publisher" || field == "éditeur" ) {
+				if (field == "publisher" || field == "éditeur" ) {
 					newItem.publisher = value;
-				} else if(field == "physical description" || field == "desc. matérielle" ||field == "description physique" ||field== "descripción física" ||field== "descripcion fisica" || field == "descr. física") {
+				} else if (field == "physical description" || field == "desc. matérielle" ||field == "description physique" ||field== "descripción física" ||field== "descripcion fisica" || field == "descr. física") {
 					value = value.match(/([\d\sxvi]+)p/)[1];
 					if (value) newItem.numPages = value;
-				} else if(field == "pub date" || field == "année" || field =="fecha de pub") {
+				} else if (field == "pub date" || field == "année" || field =="fecha de pub") {
 					var re = /[0-9]+/;
 					var m = re.exec(value);
 					newItem.date = m[0];
-				} else if(field == "isbn") {
+				} else if (field == "isbn") {
 					var re = /^[0-9\-](?:[0-9X\-]+)/;
 					var m = re.exec(value);
 					newItem.ISBN = m[0];
-				} else if(field == "issn") {
+				} else if (field == "issn") {
 					newItem.ISSN = value;
-				} else if(field == "title" || field == "titre" ||field == "titulo" || field =="título") {
+				} else if (field == "title" || field == "titre" ||field == "titulo" || field =="título") {
 					var titleParts = value.split(" / ");
 					newItem.title = Zotero.Utilities.capitalizeTitle(titleParts[0]);
 				} else if (field == "serie"){
 					newItem.series = value;	
 				} else if (field == "langue" || field == "language"){
 					newItem.language = value;	
-				} else if(field == "series title" || field == "titre de série" || field == "collection") {
+				} else if (field == "series title" || field == "titre de série" || field == "collection") {
 					newItem.series = value.replace(/^\(|\)$/g, "");
-				} else if(field == "publication info" || field == "publication" || field =="publicación" ||field =="publicacion") {
+				} else if (field == "publication info" || field == "publication" || field =="publicación" ||field =="publicacion") {
 				//this is a bit tricky - can be in the form Place : Publisher; Place : Publisher, Year
 				//or Place; Place : Publisher - the code` should get all cases and produce uniform output
 				var places = [];
@@ -130,52 +130,52 @@ function scrape(doc) {
 					}
 					newItem.publisher = publishers.join("; ");
 					newItem.place = places.join("; ");
-				} else if(field == "personal author" || field == "autor personal" || field == "auteur") {
-					if(authors.indexOf(value) == -1) {
+				} else if (field == "personal author" || field == "autor personal" || field == "auteur") {
+					if (authors.indexOf(value) == -1) {
 						value = value.replace(/(\(|\)|\d+|\-)/g, "");
 						newItem.creators.push(Zotero.Utilities.cleanAuthor(value, "author", true));
 						authors.push(value);
 					}
-				} else if(field == "author" || field == "auteur" || field == "autor"){
-					if(authors.indexOf(value) == -1) { 
+				} else if (field == "author" || field == "auteur" || field == "autor"){
+					if (authors.indexOf(value) == -1) { 
 							value = value.replace(/(\(|\)|\d+|\-)/g, "");
 						newItem.creators.push(Zotero.Utilities.cleanAuthor(value, "author", true));
 						authors.push(value);
 					}
-				} else if(field == "added author" || field == "organisme" || field == "autor secundario") {
-					if(authors.indexOf(value) == -1) {
+				} else if (field == "added author" || field == "organisme" || field == "autor secundario") {
+					if (authors.indexOf(value) == -1) {
 						newItem.creators.push(Zotero.Utilities.cleanAuthor(value, "contributor", true));
 						authors.push(value);
 					}
-				} else if(field == "corporate author") {
-					if(authors.indexOf(value) == -1) {
+				} else if (field == "corporate author") {
+					if (authors.indexOf(value) == -1) {
 						newItem.creators.push({lastName:value, fieldMode:true});
 						authors.push(value);
 					}
-				} else if(field == "general note" || field == "note" || field =="nota general") {
+				} else if (field == "general note" || field == "note" || field =="nota general") {
 					newItem.notes.push(value);
-				} else if(field == "edition" || field == "édition" ||field =="edición" ||field =="edicion") {
+				} else if (field == "edition" || field == "édition" ||field =="edición" ||field =="edicion") {
 					newItem.edition = value;
-				} else if(field == "additional formats" || field == "autres supports") {
+				} else if (field == "additional formats" || field == "autres supports") {
 					newItem.additionalformats = value;
-				} else if(field == "continued by" || field == "devient") {
+				} else if (field == "continued by" || field == "devient") {
 					newItem.continuedby = value;
-				} else if(field == "subject term" || field == "corporate subject" || field == "geographic term" || field == "subject" || field == "sujet" || field == "sujet géographique" || field == "materia-autor personal" || field == "materia") {
+				} else if (field == "subject term" || field == "corporate subject" || field == "geographic term" || field == "subject" || field == "sujet" || field == "sujet géographique" || field == "materia-autor personal" || field == "materia") {
 					var subjects = value.split("--");
-					for(var i=0; i<subjects.length; i++) {
-						if(newItem.tags.indexOf(subjects[i]) == -1) {
+					for (var i=0; i<subjects.length; i++) {
+						if (newItem.tags.indexOf(subjects[i]) == -1) {
 							newItem.tags.push(subjects[i]);
 						}
 					}
-				} else if(field == "personal subject" || field == "personne sujet" || field== "index term") {
+				} else if (field == "personal subject" || field == "personne sujet" || field== "index term") {
 					var subjects = value.split(", ");
 					var tag = value[0]+", "+value[1];
-					if(newItems.tag.indexOf(tag) == -1) {
+					if (newItems.tag.indexOf(tag) == -1) {
 						newItem.tags.push(tag);
 					}
-				} else if(field == "contents" || field == "contient") {
+				} else if (field == "contents" || field == "contient") {
 						newItem.notes.push(value);
-				} else if(field == "texto publicado en") {
+				} else if (field == "texto publicado en") {
 					 	//Z.debug(value)
 						newItem.itemType = "journalArticle";
 						newItem.publication = value.match(/En:\s*([^-.]+)/)[1]
@@ -183,7 +183,7 @@ function scrape(doc) {
 						newItem.volume = value.match(/\(([^\)]+)/)[1]
 						newItem.page = value.match(/p\.\s*([\d\-]+)/)[1]
 						
-				} else if(value && field != "http") {
+				} else if (value && field != "http") {
 					if (note)	note += casedField+": "+value+"\n";
 					else note = casedField+": "+value+"\n";
 				}
@@ -193,12 +193,12 @@ function scrape(doc) {
 		elmt = elmts.iterateNext();
 	}
 	
-	if(note) {
+	if (note) {
 		newItem.notes.push(note);
 	}
 
 	var callNumber = doc.evaluate('//tr/td[1][@class="holdingslist"]/text()', doc, null, XPathResult.ANY_TYPE, null).iterateNext();
-	if(callNumber && callNumber.nodeValue) {
+	if (callNumber && callNumber.nodeValue) {
 		newItem.callNumber = callNumber.nodeValue.trim();
 	}
 	
@@ -206,7 +206,7 @@ function scrape(doc) {
 	// http://virgo.lib.virginia.edu
 	callNumber = doc.evaluate('//tr/td[2][@class="holdingslist"]/text()', doc, null, XPathResult.ANY_TYPE, null).iterateNext();
 	// The regex here is looking for something like an LOC call number
-	if(callNumber && callNumber.nodeValue.trim().match(/^[A-Z]{1,2}[0-9]+/)) {
+	if (callNumber && callNumber.nodeValue.trim().match(/^[A-Z]{1,2}[0-9]+/)) {
 		newItem.callNumber += " " + callNumber.nodeValue.trim();
 	}
 	
@@ -236,7 +236,7 @@ function scrape(doc) {
 function doWeb(doc, url){
 	var sirsiNew = true; //toggle between SIRSI -2003 and SIRSI 2003+
 	var xpath = '//td[@class="searchsum"]/table';
-	if(doc.evaluate(xpath, doc, null, XPathResult.ANY_TYPE, null).iterateNext()) {
+	if (doc.evaluate(xpath, doc, null, XPathResult.ANY_TYPE, null).iterateNext()) {
 		Zotero.debug("SIRSI doWeb: searchsum");
 		sirsiNew = true;	
 	} else if (doc.evaluate('//form[@name="hitlist"]/table/tbody/tr', doc, null, XPathResult.ANY_TYPE, null).iterateNext()) {
@@ -251,8 +251,8 @@ function doWeb(doc, url){
 	} else {
 	var elmts = doc.evaluate('/html/body/form//text()', doc, null,
 							 XPathResult.ANY_TYPE, null);
-		while(elmt = elmts.iterateNext()) {
-			if(Zotero.Utilities.superCleanString(elmt.nodeValue) == "Viewing record") {
+		while (elmt = elmts.iterateNext()) {
+			if (Zotero.Utilities.superCleanString(elmt.nodeValue) == "Viewing record") {
 				Zotero.debug("SIRSI doWeb: Viewing record");
 				sirsiNew = false;
 			}
@@ -261,7 +261,7 @@ function doWeb(doc, url){
 	
 	if (sirsiNew) { //executes Simon's SIRSI 2003+ scraper code
 		Zotero.debug("Running SIRSI 2003+ code");
-		if(!scrape(doc)) {				
+		if (!scrape(doc)) {				
 			var checkboxes = new Array();
 			var urls = new Array();
 			var availableItems = new Array();			
@@ -271,12 +271,12 @@ function doWeb(doc, url){
 			//IUCAT fix 1 of 2
 			if (iu){
 				var tableRows = doc.evaluate('//td[@class="searchsum"]/table[//input[@class="submitLink"]]', doc, null, XPathResult.ANY_TYPE, null);
-			} else{
+			} else {
 				var tableRows = doc.evaluate('//td[@class="searchsum"]/table[//input[@value="Details" or @value="Detalles"]]', doc, null, XPathResult.ANY_TYPE, null);
 			}
 			var tableRow = tableRows.iterateNext();		// skip first row
 			// Go through table rows
-			while(tableRow = tableRows.iterateNext()) {
+			while (tableRow = tableRows.iterateNext()) {
 				//IUCAT fix 2 of 2
 				if (iu){
 					var input = doc.evaluate('.//input[@class="submitLink"]', tableRow, null, XPathResult.ANY_TYPE, null).iterateNext();
@@ -286,7 +286,7 @@ function doWeb(doc, url){
 					var text = doc.evaluate('.//label/strong', tableRow, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;					
 				}
 			//end IUCAT fixes by Andrew Smith
-				if(text) {
+				if (text) {
 					availableItems[input.name] = text;
 				}
 			}		
@@ -301,21 +301,21 @@ function doWeb(doc, url){
 				var hitlist = doc.forms.namedItem("hitlist");
 				var baseUrl = m[0]+hitlist.getAttribute("action")+"?first_hit="+hitlist.elements.namedItem("first_hit").value+"&last_hit="+hitlist.elements.namedItem("last_hit").value;
 				var uris = new Array();
-				for(var i in items) {
+				for (var i in items) {
 					uris.push(baseUrl+"&"+i+"=Details");
 				}
 		 		//Z.debug(uris)
 				Zotero.Utilities.processDocuments(uris, scrape)
 			});
 		}	
-	} else{  //executes Simon's SIRSI -2003 translator code
+	} else {  //executes Simon's SIRSI -2003 translator code
 		Zotero.debug("Running SIRSI -2003 code");
 		var uri = doc.location.href;
 		var recNumbers = new Array();
 		var xpath = '//form[@name="hitlist"]/table/tbody/tr';
 		var elmts = doc.evaluate(xpath, doc, null, XPathResult.ANY_TYPE, null);
 		var elmt = elmts.iterateNext();
-		if(elmt) {	// Search results page
+		if (elmt) {	// Search results page
 			var uriRegexp = /^https?:\/\/[^\/]+/;
 			var m = uriRegexp.exec(uri);
 			var postAction = doc.forms.namedItem("hitlist").getAttribute("action");
@@ -327,17 +327,17 @@ function doWeb(doc, url){
 											XPathResult.ANY_TYPE, null).iterateNext();
 				// Collect title
 				var title = doc.evaluate("./td[2]", elmt, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
-				if(checkbox && title) {
+				if (checkbox && title) {
 					items[checkbox.name] = Zotero.Utilities.trimInternal(title);
 				}
-			} while(elmt = elmts.iterateNext());
+			} while (elmt = elmts.iterateNext());
 			items = Zotero.selectItems(items);
 			
-			if(!items) {
+			if (!items) {
 				return true;
 			}
 			
-			for(var i in items) {
+			for (var i in items) {
 				recNumbers.push(i);
 			}
 		} else {		// Normal page
@@ -348,9 +348,9 @@ function doWeb(doc, url){
 			
 			var elmts = doc.evaluate('/html/body/form', doc, null,
 									 XPathResult.ANY_TYPE, null);
-			while(elmt = elmts.iterateNext()) {
+			while (elmt = elmts.iterateNext()) {
 				var initialText = doc.evaluate('.//text()[1]', elmt, null, XPathResult.ANY_TYPE, null).iterateNext();
-				if(initialText && initialText.nodeValue && Zotero.Utilities.superCleanString(initialText.nodeValue) == "Viewing record") {
+				if (initialText && initialText.nodeValue && Zotero.Utilities.superCleanString(initialText.nodeValue) == "Viewing record") {
 					recNumbers.push(doc.evaluate('./b[1]/text()[1]', elmt, null, XPathResult.ANY_TYPE, null).iterateNext().nodeValue);
 					break;
 				}
@@ -373,16 +373,16 @@ function doWeb(doc, url){
 				var pre = doc.getElementsByTagName("pre");
 				var text = pre[0].textContent;
 				var documents = text.split("*** DOCUMENT BOUNDARY ***");
-					for(var j=1; j<documents.length; j++) {
+					for (var j=1; j<documents.length; j++) {
 						var uri = newUri+"?marks="+recNumbers[j]+"&shadow=NO&format=FLAT+ASCII&sort=TITLE&vopt_elst=ALL&library=ALL&display_rule=ASCENDING&duedate_code=l&holdcount_code=t&DOWNLOAD_x=22&DOWNLOAD_y=12&address=&form_type=";
 						var lines = documents[j].split("\n");
 						var record = new marc.record();
 						var tag, content;
 						var ind = "";
-						for(var i=0; i<lines.length; i++) {
+						for (var i=0; i<lines.length; i++) {
 							var line = lines[i];
-							if(line[0] == "." && line.substr(4,2) == ". ") {
-								if(tag) {
+							if (line[0] == "." && line.substr(4,2) == ". ") {
+								if (tag) {
 									content = content.replace(/\|([a-z])/g, marc.subfieldDelimiter+"$1");
 									record.addField(tag, ind, content);
 								}
@@ -391,12 +391,12 @@ function doWeb(doc, url){
 								continue;
 							}
 						tag = line.substr(1, 3);	
-						if(tag[0] != "0" || tag[1] != "0") {
+						if (tag[0] != "0" || tag[1] != "0") {
 							ind = line.substr(6, 2);
 							content = line.substr(8);
 						} else {
 							content = line.substr(7);
-							if(tag == "000") {
+							if (tag == "000") {
 								tag = undefined;
 								record.leader = "00000"+content;
 								Zotero.debug("the leader is: "+record.leader);

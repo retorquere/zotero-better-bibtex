@@ -61,7 +61,7 @@
               <label prefix=" (" suffix=")" form="short"/>
             </names>
             <group delimiter=" ">
-              <text variable="container-title"/>
+              <text variable="container-title" form="short"/>
               <date variable="publication-date" date-parts="year" form="text"/>
             </group>
             <group delimiter=" ">

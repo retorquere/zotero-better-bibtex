@@ -1,0 +1,404 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "dmy",
+    "options": {},
+    "preferences": {
+      "citekeyFormat": "[auth][year]"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1016/j.jcrysgro.2011.12.035",
+      "citationKey": "Leung_2012",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Benjamin",
+          "lastName": "Leung"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Qian",
+          "lastName": "Sun"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Christopher",
+          "lastName": "Yerino"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Yu",
+          "lastName": "Zhang"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jung",
+          "lastName": "Han"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Bo",
+          "lastName": "Hyun Kong"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Hyung",
+          "lastName": "Koun Cho"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Kuan-Yung",
+          "lastName": "Liao"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Yun-Li",
+          "lastName": "Li"
+        }
+      ],
+      "date": "2012-02",
+      "extra": [
+        "Citation Key: Leung_2012"
+      ],
+      "issue": "1",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "pages": "27\u201333",
+      "publicationTitle": "Journal of Crystal Growth",
+      "title": "Growth evolution and microstructural characterization of semipolar (112\u03042) GaN selectively grown on etched r-Plane sapphire",
+      "volume": "341"
+    },
+    {
+      "DOI": "10.1021/am506162z",
+      "citationKey": "Song_2015",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Jie",
+          "lastName": "Song"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Shih-Pang",
+          "lastName": "Chang"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Cheng",
+          "lastName": "Zhang"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Ta-Cheng",
+          "lastName": "Hsu"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jung",
+          "lastName": "Han"
+        }
+      ],
+      "date": "2015-01",
+      "extra": [
+        "Citation Key: Song_2015"
+      ],
+      "issue": "1",
+      "itemID": 2,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "ACS Appl. Mater. Interfaces",
+      "pages": "273\u2013278",
+      "publicationTitle": "ACS Applied Materials & Interfaces",
+      "title": "Significantly improved luminescence properties of nitrogen-polar (0001\u0305) InGaN multiple quantum wells grown by pulsed metalorganic chemical vapor deposition",
+      "volume": "7"
+    },
+    {
+      "DOI": "10.1021/cg500229r",
+      "citationKey": "Song_2014",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Jie",
+          "lastName": "Song"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Ge",
+          "lastName": "Yuan"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Kanglin",
+          "lastName": "Xiong"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Benjamin",
+          "lastName": "Leung"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jung",
+          "lastName": "Han"
+        }
+      ],
+      "date": "2014-05",
+      "extra": [
+        "Citation Key: Song_2014"
+      ],
+      "issue": "5",
+      "itemID": 3,
+      "itemType": "journalArticle",
+      "pages": "2510\u20132515",
+      "publicationTitle": "Crystal Growth & Design",
+      "title": "Epitaxial lateral overgrowth of nitrogen-polar (0001\u0305) GaN by metalorganic chemical vapor deposition",
+      "volume": "14"
+    },
+    {
+      "DOI": "10.1063/1.121909",
+      "citationKey": "Zywietz_1998",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Tosja",
+          "lastName": "Zywietz"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J\u00f6rg",
+          "lastName": "Neugebauer"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Matthias",
+          "lastName": "Scheffler"
+        }
+      ],
+      "date": "1998-07",
+      "extra": [
+        "Citation Key: Zywietz_1998"
+      ],
+      "issue": "4",
+      "itemID": 4,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Appl. Phys. Lett.",
+      "pages": "487\u2013489",
+      "publicationTitle": "Applied Physics Letters",
+      "title": "Adatom diffusion at GaN (0001) and (0001\u0304) surfaces",
+      "volume": "73"
+    },
+    {
+      "DOI": "10.1063/1.4914102",
+      "citationKey": "Niehle_2015",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Niehle"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Trampert"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "S.",
+          "lastName": "Albert"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Bengoechea-Encabo"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "E.",
+          "lastName": "Calleja"
+        }
+      ],
+      "date": "2015-03",
+      "extra": [
+        "Citation Key: Niehle_2015"
+      ],
+      "issue": "3",
+      "itemID": 5,
+      "itemType": "journalArticle",
+      "pages": "036102",
+      "publicationTitle": "APL Materials",
+      "title": "Electron tomography of (In,Ga)N insertions in GaN nanocolumns grown on semi-polar (112\u03042) GaN templates",
+      "volume": "3"
+    },
+    {
+      "DOI": "10.1088/0268-1242/29/11/113001",
+      "citationKey": "Keller_2014",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Stacia",
+          "lastName": "Keller"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Haoran",
+          "lastName": "Li"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Matthew",
+          "lastName": "Laurent"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Yanling",
+          "lastName": "Hu"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Nathan",
+          "lastName": "Pfaff"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jing",
+          "lastName": "Lu"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "David F",
+          "lastName": "Brown"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Nicholas A",
+          "lastName": "Fichtenbaum"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "James S",
+          "lastName": "Speck"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Steven P",
+          "lastName": "DenBaars"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Umesh K",
+          "lastName": "Mishra"
+        }
+      ],
+      "date": "2014-11",
+      "extra": [
+        "Citation Key: Keller_2014"
+      ],
+      "issue": "11",
+      "itemID": 6,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Semicond. Sci. Technol.",
+      "pages": "113001",
+      "publicationTitle": "Semiconductor Science and Technology",
+      "title": "Recent progress in metal-organic chemical vapor deposition of ( 0001\u0304 ) N-Polar group-III nitrides",
+      "volume": "29"
+    },
+    {
+      "DOI": "10.1142/S0218625X98001274",
+      "citationKey": "Held_1998",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "R.",
+          "lastName": "Held"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "D. E.",
+          "lastName": "Crawford"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A. M.",
+          "lastName": "Johnston"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A. M.",
+          "lastName": "Dabiran"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "P. I.",
+          "lastName": "Cohen"
+        }
+      ],
+      "date": "1998-06",
+      "extra": [
+        "Citation Key: Held_1998"
+      ],
+      "issue": "03n04",
+      "itemID": 7,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Surf. Rev. Lett.",
+      "pages": "913\u2013934",
+      "publicationTitle": "Surface Review and Letters",
+      "title": "N-Limited Versus Ga-Limited Growth on GaN(0001\u0304) by MBE Using NH\u00b3",
+      "volume": "05"
+    },
+    {
+      "DOI": "10.7567/APEX.8.061005",
+      "citationKey": "Shojiki_2015",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Kanako",
+          "lastName": "Shojiki"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Tomoyuki",
+          "lastName": "Tanikawa"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jung-Hun",
+          "lastName": "Choi"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Shigeyuki",
+          "lastName": "Kuboya"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Takashi",
+          "lastName": "Hanada"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Ryuji",
+          "lastName": "Katayama"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Takashi",
+          "lastName": "Matsuoka"
+        }
+      ],
+      "date": "2015-06",
+      "extra": [
+        "Citation Key: Shojiki_2015"
+      ],
+      "issue": "6",
+      "itemID": 8,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Appl. Phys. Express",
+      "pages": "061005",
+      "publicationTitle": "Applied Physics Express",
+      "title": "Red to blue wavelength emission of N-Polar (0001\u0304) InGaN light-emitting diodes grown by metalorganic vapor phase epitaxy",
+      "volume": "8"
+    }
+  ]
+}

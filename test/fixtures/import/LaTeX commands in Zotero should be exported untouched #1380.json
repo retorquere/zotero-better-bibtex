@@ -1,80 +1,18 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false,
-      "exportNotes": false,
-      "keepUpdated": false
-    },
+    "localeDateOrder": "ymd",
+    "options": {},
     "preferences": {
-      "DOIandURL": "both",
-      "ascii": "",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportDelay": 1,
-      "autoExportIdleWait": 10,
-      "autoPin": false,
-      "automaticTags": true,
-      "auxImport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[auth][year]",
-      "citeprocNoteCitekey": false,
-      "client": "zotero",
-      "csquotes": "",
-      "debugLogDir": "",
-      "exportBibTeXStrings": "off",
-      "exportBraceProtection": true,
-      "exportTitleCase": true,
-      "git": "config",
-      "ignorePostscriptErrors": true,
-      "importBibTeXStrings": true,
-      "importCaseProtection": "as-needed",
-      "importSentenceCase": "on+guess",
-      "itemObserverDelay": 5,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "keyScope": "library",
-      "kuroshiro": false,
-      "mapMath": "",
-      "mapText": "",
-      "mapUnicode": "conservative",
-      "newTranslatorsAskRestart": true,
-      "parseParticles": true,
-      "platform": "mac",
-      "postscript": "",
-      "qualityReport": false,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "rawImports": true,
-      "rawLaTag": "#LaTeX",
-      "relativeFilePaths": false,
-      "removeStock": false,
-      "scrubDatabase": false,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
-      "warnBulkModify": 10
+      "rawImports": true
     }
   },
   "items": [
     {
       "ISBN": "978-2-7440-7182-9",
-      "attachments": [],
       "citationKey": "MittelbachLaTeXCompanion2006",
-      "citekey": "MittelbachLaTeXCompanion2006",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -113,29 +51,23 @@
         }
       ],
       "date": "2006-02",
-      "dateAdded": "2020-01-07T21:07:55Z",
-      "dateModified": "2020-01-07T21:07:55Z",
       "edition": "2",
-      "extra": "Citation Key: MittelbachLaTeXCompanion2006",
-      "itemID": 99,
+      "extra": [
+        "Citation Key: MittelbachLaTeXCompanion2006"
+      ],
+      "itemID": 1,
       "itemType": "book",
-      "key": "SNAZ8MMJ",
       "language": "french",
-      "libraryID": 1,
-      "notes": [],
       "numPages": "1008",
       "place": "Paris",
       "publisher": "Pearson Education France",
-      "relations": [],
       "tags": [
         {
           "tag": "#LaTeX",
           "type": 1
         }
       ],
-      "title": "\\LaTeX{} Companion",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/SNAZ8MMJ",
-      "version": 0
+      "title": "\\LaTeX{} Companion"
     }
   ]
 }

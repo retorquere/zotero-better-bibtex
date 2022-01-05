@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.1mlz1" class="note">
+  <info>
+    <title>United States: Iowa</title>
+    <id>http://juris-m.github.io/modules/juris-us:ia</id>
+    <link href="http://juris-m.github.io/modules/juris-us:ia" rel="self"/>
+    <link href="http://juris-m.github.io" rel="documentation"/>
+    <author>
+      <name>Frank Bennett</name>
+      <email>bennett@law.nagoya-u.ac.jp</email>
+    </author>
+    <category citation-format="note"/>
+    <category field="law"/>
+    <summary>Juris-M style module for the United States</summary>
+    <updated>2013-01-26T22:06:38+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+    <law-module types="none" fallback="us:al"/>
+  </info>
+  <citation>
+    <layout>
+    </layout>
+  </citation>
+</style>

@@ -1,58 +1,28 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "Export collections": true,
-      "exportFileData": false,
-      "exportNotes": false
-    },
+    "localeDateOrder": "ymd",
+    "options": {},
     "preferences": {
-      "DOIandURL": "both",
-      "asciiBibLaTeX": false,
       "asciiBibTeX": false,
       "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
       "bibtexURL": "note",
       "citekeyFormat": "[auth:nopunct][year][Title:skipwords:nopunct:select,1,2:capitalize:fold:alphanum]",
-      "jabrefFormat": 0,
       "skipFields": "abstract,note,file"
-    },
-    "release": "0.7.33"
+    }
   },
   "items": [
     {
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Sune Br\u00f8ndum",
           "lastName": "W\u00f8ller"
         }
       ],
       "date": "2011",
-      "itemID": 94,
-      "itemType": "thesis",
-      "language": "norsk",
-      "notes": [
-        "<p>CTR-Projekt</p>"
-      ],
-      "title": "Det multiple ark\u00e6ologiske objekt. Et studie af materialitet og ark\u00e6ologiske tekstiler",
-      "type": "mastersthesis"
-    },
-    {
-      "attachments": [],
-      "creators": [
-        {
-          "creatorType": "author",
-          "fieldMode": "",
-          "firstName": "Sune Br\u00f8ndum",
-          "lastName": "W\u00f8ller"
-        }
-      ],
-      "date": "2011",
-      "itemID": 94,
+      "itemID": 1,
       "itemType": "thesis",
       "language": "norsk",
       "notes": [
@@ -60,6 +30,24 @@
       ],
       "title": "CTR Det multiple ark\u00e6ologiske objekt. Et studie af materialitet og ark\u00e6ologiske tekstiler",
       "type": "phdthesis"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Sune Br\u00f8ndum",
+          "lastName": "W\u00f8ller"
+        }
+      ],
+      "date": "2011",
+      "itemID": 2,
+      "itemType": "thesis",
+      "language": "norsk",
+      "notes": [
+        "<p>CTR-Projekt</p>"
+      ],
+      "title": "Det multiple ark\u00e6ologiske objekt. Et studie af materialitet og ark\u00e6ologiske tekstiler",
+      "type": "mastersthesis"
     }
   ]
 }

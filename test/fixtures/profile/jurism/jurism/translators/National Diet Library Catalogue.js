@@ -47,7 +47,7 @@ function detectWeb(doc, url) {
 function getItemType(type) {
 	//http://www.ndl.go.jp/jp/aboutus/standards/meta/2011/12/ndl-type.rdf
 	if (type) {
-		switch(type.trim()) {
+		switch (type.trim()) {
 			case "録音図書": //Audio Book
 			case "録音図書(CD・DVD)": //Audio Book In Sound Disc
 			case "録音図書(カセットテープ)": //Audio Book In Sound Tape

@@ -1,6 +1,7 @@
 import steps.zotero as zotero
 from munch import *
 from behave import given, when, then, use_step_matcher
+import behave
 import urllib.request
 import json
 import time
@@ -8,6 +9,17 @@ import os
 from hamcrest import assert_that, equal_to
 from steps.utils import assert_equal_diff, expand_scenario_variables
 import steps.utils as utils
+import steps.zotero as zotero
+import glob
+
+from contextlib import contextmanager
+
+@contextmanager
+def step_matcher(matcher):
+    _matcher = behave.matchers.current_matcher
+    use_step_matcher(matcher)
+    yield
+    behave.matchers.current_matcher = _matcher
 
 import pathlib
 for d in pathlib.Path(__file__).resolve().parents:
@@ -15,12 +27,67 @@ for d in pathlib.Path(__file__).resolve().parents:
     ROOT = d
     break
 
-@step('I set preference {pref} to {value}')
+with step_matcher('re'):
+  @step(u'I cap the (?P<memory>total memory|memory increase) use to (?P<value>[.0-9]+[MG]?)')
+  def step_impl(context, memory, value):
+    if value.endswith('M'):
+      value = float(value[:-1])
+    elif value.endswith('G'):
+      value = float(value[:-1]) * 1024
+    else:
+      value = float(value) / (1024 * 1024)
+
+    if memory == 'total memory':
+      context.memory.total = value
+    elif memory == 'memory increase':
+      context.memory.increase = value
+    else:
+      raise AssertionError(f'unknown memory cap {json.dumps(memory)}')
+
+@given(u'I set the temp directory to {value}')
+def step_impl(context, value):
+  context.tmpDir = os.path.join(ROOT, json.loads(value))
+  if os.path.isdir(context.tmpDir):
+    for f in glob.glob(os.path.join(context.tmpDir, '*')):
+      os.remove(f)
+  else:
+    os.mkdir(context.tmpDir)
+
+@when(u'I create preference override {value}')
+def step_impl(context, value):
+  value = json.loads(value)
+  assert value.startswith('~/'), value
+  value = os.path.join(context.tmpDir, value[2:])
+  with open(value, 'w') as f:
+    json.dump({'override': { 'preferences': {} }}, f)
+  context.preferenceOverride = value
+
+@when(u'I remove preference override {value}')
+def step_impl(context, value):
+  os.remove(context.preferenceOverride)
+
+@step('I set preference override {pref} to {value}')
 def step_impl(context, pref, value):
+  assert pref.startswith('.'), pref
+  pref = pref[1:]
+
+  value = json.loads(value)
   # bit of a cheat...
   if pref.endswith('.postscript'):
     value = expand_scenario_variables(context, value)
-  context.zotero.preferences[pref] = context.zotero.preferences.parse(value)
+  with open(context.preferenceOverride) as f:
+    override = json.load(f)
+  override['override']['preferences'][pref] = value
+  with open(context.preferenceOverride, 'w') as f:
+    json.dump(override, f)
+
+@step('I set preference {pref} to {value}')
+def step_impl(context, pref, value):
+  value = json.loads(value)
+  # bit of a cheat...
+  if pref.endswith('.postscript'):
+    value = expand_scenario_variables(context, value)
+  context.zotero.preferences[pref] = value
 
 @step(r'I restart Zotero with "{db}" + "{source}"')
 def step_impl(context, db, source):
@@ -96,6 +163,9 @@ def export_library(context, translator='BetterBibTeX JSON', collection=None, exp
   expected = expand_scenario_variables(context, expected)
   displayOptions = { **context.displayOptions }
   if displayOption: displayOptions[displayOption] = True
+  if output:
+    assert output.startswith('~/'), output
+    output = os.path.join(context.tmpDir, output[2:])
 
   start = time.time()
   context.zotero.export_library(
@@ -111,33 +181,41 @@ def export_library(context, translator='BetterBibTeX JSON', collection=None, exp
   if timeout is not None:
     assert(runtime < timeout), f'Export runtime of {runtime} exceeded set maximum of {timeout}'
 
-@step(u'an auto-export to "{output}" using "{translator}" should match "{expected}"')
+@then(u'an export to "{output}" using "{translator}" should match {path}')
+def step_impl(context, output, translator, path):
+  export_library(context,
+    translator=translator,
+    expected=json.loads(path),
+    output=output
+  )
+
+@step(u'an auto-export to "{output}" using "{translator}" should match {expected}')
 def step_impl(context, translator, output, expected):
   export_library(context,
     translator=translator,
-    expected=expected,
+    expected=json.loads(expected),
     output=output,
     displayOption='keepUpdated',
     resetCache = True
   )
 
-@then(u'an auto-export of "{collection}" to "{output}" using "{translator}" should match "{expected}"')
+@then(u'an auto-export of "{collection}" to "{output}" using "{translator}" should match {expected}')
 def step_impl(context, translator, collection, output, expected):
   export_library(context,
     displayOption = 'keepUpdated',
     translator = translator,
     collection = collection,
     output = output,
-    expected = expected,
+    expected = json.loads(expected),
     resetCache = True
   )
 
-@step('an export using "{translator}" with {displayOption} on should match "{expected}"')
+@step('an export using "{translator}" with {displayOption} on should match {expected}')
 def step_impl(context, translator, displayOption, expected):
   export_library(context,
     displayOption = displayOption,
     translator = translator,
-    expected = expected
+    expected = json.loads(expected)
   )
 
 @step('an export using "{translator}" should match "{expected}"')
@@ -159,9 +237,15 @@ def step_impl(context, translator, expected, seconds):
 def step_impl(context, expected):
   export_library(context, expected = expected)
 
-@when(u'I select the first item where {field} = "{value}"')
-def step_impl(context, field, value):
-  context.selected.append(context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.find({is: value})', value=value))
+@when(u'I select the item with a field that {mode} "{value}"')
+def step_impl(context, mode, value):
+  context.selected += context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.find({[mode]: value})', mode=mode, value=value)
+  context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.select(ids)', ids=context.selected)
+  time.sleep(3)
+
+@when(u'I select {n} items with a field that {mode} "{value}"')
+def step_impl(context, n, mode, value):
+  context.selected += context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.find({[mode]: value}, n)', mode=mode, value=value, n=int(n))
   context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.select(ids)', ids=context.selected)
   time.sleep(3)
 
@@ -214,14 +298,26 @@ def step_impl(context, change):
   assert change in ['pin', 'unpin', 'refresh']
   context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.pinCiteKey(null, action)', action=change)
 
+@when(u'I pin the citation key to "{citekey}"')
+def step_impl(context, citekey):
+  assert len(context.selected) == 1
+  context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.pinCiteKey(id, "pin", citekey)', id=context.selected[0], citekey=citekey)
+
 @then(u'"{found}" should match "{expected}"')
 def step_impl(context, expected, found):
   expected = expand_scenario_variables(context, expected)
-  if expected[0] != '/': expected = os.path.join(ROOT, 'test/fixtures', expected)
+  if expected.startswith('~/'):
+    expected = os.path.join(context.tmpDir, expected[2:])
+  else:
+    expected = os.path.join(ROOT, 'test/fixtures', expected)
+    context.zotero.loaded(expected)
   with open(expected) as f:
     expected = f.read()
 
-  if found[0] != '/': found = os.path.join(ROOT, 'test/fixtures', found)
+  if found.startswith('~/'):
+    found = os.path.join(context.tmpDir, found[2:])
+  else:
+    found = os.path.join(ROOT, 'test/fixtures', found)
   with open(found) as f:
     found = f.read()
 

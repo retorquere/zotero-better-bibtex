@@ -1,15 +1,12 @@
 {
   "filename": "auto-iq.json",
   "name": "Iraq",
-  "version": "2019-08-19 06:21:44 UTC",
+  "version": "2020-09-07 21:01:30 UTC",
   "xdata": {
     "default": {
       "place": {
         "IQ": "Iraq"
       }
-    },
-    "iq": {
-      "institution-part": {}
     }
   }
 }

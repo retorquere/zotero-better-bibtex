@@ -2,14 +2,14 @@
 	"translatorID": "908c1ca2-59b6-4ad8-b026-709b7b927bda",
 	"label": "SAGE Journals",
 	"creator": "Sebastian Karcher",
-	"target": "^https?://journals\\.sagepub\\.com(/doi/((abs|full)/)?10\\.|/action/doSearch\\?|/toc/)",
+	"target": "^https?://journals\\.sagepub\\.com(/doi/((abs|full|pdf)/)?10\\.|/action/doSearch\\?|/toc/)",
 	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-01-14 20:53:20"
+	"lastUpdated": "2019-12-10 18:09:17"
 }
 
 /*
@@ -35,26 +35,33 @@
 	***** END LICENSE BLOCK *****
 */
 
-//SAGE uses Atypon, but as of now this is too distinct from any existing Atypon sites to make sense in the same translator.
+// SAGE uses Atypon, but as of now this is too distinct from any existing Atypon sites to make sense in the same translator.
+
+// attr()/text() v2
+// eslint-disable-next-line
+function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
 
 function detectWeb(doc, url) {
-	if (url.indexOf('/abs/10.') != -1 || url.indexOf('/full/10.') != -1) {
+	if (url.includes('/abs/10.') || url.includes('/full/10.') || url.includes('/pdf/10.')) {
 		return "journalArticle";
-	} else if (getSearchResults(doc, true)) {
+	}
+	else if (getSearchResults(doc, true)) {
 		return "multiple";
 	}
+	return false;
 }
 
 function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
-	var rows = ZU.xpath(doc, '//div[contains(@class, "art_title")]/a[contains(@href, "/doi/full/10.") or contains(@href, "/doi/abs/10.")][1]');
+	var rows = ZU.xpath(doc, '//span[contains(@class, "art_title")]/a[contains(@href, "/doi/full/10.") or contains(@href, "/doi/abs/10.") or contains(@href, "/doi/pdf/10.")][1]');
 	for (var i = 0; i < rows.length; i++) {
 		var href = rows[i].href;
 		var title = ZU.trimInternal(rows[i].textContent);
 		if (!href || !title) continue;
 		if (checkOnly) return true;
 		found = true;
+		href = href.replace("/doi/pdf/", "/doi/abs/");
 		items[href] = title;
 	}
 	return found ? items : false;
@@ -63,9 +70,9 @@ function getSearchResults(doc, checkOnly) {
 
 function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
-		Zotero.selectItems(getSearchResults(doc, false), function(items) {
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
 			if (!items) {
-				return true;
+				return;
 			}
 			var articles = [];
 			for (var i in items) {
@@ -73,7 +80,8 @@ function doWeb(doc, url) {
 			}
 			ZU.processDocuments(articles, scrape);
 		});
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }
@@ -84,28 +92,27 @@ function scrape(doc, url) {
 	if (!doi) {
 		doi = url.match(/10\.[^?#]+/)[0];
 	}
-	var filename = ZU.xpathText(doc, '//input[@name="downloadFileName"]/@value');
-	var post = "doi=" + encodeURIComponent(doi) + "&downloadFileName=" + filename + "&include=abs&format=ris&direct=false&submit=Download+Citation";
+	var post = "doi=" + encodeURIComponent(doi) + "&include=abs&format=ris&direct=false&submit=Download+Citation";
 	var pdfurl = "//" + doc.location.host + "/doi/pdf/" + doi;
-	//Z.debug(pdfurl);
-	//Z.debug(post);
-	ZU.doPost(risURL, post, function(text) {
-		//The publication date is saved in DA and the date first
-		//appeared online is in Y1. Thus, we want to prefer DA over T1
-		//and will therefore simply delete the later in cases both
-		//dates are present.
-		//Z.debug(text);
-		if (text.indexOf("DA  - ")>-1) {
-			text = text.replace(/Y1  - .*\r?\n/, '');
+	// Z.debug(pdfurl);
+	// Z.debug(post);
+	ZU.doPost(risURL, post, function (text) {
+		// The publication date is saved in DA and the date first
+		// appeared online is in Y1. Thus, we want to prefer DA over T1
+		// and will therefore simply delete the later in cases both
+		// dates are present.
+		// Z.debug(text);
+		if (text.includes("DA  - ")) {
+			text = text.replace(/Y1[ ]{2}- .*\r?\n/, '');
 		}
 		
 		var translator = Zotero.loadTranslator("import");
 		translator.setTranslator("32d59d2d-b65a-4da4-b0a3-bdd3cfb979e7");
 		translator.setString(text);
-		translator.setHandler("itemDone", function(obj, item) {
-			//The subtitle will be neglected in RIS and is only present in
-			//the website itself. Moreover, there can be problems with
-			//encodings of apostrophs.
+		translator.setHandler("itemDone", function (obj, item) {
+			// The subtitle will be neglected in RIS and is only present in
+			// the website itself. Moreover, there can be problems with
+			// encodings of apostrophs.
 			var subtitle = ZU.xpathText(doc, '//div[contains(@class, "publicationContentSubTitle")]/h1');
 			var title = ZU.xpathText(doc, '//div[contains(@class, "publicationContentTitle")]/h1');
 			if (title) {
@@ -114,15 +121,20 @@ function scrape(doc, url) {
 					item.title += ': ' + subtitle.trim();
 				}
 			}
-			//The encoding of apostrophs in the RIS are incorrect and
-			//therefore we extract the abstract again from the website.
+			// The encoding of apostrophs in the RIS are incorrect and
+			// therefore we extract the abstract again from the website.
 			var abstract = ZU.xpathText(doc, '//article//div[contains(@class, "abstractSection")]/p');
 			if (abstract) {
 				item.abstractNote = abstract;
 			}
 			
-			//Workaround while Sage hopefully fixes RIS for authors
-			for (let i = 0; i<item.creators.length; i++) {
+			var tags = ZU.xpathText(doc, '//kwd-group[1]');
+			if (tags) {
+				item.tags = tags.split(",");
+			}
+			
+			// Workaround while Sage hopefully fixes RIS for authors
+			for (let i = 0; i < item.creators.length; i++) {
 				if (!item.creators[i].firstName) {
 					let type = item.creators[i].creatorType;
 					let comma = item.creators[i].lastName.includes(",");
@@ -177,7 +189,17 @@ var testCases = [
 						"mimeType": "application/pdf"
 					}
 				],
-				"tags": [],
+				"tags": [
+					{
+						"tag": "emotion regulation"
+					},
+					{
+						"tag": "facial expression"
+					},
+					{
+						"tag": "facial feedback"
+					}
+				],
 				"notes": [],
 				"seeAlso": []
 			}
@@ -229,7 +251,32 @@ var testCases = [
 						"mimeType": "application/pdf"
 					}
 				],
-				"tags": [],
+				"tags": [
+					{
+						"tag": "Shear cell"
+					},
+					{
+						"tag": "BCR limestone powder (CRM-116)"
+					},
+					{
+						"tag": "flow function"
+					},
+					{
+						"tag": "characterizing powder flowability"
+					},
+					{
+						"tag": "reproducibility"
+					},
+					{
+						"tag": "Brookfield powder flow tester"
+					},
+					{
+						"tag": "Jenike shear cell"
+					},
+					{
+						"tag": "Schulze ring shear tester"
+					}
+				],
 				"notes": [],
 				"seeAlso": []
 			}
@@ -287,7 +334,20 @@ var testCases = [
 						"mimeType": "application/pdf"
 					}
 				],
-				"tags": [],
+				"tags": [
+					{
+						"tag": "Moffitt’s developmental taxonomy"
+					},
+					{
+						"tag": "gang membership"
+					},
+					{
+						"tag": "snares"
+					},
+					{
+						"tag": "delinquency"
+					}
+				],
 				"notes": [],
 				"seeAlso": []
 			}

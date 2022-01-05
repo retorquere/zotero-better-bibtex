@@ -1,19 +1,21 @@
-declare const Zotero: any
-declare const Components: any
-declare const AddonManager: any
+/* eslint-disable @typescript-eslint/require-await, @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-shadow */
 
 import { Translators } from '../translators'
 import { getItemsAsync } from '../get-items-async'
-import { Preferences as Prefs } from '../prefs'
+import { Preference } from '../../gen/preferences'
+import { log } from '../logger'
+import { fromEntries } from '../object'
+import { scannableCite } from '../../gen/ScannableCite'
 
 import * as unicode_table from 'unicode2latex/tables/unicode.json'
-const unicode2latex = Object.entries(unicode_table).reduce((acc, pair) => {
-  const unicode = pair[0] as string
-  const latex = pair[1] as { text: string, math: string }
-  acc[unicode] = { text: latex.text || latex.math, math: !(latex.text) }
-  return acc
-}, {})
-function tolatex(s) {
+
+const unicode2latex = (fromEntries(
+  Object
+    .entries(unicode_table)
+    .map(([unicode, latex]: [string, { text: string, math: string }]) => [ unicode, { text: latex.text || latex.math, math: !(latex.text) }])
+) as Record<string, { text: string, math: boolean }>)
+
+function tolatex(s: string): string {
   if (!s) return ''
 
   return s.split('')
@@ -22,7 +24,8 @@ function tolatex(s) {
       const last = acc[acc.length - 1]
       if (last && last.math === c.math) {
         last.text += c.text
-      } else {
+      }
+      else {
         acc.push(c)
       }
       return acc
@@ -31,7 +34,7 @@ function tolatex(s) {
     .join('')
 }
 
-function shortLabel(label, options) {
+function shortLabel(label: string, options): string {
   if (typeof options[label] === 'string') return options[label]
 
   return {
@@ -63,20 +66,23 @@ function shortLabel(label, options) {
 function citation2latex(citation, options) {
   let formatted = ''
   // despite Mozilla's claim that trimStart === trimLeft, and that trimStart should be preferred, trimStart does not seem to exist in FF chrome code.
-  const label = (shortLabel(citation.label, { page: '', ...options }) + ' ').trimLeft()
+  const label = (`${shortLabel(citation.label, { page: '', ...options })} `).trimLeft()
 
   if (citation.prefix) formatted += `[${tolatex(citation.prefix)}]`
 
   if (citation.locator && citation.suffix) {
     formatted += `[${tolatex(label)}${tolatex(citation.locator)}, ${tolatex(citation.suffix)}]`
 
-  } else if (citation.locator) {
+  }
+  else if (citation.locator) {
     formatted += `[${tolatex(label)}${tolatex(citation.locator)}]`
 
-  } else if (citation.suffix) {
+  }
+  else if (citation.suffix) {
     formatted += `[${tolatex(citation.suffix)}]`
 
-  } else if (citation.prefix) {
+  }
+  else if (citation.prefix) {
     formatted += '[]'
   }
 
@@ -86,14 +92,14 @@ function citation2latex(citation, options) {
 }
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let Formatter = new class { // tslint:disable-line:variable-name
+export const Formatter = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public async playground(citations, options) {
-    const formatted = citations.map(cit => `${options.keyprefix || ''}${cit.citekey}${options.keypostfix || ''}`)
+    const formatted = await citations.map(cit => `${options.keyprefix || ''}${cit.citekey}${options.keypostfix || ''}`)
     return formatted.length ? `${options.citeprefix || ''}${formatted.join(options.separator || ',')}${options.citekeypostfix || ''}` : ''
   }
 
-  public async citationLinks(citations, options) {
-    return citations.map(citation => `cites: ${citation.citekey}`).join('\n')
+  public async citationLinks(citations, _options): Promise<string> {
+    return await citations.map(citation => `cites: ${citation.citekey}`).join('\n')
   }
 
   public async cite(citations, options) { return this.natbib(citations, options) }
@@ -110,6 +116,7 @@ export let Formatter = new class { // tslint:disable-line:variable-name
     if (citations.length > 1) {
       const state = citations.reduce((acc, cit) => {
         for (const field of ['prefix', 'suffix', 'suppressAuthor', 'locator', 'label']) {
+          // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
           acc[field] = (acc[field] || 0) + (cit[field] ? 1 : 0)
         }
         return acc
@@ -148,7 +155,8 @@ export let Formatter = new class { // tslint:disable-line:variable-name
     if (citations.includes('[')) {
       // there are some pre/post notes → generate a full \XYcites command
       command = command.endsWith('s') ? command : `${command}s`
-    } else {
+    }
+    else {
       // there are no pre/post-notes, the citations can be a simple
       // comma-separated list of keys
       citations = citations.replace(/\}\{/g, ',')
@@ -156,13 +164,14 @@ export let Formatter = new class { // tslint:disable-line:variable-name
     return `\\${command}${citations}`
   }
 
-  public async mmd(citations, options) {
+  public async mmd(citations, _options) {
     const formatted = []
 
     for (const citation of citations) {
       if (citation.prefix) {
         formatted.push(`[${citation.prefix}][#${citation.citekey}]`)
-      } else {
+      }
+      else {
         formatted.push(`[#${citation.citekey}][]`)
       }
     }
@@ -199,54 +208,59 @@ export let Formatter = new class { // tslint:disable-line:variable-name
   }
 
   public async 'scannable-cite'(citations, options) {
-    const deferred = Zotero.Promise.defer()
-    Components.utils.import('resource://gre/modules/AddonManager.jsm')
-    AddonManager.getAddonByID('rtf-odf-scan-for-zotero@mystery-lab.com', addon => deferred.resolve(addon && addon.isActive))
-    const odfScan = await deferred.promise
-    if (!odfScan) throw new Error('scannable-cite needs the "RTF/ODF Scan for Zotero" plugin to be installed')
-
-    const items = await getItemsAsync(citations.map(picked => picked.id))
-    const labels = (await Translators.exportItems('248bebf1-46ab-4067-9f93-ec3d2960d0cd', null, { type: 'items', items })).split(/[{}]+/).filter(cite => cite).reduce((result, item) => {
-      const [ , text, , , id ] = item.split('|').map(v => v.trim())
-      result[id] = text
-      return result
-    }, {})
-
-    if (citations.length !== Object.keys(labels).length) throw new Error(`Scannable Cite parse error: picked ${citations.length}, found ${Object.keys(labels).length}`)
-
-    let citation = ''
-    for (const item of citations) {
-      const [ , kind, lib, key ] = item.uri.match(/^http:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^\/]+)\/items\/(.+)/)
-      const id = `${kind === 'users' ? 'zu' : 'zg'}:${lib.startsWith('local/') ? '0' : lib}:${key}`
-      if (!labels[id]) throw new Error(`No formatted citation found for ${id}`)
+    let markers = ''
+    for (const citation of citations) {
+      const scannable = scannableCite(await getItemsAsync(citation.id))
 
       const enriched = [
-        item.prefix || '',
-        `${item.suppressAuthor ? '-' : ''}${labels[id]}`,
-        item.locator ? `${shortLabel(item.label, options)} ${item.locator}`.trim() : '',
-        item.suffix || '',
-        Prefs.testing ? 'zu:0:ITEMKEY' : id,
+        citation.prefix || '',
+        `${citation.suppressAuthor ? '-' : ''}${scannable.label}`,
+        citation.locator ? `${shortLabel(citation.label, options)} ${citation.locator}`.trim() : '',
+        citation.suffix || '',
+        Preference.testing ? 'zu:0:ITEMKEY' : scannable.id,
       ].join(' | ').replace(/ +/g, ' ')
 
-      citation += `{ ${enriched.trim()} }`
+      markers += `{ ${enriched.trim()} }`
     }
-    return citation
+    return markers
   }
 
-  public async 'formatted-citation'(citations) {
-    const format = Zotero.Prefs.get('export.quickCopy.setting')
+  public async 'formatted-citation'(citations, options) {
+    let quickCopy = Zotero.Prefs.get('export.quickCopy.setting')
+    log.debug('CAYW.formatted-citation: format=', quickCopy, 'options=', options)
+    if (options.style) {
+      quickCopy = `bibliography/${options.contentType || 'text'}=`
+      if (!options.style.startsWith('http://')) quickCopy += 'http://www.zotero.org/styles/'
+      quickCopy += options.style
+    }
+    const format = Zotero.QuickCopy.unserializeSetting(quickCopy)
+    log.debug('CAYW.formatted-citation: format=', quickCopy, format)
 
-    if (Zotero.QuickCopy.unserializeSetting(format).mode !== 'bibliography') throw new Error('formatted-citations requires the Zotero default quick-copy format to be set to a citation style')
+    if (format.mode !== 'bibliography') {
+      throw new Error(`formatted-citations requires the Zotero default quick-copy format to be set to a citation style; it is currently ${format}`)
+    }
 
-    const items = await getItemsAsync(citations.map(item => item.id))
+    // items must be pre-loaded for the citation processor
+    await getItemsAsync(citations.map(item => item.id))
 
-    return Zotero.QuickCopy.getContentFromItems(items, format, null, true).text
+    const locale = format.locale ? format.locale : Zotero.Prefs.get('export.quickCopy.locale')
+    const csl = Zotero.Styles.get(format.id).getCiteProc(locale)
+    csl.updateItems(citations.map(item => item.id))
+
+    const citation = {
+      citationItems: citations.map(item => ({ ...item, 'suppress-author': item.suppressAuthor })),
+      properties: {},
+    }
+
+    return csl.previewCitationCluster(citation, [], [], format.contentType)
   }
 
   public async 'formatted-bibliography'(citations) {
     const format = Zotero.Prefs.get('export.quickCopy.setting')
 
-    if (Zotero.QuickCopy.unserializeSetting(format).mode !== 'bibliography') throw new Error('formatted-citations requires the Zotero default quick-copy format to be set to a citation style')
+    if (Zotero.QuickCopy.unserializeSetting(format).mode !== 'bibliography') {
+      throw new Error(`formatted-bibliography requires the Zotero default quick-copy format to be set to a citation style; it is currently ${format}`)
+    }
 
     const items = await getItemsAsync(citations.map(item => item.id))
 
@@ -267,7 +281,7 @@ export let Formatter = new class { // tslint:disable-line:variable-name
     return await Translators.exportItems(translator, exportOptions, { type: 'items', items })
   }
 
-  public async json(citations, options) {
+  public async json(citations, _options) {
     return JSON.stringify(citations)
   }
 }

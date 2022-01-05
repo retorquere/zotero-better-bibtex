@@ -1,57 +1,39 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
       "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
       "bibtexURL": "note",
       "citekeyFormat": "[auth:fold:lower]_[Title:fold:nopunct:skipwords:select,1,1:lower]_[year]",
-      "exportBibTeXStrings": "off",
-      "jabrefFormat": 0,
-      "skipFields": ""
-    },
-    "release": "1.0.5"
+      "mapUnicode": "math"
+    }
   },
   "items": [
     {
-      "DOI": "10.1111/1467-9655.12097",
-      "ISSN": "1467-9655",
-      "abstractNote": "State planning has been a defining means for modern subjects to regulate the passage of time. In practice, it is the focus of multiple conflicts and doubts, which planners attempt to mediate. In this paper, I address the regimes of time that planning both promotes and encounters, and tease out what these imply for anthropology. Using ethnography of Norwegian and Swedish planning offices and their encounters with participatory planning, I question recent claims that there has been an evacuation of the near future or a retreat of administrative intervention. I also suggest that recent anthropological concerns with time have been confined by their attempts to characterize the changing timescapes of specific modal shifts, such as from the modern to the neoliberal. Instead, in my ethnography, I focus not on tracking epochal breaks in time, but on demonstrating how time is manipulated, and how multiple temporalities are performed in ongoing projects of democratic planning.",
-      "accessDate": "2014-12-27 16:07:58",
-      "attachments": [],
-      "creators": [
+      "court": "HCA",
+      "date": "1998-04-01",
+      "extra": [
+        "Citation Key: kartinyeri",
+        "tex.author= Kaetinyeri v Commonwealth",
+        "tex.translator= Kartinyeri"
+      ],
+      "itemID": 1,
+      "itemType": "case",
+      "pages": "337",
+      "publicationTitle": "CLR",
+      "shortTitle": "Kartinyeri",
+      "tags": [
         {
-          "creatorType": "author",
-          "firstName": "Simone",
-          "lastName": "Abram"
+          "tag": "au"
         }
       ],
-      "date": "[2014]",
-      "extra": "Citation Key: bentley_academic_2011\ntex.xref= welker_andreas_1999",
-      "itemID": 281,
-      "itemType": "journalArticle",
-      "journalAbbreviation": "J R Anthropol Inst",
-      "language": "en",
-      "libraryCatalog": "Wiley Online Library",
-      "notes": [
-        "<p>This is the child note</p>"
-      ],
-      "pages": "129\u2013147",
-      "publicationTitle": "Journal of the Royal Anthropological Institute",
-      "rights": "\u00a9 Royal Anthropological Institute 2014",
-      "shortTitle": "6\u00a0The time it takes",
-      "tags": [
-        "m\u00e5ske"
-      ],
-      "title": "6\u00a0The time it takes: temporalities of planning",
-      "url": "http://onlinelibrary.wiley.com.ep.fjernadgang.kb.dk/doi/10.1111/1467-9655.12097/abstract",
-      "volume": "20"
+      "title": "Kartinyeri v Commonwealth",
+      "volume": "195"
     },
     {
       "creators": [
@@ -67,7 +49,7 @@
         }
       ],
       "date": "[2007]",
-      "itemID": 831,
+      "itemID": 2,
       "itemType": "journalArticle",
       "pages": "245\u201359",
       "publicationTitle": "Annu. Rev. Anthropol.",
@@ -76,23 +58,42 @@
       "volume": "36"
     },
     {
-      "caseName": "Kartinyeri v Commonwealth",
-      "court": "HCA",
-      "date": "1998-04-01",
-      "dateDecided": "1998-04-01",
-      "extra": "Citation Key: kartinyeri\ntex.author= Kaetinyeri v Commonwealth\ntex.translator= Kartinyeri",
-      "firstPage": "337",
-      "itemID": 1825,
-      "itemType": "case",
-      "pages": "337",
-      "reporter": "CLR",
-      "reporterVolume": "195",
-      "shortTitle": "Kartinyeri",
-      "tags": [
-        "au"
+      "DOI": "10.1111/1467-9655.12097",
+      "ISSN": "1467-9655",
+      "abstractNote": "State planning has been a defining means for modern subjects to regulate the passage of time. In practice, it is the focus of multiple conflicts and doubts, which planners attempt to mediate. In this paper, I address the regimes of time that planning both promotes and encounters, and tease out what these imply for anthropology. Using ethnography of Norwegian and Swedish planning offices and their encounters with participatory planning, I question recent claims that there has been an evacuation of the near future or a retreat of administrative intervention. I also suggest that recent anthropological concerns with time have been confined by their attempts to characterize the changing timescapes of specific modal shifts, such as from the modern to the neoliberal. Instead, in my ethnography, I focus not on tracking epochal breaks in time, but on demonstrating how time is manipulated, and how multiple temporalities are performed in ongoing projects of democratic planning.",
+      "accessDate": "2014-12-27 16:07:58",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Simone",
+          "lastName": "Abram"
+        }
       ],
-      "title": "Kartinyeri v Commonwealth",
-      "volume": "195"
+      "date": "[2014]",
+      "extra": [
+        "Citation Key: bentley_academic_2011",
+        "tex.xref= welker_andreas_1999"
+      ],
+      "itemID": 3,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "J R Anthropol Inst",
+      "language": "en",
+      "libraryCatalog": "Wiley Online Library",
+      "notes": [
+        "<p>This is the child note</p>"
+      ],
+      "pages": "129\u2013147",
+      "publicationTitle": "Journal of the Royal Anthropological Institute",
+      "rights": "\u00a9 Royal Anthropological Institute 2014",
+      "shortTitle": "6\u00a0The time it takes",
+      "tags": [
+        {
+          "tag": "m\u00e5ske"
+        }
+      ],
+      "title": "6\u00a0The time it takes: temporalities of planning",
+      "url": "http://onlinelibrary.wiley.com.ep.fjernadgang.kb.dk/doi/10.1111/1467-9655.12097/abstract",
+      "volume": "20"
     }
   ]
 }

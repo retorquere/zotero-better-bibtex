@@ -1,119 +1,19 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
-      "ascii": "",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportDelay": 1,
-      "autoExportIdleWait": 10,
-      "autoPin": false,
-      "automaticTags": true,
-      "auxImport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[auth][year]",
-      "citeprocNoteCitekey": false,
-      "client": "",
-      "csquotes": "",
-      "debugLogDir": "",
-      "exportBibTeXStrings": "off",
-      "exportBraceProtection": true,
-      "exportTitleCase": true,
-      "git": "config",
-      "ignorePostscriptErrors": true,
-      "importBibTeXStrings": true,
-      "importCaseProtection": "off",
-      "importSentenceCase": "on+guess",
-      "itemObserverDelay": 5,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "keyScope": "library",
-      "kuroshiro": false,
-      "mapMath": "",
-      "mapText": "",
-      "mapUnicode": "conservative",
-      "newTranslatorsAskRestart": true,
-      "parseParticles": true,
-      "platform": "",
-      "postscript": "",
-      "qualityReport": false,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "rawLaTag": "#LaTeX",
-      "relativeFilePaths": false,
-      "removeStock": false,
-      "scrubDatabase": false,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
-      "warnBulkModify": 10
+      "importCaseProtection": "off"
     }
   },
   "items": [
     {
-      "DOI": "10.1007/s13127-011-0069-8",
-      "attachments": [],
-      "citationKey": "Frit2",
-      "citekey": "Frit2",
-      "collections": [],
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "U.",
-          "lastName": "Fritz"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "C.",
-          "lastName": "Corti"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "M.",
-          "lastName": "P\u00e4ckert"
-        }
-      ],
-      "date": "2012",
-      "dateAdded": "2019-12-22T01:25:02Z",
-      "dateModified": "2019-12-22T01:25:02Z",
-      "extra": "Citation Key: Frit2\ntex.timestamp: 2015-02-24 12:14:36 +0100",
-      "itemID": 653,
-      "itemType": "journalArticle",
-      "key": "DVH8V3JD",
-      "libraryID": 1,
-      "notes": [],
-      "pages": "71-80",
-      "publicationTitle": "Actes du 4<sup>\u00e8me</sup> Congr\u00e8s Fran\u00e7ais d'Acoustique",
-      "relations": [],
-      "tags": [],
-      "title": "Test of markupconversion: Italics, bold, superscript, subscript, and small caps: Mitochondrial DNA\u2082 sequences suggest unexpected phylogenetic position of Corso-Sardinian grass snakes (<span class=\"nocase\"><i>Natrix cetti</i></span>) and <span class=\"nocase\"><b>do not</b></span> support their <span class=\"nocase\"><span style=\"font-variant:small-caps;\">species status</span></span>, with notes on phylogeography and subspecies delineation of grass snakes.",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/DVH8V3JD",
-      "version": 0,
-      "volume": "12"
-    },
-    {
-      "attachments": [],
       "citationKey": "AdcroftETAL:1997",
-      "citekey": "AdcroftETAL:1997",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -132,22 +32,47 @@
         }
       ],
       "date": "1997",
-      "dateAdded": "2019-12-22T01:25:02Z",
-      "dateModified": "2019-12-22T01:25:02Z",
-      "extra": "Citation Key: AdcroftETAL:1997",
-      "itemID": 654,
+      "extra": [
+        "Citation Key: AdcroftETAL:1997"
+      ],
+      "itemID": 1,
       "itemType": "journalArticle",
-      "key": "7CYSL4MS",
-      "libraryID": 1,
-      "notes": [],
       "pages": "2293-2315",
       "publicationTitle": "Monthly Weather Review",
-      "relations": [],
-      "tags": [],
       "title": "Representation of topography by shaved cells in a height coordinate ocean model",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/7CYSL4MS",
-      "version": 0,
       "volume": "125"
+    },
+    {
+      "DOI": "10.1007/s13127-011-0069-8",
+      "citationKey": "Frit2",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "U.",
+          "lastName": "Fritz"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Corti"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "P\u00e4ckert"
+        }
+      ],
+      "date": "2012",
+      "extra": [
+        "Citation Key: Frit2",
+        "tex.timestamp: 2015-02-24 12:14:36 +0100"
+      ],
+      "itemID": 2,
+      "itemType": "journalArticle",
+      "pages": "71-80",
+      "publicationTitle": "Actes du 4<sup>\u00e8me</sup> Congr\u00e8s Fran\u00e7ais d'Acoustique",
+      "title": "Test of markupconversion: Italics, bold, superscript, subscript, and small caps: Mitochondrial DNA\u2082 sequences suggest unexpected phylogenetic position of Corso-Sardinian grass snakes (<span class=\"nocase\"><i>Natrix cetti</i></span>) and <span class=\"nocase\"><b>do not</b></span> support their <span class=\"nocase\"><span style=\"font-variant:small-caps;\">species status</span></span>, with notes on phylogeography and subspecies delineation of grass snakes.",
+      "volume": "12"
     }
   ]
 }

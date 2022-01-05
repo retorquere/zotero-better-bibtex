@@ -1,18 +1,16 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]",
-      "jabrefFormat": 0
+      "citekeyFormat": "[auth][year]"
     }
   },
   "items": [
     {
       "ISBN": "9780521865715",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -31,6 +29,7 @@
         }
       ],
       "date": "July 7, 2008",
+      "itemID": 1,
       "itemType": "book",
       "numPages": "496",
       "place": "New York",

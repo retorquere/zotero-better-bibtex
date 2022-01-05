@@ -20,7 +20,7 @@
     <category citation-format="note"/>
     <category field="generic-base"/>
     <summary>MHRA format with full notes and bibliography</summary>
-    <updated>2019-01-07T13:45:21+00:00</updated>
+    <updated>2019-04-27 18:37:59</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -177,14 +177,10 @@
   <macro name="locators-note">
     <choose>
       <if type="article-journal">
-        <choose>
-          <if variable="volume">
-            <group delimiter=".">
-              <text variable="volume"/>
-              <text variable="issue"/>
-            </group>
-          </if>
-        </choose>
+        <group delimiter=".">
+          <text variable="volume"/>
+          <text variable="issue"/>
+        </group>
       </if>
       <else-if type="bill book chapter graphic legal_case legislation motion_picture paper-conference report song" match="any">
         <group delimiter=", ">
@@ -200,7 +196,10 @@
   <macro name="volume">
     <choose>
       <if type="article-journal">
-        <text variable="volume"/>
+        <group delimiter=".">
+          <text variable="volume"/>
+          <text variable="issue"/>
+        </group>
       </if>
       <else-if type="bill book chapter graphic legal_case legislation motion_picture paper-conference report song" match="any">
         <group delimiter=", ">

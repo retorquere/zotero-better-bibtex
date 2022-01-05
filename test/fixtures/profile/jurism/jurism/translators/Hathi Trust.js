@@ -51,12 +51,12 @@ function getSearchResults(doc) {
 	var res = ZU.xpath(doc, '//div[@class="resultitem"]\
 					[.//a[@class="cataloglinkhref"][1]/@href]');
 	//collections
-	if(!res.length) res = ZU.xpath(doc, '//div[contains(@class,"row")]/div[.//div[contains(@class, "result")]//a[contains(@class, "cataloglinkhref")][1]/@href]');
+	if (!res.length) res = ZU.xpath(doc, '//div[contains(@class,"row")]/div[.//div[contains(@class, "result")]//a[contains(@class, "cataloglinkhref")][1]/@href]');
 	return res;
 }
 
 function doWeb(doc, url){
-	if(detectWeb(doc, url) == "multiple") { 
+	if (detectWeb(doc, url) == "multiple") { 
 		var items = {};
 		var rows = getSearchResults(doc);
 		var c=0;
@@ -65,14 +65,14 @@ function doWeb(doc, url){
 						ZU.xpathText(rows[i], './h4[@class="Title"]/text()[last()]');	//collection item
 			var id = ZU.xpathText(rows[i], './/a[contains(@class, "cataloglinkhref")][1]/@href');
 			//Z.debug(id + ": " + title)
-			if(id) {
+			if (id) {
 				id = (id.match(/\/(\d+)/) || [])[1];
 				//lists can display the same record, but with different titles
 				//(for different PDF versions), so we add a unique number to each
 				//record so they don't override each other. We strip it off later
-				if(id) id = c++ + '-' + id;
+				if (id) id = c++ + '-' + id;
 			}
-			if(title && id) items[id] = title;
+			if (title && id) items[id] = title;
 		}
 
 		Zotero.selectItems(items, function (items) {

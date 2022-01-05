@@ -1,42 +1,34 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "Export collections": false,
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "doi",
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth]_[year]",
-      "jabrefFormat": 0
-    },
-    "release": "0.7.32"
+      "citekeyFormat": "[auth]_[year]"
+    }
   },
   "items": [
     {
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "T.",
           "lastName": "Hald"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "D.M.A.L.F.",
           "lastName": "Wong"
         }
       ],
       "date": "2000",
-      "institution": "Royal Veterinary and Agricultural University, Department of Animal Health and Animal Science, Division of Ethology and Health",
-      "itemID": 136,
+      "itemID": 1,
       "itemType": "report",
       "publisher": "Royal Veterinary and Agricultural University, Department of Animal Health and Animal Science, Division of Ethology and Health",
       "shortTitle": "<i>Salmonella</i> in Pork (SALINPORK)",

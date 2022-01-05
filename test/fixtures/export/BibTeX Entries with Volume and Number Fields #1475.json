@@ -1,0 +1,99 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "asciiBibTeX": false,
+      "biblatexExtendedNameFormat": true,
+      "bibtexURL": "url",
+      "citekeyFormat": "[auth:lower][year]",
+      "postscript": "if (Translator.BetterBibTeX && item.itemType === 'conferencePaper' && item.extra) {\n    const lines = item.extra.split('\\n')\n    for (let line of lines) {\n        let matches = /^([A-Za-z0-9]+): *(.+)$/.exec(line)\n        if (matches === null || matches[1] !== 'Sponsor') {\n            continue\n        }\n        reference.add({name: 'organization', value: matches[2]})\n    }\n}\n\n//if (Translator.BetterBibTeX && item.itemType === 'conferencePaper' && item.extra && item.publisher) {\n//  Zotero.debug(JSON.stringify(item))\n//\n//    var event_place = ''\n//    var publisher_place = ''\n//\n//    const lines = item.extra.split('\\n')\n//    for (let line of lines) {\n//        let matches = /^([A-Za-z0-9]+): *(.+)$/.exec(line)\n//        if (matches !== null && matches[1] === 'Event Place') {\n//            event_place = matches[2]\n//        } else if (matches !== null && matches[1] === 'Publisher Place') {\n//            publisher_place = matches[2]\n//        }\n//    }\n//\n//    if (event_place !== '' && publisher_place !== '') {\n//        reference.add({name: 'address', value: event_place})\n//        reference.add({name: 'publisher', value: item.publisher + ', ' + publisher_place})\n//    }\n//}",
+      "skipFields": "abstract,file,keywords,note",
+      "workers": 2
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.14778/1938545.1938548",
+      "abstractNote": "Scaling up the sparse matrix-vector multiplication kernel on modern Graphics Processing Units (GPU) has been at the heart of numerous studies in both academia and industry. In this article we present a novel non-parametric, self-tunable, approach to data representation for computing this kernel, particularly targeting sparse matrices representing power-law graphs. Using real web graph data, we show how our representation scheme, coupled with a novel tiling algorithm, can yield significant benefits over the current state of the art GPU efforts on a number of core data mining algorithms such as PageRank, HITS and Random Walk with Restart.",
+      "citationKey": "yang2011a",
+      "conferenceName": "37th International Conference on Very Large Data Bases",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Xintian",
+          "lastName": "Yang"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Srinivasan",
+          "lastName": "Parthasarathy"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "P.",
+          "lastName": "Sadayappan"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "H. V.",
+          "lastName": "Jagadish"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Jos\u00e9",
+          "lastName": "Blakeley"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Joseph M.",
+          "lastName": "Hellerstein"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Nick",
+          "lastName": "Koudas"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Wolfgang",
+          "lastName": "Lehner"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Sunita",
+          "lastName": "Sarawagi"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Uwe",
+          "lastName": "R\u00f6hm"
+        }
+      ],
+      "date": "2011",
+      "extra": [
+        "Event Date: 2011-08-29/2011-09-03",
+        "ISSN: 2150-8097",
+        "Issue: 4",
+        "Sponsor: Google"
+      ],
+      "itemID": 1,
+      "itemType": "conferencePaper",
+      "language": "en-US",
+      "libraryCatalog": "ACM Digital Library",
+      "pages": "231\u2013242",
+      "place": "United States of America",
+      "publicationTitle": "Proceedings of the VLDB Endowment",
+      "publisher": "VLDB Endowment",
+      "rights": "Copyright 2011 VLDB Endowment",
+      "shortTitle": "Fast sparse matrix-vector multiplication on GPUs",
+      "title": "Fast sparse matrix-vector multiplication on GPUs: implications for graph mining",
+      "url": "https://dl.acm.org/doi/10.14778/1938545.1938548",
+      "volume": "4"
+    }
+  ]
+}

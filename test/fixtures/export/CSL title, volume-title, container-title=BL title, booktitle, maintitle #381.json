@@ -1,25 +1,15 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]",
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "jabrefFormat": 0,
-      "postscript": "",
-      "skipFields": ""
-    },
-    "release": "1.5.11"
+      "citekeyFormat": "[auth][year]"
+    }
   },
   "items": [
     {
@@ -35,8 +25,10 @@
         }
       ],
       "date": "1902",
-      "extra": "{:volume-title: Clitophon, Republic, Timaeus, Critias}",
-      "itemID": 276,
+      "extra": [
+        "{:volume-title: Clitophon, Republic, Timaeus, Critias}"
+      ],
+      "itemID": 2,
       "itemType": "book",
       "language": "en-GB",
       "place": "Oxford",
@@ -46,7 +38,6 @@
       "volume": "4"
     },
     {
-      "bookTitle": "Opera",
       "creators": [
         {
           "creatorType": "author",
@@ -59,8 +50,10 @@
         }
       ],
       "date": "1901",
-      "extra": "volume-title: Clitophon, Republic, Timaeus, Critias",
-      "itemID": 277,
+      "extra": [
+        "volume-title: Clitophon, Republic, Timaeus, Critias"
+      ],
+      "itemID": 1,
       "itemType": "bookSection",
       "language": "en-GB",
       "pages": "327\u2013621",

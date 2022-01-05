@@ -62,10 +62,10 @@ function doWeb(doc, url) {
 	item.title = ZU.xpathText(doc,"/html/head/title"); /* get email title */
 
 	var from = ZU.xpathText(doc,"/html/body/b"); /* get sender's name */
-	if(from) item.creators.push(ZU.cleanAuthor(ZU.trimInternal(from), "author"));
+	if (from) item.creators.push(ZU.cleanAuthor(ZU.trimInternal(from), "author"));
 
 	item.date = ZU.xpathText(doc,"/html/body/i"); /* get date email was sent */
-	if(item.date) item.date = ZU.trimInternal(item.date);
+	if (item.date) item.date = ZU.trimInternal(item.date);
 
 	item.url = url; /* get url of archived email */
 	

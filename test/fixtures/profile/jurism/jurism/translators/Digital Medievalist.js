@@ -14,7 +14,7 @@
 
 function detectWeb(doc, url) {
 
-	if(doc.title == "Digital Medievalist: Journal" || doc.title == "Digital Medievalist" || doc.title == "Digital Medievalist Journal") {
+	if (doc.title == "Digital Medievalist: Journal" || doc.title == "Digital Medievalist" || doc.title == "Digital Medievalist Journal") {
 		return "multiple";
 	} else {
 		return "journalArticle";
@@ -67,7 +67,7 @@ function scrape(doc, url){
 	var authors = ZU.xpath(doc, '//div[@class="frontmatter"]//p[@class="byline"]');
 	for (var i=0; i<authors.length;i++){
 		var author = authors[i].textContent.match(/^.+?,/);
-		if(author) newItem.creators.push(ZU.cleanAuthor(author[0], "author"))
+		if (author) newItem.creators.push(ZU.cleanAuthor(author[0], "author"))
 	}
 	var abstract = ZU.xpathText(doc, '//div[@class="abstract"]/p[last()]');
 	if (abstract) newItem.abstractNote = ZU.trimInternal(abstract);	

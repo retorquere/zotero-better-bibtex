@@ -1,16 +1,39 @@
 {
 	"translatorID": "1b9ed730-69c7-40b0-8a06-517a89a3a278",
+	"translatorType": 4,
 	"label": "Library Catalog (PICA)",
-	"creator": "Sean Takats, Michael Berkowitz, Sylvain Machefert, Sebastian Karcher",
-	"target": "^https?://[^/]+(/[^/]+)?//?DB=\\d",
+	"creator": "Sean Takats, Michael Berkowitz, Sylvain Machefert, Sebastian Karcher, Stéphane Gully, Mathis Eon",
+	"target": "^https?://[^/]+(/[^/]+)*//?DB=\\d",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 248,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsb",
-	"lastUpdated": "2018-01-26 09:57:02"
+	"lastUpdated": "2021-06-02 19:50:00"
 }
+
+/*
+	***** BEGIN LICENSE BLOCK *****
+
+	Copyright © 2013 Sean Takats, Michael Berkowitz, Sylvain Machefert, Sebastian Karcher, Stéphane Gully
+	
+	This file is part of Zotero.
+
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Zotero is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU Affero General Public License for more details.
+
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
+
+	***** END LICENSE BLOCK *****
+*/
 
 function getSearchResults(doc) {
 	return doc.evaluate(
@@ -18,95 +41,109 @@ function getSearchResults(doc) {
 		doc, null, XPathResult.ANY_TYPE, null);
 }
 
-function detectWeb(doc, url) {
+function detectWeb(doc, _url) {
 	var multxpath = "//span[@class='tab1']|//td[@class='tab1']";
-	if (elt = doc.evaluate(multxpath, doc, null, XPathResult.ANY_TYPE, null).iterateNext()) {
+	var elt;
+	if ((elt = doc.evaluate(multxpath, doc, null, XPathResult.ANY_TYPE, null).iterateNext())) {
 		var content = elt.textContent;
-		//Z.debug(content)
+		// Z.debug(content)
 		if ((content == "Liste des résultats") || (content == "shortlist") || (content == 'Kurzliste') || content == 'titellijst') {
-			if(!getSearchResults(doc).iterateNext()) return;	//no results. Does not seem to be necessary, but just in case.
+			if (!getSearchResults(doc).iterateNext()) {
+			// no results. Does not seem to be necessary, but just in case.
+				return false;
+			}
+
 			return "multiple";
-			
-		} else if ((content == "Notice détaillée") || (content == "title data") || (content == 'Titeldaten') || (content == 'Vollanzeige') || 
-					(content == 'Besitznachweis(e)') || (content == 'full title') || (content == 'Titelanzeige' || (content == 'titelgegevens'))) {
+		}
+		else if ((content == "Notice détaillée") || (content == "title data") || (content == 'Titeldaten') || (content == 'Vollanzeige') || (content == 'Besitznachweis(e)') || (content == 'full title') || (content == 'Titelanzeige' || (content == 'titelgegevens'))) {
 			var xpathimage = "//span[@class='rec_mat_long']/img|//table[contains(@summary, 'presentation')]/tbody/tr/td/img";
-			if (elt = doc.evaluate(xpathimage, doc, null, XPathResult.ANY_TYPE, null).iterateNext()) {
+			if ((elt = doc.evaluate(xpathimage, doc, null, XPathResult.ANY_TYPE, null).iterateNext())) {
 				var type = elt.getAttribute('src');
-				//Z.debug(type);
+				// Z.debug(type);
 				if (type.includes('article.')) {
-					//book section and journal article have the same icon
-					//we can check if there is an ISBN
+					// book section and journal article have the same icon
+					// we can check if there is an ISBN
 					if (ZU.xpath(doc, '//tr/td[@class="rec_lable" and .//span[starts-with(text(), "ISBN")]]').length) {
 						return 'bookSection';
 					}
 					return "journalArticle";
-				} else if (type.includes('audiovisual.')) {
+				}
+				else if (type.includes('audiovisual.')) {
 					return "film";
-				} else if (type.includes('book.')) {
+				}
+				else if (type.includes('book.')) {
 					return "book";
-				} else if (type.includes('handwriting.')) {
+				}
+				else if (type.includes('handwriting.')) {
 					return "manuscript";
-				} else if (type.includes('sons.') || type.includes('sound.') || type.includes('score')) {
+				}
+				else if (type.includes('sons.') || type.includes('sound.') || type.includes('score')) {
 					return "audioRecording";
-				} else if (type.includes('thesis.')) {
+				}
+				else if (type.includes('thesis.')) {
 					return "thesis";
-				} else if (type.includes('map.')) {
+				}
+				else if (type.includes('map.')) {
 					return "map";
 				}
 			}
 			return "book";
 		}
 	}
+	return false;
 }
 
 function scrape(doc, url) {
 	var zXpath = '//span[@class="Z3988"]';
 	var eltCoins = doc.evaluate(zXpath, doc, null, XPathResult.ANY_TYPE, null).iterateNext();
+	var newItem = new Zotero.Item();
 	if (eltCoins) {
 		var coins = eltCoins.getAttribute('title');
-
-		var newItem = new Zotero.Item();
-		//newItem.repository = "SUDOC"; // do not save repository
-		//make sure we don't get stuck because of a COinS error
+	
+		// newItem.repository = "SUDOC"; // do not save repository
+		// make sure we don't get stuck because of a COinS error
 		try {
 			Zotero.Utilities.parseContextObject(coins, newItem);
-		} catch(e) {
+		}
+		catch (e) {
 			Z.debug("error parsing COinS");
 		}
+
 		/** we need to clean up the results a bit **/
-		//pages should not contain any extra characters like p. or brackets (what about supplementary pages?)
-		if(newItem.pages) newItem.pages = newItem.pages.replace(/[^\d-]+/g, '');
-		
-		
-	} else var newItem = new Zotero.Item();
+		// pages should not contain any extra characters like p. or brackets (what about supplementary pages?)
+		if (newItem.pages) newItem.pages = newItem.pages.replace(/[^\d-]+/g, '');
+	}
 
 	newItem.itemType = detectWeb(doc, url);
 	newItem.libraryCatalog = "Library Catalog - " + doc.location.host;
-	// 	We need to correct some informations where COinS is wrong
+	// We need to correct some informations where COinS is wrong
 	var rowXpath = '//tr[td[@class="rec_lable"]]';
-	if (!ZU.xpathText(doc, rowXpath)){
+	if (!ZU.xpathText(doc, rowXpath)) {
 		rowXpath = '//tr[td[@class="preslabel"]]';
 	}
 	var tableRows = doc.evaluate(rowXpath, doc, null, XPathResult.ANY_TYPE, null);
 	
 	var tableRow, role;
 	var authorpresent = false;
-	while (tableRow = tableRows.iterateNext()) {
+	while ((tableRow = tableRows.iterateNext())) {
 		var field = doc.evaluate('./td[@class="rec_lable"]|./td[@class="preslabel"]', tableRow, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
 		var value = doc.evaluate('./td[@class="rec_title"]|./td[@class="presvalue"]', tableRow, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
 		
 		field = ZU.trimInternal(ZU.superCleanString(field.trim()))
-			.toLowerCase().replace(/\(s\)/g, '');	
+			.toLowerCase().replace(/\(s\)/g, '');
 				
 		// With COins, we only get one author - so we start afresh. We do so in two places: Here if there is an author fied
-		//further down for other types of author fields. This is so we don't overwrite the author array when we have both an author and 
-		//another persons field (cf. the Scheffer/Schachtschabel/Blume/Thiele test)
-		if (field == "author" || field == "auteur" || field == "verfasser"){ 
+		// further down for other types of author fields. This is so we don't overwrite the author array when we have both an author and
+		// another persons field (cf. the Scheffer/Schachtschabel/Blume/Thiele test)
+		if (field == "author" || field == "auteur" || field == "verfasser") {
 			authorpresent = true;
-			newItem.creators = new Array();
-		}	
-		//Z.debug(field + ": " + value)
-		//french, english, german, and dutch interface
+			newItem.creators = [];
+		}
+
+		// Z.debug(field + ": " + value)
+		// french, english, german, and dutch interface
+		var m;
+		var i;
 		switch (field) {
 			case 'auteur':
 			case 'author':
@@ -116,22 +153,25 @@ function scrape(doc, url) {
 			case 'other persons':
 			case 'sonst. personen':
 			case 'collaborator':
-			case 'beiträger': //turn into contributor
+			case 'beiträger': // turn into contributor
 			case 'contributor':
-				if (field == 'medewerker' || field == 'beteiligt'||field =='collaborator') role = "editor";
+				if (field == 'medewerker' || field == 'beteiligt' || field == 'collaborator') role = "editor";
 				if (field == 'beiträger' || field == 'contributor') role = "contributor";
-				//we may have set this in the title field below
+				
+				// we may have set this in the title field below
 				else if (!role) role = "author";
 				
-				if (!authorpresent) newItem.creators = new Array();
-				if (authorpresent && (field=="sonst. personen" || field=="other persons")) role = "editor";
-				//sudoc has authors on separate lines and with different format - use this
+				if (!authorpresent) newItem.creators = [];
+				if (authorpresent && (field == "sonst. personen" || field == "other persons")) role = "editor";
+				
+				// sudoc has authors on separate lines and with different format - use this
+				var authors;
+				var author;
 				if (url.search(/sudoc\.(abes\.)?fr/) != -1) {
-
-					var authors = ZU.xpath(tableRow, './td[2]/div');
-					for (var i in authors) {
+					authors = ZU.xpath(tableRow, './td[2]/div');
+					for (i in authors) {
 						var authorText = authors[i].textContent;
-						var authorFields = authorText.match(/^\s*(.+?)\s*(?:\((.+?)\)\s*)?\.\s*([^\.]+)\s*$/);
+						var authorFields = authorText.match(/^\s*(.+?)\s*(?:\((.+?)\)\s*)?\.\s*([^.]+)\s*$/);
 						var authorFunction = '';
 						if (authorFields) {
 							authorFunction = authorFields[3];
@@ -145,31 +185,35 @@ function scrape(doc, url) {
 						// TODO : Add other author types
 						if (authorFunction == 'Traduction') {
 							zoteroFunction = 'translator';
-						} else if ((authorFunction.substr(0, 7) == 'Éditeur') || authorFunction=="Directeur de la publication") {
-							//once Zotero suppports it, distinguish between editorial director and editor here;
+						}
+						else if ((authorFunction.substr(0, 7) == 'Éditeur') || authorFunction == "Directeur de la publication") {
+							// once Zotero suppports it, distinguish between editorial director and editor here;
 							zoteroFunction = 'editor';
-						} else if ((newItem.itemType == "thesis") && (authorFunction != 'Auteur')) {
+						}
+						else if ((newItem.itemType == "thesis") && (authorFunction != 'Auteur')) {
 							zoteroFunction = "contributor";
-						} else {
+						}
+						else {
 							zoteroFunction = 'author';
 						}
 
 						if (authorFunction == "Université de soutenance" || authorFunction == "Organisme de soutenance") {
 							// If the author function is "université de soutenance"	it means that this author has to be in "university" field
 							newItem.university = authorText;
-							newItem.city = extra; //store for later
-						} else {
-							var author = authorText.replace(/[\*\(].+[\)\*]/, "");
+							newItem.city = extra; // store for later
+						}
+						else {
+							author = authorText.replace(/[*(].+[)*]/, "");
 							newItem.creators.push(Zotero.Utilities.cleanAuthor(author, zoteroFunction, true));
 						}
 					}
-
-				} else {
-					var authors = value.split(/\s*;\s*/);
-					for (var i in authors) {
-						if (role == "author") if (authors[i].search(/[\[\()]Hrsg\.?[\]\)]/)!=-1) role = "editor";
-						var author = authors[i].replace(/[\*\(\[].+[\)\*\]]/, "");
-						var comma = author.indexOf(",") != -1;
+				}
+				else {
+					authors = value.split(/\s*;\s*/);
+					for (i in authors) {
+						if (role == "author") if (authors[i].search(/[[()]Hrsg\.?[\])]/) != -1) role = "editor";
+						author = authors[i].replace(/[*([].+[)*\]]/, "");
+						var comma = author.includes(",");
 						newItem.creators.push(Zotero.Utilities.cleanAuthor(author, role, comma));
 					}
 				}
@@ -178,118 +222,128 @@ function scrape(doc, url) {
 			case 'edition':
 			case 'ausgabe':
 				var edition;
-				if (edition = value.match(/(\d+)[.\s]+(Aufl|ed|éd)/)){
+				if ((edition = value.match(/(\d+)[.\s]+(Aufl|ed|éd)/))) {
 					newItem.edition = edition[1];
 				}
 				else newItem.edition = value;
+				break;
 
 			case 'dans':
 			case 'in':
-				//Looks like we can do better with titles than COinS
-				//journal/book titles are always first
-				//Several different formats for ending a title
+				// Looks like we can do better with titles than COinS
+				// journal/book titles are always first
+				// Several different formats for ending a title
 				// end with "/" http://gso.gbv.de/DB=2.1/PPNSET?PPN=732386977
 				//              http://gso.gbv.de/DB=2.1/PPNSET?PPN=732443563
 				// end with ". -" followed by publisher information http://gso.gbv.de/DB=2.1/PPNSET?PPN=729937798
 				// end with ", ISSN" (maybe also ISBN?) http://www.sudoc.abes.fr/DB=2.1/SET=6/TTL=1/SHW?FRST=10
 				newItem.publicationTitle = ZU.superCleanString(
-					value.substring(0,value.search(/(?:\/|,\s*IS[SB]N\b|\.\s*-)/i)));
-				//ISSN/ISBN are easyto find
-				//http://gso.gbv.de/DB=2.1/PPNSET?PPN=732386977
-				//http://gso.gbv.de/DB=2.1/PPNSET?PPN=732443563
-				var issnRE = /\b(is[sb]n)\s+([-\d\sx]+)/i;	//this also matches ISBN
-				var m = value.match(issnRE);
-				if(m) {
-					if(m[1].toUpperCase() == 'ISSN' && !newItem.ISSN) {
-						newItem.ISSN = m[2].replace(/\s+/g,'');
-					} else if(m[1].toUpperCase() == 'ISBN' && !newItem.ISBN) {
-						newItem.ISBN = m[2].replace(/\s+/g,'');
+					value.substring(0, value.search(/(?:\/|,\s*IS[SB]N\b|\.\s*-)/i)));
+
+				// ISSN/ISBN are easyto find
+				// http://gso.gbv.de/DB=2.1/PPNSET?PPN=732386977
+				// http://gso.gbv.de/DB=2.1/PPNSET?PPN=732443563
+				var issnRE = /\b(is[sb]n)\s+([-\d\sx]+)/i;	// this also matches ISBN
+				m = value.match(issnRE);
+				if (m) {
+					if (m[1].toUpperCase() == 'ISSN' && !newItem.ISSN) {
+						newItem.ISSN = m[2].replace(/\s+/g, '');
+					}
+					else if (m[1].toUpperCase() == 'ISBN' && !newItem.ISBN) {
+						newItem.ISBN = m[2].replace(/\s+/g, '');
 					}
 				}
-				//publisher information can be preceeded by ISSN/ISBN
+
+				// publisher information can be preceeded by ISSN/ISBN
 				// typically / ed. by ****. - city, country : publisher
-				//http://gso.gbv.de/DB=2.1/PPNSET?PPN=732386977
+				// http://gso.gbv.de/DB=2.1/PPNSET?PPN=732386977
 				var n = value;
-				if(m) {
+				if (m) {
 					n = value.split(m[0])[0];
-					//first editors
-					var ed = n.split('/');	//editors only appear after /
-					if(ed.length > 1) {
-						n = n.substr(ed[0].length+1);	//trim off title
-						ed = ed[1].split('-',1)[0];
-						n = n.substr(ed.length+1);	//trim off editors
-						if(ed.indexOf('ed. by') != -1) {	//not http://gso.gbv.de/DB=2.1/PPNSET?PPN=732443563
-							ed = ed.replace(/^\s*ed\.\s*by\s*|[.\s]+$/g,'')
-									.split(/\s*(?:,|and)\s*/);	//http://gso.gbv.de/DB=2.1/PPNSET?PPN=731519299
-							for(var i=0, m=ed.length; i<m; i++) {
+					
+					// first editors
+					var ed = n.split('/');	// editors only appear after /
+					if (ed.length > 1) {
+						n = n.substr(ed[0].length + 1);	// trim off title
+						ed = ed[1].split('-', 1)[0];
+						n = n.substr(ed.length + 1);	// trim off editors
+						if (ed.includes('ed. by')) {	// not http://gso.gbv.de/DB=2.1/PPNSET?PPN=732443563
+							ed = ed.replace(/^\s*ed\.\s*by\s*|[.\s]+$/g, '')
+									.split(/\s*(?:,|and)\s*/);	// http://gso.gbv.de/DB=2.1/PPNSET?PPN=731519299
+							for (i = 0, m = ed.length; i < m; i++) {
 								newItem.creators.push(ZU.cleanAuthor(ed[i], 'editor', false));
 							}
 						}
 					}
 					var loc = n.split(':');
-					if(loc.length == 2) {
-						if(!newItem.publisher) newItem.publisher = loc[1].replace(/^\s+|[\s,]+$/,'');
-						if(!newItem.place) newItem.place = loc[0].replace(/\s*\[.+?\]\s*/, '').trim();
+					if (loc.length == 2) {
+						if (!newItem.publisher) newItem.publisher = loc[1].replace(/^\s+|[\s,]+$/, '');
+						if (!newItem.place) newItem.place = loc[0].replace(/\s*\[.+?\]\s*/, '').trim();
 					}
 
-					//we can now drop everything up through the last ISSN/ISBN
+					// we can now drop everything up through the last ISSN/ISBN
 					n = value.split(issnRE).pop();
 				}
-				//For the rest, we have trouble with some articles, like
-				//http://www.sudoc.abes.fr/DB=2.1/SRCH?IKT=12&TRM=013979922
-				//we'll only take the last set of year, volume, issue
+				// For the rest, we have trouble with some articles, like
+				// http://www.sudoc.abes.fr/DB=2.1/SRCH?IKT=12&TRM=013979922
+				// we'll only take the last set of year, volume, issue
 
-				//There are also some other problems, like
-				//"How to cook a russian goose / by Robert Cantwell" at http://opc4.kb.nl
+				// There are also some other problems, like
+				// "How to cook a russian goose / by Robert Cantwell" at http://opc4.kb.nl
 
-				//page ranges are last
-				//but they can be indicated by p. or page (or s?)
-				//http://www.sudoc.abes.fr/DB=2.1/SET=6/TTL=1/SHW?FRST=10
-				//http://opc4.kb.nl/DB=1/SET=2/TTL=1/SHW?FRST=7
-				//we'll just assume there are always pages at the end and ignore the indicator
+				// page ranges are last
+				// but they can be indicated by p. or page (or s?)
+				// http://www.sudoc.abes.fr/DB=2.1/SET=6/TTL=1/SHW?FRST=10
+				// http://opc4.kb.nl/DB=1/SET=2/TTL=1/SHW?FRST=7
+				// we'll just assume there are always pages at the end and ignore the indicator
 				n = n.split(',');
 				var pages = n.pop().match(/\d+(?:\s*-\s*\d+)/);
-				if(pages && !newItem.pages) {
+				if (pages && !newItem.pages) {
 					newItem.pages = pages[0];
 				}
-				n = n.join(',');	//there might be empty values that we're joining here
-									//could filter them out, but IE <9 does not support Array.filter, so we won't bother
-				//we're left possibly with some sort of formatted volume year issue string
-				//it's very unlikely that we will have 4 digit volumes starting with 19 or 20, so we'll just grab the year first
+				n = n.join(','); // there might be empty values that we're joining here
+				// could filter them out, but IE <9 does not support Array.filter, so we won't bother
+				// we're left possibly with some sort of formatted volume year issue string
+				// it's very unlikely that we will have 4 digit volumes starting with 19 or 20, so we'll just grab the year first
 				var dateRE = /\b(?:19|20)\d{2}\b/g;
 				var date, lastDate;
-				while(date = dateRE.exec(n)) {
+				while ((date = dateRE.exec(n))) {
 					lastDate = date[0];
-					n = n.replace(lastDate,'');	//get rid of year
+					n = n.replace(lastDate, '');	// get rid of year
 				}
-				if(lastDate) {
-					if(!newItem.date) newItem.date = lastDate;
-				} else {	//if there's no year, panic and stop trying
+				if (lastDate) {
+					if (!newItem.date) newItem.date = lastDate;
+				}
+				else {	// if there's no year, panic and stop trying
 					break;
 				}
-				//volume comes before issue
-				//but there can sometimes be other numeric stuff that we have
-				//not filtered out yet, so we just take the last two numbers
-				//e.g. http://gso.gbv.de/DB=2.1/PPNSET?PPN=732443563
-				var issvolRE = /[\d\/]+/g;	//in French, issues can be 1/4 (e.g. http://www.sudoc.abes.fr/DB=2.1/SRCH?IKT=12&TRM=013979922)
+				
+				// volume comes before issue
+				// but there can sometimes be other numeric stuff that we have
+				// not filtered out yet, so we just take the last two numbers
+				// e.g. http://gso.gbv.de/DB=2.1/PPNSET?PPN=732443563
+				var issvolRE = /[\d/]+/g;	// in French, issues can be 1/4 (e.g. http://www.sudoc.abes.fr/DB=2.1/SRCH?IKT=12&TRM=013979922)
 				var num, vol, issue;
-				while(num = issvolRE.exec(n)) {
-					if(issue != undefined) {
+				while ((num = issvolRE.exec(n))) {
+					if (issue != undefined) {
 						vol = issue;
 						issue = num[0];
-					} else if(vol != undefined) {
+					}
+					else if (vol != undefined) {
 						issue = num[0];
-					} else {
+					}
+					else {
 						vol = num[0];
 					}
 				}
-				if(vol != undefined && !newItem.volume) {
+				if (vol != undefined && !newItem.volume) {
 					newItem.volume = vol;
 				}
-				if(issue != undefined && !newItem.issue) {
+				if (issue != undefined && !newItem.issue) {
 					newItem.issue = issue;
 				}
 				break;
+
 			case 'serie':
 			case 'collection':
 			case 'series':
@@ -297,17 +351,18 @@ function scrape(doc, url) {
 			case 'reeks':
 				// The series isn't in COinS
 				var series = value;
-				var m;
 				var volRE = /;[^;]*?(\d+)\s*$/;
-				if(m = series.match(volRE)) {
-					if(ZU.fieldIsValidForType('seriesNumber', newItem.itemType)) { //e.g. http://gso.gbv.de/DB=2.1/PPNSET?PPN=729937798
-						if(!newItem.seriesNumber) newItem.seriesNumber = m[1];
-					} else {	//e.g. http://www.sudoc.fr/05625248X
-						if(!newItem.volume) newItem.volume = m[1];
+				if ((m = series.match(volRE))) {
+					if (ZU.fieldIsValidForType('seriesNumber', newItem.itemType)) { // e.g. http://gso.gbv.de/DB=2.1/PPNSET?PPN=729937798
+						if (!newItem.seriesNumber) newItem.seriesNumber = m[1];
+					}
+					else if (!newItem.volume) {
+						// e.g. http://www.sudoc.fr/05625248X
+						newItem.volume = m[1];
 					}
 					series = series.replace(volRE, '').trim();
 				}
-				newItem.seriesTitle = newItem.series = series;	//see http://forums.zotero.org/discussion/18322/series-vs-series-title/
+				newItem.seriesTitle = newItem.series = series;	// see http://forums.zotero.org/discussion/18322/series-vs-series-title/
 				break;
 
 			case 'titre':
@@ -315,15 +370,14 @@ function scrape(doc, url) {
 			case 'titel':
 			case 'title of article':
 			case 'aufsatztitel':
-				
-					title = value.split(" / ");
-					if (title[1]) {
-						//Z.debug("Title1: "+title[1])
-						//store this to convert authors to editors. 
-						//Run separate if in case we'll do this for more languages
-						//this assumes title precedes author - need to make sure that's the case
-						if (title[1].match(/^\s*(ed. by|edited by|hrsg\. von|édité par)/)) role = "editor";
-					}
+				var title = value.split(" / ");
+				if (title[1]) {
+					// Z.debug("Title1: "+title[1])
+					// store this to convert authors to editors.
+					// Run separate if in case we'll do this for more languages
+					// this assumes title precedes author - need to make sure that's the case
+					if (title[1].match(/^\s*(ed. by|edited by|hrsg\. von|édité par)/)) role = "editor";
+				}
 				if (!newItem.title) {
 					newItem.title = title[0];
 				}
@@ -332,15 +386,15 @@ function scrape(doc, url) {
 
 			case 'periodical':
 			case 'zeitschrift':
-				//for whole journals
-				var journaltitle =  value.split(" / ")[0];
+				// for whole journals
+				var journaltitle = value.split(" / ")[0];
 				break;
 
 			case 'year':
 			case 'jahr':
 			case 'jaar':
 			case 'date':
-				newItem.date = value; //we clean this up below
+				newItem.date = value; // we clean this up below
 				break;
 
 			case 'language':
@@ -356,31 +410,31 @@ function scrape(doc, url) {
 			case 'ort/jahr':
 			case 'uitgever':
 			case 'publication':
-				//ignore publisher for thesis, so that it does not overwrite university
+				// ignore publisher for thesis, so that it does not overwrite university
 				if (newItem.itemType == 'thesis' && newItem.university) break;
 
-				var m = value.split(';')[0];	//hopefully publisher is always first (e.g. http://www.sudoc.fr/128661828)
+				m = value.split(';')[0]; // hopefully publisher is always first (e.g. http://www.sudoc.fr/128661828)
 				var place = m.split(':', 1)[0];
-				var pub = m.substring(place.length+1); //publisher and maybe year
-				if(!newItem.city) {
+				var pub = m.substring(place.length + 1); // publisher and maybe year
+				if (!newItem.city) {
 					place = place.replace(/[[\]]/g, '').trim();
-					if(place.toUpperCase() != 'S.L.') {	//place is not unknown
+					if (place.toUpperCase() != 'S.L.') {	// place is not unknown
 						newItem.city = place;
 					}
 				}
 
-				if(!newItem.publisher) {
-					if(!pub) break; //not sure what this would be or look like without publisher
-					pub = pub.replace(/\[.*?\]/g,'')	//drop bracketted info, which looks to be publisher role
+				if (!newItem.publisher) {
+					if (!pub) break; // not sure what this would be or look like without publisher
+					pub = pub.replace(/\[.*?\]/g, '')	// drop bracketted info, which looks to be publisher role
 									.split(',');
-					if(pub[pub.length-1].search(/\D\d{4}\b/) != -1) {	//this is most likely year, we can drop it
+					if (pub[pub.length - 1].search(/\D\d{4}\b/) != -1) {	// this is most likely year, we can drop it
 						pub.pop();
 					}
-					if(pub.length) newItem.publisher = pub.join(',');	//in case publisher contains commas
+					if (pub.length) newItem.publisher = pub.join(',');	// in case publisher contains commas
 				}
-				if(!newItem.date) {	//date is always (?) last on the line
-					m = value.match(/\D(\d{4})\b[^,;]*$/);	//could be something like c1986
-					if(m) newItem.date = m[1];
+				if (!newItem.date) {	// date is always (?) last on the line
+					m = value.match(/\D(\d{4})\b[^,;]*$/);	// could be something like c1986
+					if (m) newItem.date = m[1];
 				}
 				break;
 
@@ -401,29 +455,29 @@ function scrape(doc, url) {
 				value = ZU.trimInternal(value); // Since we assume spaces
 				
 				// We're going to extract the number of pages from this field
-				var m = value.match(/(\d+) vol\./);
+				m = value.match(/(\d+) vol\./);
 				// sudoc in particular includes "1 vol" for every book; We don't want that info
 				if (m && m[1] != 1) {
 					newItem.numberOfVolumes = m[1];
 				}
 				
-				//make sure things like 2 partition don't match, but 2 p at the end of the field do
+				// make sure things like 2 partition don't match, but 2 p at the end of the field do
 				// f., p., and S. are "pages" in various languages
 				// For multi-volume works, we expect formats like:
-				//   x-109 p., 510 p. and X, 106 S.; 123 S.
-				var numPagesRE = /\[?((?:[ivxlcdm\d]+[ ,\-]*)+)\]?\s+[fps]\b/ig,
-					numPages = [], m;
-				while(m = numPagesRE.exec(value)) {
+				// x-109 p., 510 p. and X, 106 S.; 123 S.
+				var numPagesRE = /\[?((?:[ivxlcdm\d]+[ ,-]*)+)\]?\s+[fps]\b/ig,
+					numPages = [];
+				while ((m = numPagesRE.exec(value))) {
 					numPages.push(m[1].replace(/ /g, '')
-						.replace(/[\-,]/g,'+')
+						.replace(/[-,]/g, '+')
 						.toLowerCase() // for Roman numerals
 					);
 				}
-				if(numPages.length) newItem.numPages = numPages.join('; ');
+				if (numPages.length) newItem.numPages = numPages.join('; ');
 				
-				//running time for movies:
+				// running time for movies:
 				m = value.match(/\d+\s*min/);
-				if (m){
+				if (m) {
 					newItem.runningTime = m[0];
 				}
 				break;
@@ -454,26 +508,27 @@ function scrape(doc, url) {
 			case 'category/subject':
 
 				var subjects = doc.evaluate('./td[2]/div', tableRow, null, XPathResult.ANY_TYPE, null);
-				//subjects on separate div lines
+				// subjects on separate div lines
 				if (ZU.xpath(tableRow, './td[2]/div').length > 1) {
-					var subject_out = "";
-					while (subject = subjects.iterateNext()) {
-						var subject_content = subject.textContent;
-						subject_content = subject_content.replace(/^\s*/, "");
-						subject_content = subject_content.replace(/\s*$/, "");
-						subject_content = subject_content.split(/\s*;\s*/)
-						for (var i in subject_content) {
-							if (subject_content != "") {
-								newItem.tags.push(Zotero.Utilities.trimInternal(subject_content[i]));
+					var subject;
+					while ((subject = subjects.iterateNext())) {
+						var subjectContent = subject.textContent;
+						subjectContent = subjectContent.replace(/^\s*/, "");
+						subjectContent = subjectContent.replace(/\s*$/, "");
+						subjectContent = subjectContent.split(/\s*;\s*/);
+						for (i in subjectContent) {
+							if (subjectContent != "") {
+								newItem.tags.push(Zotero.Utilities.trimInternal(subjectContent[i]));
 							}
 						}
 					}
-				} else {
-					//subjects separated by newline or ; in same div.
-					var subjects = value.trim().split(/\s*[;\n]\s*/)
-					for (var i in subjects) {
+				}
+				else {
+					// subjects separated by newline or ; in same div.
+					subjects = value.trim().split(/\s*[;\n]\s*/);
+					for (i in subjects) {
 						subjects[i] = subjects[i].trim().replace(/\*/g, "").replace(/^\s*\/|\/\s*$/, "");
-						if (subjects[i].length!=0) newItem.tags.push(Zotero.Utilities.trimInternal(subjects[i]))
+						if (subjects[i].length != 0) newItem.tags.push(Zotero.Utilities.trimInternal(subjects[i]));
 					}
 				}
 				break;
@@ -486,23 +541,24 @@ function scrape(doc, url) {
 			case "identifiant pérenne de la notice":
 			case 'persistent identifier of the record':
 			case 'persistent identifier des datensatzes':
-				var permalink = value;	//we handle this at the end
+				var permalink = value;	// we handle this at the end
 				break;
 			
 			case 'doi':
 				newItem.DOI = value.trim();
+				break;
 
 			case 'isbn':
 				var isbns = value.trim().split(/[\n,]/);
-				var isbn = [], s;
-				for (var i in isbns) {
-					var m = isbns[i].match(/[-x\d]{10,}/i);	//this is necessary until 3.0.12
-					if(!m) continue;
-					if(m[0].replace(/-/g,'').search(/^(?:\d{9}|\d{12})[\dx]$/i) != -1) {
+				var isbn = [];
+				for (i in isbns) {
+					m = isbns[i].match(/[-x\d]{10,}/i);	// this is necessary until 3.0.12
+					if (!m) continue;
+					if (m[0].replace(/-/g, '').search(/^(?:\d{9}|\d{12})[\dx]$/i) != -1) {
 						isbn.push(m[0]);
 					}
 				}
-				//we should eventually check for duplicates, but right now this seems fine;
+				// we should eventually check for duplicates, but right now this seems fine;
 				newItem.ISBN = isbn.join(", ");
 				break;
 			
@@ -510,7 +566,7 @@ function scrape(doc, url) {
 				newItem.callNumber = value;
 				break;
 			case 'worldcat':
-				//SUDOC only
+				// SUDOC only
 				var worldcatLink = doc.evaluate('./td[2]//a', tableRow, null, XPathResult.ANY_TYPE, null).iterateNext();
 				if (worldcatLink) {
 					newItem.attachments.push({
@@ -521,54 +577,68 @@ function scrape(doc, url) {
 					});
 				}
 				break;
+
+			case 'links zum titel':
+			case 'volltext':
+			case 'link zum volltext':
+			case 'link':
+			case 'zugang':
+			case 'accès en ligne':
+				// Some time links are inside the third cell : https://kxp.k10plus.de/DB=2.1/DB=2.1/PPNSET?PPN=600530787
+				url = doc.evaluate('./td[3]//a | ./td[2]//a', tableRow, null, XPathResult.ANY_TYPE, null).iterateNext();
+				newItem.url = url;
+				break;
 		}
 	}
 
-	//merge city & country where they're separate
+	// merge city & country where they're separate
 	var location = [];
 	if (newItem.city) location.push(newItem.city.trim());
 	newItem.city = undefined;
 	if (newItem.country) location.push(newItem.country.trim());
 	newItem.country = undefined;
-	//join and remove the "u.a." common in German libraries
-	if(location.length) newItem.place = location.join(', ').replace(/\[?u\.a\.\]?\s*$/, "");
 	
-	//remove u.a. and [u.a.] from publisher
-	if (newItem.publisher){
+	// join and remove the "u.a." common in German libraries
+	if (location.length) newItem.place = location.join(', ').replace(/\[?u\.a\.\]?\s*$/, "");
+	
+	// remove u.a. and [u.a.] from publisher
+	if (newItem.publisher) {
 		newItem.publisher = newItem.publisher.replace(/\[?u\.a\.\]?\s*$/, "");
 	}
 	
-	//clean up date, which may come from various places; We're conservative here and are just cleaning up c1996 and [1995] and combinations thereof
-	if (newItem.date){
-		newItem.date = newItem.date.replace(/[\[c]+\s*(\d{4})\]?/, "$1");
+	// clean up date, which may come from various places; We're conservative here and are just cleaning up c1996 and [1995] and combinations thereof
+	if (newItem.date) {
+		newItem.date = newItem.date.replace(/[[c]+\s*(\d{4})\]?/, "$1");
 	}
-	//if we didn't get a permalink, look for it in the entire page
-	if(!permalink) {
-		var permalink = ZU.xpathText(doc, '//a[./img[contains(@src,"/permalink") or contains(@src,"/zitierlink")]][1]/@href');
+
+	// if we didn't get a permalink, look for it in the entire page
+	if (!permalink) {
+		permalink = ZU.xpathText(doc, '//a[./img[contains(@src,"/permalink") or contains(@src,"/zitierlink")]][1]/@href');
 	}
 	
-	//switch institutional authors to single field;
-	for (var i=0; i<newItem.creators.length; i++){
-		if (!newItem.creators[i].firstName){
+	// switch institutional authors to single field;
+	for (i = 0; i < newItem.creators.length; i++) {
+		if (!newItem.creators[i].firstName) {
 			newItem.creators[i].fieldMode = true;
 		}
 	}
-	if(permalink) {
+	if (permalink) {
 		newItem.attachments.push({
 			title: 'Link to Library Catalog Entry',
 			url: permalink,
 			mimeType: 'text/html',
 			snapshot: false
 		});
-		//also add snapshot using permalink so that right-click -> View Online works
+		// also add snapshot using permalink so that right-click -> View Online works
 		newItem.attachments.push({
 			title: 'Library Catalog Entry Snapshot',
 			url: permalink,
 			mimeType: 'text/html',
 			snapshot: true
 		});
-	} else {
-		//add snapshot
+	}
+	else {
+		// add snapshot
 		newItem.attachments.push({
 			title: 'Library Catalog Entry Snapshot',
 			document: doc
@@ -584,40 +654,35 @@ function doWeb(doc, url) {
 	if (type == "multiple") {
 		var newUrl = doc.evaluate('//base/@href', doc, null, XPathResult.ANY_TYPE, null).iterateNext().nodeValue;
 		// fix for sudoc, see #1529
-		newUrl = newUrl.replace(/sudoc\.abes\.fr\/\/?DB=/, 'sudoc.abes.fr/xslt/DB=');
+		newUrl = newUrl.replace(/sudoc\.abes\.fr\/cbs\/\/?DB=/, 'sudoc.abes.fr/cbs/xslt/DB=');
 		var elmts = getSearchResults(doc);
 		var elmt = elmts.iterateNext();
-		var links = [];
+
 		var availableItems = {};
 		do {
 			var link = doc.evaluate(".//a/@href", elmt, null, XPathResult.ANY_TYPE, null).iterateNext().nodeValue;
 			var searchTitle = doc.evaluate(".//a", elmt, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
 			availableItems[newUrl + link] = searchTitle;
-		} while (elmt = elmts.iterateNext());
+		} while ((elmt = elmts.iterateNext()));
 		Zotero.selectItems(availableItems, function (items) {
-			if (!items) {
-				return true;
-			}
-			var uris = [];
-			for (var i in items) {
-				uris.push(i);
-			}
-			ZU.processDocuments(uris, scrape);
+			if (items) ZU.processDocuments(Object.keys(items), scrape);
 		});
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }
+
 /** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.sudoc.abes.fr/DB=2.1/CMD?ACT=SRCHA&IKT=1016&SRT=RLV&TRM=labor",
+		"url": "http://www.sudoc.abes.fr/cbs/xslt/DB=2.1//CMD?ACT=SRCHA&IKT=1016&SRT=RLV&TRM=labor",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://www.sudoc.abes.fr/DB=2.1/SRCH?IKT=12&TRM=147745608",
+		"url": "http://www.sudoc.abes.fr/cbs/xslt/DB=2.1//SRCH?IKT=12&TRM=147745608",
 		"items": [
 			{
 				"itemType": "book",
@@ -635,7 +700,7 @@ var testCases = [
 					}
 				],
 				"date": "2010",
-				"ISBN": "978-2-7472-1729-3",
+				"ISBN": "9782747217293",
 				"language": "français",
 				"libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
 				"numPages": "290",
@@ -659,11 +724,21 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Conditions de travail -- France",
-					"Harcèlement -- France",
-					"Psychologie du travail",
-					"Stress lié au travail -- France",
-					"Violence en milieu de travail"
+					{
+						"tag": "Conditions de travail -- France"
+					},
+					{
+						"tag": "Harcèlement -- France"
+					},
+					{
+						"tag": "Psychologie du travail"
+					},
+					{
+						"tag": "Stress lié au travail -- France"
+					},
+					{
+						"tag": "Violence en milieu de travail"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -672,7 +747,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.sudoc.abes.fr/DB=2.1/SRCH?IKT=12&TRM=156726319",
+		"url": "http://www.sudoc.abes.fr/cbs/xslt/DB=2.1//SRCH?IKT=12&TRM=156726319",
 		"items": [
 			{
 				"itemType": "book",
@@ -685,11 +760,11 @@ var testCases = [
 					}
 				],
 				"date": "2011",
-				"ISBN": "978-0-83898589-2",
+				"ISBN": "9780838985892",
 				"language": "anglais",
 				"libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
 				"numPages": "159",
-				"place": "Chicago, Etats-Unis",
+				"place": "Chicago, Etats-Unis d'Amérique",
 				"publisher": "Association of College and Research Libraries",
 				"shortTitle": "Zotero",
 				"attachments": [
@@ -710,7 +785,9 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Bibliographie -- Méthodologie -- Informatique"
+					{
+						"tag": "Bibliographie -- Méthodologie -- Informatique"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -719,7 +796,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.sudoc.abes.fr/DB=2.1/SRCH?IKT=12&TRM=093838956",
+		"url": "http://www.sudoc.abes.fr/cbs/xslt/DB=2.1//SRCH?IKT=12&TRM=093838956",
 		"items": [
 			{
 				"itemType": "thesis",
@@ -740,9 +817,8 @@ var testCases = [
 				"language": "français",
 				"libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
 				"numPages": "87",
-				"numberOfVolumes": "1",
-				"place": "Lille, France",
-				"type": "Thèse d'exercice",
+				"place": "Lille ; 1969-2017, France",
+				"thesisType": "Thèse d'exercice",
 				"university": "Université du droit et de la santé",
 				"attachments": [
 					{
@@ -762,24 +838,30 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Leucémie chronique lymphocytaire à cellules B -- Dissertations universitaires",
-					"Leucémie lymphoïde chronique -- Thèses et écrits académiques",
-					"Lymphocytes B -- Dissertations universitaires",
-					"Lymphocytes B -- Thèses et écrits académiques",
-					"Lymphome malin non hodgkinien -- Dissertations universitaires"
-				],
-				"notes": [
 					{
-						"note": "<div><span>Publication autorisée par le jury</span></div>"
+						"tag": "Leucémie chronique lymphocytaire à cellules B -- Dissertation universitaire"
+					},
+					{
+						"tag": "Leucémie lymphoïde chronique"
+					},
+					{
+						"tag": "Lymphocytes B"
+					},
+					{
+						"tag": "Lymphocytes B -- Dissertation universitaire"
+					},
+					{
+						"tag": "Lymphome malin non hodgkinien -- Dissertation universitaire"
 					}
 				],
+				"notes": [],
 				"seeAlso": []
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "http://www.sudoc.abes.fr/DB=2.1/SRCH?IKT=12&TRM=127261664",
+		"url": "http://www.sudoc.abes.fr/cbs/xslt/DB=2.1//SRCH?IKT=12&TRM=127261664",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -791,15 +873,13 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2008",
+				"date": "impr. 2008",
 				"ISSN": "1359-0987",
 				"issue": "3",
 				"language": "anglais",
 				"libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
 				"pages": "515-534",
-				"place": "London, Royaume-Uni",
 				"publicationTitle": "Journal of the Royal Anthropological Institute",
-				"publisher": "Royal Anthropological Institute",
 				"shortTitle": "Mobile technology in the village",
 				"volume": "14",
 				"attachments": [
@@ -815,9 +895,15 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Communes rurales -- Et la technique -- Aspect social -- Inde",
-					"Inde -- Conditions sociales -- 20e siècle",
-					"Téléphonie mobile -- Aspect social -- Inde"
+					{
+						"tag": "Communes rurales -- Et la technique -- Aspect social -- Inde"
+					},
+					{
+						"tag": "Conditions sociales -- Inde -- 20e siècle"
+					},
+					{
+						"tag": "Téléphonie mobile -- Aspect social -- Inde"
+					}
 				],
 				"notes": [
 					{
@@ -830,7 +916,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.sudoc.abes.fr/DB=2.1/SRCH?IKT=12&TRM=128661828",
+		"url": "http://www.sudoc.abes.fr/cbs/xslt/DB=2.1//SRCH?IKT=12&TRM=128661828",
 		"items": [
 			{
 				"itemType": "film",
@@ -847,14 +933,13 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2006",
-				"ISBN": "0-8153-4223-3",
+				"date": "cop. 2006",
 				"abstractNote": "Ensemble de 20 films permettant de découvrir les protagonistes de la découverte de la théorie cellulaire, l'évolution, la diversité, la structure et le fonctionnement des cellules. Ce DVD aborde aussi en images les recherches en cours dans des laboratoires internationaux et les débats que ces découvertes sur la cellule provoquent. Les films sont regroupés en 5 chapitres complétés de fiches informatives et de liens Internet.",
+				"distributor": "CNRS Images",
 				"language": "anglais",
 				"libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
-				"place": "Meudon, France",
-				"publisher": "CNRS Images",
 				"runningTime": "180 min",
+				"url": "http://bioclips.com/dvd/index.html",
 				"attachments": [
 					{
 						"title": "Worldcat Link",
@@ -873,24 +958,52 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Biogenèse",
-					"Biologie cellulaire",
-					"Cell membranes",
-					"Cells",
-					"Cells -- Evolution",
-					"Cells -- Moral and ethical aspects",
-					"Cellules",
-					"Cellules -- Aspect moral",
-					"Cellules -- Évolution",
-					"Cytologie -- Recherche",
-					"Cytology -- Research",
-					"Membrane cellulaire",
-					"QH582.4",
-					"Ultrastructure (biologie)"
+					{
+						"tag": "Biogenèse des organelles"
+					},
+					{
+						"tag": "Biologie cellulaire"
+					},
+					{
+						"tag": "Cell membranes"
+					},
+					{
+						"tag": "Cells"
+					},
+					{
+						"tag": "Cells -- Evolution"
+					},
+					{
+						"tag": "Cells -- Moral and ethical aspects"
+					},
+					{
+						"tag": "Cellules"
+					},
+					{
+						"tag": "Cellules -- Aspect moral"
+					},
+					{
+						"tag": "Cellules -- Évolution"
+					},
+					{
+						"tag": "Cytologie -- Recherche"
+					},
+					{
+						"tag": "Cytology -- Research"
+					},
+					{
+						"tag": "Membrane cellulaire"
+					},
+					{
+						"tag": "QH582.4"
+					},
+					{
+						"tag": "Ultrastructure"
+					}
 				],
 				"notes": [
 					{
-						"note": "<div><span>Les différents films qui composent ce DVD sont réalisés avec des prises de vue réelles, ou des images microcinématographiques ou des images de synthèse, ou des images fixes tirées de livres. La bande son est essentiellement constituée de commentaires en voix off et d'interviews (les commentaires sont en anglais et les interviews sont en langue originales : anglais, français ou allemand, sous-titrée en anglais). - Discovering the cell : participation de Paul Nurse (Rockefeller university, New York), Claude Debru (ENS : Ecole normale supérieure, Paris) et Werner Franke (DKFZ : Deutsches Krebsforschungszentrum, Heidelberg) ; Membrane : participation de Kai Simons, Soizig Le Lay et Lucas Pelkmans (MPI-CBG : Max Planck institute of molecular cell biology and genetics, Dresden) ; Signals and calcium : participation de Christian Sardet et Alex Mc Dougall (CNRS / UPMC : Centre national de la recherche scientifique / Université Pierre et Marie Curie, Villefrance-sur-Mer) ; Membrane traffic : participation de Thierry Galli et Phillips Alberts (Inserm = Institut national de la santé et de la recherche médicale, Paris) ; Mitochondria : participation de Michael Duchen, Rémi Dumollard et Sean Davidson (UCL : University college of London) ; Microfilaments : participation de Cécile Gauthier Rouvière et Alexandre Philips (CNRS-CRBM : CNRS-Centre de recherche de biochimie macromoléculaire, Montpellier) ; Microtubules : participation de Johanna Höög, Philip Bastiaens et Jonne Helenius (EMBL : European molecular biology laboratory, Heidelberg) ; Centrosome : participation de Michel Bornens et Manuel Théry (CNRS-Institut Curie, Paris) ; Proteins : participation de Dino Moras et Natacha Rochel-Guiberteau (IGBMC : Institut de génétique et biologie moléculaire et cellulaire, Strasbourg) ; Nocleolus and nucleus : participation de Daniele Hernandez-Verdun, Pascal Rousset, Tanguy Lechertier (CNRS-UPMC / IJM : Institut Jacques Monod, Paris) ; The cell cycle : participation de Paul Nurse (Rockefeller university, New York) ; Mitosis and chromosomes : participation de Jan Ellenberg, Felipe Mora-Bermudez et Daniel Gerlich (EMBL, Heidelberg) ; Mitosis and spindle : participation de Eric Karsenti, Maiwen Caudron et François Nedelec (EMBL, Heidelberg) ; Cleavage : participation de Pierre Gönczy, Marie Delattre et Tu Nguyen Ngoc (Isrec : Institut suisse de recherche expérimentale sur le cancer, Lausanne) ; Cellules souches : participation de Göran Hermerén (EGE : European group on ethics in science and new technologies, Brussels) ; Cellules libres : participation de Jean-Jacques Kupiec (ENS, Paris) ; Cellules et évolution : participation de Paule Nurse (Rockefeller university, New York)</span></div><div><span>&nbsp;</span></div>"
+						"note": "<div><span>Les différents films qui composent ce DVD sont réalisés avec des prises de vue réelles, ou des images microcinématographiques ou des images de synthèse, ou des images fixes tirées de livres. La bande son est essentiellement constituée de commentaires en voix off et d'interviews (les commentaires sont en anglais et les interviews sont en langue originales : anglais, français ou allemand, sous-titrée en anglais). - Discovering the cell : participation de Paul Nurse (Rockefeller university, New York), Claude Debru (ENS : Ecole normale supérieure, Paris) et Werner Franke (DKFZ : Deutsches Krebsforschungszentrum, Heidelberg) ; Membrane : participation de Kai Simons, Soizig Le Lay et Lucas Pelkmans (MPI-CBG : Max Planck institute of molecular cell biology and genetics, Dresden) ; Signals and calcium : participation de Christian Sardet et Alex Mc Dougall (CNRS / UPMC : Centre national de la recherche scientifique / Université Pierre et Marie Curie, Villefrance-sur-Mer) ; Membrane traffic : participation de Thierry Galli et Phillips Alberts (Inserm = Institut national de la santé et de la recherche médicale, Paris) ; Mitochondria : participation de Michael Duchen, Rémi Dumollard et Sean Davidson (UCL : University college of London) ; Microfilaments : participation de Cécile Gauthier Rouvière et Alexandre Philips (CNRS-CRBM : CNRS-Centre de recherche de biochimie macromoléculaire, Montpellier) ; Microtubules : participation de Johanna Höög, Philip Bastiaens et Jonne Helenius (EMBL : European molecular biology laboratory, Heidelberg) ; Centrosome : participation de Michel Bornens et Manuel Théry (CNRS-Institut Curie, Paris) ; Proteins : participation de Dino Moras et Natacha Rochel-Guiberteau (IGBMC : Institut de génétique et biologie moléculaire et cellulaire, Strasbourg) ; Nocleolus and nucleus : participation de Daniele Hernandez-Verdun, Pascal Rousset, Tanguy Lechertier (CNRS-UPMC / IJM : Institut Jacques Monod, Paris) ; The cell cycle : participation de Paul Nurse (Rockefeller university, New York) ; Mitosis and chromosomes : participation de Jan Ellenberg, Felipe Mora-Bermudez et Daniel Gerlich (EMBL, Heidelberg) ; Mitosis and spindle : participation de Eric Karsenti, Maiwen Caudron et François Nedelec (EMBL, Heidelberg) ; Cleavage : participation de Pierre Gönczy, Marie Delattre et Tu Nguyen Ngoc (Isrec : Institut suisse de recherche expérimentale sur le cancer, Lausanne) ; Cellules souches : participation de Göran Hermerén (EGE : European group on ethics in science and new technologies, Brussels) ; Cellules libres : participation de Jean-Jacques Kupiec (ENS, Paris) ; Cellules et évolution : participation de Paule Nurse (Rockefeller university, New York)</span></div>"
 					}
 				],
 				"seeAlso": []
@@ -899,14 +1012,14 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.sudoc.abes.fr/DB=2.1/SRCH?IKT=12&TRM=098846663",
+		"url": "http://www.sudoc.abes.fr/cbs/xslt/DB=2.1//SRCH?IKT=12&TRM=098846663",
 		"items": [
 			{
 				"itemType": "map",
 				"title": "Wind and wave atlas of the Mediterranean sea",
 				"creators": [],
 				"date": "2004",
-				"ISBN": "2-11-095674-7",
+				"ISBN": "9782110956743",
 				"language": "anglais",
 				"libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
 				"publisher": "Western European Union, Western European armaments organisation research cell",
@@ -928,11 +1041,21 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Méditerranée (mer) -- Atlas",
-					"Météorologie maritime -- Méditerranée (mer) -- Atlas",
-					"Vagues -- Méditerranée (mer) -- Atlas",
-					"Vent de mer -- Méditerranée (mer) -- Atlas",
-					"Vents -- Méditerranée (mer) -- Atlas"
+					{
+						"tag": "Méditerranée (mer)"
+					},
+					{
+						"tag": "Météorologie maritime -- Méditerranée (mer)"
+					},
+					{
+						"tag": "Vagues -- Méditerranée (mer)"
+					},
+					{
+						"tag": "Vent de mer -- Méditerranée (mer)"
+					},
+					{
+						"tag": "Vents -- Méditerranée (mer)"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -941,7 +1064,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.sudoc.abes.fr/DB=2.1/SRCH?IKT=12&TRM=05625248X",
+		"url": "http://www.sudoc.abes.fr/cbs/xslt/DB=2.1//SRCH?IKT=12&TRM=05625248X",
 		"items": [
 			{
 				"itemType": "audioRecording",
@@ -950,25 +1073,24 @@ var testCases = [
 					{
 						"firstName": "Ernest H.",
 						"lastName": "Sanders",
-						"creatorType": "author"
+						"creatorType": "editor"
 					},
 					{
 						"firstName": "Frank Llewellyn",
 						"lastName": "Harrison",
-						"creatorType": "author"
+						"creatorType": "editor"
 					},
 					{
-						"firstName": "Peter",
+						"firstName": "Peter M.",
 						"lastName": "Lefferts",
-						"creatorType": "author"
+						"creatorType": "editor"
 					}
 				],
 				"date": "1986",
+				"label": "Éditions de l'oiseau-lyre",
 				"language": "latin",
 				"libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
-				"numPages": "243",
 				"place": "Monoco, Monaco",
-				"publisher": "Éditions de l'oiseau-lyre",
 				"attachments": [
 					{
 						"title": "Worldcat Link",
@@ -987,12 +1109,16 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Messes (musique) -- Partitions",
-					"Motets -- Partitions"
+					{
+						"tag": "Messes (musique) -- Partitions"
+					},
+					{
+						"tag": "Motets -- Partitions"
+					}
 				],
 				"notes": [
 					{
-						"note": "<div><span>Modern notation. - \"Critical apparatus\": p. 174-243</span></div><div><span>&nbsp;</span></div>"
+						"note": "\n<div><span>Modern notation. - \"Critical apparatus\": p. 174-243</span></div>\n<div><span>&nbsp;</span></div>\n"
 					}
 				],
 				"seeAlso": []
@@ -1031,11 +1157,9 @@ var testCases = [
 				"date": "2012",
 				"ISSN": "1931-4361",
 				"issue": "1",
-				"libraryCatalog": "Library Catalog - gso.gbv.de",
+				"libraryCatalog": "Library Catalog - kxp.k10plus.de",
 				"pages": "88-107",
-				"place": "Walla Walla, Wash.",
-				"publicationTitle": "Journal of wine economics",
-				"publisher": "AAWE",
+				"publicationTitle": "Journal of wine economics / American Association of Wine Economists",
 				"volume": "7",
 				"attachments": [
 					{
@@ -1067,30 +1191,13 @@ var testCases = [
 						"firstName": "Carl",
 						"lastName": "Phillips",
 						"creatorType": "author"
-					},
-					{
-						"firstName": "Marion",
-						"lastName": "Gibson",
-						"creatorType": "editor"
-					},
-					{
-						"firstName": "Shelley",
-						"lastName": "Trower",
-						"creatorType": "editor"
-					},
-					{
-						"firstName": "Garry",
-						"lastName": "Tregidga",
-						"creatorType": "editor"
 					}
 				],
 				"date": "2013",
-				"ISBN": "978-0-415-62868-6, 978-0-415-62869-3, 978-0-203-08018-4",
-				"bookTitle": "Mysticism, myth and Celtic identity",
-				"libraryCatalog": "Library Catalog - gso.gbv.de",
+				"ISBN": "9780415628686 9780415628693 9780203080184",
+				"bookTitle": "Mysticism, myth and Celtic identity / Gibson, Marion *1970-*",
+				"libraryCatalog": "Library Catalog - kxp.k10plus.de",
 				"pages": "70-83",
-				"place": "London",
-				"publisher": "Routledge ,",
 				"shortTitle": "'The truth against the world'",
 				"attachments": [
 					{
@@ -1136,25 +1243,22 @@ var testCases = [
 					{
 						"firstName": "Wilfried",
 						"lastName": "Henze",
-						"creatorType": "author"
+						"creatorType": "editor"
 					},
 					{
 						"firstName": "Helmut",
 						"lastName": "Tschöke",
-						"creatorType": "author"
+						"creatorType": "editor"
 					}
 				],
 				"date": "2013",
-				"ISBN": "978-3-642-33832-8",
-				"journalAbbreviation": "Lecture Notes in Electrical Engineering",
-				"libraryCatalog": "Library Catalog - gso.gbv.de",
+				"ISBN": "9783642338328",
+				"bookTitle": "Proceedings of the FISITA 2012 World Automotive Congress ; Vol. 13:Noise, vibration and harshness (NVH) / Zhongguo qi che gong cheng xue hui",
+				"libraryCatalog": "Library Catalog - kxp.k10plus.de",
 				"pages": "291-304",
-				"place": "Berlin",
-				"publicationTitle": "Proceedings of the FISITA 2012 World Automotive Congress; Vol. 13: Noise, vibration and harshness (NVH)",
-				"publisher": "Springer Berlin",
 				"series": "Lecture notes in electrical engineering",
 				"seriesNumber": "201",
-				"seriesTitle": "Lecture notes in electrical engineering",
+				"url": "http://dx.doi.org/10.1007/978-3-642-33832-8_23",
 				"attachments": [
 					{
 						"title": "Link to Library Catalog Entry",
@@ -1175,7 +1279,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.sudoc.abes.fr/DB=2.1/SRCH?IKT=12&TRM=013979922",
+		"url": "http://www.sudoc.abes.fr/cbs/xslt/DB=2.1//SRCH?IKT=12&TRM=013979922",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -1183,22 +1287,16 @@ var testCases = [
 				"creators": [
 					{
 						"lastName": "Organisation mondiale de la santé",
-						"creatorType": "author",
-						"fieldMode": true
-					},
-					{
-						"lastName": "Congrès",
-						"creatorType": "author",
+						"creatorType": "editor",
 						"fieldMode": true
 					}
 				],
-				"date": "1992-1993",
+				"date": "1992",
 				"ISSN": "0003-9578",
 				"issue": "1/4",
 				"language": "français",
 				"libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
 				"pages": "3-232",
-				"place": "Belgique",
 				"publicationTitle": "Archives belges de médecine sociale, hygiène, médecine du travail et médecine légale",
 				"volume": "51",
 				"attachments": [
@@ -1219,108 +1317,14 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Famille -- Actes de congrès",
-					"Santé publique -- Actes de congrès"
+					{
+						"tag": "Famille"
+					},
+					{
+						"tag": "Santé publique"
+					}
 				],
 				"notes": [],
-				"seeAlso": []
-			}
-		]
-	},
-	{
-		"type": "web",
-		"url": "http://catalogue.rug.nl/DB=1/XMLPRS=Y/PPN?PPN=33112484X",
-		"items": [
-			{
-				"itemType": "journalArticle",
-				"title": "Naar een nieuwe 'onderwijsvrede': de onderhandelingen tussen kardinaal Van Roey en de Duitse bezetter over de toekomst van het vrij katholiek onderwijs, 1942-1943",
-				"creators": [
-					{
-						"firstName": "Sarah Van",
-						"lastName": "Ruyskensvelde",
-						"creatorType": "author"
-					}
-				],
-				"date": "2010",
-				"ISSN": "0035-0869",
-				"issue": "4",
-				"libraryCatalog": "Library Catalog - catalogue.rug.nl",
-				"pages": "603-643",
-				"publicationTitle": "Revue belge d'histoire contemporaine = Belgisch tijdschrift voor nieuwste geschiedenis = Belgian review for contemporary history",
-				"shortTitle": "Naar een nieuwe 'onderwijsvrede'",
-				"volume": "40",
-				"attachments": [
-					{
-						"title": "Link to Library Catalog Entry",
-						"mimeType": "text/html",
-						"snapshot": false
-					},
-					{
-						"title": "Library Catalog Entry Snapshot",
-						"mimeType": "text/html",
-						"snapshot": true
-					}
-				],
-				"tags": [
-					"(GTR) Belgie",
-					"(GTR) Conflicten",
-					"(GTR) Katholiek onderwijs",
-					"(GTR) Tweede Wereldoorlog",
-					"(GTR) Vrijheid van onderwijs"
-				],
-				"notes": [
-					{
-						"note": "<div><span>Met lit. opg</span></div><div><span>Met samenvattingen in het Engels en Frans</span></div>"
-					}
-				],
-				"seeAlso": []
-			}
-		]
-	},
-	{
-		"type": "web",
-		"url": "http://catalogue.rug.nl/DB=1/XMLPRS=Y/PPN?PPN=339552697",
-		"items": [
-			{
-				"itemType": "film",
-				"title": "Medianeras",
-				"creators": [
-					{
-						"firstName": "Gustavo",
-						"lastName": "Taretto",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Pilar López de",
-						"lastName": "Ayala",
-						"creatorType": "author"
-					}
-				],
-				"date": "2012",
-				"libraryCatalog": "Library Catalog - catalogue.rug.nl",
-				"place": "Amsterdam",
-				"publisher": "Homescreen",
-				"runningTime": "92 min",
-				"attachments": [
-					{
-						"title": "Link to Library Catalog Entry",
-						"mimeType": "text/html",
-						"snapshot": false
-					},
-					{
-						"title": "Library Catalog Entry Snapshot",
-						"mimeType": "text/html",
-						"snapshot": true
-					}
-				],
-				"tags": [
-					"(GTR) Argentinië"
-				],
-				"notes": [
-					{
-						"note": "<div><span>Spaans gesproken, Nederlands en Frans ondertiteld</span></div>"
-					}
-				],
 				"seeAlso": []
 			}
 		]
@@ -1387,7 +1391,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://opac.tib.uni-hannover.de/DB=1/XMLPRS=N/PPN?PPN=620088028",
+		"url": "http://opac.tib.eu/DB=1/XMLPRS=N/PPN?PPN=620088028",
 		"items": [
 			{
 				"itemType": "book",
@@ -1400,11 +1404,10 @@ var testCases = [
 					}
 				],
 				"date": "2009",
-				"ISBN": "978-3-941300-14-9",
+				"ISBN": "9783941300149",
 				"callNumber": "F 10 B 2134",
-				"libraryCatalog": "Library Catalog - opac.tib.uni-hannover.de",
+				"libraryCatalog": "Library Catalog - opac.tib.eu",
 				"numPages": "140",
-				"pages": "140",
 				"place": "Remagen",
 				"publisher": "Kessel",
 				"shortTitle": "Phönix auf Asche",
@@ -1421,7 +1424,9 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Waldsterben / Schadstoffimmission / Dübener Heide / Bitterfeld <Region>"
+					{
+						"tag": "Waldsterben / Schadstoffimmission / Dübener Heide / Bitterfeld <Region>"
+					}
 				],
 				"notes": [
 					{
@@ -1441,23 +1446,21 @@ var testCases = [
 				"title": "Das war das Waldsterben!",
 				"creators": [
 					{
-						"firstName": "Elmar",
 						"lastName": "Klein",
-						"creatorType": "author"
+						"creatorType": "author",
+						"firstName": "Elmar"
 					}
 				],
 				"date": "2008",
-				"ISBN": "978-3-7930-9526-2",
+				"ISBN": "9783793095262",
 				"callNumber": "48 Kle",
 				"edition": "1",
 				"libraryCatalog": "Library Catalog - opac.sub.uni-goettingen.de",
 				"numPages": "164",
-				"pages": "164",
-				"place": "Freiburg im Breisgau [u.a.]",
+				"place": "Freiburg i. Br[eisgau]",
 				"publisher": "Rombach",
-				"series": "Rombach Wissenschaft Ökologie",
+				"series": "Rombach-Wissenschaften. Reihe Ökologie. - Freiburg, Br. : Rombach, 1992- ; ZDB-ID: 1139339-7",
 				"seriesNumber": "8",
-				"seriesTitle": "Rombach Wissenschaft Ökologie",
 				"attachments": [
 					{
 						"title": "Link to Library Catalog Entry",
@@ -1471,9 +1474,15 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"*Baumkrankheit",
-					"*Waldsterben",
-					"*Waldsterben / Geschichte"
+					{
+						"tag": "*Baumkrankheit"
+					},
+					{
+						"tag": "*Waldsterben"
+					},
+					{
+						"tag": "*Waldsterben / Geschichte"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -1505,11 +1514,11 @@ var testCases = [
 					}
 				],
 				"date": "1990",
-				"ISBN": "3-923120-26-5",
+				"ISBN": "9783923120260",
+				"abstractNote": "Bettina Reckter, Rolf H. Simen, Karl-Heinz Preuß (Hrsg.): Geschichten, die die Forschung schreibt. Ein Umweltlesebuch des Deutschen Forschungsdienstes. Verlag Deutscher Forschungsdienst, Bonn-Bad Godesberg 1990, 320 Seiten, 29,80 Mark",
 				"callNumber": "CL 13 : IfW13 40 W 2",
 				"libraryCatalog": "Library Catalog - lhclz.gbv.de",
 				"numPages": "319",
-				"pages": "319",
 				"place": "Bonn - Bad Godesberg",
 				"publisher": "Verlag Deutscher Forschungsdienst",
 				"shortTitle": "Geschichten, die die Forschung schreibt",
@@ -1526,28 +1535,72 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Algenpest",
-					"Aufsatzsammlung",
-					"Aufsatzsammlung / Umweltschutz",
-					"Bienen",
-					"Gewässerverschmutzung",
-					"Gleichgewicht",
-					"Lebensräume",
-					"Mülldeponie",
-					"Perlmuscheln",
-					"Saurer Regen",
-					"Schmetterlinge",
-					"Sonnenenergie",
-					"Süßwasserfische",
-					"Tiere",
-					"Trinkwasser",
-					"Umweltgifte",
-					"Umweltschaden",
-					"Umweltschutz",
-					"Umweltsignale",
-					"Vogelarten",
-					"Waldsterben",
-					"Ökomonie"
+					{
+						"tag": "Algenpest"
+					},
+					{
+						"tag": "Aufsatzsammlung"
+					},
+					{
+						"tag": "Aufsatzsammlung / Umweltschutz"
+					},
+					{
+						"tag": "Bienen"
+					},
+					{
+						"tag": "Gewässerverschmutzung"
+					},
+					{
+						"tag": "Gleichgewicht"
+					},
+					{
+						"tag": "Lebensräume"
+					},
+					{
+						"tag": "Mülldeponie"
+					},
+					{
+						"tag": "Perlmuscheln"
+					},
+					{
+						"tag": "Saurer Regen"
+					},
+					{
+						"tag": "Schmetterlinge"
+					},
+					{
+						"tag": "Sonnenenergie"
+					},
+					{
+						"tag": "Süßwasserfische"
+					},
+					{
+						"tag": "Tiere"
+					},
+					{
+						"tag": "Trinkwasser"
+					},
+					{
+						"tag": "Umweltgifte"
+					},
+					{
+						"tag": "Umweltschaden"
+					},
+					{
+						"tag": "Umweltschutz"
+					},
+					{
+						"tag": "Umweltsignale"
+					},
+					{
+						"tag": "Vogelarten"
+					},
+					{
+						"tag": "Waldsterben"
+					},
+					{
+						"tag": "Ökomonie"
+					}
 				],
 				"notes": [
 					{
@@ -1567,8 +1620,13 @@ var testCases = [
 				"title": "Borges por el mismo",
 				"creators": [
 					{
+						"lastName": "Rodríguez Monegal",
+						"creatorType": "author",
+						"firstName": "Emir"
+					},
+					{
 						"firstName": "Emir",
-						"lastName": "Rodríguez Monegal",
+						"lastName": "Rodri%CC%81guez Monegal",
 						"creatorType": "author"
 					},
 					{
@@ -1578,14 +1636,13 @@ var testCases = [
 					}
 				],
 				"date": "1984",
-				"ISBN": "84-7222-967-X",
+				"ISBN": "9788472229679",
+				"edition": "1. ed",
 				"libraryCatalog": "Library Catalog - swb.bsz-bw.de",
 				"numPages": "255",
-				"pages": "255",
 				"place": "Barcelona",
 				"publisher": "Ed. laia",
 				"series": "Laia literatura",
-				"seriesTitle": "Laia literatura",
 				"attachments": [
 					{
 						"title": "Link to Library Catalog Entry",
@@ -1599,11 +1656,7 @@ var testCases = [
 					}
 				],
 				"tags": [],
-				"notes": [
-					{
-						"note": "<div>Enth. Werke von und über Borges</div>"
-					}
-				],
+				"notes": [],
 				"seeAlso": []
 			}
 		]
@@ -1727,7 +1780,7 @@ var testCases = [
 				"ISSN": "1515-4017",
 				"libraryCatalog": "Library Catalog - lhiai.gbv.de",
 				"pages": "61-71",
-				"publicationTitle": "Proa : en las letras y en las artes",
+				"publicationTitle": "Proa",
 				"volume": "83",
 				"attachments": [
 					{
@@ -1823,12 +1876,12 @@ var testCases = [
 					}
 				],
 				"date": "2012",
-				"ISBN": "978-85-314-1374-2, 85-314-1374-5",
-				"libraryCatalog": "Library Catalog - gso.gbv.de",
+				"ISBN": "9788531413742",
+				"libraryCatalog": "Library Catalog - kxp.k10plus.de",
 				"numPages": "397",
-				"pages": "397",
 				"place": "São Paulo, SP, Brasil",
 				"publisher": "EDUSP",
+				"url": "http://www.gbv.de/dms/spk/iai/toc/770481450.pdf",
 				"attachments": [
 					{
 						"title": "Link to Library Catalog Entry",
@@ -1842,9 +1895,9 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Brazil -- Religion",
-					"Religious pluralism -- Brazil",
-					"Spiritualism -- Brazil -- History"
+					{
+						"tag": "Brazil -- Religious life and customs"
+					}
 				],
 				"notes": [
 					{
@@ -1857,11 +1910,11 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.sudoc.abes.fr/xslt/DB=2.1//SRCH?IKT=12&TRM=024630527",
+		"url": "http://www.sudoc.abes.fr/cbs/xslt/DB=2.1//SRCH?IKT=12&TRM=024630527",
 		"items": [
 			{
 				"itemType": "book",
-				"title": "Conférences sur l'administration et le droit administratif faites à l'Ecole impériale des ponts et chaussées. Tome premier",
+				"title": "Conférences sur l'administration et le droit administratif faites à l'Ecole impériale des ponts et chaussées",
 				"creators": [
 					{
 						"firstName": "Léon",
@@ -1918,11 +1971,11 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.sudoc.abes.fr/xslt/DB=2.1//SRCH?IKT=12&TRM=001493817",
+		"url": "http://www.sudoc.abes.fr/cbs/xslt/DB=2.1//SRCH?IKT=12&TRM=001493817",
 		"items": [
 			{
 				"itemType": "book",
-				"title": "Traité de la juridiction administrative et des recours contentieux",
+				"title": "Traité de la juridiction administrative et des recours contentieux",
 				"creators": [
 					{
 						"firstName": "Édouard",
@@ -1930,7 +1983,7 @@ var testCases = [
 						"creatorType": "author"
 					},
 					{
-						"firstName": "Roland",
+						"firstName": "Roland Préfacier",
 						"lastName": "Drago",
 						"creatorType": "author"
 					}
@@ -1985,7 +2038,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.sudoc.abes.fr/xslt/DB=2.1//SRCH?IKT=12&TRM=200278649",
+		"url": "http://www.sudoc.abes.fr/cbs/xslt/DB=2.1//SRCH?IKT=12&TRM=200278649",
 		"items": [
 			{
 				"itemType": "book",
@@ -2044,6 +2097,278 @@ var testCases = [
 						"note": "<div>\n<span>Table des matières disponible en ligne (</span><span><a class=\"\n\t\t\tlink_gen\n\t\t    \" target=\"\" href=\"http://catdir.loc.gov/catdir/toc/casalini11/13192019.pdf\">http://catdir.loc.gov/catdir/toc/casalini11/13192019.pdf</a></span><span>)</span>\n</div>"
 					}
 				],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://stabikat.de/DB=1/XMLPRS=N/PPN?PPN=1748358820",
+		"items": [
+			{
+				"itemType": "webpage",
+				"title": "Modern and contemporary Taiwanese philosophy: traditional foundations and new developments",
+				"creators": [],
+				"date": "2021",
+				"abstractNote": "This collection contains 13 essays on modern and contemporary Taiwanese philosophy, written by outstanding scholars working in this field. It highlights the importance of Taiwanese philosophy in the second half of the 20th century. While the Chinese conceptual tradition (especially Confucianism) fell out of favor from the 1950s onwards and was often banned or at least severely criticized on the mainland, Taiwanese philosophers constantly strove to preserve and develop it. Many of them tried to modernize their own traditions through dialogs with Western thought, especially with the ideas of the European Enlightenment. However, it was not only about preserving tradition; in the second half of the 20th century, several complex and coherent philosophical systems emerged in Taiwan. The creation of these discourses is evidence of the great creativity and innovative power of many Taiwanese theorists, whose work is still largely unknown in the Western world.Intro -- Table of Contents -- Acknowledgements -- Editor's Foreword -- Introduction -- Modern and Contemporary Confucianism -- The Problem of \"Inner Sageliness and Outer Kingliness\" Revisited -- A Debate on Confucian Orthodoxy in Contemporary Taiwanese Confucian Thought -- A Phenomenological Interpretation of Mou Zongsan's Use of \"Transcendence\" and \"Immanence\" -- Modern Confucianism and the Methodology of Chinese Aesthetics -- Research on Daoist Philosophy -- Laozi's View of Presence and Absence, Movement and Stillness, and Essence and Function -- Characteristics of Laozi's \"Complementary Opposition\" Thought Pattern -- A General Survey of Taiwanese Studies on the Philosophy of the Wei-Jin Period in the Last Fifty Years of the 20th Century -- Logic and Methodology -- Qinghua School of Logic and the Origins of Taiwanese Studies in Modern Logic -- Discussing the Functions and Limitations of Conveying \"Concepts\" in Philosophical Thinking -- Taiwanese Philosophy from the East Asian and Global Perspective -- How is it Possible to \"Think from the Point of View of East Asia?\" -- Between Philosophy and Religion -- The Global Significance of Chinese/Taiwanese Philosophy in a Project -- Index of Special Terms and Proper Names.",
+				"shortTitle": "Modern and contemporary Taiwanese philosophy",
+				"url": "http://erf.sbb.spk-berlin.de/han/872773256/ebookcentral.proquest.com/lib/staatsbibliothek-berlin/detail.action?docID=6416045",
+				"attachments": [
+					{
+						"title": "Link to Library Catalog Entry",
+						"mimeType": "text/html",
+						"snapshot": false
+					},
+					{
+						"title": "Library Catalog Entry Snapshot",
+						"mimeType": "text/html",
+						"snapshot": true
+					}
+				],
+				"tags": [
+					{
+						"tag": "*Electronic books"
+					},
+					{
+						"tag": "*Taiwan / Philosophie"
+					}
+				],
+				"notes": [
+					{
+						"note": "<div>Description based on publisher supplied metadata and other sources.</div>"
+					},
+					{
+						"note": "<div>Einzelnutzerlizenz</div>"
+					}
+				],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "http://swb.bsz-bw.de/DB=2.1/PPNSET?PPN=1703871782",
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "Calculation of the electronic, nuclear, rotational, and vibrational stopping cross sections for H atoms irradiation on H2, N2 and O2 gas targets at low collision energies",
+				"creators": [
+					{
+						"firstName": "Abdel Ghafour",
+						"lastName": "El Hachimi",
+						"creatorType": "editor"
+					}
+				],
+				"date": "2020",
+				"ISSN": "1361-6455",
+				"issue": "13",
+				"libraryCatalog": "Library Catalog - swb.bsz-bw.de",
+				"publicationTitle": "Journal of physics  B",
+				"url": "http://dx.doi.org/10.1088/1361-6455/ab8834",
+				"volume": "53",
+				"attachments": [
+					{
+						"title": "Link to Library Catalog Entry",
+						"mimeType": "text/html",
+						"snapshot": false
+					},
+					{
+						"title": "Library Catalog Entry Snapshot",
+						"mimeType": "text/html",
+						"snapshot": true
+					}
+				],
+				"tags": [],
+				"notes": [
+					{
+						"note": "<div>Gesehen am 06.07.2020. - Im Titel ist die Zahl \"2\" jeweils tiefgestellt</div>"
+					}
+				],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "http://opac.tib.eu/DB=1/XMLPRS=N/PPN?PPN=1749375400",
+		"items": [
+			{
+				"itemType": "book",
+				"title": "An investigation into WEEE arising and not arising in Ireland (EEE2WEEE): (2017-RE-MS-9)",
+				"creators": [
+					{
+						"firstName": "Yvonne",
+						"creatorType": "author",
+						"lastName": "Ryan-Fogarty"
+					}
+				],
+				"date": "February 2021",
+				"ISBN": "9781840959819",
+				"edition": "Online version",
+				"libraryCatalog": "Library Catalog - opac.tib.eu",
+				"place": "Johnstown Castle, Co. Wexford, Ireland",
+				"publisher": "Environmental Protection Agency",
+				"series": "EPA Research report. - Johnstown Castle, Co. Wexford, Ireland : Environmental Protection Agency, 2014- ; ZDB-ID: 3045798-1",
+				"seriesNumber": "366",
+				"shortTitle": "An investigation into WEEE arising and not arising in Ireland (EEE2WEEE)",
+				"url": "https://edocs.tib.eu/files/e01mr21/1749375400.pdf",
+				"attachments": [
+					{
+						"title": "Link to Library Catalog Entry",
+						"mimeType": "text/html",
+						"snapshot": false
+					},
+					{
+						"title": "Library Catalog Entry Snapshot",
+						"mimeType": "text/html",
+						"snapshot": true
+					}
+				],
+				"tags": [],
+				"notes": [
+					{
+						"note": "<div>WEEE = Waste Electrical and Electronic Equipment</div><div>Literaturverzeichnis: Seite 39-43</div><div>Archivierung/Langzeitarchivierung gewährleistet ; TIB Hannover</div>"
+					},
+					{
+						"note": "<div>Es gilt deutsches Urheberrecht. Das Werk bzw. der Inhalt darf zum eigenen Gebrauch kostenfrei heruntergeladen, konsumiert, gespeichert oder ausgedruckt, aber nicht im Internet bereitgestellt oder an Außenstehende weitergegeben werden. - German copyright law applies. The work or content may be downloaded, consumed, stored or printed for your own use but it may not be distributed via the internet or passed on to external parties.</div>"
+					}
+				],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "http://opac.sub.uni-goettingen.de/DB=1/XMLPRS=N/PPN?PPN=174526969X",
+		"items": [
+			{
+				"itemType": "book",
+				"title": "12 Strokes: A Case-Based Guide to Acute Ischemic Stroke Management",
+				"creators": [
+					{
+						"firstName": "Ferdinand K.",
+						"creatorType": "author",
+						"lastName": "Hui"
+					}
+				],
+				"date": "2021",
+				"ISBN": "9783030568573",
+				"libraryCatalog": "Library Catalog - opac.sub.uni-goettingen.de",
+				"place": "Cham",
+				"publisher": "Springer International Publishing AG",
+				"shortTitle": "12 Strokes",
+				"url": "http://han.sub.uni-goettingen.de/han/ebookcentral1/ebookcentral.proquest.com/lib/subgoettingen/detail.action?docID=6454869",
+				"attachments": [
+					{
+						"title": "Link to Library Catalog Entry",
+						"mimeType": "text/html",
+						"snapshot": false
+					},
+					{
+						"title": "Library Catalog Entry Snapshot",
+						"mimeType": "text/html",
+						"snapshot": true
+					}
+				],
+				"tags": [
+					{
+						"tag": "Electronic books"
+					}
+				],
+				"notes": [
+					{
+						"note": "<div>Description based on publisher supplied metadata and other sources.</div>"
+					},
+					{
+						"note": "<div>Im Campus-Netz sowie für Angehörige der Universität Göttingen auch extern über Authentifizierungsmodul zugänglich. Vervielfältigungen (z.B. Kopien, Downloads) sind nur von einzelnen Kapiteln oder Seiten und nur zum eigenen wissenschaftlichen Gebrauch erlaubt. Keine Weitergabe an Dritte. Kein systematisches Downloaden durch Robots.</div>"
+					}
+				],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "http://lhclz.gbv.de/DB=1/XMLPRS=N/PPN?PPN=839046855",
+		"items": [
+			{
+				"itemType": "book",
+				"title": "Customer Value Generation in Banking: The Zurich Model of Customer-Centricity",
+				"creators": [
+					{
+						"firstName": "Bernhard",
+						"lastName": "Koye",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Axel",
+						"lastName": "Liebetrau",
+						"creatorType": "author"
+					}
+				],
+				"date": "2024",
+				"libraryCatalog": "Library Catalog - lhclz.gbv.de",
+				"numPages": "209",
+				"place": "Cham",
+				"publisher": "Springer International Publishing",
+				"series": "Management for Professionals",
+				"shortTitle": "Customer Value Generation in Banking",
+				"url": "https://ebookcentral.proquest.com/lib/tuclausthal-ebooks/detail.action?docID=3567812",
+				"attachments": [
+					{
+						"title": "Link to Library Catalog Entry",
+						"mimeType": "text/html",
+						"snapshot": false
+					},
+					{
+						"title": "Library Catalog Entry Snapshot",
+						"mimeType": "text/html",
+						"snapshot": true
+					}
+				],
+				"tags": [
+					{
+						"tag": "Electronic books"
+					}
+				],
+				"notes": [
+					{
+						"note": "<div>Description based upon print version of record</div>"
+					},
+					{
+						"note": "<div>Campusweiter Zugriff. - Vervielfältigungen (z.B. Kopien, Downloads) sind nur von einzelnen Kapiteln oder Seiten und nur zum eigenen wissenschaftlichen Gebrauch erlaubt. Keine Weitergabe an Dritte. Kein systematisches Downloaden durch Robots.</div>"
+					}
+				],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "http://cbsopac.rz.uni-frankfurt.de/DB=2.1/PPNSET?PPN=318490412",
+		"items": [
+			{
+				"itemType": "book",
+				"title": "Daten- und Identitätsschutz in Cloud Computing, E-Government und E-Commerce",
+				"creators": [],
+				"ISBN": "9783642301025",
+				"edition": "1st ed. 2012",
+				"libraryCatalog": "Library Catalog - cbsopac.rz.uni-frankfurt.de",
+				"url": "https://doi.org/10.1007/978-3-642-30102-5",
+				"attachments": [
+					{
+						"title": "Link to Library Catalog Entry",
+						"mimeType": "text/html",
+						"snapshot": false
+					},
+					{
+						"title": "Library Catalog Entry Snapshot",
+						"mimeType": "text/html",
+						"snapshot": true
+					}
+				],
+				"tags": [],
+				"notes": [],
 				"seeAlso": []
 			}
 		]

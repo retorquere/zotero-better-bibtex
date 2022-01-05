@@ -1,0 +1,46 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "mdy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "automaticTags": false,
+      "citekeyFormat": "[auth:lower][year][veryshorttitle1_0:lower]",
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "extraMergeTeX": true,
+      "postscript": "\n",
+      "skipFields": "abstract,shorttitle,issn,file,month,annotation,language,",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups"
+    }
+  },
+  "items": [
+    {
+      "citationKey": "hoefer2004network",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Martin",
+          "lastName": "Hoefer"
+        }
+      ],
+      "date": "2004",
+      "extra": [
+        "tex.referencetype: mastersthesis"
+      ],
+      "itemID": 1,
+      "itemType": "thesis",
+      "publisher": "Technische Universit\u00e4t Clausthal-Zellerfeld",
+      "tags": [
+        {
+          "tag": "algo"
+        }
+      ],
+      "title": "Network Connection Games",
+      "type": "Bachelor's Thesis"
+    }
+  ]
+}

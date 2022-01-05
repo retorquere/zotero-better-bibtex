@@ -1,0 +1,61 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "biblatexExtendedNameFormat": true,
+      "bibtexURL": "url",
+      "citekeyFormat": "[zotero:clean]",
+      "itemObserverDelay": 100,
+      "qualityReport": true,
+      "skipFields": "file"
+    }
+  },
+  "items": [
+    {
+      "accessDate": "2014-08-19T00:03:18Z",
+      "attachments": [],
+      "citationKey": "shaw_rfc4880_2007",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "David",
+          "lastName": "Shaw"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Lutz",
+          "lastName": "Donnerhacke"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Rodney",
+          "lastName": "Thayer"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Hal",
+          "lastName": "Finney"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jon",
+          "lastName": "Callas"
+        }
+      ],
+      "date": "2007-11",
+      "extra": [
+        "CCitation Key: rfc4880",
+        "tex.IDs= shaw_rfc4880_2007,rfc4880"
+      ],
+      "itemID": 1,
+      "itemType": "webpage",
+      "title": "RFC4880: OpenPGP Message Format",
+      "url": "http://tools.ietf.org/html/rfc4880"
+    }
+  ]
+}

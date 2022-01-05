@@ -7,10 +7,10 @@
   pages = {25--30},
   bibsource = {DBLP, http://dblp.uni-trier.de},
   crossref = {DBLP:conf/cata/2010},
-  file = {files/Klassen2010/Klassen2010.pdf},
+  owner = {sstudent},
+  annotation = {svm liniowe najlepsze},
   groups = {klasyfikacja},
-  note = {svm liniowe najlepsze},
-  owner = {sstudent}
+  file = {~/BBTZ5TEST/storage/Klassen2010.pdf}
 }
 
 

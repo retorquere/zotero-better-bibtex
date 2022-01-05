@@ -4,17 +4,17 @@ import { Translator } from './lib/translator'
 export { Translator }
 
 function node(id, attributes = {}) {
-  let _node = JSON.stringify(id)
+  let n = JSON.stringify(id)
   const attrs = Object.entries(attributes).map(([key, value]) => `${key}=${JSON.stringify(value)}`).join(', ')
-  if (attrs) _node += ` [${attrs}]`
-  Zotero.write(`  ${_node};\n`)
+  if (attrs) n += ` [${attrs}]`
+  Zotero.write(`  ${n};\n`)
 }
 
 function edge(source, target, attributes = {}) {
-  let _edge = `${JSON.stringify(source)} -> ${JSON.stringify(target)}`
+  let e = `${JSON.stringify(source)} -> ${JSON.stringify(target)}`
   const attrs = Object.entries(attributes).map(([key, value]) => `${key}=${JSON.stringify(value)}`).join(', ')
-  if (attrs) _edge += ` [${attrs}]`
-  Zotero.write(`  ${_edge};\n`)
+  if (attrs) e += ` [${attrs}]`
+  Zotero.write(`  ${e};\n`)
 }
 
 type Item = {
@@ -22,11 +22,11 @@ type Item = {
   cites: string[]
   relations: string[]
   label: string
-  citekey: string
+  citationKey: string
   uri: string
 }
 
-export function doExport() {
+export function doExport(): void {
   Translator.init('export')
 
   Zotero.write('digraph CitationGraph {\n')
@@ -39,41 +39,41 @@ export function doExport() {
   }
 
   const items: Item[] = []
-  for (const item of Translator.items()) {
-    if (['note', 'attachment'].includes(item.itemType)) continue
+  for (const ref of Translator.references) {
+    const label = [ ref.citationKey ]
 
-    const label = [ item.citekey ]
-
-    if (add.title && item.title) {
-      label.push(`\u201C${item.title.replace(/"/g, "'")}\u201D`)
+    if (add.title && ref.title) {
+      label.push(`\u201C${ref.title.replace(/"/g, "'")}\u201D`)
     }
 
     const author = []
-    if (add.authors && item.creators && item.creators.length) {
-      const name = item.creators?.map(creator => (creator.name || creator.lastName || '').replace(/"/g, "'")).filter(creator => creator).join(', ')
+    if (add.authors && ref.creators && ref.creators.length) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      const name = ref.creators?.map(creator => (creator.name || creator.lastName || '').replace(/"/g, "'")).filter(creator => creator).join(', ')
       if (name) author.push(name)
     }
-    if (add.year && item.date) {
-      let date = Zotero.BetterBibTeX.parseDate(item.date)
+    if (add.year && ref.date) {
+      let date = Zotero.BetterBibTeX.parseDate(ref.date)
       if (date.from) date = date.from
       if (date.year) author.push(`(${date.year})`)
     }
     if (author.length) label.push(author.join(' '))
 
     items.push({
-      id: 'node-' + item.uri.replace(/.*\//, ''),
+      id: `node-${ref.uri.replace(/.*\//, '')}`,
       label: label.join('\n'),
-      relations: (item.relations?.['dc:relation'] || []),
+      relations: (ref.relations?.['dc:relation'] || []),
+      // eslint-disable-next-line prefer-spread
       cites: [].concat.apply([],
-        (item.extra || '')
+        (ref.extra || '')
           .split('\n')
-          .filter(line => line.startsWith('cites:'))
-          .map(line => line.replace(/^cites:/, '').trim())
-          .filter(keys => keys)
-          .map(keys => keys.split(/\s*,\s*/))
-        ),
-      citekey: item.citekey,
-      uri: item.uri,
+          .filter((line: string) => line.startsWith('cites:'))
+          .map((line: string) => line.replace(/^cites:/, '').trim())
+          .filter((keys: string) => keys)
+          .map((keys: string) => keys.split(/\s*,\s*/))
+      ),
+      citationKey: ref.citationKey,
+      uri: ref.uri,
     })
   }
 
@@ -84,18 +84,20 @@ export function doExport() {
       const other = items.find(o => o.uri === uri)
       if (other) {
         edge(item.id, other.id)
-      } else {
+      }
+      else {
         edge(item.id, uri.replace(/.*\//, ''), { style: 'dashed', dir: 'both' })
       }
     }
 
-    for (const citekey of item.cites) {
-      const other = items.find(o => o.citekey === citekey)
+    for (const citationKey of item.cites) {
+      const other = items.find(o => o.citationKey === citationKey)
 
       if (other) {
         edge(item.id, other.id)
-      } else {
-        edge(item.id, citekey, { style: 'dashed' })
+      }
+      else {
+        edge(item.id, citationKey, { style: 'dashed' })
       }
     }
   }

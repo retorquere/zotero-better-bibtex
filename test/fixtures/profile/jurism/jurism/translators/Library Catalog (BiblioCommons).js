@@ -80,7 +80,7 @@ function doWeb(doc, url) {
 		var results = doc.evaluate('//div[@id="bibList"]/div/div//span[@class="title"]/a[1]', doc, ns, XPathResult.ANY_TYPE, null);
 		var items = new Array();
 		var result;
-		while(result = results.iterateNext()) {
+		while (result = results.iterateNext()) {
 				var title = result.textContent;
 				var url = result.href.replace(/\/show\//,"/catalogue_info/");
 				items[url] = title;

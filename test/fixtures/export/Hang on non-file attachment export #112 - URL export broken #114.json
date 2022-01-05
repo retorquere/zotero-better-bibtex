@@ -1,42 +1,36 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "Export collections": false,
-      "exportFileData": false,
-      "exportNotes": false
-    },
+    "localeDateOrder": "ymd",
+    "options": {},
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]",
-      "jabrefFormat": 0
-    },
-    "release": "0.6.47"
+      "citekeyFormat": "[auth][year]"
+    }
   },
   "items": [
     {
       "ISBN": "9780674042582",
       "abstractNote": "Since it appeared in 1971, John Rawls's \"A Theory of Justice\" has become a classic. The author has now revised the original edition to clear up a number of difficulties he and others have found in the original book.  Rawls aims to express an essential part of the common core of the democratic tradition--justice as fairness--and to provide an alternative to utilitarianism, which had dominated the Anglo-Saxon tradition of political thought since the nineteenth century. Rawls substitutes the ideal of the social contract as a more satisfactory account of the basic rights and liberties of citizens as free and equal persons. \"Each person,\" writes Rawls, \"possesses an inviolability founded on justice that even the welfare of society as a whole cannot override.\" Advancing the ideas of Rousseau, Kant, Emerson, and Lincoln, Rawls's theory is as powerful today as it was when first published.",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "John",
           "lastName": "Rawls"
         }
       ],
       "date": "2009-07-01",
-      "itemID": 3,
+      "itemID": 1,
       "itemType": "book",
       "language": "en",
       "libraryCatalog": "Google Books",
       "numPages": "564",
       "publisher": "Harvard University Press",
       "tags": [
-        "Law / General"
+        {
+          "tag": "Law / General"
+        }
       ],
       "title": "A Theory of Justice",
       "url": "http://www.google.com"
@@ -44,24 +38,24 @@
     {
       "ISBN": "9781770482579",
       "abstractNote": "With its gripping plot and pungent dialogue, Uncle Tom's Cabin offers readers today a passionate portrait of a nation on the verge of disunion and a surprisingly subtle examination of the relationship between race and nationalism that has always been at the heart of the American experience. This Broadview edition is based upon the first American edition of the novel and reprints its original illustrations and preface. In addition, it reprints all of the prefaces that Stowe wrote for authorized European editions of Uncle Tom's Cabin, offers a wide array of appendices that clarify the novel's participation in antebellum debates about domesticity, colonization, abolitionism, and the law, and includes sections on dramatic adaptations of the novel.",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Harriet Beecher",
           "lastName": "Stowe"
         }
       ],
       "date": "2009-04-27",
-      "itemID": 5,
+      "itemID": 2,
       "itemType": "book",
       "language": "en",
       "libraryCatalog": "Google Books",
       "numPages": "629",
       "publisher": "Broadview Press",
       "tags": [
-        "Fiction / Literary"
+        {
+          "tag": "Fiction / Literary"
+        }
       ],
       "title": "Uncle Tom's Cabin"
     }

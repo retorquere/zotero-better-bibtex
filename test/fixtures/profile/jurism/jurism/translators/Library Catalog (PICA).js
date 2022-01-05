@@ -24,7 +24,7 @@ function detectWeb(doc, url) {
 		var content = elt.textContent;
 		//Z.debug(content)
 		if ((content == "Liste des résultats") || (content == "shortlist") || (content == 'Kurzliste') || content == 'titellijst') {
-			if(!getSearchResults(doc).iterateNext()) return;	//no results. Does not seem to be necessary, but just in case.
+			if (!getSearchResults(doc).iterateNext()) return;	//no results. Does not seem to be necessary, but just in case.
 			return "multiple";
 			
 		} else if ((content == "Notice détaillée") || (content == "title data") || (content == 'Titeldaten') || (content == 'Vollanzeige') || 
@@ -75,7 +75,7 @@ function scrape(doc, url) {
 		}
 		/** we need to clean up the results a bit **/
 		//pages should not contain any extra characters like p. or brackets (what about supplementary pages?)
-		if(newItem.pages) newItem.pages = newItem.pages.replace(/[^\d-]+/g, '');
+		if (newItem.pages) newItem.pages = newItem.pages.replace(/[^\d-]+/g, '');
 		
 		
 	} else var newItem = new Zotero.Item();
@@ -199,10 +199,10 @@ function scrape(doc, url) {
 				//http://gso.gbv.de/DB=2.1/PPNSET?PPN=732443563
 				var issnRE = /\b(is[sb]n)\s+([-\d\sx]+)/i;	//this also matches ISBN
 				var m = value.match(issnRE);
-				if(m) {
-					if(m[1].toUpperCase() == 'ISSN' && !newItem.ISSN) {
+				if (m) {
+					if (m[1].toUpperCase() == 'ISSN' && !newItem.ISSN) {
 						newItem.ISSN = m[2].replace(/\s+/g,'');
-					} else if(m[1].toUpperCase() == 'ISBN' && !newItem.ISBN) {
+					} else if (m[1].toUpperCase() == 'ISBN' && !newItem.ISBN) {
 						newItem.ISBN = m[2].replace(/\s+/g,'');
 					}
 				}
@@ -210,26 +210,26 @@ function scrape(doc, url) {
 				// typically / ed. by ****. - city, country : publisher
 				//http://gso.gbv.de/DB=2.1/PPNSET?PPN=732386977
 				var n = value;
-				if(m) {
+				if (m) {
 					n = value.split(m[0])[0];
 					//first editors
 					var ed = n.split('/');	//editors only appear after /
-					if(ed.length > 1) {
+					if (ed.length > 1) {
 						n = n.substr(ed[0].length+1);	//trim off title
 						ed = ed[1].split('-',1)[0];
 						n = n.substr(ed.length+1);	//trim off editors
-						if(ed.indexOf('ed. by') != -1) {	//not http://gso.gbv.de/DB=2.1/PPNSET?PPN=732443563
+						if (ed.indexOf('ed. by') != -1) {	//not http://gso.gbv.de/DB=2.1/PPNSET?PPN=732443563
 							ed = ed.replace(/^\s*ed\.\s*by\s*|[.\s]+$/g,'')
 									.split(/\s*(?:,|and)\s*/);	//http://gso.gbv.de/DB=2.1/PPNSET?PPN=731519299
-							for(var i=0, m=ed.length; i<m; i++) {
+							for (var i=0, m=ed.length; i<m; i++) {
 								newItem.creators.push(ZU.cleanAuthor(ed[i], 'editor', false));
 							}
 						}
 					}
 					var loc = n.split(':');
-					if(loc.length == 2) {
-						if(!newItem.publisher) newItem.publisher = loc[1].replace(/^\s+|[\s,]+$/,'');
-						if(!newItem.place) newItem.place = loc[0].replace(/\s*\[.+?\]\s*/, '').trim();
+					if (loc.length == 2) {
+						if (!newItem.publisher) newItem.publisher = loc[1].replace(/^\s+|[\s,]+$/,'');
+						if (!newItem.place) newItem.place = loc[0].replace(/\s*\[.+?\]\s*/, '').trim();
 					}
 
 					//we can now drop everything up through the last ISSN/ISBN
@@ -249,7 +249,7 @@ function scrape(doc, url) {
 				//we'll just assume there are always pages at the end and ignore the indicator
 				n = n.split(',');
 				var pages = n.pop().match(/\d+(?:\s*-\s*\d+)/);
-				if(pages && !newItem.pages) {
+				if (pages && !newItem.pages) {
 					newItem.pages = pages[0];
 				}
 				n = n.join(',');	//there might be empty values that we're joining here
@@ -258,12 +258,12 @@ function scrape(doc, url) {
 				//it's very unlikely that we will have 4 digit volumes starting with 19 or 20, so we'll just grab the year first
 				var dateRE = /\b(?:19|20)\d{2}\b/g;
 				var date, lastDate;
-				while(date = dateRE.exec(n)) {
+				while (date = dateRE.exec(n)) {
 					lastDate = date[0];
 					n = n.replace(lastDate,'');	//get rid of year
 				}
-				if(lastDate) {
-					if(!newItem.date) newItem.date = lastDate;
+				if (lastDate) {
+					if (!newItem.date) newItem.date = lastDate;
 				} else {	//if there's no year, panic and stop trying
 					break;
 				}
@@ -273,20 +273,20 @@ function scrape(doc, url) {
 				//e.g. http://gso.gbv.de/DB=2.1/PPNSET?PPN=732443563
 				var issvolRE = /[\d\/]+/g;	//in French, issues can be 1/4 (e.g. http://www.sudoc.abes.fr/DB=2.1/SRCH?IKT=12&TRM=013979922)
 				var num, vol, issue;
-				while(num = issvolRE.exec(n)) {
-					if(issue != undefined) {
+				while (num = issvolRE.exec(n)) {
+					if (issue != undefined) {
 						vol = issue;
 						issue = num[0];
-					} else if(vol != undefined) {
+					} else if (vol != undefined) {
 						issue = num[0];
 					} else {
 						vol = num[0];
 					}
 				}
-				if(vol != undefined && !newItem.volume) {
+				if (vol != undefined && !newItem.volume) {
 					newItem.volume = vol;
 				}
-				if(issue != undefined && !newItem.issue) {
+				if (issue != undefined && !newItem.issue) {
 					newItem.issue = issue;
 				}
 				break;
@@ -299,11 +299,11 @@ function scrape(doc, url) {
 				var series = value;
 				var m;
 				var volRE = /;[^;]*?(\d+)\s*$/;
-				if(m = series.match(volRE)) {
-					if(ZU.fieldIsValidForType('seriesNumber', newItem.itemType)) { //e.g. http://gso.gbv.de/DB=2.1/PPNSET?PPN=729937798
-						if(!newItem.seriesNumber) newItem.seriesNumber = m[1];
+				if (m = series.match(volRE)) {
+					if (ZU.fieldIsValidForType('seriesNumber', newItem.itemType)) { //e.g. http://gso.gbv.de/DB=2.1/PPNSET?PPN=729937798
+						if (!newItem.seriesNumber) newItem.seriesNumber = m[1];
 					} else {	//e.g. http://www.sudoc.fr/05625248X
-						if(!newItem.volume) newItem.volume = m[1];
+						if (!newItem.volume) newItem.volume = m[1];
 					}
 					series = series.replace(volRE, '').trim();
 				}
@@ -362,25 +362,25 @@ function scrape(doc, url) {
 				var m = value.split(';')[0];	//hopefully publisher is always first (e.g. http://www.sudoc.fr/128661828)
 				var place = m.split(':', 1)[0];
 				var pub = m.substring(place.length+1); //publisher and maybe year
-				if(!newItem.city) {
+				if (!newItem.city) {
 					place = place.replace(/[[\]]/g, '').trim();
-					if(place.toUpperCase() != 'S.L.') {	//place is not unknown
+					if (place.toUpperCase() != 'S.L.') {	//place is not unknown
 						newItem.city = place;
 					}
 				}
 
-				if(!newItem.publisher) {
-					if(!pub) break; //not sure what this would be or look like without publisher
+				if (!newItem.publisher) {
+					if (!pub) break; //not sure what this would be or look like without publisher
 					pub = pub.replace(/\[.*?\]/g,'')	//drop bracketted info, which looks to be publisher role
 									.split(',');
-					if(pub[pub.length-1].search(/\D\d{4}\b/) != -1) {	//this is most likely year, we can drop it
+					if (pub[pub.length-1].search(/\D\d{4}\b/) != -1) {	//this is most likely year, we can drop it
 						pub.pop();
 					}
-					if(pub.length) newItem.publisher = pub.join(',');	//in case publisher contains commas
+					if (pub.length) newItem.publisher = pub.join(',');	//in case publisher contains commas
 				}
-				if(!newItem.date) {	//date is always (?) last on the line
+				if (!newItem.date) {	//date is always (?) last on the line
 					m = value.match(/\D(\d{4})\b[^,;]*$/);	//could be something like c1986
-					if(m) newItem.date = m[1];
+					if (m) newItem.date = m[1];
 				}
 				break;
 
@@ -413,13 +413,13 @@ function scrape(doc, url) {
 				//   x-109 p., 510 p. and X, 106 S.; 123 S.
 				var numPagesRE = /\[?((?:[ivxlcdm\d]+[ ,\-]*)+)\]?\s+[fps]\b/ig,
 					numPages = [], m;
-				while(m = numPagesRE.exec(value)) {
+				while (m = numPagesRE.exec(value)) {
 					numPages.push(m[1].replace(/ /g, '')
 						.replace(/[\-,]/g,'+')
 						.toLowerCase() // for Roman numerals
 					);
 				}
-				if(numPages.length) newItem.numPages = numPages.join('; ');
+				if (numPages.length) newItem.numPages = numPages.join('; ');
 				
 				//running time for movies:
 				m = value.match(/\d+\s*min/);
@@ -497,8 +497,8 @@ function scrape(doc, url) {
 				var isbn = [], s;
 				for (var i in isbns) {
 					var m = isbns[i].match(/[-x\d]{10,}/i);	//this is necessary until 3.0.12
-					if(!m) continue;
-					if(m[0].replace(/-/g,'').search(/^(?:\d{9}|\d{12})[\dx]$/i) != -1) {
+					if (!m) continue;
+					if (m[0].replace(/-/g,'').search(/^(?:\d{9}|\d{12})[\dx]$/i) != -1) {
 						isbn.push(m[0]);
 					}
 				}
@@ -531,7 +531,7 @@ function scrape(doc, url) {
 	if (newItem.country) location.push(newItem.country.trim());
 	newItem.country = undefined;
 	//join and remove the "u.a." common in German libraries
-	if(location.length) newItem.place = location.join(', ').replace(/\[?u\.a\.\]?\s*$/, "");
+	if (location.length) newItem.place = location.join(', ').replace(/\[?u\.a\.\]?\s*$/, "");
 	
 	//remove u.a. and [u.a.] from publisher
 	if (newItem.publisher){
@@ -543,7 +543,7 @@ function scrape(doc, url) {
 		newItem.date = newItem.date.replace(/[\[c]+\s*(\d{4})\]?/, "$1");
 	}
 	//if we didn't get a permalink, look for it in the entire page
-	if(!permalink) {
+	if (!permalink) {
 		var permalink = ZU.xpathText(doc, '//a[./img[contains(@src,"/permalink") or contains(@src,"/zitierlink")]][1]/@href');
 	}
 	
@@ -553,7 +553,7 @@ function scrape(doc, url) {
 			newItem.creators[i].fieldMode = true;
 		}
 	}
-	if(permalink) {
+	if (permalink) {
 		newItem.attachments.push({
 			title: 'Link to Library Catalog Entry',
 			url: permalink,

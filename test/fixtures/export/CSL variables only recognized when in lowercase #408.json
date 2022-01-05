@@ -1,33 +1,21 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]",
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "jabrefFormat": 0,
-      "postscript": "",
-      "skipFields": ""
-    },
-    "release": "1.6.14"
+      "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]"
+    }
   },
   "items": [
     {
       "ISBN": "978-3-540-38875-3 978-3-540-38876-0",
       "abstractNote": "A counting Bloom filter (CBF) generalizes a Bloom filter data structure so as to allow membership queries on a set that can be changing dynamically via insertions and deletions. As with a Bloom filter, a CBF obtains space savings by allowing false positives. We provide a simple hashing-based alternative based on d-left hashing called a d-left CBF (dlCBF). The dlCBF offers the same functionality as a CBF, but uses less space, generally saving a factor of two or more. We describe the construction of dlCBFs, provide an analysis, and demonstrate their effectiveness experimentally.",
       "accessDate": "2015-11-16 00:07:55",
-      "attachments": [],
-      "bookTitle": "Algorithms \u2013 ESA 2006",
       "creators": [
         {
           "creatorType": "author",
@@ -66,8 +54,10 @@
         }
       ],
       "date": "2006/09/11",
-      "extra": "DOI: 10.1007/11841036_61",
-      "itemID": 2,
+      "extra": [
+        "DOI: 10.1007/11841036_61"
+      ],
+      "itemID": 1,
       "itemType": "bookSection",
       "language": "en",
       "libraryCatalog": "link.springer.com",
@@ -78,12 +68,24 @@
       "series": "Lecture Notes in Computer Science",
       "seriesNumber": "4168",
       "tags": [
-        "Algorithm Analysis and Problem Complexity",
-        "Computer Communication Networks",
-        "Computer Graphics",
-        "Discrete Mathematics in Computer Science",
-        "Numeric Computing",
-        "data structures"
+        {
+          "tag": "Algorithm Analysis and Problem Complexity"
+        },
+        {
+          "tag": "Computer Communication Networks"
+        },
+        {
+          "tag": "Computer Graphics"
+        },
+        {
+          "tag": "data structures"
+        },
+        {
+          "tag": "Discrete Mathematics in Computer Science"
+        },
+        {
+          "tag": "Numeric Computing"
+        }
       ],
       "title": "An Improved Construction for Counting Bloom Filters",
       "url": "http://link.springer.com/chapter/10.1007/11841036_61"

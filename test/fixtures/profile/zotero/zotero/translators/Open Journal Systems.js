@@ -1,21 +1,21 @@
 {
 	"translatorID": "99b62ba4-065c-4e83-a5c0-d8cc0c75d388",
+	"translatorType": 4,
 	"label": "Open Journal Systems",
 	"creator": "Aurimas Vinckevicius",
 	"target": "/article/view/",
 	"minVersion": "2.1.9",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2019-09-08 11:33:52"
+	"lastUpdated": "2021-06-24 22:00:00"
 }
 
 /*
 	***** BEGIN LICENSE BLOCK *****
 
-	Copyright © 2012 Aurimas Vinckevicius
+	Copyright © 2012-2021 Aurimas Vinckevicius
 
 	This file is part of Zotero.
 
@@ -38,7 +38,8 @@
 function detectWeb(doc, _url) {
 	var pkpLibraries = ZU.xpath(doc, '//script[contains(@src, "/lib/pkp/js/")]');
 	if (ZU.xpathText(doc, '//a[@id="developedBy"]/@href') == 'http://pkp.sfu.ca/ojs/'	// some sites remove this
-		|| pkpLibraries.length >= 1) {
+		|| pkpLibraries.length >= 1
+		|| attr(doc, 'meta[name="generator"]', 'content').startsWith('Open Journal Systems')) {
 		return 'journalArticle';
 	}
 	return false;
@@ -56,7 +57,7 @@ function doWeb(doc, url) {
 	}
 }
 
-function scrape(doc, _url) {
+function scrape(doc, url) {
 	// use Embeded Metadata
 	var trans = Zotero.loadTranslator('web');
 	trans.setTranslator('951c027d-74ac-47d4-a107-9c3069ab7b48');
@@ -81,10 +82,13 @@ function scrape(doc, _url) {
 			}
 		}
 		
-		if (item.journalAbbreviation && item.journalAbbreviation == "1") {
-			delete item.journalAbbreviation;
-		}
-		
+		// OJS journal abbreviations are rarely correct. sometimes they're
+		// generated from the journal's URL slug, other times they're just the
+		// number "1", or the full name of the journal, or an abbreviation that
+		// isn't correct according to ISO 4 or the journal's editors
+		// (see MeteoHistory test).
+		delete item.journalAbbreviation;
+
 		var doiNode = doc.getElementById('pub-id::doi');
 		if (!item.DOI && doiNode) {
 			item.DOI = doiNode.textContent;
@@ -117,17 +121,34 @@ function scrape(doc, _url) {
 		var pdfUrl = doc.querySelector("a.obj_galley_link.pdf");
 		// add linked PDF if there isn't one listed in the header
 		if (!pdfAttachment && pdfUrl) {
+			pdfAttachment = true;
 			item.attachments.push({
 				title: "Full Text PDF",
 				mimeType: "application/pdf",
 				url: pdfUrl.href.replace(/\/article\/view\//, '/article/download/')
 			});
 		}
+		
+		// add linked PDF if there isn't one listed in the header
+		if (!pdfAttachment) {
+			for (let link of doc.querySelectorAll("a.obj_galley_link")) {
+				if (link.textContent.includes('PDF')) {
+					item.attachments.push({
+						title: "Full Text PDF",
+						mimeType: "application/pdf",
+						url: link.href.replace(/\/article\/view\//, '/article/download/')
+					});
+					break;
+				}
+			}
+		}
 
 		item.complete();
 	});
 
-	trans.translate();
+	trans.getTranslatorObject(function (trans) {
+		trans.doWeb(doc, url);
+	});
 }
 
 
@@ -177,7 +198,7 @@ var testCases = [
 				"pages": "279-311",
 				"publicationTitle": "Dialogue & Discourse",
 				"shortTitle": "On Incrementality in Dialogue",
-				"url": "362.html",
+				"url": "http://journals.linguisticsociety.org/elanguage/dad/article/view/362.html",
 				"volume": "2",
 				"attachments": [
 					{
@@ -185,7 +206,8 @@ var testCases = [
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -217,6 +239,7 @@ var testCases = [
 				"DOI": "10.2218/ijdc.v8i2.263",
 				"ISSN": "1746-8256",
 				"abstractNote": "Academic librarians are increasingly engaging in data curation by providing infrastructure (e.g., institutional repositories) and offering services (e.g., data management plan consultations) to support the management of research data on their campuses. Efforts to develop these resources may benefit from a greater understanding of disciplinary differences in research data management needs. After conducting a survey of data management practices and perspectives at our research university, we categorized faculty members into four research domains—arts and humanities, social sciences, medical sciences, and basic sciences—and analyzed variations in their patterns of survey responses. We found statistically significant differences among the four research domains for nearly every survey item, revealing important disciplinary distinctions in data management actions, attitudes, and interest in support services. Serious consideration of both the similarities and dissimilarities among disciplines will help guide academic librarians and other data curation professionals in developing a range of data-management services that can be tailored to the unique needs of different scholarly researchers.",
+				"issue": "2",
 				"language": "en",
 				"libraryCatalog": "www.ijdc.net",
 				"pages": "5-26",
@@ -226,7 +249,8 @@ var testCases = [
 				"volume": "8",
 				"attachments": [
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					},
 					{
 						"title": "Full Text PDF",
@@ -317,7 +341,8 @@ var testCases = [
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -354,7 +379,8 @@ var testCases = [
 				"volume": "0",
 				"attachments": [
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -380,14 +406,13 @@ var testCases = [
 				"date": "2016/03/14",
 				"DOI": "10.12685/027.7-4-1-101",
 				"ISSN": "2296-0597",
-				"abstractNote": "Der Artikel beschreibt die drei Preisverfahren, die im Preismanagement angewendet werden und zeigt, dass trotz neuer Preisverfahren die Preismodelle bei wissenschaftlichen Zeitschriften immer noch kostenorientiert oder wettbewerbsorientiert sind. Das nutzenorientierte Preisverfahren wartet noch auf seine Umsetzung.This article describes the three modes of pricing which have been applied by price management. Although new pricing models are existing pricing models at scientific journals remain cost oriented or competitor oriented. The value oriented pricing is still waiting for realisation.",
 				"issue": "1",
 				"language": "de",
 				"libraryCatalog": "0277.ch",
 				"pages": "11-17",
-				"publicationTitle": "027.7 Zeitschrift für Bibliothekskultur / Journal for Library Culture",
+				"publicationTitle": "027.7 Zeitschrift für Bibliothekskultur",
 				"rights": "Copyright (c) 2016 027.7 Zeitschrift für Bibliothekskultur / Journal for Library Culture",
-				"url": "https://0277.ch/ojs/index.php/cdrs_0277/article/view/101",
+				"url": "https://0277.ch/index.php/cdrs_0277/article/view/101",
 				"volume": "4",
 				"attachments": [
 					{
@@ -395,7 +420,8 @@ var testCases = [
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -406,7 +432,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.qualitative-research.net/index.php/fqs/article/view/2477",
+		"url": "https://www.qualitative-research.net/index.php/fqs/article/view/2477",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -432,7 +458,7 @@ var testCases = [
 				"libraryCatalog": "www.qualitative-research.net",
 				"publicationTitle": "Forum Qualitative Sozialforschung / Forum: Qualitative Social Research",
 				"rights": "Copyright (c) 2016 Jakub Niedbalski, Izabela Ślęzak",
-				"url": "http://www.qualitative-research.net/index.php/fqs/article/view/2477",
+				"url": "https://www.qualitative-research.net/index.php/fqs/article/view/2477",
 				"volume": "17",
 				"attachments": [
 					{
@@ -440,7 +466,8 @@ var testCases = [
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [
@@ -448,25 +475,10 @@ var testCases = [
 						"tag": "CAQDAS"
 					},
 					{
-						"tag": "Polen"
-					},
-					{
 						"tag": "Polish sociology"
 					},
 					{
-						"tag": "Software"
-					},
-					{
-						"tag": "Soziologie"
-					},
-					{
 						"tag": "computer-assisted qualitative data analysis"
-					},
-					{
-						"tag": "computergestützte Datenanalyse"
-					},
-					{
-						"tag": "qualitative Forschung"
 					},
 					{
 						"tag": "qualitative research"
@@ -503,34 +515,18 @@ var testCases = [
 				"rights": "Copyright (c) 2016 Samuel Thevoz",
 				"shortTitle": "On the Threshold of the \"Land of Marvels",
 				"url": "https://heiup.uni-heidelberg.de/journals/index.php/transcultural/article/view/23541",
+				"volume": "7",
 				"attachments": [
 					{
 						"title": "Full Text PDF",
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [
-					{
-						"tag": "Alexandra David-Neel"
-					},
-					{
-						"tag": "Cultural Globalization"
-					},
-					{
-						"tag": "Himalayan Borderlands"
-					},
-					{
-						"tag": "Modern Buddhism"
-					},
-					{
-						"tag": "Tibetan Buddhism"
-					},
-					{
-						"tag": "Travel Writing"
-					},
 					{
 						"tag": "World Literature"
 					}
@@ -570,7 +566,8 @@ var testCases = [
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -600,7 +597,7 @@ var testCases = [
 				"language": "es",
 				"libraryCatalog": "journals.ub.uni-heidelberg.de",
 				"pages": "36-49",
-				"publicationTitle": "Miradas - Elektronische Zeitschrift für Iberische und Ibero-amerikanische Kunstgeschichte",
+				"publicationTitle": "Miradas - Zeitschrift für Kunst- und Kulturgeschichte der Amérikas und der iberischen Halbinsel",
 				"rights": "Copyright (c) 2015",
 				"url": "https://journals.ub.uni-heidelberg.de/index.php/miradas/article/view/22445",
 				"volume": "2",
@@ -610,7 +607,8 @@ var testCases = [
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -647,7 +645,8 @@ var testCases = [
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -689,20 +688,41 @@ var testCases = [
 				"volume": "17",
 				"attachments": [
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [
-					"Anonymität",
-					"Bestattung",
-					"Genderdifferenzen",
-					"Säkularisierung",
-					"Tod",
-					"anonymity",
-					"burial",
-					"death",
-					"gender difference",
-					"secularisation"
+					{
+						"tag": "Anonymität"
+					},
+					{
+						"tag": "Bestattung"
+					},
+					{
+						"tag": "Genderdifferenzen"
+					},
+					{
+						"tag": "Säkularisierung"
+					},
+					{
+						"tag": "Tod"
+					},
+					{
+						"tag": "anonymity"
+					},
+					{
+						"tag": "burial"
+					},
+					{
+						"tag": "death"
+					},
+					{
+						"tag": "gender difference"
+					},
+					{
+						"tag": "secularisation"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -753,7 +773,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2011-01-01",
+				"date": "2011/10/17",
 				"DOI": "10.4314/thrb.v13i4.63347",
 				"ISSN": "1821-9241",
 				"abstractNote": "The synergistic interaction between Human Immunodeficiency virus (HIV) disease and Malaria makes it mandatory for patients with HIV to respond appropriately in preventing and treating malaria. Such response will help to control the two diseases. This study assessed the knowledge of 495 patients attending the HIV clinic, in Lagos University Teaching Hospital, Nigeria.  Their treatment seeking, preventive practices with regards to malaria, as well as the impact of socio – demographic / socio - economic status were assessed. Out of these patients, 245 (49.5 %) used insecticide treated bed nets; this practice was not influenced by socio – demographic or socio – economic factors.  However, knowledge of the cause, knowledge of prevention of malaria, appropriate use of antimalarial drugs and seeking treatment from the right source increased with increasing level of education (p < 0.05). A greater proportion of the patients, 321 (64.9 %) utilized hospitals, pharmacy outlets or health centres when they perceived an attack of malaria. Educational intervention may result in these patients seeking treatment from the right place when an attack of malaria fever is perceived.",
@@ -761,7 +781,7 @@ var testCases = [
 				"language": "en",
 				"libraryCatalog": "www.ajol.info",
 				"publicationTitle": "Tanzania Journal of Health Research",
-				"rights": "Copyright for articles published in this journal is retained by the journal.",
+				"rights": "Copyright (c)",
 				"url": "https://www.ajol.info/index.php/thrb/article/view/63347",
 				"volume": "13",
 				"attachments": [
@@ -770,16 +790,29 @@ var testCases = [
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [
-					"HIV patients",
-					"Nigeria",
-					"knowledge",
-					"malaria",
-					"prevention",
-					"treatment"
+					{
+						"tag": "HIV patients"
+					},
+					{
+						"tag": "Nigeria"
+					},
+					{
+						"tag": "knowledge"
+					},
+					{
+						"tag": "malaria"
+					},
+					{
+						"tag": "prevention"
+					},
+					{
+						"tag": "treatment"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -788,11 +821,11 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://ejournals.library.vanderbilt.edu/ojs/index.php/ameriquests/article/view/220",
+		"url": "https://ejournals.library.vanderbilt.edu/index.php/ameriquests/article/view/220",
 		"items": [
 			{
 				"itemType": "journalArticle",
-				"title": "Open Journal Systems",
+				"title": "Canadian Literature in the Early Twenty-First Century: The Emergence of an Inter-American Perspective",
 				"creators": [
 					{
 						"firstName": "Earl E.",
@@ -800,31 +833,28 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
+				"date": "2011/07/28",
 				"DOI": "10.15695/amqst.v8i1.220",
-				"abstractNote": "Historically, Canadian literature has been chary of entering too far into the new discipline of inter-American literary study.  Rightly concerned about the danger of blurring its identity as a distinctive national literature (one made up, as is well known, of two great strands, the French and the English), Canadian writing has, however, come of age, both nationally and internationally.  One dramatic aspect of this transformation is that we now have mounting evidence that both English and French Canadian writers are actively engaging with the literatures and cultures of their hemispheric neighbors.  By extending the methodologies of Comparative Literature to the inter-American paradigm, Canadian writers, critics, and literary historians are finding ways to maintain their status as members of a unique and under-appreciated national literature while also entering into the kinds of comparative studies that demonstrate their New World ties as well.",
+				"ISSN": "1553-4316",
+				"issue": "1",
+				"language": "en",
 				"libraryCatalog": "ejournals.library.vanderbilt.edu",
-				"url": "http://ejournals.library.vanderbilt.edu/ojs/index.php/ameriquests/article/view/220",
+				"publicationTitle": "AmeriQuests",
+				"rights": "Copyright (c) 2015 AmeriQuests",
+				"shortTitle": "Canadian Literature in the Early Twenty-First Century",
+				"url": "https://ejournals.library.vanderbilt.edu/index.php/ameriquests/article/view/220",
+				"volume": "8",
 				"attachments": [
 					{
-						"title": "Snapshot"
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
+					},
+					{
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
-				"tags": [
-					"American studies",
-					"Canadian studies",
-					"american dream",
-					"brazilian studies",
-					"center for the americas",
-					"free trade",
-					"inter-american literature",
-					"latin american studies",
-					"literature and law",
-					"migration",
-					"native american studies",
-					"quebec studies",
-					"storytelling",
-					"vanderbilt"
-				],
+				"tags": [],
 				"notes": [],
 				"seeAlso": []
 			}
@@ -844,8 +874,8 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2012-12-18",
-				"ISSN": "08245053",
+				"date": "2010",
+				"ISSN": "1918-610X",
 				"language": "en",
 				"libraryCatalog": "jms.uwinnipeg.ca",
 				"pages": "203-224",
@@ -856,11 +886,12 @@ var testCases = [
 				"volume": "28",
 				"attachments": [
 					{
-						"title": "Snapshot"
-					},
-					{
 						"title": "Full Text PDF",
 						"mimeType": "application/pdf"
+					},
+					{
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -871,7 +902,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://journals.sfu.ca/jmde/index.php/jmde_1/article/view/100/115",
+		"url": "https://journals.sfu.ca/jmde/index.php/jmde_1/article/view/100/115",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -892,7 +923,7 @@ var testCases = [
 				"publicationTitle": "Journal of MultiDisciplinary Evaluation",
 				"rights": "Copyright (c)",
 				"shortTitle": "The Value of Evaluation Standards",
-				"url": "http://journals.sfu.ca/jmde/index.php/jmde_1/article/view/100",
+				"url": "https://journals.sfu.ca/jmde/index.php/jmde_1/article/view/100",
 				"volume": "2",
 				"attachments": [
 					{
@@ -900,7 +931,8 @@ var testCases = [
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -926,7 +958,6 @@ var testCases = [
 				"date": "2019/06/30",
 				"DOI": "10.15503/jecs20191.173.184",
 				"ISSN": "2081-1640",
-				"abstractNote": "Aim. The aim of the article is to analyse the ways African American children’s characters are constructed in selected picture-books and to determine whether they have any impact on the conduct of contemporary black youth facing discrimination in their own lives. It also argues that picture-books are one of the most influential media in the representation of racial problems.Methods. The subjects of the study are picture-books. The analysis pertains to the visual and the verbal narrative of the books, with a special emphasis being placed on the interplay between text and image as well as on the ways the meaning of the books is created. The texts are analysed using a number of existing research methods used for examining the picture-book format. Results. The article shows that the actions of selected children’s characters, whether real or imaginary, may serve as an incentive for contemporary youth to struggle for equal rights and contribute to the process of racial integration on a daily basis.Conclusions. The results can be considered in the process of establishing educational curricula for students from minority groups who need special literature that would empower them to take action and join in the efforts of adult members of their communities.",
 				"issue": "1",
 				"language": "en",
 				"libraryCatalog": "jecs.pl",
@@ -941,24 +972,134 @@ var testCases = [
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [
 					{
-						"tag": "African American children's literature"
-					},
-					{
-						"tag": "picture-books"
-					},
-					{
 						"tag": "political agents"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://journal.meteohistory.org/index.php/hom/article/view/79",
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "Trajectories and reconversions of the Center for Weather Forecasting and Climate Studies (CPTEC): Forming the meteorological science elite in Brazil",
+				"creators": [
+					{
+						"firstName": "Thales de",
+						"lastName": "Andrade",
+						"creatorType": "author"
 					},
 					{
-						"tag": "racism"
+						"firstName": "Paulo",
+						"lastName": "Escada",
+						"creatorType": "author"
+					}
+				],
+				"date": "2021/05/18",
+				"ISSN": "1555-5763",
+				"archiveLocation": "Brazil, 1970-2000",
+				"language": "en",
+				"libraryCatalog": "journal.meteohistory.org",
+				"pages": "1-23",
+				"publicationTitle": "History of Meteorology",
+				"rights": "Copyright (c) 2021 Thales de Andrade, Paulo Escada",
+				"shortTitle": "Trajectories and reconversions of the Center for Weather Forecasting and Climate Studies (CPTEC)",
+				"url": "https://journal.meteohistory.org/index.php/hom/article/view/79",
+				"volume": "10",
+				"attachments": [
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
 					},
 					{
-						"tag": "text-image relationships"
+						"title": "Snapshot",
+						"mimeType": "text/html"
+					}
+				],
+				"tags": [
+					{
+						"tag": "scientific elites"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://www.revistacomunicar.com/ojs/index.php/comunicar/article/view/C67-2021-02",
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "Jóvenes ante el ciberodio: El rol de la mediación parental y el apoyo familiar",
+				"creators": [
+					{
+						"firstName": "Michelle F.",
+						"lastName": "Wright",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Sebastian",
+						"lastName": "Wachs",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Manuel",
+						"lastName": "Gámez-Guadix",
+						"creatorType": "author"
+					}
+				],
+				"date": "2021/04/01",
+				"DOI": "10.3916/C67-2021-02",
+				"ISSN": "1988-3293",
+				"issue": "67",
+				"language": "es",
+				"libraryCatalog": "www.revistacomunicar.com",
+				"pages": "21-33",
+				"publicationTitle": "Comunicar",
+				"rights": "Derechos de autor",
+				"shortTitle": "Jóvenes ante el ciberodio",
+				"url": "https://www.revistacomunicar.com/ojs/index.php/comunicar/article/view/C67-2021-02",
+				"volume": "29",
+				"attachments": [
+					{
+						"title": "Snapshot",
+						"mimeType": "text/html"
+					},
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
+					}
+				],
+				"tags": [
+					{
+						"tag": "Ciberodio"
+					},
+					{
+						"tag": "afrontamiento"
+					},
+					{
+						"tag": "apoyo familiar"
+					},
+					{
+						"tag": "discurso del odio"
+					},
+					{
+						"tag": "educación mediática"
+					},
+					{
+						"tag": "mediación parental"
 					}
 				],
 				"notes": [],

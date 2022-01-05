@@ -1,4 +1,3 @@
----
 references:
 - id: vogel_cinema_2016
   abstract: >-
@@ -22,26 +21,27 @@ references:
     co-fonde´ le Festival du Film de New York, dont il a dirige´ la
     programmation jusqu'en 1968
   accessed:
-    - year: 2017
-      month: 6
-      day: 29
+  - year: 2017
+    month: 6
+    day: 29
   author:
-    - family: Vogel
-      given: Amos
+  - family: Vogel
+    given: Amos
   call-number: 791.430 1
+  event-place: Paris
   ISBN: 979-10-239-0085-9
   issued:
-    - year: 2016
+  - year: 2016
   language: fre
   number-of-pages: '349'
   original-date:
-    - year: 1974
+  - year: 1974
   publisher: Capricci
   publisher-place: Paris
-  source: 'BnF Catalogue général (http://catalogue.bnf.fr)'
-  title: 'Le Cinéma, art subversif'
+  source: BnF Catalogue général (http://catalogue.bnf.fr)
+  title: Le Cinéma, art subversif
   translator:
-    - family: Frégnac
-      given: Claude
+  - family: Frégnac
+    given: Claude
   type: book
-...
+  citation-key: vogel_cinema_2016

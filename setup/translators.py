@@ -5,7 +5,6 @@ import os
 import glob
 from addict import Dict
 import re
-from Cheetah.Template import Template
 
 print('translators')
 
@@ -43,86 +42,3 @@ for header in sorted(glob.glob(os.path.join(root, 'translators/*.json'))):
 
 with open(os.path.join(root, 'gen/translators.json'), 'w') as out:
   json.dump(translators, out, indent=2, sort_keys=True)
-
-with open(os.path.join(root, 'gen/preferences/defaults.json')) as f:
-  variables.preferences = json.load(f)
-
-  for pref, default in variables.preferences.items():
-    variables.preferences[pref] = jstype(default)
-
-variables.labels = translators.byLabel.keys()
-
-template = """
-type ZoteroCollection = {
-  id: string
-  key: string
-  parent: string
-  name: string
-  items: string[]
-  collections: string[] | ZoteroCollection[]
-}
-
-interface ITranslator {
-  preferences: IPreferences
-  skipFields: string[]
-  skipField: {[key: string]: boolean}
-  verbatimFields?: string[]
-  csquotes: { open: string, close: string }
-  exportDir: string
-  exportPath: string
-
-  options: {
-    dropAttachments?: boolean
-    #for $key, $type in $displayOptions.items():
-    $key?: $type
-    #end for
-  }
-
-  #for $label in $labels
-  $label?: boolean
-  #end for
-
-  caching: boolean
-  cache: {
-    hits: number
-    misses: number
-  }
-
-  header: {
-  #for $key, $type in $header.items():
-    $key: $type
-  #end for
-
-    displayOptions: {
-    #for $key, $type in $displayOptions.items():
-      $key: $type
-    #end for
-    }
-
-    configOptions: {
-    #for $key, $type in $configOptions.items():
-      $key: $type
-    #end for
-    }
-  }
-
-  collections: Record<string, ZoteroCollection>
-
-  isJurisM: boolean
-  isZotero: boolean
-  unicode: boolean
-  platform: string
-  paths: {
-    caseSensitive: boolean
-    sep: string
-  }
-  debugEnabled: boolean
-  BetterTeX?: boolean
-  BetterCSL?: boolean
-
-  stringCompare: (a: string, b: string) => number
-}
-"""
-
-with open(os.path.join(root, 'gen/typings/translator.d.ts'), 'w') as out:
-  out.write(str(Template(template, searchList=[variables.to_dict()])))

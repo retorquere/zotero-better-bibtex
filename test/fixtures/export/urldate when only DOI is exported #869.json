@@ -1,54 +1,19 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
       "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "doi",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
-      "autoExport": "immediate",
-      "autoExportIdleWait": 10,
-      "biblatexExtendedDateFormat": true,
       "biblatexExtendedNameFormat": true,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[authors][year]",
-      "citeprocNoteCitekey": false,
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "exportTitleCase": true,
       "itemObserverDelay": 100,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "parseParticles": true,
-      "postscript": "",
-      "qualityReport": false,
       "quickCopyMode": "pandoc",
-      "quickCopyPandocBrackets": false,
-      "scrubDatabase": false,
-      "skipFields": "issn,isbn,file,groups,keywords,shortjournal,abstract",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.0.70",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.33",
-        "locale": "en-US",
-        "oscpu": "Linux x86_64",
-        "platform": "Linux x86_64",
-        "version": "5.0.33"
-      }
+      "skipFields": "issn,isbn,file,groups,keywords,shortjournal,abstract"
     }
   },
   "items": [
@@ -57,7 +22,6 @@
       "ISSN": "1475-4975",
       "abstractNote": "The association between the smell and the bacon is \u201c.natural\u201d., that is to say it is not the result of any human behavhior. But the association between the word \u201c.breakfast\u201d. and breakfast is a social matter, which exists only for English speaking people.\u2014B. Russell, \u201c.An Inquiry into Meaning and Truth\u201d.",
       "accessDate": "2016-08-03 11:36:08",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -66,10 +30,8 @@
         }
       ],
       "date": "September 1, 1984",
-      "dateAdded": "2016-08-03 11:36:08",
-      "dateModified": "2018-01-09 12:37:54",
       "issue": "1",
-      "itemID": 1100,
+      "itemID": 1,
       "itemType": "journalArticle",
       "libraryCatalog": "Wiley Online Library",
       "pages": "478\u2013489",

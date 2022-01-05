@@ -1,11 +1,19 @@
 const marker = 'BetterBibTeXMonkeyPatched'
 
-export function repatch(object, method, patcher) {
-  object[method] = patcher(object[method])
-  object[method][marker] = true
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/ban-types
+export function repatch(object: any, method: string, patcher: ((Function) => Function)): void {
+  if (!patch.enabled) return
+  if (typeof object[method] !== 'function') throw new Error(`monkey-patch: ${method} is not a function`)
+  const patched = object[method][marker] || object[method]
+  object[method] = patcher(patched)
+  object[method][marker] = patched
 }
 
-export function patch(object, method, patcher) {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/ban-types
+export function patch(object: any, method: string, patcher: ((Function) => Function)): void {
+  if (!patch.enabled) return
   if (object[method][marker]) throw new Error(`${method} re-patched`)
   repatch(object, method, patcher)
 }
+
+patch.enabled = true

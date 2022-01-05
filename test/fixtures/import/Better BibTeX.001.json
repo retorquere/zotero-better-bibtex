@@ -1,86 +1,37 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
-    },
+    "options": {},
     "preferences": {
-      "DOIandURL": "both",
-      "ascii": "",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportDelay": 1,
-      "autoExportIdleWait": 10,
-      "autoPin": false,
-      "automaticTags": true,
-      "auxImport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
-      "citekeyFormat": "[auth][year]",
-      "citeprocNoteCitekey": false,
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "exportBraceProtection": true,
-      "exportTitleCase": true,
-      "git": "config",
-      "importBibTeXStrings": true,
-      "importCaseProtection": "off",
-      "importSentenceCase": "on+guess",
-      "itemObserverDelay": 100,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "keyScope": "library",
-      "kuroshiro": false,
-      "mapMath": "",
-      "mapText": "",
-      "mapUnicode": "conservative",
-      "newTranslatorsAskRestart": true,
-      "parseParticles": true,
-      "postscript": "",
-      "qualityReport": false,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "rawLaTag": "#LaTeX",
-      "relativeFilePaths": false,
-      "scrubDatabase": false,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
-      "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.1.145.emile.limonia",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.75",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "en-US",
-        "oscpu": "Intel Mac OS X 10.15",
-        "platform": "MacIntel",
-        "version": "5.0.75"
-      }
+      "citekeyFormat": "[auth][year]"
     }
   },
   "items": [
     {
-      "attachments": [],
+      "ISBN": "978-3-446-40695-7",
+      "citationKey": "Rechenberg2006a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Peter",
+          "lastName": "Rechenberg"
+        }
+      ],
+      "date": "2006",
+      "edition": "3., erw. und aktualisierte Aufl.",
+      "extra": [
+        "Citation Key: Rechenberg2006a",
+        "tex.ppn_gvk: 511633173"
+      ],
+      "itemID": 2,
+      "itemType": "book",
+      "numPages": "253",
+      "publisher": "Hanser Fachbuchverlag",
+      "title": "Technisches schreiben. (nicht nur) f\u00fcr Informatiker"
+    },
+    {
       "citationKey": "Adams2001",
-      "citekey": "Adams2001",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -119,17 +70,13 @@
         }
       ],
       "date": "2001",
-      "dateAdded": "2019-10-14T18:51:04Z",
-      "dateModified": "2019-10-14T18:51:04Z",
-      "extra": "Citation Key: Adams2001",
-      "itemID": 277,
+      "extra": [
+        "Citation Key: Adams2001"
+      ],
+      "itemID": 1,
       "itemType": "journalArticle",
-      "key": "5W7FAVI3",
-      "libraryID": 1,
-      "notes": [],
-      "pages": "493-518",
+      "pages": "493\u2013518",
       "publicationTitle": "Bulletin of Volcanology",
-      "relations": [],
       "tags": [
         {
           "tag": "breadcrust"
@@ -142,40 +89,7 @@
         }
       ],
       "title": "The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/5W7FAVI3",
-      "version": 0,
       "volume": "62"
-    },
-    {
-      "ISBN": "978-3-446-40695-7",
-      "attachments": [],
-      "citationKey": "Rechenberg2006a",
-      "citekey": "Rechenberg2006a",
-      "collections": [],
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Peter",
-          "lastName": "Rechenberg"
-        }
-      ],
-      "date": "2006",
-      "dateAdded": "2019-10-14T18:51:04Z",
-      "dateModified": "2019-10-14T18:51:04Z",
-      "edition": "3., erw. und aktualisierte Aufl.",
-      "extra": "Citation Key: Rechenberg2006a\ntex.ppn_gvk: 511633173",
-      "itemID": 278,
-      "itemType": "book",
-      "key": "BWVKTWL2",
-      "libraryID": 1,
-      "notes": [],
-      "numPages": "253",
-      "publisher": "Hanser Fachbuchverlag",
-      "relations": [],
-      "tags": [],
-      "title": "Technisches schreiben - (nicht nur) f\u00fcr Informatiker",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/BWVKTWL2",
-      "version": 0
     }
   ]
 }

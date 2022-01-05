@@ -216,7 +216,7 @@ function scrape(doc, url) {
 	//notes
 	var note = '';
 	for (key in mapping) {
-		if(mapping[key] == 'note' && keyValuePairs[key]) {
+		if (mapping[key] == 'note' && keyValuePairs[key]) {
 			note += key + ' = ' + keyValuePairs[key] + '\n';
 			delete keyValuePairs[key];
 		}

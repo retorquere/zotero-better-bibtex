@@ -1,0 +1,136 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "asciiBibTeX": false,
+      "biblatexExtendedNameFormat": true,
+      "bibtexURL": "url",
+      "citekeyFormat": "[auth:lower][year]",
+      "postscript": "if (Translator.BetterBibTeX && item.itemType === 'conferencePaper' && item.extra) {\n    const lines = item.extra.split('\\n')\n    for (let line of lines) {\n        let matches = /^([A-Za-z0-9]+): *(.+)$/.exec(line)\n        if (matches === null || matches[1] !== 'Sponsor') {\n            continue\n        }\n        reference.add({name: 'organization', value: matches[2]})\n    }\n}\n\n//if (Translator.BetterBibTeX && item.itemType === 'conferencePaper' && item.extra && item.publisher) {\n//  Zotero.debug(JSON.stringify(item))\n//\n//    var event_place = ''\n//    var publisher_place = ''\n//\n//    const lines = item.extra.split('\\n')\n//    for (let line of lines) {\n//        let matches = /^([A-Za-z0-9]+): *(.+)$/.exec(line)\n//        if (matches !== null && matches[1] === 'Event Place') {\n//            event_place = matches[2]\n//        } else if (matches !== null && matches[1] === 'Publisher Place') {\n//            publisher_place = matches[2]\n//        }\n//    }\n//\n//    if (event_place !== '' && publisher_place !== '') {\n//        reference.add({name: 'address', value: event_place})\n//        reference.add({name: 'publisher', value: item.publisher + ', ' + publisher_place})\n//    }\n//}",
+      "skipFields": "abstract,file,keywords,note",
+      "workers": 2
+    }
+  },
+  "items": [
+    {
+      "ISBN": "978-0-12-802118-7",
+      "abstractNote": "The sparse matrix-vector (SpMV) multiplication is a very important kernel in scientific computing. Efficiently computing this kernel on modern architectures is difficult because of high bandwidth pressure and inefficient cache use. Despite the high available bandwidth on the Intel Xeon Phi, an efficient code remains difficult to achieve because of high data access latencies. We alleviate this issue by integrating vectorization into state-of-the-art parallel SpMV multiplication strategies. We present a novel data structure that is a strict improvement on the industry-standard compressed row storage (CRS), and is highly synergistic with sparse blocking techniques and cache-oblivious orderings induced by space-filling curves. The final parallel scheme we present maximizes both data locality and data reuse on shared-memory systems. The resulting code, based on explicit thread-local data partitioning and allocation, combined with vectorization, outperforms not only a CRS-based algorithm implemented using OpenMP but also the SpMV-code available in the Intel MKL library.",
+      "citationKey": "yzelman2015a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Albert-Jan N.",
+          "lastName": "Yzelman"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Dirk",
+          "lastName": "Roose"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Karl",
+          "lastName": "Meerbergen"
+        },
+        {
+          "creatorType": "bookAuthor",
+          "firstName": "James",
+          "lastName": "Reinders"
+        },
+        {
+          "creatorType": "bookAuthor",
+          "firstName": "Jim",
+          "lastName": "Jeffers"
+        }
+      ],
+      "date": "2015-01-01",
+      "extra": [
+        "Chapter Number: 27",
+        "DOI: 10.1016/B978-0-12-802118-7.00027-3"
+      ],
+      "itemID": 1,
+      "itemType": "bookSection",
+      "language": "en-US",
+      "libraryCatalog": "ScienceDirect",
+      "pages": "457-476",
+      "place": "Waltham, MA, USA",
+      "publicationTitle": "High performance parallelism pearls: multicore and many-core programming approaches",
+      "publisher": "Morgan Kaufmann",
+      "rights": "\u00a9 2015 Elsevier Inc.",
+      "shortTitle": "Sparse matrix-vector multiplication",
+      "tags": [
+        {
+          "tag": "Bandwidth-bound computations",
+          "type": 1
+        },
+        {
+          "tag": "Blocking",
+          "type": 1
+        },
+        {
+          "tag": "Cache-oblivious",
+          "type": 1
+        },
+        {
+          "tag": "Compressed column storage",
+          "type": 1
+        },
+        {
+          "tag": "Compressed row storage",
+          "type": 1
+        },
+        {
+          "tag": "Compressed sparse rows",
+          "type": 1
+        },
+        {
+          "tag": "Compression",
+          "type": 1
+        },
+        {
+          "tag": "Coordinate format",
+          "type": 1
+        },
+        {
+          "tag": "Hilbert curve",
+          "type": 1
+        },
+        {
+          "tag": "Intel Xeon Phi",
+          "type": 1
+        },
+        {
+          "tag": "Multicore",
+          "type": 1
+        },
+        {
+          "tag": "\u00admultiplication",
+          "type": 1
+        },
+        {
+          "tag": "Parallel computing",
+          "type": 1
+        },
+        {
+          "tag": "Sparse matrix",
+          "type": 1
+        },
+        {
+          "tag": "Sparse matrix-vector",
+          "type": 1
+        },
+        {
+          "tag": "Vectorization",
+          "type": 1
+        }
+      ],
+      "title": "Sparse matrix-vector multiplication: parallelization and vectorization",
+      "url": "https://www.sciencedirect.com/science/article/pii/B9780128021187000273"
+    }
+  ]
+}

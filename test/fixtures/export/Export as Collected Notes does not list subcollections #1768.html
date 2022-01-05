@@ -1,0 +1,218 @@
+<html><head><style>
+  body {
+    counter-reset: h1;
+  }
+
+  h1 {
+    counter-reset: h2;
+  }
+  h1:before {
+    content: counter(h1, decimal) ".\0000a0\0000a0";
+    counter-increment: h1;
+  }
+
+  h2:before {
+    content: counter(h1, decimal) "." counter(h2, decimal) ".\0000a0\0000a0";
+    counter-increment: h2;
+  }
+
+  blockquote { border-left: 1px solid gray; }
+</style></head><body><h1>Fingerprints</h1>
+<div><i>Molecular fingerprint similarity search in virtual screening</i> (Cereto-Massagué, Ojeda, Valls, Mulero, Garcia-Vallvé, and Pujadas, 2015)</div>
+<blockquote><p>List of all fingerprints and explaination</p>
+<p>Why to use them and what to be careful about</p></blockquote>
+<div><i>Open-source platform to benchmark fingerprints for ligand-based virtual screening</i> (Riniker and Landrum, 2013)</div>
+<blockquote><p>How to compare fingerprints</p>
+<p>Description of all the various fingerprints and which ones are correlated</p></blockquote>
+<div><i>Similarity maps - a visualization strategy for molecular fingerprints and machine-learning methods</i> (Riniker and Landrum, 2013)</div>
+<blockquote><p>In order to make ML models more interpretable they decided to make a map visualization.</p>
+<p>The topological map is based on the paths of every single atom and their weight.</p>
+<p>It takes one reference molecule and displays which atoms are more similar and which ones are different.</p>
+<p>Non ho capito cosa significa la mappa che si tira fuori dal modello... la similaritá della molecola si puó calcolare senza modello, quella mappa dovrebbe rappresentare come ragiona il modello?</p></blockquote>
+<div><i>One molecular fingerprint to rule them all: drugs, biomolecules, and the metabolome</i> (Capecchi, Probst, and Reymond, 2020)</div>
+<blockquote><p>Comparison between fingerprints</p>
+<p>New fingerprint for large and small molecules</p></blockquote>
+<h1>Modelli</h1>
+<div><i>ADME Evaluation in Drug Discovery. 10. Predictions of P-Glycoprotein Inhibitors Using Recursive Partitioning and Naive Bayesian Classification Techniques</i> (Chen, Li, Zhao, Peng, and Hou, 2011)</div>
+<blockquote><p><strong>Annotazioni Estratte (4/3/2021, 11:55:59)</strong></p>
+<p>"The transport activity assessment of MDR reversal (MDRR) agents (i.e., P-gp inhibitors) or P-gp substrates can be achieved experimentally through in vitro or in vivo assays" (<a href="zotero://open-pdf/library/items/YBGGIDA3?page=2">Chen et al 2011:13</a>)</p>
+<p>"experimental assays are expensive, laborious, and time-consuming." (<a href="zotero://open-pdf/library/items/YBGGIDA3?page=2">Chen et al 2011:13</a>)</p>
+<p>"in 2002, Ekins and coworkers built a series of phamacophore models" (<a href="zotero://open-pdf/library/items/YBGGIDA3?page=2">Chen et al 2011:13</a>)</p>
+<p>"2005, Wang and co-workers applied an unsupervised machine learning approach based on the Kohonen self-organizing maps (SOM)" (<a href="zotero://open-pdf/library/items/YBGGIDA3?page=2">Chen et al 2011:13</a>)</p>
+<p>"n 2005, Sun developed a naive Bayesian classifier to categorize MDRR agents into active and inactive classes" (<a href="zotero://open-pdf/library/items/YBGGIDA3?page=2">Chen et al 2011:13</a>)</p>
+<p>"In 2006, Chang and co-workers generated a pharmacophore model of P-gp inhibitors" (<a href="zotero://open-pdf/library/items/YBGGIDA3?page=2">Chen et al 2011:13</a>)</p>
+<p>"A disadvantage of QSAR and SAR models for P-gp inhibitors is the use of congeneric series of compounds in the data set. The broad multispecificity of P-gp and the lack of an extensive database of P-gp inhibitors have proved two almost insurmountable obstacles to establish accurate prediction models" (<a href="zotero://open-pdf/library/items/YBGGIDA3?page=2">Chen et al 2011:13</a>)</p>
+<p>"ecursive partitioning technique to create decision trees to classify P-gp inhibitors and noninhibitors." (<a href="zotero://open-pdf/library/items/YBGGIDA3?page=2">Chen et al 2011:13</a>)</p>
+<p>"1273 structurally diverse molecules, among which 797 molecules are P-gp inhibitors and 476 molecules are P-gp noninhibitors." (<a href="zotero://open-pdf/library/items/YBGGIDA3?page=2">Chen et al 2011:13</a>)</p>
+<p>"The experimental MDRR ratio was used as the criterion to determine whether a compound is an inhibitor or not: If MDRR ratio is less than 4.0, the compound was categorized into the noninhibitor class; if MDRR ratio is larger than 5.0, the compound was categorized into the inhibitor class; if MDRR ratio isg4 and e5.0, this compound was considered as moderately active and not included in the data set for classification." (<a href="zotero://open-pdf/library/items/YBGGIDA3?page=2">Chen et al 2011:13</a>)</p>
+<p>"thirteen molecular descriptors widely adopted in ADME predictions were used in our analysis." (<a href="zotero://open-pdf/library/items/YBGGIDA3?page=2">Chen et al 2011:13</a>)</p>
+<p>"5-fold cross-validation was used to determine the degree of pruning required for the best predictive performance" (<a href="zotero://open-pdf/library/items/YBGGIDA3?page=3">Chen et al 2011:14</a>)</p>
+<p>"The whole data set was randomly split into a training set of 973 compounds and a test set of 300 compounds, respectively." (<a href="zotero://open-pdf/library/items/YBGGIDA3?page=3">Chen et al 2011:14</a>)</p>
+<p>"P-gp prefers to transport hydrophobic molecules" (<a href="zotero://open-pdf/library/items/YBGGIDA3?page=4">Chen et al 2011:15</a>)</p>
+<p>"all models based on molecular properties and fingerprints perform better than the model solely based on molecular properties." (<a href="zotero://open-pdf/library/items/YBGGIDA3?page=7">Chen et al 2011:18</a>)</p>
+<p>"the training set were obtained using the leave-one-out (LOO) cross-validation process." (<a href="zotero://open-pdf/library/items/YBGGIDA3?page=8">Chen et al 2011:19</a>)</p>
+<p>"fingerprint set has a sensitivity of 84.7, a specificity of 82.1, a prediction accuracy of inhibitors of 88.9%, and a prediction accuracy of noninhibitors of 76.1 for the training set." (<a href="zotero://open-pdf/library/items/YBGGIDA3?page=8">Chen et al 2011:19</a>)</p>
+<p>"MDR-reversal ratio is an important indicator but not a direct measure of P-gp inhibition." (<a href="zotero://open-pdf/library/items/YBGGIDA3?page=9">Chen et al 2011:20</a>)</p>
+<p>"The fingerprints can characterize the important structural fragments favorable or unfavorable for P-gp inhibition, but they cannot characterize the spatial arrangement of these important fingerprints if multiple important fingerprints are found simultaneously in one molecule." (<a href="zotero://open-pdf/library/items/YBGGIDA3?page=9">Chen et al 2011:20</a>)</p>
+<p>"naive Bayesian categorization modeling outperforms RP" (<a href="zotero://open-pdf/library/items/YBGGIDA3?page=10">Chen et al 2011:21</a>)</p></blockquote>
+<blockquote><p>CART 13 descriptors, 3D structure, Fingerprints</p>
+<p>1300 molecules</p>
+<p>Based on MDRR ?? arbitrary cutoff value</p>
+<p>Optimized and pruned the decision tree</p>
+<p>No external validation</p>
+<p>Fingerprints perform better</p>
+<p>MDRR is not always an indicator of an inhibitor</p>
+<p>Naive Bayesian is better than CART</p></blockquote>
+<div><i>The P-Glycoprotein Transport System and Cardiovascular Drugs</i> (Wessler, Grip, Mendell, and Giugliano, 2013)</div>
+<blockquote><p><b>Annotazioni Estratte (5/3/2021, 11:37:50)</b><p><p>"The mechanism of P-gp inhibition is thought to involve modulation of the membrane transporter by 1 of 4 pathways: direct inhibition of binding sites that block the transport of substrates, ATP binding inhibition, ATP hydrolysis, or coupling of ATP hydrolysis to the translocation of the substrate." (<a href="zotero://open-pdf/library/items/3JY8KAFD?page=2">Wessler et al 2013:2496</a>)</p><p>"The route of drug administration may also be relevant; different routes of administration (intravenous vs. oral) lead to different interactions because the amount of drug that reaches intestinal, renal, and hepatic P-gp receptors differs." (<a href="zotero://open-pdf/library/items/3JY8KAFD?page=2">Wessler et al 2013:2496</a>)</p><p>"if the ratio of measured efflux to uptake (netflux) of a drug is2, it is possible that the drug is a P-gp substrate." (<a href="zotero://open-pdf/library/items/3JY8KAFD?page=7">Wessler et al 2013:2501</a>)</p></blockquote>
+<blockquote><p>Good mechanism explaination</p>
+<p>Mechanisms of inhibition</p>
+<p>Meccanismi medici e vie di somministrazione</p>
+<p>Analisi dell'azione dei singoli farmaci</p></blockquote>
+<div><i>Prediction of P-Glycoprotein Substrates by a Support Vector Machine Approach</i> (Xue, Yap, Sun, Cao, Wang, and Chen, 2004)</div>
+<blockquote><p>200 Molecole, 84% accuracy</p>
+<p>SVM, anche KNN, Neural 1Networks e Decision Trees</p>
+<p>Descrittori 3D e QM</p>
+<p>Sensitivity and specificity1</p></blockquote>
+<div><i>P-glycoprotein Substrate Models Using Support Vector Machines Based on a Comprehensive Data set</i> (Wang, Chen, Liang, Bender, Glen, and Yan, 2011)</div>
+<blockquote><p><strong>Annotazioni Estratte (5/3/2021, 09:54:11)</strong></p>
+<p>"Ford and Hait observed that P-gp substrates appear to be hydrophobic, with a molecular mass of 3002000 Da" (<a href="zotero://open-pdf/library/items/DV3NZWR4?page=2">Wang et al 2011:1448</a>)</p>
+<p>""rule of four" was derived by Didziapetris and co-workers which can roughly estimate whether a compound is P-gp substrate or not. This rule states that if a compound has a total of at least eight nitrogen and oxygen atoms, a molecular weight of more than 400 and an acid with pK a of greater than four ((NþO)g 8, MW &gt; 400, and acid pK a &gt; 4), it is more likely to be a P-gp substrate." (<a href="zotero://open-pdf/library/items/DV3NZWR4?page=2">Wang et al 2011:1448</a>)</p>
+<p>"For model validation 5-fold, 10-fold, and leave-one-out (LOO) cross-validation was performed" (<a href="zotero://open-pdf/library/items/DV3NZWR4?page=2">Wang et al 2011:1448</a>)</p>
+<p>"model evaluation on an external test set." (<a href="zotero://open-pdf/library/items/DV3NZWR4?page=2">Wang et al 2011:1448</a>)</p>
+<p>"data set of 332 compounds, including 206 P-gp substrates and 126 nonsubstrates" (<a href="zotero://open-pdf/library/items/DV3NZWR4?page=2">Wang et al 2011:1448</a>)</p>
+<p>"For these compounds, we use the definition that P-gp substrates are molecules which are actively transported and therefore have a higher concentration outside the cell relative to the concentration in the cytosol." (<a href="zotero://open-pdf/library/items/DV3NZWR4?page=2">Wang et al 2011:1448</a>)</p>
+<p>"A Kohonen neural network 39,40 was used to split the data set into a training set and test set." (<a href="zotero://open-pdf/library/items/DV3NZWR4?page=2">Wang et al 2011:1448</a>)</p>
+<p>"Three methods were employed for descriptor selection, namely correlation analysis, Random Forest-based feature selection, and the F-score as a measure of feature relevance" (<a href="zotero://open-pdf/library/items/DV3NZWR4?page=3">Wang et al 2011:1449</a>)</p>
+<p>"the best model was subject to further validation by Y-scrambling in order to rule out chance correlations." (<a href="zotero://open-pdf/library/items/DV3NZWR4?page=4">Wang et al 2011:1450</a>)</p>
+<p>"descriptor a_hyd, which presents the hydrophobic pharmacophore feature of a molecule, shows a relatively high F-score, as does the descriptor rings, which counts the total number of rings" (<a href="zotero://open-pdf/library/items/DV3NZWR4?page=6">Wang et al 2011:1452</a>)</p></blockquote>
+<blockquote><p>Substrate 200 molecules SVM</p>
+<p>Very good statistical analysis and validation</p>
+<p>Advanced variable reduction</p></blockquote>
+<div><i>Molecular Docking Characterizes Substrate-Binding Sites and Efflux Modulation Mechanisms within P-Glycoprotein.</i> (Ferreira, Ferreira, and dos Santos, 2013)</div>
+<blockquote><p><b>Annotazioni Estratte (4/3/2021, 15:22:02)</b><p><p>"three distinct drug-binding sites, located in the outer leaflet of the lipid bilayer, were proposed based on the residues chemical characteristics and docked" (<a href="zotero://open-pdf/library/items/JMN7JFXI?page=2">Ferreira et al 2013:1748</a>)</p><p>"Modulators, molecules with lowerΔG and increased preference for the M-site, also able to establish a strong cross interaction effect;" (<a href="zotero://open-pdf/library/items/JMN7JFXI?page=7">Ferreira et al 2013:1753</a>)</p><p>"The above data strongly suggest that Pgp efflux modulation can be achieved through direct competition with molecules at SBSs, by conformational impairment at the M-site or both" (<a href="zotero://open-pdf/library/items/JMN7JFXI?page=9">Ferreira et al 2013:1755</a>)</p><p>"we can only speculate if the R-site/H-site assignment is maintained during the full efflux cycle." (<a href="zotero://open-pdf/library/items/JMN7JFXI?page=10">Ferreira et al 2013:1756</a>)</p></blockquote>
+<div><i>ADMET Evaluation in Drug Discovery. 13. Development of in Silico Prediction Models for P‑Glycoprotein Substrates</i> (Li, Chen, Li, Tian, Sun, and Hou, 2014)</div>
+<blockquote><p><b>Annotazioni Estratte (4/3/2021, 14:48:58)</b><p><p>"a variety of statistical techniques and machine learning approaches, including multiple linear regression (MLR), 17 partial least-squares discriminant analysis (PLSD), 18 linear discriminant analysis (LDA), 19,20 random forest (RF), 21 support vector machine (SVM), 22−24 and Kohonen selforganizing map (SOM), 25 have been furthermore employed to develop computational models. 9" (<a href="zotero://open-pdf/library/items/AHANRBVW?page=2">Li et al 2014:12</a>)</p><p>"13 simple physicochemical properties widely adopted in ADME predictions 40−42 and 43 topological descriptors" (<a href="zotero://open-pdf/library/items/AHANRBVW?page=3">Li et al 2014:13</a>)</p><p>"a variety of molecularfingerprint sets" (<a href="zotero://open-pdf/library/items/AHANRBVW?page=3">Li et al 2014:13</a>)</p><p>"In other words, more hydrophobic molecules have more chance to be P-gp substrates" (<a href="zotero://open-pdf/library/items/AHANRBVW?page=6">Li et al 2014:16</a>)</p><p>"The mean values of logS for the substrates and nonsubstrates are−6.49 and−4.97 individually, implying that the nonsubstrates of P-gp tend to be more soluble." (<a href="zotero://open-pdf/library/items/AHANRBVW?page=6">Li et al 2014:16</a>)</p><p>"Indubitably, logS is a more informative attribute than AlogP or logD for the differentiation between substrates and nonsubstrates," (<a href="zotero://open-pdf/library/items/AHANRBVW?page=6">Li et al 2014:16</a>)</p><p>"The molecules that can interact with P-gp are roughly classified into three classes: substrates, inhibitors, and modulators. 9" (<a href="zotero://open-pdf/library/items/AHANRBVW?page=6">Li et al 2014:16</a>)</p><p>"P-gp inhibitors have been typically assumed to competitively inhibit substrate transport, suggesting that the molecular characteristics of the inhibitors and substrates of P-gp may share similarities in structures or binding patterns." (<a href="zotero://open-pdf/library/items/AHANRBVW?page=6">Li et al 2014:16</a>)</p><p>"the descriptor n HBD shows much better capability to discriminate the P-gp inhibitors from substrates than PSA and n HBA" (<a href="zotero://open-pdf/library/items/AHANRBVW?page=7">Li et al 2014:17</a>)</p><p>"It is believed that the electrostatic repulsion between the negatively charged group and the negatively charge residues in P-gp may be unfavorable for substrate binding to Pgp." (<a href="zotero://open-pdf/library/items/AHANRBVW?page=9">Li et al 2014:19</a>)</p><p>"most unfavorable fragments carry carbon− carbon double bonds and carbon−carbon triple bonds, and besides, four fragments contain complicated ring systems." (<a href="zotero://open-pdf/library/items/AHANRBVW?page=9">Li et al 2014:19</a>)</p></blockquote>
+<blockquote><p>Inhibitors may be very similar to substrate</p>
+<p>Bayesian fingerprint over 67 descriptors</p></blockquote>
+<div><i>A Novel Approach for Predicting P-Glycoprotein (ABCB1) Inhibition Using Molecular Interaction Fields</i> (Broccatelli, Carosati, Neri, Frosini, Goracci, Oprea, and Cruciani, 2011)</div>
+<blockquote><p>FLAP??</p>
+<p>Farmacoforo</p>
+<p>Da rileggere bene</p></blockquote>
+<div><i>New Uses for Old Drugs: Pharmacophore-Based Screening for the Discovery of P-Glycoprotein Inhibitors: Pharmacophore-Based Screening for the Discovery of P-Glycoprotein Inhibitors</i> (Palmeira, Rodrigues, Sousa, Pinto, Vasconcelos, and Fernandes, 2011)</div>
+<blockquote><p><strong>Annotazioni Estratte (5/3/2021, 09:10:40)</strong></p>
+<p>"Multidrug resistance (MDR) can be broadly defined as a phenomenon by which tumor cells in vivo and cultured cells in vitro show simultaneous resistance to a variety of structurally and functionally dissimilar cytotoxic and xenobiotic compounds" (<a href="zotero://open-pdf/library/items/WHXJGDKS?page=1">Palmeira et al 2011:57</a>)</p>
+<p>"at least 50% of human cancers express the MDR phenotype" (<a href="zotero://open-pdf/library/items/WHXJGDKS?page=1">Palmeira et al 2011:57</a>)</p>
+<p>"side-effects are a complex phenomenon that occur in a variety of molecular scenarios, the most important of which being the direct interaction with other protein targets such as, for instance, P-gp" (<a href="zotero://open-pdf/library/items/WHXJGDKS?page=1">Palmeira et al 2011:57</a>)</p>
+<p>"implementation of a method for quick identification of P-gp modulators. A virtual screening using a pharmacophore model was performed, and the P-gp modulatory effects of the retrieved 21 hit drugs were experimentally explored" (<a href="zotero://open-pdf/library/items/WHXJGDKS?page=2">Palmeira et al 2011:58</a>)</p>
+<p>"To create the pharmacophore, model we started with 26 P-gp known inhibitors from the flavonoid family" (<a href="zotero://open-pdf/library/items/WHXJGDKS?page=2">Palmeira et al 2011:58</a>)</p>
+<p>"The GI 50 values for doxorubicin (concentration resulting in 50% inhibition of cell growth)" (<a href="zotero://open-pdf/library/items/WHXJGDKS?page=3">Palmeira et al 2011:59</a>)</p>
+<p>"The reversal fold (RF) values, as potency of reversal, were obtained by calculating the coefficient RF = GI 50 of doxorubicin alone⁄ GI 50 of doxorubicin in the presence of a test compound." (<a href="zotero://open-pdf/library/items/WHXJGDKS?page=3">Palmeira et al 2011:59</a>)</p>
+<p>"The hits that did not comply with the Lipinski rules were discarded." (<a href="zotero://open-pdf/library/items/WHXJGDKS?page=4">Palmeira et al 2011:60</a>)</p>
+<p>"the principal components result mainly from the linear combination of descriptors related to the effect of hydrophilicity⁄ lipophilicity and number of hydrogen-bond donors and acceptors." (<a href="zotero://open-pdf/library/items/WHXJGDKS?page=12">Palmeira et al 2011:68</a>)</p></blockquote>
+<blockquote><p>Farmacoforo</p>
+<p>Test su cellule</p>
+<p>Risultati efficaci su poche molecole</p></blockquote>
+<h1>Modelling methods</h1>
+<h2>Classification</h2>
+<div><i>SuSi: Supervised Self-Organizing Maps for Regression and Classification in Python</i> (Riese and Keller, 2020)</div>
+<blockquote><p>Comment: An extended and peer-reviewed version exists at doi:10.3390/rs12010007</p></blockquote>
+<div><i>What is a support vector machine?</i> (Noble, 2006)</div>
+<blockquote><p>SVM only works with one single class, it must be generalized for multiclass problems</p></blockquote>
+<h2>Consensus</h2>
+<div><i>Recent Advances in High-Level Fusion Methods to Classify Multiple Analytical Chemical Data</i> (Ballabio, Todeschini, and Consonni, 2019)</div>
+<blockquote><p>3 Levels of data fusion</p></blockquote>
+<div><i>A Novel Strategy of Structural Similarity Based Consensus Modeling</i> (Lei, Li, and Yao, 2013)</div>
+<blockquote><p>Consensus model formed of many local models</p>
+<p>The structure of the molecule is used to select the best model to use</p></blockquote>
+<div><i>A distance measure between models: a tool for similarity/diversity analysis of model populations</i> (Todeschini, Consonni, and Pavan, 2004)</div>
+<blockquote><p>Misura della differenza tra le variabili di due modelli basata sulla distanza di Hammond</p>
+<p>Buono per comparare la differenza tra modelli e per non avere tanti modelli simili.</p></blockquote>
+<div><i>Quantitative consensus of bioaccumulation models for integrated testing strategies</i> (Fernández, Lombardo, Rallo, Roncaglioni, Giralt, and Benfenati, 2012)</div>
+<blockquote><p>Cluster the data and build many local models on the clusters only, then use the appropriate model to predict compounds in its AD</p>
+<p>r2 RSE RMS</p>
+<p>Good if many molecules are similar</p></blockquote>
+<div><i>Consensus versus Individual QSARs in Classification: Comparison on a Large-Scale Case Study</i> (Valsecchi, Grisoni, Consonni, and Ballabio, 2020)</div>
+<blockquote><p>Majority voting is very simple</p>
+<p>Bayes consensus</p>
+<p>Consensus is good to have a larger AD and therefore you have a more useful model.</p></blockquote>
+<div><i>Consensus QSAR Models: Do the Benefits Outweigh the Complexity?</i> (Hewitt, Cronin, Madden, Rowe, Johnson, Obi, and Enoch, 2007)</div>
+<blockquote><p>Consensus did not perform better than single models</p>
+<p>Capire perché a loro non funziona ed invece a Cecile si</p></blockquote>
+<h2>Distance</h2>
+<div><i>Similarity Coefficients for Binary Chemoinformatics Data: Overview and Extended Comparison Using Simulated and Real Data Sets</i> (Todeschini, Consonni, Xiang, Holliday, Buscema, and Willett, 2012)</div>
+<blockquote><p>Compara 51 differenti indici di similarita' al fine di trovare le migliori per la distanza delle fingerprint.</p>
+<p>6 coefficienti vengono selezionati come i piu' adatti alla cheminformatica, 4 sono Tanimoto e suoi equivalenti, Harrys-Lahey e Consonni-Todeschini4</p>
+<p>Per determinare quali siano i migliori indici, questi vengono comparati su 100 000 dati generati con una distribuzione normale e due database di molecole con risposta quantitativa e qualitativa.</p>
+<p>MDS sulla correlazione di Pearson tra i vari indici, risultano raggruppati in base alla simmetria dell'indice.</p>
+<p>Viene costruito un diagramma di Hasse, in cui domina l'indice che ha similaritá superiore per tutti i campioni considerati.</p>
+<p>ADTM non ho capito a cosa serve...</p>
+<p>7 Misure sono ridondanti in quanto perfettamente correlate ad altre.</p>
+<p>I migliori indici sono stati selezionati in base al comportamento nel test su dati di molecole reali. Vengono contate quante molecole attive vengono trovate in media tra l'1% delle molecole piú vicine.</p></blockquote>
+<div><i>A Modification of the Jaccard–Tanimoto Similarity Index for Diverse Selection of Chemical Compounds Using Binary Strings</i> (Fligner, Verducci, and Blower, 2002)</div>
+<blockquote><p>Misura di distanza simmetrica, Tanimoto viene mediato da due contributi, la formula classica e la formula in cui si considerano solo le assenze comuni.</p>
+<p>PROBABILMENTE INUTILE</p></blockquote>
+<div><i>Euclidean chemical spaces from molecular ﬁngerprints: Hamming distance and Hempel’s ravens</i> (Martin and Cao, 2015)</div>
+<blockquote><p>Tanimoto distance is the standard to compare fingerprints</p></blockquote>
+<h2>Random Forest</h2>
+<div><i>Ensemble Machine Learning</i> (Zhang and Ma, 2012)</div>
+<blockquote><p>Generale, spiega le varie applicazioni in vari ambiti ed i vantaggi rispetto ad altri metodi</p>
+<p>Gini Importance is used to create the nodes</p>
+<p>SKIMMED</p></blockquote>
+<h2>Variable Reduction</h2>
+<div><i>Canonical Measure of Correlation (CMC) and Canonical Measure of Distance (CMD) between sets of data. Part 1. Theory and simple chemometric applications</i> (Todeschini, Ballabio, Consonni, Manganaro, and Mauri, 2009)</div>
+<blockquote><p>Canonical Measure of Distance, una misura di distanza tra modelli che migliora la Model Distance. Prende in considerazione tutte le variabili, non é necessaria una selezione preliminare.</p>
+<p>Introdotto un indice che misura la correlazione tra le variabili selezionate nei due modelli, utile per capire se due modelli sono in realtá lo stesso.</p></blockquote>
+<div><i>Reshaped Sequential Replacement algorithm: An efficient approach to variable selection</i> (Cassotti, Grisoni, and Todeschini, 2014)</div>
+<blockquote><p>New method of variable selection based on Sequential Replacement.</p>
+<p>Roulette Wheel to favor most correlated variables and QUIK rule to discard correlated models without carrying out the calculation.</p>
+<p>A Tabu list is implemented based off of low Q2 or CMC values of the single variables; these variable are discarded.</p>
+<p>Several validation methods are implemented to avoid chance correlation in the final models.</p>
+<p>Tested on a generated dataset with correlated variables and on QSAR datasets, using the original model as benchmark.</p>
+<p>Calcolo veloce, basato sulla predittivitá, identifica variabili collineari e rumorose.</p></blockquote>
+<h1>PGP</h1>
+<div><i>Revisiting the role of ABC transporters in multidrug-resistant cancer</i> (Robey, Pluchino, Hall, Fojo, Bates, and Gottesman, 2018)</div>
+<blockquote><p>Meccanismo di efflusso con 2 ATP</p>
+<p>I tumori diventano resistenti alla terapia</p></blockquote>
+<div><i>Multidrug efflux pumps: structure, function and regulation</i> (Du, Wang-Kan, Neuberger, van Veen, Pos, Piddock, and Luisi, 2018)</div>
+<blockquote><p>ATP binds and substrate enters</p>
+<p>Efflux regulation</p></blockquote>
+<div><i>Understanding multidrug resistance: molecular dynamics studies of ligand recognition by P-glycoprotein</i> (Subramanian, 2015)</div>
+<blockquote><p>Description of PGP</p></blockquote>
+<blockquote><p><strong>Extracted Annotations (3/10/2021, 10:16:10 AM)</strong></p>
+<p>"potential of mean force (PMF)" (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=2">Subramanian 2015:2</a>)</p>
+<p>"However, none of the molecules have a distinct, well-defined binding site. Instead, the binding locations overlap with several residues interacting with multiple P-gp substrates. This suggests that the binding locations for both competitive and non-competitive substrates are not well separated and cannot be considered as unique." (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=2">Subramanian 2015:2</a>)</p>
+<p>"It was found that the presence of cholesterol lowers the free energy associated with entering the middle of the bilayer in a substrate-specific manner, suggesting that P-gp substrates may preferentially accumulate in cholesterol-rich regions of the membrane" (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=3">Subramanian 2015:3</a>)</p>
+<p>"Furthermore, they demonstrate that the results obtained for substrate binding to P-gp are independent of the choice of starting structure." (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=3">Subramanian 2015:3</a>)</p>
+<p>"ABC transporters are integral membrane proteins that utilize the energy from adenosine triphosphate (ATP) hydrolysis for the transport of their substrates across cellular membranes" (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=34">Subramanian 2015:34</a>)</p>
+<p>"most functional ABC transporters contain 2 TMDs with 12 α-helices per active transporter." (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=39">Subramanian 2015:39</a>)</p>
+<p>"ABC transporters get their name from the conserved ATP binding domains known as NBDs. The NBDs are required for binding and hydrolyzing ATPs." (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=39">Subramanian 2015:39</a>)</p>
+<p>"The precise molecular mechanism by which ATP hydrolysis is coupled with substrate transport is still unknown. Studies on ABC transporters have shown that there is dependence TMDs56 between ATP binding at the NBDs and substrate binding in the" (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=47">Subramanian 2015:47</a>)</p>
+<p>"P-glycoprotein (P-gp) is also known as multidrug resistance protein (MRP1). It belongs to the ABCB subfamily of transporters. P-gp is an integral membrane protein that transports a large number of hydrophobic, positively charged molecules and some specific peptides across membranes." (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=49">Subramanian 2015:49</a>)</p>
+<p>"Because of its ability to transport a broad spectrum of molecules, overexpression of P-gp can lead to the development of MDR." (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=49">Subramanian 2015:49</a>)</p>
+<p>"tissues60. P-gp is expressed in most In particular, it is highly expressed at the apical surface of epithelial cells lining the colon, small gland61. intestine, pancreatic ductules, bile ductules and kidney proximal tubules, and the adrenal P- 62, barrier63 gp is also found in the endothelial cells of blood-brain barrier (BBB) blood-testis and the barrier6 blood-mammary tissue" (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=52">Subramanian 2015:52</a>)</p>
+<p>"P-gp substrates are generally aromatic, hydrophobic and positively charged compounds." (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=53">Subramanian 2015:53</a>)</p>
+<p>"The transport of over 50 drugs has been identified70. documented and more than 70 additional P-gp modulators or inhibitors have been The promiscuity of P-gp has made it difficult to define precisely the criteria that could be used to identify compounds as substrates or not." (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=53">Subramanian 2015:53</a>)</p>
+<p><em>It transports so much stuff that it's difficult to understand what will be transported. (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=53">note on p.53</a>)</em></p>
+<p> </p>
+<p>"Modulators act by interfering with the ability of P-gp to transport other substrates and thus to generate a concentration gradient of these membrane74, 75 molecules across the" (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=53">Subramanian 2015:53</a>)</p>
+<p>"modulators have been shown to reverse MDR in intact cells in vitro, suggesting selective inhibitors or modulators of P-gp could lead to more efficacious cancer chemotherapy" (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=53">Subramanian 2015:53</a>)</p>
+<p>"verapamil76, A77, 78 To date, modulators such as nicardipine and cyclosporine have not proved to be useful clinically in reversing MDR" (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=54">Subramanian 2015:54</a>)</p>
+<p>"he majority of the information related to possible binding sites has been inferred from mutational studies." (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=56">Subramanian 2015:56</a>)</p>
+<p>"only three residues Gln191, Gln343 and Ser340 were common to both proposals." (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=57">Subramanian 2015:57</a>)</p>
+<p>"Molecular dynamics (MD) simulation is another approach that has been used extensively to provide insight into the properties of P-gp and other ABC transporters including substrate binding." (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=57">Subramanian 2015:57</a>)</p>
+<p>"The difference in free energy between two states A and B of a molecular system can be expressed as a function of the ratio of the partition functions of the individual states:" (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=62">Subramanian 2015:62</a>)</p>
+<p>"The thermodynamic cycle can be used to estimate the difference in the free enthalpy associated with the binding of a series of alternative ligands to a receptor (for example, a protein)." (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=63">Subramanian 2015:63</a>)</p>
+<p>"These force fields are well parameterized for biomolecules such as proteins, DNA and RNA. All these force fields use a similar form for the potential energy function but they vary in terms of the parameters used to describe individual molecules" (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=67">Subramanian 2015:67</a>)</p>
+<p>"To overcome this limitation, an in-house database called Automated Topology Repository13 Builder (ATB) and" (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=67">Subramanian 2015:67</a>)</p>
+<p>"Before generating specific force field parameters for individual molecules, the protonation states for each of the molecules at pH 7.0 was determined by calculating the ionization constant of each" (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=67">Subramanian 2015:67</a>)</p>
+<p>"Parameters for the molecules in the protonated state at pH 7.0 were developed Repository132 using the Automated Topology Builder (ATB) and" (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=68">Subramanian 2015:68</a>)</p>
+<p>"Based on competitive binding studies, it has been proposed that verapamil and vinblastine interact with the same site in P-gp, commonly referred to as the site13, 33. vinblastine In a similar manner, colchicine and Hoechst 33342 have also been proposed to site34, 35. bind to P-gp at a separate pharmacological site, the H-site or Hoechst Rhodamine 123 and related molecules have been proposed to bind to a third pharmacologically distinct site, the R-site or site35 Rhodamine" (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=84">Subramanian 2015:84</a>)</p>
+<p>"in human P-gp, Phe303" (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=86">Subramanian 2015:86</a>)</p>
+<p>"41 Jara et al." (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=86">Subramanian 2015:86</a>)</p>
+<p>"Automated Topology Builder (ATB) and Repository65" (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=90">Subramanian 2015:90</a>)</p>
+<p>"The simulations were carried out in the NPT ensemble at T = 300 K, and P = 1 bar. The temperature and pressure were temperature75 maintained close to the reference values by weakly coupling the system to an external and pressure bath using a relaxation time constant of 0.1 ps and 0.5 ps, respectively" (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=91">Subramanian 2015:91</a>)</p>
+<p>"Note, these parameters maintain the conformation of both morphine and nicardipine within &lt; 0.1 nm, (all-atom RMSD) from the conformation optimized at the B3LYP/6-31G* level of theory in solvent65. implicit" (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=92">Subramanian 2015:92</a>)</p>
+<p>"helices 1 and 12 common to both pathways" (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=120">Subramanian 2015:120</a>)</p>
+<p>"TM" (<a href="zotero://open-pdf/library/items/M6JT2WL5?page=120">Subramanian 2015:120</a>)</p></blockquote>
+</body></html>

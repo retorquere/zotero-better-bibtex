@@ -44,7 +44,7 @@ function detectWeb(doc, url) {
 function doWeb(doc, url){
 
 	var ids = new Array();
-	if(detectWeb(doc, url) == "multiple") { 
+	if (detectWeb(doc, url) == "multiple") { 
 		var items = {};
 		var titles = ZU.xpath(doc, '//li/span[@class="citation"]//span[contains (@class, "articleTitle")]');
 		var identifiers = ZU.xpath(doc, '//ol[@class="entryList"]/li/@id');

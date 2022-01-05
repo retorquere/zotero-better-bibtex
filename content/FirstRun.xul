@@ -19,9 +19,6 @@
   id="better-bibtex-first-run" title="&better-bibtex.FirstRun.title;"
   width="550" height="500">
 
-  <script src="chrome://zotero/content/include.js"/>
-  <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.FirstRun.js"/>
-
   <wizardpage onpageshow="Zotero.BetterBibTeX.FirstRun.load()" label="&better-bibtex.FirstRun.title;">
     <description style="white-space: pre-wrap;">&better-bibtex.FirstRun.welcome;</description>
   </wizardpage>
@@ -47,6 +44,14 @@
     <checkbox label="&better-bibtex.FirstRun.dragndrop.enable;" id="better-bibtex-first-run-dragndrop" oncommand="Zotero.BetterBibTeX.FirstRun.update()"/>
   </wizardpage>
 
+  <wizardpage label=" " onpageshow="Zotero.BetterBibTeX.FirstRun.update()">
+    <description style="white-space: pre-wrap;" class="header">&better-bibtex.FirstRun.importUnabbreviate;</description>
+    <description>&better-bibtex.FirstRun.importUnabbreviate.explanation;</description>
+    <checkbox label="&better-bibtex.FirstRun.importUnabbreviate.enable;" checked="true" id="better-bibtex-first-run-unabbreviate" oncommand="Zotero.BetterBibTeX.FirstRun.update()"/>
+    <description>&better-bibtex.FirstRun.importStrings.explanation;</description>
+    <checkbox label="&better-bibtex.FirstRun.importStrings.enable;" checked="true" id="better-bibtex-first-run-strings" oncommand="Zotero.BetterBibTeX.FirstRun.update()"/>
+  </wizardpage>
+
   <wizardpage label=" ">
     <description style="white-space: pre-wrap;" class="header">&better-bibtex.FirstRun.exporting;</description>
     <description>&better-bibtex.FirstRun.exporting.explanation; <box class="textbox-emph">Better BibTeX</box></description>
@@ -56,4 +61,9 @@
     <description style="white-space: pre-wrap;" class="header">&better-bibtex.FirstRun.done;</description>
     <description>&better-bibtex.FirstRun.done.explanation;</description>
   </wizardpage>
+
+  <script src="chrome://zotero/content/include.js"/>
+  <script>
+    Zotero.BetterBibTeX.FirstRun.globals = Function('return this')()
+  </script>
 </wizard>

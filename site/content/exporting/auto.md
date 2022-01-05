@@ -11,9 +11,10 @@ aliases:
   - /push-and-pull
 ---
 
-When exporting using BBT you will be offered a new export option: `Keep updated`. Checking this option
-registers the export for automation; any changes to the collection or library you exported after you've completed the current export will
-trigger an automatic re-export to update the bib file. You can review/remove exports from the BBT preferences.  While
+To export a library, group or collection, right-click on it in the left Zotero pane and choose "Export Library…" or "Export Collection…".
+With BBT's export translators (e.g., "Better BibTeX"), checking the `Keep updated` option will register the export for automation.
+After you’ve completed the current export, any changes to the collection or library will trigger an automatic re-export to update the file.
+You can review/remove exports from the BBT preferences.  While
 I've gone to some lengths to make sure performance is OK, don't go overboard with the number of auto-exports you have
 going. Also, exporting only targeted selections over your whole library will get you better performance. You can set up
 separate exports for separate papers for example if you have set up a collection for each.
@@ -28,7 +29,7 @@ from here, that can only be done by initiating an export.
 
 ## Getting your BBT-generated bib(la)tex/citekeys to other places
 
-You may want to use your BBT generated bib(la)tex on other systems; maybe you use Overleaf (as I do), maybe you have your documents compiled using Travis (as I do). In any case, you want your auto-exported items to show up somewhere else. If you're thinking of this in the context of Overleaf, here's a TL;DR of the pros and cons:
+You may want to use your BBT generated bib(la)tex on other systems; maybe you use Overleaf (as I do), maybe you have your documents compiled using github actions (as I do). In any case, you want your auto-exported items to show up somewhere else. If you're thinking of this in the context of Overleaf, here's a TL;DR of the pros and cons:
 
 * Auto-export + cloud-sync
   * pro: gets the full bibtex file to Overleaf, should be seamless

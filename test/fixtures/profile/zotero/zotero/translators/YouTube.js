@@ -1,15 +1,15 @@
 {
 	"translatorID": "d3b1d34c-f8a1-43bb-9dd6-27aa6403b217",
+	"translatorType": 4,
 	"label": "YouTube",
 	"creator": "Sean Takats, Michael Berkowitz, Matt Burton and Rintze Zelle",
 	"target": "^https?://([^/]+\\.)?youtube\\.com/",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsbv",
-	"lastUpdated": "2019-08-11 18:43:54"
+	"lastUpdated": "2021-06-09 13:15:00"
 }
 
 /*
@@ -35,21 +35,21 @@
 	***** END LICENSE BLOCK *****
 */
 
-
-// attr()/text() v2
-// eslint-disable-next-line
-function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
-
-
 function detectWeb(doc, url) {
 	if (url.search(/\/watch\?(?:.*)\bv=[0-9a-zA-Z_-]+/) != -1) {
 		return "videoRecording";
 	}
 	// Search results
+	/* Testurls:
+	http://www.youtube.com/user/Zoteron
+	http://www.youtube.com/playlist?list=PL793CABDF042A9514
+	http://www.youtube.com/results?search_query=zotero&oq=zotero&aq=f&aqi=g4&aql=&gs_sm=3&gs_upl=60204l61268l0l61445l6l5l0l0l0l0l247l617l1.2.1l4l0
+	*/
+	/* currently not working 2020-11-11
 	if ((url.includes("/results?") || url.includes("/playlist?") || url.includes("/user/"))
 			&& getSearchResults(doc, true)) {
 		return "multiple";
-	}
+	} */
 	return false;
 }
 
@@ -93,12 +93,12 @@ function scrape(doc, url) {
 	item.url = url;
 	item.runningTime = text(doc, '#movie_player .ytp-time-duration');
 	
-	item.date = ZU.xpathText(doc, '//meta[@itemProp="datePublished"]/@content')
-		|| ZU.xpathText(doc, '//span[contains(@class, "date")]');
+	item.date = text(doc, '#info-text #date');
 	if (item.date) {
 		item.date = ZU.strToISO(item.date);
 	}
-	var author = text(doc, '#meta-contents #owner-name');
+	var author = text(doc, '#meta-contents #text-container .ytd-channel-name')
+		|| text(doc, '#text-container .ytd-channel-name');
 	if (author) {
 		item.creators.push({
 			lastName: author,
@@ -106,9 +106,9 @@ function scrape(doc, url) {
 			fieldMode: 1
 		});
 	}
-	var description = doc.getElementById("description");
+	var description = text(doc, '#description .content') || text(doc, '#description');
 	if (description) {
-		item.abstractNote = ZU.cleanTags(description.innerHTML);
+		item.abstractNote = description;
 	}
 	
 	item.complete();
@@ -116,12 +116,6 @@ function scrape(doc, url) {
 
 /** BEGIN TEST CASES **/
 var testCases = [
-	{
-		"type": "web",
-		"url": "http://www.youtube.com/results?search_query=zotero&oq=zotero&aq=f&aqi=g4&aql=&gs_sm=3&gs_upl=60204l61268l0l61445l6l5l0l0l0l0l247l617l1.2.1l4l0",
-		"defer": true,
-		"items": "multiple"
-	},
 	{
 		"type": "web",
 		"url": "https://www.youtube.com/watch?v=pq94aBrc0pY",
@@ -140,7 +134,7 @@ var testCases = [
 				"date": "2007-01-01",
 				"abstractNote": "Zotero is a free, easy-to-use research tool that helps you gather and organize resources (whether bibliography or the full text of articles), and then lets you to annotate, organize, and share the results of your research. It includes the best parts of older reference manager software (like EndNote)—the ability to store full reference information in author, title, and publication fields and to export that as formatted references—and the best parts of modern software such as del.icio.us or iTunes, like the ability to sort, tag, and search in advanced ways. Using its unique ability to sense when you are viewing a book, article, or other resource on the web, Zotero will—on many major research sites—find and automatically save the full reference information for you in the correct fields.",
 				"libraryCatalog": "YouTube",
-				"runningTime": "2:52",
+				"runningTime": "2:51",
 				"url": "https://www.youtube.com/watch?v=pq94aBrc0pY",
 				"attachments": [],
 				"tags": [],
@@ -148,18 +142,6 @@ var testCases = [
 				"seeAlso": []
 			}
 		]
-	},
-	{
-		"type": "web",
-		"url": "http://www.youtube.com/playlist?list=PL793CABDF042A9514",
-		"defer": true,
-		"items": "multiple"
-	},
-	{
-		"type": "web",
-		"url": "http://www.youtube.com/user/Zoteron",
-		"defer": true,
-		"items": "multiple"
 	}
 ]
 /** END TEST CASES **/

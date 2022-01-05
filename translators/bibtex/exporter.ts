@@ -1,37 +1,36 @@
 declare const Zotero: any
 
 import { Translator } from '../lib/translator'
+import { Reference } from '../../gen/typings/serialized-item'
+import { Cache } from '../../typings/cache'
 
 import { JabRef } from '../bibtex/jabref' // not so nice... BibTeX-specific code
-import * as itemfields from '../../gen/itemfields'
+import * as itemfields from '../../gen/items/items'
 import * as bibtexParser from '@retorquere/bibtex-parser'
-import { Postfix } from '../bibtex/postfix.ts'
+import { Postfix } from './postfix'
 import * as Extra from '../../content/extra'
-import * as cslMapping from '../../gen/csl-mapping.json'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let Exporter = new class { // tslint:disable-line:variable-name
+export const Exporter = new class {
   public postfix: Postfix
   public jabref: JabRef
-  public strings: {[key: string]: string}
+  public strings: {[key: string]: string} = {}
+  public strings_reverse: {[key: string]: string} = {}
+  public citekeys: Record<string, number> = {}
 
   constructor() {
     this.jabref = new JabRef()
-    this.strings = {}
   }
 
   public prepare_strings() {
     if (!Translator.BetterTeX || !Translator.preferences.strings) return
 
-    if (Translator.preferences.exportBibTeXStrings === 'match') {
-      this.strings = (bibtexParser.parse(Translator.preferences.strings, { markup: (Translator.csquotes ? { enquote: Translator.csquotes } : {}) }) as bibtexParser.Bibliography).strings
+    if (Translator.BetterTeX && Translator.preferences.exportBibTeXStrings.startsWith('match')) {
+      this.strings = bibtexParser.parse(Translator.preferences.strings, { markup: (Translator.csquotes ? { enquote: Translator.csquotes } : {}) }).strings
+      for (const [k, v] of Object.entries(this.strings)) {
+        this.strings_reverse[v.toUpperCase()] = k.toUpperCase()
+      }
     }
-
-    /*
-    if (Translator.preferences.exportBibTeXStrings !== 'off') {
-      Zotero.write(`${Translator.preferences.strings}\n\n`)
-    }
-    */
   }
 
   public unique_chars(str) {
@@ -42,57 +41,71 @@ export let Exporter = new class { // tslint:disable-line:variable-name
     return uniq
   }
 
-  public nextItem(): ISerializedItem {
-    this.postfix = this.postfix || (new Postfix(Translator.preferences.qualityReport))
+  public get items(): Generator<Reference, void, unknown> {
+    return this.itemsGenerator()
+  }
 
-    let item
-    while (item = Translator.nextItem()) {
-      if (['note', 'attachment'].includes(item.itemType)) continue
+  private *itemsGenerator(): Generator<Reference, void, unknown> {
+    if (!this.postfix && Translator.BetterTeX) this.postfix = new Postfix(Translator.preferences.qualityReport)
 
-      if (!item.citekey) {
+    for (const item of Translator.references) {
+      if (!item.citationKey) {
         throw new Error(`No citation key in ${JSON.stringify(item)}`)
       }
+      this.citekeys[item.citationKey] = (this.citekeys[item.citationKey] || 0) + 1
 
-      this.jabref.citekeys.set(item.itemID, item.citekey)
+      this.jabref.citekeys.set(item.itemID, item.citationKey)
 
       // this is not automatically lazy-evaluated?!?!
-      const cached: Types.DB.Cache.ExportedItem = Translator.caching ? Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences) : null
+      const cached: Cache.ExportedItem = item.$cacheable && Translator.BetterTeX ? Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences) : null
       Translator.cache[cached ? 'hits' : 'misses'] += 1
 
       if (cached) {
         Zotero.write(cached.reference)
-        this.postfix.add(cached)
+        this.postfix?.add(cached.metadata)
         continue
       }
 
       itemfields.simplifyForExport(item)
-      Object.assign(item, Extra.get(item.extra))
-      for (const [name, value] of Object.entries(item.extraFields.csl)) {
-        if (cslMapping.field[name]) {
-          for (const field of cslMapping.field[name]) {
-            item[field] = value
+      Object.assign(item, Extra.get(item.extra, 'zotero'))
+
+      // strip extra.tex fields that are not for me
+      const prefix = Translator.BetterBibLaTeX ? 'biblatex.' : 'bibtex.'
+      for (const [name, field] of Object.entries(item.extraFields.tex).sort((a, b) => b[0].localeCompare(a[0]))) { // sorts the fields from tex. to biblatex. to bibtex.
+        for (const type of [ prefix, 'tex.' ]) {
+          if (name.startsWith(type)) {
+            item.extraFields.tex[name.substr(type.length)] = field
+            break
           }
-          delete item.extraFields.csl[name]
         }
+
+        delete item.extraFields.tex[name]
       }
 
-      item.raw = Translator.preferences.rawLaTag === '*'
+      item.raw = Translator.BetterTeX && Translator.preferences.rawLaTag === '*'
       item.tags = item.tags.filter(tag => {
-        if (tag.tag === Translator.preferences.rawLaTag) {
+        if (Translator.BetterTeX && tag.tag === Translator.preferences.rawLaTag) {
           item.raw = true
           return false
         }
         return true
       })
 
-      return item
+      yield item
     }
-
-    return null
   }
 
   public complete() {
     this.jabref.exportGroups()
-    Zotero.write(this.postfix.toString())
+    if (this.postfix) Zotero.write(this.postfix.toString())
+    if (Translator.BetterTeX && Translator.preferences.qualityReport) {
+      let sep = '\n% == Citekey duplicates in this file:\n'
+      for (const [citekey, n] of Object.entries(this.citekeys).sort((a, b) => a[0].localeCompare(b[0]))) {
+        if (n > 1) {
+          Zotero.write(`${sep}% ${citekey} duplicates: ${n}\n`)
+          sep = '% '
+        }
+      }
+    }
   }
 }

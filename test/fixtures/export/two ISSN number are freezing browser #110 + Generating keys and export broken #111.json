@@ -1,45 +1,42 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "Export collections": true,
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/nature",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]",
-      "jabrefFormat": 0
-    },
-    "release": "0.6.44"
+      "citekeyFormat": "[auth][year]"
+    }
   },
   "items": [
     {
       "ISSN": "0016-6731, 1943-2631",
       "abstractNote": "The advent of complete genetic linkage maps consisting of codominant DNA markers [typically restriction fragment length polymorphisms (RFLPs)] has stimulated interest in the systematic genetic dissection of discrete Mendelian factors underlying quantitative traits in experimental organisms. We describe here a set of analytical methods that modify and extend the classical theory for mapping such quantitative trait loci (QTLs). These include: (i) a method of identifying promising crosses for QTL mapping by exploiting a classical formula of SEWALL WRIGHT; (ii) a method (interval mapping) for exploiting the full power of RFLP linkage maps by adapting the approach of LOD score analysis used in human genetics, to obtain accurate estimates of the genetic location and phenotypic effect of QTLs; and (iii) a method (selective genotyping) that allows a substantial reduction in the number of progeny that need to be scored with the DNA markers. In addition to the exposition of the methods, explicit graphs are provided that allow experimental geneticists to estimate, in any particular case, the number of progeny required to map QTLs underlying a quantitative trait.",
       "accessDate": "2014-10-13 16:32:21",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "E. S.",
           "lastName": "Lander"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "D.",
           "lastName": "Botstein"
         }
       ],
       "date": "01/01/1989",
-      "extra": "Citation Key: fixed\n04849\nPMID: 2563713",
+      "extra": [
+        "Citation Key: fixed",
+        "04849",
+        "PMID: 2563713"
+      ],
       "issue": "1",
-      "itemID": 7,
+      "itemID": 1,
       "itemType": "journalArticle",
       "journalAbbreviation": "Genetics",
       "language": "en",

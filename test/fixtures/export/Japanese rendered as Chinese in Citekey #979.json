@@ -1,66 +1,23 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
       "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
+      "kuroshiro": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
-      "autoExport": "immediate",
-      "autoExportIdleWait": 10,
-      "autoPin": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[auth.etal][veryshorttitle][year]",
-      "citeprocNoteCitekey": false,
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "exportTitleCase": true,
       "itemObserverDelay": 100,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "kuroshiro": false,
-      "parseParticles": true,
-      "postscript": "",
-      "qualityReport": false,
       "quickCopyMode": "pandoc",
-      "quickCopyPandocBrackets": true,
-      "scrubDatabase": false,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.0.147.7053",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.47m37",
-        "isJurisM": true,
-        "isZotero": false,
-        "locale": "en-US",
-        "oscpu": "Intel Mac OS X 10.13",
-        "platform": "MacIntel",
-        "version": "5.0.47m37"
-      }
+      "quickCopyPandocBrackets": true
     }
   },
   "items": [
     {
       "ISBN": "978-4-8158-0763-4",
-      "attachments": [],
-      "bookTitle": "\u65e5\u672c\u578b\u6392\u5916\u4e3b\u7fa9: \u5728\u7279\u4f1a\u30fb\u5916\u56fd\u4eba\u53c2\u653f\u6a29\u30fb\u6771\u30a2\u30b8\u30a2\u5730\u653f\u5b66",
       "callNumber": "HN730.Z9 R3244 2014",
       "creators": [
         {
@@ -79,9 +36,7 @@
         }
       ],
       "date": "2014",
-      "dateAdded": "2018-06-01 03:17:45",
-      "dateModified": "2018-06-01 03:28:46",
-      "itemID": 9663,
+      "itemID": 1,
       "itemType": "bookSection",
       "libraryCatalog": "Library of Congress ISBN",
       "multi": {
@@ -106,12 +61,10 @@
           "title": "ja"
         }
       },
-      "notes": [],
       "pages": "9-28",
       "place": "\u540d\u53e4\u5c4b",
       "publicationTitle": "\u65e5\u672c\u578b\u6392\u5916\u4e3b\u7fa9: \u5728\u7279\u4f1a\u30fb\u5916\u56fd\u4eba\u53c2\u653f\u6a29\u30fb\u6771\u30a2\u30b8\u30a2\u5730\u653f\u5b66",
       "publisher": "Nagoya Daigaku Shuppankai",
-      "seeAlso": [],
       "tags": [
         {
           "tag": "Japan",

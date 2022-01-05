@@ -122,7 +122,7 @@ function scrape(doc, url) {
 
 	var related_links = ZU.xpathText(doc, '//article//li/p/a/@href');
 	var note=""
-	if(related_links)
+	if (related_links)
 		note = addNote(note, related_links.split(",").filter(function(tag) {return tag.length != 0}))
 	if (note.length != 0) {
 		newItem.notes.push( {note: note} );

@@ -1,22 +1,22 @@
 {
 	"translatorID": "7feb4b6c-05d6-4d61-bf0d-5e7f70c1ef0b",
+	"translatorType": 4,
 	"label": "Frieze",
 	"creator": "czar",
-	"target": "^https?://(www\\.)?frieze\\.com",
+	"target": "^https?://(www\\.)?frieze\\.com/",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2019-02-01 01:28:00"
+	"lastUpdated": "2021-06-15 16:25:00"
 }
 
 /*
 	***** BEGIN LICENSE BLOCK *****
 
-	Copyright © 2018 czar
-	http://en.wikipedia.org/wiki/User_talk:Czar
+	Copyright © 2018-2021 czar (http://en.wikipedia.org/wiki/User_talk:Czar)
+	                      and Abe Jellinek
 
 	This file is part of Zotero.
 
@@ -37,21 +37,19 @@
 */
 
 
-// attr()/text() v2 per https://github.com/zotero/translators/issues/1277
-function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
-
-
 function detectWeb(doc, url) {
 	if (url.includes("/article/")) {		// does not handle /event/ or /media/ pages, which EM alone can handle
-		if (text(doc,'.issue-name')) {
+		if (text(doc, '.article-belongs-to-issue')) {
 			return "magazineArticle";
 		}
 		else {
 			return "blogPost";
 		}
-	} else if (getSearchResults(doc, true)) {
+	}
+	else if (getSearchResults(doc, true)) {
 		return "multiple";
 	}
+	return false;
 }
 
 
@@ -61,27 +59,35 @@ function scrape(doc, url) {
 	translator.setDocument(doc);
 	
 	translator.setHandler('itemDone', function (obj, item) { // corrections to EM
+		item.title = attr(doc, 'meta[property="og:title"]', 'content') || item.title; // EM is putting " | Frieze" at the end
 		item.publicationTitle = "Frieze";
-		item.issue = text(doc,'.issue-name');
+		item.issue = text(doc, '.article-belongs-to-issue');
 		if (item.issue) {
 			item.itemType = "magazineArticle";
 			item.ISSN = "0962-0672";
-			item.issue = item.issue.replace('Issue ','');
-		} else {
+			item.issue = item.issue.replace('Issue ', '');
+		}
+		else {
 			item.itemType = "blogPost";
 		}
-		item.date = text(doc,'.field-name-article-category-date');
+		item.date = text(doc, '.article-header-author-info').split('|')[1].trim();
 		if (item.date) {
-			item.date = Z.Utilities.strToISO(item.date.replace(/.*-\s(.*)/,"$1"));
+			// 21 -> 2021
+			item.date = item.date.replace(/([0-9]{2})$/, '20$1');
+			item.date = ZU.strToISO(item.date);
 		}
-		var authorMetadata = doc.querySelectorAll('.field-name-article-contributor-name a');
+		var authorMetadata = doc.querySelectorAll('.article-header-author-responsive a[href*="/contributor/"]');
 		for (let author of authorMetadata) {
 			item.creators.push(ZU.cleanAuthor(author.text, "author"));
+		}
+		item.tags = []; // the only tag is "premium"
+		if (item.abstractNote) {
+			item.abstractNote = item.abstractNote.replace(/, Frieze$/, '');
 		}
 		item.complete();
 	});
 
-	translator.getTranslatorObject(function(trans) {
+	translator.getTranslatorObject(function (trans) {
 		trans.doWeb(doc, url);
 	});
 }
@@ -90,8 +96,8 @@ function scrape(doc, url) {
 function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
-	var rows = doc.querySelectorAll('.field-name-title-field a');
-	for (let i=0; i<rows.length; i++) {
+	var rows = doc.querySelectorAll('.teaser-title a[href*="/article/"]');
+	for (let i = 0; i < rows.length; i++) {
 		let href = rows[i].href;
 		let title = ZU.trimInternal(rows[i].textContent);
 		if (!href || !title) continue;
@@ -109,7 +115,7 @@ function doWeb(doc, url) {
 		case "multiple":
 			Zotero.selectItems(getSearchResults(doc, false), function (items) {
 				if (!items) {
-					return true;
+					return;
 				}
 				var articles = [];
 				for (var i in items) {
@@ -119,16 +125,17 @@ function doWeb(doc, url) {
 			});
 			break;
 		case "magazineArticle":
-		case "blogPost":	
+		case "blogPost":
 			scrape(doc, url);
 			break;
 	}
 }
+
 /** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "https://frieze.com/article/africa-venice",
+		"url": "https://www.frieze.com/article/africa-venice",
 		"items": [
 			{
 				"itemType": "magazineArticle",
@@ -145,12 +152,13 @@ var testCases = [
 				"abstractNote": "The 55th Venice Biennale",
 				"issue": "157",
 				"language": "en",
-				"libraryCatalog": "frieze.com",
+				"libraryCatalog": "www.frieze.com",
 				"publicationTitle": "Frieze",
-				"url": "https://frieze.com/article/africa-venice",
+				"url": "https://www.frieze.com/article/africa-venice",
 				"attachments": [
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -161,12 +169,12 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://frieze.com/search?text_search=%22venice%20biennale%22",
+		"url": "https://www.frieze.com/search?search=%22venice%20biennale%22",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "https://frieze.com/article/weekend-reading-list-54",
+		"url": "https://www.frieze.com/article/weekend-reading-list-54",
 		"items": [
 			{
 				"itemType": "blogPost",
@@ -182,10 +190,11 @@ var testCases = [
 				"abstractNote": "From the Women's Strike to a march that cancels itself out: what to read this weekend",
 				"blogTitle": "Frieze",
 				"language": "en",
-				"url": "https://frieze.com/article/weekend-reading-list-54",
+				"url": "https://www.frieze.com/article/weekend-reading-list-54",
 				"attachments": [
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -196,7 +205,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://frieze.com/article/art-world-overwhelmingly-liberal-still-overwhelmingly-middle-class-and-white-why",
+		"url": "https://www.frieze.com/article/art-world-overwhelmingly-liberal-still-overwhelmingly-middle-class-and-white-why",
 		"items": [
 			{
 				"itemType": "blogPost",
@@ -212,10 +221,11 @@ var testCases = [
 				"abstractNote": "Is the lack of social mobility in the arts due to a self-congratulatory conviction that the sector represents the solution rather than the problem?",
 				"blogTitle": "Frieze",
 				"language": "en",
-				"url": "https://frieze.com/article/art-world-overwhelmingly-liberal-still-overwhelmingly-middle-class-and-white-why",
+				"url": "https://www.frieze.com/article/art-world-overwhelmingly-liberal-still-overwhelmingly-middle-class-and-white-why",
 				"attachments": [
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -226,7 +236,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://frieze.com/",
+		"url": "https://www.frieze.com/",
 		"items": "multiple"
 	}
 ]

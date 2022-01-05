@@ -9,8 +9,26 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsbv",
-	"lastUpdated": "2019-10-19 17:03:34"
+	"lastUpdated": "2020-09-08 02:04:42"
 }
+
+/*
+   SpringerLink Translator
+   Copyright (C) 2020 Aurimas Vinckevicius and Sebastian Karcher
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Affero General Public License for more details.
+
+   You should have received a copy of the GNU Affero General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 function detectWeb(doc, url) {
 	var action = url.match(/^https?:\/\/[^/]+\/([^/?#]+)/);
@@ -57,6 +75,10 @@ function getResultList(doc) {
 	if (!results.length) {
 		results = ZU.xpath(doc, '//div[@class="toc"]/ol//li[contains(@class,"toc-item")]/p[@class="title"]/a');
 	}
+	// https://link.springer.com/journal/10344/volumes-and-issues/66-5
+	if (!results.length) {
+		results = ZU.xpath(doc, '//li[@class="c-list-group__item"]//h3/a');
+	}
 	return results;
 }
 
@@ -69,7 +91,7 @@ function doWeb(doc, url) {
 			items[list[i].href] = list[i].textContent;
 		}
 		Zotero.selectItems(items, function (selectedItems) {
-			if (!selectedItems) return true;
+			if (!selectedItems) return;
 			for (let i in selectedItems) {
 				ZU.processDocuments(i, scrape);
 			}
@@ -117,7 +139,7 @@ function complementItem(doc, item) {
 			item.rights = '©' + year + ' ' + item.rights;
 		}
 	}
-	
+
 	if (itemType == "journalArticle") {
 		if (!item.ISSN) {
 			item.ISSN = ZU.xpathText(doc, '//dd[@id="abstract-about-issn" or @id="abstract-about-electronic-issn"]');
@@ -198,7 +220,7 @@ function scrape(doc, url) {
 		translator.setString(text);
 		translator.setHandler("itemDone", function (obj, item) {
 			item = complementItem(doc, item);
-			
+
 			item.attachments.push({
 				url: pdfURL,
 				title: "Springer Full Text PDF",
@@ -467,23 +489,7 @@ var testCases = [
 						"mimeType": "application/pdf"
 					}
 				],
-				"tags": [
-					{
-						"tag": " Analytical solutions "
-					},
-					{
-						"tag": " Elastic storage "
-					},
-					{
-						"tag": " Submarine outlet-capping "
-					},
-					{
-						"tag": " Tidal loading efficiency "
-					},
-					{
-						"tag": "Coastal aquifers "
-					}
-				],
+				"tags": [],
 				"notes": [],
 				"seeAlso": []
 			}
@@ -562,6 +568,11 @@ var testCases = [
 				"seeAlso": []
 			}
 		]
+	},
+	{
+		"type": "web",
+		"url": "https://link.springer.com/journal/10344/volumes-and-issues/66-5",
+		"items": "multiple"
 	}
 ]
 /** END TEST CASES **/

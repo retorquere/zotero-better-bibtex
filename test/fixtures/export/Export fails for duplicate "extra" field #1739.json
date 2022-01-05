@@ -1,0 +1,86 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "dmy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "asciiBibLaTeX": true,
+      "citekeyFormat": "[auth:lower][year]",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc"
+    }
+  },
+  "items": [
+    {
+      "ISBN": "978-1-138-02951-4",
+      "abstractNote": "Before architectural conservation takes place, a survey is conducted to assess the condition of the building and estimate the cost of the work. For fa\u00e7ades, scaffolding is erected so that experts can access the building\u2019s whole extent and gather data for analysis. This paper presents the results of a collaborative and cross-disciplinary research project aiming to automate data capture and analysis techniques for conservation of stone fa\u00e7ades. Our research demonstrates the feasibility of a new methodology for the survey and assessment of historic buildings and will facilitate frequent surveys with minimal disruption to the general public in cities. The project has embedded architects\u2019 expert knowledge into intelligent algorithms for automatically analysing images of facades. The combination of technologies allows for an efficient data capture while minimising the requirement for manual data analysis as well as more accurate estimates of its cost.",
+      "accessDate": "2020-12-09T11:55:43Z",
+      "attachments": [],
+      "citationKey": "gonzalezmanich2016",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Gonzalez Manich"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "T.",
+          "lastName": "Kelman"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "F.",
+          "lastName": "Coutts"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "B.",
+          "lastName": "Qiu"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "P.",
+          "lastName": "Murray"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Gonzalez-Longo"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "S.",
+          "lastName": "Marshall"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Koen",
+          "lastName": "Van Balen"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Els",
+          "lastName": "Verstrynge"
+        }
+      ],
+      "date": "2016-08-16",
+      "extra": [
+        "Conference Name: 10th International Conference on Structural Analysis of Historical Constructions",
+        "Meeting Name: 10th International Conference on Structural Analysis of Historical Constructions",
+        "Num Pages: 8"
+      ],
+      "itemID": 1,
+      "itemType": "bookSection",
+      "language": "en",
+      "libraryCatalog": "strathprints.strath.ac.uk",
+      "place": "BEL",
+      "publicationTitle": "Structural Analysis of Historical Constructions: Anamnesis, Diagnosis, Therapy, Controls",
+      "publisher": "CRC Press",
+      "title": "Exploring the use of image processing to survey and quantitatively assess historic buildings",
+      "url": "https://strathprints.strath.ac.uk/56804/"
+    }
+  ]
+}

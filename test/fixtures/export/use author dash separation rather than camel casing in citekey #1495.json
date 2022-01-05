@@ -1,0 +1,47 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "citekeyFormat": "[authors2:lower][>0]_[year] -[shorttitle:skipwords:lower]| [shorttitle:skipwords:lower]-[year]",
+      "keyConflictPolicy": "change",
+      "quickCopyMode": "pandoc",
+      "quickCopyPandocBrackets": true
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1080/13602004.2019.1575022",
+      "ISSN": "1360-2004",
+      "citationKey": "salnikovadarcus_2019-spacesmuslimidentity",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Marina",
+          "lastName": "Salnikova"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Bruce",
+          "lastName": "D\u2019Arcus"
+        }
+      ],
+      "date": "January 2, 2019",
+      "issue": "1",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Journal of Muslim Minority Affairs",
+      "notes": [
+        "<p>doi: 10.1080/13602004.2019.1575022</p>"
+      ],
+      "pages": "106-117",
+      "publicationTitle": "Journal of Muslim Minority Affairs",
+      "title": "Spaces of Muslim Identity in Inverness, Scotland",
+      "url": "https://doi.org/10.1080/13602004.2019.1575022",
+      "volume": "39"
+    }
+  ]
+}

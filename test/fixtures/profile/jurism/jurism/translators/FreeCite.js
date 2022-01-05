@@ -80,7 +80,7 @@ function doWeb(doc, url) {
 				if (!selectedIndices) {
 					return true;
 				}
-				for(var i in selectedIndices) {
+				for (var i in selectedIndices) {
 					itemList[i].complete();
 				}
 			});

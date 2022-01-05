@@ -28,13 +28,13 @@ http://www.refworks.com/refworks2/help/RefWorks_Tagged_Format.htm
 function detectImport() {
 	var line;
 	var i = 0;
-	while((line = Zotero.read()) !== false) {
+	while ((line = Zotero.read()) !== false) {
 		line = line.replace(/^\s+/, "");
-		if(line != "") {
-			if(line.search(/^RT\s+./) != -1) {
+		if (line != "") {
+			if (line.search(/^RT\s+./) != -1) {
 				return true;
 			} else {
-				if(i++ > 150) { //skip preamble
+				if (i++ > 150) { //skip preamble
 					return false;
 				}
 			}
@@ -122,12 +122,12 @@ var importTypeMap = {
 
 //supplement input map with export
 var ty;
-for(ty in exportTypeMap) {
+for (ty in exportTypeMap) {
 	importTypeMap[exportTypeMap[ty]] = ty;
 }
 
 //merge degenerate export type map into main list
-for(ty in degenerateExportTypeMap) {
+for (ty in degenerateExportTypeMap) {
 	exportTypeMap[ty] = degenerateExportTypeMap[ty];
 }
 
@@ -351,43 +351,43 @@ var TagMapper = function(mapList) {
 };
 
 TagMapper.prototype.getFields = function(itemType, tag) {
-	if(!this.cache[itemType]) this.cache[itemType] = {};
+	if (!this.cache[itemType]) this.cache[itemType] = {};
 
 	//retrieve from cache if available
-	if(this.cache[itemType][tag]) {
+	if (this.cache[itemType][tag]) {
 		return this.cache[itemType][tag];
 	}
 
 	var fields = [];
-	for(var i=0, n=this.mapList.length; i<n; i++) {
+	for (var i=0, n=this.mapList.length; i<n; i++) {
 		var map = this.mapList[i];
 		var field;
-		if(typeof(map[tag]) == 'object') {
+		if (typeof(map[tag]) == 'object') {
 			var def, exclude = false;
-			for(var f in map[tag]) {
-				if(f == "__default") {
+			for (var f in map[tag]) {
+				if (f == "__default") {
 					def = map[tag][f];
 					continue;
 				}
 
-				if(f == "__exclude") {
-					if(map[tag][f].indexOf(itemType) != -1) {
+				if (f == "__exclude") {
+					if (map[tag][f].indexOf(itemType) != -1) {
 						exclude = true;
 					}
 					continue;
 				}
 
-				if(map[tag][f].indexOf(itemType) != -1) {
+				if (map[tag][f].indexOf(itemType) != -1) {
 					field = f;
 				}
 			}
 
-			if(!field && def && !exclude) field = def;
-		} else if(typeof(map[tag]) == 'string') {
+			if (!field && def && !exclude) field = def;
+		} else if (typeof(map[tag]) == 'string') {
 			field = map[tag];
 		}
 
-		if(field) fields.push(field);
+		if (field) fields.push(field);
 	}
 
 	this.cache[itemType][tag] = fields;
@@ -408,7 +408,7 @@ function processTag(item, entry) {
 	var rawLine = entry[0];
 
 	var zField = importFields.getFields(item.itemType, tag)[0];
-	if(!zField) {
+	if (!zField) {
 		Z.debug("Unknown field " + tag + " in entry :\n" + rawLine);
 		zField = 'unknown'; //this will result in the value being added as note
 	}
@@ -424,13 +424,13 @@ function processTag(item, entry) {
 
 	//tag based manipulations
 	var processFields = true; //whether we should continue processing by zField
-	switch(tag) {
+	switch (tag) {
 		case "NO":
 			//EndNote duplicates title in the note field sometimes maybe so does RW
-			if(item.title == value) {
+			if (item.title == value) {
 				value = undefined;
 			//do some HTML formatting in non-HTML notes
-			} else if(!value.match(/<[^>]+>/)) { //from cleanTags
+			} else if (!value.match(/<[^>]+>/)) { //from cleanTags
 				value = '<p>'
 					+ value.replace(/\n\n/g, '</p><p>')
 					 .replace(/\n/g, '<br/>')
@@ -440,8 +440,8 @@ function processTag(item, entry) {
 			}
 		break;
 		case "OP":
-			if(item.pages) {
-				if(item.pages.indexOf('-') == -1) {
+			if (item.pages) {
+				if (item.pages.indexOf('-') == -1) {
 					item.pages = item.pages + '-' + value;
 				} else {
 					item.backupNumPages = value;
@@ -464,8 +464,8 @@ function processTag(item, entry) {
 	}
 
 	//zField based manipulations
-	if(processFields){
-		switch(zField[0]) {
+	if (processFields){
+		switch (zField[0]) {
 			case "backupPublicationTitle":
 				item.backupPublicationTitle = value;
 				value = undefined;
@@ -489,17 +489,17 @@ function processTag(item, entry) {
 				//the regex will take care of double semicolons and newlines
 				//but it will still allow a blank tag if there is a newline or
 				//semicolon at the begining or the end
-				if(!value[0]) value.shift();
-				if(value.length && !value[value.length-1]) value.pop();
+				if (!value[0]) value.shift();
+				if (value.length && !value[value.length-1]) value.pop();
 
-				if(!value.length) {
+				if (!value.length) {
 					value = undefined;
 				}
 			break;
 			case "notes":
 				value = {note:value};
 				//we can specify note title in the field mapping table. See VL for patent
-				if(zField[1]) {
+				if (zField[1]) {
 					value.note = zField[1] + ': ' + value.note;
 				}
 			break;
@@ -514,7 +514,7 @@ function processTag(item, entry) {
 			break;
 			case "unsupported":	//unsupported fields
 				//we can convert a RIS tag to something more useful though
-				if(zField[1]) {
+				if (zField[1]) {
 					value = zField[1] + ': ' + value;
 				}
 			break;
@@ -525,18 +525,18 @@ function processTag(item, entry) {
 }
 
 function applyValue(item, zField, value, rawLine) {
-	if(!value) return;
+	if (!value) return;
 
-	if(!zField || zField == 'unknown') {
-		if(!Zotero.parentTranslator) {
+	if (!zField || zField == 'unknown') {
+		if (!Zotero.parentTranslator) {
 			Z.debug("Entry stored as note: " + rawLine);
 			item.unknownFields.push(rawLine);
 		}
 		return;
 	}
 
-	if(zField == 'unsupported') {
-		if(!Zotero.parentTranslator) {
+	if (zField == 'unsupported') {
+		if (!Zotero.parentTranslator) {
 			Z.debug("Unsupported field will be stored in note: " + value);
 			item.unsupportedFields.push(value);
 		}
@@ -544,11 +544,11 @@ function applyValue(item, zField, value, rawLine) {
 	}
 
 	//check if field is valid for item type
-	if(zField != 'creators' && zField != 'tags' && zField != 'notes'
+	if (zField != 'creators' && zField != 'tags' && zField != 'notes'
 		&& zField != 'attachments'
 		&& !ZU.fieldIsValidForType(zField, item.itemType)) {
 		Z.debug("Invalid field '" + zField + "' for item type '" + item.itemType + "'.");
-		if(!Zotero.parentTranslator) {
+		if (!Zotero.parentTranslator) {
 			Z.debug("Entry stored in note: " + rawLine);
 			item.unknownFields.push(rawLine);
 			return;
@@ -557,18 +557,18 @@ function applyValue(item, zField, value, rawLine) {
 	}
 
 	//special processing for certain fields
-	switch(zField) {
+	switch (zField) {
 		case 'notes':
 		case 'attachments':
 		case 'creators':
 		case 'tags':
-			if(!(value instanceof Array)) {
+			if (!(value instanceof Array)) {
 				value = [value];
 			}
 			item[zField] = item[zField].concat(value);
 		break;
 		case 'extra':
-			if(item.extra) {
+			if (item.extra) {
 				item.extra += '; ' + value;
 			} else {
 				item.extra = value;
@@ -576,9 +576,9 @@ function applyValue(item, zField, value, rawLine) {
 		break;
 		default:
 			//check if value already exists
-			if(item[zField]) {
+			if (item[zField]) {
 				//if it's not the new value is not the same as existing value, store it as note
-				if(!Zotero.parentTranslator && item[zField] != value) {
+				if (!Zotero.parentTranslator && item[zField] != value) {
 					item.notes.push({note:rawLine});
 				}
 			} else {
@@ -589,25 +589,25 @@ function applyValue(item, zField, value, rawLine) {
 
 function dateRWtoZotero(risDate) {
 	var value = risDate.split(/\s*\/\s*(?:0*(?=\d))?/);	//and also drop leading 0s
-	if(value.length == 1) {
+	if (value.length == 1) {
 		return risDate;
 	}
 
 	//sometimes unknown parts of date are given as 0. Drop these and anything that follows
 	var i;
-	for(i=0; i<3; i++) {
-		if(!value[i] || !parseInt(value[i], 10)) {
+	for (i=0; i<3; i++) {
+		if (!value[i] || !parseInt(value[i], 10)) {
 			break;
 		}
 	}
-	for(; i<3; i++) {
+	for (; i<3; i++) {
 		value[i] = undefined;
 	}
 
 	//adjust month (it's 0 based)
-	if(value[1]) {
+	if (value[1]) {
 		value[1] = parseInt(value[1], 10);
-		if(value[1]) value[1]--;
+		if (value[1]) value[1]--;
 	}
 	return ZU.formatDate({
 			'year': value[0],
@@ -620,34 +620,34 @@ function dateRWtoZotero(risDate) {
 function completeItem(item) {
 	// if backup publication title exists but not proper, use backup
 	// (hack to get newspaper titles from EndNote)
-	if(item.backupPublicationTitle) {
-		if(!item.publicationTitle) {
+	if (item.backupPublicationTitle) {
+		if (!item.publicationTitle) {
 			item.publicationTitle = item.backupPublicationTitle;
 		}
 		item.backupPublicationTitle = undefined;
 	}
 
-	if(item.backupNumPages) {
-		if(!item.numPages) {
+	if (item.backupNumPages) {
+		if (!item.numPages) {
 			item.numPages = item.backupNumPages;
 		}
 		item.backupNumPages = undefined;
 	}
 
-	if(item.backupEndPage) {
-		if(!item.pages) {
+	if (item.backupEndPage) {
+		if (!item.pages) {
 			item.pages = item.backupEndPage;
-		} else if(item.pages.indexOf('-') == -1) {
+		} else if (item.pages.indexOf('-') == -1) {
 			item.pages += '-' + item.backupEndPage;
-		} else if(!item.numPages) {	//should we do this?
+		} else if (!item.numPages) {	//should we do this?
 			item.numPages = item.backupEndPage;
 		}
 		item.backupEndPage = undefined;
 	}
 
 	//see if we have a backup date
-	if(item.backupDate) {
-		if(!item[item.backupDate.field]) {
+	if (item.backupDate) {
+		if (!item[item.backupDate.field]) {
 			item[item.backupDate.field] = item.backupDate.value;
 		}
 		//in RW the freeform date field seems to often lack the year - take that from the year field.
@@ -658,44 +658,44 @@ function completeItem(item) {
 	}
 
 	// Clean up DOI
-	if(item.DOI) {
+	if (item.DOI) {
 		item.DOI = ZU.cleanDOI(item.DOI);
 	}
 
 	// hack for sites like Nature, which only use JA, journal abbreviation
-	if(item.journalAbbreviation && !item.publicationTitle){
+	if (item.journalAbbreviation && !item.publicationTitle){
 		item.publicationTitle = item.journalAbbreviation;
 	}
 
 	// Hack for Endnote exports missing full title
-	if(item.shortTitle && !item.title){
+	if (item.shortTitle && !item.title){
 		item.title = item.shortTitle;
 	}
 
 	//if we only have one tag, try splitting it by comma
 	//odds of this this backfiring are pretty low
-	if(item.tags.length == 1) {
+	if (item.tags.length == 1) {
 		item.tags = item.tags[0].split(/\s*(?:,\s*)+/);
-		if(!item.tags[0]) item.tags.shift();
-		if(item.tags.length && !item.tags[item.tags.length-1]) item.tags.pop();
+		if (!item.tags[0]) item.tags.shift();
+		if (item.tags.length && !item.tags[item.tags.length-1]) item.tags.pop();
 	}
 
 	//don't pass access date if this is called from (most likely) a web translator
-	if(Zotero.parentTranslator) {
+	if (Zotero.parentTranslator) {
 		item.accessDate = undefined;
 	}
 
 //store unsupported and unknown fields in a single note
-	if(!Zotero.parentTranslator) {
+	if (!Zotero.parentTranslator) {
 		var note = '';
-		for(var i=0, n=item.unsupportedFields.length; i<n; i++) {
+		for (var i=0, n=item.unsupportedFields.length; i<n; i++) {
 			note += item.unsupportedFields[i] + '<br/>';
 		}
-		for(var i=0, n=item.unknownFields.length; i<n; i++) {
+		for (var i=0, n=item.unknownFields.length; i<n; i++) {
 			note += item.unknownFields[i] + '<br/>';
 		}
 	
-		if(note) {
+		if (note) {
 			note = "The following values have no corresponding Zotero field:<br/>" + note;
 			item.notes.push({note: note.trim(), tags: ['_RW import']});
 		}
@@ -712,47 +712,47 @@ function completeItem(item) {
 var RW_format = /^([A-Z][A-Z0-9]) (?:(.*))?$/; //allow empty entries
 function getLine() {
 	var entry, lastLineLength;
-	if(getLine.buffer) {
+	if (getLine.buffer) {
 		entry = getLine.buffer.match(RW_format); //this should always match
-		if(entry[2] === undefined) entry[2] = '';
+		if (entry[2] === undefined) entry[2] = '';
 		lastLineLength = entry[2].length;
 		getLine.buffer = undefined;
 	}
 
 	var nextLine, temp;
-	while((nextLine = Zotero.read()) !== false) {
+	while ((nextLine = Zotero.read()) !== false) {
 		temp = nextLine.match(RW_format);
-		if(temp && temp[2] === undefined) temp[2] = '';
+		if (temp && temp[2] === undefined) temp[2] = '';
 		//if we are already processing an entry, then this is the next entry
 		//store this line for later and return
-		if(temp && entry) {
+		if (temp && entry) {
 			getLine.buffer = temp[0];
 			return entry;
 
 		//otherwise this is a new entry
-		} else if(temp) {
+		} else if (temp) {
 			entry = temp;
 			lastLineLength = entry[2].length;
 
 		//if this line didn't match, then we just attach it to the current value
 		//Try to figure out if this is supposed to be on a new line or not
-		} else if(entry) {
+		} else if (entry) {
 			//new lines would probably only be meaningful in notes and abstracts
-			if(entry[1] == 'AB' || entry[1] == 'NO') {
+			if (entry[1] == 'AB' || entry[1] == 'NO') {
 				//if previous line was short, this would probably be on a new line
 				//Might consider looking for periods and capital letters
-				if(lastLineLength < 60) {
+				if (lastLineLength < 60) {
 					nextLine = "\r\n" + nextLine;
 				}
 			}
 
 			//don't remove new lines from keywords
-			if(entry[1] == 'K1') {
+			if (entry[1] == 'K1') {
 				nextLine = "\r\n" + nextLine;
 			}
 
 			//check if we need to add a space
-			if(entry[2].substr(entry[2].length-1) != ' ') {
+			if (entry[2].substr(entry[2].length-1) != ' ') {
 				nextLine = ' ' + nextLine;
 			}
 
@@ -777,24 +777,24 @@ function doImport(attachments){
 	//skip to the first RT entry
 	do {
 		entry = getLine();
-	} while(entry && entry[1] != 'RT');
+	} while (entry && entry[1] != 'RT');
 
 	var item;
 	var i = -1; //item counter for attachments
-	while(entry) {
-		switch(entry[1]) {
+	while (entry) {
+		switch (entry[1]) {
 			//new item
 			case 'RT':
-				if(item) completeItem(item);
+				if (item) completeItem(item);
 				var type = exportedOptions.itemType || importTypeMap[entry[2].trim()];
-				if(!type) {
+				if (!type) {
 					type = DEFAULT_IMPORT_TYPE;
 					Z.debug("Unknown RW item type: " + entry[2] + ". Defaulting to " + type);
 				}
 				var item = getNewItem(type);
 				//add attachments
 				i++;
-				if(attachments && attachments[i]) {
+				if (attachments && attachments[i]) {
 					item.attachments = attachments[i];
 				}
 			break;
@@ -803,7 +803,7 @@ function doImport(attachments){
 		}
 		entry = getLine();
 	}
-	if(item) completeItem(item);
+	if (item) completeItem(item);
 }
 
 /********************
@@ -828,13 +828,13 @@ var newLineChar = "\r\n"; //from spec
 var exportFields = new TagMapper([fieldMap]);
 
 function addTag(tag, value) {
-	if(!(value instanceof Array)) value = [value];
+	if (!(value instanceof Array)) value = [value];
 
-	for(var i=0, n=value.length; i<n; i++) {
-		if(value[i] === undefined) return;
+	for (var i=0, n=value.length; i<n; i++) {
+		if (value[i] === undefined) return;
 		//don't export empty strings
 		var v = (value[i] + '').trim();
-		if(!v) continue;
+		if (!v) continue;
 
 		Zotero.write(tag + " " + v + newLineChar);
 	}
@@ -843,15 +843,15 @@ function addTag(tag, value) {
 function doExport() {
 	var item, order, tag, fields, field, value;
 
-	while(item = Zotero.nextItem()) {
+	while (item = Zotero.nextItem()) {
 		// can't store independent notes in RW
-		if(item.itemType == "note" || item.itemType == "attachment") {
+		if (item.itemType == "note" || item.itemType == "attachment") {
 			continue;
 		}
 
 		// type
 		var type = exportTypeMap[item.itemType];
-		if(!type) {
+		if (!type) {
 			type = DEFAULT_EXPORT_TYPE;
 			Z.debug("Unknown item type: " + item.itemType + ". Defaulting to " + type);
 		}
@@ -864,8 +864,8 @@ function doExport() {
 			other: []
 		};
 
-		for(var i=0, n=item.attachments.length; i<n; i++) {
-			switch(item.attachments[i].mimeType) {
+		for (var i=0, n=item.attachments.length; i<n; i++) {
+			switch (item.attachments[i].mimeType) {
 				case 'application/pdf':
 					attachments.PDF.push(item.attachments[i]);
 				break;
@@ -878,34 +878,34 @@ function doExport() {
 		}
 
 		order = exportOrder[item.itemType] || exportOrder["__default"];
-		for(var i=0, n=order.length; i<n; i++) {
+		for (var i=0, n=order.length; i<n; i++) {
 			tag = order[i];
 			//find the appropriate field to export for this item type
 			field = exportFields.getFields(item.itemType, tag)[0];
 
 			//if we didn't get anything, we don't need to export this tag for this item type
-			if(!field) continue;
+			if (!field) continue;
 
 			value = undefined;
 			//we can define fields that are nested (i.e. creators) using slashes
 			field = field.split('/');
 
 			//handle special cases based on item field
-			switch(field[0]) {
+			switch (field[0]) {
 				case "creators":
 					//according to spec, one author per line in the "Lastname, Firstname, Suffix" format
 					//Zotero does not store suffixes in a separate field
 					value = [];
 					var name;
-					for(var j=0, m=item.creators.length; j<m; j++) {
+					for (var j=0, m=item.creators.length; j<m; j++) {
 						name = [];
-						if(item.creators[j].creatorType == field[1]) {
+						if (item.creators[j].creatorType == field[1]) {
 							name.push(item.creators[j].lastName);
-							if(item.creators[j].firstName) name.push(item.creators[j].firstName);
+							if (item.creators[j].firstName) name.push(item.creators[j].firstName);
 							value.push(name.join(', '));
 						}
 					}
-					if(!value.length) value = undefined;
+					if (!value.length) value = undefined;
 				break;
 				case "notes":
 					value = item.notes.map(function(n) { return n.note.replace(/(?:\r\n?|\n)/g, "\r\n"); });
@@ -916,8 +916,8 @@ function doExport() {
 				case "attachments":
 					value = [];
 					var att = attachments[field[1]];
-					for(var j=0, m=att.length; j<m; j++) {
-						if(att[j].saveFile) {	//local file
+					for (var j=0, m=att.length; j<m; j++) {
+						if (att[j].saveFile) {	//local file
 							value.push(att[j].defaultPath);
 							att[j].saveFile(att[j].defaultPath);
 						} else {	//link to remote file
@@ -926,9 +926,9 @@ function doExport() {
 					}
 				break;
 				case "pages":
-					if(tag == "SP" && item.pages) {
+					if (tag == "SP" && item.pages) {
 						var m = item.pages.trim().match(/(.+?)[\u002D\u00AD\u2010-\u2015\u2212\u2E3A\u2E3B\s]+(.+)/);
-						if(m) {
+						if (m) {
 							addTag(tag, m[1]);
 							tag = "OP";
 							value = m[2];
@@ -940,10 +940,10 @@ function doExport() {
 			}
 
 			//handle special cases based on RW tag
-			switch(tag) {
+			switch (tag) {
 				case "YR":
 					var date = ZU.strToDate(item[field]);
-					if(date.year) {
+					if (date.year) {
 						value = ('000' + date.year).substr(-4); //since this is in export, this should not be a problem with MS JavaScript implementation of substr
 					} else {
 						value = item[field];
@@ -951,11 +951,11 @@ function doExport() {
 				break;
 				case "RD":
 					var date = ZU.strToDate(item[field]);
-					if(date.year) {
+					if (date.year) {
 						date.year = ('000' + date.year).substr(-4);
 						date.month = (date.month || date.month===0 || date.month==="0")?('0' + (date.month+1)).substr(-2):'';
 						date.day = date.day?('0' + date.day).substr(-2):'';
-						if(!date.part) date.part = '';
+						if (!date.part) date.part = '';
 	
 						value = date.year + '/' + date.month + '/' + date.day + '/' + date.part;
 					} else {

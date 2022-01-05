@@ -1,0 +1,131 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "mdy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "citekeyFormat": "[Auth:lower:replace=\\[-\\ \\].*,,regex:alphanum][year][Title:skipwords:replace=\\[-\\ \\].*,,regex:alphanum:lower]"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1007/978-3-030-45388-6_6",
+      "ISBN": "978-3-030-45388-6",
+      "abstractNote": "Recently, Beullens, Kleinjung, and Vercauteren (Asiacrypt\u201919) provided the first practical isogeny-based digital signature, obtained from the Fiat-Shamir (FS) paradigm. They worked with the CSIDH-512 parameters and passed through a new record class group computation. However, as with all standard FS signatures, the security proof is highly non-tight and the concrete parameters are set under the heuristic that the only way to attack the scheme is by finding collisions for a hash function.In this paper, we propose an FS-style signature scheme, called Lossy CSI-FiSh, constructed using the CSIDH-512 parameters and with a security proof based on the \u201cLossy Keys\u201d technique introduced by Kiltz, Lyubashevsky and Schaffner (Eurocrypt\u201918). Lossy CSI-FiSh is provably secure under the same assumption which underlies the security of the key exchange protocol CSIDH (Castryck et al. (Asiacrypt\u201918)) and is almost as efficient as CSI-FiSh. For instance, aiming for small signature size, our scheme is expected to take around \\approx 800\u2248800\\approx 800 ms to sign/verify while producing signatures of size \\approx 280\u2248280\\approx 280 bytes. This is only twice slower than CSI-FiSh while having similar signature size for the same parameter set. As an additional benefit, our scheme is by construction secure both in the classical and quantum random oracle model.",
+      "attachments": [
+      ],
+      "citationKey": "elkaafarani2020lossy",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Ali",
+          "lastName": "El Kaafarani"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Shuichi",
+          "lastName": "Katsumata"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Federico",
+          "lastName": "Pintore"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Aggelos",
+          "lastName": "Kiayias"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Markulf",
+          "lastName": "Kohlweiss"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Petros",
+          "lastName": "Wallden"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Vassilis",
+          "lastName": "Zikas"
+        }
+      ],
+      "date": "2020",
+      "itemID": 2,
+      "itemType": "conferencePaper",
+      "language": "en",
+      "libraryCatalog": "Springer Link",
+      "pages": "157-186",
+      "place": "Cham",
+      "publicationTitle": "Public-Key Cryptography \u2013 PKC 2020",
+      "publisher": "Springer International Publishing",
+      "series": "Lecture Notes in Computer Science",
+      "shortTitle": "Lossy CSI-FiSh",
+      "title": "Lossy CSI-FiSh: Efficient Signature Scheme with Tight Reduction to Decisional CSIDH-512"
+    },
+    {
+      "abstractNote": "We present the first general-purpose digital signature scheme based on supersingular elliptic curve isogenies secure against quantum adversaries in the quantum random oracle model with small key sizes. This scheme is an application of Unruh\u2019s construction of non-interactive zero-knowledge proofs to an interactive zero-knowledge proof proposed by De Feo, Jao, and Pl\u00fbt. We implement our proposed scheme on an x86-64 PC platform as well as an ARM-powered device. We exploit the state-of-the-art techniques to speed up the computations for general C and assembly. Finally, we provide timing results for real world applications.",
+      "accessDate": "2020-11-03T10:26:21Z",
+      "attachments": [
+      ],
+      "citationKey": "yoo2017postquantum",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Youngho",
+          "lastName": "Yoo"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Reza",
+          "lastName": "Azarderakhsh"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Amir",
+          "lastName": "Jalali"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "David",
+          "lastName": "Jao"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Vladimir",
+          "lastName": "Soukharev"
+        }
+      ],
+      "date": "2017",
+      "itemID": 1,
+      "itemType": "report",
+      "libraryCatalog": "ePrint IACR",
+      "number": "186",
+      "tags": [
+        {
+          "tag": "digital signatures",
+          "type": 1
+        },
+        {
+          "tag": "isogenies",
+          "type": 1
+        },
+        {
+          "tag": "post-quantum cryptography",
+          "type": 1
+        },
+        {
+          "tag": "public-key cryptography",
+          "type": 1
+        }
+      ],
+      "title": "A Post-Quantum Digital Signature Scheme Based on Supersingular Isogenies",
+      "url": "http://eprint.iacr.org/2017/186"
+    }
+  ]
+}

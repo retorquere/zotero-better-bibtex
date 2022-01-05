@@ -1,67 +1,16 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
-      "ascii": "",
-      "asciiBibLaTeX": false,
       "asciiBibTeX": false,
-      "autoAbbrev": false,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
-      "autoExport": "immediate",
-      "autoExportDelay": 1,
-      "autoExportIdleWait": 10,
-      "autoPin": false,
-      "auxImport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[zotero:clean][firstpage:prefix=_]",
-      "citeprocNoteCitekey": false,
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "exportTitleCase": true,
-      "git": "config",
-      "itemObserverDelay": 100,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "keyScope": "library",
-      "kuroshiro": false,
-      "parseParticles": true,
-      "postscript": "",
-      "qualityReport": false,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "rawLaTag": "#LaTeX",
-      "relativeFilePaths": false,
-      "scrubDatabase": false,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.1.58",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.61",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "de",
-        "oscpu": "Linux x86_64",
-        "platform": "Linux x86_64",
-        "version": "5.0.61"
-      }
+      "itemObserverDelay": 100
     }
   },
   "items": [
@@ -70,8 +19,6 @@
       "ISSN": "0039-6028",
       "abstractNote": "The adsorption site of pyridine (C5H5N) on Ni{111} has been investigated by scanned-energy mode photoelectron diffraction using the N 1s core level. It was found that the nitrogen atom adsorbs close to the atop position with an angle of 18\u00b0( + 2\u00b0\u2212 4\u00b0) between the N\ue5f8Ni bond and the surface normal. The N\ue5f8Ni bond length is 1.97 \u00b1 0.03 \u00c5. Since recent X-ray absorption studies show that the \u03c0 system of the pyridine is also tilted by about 20\u00b0 away from the surface normal, we conclude that the N\ue5f8Ni bond and the ring plane are co-planar.",
       "accessDate": "2018-07-17T09:51:47Z",
-      "attachments": [],
-      "citekey": "fritzsche_adsorption_1994",
       "creators": [
         {
           "creatorType": "author",
@@ -115,23 +62,22 @@
         }
       ],
       "date": "November 1, 1994",
-      "dateAdded": "2018-07-17T09:51:48Z",
-      "dateModified": "2018-07-24T17:02:18Z",
       "issue": "1",
-      "itemID": 22561,
+      "itemID": 1,
       "itemType": "journalArticle",
       "journalAbbreviation": "Surf. Sci.",
       "libraryCatalog": "ScienceDirect",
-      "notes": [],
       "pages": "L1-L6",
       "publicationTitle": "Surface Science",
-      "relations": [],
       "tags": [
-        "pyridine",
-        "Ni(111)"
+        {
+          "tag": "Ni(111)"
+        },
+        {
+          "tag": "pyridine"
+        }
       ],
       "title": "The adsorption site of pyridine on Ni{111} determined by low-energy photoelectron diffraction",
-      "uri": "http://zotero.org/users/408871/items/Q2IHTUR7",
       "url": "http://www.sciencedirect.com/science/article/pii/0039602894905592",
       "volume": "319"
     },
@@ -140,8 +86,6 @@
       "ISSN": "0039-6028",
       "abstractNote": "The adsorption site of pyridine (C5H5N) on Ni{111} has been investigated by scanned-energy mode photoelectron diffraction using the N 1s core level. It was found that the nitrogen atom adsorbs close to the atop position with an angle of 18\u00b0( + 2\u00b0\u2212 4\u00b0) between the N\ue5f8Ni bond and the surface normal. The N\ue5f8Ni bond length is 1.97 \u00b1 0.03 \u00c5. Since recent X-ray absorption studies show that the \u03c0 system of the pyridine is also tilted by about 20\u00b0 away from the surface normal, we conclude that the N\ue5f8Ni bond and the ring plane are co-planar.",
       "accessDate": "2018-07-17T09:51:47Z",
-      "attachments": [],
-      "citekey": "fritzsche_adsorption_1994",
       "creators": [
         {
           "creatorType": "author",
@@ -185,23 +129,22 @@
         }
       ],
       "date": "November 1, 1994",
-      "dateAdded": "2018-07-17T09:51:48Z",
-      "dateModified": "2018-07-24T17:02:18Z",
       "issue": "1",
-      "itemID": 22561,
+      "itemID": 2,
       "itemType": "journalArticle",
       "journalAbbreviation": "Surf. Sci.",
       "libraryCatalog": "ScienceDirect",
-      "notes": [],
       "pages": "L1\u2013L6",
       "publicationTitle": "Surface Science",
-      "relations": [],
       "tags": [
-        "pyridine",
-        "Ni(111)"
+        {
+          "tag": "Ni(111)"
+        },
+        {
+          "tag": "pyridine"
+        }
       ],
       "title": "The adsorption site of pyridine on Ni{111} determined by low-energy photoelectron diffraction",
-      "uri": "http://zotero.org/users/408871/items/Q2IHTUR7",
       "url": "http://www.sciencedirect.com/science/article/pii/0039602894905592",
       "volume": "319"
     }

@@ -1,16 +1,27 @@
 declare const Zotero: any
 
+import { log } from '../content/logger'
+
+const toWordsOrdinal = require('number-to-words/src/toWordsOrdinal')
+function edition(n: string | number): string {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  if (typeof n === 'number' || (typeof n === 'string' && n.match(/^[0-9]+$/))) return toWordsOrdinal(n).replace(/^\w/, (c: string) => c.toUpperCase())
+  return n
+}
+import wordsToNumbers from 'words-to-numbers'
+
 import { Translator } from './lib/translator'
 export { Translator }
 
 import { Reference } from './bibtex/reference'
 import { Exporter } from './bibtex/exporter'
-import { debug } from './lib/debug'
 import * as escape from '../content/escape'
 
 import * as bibtexParser from '@retorquere/bibtex-parser'
-import { valid } from '../gen/itemfields'
+import { valid, label } from '../gen/items/items'
 import { arXiv } from '../content/arXiv'
+
+import { babelLanguage } from '../content/text'
 
 Reference.prototype.caseConversion = {
   title: true,
@@ -26,6 +37,7 @@ Reference.prototype.caseConversion = {
 }
 
 Reference.prototype.fieldEncoding = {
+  groups: 'verbatim', // blegh jabref field
   url: 'verbatim',
   doi: 'verbatim',
   // school: 'literal'
@@ -35,25 +47,90 @@ Reference.prototype.fieldEncoding = {
   address: 'literal',
 }
 
-Reference.prototype.lint = function(explanation) {
-  const required = {
-    inproceedings: [ 'author', 'booktitle', 'pages', 'publisher', 'title', 'year' ],
-    article: [ 'author', 'journal', 'number', 'pages', 'title', 'volume', 'year' ],
-    techreport: [ 'author', 'institution', 'title', 'year' ],
-    incollection: [ 'author', 'booktitle', 'pages', 'publisher', 'title', 'year' ],
-    book: [ 'author', 'publisher', 'title', 'year' ],
-    inbook: [ 'author', 'booktitle', 'pages', 'publisher', 'title', 'year' ],
-    proceedings: [ 'editor', 'publisher', 'title', 'year' ],
-    phdthesis: [ 'author', 'school', 'title', 'year' ],
-    mastersthesis: [ 'author', 'school', 'title', 'year' ],
-    electronic: [ 'author', 'title', 'url', 'year' ],
-    misc: [ 'author', 'howpublished', 'title', 'year' ],
+const lint: Record<string, {required: string[], optional: string[]}> = {
+  article: {
+    required: [ 'author', 'title', 'journal', 'year' ],
+    optional: [ 'volume', 'number', 'pages', 'month', 'note', 'key' ],
+  },
+  book: {
+    required: ['author/editor', 'title', 'publisher', 'year' ],
+    optional: [ 'volume/number', 'series', 'address', 'edition', 'month', 'note', 'key' ],
+  },
+  booklet: {
+    required: [ 'title' ],
+    optional: [ 'author', 'howpublished', 'address', 'month', 'year', 'note', 'key' ],
+  },
+  inbook: {
+    required: [ 'author/editor', 'title', 'chapter/pages', 'publisher', 'year' ],
+    optional: [ 'volume/number', 'series', 'type', 'address', 'edition', 'month', 'note', 'key' ],
+  },
+  incollection: {
+    required: [ 'author', 'title', 'booktitle', 'publisher', 'year' ],
+    optional:  [ 'editor', 'volume/number', 'series', 'type', 'chapter', 'pages', 'address', 'edition', 'month', 'note', 'key' ],
+  },
+  inproceedings: {
+    required: [ 'author', 'title', 'booktitle', 'year' ],
+    optional: [ 'editor', 'volume/number', 'series', 'pages', 'address', 'month', 'organization', 'publisher', 'note', 'key' ],
+  },
+  manual: {
+    required: [ 'title' ],
+    optional: [ 'author', 'organization', 'address', 'edition', 'month', 'year', 'note', 'key' ],
+  },
+  mastersthesis: {
+    required: [ 'author', 'title', 'school', 'year' ],
+    optional: [ 'type', 'address', 'month', 'note', 'key' ],
+  },
+  misc: {
+    required: [],
+    optional: [ 'author', 'title', 'howpublished', 'month', 'year', 'note', 'key' ],
+  },
+  phdthesis: {
+    required: [ 'author', 'title', 'school', 'year' ],
+    optional: [ 'type', 'address', 'month', 'note', 'key' ],
+  },
+  proceedings: {
+    required: ['title', 'year' ],
+    optional: [ 'editor', 'volume/number', 'series', 'address', 'month', 'organization', 'publisher', 'note', 'key' ],
+  },
+  techreport: {
+    required: [ 'author', 'title', 'institution', 'year' ],
+    optional: [ 'type', 'number', 'address', 'month', 'note', 'key' ],
+  },
+  unpublished: {
+    required: [ 'author', 'title', 'note' ],
+    optional: [ 'month', 'year', 'key' ],
+  },
+}
+lint.conference = lint.inproceedings
+
+Reference.prototype.lint = function(_explanation) {
+  const type = lint[this.referencetype.toLowerCase()]
+  if (!type) return
+
+  log.debug('lint:', type)
+
+  // let fields = Object.keys(this.has)
+  const warnings: string[] = []
+
+  for (const required of type.required) {
+    const match = required.split('/').find(field => this.has[field])
+    if (match) {
+      // fields = fields.filter(field => field !== match)
+    }
+    else {
+      warnings.push(`Missing required field '${required}'`)
+    }
   }
 
-  const fields = required[this.referencetype.toLowerCase()]
-  if (!fields) return
+  // bibtex is so incredibly lax, forget about optionals-checking
+  /*
+  for (const field of fields) {
+    if (!type.optional.find(allowed => allowed.split('/').includes(field))) warnings.push(`Unexpected field '${field}'`)
+  }
+  */
+  log.debug('lint:', warnings)
 
-  return fields.map(field => this.has[field] ? '' : `Missing required field '${field}'`).filter(msg => msg)
+  return warnings
 }
 
 Reference.prototype.addCreators = function() {
@@ -68,10 +145,19 @@ Reference.prototype.addCreators = function() {
 
   for (const creator of this.item.creators) {
     switch (creator.creatorType) {
-      case 'editor': case 'seriesEditor': editors.push(creator); break
-      case 'translator':                  translators.push(creator); break
-      case primaryCreatorType:            authors.push(creator); break
-      default:                            collaborators.push(creator)
+      case 'editor':
+      case 'seriesEditor':
+        editors.push(creator)
+        break
+      case 'translator':
+        translators.push(creator)
+        break
+      case primaryCreatorType:
+        authors.push(creator)
+        break
+      default:
+        collaborators.push(creator)
+        break
     }
   }
 
@@ -164,7 +250,7 @@ Reference.prototype.typeMap = {
 
 const months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
 
-export function doExport() {
+export function doExport(): void {
   Translator.init('export')
   Reference.installPostscript()
   Exporter.prepare_strings()
@@ -172,42 +258,48 @@ export function doExport() {
   // Zotero.write(`\n% ${Translator.header.label}\n`)
   Zotero.write('\n')
 
-  let item: ISerializedItem
-  while (item = Exporter.nextItem()) {
+  for (const item of Exporter.items) {
     const ref = new Reference(item)
+    if (item.itemType === 'report' && item.type?.toLowerCase().includes('manual')) ref.referencetype = 'manual'
+    if (['zotero.bookSection', 'csl.chapter', 'tex.chapter'].includes(ref.referencetype_source) && ref.hasCreator('bookAuthor')) ref.referencetype = 'inbook'
 
     ref.add({name: 'address', value: item.place})
     ref.add({name: 'chapter', value: item.section})
-    ref.add({name: 'edition', value: item.edition})
+    ref.add({name: 'edition', value: edition(item.edition)})
     ref.add({name: 'type', value: item.type})
     ref.add({name: 'series', value: item.series, bibtexStrings: true})
     ref.add({name: 'title', value: item.title})
-    ref.add({name: 'volume', value: item.volume})
     ref.add({name: 'copyright', value: item.rights})
     ref.add({name: 'isbn', value: item.ISBN})
     ref.add({name: 'issn', value: item.ISSN})
     ref.add({name: 'lccn', value: item.callNumber})
     ref.add({name: 'shorttitle', value: item.shortTitle})
-    ref.add({name: 'abstract', value: item.abstractNote})
+    ref.add({name: 'abstract', value: item.abstractNote?.replace(/\n+/g, ' ')})
     ref.add({name: 'nationality', value: item.country})
-    ref.add({name: 'language', value: item.language})
+    ref.add({name: 'langid', value: babelLanguage(item.language) }) // help explain why bracing is weird on bibtex
     ref.add({name: 'assignee', value: item.assignee})
 
-    ref.add({ name: 'number', value: item.number || item.issue || item.seriesNumber })
+    // this needs to be order volume - number for #1475
+    ref.add({name: 'volume', value: ref.normalizeDashes(item.volume) })
+    if (!['book', 'inbook', 'incollection', 'proceedings', 'inproceedings'].includes(ref.referencetype) || !ref.has.volume) ref.add({ name: 'number', value: item.number || item.issue || item.seriesNumber })
     ref.add({ name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') })
 
-    if (['bookSection', 'conferencePaper', 'chapter'].includes(item.referenceType)) {
+    if (['zotero.bookSection', 'zotero.conferencePaper', 'tex.chapter', 'csl.chapter'].includes(ref.referencetype_source)) {
       ref.add({ name: 'booktitle', value: item.publicationTitle || item.conferenceName, bibtexStrings: true })
 
-    } else if (ref.isBibString(item.publicationTitle)) {
+    }
+    else if (ref.getBibString(item.publicationTitle)) {
       ref.add({ name: 'journal', value: item.publicationTitle, bibtexStrings: true })
 
-    } else {
+    }
+    else {
       ref.add({ name: 'journal', value: (Translator.options.useJournalAbbreviation && item.journalAbbreviation) || item.publicationTitle, bibtexStrings: true })
 
     }
 
-    switch (item.referenceType) {
+    let reftype = ref.referencetype_source.split('.')[1]
+    if (reftype.endsWith('thesis')) reftype = 'thesis' // # 1965
+    switch (reftype) {
       case 'thesis':
         ref.add({ name: 'school', value: item.publisher, bibtexStrings: true })
         break
@@ -225,53 +317,80 @@ export function doExport() {
         break
     }
 
-    const doi = item.extraFields.csl.DOI || item.DOI
-    let url = null
+    const doi = item.DOI || item.extraFields.kv.DOI
+    let urlfield = null
     if (Translator.preferences.DOIandURL === 'both' || !doi) {
       switch (Translator.preferences.bibtexURL) {
         case 'url':
-          url = ref.add({ name: 'url', value: item.extraFields.csl.URL || item.url })
+        case 'url-ish':
+          urlfield = ref.add({ name: 'url', value: item.url || item.extraFields.kv.url, enc: Translator.verbatimFields.includes('url') ? 'url' : 'latex' })
           break
 
         case 'note':
-          url = ref.add({ name: (['misc', 'booklet'].includes(ref.referencetype) && !ref.has.howpublished ? 'howpublished' : 'note'), value: item.extraFields.csl.URL || item.url, enc: 'url' })
+        case 'note-url-ish':
+          urlfield = ref.add({ name: (['misc', 'booklet'].includes(ref.referencetype) && !ref.has.howpublished ? 'howpublished' : 'note'), value: item.url || item.extraFields.kv.url, enc: 'url' })
           break
 
         default:
-          if (['webpage', 'post', 'post-weblog'].includes(item.referenceType)) url = ref.add({ name: 'howpublished', value: item.extraFields.csl.URL || item.url })
+          if (['csl.webpage', 'zotero.webpage', 'csl.post', 'csl.post-weblog'].includes(ref.referencetype_source)) urlfield = ref.add({ name: 'howpublished', value: item.url || item.extraFields.kv.url })
           break
       }
     }
-    if (Translator.preferences.DOIandURL === 'both' || !url) ref.add({ name: 'doi', value: doi })
+    if (Translator.preferences.DOIandURL === 'both' || !urlfield) ref.add({ name: 'doi', value: (doi || '').replace(/^https?:\/\/doi.org\//i, '') })
 
-    if (item.referenceType === 'thesis' && ['mastersthesis', 'phdthesis'].includes(item.type)) {
-      ref.referencetype = item.type
-      ref.remove('type')
+    if (ref.referencetype_source.split('.')[1] === 'thesis') {
+      const thesistype = ref.thesistype(item.type, 'phdthesis', 'mastersthesis')
+      if (thesistype) {
+        ref.referencetype = thesistype
+        ref.remove('type')
+      }
     }
 
+    // #1471 and http://ctan.cs.uu.nl/biblio/bibtex/base/btxdoc.pdf: organization The organization that sponsors a conference or that publishes a manual.
+    if (ref.referencetype === 'inproceedings') {
+      const sponsors = []
+      item.creators = item.creators.filter(creator => {
+        if (creator.creatorType !== 'sponsor') return true
+
+        let sponsor = creator.source
+        sponsor = sponsor.replace(/ and /g, ' {and} ')
+        if (Translator.and.names.repl !== ' {and} ') sponsor = sponsor.replace(Translator.and.names.re, Translator.and.names.repl)
+
+        sponsors.push(sponsor)
+        return false
+      })
+      ref.add({ name: 'organization', value: sponsors.join(Translator.preferences.separatorList) })
+    }
     ref.addCreators()
+    // #1541
+    if (ref.referencetype === 'inbook' && ref.has.author && ref.has.editor) delete ref.has.editor
 
-    if (item.date) {
-      const date = Zotero.BetterBibTeX.parseDate(item.date)
-      switch ((date || {}).type || 'verbatim') {
-        case 'verbatim':
-          ref.add({ name: 'year', value: item.date })
-          break
+    switch (ref.date.type) {
+      case 'verbatim':
+        ref.add({ name: 'year', value: ref.date.verbatim })
+        break
 
-        case 'interval':
-          if (date.from.month) ref.add({ name: 'month', value: months[date.from.month - 1], bare: true })
-          ref.add({ name: 'year', value: `${date.from.year}` })
-          break
+      case 'interval':
+        if (ref.date.from.month) ref.add({ name: 'month', value: months[ref.date.from.month - 1], bare: true })
+        ref.add({ name: 'year', value: `${ref.date.from.year}` })
+        break
 
-        case 'date':
-          if (date.month) ref.add({ name: 'month', value: months[date.month - 1], bare: true })
-          if (date.orig?.type === 'date') {
-            ref.add({ name: 'year', value: `[${date.orig.year}] ${date.year}` })
-          } else {
-            ref.add({ name: 'year', value: `${date.year}` })
-          }
-          break
-      }
+      case 'date':
+        if (ref.date.month) ref.add({ name: 'month', value: months[ref.date.month - 1], bare: true })
+        if (ref.date.orig?.type === 'date') {
+          ref.add({ name: 'year', value: `[${ref.date.orig.year}] ${ref.date.year}` })
+        }
+        else {
+          ref.add({ name: 'year', value: `${ref.date.year}` })
+        }
+        break
+
+      case 'season':
+        ref.add({ name: 'year', value: ref.date.year })
+        break
+
+      default:
+        log.debug('Unexpected date type', { date: item.date, parsed: ref.date })
     }
 
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
@@ -279,6 +398,7 @@ export function doExport() {
     ref.add({ name: 'pages', value: ref.normalizeDashes(item.pages) })
 
     ref.add({ name: 'file', value: item.attachments, enc: 'attachments' })
+
     ref.complete()
   }
 
@@ -286,16 +406,21 @@ export function doExport() {
   Zotero.write('\n')
 }
 
-export async function detectImport() {
-  const input = Zotero.read(102400) // tslint:disable-line:no-magic-numbers
-  const bib = await bibtexParser.chunker(input, { max_entries: 1, async: true })
-  return bib.find(chunk => chunk.entry)
+export function detectImport(): boolean {
+  let detected = (Zotero.getHiddenPref('better-bibtex.import') as boolean)
+  if (detected) {
+    const input = Zotero.read(102400) // eslint-disable-line no-magic-numbers
+    const bib = bibtexParser.chunker.parse(input, { max_entries: 1 })
+    detected = !!bib.find(chunk => chunk.entry)
+  }
+  return detected
 }
 
 function importGroup(group, itemIDs, root = null) {
   const collection = new Zotero.Collection()
   collection.type = 'collection'
   collection.name = group.name
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   collection.children = group.entries.filter(citekey => itemIDs[citekey]).map(citekey => ({type: 'item', id: itemIDs[citekey]}))
 
   for (const subgroup of group.groups || []) {
@@ -303,6 +428,7 @@ function importGroup(group, itemIDs, root = null) {
   }
 
   if (root) collection.complete()
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return collection
 }
 
@@ -310,26 +436,40 @@ class ZoteroItem {
   protected item: any
 
   private typeMap = {
-    book:           'book',
-    booklet:        'book',
-    manual:         'book',
-    proceedings:    'book',
-    collection:     'book',
-    incollection:   'bookSection',
-    inbook:         'bookSection',
-    inreference:    'encyclopediaArticle',
-    article:        'journalArticle',
-    misc:           'journalArticle',
-    phdthesis:      'thesis',
-    mastersthesis:  'thesis',
-    thesis:         'thesis',
-    unpublished:    'manuscript',
-    patent:         'patent',
-    inproceedings:  'conferencePaper',
-    conference:     'conferencePaper',
-    techreport:     'report',
-    report:         'report',
-    online:         'webpage',
+    article:            'journalArticle',
+    book:               'book',
+    book_section:       'bookSection', // mendeley made-up entry type
+    booklet:            'book',
+    codefragment:       'computerProgram',
+    collection:         'book',
+    conference:         'conferencePaper',
+    film:               'film', // mendeley made-up entry type
+    generic:            'journalArticle', // mendeley made-up entry type
+    inbook:             'bookSection',
+    incollection:       'bookSection',
+    inproceedings:      'conferencePaper',
+    inreference:        'encyclopediaArticle',
+    magazine_article:   'magazineArticle', // mendeley made-up entry type
+    manual:             'report',
+    mastersthesis:      'thesis',
+    movie:              'film',
+    misc:               'document',
+    newspaper_article:  'newspaperArticle', // mendeley made-up entry type
+    online:             'webpage',
+    patent:             'patent',
+    phdthesis:          'thesis',
+    proceedings:        'book',
+    report:             'report',
+    software:           'computerProgram',
+    softwaremodule:     'computerProgram',
+    softwareversion:    'computerProgram',
+    talk:               'presentation',
+    techreport:         'report',
+    thesis:             'thesis',
+    unpublished:        'manuscript',
+    video:              'film',
+    web_page:           'webpage', // mendeley made-up entry type
+    webpage:            'webpage', // papers3 made-up entry type
   }
 
   private type: string
@@ -337,13 +477,12 @@ class ZoteroItem {
   private eprint: { [key: string]: string } = {}
   private validFields: Record<string, boolean>
   private numberPrefix: string
-  private english = 'English'
 
   constructor(private id: number, private bibtex: any, private jabref, private errors: bibtexParser.ParseError[]) {
     this.bibtex.type = this.bibtex.type.toLowerCase()
     this.type = this.typeMap[this.bibtex.type]
     if (!this.type) {
-      this.errors.push({ message: `Don't know what Zotero type to make of '${this.bibtex.type}' for ${this.bibtex.key ? '@' + this.bibtex.key : 'unnamed item'}, importing as ${this.type = 'journalArticle'}` })
+      this.errors.push({ message: `Don't know what Zotero type to make of '${this.bibtex.type}' for ${this.bibtex.key ? `@${this.bibtex.key}` : 'unnamed item'}, importing as ${this.type = 'document'}` })
       this.hackyFields.push(`tex.referencetype: ${this.bibtex.type}`)
     }
     if (this.type === 'book' && (this.bibtex.fields.title || []).length && (this.bibtex.fields.booktitle || []).length) this.type = 'bookSection'
@@ -353,12 +492,14 @@ class ZoteroItem {
     this.validFields = valid.field[this.type]
 
     if (!Object.keys(this.bibtex.fields).length) {
-      this.errors.push({ message: `No fields in ${this.bibtex.key ? '@' + this.bibtex.key : 'unnamed item'}` })
+      this.errors.push({ message: `No fields in ${this.bibtex.key ? `@${this.bibtex.key}` : 'unnamed item'}` })
       this.item = null
 
-    } else {
+    }
+    else {
       this.item = new Zotero.Item(this.type)
       this.item.itemID = this.id
+      if (this.type === 'report' && this.bibtex.type === 'manual') this.$type('manual')
 
       this.import()
 
@@ -373,31 +514,44 @@ class ZoteroItem {
     if (this.item) await this.item.complete()
   }
 
-  protected $title(value) {
-    let title = this.bibtex.fields.title
+  private fallback(fields, value) {
+    const field = fields.find(f => label[f])
+    if (field) {
+      this.hackyFields.push(`${label[field]}: ${value.replace(/\n+/g, '')}`)
+      return true
+    }
+    return false
+  }
+
+  protected $title(_value) {
+    let title = []
+    if (this.bibtex.fields.title) title = title.concat(this.bibtex.fields.title)
     if (this.bibtex.fields.titleaddon) title = title.concat(this.bibtex.fields.titleaddon)
     if (this.bibtex.fields.subtitle) title = title.concat(this.bibtex.fields.subtitle)
 
     if (this.type === 'encyclopediaArticle') {
-      this.item.publicationTitle = title.join(' - ')
-    } else {
-      this.item.title = title.join(' - ')
+      this.item.publicationTitle = title.join('. ')
+    }
+    else {
+      this.item.title = title.join('. ')
     }
     return true
   }
-  protected $titleaddon(value) { return true } // handled by $title
-  protected $subtitle(value) { return true } // handled by $title
+  protected $titleaddon(value) { return this.$title(value) }
+  protected $subtitle(value) { return this.$title(value) }
 
-  protected $holder(value, field) {
+  protected $holder(_value, _field) {
     if (this.item.itemType === 'patent') {
-      this.item.assignee = this.bibtex.fields.holder.map(name => name.replace(/"/g, '')).join('; ')
+      this.item.assignee = this.bibtex.fields.holder.map((name: string) => name.replace(/"/g, '')).join('; ')
     }
     return true
   }
 
   protected $publisher(value, field) {
-    field = [field].concat(['institution', 'publisher']).find(f => this.validFields[f]) // difference between jurism and zotero. Prepending 'field' makes the import prefer exact matches to the input
-    if (!field) return false
+    // difference between jurism and zotero. Prepending 'field' makes the import prefer exact matches to the input
+    const candidates = [field].concat(['institution', 'publisher'])
+    field = candidates.find(f => this.validFields[f])
+    if (!field) return this.fallback(candidates, value)
 
     this.item[field] = [
       (this.bibtex.fields.publisher || []).join(' and '),
@@ -410,7 +564,9 @@ class ZoteroItem {
   protected $institution(value, field) { return this.$publisher(value, field) }
   protected $school(value, field) { return this.$publisher(value, field) }
 
-  protected $address(value) { return this.set('place', value) }
+  protected $address(value) {
+    return this.set('place', value, ['place'])
+  }
   protected $location(value) {
     if (this.type === 'conferencePaper') {
       this.hackyFields.push(`Place: ${value.replace(/\n+/g, '')}`)
@@ -420,7 +576,12 @@ class ZoteroItem {
     return this.$address(value)
   }
 
-  protected $edition(value) { return this.set('edition', value) }
+  protected $edition(value) {
+    value = value.replace(/^([0-9]+)(nd|th)$/, '$1')
+    const numbers = wordsToNumbers(value)
+    if (typeof numbers === 'number' || (typeof numbers === 'string' && numbers && !numbers.match(/\w/))) value = numbers
+    return this.set('edition', value)
+  }
 
   protected $isbn(value) { return this.set('ISBN', value) }
 
@@ -436,59 +597,93 @@ class ZoteroItem {
         break
     }
 
-    return false
+    return this.fallback(['booktitle'], value)
   }
 
   protected $journaltitle() {
-    let journal, abbr = null
+    let journal: { field: string, value: string}, abbr: { field: string, value: string} = null
 
-    if (this.bibtex.fields['journal-full']) { // bibdesk
-      journal = this.bibtex.fields['journal-full'][0]
-      if (this.bibtex.fields.journal) {
-        abbr = this.bibtex.fields.journal[0]
-      } else if (this.bibtex.fields.journaltitle) {
-        abbr = this.bibtex.fields.journaltitle[0]
-      }
-      if (abbr === journal) abbr = null
+    // journal-full is bibdesk
+    const titles = [ 'journal-full', 'journal', 'journaltitle', 'shortjournal' ].map(field => {
+      const value = this.bibtex.fields[field]?.[0] || ''
+      delete this.bibtex.fields[field] // this makes sure we're not ran again
+      return { field, value }
+    })
+      .filter(candidate => candidate.value) // skip empty
+      .filter(candidate => {
+        if (!abbr && candidate.field === 'shortjournal') { // shortjournal is assumed to be an abbrev
+          abbr = candidate
+          return false
+        }
+        return true
+      })
+      .filter(candidate => {
+        // to be considered an abbrev, it must have at least two periods, and there can be no periods that are not followed by a space, and no spaced that are not preceded by a period
+        const assumed_abbrev = candidate.value.match(/[.].+[.]/) && !candidate.value.match(/[.][^ ]/) && !candidate.value.match(/[^.] /)
+        if (assumed_abbrev) {
+          if (!abbr) {
+            abbr = candidate
+            return false
+          }
+        }
+        else if (!journal) { // first title is assumed to be the journal title
+          journal = candidate
+          return false
+        }
+        return true
+      }).filter(candidate => {
+        if (!abbr) {
+          abbr = candidate
+          return false
+        }
+        return true
+      })
 
-      if (abbr && this.validFields.journalAbbreviation) {
-        this.item.journalAbbreviation = abbr
-      }
-
-    } else if (this.bibtex.fields.journal) {
-      journal = this.bibtex.fields.journal[0]
-
-    } else if (this.bibtex.fields.journaltitle) {
-      journal = this.bibtex.fields.journaltitle[0]
-
+    for (const candidate of titles) {
+      this.hackyFields.push(`tex.${candidate.field}: ${candidate.value}`)
     }
 
-    switch (this.type) {
-      case 'conferencePaper':
-        this.set('series', journal)
-        break
+    if (journal) {
+      switch (this.type) {
+        case 'conferencePaper':
+          this.set('series', journal.value)
+          break
 
-      default:
-        this.set('publicationTitle', journal)
-        break
+        default:
+          this.set('publicationTitle', journal.value)
+          break
+      }
+    }
+
+    if (abbr) {
+      if (this.validFields.journalAbbreviation) {
+        this.item.journalAbbreviation = abbr.value
+      }
+      else if (!this.hackyFields.find(line => line.startsWith('Journal abbreviation:'))) {
+        this.hackyFields.push(`Journal abbreviation: ${abbr.value}`)
+      }
+      else {
+        this.hackyFields.push(`tex.${abbr.field}: ${abbr.value}`)
+      }
     }
 
     return true
   }
   protected $journal() { return this.$journaltitle() }
+  protected $shortjournal() { return this.$journaltitle() }
   protected '$journal-full'() { return this.$journaltitle() }
 
   protected $pages(value) {
-    for (const field of ['pages', 'numPages']) {
-      if (!this.validFields[field]) continue
-
-      this.set(field, value.replace(/\u2013/g, '-'))
-      return true
-    }
-
-    return false
+    if (!this.validFields.pages) return this.fallback(['pages'], value)
+    this.set('pages', value)
+    return true
   }
-  protected $pagetotal(value) { return this.$pages(value) }
+  protected $pagetotal(value) {
+    if (!this.validFields.numPages) return this.fallback(['numPages'], value)
+    this.set('numPages', value)
+    return true
+  }
+  protected $numpages(value, _field) { return this.$pagetotal(value) }
 
   protected $volume(value) { return this.set('volume', value) }
 
@@ -496,11 +691,11 @@ class ZoteroItem {
 
   protected $abstract(value) { return this.set('abstractNote', value) }
 
-  protected $keywords(value) {
+  protected $keywords(_value) {
     let tags = this.bibtex.fields.keywords || []
     tags = tags.concat(this.bibtex.fields.keyword || [])
     for (const mesh of this.bibtex.fields.mesh || []) {
-      tags = tags.concat((mesh || '').trim().split(/\s*;\s*/).filter(tag => tag))
+      tags = tags.concat((mesh || '').trim().split(/\s*;\s*/).filter(tag => tag)) // eslint-disable-line @typescript-eslint/no-unsafe-return
     }
     tags = tags.sort()
     tags = tags.filter((item, pos, ary) => !pos || (item !== ary[pos - 1]))
@@ -511,7 +706,7 @@ class ZoteroItem {
   protected $keyword(value) { return this.$keywords(value) }
   protected $mesh(value) { return this.$keywords(value) } // bibdesk
 
-  protected $date(value) {
+  protected $date(_value) {
     if (this.item.date) return true
 
     const dates = (this.bibtex.fields.date || []).slice()
@@ -520,19 +715,23 @@ class ZoteroItem {
 
     let month = (this.bibtex.fields.month && this.bibtex.fields.month[0]) || ''
     const monthno = months.indexOf(month.toLowerCase())
-    if (monthno >= 0) month = `0${monthno + 1}`.slice(-2) // tslint:disable-line no-magic-numbers
+    if (monthno >= 0) month = `0${monthno + 1}`.slice(-2) // eslint-disable-line no-magic-numbers
 
     const day = (this.bibtex.fields.day && this.bibtex.fields.day[0]) || ''
 
     if (year && month.match(/^[0-9]+$/) && day.match(/^[0-9]+$/)) {
       dates.push(`${year}-${month}-${day}`)
-    } else if (year && month.match(/^[0-9]+$/)) {
+    }
+    else if (year && month.match(/^[0-9]+$/)) {
       dates.push(`${year}-${month}`)
-    } else if (year && month && day) {
+    }
+    else if (year && month && day) {
       dates.push(`${day} ${month} ${year}`)
-    } else if (year && month) {
+    }
+    else if (year && month) {
       dates.push(`${month} ${year}`)
-    } else if (year) {
+    }
+    else if (year) {
       dates.push(year)
     }
 
@@ -556,6 +755,7 @@ class ZoteroItem {
       '\u0013': '\\',
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     for (const record of value.replace(/\\[\\;:]/g, escaped => replace[escaped]).split(';')) {
       const att = {
         mimeType: '',
@@ -563,25 +763,28 @@ class ZoteroItem {
         title: '',
       }
 
+      // eslint-disable-next-line no-control-regex, @typescript-eslint/no-unsafe-return
       const parts = record.split(':').map(str => str.replace(/[\u0011\u0012\u0013]/g, escaped => replace[escaped]))
       switch (parts.length) {
         case 1:
           att.path = parts[0]
           break
 
-        case 3: // tslint:disable-line:no-magic-numbers
+        case 3: // eslint-disable-line no-magic-numbers
           att.title = parts[0]
           att.path = parts[1]
-          att.mimeType = parts[2] // tslint:disable-line:no-magic-numbers
+          att.mimeType = parts[2] // eslint-disable-line no-magic-numbers
           break
 
         default:
-          debug(`Unexpected number of parts in file record '${record}': ${parts.length}`)
+          log.error(`attachment import: Unexpected number of parts in file record '${record}': ${parts.length}`)
+          // might be absolute windows path, just make Zotero try
+          att.path = parts.join(':')
           break
       }
 
       if (!att.path) {
-        debug(`file record '${record}' has no file path`)
+        log.debug(`attachment import: file record '${record}' has no file path`)
         continue
       }
 
@@ -601,6 +804,26 @@ class ZoteroItem {
     return true
   }
 
+  protected $license(value) {
+    if (this.validFields.rights) {
+      this.set('rights', value)
+      return true
+    }
+    else {
+      return this.fallback(['rights'], value)
+    }
+  }
+
+  protected $version(value) {
+    if (this.validFields.versionNumber) {
+      this.set('versionNumber', value)
+      return true
+    }
+    else {
+      return this.fallback(['versionNumber'], value)
+    }
+  }
+
   /* TODO: Zotero ignores these on import
   protected '$date-modified'(value) { return this.item.dateAdded = this.unparse(value) }
   protected '$date-added'(value) { return this.item.dateAdded = this.unparse(value) }
@@ -618,19 +841,16 @@ class ZoteroItem {
       return true
     }
 
-    for (const name of [field].concat(['seriesNumber', 'number', 'issue'])) {
-      if (this.validFields[name]) {
-        this.set(name, value)
-        return true
-      }
-    }
-
-    return false
+    const candidates = [field].concat(['seriesNumber', 'number', 'issue'])
+    field = candidates.find(f => this.validFields[f])
+    if (!field) return this.fallback(candidates, value)
+    this.set(field, value)
+    return true
   }
   protected $issue(value, field) { return this.$number(value, field) }
 
   protected $issn(value) {
-    if (!this.validFields.ISSN) return false
+    if (!this.validFields.ISSN) return this.fallback(['ISSN'], value)
 
     return this.set('ISSN', value)
   }
@@ -643,9 +863,11 @@ class ZoteroItem {
 
     if (m = value.match(/^(\\url{)(https?:\/\/|mailto:)}$/i)) {
       url = m[2]
-    } else if (field === 'url' || /^(https?:\/\/|mailto:)/i.test(value)) {
+    }
+    else if (field === 'url' || /^(https?:\/\/|mailto:)/i.test(value)) {
       url = value
-    } else {
+    }
+    else {
       url = null
     }
 
@@ -665,12 +887,9 @@ class ZoteroItem {
       return typeof this.numberPrefix !== 'undefined'
     }
 
-    if (this.validFields.type) {
-      this.set('type', value)
-      return true
-    }
-
-    return false
+    if (!this.validFields.type) return this.fallback(['type'], value)
+    this.set('type', value)
+    return true
   }
 
   protected $lista(value) {
@@ -694,13 +913,16 @@ class ZoteroItem {
 
   // horrid jabref 3.8+ groups format
   protected $groups(value) {
-    if (this.jabref.groups[value] && !this.jabref.groups[value].entries.includes(this.bibtex.key)) this.jabref.groups[value].entries.push(this.bibtex.key)
+    for (const group of value.split(/\s*,\s*/)) {
+      if (this.jabref.groups[group] && !this.jabref.groups[group].entries.includes(this.bibtex.key)) this.jabref.groups[group].entries.push(this.bibtex.key)
+      log.debug('$groups: adding', this.bibtex.key, 'to', group, ':', this.jabref.groups)
+    }
     return true
   }
 
-  protected $language(value, field) {
+  protected $language(_value, _field) {
     const language = (this.bibtex.fields.language || []).concat(this.bibtex.fields.langid || [])
-      .map(lang => ['en', 'eng', 'usenglish', 'english'].includes(lang.toLowerCase()) ? this.english : lang)
+      .map(babelLanguage) // eslint-disable-line @typescript-eslint/no-unsafe-return
       .join(' and ')
 
     return this.set('language', language)
@@ -729,15 +951,26 @@ class ZoteroItem {
     return true
   }
   protected $eprintclass(value, field) { return this.$eprint(value, field) }
-  protected $primaryclass(value, field) { return this.$eprint(value, 'eprintclass') }
+  protected $primaryclass(value, _field) { return this.$eprint(value, 'eprintclass') }
   protected $slaccitation(value, field) { return this.$eprint(value, field) }
 
   protected $nationality(value) { return this.set('country', value) }
 
-  protected $chapter(value) { return this.set('section', value) }
+  protected $chapter(value) {
+    const candidates = ['section', 'bookSection']
+    const field = candidates.find(f => this.validFields[f])
+    if (!field) return this.fallback(candidates, value)
+
+    return this.set(field, value)
+  }
+
+  protected $origdate(value) {
+    if (!this.fallback(['originaldate'], value)) this.hackyFields.push(`Original Date: ${value}`)
+    return true
+  }
 
   private error(err) {
-    debug(err)
+    log.error(err)
     throw new Error(err)
   }
 
@@ -755,19 +988,44 @@ class ZoteroItem {
       'editor',
       'translator',
     ]
-    for (const type of creatorTypes.concat(Object.keys(this.bibtex.creators).filter(other => !creatorTypes.includes(other)).filter(t => t !== 'holder' || this.type !== 'patent'))) {
+    const creatorTypeMap = {
+      author: 'author',
+      'film.author': 'director',
+      editor: 'editor',
+      'film.editor': 'scriptwriter',
+      translator: 'translator',
+      bookauthor: 'bookAuthor',
+      collaborator: 'contributor',
+      commentator: 'commenter',
+      director: 'director',
+      editora: 'editor',
+      editorb: 'editor',
+      editors: 'editor',
+      scriptwriter: 'scriptwriter',
+    }
+    const creatorsForType = Zotero.Utilities.getCreatorsForType(this.item.itemType)
+    for (const type of creatorTypes.concat(Object.keys(this.bibtex.creators).filter(other => !creatorTypes.includes(other)))) {
+      // 'assignee' is not a creator field for Zotero
+      if (type === 'holder' && this.type === 'patent') continue
       if (!this.bibtex.fields[type]) continue
 
       const creators = this.bibtex.fields[type].length ? this.bibtex.creators[type] : []
       delete this.bibtex.fields[type]
 
+      let creatorType = creatorTypeMap[`${this.item.itemType}.${type}`] || creatorTypeMap[type]
+      if (creatorType === 'author') creatorType = ['director', 'inventor', 'programmer', 'author'].find(t => creatorsForType.includes(t))
+      if (!creatorsForType.includes(creatorType)) creatorType = null
+      if (!creatorType && type === 'bookauthor' && creatorsForType.includes('author')) creatorType = 'author'
+      if (!creatorType) creatorType = 'contributor'
+
       for (const creator of creators) {
-        const name: {lastName?: string, firstName?: string, fieldMode?: number, creatorType: string } = { creatorType: type }
+        const name: {lastName?: string, firstName?: string, fieldMode?: number, creatorType: string } = { creatorType }
 
         if (creator.literal) {
           name.lastName = creator.literal.replace(/\u00A0/g, ' ')
           name.fieldMode = 1
-        } else {
+        }
+        else {
           name.firstName = creator.firstName || ''
           name.lastName = creator.lastName || ''
           if (creator.prefix) name.lastName = `${creator.prefix} ${name.lastName}`.trim()
@@ -783,18 +1041,22 @@ class ZoteroItem {
 
     // do this before because some handlers directly access this.bibtex.fields
     for (const [field, values] of Object.entries(this.bibtex.fields)) {
-      this.bibtex.fields[field] = (values as string[]).map(value => value.replace(/\u00A0/g, ' ').trim())
+      this.bibtex.fields[field] = (values as string[]).map(value => typeof value === 'string' ? value.replace(/\u00A0/g, ' ').trim() : `${value}`)
+    }
+
+    const zoteroField = {
+      conference: 'conferenceName',
     }
     for (const [field, values] of Object.entries(this.bibtex.fields)) {
-      for (let value of (values as string[])) {
-        value = value.replace(/\u00A0/g, ' ')
-
+      for (const value of (values as string[])) {
         if (field.match(/^(local-zo-url-[0-9]+)|(file-[0-9]+)$/)) {
           if (this.$file(value)) continue
-
-        } else if (field.match(/^bdsk-url-[0-9]+$/)) {
+        }
+        else if (field.match(/^bdsk-url-[0-9]+$/)) {
           if (this.$url(value, field)) continue
-
+        }
+        else if (field.match(/^note_[0-9]+$/)) { // jabref, #1878
+          if (this.$note(value)) continue
         }
 
         if (this[`$${field}`] && this[`$${field}`](value, field)) continue
@@ -816,11 +1078,34 @@ class ZoteroItem {
             this.hackyFields.push(`PMID: ${value}`)
             break
 
+          case 'subject': // otherwise it's picked up by the sibject -> title mapper, and I don't think that's right
+            this.hackyFields.push(`tex.${field}: ${value}`)
+            break
+
+          case 'origtitle':
+            this.hackyFields.push(`Original title: ${value}`)
+            break
+
+          case 'origlocation':
+            this.hackyFields.push(`Original publisher place: ${value}`)
+            break
+
           default:
             if (value.indexOf('\n') >= 0) {
               this.item.notes.push(`<p><b>${Zotero.Utilities.text2html(field, false)}</b></p>${Zotero.Utilities.text2html(value, false)}`)
-            } else {
-              this.hackyFields.push(`tex.${field.toLowerCase()}: ${value}`)
+            }
+            else {
+              const candidates = [field, zoteroField[field]]
+              let name
+              if ((name = candidates.find(f => this.validFields[f])) && !this.item[field]) {
+                this.item[name] = value
+              }
+              else if (name = candidates.find(f => label[f])) {
+                this.hackyFields.push(`${label[name]}: ${value}`)
+              }
+              else {
+                this.hackyFields.push(`tex.${field}: ${value}`)
+              }
             }
             break
         }
@@ -832,6 +1117,7 @@ class ZoteroItem {
       this.item.tags.push({ tag: Translator.preferences.rawLaTag, type: 1 })
     }
 
+    // eslint-disable-next-line id-blacklist
     if (this.numberPrefix && this.item.number && !this.item.number.toLowerCase().startsWith(this.numberPrefix.toLowerCase())) this.item.number = `${this.numberPrefix}${this.item.number}`
 
     if (this.bibtex.key) this.hackyFields.push(`Citation Key: ${this.bibtex.key}`) // Endnote has no citation keys in their bibtex
@@ -853,7 +1139,8 @@ class ZoteroItem {
       const eprintclass = this.eprint.eprintType === 'arXiv' && this.eprint.eprintclass ? ` [${this.eprint.eprintclass}]` : ''
       this.hackyFields.push(`${this.eprint.eprintType}: ${this.eprint.eprint}${eprintclass}`)
 
-    } else {
+    }
+    else {
 
       delete this.eprint.eprintType
       for (const [k, v] of Object.entries(this.eprint)) {
@@ -861,6 +1148,11 @@ class ZoteroItem {
       }
     }
 
+    this.hackyFields = this.hackyFields.filter(line => {
+      if (line.startsWith('Citation Key:')) return Translator.preferences.importCitationKey
+      if (line.startsWith('tex.')) return Translator.preferences.importExtra
+      return true
+    })
     if (this.hackyFields.length > 0) {
       this.hackyFields.sort((a, b) => {
         a = a.toLowerCase()
@@ -889,14 +1181,15 @@ class ZoteroItem {
   private addToExtra(str) {
     if (this.item.extra && this.item.extra !== '') {
       this.item.extra += `\n${str}`
-    } else {
+    }
+    else {
       this.item.extra = str
     }
   }
   */
 
-  private set(field, value) {
-    if (!this.validFields[field]) return false
+  private set(field, value, fallback = null) {
+    if (!this.validFields[field]) return fallback && this.fallback(fallback, value)
 
     if (Translator.preferences.testing && (this.item[field] || typeof this.item[field] === 'number') && (value || typeof value === 'number') && this.item[field] !== value) {
       this.error(`import error: duplicate ${field} on ${this.type} ${this.bibtex.key} (old: ${this.item[field]}, new: ${value})`)
@@ -942,34 +1235,82 @@ class ZoteroItem {
 //   @item.publicationTitle = value
 //   return true
 
-export async function doImport() {
+async function fetch_polyfill(url): Promise<{ json: () => Promise<any>, text: () => Promise<string> }> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest()
+    xhr.open('GET', url)
+
+    xhr.onload = function() {
+      if (this.status >= 200 && this.status < 300) { // eslint-disable-line no-magic-numbers
+        resolve({
+          json: () => JSON.parse(xhr.response), // eslint-disable-line @typescript-eslint/no-unsafe-return
+          text: () => xhr.response, // eslint-disable-line @typescript-eslint/no-unsafe-return
+        })
+      }
+      else {
+        reject({
+          status: this.status,
+          statusText: xhr.statusText,
+        })
+      }
+    }
+
+    xhr.onerror = function() {
+      reject({
+        status: this.status,
+        statusText: xhr.statusText,
+      })
+    }
+
+    xhr.send()
+  })
+}
+
+export async function doImport(): Promise<void> {
   Translator.init('import')
+
+  const unabbreviate = Translator.preferences.importJabRefAbbreviations ? await (await fetch_polyfill('resource://zotero-better-bibtex/unabbrev/unabbrev.json')).json() : undefined
+  const strings = Translator.preferences.importJabRefStrings ? await (await fetch_polyfill('resource://zotero-better-bibtex/unabbrev/strings.bib')).text() : undefined
 
   let read
   let input = ''
-  while ((read = Zotero.read(0x100000)) !== false) { // tslint:disable-line:no-magic-numbers
+  while ((read = Zotero.read(0x100000)) !== false) { // eslint-disable-line no-magic-numbers
     input += read
   }
 
   if (Translator.preferences.strings && Translator.preferences.importBibTeXStrings) input = `${Translator.preferences.strings}\n${input}`
 
-  const bib = await bibtexParser.parse(input, {
-    async: true,
+  const bib = await bibtexParser.promises.parse(input, {
     caseProtection: (Translator.preferences.importCaseProtection as 'as-needed'), // we are actually sure it's a valid enum value; stupid workaround for TS2322: Type 'string' is not assignable to type 'boolean | "as-needed" | "strict"'.
-    errorHandler: (Translator.preferences.testing ? undefined : debug),
+    errorHandler: (Translator.preferences.testing ? undefined : function(err) { log.error(err) }), // eslint-disable-line prefer-arrow/prefer-arrow-functions
+    unknownCommandHandler: function(node) { // eslint-disable-line object-shorthand
+      switch (Translator.preferences.importUnknownTexCommand) {
+        case 'tex':
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+          return this.text(`<script>${node.source}</script>`)
+        case 'text':
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+          return this.text(node.source)
+        case 'ignore':
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+          return this.text('')
+        default:
+          throw new Error(`Unexpected unknownCommandHandler ${JSON.stringify(Translator.preferences.importUnknownTexCommand)}`)
+      }
+    },
     markup: (Translator.csquotes ? { enquote: Translator.csquotes } : {}),
     sentenceCase: Translator.preferences.importSentenceCase !== 'off',
     guessAlreadySentenceCased: Translator.preferences.importSentenceCase === 'on+guess',
     verbatimFields: Translator.verbatimFields,
     raw: Translator.preferences.rawImports,
+    unabbreviate,
+    strings,
   })
   const errors = bib.errors
 
   const whitelist = bib.comments
     .filter(comment => comment.startsWith('zotero-better-bibtex:whitelist:'))
     .map(comment => comment.toLowerCase().replace(/\s/g, '').split(':').pop().split(',').filter(key => key))[0]
-
-  const jabref = bibtexParser.jabref(bib.comments)
 
   const itemIDS = {}
   let imported = 0
@@ -981,17 +1322,18 @@ export async function doImport() {
     if (bibtex.key) itemIDS[bibtex.key] = id // Endnote has no citation keys
 
     try {
-      await (new ZoteroItem(id, bibtex, jabref, errors)).complete()
-    } catch (err) {
-      debug('bbt import error:', err)
-      errors.push({ message: '' + err.message })
+      await (new ZoteroItem(id, bibtex, bib.jabref, errors)).complete()
+    }
+    catch (err) {
+      log.error('bbt import error:', err)
+      errors.push({ message: err.message })
     }
 
     imported += 1
-    Zotero.setProgress(imported / bib.entries.length * 100) // tslint:disable-line:no-magic-numbers
+    Zotero.setProgress(imported / bib.entries.length * 100) // eslint-disable-line no-magic-numbers
   }
 
-  for (const group of jabref.root || []) {
+  for (const group of bib.jabref.root || []) {
     importGroup(group, itemIDS, true)
   }
 
@@ -1014,5 +1356,5 @@ export async function doImport() {
     await item.complete()
   }
 
-  Zotero.setProgress(100) // tslint:disable-line:no-magic-numbers
+  Zotero.setProgress(100) // eslint-disable-line no-magic-numbers
 }

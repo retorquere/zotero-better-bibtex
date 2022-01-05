@@ -1,63 +1,20 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
       "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
       "asciiBibLaTeX": true,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportIdleWait": 10,
-      "autoPin": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[zotero:clean]",
-      "citeprocNoteCitekey": false,
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "exportTitleCase": true,
       "itemObserverDelay": 100,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "parseParticles": true,
-      "postscript": "",
-      "qualityReport": false,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "scrubDatabase": false,
-      "skipFields": "url,abstract,file,doi,issn,isbn,language",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.0.142.6897.issue-977",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.47",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "en-US",
-        "oscpu": "Linux x86_64",
-        "platform": "Linux x86_64",
-        "version": "5.0.47"
-      }
+      "skipFields": "url,abstract,file,doi,issn,isbn,language"
     }
   },
   "items": [
     {
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -66,16 +23,11 @@
         }
       ],
       "date": "2000",
-      "dateAdded": "2016-10-21 14:27:39",
-      "dateModified": "2018-05-31 09:43:31",
       "issue": "3, 4",
-      "itemID": 198,
+      "itemID": 1,
       "itemType": "journalArticle",
-      "notes": [],
       "pages": "319\u2013342",
       "publicationTitle": "Asymptotic Analysis",
-      "seeAlso": [],
-      "tags": [],
       "title": "Formes normales semi-classiques des syst\u00e8mes compl\u00e8tement int\u00e9grables au voisinage d'un point critique de l'application moment",
       "volume": "24"
     }

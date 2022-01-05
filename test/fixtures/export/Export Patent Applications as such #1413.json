@@ -2,137 +2,49 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "preferences": {
-      "DOIandURL": "both",
-      "automaticTags": true,
-      "asciiBibLaTeX": true,
-      "ascii": "",
-      "asciiBibTeX": true,
-      "autoExport": "immediate",
-      "quickCopyMode": "latex",
-      "citeCommand": "cite",
-      "quickCopyPandocBrackets": false,
-      "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
-      "citekeyFold": true,
-      "keyConflictPolicy": "keep",
-      "auxImport": false,
-      "keyScope": "library",
-      "exportBibTeXStrings": "off",
-      "importBibTeXStrings": true,
-      "bibtexParticleNoOp": false,
-      "skipFields": "file,abstract",
-      "bibtexURL": "off",
-      "warnBulkModify": 10,
-      "postscript": "",
-      "strings": "",
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExportIdleWait": 10,
-      "cacheFlushInterval": 5,
-      "csquotes": "",
-      "rawLaTag": "#LaTeX",
-      "rawImports": false,
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
-      "jabrefFormat": 0,
-      "qualityReport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "exportTitleCase": true,
-      "exportBraceProtection": false,
-      "retainCache": false,
-      "importSentenceCase": "on+guess",
-      "importCaseProtection": "as-needed",
-      "autoExportDelay": 1,
-      "itemObserverDelay": 100,
-      "parseParticles": true,
-      "citeprocNoteCitekey": false,
-      "extraMergeTeX": true,
-      "extraMergeCSL": true,
-      "extraMergeCitekeys": true,
-      "scrubDatabase": false,
-      "removeStock": false,
-      "ignorePostscriptErrors": true,
-      "debugLogDir": "",
-      "testing": false,
-      "autoPin": false,
-      "kuroshiro": false,
-      "relativeFilePaths": false,
-      "git": "config",
-      "mapUnicode": "conservative",
-      "mapText": "",
-      "mapMath": "",
-      "newTranslatorsAskRestart": true,
-      "workers": 0,
-      "platform": "lin",
-      "client": "zotero"
-    },
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
+    },
+    "preferences": {
+      "asciiBibLaTeX": true,
+      "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
+      "exportBraceProtection": false,
+      "itemObserverDelay": 100,
+      "skipFields": "file,abstract"
     }
   },
-  "collections": {},
   "items": [
     {
-      "version": 694,
-      "itemType": "patent",
+      "applicationNumber": "EP456456456",
       "assignee": "My Employer",
-      "applicationNumber": "EP789789789",
-      "title": "This is a Patent. It has the Patent number EP123123123. It had the Application Number EP789789789 when it was first submitted.",
+      "citationKey": "wernerThisPatentApplication",
       "creators": [
         {
+          "creatorType": "inventor",
           "firstName": "Nils",
-          "lastName": "Werner",
-          "creatorType": "inventor"
+          "lastName": "Werner"
         }
       ],
-      "tags": [],
-      "collections": [
-        "ZY874Y9M"
-      ],
-      "relations": [],
-      "dateAdded": "2020-02-02T09:12:33Z",
-      "dateModified": "2020-02-02T09:22:27Z",
-      "uri": "http://zotero.org/users/5251027/items/WKEHLDX7",
-      "attachments": [],
-      "notes": [],
-      "itemID": 676,
-      "key": "WKEHLDX7",
-      "citekey": "wernerThisPatentIt",
-      "citationKey": "wernerThisPatentIt",
-      "libraryID": 1,
-      "number": "EP123123123"
+      "itemID": 1,
+      "itemType": "patent",
+      "title": "This is a Patent Application. It has the Application Number EP456456456"
     },
     {
-      "version": 694,
-      "itemType": "patent",
+      "applicationNumber": "EP789789789",
       "assignee": "My Employer",
-      "applicationNumber": "EP456456456",
-      "title": "This is a Patent Application. It has the Application Number EP456456456",
+      "citationKey": "wernerThisPatentIt",
       "creators": [
         {
+          "creatorType": "inventor",
           "firstName": "Nils",
-          "lastName": "Werner",
-          "creatorType": "inventor"
+          "lastName": "Werner"
         }
       ],
-      "tags": [],
-      "collections": [
-        "ZY874Y9M"
-      ],
-      "relations": [],
-      "dateAdded": "2020-02-02T09:13:24Z",
-      "dateModified": "2020-02-02T09:22:31Z",
-      "uri": "http://zotero.org/users/5251027/items/9QFC7UXV",
-      "attachments": [],
-      "notes": [],
-      "itemID": 677,
-      "key": "9QFC7UXV",
-      "citekey": "wernerThisPatentApplication",
-      "citationKey": "wernerThisPatentApplication",
-      "libraryID": 1
+      "itemID": 2,
+      "itemType": "patent",
+      "number": "EP123123123",
+      "title": "This is a Patent. It has the Patent number EP123123123. It had the Application Number EP789789789 when it was first submitted."
     }
   ]
 }

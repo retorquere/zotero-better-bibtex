@@ -2,7 +2,7 @@
 @article{abbot1,
   title = {{{(Aubignac) (François Hédelin, abbé d')}}},
   author = {Aubignac, abbé d', François Hédelin},
-  note = {relies on paricleParser fallback detection}
+  annotation = {relies on paricleParser fallback detection}
 }
 
 @article{abbot3,
@@ -11,7 +11,7 @@
   options = {useprefix=true}
 }
 
-@collection{almeida_reading_2013,
+@book{almeida_reading_2013,
   title = {Reading {{HLA Hart}}'s: {{{\emph{The Concept}}}}{\emph{ of }}{{{\emph{Law}}}}},
   editor = {d' Almeida, Luís and Edwards, James and Dolcetti, Andrea},
   date = {2013},
@@ -33,118 +33,118 @@
 }
 
 @article{bugreports_ApostropheOnParticle,
-  title = {Bugreports\_{{ApostropheOnParticle}}},
+  title = {bugreports\_{{ApostropheOnParticle}}},
   author = {d' Jones, John},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{bugreports_AsmJournals,
-  title = {Bugreports\_{{AsmJournals}}},
+  title = {bugreports\_{{AsmJournals}}},
   author = {Doe Co.},
   keywords = {imported}
 }
 
 @article{bugreports_DemoPageFullCiteCruftOnSubsequent,
-  title = {Bugreports\_{{DemoPageFullCiteCruftOnSubsequent}}},
+  title = {bugreports\_{{DemoPageFullCiteCruftOnSubsequent}}},
   author = {{U.S. Bureau of the Census}},
   keywords = {imported}
 }
 
 @article{bugreports_DuplicateSpaces,
-  title = {Bugreports\_{{DuplicateSpaces}}},
+  title = {bugreports\_{{DuplicateSpaces}}},
   author = {D'Arcus, Bruce},
   keywords = {imported}
 }
 
 @article{bugreports_DuplicateSpaces3,
-  title = {Bugreports\_{{DuplicateSpaces3}}},
+  title = {bugreports\_{{DuplicateSpaces3}}},
   author = {Family Name, N},
   keywords = {imported}
 }
 
 @article{bugreports_GreekStyleProblems,
-  title = {Bugreports\_{{GreekStyleProblems}}},
+  title = {bugreports\_{{GreekStyleProblems}}},
   author = {Καρυωτάκης, Κώστας},
   keywords = {imported}
 }
 
 @article{bugreports_parseName,
-  title = {Bugreports\_{{parseName}}},
+  title = {bugreports\_{{parseName}}},
   author = {van Happel, Eduard and von Hoppel, Gustav},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{bugreports_ProcessorHang1,
-  title = {Bugreports\_{{ProcessorHang1}}},
+  title = {bugreports\_{{ProcessorHang1}}},
   author = {Reynoso-Santos, R. and Soto-Pinto, L. and Tejeda-Cruz, C. and Williams-Linera, G.},
   keywords = {imported}
 }
 
 @article{bugreports_YearSuffixInHarvard1,
-  title = {Bugreports\_{{YearSuffixInHarvard1}}},
+  title = {bugreports\_{{YearSuffixInHarvard1}}},
   author = {{Africa News}},
   keywords = {imported}
 }
 
 @article{decorations_AndTermUnaffectedByNameDecorations,
-  title = {Decorations\_{{AndTermUnaffectedByNameDecorations}}},
+  title = {decorations\_{{AndTermUnaffectedByNameDecorations}}},
   author = {Doe, III, John and van Roe, Jane},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{disambiguate_CitationLabelInData,
-  title = {Disambiguate\_{{CitationLabelInData}}},
+  title = {disambiguate\_{{CitationLabelInData}}},
   author = {von Dipheria, Doug},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{disambiguate_FailWithYearSuffix,
-  title = {Disambiguate\_{{FailWithYearSuffix}}},
+  title = {disambiguate\_{{FailWithYearSuffix}}},
   author = {{Caritas Europa} and {JRS-Europe}},
   keywords = {imported}
 }
 
 @article{disambiguate_YearCollapseWithInstitution,
-  title = {Disambiguate\_{{YearCollapseWithInstitution}}},
+  title = {disambiguate\_{{YearCollapseWithInstitution}}},
   author = {Smith Co},
   keywords = {imported}
 }
 
 @article{display_SecondFieldAlignMigratePunctuation,
-  title = {Display\_{{SecondFieldAlignMigratePunctuation}}},
+  title = {display\_{{SecondFieldAlignMigratePunctuation}}},
   author = {Bennett, Jr., Frank G.},
   keywords = {imported}
 }
 
 @book{fixedkey,
-  title = {Norm and {{Action}}. {{A Logical Enquiry}}},
-  shorttitle = {Norm and {{Action}}},
+  title = {Norm and Action. A Logical Enquiry},
+  shorttitle = {Norm and Action},
   author = {von Humboldt, Alexander and Gooding, Jr., Cuba and de La Fontaine, Jean and von Wright, Georg Henrik Auto and {von Wright}, Georg Henrik Explicit},
+  options = {useprefix=true},
   date = {1963},
+  series = {International Library of Philosophy and Scientific Method},
   publisher = {{Routledge \& Kegan Paul}},
   location = {{Londres}},
   isbn = {0-7100-3616-7},
   langid = {anglais},
-  options = {useprefix=true},
-  pagetotal = {xviii+214},
-  series = {International {{Library}} of {{Philosophy}} and {{Scientific Method}}}
+  pagetotal = {xviii+214}
 }
 
 @article{group_ComplexNesting,
-  title = {Group\_{{ComplexNesting}}},
+  title = {group\_{{ComplexNesting}}},
   author = {Doe Inc.},
   keywords = {imported}
 }
 
 @article{integration_DuplicateItem,
-  title = {Integration\_{{DuplicateItem}}},
+  title = {integration\_{{DuplicateItem}}},
   author = {la Berge, S. P},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @book{king_have_1968,
@@ -157,203 +157,203 @@
 }
 
 @article{magic_CapitalizeFirstOccurringNameParticle,
-  title = {Magic\_{{CapitalizeFirstOccurringNameParticle}}},
+  title = {magic\_{{CapitalizeFirstOccurringNameParticle}}},
   author = {de Simone, Samuel},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{magic_NameParticle,
-  title = {Magic\_{{NameParticle}}},
+  title = {magic\_{{NameParticle}}},
   author = {von Doe, John},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{magic_SuppressDuplicateVariableRendering,
-  title = {Magic\_{{SuppressDuplicateVariableRendering}}},
+  title = {magic\_{{SuppressDuplicateVariableRendering}}},
   author = {{Blob}},
   keywords = {imported}
 }
 
 @article{name_ArticularNameAsSortOrder,
-  title = {Name\_{{ArticularNameAsSortOrder}}},
+  title = {name\_{{ArticularNameAsSortOrder}}},
   author = {Doe, III, James},
   keywords = {imported}
 }
 
 @article{name_ArticularShortFormCommaSuffix,
-  title = {Name\_{{ArticularShortFormCommaSuffix}}},
+  title = {name\_{{ArticularShortFormCommaSuffix}}},
   author = {Doe, Jr, James},
   keywords = {imported}
 }
 
 @article{name_ArticularWithComma,
-  title = {Name\_{{ArticularWithComma}}},
+  title = {name\_{{ArticularWithComma}}},
   author = {Doe, Jr., Jeffrey},
   keywords = {imported}
 }
 
 @article{name_Delimiter,
-  title = {Name\_{{Delimiter}}},
+  title = {name\_{{Delimiter}}},
   author = {Noakes Inc.},
   keywords = {imported}
 }
 
 @article{name_FormattingOfParticles,
-  title = {Name\_{{FormattingOfParticles}}},
+  title = {name\_{{FormattingOfParticles}}},
   author = {van der Meer, Gerard},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{name_HyphenatedNonDroppingParticle1,
-  title = {Name\_{{HyphenatedNonDroppingParticle1}}},
+  title = {name\_{{HyphenatedNonDroppingParticle1}}},
   author = {al- One, Alan},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{name_Institution,
-  title = {Name\_{{Institution}}},
+  title = {name\_{{Institution}}},
   author = {{Multi-National United}},
   keywords = {imported}
 }
 
 @article{name_InstitutionDecoration,
-  title = {Name\_{{InstitutionDecoration}}},
+  title = {name\_{{InstitutionDecoration}}},
   author = {{São Paulo (Estado)}},
   keywords = {imported}
 }
 
 @article{name_MixedFormatsInitialSortOrderAllWithDecorationsEtAl,
-  title = {Name\_{{MixedFormatsInitialSortOrderAllWithDecorationsEtAl}}},
+  title = {name\_{{MixedFormatsInitialSortOrderAllWithDecorationsEtAl}}},
   author = {van Winkle, Rip and Thucydides, III, Carl},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{name_MultipleLiteral,
-  title = {Name\_{{MultipleLiteral}}},
+  title = {name\_{{MultipleLiteral}}},
   author = {{Alfred Benzon Foundation} and {James Benson Foundation} and {John Candy Foundation}},
   keywords = {imported}
 }
 
 @article{name_namepartAffixes,
-  title = {Name\_{{namepartAffixes}}},
+  title = {name\_{{namepartAffixes}}},
   author = {de La Fontaine, III, Jean},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{name_ParsedDroppingParticleWithAffixes,
-  title = {Name\_{{ParsedDroppingParticleWithAffixes}}},
+  title = {name\_{{ParsedDroppingParticleWithAffixes}}},
   author = {de La Fontaine, Jean},
   keywords = {imported}
 }
 
 @article{name_ParsedNonDroppingParticleWithAffixes,
-  title = {Name\_{{ParsedNonDroppingParticleWithAffixes}}},
+  title = {name\_{{ParsedNonDroppingParticleWithAffixes}}},
   author = {de la Fontaine, Jean},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{name_ParsedNonDroppingParticleWithApostrophe,
-  title = {Name\_{{ParsedNonDroppingParticleWithApostrophe}}},
+  title = {name\_{{ParsedNonDroppingParticleWithApostrophe}}},
   author = {d' Aubignac, abbé d', François Hédelin},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{name_ParseNames,
-  title = {Name\_{{ParseNames}}},
+  title = {name\_{{ParseNames}}},
   author = {van der Vlist, Eric and van Gogh, Vincent},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{name_ParticleCaps1,
-  title = {Name\_{{ParticleCaps1}}},
+  title = {name\_{{ParticleCaps1}}},
   author = {van One, Onename and van Two, Twoname and van Three, Threename and Van Four, Fourname},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{name_ParticleCaps3,
-  title = {Name\_{{ParticleCaps3}}},
+  title = {name\_{{ParticleCaps3}}},
   author = {{Van Dyke}, Dick},
   keywords = {imported}
 }
 
 @article{name_ParticleFormatting,
-  title = {Name\_{{ParticleFormatting}}},
+  title = {name\_{{ParticleFormatting}}},
   author = {de la Doe, John},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{name_ParticlesDemoteNonDroppingNever,
-  title = {Name\_{{ParticlesDemoteNonDroppingNever}}},
+  title = {name\_{{ParticlesDemoteNonDroppingNever}}},
   author = {de Las Familyname, Givenname and del Familyname, Givenname and Di Familyname, Givenname and Da Familyname, Givenname and Do Familyname, Givenname and Des Familyname, Givenname and Lou Familyname, Givenname and Pietro Familyname, Givenname and de Familyname, Givenname and de La Familyname, Givenname and Le Familyname, Givenname and La Familyname, Givenname and L'Familyname, Givenname and Saint Familyname, Givenname and Sainte Familyname, Givenname and St. Familyname, Givenname and Ste. Familyname, Givenname and van Familyname, Givenname and van de Familyname, Givenname and van der Familyname, Givenname and van den Familyname, Givenname and vander Familyname, Givenname and v.d. Familyname, Givenname and vd Familyname, Givenname and van het Familyname, Givenname and ver Familyname, Givenname},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{name_WesternArticularLowercase,
-  title = {Name\_{{WesternArticularLowercase}}},
+  title = {name\_{{WesternArticularLowercase}}},
   author = {van Doe, Jacques},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{nameorder_Long,
-  title = {Nameorder\_{{Long}}},
+  title = {nameorder\_{{Long}}},
   author = {de la Martinière, III, Gérard},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{position_IbidWithSuffix,
-  title = {Position\_{{IbidWithSuffix}}},
+  title = {position\_{{IbidWithSuffix}}},
   author = {Al-Khatib Organization},
   keywords = {imported}
 }
 
 @article{sort_ChangeInNameSort,
-  title = {Sort\_{{ChangeInNameSort}}},
+  title = {sort\_{{ChangeInNameSort}}},
   author = {{De Quincey}, Alan},
   keywords = {imported}
 }
 
 @article{sort_ChicagoYearSuffix1,
-  title = {Sort\_{{ChicagoYearSuffix1}}},
+  title = {sort\_{{ChicagoYearSuffix1}}},
   author = {Beijing Zoo and {Beijing Zoo}},
   keywords = {imported}
 }
 
 @article{sort_FamilyOnly,
-  title = {Sort\_{{FamilyOnly}}},
+  title = {sort\_{{FamilyOnly}}},
   author = {ANZ Group},
   keywords = {imported}
 }
 
 @article{sort_LeadingApostropheOnNameParticle,
-  title = {Sort\_{{LeadingApostropheOnNameParticle}}},
+  title = {sort\_{{LeadingApostropheOnNameParticle}}},
   author = {'t Horvath, Peter A.C. and in 't Horvath, Peter A.D.},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{sort_NameParticleInNameSortFalse,
-  title = {Sort\_{{NameParticleInNameSortFalse}}},
+  title = {sort\_{{NameParticleInNameSortFalse}}},
   author = {di Noakes, John},
-  keywords = {imported},
-  options = {useprefix=true}
+  options = {useprefix=true},
+  keywords = {imported}
 }
 
 @article{sort_NameVariable,
-  title = {Sort\_{{NameVariable}}},
+  title = {sort\_{{NameVariable}}},
   author = {[F]linders, Jacob},
   keywords = {imported}
 }

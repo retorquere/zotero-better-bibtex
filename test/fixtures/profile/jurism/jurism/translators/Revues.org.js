@@ -14,11 +14,11 @@
 
 function detectWeb(doc, url) {
 	// don't do anything on main domain, because there's nothing to fetch there
-	if(url.match(/http:\/\/(www\.)?revues\.org/)) return false;
+	if (url.match(/http:\/\/(www\.)?revues\.org/)) return false;
 
 	var types = ZU.xpath(doc, '//meta[@name="DC.type"]/@content');
-	for(var i=0, n=types.length; i<n; i++) {
-		switch(types[i].textContent.toLowerCase()) {
+	for (var i=0, n=types.length; i<n; i++) {
+		switch (types[i].textContent.toLowerCase()) {
 			case 'journalarticle':
 				return 'journalArticle';
 			case 'collection':
@@ -40,7 +40,7 @@ function detectWeb(doc, url) {
 
 function scrape(doc, url) {
 	//is this still necessary??
-	if(url.match(/persee\-\d+/)) {
+	if (url.match(/persee\-\d+/)) {
 		// the article is on Persée portal, getting it to be translated by COinS
 		var translator = Zotero.loadTranslator("web");
 		translator.setTranslator("05d07af9-105a-4572-99f6-a8e231c0daef");
@@ -56,14 +56,14 @@ function scrape(doc, url) {
 			//editors (and compilers)
 			var editors = ZU.xpath(doc, '//meta[@name="DC.contributor.edt" \
 				or @name="DC.contributor.com"]/@content');
-			for(var i=0, n=editors.length; i<n; i++) {
+			for (var i=0, n=editors.length; i<n; i++) {
 				item.creators.push(
 					ZU.cleanAuthor(editors[i].textContent, 'editor', true));
 			}
 			//translators
 			var trans = ZU.xpath(doc,
 				'//meta[@name="DC.contributor.trl"]/@content');
-			for(var i=0, n=trans.length; i<n; i++) {
+			for (var i=0, n=trans.length; i<n; i++) {
 				item.creators.push(
 					ZU.cleanAuthor(trans[i].textContent, 'translator', true));
 			}
@@ -95,7 +95,7 @@ function scrape(doc, url) {
 				ZU.xpathText(doc,
 					'//meta[@name="keywords" or @name="DC.subject"][1]\
 						/@content');
-			if(tags) {
+			if (tags) {
 				item.tags = tags.trim().split(/\s*,\s*/);
 			}
 
@@ -133,26 +133,26 @@ function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
 		var results = ZU.xpath(doc, '//div[@id="inside"]/div[@class="sommaire"]\
 			/dl[@class="documents"]/dd[@class="titre"]');
-		if(!results.length) {
+		if (!results.length) {
 			results = ZU.xpath(doc, '//ul[@class="summary"]//div[@class="title"]');
 		}
 
 /* From old code: When is this needed?
-		if(doc.evaluate('//meta[@name="DC.description.tableOfContents"]', doc, null, XPathResult.ANY_TYPE, null).iterateNext()) {
+		if (doc.evaluate('//meta[@name="DC.description.tableOfContents"]', doc, null, XPathResult.ANY_TYPE, null).iterateNext()) {
 			var titles = doc.evaluate('//meta[@name="DC.description.tableOfContents"]', doc, null, XPathResult.ANY_TYPE, null).iterateNext().content.split(' -- ');
 			var articles = doc.evaluate('//meta[@name="DC.relation.hasPart"]', doc, null, XPathResult.ANY_TYPE, null);
 			var article;
 			var i = 0;
-			while(article = articles.iterateNext()) {
+			while (article = articles.iterateNext()) {
 				items[article.content] = titles[i++];
 			}
 		} */
 
 		Zotero.selectItems(ZU.getItemArray(doc, results), function(selectedItems) {
-			if(!selectedItems) return true;
+			if (!selectedItems) return true;
 
 			var urls = new Array();
-			for(var i in selectedItems) {
+			for (var i in selectedItems) {
 				urls.push(i);
 			}
 

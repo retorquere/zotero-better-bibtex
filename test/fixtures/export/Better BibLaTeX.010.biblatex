@@ -1,6 +1,6 @@
 
 @inproceedings{Hulse2009,
-  title = {Feature {{Selection}} with {{High}}-{{Dimensional Imbalanced Data}}.},
+  title = {Feature {{Selection}} with {{High-Dimensional Imbalanced Data}}.},
   booktitle = {{{ICDM Workshops}}},
   author = {Hulse, Jason Van and Khoshgoftaar, Taghi M. and Napolitano, Amri and Wald, Randall},
   editor = {Saygin, Yücel and Yu, Jeffrey Xu and Kargupta, Hillol and Wang, Wei and Ranka, Sanjay and Yu, Philip S. and Wu, Xindong},
@@ -12,13 +12,13 @@
   crossref = {conf/icdm/2009w},
   description = {dblp},
   ee = {http://doi.ieeecomputersociety.org/10.1109/ICDMW.2009.35},
-  file = {files/Hulse2009/Hulse2009.pdf},
-  groups = {selekcja},
   interhash = {aad604c231737dbf8f6155082e3535ae},
   intrahash = {c97a29e90fbd958a0990360f70252458},
   isbn = {978-0-7695-3902-7},
+  owner = {sstudent},
   keywords = {dblp},
-  owner = {sstudent}
+  groups = {selekcja},
+  file = {~/BBTZ5TEST/storage/Hulse2009.pdf}
 }
 
 

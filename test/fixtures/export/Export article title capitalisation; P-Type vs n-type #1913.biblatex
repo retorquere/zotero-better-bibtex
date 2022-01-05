@@ -1,0 +1,19 @@
+
+@article{Fri60,
+  title = {Design Parameters for Optimizing the Efficiency of Thermoelectric Generators Utilizing P-Type and n-Type Lead Telluride},
+  author = {Fritts, R. W.},
+  date = {1960-01},
+  journaltitle = {Transactions of the American Institute of Electrical Engineers, Part I: Communication and Electronics},
+  shortjournal = {Trans. Am. Inst. Electr. Eng. Part Commun. Electron.},
+  volume = {78},
+  number = {6},
+  pages = {817--820},
+  issn = {2379-674X},
+  doi = {10.1109/TCE.1960.6368474},
+  eventtitle = {Transactions of the {{American Institute}} of {{Electrical Engineers}}, {{Part I}}: {{Communication}} and {{Electronics}}}
+}
+% == BibLateX quality report for Fri60:
+% Unexpected field 'eventtitle'
+% ? Unused libraryCatalog: IEEE Xplore
+
+

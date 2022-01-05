@@ -1,54 +1,21 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
       "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "doi",
       "asciiBibLaTeX": true,
-      "asciiBibTeX": true,
       "autoAbbrev": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
-      "autoExport": "immediate",
-      "autoExportIdleWait": 10,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
       "citekeyFold": false,
       "citekeyFormat": "[auth:lower][year][veryshorttitle:lower]",
-      "citeprocNoteCitekey": false,
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "exportTitleCase": true,
       "itemObserverDelay": 100,
-      "jabrefFormat": 0,
       "keyConflictPolicy": "change",
-      "parseParticles": true,
-      "postscript": "",
-      "qualityReport": false,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "scrubDatabase": false,
-      "skipFields": "extra,note,file,timestamp,abstract,urldate",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.0.64",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.33",
-        "locale": "en-US",
-        "oscpu": "Intel Mac OS X 10.11",
-        "platform": "MacIntel",
-        "version": "5.0.33"
-      }
+      "skipFields": "extra,note,file,timestamp,abstract,urldate"
     }
   },
   "items": [
@@ -56,7 +23,6 @@
       "DOI": "10.1103/PhysRevLett.115.250401",
       "abstractNote": "Local realism is the worldview in which physical properties of objects exist independently of measurement and where physical influences cannot travel faster than the speed of light. Bell\u2019s theorem states that this worldview is incompatible with the predictions of quantum mechanics, as is expressed in Bell\u2019s inequalities. Previous experiments convincingly supported the quantum predictions. Yet, every experiment requires assumptions that provide loopholes for a local realist explanation. Here, we report a Bell test that closes the most significant of these loopholes simultaneously. Using a well-optimized source of entangled photons, rapid setting generation, and highly efficient superconducting detectors, we observe a violation of a Bell inequality with high statistical significance. The purely statistical probability of our results to occur under local realism does not exceed 3.74\u00d710\u221231, corresponding to an 11.5 standard deviation effect.",
       "accessDate": "2017-12-29 18:37:20",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -170,10 +136,8 @@
         }
       ],
       "date": "December 16, 2015",
-      "dateAdded": "2017-12-29 18:37:20",
-      "dateModified": "2017-12-29 18:37:20",
       "issue": "25",
-      "itemID": 1766,
+      "itemID": 1,
       "itemType": "journalArticle",
       "journalAbbreviation": "Phys. Rev. Lett.",
       "libraryCatalog": "APS",

@@ -1,47 +1,36 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "Export collections": false,
-      "exportFileData": false,
-      "exportNotes": false
-    },
+    "localeDateOrder": "ymd",
+    "options": {},
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]",
-      "jabrefFormat": 0
-    },
-    "release": "0.7.19"
+      "citekeyFormat": "[auth][year]"
+    }
   },
   "items": [
     {
       "accessDate": "2015-02-07 20:13:23",
-      "attachments": [],
-      "bookTitle": "Policies for Happiness",
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Stefano",
           "lastName": "Bartolini"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Ennio",
           "lastName": "Bilancini"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Francesco",
           "lastName": "Sarracino"
         }
       ],
       "date": "Forthcoming",
-      "itemID": 375,
+      "itemID": 1,
       "itemType": "bookSection",
       "place": "Oxford",
       "publicationTitle": "Policies for Happiness",

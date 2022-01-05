@@ -1,11 +1,6 @@
-declare const Components: any
-declare const Zotero: any
-
-Components.utils.import('resource://gre/modules/FileUtils.jsm')
-declare const FileUtils: any
-
-import * as log from './debug'
+import { log } from './logger'
 import permutater = require('permutater')
+// import { OS } from '../typings/xpcom'
 
 function permutations(word) {
   const config = {
@@ -16,13 +11,14 @@ function permutations(word) {
   for (const [i, c] of word.split('').entries()) {
     config.charactersAt[i] = [ c.toUpperCase(), c.toLowerCase() ]
   }
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return permutater(config)
 }
 
 const alias: { [key: string]: string } = {}
-function getEnv(variable) {
+function getEnv(variable): string {
   const ENV = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
-  const value = ENV.get(variable)
+  const value: string = ENV.get(variable)
   if (value || !Zotero.isWin) return value
 
   if (typeof alias[variable] === 'undefined') {
@@ -36,10 +32,11 @@ function getEnv(variable) {
   }
 
   if (!alias[variable]) return ''
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return ENV.get(alias[variable])
 }
 
-function expandWinVars(value) {
+function expandWinVars(value: string): string {
   let more = true
   while (more) {
     more = false
@@ -52,8 +49,8 @@ function expandWinVars(value) {
 }
 
 // https://searchfox.org/mozilla-central/source/toolkit/modules/subprocess/subprocess_win.jsm#135 doesn't seem to work on Windows.
-export async function pathSearch(bin, installationDirectory: { mac?: string, win?: string } = {}) {
-  const env = {
+export async function pathSearch(bin: string, installationDirectory: { mac?: string[], win?: string[] } = {}): Promise<string> {
+  const env: {path: string[], pathext: string[], sep: string} = {
     path: [],
     pathext: [],
     sep: '',
@@ -63,7 +60,7 @@ export async function pathSearch(bin, installationDirectory: { mac?: string, win
     env.sep = '\\'
 
     env.path = []
-    if (installationDirectory.win) env.path.push(installationDirectory.win)
+    if (installationDirectory.win) env.path.push(...installationDirectory.win)
     env.path = env.path.concat(getEnv('PATH').split(';').filter(p => p).map(expandWinVars))
 
     env.pathext = getEnv('PATHEXT').split(';').filter(pe => pe.length > 1 && pe.startsWith('.'))
@@ -72,12 +69,14 @@ export async function pathSearch(bin, installationDirectory: { mac?: string, win
       return null
     }
 
-  } else {
+  }
+  else {
     const ENV = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
     env.sep = '/'
 
     env.path = []
-    if (Zotero.isMac && installationDirectory.mac) env.path.push(installationDirectory.mac)
+    if (Zotero.isMac && installationDirectory.mac) env.path.push(...installationDirectory.mac)
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     env.path = env.path.concat((ENV.get('PATH') || '').split(':').filter(p => p))
 
     env.pathext = ['']
@@ -93,17 +92,29 @@ export async function pathSearch(bin, installationDirectory: { mac?: string, win
   for (const path of env.path) {
     for (const pathext of env.pathext) {
       try {
-        const cmd = new FileUtils.File(`${path}${env.sep}${bin}${pathext}`)
-        if (cmd.exists() && cmd.isFile() && cmd.isExecutable()) {
-          log.debug(`pathSearch: ${bin}${pathext} found at ${cmd.path}`)
-          return cmd.path
+        const cmd: string = OS.Path.join(path, bin + pathext)
+        if (!(await OS.File.exists(cmd))) continue
+
+        // eslint-disable-next-line @typescript-eslint/await-thenable
+        const stat = await OS.File.stat(cmd)
+        if (stat.isDir) continue
+
+        // eslint-disable-next-line no-bitwise, no-magic-numbers
+        if (!Zotero.isWin && (stat.unixMode & 111) === 0) { // bit iffy -- we don't know if *we* can execute this.
+          // eslint-disable-next-line no-magic-numbers
+          log.debug(`pathSearch: ${cmd} exists but has mode ${(stat.unixMode).toString(8)}`)
+          continue
         }
-      } catch (err) {
+
+        log.debug(`pathSearch: ${bin} found at ${cmd}`)
+        return cmd
+      }
+      catch (err) {
         log.error('pathSearch:', err)
       }
     }
   }
-  log.debug('pathSearch: ', bin, 'not found in', env.path)
+  log.debug('pathSearch:', bin, 'not found in', env.path)
 
   return null
 }

@@ -1,3 +1,9 @@
+content/Preferences.xul
+.eslintcache
+Exported Items.*
+My Library.*
+.github/issues.json
+behave.json
 exported
 setup.cfg
 __pycache__
@@ -18,6 +24,7 @@ build
 .depend.mf
 resource/translators/*.json
 test/fixtures/plugins
+test/tmp
 tmp
 *.xpi
 *.log
@@ -35,6 +42,10 @@ typedoc.json
 *.bib_
 test/fixtures/profile/zotero/zotero/better-bibtex-12k.sqlite
 test/fixtures/profile/zotero/zotero/zotero-12k.sqlite
+test/fixtures/loaded.json
 test/db
 site/public
 logs
+pandoc/docx
+pandoc/*.docx
+pandoc/*.odt

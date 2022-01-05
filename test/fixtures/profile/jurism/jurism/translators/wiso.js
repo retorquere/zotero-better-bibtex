@@ -37,7 +37,7 @@
 
 function detectWeb(doc, url) {
 	if (url.search(/document/) !== -1) {
-		if( ZU.xpath(doc, '//a[contains(@class, "boxExport")]').length>0 ) {
+		if ( ZU.xpath(doc, '//a[contains(@class, "boxExport")]').length>0 ) {
 			//single item --> generic fallback = journalArticle
 			return "journalArticle";
 		}
@@ -62,15 +62,15 @@ function scrape(doc, url) {
 		
 		//sometimes more than one T1 fields are present
 		//or the title is distributed over T1, T2, T3...
-		if( /^TY\s+-\s+JOUR/m.test(text) && /^JF\s+-\s+/m.test(text) && !/^TI\s+-\s+/m.test(text)) {
+		if ( /^TY\s+-\s+JOUR/m.test(text) && /^JF\s+-\s+/m.test(text) && !/^TI\s+-\s+/m.test(text)) {
 			var titlesArray = [];
 			text = text.replace(/\r?\n^T[1-5]\s+-\s+(.+)$/mg, function(m, title) {
 				title = ZU.trimInternal(title);
-				if(title) titlesArray.push(title);
+				if (title) titlesArray.push(title);
 				return '';
 			});
 			
-			if(titlesArray.length) {
+			if (titlesArray.length) {
 				//insert an aggregated TI tag
 				text = text.replace(/^TY\s+-\s+(.+)$/m , "$&\nTI  - " + titlesArray.join(": "));
 			}
@@ -96,7 +96,7 @@ function scrape(doc, url) {
 				document:doc
 			}];
 			//the url for ebooks is sometimes wrong/incomplete
-			if (item.url.indexOf("DOKV_DB=&") != -1) {
+			if (item.url.includes("DOKV_DB=&")) {
 				item.url = ZU.xpathText(doc, '//a[@class="linkifyplus"]');
 			}
 			//Zotero.debug(item);
@@ -115,18 +115,18 @@ function cleanAuthorFields(m, tag, authorStr) {
 	//authorStr = second parenthesized submatch, i.e., what is following the tag
 	var authors = authorStr.split(';');
 	var fixName = false;
-	if(authors.length == 1)  {
+	if (authors.length == 1)  {
 		//no semicolon
 		fixName = true;
 		authors = authorStr.split(',');
-		if(authors.length < 3) {
+		if (authors.length < 3) {
 			//at most single comma, don't mess with it
 			return m;
 		} else if (authors.length == 3) {
 			//we have to distinguish the correct cases where the third part is
 			//just a suffix as "Jr." and wrong cases where this is a list of
 			//three authors ==> easiest is maybe to check for a space
-			if (ZU.superCleanString(authors[2]).indexOf(' ') == -1) {
+			if (!ZU.superCleanString(authors[2]).includes(' ')) {
 				return m;
 			}
 		}
@@ -136,14 +136,14 @@ function cleanAuthorFields(m, tag, authorStr) {
 	//(i) authorStr contains semicolon(s), authors is the array of its different parts, fixName = false
 	//(ii) authorStr contains no semicolon but more than one comma, authors is the array of its different parts, fixName = true	
 	var str = '';
-	for(var i=0; i<authors.length; i++) {
+	for (var i=0; i<authors.length; i++) {
 		var author = ZU.superCleanString(authors[i]).replace(/(?:Dr|Prof)\.\s*/,"");
-		if(fixName && author.indexOf(',') == -1 && author.indexOf(' ') != -1) {
+		if (fixName && !author.includes(',') && author.includes(' ')) {
 			//best guess: split at the last space
 			var splitAt = author.lastIndexOf(' ');
 			author = author.substring(splitAt+1) + ', ' + author.substring(0, splitAt);
 		}
-		if(author) str += '\n' + tag + '  - ' + author;
+		if (author) str += '\n' + tag + '  - ' + author;
 	}
 	return str.substr(1);
 }
@@ -310,5 +310,5 @@ var testCases = [
 		"url": "https://www.wiso-net.de/dosearch?explicitSearch=true&q=mannheim&x=0&y=0&dbShortcut=%3A3%3AALLEQUELLEN&searchMask=5461&TI%2CUT%2CDZ%2CBT%2COT%2CSE=&NN%2CAU%2CMM%2CZ2=&CO%2CC2%2CTA%2CKA%2CVA%2CZ1=&CT%2CDE%2CZ4=&BR%2CGW%2CN1%2CN2%2CNC%2CND%2CSC%2CWZ%2CZ5%2CAI=&Z3=&DT_from=&DT_to=&timeFilterType=selected&timeFilter=NONE",
 		"items": "multiple"
 	}
-]
+];
 /** END TEST CASES **/

@@ -77,12 +77,12 @@ function doWeb(doc,url)
 			item.journalAbbreviation = journalAbbr;
 			item.extra = '';
 			var mrnumber = ZU.xpathText(doc, '//div[@id="info"]/p[strong[contains(text(), "Mathematical Reviews number")]]/a');
-			if(mrnumber) {
+			if (mrnumber) {
 				item.extra = 'MR: ' + ZU.trimInternal(mrnumber)
 			}
 			var zbl = ZU.xpathText(doc, '//div[@id="info"]/p[strong[contains(text(), "Zentralblatt MATH")]]/a');
-			if(zbl) {
-				if(item.extra) item.extra += '\n';
+			if (zbl) {
+				if (item.extra) item.extra += '\n';
 				item.extra += 'Zbl: ' + ZU.trimInternal(zbl);
 			}
 			item.libraryCatalog = "Project Euclid"

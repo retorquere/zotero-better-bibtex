@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-06-16 20:02:57"
+	"lastUpdated": "2020-01-07 00:38:50"
 }
 
 /*
@@ -35,21 +35,25 @@
 	***** END LICENSE BLOCK *****
 */
 
+// attr()/text() v2
+// eslint-disable-next-line
+function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
 
 function detectWeb(doc, url) {
-	if (url.indexOf('/title/tt')>-1) {
+	if (url.includes('/title/tt')) {
 		return "film";
-	} else if (url.indexOf('/find?')>-1 && getSearchResults(doc, true)) {
+	}
+	else if (url.includes('/find?') && getSearchResults(doc, true)) {
 		return "multiple";
 	}
+	return false;
 }
-
 
 function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
 	var rows = ZU.xpath(doc, '//td[contains(@class, "result_text")]');
-	for (var i=0; i<rows.length; i++) {
+	for (let i = 0; i < rows.length; i++) {
 		var href = ZU.xpathText(rows[i], './a/@href');
 		var title = ZU.trimInternal(rows[i].textContent);
 		if (!href || !title) continue;
@@ -60,12 +64,11 @@ function getSearchResults(doc, checkOnly) {
 	return found ? items : false;
 }
 
-
 function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
 		Zotero.selectItems(getSearchResults(doc, false), function (items) {
 			if (!items) {
-				return true;
+				return;
 			}
 			var articles = [];
 			for (var i in items) {
@@ -73,71 +76,59 @@ function doWeb(doc, url) {
 			}
 			ZU.processDocuments(articles, scrape);
 		});
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }
 
-
-function scrape(doc, url) {
-	var translator = Zotero.loadTranslator('web');
-	// Embedded Metadata
-	translator.setTranslator('951c027d-74ac-47d4-a107-9c3069ab7b48');
-	//translator.setDocument(doc);
-	
-	translator.setHandler('itemDone', function (obj, item) {
-		var titleWrapper = ZU.xpath(doc, '//div[contains(@class, "title_wrapper")]');
-		var title = ZU.xpathText(titleWrapper, './h1/text()[1]');
-		if (title) {
-			item.title = title;
+function scrape(doc, _url) {
+	var item = new Zotero.Item("film");
+	let json = JSON.parse(text(doc, 'script[type="application/ld+json"]'));
+	item.title = json.name;// note that json only has the original title
+	var transTitle = ZU.trimInternal(ZU.xpathText(doc, "//div[@class='title_wrapper']/h1/text()")).slice(0, -2);
+	if (transTitle && transTitle !== item.title) addExtra(item, "Translated title: " + transTitle);
+	item.date = json.datePublished;
+	item.runningTime = "duration" in json ? json.duration.replace("PT", "").toLowerCase() : "";
+	item.genre = Array.isArray(json.genre) ? json.genre.join(", ") : json.genre;
+	item.abstractNote = json.description;
+	var creatorsMapping = {
+		director: "director",
+		creator: "scriptwriter",
+		actor: "contributor"
+	};
+	for (var role in creatorsMapping) {
+		if (!json[role]) continue;
+		var creators = json[role];
+		if (!Array.isArray(creators)) {
+			item.creators.push(ZU.cleanAuthor(creators.name, creatorsMapping[role]));
 		}
-		item.date = ZU.xpathText(titleWrapper, './/meta[@itemprop="datePublished"]/@content');
-		item.runningTime = ZU.xpathText(titleWrapper, './/time[@itemprop="duration"]');
-		item.genre = ZU.xpathText(titleWrapper, './/span[@itemprop="genre"]');
-		var origTitle = ZU.xpathText(titleWrapper, './/div[contains(@class, "originalTitle")]/text()[1]');
-		if (origTitle) {
-			addExtra(item, "original-title: "+origTitle);
-		}
-		var pageId = ZU.xpathText(doc, '//meta[@property="pageId"]/@content');
-		if (pageId) {
-			addExtra(item, "IMDb ID: "+pageId);
-		}
-		
-		var summary = ZU.xpath(doc, '//div[contains(@class, "plot_summary_wrapper")]');
-		var creatorsMapping = {
-			"director": "director",
-			"creator": "scriptwriter",
-			"actors": "contributor"
-		};
-		for (var role in creatorsMapping) {
-			var creators = ZU.xpath(summary, './/span[@itemprop="'+role+'"]//span[@itemprop="name"]');
-			for (var i=0; i<creators.length; i++) {
-				item.creators.push(ZU.cleanAuthor(creators[i].textContent, creatorsMapping[role]));
+		else {
+			for (var i = 0; i < creators.length; i++) {
+				if (creators[i]["@type"] == "Person") item.creators.push(ZU.cleanAuthor(creators[i].name, creatorsMapping[role]));
 			}
 		}
-		
-		//the keywords in the meta tags are very generic
-		item.tags = [];
-		var tags = ZU.xpath(doc, '//div[@itemprop="keywords"]/a');
-		for (var i=0; i<tags.length; i++) {
-			item.tags.push(tags[i].textContent);
-		}
-		
-		item.complete();
-		
-	});
-
-	translator.getTranslatorObject(function(trans) {
-		trans.itemType = "film";
-		trans.doWeb(doc, url);
-	});
+	}
+	let companyNodes = doc.querySelectorAll('a[href*="/company/"]');
+	let companies = [];
+	for (let company of companyNodes) {
+		companies.push(company.textContent);
+	}
+	item.distributor = companies.join(', ');
+	var pageId = ZU.xpathText(doc, '//meta[@property="pageId"]/@content');
+	if (pageId) {
+		addExtra(item, "IMDb ID: " + pageId);
+	}
+	addExtra(item, "event-location: " + text(doc, 'a[href*="title?country_of_origin"]'));
+	item.tags = "keywords" in json ? json.keywords.split(",") : [];
+	item.complete();
 }
 
-
 function addExtra(item, value) {
-	if(!item.extra) {
+	if (!item.extra) {
 		item.extra = '';
-	} else {
+	}
+	else {
 		item.extra += "\n";
 	}
 	item.extra += value;
@@ -147,11 +138,11 @@ function addExtra(item, value) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.imdb.com/title/tt0089276/",
+		"url": "https://www.imdb.com/title/tt0089276/",
 		"items": [
 			{
 				"itemType": "film",
-				"title": "The Official Story",
+				"title": "La historia oficial",
 				"creators": [
 					{
 						"firstName": "Luis",
@@ -182,26 +173,37 @@ var testCases = [
 						"firstName": "Chunchuna",
 						"lastName": "Villafañe",
 						"creatorType": "contributor"
-					}
-				],
-				"date": "1985-11-08",
-				"abstractNote": "Directed by Luis Puenzo.  With Norma Aleandro, Héctor Alterio, Chunchuna Villafañe, Hugo Arana. After the end of the Dirty War, a high school teacher sets out to find out who the mother of her adopted daughter is.",
-				"extra": "original-title: La historia oficial\nIMDb ID: tt0089276",
-				"genre": "Drama, History, War",
-				"libraryCatalog": "www.imdb.com",
-				"runningTime": "1h 52min",
-				"url": "http://www.imdb.com/title/tt0089276/",
-				"attachments": [
+					},
 					{
-						"title": "Snapshot"
+						"firstName": "Hugo",
+						"lastName": "Arana",
+						"creatorType": "contributor"
 					}
 				],
+				"date": "1985-04-03",
+				"abstractNote": "La historia oficial is a movie starring Norma Aleandro, Héctor Alterio, and Chunchuna Villafañe. During the final months of Argentinian Military Dictatorship in 1983, a high school teacher sets out to find out who the mother of her...",
+				"distributor": "Historias Cinematograficas Cinemania,  Progress Communications",
+				"extra": "Translated title: The Official Story\nIMDb ID: tt0089276\nevent-location: Argentina",
+				"genre": "Drama, History, War",
+				"libraryCatalog": "IMDb",
+				"runningTime": "1h52m",
+				"attachments": [],
 				"tags": [
-					" adopted daughter",
-					" high school teacher",
-					" lawyer",
-					" professor",
-					" school"
+					{
+						"tag": "adopted daughter"
+					},
+					{
+						"tag": "high school teacher"
+					},
+					{
+						"tag": "lawyer"
+					},
+					{
+						"tag": "school"
+					},
+					{
+						"tag": "thumb sucking"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -210,16 +212,16 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.imdb.com/find?q=shakespeare&s=tt",
+		"url": "https://www.imdb.com/find?q=shakespeare&s=tt",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://www.imdb.com/title/tt0060613/",
+		"url": "https://www.imdb.com/title/tt0060613/",
 		"items": [
 			{
 				"itemType": "film",
-				"title": "Skin, Skin",
+				"title": "Käpy selän alla",
 				"creators": [
 					{
 						"firstName": "Mikko",
@@ -250,26 +252,37 @@ var testCases = [
 						"firstName": "Pekka",
 						"lastName": "Autiovuori",
 						"creatorType": "contributor"
-					}
-				],
-				"date": "1967-08-18",
-				"abstractNote": "Directed by Mikko Niskanen.  With Eero Melasniemi, Kristiina Halkola, Pekka Autiovuori, Kirsti Wallasvaara. Depiction of four urban youths and their excursion to the countryside.",
-				"extra": "original-title: Käpy selän alla\nIMDb ID: tt0060613",
-				"genre": "Drama",
-				"libraryCatalog": "www.imdb.com",
-				"runningTime": "1h 29min",
-				"url": "http://www.imdb.com/title/tt0060613/",
-				"attachments": [
+					},
 					{
-						"title": "Snapshot"
+						"firstName": "Kirsti",
+						"lastName": "Wallasvaara",
+						"creatorType": "contributor"
 					}
 				],
+				"date": "1966-10-21",
+				"abstractNote": "Käpy selän alla is a movie starring Eero Melasniemi, Kristiina Halkola, and Pekka Autiovuori. Depiction of four urban youths and their excursion to the countryside.",
+				"distributor": "FJ-Filmi",
+				"extra": "Translated title: Amour libre\nIMDb ID: tt0060613\nevent-location: Finland",
+				"genre": "Drama",
+				"libraryCatalog": "IMDb",
+				"runningTime": "1h29m",
+				"attachments": [],
 				"tags": [
-					" countryside",
-					" dance",
-					" drunk",
-					" topless",
-					" youth"
+					{
+						"tag": "countryside"
+					},
+					{
+						"tag": "drunk"
+					},
+					{
+						"tag": "male female relationship"
+					},
+					{
+						"tag": "topless"
+					},
+					{
+						"tag": "youth"
+					}
 				],
 				"notes": [],
 				"seeAlso": []

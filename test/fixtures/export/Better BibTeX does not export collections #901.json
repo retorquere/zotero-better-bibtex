@@ -1,2690 +1,1066 @@
 {
   "collections": {
-    "23DGCXUA": {
-      "collections": [],
-      "id": 86,
-      "items": [
-        1684,
-        1687,
-        1692,
-        1693,
-        1694,
-        1696,
-        1698
-      ],
-      "key": "23DGCXUA",
-      "name": "Kistler",
-      "parent": "8ZQ35JFF"
-    },
-    "24UAAPSJ": {
+    "coll:00000": {
       "collections": [
-        "TV26W8G6",
-        "TJK44FKS",
-        "GDUX92ZI",
-        "SBMBW6E6",
-        "7SK8R9XD",
-        "9UU5XK3Z",
-        "JMTJASR3",
-        "K3TYSQU7",
-        "XRPR8U2W",
-        "E4PVCM74"
+        "coll:00002",
+        "coll:00003",
+        "coll:00006",
+        "coll:00009",
+        "coll:00012",
+        "coll:00014",
+        "coll:00017",
+        "coll:00018",
+        "coll:00020",
+        "coll:00021",
+        "coll:00022",
+        "coll:00023",
+        "coll:00024",
+        "coll:00025",
+        "coll:00026",
+        "coll:00027",
+        "coll:00028",
+        "coll:00029",
+        "coll:00030",
+        "coll:00031",
+        "coll:00032",
+        "coll:00111"
       ],
-      "id": 70,
+      "items": [],
+      "key": "coll:00000",
+      "name": "FM"
+    },
+    "coll:00001": {
+      "collections": [
+        "coll:00004",
+        "coll:00007"
+      ],
+      "items": [],
+      "key": "coll:00001",
+      "name": "Isa"
+    },
+    "coll:00002": {
+      "collections": [
+        "coll:00005",
+        "coll:00010"
+      ],
+      "items": [],
+      "key": "coll:00002",
+      "name": "Sciences factuelles",
+      "parent": "coll:00000"
+    },
+    "coll:00003": {
+      "collections": [
+        "coll:00008",
+        "coll:00013",
+        "coll:00019",
+        "coll:00049",
+        "coll:00054",
+        "coll:00055",
+        "coll:00079",
+        "coll:00080",
+        "coll:00088",
+        "coll:00112"
+      ],
+      "items": [],
+      "key": "coll:00003",
+      "name": "Sciences conceptuelles",
+      "parent": "coll:00000"
+    },
+    "coll:00004": {
+      "collections": [
+        "coll:00011"
+      ],
+      "items": [],
+      "key": "coll:00004",
+      "name": "R\u00e9f\u00e9rences",
+      "parent": "coll:00001"
+    },
+    "coll:00005": {
+      "collections": [
+        "coll:00015",
+        "coll:00087",
+        "coll:00094",
+        "coll:00113"
+      ],
+      "items": [],
+      "key": "coll:00005",
+      "name": "Sciences sociales",
+      "parent": "coll:00002"
+    },
+    "coll:00006": {
+      "collections": [
+        "coll:00016",
+        "coll:00061",
+        "coll:00063",
+        "coll:00091",
+        "coll:00100",
+        "coll:00101",
+        "coll:00107"
+      ],
       "items": [
-        932,
-        1222,
-        1223,
-        1346,
-        1348,
-        1460,
-        1522,
-        1693,
-        1747,
-        2548
+        29
       ],
-      "key": "24UAAPSJ",
+      "key": "coll:00006",
+      "name": "_References",
+      "parent": "coll:00000"
+    },
+    "coll:00007": {
+      "collections": [
+        "coll:00033",
+        "coll:00038",
+        "coll:00048",
+        "coll:00056",
+        "coll:00062",
+        "coll:00065",
+        "coll:00070",
+        "coll:00077",
+        "coll:00089",
+        "coll:00090",
+        "coll:00104",
+        "coll:00105",
+        "coll:00106",
+        "coll:00114",
+        "coll:00115",
+        "coll:00116",
+        "coll:00117",
+        "coll:00118"
+      ],
+      "items": [],
+      "key": "coll:00007",
+      "name": "Refworks",
+      "parent": "coll:00001"
+    },
+    "coll:00008": {
+      "collections": [
+        "coll:00034",
+        "coll:00035",
+        "coll:00042",
+        "coll:00052",
+        "coll:00073",
+        "coll:00076",
+        "coll:00083",
+        "coll:00086",
+        "coll:00092",
+        "coll:00097"
+      ],
+      "items": [
+        16
+      ],
+      "key": "coll:00008",
       "name": "Philosophie des sciences",
-      "parent": "MQZN7WBG"
+      "parent": "coll:00003"
     },
-    "26S2WA7C": {
-      "collections": [],
-      "id": 172,
-      "items": [
-        2773
-      ],
-      "key": "26S2WA7C",
-      "name": "Astronomie, astrophysique, cosmologie",
-      "parent": "DXJJDSNF"
-    },
-    "2M3ABEMG": {
-      "collections": [],
-      "id": 77,
-      "items": [
-        1615,
-        1619,
-        1622
-      ],
-      "key": "2M3ABEMG",
-      "name": "Wikipedia",
-      "parent": "PFAR8S3Z"
-    },
-    "39YB92BC": {
-      "collections": [],
-      "id": 137,
-      "items": [
-        2097,
-        2099,
-        2100,
-        2102,
-        2104,
-        2105,
-        2106,
-        2108,
-        2109,
-        2111,
-        2112,
-        2113
-      ],
-      "key": "39YB92BC",
-      "name": "KFI (C-R et critiques)",
-      "parent": "Z48DZYD9"
-    },
-    "3LW2K8KT": {
-      "collections": [],
-      "id": 128,
-      "items": [
-        1916,
-        1917,
-        1918,
-        1919,
-        1920,
-        1921,
-        1922,
-        1923,
-        1924,
-        1925,
-        1926,
-        1927,
-        1928,
-        1929,
-        1930,
-        1931,
-        1933,
-        1934,
-        1935,
-        1936,
-        1937,
-        1938,
-        1939,
-        1940,
-        1941,
-        1942,
-        1943,
-        1944,
-        1945,
-        1946,
-        1947,
-        1948,
-        1949,
-        1950,
-        1951,
-        1952,
-        2430
-      ],
-      "key": "3LW2K8KT",
-      "name": "2006-08-20 Biblio-plan",
-      "parent": "Z48DZYD9"
-    },
-    "3VL3RTVV": {
-      "collections": [],
-      "id": 136,
-      "items": [
-        1880,
-        1926,
-        1934,
-        1936,
-        1944,
-        1992,
-        2003,
-        2028,
-        2029,
-        2030,
-        2031,
-        2032,
-        2033,
-        2034,
-        2035,
-        2036,
-        2038,
-        2039,
-        2040,
-        2041,
-        2042,
-        2043,
-        2044,
-        2045,
-        2046,
-        2047,
-        2048,
-        2049,
-        2050,
-        2051,
-        2052,
-        2053,
-        2054,
-        2056,
-        2057,
-        2058,
-        2059,
-        2060,
-        2061,
-        2062,
-        2063,
-        2065,
-        2066,
-        2067,
-        2068,
-        2069,
-        2070,
-        2071,
-        2072,
-        2073,
-        2074,
-        2077,
-        2078,
-        2079,
-        2080,
-        2081,
-        2082,
-        2083,
-        2084,
-        2085,
-        2086,
-        2088,
-        2089,
-        2090,
-        2091,
-        2092,
-        2094
-      ],
-      "key": "3VL3RTVV",
-      "name": "Intentionnalit\u00e9 naturalisation",
-      "parent": "Z48DZYD9"
-    },
-    "46G3477G": {
-      "collections": [],
-      "id": 111,
-      "items": [
-        411
-      ],
-      "key": "46G3477G",
-      "name": "M\u00e9canisme",
-      "parent": "W6X9J3SR"
-    },
-    "4U2X6N5Q": {
-      "collections": [],
-      "id": 6,
-      "items": [],
-      "key": "4U2X6N5Q",
-      "name": "0008_TradBungeDictionnairePhilosophique",
-      "parent": "RIMHH32X"
-    },
-    "55496DDK": {
-      "collections": [],
-      "id": 12,
-      "items": [],
-      "key": "55496DDK",
-      "name": "0024_TradBungeTraiteVol1Vol2Semantique",
-      "parent": "RIMHH32X"
-    },
-    "5MJGJ44Q": {
-      "collections": [],
-      "id": 35,
-      "items": [
-        504,
-        507,
-        510,
-        516,
-        1030,
-        1646
-      ],
-      "key": "5MJGJ44Q",
-      "name": "\u00c9conomie",
-      "parent": "U2C2GSMH"
-    },
-    "5NGS32X5": {
-      "collections": [],
-      "id": 40,
-      "items": [
-        522,
-        652,
-        654,
-        660
-      ],
-      "key": "5NGS32X5",
-      "name": "Changeux",
-      "parent": "8ZQ35JFF"
-    },
-    "62IYBDU5": {
-      "collections": [],
-      "id": 87,
-      "items": [
-        1684,
-        1750,
-        1752,
-        2718
-      ],
-      "key": "62IYBDU5",
-      "name": "Loi",
-      "parent": "W6X9J3SR"
-    },
-    "62U59SUB": {
-      "collections": [],
-      "id": 50,
-      "items": [
-        1026
-      ],
-      "key": "62U59SUB",
-      "name": "Math\u00e9matiques",
-      "parent": "XEVVHQ37"
-    },
-    "62V4NRWN": {
-      "collections": [],
-      "id": 159,
-      "items": [
-        2562
-      ],
-      "key": "62V4NRWN",
-      "name": "JavaScript",
-      "parent": "YC4CSRUF"
-    },
-    "6ZJLB4I7": {
-      "collections": [],
-      "id": 130,
-      "items": [
-        1967,
-        1968,
-        1969,
-        1970,
-        1971,
-        1972
-      ],
-      "key": "6ZJLB4I7",
-      "name": "Compte rendu Russell",
-      "parent": "Z48DZYD9"
-    },
-    "7SK8R9XD": {
-      "collections": [],
-      "id": 99,
-      "items": [
-        928,
-        1350
-      ],
-      "key": "7SK8R9XD",
-      "name": "Math\u00e9matiques",
-      "parent": "24UAAPSJ"
-    },
-    "8DAYX8W2": {
-      "collections": [],
-      "id": 133,
-      "items": [
-        1999,
-        2000,
-        2001,
-        2002,
-        2003
-      ],
-      "key": "8DAYX8W2",
-      "name": "fonction -Dretske",
-      "parent": "Z48DZYD9"
-    },
-    "8ZQ35JFF": {
+    "coll:00009": {
       "collections": [
-        "CVD95AY7",
-        "TCCK2H36",
-        "5NGS32X5",
-        "MMZVZF7S",
-        "H8X9HKUT",
-        "MQF62BQF",
-        "23DGCXUA",
-        "RLDQGUPZ",
-        "QAJUHG9B",
-        "V5GLSCPT",
-        "GMCUC5UP",
-        "MZ4PGBTX"
+        "coll:00036",
+        "coll:00041",
+        "coll:00045",
+        "coll:00051",
+        "coll:00057",
+        "coll:00058",
+        "coll:00066",
+        "coll:00067",
+        "coll:00069",
+        "coll:00074",
+        "coll:00084",
+        "coll:00109"
       ],
-      "id": 39,
       "items": [],
-      "key": "8ZQ35JFF",
+      "key": "coll:00009",
       "name": "_Auteurs",
-      "parent": "RIMHH32X"
+      "parent": "coll:00000"
     },
-    "9JXD6JF6": {
-      "collections": [],
-      "id": 170,
-      "items": [
-        2723
-      ],
-      "key": "9JXD6JF6",
-      "name": "Physique",
-      "parent": "I8IX5MFE"
-    },
-    "9KJ3GDNH": {
-      "collections": [],
-      "id": 33,
-      "items": [
-        500,
-        2567
-      ],
-      "key": "9KJ3GDNH",
-      "name": "Sociologie",
-      "parent": "U2C2GSMH"
-    },
-    "9UU5XK3Z": {
-      "collections": [],
-      "id": 105,
-      "items": [
-        937
-      ],
-      "key": "9UU5XK3Z",
-      "name": "M\u00e9decine",
-      "parent": "24UAAPSJ"
-    },
-    "9VHTTEZI": {
-      "collections": [],
-      "id": 157,
-      "items": [
-        140,
-        2556,
-        2559,
-        2571,
-        2573,
-        2607,
-        2616,
-        2618
-      ],
-      "key": "9VHTTEZI",
-      "name": "Histoire des sciences, des technologies et des techniques",
-      "parent": "PFAR8S3Z"
-    },
-    "9WRIXFRB": {
-      "collections": [],
-      "id": 168,
-      "items": [
-        2620
-      ],
-      "key": "9WRIXFRB",
-      "name": "Gr\u00e8ce ancienne",
-      "parent": "CIZVHJT2"
-    },
-    "9ZN5KALA": {
-      "collections": [],
-      "id": 147,
-      "items": [],
-      "key": "9ZN5KALA",
-      "name": "Biblio comment\u00e9e",
-      "parent": "AI7SPXMQ"
-    },
-    "A5QVYGZN": {
-      "collections": [],
-      "id": 127,
-      "items": [
-        1954,
-        1976,
-        2028,
-        2030,
-        2040,
-        2044,
-        2045,
-        2047,
-        2048,
-        2049,
-        2052,
-        2053,
-        2054,
-        2056,
-        2057,
-        2058,
-        2059,
-        2060,
-        2061,
-        2062,
-        2065,
-        2066,
-        2079,
-        2081,
-        2085,
-        2166,
-        2175,
-        2241,
-        2243,
-        2245,
-        2246,
-        2250,
-        2251,
-        2255,
-        2256,
-        2257,
-        2258,
-        2259,
-        2260,
-        2261,
-        2262,
-        2263,
-        2264,
-        2266,
-        2269,
-        2272,
-        2273,
-        2276,
-        2279,
-        2280,
-        2281,
-        2282,
-        2296,
-        2298,
-        2303,
-        2305,
-        2306,
-        2307,
-        2308,
-        2309,
-        2310,
-        2311,
-        2314,
-        2315,
-        2316,
-        2317,
-        2318,
-        2319,
-        2320,
-        2323,
-        2327,
-        2329,
-        2331,
-        2332,
-        2335,
-        2336,
-        2339,
-        2340,
-        2341,
-        2342
-      ],
-      "key": "A5QVYGZN",
-      "name": "_Non-classees",
-      "parent": "Z48DZYD9"
-    },
-    "AI7SPXMQ": {
+    "coll:00010": {
       "collections": [
-        "9ZN5KALA",
-        "ZE474R2X",
-        "ENDJ2TPW",
-        "AY2R5VVL"
+        "coll:00037",
+        "coll:00043",
+        "coll:00046",
+        "coll:00081"
       ],
-      "id": 126,
+      "items": [],
+      "key": "coll:00010",
+      "name": "Sciences naturelles",
+      "parent": "coll:00002"
+    },
+    "coll:00011": {
+      "collections": [
+        "coll:00039",
+        "coll:00098",
+        "coll:00099",
+        "coll:00119"
+      ],
       "items": [
-        1836,
-        1837,
-        1838,
-        1839,
-        1840,
-        1841,
-        1842,
-        1843,
-        1844,
-        1845,
-        1846,
-        1847,
-        1848,
-        1850,
-        1852,
-        1853,
-        1854,
-        1855,
-        1856,
-        1857,
-        1858,
-        1859,
-        1860,
-        1861,
-        1862,
-        1863,
-        1864,
-        1865,
-        1866,
-        1867,
-        1868,
-        1869,
-        1870,
-        1872,
-        1873,
-        1874,
-        1875,
-        1876,
-        1877,
-        1878,
-        1879,
-        1880,
-        1881,
-        1882,
-        1888,
-        1889,
-        1890,
-        1891,
-        1892,
-        1893,
-        1894,
-        1895,
-        1896,
-        1897,
-        1898,
-        1900,
-        1901,
-        1902,
-        1903,
-        1904,
-        1905,
-        1906,
-        1907,
-        1908,
-        1909,
-        1910,
-        1911,
-        1912,
-        1913
+        19,
+        7
       ],
-      "key": "AI7SPXMQ",
+      "key": "coll:00011",
       "name": "Objectivit\u00e9 et naturalisme",
-      "parent": "WVVQDE8Y"
+      "parent": "coll:00004"
     },
-    "AJQXIULK": {
-      "collections": [],
-      "id": 116,
-      "items": [
-        286
-      ],
-      "key": "AJQXIULK",
-      "name": "Niveau",
-      "parent": "W6X9J3SR"
-    },
-    "AY2R5VVL": {
-      "collections": [],
-      "id": 154,
-      "items": [
-        1841,
-        1850,
-        1854,
-        1856
-      ],
-      "key": "AY2R5VVL",
-      "name": "The Stanford Encyclopedia of Philosophy",
-      "parent": "AI7SPXMQ"
-    },
-    "BK5GJEEC": {
-      "collections": [],
-      "id": 144,
-      "items": [
-        2092,
-        2217,
-        2224,
-        2225,
-        2255,
-        2280,
-        2364,
-        2391,
-        2392,
-        2394,
-        2395,
-        2469,
-        2471,
-        2472,
-        2473,
-        2476,
-        2478,
-        2479,
-        2480,
-        2481,
-        2482
-      ],
-      "key": "BK5GJEEC",
-      "name": "s\u00e9minaire perception et raison",
-      "parent": "Z48DZYD9"
-    },
-    "BKV4UTWG": {
-      "collections": [],
-      "id": 14,
-      "items": [],
-      "key": "BKV4UTWG",
-      "name": "Divers",
-      "parent": "XCP5RIKM"
-    },
-    "BS9RVC27": {
-      "collections": [],
-      "id": 7,
-      "items": [],
-      "key": "BS9RVC27",
-      "name": "0009_TradBungeLesOrdinateursPensentIls",
-      "parent": "RIMHH32X"
-    },
-    "CBS6IPCX": {
-      "collections": [],
-      "id": 107,
-      "items": [
-        1416,
-        1542,
-        1634,
-        1834
-      ],
-      "key": "CBS6IPCX",
-      "name": "Mat\u00e9rialisme",
-      "parent": "W6X9J3SR"
-    },
-    "CIZVHJT2": {
+    "coll:00012": {
       "collections": [
-        "9WRIXFRB"
+        "coll:00040"
       ],
-      "id": 45,
       "items": [
-        140
+        2,
+        25
       ],
-      "key": "CIZVHJT2",
+      "key": "coll:00012",
+      "name": "0013_Realisme_Scientifique",
+      "parent": "coll:00000"
+    },
+    "coll:00013": {
+      "collections": [
+        "coll:00044",
+        "coll:00053",
+        "coll:00068",
+        "coll:00071",
+        "coll:00075",
+        "coll:00078",
+        "coll:00096"
+      ],
+      "items": [],
+      "key": "coll:00013",
+      "name": "Ontologie",
+      "parent": "coll:00003"
+    },
+    "coll:00014": {
+      "collections": [
+        "coll:00050",
+        "coll:00102",
+        "coll:00103"
+      ],
+      "items": [],
+      "key": "coll:00014",
+      "name": "0018_MarioBunge",
+      "parent": "coll:00000"
+    },
+    "coll:00015": {
+      "collections": [
+        "coll:00059"
+      ],
+      "items": [],
+      "key": "coll:00015",
       "name": "Histoire",
-      "parent": "U2C2GSMH"
+      "parent": "coll:00005"
     },
-    "CKBWD5J7": {
-      "collections": [],
-      "id": 134,
-      "items": [
-        1918,
-        1931,
-        1933,
-        1945,
-        1980,
-        1982,
-        2005,
-        2006,
-        2007,
-        2008,
-        2014,
-        2015,
-        2016,
-        2017,
-        2430
+    "coll:00016": {
+      "collections": [
+        "coll:00060"
       ],
-      "key": "CKBWD5J7",
-      "name": "Indication (relation d', en lien avec Dretske)",
-      "parent": "Z48DZYD9"
+      "items": [],
+      "key": "coll:00016",
+      "name": "Histoire",
+      "parent": "coll:00006"
     },
-    "CKTUIAIT": {
-      "collections": [],
-      "id": 22,
-      "items": [
-        409,
-        427,
-        429,
-        518
+    "coll:00017": {
+      "collections": [
+        "coll:00064"
       ],
-      "key": "CKTUIAIT",
+      "items": [],
+      "key": "coll:00017",
+      "name": "_Programmation",
+      "parent": "coll:00000"
+    },
+    "coll:00018": {
+      "collections": [
+        "coll:00072",
+        "coll:00095",
+        "coll:00108",
+        "coll:00110"
+      ],
+      "items": [],
+      "key": "coll:00018",
+      "name": "Sciences formelles",
+      "parent": "coll:00000"
+    },
+    "coll:00019": {
+      "collections": [
+        "coll:00082",
+        "coll:00085",
+        "coll:00093"
+      ],
+      "items": [],
+      "key": "coll:00019",
+      "name": "Disciplines factuelles",
+      "parent": "coll:00003"
+    },
+    "coll:00020": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00020",
+      "name": "_Sujets",
+      "parent": "coll:00000"
+    },
+    "coll:00021": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00021",
+      "name": "0008_TradBungeDictionnairePhilosophique",
+      "parent": "coll:00000"
+    },
+    "coll:00022": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00022",
+      "name": "0009_TradBungeLesOrdinateursPensentIls",
+      "parent": "coll:00000"
+    },
+    "coll:00023": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00023",
+      "name": "0012_Metasciences",
+      "parent": "coll:00000"
+    },
+    "coll:00024": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00024",
       "name": "0014_Hist-Socio-Sciences",
-      "parent": "RIMHH32X"
+      "parent": "coll:00000"
     },
-    "CNKEN532": {
+    "coll:00025": {
       "collections": [],
-      "id": 3,
+      "items": [],
+      "key": "coll:00025",
+      "name": "0015_FormationR",
+      "parent": "coll:00000"
+    },
+    "coll:00026": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00026",
+      "name": "0017_CritiqueNeoClassique",
+      "parent": "coll:00000"
+    },
+    "coll:00027": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00027",
+      "name": "0020_Reflexions-Metascientifiques",
+      "parent": "coll:00000"
+    },
+    "coll:00028": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00028",
+      "name": "0021_PresentationCapitalXXIeSiecle",
+      "parent": "coll:00000"
+    },
+    "coll:00029": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00029",
+      "name": "0024_TradBungeTraiteVol1Vol2Semantique",
+      "parent": "coll:00000"
+    },
+    "coll:00030": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00030",
+      "name": "0025_Pourquoi-Marie-Bunge-n_est-pas-un-philosophe",
+      "parent": "coll:00000"
+    },
+    "coll:00031": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00031",
+      "name": "0028_Les_relations_logico-mathematiques",
+      "parent": "coll:00000"
+    },
+    "coll:00032": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00032",
+      "name": "0029_Keyboard-Shorcuts-Painkillers",
+      "parent": "coll:00000"
+    },
+    "coll:00033": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00033",
+      "name": "2006-08-20 Biblio-plan",
+      "parent": "coll:00007"
+    },
+    "coll:00034": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00034",
+      "name": "Anti-r\u00e9alisme",
+      "parent": "coll:00008"
+    },
+    "coll:00035": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00035",
+      "name": "Arch\u00e9ologie",
+      "parent": "coll:00008"
+    },
+    "coll:00036": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00036",
+      "name": "Aristote",
+      "parent": "coll:00009"
+    },
+    "coll:00037": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00037",
+      "name": "Astronomie, astrophysique, cosmologie",
+      "parent": "coll:00010"
+    },
+    "coll:00038": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00038",
+      "name": "Autres sujets Dretske (et plusieurs sujets Dretske)",
+      "parent": "coll:00007"
+    },
+    "coll:00039": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00039",
+      "name": "Biblio comment\u00e9e",
+      "parent": "coll:00011"
+    },
+    "coll:00040": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00040",
+      "name": "Biblio",
+      "parent": "coll:00012"
+    },
+    "coll:00041": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00041",
+      "name": "Bickle",
+      "parent": "coll:00009"
+    },
+    "coll:00042": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00042",
+      "name": "Biologie",
+      "parent": "coll:00008"
+    },
+    "coll:00043": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00043",
+      "name": "Biologie",
+      "parent": "coll:00010"
+    },
+    "coll:00044": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00044",
+      "name": "Causali\u00e9",
+      "parent": "coll:00013"
+    },
+    "coll:00045": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00045",
+      "name": "Changeux",
+      "parent": "coll:00009"
+    },
+    "coll:00046": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00046",
+      "name": "Chimie",
+      "parent": "coll:00010"
+    },
+    "coll:00047": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00047",
+      "name": "Commun"
+    },
+    "coll:00048": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00048",
+      "name": "Compte rendu Russell",
+      "parent": "coll:00007"
+    },
+    "coll:00049": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00049",
+      "name": "D\u00e9marcation",
+      "parent": "coll:00003"
+    },
+    "coll:00050": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00050",
+      "name": "Divers",
+      "parent": "coll:00014"
+    },
+    "coll:00051": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00051",
+      "name": "Eberle",
+      "parent": "coll:00009"
+    },
+    "coll:00052": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00052",
+      "name": "\u00c9conomie",
+      "parent": "coll:00008"
+    },
+    "coll:00053": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00053",
+      "name": "\u00c9mergence",
+      "parent": "coll:00013"
+    },
+    "coll:00054": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00054",
+      "name": "\u00c9pist\u00e9mologie",
+      "parent": "coll:00003"
+    },
+    "coll:00055": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00055",
+      "name": "\u00c9thique",
+      "parent": "coll:00003"
+    },
+    "coll:00056": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00056",
+      "name": "fonction -Dretske",
+      "parent": "coll:00007"
+    },
+    "coll:00057": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00057",
+      "name": "Frege",
+      "parent": "coll:00009"
+    },
+    "coll:00058": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00058",
+      "name": "Galil\u00e9e",
+      "parent": "coll:00009"
+    },
+    "coll:00059": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00059",
+      "name": "Gr\u00e8ce ancienne",
+      "parent": "coll:00015"
+    },
+    "coll:00060": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00060",
+      "name": "Gr\u00e8ce antique",
+      "parent": "coll:00016"
+    },
+    "coll:00061": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00061",
+      "name": "Histoire des sciences, des technologies et des techniques",
+      "parent": "coll:00006"
+    },
+    "coll:00062": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00062",
+      "name": "Information (th. trad.de l' et ouvrages g\u00e9n\u00e9raux sur le sujet)",
+      "parent": "coll:00007"
+    },
+    "coll:00063": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00063",
+      "name": "Internet Encyclopedia of Philosophy",
+      "parent": "coll:00006"
+    },
+    "coll:00064": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00064",
+      "name": "JavaScript",
+      "parent": "coll:00017"
+    },
+    "coll:00065": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00065",
+      "name": "KFI (C-R et critiques)",
+      "parent": "coll:00007"
+    },
+    "coll:00066": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00066",
+      "name": "Kistler",
+      "parent": "coll:00009"
+    },
+    "coll:00067": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00067",
+      "name": "Lesniewski",
+      "parent": "coll:00009"
+    },
+    "coll:00068": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00068",
+      "name": "Loi",
+      "parent": "coll:00013"
+    },
+    "coll:00069": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00069",
+      "name": "Madsen",
+      "parent": "coll:00009"
+    },
+    "coll:00070": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00070",
+      "name": "mai 2006 ajustements",
+      "parent": "coll:00007"
+    },
+    "coll:00071": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00071",
+      "name": "Mat\u00e9rialisme",
+      "parent": "coll:00013"
+    },
+    "coll:00072": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00072",
+      "name": "Math\u00e9matiques",
+      "parent": "coll:00018"
+    },
+    "coll:00073": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00073",
+      "name": "Math\u00e9matiques",
+      "parent": "coll:00008"
+    },
+    "coll:00074": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00074",
+      "name": "McLuhan",
+      "parent": "coll:00009"
+    },
+    "coll:00075": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00075",
+      "name": "M\u00e9canisme",
+      "parent": "coll:00013"
+    },
+    "coll:00076": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00076",
+      "name": "M\u00e9decine",
+      "parent": "coll:00008"
+    },
+    "coll:00077": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00077",
+      "name": "Naturalizing the Mind (C-R et critiques)",
+      "parent": "coll:00007"
+    },
+    "coll:00078": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00078",
+      "name": "Niveau",
+      "parent": "coll:00013"
+    },
+    "coll:00079": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00079",
+      "name": "Objectivit\u00e9",
+      "parent": "coll:00003"
+    },
+    "coll:00080": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00080",
+      "name": "Philosophie traditionnelle",
+      "parent": "coll:00003"
+    },
+    "coll:00081": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00081",
+      "name": "Physique",
+      "parent": "coll:00010"
+    },
+    "coll:00082": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00082",
+      "name": "Physique",
+      "parent": "coll:00019"
+    },
+    "coll:00083": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00083",
+      "name": "Physique",
+      "parent": "coll:00008"
+    },
+    "coll:00084": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00084",
+      "name": "Piaget",
+      "parent": "coll:00009"
+    },
+    "coll:00085": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00085",
+      "name": "Psychologie",
+      "parent": "coll:00019"
+    },
+    "coll:00086": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00086",
+      "name": "Psychologie",
+      "parent": "coll:00008"
+    },
+    "coll:00087": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00087",
+      "name": "Psychologie",
+      "parent": "coll:00005"
+    },
+    "coll:00088": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00088",
+      "name": "Rationalit\u00e9",
+      "parent": "coll:00003"
+    },
+    "coll:00089": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00089",
+      "name": "r\u00e9alisme moral",
+      "parent": "coll:00007"
+    },
+    "coll:00090": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00090",
+      "name": "R\u00e9f\u00e9rence et intentionnalit\u00e9",
+      "parent": "coll:00007"
+    },
+    "coll:00091": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00091",
+      "name": "Routledge Encyclopedia of Philosophy",
+      "parent": "coll:00006"
+    },
+    "coll:00092": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00092",
+      "name": "Sciences sociales",
+      "parent": "coll:00008"
+    },
+    "coll:00093": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00093",
+      "name": "Sciences sociales",
+      "parent": "coll:00019"
+    },
+    "coll:00094": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00094",
+      "name": "Sociologie",
+      "parent": "coll:00005"
+    },
+    "coll:00095": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00095",
+      "name": "Statistiques",
+      "parent": "coll:00018"
+    },
+    "coll:00096": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00096",
+      "name": "Syst\u00e8me",
+      "parent": "coll:00013"
+    },
+    "coll:00097": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00097",
+      "name": "Technologies",
+      "parent": "coll:00008"
+    },
+    "coll:00098": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00098",
+      "name": "The Internet Encyclopedia of Philosophy",
+      "parent": "coll:00011"
+    },
+    "coll:00099": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00099",
+      "name": "The Stanford Encyclopedia of Philosophy",
+      "parent": "coll:00011"
+    },
+    "coll:00100": {
+      "collections": [],
+      "items": [],
+      "key": "coll:00100",
+      "name": "Wikipedia",
+      "parent": "coll:00006"
+    },
+    "coll:00101": {
+      "collections": [],
       "items": [
         1,
-        6,
-        72,
-        81,
-        82,
-        83,
-        85,
-        317,
-        318,
-        720,
-        724,
-        726,
-        857,
-        930,
-        939,
-        982,
-        986,
-        1002,
-        1006,
-        1016,
-        1039,
-        1049,
-        1052,
-        1055,
-        1138,
-        1196,
-        1203,
-        1210,
-        1289,
-        1292,
-        1295,
-        1300,
-        1311,
-        1313,
-        1315,
-        1317,
-        1319,
-        1321,
-        1323,
-        1325,
-        1327,
-        1329,
-        1331,
-        1333,
-        1336,
-        1338,
-        1340,
-        1342,
-        1344,
-        1353,
-        1377,
-        1380,
-        1383,
-        1386,
-        1389,
-        1392,
-        1395,
-        1398,
-        1401,
-        1404,
-        1441,
-        1494,
-        1534,
-        1545,
-        1586,
-        1592,
-        1634,
-        1719,
-        1722,
-        1724,
-        1726,
-        1728,
-        1730,
-        1732,
-        1734,
-        1736,
-        1738,
-        1740,
-        1743,
-        1745,
-        1818,
-        1820,
-        1822,
-        1825,
-        1829
+        2
       ],
-      "key": "CNKEN532",
-      "name": "Ouvrages",
-      "parent": "XCP5RIKM"
-    },
-    "CTF3QCKS": {
-      "collections": [
-        "L2ZJR2GE"
-      ],
-      "id": 160,
-      "items": [],
-      "key": "CTF3QCKS",
-      "name": "Histoire",
-      "parent": "PFAR8S3Z"
-    },
-    "CVD95AY7": {
-      "collections": [],
-      "id": 156,
-      "items": [
-        2554
-      ],
-      "key": "CVD95AY7",
-      "name": "Aristote",
-      "parent": "8ZQ35JFF"
-    },
-    "D2Z97AXM": {
-      "collections": [],
-      "id": 20,
-      "items": [],
-      "key": "D2Z97AXM",
-      "name": "0015_FormationR",
-      "parent": "RIMHH32X"
-    },
-    "DMNS5NCX": {
-      "collections": [],
-      "id": 132,
-      "items": [
-        1926,
-        1938,
-        1996
-      ],
-      "key": "DMNS5NCX",
-      "name": "Explaining Behavior (C-R et critiques)",
-      "parent": "Z48DZYD9"
-    },
-    "DXJJDSNF": {
-      "collections": [
-        "26S2WA7C",
-        "SWDK7E7P",
-        "E4PZC2XY",
-        "N6WQ5P7W"
-      ],
-      "id": 41,
-      "items": [
-        704,
-        734,
-        738,
-        767
-      ],
-      "key": "DXJJDSNF",
-      "name": "Sciences naturelles",
-      "parent": "GFZRE8SG"
-    },
-    "DZYPLXVR": {
-      "collections": [],
-      "id": 115,
-      "items": [
-        1414
-      ],
-      "key": "DZYPLXVR",
-      "name": "D\u00e9marcation",
-      "parent": "MQZN7WBG"
-    },
-    "E429FF2H": {
-      "collections": [],
-      "id": 103,
-      "items": [
-        946,
-        1251,
-        1475,
-        1481,
-        1492
-      ],
-      "key": "E429FF2H",
-      "name": "Syst\u00e8me",
-      "parent": "W6X9J3SR"
-    },
-    "E4PVCM74": {
-      "collections": [],
-      "id": 100,
-      "items": [
-        1281
-      ],
-      "key": "E4PVCM74",
-      "name": "Technologies",
-      "parent": "24UAAPSJ"
-    },
-    "E4PZC2XY": {
-      "collections": [],
-      "id": 167,
-      "items": [
-        2605
-      ],
-      "key": "E4PZC2XY",
-      "name": "Chimie",
-      "parent": "DXJJDSNF"
-    },
-    "EGAC8BXE": {
-      "collections": [],
-      "id": 143,
-      "items": [
-        1865,
-        1916,
-        1917,
-        1918,
-        1919,
-        1920,
-        1921,
-        1922,
-        1923,
-        1924,
-        1925,
-        1926,
-        1927,
-        1928,
-        1929,
-        1930,
-        1931,
-        1933,
-        1934,
-        1935,
-        1936,
-        1937,
-        1938,
-        1939,
-        1940,
-        1941,
-        1942,
-        1943,
-        1944,
-        1945,
-        1946,
-        1947,
-        1948,
-        1949,
-        1950,
-        1951,
-        1952,
-        2003,
-        2008,
-        2015,
-        2099,
-        2102,
-        2104,
-        2105,
-        2106,
-        2112,
-        2241,
-        2243,
-        2246,
-        2310,
-        2311,
-        2323,
-        2402,
-        2404,
-        2407,
-        2409,
-        2410,
-        2413,
-        2414,
-        2416,
-        2427,
-        2428,
-        2429,
-        2430,
-        2431,
-        2442,
-        2446,
-        2453,
-        2458,
-        2467
-      ],
-      "key": "EGAC8BXE",
-      "name": "R\u00e9f\u00e9rences m\u00e9moire (cr\u00e9\u00e9 le 16 oct. 2006)",
-      "parent": "Z48DZYD9"
-    },
-    "ENDJ2TPW": {
-      "collections": [],
-      "id": 149,
-      "items": [
-        1837,
-        1845
-      ],
-      "key": "ENDJ2TPW",
-      "name": "The Internet Encyclopedia of Philosophy",
-      "parent": "AI7SPXMQ"
-    },
-    "EUACKQTA": {
-      "collections": [],
-      "id": 26,
-      "items": [
-        464,
-        467,
-        857
-      ],
-      "key": "EUACKQTA",
-      "name": "S\u00e9mantique",
-      "parent": "MQZN7WBG"
-    },
-    "F2KNIGW7": {
-      "collections": [],
-      "id": 140,
-      "items": [
-        2190,
-        2226,
-        2227,
-        2240
-      ],
-      "key": "F2KNIGW7",
-      "name": "Naturalizing the Mind (C-R et critiques)",
-      "parent": "Z48DZYD9"
-    },
-    "F8745EWX": {
-      "collections": [],
-      "id": 8,
-      "items": [
-        16,
-        48,
-        75,
-        480,
-        526,
-        527,
-        548,
-        939,
-        1194,
-        1207,
-        1657,
-        1661,
-        1663,
-        1665,
-        1669,
-        1671,
-        1674,
-        1678,
-        1705,
-        1809
-      ],
-      "key": "F8745EWX",
-      "name": "0012_Metasciences",
-      "parent": "RIMHH32X"
-    },
-    "GDUX92ZI": {
-      "collections": [],
-      "id": 101,
-      "items": [
-        1441
-      ],
-      "key": "GDUX92ZI",
-      "name": "Biologie",
-      "parent": "24UAAPSJ"
-    },
-    "GEEFVFEB": {
-      "collections": [],
-      "id": 177,
-      "items": [],
-      "key": "GEEFVFEB",
-      "name": "Commun",
-      "parent": false
-    },
-    "GFZRE8SG": {
-      "collections": [
-        "DXJJDSNF",
-        "U2C2GSMH"
-      ],
-      "id": 55,
-      "items": [],
-      "key": "GFZRE8SG",
-      "name": "Sciences factuelles",
-      "parent": "RIMHH32X"
-    },
-    "GMCUC5UP": {
-      "collections": [],
-      "id": 118,
-      "items": [
-        1813
-      ],
-      "key": "GMCUC5UP",
-      "name": "Piaget",
-      "parent": "8ZQ35JFF"
-    },
-    "GWF33ACQ": {
-      "collections": [],
-      "id": 24,
-      "items": [
-        446,
-        1169
-      ],
-      "key": "GWF33ACQ",
-      "name": "0025_Pourquoi-Marie-Bunge-n_est-pas-un-philosophe",
-      "parent": "RIMHH32X"
-    },
-    "H8X9HKUT": {
-      "collections": [],
-      "id": 61,
-      "items": [
-        1274
-      ],
-      "key": "H8X9HKUT",
-      "name": "Frege",
-      "parent": "8ZQ35JFF"
-    },
-    "H9U8RLCV": {
-      "collections": [],
-      "id": 141,
-      "items": [
-        1855,
-        1865,
-        2344,
-        2348
-      ],
-      "key": "H9U8RLCV",
-      "name": "r\u00e9alisme moral",
-      "parent": "Z48DZYD9"
-    },
-    "I7QE7QDP": {
-      "collections": [],
-      "id": 81,
-      "items": [
-        1130,
-        1207,
-        1419,
-        1453,
-        1678
-      ],
-      "key": "I7QE7QDP",
-      "name": "Psychologie",
-      "parent": "I8IX5MFE"
-    },
-    "I8IX5MFE": {
-      "collections": [
-        "9JXD6JF6",
-        "I7QE7QDP",
-        "X37U5ANA"
-      ],
-      "id": 82,
-      "items": [],
-      "key": "I8IX5MFE",
-      "name": "Disciplines factuelles",
-      "parent": "MQZN7WBG"
-    },
-    "INKWWN2D": {
-      "collections": [],
-      "id": 10,
-      "items": [
-        282
-      ],
-      "key": "INKWWN2D",
-      "name": "0020_Reflexions-Metascientifiques",
-      "parent": "RIMHH32X"
-    },
-    "J5ULPU6D": {
-      "collections": [],
-      "id": 135,
-      "items": [
-        2019,
-        2020,
-        2021,
-        2022,
-        2023,
-        2024,
-        2025,
-        2026,
-        2027
-      ],
-      "key": "J5ULPU6D",
-      "name": "Information (th. trad.de l' et ouvrages g\u00e9n\u00e9raux sur le sujet)",
-      "parent": "Z48DZYD9"
-    },
-    "JMTJASR3": {
-      "collections": [],
-      "id": 71,
-      "items": [
-        939,
-        991,
-        1506,
-        1514,
-        1543,
-        1597,
-        1827
-      ],
-      "key": "JMTJASR3",
-      "name": "Physique",
-      "parent": "24UAAPSJ"
-    },
-    "K3TYSQU7": {
-      "collections": [],
-      "id": 106,
-      "items": [
-        1245
-      ],
-      "key": "K3TYSQU7",
-      "name": "Psychologie",
-      "parent": "24UAAPSJ"
-    },
-    "L2ZJR2GE": {
-      "collections": [],
-      "id": 163,
-      "items": [
-        2565
-      ],
-      "key": "L2ZJR2GE",
-      "name": "Gr\u00e8ce antique",
-      "parent": "CTF3QCKS"
-    },
-    "LG6TKDQV": {
-      "collections": [],
-      "id": 129,
-      "items": [
-        1925,
-        1926,
-        1930,
-        1940,
-        1943,
-        1947,
-        1953,
-        1954,
-        1955,
-        1957,
-        1958,
-        1961,
-        1965,
-        1966
-      ],
-      "key": "LG6TKDQV",
-      "name": "Autres sujets Dretske (et plusieurs sujets Dretske)",
-      "parent": "Z48DZYD9"
-    },
-    "MD3JKSC6": {
-      "collections": [],
-      "id": 138,
-      "items": [
-        1917,
-        1919,
-        1921,
-        1922,
-        1923,
-        1924,
-        1929,
-        1935,
-        1937,
-        1939,
-        1949,
-        1951,
-        1976,
-        1992,
-        2017,
-        2115,
-        2116,
-        2117,
-        2118,
-        2119,
-        2121,
-        2122,
-        2123,
-        2124,
-        2125,
-        2126,
-        2127,
-        2128,
-        2129,
-        2130,
-        2132,
-        2134,
-        2135,
-        2136,
-        2137,
-        2138,
-        2139,
-        2140,
-        2141,
-        2142,
-        2143,
-        2144,
-        2145,
-        2146,
-        2147,
-        2148,
-        2149,
-        2151,
-        2155,
-        2156,
-        2157,
-        2158,
-        2161,
-        2162,
-        2163,
-        2165,
-        2166,
-        2167,
-        2168,
-        2169,
-        2170,
-        2171,
-        2172,
-        2173,
-        2174,
-        2175,
-        2176,
-        2178,
-        2179,
-        2180,
-        2181,
-        2182,
-        2183,
-        2185,
-        2186,
-        2187,
-        2188,
-        2189,
-        2190,
-        2191,
-        2193,
-        2194,
-        2195,
-        2196,
-        2197,
-        2198,
-        2199,
-        2200,
-        2202,
-        2203,
-        2204,
-        2207,
-        2209,
-        2212
-      ],
-      "key": "MD3JKSC6",
-      "name": "mai 2006 ajustements",
-      "parent": "Z48DZYD9"
-    },
-    "MMZVZF7S": {
-      "collections": [],
-      "id": 66,
-      "items": [],
-      "key": "MMZVZF7S",
-      "name": "Eberle",
-      "parent": "8ZQ35JFF"
-    },
-    "MQF62BQF": {
-      "collections": [],
-      "id": 166,
-      "items": [
-        2599,
-        2622,
-        2624
-      ],
-      "key": "MQF62BQF",
-      "name": "Galil\u00e9e",
-      "parent": "8ZQ35JFF"
-    },
-    "MQZN7WBG": {
-      "collections": [
-        "DZYPLXVR",
-        "I8IX5MFE",
-        "RKI43ZCV",
-        "ZXMHMKPL",
-        "PMQA6HAD",
-        "W6X9J3SR",
-        "24UAAPSJ",
-        "WPGT2CSD",
-        "T7N63ITU",
-        "EUACKQTA"
-      ],
-      "id": 54,
-      "items": [
-        2587,
-        2729
-      ],
-      "key": "MQZN7WBG",
-      "name": "Sciences conceptuelles",
-      "parent": "RIMHH32X"
-    },
-    "MZ4PGBTX": {
-      "collections": [],
-      "id": 92,
-      "items": [
-        1708,
-        1756,
-        1761
-      ],
-      "key": "MZ4PGBTX",
-      "name": "Russell",
-      "parent": "8ZQ35JFF"
-    },
-    "N6WQ5P7W": {
-      "collections": [],
-      "id": 69,
-      "items": [
-        1525,
-        1597,
-        2627
-      ],
-      "key": "N6WQ5P7W",
-      "name": "Physique",
-      "parent": "DXJJDSNF"
-    },
-    "P2HWRPBM": {
-      "collections": [],
-      "id": 2,
-      "items": [
-        3,
-        4,
-        8,
-        9,
-        11,
-        12,
-        14,
-        15,
-        16,
-        17,
-        18,
-        19,
-        20,
-        21,
-        23,
-        24,
-        25,
-        27,
-        29,
-        31,
-        32,
-        33,
-        34,
-        35,
-        36,
-        37,
-        38,
-        40,
-        41,
-        44,
-        45,
-        46,
-        48,
-        50,
-        51,
-        54,
-        55,
-        56,
-        57,
-        59,
-        61,
-        62,
-        63,
-        65,
-        66,
-        67,
-        68,
-        69,
-        71,
-        73,
-        75,
-        79,
-        87,
-        90,
-        94,
-        95,
-        96,
-        98,
-        99,
-        101,
-        103,
-        107,
-        108,
-        109,
-        111,
-        142,
-        143,
-        215,
-        220,
-        221,
-        222,
-        226,
-        228,
-        229,
-        231,
-        233,
-        234,
-        236,
-        237,
-        238,
-        239,
-        241,
-        242,
-        244,
-        247,
-        248,
-        250,
-        251,
-        252,
-        253,
-        254,
-        256,
-        259,
-        260,
-        261,
-        262,
-        264,
-        265,
-        266,
-        273,
-        274,
-        275,
-        278,
-        279,
-        280,
-        288,
-        289,
-        291,
-        292,
-        294,
-        296,
-        299,
-        300,
-        302,
-        303,
-        304,
-        306,
-        307,
-        309,
-        312,
-        313,
-        314,
-        315,
-        326,
-        327,
-        328,
-        330,
-        331,
-        332,
-        333,
-        334,
-        335,
-        336,
-        337,
-        345,
-        424,
-        483,
-        496,
-        530,
-        645,
-        718,
-        731,
-        741,
-        753,
-        772,
-        775,
-        778,
-        783,
-        788,
-        791,
-        793,
-        798,
-        801,
-        806,
-        809,
-        812,
-        815,
-        819,
-        822,
-        825,
-        830,
-        832,
-        835,
-        842,
-        853,
-        872,
-        875,
-        879,
-        882,
-        885,
-        888,
-        891,
-        894,
-        897,
-        900,
-        903,
-        906,
-        909,
-        912,
-        916,
-        919,
-        922,
-        925,
-        934,
-        943,
-        953,
-        955,
-        957,
-        959,
-        961,
-        963,
-        965,
-        967,
-        968,
-        973,
-        976,
-        992,
-        999,
-        1009,
-        1012,
-        1019,
-        1022,
-        1036,
-        1042,
-        1046,
-        1059,
-        1061,
-        1063,
-        1065,
-        1067,
-        1069,
-        1071,
-        1073,
-        1075,
-        1077,
-        1079,
-        1081,
-        1083,
-        1086,
-        1088,
-        1090,
-        1093,
-        1095,
-        1097,
-        1100,
-        1103,
-        1106,
-        1110,
-        1114,
-        1116,
-        1119,
-        1122,
-        1125,
-        1128,
-        1136,
-        1141,
-        1174,
-        1177,
-        1178,
-        1179,
-        1184,
-        1189,
-        1190,
-        1192,
-        1193,
-        1195,
-        1198,
-        1200,
-        1201,
-        1205,
-        1212,
-        1213,
-        1215,
-        1219,
-        1226,
-        1228,
-        1234,
-        1235,
-        1240,
-        1242,
-        1246,
-        1249,
-        1253,
-        1255,
-        1259,
-        1261,
-        1270,
-        1276,
-        1277,
-        1278,
-        1279,
-        1280,
-        1283,
-        1286,
-        1288,
-        1293,
-        1294,
-        1296,
-        1297,
-        1298,
-        1299,
-        1304,
-        1305,
-        1351,
-        1352,
-        1357,
-        1363,
-        1365,
-        1368,
-        1371,
-        1372,
-        1373,
-        1374,
-        1375,
-        1408,
-        1409,
-        1410,
-        1413,
-        1415,
-        1418,
-        1420,
-        1423,
-        1424,
-        1425,
-        1427,
-        1428,
-        1429,
-        1434,
-        1436,
-        1437,
-        1440,
-        1444,
-        1448,
-        1449,
-        1450,
-        1451,
-        1452,
-        1455,
-        1456,
-        1457,
-        1458,
-        1470,
-        1473,
-        1474,
-        1476,
-        1477,
-        1480,
-        1482,
-        1484,
-        1487,
-        1491,
-        1493,
-        1497,
-        1499,
-        1502,
-        1505,
-        1507,
-        1510,
-        1512,
-        1513,
-        1516,
-        1517,
-        1519,
-        1521,
-        1524,
-        1527,
-        1530,
-        1533,
-        1537,
-        1540,
-        1543,
-        1544,
-        1547,
-        1548
-      ],
-      "key": "P2HWRPBM",
-      "name": "Oeuvres",
-      "parent": "XCP5RIKM"
-    },
-    "PFAR8S3Z": {
-      "collections": [
-        "VRVFELDB",
-        "CTF3QCKS",
-        "9VHTTEZI",
-        "PI2YQEG2",
-        "VTIID7ZS",
-        "QXEUVJ9E",
-        "2M3ABEMG"
-      ],
-      "id": 37,
-      "items": [
-        500,
-        504,
-        507,
-        510,
-        1026,
-        1251,
-        1263,
-        1437,
-        1485,
-        2569,
-        2576,
-        2580
-      ],
-      "key": "PFAR8S3Z",
-      "name": "_References",
-      "parent": "RIMHH32X"
-    },
-    "PHF99EAS": {
-      "collections": [],
-      "id": 28,
-      "items": [
-        475
-      ],
-      "key": "PHF99EAS",
-      "name": "Biblio",
-      "parent": "QIKQ7QFT"
-    },
-    "PI2YQEG2": {
-      "collections": [],
-      "id": 73,
-      "items": [
-        1605,
-        1608,
-        1628
-      ],
-      "key": "PI2YQEG2",
-      "name": "Internet Encyclopedia of Philosophy",
-      "parent": "PFAR8S3Z"
-    },
-    "PMQA6HAD": {
-      "collections": [],
-      "id": 114,
-      "items": [
-        1500
-      ],
-      "key": "PMQA6HAD",
-      "name": "Objectivit\u00e9",
-      "parent": "MQZN7WBG"
-    },
-    "PX85CPBZ": {
-      "collections": [],
-      "id": 9,
-      "items": [
-        407,
-        516
-      ],
-      "key": "PX85CPBZ",
-      "name": "0017_CritiqueNeoClassique",
-      "parent": "RIMHH32X"
-    },
-    "QAJUHG9B": {
-      "collections": [],
-      "id": 83,
-      "items": [
-        1207,
-        1678
-      ],
-      "key": "QAJUHG9B",
-      "name": "Madsen",
-      "parent": "8ZQ35JFF"
-    },
-    "QF7SQFUS": {
-      "collections": [],
-      "id": 58,
-      "items": [],
-      "key": "QF7SQFUS",
-      "name": "_Sujets",
-      "parent": "RIMHH32X"
-    },
-    "QIKQ7QFT": {
-      "collections": [
-        "PHF99EAS"
-      ],
-      "id": 4,
-      "items": [
-        28,
-        57,
-        124,
-        140,
-        348,
-        352,
-        353,
-        354,
-        355,
-        357,
-        360,
-        363,
-        366,
-        369,
-        370,
-        373,
-        374,
-        376,
-        378,
-        380,
-        383,
-        385,
-        386,
-        387,
-        388,
-        389,
-        391,
-        393,
-        394,
-        395,
-        396,
-        397,
-        398,
-        399,
-        414,
-        431,
-        439,
-        446,
-        456,
-        673,
-        677,
-        693,
-        1002,
-        1386,
-        1557,
-        1565,
-        1567,
-        1572,
-        1577,
-        1579,
-        1722,
-        1750,
-        1752,
-        2540,
-        2545,
-        2547,
-        2559
-      ],
-      "key": "QIKQ7QFT",
-      "name": "0013_Realisme_Scientifique",
-      "parent": "RIMHH32X"
-    },
-    "QXEUVJ9E": {
-      "collections": [],
-      "id": 16,
-      "items": [
-        124,
-        156,
-        446,
-        477,
-        668,
-        677,
-        682,
-        685,
-        688,
-        1169,
-        1266,
-        1602,
-        1625,
-        1631
-      ],
-      "key": "QXEUVJ9E",
+      "key": "coll:00101",
       "name": "Stanford Encyclopdia of Philosophy",
-      "parent": "PFAR8S3Z"
+      "parent": "coll:00006"
     },
-    "R934K2V6": {
+    "coll:00102": {
       "collections": [],
-      "id": 142,
       "items": [
-        1880,
-        1944,
-        2034,
-        2088,
-        2255,
-        2272,
-        2315,
-        2349,
-        2350,
-        2351,
-        2352,
-        2353,
-        2354,
-        2355,
-        2356,
-        2359,
-        2360,
-        2361,
-        2362,
-        2364,
-        2365,
-        2366,
-        2367,
-        2368,
-        2369,
-        2370,
-        2372,
-        2373,
-        2374,
-        2375,
-        2376,
-        2377,
-        2379,
-        2381,
-        2382,
-        2383,
-        2384,
-        2385,
-        2386,
-        2388,
-        2390,
-        2391,
-        2392,
-        2394,
-        2395,
-        2396
-      ],
-      "key": "R934K2V6",
-      "name": "R\u00e9f\u00e9rence et intentionnalit\u00e9",
-      "parent": "Z48DZYD9"
-    },
-    "RH9XTBRB": {
-      "collections": [],
-      "id": 131,
-      "items": [
-        1916,
-        1920,
-        1941,
-        1942,
-        1946,
-        1948,
-        1949,
-        1950,
-        1952,
-        1975,
-        1976,
-        1977,
-        1978,
-        1979,
-        1980,
-        1981,
-        1982,
-        1983,
-        1984,
-        1992,
-        1993,
-        1994,
-        1995
-      ],
-      "key": "RH9XTBRB",
-      "name": "Contenu intentionnel (en relation avec Dretske)",
-      "parent": "Z48DZYD9"
-    },
-    "RIMHH32X": {
-      "collections": [
-        "8ZQ35JFF",
-        "YC4CSRUF",
-        "PFAR8S3Z",
-        "QF7SQFUS",
-        "4U2X6N5Q",
-        "BS9RVC27",
-        "F8745EWX",
-        "QIKQ7QFT",
-        "CKTUIAIT",
-        "D2Z97AXM",
-        "PX85CPBZ",
-        "XCP5RIKM",
-        "INKWWN2D",
-        "TFMXDQUD",
-        "55496DDK",
-        "GWF33ACQ",
-        "V8DQ2HU4",
-        "VPA27X42",
-        "S9J7HMHX",
-        "MQZN7WBG",
-        "GFZRE8SG",
-        "XEVVHQ37"
-      ],
-      "id": 176,
-      "items": [],
-      "key": "RIMHH32X",
-      "name": "FM",
-      "parent": false
-    },
-    "RKI43ZCV": {
-      "collections": [],
-      "id": 56,
-      "items": [
-        1431,
-        1520,
-        1531,
-        1640,
-        1647
-      ],
-      "key": "RKI43ZCV",
-      "name": "\u00c9pist\u00e9mologie",
-      "parent": "MQZN7WBG"
-    },
-    "RLDQGUPZ": {
-      "collections": [],
-      "id": 65,
-      "items": [],
-      "key": "RLDQGUPZ",
-      "name": "Lesniewski",
-      "parent": "8ZQ35JFF"
-    },
-    "RNNZAGMC": {
-      "collections": [],
-      "id": 161,
-      "items": [
-        2580
-      ],
-      "key": "RNNZAGMC",
-      "name": "Statistiques",
-      "parent": "XEVVHQ37"
-    },
-    "S2ZFKID4": {
-      "collections": [],
-      "id": 59,
-      "items": [
-        930,
-        1271,
-        1692
-      ],
-      "key": "S2ZFKID4",
-      "name": "\u00c9mergence",
-      "parent": "W6X9J3SR"
-    },
-    "S9J7HMHX": {
-      "collections": [],
-      "id": 174,
-      "items": [],
-      "key": "S9J7HMHX",
-      "name": "0029_Keyboard-Shorcuts-Painkillers",
-      "parent": "RIMHH32X"
-    },
-    "SBMBW6E6": {
-      "collections": [],
-      "id": 102,
-      "items": [
-        1366,
-        1441
-      ],
-      "key": "SBMBW6E6",
-      "name": "\u00c9conomie",
-      "parent": "24UAAPSJ"
-    },
-    "SWDK7E7P": {
-      "collections": [],
-      "id": 47,
-      "items": [
-        411,
-        941,
-        1644,
-        1645
-      ],
-      "key": "SWDK7E7P",
-      "name": "Biologie",
-      "parent": "DXJJDSNF"
-    },
-    "T7N63ITU": {
-      "collections": [],
-      "id": 98,
-      "items": [
-        541,
-        1237,
-        1353,
-        1479
-      ],
-      "key": "T7N63ITU",
-      "name": "Rationalit\u00e9",
-      "parent": "MQZN7WBG"
-    },
-    "TCCK2H36": {
-      "collections": [],
-      "id": 90,
-      "items": [
-        548
-      ],
-      "key": "TCCK2H36",
-      "name": "Bickle",
-      "parent": "8ZQ35JFF"
-    },
-    "TFMXDQUD": {
-      "collections": [],
-      "id": 11,
-      "items": [],
-      "key": "TFMXDQUD",
-      "name": "0021_PresentationCapitalXXIeSiecle",
-      "parent": "RIMHH32X"
-    },
-    "TJK44FKS": {
-      "collections": [],
-      "id": 113,
-      "items": [
-        1807
-      ],
-      "key": "TJK44FKS",
-      "name": "Arch\u00e9ologie",
-      "parent": "24UAAPSJ"
-    },
-    "TSSUJZ33": {
-      "collections": [],
-      "id": 79,
-      "items": [
-        1254,
-        1649
-      ],
-      "key": "TSSUJZ33",
-      "name": "Probabilit\u00e9s",
-      "parent": "XEVVHQ37"
-    },
-    "TV26W8G6": {
-      "collections": [],
-      "id": 68,
-      "items": [
-        1595
-      ],
-      "key": "TV26W8G6",
-      "name": "Anti-r\u00e9alisme",
-      "parent": "24UAAPSJ"
-    },
-    "U2C2GSMH": {
-      "collections": [
-        "5MJGJ44Q",
-        "CIZVHJT2",
-        "UN4LFXRT",
-        "9KJ3GDNH"
-      ],
-      "id": 32,
-      "items": [
-        761
-      ],
-      "key": "U2C2GSMH",
-      "name": "Sciences sociales",
-      "parent": "GFZRE8SG"
-    },
-    "UKJHR3HG": {
-      "collections": [],
-      "id": 18,
-      "items": [
-        153,
-        163,
-        167,
-        171,
-        175,
-        182,
-        339,
-        341,
-        443,
-        449,
-        453,
-        460,
-        462,
-        535,
-        707,
-        711,
-        2578,
-        2630,
-        2632,
-        2634,
-        2640,
-        2643,
-        2646,
-        2658,
-        2660,
-        2662,
-        2664,
-        2666,
-        2670,
-        2672,
-        2674,
-        2676,
-        2679,
-        2681,
-        2694,
-        2697,
-        2699,
-        2701,
-        2703,
-        2705,
-        2711,
-        2713,
-        2721,
-        2727,
-        2739,
-        2744,
-        2746,
-        2748,
-        2750,
-        2752,
-        2764,
-        2766,
-        2768,
-        2770
-      ],
-      "key": "UKJHR3HG",
-      "name": "Logique math\u00e9matique",
-      "parent": "XEVVHQ37"
-    },
-    "UN4LFXRT": {
-      "collections": [],
-      "id": 109,
-      "items": [
-        1419,
-        1485,
-        2552,
-        2591,
-        2594,
-        2597,
-        2602
-      ],
-      "key": "UN4LFXRT",
-      "name": "Psychologie",
-      "parent": "U2C2GSMH"
-    },
-    "V5GLSCPT": {
-      "collections": [],
-      "id": 164,
-      "items": [
-        2583
-      ],
-      "key": "V5GLSCPT",
-      "name": "McLuhan",
-      "parent": "8ZQ35JFF"
-    },
-    "V8DQ2HU4": {
-      "collections": [],
-      "id": 30,
-      "items": [
-        9,
-        19,
+        10,
+        11,
+        13,
         20,
-        29,
-        33,
-        61,
-        69,
-        71,
-        83,
-        215,
-        333,
-        483,
-        484,
-        492,
-        493,
-        670,
-        698,
-        857
+        22,
+        23,
+        28,
+        3,
+        34,
+        6,
+        8,
+        9
       ],
-      "key": "V8DQ2HU4",
-      "name": "0027_Theorie-de-la-verite",
-      "parent": "RIMHH32X"
+      "key": "coll:00102",
+      "name": "Oeuvres",
+      "parent": "coll:00014"
     },
-    "VL8NKWVX": {
+    "coll:00103": {
       "collections": [],
-      "id": 139,
       "items": [
-        2036,
-        2073,
-        2213,
-        2216,
-        2217,
-        2219,
-        2221,
-        2222,
-        2223,
-        2224,
-        2225
+        12,
+        24,
+        27,
+        32
       ],
-      "key": "VL8NKWVX",
-      "name": "Naturalisme (en g\u00e9n\u00e9ral)",
-      "parent": "Z48DZYD9"
+      "key": "coll:00103",
+      "name": "Ouvrages",
+      "parent": "coll:00014"
     },
-    "VPA27X42": {
+    "coll:00104": {
       "collections": [],
-      "id": 43,
       "items": [
-        2578
+        14
       ],
-      "key": "VPA27X42",
-      "name": "0028_Les_relations_logico-mathematiques",
-      "parent": "RIMHH32X"
+      "key": "coll:00104",
+      "name": "Indication (relation d', en lien avec Dretske)",
+      "parent": "coll:00007"
     },
-    "VRVFELDB": {
+    "coll:00105": {
       "collections": [],
-      "id": 94,
       "items": [
-        1747,
-        1763,
-        1765,
-        1767,
-        1770,
-        1772,
-        1773,
-        1776,
-        1779,
-        1781,
-        1783,
-        1785,
-        1787,
-        1789,
-        1792,
-        1794
+        15,
+        33
       ],
-      "key": "VRVFELDB",
+      "key": "coll:00105",
+      "name": "Intentionnalit\u00e9 naturalisation",
+      "parent": "coll:00007"
+    },
+    "coll:00106": {
+      "collections": [],
+      "items": [
+        15
+      ],
+      "key": "coll:00106",
+      "name": "s\u00e9minaire perception et raison",
+      "parent": "coll:00007"
+    },
+    "coll:00107": {
+      "collections": [],
+      "items": [
+        17
+      ],
+      "key": "coll:00107",
       "name": "Handbook of the philosophy of science",
-      "parent": "PFAR8S3Z"
+      "parent": "coll:00006"
     },
-    "VTIID7ZS": {
+    "coll:00108": {
       "collections": [],
-      "id": 75,
       "items": [
-        1611
+        18
       ],
-      "key": "VTIID7ZS",
-      "name": "Routledge Encyclopedia of Philosophy",
-      "parent": "PFAR8S3Z"
+      "key": "coll:00108",
+      "name": "Logique math\u00e9matique",
+      "parent": "coll:00018"
     },
-    "W44J4N9C": {
+    "coll:00109": {
       "collections": [],
-      "id": 85,
       "items": [
-        1682,
-        1684,
-        1687
+        21
       ],
-      "key": "W44J4N9C",
-      "name": "Causali\u00e9",
-      "parent": "W6X9J3SR"
+      "key": "coll:00109",
+      "name": "Russell",
+      "parent": "coll:00009"
     },
-    "W6X9J3SR": {
-      "collections": [
-        "W44J4N9C",
-        "S2ZFKID4",
-        "62IYBDU5",
-        "CBS6IPCX",
-        "46G3477G",
-        "AJQXIULK",
-        "E429FF2H"
-      ],
-      "id": 52,
-      "items": [
-        1231,
-        1638
-      ],
-      "key": "W6X9J3SR",
-      "name": "Ontologie",
-      "parent": "MQZN7WBG"
-    },
-    "WPGT2CSD": {
+    "coll:00110": {
       "collections": [],
-      "id": 63,
       "items": [
-        1303
+        26
       ],
-      "key": "WPGT2CSD",
-      "name": "Philosophie traditionnelle",
-      "parent": "MQZN7WBG"
+      "key": "coll:00110",
+      "name": "Probabilit\u00e9s",
+      "parent": "coll:00018"
     },
-    "WVVQDE8Y": {
-      "collections": [
-        "AI7SPXMQ"
-      ],
-      "id": 122,
-      "items": [],
-      "key": "WVVQDE8Y",
-      "name": "R\u00e9f\u00e9rences",
-      "parent": "YLFF5HS4"
-    },
-    "X37U5ANA": {
+    "coll:00111": {
       "collections": [],
-      "id": 110,
       "items": [
-        828,
-        1492
+        27,
+        4,
+        5
       ],
-      "key": "X37U5ANA",
-      "name": "Sciences sociales",
-      "parent": "I8IX5MFE"
+      "key": "coll:00111",
+      "name": "0027_Theorie-de-la-verite",
+      "parent": "coll:00000"
     },
-    "XCP5RIKM": {
-      "collections": [
-        "BKV4UTWG",
-        "P2HWRPBM",
-        "CNKEN532"
-      ],
-      "id": 1,
-      "items": [],
-      "key": "XCP5RIKM",
-      "name": "0018_MarioBunge",
-      "parent": "RIMHH32X"
-    },
-    "XEVVHQ37": {
-      "collections": [
-        "UKJHR3HG",
-        "62U59SUB",
-        "TSSUJZ33",
-        "RNNZAGMC"
-      ],
-      "id": 49,
-      "items": [],
-      "key": "XEVVHQ37",
-      "name": "Sciences formelles",
-      "parent": "RIMHH32X"
-    },
-    "XRPR8U2W": {
+    "coll:00112": {
       "collections": [],
-      "id": 96,
       "items": [
-        1356,
-        1508,
-        1798
+        27
       ],
-      "key": "XRPR8U2W",
-      "name": "Sciences sociales",
-      "parent": "24UAAPSJ"
+      "key": "coll:00112",
+      "name": "S\u00e9mantique",
+      "parent": "coll:00003"
     },
-    "YC4CSRUF": {
-      "collections": [
-        "62V4NRWN"
-      ],
-      "id": 158,
-      "items": [],
-      "key": "YC4CSRUF",
-      "name": "_Programmation",
-      "parent": "RIMHH32X"
-    },
-    "YLFF5HS4": {
-      "collections": [
-        "WVVQDE8Y",
-        "Z48DZYD9"
-      ],
-      "id": 120,
-      "items": [],
-      "key": "YLFF5HS4",
-      "name": "Isa",
-      "parent": false
-    },
-    "Z48DZYD9": {
-      "collections": [
-        "A5QVYGZN",
-        "3LW2K8KT",
-        "LG6TKDQV",
-        "6ZJLB4I7",
-        "RH9XTBRB",
-        "DMNS5NCX",
-        "8DAYX8W2",
-        "CKBWD5J7",
-        "J5ULPU6D",
-        "3VL3RTVV",
-        "39YB92BC",
-        "MD3JKSC6",
-        "VL8NKWVX",
-        "F2KNIGW7",
-        "H9U8RLCV",
-        "R934K2V6",
-        "EGAC8BXE",
-        "BK5GJEEC"
-      ],
-      "id": 123,
-      "items": [],
-      "key": "Z48DZYD9",
-      "name": "Refworks",
-      "parent": "YLFF5HS4"
-    },
-    "ZE474R2X": {
+    "coll:00113": {
       "collections": [],
-      "id": 148,
       "items": [
-        1839,
-        1846,
-        1847,
-        1853,
-        1855,
-        1857,
-        1859,
-        1861,
-        1862,
-        1863,
-        1864,
-        1865,
-        1866,
-        1867,
-        1868,
-        1869,
-        1870,
-        1872,
-        1873,
-        1874,
-        1876,
-        1877,
-        1878,
-        1879,
-        1881,
-        1883,
-        1884,
-        1885,
-        1886,
-        1889,
-        1890,
-        1891,
-        1892,
-        1894,
-        1901,
-        1902,
-        1914
+        29
       ],
-      "key": "ZE474R2X",
+      "key": "coll:00113",
+      "name": "\u00c9conomie",
+      "parent": "coll:00005"
+    },
+    "coll:00114": {
+      "collections": [],
+      "items": [
+        30
+      ],
+      "key": "coll:00114",
+      "name": "Explaining Behavior (C-R et critiques)",
+      "parent": "coll:00007"
+    },
+    "coll:00115": {
+      "collections": [],
+      "items": [
+        31
+      ],
+      "key": "coll:00115",
+      "name": "Naturalisme (en g\u00e9n\u00e9ral)",
+      "parent": "coll:00007"
+    },
+    "coll:00116": {
+      "collections": [],
+      "items": [
+        33,
+        35
+      ],
+      "key": "coll:00116",
+      "name": "_Non-classees",
+      "parent": "coll:00007"
+    },
+    "coll:00117": {
+      "collections": [],
+      "items": [
+        35
+      ],
+      "key": "coll:00117",
+      "name": "R\u00e9f\u00e9rences m\u00e9moire (cr\u00e9\u00e9 le 16 oct. 2006)",
+      "parent": "coll:00007"
+    },
+    "coll:00118": {
+      "collections": [],
+      "items": [
+        36
+      ],
+      "key": "coll:00118",
+      "name": "Contenu intentionnel (en relation avec Dretske)",
+      "parent": "coll:00007"
+    },
+    "coll:00119": {
+      "collections": [],
+      "items": [
+        7
+      ],
+      "key": "coll:00119",
       "name": "D\u00e9bat Harman-Sturgeon",
-      "parent": "AI7SPXMQ"
-    },
-    "ZXMHMKPL": {
-      "collections": [],
-      "id": 112,
-      "items": [
-        1199,
-        1483,
-        1488,
-        1498,
-        1503,
-        1528,
-        1538
-      ],
-      "key": "ZXMHMKPL",
-      "name": "\u00c9thique",
-      "parent": "MQZN7WBG"
+      "parent": "coll:00011"
     }
   },
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
       "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
       "asciiBibLaTeX": true,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportIdleWait": 10,
-      "biblatexExtendedDateFormat": true,
       "biblatexExtendedNameFormat": true,
-      "bibtexParticleNoOp": false,
       "bibtexURL": "url",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[auth]-[year]-[shorttitle]",
-      "citeprocNoteCitekey": false,
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "exportTitleCase": true,
       "itemObserverDelay": 100,
       "jabrefFormat": 4,
-      "keyConflictPolicy": "keep",
-      "parseParticles": true,
-      "postscript": "",
-      "qualityReport": true,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "scrubDatabase": false,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.0.88",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.34.5",
-        "locale": "fr-FR",
-        "oscpu": "Windows NT 10.0; WOW64",
-        "platform": "Win32",
-        "version": "5.0.34.5"
-      }
+      "qualityReport": true
     }
   },
   "items": [
     {
-      "attachments": [],
       "creators": [
         {
           "creatorType": "editor",
@@ -2693,44 +1069,150 @@
         }
       ],
       "date": "1973",
-      "dateAdded": "2016-01-13 00:19:12",
-      "dateModified": "2017-07-08 09:57:52",
-      "itemID": 17,
+      "itemID": 10,
       "itemType": "book",
       "language": "Anglais",
-      "notes": [],
       "place": "Dordrecht",
       "publisher": "Reidel",
-      "seeAlso": [],
-      "tags": [],
       "title": "Exact Philosophy"
     },
     {
-      "attachments": [],
-      "callNumber": "UDM: LSH: BD 21 B86",
+      "ISBN": "092492201X (PBK)",
+      "callNumber": "B105.C477; B/105/C477/C65/1991 SS; CaQMU UdeM L.S.H. B 105 C477 C65 199110164481 31225004320970 DisponibleLC",
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Mario",
-          "lastName": "Bunge"
+          "firstName": "Enrique",
+          "lastName": "Villanueva"
         }
       ],
-      "date": "1983",
-      "dateAdded": "2016-01-16 13:12:34",
-      "dateModified": "2017-06-27 23:37:42",
-      "itemID": 32,
+      "date": "1991",
+      "itemID": 15,
+      "itemType": "book",
+      "numPages": "276",
+      "place": "Atascadero, Calif.",
+      "publisher": "Ridgeview Publ. Co.",
+      "series": "Philosophical issues",
+      "tags": [
+        {
+          "tag": "Conscience",
+          "type": 0
+        }
+      ],
+      "title": "Consciousness",
+      "volume": "1"
+    },
+    {
+      "ISBN": "978-0-415-21811-5",
+      "callNumber": "HM1276 .U33 2001",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Lars",
+          "lastName": "Udehn"
+        }
+      ],
+      "date": "2001",
+      "itemID": 16,
       "itemType": "book",
       "language": "Anglais",
-      "notes": [],
-      "place": "Dordrecht",
-      "publisher": "Reidel",
-      "seeAlso": [],
-      "tags": [],
-      "title": "Treatise On Basic Philosophy Vol 5 Epistemology I Exploring the World"
+      "libraryCatalog": "Library of Congress ISBN",
+      "numPages": "450",
+      "place": "London ; New York",
+      "publisher": "Routledge",
+      "shortTitle": "Methodological individualism",
+      "tags": [
+        {
+          "tag": "Individualism",
+          "type": 1
+        }
+      ],
+      "title": "Methodological individualism: background, history, and meaning"
+    },
+    {
+      "ISBN": "978-0-444-52076-0",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "Cliff",
+          "lastName": "Hooker"
+        }
+      ],
+      "date": "2011",
+      "itemID": 17,
+      "itemType": "book",
+      "language": "Anglais",
+      "libraryCatalog": "Gemeinsamer Bibliotheksverbund ISBN",
+      "numPages": "936",
+      "place": "Amsterdam",
+      "publisher": "Elsevier",
+      "series": "Handbook of the philosophy of science",
+      "tags": [
+        {
+          "tag": "Komplexes System",
+          "type": 1
+        },
+        {
+          "tag": "Philosophie",
+          "type": 1
+        }
+      ],
+      "title": "Philosophy of complex systems",
+      "volume": "10"
+    },
+    {
+      "ISBN": "978-0-520-02356-7",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Geoffrey",
+          "lastName": "Hunter"
+        }
+      ],
+      "date": "1973",
+      "edition": "1. paperback print., 6. print. with corr",
+      "extra": [
+        "OCLC: 832736842"
+      ],
+      "itemID": 18,
+      "itemType": "book",
+      "language": "Anglais",
+      "libraryCatalog": "Gemeinsamer Bibliotheksverbund ISBN",
+      "numPages": "288",
+      "place": "Berkeley, Calif.",
+      "publisher": "Univ. of California Press",
+      "shortTitle": "Metalogic",
+      "title": "Metalogic: an introduction to the metatheory of standard first order logic"
+    },
+    {
+      "ISBN": "978-0-7456-4658-9 978-0-7456-4659-6",
+      "callNumber": "BJ1012 .M527 2013",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Alexander",
+          "lastName": "Miller"
+        }
+      ],
+      "date": "2013",
+      "edition": "Second edtion",
+      "itemID": 19,
+      "itemType": "book",
+      "libraryCatalog": "Library of Congress ISBN",
+      "numPages": "314",
+      "place": "Cambridge, UK ; Malden, MA",
+      "publisher": "Polity Press",
+      "shortTitle": "Contemporary metaethics",
+      "tags": [
+        {
+          "tag": "metaethics",
+          "type": 1
+        }
+      ],
+      "title": "Contemporary metaethics: an introduction"
     },
     {
       "ISBN": "978-0-8020-9075-1",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -2739,17 +1221,13 @@
         }
       ],
       "date": "2006",
-      "dateAdded": "2016-01-22 13:21:04",
-      "dateModified": "2016-04-13 09:48:07",
-      "itemID": 65,
+      "itemID": 20,
       "itemType": "book",
       "language": "Anglais",
       "libraryCatalog": "Library of Congress ISBN",
-      "notes": [],
       "numPages": "342",
       "place": "Toronto ; Buffalo",
       "publisher": "University of Toronto Press",
-      "seeAlso": [],
       "series": "Toronto studies in philosophy",
       "shortTitle": "Chasing reality",
       "tags": [
@@ -2765,55 +1243,28 @@
       "title": "Chasing reality: strife over realism"
     },
     {
-      "accessDate": "2016-03-23 10:23:29",
-      "attachments": [],
+      "ISBN": "978-0-85124-736-6",
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Mario",
-          "lastName": "Bunge"
-        },
-        {
-          "creatorType": "translator",
-          "firstName": "",
-          "lastName": "Services de traduction de l'Universit\u00e9 McGil"
+          "firstName": "Bertrand",
+          "lastName": "Russell"
         }
       ],
-      "date": "2003",
-      "dateAdded": "2016-03-23 10:23:29",
-      "dateModified": "2016-03-27 09:41:51",
-      "itemID": 68,
-      "itemType": "journalArticle",
-      "language": "Fran\u00e7ais",
-      "libraryCatalog": "CrossRef",
-      "notes": [
-        {
-          "dateAdded": "2016-03-23 10:29:11",
-          "dateModified": "2016-03-23 10:29:14",
-          "itemID": 77,
-          "itemType": "note",
-          "key": "UN7CSZAN",
-          "libraryID": null,
-          "note": "<div style=\"left: 270px; top: 1125.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.801445);\">L'essentiel de ce texte est tir\u00e9 d'une \u00e9tude in\u00e9dite, intitul\u00e9e</div>\n<div style=\"left: 718.001px; top: 1125.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.828156);\">The</div>\n<div style=\"left: 753.2px; top: 1125.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.822593);\">Methodological</div>\n<div style=\"left: 867.6px; top: 1125.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.859719);\">Crisis of</div>\n<div style=\"left: 270px; top: 1143.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.816605);\">Economics.</div>\n<div style=\"left: 353.03px; top: 1143.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.788572);\">Une premi\u00e8re version de cette \u00e9tude a \u00e9t\u00e9 publi\u00e9e en espagnol, sous le titre</div>\n<div style=\"left: 863.6px; top: 1143.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.800597);\">Economia</div>\n<div style=\"left: 270px; top: 1161.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.842257);\">y</div>\n<div style=\"left: 283.601px; top: 1161.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.826636);\">filosofia</div>\n<div style=\"left: 337.201px; top: 1161.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.746873);\">, Madrid, Tecnos, 1982, 1985. Une premi\u00e8re version de la <span class=\"highlight selected\">traduction</span> de ce texte a \u00e9t\u00e9</div>\n<div style=\"left: 270px; top: 1179.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.777761);\">assur\u00e9e par les services de traduction de l'Universit\u00e9 McGill.</div>",
-          "parentItem": "AZ3A8B4Q",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "AZ3A8B4Q",
-          "tags": [],
-          "uniqueFields": {
-            "note": "<div style=\"left: 270px; top: 1125.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.801445);\">L'essentiel de ce texte est tir\u00e9 d'une \u00e9tude in\u00e9dite, intitul\u00e9e</div>\n<div style=\"left: 718.001px; top: 1125.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.828156);\">The</div>\n<div style=\"left: 753.2px; top: 1125.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.822593);\">Methodological</div>\n<div style=\"left: 867.6px; top: 1125.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.859719);\">Crisis of</div>\n<div style=\"left: 270px; top: 1143.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.816605);\">Economics.</div>\n<div style=\"left: 353.03px; top: 1143.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.788572);\">Une premi\u00e8re version de cette \u00e9tude a \u00e9t\u00e9 publi\u00e9e en espagnol, sous le titre</div>\n<div style=\"left: 863.6px; top: 1143.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.800597);\">Economia</div>\n<div style=\"left: 270px; top: 1161.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.842257);\">y</div>\n<div style=\"left: 283.601px; top: 1161.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.826636);\">filosofia</div>\n<div style=\"left: 337.201px; top: 1161.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.746873);\">, Madrid, Tecnos, 1982, 1985. Une premi\u00e8re version de la <span class=\"highlight selected\">traduction</span> de ce texte a \u00e9t\u00e9</div>\n<div style=\"left: 270px; top: 1179.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.777761);\">assur\u00e9e par les services de traduction de l'Universit\u00e9 McGill.</div>"
-          }
-        }
+      "date": "1959",
+      "extra": [
+        "OCLC: 159650978"
       ],
-      "seeAlso": [],
-      "series": "Classiques des sciences sociales.",
-      "tags": [],
-      "title": "Consid\u00e9rations d'un philosophe sur l'\u00e9conomique du n\u00e9o-conservatisme (n\u00e9o-lib\u00e9ralisme)",
-      "url": "http://www.uqac.ca/zone30/Classiques_des_sciences_sociales/contemporains/bunge_mario/considerations_eco/considerations_eco.html"
+      "itemID": 21,
+      "itemType": "book",
+      "language": "Anglais",
+      "libraryCatalog": "Open WorldCat",
+      "place": "New York",
+      "publisher": "Simon and Schuster",
+      "title": "My philosophical development"
     },
     {
       "ISBN": "978-90-277-1262-2 978-90-277-1263-9",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "editor",
@@ -2827,17 +1278,13 @@
         }
       ],
       "date": "1982",
-      "dateAdded": "2016-03-23 12:03:58",
-      "dateModified": "2017-08-19 15:13:54",
-      "itemID": 82,
+      "itemID": 24,
       "itemType": "book",
       "language": "Anglais",
       "libraryCatalog": "Library of Congress ISBN",
-      "notes": [],
       "numPages": "513",
       "place": "Dordrecht, Holland ; Boston : Hingham, MA",
       "publisher": "D. Reidel - Kluwer",
-      "seeAlso": [],
       "series": "Boston studies in the philosophy of science",
       "seriesNumber": "v. 67",
       "shortTitle": "Scientific philosophy today",
@@ -2847,20 +1294,374 @@
           "type": 1
         },
         {
-          "tag": "Science",
+          "tag": "Philosophy",
           "type": 1
         },
         {
-          "tag": "Philosophy",
+          "tag": "Science",
           "type": 1
         }
       ],
       "title": "Scientific philosophy today: Essays in honor of Mario Bunge"
     },
     {
+      "ISBN": "978-94-007-9646-1",
+      "callNumber": "UQAM: En ligne; UDM: En ligne; McGill: En ligne; Concordia: En ligne",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Hasok",
+          "lastName": "Chang"
+        }
+      ],
+      "date": "2014",
+      "extra": [
+        "OCLC: ocn870412305"
+      ],
+      "itemID": 25,
+      "itemType": "book",
+      "language": "Anglais",
+      "libraryCatalog": "Library of Congress ISBN",
+      "numPages": "316",
+      "place": "Cambridge, England ; New York",
+      "publisher": "Springer",
+      "series": "Boston studies in the philosophy of science",
+      "seriesNumber": "293",
+      "shortTitle": "Is water H\u2082O?",
+      "tags": [
+        {
+          "tag": "Composition",
+          "type": 1
+        },
+        {
+          "tag": "Composition History",
+          "type": 1
+        },
+        {
+          "tag": "History",
+          "type": 1
+        },
+        {
+          "tag": "Water",
+          "type": 1
+        }
+      ],
+      "title": "Is water H\u2082O?: evidence, realism and pluralism"
+    },
+    {
+      "ISBN": "978-94-009-3061-2",
+      "abstractNote": "Probability has become one of the most characteristic con cepts of modern culture, and a 'probabilistic way of thinking' may be said to have penetrated almost every sector of our in tellectual life. However it would be difficult to determine an explicit list of 'positive' features, to be proposed as identifica tion marks of this way of thinking. One would rather say that it is characterized by certain 'negative' features, i. e. by certain at titudes which appear to be the negation of well established tra ditional assumptions, conceptual frameworks, world outlooks and the like. It is because of this opposition to tradition that the probabilistic approach is perceived as expressing a 'modern' in tellectual style. As an example one could mention the widespread diffidence in philosophy with respect to self -contained systems claiming to express apodictic truths, instead of which much weaker pretensions are preferred, that express 'probable' interpretations of reality, of history, of man (the hermeneutic trend). An ana logous example is represented by the interest devoted to the study of different patterns of 'argumentation', dealing wiht reasonings which rely not so much on the truth of the premisses and stringent formal logic links, but on a display of contextual conditions (depending on the audience, and on accepted stan dards, judgements, and values), which render the premisses and the conclusions more 'probable' (the new rhetoric).",
+      "accessDate": "2017-07-18 12:10:42",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "Evandro",
+          "lastName": "Agazzi"
+        }
+      ],
+      "date": "1988",
+      "extra": [
+        "OCLC: 851377291"
+      ],
+      "itemID": 26,
+      "itemType": "book",
+      "language": "Anglais",
+      "libraryCatalog": "Open WorldCat",
+      "place": "Dordrecht",
+      "publisher": "Springer Netherlands",
+      "title": "Probability in the Sciences",
+      "url": "http://public.eblib.com/choice/publicfullrecord.aspx?p=3102026"
+    },
+    {
+      "ISBN": "978-94-010-5779-0 978-94-011-4034-8",
+      "accessDate": "2017-06-27 23:23:50",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Paul",
+          "lastName": "Weingartner"
+        }
+      ],
+      "date": "2000",
+      "extra": [
+        "DOI: 10.1007/978-94-011-4034-8"
+      ],
+      "itemID": 27,
+      "itemType": "book",
+      "language": "Anglais",
+      "libraryCatalog": "CrossRef",
+      "place": "Dordrecht",
+      "publisher": "Springer Netherlands",
+      "title": "Basic Questions on Truth",
+      "url": "http://link.springer.com/10.1007/978-94-011-4034-8"
+    },
+    {
+      "ISBN": "9786610221356",
+      "accessDate": "2017-03-13 01:30:41",
+      "callNumber": "HB61",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Donald",
+          "lastName": "Rutherford"
+        }
+      ],
+      "date": "2002",
+      "edition": "2nd ed",
+      "itemID": 29,
+      "itemType": "book",
+      "language": "Anglais",
+      "libraryCatalog": "Library of Congress ISBN",
+      "notes": [
+        "Title from e-book title screen (viewed October 15, 2007)"
+      ],
+      "numPages": "1",
+      "place": "London ; New York",
+      "publisher": "Routledge",
+      "tags": [
+        {
+          "tag": "Economics",
+          "type": 1
+        }
+      ],
+      "title": "Routledge dictionary of economics",
+      "url": "http://www.myilibrary.com?id=22135"
+    },
+    {
+      "callNumber": "UDM: LSH: BD 21 B86",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Mario",
+          "lastName": "Bunge"
+        }
+      ],
+      "date": "1983",
+      "itemID": 6,
+      "itemType": "book",
+      "language": "Anglais",
+      "place": "Dordrecht",
+      "publisher": "Reidel",
+      "title": "Treatise On Basic Philosophy Vol 5 Epistemology I Exploring the World"
+    },
+    {
+      "ISBN": "0774803274; 08470502",
+      "callNumber": "Q360 I54 1990; Q360; 003/.5420; Q/360/I 535/1990 PS; Q/360/I 535/1990 BI 2; CaQMU UdeM Bib. EBSI Q 360 I535 199010537047 31225003820194 2 Retour: 12/07/05 23:59LC; CaQMU UdeM EPC-Bio Q 360 I535 199010537046 31225006014373 ManquantLC",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "John",
+          "lastName": "Collier"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Philip P.",
+          "lastName": "Hanson"
+        }
+      ],
+      "date": "1990",
+      "itemID": 14,
+      "itemType": "bookSection",
+      "pages": "411",
+      "place": "Vancouver",
+      "publicationTitle": "Information, language, and cognition",
+      "publisher": "University of British Columbia Press",
+      "tags": [
+        {
+          "tag": "Cognition",
+          "type": 0
+        },
+        {
+          "tag": "Information theory",
+          "type": 0
+        },
+        {
+          "tag": "Information, Th\u00e9orie de l'",
+          "type": 0
+        },
+        {
+          "tag": "Langage et langues",
+          "type": 0
+        },
+        {
+          "tag": "Language and languages",
+          "type": 0
+        }
+      ],
+      "title": "Intrinsic Information",
+      "volume": "1"
+    },
+    {
+      "ISBN": "978-0-89158-686-9",
+      "callNumber": "BJ59 .E86 1980",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "Mario",
+          "lastName": "Bunge"
+        }
+      ],
+      "date": "1980",
+      "itemID": 22,
+      "itemType": "bookSection",
+      "language": "Anglais",
+      "libraryCatalog": "Library of Congress ISBN",
+      "place": "Boulder, Colo",
+      "publicationTitle": "Ethics in an age of pervasive technology",
+      "publisher": "Westview Press",
+      "tags": [
+        {
+          "tag": "Moral and ethical aspects Congresses",
+          "type": 1
+        },
+        {
+          "tag": "Technology",
+          "type": 1
+        }
+      ],
+      "title": "Technoethics"
+    },
+    {
+      "ISBN": "978-3-642-88028-5 978-3-642-88026-1",
+      "abstractNote": "During centuries physicists were supposed to be studying the physical world. Since the turn of the century this assumption has often been challenged as naive: it was proclaimed that physics is not about the external world but about observers and their manipulations: that it is meaningless to talk of anything else than observation devices and operations: that the laws of physics concern our knowledge rather than the external world.",
+      "accessDate": "2017-06-28 00:29:07",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Mario",
+          "lastName": "Bunge"
+        }
+      ],
+      "date": "1967",
+      "extra": [
+        "DOI: 10.1007/978-3-642-88026-1_1"
+      ],
+      "itemID": 23,
+      "itemType": "bookSection",
+      "language": "Anglais",
+      "libraryCatalog": "link.springer.com",
+      "pages": "1\u20136",
+      "publicationTitle": "Quantum Theory and Reality",
+      "publisher": "Springer, Berlin, Heidelberg",
+      "series": "Studies in the Foundations Methodology and Philosophy of Science",
+      "title": "The Turn of the Tide",
+      "url": "https://link.springer.com/chapter/10.1007/978-3-642-88026-1_1"
+    },
+    {
+      "ISBN": "978-94-010-7877-1 978-94-009-3061-2",
+      "abstractNote": "The concept of probability has fascinated and puzzled numerous philosophers since its inception three and a half centuries ago. Mathematicians and scientists too, whether basic or applied, have often taken part in philosophical discussions on probability. Notwithstanding such discussions, which have been numerous and often spirited, there is still considerable divergence of opinion concerning the interpretation of probability. (See e.g. du Pasquier 1926, Fine 1973.) This is probably due to the fact that the choice of interpretation is largely a matter of philosophy. Not that philosophy is necessarily inconclusive, but it does colour all thinking on fundamental questions.",
+      "accessDate": "2017-07-18 12:12:07",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Mario",
+          "lastName": "Bunge"
+        },
+        {
+          "creatorType": "editor",
+          "lastName": "Agazzi"
+        }
+      ],
+      "date": "1988",
+      "extra": [
+        "DOI: 10.1007/978-94-009-3061-2_2"
+      ],
+      "itemID": 28,
+      "itemType": "bookSection",
+      "language": "Anglais",
+      "libraryCatalog": "link.springer.com",
+      "pages": "27\u201349",
+      "publicationTitle": "Probability in the Sciences",
+      "publisher": "Springer, Dordrecht",
+      "series": "Synthese Library",
+      "title": "Two Faces and Three Masks of Probability",
+      "url": "https://link.springer.com/chapter/10.1007/978-94-009-3061-2_2"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Geoffrey",
+          "lastName": "Sayre-McCord"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Geoffrey",
+          "lastName": "Sayre-McCord"
+        }
+      ],
+      "date": "1988",
+      "itemID": 7,
+      "itemType": "bookSection",
+      "libraryCatalog": "PhilPapers",
+      "pages": "256\u2013281",
+      "publicationTitle": "Essays on Moral Realism",
+      "publisher": "Cornell University Press",
+      "shortTitle": "Moral Theory and Explanatory Impotence In",
+      "title": "Moral Theory and Explanatory Impotence"
+    },
+    {
+      "abstractNote": "Abduction or, as it is also often called, Inference to the Best Explanation is a type of inference that assigns special status to explanatory considerations. Most philosophers agree that this type ofinference is frequently employed, in some form or other, both in everyday and in scientific reasoning. However, the exact form as wellas the normative status of abduction are still matters of controversy. This entry contrasts abduction with other types of inference; points at prominent uses of it, both in and outside philosophy; considers various more or less precise statements of it; discusses its normative status; and highlights possible connections between abduction and Bayesian confirmation theory.",
+      "accessDate": "2016-09-04 10:34:34",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Igor",
+          "lastName": "Douven"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Edward N.",
+          "lastName": "Zalta"
+        }
+      ],
+      "date": "2011",
+      "edition": "Spring 2011",
+      "itemID": 1,
+      "itemType": "encyclopediaArticle",
+      "language": "Anglais",
+      "libraryCatalog": "Stanford Encyclopedia of Philosophy",
+      "publicationTitle": "The Stanford Encyclopedia of Philosophy",
+      "tags": [
+        {
+          "tag": "epistemology: Bayesian",
+          "type": 1
+        },
+        {
+          "tag": "induction: problem of",
+          "type": 1
+        },
+        {
+          "tag": "Peirce, Charles Sanders",
+          "type": 1
+        },
+        {
+          "tag": "scientific explanation",
+          "type": 1
+        },
+        {
+          "tag": "scientific realism",
+          "type": 1
+        },
+        {
+          "tag": "simplicity",
+          "type": 1
+        },
+        {
+          "tag": "skepticism",
+          "type": 1
+        },
+        {
+          "tag": "underdetermination, of scientific theories",
+          "type": 1
+        }
+      ],
+      "title": "Abduction",
+      "url": "http://plato.stanford.edu/archives/spr2011/entries/abduction/"
+    },
+    {
       "abstractNote": "Debates about scientific realism are centrally connected to almosteverything else in the philosophy of science, for they concern the verynature of scientific knowledge. Scientific realism is a positiveepistemic attitude towards the content of our best theories and models,recommending belief in both observable and unobservable aspects of theworld described by the sciences. This epistemic attitude has importantmetaphysical and semantic dimensions, and these various commitments arecontested by a number of rival epistemologies of science, knowncollectively as forms of scientific antirealism. This article explainswhat scientific realism is, outlines its main variants, considers themost common arguments for and against the position, and contrasts itwith its most important antirealist counterparts.",
       "accessDate": "2016-04-29 02:13:57",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -2874,17 +1675,12 @@
         }
       ],
       "date": "2011",
-      "dateAdded": "2016-04-29 02:13:57",
-      "dateModified": "2016-11-14 13:49:48",
       "edition": "Fall 2015",
-      "encyclopediaTitle": "The Stanford Encyclopedia of Philosophy",
-      "itemID": 124,
+      "itemID": 2,
       "itemType": "encyclopediaArticle",
       "language": "Anglais",
       "libraryCatalog": "Stanford Encyclopedia of Philosophy",
-      "notes": [],
       "publicationTitle": "The Stanford Encyclopedia of Philosophy",
-      "seeAlso": [],
       "tags": [
         {
           "tag": "abduction",
@@ -2951,397 +1747,10 @@
       "url": "http://plato.stanford.edu/archives/fall2015/entries/scientific-realism/"
     },
     {
-      "abstractNote": "Abduction or, as it is also often called, Inference to the Best Explanation is a type of inference that assigns special status to explanatory considerations. Most philosophers agree that this type ofinference is frequently employed, in some form or other, both in everyday and in scientific reasoning. However, the exact form as wellas the normative status of abduction are still matters of controversy. This entry contrasts abduction with other types of inference; points at prominent uses of it, both in and outside philosophy; considers various more or less precise statements of it; discusses its normative status; and highlights possible connections between abduction and Bayesian confirmation theory.",
-      "accessDate": "2016-09-04 10:34:34",
-      "attachments": [],
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Igor",
-          "lastName": "Douven"
-        },
-        {
-          "creatorType": "editor",
-          "firstName": "Edward N.",
-          "lastName": "Zalta"
-        }
-      ],
-      "date": "2011",
-      "dateAdded": "2016-09-04 10:34:34",
-      "dateModified": "2016-11-14 13:51:49",
-      "edition": "Spring 2011",
-      "encyclopediaTitle": "The Stanford Encyclopedia of Philosophy",
-      "itemID": 156,
-      "itemType": "encyclopediaArticle",
-      "language": "Anglais",
-      "libraryCatalog": "Stanford Encyclopedia of Philosophy",
-      "notes": [],
-      "publicationTitle": "The Stanford Encyclopedia of Philosophy",
-      "seeAlso": [],
-      "tags": [
-        {
-          "tag": "scientific explanation",
-          "type": 1
-        },
-        {
-          "tag": "underdetermination, of scientific theories",
-          "type": 1
-        },
-        {
-          "tag": "epistemology: Bayesian",
-          "type": 1
-        },
-        {
-          "tag": "induction: problem of",
-          "type": 1
-        },
-        {
-          "tag": "Peirce, Charles Sanders",
-          "type": 1
-        },
-        {
-          "tag": "scientific realism",
-          "type": 1
-        },
-        {
-          "tag": "simplicity",
-          "type": 1
-        },
-        {
-          "tag": "skepticism",
-          "type": 1
-        }
-      ],
-      "title": "Abduction",
-      "url": "http://plato.stanford.edu/archives/spr2011/entries/abduction/"
-    },
-    {
-      "ISBN": "978-94-007-9646-1",
-      "attachments": [],
-      "callNumber": "UQAM: En ligne; UDM: En ligne; McGill: En ligne; Concordia: En ligne",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Hasok",
-          "lastName": "Chang"
-        }
-      ],
-      "date": "2014",
-      "dateAdded": "2016-11-15 02:06:37",
-      "dateModified": "2016-11-16 16:15:00",
-      "extra": "OCLC: ocn870412305",
-      "itemID": 396,
-      "itemType": "book",
-      "language": "Anglais",
-      "libraryCatalog": "Library of Congress ISBN",
-      "notes": [],
-      "numPages": "316",
-      "place": "Cambridge, England ; New York",
-      "publisher": "Springer",
-      "seeAlso": [],
-      "series": "Boston studies in the philosophy of science",
-      "seriesNumber": "293",
-      "shortTitle": "Is water H\u2082O?",
-      "tags": [
-        {
-          "tag": "History",
-          "type": 1
-        },
-        {
-          "tag": "Water",
-          "type": 1
-        },
-        {
-          "tag": "Composition History",
-          "type": 1
-        },
-        {
-          "tag": "Composition",
-          "type": 1
-        }
-      ],
-      "title": "Is water H\u2082O?: evidence, realism and pluralism"
-    },
-    {
-      "accessDate": "2017-02-20 16:20:30",
-      "attachments": [],
-      "creators": [],
-      "dateAdded": "2017-02-20 16:20:30",
-      "dateModified": "2017-06-26 10:19:29",
-      "itemID": 484,
-      "itemType": "webpage",
-      "language": "Anglais",
-      "notes": [],
-      "seeAlso": [],
-      "tags": [],
-      "title": "__\"theory of truth\" inauthor:bunge - Recherche Google",
-      "url": "https://www.google.ca/search?hl=fr&tbo=p&tbm=bks&q=%22theory+of+truth%22+inauthor:bunge&num=10#q=%22theory+of+truth%22+inauthor:bunge&hl=fr&tbm=bks&start=0"
-    },
-    {
-      "ISBN": "9786610221356",
-      "accessDate": "2017-03-13 01:30:41",
-      "attachments": [],
-      "callNumber": "HB61",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Donald",
-          "lastName": "Rutherford"
-        }
-      ],
-      "date": "2002",
-      "dateAdded": "2017-03-13 01:30:41",
-      "dateModified": "2017-06-26 10:20:08",
-      "edition": "2nd ed",
-      "itemID": 507,
-      "itemType": "book",
-      "language": "Anglais",
-      "libraryCatalog": "Library of Congress ISBN",
-      "notes": [
-        {
-          "dateAdded": "2017-03-13 01:30:41",
-          "dateModified": "2017-03-13 01:30:41",
-          "itemID": 508,
-          "itemType": "note",
-          "key": "IDCSWWSP",
-          "libraryID": null,
-          "note": "Title from e-book title screen (viewed October 15, 2007)",
-          "parentItem": "QTEW9UEX",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "QTEW9UEX",
-          "tags": [],
-          "uniqueFields": {
-            "note": "Title from e-book title screen (viewed October 15, 2007)"
-          }
-        }
-      ],
-      "numPages": "1",
-      "place": "London ; New York",
-      "publisher": "Routledge",
-      "seeAlso": [],
-      "tags": [
-        {
-          "tag": "Economics",
-          "type": 1
-        }
-      ],
-      "title": "Routledge dictionary of economics",
-      "url": "http://www.myilibrary.com?id=22135"
-    },
-    {
-      "archive": "Wikisource",
-      "attachments": [],
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Bertrand",
-          "lastName": "Russell"
-        }
-      ],
-      "date": "1905",
-      "dateAdded": "2017-06-23 03:19:21",
-      "dateModified": "2017-06-26 10:21:02",
-      "itemID": 698,
-      "itemType": "manuscript",
-      "language": "Anglais",
-      "libraryCatalog": "Wikisource",
-      "notes": [],
-      "rights": "Text is available under the Creative Commons Attribution-ShareAlike License; additional terms may apply.  By using this site, you agree to the Terms of Use and Privacy Policy.",
-      "seeAlso": [],
-      "tags": [
-        {
-          "tag": "Logic",
-          "type": 1
-        },
-        {
-          "tag": "1905 works",
-          "type": 1
-        },
-        {
-          "tag": "PD-old-30-1923",
-          "type": 1
-        },
-        {
-          "tag": "Journal articles",
-          "type": 1
-        }
-      ],
-      "title": "On Denoting"
-    },
-    {
-      "ISSN": "0270-8647",
-      "accessDate": "2017-06-25 19:57:28",
-      "attachments": [],
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Mario",
-          "lastName": "Bunge"
-        }
-      ],
-      "date": "1976",
-      "dateAdded": "2017-06-25 19:57:28",
-      "dateModified": "2017-06-26 10:27:00",
-      "itemID": 798,
-      "itemType": "journalArticle",
-      "language": "Anglais",
-      "libraryCatalog": "JSTOR",
-      "notes": [],
-      "pages": "153\u2013172",
-      "publicationTitle": "PSA: Proceedings of the Biennial Meeting of the Philosophy of Science Association",
-      "seeAlso": [],
-      "tags": [],
-      "title": "The Philosophical Richness of Technology",
-      "url": "http://www.jstor.org/stable/192379",
-      "volume": "1976"
-    },
-    {
-      "ISBN": "978-94-010-5779-0 978-94-011-4034-8",
-      "accessDate": "2017-06-27 23:23:50",
-      "attachments": [],
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Paul",
-          "lastName": "Weingartner"
-        }
-      ],
-      "date": "2000",
-      "dateAdded": "2017-06-27 23:23:50",
-      "dateModified": "2017-07-07 09:40:17",
-      "extra": "DOI: 10.1007/978-94-011-4034-8",
-      "itemID": 857,
-      "itemType": "book",
-      "language": "Anglais",
-      "libraryCatalog": "CrossRef",
-      "notes": [],
-      "place": "Dordrecht",
-      "publisher": "Springer Netherlands",
-      "seeAlso": [],
-      "tags": [],
-      "title": "Basic Questions on Truth",
-      "url": "http://link.springer.com/10.1007/978-94-011-4034-8"
-    },
-    {
-      "ISBN": "978-3-642-88028-5 978-3-642-88026-1",
-      "abstractNote": "During centuries physicists were supposed to be studying the physical world. Since the turn of the century this assumption has often been challenged as naive: it was proclaimed that physics is not about the external world but about observers and their manipulations: that it is meaningless to talk of anything else than observation devices and operations: that the laws of physics concern our knowledge rather than the external world.",
-      "accessDate": "2017-06-28 00:29:07",
-      "attachments": [],
-      "bookTitle": "Quantum Theory and Reality",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Mario",
-          "lastName": "Bunge"
-        }
-      ],
-      "date": "1967",
-      "dateAdded": "2017-06-28 00:29:07",
-      "dateModified": "2017-06-29 23:13:01",
-      "extra": "DOI: 10.1007/978-3-642-88026-1_1",
-      "itemID": 875,
-      "itemType": "bookSection",
-      "language": "Anglais",
-      "libraryCatalog": "link.springer.com",
-      "notes": [],
-      "pages": "1\u20136",
-      "publicationTitle": "Quantum Theory and Reality",
-      "publisher": "Springer, Berlin, Heidelberg",
-      "seeAlso": [],
-      "series": "Studies in the Foundations Methodology and Philosophy of Science",
-      "tags": [],
-      "title": "The Turn of the Tide",
-      "url": "https://link.springer.com/chapter/10.1007/978-3-642-88026-1_1"
-    },
-    {
-      "DOI": "10.1177/004839310103100307",
-      "ISSN": "0048-3931",
-      "accessDate": "2017-06-28 23:47:39",
-      "attachments": [],
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "M.",
-          "lastName": "Bunge"
-        }
-      ],
-      "date": "2001-09-01",
-      "dateAdded": "2017-06-28 23:47:39",
-      "dateModified": "2017-06-29 23:16:02",
-      "issue": "3",
-      "itemID": 967,
-      "itemType": "journalArticle",
-      "language": "Anglais",
-      "libraryCatalog": "CrossRef",
-      "notes": [],
-      "pages": "404\u2013423",
-      "publicationTitle": "Philosophy of the Social Sciences",
-      "seeAlso": [],
-      "shortTitle": "Systems and Emergence, Rationality and Imprecision, Free-Wheeling and Evidence, Science and Ideology",
-      "tags": [],
-      "title": "Systems and Emergence, Rationality and Imprecision, Free-Wheeling and Evidence, Science and Ideology: Social Science and Its Philosophy According to van den Berg",
-      "url": "http://pos.sagepub.com/cgi/doi/10.1177/004839310103100307",
-      "volume": "31"
-    },
-    {
-      "ISSN": "0039-3797",
-      "accessDate": "2017-06-30 14:22:03",
-      "attachments": [],
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Pavel",
-          "lastName": "Apostol"
-        }
-      ],
-      "date": "1985",
-      "dateAdded": "2017-06-30 14:22:03",
-      "dateModified": "2017-07-07 09:40:22",
-      "issue": "2",
-      "itemID": 986,
-      "itemType": "journalArticle",
-      "language": "Anglais",
-      "libraryCatalog": "JSTOR",
-      "notes": [],
-      "pages": "89\u2013136",
-      "publicationTitle": "Studies in Soviet Thought",
-      "seeAlso": [],
-      "tags": [],
-      "title": "About Mario Bunge's 'A Critical Examination of Dialectics'",
-      "url": "http://www.jstor.org/stable/20099996",
-      "volume": "29"
-    },
-    {
-      "attachments": [],
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "MA",
-          "lastName": "Bunge"
-        }
-      ],
-      "date": "1977",
-      "dateAdded": "2017-07-02 20:55:07",
-      "dateModified": "2017-07-07 09:41:12",
-      "itemID": 1114,
-      "itemType": "journalArticle",
-      "language": "Anglais",
-      "libraryCatalog": "CiteULike",
-      "notes": [],
-      "pages": "87\u201390",
-      "publicationTitle": "General Systems",
-      "seeAlso": [],
-      "tags": [],
-      "title": "General Systems and Holism",
-      "volume": "22"
-    },
-    {
       "DOI": "10.1016/0307-904X(78)90008-2",
       "ISSN": "0307-904X",
       "abstractNote": "The theory of evolution is too general to be able to make predictions. However, like every other hypergeneral scientific theory, it can be enriched with specific assumptions and data, and thus become a specific model for a particular evolutionary line. This paper exhibits such a model. It accounts for the evolution of a biopopulation in terms of genetic and environmental variables. The results is a system of linear finite difference equations that enable one to pin down the necessary and sufficient conditions for evolution proper to occur, as well as to predict the average numbers of the final varieties originating from the parent population. It is estimated that the main value of the paper is methodological rather than substantive, in that it suggests a way of building models of biological lineages.",
       "accessDate": "2017-07-14 11:10:22",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -3350,128 +1759,22 @@
         }
       ],
       "date": "September 1, 1978",
-      "dateAdded": "2017-07-14 11:10:22",
-      "dateModified": "2017-07-14 11:11:27",
       "issue": "3",
-      "itemID": 1184,
+      "itemID": 11,
       "itemType": "journalArticle",
       "journalAbbreviation": "Applied Mathematical Modelling",
       "language": "Anglais",
       "libraryCatalog": "ScienceDirect",
-      "notes": [],
       "pages": "201\u2013204",
       "publicationTitle": "Applied Mathematical Modelling",
-      "seeAlso": [],
-      "tags": [],
       "title": "A model of evolution",
       "url": "http://www.sciencedirect.com/science/article/pii/0307904X78900082",
       "volume": "2"
     },
     {
-      "ISBN": "978-0-89158-686-9",
-      "attachments": [],
-      "bookTitle": "Ethics in an age of pervasive technology",
-      "callNumber": "BJ59 .E86 1980",
-      "creators": [
-        {
-          "creatorType": "editor",
-          "firstName": "Mario",
-          "lastName": "Bunge"
-        }
-      ],
-      "date": "1980",
-      "dateAdded": "2017-07-14 12:46:22",
-      "dateModified": "2017-07-14 12:47:48",
-      "itemID": 1200,
-      "itemType": "bookSection",
-      "language": "Anglais",
-      "libraryCatalog": "Library of Congress ISBN",
-      "notes": [],
-      "place": "Boulder, Colo",
-      "publicationTitle": "Ethics in an age of pervasive technology",
-      "publisher": "Westview Press",
-      "seeAlso": [],
-      "tags": [
-        {
-          "tag": "Technology",
-          "type": 1
-        },
-        {
-          "tag": "Moral and ethical aspects Congresses",
-          "type": 1
-        }
-      ],
-      "title": "Technoethics"
-    },
-    {
-      "ISBN": "978-94-009-3061-2",
-      "abstractNote": "Probability has become one of the most characteristic con cepts of modern culture, and a 'probabilistic way of thinking' may be said to have penetrated almost every sector of our in tellectual life. However it would be difficult to determine an explicit list of 'positive' features, to be proposed as identifica tion marks of this way of thinking. One would rather say that it is characterized by certain 'negative' features, i. e. by certain at titudes which appear to be the negation of well established tra ditional assumptions, conceptual frameworks, world outlooks and the like. It is because of this opposition to tradition that the probabilistic approach is perceived as expressing a 'modern' in tellectual style. As an example one could mention the widespread diffidence in philosophy with respect to self -contained systems claiming to express apodictic truths, instead of which much weaker pretensions are preferred, that express 'probable' interpretations of reality, of history, of man (the hermeneutic trend). An ana logous example is represented by the interest devoted to the study of different patterns of 'argumentation', dealing wiht reasonings which rely not so much on the truth of the premisses and stringent formal logic links, but on a display of contextual conditions (depending on the audience, and on accepted stan dards, judgements, and values), which render the premisses and the conclusions more 'probable' (the new rhetoric).",
-      "accessDate": "2017-07-18 12:10:42",
-      "attachments": [],
-      "creators": [
-        {
-          "creatorType": "editor",
-          "firstName": "Evandro",
-          "lastName": "Agazzi"
-        }
-      ],
-      "date": "1988",
-      "dateAdded": "2017-07-18 12:10:42",
-      "dateModified": "2017-07-22 22:22:14",
-      "extra": "OCLC: 851377291",
-      "itemID": 1254,
-      "itemType": "book",
-      "language": "Anglais",
-      "libraryCatalog": "Open WorldCat",
-      "notes": [],
-      "place": "Dordrecht",
-      "publisher": "Springer Netherlands",
-      "seeAlso": [],
-      "tags": [],
-      "title": "Probability in the Sciences",
-      "url": "http://public.eblib.com/choice/publicfullrecord.aspx?p=3102026"
-    },
-    {
-      "ISBN": "978-94-010-7877-1 978-94-009-3061-2",
-      "abstractNote": "The concept of probability has fascinated and puzzled numerous philosophers since its inception three and a half centuries ago. Mathematicians and scientists too, whether basic or applied, have often taken part in philosophical discussions on probability. Notwithstanding such discussions, which have been numerous and often spirited, there is still considerable divergence of opinion concerning the interpretation of probability. (See e.g. du Pasquier 1926, Fine 1973.) This is probably due to the fact that the choice of interpretation is largely a matter of philosophy. Not that philosophy is necessarily inconclusive, but it does colour all thinking on fundamental questions.",
-      "accessDate": "2017-07-18 12:12:07",
-      "attachments": [],
-      "bookTitle": "Probability in the Sciences",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Mario",
-          "lastName": "Bunge"
-        },
-        {
-          "creatorType": "editor",
-          "firstName": "",
-          "lastName": "Agazzi"
-        }
-      ],
-      "date": "1988",
-      "dateAdded": "2017-07-18 12:12:07",
-      "dateModified": "2017-07-18 12:12:54",
-      "extra": "DOI: 10.1007/978-94-009-3061-2_2",
-      "itemID": 1255,
-      "itemType": "bookSection",
-      "language": "Anglais",
-      "libraryCatalog": "link.springer.com",
-      "notes": [],
-      "pages": "27\u201349",
-      "publicationTitle": "Probability in the Sciences",
-      "publisher": "Springer, Dordrecht",
-      "seeAlso": [],
-      "series": "Synthese Library",
-      "tags": [],
-      "title": "Two Faces and Three Masks of Probability",
-      "url": "https://link.springer.com/chapter/10.1007/978-94-009-3061-2_2"
-    },
-    {
       "DOI": "10.1016/0732-118X(91)90027-J",
       "ISSN": "0732-118X",
       "accessDate": "2017-07-22 13:24:08",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -3480,57 +1783,22 @@
         }
       ],
       "date": "January 1, 1991",
-      "dateAdded": "2017-07-22 13:24:08",
-      "dateModified": "2017-07-22 13:24:36",
       "issue": "2",
-      "itemID": 1329,
+      "itemID": 12,
       "itemType": "journalArticle",
       "journalAbbreviation": "New Ideas in Psychology",
       "language": "Anglais",
       "libraryCatalog": "ScienceDirect",
-      "notes": [],
       "pages": "227\u2013231",
       "publicationTitle": "New Ideas in Psychology",
-      "seeAlso": [],
-      "tags": [],
       "title": "The difference between everyday knowledge, ideology, and scientific knowledge",
       "url": "http://www.sciencedirect.com/science/article/pii/0732118X9190027J",
       "volume": "9"
     },
     {
-      "ISBN": "978-0-415-21811-5",
-      "attachments": [],
-      "callNumber": "HM1276 .U33 2001",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Lars",
-          "lastName": "Udehn"
-        }
-      ],
-      "date": "2001",
-      "dateAdded": "2017-07-22 14:15:10",
-      "dateModified": "2017-07-22 14:18:37",
-      "itemID": 1346,
-      "itemType": "book",
-      "language": "Anglais",
-      "libraryCatalog": "Library of Congress ISBN",
-      "notes": [],
-      "numPages": "450",
-      "place": "London ; New York",
-      "publisher": "Routledge",
-      "seeAlso": [],
-      "shortTitle": "Methodological individualism",
-      "tags": [
-        {
-          "tag": "Individualism",
-          "type": 1
-        }
-      ],
-      "title": "Methodological individualism: background, history, and meaning"
-    },
-    {
-      "attachments": [],
+      "DOI": "10.1177/004839310103100307",
+      "ISSN": "0048-3931",
+      "accessDate": "2017-06-28 23:47:39",
       "creators": [
         {
           "creatorType": "author",
@@ -3538,194 +1806,46 @@
           "lastName": "Bunge"
         }
       ],
-      "date": "1999",
-      "dateAdded": "2017-07-22 18:27:36",
-      "dateModified": "2017-07-22 18:28:03",
-      "itemID": 1371,
+      "date": "2001-09-01",
+      "issue": "3",
+      "itemID": 13,
       "itemType": "journalArticle",
       "language": "Anglais",
-      "libraryCatalog": "Google Scholar",
-      "notes": [],
-      "pages": "17\u201328",
-      "publicationTitle": "Philosophy and social action",
-      "seeAlso": [],
-      "tags": [],
-      "title": "Riot, Revolution and National Breakdown",
-      "volume": "25"
+      "libraryCatalog": "CrossRef",
+      "pages": "404\u2013423",
+      "publicationTitle": "Philosophy of the Social Sciences",
+      "shortTitle": "Systems and Emergence, Rationality and Imprecision, Free-Wheeling and Evidence, Science and Ideology",
+      "title": "Systems and Emergence, Rationality and Imprecision, Free-Wheeling and Evidence, Science and Ideology: Social Science and Its Philosophy According to van den Berg",
+      "url": "http://pos.sagepub.com/cgi/doi/10.1177/004839310103100307",
+      "volume": "31"
     },
     {
-      "ISBN": "978-0-85124-736-6",
-      "attachments": [],
+      "accessDate": "2016-03-23 10:23:29",
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Bertrand",
-          "lastName": "Russell"
-        }
-      ],
-      "date": "1959",
-      "dateAdded": "2017-08-18 23:57:58",
-      "dateModified": "2017-08-18 23:59:33",
-      "extra": "OCLC: 159650978",
-      "itemID": 1708,
-      "itemType": "book",
-      "language": "Anglais",
-      "libraryCatalog": "Open WorldCat",
-      "notes": [],
-      "place": "New York",
-      "publisher": "Simon and Schuster",
-      "seeAlso": [],
-      "tags": [],
-      "title": "My philosophical development"
-    },
-    {
-      "ISBN": "978-0-444-52076-0",
-      "attachments": [],
-      "creators": [
-        {
-          "creatorType": "editor",
-          "firstName": "Cliff",
-          "lastName": "Hooker"
-        }
-      ],
-      "date": "2011",
-      "dateAdded": "2017-08-22 23:11:16",
-      "dateModified": "2017-08-22 23:11:35",
-      "itemID": 1781,
-      "itemType": "book",
-      "language": "Anglais",
-      "libraryCatalog": "Gemeinsamer Bibliotheksverbund ISBN",
-      "notes": [],
-      "numPages": "936",
-      "place": "Amsterdam",
-      "publisher": "Elsevier",
-      "seeAlso": [],
-      "series": "Handbook of the philosophy of science",
-      "tags": [
-        {
-          "tag": "Philosophie",
-          "type": 1
+          "firstName": "Mario",
+          "lastName": "Bunge"
         },
         {
-          "tag": "Komplexes System",
-          "type": 1
+          "creatorType": "translator",
+          "name": "Services de traduction de l'Universit\u00e9 McGil"
         }
       ],
-      "title": "Philosophy of complex systems",
-      "volume": "10"
-    },
-    {
-      "ISBN": "978-0-7456-4658-9 978-0-7456-4659-6",
-      "attachments": [],
-      "callNumber": "BJ1012 .M527 2013",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Alexander",
-          "lastName": "Miller"
-        }
-      ],
-      "date": "2013",
-      "dateAdded": "2017-09-09 20:40:57",
-      "dateModified": "2017-09-09 20:40:57",
-      "edition": "Second edtion",
-      "itemID": 1838,
-      "itemType": "book",
-      "libraryCatalog": "Library of Congress ISBN",
-      "notes": [],
-      "numPages": "314",
-      "place": "Cambridge, UK ; Malden, MA",
-      "publisher": "Polity Press",
-      "seeAlso": [],
-      "shortTitle": "Contemporary metaethics",
-      "tags": [
-        {
-          "tag": "metaethics",
-          "type": 1
-        }
-      ],
-      "title": "Contemporary metaethics: an introduction"
-    },
-    {
-      "attachments": [],
-      "bookTitle": "Essays on Moral Realism",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Geoffrey",
-          "lastName": "Sayre-McCord"
-        },
-        {
-          "creatorType": "editor",
-          "firstName": "Geoffrey",
-          "lastName": "Sayre-McCord"
-        }
-      ],
-      "date": "1988",
-      "dateAdded": "2017-09-09 20:42:32",
-      "dateModified": "2017-09-09 22:46:12",
-      "itemID": 1876,
-      "itemType": "bookSection",
-      "libraryCatalog": "PhilPapers",
-      "notes": [],
-      "pages": "256\u2013281",
-      "publicationTitle": "Essays on Moral Realism",
-      "publisher": "Cornell University Press",
-      "seeAlso": [],
-      "shortTitle": "Moral Theory and Explanatory Impotence In",
-      "tags": [],
-      "title": "Moral Theory and Explanatory Impotence"
-    },
-    {
-      "ISSN": "1072-1894",
-      "abstractNote": "Unless propositional content can be shown to supervene on internal physical states of agents, the semantics (e.g., I want sorbet and I believe there is some in the freezer) that sometimes accompany our brain states must be causally irrelevant to agent behavior (e.g., my entering the kitchen and opening the freezer door). In a valiant effort to salvage an explanatory role for content without giving up the nonsupervenience thesis, Fred Dretske (Explaining Behavior, 1988) invents a special kind of content-involving causal model. I critically examine this model and show that, despite its ingenuity, it is wildly implausible.",
-      "attachments": [],
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Beth",
-          "lastName": "Hassrick"
-        }
-      ],
-      "date": "Summer 1995",
-      "dateAdded": "2017-09-09 20:46:20",
-      "dateModified": "2017-09-09 20:46:20",
-      "issue": "1",
-      "itemID": 1979,
+      "date": "2003",
+      "itemID": 3,
       "itemType": "journalArticle",
-      "language": "English",
-      "notes": [],
-      "pages": "59\u201366",
-      "publicationTitle": "Conference: A Journal of Philosophy and Theory",
-      "seeAlso": [],
-      "tags": [
-        {
-          "tag": "Semantics",
-          "type": 0
-        },
-        {
-          "tag": "Epistemology",
-          "type": 0
-        },
-        {
-          "tag": "Dretske, F",
-          "type": 0
-        },
-        {
-          "tag": "Behavior",
-          "type": 0
-        },
-        {
-          "tag": "Content",
-          "type": 0
-        }
+      "language": "Fran\u00e7ais",
+      "libraryCatalog": "CrossRef",
+      "notes": [
+        "<div style=\"left: 270px; top: 1125.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.801445);\">L'essentiel de ce texte est tir\u00e9 d'une \u00e9tude in\u00e9dite, intitul\u00e9e</div>\n<div style=\"left: 718.001px; top: 1125.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.828156);\">The</div>\n<div style=\"left: 753.2px; top: 1125.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.822593);\">Methodological</div>\n<div style=\"left: 867.6px; top: 1125.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.859719);\">Crisis of</div>\n<div style=\"left: 270px; top: 1143.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.816605);\">Economics.</div>\n<div style=\"left: 353.03px; top: 1143.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.788572);\">Une premi\u00e8re version de cette \u00e9tude a \u00e9t\u00e9 publi\u00e9e en espagnol, sous le titre</div>\n<div style=\"left: 863.6px; top: 1143.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.800597);\">Economia</div>\n<div style=\"left: 270px; top: 1161.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.842257);\">y</div>\n<div style=\"left: 283.601px; top: 1161.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.826636);\">filosofia</div>\n<div style=\"left: 337.201px; top: 1161.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.746873);\">, Madrid, Tecnos, 1982, 1985. Une premi\u00e8re version de la <span class=\"highlight selected\">traduction</span> de ce texte a \u00e9t\u00e9</div>\n<div style=\"left: 270px; top: 1179.17px; font-size: 16.4px; font-family: serif; transform: scaleX(0.777761);\">assur\u00e9e par les services de traduction de l'Universit\u00e9 McGill.</div>"
       ],
-      "title": "Fred Dretske on the Explanatory Role of Semantic Content",
-      "volume": "6"
+      "series": "Classiques des sciences sociales.",
+      "title": "Consid\u00e9rations d'un philosophe sur l'\u00e9conomique du n\u00e9o-conservatisme (n\u00e9o-lib\u00e9ralisme)",
+      "url": "http://www.uqac.ca/zone30/Classiques_des_sciences_sociales/contemporains/bunge_mario/considerations_eco/considerations_eco.html"
     },
     {
       "ISSN": "0012-2173",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -3734,14 +1854,10 @@
         }
       ],
       "date": "Summer 1993",
-      "dateAdded": "2017-09-09 20:46:56",
-      "dateModified": "2017-09-09 20:46:56",
       "issue": "3",
-      "itemID": 1996,
+      "itemID": 30,
       "itemType": "journalArticle",
-      "notes": [],
       "publicationTitle": "Dialogue: Canadian Philosophical Review",
-      "seeAlso": [],
       "tags": [
         {
           "tag": "Daniel",
@@ -3756,62 +1872,49 @@
       "volume": "32"
     },
     {
-      "ISBN": "0774803274; 08470502",
-      "attachments": [],
-      "bookTitle": "Information, language, and cognition",
-      "callNumber": "Q360 I54 1990; Q360; 003/.5420; Q/360/I 535/1990 PS; Q/360/I 535/1990 BI 2; CaQMU UdeM Bib. EBSI Q 360 I535 199010537047 31225003820194 2 Retour: 12/07/05 23:59LC; CaQMU UdeM EPC-Bio Q 360 I535 199010537046 31225006014373 ManquantLC",
+      "ISSN": "0031-8108",
+      "abstractNote": "This article reviews the transition between post-Fregean anti-naturalistic epistemology and contemporary naturalistic epistemologies. It traces the revival of naturalism to Quine's critique of the \"a priori\", and Kuhn's defense of historicism, and use the arguments of Quine and Kuhn to identify a position, \"traditional naturalism\", that combines naturalistic themes with the claim that epistemology is a normative enterprise. Pleas for more radical versions of naturalism are articulated, and briefly confronted (phil. index).",
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "John",
-          "lastName": "Collier"
-        },
-        {
-          "creatorType": "editor",
-          "firstName": "Philip P.",
-          "lastName": "Hanson"
+          "firstName": "Philip",
+          "lastName": "Kitcher"
         }
       ],
-      "date": "1990",
-      "dateAdded": "2017-09-09 20:47:20",
-      "dateModified": "2017-09-09 20:47:20",
-      "itemID": 2006,
-      "itemType": "bookSection",
-      "notes": [],
-      "pages": "411",
-      "place": "Vancouver",
-      "publicationTitle": "Information, language, and cognition",
-      "publisher": "University of British Columbia Press",
-      "seeAlso": [],
-      "tags": [
+      "date": "1992",
+      "issue": "1",
+      "itemID": 31,
+      "itemType": "journalArticle",
+      "pages": "53\u2013114",
+      "publicationTitle": "Philosophical Review",
+      "title": "The Naturalists Return",
+      "volume": "101"
+    },
+    {
+      "ISSN": "0039-3797",
+      "accessDate": "2017-06-30 14:22:03",
+      "creators": [
         {
-          "tag": "Language and languages",
-          "type": 0
-        },
-        {
-          "tag": "Cognition",
-          "type": 0
-        },
-        {
-          "tag": "Information theory",
-          "type": 0
-        },
-        {
-          "tag": "Information, Th\u00e9orie de l'",
-          "type": 0
-        },
-        {
-          "tag": "Langage et langues",
-          "type": 0
+          "creatorType": "author",
+          "firstName": "Pavel",
+          "lastName": "Apostol"
         }
       ],
-      "title": "Intrinsic Information",
-      "volume": "1"
+      "date": "1985",
+      "issue": "2",
+      "itemID": 32,
+      "itemType": "journalArticle",
+      "language": "Anglais",
+      "libraryCatalog": "JSTOR",
+      "pages": "89\u2013136",
+      "publicationTitle": "Studies in Soviet Thought",
+      "title": "About Mario Bunge's 'A Critical Examination of Dialectics'",
+      "url": "http://www.jstor.org/stable/20099996",
+      "volume": "29"
     },
     {
       "ISSN": "0268-1064",
       "abstractNote": "Daniel Dennett's book, Darwin's Dangerous Idea, offers a naturalistic teleology and a theory of the intentionality of the mental. Both are grounded in a neo-Darwinian account of evolutionary adaptation. I argue that Dennett's empirical assumptions about the evolution of psychological phenotypes may well be unwarranted; and that, in any event, the intentionality of minds is quite different from and not reducible to the intensionality of selection.",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -3820,23 +1923,23 @@
         }
       ],
       "date": "September 1996",
-      "dateAdded": "2017-09-09 20:48:35",
-      "dateModified": "2018-02-04 01:00:43",
       "issue": "3",
-      "itemID": 2040,
+      "itemID": 33,
       "itemType": "journalArticle",
       "language": "English",
-      "notes": [],
       "pages": "246\u2013262",
       "publicationTitle": "Mind and Language",
-      "seeAlso": [],
       "tags": [
         {
-          "tag": "Epistemology",
+          "tag": "Darwin",
           "type": 0
         },
         {
-          "tag": "Naturalism",
+          "tag": "Dennett, D",
+          "type": 0
+        },
+        {
+          "tag": "Epistemology",
           "type": 0
         },
         {
@@ -3848,11 +1951,7 @@
           "type": 0
         },
         {
-          "tag": "Darwin",
-          "type": 0
-        },
-        {
-          "tag": "Dennett, D",
+          "tag": "Naturalism",
           "type": 0
         }
       ],
@@ -3860,64 +1959,28 @@
       "volume": "11"
     },
     {
-      "ISBN": "092492201X (PBK)",
-      "attachments": [],
-      "callNumber": "B105.C477; B/105/C477/C65/1991 SS; CaQMU UdeM L.S.H. B 105 C477 C65 199110164481 31225004320970 DisponibleLC",
+      "ISSN": "0270-8647",
+      "accessDate": "2017-06-25 19:57:28",
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Enrique",
-          "lastName": "Villanueva"
+          "firstName": "Mario",
+          "lastName": "Bunge"
         }
       ],
-      "date": "1991",
-      "dateAdded": "2017-09-09 20:50:54",
-      "dateModified": "2018-02-04 01:00:36",
-      "itemID": 2092,
-      "itemType": "book",
-      "notes": [],
-      "numPages": "276",
-      "place": "Atascadero, Calif.",
-      "publisher": "Ridgeview Publ. Co.",
-      "seeAlso": [],
-      "series": "Philosophical issues",
-      "tags": [
-        {
-          "tag": "Conscience",
-          "type": 0
-        }
-      ],
-      "title": "Consciousness",
-      "volume": "1"
-    },
-    {
-      "ISSN": "0031-8108",
-      "abstractNote": "This article reviews the transition between post-Fregean anti-naturalistic epistemology and contemporary naturalistic epistemologies. It traces the revival of naturalism to Quine's critique of the \"a priori\", and Kuhn's defense of historicism, and use the arguments of Quine and Kuhn to identify a position, \"traditional naturalism\", that combines naturalistic themes with the claim that epistemology is a normative enterprise. Pleas for more radical versions of naturalism are articulated, and briefly confronted (phil. index).",
-      "attachments": [],
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Philip",
-          "lastName": "Kitcher"
-        }
-      ],
-      "date": "1992",
-      "dateAdded": "2017-09-09 20:55:52",
-      "dateModified": "2017-09-09 20:55:52",
-      "issue": "1",
-      "itemID": 2219,
+      "date": "1976",
+      "itemID": 34,
       "itemType": "journalArticle",
-      "notes": [],
-      "pages": "53\u2013114",
-      "publicationTitle": "Philosophical Review",
-      "seeAlso": [],
-      "tags": [],
-      "title": "The Naturalists Return",
-      "volume": "101"
+      "language": "Anglais",
+      "libraryCatalog": "JSTOR",
+      "pages": "153\u2013172",
+      "publicationTitle": "PSA: Proceedings of the Biennial Meeting of the Philosophy of Science Association",
+      "title": "The Philosophical Richness of Technology",
+      "url": "http://www.jstor.org/stable/192379",
+      "volume": "1976"
     },
     {
       "ISSN": "0279-0750",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -3926,18 +1989,14 @@
         }
       ],
       "date": "July-October 1985",
-      "dateAdded": "2017-09-09 20:59:49",
-      "dateModified": "2018-02-04 01:10:15",
-      "itemID": 2323,
+      "itemID": 35,
       "itemType": "journalArticle",
       "language": "English",
-      "notes": [],
       "pages": "310\u2013328",
       "publicationTitle": "Pacific Philosophical Quarterly",
-      "seeAlso": [],
       "tags": [
         {
-          "tag": "Science",
+          "tag": "Etiology",
           "type": 0
         },
         {
@@ -3945,7 +2004,7 @@
           "type": 0
         },
         {
-          "tag": "Etiology",
+          "tag": "Science",
           "type": 0
         },
         {
@@ -3957,32 +2016,125 @@
       "volume": "66"
     },
     {
-      "ISBN": "978-0-520-02356-7",
-      "attachments": [],
+      "ISSN": "1072-1894",
+      "abstractNote": "Unless propositional content can be shown to supervene on internal physical states of agents, the semantics (e.g., I want sorbet and I believe there is some in the freezer) that sometimes accompany our brain states must be causally irrelevant to agent behavior (e.g., my entering the kitchen and opening the freezer door). In a valiant effort to salvage an explanatory role for content without giving up the nonsupervenience thesis, Fred Dretske (Explaining Behavior, 1988) invents a special kind of content-involving causal model. I critically examine this model and show that, despite its ingenuity, it is wildly implausible.",
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Geoffrey",
-          "lastName": "Hunter"
+          "firstName": "Beth",
+          "lastName": "Hassrick"
         }
       ],
-      "date": "1973",
-      "dateAdded": "2017-10-19 10:21:16",
-      "dateModified": "2017-10-19 10:21:38",
-      "edition": "1. paperback print., 6. print. with corr",
-      "extra": "OCLC: 832736842",
-      "itemID": 2713,
-      "itemType": "book",
+      "date": "Summer 1995",
+      "issue": "1",
+      "itemID": 36,
+      "itemType": "journalArticle",
+      "language": "English",
+      "pages": "59\u201366",
+      "publicationTitle": "Conference: A Journal of Philosophy and Theory",
+      "tags": [
+        {
+          "tag": "Behavior",
+          "type": 0
+        },
+        {
+          "tag": "Content",
+          "type": 0
+        },
+        {
+          "tag": "Dretske, F",
+          "type": 0
+        },
+        {
+          "tag": "Epistemology",
+          "type": 0
+        },
+        {
+          "tag": "Semantics",
+          "type": 0
+        }
+      ],
+      "title": "Fred Dretske on the Explanatory Role of Semantic Content",
+      "volume": "6"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Bunge"
+        }
+      ],
+      "date": "1999",
+      "itemID": 8,
+      "itemType": "journalArticle",
       "language": "Anglais",
-      "libraryCatalog": "Gemeinsamer Bibliotheksverbund ISBN",
-      "notes": [],
-      "numPages": "288",
-      "place": "Berkeley, Calif.",
-      "publisher": "Univ. of California Press",
-      "seeAlso": [],
-      "shortTitle": "Metalogic",
-      "tags": [],
-      "title": "Metalogic: an introduction to the metatheory of standard first order logic"
+      "libraryCatalog": "Google Scholar",
+      "pages": "17\u201328",
+      "publicationTitle": "Philosophy and social action",
+      "title": "Riot, Revolution and National Breakdown",
+      "volume": "25"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "MA",
+          "lastName": "Bunge"
+        }
+      ],
+      "date": "1977",
+      "itemID": 9,
+      "itemType": "journalArticle",
+      "language": "Anglais",
+      "libraryCatalog": "CiteULike",
+      "pages": "87\u201390",
+      "publicationTitle": "General Systems",
+      "title": "General Systems and Holism",
+      "volume": "22"
+    },
+    {
+      "archive": "Wikisource",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Bertrand",
+          "lastName": "Russell"
+        }
+      ],
+      "date": "1905",
+      "itemID": 5,
+      "itemType": "manuscript",
+      "language": "Anglais",
+      "libraryCatalog": "Wikisource",
+      "rights": "Text is available under the Creative Commons Attribution-ShareAlike License; additional terms may apply.  By using this site, you agree to the Terms of Use and Privacy Policy.",
+      "tags": [
+        {
+          "tag": "1905 works",
+          "type": 1
+        },
+        {
+          "tag": "Journal articles",
+          "type": 1
+        },
+        {
+          "tag": "Logic",
+          "type": 1
+        },
+        {
+          "tag": "PD-old-30-1923",
+          "type": 1
+        }
+      ],
+      "title": "On Denoting"
+    },
+    {
+      "accessDate": "2017-02-20 16:20:30",
+      "itemID": 4,
+      "itemType": "webpage",
+      "language": "Anglais",
+      "title": "__\"theory of truth\" inauthor:bunge - Recherche Google",
+      "url": "https://www.google.ca/search?hl=fr&tbo=p&tbm=bks&q=%22theory+of+truth%22+inauthor:bunge&num=10#q=%22theory+of+truth%22+inauthor:bunge&hl=fr&tbm=bks&start=0"
     }
   ]
 }

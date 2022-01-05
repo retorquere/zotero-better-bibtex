@@ -32,13 +32,13 @@ var creatorMap = {
 
 function checkEIDR(eidr) {
 	var suffix = eidr.trim().match(/10.5240\/((?:[0-9A-F]{4}-){5})([0-9A-Z])/i);
-	if(!suffix) return false;
+	if (!suffix) return false;
 
 	//checksum
 	//ISO 7064 Mod 37,36
 	var id = suffix[1].replace(/-/g,'').toUpperCase().split('');
 	var sum = 0;
-	for(var i=0, n=id.length; i<n; i++) {
+	for (var i=0, n=id.length; i<n; i++) {
 		sum += '0123456789ABCDEF'.indexOf(id[i]);
 		sum = ( ((sum % 36) || 36) * 2 ) % 37;
 	}
@@ -55,13 +55,13 @@ function getValue(parentNode, node) {
 }
 
 function detectSearch(item) {
-	if(!item.DOI)
+	if (!item.DOI)
 		return;
 
 	//we should detect party and user but throw an error later
 	//this way other translators don't need to process the DOI
 	var prefix = item.DOI.split('/')[0];
-	if([
+	if ([
 			'10.5237', // Parties
 			'10.5238', // Users
 			'10.5239', // Video Services
@@ -73,9 +73,9 @@ function detectSearch(item) {
 }
 
 function  doSearch(searchItem) {
-	if(!searchItem.DOI)
+	if (!searchItem.DOI)
 		throw new Error("EIDR not specified.");
-	if(!checkEIDR(searchItem.DOI))
+	if (!checkEIDR(searchItem.DOI))
 		throw new Error("EIDR not supported: " + searchItem.DOI);
 
 	var request = 'https://resolve.eidr.org/EIDR/object/' + searchItem.DOI
@@ -89,7 +89,7 @@ function  doSearch(searchItem) {
 			'md': 'http://www.movielabs.com/schema/md/v2.1/md'
 		};
 
-		if(res.getElementsByTagName('Response').length) {
+		if (res.getElementsByTagName('Response').length) {
 
 			throw new Error("Server returned error: ("
 				+ getValue(res, 'Code') + ") "
@@ -99,7 +99,7 @@ function  doSearch(searchItem) {
 		var base = res.getElementsByTagName('BaseObjectData')[0];
 
 		var type = typeMap[getValue(base,'ReferentType')];
-		if(!type) {
+		if (!type) {
 			Z.debug("Unhandled ReferentType: " + getValue(base,'ReferentType'));
 			return
 		}
@@ -121,11 +121,11 @@ function  doSearch(searchItem) {
 		//creators
 		var creators = base.getElementsByTagName('Credits')[0];
 		var c, t;
-		if(creators) {
+		if (creators) {
 			c = creators.firstChild;
-			while(c) {
+			while (c) {
 				t = creatorMap[c.nodeName];
-				if(!t) continue;
+				if (!t) continue;
 
 				item.creators.push(
 					ZU.cleanAuthor(getValue(c,'md:DisplayName'), t)

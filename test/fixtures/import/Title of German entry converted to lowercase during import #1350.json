@@ -1,109 +1,15 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
-    },
+    "options": {},
     "preferences": {
-      "DOIandURL": "both",
-      "ascii": "",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportDelay": 1,
-      "autoExportIdleWait": 10,
-      "autoPin": false,
-      "automaticTags": true,
-      "auxImport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
-      "citekeyFormat": "[auth][year]",
-      "citeprocNoteCitekey": false,
-      "client": "",
-      "csquotes": "",
-      "debugLogDir": "",
-      "exportBibTeXStrings": "off",
-      "exportBraceProtection": true,
-      "exportTitleCase": true,
-      "git": "config",
-      "ignorePostscriptErrors": true,
-      "importBibTeXStrings": true,
-      "importCaseProtection": "off",
-      "importSentenceCase": "on+guess",
-      "itemObserverDelay": 5,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "keyScope": "library",
-      "kuroshiro": false,
-      "mapMath": "",
-      "mapText": "",
-      "mapUnicode": "conservative",
-      "newTranslatorsAskRestart": true,
-      "parseParticles": true,
-      "platform": "",
-      "postscript": "",
-      "qualityReport": false,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "rawLaTag": "#LaTeX",
-      "relativeFilePaths": false,
-      "removeStock": false,
-      "scrubDatabase": false,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
-      "warnBulkModify": 10
+      "citekeyFormat": "[auth][year]"
     }
   },
   "items": [
     {
-      "attachments": [],
-      "citationKey": "schiffer2005a",
-      "citekey": "schiffer2005a",
-      "collections": [],
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "S.",
-          "lastName": "Schiffer"
-        }
-      ],
-      "date": "2005",
-      "dateAdded": "2019-12-22T01:56:11Z",
-      "dateModified": "2019-12-22T01:56:11Z",
-      "extra": "Citation Key: schiffer2005a",
-      "itemID": 813,
-      "itemType": "bookSection",
-      "key": "B59J8E99",
-      "language": "german",
-      "libraryID": 1,
-      "notes": [],
-      "place": "W\u00fcrzburg",
-      "publicationTitle": "Eine Auswahl von Techniken und Beispielen",
-      "publisher": "Ergon",
-      "relations": [],
-      "tags": [],
-      "title": "Die Darstellung des Islams in der Presse: Sprache, Bilder, Suggestionen",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/B59J8E99",
-      "version": 0
-    },
-    {
-      "attachments": [],
       "citationKey": "albrecht2007a",
-      "citekey": "albrecht2007a",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -122,29 +28,19 @@
         }
       ],
       "date": "2007",
-      "dateAdded": "2019-12-22T01:56:11Z",
-      "dateModified": "2019-12-22T01:56:11Z",
-      "extra": "Citation Key: albrecht2007a",
-      "itemID": 814,
+      "extra": [
+        "Citation Key: albrecht2007a"
+      ],
+      "itemID": 1,
       "itemType": "bookSection",
-      "key": "QJKXRDC5",
-      "libraryID": 1,
-      "notes": [],
-      "pages": "153 - 163",
+      "pages": "153 \u2013 163",
       "place": "M\u00fcnster",
       "publicationTitle": "Religion und medien: Vom kultbild zum internetritual",
       "publisher": "Aschendorff",
-      "relations": [],
-      "tags": [],
-      "title": "Evangelische publizistik",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/QJKXRDC5",
-      "version": 0
+      "title": "Evangelische publizistik"
     },
     {
-      "attachments": [],
       "citationKey": "gaertner2008a",
-      "citekey": "gaertner2008a",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -162,29 +58,19 @@
         }
       ],
       "date": "2008",
-      "dateAdded": "2019-12-22T01:56:12Z",
-      "dateModified": "2019-12-22T01:56:12Z",
-      "extra": "Citation Key: gaertner2008a",
-      "itemID": 815,
+      "extra": [
+        "Citation Key: gaertner2008a"
+      ],
+      "itemID": 2,
       "itemType": "bookSection",
-      "key": "9LNB4D9S",
-      "libraryID": 1,
-      "notes": [],
-      "pages": "93 - 108",
+      "pages": "93 \u2013 108",
       "place": "Paderborn",
       "publicationTitle": "Religion heute \u2013 \u00f6ffentlich und politisch: Provokationen, kontroversen, perspektiven",
       "publisher": "Sch\u00f6ningh",
-      "relations": [],
-      "tags": [],
-      "title": "Die R\u00fcckkehr der Religionen in der politischen und medialen \u00d6ffent\u00ad lichkeit",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/9LNB4D9S",
-      "version": 0
+      "title": "Die R\u00fcckkehr der Religionen in der politischen und medialen \u00d6ffent\u00ad lichkeit"
     },
     {
-      "attachments": [],
       "citationKey": "schiffer2005a",
-      "citekey": "schiffer2005a",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -193,23 +79,37 @@
         }
       ],
       "date": "2005",
-      "dateAdded": "2019-12-22T01:56:12Z",
-      "dateModified": "2019-12-22T01:56:12Z",
-      "extra": "Citation Key: schiffer2005a",
-      "itemID": 816,
+      "extra": [
+        "Citation Key: schiffer2005a"
+      ],
+      "itemID": 3,
       "itemType": "bookSection",
-      "key": "RAYHM6LP",
       "language": "german",
-      "libraryID": 1,
-      "notes": [],
       "place": "W\u00fcrzburg",
       "publicationTitle": "Eine Auswahl von Techniken und Beispielen",
       "publisher": "Ergon",
-      "relations": [],
-      "tags": [],
-      "title": "Die Darstellung des Islams in der Presse: Sprache, Bilder, Suggestionen",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/RAYHM6LP",
-      "version": 0
+      "title": "Die Darstellung des Islams in der Presse: Sprache, Bilder, Suggestionen"
+    },
+    {
+      "citationKey": "schiffer2005a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "S.",
+          "lastName": "Schiffer"
+        }
+      ],
+      "date": "2005",
+      "extra": [
+        "Citation Key: schiffer2005a"
+      ],
+      "itemID": 4,
+      "itemType": "bookSection",
+      "language": "german",
+      "place": "W\u00fcrzburg",
+      "publicationTitle": "Eine Auswahl von Techniken und Beispielen",
+      "publisher": "Ergon",
+      "title": "Die Darstellung des Islams in der Presse: Sprache, Bilder, Suggestionen"
     }
   ]
 }

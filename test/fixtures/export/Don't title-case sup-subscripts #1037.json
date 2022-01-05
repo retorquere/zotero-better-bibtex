@@ -1,66 +1,20 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
       "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
-      "asciiBibLaTeX": false,
       "asciiBibTeX": false,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportIdleWait": 10,
-      "autoPin": false,
-      "biblatexExtendedDateFormat": true,
       "biblatexExtendedNameFormat": true,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[auth][year]",
-      "citeprocNoteCitekey": false,
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "exportTitleCase": true,
-      "itemObserverDelay": 100,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "keyScope": "library",
-      "kuroshiro": false,
-      "parseParticles": true,
-      "postscript": "",
-      "qualityReport": false,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "scrubDatabase": false,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.0.179",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.53",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "de",
-        "oscpu": "Linux x86_64",
-        "platform": "Linux x86_64",
-        "version": "5.0.53"
-      }
+      "itemObserverDelay": 100
     }
   },
   "items": [
     {
-      "attachments": [],
-      "citekey": "Name2018",
       "creators": [
         {
           "creatorType": "author",
@@ -69,19 +23,14 @@
         }
       ],
       "date": "2018",
-      "dateAdded": "2018-07-21T14:37:17Z",
-      "dateModified": "2018-07-21T14:43:18Z",
-      "extra": "Citation Key: ref1",
-      "itemID": 466,
+      "extra": [
+        "Citation Key: ref1"
+      ],
+      "itemID": 1,
       "itemType": "journalArticle",
-      "notes": [],
-      "tags": [],
-      "title": "1 O<sub>abcde</sub>",
-      "uri": "http://zotero.org/users/3130622/items/ILFCPBUM"
+      "title": "1 O<sub>abcde</sub>"
     },
     {
-      "attachments": [],
-      "citekey": "Name2018a",
       "creators": [
         {
           "creatorType": "author",
@@ -90,19 +39,14 @@
         }
       ],
       "date": "2018",
-      "dateAdded": "2018-07-21T14:37:59Z",
-      "dateModified": "2018-07-21T14:43:23Z",
-      "extra": "Citation Key: ref2",
-      "itemID": 467,
+      "extra": [
+        "Citation Key: ref2"
+      ],
+      "itemID": 2,
       "itemType": "journalArticle",
-      "notes": [],
-      "tags": [],
-      "title": "2 O<sub>abcde</sub> test",
-      "uri": "http://zotero.org/users/3130622/items/KEKAYD3E"
+      "title": "2 O<sub>abcde</sub> test"
     },
     {
-      "attachments": [],
-      "citekey": "Name2018b",
       "creators": [
         {
           "creatorType": "author",
@@ -111,19 +55,14 @@
         }
       ],
       "date": "2018",
-      "dateAdded": "2018-07-21T14:51:35Z",
-      "dateModified": "2018-07-21T14:51:44Z",
-      "extra": "Citation Key: ref3",
-      "itemID": 469,
+      "extra": [
+        "Citation Key: ref3"
+      ],
+      "itemID": 3,
       "itemType": "journalArticle",
-      "notes": [],
-      "tags": [],
-      "title": "<span class=\"nocase\">O<sub>abcde</sub></span>",
-      "uri": "http://zotero.org/users/3130622/items/ANY3YQYC"
+      "title": "<span class=\"nocase\">O<sub>abcde</sub></span>"
     },
     {
-      "attachments": [],
-      "citekey": "Name2018",
       "creators": [
         {
           "creatorType": "author",
@@ -132,19 +71,14 @@
         }
       ],
       "date": "2018",
-      "dateAdded": "2018-07-21T14:37:17Z",
-      "dateModified": "2018-07-21T15:55:46Z",
-      "extra": "Citation Key: ref4",
-      "itemID": 466,
+      "extra": [
+        "Citation Key: ref4"
+      ],
+      "itemID": 4,
       "itemType": "journalArticle",
-      "notes": [],
-      "tags": [],
-      "title": "O<sub>x</sub>",
-      "uri": "http://zotero.org/users/3130622/items/ILFCPBUM"
+      "title": "O<sub>x</sub>"
     },
     {
-      "attachments": [],
-      "citekey": "Name2018a",
       "creators": [
         {
           "creatorType": "author",
@@ -153,19 +87,14 @@
         }
       ],
       "date": "2018",
-      "dateAdded": "2018-07-21T14:37:59Z",
-      "dateModified": "2018-07-21T15:55:51Z",
-      "extra": "Citation Key: ref5",
-      "itemID": 467,
+      "extra": [
+        "Citation Key: ref5"
+      ],
+      "itemID": 5,
       "itemType": "journalArticle",
-      "notes": [],
-      "tags": [],
-      "title": "O<sub>x</sub> test",
-      "uri": "http://zotero.org/users/3130622/items/KEKAYD3E"
+      "title": "O<sub>x</sub> test"
     },
     {
-      "attachments": [],
-      "citekey": "Name2018b",
       "creators": [
         {
           "creatorType": "author",
@@ -174,19 +103,14 @@
         }
       ],
       "date": "2018",
-      "dateAdded": "2018-07-21T14:51:35Z",
-      "dateModified": "2018-07-21T15:55:43Z",
-      "extra": "Citation Key: ref6",
-      "itemID": 469,
+      "extra": [
+        "Citation Key: ref6"
+      ],
+      "itemID": 6,
       "itemType": "journalArticle",
-      "notes": [],
-      "tags": [],
-      "title": "<span class=\"nocase\">O<sub>x</sub></span>",
-      "uri": "http://zotero.org/users/3130622/items/ANY3YQYC"
+      "title": "<span class=\"nocase\">O<sub>x</sub></span>"
     },
     {
-      "attachments": [],
-      "citekey": "Name2018",
       "creators": [
         {
           "creatorType": "author",
@@ -195,19 +119,14 @@
         }
       ],
       "date": "2018",
-      "dateAdded": "2018-07-21T14:37:17Z",
-      "dateModified": "2018-07-21T14:37:52Z",
-      "extra": "Citation Key: ref7",
-      "itemID": 466,
+      "extra": [
+        "Citation Key: ref7"
+      ],
+      "itemID": 7,
       "itemType": "journalArticle",
-      "notes": [],
-      "tags": [],
-      "title": "O<sub>7-x</sub>",
-      "uri": "http://zotero.org/users/3130622/items/ILFCPBUM"
+      "title": "O<sub>7-x</sub>"
     },
     {
-      "attachments": [],
-      "citekey": "Name2018",
       "creators": [
         {
           "creatorType": "author",
@@ -216,15 +135,12 @@
         }
       ],
       "date": "2018",
-      "dateAdded": "2018-07-21T14:37:17Z",
-      "dateModified": "2018-07-21T14:37:52Z",
-      "extra": "Citation Key: ref8",
-      "itemID": 466,
+      "extra": [
+        "Citation Key: ref8"
+      ],
+      "itemID": 8,
       "itemType": "journalArticle",
-      "notes": [],
-      "tags": [],
-      "title": "O<sub>7-x</sub> test",
-      "uri": "http://zotero.org/users/3130622/items/ILFCPBUM"
+      "title": "O<sub>7-x</sub> test"
     }
   ]
 }

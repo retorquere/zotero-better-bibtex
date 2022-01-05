@@ -8,9 +8,32 @@
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 1,
-	"lastUpdated": "2019-07-12 05:44:41"
+	"lastUpdated": "2020-10-14 14:41:53"
 }
 
+
+/*
+	***** BEGIN LICENSE BLOCK *****
+
+	Copyright © 2020 Simon Kornblith, Sylvain Machefert
+
+	This file is part of Zotero.
+
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Zotero is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU Affero General Public License for more details.
+
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
+
+	***** END LICENSE BLOCK *****
+*/
 
 function detectImport() {
 	var marcRecordRegexp = /^[0-9]{5}[a-z ]{3}$/;
@@ -28,7 +51,7 @@ var subfieldDelimiter = "\x1F";
 /*
  * CLEANING FUNCTIONS
  */
- 
+
 
 // general purpose cleaning
 function clean(value) {
@@ -38,14 +61,14 @@ function clean(value) {
 	value = value.replace(/^[\s.,/:;]+/, '');
 	value = value.replace(/[\s.,/:;]+$/, '');
 	value = value.replace(/ +/g, ' ');
-	
+
 	var char1 = value.substr(0, 1);
 	var char2 = value.substr(value.length - 1);
 	if ((char1 == "[" && char2 == "]") || (char1 == "(" && char2 == ")")) {
 		// chop of extraneous characters
 		return value.substr(1, value.length - 2);
 	}
-	
+
 	return value;
 }
 
@@ -104,7 +127,7 @@ var record = function () {
 	this.directory = {};
 	this.leader = "";
 	this.content = "";
-	
+
 	// defaults
 	this.indicatorLength = 2;
 	this.subfieldCodeLength = 2;
@@ -116,15 +139,15 @@ record.prototype.importBinary = function (record) {
 	var directory = record.substr(0, record.indexOf(fieldTerminator));
 	this.leader = directory.substr(0, 24);
 	directory = directory.substr(24);
-	
+
 	// get various data
 	this.indicatorLength = parseInt(this.leader.substr(10, 1));
 	this.subfieldCodeLength = parseInt(this.leader.substr(11, 1));
 	var baseAddress = parseInt(this.leader.substr(12, 5));
-	
+
 	// get record data
 	var contentTmp = record.substr(baseAddress);
-	
+
 	// MARC wants one-byte characters, so when we have multi-byte UTF-8
 	// sequences, add null characters so that the directory shows up right. we
 	// can strip the nulls later.
@@ -141,13 +164,13 @@ record.prototype.importBinary = function (record) {
 			this.content += "\x00";
 		}
 	}
-	
+
 	// read directory
 	for (var i = 0; i < directory.length; i += 12) {
 		var tag = parseInt(directory.substr(i, 3));
 		var fieldLength = parseInt(directory.substr(i + 3, 4));
 		var fieldPosition = parseInt(directory.substr(i + 7, 5));
-		
+
 		if (!this.directory[tag]) {
 			this.directory[tag] = [];
 		}
@@ -165,16 +188,16 @@ record.prototype.addField = function (field, indicator, value) {
 	else if (indicator.length != this.indicatorLength) {
 		indicator = Zotero.Utilities.lpad(indicator, " ", this.indicatorLength);
 	}
-	
+
 	// add terminator
 	value = indicator + value + fieldTerminator;
-	
+
 	// add field to directory
 	if (!this.directory[field]) {
 		this.directory[field] = [];
 	}
 	this.directory[field].push([this.content.length, value.length]);
-	
+
 	// add field to record
 	this.content += value;
 };
@@ -183,22 +206,22 @@ record.prototype.addField = function (field, indicator, value) {
 record.prototype.getField = function (field) {
 	field = parseInt(field);
 	var fields = [];
-	
+
 	// make sure fields exist
 	if (!this.directory[field]) {
 		return fields;
 	}
-	
+
 	// get fields
 	for (var i in this.directory[field]) {
 		var location = this.directory[field][i];
-		
+
 		// add to array, replacing null characters
 		fields.push([this.content.substr(location[0], this.indicatorLength),
 			this.content.substr(location[0] + this.indicatorLength,
 				location[1] - this.indicatorLength - 1).replace(/\x00/g, "")]);
 	}
-	
+
 	return fields;
 };
 
@@ -235,18 +258,18 @@ record.prototype.extractSubfields = function (fieldStr, tag /* for error message
 record.prototype.getFieldSubfields = function (tag) { // returns a two-dimensional array of values
 	var fields = this.getField(tag);
 	var returnFields = [];
-	
+
 	for (var i = 0, n = fields.length; i < n; i++) {
 		returnFields[i] = this.extractSubfields(fields[i][1], tag);
 	}
-	
+
 	return returnFields;
 };
 
 // add field to DB
 record.prototype._associateDBField = function (item, fieldNo, part, fieldName, execMe, arg1, arg2) {
 	var field = this.getFieldSubfields(fieldNo);
-	
+
 	Zotero.debug('MARC: found ' + field.length + ' matches for ' + fieldNo + part);
 	if (field) {
 		for (var i in field) {
@@ -264,11 +287,11 @@ record.prototype._associateDBField = function (item, fieldNo, part, fieldName, e
 			}
 			if (value) {
 				value = clean(value);
-				
+
 				if (execMe) {
 					value = execMe(value, arg1, arg2);
 				}
-				
+
 				if (fieldName == "creator") {
 					item.creators.push(value);
 				}
@@ -309,7 +332,7 @@ record.prototype._associateNotes = function (item, fieldNo, part) {
 // add field to DB as tags
 record.prototype._associateTags = function (item, fieldNo, part) {
 	var field = this.getFieldSubfields(fieldNo);
-	
+
 	for (var i in field) {
 		for (var j = 0; j < part.length; j++) {
 			var myPart = part.substr(j, 1);
@@ -359,12 +382,12 @@ record.prototype.translate = function (item) {
 		if (this.getFieldSubfields("328")[0]) {
 			item.itemType = "thesis";
 		}
-		
+
 		// Extract ISBNs
 		this._associateDBField(item, "010", "a", "ISBN", pullISBN);
 		// Extract ISSNs
 		this._associateDBField(item, "011", "a", "ISSN", pullISBN);
-		
+
 		// Extract creators (700, 701 & 702)
 		for (let i = 700; i < 703; i++) {
 			let authorTab = this.getFieldSubfields(i);
@@ -381,7 +404,7 @@ record.prototype.translate = function (item) {
 				if (authorText) item.creators.push(Zotero.Utilities.cleanAuthor(authorText, "author", true));
 			}
 		}
-		
+
 		// Extract corporate creators (710, 711 & 712)
 		for (let i = 710; i < 713; i++) {
 			let authorTab = this.getFieldSubfields(i);
@@ -391,23 +414,23 @@ record.prototype.translate = function (item) {
 				}
 			}
 		}
-		
+
 		// Extract language. In the 101$a there's a 3 chars code, would be better to
 		// have a translation somewhere
 		this._associateDBField(item, "101", "a", "language");
-		
+
 		// Extract abstractNote
 		this._associateDBField(item, "328", "a", "abstractNote");
 		this._associateDBField(item, "330", "a", "abstractNote");
-		
+
 		// Extract tags
 		// TODO : Ajouter les autres champs en 6xx avec les autorités construites.
 		// nécessite de reconstruire les autorités
 		this._associateTags(item, "610", "a");
-		
+
 		// Extract scale (for maps)
 		this._associateDBField(item, "206", "a", "scale");
-		
+
 		// Extract title
 		var title = this.getField("200")[0][1]	// non-repeatable
 						.replace(	// chop off any translations, since they may have repeated $e fields
@@ -417,28 +440,47 @@ record.prototype.translate = function (item) {
 
 		// Extract edition
 		this._associateDBField(item, "205", "a", "edition");
-		
-		// Extract place info
-		this._associateDBField(item, "210", "a", "place");
-		
-		// Extract publisher/distributor
-		if (item.itemType == "film") {
-			this._associateDBField(item, "210", "c", "distributor");
+
+
+		// Field 214 replaces 210 in newer version of UNIMARC; the two are exclusive
+		// 214 uses numbered subfields to describe different types of bibliographic information
+		// currently not using that
+		// see https://www.transition-bibliographique.fr/wp-content/uploads/2019/08/B214-2019.pdf
+		if (this.getField("214").length) {
+			this._associateDBField(item, "214", "a", "place");
+			if (item.itemType == "film") {
+				this._associateDBField(item, "214", "c", "distributor");
+			}
+			else {
+				this._associateDBField(item, "214", "c", "publisher");
+			}
+			// Extract year
+			this._associateDBField(item, "214", "d", "date", pullNumber);
 		}
 		else {
-			this._associateDBField(item, "210", "c", "publisher");
+			// Extract place info
+			this._associateDBField(item, "210", "a", "place");
+
+			// Extract publisher/distributor
+			if (item.itemType == "film") {
+				this._associateDBField(item, "210", "c", "distributor");
+			}
+			else {
+				this._associateDBField(item, "210", "c", "publisher");
+			}
+			// Extract year
+			this._associateDBField(item, "210", "d", "date", pullNumber);
 		}
-		
-		// Extract year
-		this._associateDBField(item, "210", "d", "date", pullNumber);
+
+
 		// Extract pages. Not working well because 215$a often contains pages + volume informations : 1 vol ()
 		// this._associateDBField(item, "215", "a", "pages", pullNumber);
-		
+
 		// Extract series
 		this._associateDBField(item, "225", "a", "series");
 		// Extract series number
 		this._associateDBField(item, "225", "v", "seriesNumber");
-		
+
 		// Extract call number
 		this._associateDBField(item, "686", "ab", "callNumber");
 		this._associateDBField(item, "676", "a", "callNumber");
@@ -451,7 +493,7 @@ record.prototype.translate = function (item) {
 		if (this.getFieldSubfields("502")[0] && !this.getFieldSubfields("020")[0]) {
 			item.itemType = "thesis";
 		}
-		
+
 		// Extract ISBNs
 		this._associateDBField(item, "020", "a", "ISBN", pullISBN);
 		// Extract ISSNs
@@ -474,7 +516,7 @@ record.prototype.translate = function (item) {
 			pub: "SKIP", // publication place
 			trl: "translator"
 		};
-		
+
 		var creatorFields = ["100", "110", "700", "710"];// "111", "711" are meeting name
 		for (let i = 0; i < creatorFields.length; i++) {
 			var authorTab = this.getFieldSubfields(creatorFields[i]);
@@ -507,10 +549,10 @@ record.prototype.translate = function (item) {
 				}
 			}
 		}
-		
+
 		this._associateDBField(item, "111", "a", "meetingName");
 		this._associateDBField(item, "711", "a", "meetingName");
-		
+
 		if (item.itemType == "book" && !item.creators.length) {
 			// some LOC entries have no listed author, but have the author in the person subject field as the first entry
 			var field = this.getFieldSubfields("600");
@@ -518,7 +560,7 @@ record.prototype.translate = function (item) {
 				item.creators.push(Zotero.Utilities.cleanAuthor(field[0].a, "author", true));
 			}
 		}
-		
+
 		// Extract tags
 		// personal
 		this._associateTags(item, "600", "aqtxyzv");
@@ -567,7 +609,7 @@ record.prototype.translate = function (item) {
 		}
 		// biographical or historical data
 		this._associateNotes(item, "545", "ab");
-		
+
 		// Extract title
 		//  a = main title
 		//  b = subtitle
@@ -579,12 +621,12 @@ record.prototype.translate = function (item) {
 			glueTogether(clean(titlesubfields.n), clean(titlesubfields.p), ": "),
 			". "
 		);
-		
+
 		// Extract edition
 		this._associateDBField(item, "250", "a", "edition");
 		// Extract place info
 		this._associateDBField(item, "260", "a", "place");
-		
+
 		// Extract publisher/distributor
 		if (item.itemType == "film") {
 			this._associateDBField(item, "260", "b", "distributor");
@@ -592,7 +634,7 @@ record.prototype.translate = function (item) {
 		else {
 			this._associateDBField(item, "260", "b", "publisher");
 		}
-		
+
 		// Extract year
 		this._associateDBField(item, "260", "c", "date", pullNumber);
 		// Extract pages
@@ -622,12 +664,12 @@ record.prototype.translate = function (item) {
 		// Extract URL for electronic resources
 		this._associateDBField(item, "245", "h", "medium");
 		if (item.medium == "electronic resource" || item.medium == "Elektronische Ressource") this._associateDBField(item, "856", "u", "url");
-		
+
 		// Field 264 instead of 260
 		if (!item.place) this._associateDBField(item, "264", "a", "place");
 		if (!item.publisher) this._associateDBField(item, "264", "b", "publisher");
 		if (!item.date) this._associateDBField(item, "264", "c", "date", pullNumber);
-		
+
 		// German
 		if (!item.place) this._associateDBField(item, "410", "a", "place");
 		if (!item.publisher) this._associateDBField(item, "412", "a", "publisher");
@@ -637,7 +679,7 @@ record.prototype.translate = function (item) {
 		if (!item.date) this._associateDBField(item, "595", "a", "date", pullNumber);
 		if (this.getFieldSubfields("104")[0]) this._associateDBField(item, "104", "a", "creator", author, "author", true);
 		if (this.getFieldSubfields("800")[0]) this._associateDBField(item, "800", "a", "creator", author, "author", true);
-		
+
 		// Spanish
 		if (!item.title) this._associateDBField(item, "200", "a", "title");
 		if (!item.place) this._associateDBField(item, "210", "a", "place");
@@ -784,23 +826,23 @@ record.prototype.translate = function (item) {
 function doImport() {
 	var text;
 	var holdOver = "";	// part of the text held over from the last loop
-	
+
 	// eslint-disable-next-line no-cond-assign
 	while (text = Zotero.read(4096)) {	// read in 4096 byte increments
 		var records = text.split("\x1D");
-		
+
 		if (records.length > 1) {
 			records[0] = holdOver + records[0];
 			holdOver = records.pop(); // skip last record, since it's not done
-			
+
 			for (var i in records) {
 				var newItem = new Zotero.Item();
-				
+
 				// create new record
 				var rec = new record();
 				rec.importBinary(records[i]);
 				rec.translate(newItem);
-				
+
 				newItem.complete();
 			}
 		}

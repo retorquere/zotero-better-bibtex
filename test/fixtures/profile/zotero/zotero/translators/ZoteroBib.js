@@ -1,15 +1,15 @@
 {
 	"translatorID": "b7c665ba-173c-4dea-b28e-e866580002a2",
+	"translatorType": 4,
 	"label": "ZoteroBib",
 	"creator": "Dan Stillman",
 	"target": "^https://zbib\\.org/",
 	"minVersion": "4.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-05-14 08:38:18"
+	"lastUpdated": "2021-06-23 06:00:00"
 }
 
 /*
@@ -38,7 +38,7 @@
 var dataSelector = 'script[type="application/vnd.zotero.data+json"]';
 
 function detectWeb(doc, url) {
-	Zotero.monitorDOMChanges(doc.querySelector('.container'));
+	Zotero.monitorDOMChanges(doc.querySelector('#zotero-bib'));
 	return doc.querySelectorAll(dataSelector).length ? 'multiple' : false;
 }
 

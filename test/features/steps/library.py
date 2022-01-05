@@ -18,14 +18,18 @@ def un_multi(obj):
 
 def strip_obj(data):
   if type(data) == list:
-    stripped = [strip_obj(e) for e in data]
-    return [e for e in stripped if e not in ['', u'', {}, None, []]]
+    data = [e for e in (strip_obj(de) for de in data) if e is not None]
+    return data if len(data) > 0 else None
 
-  if type(data) == dict:
-    stripped = {k: strip_obj(v) for (k, v) in data.items()}
-    return {k: v for (k, v) in stripped.items() if v not in ['', u'', {}, None, []]}
+  elif type(data) == dict:
+    data = {k: v for k, v in ((dk, strip_obj(dv)) for dk, dv in data.items()) if v is not None}
+    return data if len(data) > 0 else None
 
-  return data
+  elif data in ['', u'']:
+    return None
+
+  else:
+    return data
 
 def clean_item(item):
   item = deepcopy(item)
@@ -47,11 +51,16 @@ def clean_item(item):
 
   item.pop('attachments', None) # I'll need to get around to this eventually
 
+  # make diffs more readable
+  if 'extra' in item and type(item['extra']) != list:
+      item['extra'] = item['extra'].split('\n')
+
   if 'notes' in item:
     item['notes'] = sorted(strip_obj([html2md(unnest(note, 'note')) for note in item.get('notes', [])]))
+    item['notes'] = [note.split('\n') for note in item['notes']]
 
   if 'note' in item:
-    item['note']  = html2md(item['note'])
+    item['note']  = html2md(item['note']).split('\n')
 
   if 'tags' in item:
     item['tags'] = sorted(strip_obj([html2md(unnest(tag, 'tag')) for tag in item.get('tags', [])]))
@@ -59,10 +68,8 @@ def clean_item(item):
   if 'creators' in item:
     item['creators'] = strip_obj(item['creators'])
 
-  if 'extra' in item:
-    item['extra'] = '\n'.join(sorted(item['extra'].split('\n')))
-
-  return strip_obj(item)
+  item = strip_obj(item)
+  return item
 
 def sort_collection(coll):
   coll['collections'] = sorted([sort_collection(c) for c in coll['collections']], key=lambda c: c.__hash__())
@@ -73,12 +80,15 @@ def load(lib):
   lib = HashableDict(lib)
 
   lib.pop('config', None)
+  lib.pop('version', None)
 
   items = {
     item['itemID']: HashableDict(clean_item(item))
     for item in lib['items']
   }
   lib['items'] = sorted(items.values(), key=lambda item: item.get('title', '') + '::' + item.__hash__())
+  for item in lib['items']:
+    if 'relations' in item: utils.print(str(item['relations']))
 
   if 'collections' not in lib: lib['collections'] = {}
   collections = { k: HashableDict(v) for k, v in lib['collections'].items() }

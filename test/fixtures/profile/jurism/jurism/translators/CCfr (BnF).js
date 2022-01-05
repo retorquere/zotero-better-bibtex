@@ -28,10 +28,10 @@ function doWeb(doc, url)
 	if (items)
 	{
 		Z.selectItems(items, function(selectedItems) {
-			if(!selectedItems) return true;
+			if (!selectedItems) return true;
 
 			var links = new Array();
-			for(var i in selectedItems) {
+			for (var i in selectedItems) {
 				links.push(getMarcUrl(i));
 			}
 			ZU.processDocuments(links, scrape);

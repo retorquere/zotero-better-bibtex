@@ -1,0 +1,54 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "mdy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "baseAttachmentPath": "C:\\Users\\jtcar\\Dropbox\\Juris-M",
+      "citekeyFold": false,
+      "citekeyFormat": "[language=ja][authEtAl][shorttitle2_2][year] | [Authors:jieba:select=1,2:transliterate=zh][Title:jieba:skipwords:select=1,2:nopunct:transliterate=zh][year]",
+      "jieba": true,
+      "kuroshiro": true,
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups"
+    }
+  },
+  "items": [
+    {
+      "citationKey": "akitaniMinhigashiQufukuyasushihen2010",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "\u88d5\u5e78",
+          "lastName": "\u79cb\u8c37"
+        }
+      ],
+      "date": "2010",
+      "itemID": 1,
+      "itemType": "book",
+      "language": "zh",
+      "place": "\u798f\u5dde",
+      "publisher": "\u798f\u5efa\u4eba\u6c11\u51fa\u7248\u793e",
+      "title": "\u95a9\u6771\u5340\u798f\u5be7\u7247\u56db\u7e23\u5e02\u65b9\u8a00\u7814\u7a76"
+    },
+    {
+      "citationKey": "akitaniMinhigashiQufukuyasushihen2010",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "\u88d5\u5e78",
+          "lastName": "\u79cb\u8c37"
+        }
+      ],
+      "date": "2010",
+      "itemID": 1,
+      "itemType": "book",
+      "language": "ja",
+      "place": "\u798f\u5dde",
+      "publisher": "\u798f\u5efa\u4eba\u6c11\u51fa\u7248\u793e",
+      "title": "\u95a9\u6771\u5340\u798f\u5be7\u7247\u56db\u7e23\u5e02\u65b9\u8a00\u7814\u7a76"
+    }
+  ]
+}

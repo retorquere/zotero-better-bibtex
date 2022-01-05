@@ -21,8 +21,8 @@ class TravisFormatter(PlainFormatter):
        * table
        * tags (maybe)
     """
-    name = "travis"
-    description = "Very basic formatter with maximum compatibility but shortened line lengths for Travis"
+    name = "CI log"
+    description = "Very basic formatter with maximum compatibility but shortened line lengths for online CI environments"
 
     LINE_WIDTH = (130 if 'CI' in os.environ else max(get_terminal_size()[0], 130))
     SHOW_TAGS = True
@@ -30,9 +30,6 @@ class TravisFormatter(PlainFormatter):
     def write_tags(self, tags, indent=None):
       if tags and self.show_tags:
         indent = indent or ""
-
-        if 'test-cluster-1' in tags:
-          tags = set(tags) - set(['test-cluster-1'])
 
         text = textwrap.fill(' '.join(['@' + tag for tag in sorted(tags, key=lambda t: (t.rjust(10, '0').rjust(30, '~') if t.isdigit() else t))]), self.LINE_WIDTH, initial_indent=indent, subsequent_indent=indent + '  ')
         self.stream.write(text + '\n')

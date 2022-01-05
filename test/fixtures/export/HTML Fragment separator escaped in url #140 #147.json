@@ -1,34 +1,31 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "Export collections": false,
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]",
-      "jabrefFormat": 0
-    },
-    "release": "0.7.6"
+      "citekeyFormat": "[auth][year]"
+    }
   },
   "items": [
     {
       "accessDate": "2015-01-31 16:24:56",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "John",
           "lastName": "MacFarlane"
         }
       ],
-      "extra": "Citation Key: MacFarlaneJohna\ntex.referencetype= archived",
-      "itemID": 389,
+      "extra": [
+        "Citation Key: MacFarlaneJohna",
+        "tex.referencetype= archived"
+      ],
+      "itemID": 1,
       "itemType": "webpage",
       "title": "Pandoc User\u2019s Guide",
       "url": "http://johnmacfarlane.net/pandoc/README.html#citations"

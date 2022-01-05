@@ -159,7 +159,7 @@ function doWeb(doc, url) {
 		}
 
 		Zotero.selectItems(items, function(items) {
-			if(!items) return true;
+			if (!items) return true;
 
 			var articles = new Array();
 			for (var i in items) {

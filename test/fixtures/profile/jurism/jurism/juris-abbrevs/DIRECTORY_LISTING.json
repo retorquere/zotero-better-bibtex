@@ -1,132 +1,1061 @@
 [
   {
+    "filename": "abbreviations-empty.json",
+    "name": "Abbreviations: EMPTY (importing with \"replace local list\" disables abbreviations)"
+  },
+  {
+    "filename": "secondary-commonwealth-commonwealth.json",
+    "name": "Abbreviations: Secondary materials for Commonwealth jurisdictions (Commonwealth styles)"
+  },
+  {
+    "filename": "secondary-science.json",
+    "name": "Abbreviations: Scientific journals"
+  },
+  {
+    "filename": "secondary-us-bluebook.json",
+    "name": "Abbreviations: Secondary materials for the US (Bluebook styles)"
+  },
+  {
+    "filename": "auto-ad.json",
+    "name": "Abbreviations: Andorra legal",
+    "version": "2020-09-07 21:01:29 UTC",
+    "jurisdiction": "ad"
+  },
+  {
+    "filename": "auto-ae.json",
+    "name": "Abbreviations: United Arab Emirates legal",
+    "version": "2020-09-07 21:01:29 UTC",
+    "jurisdiction": "ae"
+  },
+  {
+    "filename": "auto-af.json",
+    "name": "Abbreviations: Afghanistan legal",
+    "version": "2020-09-07 21:01:29 UTC",
+    "jurisdiction": "af"
+  },
+  {
+    "filename": "auto-ag.json",
+    "name": "Abbreviations: Antigua and Barbuda legal",
+    "version": "2020-09-07 21:01:29 UTC",
+    "jurisdiction": "ag"
+  },
+  {
+    "filename": "auto-ai.json",
+    "name": "Abbreviations: Anguilla legal",
+    "version": "2020-09-07 21:01:29 UTC",
+    "jurisdiction": "ai"
+  },
+  {
+    "filename": "auto-al.json",
+    "name": "Abbreviations: Albania legal",
+    "version": "2020-09-07 21:01:29 UTC",
+    "jurisdiction": "al"
+  },
+  {
+    "filename": "auto-am.json",
+    "name": "Abbreviations: Armenia legal",
+    "version": "2020-09-07 21:01:29 UTC",
+    "jurisdiction": "am"
+  },
+  {
+    "filename": "auto-ao.json",
+    "name": "Abbreviations: Angola legal",
+    "version": "2020-09-07 21:01:29 UTC",
+    "jurisdiction": "ao"
+  },
+  {
+    "filename": "auto-ar.json",
+    "name": "Abbreviations: Argentina legal",
+    "version": "2020-09-07 21:01:29 UTC",
+    "jurisdiction": "ar"
+  },
+  {
+    "filename": "auto-arb.cls.json",
+    "name": "Abbreviations: Arbitrations legal",
+    "version": "2020-10-15 22:01:45 UTC",
+    "jurisdiction": "arb.cls",
+    "variants": {
+      "enIBFD": "2020-10-15 22:01:45 UTC"
+    }
+  },
+  {
     "filename": "auto-at.json",
     "name": "Abbreviations: Austria legal",
-    "version": "2019-12-12 23:38:40 UTC",
-    "jurisdiction": "at"
+    "version": "2020-10-15 22:01:45 UTC",
+    "jurisdiction": "at",
+    "variants": {
+      "enIBFD": "2020-10-30 01:03:26 UTC"
+    }
+  },
+  {
+    "filename": "auto-au.int.json",
+    "name": "Abbreviations: African Union legal",
+    "version": "2019-08-19 06:21:43 UTC",
+    "jurisdiction": "au.int"
+  },
+  {
+    "filename": "auto-au.json",
+    "name": "Abbreviations: Australia legal",
+    "version": "2020-09-07 21:01:29 UTC",
+    "jurisdiction": "au"
+  },
+  {
+    "filename": "auto-az.json",
+    "name": "Abbreviations: Azerbaijan legal",
+    "version": "2020-09-07 21:01:29 UTC",
+    "jurisdiction": "az"
+  },
+  {
+    "filename": "auto-ba.json",
+    "name": "Abbreviations: Sprska legal",
+    "version": "2020-09-07 21:01:29 UTC",
+    "jurisdiction": "ba"
+  },
+  {
+    "filename": "auto-bb.json",
+    "name": "Abbreviations: Barbados legal",
+    "version": "2020-09-07 21:01:29 UTC",
+    "jurisdiction": "bb"
+  },
+  {
+    "filename": "auto-bd.json",
+    "name": "Abbreviations: Bangladesh legal",
+    "version": "2020-09-07 21:01:29 UTC",
+    "jurisdiction": "bd"
   },
   {
     "filename": "auto-be.json",
-    "name": "Abbreviations: Belgium legal",
-    "version": 1,
+    "name": "Abbreviations: België legal",
+    "version": "2020-10-15 22:01:45 UTC",
     "jurisdiction": "be",
     "variants": {
-      "francais": 1
+      "belgium": 1,
+      "francais": "2020-10-15 22:01:45 UTC"
+    }
+  },
+  {
+    "filename": "auto-bf.json",
+    "name": "Abbreviations: Burkina Faso legal",
+    "version": "2020-09-07 21:01:29 UTC",
+    "jurisdiction": "bf"
+  },
+  {
+    "filename": "auto-bg.json",
+    "name": "Abbreviations: Bulgaria legal",
+    "version": "2020-09-07 21:01:29 UTC",
+    "jurisdiction": "bg"
+  },
+  {
+    "filename": "auto-bh.json",
+    "name": "Abbreviations: Bahrain legal",
+    "version": "2020-09-07 21:01:29 UTC",
+    "jurisdiction": "bh"
+  },
+  {
+    "filename": "auto-bi.json",
+    "name": "Abbreviations: Burundi legal",
+    "version": "2020-09-07 21:01:29 UTC",
+    "jurisdiction": "bi"
+  },
+  {
+    "filename": "auto-bj.json",
+    "name": "Abbreviations: Benin legal",
+    "version": "2020-09-07 21:01:29 UTC",
+    "jurisdiction": "bj"
+  },
+  {
+    "filename": "auto-bn.json",
+    "name": "Abbreviations: Brunei legal",
+    "version": "2020-09-07 21:01:29 UTC",
+    "jurisdiction": "bn"
+  },
+  {
+    "filename": "auto-bo.json",
+    "name": "Abbreviations: Bolivia legal",
+    "version": "2020-09-07 21:01:29 UTC",
+    "jurisdiction": "bo"
+  },
+  {
+    "filename": "auto-br.json",
+    "name": "Abbreviations: Brazil legal",
+    "version": "2020-09-07 21:01:29 UTC",
+    "jurisdiction": "br"
+  },
+  {
+    "filename": "auto-bs.json",
+    "name": "Abbreviations: The Bahamas legal",
+    "version": "2020-09-07 21:01:29 UTC",
+    "jurisdiction": "bs"
+  },
+  {
+    "filename": "auto-bt.json",
+    "name": "Abbreviations: Bhutan legal",
+    "version": "2020-09-07 21:01:29 UTC",
+    "jurisdiction": "bt"
+  },
+  {
+    "filename": "auto-bw.json",
+    "name": "Abbreviations: Botswana legal",
+    "version": "2020-09-07 21:01:29 UTC",
+    "jurisdiction": "bw"
+  },
+  {
+    "filename": "auto-by.json",
+    "name": "Abbreviations: Belarus legal",
+    "version": "2020-09-07 21:01:29 UTC",
+    "jurisdiction": "by"
+  },
+  {
+    "filename": "auto-bz.json",
+    "name": "Abbreviations: Belize legal",
+    "version": "2020-09-07 21:01:29 UTC",
+    "jurisdiction": "bz"
+  },
+  {
+    "filename": "auto-ca.json",
+    "name": "Abbreviations: Canada legal",
+    "version": "2020-11-27 02:47:36 UTC",
+    "jurisdiction": "ca",
+    "variants": {
+      "fr": "2020-11-27 02:47:36 UTC"
+    }
+  },
+  {
+    "filename": "auto-cd.json",
+    "name": "Abbreviations: Dem. Rep. of the Congo legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "cd"
+  },
+  {
+    "filename": "auto-cf.json",
+    "name": "Abbreviations: Central African Republic legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "cf"
+  },
+  {
+    "filename": "auto-cg.json",
+    "name": "Abbreviations: Rep. of the Congo legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "cg"
+  },
+  {
+    "filename": "auto-ch.json",
+    "name": "Abbreviations: Switzerland legal",
+    "version": "2020-10-12 01:32:11 UTC",
+    "jurisdiction": "ch"
+  },
+  {
+    "filename": "auto-ci.json",
+    "name": "Abbreviations: Côte d'Ivoire legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "ci"
+  },
+  {
+    "filename": "auto-ck.json",
+    "name": "Abbreviations: Cook Islands legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "ck"
+  },
+  {
+    "filename": "auto-cl.json",
+    "name": "Abbreviations: Chile legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "cl"
+  },
+  {
+    "filename": "auto-cm.json",
+    "name": "Abbreviations: Cameroon legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "cm"
+  },
+  {
+    "filename": "auto-cn.json",
+    "name": "Abbreviations: People's Republic of China legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "cn",
+    "variants": {
+      "englished": 1
+    }
+  },
+  {
+    "filename": "auto-co.json",
+    "name": "Abbreviations: Colombia legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "co"
+  },
+  {
+    "filename": "auto-coe.int.json",
+    "name": "Abbreviations: Council of Europe legal",
+    "version": "2020-10-15 22:01:46 UTC",
+    "jurisdiction": "coe.int",
+    "variants": {
+      "de": "2020-10-15 22:01:46 UTC"
+    }
+  },
+  {
+    "filename": "auto-comesa.int.json",
+    "name": "Abbreviations: Common Market for Eastern and Southern Africa legal",
+    "version": "2019-08-19 06:21:44 UTC",
+    "jurisdiction": "comesa.int"
+  },
+  {
+    "filename": "auto-cr.json",
+    "name": "Abbreviations: Costa Rica legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "cr"
+  },
+  {
+    "filename": "auto-cs.json",
+    "name": "Abbreviations: Czechoslovakia legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "cs"
+  },
+  {
+    "filename": "auto-cu.json",
+    "name": "Abbreviations: Cuba legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "cu"
+  },
+  {
+    "filename": "auto-cv.json",
+    "name": "Abbreviations: Cape Verde legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "cv"
+  },
+  {
+    "filename": "auto-cy.json",
+    "name": "Abbreviations: Cyprus legal",
+    "version": "2020-10-15 22:01:46 UTC",
+    "jurisdiction": "cy",
+    "variants": {
+      "enIBFD": "2020-10-30 01:03:27 UTC"
     }
   },
   {
     "filename": "auto-cz.json",
     "name": "Abbreviations: Czechia legal",
-    "version": 2,
-    "jurisdiction": "cz"
+    "version": "2020-10-15 22:01:46 UTC",
+    "jurisdiction": "cz",
+    "variants": {
+      "enIBFD": "2020-10-30 01:03:27 UTC"
+    }
+  },
+  {
+    "filename": "auto-dd.json",
+    "name": "Abbreviations: German Democratic Republic legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "dd"
+  },
+  {
+    "filename": "auto-de.json",
+    "name": "Abbreviations: Germany legal",
+    "version": "2020-10-19 02:43:43 UTC",
+    "jurisdiction": "de",
+    "variants": {
+      "enIBFD": "2020-10-30 01:03:27 UTC"
+    }
+  },
+  {
+    "filename": "auto-dj.json",
+    "name": "Abbreviations: Djibouti legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "dj"
+  },
+  {
+    "filename": "auto-dk.json",
+    "name": "Abbreviations: Denmark legal",
+    "version": "2020-10-15 22:01:46 UTC",
+    "jurisdiction": "dk",
+    "variants": {
+      "enIBFD": "2020-10-30 01:03:27 UTC"
+    }
+  },
+  {
+    "filename": "auto-dm.json",
+    "name": "Abbreviations: Commonwealth of Dominica legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "dm"
+  },
+  {
+    "filename": "auto-do.json",
+    "name": "Abbreviations: Dominican Republic legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "do"
+  },
+  {
+    "filename": "auto-dz.json",
+    "name": "Abbreviations: Algeria legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "dz"
+  },
+  {
+    "filename": "auto-ec.int.json",
+    "name": "Abbreviations: European Community legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "ec.int"
+  },
+  {
+    "filename": "auto-ec.json",
+    "name": "Abbreviations: Ecuador legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "ec"
+  },
+  {
+    "filename": "auto-ee.json",
+    "name": "Abbreviations: Estonia legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "ee"
+  },
+  {
+    "filename": "auto-eea.int.json",
+    "name": "Abbreviations: European Economic Area legal",
+    "version": "2019-08-19 06:21:44 UTC",
+    "jurisdiction": "eea.int"
+  },
+  {
+    "filename": "auto-eec.int.json",
+    "name": "Abbreviations: European Economic Community legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "eec.int"
+  },
+  {
+    "filename": "auto-eg.json",
+    "name": "Abbreviations: Egypt legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "eg"
+  },
+  {
+    "filename": "auto-eh.json",
+    "name": "Abbreviations: Western Sahara legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "eh"
+  },
+  {
+    "filename": "auto-er.json",
+    "name": "Abbreviations: Eritrea legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "er"
+  },
+  {
+    "filename": "auto-es.json",
+    "name": "Abbreviations: Spain legal",
+    "version": "2020-10-30 01:03:27 UTC",
+    "jurisdiction": "es",
+    "variants": {
+      "enIBFD": "2020-10-30 01:03:27 UTC"
+    }
+  },
+  {
+    "filename": "auto-et.json",
+    "name": "Abbreviations: Ethiopia legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "et"
+  },
+  {
+    "filename": "auto-eu.int.json",
+    "name": "Abbreviations: European Union legal",
+    "version": "2020-10-15 22:01:47 UTC",
+    "jurisdiction": "eu.int",
+    "variants": {
+      "de": "2020-10-15 22:01:47 UTC"
+    }
+  },
+  {
+    "filename": "auto-fi.json",
+    "name": "Abbreviations: Finland legal",
+    "version": "2020-10-15 22:01:47 UTC",
+    "jurisdiction": "fi",
+    "variants": {
+      "enIBFD": "2020-10-30 01:03:27 UTC"
+    }
+  },
+  {
+    "filename": "auto-fj.json",
+    "name": "Abbreviations: Fiji legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "fj"
+  },
+  {
+    "filename": "auto-fm.json",
+    "name": "Abbreviations: Micronesia legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "fm"
   },
   {
     "filename": "auto-fr.json",
     "name": "Abbreviations: France legal",
-    "version": "2019-11-04 08:52:44 UTC",
-    "jurisdiction": "fr"
+    "version": "2020-10-30 01:03:27 UTC",
+    "jurisdiction": "fr",
+    "variants": {
+      "enIBFD": "2020-10-30 01:03:27 UTC"
+    }
   },
   {
-    "filename": "auto-pl.json",
-    "name": "Abbreviations: Poland legal",
-    "version": 1,
-    "jurisdiction": "pl"
+    "filename": "auto-ga.json",
+    "name": "Abbreviations: Gabon legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "ga"
   },
   {
-    "filename": "auto-us.json",
-    "name": "Abbreviations: United States legal",
-    "version": "2019-08-24 06:14:05 UTC",
-    "jurisdiction": "us"
+    "filename": "auto-gb.json",
+    "name": "Abbreviations: United Kingdom legal",
+    "version": "2020-11-01 09:32:50 UTC",
+    "jurisdiction": "gb"
   },
   {
-    "filename": "auto-un.int.json",
-    "name": "Abbreviations: United Nations legal",
-    "version": 1,
-    "jurisdiction": "un.int"
+    "filename": "auto-gd.json",
+    "name": "Abbreviations: Grenada legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "gd"
+  },
+  {
+    "filename": "auto-ge.json",
+    "name": "Abbreviations: Georgia legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "ge",
+    "variants": {
+      "ab": "2020-09-07 21:01:30 UTC"
+    }
+  },
+  {
+    "filename": "auto-gh.json",
+    "name": "Abbreviations: Ghana legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "gh"
+  },
+  {
+    "filename": "auto-gm.json",
+    "name": "Abbreviations: The Gambia legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "gm"
+  },
+  {
+    "filename": "auto-gn.json",
+    "name": "Abbreviations: Guinea legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "gn"
+  },
+  {
+    "filename": "auto-gq.json",
+    "name": "Abbreviations: Equatorial Guinea legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "gq"
+  },
+  {
+    "filename": "auto-gr.json",
+    "name": "Abbreviations: Greece legal",
+    "version": "2020-10-15 22:01:47 UTC",
+    "jurisdiction": "gr",
+    "variants": {
+      "enIBFD": "2020-10-30 01:03:27 UTC"
+    }
+  },
+  {
+    "filename": "auto-gt.json",
+    "name": "Abbreviations: Guatemala legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "gt"
+  },
+  {
+    "filename": "auto-gu.json",
+    "name": "Abbreviations: Guam legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "gu"
+  },
+  {
+    "filename": "auto-gw.json",
+    "name": "Abbreviations: Guinea-Bissau legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "gw"
+  },
+  {
+    "filename": "auto-gy.json",
+    "name": "Abbreviations: Guyana legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "gy"
+  },
+  {
+    "filename": "auto-hk.json",
+    "name": "Abbreviations: Hong Kong legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "hk"
+  },
+  {
+    "filename": "auto-hn.json",
+    "name": "Abbreviations: Honduras legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "hn"
+  },
+  {
+    "filename": "auto-hr.json",
+    "name": "Abbreviations: Croatia legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "hr"
+  },
+  {
+    "filename": "auto-ht.json",
+    "name": "Abbreviations: Haiti legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "ht"
+  },
+  {
+    "filename": "auto-hu.json",
+    "name": "Abbreviations: Hungary legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "hu"
+  },
+  {
+    "filename": "auto-icc.int.json",
+    "name": "Abbreviations: International Criminal Court legal",
+    "version": "2020-10-15 22:01:47 UTC",
+    "jurisdiction": "icc.int",
+    "variants": {
+      "de": "2020-10-15 22:01:47 UTC"
+    }
+  },
+  {
+    "filename": "auto-id.json",
+    "name": "Abbreviations: Indonesia legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "id"
+  },
+  {
+    "filename": "auto-ie.json",
+    "name": "Abbreviations: Ireland legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "ie"
+  },
+  {
+    "filename": "auto-il.json",
+    "name": "Abbreviations: Israel legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "il"
+  },
+  {
+    "filename": "auto-imf.int.json",
+    "name": "Abbreviations: International Monetary Fund legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "imf.int"
+  },
+  {
+    "filename": "auto-in.json",
+    "name": "Abbreviations: India legal",
+    "version": "2020-11-15 00:24:19 UTC",
+    "jurisdiction": "in"
+  },
+  {
+    "filename": "auto-iq.json",
+    "name": "Abbreviations: Iraq legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "iq"
+  },
+  {
+    "filename": "auto-ir.json",
+    "name": "Abbreviations: Iran legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "ir"
+  },
+  {
+    "filename": "auto-is.json",
+    "name": "Abbreviations: Iceland legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "is"
+  },
+  {
+    "filename": "auto-it.json",
+    "name": "Abbreviations: Italy legal",
+    "version": "2020-10-15 22:01:47 UTC",
+    "jurisdiction": "it",
+    "variants": {
+      "enIBFD": "2020-10-30 01:03:27 UTC"
+    }
+  },
+  {
+    "filename": "auto-je.json",
+    "name": "Abbreviations: Jersey legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "je"
+  },
+  {
+    "filename": "auto-jm.json",
+    "name": "Abbreviations: Jamaica legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "jm"
+  },
+  {
+    "filename": "auto-jo.json",
+    "name": "Abbreviations: Jordan legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "jo"
   },
   {
     "filename": "auto-jp.json",
     "name": "Abbreviations: Japan legal",
-    "version": 1,
+    "version": "2020-10-15 22:01:47 UTC",
     "jurisdiction": "jp",
     "variants": {
-      "englished": 12
+      "englished": "2020-10-15 22:01:47 UTC"
     }
   },
   {
     "filename": "auto-ke.json",
     "name": "Abbreviations: Kenya legal",
-    "version": 2,
+    "version": "2019-08-19 06:21:44 UTC",
     "jurisdiction": "ke"
   },
   {
-    "filename": "country-codes.json",
-    "name": "Abbreviations: Country codes (ISO)",
-    "version": 1
+    "filename": "auto-kg.json",
+    "name": "Abbreviations: Kyrgyzstan legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "kg"
   },
   {
-    "filename": "primary-commonwealth.json",
-    "name": "Abbreviations: Primary legal sources for Commonwealth jurisdictions",
-    "version": 1,
-    "jurisdictions": []
+    "filename": "auto-kh.json",
+    "name": "Abbreviations: Cambodia legal",
+    "version": "2019-08-19 06:21:44 UTC",
+    "jurisdiction": "kh"
   },
   {
-    "filename": "primary-us.json",
-    "name": "Abbreviations: Primary legal sources for US jurisdictions",
-    "version": 2,
-    "jurisdictions": []
+    "filename": "auto-ki.json",
+    "name": "Abbreviations: Kiribati legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "ki"
   },
   {
-    "filename": "primary-international-bluebook.json",
-    "name": "Abbreviations: Primary legal sources with international scope (Bluebook styles)",
-    "version": 1,
-    "jurisdictions": []
+    "filename": "auto-km.json",
+    "name": "Abbreviations: Comoros legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "km"
   },
   {
-    "filename": "primary-international-commonwealth.json",
-    "name": "Abbreviations: Primary legal sources with international scope (Commonwealth styles)",
-    "version": 1,
-    "jurisdictions": []
+    "filename": "auto-kn.json",
+    "name": "Abbreviations: Saint Kitts and Nevis legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "kn"
   },
   {
-    "filename": "secondary-science.json",
-    "name": "Abbreviations: Scientific journals",
-    "version": 1
+    "filename": "auto-kp.json",
+    "name": "Abbreviations: North Korea legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "kp"
   },
   {
-    "filename": "secondary-commonwealth-commonwealth.json",
-    "name": "Abbreviations: Secondary materials for Commonwealth jurisdictions (Commonwealth styles)",
-    "version": 1,
-    "jurisdictions": []
+    "filename": "auto-kr.json",
+    "name": "Abbreviations: South Korea legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "kr"
   },
   {
-    "filename": "secondary-us-bluebook.json",
-    "name": "Abbreviations: Secondary materials for the US (Bluebook styles)",
-    "version": 1,
-    "jurisdictions": []
+    "filename": "auto-kw.json",
+    "name": "Abbreviations: Kuwait legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "kw"
   },
   {
-    "filename": "primary-jurisdictions.json",
-    "name": "Jurisdiction codes (all legal styles)",
-    "version": 2,
-    "jurisdictions": []
+    "filename": "auto-ky.json",
+    "name": "Abbreviations: Cayman Islands legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "ky"
   },
   {
-    "filename": "abbreviations-empty.json",
-    "name": "Abbreviations: EMPTY (importing with \"replace local list\" disables abbreviations)",
-    "version": 1
+    "filename": "auto-kz.json",
+    "name": "Abbreviations: Kazakhstan legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "kz"
   },
   {
-    "filename": "auto-gb.json",
-    "name": "Abbreviations: United Kingdom legal",
-    "jurisdiction": "gb",
-    "version": "2019-08-23 09:55:46 UTC"
+    "filename": "auto-la.json",
+    "name": "Abbreviations: Lao People's Democratic Republic legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "la"
   },
   {
-    "filename": "auto-fi.json",
-    "name": "Abbreviations: Finland legal",
-    "version": "2019-09-26 23:53:39 UTC",
-    "jurisdiction": "fi"
+    "filename": "auto-lb.json",
+    "name": "Abbreviations: Lebanon legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "lb"
+  },
+  {
+    "filename": "auto-lc.json",
+    "name": "Abbreviations: Saint Lucia legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "lc"
+  },
+  {
+    "filename": "auto-li.json",
+    "name": "Abbreviations: Liechtenstein legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "li"
+  },
+  {
+    "filename": "auto-lk.json",
+    "name": "Abbreviations: Sri Lanka legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "lk"
+  },
+  {
+    "filename": "auto-ln.int.json",
+    "name": "Abbreviations: League of Nations legal",
+    "version": "2019-08-19 06:21:44 UTC",
+    "jurisdiction": "ln.int"
+  },
+  {
+    "filename": "auto-lr.json",
+    "name": "Abbreviations: Liberia legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "lr"
+  },
+  {
+    "filename": "auto-ls.json",
+    "name": "Abbreviations: Lesotho legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "ls"
+  },
+  {
+    "filename": "auto-lt.json",
+    "name": "Abbreviations: Lithuania legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "lt"
+  },
+  {
+    "filename": "auto-lu.json",
+    "name": "Abbreviations: Luxembourg legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "lu"
+  },
+  {
+    "filename": "auto-lv.json",
+    "name": "Abbreviations: Latvia legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "lv"
+  },
+  {
+    "filename": "auto-ly.json",
+    "name": "Abbreviations: Libya legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "ly"
+  },
+  {
+    "filename": "auto-ma.json",
+    "name": "Abbreviations: Morocco legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "ma"
+  },
+  {
+    "filename": "auto-mc.json",
+    "name": "Abbreviations: Monaco legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "mc"
+  },
+  {
+    "filename": "auto-md.json",
+    "name": "Abbreviations: Moldova legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "md"
+  },
+  {
+    "filename": "auto-me.json",
+    "name": "Abbreviations: Montenegro legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "me"
+  },
+  {
+    "filename": "auto-mg.json",
+    "name": "Abbreviations: Madagascar legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "mg"
+  },
+  {
+    "filename": "auto-mh.json",
+    "name": "Abbreviations: Marshall Islands legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "mh"
+  },
+  {
+    "filename": "auto-mk.json",
+    "name": "Abbreviations: Macedonia legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "mk"
+  },
+  {
+    "filename": "auto-ml.json",
+    "name": "Abbreviations: Mali legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "ml"
+  },
+  {
+    "filename": "auto-mm.json",
+    "name": "Abbreviations: Republic of the Union of Myanmar legal",
+    "version": "2019-08-19 06:21:44 UTC",
+    "jurisdiction": "mm"
+  },
+  {
+    "filename": "auto-mn.json",
+    "name": "Abbreviations: Mongolia legal",
+    "version": "2019-08-19 06:21:44 UTC",
+    "jurisdiction": "mn"
+  },
+  {
+    "filename": "auto-mo.json",
+    "name": "Abbreviations: Macau legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "mo"
+  },
+  {
+    "filename": "auto-mr.json",
+    "name": "Abbreviations: Mauritania legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "mr"
+  },
+  {
+    "filename": "auto-mt.json",
+    "name": "Abbreviations: Malta legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "mt"
+  },
+  {
+    "filename": "auto-mu.json",
+    "name": "Abbreviations: Mauritius legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "mu"
+  },
+  {
+    "filename": "auto-mv.json",
+    "name": "Abbreviations: Maldives legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "mv"
+  },
+  {
+    "filename": "auto-mw.json",
+    "name": "Abbreviations: Malawi legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "mw"
+  },
+  {
+    "filename": "auto-mx.json",
+    "name": "Abbreviations: Mexico legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "mx"
+  },
+  {
+    "filename": "auto-my.json",
+    "name": "Abbreviations: Malaysia legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "my"
+  },
+  {
+    "filename": "auto-mz.json",
+    "name": "Abbreviations: Mozambique legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "mz"
+  },
+  {
+    "filename": "auto-na.json",
+    "name": "Abbreviations: Namibia legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "na"
+  },
+  {
+    "filename": "auto-ne.json",
+    "name": "Abbreviations: Niger legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "ne"
+  },
+  {
+    "filename": "auto-ng.json",
+    "name": "Abbreviations: Nigeria legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "ng"
+  },
+  {
+    "filename": "auto-ni.json",
+    "name": "Abbreviations: Nicaragua legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "ni"
+  },
+  {
+    "filename": "auto-nir.json",
+    "name": "Abbreviations: Northern Ireland legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "nir"
+  },
+  {
+    "filename": "auto-nl.json",
+    "name": "Abbreviations: Netherlands legal",
+    "version": "2020-10-15 22:01:48 UTC",
+    "jurisdiction": "nl",
+    "variants": {
+      "enIBFD": "2020-10-30 01:03:27 UTC"
+    }
+  },
+  {
+    "filename": "auto-no.json",
+    "name": "Abbreviations: Norway legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "no"
+  },
+  {
+    "filename": "auto-np.json",
+    "name": "Abbreviations: Nepal legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "np"
+  },
+  {
+    "filename": "auto-nr.json",
+    "name": "Abbreviations: Nauru legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "nr"
+  },
+  {
+    "filename": "auto-nu.json",
+    "name": "Abbreviations: Niue legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "nu"
+  },
+  {
+    "filename": "auto-nz.json",
+    "name": "Abbreviations: New Zealand legal",
+    "version": "2019-08-19 06:21:44 UTC",
+    "jurisdiction": "nz",
+    "variants": {
+      "enIBFD": "2020-10-30 01:03:27 UTC"
+    }
+  },
+  {
+    "filename": "auto-oas.int.json",
+    "name": "Abbreviations: Organization of American States legal",
+    "version": "2019-08-19 06:21:44 UTC",
+    "jurisdiction": "oas.int"
+  },
+  {
+    "filename": "auto-om.json",
+    "name": "Abbreviations: Oman legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "om"
+  },
+  {
+    "filename": "auto-pa.json",
+    "name": "Abbreviations: Panama legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "pa"
+  },
+  {
+    "filename": "auto-pe.json",
+    "name": "Abbreviations: Peru legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "pe"
+  },
+  {
+    "filename": "auto-pg.json",
+    "name": "Abbreviations: Papua New Guinea legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "pg"
+  },
+  {
+    "filename": "auto-ph.json",
+    "name": "Abbreviations: Philippines legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "ph"
   },
   {
     "filename": "auto-pk.json",
@@ -135,24 +1064,405 @@
     "jurisdiction": "pk"
   },
   {
-    "filename": "auto-it.json",
-    "name": "Abbreviations: Italy legal",
-    "version": "2019-12-06 02:32:09 UTC",
-    "jurisdiction": "it"
+    "filename": "auto-pl.json",
+    "name": "Abbreviations: Poland legal",
+    "version": "2020-10-15 22:01:48 UTC",
+    "jurisdiction": "pl",
+    "variants": {
+      "enIBFD": "2020-10-30 01:03:27 UTC"
+    }
   },
   {
-    "filename": "auto-eu.int.json",
-    "name": "Abbreviations: European Union legal",
-    "version": "2019-12-12 23:59:50 UTC",
-    "jurisdiction": "eu.int",
+    "filename": "auto-ps.json",
+    "name": "Abbreviations: Palestinian Territory legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "ps"
+  },
+  {
+    "filename": "auto-pt.json",
+    "name": "Abbreviations: Portugal legal",
+    "version": "2020-10-15 22:01:48 UTC",
+    "jurisdiction": "pt",
     "variants": {
-      "de": "2019-12-12 23:59:50 UTC"
+      "enIBFD": "2020-10-30 01:03:27 UTC"
     }
+  },
+  {
+    "filename": "auto-pw.json",
+    "name": "Abbreviations: Palau legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "pw"
+  },
+  {
+    "filename": "auto-py.json",
+    "name": "Abbreviations: Paraguay legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "py"
+  },
+  {
+    "filename": "auto-qa.json",
+    "name": "Abbreviations: Qatar legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "qa"
+  },
+  {
+    "filename": "auto-ro.json",
+    "name": "Abbreviations: Romania legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "ro"
+  },
+  {
+    "filename": "auto-rs.json",
+    "name": "Abbreviations: Serbia legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "rs"
+  },
+  {
+    "filename": "auto-ru.json",
+    "name": "Abbreviations: Russia legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "ru"
+  },
+  {
+    "filename": "auto-rw.json",
+    "name": "Abbreviations: Rwanda legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "rw"
+  },
+  {
+    "filename": "auto-sa.json",
+    "name": "Abbreviations: Saudi Arabia legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "sa"
+  },
+  {
+    "filename": "auto-sai.int.json",
+    "name": "Abbreviations: Comunidad Andina legal",
+    "version": "2019-08-19 06:21:44 UTC",
+    "jurisdiction": "sai.int"
+  },
+  {
+    "filename": "auto-sb.json",
+    "name": "Abbreviations: Solomon Islands legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "sb"
+  },
+  {
+    "filename": "auto-sc.json",
+    "name": "Abbreviations: Seychelles legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "sc"
+  },
+  {
+    "filename": "auto-sd.json",
+    "name": "Abbreviations: Sudan legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "sd"
+  },
+  {
+    "filename": "auto-se.json",
+    "name": "Abbreviations: Sweden legal",
+    "version": "2020-10-30 01:03:27 UTC",
+    "jurisdiction": "se",
+    "variants": {
+      "enIBFD": "2020-10-30 01:03:27 UTC"
+    }
+  },
+  {
+    "filename": "auto-sg.json",
+    "name": "Abbreviations: Singapore legal",
+    "version": "2019-08-19 06:21:44 UTC",
+    "jurisdiction": "sg"
+  },
+  {
+    "filename": "auto-si.json",
+    "name": "Abbreviations: Slovenia legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "si"
+  },
+  {
+    "filename": "auto-sica.int.json",
+    "name": "Abbreviations: Sistema de la Integración Centroamericana legal",
+    "version": "2019-08-19 06:21:44 UTC",
+    "jurisdiction": "sica.int"
+  },
+  {
+    "filename": "auto-sk.json",
+    "name": "Abbreviations: Slovakia legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "sk"
+  },
+  {
+    "filename": "auto-sl.json",
+    "name": "Abbreviations: Sierra Leone legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "sl"
+  },
+  {
+    "filename": "auto-sm.json",
+    "name": "Abbreviations: San Marino legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "sm"
+  },
+  {
+    "filename": "auto-sn.json",
+    "name": "Abbreviations: Senegal legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "sn"
+  },
+  {
+    "filename": "auto-so.json",
+    "name": "Abbreviations: Somalia legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "so"
+  },
+  {
+    "filename": "auto-sr.json",
+    "name": "Abbreviations: Suriname legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "sr"
+  },
+  {
+    "filename": "auto-st.json",
+    "name": "Abbreviations: São Tomé and Príncipe legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "st"
+  },
+  {
+    "filename": "auto-sv.json",
+    "name": "Abbreviations: El Salvador legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "sv"
+  },
+  {
+    "filename": "auto-sy.json",
+    "name": "Abbreviations: Syria legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "sy"
+  },
+  {
+    "filename": "auto-sz.json",
+    "name": "Abbreviations: Swaziland legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "sz"
+  },
+  {
+    "filename": "auto-td.json",
+    "name": "Abbreviations: Chad legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "td"
+  },
+  {
+    "filename": "auto-tg.json",
+    "name": "Abbreviations: Togo legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "tg"
+  },
+  {
+    "filename": "auto-th.json",
+    "name": "Abbreviations: Thailand legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "th"
+  },
+  {
+    "filename": "auto-tj.json",
+    "name": "Abbreviations: Tajikistan legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "tj"
+  },
+  {
+    "filename": "auto-tl.json",
+    "name": "Abbreviations: Timor-Leste legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "tl"
+  },
+  {
+    "filename": "auto-tm.json",
+    "name": "Abbreviations: Turkmenistan legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "tm"
+  },
+  {
+    "filename": "auto-tn.json",
+    "name": "Abbreviations: Tunisia legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "tn"
+  },
+  {
+    "filename": "auto-to.json",
+    "name": "Abbreviations: Tonga legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "to"
+  },
+  {
+    "filename": "auto-tr.json",
+    "name": "Abbreviations: Turkey legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "tr"
+  },
+  {
+    "filename": "auto-tt.json",
+    "name": "Abbreviations: Trinidad and Tobago legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "tt"
+  },
+  {
+    "filename": "auto-tv.json",
+    "name": "Abbreviations: Tuvalu legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "tv"
+  },
+  {
+    "filename": "auto-tw.json",
+    "name": "Abbreviations: Republic of China legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "tw"
+  },
+  {
+    "filename": "auto-tz.json",
+    "name": "Abbreviations: Tanzania legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "tz"
+  },
+  {
+    "filename": "auto-ua.json",
+    "name": "Abbreviations: Ukraine legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "ua"
+  },
+  {
+    "filename": "auto-ug.json",
+    "name": "Abbreviations: Uganda legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "ug"
+  },
+  {
+    "filename": "auto-un.int.json",
+    "name": "Abbreviations: United Nations legal",
+    "version": "2020-10-15 22:01:48 UTC",
+    "jurisdiction": "un.int",
+    "variants": {
+      "de": "2020-10-15 22:01:48 UTC"
+    }
+  },
+  {
+    "filename": "auto-us.json",
+    "name": "Abbreviations: United States legal",
+    "version": "2020-09-07 08:44:28 UTC",
+    "jurisdiction": "us"
+  },
+  {
+    "filename": "auto-ussr.json",
+    "name": "Abbreviations: Union of Soviet Socialist Republics legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "ussr"
+  },
+  {
+    "filename": "auto-uy.json",
+    "name": "Abbreviations: Uruguay legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "uy"
+  },
+  {
+    "filename": "auto-uz.json",
+    "name": "Abbreviations: Uzbekistan legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "uz"
+  },
+  {
+    "filename": "auto-va.json",
+    "name": "Abbreviations: Vatican City legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "va"
+  },
+  {
+    "filename": "auto-vc.json",
+    "name": "Abbreviations: Saint Vincent and the Grenadines legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "vc"
+  },
+  {
+    "filename": "auto-ve.json",
+    "name": "Abbreviations: Venezuela legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "ve"
+  },
+  {
+    "filename": "auto-vg.json",
+    "name": "Abbreviations: British Virgin Islands legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "vg"
   },
   {
     "filename": "auto-vn.json",
     "name": "Abbreviations: Vietnam legal",
     "version": "2019-12-13 00:01:28 UTC",
     "jurisdiction": "vn"
+  },
+  {
+    "filename": "auto-vu.json",
+    "name": "Abbreviations: Vanuatu legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "vu"
+  },
+  {
+    "filename": "auto-wbg.int.json",
+    "name": "Abbreviations: World Bank Group legal",
+    "version": "2019-08-19 06:21:44 UTC",
+    "jurisdiction": "wbg.int"
+  },
+  {
+    "filename": "auto-ws.json",
+    "name": "Abbreviations: Samoa legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "ws"
+  },
+  {
+    "filename": "auto-wto.int.json",
+    "name": "Abbreviations: World Trade Organization legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "wto.int"
+  },
+  {
+    "filename": "auto-xk.json",
+    "name": "Abbreviations: Kosovo legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "xk"
+  },
+  {
+    "filename": "auto-ye.json",
+    "name": "Abbreviations: Yemen legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "ye"
+  },
+  {
+    "filename": "auto-yu.json",
+    "name": "Abbreviations: Yugoslavia legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "yu"
+  },
+  {
+    "filename": "auto-za.json",
+    "name": "Abbreviations: South Africa legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "za"
+  },
+  {
+    "filename": "auto-zm.json",
+    "name": "Abbreviations: Zambia legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "zm"
+  },
+  {
+    "filename": "auto-zw.json",
+    "name": "Abbreviations: Zimbabwe legal",
+    "version": "2020-09-07 21:01:30 UTC",
+    "jurisdiction": "zw"
+  },
+  {
+    "filename": "auto-zz.json",
+    "name": "Abbreviations: Atlantis legal",
+    "version": "2019-08-19 12:16:29 UTC",
+    "jurisdiction": "zz"
   }
 ]

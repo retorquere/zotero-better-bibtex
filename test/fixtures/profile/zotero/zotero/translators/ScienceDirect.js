@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2019-11-09 03:35:55"
+	"lastUpdated": "2020-10-27 06:55:27"
 }
 
 // attr()/text() v2
@@ -96,9 +96,7 @@ function getPDFLink(doc, onDone) {
 		try {
 			pdfLink.click();
 			intermediateURL = attr(doc, '.PdfDropDownMenu a', 'href');
-			var clickEvent = doc.createEvent('MouseEvents');
-			clickEvent.initEvent('mousedown', true, true);
-			doc.dispatchEvent(clickEvent);
+			doc.body.click();
 		}
 		catch (e) {
 			Zotero.debug(e, 2);

@@ -27,13 +27,13 @@ function detectWeb(doc, url) {
 	
 	var spans = doc.evaluate('//x:span[contains(@class, " Z3988") or contains(@class, "Z3988 ") or @class="Z3988"][@title]', doc, nsResolver, XPathResult.ANY_TYPE, null);
 	var span;
-	while(span = spans.iterateNext()) {
+	while (span = spans.iterateNext()) {
 		// determine if it's a valid type
 		var item = new Zotero.Item;
 		var success = Zotero.Utilities.parseContextObject(span.title, item);
 		
-		if(item.itemType) {
-			if(encounteredType) {
+		if (item.itemType) {
+			if (encounteredType) {
 				return "multiple";
 			} else {
 				encounteredType = item.itemType;
@@ -49,7 +49,7 @@ function supplementItem(item, supp, prefer, ignore) {
 	if (!prefer) prefer = [];
 	if (!ignore) ignore = [];
 	
-	for(var i in supp) {
+	for (var i in supp) {
 		if (ignore.indexOf(i) != -1)  continue;
 		if (i == 'creators' || i == 'attachments' || i == 'notes'
 			|| i == 'tags' || i == 'seeAlso'
@@ -74,10 +74,9 @@ function supplementItem(item, supp, prefer, ignore) {
 // used to retrieve next COinS object when asynchronously parsing COinS objects
 // on a page
 function retrieveNextCOinS(needFullItems, newItems, couldUseFullItems, doc) {
-	if(needFullItems.length) {
+	if (needFullItems.length) {
 		var item = needFullItems.shift();
 		
-		Zotero.debug("Looking up contextObject");
 		var search = Zotero.loadTranslator("search");
 		search.setHandler("itemDone", function(obj, newItem) {
 			supplementItem(newItem, item, [], ['contextObject', 'repository']);
@@ -93,7 +92,7 @@ function retrieveNextCOinS(needFullItems, newItems, couldUseFullItems, doc) {
 		});
 		// look for translators
 		search.setHandler("translators", function(obj, translators) {
-			if(translators.length) {
+			if (translators.length) {
 				search.setTranslator(translators);
 				search.translate();
 			} else {
@@ -111,40 +110,40 @@ function retrieveNextCOinS(needFullItems, newItems, couldUseFullItems, doc) {
 
 // saves all COinS objects
 function completeCOinS(newItems, couldUseFullItems, doc) {
-	if(newItems.length > 1) {
+	if (newItems.length > 1) {
 		var selectArray = new Array(newItems.length);
-		for(var i in newItems) {
+		for (var i in newItems) {
 			selectArray[i] = newItems[i].title;
 		}
 		
 		Zotero.selectItems(selectArray, function (selectArray) {
 			if (!selectArray) return true;
 			var useIndices = new Array();
-			for(var i in selectArray) {
+			for (var i in selectArray) {
 				useIndices.push(i);
 			}
 			completeItems(newItems, useIndices, couldUseFullItems, doc);
 		});
-	} else if(newItems.length) {
+	} else if (newItems.length) {
 		completeItems(newItems, [0], couldUseFullItems, doc);
 	}
 }
 
 function completeItems(newItems, useIndices, couldUseFullItems, doc) {
-	if(!useIndices.length) {
+	if (!useIndices.length) {
 		return;
 	}
 	var i = useIndices.shift();
 	
 	// grab full item if the COinS was missing an author
-	if(couldUseFullItems[i]) {
+	if (couldUseFullItems[i]) {
 		Zotero.debug("Looking up contextObject");
 		var search = Zotero.loadTranslator("search");
 		
 		var firstItem = false;
 		search.setHandler("itemDone", function(obj, newItem) {
 			supplementItem(newItem, newItems[i], [], ['contextObject', 'repository']);
-			if(!firstItem) {
+			if (!firstItem) {
 				// add doc as attachment
 				newItem.attachments.push({document:doc});
 				newItem.complete();
@@ -154,7 +153,7 @@ function completeItems(newItems, useIndices, couldUseFullItems, doc) {
 		search.setHandler("done", function(obj) {
 			// if we didn't find anything, use what we had before (even if it
 			// lacks the creator)
-			if(!firstItem) {
+			if (!firstItem) {
 				newItems[i].complete();
 			}
 			// call next
@@ -163,7 +162,7 @@ function completeItems(newItems, useIndices, couldUseFullItems, doc) {
 		// Don't throw on error
 		search.setHandler("error", function() {});
 		search.setHandler("translators", function(obj, translators) {
-			if(translators.length) {
+			if (translators.length) {
 				search.setTranslator(translators);
 				search.translate();
 			} else {
@@ -196,20 +195,27 @@ function doWeb(doc, url) {
 	function nsResolver() {
 		return 'http://www.w3.org/1999/xhtml';
 	}
-	
+
 	var spans = doc.evaluate('//x:span[contains(@class, " Z3988") or contains(@class, "Z3988 ") or @class="Z3988"][@title]', doc, nsResolver, XPathResult.ANY_TYPE, null);
 	var span;
-	while(span = spans.iterateNext()) {
+	while (span = spans.iterateNext()) {
 		var spanTitle = span.title;
 		var newItem = new Zotero.Item();
 		newItem.repository = false;	// do not save repository
-		if(Zotero.Utilities.parseContextObject(spanTitle, newItem)) {
-			if(newItem.title) {
-				if(!newItem.creators.length) {
+		if (Zotero.Utilities.parseContextObject(spanTitle, newItem)) {
+			if (newItem.title) {
+				if (!newItem.creators.length) {
 					// if we have a title but little other identifying
 					// information, say we'll get full item later
 					newItem.contextObject = spanTitle;
 					couldUseFullItems[newItems.length] = true;
+				}
+				else {
+					for (var creator of newItem.creators) {
+						creator.multi = {
+							_key: {}
+						}
+					}
 				}
 				
 				// title and creators are minimum data to avoid looking up
@@ -223,7 +229,7 @@ function doWeb(doc, url) {
 	}
 	
 	Zotero.debug(needFullItems);
-	if(needFullItems.length) {
+	if (needFullItems.length) {
 		// retrieve full items asynchronously
 		Zotero.wait();
 		retrieveNextCOinS(needFullItems, newItems, couldUseFullItems, doc);
@@ -238,7 +244,7 @@ function doExport() {
 	
 	while (item = Zotero.nextItem()) {
 		co = Zotero.Utilities.createContextObject(item, "1.0");
-		if(co) {
+		if (co) {
 			Zotero.write("<span class='Z3988' title='"+ Zotero.Utilities.htmlSpecialChars(co) +"'></span>\n");
 		}
 	}

@@ -1,73 +1,17 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
-      "ascii": "",
-      "asciiBibLaTeX": false,
       "asciiBibTeX": false,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportDelay": 1,
-      "autoExportIdleWait": 10,
-      "autoPin": false,
-      "automaticTags": true,
-      "auxImport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[Auth.etal].[origyear].[PublicationTitle:postfix=.][shorttitle3_3].[firstpage]",
-      "citeprocNoteCitekey": false,
-      "client": "zotero",
-      "csquotes": "",
-      "debugLogDir": "",
-      "exportBibTeXStrings": "off",
-      "exportBraceProtection": true,
-      "exportTitleCase": true,
-      "extraMergeCSL": true,
-      "extraMergeCitekeys": true,
-      "extraMergeTeX": true,
-      "git": "config",
-      "ignorePostscriptErrors": true,
-      "importBibTeXStrings": true,
-      "importCaseProtection": "as-needed",
-      "importSentenceCase": "on+guess",
-      "itemObserverDelay": 5,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
       "keyScope": "global",
-      "kuroshiro": false,
-      "mapMath": "",
-      "mapText": "",
-      "mapUnicode": "conservative",
-      "newTranslatorsAskRestart": false,
-      "parseParticles": true,
-      "platform": "win",
-      "postscript": "",
       "qualityReport": true,
       "quickCopyMode": "orgRef",
-      "quickCopyPandocBrackets": false,
-      "rawImports": false,
-      "rawLaTag": "#LaTeX",
-      "relativeFilePaths": false,
-      "removeStock": false,
-      "scrubDatabase": false,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
       "warnBulkModify": 0,
       "workers": 4
     }
@@ -75,10 +19,7 @@
   "items": [
     {
       "ISBN": "84-7166-852-1",
-      "attachments": [],
       "citationKey": "Brennan.1982.MagiaExperimental.",
-      "citekey": "Brennan.1982.MagiaExperimental.",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -87,29 +28,19 @@
         }
       ],
       "date": "1982",
-      "dateAdded": "2020-01-09T12:07:50Z",
-      "dateModified": "2020-01-14T14:34:30Z",
-      "extra": "{:original-date: 1976}",
-      "itemID": 95,
+      "extra": [
+        "{:original-date: 1976}"
+      ],
+      "itemID": 1,
       "itemType": "book",
-      "key": "76ELWHFR",
       "language": "Spanish",
-      "libraryID": 1,
-      "notes": [],
       "place": "Madrid",
       "publisher": "Edaf",
-      "relations": [],
-      "tags": [],
-      "title": "Magia experimental",
-      "uri": "http://zotero.org/users/6244081/items/76ELWHFR",
-      "version": 227
+      "title": "Magia experimental"
     },
     {
       "ISBN": "978-85-86019-05-0",
-      "attachments": [],
       "citationKey": "Vieira.1994.700ExperimentosdaConscienciologia.Capitulo.p.22",
-      "citekey": "Vieira.1994.700ExperimentosdaConscienciologia.Capitulo.p.22",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -118,25 +49,18 @@
         }
       ],
       "date": "2002",
-      "dateAdded": "2020-01-10T23:33:03Z",
-      "dateModified": "2020-01-15T07:10:10Z",
       "edition": "1. ed.",
-      "extra": "{:original-date: 1994}",
-      "itemID": 96,
+      "extra": [
+        "{:original-date: 1994}"
+      ],
+      "itemID": 2,
       "itemType": "bookSection",
-      "key": "8GEWVJQ8",
       "language": "pt",
-      "libraryID": 1,
-      "notes": [],
       "pages": "p.22",
       "place": "Rio de Janeiro",
       "publicationTitle": "700 Experimentos da Conscienciologia",
       "publisher": "Instituto Internacional de Projeciologia",
-      "relations": [],
-      "tags": [],
-      "title": "Cap\u00edtulo 5",
-      "uri": "http://zotero.org/users/6244081/items/8GEWVJQ8",
-      "version": 235
+      "title": "Cap\u00edtulo 5"
     }
   ]
 }

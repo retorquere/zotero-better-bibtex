@@ -1,0 +1,24 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
+      "itemObserverDelay": 100,
+      "workers": 4
+    }
+  },
+  "items": [
+    {
+      "citationKey": "TestEntry2020",
+      "date": "30-Mar-2020",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "title": "Test Entry"
+    }
+  ]
+}

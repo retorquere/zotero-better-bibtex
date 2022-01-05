@@ -12,6 +12,30 @@
 	"lastUpdated": "2014-01-05 12:45:00"
 }
 
+/*
+	***** BEGIN LICENSE BLOCK *****
+
+	Copyright © 2014-2019 Sebastian Karcher
+
+	This file is part of Zotero.
+
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Zotero is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU Affero General Public License for more details.
+
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
+
+	***** END LICENSE BLOCK *****
+*/
+
+// eslint-disable-next-line
 /*********************** BEGIN FRAMEWORK ***********************/
 /**
     Copyright (c) 2010-2013, Erik Hetzner
@@ -668,88 +692,89 @@ function doWeb(doc, url) { return FW.doWeb(doc, url); }
 
 /**Art Images*/
 FW.Scraper({
-itemType : 'artwork',
-detect : FW.Xpath('//td[@id="fileinfotpl_art_title" or @id="fileinfotpl_desc"]'),
-title : FW.Xpath('//td[@id="fileinfotpl_art_title" or @id="fileinfotpl_desc"]/following-sibling::td').text().trim().remove(/\n.+/g),
-attachments : [{
-  url : FW.Url(),
-  title : "Wikimedia Snapshot",
-  type : "text/html"
-},
-{
-	url : FW.Xpath('//div[@id="file"]/a/@href').text().prepend("http:"),
-	title : "Wikimedia Image"
-}
-],
-creators : FW.Xpath('//tr/td[@id="fileinfotpl_aut"]/following-sibling::td').text().remove(/\n/g).remove(/\(.+/).cleanAuthor("author"),
-artworkSize : FW.Xpath('//tr/td[@id="fileinfotpl_art_dimensions"]/following-sibling::td').text(),
-artworkMedium : FW.Xpath('//tr/td[@id="fileinfotpl_art_medium"]/following-sibling::td').text(),
-date : FW.Xpath('//tr/td[@id="fileinfotpl_date"]/following-sibling::td').text(),
-archive : FW.Xpath('//tr/td[@id="fileinfotpl_art_gallery"]/following-sibling::td').text().trim().remove(/\n.+/g),
-rights : FW.Xpath('//table[@class="licensetpl" or @class="layouttemplate licensetpl"]/tbody/tr/td[2]|//table[@class="licensetpl" or @class="layouttemplate licensetpl"]/tbody/tr/td/span').text(),
+	itemType : 'artwork',
+	detect : FW.Xpath('//td[@id="fileinfotpl_art_title" or @id="fileinfotpl_desc"]'),
+	title : FW.Xpath('//td[@id="fileinfotpl_art_title" or @id="fileinfotpl_desc"]/following-sibling::td').text().trim().remove(/\n.+/g),
+	attachments : [{
+  	url : FW.Url(),
+  	title : "Wikimedia Snapshot",
+  	type : "text/html"
+	},
+	{
+		url : FW.Xpath('//div[@id="file"]/a/@href').text().prepend("http:"),
+		title : "Wikimedia Image"
+	}],
+	creators : FW.Xpath('//tr/td[@id="fileinfotpl_aut"]/following-sibling::td').text().remove(/\n/g).remove(/\(.+/).cleanAuthor("author"),
+	artworkSize : FW.Xpath('//tr/td[@id="fileinfotpl_art_dimensions"]/following-sibling::td').text(),
+	artworkMedium : FW.Xpath('//tr/td[@id="fileinfotpl_art_medium"]/following-sibling::td').text(),
+	date : FW.Xpath('//tr/td[@id="fileinfotpl_date"]/following-sibling::td').text(),
+	archive : FW.Xpath('//tr/td[@id="fileinfotpl_art_gallery"]/following-sibling::td').text().trim().remove(/\n.+/g),
+	rights : FW.Xpath('//table[@class="licensetpl" or @class="layouttemplate licensetpl"]/tbody/tr/td[2]|//table[@class="licensetpl" or @class="layouttemplate licensetpl"]/tbody/tr/td/span').text(),
 
-hooks : { "scraperDone": function  (item,doc, url) {
-	if (!item.archive) item.archive = ZU.xpathText(doc, '//tr/td[@id="fileinfotpl_src"]/following-sibling::td');
-	item.date = item.date ? item.date : item.runningTime;
-	item.runningTime = undefined;
-	for (i in item.creators) {
-		if (!item.creators[i].firstName){
-				item.creators[i].fieldMode=1;
+	hooks : {
+		"scraperDone": function  (item,doc, url) {
+			if (!item.archive) item.archive = ZU.xpathText(doc, '//tr/td[@id="fileinfotpl_src"]/following-sibling::td');
+			item.date = item.date ? item.date : item.runningTime;
+			item.runningTime = undefined;
+			for (let i in item.creators) {
+				if (!item.creators[i].firstName){
+					item.creators[i].fieldMode=1;
+				}
+			}
 		}
-	}}
-}
+	}
 });
 
 /**Photos*/
 FW.Scraper({
-itemType : 'artwork',
-detect : FW.Xpath('//span[@class="description"]'),
-title : FW.Xpath('//span[@class="description"]').text().trim(),
-attachments : [{
-  url : FW.Url(),
-  title : "Wikimedia Snapshot",
-  type : "text/html"
-},
-{
-	url : FW.Xpath('//div[@id="file"]/a/@href').text().prepend("http:"),
-	title : "Wikimedia Image"
-}
-],
-creators : FW.Xpath('//tr/td[@id="fileinfotpl_aut"]/following-sibling::td').text().remove(/\n/g).remove(/\(.+/).cleanAuthor("author"),
-date : FW.Xpath('//tr/td[@id="fileinfotpl_date"]/following-sibling::td').text(),
-archive : FW.Xpath('//tr/td[@id="fileinfotpl_src"]/following-sibling::td').text(),
-rights : FW.Xpath('//table[@class="licensetpl" or @class="layouttemplate licensetpl"]/tbody/tr/td[2]|//table[@class="licensetpl" or @class="layouttemplate licensetpl"]/tbody/tr/td/span').text(),
-//fix authors w/o first names to single field mode
-hooks : { "scraperDone": function  (item,doc, url) {
-	item.date = item.date ? item.date : item.runningTime;
-	item.runningTime = undefined;
-	for (i in item.creators) {
-		if (!item.creators[i].firstName){
-				item.creators[i].fieldMode=1;
+	itemType : 'artwork',
+	detect : FW.Xpath('//span[@class="description"]'),
+	title : FW.Xpath('//span[@class="description"]').text().trim(),
+	attachments : [{
+  	url : FW.Url(),
+  	title : "Wikimedia Snapshot",
+  	type : "text/html"
+	},
+	{
+		url : FW.Xpath('//div[@id="file"]/a/@href').text().prepend("http:"),
+		title : "Wikimedia Image"
+	}],
+	creators : FW.Xpath('//tr/td[@id="fileinfotpl_aut"]/following-sibling::td').text().remove(/\n/g).remove(/\(.+/).cleanAuthor("author"),
+	date : FW.Xpath('//tr/td[@id="fileinfotpl_date"]/following-sibling::td').text(),
+	archive : FW.Xpath('//tr/td[@id="fileinfotpl_src"]/following-sibling::td').text(),
+	rights : FW.Xpath('//table[@class="licensetpl" or @class="layouttemplate licensetpl"]/tbody/tr/td[2]|//table[@class="licensetpl" or @class="layouttemplate licensetpl"]/tbody/tr/td/span').text(),
+	//fix authors w/o first names to single field mode
+	hooks : {
+  	"scraperDone": function  (item,doc, url) {
+			item.date = item.date ? item.date : item.runningTime;
+			item.runningTime = undefined;
+			for (let i in item.creators) {
+				if (!item.creators[i].firstName){
+					item.creators[i].fieldMode=1;
+				}
+			}
 		}
-	}}
-}
+	}
 });
-
 
 /** Search results */
 FW.MultiScraper({
-itemType : "multiple",
-detect : FW.Xpath('//ul[contains(@class, "search-results")]'),
-choices : {
-  titles : FW.Xpath('//ul[contains(@class, "search-results")]//a[contains(@title, "File:")]').text(),
-  urls : FW.Xpath('//ul[contains(@class, "search-results")]//a[contains(@title, "File:")]').key('href').text()
-}
+	itemType : "multiple",
+	detect : FW.Xpath('//ul[contains(@class, "search-results")]'),
+	choices : {
+		titles : FW.Xpath('//ul[contains(@class, "search-results")]//a[contains(@title, "File:")]').text(),
+		urls : FW.Xpath('//ul[contains(@class, "search-results")]//a[contains(@title, "File:")]').key('href').text()
+	}
 });
 
 /**Galleries */
 FW.MultiScraper({
-itemType : "multiple",
-detect : FW.Xpath('//ul[contains(@class, "gallery")]'),
-choices : {
-  titles : FW.Xpath('//ul[contains(@class, "gallery")]//div[@class="gallerytext"]').text(),
-  urls : FW.Xpath('//ul[contains(@class, "gallery")]//a[@class="image"]').key('href').text()
-}
+	itemType : "multiple",
+	detect : FW.Xpath('//ul[contains(@class, "gallery")]'),
+	choices : {
+  	titles : FW.Xpath('//ul[contains(@class, "gallery")]//div[@class="gallerytext"]').text(),
+  	urls : FW.Xpath('//ul[contains(@class, "gallery")]//a[@class="image"]').key('href').text()
+	}
 });/** BEGIN TEST CASES **/
 var testCases = [
 	{
@@ -873,5 +898,5 @@ var testCases = [
 		"url": "http://commons.wikimedia.org/wiki/Commons:Valued_images_by_topic/Science",
 		"items": "multiple"
 	}
-]
+];
 /** END TEST CASES **/

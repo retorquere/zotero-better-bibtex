@@ -1,57 +1,103 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
       "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "doi",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportIdleWait": 10,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[zotero]",
-      "citeprocNoteCitekey": false,
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "exportTitleCase": true,
       "itemObserverDelay": 100,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "parseParticles": true,
-      "postscript": "",
-      "qualityReport": false,
-      "quickCopyMode": "pandoc",
-      "quickCopyPandocBrackets": false,
-      "scrubDatabase": false,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.0.68",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.33",
-        "locale": "en-US",
-        "oscpu": "Intel Mac OS X 10.13",
-        "platform": "MacIntel",
-        "version": "5.0.33"
-      }
+      "quickCopyMode": "pandoc"
     }
   },
   "items": [
+    {
+      "ISSN": "0008-6215 0008-6215",
+      "abstractNote": "The epitopes present on beta-(1-->4)-galactosyltransferase-1 (beta 4Gal-T1) have  been explored using a panel of monoclonal antibodies (mAbs) raised against the soluble form of the human enzyme. Reactivity of the antibodies with site-specific and truncated mutants of human beta 4Gal-T1 suggests the presence of a major immunogenic epitope cluster consisting of four epitopes within the stem region and mapping between amino acids 42 and 115. The catalytic activity of the enzyme  is increased in the presence of stem region-specific antibody. Two of the epitopes were further localized to a region between amino acids 42 and 77, sequences which are not shared with the recently cloned beta 4Gal-T2 and beta 4Gal-T3 enzymes. An epitope located close to or within the catalytic domain is also identified, and the mAb to this region binds synergistically with antibodies to the stem region.",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Keusch"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "G.",
+          "lastName": "Panayotou"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Malissard"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "E. G.",
+          "lastName": "Berger"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "H. E.",
+          "lastName": "Appert"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "P. M.",
+          "lastName": "Lydyard"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "P. J.",
+          "lastName": "Delves"
+        }
+      ],
+      "date": "1998 Nov",
+      "extra": [
+        "PMID: 9861700"
+      ],
+      "issue": "1",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Carbohydr Res",
+      "language": "eng",
+      "pages": "37\u201348",
+      "publicationTitle": "Carbohydrate research",
+      "tags": [
+        {
+          "tag": "*Epitope Mapping",
+          "type": 0
+        },
+        {
+          "tag": "Antibodies, Monoclonal",
+          "type": 0
+        },
+        {
+          "tag": "beta-N-Acetylglucosaminylglycopeptide beta-1,4-Galactosyltransferase/genetics/*immunology",
+          "type": 0
+        },
+        {
+          "tag": "Catalysis",
+          "type": 0
+        },
+        {
+          "tag": "Humans",
+          "type": 0
+        },
+        {
+          "tag": "Mutation",
+          "type": 0
+        },
+        {
+          "tag": "N-Acetyllactosamine Synthase/genetics/*immunology",
+          "type": 0
+        }
+      ],
+      "title": "Antibody recognition of epitopes on wild-type and mutant beta-(1-->4)-galactosyltransferase-1.",
+      "volume": "313"
+    },
     {
       "ISSN": "0261-4189 0261-4189",
       "abstractNote": "Pleckstrin homology (PH) domains may act as membrane localization modules through specific interactions with phosphoinositide phospholipids. These interactions could represent responses to second messengers, with scope for regulation by soluble inositol polyphosphates. A biosensor-based assay was used here to probe interactions between PH domains and unilamellar liposomes containing different phospholipids and to demonstrate specificity for distinct phosphoinositides. The  dynamin PH domain specifically interacted with liposomes containing phosphatidylinositol-4,5-bisphosphate [PI(4,5)P2] and, more weakly, with liposomes containing phosphatidylinositol-4-phosphate [PI(4)P]. This correlates with phosphoinositide activation of the dynamin GTPase. The functional GTPase of  a dynamin mutant lacking the PH domain, however, cannot be activated by PI(4,5)P2. The phosphoinositide-PH domain interaction can be abolished selectively by point mutations in the putative binding pocket predicted by molecular modelling and NMR spectroscopy. In contrast, the Bruton's tyrosine kinase (Btk)PH domain specifically bound liposomes containing phosphatidylinositol-3,4,5-trisphosphate [PI(3,4,5)P3]: an interaction requiring  Arg28, a residue found to be mutated in some X-linked agammaglobulinaemia patients. A rational explanation for these different specificities is proposed through modelling of candidate binding pockets and is supported by NMR spectroscopy.",
@@ -118,11 +164,12 @@
         }
       ],
       "date": "1996 Nov 15",
-      "dateAdded": "2017-05-29 11:26:23",
-      "dateModified": "2018-01-05 19:09:08",
-      "extra": "PMID: 8947047 \nPMCID: PMC452447",
+      "extra": [
+        "PMID: 8947047 ",
+        "PMCID: PMC452447"
+      ],
       "issue": "22",
-      "itemID": 191,
+      "itemID": 2,
       "itemType": "journalArticle",
       "journalAbbreviation": "EMBO J",
       "language": "eng",
@@ -134,11 +181,7 @@
           "type": 0
         },
         {
-          "tag": "Molecular Sequence Data",
-          "type": 0
-        },
-        {
-          "tag": "Protein Binding",
+          "tag": "Binding Sites",
           "type": 0
         },
         {
@@ -146,39 +189,11 @@
           "type": 0
         },
         {
-          "tag": "Protein Structure, Tertiary",
-          "type": 0
-        },
-        {
-          "tag": "Enzyme Activation/drug effects",
-          "type": 0
-        },
-        {
-          "tag": "Mutagenesis, Site-Directed",
-          "type": 0
-        },
-        {
-          "tag": "Binding Sites",
-          "type": 0
-        },
-        {
-          "tag": "Sequence Alignment",
-          "type": 0
-        },
-        {
-          "tag": "Phosphatidylinositol Phosphates/metabolism",
-          "type": 0
-        },
-        {
           "tag": "Dynamins",
           "type": 0
         },
         {
-          "tag": "Magnetic Resonance Spectroscopy",
-          "type": 0
-        },
-        {
-          "tag": "Models, Molecular",
+          "tag": "Enzyme Activation/drug effects",
           "type": 0
         },
         {
@@ -190,7 +205,27 @@
           "type": 0
         },
         {
+          "tag": "Magnetic Resonance Spectroscopy",
+          "type": 0
+        },
+        {
+          "tag": "Models, Molecular",
+          "type": 0
+        },
+        {
+          "tag": "Molecular Sequence Data",
+          "type": 0
+        },
+        {
+          "tag": "Mutagenesis, Site-Directed",
+          "type": 0
+        },
+        {
           "tag": "Phosphatidylinositol 4,5-Diphosphate/metabolism",
+          "type": 0
+        },
+        {
+          "tag": "Phosphatidylinositol Phosphates/metabolism",
           "type": 0
         },
         {
@@ -198,96 +233,24 @@
           "type": 0
         },
         {
+          "tag": "Protein Binding",
+          "type": 0
+        },
+        {
+          "tag": "Protein Structure, Tertiary",
+          "type": 0
+        },
+        {
           "tag": "Protein-Tyrosine Kinases/*chemistry/*metabolism",
+          "type": 0
+        },
+        {
+          "tag": "Sequence Alignment",
           "type": 0
         }
       ],
       "title": "Distinct specificity in the recognition of phosphoinositides by the pleckstrin homology domains of dynamin and Bruton's tyrosine kinase.",
       "volume": "15"
-    },
-    {
-      "ISSN": "0008-6215 0008-6215",
-      "abstractNote": "The epitopes present on beta-(1-->4)-galactosyltransferase-1 (beta 4Gal-T1) have  been explored using a panel of monoclonal antibodies (mAbs) raised against the soluble form of the human enzyme. Reactivity of the antibodies with site-specific and truncated mutants of human beta 4Gal-T1 suggests the presence of a major immunogenic epitope cluster consisting of four epitopes within the stem region and mapping between amino acids 42 and 115. The catalytic activity of the enzyme  is increased in the presence of stem region-specific antibody. Two of the epitopes were further localized to a region between amino acids 42 and 77, sequences which are not shared with the recently cloned beta 4Gal-T2 and beta 4Gal-T3 enzymes. An epitope located close to or within the catalytic domain is also identified, and the mAb to this region binds synergistically with antibodies to the stem region.",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "J.",
-          "lastName": "Keusch"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "G.",
-          "lastName": "Panayotou"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "M.",
-          "lastName": "Malissard"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "E. G.",
-          "lastName": "Berger"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "H. E.",
-          "lastName": "Appert"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "P. M.",
-          "lastName": "Lydyard"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "P. J.",
-          "lastName": "Delves"
-        }
-      ],
-      "date": "1998 Nov",
-      "dateAdded": "2017-05-29 11:26:22",
-      "dateModified": "2017-05-29 11:26:22",
-      "extra": "PMID: 9861700",
-      "issue": "1",
-      "itemID": 13,
-      "itemType": "journalArticle",
-      "journalAbbreviation": "Carbohydr Res",
-      "language": "eng",
-      "pages": "37\u201348",
-      "publicationTitle": "Carbohydrate research",
-      "tags": [
-        {
-          "tag": "*Epitope Mapping",
-          "type": 0
-        },
-        {
-          "tag": "Antibodies, Monoclonal",
-          "type": 0
-        },
-        {
-          "tag": "beta-N-Acetylglucosaminylglycopeptide beta-1,4-Galactosyltransferase/genetics/*immunology",
-          "type": 0
-        },
-        {
-          "tag": "Catalysis",
-          "type": 0
-        },
-        {
-          "tag": "Humans",
-          "type": 0
-        },
-        {
-          "tag": "Mutation",
-          "type": 0
-        },
-        {
-          "tag": "N-Acetyllactosamine Synthase/genetics/*immunology",
-          "type": 0
-        }
-      ],
-      "title": "Antibody recognition of epitopes on wild-type and mutant beta-(1-->4)-galactosyltransferase-1.",
-      "volume": "313"
     }
   ]
 }

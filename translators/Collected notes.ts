@@ -1,176 +1,240 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+
 declare const Zotero: any
+
+import html2markdown from '@inkdropapp/html2markdown'
 
 import { Translator } from './lib/translator'
 export { Translator }
+import { log } from '../content/logger'
+import { fromEntries } from '../content/object'
+
+import { Item } from '../gen/typings/serialized-item'
 
 import * as escape from '../content/escape'
 import * as Extra from '../content/extra'
 
-const html = {
-  levels: 0,
-  body: '',
-}
-
-function _collection(collection, level = 1) {
-  if (level > html.levels) html.levels = level
-
-  html.body += `<h${ level }>${ escape.html(collection.name) }</h${ level }>\n`
-  for (const item of collection.items) {
-    _item(item)
-  }
-
-  for (const subcoll of collection.collections) {
-    _collection(subcoll, level + 1)
-  }
-}
-
-function _item(item) {
+function clean(item: Item): Item {
   switch (item.itemType) {
     case 'note':
-      _note(item.note, 'note')
-      break
+    case 'annotation':
     case 'attachment':
-      _reference(item)
-      break
-    default:
-      _reference(item)
-      break
+      return item
   }
+  const cleaned: Item = {...item, extra: Extra.get(item.extra, 'zotero').extra }
+  cleaned.extra = cleaned.extra.split('\n').filter(line => !line.match(/^OCLC:/i)).join('\n')
+  return cleaned
 }
 
-function _prune(collection) {
-  let keep = collection.items.length > 0
-
-  collection.collections = collection.collections.filter(subcoll => {
-    if (_prune(subcoll)) {
-      return false
-    } else {
-      keep = true
-      return true
-    }
-  })
-
-  return !keep
+type ExpandedCollection = {
+  name: string
+  items: Item[]
+  collections: ExpandedCollection[]
+  root: boolean
 }
 
-function _note(note, type) {
-  switch (type) {
-    case 'extra':
-      if (!note) return
-      html.body += `<blockquote><pre>${ escape.html(note) }</pre></blockquote>\n`
-      break
-    case 'attachment':
-      if (!note.note) return
-      html.body += `<blockquote><div><samp>${ note.title }</samp></div>${ note.note }</blockquote>\n`
-      break
-    default:
-      if (!note.note) return
-      html.body += `<blockquote>${ note.note }</blockquote>\n`
-      break
-  }
+function sorted(collections: ExpandedCollection[]) {
+  return collections.sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }))
 }
 
-function _creator(cr) {
-  return [cr.lastName, cr.firstName, cr.name].filter(v => v).join(', ')
-}
+class Exporter {
+  private levels = 0
+  private body = ''
+  public html = ''
+  public markdown = ''
 
-function _reference(item) {
-  let notes = []
-  let title = ''
+  constructor() {
+    const items: Record<number, Item> = {}
+    const filed: Set<number> = new Set
+    const collections: Record<string, ExpandedCollection> = {}
 
-  if (item.itemType === 'attachment') {
-    if (item.note) notes = [ { note: item.note } ]
-    if (item.title) title = `<samp>${ escape.html(item.title) }</samp>`
-
-  } else {
-    notes = item.notes.filter(note => note.note)
-
-    const creators = item.creators.map(_creator).filter(v => v).join(' and ')
-
-    let date = null
-    if (item.date) {
-      date = Zotero.BetterBibTeX.parseDate(item.date)
-      if (date.from) date = date.from
-      date = typeof date.year === 'number' ? date.year : item.date
+    for (const item of Translator.items) {
+      const cleaned = clean(item)
+      if (this.keep(cleaned)) items[item.itemID] = cleaned
     }
 
-    const author = [creators, date].filter(v => v).join(', ')
+    log.debug(Object.values(Translator.collections).map(coll => ({
+      ...coll,
+      collections: fromEntries((coll.collections || []).map(key => [ key, !!Translator.collections[key] ])),
+      items: fromEntries((coll.items || []).map(itemID => [ itemID, !!items[itemID] ])),
+    })))
 
-    if (item.title) title += `<i>${ escape.html(item.title) }</i>`
-    if (author) title += `(${ escape.html(author) })`
-    title = title.trim()
+    for (const [key, collection] of Object.entries(Translator.collections)) {
+      for (const itemID of collection.items) filed.add(itemID)
+      collections[key] = {
+        name: collection.name,
+        // resolve item IDs to items
+        items: (collection.items || []).map(itemID => items[itemID]).filter(item => item),
+        // resolve collection IDs to collections
+        collections: [],
+        root: !Translator.collections[collection.parent],
+      }
+    }
+    for (const [key, collection] of Object.entries(Translator.collections)) {
+      collections[key].collections = (collection.collections || []).map(coll => collections[coll]).filter(coll => coll)
+    }
+
+    const unfiled = { name: 'Unfiled', items: Object.values(items).filter(item => !filed.has(item.itemID)), collections: [], root: true }
+    if (!this.prune(unfiled)) this.collection(unfiled)
+
+    for (const collection of sorted(Object.values(collections))) {
+      if (collection.root && !this.prune(collection)) this.collection(collection)
+    }
+
+    let style = '\n  body {\n    counter-reset: h1;\n  }\n\n'
+    for (let level = 1; level <= this.levels; level++) {
+      if (level !== this.levels) style += `  h${level} {\n    counter-reset: h${level + 1};\n  }\n`
+
+      style += `  h${level}:before {\n`
+      const label = Array.from({length: level}, (_x, i) => `counter(h${ i + 1 }, decimal)`).join(' "." ')
+      style += `    content: ${label} ".\\0000a0\\0000a0";\n`
+      style += `    counter-increment: h${level};\n`
+      style += '  }\n\n'
+    }
+    style += '  blockquote { border-left: 1px solid gray; }\n'
+
+    this.html = `<html><head><style>${ style }</style></head><body>${ this.body }</body></html>`
+    log.debug('Translator options:', Translator.options)
+    if (Translator.options.markdown) this.markdown = html2markdown(this.html)
   }
 
-  html.body += `<div>${ title }</div>\n`
-
-  _note(item.extra, 'extra')
-
-  for (const note of notes) {
-    _note(note, 'note')
+  show(context, args) {
+    log.debug(`collectednotes.${context}: ${JSON.stringify(Array.from(args))}`)
   }
 
-  for (const att of item.attachments || []) {
-    _note(att, 'attachment')
+  collection(collection, level = 1) {
+    log.debug(`collection ${collection.name} @ ${level} with ${collection.collections.length} subcollections`)
+    this.levels = Math.max(this.levels, level)
+
+    this.body += `<h${ level }>${ escape.html(collection.name) }</h${ level }>\n`
+    for (const item of collection.items) {
+      this.item(item)
+    }
+
+    for (const coll of sorted(collection.collections)) {
+      this.collection(coll, level + 1)
+    }
+  }
+
+  item(item) {
+    switch (item.itemType) {
+      case 'note':
+        this.note(item.note, 'note')
+        break
+      case 'attachment':
+        this.reference(item)
+        break
+      default:
+        this.reference(item)
+        break
+    }
+  }
+
+  prune(collection) {
+    if (!collection) return true
+
+    collection.collections = collection.collections.filter(sub => !this.prune(sub))
+
+    log.debug(`prune: ${collection.name}: ${collection.items.length} items, ${collection.collections.length} collections: ${!collection.items.length && !collection.collections.length}`)
+    return !collection.items.length && !collection.collections.length
+  }
+
+  note(note, type) {
+    switch (type) {
+      case 'extra':
+        if (!note) return
+        this.body += `<blockquote><pre>${ escape.html(note) }</pre></blockquote>\n`
+        break
+      case 'attachment':
+        if (!note.note) return
+        this.body += `<blockquote><div><samp>${ note.title }</samp></div>${ note.note }</blockquote>\n`
+        break
+      default:
+        if (!note.note) return
+        this.body += `<blockquote>${ note.note }</blockquote>\n`
+        break
+    }
+  }
+
+  creator(cr) {
+    return [cr.lastName, cr.name, cr.firstName].find(v => v) || ''
+  }
+
+  creators(cr: string[]): string {
+    switch (cr.length) {
+      case 0:
+      case 1:
+        return cr[0]
+      case 2:
+        return cr.join(' and ')
+      default:
+        return `${cr.slice(0, cr.length - 1).join(', ')}, and ${cr[cr.length - 1]}`
+    }
+  }
+
+  reference(item) {
+    let notes = []
+    let title = ''
+
+    if (item.itemType === 'attachment') {
+      if (item.note) notes = [ { note: item.note } ]
+      if (item.title) title = `<samp>${ escape.html(item.title) }</samp>`
+
+    }
+    else {
+      notes = (item.notes || []).filter(note => note.note)
+
+      const creators = this.creators(item.creators.map(creator => this.creator(creator)).filter(v => v))
+
+      let date = null
+      if (item.date) {
+        date = Zotero.BetterBibTeX.parseDate(item.date)
+        if (date.from) date = date.from
+        date = typeof date.year === 'number' ? date.year : item.date
+      }
+
+      const author = [creators, date].filter(v => v).join(', ')
+
+      if (item.title) title += `<i>${ escape.html(item.title) }</i>`
+      if (author) title += ` (${ escape.html(author) })`
+      title = title.trim()
+    }
+
+    this.body += `<div>${ title }</div>\n`
+
+    this.note(item.extra, 'extra')
+
+    for (const note of notes) {
+      this.note(note, 'note')
+    }
+
+    for (const att of item.attachments || []) {
+      this.note(att, 'attachment')
+    }
+  }
+
+  keep(item) {
+    if (!item) return false
+    switch (item.itemType) {
+      case 'note':
+      case 'annotation':
+        return item.note
+
+      case 'attachment':
+        return item.notes?.find(note => note.note)
+
+      default:
+        return item.extra || item.notes?.find(note => note.note) || item.attachments?.find(att => att.note)
+    }
   }
 }
 
-function _reset(starting) {
-  if (starting > html.levels) return ''
-
-  let reset = 'counter-reset:'
-  for (let level = starting; level <= html.levels; level++) {
-    reset += ` h${ level }counter 0`
-  }
-  return reset + ';'
-  // return `counter-reset: h${ starting }counter;`
-}
-
-function _keep(item) {
-  if (item.extra) return true
-  if (item.note) return true
-  if (item.notes && item.notes.find(note => note.note)) return true
-  if (item.attachments && item.attachments.find(att => att.note)) return true
-  return false
-}
-
-export function doExport() {
+export function doExport(): void {
   Translator.init('export')
-
-  // collect all notes
-  const items: Record<number, ISerializedItem> = {}
-  for (const item of Translator.items()) {
-    if (!_keep(item)) continue
-    items[item.itemID] = Object.assign(item, Extra.get(item.extra)) // tslint:disable-line:prefer-object-spread
+  if (Translator.options.markdown) {
+    Zotero.write((new Exporter).markdown)
   }
-
-  const filed = {}
-  // expand collections
-  for (const collection of Object.values(Translator.collections)) {
-    // collection.collections = collection.collections.map(key => Translator.collections[key]).filter(v => v) // TODO: doesn't CTranslator laready do this?
-    collection.items = collection.items.map(id => filed[id] = items[id]).filter(v => v)
+  else {
+    Zotero.write((new Exporter).html)
   }
-
-  // prune empty branches
-  const collections = Object.values(Translator.collections).filter(collection => !collection.parent && !_prune(collection))
-
-  html.body += '<html><body>'
-
-  for (const item of (Object.values(items) as { itemID: number }[])) {
-    if (filed[item.itemID]) continue
-    _item(item)
-  }
-
-  for (const collection of collections) {
-    _collection(collection)
-  }
-
-  let style = `  body { ${ _reset(1) } }\n`
-  for (let level = 1; level <= html.levels; level++) {
-    style += `  h${ level } { ${ _reset(level + 1) } }\n`
-    const label = Array.from({length: level}, (x, i) => `counter(h${ i + 1 }counter)`).join(' "." ')
-    style += `  h${ level }:before { counter-increment: h${ level }counter; content: ${ label } ".\\0000a0\\0000a0"; }\n`
-  }
-  style += '  blockquote { border-left: 1px solid gray; }\n'
-
-  Zotero.write(`<html><head><style>${ style }</style></head><body>${ html.body }</body></html>`)
 }

@@ -1,13 +1,12 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "preferences": {
       "autoAbbrev": true,
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]",
-      "jabrefFormat": 0
+      "citekeyFormat": "[auth][year]"
     }
   },
   "items": [
@@ -31,6 +30,7 @@
         }
       ],
       "date": "2012",
+      "itemID": 1,
       "itemType": "journalArticle",
       "pages": "71\u201380",
       "publicationTitle": "Actes du 4<sup>\u00e8me</sup> Congr\u00e8s Fran\u00e7ais d'Acoustique",
@@ -57,6 +57,7 @@
         }
       ],
       "date": "2012",
+      "itemID": 2,
       "itemType": "journalArticle",
       "pages": "71\u201380",
       "publicationTitle": "Actes du 4<sup>\u00e8me</sup> Congr\u00e8s Fran\u00e7ais d'Acoustique",
@@ -83,6 +84,7 @@
         }
       ],
       "date": "2012",
+      "itemID": 3,
       "itemType": "journalArticle",
       "pages": "71\u201380",
       "publicationTitle": "Actes du 4<sup>\u00e8me</sup> Congr\u00e8s Fran\u00e7ais d'Acoustique",
@@ -109,6 +111,7 @@
         }
       ],
       "date": "2012",
+      "itemID": 4,
       "itemType": "journalArticle",
       "pages": "71\u201380",
       "publicationTitle": "Actes du 4<sup>\u00e8me</sup> Congr\u00e8s Fran\u00e7ais d'Acoustique",
@@ -135,6 +138,7 @@
         }
       ],
       "date": "2012",
+      "itemID": 5,
       "itemType": "journalArticle",
       "pages": "71\u201380",
       "publicationTitle": "Actes du 4<sup>\u00e8me</sup> Congr\u00e8s Fran\u00e7ais d'Acoustique",
@@ -161,6 +165,7 @@
         }
       ],
       "date": "2012",
+      "itemID": 6,
       "itemType": "journalArticle",
       "pages": "71\u201380",
       "publicationTitle": "Actes du 4<sup>\u00e8me</sup> Congr\u00e8s Fran\u00e7ais d'Acoustique",

@@ -1,31 +1,20 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "doi",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:nopunct:condense,_][year][journal:abbr][0]",
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "jabrefFormat": 0,
-      "postscript": "",
-      "skipFields": ""
-    },
-    "release": "1.6.15"
+      "citekeyFormat": "[auth:nopunct:condense,_][year][journal:abbr][0]"
+    }
   },
   "items": [
     {
       "ISBN": "978-2-87031-104-2 978-2-87031-228-5 978-2-87031-179-0 978-2-87031-184-4 978-2-87031-195-0 978-2-87031-213-1 978-2-87031-256-8 978-2-87031-264-3 978-2-87031-284-1",
-      "attachments": [],
-      "bookTitle": "Studies in Latin literature and Roman history",
       "callNumber": "PA6011 .S86",
       "creators": [
         {
@@ -40,7 +29,7 @@
         }
       ],
       "date": "1979",
-      "itemID": 18810,
+      "itemID": 1,
       "itemType": "bookSection",
       "language": "eng",
       "libraryCatalog": "Library of Congress ISBN",
@@ -51,10 +40,18 @@
       "series": "Collection Latomus",
       "seriesNumber": "v. 164, 168, 180, 196, 206, 217, 227, 239, 244, 254, 272, 287, 301, 315, 323, 338",
       "tags": [
-        "History",
-        "History and criticism",
-        "Latin literature",
-        "Rome"
+        {
+          "tag": "History"
+        },
+        {
+          "tag": "History and criticism"
+        },
+        {
+          "tag": "Latin literature"
+        },
+        {
+          "tag": "Rome"
+        }
       ],
       "title": "Why a Second Temple for Venus Erycina?"
     }

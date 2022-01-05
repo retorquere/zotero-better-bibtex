@@ -13,13 +13,13 @@
 }
 
 function detectWeb(doc, url) {
-	if(doc.title.indexOf(" -- Search Result") !== -1) {
-		if(doc.evaluate('//table/tbody/tr[td/input[@type="checkbox"][@name="gca"]]', doc,
+	if (doc.title.indexOf(" -- Search Result") !== -1) {
+		if (doc.evaluate('//table/tbody/tr[td/input[@type="checkbox"][@name="gca"]]', doc,
 			null, XPathResult.ANY_TYPE, null).iterateNext()) return "multiple";
-	} else if(doc.title.indexOf(" -- Table of Contents") != -1) {
-		if(doc.evaluate('//form/dl', doc, null, XPathResult.ANY_TYPE,null).iterateNext()) return "multiple";
+	} else if (doc.title.indexOf(" -- Table of Contents") != -1) {
+		if (doc.evaluate('//form/dl', doc, null, XPathResult.ANY_TYPE,null).iterateNext()) return "multiple";
 	} else {
-		if(doc.evaluate('//a[substring(@href, 1, 16) = "/cgi/citmgr?gca="]', doc, null,
+		if (doc.evaluate('//a[substring(@href, 1, 16) = "/cgi/citmgr?gca="]', doc, null,
 			XPathResult.ANY_TYPE, null).iterateNext()) return "journalArticle";
 	}
 	
@@ -27,7 +27,7 @@ function detectWeb(doc, url) {
 }
 
 function handleRequests(requests) {
-	if(requests.length == 0) {
+	if (requests.length == 0) {
 		Zotero.done();
 		return;
 	}
@@ -41,7 +41,7 @@ function handleRequests(requests) {
 		translator.setTranslator("32d59d2d-b65a-4da4-b0a3-bdd3cfb979e7");
 		translator.setString(text);
 		translator.setHandler("itemDone", function(obj, item) {
-			if(item.notes[0]) {
+			if (item.notes[0]) {
 				item.DOI = Zotero.Utilities.unescapeHTML(item.notes[0].note);
 				item.notes = new Array();
 			}
@@ -60,8 +60,8 @@ function handleRequests(requests) {
 			item.attachments = new Array();
 			var snapshot = request.snapshots.shift();
 			var pdf = request.pdfs.shift();
-			if(snapshot) {
-				if(typeof(snapshot) == "string") {
+			if (snapshot) {
+				if (typeof(snapshot) == "string") {
 					// string snapshot (from search)
 					item.attachments.push({title:"HighWire Snapshot", mimeType:"text/html", url:snapshot});
 				} else {
@@ -69,7 +69,7 @@ function handleRequests(requests) {
 					item.attachments.push({title:"HighWire Snapshot", document:snapshot});
 				}
 			}
-			if(pdf) {
+			if (pdf) {
 				var m = pdf.match(/^[^?]+/);
 				item.attachments.push({title:"HighWire Full Text PDF", mimeType:"application/pdf", url:m[0]+".pdf"});
 			}
@@ -89,16 +89,16 @@ function doWeb(doc, url) {
 	var isSearch = doc.title.indexOf("Search Result") != -1
 	var isTOC = doc.title.indexOf(" -- Table of Contents") != -1;
 	var isScience = doc.title.indexOf("Science Magazine Search Results") != -1;
-	if(isSearch || isTOC) {
+	if (isSearch || isTOC) {
 		// search page
 		var items = new Object();
 		var snapshots = new Object();
 		var pdfs = new Object();
 		
-		if(isTOC) {
+		if (isTOC) {
 			var gcaRe = /^https?:\/\/[^\/]+\/cgi\/reprint\/([0-9]+\/[0-9]+\/[0-9]+)/;
 			var tableRows = doc.evaluate('//form/dl', doc, null, XPathResult.ANY_TYPE, null);
-		} else if(isScience) {
+		} else if (isScience) {
 			var tableRows = doc.evaluate('//form/dl/dd', doc, null, XPathResult.ANY_TYPE, null);
 			var tableDTs = doc.evaluate('//form/dl/dt', doc, null, XPathResult.ANY_TYPE, null);
 		} else {
@@ -107,35 +107,35 @@ function doWeb(doc, url) {
 		}
 		
 		var tableRow, link;
-		while(tableRow = tableRows.iterateNext()) {
+		while (tableRow = tableRows.iterateNext()) {
 			var snapshot = undefined;
 			var pdf = undefined;
 			
-			if(isTOC) {
+			if (isTOC) {
 				var title = doc.evaluate('.//strong', tableRow, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
 				
 				var links = doc.evaluate('.//a', tableRow, null, XPathResult.ANY_TYPE, null);
-				while(link = links.iterateNext()) {
+				while (link = links.iterateNext()) {
 					// prefer Full Text snapshots, but take abstracts
-					if(link.textContent == "[Abstract]") {
-						if(!snapshot) snapshot = link.href;
+					if (link.textContent == "[Abstract]") {
+						if (!snapshot) snapshot = link.href;
 					} else if (link.textContent == "[Full Text]") {
 						snapshot = link.href;
-					} else if(link.textContent == "[PDF]") {
+					} else if (link.textContent == "[PDF]") {
 						pdf = link.href;
 						var m = gcaRe.exec(link.href);
 						var gca = m[1];
 					}
 				}
 			} else {
-				if(isScience) {
+				if (isScience) {
 					var tableDT = tableDTs.iterateNext();
 					var gca = doc.evaluate('./input[@type="checkbox"]', tableDT, null, XPathResult.ANY_TYPE, null).iterateNext().value;
 					var title = doc.evaluate('./label', tableDT, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
 				} else {
 					var gca = doc.evaluate('./td/input[@type="checkbox"]', tableRow, null, XPathResult.ANY_TYPE, null).iterateNext().value;
 					var title = doc.evaluate('./td/font/strong', tableRow, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
-					if(title.snapshotItem(0).textContent.toUpperCase() == title.snapshotItem(0).textContent) {
+					if (title.snapshotItem(0).textContent.toUpperCase() == title.snapshotItem(0).textContent) {
 						title = title.snapshotItem(1).textContent;
 					} else {
 						title = title.snapshotItem(0).textContent;
@@ -143,12 +143,12 @@ function doWeb(doc, url) {
 				}
 				
 				var links = doc.evaluate('.//a', tableRow, null, XPathResult.ANY_TYPE, null);
-				while(link = links.iterateNext()) {
+				while (link = links.iterateNext()) {
 					// prefer Full Text snapshots, but take abstracts
 					var textContent = Zotero.Utilities.trimInternal(link.textContent);
-					if((textContent.substr(0, 8) == "Abstract" && !snapshot) || textContent.substr(0, 9) == "Full Text") {
+					if ((textContent.substr(0, 8) == "Abstract" && !snapshot) || textContent.substr(0, 9) == "Full Text") {
 						snapshot = link.href;
-					} else if(textContent.substr(0, 3) == "PDF") {
+					} else if (textContent.substr(0, 3) == "PDF") {
 						pdf = link.href;
 					}
 				}
@@ -161,23 +161,23 @@ function doWeb(doc, url) {
 		}
 		
 		Zotero.selectItems(items, function(items) {
-			if(!items) return true;
+			if (!items) return true;
 			
 			var requests = new Array();
-			for(var gca in items) {
+			for (var gca in items) {
 				var m = hostRe.exec(pdfs[gca]);
 				var baseURL = 'http://' + doc.location.host + '/cgi/citmgr?type=refman';
 				
 				var thisRequest = null;
 				for (var i=0; i<requests.length; i++) {
 					var request = requests[i];
-					if(request.baseURL == baseURL) {
+					if (request.baseURL == baseURL) {
 						thisRequest = request;
 						break;
 					}
 				}
 				
-				if(!thisRequest) {
+				if (!thisRequest) {
 					thisRequest = new Object();
 					thisRequest.snapshots = new Array();
 					thisRequest.pdfs = new Array();

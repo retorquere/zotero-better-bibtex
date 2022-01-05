@@ -1,27 +1,32 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:lower]_[veryshorttitle:lower]_[year]",
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "jabrefFormat": 0,
-      "postscript": "",
-      "skipFields": ""
-    },
-    "release": "1.6.6"
+      "citekeyFormat": "[auth:lower]_[veryshorttitle:lower]_[year]"
+    }
   },
   "items": [
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Adam",
+          "lastName": "Skubala"
+        }
+      ],
+      "date": "2012.09.27",
+      "itemID": 1,
+      "itemType": "book",
+      "place": "Masterthesis, Fakult\u00e4t Statistik",
+      "publisher": "TU Dortmund",
+      "title": "Modellierung niederfrequenter Schwingungen in einem elektrischen Energienetz"
+    },
     {
       "ISBN": "978-0-13-014400-3",
       "creators": [
@@ -33,26 +38,11 @@
       ],
       "date": "22.08.2000",
       "edition": "2",
-      "itemID": 60,
+      "itemID": 4,
       "itemType": "book",
       "numPages": "470",
       "publisher": "Prentice Hall",
       "title": "Introduction to Graph Theory"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Adam",
-          "lastName": "Skubala"
-        }
-      ],
-      "date": "2012.09.27",
-      "itemID": 50,
-      "itemType": "book",
-      "place": "Masterthesis, Fakult\u00e4t Statistik",
-      "publisher": "TU Dortmund",
-      "title": "Modellierung niederfrequenter Schwingungen in einem elektrischen Energienetz"
     },
     {
       "DOI": "10.1002/eej.4391150705",
@@ -65,7 +55,7 @@
       ],
       "date": "1995.12",
       "issue": "7",
-      "itemID": 31,
+      "itemID": 3,
       "itemType": "journalArticle",
       "pages": "49 - 68",
       "publicationTitle": "Electrical Engineering in Japan",
@@ -106,13 +96,11 @@
         }
       ],
       "date": "2014.02.11",
-      "institution": "Technische Universit\u00e4t Dortmund",
-      "itemID": 10,
+      "itemID": 2,
       "itemType": "report",
       "number": "2003/32864",
       "place": "Eldorado",
       "publisher": "Technische Universit\u00e4t Dortmund",
-      "reportNumber": "2003/32864",
       "title": "Stability Analysis and Clustering of Electrical Transmission Systems",
       "url": "http://dx.doi.org/10.17877/DE290R-13190"
     }

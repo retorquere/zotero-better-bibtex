@@ -37,7 +37,7 @@
 
 
 function detectWeb(doc, url) {
-	if (url.indexOf('.html')>-1) {
+	if (url.includes('.html')) {
 		return "newspaperArticle";
 	} else if (getSearchResults(doc, true)) {
 		return "multiple";
@@ -106,7 +106,7 @@ function scrape(doc, url) {
 		trans.addCustomFields({
 			'publish-date': 'date',
 			'cXenseParse:recs:custom2': 'section'
-		})
+		});
 		trans.doWeb(doc, url);
 	});
 }
@@ -200,5 +200,5 @@ var testCases = [
 		"url": "http://www.winnipegfreepress.com/search/?keywords=chocolate&searchSubmitted=y&sortBy=-startDate",
 		"items": "multiple"
 	}
-]
+];
 /** END TEST CASES **/

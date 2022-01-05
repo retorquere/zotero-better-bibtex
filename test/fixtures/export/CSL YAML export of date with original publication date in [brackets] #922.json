@@ -1,55 +1,18 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
       "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
-      "autoExport": "immediate",
-      "autoExportIdleWait": 10,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[zotero]",
-      "citeprocNoteCitekey": false,
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "exportTitleCase": true,
       "itemObserverDelay": 100,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "parseParticles": true,
-      "postscript": "",
-      "qualityReport": false,
       "quickCopyMode": "pandoc",
       "quickCopyPandocBrackets": true,
-      "scrubDatabase": false,
-      "skipFields": "extra,collection",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.0.92",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.35.1",
-        "locale": "fr-FR",
-        "oscpu": "Linux x86_64",
-        "platform": "Linux x86_64",
-        "version": "5.0.35.1"
-      }
+      "skipFields": "extra,collection"
     }
   },
   "items": [
@@ -57,7 +20,6 @@
       "ISBN": "979-10-239-0085-9",
       "abstractNote": "Le Cine\u00b4ma, art subversif est un livre culte dans l'histoire de la cine\u00b4philie, cite\u00b4 en re\u00b4fe\u00b4rence par de nombreux cine\u00b4astes et artistes depuis sa parution en 1974. Ce\u00b4le\u00b4brant les formes de la subversion au cine\u00b4ma, Amos Vogel analyse comment les films peuvent contourner, transgresser ou annihiler les re`gles et les conventions e\u00b4tablies, qu'elles soient esthe\u00b4tiques ou morales. Illustre\u00b4 par plus de 300 images, souvent side\u00b4rantes, l'ouvrage alterne textes the\u00b4oriques et notules critiques, consacre\u00b4es aussi bien a` des \u0153uvres ce\u00b4le`bres qu'a` des films inconnus, de tous pays et de toutes e\u00b4poques. Contre les tabous, contre toute forme de censure, c'est une ode a` la liberte\u00b4 cine\u00b4matographique. Traduit en franc\u00b8ais en 1977, Le Cine\u00b4ma, art subversif n'avait jamais e\u00b4te\u00b4 re\u00b4e\u00b4dite\u00b4. A` l'heure ou` la subversion, rele\u00b4gue\u00b4e dans les marges, semble avoir de\u00b4serte\u00b4 les e\u00b4crans, il apparai^t plus indispensable que jamais. Amos Vogel (1921-2012) est le fondateur et programmateur du Cinema 16, le plus influent cine\u00b4-club d'avant-garde new- yorkais. Il est le premier a` y avoir montre\u00b4 aux E\u00b4tats-Unis les films de Roman Polanski, John Cassavetes, Nagisa Oshima, Jacques Rivette ou encore Alain Resnais. Il a e\u00b4galement co-fonde\u00b4 le Festival du Film de New York, dont il a dirige\u00b4 la programmation jusqu'en 1968",
       "accessDate": "2017-06-29 14:17:18",
-      "attachments": [],
       "callNumber": "791.430 1",
       "creators": [
         {
@@ -72,17 +34,13 @@
         }
       ],
       "date": "2016 [1974]",
-      "dateAdded": "2017-06-29 14:17:18",
-      "dateModified": "2018-03-03 16:47:25",
-      "itemID": 804,
+      "itemID": 1,
       "itemType": "book",
       "language": "fre",
       "libraryCatalog": "BnF Catalogue g\u00e9n\u00e9ral (http://catalogue.bnf.fr)",
-      "notes": [],
       "numPages": "349",
       "place": "Paris",
       "publisher": "Capricci",
-      "seeAlso": [],
       "tags": [
         {
           "tag": "Cin\u00e9ma",

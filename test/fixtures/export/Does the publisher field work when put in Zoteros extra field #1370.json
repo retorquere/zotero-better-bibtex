@@ -1,70 +1,18 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "doi",
-      "ascii": "",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
       "autoAbbrev": true,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportDelay": 1,
-      "autoExportIdleWait": 10,
-      "autoPin": false,
-      "automaticTags": true,
-      "auxImport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[auth:lower][year][shorttitle3_3]",
-      "citeprocNoteCitekey": false,
-      "client": "zotero",
-      "csquotes": "",
-      "debugLogDir": "",
-      "exportBibTeXStrings": "off",
-      "exportBraceProtection": true,
-      "exportTitleCase": true,
-      "git": "config",
-      "ignorePostscriptErrors": true,
-      "importBibTeXStrings": true,
-      "importCaseProtection": "as-needed",
-      "importSentenceCase": "on+guess",
-      "itemObserverDelay": 5,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "keyScope": "library",
-      "kuroshiro": false,
-      "mapMath": "",
-      "mapText": "",
-      "mapUnicode": "conservative",
-      "newTranslatorsAskRestart": true,
-      "parseParticles": true,
-      "platform": "win",
       "postscript": "if (Translator.BetterTeX) {\n  // the bib(la)tex fields are ordered according to this array.\n  // If a field is not in this list, it will show up at after the ordered fields.\n  // https://github.com/retorquere/zotero-better-bibtex/issues/512\n\n  const order = ['author', 'editor', 'title', 'shorttitle', 'booktitle', 'journaltitle', 'shortjournal', 'edition', 'volume', 'pages', 'publisher', 'address', 'institution', 'location', 'date', 'issn', 'doi', 'url', 'urldate']\n  for (const field of order.concat(Object.keys(reference.has).filter(other => !order.includes(other)))) {\n    const value = reference.has[field]\n    if (value) {\n      delete reference.has[field]\n      reference.has[field] = value\n    }\n  }\n}\n",
       "qualityReport": true,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "rawLaTag": "#LaTeX",
-      "relativeFilePaths": false,
-      "removeStock": false,
-      "scrubDatabase": false,
-      "skipFields": "file, abstract, note",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
-      "warnBulkModify": 10
+      "skipFields": "file, abstract, note"
     }
   },
   "items": [
@@ -72,12 +20,7 @@
       "DOI": "10.1109/TETC.2016.2606384",
       "ISSN": "2376-4562",
       "abstractNote": "Internet of Things (IoT), also referred to as the Internet of Objects, is envisioned as a transformative approach for providing numerous services. Compact smart devices constitute an essential part of IoT. They range widely in use, size, energy capacity, and computation power. However, the integration of these smart things into the standard Internet introduces several security challenges because the majority of Internet technologies and communication protocols were not designed to support IoT. Moreover, commercialization of IoT has led to public security concerns, including personal privacy issues, threat of cyber attacks, and organized crime. In order to provide a guideline for those who want to investigate IoT security and contribute to its improvement, this survey attempts to provide a comprehensive list of vulnerabilities and countermeasures against them on the edge-side layer of IoT, which consists of three levels: (i) edge nodes, (ii) communication, and (iii) edge computing. To achieve this goal, we first briefly describe three widely-known IoT reference models and define security in the context of IoT. Second, we discuss the possible applications of IoT and potential motivations of the attackers who target this new paradigm. Third, we discuss different attacks and threats. Fourth, we describe possible countermeasures against these attacks. Finally, we introduce two emerging security challenges not yet explained in detail in previous literature.",
-      "attachments": [],
       "citationKey": "mosenia2017ComprehensiveStudySecurity",
-      "citekey": "mosenia2017ComprehensiveStudySecurity",
-      "collections": [
-        "39GL4J5T"
-      ],
       "creators": [
         {
           "creatorType": "author",
@@ -91,33 +34,18 @@
         }
       ],
       "date": "October 2017",
-      "dateAdded": "2019-12-27T17:34:54Z",
-      "dateModified": "2019-12-27T19:07:50Z",
-      "extra": "ZSCC: NoCitationData[s0]\nPublisher: IEEE",
+      "extra": [
+        "ZSCC: NoCitationData[s0]",
+        "Publisher: IEEE"
+      ],
       "issue": "4",
-      "itemID": 248,
+      "itemID": 1,
       "itemType": "journalArticle",
       "journalAbbreviation": "IEEE Trans. Emerg. Top. Comput.",
-      "key": "URX7R3ZJ",
       "libraryCatalog": "IEEE Xplore",
-      "libraryID": 1,
-      "notes": [],
       "pages": "586-602",
       "publicationTitle": "IEEE Transactions on Emerging Topics in Computing",
-      "relations": [],
       "tags": [
-        {
-          "tag": "security",
-          "type": 1
-        },
-        {
-          "tag": "Security",
-          "type": 1
-        },
-        {
-          "tag": "Internet of Things",
-          "type": 1
-        },
         {
           "tag": "Availability",
           "type": 1
@@ -179,6 +107,10 @@
           "type": 1
         },
         {
+          "tag": "Internet of Things",
+          "type": 1
+        },
+        {
           "tag": "Internet technologies",
           "type": 1
         },
@@ -215,6 +147,14 @@
           "type": 1
         },
         {
+          "tag": "security",
+          "type": 1
+        },
+        {
+          "tag": "Security",
+          "type": 1
+        },
+        {
           "tag": "security of data",
           "type": 1
         },
@@ -236,8 +176,6 @@
         }
       ],
       "title": "A Comprehensive Study of Security of Internet-of-Things",
-      "uri": "http://zotero.org/users/6238049/items/URX7R3ZJ",
-      "version": 397,
       "volume": "5"
     }
   ]

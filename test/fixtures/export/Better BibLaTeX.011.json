@@ -1,19 +1,18 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]",
-      "jabrefFormat": 0
+      "citekeyFormat": "[auth][year]"
     }
   },
   "items": [
     {
       "attachments": [
         {
-          "mimeType": "application/pdf",
+          "contentType": "application/pdf",
           "path": "attachments/Klassen2010.pdf",
           "title": "Klassen2010.pdf"
         }
@@ -36,10 +35,18 @@
         }
       ],
       "date": "2010",
-      "extra": "Citation Key: Klassen2010\ntex.bibsource= DBLP, http://dblp.uni-trier.de\ntex.crossref= DBLP:conf/cata/2010\ntex.groups= klasyfikacja\ntex.owner= sstudent\nsvm liniowe najlepsze",
+      "extra": [
+        "Citation Key: Klassen2010",
+        "tex.bibsource= DBLP, http://dblp.uni-trier.de",
+        "tex.crossref= DBLP:conf/cata/2010",
+        "tex.groups= klasyfikacja",
+        "tex.owner= sstudent",
+        "svm liniowe najlepsze"
+      ],
+      "itemID": 1,
       "itemType": "conferencePaper",
       "pages": "25\u201330",
-      "proceedingsTitle": "CATA",
+      "publicationTitle": "CATA",
       "title": "Empirical Study of Support Vector Machine Kernels with Applications to Microarray Data"
     }
   ]

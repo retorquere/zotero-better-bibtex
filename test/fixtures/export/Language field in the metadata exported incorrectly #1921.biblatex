@@ -1,0 +1,1042 @@
+
+@inreference{apathy1063ABGB2010,
+  title = {§ 1063 ABGB},
+  booktitle = {Kurzkommentar zum ABGB},
+  author = {Apathy, Peter},
+  editor = {Koziol, Helmut and Bydlinski, Peter and Bollenberger, Raimund},
+  date = {2010},
+  edition = {3},
+  pages = {1183--1198},
+  publisher = {{Springer}},
+  location = {{Wien}},
+  langid = {austrian}
+}
+
+@incollection{apathySicherungsubereignung2012,
+  title = {Die Sicherungsübereignung},
+  shorttitle = {Sicherungsübereignung},
+  booktitle = {Österreichisches Bankvertragsrecht Band IX: Kreditsicherheiten Teil II},
+  author = {Apathy, Peter},
+  editor = {Apathy, Peter and Iro, Gert and Koziol, Helmut},
+  date = {2012},
+  edition = {2},
+  pages = {277--303},
+  publisher = {{Springer}},
+  location = {{Wien}},
+  langid = {austrian}
+}
+
+@incollection{apathySicherungszession2012,
+  title = {Die Sicherungszession},
+  shorttitle = {Sicherungszession},
+  booktitle = {Österreichisches Bankvertragsrecht Band IX: Kreditsicherheiten Teil II},
+  author = {Apathy, Peter},
+  editor = {Apathy, Peter and Iro, Gert and Koziol, Helmut},
+  date = {2012},
+  edition = {2},
+  pages = {303--364},
+  publisher = {{Springer}},
+  location = {{Wien}},
+  langid = {austrian}
+}
+
+@inreference{basedow305BGB2019,
+  title = {§ 305 BGB},
+  booktitle = {Münchener Kommentar zum Bürgerlichen Gesetzbuch Band 2},
+  author = {Basedow, Jürgen},
+  editor = {Krüger, Wolfgang},
+  date = {2019},
+  edition = {8},
+  publisher = {{C. H. Beck}},
+  location = {{München}},
+  langid = {german}
+}
+
+@inreference{basedow305cBGB2019,
+  title = {§ 305c BGB},
+  booktitle = {Münchener Kommentar zum Bürgerlichen Gesetzbuch Band 2},
+  author = {Basedow, Jürgen},
+  editor = {Krüger, Wolfgang},
+  date = {2019},
+  edition = {8},
+  publisher = {{C. H. Beck}},
+  location = {{München}},
+  langid = {german}
+}
+
+@inreference{basedowVor305BGB2019,
+  title = {vor § 305 BGB},
+  booktitle = {Münchener Kommentar zum Bürgerlichen Gesetzbuch Band 2},
+  author = {Basedow, Jürgen},
+  editor = {Krüger, Wolfgang},
+  date = {2019},
+  edition = {8},
+  publisher = {{C. H. Beck}},
+  location = {{München}},
+  langid = {german}
+}
+
+@book{baurSachenrecht2009,
+  title = {Sachenrecht},
+  shorttitle = {SachenR},
+  author = {Baur, Fritz and Baur, Jürgen F. and Stürner, Rolf},
+  date = {2009},
+  edition = {18},
+  publisher = {{C. H. Beck}},
+  location = {{München}},
+  langid = {german}
+}
+
+@inreference{beckmann449BGB2004,
+  title = {§ 449 BGB},
+  booktitle = {Kommentar zum Bürgerlichen Gesetzbuch §§ 433-487 BGB},
+  author = {Beckmann, Roland Michael},
+  editor = {von Staudinger, J.},
+  date = {2004},
+  pages = {417--477},
+  publisher = {{Sellier - de Gruyter}},
+  location = {{Berlin}},
+  langid = {german}
+}
+
+@book{beckNeueBurgschaftsrecht1942,
+  title = {Das neue Bürgschaftsrecht},
+  shorttitle = {Bürgschaftsrecht},
+  author = {Beck, Emil},
+  date = {1942},
+  publisher = {{Schulthess}},
+  location = {{Zürich}},
+  langid = {nswissgerman}
+}
+
+@inreference{berger305BGB2007,
+  title = {§ 305 BGB},
+  booktitle = {BGB Kommentar},
+  author = {Berger, Klaus Peter},
+  editor = {Prütting, Hans and Wegen, Gerhard and Weinreich, Gerd},
+  date = {2007},
+  edition = {2},
+  pages = {482--488},
+  publisher = {{Luchterhand}},
+  location = {{Neuwied}},
+  langid = {german}
+}
+
+@inreference{berger305cBGB2007,
+  title = {§ 305c BGB},
+  booktitle = {BGB Kommentar},
+  author = {Berger, Klaus Peter},
+  editor = {Prütting, Hans and Wegen, Gerhard and Weinreich, Gerd},
+  date = {2007},
+  edition = {2},
+  pages = {489--492},
+  publisher = {{Luchterhand}},
+  location = {{Neuwied}},
+  langid = {german}
+}
+
+@book{bergerAllgemeinesSchuldrecht2012,
+  title = {Allgemeines Schuldrecht},
+  shorttitle = {Schuldrecht},
+  author = {Berger, Bernhard},
+  date = {2012},
+  edition = {2},
+  publisher = {{Stämpfli Verlag}},
+  location = {{Bern}},
+  langid = {nswissgerman}
+}
+
+@inreference{brinkmannArt43EGBGB2007,
+  title = {Art. 43 EGBGB},
+  booktitle = {BGB Kommentar},
+  author = {Brinkmann, Moritz},
+  editor = {Prütting, Hans and Wegen, Gerhard and Weinreich, Gerd},
+  date = {2007},
+  edition = {2},
+  pages = {3080--3083},
+  publisher = {{Luchterhand}},
+  location = {{Neuwied}},
+  langid = {german}
+}
+
+@inreference{buhlerArt3681998,
+  title = {Art. 368 OR},
+  booktitle = {Der Werkvertrag, Art. 363-379 Zürcher Kommentar Band V/2d},
+  author = {Bühler, Theodor},
+  date = {1998},
+  edition = {3},
+  publisher = {{Schulthess Polygraphischer Verlag AG}},
+  location = {{Zürich}},
+  langid = {nswissgerman}
+}
+
+@inreference{buhlerArt3711998,
+  title = {Art. 371 OR},
+  booktitle = {Der Werkvertrag, Art. 363-379 Zürcher Kommentar Band V/2d},
+  author = {Bühler, Theodor},
+  date = {1998},
+  edition = {3},
+  publisher = {{Schulthess Polygraphischer Verlag AG}},
+  location = {{Zürich}},
+  langid = {nswissgerman}
+}
+
+@book{bydlinskiBurgerlichesRechtBand2013,
+  title = {Bürgerliches Recht Band I Allgemeiner Teil},
+  shorttitle = {BR AT},
+  author = {Bydlinski, Peter},
+  editor = {Apathy, Peter},
+  date = {2013},
+  edition = {6},
+  publisher = {{Verlag Österreich}},
+  location = {{Wien}},
+  langid = {austrian}
+}
+
+@article{bydlinskiEntscheidungNach981991,
+  title = {Entscheidung nach § 98 EheG und anhängiges Verfahren},
+  shorttitle = {§ 98 EheG},
+  author = {Bydlinski, Michael},
+  date = {1991},
+  journaltitle = {Österreichisches Bank Archiv},
+  shortjournal = {ÖBA},
+  volume = {39},
+  number = {2},
+  pages = {106--113},
+  langid = {austrian}
+}
+
+@article{bydlinskiKeineAnalogeAnwendung2007,
+  title = {Keine analoge Anwendung der §§ 25c und 25d KSchG auf Pfandbestellung (Entscheidungsanmerkung)},
+  shorttitle = {Pfandbestellung},
+  author = {Bydlinski, Peter},
+  date = {2007},
+  journaltitle = {Recht der Wirtschaft},
+  shortjournal = {RdW},
+  volume = {25},
+  number = {10},
+  pages = {599--600},
+  langid = {austrian}
+}
+
+@incollection{coesterAllgemeineGeschaftsbedingungen2008,
+  title = {Allgemeine Geschäftsbedingungen},
+  shorttitle = {AGB},
+  booktitle = {Kommentar zum Bürgerlichen Gesetzbuch -- Eckpfeiler des Zivilrechts},
+  author = {Coester, Michael},
+  editor = {von Staudinger, J.},
+  date = {2008},
+  pages = {159--184},
+  publisher = {{Sellier - de Gruyter}},
+  location = {{Berlin}},
+  langid = {german}
+}
+
+@article{dagdelenGeltungskontrolleErstreckungsklauselnKreditburgschaften2018,
+  title = {Geltungskontrolle der Erstreckungsklauseln in Kreditbürgschaften nach dem österreichischen bürgerlichen Recht},
+  shorttitle = {Geltungskontrolle},
+  author = {Dağdelen, Ahmet Hakan},
+  date = {2018},
+  journaltitle = {Law and Justice Review},
+  volume = {9},
+  number = {17},
+  pages = {63--69},
+  langid = {austrian}
+}
+
+@book{dagdelenSchutzBurgenRechtsvergleich2020,
+  title = {Schutz des Bürgen - Ein Rechtsvergleich zwischen Österreich und der Türkei},
+  shorttitle = {Rechtsvergleich},
+  author = {Dağdelen, Ahmet Hakan},
+  date = {2020},
+  publisher = {{Yetkin}},
+  location = {{Ankara}},
+  langid = {austrian}
+}
+
+@inreference{deillon-scheggArt963ZGB2016,
+  title = {Art. 963 ZGB},
+  booktitle = {Handkommentar zum Schweizer Privatrecht Sachenrecht Art. 641-977 ZGB},
+  author = {Deillon-Schegg, Bettina},
+  editor = {Breitschmid, Peter and Jungo, Alexandra},
+  date = {2016},
+  edition = {3},
+  pages = {925--929},
+  publisher = {{Schulthess Juristische Medien AG}},
+  location = {{Schweiz}},
+  langid = {nswissgerman}
+}
+
+@incollection{eicherPfandrechtBeweglichenSachen2012,
+  title = {Das Pfandrecht an beweglichen Sachen},
+  shorttitle = {Pfandrecht},
+  booktitle = {Österreichisches Bankvertragsrecht Band IX: Kreditsicherheiten Teil II},
+  author = {Eicher, Gernot},
+  editor = {Apathy, Peter and Iro, Gert and Koziol, Helmut},
+  date = {2012},
+  edition = {2},
+  pages = {1--69},
+  publisher = {{Springer}},
+  location = {{Wien}},
+  langid = {austrian}
+}
+
+@article{fountoulakisBurgschaftsrechtHoffnungenGesetzgebers2010,
+  title = {Bürgschaftsrecht - von Hoffnungen des Gesetzgebers und was davon übrig bleibt},
+  shorttitle = {Bürgschaftsrecht},
+  author = {Fountoulakis, Christiana},
+  date = {2010},
+  journaltitle = {Aktuelle Juristische Praxis},
+  shortjournal = {AJP},
+  pages = {423--434},
+  langid = {nswissgerman}
+}
+
+@book{gauchWerkvertrag2011,
+  title = {Der Werkvertrag},
+  shorttitle = {Werkvertrag},
+  author = {Gauch, Peter},
+  date = {2011},
+  edition = {5},
+  publisher = {{Schulthess}},
+  location = {{Zürich}},
+  langid = {nswissgerman}
+}
+
+@book{giovanoliKommentarSchweizerischenZivilgesetzbuch1942,
+  title = {Kommentar zum Schweizerischen Zivilgesetzbuch Obligationenrecht Band VI Kommentar zum revidierten Bürgschaftsrecht},
+  shorttitle = {Bürgschaftsrecht},
+  author = {Giovanoli, Silvio},
+  editor = {Becker, Hermann},
+  date = {1942},
+  publisher = {{Verlag von Stämpfli \& Cie.}},
+  location = {{Bern}},
+  langid = {nswissgerman}
+}
+
+@inreference{girsbergerArt102IPRG2004,
+  title = {Art. 102 IPRG},
+  booktitle = {Zürcher Kommentar zum IPRG, Kommentar zum Bundesgesetz über das Internationale Privatrecht (IPRG) vom 18. Dezember 1987},
+  author = {Girsberger, Daniel and Heini, Anton and Keller, Max and Kostkiewicz, Jolanta Kren and Siehr, Kurt and Vischer, Frank and Volken, Paul},
+  date = {2004},
+  edition = {2},
+  pages = {1106--1112},
+  publisher = {{Schulthess Juristische Medien AG}},
+  location = {{Schweiz}},
+  langid = {nswissgerman}
+}
+
+@inreference{goksuArt102IPRG2016,
+  title = {Art. 102 IPRG},
+  booktitle = {Handkommentar zum Schweizer Privatrecht},
+  author = {Göksu, Tarkan},
+  editor = {Furrer, Andreas and Girsberger, Daniel and Müller-Chen, Markus},
+  date = {2016},
+  edition = {3},
+  pages = {408--412},
+  publisher = {{Schulthess Juristische Medien AG}},
+  location = {{Schweiz}},
+  langid = {nswissgerman}
+}
+
+@inreference{goksuArt103IPRG2016,
+  title = {Art. 103 IPRG},
+  booktitle = {Handkommentar zum Schweizer Privatrecht},
+  author = {Göksu, Tarkan},
+  editor = {Furrer, Andreas and Girsberger, Daniel and Müller-Chen, Markus},
+  date = {2016},
+  edition = {3},
+  pages = {412--413},
+  publisher = {{Schulthess Juristische Medien AG}},
+  location = {{Schweiz}},
+  langid = {nswissgerman}
+}
+
+@article{gruberUmfangBurgenhaftungErstreckungsklausel2002,
+  title = {Umfang der Bürgenhaftung: Erstreckungsklausel und Globalbürgschaft},
+  shorttitle = {Erstreckungsklausel},
+  author = {Gruber, Michael},
+  date = {2002},
+  journaltitle = {Österreichisches Bank Archiv},
+  shortjournal = {ÖBA},
+  volume = {50},
+  number = {11},
+  pages = {885--902},
+  langid = {austrian}
+}
+
+@book{guhlNeueBurgschaftsrechtSchweiz1942,
+  title = {Das neue Bürgschaftsrecht der Schweiz},
+  shorttitle = {Bürgschaftsrecht},
+  author = {Guhl, Theo},
+  date = {1942},
+  publisher = {{Polygraphischer Verlag}},
+  location = {{Zürich}},
+  langid = {nswissgerman}
+}
+
+@inreference{haabArt716ZGB1977,
+  title = {Art. 716 ZGB},
+  booktitle = {Das Eigentum, Art. 641-729 ZGB Kommentar zum Schweizerischen Zivilgesetzbuch, Das Sachenrecht, Zürcher Kommentar Band/Nr. IV/1},
+  author = {Haab, Robert and Simonius, August and Scherrer, Werner and Zobl, Dieter},
+  date = {1977},
+  pages = {709--752},
+  publisher = {{Schulthess Polygraphischer Verlag AG}},
+  location = {{Schweiz}},
+  langid = {nswissgerman}
+}
+
+@article{haasStichwortAGBKontrolleFormularmassige04,
+  title = {Stichwort AGB-Kontrolle: Formularmäßige Erstreckungsklauseln auf dem Prüfstand},
+  shorttitle = {Erstreckungsklauseln},
+  author = {Haas, Susanne},
+  date = {0004-03},
+  journaltitle = {Juristische Ausbildung und Praxisvorbereitung},
+  shortjournal = {JAP},
+  volume = {14},
+  number = {2},
+  pages = {75--85},
+  langid = {austrian}
+}
+
+@inreference{heinrichs305BGB2005,
+  title = {§ 305 BGB},
+  booktitle = {Palandt Bürgerliches Gesetzbuch},
+  author = {Heinrichs, Helmut},
+  editor = {Palandt, Otto},
+  date = {2005},
+  edition = {64},
+  pages = {407--415},
+  publisher = {{C. H. Beck}},
+  location = {{München}},
+  langid = {german}
+}
+
+@inreference{heinrichs305cBGB2005,
+  title = {§ 305c BGB},
+  booktitle = {Palandt Bürgerliches Gesetzbuch},
+  author = {Heinrichs, Helmut},
+  editor = {Palandt, Otto},
+  date = {2005},
+  edition = {64},
+  pages = {416--419},
+  publisher = {{C. H. Beck}},
+  location = {{München}},
+  langid = {german}
+}
+
+@inreference{heldrichArt43EGBGB2005,
+  title = {Art. 43 EGBGB},
+  booktitle = {Palandt Bürgerliches Gesetzbuch},
+  author = {Heldrich, Andreas},
+  editor = {Palandt, Otto},
+  date = {2005},
+  edition = {64},
+  pages = {2646--2649},
+  publisher = {{C. H. Beck}},
+  location = {{München}},
+  langid = {german}
+}
+
+@inreference{hitzArt714ZGB2016,
+  title = {Art. 714 ZGB},
+  booktitle = {Handkommentar zum Schweizer Privatrecht Sachenrecht Art. 641-977 ZGB},
+  author = {Hitz, Flurina},
+  editor = {Breitschmid, Peter and Jungo, Alexandra},
+  date = {2016},
+  edition = {3},
+  pages = {350--354},
+  publisher = {{Schulthess Juristische Medien AG}},
+  location = {{Schweiz}},
+  langid = {nswissgerman}
+}
+
+@inreference{hitzArt715ZGB2016,
+  title = {Art. 715 ZGB},
+  booktitle = {Handkommentar zum Schweizer Privatrecht Sachenrecht Art. 641-977 ZGB},
+  author = {Hitz, Flurina},
+  editor = {Breitschmid, Peter and Jungo, Alexandra},
+  date = {2016},
+  edition = {3},
+  pages = {354--359},
+  publisher = {{Schulthess Juristische Medien AG}},
+  location = {{Schweiz}},
+  langid = {nswissgerman}
+}
+
+@book{honsellSchweizerischesHaftpflichtrecht2005,
+  title = {Schweizerisches Haftpflichtrecht},
+  shorttitle = {Haftpflichtrecht},
+  author = {Honsell, Heinrich},
+  date = {2005},
+  edition = {4},
+  publisher = {{Schulthess}},
+  location = {{Zürich}},
+  langid = {nswissgerman}
+}
+
+@book{honsellSchweizerischesObligationenrechtBesonderer2010,
+  title = {Schweizerisches Obligationenrecht Besonderer Teil},
+  shorttitle = {OR BT},
+  author = {Honsell, Heinrich},
+  date = {2010},
+  edition = {9},
+  publisher = {{Stämpfli Verlag}},
+  location = {{Bern}},
+  langid = {nswissgerman}
+}
+
+@book{hrubesch-millauerSachenrecht2017,
+  title = {Sachenrecht},
+  author = {Hrubesch-Millauer, Stephanie and Graham-Siegenthaler, Barbara and Roberto, Vito},
+  date = {2017},
+  edition = {5},
+  publisher = {{Stämpfli Verlag}},
+  location = {{Bern}},
+  langid = {nswissgerman}
+}
+
+@book{iroBurgerlichesRechtBand2013,
+  title = {Bürgerliches Recht Band IV Sachenrecht},
+  shorttitle = {Sachenrecht},
+  author = {Iro, Gert},
+  editor = {Apathy, Peter},
+  date = {2013},
+  edition = {5},
+  publisher = {{Verlag Österreich}},
+  location = {{Wien}},
+  langid = {austrian}
+}
+
+@book{iroBurgerlichesRechtBand2016,
+  title = {Bürgerliches Recht Band IV Sachenrecht},
+  shorttitle = {Sachenrecht},
+  author = {Iro, Gert},
+  editor = {Apathy, Peter},
+  date = {2016},
+  edition = {6},
+  publisher = {{Verlag Österreich}},
+  location = {{Wien}},
+  langid = {austrian}
+}
+
+@incollection{iroHypothekenrecht2012,
+  title = {Hypothekenrecht},
+  booktitle = {Österreichisches Bankvertragsrecht Band IX: Kreditsicherheiten Teil II},
+  author = {Iro, Gert},
+  editor = {Apathy, Peter and Iro, Gert and Koziol, Helmut},
+  date = {2012},
+  edition = {2},
+  pages = {69--244},
+  publisher = {{Springer}},
+  location = {{Wien}},
+  langid = {austrian}
+}
+
+@inreference{jaggiArt171973,
+  title = {Art. 17 OR},
+  booktitle = {Zürcher Kommentar Band Nr. V/1a Obligationenrecht Art. 1-17},
+  author = {Jäggi, Peter and Schönenberger, Wilhelm},
+  date = {1973},
+  edition = {3},
+  publisher = {{Schulthess Polygraphischer Verlag AG}},
+  location = {{Zürich}},
+  langid = {nswissgerman}
+}
+
+@inreference{kahrArt714ZGB2016,
+  title = {Art. 714 ZGB},
+  booktitle = {ZGB Kommentar Schweizerisches Zivilgesetzbuch},
+  author = {Kähr, Michel},
+  editor = {Kostkiewicz, Jolanta Kren and Wolf, Stephan and Amstutz, Marc and Fankhauser, Roland},
+  date = {2016},
+  edition = {3},
+  pages = {1453--1455},
+  publisher = {{Orell Füssli Verlag AG}},
+  location = {{Schweiz}},
+  langid = {nswissgerman}
+}
+
+@inreference{kahrArt715ZGB2016,
+  title = {Art. 715 ZGB},
+  booktitle = {ZGB Kommentar Schweizerisches Zivilgesetzbuch},
+  author = {Kähr, Michel},
+  editor = {Kostkiewicz, Jolanta Kren and Wolf, Stephan and Amstutz, Marc and Fankhauser, Roland},
+  date = {2016},
+  edition = {3},
+  pages = {1455--1458},
+  publisher = {{Orell Füssli Verlag AG}},
+  location = {{Schweiz}},
+  langid = {nswissgerman}
+}
+
+@incollection{kochKreditsicherheitenGesellschaftsanteilenImmaterialgutern2012,
+  title = {Kreditsicherheiten an Gesellschaftsanteilen, Immaterialgütern und Internet-Domains},
+  shorttitle = {Kreditsicherheiten},
+  booktitle = {Österreichisches Bankvertragsrecht Band IX: Kreditsicherheiten Teil II},
+  author = {Koch, Bernhard},
+  editor = {Apathy, Peter and Iro, Gert and Koziol, Helmut},
+  date = {2012},
+  edition = {2},
+  pages = {435--485},
+  publisher = {{Springer}},
+  location = {{Wien}},
+  langid = {austrian}
+}
+
+@book{kohlerBGBAllgemeinerTeil2020,
+  title = {BGB Allgemeiner Teil},
+  shorttitle = {AT},
+  author = {Köhler, Helmut},
+  date = {2020},
+  edition = {44},
+  publisher = {{C. H. Beck}},
+  location = {{München}},
+  langid = {german}
+}
+
+@book{kollerSchweizerischesObligationenrechtBesonderer2012,
+  title = {Schweizerisches Obligationenrecht Besonderer Teil Band I},
+  shorttitle = {OR BT I},
+  author = {Koller, Alfred},
+  date = {2012},
+  publisher = {{Stämpfli Verlag}},
+  location = {{Bern}},
+  langid = {nswissgerman}
+}
+
+@book{kollerSchweizerischesObligationenrechtBesonderer2012a,
+  title = {Schweizerisches Obligationenrecht Besonderer Teil Band I},
+  shorttitle = {OR BT I},
+  author = {Koller, Alfred},
+  date = {2012},
+  publisher = {{Stämpfli Verlag}},
+  location = {{Bern}},
+  langid = {nswissgerman}
+}
+
+@book{kollerSchweizerischesWerkvertragsrecht2015,
+  title = {Schweizerisches Werkvertragsrecht},
+  shorttitle = {Werkvertragsrecht},
+  author = {Koller, Alfred},
+  date = {2015},
+  publisher = {{Dike Verlag AG}},
+  location = {{Zürich/St. Gallen}},
+  langid = {nswissgerman}
+}
+
+@inreference{kolmasch864aABGB2013,
+  title = {§ 864a ABGB},
+  booktitle = {ABGB Taschenkommentar},
+  author = {Kolmasch, Wolfgang},
+  editor = {Schwimann, Michael},
+  date = {2013},
+  edition = {2},
+  pages = {586--594},
+  publisher = {{Lexisnexis}},
+  location = {{Wien}},
+  langid = {austrian}
+}
+
+@incollection{konigVomMangelfolgeschadenGrundzuge2019,
+  title = {Vom Mangelfolgeschaden: Grundzüge und Streitfragen},
+  shorttitle = {Mangelfolgeschaden},
+  booktitle = {Schweizerische Baurechtstagung 2019},
+  author = {König, Roger},
+  editor = {Stöckli, Hubert},
+  date = {2019},
+  pages = {79--106},
+  publisher = {{Institut für Schweizerisches und Internationales Baurecht}},
+  location = {{Freiburg}},
+  langid = {nswissgerman}
+}
+
+@inreference{kostkiewiczArt102IPRG2015,
+  title = {Art. 102 IPRG},
+  booktitle = {IPRG/LugÜ Kommentar Bundesgesetz über das Internationale Privatrecht, Lugano Übereinkommen und weitere Erlasse},
+  author = {Kostkiewicz, Jolanta Kren},
+  date = {2015},
+  pages = {168--169},
+  publisher = {{Orell Füssli Verlag AG}},
+  location = {{Schweiz}},
+  langid = {nswissgerman}
+}
+
+@book{koziolBurgerlichesRechtBand2014,
+  ids = {koziolBuergerlichesRechtBand2006},
+  title = {Bürgerliches Recht Band I},
+  shorttitle = {BR I},
+  author = {Koziol, Helmut and Welser, Rudolf and Kletečka, Andreas},
+  date = {2014},
+  edition = {14},
+  publisher = {{Manz}},
+  location = {{Wien}},
+  isbn = {3-214-14708-0},
+  langid = {austrian}
+}
+
+@book{lukeSachenrecht2018,
+  title = {Sachenrecht},
+  shorttitle = {SachenR},
+  author = {Lüke, Wolfgang},
+  date = {2018},
+  edition = {4},
+  publisher = {{C. H. Beck}},
+  location = {{München}},
+  langid = {german}
+}
+
+@book{medicusSchuldrechtIIBesonderer2018,
+  title = {Schuldrecht II Besonderer Teil},
+  shorttitle = {SchuldR BT},
+  author = {Medicus, Dieter and Lorenz, Stephan},
+  date = {2018},
+  edition = {18},
+  publisher = {{Beck}},
+  location = {{München}},
+  langid = {german}
+}
+
+@inreference{mullerArt172018,
+  title = {Art. 17 OR},
+  booktitle = {Berner Kommentar Obligationenrecht Allgemeine Bestimmungen: Art. 1-18 OR mit allgemeiner Einleitung in das Schweizerische Obligationenrecht},
+  author = {Müller, Christoph},
+  editor = {Aebi-Müller, Regina E. and Müller, Christoph},
+  date = {2018},
+  publisher = {{Stämpfli Verlag}},
+  location = {{Bern}},
+  langid = {nswissgerman}
+}
+
+@inreference{neumayr31IPRG2010,
+  title = {§ 31 IPRG},
+  booktitle = {Kurzkommentar zum ABGB},
+  author = {Neumayr, Matthias},
+  editor = {Koziol, Helmut and Bydlinski, Peter and Bollenberger, Raimund},
+  date = {2010},
+  edition = {3},
+  pages = {2100--2103},
+  publisher = {{Springer}},
+  location = {{Wien}},
+  langid = {austrian}
+}
+
+@inreference{pestalozziArt4972015,
+  title = {Art. 497 OR},
+  booktitle = {Basler Kommentar - Obligationenrecht I Art. 1 - 529},
+  author = {Pestalozzi, Christoph},
+  editor = {Honsell, Heinrich and Vogt, Nedim Peter and Wiegand, Wolfgang},
+  date = {2015},
+  edition = {6},
+  publisher = {{Helbing Lichtenhahn Verlag}},
+  location = {{Basel}},
+  langid = {nswissgerman}
+}
+
+@inreference{pestalozziArt5072015,
+  title = {Art. 507 OR},
+  booktitle = {Basler Kommentar - Obligationenrecht I Art. 1 - 529},
+  author = {Pestalozzi, Christoph},
+  editor = {Honsell, Heinrich and Vogt, Nedim Peter and Wiegand, Wolfgang},
+  date = {2015},
+  edition = {6},
+  publisher = {{Helbing Lichtenhahn Verlag}},
+  location = {{Basel}},
+  langid = {nswissgerman}
+}
+
+@inreference{pfammatterArt963ZGB2016,
+  title = {Art. 963 ZGB},
+  booktitle = {ZGB Kommentar Schweizerisches Zivilgesetzbuch},
+  author = {Pfammatter, Aron},
+  editor = {Kostkiewicz, Jolanta Kren and Wolf, Stephan and Amstutz, Marc and Fankhauser, Roland},
+  date = {2016},
+  edition = {3},
+  pages = {1898--1901},
+  publisher = {{Orell Füssli Verlag AG}},
+  location = {{Schweiz}},
+  langid = {nswissgerman}
+}
+
+@book{poschBurgerlichesRechtVII2010,
+  title = {Bürgerliches Recht VII Internationales Privatrecht},
+  shorttitle = {IPR},
+  author = {Posch, Willibald},
+  editor = {Apathy, Peter},
+  date = {2010},
+  edition = {5},
+  publisher = {{Springer}},
+  location = {{Wien}},
+  langid = {austrian}
+}
+
+@inreference{putzo449BGB2005,
+  title = {§ 449 BGB},
+  booktitle = {Palandt Bürgerliches Gesetzbuch},
+  author = {Putzo, Hans},
+  editor = {Palandt, Otto},
+  date = {2005},
+  edition = {64},
+  pages = {658--661},
+  publisher = {{C. H. Beck}},
+  location = {{München}},
+  langid = {german}
+}
+
+@book{reinickeBurgschaftsrecht2008,
+  title = {Bürgschaftsrecht},
+  author = {Reinicke, Dietrich and Tiedtke, Klaus},
+  date = {2008},
+  edition = {3},
+  publisher = {{Carl Heymanns Verlag}},
+  location = {{Köln - München}},
+  langid = {german}
+}
+
+@incollection{riedlerEigentumsvorbehalt2012,
+  title = {Eigentumsvorbehalt},
+  booktitle = {Österreichisches Bankvertragsrecht Band IX: Kreditsicherheiten Teil II},
+  author = {Riedler, Andreas},
+  editor = {Apathy, Peter and Iro, Gert and Koziol, Helmut},
+  date = {2012},
+  edition = {2},
+  pages = {244--277},
+  publisher = {{Springer}},
+  location = {{Wien}},
+  langid = {austrian}
+}
+
+@incollection{riedlerKonsortialkrediteSicherheitenbestellungUnd2012,
+  title = {Konsortialkredite - Sicherheitenbestellung und Sicherheitenpoolung},
+  shorttitle = {KSS},
+  booktitle = {Österreichisches Bankvertragsrecht Band IX: Kreditsicherheiten Teil II},
+  author = {Riedler, Andreas},
+  editor = {Apathy, Peter and Iro, Gert and Koziol, Helmut},
+  date = {2012},
+  edition = {2},
+  pages = {364--435},
+  publisher = {{Springer}},
+  location = {{Wien}},
+  langid = {austrian}
+}
+
+@inreference{ruediArt662011,
+  title = {Art. 66 OR},
+  booktitle = {Berner Kommentar Die Entstehung der Obligation: Die Entstehung aus ungerechtfetigter Bereicherung: Ausschluss der Rückforderungen, Art. 66 OR},
+  author = {Rüedi, Yves},
+  date = {2011},
+  publisher = {{Stämpfli Verlag}},
+  location = {{Bern}},
+  langid = {nswissgerman}
+}
+
+@book{ruthersAllgemeinerTeilBGB2020,
+  title = {Allgemeiner Teil des BGB},
+  shorttitle = {AT},
+  author = {Rüthers, Bernd and Stadler, Astrid},
+  date = {2020},
+  edition = {20},
+  publisher = {{C. H. Beck}},
+  location = {{München}},
+  langid = {german}
+}
+
+@incollection{schauble17Sachenrecht2017,
+  title = {§ 17 Sachenrecht},
+  shorttitle = {§ 17},
+  booktitle = {Internationales Privatrecht in der Notar- und Gestaltungspraxis},
+  author = {Schäuble, Daniel},
+  editor = {Hausmann, Rainer and Odersky, Felix},
+  date = {2017},
+  edition = {3},
+  publisher = {{C. H. Beck}},
+  location = {{München}},
+  langid = {german}
+}
+
+@incollection{schiemannRechtsgeschaft2008,
+  title = {Rechtsgeschäft},
+  booktitle = {Kommentar zum Bürgerlichen Gesetzbuch -- Eckpfeiler des Zivilrechts},
+  author = {Schiemann, Gottfried},
+  editor = {von Staudinger, J.},
+  date = {2008},
+  pages = {43--122},
+  publisher = {{Sellier - de Gruyter}},
+  location = {{Berlin}},
+  langid = {german}
+}
+
+@inreference{schmidt449BGB2007,
+  title = {§ 449 BGB},
+  booktitle = {BGB Kommentar},
+  author = {Schmidt, Detlef},
+  editor = {Prütting, Hans and Wegen, Gerhard and Weinreich, Gerd},
+  date = {2007},
+  edition = {2},
+  pages = {755--760},
+  publisher = {{Luchterhand}},
+  location = {{Neuwied}},
+  langid = {german}
+}
+
+@inreference{schurr1063ABGB2013,
+  title = {§ 1063 ABGB},
+  booktitle = {ABGB Taschenkommentar},
+  author = {Schurr, Francesco},
+  editor = {Schwimann, Michael},
+  date = {2013},
+  edition = {2},
+  pages = {850--856},
+  publisher = {{Lexisnexis}},
+  location = {{Wien}},
+  langid = {austrian}
+}
+
+@inreference{schwanderArt715ZGB2015,
+  title = {Art. 715 ZGB},
+  booktitle = {Basler Kommentar - Zivilgesetzbuch II},
+  author = {Schwander, Ivo},
+  editor = {Honsell, Heinrich and Vogt, Nedim Peter and Geiser, Thomas},
+  date = {2015},
+  edition = {5},
+  pages = {1407--1412},
+  publisher = {{Helbing Lichtenhahn Verlag}},
+  location = {{Basel}},
+  langid = {nswissgerman}
+}
+
+@book{schwenzerSchweizerischesObligationenrechtAllgemeiner2009,
+  title = {Schweizerisches Obligationenrecht Allgemeiner Teil},
+  author = {Schwenzer, Ingeborg},
+  date = {2009},
+  edition = {5},
+  publisher = {{Stämpfli Verlag}},
+  location = {{Bern}},
+  langid = {nswissgerman}
+}
+
+@incollection{seilerSachenrechtAllgemeineLehren2008,
+  title = {Sachenrecht -- Allgemeine Lehren},
+  shorttitle = {Sachenrecht},
+  booktitle = {Kommentar zum Bürgerlichen Gesetzbuch -- Eckpfeiler des Zivilrechts},
+  author = {Seiler, Hans Hermann},
+  editor = {von Staudinger, J.},
+  date = {2008},
+  pages = {955--977},
+  publisher = {{Sellier - de Gruyter}},
+  location = {{Berlin}},
+  langid = {german}
+}
+
+@inreference{weberArt1102002,
+  title = {Art. 110 OR},
+  booktitle = {Berner Kommentar Art. 110-113 OR Band VI/1/6},
+  author = {Weber, Rolf H.},
+  editor = {Hausheer, Heinz},
+  date = {2002},
+  publisher = {{Stämpfli Verlag}},
+  location = {{Bern}},
+  langid = {nswissgerman}
+}
+
+@book{welserBurgerlichesRechtBand2015,
+  title = {Bürgerliches Recht Band II},
+  shorttitle = {BR II},
+  author = {Welser, Rudolf and Zöchling-Jud, Brigitta},
+  date = {2015},
+  edition = {14},
+  publisher = {{Manz}},
+  location = {{Wien}},
+  langid = {austrian}
+}
+
+@incollection{welter26AuslandsbezugUnd2017,
+  title = {§ 26 Auslandsbezug und Tragweite ausländischen Rechts},
+  shorttitle = {§ 26},
+  booktitle = {Bankrechts-Handbuch Band I-II},
+  author = {Welter, Reinhard},
+  editor = {Schimansky, Herbert and Bunte, Hermann-Josef and Lwowski, Hans-Jürgen},
+  date = {2017},
+  edition = {5},
+  publisher = {{C. H. Beck}},
+  location = {{München}},
+  langid = {german}
+}
+
+@inreference{wendehorstArt43EGBGB2018,
+  title = {Art. 43 EGBGB},
+  booktitle = {Münchener Kommentar zum Bürgerlichen Gesetzbuch Band 12},
+  author = {Wendehorst, Christiane},
+  editor = {Hein, Jan},
+  date = {2018},
+  edition = {7},
+  publisher = {{C. H. Beck}},
+  location = {{München}},
+  langid = {german}
+}
+
+@book{wendehorstPrivatrechtEinfuhrungRechtswissenschaften2016,
+  title = {Privatrecht Einführung in die Rechtswissenschaften und ihre Methoden Teil II},
+  shorttitle = {Einführung},
+  author = {Wendehorst, Christiane and Zöchling-Jud, Brigitta},
+  date = {2016},
+  edition = {6},
+  publisher = {{Manz}},
+  location = {{Wien}},
+  langid = {austrian}
+}
+
+@inreference{westermann449BGB2016,
+  title = {§ 449 BGB},
+  booktitle = {Münchener Kommentar zum Bürgerlichen Gesetzbuch Band 3},
+  author = {Westermann, Harm Peter},
+  editor = {Säcker, Franz Jürgen and Rixecker, Roland and Oetker, Hartmut and Limperg, Bettina},
+  date = {2016},
+  edition = {7},
+  publisher = {{C. H. Beck}},
+  location = {{München}},
+  langid = {german}
+}
+
+@book{wolfSachenrecht2020,
+  title = {Sachenrecht},
+  shorttitle = {SachenR},
+  author = {Wolf, Manfred and Wellenhofer, Marina},
+  date = {2020},
+  edition = {35},
+  publisher = {{C. H. Beck}},
+  location = {{München}},
+  langid = {german}
+}
+
+@book{zanklBurgerlichesRecht2012,
+  title = {Bürgerliches Recht},
+  shorttitle = {BR},
+  author = {Zankl, Wolfgang},
+  date = {2012},
+  edition = {6},
+  publisher = {{Facultas}},
+  location = {{Wien}},
+  langid = {austrian}
+}
+
+@article{ZoiaBlasonDOttavioEtAl13,
+  title = {The Development of Upper Limb Movements: From Fetal to Post-Natal Life},
+  shorttitle = {The Development of Upper Limb Movements},
+  author = {Zoia, Stefania and Blason, Laura and D’Ottavio, Giuseppina and Biancotto, Marina and Bulgheroni, Maria and Castiello, Umberto},
+  date = {2013-12-04},
+  journaltitle = {PLOS ONE},
+  shortjournal = {PLOS ONE},
+  volume = {8},
+  number = {12},
+  pages = {e80876},
+  issn = {1932-6203},
+  doi = {10.1371/journal.pone.0080876},
+  url = {https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0080876},
+  urldate = {2019-08-14},
+  abstract = {Background The aim of this longitudinal study was to investigate how the kinematic organization of upper limb movements changes from fetal to post-natal life. By means of off-line kinematical techniques we compared the kinematics of hand-to-mouth and hand-to-eye movements, in the same individuals, during prenatal life and early postnatal life, as well as the kinematics of hand-to-mouth and reaching-toward-object movements in the later age periods. Methodology/Principal Findings Movements recorded at the 14th, 18th and 22nd week of gestation were compared with similar movements recorded in an ecological context at 1, 2, 3, 4, 8, and 12 months after birth. The results indicate a similar kinematic organization depending on movement type (i.e., eye, mouth) for the infants at one month and for the fetuses at 22 weeks of gestation. At two and three months such differential motor planning depending on target is lost and no statistical differences emerge. Hand to eye movements were no longer observed after the fourth month of life, therefore we compared kinematics for hand to mouth with hand to object movements. Results of these analyses revealed differences in the performance of hand to mouth and reaching to object movements in the length of the deceleration phase of the movement, depending on target. Conclusion/Significance Data are discussed in terms of how the passage from intrauterine to extra-uterine environments modifies motor planning. These results provide novel evidence of how different types of upper extremity movements, those directed towards one’s own face and those directed to external objects, develop.},
+  langid = {english},
+  keywords = {Birth,Eye movements,Eyes,Fetuses,Hands,Infants,Kinematics,Musculoskeletal system}
+}
+
+

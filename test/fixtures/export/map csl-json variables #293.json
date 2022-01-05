@@ -1,37 +1,33 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false,
-      "exportNotes": false
-    },
+    "localeDateOrder": "ymd",
+    "options": {},
     "preferences": {
-      "DOIandURL": "both",
       "autoAbbrevStyle": "http://www.zotero.org/styles/nature",
       "bibtexURL": "note",
       "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]",
-      "exportBibTeXStrings": "off",
-      "jabrefFormat": 0,
-      "skipFields": "file,editora,editoratype,editorb,editorbtype",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum"
-    },
-    "release": "0.7.33"
+      "skipFields": "file,editora,editoratype,editorb,editorbtype"
+    }
   },
   "items": [
     {
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Bruno",
           "lastName": "Latour"
         }
       ],
       "date": "2008",
-      "extra": "{:original-date: 2005}\n{:original-publisher: origpublisher}\n{:original-publisher-place: origlocation}\n{:original-title: origtitle}",
-      "itemID": 647,
+      "extra": [
+        "{:original-date: 2005}",
+        "{:original-publisher: origpublisher}",
+        "{:original-publisher-place: origlocation}",
+        "{:original-title: origtitle}"
+      ],
+      "itemID": 1,
       "itemType": "book",
       "language": "dan",
       "place": "K\u00f8benhavn",
@@ -61,8 +57,13 @@
       ],
       "date": "2004 [1929]",
       "edition": "2",
-      "extra": "{:original-date: 1929}\n{:original-title: Vom Wesen und Wert der Demokratie}\n{:original-publisher-place: T\u00fcbingen}\n{:original-publisher: J.C.B. Mohr}",
-      "itemID": 4325,
+      "extra": [
+        "{:original-date: 1929}",
+        "{:original-title: Vom Wesen und Wert der Demokratie}",
+        "{:original-publisher-place: T\u00fcbingen}",
+        "{:original-publisher: J.C.B. Mohr}"
+      ],
+      "itemID": 2,
       "itemType": "book",
       "language": "fr-FR",
       "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",

@@ -1,0 +1,86 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "asciiBibTeX": false,
+      "automaticTags": false,
+      "citekeyFormat": "[=journalArticle][shorttitle][date=%oY] | [=forumPost][shorttitle][Date:format-date=%Y-%m-%d.%H\\:%M:prefix=-] | [shorttitle][origyear:prefix=-]",
+      "keyScope": "global",
+      "quickCopyMode": "orgRef",
+      "warnBulkModify": 0
+    }
+  },
+  "items": [
+    {
+      "accessDate": "2020-04-12T13:25:19Z",
+      "attachments": [],
+      "citationKey": "austadisimos.2020.BenditaMierdaCoronavirus",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "austad\u00edsimos"
+        }
+      ],
+      "date": "2020-04-11T08:09:10",
+      "itemID": 1,
+      "itemType": "book",
+      "title": "Book",
+      "url": "https://www.transicionestructural.net/index.php?topic=2514.msg177634#msg177634"
+    },
+    {
+      "accessDate": "2020-04-12T13:25:19Z",
+      "attachments": [],
+      "citationKey": "austadisimos.2020.BenditaMierdaCoronavirus",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "austad\u00edsimos"
+        }
+      ],
+      "date": "2020-04-11T08:09:10",
+      "itemID": 2,
+      "itemType": "forumPost",
+      "title": "Forum post with full date and time",
+      "url": "https://www.transicionestructural.net/index.php?topic=2514.msg177634#msg177634"
+    },
+    {
+      "accessDate": "2020-04-12T13:25:19Z",
+      "attachments": [],
+      "citationKey": "austadisimos.2020.BenditaMierdaCoronavirus",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "austad\u00edsimos"
+        }
+      ],
+      "date": "2020",
+      "itemID": 3,
+      "itemType": "forumPost",
+      "title": "Forum Post with year only",
+      "url": "https://www.transicionestructural.net/index.php?topic=2514.msg177634#msg177634"
+    },
+    {
+      "citationKey": "Brennan.1982.MagiaExperimental",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J. H",
+          "lastName": "Brennan"
+        }
+      ],
+      "date": "1982",
+      "extra": [
+        "original-date: 1976"
+      ],
+      "itemID": 4,
+      "itemType": "journalArticle",
+      "language": "Spanish",
+      "title": "Magia experimental"
+    }
+  ]
+}

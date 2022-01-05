@@ -1,73 +1,14 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
-      "ascii": "",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportDelay": 1,
-      "autoExportIdleWait": 10,
-      "autoPin": false,
-      "auxImport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[auth][year]",
-      "citeprocNoteCitekey": false,
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "exportBraceProtection": true,
-      "exportTitleCase": true,
-      "git": "config",
-      "importBibTeXStrings": true,
-      "itemObserverDelay": 100,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "keyScope": "library",
-      "kuroshiro": false,
-      "mapMath": "",
-      "mapText": "",
-      "mapUnicode": "conservative",
-      "parseParticles": true,
-      "postscript": "",
-      "qualityReport": false,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "rawLaTag": "#LaTeX",
-      "relativeFilePaths": false,
-      "scrubDatabase": false,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.1.127.emile.limonia",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.71",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "en-US",
-        "oscpu": "Intel Mac OS X 10.14",
-        "platform": "MacIntel",
-        "version": "5.0.71"
-      }
+      "itemObserverDelay": 100
     }
   },
   "items": [
@@ -75,10 +16,7 @@
       "DOI": "10.1016/j.jce.2003.09.003",
       "ISSN": "0147-5967",
       "abstractNote": "Do societies choose inefficient policies and institutions? An extension of the Coase theorem to politics would suggest the answer is no. This paper discusses various approaches to political economy and develops the argument that there are strong empirical and theoretical grounds for believing that inefficient policies and institutions are prevalent. We conclude that these inefficient institutions and policies are chosen because they serve the interests of politicians or social groups that hold political power at the expense of the rest. The theoretical case depends on commitment problems inherent in politics; parties holding political power cannot make commitments to bind their future actions because there is no outside agency with the coercive capacity to enforce such arrangements. Journal of Comparative Economics 31 (4) (2003) 620-652.",
-      "attachments": [],
       "citationKey": "Acemoglu2003Whynotpolitical",
-      "citekey": "Acemoglu2003Whynotpolitical",
-      "collections": [],
       "creators": [
         {
           "creatorType": "author",
@@ -87,25 +25,28 @@
         }
       ],
       "date": "2003",
-      "dateAdded": "2019-08-22T20:53:41Z",
-      "dateModified": "2019-08-22T20:53:41Z",
-      "extra": "Citation Key: Acemoglu2003Whynotpolitical\ntex.bdsk-url-2: http://dx.doi.org/10.1016/j.jce.2003.09.003\ntex.date-added: 2015-04-15 15:21:27 +0000\ntex.date-modified: 2017-05-15 14:14:57 +0000\ntex.jlprojects: spatial\u2091lections, continuous\u2092pinion<sub>d</sub>ynamics\ntex.project: ODCD\ntex.rating: 4\ntex.timestamp: 2011.06.01",
+      "extra": [
+        "Citation Key: Acemoglu2003Whynotpolitical",
+        "tex.bdsk-url-2: http://dx.doi.org/10.1016/j.jce.2003.09.003",
+        "tex.date-added: 2015-04-15 15:21:27 +0000",
+        "tex.date-modified: 2017-05-15 14:14:57 +0000",
+        "tex.jlprojects: spatial\u2091lections, continuous\u2092pinion<sub>d</sub>ynamics",
+        "tex.project: ODCD",
+        "tex.rating: 4",
+        "tex.timestamp: 2011.06.01"
+      ],
       "issue": "4",
-      "itemID": 846,
+      "itemID": 1,
       "itemType": "journalArticle",
-      "key": "665AAH6U",
-      "libraryID": 1,
-      "notes": [],
       "pages": "620 - 652",
       "publicationTitle": "Journal of Comparative Economics",
-      "relations": [],
       "tags": [
-        "Political economy"
+        {
+          "tag": "Political economy"
+        }
       ],
       "title": "Why not a political Coase theorem? Social conflict, commitment, and politics",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/665AAH6U",
       "url": "http://www.sciencedirect.com/science/article/pii/S014759670300101X",
-      "version": 0,
       "volume": "31"
     }
   ]

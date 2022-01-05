@@ -1,15 +1,12 @@
 {
   "filename": "auto-bf.json",
   "name": "Burkina Faso",
-  "version": "2019-08-19 06:21:43 UTC",
+  "version": "2020-09-07 21:01:29 UTC",
   "xdata": {
     "default": {
       "place": {
         "BF": "Burkina Faso"
       }
-    },
-    "bf": {
-      "institution-part": {}
     }
   }
 }

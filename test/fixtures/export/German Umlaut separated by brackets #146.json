@@ -1,36 +1,30 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "Export collections": true,
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/ieee",
       "bibtexURL": "note",
       "citekeyFormat": "[auth][year]",
-      "jabrefFormat": 0,
       "skipFields": "keywords,abstract,file"
-    },
-    "release": "0.7.11"
+    }
   },
   "items": [
     {
       "ISBN": "3800721414  9783800721412  3802204697  9783802204692",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Wolfgang",
           "lastName": "Kaufmann"
         }
       ],
       "date": "1995",
-      "itemID": 8,
+      "itemID": 1,
       "itemType": "book",
       "language": "German",
       "libraryCatalog": "Open WorldCat",
@@ -40,9 +34,15 @@
       "place": "Berlin; Frankfurt am Main",
       "publisher": "VDE-Verl. ; Verl.- und Wirtschaftsges. der Elektrizita\u0308tswerke",
       "tags": [
-        "Gleichzeitigkeitsfaktor",
-        "Niederspannung",
-        "Verteilnetz"
+        {
+          "tag": "Gleichzeitigkeitsfaktor"
+        },
+        {
+          "tag": "Niederspannung"
+        },
+        {
+          "tag": "Verteilnetz"
+        }
       ],
       "title": "Planung o\u0308ffentlicher Elektrizit\u00e4tsverteilungs-Systeme"
     }

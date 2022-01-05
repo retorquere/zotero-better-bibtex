@@ -1,70 +1,65 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "Export collections": false,
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/american-medical-association",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]",
-      "jabrefFormat": 0
-    },
-    "release": "0.7.1"
+      "citekeyFormat": "[auth][year]"
+    }
   },
   "items": [
     {
       "DOI": "10.1109/HiPC.2011.6152428",
       "accessDate": "2014-10-23 05:48:04",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Franck",
           "lastName": "Cappello"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Mathias",
           "lastName": "Jacquelin"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Loris",
           "lastName": "Marchal"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Yves",
           "lastName": "Robert"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Marc",
           "lastName": "Snir"
         }
       ],
       "date": "2011",
-      "extra": "Citation Key: CapEA11",
-      "itemID": 3149,
+      "extra": [
+        "Citation Key: CapEA11"
+      ],
+      "itemID": 1,
       "itemType": "conferencePaper",
       "libraryCatalog": "Google Scholar",
       "pages": "1\u201310",
-      "proceedingsTitle": "High Performance Computing (HiPC), 2011 18th international conference on",
       "publicationTitle": "High Performance Computing (HiPC), 2011 18th international conference on",
       "publisher": "IEEE",
       "tags": [
-        "bdec15",
-        "zotero_testcase"
+        {
+          "tag": "bdec15"
+        },
+        {
+          "tag": "zotero_testcase"
+        }
       ],
       "title": "Comparing archival policies for Blue Waters",
       "url": "http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=6152428"
@@ -74,48 +69,43 @@
       "ISBN": "978-1-4799-5500-8",
       "abstractNote": "We study the energy used by a production-level regional climate and weather simulation code on a distributed memory system with hybrid CPU-GPU nodes. The code is optimised for both processor architectures, for which we investigate both time and energy to solution. Operational constraints for time to solution can be met with both processor types, although on different numbers of nodes. Energy to solution is a factor 3 lower with GPUs, but strong scaling can be pushed to larger node counts with CPUs to minimize time to solution. Our data shows that an affine relationship exists between energy and nodehours consumed by the simulation. We use this property to devise a simple and practical methodology for optimising for energy efficiency that can be applied to other applications, which we demonstrate with the HPCG benchmark. We conclude with a discussion about the relationship to the commonly-used GF/Watt metric.",
       "accessDate": "2015-01-12 12:29:55",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Ben",
           "lastName": "Cumming"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Gilles",
           "lastName": "Fourestey"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Oliver",
           "lastName": "Fuhrer"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Tobias",
           "lastName": "Gysi"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Massimiliano",
           "lastName": "Fatica"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Thomas C.",
           "lastName": "Schulthess"
         }
       ],
       "date": "2014",
-      "extra": "Citation Key: CumEA14",
-      "itemID": 3433,
+      "extra": [
+        "Citation Key: CumEA14"
+      ],
+      "itemID": 2,
       "itemType": "conferencePaper",
       "libraryCatalog": "ACM Digital Library",
       "pages": "819\u2013829",
@@ -124,8 +114,12 @@
       "publisher": "IEEE Press",
       "series": "SC '14",
       "tags": [
-        "bdec15",
-        "zotero_testcase"
+        {
+          "tag": "bdec15"
+        },
+        {
+          "tag": "zotero_testcase"
+        }
       ],
       "title": "Application centric energy-efficiency study of distributed multi-core and hybrid CPU-GPU systems",
       "url": "http://dx.doi.org/10.1109/SC.2014.72"
@@ -134,40 +128,48 @@
       "DOI": "10.1175/BAMS-D-11-00094.1",
       "ISSN": "0003-0007, 1520-0477",
       "accessDate": "2012-04-17 10:25:06",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Karl E.",
           "lastName": "Taylor"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Ronald J.",
           "lastName": "Stouffer"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Gerald A.",
           "lastName": "Meehl"
         }
       ],
       "date": "2011-10-07",
-      "extra": "Citation Key: TayEA11",
-      "itemID": 542,
+      "extra": [
+        "Citation Key: TayEA11"
+      ],
+      "itemID": 3,
       "itemType": "journalArticle",
       "libraryCatalog": "CrossRef",
       "pages": "485--498",
       "publicationTitle": "Bulletin of the American Meteorological Society",
       "tags": [
-        "bdec15",
-        "jasmin13a",
-        "p-12-iam",
-        "p-gmdm41",
-        "zotero_testcase"
+        {
+          "tag": "bdec15"
+        },
+        {
+          "tag": "jasmin13a"
+        },
+        {
+          "tag": "p-12-iam"
+        },
+        {
+          "tag": "p-gmdm41"
+        },
+        {
+          "tag": "zotero_testcase"
+        }
       ],
       "title": "An overview of CMIP5 and the Experiment Design",
       "url": "http://journals.ametsoc.org/doi/abs/10.1175/BAMS-D-11-00094.1",

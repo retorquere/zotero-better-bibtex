@@ -7,15 +7,7 @@ tags:
   - export
 ---
 
-You can fetch your bibliography on the url http://127.0.0.1:23119/better-bibtex/collection?`[collectionID]`.`[format]` [^1], where collectionID is:
-
-* the ID you get by right-clicking your collection and selecting "Show collection key"
-* the path "/[library id]/full/path/to/collection" (the library id is the first number from the key you get in the
-  option above; it's always '0' for your personal library)
-
-or any multiple of those, separated by a '+' sign.
-
-The format is either 'bibtex' or 'biblatex', and determines the translator used for export.
+You can fetch your bibliography on the url http://127.0.0.1:23119/better-bibtex/collection?`[collectionID]`.`[format]` [^1]. You can get this URL for a group, library or collection by right-clicking it and selecting `Download Better BibTeX export...`
 
 You can add options to the export as URL parameters:
 
@@ -24,7 +16,7 @@ You can add options to the export as URL parameters:
 
 You can fetch your library as part of your build, using something like `curl` from your Makefile, or with a BibLaTeX remote statement like
 
-```
+```tex
 \addbibresource[location=remote]{http://127.0.0.1:23119/better-bibtex/collection?/0/8CV58ZVD.biblatex}
 ```
 
@@ -32,8 +24,9 @@ You can fetch your library as part of your build, using something like `curl` fr
 
 * `biblatex` for BibLaTeX
 * `bibtex` for BibTeX
-* `csljson` for CSL-JSON
-* `cslyaml` for CSL-JSON in YAML format
+* `json` or `csljson` for CSL-JSON
+* `yaml`, `yml` or `cslyaml` for CSL-JSON in YAML format
+* `jzon` for BetterBibTeX JSON debug format
 * the value of `translatorID` taken from the header of any existing Zotero translator to get an export in that translator format
 
 **Pull export will *only* work if you are compiling your document on the

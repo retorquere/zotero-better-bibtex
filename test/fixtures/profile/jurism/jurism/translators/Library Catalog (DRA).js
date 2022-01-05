@@ -80,7 +80,7 @@ function doWeb(doc, url) {
 function scrape(doc, uri) {
 	var uriRegexp = /^((?:https?:\/\/.*)?\/web2\/tramp2\.exe\/)(?:goto|see\_record|authority\_hits)(\/.*)\?(?:screen=Record\.html\&)?(.*)$/i;
 	var m = uriRegexp.exec(uri);
-	if(uri.indexOf("/authority_hits") < 0) {
+	if (uri.indexOf("/authority_hits") < 0) {
 		var newUri = m[1]+"download_record"+m[2]+"/RECORD.MRC?format=marc&"+m[3];
 	} else {
 		var newUri = m[1]+"download_record"+m[2]+"/RECORD.MRC?format=marc";

@@ -1,15 +1,15 @@
 {
 	"translatorID": "4883f662-29df-44ad-959e-27c9d036d165",
+	"translatorType": 4,
 	"label": "FAO Publications",
 	"creator": "Bin Liu <lieubean@gmail.com>",
 	"target": "^https?://www\\.fao\\.org/documents|publications/",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-05-21 10:14:37"
+	"lastUpdated": "2021-06-09 13:20:00"
 }
 
 /*
@@ -28,26 +28,47 @@
 	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
 	***** END LICENSE BLOCK *****
 */
-
 function detectWeb(doc, url) {
-	//Just differentiate single and multiple. Correct itemType (either book or conferencePaper) will be determined in scrape().
-	if (url.indexOf('card') !== -1) {
-		return 'book';
-	} 
+	// Just differentiate single and multiple.
+	// Identify item type (book or conferencePaper) based on "fdr_label" class.
+	if (url.includes('card')) {
+		let isConferencePaper = false;
+		let confMetaName = ['اسم الاجتماع', '会议名称', 'Meeting Name', 'Nom de la réunion', 'Название мероприятия', 'Nombre de la reunión'];
+		let labelArray = doc.querySelectorAll('.fdr_label');
+		for (let i = 0; i < labelArray.length; i++) {
+			for (let j = 0; j < confMetaName.length; j++) {
+				isConferencePaper = labelArray[i].innerText.includes(confMetaName[j]);
+				if (isConferencePaper) {
+					break;
+				}
+			}
+			if (isConferencePaper) {
+				break;
+			}
+		}
+		if (isConferencePaper) {
+			return 'conferencePaper';
+		}
+		else {
+			return 'book';
+		}
+	}
+
 	/* Multiples currently don't load properly
 	else if (getSearchResults(doc, true)) {
 		return 'multiple';
 	}
 	*/
+	return false;
 }
 
 function cleanMeta(str) {
-	//clean meta fields obtained from page
+	// clean meta fields obtained from page
 	if (str.includes(';') === false) {
-		return str.slice(str.indexOf(':')+2);
-	} else {
-		var strArray = str.slice(str.indexOf(':')+2).split(';');
-		strArray.pop(); //removes empty element after the last ';'
+		return str.slice(str.indexOf(':') + 2);
+	}
+	else {
+		var strArray = str.slice(str.indexOf(':') + 2).split(';');
 		return strArray;
 	}
 }
@@ -55,22 +76,22 @@ function cleanMeta(str) {
 function scrape(doc, url) {
 	var newItem = new Z.Item();
 
-	if (url.indexOf('card') !== -1) {
-		
-		//attach document card URL and snapshot
-		newItem.attachments.push({
+	if (url.includes('card')) {
+		// attach document card URL and snapshot
+		// TEMP: Disable at least until we have post-JS snapshots
+		/* newItem.attachments.push({
 			url: url,
 			title: 'FAO Document Record Snapshot',
 			mimeType: 'text/html',
 			snapshot: true
-		});
+		}); */
 
-		//********** Begin fixed-location variables **********
+		//* ********* Begin fixed-location variables **********
 
-		//Some variables always appear and appear at the same location in all document pages.
-		
-		//abstract
-		var abs = doc.getElementById("mainContentN1");
+		// Some variables always appear and appear at the same location in all document pages.
+
+		// abstract
+		var abs = doc.getElementById("mainContentN0");
 		// The childrens of `abs` are the label "Abstract:" in a strong-tag,
 		// the abstract in several p-tags or text nodes directly, and possibly
 		// a note about other languages which begins also with a strong-tag.
@@ -80,10 +101,11 @@ function scrape(doc, url) {
 			for (let child of children) {
 				if (child.tagName == "STRONG" || (child.nodeType == 1 && ZU.xpathText(child, './/strong'))) {
 					if (abstractFound) {
-						break;// stop when another strong tag is found
-					} else {
+						break; // stop when another strong tag is found
+					}
+					else {
 						abstractFound = true;
-						continue;// exclude the label "Abstract"
+						continue; // exclude the label "Abstract"
 					}
 				}
 				if (newItem.abstractNote) {
@@ -91,79 +113,98 @@ function scrape(doc, url) {
 						newItem.abstractNote += "\n\n";
 					}
 					newItem.abstractNote += child.textContent;
-				} else {
+				}
+				else {
 					newItem.abstractNote = child.textContent;
 				}
 			}
+			// DOI: Some docs contain DOI as a separate paragraph in abs field
+			var DOILead = 'https://doi.org/';
+			if (abs.innerText.includes(DOILead)) {
+				var DOIMatch = abs.innerText.match(/https:\/\/doi\.org\/(.+)/i);
+				newItem.DOI = DOIMatch[1];
+			}
 		}
-		//attach PDF
-		var pdfUrl = ZU.xpath(doc, '//*[@id="mainRightN1"]/div[2]/a')[0].href;
+		// attach PDF
+		var pdfUrl = ZU.xpath(doc, '//*[@id="mainRightN0"]/div[2]/a')[0].href;
 		newItem.attachments.push({
 			url: pdfUrl,
 			title: 'Full Text PDF',
 			mimeType: 'application/pdf'
 		});
-		//url: remove 'http://' from pdfUrl
-		newItem.url = pdfUrl.slice(pdfUrl.indexOf('www'));
-		//language: according to the last one (old format) or two (new format) letters of PDF file name
-		var lang_old = pdfUrl.charAt(pdfUrl.indexOf('pdf')-2);
-		var lang_new = pdfUrl.slice(pdfUrl.indexOf('pdf')-3, pdfUrl.indexOf('pdf')-1);
-		if ((lang_old == 'a') || (lang_new == 'AR') || (lang_new == 'ar')) {
+		// url
+		newItem.url = url;
+		// language: 2 or 3 letters following ISO 639
+		// indicated by the last 1-3 letters in PDF file name (langCode)
+		// One good example is the various language versions of http://www.fao.org/publications/card/en/c/I2801E
+		var langCode = '';
+		var matches = pdfUrl.match(/([a-z]+)\.pdf$/i);
+		if (matches) {
+			langCode = matches[1];
+		}
+		// In the new PDF naming scheme, langCode follows ISO 639.
+		if (langCode.length > 1) {
+			newItem.language = langCode.toLowerCase();
+		}
+		// In the old PDF naming scheme, langCode is one lower/upper case letter and only differentiates between the 6 UN languages.
+		else if ((langCode == 'a') || (langCode == 'A')) {
 			newItem.language = 'ar';
-		} else if ((lang_old == 'c') || (lang_new == 'ZH') || (lang_new == 'zh')) {
+		}
+		else if ((langCode == 'c') || (langCode == 'C')) {
 			newItem.language = 'zh';
-		} else if ((lang_old == 'e') || (lang_new == 'EN') || (lang_new == 'en')) {
+		}
+		else if ((langCode == 'e') || (langCode == 'E')) {
 			newItem.language = 'en';
-		} else if ((lang_old == 'f') || (lang_new == 'FR') || (lang_new == 'fr')) {
+		}
+		else if ((langCode == 'f') || (langCode == 'F')) {
 			newItem.language = 'fr';
-		} else if ((lang_old == 'r') || (lang_new == 'RU') || (lang_new == 'ru')) {
+		}
+		else if ((langCode == 'r') || (langCode == 'R')) {
 			newItem.language = 'ru';
-		} else if ((lang_old == 's') || (lang_new == 'ES') || (lang_new == 'es')) {
+		}
+		else if ((langCode == 's') || (langCode == 'S')) {
 			newItem.language = 'es';
-		} else {
+		}
+		else { // Other languages are usually designated 'o'. Using 'else' just to be safe.
 			newItem.language = 'other';
 		}
-		//title: use colon to connect main title and subtitle (if subtitle exists)
-		var mainTitle = ZU.xpathText(doc, '//*[@id="headerN1"]/h1');
+		// title: use colon to connect main title and subtitle (if subtitle exists)
+		var mainTitle = ZU.xpathText(doc, '//*[@id="headerN0"]/h1');
 		var subTitle = ZU.xpathText(doc, '//h4[@class="csc-firstHeader h1"]');
-		if (subTitle == null) {
+		if (!subTitle) {
 			newItem.title = mainTitle;
-		} else {
-			if (newItem.language == 'zh') {
-				newItem.title = mainTitle + '：' + subTitle;
-			} else {
-				newItem.title = mainTitle + ': ' + subTitle;				
-			}
 		}
-		
-		//********** End fixed-location variables **********
+		else if ((newItem.language == 'zh') || (newItem.language == 'ja')) {
+			newItem.title = mainTitle + '：' + subTitle;
+		}
+		else {
+			newItem.title = mainTitle + ': ' + subTitle;
+		}
+
+		//* ********* End fixed-location variables **********
 
 
-		//********** Begin dynamic-location variables **********
+		//* ********* Begin dynamic-location variables **********
 
-		//Variables that appear neither in all document pages nor at same positions in the pages.
-		var metaText = ZU.xpath(doc, '//*[@id="mainN1"]')[0].innerText.split('\n'); //scrape text of meta area and split into an array based on line breaks.
-		//get what variables are listed in the page, save to object existingMeta
-		var textVariable = { //declarations for metadata names as appeared in document pages in different languages
-			date: ['سنة النشر', '出版年代', 'Year of publication', 'Année de publication', 'Год издания', 'Fecha de publicación'],
-			publisher: ['Publisher', 'Издательство'],
-			place: ['مكان النشر', '出版地點', 'Place of publication', 'Lieu de publication', 'Место публикации', 'Lugar de publicacion'],
-			pages: ['الصفحات', '页次', 'Pages', 'Страницы', 'Páginas'],
+		// Variables that appear neither in all document pages nor at same positions in the pages.
+		var metaText = ZU.xpath(doc, '//*[@id="mainN0"]')[0].innerText.split('\n'); // scrape text of meta area and split into an array based on line breaks.
+		// get what variables are listed in the page, save to object existingMeta
+		var textVariable = { // declarations for metadata names as appeared in document pages in different languages
+			date: ['سنة النشر', '出版年份', 'Year of publication', 'Année de publication', 'Год издания', 'Fecha de publicación'],
+			publisher: ['الناشر', '出版方', 'Publisher', 'Éditeur', 'Издатель', 'Editor'],
+			place: ['مكان النشر', '出版地点', 'Place of publication', 'Lieu de publication', 'Место публикации', 'Lugar de publicacion'],
+			pages: ['الصفحات', '页数', 'Pages', 'Страницы', 'Páginas'],
 			ISBN: ['الرقم الدولي الموحد للكتاب', 'ISBN'],
 			author: ['الكاتب', '作者', 'Author', 'Auteur', 'Автор', 'Autor'],
-			corpAuthor: ['الشعبة', '司', 'Corporate author', 'Division', 'Отдел', 'División'],
-			office: ['مكتب', '办公室', 'Office', 'Bureau', 'Oфис', 'Oficina'],
-			seriesTitle: ['Serial Title'],
+			seriesTitle: ['العنوان التسلسي', '系列标题', 'Serial Title', 'Titre de la série', 'Название серии', 'Título de la serie'],
 			seriesNumber: ['رقم المسلسل', '系列号码', 'Series number', 'Numéro de série', 'Серийный номер', 'Número de serie'],
 			conference: ['اسم الاجتماع', '会议名称', 'Meeting Name', 'Nom de la réunion', 'Название мероприятия', 'Nombre de la reunión'],
-			confCode: ['رمز/شفرة الاجتماع', '会议代码', 'Meeting symbol/code', 'Symbole/code de la réunion', 'Cимвол/код мероприятия', 'Código/Símbolo de la reunión'],
-			session: ['Session', 'undefined', 'session'], //web page bug: in Russian page, session name is 'undefined'
 			tags: ['المعجم الكلمات الموضوع', 'AGROVOC', 'Agrovoc', 'АГРОВОК']
 		};
 		var existingMeta = {};
-		for (var i = 0; i < metaText.length; i++) {
-			for (var key in textVariable) {
-				for (var j = 0; j < textVariable[key].length; j++) {
+		for (let i = 0; i < metaText.length; i++) {
+			for (let key in textVariable) {
+				for (let j = 0; j < textVariable[key].length; j++) {
 					if (metaText[i].includes(textVariable[key][j])) {
 						existingMeta[key] = metaText[i];
 					}
@@ -171,113 +212,107 @@ function scrape(doc, url) {
 			}
 		}
 
-		for (var key in existingMeta) {
+		for (let key in existingMeta) {
 			var metaResult = cleanMeta(existingMeta[key]);
-			
-			//date
+
+			// date
 			if (key.includes('date')) {
 				newItem.date = metaResult;
 			}
-			//publisher
+			// publisher
 			if (key.includes('publisher')) {
 				newItem.publisher = metaResult;
 			}
-			//place
+			// place
 			if (key.includes('place')) {
 				newItem.place = metaResult;
 			}
-			//number of pages
+			// number of pages
 			if (key.includes('pages')) {
 				newItem.numPages = metaResult.match(/\d+/)[0];
 			}
-			//ISBN
+			// ISBN
 			if (key.includes('ISBN')) {
-				newItem.ISBN = ZU.cleanISBN(metaResult, false); 
+				newItem.ISBN = ZU.cleanISBN(metaResult, false);
 			}
-			//individual author(s)
+			// author(s): whether there is one or more authors; whether last and first name are separated by ',' (if not, use single-field mode).
 			if (key.includes('author')) {
-				for (var i = 0; i < metaResult.length; i++) {
-					var author = metaResult[i];
-					newItem.creators.push(ZU.cleanAuthor(author, 'author', true));
+				if (Array.isArray(metaResult)) { // If there are more than 1 authors, metaResult returns an array.
+					for (let i = 0; i < metaResult.length; i++) {
+						if (metaResult[i].includes(',')) {
+							newItem.creators.push(ZU.cleanAuthor(metaResult[i], 'author', true));
+						}
+						else {
+							newItem.creators.push({
+								lastName: metaResult[i],
+								creatorType: 'author',
+								fieldMode: 1
+							});
+						}
+					}
+				}
+				else if (metaResult.includes(',')) {
+					newItem.creators.push(ZU.cleanAuthor(metaResult, 'author', true));
+				}
+				else {
+					newItem.creators.push({
+						lastName: metaResult,
+						creatorType: 'author',
+						fieldMode: 1
+					});
 				}
 			}
-			//corporate author: save for later conditions
-			if (key.includes('corpAuthor')) {
-				var corpAuthorWeb = metaResult;
-			}
-			if (key.includes('office')) {
-				var officeWeb = metaResult;
-			}
-			//tag (Agrovoc)
+			// tag (Agrovoc)
 			if (key.includes('tags')) {
 				for (var i = 0; i < metaResult.length; i++) {
 					newItem.tags[i] = metaResult[i].trim();
 				}
-			}	
-			//seriesTitle
+			}
+			// seriesTitle
 			if (key.includes('seriesTitle')) {
-				newItem.series = metaResult[0];
+				newItem.series = metaResult;
 			}
-			//seriesNumber: convert first letter to upper case
+			// seriesNumber: extract the number.
 			if (key.includes('seriesNumber')) {
-				newItem.seriesNumber = metaResult[0].toUpperCase() + metaResult.slice(1);
+				newItem.seriesNumber = (metaResult.match(/\d+/) || [])[0];
 			}
-			//use confCode as 'Proceedings Title' in Zotero.
-			if (key.includes('confCode')) {
-				newItem.publicationTitle = metaResult;
-			}
-			//conferenceName: save for later conditions.
+			// conferenceName: save for later conditions.
 			if (key.includes('conference')) {
 				var conferenceWeb = metaResult[0];
-			}
-			if (key.includes('session')) {
-				var sessionWeb = metaResult;
+				newItem.conferenceName = conferenceWeb;
 			}
 		}
 
-		//If there's no publisher, use 'FAO' as publisher.
-		if (newItem.publisher == null) {
+		// If there's no publisher, use 'FAO' as publisher.
+		if (!newItem.publisher) {
 			newItem.publisher = 'FAO';
 		}
-		//If there's no place, use 'Rome, Italy' as place.
-		if (newItem.place == null) {
+		// If there's no place, use 'Rome, Italy' as place.
+		if (!newItem.place) {
 			newItem.place = 'Rome, Italy';
 		}
-		//Write corporate author; if no individual or corporate author, use 'FAO' as author.
-		if (newItem.creators.length == 0) {
-			if (corpAuthorWeb && officeWeb) {
-				newItem.creators.push({lastName: corpAuthorWeb + ', ' + officeWeb, creatorType: author, fieldMode: true});
-			} else if (corpAuthorWeb && !officeWeb) {
-				newItem.creators.push({lastName: corpAuthorWeb, creatorType: author, fieldMode: true});
-			} else if (!corpAuthorWeb && officeWeb) {
-				newItem.creators.push({lastName: officeWeb, creatorType: author, fieldMode: true});
-			} else {
-				newItem.creators.push({lastName: 'FAO', creatorType: author, fieldMode: true});
-			}
+		// If there's no author, use 'FAO' as author.
+		if (!newItem.creators.length) {
+			newItem.creators.push({
+				lastName: 'FAO',
+				creatorType: 'author',
+				fieldMode: 1
+			});
 		}
-		//Write conferenceName
-		if (conferenceWeb && sessionWeb) {
-			newItem.conferenceName = conferenceWeb + ' ' + sessionWeb;
-		} else if (!sessionWeb) {
-			newItem.conferenceName = conferenceWeb;
-		} else {
-			newItem.conferenceName = sessionWeb;
-		}
-		//If conference and/or session exists in document page, the itemType is 'conferencePaper'; otherwise it's 'book'. 
-		if (conferenceWeb || sessionWeb) {
+		// If conference exists in document page, the itemType is 'conferencePaper'; otherwise it's 'book'.
+		if (conferenceWeb) {
 			newItem.itemType = 'conferencePaper';
-		} else {
+		}
+		else {
 			newItem.itemType = 'book';
 		}
-		//********** End dynamic-location variables **********
-
-
+		//* ********* End dynamic-location variables **********
 	}
 	newItem.complete();
 }
 
 
-//get items from a multiple-item page
+// get items from a multiple-item page
 function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
@@ -297,7 +332,7 @@ function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
 		Z.selectItems(getSearchResults(doc, false), function (items) {
 			if (!items) {
-				return true;
+				return;
 			}
 			var articles = [];
 			for (var i in items) {
@@ -305,40 +340,41 @@ function doWeb(doc, url) {
 			}
 			ZU.processDocuments(articles, scrape);
 		});
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }
 
-//Note on test cases: Because the pages use dynamic elements (which is also why the translator doesn't work for multiple item pages), automatic test in Scaffold doesn't work. Every time a test is needed, use "New Web" to manually add it./** BEGIN TEST CASES **/
+// Note on test cases: Because the pages use dynamic elements (which is also why the translator doesn't work for multiple item pages), automatic test in Scaffold doesn't work. Every time a test is needed, use "New Web" to manually add it.
+
+/** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.fao.org/documents/card/zh/c/d8a82e37-695b-4eca-b6f9-53c12758eb8e/",
+		"url": "http://www.fao.org/documents/card/en/c/ca8466en",
+		"defer": true,
 		"items": [
 			{
 				"itemType": "book",
-				"title": "迁移、农业和农村发展：解决迁移的根源并利用迁移的潜力促进发展",
+				"title": "Responding to the impact of the COVID-19 outbreak on food value chains through efficient logistics",
 				"creators": [
 					{
 						"lastName": "FAO",
-						"fieldMode": true
+						"creatorType": "author",
+						"fieldMode": 1
 					}
 				],
-				"date": "2016",
-				"abstractNote": "本文件针对的对象是成员国、联合国系统及所有其他潜在合作伙伴，阐明了农业和农村发展以及可持续自然资源管理能够在缓解农村迁移压力方面发挥作用。文件还概述了粮农组织参与国际工作、解决难民和移民全球性流动的主要切入点。粮农组织与合作伙伴合作，加大工作力度，致力于人道主义和发展环境下的迁移问题，并发挥自身在处理农业和农村发展问题方面的比较优势。\n\n其他語言版本:\n\n英語 俄语 西班牙语 法语 阿拉伯语",
-				"language": "zh",
+				"date": "2020",
+				"ISBN": "9789251323717",
+				"abstractNote": "Measures implemented around the world to contain the COVID-19 pandemic have entailed a severe reduction not only in the transportation of goods and services that rely on transport, but also in the migration of labour domestically and internationally. Workers are less available reflecting both disruptions in transportation systems and restrictions to stop the transmission of the disease, within and across borders. \n\nThe Food and Agriculture Organization of the United Nations (FAO) urges countries to maintain functioning food value chains to avoid food shortages, following practices that are being proven to work. This note summarizes some practices that could be useful for governments and the private sector to maintain critical logistical elements in food value chain.\n\nRevised 26 April 2020.\n\nSee the full list of policy briefs related to COVID-19\n\n.",
+				"language": "en",
 				"libraryCatalog": "FAO Publications",
-				"numPages": "20",
+				"numPages": "4",
 				"place": "Rome, Italy",
 				"publisher": "FAO",
-				"url": "www.fao.org/3/a-i6064c.pdf",
+				"url": "http://www.fao.org/documents/card/en/c/ca8466en",
 				"attachments": [
-					{
-						"title": "FAO Document Record Snapshot",
-						"mimeType": "text/html",
-						"snapshot": true
-					},
 					{
 						"title": "Full Text PDF",
 						"mimeType": "application/pdf"
@@ -346,16 +382,81 @@ var testCases = [
 				],
 				"tags": [
 					{
-						"tag": "农业发展"
+						"tag": "Coronavirus"
 					},
 					{
-						"tag": "农村发展"
+						"tag": "agrifood sector"
 					},
 					{
-						"tag": "对于灾害和危机的适应与恢复能力"
+						"tag": "infectious diseases"
 					},
 					{
-						"tag": "迁徙"
+						"tag": "logistics"
+					},
+					{
+						"tag": "value chains"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "http://www.fao.org/documents/card/en/c/ca8751en/",
+		"defer": true,
+		"items": [
+			{
+				"itemType": "book",
+				"title": "Blockchain application in seafood value chains",
+				"creators": [
+					{
+						"firstName": "F.",
+						"lastName": "Blaha",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "K.",
+						"lastName": "Katafono",
+						"creatorType": "author"
+					}
+				],
+				"date": "2020",
+				"ISBN": "9789251324530",
+				"abstractNote": "Innovation through information and communication technologies is a key enabler in transforming food systems and holds great potential to achieve the Sustainable Development Goals. Recent developments, such as mobile technologies, smart networks, drones, remote-sensing, distributed computing, as well as disruptive technologies, such as blockchain, the Internet of things and artificial intelligence, are serving as the premise for a “digital revolution” whereby management of resources can potentially be highly optimized, intelligent and anticipatory. This publication establishes chain traceability as the substrate over which digital solutions need to operate. It provides a comprehensive introduction to blockchain, and covers smart contracts, explores how they relate to blockchain with an example of their use in seafood value chains, and then examines major development and operational considerations for blockchain applications. The publication also analyses the seafood supply chain with considerations on flag, coastal, port, processing and market States. It identifies general control elements (critical tracking events and corresponding key data elements) that form the basis for traceability monitoring and acquisition, and summarizes suitability for blockchain. It also investigates considerations for legality, transparency, species fraud and food safety.",
+				"language": "en",
+				"libraryCatalog": "FAO Publications",
+				"numPages": "56",
+				"place": "Rome, Italy",
+				"publisher": "FAO",
+				"series": "FAO Fisheries and Aquaculture Circular",
+				"seriesNumber": "1207",
+				"url": "http://www.fao.org/documents/card/en/c/ca8751en/",
+				"attachments": [
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
+					}
+				],
+				"tags": [
+					{
+						"tag": "analysis"
+					},
+					{
+						"tag": "blockchain technology"
+					},
+					{
+						"tag": "fisheries"
+					},
+					{
+						"tag": "food production"
+					},
+					{
+						"tag": "food systems"
+					},
+					{
+						"tag": "traceability"
 					}
 				],
 				"notes": [],
@@ -366,6 +467,7 @@ var testCases = [
 	{
 		"type": "web",
 		"url": "http://www.fao.org/documents/card/en/c/I9069EN",
+		"defer": true,
 		"items": [
 			{
 				"itemType": "book",
@@ -390,13 +492,8 @@ var testCases = [
 				"numPages": "65",
 				"place": "Budapest, Hungary",
 				"publisher": "FAO",
-				"url": "www.fao.org/3/i9069en/I9069EN.pdf",
+				"url": "http://www.fao.org/documents/card/en/c/I9069EN",
 				"attachments": [
-					{
-						"title": "FAO Document Record Snapshot",
-						"mimeType": "text/html",
-						"snapshot": true
-					},
 					{
 						"title": "Full Text PDF",
 						"mimeType": "application/pdf"
@@ -410,6 +507,9 @@ var testCases = [
 						"tag": "agricultural sector"
 					},
 					{
+						"tag": "data analysis"
+					},
+					{
 						"tag": "economic analysis"
 					},
 					{
@@ -420,6 +520,9 @@ var testCases = [
 					},
 					{
 						"tag": "research"
+					},
+					{
+						"tag": "supply chain"
 					}
 				],
 				"notes": [],
@@ -429,33 +532,30 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.fao.org/publications/card/en/c/4ca616af-0a4a-4232-bd3b-681b67471857/",
+		"url": "http://www.fao.org/documents/card/en/c/ca7988en/",
+		"defer": true,
 		"items": [
 			{
 				"itemType": "book",
-				"title": "Save Food for a Better Climate: Converting the food loss and waste challenge into climate action",
+				"title": "FAO publications catalogue 2020: March",
 				"creators": [
 					{
 						"lastName": "FAO",
-						"fieldMode": true
+						"creatorType": "author",
+						"fieldMode": 1
 					}
 				],
-				"date": "2017",
-				"ISBN": "9789251099896",
-				"abstractNote": "This paper aims to inform on the interrelationship between food loss and waste and climate change. In this context, the paper highlights the related impacts, and outlines the recent global frameworks adopted by the international community, and how they have been translated into national priorities and targets. Climate technology options are explored, along with the challenges and opportunities related to financing needs. Finally, this paper will identify ways and enabling factors to reduce food loss and waste as part of the collective effort to enhance ambition for climate action while simultaneously delivering the other objectives of the sustainable development agenda.",
+				"date": "2020",
+				"ISBN": "9789251322550",
+				"abstractNote": "This catalogue aims to improve the dissemination and outreach of FAO’s knowledge products and overall publishing programme. By providing information on its key publications in every area of FAO’s work, and catering to a range of audiences, it thereby contributes to all organizational outcomes.\n\nFrom statistical analysis to specialized manuals to children’s books, FAO publications cater to a diverse range of audiences. This catalogue presents a selection of FAO’s main publications, produced in 2020 or earlier, ranging from its global reports and general interest publications to numerous specialized titles. In addition to the major themes of agriculture, forestry and fisheries, it also includes thematic sections on climate change, economic and social development, and food safety and nutrition.",
 				"language": "en",
 				"libraryCatalog": "FAO Publications",
-				"numPages": "38",
+				"numPages": "114",
 				"place": "Rome, Italy",
 				"publisher": "FAO",
-				"shortTitle": "Save Food for a Better Climate",
-				"url": "www.fao.org/3/a-i8000e.pdf",
+				"shortTitle": "FAO publications catalogue 2020",
+				"url": "http://www.fao.org/documents/card/en/c/ca7988en/",
 				"attachments": [
-					{
-						"title": "FAO Document Record Snapshot",
-						"mimeType": "text/html",
-						"snapshot": true
-					},
 					{
 						"title": "Full Text PDF",
 						"mimeType": "application/pdf"
@@ -463,34 +563,16 @@ var testCases = [
 				],
 				"tags": [
 					{
-						"tag": "agricultural development"
+						"tag": "FAO"
 					},
 					{
-						"tag": "agricultural wastes"
+						"tag": "cataloguing"
 					},
 					{
-						"tag": "climate change adaptation"
+						"tag": "information dissemination"
 					},
 					{
-						"tag": "climate change mitigation"
-					},
-					{
-						"tag": "climate-smart agriculture"
-					},
-					{
-						"tag": "food wastes"
-					},
-					{
-						"tag": "smallholders"
-					},
-					{
-						"tag": "sustainable agriculture"
-					},
-					{
-						"tag": "sustainable development"
-					},
-					{
-						"tag": "waste reduction"
+						"tag": "publications"
 					}
 				],
 				"notes": [],
@@ -501,10 +583,11 @@ var testCases = [
 	{
 		"type": "web",
 		"url": "http://www.fao.org/publications/card/fr/c/77dbd058-8dd4-4295-af77-23f6b28cc683/",
+		"defer": true,
 		"items": [
 			{
 				"itemType": "book",
-				"title": "Vivre et se nourrir de la forêt en Afrique centrale",
+				"title": "Vivre et se nourir de la forêt en Afrique centrale",
 				"creators": [
 					{
 						"firstName": "O.",
@@ -519,21 +602,16 @@ var testCases = [
 				],
 				"date": "2016",
 				"ISBN": "9789252094890",
-				"abstractNote": "Ce livre nous emmène au cœur des zones de forêts denses et sahéliennes de l’Afrique centrale, un écosystème précieux et essentiel à la vie quotidienne de ses habitants, représentant l’un des trois principaux ensembles boisés tropicaux de la planète. Dix pays (Burundi, Cameroun, Congo, Gabon, Guinée Equatoriale, République Centrafricaine, République Démocratique du Congo, Rwanda, Sao Tomé & Principe, Tchad) abritent ces forêts et savanes, riches d’importantes ressources naturelles. Ils ont en commun une longue histoire liée à la colonisation, suivie d'une expérience de coopération multiforme depuis les indépendances qui évolue incontestablement vers une intégration économique et monétaire. De nos jours, alors que les équilibres séculaires entre l’homme et la nature semblent ébranlés, que la sécurité alimentaire, la lutte contre la pauvreté et la préservation de la biodiversité et des ressources forestières sont devenus des enjeux mondiaux ; à l’heure où la croissance démographique non maîtrisée fragilise le maintien des écosystèmes forestiers tout en accentuant les conflits liés à la recherche d’espace vital, le phénomène des changements climatiques vient davantage sonder le génie créateur des populations forestières dans la préservation et la gestion durable de la forêt et des produits forestiers non ligneux (PFNL) qui en sont issus. Cette publication est l’œuvre du personnel technique de la FAO, avec la contribution des partenaires internationaux et locaux engagés dans l’évolution des PFNL. Elle est un document précieux consacré au développement des peuples par la promotion des PFNL en Afrique centrale en vue du renforcement de la sécurité alimentaire et la lutte contre la pauvreté.\n\nVoir aussi la sommaire en version anglais\n\nEgalement disponible en:\n\nAnglais",
+				"abstractNote": "Ce livre nous emmène au cœur des zones de forêts denses et sahéliennes de l’Afrique centrale, un écosystème précieux et essentiel à la vie quotidienne de ses habitants, représentant l’un des trois principaux ensembles boisés tropicaux de la planète. Dix pays (Burundi, Cameroun, Congo, Gabon, Guinée Equatoriale, République Centrafricaine, République Démocratique du Congo, Rwanda, Sao Tomé & Principe, Tchad) abritent ces forêts et savanes, riches d’importantes ressources naturelles. Ils ont en com mun une longue histoire liée à la colonisation, suivie d'une expérience de coopération multiforme depuis les indépendances qui évolue incontestablement vers une intégration économique et monétaire. De nos jours, alors que les équilibres séculaires entre l’homme et la nature semblent ébranlés, que la sécurité alimentaire, la lutte contre la pauvreté et la préservation de la biodiversité et des ressources forestières sont devenus des enjeux mondiaux ; à l’heure où la croissance démographique non m aîtrisée fragilise le maintien des écosystèmes forestiers tout en accentuant les conflits liés à la recherche d’espace vital, le phénomène des changements climatiques vient davantage sonder le génie créateur des populations forestières dans la préservation et la gestion durable de la forêt et des produits forestiers non ligneux (PFNL) qui en sont issus. Cette publication est l’œuvre du personnel technique de la FAO, avec la contribution des partenaires internationaux et locaux engagés dans l’évo lution des PFNL. Elle est un document précieux consacré au développement des peuples par la promotion des PFNL en Afrique centrale en vue du renforcement de la sécurité alimentaire et la lutte contre la pauvreté.  \n\n Voir aussi  la sommaire en version anglais",
 				"language": "fr",
 				"libraryCatalog": "FAO Publications",
 				"numPages": "251",
 				"place": "Rome, Italy",
 				"publisher": "FAO",
-				"series": "Non-wood forest products working paper",
-				"seriesNumber": "No. 21",
-				"url": "www.fao.org/3/a-i6399f.pdf",
+				"series": "Produits Forestiers Non-Ligneux",
+				"seriesNumber": "21",
+				"url": "http://www.fao.org/publications/card/fr/c/77dbd058-8dd4-4295-af77-23f6b28cc683/",
 				"attachments": [
-					{
-						"title": "FAO Document Record Snapshot",
-						"mimeType": "text/html",
-						"snapshot": true
-					},
 					{
 						"title": "Full Text PDF",
 						"mimeType": "application/pdf"
@@ -544,64 +622,34 @@ var testCases = [
 						"tag": "Afrique centrale"
 					},
 					{
-						"tag": "Aménagement forestier"
+						"tag": "Commerce international"
 					},
 					{
-						"tag": "Burundi"
-					},
-					{
-						"tag": "Cameroun"
-					},
-					{
-						"tag": "Congo"
+						"tag": "Communauté rurale"
 					},
 					{
 						"tag": "Connaissance indigène"
 					},
 					{
-						"tag": "Conservation de la diversité biologique"
+						"tag": "Nouvelle technologie"
 					},
 					{
-						"tag": "Forêt humide"
+						"tag": "Petite entreprise"
 					},
 					{
-						"tag": "Gabon"
-					},
-					{
-						"tag": "Gnetum"
-					},
-					{
-						"tag": "Guinée Équatoriale"
+						"tag": "Politique forestière"
 					},
 					{
 						"tag": "Produit forestier non ligneux"
 					},
 					{
-						"tag": "Ricinodendron heudelotii"
+						"tag": "Ressource forestière"
 					},
 					{
-						"tag": "Rwanda"
+						"tag": "Sécurité alimentaire"
 					},
 					{
-						"tag": "République centrafricaine"
-					},
-					{
-						"tag": "République démocratique du Congo"
-					},
-					{
-						"tag": "Sao Tomé-et-Principe"
-					},
-					{
-						"tag": "Tchad"
-					},
-					{
-						"tag": "Technologie traditionnelle"
-					},
-					{
-						"tag": "forest products derivation"
-					},
-					{
-						"tag": "méthode traditionnelle"
+						"tag": "Valeur économique"
 					},
 					{
 						"tag": "sustainable forest management"
@@ -614,33 +662,28 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.fao.org/publications/card/en/c/MW029en",
+		"url": "http://www.fao.org/publications/card/zh/c/mw246ZH/",
+		"defer": true,
 		"items": [
 			{
 				"itemType": "conferencePaper",
-				"title": "Multi-year Programme of Work (MYPOW) 2016-2019 for the FAO Regional Conference for Asia and the Pacific",
+				"title": "亚太区域可持续粮食系统 促进健康膳食和营养改善专题讨论会成果报告",
 				"creators": [
 					{
-						"firstName": "A.",
-						"lastName": "Quereshi",
+						"firstName": "X.",
+						"lastName": "Yao",
 						"creatorType": "author"
 					}
 				],
 				"date": "2018",
-				"abstractNote": "This document presents again the MYPOW for 2016-2019 for APRC. A report on how FAO's regional activities have addressed regional priorities during 2016-2017, as well as priorities and recommendations of the regional technical commissions, along with the plans and priorities of partners such as the Regional Economic Organizations, civil society organizations (CSOs) and the private sector, is presented in document APRC/18/6.\n\nAlso Available in:\n\nChinese French Russian",
+				"abstractNote": "联合国粮食及农业组织（粮农组织）亚洲及太平洋区域办事处（亚太区域办），与世界卫生组织（世卫组织）、世界粮食计划署（粮食署）、联合国儿童基金会（儿基会）以及世界银行南亚粮食和营养安全举措（世行南亚举措）合作，组织了“亚太区域可持续粮食系统促进健康膳食和营养改善专题讨论会”。讨论会的组织是对2016年12月在罗马粮农组织总部就同一主题召开的粮农组织/世卫组织国际研讨会采取的一项区域后续行动。会议目的是就具有促成积极营养成果潜力的农业和粮食系统政策及行动交流经验和证据。\n\n讨论会呼吁所有利益相关方在相关政策框架中说明的全球、区域、国家行动中形成合力，其中包括可持续发展目标、第二届国际营养大会行动框架、联合国营养问题行动十年，以及相关的国家多部门行动计划和非传染性疾病工作计划。讨论会还呼吁联合国机构联合采取具体行动，支持各国实现其粮食安全和营养议程。\n\n本情况说明对审议结果做了总结。",
 				"conferenceName": "FAO Regional Conference for Asia and the Pacific (APRC)",
-				"language": "en",
+				"language": "zh",
 				"libraryCatalog": "FAO Publications",
-				"place": "Bangkok, Thailand",
-				"proceedingsTitle": "APRC/18/8",
+				"place": "Rome, Italy",
 				"publisher": "FAO",
-				"url": "www.fao.org/3/mw029en/MW029en.pdf",
+				"url": "http://www.fao.org/publications/card/zh/c/mw246ZH/",
 				"attachments": [
-					{
-						"title": "FAO Document Record Snapshot",
-						"mimeType": "text/html",
-						"snapshot": true
-					},
 					{
 						"title": "Full Text PDF",
 						"mimeType": "application/pdf"
@@ -648,40 +691,175 @@ var testCases = [
 				],
 				"tags": [
 					{
-						"tag": "Asia and the Pacific"
+						"tag": "meetings"
 					},
 					{
-						"tag": "FAO"
+						"tag": "traditional foods"
 					},
 					{
-						"tag": "Sustainable Development Goals"
+						"tag": "亚太"
 					},
 					{
-						"tag": "agricultural development"
+						"tag": "人体营养"
 					},
 					{
-						"tag": "climate change"
+						"tag": "粮食供给"
 					},
 					{
-						"tag": "development indicators"
+						"tag": "联合国粮农组织"
 					},
 					{
-						"tag": "development policies"
+						"tag": "营养不良"
 					},
 					{
-						"tag": "food safety"
+						"tag": "营养政策"
 					},
 					{
-						"tag": "food security"
+						"tag": "营养教育"
 					},
 					{
-						"tag": "human nutrition"
+						"tag": "营养状况调查"
+					},
+					{
+						"tag": "营养监督"
+					},
+					{
+						"tag": "进食"
+					},
+					{
+						"tag": "食品供应链"
+					},
+					{
+						"tag": "食品工业"
+					},
+					{
+						"tag": "食物政策"
+					},
+					{
+						"tag": "食物的获得"
+					},
+					{
+						"tag": "食物链"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "http://www.fao.org/publications/card/en/c/5014f143-be17-4b58-b90e-f1c6bef344a0/",
+		"defer": true,
+		"items": [
+			{
+				"itemType": "book",
+				"title": "Climate-Smart Agriculture: A Call for Action: Synthesis of the Asia-Pacific Regional Workshop Bangkok, Thailand, 18 to 20 June 2015",
+				"creators": [
+					{
+						"lastName": "FAO",
+						"creatorType": "author",
+						"fieldMode": 1
+					}
+				],
+				"date": "2015",
+				"ISBN": "9789251088630",
+				"abstractNote": "This publication is a summary of the workshop held in Bangkok, Thailand from 18 to 20 June 2015 to promote the mainstreaming and up-scaling of Climate-Smart Agriculture in the region. Included in the report are successful case studies that agriculturists have been practicing as a means to address food security under adverse circumstances.",
+				"language": "en",
+				"libraryCatalog": "FAO Publications",
+				"numPages": "106",
+				"place": "Rome, Italy",
+				"publisher": "FAO Regional Office for Asia and the Pacific",
+				"series": "RAP Publication",
+				"shortTitle": "Climate-Smart Agriculture",
+				"url": "http://www.fao.org/publications/card/en/c/5014f143-be17-4b58-b90e-f1c6bef344a0/",
+				"attachments": [
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
+					}
+				],
+				"tags": [
+					{
+						"tag": "climate-smart agriculture"
+					},
+					{
+						"tag": "forestry"
+					},
+					{
+						"tag": "market gardens"
 					},
 					{
 						"tag": "meetings"
 					},
 					{
-						"tag": "smallholders"
+						"tag": "sustainable agriculture"
+					},
+					{
+						"tag": "sustainable development"
+					},
+					{
+						"tag": "urban farmers"
+					},
+					{
+						"tag": "water harvesting"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "http://www.fao.org/publications/card/ar/c/c6c2c8d7-3683-53a7-ab58-ce480c65f36c/",
+		"defer": true,
+		"items": [
+			{
+				"itemType": "book",
+				"title": "الخطوط التوجيهية الطوعية بشأن الحوكمة المسؤولة لحيازة الأراضي ومصايد الأسماك والغابات في سياق الأمن الغذائي الوطني",
+				"creators": [
+					{
+						"lastName": "FAO",
+						"creatorType": "author",
+						"fieldMode": 1
+					}
+				],
+				"date": "2012",
+				"abstractNote": "هذه الخطوط التوجيهية هي أول صكّ عالمي شامل خاص بالحيازات وإدارتها  يُعدّ من خلال مفاوضات حكومية دولية. وتضع هذه الخطوط التوجيهية مبادئ ومعايير  مقبولة دولياً للممارسات المسؤولة لاستخدام الأراضي ومصايد الأسماك والغابات وللتحكّم بها.  وهي تعطي توجيهات لتحسين الأطر القانونية والتنظيمية والمتصلة بالسياسات التي تنظّم  حقوق الحيازة  ولزيادة شفافية نظم الحيازة وإدارتها  ولتعزيز القدرات والإجراءات التي  تتخذها الأجهزة العامة ومؤسسات القطاع الخاص ومنظمات المجتمع المدني وجميع  المعنيين بالحيازات وإد ارتها. وتُدرج هذه الخطوط التوجيهية إدارة الحيازات ضمن السياق  الوطني للأمن الغذائي وهي تسعى إلى المساهمة في الإعمال المطرد للحق في غذاء كافٍ  والقضاء على الفقر وحماية البيئة وتحقيق التنمية الاجتماعية والاقتصادية المستدامة.",
+				"language": "ar",
+				"libraryCatalog": "FAO Publications",
+				"numPages": "40",
+				"place": "Rome, Italy",
+				"publisher": "FAO",
+				"url": "http://www.fao.org/publications/card/ar/c/c6c2c8d7-3683-53a7-ab58-ce480c65f36c/",
+				"attachments": [
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
+					}
+				],
+				"tags": [
+					{
+						"tag": "null"
+					},
+					{
+						"tag": "null"
+					},
+					{
+						"tag": "null"
+					},
+					{
+						"tag": "null"
+					},
+					{
+						"tag": "أمن غذائي"
+					},
+					{
+						"tag": "الحكم"
+					},
+					{
+						"tag": "حيازة الأراضي"
 					}
 				],
 				"notes": [],

@@ -2,14 +2,14 @@
 	"translatorID": "11614156-f421-4e89-8ce0-a5e69ce3ebed",
 	"label": "Library Genesis",
 	"creator": "Reverend Wicks Cherrycoke",
-	"target": "^https?://(libgen\\.io|gen\\.lib\\.rus\\.ec)/",
+	"target": "^https?://(libgen\\.i[os]|gen\\.lib\\.rus\\.ec)/",
 	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsi",
-	"lastUpdated": "2017-03-11 19:59:48"
+	"lastUpdated": "2019-12-09 20:38:23"
 }
 
 /*
@@ -34,20 +34,16 @@
 ***** END LICENSE BLOCK *****
 */
 
-var MIME_TYPES = {
-	'pdf': 'application/pdf',
-	'epub': 'application/epub+zip',
-	'mobi': 'application/x-mobipocket-ebook',
-	'djvu': 'image/vnd.djvu'
-};
+
 var MD5_REGEX = /md5=([0-9a-fA-F]+)/;
 var AUTHOR_REGEX = /author\s*=\s*{(.*?)}/;
 
 
 function detectWeb(doc, url) {
-	if (url.indexOf('book/index.php') != -1) {
+	if (url.includes('book/index.php')) {
 		return 'book';
 	}
+	return false;
 }
 
 function doWeb(doc, url) {
@@ -56,29 +52,30 @@ function doWeb(doc, url) {
 	// To save some work, we use the provided bibtex file to retrieve the
 	// metadata and use Zotero's built-in bibtex importer
 	var bibtexUrl = "/book/bibtex.php?md5=" + md5Hash;
-	ZU.processDocuments(bibtexUrl, function(bibtexDoc) {
+	ZU.processDocuments(bibtexUrl, function (bibtexDoc) {
 		var bibtexStr = bibtexDoc.getElementsByTagName("textarea")[0].value;
 		var translator = Zotero.loadTranslator('import');
 		translator.setTranslator('9cb70025-a888-4a29-a210-93ec52da40d4');
 		translator.setString(bibtexStr);
-		translator.setHandler('itemDone', function(obj, item) {
+		translator.setHandler('itemDone', function (obj, item) {
 			// The bibtex messes up multiple authors, so we set them ourselves
 			var authorStr = AUTHOR_REGEX.exec(bibtexStr)[1];
-			if (authorStr.indexOf(';') != -1) {
-				item.creators = authorStr.split(";").map(function(author) {
+			if (authorStr.includes(';')) {
+				item.creators = authorStr.split(";").map(function (author) {
 					// Are we dealing with "last, first" formatting?
-					var useCommas = (author.indexOf(",") != -1);
+					var useCommas = (author.includes(","));
 					return ZU.cleanAuthor(author, "author", useCommas);
 				});
-			} else {
-				item.creators = authorStr.split(",").map(function(author) {
+			}
+			else {
+				item.creators = authorStr.split(",").map(function (author) {
 					return ZU.cleanAuthor(author, "author", false);
 				});
 			}
 			// It also messes up multiple ISBNs, so we just pick the first one
 			if (item.ISBN) {
-				[' ', ','].forEach(function(splitChar) {
-					if (item.ISBN.indexOf(splitChar) != -1) {
+				[' ', ','].forEach(function (splitChar) {
+					if (item.ISBN.includes(splitChar)) {
 						item.ISBN = item.ISBN.split(splitChar)[0];
 					}
 				});
@@ -86,6 +83,12 @@ function doWeb(doc, url) {
 			// Add the full text attachment
 			/* NOTE: For now this is commented out, pending a decision on how to
 					 deal with possibly huge downloads, see issue #1056 for details.
+			var MIME_TYPES = {
+				pdf: 'application/pdf',
+				epub: 'application/epub+zip',
+				mobi: 'application/x-mobipocket-ebook',
+				djvu: 'image/vnd.djvu'
+			};
 			var extension = ZU.xpathText(
 				doc, '//td[contains(./font/text(), "Extension")]/following-sibling::td');
 			var downloadUrl = "/get/" + md5Hash + "/" + md5Hash + "." + extension;

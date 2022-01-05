@@ -67,7 +67,7 @@ function reconcileAuthor(author){
 		Le Roy
 		*/
 	}
-	if(authorMap[author]) {
+	if (authorMap[author]) {
 		author = authorMap[author];
 	}
 	// remove ARTFL's trailing 5 for odd contributors (e.g. Turgot5)

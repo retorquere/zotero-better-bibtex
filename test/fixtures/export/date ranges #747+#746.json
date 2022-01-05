@@ -1,17 +1,15 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]",
-      "jabrefFormat": 0
+      "citekeyFormat": "[auth][year]"
     }
   },
   "items": [
     {
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -20,78 +18,124 @@
         }
       ],
       "date": "January 30\u2013February 3, 1989",
-      "dateAdded": "2017-10-30 19:04:48",
-      "dateModified": "2017-11-03 19:06:17",
-      "itemID": 12181,
+      "itemID": 3,
       "itemType": "conferencePaper",
       "pages": "287\u2013304",
       "place": "San Diego, California, USA",
-      "proceedingsTitle": "Proceedings of the Winter 1989 USENIX Conference",
       "publicationTitle": "Proceedings of the Winter 1989 USENIX Conference",
       "publisher": "USENIX",
       "title": "A tour of the worm"
     },
     {
-      "attachments": [
-        {
-          "mimeType": "application/pdf",
-          "path": "attachments/Adams_Huaynaputina.pdf",
-          "title": "Attachment"
-        }
-      ],
+      "DOI": "10.1109/FISTS.2011.5973643",
+      "abstractNote": "Virtually all ITS applications rely on accurate traffic data. Identification of faulty detectors is thus vital for their reliability and efficiency. Most existing approaches solely use current and historical data of single or adjacent detectors and are based on empirical thresholds. We present a method for fault detection using Floating-Car Data (FCD) as independent source of information which allows to distinguish changed traffic conditions from sensor faults. Fault detection is based on residuals of a nonlinear regression model fitted to detector readings and FCD traffic speeds. Instead of applying rule-of-thumb thresholds we employ a statistical test, where thresholds result naturally from historical data, sample sizes and required fault detection accuracy. We provide a theoretical framework for fault detectability analysis and empirically evaluate the fault detection capability of our approach using data obtained from a microscopic traffic simulation.",
+      "conferenceName": "2011 IEEE Forum on Integrated and Sustainable Transportation Systems",
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Nancy K",
-          "lastName": "Adams"
+          "name": "P. Widhalm"
         },
         {
           "creatorType": "author",
-          "firstName": "Shanaka L",
-          "lastName": "DeSilva"
+          "name": "H. Koller"
         },
         {
           "creatorType": "author",
-          "firstName": "Steven",
-          "lastName": "Self"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Guido",
-          "lastName": "Salas"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Steven",
-          "lastName": "Schubring"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Jason L",
-          "lastName": "Permenter"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Kendra",
-          "lastName": "Arbesman"
+          "name": "W. Ponweiser"
         }
       ],
-      "date": "June 18\u201323, 2017",
-      "itemType": "journalArticle",
-      "pages": "493\u2013518",
-      "publicationTitle": "Bulletin of Volcanology",
+      "date": "29 June-1 July 2011",
+      "itemID": 4,
+      "itemType": "conferencePaper",
+      "pages": "103-108",
+      "publicationTitle": "2011 IEEE Forum on Integrated and Sustainable Transportation Systems",
       "tags": [
-        "Vulcanian eruptions",
-        "breadcrust",
-        "plinian"
+        {
+          "tag": "Data models"
+        },
+        {
+          "tag": "Detectors"
+        },
+        {
+          "tag": "Error analysis"
+        },
+        {
+          "tag": "fault detection"
+        },
+        {
+          "tag": "Fault detection"
+        },
+        {
+          "tag": "fault diagnosis"
+        },
+        {
+          "tag": "faulty traffic detector"
+        },
+        {
+          "tag": "FCD traffic speed"
+        },
+        {
+          "tag": "floating car data"
+        },
+        {
+          "tag": "ITS"
+        },
+        {
+          "tag": "loop-quality"
+        },
+        {
+          "tag": "microscopic traffic simulation"
+        },
+        {
+          "tag": "nonlinear regression model"
+        },
+        {
+          "tag": "regression analysis"
+        },
+        {
+          "tag": "road traffic"
+        },
+        {
+          "tag": "statistical test"
+        },
+        {
+          "tag": "traffic engineering computing"
+        },
+        {
+          "tag": "Training data"
+        },
+        {
+          "tag": "Vehicles"
+        }
       ],
-      "title": "747: The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
-      "volume": "62"
+      "title": "Identifying faulty traffic detectors with Floating Car Data"
+    },
+    {
+      "DOI": "10.1145/637069.637096",
+      "abstractNote": "In designing computer-based systems, we work within a perspective that shapes the design questions that will be asked and the kinds of solutions that are sought. This paper introduces a perspective based on language as action, and explores its consequences for practical system design. The language/action perspective is contrasted to a number of other currently prominent perspectives, and is illustrated with an extended example based on studies of nursing work in a hospital ward. We show how it leads to particular analyses of that work, which reveal potentials for creating new designs that can make the work (and the workers) more effective.",
+      "accessDate": "2017-10-20 19:37:10",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Terry",
+          "lastName": "Winograd"
+        }
+      ],
+      "date": "December 3-5, 1986",
+      "itemID": 5,
+      "itemType": "conferencePaper",
+      "libraryCatalog": "ACM Digital Library",
+      "pages": "203\u2013220",
+      "place": "Austin, TX",
+      "publicationTitle": "Proceedings of the 1986 ACM Conference on Computer-supported Cooperative Work (CSCW '86)",
+      "publisher": "ACM",
+      "title": "A language/action perspective on the design of cooperative work",
+      "url": "http://doi.acm.org/10.1145/637069.637096"
     },
     {
       "attachments": [
         {
-          "mimeType": "application/pdf",
+          "contentType": "application/pdf",
           "path": "attachments/Adams_Huaynaputina.pdf",
           "title": "Attachment"
         }
@@ -134,95 +178,87 @@
         }
       ],
       "date": "22-26 June 2015",
+      "itemID": 1,
       "itemType": "journalArticle",
       "pages": "493\u2013518",
       "publicationTitle": "Bulletin of Volcanology",
       "tags": [
-        "Vulcanian eruptions",
-        "breadcrust",
-        "plinian"
+        {
+          "tag": "breadcrust"
+        },
+        {
+          "tag": "plinian"
+        },
+        {
+          "tag": "Vulcanian eruptions"
+        }
       ],
       "title": "746: The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
       "volume": "62"
     },
     {
-      "DOI": "10.1145/637069.637096",
-      "abstractNote": "In designing computer-based systems, we work within a perspective that shapes the design questions that will be asked and the kinds of solutions that are sought. This paper introduces a perspective based on language as action, and explores its consequences for practical system design. The language/action perspective is contrasted to a number of other currently prominent perspectives, and is illustrated with an extended example based on studies of nursing work in a hospital ward. We show how it leads to particular analyses of that work, which reveal potentials for creating new designs that can make the work (and the workers) more effective.",
-      "accessDate": "2017-10-20 19:37:10",
-      "attachments": [],
+      "attachments": [
+        {
+          "contentType": "application/pdf",
+          "path": "attachments/Adams_Huaynaputina.pdf",
+          "title": "Attachment"
+        }
+      ],
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Terry",
-          "lastName": "Winograd"
-        }
-      ],
-      "date": "December 3-5, 1986",
-      "dateAdded": "2017-10-20 19:37:10",
-      "dateModified": "2017-10-20 19:37:59",
-      "itemID": 12093,
-      "itemType": "conferencePaper",
-      "libraryCatalog": "ACM Digital Library",
-      "pages": "203\u2013220",
-      "place": "Austin, TX",
-      "proceedingsTitle": "Proceedings of the 1986 ACM Conference on Computer-supported Cooperative Work (CSCW '86)",
-      "publicationTitle": "Proceedings of the 1986 ACM Conference on Computer-supported Cooperative Work (CSCW '86)",
-      "publisher": "ACM",
-      "title": "A language/action perspective on the design of cooperative work",
-      "url": "http://doi.acm.org/10.1145/637069.637096"
-    },
-    {
-      "DOI": "10.1109/FISTS.2011.5973643",
-      "abstractNote": "Virtually all ITS applications rely on accurate traffic data. Identification of faulty detectors is thus vital for their reliability and efficiency. Most existing approaches solely use current and historical data of single or adjacent detectors and are based on empirical thresholds. We present a method for fault detection using Floating-Car Data (FCD) as independent source of information which allows to distinguish changed traffic conditions from sensor faults. Fault detection is based on residuals of a nonlinear regression model fitted to detector readings and FCD traffic speeds. Instead of applying rule-of-thumb thresholds we employ a statistical test, where thresholds result naturally from historical data, sample sizes and required fault detection accuracy. We provide a theoretical framework for fault detectability analysis and empirically evaluate the fault detection capability of our approach using data obtained from a microscopic traffic simulation.",
-      "attachments": [],
-      "citekey": "pwidhalmIdentifyingFaultyTraffic29",
-      "conferenceName": "2011 IEEE Forum on Integrated and Sustainable Transportation Systems",
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "P. Widhalm"
+          "firstName": "Nancy K",
+          "lastName": "Adams"
         },
         {
           "creatorType": "author",
-          "name": "H. Koller"
+          "firstName": "Shanaka L",
+          "lastName": "DeSilva"
         },
         {
           "creatorType": "author",
-          "name": "W. Ponweiser"
+          "firstName": "Steven",
+          "lastName": "Self"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Guido",
+          "lastName": "Salas"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Steven",
+          "lastName": "Schubring"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jason L",
+          "lastName": "Permenter"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Kendra",
+          "lastName": "Arbesman"
         }
       ],
-      "date": "29 June-1 July 2011",
-      "dateAdded": "2018-09-07T17:41:29Z",
-      "dateModified": "2018-09-07T17:42:55Z",
-      "itemID": 504,
-      "itemType": "conferencePaper",
-      "notes": [],
-      "pages": "103-108",
-      "publicationTitle": "2011 IEEE Forum on Integrated and Sustainable Transportation Systems",
-      "relations": [],
+      "date": "June 18\u201323, 2017",
+      "itemID": 2,
+      "itemType": "journalArticle",
+      "pages": "493\u2013518",
+      "publicationTitle": "Bulletin of Volcanology",
       "tags": [
-        "road traffic",
-        "Data models",
-        "traffic engineering computing",
-        "ITS",
-        "floating car data",
-        "fault detection",
-        "loop-quality",
-        "Detectors",
-        "Error analysis",
-        "Fault detection",
-        "fault diagnosis",
-        "faulty traffic detector",
-        "FCD traffic speed",
-        "microscopic traffic simulation",
-        "nonlinear regression model",
-        "regression analysis",
-        "statistical test",
-        "Training data",
-        "Vehicles"
+        {
+          "tag": "breadcrust"
+        },
+        {
+          "tag": "plinian"
+        },
+        {
+          "tag": "Vulcanian eruptions"
+        }
       ],
-      "title": "Identifying faulty traffic detectors with Floating Car Data",
-      "uri": "http://zotero.org/groups/1844905/items/UV8GW56Y"
+      "title": "747: The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
+      "volume": "62"
     }
   ]
 }

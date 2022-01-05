@@ -1,3 +1,2 @@
-our.law.nagoya-u.ac.jp:HSTS	1	18246	1608071551312,1,1,2
-www.zotero.org:HSTS	0	17594	1551698216045,1,1
-blocklist.addons.mozilla.org:HSTS	0	17594	1520162636731,1,0
+api.zotero.org:HSTS	1	18593	1638007065605,1,1,2
+our.law.nagoya-u.ac.jp:HSTS	1	18593	1638007067448,1,1,2

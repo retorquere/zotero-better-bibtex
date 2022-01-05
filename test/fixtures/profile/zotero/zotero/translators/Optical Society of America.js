@@ -1,15 +1,15 @@
 {
 	"translatorID": "a1a97ad4-493a-45f2-bd46-016069de4162",
+	"translatorType": 4,
 	"label": "Optical Society of America",
 	"creator": "Philipp Zumstein",
 	"target": "^https?://(www\\.)?osapublishing\\.org",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-01-03 23:20:12"
+	"lastUpdated": "2021-06-10 01:50:00"
 }
 
 /*
@@ -37,19 +37,24 @@
 
 
 function detectWeb(doc, url) {
-	if (url.indexOf("abstract.cfm") != -1) {
+	url = url.toLowerCase();
+	if (url.includes("/abstract.cfm") || url.includes("/viewmedia.cfm")) {
 		var conference = ZU.xpathText(doc, '//meta[@name="citation_conference_title"]/@content');
 		var journal = ZU.xpathText(doc, '//meta[@name="citation_journal_title"]/@content');
 		if (conference) {
 			return "conferencePaper";
-		} else if (journal) {
+		}
+		else if (journal) {
 			return "journalArticle";
-		} else {
+		}
+		else {
 			return "book";
 		}
-	} else if (getSearchResults(doc, true)) {
+	}
+	else if (getSearchResults(doc, true)) {
 		return "multiple";
-	} 
+	}
+	return false;
 }
 
 
@@ -57,7 +62,7 @@ function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
 	var rows = ZU.xpath(doc, '//ul[@id="results"]/li[contains(@class, "sr-item")]//h3/a|//p[contains(@class, "article-title")]/a');
-	for (var i=0; i<rows.length; i++) {
+	for (var i = 0; i < rows.length; i++) {
 		var href = rows[i].href;
 		var title = ZU.trimInternal(rows[i].textContent);
 		if (!href || !title) continue;
@@ -73,7 +78,7 @@ function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
 		Zotero.selectItems(getSearchResults(doc, false), function (items) {
 			if (!items) {
-				return true;
+				return;
 			}
 			var articles = [];
 			for (var i in items) {
@@ -81,7 +86,8 @@ function doWeb(doc, url) {
 			}
 			ZU.processDocuments(articles, scrape);
 		});
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }
@@ -91,19 +97,36 @@ function scrape(doc, url) {
 	var translator = Zotero.loadTranslator('web');
 	// Embedded Metadata
 	translator.setTranslator('951c027d-74ac-47d4-a107-9c3069ab7b48');
-	//translator.setDocument(doc);
+	// translator.setDocument(doc);
 
 	translator.setHandler('itemDone', function (obj, item) {
-		if (item.abstractNote ) {
+		item.title = decodeEntities(item.title, doc);
+		item.bookTitle = decodeEntities(item.bookTitle, doc);
+		item.publicationTitle = decodeEntities(item.publicationTitle, doc);
+		item.rights = decodeEntities(item.rights, doc);
+		
+		if (item.abstractNote) {
 			item.abstractNote = ZU.trimInternal(item.abstractNote);
 		}
 
 		item.complete();
 	});
 
-	translator.getTranslatorObject(function(trans) {
+	translator.getTranslatorObject(function (trans) {
 		trans.doWeb(doc, url);
 	});
+}
+
+
+function decodeEntities(str, doc) {
+	if (!str || !str.includes('&') || !doc.createElement) {
+		return str;
+	}
+	
+	// https://stackoverflow.com/questions/7394748/whats-the-right-way-to-decode-a-string-that-has-special-html-entities-in-it/7394787#7394787
+	var textarea = doc.createElement('textarea');
+	textarea.innerHTML = str;
+	return textarea.value;
 }
 
 /** BEGIN TEST CASES **/
@@ -139,7 +162,7 @@ var testCases = [
 				"publicationTitle": "JOSA A",
 				"rights": "© 1999 Optical Society of America",
 				"shortTitle": "Lens axicons",
-				"url": "http://www.osapublishing.org/abstract.cfm?uri=josaa-16-1-191",
+				"url": "https://www.osapublishing.org/josaa/abstract.cfm?uri=josaa-16-1-191",
 				"volume": "16",
 				"attachments": [
 					{
@@ -147,13 +170,29 @@ var testCases = [
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [
-					"Diffraction",
-					"Lens system design",
-					"Propagation"
+					{
+						"tag": "Axicons"
+					},
+					{
+						"tag": "First order optics"
+					},
+					{
+						"tag": "Geometric optics"
+					},
+					{
+						"tag": "Spherical lenses"
+					},
+					{
+						"tag": "Superlenses"
+					},
+					{
+						"tag": "Wavefronts"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -163,6 +202,7 @@ var testCases = [
 	{
 		"type": "web",
 		"url": "https://www.osapublishing.org/search.cfm?q=test&meta=1&cj=1&cc=1",
+		"defer": true,
 		"items": "multiple"
 	},
 	{
@@ -180,7 +220,7 @@ var testCases = [
 					}
 				],
 				"date": "2006/03/05",
-				"abstractNote": "Resilient packet ring ( IEEE 802.17) is a metropolitan area network technology for data transfer based on ring configuration.The paper provides guidelines for generation of recommends simulated environments for RPR testing ,discusses ways to test complex areas of RPR( e.g Fairness),provides guidelines for generating standard compliant test suite, and puts forward a strategy for automation of RPR testing.This paper is based on development of a RPR solution based on a Network processor.RPR specifies 39 state machines which implement the functionalities Topology Discovery, Protection, Datapath, OAM, Fairness and Shapers. The specification of the functionalities as well as the interaction between them makes RPR a complex protocol to validate. Lack of RPR test generator and inter dependency of control plane on data plane adds to the challenges of RPR testing. Careful planning, execution of testing in phases, building simulators and identifying the areas of challenges will guarantee success.Table of Contents Test Suite generationSimulators for RPR testingTest Sets for RPR testingTesting of RPR areasAutomation possibilities Test Suite generation Protocol Implementation Conformance Statements (PICs) provide a guidelines but it falls short of complete testing if you want to achieve the 'carrier grade' performance of the RPR. The test suite generation demands complete knowledge of the RPR Standard (IEEE 802.17, 802.17a, 802.17b).Simulators for RPR testing Simulator testing is a crucial part of RPR validation. Two types of simulators are recommended. Control plane simulator and the dataplane simulator The control plane functionality can be tested by building a stand alone simulator which can act as a frame work to exchange packets between the control plane instances.Pipeline integration stage is the integration of different modules of the packet processing modules. Pipeline integration testing is performed in the simulated environment with all the data path components treated as one single block. The packet headers are created and injected to the Receiver block and the packets from the pipeline are captured and analyzed at the transmit block. Most of the Network Processor development workbenches (e.g. transactor of IXP) support packet generators. More than 60% of the test cases can be executed in the pipeline integration stage using packet streams generated.Test Sets for RPR testingNo single test set has features required for RPR testing .The paper compares the capabilities of various test sets including Agilent and Ixia and proposes a combination of test sets for achieving RPR test coverage.Testing of RPR areasThe paper suggests methods to validate the following areas of RPR[1] 255 node testing [2] Fairness and Shaper testing [3] 50 milliseconds protection switch time[4] Testing of strict order frames [5] Jitter measurement [6] Performance monitoring testing[7] RPR-RPR BridgingSpatially Aware Sublayer (IEEE802.17b) introduces new challenge for validation of RPR. The paper discusses the complexities involved for validation of IEEE 802.17b.Automation possibilitiesThe paper discusses the areas of automation for RPR testing and methods for the same. RPR test automation can be achieved for the pipeline integration stage, On board integration and system testing phases",
+				"abstractNote": "Resilient Packet Ring (RPR) is a metropolitan area network technology for data transfer based on ring configuration and is standardized as IEEE 802.17. RPR testing is challenging as it combines best of SONET networks and Data networks. The paper provides guidelines for generation of standard compliant test suite, recommends simulated environments for RPR testing and puts forward a strategy for automation of RPR testing. The paper describes various stages of RPR testing and the challenges considering entire project cycle.",
 				"conferenceName": "Optical Fiber Communication Conference",
 				"language": "EN",
 				"libraryCatalog": "www.osapublishing.org",
@@ -188,18 +228,36 @@ var testCases = [
 				"proceedingsTitle": "Optical Fiber Communication Conference and Exposition and The National Fiber Optic Engineers Conference (2006), paper JThB89",
 				"publisher": "Optical Society of America",
 				"rights": "© 2006 Optical Society of America",
-				"url": "http://www.osapublishing.org/abstract.cfm?uri=OFC-2006-JThB89",
+				"url": "https://www.osapublishing.org/abstract.cfm?uri=OFC-2006-JThB89",
 				"attachments": [
 					{
 						"title": "Full Text PDF",
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [
-					"Other topics of general interest"
+					{
+						"tag": "Fluorescence correlation spectroscopy"
+					},
+					{
+						"tag": "Green fluorescent protein"
+					},
+					{
+						"tag": "Networking hardware"
+					},
+					{
+						"tag": "Optical angular momentum"
+					},
+					{
+						"tag": "Optical ethernet"
+					},
+					{
+						"tag": "Refractive index"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -237,7 +295,7 @@ var testCases = [
 				],
 				"date": "1992/09/10",
 				"DOI": "10.1364/AO.31.005706",
-				"ISSN": "1539-4522",
+				"ISSN": "2155-3165",
 				"abstractNote": "We discuss the realization of highly efficient fan-out elements. Laser-beam writing lithography is available now for fabricating smooth surface relief microstructures. We develop several methods for optimizing microstructure profiles. Only a small number of parameters in the object plane are necessary for determining the kinoform. This simplifies the calculation of M × N arrays also for large M and N. Experimental results for a 9-beam fan-out element are presented.",
 				"issue": "26",
 				"journalAbbreviation": "Appl. Opt., AO",
@@ -246,7 +304,7 @@ var testCases = [
 				"pages": "5706-5711",
 				"publicationTitle": "Applied Optics",
 				"rights": "© 1992 Optical Society of America",
-				"url": "http://www.osapublishing.org/abstract.cfm?uri=ao-31-26-5706",
+				"url": "https://www.osapublishing.org/ao/abstract.cfm?uri=ao-31-26-5706",
 				"volume": "31",
 				"attachments": [
 					{
@@ -254,10 +312,102 @@ var testCases = [
 						"mimeType": "application/pdf"
 					},
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
-				"tags": [],
+				"tags": [
+					{
+						"tag": "Dammann gratings"
+					},
+					{
+						"tag": "Diffraction efficiency"
+					},
+					{
+						"tag": "Laser beams"
+					},
+					{
+						"tag": "Light sources"
+					},
+					{
+						"tag": "Lithography"
+					},
+					{
+						"tag": "Total internal reflection"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://www.osapublishing.org/ol/abstract.cfm?uri=ol-40-24-5750",
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "Metamaterial-waveguide bends with effective bend radius < λ<sub>0</sub>/2",
+				"creators": [
+					{
+						"firstName": "Bing",
+						"lastName": "Shen",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Randy",
+						"lastName": "Polson",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Rajesh",
+						"lastName": "Menon",
+						"creatorType": "author"
+					}
+				],
+				"date": "2015/12/15",
+				"DOI": "10.1364/OL.40.005750",
+				"ISSN": "1539-4794",
+				"abstractNote": "We designed, fabricated, and characterized broadband, efficient, all-dielectric metamaterial-waveguide bends (MWBs) that redirect light by 180&#xA0;deg. The footprint of each MWB is 3&#x2009;&#x2009;&#x3BC;m&#xD7;3&#x2009;&#x2009;&#x3BC;m and redirection is achieved for single-mode waveguides spaced by 1.3&#xA0;&#x3BC;m, which corresponds to an effective bend radius of 0.65&#xA0;&#x3BC;m (&lt;&#x3BB;0/2 for &#x3BB;0=1.55&#x2009;&#x2009;&#x3BC;m). The designed and measured transmission efficiencies are &gt;80% and &#x223C;70%, respectively. Furthermore, the MWBs have an operating bandwidth &gt;66&#x2009;nm (design) and &gt;56&#x2009;&#x2009;nm (experiments). Our design methodology that incorporates fabrication constraints enables highly robust devices. The methodology can be extended to the general routing of light in tight spaces for large-scale photonic integration.",
+				"issue": "24",
+				"journalAbbreviation": "Opt. Lett., OL",
+				"language": "EN",
+				"libraryCatalog": "www.osapublishing.org",
+				"pages": "5750-5753",
+				"publicationTitle": "Optics Letters",
+				"rights": "© 2015 Optical Society of America",
+				"url": "https://www.osapublishing.org/ol/abstract.cfm?uri=ol-40-24-5750",
+				"volume": "40",
+				"attachments": [
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
+					},
+					{
+						"title": "Snapshot",
+						"mimeType": "text/html"
+					}
+				],
+				"tags": [
+					{
+						"tag": "Bend loss"
+					},
+					{
+						"tag": "Light propagation"
+					},
+					{
+						"tag": "Optical lithography"
+					},
+					{
+						"tag": "Photonic crystals"
+					},
+					{
+						"tag": "Photonic integration"
+					},
+					{
+						"tag": "Plasmon waveguides"
+					}
+				],
 				"notes": [],
 				"seeAlso": []
 			}

@@ -1,31 +1,51 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
-    "label": "BetterBibTeX JSON"
+    "label": "BetterBibTeX JSON",
+    "options": {},
+    "preferences": {
+      "citekeyFormat": "[auth][year]"
+    }
   },
   "items": [
     {
-      "attachments": [],
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "path": "/Users/emile/.BBTZ5TEST/zotero/storage/A6RPCDZD/Robinson_2007_Theories of globalization.pdf",
+          "title": "Robinson_2007_Theories of globalization.pdf",
+          "uri": "http://zotero.org/users/local/6z7M0kXV/items/A6RPCDZD"
+        }
+      ],
+      "citationKey": "robinson2007theoriesglobalization",
       "creators": [
         {
           "creatorType": "author",
           "firstName": "William I",
           "lastName": "Robinson"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "George",
+          "lastName": "Ritzer"
         }
       ],
       "date": "2007",
-      "extra": "Citation Key: robinson2007theoriesglobalization\ntex.collaborator: Ritzer, George",
-      "itemID": 0,
+      "extra": [
+        "Citation Key: robinson2007theoriesglobalization"
+      ],
+      "itemID": 1,
       "itemType": "bookSection",
       "notes": [
-        "<p>Extracted Annotations (zondag 17 november 2013 15:45:35) &quot;What is the relationship between globalization and the nation-state? Is the nation-state being undermined?&quot; (Robinson 2007:127) Relatedly, to what extent is the relationship between social structure and territoriality being redefined by globalization? Is there a deterritorialization of social relations under globalization? What is the relationship between the local and the global? How are space and time being reconfigured? (note on p.127) &quot;Relatedly, to what extent is the relationship between social structure and territoriality being redefined by globalization? Is there a deterritorialization of social&quot; (Robinson 2007:127) &quot;relations under globalization? What is the relationship between the local and the global? How are space and time being reconfigured?&quot; (Robinson 2007:128) &quot;THE NETWORK SOCIETY Manuel Castells&apos; groundbreaking trilogy, The Rise of the Network Society (1996, 1997, 1998), exemplifies a &apos;technologistic&apos; approach to globalization&quot; (Robinson 2007:132) &quot;&apos;communication decisively shapes culture because we do not see . . . reality as it &apos;is&apos; but as our languages are&apos;. He adds, &apos;we are not living in a global village, but in customized cottages, globally produced and locally distributed&apos; (1996: 370).&quot; (Robinson 2007:133)</p>"
+        "Extracted Annotations (zondag 17 november 2013 15:45:35) \"What is the relationship between globalization and the nation-state? Is the nation-state being undermined?\" (Robinson 2007:127) Relatedly, to what extent is the relationship between social structure and territoriality being redefined by globalization? Is there a deterritorialization of social relations under globalization? What is the relationship between the local and the global? How are space and time being reconfigured? (note on p.127) \"Relatedly, to what extent is the relationship between social structure and territoriality being redefined by globalization? Is there a deterritorialization of social\" (Robinson 2007:127) \"relations under globalization? What is the relationship between the local and the global? How are space and time being reconfigured?\" (Robinson 2007:128) \"THE NETWORK SOCIETY Manuel Castells' groundbreaking trilogy, The Rise of the Network Society (1996, 1997, 1998), exemplifies a 'technologistic' approach to globalization\" (Robinson 2007:132) \"'communication decisively shapes culture because we do not see . . . reality as it 'is' but as our languages are'. He adds, 'we are not living in a global village, but in customized cottages, globally produced and locally distributed' (1996: 370).\" (Robinson 2007:133)"
       ],
       "pages": "125-143",
       "publicationTitle": "The Blackwell companion to globalization",
       "publisher": "John Wiley & Sons",
       "tags": [
-        "orphaned"
+        {
+          "tag": "orphaned"
+        }
       ],
       "title": "Theories of globalization"
     }

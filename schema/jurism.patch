@@ -1,0 +1,5 @@
+[
+  { "op": "replace", "path": "/itemTypes/hearing/fields/assemblyNumber", "value": "seriesNumber" },
+  { "op": "replace", "path": "/itemTypes/report/fields/assemblyNumber", "value": "seriesNumber" },
+  { "op": "replace", "path": "/itemTypes/patent/fields/genre", "value": "type" }
+]

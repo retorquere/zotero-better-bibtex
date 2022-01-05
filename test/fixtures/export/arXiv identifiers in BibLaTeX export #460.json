@@ -1,76 +1,22 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "idle",
-      "autoExportIdleWait": 10,
       "bibtexURL": "note",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
-      "citekeyFormat": "[auth][year:prefix,.][0][Title:nopunct:fold:skipwords:select,1,1:alphanum:prefix,.]",
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "postscript": "",
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "warnBulkModify": 10
-    },
-    "release": "1.6.31-travis-2383"
+      "citekeyFormat": "[auth][year:prefix,.][0][Title:nopunct:fold:skipwords:select,1,1:alphanum:prefix,.]"
+    }
   },
   "items": [
     {
-      "DOI": "10.1007/JHEP02(2016)087",
-      "ISSN": "1029-8479",
-      "abstractNote": "We construct the quantum BV master action for heterotic and type II string field theories.",
-      "accessDate": "2016-04-17 05:57:20",
-      "attachments": [],
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Ashoke",
-          "lastName": "Sen"
-        }
-      ],
-      "date": "2/2016",
-      "extra": "arXiv: 1508.05387",
-      "issue": "2",
-      "itemID": 19002,
-      "itemType": "journalArticle",
-      "libraryCatalog": "arXiv.org",
-      "notes": [
-        "<p>27/03/16 - overview - studying the papers of Ashoke</p>\n<p>This paper is of great importance because it constructs a fully consistent quantum action for (covariant) superstring field theory, including the Ramond sector. The idea is to introduce extra dynamical fields which are free (they don't even couple to gravity) and so they can be consistently decoupled.</p>"
-      ],
-      "publicationTitle": "Journal of High Energy Physics",
-      "tags": [
-        "Batalin-Vilkoviski formalism",
-        "_tablet",
-        "covariant string field theory",
-        "futur: 3",
-        "note: 4",
-        "printed",
-        "superstring field theory"
-      ],
-      "title": "BV Master Action for Heterotic and Type II String Field Theories",
-      "url": "http://arxiv.org/abs/1508.05387",
-      "volume": "2016"
-    },
-    {
       "abstractNote": "A pair of recent articles concluded that the D-Wave One machine actually operates in the quantum regime, rather than performing some classical evolution. Here we give a classical model that leads to the same behaviors used in those works to infer quantum effects. Thus, the evidence presented does not demonstrate the presence of quantum effects.",
       "accessDate": "2016-04-18 23:47:42",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -84,8 +30,10 @@
         }
       ],
       "date": "2013-05-21",
-      "extra": "arXiv: 1305.4904",
-      "itemID": 4,
+      "extra": [
+        "arXiv: 1305.4904"
+      ],
+      "itemID": 1,
       "itemType": "journalArticle",
       "libraryCatalog": "arXiv.org",
       "notes": [
@@ -93,17 +41,69 @@
       ],
       "publicationTitle": "arXiv:1305.4904 [quant-ph]",
       "tags": [
-        "Quantum Physics"
+        {
+          "tag": "Quantum Physics"
+        }
       ],
       "title": "Classical signature of quantum annealing",
       "url": "http://arxiv.org/abs/1305.4904"
+    },
+    {
+      "DOI": "10.1007/JHEP02(2016)087",
+      "ISSN": "1029-8479",
+      "abstractNote": "We construct the quantum BV master action for heterotic and type II string field theories.",
+      "accessDate": "2016-04-17 05:57:20",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Ashoke",
+          "lastName": "Sen"
+        }
+      ],
+      "date": "2/2016",
+      "extra": [
+        "arXiv: 1508.05387"
+      ],
+      "issue": "2",
+      "itemID": 2,
+      "itemType": "journalArticle",
+      "libraryCatalog": "arXiv.org",
+      "notes": [
+        "<p>27/03/16 - overview - studying the papers of Ashoke</p>\n<p>This paper is of great importance because it constructs a fully consistent quantum action for (covariant) superstring field theory, including the Ramond sector. The idea is to introduce extra dynamical fields which are free (they don't even couple to gravity) and so they can be consistently decoupled.</p>"
+      ],
+      "publicationTitle": "Journal of High Energy Physics",
+      "tags": [
+        {
+          "tag": "_tablet"
+        },
+        {
+          "tag": "Batalin-Vilkoviski formalism"
+        },
+        {
+          "tag": "covariant string field theory"
+        },
+        {
+          "tag": "futur: 3"
+        },
+        {
+          "tag": "note: 4"
+        },
+        {
+          "tag": "printed"
+        },
+        {
+          "tag": "superstring field theory"
+        }
+      ],
+      "title": "BV Master Action for Heterotic and Type II String Field Theories",
+      "url": "http://arxiv.org/abs/1508.05387",
+      "volume": "2016"
     },
     {
       "DOI": "10.1126/science.1252319",
       "ISSN": "0036-8075, 1095-9203",
       "abstractNote": "The development of small-scale digital and analog quantum devices raises the question of how to fairly assess and compare the computational power of classical and quantum devices, and of how to detect quantum speedup. Here we show how to define and measure quantum speedup in various scenarios, and how to avoid pitfalls that might mask or fake quantum speedup. We illustrate our discussion with data from a randomized benchmark test on a D-Wave Two device with up to 503 qubits. Comparing the performance of the device on random spin glass instances with limited precision to simulated classical and quantum annealers, we find no evidence of quantum speedup when the entire data set is considered, and obtain inconclusive results when comparing subsets of instances on an instance-by-instance basis. Our results for one particular benchmark do not rule out the possibility of speedup for other classes of problems and illustrate that quantum speedup is elusive and can depend on the question posed.",
       "accessDate": "2016-04-18 23:47:51",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -152,15 +152,19 @@
         }
       ],
       "date": "2014-07-25",
-      "extra": "arXiv: 1401.2910 [quant-ph]",
+      "extra": [
+        "arXiv: 1401.2910 [quant-ph]"
+      ],
       "issue": "6195",
-      "itemID": 8,
+      "itemID": 3,
       "itemType": "journalArticle",
       "libraryCatalog": "arXiv.org",
       "pages": "420\u2013424",
       "publicationTitle": "Science",
       "tags": [
-        "Quantum Physics"
+        {
+          "tag": "Quantum Physics"
+        }
       ],
       "title": "Defining and detecting quantum speedup",
       "url": "http://arxiv.org/abs/1401.2910",

@@ -1,31 +1,19 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false,
-      "exportFilename": "UrlUnderscoreIssue.json",
-      "exportNotes": false
-    },
+    "localeDateOrder": "ymd",
+    "options": {},
     "preferences": {
       "DOIandURL": "doi",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
       "bibtexURL": "note",
       "citekeyFormat": "[auth5][auth5_1][shortyear]",
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "jabrefFormat": 0,
-      "postscript": "",
       "skipFields": "abstract"
-    },
-    "release": "1.6.5"
+    }
   },
   "items": [
     {
       "abstractNote": "Low order duct acoustic models are a powerful tool to predict and avoid aeroacoustic instabilities like whistling. Such instabilities are important in the development process of many applications as diverse as pipeline networks, mufflers or HVAC Systems. This paper presents a low order network duct acoustic simulation tool called taX, which takes advantage of the Matlab control system toolbox. The propagation of acoustic perturbations may be modeled by a set of linear, time invariant differential equations. By simplification to one dimensional propagation of acoustic waves, the acoustic system can be modeled by Green's functions describing the transmission of acoustic waves in a network of acoustic elements. The scattering of acoustic waves in each of the acoustic elements can be respresented by the scattering matrix, which is the Fourrier transformation of the Green's function. We demonstrate that there exists an equivalence between the aeroacoustic models and system description and commonly used models of control sytem theory. Being aware of this analogy, we have the opportunity to leverage the power of control system theory and future developments in this field to solve duct acoustic problems. Our tool therefore takes advantage of efficient implementations given by the Matlab control system routines. Subsequently the tool will be applied to determine the acoustic stability of a simple acoustic network model comprising an area jump, two duct sections, and open ends. The acoustic models involved are analytically derived from first principles in continuous time. In order to demonstrate the versatility of the tool set, a bifurcation diagram for decreasing area ratios of the orifice is computed and discussed. Further we will show the seamless integration of discrete time models retrieved by system identification from random time series data in LES simulations. The identified model of an area jump is compared to the model retrieved from first principles, limitations of the analytical model are discussed. In order to do so, the eigenvalues of the discrete time system are transformed to match and therefore compare to the eigenvalues of the continuous time system.",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -49,14 +37,17 @@
         }
       ],
       "date": "September 2014",
-      "extra": "Citation Key: EmmerJaens14a",
-      "itemID": 10653,
+      "extra": [
+        "Citation Key: EmmerJaens14a"
+      ],
+      "itemID": 1,
       "itemType": "conferencePaper",
       "place": "Krakow",
-      "proceedingsTitle": "7th Forum Acusticum",
       "publicationTitle": "7th Forum Acusticum",
       "tags": [
-        "NonPerRev"
+        {
+          "tag": "NonPerRev"
+        }
       ],
       "title": "taX - a Flexible Tool for Low-Order Duct Acoustic Simulation in Time and Frequency Domain",
       "url": "http://www.fa2014.agh.edu.pl/fa2014_cd/"

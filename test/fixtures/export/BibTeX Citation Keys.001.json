@@ -1,12 +1,11 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]",
-      "jabrefFormat": 0
+      "citekeyFormat": "[auth][year]"
     }
   },
   "items": [
@@ -49,14 +48,23 @@
         }
       ],
       "date": "2001",
-      "extra": "Citation Key: Adams2001",
+      "extra": [
+        "Citation Key: Adams2001"
+      ],
+      "itemID": 1,
       "itemType": "journalArticle",
       "pages": "493\u2013518",
       "publicationTitle": "Bulletin of Volcanology",
       "tags": [
-        "Vulcanian eruptions",
-        "breadcrust",
-        "plinian"
+        {
+          "tag": "breadcrust"
+        },
+        {
+          "tag": "plinian"
+        },
+        {
+          "tag": "Vulcanian eruptions"
+        }
       ],
       "title": "The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
       "volume": "62"

@@ -1,0 +1,41 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "autoExportDelay": 60,
+      "automaticTags": false,
+      "biblatexExtendedNameFormat": true,
+      "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
+      "exportBraceProtection": false,
+      "exportTitleCase": false,
+      "keyScope": "global",
+      "workers": 2
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1007/BF00159034",
+      "citationKey": "bodewitzVedicAnusthuAnusth1974",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Hendrik Wilhelm",
+          "lastName": "Bodewitz"
+        }
+      ],
+      "date": "1974",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "language": "english",
+      "pages": "1\u201317",
+      "publicationTitle": "Indo-Iranian Journal",
+      "title": "Vedic anu\u1e63\u1e6dh\u00fa and anu\u1e63\u1e6dh(u)y\u0101\u0301",
+      "volume": "16"
+    }
+  ]
+}

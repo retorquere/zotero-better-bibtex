@@ -39,7 +39,7 @@
 
 function detectWeb(doc, url) {
   if (url.match(/\/doi\/abs\/10\.|\/doi\/full\/10\./))	return "journalArticle";
-  else if(url.match(/\/action\/doSearch|\/toc\//))	return "multiple";
+  else if (url.match(/\/action\/doSearch|\/toc\//))	return "multiple";
 }
 
 
@@ -58,7 +58,7 @@ function doWeb(doc, url) {
 			items[id] = title;
 	}
 		Zotero.selectItems(items, function(items){
-			 if(!items) {
+			 if (!items) {
 			   return true;
 			 }
 			 citationurls = new Array();

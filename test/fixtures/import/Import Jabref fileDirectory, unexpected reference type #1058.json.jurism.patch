@@ -1,0 +1,32 @@
+[
+  {
+    "op": "add",
+    "path": "/items/0/publisher",
+    "value": "Springer Berlin / Heidelberg"
+  },
+  {
+    "op": "remove",
+    "path": "/items/0/extra/1",
+    ":value": "Publisher: Springer Berlin / Heidelberg"
+  },
+  {
+    "op": "replace",
+    "path": "/items/1/attachments/0/path",
+    "value": "/Users/emile/.BBTZ5TEST/jurism/storage/G6LZV9WG/2.pdf"
+  },
+  {
+    "op": "replace",
+    "path": "/items/1/attachments/0/uri",
+    "value": "http://zotero.org/users/local/NaNzQo9n/items/G6LZV9WG"
+  },
+  {
+    "op": "replace",
+    "path": "/items/1/attachments/1/path",
+    "value": "/Users/emile/.BBTZ5TEST/jurism/storage/FPIB6JTN/1.pdf"
+  },
+  {
+    "op": "replace",
+    "path": "/items/1/attachments/1/uri",
+    "value": "http://zotero.org/users/local/NaNzQo9n/items/FPIB6JTN"
+  }
+]

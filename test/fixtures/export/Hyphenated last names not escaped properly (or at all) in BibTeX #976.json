@@ -1,65 +1,22 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
       "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportIdleWait": 10,
-      "autoPin": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
       "bibtexURL": "url",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[authorsAlpha][shorttitle2_2][shortyear]",
-      "citeprocNoteCitekey": false,
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "exportTitleCase": true,
       "itemObserverDelay": 100,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "parseParticles": true,
-      "postscript": "",
-      "qualityReport": false,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "scrubDatabase": false,
-      "skipFields": "publisher,place,pages,file,keywords,eprinttype,archiveprefix,eprint,month,language,archiveprefix,abstract",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.0.141",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.47",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "en-US",
-        "oscpu": "Intel Mac OS X 10.12",
-        "platform": "MacIntel",
-        "version": "5.0.47"
-      }
+      "skipFields": "publisher,place,pages,file,keywords,eprinttype,archiveprefix,eprint,month,language,archiveprefix,abstract"
     }
   },
   "items": [
     {
       "abstractNote": "Random number generators (RNGs) play a crucial role in many cryptographic schemes and protocols, but their security proof usually assumes that their internal state is initialized with truly random seeds and remains secret at all times. However, in many practical situations these are unrealistic assumptions: The seed is often gathered after a reset/reboot from low entropy external events such as the timing of manual key presses, and the state can be compromised at unknown points in time via side channels or penetration attacks. The usual remedy (used by all the major operating systems, including Windows, Linux, FreeBSD, MacOS, iOS, etc.) is to periodically replenish the internal state through an auxiliary input with additional randomness harvested from the environment. However, recovering from such attacks in a provably correct and computationally optimal way had remained an unsolved challenge so far.\n\n\n\nIn this paper we formalize the problem of designing an efficient recovery mechanism from state compromise, by considering it as an online optimization problem. If we knew the timing of the last compromise and the amount of entropy gathered since then, we could stop producing any outputs until the state becomes truly random again. However, our challenge is to recover within a time proportional to this optimal solution even in the hardest (and most realistic) case in which (a) we know nothing about the timing of the last state compromise, and the amount of new entropy injected since then into the state, and (b) any premature production of outputs leads to the total loss of all the added entropy {\\em used by the RNG}, since the attacker can use brute force to enumerate all the possible low-entropy states. In other words, the challenge is to develop recovery mechanisms which are guaranteed to save the day as quickly as possible after a compromise we are not even aware of. The dilemma that we face is that any entropy used prematurely will be lost, and any entropy which is kept unused will delay the recovery.\n\nAfter developing our formal definitional framework for RNGs with inputs, we show how to construct a nearly optimal RNG which is secure in our model. Our technique is inspired by the design of the Fortuna RNG (which is a heuristic RNG construction that is currently used by Windows and comes without any formal analysis), but we non-trivially adapt it to our much stronger adversarial setting. Along the way, our formal treatment of Fortuna enables us to improve its entropy efficiency by almost a factor of two, and to show that our improved construction is essentially tight, by proving a rigorous lower bound on the possible efficiency of any recovery mechanism in our very general model of the problem.",
       "accessDate": "2018-05-30 21:07:21",
-      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -83,15 +40,10 @@
         }
       ],
       "date": "2014",
-      "dateAdded": "2018-05-30 21:07:21",
-      "dateModified": "2018-05-31 10:21:30",
-      "itemID": 1124,
+      "itemID": 1,
       "itemType": "conferencePaper",
       "libraryCatalog": "ePrint IACR",
-      "notes": [],
-      "proceedingsTitle": "CRYPTO",
       "publicationTitle": "CRYPTO",
-      "seeAlso": [],
       "tags": [
         {
           "tag": "entropy accumulation",

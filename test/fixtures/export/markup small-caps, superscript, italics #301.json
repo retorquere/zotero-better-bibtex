@@ -1,28 +1,19 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false,
-      "exportNotes": false
-    },
+    "localeDateOrder": "ymd",
+    "options": {},
     "preferences": {
-      "DOIandURL": "both",
       "autoAbbrevStyle": "http://www.zotero.org/styles/nature",
       "bibtexURL": "note",
       "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]",
-      "exportBibTeXStrings": "off",
-      "jabrefFormat": 0,
-      "skipFields": "abstract,file,editora,editoratype,editorb,editorbtype",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum"
-    },
-    "release": "1.2.18"
+      "skipFields": "abstract,file,editora,editoratype,editorb,editorbtype"
+    }
   },
   "items": [
     {
       "ISBN": "978-2-247-10748-3",
-      "bookTitle": "La conscience des droits. M\u00e9langes en l'honneur de Jean-Paul Costa",
       "creators": [
         {
           "creatorType": "author",
@@ -41,7 +32,7 @@
         }
       ],
       "date": "2011",
-      "itemID": 5868,
+      "itemID": 1,
       "itemType": "bookSection",
       "language": "fr-FR",
       "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
@@ -54,7 +45,6 @@
     },
     {
       "ISBN": "978-2-912025-68-5",
-      "bookTitle": "Consulter, d\u00e9lib\u00e9rer, d\u00e9cider : donner son avis au Moyen \u00c2ge (France-Espagne, <sc>vii</sc><sup>e</sup>-<sc>xvi</sc><sup>e</sup> si\u00e8cles)",
       "creators": [
         {
           "creatorType": "author",
@@ -73,7 +63,7 @@
         }
       ],
       "date": "2010",
-      "itemID": 1597,
+      "itemID": 2,
       "itemType": "bookSection",
       "language": "fr-FR",
       "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",

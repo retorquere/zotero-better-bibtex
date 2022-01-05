@@ -1,15 +1,15 @@
 {
 	"translatorID": "e034d9be-c420-42cf-8311-23bca5735a32",
+	"translatorType": 4,
 	"label": "Baidu Scholar",
 	"creator": "Philipp Zumstein",
 	"target": "^https?://(www\\.)?xueshu\\.baidu\\.com/",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2019-10-22 09:40:59"
+	"lastUpdated": "2021-06-17 15:20:00"
 }
 
 /*
@@ -88,19 +88,20 @@ function doWeb(doc, url) {
 
 function scrape(doc, _url) {
 	var dataUrl = attr(doc, 'i.reqdata', 'url');
-	var diversion = attr(doc, 'i.reqdata', 'diversion');
-	var sign = attr(doc, 'a.sc_q', 'data-sign');
-	var risUrl = "http://xueshu.baidu.com/u/citation?&url=" + encodeURIComponent(dataUrl) + "&sign=" + sign + "&diversion=" + diversion + "&t=ris";
+	let paperId = undefined;
+	const paperIdMatches = _url.match(/paperid=([a-z0-9]*)/i);
+	if (paperIdMatches[1]) {
+		paperId = paperIdMatches[1];
+	}
+	const risUrl = `https://xueshu.baidu.com/u/citation?type=ris&paperid=${paperId}`;
 	var title = doc.title.replace('_百度学术', '');
 
 	var tags = [];
 	doc.querySelectorAll('p.kw_main span a').forEach(e => tags.push(ZU.trimInternal(e.textContent)));
-
 	ZU.doGet(risUrl, function (ris) {
 		// Z.debug({ ris });
 		// delete parenthesis in pages information, e.g. SP  - 5-7(3)
 		ris = ris.replace(/(SP\s+-\s\d+-\d+)\(\d+\)$/m, "$1");
-
 		var translator = Zotero.loadTranslator("import");
 		translator.setTranslator("32d59d2d-b65a-4da4-b0a3-bdd3cfb979e7");
 		translator.setString(ris);
@@ -127,13 +128,22 @@ function scrape(doc, _url) {
 					item.creators.push(ZU.cleanAuthor(e.textContent, 'author', true));
 				});
 			}
+			for (let i = 0, n = item.creators.length; i < n; i++) {
+				let creator = item.creators[i];
+				if (!creator.firstName && creator.lastName.search(/[A-Za-z]/) == -1 && !creator.lastName.includes(' ')) {
+					// Chinese name: first character is last name, the rest are first name (ignoring compound last names which are rare)
+					creator.firstName = creator.lastName.substr(1);
+					creator.lastName = creator.lastName.charAt(0);
+				}
+				item.creators[i] = creator;
+			}
 			if (!item.publicationTitle) {
 				item.publicationTitle = attr(doc, 'a.journal_title', 'title');
 			}
-			if (!item.date) {
+			if (!item.date && text(doc, 'div.year_wr p.kw_main')) {
 				item.date = ZU.trimInternal(text(doc, 'div.year_wr p.kw_main'));
 			}
-			if (!item.DOI) {
+			if (!item.DOI && text(doc, 'div.doi_wr p.kw_main')) {
 				item.DOI = ZU.trimInternal(text(doc, 'div.doi_wr p.kw_main'));
 			}
 
@@ -143,11 +153,12 @@ function scrape(doc, _url) {
 	});
 }
 
+
 /** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://xueshu.baidu.com/s?wd=paperuri%3A%28b3ab239032d44d951d8eee26d7bc44bf%29&filter=sc_long_sign&sc_ks_para=q%3DZotero%3A%20information%20management%20software%202.0&sc_us=11047153676455408520&tn=SE_baiduxueshu_c1gjeupa&ie=utf-8",
+		"url": "https://xueshu.baidu.com/usercenter/paper/show?paperid=b3ab239032d44d951d8eee26d7bc44bf&site=xueshu_se",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -155,22 +166,24 @@ var testCases = [
 				"creators": [
 					{
 						"lastName": "Fernandez",
-						"firstName": "Peter",
+						"firstName": "P.",
 						"creatorType": "author"
 					}
 				],
 				"date": "2011",
+				"DOI": "10.1108/07419051111154758",
 				"abstractNote": "Purpose – The purpose of this paper is to highlight how the open-source bibliographic management program Zotero harnesses Web 2.0 features to make library resources more accessible to casual users without sacrificing advanced features. This reduces the barriers understanding library resources and provides additional functionality when organizing information resources. Design/methodology/approach – The paper reviews select aspects of the program to illustrate how it can be used by patrons and information professionals, and why information professionals should be aware of it. Findings – Zotero has some limitations, but succeeds in meeting the information management needs of a wide variety of users, particularly users who use online resources. Originality/value – This paper is of interest to information professionals seeking free software that can make managing bibliographic information easier for themselves and their patrons.",
 				"issue": "4",
 				"libraryCatalog": "Baidu Scholar",
 				"pages": "5-7",
 				"publicationTitle": "Library Hi Tech News",
 				"shortTitle": "Zotero",
-				"url": "http://www.emeraldinsight.com/doi/full/10.1108/07419051111154758",
+				"url": "http://www.emeraldinsight.com/doi/pdfplus/10.1108/07419051111154758",
 				"volume": "28",
 				"attachments": [
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [
@@ -194,14 +207,13 @@ var testCases = [
 					}
 				],
 				"notes": [],
-				"seeAlso": [],
-				"DOI": "10.1108/07419051111154758"
+				"seeAlso": []
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "http://xueshu.baidu.com/s?wd=paperuri%3A%2829fcf50a863692823c3f336a9ee1efea%29&filter=sc_long_sign&sc_ks_para=q%3DComparativo%20dos%20softwares%20de%20gerenciamento%20de%20refer%C3%AAncias%20bibliogr%C3%A1ficas%3A%20Mendeley%2C%20EndNote%20e%20Zotero&sc_us=1497086148200551335&tn=SE_baiduxueshu_c1gjeupa&ie=utf-8",
+		"url": "https://xueshu.baidu.com/usercenter/paper/show?paperid=29fcf50a863692823c3f336a9ee1efea&site=xueshu_se",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -209,30 +221,44 @@ var testCases = [
 				"creators": [
 					{
 						"lastName": "Yamakawa",
-						"firstName": "Eduardo Kazumi",
+						"firstName": "E. K.",
 						"creatorType": "author"
 					},
 					{
 						"lastName": "Kubota",
-						"firstName": "Flávio Issao",
+						"firstName": "F. I.",
 						"creatorType": "author"
 					},
 					{
 						"lastName": "Beuren",
-						"firstName": "Fernanda Hansch",
+						"firstName": "F. H.",
+						"creatorType": "author"
+					},
+					{
+						"lastName": "Scalvenzi",
+						"firstName": "L.",
+						"creatorType": "author"
+					},
+					{
+						"lastName": "Miguel",
+						"firstName": "Pac",
 						"creatorType": "author"
 					}
 				],
 				"date": "2014",
 				"DOI": "10.1590/0103-37862014000200006",
 				"abstractNote": "A elaboração de uma revisão bibliográfica confiável, a partir de trabalhos relevantes publicados anteriormente, é fundamental para evidenciar a originalidade e a contribuição científica dos trabalhos de pesquisa. Devido à grande quantidade de bases de dados e de publicações disponíveis, torna-se necessário utilizar ferramentas que auxiliem na gestão das referências bibliográficas de uma maneira fácil e padronizada. O objetivo deste artigo é examinar três de gerenciamento bibliográfico utilizados com frequência por pesquisadores acadêmicos, são eles: , e . Nesse sentido, buscou-se, em primeiro lugar, evidenciar seus principais benefícios e as possíveis dificuldades de utilização. Em segundo lugar, procurou-se comparar suas principais características por meio de uma pesquisa teórico-conceitual baseada em literatura especializada, o que permitiu utilizá-los e analisá-los de maneira crítica. Assim sendo, evidenciou-se as principais particularidades de cada e foi elaborado um quadro comparativo entre os mesmos. Considerando as características analisadas nos três , concluiu-se que todos, ao mesmo tempo em que facilitam o trabalho dos pesquisadores, possuem ferramentas que facilitam as buscas, a organização e a análise dos artigos.",
+				"issue": "2",
 				"libraryCatalog": "Baidu Scholar",
-				"publicationTitle": "Transinformação",
+				"pages": "167-176",
+				"publicationTitle": "Transinformao",
 				"shortTitle": "Comparativo dos softwares de gerenciamento de referências bibliográficas",
 				"url": "http://www.scielo.br/scielo.php?script=sci_arttext&amp;pid=S0103-37862014000200167&amp;lng=pt&amp;nrm=is",
+				"volume": "26",
 				"attachments": [
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -243,7 +269,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://xueshu.baidu.com/s?wd=zotero&rsv_bp=0&tn=SE_baiduxueshu_c1gjeupa&rsv_spt=3&ie=utf-8&f=8&rsv_sug2=0&sc_f_para=sc_tasktype%3D%7BfirstSimpleSearch%7D",
+		"url": "https://xueshu.baidu.com/s?wd=zotero&rsv_bp=0&tn=SE_baiduxueshu_c1gjeupa&rsv_spt=3&ie=utf-8&f=8&rsv_sug2=0&sc_f_para=sc_tasktype%3D%7BfirstSimpleSearch%7D",
 		"items": "multiple"
 	}
 ]

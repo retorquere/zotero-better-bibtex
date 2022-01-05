@@ -1,17 +1,20 @@
-declare const Components: any
-declare const Zotero: any
-declare const AsyncShutdown: any
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types, prefer-arrow/prefer-arrow-functions, prefer-rest-params, @typescript-eslint/no-unsafe-return */
 
 Components.utils.import('resource://gre/modules/AsyncShutdown.jsm')
+declare const AsyncShutdown: any
+
+// Components.utils.import('resource://gre/modules/Sqlite.jsm')
+// declare const Sqlite: any
+
 import { patch as $patch$ } from '../monkey-patch'
 
-import AJV = require('ajv')
-import * as log from '../debug'
+import { log } from '../logger'
 // import { Preferences as Prefs } from '../prefs'
 
-// tslint:disable-next-line:variable-name
+// eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
 import Loki = require('lokijs')
 
+import AJV from 'ajv'
 const validator = new AJV({ useDefaults: true, coerceTypes: true })
 require('ajv-keywords')(validator)
 
@@ -42,11 +45,19 @@ $patch$(Loki.Collection.prototype, 'update', original => function(doc) {
 
 // TODO: workaround for https://github.com/techfort/LokiJS/issues/595#issuecomment-322032656
 $patch$(Loki.prototype, 'close', original => function(callback) {
+  const store: string = this.persistenceAdapter.constructor.name || 'Unknown'
+  Zotero.debug(`BBT: patched ${store}.close started`)
   return original.call(this, errClose => {
+    Zotero.debug(`BBT: patched ${store}.close has ran: ${errClose}`)
     if (this.persistenceAdapter && (typeof this.persistenceAdapter.close === 'function')) {
-      return this.persistenceAdapter.close(this.filename, errCloseAdapter => callback(errClose || errCloseAdapter))
-    } else {
-      return callback(errClose)
+      Zotero.debug(`BBT: patched ${store}.persistenceAdapter.close started`)
+      this.persistenceAdapter.close(this.filename, errCloseAdapter => {
+        Zotero.debug(`BBT: patched ${store}.persistenceAdapter.close finished: ${errClose || errCloseAdapter}`)
+        callback(errClose || errCloseAdapter)
+      })
+    }
+    else {
+      callback(errClose)
     }
   })
 })
@@ -62,23 +73,23 @@ const autoSaveOnIdle = []
 
 const idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
 idleService.addIdleObserver({
-  async observe(subject, topic, data) {
+  async observe(_subject: string, _topic: string, _data: any) {
     for (const db of autoSaveOnIdle) {
       if (!db.autosaveDirty()) continue
 
-      log.debug('idle, saving', db.filename)
       try {
         await db.saveDatabaseAsync()
-      } catch (err) {
+      }
+      catch (err) {
         log.error('idle, saving failed', db.filename, err)
       }
     }
   },
-}, 5) // tslint:disable-line:no-magic-numbers
+}, 5) // eslint-disable-line no-magic-numbers
 
 // https://github.com/Microsoft/TypeScript/issues/17032
 export class XULoki extends Loki {
-  constructor(name, options: any = {}) {
+  constructor(name: string, options: any = {}) {
     const nullStore = !options.adapter
     options.adapter = options.adapter || new NullStore()
     options.env = 'XUL-Chrome'
@@ -90,71 +101,105 @@ export class XULoki extends Loki {
 
     if (periodicSave) {
       autoSaveOnIdle.push(this)
-    } else {
+    }
+    else {
       // workaround for https://github.com/techfort/LokiJS/issues/597
       this.autosaveDisable()
     }
 
     if (this.persistenceAdapter && !nullStore) {
-      AsyncShutdown.profileBeforeChange.addBlocker(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: closing ${name}`, async () => {
-        log.debug(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: closing ${name}`)
-
-        // setTimeout is disabled during shutdown and throws errors
-        this.throttledSaves = false
-
+      (function(db, dbname) {
+        const store: string = db.persistenceAdapter.constructor.name || 'Unknown'
         try {
-          await this.saveDatabaseAsync()
-          await this.closeAsync()
-          log.debug(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: closed ${name}`)
-        } catch (err) {
-          log.error(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: close ${name} failed`, err)
+          AsyncShutdown.profileBeforeChange.addBlocker(`Loki.${store}.shutdown: closing ${dbname}`, async () => {
+          // Sqlite.shutdown.addBlocker(`Loki.${store}.shutdown: close of ${dbname}`, async () => {
+            // setTimeout is disabled during shutdown and throws errors
+            db.throttledSaves = false
+
+            try {
+              Zotero.debug(`Loki.${store}.shutdown: saving ${dbname}`)
+              await db.saveDatabaseAsync()
+              Zotero.debug(`Loki.${store}.shutdown: closing ${dbname}`)
+              await db.closeAsync()
+              Zotero.debug(`Loki.${store}.shutdown: shutdown of ${dbname} completed`)
+            }
+            catch (err) {
+              Zotero.debug(`Loki.${store}.shutdown: shutdown of ${dbname} failed`)
+              log.error(`Loki.${store}.shutdown: shutdown of ${dbname} failed`, err)
+            }
+          })
+        }
+        catch (err) {
+          log.error(`Loki.${store} failed to install shutdown blocker!`, err)
+        }
+      })(this, name)
+    }
+  }
+
+  public loadDatabaseAsync(options = {}): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.loadDatabase(options, err => {
+        if (err) return reject(err)
+        resolve(null)
+      })
+    })
+  }
+
+  public saveDatabaseAsync(): Promise<void> {
+    const store = this.persistenceAdapter.constructor.name
+    Zotero.debug(`BBT: ${store}.saveDatabaseAsync started`)
+    return new Promise((resolve, reject) => {
+      this.saveDatabase(err => {
+        Zotero.debug(`BBT: ${store}.saveDatabaseAsync finished: ${err}`)
+        if (err) {
+          reject(err)
+        }
+        else {
+          resolve(null)
         }
       })
-    }
-  }
-
-  public loadDatabaseAsync(options = {}) {
-    const deferred = Zotero.Promise.defer()
-    this.loadDatabase(options, err => {
-      if (err) return deferred.reject(err)
-      deferred.resolve(null)
     })
-    return deferred.promise
   }
 
-  public saveDatabaseAsync() {
-    const deferred = Zotero.Promise.defer()
-    this.saveDatabase(err => {
-      if (err) return deferred.reject(err)
-      deferred.resolve(null)
+  public closeAsync(): Promise<void> {
+    const store = this.persistenceAdapter.constructor.name
+    Zotero.debug(`BBT: ${store}.closeAsync started`)
+    return new Promise((resolve, reject) => {
+      this.close(err => {
+        Zotero.debug(`BBT: ${store}.closeAsync finished`)
+        if (err) {
+          reject(err)
+        }
+        else {
+          resolve(null)
+        }
+      })
     })
-    return deferred.promise
   }
 
-  public closeAsync() {
-    const deferred = Zotero.Promise.defer()
-    this.close(err => {
-      if (err) return deferred.reject(err)
-      deferred.resolve(null)
-    })
-    return deferred.promise
-  }
-
-  public schemaCollection(name, options) {
+  public schemaCollection(name: string, options: any) {
     options.cloneObjects = true
     options.clone = true
-    const coll = this.getCollection(name) || this.addCollection(name, options)
+    const coll: any = this.getCollection(name) || this.addCollection(name, options)
+    coll.cloneObjects = true
 
-    log.debug('!!!!!!! REMOVE THIS !!!!!!!!')
-    // if (options.logging && Prefs.testing) {
-    if (options.logging) {
-      for (const event of ['insert', 'delete', 'update']) {
-        ((e, n, db) => coll.on(e, data => log.debug(`DB Event: ${db}.${n}.${e}`, data)))(event, name, this.filename)
-      }
-    }
-
-    (coll as any).validate = validator.compile(options.schema)
+    log.debug('compiling', JSON.stringify(options.schema, null, 2))
+    coll.validate = validator.compile(options.schema)
 
     return coll
   }
 }
+
+type QueryPrimitive = number | boolean | string | undefined
+export type Query
+  = { [field: string]: { $eq: QueryPrimitive } }
+  | { [field: string]: { $ne: QueryPrimitive } }
+  | { [field: string]: { $in: QueryPrimitive[] } }
+  | { $and: Query[] }
+
+export function $and(query): Query {
+  let and: Query = { $and: Object.entries(query).map(([k, v]: [string, QueryPrimitive | Query]) => ({ [k]: typeof v === 'object' ? v : {$eq: v } })) as Query[] }
+  if (and.$and.length === 1) and = and.$and[0]
+  return and
+}
+

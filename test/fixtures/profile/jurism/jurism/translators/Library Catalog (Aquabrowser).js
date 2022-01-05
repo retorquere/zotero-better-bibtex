@@ -60,7 +60,7 @@ function detectWeb(doc, url) {
 function doWeb(doc, url){
 
 	var articles = new Array();
-	if(detectWeb(doc, url) == "multiple") { 
+	if (detectWeb(doc, url) == "multiple") { 
 		var items = {};
 		var titles = doc.evaluate('//div[@class="titlenew"]//a[@class="classiclink"]', doc, null, XPathResult.ANY_TYPE, null);
 		var title;

@@ -1,23 +1,17 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "bibtexURL": "note",
       "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,\\:][year:prefix,\\:][0]",
-      "exportBibTeXStrings": "off",
-      "jabrefFormat": 0,
-      "skipFields": "file,abstract,pagetotal,keywords,notes,langid,volumes,timestamp,isbn,issn,doi",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum"
-    },
-    "release": "1.2.1"
+      "skipFields": "file,abstract,pagetotal,keywords,notes,langid,volumes,timestamp,isbn,issn,doi"
+    }
   },
   "items": [
     {
@@ -30,8 +24,11 @@
         }
       ],
       "date": "2009",
-      "extra": "Citation Key: ea\ntex.referencetype= mvreference",
-      "itemID": 493,
+      "extra": [
+        "Citation Key: ea",
+        "tex.referencetype= mvreference"
+      ],
+      "itemID": 1,
       "itemType": "book",
       "language": "en",
       "notes": [
@@ -41,8 +38,12 @@
       "place": "Leiden",
       "publisher": "Brill",
       "tags": [
-        "#LaTeX",
-        "Arabisch, Linguistik, W\u00f6rterbuch"
+        {
+          "tag": "#LaTeX"
+        },
+        {
+          "tag": "Arabisch, Linguistik, W\u00f6rterbuch"
+        }
       ],
       "title": "Encyclopedia of Arabic Language and Linguistics",
       "url": "https://katalog.ub.uni-leipzig.de/Record/0002828121/Multipart",

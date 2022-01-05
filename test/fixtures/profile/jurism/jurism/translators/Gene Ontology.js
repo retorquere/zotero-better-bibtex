@@ -101,7 +101,7 @@ function retrievePMIDs(PMIDs, doc){
 	
 			translate.setHandler("done", function(translate) {
 				_numPMIDs--;
-				if(_numPMIDs <= 0) {
+				if (numPMIDs <= 0) {
 					completePMIDs(doc);
 				}
 			});
@@ -118,17 +118,17 @@ function completePMIDs(doc) {
 	// all PMIDs retrieved now
 	// check to see if there is more than one DOI
 	var numPMIDs = 0;
-	for(var PMID in selectArray) {
+	for (var PMID in selectArray) {
 		numPMIDs++;
-		if(numPMIDs == 1) break;
+		if (numPMIDs == 1) break;
 	}
-	if(numPMIDs == 0) {
+	if (numPMIDs == 0) {
 		throw "Could not find PMID";
 	}  else {
 		Zotero.selectItems(selectArray, function(selectedPMIDs) {
-			if(!selectedPMIDs) return true;
+			if (!selectedPMIDs) return true;
 
-			for(var PMID in selectedPMIDs) {
+			for (var PMID in selectedPMIDs) {
 				items[PMID].complete();
 			}
 		});

@@ -1,17 +1,19 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]",
-      "jabrefFormat": 0
+      "citekeyFormat": "[auth][year]"
     }
   },
   "items": [
     {
-      "extra": "Citation Key: test-ticket1661",
+      "extra": [
+        "Citation Key: test-ticket1661"
+      ],
+      "itemID": 1,
       "itemType": "journalArticle",
       "title": "non-breaking space: ; accented characters: \u00f1 and \u00f1; tilde in URL: http://example.com/~user"
     }

@@ -1,0 +1,53 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "autoAbbrevStyle": "http://www.zotero.org/styles/vancouver",
+      "citekeyFormat": "[zotero:clean]"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1006/jfls.1994.1024",
+      "ISSN": "08899746",
+      "accessDate": "2020-03-09T10:28:22Z",
+      "attachments": [],
+      "citationKey": "mateescu_unsteady_1994",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "D.",
+          "lastName": "Mateescu"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.P.",
+          "lastName": "Pa\u0131\u0308doussis"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "F.",
+          "lastName": "Belanger"
+        }
+      ],
+      "date": "7/1994",
+      "issue": "5",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Journal of Fluids and Structures",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "pages": "489-507",
+      "publicationTitle": "Journal of Fluids and Structures",
+      "shortTitle": "Unsteady Annular Viscous Flows Between Oscillating Cylinders. Part I",
+      "title": "Unsteady Annular Viscous Flows Between Oscillating Cylinders. Part I: Computational Solutions Based on a Time-Integration Method",
+      "url": "https://linkinghub.elsevier.com/retrieve/pii/S0889974684710243",
+      "volume": "8"
+    }
+  ]
+}

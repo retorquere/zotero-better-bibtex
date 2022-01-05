@@ -1,0 +1,19 @@
+
+@article{mateescu_unsteady_1994,
+  title = {Unsteady {{Annular Viscous Flows Between Oscillating Cylinders}}. {{Part I}}: {{Computational Solutions Based}} on a {{Time-Integration Method}}},
+  shorttitle = {Unsteady {{Annular Viscous Flows Between Oscillating Cylinders}}. {{Part I}}},
+  author = {Mateescu, D. and Paı̈doussis, M.P. and Belanger, F.},
+  date = {1994-07},
+  journaltitle = {Journal of Fluids and Structures},
+  shortjournal = {Journal of Fluids and Structures},
+  volume = {8},
+  number = {5},
+  pages = {489--507},
+  issn = {08899746},
+  doi = {10.1006/jfls.1994.1024},
+  url = {https://linkinghub.elsevier.com/retrieve/pii/S0889974684710243},
+  urldate = {2020-03-09},
+  langid = {english}
+}
+
+

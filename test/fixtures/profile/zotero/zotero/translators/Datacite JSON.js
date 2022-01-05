@@ -1,15 +1,14 @@
 {
 	"translatorID": "b5b5808b-1c61-473d-9a02-e1f5ba7b8eef",
+	"translatorType": 1,
 	"label": "Datacite JSON",
 	"creator": "Philipp Zumstein",
 	"target": "json",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 1,
-	"browserSupport": "gcsibv",
-	"lastUpdated": "2019-01-27 16:34:49"
+	"lastUpdated": "2021-06-08 14:40:00"
 }
 
 /*
@@ -106,7 +105,7 @@ function doImport() {
 
 	var item = new Zotero.Item(type);
 	if (data.types.citeproc == "dataset") {
-		item.extra = "type: dataset";
+		item.extra = "Type: dataset";
 	}
 	var title = "";
 	for (let titleElement of data.titles) {
@@ -122,57 +121,63 @@ function doImport() {
 	}
 	item.title = title;
 	
-	for (let creator of data.creators) {
-		if (creator.nameType == "Personal") {
-			if (creator.familyName && creator.givenName) {
-				item.creators.push({
-					"lastName": creator.familyName,
-					"firstName": creator.givenName,
-					"creatorType": "author"
-				});
+	if (data.creators) {
+		for (let creator of data.creators) {
+			if (creator.nameType == "Personal") {
+				if (creator.familyName && creator.givenName) {
+					item.creators.push({
+						"lastName": creator.familyName,
+						"firstName": creator.givenName,
+						"creatorType": "author"
+					});
+				} else {
+					item.creators.push(ZU.cleanAuthor(creator.name, "author"));
+				}
 			} else {
-				item.creators.push(ZU.cleanAuthor(creator.name, "author"));
+				item.creators.push({"lastName": creator.name, "creatorType": "author", "fieldMode": true});
 			}
-		} else {
-			item.creators.push({"lastName": creator.name, "creatorType": "author", "fieldMode": true});
 		}
 	}
-	for (let contributor of data.contributors) {
-		let role = "contributor";
-		if (contributor.contributorRole) {
-			switch(contributor.contributorRole.toLowerCase()) {
-				case "editor":
-					role = "editor";
-					break;
-				case "producer":
-					role = "producer";
-					break;
-				default:
-					// use the already assigned value
+	if (data.contributors) {
+		for (let contributor of data.contributors) {
+			let role = "contributor";
+			if (contributor.contributorRole) {
+				switch(contributor.contributorRole.toLowerCase()) {
+					case "editor":
+						role = "editor";
+						break;
+					case "producer":
+						role = "producer";
+						break;
+					default:
+						// use the already assigned value
+				}
 			}
-		}
-		if (contributor.nameType == "Personal") {
-			if (contributor.familyName && contributor.givenName) {
-				item.creators.push({
-					"lastName": contributor.familyName,
-					"firstName": contributor.givenName,
-					"creatorType": role
-				});
+			if (contributor.nameType == "Personal") {
+				if (contributor.familyName && contributor.givenName) {
+					item.creators.push({
+						"lastName": contributor.familyName,
+						"firstName": contributor.givenName,
+						"creatorType": role
+					});
+				} else {
+					item.creators.push(ZU.cleanAuthor(contributor.name, role));
+				}
 			} else {
-				item.creators.push(ZU.cleanAuthor(contributor.name, role));
+				item.creators.push({"lastName": contributor.name, "creatorType": role, "fieldMode": true});
 			}
-		} else {
-			item.creators.push({"lastName": contributor.name, "creatorType": role, "fieldMode": true});
 		}
 	}
 	
 	item.publisher = data.publisher;
 	
 	let dates = {};
-	for (let date of data.dates) {
-		dates[date.dateType] = date.date;
+	if (data.dates) {
+		for (let date of data.dates) {
+			dates[date.dateType] = date.date;
+		}
+		item.date = dates["Issued"] || dates["Updated"] || dates["Available"]  || dates["Accepted"] || dates["Submitted"] || dates["Created"] || data.publicationYear;
 	}
-	item.date = dates["Issued"] || dates["Updated"] || dates["Available"]  || dates["Accepted"] || dates["Submitted"] || dates["Created"] || data.publicationYear;
 	
 	item.DOI = data.doi;
 	//add DOI to extra for unsupported items
@@ -185,20 +190,30 @@ function doImport() {
 	}
 	item.url = data.url;
 	item.language = data.language;
-	for (let subject of data.subjects) {
-		item.tags.push(subject.subject);
+	if (data.subjects) {
+		for (let subject of data.subjects) {
+			item.tags.push(subject.subject);
+		}
 	}
-	item.medium = data.formats.join();
-	item.pages = item.artworkSize = data.sizes.join(", ");
+	if (data.formats) {
+		item.medium = data.formats.join();
+	}
+	if (data.sizes) {
+		item.pages = item.artworkSize = data.sizes.join(", ");
+	}
 	item.versionNumber = data.version;
-	item.rights = data.rightsList.map(x => x.rights).join(", ");
+	if (data.rightsList) {
+		item.rights = data.rightsList.map(x => x.rights).join(", ");
+	}
 	
 	var descriptionNote = "";
-	for (let description of data.descriptions) {
-		if (description.descriptionType == "Abstract") {
-			item.abstractNote = description.description;
-		} else {
-			descriptionNote += "<h2>" + description.descriptionType + "</h2>\n" + description.description;
+	if (data.descriptions) {
+		for (let description of data.descriptions) {
+			if (description.descriptionType == "Abstract") {
+				item.abstractNote = description.description;
+			} else {
+				descriptionNote += "<h2>" + description.descriptionType + "</h2>\n" + description.description;
+			}
 		}
 	}
 	if (descriptionNote !== "") {
@@ -223,17 +238,17 @@ function doImport() {
 		}
 	}
 	
-	for (let relates of data.relatedIdentifiers) {
-		if (!item.ISSN && relates.relatedIdentifierType == "ISSN") {
-			item.ISSN = relates.relatedIdentifier;
-		}
-		if (!item.ISBN && relates.relatedIdentifierType == "ISBN") {
-			item.ISBN = relates.relatedIdentifier;
+	if (data.relatedIdentifiers) {
+		for (let relates of data.relatedIdentifiers) {
+			if (!item.ISSN && relates.relatedIdentifierType == "ISSN") {
+				item.ISSN = relates.relatedIdentifier;
+			}
+			if (!item.ISBN && relates.relatedIdentifierType == "ISBN") {
+				item.ISBN = relates.relatedIdentifier;
+			}
 		}
 	}
 	
-	
-
 	item.complete();
 }
 
@@ -418,7 +433,7 @@ var testCases = [
 					}
 				],
 				"date": "2016",
-				"extra": "type: dataset\nDOI: 10.17171/2-3-12-1",
+				"extra": "Type: dataset\nDOI: 10.17171/2-3-12-1",
 				"publisher": "Edition Topoi",
 				"url": "http://repository.edition-topoi.org/collection/MAGN/single/0012/0",
 				"attachments": [],
@@ -499,6 +514,43 @@ var testCases = [
 				"notes": [
 					{
 						"note": "<h2>SeriesInformation</h2>\nThe Journal of Transcultural Studies, No 1-2 (2018)"
+					}
+				],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "import",
+		"input": "{\n  \"id\": \"https://doi.org/10.7916/d8959hr1\",\n  \"doi\": \"10.7916/D8959HR1\",\n  \"url\": \"https://tremorjournal.org/index.php/tremor/article/view/413\",\n  \"types\": {\n    \"ris\": \"RPRT\",\n    \"bibtex\": \"article\",\n    \"citeproc\": \"article-journal\",\n    \"schemaOrg\": \"ScholarlyArticle\",\n    \"resourceType\": \"Article\",\n    \"resourceTypeGeneral\": \"Text\"\n  },\n  \"creators\": [\n    {\n      \"name\": \"Hogg, Elliot\",\n      \"nameType\": \"Personal\",\n      \"givenName\": \"Elliot\",\n      \"familyName\": \"Hogg\",\n      \"affiliation\": []\n    },\n    {\n      \"name\": \"Tagliati, Michele\",\n      \"nameType\": \"Personal\",\n      \"givenName\": \"Michele\",\n      \"familyName\": \"Tagliati\",\n      \"affiliation\": []\n    }\n  ],\n  \"titles\": [\n    {\n      \"title\": \"Overuse Cervical Dystonia: A Case Report and Literature Review\"\n    }\n  ],\n  \"publisher\": \"Tremor and Other Hyperkinetic Movements\",\n  \"container\": {\n    \"type\": \"Series\",\n    \"title\": \"Tremor and Other Hyperkinetic Movements\",\n    \"firstPage\": \"Tremor and Other Hyperkinetic Movements\"\n  },\n  \"contributors\": [],\n  \"dates\": [\n    {\n      \"date\": \"2016-06-28\",\n      \"dateType\": \"Submitted\"\n    },\n    {\n      \"date\": \"2016-08-22\",\n      \"dateType\": \"Accepted\"\n    },\n    {\n      \"date\": \"2019-02-06\",\n      \"dateType\": \"Updated\"\n    },\n    {\n      \"date\": \"2016-09-14\",\n      \"dateType\": \"Issued\"\n    }\n  ],\n  \"publicationYear\": 2016,\n  \"language\": \"en\",\n  \"identifiers\": [\n    {\n      \"identifier\": \"https://doi.org/10.7916/d8959hr1\",\n      \"identifierType\": \"DOI\"\n    },\n    {\n      \"identifier\": \"1-2-413\",\n      \"identifierType\": \"publisherId\"\n    }\n  ],\n  \"descriptions\": [\n    {\n      \"description\": \"Background: Overuse or task-specific dystonia has been described in a number of professions characterized by repetitive actions, typically affecting the upper extremities. Cervical dystonia (CD), however, has rarely been associated with overuse. Case Report: We present a case report of typical CD that developed in the context of chronic repetitive movements associated with the patient’s professional occupation as an office manager who spent many hours per day holding a phone to his ear. Discussion: Overuse CD should be suspected when typical symptoms and signs of CD develop in the context of chronic repetitive use or overuse of cervical muscles, especially where exacerbating tasks involve asymmetric postures.\",\n      \"descriptionType\": \"Abstract\"\n    },\n    {\n      \"description\": \"Tremor and Other Hyperkinetic Movements, Tremor and Other Hyperkinetic Movements\",\n      \"descriptionType\": \"SeriesInformation\"\n    }\n  ],\n  \"providerId\": \"cul\",\n  \"clientId\": \"cul.columbia\",\n  \"agency\": \"DataCite\",\n  \"state\": \"findable\"\n}",
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "Overuse Cervical Dystonia: A Case Report and Literature Review",
+				"creators": [
+					{
+						"lastName": "Hogg",
+						"firstName": "Elliot",
+						"creatorType": "author"
+					},
+					{
+						"lastName": "Tagliati",
+						"firstName": "Michele",
+						"creatorType": "author"
+					}
+				],
+				"date": "2016-09-14",
+				"DOI": "10.7916/D8959HR1",
+				"abstractNote": "Background: Overuse or task-specific dystonia has been described in a number of professions characterized by repetitive actions, typically affecting the upper extremities. Cervical dystonia (CD), however, has rarely been associated with overuse. Case Report: We present a case report of typical CD that developed in the context of chronic repetitive movements associated with the patient’s professional occupation as an office manager who spent many hours per day holding a phone to his ear. Discussion: Overuse CD should be suspected when typical symptoms and signs of CD develop in the context of chronic repetitive use or overuse of cervical muscles, especially where exacerbating tasks involve asymmetric postures.",
+				"language": "en",
+				"pages": "Tremor and Other Hyperkinetic Movements",
+				"publicationTitle": "Tremor and Other Hyperkinetic Movements",
+				"url": "https://tremorjournal.org/index.php/tremor/article/view/413",
+				"attachments": [],
+				"tags": [],
+				"notes": [
+					{
+						"note": "<h2>SeriesInformation</h2>\nTremor and Other Hyperkinetic Movements, Tremor and Other Hyperkinetic Movements"
 					}
 				],
 				"seeAlso": []

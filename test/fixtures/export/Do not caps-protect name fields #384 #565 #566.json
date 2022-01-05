@@ -1,87 +1,18 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
       "bibtexURL": "note",
       "citekeyFormat": "[auth:lower]",
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "jabrefFormat": 0,
-      "postscript": "",
       "skipFields": "timestamp"
-    },
-    "release": "1.6.3"
+    }
   },
   "items": [
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Vincent",
-          "lastName": "van Gogh"
-        }
-      ],
-      "extra": "[van Gogh][Vincent]",
-      "itemID": 316,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Alexander von",
-          "lastName": "Humboldt"
-        }
-      ],
-      "extra": "[Humboldt][Alexander von]",
-      "itemID": 296,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Simone de",
-          "lastName": "Beauvoir"
-        }
-      ],
-      "extra": "[Beauvoir][Simone de]",
-      "itemID": 281,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Charles",
-          "lastName": "\"de Gaulle\""
-        }
-      ],
-      "extra": "[\"de Gaulle\"][Charles]",
-      "itemID": 288,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Martin Luther, Jr.",
-          "lastName": "King"
-        }
-      ],
-      "extra": "[King][Martin Luther, Jr.]",
-      "itemID": 297,
-      "itemType": "book"
-    },
     {
       "creators": [
         {
@@ -90,19 +21,10 @@
           "lastName": "Stevenson"
         }
       ],
-      "extra": "[Stevenson][Adlai E.,! III]",
-      "itemID": 314,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "National Aeronautics and Space Administration"
-        }
+      "extra": [
+        "[Stevenson][Adlai E.,! III]"
       ],
-      "extra": "[[National Aeronautics and Space Administration]]",
-      "itemID": 306,
+      "itemID": 1,
       "itemType": "book"
     },
     {
@@ -113,92 +35,10 @@
           "lastName": "boven d'Eert"
         }
       ],
-      "extra": "[boven d'Eert][Christianus]",
-      "itemID": 282,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Goverdus",
-          "lastName": "'s-Gravesande"
-        }
+      "extra": [
+        "[boven d'Eert][Christianus]"
       ],
-      "extra": "['s-Gravesande][Goverdus]",
-      "itemID": 311,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Thomas",
-          "lastName": "De Quincey"
-        }
-      ],
-      "extra": "[De Quincey][Thomas]",
-      "itemID": 292,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Jos\u00e9",
-          "lastName": "Ortega y Gasset"
-        }
-      ],
-      "extra": "[Ortega y Gasset][Jos\u00e9]",
-      "itemID": 307,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Alfonse",
-          "lastName": "D\u2019Amato"
-        }
-      ],
-      "extra": "[D\u2019Amato][Alfonse]",
-      "itemID": 285,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Anwar el-",
-          "lastName": "Sadat"
-        }
-      ],
-      "extra": "[Sadat][Anwar el-]",
-      "itemID": 309,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Robert M., Sr.",
-          "lastName": "La Follette"
-        }
-      ],
-      "extra": "[La Follette][Robert M., Sr.]",
-      "itemID": 298,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Walter",
-          "lastName": "\"de la Mare\""
-        }
-      ],
-      "extra": "[\"de la Mare\"][Walter]",
-      "itemID": 290,
+      "itemID": 10,
       "itemType": "book"
     },
     {
@@ -209,283 +49,10 @@
           "lastName": "DeGette"
         }
       ],
-      "extra": "[DeGette][Diana]",
-      "itemID": 289,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "John Bertrand de Cusance Morant",
-          "lastName": "Saunders"
-        }
+      "extra": [
+        "[DeGette][Diana]"
       ],
-      "extra": "[Saunders][John Bertrand de Cusance Morant]",
-      "itemID": 310,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "Marcus Aurelius"
-        }
-      ],
-      "extra": "[[Marcus Aurelius]]",
-      "itemID": 303,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Alexandre, p\u00e8re",
-          "lastName": "Dumas"
-        }
-      ],
-      "extra": "[Dumas][Alexandre, p\u00e8re]",
-      "itemID": 293,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Stephen",
-          "lastName": "Van Rensselaer"
-        }
-      ],
-      "extra": "[Van Rensselaer][Stephen]",
-      "itemID": 318,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Pierre-Charles",
-          "lastName": "L\u2019Enfant"
-        }
-      ],
-      "extra": "[L\u2019Enfant][Pierre-Charles]",
-      "itemID": 301,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Robert",
-          "lastName": "\"van Gulik\""
-        }
-      ],
-      "extra": "[\"van Gulik\"][Robert]",
-      "itemID": 317,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Victoria",
-          "lastName": "Sackville-West"
-        }
-      ],
-      "extra": "[Sackville-West][Victoria]",
-      "itemID": 308,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Ralph",
-          "lastName": "Vaughan Williams"
-        }
-      ],
-      "extra": "[Vaughan Williams][Ralph]",
-      "itemID": 319,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Ludwig",
-          "lastName": "Mies van der Rohe"
-        }
-      ],
-      "extra": "[Mies van der Rohe][Ludwig]",
-      "itemID": 305,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Jean le Rond",
-          "lastName": "d\u2019Alembert"
-        }
-      ],
-      "extra": "[d\u2019Alembert][Jean le Rond]",
-      "itemID": 284,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Alexis de",
-          "lastName": "Tocqueville"
-        }
-      ],
-      "extra": "[Tocqueville][Alexis de]",
-      "itemID": 315,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Jean de",
-          "lastName": "La Fontaine"
-        }
-      ],
-      "extra": "[La Fontaine][Jean de]",
-      "itemID": 299,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Ren\u00e9-Robert Cavelier de",
-          "lastName": "La Salle"
-        }
-      ],
-      "extra": "[La Salle][Ren\u00e9-Robert Cavelier de]",
-      "itemID": 300,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Ph\u0097ilippe",
-          "lastName": "du Puy de Clinchamps"
-        }
-      ],
-      "extra": "[du Puy de Clinchamps][PhU+0097ilippe]",
-      "itemID": 294,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Heinrich Friedrich Karl vom und zum",
-          "lastName": "Stein"
-        }
-      ],
-      "extra": "[Stein][Heinrich Friedrich Karl vom und zum]",
-      "itemID": 313,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Agostinho da",
-          "lastName": "Silva"
-        }
-      ],
-      "extra": "[Silva][Agostinho da]",
-      "itemID": 312,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Vasco",
-          "lastName": "\"da Gama\""
-        }
-      ],
-      "extra": "[\"da Gama\"][Vasco]",
-      "itemID": 283,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Gabriele",
-          "lastName": "D\u2019Annunzio"
-        }
-      ],
-      "extra": "[D\u2019Annunzio][Gabriele]",
-      "itemID": 286,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Lorenzo",
-          "lastName": "Da Ponte"
-        }
-      ],
-      "extra": "[Da Ponte][Lorenzo]",
-      "itemID": 287,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Luca",
-          "lastName": "Della Robbia"
-        }
-      ],
-      "extra": "[Della Robbia][Luca]",
-      "itemID": 291,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Beatrice d\u2019",
-          "lastName": "Este"
-        }
-      ],
-      "extra": "[Este][Beatrice d\u2019]",
-      "itemID": 295,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Lorenzo de\u2019\u200b",
-          "lastName": "Medici"
-        }
-      ],
-      "extra": "[Medici][Lorenzo de\u2019U+200B]",
-      "itemID": 304,
-      "itemType": "book"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Tawfiq",
-          "lastName": "al-Hakim"
-        }
-      ],
-      "extra": "[al-Hakim][Tawfiq]",
-      "itemID": 280,
+      "itemID": 11,
       "itemType": "book"
     },
     {
@@ -496,8 +63,512 @@
           "lastName": "Le Vayer"
         }
       ],
-      "extra": "[Le Vayer][Fran\u00e7ois de La Mothe]",
-      "itemID": 302,
+      "extra": [
+        "[Le Vayer][Fran\u00e7ois de La Mothe]"
+      ],
+      "itemID": 12,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Gabriele",
+          "lastName": "D\u2019Annunzio"
+        }
+      ],
+      "extra": [
+        "[D\u2019Annunzio][Gabriele]"
+      ],
+      "itemID": 13,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Goverdus",
+          "lastName": "'s-Gravesande"
+        }
+      ],
+      "extra": [
+        "['s-Gravesande][Goverdus]"
+      ],
+      "itemID": 14,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Heinrich Friedrich Karl vom und zum",
+          "lastName": "Stein"
+        }
+      ],
+      "extra": [
+        "[Stein][Heinrich Friedrich Karl vom und zum]"
+      ],
+      "itemID": 15,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Jean de",
+          "lastName": "La Fontaine"
+        }
+      ],
+      "extra": [
+        "[La Fontaine][Jean de]"
+      ],
+      "itemID": 16,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Jean le Rond",
+          "lastName": "d\u2019Alembert"
+        }
+      ],
+      "extra": [
+        "[d\u2019Alembert][Jean le Rond]"
+      ],
+      "itemID": 17,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "John Bertrand de Cusance Morant",
+          "lastName": "Saunders"
+        }
+      ],
+      "extra": [
+        "[Saunders][John Bertrand de Cusance Morant]"
+      ],
+      "itemID": 18,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Jos\u00e9",
+          "lastName": "Ortega y Gasset"
+        }
+      ],
+      "extra": [
+        "[Ortega y Gasset][Jos\u00e9]"
+      ],
+      "itemID": 19,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Agostinho da",
+          "lastName": "Silva"
+        }
+      ],
+      "extra": [
+        "[Silva][Agostinho da]"
+      ],
+      "itemID": 2,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Lorenzo de\u2019\u200b",
+          "lastName": "Medici"
+        }
+      ],
+      "extra": [
+        "[Medici][Lorenzo de\u2019U+200B]"
+      ],
+      "itemID": 20,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Lorenzo",
+          "lastName": "Da Ponte"
+        }
+      ],
+      "extra": [
+        "[Da Ponte][Lorenzo]"
+      ],
+      "itemID": 21,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Luca",
+          "lastName": "Della Robbia"
+        }
+      ],
+      "extra": [
+        "[Della Robbia][Luca]"
+      ],
+      "itemID": 22,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Ludwig",
+          "lastName": "Mies van der Rohe"
+        }
+      ],
+      "extra": [
+        "[Mies van der Rohe][Ludwig]"
+      ],
+      "itemID": 23,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Martin Luther, Jr.",
+          "lastName": "King"
+        }
+      ],
+      "extra": [
+        "[King][Martin Luther, Jr.]"
+      ],
+      "itemID": 24,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Ph\u0097ilippe",
+          "lastName": "du Puy de Clinchamps"
+        }
+      ],
+      "extra": [
+        "[du Puy de Clinchamps][PhU+0097ilippe]"
+      ],
+      "itemID": 25,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Pierre-Charles",
+          "lastName": "L\u2019Enfant"
+        }
+      ],
+      "extra": [
+        "[L\u2019Enfant][Pierre-Charles]"
+      ],
+      "itemID": 26,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Ralph",
+          "lastName": "Vaughan Williams"
+        }
+      ],
+      "extra": [
+        "[Vaughan Williams][Ralph]"
+      ],
+      "itemID": 27,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Ren\u00e9-Robert Cavelier de",
+          "lastName": "La Salle"
+        }
+      ],
+      "extra": [
+        "[La Salle][Ren\u00e9-Robert Cavelier de]"
+      ],
+      "itemID": 28,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Robert M., Sr.",
+          "lastName": "La Follette"
+        }
+      ],
+      "extra": [
+        "[La Follette][Robert M., Sr.]"
+      ],
+      "itemID": 29,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Alexander von",
+          "lastName": "Humboldt"
+        }
+      ],
+      "extra": [
+        "[Humboldt][Alexander von]"
+      ],
+      "itemID": 3,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Robert",
+          "lastName": "\"van Gulik\""
+        }
+      ],
+      "extra": [
+        "[\"van Gulik\"][Robert]"
+      ],
+      "itemID": 30,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Simone de",
+          "lastName": "Beauvoir"
+        }
+      ],
+      "extra": [
+        "[Beauvoir][Simone de]"
+      ],
+      "itemID": 31,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Stephen",
+          "lastName": "Van Rensselaer"
+        }
+      ],
+      "extra": [
+        "[Van Rensselaer][Stephen]"
+      ],
+      "itemID": 32,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Tawfiq",
+          "lastName": "al-Hakim"
+        }
+      ],
+      "extra": [
+        "[al-Hakim][Tawfiq]"
+      ],
+      "itemID": 33,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Thomas",
+          "lastName": "De Quincey"
+        }
+      ],
+      "extra": [
+        "[De Quincey][Thomas]"
+      ],
+      "itemID": 34,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Vasco",
+          "lastName": "\"da Gama\""
+        }
+      ],
+      "extra": [
+        "[\"da Gama\"][Vasco]"
+      ],
+      "itemID": 35,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Victoria",
+          "lastName": "Sackville-West"
+        }
+      ],
+      "extra": [
+        "[Sackville-West][Victoria]"
+      ],
+      "itemID": 36,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Vincent",
+          "lastName": "van Gogh"
+        }
+      ],
+      "extra": [
+        "[van Gogh][Vincent]"
+      ],
+      "itemID": 37,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Walter",
+          "lastName": "\"de la Mare\""
+        }
+      ],
+      "extra": [
+        "[\"de la Mare\"][Walter]"
+      ],
+      "itemID": 38,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "Marcus Aurelius"
+        }
+      ],
+      "extra": [
+        "[[Marcus Aurelius]]"
+      ],
+      "itemID": 39,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Alexandre, p\u00e8re",
+          "lastName": "Dumas"
+        }
+      ],
+      "extra": [
+        "[Dumas][Alexandre, p\u00e8re]"
+      ],
+      "itemID": 4,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "National Aeronautics and Space Administration"
+        }
+      ],
+      "extra": [
+        "[[National Aeronautics and Space Administration]]"
+      ],
+      "itemID": 40,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Alexis de",
+          "lastName": "Tocqueville"
+        }
+      ],
+      "extra": [
+        "[Tocqueville][Alexis de]"
+      ],
+      "itemID": 5,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Alfonse",
+          "lastName": "D\u2019Amato"
+        }
+      ],
+      "extra": [
+        "[D\u2019Amato][Alfonse]"
+      ],
+      "itemID": 6,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Anwar el-",
+          "lastName": "Sadat"
+        }
+      ],
+      "extra": [
+        "[Sadat][Anwar el-]"
+      ],
+      "itemID": 7,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Beatrice d\u2019",
+          "lastName": "Este"
+        }
+      ],
+      "extra": [
+        "[Este][Beatrice d\u2019]"
+      ],
+      "itemID": 8,
+      "itemType": "book"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Charles",
+          "lastName": "\"de Gaulle\""
+        }
+      ],
+      "extra": [
+        "[\"de Gaulle\"][Charles]"
+      ],
+      "itemID": 9,
       "itemType": "book"
     }
   ]

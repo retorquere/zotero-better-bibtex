@@ -1,48 +1,40 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
       "bibtexURL": "note",
       "citekeyFormat": "[title:lower]",
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "jabrefFormat": 0,
-      "postscript": "",
       "skipFields": "timestamp"
-    },
-    "release": "1.6.3"
+    }
   },
   "items": [
     {
-      "extra": "original-publisher-place: Saint Kitts and Nevis\noriginal-publisher: Doe and Company",
-      "itemID": 321,
+      "extra": [
+        "original-publisher-place: Saint Kitts and Nevis",
+        "original-publisher: Doe and Company"
+      ],
+      "itemID": 1,
       "itemType": "book",
       "place": "Trinidad and Tobago",
       "publisher": "Miller, Smith and Jones",
       "title": "Publisher"
     },
     {
-      "institution": "Office of Information Management and Communications",
-      "itemID": 320,
+      "itemID": 2,
       "itemType": "report",
       "publisher": "Office of Information Management and Communications",
       "title": "Institution"
     },
     {
-      "itemID": 322,
+      "itemID": 3,
       "itemType": "thesis",
       "publisher": "University of Saint Kitts and Nevis",
-      "title": "University",
-      "university": "University of Saint Kitts and Nevis"
+      "title": "University"
     }
   ]
 }

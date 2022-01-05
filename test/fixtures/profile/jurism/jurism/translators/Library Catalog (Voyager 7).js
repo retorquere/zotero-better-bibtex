@@ -19,7 +19,7 @@ function detectWeb(doc, url) {
 	}
 	//for single search results such as
 	//http://catalog.loc.gov/vwebv/search?searchArg=bynum+holy+feast+holy+fast&searchCode=GKEY^*&searchType=0&recCount=100&sk=en_US
-	else if(ZU.xpathText(doc, '//div[@class="bibliographicData"]')) return "book";
+	else if (ZU.xpathText(doc, '//div[@class="bibliographicData"]')) return "book";
 
 
 	var titles = doc.evaluate('//div[@class="resultListTextCell"]//a', doc, null, XPathResult.ANY_TYPE, null);

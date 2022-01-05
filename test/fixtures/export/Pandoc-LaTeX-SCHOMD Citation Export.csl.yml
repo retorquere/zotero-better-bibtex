@@ -1,29 +1,28 @@
----
 references:
 - id: Adams2001
   author:
-    - family: Adams
-      given: Nancy K
-    - family: DeSilva
-      given: Shanaka L
-    - family: Self
-      given: Steven
-    - family: Salas
-      given: Guido
-    - family: Schubring
-      given: Steven
-    - family: Permenter
-      given: Jason L
-    - family: Arbesman
-      given: Kendra
+  - family: Adams
+    given: Nancy K
+  - family: DeSilva
+    given: Shanaka L
+  - family: Self
+    given: Steven
+  - family: Salas
+    given: Guido
+  - family: Schubring
+    given: Steven
+  - family: Permenter
+    given: Jason L
+  - family: Arbesman
+    given: Kendra
   container-title: Bulletin of Volcanology
   issued:
-    - year: 2014
-      month: 12
-      day: 31
-    - year: 2015
-      month: 1
-      day: 1
+  - year: 2014
+    month: 12
+    day: 31
+  - year: 2015
+    month: 1
+    day: 1
   page: 493–518
   title: >-
     The physical volcanology of the 1600 eruption of **Huaynaputina**, southern
@@ -31,18 +30,19 @@ references:
   type: article-journal
   volume: '62'
 
+  citation-key: Adams2001
 - id: Berndt1994
   accessed:
-    - year: 2014
-      month: 10
-      day: 2
+  - year: 2014
+    month: 10
+    day: 2
   author:
-    - family: Berndt
-      given: Rainer
+  - family: Berndt
+    given: Rainer
   container-title: Sacris Erudiri
   DOI: 10.1484/J.SE.2.303788
   issued:
-    - year: 1994
+  - year: 1994
   language: German
   page: 5–32
   source: MetaPress
@@ -50,17 +50,19 @@ references:
     Skizze zur Auslegungsgeschichte der Bücher *Prouerbia* und *Ecclesiastes* in
     der abendländischen Kirche
   type: article-journal
-  URL: 'http://dx.doi.org/10.1484/J.SE.2.303788'
+  URL: http://dx.doi.org/10.1484/J.SE.2.303788
   volume: '34'
 
+  citation-key: Berndt1994
 - id: Dunning2016
   author:
-    - family: Dunning
-      given: Andrew N.J.
+  - family: Dunning
+    given: Andrew N.J.
   collection-number: '33'
   collection-title: Toronto Medieval Latin Texts
+  event-place: Toronto
   issued:
-    - year: 2016
+  - year: 2016
   publisher: Pontifical Institute of Mediaeval Studies
   publisher-place: Toronto
   title: >-
@@ -70,18 +72,20 @@ references:
   title-short: Notes from the school of William de Montibus
   type: book
 
+  citation-key: Dunning2016
 - id: Wordsworth1883
   accessed:
-    - year: 2014
-      month: 4
-      day: 29
+  - year: 2014
+    month: 4
+    day: 29
   collection-number: '1'
   collection-title: Old-Latin Biblical Texts
   editor:
-    - family: Wordsworth
-      given: John
+  - family: Wordsworth
+    given: John
+  event-place: Oxford
   issued:
-    - year: 1883
+  - year: 1883
   language: English
   number-of-pages: '139'
   publisher: Clarendon Press
@@ -92,5 +96,5 @@ references:
     numbered Lat. 11553 in the National Library at Paris
   title-short: The Gospel according to St. Matthew
   type: book
-  URL: 'https://archive.org/details/gospelaccording00goog'
-...
+  URL: https://archive.org/details/gospelaccording00goog
+  citation-key: Wordsworth1883

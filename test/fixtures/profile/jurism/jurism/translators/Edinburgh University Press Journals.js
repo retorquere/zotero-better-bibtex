@@ -104,7 +104,7 @@ function scrape(doc, url) {
 			}];
 
 			var pdfurl = ZU.xpath(doc, '//div[@class="article_link"]/a')[0];
-			if(pdfurl) {
+			if (pdfurl) {
 				pdfurl = pdfurl.href;
 				item.attachments.push({
 					url: pdfurl,

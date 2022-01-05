@@ -1,101 +1,22 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "doi",
-      "ascii": "",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportDelay": 1,
-      "autoExportIdleWait": 10,
-      "autoPin": false,
-      "auxImport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
       "bibtexURL": "url",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[authors3][year]",
-      "citeprocNoteCitekey": false,
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "exportBraceProtection": true,
       "exportTitleCase": false,
-      "git": "config",
-      "importBibTeXStrings": true,
       "itemObserverDelay": 100,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "keyScope": "library",
-      "kuroshiro": false,
-      "parseParticles": true,
-      "postscript": "",
-      "qualityReport": false,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "rawLaTag": "#LaTeX",
-      "relativeFilePaths": false,
-      "scrubDatabase": false,
-      "skipFields": "note,issn",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.1.81",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.66",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "en-US",
-        "oscpu": "Windows NT 10.0; WOW64",
-        "platform": "Win32",
-        "version": "5.0.66"
-      }
+      "skipFields": "note,issn"
     }
   },
   "items": [
     {
-      "attachments": [],
-      "citekey": "Smith2019",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "John",
-          "lastName": "Smith"
-        }
-      ],
-      "date": "2019",
-      "dateAdded": "2019-05-15T09:07:15Z",
-      "dateModified": "2019-05-15T09:08:23Z",
-      "extra": "00000",
-      "issue": "1",
-      "itemID": 1238,
-      "itemType": "journalArticle",
-      "notes": [],
-      "pages": "27-49",
-      "publicationTitle": "Journal of Testing",
-      "relations": [],
-      "tags": [],
-      "title": "This Article is Title Case in Zotero",
-      "uri": "http://zotero.org/users/4988909/items/WZ62BLYI",
-      "volume": "3"
-    },
-    {
-      "attachments": [],
-      "citekey": "Doe2018",
       "creators": [
         {
           "creatorType": "author",
@@ -104,24 +25,18 @@
         }
       ],
       "date": "2018",
-      "dateAdded": "2019-05-15T09:08:32Z",
-      "dateModified": "2019-05-15T10:35:19Z",
-      "extra": "00000",
+      "extra": [
+        "00000"
+      ],
       "issue": "4",
-      "itemID": 1239,
+      "itemID": 1,
       "itemType": "journalArticle",
-      "notes": [],
       "pages": "1-31",
       "publicationTitle": "Journal of Testing",
-      "relations": [],
-      "tags": [],
       "title": "This article is sentence case in Zotero",
-      "uri": "http://zotero.org/users/4988909/items/X243432M",
       "volume": "2"
     },
     {
-      "attachments": [],
-      "citekey": "Jackson2019",
       "creators": [
         {
           "creatorType": "author",
@@ -130,20 +45,36 @@
         }
       ],
       "date": "2019",
-      "dateAdded": "2019-05-15T10:33:14Z",
-      "dateModified": "2019-05-15T10:34:56Z",
-      "extra": "00000",
+      "extra": [
+        "00000"
+      ],
       "issue": "4",
-      "itemID": 1241,
+      "itemID": 2,
       "itemType": "journalArticle",
-      "notes": [],
       "pages": "399-412",
       "publicationTitle": "Internet Quarterly",
-      "relations": [],
-      "tags": [],
       "title": "I like ISDN heaps better than dialup",
-      "uri": "http://zotero.org/users/4988909/items/UBW6GK6U",
       "volume": "12"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "John",
+          "lastName": "Smith"
+        }
+      ],
+      "date": "2019",
+      "extra": [
+        "00000"
+      ],
+      "issue": "1",
+      "itemID": 3,
+      "itemType": "journalArticle",
+      "pages": "27-49",
+      "publicationTitle": "Journal of Testing",
+      "title": "This Article is Title Case in Zotero",
+      "volume": "3"
     }
   ]
 }

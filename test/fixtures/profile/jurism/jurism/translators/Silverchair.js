@@ -41,7 +41,7 @@ function detectWeb(doc, url) {
 	if (scm6){
 		if (scm6.indexOf("SCM6")!=-1){
 			if (url.search(/\/(article|proceeding)\.aspx\?articleid=\d+/i)!=-1) return "journalArticle";
-			else if(url.indexOf("/searchresults.aspx?q=")!=-1 || url.indexOf("/issue.aspx")!=1  && ZU.xpathText(doc, multxpath)!=null) return "multiple";
+			else if (url.indexOf("/searchresults.aspx?q=")!=-1 || url.indexOf("/issue.aspx")!=1  && ZU.xpathText(doc, multxpath)!=null) return "multiple";
 	}
 	}
 	return false;
@@ -51,7 +51,7 @@ function detectWeb(doc, url) {
 function doWeb(doc, url){
 
 	var articles = new Array();
-	if(detectWeb(doc, url) == "multiple") { 
+	if (detectWeb(doc, url) == "multiple") { 
 		var items = {};
 		var titles = doc.evaluate('//div[contains(@class, "resultBlock")]/a|//div[contains(@class, "articleTitle") or contains(@class, "articleSection")]/a[contains(@href, "articleid") or contains(@href, "articleID")]|//ul[contains(@class, "article")]//h4[contains(@class, "title")]/a', doc, null, XPathResult.ANY_TYPE, null);
 		var title;

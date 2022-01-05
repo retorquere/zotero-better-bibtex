@@ -1,80 +1,24 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
-      "ascii": "",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportDelay": 1,
-      "autoExportIdleWait": 10,
-      "autoPin": false,
-      "automaticTags": true,
-      "auxImport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[Auth]_[year]_[Title:split-ideographs:select=1,3]",
-      "citeprocNoteCitekey": false,
-      "client": "zotero",
-      "csquotes": "",
-      "debugLogDir": "",
-      "exportBibTeXStrings": "off",
-      "exportBraceProtection": true,
-      "exportTitleCase": true,
-      "git": "config",
-      "ignorePostscriptErrors": true,
+      "kuroshiro": true,
       "importBibTeXStrings": false,
       "importCaseProtection": "off",
-      "importSentenceCase": "on+guess",
       "itemObserverDelay": 100,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "keyScope": "library",
-      "kuroshiro": false,
-      "mapMath": "",
-      "mapText": "",
-      "mapUnicode": "conservative",
-      "newTranslatorsAskRestart": true,
-      "parseParticles": true,
-      "platform": "lin",
       "postscript": "if (Translator.BetterTeX) {\n  // the bib(la)tex fields are ordered according to this array.\n  // If a field is not in this list, it will show up at after the ordered fields.\n  // https://github.com/retorquere/zotero-better-bibtex/issues/512\n\n  const order = ['author', 'date', 'title', 'publisher']\n  for (const field of order.concat(Object.keys(reference.has).filter(other => !order.includes(other)))) {\n    const value = reference.has[field]\n    if (value) {\n      delete reference.has[field]\n      reference.has[field] = value\n    }\n  }\n}",
-      "qualityReport": false,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "rawLaTag": "#LaTeX",
-      "relativeFilePaths": false,
-      "removeStock": false,
-      "scrubDatabase": false,
-      "skipFields": "file, note",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
-      "warnBulkModify": 10
+      "skipFields": "file, note"
     }
   },
   "items": [
     {
-      "attachments": [],
       "citationKey": "LiWenHui_2014_HangPaiShiPi",
-      "citekey": "LiWenHui_2014_HangPaiShiPi",
-      "collections": [
-        "326MBU48"
-      ],
       "creators": [
         {
           "creatorType": "author",
@@ -82,20 +26,11 @@
         }
       ],
       "date": "2014",
-      "dateAdded": "2019-12-04T07:04:26Z",
-      "dateModified": "2019-12-06T07:54:47Z",
-      "itemID": 121,
+      "itemID": 1,
       "itemType": "thesis",
-      "key": "2RCNQN94",
-      "libraryID": 1,
-      "notes": [],
       "publisher": "\u897f\u5b89: \u897f\u5b89\u7535\u5b50\u79d1\u6280\u5927\u5b66",
-      "relations": [],
-      "tags": [],
       "title": "\u822a\u62cd\u89c6\u9891\u4e2d\u8fd0\u52a8\u76ee\u6807\u7684\u68c0\u6d4b\u4e0e\u8ddf\u8e2a\u7b97\u6cd5\u7814\u7a76",
-      "type": "PhD Thesis",
-      "uri": "http://zotero.org/users/6202952/items/2RCNQN94",
-      "version": 99
+      "type": "PhD Thesis"
     }
   ]
 }

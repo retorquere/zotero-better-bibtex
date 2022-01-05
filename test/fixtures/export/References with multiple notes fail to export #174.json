@@ -1,39 +1,35 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "Export collections": false,
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]",
-      "jabrefFormat": 0
-    },
-    "release": "0.8.2"
+      "citekeyFormat": "[auth][year]"
+    }
   },
   "items": [
     {
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Joe",
           "lastName": "Torre"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Tom",
           "lastName": "Verducci"
         }
       ],
       "date": "2008",
-      "extra": "Citation Key: Torre2008",
-      "itemID": 653,
+      "extra": [
+        "Citation Key: Torre2008"
+      ],
+      "itemID": 1,
       "itemType": "document",
       "notes": [
         "note 1",

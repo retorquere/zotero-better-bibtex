@@ -1,0 +1,68 @@
+| <?xml version="1.0"?>
+| <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+| <?xml-stylesheet href="chrome://global/skin/global.css"?>
+| <?xml-stylesheet href="chrome://zotero-platform/content/preferences.css"?>
+| <?xml-stylesheet href="chrome://browser/skin/preferences/preferences.css"?>
+| <?xml-stylesheet href="chrome://zotero/skin/preferences.css"?>
+| <?xml-stylesheet href="chrome://zotero/skin/zotero.css"?>
+| <?xml-stylesheet href="chrome://zotero-platform/content/overlay.css"?>
+| <?xml-stylesheet href="chrome://zotero-better-bibtex/skin/preferences.css"?>
+| <?xml-stylesheet href="chrome://zotero-better-bibtex/skin/error-report.css" type="text/css"?>
+| <!DOCTYPE window SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd">
+overlay#zotero-better-bibtex-preferences(xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:bbt="http://retorque.re/zotero-better-bibtex/")
+  popupset
+    tooltip#tooltip-bibtexURL
+      description &better-bibtex.Preferences.export.fields.doi-and-url.warning;
+    tooltip#tooltip-jabrefFormat
+      description &better-bibtex.Preferences.export.jabrefFormat.warn;
+    tooltip#tooltip-importSentenceCase
+      description &better-bibtex.Preferences.advanced.import.sentenceCase.warning;
+    tooltip#tooltip-importCaseProtection
+      description &better-bibtex.Preferences.advanced.import.caseProtection.warning;
+    tooltip#tooltip-exportTitleCase
+      description &better-bibtex.Preferences.advanced.export.titleCase.warning;
+    tooltip#tooltip-exportBraceProtection
+      description &better-bibtex.Preferences.advanced.export.braceProtection.warning;
+    tooltip#tooltip-retainCache
+      description &better-bibtex.Preferences.advanced.export.retainCache.warning;
+  prefwindow#zotero-prefs
+    prefpane#zotero-prefpane-better-bibtex(insertafter="zotero-prefpane-advanced" label="&better-bibtex.Preferences.prefpane.better-bibtex;" image="chrome://zotero-better-bibtex/skin/bibtex.svg" onpaneload="load()" helpTopic="BetterBibTeX")
+
+      preferences#zotero-preferences-cite
+        include Preferences/preferences.pug
+
+      deck#better-bibtex-prefs-deck(selectedIndex='0')
+        label#better-bibtex-loading &better-bibtex.Preferences.prefpane.loading;
+
+        tabbox#better-bibtex-prefs-tabbox
+          tabs#better-bibtex-prefs-tabs(onselect="Zotero.BetterBibTeX.PrefPane.refresh()")
+            tab#better-bibtex-prefs-citekey(label="&better-bibtex.Preferences.tab.citekey;")
+            tab#better-bibtex-prefs-export(label="&better-bibtex.Preferences.tab.export;")
+            tab#better-bibtex-prefs-auto-export(label="&better-bibtex.Preferences.tab.auto-export;")
+            tab(label='&better-bibtex.Preferences.advanced.tab.import;')
+            tab(label='&better-bibtex.Preferences.export.misc;')
+
+          tabpanels#better-bibtex-prefs-tabpanels(flex="1")
+            tabpanel(bbt:page='citation-keys' flex="1" orient="vertical")
+              include Preferences/citekeys.pug
+            tabpanel(bbt:page='export' flex="1" orient="vertical")
+              include Preferences/export.pug
+            tabpanel(bbt:page='automatic-export' flex="1" orient="vertical")
+              include Preferences/autoexport.pug
+            tabpanel(bbt:page='import' flex="1" orient="vertical")
+              include Preferences/import.pug
+            tabpanel(bbt:page='miscellaneous' flex="1" orient="vertical")
+              include Preferences/misc.pug
+  // http://udn.realityripple.com/docs/Archive/Mozilla/XUL/prefpane, "using multiple prefpanes"... ugh
+  script.
+    Zotero.debug('BBT: overlay PrefPane')
+    Zotero.BetterBibTeX.PrefPane.globals = Zotero.BetterBibTeX.PrefPane.autoexport.globals = Function('return this')();
+    async function load() {
+      try {
+        Zotero.debug('BBT: loading PrefPane')
+        await Zotero.BetterBibTeX.PrefPane.load()
+        Zotero.debug('BBT: PrefPane loaded')
+      } catch (err) {
+        Zotero.debug(`BBT: loading PrefPane error: ${err.message}\n${err.stack ||''}`)
+      }
+    }

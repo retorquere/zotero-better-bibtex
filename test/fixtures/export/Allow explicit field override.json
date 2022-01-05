@@ -1,41 +1,41 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "both",
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "bibtexURL": "note",
       "citekeyFormat": "[auth:lower][year]",
-      "jabrefFormat": 0,
       "skipFields": "abstract,file"
-    },
-    "release": "0.9.6"
+    }
   },
   "items": [
     {
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Abhishek",
           "lastName": "Anand"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Vincent",
           "lastName": "Rahli"
         }
       ],
       "date": "2014",
-      "extra": "Citation Key: anand2014technicalreportformally\ntex.origdate= 1856\ntex.origtitle= An Old Title\ntex.timestamp= 2011.03.22\nhttp://www.nuprl.org/html/verification/",
-      "itemID": 375,
+      "extra": [
+        "Citation Key: anand2014technicalreportformally",
+        "tex.origdate= 1856",
+        "tex.origtitle= An Old Title",
+        "tex.timestamp= 2011.03.22",
+        "http://www.nuprl.org/html/verification/"
+      ],
+      "itemID": 1,
       "itemType": "journalArticle",
       "title": "Technical Report : Towards a Formally Verified Proof Assistant",
       "url": "http://www.nuprl.org/html/verification/"

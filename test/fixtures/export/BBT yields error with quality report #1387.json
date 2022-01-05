@@ -1,85 +1,25 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false,
-      "exportNotes": false,
-      "keepUpdated": false
-    },
+    "localeDateOrder": "ymd",
+    "options": {},
     "preferences": {
       "DOIandURL": "doi",
-      "ascii": "",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
-      "autoExport": "immediate",
-      "autoExportDelay": 1,
-      "autoExportIdleWait": 10,
-      "autoPin": true,
-      "automaticTags": true,
-      "auxImport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
       "citekeyFormat": "[auth][shorttitle][year]",
-      "citeprocNoteCitekey": false,
-      "client": "zotero",
-      "csquotes": "",
-      "debugLogDir": "",
-      "exportBibTeXStrings": "off",
-      "exportBraceProtection": true,
-      "exportTitleCase": true,
-      "extraMergeCSL": true,
-      "extraMergeCitekeys": true,
-      "extraMergeTeX": true,
-      "git": "config",
-      "ignorePostscriptErrors": false,
-      "importBibTeXStrings": true,
       "importCaseProtection": "off",
-      "importSentenceCase": "on+guess",
       "itemObserverDelay": 100,
-      "jabrefFormat": 0,
       "keyConflictPolicy": "change",
-      "keyScope": "library",
       "kuroshiro": true,
-      "mapMath": "",
-      "mapText": "",
-      "mapUnicode": "conservative",
-      "newTranslatorsAskRestart": true,
-      "parseParticles": true,
-      "platform": "mac",
-      "postscript": "",
       "qualityReport": true,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "rawImports": false,
-      "rawLaTag": "#LaTeX",
-      "relativeFilePaths": false,
-      "removeStock": true,
-      "scrubDatabase": false,
       "skipFields": "abstract, copyright, googlebooks",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "strings": "",
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
-      "warnBulkModify": 10,
       "workers": 4
     }
   },
   "items": [
     {
-      "attachments": [],
       "citationKey": "HopfieldTank85",
-      "citekey": "HopfieldTank85",
-      "collections": [
-        "NF94GG4I"
-      ],
       "creators": [
         {
           "creatorType": "author",
@@ -93,25 +33,19 @@
         }
       ],
       "date": "xx 1985",
-      "dateAdded": "2019-12-17T13:10:25Z",
-      "dateModified": "2020-01-10T21:27:53Z",
-      "extra": "Citation Key: HopfieldTank85",
-      "itemID": 788,
+      "extra": [
+        "Citation Key: HopfieldTank85"
+      ],
+      "itemID": 1,
       "itemType": "webpage",
-      "key": "UZ6S3RFJ",
-      "libraryID": 1,
-      "notes": [],
       "publicationTitle": "Biological Cybernetics",
-      "relations": [],
       "tags": [
         {
           "tag": "#LaTeX"
         }
       ],
       "title": "{`Neural'} computation of decisions in optimization problems.",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/UZ6S3RFJ",
-      "url": "http://www.ncbi.nlm.nih.gov/pubmed/4027280",
-      "version": 0
+      "url": "http://www.ncbi.nlm.nih.gov/pubmed/4027280"
     }
   ]
 }

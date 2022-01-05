@@ -87,7 +87,7 @@ function scrape(doc, url) {
 			var d = new Date();
 			date ='//span[@class="arrival_time"]';
 			dateObject = doc.evaluate(date, doc, null, XPathResult.ANY_TYPE, null).iterateNext();
-				if(dateObject){
+				if (dateObject){
 					newItem.date = dateObject.textContent.replace(/Available\s/, '')+ " " +d.getFullYear()
 					;
 				}

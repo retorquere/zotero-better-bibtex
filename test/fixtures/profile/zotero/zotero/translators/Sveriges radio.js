@@ -1,15 +1,15 @@
 {
 	"translatorID": "caa8f42c-9dbf-446e-963b-6ee18e3133d2",
+	"translatorType": 4,
 	"label": "Sveriges radio",
 	"creator": "Sebastian Berlin",
-	"target": "^https?://sverigesradio\\.se/(sida/artikel\\.aspx|sok\\?)",
+	"target": "^https?://sverigesradio\\.se/(artikel|sok\\?)",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2019-01-15 13:24:45"
+	"lastUpdated": "2021-06-15 16:25:00"
 }
 
 /*
@@ -36,16 +36,14 @@
 */
 
 
-// attr()/text() v2
-function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
-
-
 function detectWeb(doc, url) {
-	if (url.includes('/sida/artikel')) {
+	if (url.includes('/artikel/')) {
 		return "newspaperArticle";
-	} else if (url.includes('/sok?') && getSearchResults(doc, true)) {
+	}
+	else if (url.includes('/sok?') && getSearchResults(doc, true)) {
 		return "multiple";
 	}
+	return false;
 }
 
 
@@ -53,7 +51,7 @@ function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
 	var rows = doc.querySelectorAll('a.search-item');
-	for (let i=0; i<rows.length; i++) {
+	for (let i = 0; i < rows.length; i++) {
 		let href = rows[i].href;
 		let title = ZU.trimInternal(rows[i].textContent);
 		if (!href || !title) continue;
@@ -69,7 +67,7 @@ function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
 		Zotero.selectItems(getSearchResults(doc, false), function (items) {
 			if (!items) {
-				return true;
+				return;
 			}
 			var articles = [];
 			for (var i in items) {
@@ -77,7 +75,8 @@ function doWeb(doc, url) {
 			}
 			ZU.processDocuments(articles, scrape);
 		});
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }
@@ -118,37 +117,15 @@ function scrape(doc, url) {
 		item.title = titleParts[0];
 		item.section = titleParts[1];
 
-		// Date string is of the format:
-		// Publicerat onsdag 15 november 2017 kl 00.11
-		var dateString = ZU.xpathText(doc, '//div[@class="publication-metadata__item"]');
-		var dateParts =
-			dateString.match(/.*(\d{2}) (\w+) (\d{4}).*/);
-		if (dateParts) {
-			var year = dateParts[3];
-			var months = {
-				januari: "01",
-				februari: "02",
-				mars: "03",
-				april: "04",
-				maj: "05",
-				juni: "06",
-				juli: "07",
-				augusti: "08",
-				september: "09",
-				oktober: "10",
-				november: "11",
-				december: "12"
-			};
-			var month = months[dateParts[2]];
-			var day = dateParts[1];
-			item.date = year + "-" + month + "-" + day;
-		}
+		var dateString = attr(doc, '.publication-metadata time', 'datetime');
+		item.date = dateString;
+		
 		item.tags = [];
 
 		item.complete();
 	});
 
-	translator.getTranslatorObject(function(trans) {
+	translator.getTranslatorObject(function (trans) {
 		trans.itemType = "newspaperArticle";
 		trans.addCustomFields({
 			'twitter:description': 'abstractNote'
@@ -156,11 +133,12 @@ function scrape(doc, url) {
 		trans.doWeb(doc, url);
 	});
 }
+
 /** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "https://sverigesradio.se/sida/artikel.aspx?programid=83&artikel=6821850",
+		"url": "https://sverigesradio.se/artikel/6821850",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
@@ -172,16 +150,17 @@ var testCases = [
 						"fieldMode": true
 					}
 				],
-				"date": "2017-11-15",
+				"date": "2017-11-15 00:11:00Z",
 				"abstractNote": "I en rådgivande postomröstning i Australien svarade 61,6 procent av medborgarna att de ville se en lag som godkänner samkönade äktenskap.",
 				"language": "sv",
 				"libraryCatalog": "sverigesradio.se",
 				"publicationTitle": "Sveriges Radio",
 				"section": "Nyheter (Ekot)",
-				"url": "https://sverigesradio.se/sida/artikel.aspx?programid=83&artikel=6821850",
+				"url": "https://sverigesradio.se/artikel/6821850",
 				"attachments": [
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -192,7 +171,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://sverigesradio.se/sida/artikel.aspx?programid=83&artikel=6865752",
+		"url": "https://sverigesradio.se/artikel/6865752",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
@@ -204,16 +183,17 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2018-02-20",
+				"date": "2018-02-20 06:06:00Z",
 				"abstractNote": "I Karlstad har äldreomsorgen börjat använda en duschrobot.",
 				"language": "sv",
 				"libraryCatalog": "sverigesradio.se",
 				"publicationTitle": "Sveriges Radio",
 				"section": "Nyheter (Ekot)",
-				"url": "https://sverigesradio.se/sida/artikel.aspx?programid=83&artikel=6865752",
+				"url": "https://sverigesradio.se/artikel/6865752",
 				"attachments": [
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -224,7 +204,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://sverigesradio.se/sida/artikel.aspx?programid=478&artikel=6891473",
+		"url": "https://sverigesradio.se/artikel/6891473",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
@@ -236,16 +216,17 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2018-02-21",
+				"date": "2018-02-21 16:26:00Z",
 				"abstractNote": "Musikskaparnas representantorganisation Stim har skrivit ett internationellt avtal med Facebook.",
 				"language": "sv",
 				"libraryCatalog": "sverigesradio.se",
 				"publicationTitle": "Sveriges Radio",
 				"section": "Kulturnytt i P1",
-				"url": "https://sverigesradio.se/sida/artikel.aspx?programid=478&artikel=6891473",
+				"url": "https://sverigesradio.se/artikel/6891473",
 				"attachments": [
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -256,7 +237,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://sverigesradio.se/sida/artikel.aspx?programid=83&artikel=6892065",
+		"url": "https://sverigesradio.se/artikel/6892065",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
@@ -268,17 +249,18 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2018-02-22",
+				"date": "2018-02-22 11:44:00Z",
 				"abstractNote": "Högsta domstolen i Pakistan har slagit fast att landets avsatte premiärminister Nawaz Sharif inte längre får leda det parti han själv grundat.",
 				"language": "sv",
 				"libraryCatalog": "sverigesradio.se",
 				"publicationTitle": "Sveriges Radio",
 				"section": "Nyheter (Ekot)",
 				"shortTitle": "HD",
-				"url": "https://sverigesradio.se/sida/artikel.aspx?programid=83&artikel=6892065",
+				"url": "https://sverigesradio.se/artikel/6892065",
 				"attachments": [
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -289,7 +271,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://sverigesradio.se/sida/artikel.aspx?programid=78&artikel=6891577",
+		"url": "https://sverigesradio.se/artikel/6891577",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
@@ -301,16 +283,17 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2018-02-22",
+				"date": "2018-02-22 06:21:00Z",
 				"abstractNote": "Förra året begick 12 ensamkommande barn och ungdomar självmord i Sverige. Ett av fallen skedde i Jämtland.",
 				"language": "sv",
 				"libraryCatalog": "sverigesradio.se",
 				"publicationTitle": "Sveriges Radio",
 				"section": "P4 Jämtland",
-				"url": "https://sverigesradio.se/sida/artikel.aspx?programid=78&artikel=6891577",
+				"url": "https://sverigesradio.se/artikel/6891577",
 				"attachments": [
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -321,7 +304,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://sverigesradio.se/sida/artikel.aspx?programid=128&artikel=6892091",
+		"url": "https://sverigesradio.se/artikel/6892091",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
@@ -338,16 +321,17 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2018-02-22",
+				"date": "2018-02-22 12:09:00Z",
 				"abstractNote": "Facebook och Instagram fick problem strax före 12. Minuter senare fungerade allt som vanligt för de flesta användare. Under tiden hade #facebookdown använts ...",
 				"language": "sv",
 				"libraryCatalog": "sverigesradio.se",
 				"publicationTitle": "Sveriges Radio",
 				"section": "P4 Halland",
-				"url": "https://sverigesradio.se/sida/artikel.aspx?programid=128&artikel=6892091",
+				"url": "https://sverigesradio.se/artikel/6892091",
 				"attachments": [
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -358,7 +342,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://sverigesradio.se/sida/artikel.aspx?programid=2054&artikel=6894423",
+		"url": "https://sverigesradio.se/artikel/6894423",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
@@ -370,16 +354,17 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2018-02-26",
+				"date": "2018-02-26 13:31:00Z",
 				"abstractNote": "A Siberian cold front has brought Sweden unusually cold temperatures for late February. It was -42C when Kristina Lindqvist left home for her job at the ...",
 				"language": "en",
 				"libraryCatalog": "sverigesradio.se",
 				"publicationTitle": "Sveriges Radio",
 				"section": "Radio Sweden",
-				"url": "https://sverigesradio.se/sida/artikel.aspx?programid=2054&artikel=6894423",
+				"url": "https://sverigesradio.se/artikel/6894423",
 				"attachments": [
 					{
-						"title": "Snapshot"
+						"title": "Snapshot",
+						"mimeType": "text/html"
 					}
 				],
 				"tags": [],
@@ -390,8 +375,42 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://sverigesradio.se/sok?q=choklad&content=true",
+		"url": "https://sverigesradio.se/sok?query=choklad",
+		"defer": true,
 		"items": "multiple"
+	},
+	{
+		"type": "web",
+		"url": "https://sverigesradio.se/artikel/har-gor-den-svenska-extrabubblan-sin-forsta-traning",
+		"items": [
+			{
+				"itemType": "newspaperArticle",
+				"title": "Här gör den svenska ”extrabubblan” sin första träning",
+				"creators": [
+					{
+						"firstName": "",
+						"lastName": "Radiosporten",
+						"creatorType": "author"
+					}
+				],
+				"date": "2021-06-11 20:03:00Z",
+				"abstractNote": "Under fredagen genomfördes den första träningen för de sex spelare som blixtinkallats till fotbollslandslagets extrabubbla. De som ska vara redo att skrivas ...",
+				"language": "sv",
+				"libraryCatalog": "sverigesradio.se",
+				"publicationTitle": "Sveriges Radio",
+				"section": "Radiosporten",
+				"url": "https://sverigesradio.se/artikel/har-gor-den-svenska-extrabubblan-sin-forsta-traning",
+				"attachments": [
+					{
+						"title": "Snapshot",
+						"mimeType": "text/html"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
 	}
 ]
 /** END TEST CASES **/

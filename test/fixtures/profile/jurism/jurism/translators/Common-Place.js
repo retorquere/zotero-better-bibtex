@@ -80,7 +80,7 @@ function scrape(doc, url) {
 		//e.g. <a href="/vol-12/no-01/">vol. 12 · no. 1 · October 2011</a>
 		var dateRe = /<a href="\/vol-(\d+)\/no-(\d+)\/">([^<]*)<\/a>/;
 		var m = dateRe.exec(ZU.trimInternal(doc.getElementsByTagName("body")[0].innerHTML));
-		if(m) {
+		if (m) {
 			newItem.volume = m[1];
 			newItem.issue = m[2];
 			var n = m[3].match(/· ([\w\s]+)$/);

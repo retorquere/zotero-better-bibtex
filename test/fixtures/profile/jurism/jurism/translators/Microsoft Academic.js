@@ -216,7 +216,7 @@ function scrape(urlList) {
 			
 			//add DOIs for books, but make this robust to addition of other item types
 			if (item.DOI && !ZU.fieldIsValidForType("DOI", item.itemType)) {
-				if(item.extra) {
+				if (item.extra) {
 					if (item.extra.search(/^DOI:/) == -1) {
 						item.extra += '\nDOI: ' + item.DOI;
 					}

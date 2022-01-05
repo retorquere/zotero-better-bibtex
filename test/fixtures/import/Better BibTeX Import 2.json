@@ -1,8 +1,8 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
-    "label": "BetterBibTeX JSON"
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd"
   },
   "items": [
     {
@@ -20,8 +20,10 @@
       ],
       "date": "1964",
       "edition": "ninth Dover printing, tenth GPO printing",
-      "extra": "Citation Key: abramowitz+stegun",
-      "itemID": 0,
+      "extra": [
+        "Citation Key: abramowitz+stegun"
+      ],
+      "itemID": 1,
       "itemType": "book",
       "place": "New York",
       "publisher": "Dover",
@@ -42,8 +44,10 @@
         }
       ],
       "date": "2008",
-      "extra": "Citation Key: Torre2008",
-      "itemID": 1,
+      "extra": [
+        "Citation Key: Torre2008"
+      ],
+      "itemID": 2,
       "itemType": "book",
       "publisher": "Doubleday",
       "title": "The yankee years"

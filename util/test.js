@@ -1,1 +1,3 @@
-return 4
+return await Zotero.DB.executeTransaction(async () => {
+  return 4
+})

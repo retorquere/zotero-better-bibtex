@@ -61,12 +61,12 @@ function detectImport() {
 	var line, m;
 	var lastIndex = 0;
 	var i = 0;
-	while((line = Zotero.read()) !== false && (i++ < MAX_DETECT_LINES)) {
+	while ((line = Zotero.read()) !== false && (i++ < MAX_DETECT_LINES)) {
 		text += line;
 
 		bookmarkRE.lastIndex = lastIndex; //don't restart searches from begining
 		m = bookmarkRE.exec(text);
-		if(m && lastIndex < bookmarkRE.lastIndex) lastIndex = bookmarkRE.lastIndex;
+		if (m && lastIndex < bookmarkRE.lastIndex) lastIndex = bookmarkRE.lastIndex;
 
 		if (m && m[2].toUpperCase().indexOf('PLACE:') !== 0) {
 			Zotero.debug("Found a match with line: "+m[0]);
@@ -88,38 +88,38 @@ function doImport() {
 	var firstMatch, firstMatchAt, openItem, lastIndex = 0;
 	var collectionStack = [], collection;
 	
-	while((l = Zotero.read()) !== false) {
+	while ((l = Zotero.read()) !== false) {
 		line += '\n' + l;
 		bookmarkRE.lastIndex = collectionRE.lastIndex = descriptionRE.lastIndex = 0;
 		do {
 			firstMatch = false;
 			firstMatchType = false;
 			
-			for(var re in allREs) {
-				if(re == 'd' && !openItem) {
+			for (var re in allREs) {
+				if (re == 'd' && !openItem) {
 					continue;
 				}
 				
 				allREs[re].lastIndex = lastIndex;
 				m = allREs[re].exec(line);
-				if(m && (!firstMatchType || m.index < firstMatch.index)) {
+				if (m && (!firstMatchType || m.index < firstMatch.index)) {
 					firstMatch = m;
 					firstMatchType = re;
 				}
 			}
 			
-			if(firstMatchType) {
+			if (firstMatchType) {
 				m = firstMatch;
 				lastIndex = allREs[firstMatchType].lastIndex;
 			}
 			
-			switch(firstMatchType) {
+			switch (firstMatchType) {
 				case 'b': //create new webpage item
-					if(openItem) openItem.complete();
+					if (openItem) openItem.complete();
 					
 					var title = m[3].trim();
 					
-					if(!title || m[2].toUpperCase().indexOf('PLACE:') == 0) {
+					if (!title || m[2].toUpperCase().indexOf('PLACE:') == 0) {
 						Z.debug('Skipping item with no title or special "place:" item');
 						openItem = false;
 						break;
@@ -128,12 +128,12 @@ function doImport() {
 					openItem = new Zotero.Item("webpage");
 					openItem.title = ZU.unescapeHTML(title);
 					openItem.itemID = openItem.id = itemID++;
-					if(collection) collection.children.push(openItem);
+					if (collection) collection.children.push(openItem);
 					
 					bookmarkDetailsRE.lastIndex = 0;
 					var detailMatch;
-					while(detailMatch = bookmarkDetailsRE.exec(m[0])) {
-						switch(detailMatch[1].toUpperCase()) {
+					while (detailMatch = bookmarkDetailsRE.exec(m[0])) {
+						switch (detailMatch[1].toUpperCase()) {
 							case 'HREF':
 								openItem.url = detailMatch[3];
 							break;
@@ -151,12 +151,12 @@ function doImport() {
 					}
 				break;
 				case 'c': //start a collection
-					if(openItem) {
+					if (openItem) {
 						openItem.complete();
 						openItem = false;
 					}
 					
-					if(collection) collectionStack.push(collection)
+					if (collection) collectionStack.push(collection)
 					
 					collection = new Zotero.Collection();
 					collection.type = 'collection';
@@ -165,19 +165,19 @@ function doImport() {
 					collection.children = new Array();
 				break;
 				case 'ce': //end a collection
-					if(openItem) {
+					if (openItem) {
 						openItem.complete();
 						openItem = false;
 					}
 					
 					var parentCollection = collectionStack.pop();
 					
-					if(parentCollection) {
-						if(collection.children.length) {
+					if (parentCollection) {
+						if (collection.children.length) {
 							parentCollection.children.push(collection);
 						}
 						collection = parentCollection;
-					} else if(collection && collection.children.length) {
+					} else if (collection && collection.children.length) {
 						collection.complete();
 						collection = false;
 					}
@@ -188,22 +188,22 @@ function doImport() {
 					openItem = false;
 				break;
 			}
-		} while(firstMatch);
+		} while (firstMatch);
 		
 		line = line.substr(lastIndex);
 		lastIndex = 0;
 	}
 	
-	if(openItem) openItem.complete();
-	if(collection) {
+	if (openItem) openItem.complete();
+	if (collection) {
 		var parentCollection;
-		while(parentCollection = collectionStack.pop()) {
-			if(collection.children.length) {
+		while (parentCollection = collectionStack.pop()) {
+			if (collection.children.length) {
 				parentCollection.children.push(collection);
 			}
 			collection = parentCollection;
 		}
-		if(collection.children.length) {
+		if (collection.children.length) {
 			collection.complete();
 		}
 	}

@@ -1,0 +1,93 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "asciiBibTeX": false,
+      "biblatexExtendedNameFormat": true,
+      "bibtexURL": "url",
+      "citekeyFormat": "[auth:lower][year]",
+      "postscript": "\nif (Translator.BetterBibTeX && item.itemType === 'conferencePaper' && item.extra) {\n  for (const line of item.extra.split('\\n')) {\n    try {\n      const [ , keyword, value ] = line.match(/([^:]+):s*(.*)/)\n      switch (keyword) {\n        case 'Sponsor':\n          reference.add({name: 'organization', value })\n          break\n      }\n    } catch (err) {\n      if (!(err instanceof TypeError)) throw err\n    }\n  }\n}\n",
+      "skipFields": "abstract,file,keywords,note",
+      "workers": 2
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1145/2751205.2751209",
+      "ISBN": "978-1-4503-3559-1",
+      "abstractNote": "Sparse matrix-vector multiplication (SpMV) is a fundamental building block for numerous applications. In this paper, we propose CSR5 (Compressed Sparse Row 5), a new storage format, which offers high-throughput SpMV on various platforms including CPUs, GPUs and Xeon Phi. First, the CSR5 format is insensitive to the sparsity structure of the input matrix. Thus the single format can support an SpMV algorithm that is efficient both for regular matrices and for irregular matrices. Furthermore, we show that the overhead of the format conversion from the CSR to the CSR5 can be as low as the cost of a few SpMV operations. We compare the CSR5-based SpMV algorithm with 11 state-of-the-art formats and algorithms on four mainstream processors using 14 regular and 10 irregular matrices as a benchmark suite. For the 14 regular matrices in the suite, we achieve comparable or better performance over the previous work. For the 10 irregular matrices, the CSR5 obtains average performance improvement of 17.6%, 28.5%, 173.0% and 293.3% (up to 213.3%, 153.6%, 405.1% and 943.3%) over the best existing work on dual-socket Intel CPUs, an nVidia GPU, an AMD GPU and an Intel Xeon Phi, respectively. For real-world applications such as a solver with only tens of iterations, the CSR5 format can be more practical because of its low-overhead for format conversion.",
+      "citationKey": "liu2015a",
+      "conferenceName": "29th ACM International Conference on Supercomputing",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Weifeng",
+          "lastName": "Liu"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Brian",
+          "lastName": "Vinter"
+        }
+      ],
+      "date": "2015-06-08",
+      "extra": [
+        "Event Date: 2015-06-08/2015-06-11",
+        "Event Place: Newport Beach, California, USA",
+        "Publisher Place: New York, NY, United States",
+        "Sponsor: ACM SIGARCH"
+      ],
+      "itemID": 1,
+      "itemType": "conferencePaper",
+      "language": "en-US",
+      "libraryCatalog": "ACM Digital Library",
+      "pages": "339\u2013350",
+      "publicationTitle": "Proceedings of the 29th ACM international conference on supercomputing",
+      "publisher": "Association for Computing Machinery",
+      "rights": "Copyright is held by the owner/author(s). Publication rights licensed to ACM.",
+      "series": "ICS '15",
+      "shortTitle": "CSR5",
+      "tags": [
+        {
+          "tag": "cpu",
+          "type": 1
+        },
+        {
+          "tag": "csr",
+          "type": 1
+        },
+        {
+          "tag": "csr5",
+          "type": 1
+        },
+        {
+          "tag": "gpu",
+          "type": 1
+        },
+        {
+          "tag": "sparse matrices",
+          "type": 1
+        },
+        {
+          "tag": "spmv",
+          "type": 1
+        },
+        {
+          "tag": "storage formats",
+          "type": 1
+        },
+        {
+          "tag": "xeon phi",
+          "type": 1
+        }
+      ],
+      "title": "CSR5: an efficient storage format for cross-platform sparse matrix-vector multiplication",
+      "url": "https://dl.acm.org/doi/10.1145/2751205.2751209"
+    }
+  ]
+}

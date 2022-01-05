@@ -177,7 +177,7 @@ function doWeb(doc, url) {
 		var hits = getSearchResults(doc);
 		var urls = [];
 		Z.selectItems(hits, function(items) {
-			if(items == null) {
+			if (items == null) {
 				return true;
 			}
 			for (var j in items) {

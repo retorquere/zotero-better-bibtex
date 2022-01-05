@@ -1,40 +1,36 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
     "options": {
-      "Export collections": true,
-      "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]",
-      "jabrefFormat": 0
-    },
-    "release": "0.6.44"
+      "citekeyFormat": "[auth][year]"
+    }
   },
   "items": [
     {
-      "bookTitle": "Implementation of Functional Languages",
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Pieter",
           "lastName": "Koopman"
         },
         {
           "creatorType": "author",
-          "fieldMode": "",
           "firstName": "Rinus",
           "lastName": "Plasmeijer"
         }
       ],
       "date": "1999",
-      "extra": "Citation Key: koopman_efficient_99\ntex.doi= 10.1007/3-540-48515-5_8",
-      "itemID": 203,
+      "extra": [
+        "Citation Key: koopman_efficient_99",
+        "tex.doi= 10.1007/3-540-48515-5_8"
+      ],
+      "itemID": 1,
       "itemType": "bookSection",
       "libraryCatalog": "Google Scholar",
       "pages": "120\u2013136",

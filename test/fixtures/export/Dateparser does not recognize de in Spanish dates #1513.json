@@ -1,0 +1,55 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "mdy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "asciiBibTeX": false,
+      "automaticTags": false,
+      "citekeyFormat": "[=forumPost/WebPage][Auth:lower:capitalize][Date:format-date=%Y-%m-%d.%H\\:%M\\:%S:prefix=.][PublicationTitle:select=1,1:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de] | [Auth:lower:capitalize][date=%oY:prefix=.][PublicationTitle:select=1,1:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de]",
+      "keyScope": "global",
+      "qualityReport": true,
+      "quickCopyMode": "orgRef",
+      "warnBulkModify": 0
+    }
+  },
+  "items": [
+    {
+      "ISBN": "978-0-393-33745-7",
+      "abstractNote": "From breaking the law to breaking a promise, how do people lie and how can they be caught?In this revised edition, Paul Ekman, a renowned expert in emotions research and nonverbal communication, adds a new chapter to present his latest research on his groundbreaking inquiry into lying and the methods for uncovering lies. Ekman has figured out the most important behavioral clues to deceit; he has developed a one-hour self-instructional program that trains people to observe and understand \"micro expressions\"; and he has done research that identifies the facial expressions that show whether someone is likely to become violent\u2015a self-instructional program to train recognition of these dangerous signals has also been developed.Telling Lies describes how lies vary in form and how they can differ from other types of misinformation that can reveal untruths. It discusses how a person\u2019s body language, voice, and facial expressions can give away a lie but still fool professional lie hunters?even judges, police officers, drug enforcement agents, and Secret Service agents.",
+      "attachments": [
+        {
+          "accessDate": "2020-05-01T06:47:23Z",
+          "contentType": "text/html",
+          "itemType": "attachment",
+          "key": "32KHP9DB",
+          "linkMode": "linked_url",
+          "title": "Amazon.com Link",
+          "uri": "http://zotero.org/users/6244081/items/32KHP9DB",
+          "url": "https://www.amazon.com/-/es/Paul-Ekman/dp/0393337456/ref=tmm_pap_swatch_0?_encoding=UTF8&qid=1588315592&sr=8-1"
+        }
+      ],
+      "citationKey": "Ekman.TellingLiesClues",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Paul",
+          "lastName": "Ekman"
+        }
+      ],
+      "date": "26 de enero de 2009",
+      "edition": "Edici\u00f3n: Revised",
+      "itemID": 1,
+      "itemType": "book",
+      "language": "English",
+      "numPages": "416",
+      "place": "New York",
+      "publisher": "W. W. Norton & Company",
+      "shortTitle": "Telling Lies",
+      "title": "Telling Lies: Clues to Deceit in the Marketplace, Politics, and Marriage"
+    }
+  ]
+}
