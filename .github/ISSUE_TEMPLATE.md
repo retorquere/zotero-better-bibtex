@@ -8,5 +8,4 @@ You can generate a support log ID by:
 
 If you are sure your question does not relate to items in your library at all, just select any one item in your library.
 
-
-Thank you.
+Please remove this boilerplate before submitting your issue. Thank you.
