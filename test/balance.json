@@ -25,7 +25,7 @@
     },
     "Citekey generation failure #708 and sort references on export #957": 2040,
     "Collected notes": {
-      "msecs": 3620,
+      "msecs": 3630,
       "runs": -71
     },
     "Date export to Better CSL-JSON #360 #811": 1350,
@@ -74,7 +74,7 @@
     "Export 1 references for BibLaTeX to CSL variables only recognized when in lowercase #408": 460,
     "Export 1 references for BibLaTeX to Capitalisation in techreport titles #160": 340,
     "Export 1 references for BibLaTeX to Capitalized words after colons not brace protected #1978": {
-      "msecs": 660,
+      "msecs": 710,
       "runs": -432
     },
     "Export 1 references for BibLaTeX to Cite archive documents with BetterBibLaTeX #1799": {
@@ -121,7 +121,7 @@
     },
     "Export 1 references for BibLaTeX to Exporting of single-field author lacks braces #130": 410,
     "Export 1 references for BibLaTeX to Extensions to citation format syntax #1933": {
-      "msecs": 710,
+      "msecs": 720,
       "runs": -430
     },
     "Export 1 references for BibLaTeX to Fields in Extra should override defaults": 320,
@@ -296,7 +296,7 @@
       "runs": -80
     },
     "Export 1 references for BibTeX to University is exported as publisher as soon as tex.referencetype is specified in Extra field #1965": {
-      "msecs": 770,
+      "msecs": 780,
       "runs": -422
     },
     "Export 1 references for BibTeX to Use creator in extra field when there is no creator in the usual places? #1873": {
@@ -320,12 +320,12 @@
     "Export 1 references for BibTeX to braces after textemdash followed by unicode #980": 400,
     "Export 1 references for BibTeX to capital delta breaks .bib output #141": 410,
     "Export 1 references for BibTeX to citation key format nopunctordash filter list #1880": {
-      "msecs": 1450,
+      "msecs": 1440,
       "runs": -380
     },
     "Export 1 references for BibTeX to custom fields should be exported as-is #441": 480,
     "Export 1 references for BibTeX to fetch inspire-hep key #1879": {
-      "msecs": 1980,
+      "msecs": 2000,
       "runs": -422
     },
     "Export 1 references for BibTeX to lone ogonek should have brace": {
@@ -360,7 +360,7 @@
     "Export 2 references for BibLaTeX to Hang on non-file attachment export #112 - URL export broken #114": 460,
     "Export 2 references for BibLaTeX to Juris-M missing multi-lingual fields #482": 430,
     "Export 2 references for BibLaTeX to Kuroshiro hardcoded to apply to all CJK language items when option checked #1928": {
-      "msecs": 1930,
+      "msecs": 1940,
       "runs": -409
     },
     "Export 2 references for BibLaTeX to Title case of latex greek text on biblatex export #564": 550,
@@ -407,17 +407,17 @@
     "Export 6 references for BibLaTeX to Better BibLaTeX.stable-keys": 620,
     "Export 8 references for BibLaTeX to Don't title-case sup-subscripts #1037": 660,
     "Export 86 references for BibLaTeX to Language field in the metadata exported incorrectly #1921": {
-      "msecs": 5950,
+      "msecs": 5980,
       "runs": -405
     },
     "Export as Collected Notes does not list subcollections #1768": {
-      "msecs": 4960,
+      "msecs": 4970,
       "runs": -256
     },
     "Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825": 990,
     "Export web page to misc type with notes and howpublished custom fields #329": 470,
     "Exporting %-encoded URLs (e.g. containing %20) #1966": {
-      "msecs": 1730,
+      "msecs": 1740,
       "runs": -423
     },
     "Exporting folder, previous postscript does not work anymore #1962": {
@@ -504,7 +504,7 @@
     "Include first name initial(s) in cite key generation pattern (86)": 450,
     "Jabref groups import does not work #717": 2890,
     "Jabref import - groups lost #1730": {
-      "msecs": 3440,
+      "msecs": 3450,
       "runs": -228
     },
     "Journal abbreviations": 490,
@@ -512,6 +512,10 @@
     "LaTeX commands in Zotero should be exported untouched #1380": 1290,
     "Math markup to unicode not always imported correctly #472": 1020,
     "Merging error with arXiv ID #1373": 9480,
+    "Multiple creators in Extra not exported in Better CSL JSON #2015": {
+      "msecs": 400,
+      "runs": -436
+    },
     "Omit URL export when DOI present. #131": 1760,
     "Options to use default import process? #1562": {
       "msecs": 1230,
@@ -524,7 +528,7 @@
     },
     "Postscript error aborts CSL JSON export #1155": 750,
     "Quotes around last names should be removed from citekeys #856": 250,
-    "Really Big whopping library": 346940,
+    "Really Big whopping library": 346680,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
@@ -538,7 +542,7 @@
       "msecs": 710,
       "runs": -413
     },
-    "Unabbreviate on import #1436-1": 39010,
+    "Unabbreviate on import #1436-1": 39030,
     "Unbalanced vphantom escapes #1043": 760,
     "arXiv identifiers in BibLaTeX export #460": 1180,
     "auto-export": 14370,
@@ -561,7 +565,7 @@
       "runs": -36
     },
     "web_page and other mendeley idiocy": {
-      "msecs": 40380,
+      "msecs": 40440,
       "runs": -239
     }
   },
@@ -890,7 +894,7 @@
       "Identical Pinned keys lost when merging duplicated records #1721"
     ]
   },
-  "runs": 436,
+  "runs": 437,
   "slow": {
     "1": [
       "Export 1 references for BibLaTeX to Capitalized words after colons not brace protected #1978",
@@ -1211,7 +1215,8 @@
       "Merging error with arXiv ID #1373",
       "Duplicate Citation Key Alias #1384",
       "ids field should be created in raw mode #1729",
-      "Identical Pinned keys lost when merging duplicated records #1721"
+      "Identical Pinned keys lost when merging duplicated records #1721",
+      "Multiple creators in Extra not exported in Better CSL JSON #2015"
     ],
     "2": [
       "Really Big whopping library",

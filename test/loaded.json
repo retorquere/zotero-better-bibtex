@@ -315,6 +315,8 @@
   "export/Missing JabRef pattern; authorsN+initials #553.json",
   "export/Month showing up in year field on export #889.biblatex",
   "export/Month showing up in year field on export #889.json",
+  "export/Multiple creators in Extra not exported in Better CSL JSON #2015.csl.json",
+  "export/Multiple creators in Extra not exported in Better CSL JSON #2015.json",
   "export/Multiple locations and-or publishers and BibLaTeX export #689.biblatex",
   "export/Multiple locations and-or publishers and BibLaTeX export #689.json",
   "export/No booktitle field when exporting references from conference proceedings #1069.bibtex",
