@@ -49,9 +49,13 @@ export const Exporter = new class {
     if (!this.postfix && Translator.BetterTeX) this.postfix = new Postfix(Translator.preferences.qualityReport)
 
     for (const item of Translator.references) {
-      if (!item.citationKey) {
-        throw new Error(`No citation key in ${JSON.stringify(item)}`)
+      Object.assign(item, Extra.get(item.extra, 'zotero'))
+      if (typeof item.itemID !== 'number') { // https://github.com/diegodlh/zotero-cita/issues/145
+        item.citationKey = item.extraFields.citationKey
+        item.$cacheable = false
       }
+      if (!item.citationKey) throw new Error(`No citation key in ${JSON.stringify(item)}`)
+
       this.citekeys[item.citationKey] = (this.citekeys[item.citationKey] || 0) + 1
 
       this.jabref.citekeys.set(item.itemID, item.citationKey)
@@ -67,7 +71,6 @@ export const Exporter = new class {
       }
 
       itemfields.simplifyForExport(item)
-      Object.assign(item, Extra.get(item.extra, 'zotero'))
 
       // strip extra.tex fields that are not for me
       const prefix = Translator.BetterBibLaTeX ? 'biblatex.' : 'bibtex.'

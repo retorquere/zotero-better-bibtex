@@ -497,7 +497,7 @@ export class KeyManager {
     return { citekey: '', pinned: false, retry: true }
   }
 
-  public propose(item: ZoteroItem): { citekey: string, pinned: boolean } {
+  public propose(item: ZoteroItem, transient: string[] = []): { citekey: string, pinned: boolean } {
     let citekey: string = Extra.get(item.getField('extra') as string, 'zotero', { citationKey: true }).extraFields.citationKey
 
     if (citekey) return { citekey, pinned: true }
@@ -524,7 +524,7 @@ export class KeyManager {
       seen[postfix] = true
 
       const postfixed = citekey + postfix
-      const conflict = this.keys.findOne({ $and: [...conflictQuery.$and, { citekey: { $eq: postfixed } }] })
+      const conflict = transient.includes(postfixed) || this.keys.findOne({ $and: [...conflictQuery.$and, { citekey: { $eq: postfixed } }] })
       if (conflict) continue
 
       return { citekey: postfixed, pinned: false }
