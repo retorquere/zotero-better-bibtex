@@ -2,126 +2,49 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
     "preferences": {
       "DOIandURL": "doi",
-      "automaticTags": true,
-      "asciiBibLaTeX": false,
-      "ascii": "",
-      "asciiBibTeX": true,
-      "autoExport": "immediate",
-      "quickCopyMode": "latex",
-      "citeCommand": "cite",
-      "quickCopyPandocBrackets": false,
-      "citekeyFormat": "[auth:lower][shorttitle4_4][year]",
-      "citekeyFold": true,
-      "keyConflictPolicy": "keep",
-      "auxImport": false,
-      "keyScope": "global",
-      "exportBibTeXStrings": "off",
-      "importBibTeXStrings": true,
-      "bibtexParticleNoOp": true,
-      "skipFields": "abstract,ZSCC",
-      "bibtexURL": "url",
-      "warnBulkModify": 10,
-      "postscript": "if (Translator.BetterTeX && item.extra) {\n    const away = [\"comment\", \"ZSCC\"];\n    let note = item.extra;\n    for (const val of away) {\n        let re = new RegExp('^'+val+':\\\\s?[^\\\\n]+[\\\\n]*', 'mg');\n        note = note.replace(re, '')\n        // Zotero.debug(re + \": \" + note);\n    }\n    reference.remove('note');\n    reference.add({ name: 'note', value: note });\n}\n",
-      "strings": "",
       "autoAbbrev": true,
-      "autoAbbrevStyle": "",
-      "autoExportIdleWait": 10,
-      "cacheFlushInterval": 5,
-      "csquotes": "",
-      "rawLaTag": "#LaTeX",
-      "rawImports": false,
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
-      "jabrefFormat": 0,
-      "qualityReport": true,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "exportTitleCase": true,
-      "exportBraceProtection": true,
-      "retainCache": false,
-      "importSentenceCase": "on+guess",
-      "importCaseProtection": "as-needed",
       "autoExportDelay": 1,
-      "itemObserverDelay": 5,
-      "parseParticles": true,
-      "citeprocNoteCitekey": false,
-      "extraMergeTeX": true,
+      "bibtexParticleNoOp": true,
+      "bibtexURL": "url",
+      "citekeyFormat": "[auth:lower][shorttitle4_4][year]",
       "extraMergeCSL": true,
       "extraMergeCitekeys": true,
-      "postscriptOverride": "",
-      "scrubDatabase": false,
-      "removeStock": false,
-      "ignorePostscriptErrors": true,
-      "debugLogDir": "",
-      "testing": false,
-      "autoPin": false,
-      "kuroshiro": false,
-      "relativeFilePaths": false,
-      "git": "config",
-      "mapUnicode": "conservative",
-      "mapText": "",
-      "mapMath": "",
-      "newTranslatorsAskRestart": true,
-      "workers": 1,
-      "platform": "lin",
-      "client": "zotero"
-    },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+      "extraMergeTeX": true,
+      "keyScope": "global",
+      "postscript": "if (Translator.BetterTeX && item.extra) {\n    const away = [\"comment\", \"ZSCC\"];\n    let note = item.extra;\n    for (const val of away) {\n        let re = new RegExp('^'+val+':\\\\s?[^\\\\n]+[\\\\n]*', 'mg');\n        note = note.replace(re, '')\n        // Zotero.debug(re + \": \" + note);\n    }\n    reference.remove('note');\n    reference.add({ name: 'note', value: note });\n}\n",
+      "qualityReport": true,
+      "skipFields": "abstract,ZSCC",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc"
     }
   },
-  "collections": {},
   "items": [
     {
-      "key": "FRGL3KCL",
-      "version": 0,
-      "itemType": "report",
-      "url": "https://www.iso.org/standard/29237.html",
-      "date": "1999-12-01",
-      "extra": "Citation Key: c99",
       "accessDate": "2020-02-12T19:03:10Z",
-      "language": "en",
-      "title": "Programming languages — C",
-      "shortTitle": "C99",
+      "citationKey": "c99",
       "creators": [
         {
-          "name": "JTC 1/SC 22/WG 14",
-          "creatorType": "author"
+          "creatorType": "author",
+          "name": "JTC\u00a01/SC\u00a022/WG\u00a014"
         }
       ],
-      "tags": [],
-      "collections": [
-        "EPVU9K4E"
+      "date": "1999-12-01",
+      "extra": [
+        "Citation Key: c99"
       ],
-      "relations": [],
-      "dateAdded": "2020-02-12T19:03:10Z",
-      "dateModified": "2020-02-12T21:24:46Z",
-      "uri": "http://zotero.org/users/local/p8gOMqCB/items/FRGL3KCL",
-      "itemID": 562,
-      "attachments": [
-        {
-          "itemType": "attachment",
-          "title": "1400-1700-ISOIEC_98991999.pdf",
-          "path": "/home/stefanct/Documents/uni/phd/git/references/PDFs/1400-1700-ISOIEC_98991999.pdf",
-          "tags": [],
-          "relations": [],
-          "dateAdded": "2020-02-12T19:04:11Z",
-          "dateModified": "2020-02-12T19:04:13Z",
-          "uri": "http://zotero.org/users/local/p8gOMqCB/items/5SUL7MRU"
-        }
-      ],
-      "notes": [],
-      "citekey": "c99",
-      "citationKey": "c99",
-      "journalAbbreviation": null,
-      "libraryID": 1,
+      "itemID": 1,
+      "itemType": "report",
+      "language": "en",
       "number": "9899:1999",
+      "publisher": "ISO/IEC",
+      "shortTitle": "C99",
+      "title": "Programming languages \u2014 C",
       "type": "std",
-      "publisher": "ISO/IEC"
+      "url": "https://www.iso.org/standard/29237.html"
     }
   ]
 }
