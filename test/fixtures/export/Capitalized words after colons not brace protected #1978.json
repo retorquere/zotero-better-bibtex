@@ -1,0 +1,62 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "baseAttachmentPath": "/home/zach/Documents/bib",
+      "bibtexURL": "url",
+      "citekeyFormat": "[authors4][year]",
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "extraMergeTeX": true,
+      "itemObserverDelay": 100,
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1080/01445340.2017.1358414",
+      "ISSN": "0144-5340",
+      "abstractNote": "We propose a reconstruction of the constellation of problems and philosophical positions on the nature and number of the primitives of logic in four authors of the nineteenth century logical scene: Peano, Padoa, Frege and Peirce. We argue that the proposed reconstruction forces us to recognize that it is in at least four different senses that a notation can be said to be simpler than another, and we trace the origins of these four senses in the writings of these authors. We conclude that Frege, and even more so Peirce, developed new notations not to make drawing logical conclusions easier but in order to answer the needs of logical analysis.",
+      "accessDate": "2021-05-11T21:23:32Z",
+      "attachments": [],
+      "citationKey": "BellucciMoktefiPietarinen2018",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Francesco",
+          "lastName": "Bellucci"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Amirouche",
+          "lastName": "Moktefi"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Ahti-Veikko",
+          "lastName": "Pietarinen"
+        }
+      ],
+      "date": "January 2, 2018",
+      "extra": [
+        "Publisher: Taylor & Francis",
+        "_eprint: https://doi.org/10.1080/01445340.2017.1358414"
+      ],
+      "issue": "1",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "libraryCatalog": "Taylor and Francis+NEJM",
+      "pages": "80-95",
+      "publicationTitle": "History and Philosophy of Logic",
+      "shortTitle": "Simplex sigillum veri",
+      "title": "Simplex sigillum veri: Peano, Frege, and Peirce on the primitives of logic",
+      "url": "https://doi.org/10.1080/01445340.2017.1358414",
+      "volume": "39"
+    }
+  ]
+}

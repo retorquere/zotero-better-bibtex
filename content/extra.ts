@@ -43,7 +43,6 @@ const re = {
   new: /^((?:bib(?:la)?)?tex\.)?([^:=]+)\s*([:=])\s*([\S\s]*)/,
 }
 
-
 type SetOptions = {
   citationKey?: string
   aliases?: string[]
@@ -113,7 +112,7 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
       for (const field of (ef[mode] ||  ef[other])) {
         switch (ef.type) {
           case 'name':
-            extraFields.creator[field] = extraFields.creator[key] || []
+            extraFields.creator[field] = extraFields.creator[field] || []
             extraFields.creator[field].push(value)
             break
           case 'text':

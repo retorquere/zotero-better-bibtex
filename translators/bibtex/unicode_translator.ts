@@ -157,6 +157,11 @@ const htmlConverter = new class HTMLConverter {
         latex = '\\textbf{...}'
         break
 
+      case 'tt':
+      case 'code':
+        latex = '\\texttt{...}'
+        break
+
       case 'a':
         /* zotero://open-pdf/0_5P2KA4XM/7 is actually a reference. */
         if (tag.attr.href && tag.attr.href.length) latex = `\\href{${tag.attr.href}}{...}`

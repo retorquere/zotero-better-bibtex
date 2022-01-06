@@ -1,0 +1,82 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "dmy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "citeCommand": "autocite",
+      "citekeyFormat": "[authors+;:replace=\\[^;\\]+,,regex:>1:discard] [authors1+;:replace=;.*,,regex:postfix=;ea] | [authors2+;]",
+      "exportBraceProtection": false,
+      "exportTitleCase": false,
+      "importSentenceCase": "off",
+      "postscript": "if (Translator.BetterBibLaTeX && reference.has.title) {\n\tconst titles = reference.has.title.value.match(/(.+?)([?:;])(.*)/);\n\tif (titles) {\n\t\tlet title = titles[1] + (titles[2] === \"?\" ? \"?\" : \"\");\n\t\treference.add({ name: \"title\", value: title });\n\t\treference.add({ name: \"subtitle\", value: titles[3].trim() });\n\t}\n}\n",
+      "quickCopyMode": "citekeys",
+      "separatorList": "|",
+      "separatorNames": "|"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1016/j.shpsb.2006.03.007",
+      "ISSN": "1355-2198",
+      "abstractNote": "There has recently been a good deal of controversy about Landauer's Principle, which is often stated as follows: the erasure of one bit of information in a computational device is necessarily accompanied by a generation of kTln2 heat. This is often generalised to the claim that any logically irreversible operation cannot be implemented in a thermodynamically reversible way. Norton [2005. Eaters of the lotus: Landauer's principle and the return of Maxwell's demon. Studies in History and Philosophy of Modern Physics, 36, 375\u2013411] and Maroney [2005. The (absence of a) relationship between thermodynamic and logical reversibility. Studies in History and Philosophy of Modern Physics, 36, 355\u2013374] both argue that Landauer's Principle has not been shown to hold in general, and Maroney offers a method that he claims instantiates the operation Reset in a thermodynamically reversible way. In this paper we defend the qualitative form of Landauer's Principle, and clarify its quantitative consequences (assuming the second law of thermodynamics). We analyse in detail what it means for a physical system to implement a logical transformation L, and we make this precise by defining the notion of an L-machine. Then we show that logical irreversibility of L implies thermodynamic irreversibility of every corresponding L-machine. We do this in two ways. First, by assuming the phenomenological validity of the Kelvin statement of the second law, and second, by using information-theoretic reasoning. We illustrate our results with the example of the logical transformation \u2018Reset\u2019, and thereby recover the quantitative form of Landauer's Principle.",
+      "citationKey": "Ladyman;Presnellea:2007",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "James",
+          "lastName": "Ladyman"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Stuart",
+          "lastName": "Presnell"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Anthony J.",
+          "lastName": "Short"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Berry",
+          "lastName": "Groisman"
+        }
+      ],
+      "date": "2007-03",
+      "issue": "1",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "language": "en",
+      "pages": "58-79",
+      "publicationTitle": "Studies in History and Philosophy of Science Part B: Studies in History and Philosophy of Modern Physics",
+      "tags": [
+        {
+          "tag": "Computation"
+        },
+        {
+          "tag": "Entropy"
+        },
+        {
+          "tag": "Information"
+        },
+        {
+          "tag": "Irreversibility"
+        },
+        {
+          "tag": "Landauer's principle"
+        },
+        {
+          "tag": "Thermodynamics"
+        }
+      ],
+      "title": "The connection between logical and thermodynamic irreversibility",
+      "url": "https://doi.org/10.1016/j.shpsb.2006.03.007",
+      "volume": "38"
+    }
+  ]
+}

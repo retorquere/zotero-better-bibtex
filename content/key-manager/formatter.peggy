@@ -123,10 +123,21 @@ method
       }
 
       let method = match(fn, paramnames.slice(0, Object.keys(args).length).map(n => args[n]), input, error);
-      if (scrub) method += '.scrub()';
+      if (scrub) method += '._clean(true)';
 
       return method;
     }
+  / operator:$([<>=] / [<>!] '=') n:$[0-9]+ {
+    const method = {
+      '=': 'eq',
+      '<': 'lt',
+      '>': 'gt',
+      '<=': 'le',
+      '>=': 'ge',
+      '!=': 'ne',
+    } || operator
+    return match('$' + method, [n], operator, error)
+  }
   / name:$([a-z][-.a-zA-Z]+) &{ return options.methods[method_name(name, '$')] } p:fparams? {
       if (name === 'zotero') postfix.set(postfix.numeric)
       return match('$' + name, p || [], name, error)

@@ -11,3 +11,4 @@ import bibertool
 import abbrev
 import jieba
 import babel
+import scannablecite

@@ -12,7 +12,7 @@ import toml
 import urllib
 import tempfile
 from munch import *
-from steps.utils import running, nested_dict_iter, benchmark, ROOT, assert_equal_diff, serialize, html2md, post_log, clean_html, extra_lower
+from steps.utils import running, nested_dict_iter, benchmark, ROOT, assert_equal_diff, serialize, html2md, clean_html, extra_lower
 from steps.library import load as Library
 from steps.bbtjsonschema import validate as validate_bbt_json
 import steps.utils as utils
@@ -296,8 +296,6 @@ class Zotero:
 
         except (urllib.error.HTTPError, urllib.error.URLError,socket.timeout):
           pass
-
-        if bm.elapsed > 2000 and not posted: posted = post_log()
 
     assert ready, f'{self.client} did not start'
     self.config.pop()
