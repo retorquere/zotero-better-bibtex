@@ -24,28 +24,17 @@ function execShellCommand(cmd) {
 
 async function bundle(config) {
   config = {
-    ...config,
     bundle: true,
     format: 'iife',
+    target: ['firefox60'],
+    inject: [],
+    ...config,
   }
-  if (!config.platform) config.target = ['firefox60']
+
+  config.inject.push('./setup/loaders/globals.js')
 
   const metafile = config.metafile
   config.metafile = true
-
-  if (!config.banner) config.banner = {}
-  if (!config.banner.js) config.banner.js = ''
-
-  if (config.prepend) {
-    if (!Array.isArray(config.prepend)) config.prepend = [config.prepend]
-    for (const source of config.prepend.reverse()) {
-      config.banner.js = `${await fs.promises.readFile(source, 'utf-8')}\n${config.banner.js}`
-    }
-    delete config.prepend
-  }
-
-  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis
-  config.banner.js = `var global = Function("return this")();\n${config.banner.js}`
 
   let target
   if (config.outfile) {
@@ -63,13 +52,6 @@ async function bundle(config) {
 }
 
 async function rebuild() {
-  // process
-  await bundle({
-    globalName: 'process',
-    entryPoints: [ 'node_modules/process/browser.js' ],
-    outfile: 'gen/process.js',
-  })
-
   // plugin code
   await bundle({
     entryPoints: [ 'content/better-bibtex.ts' ],
@@ -85,7 +67,6 @@ async function rebuild() {
     banner: { js: 'if (!Zotero.BetterBibTeX) {\n' },
     footer: { js: '\n}' },
     metafile: 'gen/plugin.json',
-    prepend: 'gen/process.js',
     external: [
       'zotero/itemTree',
     ]
@@ -113,7 +94,6 @@ async function rebuild() {
         'importScripts(`resource://zotero-better-bibtex/${workerContext.translator}.js`);',
       ].join('\n'),
     },
-    prepend: 'gen/process.js',
     metafile: 'gen/worker.json',
   })
 
@@ -164,7 +144,6 @@ async function rebuild() {
       // inject: [ './headless/inject.js' ],
       plugins: [node_modules.plugin, loader.patcher('setup/patches'), loader.bibertool, loader.peggy ],
       bundle: true,
-      format: 'iife',
       globalName: 'Headless',
       entryPoints: [ 'headless/zotero.ts' ],
       outfile: 'gen/headless/zotero.js',
@@ -185,7 +164,6 @@ async function rebuild() {
       // inject: [ './headless/inject.js' ],
       plugins: [node_modules.plugin, loader.patcher('setup/patches'), loader.bibertool, loader.peggy ],
       bundle: true,
-      format: 'iife',
       globalName: 'Headless',
       entryPoints: [ 'headless/index.ts' ],
       outfile: 'gen/headless/index.js',

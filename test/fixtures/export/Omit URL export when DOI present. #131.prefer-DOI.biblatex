@@ -13,7 +13,7 @@
 }
 
 @inproceedings{CumEA14,
-  title = {Application Centric Energy-Efficiency Study of Distributed Multi-Core and Hybrid {{CPU}}-{{GPU}} Systems},
+  title = {Application Centric Energy-Efficiency Study of Distributed Multi-Core and Hybrid {{CPU-GPU}} Systems},
   booktitle = {Proceedings of the International Conference for {{High Performance Computing}}, {{Networking}}, {{Storage}} and {{Analysis}}},
   author = {Cumming, Ben and Fourestey, Gilles and Fuhrer, Oliver and Gysi, Tobias and Fatica, Massimiliano and Schulthess, Thomas C.},
   date = {2014},

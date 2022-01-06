@@ -46,7 +46,7 @@ re.lcChar = re.Ll + re.Lt + re.Lm + re.Lo + re.Mn + re.Mc + re.Nd + re.Nl
 // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
 re.char = re.Lu + re.lcChar
 re.L = `${re.Lu}${re.Ll}${re.Lt}${re.Lm}${re.Lo}`
-re.protectedWord = `[${re.lcChar}]*[${re.Lu}][${re.char}]*`
+re.protectedWord = `[${re.lcChar}]*[${re.Lu}][-${re.char}]*`
 
 /* actual regexps */
 
@@ -102,7 +102,6 @@ export function titleCase(text: string): string {
     return match
   })
 
-  Zotero.debug(`titleCase: ${JSON.stringify(text)} => ${JSON.stringify(titlecased)}`)
   return titlecased
 }
 
@@ -408,7 +407,7 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
             // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
             this.plaintext(normalized_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[0].length)
-            this.sentenceStart = true
+            // this.sentenceStart = true
             continue
           }
 

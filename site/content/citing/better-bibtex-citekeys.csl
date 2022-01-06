@@ -51,7 +51,7 @@
     <layout delimiter="; " prefix="[" suffix="]">
       <group>
         <text value="@"/>
-        <text variable="note"/>
+        <text variable="citation-key"/>
         <text variable="locator" prefix=", p. "/>
       </group>
     </layout>

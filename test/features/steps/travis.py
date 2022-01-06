@@ -21,8 +21,8 @@ class TravisFormatter(PlainFormatter):
        * table
        * tags (maybe)
     """
-    name = "travis"
-    description = "Very basic formatter with maximum compatibility but shortened line lengths for Travis"
+    name = "CI log"
+    description = "Very basic formatter with maximum compatibility but shortened line lengths for online CI environments"
 
     LINE_WIDTH = (130 if 'CI' in os.environ else max(get_terminal_size()[0], 130))
     SHOW_TAGS = True

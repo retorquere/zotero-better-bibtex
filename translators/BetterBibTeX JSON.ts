@@ -71,8 +71,8 @@ export async function doImport(): Promise<void> {
 
     if (!itemfields.valid.type[source.itemType]) throw new Error(`unexpected item type '${source.itemType}'`)
     const validFields = itemfields.valid.field[source.itemType]
-    for (const field of Object.keys(source)) {
-      const valid = validFields[field]
+    for (const [field, value] of Object.entries(source)) {
+      const valid = !value || validFields[field]
       if (valid) continue
 
       const msg = `${valid}: unexpected ${source.itemType}.${field} for ${Translator.isZotero ? 'zotero' : 'juris-m'} in ${JSON.stringify(source)} / ${JSON.stringify(validFields)}`

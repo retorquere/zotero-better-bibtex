@@ -18,10 +18,10 @@
   </menupopup>
 
   <menupopup id="zotero-collectionmenu">
-    <menuseparator class="bbt-autoexport" id="bbt-collectionmenu-separator"/>
+    <menuseparator class="zotero-collectionmenu-bbt-autoexport" id="bbt-collectionmenu-separator"/>
 
-    <menu class="bbt-autoexport" label="&better-bibtex.Preferences.tab.auto-export;">
-      <menupopup id="zotero-itemmenu-BetterBibTeX-autoexport-menu">
+    <menu class="zotero-collectionmenu-bbt-autoexport" label="&better-bibtex.Preferences.tab.auto-export;">
+      <menupopup id="zotero-collectionmenu-bbt-autoexport-menupopup">
         <menuitem label="" oncommand="event.stopPropagation(); Zotero.BetterBibTeX.ZoteroPane.startAutoExport(event);"/>
       </menupopup>
     </menu>

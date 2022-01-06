@@ -12,7 +12,7 @@
 }
 
 @online{doe12_edtf_2011,
-  title = {{{EDTF}} Date {{YYYY}}-{{MM}}\textasciitilde{} [Month Precision \& circa]: 2011-05\textasciitilde},
+  title = {{{EDTF}} Date {{YYYY-MM}}\textasciitilde{} [Month Precision \& circa]: 2011-05\textasciitilde},
   author = {Doe12, John},
   date = {2011-05~}
 }

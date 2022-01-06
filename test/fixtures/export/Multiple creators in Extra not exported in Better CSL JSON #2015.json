@@ -1,0 +1,42 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "mdy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "caching": false
+    }
+  },
+  "items": [
+    {
+      "citationKey": "barrisLemons2017",
+      "creators": [
+        {
+          "creatorType": "director",
+          "firstName": "K. (Writer\u2060 \u2060&\u2060 \u2060Director)",
+          "lastName": "Barris"
+        }
+      ],
+      "date": "2017-01-11",
+      "extra": [
+        "Container author: Barris || K.",
+        "Container author: Groff || J.",
+        "Container author: Anderson || A.",
+        "Container author: Dobbins || E.B.",
+        "Container author: Fishburne || L.",
+        "Container author: Sugland (Executive\u2060 \u2060Producers) || H."
+      ],
+      "itemID": 1,
+      "itemType": "tvBroadcast",
+      "medium": "TV series episode",
+      "number": "Season 3, Episode 12",
+      "publicationTitle": "Black-ish",
+      "publisher": "Wilmore Films; Artists First; Cinema Gypsy Productions; ABC Studios",
+      "rights": "87a",
+      "title": "Lemons"
+    }
+  ]
+}

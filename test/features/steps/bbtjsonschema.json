@@ -186,9 +186,6 @@
             "citekeySearch": {
               "type": "boolean"
             },
-            "citeprocNoteCitekey": {
-              "type": "boolean"
-            },
             "csquotes": {
               "type": "string"
             },

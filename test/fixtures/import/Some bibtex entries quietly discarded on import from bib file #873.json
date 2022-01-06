@@ -1780,7 +1780,7 @@
       "itemID": 68,
       "itemType": "manuscript",
       "notes": [
-        "Unpublished manuscript based on invited address to IJCAI-97 http://aida.intellektik.informatik.th-darmstadt.de/ bibel/"
+        "Unpublished manuscript based on invited address to IJCAI-97 <tt>http://aida.intellektik.informatik.th-darmstadt.de/ bibel/</tt>"
       ],
       "title": "Let's plan it deductively!"
     },

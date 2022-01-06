@@ -3,7 +3,7 @@
 
 import { Method, API } from './api-extractor'
 import * as fs from 'fs'
-import stringify from 'safe-stable-stringify'
+import stringify from 'fast-safe-stringify'
 
 class FormatterAPI {
   private formatter: Record<string, Method>
@@ -73,8 +73,8 @@ if (!fs.existsSync('gen/api')) fs.mkdirSync('gen/api', { recursive: true })
 
 const formatters = new FormatterAPI('content/key-manager/formatter.ts')
 fs.writeFileSync('gen/api/key-formatter.json', JSON.stringify(formatters.signature, null, 2))
-fs.writeFileSync('site/data/citekeyformatters/functions.json', stringify(formatters.doc.function, null, 2))
-fs.writeFileSync('site/data/citekeyformatters/filters.json', stringify(formatters.doc.filter, null, 2))
+fs.writeFileSync('site/data/citekeyformatters/functions.json', stringify.stable(formatters.doc.function, null, 2))
+fs.writeFileSync('site/data/citekeyformatters/filters.json', stringify.stable(formatters.doc.filter, null, 2))
 
 class JSONRPCAPI {
   private classes: Record<string, Record<string, Method>>

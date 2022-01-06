@@ -96,24 +96,25 @@ AddonManager.addAddonListener({
   MONKEY PATCHES
 */
 
-if (Preference.citeprocNoteCitekey) {
-  $patch$(Zotero.Utilities, 'itemToCSLJSON', original => function itemToCSLJSON(zoteroItem: { itemID: any }) {
-    const cslItem = original.apply(this, arguments)
+// zotero beta moves itemToCSLJSON to Zotero.Utilities.Item
+$patch$(Zotero.Utilities.Item?.itemToCSLJSON ? Zotero.Utilities.Item : Zotero.Utilities, 'itemToCSLJSON', original => function itemToCSLJSON(zoteroItem: { itemID: any }) {
+  const cslItem = original.apply(this, arguments)
 
+  try {
     if (typeof Zotero.Item !== 'undefined' && !(zoteroItem instanceof Zotero.Item)) {
       const citekey = Zotero.BetterBibTeX.KeyManager.get(zoteroItem.itemID)
       if (citekey) {
-        cslItem.note = citekey.citekey
-      }
-      else {
-        delete cslItem.note
+        cslItem['citation-key'] = citekey.citekey
       }
     }
+  }
+  catch (err) {
+    log.debug('failed patching CSL-JSON:', err)
+  }
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return cslItem
-  })
-}
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return cslItem
+})
 
 // https://github.com/retorquere/zotero-better-bibtex/issues/1221
 $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(item: ZoteroItem, otherItems: ZoteroItem[]) {

@@ -118,7 +118,14 @@ class NSItem {
     }
     search.addCondition('quicksearch-titleCreatorYear', 'contains', terms)
     search.addCondition('itemType', 'isNot', 'attachment')
-    if (typeof library !== 'undefined') search.addCondition('libraryID', 'is', Library.get(library))
+    if (typeof library !== 'undefined') {
+      try {
+        search.addCondition('libraryID', 'is', Library.get(library).id)
+      }
+      catch (err) {
+        throw new Error(`library ${JSON.stringify(library)} not found`)
+      }
+    }
 
     const ids: Set<number> = new Set(await search.search())
 
@@ -253,13 +260,11 @@ class NSItem {
    * @param translator BBT translator name or GUID
    * @param libraryID  ID of library to select the items from. When omitted, assume 'My Library'
    */
-  public async export(citekeys: string[], translator: string, libraryID: number) {
-    // eslint-disable-next-line no-underscore-dangle, prefer-rest-params
-    if (typeof libraryID === 'undefined') libraryID = Zotero.Libraries.userLibraryID
-
+  public async export(citekeys: string[], translator: string, libraryID?: number) {
     const query: Query = {$and: [{citekey: { $in: citekeys } } ]}
 
     if (Preference.keyScope === 'library') {
+      if (typeof libraryID === 'undefined') libraryID = Zotero.Libraries.userLibraryID
       if (typeof libraryID !== 'number') throw { code: INVALID_PARAMETERS, message: 'keyscope is library, please provide a library ID' }
       query.$and.push({ libraryID: {$eq: libraryID} })
     }
@@ -354,7 +359,6 @@ const api = new class API {
     }
 
     const argerror = schema.validate(args.object)
-    log.debug('json-rpc:', { ...args, method: request.method, schema: schema.schema, argerror })
     if (argerror) return {jsonrpc: '2.0', error: {code: INVALID_PARAMETERS, message: argerror}, id: null}
 
     try {

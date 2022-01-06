@@ -57,7 +57,7 @@ class Trie:
     return {k: next(v for v in A if v.startswith(k)) for k in ans}
 
 DB.execute('CREATE TABLE biblatex (langid NOT NULL PRIMARY KEY)')
-DB.executemany('INSERT INTO biblatex (langid) VALUES (?)', [(path.stem.lower(),) for path in Path('biblatex/tex/latex/biblatex/lbx').glob('*.lbx')])
+DB.executemany('INSERT INTO biblatex (langid) VALUES (?)', [(path.stem.lower(),) for path in Path('submodules/biblatex/tex/latex/biblatex/lbx').glob('*.lbx')])
 
 class MultiOrderedDict(OrderedDict):
   def __setitem__(self, key, value):
@@ -67,7 +67,7 @@ class MultiOrderedDict(OrderedDict):
       super().__setitem__(key, value)
 
 DB.execute('CREATE TABLE babel (tag NOT NULL, prio NOT NULL, rel NOT NULL, langid NOT NULL)')
-for path in sorted(Path('babel/locale').rglob('*.ini'), key=lambda p: p.name):
+for path in sorted(Path('submodules/babel/locale').rglob('*.ini'), key=lambda p: p.name):
   locale = RawConfigParser(dict_type=MultiOrderedDict, strict=False)
   locale.read(str(path))
   locale = locale['identification']

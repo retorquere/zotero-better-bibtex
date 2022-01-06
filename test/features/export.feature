@@ -12,6 +12,8 @@ Scenario Outline: Export <references> references for BibLaTeX to <file>
 
   Examples:
      | file                                                                                           | references  |
+     | Capitalized words after colons not brace protected #1978                                       | 1           |
+     | Extensions to citation format syntax #1933                                                     | 1           |
      | Specific BBT citation key format is no longer working for my use case after update #1970       | 1           |
      | Define word delimiter characters #1943                                                         | 1           |
      | How to use the last word of the title? #1746                                                   | 1           |
@@ -159,6 +161,7 @@ Scenario Outline: Export <references> references for BibTeX to <file>
 
   Examples:
      | file                                                                               | references |
+     | Non-breakable spaces in author fields should be exported as tilde #1430            | 1          |
      | University is exported as publisher as soon as tex.referencetype is specified in Extra field #1965 | 1           |
      | fetch inspire-hep key #1879                                                        | 1          |
      | Debugging translator issue for PhD Dissertation type #1950                         | 1          |
@@ -350,6 +353,10 @@ Scenario: Include first name initial(s) in cite key generation pattern (86)
 Scenario: Postscript error aborts CSL JSON export #1155
   When I set preference .ignorePostscriptErrors to true
   When I import 4 references from "export/*.json"
+  Then an export using "Better CSL JSON" should match "export/*.csl.json"
+
+Scenario: Multiple creators in Extra not exported in Better CSL JSON #2015
+  When I import 1 reference from "export/*.json"
   Then an export using "Better CSL JSON" should match "export/*.csl.json"
 
 @1400

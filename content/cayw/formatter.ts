@@ -1,13 +1,11 @@
-/* eslint-disable @typescript-eslint/require-await, @typescript-eslint/no-unsafe-return */
-
-Components.utils.import('resource://gre/modules/AddonManager.jsm')
-declare const AddonManager: any
+/* eslint-disable @typescript-eslint/require-await, @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-shadow */
 
 import { Translators } from '../translators'
 import { getItemsAsync } from '../get-items-async'
 import { Preference } from '../../gen/preferences'
 import { log } from '../logger'
 import { fromEntries } from '../object'
+import { scannableCite } from '../../gen/ScannableCite'
 
 import * as unicode_table from 'unicode2latex/tables/unicode.json'
 
@@ -210,37 +208,21 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
   }
 
   public async 'scannable-cite'(citations, options) {
-    const odfScan = await new Promise((resolve, _reject) => {
-      AddonManager.getAddonByID('rtf-odf-scan-for-zotero@mystery-lab.com', addon => resolve(addon && addon.isActive))
-    })
-    if (!odfScan) throw new Error('scannable-cite needs the "RTF/ODF Scan for Zotero" plugin to be installed')
-
-    const items = await getItemsAsync(citations.map(picked => picked.id))
-    const labels = (await Translators.exportItems('248bebf1-46ab-4067-9f93-ec3d2960d0cd', null, { type: 'items', items })).split(/[{}]+/).filter(cite => cite).reduce((result, item) => {
-      const [ , text, , , id ] = item.split('|').map(v => v.trim())
-      result[id] = text
-      return result
-    }, {})
-
-    if (citations.length !== Object.keys(labels).length) throw new Error(`Scannable Cite parse error: picked ${citations.length}, found ${Object.keys(labels).length}`)
-
-    let citation = ''
-    for (const item of citations) {
-      const [ , kind, lib, key ] = item.uri.match(/^http:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^/]+)\/items\/(.+)/)
-      const id = `${kind === 'users' ? 'zu' : 'zg'}:${lib.startsWith('local/') ? '0' : lib}:${key}`
-      if (!labels[id]) throw new Error(`No formatted citation found for ${id}`)
+    let markers = ''
+    for (const citation of citations) {
+      const scannable = scannableCite(await getItemsAsync(citation.id))
 
       const enriched = [
-        item.prefix || '',
-        `${item.suppressAuthor ? '-' : ''}${labels[id]}`,
-        item.locator ? `${shortLabel(item.label, options)} ${item.locator}`.trim() : '',
-        item.suffix || '',
-        Preference.testing ? 'zu:0:ITEMKEY' : id,
+        citation.prefix || '',
+        `${citation.suppressAuthor ? '-' : ''}${scannable.label}`,
+        citation.locator ? `${shortLabel(citation.label, options)} ${citation.locator}`.trim() : '',
+        citation.suffix || '',
+        Preference.testing ? 'zu:0:ITEMKEY' : scannable.id,
       ].join(' | ').replace(/ +/g, ' ')
 
-      citation += `{ ${enriched.trim()} }`
+      markers += `{ ${enriched.trim()} }`
     }
-    return citation
+    return markers
   }
 
   public async 'formatted-citation'(citations, options) {

@@ -275,18 +275,6 @@
     "label": "Enable citation key search"
   },
   {
-    "name": "citeprocNoteCitekey",
-    "type": "boolean",
-    "default": false,
-    "affects": [
-      "Better BibLaTeX",
-      "Better BibTeX",
-      "Better CSL JSON",
-      "Better CSL YAML"
-    ],
-    "var": "citeprocNoteCitekey"
-  },
-  {
     "name": "csquotes",
     "type": "string",
     "default": "",

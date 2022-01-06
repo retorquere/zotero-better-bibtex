@@ -29,7 +29,7 @@ from here, that can only be done by initiating an export.
 
 ## Getting your BBT-generated bib(la)tex/citekeys to other places
 
-You may want to use your BBT generated bib(la)tex on other systems; maybe you use Overleaf (as I do), maybe you have your documents compiled using Travis (as I do). In any case, you want your auto-exported items to show up somewhere else. If you're thinking of this in the context of Overleaf, here's a TL;DR of the pros and cons:
+You may want to use your BBT generated bib(la)tex on other systems; maybe you use Overleaf (as I do), maybe you have your documents compiled using github actions (as I do). In any case, you want your auto-exported items to show up somewhere else. If you're thinking of this in the context of Overleaf, here's a TL;DR of the pros and cons:
 
 * Auto-export + cloud-sync
   * pro: gets the full bibtex file to Overleaf, should be seamless
