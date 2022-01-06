@@ -327,6 +327,8 @@
   "export/No space between author first and last name because last char of first name is translated to a latex command #1091.json",
   "export/Non-ascii in dates is not matched by date parser #376.biblatex",
   "export/Non-ascii in dates is not matched by date parser #376.json",
+  "export/Non-breakable spaces in author fields should be exported as tilde #1430.bibtex",
+  "export/Non-breakable spaces in author fields should be exported as tilde #1430.json",
   "export/Normalize date ranges in citekeys #356.biblatex",
   "export/Normalize date ranges in citekeys #356.json",
   "export/Numbers confuse capital-preservation #295.bibtex",
