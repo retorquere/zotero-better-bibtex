@@ -128,7 +128,7 @@ const re = {
   punctuationAtEnd: new Zotero.Utilities.XRegExp('[\\p{Punctuation}]$'),
   startsWithLowercase: new Zotero.Utilities.XRegExp('^[\\p{Ll}]'),
   hasLowercaseWord: new Zotero.Utilities.XRegExp('\\s[\\p{Ll}]'),
-  whitespace: new Zotero.Utilities.XRegExp('\\p{Zs}'),
+  whitespace: new Zotero.Utilities.XRegExp('[\\p{Zs}]+'),
 }
 
 const enc_creators_marker = {
@@ -841,7 +841,11 @@ export class Reference {
   }
 
   protected _enc_creators_scrub_name(name: string): string {
-    return Zotero.Utilities.XRegExp.replace(name, re.whitespace, ' ', 'all')
+    name = name.replace(/uFFFC/g, '') // these should never appear
+    name = name.replace(/\u00A0/g, '\uFFFC') // safeguard non-breaking spaces -- the only non-space space-ish allowed in names (see #859)
+    name =  Zotero.Utilities.XRegExp.replace(name, re.whitespace, ' ', 'all') // all the rest must go
+    name = name.replace(/\uFFFC/g, '\u00A0') // restore non-breaking spaces
+    return name
   }
   /*
    * Encode creators to author-style field
