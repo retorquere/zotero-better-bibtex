@@ -6,6 +6,7 @@ Background:
   #And I cap the total memory use to 1.1G
   #And I cap the memory increase use to 100M
 
+@biblatex
 Scenario Outline: Export <references> references for BibLaTeX to <file>
   When I import <references> references from "export/<file>.json"
   Then an export using "Better BibLaTeX" should match "export/*.biblatex"
@@ -155,6 +156,7 @@ Scenario Outline: Export <references> references for BibLaTeX to <file>
      | date ranges #747+#746                                                                          | 5           |
      | preserve @strings between import-export #1162                                                  | 1           |
 
+@bibtex
 Scenario Outline: Export <references> references for BibTeX to <file>
   Given I import <references> references from "export/<file>.json"
   Then an export using "Better BibTeX" should match "export/*.bibtex"
@@ -233,12 +235,14 @@ Scenario Outline: Export <references> references for BibTeX to <file>
      | preserve @strings between import-export #1162                                      | 1          |
      | titles are title-cased in .bib file #558                                           | 2          |
 
+@csl
 Scenario Outline: Export <references> references for CSL JSON to <file>
   When I import <references> references from "export/<file>.json"
-  Then an export using "Better BibLaTeX" should match "export/*.csl.json"
+  Then an export using "Better CSL JSON" should match "export/*.csl.json"
 
   Examples:
     | file                                                              | references  |
+    | Better CSL JSON does not include authority field #2019            | 1           |
     | Multiple creators in Extra not exported in Better CSL JSON #2015  | 1           |
     | Deterministic ordering for CSL #1178 #1400                        | 26          |
     | CSL exporters; ignore [Fields to omit from export] setting #1179  | 26          |
