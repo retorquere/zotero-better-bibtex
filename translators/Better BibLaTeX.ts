@@ -576,9 +576,7 @@ export function doExport(): void {
           archive = false
       }
 
-      if (archive) {
-        if (!ref.has.eprint) ref.add({ name: 'eprint', value: item.archiveLocation })
-      }
+      if (archive && !ref.has.eprint) ref.add({ name: 'eprint', value: item.archiveLocation })
     }
 
     if (item.arXiv && !ref.has.journaltitle && ref.referencetype === 'article') ref.referencetype = 'online'
