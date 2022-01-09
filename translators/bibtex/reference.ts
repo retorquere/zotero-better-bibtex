@@ -15,6 +15,7 @@ import { Exporter } from './exporter'
 import { text2latex, replace_command_spacers } from './unicode_translator'
 import { datefield } from './datefield'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
+import { label as propertyLabel } from '../../gen/items/items'
 import * as Extra from '../../content/extra'
 import * as CSL from 'citeproc'
 import { log } from '../../content/logger'
@@ -119,7 +120,7 @@ const fieldOrder = [
 }, {})
 
 
-function entry_sort(a: [string, string | number], b: [string, string | number]): number {
+function property_sort(a: [string, string], b: [string, string]): number {
   return Translator.stringCompare(a[0], b[0])
 }
 
@@ -129,6 +130,7 @@ const re = {
   startsWithLowercase: new Zotero.Utilities.XRegExp('^[\\p{Ll}]'),
   hasLowercaseWord: new Zotero.Utilities.XRegExp('\\s[\\p{Ll}]'),
   whitespace: new Zotero.Utilities.XRegExp('[\\p{Zs}]+'),
+  nonwordish: new Zotero.Utilities.XRegExp('[^\\p{L}\\p{N}]', 'g'),
 }
 
 const enc_creators_marker = {
@@ -189,12 +191,11 @@ export class Reference {
   }
 
   private metadata: Cache.ExportedItemMetadata = { DeclarePrefChars: '', noopsort: false, packages: [] }
-  private packages: { [key: string]: boolean }
+  private packages: Record<string, boolean> = {}
   private juniorcomma: boolean
 
   constructor(item) {
     this.item = item
-    this.packages = {}
     this.date = item.date ? Zotero.BetterBibTeX.parseDate(item.date) : { type: 'none' }
 
     if (!this.item.language) {
@@ -304,6 +305,14 @@ export class Reference {
       this.add({ name: 'eprinttype', value: 'arxiv'})
       this.add({ name: 'eprint', value: this.item.arXiv.id })
       this.add({ name: 'primaryclass', value: this.item.arXiv.category })
+    }
+  }
+
+  private valueish(value) {
+    switch (typeof value) {
+      case 'number': return `${value}`
+      case 'string': return Zotero.Utilities.XRegExp.replace(value, re.nonwordish, '', 'all').toLowerCase()
+      default: return ''
     }
   }
 
@@ -1256,19 +1265,12 @@ export class Reference {
 
       report = report.concat(this.quality_report)
 
-      if (!report.length) return ''
-
-      report.unshift(`== ${Translator.BetterBibTeX ? 'BibTeX' : 'BibLateX'} quality report for ${this.item.citationKey}:`)
-
-      const used: Array<string | number> = Object.values(this.has) // eslint-disable-line @typescript-eslint/array-type
+      const used_values: Array<string | number> = Object.values(this.has) // eslint-disable-line @typescript-eslint/array-type
         .filter(field => typeof field.value === 'string' || typeof field.value === 'number')
-        .map(field => typeof field.value === 'string' ? field.value.toLowerCase().replace(/[^a-zA-z0-9]/g, '') : field.value)
-      const fields: [string, any][] = Object.entries(this.item)
-        .sort(entry_sort)
-      const extra_fields: [string, any][] = (Object.entries(this.item.extraFields.kv) as [string, any][])
-        .sort(entry_sort)
-        .map(([field, value]: [string, any]) => [`extraFields.kv.${field}`, value])
-      const ignore_unused_fields = [
+        .map(field => this.valueish(field.value))
+        .filter(value => value !== '')
+
+      const ignore_unused_props = [
         'abstractNote',
         'accessDate',
         'autoJournalAbbreviation',
@@ -1284,31 +1286,26 @@ export class Reference {
         'key',
         'libraryID',
         'relations',
+        'rights',
         'uri',
+        'version',
       ]
-      for (const [field, value] of fields.concat(extra_fields)) {
-        if (!value) continue
-        if (ignore_unused_fields.includes(field)) continue
+      const unused_props = Object.entries(this.item.extraFields.kv).map(([p, v]) => [ `extra: ${propertyLabel[p.toLowerCase()] || p}`, v ])
+        .concat(Object.entries(this.item))
+        .map(([p, v]) => [p, v, this.valueish(v) ])
+        .filter(([p, v, vi]) => vi !== '' && !ignore_unused_props.includes(p) && !used_values.includes(this.valueish(v)))
+        .sort(property_sort)
 
-        let v: string
-        switch (typeof value) {
-          case 'string':
-            v = value.toLowerCase().replace(/[^a-zA-z0-9]/g, '')
-            if (used.includes(v)) continue
-            if (field === 'libraryCatalog' && v.includes('arxiv') && this.item.arXiv) continue
-            if (field === 'language' && this.has.langid) continue
-            break
-          case 'number':
-            if (used.includes(value)) continue
-            break
-
-          default:
-            continue
-        }
-
-        report.push(`? Unused ${field}: ${value}`)
+      for (const [prop, value, valueish] of unused_props) {
+        if (prop === 'language' && this.has.langid) continue
+        if (prop === 'libraryCatalog' && valueish.includes('arxiv') && this.item.arXiv) continue
+        log.debug('label:', { prop, label: propertyLabel[prop] })
+        report.push(`? unused ${propertyLabel[prop.toLowerCase()] || prop} ("${value}")`)
       }
 
+      if (!report.length) return ''
+
+      report.unshift(`== ${Translator.BetterBibTeX ? 'BibTeX' : 'BibLateX'} quality report for ${this.item.citationKey}:`)
       return report.map(line => `% ${line}\n`).join('')
     }
     finally {
