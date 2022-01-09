@@ -117,6 +117,12 @@ def step_impl(context, db):
 def step_impl(context, profile):
   context.zotero.restart(timeout=context.timeout, profile=profile)
 
+@step(r'I apply the preferences from "{source}"')
+def step_impl(context, references, source):
+  source = expand_scenario_variables(context, source)
+  context.imported = source
+  assert_that(context.zotero.import_file(context, source, items=False), equal_to(references))
+
 @step(r'I import {references:d} references from "{source}"')
 def step_impl(context, references, source):
   source = expand_scenario_variables(context, source)

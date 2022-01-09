@@ -85,7 +85,7 @@ if args.test_case:
     fmt = 'biblatex'
   if fmt == 'csl':
     fmt = 'csl-json'
-  assert fmt in ['csl-json', 'csl-yaml', 'bibtex', 'biblatex'], fmt
+  assert fmt in ['import', 'csl-json', 'csl-yaml', 'bibtex', 'biblatex'], fmt
 
   issue = issues[int(branches.current.replace('gh-', ''))]
   lib = os.path.join('logs', log, 'references.json')
@@ -99,10 +99,15 @@ if args.test_case:
     n = ' ' + str(len(json.load(f)['items']))
   print(title, n)
 
-  with open('test/features/export.feature') as f:
+  fixtures = 'import' if fmt == 'import' else 'export'
+  _feature = f'test/features/{fixtures}.feature'
+  with open(_feature) as f:
     feature = f.readlines()
-  with open('test/features/export.feature', 'w') as f:
-    scenario = f'Scenario Outline: Export <references> references for {fmt.replace("-", " ")} to <file>'.lower().strip()
+  with open(_feature, 'w') as f:
+    if fmt == 'import':
+      scenario = 'Scenario Outline: Import <references> references from <file>'.lower().strip()
+    else:
+      scenario = f'Scenario Outline: Export <references> references for {fmt.replace("-", " ")} to <file>'.lower().strip()
     in_scenario = False
     inserted = False
     removed = False
@@ -121,14 +126,15 @@ if args.test_case:
       f.write(line)
     print(title, 'inserted:', inserted, 'replaced:', removed)
 
-  shutil.copyfile(lib, os.path.join('test/fixtures/export', title.strip() + '.json'))
+  shutil.copyfile(lib, os.path.join(f'test/fixtures/{fixtures}', title.strip() + '.json'))
   if fmt == 'csl-json':
-    tgt = os.path.join('test/fixtures/export', title.strip() + '.csl.json')
+    tgt = os.path.join(f'test/fixtures/{fixtures}', title.strip() + '.csl.json')
     if not os.path.exists(tgt):
       with open(tgt, 'w') as f:
         print('[]', file=f)
   else:
-    Path(os.path.join('test/fixtures/export', title.strip() + '.' + fmt.replace('-', '.'))).touch()
+    ext = 'bib' if fmt == 'import' else fmt.replace('-', '.')
+    Path(os.path.join(f'test/fixtures/{fixtures}', title.strip() + '.' + ext)).touch()
 
   sys.exit(0)
 

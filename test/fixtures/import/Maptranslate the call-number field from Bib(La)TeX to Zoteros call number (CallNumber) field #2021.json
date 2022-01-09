@@ -1,0 +1,53 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "mdy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "autoExport": "off",
+      "bibtexURL": "url",
+      "caching": false,
+      "citekeyFormat": "[authors1]:[year][veryshorttitle1_0:substring=1,2]",
+      "exportTitleCase": false,
+      "importSentenceCase": "off",
+      "keyScope": "global"
+    }
+  },
+  "items": [
+    {
+      "ISBN": "0-231-11824-4",
+      "callNumber": "HV40",
+      "citationKey": "Kirk:2002er",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Stuart A.",
+          "lastName": "Kirk"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "William James",
+          "lastName": "Reid"
+        }
+      ],
+      "date": "2002",
+      "extra": [
+        "Citation Key: Kirk:2002er",
+        "DOI: 10.7312/kirk11824",
+        "Type: Social service",
+        "tex.dewey-call-number: 361.3",
+        "tex.jstor: 10.7312/kirk11824",
+        "tex.library-id: 2001028014",
+        "tex.oclc: 45888941"
+      ],
+      "itemID": 1,
+      "itemType": "book",
+      "place": "New York",
+      "publisher": "Columbia University Press",
+      "title": "Science and social work: a critical appraisal"
+    }
+  ]
+}

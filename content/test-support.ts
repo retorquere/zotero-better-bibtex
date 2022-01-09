@@ -90,15 +90,10 @@ export class TestSupport {
 
     preferences = preferences || {}
 
-    if (Object.keys(preferences).length) {
-      for (let [pref, value] of Object.entries(preferences)) {
-        if (typeof defaults[pref] === 'undefined') throw new Error(`Unsupported preference ${pref} in test case`)
-        if (Array.isArray(value)) value = value.join(',')
-        Zotero.Prefs.set(`translators.better-bibtex.${pref}`, value)
-      }
-    }
-    else {
-      log.debug(`importing references from ${path}`)
+    for (let [pref, value] of Object.entries(preferences)) {
+      if (typeof defaults[pref] === 'undefined') throw new Error(`Unsupported preference ${pref} in test case`)
+      if (Array.isArray(value)) value = value.join(',')
+      Zotero.Prefs.set(`translators.better-bibtex.${pref}`, value)
     }
 
     if (!path) return 0

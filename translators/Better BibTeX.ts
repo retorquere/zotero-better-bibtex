@@ -576,6 +576,10 @@ class ZoteroItem {
     return this.$address(value)
   }
 
+  protected '$call-number'(value) {
+    return this.set('callNumber', value)
+  }
+
   protected $edition(value) {
     value = value.replace(/^([0-9]+)(nd|th)$/, '$1')
     const numbers = wordsToNumbers(value)
