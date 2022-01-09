@@ -82,20 +82,10 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
       let csl = Zotero.Utilities.itemToCSLJSON(item)
       if (worker) csl.note = item.extra || undefined
 
-      // 637
-      /* TODO: is this still needed with the new extra-parser?
-      delete csl['publisher-place']
-      delete csl['archive-place']
-      delete csl['event-place']
-      delete csl['original-publisher-place']
-      delete csl['publisher-place']
-      */
       if (item.place) csl[item.itemType === 'presentation' ? 'event-place' : 'publisher-place'] = item.place
 
       // https://github.com/retorquere/zotero-better-bibtex/issues/811#issuecomment-347165389
       if (item.ISBN) csl.ISBN = item.ISBN
-
-      delete csl.authority
 
       if (item.itemType === 'videoRecording' && csl.type === 'video') csl.type = 'motion_picture'
 

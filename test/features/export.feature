@@ -6,6 +6,7 @@ Background:
   #And I cap the total memory use to 1.1G
   #And I cap the memory increase use to 100M
 
+@biblatex
 Scenario Outline: Export <references> references for BibLaTeX to <file>
   When I import <references> references from "export/<file>.json"
   Then an export using "Better BibLaTeX" should match "export/*.biblatex"
@@ -155,6 +156,7 @@ Scenario Outline: Export <references> references for BibLaTeX to <file>
      | date ranges #747+#746                                                                          | 5           |
      | preserve @strings between import-export #1162                                                  | 1           |
 
+@bibtex
 Scenario Outline: Export <references> references for BibTeX to <file>
   Given I import <references> references from "export/<file>.json"
   Then an export using "Better BibTeX" should match "export/*.bibtex"
@@ -232,6 +234,20 @@ Scenario Outline: Export <references> references for BibTeX to <file>
      | date ranges #747+#746                                                              | 5          |
      | preserve @strings between import-export #1162                                      | 1          |
      | titles are title-cased in .bib file #558                                           | 2          |
+
+@csl
+Scenario Outline: Export <references> references for CSL JSON to <file>
+  When I import <references> references from "export/<file>.json"
+  Then an export using "Better CSL JSON" should match "export/*.csl.json"
+
+  Examples:
+    | file                                                              | references  |
+    | Better CSL JSON does not include authority field #2019            | 1           |
+    | Multiple creators in Extra not exported in Better CSL JSON #2015  | 1           |
+    | Deterministic ordering for CSL #1178 #1400                        | 26          |
+    | CSL exporters; ignore [Fields to omit from export] setting #1179  | 26          |
+    | Quotes around last names should be removed from citekeys #856     | 1           |
+    | BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372  | 1           |
 
 Scenario: Omit URL export when DOI present. #131
   When I import 3 references with 2 attachments from "export/*.json" into a new collection
@@ -355,20 +371,6 @@ Scenario: Postscript error aborts CSL JSON export #1155
   When I import 4 references from "export/*.json"
   Then an export using "Better CSL JSON" should match "export/*.csl.json"
 
-Scenario: Multiple creators in Extra not exported in Better CSL JSON #2015
-  When I import 1 reference from "export/*.json"
-  Then an export using "Better CSL JSON" should match "export/*.csl.json"
-
-@1400
-Scenario: Deterministic ordering for CSL #1178 #1400
-  When I import 26 references from "export/*.json"
-  Then an export using "Better CSL JSON" should match "export/*.csl.json"
-
-@1179
-Scenario: CSL exporters; ignore [Fields to omit from export] setting #1179
-  When I import 26 references from "export/*.json"
-  Then an export using "Better CSL JSON" should match "export/*.csl.json"
-
 @860 @cslyml
 Scenario: Season ranges should be exported as pseudo-months (13-16, or 21-24) #860
   When I import 6 references from "export/*.json"
@@ -380,16 +382,6 @@ Scenario: Season ranges should be exported as pseudo-months (13-16, or 21-24) #8
 Scenario: CSL YAML export of date with original publication date in [brackets] #922
   When I import 1 reference from "export/*.json"
   Then an export using "Better CSL YAML" should match "export/*.csl.yml"
-
-@856
-Scenario: Quotes around last names should be removed from citekeys #856
-  When I import 1 reference from "export/*.json"
-  Then an export using "Better CSL JSON" should match "export/*.csl.json"
-
-@372 @pandoc
-Scenario: BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372
-  When I import 1 reference from "export/*.json"
-  Then an export using "Better CSL JSON" should match "export/*.csl.json"
 
 @365 @pandoc @825
 Scenario: Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825

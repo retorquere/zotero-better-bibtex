@@ -14,6 +14,7 @@ from types import SimpleNamespace
 import json
 from pathlib import Path
 import shutil
+import string
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--all', action='store_true')
@@ -77,34 +78,57 @@ for issue in issues.values():
   )
 
 if args.test_case:
+  if ',' in args.test_case:
+    log, fmt = args.test_case.split(',')
+  else:
+    log = args.test_case
+    fmt = 'biblatex'
+  if fmt == 'csl':
+    fmt = 'csl-json'
+  assert fmt in ['csl-json', 'csl-yaml', 'bibtex', 'biblatex'], fmt
+
   issue = issues[int(branches.current.replace('gh-', ''))]
-  lib = os.path.join('logs', args.test_case, 'references.json')
+  lib = os.path.join('logs', log, 'references.json')
   print(subprocess.check_output(['./util/clean-lib.ts', lib, '--save']).decode())
 
-  print(issue.number, args.test_case)
-  title = f' {issue.title} #{issue.number}'
-  title = "{:<95}".format(title)
+  print(issue.number, log, fmt)
+  valid_chars = f'-_.()# {string.ascii_letters}{string.digits}'
+  title = f'{issue.title} #{issue.number}'
+  title = ''.join(c for c in title if c in valid_chars)
   with open(lib) as f:
     n = ' ' + str(len(json.load(f)['items']))
-    n = "{:<12}".format(n)
   print(title, n)
+
   with open('test/features/export.feature') as f:
     feature = f.readlines()
   with open('test/features/export.feature', 'w') as f:
-    replaced = False
+    scenario = f'Scenario Outline: Export <references> references for {fmt.replace("-", " ")} to <file>'.lower().strip()
+    in_scenario = False
+    inserted = False
+    removed = False
     for line in feature:
-      if f' #{issue.number} ' in line:
-        print('replacing')
-        print(line)
-      elif not replaced and line.strip().replace(' ', '') == '|file|references|':
+      if line.lower().strip() == scenario:
+        in_scenario = True
+      elif in_scenario and f' #{issue.number} ' in line:
+        print(f'replacing #{line.strip()}')
+        removed = True
+        continue
+      elif in_scenario and line.strip().replace(' ', '') == '|file|references|':
         f.write(line)
-        print(f'     |{title} |{n} |', file=f)
-        replaced = True
-      else:
-        f.write(line)
+        print(f'     | {title} | {n} |', file=f)
+        inserted = True
+        continue
+      f.write(line)
+    print(title, 'inserted:', inserted, 'replaced:', removed)
 
   shutil.copyfile(lib, os.path.join('test/fixtures/export', title.strip() + '.json'))
-  Path(os.path.join('test/fixtures/export', title.strip() + '.biblatex')).touch()
+  if fmt == 'csl-json':
+    tgt = os.path.join('test/fixtures/export', title.strip() + '.csl.json')
+    if not os.path.exists(tgt):
+      with open(tgt, 'w') as f:
+        print('[]', file=f)
+  else:
+    Path(os.path.join('test/fixtures/export', title.strip() + '.' + fmt.replace('-', '.'))).touch()
 
   sys.exit(0)
 
