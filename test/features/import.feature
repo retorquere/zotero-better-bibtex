@@ -57,7 +57,7 @@ Scenario Outline: Import <references> references from <file>
   Then the library should match "import/*.json"
   Examples:
   | file                                                                        | references  |
-  | Maptranslate the call-number field from Bib(La)TeX to Zoteros call number (CallNumber) field #2021 |  1 |
+  | Map the call-number field from Bib(La)TeX to call number #2021              |  1          |
   | Detect journal abbreviation in the publication field #1951                  | 1           |
   | Improve import of films #1837                                               | 4           |
   | tex.origdate ignored in citekey generation #1696                            | 1           |
