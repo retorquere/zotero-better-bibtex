@@ -314,7 +314,7 @@ function parseToDate(value: string, localeDateOrder: string, as_single_date: boo
     if (has_valid_month(date = { type: 'date', year, month })) return Season.seasonize(doubt(date, state))
   }
 
-  if (exactish.match(/^-?[0-9]+$/)) {
+  if (exactish.match(/^-?[0-9]{3,}$/)) {
     return doubt({ type: 'date', year: parseInt(exactish) }, state)
   }
 
@@ -340,7 +340,7 @@ function parseToDate(value: string, localeDateOrder: string, as_single_date: boo
 
   // https://github.com/retorquere/zotero-better-bibtex/issues/868
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  if (m = /^([0-9]+)\s([^0-9]+)(?:\s+([0-9]+))?$/.exec(value.normalize('NFC').replace(months_re, _ => months[_.toLowerCase()] || _))) {
+  if (m = /^([0-9]{3,})\s([^0-9]+)(?:\s+([0-9]+))?$/.exec(value.normalize('NFC').replace(months_re, _ => months[_.toLowerCase()] || _))) {
     const [ , year, month, day ] = m
     if (months[month]) {
       try {
