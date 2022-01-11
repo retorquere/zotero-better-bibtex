@@ -24,14 +24,6 @@ export type ParsedDate = {
 
 const months_re = new RegExp(Object.keys(months).sort((a, b) => b.length - a.length).join('|'), 'i')
 
-/*
-regex = {
-  My: new RegExp('^(' + months.english.join('|') + ')\\s([0-9]{3,})$', 'i'),
-  Mdy: new RegExp('^(' + months.english.join('|') + ')\\s([0-9]{1,2})\\s*,\\s*([0-9]{3,})$', 'i'),
-  dMy: new RegExp('^([0-9]{1,2})\\.?\\s+(' + months.english.join('|') + ')\\s+([0-9]{3,})$', 'i'),
-}
-*/
-
 const Season = new class {
   private ranges = [
     [ 13, 14, 15, 16 ], // eslint-disable-line no-magic-numbers
