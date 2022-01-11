@@ -1,6 +1,7 @@
 /* eslint-disable no-case-declarations */
 import EDTF = require('edtf')
 import edtfy = require('edtfy')
+import * as CSL from 'citeproc'
 
 // import escapeStringRegexp = require('escape-string-regexp')
 
@@ -107,6 +108,14 @@ function is_valid_month(month: number, allowseason: boolean) {
   return false
 }
 
+function is_valid_date(date) {
+  if (date.type !== 'date') return true
+  date = {...date}
+  if (typeof date.month === 'number' && Season.fromMonth(date.month)) date.month = 1 // eslint-disable-line no-magic-numbers
+  const d = new Date(`${date.year}-${date.month || 1}-${date.day || 1}`)
+  return (d instanceof Date) && !isNaN(d as unknown as number)
+}
+
 // swap day/month for our American friends
 function swap_day_month(day: number, month: number, localeDateOrder: string): number[] {
   if (!day) day = undefined
@@ -124,7 +133,23 @@ function stripTime(date: string): string {
 }
 
 export function parse(value: string, localeDateOrder: string): ParsedDate {
-  return parseToDate(value, localeDateOrder, false)
+  const date = parseToDate(value, localeDateOrder, false)
+
+  if (date.type === 'verbatim') {
+    const csl = CSL.DateParser.parseDateToObject(value)
+    if (typeof csl.year === 'number') {
+      if (csl.day_end === csl.day) delete csl.day_end
+      if (csl.month_end === csl.month) delete csl.month_end
+      if (csl.year_end === csl.year) delete csl.year_end
+      const from = { type: 'date', year: csl.year, month: csl.month, day: csl.day }
+      const to = { type: 'date', year: csl.year_end, month: csl.month_end, day: csl.day_end }
+      if (is_valid_date(from) && (!to.year || is_valid_date(to))) {
+        return to.year ? { type: 'interval', from: Season.seasonize(from as ParsedDate), to: Season.seasonize(to as ParsedDate) } : Season.seasonize(from as ParsedDate)
+      }
+    }
+  }
+
+  return date
 }
 
 function parseToDate(value: string, localeDateOrder: string, as_single_date: boolean): ParsedDate {
