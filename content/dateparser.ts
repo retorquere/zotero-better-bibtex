@@ -323,27 +323,30 @@ export function parse(value: string, localeDateOrder: string, as_range_part = fa
     }
   }
 
-  if (!as_range_part && !parsed) { // try two range parts
-    for (const sep of ['--', '-', ' / ', '/', '_', '–']) {
-      const split = value.split(sep)
-      if (split.length === 2) {
-        const from = parse(split[0], localeDateOrder, true)
-        if (from.type !== 'date' && from.type !== 'season') continue
-        const to = parse(split[1], localeDateOrder, true)
-        if (to.type !== 'date' && to.type !== 'season') continue
-        return { type: 'interval', from, to }
+  if (!parsed) {
+    if (as_range_part) { // try CSL date parser for single dates only
+      const csl = CSL.DateParser.parseDateToObject(value)
+      if (typeof csl.year === 'number') {
+        if (csl.day_end === csl.day) delete csl.day_end
+        if (csl.month_end === csl.month) delete csl.month_end
+        if (csl.year_end === csl.year) delete csl.year_end
+        const from = { type: 'date', year: csl.year, month: csl.month, day: csl.day }
+        const to = { type: 'date', year: csl.year_end, month: csl.month_end, day: csl.day_end }
+        if (isValidDate(from) && (!to.year || isValidDate(to))) {
+          return to.year ? { type: 'interval', from: seasonize(from as ParsedDate), to: seasonize(to as ParsedDate) } : seasonize(from as ParsedDate)
+        }
       }
     }
-
-    const csl = CSL.DateParser.parseDateToObject(value)
-    if (typeof csl.year === 'number') {
-      if (csl.day_end === csl.day) delete csl.day_end
-      if (csl.month_end === csl.month) delete csl.month_end
-      if (csl.year_end === csl.year) delete csl.year_end
-      const from = { type: 'date', year: csl.year, month: csl.month, day: csl.day }
-      const to = { type: 'date', year: csl.year_end, month: csl.month_end, day: csl.day_end }
-      if (isValidDate(from) && (!to.year || isValidDate(to))) {
-        return to.year ? { type: 'interval', from: seasonize(from as ParsedDate), to: seasonize(to as ParsedDate) } : seasonize(from as ParsedDate)
+    else { // try range
+      for (const sep of ['--', '-', ' / ', '/', '_', '–']) {
+        const split = value.split(sep)
+        if (split.length === 2) {
+          const from = parse(split[0], localeDateOrder, true)
+          if (from.type !== 'date' && from.type !== 'season') continue
+          const to = parse(split[1], localeDateOrder, true)
+          if (to.type !== 'date' && to.type !== 'season') continue
+          return { type: 'interval', from, to }
+        }
       }
     }
   }
