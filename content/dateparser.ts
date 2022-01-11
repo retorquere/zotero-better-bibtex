@@ -130,7 +130,6 @@ export function parse(value: string, localeDateOrder: string): ParsedDate {
 function parseToDate(value: string, localeDateOrder: string, as_single_date: boolean): ParsedDate {
   value = (value || '').trim()
 
-  let parsed: ParsedDate
   let m: RegExpMatchArray
 
   if (value === 'today') {
@@ -285,43 +284,39 @@ function parseToDate(value: string, localeDateOrder: string, as_single_date: boo
 
   try {
     // https://github.com/inukshuk/edtf.js/issues/5
-    parsed = normalize_edtf(EDTF.parse(upgrade_edtf(stripTime(value.replace(/_|--/, '/')))))
+    const edtf = normalize_edtf(EDTF.parse(upgrade_edtf(stripTime(value.replace(/_|--/, '/')))))
+    if (edtf) return edtf
   }
   catch (err) {
-    parsed = null
   }
 
-  if (!parsed) {
-    try {
-      parsed = normalize_edtf(EDTF.parse(edtfy(value
-        .normalize('NFC')
-        .replace(/\. /, ' ') // 8. july 2011
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        .replace(months_re, _ => months[_.toLowerCase()] || _)
-      )))
-    }
-    catch (err) {
-      parsed = null
-    }
+  try {
+    const edtf = normalize_edtf(EDTF.parse(edtfy(value
+      .normalize('NFC')
+      .replace(/\. /, ' ') // 8. july 2011
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      .replace(months_re, _ => months[_.toLowerCase()] || _)
+    )))
+    if (edtf) return edtf
+  }
+  catch (err) {
   }
 
   // https://github.com/retorquere/zotero-better-bibtex/issues/868
-  if (!parsed) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    if (m = /^([0-9]+)\s([^0-9]+)(?:\s+([0-9]+))?$/.exec(value.normalize('NFC').replace(months_re, _ => months[_.toLowerCase()] || _))) {
-      const [ , year, month, day ] = m
-      if (months[month]) {
-        try {
-          parsed = normalize_edtf(EDTF.parse(edtfy(`${day || ''} ${month} ${year}`.trim())))
-        }
-        catch (err) {
-          parsed = null
-        }
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  if (m = /^([0-9]+)\s([^0-9]+)(?:\s+([0-9]+))?$/.exec(value.normalize('NFC').replace(months_re, _ => months[_.toLowerCase()] || _))) {
+    const [ , year, month, day ] = m
+    if (months[month]) {
+      try {
+        const edtf = normalize_edtf(EDTF.parse(edtfy(`${day || ''} ${month} ${year}`.trim())))
+        if (edtf) return edtf
+      }
+      catch (err) {
       }
     }
   }
 
-  if (!as_single_date && !parsed) { // try ranges
+  if (!as_single_date) { // try ranges
     for (const sep of ['--', '-', '/', '_', '–']) {
       const split = value.split(sep)
       if (split.length === 2) {
@@ -334,7 +329,7 @@ function parseToDate(value: string, localeDateOrder: string, as_single_date: boo
     }
   }
 
-  return parsed || { type: 'verbatim', verbatim: value }
+  return { type: 'verbatim', verbatim: value }
 }
 
 function testEDTF(value: string): boolean {
