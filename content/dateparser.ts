@@ -103,20 +103,26 @@ function upgrade_edtf(date: string): string {
 
 function is_valid_month(month: number, allowseason: boolean) {
   if (month >= 1 && month <= 12) return true // eslint-disable-line no-magic-numbers
-  if (allowseason && month >= 21 && month <= 24) return true // eslint-disable-line no-magic-numbers
+  if (allowseason && Season.fromMonth(month)) return true
 
   return false
 }
 
-/*
-function is_valid_date(date) {
+function has_valid_month(date: ParsedDate) {
+  return date.type === 'date' && typeof date.month === 'number' && is_valid_month(date.month, true)
+}
+
+function is_valid_date(date: ParsedDate) {
   if (date.type !== 'date') return true
+  if (typeof date.year !== 'number') return false
   date = {...date}
-  if (typeof date.month === 'number' && Season.fromMonth(date.month)) date.month = 1 // eslint-disable-line no-magic-numbers
+  if (typeof date.month === 'number' && Season.fromMonth(date.month)) {
+    if (typeof date.day !== 'undefined') return false
+    date.month = 1
+  }
   const d = new Date(`${date.year}-${date.month || 1}-${date.day || 1}`)
   return (d instanceof Date) && !isNaN(d as unknown as number)
 }
-*/
 
 // swap day/month for our American friends
 function swap_day_month(day: number, month: number, localeDateOrder: string): number[] {
@@ -158,6 +164,7 @@ export function parse(value: string, localeDateOrder: string): ParsedDate {
 
 function parseToDate(value: string, localeDateOrder: string, as_single_date: boolean): ParsedDate {
   value = (value || '').trim()
+  let date: ParsedDate
 
   let m: RegExpMatchArray
 
@@ -179,7 +186,7 @@ function parseToDate(value: string, localeDateOrder: string, as_single_date: boo
   if (m = (/^([0-9]+)-([a-z]+)-([0-9]+)$/i).exec(value)) {
     let [ , day, month, year ] = m
     if (parseInt(day) > 31 && parseInt(year) < 31) [ day, year ] = [ year, day ] // eslint-disable-line no-magic-numbers
-    const date = parseToDate(`${month} ${day} ${year}`, localeDateOrder, true)
+    date = parseToDate(`${month} ${day} ${year}`, localeDateOrder, true)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     if (date.type === 'date') return date
   }
@@ -187,7 +194,7 @@ function parseToDate(value: string, localeDateOrder: string, as_single_date: boo
   // '[origdate] date'
   if (!as_single_date && (m = /^\[(.+)\]\s*(.+)$/.exec(value))) {
     const [ , _orig, _date ] = m
-    const date = parseToDate(_date, localeDateOrder, true)
+    date = parseToDate(_date, localeDateOrder, true)
     const orig = parseToDate(_orig, localeDateOrder, true)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     if (date.type === 'date' && orig.type === 'date') return {...date, ...{ orig } }
@@ -196,7 +203,7 @@ function parseToDate(value: string, localeDateOrder: string, as_single_date: boo
   // 'date [origdate]'
   if (!as_single_date && (m = /^(.+)\s*\[(.+)\]$/.exec(value))) {
     const [ , _date, _orig ] = m
-    const date = parseToDate(_date, localeDateOrder, true)
+    date = parseToDate(_date, localeDateOrder, true)
     const orig = parseToDate(_orig, localeDateOrder, true)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     if (date.type === 'date' && orig.type === 'date') return {...date, ...{ orig } }
@@ -263,9 +270,9 @@ function parseToDate(value: string, localeDateOrder: string, as_single_date: boo
     const year = parseInt(_year)
     const [day, month] = swap_day_month(parseInt(_day), parseInt(_month), 'ymd')
 
-    if (!month && !day) return Season.seasonize(doubt({ type: 'date', year }, state))
-    if (is_valid_month(month, !day) && !day) return Season.seasonize(doubt({ type: 'date', year, month }, state))
-    if (is_valid_month(month, !day)) return Season.seasonize(doubt({ type: 'date', year, month, day }, state))
+    // if (!month && !day) return doubt({ type: 'date', year }, state)
+    if (!day && has_valid_month(date = { type: 'date', year, month })) return Season.seasonize(doubt(date, state))
+    if (is_valid_date(date = { type: 'date', year, month, day })) return doubt(date, state)
   }
 
   // https://github.com/retorquere/zotero-better-bibtex/issues/1112
@@ -274,9 +281,9 @@ function parseToDate(value: string, localeDateOrder: string, as_single_date: boo
     const year = parseInt(_year)
     const [day, month] = swap_day_month(parseInt(_day), parseInt(_month), localeDateOrder)
 
-    if (!month && !day) return Season.seasonize(doubt({ type: 'date', year }, state))
-    if (is_valid_month(month, !day) && !day) return Season.seasonize(doubt({ type: 'date', year, month }, state))
-    if (is_valid_month(month, false)) return Season.seasonize(doubt({ type: 'date', year, month, day }, state))
+    if (!month && !day) return doubt({ type: 'date', year }, state)
+    if (!day && has_valid_month(date = { type: 'date', year, month })) return Season.seasonize(doubt(date, state))
+    if (is_valid_date(date = { type: 'date', year, month, day })) return doubt(date, state)
   }
 
   if (m = /^([0-9]{1,2})([-\s/.])([0-9]{1,2})(\2([0-9]{3,}))$/.exec(exactish)) {
@@ -284,9 +291,9 @@ function parseToDate(value: string, localeDateOrder: string, as_single_date: boo
     const year = parseInt(_year)
     const [day, month] = swap_day_month(parseInt(_day), parseInt(_month), localeDateOrder)
 
-    if (!month && !day) return Season.seasonize(doubt({ type: 'date', year }, state))
-    if (is_valid_month(month, !day) && !day) return Season.seasonize(doubt({ type: 'date', year, month }, state))
-    if (is_valid_month(month, false)) return Season.seasonize(doubt({ type: 'date', year, month, day }, state))
+    if (!month && !day) return doubt({ type: 'date', year }, state)
+    if (!day && has_valid_month(date = { type: 'date', year, month })) return Season.seasonize(doubt(date, state))
+    if (is_valid_date(date = { type: 'date', year, month, day })) return doubt(date, state)
   }
 
   if (m = /^([0-9]{1,2})[-\s/.]([0-9]{3,})$/.exec(exactish)) {
@@ -294,8 +301,8 @@ function parseToDate(value: string, localeDateOrder: string, as_single_date: boo
     const month = parseInt(_month)
     const year = parseInt(_year)
 
-    if (!month) return Season.seasonize(doubt({ type: 'date', year }, state))
-    if (is_valid_month(month, false)) return Season.seasonize(doubt({ type: 'date', year, month }, state))
+    if (!month) return doubt({ type: 'date', year }, state)
+    if (has_valid_month(date = { type: 'date', year, month })) return Season.seasonize(doubt(date, state))
   }
 
   if (m = /^([0-9]{3,})[-\s/.]([0-9]{1,2})$/.exec(exactish)) {
@@ -303,8 +310,8 @@ function parseToDate(value: string, localeDateOrder: string, as_single_date: boo
     const year = parseInt(_year)
     const month = parseInt(_month)
 
-    if (!month) return Season.seasonize(doubt({ type: 'date', year }, state))
-    if (is_valid_month(month, false)) return Season.seasonize(doubt({ type: 'date', year, month }, state))
+    if (!month) return doubt({ type: 'date', year }, state)
+    if (has_valid_month(date = { type: 'date', year, month })) return Season.seasonize(doubt(date, state))
   }
 
   if (exactish.match(/^-?[0-9]+$/)) {

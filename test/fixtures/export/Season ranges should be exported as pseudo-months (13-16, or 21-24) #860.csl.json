@@ -3,6 +3,6 @@
   {"id":"001121001222=-11","citation-key":"001121001222=-11","issued":{"date-parts":[[-12,13],[-13,14]]},"title":"-0011-21/-0012-22","type":"webpage"},
   {"id":"001121001222=11","citation-key":"001121001222=11","issued":{"date-parts":[[11,13],[12,14]]},"title":"0011-21/0012-22","type":"webpage"},
   {"id":"201121201222=-2011","citation-key":"201121201222=-2011","issued":{"date-parts":[[-2012,13],[-2013,14]]},"title":"-2011-21/-2012-22","type":"webpage"},
-  {"id":"monthsoutrange=2017","citation-key":"monthsoutrange=2017","issued":{"date-parts":[[2017,14],[2017,15]]},"original-date":{"season":2,"date-parts":[[2017]]},"title":"months out of range","type":"webpage"},
+  {"id":"monthsoutrange=2017","citation-key":"monthsoutrange=2017","issued":{"date-parts":[[2017,14],[2017,15]]},"original-date":{"literal":"2017-14/2017-99"},"title":"months out of range","type":"webpage"},
   {"id":"SeasonrangesEDTF=2017","citation-key":"SeasonrangesEDTF=2017","issued":{"date-parts":[[2017,15],[2017,16]]},"original-date":{"date-parts":[[2015,13],[2016,14]]},"title":"Season ranges: EDTF and literal","type":"webpage"}
 ]
