@@ -326,15 +326,9 @@ export function parse(value: string, localeDateOrder: string, as_range_part = fa
   if (!parsed) {
     if (as_range_part) { // try CSL date parser for single dates only
       const csl = CSL.DateParser.parseDateToObject(value)
-      if (typeof csl.year === 'number') {
-        if (csl.day_end === csl.day) delete csl.day_end
-        if (csl.month_end === csl.month) delete csl.month_end
-        if (csl.year_end === csl.year) delete csl.year_end
+      if (typeof csl.year === 'number' && typeof csl.year_end !== 'number') {
         const from = { type: 'date', year: csl.year, month: csl.month, day: csl.day }
-        const to = { type: 'date', year: csl.year_end, month: csl.month_end, day: csl.day_end }
-        if (isValidDate(from) && (!to.year || isValidDate(to))) {
-          return to.year ? { type: 'interval', from: seasonize(from as ParsedDate), to: seasonize(to as ParsedDate) } : seasonize(from as ParsedDate)
-        }
+        if (isValidDate(from)) return seasonize(from as ParsedDate)
       }
     }
     else { // try range
