@@ -32,13 +32,22 @@ regex = {
 }
 */
 
-const SPRING = 21
-const WINTER = 24
+const SEASONS = [
+  [ 13, 14, 15, 16 ], // eslint-disable-line no-magic-numbers
+  [ 21, 22, 23, 24 ], // eslint-disable-line no-magic-numbers
+]
 
+function month2season(month) {
+  for (const range of SEASONS) {
+    if (range.includes(month)) return (month - range[0]) + 1
+  }
+  return undefined
+}
 function seasonize(date: ParsedDate): ParsedDate {
-  if (date.type === 'date' && typeof date.month === 'number' && date.month >= SPRING && date.month <= WINTER && !date.day) {
+  const season = month2season(date.month)
+  if (date.type === 'date' && typeof season === 'number') {
     date.type = 'season'
-    date.season = (date.month - SPRING) + 1
+    date.season = season
     delete date.month
   }
   return date
@@ -68,7 +77,7 @@ function normalize_edtf(date: any): ParsedDate {
 
     case 'Season':
       [ year, month ] = date.values
-      if (month < SPRING || month > WINTER) throw new Error(`Unexpected season ${month}`)
+      if (typeof month2season(month) !== 'number') throw new Error(`Unexpected season ${month}`)
       return seasonize({ type: 'date', year, month })
 
     case 'List':
@@ -91,7 +100,7 @@ function upgrade_edtf(date: string): string {
 
 function is_valid_month(month: number, allowseason: boolean) {
   if (month >= 1 && month <= 12) return true // eslint-disable-line no-magic-numbers
-  if (allowseason && month >= 21 && month <= 24) return true // eslint-disable-line no-magic-numbers
+  if (allowseason && typeof month2season(month) === 'number') return true
 
   return false
 }
@@ -110,6 +119,14 @@ function swap_day_month(day: number, month: number, localeDateOrder: string): nu
 
 function stripTime(date: string): string {
   return date.replace(/(\s+|T)[0-9]{2}:[0-9]{2}(:[0-9]{2}(Z|\+[0-9]{2}:?[0-9]{2})?)?$/, '')
+}
+
+function isValidDate(date) {
+  if (date.type !== 'date') return true
+  date = {...date}
+  if (typeof date.month === 'number' && date.month > 12 && typeof month2season(date.month) === 'number') date.month = 1 // eslint-disable-line no-magic-numbers
+  const d = new Date(`${date.year}-${date.month || 1}-${date.day || 1}`)
+  return (d instanceof Date) && !isNaN(d as unknown as number)
 }
 
 export function parse(value: string, localeDateOrder: string, as_range_part = false): ParsedDate {
@@ -325,7 +342,9 @@ export function parse(value: string, localeDateOrder: string, as_range_part = fa
       if (csl.year_end === csl.year) delete csl.year_end
       const from = { type: 'date', year: csl.year, month: csl.month, day: csl.day }
       const to = { type: 'date', year: csl.year_end, month: csl.month_end, day: csl.day_end }
-      return (to.year ? { type: 'interval', from, to } : from) as ParsedDate
+      if (isValidDate(from) && (!to.year || isValidDate(to))) {
+        return to.year ? { type: 'interval', from: seasonize(from as ParsedDate), to: seasonize(to as ParsedDate) } : seasonize(from as ParsedDate)
+      }
     }
   }
 
