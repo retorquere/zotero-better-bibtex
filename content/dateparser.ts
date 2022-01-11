@@ -318,7 +318,7 @@ export function parse(value: string, localeDateOrder: string, as_range_part = fa
       }
     }
 
-    const csl  = CSL.DateParser.parseDateToObject(value)
+    const csl = CSL.DateParser.parseDateToObject(value)
     if (typeof csl.year === 'number') {
       if (csl.day_end === csl.day) delete csl.day_end
       if (csl.month_end === csl.month) delete csl.month_end
