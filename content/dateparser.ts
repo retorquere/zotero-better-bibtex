@@ -1,7 +1,7 @@
 /* eslint-disable no-case-declarations */
 import EDTF = require('edtf')
 import edtfy = require('edtfy')
-import * as CSL from 'citeproc'
+// import * as CSL from 'citeproc'
 
 // import escapeStringRegexp = require('escape-string-regexp')
 
@@ -108,6 +108,7 @@ function is_valid_month(month: number, allowseason: boolean) {
   return false
 }
 
+/*
 function is_valid_date(date) {
   if (date.type !== 'date') return true
   date = {...date}
@@ -115,6 +116,7 @@ function is_valid_date(date) {
   const d = new Date(`${date.year}-${date.month || 1}-${date.day || 1}`)
   return (d instanceof Date) && !isNaN(d as unknown as number)
 }
+*/
 
 // swap day/month for our American friends
 function swap_day_month(day: number, month: number, localeDateOrder: string): number[] {
@@ -135,6 +137,7 @@ function stripTime(date: string): string {
 export function parse(value: string, localeDateOrder: string): ParsedDate {
   const date = parseToDate(value, localeDateOrder, false)
 
+  /*
   if (date.type === 'verbatim') {
     const csl = CSL.DateParser.parseDateToObject(value)
     if (typeof csl.year === 'number') {
@@ -148,6 +151,7 @@ export function parse(value: string, localeDateOrder: string): ParsedDate {
       }
     }
   }
+  */
 
   return date
 }
